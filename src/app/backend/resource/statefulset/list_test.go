@@ -20,9 +20,9 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/pkg/api/v1"
@@ -48,7 +48,7 @@ func TestGetStatefulSetListFromChannels(t *testing.T) {
 			&v1.PodList{},
 			&StatefulSetList{
 				ListMeta:          api.ListMeta{},
-				CumulativeMetrics: make([]metric.Metric, 0),
+				CumulativeMetrics: make([]metricapi.Metric, 0),
 				StatefulSets:      []StatefulSet{}},
 			nil,
 		},
@@ -143,7 +143,7 @@ func TestGetStatefulSetListFromChannels(t *testing.T) {
 			},
 			&StatefulSetList{
 				ListMeta:          api.ListMeta{TotalItems: 1},
-				CumulativeMetrics: make([]metric.Metric, 0),
+				CumulativeMetrics: make([]metricapi.Metric, 0),
 				StatefulSets: []StatefulSet{{
 					ObjectMeta: api.ObjectMeta{
 						Name:              "rs-name",

@@ -12,14 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package metric
+package heapster
 
 import (
-	"encoding/json"
-
 	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
-	types "k8s.io/heapster/metrics/api/v1/types"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
+	heapster "k8s.io/heapster/metrics/api/v1/types"
 )
 
 // HeapsterAllInOneDownloadConfig holds config information specifying whether given native Heapster
@@ -31,9 +29,9 @@ var HeapsterAllInOneDownloadConfig = map[api.ResourceKind]bool{
 
 // DataPointsFromMetricJSONFormat converts all the data points from format used by heapster to our
 // format.
-func DataPointsFromMetricJSONFormat(raw types.MetricResult) (dp DataPoints) {
+func DataPointsFromMetricJSONFormat(raw heapster.MetricResult) (dp metricapi.DataPoints) {
 	for _, raw := range raw.Metrics {
-		converted := DataPoint{
+		converted := metricapi.DataPoint{
 			X: raw.Timestamp.Unix(),
 			Y: int64(raw.Value),
 		}
@@ -45,14 +43,4 @@ func DataPointsFromMetricJSONFormat(raw types.MetricResult) (dp DataPoints) {
 		dp = append(dp, converted)
 	}
 	return
-}
-
-// HeapsterUnmarshalType performs heapster GET request to the specifies path and transfers
-// the data to the interface provided.
-func HeapsterUnmarshalType(client heapster.HeapsterClient, path string, v interface{}) error {
-	rawData, err := client.Get("/model/" + path).DoRaw()
-	if err != nil {
-		return err
-	}
-	return json.Unmarshal(rawData, v)
 }

@@ -17,7 +17,7 @@ package replicationcontroller
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
@@ -31,7 +31,7 @@ import (
 // GetReplicationControllerPods return list of pods targeting replication controller associated
 // to given name.
 func GetReplicationControllerPods(client k8sClient.Interface,
-	heapsterClient heapster.HeapsterClient,
+	metricClient metricapi.MetricClient,
 	dsQuery *dataselect.DataSelectQuery, rcName, namespace string) (*pod.PodList, error) {
 	log.Printf("Getting replication controller %s pods in namespace %s", rcName, namespace)
 
@@ -40,7 +40,7 @@ func GetReplicationControllerPods(client k8sClient.Interface,
 		return nil, err
 	}
 
-	podList := pod.CreatePodList(pods, []v1.Event{}, dsQuery, heapsterClient)
+	podList := pod.CreatePodList(pods, []v1.Event{}, dsQuery, metricClient)
 	return &podList, nil
 }
 

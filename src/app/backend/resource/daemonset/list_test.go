@@ -19,9 +19,9 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/pkg/api/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
@@ -62,7 +62,7 @@ func TestGetDaemonSetList(t *testing.T) {
 	}{
 		{nil, nil, nil, nil, &DaemonSetList{
 			DaemonSets:        []DaemonSet{},
-			CumulativeMetrics: make([]metric.Metric, 0)},
+			CumulativeMetrics: make([]metricapi.Metric, 0)},
 		}, {
 			[]extensions.DaemonSet{
 				{
@@ -168,7 +168,7 @@ func TestGetDaemonSetList(t *testing.T) {
 			},
 			&DaemonSetList{
 				ListMeta:          api.ListMeta{TotalItems: 2},
-				CumulativeMetrics: make([]metric.Metric, 0),
+				CumulativeMetrics: make([]metricapi.Metric, 0),
 				DaemonSets: []DaemonSet{
 					{
 						ObjectMeta: api.ObjectMeta{

@@ -80,7 +80,7 @@ func TestGetJobEvents(t *testing.T) {
 		}
 
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("TestGetJobEvents(client,heapsterClient,%#v, %#v) == \ngot: %#v, \nexpected %#v",
+			t.Errorf("TestGetJobEvents(client,metricClient,%#v, %#v) == \ngot: %#v, \nexpected %#v",
 				c.namespace, c.name, actual, c.expected)
 		}
 	}
@@ -135,7 +135,7 @@ func TestGetJobPodsEvents(t *testing.T) {
 		}
 
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("TestGetJobPodsEvents(client,heapsterClient,%#v, %#v) == \ngot: %#v, \nexpected %#v",
+			t.Errorf("TestGetJobPodsEvents(client,metricClient,%#v, %#v) == \ngot: %#v, \nexpected %#v",
 				c.namespace, c.name, actual, c.expected)
 		}
 	}
