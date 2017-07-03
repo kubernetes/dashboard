@@ -18,7 +18,7 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
@@ -51,7 +51,7 @@ type NamespaceDetail struct {
 }
 
 // GetNamespaceDetail gets namespace details.
-func GetNamespaceDetail(client k8sClient.Interface, heapsterClient heapster.HeapsterClient,
+func GetNamespaceDetail(client k8sClient.Interface, metricClient metricapi.MetricClient,
 	name string) (
 	*NamespaceDetail, error) {
 	log.Printf("Getting details of %s namespace", name)

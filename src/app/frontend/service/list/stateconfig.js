@@ -24,7 +24,7 @@ import {ServiceListController} from './controller';
  */
 const i18n = {
   /** @type {string} @desc Label 'Services' that appears as a breadcrumbs on the action bar. */
-  MSG_serviceS_LABEL: goog.getMsg('Services'),
+  MSG_SERVICES_LABEL: goog.getMsg('Services'),
 };
 
 /**
@@ -40,7 +40,7 @@ export const config = {
   },
   data: {
     [breadcrumbsConfig]: {
-      'label': i18n.MSG_serviceS_LABEL,
+      'label': i18n.MSG_SERVICES_LABEL,
       'parent': parentStateName,
     },
   },

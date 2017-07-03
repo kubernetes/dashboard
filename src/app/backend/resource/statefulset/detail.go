@@ -18,7 +18,7 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
@@ -48,7 +48,7 @@ type StatefulSetDetail struct {
 }
 
 // GetStatefulSetDetail gets pet set details.
-func GetStatefulSetDetail(client *k8sClient.Clientset, heapsterClient heapster.HeapsterClient,
+func GetStatefulSetDetail(client *k8sClient.Clientset, metricClient metricapi.MetricClient,
 	namespace, name string) (*StatefulSetDetail, error) {
 
 	log.Printf("Getting details of %s service in %s namespace", name, namespace)
@@ -59,7 +59,7 @@ func GetStatefulSetDetail(client *k8sClient.Clientset, heapsterClient heapster.H
 		return nil, err
 	}
 
-	podList, err := GetStatefulSetPods(client, heapsterClient, dataselect.DefaultDataSelectWithMetrics, name, namespace)
+	podList, err := GetStatefulSetPods(client, metricClient, dataselect.DefaultDataSelectWithMetrics, name, namespace)
 	if err != nil {
 		return nil, err
 	}
@@ -74,11 +74,11 @@ func GetStatefulSetDetail(client *k8sClient.Clientset, heapsterClient heapster.H
 		return nil, err
 	}
 
-	statefulSet := getStatefulSetDetail(statefulSetData, heapsterClient, *events, *podList, *podInfo)
+	statefulSet := getStatefulSetDetail(statefulSetData, metricClient, *events, *podList, *podInfo)
 	return &statefulSet, nil
 }
 
-func getStatefulSetDetail(statefulSet *apps.StatefulSet, heapsterClient heapster.HeapsterClient,
+func getStatefulSetDetail(statefulSet *apps.StatefulSet, metricClient metricapi.MetricClient,
 	eventList common.EventList, podList pod.PodList, podInfo common.PodInfo) StatefulSetDetail {
 
 	return StatefulSetDetail{

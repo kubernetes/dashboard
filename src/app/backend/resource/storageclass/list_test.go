@@ -27,12 +27,12 @@ import (
 
 func TestGetStorageClassList(t *testing.T) {
 	cases := []struct {
-		serviceList     *storage.StorageClassList
-		expectedActions []string
-		expected        *StorageClassList
+		storageClassList *storage.StorageClassList
+		expectedActions  []string
+		expected         *StorageClassList
 	}{
 		{
-			serviceList: &storage.StorageClassList{
+			storageClassList: &storage.StorageClassList{
 				Items: []storage.StorageClass{
 					{
 						ObjectMeta: metaV1.ObjectMeta{
@@ -58,7 +58,7 @@ func TestGetStorageClassList(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		fakeClient := fake.NewSimpleClientset(c.serviceList)
+		fakeClient := fake.NewSimpleClientset(c.storageClassList)
 
 		actual, _ := GetStorageClassList(fakeClient, dataselect.NoDataSelect)
 

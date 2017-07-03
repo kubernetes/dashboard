@@ -20,11 +20,12 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/client-go/kubernetes/fake"
 	"k8s.io/client-go/pkg/api/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
@@ -48,7 +49,7 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 			&v1.PodList{},
 			&ReplicaSetList{
 				ListMeta:          api.ListMeta{},
-				CumulativeMetrics: make([]metric.Metric, 0),
+				CumulativeMetrics: make([]metricapi.Metric, 0),
 				ReplicaSets:       []ReplicaSet{}},
 			nil,
 		},
@@ -141,7 +142,7 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 			},
 			&ReplicaSetList{
 				ListMeta:          api.ListMeta{TotalItems: 1},
-				CumulativeMetrics: make([]metric.Metric, 0),
+				CumulativeMetrics: make([]metricapi.Metric, 0),
 				ReplicaSets: []ReplicaSet{{
 					ObjectMeta: api.ObjectMeta{
 						Name:              "rs-name",
@@ -234,7 +235,7 @@ func TestCreateReplicaSetList(t *testing.T) {
 			[]v1.Event{},
 			&ReplicaSetList{
 				ListMeta:          api.ListMeta{TotalItems: 1},
-				CumulativeMetrics: make([]metric.Metric, 0),
+				CumulativeMetrics: make([]metricapi.Metric, 0),
 				ReplicaSets: []ReplicaSet{
 					{
 						ObjectMeta: api.ObjectMeta{Name: "replica-set", Namespace: "ns-1"},
@@ -252,6 +253,74 @@ func TestCreateReplicaSetList(t *testing.T) {
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("CreateReplicaSetList(%#v, %#v, %#v, ...) == \ngot %#v, \nexpected %#v",
 				c.replicaSets, c.pods, c.events, actual, c.expected)
+		}
+	}
+}
+
+func TestGetReplicaSetList(t *testing.T) {
+	replicas := int32(1)
+	cases := []struct {
+		rsList          *extensions.ReplicaSetList
+		expectedActions []string
+		expected        *ReplicaSetList
+	}{
+		{
+			rsList: &extensions.ReplicaSetList{
+				Items: []extensions.ReplicaSet{
+					{
+						ObjectMeta: metaV1.ObjectMeta{
+							Name:   "rs-1",
+							Labels: map[string]string{},
+						},
+						Spec: extensions.ReplicaSetSpec{
+							Replicas: &replicas,
+						},
+					},
+				}},
+			expectedActions: []string{"list", "list", "list"},
+			expected: &ReplicaSetList{
+				ListMeta: api.ListMeta{TotalItems: 1},
+				ReplicaSets: []ReplicaSet{
+					{
+						ObjectMeta: api.ObjectMeta{
+							Name:   "rs-1",
+							Labels: map[string]string{},
+						},
+						TypeMeta: api.TypeMeta{Kind: api.ResourceKindReplicaSet},
+						Pods: common.PodInfo{
+							Desired:  replicas,
+							Warnings: make([]common.Event, 0),
+						},
+					},
+				},
+				CumulativeMetrics: make([]metricapi.Metric, 0),
+			},
+		},
+	}
+
+	for _, c := range cases {
+		fakeClient := fake.NewSimpleClientset(c.rsList)
+
+		actual, _ := GetReplicaSetList(fakeClient, &common.NamespaceQuery{},
+			dataselect.NoDataSelect, nil)
+
+		actions := fakeClient.Actions()
+		if len(actions) != len(c.expectedActions) {
+			t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
+				len(c.expectedActions), len(actions))
+			continue
+		}
+
+		for i, verb := range c.expectedActions {
+			if actions[i].GetVerb() != verb {
+				t.Errorf("Unexpected action: %+v, expected %s",
+					actions[i], verb)
+			}
+		}
+
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("GetReplicaSetList(client) == got\n%#v, expected\n %#v",
+				actual, c.expected)
 		}
 	}
 }

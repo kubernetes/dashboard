@@ -18,11 +18,10 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	client "k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/pkg/api/v1"
 )
@@ -33,12 +32,12 @@ type ReplicationControllerList struct {
 
 	// Unordered list of Replication Controllers.
 	ReplicationControllers []ReplicationController `json:"replicationControllers"`
-	CumulativeMetrics      []metric.Metric         `json:"cumulativeMetrics"`
+	CumulativeMetrics      []metricapi.Metric      `json:"cumulativeMetrics"`
 }
 
 // GetReplicationControllerList returns a list of all Replication Controllers in the cluster.
-func GetReplicationControllerList(client *client.Clientset, nsQuery *common.NamespaceQuery,
-	dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) (*ReplicationControllerList, error) {
+func GetReplicationControllerList(client client.Interface, nsQuery *common.NamespaceQuery,
+	dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) (*ReplicationControllerList, error) {
 	log.Print("Getting list of all replication controllers in the cluster")
 
 	channels := &common.ResourceChannels{
@@ -47,13 +46,13 @@ func GetReplicationControllerList(client *client.Clientset, nsQuery *common.Name
 		EventList:                 common.GetEventListChannel(client, nsQuery, 1),
 	}
 
-	return GetReplicationControllerListFromChannels(channels, dsQuery, heapsterClient)
+	return GetReplicationControllerListFromChannels(channels, dsQuery, metricClient)
 }
 
 // GetReplicationControllerListFromChannels returns a list of all Replication Controllers in the cluster
 // reading required resource list once from the channels.
 func GetReplicationControllerListFromChannels(channels *common.ResourceChannels,
-	dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) (*ReplicationControllerList, error) {
+	dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) (*ReplicationControllerList, error) {
 
 	rcList := <-channels.ReplicationControllerList.List
 	if err := <-channels.ReplicationControllerList.Error; err != nil {
@@ -70,23 +69,23 @@ func GetReplicationControllerListFromChannels(channels *common.ResourceChannels,
 		return nil, err
 	}
 
-	return CreateReplicationControllerList(rcList.Items, dsQuery, podList.Items, eventList.Items, heapsterClient), nil
+	return CreateReplicationControllerList(rcList.Items, dsQuery, podList.Items, eventList.Items, metricClient), nil
 }
 
 // CreateReplicationControllerList creates paginated list of Replication Controller model
 // objects based on Kubernetes Replication Controller objects array and related resources arrays.
 func CreateReplicationControllerList(replicationControllers []v1.ReplicationController,
-	dsQuery *dataselect.DataSelectQuery, pods []v1.Pod, events []v1.Event, heapsterClient *heapster.HeapsterClient) *ReplicationControllerList {
+	dsQuery *dataselect.DataSelectQuery, pods []v1.Pod, events []v1.Event, metricClient metricapi.MetricClient) *ReplicationControllerList {
 
 	rcList := &ReplicationControllerList{
 		ReplicationControllers: make([]ReplicationController, 0),
 		ListMeta:               api.ListMeta{TotalItems: len(replicationControllers)},
 	}
-	cachedResources := &dataselect.CachedResources{
+	cachedResources := &metricapi.CachedResources{
 		Pods: pods,
 	}
 	rcCells, metricPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(
-		toCells(replicationControllers), dsQuery, cachedResources, heapsterClient)
+		toCells(replicationControllers), dsQuery, cachedResources, metricClient)
 	replicationControllers = fromCells(rcCells)
 	rcList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
@@ -103,7 +102,7 @@ func CreateReplicationControllerList(replicationControllers []v1.ReplicationCont
 	cumulativeMetrics, err := metricPromises.GetMetrics()
 	rcList.CumulativeMetrics = cumulativeMetrics
 	if err != nil {
-		rcList.CumulativeMetrics = make([]metric.Metric, 0)
+		rcList.CumulativeMetrics = make([]metricapi.Metric, 0)
 	}
 
 	return rcList

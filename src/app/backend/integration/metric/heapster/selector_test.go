@@ -12,18 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package metric
+package heapster
 
 import (
 	"reflect"
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/pkg/api/v1"
 )
 
-func TestResourceSelector(t *testing.T) {
+func TestGetHeapsterSelector(t *testing.T) {
 	resource1 := map[string]string{
 		"resource": "1",
 	}
@@ -68,14 +69,14 @@ func TestResourceSelector(t *testing.T) {
 	}
 	testCases := []struct {
 		Info                   string
-		ResourceSelector       ResourceSelector
+		ResourceSelector       metricapi.ResourceSelector
 		ExpectedPath           string
 		ExpectedTargetResource api.ResourceKind
 		ExpectedResources      []string
 	}{
 		{
 			"ResourceSelector for native resource - pod",
-			ResourceSelector{
+			metricapi.ResourceSelector{
 				Namespace:    "bar",
 				ResourceType: api.ResourceKindPod,
 				ResourceName: "foo",
@@ -86,7 +87,7 @@ func TestResourceSelector(t *testing.T) {
 		},
 		{
 			"ResourceSelector for native resource - node",
-			ResourceSelector{
+			metricapi.ResourceSelector{
 				Namespace:    "barn",
 				ResourceType: api.ResourceKindNode,
 				ResourceName: "foon",
@@ -97,7 +98,7 @@ func TestResourceSelector(t *testing.T) {
 		},
 		{
 			"ResourceSelector for derived resource with old style selector",
-			ResourceSelector{
+			metricapi.ResourceSelector{
 				Namespace:    "a",
 				ResourceType: api.ResourceKindDeployment,
 				ResourceName: "baba",
@@ -109,7 +110,8 @@ func TestResourceSelector(t *testing.T) {
 		},
 	}
 	for _, testCase := range testCases {
-		sel, err := testCase.ResourceSelector.GetHeapsterSelector(cachedPodList)
+		sel, err := getHeapsterSelector(testCase.ResourceSelector,
+			&metricapi.CachedResources{cachedPodList})
 		if err != nil {
 			t.Errorf("Test Case: %s. Failed to get HeapsterSelector. - %s", testCase.Info, err)
 			return
