@@ -28,7 +28,6 @@ export class DaemonSetDetailController {
       kdDaemonSetEventsResource) {
     /** @export {!backendApi.DaemonSetDetail} */
     this.daemonSetDetail = daemonSetDetail;
-    console.log(daemonSetDetail);
 
     /** @export {!angular.Resource} */
     this.daemonSetPodsResource = kdDaemonSetPodsResource;

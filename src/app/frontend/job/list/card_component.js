@@ -67,7 +67,6 @@ export default class JobCardController {
    * @export
    */
   hasWarnings() {
-    console.log(this.job);
     return this.job.pods.warnings.length > 0;
   }
 
