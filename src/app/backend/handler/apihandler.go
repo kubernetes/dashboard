@@ -2031,7 +2031,7 @@ func (apiHandler *APIHandler) handleGetJobDetail(request *restful.Request, respo
 }
 
 func (apiHandler *APIHandler) handleDeleteJob(request *restful.Request, response *restful.Response) {
-	k8sClient, err := apiHandler.manager.Client(request)
+	k8sClient, err := apiHandler.cManager.Client(request)
 	if err != nil {
 		handleInternalError(response, err)
 		return
