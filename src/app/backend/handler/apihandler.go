@@ -1415,19 +1415,31 @@ func (apiHandler *APIHandler) handlePutResource(
 
 func (apiHandler *APIHandler) handleDeleteResource(
 	request *restful.Request, response *restful.Response) {
-	verber, err := apiHandler.cManager.VerberClient(request)
-	if err != nil {
-		handleInternalError(response, err)
-		return
-	}
-
 	kind := request.PathParameter("kind")
 	namespace, ok := request.PathParameters()["namespace"]
 	name := request.PathParameter("name")
 
-	if err := verber.Delete(kind, ok, namespace, name); err != nil {
-		handleInternalError(response, err)
-		return
+	switch kind {
+	case api.ResourceKindJob:
+		k8sClient, err := apiHandler.cManager.Client(request)
+		if err != nil {
+			handleInternalError(response, err)
+			return
+		}
+		if err := job.DeleteJob(k8sClient, namespace, name); err != nil {
+			handleInternalError(response, err)
+			return
+		}
+	default:
+		verber, err := apiHandler.cManager.VerberClient(request)
+		if err != nil {
+			handleInternalError(response, err)
+			return
+		}
+		if err := verber.Delete(kind, ok, namespace, name); err != nil {
+			handleInternalError(response, err)
+			return
+		}
 	}
 
 	response.WriteHeader(http.StatusOK)
