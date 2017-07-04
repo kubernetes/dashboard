@@ -166,7 +166,7 @@ func TestGetJobListFromChannels(t *testing.T) {
 					Pods: common.PodInfo{
 						Current:  7,
 						Desired:  21,
-						Failed:   1,
+						Failed:   2,
 						Warnings: []common.Event{},
 					},
 				}, {
@@ -180,7 +180,7 @@ func TestGetJobListFromChannels(t *testing.T) {
 					Pods: common.PodInfo{
 						Current:  7,
 						Desired:  0,
-						Failed:   1,
+						Failed:   2,
 						Warnings: []common.Event{},
 					},
 				}},
