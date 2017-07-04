@@ -18,10 +18,9 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/fields"
@@ -53,12 +52,15 @@ type ServiceDetail struct {
 	// a valid IP address. None can be specified for headless services when proxying is not required
 	ClusterIP string `json:"clusterIP"`
 
+	// List of events related to this Service
+	EventList common.EventList `json:"eventList"`
+
 	// PodList represents list of pods targeted by same label selector as this service.
 	PodList pod.PodList `json:"podList"`
 }
 
 // GetServiceDetail gets service details.
-func GetServiceDetail(client k8sClient.Interface, heapsterClient heapster.HeapsterClient,
+func GetServiceDetail(client k8sClient.Interface, metricClient metricapi.MetricClient,
 	namespace, name string, dsQuery *dataselect.DataSelectQuery) (*ServiceDetail, error) {
 
 	log.Printf("Getting details of %s service in %s namespace", name, namespace)
@@ -69,19 +71,25 @@ func GetServiceDetail(client k8sClient.Interface, heapsterClient heapster.Heapst
 		return nil, err
 	}
 
-	podList, err := GetServicePods(client, heapsterClient, namespace, name, dsQuery)
+	podList, err := GetServicePods(client, metricClient, namespace, name, dsQuery)
+	if err != nil {
+		return nil, err
+	}
+
+	eventList, err := GetServiceEvents(client, dataselect.DefaultDataSelect, namespace, name)
 	if err != nil {
 		return nil, err
 	}
 
 	service := ToServiceDetail(serviceData)
 	service.PodList = *podList
+	service.EventList = *eventList
 
 	return &service, nil
 }
 
 // GetServicePods gets list of pods targeted by given label selector in given namespace.
-func GetServicePods(client k8sClient.Interface, heapsterClient heapster.HeapsterClient, namespace,
+func GetServicePods(client k8sClient.Interface, metricClient metricapi.MetricClient, namespace,
 	name string, dsQuery *dataselect.DataSelectQuery) (*pod.PodList, error) {
 
 	service, err := client.CoreV1().Services(namespace).Get(name, metaV1.GetOptions{})
@@ -92,7 +100,7 @@ func GetServicePods(client k8sClient.Interface, heapsterClient heapster.Heapster
 	if service.Spec.Selector == nil {
 		emptyPodList := &pod.PodList{
 			Pods:              []pod.Pod{},
-			CumulativeMetrics: []metric.Metric{},
+			CumulativeMetrics: []metricapi.Metric{},
 		}
 		return emptyPodList, nil
 	}
@@ -113,6 +121,6 @@ func GetServicePods(client k8sClient.Interface, heapsterClient heapster.Heapster
 		return nil, err
 	}
 
-	podList := pod.CreatePodList(apiPodList.Items, []v1.Event{}, dsQuery, heapsterClient)
+	podList := pod.CreatePodList(apiPodList.Items, []v1.Event{}, dsQuery, metricClient)
 	return &podList, nil
 }

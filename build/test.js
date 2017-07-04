@@ -22,6 +22,7 @@ import gulpProtractor from 'gulp-protractor';
 import karma from 'karma';
 import path from 'path';
 import conf from './conf';
+import goCommand from './gocommand';
 import {browserSyncInstance} from './serve';
 
 
@@ -70,7 +71,7 @@ function runProtractorTests(doneFn) {
 /**
  * Runs once all unit tests of the application.
  */
-gulp.task('test', ['frontend-test', 'backend-test']);
+gulp.task('test', ['frontend-test', 'backend-test-with-coverage']);
 
 /**
  * Execute gulp-codecov task and uploads generated
@@ -94,6 +95,13 @@ gulp.task('frontend-test', function(doneFn) {
  * Runs once all unit tests of the backend application.
  */
 gulp.task('backend-test', ['package-backend'], function(doneFn) {
+  goCommand(conf.backend.testCommandArgs, doneFn);
+});
+
+/**
+ * Runs once all unit tests of the backend application with coverage report.
+ */
+gulp.task('backend-test-with-coverage', ['package-backend'], function(doneFn) {
   let testProcess = childProcess.execFile(
       conf.paths.goTestScript, [conf.paths.coverageBackend, conf.backend.mainPackageName]);
 

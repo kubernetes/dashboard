@@ -21,7 +21,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	rbac "k8s.io/client-go/pkg/apis/rbac/v1alpha1"
+	rbac "k8s.io/client-go/pkg/apis/rbac/v1beta1"
 )
 
 func TestGetRbacRoleBindingList(t *testing.T) {

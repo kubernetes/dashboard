@@ -18,7 +18,7 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
@@ -68,7 +68,7 @@ type ReplicationControllerSpec struct {
 // GetReplicationControllerDetail returns detailed information about the given replication
 // controller in the given namespace.
 func GetReplicationControllerDetail(client k8sClient.Interface,
-	heapsterClient heapster.HeapsterClient,
+	metricClient metricapi.MetricClient,
 	namespace, name string) (*ReplicationControllerDetail, error) {
 	log.Printf("Getting details of %s replication controller in %s namespace", name, namespace)
 
@@ -82,7 +82,7 @@ func GetReplicationControllerDetail(client k8sClient.Interface,
 		return nil, err
 	}
 
-	podList, err := GetReplicationControllerPods(client, heapsterClient, dataselect.DefaultDataSelectWithMetrics,
+	podList, err := GetReplicationControllerPods(client, metricClient, dataselect.DefaultDataSelectWithMetrics,
 		name, namespace)
 	if err != nil {
 		return nil, err

@@ -46,7 +46,7 @@ func TestToPodPodStatusFailed(t *testing.T) {
 		},
 	}
 
-	actual := ToPod(pod, &common.MetricsByPod{}, []common.Event{})
+	actual := ToPod(pod, &MetricsByPod{}, []common.Event{})
 
 	if !reflect.DeepEqual(actual, expected) {
 		t.Errorf("ToPod(%#v) == \ngot %#v, \nexpected %#v", pod, actual, expected)
@@ -75,7 +75,7 @@ func TestToPodPodStatusSucceeded(t *testing.T) {
 		},
 	}
 
-	actual := ToPod(pod, &common.MetricsByPod{}, []common.Event{})
+	actual := ToPod(pod, &MetricsByPod{}, []common.Event{})
 
 	if !reflect.DeepEqual(actual, expected) {
 		t.Errorf("ToPod(%#v) == \ngot %#v, \nexpected %#v", pod, actual, expected)
@@ -108,7 +108,7 @@ func TestToPodPodStatusRunning(t *testing.T) {
 		},
 	}
 
-	actual := ToPod(pod, &common.MetricsByPod{}, []common.Event{})
+	actual := ToPod(pod, &MetricsByPod{}, []common.Event{})
 
 	if !reflect.DeepEqual(actual, expected) {
 		t.Errorf("ToPod(%#v) == \ngot %#v, \nexpected %#v", pod, actual, expected)
@@ -137,7 +137,7 @@ func TestToPodPodStatusPending(t *testing.T) {
 		},
 	}
 
-	actual := ToPod(pod, &common.MetricsByPod{}, []common.Event{})
+	actual := ToPod(pod, &MetricsByPod{}, []common.Event{})
 
 	if !reflect.DeepEqual(actual, expected) {
 		t.Errorf("ToPod(%#v) == \ngot %#v, \nexpected %#v", pod, actual, expected)
@@ -188,7 +188,7 @@ func TestToPodContainerStates(t *testing.T) {
 		},
 	}
 
-	actual := ToPod(pod, &common.MetricsByPod{}, []common.Event{})
+	actual := ToPod(pod, &MetricsByPod{}, []common.Event{})
 
 	if !reflect.DeepEqual(actual, expected) {
 		t.Errorf("ToPod(%#v) == \ngot %#v, \nexpected %#v", pod, actual, expected)
@@ -199,11 +199,11 @@ func TestToPodContainerStates(t *testing.T) {
 func TestToPod(t *testing.T) {
 	cases := []struct {
 		pod      *v1.Pod
-		metrics  *common.MetricsByPod
+		metrics  *MetricsByPod
 		expected Pod
 	}{
 		{
-			pod: &v1.Pod{}, metrics: &common.MetricsByPod{},
+			pod: &v1.Pod{}, metrics: &MetricsByPod{},
 			expected: Pod{
 				TypeMeta: api.TypeMeta{Kind: api.ResourceKindPod},
 				PodStatus: PodStatus{
@@ -215,7 +215,7 @@ func TestToPod(t *testing.T) {
 				ObjectMeta: metaV1.ObjectMeta{
 					Name: "test-pod", Namespace: "test-namespace",
 				}},
-			metrics: &common.MetricsByPod{},
+			metrics: &MetricsByPod{},
 			expected: Pod{
 				TypeMeta: api.TypeMeta{Kind: api.ResourceKindPod},
 				ObjectMeta: api.ObjectMeta{

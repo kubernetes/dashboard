@@ -16,9 +16,9 @@ package node
 
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"k8s.io/client-go/pkg/api/v1"
 )
 
@@ -51,8 +51,8 @@ func (self NodeCell) GetProperty(name dataselect.PropertyName) dataselect.Compar
 	}
 }
 
-func (self NodeCell) GetResourceSelector() *metric.ResourceSelector {
-	return &metric.ResourceSelector{
+func (self NodeCell) GetResourceSelector() *metricapi.ResourceSelector {
+	return &metricapi.ResourceSelector{
 		Namespace:    self.ObjectMeta.Namespace,
 		ResourceType: api.ResourceKindNode,
 		ResourceName: self.ObjectMeta.Name,

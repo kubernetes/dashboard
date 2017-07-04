@@ -55,7 +55,7 @@ export const config = {
  * @ngInject
  */
 export function roleListResource($resource) {
-  return $resource('api/v1/rbacrole');
+  return $resource('api/v1/rbac/role');
 }
 
 /**

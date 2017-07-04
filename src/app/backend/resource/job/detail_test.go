@@ -19,15 +19,13 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
 	batch "k8s.io/client-go/pkg/apis/batch/v1"
-	restclient "k8s.io/client-go/rest"
 )
 
 type FakeHeapsterClient struct {
@@ -75,7 +73,7 @@ func TestGetJobDetail(t *testing.T) {
 				PodInfo:  common.PodInfo{Warnings: []common.Event{}},
 				PodList: pod.PodList{
 					Pods:              []pod.Pod{},
-					CumulativeMetrics: make([]metric.Metric, 0),
+					CumulativeMetrics: make([]metricapi.Metric, 0),
 				},
 				EventList:   common.EventList{Events: []common.Event{}},
 				Parallelism: &jobCompletions,
@@ -86,10 +84,10 @@ func TestGetJobDetail(t *testing.T) {
 
 	for _, c := range cases {
 		fakeClient := fake.NewSimpleClientset(c.job)
-		fakeHeapsterClient := FakeHeapsterClient{client: *fake.NewSimpleClientset()}
+    fakeHeapsterClient := FakeHeapsterClient{client: *fake.NewSimpleClientset()
 
-		dataselect.DefaultDataSelectWithMetrics.MetricQuery = dataselect.NoMetrics
-		actual, _ := GetJobDetail(fakeClient, fakeHeapsterClient, c.namespace, c.name)
+    dataselect.DefaultDataSelectWithMetrics.MetricQuery = dataselect.NoMetrics
+    actual, _ := GetJobDetail(fakeClient, nil, c.namespace, c.name)
 
 		actions := fakeClient.Actions()
 		if len(actions) != len(c.expectedActions) {

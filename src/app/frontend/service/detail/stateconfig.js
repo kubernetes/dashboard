@@ -58,10 +58,18 @@ export const config = {
  * @return {!angular.Resource}
  * @ngInject
  */
+export function serviceEventsResource($resource) {
+  return $resource('api/v1/service/:namespace/:name/event');
+}
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
 export function servicePodsResource($resource) {
   return $resource('api/v1/service/:namespace/:name/pod');
 }
-
 
 /**
  * @param {!./../../common/resource/resourcedetail.StateParams} $stateParams

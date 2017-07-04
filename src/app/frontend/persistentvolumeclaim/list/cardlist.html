@@ -57,6 +57,9 @@ limitations under the License.
                                     sort-id="$root.SortableProperties.AGE">
       [[Age|Label 'Age' which appears as a column label in the table of persistent volume claims (persistent volume claim list view).]]
     </kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small"
+                                    grow="nogrow">
+    </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
   <kd-persistent-volume-claim-card dir-paginate="persistentVolumeClaim in $ctrl.persistentVolumeClaimList.items | itemsPerPage: default"
                                    pagination-id="{{::$ctrl.getSelectId()}}"

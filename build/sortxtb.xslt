@@ -17,10 +17,20 @@
   <!--empty template suppresses 'source' attribute -->
   <xsl:template match="@source"/>
 
+  <!-- remove duplicates -->
+  <xsl:key name="indexKey" match="//translation[@key]" use="@key" />
+  <xsl:template match="translation">
+    <xsl:if test="generate-id()=generate-id(key('indexKey', @key)[1])">
+      <xsl:copy>
+        <xsl:apply-templates select="@*|node()"/>
+      </xsl:copy>
+    </xsl:if>
+  </xsl:template>
+
   <!--identity template copies everything forward by default-->
   <xsl:template match="@* | node()">
     <xsl:copy>
-      <xsl:apply-templates select="@* | node()"/>
+      <xsl:apply-templates select="@*|node()"/>
     </xsl:copy>
   </xsl:template>
 </xsl:stylesheet>

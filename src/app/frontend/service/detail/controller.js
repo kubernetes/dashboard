@@ -19,13 +19,17 @@ export class ServiceDetailController {
   /**
    * @param {!backendApi.ServiceDetail} serviceDetail
    * @param {!angular.Resource} kdServicePodsResource
+   * @param {!angular.Resource} kdServiceEventsResource
    * @ngInject
    */
-  constructor(serviceDetail, kdServicePodsResource) {
+  constructor(serviceDetail, kdServicePodsResource, kdServiceEventsResource) {
     /** @export {!backendApi.ServiceDetail} */
     this.serviceDetail = serviceDetail;
 
     /** {!angular.Resource} */
     this.servicePodsResource = kdServicePodsResource;
+
+    /** @export {!angular.Resource} */
+    this.eventListResource = kdServiceEventsResource;
   }
 }

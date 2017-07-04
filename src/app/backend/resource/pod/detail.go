@@ -23,10 +23,9 @@ import (
 	"strconv"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/owner"
 	"k8s.io/apimachinery/pkg/api/errors"
 	res "k8s.io/apimachinery/pkg/api/resource"
@@ -66,7 +65,7 @@ type PodDetail struct {
 	InitContainers []Container `json:"initContainers"`
 
 	// Metrics collected for this resource
-	Metrics []metric.Metric `json:"metrics"`
+	Metrics []metricapi.Metric `json:"metrics"`
 
 	// Conditions of this pod.
 	Conditions []common.Condition `json:"conditions"`
@@ -109,7 +108,7 @@ type EnvVar struct {
 
 // GetPodDetail returns the details (PodDetail) of a named Pod from a particular namespace.
 // TODO(maciaszczykm): Owner reference should be used instead of created by annotation.
-func GetPodDetail(client kubernetes.Interface, heapsterClient heapster.HeapsterClient, namespace,
+func GetPodDetail(client kubernetes.Interface, metricClient metricapi.MetricClient, namespace,
 	name string) (*PodDetail, error) {
 
 	log.Printf("Getting details of %s pod in %s namespace", name, namespace)
@@ -119,7 +118,6 @@ func GetPodDetail(client kubernetes.Interface, heapsterClient heapster.HeapsterC
 			common.NewSameNamespaceQuery(namespace), 1),
 		SecretList: common.GetSecretListChannel(client,
 			common.NewSameNamespaceQuery(namespace), 1),
-		PodMetrics: common.GetPodMetricsChannel(heapsterClient, name, namespace),
 	}
 
 	pod, err := client.CoreV1().Pods(namespace).Get(name, metaV1.GetOptions{})
@@ -140,7 +138,7 @@ func GetPodDetail(client kubernetes.Interface, heapsterClient heapster.HeapsterC
 	}
 
 	_, metricPromises := dataselect.GenericDataSelectWithMetrics(toCells([]v1.Pod{*pod}),
-		dataselect.StdMetricsDataSelect, dataselect.NoResourceCache, &heapsterClient)
+		dataselect.StdMetricsDataSelect, metricapi.NoResourceCache, metricClient)
 	metrics, _ := metricPromises.GetMetrics()
 
 	if err = <-channels.ConfigMapList.Error; err != nil {
@@ -233,7 +231,7 @@ func extractContainerInfo(containerList []v1.Container, pod *v1.Pod, configMaps 
 	return containers
 }
 
-func toPodDetail(pod *v1.Pod, metrics []metric.Metric, configMaps *v1.ConfigMapList,
+func toPodDetail(pod *v1.Pod, metrics []metricapi.Metric, configMaps *v1.ConfigMapList,
 	secrets *v1.SecretList, controller owner.ResourceOwner,
 	events *common.EventList) PodDetail {
 	podDetail := PodDetail{

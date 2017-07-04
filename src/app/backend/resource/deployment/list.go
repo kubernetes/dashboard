@@ -18,11 +18,10 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	client "k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/pkg/api/v1"
@@ -34,8 +33,8 @@ type DeploymentList struct {
 	ListMeta api.ListMeta `json:"listMeta"`
 
 	// Unordered list of Deployments.
-	Deployments       []Deployment    `json:"deployments"`
-	CumulativeMetrics []metric.Metric `json:"cumulativeMetrics"`
+	Deployments       []Deployment       `json:"deployments"`
+	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`
 }
 
 // Deployment is a presentation layer view of Kubernetes Deployment resource. This means
@@ -54,7 +53,7 @@ type Deployment struct {
 
 // GetDeploymentList returns a list of all Deployments in the cluster.
 func GetDeploymentList(client client.Interface, nsQuery *common.NamespaceQuery,
-	dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) (*DeploymentList, error) {
+	dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) (*DeploymentList, error) {
 	log.Print("Getting list of all deployments in the cluster")
 
 	channels := &common.ResourceChannels{
@@ -64,13 +63,13 @@ func GetDeploymentList(client client.Interface, nsQuery *common.NamespaceQuery,
 		ReplicaSetList: common.GetReplicaSetListChannel(client, nsQuery, 1),
 	}
 
-	return GetDeploymentListFromChannels(channels, dsQuery, heapsterClient)
+	return GetDeploymentListFromChannels(channels, dsQuery, metricClient)
 }
 
 // GetDeploymentList returns a list of all Deployments in the cluster
 // reading required resource list once from the channels.
 func GetDeploymentListFromChannels(channels *common.ResourceChannels,
-	dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) (*DeploymentList, error) {
+	dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) (*DeploymentList, error) {
 
 	deployments := <-channels.DeploymentList.List
 	if err := <-channels.DeploymentList.Error; err != nil {
@@ -101,24 +100,26 @@ func GetDeploymentListFromChannels(channels *common.ResourceChannels,
 		return nil, err
 	}
 
-	return CreateDeploymentList(deployments.Items, pods.Items, events.Items, rs.Items, dsQuery, heapsterClient), nil
+	return CreateDeploymentList(deployments.Items, pods.Items, events.Items, rs.Items, dsQuery, metricClient), nil
 }
 
 // CreateDeploymentList returns a list of all Deployment model objects in the cluster, based on all
 // Kubernetes Deployment API objects.
 func CreateDeploymentList(deployments []extensions.Deployment, pods []v1.Pod, events []v1.Event,
 	rs []extensions.ReplicaSet, dsQuery *dataselect.DataSelectQuery,
-	heapsterClient *heapster.HeapsterClient) *DeploymentList {
+	metricClient metricapi.MetricClient) *DeploymentList {
 
 	deploymentList := &DeploymentList{
 		Deployments: make([]Deployment, 0),
 		ListMeta:    api.ListMeta{TotalItems: len(deployments)},
 	}
 
-	cachedResources := &dataselect.CachedResources{
+	cachedResources := &metricapi.CachedResources{
 		Pods: pods,
 	}
-	deploymentCells, metricPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(toCells(deployments), dsQuery, cachedResources, heapsterClient)
+	deploymentCells, metricPromises, filteredTotal := dataselect.
+		GenericDataSelectWithFilterAndMetrics(
+			toCells(deployments), dsQuery, cachedResources, metricClient)
 	deployments = fromCells(deploymentCells)
 	deploymentList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
@@ -140,7 +141,7 @@ func CreateDeploymentList(deployments []extensions.Deployment, pods []v1.Pod, ev
 	cumulativeMetrics, err := metricPromises.GetMetrics()
 	deploymentList.CumulativeMetrics = cumulativeMetrics
 	if err != nil {
-		deploymentList.CumulativeMetrics = make([]metric.Metric, 0)
+		deploymentList.CumulativeMetrics = make([]metricapi.Metric, 0)
 	}
 
 	return deploymentList
