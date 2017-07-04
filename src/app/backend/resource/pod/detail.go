@@ -27,7 +27,8 @@ import (
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/owner"
+
+	"github.com/kubernetes/dashboard/src/app/backend/resource/generic"
 	"k8s.io/apimachinery/pkg/api/errors"
 	res "k8s.io/apimachinery/pkg/api/resource"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -58,7 +59,7 @@ type PodDetail struct {
 	RestartCount int32 `json:"restartCount"`
 
 	// Reference to the Controller
-	Controller owner.ResourceOwner `json:"controller"`
+	Controller generic.ResourceOwner `json:"controller"`
 
 	// List of container of this pod.
 	Containers []Container `json:"containers"`
@@ -126,7 +127,7 @@ func GetPodDetail(client kubernetes.Interface, metricClient metricapi.MetricClie
 		return nil, err
 	}
 
-	controller := owner.ResourceOwner{}
+	controller := generic.ResourceOwner{}
 	creatorAnnotation, found := pod.ObjectMeta.Annotations[v1.CreatedByAnnotation]
 	if found {
 		creatorRef, err := getPodCreator(client, creatorAnnotation, common.NewSameNamespaceQuery(namespace), pod)
@@ -165,7 +166,7 @@ func GetPodDetail(client kubernetes.Interface, metricClient metricapi.MetricClie
 }
 
 func getPodCreator(client kubernetes.Interface, creatorAnnotation string, nsQuery *common.NamespaceQuery,
-	pod *v1.Pod) (*owner.ResourceOwner, error) {
+	pod *v1.Pod) (*generic.ResourceOwner, error) {
 
 	var serializedReference v1.SerializedReference
 	err := json.Unmarshal([]byte(creatorAnnotation), &serializedReference)
@@ -189,10 +190,10 @@ func getPodCreator(client kubernetes.Interface, creatorAnnotation string, nsQuer
 	}
 
 	reference := serializedReference.Reference
-	rc, err := owner.NewResourceController(reference, client)
+	rc, err := generic.NewResourceController(reference, client)
 	if err != nil {
 		if isNotFoundError(err) {
-			return &owner.ResourceOwner{}, nil
+			return &generic.ResourceOwner{}, nil
 		}
 
 		return nil, err
@@ -201,7 +202,7 @@ func getPodCreator(client kubernetes.Interface, creatorAnnotation string, nsQuer
 	if hasInvalidControllerReference(rc.UID(), pod) {
 		// Delete creator annotation if it is targeting invalid resource
 		delete(pod.ObjectMeta.Annotations, v1.CreatedByAnnotation)
-		return &owner.ResourceOwner{}, nil
+		return &generic.ResourceOwner{}, nil
 	}
 
 	controller := rc.Get(pods.Items, events.Items)
@@ -252,7 +253,7 @@ func extractContainerInfo(containerList []v1.Container, pod *v1.Pod, configMaps 
 }
 
 func toPodDetail(pod *v1.Pod, metrics []metricapi.Metric, configMaps *v1.ConfigMapList, secrets *v1.SecretList,
-	controller owner.ResourceOwner, events *common.EventList, nonCriticalErrors []error) PodDetail {
+	controller generic.ResourceOwner, events *common.EventList, nonCriticalErrors []error) PodDetail {
 	return PodDetail{
 		ObjectMeta:     api.NewObjectMeta(pod.ObjectMeta),
 		TypeMeta:       api.NewTypeMeta(api.ResourceKindPod),

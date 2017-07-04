@@ -902,7 +902,7 @@ backendApi.PodContainer;
  *   containers: !Array<string>
  * }}
  */
-backendApi.PodContainerList;
+backendApi.PodContainerList;  // TODO cheld ----------------------------------------------
 
 /**
  * @typedef {{
@@ -920,6 +920,14 @@ backendApi.ReplicationControllerPodWithContainers;
  * }}
  */
 backendApi.ReplicationControllerPods;
+
+/**
+ * @typedef {{
+ *   podNames: !Array<string>,
+ *   containerNames: !Array<string>
+ * }}
+ */
+backendApi.LogSources;
 
 /**
  * @typedef {{

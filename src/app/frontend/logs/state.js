@@ -27,12 +27,12 @@ export class StateParams extends ResourceStateParams {
   /**
    * @param {string} objectNamespace
    * @param {string} objectName
-   * @param {string=} opt_container
+   * @param {string} resourceType
    */
-  constructor(objectNamespace, objectName, opt_container) {
+  constructor(objectNamespace, objectName, resourceType) {
     super(objectNamespace, objectName);
 
-    /** @export {string|undefined} Name of this pod container. */
-    this.container = opt_container;
+    /** @export {string} Resource type (e.g. ReplicaSet, Pod) */
+    this.resourceType = resourceType;
   }
 }

@@ -32,9 +32,9 @@ func TestGetContainerImages(t *testing.T) {
 		{&api.PodSpec{}, nil},
 		{
 			&api.PodSpec{
-				Containers: []api.Container{{Image: "container-1"}, {Image: "container-2"}},
+				Containers: []api.Container{{Image: "container:v1"}, {Image: "container:v2"}},
 			},
-			[]string{"container-1", "container-2"},
+			[]string{"container:v1", "container:v2"},
 		},
 	}
 
@@ -42,6 +42,29 @@ func TestGetContainerImages(t *testing.T) {
 		actual := GetContainerImages(c.podTemplate)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("GetContainerImages(%+v) == %+v, expected %+v",
+				c.podTemplate, actual, c.expected)
+		}
+	}
+}
+
+func TestGetContainerNames(t *testing.T) {
+	cases := []struct {
+		podTemplate *api.PodSpec
+		expected    []string
+	}{
+		{&api.PodSpec{}, nil},
+		{
+			&api.PodSpec{
+				Containers: []api.Container{{Name: "container"}, {Name: "container"}},
+			},
+			[]string{"container", "container"},
+		},
+	}
+
+	for _, c := range cases {
+		actual := GetContainerNames(c.podTemplate)
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("GetContainerNames(%+v) == %+v, expected %+v",
 				c.podTemplate, actual, c.expected)
 		}
 	}
