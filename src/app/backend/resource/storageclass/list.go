@@ -18,16 +18,16 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"k8s.io/client-go/kubernetes"
 	storage "k8s.io/client-go/pkg/apis/storage/v1beta1"
-	"github.com/kubernetes/dashboard/src/app/backend/errors"
 )
 
 // StorageClassList holds a list of storage class objects in the cluster.
 type StorageClassList struct {
-	ListMeta api.ListMeta `json:"listMeta"`
+	ListMeta       api.ListMeta   `json:"listMeta"`
 	StorageClasses []StorageClass `json:"storageClasses"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
@@ -61,7 +61,7 @@ func toStorageClassList(storageClasses []storage.StorageClass, nonCriticalErrors
 	storageClassList := &StorageClassList{
 		StorageClasses: make([]StorageClass, 0),
 		ListMeta:       api.ListMeta{TotalItems: len(storageClasses)},
-		Errors: nonCriticalErrors,
+		Errors:         nonCriticalErrors,
 	}
 
 	storageClassCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(storageClasses), dsQuery)

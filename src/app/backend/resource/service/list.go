@@ -18,6 +18,7 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	client "k8s.io/client-go/kubernetes"
@@ -75,9 +76,11 @@ func GetServiceList(client client.Interface, nsQuery *common.NamespaceQuery,
 func GetServiceListFromChannels(channels *common.ResourceChannels,
 	dsQuery *dataselect.DataSelectQuery) (*ServiceList, error) {
 	services := <-channels.ServiceList.List
-	if err := <-channels.ServiceList.Error; err != nil {
-		return nil, err
+	err := <-channels.ServiceList.Error
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	return CreateServiceList(services.Items, dsQuery), nil
+	return CreateServiceList(services.Items, nonCriticalErrors, dsQuery), nil
 }

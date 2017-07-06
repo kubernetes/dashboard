@@ -43,7 +43,7 @@ func TestToPersistentVolumeList(t *testing.T) {
 					},
 					Spec: v1.PersistentVolumeSpec{
 						PersistentVolumeReclaimPolicy: v1.PersistentVolumeReclaimRecycle,
-						AccessModes:                   []v1.PersistentVolumeAccessMode{
+						AccessModes: []v1.PersistentVolumeAccessMode{
 							v1.ReadWriteOnce,
 						},
 						ClaimRef: &v1.ObjectReference{
@@ -63,10 +63,10 @@ func TestToPersistentVolumeList(t *testing.T) {
 					TotalItems: 1,
 				},
 				Items: []PersistentVolume{{
-					TypeMeta:    api.TypeMeta{
+					TypeMeta: api.TypeMeta{
 						Kind: "persistentvolume",
 					},
-					ObjectMeta:  api.ObjectMeta{
+					ObjectMeta: api.ObjectMeta{
 						Name: "foo",
 					},
 					Capacity:    nil,
