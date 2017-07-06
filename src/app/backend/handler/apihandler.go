@@ -340,9 +340,6 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			To(apiHandler.handleGetJobPods).
 			Writes(pod.PodList{}))
 	apiV1Ws.Route(
-		apiV1Ws.DELETE("/job/{namespace}/{job}").
-			To(apiHandler.handleDeleteJob))
-	apiV1Ws.Route(
 		apiV1Ws.GET("/job/{namespace}/{job}/event").
 			To(apiHandler.handleGetJobEvents).
 			Writes(common.EventList{}))
@@ -1419,6 +1416,7 @@ func (apiHandler *APIHandler) handleDeleteResource(
 	namespace, ok := request.PathParameters()["namespace"]
 	name := request.PathParameter("name")
 
+	var err error
 	switch kind {
 	case api.ResourceKindJob:
 		k8sClient, err := apiHandler.cManager.Client(request)
@@ -1426,20 +1424,19 @@ func (apiHandler *APIHandler) handleDeleteResource(
 			handleInternalError(response, err)
 			return
 		}
-		if err := job.DeleteJob(k8sClient, namespace, name); err != nil {
-			handleInternalError(response, err)
-			return
-		}
+		err = job.DeleteJob(k8sClient, namespace, name)
 	default:
 		verber, err := apiHandler.cManager.VerberClient(request)
 		if err != nil {
 			handleInternalError(response, err)
 			return
 		}
-		if err := verber.Delete(kind, ok, namespace, name); err != nil {
-			handleInternalError(response, err)
-			return
-		}
+		err = verber.Delete(kind, ok, namespace, name)
+	}
+
+	if err != nil {
+		handleInternalError(response, err)
+		return
 	}
 
 	response.WriteHeader(http.StatusOK)
@@ -2040,23 +2037,6 @@ func (apiHandler *APIHandler) handleGetJobDetail(request *restful.Request, respo
 		return
 	}
 	response.WriteHeaderAndEntity(http.StatusOK, result)
-}
-
-func (apiHandler *APIHandler) handleDeleteJob(request *restful.Request, response *restful.Response) {
-	k8sClient, err := apiHandler.cManager.Client(request)
-	if err != nil {
-		handleInternalError(response, err)
-		return
-	}
-
-	namespace := request.PathParameter("namespace")
-	name := request.PathParameter("job")
-
-	if err := job.DeleteJob(k8sClient, namespace, name); err != nil {
-		handleInternalError(response, err)
-		return
-	}
-	response.WriteHeader(http.StatusOK)
 }
 
 func (apiHandler *APIHandler) handleGetJobPods(request *restful.Request, response *restful.Response) {

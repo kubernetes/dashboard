@@ -25,6 +25,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
+	"k8s.io/client-go/pkg/api/v1"
 	batch "k8s.io/client-go/pkg/apis/batch/v1"
 )
 
@@ -97,6 +98,63 @@ func TestGetJobDetail(t *testing.T) {
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("GetEvents(client,heapsterClient,%#v, %#v) == \ngot: %#v, \nexpected %#v",
 				c.namespace, c.name, actual, c.expected)
+		}
+	}
+}
+
+func TestDeleteJob(t *testing.T) {
+	var jobCompletions int32
+	var parallelism int32
+
+	cases := []struct {
+		namespace, name string
+		expectedActions []string
+		job             *batch.Job
+	}{
+		{
+			"ns-1", "job-1",
+			[]string{"get", "list", "delete"},
+			createJob("job-1", "ns-1", map[string]string{"app": "test"}),
+		},
+		{
+			namespace: "ns-1", name: "job-1",
+			expectedActions: []string{"get", "list", "delete", "delete"},
+			job: &batch.Job{
+				ObjectMeta: metaV1.ObjectMeta{
+					Name: "ns-1", Namespace: "job-1", Labels: map[string]string{"app": "test"},
+				},
+				Spec: batch.JobSpec{
+					Selector:    &metaV1.LabelSelector{MatchLabels: map[string]string{"app": "test"}},
+					Completions: &jobCompletions,
+					Parallelism: &parallelism,
+					Template: v1.PodTemplateSpec{
+						ObjectMeta: metaV1.ObjectMeta{
+							Name:      "test-pod",
+							Namespace: "ns-1",
+							Labels:    map[string]string{"app": "test"},
+						},
+					},
+				},
+			},
+		},
+	}
+
+	for _, c := range cases {
+		fakeClient := fake.NewSimpleClientset(c.job)
+
+		DeleteJob(fakeClient, c.namespace, c.name)
+
+		actions := fakeClient.Actions()
+		if len(actions) != len(c.expectedActions) {
+			t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
+				len(c.expectedActions), len(actions))
+			continue
+		}
+		for i, verb := range c.expectedActions {
+			if actions[i].GetVerb() != verb {
+				t.Errorf("Unexpected action: %+v, expected %s",
+					actions[i], verb)
+			}
 		}
 	}
 }
