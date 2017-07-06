@@ -15,67 +15,23 @@
 package replicaset
 
 import (
-	"log"
-
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 
-	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
-	api "k8s.io/client-go/pkg/api/v1"
 )
 
 // GetReplicaSetEvents gets events associated to replica set.
 func GetReplicaSetEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery, namespace, replicaSetName string) (
 	*common.EventList, error) {
 
-	log.Printf("Getting events related to %s replica set in %s namespace", replicaSetName,
-		namespace)
-
 	// Get events for replica set.
 	rsEvents, err := event.GetEvents(client, namespace, replicaSetName)
-
 	if err != nil {
 		return nil, err
 	}
 
-	// Get events for pods in replica set.
-	podEvents, err := GetReplicaSetPodsEvents(client, namespace, replicaSetName)
-
-	if err != nil {
-		return nil, err
-	}
-
-	apiEvents := append(rsEvents, podEvents...)
-
-	if !event.IsTypeFilled(apiEvents) {
-		apiEvents = event.FillEventsType(apiEvents)
-	}
-
-	events := event.CreateEventList(apiEvents, dsQuery)
-
-	log.Printf("Found %d events related to %s replica set in %s namespace",
-		len(events.Events), replicaSetName, namespace)
-
+	events := event.CreateEventList(rsEvents, dsQuery)
 	return &events, nil
-}
-
-// GetReplicaSetPodsEvents gets events associated to pods in replica set.
-func GetReplicaSetPodsEvents(client client.Interface, namespace, replicaSetName string) (
-	[]api.Event, error) {
-
-	replicaSet, err := client.ExtensionsV1beta1().ReplicaSets(namespace).Get(replicaSetName, metaV1.GetOptions{})
-
-	if err != nil {
-		return nil, err
-	}
-
-	podEvents, err := event.GetPodsEvents(client, namespace, replicaSet.Spec.Selector.MatchLabels)
-
-	if err != nil {
-		return nil, err
-	}
-
-	return podEvents, nil
 }

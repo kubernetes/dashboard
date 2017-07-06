@@ -53,7 +53,7 @@ func TestGetReplicaSetEvents(t *testing.T) {
 					Selector: &metaV1.LabelSelector{
 						MatchLabels: labelSelector,
 					}}},
-			[]string{"list", "get", "list", "list"},
+			[]string{"list"},
 			&common.EventList{
 				ListMeta: api.ListMeta{TotalItems: 1},
 				Events: []common.Event{{
@@ -70,63 +70,6 @@ func TestGetReplicaSetEvents(t *testing.T) {
 		fakeClient := fake.NewSimpleClientset(c.eventList, c.replicaSet, c.podList)
 
 		actual, _ := GetReplicaSetEvents(fakeClient, dataselect.NoDataSelect, c.namespace, c.name)
-
-		actions := fakeClient.Actions()
-		if len(actions) != len(c.expectedActions) {
-			t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
-				len(c.expectedActions), len(actions))
-			continue
-		}
-
-		for i, verb := range c.expectedActions {
-			if actions[i].GetVerb() != verb {
-				t.Errorf("Unexpected action: %+v, expected %s",
-					actions[i], verb)
-			}
-		}
-
-		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("GetEvents(client,metricClient,%#v, %#v) == \ngot: %#v, \nexpected %#v",
-				c.namespace, c.name, actual, c.expected)
-		}
-	}
-}
-
-func TestGetReplicaSetPodsEvents(t *testing.T) {
-	labelSelector := map[string]string{"app": "test"}
-
-	cases := []struct {
-		namespace, name string
-		eventList       *v1.EventList
-		podList         *v1.PodList
-		replicaSet      *extensions.ReplicaSet
-		expectedActions []string
-		expected        []v1.Event
-	}{
-		{
-			"ns-1", "rs-1",
-			&v1.EventList{Items: []v1.Event{
-				{Message: "test-message", ObjectMeta: metaV1.ObjectMeta{
-					Name: "ev-1", Namespace: "ns-1", Labels: labelSelector}},
-			}},
-			&v1.PodList{Items: []v1.Pod{{ObjectMeta: metaV1.ObjectMeta{
-				Name: "pod-1", Namespace: "ns-1", Labels: labelSelector}}}},
-			&extensions.ReplicaSet{
-				ObjectMeta: metaV1.ObjectMeta{Name: "rs-1", Namespace: "ns-1", Labels: labelSelector},
-				Spec: extensions.ReplicaSetSpec{
-					Selector: &metaV1.LabelSelector{
-						MatchLabels: labelSelector,
-					}}},
-			[]string{"get", "list", "list"},
-			[]v1.Event{{Message: "test-message", ObjectMeta: metaV1.ObjectMeta{
-				Name: "ev-1", Namespace: "ns-1", Labels: labelSelector}}},
-		},
-	}
-
-	for _, c := range cases {
-		fakeClient := fake.NewSimpleClientset(c.replicaSet, c.podList, c.eventList)
-
-		actual, _ := GetReplicaSetPodsEvents(fakeClient, c.namespace, c.name)
 
 		actions := fakeClient.Actions()
 		if len(actions) != len(c.expectedActions) {

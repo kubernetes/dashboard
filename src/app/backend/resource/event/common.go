@@ -25,12 +25,12 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	client "k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/pkg/api/v1"
+	kubeapi "k8s.io/kubernetes/pkg/api"
 )
 
 // GetEvents gets events associated to resource with given name.
 func GetEvents(client client.Interface, namespace, resourceName string) ([]v1.Event, error) {
-
-	fieldSelector, err := fields.ParseSelector("involvedObject.name=" + resourceName)
+	fieldSelector, err := fields.ParseSelector(kubeapi.EventInvolvedNameField + "=" + resourceName)
 
 	if err != nil {
 		return nil, err
@@ -52,28 +52,19 @@ func GetEvents(client client.Interface, namespace, resourceName string) ([]v1.Ev
 		return nil, err
 	}
 
+	if !IsTypeFilled(eventList.Items) {
+		eventList.Items = FillEventsType(eventList.Items)
+	}
+
 	return eventList.Items, nil
 }
 
-// GetPodsEvents gets pods events associated to resource targeted by given resource selector.
-func GetPodsEvents(client client.Interface, namespace string, resourceSelector map[string]string) (
+// GetPodsEvents gets events targeting given list of pods.
+func GetPodsEvents(client client.Interface, namespace string, pods []v1.Pod) (
 	[]v1.Event, error) {
 
 	channels := &common.ResourceChannels{
-		PodList: common.GetPodListChannelWithOptions(
-			client,
-			common.NewSameNamespaceQuery(namespace),
-			metaV1.ListOptions{
-				LabelSelector: labels.SelectorFromSet(resourceSelector).String(),
-				FieldSelector: fields.Everything().String(),
-			},
-			1),
 		EventList: common.GetEventListChannel(client, common.NewSameNamespaceQuery(namespace), 1),
-	}
-
-	podList := <-channels.PodList.List
-	if err := <-channels.PodList.Error; err != nil {
-		return nil, err
 	}
 
 	eventList := <-channels.EventList.List
@@ -81,7 +72,7 @@ func GetPodsEvents(client client.Interface, namespace string, resourceSelector m
 		return nil, err
 	}
 
-	events := filterEventsByPodsUID(eventList.Items, podList.Items)
+	events := filterEventsByPodsUID(eventList.Items, pods)
 
 	return events, nil
 }
@@ -115,6 +106,10 @@ func GetPodEvents(client client.Interface, namespace, podName string) ([]v1.Even
 
 	events := filterEventsByPodsUID(eventList.Items, l)
 
+	if !IsTypeFilled(events) {
+		events = FillEventsType(events)
+	}
+
 	return events, nil
 }
 
@@ -139,16 +134,25 @@ func GetNodeEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery,
 		return nil, err
 	}
 
+	if !IsTypeFilled(events.Items) {
+		events.Items = FillEventsType(events.Items)
+	}
+
 	eventList = CreateEventList(events.Items, dsQuery)
 	return &eventList, nil
 }
 
-// GetNodeEvents gets events associated to node with given name.
+// GetNamespaceEvents gets events associated to a namespace with given name.
 func GetNamespaceEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery, namespace string) (common.EventList, error) {
 	events, _ := client.Core().Events(namespace).List(metaV1.ListOptions{
 		LabelSelector: labels.Everything().String(),
 		FieldSelector: fields.Everything().String(),
 	})
+
+	if !IsTypeFilled(events.Items) {
+		events.Items = FillEventsType(events.Items)
+	}
+
 	return CreateEventList(events.Items, dsQuery), nil
 }
 

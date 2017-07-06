@@ -21,65 +21,8 @@ import (
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/types"
 	api "k8s.io/client-go/pkg/api/v1"
+	batch "k8s.io/client-go/pkg/apis/batch/v1"
 )
-
-func TestFilterPodsBySelector(t *testing.T) {
-	firstLabelSelectorMap := make(map[string]string)
-	firstLabelSelectorMap["name"] = "app-name-first"
-	secondLabelSelectorMap := make(map[string]string)
-	secondLabelSelectorMap["name"] = "app-name-second"
-
-	cases := []struct {
-		selector map[string]string
-		pods     []api.Pod
-		expected []api.Pod
-	}{
-		{
-			firstLabelSelectorMap,
-			[]api.Pod{
-				{
-					ObjectMeta: metaV1.ObjectMeta{
-						Name:   "first-pod-ok",
-						Labels: firstLabelSelectorMap,
-					},
-				},
-				{
-					ObjectMeta: metaV1.ObjectMeta{
-						Name:   "second-pod-ok",
-						Labels: firstLabelSelectorMap,
-					},
-				},
-				{
-					ObjectMeta: metaV1.ObjectMeta{
-						Name:   "third-pod-wrong",
-						Labels: secondLabelSelectorMap,
-					},
-				},
-			},
-			[]api.Pod{
-				{
-					ObjectMeta: metaV1.ObjectMeta{
-						Name:   "first-pod-ok",
-						Labels: firstLabelSelectorMap,
-					},
-				},
-				{
-					ObjectMeta: metaV1.ObjectMeta{
-						Name:   "second-pod-ok",
-						Labels: firstLabelSelectorMap,
-					},
-				},
-			},
-		},
-	}
-	for _, c := range cases {
-		actual := FilterPodsBySelector(c.pods, c.selector)
-		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("FilterPodsBySelector(%+v, %+v) == %+v, expected %+v",
-				c.pods, c.selector, actual, c.expected)
-		}
-	}
-}
 
 func TestGetContainerImages(t *testing.T) {
 	cases := []struct {
@@ -173,6 +116,60 @@ func TestFilterPodsByOwnerReference(t *testing.T) {
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("FilterPodsByOwnerReference(%+v, %+v, %+v) == %+v, expected %+v",
 				c.pods, c.namespace, c.uid, actual, c.expected)
+		}
+	}
+}
+
+func TestFilterPodsForJob(t *testing.T) {
+	cases := []struct {
+		job      batch.Job
+		pods     []api.Pod
+		expected []api.Pod
+	}{
+		{
+			batch.Job{
+				ObjectMeta: metaV1.ObjectMeta{
+					Namespace: "default",
+					Name:      "job-1",
+					UID:       "job-uid",
+				},
+				Spec: batch.JobSpec{
+					Selector: &metaV1.LabelSelector{
+						MatchLabels: map[string]string{"controller-uid": "job-uid"},
+					},
+				},
+			},
+			[]api.Pod{
+				{
+					ObjectMeta: metaV1.ObjectMeta{
+						Name:      "pod-1",
+						Namespace: "default",
+						Labels:    map[string]string{"controller-uid": "job-uid"},
+					},
+				},
+				{
+					ObjectMeta: metaV1.ObjectMeta{
+						Name:      "pod-2",
+						Namespace: "default",
+					},
+				},
+			},
+			[]api.Pod{
+				{
+					ObjectMeta: metaV1.ObjectMeta{
+						Name:      "pod-1",
+						Namespace: "default",
+						Labels:    map[string]string{"controller-uid": "job-uid"},
+					},
+				},
+			},
+		},
+	}
+	for _, c := range cases {
+		actual := FilterPodsForJob(c.job, c.pods)
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("FilterPodsForJob(%+v, %+v) == %+v, expected %+v",
+				c.job, c.pods, actual, c.expected)
 		}
 	}
 }

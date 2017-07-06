@@ -18,10 +18,10 @@ import (
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
-	api "k8s.io/client-go/pkg/api/v1"
 )
 
 // GetDeploymentPods returns list of pods targeting deployment.
@@ -49,7 +49,11 @@ func GetDeploymentPods(client client.Interface, metricClient metricapi.MetricCli
 	}
 
 	pods := common.FilterDeploymentPodsByOwnerReference(*deployment, rawRs.Items, rawPods.Items)
+	events, err := event.GetPodsEvents(client, namespace, pods)
+	if err != nil {
+		return nil, err
+	}
 
-	podList := pod.CreatePodList(pods, []api.Event{}, dsQuery, metricClient)
+	podList := pod.CreatePodList(pods, events, dsQuery, metricClient)
 	return &podList, nil
 }
