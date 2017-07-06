@@ -15,14 +15,10 @@
 package replicationcontroller
 
 import (
-	"log"
-
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	resourceEvent "github.com/kubernetes/dashboard/src/app/backend/resource/event"
-	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
-	api "k8s.io/client-go/pkg/api/v1"
 )
 
 // GetReplicationControllerEvents returns events for particular namespace and replication
@@ -30,53 +26,12 @@ import (
 func GetReplicationControllerEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery,
 	namespace, replicationControllerName string) (*common.EventList, error) {
 
-	log.Printf("Getting events related to %s replication controller in %s namespace", replicationControllerName,
-		namespace)
-
 	// Get events for replication controller.
 	rsEvents, err := resourceEvent.GetEvents(client, namespace, replicationControllerName)
-
 	if err != nil {
 		return nil, err
 	}
 
-	// Get events for pods in replication controller.
-	podEvents, err := getReplicationControllerPodsEvents(client, namespace,
-		replicationControllerName)
-
-	if err != nil {
-		return nil, err
-	}
-
-	apiEvents := append(rsEvents, podEvents...)
-
-	if !resourceEvent.IsTypeFilled(apiEvents) {
-		apiEvents = resourceEvent.FillEventsType(apiEvents)
-	}
-
-	events := resourceEvent.CreateEventList(apiEvents, dsQuery)
-
-	log.Printf("Found %d events related to %s replication controller in %s namespace",
-		len(events.Events), replicationControllerName, namespace)
-
+	events := resourceEvent.CreateEventList(rsEvents, dsQuery)
 	return &events, nil
-}
-
-func getReplicationControllerPodsEvents(client client.Interface, namespace,
-	replicationControllerName string) ([]api.Event, error) {
-
-	replicationController, err := client.CoreV1().ReplicationControllers(namespace).Get(replicationControllerName, metaV1.GetOptions{})
-
-	if err != nil {
-		return nil, err
-	}
-
-	podEvents, err := resourceEvent.GetPodsEvents(client, namespace,
-		replicationController.Spec.Selector)
-
-	if err != nil {
-		return nil, err
-	}
-
-	return podEvents, nil
 }

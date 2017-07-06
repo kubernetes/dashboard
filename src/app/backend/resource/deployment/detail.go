@@ -21,6 +21,7 @@ import (
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
@@ -159,6 +160,12 @@ func GetDeploymentDetail(client client.Interface, metricClient metricapi.MetricC
 	var newReplicaSet replicaset.ReplicaSet
 	if newRs != nil {
 		newRsPodInfo := common.GetPodInfo(newRs.Status.Replicas, *newRs.Spec.Replicas, rawPods.Items)
+		events, err := event.GetPodsEvents(client, namespace, rawPods.Items)
+		if err != nil {
+			return nil, err
+		}
+
+		newRsPodInfo.Warnings = event.CreateEventList(events, dataselect.NoDataSelect).Events
 		newReplicaSet = replicaset.ToReplicaSet(newRs, &newRsPodInfo)
 	}
 

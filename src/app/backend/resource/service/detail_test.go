@@ -69,7 +69,7 @@ func TestGetServiceDetail(t *testing.T) {
 				},
 			},
 			namespace: "ns-2", name: "svc-2",
-			expectedActions: []string{"get", "get", "list", "list"},
+			expectedActions: []string{"get", "get", "list", "list", "list"},
 			expected: &ServiceDetail{
 				ObjectMeta: api.ObjectMeta{
 					Name:      "svc-2",

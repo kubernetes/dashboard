@@ -21,11 +21,13 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	meta "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/pkg/api/v1"
 	apps "k8s.io/client-go/pkg/apis/apps/v1beta1"
 	batch "k8s.io/client-go/pkg/apis/batch/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
+	"strings"
 )
 
 // ResourceOwner is an structure representing resource owner, it may be Replication Controller,
@@ -41,6 +43,8 @@ type ResourceOwner struct {
 // instantiate it use NewResourceController and pass object reference to it. It may be extended to
 // provide more detailed set of functions.
 type ResourceController interface {
+	// UID returns UID of controlled resource.
+	UID() types.UID
 	// Get is a method, that returns ResourceOwner object.
 	Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOwner
 }
@@ -49,36 +53,36 @@ type ResourceController interface {
 // to convert owner/created by references to real objects.
 func NewResourceController(reference v1.ObjectReference, client kubernetes.Interface) (
 	ResourceController, error) {
-	switch reference.Kind {
-	case "Job":
+	switch strings.ToLower(reference.Kind) {
+	case api.ResourceKindJob:
 		job, err := client.BatchV1().Jobs(reference.Namespace).Get(reference.Name,
 			meta.GetOptions{})
 		if err != nil {
 			return nil, err
 		}
 		return JobController(*job), nil
-	case "ReplicaSet":
+	case api.ResourceKindReplicaSet:
 		rs, err := client.ExtensionsV1beta1().ReplicaSets(reference.Namespace).Get(reference.Name,
 			meta.GetOptions{})
 		if err != nil {
 			return nil, err
 		}
 		return ReplicaSetController(*rs), nil
-	case "ReplicationController":
+	case api.ResourceKindReplicationController:
 		rc, err := client.CoreV1().ReplicationControllers(reference.Namespace).Get(
 			reference.Name, meta.GetOptions{})
 		if err != nil {
 			return nil, err
 		}
 		return ReplicationControllerController(*rc), nil
-	case "DaemonSet":
+	case api.ResourceKindDaemonSet:
 		ds, err := client.ExtensionsV1beta1().DaemonSets(reference.Namespace).Get(reference.Name,
 			meta.GetOptions{})
 		if err != nil {
 			return nil, err
 		}
 		return DaemonSetController(*ds), nil
-	case "StatefulSet":
+	case api.ResourceKindStatefulSet:
 		ss, err := client.AppsV1beta1().StatefulSets(reference.Namespace).Get(reference.Name,
 			meta.GetOptions{})
 		if err != nil {
@@ -96,7 +100,7 @@ type JobController batch.Job
 
 // Get is an implementation of Get method from ResourceController interface.
 func (self JobController) Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOwner {
-	matchingPods := common.FilterPodsByOwnerReference(self.Namespace, self.UID, allPods)
+	matchingPods := common.FilterPodsForJob(batch.Job(self), allPods)
 	var completions int32
 	if self.Spec.Completions != nil {
 		completions = *self.Spec.Completions
@@ -112,13 +116,18 @@ func (self JobController) Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOw
 	}
 }
 
+// UID is an implementation of UID method from ResourceController interface.
+func (self JobController) UID() types.UID {
+	return batch.Job(self).UID
+}
+
 // ReplicaSetController is an alias-type for Kubernetes API Replica Set type. It allows to provide
 // custom set of functions for already existing type.
 type ReplicaSetController extensions.ReplicaSet
 
 // Get is an implementation of Get method from ResourceController interface.
 func (self ReplicaSetController) Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOwner {
-	matchingPods := common.FilterPodsByOwnerReference(self.Namespace, self.UID, allPods)
+	matchingPods := common.FilterPodsByOwnerReference(self.Namespace, self.UID(), allPods)
 	podInfo := common.GetPodInfo(self.Status.Replicas, *self.Spec.Replicas, matchingPods)
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
@@ -130,6 +139,11 @@ func (self ReplicaSetController) Get(allPods []v1.Pod, allEvents []v1.Event) Res
 	}
 }
 
+// UID is an implementation of UID method from ResourceController interface.
+func (self ReplicaSetController) UID() types.UID {
+	return extensions.ReplicaSet(self).UID
+}
+
 // ReplicationControllerController is an alias-type for Kubernetes API Replication Controller type.
 // It allows to provide custom set of functions for already existing type.
 type ReplicationControllerController v1.ReplicationController
@@ -137,7 +151,7 @@ type ReplicationControllerController v1.ReplicationController
 // Get is an implementation of Get method from ResourceController interface.
 func (self ReplicationControllerController) Get(allPods []v1.Pod,
 	allEvents []v1.Event) ResourceOwner {
-	matchingPods := common.FilterPodsByOwnerReference(self.Namespace, self.UID, allPods)
+	matchingPods := common.FilterPodsByOwnerReference(self.Namespace, self.UID(), allPods)
 	podInfo := common.GetPodInfo(self.Status.Replicas, *self.Spec.Replicas, matchingPods)
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
@@ -149,13 +163,18 @@ func (self ReplicationControllerController) Get(allPods []v1.Pod,
 	}
 }
 
+// UID is an implementation of UID method from ResourceController interface.
+func (self ReplicationControllerController) UID() types.UID {
+	return v1.ReplicationController(self).UID
+}
+
 // DaemonSetController is an alias-type for Kubernetes API Daemon Set type. It allows to provide
 // custom set of functions for already existing type.
 type DaemonSetController extensions.DaemonSet
 
 // Get is an implementation of Get method from ResourceController interface.
 func (self DaemonSetController) Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOwner {
-	matchingPods := common.FilterPodsByOwnerReference(self.Namespace, self.UID, allPods)
+	matchingPods := common.FilterPodsByOwnerReference(self.Namespace, self.UID(), allPods)
 	podInfo := common.GetPodInfo(self.Status.CurrentNumberScheduled,
 		self.Status.DesiredNumberScheduled, matchingPods)
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
@@ -168,13 +187,18 @@ func (self DaemonSetController) Get(allPods []v1.Pod, allEvents []v1.Event) Reso
 	}
 }
 
+// UID is an implementation of UID method from ResourceController interface.
+func (self DaemonSetController) UID() types.UID {
+	return extensions.DaemonSet(self).UID
+}
+
 // StatefulSetController is an alias-type for Kubernetes API Stateful Set type. It allows to provide
 // custom set of functions for already existing type.
 type StatefulSetController apps.StatefulSet
 
 // Get is an implementation of Get method from ResourceController interface.
 func (self StatefulSetController) Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOwner {
-	matchingPods := common.FilterPodsByOwnerReference(self.Namespace, self.UID, allPods)
+	matchingPods := common.FilterPodsByOwnerReference(self.Namespace, self.UID(), allPods)
 	podInfo := common.GetPodInfo(self.Status.Replicas, *self.Spec.Replicas, matchingPods)
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
@@ -184,4 +208,9 @@ func (self StatefulSetController) Get(allPods []v1.Pod, allEvents []v1.Event) Re
 		Pods:            podInfo,
 		ContainerImages: common.GetContainerImages(&self.Spec.Template.Spec),
 	}
+}
+
+// UID is an implementation of UID method from ResourceController interface.
+func (self StatefulSetController) UID() types.UID {
+	return apps.StatefulSet(self).UID
 }

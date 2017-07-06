@@ -57,7 +57,7 @@ func TestGetJobDetail(t *testing.T) {
 	}{
 		{
 			"ns-1", "job-1",
-			[]string{"get", "get", "list", "list", "list", "get", "list", "list"},
+			[]string{"get", "get", "list", "list", "list", "list"},
 			createJob("job-1", "ns-1", map[string]string{"app": "test"}),
 			&JobDetail{
 				ObjectMeta: api.ObjectMeta{Name: "job-1", Namespace: "ns-1",

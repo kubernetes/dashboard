@@ -15,11 +15,10 @@
 package common
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/api"
-	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/pkg/api/helper"
 	"k8s.io/client-go/pkg/api/v1"
+	batch "k8s.io/client-go/pkg/apis/batch/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
 
@@ -59,30 +58,16 @@ func FilterPodsByOwnerReference(namespace string, uid types.UID, allPods []v1.Po
 	return matchingPods
 }
 
-// FilterPodsBySelector returns pods targeted by given resource selector.
-func FilterPodsBySelector(pods []v1.Pod, resourceSelector map[string]string) []v1.Pod {
-	var matchingPods []v1.Pod
+func FilterPodsForJob(job batch.Job, pods []v1.Pod) []v1.Pod {
+	result := make([]v1.Pod, 0)
 	for _, pod := range pods {
-		if api.IsSelectorMatching(resourceSelector, pod.Labels) {
-			matchingPods = append(matchingPods, pod)
+		if pod.Namespace == job.Namespace && pod.Labels["controller-uid"] ==
+			job.Spec.Selector.MatchLabels["controller-uid"] {
+			result = append(result, pod)
 		}
 	}
-	return matchingPods
-}
 
-// FilterNamespacedPodsByLabelSelector returns pods targeted by given resource label selector in
-// given namespace.
-func FilterNamespacedPodsByLabelSelector(pods []v1.Pod, namespace string,
-	labelSelector *metaV1.LabelSelector) []v1.Pod {
-
-	var matchingPods []v1.Pod
-	for _, pod := range pods {
-		if pod.ObjectMeta.Namespace == namespace &&
-			api.IsLabelSelectorMatching(pod.Labels, labelSelector) {
-			matchingPods = append(matchingPods, pod)
-		}
-	}
-	return matchingPods
+	return result
 }
 
 // GetContainerImages returns container image strings from the given pod spec.

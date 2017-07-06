@@ -30,6 +30,7 @@ import (
 	"k8s.io/apimachinery/pkg/api/errors"
 	res "k8s.io/apimachinery/pkg/api/resource"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/pkg/api/v1"
 	kubeapi "k8s.io/kubernetes/pkg/api"
@@ -130,7 +131,7 @@ func GetPodDetail(client kubernetes.Interface, metricClient metricapi.MetricClie
 	creatorAnnotation, found := pod.ObjectMeta.Annotations[v1.CreatedByAnnotation]
 	if found {
 		creatorRef, err := getPodCreator(client, creatorAnnotation,
-			common.NewSameNamespaceQuery(namespace))
+			common.NewSameNamespaceQuery(namespace), pod)
 		if err != nil {
 			return nil, err
 		}
@@ -162,7 +163,7 @@ func GetPodDetail(client kubernetes.Interface, metricClient metricapi.MetricClie
 }
 
 func getPodCreator(client kubernetes.Interface, creatorAnnotation string,
-	nsQuery *common.NamespaceQuery) (*owner.ResourceOwner, error) {
+	nsQuery *common.NamespaceQuery, pod *v1.Pod) (*owner.ResourceOwner, error) {
 
 	var serializedReference v1.SerializedReference
 	err := json.Unmarshal([]byte(creatorAnnotation), &serializedReference)
@@ -187,12 +188,29 @@ func getPodCreator(client kubernetes.Interface, creatorAnnotation string,
 
 	reference := serializedReference.Reference
 	rc, err := owner.NewResourceController(reference, client)
-	if err != nil && isNotFoundError(err) {
+	if err != nil {
+		if isNotFoundError(err) {
+			return &owner.ResourceOwner{}, nil
+		}
+
+		return nil, err
+	}
+
+	if hasInvalidControllerReference(rc.UID(), pod) {
+		// Delete creator annotation if it is targeting invalid resource
+		delete(pod.ObjectMeta.Annotations, v1.CreatedByAnnotation)
 		return &owner.ResourceOwner{}, nil
 	}
 
 	controller := rc.Get(pods.Items, events.Items)
 	return &controller, err
+}
+
+// Job pods are targeted using label 'controller-uid' set on both Pod and Job. We have to make
+// sure that orphaned job pod is not going to show different job with same name as its' creator.
+func hasInvalidControllerReference(jobUID types.UID, pod *v1.Pod) bool {
+	uidLabel, hasControllerLabel := pod.Labels["controller-uid"]
+	return hasControllerLabel && uidLabel != string(jobUID)
 }
 
 // isNotFoundError returns true when the given error is 404-NotFound error.
