@@ -22,13 +22,12 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"k8s.io/client-go/kubernetes"
 	storage "k8s.io/client-go/pkg/apis/storage/v1beta1"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 )
 
 // StorageClassList holds a list of storage class objects in the cluster.
 type StorageClassList struct {
 	ListMeta api.ListMeta `json:"listMeta"`
-
-	// Unordered list of storage classes.
 	StorageClasses []StorageClass `json:"storageClasses"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
@@ -49,18 +48,20 @@ func GetStorageClassList(client kubernetes.Interface, dsQuery *dataselect.DataSe
 // GetStorageClassListFromChannels returns a list of all storage class objects in the cluster.
 func GetStorageClassListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery) (*StorageClassList, error) {
 	storageClasses := <-channels.StorageClassList.List
-	if err := <-channels.StorageClassList.Error; err != nil {
-		return &StorageClassList{StorageClasses: []StorageClass{}}, err
+	err := <-channels.StorageClassList.Error
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	return CreateStorageClassList(storageClasses.Items, dsQuery), nil
+	return toStorageClassList(storageClasses.Items, nonCriticalErrors, dsQuery), nil
 }
 
-// CreateStorageClassList creates list of api storage class objects based on list of kubernetes storage class objects
-func CreateStorageClassList(storageClasses []storage.StorageClass, dsQuery *dataselect.DataSelectQuery) *StorageClassList {
+func toStorageClassList(storageClasses []storage.StorageClass, nonCriticalErrors []error, dsQuery *dataselect.DataSelectQuery) *StorageClassList {
 	storageClassList := &StorageClassList{
 		StorageClasses: make([]StorageClass, 0),
 		ListMeta:       api.ListMeta{TotalItems: len(storageClasses)},
+		Errors: nonCriticalErrors,
 	}
 
 	storageClassCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(storageClasses), dsQuery)
