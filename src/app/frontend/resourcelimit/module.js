@@ -16,7 +16,7 @@ import chromeModule from 'chrome/module';
 import componentsModule from 'common/components/module';
 import filtersModule from 'common/filters/module';
 import eventsModule from 'events/module';
-import {resourceLimitsComponent} from './resourcelimits_component';
+import {resourceLimitsComponent} from './detail/detail_component';
 
 /**
  * Angular module for the Limit Range details view.
@@ -25,7 +25,7 @@ import {resourceLimitsComponent} from './resourcelimits_component';
  */
 export default angular
     .module(
-        'kubernetesDashboard.limitRangeDetail',
+        'kubernetesDashboard.resourceLimit',
         [
           'ngMaterial',
           'ngResource',
