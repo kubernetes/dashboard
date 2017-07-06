@@ -100,6 +100,7 @@ func validateXSRFFilter(csrfKey string) restful.FilterFunction {
 			log.Print(err)
 			resp.AddHeader("Content-Type", "text/plain")
 			resp.WriteErrorString(http.StatusUnauthorized, err.Error()+"\n")
+			return
 		}
 
 		chain.ProcessFilter(req, resp)

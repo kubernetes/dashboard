@@ -48,13 +48,13 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/rbacroles"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/scaling"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/secret"
 	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/statefulset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/storageclass"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/thirdpartyresource"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/workload"
+	"github.com/kubernetes/dashboard/src/app/backend/scaling"
 	"github.com/kubernetes/dashboard/src/app/backend/search"
 	"github.com/kubernetes/dashboard/src/app/backend/validation"
 	"golang.org/x/net/xsrftoken"
@@ -1424,6 +1424,7 @@ func (apiHandler *APIHandler) handleDeleteResource(
 			handleInternalError(response, err)
 			return
 		}
+
 		err = job.DeleteJob(k8sClient, namespace, name)
 	default:
 		verber, err := apiHandler.cManager.VerberClient(request)
@@ -1431,6 +1432,7 @@ func (apiHandler *APIHandler) handleDeleteResource(
 			handleInternalError(response, err)
 			return
 		}
+
 		err = verber.Delete(kind, ok, namespace, name)
 	}
 
@@ -1503,7 +1505,7 @@ func (apiHandler *APIHandler) handleGetNamespaceDetail(request *restful.Request,
 	}
 
 	name := request.PathParameter("name")
-	result, err := ns.GetNamespaceDetail(k8sClient, apiHandler.iManager.Metric().Client(), name)
+	result, err := ns.GetNamespaceDetail(k8sClient, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return
