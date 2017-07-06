@@ -751,14 +751,14 @@
   <translation id="8299490700020675585" key="MSG_REPLICA_SET_LIST_CREATED_AT_TOOLTIP" desc="Tooltip 'Created at [some date]' showing the exact creation time of replica set.">
     <ph name="CREATION_DATE"> に作成</ph>
   </translation>
-  <translation id="6205650542608928284" key="MSG_RESOURCELIMIT_RESOURCELIMITS_0" desc="Resource Limits name entry.">種別</translation>
-  <translation id="2131550401081026485" key="MSG_RESOURCELIMIT_RESOURCELIMITS_1" desc="Resource Limits resource entry.">リソース</translation>
-  <translation id="2541562557443174752" key="MSG_RESOURCELIMIT_RESOURCELIMITS_2" desc="]Resource Limits min entry.">最小</translation>
-  <translation id="612114430188796188" key="MSG_RESOURCELIMIT_RESOURCELIMITS_3" desc="Resource Limits max entry.">最大</translation>
-  <translation id="3535089658933789537" key="MSG_RESOURCELIMIT_RESOURCELIMITS_4" desc="Resource Limits max entry.">最大</translation>
-  <translation id="6070144888655765726" key="MSG_RESOURCELIMIT_RESOURCELIMITS_5" desc="Resource Limits default limit entry.">デフォルト制限</translation>
-  <translation id="836896690388641861" key="MSG_RESOURCELIMIT_RESOURCELIMITS_6" desc="Resource Limits default limit entry.">デフォルト制限</translation>
-  <translation id="323516129286855678" key="MSG_RESOURCELIMIT_RESOURCELIMITS_7" desc="Resource Limits max limit/request ratio entry.">最大上限/リクエスト</translation>
+  <translation id="5695785595036964519" key="MSG_RESOURCELIMIT_DETAIL_DETAIL_0" desc="Resource limit info details section title.">Resource Limits</translation>
+  <translation id="7188407971555381193" key="MSG_RESOURCELIMIT_DETAIL_DETAIL_1" desc="Resource Limits name entry.">Type</translation>
+  <translation id="6234304804960810693" key="MSG_RESOURCELIMIT_DETAIL_DETAIL_2" desc="Resource Limits resource entry.">Resource</translation>
+  <translation id="1527364212430197150" key="MSG_RESOURCELIMIT_DETAIL_DETAIL_3" desc="]Resource Limits min entry.">Min</translation>
+  <translation id="4920141650632135528" key="MSG_RESOURCELIMIT_DETAIL_DETAIL_4" desc="Resource Limits max entry.">Max</translation>
+  <translation id="6034104350428688973" key="MSG_RESOURCELIMIT_DETAIL_DETAIL_5" desc="Resource Limits default request entry.">Default Request</translation>
+  <translation id="419672273675060335" key="MSG_RESOURCELIMIT_DETAIL_DETAIL_6" desc="Resource Limits default limit entry.">Default Limit</translation>
+  <translation id="7475726307928755725" key="MSG_RESOURCELIMIT_DETAIL_DETAIL_7" desc="Resource Limits max limit/request ratio entry.">Max Limit/Request Ratio</translation>
   <translation id="7531862076213500526" key="MSG_RESOURCEQUOTA_DETAIL_DETAIL_0" desc="Resource quota info details section title.">Resource Quotas</translation>
   <translation id="2839859779657386369" key="MSG_RESOURCEQUOTA_DETAIL_DETAIL_1" desc="Resource quota info details section name">Name</translation>
   <translation id="4649467264578406553" key="MSG_RESOURCEQUOTA_DETAIL_DETAIL_2" desc="Resource quota info details section scopes">Scopes</translation>
