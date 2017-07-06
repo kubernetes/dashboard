@@ -45,7 +45,7 @@ func TestGetEvents(t *testing.T) {
 			[]v1.Event{
 				{Message: "test-message", ObjectMeta: metaV1.ObjectMeta{
 					Name: "ev-1", Namespace: "ns-1", Labels: map[string]string{"app": "test"},
-				}},
+				}, Type: v1.EventTypeNormal},
 			},
 		},
 	}
@@ -71,71 +71,6 @@ func TestGetEvents(t *testing.T) {
 
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("GetEvents(client,%#v,%#v) == %#v, expected %#v", c.namespace, c.name,
-				actual, c.expected)
-		}
-	}
-}
-
-func TestGetPodsEvents(t *testing.T) {
-	cases := []struct {
-		namespace       string
-		selector        map[string]string
-		podList         *v1.PodList
-		eventList       *v1.EventList
-		expectedActions []string
-		expected        []v1.Event
-	}{
-		{
-			"test-namespace", map[string]string{"app": "test"},
-			&v1.PodList{Items: []v1.Pod{{
-				ObjectMeta: metaV1.ObjectMeta{
-					Name:      "test-pod",
-					Namespace: "test-namespace",
-					UID:       "test-uid",
-					Labels:    map[string]string{"app": "test"},
-				}}, {
-				ObjectMeta: metaV1.ObjectMeta{
-					Name:      "test-pod-2",
-					Namespace: "test-namespace",
-					UID:       "test-uid",
-					Labels:    map[string]string{"app": "test-app"},
-				}},
-			}},
-			&v1.EventList{Items: []v1.Event{{
-				Message:        "event-test-msg",
-				ObjectMeta:     metaV1.ObjectMeta{Name: "ev-1", Namespace: "test-namespace"},
-				InvolvedObject: v1.ObjectReference{UID: "test-uid"},
-			}}},
-			[]string{"list", "list"},
-			[]v1.Event{{
-				Message:        "event-test-msg",
-				ObjectMeta:     metaV1.ObjectMeta{Name: "ev-1", Namespace: "test-namespace"},
-				InvolvedObject: v1.ObjectReference{UID: "test-uid"},
-			}},
-		},
-	}
-
-	for _, c := range cases {
-		fakeClient := fake.NewSimpleClientset(c.podList, c.eventList)
-
-		actual, _ := GetPodsEvents(fakeClient, c.namespace, c.selector)
-
-		actions := fakeClient.Actions()
-		if len(actions) != len(c.expectedActions) {
-			t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
-				len(c.expectedActions), len(actions))
-			continue
-		}
-
-		for i, verb := range c.expectedActions {
-			if actions[i].GetVerb() != verb {
-				t.Errorf("Unexpected action: %+v, expected %s",
-					actions[i], verb)
-			}
-		}
-
-		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("GetPodsEvents(client,%#v,%#v) == %#v, expected %#v", c.namespace, c.selector,
 				actual, c.expected)
 		}
 	}

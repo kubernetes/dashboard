@@ -32,10 +32,6 @@ func GetEventsForPod(client client.Interface, dsQuery *dataselect.DataSelectQuer
 		return nil, err
 	}
 
-	if !event.IsTypeFilled(podEvents) {
-		podEvents = event.FillEventsType(podEvents)
-	}
-
 	events := event.CreateEventList(podEvents, dsQuery)
 
 	log.Printf("Found %d events related to %s pod in %s namespace", len(events.Events), podName,

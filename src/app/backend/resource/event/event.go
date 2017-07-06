@@ -15,7 +15,6 @@
 package event
 
 import (
-	"log"
 	"strings"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
@@ -26,11 +25,11 @@ import (
 // FailedReasonPartials  is an array of partial strings to correctly filter warning events.
 // Have to be lower case for correct case insensitive comparison.
 // Based on k8s official events reason file:
-// https://github.com/kubernetes/kubernetes/blob/53f0f9d59860131c2be301a0054adfc86e43945d/pkg/kubelet/container/event.go
+// https://github.com/kubernetes/kubernetes/blob/886e04f1fffbb04faf8a9f9ee141143b2684ae68/pkg/kubelet/events/event.go
 // Partial strings that are not in event.go file are added in order to support
 // older versions of k8s which contained additional event reason messages.
 var FailedReasonPartials = []string{"failed", "err", "exceeded", "invalid", "unhealthy",
-	"mismatch", "insufficient", "conflict", "outof", "nil"}
+	"mismatch", "insufficient", "conflict", "outof", "nil", "backoff"}
 
 // GetPodsEventWarnings returns warning pod events by filtering out events targeting only given pods
 // TODO(floreks) : Import and use Set instead of custom function to get rid of duplicates
@@ -79,9 +78,6 @@ func filterEventsByPodsUID(events []api.Event, pods []api.Pod) []api.Event {
 
 	for _, event := range events {
 		if _, exists := podEventMap[event.InvolvedObject.UID]; exists {
-			if event.InvolvedObject.UID == "1651423a-b85d-11e6-b62d-42010af00082" {
-				log.Printf("crashloopbackoff: %v", event)
-			}
 			result = append(result, event)
 		}
 	}
