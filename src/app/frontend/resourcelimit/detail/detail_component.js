@@ -17,7 +17,7 @@
  */
 export default class ResourceLimitsController {
   /**
-   * Constructs pettion controller info object.
+   * Constructs resource limits controller info object.
    */
   constructor() {
     /**
@@ -34,8 +34,12 @@ export default class ResourceLimitsController {
  * @return {!angular.Component}
  */
 export const resourceLimitsComponent = {
+  transclude: {
+    // Optional header that is transcluded instead of the default one.
+    'header': '?kdHeader',
+  },
   controller: ResourceLimitsController,
-  templateUrl: 'resourcelimit/resourcelimits.html',
+  templateUrl: 'resourcelimit/detail/detail.html',
   bindings: {
     /** {Array<!backendApi.LimitRange>} */
     'resourceLimits': '=',

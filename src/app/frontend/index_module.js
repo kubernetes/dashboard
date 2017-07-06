@@ -40,6 +40,7 @@ import persistentVolumeClaimModule from './persistentvolumeclaim/module';
 import podModule from './pod/module';
 import replicaSetModule from './replicaset/module';
 import replicationControllerModule from './replicationcontroller/module';
+import resourceLimitModule from './resourcelimit/module';
 import resourceQuotaModule from './resourcequota/module';
 import roleModule from './role/module';
 import searchModule from './search/module';
@@ -86,6 +87,7 @@ export default angular
           statefulSetModule.name,
           persistentVolumeClaimModule.name,
           resourceQuotaModule.name,
+          resourceLimitModule.name,
           configMapModule.name,
           secretModule.name,
           ingressModule.name,
