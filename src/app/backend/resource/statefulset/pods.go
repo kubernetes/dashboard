@@ -44,7 +44,7 @@ func GetStatefulSetPods(client *k8sClient.Clientset, metricClient metricapi.Metr
 		return nil, err
 	}
 
-	podList := pod.CreatePodList(pods, events, []error{}, dsQuery, metricClient)
+	podList := pod.ToPodList(pods, events, []error{}, dsQuery, metricClient)
 	return &podList, nil
 }
 

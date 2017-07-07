@@ -98,14 +98,15 @@ func GetPodListFromChannels(channels *common.ResourceChannels, dsQuery *datasele
 		return nil, criticalError
 	}
 
-	podList := CreatePodList(pods.Items, eventList.Items, nonCriticalErrors, dsQuery, metricClient)
+	podList := ToPodList(pods.Items, eventList.Items, nonCriticalErrors, dsQuery, metricClient)
 	return &podList, nil
 }
 
-func CreatePodList(pods []v1.Pod, events []v1.Event, nonCriticalErrors []error, dsQuery *dataselect.DataSelectQuery,
+func ToPodList(pods []v1.Pod, events []v1.Event, nonCriticalErrors []error, dsQuery *dataselect.DataSelectQuery,
 	metricClient metricapi.MetricClient) PodList {
 	podList := PodList{
-		Pods: make([]Pod, 0),
+		Pods:   make([]Pod, 0),
+		Errors: nonCriticalErrors,
 	}
 
 	podCells, cumulativeMetricsPromises, filteredTotal := dataselect.
@@ -130,8 +131,6 @@ func CreatePodList(pods []v1.Pod, events []v1.Event, nonCriticalErrors []error, 
 	if err != nil {
 		podList.CumulativeMetrics = make([]metricapi.Metric, 0)
 	}
-
-	podList.Errors = nonCriticalErrors
 
 	return podList
 }

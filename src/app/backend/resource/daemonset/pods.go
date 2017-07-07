@@ -43,7 +43,7 @@ func GetDaemonSetPods(client k8sClient.Interface, metricClient metricapi.MetricC
 		return nil, err
 	}
 
-	podList := pod.CreatePodList(pods, events, []error{}, dsQuery, metricClient)
+	podList := pod.ToPodList(pods, events, []error{}, dsQuery, metricClient)
 	return &podList, nil
 }
 

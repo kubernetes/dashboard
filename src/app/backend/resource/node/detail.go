@@ -239,7 +239,7 @@ func GetNodePods(client k8sClient.Interface, metricClient metricapi.MetricClient
 		return nil, err
 	}
 
-	podList := pod.CreatePodList(pods.Items, []v1.Event{}, []error{}, dsQuery, metricClient)
+	podList := pod.ToPodList(pods.Items, []v1.Event{}, []error{}, dsQuery, metricClient)
 	return &podList, nil
 }
 
