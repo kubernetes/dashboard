@@ -18,6 +18,7 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
@@ -74,51 +75,56 @@ func GetDeploymentListFromChannels(channels *common.ResourceChannels, dsQuery *d
 	metricClient metricapi.MetricClient) (*DeploymentList, error) {
 
 	deployments := <-channels.DeploymentList.List
-	if err := <-channels.DeploymentList.Error; err != nil {
-		return nil, err
+	err := <-channels.DeploymentList.Error
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
 	pods := <-channels.PodList.List
-	if err := <-channels.PodList.Error; err != nil {
-		return nil, err
+	err = <-channels.PodList.Error
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
 	events := <-channels.EventList.List
-	if err := <-channels.EventList.Error; err != nil {
-		return nil, err
+	err = <-channels.EventList.Error
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
 	rs := <-channels.ReplicaSetList.List
-	if err := <-channels.ReplicaSetList.Error; err != nil {
-		return nil, err
+	err = <-channels.ReplicaSetList.Error
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	return CreateDeploymentList(deployments.Items, pods.Items, events.Items, rs.Items, dsQuery, metricClient), nil
+	return toDeploymentList(deployments.Items, pods.Items, events.Items, rs.Items, nonCriticalErrors, dsQuery, metricClient), nil
 }
 
-// CreateDeploymentList returns a list of all Deployment model objects in the cluster, based on all
-// Kubernetes Deployment API objects.
-func CreateDeploymentList(deployments []extensions.Deployment, pods []v1.Pod, events []v1.Event, rs []extensions.ReplicaSet,
-	dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) *DeploymentList {
+func toDeploymentList(deployments []extensions.Deployment, pods []v1.Pod, events []v1.Event, rs []extensions.ReplicaSet,
+	nonCriticalErrors []error, dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) *DeploymentList {
 
 	deploymentList := &DeploymentList{
 		Deployments: make([]Deployment, 0),
 		ListMeta:    api.ListMeta{TotalItems: len(deployments)},
+		Errors:      nonCriticalErrors,
 	}
 
 	cachedResources := &metricapi.CachedResources{
 		Pods: pods,
 	}
-	deploymentCells, metricPromises, filteredTotal := dataselect.
-		GenericDataSelectWithFilterAndMetrics(
-			toCells(deployments), dsQuery, cachedResources, metricClient)
+	deploymentCells, metricPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(
+		toCells(deployments), dsQuery, cachedResources, metricClient)
 	deployments = fromCells(deploymentCells)
 	deploymentList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
 	for _, deployment := range deployments {
 		matchingPods := common.FilterDeploymentPodsByOwnerReference(deployment, rs, pods)
-		podInfo := common.GetPodInfo(deployment.Status.Replicas, *deployment.Spec.Replicas,
-			matchingPods)
+		podInfo := common.GetPodInfo(deployment.Status.Replicas, *deployment.Spec.Replicas, matchingPods)
 		podInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)
 
 		deploymentList.Deployments = append(deploymentList.Deployments,

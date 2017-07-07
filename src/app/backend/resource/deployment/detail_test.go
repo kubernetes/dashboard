@@ -117,6 +117,7 @@ func TestGetDeploymentDetail(t *testing.T) {
 				PodList: pod.PodList{
 					Pods:              []pod.Pod{},
 					CumulativeMetrics: make([]metricapi.Metric, 0),
+					Errors:            []error{},
 				},
 				Selector: map[string]string{"foo": "bar"},
 				StatusInfo: StatusInfo{
@@ -145,6 +146,7 @@ func TestGetDeploymentDetail(t *testing.T) {
 				},
 				HorizontalPodAutoscalerList: horizontalpodautoscaler.HorizontalPodAutoscalerList{
 					HorizontalPodAutoscalers: []horizontalpodautoscaler.HorizontalPodAutoscaler{},
+					Errors: []error{},
 				},
 			},
 		},

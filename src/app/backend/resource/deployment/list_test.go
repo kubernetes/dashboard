@@ -49,6 +49,7 @@ func TestGetDeploymentListFromChannels(t *testing.T) {
 				ListMeta:          api.ListMeta{},
 				Deployments:       []Deployment{},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
+				Errors: []error{},
 			},
 			nil,
 		},
@@ -79,15 +80,6 @@ func TestGetDeploymentListFromChannels(t *testing.T) {
 			&v1.PodList{},
 			nil,
 			&k8serrors.StatusError{ErrStatus: metaV1.Status{Reason: "foo-bar"}},
-		},
-		{
-			extensions.DeploymentList{},
-			&k8serrors.StatusError{ErrStatus: metaV1.Status{Reason: "NotFound"}},
-			&v1.PodList{},
-			&DeploymentList{
-				Deployments: make([]Deployment, 0),
-			},
-			nil,
 		},
 		{
 			extensions.DeploymentList{
@@ -127,6 +119,7 @@ func TestGetDeploymentListFromChannels(t *testing.T) {
 						Warnings: []common.Event{},
 					},
 				}},
+				Errors: []error{},
 			},
 			nil,
 		},
