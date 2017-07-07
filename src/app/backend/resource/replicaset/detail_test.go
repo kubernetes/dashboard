@@ -59,13 +59,20 @@ func TestGetReplicaSetDetail(t *testing.T) {
 				PodList: pod.PodList{
 					Pods:              []pod.Pod{},
 					CumulativeMetrics: make([]metricapi.Metric, 0),
+					Errors:            []error{},
 				},
 				Selector: &metaV1.LabelSelector{
 					MatchLabels: map[string]string{"app": "test"},
 				},
-				ServiceList:                 service.ServiceList{Services: []service.Service{}},
-				EventList:                   common.EventList{Events: []common.Event{}},
-				HorizontalPodAutoscalerList: horizontalpodautoscaler.HorizontalPodAutoscalerList{HorizontalPodAutoscalers: []horizontalpodautoscaler.HorizontalPodAutoscaler{}},
+				ServiceList: service.ServiceList{
+					Services: []service.Service{},
+					Errors:   []error{},
+				},
+				EventList: common.EventList{Events: []common.Event{}},
+				HorizontalPodAutoscalerList: horizontalpodautoscaler.HorizontalPodAutoscalerList{
+					HorizontalPodAutoscalers: []horizontalpodautoscaler.HorizontalPodAutoscaler{},
+					Errors: []error{},
+				},
 			},
 		},
 	}

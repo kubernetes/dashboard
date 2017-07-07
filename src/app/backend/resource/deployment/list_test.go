@@ -49,7 +49,7 @@ func TestGetDeploymentListFromChannels(t *testing.T) {
 				ListMeta:          api.ListMeta{},
 				Deployments:       []Deployment{},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
-				Errors: []error{},
+				Errors:            []error{},
 			},
 			nil,
 		},
