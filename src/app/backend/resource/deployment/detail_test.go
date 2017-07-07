@@ -135,7 +135,7 @@ func TestGetDeploymentDetail(t *testing.T) {
 				OldReplicaSetList: replicaset.ReplicaSetList{
 					ReplicaSets:       []replicaset.ReplicaSet{},
 					CumulativeMetrics: make([]metricapi.Metric, 0),
-					Errors: []error{},
+					Errors:            []error{},
 				},
 				NewReplicaSet: replicaset.ReplicaSet{
 					ObjectMeta: api.NewObjectMeta(newReplicaSet.ObjectMeta),

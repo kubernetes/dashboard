@@ -18,6 +18,7 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
@@ -28,11 +29,11 @@ import (
 
 // ReplicationControllerList contains a list of Replication Controllers in the cluster.
 type ReplicationControllerList struct {
-	ListMeta api.ListMeta `json:"listMeta"`
+	ListMeta          api.ListMeta       `json:"listMeta"`
+	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`
 
 	// Unordered list of Replication Controllers.
 	ReplicationControllers []ReplicationController `json:"replicationControllers"`
-	CumulativeMetrics      []metricapi.Metric      `json:"cumulativeMetrics"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
@@ -54,35 +55,40 @@ func GetReplicationControllerList(client client.Interface, nsQuery *common.Names
 
 // GetReplicationControllerListFromChannels returns a list of all Replication Controllers in the cluster
 // reading required resource list once from the channels.
-func GetReplicationControllerListFromChannels(channels *common.ResourceChannels,
-	dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) (*ReplicationControllerList, error) {
+func GetReplicationControllerListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery,
+	metricClient metricapi.MetricClient) (*ReplicationControllerList, error) {
 
 	rcList := <-channels.ReplicationControllerList.List
-	if err := <-channels.ReplicationControllerList.Error; err != nil {
-		return nil, err
+	err := <-channels.ReplicationControllerList.Error
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
 	podList := <-channels.PodList.List
-	if err := <-channels.PodList.Error; err != nil {
-		return nil, err
+	err = <-channels.PodList.Error
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
 	eventList := <-channels.EventList.List
-	if err := <-channels.EventList.Error; err != nil {
-		return nil, err
+	err = <-channels.EventList.Error
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	return CreateReplicationControllerList(rcList.Items, dsQuery, podList.Items, eventList.Items, metricClient), nil
+	return toReplicationControllerList(rcList.Items, dsQuery, podList.Items, eventList.Items, nonCriticalErrors, metricClient), nil
 }
 
-// CreateReplicationControllerList creates paginated list of Replication Controller model
-// objects based on Kubernetes Replication Controller objects array and related resources arrays.
-func CreateReplicationControllerList(replicationControllers []v1.ReplicationController,
-	dsQuery *dataselect.DataSelectQuery, pods []v1.Pod, events []v1.Event, metricClient metricapi.MetricClient) *ReplicationControllerList {
+func toReplicationControllerList(replicationControllers []v1.ReplicationController, dsQuery *dataselect.DataSelectQuery,
+	pods []v1.Pod, events []v1.Event, nonCriticalErrors []error, metricClient metricapi.MetricClient) *ReplicationControllerList {
 
 	rcList := &ReplicationControllerList{
 		ReplicationControllers: make([]ReplicationController, 0),
 		ListMeta:               api.ListMeta{TotalItems: len(replicationControllers)},
+		Errors:                 nonCriticalErrors,
 	}
 	cachedResources := &metricapi.CachedResources{
 		Pods: pods,
