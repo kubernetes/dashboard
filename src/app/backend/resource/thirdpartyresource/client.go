@@ -27,7 +27,7 @@ func newRESTClient(config *rest.Config) (*rest.RESTClient, error) {
 	return rest.RESTClientFor(config)
 }
 
-func newClientConfig(config *rest.Config, groupVersion schema.GroupVersion) (*rest.Config, error) {
+func newClientConfig(config *rest.Config, groupVersion schema.GroupVersion) *rest.Config {
 	config.GroupVersion = &groupVersion
 	config.APIPath = "/apis"
 	config.ContentType = runtime.ContentTypeJSON
@@ -46,5 +46,5 @@ func newClientConfig(config *rest.Config, groupVersion schema.GroupVersion) (*re
 		})
 
 	schemeBuilder.AddToScheme(api.Scheme)
-	return config, nil
+	return config
 }

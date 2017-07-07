@@ -19,6 +19,7 @@ import (
 	"strings"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -41,6 +42,9 @@ type ThirdPartyResourceObjectList struct {
 	ListMeta        api.ListMeta `json:"listMeta"`
 	metav1.TypeMeta `json:",inline"`
 	Items           []ThirdPartyResourceObject `json:"items"`
+
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
 // GetThirdPartyResourceObjects return list of third party resource instances. Channels cannot be
@@ -52,23 +56,20 @@ func GetThirdPartyResourceObjects(client k8sClient.Interface, config *rest.Confi
 	var list ThirdPartyResourceObjectList
 
 	thirdPartyResource, err := client.ExtensionsV1beta1().ThirdPartyResources().Get(tprName, metaV1.GetOptions{})
-	if err != nil {
-		return list, err
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return list, criticalError
 	}
 
-	restConfig, err := newClientConfig(config, getThirdPartyResourceGroupVersion(thirdPartyResource))
-	if err != nil {
-		return list, err
-	}
-
-	restClient, err := newRESTClient(restConfig)
+	restClient, err := newRESTClient(newClientConfig(config, getThirdPartyResourceGroupVersion(thirdPartyResource)))
 	if err != nil {
 		return list, err
 	}
 
 	raw, err := restClient.Get().Resource(getThirdPartyResourcePluralName(thirdPartyResource)).Namespace(kubeapi.NamespaceAll).Do().Raw()
-	if err != nil {
-		return list, err
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return list, criticalError
 	}
 
 	// Unmarshal raw data to JSON.
@@ -81,6 +82,7 @@ func GetThirdPartyResourceObjects(client k8sClient.Interface, config *rest.Confi
 	tprObjectCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toObjectCells(list.Items), dsQuery)
 	list.Items = fromObjectCells(tprObjectCells)
 	list.ListMeta = api.ListMeta{TotalItems: filteredTotal}
+	list.Errors = nonCriticalErrors
 
 	return list, err
 }
