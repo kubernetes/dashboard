@@ -754,7 +754,7 @@
   <translation id="5695785595036964519" key="MSG_RESOURCELIMIT_DETAIL_DETAIL_0" desc="Resource limit info details section title.">Resource Limits</translation>
   <translation id="7188407971555381193" key="MSG_RESOURCELIMIT_DETAIL_DETAIL_1" desc="Resource Limits name entry.">Type</translation>
   <translation id="6234304804960810693" key="MSG_RESOURCELIMIT_DETAIL_DETAIL_2" desc="Resource Limits resource entry.">Resource</translation>
-  <translation id="1527364212430197150" key="MSG_RESOURCELIMIT_DETAIL_DETAIL_3" desc="]Resource Limits min entry.">Min</translation>
+  <translation id="1527364212430197150" key="MSG_RESOURCELIMIT_DETAIL_DETAIL_3" desc="Resource Limits min entry.">Min</translation>
   <translation id="4920141650632135528" key="MSG_RESOURCELIMIT_DETAIL_DETAIL_4" desc="Resource Limits max entry.">Max</translation>
   <translation id="6034104350428688973" key="MSG_RESOURCELIMIT_DETAIL_DETAIL_5" desc="Resource Limits default request entry.">Default Request</translation>
   <translation id="419672273675060335" key="MSG_RESOURCELIMIT_DETAIL_DETAIL_6" desc="Resource Limits default limit entry.">Default Limit</translation>
