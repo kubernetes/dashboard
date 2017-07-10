@@ -20,16 +20,16 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/configmap"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolumeclaim"
+	pvc "github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolumeclaim"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/secret"
 	"k8s.io/client-go/kubernetes"
 )
 
 // Config structure contains all resource lists grouped into the config category.
 type Config struct {
-	ConfigMapList             configmap.ConfigMapList                         `json:"configMapList"`
-	PersistentVolumeClaimList persistentvolumeclaim.PersistentVolumeClaimList `json:"persistentVolumeClaimList"`
-	SecretList                secret.SecretList                               `json:"secretList"`
+	ConfigMapList             configmap.ConfigMapList       `json:"configMapList"`
+	PersistentVolumeClaimList pvc.PersistentVolumeClaimList `json:"persistentVolumeClaimList"`
+	SecretList                secret.SecretList             `json:"secretList"`
 }
 
 // GetConfig returns a list of all config resources in the cluster.
@@ -51,11 +51,11 @@ func GetConfig(client *kubernetes.Clientset, nsQuery *common.NamespaceQuery,
 func GetConfigFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery,
 	nsQuery *common.NamespaceQuery) (*Config, error) {
 
-	configMapChan := make(chan *configmap.ConfigMapList)
-	secretChan := make(chan *secret.SecretList)
-	pvcChan := make(chan *persistentvolumeclaim.PersistentVolumeClaimList)
 	numErrs := 3
 	errChan := make(chan error, numErrs)
+	configMapChan := make(chan *configmap.ConfigMapList)
+	secretChan := make(chan *secret.SecretList)
+	pvcChan := make(chan *pvc.PersistentVolumeClaimList)
 
 	go func() {
 		items, err := configmap.GetConfigMapListFromChannels(channels, dsQuery)
@@ -70,7 +70,7 @@ func GetConfigFromChannels(channels *common.ResourceChannels, dsQuery *dataselec
 	}()
 
 	go func() {
-		pvcList, err := persistentvolumeclaim.GetPersistentVolumeClaimListFromChannels(channels, nsQuery, dsQuery)
+		pvcList, err := pvc.GetPersistentVolumeClaimListFromChannels(channels, nsQuery, dsQuery)
 		errChan <- err
 		pvcChan <- pvcList
 	}()
@@ -82,11 +82,9 @@ func GetConfigFromChannels(channels *common.ResourceChannels, dsQuery *dataselec
 		}
 	}
 
-	config := &Config{
+	return &Config{
 		ConfigMapList:             *(<-configMapChan),
 		PersistentVolumeClaimList: *(<-pvcChan),
 		SecretList:                *(<-secretChan),
-	}
-
-	return config, nil
+	}, nil
 }

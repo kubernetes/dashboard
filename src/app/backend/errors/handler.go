@@ -20,21 +20,21 @@ import (
 	"net/http"
 )
 
-// NonCriticalErrors is an array of error statuses, that are non-critical. That means, that this error can be silenced
-// and displayed to the user as a warning on the frontend side.
+// NonCriticalErrors is an array of error statuses, that are non-critical. That means, that this error can be
+// silenced and displayed to the user as a warning on the frontend side.
 var NonCriticalErrors = []int32{http.StatusForbidden}
 
-// HandleError handles single error, that occurred during API GET call. If it is not critical, then it will be returned
-// as a part of error array. Otherwise, it will be returned as a second value. Usage of this functions allows to
-// distinguish critical errors from non-critical ones. It is needed to handle them in a different way.
+// HandleError handles single error, that occurred during API GET call. If it is not critical, then it will be
+// returned as a part of error array. Otherwise, it will be returned as a second value. Usage of this functions
+// allows to distinguish critical errors from non-critical ones. It is needed to handle them in a different way.
 func HandleError(err error) ([]error, error) {
 	nonCriticalErrors := make([]error, 0)
 	return AppendError(err, nonCriticalErrors)
 }
 
-// AppendError handles single error, that occurred during API GET call. If it is not critical, then it will be returned
-// as a part of error array. Otherwise, it will be returned as a second value. Usage of this functions allows to
-// distinguish critical errors from non-critical ones. It is needed to handle them in a different way.
+// AppendError handles single error, that occurred during API GET call. If it is not critical, then it will be
+// returned as a part of error array. Otherwise, it will be returned as a second value. Usage of this functions
+// allows to distinguish critical errors from non-critical ones. It is needed to handle them in a different way.
 func AppendError(err error, nonCriticalErrors []error) ([]error, error) {
 	if err != nil {
 		if isErrorCritical(err) {

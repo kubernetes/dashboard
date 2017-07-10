@@ -70,7 +70,7 @@ type SearchResult struct {
 	DaemonSetList             daemonset.DaemonSetList      `json:"daemonSetList"`
 	StatefulSetList           statefulset.StatefulSetList  `json:"statefulSetList"`
 
-	// TODO(maciaszczykm): Third party resources.
+	// TODO(maciaszczykm): Add third party resources.
 }
 
 func Search(client *kubernetes.Clientset, metricClient metricapi.MetricClient,

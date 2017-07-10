@@ -52,6 +52,7 @@ func TestGetPodDetail(t *testing.T) {
 				InitContainers: []Container{},
 				EventList:      common.EventList{Events: []common.Event{}},
 				Metrics:        []metricapi.Metric{},
+				Errors:         []error{},
 			},
 		},
 	}
@@ -66,8 +67,7 @@ func TestGetPodDetail(t *testing.T) {
 			t.Errorf("GetPodDetail(%#v) == \ngot err %#v", c.pod, err)
 		}
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("GetPodDetail(%#v) == \ngot %#v, \nexpected %#v", c.pod, actual,
-				c.expected)
+			t.Errorf("GetPodDetail(%#v) == \ngot %#v, \nexpected %#v", c.pod, actual, c.expected)
 		}
 	}
 }
