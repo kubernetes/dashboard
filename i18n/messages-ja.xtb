@@ -357,7 +357,7 @@
     <ph name="DESIRED_PODS"> desired.</ph>
   </translation>
   <translation id="4162582061346784285" key="MSG_ERROR_HANDLING_DIALOG_CLOSE_ACTION" desc="Action &quot;Close&quot; which appears at the bottom of any displayed error dialog.">閉じる</translation>
-  <translation id="6020266409089609793" key="MSG_ERROR_INTERNALERROR_0" desc="This is a label for button displayed on error page used to send feedback to GitHub new issue.">Send feedback</translation>
+  <translation id="6020266409089609793" key="MSG_ERROR_INTERNALERROR_0" desc="This is a label for button displayed on error page used to send feedback to GitHub new issue.">フィードバックを送信</translation>
   <translation id="1499717850384845922" key="MSG_EVENTS_CARDLIST_0" desc="Label which appears above the list of such objects.">Events</translation>
   <translation id="394833373610211124" key="MSG_EVENTS_CARDLIST_1" desc="Label \'Message\' for the event message column of the events table (events list page).">Message</translation>
   <translation id="397148110173555485" key="MSG_EVENTS_CARDLIST_2" desc="Label \'Source\' for the event source column of the events table (events list page).">Source</translation>
