@@ -40,7 +40,7 @@ func AppendError(err error, nonCriticalErrors []error) ([]error, error) {
 		if isErrorCritical(err) {
 			return nonCriticalErrors, err
 		} else {
-			log.Printf("Non-critical error occurred during secrets retrieval: %s", err)
+			log.Printf("Non-critical error occurred during resource retrieval: %s", err)
 			nonCriticalErrors = append(nonCriticalErrors, err)
 		}
 	}

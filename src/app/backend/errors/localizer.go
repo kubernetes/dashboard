@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package common
+package errors
 
 import (
 	"errors"
@@ -21,8 +21,8 @@ import (
 
 // This file contains all errors that should be kept in sync with:
 // 'src/app/frontend/common/errorhandling/errors.js' and localized on frontend side.
-//
-// Map structure:
+
+// partialsToErrorsMap map structure:
 // Key - unique partial string that can be used to differentiate error messages
 // Value - unique error code string that frontend can use to localize error message created using
 // 		   pattern MSG_<VIEW>_<CAUSE_OF_ERROR>_ERROR
