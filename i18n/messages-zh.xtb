@@ -20,7 +20,7 @@
   <translation id="3098067826555563293" key="MSG_BREADCRUMBS_DEPLOY_FILE_LABEL" desc="Breadcrum label for the YAML upload form">上传</translation>
   <translation id="8693076889249273053" key="MSG_BREADCRUMBS_DISCOVERY_AND_LOAD_BALANCING_LABEL" desc="Label 'Discovery and load balancing' that appears as a breadcrumbs on the action bar.">Discovery and load balancing</translation>
   <translation id="2248903848244811172" key="MSG_BREADCRUMBS_HORIZONTAL_POD_AUTOSCALERS_LABEL" desc="Label 'Horizontal Pod Autoscalers' that appears as a breadcrumbs on the action bar.">Pod水平自动伸缩</translation>
-  <translation id="5747298115200147575" key="MSG_BREADCRUMBS_INGRESSS_LABEL" desc="Label 'Ingress' that appears as a breadcrumbs on the action bar.">入口地址(Ingress)</translation>
+  <translation id="8885204956315323333" key="MSG_BREADCRUMBS_INGRESSS_LABEL" desc="Label 'Ingresses' that appears as a breadcrumbs on the action bar.">Ingresses</translation>
   <translation id="2741276106482217695" key="MSG_BREADCRUMBS_INTERNALERROR_LABEL" desc="Label for internal error page for breadcrumbs on the action bar.">内部错误(Internal error)</translation>
   <translation id="2024511088483477440" key="MSG_BREADCRUMBS_JOBS_LABEL" desc="Label 'Jobs' that appears as a breadcrumbs on the action bar.">批处理任务(Jobs)</translation>
   <translation id="1050029015813261838" key="MSG_BREADCRUMBS_LOGS_LABEL" desc="Breadcrum label for the logs view.">日志</translation>
@@ -48,18 +48,18 @@
   <translation id="1368029980670062566" key="MSG_CHROME_NAV_NAV_12" desc="Replication Controllers menu entry.">Replication Controllers</translation>
   <translation id="727510939665067635" key="MSG_CHROME_NAV_NAV_13" desc="Stateful Sets menu entry.">Stateful Sets</translation>
   <translation id="3750547428998043153" key="MSG_CHROME_NAV_NAV_14" desc="Discovery and Load Balancing group menu entry.">Discovery and Load Balancing</translation>
-  <translation id="3039957839920471408" key="MSG_CHROME_NAV_NAV_15" desc="Storage item in the nav.">存储(Storage)</translation>
+  <translation id="5657472840568954752" key="MSG_CHROME_NAV_NAV_15" desc="Ingresses menu entry.">Ingresses</translation>
   <translation id="6209183557961833624" key="MSG_CHROME_NAV_NAV_16" desc="Services menu entry.">Services</translation>
   <translation id="5112568842026217488" key="MSG_CHROME_NAV_NAV_18" desc="Config Maps menu entry.">Config Maps</translation>
-  <translation id="8736839163304985332" key="MSG_CHROME_NAV_NAV_19" desc="Config Maps item in the nav.">配置式字典(Config Maps)</translation>
+  <translation id="8817168805652183378" key="MSG_CHROME_NAV_NAV_19" desc="Persistent Volume Claims menu entry.">Persistent Volume Claims</translation>
   <translation id="1743316598408730775" key="MSG_CHROME_NAV_NAV_2" desc="Nodes menu item in the nav.">工作节点(Nodes)</translation>
   <translation id="1040732924028857594" key="MSG_CHROME_NAV_NAV_20" desc="Secrets menu entry.">Secrets</translation>
   <translation id="8368599117962865229" key="MSG_CHROME_NAV_NAV_21" desc="About page menu entry.">About</translation>
   <translation id="4957526140740745953" key="MSG_CHROME_NAV_NAV_3" desc="Persistent Volumes menu item in the nav.">持久性存储卷(Persistent Volumes)</translation>
-  <translation id="4398523516847444868" key="MSG_CHROME_NAV_NAV_4" desc="Workloads menu item in the nav.">载荷(Workloads)</translation>
+  <translation id="5886605472855359914" key="MSG_CHROME_NAV_NAV_4" desc="Config and Storage group menu entry.">Config and Storage</translation>
   <translation id="874273813471860738" key="MSG_CHROME_NAV_NAV_5" desc="Storage Classes menu entry.">Storage Classes</translation>
   <translation id="4285258567654567328" key="MSG_CHROME_NAV_NAV_6" desc="Workloads group menu entry.">Workloads</translation>
-  <translation id="723915224801093587" key="MSG_CHROME_NAV_NAV_7" desc="Replication Controllers menu item in the nav.">复制控制(Replication Controllers)</translation>
+  <translation id="5016929559748268107" key="MSG_CHROME_NAV_NAV_7" desc="Daemon Sets menu entry.">Daemon Sets</translation>
   <translation id="3185730728792936775" key="MSG_CHROME_NAV_NAV_8" desc="Deployments menu entry.">Deployments</translation>
   <translation id="1017990697544914862" key="MSG_CHROME_NAV_NAV_9" desc="Jobs menu entry.">Jobs</translation>
   <translation id="373826984984498333" key="MSG_CHROME_NAV_ROLENAV_0" desc="Roles menu entry.">Roles</translation>
@@ -274,7 +274,7 @@
   <translation id="2106636614171074357" key="MSG_DEPLOY_DEPLOY_2" desc="Text for a selection option, which the user must click to upload a YAML/JSON file to deploy from on the deploy page.">Upload a YAML or JSON file</translation>
   <translation id="2293780968979487050" key="MSG_DEPLOY_DEPLOY_3" desc="User help with a link redirecting to the &quot;Dashboard tour&quot; on the deploy page.">To learn more, &lt;a href="http://kubernetes.io/docs/user-guide/ui/" target="_blank" tabindex="-1"&gt; take the Dashboard Tour &lt;i class="material-icons"&gt;open_in_new&lt;/i&gt;&lt;/a&gt;</translation>
   <translation id="6885083433056530489" key="MSG_DEPLOY_DIALOG_ERROR" desc="Text shown on failed deploy in error dialog.">Deploying file has failed</translation>
-  <translation id="1886245275698966389" key="MSG_DEPLOY_EMPTY_NAMESPACE_ERROR" desc="Text shown on in error dialog when there is no namespace provided selected in both dashboard and yaml file.">Dashboard and your file do not specify any namespace to deploy a resource. Please select a specific namespace in dashboard or specify one in yaml file.</translation>
+  <translation id="3201385994827441255" key="MSG_DEPLOY_EMPTY_NAMESPACE_ERROR" desc="Text shown on in error dialog when there is no namespace provided selected in both dashboard and yaml file.">Dashboard and your file do not specify any namespace to deploy a resource. Please select a specific namespace in dashboard or add one in yaml file.</translation>
   <translation id="1523443588838795036" key="MSG_DEPLOY_ENVIRONMENTVARIABLES_0" desc="Title of the Environment Variables section on the deploy page.">Environment variables</translation>
   <translation id="5261984673543175121" key="MSG_DEPLOY_ENVIRONMENTVARIABLES_1" desc="Label &quot;Name&quot; which appears as a placeholder for the input of an environment variable name on the deploy page.">名称(Name)</translation>
   <translation id="3054625987181220918" key="MSG_DEPLOY_ENVIRONMENTVARIABLES_2" desc="Label &quot;Value&quot; which appears as a placeholder for the input of an environment variable value on the deploy page.">Variable name must be a valid C identifier.</translation>
@@ -458,9 +458,9 @@
   <translation id="5143266087600531180" key="MSG_NAMESPACE_SELECT_ARIA_LABEL" desc="Text describing what namespace selector is">所选的名字空间标签</translation>
   <translation id="5644753445531072726" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_0" desc="Label \'Allocated resources\' for the allocated resources section.">Allocated resources</translation>
   <translation id="3448064978953547706" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_1" desc="Label \'Requests\' for the allocated resources graphs legend.">Requests</translation>
-  <translation id="776419576895892458" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_2" desc="Label \'CPU limits (cores)\' for the allocated resources table header on the node details page.">CPU limits (cores)</translation>
-  <translation id="2364634598145731752" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_3" desc="Label \'Memory requests (bytes)\' for the allocated resources table header on the node details page.">Memory requests (bytes)</translation>
-  <translation id="4803828848895485340" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_4" desc="Label \'Memory limits (bytes)\' for the allocated resources table header on the node details page.">Memory limits (bytes)</translation>
+  <translation id="7138692152606832108" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_2" desc="Label \'Limits\' for the allocated resources graphs legend.">Limits</translation>
+  <translation id="9137523745385232068" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_3" desc="Label \'Capacity\' for the allocated resources graphs legend.">Capacity</translation>
+  <translation id="4929249194769778893" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_4" desc="Label \'Requests\' for the allocated resources graphs legend.">Requests</translation>
   <translation id="495272876191440718" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_5" desc="Label \'Limits\' for the allocated resources graphs legend.">Limits</translation>
   <translation id="2228308297469848373" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_6" desc="Label \'Capacity\' for the allocated resources graphs legend.">Capacity</translation>
   <translation id="3729099716287586109" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_7" desc="Label \'Allocation\' for the allocated resources graphs legend.">Allocation</translation>

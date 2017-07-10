@@ -59,9 +59,10 @@ function extractForLanguage(langKey) {
   return deferred.promise;
 }
 
-gulp.task(
-    'generate-xtbs',
-    ['extract-translations', 'sort-translations', 'remove-redundant-translations']);
+gulp.task('generate-xtbs', [
+  'extract-translations', 'remove-unused-translations', 'remove-duplicated-translations',
+  'sort-translations'
+]);
 
 let prevMsgs = {};
 
@@ -94,8 +95,7 @@ gulp.task('buildExistingI18nCache', function() {
 /**
  * Extracts all translation messages into XTB bundles.
  *
- * Cleans up the data from the previous run to prevent cross-pollination between
- * branches
+ * Cleans up the data from the previous run to prevent cross-pollination between branches.
  */
 gulp.task(
     'extract-translations', ['scripts', 'angular-templates', 'clean-messages-for-extraction'],
@@ -104,13 +104,29 @@ gulp.task(
       return q.all(promises);
     });
 
-gulp.task('sort-translations', ['extract-translations'], function() {
-  return gulp.src('i18n/messages-*.xtb').pipe(xslt('build/sortxtb.xslt')).pipe(gulp.dest('i18n'));
+/**
+ * Task to sort translations.
+ */
+gulp.task('sort-translations', ['remove-duplicated-translations'], function() {
+  return gulp.src('i18n/messages-*.xtb')
+      .pipe(xslt('build/sort-translations.xslt'))
+      .pipe(gulp.dest('i18n'));
+});
+
+/**
+ * Task to remove duplicated translations (should remove old translations from XTB when entries are
+ * updated in source code). It has to be runned before 'sort-translations' as original translation
+ * order is required.
+ */
+gulp.task('remove-duplicated-translations', ['extract-translations'], function() {
+  return gulp.src('i18n/messages-*.xtb')
+      .pipe(xslt('build/remove-duplicated-translations.xslt'))
+      .pipe(gulp.dest('i18n'));
 });
 
 /**
  * Task to used to find translations used in JavaScript files. Do not run manually. It should be
- * invoked as a part of 'gulp remove-redundant-translations'.
+ * invoked as a part of 'remove-unused-translations'.
  */
 gulp.task('find-translations-used-in-js', function() {
   let jsSource = path.join(conf.paths.frontendSrc, '**/*.js');
@@ -122,29 +138,29 @@ gulp.task('find-translations-used-in-js', function() {
 });
 
 /**
- * Task to remove redundant translations. Do not run manually. It should be invoked as a part of
- * 'gulp generate-xtbs'.
+ * Task to remove unused translations. Do not run manually. It should be invoked as a part of
+ * 'generate-xtbs'.
  */
 gulp.task(
-    'remove-redundant-translations', ['angular-templates', 'find-translations-used-in-js'],
+    'remove-unused-translations', ['angular-templates', 'find-translations-used-in-js'],
     function() {
       // Get translations used in JavaScript and HTML files. These will not be removed.
       let used = translationsManager.getUsed();
 
       return gulp.src('i18n/messages-*.xtb')
           .pipe(cheerio((doc) => {
-            let redundant = new Set();
+            let unused = new Set();
 
             // Find translations to remove.
             doc('translation').each((i, translation) => {
               let key = translation.attribs.key;
               if (!used.has(key)) {
-                redundant.add(key);
+                unused.add(key);
               }
             });
 
-            // Remove redundant translations.
-            redundant.forEach((r) => {
+            // Remove unused translations.
+            unused.forEach((r) => {
               doc(`translation[key=${r}]`).remove();
             });
           }))
