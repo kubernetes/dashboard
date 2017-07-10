@@ -35,7 +35,8 @@ type StorageClassList struct {
 }
 
 // GetStorageClassList returns a list of all storage class objects in the cluster.
-func GetStorageClassList(client kubernetes.Interface, dsQuery *dataselect.DataSelectQuery) (*StorageClassList, error) {
+func GetStorageClassList(client kubernetes.Interface, dsQuery *dataselect.DataSelectQuery) (
+	*StorageClassList, error) {
 	log.Print("Getting list of storage classes in the cluster")
 
 	channels := &common.ResourceChannels{
@@ -46,7 +47,8 @@ func GetStorageClassList(client kubernetes.Interface, dsQuery *dataselect.DataSe
 }
 
 // GetStorageClassListFromChannels returns a list of all storage class objects in the cluster.
-func GetStorageClassListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery) (*StorageClassList, error) {
+func GetStorageClassListFromChannels(channels *common.ResourceChannels,
+	dsQuery *dataselect.DataSelectQuery) (*StorageClassList, error) {
 	storageClasses := <-channels.StorageClassList.List
 	err := <-channels.StorageClassList.Error
 	nonCriticalErrors, criticalError := errors.HandleError(err)
@@ -57,7 +59,9 @@ func GetStorageClassListFromChannels(channels *common.ResourceChannels, dsQuery 
 	return toStorageClassList(storageClasses.Items, nonCriticalErrors, dsQuery), nil
 }
 
-func toStorageClassList(storageClasses []storage.StorageClass, nonCriticalErrors []error, dsQuery *dataselect.DataSelectQuery) *StorageClassList {
+func toStorageClassList(storageClasses []storage.StorageClass, nonCriticalErrors []error,
+	dsQuery *dataselect.DataSelectQuery) *StorageClassList {
+
 	storageClassList := &StorageClassList{
 		StorageClasses: make([]StorageClass, 0),
 		ListMeta:       api.ListMeta{TotalItems: len(storageClasses)},
@@ -69,7 +73,7 @@ func toStorageClassList(storageClasses []storage.StorageClass, nonCriticalErrors
 	storageClassList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
 	for _, storageClass := range storageClasses {
-		storageClassList.StorageClasses = append(storageClassList.StorageClasses, ToStorageClass(&storageClass))
+		storageClassList.StorageClasses = append(storageClassList.StorageClasses, toStorageClass(&storageClass))
 	}
 
 	return storageClassList

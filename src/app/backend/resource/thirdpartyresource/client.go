@@ -27,7 +27,7 @@ func newRESTClient(config *rest.Config) (*rest.RESTClient, error) {
 	return rest.RESTClientFor(config)
 }
 
-func newClientConfig(config *rest.Config, groupVersion schema.GroupVersion) *rest.Config {
+func newRESTConfig(config *rest.Config, groupVersion schema.GroupVersion) *rest.Config {
 	config.GroupVersion = &groupVersion
 	config.APIPath = "/apis"
 	config.ContentType = runtime.ContentTypeJSON

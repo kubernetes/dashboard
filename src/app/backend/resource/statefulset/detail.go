@@ -27,29 +27,28 @@ import (
 	apps "k8s.io/client-go/pkg/apis/apps/v1beta1"
 )
 
-// StatefulSetDetail is a presentation layer view of Kubernetes Pet Set resource. This means
-// it is Pet Set plus additional augmented data we can get from other sources
-// (like services that target the same pods).
+// StatefulSetDetail is a presentation layer view of Kubernetes Stateful Set resource. This means it is Stateful Set
+// plus additional augmented data we can get from other sources (like services that target the same pods).
 type StatefulSetDetail struct {
 	ObjectMeta api.ObjectMeta `json:"objectMeta"`
 	TypeMeta   api.TypeMeta   `json:"typeMeta"`
 
-	// Aggregate information about pods belonging to this Pet Set.
+	// Aggregate information about pods belonging to this Stateful Set.
 	PodInfo common.PodInfo `json:"podInfo"`
 
-	// Detailed information about Pods belonging to this Pet Set.
+	// Detailed information about Pods belonging to this Stateful Set.
 	PodList pod.PodList `json:"podList"`
 
-	// Container images of the Pet Set.
+	// Container images of the Stateful Set.
 	ContainerImages []string `json:"containerImages"`
 
-	// List of events related to this Pet Set.
+	// List of events related to this Stateful Set.
 	EventList common.EventList `json:"eventList"`
 }
 
 // GetStatefulSetDetail gets pet set details.
-func GetStatefulSetDetail(client *k8sClient.Clientset, metricClient metricapi.MetricClient,
-	namespace, name string) (*StatefulSetDetail, error) {
+func GetStatefulSetDetail(client *k8sClient.Clientset, metricClient metricapi.MetricClient, namespace,
+	name string) (*StatefulSetDetail, error) {
 
 	log.Printf("Getting details of %s service in %s namespace", name, namespace)
 
@@ -59,7 +58,8 @@ func GetStatefulSetDetail(client *k8sClient.Clientset, metricClient metricapi.Me
 		return nil, err
 	}
 
-	podList, err := GetStatefulSetPods(client, metricClient, dataselect.DefaultDataSelectWithMetrics, name, namespace)
+	podList, err := GetStatefulSetPods(client, metricClient, dataselect.DefaultDataSelectWithMetrics,
+		name, namespace)
 	if err != nil {
 		return nil, err
 	}
@@ -69,17 +69,18 @@ func GetStatefulSetDetail(client *k8sClient.Clientset, metricClient metricapi.Me
 		return nil, err
 	}
 
-	events, err := GetStatefulSetEvents(client, dataselect.DefaultDataSelect, statefulSetData.Namespace, statefulSetData.Name)
+	events, err := GetStatefulSetEvents(client, dataselect.DefaultDataSelect, statefulSetData.Namespace,
+		statefulSetData.Name)
 	if err != nil {
 		return nil, err
 	}
 
-	statefulSet := getStatefulSetDetail(statefulSetData, metricClient, *events, *podList, *podInfo)
+	statefulSet := getStatefulSetDetail(statefulSetData, *events, *podList, *podInfo)
 	return &statefulSet, nil
 }
 
-func getStatefulSetDetail(statefulSet *apps.StatefulSet, metricClient metricapi.MetricClient,
-	eventList common.EventList, podList pod.PodList, podInfo common.PodInfo) StatefulSetDetail {
+func getStatefulSetDetail(statefulSet *apps.StatefulSet, eventList common.EventList, podList pod.PodList,
+	podInfo common.PodInfo) StatefulSetDetail {
 
 	return StatefulSetDetail{
 		ObjectMeta:      api.NewObjectMeta(statefulSet.ObjectMeta),
