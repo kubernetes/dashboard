@@ -47,7 +47,7 @@ class exampleController {
 }
 
 const i18n = {
-  /** @export {string} @desc a simple example */
+  /** @export {string} @desc a simple description for the translator */
   MSG_EXAMPLE_TEXT: goog.getMsg('This is an example'),
   ... // other variables
 }
@@ -67,14 +67,14 @@ Usage of `MSG_` variables in JavaScript and HTML files is not the only way to lo
 is to use specific pattern directly in HTML messages:
 
 ```
-[[This is an example|a simple example]]
+[[This is an example|a simple description for the translator]]
 ```
 
 As you can see it is the same definition as in above section, but it is a lot easier to use. There is sample usage:
 
 ```html
 <div>
-    [[This is an example|a simple example]]
+    [[This is an example|a simple description for the translator]]
 </div>
 ```
 
