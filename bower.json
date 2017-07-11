@@ -2,23 +2,23 @@
   "name": "kubernetes-dashboard",
   "version": "1.6.1",
   "dependencies": {
-    "angular": "~1.6.4",
-    "angular-animate": "~1.6.4",
-    "angular-aria": "~1.6.4",
+    "angular": "~1.6.5",
+    "angular-animate": "~1.6.5",
+    "angular-aria": "~1.6.5",
     "angular-material": "~1.1.4",
-    "angular-messages": "~1.6.4",
-    "angular-ui-router": "~0.4.2",
-    "angular-resource": "~1.6.4",
-    "angular-sanitize": "~1.6.4",
+    "angular-messages": "~1.6.5",
+    "angular-ui-router": "~1.0.5",
+    "angular-resource": "~1.6.5",
+    "angular-sanitize": "~1.6.5",
     "ansi-up": "drudru/ansi_up#~v1.3.0",
-    "d3": "^3.5.17",
+    "d3": "^4.9.1",
     "nvd3": "1.8.5",
     "material-design-icons": "~3.0.1",
-    "roboto-fontface": "0.7.0",
+    "roboto-fontface": "0.8.0",
     "ng-jsoneditor": "angular-tools/ng-jsoneditor#~1.0.0",
     "angularUtils-pagination": "angular-utils-pagination#~0.11.1",
     "easyfont-roboto-mono": "easyfont/roboto-mono#fa7971ea56f68bfdb2771f9cb560c99aca0164c1",
-    "angular-clipboard": "^1.5.0",
+    "angular-clipboard": "^1.6.0",
     "hterm": "~1.0.0",
     "sockjs-client": "^1.1.4"
   },
@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "cljsjs-packages-externs": "https://github.com/cljsjs/packages.git#0c44b38658ad789a45d342bff4f13706276f293a",
-    "angular-mocks": "~1.6.4",
+    "angular-mocks": "~1.6.5",
     "google-closure-library": "*"
   }
 }
