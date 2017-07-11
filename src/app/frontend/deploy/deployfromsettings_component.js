@@ -428,6 +428,17 @@ export default class DeployFromSettingsController {
   }
 }
 
+/**
+ * Returns component definition for deploy from settings component.
+ *
+ * @return {!angular.Component}
+ */
+export const deployFromSettingsComponent = {
+  controller: DeployFromSettingsController,
+  controllerAs: 'ctrl',
+  templateUrl: 'deploy/deployfromsettings.html',
+};
+
 const i18n = {
 
   /** @export {string} @desc Appears when the typed in app name on the deploy from settings page

@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {actionbarViewName, stateName as chromeStateName} from 'chrome/state';
+import {actionbarViewName} from 'chrome/state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
 import {stateName as persistentVolumeList} from './../list/state';
-import {stateUrl} from './../state';
+import {stateUrl, stateName as parentState} from './../state';
 
 import {ActionBarController} from './actionbar_controller';
 import {PersistentVolumeDetailController} from './controller';
@@ -27,7 +27,7 @@ import {PersistentVolumeDetailController} from './controller';
  */
 export const config = {
   url: `${stateUrl}/:objectName`,
-  parent: chromeStateName,
+  parent: parentState,
   resolve: {
     'persistentVolumeDetailResource': getPersistentVolumeDetailResource,
     'persistentVolumeDetail': getPersistentVolumeDetail,

@@ -25,11 +25,11 @@ import {actionbarViewName} from './state';
 export class ChromeController {
   /**
    * @param {!ui.router.$state} $state
-   * @param {!angular.Scope} $scope
    * @param {!angular.$timeout} $timeout
+   * @param {!ui.router.transitions} $transitions
    * @ngInject
    */
-  constructor($state, $scope, $timeout) {
+  constructor($state, $timeout, $transitions) {
     /**
      * By default this is true to show loading spinner for the first page.
      * @export {boolean}
@@ -45,16 +45,16 @@ export class ChromeController {
     /** @private {!ui.router.$state} */
     this.state_ = $state;
 
-    /** @private {!angular.Scope} */
-    this.scope_ = $scope;
-
     /** @private {!angular.$timeout} */
     this.timeout_ = $timeout;
+
+    /** @private {!ui.router.transitions} */
+    this.transitions_ = $transitions;
   }
 
   /** @export */
   $onInit() {
-    this.registerStateChangeListeners(this.scope_);
+    this.registerStateChangeListeners();
   }
 
   /**
@@ -74,22 +74,19 @@ export class ChromeController {
     return this.state_.current.data[fillContentConfig] === true;
   }
 
-  /**
-   * @param {!angular.Scope} scope
-   */
-  registerStateChangeListeners(scope) {
-    scope.$on('$stateChangeStart', () => {
+  registerStateChangeListeners() {
+    this.transitions_.onStart({}, () => {
       this.loading = true;
       this.showLoadingSpinner = false;
       // Show loading spinner after X ms, only for long-loading pages. This is to avoid flicker
       // for pages that load instantaneously.
       this.timeout_(() => {
         this.showLoadingSpinner = true;
-      }, 250);
-    });
+      }, 250);}
+    );
 
-    scope.$on('$stateChangeError', this.hideSpinner_.bind(this));
-    scope.$on('$stateChangeSuccess', this.hideSpinner_.bind(this));
+    this.transitions_.onError({}, this.hideSpinner_.bind(this));
+    this.transitions_.onSuccess({}, this.hideSpinner_.bind(this));
   }
 
   /**

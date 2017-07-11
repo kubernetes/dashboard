@@ -13,12 +13,11 @@
 // limitations under the License.
 
 import {actionbarViewName} from 'chrome/state';
-import {stateName as chromeStateName} from 'chrome/state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
 import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
 import {stateName as configMapList} from 'configmap/list/state';
 
-import {stateUrl} from './../state';
+import {stateUrl, stateName as parentState} from './../state';
 import {ActionBarController} from './actionbar_controller';
 import {ConfigMapDetailController} from './controller';
 
@@ -29,7 +28,7 @@ import {ConfigMapDetailController} from './controller';
  */
 export const config = {
   url: appendDetailParamsToUrl(stateUrl),
-  parent: chromeStateName,
+  parent: parentState,
   resolve: {
     'configMapDetailResource': getConfigMapDetailResource,
     'configMapDetail': getConfigMapDetail,

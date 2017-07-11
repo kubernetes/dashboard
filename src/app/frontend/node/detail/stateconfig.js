@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {actionbarViewName, stateName as chromeStateName} from 'chrome/state';
+import {actionbarViewName} from 'chrome/state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
 import {appendDetailParamsToUrl} from 'common/resource/globalresourcedetail';
 
 import {stateName as nodeList} from './../list/state';
-import {stateUrl} from './../state';
+import {stateUrl, stateName as parentState} from './../state';
 import {NodeDetailController} from './controller';
 
 /**
@@ -27,7 +27,7 @@ import {NodeDetailController} from './controller';
  */
 export const config = {
   url: appendDetailParamsToUrl(stateUrl),
-  parent: chromeStateName,
+  parent: parentState,
   resolve: {
     'nodeDetailResource': getNodeDetailResource,
     'nodeDetail': getNodeDetail,

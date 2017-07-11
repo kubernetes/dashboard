@@ -12,11 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as chromeStateName} from 'chrome/state';
 import {stateName as parentStateName} from 'cluster/state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
 
-import {stateUrl} from './../state';
+import {stateUrl, stateName as parentState} from './../state';
 import {NodeListController} from './controller';
 
 /**
@@ -34,7 +33,7 @@ const i18n = {
  */
 export const config = {
   url: stateUrl,
-  parent: chromeStateName,
+  parent: parentState,
   resolve: {
     'nodeList': resolveNodeList,
   },

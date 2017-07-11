@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {actionbarViewName, stateName as chromeStateName} from 'chrome/state';
+import {actionbarViewName} from 'chrome/state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
 import {appendDetailParamsToUrl} from 'common/resource/globalresourcedetail';
 import {stateName as tprListState} from 'thirdpartyresource/list/state';
-import {stateUrl} from './../state';
+import {stateUrl, stateName as parentState} from './../state';
 
 import {ThirdPartyResourceDetailController} from './controller';
 
@@ -27,7 +27,7 @@ import {ThirdPartyResourceDetailController} from './controller';
  */
 export const config = {
   url: appendDetailParamsToUrl(stateUrl),
-  parent: chromeStateName,
+  parent: parentState,
   resolve: {
     'tprDetailResource': getTprDetailResource,
     'tprDetail': getTprDetail,

@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {actionbarViewName, stateName as chromeStateName} from 'chrome/state';
+import {actionbarViewName} from 'chrome/state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
 import {stateName as storageClassList} from './../list/state';
-import {stateUrl} from './../state';
+import {stateUrl, stateName as parentState} from './../state';
 
 import {ActionBarController} from './actionbar_controller';
 import {StorageClassController} from './controller';
@@ -27,7 +27,7 @@ import {StorageClassController} from './controller';
  */
 export const config = {
   url: `${stateUrl}/:objectName`,
-  parent: chromeStateName,
+  parent: parentState,
   resolve: {
     'storageClassResource': getStorageClassResource,
     'storageClass': getStorageClass,
