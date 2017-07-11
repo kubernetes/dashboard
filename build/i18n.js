@@ -60,8 +60,10 @@ function extractForLanguage(langKey) {
 }
 
 gulp.task('generate-xtbs', [
-  'extract-translations', 'remove-unused-translations', 'remove-duplicated-translations',
-  'sort-translations'
+  'extract-translations',
+  'remove-unused-translations',
+  'remove-duplicated-translations',
+  'sort-translations',
 ]);
 
 let prevMsgs = {};
