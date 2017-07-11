@@ -91,7 +91,6 @@ func getReplicaSetPodInfo(client k8sClient.Interface, replicaSet *extensions.Rep
 		return nil, err
 	}
 
-	podInfo := common.GetPodInfo(replicaSet.Status.Replicas, *replicaSet.Spec.Replicas,
-		pods.Items)
+	podInfo := common.GetPodInfo(replicaSet.Status.Replicas, *replicaSet.Spec.Replicas, pods.Items)
 	return &podInfo, nil
 }

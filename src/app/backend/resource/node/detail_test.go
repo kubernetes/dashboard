@@ -76,6 +76,7 @@ func TestGetNodeDetail(t *testing.T) {
 					PodFraction:            0,
 				},
 				Metrics: make([]metricapi.Metric, 0),
+				Errors:  []error{},
 			},
 		},
 	}
