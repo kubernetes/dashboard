@@ -567,6 +567,11 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			To(apiHandler.handleOverview).
 			Writes(overview.Overview{}))
 
+	apiV1Ws.Route(
+		apiV1Ws.GET("/login/status").
+			To(apiHandler.handleLoginStatus).
+			Writes(validation.LoginStatus{}))
+
 	return wsContainer, nil
 }
 
@@ -617,6 +622,10 @@ func (apiHandler *APIHandler) handleRbacStatus(request *restful.Request, respons
 		return
 	}
 	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleLoginStatus(request *restful.Request, response *restful.Response) {
+	response.WriteHeaderAndEntity(http.StatusOK, validation.ValidateLoginStatus(request))
 }
 
 func (apiHandler *APIHandler) handleGetCsrfToken(request *restful.Request, response *restful.Response) {

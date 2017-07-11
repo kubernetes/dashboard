@@ -1,0 +1,12 @@
+@import './../variables';
+
+.kd-login-card {
+  width: 50%;
+  margin: auto;
+  padding-top: 2 * $baseline-grid;
+  padding-left: $baseline-grid;
+}
+
+.kd-login-card-content {
+  padding: 0 2 * $baseline-grid;
+}
