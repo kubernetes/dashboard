@@ -37,13 +37,8 @@ export default angular
  * @param {!ui.router.$state} $state
  * @ngInject
  */
-function errorConfig($rootScope, $state) {
-  let deregistrationHandler = $rootScope.$on(
-      '$stateChangeError', (event, toState, toParams, fromState, fromParams, error) => {
-        if (toState.name !== stateName) {
-          $state.go(stateName, new StateParams(error, toParams.namespace));
-        }
-      });
-
-  $rootScope.$on('$destroy', deregistrationHandler);
+function errorConfig($state) {
+  $state.defaultErrorHandler((err) => {
+    $state.go(stateName, new StateParams(err.detail, $state.params.namespace));
+  });
 }

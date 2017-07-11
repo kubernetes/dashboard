@@ -20,7 +20,9 @@ import {stateUrl as defaultStateUrl} from './workloads/state';
  * @param {!ui.router.$urlRouterProvider} $urlRouterProvider
  * @ngInject
  */
-export default function routeConfig($urlRouterProvider) {
+export default function routeConfig($urlRouterProvider, $locationProvider) {
+  $locationProvider.html5Mode(true);
+  
   // When no state is matched by an URL, redirect to default one.
   $urlRouterProvider.otherwise(defaultStateUrl);
 }
