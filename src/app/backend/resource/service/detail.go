@@ -89,7 +89,7 @@ func GetServiceDetail(client k8sClient.Interface, metricClient metricapi.MetricC
 	service := ToServiceDetail(serviceData)
 	service.PodList = *podList
 	service.EventList = *eventList
-
+	service.Errors = nonCriticalErrors
 	return &service, nil
 }
 

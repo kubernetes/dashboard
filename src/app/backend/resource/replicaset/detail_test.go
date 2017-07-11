@@ -73,6 +73,7 @@ func TestGetReplicaSetDetail(t *testing.T) {
 					HorizontalPodAutoscalers: []horizontalpodautoscaler.HorizontalPodAutoscaler{},
 					Errors: []error{},
 				},
+				Errors: []error{},
 			},
 		},
 	}
@@ -121,7 +122,10 @@ func TestToReplicaSetDetail(t *testing.T) {
 			common.PodInfo{},
 			service.ServiceList{},
 			horizontalpodautoscaler.HorizontalPodAutoscalerList{},
-			ReplicaSetDetail{TypeMeta: api.TypeMeta{Kind: api.ResourceKindReplicaSet}},
+			ReplicaSetDetail{
+				TypeMeta: api.TypeMeta{Kind: api.ResourceKindReplicaSet},
+				Errors:   []error{},
+			},
 		}, {
 			&extensions.ReplicaSet{ObjectMeta: metaV1.ObjectMeta{Name: "replica-set"}},
 			common.EventList{Events: []common.Event{{Message: "event-msg"}}},
@@ -152,15 +156,16 @@ func TestToReplicaSetDetail(t *testing.T) {
 						ObjectMeta: api.ObjectMeta{Name: "hpa-1"},
 					}},
 				},
+				Errors: []error{},
 			},
 		},
 	}
 
 	for _, c := range cases {
-		actual := ToReplicaSetDetail(c.replicaSet, c.eventList, c.podList, c.podInfo, c.serviceList, c.hpaList)
+		actual := toReplicaSetDetail(c.replicaSet, c.eventList, c.podList, c.podInfo, c.serviceList, c.hpaList, []error{})
 
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("ToReplicaSetDetail(%#v, %#v, %#v, %#v, %#v) == \ngot %#v, \nexpected %#v",
+			t.Errorf("toReplicaSetDetail(%#v, %#v, %#v, %#v, %#v) == \ngot %#v, \nexpected %#v",
 				c.replicaSet, c.eventList, c.podList, c.podInfo, c.serviceList, actual, c.expected)
 		}
 	}
