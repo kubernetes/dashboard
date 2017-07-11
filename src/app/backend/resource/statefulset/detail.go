@@ -47,7 +47,6 @@ func GetStatefulSetDetail(client *k8sClient.Clientset, metricClient metricapi.Me
 	name string) (*StatefulSetDetail, error) {
 
 	log.Printf("Getting details of %s service in %s namespace", name, namespace)
-
 	ss, err := client.AppsV1beta1().StatefulSets(namespace).Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err

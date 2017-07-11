@@ -56,6 +56,7 @@ func TestGetServiceDetail(t *testing.T) {
 				EventList: common.EventList{
 					Events: []common.Event{},
 				},
+				Errors: []error{},
 			},
 		},
 		{
@@ -86,6 +87,7 @@ func TestGetServiceDetail(t *testing.T) {
 				EventList: common.EventList{
 					Events: []common.Event{},
 				},
+				Errors: []error{},
 			},
 		},
 	}
