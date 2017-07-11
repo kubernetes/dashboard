@@ -9,7 +9,7 @@ All translation data is stored in `i18n` directory in project's root. It include
 
 ## Providing translations for a new language
 
-To provide translations for a new language following steps have to be followed:
+To provide translations for a new language following steps have to be followed.
 
 #### Update configuration file
 
