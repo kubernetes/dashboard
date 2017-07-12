@@ -84,8 +84,7 @@ func TestGetDeploymentDetail(t *testing.T) {
 
 	podTemplateSpec := GetNewReplicaSetTemplate(deployment)
 
-	newReplicaSet := createReplicaSet("rs-1", "ns-1", map[string]string{"foo": "bar"},
-		podTemplateSpec)
+	newReplicaSet := createReplicaSet("rs-1", "ns-1", map[string]string{"foo": "bar"}, podTemplateSpec)
 
 	replicaSetList := &extensions.ReplicaSetList{
 		Items: []extensions.ReplicaSet{
@@ -118,6 +117,7 @@ func TestGetDeploymentDetail(t *testing.T) {
 				PodList: pod.PodList{
 					Pods:              []pod.Pod{},
 					CumulativeMetrics: make([]metricapi.Metric, 0),
+					Errors:            []error{},
 				},
 				Selector: map[string]string{"foo": "bar"},
 				StatusInfo: StatusInfo{
@@ -135,6 +135,7 @@ func TestGetDeploymentDetail(t *testing.T) {
 				OldReplicaSetList: replicaset.ReplicaSetList{
 					ReplicaSets:       []replicaset.ReplicaSet{},
 					CumulativeMetrics: make([]metricapi.Metric, 0),
+					Errors:            []error{},
 				},
 				NewReplicaSet: replicaset.ReplicaSet{
 					ObjectMeta: api.NewObjectMeta(newReplicaSet.ObjectMeta),
@@ -144,14 +145,17 @@ func TestGetDeploymentDetail(t *testing.T) {
 				EventList: common.EventList{
 					Events: []common.Event{},
 				},
-				HorizontalPodAutoscalerList: horizontalpodautoscaler.HorizontalPodAutoscalerList{HorizontalPodAutoscalers: []horizontalpodautoscaler.HorizontalPodAutoscaler{}},
+				HorizontalPodAutoscalerList: horizontalpodautoscaler.HorizontalPodAutoscalerList{
+					HorizontalPodAutoscalers: []horizontalpodautoscaler.HorizontalPodAutoscaler{},
+					Errors: []error{},
+				},
+				Errors: []error{},
 			},
 		},
 	}
 
 	for _, c := range cases {
 		fakeClient := fake.NewSimpleClientset(c.deployment, replicaSetList, podList, eventList)
-
 		dataselect.DefaultDataSelectWithMetrics.MetricQuery = dataselect.NoMetrics
 		actual, _ := GetDeploymentDetail(fakeClient, nil, c.namespace, c.name)
 
@@ -164,8 +168,7 @@ func TestGetDeploymentDetail(t *testing.T) {
 
 		for i, verb := range c.expectedActions {
 			if actions[i].GetVerb() != verb {
-				t.Errorf("Unexpected action: %+v, expected %s",
-					actions[i], verb)
+				t.Errorf("Unexpected action: %+v, expected %s", actions[i], verb)
 			}
 		}
 

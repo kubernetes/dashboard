@@ -20,8 +20,7 @@ import (
 	storage "k8s.io/client-go/pkg/apis/storage/v1beta1"
 )
 
-// ToStorageClass returns api storage class object based on kubernetes storage class object
-func ToStorageClass(storageClass *storage.StorageClass) StorageClass {
+func toStorageClass(storageClass *storage.StorageClass) StorageClass {
 	return StorageClass{
 		ObjectMeta:  api.NewObjectMeta(storageClass.ObjectMeta),
 		TypeMeta:    api.NewTypeMeta(api.ResourceKindStorageClass),

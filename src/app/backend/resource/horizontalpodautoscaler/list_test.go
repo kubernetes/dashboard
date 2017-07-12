@@ -133,6 +133,7 @@ func TestGetHorizontalPodAutoscalerList(t *testing.T) {
 			&HorizontalPodAutoscalerList{
 				ListMeta:                 api.ListMeta{TotalItems: 4},
 				HorizontalPodAutoscalers: ourHpaList,
+				Errors: []error{},
 			},
 		},
 	}
@@ -180,6 +181,7 @@ func TestGetHorizontalPodAutoscalerListForResource(t *testing.T) {
 			&HorizontalPodAutoscalerList{
 				ListMeta:                 api.ListMeta{TotalItems: 1},
 				HorizontalPodAutoscalers: []HorizontalPodAutoscaler{ourHpaList[0]},
+				Errors: []error{},
 			},
 		}, {
 			"test-kind2", "test-name2",
@@ -190,6 +192,7 @@ func TestGetHorizontalPodAutoscalerListForResource(t *testing.T) {
 			&HorizontalPodAutoscalerList{
 				ListMeta:                 api.ListMeta{TotalItems: 2},
 				HorizontalPodAutoscalers: []HorizontalPodAutoscaler{ourHpaList[1], ourHpaList[2]},
+				Errors: []error{},
 			},
 		}, {
 			"test-kind2", "test-name3",
@@ -200,6 +203,7 @@ func TestGetHorizontalPodAutoscalerListForResource(t *testing.T) {
 			&HorizontalPodAutoscalerList{
 				ListMeta:                 api.ListMeta{TotalItems: 1},
 				HorizontalPodAutoscalers: []HorizontalPodAutoscaler{ourHpaList[3]},
+				Errors: []error{},
 			},
 		}, {
 			"test-kind1", "test-name2",
@@ -210,19 +214,19 @@ func TestGetHorizontalPodAutoscalerListForResource(t *testing.T) {
 			&HorizontalPodAutoscalerList{
 				ListMeta:                 api.ListMeta{TotalItems: 0},
 				HorizontalPodAutoscalers: []HorizontalPodAutoscaler{},
+				Errors: []error{},
 			},
 		},
 	}
 
 	for _, c := range cases {
 		fakeClient := fake.NewSimpleClientset(c.hpaList)
-
 		actual, _ := GetHorizontalPodAutoscalerListForResource(fakeClient, "", c.kind, c.name)
-
 		actions := fakeClient.Actions()
+
 		if len(actions) != len(c.expectedActions) {
-			t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
-				len(c.expectedActions), len(actions))
+			t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions, len(c.expectedActions),
+				len(actions))
 			continue
 		}
 

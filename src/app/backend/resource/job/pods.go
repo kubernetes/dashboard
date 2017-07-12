@@ -45,7 +45,7 @@ func GetJobPods(client k8sClient.Interface, metricClient metricapi.MetricClient,
 		return nil, err
 	}
 
-	podList := pod.CreatePodList(pods, events, dsQuery, metricClient)
+	podList := pod.ToPodList(pods, events, []error{}, dsQuery, metricClient)
 	return &podList, nil
 }
 

@@ -46,7 +46,7 @@ func GetReplicationControllerPods(client k8sClient.Interface,
 		return nil, err
 	}
 
-	podList := pod.CreatePodList(pods, events, dsQuery, metricClient)
+	podList := pod.ToPodList(pods, events, []error{}, dsQuery, metricClient)
 	return &podList, nil
 }
 

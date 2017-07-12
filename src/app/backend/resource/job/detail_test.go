@@ -66,10 +66,12 @@ func TestGetJobDetail(t *testing.T) {
 				PodList: pod.PodList{
 					Pods:              []pod.Pod{},
 					CumulativeMetrics: make([]metricapi.Metric, 0),
+					Errors:            []error{},
 				},
 				EventList:   common.EventList{Events: []common.Event{}},
 				Parallelism: &jobCompletions,
 				Completions: &parallelism,
+				Errors:      []error{},
 			},
 		},
 	}

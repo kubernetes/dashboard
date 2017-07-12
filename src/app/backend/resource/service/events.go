@@ -23,23 +23,20 @@ import (
 	client "k8s.io/client-go/kubernetes"
 )
 
-// GetServiceEvents returns model events for a service with the given name in the given
-// namespace
-func GetServiceEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery, namespace, serviceName string) (
+// GetServiceEvents returns model events for a service with the given name in the given namespace.
+func GetServiceEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery, namespace, name string) (
 	*common.EventList, error) {
 
-	serviceEvents, err := event.GetEvents(client, namespace, serviceName)
-
+	serviceEvents, err := event.GetEvents(client, namespace, name)
 	if err != nil {
 		return nil, err
 	}
+
 	if !event.IsTypeFilled(serviceEvents) {
 		serviceEvents = event.FillEventsType(serviceEvents)
 	}
 
 	events := event.CreateEventList(serviceEvents, dsQuery)
-	log.Printf("Found %d events related to %s service in %s namespace",
-		len(events.Events), serviceName, namespace)
-
+	log.Printf("Found %d events related to %s service in %s namespace", len(events.Events), name, namespace)
 	return &events, nil
 }

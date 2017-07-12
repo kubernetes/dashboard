@@ -18,6 +18,7 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
@@ -119,11 +120,13 @@ type NodeDetail struct {
 
 	// Taints
 	Taints []v1.Taint `json:"taints,omitempty"`
+
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
 // GetNodeDetail gets node details.
-func GetNodeDetail(client k8sClient.Interface, metricClient metricapi.MetricClient,
-	name string) (*NodeDetail, error) {
+func GetNodeDetail(client k8sClient.Interface, metricClient metricapi.MetricClient, name string) (*NodeDetail, error) {
 	log.Printf("Getting details of %s node", name)
 
 	node, err := client.CoreV1().Nodes().Get(name, metaV1.GetOptions{})
@@ -138,24 +141,31 @@ func GetNodeDetail(client k8sClient.Interface, metricClient metricapi.MetricClie
 		metricapi.NoResourceCache, metricClient)
 
 	pods, err := getNodePods(client, *node)
-	if err != nil {
-		return nil, err
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
 	podList, err := GetNodePods(client, metricClient, dataselect.DefaultDataSelect, name)
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
+	}
 
 	eventList, err := event.GetNodeEvents(client, dataselect.DefaultDataSelect, node.Name)
-	if err != nil {
-		return nil, err
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
 	allocatedResources, err := getNodeAllocatedResources(*node, pods)
-	if err != nil {
-		return nil, err
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
 	metrics, _ := metricPromises.GetMetrics()
-	nodeDetails := toNodeDetail(*node, podList, eventList, allocatedResources, metrics)
+	nodeDetails := toNodeDetail(*node, podList, eventList, allocatedResources, metrics, nonCriticalErrors)
 	return &nodeDetails, nil
 }
 
@@ -236,11 +246,10 @@ func GetNodePods(client k8sClient.Interface, metricClient metricapi.MetricClient
 		return nil, err
 	}
 
-	podList := pod.CreatePodList(pods.Items, []v1.Event{}, dsQuery, metricClient)
+	podList := pod.ToPodList(pods.Items, []v1.Event{}, []error{}, dsQuery, metricClient)
 	return &podList, nil
 }
 
-// getNodePods return pods list
 func getNodePods(client k8sClient.Interface, node v1.Node) (*v1.PodList, error) {
 	fieldSelector, err := fields.ParseSelector("spec.nodeName=" + node.Name +
 		",status.phase!=" + string(v1.PodSucceeded) +
@@ -256,7 +265,7 @@ func getNodePods(client k8sClient.Interface, node v1.Node) (*v1.PodList, error) 
 }
 
 func toNodeDetail(node v1.Node, pods *pod.PodList, eventList *common.EventList,
-	allocatedResources NodeAllocatedResources, metrics []metricapi.Metric) NodeDetail {
+	allocatedResources NodeAllocatedResources, metrics []metricapi.Metric, nonCriticalErrors []error) NodeDetail {
 
 	return NodeDetail{
 		ObjectMeta:         api.NewObjectMeta(node.ObjectMeta),
@@ -274,5 +283,6 @@ func toNodeDetail(node v1.Node, pods *pod.PodList, eventList *common.EventList,
 		AllocatedResources: allocatedResources,
 		Metrics:            metrics,
 		Taints:             node.Spec.Taints,
+		Errors:             nonCriticalErrors,
 	}
 }

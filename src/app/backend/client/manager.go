@@ -138,8 +138,7 @@ func (self *clientManager) CSRFKey() string {
 	return self.csrfKey
 }
 
-// VerberClient returns new verber client based on authentication information extracted from
-// request
+// VerberClient returns new verber client based on authentication information extracted from request
 func (self *clientManager) VerberClient(req *restful.Request) (ResourceVerber, error) {
 	client, err := self.Client(req)
 	if err != nil {
@@ -268,6 +267,5 @@ func NewClientManager(kubeConfigPath, apiserverHost string) ClientManager {
 	}
 
 	result.init()
-
 	return result
 }

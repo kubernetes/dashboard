@@ -24,19 +24,28 @@ import (
 	"k8s.io/client-go/pkg/api/v1"
 )
 
-func TestGetPersistentVolumeList(t *testing.T) {
+func TestToPersistentVolumeList(t *testing.T) {
 	cases := []struct {
 		persistentVolumes []v1.PersistentVolume
 		expected          *PersistentVolumeList
 	}{
-		{nil, &PersistentVolumeList{Items: []PersistentVolume{}}},
+		{
+			nil,
+			&PersistentVolumeList{
+				Items: []PersistentVolume{},
+			},
+		},
 		{
 			[]v1.PersistentVolume{
 				{
-					ObjectMeta: metaV1.ObjectMeta{Name: "foo"},
+					ObjectMeta: metaV1.ObjectMeta{
+						Name: "foo",
+					},
 					Spec: v1.PersistentVolumeSpec{
 						PersistentVolumeReclaimPolicy: v1.PersistentVolumeReclaimRecycle,
-						AccessModes:                   []v1.PersistentVolumeAccessMode{v1.ReadWriteOnce},
+						AccessModes: []v1.PersistentVolumeAccessMode{
+							v1.ReadWriteOnce,
+						},
 						ClaimRef: &v1.ObjectReference{
 							Name:      "myclaim-name",
 							Namespace: "default",
@@ -50,10 +59,16 @@ func TestGetPersistentVolumeList(t *testing.T) {
 				},
 			},
 			&PersistentVolumeList{
-				ListMeta: api.ListMeta{TotalItems: 1},
+				ListMeta: api.ListMeta{
+					TotalItems: 1,
+				},
 				Items: []PersistentVolume{{
-					TypeMeta:    api.TypeMeta{Kind: "persistentvolume"},
-					ObjectMeta:  api.ObjectMeta{Name: "foo"},
+					TypeMeta: api.TypeMeta{
+						Kind: "persistentvolume",
+					},
+					ObjectMeta: api.ObjectMeta{
+						Name: "foo",
+					},
 					Capacity:    nil,
 					AccessModes: []v1.PersistentVolumeAccessMode{v1.ReadWriteOnce},
 					Status:      v1.VolumePending,
@@ -64,9 +79,9 @@ func TestGetPersistentVolumeList(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := getPersistentVolumeList(c.persistentVolumes, dataselect.NoDataSelect)
+		actual := toPersistentVolumeList(c.persistentVolumes, nil, dataselect.NoDataSelect)
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("getPersistentVolumeList(%#v) == \n%#v\nexpected \n%#v\n",
+			t.Errorf("toPersistentVolumeList(%#v) == \n%#v\nexpected \n%#v\n",
 				c.persistentVolumes, actual, c.expected)
 		}
 	}

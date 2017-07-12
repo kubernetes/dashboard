@@ -18,8 +18,10 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/pkg/api/v1"
 )
@@ -30,6 +32,9 @@ type ConfigMapList struct {
 
 	// Unordered list of Config Maps
 	Items []ConfigMap `json:"items"`
+
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
 // ConfigMap API resource provides mechanisms to inject containers with configuration data while keeping
@@ -37,13 +42,10 @@ type ConfigMapList struct {
 type ConfigMap struct {
 	ObjectMeta api.ObjectMeta `json:"objectMeta"`
 	TypeMeta   api.TypeMeta   `json:"typeMeta"`
-
-	// No additional info in the list object.
 }
 
 // GetConfigMapList returns a list of all ConfigMaps in the cluster.
-func GetConfigMapList(client *client.Clientset, nsQuery *common.NamespaceQuery,
-	dsQuery *dataselect.DataSelectQuery) (*ConfigMapList, error) {
+func GetConfigMapList(client *client.Clientset, nsQuery *common.NamespaceQuery, dsQuery *dataselect.DataSelectQuery) (*ConfigMapList, error) {
 	log.Printf("Getting list config maps in the namespace %s", nsQuery.ToRequestParam())
 	channels := &common.ResourceChannels{
 		ConfigMapList: common.GetConfigMapListChannel(client, nsQuery, 1),
@@ -52,26 +54,32 @@ func GetConfigMapList(client *client.Clientset, nsQuery *common.NamespaceQuery,
 	return GetConfigMapListFromChannels(channels, dsQuery)
 }
 
-// GetConfigMapListFromChannels returns a list of all Config Maps in the cluster
-// reading required resource list once from the channels.
-func GetConfigMapListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery) (
-	*ConfigMapList, error) {
-
+// GetConfigMapListFromChannels returns a list of all Config Maps in the cluster reading required resource list once from the channels.
+func GetConfigMapListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery) (*ConfigMapList, error) {
 	configMaps := <-channels.ConfigMapList.List
-	if err := <-channels.ConfigMapList.Error; err != nil {
-		return nil, err
+	err := <-channels.ConfigMapList.Error
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	result := getConfigMapList(configMaps.Items, dsQuery)
+	result := toConfigMapList(configMaps.Items, nonCriticalErrors, dsQuery)
 
 	return result, nil
 }
 
-func getConfigMapList(configMaps []v1.ConfigMap, dsQuery *dataselect.DataSelectQuery) *ConfigMapList {
+func toConfigMap(meta metaV1.ObjectMeta) ConfigMap {
+	return ConfigMap{
+		ObjectMeta: api.NewObjectMeta(meta),
+		TypeMeta:   api.NewTypeMeta(api.ResourceKindConfigMap),
+	}
+}
 
+func toConfigMapList(configMaps []v1.ConfigMap, nonCriticalErrors []error, dsQuery *dataselect.DataSelectQuery) *ConfigMapList {
 	result := &ConfigMapList{
 		Items:    make([]ConfigMap, 0),
 		ListMeta: api.ListMeta{TotalItems: len(configMaps)},
+		Errors:   nonCriticalErrors,
 	}
 
 	configMapCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(configMaps), dsQuery)
@@ -79,11 +87,7 @@ func getConfigMapList(configMaps []v1.ConfigMap, dsQuery *dataselect.DataSelectQ
 	result.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
 	for _, item := range configMaps {
-		result.Items = append(result.Items,
-			ConfigMap{
-				ObjectMeta: api.NewObjectMeta(item.ObjectMeta),
-				TypeMeta:   api.NewTypeMeta(api.ResourceKindConfigMap),
-			})
+		result.Items = append(result.Items, toConfigMap(item.ObjectMeta))
 	}
 
 	return result

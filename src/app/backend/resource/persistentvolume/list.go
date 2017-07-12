@@ -18,6 +18,7 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	client "k8s.io/client-go/kubernetes"
@@ -26,23 +27,22 @@ import (
 
 // PersistentVolumeList contains a list of Persistent Volumes in the cluster.
 type PersistentVolumeList struct {
-	ListMeta api.ListMeta `json:"listMeta"`
+	ListMeta api.ListMeta       `json:"listMeta"`
+	Items    []PersistentVolume `json:"items"`
 
-	// Unordered list of Persistent Volumes
-	Items []PersistentVolume `json:"items"`
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
 // PersistentVolume provides the simplified presentation layer view of Kubernetes Persistent Volume resource.
 type PersistentVolume struct {
-	ObjectMeta api.ObjectMeta `json:"objectMeta"`
-	TypeMeta   api.TypeMeta   `json:"typeMeta"`
-
+	ObjectMeta  api.ObjectMeta                  `json:"objectMeta"`
+	TypeMeta    api.TypeMeta                    `json:"typeMeta"`
 	Capacity    v1.ResourceList                 `json:"capacity"`
 	AccessModes []v1.PersistentVolumeAccessMode `json:"accessModes"`
 	Status      v1.PersistentVolumePhase        `json:"status"`
 	Claim       string                          `json:"claim"`
 	Reason      string                          `json:"reason"`
-	// No additional info in the list object.
 }
 
 // GetPersistentVolumeList returns a list of all Persistent Volumes in the cluster.
@@ -57,23 +57,25 @@ func GetPersistentVolumeList(client *client.Clientset, dsQuery *dataselect.DataS
 
 // GetPersistentVolumeListFromChannels returns a list of all Persistent Volumes in the cluster
 // reading required resource list once from the channels.
-func GetPersistentVolumeListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery) (
-	*PersistentVolumeList, error) {
-
+func GetPersistentVolumeListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery) (*PersistentVolumeList, error) {
 	persistentVolumes := <-channels.PersistentVolumeList.List
-	if err := <-channels.PersistentVolumeList.Error; err != nil {
-		return &PersistentVolumeList{Items: []PersistentVolume{}}, err
+	err := <-channels.PersistentVolumeList.Error
+
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	result := getPersistentVolumeList(persistentVolumes.Items, dsQuery)
-
-	return result, nil
+	return toPersistentVolumeList(persistentVolumes.Items, nonCriticalErrors, dsQuery), nil
 }
 
-func getPersistentVolumeList(persistentVolumes []v1.PersistentVolume, dsQuery *dataselect.DataSelectQuery) *PersistentVolumeList {
+func toPersistentVolumeList(persistentVolumes []v1.PersistentVolume, nonCriticalErrors []error,
+	dsQuery *dataselect.DataSelectQuery) *PersistentVolumeList {
+
 	result := &PersistentVolumeList{
 		Items:    make([]PersistentVolume, 0),
 		ListMeta: api.ListMeta{TotalItems: len(persistentVolumes)},
+		Errors:   nonCriticalErrors,
 	}
 
 	pvCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(persistentVolumes), dsQuery)
