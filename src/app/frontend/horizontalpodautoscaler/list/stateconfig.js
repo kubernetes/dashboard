@@ -14,7 +14,7 @@
 
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
 
-import {stateUrl, stateName as parentState} from './../state';
+import {stateName as parentState, stateUrl} from './../state';
 import {HorizontalPodAutoscalerListController} from './controller';
 
 /**

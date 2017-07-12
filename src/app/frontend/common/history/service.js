@@ -18,13 +18,13 @@
 export class HistoryService {
   /**
    * @param {!ui.router.$state} $state
-   * @param {} $transitions
+   * @param {!kdUiRouter.$transitions} $transitions
    * @ngInject
    */
   constructor($state, $transitions) {
     /** @private {!ui.router.$state} */
     this.state_ = $state;
-    /** @private {!angular.Scope} */
+    /** @private {!kdUiRouter.$transitions} */
     this.transitions_ = $transitions;
     /** @private {string} */
     this.previousStateName_ = '';

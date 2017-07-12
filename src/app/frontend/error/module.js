@@ -33,8 +33,7 @@ export default angular
 /**
  * Configures event catchers for the error views.
  *
- * @param {!angular.Scope} $rootScope
- * @param {!ui.router.$state} $state
+ * @param {!kdUiRouter.$state} $state
  * @ngInject
  */
 function errorConfig($state) {

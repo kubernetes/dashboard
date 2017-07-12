@@ -26,7 +26,7 @@ export class ChromeController {
   /**
    * @param {!ui.router.$state} $state
    * @param {!angular.$timeout} $timeout
-   * @param {!ui.router.transitions} $transitions
+   * @param {!kdUiRouter.$transitions} $transitions
    * @ngInject
    */
   constructor($state, $timeout, $transitions) {
@@ -48,7 +48,7 @@ export class ChromeController {
     /** @private {!angular.$timeout} */
     this.timeout_ = $timeout;
 
-    /** @private {!ui.router.transitions} */
+    /** @private {!kdUiRouter.$transitions} */
     this.transitions_ = $transitions;
   }
 
@@ -82,8 +82,8 @@ export class ChromeController {
       // for pages that load instantaneously.
       this.timeout_(() => {
         this.showLoadingSpinner = true;
-      }, 250);}
-    );
+      }, 250);
+    });
 
     this.transitions_.onError({}, this.hideSpinner_.bind(this));
     this.transitions_.onSuccess({}, this.hideSpinner_.bind(this));

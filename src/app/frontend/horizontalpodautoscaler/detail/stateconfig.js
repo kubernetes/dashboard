@@ -17,7 +17,7 @@ import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
 import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
 import {stateName as horizontalPodAutoscalerList} from 'horizontalpodautoscaler/list/state';
 
-import {stateUrl, stateName as parentState} from './../state';
+import {stateName as parentState, stateUrl} from './../state';
 import {ActionBarController} from './actionbar_controller';
 import {HorizontalPodAutoscalerDetailController} from './controller';
 

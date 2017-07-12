@@ -17,7 +17,7 @@ import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
 import {appendDetailParamsToUrl} from 'common/resource/globalresourcedetail';
 
 import {stateName as namespaceList} from './../list/state';
-import {stateUrl, stateName as parentState} from './../state';
+import {stateName as parentState, stateUrl} from './../state';
 import {NamespaceDetailController} from './controller';
 
 /**

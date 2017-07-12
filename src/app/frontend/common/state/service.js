@@ -21,11 +21,11 @@
 export class FutureStateService {
   /**
    * @param {!ui.router.$state} $state
-   * @param {} $transitions
+   * @param {!kdUiRouter.$transitions} $transitions
    * @ngInject
    */
   constructor($state, $transitions) {
-    /** @private {} */
+    /** @private {!kdUiRouter.$transitions} */
     this.transitions_ = $transitions;
 
     /** @type {!ui.router.$state} */

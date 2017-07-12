@@ -37,8 +37,8 @@ export default class DeployFromSettingsController {
    * @param {!./../common/csrftoken/service.CsrfTokenService} kdCsrfTokenService
    * @ngInject
    */
-  constructor($log, $resource, $q, $mdDialog, kdHistoryService,
-              kdNamespaceService, kdCsrfTokenService) {
+  constructor(
+      $log, $resource, $q, $mdDialog, kdHistoryService, kdNamespaceService, kdCsrfTokenService) {
     /**
      * Initialized from the template.
      * @export {!angular.FormController}
@@ -156,23 +156,37 @@ export default class DeployFromSettingsController {
     /** @private {!angular.$q.Promise} */
     this.tokenPromise = kdCsrfTokenService.getTokenForAction('appdeployment');
 
-    /**
-     * @export
-     */
+    /** @export {!Array<string>} */
+    this.protocols;
+
+    /** @export {!Array<string>} */
+    this.namespaces;
+
+    /** @export {!backendApi.Protocols} - initialized from resolve */
+    this.protocolList;
+
+    /** @export {!backendApi.NamespaceList} - initialized from resolve */
+    this.namespaceList;
+
+    /** @export {!kdUiRouter.$transition$} - initialized from resolve */
+    this.$transition$;
+
+    /** @export */
     this.i18n = i18n;
   }
 
   /** @export */
   $onInit() {
-    this.protocols = this.protocols.protocols;
-    this.namespaces = this.namespaces.namespaces.map((n) => n.objectMeta.name);
+    this.protocols = this.protocolList.protocols;
+    this.namespaces = this.namespaceList.namespaces.map((n) => n.objectMeta.name);
 
     /**
      * Currently chosen namespace.
      * @export {string}
      */
     this.namespace = !this.kdNamespaceService_.areMultipleNamespacesSelected() ?
-    this.$transition$.params().namespace || this.namespaces[0] : this.namespaces[0];
+        this.$transition$.params().namespace || this.namespaces[0] :
+        this.namespaces[0];
   }
 
   /**
@@ -214,7 +228,8 @@ export default class DeployFromSettingsController {
         replicas: this.replicas,
         namespace: this.namespace,
         cpuRequirement: angular.isNumber(this.cpuRequirement) ? this.cpuRequirement : null,
-        memoryRequirement: angular.isNumber(this.memoryRequirement) ? `${this.memoryRequirement}Mi` : null,
+        memoryRequirement:
+            angular.isNumber(this.memoryRequirement) ? `${this.memoryRequirement}Mi` : null,
         labels: this.toBackendApiLabels_(this.labels),
         runAsPrivileged: this.runAsPrivileged,
       };
@@ -425,13 +440,8 @@ export const deployFromSettingsComponent = {
   controllerAs: 'ctrl',
   templateUrl: 'deploy/deployfromsettings.html',
   bindings: {
-    /**
-     * List of available namespaces.
-     * @export {!Array<string>}
-     */
-    'namespaces': '<',
-    /** @export {!Array<string>} */
-    'protocols': '<',
+    'namespaceList': '<',
+    'protocolList': '<',
     '$transition$': '<',
   }
 };
@@ -440,9 +450,10 @@ const i18n = {
 
   /** @export {string} @desc Appears when the typed in app name on the deploy from settings page
    exceeds the maximal allowed length. */
-  MSG_DEPLOY_SETTINGS_APP_NAME_MAX_LENGTH_WARNING: goog.getMsg(`Name must be up to {$maxLength} characters long.`, {
-    'maxLength': '24',
-  }),
+  MSG_DEPLOY_SETTINGS_APP_NAME_MAX_LENGTH_WARNING:
+      goog.getMsg(`Name must be up to {$maxLength} characters long.`, {
+        'maxLength': '24',
+      }),
 
   /** @export {string} @desc User help for the `App name` input on the deploy from settings page. */
   MSG_DEPLOY_SETTINGS_APP_NAME_USER_HELP: goog.getMsg(
@@ -479,7 +490,8 @@ const i18n = {
 
   /** @export {string} @desc Appears to tell the user that the number of pods on the deploy from
    settings page must be non-negative or integer. */
-  MSG_DEPLOY_SETTINGS_NUMBER_OF_PODS_INT_WARNING: goog.getMsg(`Number of pods must be a positive integer`),
+  MSG_DEPLOY_SETTINGS_NUMBER_OF_PODS_INT_WARNING:
+      goog.getMsg(`Number of pods must be a positive integer`),
 
   /** @export {string} @desc Appears to tell the user that the number of pods on the deploy from
    settings page must be at least 1. */
@@ -503,7 +515,8 @@ const i18n = {
   /** @export {string} @desc User help, tells the user what the DNS name of his deployed service (on
    the deploy page) is going to be. The actual name will follow, so this text must end with a
    colon. */
-  MSG_DEPLOY_SETTINGS_SERVICE_DNS_NAME_USER_HELP: goog.getMsg(`The internal DNS name for this Service will be:`),
+  MSG_DEPLOY_SETTINGS_SERVICE_DNS_NAME_USER_HELP:
+      goog.getMsg(`The internal DNS name for this Service will be:`),
 
   /** @export {string} @desc Label "Description", which appears as a placeholder in the empty
    description input on the deploy from settings page. */
@@ -539,7 +552,8 @@ const i18n = {
 
   /** @export {string} @desc User help for the namespace selection on the deploy from settings page.
    */
-  MSG_DEPLOY_SETTINGS_NAMESPACE_USER_HELP: goog.getMsg(`Namespaces let you partition resources into logically named groups.`),
+  MSG_DEPLOY_SETTINGS_NAMESPACE_USER_HELP:
+      goog.getMsg(`Namespaces let you partition resources into logically named groups.`),
 
   /** @export {string} @desc Label "Image Pull Secret", which appears as a placeholder in the image
    pull secret selection box on the deploy from settings page. */
@@ -560,11 +574,13 @@ const i18n = {
 
   /** @export {string} @desc Appears to tell the user that the typed in CPU cores count on the
    deploy page is not a number. */
-  MSG_DEPLOY_SETTINGS_CPU_NOT_A_NUMBER_WARNING: goog.getMsg(`CPU requirement must be given as a valid number.`),
+  MSG_DEPLOY_SETTINGS_CPU_NOT_A_NUMBER_WARNING:
+      goog.getMsg(`CPU requirement must be given as a valid number.`),
 
   /** @export {string} @desc Appears to tell the user that the typed in number of CPU cores (on the
    deploy page) cannot be negative. */
-  MSG_DEPLOY_SETTINGS_CPU_NEGATIVE_WARNING: goog.getMsg(`CPU requirement must be given as a positive number.`),
+  MSG_DEPLOY_SETTINGS_CPU_NEGATIVE_WARNING:
+      goog.getMsg(`CPU requirement must be given as a positive number.`),
 
   /** @export {string} @desc Label "Memory requirement", which appears as a placeholder for the
    memory input on the deploy from settings page. */
@@ -572,15 +588,18 @@ const i18n = {
 
   /** @export {string} @desc Appears to tell the user that the typed in memory on the deploy page is
    not a number. */
-  MSG_DEPLOY_SETTINGS_MEMORY_NOT_A_NUMBER_WARNING: goog.getMsg(`Memory requirement must be given as a valid number.`),
+  MSG_DEPLOY_SETTINGS_MEMORY_NOT_A_NUMBER_WARNING:
+      goog.getMsg(`Memory requirement must be given as a valid number.`),
 
   /** @export {string} @desc Appears to tell the user that the typed in memory (on the deploy page)
    cannot be negative. */
-  MSG_DEPLOY_SETTINGS_MEMORY_NEGATIVE_WARNING: goog.getMsg(`Memory requirement must be given as a positive number.`),
+  MSG_DEPLOY_SETTINGS_MEMORY_NEGATIVE_WARNING:
+      goog.getMsg(`Memory requirement must be given as a positive number.`),
 
   /** @export {string} @desc User help for the memory and cpu requirement inputs on the deploy from
    settings page.*/
-  MSG_DEPLOY_SETTINGS_CPU_MEM_USER_HELP: goog.getMsg(`You can specify minimum CPU and memory requirements for the container.`),
+  MSG_DEPLOY_SETTINGS_CPU_MEM_USER_HELP:
+      goog.getMsg(`You can specify minimum CPU and memory requirements for the container.`),
 
   /** @export {string} @desc Label "Run command" (a noun, not a verb), which serves as a placeholder
    for the 'Command' input on the deploy from settings page.*/

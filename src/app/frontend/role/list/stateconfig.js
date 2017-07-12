@@ -14,7 +14,9 @@
 
 import {stateName as parentStateName} from 'cluster/state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
-import {stateUrl, stateName as parentState} from '../state';
+
+import {stateName as parentState, stateUrl} from '../state';
+
 import {RoleListController} from './controller';
 
 const i18n = {

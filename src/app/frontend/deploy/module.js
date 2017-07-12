@@ -16,13 +16,14 @@ import componentsModule from 'common/components/module';
 import csrfTokenModule from 'common/csrftoken/module';
 import historyModule from 'common/history/module';
 import validatorsModule from 'common/validators/module';
+
 import errorHandlingModule from '../common/errorhandling/module';
 
-import {deployLabelComponent} from './deploylabel_component';
-import {environmentVariablesComponent} from './environmentvariables_component';
 import {deployComponent} from './component';
 import {deployFromFileComponent} from './deployfromfile_component';
 import {deployFromSettingsComponent} from './deployfromsettings_component';
+import {deployLabelComponent} from './deploylabel_component';
+import {environmentVariablesComponent} from './environmentvariables_component';
 import fileReaderDirective from './filereader_directive';
 import helpSectionModule from './helpsection/helpsection_module';
 import initConfig from './initconfig';

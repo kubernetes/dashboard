@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {LogsService} from './service';
 import {logsComponent} from './component';
+import {LogsService} from './service';
 import stateConfig from './stateconfig';
 
 /**

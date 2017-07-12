@@ -71,6 +71,9 @@ export class LogsController {
     /** @export {!Array<string>} */
     this.containers;
 
+    /** @export {!backendApi.PodContainerList} - initialized from resolve */
+    this.podContainers;
+
     /** @export {string} */
     this.container;
 
@@ -80,8 +83,11 @@ export class LogsController {
     /** @private {!../common/errorhandling/service.ErrorDialog} */
     this.errorDialog_ = errorDialog;
 
-    /** @private {TODO} */
+    /** @private {!ui.router.$stateParams} */
     this.stateParams_;
+
+    /** @export {!kdUiRouter.$transition$} - initialized from resolve */
+    this.$transition$;
   }
 
   $onInit() {

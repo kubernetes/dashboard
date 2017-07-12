@@ -15,7 +15,7 @@
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
 import {stateName as workloadsStateName} from 'workloads/state';
 
-import {stateUrl, stateName as parentState} from './../state';
+import {stateName as parentState, stateUrl} from './../state';
 import {PodListController} from './controller';
 
 /**

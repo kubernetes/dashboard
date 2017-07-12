@@ -34,9 +34,9 @@ export default function stateConfig($stateProvider) {
     component: 'kdDeployFromSettings',
     url: '/app',
     resolve: {
-      'namespaces': resolveNamespaces,
+      'namespaceList': resolveNamespaces,
       'protocolsResource': getProtocolsResource,
-      'protocols': getDefaultProtocols,
+      'protocolList': getDefaultProtocols,
     },
     data: {
       [breadcrumbsConfig]: {
