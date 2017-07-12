@@ -71,6 +71,7 @@ func TestGetJobDetail(t *testing.T) {
 				EventList:   common.EventList{Events: []common.Event{}},
 				Parallelism: &jobCompletions,
 				Completions: &parallelism,
+				Errors:      []error{},
 			},
 		},
 	}

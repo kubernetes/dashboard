@@ -16,6 +16,7 @@ package job
 
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
@@ -44,46 +45,49 @@ type JobDetail struct {
 	// List of events related to this Job.
 	EventList common.EventList `json:"eventList"`
 
-	// Parallelism specifies the maximum desired number of pods the job should run at any given
-	// time.
+	// Parallelism specifies the maximum desired number of pods the job should run at any given time.
 	Parallelism *int32 `json:"parallelism"`
 
-	// Completions specifies the desired number of successfully finished pods the job should be
-	// run with.
+	// Completions specifies the desired number of successfully finished pods the job should be run with.
 	Completions *int32 `json:"completions"`
+
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
 // GetJobDetail gets job details.
-func GetJobDetail(client k8sClient.Interface, metricClient metricapi.MetricClient,
-	namespace, name string) (*JobDetail, error) {
+func GetJobDetail(client k8sClient.Interface, metricClient metricapi.MetricClient, namespace, name string) (
+	*JobDetail, error) {
 
-	// TODO(floreks): Use channels.
 	jobData, err := client.BatchV1().Jobs(namespace).Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
 
 	podList, err := GetJobPods(client, metricClient, dataselect.DefaultDataSelectWithMetrics, namespace, name)
-	if err != nil {
-		return nil, err
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
 	podInfo, err := getJobPodInfo(client, jobData)
-	if err != nil {
-		return nil, err
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
 	eventList, err := GetJobEvents(client, dataselect.DefaultDataSelect, jobData.Namespace, jobData.Name)
-	if err != nil {
-		return nil, err
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	job := getJobDetail(jobData, metricClient, *eventList, *podList, *podInfo)
+	job := toJobDetail(jobData, *eventList, *podList, *podInfo, nonCriticalErrors)
 	return &job, nil
 }
 
-func getJobDetail(job *batch.Job, metricClient metricapi.MetricClient,
-	eventList common.EventList, podList pod.PodList, podInfo common.PodInfo) JobDetail {
+func toJobDetail(job *batch.Job, eventList common.EventList, podList pod.PodList, podInfo common.PodInfo,
+	nonCriticalErrors []error) JobDetail {
 	return JobDetail{
 		ObjectMeta:      api.NewObjectMeta(job.ObjectMeta),
 		TypeMeta:        api.NewTypeMeta(api.ResourceKindJob),
@@ -93,5 +97,6 @@ func getJobDetail(job *batch.Job, metricClient metricapi.MetricClient,
 		EventList:       eventList,
 		Parallelism:     job.Spec.Parallelism,
 		Completions:     job.Spec.Completions,
+		Errors:          nonCriticalErrors,
 	}
 }
