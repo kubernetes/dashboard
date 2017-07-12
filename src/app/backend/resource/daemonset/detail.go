@@ -18,9 +18,10 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	ds "github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
 	"k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -53,6 +54,9 @@ type DaemonSetDetail struct {
 
 	// List of events related to this daemon set
 	EventList common.EventList `json:"eventList"`
+
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
 // Returns detailed information about the given daemon set in the given namespace.
@@ -65,24 +69,28 @@ func GetDaemonSetDetail(client k8sClient.Interface, metricClient metricapi.Metri
 		return nil, err
 	}
 
-	podList, err := GetDaemonSetPods(client, metricClient, dataselect.DefaultDataSelectWithMetrics, name, namespace)
-	if err != nil {
-		return nil, err
+	podList, err := GetDaemonSetPods(client, metricClient, ds.DefaultDataSelectWithMetrics, name, namespace)
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
 	podInfo, err := getDaemonSetPodInfo(client, daemonSet)
-	if err != nil {
-		return nil, err
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	serviceList, err := GetDaemonSetServices(client, dataselect.DefaultDataSelect, namespace, name)
-	if err != nil {
-		return nil, err
+	serviceList, err := GetDaemonSetServices(client, ds.DefaultDataSelect, namespace, name)
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	eventList, err := GetDaemonSetEvents(client, dataselect.DefaultDataSelect, daemonSet.Namespace, daemonSet.Name)
-	if err != nil {
-		return nil, err
+	eventList, err := GetDaemonSetEvents(client, ds.DefaultDataSelect, daemonSet.Namespace, daemonSet.Name)
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
 	daemonSetDetail := &DaemonSetDetail{
@@ -93,6 +101,7 @@ func GetDaemonSetDetail(client k8sClient.Interface, metricClient metricapi.Metri
 		PodList:       *podList,
 		ServiceList:   *serviceList,
 		EventList:     *eventList,
+		Errors:        nonCriticalErrors,
 	}
 
 	for _, container := range daemonSet.Spec.Template.Spec.Containers {

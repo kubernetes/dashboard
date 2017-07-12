@@ -149,6 +149,7 @@ func TestGetDeploymentDetail(t *testing.T) {
 					HorizontalPodAutoscalers: []horizontalpodautoscaler.HorizontalPodAutoscaler{},
 					Errors: []error{},
 				},
+				Errors: []error{},
 			},
 		},
 	}
