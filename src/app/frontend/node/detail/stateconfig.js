@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {actionbarViewName} from 'chrome/state';
+import {actionbarViewName, stateName as chromeStateName} from 'chrome/state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
 import {appendDetailParamsToUrl} from 'common/resource/globalresourcedetail';
 
@@ -44,7 +44,7 @@ export const config = {
       controllerAs: 'ctrl',
       templateUrl: 'node/detail/detail.html',
     },
-    [actionbarViewName]: {},
+    [`${actionbarViewName}@${chromeStateName}`]: {},
   },
 };
 
