@@ -88,8 +88,12 @@ func scaleJobResource(client client.Interface, namespace, name, count string, rc
 	if err != nil {
 		return err
 	}
+
 	*j.Spec.Parallelism = int32(c)
 	j, err = client.BatchV1().Jobs(namespace).Update(j)
+	if err != nil {
+		return err
+	}
 
 	rc.DesiredReplicas = *j.Spec.Parallelism
 	rc.ActualReplicas = *j.Spec.Parallelism
@@ -107,6 +111,9 @@ func scaleStatefulSetResource(client client.Interface, namespace, name, count st
 
 	*ss.Spec.Replicas = int32(c)
 	ss, err = client.AppsV1beta1().StatefulSets(namespace).Update(ss)
+	if err != nil {
+		return err
+	}
 
 	rc.DesiredReplicas = *ss.Spec.Replicas
 	rc.ActualReplicas = ss.Status.Replicas

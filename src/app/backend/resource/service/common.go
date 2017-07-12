@@ -47,12 +47,12 @@ func ToServiceDetail(service *v1.Service) ServiceDetail {
 	}
 }
 
-// CreateServiceList returns paginated service list based on given service array
-// and pagination query.
-func CreateServiceList(services []v1.Service, dsQuery *dataselect.DataSelectQuery) *ServiceList {
+// CreateServiceList returns paginated service list based on given service array and pagination query.
+func CreateServiceList(services []v1.Service, nonCriticalErrors []error, dsQuery *dataselect.DataSelectQuery) *ServiceList {
 	serviceList := &ServiceList{
 		Services: make([]Service, 0),
 		ListMeta: api.ListMeta{TotalItems: len(services)},
+		Errors:   nonCriticalErrors,
 	}
 
 	serviceCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(services), dsQuery)

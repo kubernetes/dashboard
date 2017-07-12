@@ -54,16 +54,16 @@ func TestGetServiceList(t *testing.T) {
 						InternalEndpoint: common.Endpoint{Host: "svc-1.ns-1"},
 					},
 				},
+				Errors: []error{},
 			},
 		},
 	}
 
 	for _, c := range cases {
 		fakeClient := fake.NewSimpleClientset(c.serviceList)
-
 		actual, _ := GetServiceList(fakeClient, common.NewNamespaceQuery(nil), dataselect.NoDataSelect)
-
 		actions := fakeClient.Actions()
+
 		if len(actions) != len(c.expectedActions) {
 			t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
 				len(c.expectedActions), len(actions))

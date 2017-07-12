@@ -74,7 +74,7 @@ func GetDeploymentOldReplicaSets(client client.Interface, dsQuery *dataselect.Da
 	for i, replicaSet := range oldRs {
 		oldReplicaSets[i] = *replicaSet
 	}
-	oldReplicaSetList := replicaset.CreateReplicaSetList(oldReplicaSets, rawPods.Items,
-		rawEvents.Items, dsQuery, nil)
+
+	oldReplicaSetList := replicaset.ToReplicaSetList(oldReplicaSets, rawPods.Items, rawEvents.Items, []error{}, dsQuery, nil) // TODO
 	return oldReplicaSetList, nil
 }

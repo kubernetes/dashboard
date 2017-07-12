@@ -18,11 +18,11 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
-	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	client "k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/pkg/api/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
@@ -30,11 +30,14 @@ import (
 
 // ReplicationSetList contains a list of Deployments in the cluster.
 type DeploymentList struct {
-	ListMeta api.ListMeta `json:"listMeta"`
+	ListMeta          api.ListMeta       `json:"listMeta"`
+	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`
 
 	// Unordered list of Deployments.
-	Deployments       []Deployment       `json:"deployments"`
-	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`
+	Deployments []Deployment `json:"deployments"`
+
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
 // Deployment is a presentation layer view of Kubernetes Deployment resource. This means
@@ -52,8 +55,8 @@ type Deployment struct {
 }
 
 // GetDeploymentList returns a list of all Deployments in the cluster.
-func GetDeploymentList(client client.Interface, nsQuery *common.NamespaceQuery,
-	dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) (*DeploymentList, error) {
+func GetDeploymentList(client client.Interface, nsQuery *common.NamespaceQuery, dsQuery *dataselect.DataSelectQuery,
+	metricClient metricapi.MetricClient) (*DeploymentList, error) {
 	log.Print("Getting list of all deployments in the cluster")
 
 	channels := &common.ResourceChannels{
@@ -68,65 +71,60 @@ func GetDeploymentList(client client.Interface, nsQuery *common.NamespaceQuery,
 
 // GetDeploymentList returns a list of all Deployments in the cluster
 // reading required resource list once from the channels.
-func GetDeploymentListFromChannels(channels *common.ResourceChannels,
-	dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) (*DeploymentList, error) {
+func GetDeploymentListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery,
+	metricClient metricapi.MetricClient) (*DeploymentList, error) {
 
 	deployments := <-channels.DeploymentList.List
-	if err := <-channels.DeploymentList.Error; err != nil {
-		statusErr, ok := err.(*k8serrors.StatusError)
-		if ok && statusErr.ErrStatus.Reason == "NotFound" {
-			// NotFound - this means that the server does not support Deployment objects, which
-			// is fine.
-			emptyList := &DeploymentList{
-				Deployments: make([]Deployment, 0),
-			}
-			return emptyList, nil
-		}
-		return nil, err
+	err := <-channels.DeploymentList.Error
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
 	pods := <-channels.PodList.List
-	if err := <-channels.PodList.Error; err != nil {
-		return nil, err
+	err = <-channels.PodList.Error
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
 	events := <-channels.EventList.List
-	if err := <-channels.EventList.Error; err != nil {
-		return nil, err
+	err = <-channels.EventList.Error
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
 	rs := <-channels.ReplicaSetList.List
-	if err := <-channels.ReplicaSetList.Error; err != nil {
-		return nil, err
+	err = <-channels.ReplicaSetList.Error
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	return CreateDeploymentList(deployments.Items, pods.Items, events.Items, rs.Items, dsQuery, metricClient), nil
+	return toDeploymentList(deployments.Items, pods.Items, events.Items, rs.Items, nonCriticalErrors, dsQuery, metricClient), nil
 }
 
-// CreateDeploymentList returns a list of all Deployment model objects in the cluster, based on all
-// Kubernetes Deployment API objects.
-func CreateDeploymentList(deployments []extensions.Deployment, pods []v1.Pod, events []v1.Event,
-	rs []extensions.ReplicaSet, dsQuery *dataselect.DataSelectQuery,
-	metricClient metricapi.MetricClient) *DeploymentList {
+func toDeploymentList(deployments []extensions.Deployment, pods []v1.Pod, events []v1.Event, rs []extensions.ReplicaSet,
+	nonCriticalErrors []error, dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) *DeploymentList {
 
 	deploymentList := &DeploymentList{
 		Deployments: make([]Deployment, 0),
 		ListMeta:    api.ListMeta{TotalItems: len(deployments)},
+		Errors:      nonCriticalErrors,
 	}
 
 	cachedResources := &metricapi.CachedResources{
 		Pods: pods,
 	}
-	deploymentCells, metricPromises, filteredTotal := dataselect.
-		GenericDataSelectWithFilterAndMetrics(
-			toCells(deployments), dsQuery, cachedResources, metricClient)
+	deploymentCells, metricPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(
+		toCells(deployments), dsQuery, cachedResources, metricClient)
 	deployments = fromCells(deploymentCells)
 	deploymentList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
 	for _, deployment := range deployments {
 		matchingPods := common.FilterDeploymentPodsByOwnerReference(deployment, rs, pods)
-		podInfo := common.GetPodInfo(deployment.Status.Replicas, *deployment.Spec.Replicas,
-			matchingPods)
+		podInfo := common.GetPodInfo(deployment.Status.Replicas, *deployment.Spec.Replicas, matchingPods)
 		podInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)
 
 		deploymentList.Deployments = append(deploymentList.Deployments,

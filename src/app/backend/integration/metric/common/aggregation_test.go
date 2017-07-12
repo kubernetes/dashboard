@@ -70,14 +70,14 @@ func TestAggregateMetricPromises(t *testing.T) {
 			getMetricPromises([]metricapi.Metric{}),
 			"",
 			metricapi.OnlyDefaultAggregation,
-			metricapi.Label{api.ResourceKindPod: []types.UID{"overriden-uid"}},
+			metricapi.Label{api.ResourceKindPod: []types.UID{"overridden-uid"}},
 			[]metricapi.Metric{
 				{
 					DataPoints:   metricapi.DataPoints{},
 					MetricPoints: []metricapi.MetricPoint{},
 					MetricName:   "",
 					Label: metricapi.Label{
-						api.ResourceKindPod: []types.UID{"overriden-uid"},
+						api.ResourceKindPod: []types.UID{"overridden-uid"},
 					},
 					Aggregate: metricapi.SumAggregation,
 				},

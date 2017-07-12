@@ -56,6 +56,7 @@ func TestGetServiceDetail(t *testing.T) {
 				EventList: common.EventList{
 					Events: []common.Event{},
 				},
+				Errors: []error{},
 			},
 		},
 		{
@@ -81,21 +82,21 @@ func TestGetServiceDetail(t *testing.T) {
 				PodList: pod.PodList{
 					Pods:              []pod.Pod{},
 					CumulativeMetrics: make([]metricapi.Metric, 0),
+					Errors:            []error{},
 				},
 				EventList: common.EventList{
 					Events: []common.Event{},
 				},
+				Errors: []error{},
 			},
 		},
 	}
 
 	for _, c := range cases {
 		fakeClient := fake.NewSimpleClientset(c.service)
-
-		actual, _ := GetServiceDetail(fakeClient, nil,
-			c.namespace, c.name, dataselect.NoDataSelect)
-
+		actual, _ := GetServiceDetail(fakeClient, nil, c.namespace, c.name, dataselect.NoDataSelect)
 		actions := fakeClient.Actions()
+
 		if len(actions) != len(c.expectedActions) {
 			t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
 				len(c.expectedActions), len(actions))
@@ -104,8 +105,7 @@ func TestGetServiceDetail(t *testing.T) {
 
 		for i, verb := range c.expectedActions {
 			if actions[i].GetVerb() != verb {
-				t.Errorf("Unexpected action: %+v, expected %s",
-					actions[i], verb)
+				t.Errorf("Unexpected action: %+v, expected %s", actions[i], verb)
 			}
 		}
 

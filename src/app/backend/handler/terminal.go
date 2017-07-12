@@ -68,7 +68,6 @@ func (t TerminalSession) Next() *remotecommand.TerminalSize {
 	case size := <-t.sizeChan:
 		return &size
 	}
-	return nil
 }
 
 // Read handles pty->process messages (stdin, resize)

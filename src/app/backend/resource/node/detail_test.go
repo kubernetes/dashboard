@@ -54,6 +54,7 @@ func TestGetNodeDetail(t *testing.T) {
 				Unschedulable: true,
 				PodList: pod.PodList{
 					Pods:              []pod.Pod{},
+					Errors:            []error{},
 					CumulativeMetrics: make([]metricapi.Metric, 0),
 				},
 				EventList: common.EventList{
@@ -75,6 +76,7 @@ func TestGetNodeDetail(t *testing.T) {
 					PodFraction:            0,
 				},
 				Metrics: make([]metricapi.Metric, 0),
+				Errors:  []error{},
 			},
 		},
 	}

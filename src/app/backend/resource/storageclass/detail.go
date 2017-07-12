@@ -46,12 +46,11 @@ type StorageClass struct {
 func GetStorageClass(client kubernetes.Interface, name string) (*StorageClass, error) {
 	log.Printf("Getting details of %s storage class", name)
 
-	// TODO(maciaszczykm): Use channels.
 	storage, err := client.StorageV1beta1().StorageClasses().Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
 
-	storageClass := ToStorageClass(storage)
+	storageClass := toStorageClass(storage)
 	return &storageClass, nil
 }

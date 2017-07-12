@@ -52,7 +52,7 @@ func TestGetThirdPartyResourceList(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := getThirdPartyResourceList(c.thirdPartyResources, dataselect.NoDataSelect)
+		actual := getThirdPartyResourceList(c.thirdPartyResources, nil, dataselect.NoDataSelect)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("getThirdPartyResourceList(%#v) == \n%#v\nexpected \n%#v\n",
 				c.thirdPartyResources, actual, c.expected)
