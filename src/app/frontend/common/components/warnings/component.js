@@ -13,22 +13,10 @@
 // limitations under the License.
 
 /**
- * @final
+ * @type {!angular.Component}
  */
-export class WarningsController {
-  /**
-   * @param {!angular.$transclude} $transclude
-   * @ngInject
-   */
-  constructor($transclude) {
-    /** @private {Object} */
-    this.transclude_ = $transclude;
-  }
-}
-
 export const warningsComponent = {
-  templateUrl: 'common/components/warnings/contentcard.html',
-  controller: WarningsController,
+  templateUrl: 'common/components/warnings/warnings.html',
   bindings: {
     'errors': '<',
   }
