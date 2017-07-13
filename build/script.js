@@ -199,6 +199,11 @@ function compileES6(translation) {
     // ---- JS MODULES ----
     js_module_root: `/${path.relative(conf.paths.base, conf.paths.frontendSrc)}`,
 
+    // Specifies how the compiler locates modules. Default value 'BROWSER' requires all imports to
+    // begin with a '.' or '/' and have a file extension. Currently Dashboard does not meet these
+    // requirements, so 'LEGACY' value will be used.
+    module_resolution: `LEGACY`,
+
     // ---- LIBRARY AND FRAMEWORK SPECIFIC OPTIONS ----
     angular_pass: true,
   };
