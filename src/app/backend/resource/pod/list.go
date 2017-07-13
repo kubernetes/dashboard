@@ -64,6 +64,9 @@ type Pod struct {
 
 	// Pod warning events
 	Warnings []common.Event `json:"warnings"`
+
+	// Name of the Node this Pod runs on.
+	NodeName string `json:"nodeName"`
 }
 
 // GetPodList returns a list of all Pods in the cluster.
@@ -123,6 +126,7 @@ func ToPodList(pods []v1.Pod, events []v1.Event, nonCriticalErrors []error, dsQu
 		warnings := event.GetPodsEventWarnings(events, []v1.Pod{pod})
 		podDetail := ToPod(&pod, metrics, warnings)
 		podDetail.Warnings = warnings
+		podDetail.NodeName = pod.Spec.NodeName
 		podList.Pods = append(podList.Pods, podDetail)
 	}
 
