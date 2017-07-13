@@ -16,16 +16,10 @@ limitations under the License.
 
 <div class="kd-content-card">
   <div class="kd-warnings-content">
-    <h1 layout-padding
-        class="kd-content-card-content-title md-title">
-      Warnings
-    </h1>
-    <div class="kd-content-card-transclude-content">
-      <kd-content>
-        <div ng-repeat="err in $ctrl.errors">
-          {{err.ErrStatus.message}}
-        </div>
-      </kd-content>
+    <div>
+      <div ng-repeat="err in $ctrl.errors">
+        <pre><md-icon class="material-icons">warning</md-icon>  {{err.ErrStatus.message}}</pre>
+      </div>
     </div>
   </div>
 </div>

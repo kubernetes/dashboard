@@ -15,10 +15,12 @@
 @import '../../../variables';
 
 .kd-warnings-content {
-  background-color: rgb(255, 230, 162);
+  background-color: #ffad20;
   border: 1px solid $border;
   border-radius: 2px;
   box-shadow: $whiteframe-shadow-1dp;
+  color: rgba(0, 0, 0, .65);
+  padding-left: 2 * $baseline-grid;
 }
 
 kd-warnings {
@@ -30,7 +32,7 @@ kd-warnings {
 .kd-content-card {
   height: 100%;
 
-  kd-content {
+  kd-warnings-x {
     &.kd-content-padded {
       display: block;
       padding: 2 * $baseline-grid;
@@ -41,21 +43,8 @@ kd-warnings {
 .kd-content-card-content-title {
   border-bottom: 1px solid $border;
   box-sizing: border-box;
+  font-weight: $regular-font-weight;
   height: 7 * $baseline-grid;
   line-height: 5 * $baseline-grid;
-  margin: 0;
-
-  kd-title {
-    font-weight: $regular-font-weight;
-
-    a {
-      color: $foreground-1;
-    }
-  }
-}
-
-.kd-content-card-content-footer {
-  border-top: 1px solid $border;
-  box-sizing: border-box;
   margin: 0;
 }

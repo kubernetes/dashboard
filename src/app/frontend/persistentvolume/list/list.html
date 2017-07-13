@@ -14,12 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
+<kd-warnings ng-if="::$ctrl.persistentVolumeList.errors"
+             errors="::$ctrl.persistentVolumeList.errors">
+</kd-warnings>
+
 <kd-content-card>
   <kd-content>
-    <kd-persistent-volume-card-list ng-if="!$ctrl.shouldShowZeroState()"
-                                    persistent-volume-list="$ctrl.persistentVolumeList"
+    <kd-persistent-volume-card-list persistent-volume-list="$ctrl.persistentVolumeList"
                                     persistent-volume-list-resource="$ctrl.persistentVolumeListResource">
     </kd-persistent-volume-card-list>
-    <kd-zero-state ng-if="$ctrl.shouldShowZeroState()"></kd-zero-state>
   </kd-content>
 </kd-content-card>
