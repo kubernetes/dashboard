@@ -25,9 +25,10 @@ import {baseStateName, deployAppStateName, deployFileStateName} from './state';
  */
 export default function stateConfig($stateProvider) {
   $stateProvider.state(baseStateName, {
-    abstract: true,
     parent: chromeStateName,
     component: 'kdDeploy',
+    abstract: true,
+    url: '/deploy',
   });
   $stateProvider.state(deployAppStateName, {
     parent: baseStateName,
