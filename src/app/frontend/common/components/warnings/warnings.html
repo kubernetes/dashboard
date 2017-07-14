@@ -14,12 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div class="kd-content-card">
-  <div class="kd-warnings-content">
-    <div>
-      <div ng-repeat="err in $ctrl.errors">
-        <pre><md-icon class="material-icons">warning</md-icon>  {{err.ErrStatus.message}}</pre>
-      </div>
-    </div>
+<div class="kd-warnings-container">
+  <div class="kd-warning-message"
+       ng-repeat="err in $ctrl.errors">
+    <pre><md-icon class="material-icons">warning</md-icon>  {{err.ErrStatus.message}}</pre>
   </div>
 </div>

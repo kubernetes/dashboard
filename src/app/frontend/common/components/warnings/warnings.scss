@@ -14,37 +14,21 @@
 
 @import '../../../variables';
 
-.kd-warnings-content {
+.kd-warnings-container {
   background-color: #ffad20;
   border: 1px solid $border;
   border-radius: 2px;
   box-shadow: $whiteframe-shadow-1dp;
   color: rgba(0, 0, 0, .65);
-  padding-left: 2 * $baseline-grid;
-}
-
-kd-warnings {
   display: block;
   margin: 2.5 * $baseline-grid;
   margin-bottom: 0;
 }
 
-.kd-content-card {
-  height: 100%;
+.kd-warning-message {
+  padding-left: 2 * $baseline-grid;
 
-  kd-warnings-x {
-    &.kd-content-padded {
-      display: block;
-      padding: 2 * $baseline-grid;
-    }
+  &:not(:last-child) {
+    border-bottom: 1px solid $border;
   }
-}
-
-.kd-content-card-content-title {
-  border-bottom: 1px solid $border;
-  box-sizing: border-box;
-  font-weight: $regular-font-weight;
-  height: 7 * $baseline-grid;
-  line-height: 5 * $baseline-grid;
-  margin: 0;
 }
