@@ -14,14 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div class="kd-warnings-container">
+<div ng-if="$ctrl.errors.length"
+     class="kd-warnings-container">
   <div class="kd-warning-message"
        ng-repeat="err in $ctrl.errors | limitTo: $ctrl.limit">
     <pre><md-icon class="material-icons">warning</md-icon>  {{err.ErrStatus.message}}</pre>
+    <md-icon ng-click="$ctrl.dismissWarning($index)"
+             class="material-icons dismiss-icon">close</md-icon>
   </div>
   <div class="kd-more-warnings"
        ng-click="$ctrl.toggleWarnings()"
-       ng-if="$ctrl.errors.length > 3">
+       ng-if="$ctrl.errors.length > $ctrl.defaultLimit">
     <div ng-if="$ctrl.limit">
       <md-icon class="material-icons">expand_more</md-icon>
       Click to show {{$ctrl.errors.length - $ctrl.defaultLimit}} more non-critical errors

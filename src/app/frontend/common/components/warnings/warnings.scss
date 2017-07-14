@@ -26,10 +26,18 @@
 }
 
 .kd-warning-message {
+  display: flex;
   padding-left: 2 * $baseline-grid;
 
   &:not(:last-child) {
     border-bottom: 1px solid $border;
+  }
+
+  .dismiss-icon {
+    cursor: pointer;
+    margin-right: 2 * $baseline-grid;
+    outline: none;
+    text-align: right;
   }
 }
 

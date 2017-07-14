@@ -13,35 +13,32 @@
 // limitations under the License.
 
 export default class WarningsController {
-    /**
-     * Constructs warnings controller.
-     * @ngInject
-     */
-    constructor() {
-      this.defaultLimit = 3;
+  /**
+   * Constructs warnings controller.
+   * @ngInject
+   */
+  constructor() {
+    this.defaultLimit = 3;
+    this.limit = this.defaultLimit;
+  }
+
+  /**
+   * @export
+   */
+  toggleWarnings() {
+    if (this.limit) {
+      this.limit = undefined;
+    } else {
       this.limit = this.defaultLimit;
     }
+  }
 
-    /**
-     * @export
-     */
-    toggleWarnings() {
-      if(this.limit) {
-        this.limit = undefined;
-      } else {
-        this.limit = this.defaultLimit;
-      }
-    }
-
-    $onInit() {
-      // this.errors.forEach((part, idx, arr) => {
-      //   if
-      //   arr[idx].isHidden = false;
-      // });
-
-
-        console.log(this.errors)
-    }
+  /**
+   * @export
+   */
+  dismissWarning(index) {
+    this.errors.splice(index, 1);
+  }
 }
 
 /**
@@ -51,6 +48,6 @@ export const warningsComponent = {
   bindings: {
     'errors': '<',
   },
-    controller: WarningsController,
-    templateUrl: 'common/components/warnings/warnings.html',
+  controller: WarningsController,
+  templateUrl: 'common/components/warnings/warnings.html',
 };
