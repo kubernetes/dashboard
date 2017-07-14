@@ -443,7 +443,7 @@ export const deployFromSettingsComponent = {
     'namespaceList': '<',
     'protocolList': '<',
     '$transition$': '<',
-  }
+  },
 };
 
 const i18n = {

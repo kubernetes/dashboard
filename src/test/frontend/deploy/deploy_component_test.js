@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import DeployController from 'deploy/controller';
 import deployModule from 'deploy/module';
 
 describe('Deploy controller', () => {
@@ -24,11 +23,11 @@ describe('Deploy controller', () => {
   beforeEach(() => {
     angular.mock.module(deployModule.name);
 
-    angular.mock.inject(($controller, $state) => {
+    angular.mock.inject(($componentController, $state) => {
       state = $state;
       state.current.name = 'current-state';
       spyOn(state, 'go');
-      ctrl = $controller(DeployController);
+      ctrl = $componentController('kdDeploy', {$state, state});
     });
   });
 

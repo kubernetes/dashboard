@@ -390,7 +390,7 @@ export const logsComponent = {
     'podContainers': '<',
     'podLogs': '<',
     '$transition$': '<',
-  }
+  },
 };
 
 const i18n = {

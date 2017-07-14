@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import DeployFromFileController from 'deploy/deployfromfile_controller';
 import deployModule from 'deploy/module';
 
 describe('DeployFromFile controller', () => {
@@ -37,7 +36,8 @@ describe('DeployFromFile controller', () => {
     angular.mock.module(deployModule.name);
 
     angular.mock.inject(
-        ($controller, $httpBackend, $resource, $mdDialog, _kdCsrfTokenService_, $q, $rootScope) => {
+        ($componentController, $httpBackend, $resource, $mdDialog, _kdCsrfTokenService_, $q,
+         $rootScope) => {
           mockResource = jasmine.createSpy('$resource');
           resource = $resource;
           mdDialog = $mdDialog;
@@ -46,8 +46,8 @@ describe('DeployFromFile controller', () => {
           form = {
             $valid: true,
           };
-          ctrl = $controller(
-              DeployFromFileController, {
+          ctrl = $componentController(
+              'kdDeployFromFile', {
                 $resource: mockResource,
                 $mdDialog: mdDialog,
                 kdCsrfTokenService: _kdCsrfTokenService_,

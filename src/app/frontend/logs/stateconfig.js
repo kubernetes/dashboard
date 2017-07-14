@@ -48,7 +48,7 @@ export default function stateConfig($stateProvider) {
     views: {
       '': {
         component: 'kdLogs',
-      }
+      },
     },
   });
 }
