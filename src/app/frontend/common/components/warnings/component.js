@@ -18,11 +18,23 @@ export default class WarningsController {
    * @ngInject
    */
   constructor() {
+    /**
+     * Limit of displayed warnings used by default.
+     * @type {number}
+     */
     this.defaultLimit = 3;
+
+    /**
+     * Currently used limit of displayed warnings.
+     * @type {number}
+     */
     this.limit = this.defaultLimit;
   }
 
   /**
+   * Toggles between two states of warnings display: show all and show only specific number of
+   * warnings.
+   *
    * @export
    */
   toggleWarnings() {
@@ -34,6 +46,9 @@ export default class WarningsController {
   }
 
   /**
+   * Dismisses single warning.
+   *
+   * @param {number} index
    * @export
    */
   dismissWarning(index) {
@@ -41,6 +56,8 @@ export default class WarningsController {
   }
 
   /**
+   * Dismisses all warnings at once.
+   *
    * @export
    */
   dismissWarnings() {
