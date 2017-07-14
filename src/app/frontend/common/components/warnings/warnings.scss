@@ -15,11 +15,11 @@
 @import '../../../variables';
 
 .kd-warnings-container {
-  background-color: #ffad20;
+  background-color: $warning;
   border: 1px solid $border;
   border-radius: 2px;
   box-shadow: $whiteframe-shadow-1dp;
-  color: rgba(0, 0, 0, .65);
+  color: $warning-secondary;
   display: block;
   margin: 2.5 * $baseline-grid;
   margin-bottom: 0;
