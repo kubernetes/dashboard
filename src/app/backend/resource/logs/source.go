@@ -14,40 +14,37 @@
 
 package logs
 
-import "github.com/kubernetes/dashboard/src/app/backend/resource/generic"
+import "github.com/kubernetes/dashboard/src/app/backend/resource/controller"
 import "github.com/kubernetes/dashboard/src/app/backend/resource/common"
 import client "k8s.io/client-go/kubernetes"
 import meta "k8s.io/apimachinery/pkg/apis/meta/v1"
 import "k8s.io/client-go/pkg/api/v1"
 
-// Returns all log sources for a given resource. A log source identifies a log file through the combination of pod & container
-func GetLogSources(k8sClient *client.Clientset, ns string, resourceName string, resourceType string) (generic.LogSources, error) {
+// GetLogSources returns all log sources for a given resource. A log source identifies a log file through the combination of pod & container
+func GetLogSources(k8sClient *client.Clientset, ns string, resourceName string, resourceType string) (controller.LogSources, error) {
 	if resourceType == "Pod" {
 		return getLogSourcesFromPod(k8sClient, ns, resourceName)
-	} else {
-		return getLogSourcesFromController(k8sClient, ns, resourceName, resourceType)
 	}
+	return getLogSourcesFromController(k8sClient, ns, resourceName, resourceType)
 }
 
-// Returns all containers for a given pod
-func getLogSourcesFromPod(k8sClient *client.Clientset, ns, resourceName string) (generic.LogSources, error) {
-	logSources := generic.LogSources{}
+// GetLogSourcesFromPod returns all containers for a given pod
+func getLogSourcesFromPod(k8sClient *client.Clientset, ns, resourceName string) (controller.LogSources, error) {
 	pod, err := k8sClient.CoreV1().Pods(ns).Get(resourceName, meta.GetOptions{})
 	if err != nil {
-		return logSources, err
+		return controller.LogSources{}, err
 	}
-	logSources.ContainerNames = common.GetContainerNames(&pod.Spec)
-	logSources.PodNames = []string{resourceName}
-	return logSources, nil
+	return controller.LogSources{
+		ContainerNames: common.GetContainerNames(&pod.Spec),
+		PodNames: []string{resourceName},
+	}, nil
 }
 
-// Returns all pods and containers for a controller object, such as ReplicaSEt
-func getLogSourcesFromController(k8sClient *client.Clientset, ns, resourceName, resourceType string) (generic.LogSources, error) {
-	logSources := generic.LogSources{}
-	rc, err := generic.NewResourceController(v1.ObjectReference{Kind: resourceType, Name: resourceName, Namespace: ns}, k8sClient)
+// GetLogSourcesFromController returns all pods and containers for a controller object, such as ReplicaSEt
+func getLogSourcesFromController(k8sClient *client.Clientset, ns, resourceName, resourceType string) (controller.LogSources, error) {
+	rc, err := controller.NewResourceController(v1.ObjectReference{Kind: resourceType, Name: resourceName, Namespace: ns}, k8sClient)
 	if err != nil {
-		return logSources, err
+		return controller.LogSources{}, err
 	}
-	logSources = rc.GetLogSources(k8sClient)
-	return logSources, nil
+	return rc.GetLogSources(k8sClient), nil
 }

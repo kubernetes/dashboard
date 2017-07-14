@@ -30,7 +30,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/deployment"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/discovery"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/generic"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/controller"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/ingress"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/job"
@@ -546,7 +546,7 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 	apiV1Ws.Route(
 		apiV1Ws.GET("/log/source/{namespace}/{resourceName}/{resourceType}").
 			To(apiHandler.handleLogSource).
-			Writes(generic.LogSources{}))
+			Writes(controller.LogSources{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/log/{namespace}/{pod}").
 			To(apiHandler.handleLogs).
@@ -2096,10 +2096,8 @@ func (apiHandler *APIHandler) handleLogs(request *restful.Request, response *res
 	offsetTo, err2 := strconv.Atoi(request.QueryParameter("offsetTo"))
 	logFilePosition := request.QueryParameter("logFilePosition")
 
-	var logSelector *logs.Selection
-	if err1 != nil || err2 != nil {
-		logSelector = logs.DefaultSelection
-	} else {
+	logSelector := logs.DefaultSelection
+	if err1 == nil || err2 == nil {
 		logSelector = &logs.Selection{
 			ReferencePoint: logs.LogLineId{
 				LogTimestamp: logs.LogTimestamp(refTimestamp),
