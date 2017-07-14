@@ -14,6 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
+<kd-warnings ng-if="::$ctrl.errors.length"
+             errors="::$ctrl.errors">
+</kd-warnings>
+
 <div layout="row">
   <kd-graph-card graph-title="[[CPU usage|Title for graph card displaying CPU metric of one all resources.]]"
                  metrics="::$ctrl.workloads.podList.cumulativeMetrics"

@@ -53,6 +53,11 @@ export class WorkloadsController {
 
     /** @export {!angular.Resource} */
     this.rcListResource = kdRCListResource;
+
+    this.errors = this.workloads.deploymentList.errors.concat(
+        this.workloads.replicaSetList.errors, this.workloads.jobList.errors,
+        this.workloads.replicationControllerList.errors, this.workloads.podList.errors,
+        this.workloads.daemonSetList.errors, this.workloads.statefulSetList.errors);
   }
 
   /**

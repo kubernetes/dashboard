@@ -12,12 +12,45 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+export default class WarningsController {
+    /**
+     * Constructs warnings controller.
+     * @ngInject
+     */
+    constructor() {
+      this.defaultLimit = 3;
+      this.limit = this.defaultLimit;
+    }
+
+    /**
+     * @export
+     */
+    toggleWarnings() {
+      if(this.limit) {
+        this.limit = undefined;
+      } else {
+        this.limit = this.defaultLimit;
+      }
+    }
+
+    $onInit() {
+      // this.errors.forEach((part, idx, arr) => {
+      //   if
+      //   arr[idx].isHidden = false;
+      // });
+
+
+        console.log(this.errors)
+    }
+}
+
 /**
  * @type {!angular.Component}
  */
 export const warningsComponent = {
-  templateUrl: 'common/components/warnings/warnings.html',
   bindings: {
     'errors': '<',
-  }
+  },
+    controller: WarningsController,
+    templateUrl: 'common/components/warnings/warnings.html',
 };
