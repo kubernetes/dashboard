@@ -39,6 +39,13 @@ export default class WarningsController {
   dismissWarning(index) {
     this.errors.splice(index, 1);
   }
+
+  /**
+   * @export
+   */
+  dismissWarnings() {
+    this.errors = [];
+  }
 }
 
 /**

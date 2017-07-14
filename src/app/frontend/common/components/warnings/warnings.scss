@@ -43,15 +43,19 @@
 
 .kd-more-warnings {
   background-color: $foreground-4;
+  display: flex;
   font-weight: 500;
-  outline: none;
   padding: $baseline-grid (2 * $baseline-grid);
-
-  &:hover {
-    cursor: pointer;
-  }
 
   md-icon {
     margin-right: 1.5 * $baseline-grid;
+  }
+
+  .md-button {
+    cursor: pointer;
+    margin: 0;
+    min-height: 0;
+    line-height: 24px;
+    outline: none;
   }
 }

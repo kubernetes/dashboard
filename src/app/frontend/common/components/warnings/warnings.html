@@ -23,15 +23,18 @@ limitations under the License.
              class="material-icons dismiss-icon">close</md-icon>
   </div>
   <div class="kd-more-warnings"
-       ng-click="$ctrl.toggleWarnings()"
        ng-if="$ctrl.errors.length > $ctrl.defaultLimit">
-    <div ng-if="$ctrl.limit">
+    <md-button ng-if="$ctrl.limit"
+               ng-click="$ctrl.toggleWarnings()">
       <md-icon class="material-icons">expand_more</md-icon>
-      Click to show {{$ctrl.errors.length - $ctrl.defaultLimit}} more non-critical errors
-    </div>
-    <div ng-if="!$ctrl.limit">
+      Show {{$ctrl.errors.length - $ctrl.defaultLimit}} more warnings
+    </md-button>
+    <md-button ng-if="!$ctrl.limit"
+               ng-click="$ctrl.toggleWarnings()">
       <md-icon class="material-icons">expand_less</md-icon>
-      Click to show {{$ctrl.errors.length - $ctrl.defaultLimit}} less non-critical errors
-    </div>
+      Show {{$ctrl.errors.length - $ctrl.defaultLimit}} less warnings
+    </md-button>
+    <span flex></span>
+    <md-button ng-click="$ctrl.dismissWarnings()">Dismiss all</md-button>
   </div>
 </div>
