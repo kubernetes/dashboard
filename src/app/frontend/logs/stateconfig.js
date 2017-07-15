@@ -17,7 +17,6 @@ import {fillContentConfig} from 'chrome/state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
 import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
 
-import {LogsController} from './controller';
 import {stateName} from './state';
 
 /**
@@ -27,16 +26,14 @@ import {stateName} from './state';
  * @ngInject
  */
 export default function stateConfig($stateProvider) {
-  let views = {
-    '': {
-      templateUrl: 'logs/logs.html',
-      controller: LogsController,
-      controllerAs: 'ctrl',
-    },
-  };
-
   $stateProvider.state(stateName, {
     url: `${appendDetailParamsToUrl('/log')}/:container`,
+    params: {
+      'container': {
+        value: null,
+        squash: true,
+      },
+    },
     parent: chromeStateName,
     resolve: {
       'podContainers': resolvePodContainers,
@@ -48,7 +45,11 @@ export default function stateConfig($stateProvider) {
       },
       [fillContentConfig]: true,
     },
-    views: views,
+    views: {
+      '': {
+        component: 'kdLogs',
+      },
+    },
   });
 }
 

@@ -32,20 +32,15 @@ const newestTimestamp = 'newest';
  */
 export class LogsController {
   /**
-   * @param {!backendApi.LogDetails} podLogs
-   * @param {!backendApi.PodContainerList} podContainers
    * @param {!./service.LogsService} logsService
    * @param {!angular.$sce} $sce
    * @param {!angular.$document} $document
-   * @param {!./state.StateParams} $stateParams
    * @param {!angular.$resource} $resource
    * @param {!ui.router.$state} $state
    * @param {!../common/errorhandling/service.ErrorDialog} errorDialog
    * @ngInject
    */
-  constructor(
-      podLogs, podContainers, logsService, $sce, $document, $resource, $stateParams, $state,
-      errorDialog) {
+  constructor(logsService, $sce, $document, $resource, $state, errorDialog) {
     /** @private {!angular.$sce} */
     this.sce_ = $sce;
 
@@ -54,9 +49,6 @@ export class LogsController {
 
     /** @private {!angular.$resource} */
     this.resource_ = $resource;
-
-    /** @private {!./state.StateParams} $stateParams */
-    this.stateParams_ = $stateParams;
 
     /** @export {!./service.LogsService} */
     this.logsService = logsService;
@@ -68,7 +60,7 @@ export class LogsController {
     this.logsSet;
 
     /** @export {!backendApi.LogDetails} */
-    this.podLogs = podLogs;
+    this.podLogs;
 
     /** @private {!backendApi.LogSelection}*/
     this.currentSelection;
@@ -77,19 +69,31 @@ export class LogsController {
     this.state_ = $state;
 
     /** @export {!Array<string>} */
-    this.containers = podContainers.containers;
+    this.containers;
+
+    /** @export {!backendApi.PodContainerList} - initialized from resolve */
+    this.podContainers;
 
     /** @export {string} */
-    this.container = this.podLogs.info.containerName;
+    this.container;
 
     /** @export {number} */
     this.topIndex = 0;
 
     /** @private {!../common/errorhandling/service.ErrorDialog} */
     this.errorDialog_ = errorDialog;
+
+    /** @private {!ui.router.$stateParams} */
+    this.stateParams_;
+
+    /** @export {!kdUiRouter.$transition$} - initialized from resolve */
+    this.$transition$;
   }
 
   $onInit() {
+    this.containers = this.podContainers.containers;
+    this.container = this.podLogs.info.containerName;
+    this.stateParams_ = this.$transition$.params();
     this.updateUiModel(this.podLogs);
     this.topIndex = this.podLogs.logs.length;
   }
@@ -372,6 +376,22 @@ export class LogsController {
     return container;
   }
 }
+
+/**
+ * Returns component definition for logs component.
+ *
+ * @return {!angular.Component}
+ */
+export const logsComponent = {
+  controller: LogsController,
+  controllerAs: 'ctrl',
+  templateUrl: 'logs/logs.html',
+  bindings: {
+    'podContainers': '<',
+    'podLogs': '<',
+    '$transition$': '<',
+  },
+};
 
 const i18n = {
   /** @export {string} @desc Text for logs card zerostate in logs page. */
