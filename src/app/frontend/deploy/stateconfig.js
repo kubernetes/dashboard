@@ -15,9 +15,6 @@
 import {stateName as chromeStateName} from 'chrome/state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
 
-import DeployController from './controller';
-import DeployFromFileController from './deployfromfile_controller';
-import DeployFromSettingsController from './deployfromsettings_controller';
 import {baseStateName, deployAppStateName, deployFileStateName} from './state';
 
 /**
@@ -28,41 +25,35 @@ import {baseStateName, deployAppStateName, deployFileStateName} from './state';
  */
 export default function stateConfig($stateProvider) {
   $stateProvider.state(baseStateName, {
-    controller: DeployController,
-    controllerAs: 'ctrl',
-    url: '/deploy',
     parent: chromeStateName,
+    component: 'kdDeploy',
     abstract: true,
-    templateUrl: 'deploy/deploy.html',
+    url: '/deploy',
   });
   $stateProvider.state(deployAppStateName, {
-    controller: DeployFromSettingsController,
-    controllerAs: 'ctrl',
-    url: '/app',
     parent: baseStateName,
+    component: 'kdDeployFromSettings',
+    url: '/app',
     resolve: {
-      'namespaces': resolveNamespaces,
+      'namespaceList': resolveNamespaces,
       'protocolsResource': getProtocolsResource,
-      'protocols': getDefaultProtocols,
+      'protocolList': getDefaultProtocols,
     },
     data: {
       [breadcrumbsConfig]: {
         'label': i18n.MSG_BREADCRUMBS_DEPLOY_APP_LABEL,
       },
     },
-    templateUrl: 'deploy/deployfromsettings.html',
   });
   $stateProvider.state(deployFileStateName, {
-    controller: DeployFromFileController,
-    controllerAs: 'ctrl',
-    url: '/file',
     parent: baseStateName,
+    component: 'kdDeployFromFile',
+    url: '/file',
     data: {
       [breadcrumbsConfig]: {
         'label': i18n.MSG_BREADCRUMBS_DEPLOY_FILE_LABEL,
       },
     },
-    templateUrl: 'deploy/deployfromfile.html',
   });
 }
 

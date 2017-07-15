@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import errorModule from 'common/errorhandling/module';
-import {LogsController} from 'logs/controller';
+
 import LogsModule from 'logs/module';
 import {StateParams} from 'logs/state';
 
@@ -75,13 +75,20 @@ describe('Logs controller', () => {
     angular.mock.module(LogsModule.name);
     angular.mock.module(errorModule.name);
 
-    angular.mock.inject(($controller, $httpBackend, errorDialog) => {
-      ctrl = $controller(LogsController, {
-        podLogs: angular.copy(podLogs),
-        podContainers: podContainers,
-        $stateParams: stateParams,
-        errorDialog: errorDialog,
-      });
+    angular.mock.inject(($componentController, $httpBackend, errorDialog) => {
+      ctrl = $componentController(
+          'kdLogs', {
+            errorDialog: errorDialog,
+          },
+          {
+            podLogs: angular.copy(podLogs),
+            podContainers: podContainers,
+            $transition$: {
+              'params': function() {
+                return stateParams;
+              },
+            },
+          });
       httpBackend = $httpBackend;
     });
   });

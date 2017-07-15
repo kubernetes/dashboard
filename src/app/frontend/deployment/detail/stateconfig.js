@@ -17,7 +17,7 @@ import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
 import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
 import {stateName as deploymentList} from 'deployment/list/state';
 
-import {stateUrl} from './../state';
+import {stateName as parentState, stateUrl} from './../state';
 import {ActionBarController} from './actionbar_controller';
 import {DeploymentDetailController} from './controller';
 
@@ -28,7 +28,7 @@ import {DeploymentDetailController} from './controller';
  */
 export const config = {
   url: appendDetailParamsToUrl(stateUrl),
-  parent: chromeStateName,
+  parent: parentState,
   resolve: {
     'deploymentDetailResource': getDeploymentDetailResource,
     'deploymentDetail': getDeploymentDetail,
@@ -45,7 +45,7 @@ export const config = {
       controllerAs: 'ctrl',
       templateUrl: 'deployment/detail/detail.html',
     },
-    [actionbarViewName]: {
+    [`${actionbarViewName}@${chromeStateName}`]: {
       controller: ActionBarController,
       controllerAs: '$ctrl',
       templateUrl: 'deployment/detail/actionbar.html',

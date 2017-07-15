@@ -193,6 +193,17 @@ export default class DeployFromFileController {
   }
 }
 
+/**
+ * Returns component definition for deploy from file component.
+ *
+ * @return {!angular.Component}
+ */
+export const deployFromFileComponent = {
+  controller: DeployFromFileController,
+  controllerAs: 'ctrl',
+  templateUrl: 'deploy/deployfromfile.html',
+};
+
 const i18n = {
   /** @export {string} @desc Text shown on failed deploy in error dialog. */
   MSG_DEPLOY_DIALOG_ERROR: goog.getMsg('Deploying file has failed'),

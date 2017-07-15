@@ -15,9 +15,9 @@
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
 import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
-import {stateName as podList} from './../list/state';
-import {stateUrl} from './../state';
 
+import {stateName as podList} from './../list/state';
+import {stateName as parentState, stateUrl} from './../state';
 import {ActionBarController} from './actionbar_controller';
 import {PodDetailController} from './controller';
 
@@ -28,7 +28,7 @@ import {PodDetailController} from './controller';
  */
 export const config = {
   url: appendDetailParamsToUrl(stateUrl),
-  parent: chromeStateName,
+  parent: parentState,
   resolve: {
     'podDetailResource': getPodDetailResource,
     'podDetail': getPodDetail,
@@ -45,7 +45,7 @@ export const config = {
       controllerAs: 'ctrl',
       templateUrl: 'pod/detail/detail.html',
     },
-    [actionbarViewName]: {
+    [`${actionbarViewName}@${chromeStateName}`]: {
       controller: ActionBarController,
       controllerAs: '$ctrl',
       templateUrl: 'pod/detail/actionbar.html',
