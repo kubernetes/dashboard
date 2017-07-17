@@ -30,16 +30,26 @@ export class ClusterController {
       kdRoleListResource, kdStorageClassListResource) {
     /** @export {!backendApi.Cluster} */
     this.cluster = cluster;
+
     /** @export {!angular.Resource} */
     this.kdNamespaceListResource = kdNamespaceListResource;
+
     /** @export {!angular.Resource} */
     this.kdNodeListResource = kdNodeListResource;
+
     /** @export {!angular.Resource} */
     this.kdPersistentVolumeListResource = kdPersistentVolumeListResource;
+
     /** @export {!angular.Resource} */
     this.kdRoleListResource = kdRoleListResource;
+
     /** @export {!angular.Resource} */
     this.kdStorageClassListResource = kdStorageClassListResource;
+
+    /** @export {!Array<backendApi.Error>} */
+    this.errors = this.cluster.nodeList.errors.concat(
+        this.cluster.namespaceList.errors, this.cluster.persistentVolumeList.errors,
+        this.cluster.storageClassList.errors, this.cluster.roleList.errors);
   }
 
   /**
@@ -51,6 +61,7 @@ export class ClusterController {
     let resourcesLength = this.cluster.nodeList.listMeta.totalItems +
         this.cluster.namespaceList.listMeta.totalItems +
         this.cluster.persistentVolumeList.listMeta.totalItems +
+        this.cluster.roleList.listMeta.totalItems +
         this.cluster.storageClassList.listMeta.totalItems;
     return resourcesLength === 0;
   }

@@ -25,10 +25,15 @@ export class DiscoveryController {
   constructor(discovery, kdServiceListResource, kdIngressListResource) {
     /** @export {!backendApi.Discovery} */
     this.discovery = discovery;
+
     /** @export {!angular.Resource} */
     this.kdServiceListResource = kdServiceListResource;
+
     /** @export {!angular.Resource} */
     this.kdIngressListResource = kdIngressListResource;
+
+    /** @export {!Array<backendApi.Error>} */
+    this.errors = this.discovery.serviceList.errors.concat(this.discovery.ingressList.errors);
   }
 
   /**
