@@ -36,6 +36,8 @@ limitations under the License.
   <kd-namespace-select></kd-namespace-select>
   <div class="kd-nav-group">
     <kd-nav-item class="kd-nav-group-item"
+                 state="{{::$ctrl.states.allObjects}}">[[All Objects|All Objects menu entry.]]</kd-nav-item>
+    <kd-nav-item class="kd-nav-group-item"
                  state="{{::$ctrl.states.workload}}">[[Workloads|Workloads group menu entry.]]</kd-nav-item>
     <kd-nav-item class="kd-nav-item"
                  state="{{::$ctrl.states.daemonSet}}">[[Daemon Sets|Daemon Sets menu entry.]]</kd-nav-item>

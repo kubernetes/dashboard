@@ -547,6 +547,11 @@ func CreateHTTPAPIHandler(heapsterClient heapster.HeapsterClient, manager client
 		apiV1Ws.GET("/search/{namespace}").
 			To(apiHandler.handleSearch).
 			Writes(search.SearchResult{}))
+	
+	apiV1Ws.Route(
+		apiV1Ws.GET("/allobjects/{namespace}").
+			To(apiHandler.handleAllObjects).
+			Writes(search.SearchResult{}))
 
 	return wsContainer, nil
 }
@@ -1014,6 +1019,25 @@ func (apiHandler *APIHandler) handleGetWorkloads(request *restful.Request, respo
 	dataSelect := parseDataSelectPathParameter(request)
 	dataSelect.MetricQuery = dataselect.NoMetrics
 	result, err := workload.GetWorkloads(k8sClient, apiHandler.heapsterClient, namespace, dataSelect)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleAllObjects(request *restful.Request, response *restful.Response) {
+	k8sClient, err := apiHandler.manager.Client(request)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	
+	namespace := parseNamespacePathParameter(request)
+	dataSelect := parseDataSelectPathParameter(request)
+	dataSelect.FilterQuery = dataselect.NoFilter
+	dataSelect.MetricQuery = dataselect.NoMetrics
+	result, err := search.Search(k8sClient, apiHandler.heapsterClient, namespace, dataSelect)
 	if err != nil {
 		handleInternalError(response, err)
 		return

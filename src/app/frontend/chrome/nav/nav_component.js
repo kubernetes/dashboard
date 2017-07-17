@@ -33,6 +33,7 @@ import {stateName as serviceState} from 'service/list/state';
 import {stateName as statefulSetState} from 'statefulset/list/state';
 import {stateName as storageClassState} from 'storageclass/list/state';
 import {stateName as workloadState} from 'workloads/state';
+import {stateName as allObjectsState} from 'allobjects/state';
 
 /**
  * @final
@@ -53,6 +54,7 @@ export class NavController {
     this.states = {
       'namespace': namespaceState,
       'node': nodeState,
+      'allObjects': allObjectsState,
       'workload': workloadState,
       'cluster': clusterState,
       'pod': podState,
