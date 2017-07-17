@@ -628,6 +628,7 @@
   <translation id="8463106700747317382" key="MSG_POD_LIST_CARDLIST_8" desc="Text for pods card list zerostate.">没有容器组可显示</translation>
   <translation id="5608535302521220986" key="MSG_POD_LIST_CARD_0" desc="Tooltip for failed pod card icon">此容器组已出错</translation>
   <translation id="7889427465656547627" key="MSG_POD_LIST_CARD_1" desc="Tooltip for pending pod card icon">此容器组等待中</translation>
+  <translation id="6227114160090429637" key="MSG_POD_LIST_CARD_2" desc="Label for logs tooltip">Logs</translation>
   <translation id="1278633357095866885" key="MSG_POD_LIST_CARD_3" desc="Name of the pod resource">容器组</translation>
   <translation id="1053078836410141563" key="MSG_POD_LIST_CARD_4" desc="Name of the pod resource">容器组</translation>
   <translation id="4686932628263410864" key="MSG_POD_LIST_LIST_0" desc="Title for graph card displaying CPU metric of pods.">CPU 使用率</translation>

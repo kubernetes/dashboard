@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import {StateParams} from 'common/resource/resourcedetail';
+import {stateName as logsStateName, StateParams as LogsStateParams} from 'logs/state';
 import {stateName} from 'pod/detail/state';
 
 /**
@@ -85,6 +86,15 @@ export class PodCardController {
     return this.pod.podStatus.status === 'failed';
   }
 
+  /**
+   * @return {string}
+   * @export
+   */
+  getPodLogsHref() {
+    return this.state_.href(
+        logsStateName,
+        new LogsStateParams(this.pod.objectMeta.namespace, this.pod.objectMeta.name, 'pod'));
+  }
 
   /**
    * @return {string}
