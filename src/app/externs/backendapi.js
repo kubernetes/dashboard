@@ -26,7 +26,7 @@ const backendApi = {};
 
 /**
  * @typedef {{
- *   ErrStatus: ErrStatus,
+ *   ErrStatus: !backendApi.ErrStatus,
  * }}
  */
 backendApi.Error;

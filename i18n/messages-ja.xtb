@@ -102,6 +102,8 @@
   <translation id="7353491667260402390" key="MSG_COMMON_COMPONENTS_RESOURCEDETAIL_INFOCARD_2" desc="Label \'Labels\' for a resource.">ラベル</translation>
   <translation id="5872558793526944357" key="MSG_COMMON_COMPONENTS_RESOURCEDETAIL_INFOCARD_3" desc="Label \'Annotations\' for a resource.">注釈</translation>
   <translation id="311978980344633152" key="MSG_COMMON_COMPONENTS_RESOURCEDETAIL_INFOCARD_4" desc="Label \'Creation time\' for a resource.">作成日時</translation>
+  <translation id="8514425134682432381" key="MSG_COMMON_COMPONENTS_WARNINGS_WARNINGS_0" desc="Tooltip for warning dismissal button.">Dismiss</translation>
+  <translation id="7328790086203280450" key="MSG_COMMON_COMPONENTS_WARNINGS_WARNINGS_1" desc="Tooltip for all warning dismissal button.">Dismiss all</translation>
   <translation id="6941584785589389821" key="MSG_COMMON_COMPONENTS_ZEROSTATE_ZEROSTATE_0" desc="(no description provided)">表示するものがありません</translation>
   <translation id="8000678649572976545" key="MSG_COMMON_COMPONENTS_ZEROSTATE_ZEROSTATE_1" desc="Description for a zero state page.">&lt;a href="{{::$ctrl.getStateHref()}}"&gt;コンテナアプリを配備&lt;/a&gt;、他のネームスペースを選択、もっと知るために&lt;a href="http://kubernetes.io/docs/user-guide/ui/" target="_blank"&gt;ダッシュボードツアーに出る&lt;i class="material-icons kd-zerostate-icon"&gt;open_in_new&lt;/i&gt;&lt;/a&gt; が可能です。</translation>
   <translation id="4492076728105331074" key="MSG_COMMON_NAMESPACE_NAMESPACESELECT_0" desc="Title for namespace select.">ネームスペース</translation>
@@ -456,12 +458,14 @@
   <translation id="3055363125961915665" key="MSG_JOB_LIST_LIST_0" desc="Title for graph card displaying CPU metric of jobs.">CPU使用量</translation>
   <translation id="5794425570699478727" key="MSG_JOB_LIST_LIST_1" desc="Title for graph card displaying memory metric of jobs.">メモリー使用量</translation>
   <translation id="6300164314930034252" key="MSG_JOB_LIST_LIST_2" desc="Help message detailing what is included in the memory usage">メモリー使用量は、これらのジョブに管理されたポッドのキャッシュも含みます。</translation>
+  <translation id="5485538583399563094" key="MSG_LESS_WARNINGS_LABEL" desc="Show less warnings button label.">Show <ph name="COUNT"> less</ph></translation>
   <translation id="4722922095699681308" key="MSG_LOGS_LOGS_0" desc="Title prefix for logs card.">Logs from</translation>
   <translation id="6855662924451585032" key="MSG_LOGS_LOGS_1" desc="Title part for logs card.">in</translation>
   <translation id="6208229815004454576" key="MSG_LOGS_LOGS_2" desc="Title prefix for logs card.">Logs from</translation>
   <translation id="1223986507449568472" key="MSG_LOGS_LOGS_3" desc="Footer part for logs card.">to</translation>
   <translation id="3402202863027894322" key="MSG_LOGS_TRUNCATED_WARNING" desc="Error dialog indicating that parts of the log file is missing due to memory constraints.">大きすぎるため、ログファイルの中間部分は読み込めません。</translation>
   <translation id="7594890250973129963" key="MSG_LOGS_ZEROSTATE_TEXT" desc="Text for logs card zerostate in logs page.">選択されたコンテナにはログにメッセージが記録されていません。</translation>
+  <translation id="2533795620042066843" key="MSG_MORE_WARNINGS_LABEL" desc="Show more warnings button label.">Show <ph name="COUNT"> more</ph></translation>
   <translation id="8066049814492652432" key="MSG_NAMESPACE_DETAIL_INFO_0" desc="Header in a detail view">詳細</translation>
   <translation id="6352041840775187168" key="MSG_NAMESPACE_DETAIL_INFO_1" desc="Label \'Status\' for the namespace namespace on the namespace details page.">状態</translation>
   <translation id="2794451768196559104" key="MSG_NAMESPACE_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">ネームスペース</translation>
@@ -650,6 +654,7 @@
   <translation id="2353613362278824556" key="MSG_POD_LIST_CARDLIST_6" desc="Title of a column">CPU（コア数）</translation>
   <translation id="6472029030033782169" key="MSG_POD_LIST_CARDLIST_7" desc="Title of a column">メモリー（バイト）</translation>
   <translation id="8463106700747317382" key="MSG_POD_LIST_CARDLIST_8" desc="Text for pods card list zerostate.">表示するものがありません</translation>
+  <translation id="2699867637725149359" key="MSG_POD_LIST_CARDLIST_9" desc="Title of a column showing name of the node that pod is running at">Node</translation>
   <translation id="5608535302521220986" key="MSG_POD_LIST_CARD_0" desc="Tooltip for failed pod card icon">ポッドにエラーが発生しています。</translation>
   <translation id="7889427465656547627" key="MSG_POD_LIST_CARD_1" desc="Tooltip for pending pod card icon">ポッドは待機状態です。</translation>
   <translation id="6227114160090429637" key="MSG_POD_LIST_CARD_2" desc="Label for logs tooltip">ログ</translation>
@@ -776,7 +781,9 @@
   <translation id="3561280019877192219" key="MSG_ROLE_LIST_CARDLIST_3" desc="Role list header: namespace.">ネームスペース</translation>
   <translation id="3197213955933923965" key="MSG_ROLE_LIST_CARDLIST_4" desc="Label \'Age\' which appears as a column label in the table of ingresses (ingress list view).">起動時間</translation>
   <translation id="8108259204772140609" key="MSG_ROLE_LIST_CARDLIST_5" desc="Text for role card list zerostate.">表示するものがありません</translation>
-  <translation id="2864599603034607510" key="MSG_ROLE_LIST_STARTED_AT_TOOLTIP" desc="Tooltip 'Started at [some date]' showing the exact start time of the role."><ph name="START_DATE"> UTC に作成</ph></translation>
+  <translation id="2864599603034607510" key="MSG_ROLE_LIST_STARTED_AT_TOOLTIP" desc="Tooltip 'Started at [some date]' showing the exact start time of the role.">
+    <ph name="START_DATE"> UTC に作成</ph>
+  </translation>
   <translation id="6072176334759614767" key="MSG_SECRET_DETAIL_ACTIONBAR_0" desc="Label \'Secret\' which appears at the top of the delete dialog, opened from a secret details page.">シークレット</translation>
   <translation id="2720871506693211747" key="MSG_SECRET_DETAIL_DETAIL_0" desc="Secrets info details section data.">データ</translation>
   <translation id="5212791345913891342" key="MSG_SECRET_DETAIL_DETAIL_1" desc="Tooltip label for showing secret content">シークレットコンテントを表示</translation>
@@ -900,7 +907,9 @@
   <translation id="3967360362065546967" key="MSG_TIME_UNIT_SECOND_LABEL" desc="Time units label, a single second.">1 秒</translation>
   <translation id="270964281826728358" key="MSG_TIME_UNIT_YEARS_LABEL" desc="Time units label, many years (plural).">年</translation>
   <translation id="58035047264145239" key="MSG_TIME_UNIT_YEAR_LABEL" desc="Time units label, a single year.">1 年</translation>
-  <translation id="7831482692212754207" key="MSG_TPR_LIST_STARTED_AT_TOOLTIP" desc="Tooltip 'Started at [some date]' showing the exact creation time of third party resource object."><ph name="START_DATE"> UTC に開始</ph></translation>
+  <translation id="7831482692212754207" key="MSG_TPR_LIST_STARTED_AT_TOOLTIP" desc="Tooltip 'Started at [some date]' showing the exact creation time of third party resource object.">
+    <ph name="START_DATE"> UTC に開始</ph>
+  </translation>
   <translation id="4037658160328783864" key="MSG_UNKNOWN_SERVER_ERROR" desc="String to display when error object has invalid structure.">不明なサーバーエラーです</translation>
   <translation id="5877596609986036290" key="MSG_UNSUPPORTED_TOAST" desc="Toast message appears when browser does not support clipboard">サポートされていないブラウザーです</translation>
   <translation id="4302564966959880468" key="MSG_WORKLOADS_WORKLOADS_0" desc="Title for graph card displaying CPU metric of one all resources.">CPU使用量</translation>

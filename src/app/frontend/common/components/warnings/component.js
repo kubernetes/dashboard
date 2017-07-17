@@ -52,7 +52,7 @@ export default class WarningsController {
    * @export
    */
   dismissWarning(index) {
-    this.errors.splice(index, 1);
+    this.warnings.splice(index, 1);
   }
 
   /**
@@ -61,7 +61,7 @@ export default class WarningsController {
    * @export
    */
   dismissWarnings() {
-    this.errors = [];
+    this.warnings = [];
   }
 
   /**
@@ -71,7 +71,7 @@ export default class WarningsController {
   getShowMoreLabel() {
     /** @type {string} @desc Show more warnings button label. */
     let MSG_MORE_WARNINGS_LABEL =
-        goog.getMsg('Show {$count} more', {'count': this.errors.length - this.defaultLimit});
+        goog.getMsg('Show {$count} more', {'count': this.warnings.length - this.defaultLimit});
     return MSG_MORE_WARNINGS_LABEL;
   }
 
@@ -81,9 +81,9 @@ export default class WarningsController {
    */
   getShowLessLabel() {
     /** @type {string} @desc Show less warnings button label. */
-    let MSG_MORE_WARNINGS_LABEL =
-        goog.getMsg('Show {$count} less', {'count': this.errors.length - this.defaultLimit});
-    return MSG_MORE_WARNINGS_LABEL;
+    let MSG_LESS_WARNINGS_LABEL =
+        goog.getMsg('Show {$count} less', {'count': this.warnings.length - this.defaultLimit});
+    return MSG_LESS_WARNINGS_LABEL;
   }
 }
 
@@ -92,7 +92,7 @@ export default class WarningsController {
  */
 export const warningsComponent = {
   bindings: {
-    'errors': '<',
+    'warnings': '<',
   },
   controller: WarningsController,
   templateUrl: 'common/components/warnings/warnings.html',
