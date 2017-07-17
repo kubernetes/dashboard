@@ -22,7 +22,7 @@ import "k8s.io/client-go/pkg/api/v1"
 
 // GetLogSources returns all log sources for a given resource. A log source identifies a log file through the combination of pod & container
 func GetLogSources(k8sClient *client.Clientset, ns string, resourceName string, resourceType string) (controller.LogSources, error) {
-	if resourceType == "Pod" {
+	if resourceType == "pod" {
 		return getLogSourcesFromPod(k8sClient, ns, resourceName)
 	}
 	return getLogSourcesFromController(k8sClient, ns, resourceName, resourceType)

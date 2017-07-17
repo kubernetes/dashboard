@@ -399,7 +399,7 @@ export const logsComponent = {
   controllerAs: 'ctrl',
   templateUrl: 'logs/logs.html',
   bindings: {
-    'podContainers': '<',
+    'logSources': '<',
     'podLogs': '<',
     '$transition$': '<',
   },
