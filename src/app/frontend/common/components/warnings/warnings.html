@@ -20,19 +20,22 @@ limitations under the License.
        ng-repeat="err in $ctrl.errors | limitTo: $ctrl.limit">
     <pre><md-icon class="material-icons">warning</md-icon>  {{err.ErrStatus.message}}</pre>
     <md-icon ng-click="$ctrl.dismissWarning($index)"
-             class="material-icons dismiss-icon">close</md-icon>
+             class="material-icons dismiss-icon">
+      close
+      <md-tooltip md-delay="500">Dismiss</md-tooltip>
+    </md-icon>
   </div>
   <div class="kd-more-warnings"
        ng-if="$ctrl.errors.length > $ctrl.defaultLimit">
     <md-button ng-if="$ctrl.limit"
                ng-click="$ctrl.toggleWarnings()">
       <md-icon class="material-icons">expand_more</md-icon>
-      Show {{$ctrl.errors.length - $ctrl.defaultLimit}} more warnings
+      Show {{$ctrl.errors.length - $ctrl.defaultLimit}} more
     </md-button>
     <md-button ng-if="!$ctrl.limit"
                ng-click="$ctrl.toggleWarnings()">
       <md-icon class="material-icons">expand_less</md-icon>
-      Show {{$ctrl.errors.length - $ctrl.defaultLimit}} less warnings
+      Show {{$ctrl.errors.length - $ctrl.defaultLimit}} less
     </md-button>
     <span flex></span>
     <md-button ng-click="$ctrl.dismissWarnings()">Dismiss all</md-button>
