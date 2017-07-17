@@ -44,9 +44,10 @@ func TestToPodPodStatusFailed(t *testing.T) {
 			Status:   "failed",
 			PodPhase: v1.PodFailed,
 		},
+		Warnings: []common.Event{},
 	}
 
-	actual := ToPod(pod, &MetricsByPod{}, []common.Event{})
+	actual := toPod(pod, &MetricsByPod{}, []common.Event{})
 
 	if !reflect.DeepEqual(actual, expected) {
 		t.Errorf("ToPod(%#v) == \ngot %#v, \nexpected %#v", pod, actual, expected)
@@ -73,9 +74,10 @@ func TestToPodPodStatusSucceeded(t *testing.T) {
 			Status:   "success",
 			PodPhase: v1.PodSucceeded,
 		},
+		Warnings: []common.Event{},
 	}
 
-	actual := ToPod(pod, &MetricsByPod{}, []common.Event{})
+	actual := toPod(pod, &MetricsByPod{}, []common.Event{})
 
 	if !reflect.DeepEqual(actual, expected) {
 		t.Errorf("ToPod(%#v) == \ngot %#v, \nexpected %#v", pod, actual, expected)
@@ -106,9 +108,10 @@ func TestToPodPodStatusRunning(t *testing.T) {
 			Status:   "success",
 			PodPhase: v1.PodRunning,
 		},
+		Warnings: []common.Event{},
 	}
 
-	actual := ToPod(pod, &MetricsByPod{}, []common.Event{})
+	actual := toPod(pod, &MetricsByPod{}, []common.Event{})
 
 	if !reflect.DeepEqual(actual, expected) {
 		t.Errorf("ToPod(%#v) == \ngot %#v, \nexpected %#v", pod, actual, expected)
@@ -135,9 +138,10 @@ func TestToPodPodStatusPending(t *testing.T) {
 			Status:   "pending",
 			PodPhase: v1.PodPending,
 		},
+		Warnings: []common.Event{},
 	}
 
-	actual := ToPod(pod, &MetricsByPod{}, []common.Event{})
+	actual := toPod(pod, &MetricsByPod{}, []common.Event{})
 
 	if !reflect.DeepEqual(actual, expected) {
 		t.Errorf("ToPod(%#v) == \ngot %#v, \nexpected %#v", pod, actual, expected)
@@ -186,9 +190,10 @@ func TestToPodContainerStates(t *testing.T) {
 				},
 			},
 		},
+		Warnings: []common.Event{},
 	}
 
-	actual := ToPod(pod, &MetricsByPod{}, []common.Event{})
+	actual := toPod(pod, &MetricsByPod{}, []common.Event{})
 
 	if !reflect.DeepEqual(actual, expected) {
 		t.Errorf("ToPod(%#v) == \ngot %#v, \nexpected %#v", pod, actual, expected)
@@ -209,6 +214,7 @@ func TestToPod(t *testing.T) {
 				PodStatus: PodStatus{
 					Status: "pending",
 				},
+				Warnings: []common.Event{},
 			},
 		}, {
 			pod: &v1.Pod{
@@ -225,16 +231,16 @@ func TestToPod(t *testing.T) {
 				PodStatus: PodStatus{
 					Status: "pending",
 				},
+				Warnings: []common.Event{},
 			},
 		},
 	}
 
 	for _, c := range cases {
-		actual := ToPod(c.pod, c.metrics, []common.Event{})
+		actual := toPod(c.pod, c.metrics, []common.Event{})
 
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("ToPod(%#v) == \ngot %#v, \nexpected %#v", c.pod, actual,
-				c.expected)
+			t.Errorf("ToPod(%#v) == \ngot %#v, \nexpected %#v", c.pod, actual, c.expected)
 		}
 	}
 }
