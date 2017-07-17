@@ -82,22 +82,6 @@ func getPodStatusStatus(pod v1.Pod, warnings []common.Event) string {
 	return "pending"
 }
 
-// ToPod transforms Kubernetes pod object into object returned by API.
-func ToPod(pod *v1.Pod, metrics *MetricsByPod, warnings []common.Event) Pod {
-	podDetail := Pod{
-		ObjectMeta:   api.NewObjectMeta(pod.ObjectMeta),
-		TypeMeta:     api.NewTypeMeta(api.ResourceKindPod),
-		PodStatus:    getPodStatus(*pod, warnings),
-		RestartCount: getRestartCount(*pod),
-	}
-
-	if m, exists := metrics.MetricsMap[pod.UID]; exists {
-		podDetail.Metrics = &m
-	}
-
-	return podDetail
-}
-
 // The code below allows to perform complex data section on []api.Pod
 
 type PodCell v1.Pod
