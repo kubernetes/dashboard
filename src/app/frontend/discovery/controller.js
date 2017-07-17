@@ -31,9 +31,6 @@ export class DiscoveryController {
 
     /** @export {!angular.Resource} */
     this.kdIngressListResource = kdIngressListResource;
-
-    /** @export {!Array<backendApi.Error>} */
-    this.errors = this.discovery.serviceList.errors.concat(this.discovery.ingressList.errors);
   }
 
   /**

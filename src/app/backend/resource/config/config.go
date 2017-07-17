@@ -17,6 +17,7 @@ package config
 import (
 	"log"
 
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/configmap"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
@@ -30,6 +31,9 @@ type Config struct {
 	ConfigMapList             configmap.ConfigMapList       `json:"configMapList"`
 	PersistentVolumeClaimList pvc.PersistentVolumeClaimList `json:"persistentVolumeClaimList"`
 	SecretList                secret.SecretList             `json:"secretList"`
+
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
 // GetConfig returns a list of all config resources in the cluster.
@@ -82,9 +86,14 @@ func GetConfigFromChannels(channels *common.ResourceChannels, dsQuery *dataselec
 		}
 	}
 
-	return &Config{
+	config := &Config{
 		ConfigMapList:             *(<-configMapChan),
 		PersistentVolumeClaimList: *(<-pvcChan),
 		SecretList:                *(<-secretChan),
-	}, nil
+	}
+
+	config.Errors = errors.MergeErrors(config.ConfigMapList.Errors, config.PersistentVolumeClaimList.Errors,
+		config.SecretList.Errors)
+
+	return config, nil
 }

@@ -45,11 +45,6 @@ export class ClusterController {
 
     /** @export {!angular.Resource} */
     this.kdStorageClassListResource = kdStorageClassListResource;
-
-    /** @export {!Array<backendApi.Error>} */
-    this.errors = this.cluster.nodeList.errors.concat(
-        this.cluster.namespaceList.errors, this.cluster.persistentVolumeList.errors,
-        this.cluster.storageClassList.errors, this.cluster.roleList.errors);
   }
 
   /**

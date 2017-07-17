@@ -21,7 +21,7 @@
   box-shadow: $whiteframe-shadow-1dp;
   color: $warning-secondary;
   display: block;
-  margin-bottom: 0;
+  margin: (2.5 * $baseline-grid) (2.5 * $baseline-grid) 0 (2.5 * $baseline-grid);
 }
 
 .kd-warning-message {

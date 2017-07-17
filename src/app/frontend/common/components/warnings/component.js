@@ -20,15 +20,20 @@ export default class WarningsController {
   constructor() {
     /**
      * Limit of displayed warnings used by default.
-     * @type {number}
+     * @export {number}
      */
-    this.defaultLimit = 3;
+    this.defaultLimit = 2;
 
     /**
      * Currently used limit of displayed warnings.
-     * @type {number}
+     * @export {number|undefined}
      */
     this.limit = this.defaultLimit;
+
+    /**
+     * @export {!Array<!backendApi.Error>}
+     */
+    this.warnings;
   }
 
   /**

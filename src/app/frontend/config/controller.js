@@ -36,10 +36,6 @@ export class ConfigController {
 
     /** @export {!angular.Resource} */
     this.pvcListResource = kdPersistentVolumeClaimListResource;
-
-    /** @export {!Array<backendApi.Error>} */
-    this.errors = this.config.configMapList.errors.concat(
-        this.config.secretList.errors, this.config.persistentVolumeClaimList.errors);
   }
 
   /**

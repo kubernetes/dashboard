@@ -15,9 +15,7 @@
 package errors
 
 import (
-	"fmt"
 	"k8s.io/apimachinery/pkg/api/errors"
-	"k8s.io/apimachinery/pkg/runtime/schema"
 	"log"
 	"net/http"
 )
@@ -31,10 +29,6 @@ var NonCriticalErrors = []int32{http.StatusForbidden}
 // allows to distinguish critical errors from non-critical ones. It is needed to handle them in a different way.
 func HandleError(err error) ([]error, error) {
 	nonCriticalErrors := make([]error, 0)
-
-	nonCriticalErrors = append(nonCriticalErrors, errors.NewForbidden(schema.ParseGroupResource("sd"), "s123123213", fmt.Errorf("ASd")))
-	nonCriticalErrors = append(nonCriticalErrors, errors.NewForbidden(schema.ParseGroupResource("sd"), "s123123213", fmt.Errorf("111")))
-
 	return AppendError(err, nonCriticalErrors)
 }
 
@@ -51,6 +45,14 @@ func AppendError(err error, nonCriticalErrors []error) ([]error, error) {
 		}
 	}
 	return nonCriticalErrors, nil
+}
+
+// MergeErrors merges multiple non-critical error arrays into one array.
+func MergeErrors(errorArraysToMerge ...[]error) (mergedErrors []error) {
+	for _, errorArray := range errorArraysToMerge {
+		mergedErrors = append(mergedErrors, errorArray...)
+	}
+	return
 }
 
 func isErrorCritical(err error) bool {
