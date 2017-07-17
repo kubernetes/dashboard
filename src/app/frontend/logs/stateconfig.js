@@ -32,7 +32,6 @@ export default function stateConfig($stateProvider) {
     resolve: {
       'logSources': resolveLogSources,
       'podLogs': resolvePodLogs,
-
     },
     data: {
       [breadcrumbsConfig]: {
@@ -61,7 +60,7 @@ function resolveLogSources($stateParams, $resource) {
   let objectName = $stateParams.objectName;
   let resourceType = $stateParams.resourceType || '';
 
-  /** @type {!angular.Resource<!backendApi.Logs>} */
+  /** @type {!angular.Resource<!backendApi.LogSources>} */
   let resource = $resource(`api/v1/log/source/${namespace}/${objectName}/${resourceType}`);
   return resource.get().$promise;
 }

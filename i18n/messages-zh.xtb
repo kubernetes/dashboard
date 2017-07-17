@@ -1207,6 +1207,7 @@
   <translation id="8618830203451501141" key="MSG_TIME_UNIT_SECONDS_LABEL" desc="Time units label, many seconds (plural).">秒</translation>
   <translation id="3967360362065546967" key="MSG_TIME_UNIT_SECOND_LABEL" desc="Time units label, a single second.">1 秒</translation>
   <translation id="270964281826728358" key="MSG_TIME_UNIT_YEARS_LABEL" desc="Time units label, many years (plural).">年</translation>
+<<<<<<< 79d1adcb8b81017f6c25c1dec92b08356cbbd0c7
   <translation id="58035047264145239" key="MSG_TIME_UNIT_YEAR_LABEL" desc="Time units label, a single year.">1 年</translation>
   <translation id="7831482692212754207" key="MSG_TPR_LIST_STARTED_AT_TOOLTIP" desc="Tooltip 'Started at [some date]' showing the exact creation time of third party resource object.">开始于 <ph name="START_DATE"> UTC</ph></translation>
   <translation id="4037658160328783864" key="MSG_UNKNOWN_SERVER_ERROR" desc="String to display when error object has invalid structure.">未知服务器错误</translation>
@@ -1215,3 +1216,13 @@
   <translation id="1036433586363793837" key="MSG_WORKLOADS_WORKLOADS_1" desc="Title for graph card displaying memory metric of one all resources.">内存使用率</translation>
   <translation id="5680064618107855853" key="MSG_WORKLOADS_WORKLOADS_2" desc="Help message detailing what is included in the memory usage">这些资源所管理容器组的内存占用包括缓存（不会重复计算容器组，因为容器组列表和控制器（例如副本集）中都会包含它们）</translation>
 </translationbundle>
+=======
+  <translation id="58035047264145239" key="MSG_TIME_UNIT_YEAR_LABEL" desc="Time units label, a single year.">1年</translation>
+  <translation id="7831482692212754207" key="MSG_TPR_LIST_STARTED_AT_TOOLTIP" desc="Tooltip 'Started at [some date]' showing the exact creation time of third party resource object.">Started at <ph name="START_DATE"> UTC</ph></translation>
+  <translation id="4037658160328783864" key="MSG_UNKNOWN_SERVER_ERROR" desc="String to display when error object has invalid structure.">未知的服务错误(Unknown Server Error)</translation>
+  <translation id="5877596609986036290" key="MSG_UNSUPPORTED_TOAST" desc="Toast message appears when browser does not support clipboard">Unsupported browser</translation>
+  <translation id="4302564966959880468" key="MSG_WORKLOADS_WORKLOADS_0" desc="Title for graph card displaying CPU metric of one all resources.">CPU使用</translation>
+  <translation id="1036433586363793837" key="MSG_WORKLOADS_WORKLOADS_1" desc="Title for graph card displaying memory metric of one all resources.">内存使用</translation>
+  <translation id="5680064618107855853" key="MSG_WORKLOADS_WORKLOADS_2" desc="Help message detailing what is included in the memory usage">内存使用上包括相关Pod的缓存（不要重复计算Pod使用，在PodList及控制如ReplicaSet上）</translation>
+</translationbundle>
+>>>>>>> merged from upstream

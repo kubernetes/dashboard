@@ -38,8 +38,7 @@ export class LogsController {
    * @param {!../common/errorhandling/service.ErrorDialog} errorDialog
    * @ngInject
    */
-  constructor(logsService, $sce, $document, $resource, $state, errorDialog) {
-
+  constructor(logsService, $sce, $document, $resource, errorDialog) {
     /** @private {!angular.$sce} */
     this.sce_ = $sce;
 
@@ -77,7 +76,7 @@ export class LogsController {
      * Pods and containers available for selection
      * @export {!backendApi.LogSources}
      */
-    this.logSources = logSources;
+    this.logSources;
 
     /**
      * Current page selection
@@ -100,7 +99,6 @@ export class LogsController {
 
 
   $onInit() {
-    this.containers = this.podContainers.containers;
     this.container = this.podLogs.info.containerName;
     this.pod = this.podLogs.info.podName;
     this.stateParams_ = this.$transition$.params();
