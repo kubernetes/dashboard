@@ -1225,4 +1225,7 @@
   <translation id="1036433586363793837" key="MSG_WORKLOADS_WORKLOADS_1" desc="Title for graph card displaying memory metric of one all resources.">内存使用</translation>
   <translation id="5680064618107855853" key="MSG_WORKLOADS_WORKLOADS_2" desc="Help message detailing what is included in the memory usage">内存使用上包括相关Pod的缓存（不要重复计算Pod使用，在PodList及控制如ReplicaSet上）</translation>
 </translationbundle>
+<<<<<<< 91a5eb62d8d5881812f6819906681cb1ae52df73
 >>>>>>> merged from upstream
+=======
+>>>>>>> generated messages
