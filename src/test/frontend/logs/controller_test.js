@@ -43,9 +43,6 @@ describe('Logs controller', () => {
   /** @type {!StateParams} */
   const stateParams = new StateParams(mockNamespace, mockPodId, mockContainer);
 
-  /** @type {!backendApi.PodContainers} */
-  const podContainers = {containers: [mockContainer]};
-
   let podLogs = {
     logs: [
       {timestamp: '1', content: 'a'},
@@ -60,6 +57,8 @@ describe('Logs controller', () => {
       'offsetTo': 25,
     },
   };
+
+  let logSoruces = {podNames: ['pod1', 'pod2'], containerNames: ['cont1', 'cont2']};
 
   let otherLogs = {
     logs: [{timestamp: '7', content: 'x'}, {timestamp: '8', content: 'y'}],
@@ -82,7 +81,7 @@ describe('Logs controller', () => {
           },
           {
             podLogs: angular.copy(podLogs),
-            podContainers: podContainers,
+            logSources: logSoruces,
             $transition$: {
               'params': function() {
                 return stateParams;
@@ -133,7 +132,7 @@ describe('Logs controller', () => {
     expect(ctrl.logsSet.length).toEqual(3);
     httpBackend
         .expectGET(
-            'api/v1/pod/namespace11/pod2/log/con22?logFilePosition=beginning&offsetFrom=25&offsetTo=125&referenceLineNum=11&referenceTimestamp=X')
+            'api/v1/log/namespace11/test-pod/container-name?logFilePosition=beginning&offsetFrom=25&offsetTo=125&referenceLineNum=11&referenceTimestamp=X')
         .respond(200, otherLogs);
     httpBackend.flush();
     expect(ctrl.logsSet.length).toEqual(2);
@@ -146,7 +145,7 @@ describe('Logs controller', () => {
     expect(ctrl.logsSet.length).toEqual(3);
     httpBackend
         .expectGET(
-            'api/v1/pod/namespace11/pod2/log/con22?logFilePosition=beginning&offsetFrom=-78&offsetTo=22&referenceLineNum=11&referenceTimestamp=X')
+            'api/v1/log/namespace11/test-pod/container-name?logFilePosition=beginning&offsetFrom=-78&offsetTo=22&referenceLineNum=11&referenceTimestamp=X')
         .respond(200, otherLogs);
     httpBackend.flush();
     expect(ctrl.logsSet.length).toEqual(2);
@@ -159,7 +158,7 @@ describe('Logs controller', () => {
     expect(ctrl.logsSet.length).toEqual(3);
     httpBackend
         .expectGET(
-            'api/v1/pod/namespace11/pod2/log/con22?logFilePosition=end&offsetFrom=2000000000&offsetTo=2000000100&referenceLineNum=0&referenceTimestamp=newest')
+            'api/v1/log/namespace11/test-pod/container-name?logFilePosition=end&offsetFrom=2000000000&offsetTo=2000000100&referenceLineNum=0&referenceTimestamp=newest')
         .respond(200, otherLogs);
     httpBackend.flush();
     expect(ctrl.logsSet.length).toEqual(2);
@@ -173,7 +172,7 @@ describe('Logs controller', () => {
     expect(ctrl.logsSet.length).toEqual(3);
     httpBackend
         .expectGET(
-            'api/v1/pod/namespace11/pod2/log/con22?logFilePosition=beginning&offsetFrom=-2000000100&offsetTo=-2000000000&referenceLineNum=0&referenceTimestamp=oldest')
+            'api/v1/log/namespace11/test-pod/container-name?logFilePosition=beginning&offsetFrom=-2000000100&offsetTo=-2000000000&referenceLineNum=0&referenceTimestamp=oldest')
         .respond(200, otherLogs);
     httpBackend.flush();
     expect(ctrl.logsSet.length).toEqual(2);
