@@ -22,7 +22,7 @@ limitations under the License.
     <md-icon ng-click="$ctrl.dismissWarning($index)"
              class="material-icons dismiss-icon">
       close
-      <md-tooltip md-delay="500">Dismiss</md-tooltip>
+      <md-tooltip md-delay="500">[[Dismiss|Tooltip for warning dismissal button.]]</md-tooltip>
     </md-icon>
   </div>
   <div class="kd-more-warnings"
@@ -30,14 +30,14 @@ limitations under the License.
     <md-button ng-if="$ctrl.limit"
                ng-click="$ctrl.toggleWarnings()">
       <md-icon class="material-icons">expand_more</md-icon>
-      Show {{$ctrl.errors.length - $ctrl.defaultLimit}} more
+      {{$ctrl.getShowMoreLabel()}}
     </md-button>
     <md-button ng-if="!$ctrl.limit"
                ng-click="$ctrl.toggleWarnings()">
       <md-icon class="material-icons">expand_less</md-icon>
-      Show {{$ctrl.errors.length - $ctrl.defaultLimit}} less
+      {{$ctrl.getShowLessLabel()}}
     </md-button>
     <span flex></span>
-    <md-button ng-click="$ctrl.dismissWarnings()">Dismiss all</md-button>
+    <md-button ng-click="$ctrl.dismissWarnings()">[[Dismiss all|Tooltip for all warning dismissal button.]]</md-button>
   </div>
 </div>

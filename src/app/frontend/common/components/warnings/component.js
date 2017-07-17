@@ -63,6 +63,28 @@ export default class WarningsController {
   dismissWarnings() {
     this.errors = [];
   }
+
+  /**
+   * @export
+   * @return {string}
+   */
+  getShowMoreLabel() {
+    /** @type {string} @desc Show more warnings button label. */
+    let MSG_MORE_WARNINGS_LABEL =
+        goog.getMsg('Show {$count} more', {'count': this.errors.length - this.defaultLimit});
+    return MSG_MORE_WARNINGS_LABEL;
+  }
+
+  /**
+   * @export
+   * @return {string}
+   */
+  getShowLessLabel() {
+    /** @type {string} @desc Show less warnings button label. */
+    let MSG_MORE_WARNINGS_LABEL =
+        goog.getMsg('Show {$count} less', {'count': this.errors.length - this.defaultLimit});
+    return MSG_MORE_WARNINGS_LABEL;
+  }
 }
 
 /**
