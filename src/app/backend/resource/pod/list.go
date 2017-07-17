@@ -46,9 +46,8 @@ type PodStatus struct {
 	ContainerStates []v1.ContainerState `json:"containerStates"`
 }
 
-// Pod is a presentation layer view of Kubernetes Pod resource. This means
-// it is Pod plus additional augmented data we can get from other sources
-// (like services that target it).
+// Pod is a presentation layer view of Kubernetes Pod resource. This means it is Pod plus additional augmented data
+// we can get from other sources (like services that target it).
 type Pod struct {
 	ObjectMeta api.ObjectMeta `json:"objectMeta"`
 	TypeMeta   api.TypeMeta   `json:"typeMeta"`
@@ -64,11 +63,14 @@ type Pod struct {
 
 	// Pod warning events
 	Warnings []common.Event `json:"warnings"`
+
+	// Name of the Node this Pod runs on.
+	NodeName string `json:"nodeName"`
 }
 
 // GetPodList returns a list of all Pods in the cluster.
-func GetPodList(client k8sClient.Interface, metricClient metricapi.MetricClient,
-	nsQuery *common.NamespaceQuery, dsQuery *dataselect.DataSelectQuery) (*PodList, error) {
+func GetPodList(client k8sClient.Interface, metricClient metricapi.MetricClient, nsQuery *common.NamespaceQuery,
+	dsQuery *dataselect.DataSelectQuery) (*PodList, error) {
 	log.Print("Getting list of all pods in the cluster")
 
 	channels := &common.ResourceChannels{
@@ -121,8 +123,7 @@ func ToPodList(pods []v1.Pod, events []v1.Event, nonCriticalErrors []error, dsQu
 
 	for _, pod := range pods {
 		warnings := event.GetPodsEventWarnings(events, []v1.Pod{pod})
-		podDetail := ToPod(&pod, metrics, warnings)
-		podDetail.Warnings = warnings
+		podDetail := toPod(&pod, metrics, warnings)
 		podList.Pods = append(podList.Pods, podDetail)
 	}
 
@@ -133,4 +134,21 @@ func ToPodList(pods []v1.Pod, events []v1.Event, nonCriticalErrors []error, dsQu
 	}
 
 	return podList
+}
+
+func toPod(pod *v1.Pod, metrics *MetricsByPod, warnings []common.Event) Pod {
+	podDetail := Pod{
+		ObjectMeta:   api.NewObjectMeta(pod.ObjectMeta),
+		TypeMeta:     api.NewTypeMeta(api.ResourceKindPod),
+		Warnings:     warnings,
+		PodStatus:    getPodStatus(*pod, warnings),
+		RestartCount: getRestartCount(*pod),
+		NodeName:     pod.Spec.NodeName,
+	}
+
+	if m, exists := metrics.MetricsMap[pod.UID]; exists {
+		podDetail.Metrics = &m
+	}
+
+	return podDetail
 }
