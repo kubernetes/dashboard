@@ -902,7 +902,7 @@ backendApi.PodContainer;
  *   containers: !Array<string>
  * }}
  */
-backendApi.PodContainerList;  // TODO cheld ----------------------------------------------
+backendApi.PodContainerList;
 
 /**
  * @typedef {{

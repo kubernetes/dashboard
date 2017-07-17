@@ -25,12 +25,12 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/config"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/configmap"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/container"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/controller"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/deployment"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/discovery"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/controller"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/ingress"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/job"
@@ -2097,7 +2097,7 @@ func (apiHandler *APIHandler) handleLogs(request *restful.Request, response *res
 	logFilePosition := request.QueryParameter("logFilePosition")
 
 	logSelector := logs.DefaultSelection
-	if err1 == nil || err2 == nil {
+	if err1 == nil && err2 == nil {
 		logSelector = &logs.Selection{
 			ReferencePoint: logs.LogLineId{
 				LogTimestamp: logs.LogTimestamp(refTimestamp),

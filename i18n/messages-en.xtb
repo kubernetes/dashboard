@@ -613,7 +613,7 @@
   <translation id="3180983899887518304" key="MSG_POD_DETAIL_DETAIL_3" desc="Subtitle at the top of the container details.">Init Containers</translation>
   <translation id="855512770998820017" key="MSG_POD_DETAIL_INFO_0" desc="Header in a detail view">Details</translation>
   <translation id="1457675883548195036" key="MSG_POD_DETAIL_INFO_1" desc="Label \'Status\' for the pod status in details part (left) of the pod details view.">Status</translation>
-  <translation id="8753288911649190943" key="MSG_POD_DETAIL_INFO_2" desc="Link to logs view in the pod details view.">View logs</translation>
+  <translation id="8753288911649190943" key="MSG_POD_DETAIL_INFO_2" desc="Label for the pod logs in details part (left) of the pod details view.">View logs</translation>
   <translation id="694126564552626450" key="MSG_POD_DETAIL_INFO_3" desc="Subtitle \'Network\' at the top of the column about network connectivity (right) at the pod detail view.">Network</translation>
   <translation id="7855013997463493128" key="MSG_POD_DETAIL_INFO_4" desc="Label \'Node\' for the node a pods is running on, appears in the connectivity part (right) of the pod details view.">Node</translation>
   <translation id="7683783814970718475" key="MSG_POD_DETAIL_INFO_5" desc="Label \'IP\' for the pod internal IP, appears in the connectivity part (right) of the pod details view.">IP</translation>
