@@ -2097,7 +2097,7 @@ func (apiHandler *APIHandler) handleLogs(request *restful.Request, response *res
 	logFilePosition := request.QueryParameter("logFilePosition")
 
 	logSelector := logs.DefaultSelection
-	if err1 == nil || err2 == nil {
+	if err1 == nil && err2 == nil {
 		logSelector = &logs.Selection{
 			ReferencePoint: logs.LogLineId{
 				LogTimestamp: logs.LogTimestamp(refTimestamp),
