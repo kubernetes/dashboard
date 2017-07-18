@@ -163,6 +163,7 @@
   <translation id="3771546490015192323" key="MSG_DAEMONSET_DETAIL_INFO_11" desc="The message says how many pods are pending (daemon set details page).">{{::$ctrl.daemonSet.podInfo.pending}} 待機中</translation>
   <translation id="6989004320544423836" key="MSG_DAEMONSET_DETAIL_INFO_12" desc="The message says how many pods have failed (daemon set details page).">{{::$ctrl.daemonSet.podInfo.failed}} の失敗</translation>
   <translation id="7121920513850122580" key="MSG_DAEMONSET_DETAIL_INFO_13" desc="The message describes how many pods are running (daemon set details page).">{{::$ctrl.daemonSet.podInfo.running}} 起動中</translation>
+  <translation id="5310198253163300158" key="MSG_DAEMONSET_DETAIL_INFO_14" desc="Link to logs view in the daemon set details view.">View logs</translation>
   <translation id="1915762576763304293" key="MSG_DAEMONSET_DETAIL_INFO_2" desc="Label \'Namespace\' for the daemon set namespace on the details page">ネームスペース</translation>
   <translation id="3087018613949976492" key="MSG_DAEMONSET_DETAIL_INFO_3" desc="Label \'Labels\' for the daemon set\'s labels list on the daemon set details page.">ラベル</translation>
   <translation id="5529663386929562771" key="MSG_DAEMONSET_DETAIL_INFO_4" desc="Label \'Images\' for the list of images used in a daemon set, on its details page.">イメージ</translation>
@@ -625,7 +626,6 @@
   <translation id="6310781543090479387" key="MSG_POD_DETAIL_CONTAINERINFO_6" desc="Label when there is no container commands.">-</translation>
   <translation id="3742802452775193525" key="MSG_POD_DETAIL_CONTAINERINFO_7" desc="Label for container args.">引数</translation>
   <translation id="3712176760429571617" key="MSG_POD_DETAIL_CONTAINERINFO_8" desc="Label when there is no container arguments.">-</translation>
-  <translation id="6103596689592690772" key="MSG_POD_DETAIL_CONTAINERINFO_9" desc="Label for the container logs.">ログの表示</translation>
   <translation id="3675899736876134447" key="MSG_POD_DETAIL_CREATORINFO_0" desc="Heading for Creator card on pod detail page.">作成者 </translation>
   <translation id="9199113045758849849" key="MSG_POD_DETAIL_CREATORINFO_1" desc="Label \'Name\' which appears as a column label in the creator card.">名前</translation>
   <translation id="6242760697176997170" key="MSG_POD_DETAIL_CREATORINFO_2" desc="Label \'Kind\' which appears as a column label in the creator card.">種類</translation>
@@ -657,7 +657,7 @@
   <translation id="2699867637725149359" key="MSG_POD_LIST_CARDLIST_9" desc="Title of a column showing name of the node that pod is running at">Node</translation>
   <translation id="5608535302521220986" key="MSG_POD_LIST_CARD_0" desc="Tooltip for failed pod card icon">ポッドにエラーが発生しています。</translation>
   <translation id="7889427465656547627" key="MSG_POD_LIST_CARD_1" desc="Tooltip for pending pod card icon">ポッドは待機状態です。</translation>
-  <translation id="6227114160090429637" key="MSG_POD_LIST_CARD_2" desc="Label for logs tooltip">ログ</translation>
+  <translation id="6227114160090429637" key="MSG_POD_LIST_CARD_2" desc="Label for logs tooltip">Logs</translation>
   <translation id="1278633357095866885" key="MSG_POD_LIST_CARD_3" desc="Name of the pod resource">ポッド</translation>
   <translation id="1053078836410141563" key="MSG_POD_LIST_CARD_4" desc="Name of the pod resource">ポッド</translation>
   <translation id="4686932628263410864" key="MSG_POD_LIST_LIST_0" desc="Title for graph card displaying CPU metric of pods.">CPU使用量</translation>
@@ -687,6 +687,7 @@
   <translation id="4263408774070199925" key="MSG_REPLICASET_DETAIL_INFO_1" desc="Label \'selector\' for replica sets.">セレクター</translation>
   <translation id="3760168929569923839" key="MSG_REPLICASET_DETAIL_INFO_10" desc="The message says how many pods have failed (replica set details page).">{{::$ctrl.replicaSet.podInfo.failed}} の失敗</translation>
   <translation id="7492629527868215674" key="MSG_REPLICASET_DETAIL_INFO_11" desc="The message says how many pods are running (replica set details page).">{{::$ctrl.replicaSet.podInfo.running}} 起動中</translation>
+  <translation id="5308712918175351277" key="MSG_REPLICASET_DETAIL_INFO_12" desc="Link to logs view in the replica set details view.">View logs</translation>
   <translation id="3911353918422532139" key="MSG_REPLICASET_DETAIL_INFO_2" desc="Label \'Images\' for the list of images used in a replica set, on its details page.">イメージ</translation>
   <translation id="8102227019794353148" key="MSG_REPLICASET_DETAIL_INFO_3" desc="Subtitle \'Status\' for the right section with pod status information\n        on the replica set details page.">状態</translation>
   <translation id="875157097607992319" key="MSG_REPLICASET_DETAIL_INFO_4" desc="Label \'Pods\' for the pods in a replica set on its details page.">ポッド</translation>
@@ -726,6 +727,7 @@
   <translation id="2966352401153803656" key="MSG_REPLICATIONCONTROLLER_DETAIL_INFO_1" desc="Label \'Selector\' for the replication controller\'s selector on the replication controller details page.">セレクター</translation>
   <translation id="4612002136140637630" key="MSG_REPLICATIONCONTROLLER_DETAIL_INFO_10" desc="The message says how many pods have failed (replication controller details page).">{{::$ctrl.replicationController.podInfo.failed}} の失敗</translation>
   <translation id="6124228678804559019" key="MSG_REPLICATIONCONTROLLER_DETAIL_INFO_11" desc="The message says how many pods are running (replication controller details page).">{{::$ctrl.replicationController.podInfo.running}} 起動中</translation>
+  <translation id="7206284857664059071" key="MSG_REPLICATIONCONTROLLER_DETAIL_INFO_12" desc="Link to logs view in the pod details view.">View logs</translation>
   <translation id="8187351409255724077" key="MSG_REPLICATIONCONTROLLER_DETAIL_INFO_2" desc="Label \'Images\' for the list of images used in a replication controller, on its details page.">イメージ</translation>
   <translation id="5182546327040956779" key="MSG_REPLICATIONCONTROLLER_DETAIL_INFO_3" desc="Subtitle \'Status\' for the right section with pod status information on the replication controller details page.">状態</translation>
   <translation id="1084410744399884216" key="MSG_REPLICATIONCONTROLLER_DETAIL_INFO_4" desc="Label \'Pods\' for the pods in a replication controller on its details page.">ポッド</translation>
@@ -832,6 +834,7 @@
   <translation id="3348024993164925047" key="MSG_STATEFULSET_DETAIL_INFO_0" desc="Header in a detail view">詳細</translation>
   <translation id="3442372861347610857" key="MSG_STATEFULSET_DETAIL_INFO_1" desc="Stateful set info details section images entry.">イメージ</translation>
   <translation id="638418405338120294" key="MSG_STATEFULSET_DETAIL_INFO_10" desc="The message says that that many pods are running (stateful set details page).">{{ $ctrl.statefulSet.podInfo.running}} 起動中</translation>
+  <translation id="3336725994331956456" key="MSG_STATEFULSET_DETAIL_INFO_11" desc="Link to logs view in the stateful set details view.">View logs</translation>
   <translation id="6022511979639323705" key="MSG_STATEFULSET_DETAIL_INFO_2" desc="Stateful set info status section name.">状態</translation>
   <translation id="4333163254678014871" key="MSG_STATEFULSET_DETAIL_INFO_3" desc="Stateful set info status section pods entry.">ポッド</translation>
   <translation id="2225505653570116356" key="MSG_STATEFULSET_DETAIL_INFO_4" desc="The message says that that many pods were created (stateful set details page).">{{ $ctrl.statefulSet.podInfo.current}} 作成済</translation>

@@ -12,19 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {stateName as logsStateName, StateParams as LogsStateParams} from 'logs/state';
+
 /**
  * @final
  */
 export default class ReplicaSetInfoController {
   /**
    * Constructs replica set info object.
+   * @param {!ui.router.$state} $state
+   * @ngInject
    */
-  constructor() {
+  constructor($state) {
     /**
      * Replica set details. Initialized from the scope.
      * @export {!backendApi.ReplicaSetDetail}
      */
     this.replicaSet;
+
+    /** @private {!ui.router.$state} */
+    this.state_ = $state;
   }
 
   /**
@@ -33,6 +40,18 @@ export default class ReplicaSetInfoController {
    */
   areDesiredPodsRunning() {
     return this.replicaSet.podInfo.running === this.replicaSet.podInfo.desired;
+  }
+
+  /**
+   * Returns link to teh log view
+   * @return {string}
+   * @export
+   */
+  getLogsHref() {
+    return this.state_.href(
+        logsStateName,
+        new LogsStateParams(
+            this.replicaSet.objectMeta.namespace, this.replicaSet.objectMeta.name, 'replicaset'));
   }
 }
 
