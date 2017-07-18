@@ -64,6 +64,7 @@ import (
 	errorsK8s "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/client-go/tools/remotecommand"
+	"github.com/kubernetes/dashboard/src/app/backend/auth"
 )
 
 const (
@@ -104,6 +105,9 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 
 	integrationHandler := integration.NewIntegrationHandler(iManager)
 	integrationHandler.Install(apiV1Ws)
+
+	authHandler := auth.NewAuthHandler(auth.NewAuthManager())
+	authHandler.Install(apiV1Ws)
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("csrftoken/{action}").

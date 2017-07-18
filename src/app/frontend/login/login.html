@@ -1,29 +1,37 @@
 <form name="$ctrl.form"
       ng-submit="$ctrl.logIn()"
       novalidate>
-<kd-content-card class="kd-login-card">
+  <kd-content-card class="kd-login-card">
     <kd-title>
-        Log in
+      Log in
     </kd-title>
     <kd-content>
-        <div class="kd-login-card-content">
-            <md-input-container class="md-block">
-                <label>Username</label>
-                <input type="text" ng-model="$ctrl.username">
-            </md-input-container>
+      <div class="kd-login-card-content">
+        <md-input-container class="md-block">
+          <label>Username</label>
+          <input type="text"
+                 ng-model="$ctrl.username">
+        </md-input-container>
 
-            <md-input-container class="md-block">
-                <label>Password</label>
-                <input type="password" ng-model="$ctrl.password">
-            </md-input-container>
-        </div>
+        <md-input-container class="md-block">
+          <label>Password</label>
+          <input type="password"
+                 ng-model="$ctrl.password">
+        </md-input-container>
+      </div>
 
-        <md-button class="md-raised md-primary" type="submit">
-            Login
-        </md-button>
-        <md-button class="md-primary" ng-click="$ctrl.skip()">
-            Skip
-        </md-button>
+      <md-button class="md-raised md-primary"
+                 type="submit">
+        Login
+      </md-button>
+      <md-button class="md-primary"
+                 ng-click="$ctrl.skip()">
+        Skip
+      </md-button>
+      <md-button class="md-primary"
+                 ng-click="$ctrl.invalidate()">
+        Invalidate
+      </md-button>
     </kd-content>
-</kd-content-card>
+  </kd-content-card>
 </form>

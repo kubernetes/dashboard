@@ -15,6 +15,7 @@
 import chromeModule from 'chrome/module';
 import componentsModule from 'common/components/module';
 
+import {loginComponent} from './component';
 import stateConfig from './stateconfig';
 
 /**
@@ -30,4 +31,5 @@ export default angular
           chromeModule.name,
           componentsModule.name,
         ])
+    .component('kdLogin', loginComponent)
     .config(stateConfig);

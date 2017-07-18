@@ -38,21 +38,21 @@ export default angular
  * @param {!angular.$location} $location
  * @ngInject
  */
-function ensureNamespaceParamPresent($rootScope, $location) {
+function ensureNamespaceParamPresent($rootScope, $location, $transitions, $state) {
   /**
    * Helper function which replaces namespace URL search param when the given namespace is
    * undefined.
    * @param {string|undefined} namespace
    */
   function replaceUrlIfNeeded(namespace) {
-    if (namespace === undefined) {
+    if (namespace === undefined && !!$state.transition && $state.transition.to().name !== 'login') {
       $location.search(namespaceParam, DEFAULT_NAMESPACE);
       $location.replace();
     }
   }
 
   $rootScope.$watch(() => $location.search()[namespaceParam], replaceUrlIfNeeded);
-  $rootScope.$on('$locationChangeSuccess', () => {
+  $transitions.onSuccess({}, () => {
     replaceUrlIfNeeded($location.search()[namespaceParam]);
   });
 }

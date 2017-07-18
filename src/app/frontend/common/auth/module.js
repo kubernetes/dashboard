@@ -13,8 +13,7 @@
 // limitations under the License.
 
 import {AuthService} from './service';
-
-import {stateName as loginState} from 'login/state';
+import {AuthInterceptor} from './interceptor';
 
 /**
  * Angular module containing application configuration.
@@ -27,21 +26,20 @@ export default angular
           'ngResource',
         ])
     .service('kdAuthService', AuthService)
+    .factory('kdAuthInterceptor', AuthInterceptor.NewAuthInterceptor)
+    .config(initAuthInterceptor)
     .run(initAuthService);
 
 /**
  * Initializes the service to track state changes and make sure that user is logged in and
  * token has not expired.
- */
-/**
+ *
  * @ngInject
  */
-function initAuthService(kdAuthService, $rootScope, $state) {
-  $rootScope.$on('$stateChangeStart', (event, toState) => {
-    if (toState.name !== loginState && !kdAuthService.isLoggedIn() &&
-        kdAuthService.isLoginPageEnabled() && !kdAuthService.isAuthHeaderPresent()) {
-      event.preventDefault();
-      return $state.transitionTo(loginState);
-    }
-  });
+function initAuthService(kdAuthService) {
+  kdAuthService.init();
+}
+
+function initAuthInterceptor($httpProvider) {
+  $httpProvider.interceptors.push('kdAuthInterceptor')
 }

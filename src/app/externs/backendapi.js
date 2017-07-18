@@ -1441,5 +1441,24 @@ backendApi.ThirdPartyResourceObjectList;
  */
 backendApi.CsrfToken;
 
+/**
+ * @typedef {{
+ *   username: string
+ *   password: string
+ *   clientCert: Int8Array,
+ *   clientData: Int8Array,
+ *   token: string,
+ *   kubeConfig: string,
+ * }}
+ */
+backendApi.LoginSpec;
+
+/**
+ * @typedef {{
+ *   jwtToken: string,
+ * }}
+ */
+backendApi.LoginResponse;
+
 /** @typedef {{serverTime: number}} */
 const appConfig_DO_NOT_USE_DIRECTLY = {};

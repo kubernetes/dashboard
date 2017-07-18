@@ -17,9 +17,9 @@
  * to bootstrap the application.
  */
 import aboutModule from './about/module';
-import authModule from './common/auth/module';
 import chromeModule from './chrome/module';
 import clusterModule from './cluster/module';
+import authModule from './common/auth/module';
 import csrfTokenModule from './common/csrftoken/module';
 import scalingModule from './common/scaling/module';
 import configModule from './config/module';

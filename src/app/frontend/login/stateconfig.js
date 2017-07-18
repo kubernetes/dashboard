@@ -15,8 +15,7 @@
 import {stateName as chromeStateName} from 'chrome/state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
 
-import {stateUrl, stateName} from './state';
-import {LoginController} from './controller';
+import {stateName, stateUrl} from './state';
 
 /**
  * I18n object that defines strings for translation used in this file.
@@ -54,9 +53,7 @@ export const config = {
   },
   views: {
     '': {
-      controller: LoginController,
-      controllerAs: '$ctrl',
-      templateUrl: 'login/login.html',
+      component: 'kdLogin',
     },
   },
 };
