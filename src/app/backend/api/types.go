@@ -69,8 +69,7 @@ type TypeMeta struct {
 	Kind ResourceKind `json:"kind,omitempty"`
 }
 
-// ListMeta describes list of objects, i.e. holds information about pagination options set for the
-// list.
+// ListMeta describes list of objects, i.e. holds information about pagination options set for the list.
 type ListMeta struct {
 	// Total number of items on the list. Used for pagination.
 	TotalItems int `json:"totalItems"`
@@ -148,12 +147,11 @@ const (
 // K8s apiserver uses plural paths and this project singular.
 // Must be kept in sync with the list of supported kinds.
 var KindToAPIMapping = map[string]struct {
-	// K8s resource name
+	// Kubernetes resource name.
 	Resource string
-	// Client type used by given resource, i.e. deployments are using extension client and pet
-	// sets apps client.
+	// Client type used by given resource, i.e. deployments are using extension client.
 	ClientType ClientType
-	// Is this object global scoped (not below a namespace)
+	// Is this object global scoped (not below a namespace).
 	Namespaced bool
 }{
 	ResourceKindConfigMap:               {"configmaps", ClientTypeDefault, true},
@@ -179,13 +177,10 @@ var KindToAPIMapping = map[string]struct {
 	ResourceKindStorageClass:            {"storageclasses", ClientTypeStorageClient, false},
 }
 
-// IsSelectorMatching returns true when an object with the given
-// selector targets the same Resources (or subset) that
-// the tested object with the given selector.
-func IsSelectorMatching(labelSelector map[string]string,
-	testedObjectLabels map[string]string) bool {
-
-	// If service has no selectors, then assume it targets different Resource.
+// IsSelectorMatching returns true when an object with the given selector targets the same
+// Resources (or subset) that the tested object with the given selector.
+func IsSelectorMatching(labelSelector map[string]string, testedObjectLabels map[string]string) bool {
+	// If service has no selectors, then assume it targets different resource.
 	if len(labelSelector) == 0 {
 		return false
 	}
@@ -199,9 +194,7 @@ func IsSelectorMatching(labelSelector map[string]string,
 
 // IsLabelSelectorMatching returns true when a resource with the given selector targets the same
 // Resources(or subset) that a tested object selector with the given selector.
-func IsLabelSelectorMatching(selector map[string]string,
-	labelSelector *v1.LabelSelector) bool {
-
+func IsLabelSelectorMatching(selector map[string]string, labelSelector *v1.LabelSelector) bool {
 	// If the resource has no selectors, then assume it targets different Pods.
 	if len(selector) == 0 {
 		return false

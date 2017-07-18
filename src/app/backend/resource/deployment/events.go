@@ -18,44 +18,18 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
-	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/fields"
-	"k8s.io/apimachinery/pkg/labels"
 	client "k8s.io/client-go/kubernetes"
-	"k8s.io/kubernetes/pkg/api"
 )
 
-// GetDeploymentEvents returns model events for a deployment with the given name in the given
-// namespace
-func GetDeploymentEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery, namespace string, deploymentName string) (
-	*common.EventList, error) {
+// GetDeploymentEvents returns model events for a deployment with the given name in the given namespace.
+func GetDeploymentEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery, namespace string,
+	deploymentName string) (*common.EventList, error) {
 
-	fieldSelector, err := fields.ParseSelector(api.EventInvolvedNameField + "=" + deploymentName)
+	dpEvents, err := event.GetEvents(client, namespace, deploymentName)
 	if err != nil {
 		return nil, err
 	}
 
-	channels := &common.ResourceChannels{
-		EventList: common.GetEventListChannelWithOptions(
-			client,
-			common.NewSameNamespaceQuery(namespace),
-			metaV1.ListOptions{
-				LabelSelector: labels.Everything().String(),
-				FieldSelector: fieldSelector.String(),
-			},
-			1),
-	}
-
-	eventRaw := <-channels.EventList.List
-	if err := <-channels.EventList.Error; err != nil {
-		return nil, err
-	}
-	dpEvents := eventRaw.Items
-	if !event.IsTypeFilled(dpEvents) {
-		dpEvents = event.FillEventsType(dpEvents)
-	}
-
 	eventList := event.CreateEventList(dpEvents, dsQuery)
-
 	return &eventList, nil
 }

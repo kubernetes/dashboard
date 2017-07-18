@@ -16,8 +16,12 @@ import componentsModule from 'common/components/module';
 import csrfTokenModule from 'common/csrftoken/module';
 import historyModule from 'common/history/module';
 import validatorsModule from 'common/validators/module';
+
 import errorHandlingModule from '../common/errorhandling/module';
 
+import {deployComponent} from './component';
+import {deployFromFileComponent} from './deployfromfile_component';
+import {deployFromSettingsComponent} from './deployfromsettings_component';
 import {deployLabelComponent} from './deploylabel_component';
 import {environmentVariablesComponent} from './environmentvariables_component';
 import fileReaderDirective from './filereader_directive';
@@ -58,4 +62,7 @@ export default angular
     .directive('kdFileReader', fileReaderDirective)
     .directive('kdUpload', uploadDirective)
     .component('kdEnvironmentVariables', environmentVariablesComponent)
-    .component('kdDeployLabel', deployLabelComponent);
+    .component('kdDeployLabel', deployLabelComponent)
+    .component('kdDeploy', deployComponent)
+    .component('kdDeployFromFile', deployFromFileComponent)
+    .component('kdDeployFromSettings', deployFromSettingsComponent);

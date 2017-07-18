@@ -17,7 +17,7 @@ package workload
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
@@ -25,30 +25,24 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/job"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
+	rc "github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/statefulset"
 	"k8s.io/client-go/kubernetes"
 )
 
 // Workloads structure contains all resource lists grouped into the workloads category.
 type Workloads struct {
-	DeploymentList deployment.DeploymentList `json:"deploymentList"`
-
-	ReplicaSetList replicaset.ReplicaSetList `json:"replicaSetList"`
-
-	JobList job.JobList `json:"jobList"`
-
-	ReplicationControllerList replicationcontroller.ReplicationControllerList `json:"replicationControllerList"`
-
-	PodList pod.PodList `json:"podList"`
-
-	DaemonSetList daemonset.DaemonSetList `json:"daemonSetList"`
-
-	StatefulSetList statefulset.StatefulSetList `json:"statefulSetList"`
+	DeploymentList            deployment.DeploymentList    `json:"deploymentList"`
+	ReplicaSetList            replicaset.ReplicaSetList    `json:"replicaSetList"`
+	JobList                   job.JobList                  `json:"jobList"`
+	ReplicationControllerList rc.ReplicationControllerList `json:"replicationControllerList"`
+	PodList                   pod.PodList                  `json:"podList"`
+	DaemonSetList             daemonset.DaemonSetList      `json:"daemonSetList"`
+	StatefulSetList           statefulset.StatefulSetList  `json:"statefulSetList"`
 }
 
 // GetWorkloads returns a list of all workloads in the cluster.
-func GetWorkloads(client *kubernetes.Clientset, heapsterClient heapster.HeapsterClient,
+func GetWorkloads(client *kubernetes.Clientset, metricClient metricapi.MetricClient,
 	nsQuery *common.NamespaceQuery, dsQuery *dataselect.DataSelectQuery) (*Workloads, error) {
 
 	log.Print("Getting lists of all workloads")
@@ -64,27 +58,25 @@ func GetWorkloads(client *kubernetes.Clientset, heapsterClient heapster.Heapster
 		EventList:                 common.GetEventListChannel(client, nsQuery, 7),
 	}
 
-	return GetWorkloadsFromChannels(channels, heapsterClient, dsQuery)
+	return GetWorkloadsFromChannels(channels, metricClient, dsQuery)
 }
 
-// GetWorkloadsFromChannels returns a list of all workloads in the cluster, from the
-// channel sources.
-func GetWorkloadsFromChannels(channels *common.ResourceChannels,
-	heapsterClient heapster.HeapsterClient, dsQuery *dataselect.DataSelectQuery) (*Workloads,
-	error) {
+// GetWorkloadsFromChannels returns a list of all workloads in the cluster, from the channel sources.
+func GetWorkloadsFromChannels(channels *common.ResourceChannels, metricClient metricapi.MetricClient,
+	dsQuery *dataselect.DataSelectQuery) (*Workloads, error) {
 
+	numErrs := 7
+	errChan := make(chan error, numErrs)
 	rsChan := make(chan *replicaset.ReplicaSetList)
 	jobChan := make(chan *job.JobList)
 	deploymentChan := make(chan *deployment.DeploymentList)
-	rcChan := make(chan *replicationcontroller.ReplicationControllerList)
+	rcChan := make(chan *rc.ReplicationControllerList)
 	podChan := make(chan *pod.PodList)
 	dsChan := make(chan *daemonset.DaemonSetList)
-	psChan := make(chan *statefulset.StatefulSetList)
-	errChan := make(chan error, 7)
+	ssChan := make(chan *statefulset.StatefulSetList)
 
 	go func() {
-		rcList, err := replicationcontroller.GetReplicationControllerListFromChannels(channels,
-			dsQuery, nil)
+		rcList, err := rc.GetReplicationControllerListFromChannels(channels, dsQuery, nil)
 		errChan <- err
 		rcChan <- rcList
 	}()
@@ -108,9 +100,9 @@ func GetWorkloadsFromChannels(channels *common.ResourceChannels,
 	}()
 
 	go func() {
-		podList, err := pod.GetPodListFromChannels(channels,
-			dataselect.NewDataSelectQuery(dsQuery.PaginationQuery, dsQuery.SortQuery,
-				dsQuery.FilterQuery, dataselect.StandardMetrics), heapsterClient)
+		podList, err := pod.GetPodListFromChannels(channels, dataselect.NewDataSelectQuery(
+			dsQuery.PaginationQuery, dsQuery.SortQuery, dsQuery.FilterQuery,
+			dataselect.StandardMetrics), metricClient)
 		errChan <- err
 		podChan <- podList
 	}()
@@ -122,62 +114,25 @@ func GetWorkloadsFromChannels(channels *common.ResourceChannels,
 	}()
 
 	go func() {
-		psList, err := statefulset.GetStatefulSetListFromChannels(channels, dsQuery, nil)
+		ssList, err := statefulset.GetStatefulSetListFromChannels(channels, dsQuery, nil)
 		errChan <- err
-		psChan <- psList
+		ssChan <- ssList
 	}()
 
-	rcList := <-rcChan
-	err := <-errChan
-	if err != nil {
-		return nil, err
+	for i := 0; i < numErrs; i++ {
+		err := <-errChan
+		if err != nil {
+			return nil, err
+		}
 	}
 
-	podList := <-podChan
-	err = <-errChan
-	if err != nil {
-		return nil, err
-	}
-
-	rsList := <-rsChan
-	err = <-errChan
-	if err != nil {
-		return nil, err
-	}
-
-	jobList := <-jobChan
-	err = <-errChan
-	if err != nil {
-		return nil, err
-	}
-
-	deploymentList := <-deploymentChan
-	err = <-errChan
-	if err != nil {
-		return nil, err
-	}
-
-	dsList := <-dsChan
-	err = <-errChan
-	if err != nil {
-		return nil, err
-	}
-
-	psList := <-psChan
-	err = <-errChan
-	if err != nil {
-		return nil, err
-	}
-
-	workloads := &Workloads{
-		ReplicaSetList:            *rsList,
-		JobList:                   *jobList,
-		ReplicationControllerList: *rcList,
-		DeploymentList:            *deploymentList,
-		PodList:                   *podList,
-		DaemonSetList:             *dsList,
-		StatefulSetList:           *psList,
-	}
-
-	return workloads, nil
+	return &Workloads{
+		ReplicaSetList:            *(<-rsChan),
+		JobList:                   *(<-jobChan),
+		ReplicationControllerList: *(<-rcChan),
+		DeploymentList:            *(<-deploymentChan),
+		PodList:                   *(<-podChan),
+		DaemonSetList:             *(<-dsChan),
+		StatefulSetList:           *(<-ssChan),
+	}, nil
 }

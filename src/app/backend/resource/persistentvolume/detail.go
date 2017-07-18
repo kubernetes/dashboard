@@ -25,9 +25,8 @@ import (
 
 // PersistentVolumeDetail provides the presentation layer view of Kubernetes Persistent Volume resource.
 type PersistentVolumeDetail struct {
-	ObjectMeta api.ObjectMeta `json:"objectMeta"`
-	TypeMeta   api.TypeMeta   `json:"typeMeta"`
-
+	ObjectMeta             api.ObjectMeta                   `json:"objectMeta"`
+	TypeMeta               api.TypeMeta                     `json:"typeMeta"`
 	Status                 v1.PersistentVolumePhase         `json:"status"`
 	Claim                  string                           `json:"claim"`
 	ReclaimPolicy          v1.PersistentVolumeReclaimPolicy `json:"reclaimPolicy"`

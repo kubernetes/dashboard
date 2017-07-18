@@ -17,7 +17,7 @@ import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
 import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
 
 import {stateName as serviceList} from './../list/state';
-import {stateUrl} from './../state';
+import {stateName as parentState, stateUrl} from './../state';
 import {ActionBarController} from './actionbar_controller';
 import {ServiceDetailController} from './controller';
 
@@ -28,7 +28,7 @@ import {ServiceDetailController} from './controller';
  */
 export const config = {
   url: appendDetailParamsToUrl(stateUrl),
-  parent: chromeStateName,
+  parent: parentState,
   resolve: {
     'serviceDetailResource': getServiceDetailResource,
     'serviceDetail': resolveServiceDetail,
@@ -45,7 +45,7 @@ export const config = {
       controllerAs: 'ctrl',
       templateUrl: 'service/detail/detail.html',
     },
-    [actionbarViewName]: {
+    [`${actionbarViewName}@${chromeStateName}`]: {
       controller: ActionBarController,
       controllerAs: '$ctrl',
       templateUrl: 'service/detail/actionbar.html',
@@ -58,10 +58,18 @@ export const config = {
  * @return {!angular.Resource}
  * @ngInject
  */
+export function serviceEventsResource($resource) {
+  return $resource('api/v1/service/:namespace/:name/event');
+}
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
 export function servicePodsResource($resource) {
   return $resource('api/v1/service/:namespace/:name/pod');
 }
-
 
 /**
  * @param {!./../../common/resource/resourcedetail.StateParams} $stateParams

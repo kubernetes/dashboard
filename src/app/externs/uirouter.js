@@ -30,3 +30,65 @@ kdUiRouter.$stateProvider = function() {};
  * @param {Function} callback
  */
 kdUiRouter.$stateProvider.prototype.decorator = function(parent, callback) {};
+
+/**
+ * @constructor
+ */
+kdUiRouter.$transitions = function() {};
+
+/**
+ * @param {Object} criteria
+ * @param {Function} callback
+ * @param {Object=} options
+ */
+kdUiRouter.$transitions.prototype.onStart = function(criteria, callback, options) {};
+
+/**
+ * @param {Object} criteria
+ * @param {Function} callback
+ * @param {Object=} options
+ */
+kdUiRouter.$transitions.prototype.onError = function(criteria, callback, options) {};
+
+/**
+ * @param {Object} criteria
+ * @param {Function} callback
+ * @param {Object=} options
+ */
+kdUiRouter.$transitions.prototype.onSuccess = function(criteria, callback, options) {};
+
+/**
+ * @constructor
+ */
+kdUiRouter.$transition$ = function() {};
+
+/**
+ * @return {!ui.router.$state}
+ */
+kdUiRouter.$transition$.prototype.to = function() {};
+
+/**
+ * @return {!ui.router.$stateParams}
+ */
+kdUiRouter.$transition$.prototype.params = function() {};
+
+/**
+ * @constructor
+ */
+kdUiRouter.$state = function() {};
+
+/**
+ * @param {Function} callback
+ */
+kdUiRouter.$state.prototype.defaultErrorHandler = function(callback) {};
+
+/**
+ * @param {string|!ui.router.State} to
+ * @param {?ui.router.StateParams=} opt_toParams
+ * @param {!ui.router.StateOptions=} opt_options
+ * @return {!angular.$q.Promise}
+ */
+kdUiRouter.$state.prototype.go = function(to, opt_toParams, opt_options) {};
+
+/** @type {!Object|undefined} */
+kdUiRouter.$state.prototype.params;

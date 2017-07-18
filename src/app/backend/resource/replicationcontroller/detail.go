@@ -18,10 +18,11 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
+	ds "github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	hpa "github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -56,7 +57,10 @@ type ReplicationControllerDetail struct {
 	HasMetrics bool `json:"hasMetrics"`
 
 	// List of Horizontal Pod AutoScalers targeting this Replication Controller.
-	HorizontalPodAutoscalerList horizontalpodautoscaler.HorizontalPodAutoscalerList `json:"horizontalPodAutoscalerList"`
+	HorizontalPodAutoscalerList hpa.HorizontalPodAutoscalerList `json:"horizontalPodAutoscalerList"`
+
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
 // ReplicationControllerSpec contains information needed to update replication controller.
@@ -65,10 +69,9 @@ type ReplicationControllerSpec struct {
 	Replicas int32 `json:"replicas"`
 }
 
-// GetReplicationControllerDetail returns detailed information about the given replication
-// controller in the given namespace.
-func GetReplicationControllerDetail(client k8sClient.Interface,
-	heapsterClient heapster.HeapsterClient,
+// GetReplicationControllerDetail returns detailed information about the given replication controller
+// in the given namespace.
+func GetReplicationControllerDetail(client k8sClient.Interface, metricClient metricapi.MetricClient,
 	namespace, name string) (*ReplicationControllerDetail, error) {
 	log.Printf("Getting details of %s replication controller in %s namespace", name, namespace)
 
@@ -78,50 +81,52 @@ func GetReplicationControllerDetail(client k8sClient.Interface,
 	}
 
 	podInfo, err := getReplicationControllerPodInfo(client, replicationController, namespace)
-	if err != nil {
-		return nil, err
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	podList, err := GetReplicationControllerPods(client, heapsterClient, dataselect.DefaultDataSelectWithMetrics,
+	podList, err := GetReplicationControllerPods(client, metricClient, ds.DefaultDataSelectWithMetrics,
 		name, namespace)
-	if err != nil {
-		return nil, err
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	eventList, err := GetReplicationControllerEvents(client, dataselect.DefaultDataSelect, namespace, name)
-	if err != nil {
-		return nil, err
+	eventList, err := GetReplicationControllerEvents(client, ds.DefaultDataSelect, namespace, name)
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	serviceList, err := GetReplicationControllerServices(client, dataselect.DefaultDataSelect, namespace,
-		name)
-	if err != nil {
-		return nil, err
+	serviceList, err := GetReplicationControllerServices(client, ds.DefaultDataSelect, namespace, name)
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	hpas, err := horizontalpodautoscaler.GetHorizontalPodAutoscalerListForResource(client, namespace, "ReplicationController", name)
-	if err != nil {
-		return nil, err
+	hpas, err := hpa.GetHorizontalPodAutoscalerListForResource(client, namespace, "ReplicationController", name)
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	replicationControllerDetail := ToReplicationControllerDetail(replicationController, *podInfo,
-		*podList, *eventList, *serviceList, *hpas)
+	replicationControllerDetail := toReplicationControllerDetail(replicationController, *podInfo,
+		*podList, *eventList, *serviceList, *hpas, nonCriticalErrors)
 	return &replicationControllerDetail, nil
 }
 
-// UpdateReplicasCount updates number of replicas in Replication Controller based on Replication
-// Controller Spec
-func UpdateReplicasCount(client k8sClient.Interface, namespace, name string,
-	replicationControllerSpec *ReplicationControllerSpec) error {
+// UpdateReplicasCount updates number of replicas in Replication Controller based on Replication Controller Spec
+func UpdateReplicasCount(client k8sClient.Interface, namespace, name string, spec *ReplicationControllerSpec) error {
 	log.Printf("Updating replicas count to %d for %s replication controller from %s namespace",
-		replicationControllerSpec.Replicas, name, namespace)
+		spec.Replicas, name, namespace)
 
 	replicationController, err := client.CoreV1().ReplicationControllers(namespace).Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return err
 	}
 
-	replicationController.Spec.Replicas = &replicationControllerSpec.Replicas
+	replicationController.Spec.Replicas = &spec.Replicas
 
 	_, err = client.Core().ReplicationControllers(namespace).Update(replicationController)
 	if err != nil {
@@ -129,18 +134,16 @@ func UpdateReplicasCount(client k8sClient.Interface, namespace, name string,
 	}
 
 	log.Printf("Successfully updated replicas count to %d for %s replication controller from %s namespace",
-		replicationControllerSpec.Replicas, name, namespace)
+		spec.Replicas, name, namespace)
 
 	return nil
 }
 
-// ToReplicationControllerDetail converts replication controller api object to replication
-// controller detail model object.
-func ToReplicationControllerDetail(replicationController *v1.ReplicationController,
-	podInfo common.PodInfo, podList pod.PodList, eventList common.EventList,
-	serviceList resourceService.ServiceList, hpas horizontalpodautoscaler.HorizontalPodAutoscalerList) ReplicationControllerDetail {
+func toReplicationControllerDetail(replicationController *v1.ReplicationController, podInfo common.PodInfo,
+	podList pod.PodList, eventList common.EventList, serviceList resourceService.ServiceList,
+	hpas hpa.HorizontalPodAutoscalerList, nonCriticalErrors []error) ReplicationControllerDetail {
 
-	replicationControllerDetail := ReplicationControllerDetail{
+	return ReplicationControllerDetail{
 		ObjectMeta:                  api.NewObjectMeta(replicationController.ObjectMeta),
 		TypeMeta:                    api.NewTypeMeta(api.ResourceKindReplicationController),
 		LabelSelector:               replicationController.Spec.Selector,
@@ -150,7 +153,6 @@ func ToReplicationControllerDetail(replicationController *v1.ReplicationControll
 		ServiceList:                 serviceList,
 		HorizontalPodAutoscalerList: hpas,
 		ContainerImages:             common.GetContainerImages(&replicationController.Spec.Template.Spec),
+		Errors:                      nonCriticalErrors,
 	}
-
-	return replicationControllerDetail
 }

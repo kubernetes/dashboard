@@ -15,14 +15,12 @@
 package daemonset
 
 import (
-	"log"
-
 	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	client "k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/pkg/api/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
@@ -30,15 +28,15 @@ import (
 
 // DaemonSetList contains a list of Daemon Sets in the cluster.
 type DaemonSetList struct {
-	ListMeta api.ListMeta `json:"listMeta"`
+	ListMeta          api.ListMeta       `json:"listMeta"`
+	DaemonSets        []DaemonSet        `json:"daemonSets"`
+	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`
 
-	// Unordered list of Daemon Sets
-	DaemonSets        []DaemonSet     `json:"daemonSets"`
-	CumulativeMetrics []metric.Metric `json:"cumulativeMetrics"`
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
-// DaemonSet (aka. Daemon Set) plus zero or more Kubernetes services that
-// target the Daemon Set.
+// DaemonSet plus zero or more Kubernetes services that target the Daemon Set.
 type DaemonSet struct {
 	ObjectMeta api.ObjectMeta `json:"objectMeta"`
 	TypeMeta   api.TypeMeta   `json:"typeMeta"`
@@ -51,9 +49,8 @@ type DaemonSet struct {
 }
 
 // GetDaemonSetList returns a list of all Daemon Set in the cluster.
-func GetDaemonSetList(client *client.Clientset, nsQuery *common.NamespaceQuery,
-	dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) (*DaemonSetList, error) {
-	log.Print("Getting list of all daemon sets in the cluster")
+func GetDaemonSetList(client *client.Clientset, nsQuery *common.NamespaceQuery, dsQuery *dataselect.DataSelectQuery,
+	metricClient metricapi.MetricClient) (*DaemonSetList, error) {
 	channels := &common.ResourceChannels{
 		DaemonSetList: common.GetDaemonSetListChannel(client, nsQuery, 1),
 		ServiceList:   common.GetServiceListChannel(client, nsQuery, 1),
@@ -61,47 +58,54 @@ func GetDaemonSetList(client *client.Clientset, nsQuery *common.NamespaceQuery,
 		EventList:     common.GetEventListChannel(client, nsQuery, 1),
 	}
 
-	return GetDaemonSetListFromChannels(channels, dsQuery, heapsterClient)
+	return GetDaemonSetListFromChannels(channels, dsQuery, metricClient)
 }
 
 // GetDaemonSetListFromChannels returns a list of all Daemon Seet in the cluster
 // reading required resource list once from the channels.
-func GetDaemonSetListFromChannels(channels *common.ResourceChannels,
-	dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) (*DaemonSetList, error) {
+func GetDaemonSetListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery,
+	metricClient metricapi.MetricClient) (*DaemonSetList, error) {
 
 	daemonSets := <-channels.DaemonSetList.List
-	if err := <-channels.DaemonSetList.Error; err != nil {
-		return nil, err
+	err := <-channels.DaemonSetList.Error
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
 	pods := <-channels.PodList.List
-	if err := <-channels.PodList.Error; err != nil {
-		return nil, err
+	err = <-channels.PodList.Error
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
 	events := <-channels.EventList.List
-	if err := <-channels.EventList.Error; err != nil {
-		return nil, err
+	err = <-channels.EventList.Error
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	result := CreateDaemonSetList(daemonSets.Items, pods.Items, events.Items, dsQuery, heapsterClient)
+	result := toDaemonSetList(daemonSets.Items, pods.Items, events.Items, nonCriticalErrors, dsQuery, metricClient)
 	return result, nil
 }
 
-// CreateDaemonSetList returns a list of all Daemon Set model objects in the cluster, based on all
-// Kubernetes Daemon Set API objects.
-func CreateDaemonSetList(daemonSets []extensions.DaemonSet, pods []v1.Pod,
-	events []v1.Event, dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) *DaemonSetList {
+func toDaemonSetList(daemonSets []extensions.DaemonSet, pods []v1.Pod, events []v1.Event, nonCriticalErrors []error,
+	dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) *DaemonSetList {
 
 	daemonSetList := &DaemonSetList{
 		DaemonSets: make([]DaemonSet, 0),
 		ListMeta:   api.ListMeta{TotalItems: len(daemonSets)},
+		Errors:     nonCriticalErrors,
 	}
 
-	cachedResources := &dataselect.CachedResources{
+	cachedResources := &metricapi.CachedResources{
 		Pods: pods,
 	}
-	dsCells, metricPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(ToCells(daemonSets), dsQuery, cachedResources, heapsterClient)
+
+	dsCells, metricPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(ToCells(daemonSets),
+		dsQuery, cachedResources, metricClient)
 	daemonSets = FromCells(dsCells)
 	daemonSetList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
@@ -111,19 +115,18 @@ func CreateDaemonSetList(daemonSets []extensions.DaemonSet, pods []v1.Pod,
 			daemonSet.Status.DesiredNumberScheduled, matchingPods)
 		podInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)
 
-		daemonSetList.DaemonSets = append(daemonSetList.DaemonSets,
-			DaemonSet{
-				ObjectMeta:      api.NewObjectMeta(daemonSet.ObjectMeta),
-				TypeMeta:        api.NewTypeMeta(api.ResourceKindDaemonSet),
-				Pods:            podInfo,
-				ContainerImages: common.GetContainerImages(&daemonSet.Spec.Template.Spec),
-			})
+		daemonSetList.DaemonSets = append(daemonSetList.DaemonSets, DaemonSet{
+			ObjectMeta:      api.NewObjectMeta(daemonSet.ObjectMeta),
+			TypeMeta:        api.NewTypeMeta(api.ResourceKindDaemonSet),
+			Pods:            podInfo,
+			ContainerImages: common.GetContainerImages(&daemonSet.Spec.Template.Spec),
+		})
 	}
 
 	cumulativeMetrics, err := metricPromises.GetMetrics()
 	daemonSetList.CumulativeMetrics = cumulativeMetrics
 	if err != nil {
-		daemonSetList.CumulativeMetrics = make([]metric.Metric, 0)
+		daemonSetList.CumulativeMetrics = make([]metricapi.Metric, 0)
 	}
 
 	return daemonSetList

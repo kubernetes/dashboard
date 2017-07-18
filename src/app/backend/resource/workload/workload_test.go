@@ -19,12 +19,12 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/deployment"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/job"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
@@ -174,51 +174,45 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 		expected := &Workloads{
 			ReplicationControllerList: replicationcontroller.ReplicationControllerList{
 				ListMeta:               api.ListMeta{TotalItems: len(c.rcs)},
-				CumulativeMetrics:      make([]metric.Metric, 0),
+				CumulativeMetrics:      make([]metricapi.Metric, 0),
 				ReplicationControllers: c.rcs,
+				Errors:                 []error{},
 			},
 			ReplicaSetList: replicaset.ReplicaSetList{
 				ListMeta:          api.ListMeta{TotalItems: len(c.rs)},
-				CumulativeMetrics: make([]metric.Metric, 0),
+				CumulativeMetrics: make([]metricapi.Metric, 0),
 				ReplicaSets:       c.rs,
+				Errors:            []error{},
 			},
 			JobList: job.JobList{
 				ListMeta:          api.ListMeta{TotalItems: len(c.jobs)},
-				CumulativeMetrics: make([]metric.Metric, 0),
+				CumulativeMetrics: make([]metricapi.Metric, 0),
 				Jobs:              c.jobs,
+				Errors:            []error{},
 			},
 			DaemonSetList: daemonset.DaemonSetList{
 				ListMeta:          api.ListMeta{TotalItems: len(c.daemonset)},
-				CumulativeMetrics: make([]metric.Metric, 0),
+				CumulativeMetrics: make([]metricapi.Metric, 0),
 				DaemonSets:        c.daemonset,
+				Errors:            []error{},
 			},
 			DeploymentList: deployment.DeploymentList{
 				ListMeta:          api.ListMeta{TotalItems: len(c.deployment)},
-				CumulativeMetrics: make([]metric.Metric, 0),
+				CumulativeMetrics: make([]metricapi.Metric, 0),
 				Deployments:       c.deployment,
+				Errors:            []error{},
 			},
 			PodList: pod.PodList{
-				ListMeta: api.ListMeta{TotalItems: len(c.pod)},
-				CumulativeMetrics: []metric.Metric{
-					{
-						DataPoints: metric.DataPoints{},
-						MetricName: "cpu/usage_rate",
-						Label:      metric.Label{},
-						Aggregate:  "sum",
-					},
-					{
-						DataPoints: metric.DataPoints{},
-						MetricName: "memory/usage",
-						Label:      metric.Label{},
-						Aggregate:  "sum",
-					},
-				},
-				Pods: c.pod,
+				ListMeta:          api.ListMeta{TotalItems: len(c.pod)},
+				CumulativeMetrics: []metricapi.Metric{},
+				Pods:              c.pod,
+				Errors:            []error{},
 			},
 			StatefulSetList: statefulset.StatefulSetList{
 				ListMeta:          api.ListMeta{TotalItems: len(c.statefulSet)},
-				CumulativeMetrics: make([]metric.Metric, 0),
+				CumulativeMetrics: make([]metricapi.Metric, 0),
 				StatefulSets:      c.statefulSet,
+				Errors:            []error{},
 			},
 		}
 		var expectedErr error

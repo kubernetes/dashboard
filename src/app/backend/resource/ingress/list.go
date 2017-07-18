@@ -16,6 +16,7 @@ package ingress
 
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -40,41 +41,37 @@ type IngressList struct {
 
 	// Unordered list of Ingresss.
 	Items []Ingress `json:"items"`
+
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
 // GetIngressList - return all ingresses in the given namespace.
-func GetIngressList(client client.Interface, namespace *common.NamespaceQuery,
-	dsQuery *dataselect.DataSelectQuery) (*IngressList, error) {
+func GetIngressList(client client.Interface, namespace *common.NamespaceQuery, dsQuery *dataselect.DataSelectQuery) (*IngressList, error) {
 	ingressList, err := client.Extensions().Ingresses(namespace.ToRequestParam()).List(metaV1.ListOptions{
 		LabelSelector: labels.Everything().String(),
 		FieldSelector: fields.Everything().String(),
 	})
-	if err != nil {
-		return nil, err
+
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
 	}
-	return NewIngressList(ingressList.Items, dsQuery), err
+
+	return toIngressList(ingressList.Items, nonCriticalErrors, dsQuery), err
 }
 
 // GetIngressListFromChannels - return all ingresses in the given namespace.
-func GetIngressListFromChannels(channels *common.ResourceChannels,
-	dsQuery *dataselect.DataSelectQuery) (*IngressList, error) {
+func GetIngressListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery) (*IngressList, error) {
 	ingress := <-channels.IngressList.List
-	if err := <-channels.IngressList.Error; err != nil {
-		return nil, err
+	err := <-channels.IngressList.Error
+
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	return NewIngressList(ingress.Items, dsQuery), nil
-}
-
-// NewIngress - creates a new instance of Ingress struct based on K8s Ingress.
-func NewIngress(ingress *extensions.Ingress) *Ingress {
-	modelIngress := &Ingress{
-		ObjectMeta: api.NewObjectMeta(ingress.ObjectMeta),
-		TypeMeta:   api.NewTypeMeta(api.ResourceKindIngress),
-		Endpoints:  getEndpoints(ingress),
-	}
-
-	return modelIngress
+	return toIngressList(ingress.Items, nonCriticalErrors, dsQuery), nil
 }
 
 func getEndpoints(ingress *extensions.Ingress) []common.Endpoint {
@@ -88,11 +85,20 @@ func getEndpoints(ingress *extensions.Ingress) []common.Endpoint {
 	return endpoints
 }
 
-// NewIngressList - creates a new instance of IngressList struct based on K8s Ingress array.
-func NewIngressList(ingresses []extensions.Ingress, dsQuery *dataselect.DataSelectQuery) *IngressList {
+func toIngress(ingress *extensions.Ingress) *Ingress {
+	modelIngress := &Ingress{
+		ObjectMeta: api.NewObjectMeta(ingress.ObjectMeta),
+		TypeMeta:   api.NewTypeMeta(api.ResourceKindIngress),
+		Endpoints:  getEndpoints(ingress),
+	}
+	return modelIngress
+}
+
+func toIngressList(ingresses []extensions.Ingress, nonCriticalErrors []error, dsQuery *dataselect.DataSelectQuery) *IngressList {
 	newIngressList := &IngressList{
 		ListMeta: api.ListMeta{TotalItems: len(ingresses)},
 		Items:    make([]Ingress, 0),
+		Errors:   nonCriticalErrors,
 	}
 
 	ingresCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(ingresses), dsQuery)
@@ -100,7 +106,7 @@ func NewIngressList(ingresses []extensions.Ingress, dsQuery *dataselect.DataSele
 	newIngressList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
 	for _, ingress := range ingresses {
-		newIngressList.Items = append(newIngressList.Items, *NewIngress(&ingress))
+		newIngressList.Items = append(newIngressList.Items, *toIngress(&ingress))
 	}
 
 	return newIngressList

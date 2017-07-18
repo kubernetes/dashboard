@@ -12,11 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as chromeStateName} from 'chrome/state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
 import {stateName as parentStateName} from 'discovery/state';
 
-import {stateUrl} from './../state';
+import {stateName as parentState, stateUrl} from './../state';
 import {ServiceListController} from './controller';
 
 /**
@@ -24,7 +23,7 @@ import {ServiceListController} from './controller';
  */
 const i18n = {
   /** @type {string} @desc Label 'Services' that appears as a breadcrumbs on the action bar. */
-  MSG_serviceS_LABEL: goog.getMsg('Services'),
+  MSG_SERVICES_LABEL: goog.getMsg('Services'),
 };
 
 /**
@@ -34,13 +33,13 @@ const i18n = {
  */
 export const config = {
   url: stateUrl,
-  parent: chromeStateName,
+  parent: parentState,
   resolve: {
     'serviceList': resolveServiceList,
   },
   data: {
     [breadcrumbsConfig]: {
-      'label': i18n.MSG_serviceS_LABEL,
+      'label': i18n.MSG_SERVICES_LABEL,
       'parent': parentStateName,
     },
   },

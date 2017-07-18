@@ -108,16 +108,17 @@ func (self *clientManager) ClientCmdConfig(req *restful.Request) (clientcmd.Clie
 		return nil, err
 	}
 
-	// Use token in cfg if there is no token in authInfo
+	// Use auth data provided in cfg if there is no token in header
 	if len(authInfo.Token) == 0 {
-		authInfo.Token = cfg.BearerToken
+		authInfo = self.buildAuthInfoFromConfig(cfg)
 	}
 
 	cmdCfg := api.NewConfig()
 	cmdCfg.Clusters[DefaultCmdConfigName] = &api.Cluster{
-		Server:                cfg.Host,
-		CertificateAuthority:  cfg.TLSClientConfig.CAFile,
-		InsecureSkipTLSVerify: cfg.TLSClientConfig.Insecure,
+		Server:                   cfg.Host,
+		CertificateAuthority:     cfg.TLSClientConfig.CAFile,
+		CertificateAuthorityData: cfg.TLSClientConfig.CAData,
+		InsecureSkipTLSVerify:    cfg.TLSClientConfig.Insecure,
 	}
 	cmdCfg.AuthInfos[DefaultCmdConfigName] = &authInfo
 	cmdCfg.Contexts[DefaultCmdConfigName] = &api.Context{
@@ -137,8 +138,7 @@ func (self *clientManager) CSRFKey() string {
 	return self.csrfKey
 }
 
-// VerberClient returns new verber client based on authentication information extracted from
-// request
+// VerberClient returns new verber client based on authentication information extracted from request
 func (self *clientManager) VerberClient(req *restful.Request) (ResourceVerber, error) {
 	client, err := self.Client(req)
 	if err != nil {
@@ -173,6 +173,19 @@ func (self *clientManager) buildConfigFromFlags(apiserverHost, kubeConfigPath st
 	}
 
 	return nil, errors.New("Could not create client config. Check logs for more information")
+}
+
+// Based on rest config creates auth info structure.
+func (self *clientManager) buildAuthInfoFromConfig(cfg *rest.Config) api.AuthInfo {
+	return api.AuthInfo{
+		Token:                 cfg.BearerToken,
+		ClientCertificate:     cfg.CertFile,
+		ClientKey:             cfg.KeyFile,
+		ClientCertificateData: cfg.CertData,
+		ClientKeyData:         cfg.KeyData,
+		Username:              cfg.Username,
+		Password:              cfg.Password,
+	}
 }
 
 // Extracts authentication information from request header
@@ -254,6 +267,5 @@ func NewClientManager(kubeConfigPath, apiserverHost string) ClientManager {
 	}
 
 	result.init()
-
 	return result
 }

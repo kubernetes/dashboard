@@ -15,24 +15,12 @@
 package dataselect
 
 import (
-	"fmt"
 	"sort"
 
-	client "github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
-	"k8s.io/client-go/pkg/api/v1"
+	"errors"
+	"github.com/emicklei/go-restful/log"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 )
-
-// CachedResources contains all resources that may be required by DataSelect functions.
-// Depending on the need you may have to provide DataSelect with resources it requires, for example
-// resource like deployment will need Pods in order to calculate its metrics.
-type CachedResources struct {
-	Pods []v1.Pod
-	// More cached resources can be added.
-	// For example, if you want to use Events from DataSelect, you will have to add them here.
-}
-
-var NoResourceCache = &CachedResources{}
 
 // GenericDataCell describes the interface of the data cell that contains all the necessary methods needed to perform
 // complex data selection
@@ -46,12 +34,10 @@ type DataCell interface {
 
 // MetricDataCell extends interface of DataCells and additionally supports metric download.
 type MetricDataCell interface {
-	// GetPropertyAtIndex returns the property of this data cell.
-	// Value returned has to have Compare method which is required by Sort functionality of DataSelect.
-	GetProperty(PropertyName) ComparableValue
+	DataCell
 	// GetResourceSelector returns ResourceSelector for this resource. The ResourceSelector can be used to get,
 	// HeapsterSelector which in turn can be used to download metrics.
-	GetResourceSelector() *metric.ResourceSelector
+	GetResourceSelector() *metricapi.ResourceSelector
 }
 
 // ComparableValue hold any value that can be compared to its own kind.
@@ -71,10 +57,14 @@ type DataSelector struct {
 	// DataSelectQuery holds instructions for data select.
 	DataSelectQuery *DataSelectQuery
 	// CachedResources stores resources that may be needed during data selection process
-	CachedResources *CachedResources
+	CachedResources *metricapi.CachedResources
 	// CumulativeMetricsPromises is a list of promises holding aggregated metrics for resources in GenericDataList.
 	// The metrics will be calculated after calling GetCumulativeMetrics method.
-	CumulativeMetricsPromises metric.MetricPromises
+	CumulativeMetricsPromises metricapi.MetricPromises
+	// MetricsPromises is a list of promises holding metrics for resources in GenericDataList.
+	// The metrics will be calculated after calling GetMetrics method. Metric will not be
+	// aggregated and can are used to display sparklines on pod list.
+	MetricsPromises metricapi.MetricPromises
 }
 
 // Implementation of sort.Interface so that we can use built-in sort function (sort.Sort) for sorting SelectableData
@@ -138,37 +128,84 @@ func (self *DataSelector) Filter() *DataSelector {
 	return self
 }
 
-// GetCumulativeMetrics downloads and aggregates metrics for data cells currently present in self.GenericDataList as instructed
-// by MetricQuery and inserts resulting MetricPromises to self.CumulativeMetricsPromises.
-func (self *DataSelector) GetCumulativeMetrics(heapsterClient *client.HeapsterClient) *DataSelector {
+func (self *DataSelector) getMetrics(metricClient metricapi.MetricClient) (
+	[]metricapi.MetricPromises, error) {
+	metricPromises := make([]metricapi.MetricPromises, 0)
+
+	if metricClient == nil {
+		return metricPromises, errors.New("No metric client provided. Skipping metrics.")
+	}
+
 	metricNames := self.DataSelectQuery.MetricQuery.MetricNames
 	if metricNames == nil {
-		// Don't download any metrics
-		return self
+		return metricPromises, errors.New("No metrics specified. Skipping metrics.")
 	}
-	aggregations := self.DataSelectQuery.MetricQuery.Aggregations
-	heapsterSelectors := make(metric.HeapsterSelectors, len(self.GenericDataList))
-	// get all heapster queries
+
+	selectors := make([]metricapi.ResourceSelector, len(self.GenericDataList))
 	for i, dataCell := range self.GenericDataList {
 		// make sure data cells support metrics
-		metricDataCell := dataCell.(MetricDataCell)
-
-		// get its heapster selector
-		heapsterSelector, err := metricDataCell.GetResourceSelector().GetHeapsterSelector(self.CachedResources.Pods)
-		if err != nil {
-			// Programming error. Notify immediately.
-			panic(fmt.Sprintf(`Failed to create heapster selector for resource "%s". Error: %s`, metricDataCell.GetResourceSelector().ResourceType, err))
+		metricDataCell, ok := dataCell.(MetricDataCell)
+		if !ok {
+			log.Printf("Data cell does not implement MetricDataCell. Skipping. %v", dataCell)
+			continue
 		}
-		heapsterSelectors[i] = heapsterSelector
+
+		selectors[i] = *metricDataCell.GetResourceSelector()
 	}
+
+	for _, metricName := range metricNames {
+		promises := metricClient.DownloadMetric(selectors, metricName, self.CachedResources)
+		metricPromises = append(metricPromises, promises)
+	}
+
+	return metricPromises, nil
+}
+
+// GetMetrics downloads metrics for data cells currently present in self.GenericDataList as instructed
+// by MetricQuery and inserts resulting MetricPromises to self.MetricsPromises.
+func (self *DataSelector) GetMetrics(metricClient metricapi.MetricClient) *DataSelector {
+	metricPromisesList, err := self.getMetrics(metricClient)
+	if err != nil {
+		log.Print(err)
+		return self
+	}
+
+	metricPromises := make(metricapi.MetricPromises, 0)
+	for _, promises := range metricPromisesList {
+		metricPromises = append(metricPromises, promises...)
+	}
+
+	self.MetricsPromises = metricPromises
+	return self
+}
+
+// GetCumulativeMetrics downloads and aggregates metrics for data cells currently present in self.GenericDataList as instructed
+// by MetricQuery and inserts resulting MetricPromises to self.CumulativeMetricsPromises.
+func (self *DataSelector) GetCumulativeMetrics(metricClient metricapi.MetricClient) *DataSelector {
+	metricPromisesList, err := self.getMetrics(metricClient)
+	if err != nil {
+		log.Print(err)
+		return self
+	}
+
+	metricNames := self.DataSelectQuery.MetricQuery.MetricNames
+	if metricNames == nil {
+		log.Print("No metrics specified. Skipping metrics.")
+		return self
+	}
+
+	aggregations := self.DataSelectQuery.MetricQuery.Aggregations
 	if aggregations == nil {
-		aggregations = metric.OnlyDefaultAggregation
+		aggregations = metricapi.OnlyDefaultAggregation
 	}
-	// panic if someone tries to download metrics without providing heapster client.
-	if heapsterClient == nil {
-		panic("Tried to download metrics without providing heapster client. Use dataselect.NoMetrics or provide heapster!")
+
+	metricPromises := make(metricapi.MetricPromises, 0)
+	for i, metricName := range metricNames {
+		promises := metricClient.AggregateMetrics(metricPromisesList[i], metricName, aggregations)
+		metricPromises = append(metricPromises, promises...)
 	}
-	self.CumulativeMetricsPromises = heapsterSelectors.DownloadAndAggregate(*heapsterClient, metricNames, aggregations)
+
+	self.CumulativeMetricsPromises = metricPromises
 	return self
 }
 
@@ -216,19 +253,22 @@ func GenericDataSelectWithFilter(dataList []DataCell, dsQuery *DataSelectQuery) 
 
 // GenericDataSelect takes a list of GenericDataCells and DataSelectQuery and returns selected data as instructed by dsQuery.
 func GenericDataSelectWithMetrics(dataList []DataCell, dsQuery *DataSelectQuery,
-	cachedResources *CachedResources, heapsterClient *client.HeapsterClient) ([]DataCell, metric.MetricPromises) {
+	cachedResources *metricapi.CachedResources, metricClient metricapi.MetricClient) (
+	[]DataCell, metricapi.MetricPromises) {
 	SelectableData := DataSelector{
 		GenericDataList: dataList,
 		DataSelectQuery: dsQuery,
 		CachedResources: cachedResources,
 	}
 	// Pipeline is Filter -> Sort -> CollectMetrics -> Paginate
-	processed := SelectableData.Sort().GetCumulativeMetrics(heapsterClient).Paginate()
+	processed := SelectableData.Sort().GetCumulativeMetrics(metricClient).Paginate()
 	return processed.GenericDataList, processed.CumulativeMetricsPromises
 }
 
+// GenericDataSelect takes a list of GenericDataCells and DataSelectQuery and returns selected data as instructed by dsQuery.
 func GenericDataSelectWithFilterAndMetrics(dataList []DataCell, dsQuery *DataSelectQuery,
-	cachedResources *CachedResources, heapsterClient *client.HeapsterClient) ([]DataCell, metric.MetricPromises, int) {
+	cachedResources *metricapi.CachedResources, metricClient metricapi.MetricClient) (
+	[]DataCell, metricapi.MetricPromises, int) {
 	SelectableData := DataSelector{
 		GenericDataList: dataList,
 		DataSelectQuery: dsQuery,
@@ -237,7 +277,19 @@ func GenericDataSelectWithFilterAndMetrics(dataList []DataCell, dsQuery *DataSel
 	// Pipeline is Filter -> Sort -> CollectMetrics -> Paginate
 	filtered := SelectableData.Filter()
 	filteredTotal := len(filtered.GenericDataList)
-	processed := filtered.Sort().GetCumulativeMetrics(heapsterClient).Paginate()
+	processed := filtered.Sort().GetCumulativeMetrics(metricClient).Paginate()
 	return processed.GenericDataList, processed.CumulativeMetricsPromises, filteredTotal
+}
 
+// PodListMetrics returns metrics for every resource on the dataList without aggregating data.
+func PodListMetrics(dataList []DataCell, dsQuery *DataSelectQuery,
+	metricClient metricapi.MetricClient) metricapi.MetricPromises {
+	selectableData := DataSelector{
+		GenericDataList: dataList,
+		DataSelectQuery: dsQuery,
+		CachedResources: metricapi.NoResourceCache,
+	}
+
+	processed := selectableData.GetMetrics(metricClient)
+	return processed.MetricsPromises
 }

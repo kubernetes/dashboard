@@ -20,9 +20,9 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/pkg/api/v1"
@@ -45,46 +45,39 @@ func TestGetJobListFromChannels(t *testing.T) {
 			&v1.PodList{},
 			&JobList{
 				ListMeta:          api.ListMeta{},
-				CumulativeMetrics: make([]metric.Metric, 0),
-				Jobs:              []Job{}},
-			nil,
-		},
-		{
-			batch.JobList{},
-			errors.New("MyCustomError"),
-			&v1.PodList{},
-			nil,
-			errors.New("MyCustomError"),
-		},
-		{
-			batch.JobList{},
-			&k8serrors.StatusError{},
-			&v1.PodList{},
-			nil,
-			&k8serrors.StatusError{},
-		},
-		{
-			batch.JobList{},
-			&k8serrors.StatusError{ErrStatus: metaV1.Status{}},
-			&v1.PodList{},
-			nil,
-			&k8serrors.StatusError{ErrStatus: metaV1.Status{}},
-		},
-		{
-			batch.JobList{},
-			&k8serrors.StatusError{ErrStatus: metaV1.Status{Reason: "foo-bar"}},
-			&v1.PodList{},
-			nil,
-			&k8serrors.StatusError{ErrStatus: metaV1.Status{Reason: "foo-bar"}},
-		},
-		{
-			batch.JobList{},
-			&k8serrors.StatusError{ErrStatus: metaV1.Status{Reason: "NotFound"}},
-			&v1.PodList{},
-			&JobList{
-				Jobs: make([]Job, 0),
+				CumulativeMetrics: make([]metricapi.Metric, 0),
+				Jobs:              []Job{},
+				Errors:            []error{},
 			},
 			nil,
+		},
+		{
+			batch.JobList{},
+			errors.New("MyCustomError"),
+			&v1.PodList{},
+			nil,
+			errors.New("MyCustomError"),
+		},
+		{
+			batch.JobList{},
+			&k8serrors.StatusError{},
+			&v1.PodList{},
+			nil,
+			&k8serrors.StatusError{},
+		},
+		{
+			batch.JobList{},
+			&k8serrors.StatusError{ErrStatus: metaV1.Status{}},
+			&v1.PodList{},
+			nil,
+			&k8serrors.StatusError{ErrStatus: metaV1.Status{}},
+		},
+		{
+			batch.JobList{},
+			&k8serrors.StatusError{ErrStatus: metaV1.Status{Reason: "foo-bar"}},
+			&v1.PodList{},
+			nil,
+			&k8serrors.StatusError{ErrStatus: metaV1.Status{Reason: "foo-bar"}},
 		},
 		{
 			batch.JobList{
@@ -154,7 +147,7 @@ func TestGetJobListFromChannels(t *testing.T) {
 			},
 			&JobList{
 				ListMeta:          api.ListMeta{TotalItems: 2},
-				CumulativeMetrics: make([]metric.Metric, 0),
+				CumulativeMetrics: make([]metricapi.Metric, 0),
 				Jobs: []Job{{
 					ObjectMeta: api.ObjectMeta{
 						Name:              "rs-name",
@@ -166,7 +159,7 @@ func TestGetJobListFromChannels(t *testing.T) {
 					Pods: common.PodInfo{
 						Current:  7,
 						Desired:  21,
-						Failed:   1,
+						Failed:   2,
 						Warnings: []common.Event{},
 					},
 				}, {
@@ -180,10 +173,11 @@ func TestGetJobListFromChannels(t *testing.T) {
 					Pods: common.PodInfo{
 						Current:  7,
 						Desired:  0,
-						Failed:   1,
+						Failed:   2,
 						Warnings: []common.Event{},
 					},
 				}},
+				Errors: []error{},
 			},
 			nil,
 		},

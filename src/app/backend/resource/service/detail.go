@@ -18,10 +18,11 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/fields"
@@ -53,35 +54,47 @@ type ServiceDetail struct {
 	// a valid IP address. None can be specified for headless services when proxying is not required
 	ClusterIP string `json:"clusterIP"`
 
+	// List of events related to this Service
+	EventList common.EventList `json:"eventList"`
+
 	// PodList represents list of pods targeted by same label selector as this service.
 	PodList pod.PodList `json:"podList"`
+
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
 // GetServiceDetail gets service details.
-func GetServiceDetail(client k8sClient.Interface, heapsterClient heapster.HeapsterClient,
-	namespace, name string, dsQuery *dataselect.DataSelectQuery) (*ServiceDetail, error) {
+func GetServiceDetail(client k8sClient.Interface, metricClient metricapi.MetricClient, namespace, name string,
+	dsQuery *dataselect.DataSelectQuery) (*ServiceDetail, error) {
 
 	log.Printf("Getting details of %s service in %s namespace", name, namespace)
-
-	// TODO(maciaszczykm): Use channels.
 	serviceData, err := client.CoreV1().Services(namespace).Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
 
-	podList, err := GetServicePods(client, heapsterClient, namespace, name, dsQuery)
-	if err != nil {
-		return nil, err
+	podList, err := GetServicePods(client, metricClient, namespace, name, dsQuery)
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
+	}
+
+	eventList, err := GetServiceEvents(client, dataselect.DefaultDataSelect, namespace, name)
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
 	service := ToServiceDetail(serviceData)
 	service.PodList = *podList
-
+	service.EventList = *eventList
+	service.Errors = nonCriticalErrors
 	return &service, nil
 }
 
 // GetServicePods gets list of pods targeted by given label selector in given namespace.
-func GetServicePods(client k8sClient.Interface, heapsterClient heapster.HeapsterClient, namespace,
+func GetServicePods(client k8sClient.Interface, metricClient metricapi.MetricClient, namespace,
 	name string, dsQuery *dataselect.DataSelectQuery) (*pod.PodList, error) {
 
 	service, err := client.CoreV1().Services(namespace).Get(name, metaV1.GetOptions{})
@@ -92,20 +105,18 @@ func GetServicePods(client k8sClient.Interface, heapsterClient heapster.Heapster
 	if service.Spec.Selector == nil {
 		emptyPodList := &pod.PodList{
 			Pods:              []pod.Pod{},
-			CumulativeMetrics: []metric.Metric{},
+			CumulativeMetrics: []metricapi.Metric{},
 		}
 		return emptyPodList, nil
 	}
 
 	labelSelector := labels.SelectorFromSet(service.Spec.Selector)
 	channels := &common.ResourceChannels{
-		PodList: common.GetPodListChannelWithOptions(client,
-			common.NewSameNamespaceQuery(namespace),
+		PodList: common.GetPodListChannelWithOptions(client, common.NewSameNamespaceQuery(namespace),
 			metaV1.ListOptions{
 				LabelSelector: labelSelector.String(),
 				FieldSelector: fields.Everything().String(),
-			},
-			1),
+			}, 1),
 	}
 
 	apiPodList := <-channels.PodList.List
@@ -113,6 +124,11 @@ func GetServicePods(client k8sClient.Interface, heapsterClient heapster.Heapster
 		return nil, err
 	}
 
-	podList := pod.CreatePodList(apiPodList.Items, []v1.Event{}, dsQuery, heapsterClient)
+	events, err := event.GetPodsEvents(client, namespace, apiPodList.Items)
+	if err != nil {
+		return nil, err
+	}
+
+	podList := pod.ToPodList(apiPodList.Items, events, []error{}, dsQuery, metricClient)
 	return &podList, nil
 }

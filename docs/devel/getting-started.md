@@ -41,7 +41,7 @@ task is provided that checks out the latest stable version, and runs it inside a
 Run the following command:
 
 ```shell
-$ gulp local-up-cluster
+$ gulp local-up-cluster --heapsterServerHost 'http://localhost:8082'
 ```
 
 This will build and start a lightweight local cluster, consisting of a master and a single node.

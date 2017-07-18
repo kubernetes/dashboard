@@ -18,12 +18,11 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
-	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	client "k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/pkg/api/v1"
 	batch "k8s.io/client-go/pkg/apis/batch/v1"
@@ -31,11 +30,14 @@ import (
 
 // JobList contains a list of Jobs in the cluster.
 type JobList struct {
-	ListMeta api.ListMeta `json:"listMeta"`
+	ListMeta          api.ListMeta       `json:"listMeta"`
+	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`
 
 	// Unordered list of Jobs.
-	Jobs              []Job           `json:"jobs"`
-	CumulativeMetrics []metric.Metric `json:"cumulativeMetrics"`
+	Jobs []Job `json:"jobs"`
+
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
 // Job is a presentation layer view of Kubernetes Job resource. This means it is Job plus additional
@@ -56,7 +58,7 @@ type Job struct {
 
 // GetJobList returns a list of all Jobs in the cluster.
 func GetJobList(client client.Interface, nsQuery *common.NamespaceQuery,
-	dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) (*JobList, error) {
+	dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) (*JobList, error) {
 	log.Print("Getting list of all jobs in the cluster")
 
 	channels := &common.ResourceChannels{
@@ -65,78 +67,75 @@ func GetJobList(client client.Interface, nsQuery *common.NamespaceQuery,
 		EventList: common.GetEventListChannel(client, nsQuery, 1),
 	}
 
-	return GetJobListFromChannels(channels, dsQuery, heapsterClient)
+	return GetJobListFromChannels(channels, dsQuery, metricClient)
 }
 
 // GetJobListFromChannels returns a list of all Jobs in the cluster reading required resource list once from the channels.
-func GetJobListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) (
-	*JobList, error) {
+func GetJobListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery,
+	metricClient metricapi.MetricClient) (*JobList, error) {
 
 	jobs := <-channels.JobList.List
-	if err := <-channels.JobList.Error; err != nil {
-		statusErr, ok := err.(*k8serrors.StatusError)
-		if ok && statusErr.ErrStatus.Reason == "NotFound" {
-			// NotFound - this means that the server does not support Job objects, which
-			// is fine.
-			emptyList := &JobList{
-				Jobs: make([]Job, 0),
-			}
-			return emptyList, nil
-		}
-		return nil, err
+	err := <-channels.JobList.Error
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
 	pods := <-channels.PodList.List
-	if err := <-channels.PodList.Error; err != nil {
-		return nil, err
+	err = <-channels.PodList.Error
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
 	events := <-channels.EventList.List
-	if err := <-channels.EventList.Error; err != nil {
-		return nil, err
+	err = <-channels.EventList.Error
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	return CreateJobList(jobs.Items, pods.Items, events.Items, dsQuery, heapsterClient), nil
+	return toJobList(jobs.Items, pods.Items, events.Items, nonCriticalErrors, dsQuery, metricClient), nil
 }
 
-// CreateJobList returns a list of all Job model objects in the cluster, based on all
-// Kubernetes Job API objects.
-func CreateJobList(jobs []batch.Job, pods []v1.Pod, events []v1.Event,
-	dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) *JobList {
+func toJobList(jobs []batch.Job, pods []v1.Pod, events []v1.Event, nonCriticalErrors []error,
+	dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) *JobList {
 
 	jobList := &JobList{
 		Jobs:     make([]Job, 0),
 		ListMeta: api.ListMeta{TotalItems: len(jobs)},
+		Errors:   nonCriticalErrors,
 	}
 
-	cachedResources := &dataselect.CachedResources{
+	cachedResources := &metricapi.CachedResources{
 		Pods: pods,
 	}
-	jobCells, metricPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(ToCells(jobs), dsQuery, cachedResources, heapsterClient)
+	jobCells, metricPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(ToCells(jobs),
+		dsQuery, cachedResources, metricClient)
 	jobs = FromCells(jobCells)
 	jobList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
 	for _, job := range jobs {
 		var completions int32
-		matchingPods := common.FilterPodsByOwnerReference(job.Namespace, job.UID, pods)
+		matchingPods := common.FilterPodsForJob(job, pods)
 		if job.Spec.Completions != nil {
 			completions = *job.Spec.Completions
 		}
 		podInfo := common.GetPodInfo(job.Status.Active, completions, matchingPods)
 		podInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)
-		jobList.Jobs = append(jobList.Jobs, ToJob(&job, &podInfo))
+		jobList.Jobs = append(jobList.Jobs, toJob(&job, &podInfo))
 	}
 
 	cumulativeMetrics, err := metricPromises.GetMetrics()
 	jobList.CumulativeMetrics = cumulativeMetrics
 	if err != nil {
-		jobList.CumulativeMetrics = make([]metric.Metric, 0)
+		jobList.CumulativeMetrics = make([]metricapi.Metric, 0)
 	}
 
 	return jobList
 }
 
-func ToJob(job *batch.Job, podInfo *common.PodInfo) Job {
+func toJob(job *batch.Job, podInfo *common.PodInfo) Job {
 	return Job{
 		ObjectMeta:      api.NewObjectMeta(job.ObjectMeta),
 		TypeMeta:        api.NewTypeMeta(api.ResourceKindJob),

@@ -65,7 +65,7 @@ export class DaemonSetCardController {
    * @export
    */
   hasWarnings() {
-    return this.daemonSet.pods.failed > 0;
+    return this.daemonSet.pods.warnings.length > 0;
   }
 
   /**

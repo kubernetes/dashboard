@@ -20,15 +20,16 @@
  */
 export class FutureStateService {
   /**
-   * @param {!angular.Scope} $rootScope
+   * @param {!ui.router.$state} $state
+   * @param {!kdUiRouter.$transitions} $transitions
    * @ngInject
    */
-  constructor($rootScope) {
-    /** @private {!angular.Scope} */
-    this.scope_ = $rootScope;
+  constructor($state, $transitions) {
+    /** @private {!kdUiRouter.$transitions} */
+    this.transitions_ = $transitions;
 
-    /** @type {ui.router.$state} */
-    this.state = null;
+    /** @type {!ui.router.$state} */
+    this.state = $state;
 
     /** @type {Object<string, string>} */
     this.params = null;
@@ -38,9 +39,9 @@ export class FutureStateService {
    * Initializes the service to track future and current state.
    */
   init() {
-    this.scope_.$on('$stateChangeStart', (event, toState, toParams) => {
-      this.state = toState;
-      this.params = toParams;
+    this.transitions_.onStart({}, ($transition$) => {
+      this.state = $transition$.to();
+      this.params = $transition$.params();
     });
   }
 }

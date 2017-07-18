@@ -18,10 +18,11 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
+	ds "github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	hpa "github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -55,52 +56,59 @@ type ReplicaSetDetail struct {
 	Selector *metaV1.LabelSelector `json:"selector"`
 
 	// List of Horizontal Pod Autoscalers targeting this Replica Set.
-	HorizontalPodAutoscalerList horizontalpodautoscaler.HorizontalPodAutoscalerList `json:"horizontalPodAutoscalerList"`
+	HorizontalPodAutoscalerList hpa.HorizontalPodAutoscalerList `json:"horizontalPodAutoscalerList"`
+
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
 // GetReplicaSetDetail gets replica set details.
-func GetReplicaSetDetail(client k8sClient.Interface, heapsterClient heapster.HeapsterClient,
+func GetReplicaSetDetail(client k8sClient.Interface, metricClient metricapi.MetricClient,
 	namespace, name string) (*ReplicaSetDetail, error) {
 	log.Printf("Getting details of %s service in %s namespace", name, namespace)
 
-	// TODO(floreks): Use channels.
-	replicaSetData, err := client.ExtensionsV1beta1().ReplicaSets(namespace).Get(name, metaV1.GetOptions{})
+	rs, err := client.ExtensionsV1beta1().ReplicaSets(namespace).Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
 
-	eventList, err := GetReplicaSetEvents(client, dataselect.DefaultDataSelect, replicaSetData.Namespace, replicaSetData.Name)
-	if err != nil {
-		return nil, err
+	eventList, err := GetReplicaSetEvents(client, ds.DefaultDataSelect, rs.Namespace, rs.Name)
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	podList, err := GetReplicaSetPods(client, heapsterClient, dataselect.DefaultDataSelectWithMetrics, name, namespace)
-	if err != nil {
-		return nil, err
+	podList, err := GetReplicaSetPods(client, metricClient, ds.DefaultDataSelectWithMetrics, name, namespace)
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	podInfo, err := getReplicaSetPodInfo(client, replicaSetData)
-	if err != nil {
-		return nil, err
+	podInfo, err := getReplicaSetPodInfo(client, rs)
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	serviceList, err := GetReplicaSetServices(client, dataselect.DefaultDataSelect, namespace, name)
-	if err != nil {
-		return nil, err
+	serviceList, err := GetReplicaSetServices(client, ds.DefaultDataSelect, namespace, name)
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	hpas, err := horizontalpodautoscaler.GetHorizontalPodAutoscalerListForResource(client, namespace, "ReplicaSet", name)
-	if err != nil {
-		return nil, err
+	hpas, err := hpa.GetHorizontalPodAutoscalerListForResource(client, namespace, "ReplicaSet", name)
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	replicaSet := ToReplicaSetDetail(replicaSetData, *eventList, *podList, *podInfo, *serviceList, *hpas)
-	return &replicaSet, nil
+	rsDetail := toReplicaSetDetail(rs, *eventList, *podList, *podInfo, *serviceList, *hpas, nonCriticalErrors)
+	return &rsDetail, nil
 }
 
-// ToReplicaSetDetail converts replica set api object to replica set detail model object.
-func ToReplicaSetDetail(replicaSet *extensions.ReplicaSet, eventList common.EventList,
-	podList pod.PodList, podInfo common.PodInfo, serviceList resourceService.ServiceList, hpas horizontalpodautoscaler.HorizontalPodAutoscalerList) ReplicaSetDetail {
+func toReplicaSetDetail(replicaSet *extensions.ReplicaSet, eventList common.EventList, podList pod.PodList,
+	podInfo common.PodInfo, serviceList resourceService.ServiceList,
+	hpas hpa.HorizontalPodAutoscalerList, nonCriticalErrors []error) ReplicaSetDetail {
 
 	return ReplicaSetDetail{
 		ObjectMeta:                  api.NewObjectMeta(replicaSet.ObjectMeta),
@@ -112,5 +120,6 @@ func ToReplicaSetDetail(replicaSet *extensions.ReplicaSet, eventList common.Even
 		ServiceList:                 serviceList,
 		EventList:                   eventList,
 		HorizontalPodAutoscalerList: hpas,
+		Errors: nonCriticalErrors,
 	}
 }

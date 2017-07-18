@@ -17,9 +17,10 @@ package replicaset
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/fields"
@@ -30,7 +31,7 @@ import (
 )
 
 // GetReplicaSetPods return list of pods targeting replica set.
-func GetReplicaSetPods(client k8sClient.Interface, heapsterClient heapster.HeapsterClient,
+func GetReplicaSetPods(client k8sClient.Interface, metricClient metricapi.MetricClient,
 	dsQuery *dataselect.DataSelectQuery, petSetName, namespace string) (*pod.PodList, error) {
 	log.Printf("Getting replication controller %s pods in namespace %s", petSetName, namespace)
 
@@ -39,7 +40,12 @@ func GetReplicaSetPods(client k8sClient.Interface, heapsterClient heapster.Heaps
 		return nil, err
 	}
 
-	podList := pod.CreatePodList(pods, []v1.Event{}, dsQuery, heapsterClient)
+	events, err := event.GetPodsEvents(client, namespace, pods)
+	if err != nil {
+		return nil, err
+	}
+
+	podList := pod.ToPodList(pods, events, []error{}, dsQuery, metricClient)
 	return &podList, nil
 }
 
@@ -85,7 +91,6 @@ func getReplicaSetPodInfo(client k8sClient.Interface, replicaSet *extensions.Rep
 		return nil, err
 	}
 
-	podInfo := common.GetPodInfo(replicaSet.Status.Replicas, *replicaSet.Spec.Replicas,
-		pods.Items)
+	podInfo := common.GetPodInfo(replicaSet.Status.Replicas, *replicaSet.Spec.Replicas, pods.Items)
 	return &podInfo, nil
 }

@@ -29,14 +29,18 @@ func TestGetPersistentVolumeClaimList(t *testing.T) {
 		persistentVolumeClaims []v1.PersistentVolumeClaim
 		expected               *PersistentVolumeClaimList
 	}{
-		{nil, &PersistentVolumeClaimList{Items: []PersistentVolumeClaim{}}},
+		{
+			nil,
+			&PersistentVolumeClaimList{
+				Items: []PersistentVolumeClaim{},
+			},
+		},
 		{
 			[]v1.PersistentVolumeClaim{{
 				ObjectMeta: metaV1.ObjectMeta{Name: "foo"},
 				Spec:       v1.PersistentVolumeClaimSpec{VolumeName: "my-volume"},
 				Status:     v1.PersistentVolumeClaimStatus{Phase: v1.ClaimBound},
-			},
-			},
+			}},
 			&PersistentVolumeClaimList{
 				ListMeta: api.ListMeta{TotalItems: 1},
 				Items: []PersistentVolumeClaim{{
@@ -49,7 +53,7 @@ func TestGetPersistentVolumeClaimList(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := getPersistentVolumeClaimList(c.persistentVolumeClaims, dataselect.NoDataSelect)
+		actual := toPersistentVolumeClaimList(c.persistentVolumeClaims, nil, dataselect.NoDataSelect)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("getPersistentVolumeClaimList(%#v) == \n%#v\nexpected \n%#v\n",
 				c.persistentVolumeClaims, actual, c.expected)

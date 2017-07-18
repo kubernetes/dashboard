@@ -20,9 +20,9 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	v1 "k8s.io/client-go/pkg/api/v1"
@@ -48,7 +48,8 @@ func TestGetDeploymentListFromChannels(t *testing.T) {
 			&DeploymentList{
 				ListMeta:          api.ListMeta{},
 				Deployments:       []Deployment{},
-				CumulativeMetrics: make([]metric.Metric, 0),
+				CumulativeMetrics: make([]metricapi.Metric, 0),
+				Errors:            []error{},
 			},
 			nil,
 		},
@@ -79,15 +80,6 @@ func TestGetDeploymentListFromChannels(t *testing.T) {
 			&v1.PodList{},
 			nil,
 			&k8serrors.StatusError{ErrStatus: metaV1.Status{Reason: "foo-bar"}},
-		},
-		{
-			extensions.DeploymentList{},
-			&k8serrors.StatusError{ErrStatus: metaV1.Status{Reason: "NotFound"}},
-			&v1.PodList{},
-			&DeploymentList{
-				Deployments: make([]Deployment, 0),
-			},
-			nil,
 		},
 		{
 			extensions.DeploymentList{
@@ -111,7 +103,7 @@ func TestGetDeploymentListFromChannels(t *testing.T) {
 			&v1.PodList{},
 			&DeploymentList{
 				ListMeta:          api.ListMeta{TotalItems: 1},
-				CumulativeMetrics: make([]metric.Metric, 0),
+				CumulativeMetrics: make([]metricapi.Metric, 0),
 				Deployments: []Deployment{{
 					ObjectMeta: api.ObjectMeta{
 						Name:              "rs-name",
@@ -127,6 +119,7 @@ func TestGetDeploymentListFromChannels(t *testing.T) {
 						Warnings: []common.Event{},
 					},
 				}},
+				Errors: []error{},
 			},
 			nil,
 		},

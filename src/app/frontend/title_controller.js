@@ -21,14 +21,21 @@ export class TitleController {
   /**
    * @param {!angular.$interpolate} $interpolate
    * @param {!./common/state/service.FutureStateService} kdFutureStateService
+   * @param {!./common/components/breadcrumbs/service.BreadcrumbsService} kdBreadcrumbsService
    * @ngInject
    */
-  constructor($interpolate, kdFutureStateService) {
+  constructor($interpolate, kdFutureStateService, kdBreadcrumbsService) {
     /** @private {!./common/state/service.FutureStateService} */
-    this.kdFutureStateService_ = kdFutureStateService;
+    this.transitions_ = kdFutureStateService;
+
+    /** @private {!./common/components/breadcrumbs/service.BreadcrumbsService} */
+    this.kdBreadcrumbsService_ = kdBreadcrumbsService;
 
     /** @private {!angular.$interpolate} */
     this.interpolate_ = $interpolate;
+
+    /** @private {string} */
+    this.defaultTitle_ = 'Kubernetes Dashboard';
   }
 
   /**
@@ -38,15 +45,16 @@ export class TitleController {
    * @return {string}
    */
   title() {
-    if (this.kdFutureStateService_.state && this.kdFutureStateService_.state.data &&
-        this.kdFutureStateService_.state.data.kdBreadcrumbs &&
-        this.kdFutureStateService_.state.data.kdBreadcrumbs.label) {
-      let breadcrumbs = this.kdFutureStateService_.state.data.kdBreadcrumbs;
-      let params = this.kdFutureStateService_.params;
-      let state = this.interpolate_(breadcrumbs.label)({'$stateParams': params}).toString();
-      return `${state} - Kubernetes Dashboard`;
-    } else {
-      return 'Kubernetes Dashboard';
+    let conf = this.kdBreadcrumbsService_.getBreadcrumbConfig(this.transitions_.state);
+
+    // When conf is undefined or label is undefined or empty then fallback to default title
+    if (!conf || !conf.label) {
+      return this.defaultTitle_;
     }
+
+    let params = this.transitions_.params;
+    let stateLabel = this.interpolate_(conf.label)({'$stateParams': params}).toString();
+
+    return `${stateLabel} - ${this.defaultTitle_}`;
   }
 }

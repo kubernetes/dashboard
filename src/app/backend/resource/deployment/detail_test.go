@@ -19,10 +19,10 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -84,8 +84,7 @@ func TestGetDeploymentDetail(t *testing.T) {
 
 	podTemplateSpec := GetNewReplicaSetTemplate(deployment)
 
-	newReplicaSet := createReplicaSet("rs-1", "ns-1", map[string]string{"foo": "bar"},
-		podTemplateSpec)
+	newReplicaSet := createReplicaSet("rs-1", "ns-1", map[string]string{"foo": "bar"}, podTemplateSpec)
 
 	replicaSetList := &extensions.ReplicaSetList{
 		Items: []extensions.ReplicaSet{
@@ -106,7 +105,7 @@ func TestGetDeploymentDetail(t *testing.T) {
 	}{
 		{
 			"ns-1", "dp-1",
-			[]string{"get", "list", "list", "get", "list", "list", "list", "list", "get", "list", "list", "list"},
+			[]string{"get", "list", "list", "get", "list", "list", "list", "list", "list", "get", "list", "list", "list", "list"},
 			deployment,
 			&DeploymentDetail{
 				ObjectMeta: api.ObjectMeta{
@@ -117,7 +116,8 @@ func TestGetDeploymentDetail(t *testing.T) {
 				TypeMeta: api.TypeMeta{Kind: api.ResourceKindDeployment},
 				PodList: pod.PodList{
 					Pods:              []pod.Pod{},
-					CumulativeMetrics: make([]metric.Metric, 0),
+					CumulativeMetrics: make([]metricapi.Metric, 0),
+					Errors:            []error{},
 				},
 				Selector: map[string]string{"foo": "bar"},
 				StatusInfo: StatusInfo{
@@ -134,7 +134,8 @@ func TestGetDeploymentDetail(t *testing.T) {
 				},
 				OldReplicaSetList: replicaset.ReplicaSetList{
 					ReplicaSets:       []replicaset.ReplicaSet{},
-					CumulativeMetrics: make([]metric.Metric, 0),
+					CumulativeMetrics: make([]metricapi.Metric, 0),
+					Errors:            []error{},
 				},
 				NewReplicaSet: replicaset.ReplicaSet{
 					ObjectMeta: api.NewObjectMeta(newReplicaSet.ObjectMeta),
@@ -144,14 +145,17 @@ func TestGetDeploymentDetail(t *testing.T) {
 				EventList: common.EventList{
 					Events: []common.Event{},
 				},
-				HorizontalPodAutoscalerList: horizontalpodautoscaler.HorizontalPodAutoscalerList{HorizontalPodAutoscalers: []horizontalpodautoscaler.HorizontalPodAutoscaler{}},
+				HorizontalPodAutoscalerList: horizontalpodautoscaler.HorizontalPodAutoscalerList{
+					HorizontalPodAutoscalers: []horizontalpodautoscaler.HorizontalPodAutoscaler{},
+					Errors: []error{},
+				},
+				Errors: []error{},
 			},
 		},
 	}
 
 	for _, c := range cases {
 		fakeClient := fake.NewSimpleClientset(c.deployment, replicaSetList, podList, eventList)
-
 		dataselect.DefaultDataSelectWithMetrics.MetricQuery = dataselect.NoMetrics
 		actual, _ := GetDeploymentDetail(fakeClient, nil, c.namespace, c.name)
 
@@ -164,8 +168,7 @@ func TestGetDeploymentDetail(t *testing.T) {
 
 		for i, verb := range c.expectedActions {
 			if actions[i].GetVerb() != verb {
-				t.Errorf("Unexpected action: %+v, expected %s",
-					actions[i], verb)
+				t.Errorf("Unexpected action: %+v, expected %s", actions[i], verb)
 			}
 		}
 

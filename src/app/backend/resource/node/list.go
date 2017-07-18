@@ -18,10 +18,10 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/labels"
@@ -31,9 +31,12 @@ import (
 
 // NodeList contains a list of nodes in the cluster.
 type NodeList struct {
-	ListMeta          api.ListMeta    `json:"listMeta"`
-	Nodes             []Node          `json:"nodes"`
-	CumulativeMetrics []metric.Metric `json:"cumulativeMetrics"`
+	ListMeta          api.ListMeta       `json:"listMeta"`
+	Nodes             []Node             `json:"nodes"`
+	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`
+
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
 // Node is a presentation layer view of Kubernetes nodes. This means it is node plus additional
@@ -46,61 +49,61 @@ type Node struct {
 }
 
 // GetNodeListFromChannels returns a list of all Nodes in the cluster.
-func GetNodeListFromChannels(client client.Interface, channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery,
-	heapsterClient heapster.HeapsterClient) (*NodeList, error) {
-	log.Print("Getting node list")
+func GetNodeListFromChannels(client client.Interface, channels *common.ResourceChannels,
+	dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) (*NodeList, error) {
 
 	nodes := <-channels.NodeList.List
-	if err := <-channels.NodeList.Error; err != nil {
-		return &NodeList{Nodes: []Node{}}, err
+	err := <-channels.NodeList.Error
+
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	return toNodeList(client, nodes.Items, dsQuery, heapsterClient), nil
+	return toNodeList(client, nodes.Items, nonCriticalErrors, dsQuery, metricClient), nil
 }
 
 // GetNodeList returns a list of all Nodes in the cluster.
-func GetNodeList(client client.Interface, dsQuery *dataselect.DataSelectQuery, heapsterClient heapster.HeapsterClient) (*NodeList, error) {
-	log.Print("Getting list of all nodes in the cluster")
-
+func GetNodeList(client client.Interface, dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) (*NodeList, error) {
 	nodes, err := client.CoreV1().Nodes().List(metaV1.ListOptions{
 		LabelSelector: labels.Everything().String(),
 		FieldSelector: fields.Everything().String(),
 	})
 
-	if err != nil {
-		return nil, err
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	return toNodeList(client, nodes.Items, dsQuery, heapsterClient), nil
+	return toNodeList(client, nodes.Items, nonCriticalErrors, dsQuery, metricClient), nil
 }
 
-func toNodeList(client client.Interface, nodes []v1.Node, dsQuery *dataselect.DataSelectQuery,
-	heapsterClient heapster.HeapsterClient) *NodeList {
+func toNodeList(client client.Interface, nodes []v1.Node, nonCriticalErrors []error, dsQuery *dataselect.DataSelectQuery,
+	metricClient metricapi.MetricClient) *NodeList {
 	nodeList := &NodeList{
 		Nodes:    make([]Node, 0),
 		ListMeta: api.ListMeta{TotalItems: len(nodes)},
+		Errors:   nonCriticalErrors,
 	}
 
 	nodeCells, metricPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(toCells(nodes),
-		dsQuery, dataselect.NoResourceCache, &heapsterClient)
+		dsQuery, metricapi.NoResourceCache, metricClient)
 	nodes = fromCells(nodeCells)
 	nodeList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
 	for _, node := range nodes {
 		pods, err := getNodePods(client, node)
 		if err != nil {
-			log.Printf("Couldn't get pods of %s node\n", node.Name)
-			log.Println(err)
+			log.Printf("Couldn't get pods of %s node: %s\n", node.Name, err)
 		}
 
 		nodeList.Nodes = append(nodeList.Nodes, toNode(node, pods))
 	}
 
-	// this may be slow because heapster does not support all in one download for nodes.
 	cumulativeMetrics, err := metricPromises.GetMetrics()
 	nodeList.CumulativeMetrics = cumulativeMetrics
 	if err != nil {
-		nodeList.CumulativeMetrics = make([]metric.Metric, 0)
+		nodeList.CumulativeMetrics = make([]metricapi.Metric, 0)
 	}
 
 	return nodeList
@@ -109,8 +112,7 @@ func toNodeList(client client.Interface, nodes []v1.Node, dsQuery *dataselect.Da
 func toNode(node v1.Node, pods *v1.PodList) Node {
 	allocatedResources, err := getNodeAllocatedResources(node, pods)
 	if err != nil {
-		log.Printf("Couldn't get allocated resources of %s node\n", node.Name)
-		log.Println(err)
+		log.Printf("Couldn't get allocated resources of %s node: %s\n", node.Name, err)
 	}
 
 	return Node{
@@ -121,7 +123,6 @@ func toNode(node v1.Node, pods *v1.PodList) Node {
 	}
 }
 
-// Returns the status (True, False, Unknown) of a particular NodeConditionType
 func getNodeConditionStatus(node v1.Node, conditionType v1.NodeConditionType) v1.ConditionStatus {
 	for _, condition := range node.Status.Conditions {
 		if condition.Type == conditionType {

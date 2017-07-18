@@ -19,7 +19,7 @@ import namespaceModule from 'common/namespace/module';
 import eventsModule from 'events/module';
 
 import {serviceInfoComponent} from './detail/info_component';
-import {servicePodsResource} from './detail/stateconfig';
+import {serviceEventsResource, servicePodsResource} from './detail/stateconfig';
 import {serviceCardComponent} from './list/card_component';
 import {serviceCardListComponent} from './list/cardlist_component';
 import {serviceListResource} from './list/stateconfig';
@@ -46,4 +46,5 @@ export default angular
     .component('kdServiceCardList', serviceCardListComponent)
     .component('kdServiceInfo', serviceInfoComponent)
     .factory('kdServiceListResource', serviceListResource)
-    .factory('kdServicePodsResource', servicePodsResource);
+    .factory('kdServicePodsResource', servicePodsResource)
+    .factory('kdServiceEventsResource', serviceEventsResource);

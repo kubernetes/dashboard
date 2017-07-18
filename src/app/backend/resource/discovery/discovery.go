@@ -48,10 +48,10 @@ func GetDiscovery(client *kubernetes.Clientset, nsQuery *common.NamespaceQuery,
 func GetDiscoveryFromChannels(channels *common.ResourceChannels,
 	dsQuery *dataselect.DataSelectQuery) (*Discovery, error) {
 
-	svcChan := make(chan *service.ServiceList)
-	ingressChan := make(chan *ingress.IngressList)
 	numErrs := 2
 	errChan := make(chan error, numErrs)
+	svcChan := make(chan *service.ServiceList)
+	ingressChan := make(chan *ingress.IngressList)
 
 	go func() {
 		items, err := service.GetServiceListFromChannels(channels, dsQuery)
@@ -72,10 +72,8 @@ func GetDiscoveryFromChannels(channels *common.ResourceChannels,
 		}
 	}
 
-	discovery := &Discovery{
+	return &Discovery{
 		ServiceList: *(<-svcChan),
 		IngressList: *(<-ingressChan),
-	}
-
-	return discovery, nil
+	}, nil
 }

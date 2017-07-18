@@ -19,6 +19,7 @@ import childProcess from 'child_process';
 import fileExists from 'file-exists';
 import gulp from 'gulp';
 import cheerio from 'gulp-cheerio';
+import freplace from 'gulp-findreplace';
 import gulpUtil from 'gulp-util';
 import xslt from 'gulp-xslt';
 import jsesc from 'jsesc';
@@ -42,7 +43,7 @@ function extractForLanguage(langKey) {
   let messagesSource = path.join(conf.paths.messagesForExtraction, '**.js');
   let command = `java -jar ${conf.paths.xtbgenerator} --lang ${langKey}` +
       ` --xtb_output_file ${translationBundle} --js ${codeSource} --js ${messagesSource}`;
-  if (fileExists(translationBundle)) {
+  if (fileExists.sync(translationBundle)) {
     command = `${command} --translations_file ${translationBundle}`;
   }
 
@@ -58,7 +59,12 @@ function extractForLanguage(langKey) {
   return deferred.promise;
 }
 
-gulp.task('generate-xtbs', ['extract-translations', 'sort-translations']);
+gulp.task('generate-xtbs', [
+  'extract-translations',
+  'remove-unused-translations',
+  'remove-duplicated-translations',
+  'sort-translations',
+]);
 
 let prevMsgs = {};
 
@@ -91,8 +97,7 @@ gulp.task('buildExistingI18nCache', function() {
 /**
  * Extracts all translation messages into XTB bundles.
  *
- * Cleans up the data from the previous run to prevent cross-pollination between
- * branches
+ * Cleans up the data from the previous run to prevent cross-pollination between branches.
  */
 gulp.task(
     'extract-translations', ['scripts', 'angular-templates', 'clean-messages-for-extraction'],
@@ -101,10 +106,107 @@ gulp.task(
       return q.all(promises);
     });
 
-gulp.task('sort-translations', ['extract-translations'], function() {
-  return gulp.src('i18n/messages-*.xtb').pipe(xslt('build/sortxtb.xslt')).pipe(gulp.dest('i18n'));
+/**
+ * Task to sort translations.
+ */
+gulp.task('sort-translations', ['remove-duplicated-translations'], function() {
+  return gulp.src('i18n/messages-*.xtb')
+      .pipe(xslt('build/sort-translations.xslt'))
+      .pipe(gulp.dest('i18n'));
 });
 
+/**
+ * Task to remove duplicated translations (should remove old translations from XTB when entries are
+ * updated in source code). It has to be runned before 'sort-translations' as original translation
+ * order is required.
+ */
+gulp.task('remove-duplicated-translations', ['extract-translations'], function() {
+  return gulp.src('i18n/messages-*.xtb')
+      .pipe(xslt('build/remove-duplicated-translations.xslt'))
+      .pipe(gulp.dest('i18n'));
+});
+
+/**
+ * Task to used to find translations used in JavaScript files. Do not run manually. It should be
+ * invoked as a part of 'remove-unused-translations'.
+ */
+gulp.task('find-translations-used-in-js', function() {
+  let jsSource = path.join(conf.paths.frontendSrc, '**/*.js');
+  return gulp.src(jsSource).pipe(freplace(/MSG_\w*/g, function(match) {
+    // Mark every message found in JavaScript files as used, it will allow deletion of unused
+    // messages afterwards.
+    translationsManager.addUsed(match);
+  }));
+});
+
+/**
+ * Task to remove unused translations. Do not run manually. It should be invoked as a part of
+ * 'generate-xtbs'.
+ */
+gulp.task(
+    'remove-unused-translations', ['angular-templates', 'find-translations-used-in-js'],
+    function() {
+      // Get translations used in JavaScript and HTML files. These will not be removed.
+      let used = translationsManager.getUsed();
+
+      return gulp.src('i18n/messages-*.xtb')
+          .pipe(cheerio((doc) => {
+            let unused = new Set();
+
+            // Find translations to remove.
+            doc('translation').each((i, translation) => {
+              let key = translation.attribs.key;
+              if (!used.has(key)) {
+                unused.add(key);
+              }
+            });
+
+            // Remove unused translations.
+            unused.forEach((r) => {
+              doc(`translation[key=${r}]`).remove();
+            });
+          }))
+          .pipe(gulp.dest('i18n/'));
+    });
+
+/**
+ * Translations manager is a closure function allowing to manage translations.
+ * Allows removing unused translations after marking certain as used.
+ *
+ * @type {{markAsUsed, removeUnused}}
+ */
+export let translationsManager = (function() {
+
+  /**
+   * Set of translations marked as used.
+   *
+   * @type {Set}
+   */
+  let used = new Set();
+
+  /**
+   * Function used to mark translations as used.
+   *
+   * @param {string} key
+   */
+  function addUsed(key) {
+    used.add(key);
+  }
+
+  /**
+   * Function used to get used translations.
+   *
+   * @return {Set}
+   */
+  function getUsed() {
+    return used;
+  }
+
+  return {
+    addUsed: addUsed,
+    getUsed: getUsed,
+  };
+})();
 
 // Regex to match [[Foo | Bar]] or [[Foo]] i18n placeholders.
 // Technical details:
@@ -175,6 +277,10 @@ export function processI18nMessages(file, minifiedHtml) {
     // for compiler passses.
     content = content.replace(message.original, `' + ${message.varName} + '`);
     pureHtmlContent = pureHtmlContent.replace(message.original, message.text);
+
+    // Mark every message found in this HTML file as used, it will allow deletion of unused messages
+    // afterwards.
+    translationsManager.addUsed(message.varName);
   });
 
   let messageVariables = i18nMessages.map((message) => {
