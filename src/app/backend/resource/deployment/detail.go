@@ -178,7 +178,7 @@ func GetDeploymentDetail(client client.Interface, metricClient metricapi.MetricC
 			return nil, criticalError
 		}
 
-		newRsPodInfo.Warnings = event.CreateEventList(events, dataselect.NoDataSelect).Events
+		newRsPodInfo.Warnings = event.GetPodsEventWarnings(events, rawPods.Items)
 		newReplicaSet = replicaset.ToReplicaSet(newRs, &newRsPodInfo)
 	}
 
