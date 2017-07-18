@@ -17,6 +17,7 @@ package workload
 import (
 	"log"
 
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset"
@@ -39,6 +40,9 @@ type Workloads struct {
 	PodList                   pod.PodList                  `json:"podList"`
 	DaemonSetList             daemonset.DaemonSetList      `json:"daemonSetList"`
 	StatefulSetList           statefulset.StatefulSetList  `json:"statefulSetList"`
+
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
 // GetWorkloads returns a list of all workloads in the cluster.
@@ -126,7 +130,7 @@ func GetWorkloadsFromChannels(channels *common.ResourceChannels, metricClient me
 		}
 	}
 
-	return &Workloads{
+	workloads := &Workloads{
 		ReplicaSetList:            *(<-rsChan),
 		JobList:                   *(<-jobChan),
 		ReplicationControllerList: *(<-rcChan),
@@ -134,5 +138,11 @@ func GetWorkloadsFromChannels(channels *common.ResourceChannels, metricClient me
 		PodList:                   *(<-podChan),
 		DaemonSetList:             *(<-dsChan),
 		StatefulSetList:           *(<-ssChan),
-	}, nil
+	}
+
+	workloads.Errors = errors.MergeErrors(workloads.DaemonSetList.Errors, workloads.DeploymentList.Errors,
+		workloads.JobList.Errors, workloads.PodList.Errors, workloads.ReplicaSetList.Errors,
+		workloads.ReplicationControllerList.Errors, workloads.StatefulSetList.Errors)
+
+	return workloads, nil
 }
