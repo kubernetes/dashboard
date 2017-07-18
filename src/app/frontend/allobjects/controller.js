@@ -27,12 +27,16 @@ export class AllObjectsController {
    * @param {!angular.Resource} kdRCListResource
    * @param {!angular.Resource} kdServiceListResource
    * @param {!angular.Resource} kdIngressListResource
+   * @param {!angular.Resource} kdConfigMapListResource
+   * @param {!angular.Resource} kdSecretListResource
+   * @param {!angular.Resource} kdPersistentVolumeClaimListResource
    * @ngInject
    */
   constructor(
       allObjects, kdPodListResource, kdReplicaSetListResource, kdDaemonSetListResource,
       kdDeploymentListResource, kdStatefulSetListResource, kdJobListResource, kdRCListResource,
-      kdServiceListResource, kdIngressListResource) {
+      kdServiceListResource, kdIngressListResource, kdConfigMapListResource,
+      kdSecretListResource, kdPersistentVolumeClaimListResource) {
     /** @export {!backendApi.Workloads} */
     this.allObjects = allObjects;
 
@@ -62,6 +66,15 @@ export class AllObjectsController {
 
     /** @export {!angular.Resource} */
     this.kdIngressListResource = kdIngressListResource;
+
+    /** @export {!angular.Resource} */
+    this.kdConfigMapListResource = kdConfigMapListResource;
+
+    /** @export {!angular.Resource} */
+    this.kdSecretListResource = kdSecretListResource;
+
+    /** @export {!angular.Resource} */
+    this.pvcListResource = kdPersistentVolumeClaimListResource;
   }
 
   /**
@@ -78,7 +91,10 @@ export class AllObjectsController {
         this.allObjects.daemonSetList.listMeta.totalItems +
         this.allObjects.statefulSetList.listMeta.totalItems +
         this.allObjects.serviceList.listMeta.totalItems +
-        this.allObjects.ingressList.listMeta.totalItems;
+        this.allObjects.ingressList.listMeta.totalItems +
+        this.allObjects.configMapList.listMeta.totalItems +
+        this.allObjects.secretList.listMeta.totalItems +
+        this.allObjects.persistentVolumeClaimList.listMeta.totalItems;
 
     return resourcesLength === 0;
   }

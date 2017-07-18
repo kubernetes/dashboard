@@ -23,6 +23,9 @@ import replicationControllerModule from 'replicationcontroller/module';
 import statefulSetModule from 'statefulset/module';
 import ingressModule from 'ingress/module';
 import serviceModule from 'service/module';
+import configMapModule from 'configmap/module';
+import persistentVolumeClaimModule from 'persistentvolumeclaim/module';
+import secretModule from 'secret/module';
 
 import stateConfig from './stateconfig';
 
@@ -47,6 +50,9 @@ export default angular
           statefulSetModule.name,
           serviceModule.name,
           ingressModule.name,
+          configMapModule.name,
+          secretModule.name,
+          persistentVolumeClaimModule.name,
         ])
     .config(stateConfig)
     .factory('kdAllObjectsResource', allObjectsResource);
