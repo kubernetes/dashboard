@@ -21,7 +21,7 @@
   box-shadow: $whiteframe-shadow-1dp;
   color: $warning-secondary;
   display: block;
-  margin: (2.5 * $baseline-grid) (2.5 * $baseline-grid) 0 (2.5 * $baseline-grid);
+  margin: (2.5 * $baseline-grid) (2.5 * $baseline-grid) 0;
 }
 
 .kd-warning-message {
@@ -33,11 +33,11 @@
   }
 
   .kd-raw-warning {
-    overflow: hidden;
-    word-wrap: break-word;
-    word-break: break-all;
     font-family: monospace;
     margin: 1.75 * $baseline-grid;
+    text-align: left;
+    word-break: break-all;
+    word-wrap: break-word;
   }
 
   .kd-dismiss-icon {
@@ -45,7 +45,6 @@
     margin-right: 2 * $baseline-grid;
     outline: none;
     text-align: right;
-    flex: 1;
   }
 }
 
@@ -61,9 +60,9 @@
 
   .md-button {
     cursor: pointer;
+    line-height: 24px;
     margin: 0;
     min-height: 0;
-    line-height: 24px;
     outline: none;
   }
 }
