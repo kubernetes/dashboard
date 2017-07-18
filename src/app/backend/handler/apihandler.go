@@ -15,11 +15,6 @@
 package handler
 
 import (
-	"log"
-	"net/http"
-	"strconv"
-	"strings"
-
 	"github.com/emicklei/go-restful"
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
@@ -30,6 +25,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/config"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/configmap"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/container"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/controller"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/deployment"
@@ -61,6 +57,10 @@ import (
 	errorsK8s "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/kubernetes/pkg/client/unversioned/remotecommand"
+	"log"
+	"net/http"
+	"strconv"
+	"strings"
 )
 
 const (
@@ -236,14 +236,6 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 		apiV1Ws.GET("/pod/{namespace}/{pod}/container").
 			To(apiHandler.handleGetPodContainers).
 			Writes(pod.PodDetail{}))
-	apiV1Ws.Route(
-		apiV1Ws.GET("/pod/{namespace}/{pod}/log").
-			To(apiHandler.handleLogs).
-			Writes(logs.LogDetails{}))
-	apiV1Ws.Route(
-		apiV1Ws.GET("/pod/{namespace}/{pod}/log/{container}").
-			To(apiHandler.handleLogs).
-			Writes(logs.LogDetails{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/pod/{namespace}/{pod}/event").
 			To(apiHandler.handleGetPodEvents).
@@ -551,6 +543,19 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			To(apiHandler.handleSearch).
 			Writes(search.SearchResult{}))
 
+	apiV1Ws.Route(
+		apiV1Ws.GET("/log/source/{namespace}/{resourceName}/{resourceType}").
+			To(apiHandler.handleLogSource).
+			Writes(controller.LogSources{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/log/{namespace}/{pod}").
+			To(apiHandler.handleLogs).
+			Writes(logs.LogDetails{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/log/{namespace}/{pod}/{container}").
+			To(apiHandler.handleLogs).
+			Writes(logs.LogDetails{}))
+
 	return wsContainer, nil
 }
 
@@ -638,6 +643,7 @@ func (apiHandler *APIHandler) handleGetStatefulSetDetail(request *restful.Reques
 	namespace := request.PathParameter("namespace")
 	name := request.PathParameter("statefulset")
 	result, err := statefulset.GetStatefulSetDetail(k8sClient, apiHandler.iManager.Metric().Client(), namespace, name)
+
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1731,54 +1737,6 @@ func (apiHandler *APIHandler) handleGetPersistentVolumeClaimDetail(request *rest
 	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
-func (apiHandler *APIHandler) handleLogs(request *restful.Request, response *restful.Response) {
-	k8sClient, err := apiHandler.cManager.Client(request)
-	if err != nil {
-		handleInternalError(response, err)
-		return
-	}
-
-	namespace := request.PathParameter("namespace")
-	podID := request.PathParameter("pod")
-	containerID := request.PathParameter("container")
-
-	refTimestamp := request.QueryParameter("referenceTimestamp")
-	if refTimestamp == "" {
-		refTimestamp = logs.NewestTimestamp
-	}
-
-	refLineNum, err := strconv.Atoi(request.QueryParameter("referenceLineNum"))
-	if err != nil {
-		refLineNum = 0
-	}
-
-	offsetFrom, err1 := strconv.Atoi(request.QueryParameter("offsetFrom"))
-	offsetTo, err2 := strconv.Atoi(request.QueryParameter("offsetTo"))
-	logFilePosition := request.QueryParameter("logFilePosition")
-
-	var logSelector *logs.Selection
-	if err1 != nil || err2 != nil {
-		logSelector = logs.DefaultSelection
-	} else {
-		logSelector = &logs.Selection{
-			ReferencePoint: logs.LogLineId{
-				LogTimestamp: logs.LogTimestamp(refTimestamp),
-				LineNum:      refLineNum,
-			},
-			OffsetFrom:      offsetFrom,
-			OffsetTo:        offsetTo,
-			LogFilePosition: logFilePosition,
-		}
-	}
-
-	result, err := container.GetPodLogs(k8sClient, namespace, podID, containerID, logSelector)
-	if err != nil {
-		handleInternalError(response, err)
-		return
-	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
-}
-
 func (apiHandler *APIHandler) handleGetPodContainers(request *restful.Request, response *restful.Response) {
 	k8sClient, err := apiHandler.cManager.Client(request)
 	if err != nil {
@@ -2088,6 +2046,70 @@ func (apiHandler *APIHandler) handleGetStorageClass(request *restful.Request, re
 
 	name := request.PathParameter("storageclass")
 	result, err := storageclass.GetStorageClass(k8sClient, name)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleLogSource(request *restful.Request, response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	resourceName := request.PathParameter("resourceName")
+	resourceType := request.PathParameter("resourceType")
+	namespace := request.PathParameter("namespace")
+	logSources, err := logs.GetLogSources(k8sClient, namespace, resourceName, resourceType)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, logSources)
+}
+
+func (apiHandler *APIHandler) handleLogs(request *restful.Request, response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	namespace := request.PathParameter("namespace")
+	podID := request.PathParameter("pod")
+	containerID := request.PathParameter("container")
+
+	refTimestamp := request.QueryParameter("referenceTimestamp")
+	if refTimestamp == "" {
+		refTimestamp = logs.NewestTimestamp
+	}
+
+	refLineNum, err := strconv.Atoi(request.QueryParameter("referenceLineNum"))
+	if err != nil {
+		refLineNum = 0
+	}
+
+	offsetFrom, err1 := strconv.Atoi(request.QueryParameter("offsetFrom"))
+	offsetTo, err2 := strconv.Atoi(request.QueryParameter("offsetTo"))
+	logFilePosition := request.QueryParameter("logFilePosition")
+
+	logSelector := logs.DefaultSelection
+	if err1 == nil && err2 == nil {
+		logSelector = &logs.Selection{
+			ReferencePoint: logs.LogLineId{
+				LogTimestamp: logs.LogTimestamp(refTimestamp),
+				LineNum:      refLineNum,
+			},
+			OffsetFrom:      offsetFrom,
+			OffsetTo:        offsetTo,
+			LogFilePosition: logFilePosition,
+		}
+	}
+
+	result, err := container.GetPodLogs(k8sClient, namespace, podID, containerID, logSelector)
 	if err != nil {
 		handleInternalError(response, err)
 		return

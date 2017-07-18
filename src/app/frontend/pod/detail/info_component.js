@@ -52,7 +52,7 @@ export default class PodInfoController {
   getLogsHref() {
     return this.state_.href(
         logsStateName,
-        new LogsStateParams(this.pod.objectMeta.namespace, this.pod.objectMeta.name));
+        new LogsStateParams(this.pod.objectMeta.namespace, this.pod.objectMeta.name, 'pod'));
   }
 }
 

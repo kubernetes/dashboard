@@ -959,6 +959,14 @@ backendApi.ReplicationControllerPods;
 
 /**
  * @typedef {{
+ *   podNames: !Array<string>,
+ *   containerNames: !Array<string>
+ * }}
+ */
+backendApi.LogSources;
+
+/**
+ * @typedef {{
  *   info: !backendApi.LogInfo,
  *   logs: !Array<backendApi.LogLine>,
  *   selection: !backendApi.LogSelection,
