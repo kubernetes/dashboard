@@ -18,9 +18,10 @@ limitations under the License.
      class="kd-warnings-container">
   <div class="kd-warning-message"
        ng-repeat="warning in $ctrl.warnings | limitTo: $ctrl.limit">
-    <pre><md-icon class="material-icons">warning</md-icon>  {{warning.ErrStatus.message}}</pre>
+    <md-icon class="material-icons">warning</md-icon>
+    <span class="kd-raw-warning">  {{warning.ErrStatus.message}}</span>
     <md-icon ng-click="$ctrl.dismissWarning($index)"
-             class="material-icons dismiss-icon">
+             class="material-icons kd-dismiss-icon">
       close
       <md-tooltip md-delay="500">[[Dismiss|Tooltip for warning dismissal button.]]</md-tooltip>
     </md-icon>
