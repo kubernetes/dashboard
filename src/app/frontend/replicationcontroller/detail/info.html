@@ -27,6 +27,13 @@ limitations under the License.
         <kd-middle-ellipsis display-string="{{::image}}"></kd-middle-ellipsis>
       </div>
     </kd-info-card-entry>
+    <kd-info-card-entry>
+      <a ng-href="{{::$ctrl.getLogsHref()}}"
+         class="kd-middle-ellipsised-link">
+        <kd-middle-ellipsis display-string="[[View logs|Link to logs view in the pod details view.]]">
+        </kd-middle-ellipsis>
+      </a>
+    </kd-info-card-entry>
   </kd-info-card-section>
 
   <kd-info-card-section name="[[Status|Subtitle 'Status' for the right section with pod status information on the replication controller details page.]]">

@@ -70,11 +70,6 @@ limitations under the License.
       </div>
     </kd-info-card-entry>
     <kd-info-card-entry ng-if="::$ctrl.podName">
-      <a ng-href="{{::$ctrl.getLogsHref(container)}}"
-         class="kd-middle-ellipsised-link">
-        <kd-middle-ellipsis display-string="[[View logs|Label for the container logs.]]">
-        </kd-middle-ellipsis>
-      </a>
       <a ng-href="{{::$ctrl.getShellHref(container)}}"
          class="kd-middle-ellipsised-link">
         <kd-middle-ellipsis display-string="[[Execute shell|Execute shell in the container]]">

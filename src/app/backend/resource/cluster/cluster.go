@@ -17,6 +17,7 @@ package cluster
 import (
 	"log"
 
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
@@ -35,6 +36,9 @@ type Cluster struct {
 	PersistentVolumeList pv.PersistentVolumeList       `json:"persistentVolumeList"`
 	RoleList             rbacroles.RbacRoleList        `json:"roleList"`
 	StorageClassList     storageclass.StorageClassList `json:"storageClassList"`
+
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
 // GetCluster returns a list of all cluster resources in the cluster.
@@ -105,11 +109,16 @@ func GetClusterFromChannels(client *kubernetes.Clientset, channels *common.Resou
 		}
 	}
 
-	return &Cluster{
+	cluster := &Cluster{
 		NamespaceList:        *(<-nsChan),
 		NodeList:             *(<-nodeChan),
 		PersistentVolumeList: *(<-pvChan),
 		RoleList:             *(<-roleChan),
 		StorageClassList:     *(<-storageChan),
-	}, nil
+	}
+
+	cluster.Errors = errors.MergeErrors(cluster.NamespaceList.Errors, cluster.NodeList.Errors,
+		cluster.PersistentVolumeList.Errors, cluster.RoleList.Errors, cluster.StorageClassList.Errors)
+
+	return cluster, nil
 }

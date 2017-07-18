@@ -17,6 +17,7 @@ package discovery
 import (
 	"log"
 
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/ingress"
@@ -28,6 +29,9 @@ import (
 type Discovery struct {
 	ServiceList service.ServiceList `json:"serviceList"`
 	IngressList ingress.IngressList `json:"ingressList"`
+
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
 // GetDiscovery returns a list of all servicesAndDiscovery resources in the cluster.
@@ -72,8 +76,12 @@ func GetDiscoveryFromChannels(channels *common.ResourceChannels,
 		}
 	}
 
-	return &Discovery{
+	discovery := &Discovery{
 		ServiceList: *(<-svcChan),
 		IngressList: *(<-ingressChan),
-	}, nil
+	}
+
+	discovery.Errors = errors.MergeErrors(discovery.ServiceList.Errors, discovery.IngressList.Errors)
+
+	return discovery, nil
 }

@@ -47,6 +47,14 @@ func AppendError(err error, nonCriticalErrors []error) ([]error, error) {
 	return nonCriticalErrors, nil
 }
 
+// MergeErrors merges multiple non-critical error arrays into one array.
+func MergeErrors(errorArraysToMerge ...[]error) (mergedErrors []error) {
+	for _, errorArray := range errorArraysToMerge {
+		mergedErrors = append(mergedErrors, errorArray...)
+	}
+	return
+}
+
 func isErrorCritical(err error) bool {
 	status, ok := err.(*errors.StatusError)
 	if !ok {
