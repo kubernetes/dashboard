@@ -5,7 +5,6 @@ type AuthManager interface {
 }
 
 type authManager struct {
-
 }
 
 func (self authManager) Login(spec *LoginSpec) (string, error) {

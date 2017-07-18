@@ -12,17 +12,17 @@ type AuthHandler struct {
 
 type LoginSpec struct {
 	// Username is the username for basic authentication to the kubernetes cluster.
-	Username   string `json:"username"`
+	Username string `json:"username"`
 	// Password is the password for basic authentication to the kubernetes cluster.
-	Password   string `json:"password"`
+	Password string `json:"password"`
 
 	// ClientCert contains PEM-encoded data from a client cert file for TLS. Overrides ClientCertificate
 	ClientCert []byte `json:"clientCert"`
 	// ClientKey contains PEM-encoded data from a client key file for TLS. Overrides ClientKey
-	ClientKey  []byte `json:"clientKey"`
+	ClientKey []byte `json:"clientKey"`
 
 	// Token is the bearer token for authentication to the kubernetes cluster.
-	Token      string `json:"jwtToken"`
+	Token string `json:"jwtToken"`
 
 	// KubeConfig is the content of users' kubeconfig file. It will be parsed and auth data will be extracted.
 	// Kubeconfig can not contain any paths. All data has to be provided within the file.
@@ -45,14 +45,14 @@ func (self AuthHandler) handleLogin(request *restful.Request, response *restful.
 	loginSpec := new(LoginSpec)
 	if err := request.ReadEntity(loginSpec); err != nil {
 		response.AddHeader("Content-Type", "text/plain")
-		response.WriteErrorString(http.StatusInternalServerError, err.Error() + "\n")
+		response.WriteErrorString(http.StatusInternalServerError, err.Error()+"\n")
 		return
 	}
 
 	token, err := self.manager.Login(loginSpec)
 	if err != nil {
 		response.AddHeader("Content-Type", "text/plain")
-		response.WriteErrorString(http.StatusInternalServerError, err.Error() + "\n")
+		response.WriteErrorString(http.StatusInternalServerError, err.Error()+"\n")
 		return
 	}
 
