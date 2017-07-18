@@ -551,7 +551,7 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 		apiV1Ws.GET("/search/{namespace}").
 			To(apiHandler.handleSearch).
 			Writes(search.SearchResult{}))
-	
+
 	apiV1Ws.Route(
 		apiV1Ws.GET("/allobjects/{namespace}").
 			To(apiHandler.handleAllObjects).
@@ -1037,7 +1037,7 @@ func (apiHandler *APIHandler) handleAllObjects(request *restful.Request, respons
 		handleInternalError(response, err)
 		return
 	}
-	
+
 	namespace := parseNamespacePathParameter(request)
 	dataSelect := parseDataSelectPathParameter(request)
 	dataSelect.FilterQuery = dataselect.NoFilter
