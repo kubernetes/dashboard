@@ -16,16 +16,8 @@ import {PersistentVolumeListController} from 'persistentvolume/list/controller';
 import persistentVolumeListModule from 'persistentvolume/module';
 
 describe('Persistent Volume list controller', () => {
-  /** @type {!PersistentVolumeListController}
-   */
-  let ctrl;
-
   beforeEach(() => {
     angular.mock.module(persistentVolumeListModule.name);
-
-    angular.mock.inject(($controller) => {
-      ctrl = $controller(PersistentVolumeListController, {persistentVolumeList: {items: []}});
-    });
   });
 
   it('should initialize persistent volume controller', angular.mock.inject(($controller) => {
