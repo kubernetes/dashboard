@@ -15,22 +15,23 @@
 import chromeModule from 'chrome/module';
 import componentsModule from 'common/components/module';
 import filtersModule from 'common/filters/module';
+import configMapModule from 'configmap/module';
 import daemonSetModule from 'daemonset/module';
 import deploymentModule from 'deployment/module';
+import ingressModule from 'ingress/module';
 import jobModule from 'job/module';
+import persistentVolumeClaimModule from 'persistentvolumeclaim/module';
 import replicaSetModule from 'replicaset/module';
 import replicationControllerModule from 'replicationcontroller/module';
-import statefulSetModule from 'statefulset/module';
-import ingressModule from 'ingress/module';
-import serviceModule from 'service/module';
-import configMapModule from 'configmap/module';
-import persistentVolumeClaimModule from 'persistentvolumeclaim/module';
 import secretModule from 'secret/module';
+import serviceModule from 'service/module';
+import statefulSetModule from 'statefulset/module';
 
 import stateConfig from './stateconfig';
 
 /**
- * Module with a view that displays all resources categorized as objects, e.g., Workloads and Services.
+ * Module with a view that displays all resources categorized as objects
+ * e.g., Workloads and Services.
  */
 export default angular
     .module(

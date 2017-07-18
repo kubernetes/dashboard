@@ -35,8 +35,8 @@ export class AllObjectsController {
   constructor(
       allObjects, kdPodListResource, kdReplicaSetListResource, kdDaemonSetListResource,
       kdDeploymentListResource, kdStatefulSetListResource, kdJobListResource, kdRCListResource,
-      kdServiceListResource, kdIngressListResource, kdConfigMapListResource,
-      kdSecretListResource, kdPersistentVolumeClaimListResource) {
+      kdServiceListResource, kdIngressListResource, kdConfigMapListResource, kdSecretListResource,
+      kdPersistentVolumeClaimListResource) {
     /** @export {!backendApi.Workloads} */
     this.allObjects = allObjects;
 
