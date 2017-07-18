@@ -27,7 +27,7 @@ export default function stateConfig($stateProvider) {
     url: stateUrl,
     parent: chromeStateName,
     resolve: {
-      'workloads': resolveAllObjects,
+      'allObjects': resolveAllObjects,
     },
     data: {
       [breadcrumbsConfig]: {

@@ -21,12 +21,13 @@ import jobModule from 'job/module';
 import replicaSetModule from 'replicaset/module';
 import replicationControllerModule from 'replicationcontroller/module';
 import statefulSetModule from 'statefulset/module';
+import ingressModule from 'ingress/module';
+import serviceModule from 'service/module';
 
 import stateConfig from './stateconfig';
 
 /**
- * Module with a view that displays resources categorized as workloads, e.g., Replica Sets or
- * Deployments.
+ * Module with a view that displays all resources categorized as objects, e.g., Workloads and Services.
  */
 export default angular
     .module(
@@ -44,6 +45,8 @@ export default angular
           deploymentModule.name,
           daemonSetModule.name,
           statefulSetModule.name,
+          serviceModule.name,
+          ingressModule.name,
         ])
     .config(stateConfig)
     .factory('kdAllObjectsResource', allObjectsResource);

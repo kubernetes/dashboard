@@ -17,7 +17,7 @@
  */
 export class AllObjectsController {
   /**
-   * @param {!backendApi.Workloads} workloads
+   * @param {!backendApi.AllObjects} allObjects
    * @param {!angular.Resource} kdPodListResource
    * @param {!angular.Resource} kdReplicaSetListResource
    * @param {!angular.Resource} kdDaemonSetListResource
@@ -25,13 +25,16 @@ export class AllObjectsController {
    * @param {!angular.Resource} kdStatefulSetListResource
    * @param {!angular.Resource} kdJobListResource
    * @param {!angular.Resource} kdRCListResource
+   * @param {!angular.Resource} kdServiceListResource
+   * @param {!angular.Resource} kdIngressListResource
    * @ngInject
    */
   constructor(
-      workloads, kdPodListResource, kdReplicaSetListResource, kdDaemonSetListResource,
-      kdDeploymentListResource, kdStatefulSetListResource, kdJobListResource, kdRCListResource) {
+      allObjects, kdPodListResource, kdReplicaSetListResource, kdDaemonSetListResource,
+      kdDeploymentListResource, kdStatefulSetListResource, kdJobListResource, kdRCListResource,
+      kdServiceListResource, kdIngressListResource) {
     /** @export {!backendApi.Workloads} */
-    this.workloads = workloads;
+    this.allObjects = allObjects;
 
     /** @export {!angular.Resource} */
     this.podListResource = kdPodListResource;
@@ -53,6 +56,12 @@ export class AllObjectsController {
 
     /** @export {!angular.Resource} */
     this.rcListResource = kdRCListResource;
+
+    /** @export {!angular.Resource} */
+    this.kdServiceListResource = kdServiceListResource;
+
+    /** @export {!angular.Resource} */
+    this.kdIngressListResource = kdIngressListResource;
   }
 
   /**
@@ -61,13 +70,15 @@ export class AllObjectsController {
    */
   shouldShowZeroState() {
     /** @type {number} */
-    let resourcesLength = this.workloads.deploymentList.listMeta.totalItems +
-        this.workloads.replicaSetList.listMeta.totalItems +
-        this.workloads.jobList.listMeta.totalItems +
-        this.workloads.replicationControllerList.listMeta.totalItems +
-        this.workloads.podList.listMeta.totalItems +
-        this.workloads.daemonSetList.listMeta.totalItems +
-        this.workloads.statefulSetList.listMeta.totalItems;
+    let resourcesLength = this.allObjects.deploymentList.listMeta.totalItems +
+        this.allObjects.replicaSetList.listMeta.totalItems +
+        this.allObjects.jobList.listMeta.totalItems +
+        this.allObjects.replicationControllerList.listMeta.totalItems +
+        this.allObjects.podList.listMeta.totalItems +
+        this.allObjects.daemonSetList.listMeta.totalItems +
+        this.allObjects.statefulSetList.listMeta.totalItems +
+        this.allObjects.serviceList.listMeta.totalItems +
+        this.allObjects.ingressList.listMeta.totalItems;
 
     return resourcesLength === 0;
   }
