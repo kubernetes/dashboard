@@ -1032,7 +1032,7 @@ func (apiHandler *APIHandler) handleGetWorkloads(request *restful.Request, respo
 }
 
 func (apiHandler *APIHandler) handleAllObjects(request *restful.Request, response *restful.Response) {
-	k8sClient, err := apiHandler.manager.Client(request)
+	k8sClient, err := apiHandler.cManager.Client(request)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1042,7 +1042,7 @@ func (apiHandler *APIHandler) handleAllObjects(request *restful.Request, respons
 	dataSelect := parseDataSelectPathParameter(request)
 	dataSelect.FilterQuery = dataselect.NoFilter
 	dataSelect.MetricQuery = dataselect.NoMetrics
-	result, err := allobjects.GetAllObjects(k8sClient, apiHandler.heapsterClient, namespace, dataSelect)
+	result, err := allobjects.GetAllObjects(k8sClient, apiHandler.iManager.Metric().Client(), namespace, dataSelect)
 	if err != nil {
 		handleInternalError(response, err)
 		return
