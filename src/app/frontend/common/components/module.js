@@ -32,6 +32,7 @@ import {infoCardComponent} from './resourcedetail/component';
 import {serializedReferenceComponent} from './serializedreference/component';
 import {sparklineComponent} from './sparkline/component';
 import {toggleHiddenTextComponent} from './togglehiddentext/component';
+import {warningsComponent} from './warnings/component';
 import warnThresholdDirective from './warnthreshold/directive';
 import {zeroStateComponent} from './zerostate/component';
 
@@ -63,5 +64,6 @@ export default angular
     .component('kdSerializedReference', serializedReferenceComponent)
     .component('kdObjectMetaInfoCard', infoCardComponent)
     .component('kdContentCard', contentCardComponent)
+    .component('kdWarnings', warningsComponent)
     .component('kdConditionList', conditionListComponent)
     .directive('kdWarnThreshold', warnThresholdDirective);
