@@ -545,11 +545,6 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			Writes(search.SearchResult{}))
 
 	apiV1Ws.Route(
-<<<<<<< HEAD
-		apiV1Ws.GET("/allobjects/{namespace}").
-			To(apiHandler.handleAllObjects).
-			Writes(allobjects.ObjectResult{}))
-=======
 		apiV1Ws.GET("/log/source/{namespace}/{resourceName}/{resourceType}").
 			To(apiHandler.handleLogSource).
 			Writes(controller.LogSources{}))
@@ -561,7 +556,11 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 		apiV1Ws.GET("/log/{namespace}/{pod}/{container}").
 			To(apiHandler.handleLogs).
 			Writes(logs.LogDetails{}))
->>>>>>> master
+
+	apiV1Ws.Route(
+		apiV1Ws.GET("/allobjects/{namespace}").
+			To(apiHandler.handleAllObjects).
+			Writes(allobjects.ObjectResult{}))
 
 	return wsContainer, nil
 }
