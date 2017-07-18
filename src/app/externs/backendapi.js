@@ -143,7 +143,7 @@ backendApi.ReplicationControllerList;
  *   replicationControllerList: !backendApi.ReplicationControllerList,
  *   podList: !backendApi.PodList,
  *   daemonSetList: !backendApi.DaemonSetList,
- *   statefulSetList: !backendApi.StatefulSetList
+ *   statefulSetList: !backendApi.StatefulSetList,
  *   serviceList: !backendApi.ServiceList,
  *   ingressList: !backendApi.IngressList,
  *   configMapList: !backendApi.ConfigMapList,
