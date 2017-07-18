@@ -37,7 +37,7 @@ export class AllObjectsController {
       kdDeploymentListResource, kdStatefulSetListResource, kdJobListResource, kdRCListResource,
       kdServiceListResource, kdIngressListResource, kdConfigMapListResource, kdSecretListResource,
       kdPersistentVolumeClaimListResource) {
-    /** @export {!backendApi.Workloads} */
+    /** @export {!backendApi.AllObjects} */
     this.allObjects = allObjects;
 
     /** @export {!angular.Resource} */
