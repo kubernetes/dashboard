@@ -16,8 +16,9 @@
 
 .kd-content-card-content {
   background-color: $content-background;
-  border: 1px solid $border;
+  border: solid $border;
   border-radius: 2px;
+  border-width: 1px 1px 0;
   box-shadow: $whiteframe-shadow-1dp;
 }
 
