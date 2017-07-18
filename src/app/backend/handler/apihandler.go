@@ -21,6 +21,7 @@ import (
 	"strings"
 
 	restful "github.com/emicklei/go-restful"
+	"github.com/kubernetes/dashboard/src/app/backend/allobjects"
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
@@ -551,7 +552,7 @@ func CreateHTTPAPIHandler(heapsterClient heapster.HeapsterClient, manager client
 	apiV1Ws.Route(
 		apiV1Ws.GET("/allobjects/{namespace}").
 			To(apiHandler.handleAllObjects).
-			Writes(search.SearchResult{}))
+			Writes(allobjects.ObjectResult{}))
 
 	return wsContainer, nil
 }
@@ -1037,7 +1038,7 @@ func (apiHandler *APIHandler) handleAllObjects(request *restful.Request, respons
 	dataSelect := parseDataSelectPathParameter(request)
 	dataSelect.FilterQuery = dataselect.NoFilter
 	dataSelect.MetricQuery = dataselect.NoMetrics
-	result, err := search.Search(k8sClient, apiHandler.heapsterClient, namespace, dataSelect)
+	result, err := allobjects.GetAllObjects(k8sClient, apiHandler.heapsterClient, namespace, dataSelect)
 	if err != nil {
 		handleInternalError(response, err)
 		return
