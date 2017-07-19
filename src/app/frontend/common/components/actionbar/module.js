@@ -20,6 +20,7 @@ import {actionbarDeleteItemComponent} from './actionbardeleteitem_component';
 import {actionbarDetailButtonsComponent} from './actionbardetailbuttons_component';
 import {actionbarEditItemComponent} from './actionbaredititem_component';
 import {actionbarListButtonsComponent} from './actionbarlistbuttons_component';
+import {actionbarLogsComponent} from './actionbarlogs_component';
 import {actionbarComponent} from './component';
 
 
@@ -36,6 +37,7 @@ export default angular
         ])
     .component('kdActionbar', actionbarComponent)
     .component('kdBreadcrumbs', breadcrumbsComponent)
+    .component('kdActionbarLogs', actionbarLogsComponent)
     .component('kdActionbarDeleteItem', actionbarDeleteItemComponent)
     .component('kdActionbarEditItem', actionbarEditItemComponent)
     .component('kdActionbarDetailButtons', actionbarDetailButtonsComponent)

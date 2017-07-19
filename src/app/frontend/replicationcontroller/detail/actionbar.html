@@ -14,6 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
+<kd-actionbar-logs resource-kind-name="replicationcontroller"
+                   object-meta="$ctrl.details.objectMeta">
+</kd-actionbar-logs>
+
 <md-button ng-click="$ctrl.handleScaleResourceDialog()">
   <md-icon class="kd-actionbar-icon-button">linear_scale</md-icon>
   <md-tooltip md-direction="bottom">
@@ -21,6 +25,7 @@ limitations under the License.
   </md-tooltip>
   [[Scale|Tooltip for the 'scale' button on the action bar of a replication controller details view.]]
 </md-button>
+
 <kd-actionbar-detail-buttons resource-kind-name="[[Replication Controller|Label 'Replication Controller' which appears at the top of the edit dialog, opened from a replication controller details page.]]"
                              type-meta="$ctrl.details.typeMeta"
                              object-meta="$ctrl.details.objectMeta">

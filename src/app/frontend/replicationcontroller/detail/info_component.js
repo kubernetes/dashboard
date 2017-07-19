@@ -12,27 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
-import {stateName as logsStateName, StateParams as LogsStateParams} from 'logs/state';
-
 /**
  * @final
  */
 export default class ReplicationControllerInfoController {
   /**
    * Constructs replication controller info object.
-   * @param {!ui.router.$state} $state
    * @ngInject
    */
-  constructor($state) {
+  constructor() {
     /**
      * Replication controller details. Initialized from the scope.
      * @export {!backendApi.ReplicationControllerDetail}
      */
     this.replicationController;
-
-    /** @private {!ui.router.$state} */
-    this.state_ = $state;
   }
 
   /**
@@ -42,19 +35,6 @@ export default class ReplicationControllerInfoController {
   areDesiredPodsRunning() {
     return this.replicationController.podInfo.running ===
         this.replicationController.podInfo.desired;
-  }
-
-
-  /**
-   * @return {string}
-   * @export
-   */
-  getLogsHref() {
-    return this.state_.href(
-        logsStateName,
-        new LogsStateParams(
-            this.replicationController.objectMeta.namespace,
-            this.replicationController.objectMeta.name, 'replicationcontroller'));
   }
 }
 
