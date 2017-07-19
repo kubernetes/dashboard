@@ -19,7 +19,10 @@ limitations under the License.
   <div class="kd-warning-message"
        ng-repeat="warning in $ctrl.warnings | limitTo: $ctrl.limit">
     <md-icon class="material-icons">warning</md-icon>
-    <span class="kd-raw-warning" flex>  {{warning.ErrStatus.message}}</span>
+    <span class="kd-raw-warning"
+          flex>
+      {{warning.ErrStatus.message}}
+    </span>
     <md-icon ng-click="$ctrl.dismissWarning($index)"
              class="material-icons kd-dismiss-icon">
       close

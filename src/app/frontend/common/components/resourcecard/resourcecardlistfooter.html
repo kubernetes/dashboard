@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div class="kd-resource-card-list-footer">
+<div class="kd-resource-card-list-footer"
+     ng-style="$ctrl.getBottomBorderStyle()">
   <div ng-transclude
        class="kd-resource-card-list-footer-content"></div>
   <div ng-transclude="pagination"
