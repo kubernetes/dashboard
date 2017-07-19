@@ -30,13 +30,10 @@ class ResourceCardListFooterController {
    * controls (this means, that footer is actually displayed).
    *
    * @export
-   * @return {{border-top: string}|undefined}
+   * @return {boolean}
    */
-  getBottomBorderStyle() {
-    if (this.element_[0].innerHTML.indexOf('dir-pagination-controls') > 0) {
-      return {'border-top': '1px solid rgba(0, 0, 0, .12)'};
-    }
-    return undefined;
+  isBottomBorderVisible() {
+    return this.element_[0].innerHTML.indexOf('dir-pagination-controls') > 0;
   }
 }
 

@@ -19,6 +19,10 @@
   display: flex;
 }
 
+.kd-resource-card-list-footer-border {
+  border-top: 1px solid $border;
+}
+
 .kd-resource-card-list-footer-content {
   flex: 1;
   padding-left: 2 * $baseline-grid;
