@@ -15,6 +15,8 @@
 package namespace
 
 import (
+	"log"
+
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
@@ -24,7 +26,6 @@ import (
 	"k8s.io/apimachinery/pkg/labels"
 	client "k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/pkg/api/v1"
-	"log"
 )
 
 // NamespaceList contains a list of namespaces in the cluster.

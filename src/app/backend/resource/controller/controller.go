@@ -17,6 +17,8 @@ package controller
 import (
 	"fmt"
 
+	"strings"
+
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
@@ -29,7 +31,6 @@ import (
 	apps "k8s.io/client-go/pkg/apis/apps/v1beta1"
 	batch "k8s.io/client-go/pkg/apis/batch/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
-	"strings"
 )
 
 var listEverything = meta.ListOptions{
