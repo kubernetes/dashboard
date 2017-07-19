@@ -28,6 +28,7 @@ func (self AuthHandler) handleLogin(request *restful.Request, response *restful.
 	}
 
 	token, err := self.manager.Login(loginSpec)
+	// TODO: check for non-critical errors
 	if err != nil {
 		response.AddHeader("Content-Type", "text/plain")
 		response.WriteErrorString(http.StatusInternalServerError, err.Error()+"\n")

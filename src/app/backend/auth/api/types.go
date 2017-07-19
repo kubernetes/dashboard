@@ -4,6 +4,12 @@ import "k8s.io/client-go/tools/clientcmd/api"
 
 type AuthManager interface {
 	Login(*LoginSpec) (string, error)
+	DecryptToken(string) (*api.AuthInfo, error)
+}
+
+type TokenManager interface {
+	Generate(api.AuthInfo) (string, error)
+	Decrypt(string) (*api.AuthInfo, error)
 }
 
 type Authenticator interface {

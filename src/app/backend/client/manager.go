@@ -25,6 +25,8 @@ import (
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/client-go/tools/clientcmd/api"
+	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
+	"github.com/kubernetes/dashboard/src/app/backend/auth"
 )
 
 // Dashboard UI default values for client configs.
@@ -63,6 +65,8 @@ type clientManager struct {
 	// Initialized on clientManager creation and used if kubeconfigPath and apiserverHost are
 	// empty
 	inClusterConfig *rest.Config
+
+	authManager authApi.AuthManager
 }
 
 // Client returns kubernetes client that is created based on authentication information extracted
@@ -101,16 +105,20 @@ func (self *clientManager) Config(req *restful.Request) (*rest.Config, error) {
 // ClientCmdConfig creates ClientCmd Config based on authentication information extracted from request.
 // Currently request header is only checked for existence of 'Authentication: BearerToken'
 func (self *clientManager) ClientCmdConfig(req *restful.Request) (clientcmd.ClientConfig, error) {
-	authInfo := self.extractAuthInfo(req)
+	authInfo, err := self.extractAuthInfo(req)
+	if err != nil {
+		return nil, err
+	}
 
 	cfg, err := self.buildConfigFromFlags(self.apiserverHost, self.kubeConfigPath)
 	if err != nil {
 		return nil, err
 	}
 
-	// Use auth data provided in cfg if there is no token in header
-	if len(authInfo.Token) == 0 {
-		authInfo = self.buildAuthInfoFromConfig(cfg)
+	// Use auth data provided in cfg if extracted auth info is nil
+	if authInfo == nil {
+		defaultAuthInfo := self.buildAuthInfoFromConfig(cfg)
+		authInfo = &defaultAuthInfo
 	}
 
 	cmdCfg := api.NewConfig()
@@ -120,7 +128,7 @@ func (self *clientManager) ClientCmdConfig(req *restful.Request) (clientcmd.Clie
 		CertificateAuthorityData: cfg.TLSClientConfig.CAData,
 		InsecureSkipTLSVerify:    cfg.TLSClientConfig.Insecure,
 	}
-	cmdCfg.AuthInfos[DefaultCmdConfigName] = &authInfo
+	cmdCfg.AuthInfos[DefaultCmdConfigName] = authInfo
 	cmdCfg.Contexts[DefaultCmdConfigName] = &api.Context{
 		Cluster:  DefaultCmdConfigName,
 		AuthInfo: DefaultCmdConfigName,
@@ -188,20 +196,35 @@ func (self *clientManager) buildAuthInfoFromConfig(cfg *rest.Config) api.AuthInf
 	}
 }
 
-// Extracts authentication information from request header
-func (self *clientManager) extractAuthInfo(req *restful.Request) api.AuthInfo {
+// Extracts authorization information from request header
+func (self *clientManager) extractAuthInfo(req *restful.Request) (*api.AuthInfo, error) {
 	if req == nil {
-		log.Print("No request provided. Skipping authorization header")
-		return api.AuthInfo{}
+		log.Print("No request provided. Skipping authorization.")
+		return nil, nil
 	}
 
 	authHeader := req.HeaderParameter("Authorization")
-	token := ""
-	if strings.HasPrefix(authHeader, "Bearer ") {
-		token = strings.TrimPrefix(authHeader, "Bearer ")
+	jweToken := req.HeaderParameter("kdToken")
+
+	// Authorization header will be more important than our token
+	token := self.extractTokenFromHeader(authHeader)
+	if len(token) > 0 {
+		return &api.AuthInfo{Token: token}, nil
 	}
 
-	return api.AuthInfo{Token: token}
+	if len(jweToken) > 0 {
+		return self.authManager.DecryptToken(jweToken)
+	}
+
+	return nil, nil
+}
+
+func (self *clientManager) extractTokenFromHeader(authHeader string) string {
+	if strings.HasPrefix(authHeader, "Bearer ") {
+		return strings.TrimPrefix(authHeader, "Bearer ")
+	}
+
+	return ""
 }
 
 // Initializes client manager
@@ -264,6 +287,7 @@ func NewClientManager(kubeConfigPath, apiserverHost string) ClientManager {
 	result := &clientManager{
 		kubeConfigPath: kubeConfigPath,
 		apiserverHost:  apiserverHost,
+		authManager: auth.NewAuthManager(),
 	}
 
 	result.init()

@@ -1,4 +1,3 @@
-
 /**
  * @final
  */
@@ -24,15 +23,15 @@ class LoginController {
      */
     this.form;
 
-    // this.username;
-    // this.password;
+    this.username = 'floreks';
+    this.password = 'password';
   }
 
   /**
    * @export
    */
   logIn() {
-    this.kdAuthService_.logIn({}).then(
+    this.kdAuthService_.logIn({username: this.username, password: this.password}).then(
         () => {
           this.kdNavService_.setVisibility(true);
           this.state_.transitionTo('workload');

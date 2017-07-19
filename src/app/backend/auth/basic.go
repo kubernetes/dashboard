@@ -12,9 +12,12 @@ type BasicAuthenticator struct{
 	password string
 }
 
-func (BasicAuthenticator) GetAuthInfo() (api.AuthInfo, error) {
+func (self *BasicAuthenticator) GetAuthInfo() (api.AuthInfo, error) {
 	// TODO: implement that
-	return api.AuthInfo{}, nil
+	return api.AuthInfo{
+		Username: self.username,
+		Password: self.password,
+	}, nil
 }
 
 func NewBasicAuthenticator(spec *authApi.LoginSpec) authApi.Authenticator {

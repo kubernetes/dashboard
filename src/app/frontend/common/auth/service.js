@@ -44,12 +44,17 @@ export class AuthService {
 
           resource.save(loginSpec,
               response => {
-                this.setJWTCookie(response.jwtToken);
-                deferred.resolve();
+                console.log(response)
+                if(!!response.jwtToken) {
+                  console.log(response.jwtToken)
+                  this.setJWTCookie(response.jwtToken);
+                  deferred.resolve();
+                }
+
+                deferred.reject('Got empty token');
               },
               err => {
                 deferred.reject(err);
-                console.log(err);
               })
         },
         err => {
