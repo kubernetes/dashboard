@@ -12,50 +12,49 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {GlobalStateParams} from 'common/resource/globalresourcedetail';
 import {stateName as logsStateName, StateParams as LogsStateParams} from 'logs/state';
-import {stateName} from 'node/detail/state';
 
-/**
- * @final
- */
-export default class PodInfoController {
+export class ActionbarLogsItemController {
   /**
-   * Constructs pod info object.
    * @param {!ui.router.$state} $state
    * @ngInject
    */
   constructor($state) {
-    /**
-     * Pod details. Initialized from the scope.
-     * @export {!backendApi.PodDetail}
-     */
-    this.pod;
+    /** @export {string} Initialized from a binding. */
+    this.resourceKindName;
 
-    /** @private {!ui.router.$state} */
+    /** @export {!backendApi.ObjectMeta} Initialized from a binding. */
+    this.objectMeta;
+
+    /** @private {!ui.router.$state}} */
     this.state_ = $state;
   }
 
   /**
-   * Returns link to connected node details page.
+   * Returns link to teh log view
    * @return {string}
    * @export
    */
-  getNodeDetailsHref() {
-    return this.state_.href(stateName, new GlobalStateParams(this.pod.nodeName));
+  getLogsHref() {
+    return this.state_.href(
+        logsStateName,
+        new LogsStateParams(
+            this.objectMeta.namespace, this.objectMeta.name, this.resourceKindName));
   }
 }
 
 /**
- * Definition object for the component that displays pod info.
+ * Action bar logs component should be used only on resource details page in order to
+ * add button that allows to see logs of this resource.
  *
- * @return {!angular.Component}
+ * @type {!angular.Component}
  */
-export const podInfoComponent = {
-  controller: PodInfoController,
-  templateUrl: 'pod/detail/info.html',
+export const actionbarLogsComponent = {
+  templateUrl: 'common/components/actionbar/actionbarlogs.html',
   bindings: {
-    /** {!backendApi.PodDetail} */
-    'pod': '<',
+    'resourceKindName': '@',
+    'objectMeta': '<',
   },
+  bindToController: true,
+  controller: ActionbarLogsItemController,
 };

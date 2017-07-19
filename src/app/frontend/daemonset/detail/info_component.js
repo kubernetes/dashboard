@@ -12,26 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as logsStateName, StateParams as LogsStateParams} from 'logs/state';
-
 /**
  * @final
  */
 export default class DaemonSetInfoController {
   /**
    * Constructs daemon set info object.
-   * @param {!ui.router.$state} $state
    * @ngInject
    */
-  constructor($state) {
+  constructor() {
     /**
      * Daemon set details. Initialized from the scope.
      * @export {!backendApi.DaemonSetDetail}
      */
     this.daemonSet;
-
-    /** @private {!ui.router.$state} */
-    this.state_ = $state;
   }
 
   /**
@@ -40,18 +34,6 @@ export default class DaemonSetInfoController {
    */
   areDesiredPodsRunning() {
     return this.daemonSet.podInfo.running === this.daemonSet.podInfo.desired;
-  }
-
-  /**
-   * Returns link to teh log view
-   * @return {string}
-   * @export
-   */
-  getLogsHref() {
-    return this.state_.href(
-        logsStateName,
-        new LogsStateParams(
-            this.daemonSet.objectMeta.namespace, this.daemonSet.objectMeta.name, 'daemonset'));
   }
 }
 
