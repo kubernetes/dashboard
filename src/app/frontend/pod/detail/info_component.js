@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import {GlobalStateParams} from 'common/resource/globalresourcedetail';
-import {stateName as logsStateName, StateParams as LogsStateParams} from 'logs/state';
 import {stateName} from 'node/detail/state';
 
 /**
