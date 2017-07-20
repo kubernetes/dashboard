@@ -52,7 +52,7 @@ export class ActionbarLogsItemController {
 export const actionbarLogsComponent = {
   templateUrl: 'common/components/actionbar/actionbarlogs.html',
   bindings: {
-    'resourceKindName': '@',
+    'resourceKindName': '<',
     'objectMeta': '<',
   },
   bindToController: true,
