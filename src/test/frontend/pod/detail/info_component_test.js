@@ -42,10 +42,4 @@ describe('Pod Info controller', () => {
   it('should instantiate the controller properly', () => {
     expect(ctrl).not.toBeUndefined();
   });
-
-  it('should provide link to logs view', () => {
-    expect(ctrl.getLogsHref()).toBe('#!/log/default-ns/my-pod/pod');
-  });
-
-
 });

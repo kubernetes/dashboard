@@ -15,9 +15,10 @@
 package errors
 
 import (
-	"k8s.io/apimachinery/pkg/api/errors"
 	"log"
 	"net/http"
+
+	"k8s.io/apimachinery/pkg/api/errors"
 )
 
 // NonCriticalErrors is an array of error statuses, that are non-critical. That means, that this error can be

@@ -71,6 +71,8 @@
   <translation id="8227118065394270046" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBAREDITITEM_0" desc="Action \'Edit\' for the edit button on the global action bar.">Edit</translation>
   <translation id="6890205203402149061" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBARLISTBUTTONS_0" desc="Label for deploy app button.">Deploy app</translation>
   <translation id="8440773175603161155" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBARLISTBUTTONS_1" desc="Label for upload YAML button.">Upload YAML</translation>
+  <translation id="4823508741067150667" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBARLOGS_0" desc="Tooltip for the \'logs\' button on the action bar.">View logs</translation>
+  <translation id="1841242100396658719" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBARLOGS_1" desc="Tooltip for the \'logs\' button on the action bar.">Logs</translation>
   <translation id="1745702155571319443" key="MSG_COMMON_COMPONENTS_ANNOTATIONS_ANNOTATIONS_0" desc="Friendly name of the kubernetes.io/created-by annotation">Created by:</translation>
   <translation id="1417978160910275828" key="MSG_COMMON_COMPONENTS_ANNOTATIONS_ANNOTATIONS_1" desc="Text on the button to show fewer annotations.">show fewer annotations</translation>
   <translation id="6884163988875905686" key="MSG_COMMON_COMPONENTS_ANNOTATIONS_ANNOTATIONS_2" desc="Text on the button to show all the annotations.">show all annotations</translation>
@@ -157,7 +159,6 @@
   <translation id="3771546490015192323" key="MSG_DAEMONSET_DETAIL_INFO_11" desc="The message says how many pods are pending (daemon set details page).">{{::$ctrl.daemonSet.podInfo.pending}} pending</translation>
   <translation id="6989004320544423836" key="MSG_DAEMONSET_DETAIL_INFO_12" desc="The message says how many pods have failed (daemon set details page).">{{::$ctrl.daemonSet.podInfo.failed}} failed</translation>
   <translation id="7121920513850122580" key="MSG_DAEMONSET_DETAIL_INFO_13" desc="The message describes how many pods are running (daemon set details page).">{{::$ctrl.daemonSet.podInfo.running}} running</translation>
-  <translation id="5310198253163300158" key="MSG_DAEMONSET_DETAIL_INFO_14" desc="Link to logs view in the daemon set details view.">View logs</translation>
   <translation id="1915762576763304293" key="MSG_DAEMONSET_DETAIL_INFO_2" desc="Label \'Namespace\' for the daemon set namespace on the details page">Namespace</translation>
   <translation id="3087018613949976492" key="MSG_DAEMONSET_DETAIL_INFO_3" desc="Label \'Labels\' for the daemon set\'s labels list on the daemon set details page.">Labels</translation>
   <translation id="5529663386929562771" key="MSG_DAEMONSET_DETAIL_INFO_4" desc="Label \'Images\' for the list of images used in a daemon set, on its details page.">Images</translation>
@@ -617,7 +618,6 @@
   <translation id="3180983899887518304" key="MSG_POD_DETAIL_DETAIL_3" desc="Subtitle at the top of the container details.">Init Containers</translation>
   <translation id="855512770998820017" key="MSG_POD_DETAIL_INFO_0" desc="Header in a detail view">Details</translation>
   <translation id="1457675883548195036" key="MSG_POD_DETAIL_INFO_1" desc="Label \'Status\' for the pod status in details part (left) of the pod details view.">Status</translation>
-  <translation id="8753288911649190943" key="MSG_POD_DETAIL_INFO_2" desc="Label for the pod logs in details part (left) of the pod details view.">View logs</translation>
   <translation id="694126564552626450" key="MSG_POD_DETAIL_INFO_3" desc="Subtitle \'Network\' at the top of the column about network connectivity (right) at the pod detail view.">Network</translation>
   <translation id="7855013997463493128" key="MSG_POD_DETAIL_INFO_4" desc="Label \'Node\' for the node a pods is running on, appears in the connectivity part (right) of the pod details view.">Node</translation>
   <translation id="7683783814970718475" key="MSG_POD_DETAIL_INFO_5" desc="Label \'IP\' for the pod internal IP, appears in the connectivity part (right) of the pod details view.">IP</translation>
@@ -659,7 +659,6 @@
   <translation id="4263408774070199925" key="MSG_REPLICASET_DETAIL_INFO_1" desc="Label \'selector\' for replica sets.">Selector</translation>
   <translation id="3760168929569923839" key="MSG_REPLICASET_DETAIL_INFO_10" desc="The message says how many pods have failed (replica set details page).">{{::$ctrl.replicaSet.podInfo.failed}} failed</translation>
   <translation id="7492629527868215674" key="MSG_REPLICASET_DETAIL_INFO_11" desc="The message says how many pods are running (replica set details page).">{{::$ctrl.replicaSet.podInfo.running}} running</translation>
-  <translation id="5308712918175351277" key="MSG_REPLICASET_DETAIL_INFO_12" desc="Link to logs view in the replica set details view.">View logs</translation>
   <translation id="3911353918422532139" key="MSG_REPLICASET_DETAIL_INFO_2" desc="Label \'Images\' for the list of images used in a replica set, on its details page.">Images</translation>
   <translation id="8102227019794353148" key="MSG_REPLICASET_DETAIL_INFO_3" desc="Subtitle \'Status\' for the right section with pod status information\n        on the replica set details page.">Status</translation>
   <translation id="875157097607992319" key="MSG_REPLICASET_DETAIL_INFO_4" desc="Label \'Pods\' for the pods in a replica set on its details page.">Pods</translation>
@@ -699,7 +698,6 @@
   <translation id="2966352401153803656" key="MSG_REPLICATIONCONTROLLER_DETAIL_INFO_1" desc="Label \'Selector\' for the replication controller\'s selector on the replication controller details page.">Selector</translation>
   <translation id="4612002136140637630" key="MSG_REPLICATIONCONTROLLER_DETAIL_INFO_10" desc="The message says how many pods have failed (replication controller details page).">{{::$ctrl.replicationController.podInfo.failed}} failed</translation>
   <translation id="6124228678804559019" key="MSG_REPLICATIONCONTROLLER_DETAIL_INFO_11" desc="The message says how many pods are running (replication controller details page).">{{::$ctrl.replicationController.podInfo.running}} running</translation>
-  <translation id="7206284857664059071" key="MSG_REPLICATIONCONTROLLER_DETAIL_INFO_12" desc="Link to logs view in the pod details view.">View logs</translation>
   <translation id="8187351409255724077" key="MSG_REPLICATIONCONTROLLER_DETAIL_INFO_2" desc="Label \'Images\' for the list of images used in a replication controller, on its details page.">Images</translation>
   <translation id="5182546327040956779" key="MSG_REPLICATIONCONTROLLER_DETAIL_INFO_3" desc="Subtitle \'Status\' for the right section with pod status information on the replication controller details page.">Status</translation>
   <translation id="1084410744399884216" key="MSG_REPLICATIONCONTROLLER_DETAIL_INFO_4" desc="Label \'Pods\' for the pods in a replication controller on its details page.">Pods</translation>
@@ -800,7 +798,6 @@
   <translation id="3348024993164925047" key="MSG_STATEFULSET_DETAIL_INFO_0" desc="Header in a detail view">Details</translation>
   <translation id="3442372861347610857" key="MSG_STATEFULSET_DETAIL_INFO_1" desc="Stateful set info details section images entry.">Images</translation>
   <translation id="638418405338120294" key="MSG_STATEFULSET_DETAIL_INFO_10" desc="The message says that that many pods are running (stateful set details page).">{{ $ctrl.statefulSet.podInfo.running}} running</translation>
-  <translation id="3336725994331956456" key="MSG_STATEFULSET_DETAIL_INFO_11" desc="Link to logs view in the stateful set details view.">View logs</translation>
   <translation id="6022511979639323705" key="MSG_STATEFULSET_DETAIL_INFO_2" desc="Stateful set info status section name.">Status</translation>
   <translation id="4333163254678014871" key="MSG_STATEFULSET_DETAIL_INFO_3" desc="Stateful set info status section pods entry.">Pods</translation>
   <translation id="2225505653570116356" key="MSG_STATEFULSET_DETAIL_INFO_4" desc="The message says that that many pods were created (stateful set details page).">{{ $ctrl.statefulSet.podInfo.current}} created</translation>

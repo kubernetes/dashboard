@@ -15,8 +15,9 @@
 package common
 
 import (
-	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"sort"
+
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 )
 
 // SortableInt64 implements sort.Interface for []int64. This allows to use built in sort with int64.

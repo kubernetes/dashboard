@@ -70,8 +70,4 @@ describe('Replication Controller Info controller', () => {
     // then
     expect(ctrl.areDesiredPodsRunning()).toBeFalsy();
   });
-
-  it('should provide link to logs view', () => {
-    expect(ctrl.getLogsHref()).toBe('#!/log/default-ns/my-rc/replicationcontroller');
-  });
 });

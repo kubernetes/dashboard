@@ -12,26 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as logsStateName, StateParams as LogsStateParams} from 'logs/state';
-
 /**
  * @final
  */
 export default class StatefulSetInfoController {
   /**
-   * Constructs statefultion controller info object.
-   * @param {!ui.router.$state} $state
+   * Constructs stateful set controller info object.
    * @ngInject
    */
-  constructor($state) {
+  constructor() {
     /**
      * Stateful set details. Initialized from the scope.
      * @export {!backendApi.StatefulSetDetail}
      */
     this.statefulSet;
-
-    /** @private {!ui.router.$state} */
-    this.state_ = $state;
   }
 
   /**
@@ -40,18 +34,6 @@ export default class StatefulSetInfoController {
    */
   areDesiredPodsRunning() {
     return this.statefulSet.podInfo.running === this.statefulSet.podInfo.desired;
-  }
-
-  /**
-   * @return {string}
-   * @export
-   */
-  getLogsHref() {
-    return this.state_.href(
-        logsStateName,
-        new LogsStateParams(
-            this.statefulSet.objectMeta.namespace, this.statefulSet.objectMeta.name,
-            'statefulset'));
   }
 }
 
