@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ActionBarController} from 'deployment/detail/actionbar_controller';
-import module from 'deployment/module';
+import {ActionBarController} from 'job/detail/actionbar_controller';
+import module from 'job/module';
 
-describe('Action Bar controller', () => {
-  /** @type {!ActionBarController} */
+describe('Action Bar scale button component', () => {
+  /** @type {!ScaleButtonController} */
   let ctrl;
   /** @type {!ScaleService} */
   let kdScaleService;
@@ -25,17 +25,37 @@ describe('Action Bar controller', () => {
   beforeEach(() => {
     angular.mock.module(module.name);
 
-    angular.mock.inject(($controller, _kdScaleService_) => {
+    angular.mock.inject(($component, _kdScaleService_) => {
       kdScaleService = _kdScaleService_;
 
-      ctrl = $controller(ActionBarController, {
-        deploymentDetail: details,
+      ctrl = $component('kdActionbarScaleButton', {
         kdScaleService: _kdScaleService_,
       });
     });
   });
 
-  it('should initialize details', () => {
-    expect(ctrl.details).toBe(details);
+  it('should show edit replicas dialog', () => {
+    // given
+    ctrl.objectMeta = {
+      namespace: 'foo-namespace',
+      name: 'foo-name',
+    };
+    ctrl.typeMeta = {
+      kind: '',
+    };
+    ctrl.ctrl.details = {
+
+      typeMeta: {
+        kind: '',
+      },
+      parallelism: 3,
+    };
+    spyOn(kdScaleService, 'showScaleDialog');
+
+    // when
+    ctrl.handleScaleResourceDialog();
+
+    // then
+    expect(kdScaleService.showScaleDialog).toHaveBeenCalled();
   });
 });

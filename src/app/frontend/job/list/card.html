@@ -76,13 +76,16 @@ limitations under the License.
     </kd-resource-card-column>
     <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
       <kd-resource-card-menu>
-        <md-menu-item>
-          <md-button ng-click="$ctrl.showScaleDialog()">
-            [[Scale|Action 'Edit Pod Count' on the drop down menu for a single replication controller (replication controller list page).]]
-          </md-button>
-        </md-menu-item>
-        <kd-resource-card-delete-menu-item resource-kind-name="Job">
+        <kd-scale-button resource-kind-name="[[Job|Label 'Job' which will appear in the job scale dialog opened from a job card on the list page.]]"
+                         object-meta="$ctrl.job.objectMeta"
+                         current-pods="$ctrl.job.parallelism"
+                         desired-pods="$ctrl.job.parallelism"
+                         menu-item="true">
+        </kd-scale-button>
+        <kd-resource-card-delete-menu-item resource-kind-name="[[Job|Label 'Job' which will appear in the job delete dialog opened from a job card on the list page.]]">
         </kd-resource-card-delete-menu-item>
+        <kd-resource-card-edit-menu-item resource-kind-name="[[Job|Label 'Job' which will appear in the job edit dialog opened from a job card on the list page.]]">
+        </kd-resource-card-edit-menu-item>
       </kd-resource-card-menu>
     </kd-resource-card-column>
   </kd-resource-card-columns>
