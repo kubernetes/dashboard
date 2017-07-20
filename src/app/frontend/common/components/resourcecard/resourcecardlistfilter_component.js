@@ -87,7 +87,7 @@ class ResourceCardListFilterController {
     // clicking on filter button.
     this.timeout_(() => {
       this.element_.find('input')[0].focus();
-    }, 250)
+    }, 250);
   }
 
   /** @export */
