@@ -17,9 +17,10 @@ import {stateName as logsStateName, StateParams as LogsStateParams} from 'logs/s
 export class ActionbarLogsItemController {
   /**
    * @param {!ui.router.$state} $state
+   * @param {!angular.$window} $window
    * @ngInject
    */
-  constructor($state) {
+  constructor($state, $window) {
     /** @export {string} Initialized from a binding. */
     this.resourceKindName;
 
@@ -28,18 +29,22 @@ export class ActionbarLogsItemController {
 
     /** @private {!ui.router.$state}} */
     this.state_ = $state;
+
+    /** @private {!angular.$window} */
+    this.window_ = $window;
   }
 
   /**
-   * Returns link to teh log view
-   * @return {string}
+   * Open the logs view in a new window.
    * @export
    */
-  getLogsHref() {
-    return this.state_.href(
+  viewLogs() {
+    let logsLink = this.state_.href(
         logsStateName,
         new LogsStateParams(
             this.objectMeta.namespace, this.objectMeta.name, this.resourceKindName));
+
+    this.window_.open(logsLink, '_blank');
   }
 }
 
