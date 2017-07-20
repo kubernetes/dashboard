@@ -15,20 +15,19 @@
 import {ActionBarController} from 'job/detail/actionbar_controller';
 import module from 'job/module';
 
-describe('Action Bar scale button component', () => {
+describe('Scale button component', () => {
   /** @type {!ScaleButtonController} */
   let ctrl;
   /** @type {!ScaleService} */
   let kdScaleService;
-  let details = {};
 
   beforeEach(() => {
     angular.mock.module(module.name);
 
-    angular.mock.inject(($component, _kdScaleService_) => {
+    angular.mock.inject(($componentController, _kdScaleService_) => {
       kdScaleService = _kdScaleService_;
 
-      ctrl = $component('kdActionbarScaleButton', {
+      ctrl = $componentController('kdScaleButton', {
         kdScaleService: _kdScaleService_,
       });
     });
@@ -40,16 +39,9 @@ describe('Action Bar scale button component', () => {
       namespace: 'foo-namespace',
       name: 'foo-name',
     };
-    ctrl.typeMeta = {
-      kind: '',
-    };
-    ctrl.ctrl.details = {
-
-      typeMeta: {
-        kind: '',
-      },
-      parallelism: 3,
-    };
+    ctrl.desiredPods = 3;
+    ctrl.currentPods = 3;
+    ctrl.resourceKindName = 'Replica Set';
     spyOn(kdScaleService, 'showScaleDialog');
 
     // when
@@ -57,5 +49,16 @@ describe('Action Bar scale button component', () => {
 
     // then
     expect(kdScaleService.showScaleDialog).toHaveBeenCalled();
+  });
+
+  it('should return true if menu button should be displayed within menu item', () => {
+    // given
+    ctrl.menuItem = true;
+
+    // when
+    let result = ctrl.isMenuItem();
+
+    // then
+    expect(result).toBeTruthy();
   });
 });

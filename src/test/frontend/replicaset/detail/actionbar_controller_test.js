@@ -38,28 +38,4 @@ describe('Action Bar controller', () => {
   it('should initialize details', () => {
     expect(ctrl.details).toBe(details);
   });
-
-  it('should show edit replicas dialog', () => {
-    // given
-    ctrl.details = {
-      objectMeta: {
-        namespace: 'foo-namespace',
-        name: 'foo-name',
-      },
-      typeMeta: {
-        kind: '',
-      },
-      podInfo: {
-        current: 3,
-        desired: 3,
-      },
-    };
-    spyOn(kdScaleService, 'showScaleDialog');
-
-    // when
-    ctrl.handleScaleResourceDialog();
-
-    // then
-    expect(kdScaleService.showScaleDialog).toHaveBeenCalled();
-  });
 });
