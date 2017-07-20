@@ -16,8 +16,14 @@
  * @final
  */
 class ResourceCardListFilterController {
-  /** @ngInject */
-  constructor(kdDataSelectService, errorDialog) {
+  /**
+   * @param {!../../dataselect/service.DataSelectService} kdDataSelectService
+   * @param {!../../errorhandling/service.ErrorDialog} errorDialog
+   * @param {!angular.JQLite} $element
+   * @param {!angular.$timeout} $timeout
+   * @ngInject
+   */
+  constructor(kdDataSelectService, errorDialog, $element, $timeout) {
     /** @export {!./resourcecardlist_component.ResourceCardListController} -
      * Initialized from require just before $onInit is called. */
     this.resourceCardListCtrl;
@@ -33,6 +39,10 @@ class ResourceCardListFilterController {
     this.i18n = i18n;
     /** @private - Indicates whether search input should be shown or not */
     this.hidden_ = true;
+    /** @private {!angular.JQLite} */
+    this.element_ = $element;
+    /** @private {!angular.$timeout} */
+    this.timeout_ = $timeout;
   }
 
   /** @export */
@@ -62,11 +72,22 @@ class ResourceCardListFilterController {
     return !this.hidden_;
   }
 
-  /**
-   * @export
-   */
+  /** @export */
   switchSearchVisibility() {
     this.hidden_ = !this.hidden_;
+
+    if (!this.hidden_) {
+      this.focusInput();
+    }
+  }
+
+  /** @export */
+  focusInput() {
+    // Small timeout is required as input is not yet rendered when method is fired right after
+    // clicking on filter button.
+    this.timeout_(() => {
+      this.element_.find('input')[0].focus();
+    }, 250);
   }
 
   /** @export */
