@@ -79,14 +79,3 @@ func getExternalEndpoint(ingress api.LoadBalancerIngress, ports []api.ServicePor
 		Ports: GetServicePorts(ports),
 	}
 }
-
-// GetNodeByName returns the node with the given name from the list
-func GetNodeByName(nodes []api.Node, nodeName string) *api.Node {
-	for _, node := range nodes {
-		if node.ObjectMeta.Name == nodeName {
-			return &node
-		}
-	}
-
-	return nil
-}

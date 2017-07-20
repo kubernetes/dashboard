@@ -677,7 +677,8 @@ backendApi.DataPoint;
  *   name: string,
  *   namespace: string,
  *   labels: !Object<string, string>,
- *   creationTimestamp: string
+ *   creationTimestamp: string,
+ *   annotations: !Object<string, string>
  * }}
  */
 backendApi.ObjectMeta;
@@ -873,14 +874,24 @@ backendApi.RoleList;
 
 /**
  * @typedef {{
+ *   endpoints: !Array<!backendApi.Endpoint>,
+ *   listMeta: !backendApi.ListMeta
+ * }}
+ */
+backendApi.EndpointList;
+
+/**
+ * @typedef {{
  *  objectMeta: !backendApi.ObjectMeta,
  *  typeMeta: !backendApi.TypeMeta,
  *  internalEndpoint: !backendApi.Endpoint,
  *  externalEndpoints: !Array<!backendApi.Endpoint>,
+ *  endpointList: !Array<!backendApi.Endpoint>,
  *  selector: !Object<string, string>,
  *  type: string,
  *  clusterIP: string,
  *  podList: !backendApi.PodList,
+ *  sessionAffinity: string,
  *  errors: !Array<!backendApi.Error>
  * }}
  */
@@ -945,8 +956,13 @@ backendApi.DaemonSetList;
 
 /**
  * @typedef {{
+ *  objectMeta: !backendApi.ObjectMeta,
+ *  typeMeta: !backendApi.TypeMeta,
  *  host: string,
- *  ports: !Array<{port: number, protocol: string}>
+ *  ports: !Array<{port: number, protocol: string}>,
+ *  nodeName: string,
+ *  port: number,
+ *  ready: string
  * }}
  */
 backendApi.Endpoint;
