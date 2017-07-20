@@ -55,7 +55,7 @@ export class ResourceCardEditMenuItemController {
           this.state_.reload();
         })
         .catch((err) => {
-          if (!!err) {
+          if (err) {
             this.log_.error('Error showing edit dialog:', err);
           }
         });

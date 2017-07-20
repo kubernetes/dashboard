@@ -12,26 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ActionBarController} from 'replicaset/detail/actionbar_controller';
-import module from 'replicaset/module';
+import {ScaleService} from './service';
 
-describe('Action Bar controller', () => {
-  /** @type {!ActionBarController} */
-  let ctrl;
-  /** @type {!backendApi.ReplicaSetDetail} */
-  let details = {};
-
-  beforeEach(() => {
-    angular.mock.module(module.name);
-
-    angular.mock.inject(($controller) => {
-      ctrl = $controller(ActionBarController, {
-        replicaSetDetail: details,
-      });
-    });
-  });
-
-  it('should initialize details', () => {
-    expect(ctrl.details).toBe(details);
-  });
-});
+/**
+ * Angular module containing application configuration.
+ */
+export default angular
+    .module(
+        'kubernetesDashboard.scaling',
+        [
+          'ngMaterial',
+        ])
+    .service('kdScaleService', ScaleService);

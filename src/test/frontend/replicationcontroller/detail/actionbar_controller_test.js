@@ -18,22 +18,23 @@ import replicationControllerModule from 'replicationcontroller/module';
 describe('Replication Controller Detail Action Bar controller', () => {
   /**
    * Replication Controller Detail Action Bar controller.
-   * @type {!ReplicationControllerDetailActionBarController}
+   * @type {!ActionBarController}
    */
   let ctrl;
-  /** @type {!ReplicationControllerService} */
-  let kdScaleService;
+  /** @type {!backendApi.ReplicationControllerDetail} */
+  let details = {};
 
   beforeEach(() => {
     angular.mock.module(replicationControllerModule.name);
 
-    angular.mock.inject(($controller, $resource, _kdScaleService_) => {
-      kdScaleService = _kdScaleService_;
-
+    angular.mock.inject(($controller) => {
       ctrl = $controller(ActionBarController, {
-        replicationControllerDetail: {},
-        kdScaleService: _kdScaleService_,
+        replicationControllerDetail: details,
       });
     });
+  });
+
+  it('should initialize details', () => {
+    expect(ctrl.details).toBe(details);
   });
 });

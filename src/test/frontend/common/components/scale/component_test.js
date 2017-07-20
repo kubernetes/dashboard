@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ActionBarController} from 'job/detail/actionbar_controller';
-import module from 'job/module';
+import componentsModule from 'common/components/module';
+import scalingModule from 'common/scaling/module';
 
 describe('Scale button component', () => {
   /** @type {!ScaleButtonController} */
@@ -22,7 +22,8 @@ describe('Scale button component', () => {
   let kdScaleService;
 
   beforeEach(() => {
-    angular.mock.module(module.name);
+    angular.mock.module(componentsModule.name);
+    angular.mock.module(scalingModule.name);
 
     angular.mock.inject(($componentController, _kdScaleService_) => {
       kdScaleService = _kdScaleService_;

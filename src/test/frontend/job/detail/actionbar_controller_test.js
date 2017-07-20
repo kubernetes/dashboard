@@ -18,19 +18,15 @@ import module from 'job/module';
 describe('Action Bar controller', () => {
   /** @type {!ActionBarController} */
   let ctrl;
-  /** @type {!ScaleService} */
-  let kdScaleService;
+  /** @type {!backendApi.JobDetail} */
   let details = {};
 
   beforeEach(() => {
     angular.mock.module(module.name);
 
-    angular.mock.inject(($controller, _kdScaleService_) => {
-      kdScaleService = _kdScaleService_;
-
+    angular.mock.inject(($controller) => {
       ctrl = $controller(ActionBarController, {
         jobDetail: details,
-        kdScaleService: _kdScaleService_,
       });
     });
   });
