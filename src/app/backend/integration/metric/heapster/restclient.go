@@ -15,8 +15,9 @@
 package heapster
 
 import (
-	"k8s.io/client-go/rest"
 	"log"
+
+	"k8s.io/client-go/rest"
 )
 
 // HeapsterRESTClient is used to make raw requests to heapster.
