@@ -74,6 +74,9 @@ limitations under the License.
       </div>
     </kd-resource-card-column>
     <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
+      <kd-logs-button object-meta="::$ctrl.statefulSet.objectMeta"
+                      resource-kind-name="statefulset">
+      </kd-logs-button>
       <kd-resource-card-menu>
         <kd-scale-button resource-kind-name="[[Stateful Set|Label 'Stateful Set' which will appear in the stateful set scale dialog opened from a stateful set card on the list page.]]"
                          object-meta="$ctrl.statefulSet.objectMeta"
