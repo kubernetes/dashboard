@@ -17,7 +17,7 @@
  * to bootstrap the application.
  */
 import aboutModule from './about/module';
-import allObjectsModule from './allobjects/module';
+import overviewModule from './overview/module';
 import chromeModule from './chrome/module';
 import clusterModule from './cluster/module';
 import csrfTokenModule from './common/csrftoken/module';
@@ -66,7 +66,7 @@ export default angular
           'ngSanitize',
           'ui.router',
           aboutModule.name,
-          allObjectsModule.name,
+          overviewModule.name,
           chromeModule.name,
           daemonSetModule.name,
           deployModule.name,

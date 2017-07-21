@@ -15,9 +15,9 @@
 /**
  * @final
  */
-export class AllObjectsController {
+export class OverviewController {
   /**
-   * @param {!backendApi.AllObjects} allObjects
+   * @param {!backendApi.Overview} overview
    * @param {!angular.Resource} kdPodListResource
    * @param {!angular.Resource} kdReplicaSetListResource
    * @param {!angular.Resource} kdDaemonSetListResource
@@ -33,12 +33,12 @@ export class AllObjectsController {
    * @ngInject
    */
   constructor(
-      allObjects, kdPodListResource, kdReplicaSetListResource, kdDaemonSetListResource,
+      overview, kdPodListResource, kdReplicaSetListResource, kdDaemonSetListResource,
       kdDeploymentListResource, kdStatefulSetListResource, kdJobListResource, kdRCListResource,
       kdServiceListResource, kdIngressListResource, kdConfigMapListResource, kdSecretListResource,
       kdPersistentVolumeClaimListResource) {
-    /** @export {!backendApi.AllObjects} */
-    this.allObjects = allObjects;
+    /** @export {!backendApi.Overview} */
+    this.overview = overview;
 
     /** @export {!angular.Resource} */
     this.podListResource = kdPodListResource;
@@ -83,18 +83,18 @@ export class AllObjectsController {
    */
   shouldShowZeroState() {
     /** @type {number} */
-    let resourcesLength = this.allObjects.deploymentList.listMeta.totalItems +
-        this.allObjects.replicaSetList.listMeta.totalItems +
-        this.allObjects.jobList.listMeta.totalItems +
-        this.allObjects.replicationControllerList.listMeta.totalItems +
-        this.allObjects.podList.listMeta.totalItems +
-        this.allObjects.daemonSetList.listMeta.totalItems +
-        this.allObjects.statefulSetList.listMeta.totalItems +
-        this.allObjects.serviceList.listMeta.totalItems +
-        this.allObjects.ingressList.listMeta.totalItems +
-        this.allObjects.configMapList.listMeta.totalItems +
-        this.allObjects.secretList.listMeta.totalItems +
-        this.allObjects.persistentVolumeClaimList.listMeta.totalItems;
+    let resourcesLength = this.overview.deploymentList.listMeta.totalItems +
+        this.overview.replicaSetList.listMeta.totalItems +
+        this.overview.jobList.listMeta.totalItems +
+        this.overview.replicationControllerList.listMeta.totalItems +
+        this.overview.podList.listMeta.totalItems +
+        this.overview.daemonSetList.listMeta.totalItems +
+        this.overview.statefulSetList.listMeta.totalItems +
+        this.overview.serviceList.listMeta.totalItems +
+        this.overview.ingressList.listMeta.totalItems +
+        this.overview.configMapList.listMeta.totalItems +
+        this.overview.secretList.listMeta.totalItems +
+        this.overview.persistentVolumeClaimList.listMeta.totalItems;
 
     return resourcesLength === 0;
   }

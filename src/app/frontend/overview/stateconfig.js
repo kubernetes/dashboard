@@ -15,7 +15,7 @@
 import {stateName as chromeStateName} from 'chrome/state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
 
-import {AllObjectsController} from './controller';
+import {OverviewController} from './controller';
 import {stateName, stateUrl} from './state';
 
 /**
@@ -27,7 +27,7 @@ export default function stateConfig($stateProvider) {
     url: stateUrl,
     parent: chromeStateName,
     resolve: {
-      'allObjects': resolveAllObjects,
+      'overview': resolveOverview,
     },
     data: {
       [breadcrumbsConfig]: {
@@ -36,27 +36,27 @@ export default function stateConfig($stateProvider) {
     },
     views: {
       '': {
-        controller: AllObjectsController,
+        controller: OverviewController,
         controllerAs: '$ctrl',
-        templateUrl: 'allobjects/allobjects.html',
+        templateUrl: 'overview/overview.html',
       },
     },
   });
 }
 
 /**
- * @param {!angular.$resource} kdAllObjectsResource
+ * @param {!angular.$resource} kdOverviewResource
  * @param {!./../chrome/state.StateParams} $stateParams
  * @param {!./../common/dataselect/service.DataSelectService} kdDataSelectService
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveAllObjects(kdAllObjectsResource, $stateParams, kdDataSelectService) {
+export function resolveOverview(kdOverviewResource, $stateParams, kdDataSelectService) {
   let query = kdDataSelectService.getDefaultResourceQuery($stateParams.namespace);
-  return kdAllObjectsResource.get(query).$promise;
+  return kdOverviewResource.get(query).$promise;
 }
 
 const i18n = {
-  /** @type {string} @desc Label 'All Objects' that appears as a breadcrumb on the action bar. */
-  MSG_BREADCRUMBS_ALL_OBJECTS_LABEL: goog.getMsg('All Objects'),
+  /** @type {string} @desc Label 'Overview' that appears as a breadcrumb on the action bar. */
+  MSG_BREADCRUMBS_ALL_OBJECTS_LABEL: goog.getMsg('Overview'),
 };

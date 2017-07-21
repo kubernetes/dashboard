@@ -21,7 +21,7 @@ import (
 	"strings"
 
 	"github.com/emicklei/go-restful"
-	"github.com/kubernetes/dashboard/src/app/backend/allobjects"
+	"github.com/kubernetes/dashboard/src/app/backend/overview"
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/integration"
@@ -559,9 +559,9 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			Writes(logs.LogDetails{}))
 
 	apiV1Ws.Route(
-		apiV1Ws.GET("/allobjects/{namespace}").
-			To(apiHandler.handleAllObjects).
-			Writes(allobjects.ObjectResult{}))
+		apiV1Ws.GET("/overview/{namespace}").
+			To(apiHandler.handleOverview).
+			Writes(overview.ObjectResult{}))
 
 	return wsContainer, nil
 }
@@ -1038,7 +1038,7 @@ func (apiHandler *APIHandler) handleGetWorkloads(request *restful.Request, respo
 	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
-func (apiHandler *APIHandler) handleAllObjects(request *restful.Request, response *restful.Response) {
+func (apiHandler *APIHandler) handleOverview(request *restful.Request, response *restful.Response) {
 	k8sClient, err := apiHandler.cManager.Client(request)
 	if err != nil {
 		handleInternalError(response, err)
@@ -1049,7 +1049,7 @@ func (apiHandler *APIHandler) handleAllObjects(request *restful.Request, respons
 	dataSelect := parseDataSelectPathParameter(request)
 	dataSelect.FilterQuery = dataselect.NoFilter
 	dataSelect.MetricQuery = dataselect.NoMetrics
-	result, err := allobjects.GetAllObjects(k8sClient, apiHandler.iManager.Metric().Client(), namespace, dataSelect)
+	result, err := overview.GetOverview(k8sClient, apiHandler.iManager.Metric().Client(), namespace, dataSelect)
 	if err != nil {
 		handleInternalError(response, err)
 		return

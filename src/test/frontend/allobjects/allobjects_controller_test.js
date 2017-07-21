@@ -15,7 +15,7 @@
 import {AllObjectsController} from 'allobjects/controller';
 import allObjectsListModule from 'allobjects/module';
 
-describe('All Objects list controller', () => {
+describe('Overview list controller', () => {
   /** @type {!allobjects/controller.AllObjectsController} */
   let ctrl;
 

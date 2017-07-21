@@ -35,7 +35,7 @@ import stateConfig from './stateconfig';
  */
 export default angular
     .module(
-        'kubernetesDashboard.allObjects',
+        'kubernetesDashboard.overview',
         [
           'ngMaterial',
           'ngResource',
@@ -56,13 +56,13 @@ export default angular
           persistentVolumeClaimModule.name,
         ])
     .config(stateConfig)
-    .factory('kdAllObjectsResource', allObjectsResource);
+    .factory('kdOverviewResource', overviewResource);
 
 /**
  * @param {!angular.$resource} $resource
  * @return {!angular.Resource}
  * @ngInject
  */
-function allObjectsResource($resource) {
-  return $resource('api/v1/allobjects/:namespace');
+function overviewResource($resource) {
+  return $resource('api/v1/overview/:namespace');
 }

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {stateName as aboutState} from 'about/state';
-import {stateName as allObjectsState} from 'allobjects/state';
+import {stateName as overviewState} from 'overview/state';
 import {stateName as clusterState} from 'cluster/state';
 import {stateName as configState} from 'config/state';
 import {stateName as configMapState} from 'configmap/list/state';
@@ -73,7 +73,7 @@ export class NavController {
       'config': configState,
       'storageClass': storageClassState,
       'about': aboutState,
-      'allObjects': allObjectsState,
+      'overview': overviewState,
     };
   }
 

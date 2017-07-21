@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package allobjects
+package overview
 
 import (
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
@@ -59,7 +59,7 @@ type ObjectResult struct {
 	// TODO(maciaszczykm): Third party resources.
 }
 
-func GetAllObjects(client *kubernetes.Clientset, metricClient metricapi.MetricClient,
+func GetOverview(client *kubernetes.Clientset, metricClient metricapi.MetricClient,
 	nsQuery *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery) (*ObjectResult, error) {
 

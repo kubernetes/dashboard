@@ -151,7 +151,7 @@ backendApi.ReplicationControllerList;
  *   secretList: !backendApi.SecretList
  * }}
  */
-backendApi.AllObjects;
+backendApi.Overview;
 
 /**
  * @typedef {{
