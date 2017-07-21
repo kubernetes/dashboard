@@ -23,7 +23,6 @@ import {actionbarListButtonsComponent} from './actionbarlistbuttons_component';
 import {actionbarLogsComponent} from './actionbarlogs_component';
 import {actionbarComponent} from './component';
 
-
 /**
  * Module containing common actionbar.
  */
