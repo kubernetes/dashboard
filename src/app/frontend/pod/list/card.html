@@ -88,13 +88,9 @@ limitations under the License.
       <div ng-if="::!$ctrl.hasMemoryUsage()">-</div>
     </kd-resource-card-column>
     <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
-      <md-button ng-if="::$ctrl.getPodLogsHref()"
-                 ng-href="{{::$ctrl.getPodLogsHref()}}"
-                 target="_blank"
-                 class="md-icon-button">
-        <md-icon md-font-library="material-icons">subject</md-icon>
-        <md-tooltip>[[Logs|Label for logs tooltip]]</md-tooltip>
-      </md-button>
+      <kd-logs-button object-meta="::$ctrl.pod.objectMeta"
+                      resource-kind-name="pod">
+      </kd-logs-button>
       <kd-resource-card-menu>
         <kd-resource-card-delete-menu-item resource-kind-name="[[Pod|Name of the pod resource]]">
         </kd-resource-card-delete-menu-item>

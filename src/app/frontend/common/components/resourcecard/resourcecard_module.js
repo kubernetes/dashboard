@@ -14,6 +14,7 @@
 
 import resourceModule from 'common/resource/module';
 
+import {logsButtonComponent} from './logsbutton';
 import {resourceCardComponent} from './resourcecard_component';
 import {resourceCardColumnComponent} from './resourcecardcolumn_component';
 import {resourceCardColumnsComponent} from './resourcecardcolumns_component';
@@ -42,6 +43,7 @@ export default angular
           'angularUtils.directives.dirPagination',
           resourceModule.name,
         ])
+    .component('kdLogsButton', logsButtonComponent)
     .component('kdResourceCard', resourceCardComponent)
     .component('kdResourceCardList', resourceCardListComponent)
     .component('kdResourceCardListFooter', resourceCardListFooterComponent)
