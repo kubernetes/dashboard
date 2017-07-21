@@ -58,7 +58,7 @@ export default function stateConfig($stateProvider) {
 }
 
 /**
- * @param {!./state.StateParams} $stateParams
+ * @param {!../common/resource/resourcedetail.StateParams} $stateParams
  * @param {!angular.$resource} $resource
  * @return {!angular.$q.Promise}
  * @ngInject
@@ -73,6 +73,6 @@ function resolvePodContainers($stateParams, $resource) {
 }
 
 const i18n = {
-  /** @type {string} @desc Breadcrum label for the shell view. */
+  /** @type {string} @desc Breadcrumb label for the shell view. */
   MSG_BREADCRUMBS_SHELL_LABEL: goog.getMsg('Shell'),
 };

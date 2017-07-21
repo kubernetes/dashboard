@@ -41,8 +41,8 @@ export class ShellController {
     /** @private {!ui.router.$state} */
     this.state_ = $state;
 
-    /** @private {!./state.StateParams} $stateParams */
-    this.stateParams_ = this.state_.params;
+    /** @private {!./state.StateParams} */
+    this.stateParams_ = this.state_['params'];
 
     /** @export {!Array<string>} */
     this.containers = podContainers.containers ? podContainers.containers : [];

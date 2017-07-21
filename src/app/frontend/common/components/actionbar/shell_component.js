@@ -25,8 +25,14 @@ class ActionbarShellButtonController {
    * @ngInject
    */
   constructor($state, $window) {
+    /** @private {!ui.router.$state} */
     this.state_ = $state;
+    /** @private {!angular.$window} */
     this.window_ = $window;
+    /** @export {string} */
+    this.namespace;
+    /** @export {string} */
+    this.podName;
   }
 
   /** @export */
