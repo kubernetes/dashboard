@@ -44,9 +44,6 @@ export class ShellController {
     /** @private {!./state.StateParams} $stateParams */
     this.stateParams_ = this.state_.params;
 
-    /** @export */
-    this.i18n = i18n;
-
     /** @export {!Array<string>} */
     this.containers = podContainers.containers ? podContainers.containers : [];
 
@@ -203,5 +200,3 @@ export class ShellController {
             this.stateParams_.objectNamespace, this.stateParams_.objectName, container));
   }
 }
-
-const i18n = {};
