@@ -17,7 +17,6 @@
  * to bootstrap the application.
  */
 import aboutModule from './about/module';
-import overviewModule from './overview/module';
 import chromeModule from './chrome/module';
 import clusterModule from './cluster/module';
 import csrfTokenModule from './common/csrftoken/module';
@@ -36,6 +35,7 @@ import jobModule from './job/module';
 import logsModule from './logs/module';
 import namespaceModule from './namespace/module';
 import nodeModule from './node/module';
+import overviewModule from './overview/module';
 import persistentVolumeModule from './persistentvolume/module';
 import persistentVolumeClaimModule from './persistentvolumeclaim/module';
 import podModule from './pod/module';
