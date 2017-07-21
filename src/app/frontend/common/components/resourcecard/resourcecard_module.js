@@ -14,7 +14,7 @@
 
 import resourceModule from 'common/resource/module';
 
-import {logsButtonComponent} from './logsbutton';
+import {logsButtonComponent} from './logsbutton_component';
 import {resourceCardComponent} from './resourcecard_component';
 import {resourceCardColumnComponent} from './resourcecardcolumn_component';
 import {resourceCardColumnsComponent} from './resourcecardcolumns_component';
