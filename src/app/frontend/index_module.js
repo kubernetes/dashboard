@@ -20,6 +20,7 @@ import aboutModule from './about/module';
 import chromeModule from './chrome/module';
 import clusterModule from './cluster/module';
 import csrfTokenModule from './common/csrftoken/module';
+import scalingModule from './common/scaling/module';
 import configModule from './config/module';
 import configMapModule from './configmap/module';
 import daemonSetModule from './daemonset/module';
@@ -97,6 +98,7 @@ export default angular
           storageClassModule.name,
           thirdPartyResourceModule.name,
           roleModule.name,
+          scalingModule.name,
         ])
     .config(indexConfig)
     .config(routeConfig)

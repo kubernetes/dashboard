@@ -14,10 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<md-button ng-click="::$ctrl.viewLogs()">
-  <md-icon class="kd-actionbar-icon-button">subject</md-icon>
+<md-menu-item ng-if="$ctrl.isMenuItem()">
+  <md-button ng-click="$ctrl.handleScaleResourceDialog()"
+             role="menuitem">
+    [[Scale|Action 'Scale' on the drop down menu on resource list page.]]
+  </md-button>
+</md-menu-item>
+
+<md-button ng-if="!$ctrl.isMenuItem()"
+           ng-click="$ctrl.handleScaleResourceDialog()">
+  <md-icon class="kd-actionbar-icon-button">linear_scale</md-icon>
   <md-tooltip md-direction="bottom">
-    [[View logs|Tooltip for the 'logs' button on the action bar.]]
+    [[Edit number of pods|Tooltip for the 'scale' button on the action bar on a resource details view.]]
   </md-tooltip>
-  [[Logs|Tooltip for the 'logs' button on the action bar.]]
+  [[Scale|Tooltip for the 'Scale' button on the action bar on a resource details view.]]
 </md-button>

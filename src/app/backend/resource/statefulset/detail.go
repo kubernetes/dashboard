@@ -45,8 +45,8 @@ type StatefulSetDetail struct {
 // GetStatefulSetDetail gets Stateful Set details.
 func GetStatefulSetDetail(client *k8sClient.Clientset, metricClient metricapi.MetricClient, namespace,
 	name string) (*StatefulSetDetail, error) {
+	log.Printf("Getting details of %s statefulset in %s namespace", name, namespace)
 
-	log.Printf("Getting details of %s service in %s namespace", name, namespace)
 	ss, err := client.AppsV1beta1().StatefulSets(namespace).Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
