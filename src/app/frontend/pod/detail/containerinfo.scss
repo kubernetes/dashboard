@@ -1,0 +1,54 @@
+// Copyright 2015 Google Inc. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+@import '../../variables';
+
+%kd-env-value-base {
+  background: $background-2;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.kd-env-config-map-value {
+  @extend %kd-env-value-base;
+  border-radius: $baseline-grid;
+  margin: $baseline-grid 0;
+  padding: $baseline-grid;
+}
+
+.kd-env-value {
+  @extend %kd-env-value-base;
+  border-radius: $baseline-grid / 4;
+  font-family: monospace;
+  padding: 1px;
+
+}
+
+.md-button {
+  &.md-icon-button {
+    &.kd-env-secret-button {
+      color: $foreground-2;
+      height: 2.25 * $baseline-grid;
+      min-height: 2.25 * $baseline-grid;
+      padding: 0;
+      width: 2.25 * $baseline-grid;
+    }
+  }
+}
+
+.material-icons {
+  &.kd-env-secret-icon {
+    font-size: 2.25 * $baseline-grid;
+  }
+}
