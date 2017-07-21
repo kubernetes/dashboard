@@ -143,7 +143,8 @@ backendApi.ReplicationControllerList;
  *   replicationControllerList: !backendApi.ReplicationControllerList,
  *   podList: !backendApi.PodList,
  *   daemonSetList: !backendApi.DaemonSetList,
- *   statefulSetList: !backendApi.StatefulSetList
+ *   statefulSetList: !backendApi.StatefulSetList,
+ *   errors: !Array<!backendApi.Error>
  * }}
  */
 backendApi.Workloads;
@@ -155,6 +156,7 @@ backendApi.Workloads;
  *   persistentVolumeList: !backendApi.PersistentVolumeList,
  *   roleList: !backendApi.RoleList,
  *   storageClassList: !backendApi.StorageClassList,
+ *   errors: !Array<!backendApi.Error>
  * }}
  */
 backendApi.Cluster;
@@ -163,6 +165,7 @@ backendApi.Cluster;
  * @typedef {{
  *   serviceList: !backendApi.ServiceList,
  *   ingressList: !backendApi.IngressList,
+ *   errors: !Array<!backendApi.Error>
  * }}
  */
 backendApi.Discovery;
@@ -172,6 +175,7 @@ backendApi.Discovery;
  *   configMapList: !backendApi.ConfigMapList,
  *   persistentVolumeClaimList: !backendApi.PersistentVolumeClaimList,
  *   secretList: !backendApi.SecretList,
+ *   errors: !Array<!backendApi.Error>
  * }}
  */
 backendApi.Config;
@@ -195,6 +199,7 @@ backendApi.Config;
  *   configMapList: !backendApi.ConfigMapList,
  *   persistentVolumeClaimList: !backendApi.PersistentVolumeClaimList,
  *   secretList: !backendApi.SecretList,
+ *   errors: !Array<!backendApi.Error>
  * }}
  */
 backendApi.Search;
