@@ -55,11 +55,10 @@ export class ActionbarLogsItemController {
  * @type {!angular.Component}
  */
 export const actionbarLogsComponent = {
+  controller: ActionbarLogsItemController,
   templateUrl: 'common/components/actionbar/actionbarlogs.html',
   bindings: {
     'resourceKindName': '<',
     'objectMeta': '<',
   },
-  bindToController: true,
-  controller: ActionbarLogsItemController,
 };

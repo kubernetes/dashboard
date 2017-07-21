@@ -24,12 +24,11 @@ export class ShellController {
    * @param {!backendApi.PodContainerList} podContainers
    * @param {!angular.$sce} $sce
    * @param {!angular.$document} $document
-   * @param {!./state.StateParams} $stateParams
    * @param {!angular.$resource} $resource
    * @param {!ui.router.$state} $state
    * @ngInject
    */
-  constructor(podContainers, $sce, $document, $resource, $stateParams, $state) {
+  constructor(podContainers, $sce, $document, $resource, $state) {
     /** @private {!angular.$sce} */
     this.sce_ = $sce;
 
@@ -39,23 +38,20 @@ export class ShellController {
     /** @private {!angular.$resource} */
     this.resource_ = $resource;
 
-    /** @private {!./state.StateParams} $stateParams */
-    this.stateParams_ = $stateParams;
-
-    /** @export */
-    this.i18n = i18n;
-
     /** @private {!ui.router.$state} */
     this.state_ = $state;
+
+    /** @private {!./state.StateParams} */
+    this.stateParams_ = this.state_['params'];
 
     /** @export {!Array<string>} */
     this.containers = podContainers.containers ? podContainers.containers : [];
 
     /** @export {string} */
-    this.container = this.stateParams_.container ? this.stateParams_.container : '';
+    this.container = this.getContainerName();
 
     /** @export {string} */
-    this.podName = this.stateParams_.objectName ? this.stateParams_.objectName : '';
+    this.podName = this.stateParams_.objectName;
 
     /** private {hterm.Terminal} */
     this.term = null;
@@ -69,6 +65,16 @@ export class ShellController {
     this.prepareTerminal();
   }
 
+  /**
+   * @return {string}
+   * @export
+   */
+  getContainerName() {
+    return this.stateParams_.container ? this.stateParams_.container :
+                                         this.containers.length > 0 ? this.containers[0] : '';
+  }
+
+  /** @private */
   prepareTerminal() {
     // https://chromium.googlesource.com/apps/libapps/+/HEAD/hterm/doc/embed.md
     hterm.defaultStorage = new lib.Storage.Memory();
@@ -89,20 +95,19 @@ export class ShellController {
 
   /**
    * Attached to hterm.onTerminalReady
+   * @private
    */
   onTerminalReady() {
     this.io = this.term.io.push();
-
-    let namespace = this.stateParams_.objectNamespace;
-    let podName = this.stateParams_.objectName;
-    let containerName = this.stateParams_.container || '';
-
-    this.resource_(`api/v1/pod/${namespace}/${podName}/shell/${containerName}`)
+    this.resource_(`api/v1/pod/${this.stateParams_.objectNamespace}/${
+                                                                      this.podName
+                                                                    }/shell/${this.container}`)
         .get({}, this.onTerminalResponseReceived.bind(this));
   }
 
   /**
    * Called when .../shell/... resource is fetched
+   * @private
    */
   onTerminalResponseReceived(terminalResponse) {
     // https://github.com/sockjs/sockjs-client
@@ -114,6 +119,7 @@ export class ShellController {
 
   /**
    * Attached to SockJS.onopen
+   * @private
    */
   onConnectionOpen(terminalResponse) {
     this.conn.send(JSON.stringify({'Op': 'bind', 'SessionID': terminalResponse.id}));
@@ -128,6 +134,7 @@ export class ShellController {
 
   /**
    * Attached to SockJS.onmessage
+   * @private
    */
   onConnectionMessage(evt) {
     let msg = JSON.parse(evt.data);
@@ -145,6 +152,7 @@ export class ShellController {
 
   /**
    * Attached to SockJS.onclose
+   * @private
    */
   onConnectionClose(evt) {
     if (evt.reason !== '' && evt.code < 1000) {
@@ -158,6 +166,7 @@ export class ShellController {
 
   /**
    * Attached to hterm.io.onVTKeystroke
+   * @private
    */
   onTerminalVTKeystroke(str) {
     this.conn.send(JSON.stringify({'Op': 'stdin', 'Data': str}));
@@ -165,6 +174,7 @@ export class ShellController {
 
   /**
    * Attached to hterm.io.sendString
+   * @private
    */
   onTerminalSendString(str) {
     this.conn.send(JSON.stringify({'Op': 'stdin', 'Data': str}));
@@ -172,6 +182,7 @@ export class ShellController {
 
   /**
    * Attached to hterm.io.onTerminalResize
+   * @private
    */
   onTerminalResize(columns, rows) {
     this.conn.send(JSON.stringify({'Op': 'resize', 'Cols': columns, 'Rows': rows}));
@@ -189,5 +200,3 @@ export class ShellController {
             this.stateParams_.objectNamespace, this.stateParams_.objectName, container));
   }
 }
-
-const i18n = {};

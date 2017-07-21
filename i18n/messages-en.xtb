@@ -73,6 +73,8 @@
   <translation id="8440773175603161155" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBARLISTBUTTONS_1" desc="Label for upload YAML button.">Upload YAML</translation>
   <translation id="4823508741067150667" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBARLOGS_0" desc="Tooltip for the \'logs\' button on the action bar.">View logs</translation>
   <translation id="1841242100396658719" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBARLOGS_1" desc="Tooltip for the \'logs\' button on the action bar.">Logs</translation>
+  <translation id="4246093411879805828" key="MSG_COMMON_COMPONENTS_ACTIONBAR_SHELL_0" desc="Exec button tooltip located on pod detail page actionbar">Exec into Pod</translation>
+  <translation id="1980816672340986356" key="MSG_COMMON_COMPONENTS_ACTIONBAR_SHELL_1" desc="Execute shell in the container">Exec</translation>
   <translation id="1745702155571319443" key="MSG_COMMON_COMPONENTS_ANNOTATIONS_ANNOTATIONS_0" desc="Friendly name of the kubernetes.io/created-by annotation">Created by:</translation>
   <translation id="1417978160910275828" key="MSG_COMMON_COMPONENTS_ANNOTATIONS_ANNOTATIONS_1" desc="Text on the button to show fewer annotations.">show fewer annotations</translation>
   <translation id="6884163988875905686" key="MSG_COMMON_COMPONENTS_ANNOTATIONS_ANNOTATIONS_2" desc="Text on the button to show all the annotations.">show all annotations</translation>
@@ -598,7 +600,6 @@
   <translation id="4867553232280640900" key="MSG_POD_DETAIL_ACTIONBAR_0" desc="Label \'Pod\' which appears at the top of the delete dialog, opened from a pod details page.">Pod</translation>
   <translation id="3190654996078973226" key="MSG_POD_DETAIL_CONTAINERINFO_0" desc="Subtitle at the top of the container details.">Containers</translation>
   <translation id="1970650270984178962" key="MSG_POD_DETAIL_CONTAINERINFO_1" desc="Label for container image.">Image</translation>
-  <translation id="2439385269334474118" key="MSG_POD_DETAIL_CONTAINERINFO_10" desc="Execute shell in the container">Execute shell</translation>
   <translation id="1360847805196042023" key="MSG_POD_DETAIL_CONTAINERINFO_2" desc="Label for container environment variables.">Environment variables</translation>
   <translation id="3109447894831467677" key="MSG_POD_DETAIL_CONTAINERINFO_3" desc="Label for environment variable that comes from a Config Map">value from ConfigMap {{env.valueFrom.configMapKeyRef.Name}}/{{env.valueFrom.configMapKeyRef.key}}</translation>
   <translation id="7982652991565550562" key="MSG_POD_DETAIL_CONTAINERINFO_4" desc="Label when there is no container environment variables.">-</translation>
