@@ -77,7 +77,7 @@ limitations under the License.
     </kd-resource-card-column>
     <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
       <kd-logs-button object-meta="::$ctrl.replicaSet.objectMeta"
-                      resource-kind-name="replicaset">
+                      resource-kind-name="::$ctrl.replicaSet.typeMeta.kind">
       </kd-logs-button>
       <kd-resource-card-menu>
         <kd-scale-button resource-kind-name="[[Replica Set|Label 'Replica Set' which appears at the top of the scale dialog, opened from a replica set list page.]]"

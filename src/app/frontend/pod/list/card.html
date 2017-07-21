@@ -89,7 +89,7 @@ limitations under the License.
     </kd-resource-card-column>
     <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
       <kd-logs-button object-meta="::$ctrl.pod.objectMeta"
-                      resource-kind-name="pod">
+                      resource-kind-name="::$ctrl.pod.typeMeta.kind">
       </kd-logs-button>
       <kd-resource-card-menu>
         <kd-resource-card-delete-menu-item resource-kind-name="[[Pod|Name of the pod resource]]">

@@ -69,7 +69,7 @@ limitations under the License.
     </kd-resource-card-column>
     <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
       <kd-logs-button object-meta="::$ctrl.daemonSet.objectMeta"
-                      resource-kind-name="daemonset">
+                      resource-kind-name="::$ctrl.daemonSet.typeMeta.kind">
       </kd-logs-button>
       <kd-resource-card-menu>
         <kd-resource-card-delete-menu-item resource-kind-name="[[Daemon Set|Title 'Daemon Set' which is used as a title for the delete/update

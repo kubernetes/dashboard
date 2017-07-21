@@ -50,7 +50,7 @@ export class LogsButtonController {
 export const logsButtonComponent = {
   templateUrl: 'common/components/resourcecard/logsbutton.html',
   bindings: {
-    'resourceKindName': '@',
+    'resourceKindName': '<',
     'objectMeta': '<',
   },
   bindToController: true,
