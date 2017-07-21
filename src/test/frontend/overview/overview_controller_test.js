@@ -12,32 +12,32 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {AllObjectsController} from 'allobjects/controller';
-import allObjectsListModule from 'allobjects/module';
+import overviewListModule from '/module';
+import {OverviewController} from 'overview/controller';
 
 describe('Overview list controller', () => {
-  /** @type {!allobjects/controller.AllObjectsController} */
+  /** @type {!/controller.OverviewController} */
   let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(allObjectsListModule.name);
+    angular.mock.module(overviewListModule.name);
 
     angular.mock.inject(($controller) => {
-      ctrl = $controller(AllObjectsController, {allObjects: {allObjects: []}});
+      ctrl = $controller(OverviewController, {overview: {overview: []}});
     });
   });
 
   it('should initialize all objects', angular.mock.inject(($controller) => {
-    let allObjects = {allObjects: 'foo-bar'};
-    /** @type {!AllObjectsController} */
-    let ctrl = $controller(AllObjectsController, {allObjects: allObjects});
+    let overview = {overview: 'foo-bar'};
+    /** @type {!OverviewController} */
+    let ctrl = $controller(OverviewController, {overview: overview});
 
-    expect(ctrl.allObjects).toBe(allObjects);
+    expect(ctrl.overview).toBe(overview);
   }));
 
   it('should show zero state', () => {
     // given
-    ctrl.allObjects = {
+    ctrl.overview = {
       deploymentList: {listMeta: {totalItems: 0}, deployments: []},
       replicaSetList: {listMeta: {totalItems: 0}, replicaSets: []},
       jobList: {listMeta: {totalItems: 0}, jobs: []},
@@ -57,7 +57,7 @@ describe('Overview list controller', () => {
 
   it('should hide zero state', () => {
     // given
-    ctrl.allObjects = {
+    ctrl.overview = {
       deploymentList: {listMeta: {totalItems: 1}, deployments: []},
       replicaSetList: {listMeta: {totalItems: 0}, replicaSets: []},
       jobList: {listMeta: {totalItems: 0}, jobs: []},

@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import allObjectsListModule from 'allobjects/module';
-import {resolveAllObjects} from 'allobjects/stateconfig';
+import overviewListModule from '/module';
+import {resolveOverview} from '/stateconfig';
 
 describe('StateConfig for all objects list', () => {
   /** @type {!common/dataselect/dataselect_service.DataSelectService} */
   let kdDataSelectService;
 
   beforeEach(() => {
-    angular.mock.module(allObjectsListModule.name);
+    angular.mock.module(overviewListModule.name);
     angular.mock.inject((_kdDataSelectService_) => {
       kdDataSelectService = _kdDataSelectService_;
     });
@@ -34,7 +34,7 @@ describe('StateConfig for all objects list', () => {
       return {$promise: promise};
     });
 
-    let actual = resolveAllObjects(resource, {namespace: 'foo'}, kdDataSelectService);
+    let actual = resolveOverview(resource, {namespace: 'foo'}, kdDataSelectService);
 
     expect(resource.get).toHaveBeenCalledWith(kdDataSelectService.getDefaultResourceQuery('foo'));
     expect(actual).toBe(promise);
