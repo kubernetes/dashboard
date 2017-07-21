@@ -26,7 +26,7 @@ export class TitleController {
    */
   constructor($interpolate, kdFutureStateService, kdBreadcrumbsService) {
     /** @private {!./common/state/service.FutureStateService} */
-    this.transitions_ = kdFutureStateService;
+    this.futureStateService_ = kdFutureStateService;
 
     /** @private {!./common/components/breadcrumbs/service.BreadcrumbsService} */
     this.kdBreadcrumbsService_ = kdBreadcrumbsService;
@@ -45,14 +45,14 @@ export class TitleController {
    * @return {string}
    */
   title() {
-    let conf = this.kdBreadcrumbsService_.getBreadcrumbConfig(this.transitions_.state);
+    let conf = this.kdBreadcrumbsService_.getBreadcrumbConfig(this.futureStateService_.state);
 
     // When conf is undefined or label is undefined or empty then fallback to default title
     if (!conf || !conf.label) {
       return this.defaultTitle_;
     }
 
-    let params = this.transitions_.params;
+    let params = this.futureStateService_.params;
     let stateLabel = this.interpolate_(conf.label)({'$stateParams': params}).toString();
 
     return `${stateLabel} - ${this.defaultTitle_}`;

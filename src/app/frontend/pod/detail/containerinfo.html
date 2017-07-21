@@ -69,12 +69,5 @@ limitations under the License.
         [[-|Label when there is no container arguments.]]
       </div>
     </kd-info-card-entry>
-    <kd-info-card-entry ng-if="::$ctrl.podName">
-      <a ng-href="{{::$ctrl.getShellHref(container)}}"
-         class="kd-middle-ellipsised-link">
-        <kd-middle-ellipsis display-string="[[Execute shell|Execute shell in the container]]">
-        </kd-middle-ellipsis>
-      </a>
-    </kd-info-card-entry>
   </kd-info-card-section>
 </kd-info-card>
