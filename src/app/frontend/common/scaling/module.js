@@ -12,16 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {ScaleService} from './service';
+
 /**
- * @final
+ * Angular module containing application configuration.
  */
-export class ActionBarController {
-  /**
-   * @param {!backendApi.ReplicaSetDetail} replicaSetDetail
-   * @ngInject
-   */
-  constructor(replicaSetDetail) {
-    /** @export {!backendApi.ReplicaSetDetail} */
-    this.details = replicaSetDetail;
-  }
-}
+export default angular
+    .module(
+        'kubernetesDashboard.scaling',
+        [
+          'ngMaterial',
+        ])
+    .service('kdScaleService', ScaleService);

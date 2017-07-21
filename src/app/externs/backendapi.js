@@ -173,6 +173,7 @@ backendApi.Workloads;
  *   persistentVolumeList: !backendApi.PersistentVolumeList,
  *   roleList: !backendApi.RoleList,
  *   storageClassList: !backendApi.StorageClassList,
+ *   errors: !Array<!backendApi.Error>
  * }}
  */
 backendApi.Cluster;
@@ -181,6 +182,7 @@ backendApi.Cluster;
  * @typedef {{
  *   serviceList: !backendApi.ServiceList,
  *   ingressList: !backendApi.IngressList,
+ *   errors: !Array<!backendApi.Error>
  * }}
  */
 backendApi.Discovery;
@@ -190,6 +192,7 @@ backendApi.Discovery;
  *   configMapList: !backendApi.ConfigMapList,
  *   persistentVolumeClaimList: !backendApi.PersistentVolumeClaimList,
  *   secretList: !backendApi.SecretList,
+ *   errors: !Array<!backendApi.Error>
  * }}
  */
 backendApi.Config;
@@ -213,6 +216,7 @@ backendApi.Config;
  *   configMapList: !backendApi.ConfigMapList,
  *   persistentVolumeClaimList: !backendApi.PersistentVolumeClaimList,
  *   secretList: !backendApi.SecretList,
+ *   errors: !Array<!backendApi.Error>
  * }}
  */
 backendApi.Search;
@@ -710,18 +714,27 @@ backendApi.EnvVar;
 
 /**
  * @typedef {{
- *   configMapKeyRef: backendApi.ConfigMapKeyRef
+ *   configMapKeyRef: backendApi.ConfigMapKeyRef,
+ *   secretKeyRef: backendApi.SecretKeyRef
  * }}
  */
 backendApi.EnvVarSource;
 
 /**
  * @typedef {{
- *   Name: string,
+ *   name: string,
  *   key: string,
  * }}
  */
 backendApi.ConfigMapKeyRef;
+
+/**
+ * @typedef {{
+ *   name: string,
+ *   key: string,
+ * }}
+ */
+backendApi.SecretKeyRef;
 
 /**
  * @typedef {{

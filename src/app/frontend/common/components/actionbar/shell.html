@@ -14,10 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<md-button ng-click="::$ctrl.viewLogs()">
-  <md-icon class="kd-actionbar-icon-button">subject</md-icon>
-  <md-tooltip md-direction="bottom">
-    [[View logs|Tooltip for the 'logs' button on the action bar.]]
-  </md-tooltip>
-  [[Logs|Tooltip for the 'logs' button on the action bar.]]
+<md-button ng-click="::$ctrl.openShell()">
+  <md-icon class="kd-actionbar-icon-button">input</md-icon>
+  <md-tooltip md-direction="bottom">[[Exec into Pod|Exec button tooltip located on pod detail page actionbar]]</md-tooltip>
+  [[Exec|Execute shell in the container]]
 </md-button>

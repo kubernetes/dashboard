@@ -14,19 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-actionbar-logs resource-kind-name="statefulset"
+<kd-actionbar-logs resource-kind-name="$ctrl.details.typeMeta.kind"
                    object-meta="$ctrl.details.objectMeta">
 </kd-actionbar-logs>
 
-<md-button ng-click="$ctrl.handleScaleResourceDialog()">
-  <md-icon class="kd-actionbar-icon-button">linear_scale</md-icon>
-  <md-tooltip md-direction="bottom">
-    [[Edit number of pods|Tooltip for the 'scale' button on the action bar of a statefulset details view.]]
-  </md-tooltip>
-  [[Scale|Tooltip for the 'scale' button on the action bar of a statefulset details view.]]
-</md-button>
+<kd-scale-button resource-kind-name="[[Stateful Set|Label 'Stateful Set' which appears at the top of the scale dialog, opened from a stateful set details page.]]"
+                 object-meta="$ctrl.details.objectMeta"
+                 current-pods="$ctrl.details.podInfo.current"
+                 desired-pods="$ctrl.details.podInfo.desired">
+</kd-scale-button>
 
-<kd-actionbar-detail-buttons resource-kind-name="[[Stateful Set|Label 'Stateful Set' which appears at the top of the delete dialog, opened from a stateful set details page.]]"
+<kd-actionbar-detail-buttons resource-kind-name="[[Stateful Set|Label 'Stateful Set' which appears at the top of the dialog, opened from a stateful set details page.]]"
                              type-meta="$ctrl.details.typeMeta"
                              object-meta="$ctrl.details.objectMeta">
 </kd-actionbar-detail-buttons>

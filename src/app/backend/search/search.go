@@ -15,6 +15,7 @@
 package search
 
 import (
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/cluster"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
@@ -70,6 +71,9 @@ type SearchResult struct {
 	DaemonSetList             daemonset.DaemonSetList      `json:"daemonSetList"`
 	StatefulSetList           statefulset.StatefulSetList  `json:"statefulSetList"`
 
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
+
 	// TODO(maciaszczykm): Add third party resources.
 }
 
@@ -123,5 +127,9 @@ func Search(client *kubernetes.Clientset, metricClient metricapi.MetricClient,
 		PodList:                   workloadsResources.PodList,
 		DaemonSetList:             workloadsResources.DaemonSetList,
 		StatefulSetList:           workloadsResources.StatefulSetList,
+
+		// Errors.
+		Errors: errors.MergeErrors(clusterResources.Errors, configResources.Errors,
+			discoveryResources.Errors, workloadsResources.Errors),
 	}, nil
 }

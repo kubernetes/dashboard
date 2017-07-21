@@ -18,46 +18,23 @@ import replicationControllerModule from 'replicationcontroller/module';
 describe('Replication Controller Detail Action Bar controller', () => {
   /**
    * Replication Controller Detail Action Bar controller.
-   * @type {!ReplicationControllerDetailActionBarController}
+   * @type {!ActionBarController}
    */
   let ctrl;
-  /** @type {!ReplicationControllerService} */
-  let kdScaleService;
+  /** @type {!backendApi.ReplicationControllerDetail} */
+  let details = {};
 
   beforeEach(() => {
     angular.mock.module(replicationControllerModule.name);
 
-    angular.mock.inject(($controller, $resource, _kdScaleService_) => {
-      kdScaleService = _kdScaleService_;
-
+    angular.mock.inject(($controller) => {
       ctrl = $controller(ActionBarController, {
-        replicationControllerDetail: {},
-        kdScaleService: _kdScaleService_,
+        replicationControllerDetail: details,
       });
     });
   });
 
-  it('should show edit replicas dialog', () => {
-    // given
-    ctrl.details = {
-      objectMeta: {
-        namespace: 'foo-namespace',
-        name: 'foo-name',
-      },
-      typeMeta: {
-        kind: '',
-      },
-      podInfo: {
-        current: 3,
-        desired: 3,
-      },
-    };
-    spyOn(kdScaleService, 'showScaleDialog');
-
-    // when
-    ctrl.handleScaleResourceDialog();
-
-    // then
-    expect(kdScaleService.showScaleDialog).toHaveBeenCalled();
+  it('should initialize details', () => {
+    expect(ctrl.details).toBe(details);
   });
 });

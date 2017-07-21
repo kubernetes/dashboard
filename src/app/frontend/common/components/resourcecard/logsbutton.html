@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<md-button ng-click="::$ctrl.viewLogs()">
-  <md-icon class="kd-actionbar-icon-button">subject</md-icon>
-  <md-tooltip md-direction="bottom">
-    [[View logs|Tooltip for the 'logs' button on the action bar.]]
-  </md-tooltip>
-  [[Logs|Tooltip for the 'logs' button on the action bar.]]
+<md-button ng-if="::$ctrl.getLogsHref()"
+           ng-href="{{::$ctrl.getLogsHref()}}"
+           target="_blank"
+           class="md-icon-button">
+  <md-icon md-font-library="material-icons">subject</md-icon>
+  <md-tooltip>[[Logs|Label for logs tooltip.]]</md-tooltip>
 </md-button>
