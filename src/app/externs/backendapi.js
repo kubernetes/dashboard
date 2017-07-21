@@ -697,18 +697,27 @@ backendApi.EnvVar;
 
 /**
  * @typedef {{
- *   configMapKeyRef: backendApi.ConfigMapKeyRef
+ *   configMapKeyRef: backendApi.ConfigMapKeyRef,
+ *   secretKeyRef: backendApi.SecretKeyRef
  * }}
  */
 backendApi.EnvVarSource;
 
 /**
  * @typedef {{
- *   Name: string,
+ *   name: string,
  *   key: string,
  * }}
  */
 backendApi.ConfigMapKeyRef;
+
+/**
+ * @typedef {{
+ *   name: string,
+ *   key: string,
+ * }}
+ */
+backendApi.SecretKeyRef;
 
 /**
  * @typedef {{

@@ -626,7 +626,7 @@
   <translation id="3190654996078973226" key="MSG_POD_DETAIL_CONTAINERINFO_0" desc="Subtitle at the top of the container details.">コンテナ</translation>
   <translation id="1970650270984178962" key="MSG_POD_DETAIL_CONTAINERINFO_1" desc="Label for container image.">イメージ</translation>
   <translation id="1360847805196042023" key="MSG_POD_DETAIL_CONTAINERINFO_2" desc="Label for container environment variables.">環境変数</translation>
-  <translation id="3109447894831467677" key="MSG_POD_DETAIL_CONTAINERINFO_3" desc="Label for environment variable that comes from a Config Map">コンフィグマップからの値 {{env.valueFrom.configMapKeyRef.Name}}/{{env.valueFrom.configMapKeyRef.key}}</translation>
+  <translation id="5891342958155783593" key="MSG_POD_DETAIL_CONTAINERINFO_3" desc="Tooltip on container env variables taken from secret">Show secret value</translation>
   <translation id="7982652991565550562" key="MSG_POD_DETAIL_CONTAINERINFO_4" desc="Label when there is no container environment variables.">-</translation>
   <translation id="7884138906305492767" key="MSG_POD_DETAIL_CONTAINERINFO_5" desc="Label for container commands.">コマンド</translation>
   <translation id="6310781543090479387" key="MSG_POD_DETAIL_CONTAINERINFO_6" desc="Label when there is no container commands.">-</translation>
