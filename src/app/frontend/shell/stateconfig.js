@@ -37,6 +37,12 @@ export default function stateConfig($stateProvider) {
 
   $stateProvider.state(stateName, {
     url: `${appendDetailParamsToUrl('/shell')}/:container`,
+    params: {
+      'container': {
+        value: null,
+        squash: true,
+      },
+    },
     parent: chromeStateName,
     resolve: {
       'podContainers': resolvePodContainers,

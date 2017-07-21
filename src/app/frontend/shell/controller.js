@@ -74,7 +74,7 @@ export class ShellController {
    */
   getContainerName() {
     return this.stateParams_.container ? this.stateParams_.container :
-        this.containers.length > 0 ? this.containers[0] : '';
+                                         this.containers.length > 0 ? this.containers[0] : '';
   }
 
   /** @private */
@@ -102,7 +102,9 @@ export class ShellController {
    */
   onTerminalReady() {
     this.io = this.term.io.push();
-    this.resource_(`api/v1/pod/${this.stateParams_.objectNamespace}/${this.podName}/shell/${this.container}`)
+    this.resource_(`api/v1/pod/${this.stateParams_.objectNamespace}/${
+                                                                      this.podName
+                                                                    }/shell/${this.container}`)
         .get({}, this.onTerminalResponseReceived.bind(this));
   }
 

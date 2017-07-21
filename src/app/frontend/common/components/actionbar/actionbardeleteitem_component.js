@@ -86,6 +86,5 @@ export const actionbarDeleteItemComponent = {
     'typeMeta': '<',
     'objectMeta': '<',
   },
-  bindToController: true,
   controller: ActionbarDeleteItemController,
 };
