@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import overviewListModule from '/module';
-import {resolveOverview} from '/stateconfig';
+import overviewListModule from 'overview/module';
+import {resolveOverview} from 'overview/stateconfig';
 
 describe('StateConfig for all objects list', () => {
   /** @type {!common/dataselect/dataselect_service.DataSelectService} */

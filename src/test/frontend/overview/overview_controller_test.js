@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import overviewListModule from '/module';
 import {OverviewController} from 'overview/controller';
+import overviewListModule from 'overview/module';
 
 describe('Overview list controller', () => {
   /** @type {!/controller.OverviewController} */
