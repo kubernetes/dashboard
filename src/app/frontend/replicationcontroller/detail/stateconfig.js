@@ -30,7 +30,6 @@ export const config = {
   url: appendDetailParamsToUrl(stateUrl),
   parent: parentState,
   resolve: {
-    'replicationControllerSpecPodsResource': getReplicationControllerSpecPodsResource,
     'replicationControllerDetail': resolveReplicationControllerDetails,
   },
   data: {
@@ -87,30 +86,6 @@ export function replicationControllerEventsResource($resource) {
  */
 export function replicationControllerServicesResource($resource) {
   return $resource('api/v1/replicationcontroller/:namespace/:name/service');
-}
-
-/**
- * @param {!./../../common/resource/resourcedetail.StateParams} $stateParams
- * @param {!angular.$resource} $resource
- * @return {!angular.Resource<!backendApi.ReplicationControllerSpec>}
- * @ngInject
- */
-export function getReplicationControllerSpecPodsResource($stateParams, $resource) {
-  return getReplicationControllerSpecPodsResourceWithActions($stateParams, $resource);
-}
-
-/**
- * @param {!./../../common/resource/resourcedetail.StateParams} $stateParams
- * @param {!angular.$resource} $resource
- * @param {!Object.<Object>=} actions
- * @return {!angular.Resource<!backendApi.ReplicationControllerSpec>}
- */
-export function getReplicationControllerSpecPodsResourceWithActions(
-    $stateParams, $resource, actions = {}) {
-  return $resource(
-      `api/v1/replicationcontroller/${$stateParams.objectNamespace}/` +
-          `${$stateParams.objectName}/update/pod`,
-      {}, actions);
 }
 
 /**
