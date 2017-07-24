@@ -96,18 +96,18 @@ func GetServiceDetail(client k8sClient.Interface, metricClient metricapi.MetricC
 // GetServicePods gets list of pods targeted by given label selector in given namespace.
 func GetServicePods(client k8sClient.Interface, metricClient metricapi.MetricClient, namespace,
 	name string, dsQuery *dataselect.DataSelectQuery) (*pod.PodList, error) {
+	podList := pod.PodList{
+		Pods:              []pod.Pod{},
+		CumulativeMetrics: []metricapi.Metric{},
+	}
 
 	service, err := client.CoreV1().Services(namespace).Get(name, metaV1.GetOptions{})
 	if err != nil {
-		return nil, err
+		return &podList, err
 	}
 
 	if service.Spec.Selector == nil {
-		emptyPodList := &pod.PodList{
-			Pods:              []pod.Pod{},
-			CumulativeMetrics: []metricapi.Metric{},
-		}
-		return emptyPodList, nil
+		return &podList, nil
 	}
 
 	labelSelector := labels.SelectorFromSet(service.Spec.Selector)
@@ -121,14 +121,15 @@ func GetServicePods(client k8sClient.Interface, metricClient metricapi.MetricCli
 
 	apiPodList := <-channels.PodList.List
 	if err := <-channels.PodList.Error; err != nil {
-		return nil, err
+		return &podList, err
 	}
 
 	events, err := event.GetPodsEvents(client, namespace, apiPodList.Items)
-	if err != nil {
-		return nil, err
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return &podList, criticalError
 	}
 
-	podList := pod.ToPodList(apiPodList.Items, events, []error{}, dsQuery, metricClient)
+	podList = pod.ToPodList(apiPodList.Items, events, nonCriticalErrors, dsQuery, metricClient)
 	return &podList, nil
 }

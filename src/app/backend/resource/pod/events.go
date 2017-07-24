@@ -17,6 +17,7 @@ package pod
 import (
 	"log"
 
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
@@ -26,16 +27,20 @@ import (
 // GetEventsForPod gets events that are associated with this pod.
 func GetEventsForPod(client client.Interface, dsQuery *dataselect.DataSelectQuery, namespace,
 	podName string) (*common.EventList, error) {
+	eventList := common.EventList{
+		Events:   make([]common.Event, 0),
+		ListMeta: api.ListMeta{TotalItems: 0},
+	}
 
 	podEvents, err := event.GetPodEvents(client, namespace, podName)
 	if err != nil {
-		return nil, err
+		return &eventList, err
 	}
 
-	events := event.CreateEventList(podEvents, dsQuery)
+	eventList = event.CreateEventList(podEvents, dsQuery)
 
-	log.Printf("Found %d events related to %s pod in %s namespace", len(events.Events), podName,
+	log.Printf("Found %d events related to %s pod in %s namespace", len(eventList.Events), podName,
 		namespace)
 
-	return &events, nil
+	return &eventList, nil
 }
