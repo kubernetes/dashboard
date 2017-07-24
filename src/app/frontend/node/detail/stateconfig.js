@@ -79,9 +79,12 @@ export function getNodeDetailResource($resource, $stateParams) {
 
 /**
  * @param {!angular.Resource<!backendApi.NodeDetail>} nodeDetailResource
+ * @param {!./../../common/dataselect/service.DataSelectService} kdDataSelectService
+ * @param {!./../../common/resource/globalresourcedetail.GlobalStateParams} $stateParams
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function getNodeDetail(nodeDetailResource) {
-  return nodeDetailResource.get().$promise;
+export function getNodeDetail(nodeDetailResource, kdDataSelectService, $stateParams) {
+  let query = kdDataSelectService.getDefaultResourceQuery('', $stateParams.objectName);
+  return nodeDetailResource.get(query).$promise;
 }

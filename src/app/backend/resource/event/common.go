@@ -63,8 +63,13 @@ func GetEvents(client client.Interface, namespace, resourceName string) ([]v1.Ev
 func GetPodsEvents(client client.Interface, namespace string, pods []v1.Pod) (
 	[]v1.Event, error) {
 
+	nsQuery := common.NewSameNamespaceQuery(namespace)
+	if namespace == v1.NamespaceAll {
+		nsQuery = common.NewNamespaceQuery([]string{})
+	}
+
 	channels := &common.ResourceChannels{
-		EventList: common.GetEventListChannel(client, common.NewSameNamespaceQuery(namespace), 1),
+		EventList: common.GetEventListChannel(client, nsQuery, 1),
 	}
 
 	eventList := <-channels.EventList.List

@@ -126,7 +126,8 @@ type NodeDetail struct {
 }
 
 // GetNodeDetail gets node details.
-func GetNodeDetail(client k8sClient.Interface, metricClient metricapi.MetricClient, name string) (*NodeDetail, error) {
+func GetNodeDetail(client k8sClient.Interface, metricClient metricapi.MetricClient, name string,
+	dsQuery *dataselect.DataSelectQuery) (*NodeDetail, error) {
 	log.Printf("Getting details of %s node", name)
 
 	node, err := client.CoreV1().Nodes().Get(name, metaV1.GetOptions{})
@@ -137,7 +138,7 @@ func GetNodeDetail(client k8sClient.Interface, metricClient metricapi.MetricClie
 	// Download standard metrics. Currently metrics are hard coded, but it is possible to replace
 	// dataselect.StdMetricsDataSelect with data select provided in the request.
 	_, metricPromises := dataselect.GenericDataSelectWithMetrics(toCells([]v1.Node{*node}),
-		dataselect.StdMetricsDataSelect,
+		dsQuery,
 		metricapi.NoResourceCache, metricClient)
 
 	pods, err := getNodePods(client, *node)
@@ -146,13 +147,13 @@ func GetNodeDetail(client k8sClient.Interface, metricClient metricapi.MetricClie
 		return nil, criticalError
 	}
 
-	podList, err := GetNodePods(client, metricClient, dataselect.DefaultDataSelect, name)
+	podList, err := GetNodePods(client, metricClient, dsQuery, name)
 	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
 	if criticalError != nil {
 		return nil, criticalError
 	}
 
-	eventList, err := event.GetNodeEvents(client, dataselect.DefaultDataSelect, node.Name)
+	eventList, err := event.GetNodeEvents(client, dsQuery, node.Name)
 	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
 	if criticalError != nil {
 		return nil, criticalError
@@ -246,7 +247,12 @@ func GetNodePods(client k8sClient.Interface, metricClient metricapi.MetricClient
 		return nil, err
 	}
 
-	podList := pod.ToPodList(pods.Items, []v1.Event{}, []error{}, dsQuery, metricClient)
+	events, err := event.GetPodsEvents(client, v1.NamespaceAll, pods.Items)
+	if err != nil {
+		return nil, err
+	}
+
+	podList := pod.ToPodList(pods.Items, events, []error{}, dsQuery, metricClient)
 	return &podList, nil
 }
 
