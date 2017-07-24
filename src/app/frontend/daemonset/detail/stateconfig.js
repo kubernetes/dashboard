@@ -92,9 +92,13 @@ export function getDaemonSetDetailResource($resource, $stateParams) {
 
 /**
  * @param {!angular.Resource<!backendApi.DaemonSetDetail>} daemonSetDetailResource
+ * @param {!./../../common/resource/resourcedetail.StateParams} $stateParams
+ * @param {!./../../common/dataselect/service.DataSelectService} kdDataSelectService
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function getDaemonSetDetail(daemonSetDetailResource) {
-  return daemonSetDetailResource.get().$promise;
+export function getDaemonSetDetail(daemonSetDetailResource, $stateParams, kdDataSelectService) {
+  let query = kdDataSelectService.getDefaultResourceQuery(
+      $stateParams.objectNamespace, $stateParams.objectName);
+  return daemonSetDetailResource.get(query).$promise;
 }
