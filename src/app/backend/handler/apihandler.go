@@ -561,7 +561,7 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 	apiV1Ws.Route(
 		apiV1Ws.GET("/overview/{namespace}").
 			To(apiHandler.handleOverview).
-			Writes(overview.ObjectResult{}))
+			Writes(overview.OverviewObjectList{}))
 
 	return wsContainer, nil
 }

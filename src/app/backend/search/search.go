@@ -43,16 +43,8 @@ import (
 	"k8s.io/client-go/kubernetes"
 )
 
-// SearchResult is a list of resources matching search criteria found in whole cluster.
-type SearchResult struct {
-
-	// Cluster.
-	NamespaceList        namespace.NamespaceList               `json:"namespaceList"`
-	NodeList             node.NodeList                         `json:"nodeList"`
-	PersistentVolumeList persistentvolume.PersistentVolumeList `json:"persistentVolumeList"`
-	RoleList             rbacroles.RbacRoleList                `json:"roleList"`
-	StorageClassList     storageclass.StorageClassList         `json:"storageClassList"`
-
+// AllObjectsInNamespace is a struct containing all of the objects in a given namespace
+type AllObjectsInNamespace struct {
 	// Config and storage.
 	ConfigMapList             configmap.ConfigMapList       `json:"configMapList"`
 	PersistentVolumeClaimList pvc.PersistentVolumeClaimList `json:"persistentVolumeClaimList"`
@@ -70,6 +62,18 @@ type SearchResult struct {
 	PodList                   pod.PodList                  `json:"podList"`
 	DaemonSetList             daemonset.DaemonSetList      `json:"daemonSetList"`
 	StatefulSetList           statefulset.StatefulSetList  `json:"statefulSetList"`
+}
+
+// SearchResult is a list of resources matching search criteria found in whole cluster.
+type SearchResult struct {
+	AllObjectsInNamespace
+
+	// Cluster.
+	NamespaceList        namespace.NamespaceList               `json:"namespaceList"`
+	NodeList             node.NodeList                         `json:"nodeList"`
+	PersistentVolumeList persistentvolume.PersistentVolumeList `json:"persistentVolumeList"`
+	RoleList             rbacroles.RbacRoleList                `json:"roleList"`
+	StorageClassList     storageclass.StorageClassList         `json:"storageClassList"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
@@ -110,23 +114,25 @@ func Search(client *kubernetes.Clientset, metricClient metricapi.MetricClient,
 		RoleList:             clusterResources.RoleList,
 		StorageClassList:     clusterResources.StorageClassList,
 
-		// Config and storage.
-		ConfigMapList:             configResources.ConfigMapList,
-		PersistentVolumeClaimList: configResources.PersistentVolumeClaimList,
-		SecretList:                configResources.SecretList,
+		AllObjectsInNamespace: AllObjectsInNamespace{
+			// Config and storage.
+			ConfigMapList:             configResources.ConfigMapList,
+			PersistentVolumeClaimList: configResources.PersistentVolumeClaimList,
+			SecretList:                configResources.SecretList,
 
-		// Discovery and load balancing.
-		ServiceList: discoveryResources.ServiceList,
-		IngressList: discoveryResources.IngressList,
+			// Discovery and load balancing.
+			ServiceList: discoveryResources.ServiceList,
+			IngressList: discoveryResources.IngressList,
 
-		// Workloads.
-		DeploymentList:            workloadsResources.DeploymentList,
-		ReplicaSetList:            workloadsResources.ReplicaSetList,
-		JobList:                   workloadsResources.JobList,
-		ReplicationControllerList: workloadsResources.ReplicationControllerList,
-		PodList:                   workloadsResources.PodList,
-		DaemonSetList:             workloadsResources.DaemonSetList,
-		StatefulSetList:           workloadsResources.StatefulSetList,
+			// Workloads.
+			DeploymentList:            workloadsResources.DeploymentList,
+			ReplicaSetList:            workloadsResources.ReplicaSetList,
+			JobList:                   workloadsResources.JobList,
+			ReplicationControllerList: workloadsResources.ReplicationControllerList,
+			PodList:                   workloadsResources.PodList,
+			DaemonSetList:             workloadsResources.DaemonSetList,
+			StatefulSetList:           workloadsResources.StatefulSetList,
+		},
 
 		// Errors.
 		Errors: errors.MergeErrors(clusterResources.Errors, configResources.Errors,
