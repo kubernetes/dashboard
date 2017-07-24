@@ -5,7 +5,7 @@
   <translation id="4718120324314749596" key="MSG_ABOUT_ABOUT_2" desc="Label \'Git Commit\' for the about page.">Git 提交</translation>
   <translation id="5788105450172886273" key="MSG_ABOUT_ABOUT_3" desc="This is a label for button displayed on about page used to send feedback to GitHub new issue.">发送反馈</translation>
   <translation id="4249662097435421699" key="MSG_ABOUT_ABOUT_4" desc="This is the copyright statement displayed on the about page">版权所有 2015-{{ $ctrl.latestCopyrightYear}} Kubernetes 团队</translation>
-  <translation id="4171916442768740608" key="MSG_ABOUT_ABOUT_5" desc="This is the creator reference on the footer of the about page"> Kubernetes 控制面板 由&lt;a href="https://github.com/kubernetes/dashboard/graphs/contributors"&gt;本社区&lt;/a&gt;打造并&lt;a href="https://github.com/kubernetes/dashboard"&gt;开源&lt;/a&gt; </translation>
+  <translation id="4171916442768740608" key="MSG_ABOUT_ABOUT_5" desc="This is the creator reference on the footer of the about page"> Kubernetes 控制面板由&lt;a href="https://github.com/kubernetes/dashboard/graphs/contributors"&gt;社区&lt;/a&gt;作为&lt;a href="https://github.com/kubernetes/dashboard"&gt;开源项目&lt;/a&gt;打造</translation>
   <translation id="4426231252111230009" key="MSG_ABOUT_ABOUT_6" desc="Dashbord moto on the about page, just below the header">Kubernetes 集群通用网页界面</translation>
   <translation id="6783150167357318030" key="MSG_ACTION_BAR_DELETE_TOOLTIP" desc="Generic &quot;Delete some resource&quot; tooltip text which appears over the delete icon on the global action bar.">删除<ph name="RESOURCE_NAME"/></translation>
   <translation id="1421031463694814701" key="MSG_ACTION_BAR_EDIT_TOOLTIP" desc="Generic &quot;Edit some resource&quot; tooltip text which appears over the edit icon on the global action bar.">编辑<ph name="RESOURCE_NAME"/></translation>
@@ -19,7 +19,7 @@
   <translation id="9213553703311647006" key="MSG_BREADCRUMBS_DEPLOY_APP_LABEL" desc="Breadcrum label for the deploy containerized app form view.">创建应用</translation>
   <translation id="3098067826555563293" key="MSG_BREADCRUMBS_DEPLOY_FILE_LABEL" desc="Breadcrum label for the YAML upload form">上传</translation>
   <translation id="8693076889249273053" key="MSG_BREADCRUMBS_DISCOVERY_AND_LOAD_BALANCING_LABEL" desc="Label 'Discovery and load balancing' that appears as a breadcrumbs on the action bar.">服务发现与负载均衡</translation>
-  <translation id="2248903848244811172" key="MSG_BREADCRUMBS_HORIZONTAL_POD_AUTOSCALERS_LABEL" desc="Label 'Horizontal Pod Autoscalers' that appears as a breadcrumbs on the action bar.">水平容器组自动伸缩器</translation>
+  <translation id="2248903848244811172" key="MSG_BREADCRUMBS_HORIZONTAL_POD_AUTOSCALERS_LABEL" desc="Label 'Horizontal Pod Autoscalers' that appears as a breadcrumbs on the action bar.">容器组水平伸缩器</translation>
   <translation id="8885204956315323333" key="MSG_BREADCRUMBS_INGRESSS_LABEL" desc="Label 'Ingresses' that appears as a breadcrumbs on the action bar.">访问权</translation>
   <translation id="2741276106482217695" key="MSG_BREADCRUMBS_INTERNALERROR_LABEL" desc="Label for internal error page for breadcrumbs on the action bar.">内部错误</translation>
   <translation id="2024511088483477440" key="MSG_BREADCRUMBS_JOBS_LABEL" desc="Label 'Jobs' that appears as a breadcrumbs on the action bar.">任务</translation>
@@ -71,13 +71,13 @@
   <translation id="8227118065394270046" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBAREDITITEM_0" desc="Action \'Edit\' for the edit button on the global action bar.">编辑</translation>
   <translation id="6890205203402149061" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBARLISTBUTTONS_0" desc="Label for deploy app button.">部署应用</translation>
   <translation id="8440773175603161155" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBARLISTBUTTONS_1" desc="Label for upload YAML button.">上传 YAML</translation>
-  <translation id="4823508741067150667" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBARLOGS_0" desc="Tooltip for the \'logs\' button on the action bar.">View logs</translation>
-  <translation id="1841242100396658719" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBARLOGS_1" desc="Tooltip for the \'logs\' button on the action bar.">Logs</translation>
-  <translation id="4246093411879805828" key="MSG_COMMON_COMPONENTS_ACTIONBAR_SHELL_0" desc="Exec button tooltip located on pod detail page actionbar">Exec into Pod</translation>
-  <translation id="1980816672340986356" key="MSG_COMMON_COMPONENTS_ACTIONBAR_SHELL_1" desc="Execute shell in the container">Exec</translation>
+  <translation id="4823508741067150667" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBARLOGS_0" desc="Tooltip for the \'logs\' button on the action bar.">查看日志</translation>
+  <translation id="1841242100396658719" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBARLOGS_1" desc="Tooltip for the \'logs\' button on the action bar.">日志</translation>
+  <translation id="4246093411879805828" key="MSG_COMMON_COMPONENTS_ACTIONBAR_SHELL_0" desc="Exec button tooltip located on pod detail page actionbar">在容器组中运行命令</translation>
+  <translation id="1980816672340986356" key="MSG_COMMON_COMPONENTS_ACTIONBAR_SHELL_1" desc="Execute shell in the container">运行命令</translation>
   <translation id="1745702155571319443" key="MSG_COMMON_COMPONENTS_ANNOTATIONS_ANNOTATIONS_0" desc="Friendly name of the kubernetes.io/created-by annotation">创建者</translation>
-  <translation id="1417978160910275828" key="MSG_COMMON_COMPONENTS_ANNOTATIONS_ANNOTATIONS_1" desc="Text on the button to show fewer annotations.">显示简要注记</translation>
-  <translation id="6884163988875905686" key="MSG_COMMON_COMPONENTS_ANNOTATIONS_ANNOTATIONS_2" desc="Text on the button to show all the annotations.">显示所有注记</translation>
+  <translation id="1417978160910275828" key="MSG_COMMON_COMPONENTS_ANNOTATIONS_ANNOTATIONS_1" desc="Text on the button to show fewer annotations.">显示简要注释</translation>
+  <translation id="6884163988875905686" key="MSG_COMMON_COMPONENTS_ANNOTATIONS_ANNOTATIONS_2" desc="Text on the button to show all the annotations.">显示所有注释</translation>
   <translation id="6935188165410090417" key="MSG_COMMON_COMPONENTS_ANNOTATIONS_LASTAPPLIEDCONFIGURATION_0" desc="Label for the kubectl.kubernetes.io/last-applied-configuration annotation">最近应用配置</translation>
   <translation id="6456481460873145449" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_0" desc="Label \'Conditions\' for the conditions section.">现状</translation>
   <translation id="8993677465322195935" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_1" desc="Label \'Type\' for the condition table header.">类型</translation>
@@ -86,7 +86,7 @@
   <translation id="6464751813964841186" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_12" desc="Label when there is no data.">-</translation>
   <translation id="3102698318305254308" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_2" desc="Label \'Status\' for the condition table header.">状态</translation>
   <translation id="3198492785716828854" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_3" desc="Label \'Last heartbeat time\' for the condition table header.">最近心跳</translation>
-  <translation id="3828327508280797097" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_4" desc="Label \'Last transition time\' for the condition table header.">最近传送</translation>
+  <translation id="3828327508280797097" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_4" desc="Label \'Last transition time\' for the condition table header.">最近更改</translation>
   <translation id="5617747719771691362" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_5" desc="Label \'Reason\' for the condition table header.">原因</translation>
   <translation id="3635038721825489232" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_6" desc="Label \'Message\' for the condition table header.">消息</translation>
   <translation id="4637603666933267922" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_7" desc="Label when there is no data.">-</translation>
@@ -94,22 +94,22 @@
   <translation id="3496419655731709621" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_9" desc="Label when there is no data.">-</translation>
   <translation id="3570731037158883626" key="MSG_COMMON_COMPONENTS_LABELS_LABELS_0" desc="Tooltip on the &quot;show less&quot; button for the labels of any kubernetes resource. Usually appears on the resource details pages.">显示简要标签</translation>
   <translation id="8950559770902715649" key="MSG_COMMON_COMPONENTS_LABELS_LABELS_1" desc="Tooltip on the &quot;show all&quot; button for the labels of any kubernetes resource. Usually appears on the resource details pages.">显示所有标签</translation>
-  <translation id="7262450799096886396" key="MSG_COMMON_COMPONENTS_RESOURCECARD_LOGSBUTTON_0" desc="Label for logs tooltip.">Logs</translation>
+  <translation id="7262450799096886396" key="MSG_COMMON_COMPONENTS_RESOURCECARD_LOGSBUTTON_0" desc="Label for logs tooltip.">日志</translation>
   <translation id="8077948432236649947" key="MSG_COMMON_COMPONENTS_RESOURCECARD_RESOURCECARDDELETEMENUITEM_0" desc="Action &quot;Delete&quot; (verb), which appears as a menu item on the cards for kubernetes resources.">删除</translation>
   <translation id="1786717544428328487" key="MSG_COMMON_COMPONENTS_RESOURCECARD_RESOURCECARDEDITMENUITEM_0" desc="Label for YAML edit menu item.">查看/编辑 YAML</translation>
-  <translation id="6165720699884834015" key="MSG_COMMON_COMPONENTS_RESOURCECARD_RESOURCECARDMENU_0" desc="Tooltip &quot;Actions&quot;, which appears when you hover over the menu icon on any resource card.">动作</translation>
+  <translation id="6165720699884834015" key="MSG_COMMON_COMPONENTS_RESOURCECARD_RESOURCECARDMENU_0" desc="Tooltip &quot;Actions&quot;, which appears when you hover over the menu icon on any resource card.">操作</translation>
   <translation id="5816664742336097257" key="MSG_COMMON_COMPONENTS_RESOURCEDETAIL_INFOCARD_0" desc="Label \'Name\' for a resource.">名称</translation>
   <translation id="324296574289248020" key="MSG_COMMON_COMPONENTS_RESOURCEDETAIL_INFOCARD_1" desc="Label \'Namespace\' for a resource.">命名空间</translation>
   <translation id="7353491667260402390" key="MSG_COMMON_COMPONENTS_RESOURCEDETAIL_INFOCARD_2" desc="Label \'Labels\' for a resource.">标签</translation>
   <translation id="5872558793526944357" key="MSG_COMMON_COMPONENTS_RESOURCEDETAIL_INFOCARD_3" desc="Label \'Annotations\' for a resource.">注释</translation>
   <translation id="311978980344633152" key="MSG_COMMON_COMPONENTS_RESOURCEDETAIL_INFOCARD_4" desc="Label \'Creation time\' for a resource.">创建时间</translation>
-  <translation id="5724590208757461876" key="MSG_COMMON_COMPONENTS_SCALE_SCALE_0" desc="Action \'Scale\' on the drop down menu on resource list page.">Scale</translation>
-  <translation id="2699323907720130275" key="MSG_COMMON_COMPONENTS_SCALE_SCALE_1" desc="Tooltip for the \'scale\' button on the action bar on a resource details view.">Edit number of pods</translation>
-  <translation id="8982112402145698888" key="MSG_COMMON_COMPONENTS_SCALE_SCALE_2" desc="Tooltip for the \'Scale\' button on the action bar on a resource details view.">Scale</translation>
-  <translation id="8514425134682432381" key="MSG_COMMON_COMPONENTS_WARNINGS_WARNINGS_0" desc="Tooltip for warning dismissal button.">Dismiss</translation>
-  <translation id="7328790086203280450" key="MSG_COMMON_COMPONENTS_WARNINGS_WARNINGS_1" desc="Tooltip for all warning dismissal button.">Dismiss all</translation>
+  <translation id="5724590208757461876" key="MSG_COMMON_COMPONENTS_SCALE_SCALE_0" desc="Action \'Scale\' on the drop down menu on resource list page.">伸缩</translation>
+  <translation id="2699323907720130275" key="MSG_COMMON_COMPONENTS_SCALE_SCALE_1" desc="Tooltip for the \'scale\' button on the action bar on a resource details view.">编辑容器组数量</translation>
+  <translation id="8982112402145698888" key="MSG_COMMON_COMPONENTS_SCALE_SCALE_2" desc="Tooltip for the \'Scale\' button on the action bar on a resource details view.">伸缩</translation>
+  <translation id="8514425134682432381" key="MSG_COMMON_COMPONENTS_WARNINGS_WARNINGS_0" desc="Tooltip for warning dismissal button.">忽略</translation>
+  <translation id="7328790086203280450" key="MSG_COMMON_COMPONENTS_WARNINGS_WARNINGS_1" desc="Tooltip for all warning dismissal button.">忽略所有</translation>
   <translation id="6941584785589389821" key="MSG_COMMON_COMPONENTS_ZEROSTATE_ZEROSTATE_0" desc="Title text which appears on zero state view.">无内容显示</translation>
-  <translation id="8000678649572976545" key="MSG_COMMON_COMPONENTS_ZEROSTATE_ZEROSTATE_1" desc="Description for a zero state page.">现在就 &lt;a href="{{::$ctrl.getStateHref()}}"&gt;部署容器应用&lt;/a&gt;、查看其它命名空间，或 &lt;a href="http://kubernetes.io/docs/user-guide/ui/" target="_blank"&gt;浏览控制面板概览&lt;i class="material-icons kd-zerostate-icon"&gt;open_in_new&lt;/i&gt;&lt;/a&gt; 以了解更多</translation>
+  <translation id="8000678649572976545" key="MSG_COMMON_COMPONENTS_ZEROSTATE_ZEROSTATE_1" desc="Description for a zero state page.">现在就&lt;a href="{{::$ctrl.getStateHref()}}"&gt;部署容器应用&lt;/a&gt;、查看其它命名空间，或&lt;a href="http://kubernetes.io/docs/user-guide/ui/" target="_blank"&gt;浏览控制面板概览&lt;i class="material-icons kd-zerostate-icon"&gt;open_in_new&lt;/i&gt;&lt;/a&gt;来了解更多</translation>
   <translation id="4492076728105331074" key="MSG_COMMON_NAMESPACE_NAMESPACESELECT_0" desc="Title for namespace select.">命名空间</translation>
   <translation id="5174603006239796789" key="MSG_COMMON_NAMESPACE_NAMESPACESELECT_1" desc="Text describing what namespace selector is">所选的命名空间标签</translation>
   <translation id="7324783266461564175" key="MSG_COMMON_NAMESPACE_NAMESPACESELECT_2" desc="Text for dropdown item that indicates that no namespace was selected.">所有命名空间</translation>
@@ -127,7 +127,7 @@
   <translation id="2484996950399771862" key="MSG_COMMON_RESOURCE_EDITRESOURCE_4" desc="Label for copy button.">复制</translation>
   <translation id="6231407305842192181" key="MSG_COMMON_SCALING_SCALERESOURCE_0" desc="Title for a scaling resource dialog.">伸缩 {{::$ctrl.resourceKindName}}</translation>
   <translation id="8595969509136101884" key="MSG_COMMON_SCALING_SCALERESOURCE_1" desc="Title for a scaling resource dialog.">伸缩 {{::$ctrl.resourceKindName}}</translation>
-  <translation id="3101929086031362285" key="MSG_COMMON_SCALING_SCALERESOURCE_2" desc="User help for the pod count update dialog (on the replication controllers detail page).">{{::$ctrl.resourceName}} 资源将更新以反映所需数量</translation>
+  <translation id="3101929086031362285" key="MSG_COMMON_SCALING_SCALERESOURCE_2" desc="User help for the pod count update dialog (on the replication controllers detail page).">资源 {{::$ctrl.resourceName}} 将更新以反映所需数量</translation>
   <translation id="3999312467829287271" key="MSG_COMMON_SCALING_SCALERESOURCE_3" desc="Label \'Desired number of pods\', which appears as a placeholder for the pods count input on the &quot;update pods count&quot; dialog (for a Deployment, ReplicaSet, Replication Controller resource).">所需容器组数量</translation>
   <translation id="536413431729659126" key="MSG_COMMON_SCALING_SCALERESOURCE_4" desc="Label \'Desired degree parallelism for a Job\', which appears as a placeholder for the parallelism count input on the &quot;update parallelism count&quot; dialog (for a Job resource).">所需任务并行度</translation>
   <translation id="937791798359212536" key="MSG_COMMON_SCALING_SCALERESOURCE_5" desc="This warning appears when the user does not specify a pods count on the &quot;update number of pods&quot; dialog (for a deployment).">容器组数量必填</translation>
@@ -170,9 +170,9 @@
   <translation id="5529663386929562771" key="MSG_DAEMONSET_DETAIL_INFO_4" desc="Label \'Images\' for the list of images used in a daemon set, on its details page.">镜像</translation>
   <translation id="8207927853231587262" key="MSG_DAEMONSET_DETAIL_INFO_5" desc="Subtitle \'Status\' for the right section with pod status information on the daemon set details page.">状态</translation>
   <translation id="3195556158142781226" key="MSG_DAEMONSET_DETAIL_INFO_6" desc="Label \'Pods\' for the pods in a daemon set on its details page.">容器组</translation>
-  <translation id="1832136994003570020" key="MSG_DAEMONSET_DETAIL_INFO_7" desc="The message describes how many pods were created (daemon set details page).">{{::$ctrl.daemonSet.podInfo.current}} 已创建</translation>
-  <translation id="5651976668507530367" key="MSG_DAEMONSET_DETAIL_INFO_8" desc="The message describes how many pods are desired to run (daemon set details page).">{{::$ctrl.daemonSet.podInfo.desired}} 需要</translation>
-  <translation id="5550367961828357134" key="MSG_DAEMONSET_DETAIL_INFO_9" desc="The message describes how many pods are running (daemon set details page).">{{::$ctrl.daemonSet.podInfo.running}} 运行中</translation>
+  <translation id="1832136994003570020" key="MSG_DAEMONSET_DETAIL_INFO_7" desc="The message describes how many pods were created (daemon set details page).">{{::$ctrl.daemonSet.podInfo.current}} 个已创建</translation>
+  <translation id="5651976668507530367" key="MSG_DAEMONSET_DETAIL_INFO_8" desc="The message describes how many pods are desired to run (daemon set details page).">需要 {{::$ctrl.daemonSet.podInfo.desired}} 个</translation>
+  <translation id="5550367961828357134" key="MSG_DAEMONSET_DETAIL_INFO_9" desc="The message describes how many pods are running (daemon set details page).">{{::$ctrl.daemonSet.podInfo.running}} 个运行中</translation>
   <translation id="5631725742223773299" key="MSG_DAEMONSET_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">守护进程集</translation>
   <translation id="3304895041101053745" key="MSG_DAEMONSET_LIST_CARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of daemon sets (daemon set list view).">名称</translation>
   <translation id="7715674186436282027" key="MSG_DAEMONSET_LIST_CARDLIST_2" desc="Column header \'Kind\' on Daemon Set lists">类型</translation>
@@ -192,10 +192,10 @@
   <translation id="2452514894533620787" key="MSG_DAEMONSET_LIST_LIST_2" desc="Help message detailing what is included in the memory usage">这些守护进程集所管理容器组的内存占用包括缓存</translation>
   <translation id="1183334493862832095" key="MSG_DAEMON_SET_LIST_CREATED_AT_TOOLTIP" desc="Tooltip 'Created at [some date]' showing the exact creation time of the daemon set.">创建于 <ph name="CREATION_DATE"/></translation>
   <translation id="8731452969115857295" key="MSG_DEPLOYMENT_DETAIL_ACTIONBAR_0" desc="Label \'Deployment\' which will appear in the deployment delete dialog opened from the deployment details page.">部署</translation>
-  <translation id="4537205375409268523" key="MSG_DEPLOYMENT_DETAIL_ACTIONBAR_1" desc="Label \'Deployment\' which will appear in the deployment dialog opened from the deployment details page.">Deployment</translation>
+  <translation id="4537205375409268523" key="MSG_DEPLOYMENT_DETAIL_ACTIONBAR_1" desc="Label \'Deployment\' which will appear in the deployment dialog opened from the deployment details page.">部署</translation>
   <translation id="916794903553842041" key="MSG_DEPLOYMENT_DETAIL_DETAIL_0" desc="Title for graph card displaying CPU metric of one deployment.">CPU 使用率</translation>
   <translation id="8453931805104629005" key="MSG_DEPLOYMENT_DETAIL_DETAIL_1" desc="Title for graph card displaying memory metric of one deployment.">内存使用率</translation>
-  <translation id="620255252783687720" key="MSG_DEPLOYMENT_DETAIL_DETAIL_10" desc="Text for horizontal pod autoscalers card zerostate in replica set details page.">此部署目前没有水平容器组自动伸缩器</translation>
+  <translation id="620255252783687720" key="MSG_DEPLOYMENT_DETAIL_DETAIL_10" desc="Text for horizontal pod autoscalers card zerostate in replica set details page.">此部署目前没有容器组水平伸缩器</translation>
   <translation id="7206451673196119468" key="MSG_DEPLOYMENT_DETAIL_DETAIL_2" desc="Help message detailing what is included in the memory usage">此部署所管理容器组的内存占用包括缓存</translation>
   <translation id="4293182903162394917" key="MSG_DEPLOYMENT_DETAIL_DETAIL_3" desc="Title \'New Replica Set\' for the newly created replica set view, on the deployment details page.">新副本集</translation>
   <translation id="5406429395386793842" key="MSG_DEPLOYMENT_DETAIL_DETAIL_5" desc="Text for new replica sets card zero-state in deployment details page.">目前此部署中没有新副本集</translation>
@@ -206,10 +206,10 @@
   <translation id="4052405407765242541" key="MSG_DEPLOYMENT_DETAIL_INFO_10" desc="The message says how many replicas can be created above the desired number of replicas in a deployment (deployment details page).">最大激增数: {{ $ctrl.deployment.rollingUpdateStrategy.maxSurge}}</translation>
   <translation id="978278245821528339" key="MSG_DEPLOYMENT_DETAIL_INFO_11" desc="The message says how many replicas are allowed to be unavailable during an update in the deployment (deployment details page).">最大无效数: {{ $ctrl.deployment.rollingUpdateStrategy.maxUnavailable}}</translation>
   <translation id="1006526299552096694" key="MSG_DEPLOYMENT_DETAIL_INFO_12" desc="Label \'Status\' for the deployment\'s status information on the deployment details page.">状态</translation>
-  <translation id="4141792758328458887" key="MSG_DEPLOYMENT_DETAIL_INFO_13" desc="The message describes how many replicas were updated in the deployment (deployment details page).">{{ $ctrl.deployment.statusInfo.updated}} 已更新</translation>
-  <translation id="2896056679280503985" key="MSG_DEPLOYMENT_DETAIL_INFO_14" desc="The message describes how many replicas (in total) are in the deployment (deployment details page).">共计 {{ $ctrl.deployment.statusInfo.replicas}}</translation>
-  <translation id="1768519246344146437" key="MSG_DEPLOYMENT_DETAIL_INFO_15" desc="The message describes how many replicas are available in the deployment (deployment details page).">{{ $ctrl.deployment.statusInfo.available}} 可用</translation>
-  <translation id="3113137197415192324" key="MSG_DEPLOYMENT_DETAIL_INFO_16" desc="The message says how many replicas are unavailable in the deployment (deployment details page).">{{ $ctrl.deployment.statusInfo.unavailable}} 不可用</translation>
+  <translation id="4141792758328458887" key="MSG_DEPLOYMENT_DETAIL_INFO_13" desc="The message describes how many replicas were updated in the deployment (deployment details page).">{{ $ctrl.deployment.statusInfo.updated}} 个已更新</translation>
+  <translation id="2896056679280503985" key="MSG_DEPLOYMENT_DETAIL_INFO_14" desc="The message describes how many replicas (in total) are in the deployment (deployment details page).">共计 {{ $ctrl.deployment.statusInfo.replicas}} 个</translation>
+  <translation id="1768519246344146437" key="MSG_DEPLOYMENT_DETAIL_INFO_15" desc="The message describes how many replicas are available in the deployment (deployment details page).">{{ $ctrl.deployment.statusInfo.available}} 个可用</translation>
+  <translation id="3113137197415192324" key="MSG_DEPLOYMENT_DETAIL_INFO_16" desc="The message says how many replicas are unavailable in the deployment (deployment details page).">{{ $ctrl.deployment.statusInfo.unavailable}} 个不可用</translation>
   <translation id="638037533109128765" key="MSG_DEPLOYMENT_DETAIL_INFO_2" desc="Label \'Namespace\' for the deployment namespace on the deployment details page.">命名空间</translation>
   <translation id="5010967792828441755" key="MSG_DEPLOYMENT_DETAIL_INFO_3" desc="Label \'Labels\' for the deployment\'s labels list on the deployment details page.">标签</translation>
   <translation id="4852965799360700062" key="MSG_DEPLOYMENT_DETAIL_INFO_4" desc="Label \'Selector\' for the deployment\'s labels list on the deployment details page.">选择器</translation>
@@ -230,7 +230,7 @@
   <translation id="5603340787019545076" key="MSG_DEPLOYMENT_LIST_CARD_1" desc="Tooltip saying that some pods in a deployment are pending.">一个或多个容器组等待中</translation>
   <translation id="5335487391687545375" key="MSG_DEPLOYMENT_LIST_CARD_2" desc="Label \'Deployment\' which will appear in the deployment delete dialog opened from a deployment card on the list page.">部署</translation>
   <translation id="5009335850870865346" key="MSG_DEPLOYMENT_LIST_CARD_3" desc="Label \'Deployment\' which will appear in the deployment delete dialog opened from a deployment card on the list page.">部署</translation>
-  <translation id="1062694263538589459" key="MSG_DEPLOYMENT_LIST_CARD_4" desc="Label \'Deployment\' which will appear in the deployment edit dialog opened from a deployment card on the list page.">Deployment</translation>
+  <translation id="1062694263538589459" key="MSG_DEPLOYMENT_LIST_CARD_4" desc="Label \'Deployment\' which will appear in the deployment edit dialog opened from a deployment card on the list page.">部署</translation>
   <translation id="8652993905127268587" key="MSG_DEPLOYMENT_LIST_CREATED_AT_TOOLTIP" desc="Tooltip 'Created at [some date]' showing the exact creation time of a deployment.">创建于 <ph name="CREATION_DATE"/></translation>
   <translation id="7895969081606283904" key="MSG_DEPLOYMENT_LIST_LIST_0" desc="Title for graph card displaying CPU metric of deployments.">CPU 使用率</translation>
   <translation id="3670753449040819695" key="MSG_DEPLOYMENT_LIST_LIST_1" desc="Title for graph card displaying memory metric of deployments.">内存使用率</translation>
@@ -279,7 +279,7 @@
   <translation id="2470722095529833019" key="MSG_DEPLOY_DEPLOYLABEL_4" desc="This warning appears when the value of a specified kubernetes label (on the deploy page) does not match the required pattern.">标签值必须为字母和数字，以「.」、「-」或「_」分隔</translation>
   <translation id="6277486407628401666" key="MSG_DEPLOY_DEPLOYLABEL_5" desc="This warning appears when the value of a specified kubernetes label (on the deploy page) is too long.">标签值不能多于 253 个字符</translation>
   <translation id="280662661340035471" key="MSG_DEPLOY_DEPLOY_0" desc="Title text which appears on top of the deploy page.">部署容器应用</translation>
-  <translation id="83109818144168195" key="MSG_DEPLOY_DEPLOY_1" desc="Text for a selection option, which the user must click to manually enter the app details on the deploy page.">指定应用详情</translation>
+  <translation id="83109818144168195" key="MSG_DEPLOY_DEPLOY_1" desc="Text for a selection option, which the user must click to manually enter the app details on the deploy page.">填写应用详情</translation>
   <translation id="2106636614171074357" key="MSG_DEPLOY_DEPLOY_2" desc="Text for a selection option, which the user must click to upload a YAML/JSON file to deploy from on the deploy page.">上传 YAML 或 JSON 文件</translation>
   <translation id="2293780968979487050" key="MSG_DEPLOY_DEPLOY_3" desc="User help with a link redirecting to the &quot;Dashboard tour&quot; on the deploy page.">&lt;a href="http://kubernetes.io/docs/user-guide/ui/" target="_blank" tabindex="-1"&gt; 浏览控制面板概览 &lt;i class="material-icons"&gt;open_in_new&lt;/i&gt;&lt;/a&gt; 以了解更多</translation>
   <translation id="6885083433056530489" key="MSG_DEPLOY_DIALOG_ERROR" desc="Text shown on failed deploy in error dialog.">部署文件已失败</translation>
@@ -318,7 +318,7 @@
   <translation id="4718361914515511196" key="MSG_DEPLOY_SETTINGS_CPU_REQUIREMENT_LABEL" desc="Label &quot;CPU requirement&quot;, which appears as a placeholder for the cpu input on the deploy from settings page.">所需 CPU (核)</translation>
   <translation id="8124619641904856564" key="MSG_DEPLOY_SETTINGS_DESCRIPTION_LABEL" desc="Label &quot;Description&quot;, which appears as a placeholder in the empty description input on the deploy from settings page.">描述</translation>
   <translation id="892968281959586271" key="MSG_DEPLOY_SETTINGS_DESCRIPTION_USER_HELP" desc="User help for the &quot;Description&quot; input on the deploy from settings page.">描述将被作为注释添加到副本控制器，并显示在应用的详情中</translation>
-  <translation id="7560440547757208994" key="MSG_DEPLOY_SETTINGS_ENV_VARIABLES_USER_HELP" desc="User help for the &quot;Environment variables&quot; section on the deploy from settings page.">环境变量可供容器中使用，变量可使用 $(VAR_NAME) 语法引用其它变量</translation>
+  <translation id="7560440547757208994" key="MSG_DEPLOY_SETTINGS_ENV_VARIABLES_USER_HELP" desc="User help for the &quot;Environment variables&quot; section on the deploy from settings page.">容器可以使用的环境变量，某个变量可使用 $(VAR_NAME) 语法引用其它变量</translation>
   <translation id="6045084755231450864" key="MSG_DEPLOY_SETTINGS_IMAGE_PULL_SECRET_CREATE_ACTION" desc="The text appears in the image pull secret selection box on the deploy from settings page and acts as a button. Pressing it creates a new image pull secret.">创建保密字典...</translation>
   <translation id="7821863265656538668" key="MSG_DEPLOY_SETTINGS_IMAGE_PULL_SECRET_LABEL" desc="Label &quot;Image Pull Secret&quot;, which appears as a placeholder in the image pull secret selection box on the deploy from settings page.">镜像拉取保密字典</translation>
   <translation id="5111944609518832752" key="MSG_DEPLOY_SETTINGS_IMAGE_PULL_SECRET_USER_HELP" desc="User help for the &quot;Image Pull Secret&quot; selection box on the deploy from settings page.">所选镜像如果为私有则需要密钥凭证，可从保密字典中选择或新建</translation>
@@ -332,7 +332,7 @@
   <translation id="6150169179901412462" key="MSG_DEPLOY_SETTINGS_MEMORY_REQUIREMENT_LABEL" desc="Label &quot;Memory requirement&quot;, which appears as a placeholder for the memory input on the deploy from settings page.">所需内存 (MiB)</translation>
   <translation id="1799676332581487715" key="MSG_DEPLOY_SETTINGS_NAMESPACE_CREATE_ACTION" desc="The text appears in the namespace selection box on the deploy from settings page, and acts as a button. Clicking it creates a new namespace.">创建命名空间...</translation>
   <translation id="9130827171778144236" key="MSG_DEPLOY_SETTINGS_NAMESPACE_LABEL" desc="Label &quot;Namespace&quot; label, for the namespace selection box on the deploy from settings page.">命名空间</translation>
-  <translation id="5947931806556909716" key="MSG_DEPLOY_SETTINGS_NAMESPACE_USER_HELP" desc="User help for the namespace selection on the deploy from settings page.">命名空间用于将资源从逻辑上分组</translation>
+  <translation id="5947931806556909716" key="MSG_DEPLOY_SETTINGS_NAMESPACE_USER_HELP" desc="User help for the namespace selection on the deploy from settings page.">命名空间用于按逻辑对资源分组</translation>
   <translation id="6564510320385038864" key="MSG_DEPLOY_SETTINGS_NUMBER_OF_PODS_HIGH_WARNING" desc="Appears as a warning when the user has specified a really high number of pods on the deploy from settings page.">设置过高容器组可能会导致集群和控制面板产生性能问题</translation>
   <translation id="7026295428726247109" key="MSG_DEPLOY_SETTINGS_NUMBER_OF_PODS_INT_WARNING" desc="Appears to tell the user that the number of pods on the deploy from settings page must be non-negative or integer.">容器组数量必须为正整数</translation>
   <translation id="5828613424792759380" key="MSG_DEPLOY_SETTINGS_NUMBER_OF_PODS_LABEL" desc="Label &quot;Number of pods&quot;, which appears as a placeholder in an empty input field for the number of pods on the deploy from settings page.">容器组数量</translation>
@@ -362,8 +362,8 @@
   <translation id="397148110173555485" key="MSG_EVENTS_CARDLIST_2" desc="Label \'Source\' for the event source column of the events table (events list page).">来源</translation>
   <translation id="4598322482281808115" key="MSG_EVENTS_CARDLIST_3" desc="Label \'Sub-object\' for the respective column of the events table (events list page).">子对象</translation>
   <translation id="4243993147460207456" key="MSG_EVENTS_CARDLIST_4" desc="Label \'Count\' for event count column of the events table (events list page).">总数</translation>
-  <translation id="2318056046996927961" key="MSG_EVENTS_CARDLIST_5" desc="Label \'First seen\' for the respective column of the events table (events list page).">最初出现于</translation>
-  <translation id="8546806166673222480" key="MSG_EVENTS_CARDLIST_6" desc="Label \'Last seen\' for the respective column of the events table (events list page).">最后出现于</translation>
+  <translation id="2318056046996927961" key="MSG_EVENTS_CARDLIST_5" desc="Label \'First seen\' for the respective column of the events table (events list page).">最早出现于</translation>
+  <translation id="8546806166673222480" key="MSG_EVENTS_CARDLIST_6" desc="Label \'Last seen\' for the respective column of the events table (events list page).">最近出现于</translation>
   <translation id="8384910280515978185" key="MSG_EVENTS_CARDLIST_8" desc="User help on the events page when no events are to be displayed.">可能所有事件已过期</translation>
   <translation id="4919061456654775514" key="MSG_EVENTS_WARNING_LABEL" desc="Label 'Warning' for the event selection drop-down.">警告</translation>
   <translation id="339987725992094148" key="MSG_GRAPH_CPU_AXIS_LABEL" desc="Name of Y axis showing CPU usage.">CPU (核)</translation>
@@ -371,35 +371,35 @@
   <translation id="6172878964647554384" key="MSG_GRAPH_CPU_USAGE_LEGEND_LABEL" desc="Name of the CPU usage metric as displayed in the legend.">CPU 使用率</translation>
   <translation id="1378300715036317101" key="MSG_GRAPH_DATA_POINT_NOT_AVAILABLE" desc="String to display when data point is not available.">不可用</translation>
   <translation id="2029236165141474072" key="MSG_GRAPH_MEMORY_AXIS_LABEL" desc="Name of Y axis showing memory usage.">内存 (字节)</translation>
-  <translation id="6525531670828842343" key="MSG_GRAPH_MEMORY_USAGE_LEGEND_LABEL" desc="Name of the memory usage metric as displayed in the legend.">内存使用</translation>
+  <translation id="6525531670828842343" key="MSG_GRAPH_MEMORY_USAGE_LEGEND_LABEL" desc="Name of the memory usage metric as displayed in the legend.">内存占用</translation>
   <translation id="185015236199417198" key="MSG_GRAPH_TIME_AXIS_LABEL" desc="Name of time axis.">时间</translation>
-  <translation id="3116131023784654870" key="MSG_HORIZONTALPODAUTOSCALER_DETAIL_ACTIONBAR_0" desc="Label \'Horizontal Pod Autoscaler\' which appears at the top of the delete dialog, opened from a horizontal pod autoscaler details page.">水平容器组自动伸缩器</translation>
+  <translation id="3116131023784654870" key="MSG_HORIZONTALPODAUTOSCALER_DETAIL_ACTIONBAR_0" desc="Label \'Horizontal Pod Autoscaler\' which appears at the top of the delete dialog, opened from a horizontal pod autoscaler details page.">容器组水平伸缩器</translation>
   <translation id="4234217286162701029" key="MSG_HORIZONTALPODAUTOSCALER_DETAIL_INFO_0" desc="Horizontal pod autoscaler info details section name.">详情</translation>
   <translation id="8852238167226878780" key="MSG_HORIZONTALPODAUTOSCALER_DETAIL_INFO_1" desc="Horizontal pod autoscaler info details section target entry.">目标</translation>
   <translation id="3801305643617716507" key="MSG_HORIZONTALPODAUTOSCALER_DETAIL_INFO_10" desc="Show the current CPU utilization percentage of a the pods of the targetted resource of a HPA">{{::$ctrl.horizontalPodAutoscaler.currentCPUUtilizationPercentage}}%</translation>
   <translation id="497992149326036535" key="MSG_HORIZONTALPODAUTOSCALER_DETAIL_INFO_11" desc="Horizontal pod autoscaler info status section lastScaleTime entry.">最近伸缩于</translation>
   <translation id="8730855784576965122" key="MSG_HORIZONTALPODAUTOSCALER_DETAIL_INFO_2" desc="Horizontal pod autoscaler info details section minReplicas entry.">最小副本数</translation>
   <translation id="3022079345770588418" key="MSG_HORIZONTALPODAUTOSCALER_DETAIL_INFO_3" desc="Horizontal pod autoscaler info details section maxReplicas entry.">最大副本数</translation>
-  <translation id="4199855790520636602" key="MSG_HORIZONTALPODAUTOSCALER_DETAIL_INFO_4" desc="Horizontal pod autoscaler info details section targetCPUUtilizationPercentage entry.">目标 CPU 利用率</translation>
+  <translation id="4199855790520636602" key="MSG_HORIZONTALPODAUTOSCALER_DETAIL_INFO_4" desc="Horizontal pod autoscaler info details section targetCPUUtilizationPercentage entry.">目标 CPU 使用率</translation>
   <translation id="8718543337819526846" key="MSG_HORIZONTALPODAUTOSCALER_DETAIL_INFO_5" desc="Show the target CPU utilization percentage of a the pods of the targetted resource of a HPA">{{::$ctrl.horizontalPodAutoscaler.targetCPUUtilizationPercentage}}%</translation>
   <translation id="8954426675014032405" key="MSG_HORIZONTALPODAUTOSCALER_DETAIL_INFO_6" desc="Horizontal pod autoscaler info status section">状态</translation>
   <translation id="3808910683344466681" key="MSG_HORIZONTALPODAUTOSCALER_DETAIL_INFO_7" desc="Horizontal pod autoscaler info status section currentReplicas entry.">当前副本数</translation>
   <translation id="564448650580373807" key="MSG_HORIZONTALPODAUTOSCALER_DETAIL_INFO_8" desc="Horizontal pod autoscaler info status section desiredReplicas entry.">需要副本数</translation>
-  <translation id="3389156809898904124" key="MSG_HORIZONTALPODAUTOSCALER_DETAIL_INFO_9" desc="Horizontal pod autoscaler info status section currentCPUUtilizationPercentage entry.">当前 CPU 利用率</translation>
-  <translation id="2401546852640381854" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">水平容器组自动伸缩器</translation>
+  <translation id="3389156809898904124" key="MSG_HORIZONTALPODAUTOSCALER_DETAIL_INFO_9" desc="Horizontal pod autoscaler info status section currentCPUUtilizationPercentage entry.">当前 CPU 使用率</translation>
+  <translation id="2401546852640381854" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">容器组水平伸缩器</translation>
   <translation id="6229449628982316627" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of horizontal pod autoscalers (horizontal pod autoscaler list view).">名称</translation>
   <translation id="2615165549137360373" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARDLIST_2" desc="Label \'Namespace\' which appears as a column label in the table of horizontal pod autoscalers (horizontal pod autoscaler list view).">命名空间</translation>
   <translation id="2649209286132146798" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARDLIST_3" desc="Column header \'Target\' on Horizontal Pod Autoscaler lists">目标</translation>
-  <translation id="6390261292837099398" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARDLIST_4" desc="Label \'Target CPU Utilization\' which appears as a column label in the table of horizontal pod autoscalers (horizontal pod autoscaler list view).">目标 CPU 利用率</translation>
-  <translation id="1138380808295885535" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARDLIST_5" desc="Label \'Current CPU Utilization\' which appears as a column label in the table of horizontal pod autoscalers (horizontal pod autoscaler list view).">当前 CPU 利用率</translation>
+  <translation id="6390261292837099398" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARDLIST_4" desc="Label \'Target CPU Utilization\' which appears as a column label in the table of horizontal pod autoscalers (horizontal pod autoscaler list view).">目标 CPU 使用率</translation>
+  <translation id="1138380808295885535" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARDLIST_5" desc="Label \'Current CPU Utilization\' which appears as a column label in the table of horizontal pod autoscalers (horizontal pod autoscaler list view).">当前 CPU 使用率</translation>
   <translation id="2631385607889091074" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARDLIST_6" desc="Label \'Min Replicas\' which appears as a column label in the table of horizontal pod autoscalers (horizontal pod autoscaler list view).">最小副本数</translation>
   <translation id="8088373128320107261" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARDLIST_7" desc="Label \'Max Replicas\' which appears as a column label in the table of horizontal pod autoscalers (horizontal pod autoscaler list view).">最大副本数</translation>
   <translation id="4787729230562636049" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARDLIST_8" desc="Label \'Age\' which appears as a column label in the table of horizontal pod autoscalers (horizontal pod autoscaler list view).">已创建</translation>
-  <translation id="1108386405397731039" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARDLIST_9" desc="Text for horizontal pod autoscaler card list zerostate.">没有水平容器组自动伸缩器可显示</translation>
+  <translation id="1108386405397731039" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARDLIST_9" desc="Text for horizontal pod autoscaler card list zerostate.">没有容器组水平伸缩器可显示</translation>
   <translation id="7169021054679689074" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARD_0" desc="Show the target CPU utilization percentage of a the pods of the targetted resource of a HPA">{{::$ctrl.horizontalPodAutoscaler.targetCPUUtilizationPercentage}}%</translation>
   <translation id="2749124983305767530" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARD_1" desc="Show the current CPU utilization percentage of a the pods of the targetted resource of a HPA">{{::$ctrl.horizontalPodAutoscaler.currentCPUUtilizationPercentage}}%</translation>
-  <translation id="8805456014928287136" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARD_2" desc="Title \'Horizontal Pod Autoscaler\' which is used as a title for the delete/update\n   dialogs (that can be opened on the horizontal pod autoscaler list view).">水平容器组自动伸缩器</translation>
-  <translation id="8880232300868913858" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARD_3" desc="Title \'Horizontal Pod Autoscaler\' which is used as a title for the delete/update\n   dialogs (that can be opened on the horizontal pod autoscaler list view).">水平容器组自动伸缩器</translation>
+  <translation id="8805456014928287136" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARD_2" desc="Title \'Horizontal Pod Autoscaler\' which is used as a title for the delete/update\n   dialogs (that can be opened on the horizontal pod autoscaler list view).">容器组水平伸缩器</translation>
+  <translation id="8880232300868913858" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARD_3" desc="Title \'Horizontal Pod Autoscaler\' which is used as a title for the delete/update\n   dialogs (that can be opened on the horizontal pod autoscaler list view).">容器组水平伸缩器</translation>
   <translation id="6040027076420887056" key="MSG_HORIZONTAL_POD_AUTOSCALER_DETAIL_LAST_SCALED_TOOLTIP" desc="Tooltip 'Last scaled at [some date]' showing the exact time of the last time the horizontal pod autoscaler was scaled.">最近伸缩于 <ph name="SCALE_DATE"/></translation>
   <translation id="9182587734524448852" key="MSG_HORIZONTAL_POD_AUTOSCALER_LIST_CREATED_AT_TOOLTIP" desc="Tooltip 'Created at [some date]' showing the exact creation time of the horizontal pod autoscaler.">创建于 <ph name="CREATION_DATE"/></translation>
   <translation id="8095485922114238358" key="MSG_INGRESS_DETAIL_ACTIONBAR_0" desc="Label \'Ingress\' which appears at the top of the delete dialog, opened from an ingress details page.">访问权</translation>
@@ -416,7 +416,7 @@
   <translation id="6006534028215971090" key="MSG_INGRESS_LIST_CARDLIST_5" desc="Text for ingress card list zerostate.">没有访问权可显示</translation>
   <translation id="6014322650743882966" key="MSG_INGRESS_LIST_STARTED_AT_TOOLTIP" desc="Tooltip 'Started at [some date]' showing the exact start time of the ingress.">创建于 <ph name="START_DATE"> UTC</ph></translation>
   <translation id="3490469769225638472" key="MSG_JOB_DETAIL_ACTIONBAR_0" desc="Label \'Job\' which appears at the top of the dialog, opened from a job details page.">任务</translation>
-  <translation id="6834336408129965832" key="MSG_JOB_DETAIL_ACTIONBAR_1" desc="Label \'Job\' which appears at the top of the dialog, opened from a job details page.">Job</translation>
+  <translation id="6834336408129965832" key="MSG_JOB_DETAIL_ACTIONBAR_1" desc="Label \'Job\' which appears at the top of the dialog, opened from a job details page.">任务</translation>
   <translation id="9158321222252952956" key="MSG_JOB_DETAIL_DETAIL_0" desc="Title for graph card displaying CPU metric of one job.">CPU 使用率</translation>
   <translation id="5829638785096512195" key="MSG_JOB_DETAIL_DETAIL_1" desc="Title for graph card displaying memory metric of one job.">内存使用率</translation>
   <translation id="91452791679953853" key="MSG_JOB_DETAIL_DETAIL_2" desc="Help message detailing what is included in the memory usage">此任务所管理容器组的内存占用包括缓存</translation>
@@ -444,20 +444,20 @@
   <translation id="8162859503142023792" key="MSG_JOB_LIST_CARDLIST_7" desc="Label \'Images\' which appears as a column label in the table of replication controllers (Job list view).">镜像</translation>
   <translation id="3716747253637312807" key="MSG_JOB_LIST_CARDLIST_8" desc="Text for job card list zerostate.">没有任务可显示</translation>
   <translation id="122753681203495181" key="MSG_JOB_LIST_CARD_0" desc="Column \'Job\' that shows if the resource kind should be shown in a Job List">任务</translation>
-  <translation id="6478317117857627375" key="MSG_JOB_LIST_CARD_1" desc="Label \'Job\' which will appear in the job scale dialog opened from a job card on the list page.">Job</translation>
-  <translation id="2309406660346586810" key="MSG_JOB_LIST_CARD_2" desc="Label \'Job\' which will appear in the job delete dialog opened from a job card on the list page.">Job</translation>
-  <translation id="8437900733414779283" key="MSG_JOB_LIST_CARD_3" desc="Label \'Job\' which will appear in the job edit dialog opened from a job card on the list page.">Job</translation>
+  <translation id="6478317117857627375" key="MSG_JOB_LIST_CARD_1" desc="Label \'Job\' which will appear in the job scale dialog opened from a job card on the list page.">任务</translation>
+  <translation id="2309406660346586810" key="MSG_JOB_LIST_CARD_2" desc="Label \'Job\' which will appear in the job delete dialog opened from a job card on the list page.">任务</translation>
+  <translation id="8437900733414779283" key="MSG_JOB_LIST_CARD_3" desc="Label \'Job\' which will appear in the job edit dialog opened from a job card on the list page.">任务</translation>
   <translation id="3055363125961915665" key="MSG_JOB_LIST_LIST_0" desc="Title for graph card displaying CPU metric of jobs.">CPU 使用率</translation>
   <translation id="5794425570699478727" key="MSG_JOB_LIST_LIST_1" desc="Title for graph card displaying memory metric of jobs.">内存使用率</translation>
   <translation id="6300164314930034252" key="MSG_JOB_LIST_LIST_2" desc="Help message detailing what is included in the memory usage">这些任务所管理容器组的内存占用包括缓存</translation>
-  <translation id="5485538583399563094" key="MSG_LESS_WARNINGS_LABEL" desc="Show less warnings button label.">Show <ph name="COUNT"> less</ph></translation>
-  <translation id="4722922095699681308" key="MSG_LOGS_LOGS_0" desc="Title prefix for logs card.">日志来自</translation>
-  <translation id="6855662924451585032" key="MSG_LOGS_LOGS_1" desc="Title part for logs card.">在</translation>
-  <translation id="6208229815004454576" key="MSG_LOGS_LOGS_2" desc="Title prefix for logs card.">日志来自</translation>
+  <translation id="5485538583399563094" key="MSG_LESS_WARNINGS_LABEL" desc="Show less warnings button label.">隐藏 <ph name="COUNT"> 条</ph></translation>
+  <translation id="4722922095699681308" key="MSG_LOGS_LOGS_0" desc="Title prefix for logs card.">容器日志</translation>
+  <translation id="6855662924451585032" key="MSG_LOGS_LOGS_1" desc="Title part for logs card.">位于</translation>
+  <translation id="6208229815004454576" key="MSG_LOGS_LOGS_2" desc="Title prefix for logs card.">日志范围从</translation>
   <translation id="1223986507449568472" key="MSG_LOGS_LOGS_3" desc="Footer part for logs card.">到</translation>
   <translation id="3402202863027894322" key="MSG_LOGS_TRUNCATED_WARNING" desc="Error dialog indicating that parts of the log file is missing due to memory constraints.">日志文件过大，中间部分无法加载</translation>
   <translation id="7594890250973129963" key="MSG_LOGS_ZEROSTATE_TEXT" desc="Text for logs card zerostate in logs page.">所选容器没有日志信息</translation>
-  <translation id="2533795620042066843" key="MSG_MORE_WARNINGS_LABEL" desc="Show more warnings button label.">Show <ph name="COUNT"> more</ph></translation>
+  <translation id="2533795620042066843" key="MSG_MORE_WARNINGS_LABEL" desc="Show more warnings button label.">显示更多 <ph name="COUNT"> 条</ph></translation>
   <translation id="8066049814492652432" key="MSG_NAMESPACE_DETAIL_INFO_0" desc="Header in a detail view">详情</translation>
   <translation id="6352041840775187168" key="MSG_NAMESPACE_DETAIL_INFO_1" desc="Label \'Status\' for the namespace namespace on the namespace details page.">状态</translation>
   <translation id="2794451768196559104" key="MSG_NAMESPACE_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">命名空间</translation>
@@ -471,12 +471,12 @@
   <translation id="5644753445531072726" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_0" desc="Label \'Allocated resources\' for the allocated resources section.">已分配资源</translation>
   <translation id="3448064978953547706" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_1" desc="Label \'Requests\' for the allocated resources graphs legend.">请求值</translation>
   <translation id="7138692152606832108" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_2" desc="Label \'Limits\' for the allocated resources graphs legend.">限制值</translation>
-  <translation id="9137523745385232068" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_3" desc="Label \'Capacity\' for the allocated resources graphs legend.">负荷力</translation>
+  <translation id="9137523745385232068" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_3" desc="Label \'Capacity\' for the allocated resources graphs legend.">总量</translation>
   <translation id="4929249194769778893" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_4" desc="Label \'Requests\' for the allocated resources graphs legend.">请求值</translation>
   <translation id="495272876191440718" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_5" desc="Label \'Limits\' for the allocated resources graphs legend.">限制值</translation>
-  <translation id="2228308297469848373" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_6" desc="Label \'Capacity\' for the allocated resources graphs legend.">负荷力</translation>
+  <translation id="2228308297469848373" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_6" desc="Label \'Capacity\' for the allocated resources graphs legend.">总量</translation>
   <translation id="3729099716287586109" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_7" desc="Label \'Allocation\' for the allocated resources graphs legend.">已分配</translation>
-  <translation id="1870534195313284860" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_8" desc="Label \'Capacity\' for the allocated resources graphs legend.">负荷力</translation>
+  <translation id="1870534195313284860" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_8" desc="Label \'Capacity\' for the allocated resources graphs legend.">总量</translation>
   <translation id="8825218677764515340" key="MSG_NODE_DETAIL_DETAIL_0" desc="Title for graph card displaying CPU metric of one node.">CPU 使用率</translation>
   <translation id="1397958944434227282" key="MSG_NODE_DETAIL_DETAIL_1" desc="Title for graph card displaying memory metric of one node.">内存使用率</translation>
   <translation id="1964687474867368783" key="MSG_NODE_DETAIL_DETAIL_2" desc="Help message detailing what is included in the memory usage">内存占用包括缓存</translation>
@@ -513,12 +513,12 @@
   <translation id="7165645741606687474" key="MSG_NODE_LIST_LIST_0" desc="Title for graph card displaying CPU metric of nodes.">CPU 使用率</translation>
   <translation id="7938673888851238901" key="MSG_NODE_LIST_LIST_1" desc="Title for graph card displaying memory metric of nodes.">内存使用率</translation>
   <translation id="1363994976459428521" key="MSG_NODE_LIST_LIST_2" desc="Help message detailing what is included in the memory usage">内存占用包括缓存</translation>
-  <translation id="2230058550547139309" key="MSG_NO_ERROR_DATA" desc="String to display when error object has no data.">无错误</translation>
+  <translation id="2230058550547139309" key="MSG_NO_ERROR_DATA" desc="String to display when error object has no data.">没有错误数据</translation>
   <translation id="486388281806331038" key="MSG_PERSISTENTVOLUMECLAIM_DETAIL_ACTIONBAR_0" desc="Label \'Persistent Volume Claim\' which appears at the top of the delete dialog, opened from a persistent volume claim details page.">持久化存储卷索取</translation>
   <translation id="1482471968556330090" key="MSG_PERSISTENTVOLUMECLAIM_DETAIL_INFO_0" desc="Header in a detail view">详情</translation>
   <translation id="6385503627780441862" key="MSG_PERSISTENTVOLUMECLAIM_DETAIL_INFO_1" desc="Persistent volume claim info details section status entry.">状态</translation>
   <translation id="2412371468817393973" key="MSG_PERSISTENTVOLUMECLAIM_DETAIL_INFO_2" desc="Persistent volume claim info details section volume entry.">存储卷</translation>
-  <translation id="6740597941261077457" key="MSG_PERSISTENTVOLUMECLAIM_DETAIL_INFO_3" desc="Persistent volume claim info details section capacity entry.">负荷力</translation>
+  <translation id="6740597941261077457" key="MSG_PERSISTENTVOLUMECLAIM_DETAIL_INFO_3" desc="Persistent volume claim info details section capacity entry.">总量</translation>
   <translation id="297809042910539610" key="MSG_PERSISTENTVOLUMECLAIM_DETAIL_INFO_4" desc="Persistent volume claim info details section access modes entry.">访问模式</translation>
   <translation id="29404782164326270" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">持久化存储卷索取</translation>
   <translation id="5483797855700474826" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of persistent volume claims (persistent volume claim list view).">名称</translation>
@@ -537,7 +537,7 @@
   <translation id="1183014090355571191" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_2" desc="Persistent volume info details section claim entry.">索取</translation>
   <translation id="8253469971637153606" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_3" desc="Persistent volume info details section reclaim policy entry.">回收策略</translation>
   <translation id="1048037683065603923" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_4" desc="Persistent volume info details section access modes entry.">访问模式</translation>
-  <translation id="489198110526224081" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_5" desc="Persistent volume info details section capacity entry.">负荷力</translation>
+  <translation id="489198110526224081" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_5" desc="Persistent volume info details section capacity entry.">总量</translation>
   <translation id="7193098873360233228" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_6" desc="Persistent volume info details section message entry.">消息</translation>
   <translation id="3344267084925697004" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_0" desc="Persistent volume source info title.">持久化存储卷来源</translation>
   <translation id="4229851576634547217" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_1" desc="Persistent volume source info host path title.">宿主机路径</translation>
@@ -587,7 +587,7 @@
   <translation id="7944617415298542080" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">持久化存储卷</translation>
   <translation id="132041398851471554" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_1" desc="Persistent volume list header: name.">名称</translation>
   <translation id="5516067660249261426" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_2" desc="Persistent volume list header: labels.">标签</translation>
-  <translation id="401484757289437256" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_3" desc="Persistent volume list header: capacity.">负荷力</translation>
+  <translation id="401484757289437256" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_3" desc="Persistent volume list header: capacity.">总量</translation>
   <translation id="119943904947653278" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_4" desc="Persistent volume list header: access modes.">访问模式</translation>
   <translation id="384445450481051056" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_5" desc="Persistent volume list header: status.">状态</translation>
   <translation id="6387315119675278668" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_6" desc="Persistent volume list header: claim.">索取</translation>
@@ -630,12 +630,12 @@
   <translation id="1984772040767431754" key="MSG_POD_LIST_CARDLIST_1" desc="Title of a column">名称</translation>
   <translation id="7443881172620941594" key="MSG_POD_LIST_CARDLIST_2" desc="Title of a column">命名空间</translation>
   <translation id="6983001768279857619" key="MSG_POD_LIST_CARDLIST_3" desc="Title of a pod status column">状态</translation>
-  <translation id="9188256196176968844" key="MSG_POD_LIST_CARDLIST_4" desc="Title of a restarts column for a pod">重启</translation>
+  <translation id="9188256196176968844" key="MSG_POD_LIST_CARDLIST_4" desc="Title of a restarts column for a pod">已重启</translation>
   <translation id="6713259838973606526" key="MSG_POD_LIST_CARDLIST_5" desc="Title of a column for the age of a pod">已创建</translation>
   <translation id="2353613362278824556" key="MSG_POD_LIST_CARDLIST_6" desc="Title of a column">CPU (核)</translation>
   <translation id="6472029030033782169" key="MSG_POD_LIST_CARDLIST_7" desc="Title of a column">内存 (字节)</translation>
   <translation id="8463106700747317382" key="MSG_POD_LIST_CARDLIST_8" desc="Text for pods card list zerostate.">没有容器组可显示</translation>
-  <translation id="2699867637725149359" key="MSG_POD_LIST_CARDLIST_9" desc="Title of a column showing name of the node that pod is running at">Node</translation>
+  <translation id="2699867637725149359" key="MSG_POD_LIST_CARDLIST_9" desc="Title of a column showing name of the node that pod is running at">节点</translation>
   <translation id="5608535302521220986" key="MSG_POD_LIST_CARD_0" desc="Tooltip for failed pod card icon">此容器组已出错</translation>
   <translation id="7889427465656547627" key="MSG_POD_LIST_CARD_1" desc="Tooltip for pending pod card icon">此容器组等待中</translation>
   <translation id="1278633357095866885" key="MSG_POD_LIST_CARD_3" desc="Name of the pod resource">容器组</translation>
@@ -651,25 +651,25 @@
   <translation id="721797967401199865" key="MSG_PORT_MAPPINGS_SERVICE_TYPE_NONE_LABEL" desc="Label 'None', which appears as an option in the service type selection box on the deploy page.">无</translation>
   <translation id="4521543753957765275" key="MSG_RC_LIST_CREATED_AT_TOOLTIP" desc="Tooltip 'Created at [some date]' showing the exact creation time of replication controller.">创建于 <ph name="CREATION_DATE"/></translation>
   <translation id="1260262098898397299" key="MSG_REPLICASET_DETAIL_ACTIONBAR_0" desc="Label \'Replica Set\' which appears at the top of the delete dialog, opened from a replica set details page.">副本集</translation>
-  <translation id="1514528876969530401" key="MSG_REPLICASET_DETAIL_ACTIONBAR_1" desc="Label \'Replica Set\' which appears at the top of the dialog, opened from a replica set details page.">Replica Set</translation>
+  <translation id="1514528876969530401" key="MSG_REPLICASET_DETAIL_ACTIONBAR_1" desc="Label \'Replica Set\' which appears at the top of the dialog, opened from a replica set details page.">副本集</translation>
   <translation id="4400871969398726978" key="MSG_REPLICASET_DETAIL_DETAIL_0" desc="Title for graph card displaying CPU metric of one replica set.">CPU 使用率</translation>
   <translation id="4704389000141025902" key="MSG_REPLICASET_DETAIL_DETAIL_1" desc="Title for graph card displaying memory metric of one replica set.">内存使用率</translation>
   <translation id="8906155885743398611" key="MSG_REPLICASET_DETAIL_DETAIL_2" desc="Help message detailing what is included in the memory usage">此副本集所管理容器组的内存占用包括缓存</translation>
   <translation id="4572191373237361392" key="MSG_REPLICASET_DETAIL_DETAIL_4" desc="Text for pods card zerostate in replica set details page.">此副本集目前没有管理容器组</translation>
   <translation id="4073087810541869774" key="MSG_REPLICASET_DETAIL_DETAIL_6" desc="Text for services card zerostate in replica set details page.">目前没有服务的标签选择器与此副本集一致</translation>
-  <translation id="866751517478629490" key="MSG_REPLICASET_DETAIL_DETAIL_8" desc="Text for horizontal pod autoscalers card zerostate in replica set details page.">此副本集目前没有水平容器组自动伸缩器</translation>
+  <translation id="866751517478629490" key="MSG_REPLICASET_DETAIL_DETAIL_8" desc="Text for horizontal pod autoscalers card zerostate in replica set details page.">此副本集目前没有容器组水平伸缩器</translation>
   <translation id="55301176526383580" key="MSG_REPLICASET_DETAIL_INFO_0" desc="Header in a detail view">详情</translation>
   <translation id="4263408774070199925" key="MSG_REPLICASET_DETAIL_INFO_1" desc="Label \'selector\' for replica sets.">选择器</translation>
-  <translation id="3760168929569923839" key="MSG_REPLICASET_DETAIL_INFO_10" desc="The message says how many pods have failed (replica set details page).">{{::$ctrl.replicaSet.podInfo.failed}} 已失败</translation>
-  <translation id="7492629527868215674" key="MSG_REPLICASET_DETAIL_INFO_11" desc="The message says how many pods are running (replica set details page).">{{::$ctrl.replicaSet.podInfo.running}} 运行中</translation>
+  <translation id="3760168929569923839" key="MSG_REPLICASET_DETAIL_INFO_10" desc="The message says how many pods have failed (replica set details page).">{{::$ctrl.replicaSet.podInfo.failed}} 个已失败</translation>
+  <translation id="7492629527868215674" key="MSG_REPLICASET_DETAIL_INFO_11" desc="The message says how many pods are running (replica set details page).">{{::$ctrl.replicaSet.podInfo.running}} 个运行中</translation>
   <translation id="3911353918422532139" key="MSG_REPLICASET_DETAIL_INFO_2" desc="Label \'Images\' for the list of images used in a replica set, on its details page.">镜像</translation>
   <translation id="8102227019794353148" key="MSG_REPLICASET_DETAIL_INFO_3" desc="Subtitle \'Status\' for the right section with pod status information\n        on the replica set details page.">状态</translation>
   <translation id="875157097607992319" key="MSG_REPLICASET_DETAIL_INFO_4" desc="Label \'Pods\' for the pods in a replica set on its details page.">容器组</translation>
-  <translation id="2767096077990855253" key="MSG_REPLICASET_DETAIL_INFO_5" desc="The message says how many pods were created (replica set details page).">{{::$ctrl.replicaSet.podInfo.current}} 已创建</translation>
-  <translation id="111482360301352967" key="MSG_REPLICASET_DETAIL_INFO_6" desc="The message says how many pods are desired to run (replica set details page).">{{::$ctrl.replicaSet.podInfo.desired}} 需要</translation>
-  <translation id="1490872208453690790" key="MSG_REPLICASET_DETAIL_INFO_7" desc="How many pods are running (replica set details page).">{{::$ctrl.replicaSet.podInfo.running}} 运行中</translation>
+  <translation id="2767096077990855253" key="MSG_REPLICASET_DETAIL_INFO_5" desc="The message says how many pods were created (replica set details page).">{{::$ctrl.replicaSet.podInfo.current}} 个已创建</translation>
+  <translation id="111482360301352967" key="MSG_REPLICASET_DETAIL_INFO_6" desc="The message says how many pods are desired to run (replica set details page).">需要 {{::$ctrl.replicaSet.podInfo.desired}} 个</translation>
+  <translation id="1490872208453690790" key="MSG_REPLICASET_DETAIL_INFO_7" desc="How many pods are running (replica set details page).">{{::$ctrl.replicaSet.podInfo.running}} 个运行中</translation>
   <translation id="6003817598627470456" key="MSG_REPLICASET_DETAIL_INFO_8" desc="Label \'Pods status\' for the status of the pods in a replica set, on the replica set details page.">容器组状态</translation>
-  <translation id="4170684647118324267" key="MSG_REPLICASET_DETAIL_INFO_9" desc="The message says how many pods are pending (replica set details page).">{{::$ctrl.replicaSet.podInfo.pending}} 等待中</translation>
+  <translation id="4170684647118324267" key="MSG_REPLICASET_DETAIL_INFO_9" desc="The message says how many pods are pending (replica set details page).">{{::$ctrl.replicaSet.podInfo.pending}} 个等待中</translation>
   <translation id="3006509380820850241" key="MSG_REPLICASET_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">副本集</translation>
   <translation id="2550445470731407296" key="MSG_REPLICASET_LIST_CARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of replica sets (replica set list view).">名称</translation>
   <translation id="7363658059896561467" key="MSG_REPLICASET_LIST_CARDLIST_2" desc="Column header \'Kind\' for a Replica Set list">类型</translation>
@@ -684,30 +684,30 @@
   <translation id="8737661932051185312" key="MSG_REPLICASET_LIST_CARD_2" desc="Column \'Replica Set\' that shows if the resource kind should be shown in a Replica Set List">副本集</translation>
   <translation id="7581599441949506500" key="MSG_REPLICASET_LIST_CARD_3" desc="Label \'Replica Set\' which appears at the top of the delete dialog, opened from a replica set list page.">副本集</translation>
   <translation id="4577636652353595689" key="MSG_REPLICASET_LIST_CARD_4" desc="Label \'Replica Set\' which appears at the top of the delete dialog, opened from a replica set list page.">副本集</translation>
-  <translation id="7557813909805722094" key="MSG_REPLICASET_LIST_CARD_5" desc="Label \'Replica Set\' which appears at the top of the edit dialog, opened from a replica set list page.">Replica Set</translation>
+  <translation id="7557813909805722094" key="MSG_REPLICASET_LIST_CARD_5" desc="Label \'Replica Set\' which appears at the top of the edit dialog, opened from a replica set list page.">副本集</translation>
   <translation id="1953836789676016853" key="MSG_REPLICASET_LIST_LIST_0" desc="Title for graph card displaying CPU metric of replica sets.">CPU 使用率</translation>
   <translation id="110700328163812848" key="MSG_REPLICASET_LIST_LIST_1" desc="Title for graph card displaying memory metric of replica sets.">内存使用率</translation>
   <translation id="8124993050775257685" key="MSG_REPLICASET_LIST_LIST_2" desc="Help message detailing what is included in the memory usage">这些副本集所管理容器组的内存占用包括缓存</translation>
-  <translation id="4086662747053444628" key="MSG_REPLICATIONCONTROLLER_DETAIL_ACTIONBAR_0" desc="Label \'Replication Controller\' which appears at the top of the scale dialog, opened from a replication controller details page.">Replication Controller</translation>
-  <translation id="6658500099642793481" key="MSG_REPLICATIONCONTROLLER_DETAIL_ACTIONBAR_1" desc="Label \'Replication Controller\' which appears at the top of the dialog, opened from a replication controller details page.">Replication Controller</translation>
+  <translation id="4086662747053444628" key="MSG_REPLICATIONCONTROLLER_DETAIL_ACTIONBAR_0" desc="Label \'Replication Controller\' which appears at the top of the scale dialog, opened from a replication controller details page.">副本控制器</translation>
+  <translation id="6658500099642793481" key="MSG_REPLICATIONCONTROLLER_DETAIL_ACTIONBAR_1" desc="Label \'Replication Controller\' which appears at the top of the dialog, opened from a replication controller details page.">副本控制器</translation>
   <translation id="540465365371246326" key="MSG_REPLICATIONCONTROLLER_DETAIL_DETAIL_0" desc="Title for graph card displaying CPU metric of one replication controller.">CPU 使用率</translation>
   <translation id="5679990989824450360" key="MSG_REPLICATIONCONTROLLER_DETAIL_DETAIL_1" desc="Title for graph card displaying memory metric of one replication controller.">内存使用率</translation>
   <translation id="811005294829243195" key="MSG_REPLICATIONCONTROLLER_DETAIL_DETAIL_2" desc="Help message detailing what is included in the memory usage">这些副本控制器所管理容器组的内存占用包括缓存</translation>
   <translation id="5205445021979184107" key="MSG_REPLICATIONCONTROLLER_DETAIL_DETAIL_4" desc="Text for services card zerostate in replication controller details page.">目前没有服务的标签选择器与此副本控制器一致</translation>
   <translation id="3131127524918345503" key="MSG_REPLICATIONCONTROLLER_DETAIL_DETAIL_6" desc="Text for pods card zerostate in replication controller details page.">此副本控制器目前没有管理容器组</translation>
-  <translation id="6774788258232499089" key="MSG_REPLICATIONCONTROLLER_DETAIL_DETAIL_8" desc="Text for horizontal pod autoscalers card zerostate in replica set details page.">此副本控制器目前没有水平容器组自动伸缩器</translation>
+  <translation id="6774788258232499089" key="MSG_REPLICATIONCONTROLLER_DETAIL_DETAIL_8" desc="Text for horizontal pod autoscalers card zerostate in replica set details page.">此副本控制器目前没有容器组水平伸缩器</translation>
   <translation id="226817742496907856" key="MSG_REPLICATIONCONTROLLER_DETAIL_INFO_0" desc="Header in a detail view">详情</translation>
   <translation id="2966352401153803656" key="MSG_REPLICATIONCONTROLLER_DETAIL_INFO_1" desc="Label \'Selector\' for the replication controller\'s selector on the replication controller details page.">选择器</translation>
-  <translation id="4612002136140637630" key="MSG_REPLICATIONCONTROLLER_DETAIL_INFO_10" desc="The message says how many pods have failed (replication controller details page).">{{::$ctrl.replicationController.podInfo.failed}} 已失败</translation>
-  <translation id="6124228678804559019" key="MSG_REPLICATIONCONTROLLER_DETAIL_INFO_11" desc="The message says how many pods are running (replication controller details page).">{{::$ctrl.replicationController.podInfo.running}} 运行中</translation>
+  <translation id="4612002136140637630" key="MSG_REPLICATIONCONTROLLER_DETAIL_INFO_10" desc="The message says how many pods have failed (replication controller details page).">{{::$ctrl.replicationController.podInfo.failed}} 个已失败</translation>
+  <translation id="6124228678804559019" key="MSG_REPLICATIONCONTROLLER_DETAIL_INFO_11" desc="The message says how many pods are running (replication controller details page).">{{::$ctrl.replicationController.podInfo.running}} 个运行中</translation>
   <translation id="8187351409255724077" key="MSG_REPLICATIONCONTROLLER_DETAIL_INFO_2" desc="Label \'Images\' for the list of images used in a replication controller, on its details page.">镜像</translation>
   <translation id="5182546327040956779" key="MSG_REPLICATIONCONTROLLER_DETAIL_INFO_3" desc="Subtitle \'Status\' for the right section with pod status information on the replication controller details page.">状态</translation>
   <translation id="1084410744399884216" key="MSG_REPLICATIONCONTROLLER_DETAIL_INFO_4" desc="Label \'Pods\' for the pods in a replication controller on its details page.">容器组</translation>
-  <translation id="5269025916970350208" key="MSG_REPLICATIONCONTROLLER_DETAIL_INFO_5" desc="The message says how many pods were created (replication controller details page).">{{::$ctrl.replicationController.podInfo.currentCount}} 已创建</translation>
-  <translation id="2486312277918544072" key="MSG_REPLICATIONCONTROLLER_DETAIL_INFO_6" desc="The message says how many pods are desired to run (replication controller details page).">{{::$ctrl.replicationController.podInfo.desired}} 需要</translation>
-  <translation id="6816738060650305426" key="MSG_REPLICATIONCONTROLLER_DETAIL_INFO_7" desc="The message says how many pods are running (replication controller details page).">{{::$ctrl.replicationController.podInfo.running}} 运行中</translation>
+  <translation id="5269025916970350208" key="MSG_REPLICATIONCONTROLLER_DETAIL_INFO_5" desc="The message says how many pods were created (replication controller details page).">{{::$ctrl.replicationController.podInfo.currentCount}} 个已创建</translation>
+  <translation id="2486312277918544072" key="MSG_REPLICATIONCONTROLLER_DETAIL_INFO_6" desc="The message says how many pods are desired to run (replication controller details page).">需要 {{::$ctrl.replicationController.podInfo.desired}} 个</translation>
+  <translation id="6816738060650305426" key="MSG_REPLICATIONCONTROLLER_DETAIL_INFO_7" desc="The message says how many pods are running (replication controller details page).">{{::$ctrl.replicationController.podInfo.running}} 个运行中</translation>
   <translation id="2996817668812553434" key="MSG_REPLICATIONCONTROLLER_DETAIL_INFO_8" desc="Label \'Pods status\' for the status of the pods in a replication controller, on the replication controller details page.">容器组状态</translation>
-  <translation id="1894294583521271782" key="MSG_REPLICATIONCONTROLLER_DETAIL_INFO_9" desc="The message says how many pods are pending (replication controller details page).">{{::$ctrl.replicationController.podInfo.pending}} 等待中</translation>
+  <translation id="1894294583521271782" key="MSG_REPLICATIONCONTROLLER_DETAIL_INFO_9" desc="The message says how many pods are pending (replication controller details page).">{{::$ctrl.replicationController.podInfo.pending}} 个等待中</translation>
   <translation id="4434451626308089157" key="MSG_REPLICATIONCONTROLLER_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">副本控制器</translation>
   <translation id="4241490788014176188" key="MSG_REPLICATIONCONTROLLER_LIST_CARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of replication controllers (RC list view).">名称</translation>
   <translation id="8687785566574889286" key="MSG_REPLICATIONCONTROLLER_LIST_CARDLIST_2" desc="Column header \'Kind\' of a Replication Controller list">类型</translation>
@@ -717,7 +717,7 @@
   <translation id="3957484052069652608" key="MSG_REPLICATIONCONTROLLER_LIST_CARDLIST_6" desc="Label \'Age\' which appears as a column label in the table of replication controllers (RC list view).">已创建</translation>
   <translation id="6698419478883321763" key="MSG_REPLICATIONCONTROLLER_LIST_CARDLIST_7" desc="Label \'Images\' which appears as a column label in the table of replication controllers (RC list view).">镜像</translation>
   <translation id="3909279990084178026" key="MSG_REPLICATIONCONTROLLER_LIST_CARDLIST_8" desc="Text for replication controller card list zerostate.">没有副本控制器可显示</translation>
-  <translation id="8726722862459943357" key="MSG_REPLICATIONCONTROLLER_LIST_CARDMENU_0" desc="Label \'Replication Controller\' which will appear in the replication Controller scale dialog opened from a replication controller card on the list page.">Replication Controller</translation>
+  <translation id="8726722862459943357" key="MSG_REPLICATIONCONTROLLER_LIST_CARDMENU_0" desc="Label \'Replication Controller\' which will appear in the replication Controller scale dialog opened from a replication controller card on the list page.">副本控制器</translation>
   <translation id="1225563863938274391" key="MSG_REPLICATIONCONTROLLER_LIST_CARDMENU_2" desc="Label \'Replication Controller\' which will appear in the replication Controller delete dialogm opened from a replication controller card on the list page.">副本控制器</translation>
   <translation id="538474906418277358" key="MSG_REPLICATIONCONTROLLER_LIST_CARDMENU_3" desc="Label \'Replication Controller\' which will appear in the replication Controller delete dialogm opened from a replication controller card on the list page.">副本控制器</translation>
   <translation id="3633473974060235402" key="MSG_REPLICATIONCONTROLLER_LIST_CARD_0" desc="Tooltip saying that some pods in a replication controller have errors.">一个或多个容器组已出错</translation>
@@ -742,7 +742,7 @@
   <translation id="1028467341074968941" key="MSG_RESOURCEQUOTA_DETAIL_STATUS_1" desc="Resource quota details status section hard.">硬性限制</translation>
   <translation id="1101311215261110165" key="MSG_RESOURCEQUOTA_DETAIL_STATUS_2" desc="Resource quota details status section used.">已使用</translation>
   <translation id="5666870883139874190" key="MSG_RESOURCE_CARD_LIST_FILTERING_ERROR" desc="Message shown to the user when there is a filtering error.">过滤错误</translation>
-  <translation id="5352740626481015314" key="MSG_RESOURCE_CARD_LIST_FILTER_ICON_TOOLTIP" desc="Tooltip on resource card list filter icon.">以名称过滤对象</translation>
+  <translation id="5352740626481015314" key="MSG_RESOURCE_CARD_LIST_FILTER_ICON_TOOLTIP" desc="Tooltip on resource card list filter icon.">通过名称过滤对象</translation>
   <translation id="6139977749663403568" key="MSG_RESOURCE_CARD_LIST_FILTER_PLACEHOLDER_TEXT" desc="Tooltip on resource card list filter icon.">搜索</translation>
   <translation id="3641265385665997534" key="MSG_RESOURCE_CARD_LIST_PAGINATION_ERROR" desc="Message shown to the user when there is a pagination error.">分页错误</translation>
   <translation id="8315383091892527627" key="MSG_RESOURCE_CARD_LIST_SORT_ERROR" desc="Message shown to the user when there is a sort error.">排序错误</translation>
@@ -788,22 +788,22 @@
   <translation id="3162800940071393879" key="MSG_SHELL_SHELL_0" desc="Title prefix for the shell card.">命令行</translation>
   <translation id="6124573494636381071" key="MSG_SHELL_SHELL_1" desc="Title part for the shell card.">在</translation>
   <translation id="2232943352979399383" key="MSG_STATEFULSET_DETAIL_ACTIONBAR_0" desc="Label \'Stateful Set\' which appears at the top of the delete dialog, opened from a stateful set details page.">有状态副本集</translation>
-  <translation id="7781029351667027732" key="MSG_STATEFULSET_DETAIL_ACTIONBAR_1" desc="Label \'Stateful Set\' which appears at the top of the dialog, opened from a stateful set details page.">Stateful Set</translation>
+  <translation id="7781029351667027732" key="MSG_STATEFULSET_DETAIL_ACTIONBAR_1" desc="Label \'Stateful Set\' which appears at the top of the dialog, opened from a stateful set details page.">有状态副本集</translation>
   <translation id="7161753444048215428" key="MSG_STATEFULSET_DETAIL_DETAIL_0" desc="Title for graph card displaying CPU metric of one stateful set.">CPU 使用率</translation>
   <translation id="8249817415205260138" key="MSG_STATEFULSET_DETAIL_DETAIL_1" desc="Title for graph card displaying memory metric of one stateful set.">内存使用率</translation>
   <translation id="5166179618558114310" key="MSG_STATEFULSET_DETAIL_DETAIL_2" desc="Help message detailing what is included in the memory usage">此有状态副本集所管理容器组的内存占用包括缓存</translation>
   <translation id="8863896898922148088" key="MSG_STATEFULSET_DETAIL_DETAIL_4" desc="Text for pods card zerostate in stateful set details page.">此有状态副本集目前没有管理容器组</translation>
   <translation id="3348024993164925047" key="MSG_STATEFULSET_DETAIL_INFO_0" desc="Header in a detail view">详情</translation>
   <translation id="3442372861347610857" key="MSG_STATEFULSET_DETAIL_INFO_1" desc="Stateful set info details section images entry.">镜像</translation>
-  <translation id="638418405338120294" key="MSG_STATEFULSET_DETAIL_INFO_10" desc="The message says that that many pods are running (stateful set details page).">{{ $ctrl.statefulSet.podInfo.running}} 运行中</translation>
+  <translation id="638418405338120294" key="MSG_STATEFULSET_DETAIL_INFO_10" desc="The message says that that many pods are running (stateful set details page).">{{ $ctrl.statefulSet.podInfo.running}} 个运行中</translation>
   <translation id="6022511979639323705" key="MSG_STATEFULSET_DETAIL_INFO_2" desc="Stateful set info status section name.">状态</translation>
   <translation id="4333163254678014871" key="MSG_STATEFULSET_DETAIL_INFO_3" desc="Stateful set info status section pods entry.">容器组</translation>
-  <translation id="2225505653570116356" key="MSG_STATEFULSET_DETAIL_INFO_4" desc="The message says that that many pods were created (stateful set details page).">{{ $ctrl.statefulSet.podInfo.current}} 已创建</translation>
-  <translation id="1716379563650440954" key="MSG_STATEFULSET_DETAIL_INFO_5" desc="The message says that that many pods are desired to run (stateful set details page).">{{ $ctrl.statefulSet.podInfo.desired}} 需要</translation>
-  <translation id="7816002201100319166" key="MSG_STATEFULSET_DETAIL_INFO_6" desc="The message says that that many pods are running (stateful set details page).">{{ $ctrl.statefulSet.podInfo.running}} 运行中</translation>
+  <translation id="2225505653570116356" key="MSG_STATEFULSET_DETAIL_INFO_4" desc="The message says that that many pods were created (stateful set details page).">{{ $ctrl.statefulSet.podInfo.current}} 个已创建</translation>
+  <translation id="1716379563650440954" key="MSG_STATEFULSET_DETAIL_INFO_5" desc="The message says that that many pods are desired to run (stateful set details page).">需要 {{ $ctrl.statefulSet.podInfo.desired}} 个</translation>
+  <translation id="7816002201100319166" key="MSG_STATEFULSET_DETAIL_INFO_6" desc="The message says that that many pods are running (stateful set details page).">{{ $ctrl.statefulSet.podInfo.running}} 个运行中</translation>
   <translation id="5917392867555318609" key="MSG_STATEFULSET_DETAIL_INFO_7" desc="Stateful set info status section pods status entry.">容器组状态</translation>
-  <translation id="4705118863872693508" key="MSG_STATEFULSET_DETAIL_INFO_8" desc="The message says that that many pods are pending (stateful set details page).">{{ $ctrl.statefulSet.podInfo.pending}} 等待中</translation>
-  <translation id="3990693047066216292" key="MSG_STATEFULSET_DETAIL_INFO_9" desc="The message says that that many pods have failed (stateful set details page).">{{ $ctrl.statefulSet.podInfo.failed}} 已失败</translation>
+  <translation id="4705118863872693508" key="MSG_STATEFULSET_DETAIL_INFO_8" desc="The message says that that many pods are pending (stateful set details page).">{{ $ctrl.statefulSet.podInfo.pending}} 个等待中</translation>
+  <translation id="3990693047066216292" key="MSG_STATEFULSET_DETAIL_INFO_9" desc="The message says that that many pods have failed (stateful set details page).">{{ $ctrl.statefulSet.podInfo.failed}} 个已失败</translation>
   <translation id="5793511256137993991" key="MSG_STATEFULSET_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">有状态副本集</translation>
   <translation id="1171712742904097783" key="MSG_STATEFULSET_LIST_CARDLIST_1" desc="Stateful set list header: name.">名称</translation>
   <translation id="3541355470656139746" key="MSG_STATEFULSET_LIST_CARDLIST_2" desc="Column header \'Kind\' of a Stateful Set List">类型</translation>
@@ -818,7 +818,7 @@
   <translation id="8536391692904195793" key="MSG_STATEFULSET_LIST_CARD_2" desc="Column \'Stateful Set\' of a Stateful Set List">有状态副本集</translation>
   <translation id="8303350341808463069" key="MSG_STATEFULSET_LIST_CARD_3" desc="Label \'Stateful Set\' which will appear in the stateful set delete dialog opened from a stateful set card on the list page.">有状态副本集</translation>
   <translation id="7265964616399472549" key="MSG_STATEFULSET_LIST_CARD_4" desc="Label \'Stateful Set\' which will appear in the stateful set delete dialog opened from a stateful set card on the list page.">有状态副本集</translation>
-  <translation id="492671461743788616" key="MSG_STATEFULSET_LIST_CARD_5" desc="Label \'Stateful Set\' which will appear in the stateful set edit dialog opened from a stateful set card on the list page.">Stateful Set</translation>
+  <translation id="492671461743788616" key="MSG_STATEFULSET_LIST_CARD_5" desc="Label \'Stateful Set\' which will appear in the stateful set edit dialog opened from a stateful set card on the list page.">有状态副本集</translation>
   <translation id="8198362727821894618" key="MSG_STATEFULSET_LIST_LIST_0" desc="Title for graph card displaying CPU metric of stateful sets.">CPU 使用率</translation>
   <translation id="7302052672443322476" key="MSG_STATEFULSET_LIST_LIST_1" desc="Title for graph card displaying memory metric of stateful sets.">内存使用率</translation>
   <translation id="725937525862708224" key="MSG_STATEFULSET_LIST_LIST_2" desc="Help message detailing what is included in the memory usage">这些副本集所管理容器组的内存占用包括缓存</translation>
