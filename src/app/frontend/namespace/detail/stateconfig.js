@@ -17,7 +17,7 @@ import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
 import {appendDetailParamsToUrl} from 'common/resource/globalresourcedetail';
 
 import {stateName as namespaceList} from './../list/state';
-import {stateUrl} from './../state';
+import {stateName as parentState, stateUrl} from './../state';
 import {NamespaceDetailController} from './controller';
 
 /**
@@ -27,7 +27,7 @@ import {NamespaceDetailController} from './controller';
  */
 export const config = {
   url: appendDetailParamsToUrl(stateUrl),
-  parent: chromeStateName,
+  parent: parentState,
   resolve: {
     'namespaceDetailResource': getNamespaceDetailResource,
     'namespaceDetail': getNamespaceDetail,
@@ -44,7 +44,7 @@ export const config = {
       controllerAs: 'ctrl',
       templateUrl: 'namespace/detail/detail.html',
     },
-    [actionbarViewName]: {},
+    [`${actionbarViewName}@${chromeStateName}`]: {},
   },
 };
 

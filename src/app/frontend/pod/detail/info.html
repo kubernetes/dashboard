@@ -22,13 +22,6 @@ limitations under the License.
     <kd-info-card-entry title="[[Status|Label 'Status' for the pod status in details part (left) of the pod details view.]]">
       {{::$ctrl.pod.podPhase}}
     </kd-info-card-entry>
-    <kd-info-card-entry>
-      <a ng-href="{{::$ctrl.getLogsHref()}}"
-         class="kd-middle-ellipsised-link">
-        <kd-middle-ellipsis display-string="[[View logs|Label for the pod logs in details part (left) of the pod details view.]]">
-        </kd-middle-ellipsis>
-      </a>
-    </kd-info-card-entry>
   </kd-info-card-section>
 
   <kd-info-card-section name="[[Network|Subtitle 'Network' at the top of the column about network connectivity (right) at the pod detail view.]]">

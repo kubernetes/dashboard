@@ -18,6 +18,7 @@
 export default class ReplicationControllerInfoController {
   /**
    * Constructs replication controller info object.
+   * @ngInject
    */
   constructor() {
     /**

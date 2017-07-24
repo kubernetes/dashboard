@@ -18,10 +18,9 @@ import {stateName as detailState} from './detail/state';
 import {config as detailConfig} from './detail/stateconfig';
 import {stateName as listState} from './list/state';
 import {config as listConfig} from './list/stateconfig';
-import {stateName, stateUrl} from './state';
-
+import {stateName} from './state';
 /**
- * Configures states for the Ingress resource.
+ * Configures states for the Stateful Set resource.
  *
  * @param {!ui.router.$stateProvider} $stateProvider
  * @ngInject
@@ -40,6 +39,5 @@ export default function stateConfig($stateProvider) {
 const config = {
   abstract: true,
   parent: chromeStateName,
-  url: stateUrl,
   template: '<ui-view/>',
 };

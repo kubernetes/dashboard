@@ -76,7 +76,7 @@ export class NamespaceSelectController {
     this.scope_ = $scope;
 
     /** @private {!./../state/service.FutureStateService}} */
-    this.kdFutureStateService_ = kdFutureStateService;
+    this.futureStateService_ = kdFutureStateService;
 
     /** @private {!./../components/breadcrumbs/service.BreadcrumbsService}} */
     this.kdBreadcrumbsService_ = kdBreadcrumbsService;
@@ -89,9 +89,9 @@ export class NamespaceSelectController {
    * @export
    */
   $onInit() {
-    this.onNamespaceChanged_(this.kdFutureStateService_.params);
+    this.onNamespaceChanged_(this.futureStateService_.params);
 
-    this.scope_.$watch(() => this.kdFutureStateService_.params, (toParams) => {
+    this.scope_.$watch(() => this.futureStateService_.params, (toParams) => {
       this.onNamespaceChanged_(toParams);
     });
   }

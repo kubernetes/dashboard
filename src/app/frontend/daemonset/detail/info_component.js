@@ -18,6 +18,7 @@
 export default class DaemonSetInfoController {
   /**
    * Constructs daemon set info object.
+   * @ngInject
    */
   constructor() {
     /**

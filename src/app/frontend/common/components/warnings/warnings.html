@@ -1,0 +1,47 @@
+<!--
+Copyright 2017 The Kubernetes Dashboard Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<div ng-if="$ctrl.warnings.length"
+     class="kd-warnings-container">
+  <div class="kd-warning-message"
+       ng-repeat="warning in $ctrl.warnings | limitTo: $ctrl.limit">
+    <md-icon class="material-icons">warning</md-icon>
+    <span class="kd-raw-warning"
+          flex>
+      {{warning.ErrStatus.message}}
+    </span>
+    <md-icon ng-click="$ctrl.dismissWarning($index)"
+             class="material-icons kd-dismiss-icon">
+      close
+      <md-tooltip md-delay="500">[[Dismiss|Tooltip for warning dismissal button.]]</md-tooltip>
+    </md-icon>
+  </div>
+  <div class="kd-more-warnings"
+       ng-if="$ctrl.warnings.length > $ctrl.defaultLimit">
+    <md-button ng-if="$ctrl.limit"
+               ng-click="$ctrl.toggleWarnings()">
+      <md-icon class="material-icons">expand_more</md-icon>
+      {{$ctrl.getShowMoreLabel()}}
+    </md-button>
+    <md-button ng-if="!$ctrl.limit"
+               ng-click="$ctrl.toggleWarnings()">
+      <md-icon class="material-icons">expand_less</md-icon>
+      {{$ctrl.getShowLessLabel()}}
+    </md-button>
+    <span flex></span>
+    <md-button ng-click="$ctrl.dismissWarnings()">[[Dismiss all|Tooltip for all warning dismissal button.]]</md-button>
+  </div>
+</div>

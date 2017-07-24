@@ -18,6 +18,7 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
@@ -29,23 +30,24 @@ import (
 
 // PodList contains a list of Pods in the cluster.
 type PodList struct {
-	ListMeta api.ListMeta `json:"listMeta"`
+	ListMeta          api.ListMeta       `json:"listMeta"`
+	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`
 
 	// Unordered list of Pods.
-	Pods              []Pod              `json:"pods"`
-	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`
+	Pods []Pod `json:"pods"`
+
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
 type PodStatus struct {
-	// Status of the Pod. See Kubernetes API for reference.
 	Status          string              `json:"status"`
 	PodPhase        v1.PodPhase         `json:"podPhase"`
 	ContainerStates []v1.ContainerState `json:"containerStates"`
 }
 
-// Pod is a presentation layer view of Kubernetes Pod resource. This means
-// it is Pod plus additional augmented data we can get from other sources
-// (like services that target it).
+// Pod is a presentation layer view of Kubernetes Pod resource. This means it is Pod plus additional augmented data
+// we can get from other sources (like services that target it).
 type Pod struct {
 	ObjectMeta api.ObjectMeta `json:"objectMeta"`
 	TypeMeta   api.TypeMeta   `json:"typeMeta"`
@@ -61,11 +63,22 @@ type Pod struct {
 
 	// Pod warning events
 	Warnings []common.Event `json:"warnings"`
+
+	// Name of the Node this Pod runs on.
+	NodeName string `json:"nodeName"`
+}
+
+var EmptyPodList = &PodList{
+	Pods:   make([]Pod, 0),
+	Errors: make([]error, 0),
+	ListMeta: api.ListMeta{
+		TotalItems: 0,
+	},
 }
 
 // GetPodList returns a list of all Pods in the cluster.
-func GetPodList(client k8sClient.Interface, metricClient metricapi.MetricClient,
-	nsQuery *common.NamespaceQuery, dsQuery *dataselect.DataSelectQuery) (*PodList, error) {
+func GetPodList(client k8sClient.Interface, metricClient metricapi.MetricClient, nsQuery *common.NamespaceQuery,
+	dsQuery *dataselect.DataSelectQuery) (*PodList, error) {
 	log.Print("Getting list of all pods in the cluster")
 
 	channels := &common.ResourceChannels{
@@ -82,28 +95,32 @@ func GetPodListFromChannels(channels *common.ResourceChannels, dsQuery *datasele
 	metricClient metricapi.MetricClient) (*PodList, error) {
 
 	pods := <-channels.PodList.List
-	if err := <-channels.PodList.Error; err != nil {
-		return nil, err
+	err := <-channels.PodList.Error
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
 	eventList := <-channels.EventList.List
-	if err := <-channels.EventList.Error; err != nil {
-		return nil, err
+	err = <-channels.EventList.Error
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	podList := CreatePodList(pods.Items, eventList.Items, dsQuery, metricClient)
+	podList := ToPodList(pods.Items, eventList.Items, nonCriticalErrors, dsQuery, metricClient)
 	return &podList, nil
 }
 
-func CreatePodList(pods []v1.Pod, events []v1.Event, dsQuery *dataselect.DataSelectQuery,
+func ToPodList(pods []v1.Pod, events []v1.Event, nonCriticalErrors []error, dsQuery *dataselect.DataSelectQuery,
 	metricClient metricapi.MetricClient) PodList {
 	podList := PodList{
-		Pods: make([]Pod, 0),
+		Pods:   make([]Pod, 0),
+		Errors: nonCriticalErrors,
 	}
 
 	podCells, cumulativeMetricsPromises, filteredTotal := dataselect.
-		GenericDataSelectWithFilterAndMetrics(toCells(pods), dsQuery,
-			metricapi.NoResourceCache, metricClient)
+		GenericDataSelectWithFilterAndMetrics(toCells(pods), dsQuery, metricapi.NoResourceCache, metricClient)
 	pods = fromCells(podCells)
 	podList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
@@ -114,11 +131,8 @@ func CreatePodList(pods []v1.Pod, events []v1.Event, dsQuery *dataselect.DataSel
 
 	for _, pod := range pods {
 		warnings := event.GetPodsEventWarnings(events, []v1.Pod{pod})
-
-		podDetail := ToPod(&pod, metrics, warnings)
-		podDetail.Warnings = warnings
+		podDetail := toPod(&pod, metrics, warnings)
 		podList.Pods = append(podList.Pods, podDetail)
-
 	}
 
 	cumulativeMetrics, err := cumulativeMetricsPromises.GetMetrics()
@@ -128,4 +142,21 @@ func CreatePodList(pods []v1.Pod, events []v1.Event, dsQuery *dataselect.DataSel
 	}
 
 	return podList
+}
+
+func toPod(pod *v1.Pod, metrics *MetricsByPod, warnings []common.Event) Pod {
+	podDetail := Pod{
+		ObjectMeta:   api.NewObjectMeta(pod.ObjectMeta),
+		TypeMeta:     api.NewTypeMeta(api.ResourceKindPod),
+		Warnings:     warnings,
+		PodStatus:    getPodStatus(*pod, warnings),
+		RestartCount: getRestartCount(*pod),
+		NodeName:     pod.Spec.NodeName,
+	}
+
+	if m, exists := metrics.MetricsMap[pod.UID]; exists {
+		podDetail.Metrics = &m
+	}
+
+	return podDetail
 }

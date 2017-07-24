@@ -27,10 +27,13 @@ export class ConfigController {
       config, kdConfigMapListResource, kdSecretListResource, kdPersistentVolumeClaimListResource) {
     /** @export {!backendApi.Config} */
     this.config = config;
+
     /** @export {!angular.Resource} */
     this.kdConfigMapListResource = kdConfigMapListResource;
+
     /** @export {!angular.Resource} */
     this.kdSecretListResource = kdSecretListResource;
+
     /** @export {!angular.Resource} */
     this.pvcListResource = kdPersistentVolumeClaimListResource;
   }

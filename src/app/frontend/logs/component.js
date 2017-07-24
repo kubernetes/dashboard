@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as logs, StateParams} from './state';
 
 const logsPerView = 100;
 const maxLogSize = 2e9;
@@ -32,20 +31,14 @@ const newestTimestamp = 'newest';
  */
 export class LogsController {
   /**
-   * @param {!backendApi.LogDetails} podLogs
-   * @param {!backendApi.PodContainerList} podContainers
    * @param {!./service.LogsService} logsService
    * @param {!angular.$sce} $sce
    * @param {!angular.$document} $document
-   * @param {!./state.StateParams} $stateParams
    * @param {!angular.$resource} $resource
-   * @param {!ui.router.$state} $state
    * @param {!../common/errorhandling/service.ErrorDialog} errorDialog
    * @ngInject
    */
-  constructor(
-      podLogs, podContainers, logsService, $sce, $document, $resource, $stateParams, $state,
-      errorDialog) {
+  constructor(logsService, $sce, $document, $resource, errorDialog) {
     /** @private {!angular.$sce} */
     this.sce_ = $sce;
 
@@ -54,9 +47,6 @@ export class LogsController {
 
     /** @private {!angular.$resource} */
     this.resource_ = $resource;
-
-    /** @private {!./state.StateParams} $stateParams */
-    this.stateParams_ = $stateParams;
 
     /** @export {!./service.LogsService} */
     this.logsService = logsService;
@@ -68,28 +58,50 @@ export class LogsController {
     this.logsSet;
 
     /** @export {!backendApi.LogDetails} */
-    this.podLogs = podLogs;
+    this.podLogs;
 
-    /** @private {!backendApi.LogSelection}*/
+    /**
+     * Current pod selection
+     * @export {string}
+     */
+    this.pod;
+
+    /**
+     * Current container selection
+     * @export {string}
+     */
+    this.container;
+
+    /**
+     * Pods and containers available for selection
+     * @export {!backendApi.LogSources}
+     */
+    this.logSources;
+
+    /**
+     * Current page selection
+     * @private {!backendApi.LogSelection}
+     */
     this.currentSelection;
-
-    /** @private {!ui.router.$state} */
-    this.state_ = $state;
-
-    /** @export {!Array<string>} */
-    this.containers = podContainers.containers;
-
-    /** @export {string} */
-    this.container = this.podLogs.info.containerName;
 
     /** @export {number} */
     this.topIndex = 0;
 
     /** @private {!../common/errorhandling/service.ErrorDialog} */
     this.errorDialog_ = errorDialog;
+
+    /** @private {!ui.router.$stateParams} */
+    this.stateParams_;
+
+    /** @export {!kdUiRouter.$transition$} - initialized from resolve */
+    this.$transition$;
   }
 
+
   $onInit() {
+    this.container = this.podLogs.info.containerName;
+    this.pod = this.podLogs.info.podName;
+    this.stateParams_ = this.$transition$.params();
     this.updateUiModel(this.podLogs);
     this.topIndex = this.podLogs.logs.length;
   }
@@ -149,10 +161,8 @@ export class LogsController {
    */
   loadView(logFilePosition, referenceTimestamp, referenceLinenum, offsetFrom, offsetTo) {
     let namespace = this.stateParams_.objectNamespace;
-    let podId = this.stateParams_.objectName;
-    let container = this.stateParams_.container || '';
 
-    this.resource_(`api/v1/pod/${namespace}/${podId}/log/${container}`)
+    this.resource_(`api/v1/log/${namespace}/${this.pod}/${this.container}`)
         .get(
             {
               'logFilePosition': logFilePosition,
@@ -297,15 +307,21 @@ export class LogsController {
 
 
   /**
-   * Execute when a user changes the selected option of a container element.
-   * @param {string} container
+   * Execute when a user changes the container from which logs should be loaded.
+
    * @export
    */
-  onContainerChange(container) {
-    this.state_.go(
-        logs,
-        new StateParams(
-            this.stateParams_.objectNamespace, this.stateParams_.objectName, container));
+  onContainerChange() {
+    this.loadNewest();
+  }
+
+  /**
+   * Execute when a user changes the pod from which logs should be loaded.
+   *
+   * @export
+   */
+  onPodChange() {
+    this.loadNewest();
   }
 
   /**
@@ -372,6 +388,22 @@ export class LogsController {
     return container;
   }
 }
+
+/**
+ * Returns component definition for logs component.
+ *
+ * @return {!angular.Component}
+ */
+export const logsComponent = {
+  controller: LogsController,
+  controllerAs: 'ctrl',
+  templateUrl: 'logs/logs.html',
+  bindings: {
+    'logSources': '<',
+    'podLogs': '<',
+    '$transition$': '<',
+  },
+};
 
 const i18n = {
   /** @export {string} @desc Text for logs card zerostate in logs page. */

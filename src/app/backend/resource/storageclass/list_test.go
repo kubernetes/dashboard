@@ -53,6 +53,7 @@ func TestGetStorageClassList(t *testing.T) {
 						TypeMeta: api.TypeMeta{Kind: api.ResourceKindStorageClass},
 					},
 				},
+				Errors: []error{},
 			},
 		},
 	}

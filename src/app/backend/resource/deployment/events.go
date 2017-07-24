@@ -21,14 +21,13 @@ import (
 	client "k8s.io/client-go/kubernetes"
 )
 
-// GetDeploymentEvents returns model events for a deployment with the given name in the given
-// namespace
-func GetDeploymentEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery, namespace string, deploymentName string) (
-	*common.EventList, error) {
+// GetDeploymentEvents returns model events for a deployment with the given name in the given namespace.
+func GetDeploymentEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery, namespace string,
+	deploymentName string) (*common.EventList, error) {
 
 	dpEvents, err := event.GetEvents(client, namespace, deploymentName)
 	if err != nil {
-		return nil, err
+		return event.EmptyEventList, err
 	}
 
 	eventList := event.CreateEventList(dpEvents, dsQuery)

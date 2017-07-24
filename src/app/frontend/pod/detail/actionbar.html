@@ -14,6 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
+<kd-actionbar-shell-button namespace="$ctrl.details.objectMeta.namespace"
+                           pod-name="$ctrl.details.objectMeta.name">
+</kd-actionbar-shell-button>
+
+<kd-actionbar-logs resource-kind-name="$ctrl.details.typeMeta.kind"
+                   object-meta="$ctrl.details.objectMeta">
+</kd-actionbar-logs>
+
 <kd-actionbar-detail-buttons resource-kind-name="[[Pod|Label 'Pod' which appears at the top of the delete dialog, opened from a pod details page.]]"
                              type-meta="$ctrl.details.typeMeta"
                              object-meta="$ctrl.details.objectMeta">

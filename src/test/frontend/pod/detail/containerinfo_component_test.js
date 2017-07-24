@@ -32,7 +32,7 @@ describe('Container info component', () => {
   });
 
   it('should compute config map href', () => {
-    let cmkr = {Name: 'foo', key: 'bar'};
+    let cmkr = {name: 'foo', key: 'bar'};
     expect(ctrl.getEnvConfigMapHref(cmkr)).toBe('#!/configmap/foo-namespace/foo');
   });
 });

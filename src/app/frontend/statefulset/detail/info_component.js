@@ -17,7 +17,8 @@
  */
 export default class StatefulSetInfoController {
   /**
-   * Constructs statefultion controller info object.
+   * Constructs stateful set controller info object.
+   * @ngInject
    */
   constructor() {
     /**

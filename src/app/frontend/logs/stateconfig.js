@@ -17,7 +17,6 @@ import {fillContentConfig} from 'chrome/state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
 import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
 
-import {LogsController} from './controller';
 import {stateName} from './state';
 
 /**
@@ -27,19 +26,11 @@ import {stateName} from './state';
  * @ngInject
  */
 export default function stateConfig($stateProvider) {
-  let views = {
-    '': {
-      templateUrl: 'logs/logs.html',
-      controller: LogsController,
-      controllerAs: 'ctrl',
-    },
-  };
-
   $stateProvider.state(stateName, {
-    url: `${appendDetailParamsToUrl('/log')}/:container`,
+    url: `${appendDetailParamsToUrl('/log')}/:resourceType`,
     parent: chromeStateName,
     resolve: {
-      'podContainers': resolvePodContainers,
+      'logSources': resolveLogSources,
       'podLogs': resolvePodLogs,
     },
     data: {
@@ -48,39 +39,56 @@ export default function stateConfig($stateProvider) {
       },
       [fillContentConfig]: true,
     },
-    views: views,
+    views: {
+      '': {
+        component: 'kdLogs',
+      },
+    },
   });
 }
 
 /**
+ * Load all log sources (pods and containers) that are available
+ *
  * @param {!./state.StateParams} $stateParams
  * @param {!angular.$resource} $resource
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-function resolvePodLogs($stateParams, $resource) {
+function resolveLogSources($stateParams, $resource) {
   let namespace = $stateParams.objectNamespace;
-  let podId = $stateParams.objectName;
-  let container = $stateParams.container || '';
+  let objectName = $stateParams.objectName;
+  let resourceType = $stateParams.resourceType || '';
 
-  /** @type {!angular.Resource<!backendApi.Logs>} */
-  let resource = $resource(`api/v1/pod/${namespace}/${podId}/log/${container}`);
-
+  /** @type {!angular.Resource<!backendApi.LogSources>} */
+  let resource = $resource(`api/v1/log/source/${namespace}/${objectName}/${resourceType}`);
   return resource.get().$promise;
 }
 
+
 /**
+ * Load log lines for a given logSources object. Log sources contains either a list of containers
+ * and pods of a higher level controller or a single pod. In case of a list the first entry is
+ * chosen as default.
+ *
  * @param {!./state.StateParams} $stateParams
  * @param {!angular.$resource} $resource
+ * @param {!backendApi.LogSources} logSources
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-function resolvePodContainers($stateParams, $resource) {
+function resolvePodLogs($stateParams, $resource, logSources) {
   let namespace = $stateParams.objectNamespace;
-  let podId = $stateParams.objectName;
+  let resourceType = $stateParams.resourceType || '';
+  let podName = $stateParams.objectName;
 
-  /** @type {!angular.Resource<!backendApi.PodContainerList>} */
-  let resource = $resource(`api/v1/pod/${namespace}/${podId}/container`);
+  // use first pod as default in case of a higher level controller (like ReplicaSet)
+  if (resourceType !== 'Pod') {
+    podName = logSources.podNames[0];
+  }
+
+  /** @type {!angular.Resource<!backendApi.Logs>} */
+  let resource = $resource(`api/v1/log/${namespace}/${podName}`);
   return resource.get().$promise;
 }
 

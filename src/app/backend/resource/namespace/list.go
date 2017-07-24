@@ -18,6 +18,7 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -33,6 +34,9 @@ type NamespaceList struct {
 
 	// Unordered list of Namespaces.
 	Namespaces []Namespace `json:"namespaces"`
+
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
 // Namespace is a presentation layer view of Kubernetes namespaces. This means it is namespace plus
@@ -46,36 +50,36 @@ type Namespace struct {
 }
 
 // GetNamespaceListFromChannels returns a list of all namespaces in the cluster.
-func GetNamespaceListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery) (*NamespaceList,
-	error) {
-	log.Print("Getting namespace list")
-
+func GetNamespaceListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery) (*NamespaceList, error) {
 	namespaces := <-channels.NamespaceList.List
-	if err := <-channels.NamespaceList.Error; err != nil {
-		return &NamespaceList{Namespaces: []Namespace{}}, err
+	err := <-channels.NamespaceList.Error
+
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	return toNamespaceList(namespaces.Items, dsQuery), nil
+	return toNamespaceList(namespaces.Items, nonCriticalErrors, dsQuery), nil
 }
 
 // GetNamespaceList returns a list of all namespaces in the cluster.
-func GetNamespaceList(client *client.Clientset, dsQuery *dataselect.DataSelectQuery) (*NamespaceList,
-	error) {
-	log.Print("Getting namespace list")
+func GetNamespaceList(client *client.Clientset, dsQuery *dataselect.DataSelectQuery) (*NamespaceList, error) {
+	log.Println("Getting list of namespaces")
 
 	namespaces, err := client.Namespaces().List(metaV1.ListOptions{
 		LabelSelector: labels.Everything().String(),
 		FieldSelector: fields.Everything().String(),
 	})
 
-	if err != nil {
-		return nil, err
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	return toNamespaceList(namespaces.Items, dsQuery), nil
+	return toNamespaceList(namespaces.Items, nonCriticalErrors, dsQuery), nil
 }
 
-func toNamespaceList(namespaces []v1.Namespace, dsQuery *dataselect.DataSelectQuery) *NamespaceList {
+func toNamespaceList(namespaces []v1.Namespace, nonCriticalErrors []error, dsQuery *dataselect.DataSelectQuery) *NamespaceList {
 	namespaceList := &NamespaceList{
 		Namespaces: make([]Namespace, 0),
 		ListMeta:   api.ListMeta{TotalItems: len(namespaces)},
@@ -84,6 +88,7 @@ func toNamespaceList(namespaces []v1.Namespace, dsQuery *dataselect.DataSelectQu
 	namespaceCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(namespaces), dsQuery)
 	namespaces = fromCells(namespaceCells)
 	namespaceList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
+	namespaceList.Errors = nonCriticalErrors
 
 	for _, namespace := range namespaces {
 		namespaceList.Namespaces = append(namespaceList.Namespaces, toNamespace(namespace))

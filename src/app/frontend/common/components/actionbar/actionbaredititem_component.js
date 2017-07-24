@@ -80,6 +80,5 @@ export const actionbarEditItemComponent = {
     'typeMeta': '<',
     'objectMeta': '<',
   },
-  bindToController: true,
   controller: ActionbarEditItemController,
 };

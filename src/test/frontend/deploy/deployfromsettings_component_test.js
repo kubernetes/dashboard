@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import DeployFromSettingController from 'deploy/deployfromsettings_controller';
 import DeployLabel from 'deploy/deploylabel';
 import deployModule from 'deploy/module';
 import {uniqueNameValidationKey} from 'deploy/uniquename_directive';
@@ -32,7 +31,7 @@ describe('DeployFromSettings controller', () => {
   beforeEach(() => {
     angular.mock.module(deployModule.name);
 
-    angular.mock.inject(($controller, $httpBackend, $resource) => {
+    angular.mock.inject(($componentController, $httpBackend, $resource) => {
       httpBackend = $httpBackend;
       httpBackend.expectGET('api/v1/csrftoken/appdeployment').respond(200, '{"token": "x"}');
       angularResource = $resource;
@@ -47,30 +46,43 @@ describe('DeployFromSettings controller', () => {
           },
         },
       };
-      ctrl = $controller(
-          DeployFromSettingController,
-          {$resource: mockResource, namespaces: {namespaces: []}, protocols: {protocols: []}},
+      ctrl = $componentController(
+          'kdDeployFromSettings',
+          {$resource: mockResource, namespaceList: {namespaces: []}, protocolList: {protocols: []}},
           {form: form});
       ctrl.portMappings = [];
       ctrl.variables = [];
     });
   });
 
-  it('should select initial namespace', angular.mock.inject(($controller) => {
-    ctrl = $controller(DeployFromSettingController, {
-      namespaces: {namespaces: [{objectMeta: {name: 'foo'}}, {objectMeta: {name: 'bar'}}]},
-      protocols: {protocols: []},
-      $stateParams: {},
+  it('should select initial namespace', angular.mock.inject(($componentController) => {
+    // given
+    let $transition$ = {params: function() {}};
+    spyOn($transition$, 'params').and.returnValue({namespace: 'foo'});
+    ctrl = $componentController('kdDeployFromSettings', {$stateParams: {}}, {
+      namespaceList: {namespaces: [{objectMeta: {name: 'foo'}}, {objectMeta: {name: 'bar'}}]},
+      protocolList: {protocols: []},
+      $transition$: $transition$,
     });
 
+    // when
+    ctrl.$onInit();
+
+    // then
     expect(ctrl.namespace).toBe('foo');
 
-    ctrl = $controller(DeployFromSettingController, {
-      namespaces: {namespaces: [{objectMeta: {name: 'foo'}}, {objectMeta: {name: 'bar'}}]},
-      protocols: {protocols: []},
-      $stateParams: {namespace: 'bar'},
+    // given
+    $transition$.params.and.returnValue({namespace: 'bar'});
+    ctrl = $componentController('kdDeployFromSettings', {$stateParams: {namespace: 'bar'}}, {
+      namespaceList: {namespaces: [{objectMeta: {name: 'foo'}}, {objectMeta: {name: 'bar'}}]},
+      protocolList: {protocols: []},
+      $transition$: $transition$,
     });
 
+    // when
+    ctrl.$onInit();
+
+    // then
     expect(ctrl.namespace).toBe('bar');
   }));
 

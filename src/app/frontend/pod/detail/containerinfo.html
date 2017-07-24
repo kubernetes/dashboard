@@ -27,16 +27,24 @@ limitations under the License.
       <div ng-if="::container.env.length">
         <div ng-repeat="env in ::container.env"
              layout="row">
-          <span>{{::env.name}}</span><span ng-if="env.valueFrom">
-            <span ng-if="env.valueFrom.configMapKeyRef">
-              (<a ng-href="{{::$ctrl.getEnvConfigMapHref(env.valueFrom.configMapKeyRef)}}">
-                [[value from ConfigMap {{env.valueFrom.configMapKeyRef.Name}}/{{env.valueFrom.configMapKeyRef.key}}|Label for environment variable that comes from a Config Map]]
-              </a>)
-            </span>
-          </span><span>:&nbsp;</span>
-          <kd-middle-ellipsis display-string="{{::env.value}}"
-                              flex="shrink">
-          </kd-middle-ellipsis>
+          <span ng-if="::$ctrl.isHref(env)"
+                class="kd-env-href-wrapper">
+                {{::env.name}}&nbsp;(<a ng-href="{{::$ctrl.getRefObjectHref(env)}}">{{::$ctrl.getRefObjectName(env)}}</a>):&nbsp;
+                <span ng-if="::$ctrl.isSecret(env)">
+                    <md-button ng-if="!$ctrl.isSecretVisible" ng-click="::$ctrl.showSecret()" class="md-icon-button kd-env-secret-button">
+                        <i class="material-icons kd-env-secret-icon">visibility</i>
+                        <md-tooltip md-direction="top">[[Show secret value|Tooltip on container env variables taken from secret]]</md-tooltip>
+                    </md-button>
+                    <span ng-if="$ctrl.isSecretVisible && env.value" class="kd-env-value">{{::$ctrl.formatSecretValue(env.value)}}</span>
+          <span ng-if="$ctrl.isSecretVisible && !env.value">-</span>
+          </span>
+          <pre class="kd-env-config-map-value"
+               ng-if="!$ctrl.isSecret(env)">{{::env.value}}</pre>
+          </span>
+          <span ng-if="::!$ctrl.isHref(env)">
+                {{::env.name}}:&nbsp;
+                <span class="kd-env-value">{{::env.value}}</span>
+          </span>
         </div>
       </div>
       <div ng-if="::!container.env.length">
@@ -68,18 +76,6 @@ limitations under the License.
       <div ng-if="::!container.args.length">
         [[-|Label when there is no container arguments.]]
       </div>
-    </kd-info-card-entry>
-    <kd-info-card-entry ng-if="::$ctrl.podName">
-      <a ng-href="{{::$ctrl.getLogsHref(container)}}"
-         class="kd-middle-ellipsised-link">
-        <kd-middle-ellipsis display-string="[[View logs|Label for the container logs.]]">
-        </kd-middle-ellipsis>
-      </a>
-      <a ng-href="{{::$ctrl.getShellHref(container)}}"
-         class="kd-middle-ellipsised-link">
-        <kd-middle-ellipsis display-string="[[Execute shell|Execute shell in the container]]">
-        </kd-middle-ellipsis>
-      </a>
     </kd-info-card-entry>
   </kd-info-card-section>
 </kd-info-card>

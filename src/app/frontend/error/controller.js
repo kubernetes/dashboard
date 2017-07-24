@@ -17,14 +17,14 @@
  */
 export class InternalErrorController {
   /**
-   * @param {!./state.StateParams} $stateParams
+   * @param {!kdUiRouter.$transition$} $transition$
    * * @param {!./../chrome/nav/nav_service.NavService} kdNavService
    *   @param {!../common/appconfig/service.AppConfigService} kdAppConfigService
    * @ngInject
    */
-  constructor($stateParams, kdNavService, kdAppConfigService) {
+  constructor($transition$, kdNavService, kdAppConfigService) {
     /** @export {!angular.$http.Response} */
-    this.error = $stateParams.error;
+    this.error = $transition$.params().error;
 
     /** @private {!./../chrome/nav/nav_service.NavService} */
     this.kdNavService_ = kdNavService;

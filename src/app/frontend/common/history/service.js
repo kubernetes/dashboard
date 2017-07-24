@@ -12,22 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {baseStateName as deployState} from 'deploy/state';
-
 /**
  * @final
  */
 export class HistoryService {
   /**
    * @param {!ui.router.$state} $state
-   * @param {!angular.Scope} $rootScope
+   * @param {!kdUiRouter.$transitions} $transitions
    * @ngInject
    */
-  constructor($state, $rootScope) {
+  constructor($state, $transitions) {
     /** @private {!ui.router.$state} */
     this.state_ = $state;
-    /** @private {!angular.Scope} */
-    this.scope_ = $rootScope;
+    /** @private {!kdUiRouter.$transitions} */
+    this.transitions_ = $transitions;
     /** @private {string} */
     this.previousStateName_ = '';
     /** @private {Object} */
@@ -36,16 +34,10 @@ export class HistoryService {
 
   /** Initializes the service. Must be called before use. */
   init() {
-    this.scope_.$on(
-        '$stateChangeSuccess',
-        (event, toState, toParams, /** !ui.router.State */ fromState, fromParams) => {
-          let prevName = fromState.name || '';
-          // Skip deploy states from history. They are not relevant now. This may change later.
-          if (prevName.indexOf(deployState) === -1) {
-            this.previousStateName_ = prevName;
-            this.previousStateParams_ = fromParams;
-          }
-        });
+    this.transitions_.onSuccess({}, ($transition$) => {
+      this.previousStateName_ = $transition$.from().name || '';
+      this.previousStateParams_ = $transition$.params('from');
+    });
   }
 
   /**

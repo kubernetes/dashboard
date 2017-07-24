@@ -76,15 +76,19 @@ limitations under the License.
       </div>
     </kd-resource-card-column>
     <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
+      <kd-logs-button object-meta="::$ctrl.replicaSet.objectMeta"
+                      resource-kind-name="::$ctrl.replicaSet.typeMeta.kind">
+      </kd-logs-button>
       <kd-resource-card-menu>
-        <md-menu-item>
-          <md-button ng-click="$ctrl.showScaleDialog()">
-            [[Scale|Action 'Edit Pod Count' on the drop down menu for a single replication controller (replication controller list page).]]
-          </md-button>
-        </md-menu-item>
+        <kd-scale-button resource-kind-name="[[Replica Set|Label 'Replica Set' which appears at the top of the scale dialog, opened from a replica set list page.]]"
+                         object-meta="$ctrl.replicaSet.objectMeta"
+                         current-pods="$ctrl.replicaSet.pods.current"
+                         desired-pods="$ctrl.replicaSet.pods.desired"
+                         menu-item="true">
+        </kd-scale-button>
         <kd-resource-card-delete-menu-item resource-kind-name="[[Replica Set|Label 'Replica Set' which appears at the top of the delete dialog, opened from a replica set list page.]]">
         </kd-resource-card-delete-menu-item>
-        <kd-resource-card-edit-menu-item resource-kind-name="[[Replica Set|Label 'Replica Set' which appears at the top of the delete dialog, opened from a replica set list page.]]">
+        <kd-resource-card-edit-menu-item resource-kind-name="[[Replica Set|Label 'Replica Set' which appears at the top of the edit dialog, opened from a replica set list page.]]">
         </kd-resource-card-edit-menu-item>
       </kd-resource-card-menu>
     </kd-resource-card-column>

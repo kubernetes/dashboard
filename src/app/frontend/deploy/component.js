@@ -19,7 +19,7 @@ import {deployAppStateName, deployFileStateName} from './state';
  *
  * @final
  */
-export default class DeployController {
+class DeployController {
   /**
    * @param {!ui.router.$state} $state
    * @ngInject
@@ -43,3 +43,14 @@ export default class DeployController {
     this.state_.go(this.selection);
   }
 }
+
+/**
+ * Returns component definition for deploy component.
+ *
+ * @return {!angular.Component}
+ */
+export const deployComponent = {
+  controller: DeployController,
+  controllerAs: 'ctrl',
+  templateUrl: 'deploy/deploy.html',
+};

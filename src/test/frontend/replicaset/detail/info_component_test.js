@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import logModule from 'logs/module';
 import replicaSetModule from 'replicaset/module';
 
 describe('Replica Set Info controller', () => {
@@ -23,10 +24,15 @@ describe('Replica Set Info controller', () => {
 
   beforeEach(() => {
     angular.mock.module(replicaSetModule.name);
+    angular.mock.module(logModule.name);
 
     angular.mock.inject(($componentController, $rootScope) => {
       ctrl = $componentController('kdReplicaSetInfo', {$scope: $rootScope}, {
         replicaSet: {
+          objectMeta: {
+            name: 'my-rs',
+            namespace: 'default-ns',
+          },
           podInfo: {
             running: 0,
             desired: 0,

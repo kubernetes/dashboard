@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import {GlobalStateParams} from 'common/resource/globalresourcedetail';
-import {stateName as logsStateName, StateParams as LogsStateParams} from 'logs/state';
 import {stateName} from 'node/detail/state';
 
 /**
@@ -43,16 +42,6 @@ export default class PodInfoController {
    */
   getNodeDetailsHref() {
     return this.state_.href(stateName, new GlobalStateParams(this.pod.nodeName));
-  }
-
-  /**
-   * @return {string}
-   * @export
-   */
-  getLogsHref() {
-    return this.state_.href(
-        logsStateName,
-        new LogsStateParams(this.pod.objectMeta.namespace, this.pod.objectMeta.name));
   }
 }
 

@@ -17,7 +17,7 @@ import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
 import {appendDetailParamsToUrl} from 'common/resource/globalresourcedetail';
 
 import {stateName as nodeList} from './../list/state';
-import {stateUrl} from './../state';
+import {stateName as parentState, stateUrl} from './../state';
 import {NodeDetailController} from './controller';
 
 /**
@@ -27,7 +27,7 @@ import {NodeDetailController} from './controller';
  */
 export const config = {
   url: appendDetailParamsToUrl(stateUrl),
-  parent: chromeStateName,
+  parent: parentState,
   resolve: {
     'nodeDetailResource': getNodeDetailResource,
     'nodeDetail': getNodeDetail,
@@ -44,7 +44,7 @@ export const config = {
       controllerAs: 'ctrl',
       templateUrl: 'node/detail/detail.html',
     },
-    [actionbarViewName]: {},
+    [`${actionbarViewName}@${chromeStateName}`]: {},
   },
 };
 
@@ -79,9 +79,12 @@ export function getNodeDetailResource($resource, $stateParams) {
 
 /**
  * @param {!angular.Resource<!backendApi.NodeDetail>} nodeDetailResource
+ * @param {!./../../common/dataselect/service.DataSelectService} kdDataSelectService
+ * @param {!./../../common/resource/globalresourcedetail.GlobalStateParams} $stateParams
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function getNodeDetail(nodeDetailResource) {
-  return nodeDetailResource.get().$promise;
+export function getNodeDetail(nodeDetailResource, kdDataSelectService, $stateParams) {
+  let query = kdDataSelectService.getDefaultResourceQuery('', $stateParams.objectName);
+  return nodeDetailResource.get(query).$promise;
 }

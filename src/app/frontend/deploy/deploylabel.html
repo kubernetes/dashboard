@@ -21,6 +21,7 @@ limitations under the License.
                       class="kd-deploy-input-row"
                       flex="45">
     <input name="key"
+           aria-label="key"
            ng-model="labelCtrl.label.key"
            ng-change="labelCtrl.check(labelForm)"
            placeholder="{{labelCtrl.label.key}}"
@@ -47,6 +48,7 @@ limitations under the License.
                       class="kd-deploy-input-row"
                       flex="40">
     <input name="value"
+           aria-label="value"
            ng-model="labelCtrl.label.value"
            placeholder="{{labelCtrl.label.value()}}"
            ng-disabled="!labelCtrl.label.editable"

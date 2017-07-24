@@ -18,11 +18,12 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
+	hpa "github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -89,7 +90,10 @@ type DeploymentDetail struct {
 	EventList common.EventList `json:"eventList"`
 
 	// List of Horizontal Pod AutoScalers targeting this Deployment
-	HorizontalPodAutoscalerList horizontalpodautoscaler.HorizontalPodAutoscalerList `json:"horizontalPodAutoscalerList"`
+	HorizontalPodAutoscalerList hpa.HorizontalPodAutoscalerList `json:"horizontalPodAutoscalerList"`
+
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
 // GetDeploymentDetail returns model object of deployment and error, if any.
@@ -118,54 +122,63 @@ func GetDeploymentDetail(client client.Interface, metricClient metricapi.MetricC
 	}
 
 	rawRs := <-channels.ReplicaSetList.List
-	if err := <-channels.ReplicaSetList.Error; err != nil {
-		return nil, err
+	err = <-channels.ReplicaSetList.Error
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
 	}
+
 	rawPods := <-channels.PodList.List
-	if err := <-channels.PodList.Error; err != nil {
-		return nil, err
+	err = <-channels.PodList.Error
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	// Pods
 	podList, err := GetDeploymentPods(client, metricClient, dataselect.DefaultDataSelectWithMetrics, namespace, deploymentName)
-	if err != nil {
-		return nil, err
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
-	// Events
+
 	eventList, err := GetDeploymentEvents(client, dataselect.DefaultDataSelect, namespace, deploymentName)
-	if err != nil {
-		return nil, err
-	}
-	// Horizontal Pod Autoscalers
-	hpas, err := horizontalpodautoscaler.GetHorizontalPodAutoscalerListForResource(client, namespace, "Deployment", deploymentName)
-	if err != nil {
-		return nil, err
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	// Old Replica Sets
+	hpas, err := hpa.GetHorizontalPodAutoscalerListForResource(client, namespace, "Deployment", deploymentName)
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
+	}
+
 	oldReplicaSetList, err := GetDeploymentOldReplicaSets(client, dataselect.DefaultDataSelect, namespace, deploymentName)
-	if err != nil {
-		return nil, err
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	// New Replica Set
 	rawRepSets := make([]*extensions.ReplicaSet, 0)
 	for i := range rawRs.Items {
 		rawRepSets = append(rawRepSets, &rawRs.Items[i])
 	}
 	newRs, err := FindNewReplicaSet(deployment, rawRepSets)
-	if err != nil {
-		return nil, err
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
+
 	var newReplicaSet replicaset.ReplicaSet
 	if newRs != nil {
 		newRsPodInfo := common.GetPodInfo(newRs.Status.Replicas, *newRs.Spec.Replicas, rawPods.Items)
 		events, err := event.GetPodsEvents(client, namespace, rawPods.Items)
-		if err != nil {
-			return nil, err
+		nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+		if criticalError != nil {
+			return nil, criticalError
 		}
 
-		newRsPodInfo.Warnings = event.CreateEventList(events, dataselect.NoDataSelect).Events
+		newRsPodInfo.Warnings = event.GetPodsEventWarnings(events, rawPods.Items)
 		newReplicaSet = replicaset.ToReplicaSet(newRs, &newRsPodInfo)
 	}
 
@@ -192,6 +205,7 @@ func GetDeploymentDetail(client client.Interface, metricClient metricapi.MetricC
 		RevisionHistoryLimit:        deployment.Spec.RevisionHistoryLimit,
 		EventList:                   *eventList,
 		HorizontalPodAutoscalerList: *hpas,
+		Errors: nonCriticalErrors,
 	}, nil
 
 }

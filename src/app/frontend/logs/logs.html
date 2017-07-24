@@ -18,15 +18,26 @@ limitations under the License.
   <kd-title class="kd-logs-title">
     [[Logs from|Title prefix for logs card.]]
     <md-select class="kd-logs-toolbar-select"
+               aria-label="container"
                ng-model="ctrl.container"
                md-on-close="ctrl.onContainerChange(ctrl.container)"
                required>
-      <md-option ng-repeat="item in ctrl.containers"
+      <md-option ng-repeat="item in ctrl.logSources.containerNames"
                  ng-value="item">
         <span class="kd-logs-toolbar-text">{{::item}}</span>
       </md-option>
     </md-select>
-    [[in|Title part for logs card.]] {{ctrl.podLogs.info.podName}}
+    [[in|Title part for logs card.]]
+    <md-select class="kd-logs-toolbar-select"
+               aria-label="resource"
+               ng-model="ctrl.pod"
+               md-on-close="ctrl.onContainerChange(ctrl.pod)"
+               required>
+      <md-option ng-repeat="item in ctrl.logSources.podNames"
+                 ng-value="item">
+        <span class="kd-logs-toolbar-text">{{::item}}</span>
+      </md-option>
+    </md-select>
     <div class="kd-logs-style-buttons">
       <md-button class="kd-logs-toolbar-button"
                  ng-click="ctrl.onTextColorChange()">

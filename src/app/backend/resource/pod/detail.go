@@ -23,10 +23,12 @@ import (
 	"strconv"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	errorHandler "github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/owner"
+
+	"github.com/kubernetes/dashboard/src/app/backend/resource/controller"
 	"k8s.io/apimachinery/pkg/api/errors"
 	res "k8s.io/apimachinery/pkg/api/resource"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -57,7 +59,7 @@ type PodDetail struct {
 	RestartCount int32 `json:"restartCount"`
 
 	// Reference to the Controller
-	Controller owner.ResourceOwner `json:"controller"`
+	Controller controller.ResourceOwner `json:"controller"`
 
 	// List of container of this pod.
 	Containers []Container `json:"containers"`
@@ -73,6 +75,9 @@ type PodDetail struct {
 
 	// Events is list of events associated with a pod.
 	EventList common.EventList `json:"eventList"`
+
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
 // Container represents a docker/rkt/etc. container that lives in a pod.
@@ -109,29 +114,23 @@ type EnvVar struct {
 
 // GetPodDetail returns the details (PodDetail) of a named Pod from a particular namespace.
 // TODO(maciaszczykm): Owner reference should be used instead of created by annotation.
-func GetPodDetail(client kubernetes.Interface, metricClient metricapi.MetricClient, namespace,
-	name string) (*PodDetail, error) {
-
+func GetPodDetail(client kubernetes.Interface, metricClient metricapi.MetricClient, namespace, name string) (*PodDetail, error) {
 	log.Printf("Getting details of %s pod in %s namespace", name, namespace)
 
 	channels := &common.ResourceChannels{
-		ConfigMapList: common.GetConfigMapListChannel(client,
-			common.NewSameNamespaceQuery(namespace), 1),
-		SecretList: common.GetSecretListChannel(client,
-			common.NewSameNamespaceQuery(namespace), 1),
+		ConfigMapList: common.GetConfigMapListChannel(client, common.NewSameNamespaceQuery(namespace), 1),
+		SecretList:    common.GetSecretListChannel(client, common.NewSameNamespaceQuery(namespace), 1),
 	}
 
 	pod, err := client.CoreV1().Pods(namespace).Get(name, metaV1.GetOptions{})
-
 	if err != nil {
 		return nil, err
 	}
 
-	controller := owner.ResourceOwner{}
+	controller := controller.ResourceOwner{}
 	creatorAnnotation, found := pod.ObjectMeta.Annotations[v1.CreatedByAnnotation]
 	if found {
-		creatorRef, err := getPodCreator(client, creatorAnnotation,
-			common.NewSameNamespaceQuery(namespace), pod)
+		creatorRef, err := getPodCreator(client, creatorAnnotation, common.NewSameNamespaceQuery(namespace), pod)
 		if err != nil {
 			return nil, err
 		}
@@ -142,28 +141,32 @@ func GetPodDetail(client kubernetes.Interface, metricClient metricapi.MetricClie
 		dataselect.StdMetricsDataSelect, metricapi.NoResourceCache, metricClient)
 	metrics, _ := metricPromises.GetMetrics()
 
-	if err = <-channels.ConfigMapList.Error; err != nil {
-		return nil, err
-	}
 	configMapList := <-channels.ConfigMapList.List
-
-	if err = <-channels.SecretList.Error; err != nil {
-		return nil, err
+	err = <-channels.ConfigMapList.Error
+	nonCriticalErrors, criticalError := errorHandler.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
 	}
+
 	secretList := <-channels.SecretList.List
-
-	eventList, err := GetEventsForPod(client, dataselect.DefaultDataSelect, pod.Namespace,
-		pod.Name)
-	if err != nil {
-		return nil, err
+	err = <-channels.SecretList.Error
+	nonCriticalErrors, criticalError = errorHandler.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	podDetail := toPodDetail(pod, metrics, configMapList, secretList, controller, eventList)
+	eventList, err := GetEventsForPod(client, dataselect.DefaultDataSelect, pod.Namespace, pod.Name)
+	nonCriticalErrors, criticalError = errorHandler.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
+	}
+
+	podDetail := toPodDetail(pod, metrics, configMapList, secretList, controller, eventList, nonCriticalErrors)
 	return &podDetail, nil
 }
 
-func getPodCreator(client kubernetes.Interface, creatorAnnotation string,
-	nsQuery *common.NamespaceQuery, pod *v1.Pod) (*owner.ResourceOwner, error) {
+func getPodCreator(client kubernetes.Interface, creatorAnnotation string, nsQuery *common.NamespaceQuery,
+	pod *v1.Pod) (*controller.ResourceOwner, error) {
 
 	var serializedReference v1.SerializedReference
 	err := json.Unmarshal([]byte(creatorAnnotation), &serializedReference)
@@ -183,14 +186,14 @@ func getPodCreator(client kubernetes.Interface, creatorAnnotation string,
 
 	events := <-channels.EventList.List
 	if err := <-channels.EventList.Error; err != nil {
-		return nil, err
+		events = &v1.EventList{}
 	}
 
 	reference := serializedReference.Reference
-	rc, err := owner.NewResourceController(reference, client)
+	rc, err := controller.NewResourceController(reference, client)
 	if err != nil {
 		if isNotFoundError(err) {
-			return &owner.ResourceOwner{}, nil
+			return &controller.ResourceOwner{}, nil
 		}
 
 		return nil, err
@@ -199,7 +202,7 @@ func getPodCreator(client kubernetes.Interface, creatorAnnotation string,
 	if hasInvalidControllerReference(rc.UID(), pod) {
 		// Delete creator annotation if it is targeting invalid resource
 		delete(pod.ObjectMeta.Annotations, v1.CreatedByAnnotation)
-		return &owner.ResourceOwner{}, nil
+		return &controller.ResourceOwner{}, nil
 	}
 
 	controller := rc.Get(pods.Items, events.Items)
@@ -249,10 +252,9 @@ func extractContainerInfo(containerList []v1.Container, pod *v1.Pod, configMaps 
 	return containers
 }
 
-func toPodDetail(pod *v1.Pod, metrics []metricapi.Metric, configMaps *v1.ConfigMapList,
-	secrets *v1.SecretList, controller owner.ResourceOwner,
-	events *common.EventList) PodDetail {
-	podDetail := PodDetail{
+func toPodDetail(pod *v1.Pod, metrics []metricapi.Metric, configMaps *v1.ConfigMapList, secrets *v1.SecretList,
+	controller controller.ResourceOwner, events *common.EventList, nonCriticalErrors []error) PodDetail {
+	return PodDetail{
 		ObjectMeta:     api.NewObjectMeta(pod.ObjectMeta),
 		TypeMeta:       api.NewTypeMeta(api.ResourceKindPod),
 		PodPhase:       pod.Status.Phase,
@@ -265,8 +267,8 @@ func toPodDetail(pod *v1.Pod, metrics []metricapi.Metric, configMaps *v1.ConfigM
 		Metrics:        metrics,
 		Conditions:     getPodConditions(*pod),
 		EventList:      *events,
+		Errors:         nonCriticalErrors,
 	}
-	return podDetail
 }
 
 // evalValueFrom evaluates environment value from given source. For more details check:

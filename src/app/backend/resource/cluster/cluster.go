@@ -17,12 +17,13 @@ package cluster
 import (
 	"log"
 
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/namespace"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/node"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolume"
+	pv "github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolume"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/rbacroles"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/storageclass"
 	"k8s.io/client-go/kubernetes"
@@ -30,16 +31,20 @@ import (
 
 // Cluster structure contains all resource lists grouped into the cluster category.
 type Cluster struct {
-	NamespaceList        namespace.NamespaceList               `json:"namespaceList"`
-	NodeList             node.NodeList                         `json:"nodeList"`
-	PersistentVolumeList persistentvolume.PersistentVolumeList `json:"persistentVolumeList"`
-	RoleList             rbacroles.RbacRoleList                `json:"roleList"`
-	StorageClassList     storageclass.StorageClassList         `json:"storageClassList"`
+	NamespaceList        namespace.NamespaceList       `json:"namespaceList"`
+	NodeList             node.NodeList                 `json:"nodeList"`
+	PersistentVolumeList pv.PersistentVolumeList       `json:"persistentVolumeList"`
+	RoleList             rbacroles.RbacRoleList        `json:"roleList"`
+	StorageClassList     storageclass.StorageClassList `json:"storageClassList"`
+
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
 // GetCluster returns a list of all cluster resources in the cluster.
 func GetCluster(client *kubernetes.Clientset, dsQuery *dataselect.DataSelectQuery,
 	metricClient metricapi.MetricClient) (*Cluster, error) {
+
 	log.Print("Getting cluster category")
 	channels := &common.ResourceChannels{
 		NamespaceList:        common.GetNamespaceListChannel(client, 1),
@@ -53,19 +58,17 @@ func GetCluster(client *kubernetes.Clientset, dsQuery *dataselect.DataSelectQuer
 	return GetClusterFromChannels(client, channels, dsQuery, metricClient)
 }
 
-// GetClusterFromChannels returns a list of all cluster in the cluster, from the
-// channel sources.
+// GetClusterFromChannels returns a list of all cluster in the cluster, from the channel sources.
 func GetClusterFromChannels(client *kubernetes.Clientset, channels *common.ResourceChannels,
-	dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) (
-	*Cluster, error) {
+	dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) (*Cluster, error) {
 
-	nsChan := make(chan *namespace.NamespaceList)
-	nodeChan := make(chan *node.NodeList)
-	pvChan := make(chan *persistentvolume.PersistentVolumeList)
-	roleChan := make(chan *rbacroles.RbacRoleList)
-	storageChan := make(chan *storageclass.StorageClassList)
 	numErrs := 5
 	errChan := make(chan error, numErrs)
+	nsChan := make(chan *namespace.NamespaceList)
+	nodeChan := make(chan *node.NodeList)
+	pvChan := make(chan *pv.PersistentVolumeList)
+	roleChan := make(chan *rbacroles.RbacRoleList)
+	storageChan := make(chan *storageclass.StorageClassList)
 
 	go func() {
 		items, err := namespace.GetNamespaceListFromChannels(channels, dsQuery)
@@ -82,7 +85,7 @@ func GetClusterFromChannels(client *kubernetes.Clientset, channels *common.Resou
 	}()
 
 	go func() {
-		items, err := persistentvolume.GetPersistentVolumeListFromChannels(channels, dsQuery)
+		items, err := pv.GetPersistentVolumeListFromChannels(channels, dsQuery)
 		errChan <- err
 		pvChan <- items
 	}()
@@ -102,9 +105,7 @@ func GetClusterFromChannels(client *kubernetes.Clientset, channels *common.Resou
 	for i := 0; i < numErrs; i++ {
 		err := <-errChan
 		if err != nil {
-			// Log errors instead of forwarding. This way even if 1 resource fails
-			// other will be displayed
-			log.Print(err)
+			return nil, err
 		}
 	}
 
@@ -115,6 +116,9 @@ func GetClusterFromChannels(client *kubernetes.Clientset, channels *common.Resou
 		RoleList:             *(<-roleChan),
 		StorageClassList:     *(<-storageChan),
 	}
+
+	cluster.Errors = errors.MergeErrors(cluster.NamespaceList.Errors, cluster.NodeList.Errors,
+		cluster.PersistentVolumeList.Errors, cluster.RoleList.Errors, cluster.StorageClassList.Errors)
 
 	return cluster, nil
 }
