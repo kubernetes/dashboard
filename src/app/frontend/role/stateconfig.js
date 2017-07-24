@@ -17,7 +17,7 @@ import {stateName as listState} from './list/state';
 import {config as listConfig} from './list/stateconfig';
 import {stateName} from './state';
 /**
- * Configures states for the Ingress resource.
+ * Configures states for the Role resource.
  *
  * @param {!ui.router.$stateProvider} $stateProvider
  * @ngInject
