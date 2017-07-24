@@ -28,6 +28,14 @@ import (
 	kubeapi "k8s.io/kubernetes/pkg/api"
 )
 
+// EmptyEventList is a empty list of events.
+var EmptyEventList = &common.EventList{
+	Events: make([]common.Event, 0),
+	ListMeta: api.ListMeta{
+		TotalItems: 0,
+	},
+}
+
 // GetEvents gets events associated to resource with given name.
 func GetEvents(client client.Interface, namespace, resourceName string) ([]v1.Event, error) {
 	fieldSelector, err := fields.ParseSelector(kubeapi.EventInvolvedNameField + "=" + resourceName)

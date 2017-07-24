@@ -68,6 +68,14 @@ type Pod struct {
 	NodeName string `json:"nodeName"`
 }
 
+var EmptyPodList = &PodList{
+	Pods:   make([]Pod, 0),
+	Errors: make([]error, 0),
+	ListMeta: api.ListMeta{
+		TotalItems: 0,
+	},
+}
+
 // GetPodList returns a list of all Pods in the cluster.
 func GetPodList(client k8sClient.Interface, metricClient metricapi.MetricClient, nsQuery *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery) (*PodList, error) {
