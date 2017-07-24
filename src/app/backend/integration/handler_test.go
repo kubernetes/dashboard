@@ -17,7 +17,7 @@ package integration
 import (
 	"testing"
 
-	"github.com/emicklei/go-restful"
+	restful "github.com/emicklei/go-restful"
 )
 
 func TestIntegrationHandler_Install(t *testing.T) {

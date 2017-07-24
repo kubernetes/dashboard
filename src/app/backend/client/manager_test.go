@@ -18,7 +18,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/emicklei/go-restful"
+	restful "github.com/emicklei/go-restful"
 )
 
 func TestNewClientManager(t *testing.T) {

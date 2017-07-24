@@ -5,7 +5,7 @@ readonly red=$(tput bold; tput setaf 1)
 readonly green=$(tput bold; tput setaf 2)
 
 exit_code=0
-gofmt_available=false
+goimports_available=false
 gulp_available=false
 
 # Pre checks
@@ -20,13 +20,13 @@ else
 fi
 
 echo "${reset}"
-echo -ne "Checking if gofmt is available in your PATH... "
-if ! OUT=$(which gofmt 2>&1); then
+echo -ne "Checking if goimports is available in your PATH... "
+if ! OUT=$(which goimports 2>&1); then
   echo "${red}ERROR!"
-  echo "Please add gofmt to your PATH"
+  echo "Please add goimports to your PATH"
   exit_code=1
 else
-  gofmt_available=true
+  goimports_available=true
   echo "${green}OK"
 fi
 
@@ -44,15 +44,15 @@ if ${gulp_available}; then
   fi
 fi
 
-if ${gofmt_available}; then
+if ${goimports_available}; then
   echo "${reset}"
   echo -ne "Checking go files formatting... "
-  unformatted=$(gofmt -l src/app/backend)
+  unformatted=$(goimports -l src/app/backend)
   if [ ! -z "$unformatted" ]; then
     echo "${red}ERROR!"
     echo "There is an issue with file formatting."
     echo "To format go files run:"
-    echo "  gofmt -w src/app/backend"
+    echo "  goimports -w src/app/backend"
     exit_code=1
   else
     echo "${green}OK"

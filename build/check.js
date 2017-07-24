@@ -28,7 +28,7 @@ import path from 'path';
 import through from 'through2';
 
 import conf from './conf';
-import {gofmtCommand} from './gocommand';
+import {goimportsCommand} from './gocommand';
 
 /** HTML beautifier from js-beautify package */
 const htmlBeautify = beautify.html;
@@ -126,10 +126,10 @@ gulp.task('format-html', function() {
 });
 
 /**
- * Formats all project's Go files using gofmt.
+ * Formats all project's Go files using goimports tool.
  */
 gulp.task('format-go', function(doneFn) {
-  gofmtCommand(
+  goimportsCommand(
       [
         '-w',
         path.relative(conf.paths.base, conf.paths.backendSrc),

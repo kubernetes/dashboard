@@ -55,15 +55,15 @@ export default function goCommand(args, doneFn, envOverride) {
 }
 
 /**
- * Spawns a Gofmt process after making sure all Go prerequisites are present.
+ * Spawns a goimports process after making sure all Go prerequisites are present.
  *
  * @param {!Array<string>} args - Arguments of the go command.
  * @param {function(?Error=)} doneFn - Callback.
  * @param {!Object<string, string>=} [envOverride] optional environment variables overrides map.
  */
-export function gofmtCommand(args, doneFn, envOverride) {
+export function goimportsCommand(args, doneFn, envOverride) {
   checkPrerequisites()
-      .then(() => spawnGofmtProcess(args, envOverride))
+      .then(() => spawnGoimportsProcess(args, envOverride))
       .then(doneFn)
       .fail((error) => doneFn(error));
 }
@@ -205,13 +205,13 @@ function spawnGoProcess(args, envOverride) {
 }
 
 /**
- * Spawns gofmt process.
+ * Spawns goimports process.
  * Promises an error if the go command process fails.
  *
  * @param {!Array<string>} args - Arguments of the go command.
  * @param {!Object<string, string>=} [envOverride] optional environment variables overrides map.
  * @return {Q.Promise} A promise object.
  */
-function spawnGofmtProcess(args, envOverride) {
-  return spawnProcess('gofmt', args, envOverride);
+function spawnGoimportsProcess(args, envOverride) {
+  return spawnProcess('goimports', args, envOverride);
 }
