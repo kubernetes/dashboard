@@ -20,7 +20,7 @@ import {stateName as listState} from './list/state';
 import {config as listConfig} from './list/stateconfig';
 import {stateName} from './state';
 /**
- * Configures states for the Relica Set resource.
+ * Configures states for the Replica Set resource.
  *
  * @param {!ui.router.$stateProvider} $stateProvider
  * @ngInject
