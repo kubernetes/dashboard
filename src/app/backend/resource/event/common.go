@@ -131,12 +131,12 @@ func GetNodeEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery,
 	mc := client.CoreV1().Nodes()
 	node, err := mc.Get(nodeName, metaV1.GetOptions{})
 	if err != nil {
-		return nil, err
+		return &eventList, err
 	}
 
 	events, err := client.CoreV1().Events(v1.NamespaceAll).Search(scheme, node)
 	if err != nil {
-		return nil, err
+		return &eventList, err
 	}
 
 	if !IsTypeFilled(events.Items) {

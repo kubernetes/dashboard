@@ -186,7 +186,7 @@ func getPodCreator(client kubernetes.Interface, creatorAnnotation string, nsQuer
 
 	events := <-channels.EventList.List
 	if err := <-channels.EventList.Error; err != nil {
-		return nil, err
+		events = &v1.EventList{}
 	}
 
 	reference := serializedReference.Reference
