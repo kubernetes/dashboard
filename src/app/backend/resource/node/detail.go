@@ -237,22 +237,28 @@ func getNodeAllocatedResources(node v1.Node, podList *v1.PodList) (NodeAllocated
 // GetNodePods return pods list in given named node
 func GetNodePods(client k8sClient.Interface, metricClient metricapi.MetricClient,
 	dsQuery *dataselect.DataSelectQuery, name string) (*pod.PodList, error) {
+	podList := pod.PodList{
+		Pods:              []pod.Pod{},
+		CumulativeMetrics: []metricapi.Metric{},
+	}
+
 	node, err := client.CoreV1().Nodes().Get(name, metaV1.GetOptions{})
 	if err != nil {
-		return nil, err
+		return &podList, err
 	}
 
 	pods, err := getNodePods(client, *node)
 	if err != nil {
-		return nil, err
+		return &podList, err
 	}
 
 	events, err := event.GetPodsEvents(client, v1.NamespaceAll, pods.Items)
-	if err != nil {
-		return nil, err
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return &podList, criticalError
 	}
 
-	podList := pod.ToPodList(pods.Items, events, []error{}, dsQuery, metricClient)
+	podList = pod.ToPodList(pods.Items, events, nonCriticalErrors, dsQuery, metricClient)
 	return &podList, nil
 }
 
