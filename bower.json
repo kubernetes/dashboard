@@ -1,6 +1,6 @@
 {
   "name": "kubernetes-dashboard",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "dependencies": {
     "angular": "~1.6.5",
     "angular-animate": "~1.6.5",
