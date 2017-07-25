@@ -43,8 +43,8 @@ import (
 	"k8s.io/client-go/kubernetes"
 )
 
-// AllObjectsInNamespace is a struct containing all of the objects in a given namespace
-type AllObjectsInNamespace struct {
+// ResourcesInNamespace is a struct containing all of the objects in a given namespace
+type ResourcesInNamespace struct {
 	// Config and storage.
 	ConfigMapList             configmap.ConfigMapList       `json:"configMapList"`
 	PersistentVolumeClaimList pvc.PersistentVolumeClaimList `json:"persistentVolumeClaimList"`
@@ -66,7 +66,7 @@ type AllObjectsInNamespace struct {
 
 // SearchResult is a list of resources matching search criteria found in whole cluster.
 type SearchResult struct {
-	AllObjectsInNamespace
+	ResourcesInNamespace
 
 	// Cluster.
 	NamespaceList        namespace.NamespaceList               `json:"namespaceList"`
@@ -114,7 +114,7 @@ func Search(client *kubernetes.Clientset, metricClient metricapi.MetricClient,
 		RoleList:             clusterResources.RoleList,
 		StorageClassList:     clusterResources.StorageClassList,
 
-		AllObjectsInNamespace: AllObjectsInNamespace{
+		ResourcesInNamespace: ResourcesInNamespace{
 			// Config and storage.
 			ConfigMapList:             configResources.ConfigMapList,
 			PersistentVolumeClaimList: configResources.PersistentVolumeClaimList,

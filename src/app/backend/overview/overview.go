@@ -28,7 +28,7 @@ import (
 
 // OverviewObjectList is a list of objects present in a given namespace
 type OverviewObjectList struct {
-	search.AllObjectsInNamespace
+	search.ResourcesInNamespace
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
@@ -56,7 +56,7 @@ func GetOverview(client *kubernetes.Clientset, metricClient metricapi.MetricClie
 
 	return &OverviewObjectList{
 		// All the objects in a namespace
-		AllObjectsInNamespace: search.AllObjectsInNamespace{
+		ResourcesInNamespace: search.ResourcesInNamespace{
 			// Config and storage.
 			ConfigMapList:             configResources.ConfigMapList,
 			PersistentVolumeClaimList: configResources.PersistentVolumeClaimList,
