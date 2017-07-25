@@ -28,12 +28,4 @@ export class SecretListController {
     /** @export {!angular.Resource} */
     this.secretListResource = kdSecretListResource;
   }
-
-  /**
-   * @return {boolean}
-   * @export
-   */
-  shouldShowZeroState() {
-    return !(this.secretList.secrets && this.secretList.secrets.length);
-  }
 }

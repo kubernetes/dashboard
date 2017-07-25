@@ -28,4 +28,14 @@ export class ThirdPartyResourceListController {
     /** @export {!angular.Resource} */
     this.thirdPartyResourceListResource = kdThirdPartyResourceListResource;
   }
+
+  /**
+   * @return {boolean}
+   * @export
+   */
+  shouldShowZeroState() {
+    /** @type {number} */
+    let resourcesLength = this.thirdPartyResourceList.listMeta.totalItems;
+    return resourcesLength == 0;
+  }
 }

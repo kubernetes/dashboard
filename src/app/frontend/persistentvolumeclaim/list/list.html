@@ -18,10 +18,8 @@ limitations under the License.
 
 <kd-content-card>
   <kd-content>
-    <kd-persistent-volume-claim-card-list ng-if="!$ctrl.shouldShowZeroState()"
-                                          persistent-volume-claim-list="$ctrl.persistentVolumeClaimList"
+    <kd-persistent-volume-claim-card-list persistent-volume-claim-list="$ctrl.persistentVolumeClaimList"
                                           persistent-volume-claim-list-resource="$ctrl.persistentVolumeClaimListResource">
     </kd-persistent-volume-claim-card-list>
-    <kd-zero-state ng-if="$ctrl.shouldShowZeroState()"></kd-zero-state>
   </kd-content>
 </kd-content-card>

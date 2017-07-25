@@ -30,11 +30,9 @@ limitations under the License.
 
 <kd-content-card>
   <kd-content>
-    <kd-daemon-set-card-list ng-if="!ctrl.shouldShowZeroState()"
-                             daemon-set-list="::ctrl.daemonSetList"
+    <kd-daemon-set-card-list daemon-set-list="::ctrl.daemonSetList"
                              daemon-set-list-resource="::ctrl.daemonSetListResource"
                              with-statuses="true">
     </kd-daemon-set-card-list>
-    <kd-zero-state ng-if="ctrl.shouldShowZeroState()"></kd-zero-state>
   </kd-content>
 </kd-content-card>

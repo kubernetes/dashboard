@@ -28,12 +28,4 @@ export class DaemonSetListController {
     /** @export {!angular.Resource} */
     this.daemonSetListResource = kdDaemonSetListResource;
   }
-
-  /**
-   * @return {boolean}
-   * @export
-   */
-  shouldShowZeroState() {
-    return this.daemonSetList.daemonSets.length === 0;
-  }
 }

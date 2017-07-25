@@ -30,12 +30,4 @@ export class DeploymentListController {
     /** @export {!angular.Resource} */
     this.deploymentListResource = kdDeploymentListResource;
   }
-
-  /**
-   * @return {boolean}
-   * @export
-   */
-  shouldShowZeroState() {
-    return this.deploymentList.deployments.length === 0;
-  }
 }

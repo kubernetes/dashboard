@@ -30,10 +30,8 @@ limitations under the License.
 
 <kd-content-card>
   <kd-content>
-    <kd-deployment-card-list ng-if="!$ctrl.shouldShowZeroState()"
-                             deployment-list="::$ctrl.deploymentList"
+    <kd-deployment-card-list deployment-list="::$ctrl.deploymentList"
                              deployment-list-resource="::$ctrl.deploymentListResource">
     </kd-deployment-card-list>
-    <kd-zero-state ng-if="$ctrl.shouldShowZeroState()"></kd-zero-state>
   </kd-content>
 </kd-content-card>

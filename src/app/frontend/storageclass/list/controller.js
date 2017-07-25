@@ -30,12 +30,4 @@ export class StorageClassListController {
     /** @export {!angular.Resource} */
     this.storageClassListResource = kdStorageClassListResource;
   }
-
-  /**
-   * @return {boolean}
-   * @export
-   */
-  shouldShowZeroState() {
-    return this.storageClassList.storageClasses.length === 0;
-  }
 }

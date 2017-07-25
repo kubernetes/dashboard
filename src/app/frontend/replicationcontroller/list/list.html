@@ -30,10 +30,8 @@ limitations under the License.
 
 <kd-content-card>
   <kd-content>
-    <kd-replication-controller-card-list ng-if="!$ctrl.shouldShowZeroState()"
-                                         replication-controller-list="$ctrl.replicationControllerList"
+    <kd-replication-controller-card-list replication-controller-list="$ctrl.replicationControllerList"
                                          replication-controller-list-resource="$ctrl.rcListResource">
     </kd-replication-controller-card-list>
-    <kd-zero-state ng-if="$ctrl.shouldShowZeroState()"></kd-zero-state>
   </kd-content>
 </kd-content-card>

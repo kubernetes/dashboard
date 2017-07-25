@@ -32,9 +32,7 @@ limitations under the License.
   <kd-content>
     <kd-pod-card-list pod-list="$ctrl.podList"
                       pod-list-resource="$ctrl.podListResource"
-                      with-statuses="true"
-                      ng-if="!$ctrl.shouldShowZeroState()">
+                      with-statuses="true">
     </kd-pod-card-list>
-    <kd-zero-state ng-if="$ctrl.shouldShowZeroState()"></kd-zero-state>
   </kd-content>
 </kd-content-card>

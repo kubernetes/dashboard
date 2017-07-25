@@ -30,12 +30,4 @@ export class ConfigMapListController {
     /** @export {!angular.Resource} */
     this.configMapListResource = kdConfigMapListResource;
   }
-
-  /**
-   * @return {boolean}
-   * @export
-   */
-  shouldShowZeroState() {
-    return this.configMapList.items.length === 0;
-  }
 }

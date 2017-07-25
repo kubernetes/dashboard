@@ -30,10 +30,8 @@ limitations under the License.
 
 <kd-content-card>
   <kd-content>
-    <kd-job-card-list ng-if="!$ctrl.shouldShowZeroState()"
-                      job-list="$ctrl.jobList"
+    <kd-job-card-list job-list="$ctrl.jobList"
                       job-list-resource="$ctrl.jobListResource">
     </kd-job-card-list>
-    <kd-zero-state ng-if="$ctrl.shouldShowZeroState()"></kd-zero-state>
   </kd-content>
 </kd-content-card>

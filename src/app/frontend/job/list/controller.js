@@ -30,12 +30,4 @@ export class JobListController {
     /** @export {!angular.Resource} */
     this.jobListResource = kdJobListResource;
   }
-
-  /**
-   * @return {boolean}
-   * @export
-   */
-  shouldShowZeroState() {
-    return this.jobList.jobs.length === 0;
-  }
 }
