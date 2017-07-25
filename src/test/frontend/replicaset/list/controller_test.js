@@ -34,16 +34,4 @@ describe('Replica Set list controller', () => {
 
     expect(ctrl.replicaSetList.replicaSets).toBe(ctrls);
   }));
-
-  it('should show zero state', () => {
-    expect(ctrl.shouldShowZeroState()).toBeTruthy();
-  });
-
-  it('should hide zero state', () => {
-    // given
-    ctrl.replicaSetList = {replicaSets: ['mock']};
-
-    // then
-    expect(ctrl.shouldShowZeroState()).toBeFalsy();
-  });
 });

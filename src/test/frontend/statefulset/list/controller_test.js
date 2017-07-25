@@ -34,16 +34,4 @@ describe('Stateful Set list controller', () => {
 
     expect(ctrl.statefulSetList.statefulSets).toBe(ctrls);
   }));
-
-  it('should show zero state', () => {
-    expect(ctrl.shouldShowZeroState()).toBeTruthy();
-  });
-
-  it('should hide zero state', () => {
-    // given
-    ctrl.statefulSetList = {statefulSets: ['mock']};
-
-    // then
-    expect(ctrl.shouldShowZeroState()).toBeFalsy();
-  });
 });

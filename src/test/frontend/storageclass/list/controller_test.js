@@ -35,16 +35,4 @@ describe('Storage Class list controller', () => {
 
     expect(ctrl.storageClassList.storageClasses).toBe(ctrls);
   }));
-
-  it('should show zero state', () => {
-    expect(ctrl.shouldShowZeroState()).toBe(true);
-  });
-
-  it('should hide zero state', () => {
-    // given
-    ctrl.storageClassList = {storageClasses: ['mock']};
-
-    // then
-    expect(ctrl.shouldShowZeroState()).toBe(false);
-  });
 });

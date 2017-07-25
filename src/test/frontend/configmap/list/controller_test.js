@@ -34,16 +34,4 @@ describe('Config Map list controller', () => {
 
     expect(ctrl.configMapList.items).toBe(ctrls);
   }));
-
-  it('should show zero state', () => {
-    expect(ctrl.shouldShowZeroState()).toBe(true);
-  });
-
-  it('should hide zero state', () => {
-    // given
-    ctrl.configMapList = {items: ['mock']};
-
-    // then
-    expect(ctrl.shouldShowZeroState()).toBe(false);
-  });
 });

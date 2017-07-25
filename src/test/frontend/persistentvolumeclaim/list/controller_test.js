@@ -36,16 +36,4 @@ describe('Persistent Volume list controller', () => {
 
     expect(ctrl.persistentVolumeClaimList.items).toBe(ctrls);
   }));
-
-  it('should show zero state', () => {
-    expect(ctrl.shouldShowZeroState()).toBe(true);
-  });
-
-  it('should hide zero state', () => {
-    // given
-    ctrl.persistentVolumeClaimList = {items: ['mock']};
-
-    // then
-    expect(ctrl.shouldShowZeroState()).toBe(false);
-  });
 });

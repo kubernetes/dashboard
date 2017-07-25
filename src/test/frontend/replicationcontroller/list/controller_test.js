@@ -38,16 +38,4 @@ describe('Replication controller list controller', () => {
 
     expect(ctrl.replicationControllerList.replicationControllers).toBe(ctrls);
   }));
-
-  it('should show zero state', () => {
-    expect(ctrl.shouldShowZeroState()).toBeTruthy();
-  });
-
-  it('should hide zero state', () => {
-    // given
-    ctrl.replicationControllerList = {replicationControllers: ['mock']};
-
-    // then
-    expect(ctrl.shouldShowZeroState()).toBeFalsy();
-  });
 });
