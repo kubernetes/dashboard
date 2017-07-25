@@ -15,6 +15,7 @@
 package overview
 
 import (
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/config"
@@ -28,8 +29,12 @@ import (
 // OverviewObjectList is a list of objects present in a given namespace
 type OverviewObjectList struct {
 	search.AllObjectsInNamespace
+
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
+// GetOverview returns a list of all objects in a given namespace.
 func GetOverview(client *kubernetes.Clientset, metricClient metricapi.MetricClient,
 	nsQuery *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery) (*OverviewObjectList, error) {
@@ -50,7 +55,8 @@ func GetOverview(client *kubernetes.Clientset, metricClient metricapi.MetricClie
 	}
 
 	return &OverviewObjectList{
-		search.AllObjectsInNamespace{
+		// All the objects in a namespace
+		AllObjectsInNamespace: search.AllObjectsInNamespace{
 			// Config and storage.
 			ConfigMapList:             configResources.ConfigMapList,
 			PersistentVolumeClaimList: configResources.PersistentVolumeClaimList,
@@ -69,5 +75,9 @@ func GetOverview(client *kubernetes.Clientset, metricClient metricapi.MetricClie
 			DaemonSetList:             workloadsResources.DaemonSetList,
 			StatefulSetList:           workloadsResources.StatefulSetList,
 		},
+
+		// Errors.
+		Errors: errors.MergeErrors(configResources.Errors, discoveryResources.Errors,
+			workloadsResources.Errors),
 	}, nil
 }

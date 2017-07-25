@@ -31,7 +31,7 @@ export default function stateConfig($stateProvider) {
     },
     data: {
       [breadcrumbsConfig]: {
-        'label': i18n.MSG_BREADCRUMBS_ALL_OBJECTS_LABEL,
+        'label': i18n.MSG_BREADCRUMBS_OVERVIEW_LABEL,
       },
     },
     views: {
@@ -58,5 +58,5 @@ export function resolveOverview(kdOverviewResource, $stateParams, kdDataSelectSe
 
 const i18n = {
   /** @type {string} @desc Label 'Overview' that appears as a breadcrumb on the action bar. */
-  MSG_BREADCRUMBS_ALL_OBJECTS_LABEL: goog.getMsg('Overview'),
+  MSG_BREADCRUMBS_OVERVIEW_LABEL: goog.getMsg('Overview'),
 };
