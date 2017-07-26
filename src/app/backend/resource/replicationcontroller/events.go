@@ -17,7 +17,7 @@ package replicationcontroller
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	resourceEvent "github.com/kubernetes/dashboard/src/app/backend/resource/event"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	client "k8s.io/client-go/kubernetes"
 )
 
@@ -27,11 +27,11 @@ func GetReplicationControllerEvents(client client.Interface, dsQuery *dataselect
 	namespace, replicationControllerName string) (*common.EventList, error) {
 
 	// Get events for replication controller.
-	rsEvents, err := resourceEvent.GetEvents(client, namespace, replicationControllerName)
+	rsEvents, err := event.GetEvents(client, namespace, replicationControllerName)
 	if err != nil {
-		return nil, err
+		return event.EmptyEventList, err
 	}
 
-	events := resourceEvent.CreateEventList(rsEvents, dsQuery)
+	events := event.CreateEventList(rsEvents, dsQuery)
 	return &events, nil
 }

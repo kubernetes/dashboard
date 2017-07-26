@@ -28,7 +28,7 @@ func GetDaemonSetEvents(client client.Interface, dsQuery *dataselect.DataSelectQ
 	// Get events for daemon set.
 	dsEvents, err := event.GetEvents(client, namespace, daemonSetName)
 	if err != nil {
-		return nil, err
+		return event.EmptyEventList, err
 	}
 
 	events := event.CreateEventList(dsEvents, dsQuery)

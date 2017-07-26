@@ -15,6 +15,8 @@
 package deployment
 
 import (
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
@@ -27,15 +29,19 @@ import (
 func GetDeploymentOldReplicaSets(client client.Interface, dsQuery *dataselect.DataSelectQuery,
 	namespace string, deploymentName string) (*replicaset.ReplicaSetList, error) {
 
-	deployment, err := client.ExtensionsV1beta1().Deployments(namespace).Get(deploymentName,
-		metaV1.GetOptions{})
+	oldReplicaSetList := &replicaset.ReplicaSetList{
+		ReplicaSets: make([]replicaset.ReplicaSet, 0),
+		ListMeta:    api.ListMeta{TotalItems: 0},
+	}
+
+	deployment, err := client.ExtensionsV1beta1().Deployments(namespace).Get(deploymentName, metaV1.GetOptions{})
 	if err != nil {
-		return nil, err
+		return oldReplicaSetList, err
 	}
 
 	selector, err := metaV1.LabelSelectorAsSelector(deployment.Spec.Selector)
 	if err != nil {
-		return nil, err
+		return oldReplicaSetList, err
 	}
 	options := metaV1.ListOptions{LabelSelector: selector.String()}
 
@@ -50,15 +56,19 @@ func GetDeploymentOldReplicaSets(client client.Interface, dsQuery *dataselect.Da
 
 	rawRs := <-channels.ReplicaSetList.List
 	if err := <-channels.ReplicaSetList.Error; err != nil {
-		return nil, err
+		return oldReplicaSetList, err
 	}
+
 	rawPods := <-channels.PodList.List
 	if err := <-channels.PodList.Error; err != nil {
-		return nil, err
+		return oldReplicaSetList, err
 	}
+
 	rawEvents := <-channels.EventList.List
-	if err := <-channels.EventList.Error; err != nil {
-		return nil, err
+	err = <-channels.EventList.Error
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return oldReplicaSetList, criticalError
 	}
 
 	rawRepSets := make([]*extensions.ReplicaSet, 0)
@@ -67,7 +77,7 @@ func GetDeploymentOldReplicaSets(client client.Interface, dsQuery *dataselect.Da
 	}
 	oldRs, _, err := FindOldReplicaSets(deployment, rawRepSets)
 	if err != nil {
-		return nil, err
+		return oldReplicaSetList, err
 	}
 
 	oldReplicaSets := make([]extensions.ReplicaSet, len(oldRs))
@@ -75,6 +85,7 @@ func GetDeploymentOldReplicaSets(client client.Interface, dsQuery *dataselect.Da
 		oldReplicaSets[i] = *replicaSet
 	}
 
-	oldReplicaSetList := replicaset.ToReplicaSetList(oldReplicaSets, rawPods.Items, rawEvents.Items, []error{}, dsQuery, nil) // TODO
+	oldReplicaSetList = replicaset.ToReplicaSetList(oldReplicaSets, rawPods.Items, rawEvents.Items,
+		nonCriticalErrors, dsQuery, nil)
 	return oldReplicaSetList, nil
 }

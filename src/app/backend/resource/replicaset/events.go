@@ -16,22 +16,21 @@ package replicaset
 
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	ds "github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 
 	client "k8s.io/client-go/kubernetes"
 )
 
 // GetReplicaSetEvents gets events associated to replica set.
-func GetReplicaSetEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery, namespace, replicaSetName string) (
-	*common.EventList, error) {
+func GetReplicaSetEvents(client client.Interface, dsQuery *ds.DataSelectQuery, namespace,
+	name string) (*common.EventList, error) {
 
-	// Get events for replica set.
-	rsEvents, err := event.GetEvents(client, namespace, replicaSetName)
+	events, err := event.GetEvents(client, namespace, name)
 	if err != nil {
-		return nil, err
+		return event.EmptyEventList, err
 	}
 
-	events := event.CreateEventList(rsEvents, dsQuery)
-	return &events, nil
+	eventList := event.CreateEventList(events, dsQuery)
+	return &eventList, nil
 }

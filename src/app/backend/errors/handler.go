@@ -42,7 +42,7 @@ func AppendError(err error, nonCriticalErrors []error) ([]error, error) {
 			return nonCriticalErrors, err
 		} else {
 			log.Printf("Non-critical error occurred during resource retrieval: %s", err)
-			nonCriticalErrors = append(nonCriticalErrors, err)
+			nonCriticalErrors = appendMissing(nonCriticalErrors, err)
 		}
 	}
 	return nonCriticalErrors, nil
@@ -51,7 +51,7 @@ func AppendError(err error, nonCriticalErrors []error) ([]error, error) {
 // MergeErrors merges multiple non-critical error arrays into one array.
 func MergeErrors(errorArraysToMerge ...[]error) (mergedErrors []error) {
 	for _, errorArray := range errorArraysToMerge {
-		mergedErrors = append(mergedErrors, errorArray...)
+		mergedErrors = appendMissing(mergedErrors, errorArray...)
 	}
 	return
 }
@@ -63,6 +63,24 @@ func isErrorCritical(err error) bool {
 		return true
 	}
 	return !contains(NonCriticalErrors, status.ErrStatus.Code)
+}
+
+func appendMissing(slice []error, toAppend ...error) []error {
+	m := make(map[string]bool, 0)
+
+	for _, s := range slice {
+		m[s.Error()] = true
+	}
+
+	for _, a := range toAppend {
+		_, ok := m[a.Error()]
+		if !ok {
+			slice = append(slice, a)
+			m[a.Error()] = true
+		}
+	}
+
+	return slice
 }
 
 func contains(s []int32, e int32) bool {

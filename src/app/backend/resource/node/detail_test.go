@@ -85,7 +85,7 @@ func TestGetNodeDetail(t *testing.T) {
 		fakeClient := fake.NewSimpleClientset(c.node)
 
 		dataselect.StdMetricsDataSelect.MetricQuery = dataselect.NoMetrics
-		actual, _ := GetNodeDetail(fakeClient, nil, c.name)
+		actual, _ := GetNodeDetail(fakeClient, nil, c.name, dataselect.NoDataSelect)
 
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("GetNodeDetail(client,metricClient,%#v, %#v) == \ngot: %#v, \nexpected %#v",

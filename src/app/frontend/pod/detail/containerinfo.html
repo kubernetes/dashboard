@@ -27,14 +27,16 @@ limitations under the License.
       <div ng-if="::container.env.length">
         <div ng-repeat="env in ::container.env"
              layout="row">
-          <span ng-if="::$ctrl.isHref(env)">
+          <span ng-if="::$ctrl.isHref(env)"
+                class="kd-env-href-wrapper">
                 {{::env.name}}&nbsp;(<a ng-href="{{::$ctrl.getRefObjectHref(env)}}">{{::$ctrl.getRefObjectName(env)}}</a>):&nbsp;
                 <span ng-if="::$ctrl.isSecret(env)">
                     <md-button ng-if="!$ctrl.isSecretVisible" ng-click="::$ctrl.showSecret()" class="md-icon-button kd-env-secret-button">
                         <i class="material-icons kd-env-secret-icon">visibility</i>
                         <md-tooltip md-direction="top">[[Show secret value|Tooltip on container env variables taken from secret]]</md-tooltip>
                     </md-button>
-                    <span ng-if="$ctrl.isSecretVisible" class="kd-env-value">{{::$ctrl.formatSecretValue(env.value)}}</span>
+                    <span ng-if="$ctrl.isSecretVisible && env.value" class="kd-env-value">{{::$ctrl.formatSecretValue(env.value)}}</span>
+          <span ng-if="$ctrl.isSecretVisible && !env.value">-</span>
           </span>
           <pre class="kd-env-config-map-value"
                ng-if="!$ctrl.isSecret(env)">{{::env.value}}</pre>

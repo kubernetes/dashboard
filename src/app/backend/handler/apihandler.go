@@ -662,6 +662,7 @@ func (apiHandler *APIHandler) handleGetStatefulSetPods(request *restful.Request,
 	namespace := request.PathParameter("namespace")
 	name := request.PathParameter("statefulset")
 	dataSelect := parseDataSelectPathParameter(request)
+	dataSelect.MetricQuery = dataselect.StandardMetrics
 	result, err := statefulset.GetStatefulSetPods(k8sClient, apiHandler.iManager.Metric().Client(), dataSelect, name, namespace)
 	if err != nil {
 		handleInternalError(response, err)
@@ -715,6 +716,7 @@ func (apiHandler *APIHandler) handleGetServiceDetail(request *restful.Request, r
 	namespace := request.PathParameter("namespace")
 	name := request.PathParameter("service")
 	dataSelect := parseDataSelectPathParameter(request)
+	dataSelect.MetricQuery = dataselect.StandardMetrics
 	result, err := resourceService.GetServiceDetail(k8sClient, apiHandler.iManager.Metric().Client(), namespace, name, dataSelect)
 	if err != nil {
 		handleInternalError(response, err)
@@ -767,6 +769,7 @@ func (apiHandler *APIHandler) handleGetServicePods(request *restful.Request, res
 	namespace := request.PathParameter("namespace")
 	name := request.PathParameter("service")
 	dataSelect := parseDataSelectPathParameter(request)
+	dataSelect.MetricQuery = dataselect.StandardMetrics
 	result, err := resourceService.GetServicePods(k8sClient, apiHandler.iManager.Metric().Client(), namespace, name, dataSelect)
 	if err != nil {
 		handleInternalError(response, err)
@@ -817,7 +820,9 @@ func (apiHandler *APIHandler) handleGetNodeDetail(request *restful.Request, resp
 	}
 
 	name := request.PathParameter("name")
-	result, err := node.GetNodeDetail(k8sClient, apiHandler.iManager.Metric().Client(), name)
+	dataSelect := parseDataSelectPathParameter(request)
+	dataSelect.MetricQuery = dataselect.StandardMetrics
+	result, err := node.GetNodeDetail(k8sClient, apiHandler.iManager.Metric().Client(), name, dataSelect)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -834,6 +839,7 @@ func (apiHandler *APIHandler) handleGetNodeEvents(request *restful.Request, resp
 
 	name := request.PathParameter("name")
 	dataSelect := parseDataSelectPathParameter(request)
+	dataSelect.MetricQuery = dataselect.StandardMetrics
 	result, err := event.GetNodeEvents(k8sClient, dataSelect, name)
 	if err != nil {
 		handleInternalError(response, err)
@@ -851,6 +857,7 @@ func (apiHandler *APIHandler) handleGetNodePods(request *restful.Request, respon
 
 	name := request.PathParameter("name")
 	dataSelect := parseDataSelectPathParameter(request)
+	dataSelect.MetricQuery = dataselect.StandardMetrics
 	result, err := node.GetNodePods(k8sClient, apiHandler.iManager.Metric().Client(), dataSelect, name)
 	if err != nil {
 		handleInternalError(response, err)
@@ -1131,6 +1138,7 @@ func (apiHandler *APIHandler) handleGetReplicaSetPods(request *restful.Request, 
 	namespace := request.PathParameter("namespace")
 	replicaSet := request.PathParameter("replicaSet")
 	dataSelect := parseDataSelectPathParameter(request)
+	dataSelect.MetricQuery = dataselect.StandardMetrics
 	result, err := replicaset.GetReplicaSetPods(k8sClient, apiHandler.iManager.Metric().Client(), dataSelect, replicaSet, namespace)
 	if err != nil {
 		handleInternalError(response, err)
@@ -1150,6 +1158,7 @@ func (apiHandler *APIHandler) handleGetReplicaSetServices(request *restful.Reque
 	namespace := request.PathParameter("namespace")
 	replicaSet := request.PathParameter("replicaSet")
 	dataSelect := parseDataSelectPathParameter(request)
+	dataSelect.MetricQuery = dataselect.StandardMetrics
 	result, err := replicaset.GetReplicaSetServices(k8sClient, dataSelect, namespace, replicaSet)
 	if err != nil {
 		handleInternalError(response, err)
@@ -1169,6 +1178,7 @@ func (apiHandler *APIHandler) handleGetReplicaSetEvents(request *restful.Request
 	namespace := request.PathParameter("namespace")
 	name := request.PathParameter("replicaSet")
 	dataSelect := parseDataSelectPathParameter(request)
+	dataSelect.MetricQuery = dataselect.StandardMetrics
 	result, err := replicaset.GetReplicaSetEvents(k8sClient, dataSelect, namespace, name)
 	if err != nil {
 		handleInternalError(response, err)
@@ -1189,6 +1199,7 @@ func (apiHandler *APIHandler) handleGetPodEvents(request *restful.Request, respo
 	namespace := request.PathParameter("namespace")
 	name := request.PathParameter("pod")
 	dataSelect := parseDataSelectPathParameter(request)
+	dataSelect.MetricQuery = dataselect.StandardMetrics
 	result, err := pod.GetEventsForPod(k8sClient, dataSelect, namespace, name)
 	if err != nil {
 		handleInternalError(response, err)
@@ -1290,6 +1301,7 @@ func (apiHandler *APIHandler) handleGetDeploymentOldReplicaSets(request *restful
 	namespace := request.PathParameter("namespace")
 	name := request.PathParameter("deployment")
 	dataSelect := parseDataSelectPathParameter(request)
+	dataSelect.MetricQuery = dataselect.StandardMetrics
 	result, err := deployment.GetDeploymentOldReplicaSets(k8sClient, dataSelect, namespace, name)
 	if err != nil {
 		handleInternalError(response, err)
@@ -1447,6 +1459,7 @@ func (apiHandler *APIHandler) handleGetReplicationControllerPods(request *restfu
 	namespace := request.PathParameter("namespace")
 	rc := request.PathParameter("replicationController")
 	dataSelect := parseDataSelectPathParameter(request)
+	dataSelect.MetricQuery = dataselect.StandardMetrics
 	result, err := replicationcontroller.GetReplicationControllerPods(k8sClient, apiHandler.iManager.Metric().Client(), dataSelect, rc, namespace)
 	if err != nil {
 		handleInternalError(response, err)
@@ -1850,6 +1863,7 @@ func (apiHandler *APIHandler) handleGetDaemonSetPods(request *restful.Request, r
 	namespace := request.PathParameter("namespace")
 	name := request.PathParameter("daemonSet")
 	dataSelect := parseDataSelectPathParameter(request)
+	dataSelect.MetricQuery = dataselect.StandardMetrics
 	result, err := daemonset.GetDaemonSetPods(k8sClient, apiHandler.iManager.Metric().Client(), dataSelect, name, namespace)
 	if err != nil {
 		handleInternalError(response, err)
@@ -1996,6 +2010,7 @@ func (apiHandler *APIHandler) handleGetJobPods(request *restful.Request, respons
 	namespace := request.PathParameter("namespace")
 	name := request.PathParameter("job")
 	dataSelect := parseDataSelectPathParameter(request)
+	dataSelect.MetricQuery = dataselect.StandardMetrics
 	result, err := job.GetJobPods(k8sClient, apiHandler.iManager.Metric().Client(), dataSelect, namespace, name)
 	if err != nil {
 		handleInternalError(response, err)

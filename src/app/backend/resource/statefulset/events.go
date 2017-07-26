@@ -28,7 +28,7 @@ func GetStatefulSetEvents(client *client.Clientset, dsQuery *dataselect.DataSele
 	// Get events for stateful set.
 	statefulSetEvents, err := event.GetEvents(client, namespace, statefulSetName)
 	if err != nil {
-		return nil, err
+		return event.EmptyEventList, err
 	}
 
 	events := event.CreateEventList(statefulSetEvents, dsQuery)

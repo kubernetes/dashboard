@@ -27,7 +27,7 @@ func GetDeploymentEvents(client client.Interface, dsQuery *dataselect.DataSelect
 
 	dpEvents, err := event.GetEvents(client, namespace, deploymentName)
 	if err != nil {
-		return nil, err
+		return event.EmptyEventList, err
 	}
 
 	eventList := event.CreateEventList(dpEvents, dsQuery)

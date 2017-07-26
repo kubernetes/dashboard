@@ -17,6 +17,7 @@ package statefulset
 import (
 	"log"
 
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
@@ -36,15 +37,16 @@ func GetStatefulSetPods(client *k8sClient.Clientset, metricClient metricapi.Metr
 
 	pods, err := getRawStatefulSetPods(client, name, namespace)
 	if err != nil {
-		return nil, err
+		return pod.EmptyPodList, err
 	}
 
 	events, err := event.GetPodsEvents(client, namespace, pods)
-	if err != nil {
-		return nil, err
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	podList := pod.ToPodList(pods, events, []error{}, dsQuery, metricClient)
+	podList := pod.ToPodList(pods, events, nonCriticalErrors, dsQuery, metricClient)
 	return &podList, nil
 }
 

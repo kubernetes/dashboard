@@ -17,6 +17,7 @@ package replicationcontroller
 import (
 	"log"
 
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
@@ -38,31 +39,27 @@ func GetReplicationControllerPods(client k8sClient.Interface,
 
 	pods, err := getRawReplicationControllerPods(client, rcName, namespace)
 	if err != nil {
-		return nil, err
+		return pod.EmptyPodList, err
 	}
 
 	events, err := event.GetPodsEvents(client, namespace, pods)
-	if err != nil {
-		return nil, err
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	podList := pod.ToPodList(pods, events, []error{}, dsQuery, metricClient)
+	podList := pod.ToPodList(pods, events, nonCriticalErrors, dsQuery, metricClient)
 	return &podList, nil
 }
 
-// getRawReplicationControllerPods returns array of api pods targeting replication controller
-// associated to given name.
-func getRawReplicationControllerPods(client k8sClient.Interface, rcName, namespace string) (
-	[]v1.Pod, error) {
-	rc, err := client.CoreV1().ReplicationControllers(namespace).Get(rcName,
-		metaV1.GetOptions{})
+func getRawReplicationControllerPods(client k8sClient.Interface, rcName, namespace string) ([]v1.Pod, error) {
+	rc, err := client.CoreV1().ReplicationControllers(namespace).Get(rcName, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
 
 	channels := &common.ResourceChannels{
-		PodList: common.GetPodListChannel(client, common.NewSameNamespaceQuery(namespace),
-			1),
+		PodList: common.GetPodListChannel(client, common.NewSameNamespaceQuery(namespace), 1),
 	}
 
 	podList := <-channels.PodList.List
@@ -74,15 +71,14 @@ func getRawReplicationControllerPods(client k8sClient.Interface, rcName, namespa
 }
 
 // getReplicationControllerPodInfo returns simple info about pods(running, desired, failing, etc.)
-// related to given replication
-// controller.
+// related to given replication controller.
 func getReplicationControllerPodInfo(client k8sClient.Interface, rc *v1.ReplicationController,
 	namespace string) (*common.PodInfo, error) {
 
 	labelSelector := labels.SelectorFromSet(rc.Spec.Selector)
 	channels := &common.ResourceChannels{
-		PodList: common.GetPodListChannelWithOptions(client,
-			common.NewSameNamespaceQuery(namespace), metaV1.ListOptions{
+		PodList: common.GetPodListChannelWithOptions(client, common.NewSameNamespaceQuery(namespace),
+			metaV1.ListOptions{
 				LabelSelector: labelSelector.String(),
 				FieldSelector: fields.Everything().String(),
 			}, 1),

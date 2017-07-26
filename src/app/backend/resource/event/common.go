@@ -28,6 +28,14 @@ import (
 	kubeapi "k8s.io/kubernetes/pkg/api"
 )
 
+// EmptyEventList is a empty list of events.
+var EmptyEventList = &common.EventList{
+	Events: make([]common.Event, 0),
+	ListMeta: api.ListMeta{
+		TotalItems: 0,
+	},
+}
+
 // GetEvents gets events associated to resource with given name.
 func GetEvents(client client.Interface, namespace, resourceName string) ([]v1.Event, error) {
 	fieldSelector, err := fields.ParseSelector(kubeapi.EventInvolvedNameField + "=" + resourceName)
@@ -63,8 +71,13 @@ func GetEvents(client client.Interface, namespace, resourceName string) ([]v1.Ev
 func GetPodsEvents(client client.Interface, namespace string, pods []v1.Pod) (
 	[]v1.Event, error) {
 
+	nsQuery := common.NewSameNamespaceQuery(namespace)
+	if namespace == v1.NamespaceAll {
+		nsQuery = common.NewNamespaceQuery([]string{})
+	}
+
 	channels := &common.ResourceChannels{
-		EventList: common.GetEventListChannel(client, common.NewSameNamespaceQuery(namespace), 1),
+		EventList: common.GetEventListChannel(client, nsQuery, 1),
 	}
 
 	eventList := <-channels.EventList.List
@@ -126,12 +139,12 @@ func GetNodeEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery,
 	mc := client.CoreV1().Nodes()
 	node, err := mc.Get(nodeName, metaV1.GetOptions{})
 	if err != nil {
-		return nil, err
+		return &eventList, err
 	}
 
 	events, err := client.CoreV1().Events(v1.NamespaceAll).Search(scheme, node)
 	if err != nil {
-		return nil, err
+		return &eventList, err
 	}
 
 	if !IsTypeFilled(events.Items) {

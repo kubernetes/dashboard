@@ -59,7 +59,7 @@ spec:
     spec:
       containers:
       - name: kubernetes-dashboard
-        image: gcr.io/google_containers/kubernetes-dashboard-arm:v1.6.1
+        image: gcr.io/google_containers/kubernetes-dashboard-arm:v1.6.2
         ports:
         - containerPort: 9090
           protocol: TCP

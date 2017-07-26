@@ -58,7 +58,7 @@ func GetIngressList(client client.Interface, namespace *common.NamespaceQuery, d
 		return nil, criticalError
 	}
 
-	return toIngressList(ingressList.Items, nonCriticalErrors, dsQuery), err
+	return toIngressList(ingressList.Items, nonCriticalErrors, dsQuery), nil
 }
 
 // GetIngressListFromChannels - return all ingresses in the given namespace.
