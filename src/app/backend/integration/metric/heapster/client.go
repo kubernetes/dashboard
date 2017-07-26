@@ -237,7 +237,7 @@ func CreateHeapsterClient(host string, k8sClient *kubernetes.Clientset) (
 
 	if host == "" && k8sClient != nil {
 		log.Print("Creating in-cluster Heapster client")
-		c := inClusterHeapsterClient{client: k8sClient.Core().RESTClient()}
+		c := inClusterHeapsterClient{client: k8sClient.CoreV1().RESTClient()}
 		return heapsterClient{client: c}, nil
 	}
 
@@ -247,6 +247,6 @@ func CreateHeapsterClient(host string, k8sClient *kubernetes.Clientset) (
 		return heapsterClient{}, err
 	}
 	log.Printf("Creating remote Heapster client for %s", host)
-	c := remoteHeapsterClient{client: restClient.Core().RESTClient()}
+	c := remoteHeapsterClient{client: restClient.CoreV1().RESTClient()}
 	return heapsterClient{client: c}, nil
 }

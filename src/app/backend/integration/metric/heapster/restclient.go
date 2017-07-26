@@ -48,12 +48,24 @@ func (c inClusterHeapsterClient) Get(path string) RequestInterface {
 		Namespace("kube-system").
 		Resource("services").
 		Name("heapster").
-		Suffix("/api/v1" + path)
+		Suffix("/api/v1/" + path)
 }
 
 // HealthCheck does a health check of the application.
+// Returns nil if connection to application can be established, error object otherwise.
 func (self inClusterHeapsterClient) HealthCheck() error {
-	return healthCheck(self)
+	_, err := self.client.Get().Prefix("proxy").
+		Namespace("kube-system").
+		Resource("services").
+		Name("heapster").
+		Suffix("/healthz").
+		DoRaw()
+
+	if err == nil {
+		log.Print("Successful initial request to heapster")
+	}
+
+	return err
 }
 
 // RemoteHeapsterClient is an implementation of a remote Heapster client. Talks with Heapster
@@ -68,16 +80,11 @@ func (c remoteHeapsterClient) Get(path string) RequestInterface {
 }
 
 // HealthCheck does a health check of the application.
-func (self remoteHeapsterClient) HealthCheck() error {
-	return healthCheck(self)
-}
-
 // Returns nil if connection to application can be established, error object otherwise.
-func healthCheck(client HeapsterRESTClient) error {
-	_, err := client.Get("healthz").AbsPath("/").DoRaw()
+func (self remoteHeapsterClient) HealthCheck() error {
+	_, err := self.Get("healthz").AbsPath("/").DoRaw()
 	if err == nil {
 		log.Print("Successful initial request to heapster")
-		return nil
 	}
 
 	return err
