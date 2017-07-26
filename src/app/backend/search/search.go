@@ -43,8 +43,15 @@ import (
 	"k8s.io/client-go/kubernetes"
 )
 
-// ResourcesInNamespace is a struct containing all of the objects in a given namespace
-type ResourcesInNamespace struct {
+// SearchResult is a list of resources matching search criteria found in whole cluster.
+type SearchResult struct {
+	// Cluster.
+	NamespaceList        namespace.NamespaceList               `json:"namespaceList"`
+	NodeList             node.NodeList                         `json:"nodeList"`
+	PersistentVolumeList persistentvolume.PersistentVolumeList `json:"persistentVolumeList"`
+	RoleList             rbacroles.RbacRoleList                `json:"roleList"`
+	StorageClassList     storageclass.StorageClassList         `json:"storageClassList"`
+
 	// Config and storage.
 	ConfigMapList             configmap.ConfigMapList       `json:"configMapList"`
 	PersistentVolumeClaimList pvc.PersistentVolumeClaimList `json:"persistentVolumeClaimList"`
@@ -62,18 +69,6 @@ type ResourcesInNamespace struct {
 	PodList                   pod.PodList                  `json:"podList"`
 	DaemonSetList             daemonset.DaemonSetList      `json:"daemonSetList"`
 	StatefulSetList           statefulset.StatefulSetList  `json:"statefulSetList"`
-}
-
-// SearchResult is a list of resources matching search criteria found in whole cluster.
-type SearchResult struct {
-	ResourcesInNamespace //`json:"namespaceList"`
-
-	// Cluster.
-	NamespaceList        namespace.NamespaceList               `json:"namespaceList"`
-	NodeList             node.NodeList                         `json:"nodeList"`
-	PersistentVolumeList persistentvolume.PersistentVolumeList `json:"persistentVolumeList"`
-	RoleList             rbacroles.RbacRoleList                `json:"roleList"`
-	StorageClassList     storageclass.StorageClassList         `json:"storageClassList"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
@@ -106,7 +101,6 @@ func Search(client *kubernetes.Clientset, metricClient metricapi.MetricClient,
 	}
 
 	return &SearchResult{
-
 		// Cluster.
 		NamespaceList:        clusterResources.NamespaceList,
 		NodeList:             clusterResources.NodeList,
@@ -114,25 +108,23 @@ func Search(client *kubernetes.Clientset, metricClient metricapi.MetricClient,
 		RoleList:             clusterResources.RoleList,
 		StorageClassList:     clusterResources.StorageClassList,
 
-		ResourcesInNamespace: ResourcesInNamespace{
-			// Config and storage.
-			ConfigMapList:             configResources.ConfigMapList,
-			PersistentVolumeClaimList: configResources.PersistentVolumeClaimList,
-			SecretList:                configResources.SecretList,
+		// Config and storage.
+		ConfigMapList:             configResources.ConfigMapList,
+		PersistentVolumeClaimList: configResources.PersistentVolumeClaimList,
+		SecretList:                configResources.SecretList,
 
-			// Discovery and load balancing.
-			ServiceList: discoveryResources.ServiceList,
-			IngressList: discoveryResources.IngressList,
+		// Discovery and load balancing.
+		ServiceList: discoveryResources.ServiceList,
+		IngressList: discoveryResources.IngressList,
 
-			// Workloads.
-			DeploymentList:            workloadsResources.DeploymentList,
-			ReplicaSetList:            workloadsResources.ReplicaSetList,
-			JobList:                   workloadsResources.JobList,
-			ReplicationControllerList: workloadsResources.ReplicationControllerList,
-			PodList:                   workloadsResources.PodList,
-			DaemonSetList:             workloadsResources.DaemonSetList,
-			StatefulSetList:           workloadsResources.StatefulSetList,
-		},
+		// Workloads.
+		DeploymentList:            workloadsResources.DeploymentList,
+		ReplicaSetList:            workloadsResources.ReplicaSetList,
+		JobList:                   workloadsResources.JobList,
+		ReplicationControllerList: workloadsResources.ReplicationControllerList,
+		PodList:                   workloadsResources.PodList,
+		DaemonSetList:             workloadsResources.DaemonSetList,
+		StatefulSetList:           workloadsResources.StatefulSetList,
 
 		// Errors.
 		Errors: errors.MergeErrors(clusterResources.Errors, configResources.Errors,

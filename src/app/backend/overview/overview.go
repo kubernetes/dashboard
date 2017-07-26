@@ -22,13 +22,15 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/discovery"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/workload"
-	"github.com/kubernetes/dashboard/src/app/backend/search"
 	"k8s.io/client-go/kubernetes"
 )
 
 // OverviewObjectList is a list of objects present in a given namespace
 type OverviewObjectList struct {
-	search.ResourcesInNamespace //`json:"resourcesInNamespace"`
+	// Inherits the fields from the config, discovery, and workloads objects
+	config.Config
+	discovery.Discovery
+	workload.Workloads
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
@@ -55,18 +57,21 @@ func GetOverview(client *kubernetes.Clientset, metricClient metricapi.MetricClie
 	}
 
 	return &OverviewObjectList{
-		// All the objects in a namespace
-		ResourcesInNamespace: search.ResourcesInNamespace{
-			// Config and storage.
+		// Config and storage.
+		Config: config.Config{
 			ConfigMapList:             configResources.ConfigMapList,
 			PersistentVolumeClaimList: configResources.PersistentVolumeClaimList,
 			SecretList:                configResources.SecretList,
+		},
 
-			// Discovery and load balancing.
+		// Discovery and load balancing.
+		Discovery: discovery.Discovery{
 			ServiceList: discoveryResources.ServiceList,
 			IngressList: discoveryResources.IngressList,
+		},
 
-			// Workloads.
+		// Workloads.
+		Workloads: workload.Workloads{
 			DeploymentList:            workloadsResources.DeploymentList,
 			ReplicaSetList:            workloadsResources.ReplicaSetList,
 			JobList:                   workloadsResources.JobList,
