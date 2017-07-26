@@ -25,8 +25,6 @@ import (
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/client-go/tools/clientcmd/api"
-	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
-	"github.com/kubernetes/dashboard/src/app/backend/auth"
 )
 
 // Dashboard UI default values for client configs.
@@ -50,6 +48,7 @@ type ClientManager interface {
 	Config(req *restful.Request) (*rest.Config, error)
 	ClientCmdConfig(req *restful.Request) (clientcmd.ClientConfig, error)
 	CSRFKey() string
+	HasAccess(authInfo api.AuthInfo) bool
 	VerberClient(req *restful.Request) (ResourceVerber, error)
 }
 
@@ -66,7 +65,7 @@ type clientManager struct {
 	// empty
 	inClusterConfig *rest.Config
 
-	authManager authApi.AuthManager
+	tokenManager authApi.TokenManager
 }
 
 // Client returns kubernetes client that is created based on authentication information extracted
@@ -146,6 +145,49 @@ func (self *clientManager) CSRFKey() string {
 	return self.csrfKey
 }
 
+func (self *clientManager) HasAccess(authInfo api.AuthInfo) bool {
+	cfg, err := self.buildConfigFromFlags(self.apiserverHost, self.kubeConfigPath)
+	if err != nil {
+		return false
+	}
+
+	cmdCfg := api.NewConfig()
+	cmdCfg.Clusters[DefaultCmdConfigName] = &api.Cluster{
+		Server:                   cfg.Host,
+		CertificateAuthority:     cfg.TLSClientConfig.CAFile,
+		CertificateAuthorityData: cfg.TLSClientConfig.CAData,
+		InsecureSkipTLSVerify:    cfg.TLSClientConfig.Insecure,
+	}
+	cmdCfg.AuthInfos[DefaultCmdConfigName] = &authInfo
+	cmdCfg.Contexts[DefaultCmdConfigName] = &api.Context{
+		Cluster:  DefaultCmdConfigName,
+		AuthInfo: DefaultCmdConfigName,
+	}
+	cmdCfg.CurrentContext = DefaultCmdConfigName
+
+	clientConfig := clientcmd.NewDefaultClientConfig(
+		*cmdCfg,
+		&clientcmd.ConfigOverrides{},
+	)
+
+	cfg, err = clientConfig.ClientConfig()
+	if err != nil {
+		return false
+	}
+
+	client, err := kubernetes.NewForConfig(cfg)
+	if err != nil {
+		return false
+	}
+
+	_, err = client.ServerVersion()
+	if err != nil {
+		return false
+	}
+
+	return true
+}
+
 // VerberClient returns new verber client based on authentication information extracted from request
 func (self *clientManager) VerberClient(req *restful.Request) (ResourceVerber, error) {
 	client, err := self.Client(req)
@@ -213,7 +255,7 @@ func (self *clientManager) extractAuthInfo(req *restful.Request) (*api.AuthInfo,
 	}
 
 	if len(jweToken) > 0 {
-		return self.authManager.DecryptToken(jweToken)
+		return self.tokenManager.Decrypt(jweToken)
 	}
 
 	return nil, nil
@@ -287,7 +329,7 @@ func NewClientManager(kubeConfigPath, apiserverHost string) ClientManager {
 	result := &clientManager{
 		kubeConfigPath: kubeConfigPath,
 		apiserverHost:  apiserverHost,
-		authManager: auth.NewAuthManager(),
+		tokenManager:   jwt.NewJWTTokenManager(),
 	}
 
 	result.init()

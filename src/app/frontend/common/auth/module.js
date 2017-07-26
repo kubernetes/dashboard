@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {AuthService} from './service';
 import {AuthInterceptor} from './interceptor';
+import {AuthService} from './service';
 
 /**
  * Angular module containing application configuration.

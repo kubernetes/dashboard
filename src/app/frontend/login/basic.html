@@ -1,0 +1,16 @@
+<div ng-if="$ctrl.selected">
+  <md-input-container class="md-block">
+    <label>Username</label>
+    <input ng-model="$ctrl.username"
+           ng-change="$ctrl.onUsernameUpdate()"
+           required>
+  </md-input-container>
+
+  <md-input-container class="md-block">
+    <label>Password</label>
+    <input type="password"
+           ng-model="$ctrl.password"
+           ng-change="$ctrl.onPasswordUpdate()"
+           required>
+  </md-input-container>
+</div>

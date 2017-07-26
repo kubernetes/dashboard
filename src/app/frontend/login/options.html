@@ -1,0 +1,10 @@
+<md-radio-group ng-model="$ctrl.selectedOption"
+                ng-change="$ctrl.onOptionChange()">
+  <md-radio-button ng-repeat="option in $ctrl.options"
+                   value="{{::option.title}}"
+                   class="md-primary">
+    {{::option.title}}
+  </md-radio-button>
+</md-radio-group>
+<div ng-transclude
+     style="padding-top: 4px"></div>

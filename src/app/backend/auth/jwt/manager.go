@@ -1,21 +1,33 @@
+// Copyright 2017 The Kubernetes Dashboard Authors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package jwt
 
 import (
 	"crypto/rand"
+	"crypto/rsa"
+
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 	"gopkg.in/square/go-jose.v2"
 	"k8s.io/apimachinery/pkg/util/json"
 	"k8s.io/client-go/tools/clientcmd/api"
-	"crypto/rsa"
-	"fmt"
 )
 
-// For testing only
-const JWTToken = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJzdGF0ZWZ1bHNldC1jb250cm9sbGVyLXRva2VuLTZxa2N6Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6InN0YXRlZnVsc2V0LWNvbnRyb2xsZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiI2ODQ3NmE2Ny0zNTZhLTExZTctODJmNC05MDFiMGU1MzI1MTYiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZS1zeXN0ZW06c3RhdGVmdWxzZXQtY29udHJvbGxlciJ9.K6d49gokYlhnN69kpM-1dJ9sUFhIXSQdUX3OjldVJiwJyNttI9gvi5tivP_p_ONrMvE6UvP4Gun73yRO22AotADPbI7_X4K6Yw0uLyUlvC-qDTyk6kHjifCm68GI7XqgGwjx63FImS4kOWVSIdrY92se2F5-ftEuqNLdw22Bv5xBoR1WbhqV3gDMjp5Bh2dzpDKaAQnlM_LBTbvzWoUnZNtnP5A36IH3emuvXziu53iy4qqIZhqhgtTBzknJEoUu8x4qeTEUvIyU22qk6TtB6W-zO1EWtTCeKWM47Q-Kw2Q4XeqfU0FsgaoKe7r-MqJ4yg1_-myv9h2T7LiX3PLICg"
-
-// TODO: Dev only property. Should be retrieved from a secret
+// TODO(floreks): Should be retrieved from a secret
 var tokenSigningKey *rsa.PrivateKey
 
+// On dashboard start generates the token signing key
 func init() {
 	privateKey, err := rsa.GenerateKey(rand.Reader, 2048)
 	if err != nil {
@@ -40,31 +52,26 @@ func (self jwtTokenManager) Generate(authInfo api.AuthInfo) (token string, err e
 		return "", err
 	}
 
-	aad := []byte("test")
-	jwtObject, err := encrypter.EncryptWithAuthData(marshalledAuthInfo, aad)
+	// TODO(floreks): add token expiration header and handle it
+	jwtObject, err := encrypter.Encrypt(marshalledAuthInfo)
 	if err != nil {
 		return "", err
 	}
 
-	fmt.Println(jwtObject.GetAuthData())
 	return jwtObject.FullSerialize(), nil
 }
 
-func (self jwtTokenManager) validate(token string) (err error) {
-	jweToken, err := jose.ParseEncrypted(token)
-
-	fmt.Println(jweToken.Header)
-	fmt.Println(string(jweToken.GetAuthData()))
-
-	return
+func (self jwtTokenManager) validate(token string) (*jose.JSONWebEncryption, error) {
+	// TODO(floreks): validate token expiration
+	return jose.ParseEncrypted(token)
 }
 
 func (self jwtTokenManager) Decrypt(token string) (*api.AuthInfo, error) {
-	if err := self.validate(token); err != nil {
+	jweToken, err := self.validate(token)
+	if err != nil {
 		return nil, err
 	}
 
-	jweToken, _ := jose.ParseEncrypted(token)
 	decrypted, err := jweToken.Decrypt(tokenSigningKey)
 	if err != nil {
 		return nil, err

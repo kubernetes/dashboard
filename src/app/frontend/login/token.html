@@ -1,0 +1,8 @@
+<div ng-if="$ctrl.selected">
+  <md-input-container class="md-block">
+    <label>Token</label>
+    <input ng-model="$ctrl.token"
+           ng-change="$ctrl.onTokenUpdate()"
+           required>
+  </md-input-container>
+</div>

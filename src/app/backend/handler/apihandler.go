@@ -106,7 +106,7 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 	integrationHandler := integration.NewIntegrationHandler(iManager)
 	integrationHandler.Install(apiV1Ws)
 
-	authHandler := auth.NewAuthHandler(auth.NewAuthManager())
+	authHandler := auth.NewAuthHandler(auth.NewAuthManager(cManager))
 	authHandler.Install(apiV1Ws)
 
 	apiV1Ws.Route(

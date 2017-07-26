@@ -15,8 +15,11 @@
 import chromeModule from 'chrome/module';
 import componentsModule from 'common/components/module';
 
+import {basicLoginComponent} from './basic_component';
 import {loginComponent} from './component';
+import {loginOptionsComponent} from './options_component';
 import stateConfig from './stateconfig';
+import {tokenLoginComponent} from './token_component';
 
 /**
  * Angular module for the Login view.
@@ -32,4 +35,7 @@ export default angular
           componentsModule.name,
         ])
     .component('kdLogin', loginComponent)
+    .component('kdLoginOptions', loginOptionsComponent)
+    .component('kdBasicLogin', basicLoginComponent)
+    .component('kdTokenLogin', tokenLoginComponent)
     .config(stateConfig);
