@@ -28,7 +28,7 @@ import (
 
 // OverviewObjectList is a list of objects present in a given namespace
 type OverviewObjectList struct {
-	search.ResourcesInNamespace `json:"ResourcesInNamespace"`
+	search.ResourcesInNamespace //`json:"resourcesInNamespace"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
