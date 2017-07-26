@@ -148,7 +148,8 @@ backendApi.ReplicationControllerList;
  *   ingressList: !backendApi.IngressList,
  *   configMapList: !backendApi.ConfigMapList,
  *   persistentVolumeClaimList: !backendApi.PersistentVolumeClaimList,
- *   secretList: !backendApi.SecretList
+ *   secretList: !backendApi.SecretList,
+ *   errors: !Array<!backendApi.Error>
  * }}
  */
 backendApi.Overview;
@@ -161,7 +162,8 @@ backendApi.Overview;
  *   replicationControllerList: !backendApi.ReplicationControllerList,
  *   podList: !backendApi.PodList,
  *   daemonSetList: !backendApi.DaemonSetList,
- *   statefulSetList: !backendApi.StatefulSetList
+ *   statefulSetList: !backendApi.StatefulSetList,
+ *   errors: !Array<!backendApi.Error>
  * }}
  */
 backendApi.Workloads;

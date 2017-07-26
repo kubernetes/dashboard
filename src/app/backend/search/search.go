@@ -66,7 +66,7 @@ type ResourcesInNamespace struct {
 
 // SearchResult is a list of resources matching search criteria found in whole cluster.
 type SearchResult struct {
-	ResourcesInNamespace
+	ResourcesInNamespace `json:"ResourcesInNamespace"`
 
 	// Cluster.
 	NamespaceList        namespace.NamespaceList               `json:"namespaceList"`
