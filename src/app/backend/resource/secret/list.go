@@ -22,8 +22,6 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/fields"
-	"k8s.io/apimachinery/pkg/labels"
 	client "k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/pkg/api/v1"
 )
@@ -83,13 +81,10 @@ type SecretList struct {
 }
 
 // GetSecretList returns all secrets in the given namespace.
-func GetSecretList(client *client.Clientset, namespace *common.NamespaceQuery, dsQuery *dataselect.DataSelectQuery) (*SecretList, error) {
+func GetSecretList(client *client.Clientset, namespace *common.NamespaceQuery,
+	dsQuery *dataselect.DataSelectQuery) (*SecretList, error) {
 	log.Printf("Getting list of secrets in %s namespace\n", namespace)
-
-	secretList, err := client.Secrets(namespace.ToRequestParam()).List(metaV1.ListOptions{
-		LabelSelector: labels.Everything().String(),
-		FieldSelector: fields.Everything().String(),
-	})
+	secretList, err := client.Secrets(namespace.ToRequestParam()).List(api.ListEverything)
 
 	nonCriticalErrors, criticalError := errors.HandleError(err)
 	if criticalError != nil {

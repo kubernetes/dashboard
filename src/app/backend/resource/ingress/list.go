@@ -19,9 +19,6 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/fields"
-	"k8s.io/apimachinery/pkg/labels"
 	client "k8s.io/client-go/kubernetes"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
@@ -46,12 +43,10 @@ type IngressList struct {
 	Errors []error `json:"errors"`
 }
 
-// GetIngressList - return all ingresses in the given namespace.
-func GetIngressList(client client.Interface, namespace *common.NamespaceQuery, dsQuery *dataselect.DataSelectQuery) (*IngressList, error) {
-	ingressList, err := client.Extensions().Ingresses(namespace.ToRequestParam()).List(metaV1.ListOptions{
-		LabelSelector: labels.Everything().String(),
-		FieldSelector: fields.Everything().String(),
-	})
+// GetIngressList returns all ingresses in the given namespace.
+func GetIngressList(client client.Interface, namespace *common.NamespaceQuery,
+	dsQuery *dataselect.DataSelectQuery) (*IngressList, error) {
+	ingressList, err := client.Extensions().Ingresses(namespace.ToRequestParam()).List(api.ListEverything)
 
 	nonCriticalErrors, criticalError := errors.HandleError(err)
 	if criticalError != nil {

@@ -276,6 +276,7 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 		apiV1Ws.GET("/scale/{kind}/{namespace}/{name}").
 			To(apiHandler.handleGetReplicaCount).
 			Writes(scaling.ReplicaCounts{}))
+
 	apiV1Ws.Route(
 		apiV1Ws.GET("/daemonset").
 			To(apiHandler.handleGetDaemonSetList).
@@ -288,9 +289,6 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 		apiV1Ws.GET("/daemonset/{namespace}/{daemonSet}").
 			To(apiHandler.handleGetDaemonSetDetail).
 			Writes(daemonset.DaemonSetDetail{}))
-	apiV1Ws.Route(
-		apiV1Ws.DELETE("/daemonset/{namespace}/{daemonSet}").
-			To(apiHandler.handleDeleteDaemonSet))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/daemonset/{namespace}/{daemonSet}/pod").
 			To(apiHandler.handleGetDaemonSetPods).
@@ -692,7 +690,7 @@ func (apiHandler *APIHandler) handleGetStatefulSetEvents(request *restful.Reques
 	namespace := request.PathParameter("namespace")
 	name := request.PathParameter("statefulset")
 	dataSelect := parseDataSelectPathParameter(request)
-	result, err := statefulset.GetStatefulSetEvents(k8sClient, dataSelect, namespace, name)
+	result, err := event.GetResourceEvents(k8sClient, dataSelect, namespace, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1209,7 +1207,7 @@ func (apiHandler *APIHandler) handleGetReplicaSetEvents(request *restful.Request
 	name := request.PathParameter("replicaSet")
 	dataSelect := parseDataSelectPathParameter(request)
 	dataSelect.MetricQuery = dataselect.StandardMetrics
-	result, err := replicaset.GetReplicaSetEvents(k8sClient, dataSelect, namespace, name)
+	result, err := event.GetResourceEvents(k8sClient, dataSelect, namespace, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1313,7 +1311,7 @@ func (apiHandler *APIHandler) handleGetDeploymentEvents(request *restful.Request
 	namespace := request.PathParameter("namespace")
 	name := request.PathParameter("deployment")
 	dataSelect := parseDataSelectPathParameter(request)
-	result, err := deployment.GetDeploymentEvents(k8sClient, dataSelect, namespace, name)
+	result, err := event.GetResourceEvents(k8sClient, dataSelect, namespace, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1808,7 +1806,7 @@ func (apiHandler *APIHandler) handleGetReplicationControllerEvents(request *rest
 	namespace := request.PathParameter("namespace")
 	name := request.PathParameter("replicationController")
 	dataSelect := parseDataSelectPathParameter(request)
-	result, err := replicationcontroller.GetReplicationControllerEvents(k8sClient, dataSelect, namespace, name)
+	result, err := event.GetResourceEvents(k8sClient, dataSelect, namespace, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1930,33 +1928,12 @@ func (apiHandler *APIHandler) handleGetDaemonSetEvents(request *restful.Request,
 	namespace := request.PathParameter("namespace")
 	name := request.PathParameter("daemonSet")
 	dataSelect := parseDataSelectPathParameter(request)
-	result, err := daemonset.GetDaemonSetEvents(k8sClient, dataSelect, namespace, name)
+	result, err := event.GetResourceEvents(k8sClient, dataSelect, namespace, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return
 	}
 	response.WriteHeaderAndEntity(http.StatusOK, result)
-}
-
-func (apiHandler *APIHandler) handleDeleteDaemonSet(request *restful.Request, response *restful.Response) {
-	k8sClient, err := apiHandler.cManager.Client(request)
-	if err != nil {
-		handleInternalError(response, err)
-		return
-	}
-
-	namespace := request.PathParameter("namespace")
-	name := request.PathParameter("daemonSet")
-	deleteServices, err := strconv.ParseBool(request.QueryParameter("deleteServices"))
-	if err != nil {
-		handleInternalError(response, err)
-		return
-	}
-	if err := daemonset.DeleteDaemonSet(k8sClient, namespace, name, deleteServices); err != nil {
-		handleInternalError(response, err)
-		return
-	}
-	response.WriteHeader(http.StatusOK)
 }
 
 func (apiHandler *APIHandler) handleGetHorizontalPodAutoscalerList(request *restful.Request,
