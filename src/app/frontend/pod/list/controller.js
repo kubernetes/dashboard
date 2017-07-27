@@ -30,12 +30,4 @@ export class PodListController {
     /** @export {!angular.$resource} */
     this.podListResource = kdPodListResource;
   }
-
-  /**
-   * @return {boolean}
-   * @export
-   */
-  shouldShowZeroState() {
-    return this.podList.pods.length === 0;
-  }
 }

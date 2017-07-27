@@ -28,12 +28,4 @@ export class ServiceListController {
     /** @export {!angular.Resource} */
     this.serviceListResource = kdServiceListResource;
   }
-
-  /**
-   * @return {boolean}
-   * @export
-   */
-  shouldShowZeroState() {
-    return this.serviceList.services.length === 0;
-  }
 }

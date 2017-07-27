@@ -18,11 +18,9 @@ limitations under the License.
 
 <kd-content-card>
   <kd-content>
-    <kd-ingress-card-list ng-if="!$ctrl.shouldShowZeroState()"
-                          ingress-list="$ctrl.ingressList"
+    <kd-ingress-card-list ingress-list="$ctrl.ingressList"
                           with-statuses="false"
                           ingress-list-resource="$ctrl.ingressListResource">
     </kd-ingress-card-list>
-    <kd-zero-state ng-if="$ctrl.shouldShowZeroState()"></kd-zero-state>
   </kd-content>
 </kd-content-card>
