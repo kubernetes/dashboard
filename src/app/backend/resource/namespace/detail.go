@@ -97,7 +97,7 @@ func toNamespaceDetail(namespace v1.Namespace, events common.EventList, resource
 }
 
 func getResourceQuotas(client k8sClient.Interface, namespace v1.Namespace) (*rq.ResourceQuotaDetailList, error) {
-	list, err := client.CoreV1().ResourceQuotas(namespace.Name).List(common.ListEverything)
+	list, err := client.CoreV1().ResourceQuotas(namespace.Name).List(api.ListEverything)
 
 	result := &rq.ResourceQuotaDetailList{
 		Items:    make([]rq.ResourceQuotaDetail, 0),
@@ -113,7 +113,7 @@ func getResourceQuotas(client k8sClient.Interface, namespace v1.Namespace) (*rq.
 }
 
 func getLimitRanges(client k8sClient.Interface, namespace v1.Namespace) ([]limitrange.LimitRangeItem, error) {
-	list, err := client.CoreV1().LimitRanges(namespace.Name).List(common.ListEverything)
+	list, err := client.CoreV1().LimitRanges(namespace.Name).List(api.ListEverything)
 	if err != nil {
 		return nil, err
 	}

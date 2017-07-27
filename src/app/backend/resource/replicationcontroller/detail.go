@@ -22,6 +22,7 @@ import (
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	ds "github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	hpa "github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
@@ -93,7 +94,7 @@ func GetReplicationControllerDetail(client k8sClient.Interface, metricClient met
 		return nil, criticalError
 	}
 
-	eventList, err := GetReplicationControllerEvents(client, ds.DefaultDataSelect, namespace, name)
+	eventList, err := event.GetResourceEvents(client, ds.DefaultDataSelect, namespace, name)
 	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
 	if criticalError != nil {
 		return nil, criticalError

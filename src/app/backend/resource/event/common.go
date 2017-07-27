@@ -214,16 +214,26 @@ func ToEvent(event v1.Event) common.Event {
 	return result
 }
 
+// GetResourceEvents gets events associated to specified resource.
+func GetResourceEvents(client *client.Clientset, dsQuery *dataselect.DataSelectQuery, namespace, name string) (
+	*common.EventList, error) {
+	resourceEvents, err := GetEvents(client, namespace, name)
+	if err != nil {
+		return EmptyEventList, err
+	}
+
+	events := CreateEventList(resourceEvents, dsQuery)
+	return &events, nil
+}
+
 // CreateEventList converts array of api events to common EventList structure
 func CreateEventList(events []v1.Event, dsQuery *dataselect.DataSelectQuery) common.EventList {
-
 	eventList := common.EventList{
 		Events:   make([]common.Event, 0),
 		ListMeta: api.ListMeta{TotalItems: len(events)},
 	}
 
 	events = fromCells(dataselect.GenericDataSelect(toCells(events), dsQuery))
-
 	for _, event := range events {
 		eventDetail := ToEvent(event)
 		eventList.Events = append(eventList.Events, eventDetail)

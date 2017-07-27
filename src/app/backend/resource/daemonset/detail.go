@@ -22,6 +22,7 @@ import (
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	ds "github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
 	"k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -87,7 +88,7 @@ func GetDaemonSetDetail(client k8sClient.Interface, metricClient metricapi.Metri
 		return nil, criticalError
 	}
 
-	eventList, err := GetDaemonSetEvents(client, ds.DefaultDataSelect, daemonSet.Namespace, daemonSet.Name)
+	eventList, err := event.GetResourceEvents(client, ds.DefaultDataSelect, daemonSet.Namespace, daemonSet.Name)
 	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
 	if criticalError != nil {
 		return nil, criticalError

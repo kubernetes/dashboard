@@ -141,7 +141,7 @@ func GetDeploymentDetail(client client.Interface, metricClient metricapi.MetricC
 		return nil, criticalError
 	}
 
-	eventList, err := GetDeploymentEvents(client, dataselect.DefaultDataSelect, namespace, deploymentName)
+	eventList, err := event.GetResourceEvents(client, dataselect.DefaultDataSelect, namespace, deploymentName)
 	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
 	if criticalError != nil {
 		return nil, criticalError
