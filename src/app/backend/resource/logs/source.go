@@ -46,5 +46,5 @@ func getLogSourcesFromController(k8sClient *client.Clientset, ns, resourceName, 
 	if err != nil {
 		return controller.LogSources{}, err
 	}
-	return rc.GetLogSources(k8sClient), nil
+	return rc.GetLogSources(k8sClient)
 }
