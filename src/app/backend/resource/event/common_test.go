@@ -24,6 +24,7 @@ import (
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
 	"k8s.io/client-go/pkg/api/v1"
+	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
 
 func TestGetEvents(t *testing.T) {
@@ -109,6 +110,71 @@ func TestToEventList(t *testing.T) {
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("ToEventList(%+v, %+v) == \n%+v, expected \n%+v",
 				c.events, c.namespace, actual, c.expected)
+		}
+	}
+}
+
+func TestGetResourceEvents(t *testing.T) {
+	labelSelector := map[string]string{"app": "test"}
+
+	cases := []struct {
+		namespace, name string
+		eventList       *v1.EventList
+		podList         *v1.PodList
+		replicaSet      *extensions.ReplicaSet
+		expectedActions []string
+		expected        *common.EventList
+	}{
+		{
+			"ns-1", "rs-1",
+			&v1.EventList{Items: []v1.Event{
+				{Message: "test-message", ObjectMeta: metaV1.ObjectMeta{
+					Name: "ev-1", Namespace: "ns-1", Labels: labelSelector}},
+			}},
+			&v1.PodList{Items: []v1.Pod{{ObjectMeta: metaV1.ObjectMeta{
+				Name: "pod-1", Namespace: "ns-1"}}}},
+			&extensions.ReplicaSet{
+				ObjectMeta: metaV1.ObjectMeta{
+					Name: "rs-1", Namespace: "ns-1", Labels: labelSelector},
+				Spec: extensions.ReplicaSetSpec{
+					Selector: &metaV1.LabelSelector{
+						MatchLabels: labelSelector,
+					}}},
+			[]string{"list"},
+			&common.EventList{
+				ListMeta: api.ListMeta{TotalItems: 1},
+				Events: []common.Event{{
+					TypeMeta: api.TypeMeta{Kind: api.ResourceKindEvent},
+					ObjectMeta: api.ObjectMeta{
+						Name: "ev-1", Namespace: "ns-1", Labels: labelSelector},
+					Message: "test-message",
+					Type:    v1.EventTypeNormal,
+				}}},
+		},
+	}
+
+	for _, c := range cases {
+		fakeClient := fake.NewSimpleClientset(c.eventList, c.replicaSet, c.podList)
+
+		actual, _ := GetResourceEvents(fakeClient, dataselect.NoDataSelect, c.namespace, c.name)
+
+		actions := fakeClient.Actions()
+		if len(actions) != len(c.expectedActions) {
+			t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
+				len(c.expectedActions), len(actions))
+			continue
+		}
+
+		for i, verb := range c.expectedActions {
+			if actions[i].GetVerb() != verb {
+				t.Errorf("Unexpected action: %+v, expected %s",
+					actions[i], verb)
+			}
+		}
+
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("GetEvents(client,metricClient,%#v, %#v) == \ngot: %#v, \nexpected %#v",
+				c.namespace, c.name, actual, c.expected)
 		}
 	}
 }

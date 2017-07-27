@@ -25,16 +25,9 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/limitrange"
 	rq "github.com/kubernetes/dashboard/src/app/backend/resource/resourcequota"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/fields"
-	"k8s.io/apimachinery/pkg/labels"
 	k8sClient "k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/pkg/api/v1"
 )
-
-var listEverything = metaV1.ListOptions{
-	LabelSelector: labels.Everything().String(),
-	FieldSelector: fields.Everything().String(),
-}
 
 // NamespaceDetail is a presentation layer view of Kubernetes Namespace resource. This means it is Namespace plus
 // additional augmented data we can get from other sources.
@@ -104,7 +97,7 @@ func toNamespaceDetail(namespace v1.Namespace, events common.EventList, resource
 }
 
 func getResourceQuotas(client k8sClient.Interface, namespace v1.Namespace) (*rq.ResourceQuotaDetailList, error) {
-	list, err := client.CoreV1().ResourceQuotas(namespace.Name).List(listEverything)
+	list, err := client.CoreV1().ResourceQuotas(namespace.Name).List(api.ListEverything)
 
 	result := &rq.ResourceQuotaDetailList{
 		Items:    make([]rq.ResourceQuotaDetail, 0),
@@ -120,7 +113,7 @@ func getResourceQuotas(client k8sClient.Interface, namespace v1.Namespace) (*rq.
 }
 
 func getLimitRanges(client k8sClient.Interface, namespace v1.Namespace) ([]limitrange.LimitRangeItem, error) {
-	list, err := client.CoreV1().LimitRanges(namespace.Name).List(listEverything)
+	list, err := client.CoreV1().LimitRanges(namespace.Name).List(api.ListEverything)
 	if err != nil {
 		return nil, err
 	}
