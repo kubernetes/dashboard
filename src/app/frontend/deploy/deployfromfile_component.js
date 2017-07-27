@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {stateName as overview} from 'overview/state';
 import showDeployAnywayDialog from './deployanyway_dialog';
 
 /**
@@ -118,7 +119,7 @@ export default class DeployFromFileController {
                   if (response.error.length > 0) {
                     this.errorDialog_.open('Deployment has been partly completed', response.error);
                   }
-                  this.kdHistoryService_.back(workloads);
+                  this.kdHistoryService_.back(overview);
                 },
                 (err) => {
                   defer.reject(err);  // Progress ends
@@ -188,7 +189,7 @@ export default class DeployFromFileController {
    * @export
    */
   cancel() {
-    this.kdHistoryService_.back(workloads);
+    this.kdHistoryService_.back(overview);
   }
 }
 
