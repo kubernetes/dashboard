@@ -27,10 +27,10 @@ import (
 
 // OverviewObjectList is a list of objects present in a given namespace
 type OverviewObjectList struct {
-	// Inherits the fields from the config, discovery, and workloads objects
-	config.Config
-	discovery.Discovery
-	workload.Workloads
+	// Inherits fields from the config, discovery, and workloads objects
+	config.Config       `json:",inline"`
+	discovery.Discovery `json:",inline"`
+	workload.Workloads  `json:",inline"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
