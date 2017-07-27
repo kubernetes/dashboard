@@ -16,16 +16,9 @@ import {StorageClassListController} from 'storageclass/list/controller';
 import storageClassModule from 'storageclass/module';
 
 describe('Storage Class list controller', () => {
-  /** @type {!StorageClassListController}
-   */
-  let ctrl;
 
   beforeEach(() => {
     angular.mock.module(storageClassModule.name);
-
-    angular.mock.inject(($controller) => {
-      ctrl = $controller(StorageClassListController, {storageClassList: {storageClasses: []}});
-    });
   });
 
   it('should initialize storage class controller', angular.mock.inject(($controller) => {

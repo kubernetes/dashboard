@@ -16,15 +16,9 @@ import {DaemonSetListController} from 'daemonset/list/controller';
 import daemonSetModule from 'daemonset/module';
 
 describe('Daemon Set list controller', () => {
-  /** @type {!DaemonSetListController} */
-  let ctrl;
 
   beforeEach(() => {
     angular.mock.module(daemonSetModule.name);
-
-    angular.mock.inject(($controller) => {
-      ctrl = $controller(DaemonSetListController, {daemonSetList: {daemonSets: []}});
-    });
   });
 
   it('should initialize daemon set', angular.mock.inject(($controller) => {

@@ -16,15 +16,9 @@ import {JobListController} from 'job/list/controller';
 import jobModule from 'job/module';
 
 describe('Job list controller', () => {
-  /** @type {!JobListController} */
-  let ctrl;
 
   beforeEach(() => {
     angular.mock.module(jobModule.name);
-
-    angular.mock.inject(($controller) => {
-      ctrl = $controller(JobListController, {jobList: {jobs: []}});
-    });
   });
 
   it('should initialize job controller', angular.mock.inject(($controller) => {

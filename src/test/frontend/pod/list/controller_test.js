@@ -16,15 +16,9 @@ import {PodListController} from 'pod/list/controller';
 import podModule from 'pod/module';
 
 describe('Pod list controller', () => {
-  /** @type {!PodListController} */
-  let ctrl;
 
   beforeEach(() => {
     angular.mock.module(podModule.name);
-
-    angular.mock.inject(($controller) => {
-      ctrl = $controller(PodListController, {podList: {pods: []}});
-    });
   });
 
   it('should initialize pod list', angular.mock.inject(($controller) => {

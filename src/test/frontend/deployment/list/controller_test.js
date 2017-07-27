@@ -15,16 +15,9 @@
 import {DeploymentListController} from 'deployment/list/controller';
 import deploymentListModule from 'deployment/module';
 
-describe('Replica Set list controller', () => {
-  /** @type {!DeploymentListController} */
-  let ctrl;
-
+describe('Deployment list controller', () => {
   beforeEach(() => {
     angular.mock.module(deploymentListModule.name);
-
-    angular.mock.inject(($controller) => {
-      ctrl = $controller(DeploymentListController, {deploymentList: {deployments: []}});
-    });
   });
 
   it('should initialize replication controllers', angular.mock.inject(($controller) => {

@@ -16,16 +16,9 @@ import {PersistentVolumeClaimListController} from 'persistentvolumeclaim/list/co
 import persistentVolumeClaimModule from 'persistentvolumeclaim/module';
 
 describe('Persistent Volume list controller', () => {
-  /** @type {!PersistentVolumeClaimListController} */
-  let ctrl;
 
   beforeEach(() => {
     angular.mock.module(persistentVolumeClaimModule.name);
-
-    angular.mock.inject(($controller) => {
-      ctrl = $controller(
-          PersistentVolumeClaimListController, {persistentVolumeClaimList: {items: []}});
-    });
   });
 
   it('should initialize persistent volume claim controller', angular.mock.inject(($controller) => {

@@ -36,6 +36,6 @@ export class ThirdPartyResourceListController {
   shouldShowZeroState() {
     /** @type {number} */
     let resourcesLength = this.thirdPartyResourceList.listMeta.totalItems;
-    return resourcesLength == 0;
+    return resourcesLength === 0;
   }
 }

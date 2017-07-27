@@ -16,15 +16,9 @@ import {ServiceListController} from 'service/list/controller';
 import serviceModule from 'service/module';
 
 describe('Service list controller', () => {
-  /** @type {!ServiceListController} */
-  let ctrl;
 
   beforeEach(() => {
     angular.mock.module(serviceModule.name);
-
-    angular.mock.inject(($controller) => {
-      ctrl = $controller(ServiceListController, {serviceList: {services: []}});
-    });
   });
 
   it('should initialize controller', angular.mock.inject(($controller) => {

@@ -16,15 +16,9 @@ import {ConfigMapListController} from 'configmap/list/controller';
 import configMapListModule from 'configmap/module';
 
 describe('Config Map list controller', () => {
-  /** @type {!ConfigMapListController} */
-  let ctrl;
 
   beforeEach(() => {
     angular.mock.module(configMapListModule.name);
-
-    angular.mock.inject(($controller) => {
-      ctrl = $controller(ConfigMapListController, {configMapList: {items: []}});
-    });
   });
 
   it('should initialize config map controller', angular.mock.inject(($controller) => {

@@ -16,15 +16,9 @@ import {StatefulSetListController} from 'statefulset/list/controller';
 import statefulSetModule from 'statefulset/module';
 
 describe('Stateful Set list controller', () => {
-  /** @type {!StatefulSetListController} */
-  let ctrl;
 
   beforeEach(() => {
     angular.mock.module(statefulSetModule.name);
-
-    angular.mock.inject(($controller) => {
-      ctrl = $controller(StatefulSetListController, {statefulSetList: {statefulSets: []}});
-    });
   });
 
   it('should initialize stateful set controller', angular.mock.inject(($controller) => {

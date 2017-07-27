@@ -16,15 +16,9 @@ import {IngressListController} from 'ingress/list/controller';
 import ingressModule from 'ingress/module';
 
 describe('Ingress list controller', () => {
-  /** @type {!IngressListController} */
-  let ctrl;
 
   beforeEach(() => {
     angular.mock.module(ingressModule.name);
-
-    angular.mock.inject(($controller) => {
-      ctrl = $controller(IngressListController, {ingressList: {ingresss: []}});
-    });
   });
 
   it('should initialize ingress list', angular.mock.inject(($controller) => {
