@@ -30,11 +30,4 @@ export class PersistentVolumeClaimListController {
     /** @export {!angular.Resource} */
     this.persistentVolumeClaimListResource = kdPersistentVolumeClaimListResource;
   }
-  /**
-   * @return {boolean}
-   * @export
-   */
-  shouldShowZeroState() {
-    return !(this.persistentVolumeClaimList.items && this.persistentVolumeClaimList.items.length);
-  }
 }

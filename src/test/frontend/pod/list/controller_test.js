@@ -16,15 +16,9 @@ import {PodListController} from 'pod/list/controller';
 import podModule from 'pod/module';
 
 describe('Pod list controller', () => {
-  /** @type {!PodListController} */
-  let ctrl;
 
   beforeEach(() => {
     angular.mock.module(podModule.name);
-
-    angular.mock.inject(($controller) => {
-      ctrl = $controller(PodListController, {podList: {pods: []}});
-    });
   });
 
   it('should initialize pod list', angular.mock.inject(($controller) => {
@@ -34,16 +28,4 @@ describe('Pod list controller', () => {
 
     expect(ctrl.podList).toBe(data);
   }));
-
-  it('should show zero state', () => {
-    expect(ctrl.shouldShowZeroState()).toBeTruthy();
-  });
-
-  it('should hide zero state', () => {
-    // given
-    ctrl.podList = {pods: ['mock']};
-
-    // then
-    expect(ctrl.shouldShowZeroState()).toBeFalsy();
-  });
 });

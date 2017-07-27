@@ -28,12 +28,4 @@ export class IngressListController {
     /** @export {!angular.Resource} */
     this.ingressListResource = kdIngressListResource;
   }
-
-  /**
-   * @return {boolean}
-   * @export
-   */
-  shouldShowZeroState() {
-    return !(this.ingressList.items && this.ingressList.items.length);
-  }
 }
