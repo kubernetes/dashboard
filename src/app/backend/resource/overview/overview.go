@@ -25,9 +25,9 @@ import (
 	"k8s.io/client-go/kubernetes"
 )
 
-// OverviewObjectList is a list of objects present in a given namespace
-type OverviewObjectList struct {
-	// Inherits fields from the config, discovery, and workloads objects
+// Overview is a list of objects present in a given namespace.
+type Overview struct {
+	// Inherits fields from the config, discovery, and workloads objects.
 	config.Config       `json:",inline"`
 	discovery.Discovery `json:",inline"`
 	workload.Workloads  `json:",inline"`
@@ -38,39 +38,35 @@ type OverviewObjectList struct {
 
 // GetOverview returns a list of all objects in a given namespace.
 func GetOverview(client *kubernetes.Clientset, metricClient metricapi.MetricClient,
-	nsQuery *common.NamespaceQuery,
-	dsQuery *dataselect.DataSelectQuery) (*OverviewObjectList, error) {
+	nsQuery *common.NamespaceQuery, dsQuery *dataselect.DataSelectQuery) (*Overview, error) {
 
 	configResources, err := config.GetConfig(client, nsQuery, dsQuery)
 	if err != nil {
-		return &OverviewObjectList{}, err
+		return &Overview{}, err
 	}
 
 	discoveryResources, err := discovery.GetDiscovery(client, nsQuery, dsQuery)
 	if err != nil {
-		return &OverviewObjectList{}, err
+		return &Overview{}, err
 	}
 
 	workloadsResources, err := workload.GetWorkloads(client, metricClient, nsQuery, dsQuery)
 	if err != nil {
-		return &OverviewObjectList{}, err
+		return &Overview{}, err
 	}
 
-	return &OverviewObjectList{
-		// Config and storage.
+	return &Overview{
 		Config: config.Config{
 			ConfigMapList:             configResources.ConfigMapList,
 			PersistentVolumeClaimList: configResources.PersistentVolumeClaimList,
 			SecretList:                configResources.SecretList,
 		},
 
-		// Discovery and load balancing.
 		Discovery: discovery.Discovery{
 			ServiceList: discoveryResources.ServiceList,
 			IngressList: discoveryResources.IngressList,
 		},
 
-		// Workloads.
 		Workloads: workload.Workloads{
 			DeploymentList:            workloadsResources.DeploymentList,
 			ReplicaSetList:            workloadsResources.ReplicaSetList,
@@ -81,7 +77,6 @@ func GetOverview(client *kubernetes.Clientset, metricClient metricapi.MetricClie
 			StatefulSetList:           workloadsResources.StatefulSetList,
 		},
 
-		// Errors.
 		Errors: errors.MergeErrors(configResources.Errors, discoveryResources.Errors,
 			workloadsResources.Errors),
 	}, nil
