@@ -116,8 +116,7 @@ func GetDaemonSetDetail(client k8sClient.Interface, metricClient metricapi.Metri
 // TODO(floreks): This should be transactional to make sure that DS will not be deleted without pods
 // Deletes daemon set with given name in given namespace and related pods.
 // Also deletes services related to daemon set if deleteServices is true.
-func DeleteDaemonSet(client k8sClient.Interface, namespace, name string,
-	deleteServices bool) error {
+func DeleteDaemonSet(client k8sClient.Interface, namespace, name string, deleteServices bool) error {
 
 	log.Printf("Deleting %s daemon set from %s namespace", name, namespace)
 
@@ -143,14 +142,12 @@ func DeleteDaemonSet(client k8sClient.Interface, namespace, name string,
 	}
 
 	log.Printf("Successfully deleted %s daemon set from %s namespace", name, namespace)
-
 	return nil
 }
 
 // DeleteDaemonSetServices deletes services related to daemon set with given name in given namespace.
 func DeleteDaemonSetServices(client k8sClient.Interface, namespace, name string) error {
-	log.Printf("Deleting services related to %s daemon set from %s namespace", name,
-		namespace)
+	log.Printf("Deleting services related to %s daemon set from %s namespace", name, namespace)
 
 	daemonSet, err := client.Extensions().DaemonSets(namespace).Get(name, metaV1.GetOptions{})
 	if err != nil {
@@ -173,8 +170,6 @@ func DeleteDaemonSetServices(client k8sClient.Interface, namespace, name string)
 		}
 	}
 
-	log.Printf("Successfully deleted services related to %s daemon set from %s namespace",
-		name, namespace)
-
+	log.Printf("Successfully deleted services related to %s daemon set from %s namespace", name, namespace)
 	return nil
 }

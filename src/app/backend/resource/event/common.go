@@ -215,7 +215,7 @@ func ToEvent(event v1.Event) common.Event {
 }
 
 // GetResourceEvents gets events associated to specified resource.
-func GetResourceEvents(client *client.Clientset, dsQuery *dataselect.DataSelectQuery, namespace, name string) (
+func GetResourceEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery, namespace, name string) (
 	*common.EventList, error) {
 	resourceEvents, err := GetEvents(client, namespace, name)
 	if err != nil {
