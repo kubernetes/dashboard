@@ -15,14 +15,14 @@ limitations under the License.
 -->
 
 <div ng-if="!$ctrl.shouldShowZeroState()">
-    <kd-content-card>
-      <kd-content>
-        <kd-third-party-resource-card-list third-party-resource-list="$ctrl.thirdPartyResourceList"
-                                           third-party-resource-list-resource="$ctrl.thirdPartyResourceListResource"
-                                           with-statuses="false">
-        </kd-third-party-resource-card-list>
-      </kd-content>
-    </kd-content-card>
+  <kd-content-card>
+    <kd-content>
+      <kd-third-party-resource-card-list third-party-resource-list="$ctrl.thirdPartyResourceList"
+                                         third-party-resource-list-resource="$ctrl.thirdPartyResourceListResource"
+                                         with-statuses="false">
+      </kd-third-party-resource-card-list>
+    </kd-content>
+  </kd-content-card>
 </div>
 
 <kd-content-card ng-if="$ctrl.shouldShowZeroState()">
