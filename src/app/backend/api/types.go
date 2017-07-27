@@ -17,6 +17,8 @@ package api
 import (
 	"k8s.io/apimachinery/pkg/apis/meta/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/fields"
+	"k8s.io/apimachinery/pkg/labels"
 )
 
 // CsrfToken is used to secure requests from CSRF attacks
@@ -205,4 +207,10 @@ func IsLabelSelectorMatching(selector map[string]string, labelSelector *v1.Label
 		}
 	}
 	return true
+}
+
+// ListEverything is a list options used to list all resources without any filtering.
+var ListEverything = metaV1.ListOptions{
+	LabelSelector: labels.Everything().String(),
+	FieldSelector: fields.Everything().String(),
 }

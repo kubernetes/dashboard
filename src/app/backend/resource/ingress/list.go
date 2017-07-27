@@ -46,12 +46,10 @@ type IngressList struct {
 	Errors []error `json:"errors"`
 }
 
-// GetIngressList - return all ingresses in the given namespace.
-func GetIngressList(client client.Interface, namespace *common.NamespaceQuery, dsQuery *dataselect.DataSelectQuery) (*IngressList, error) {
-	ingressList, err := client.Extensions().Ingresses(namespace.ToRequestParam()).List(metaV1.ListOptions{
-		LabelSelector: labels.Everything().String(),
-		FieldSelector: fields.Everything().String(),
-	})
+// GetIngressList returns all ingresses in the given namespace.
+func GetIngressList(client client.Interface, namespace *common.NamespaceQuery,
+	dsQuery *dataselect.DataSelectQuery) (*IngressList, error) {
+	ingressList, err := client.Extensions().Ingresses(namespace.ToRequestParam()).List(common.ListEverything)
 
 	nonCriticalErrors, criticalError := errors.HandleError(err)
 	if criticalError != nil {

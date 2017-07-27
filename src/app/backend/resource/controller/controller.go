@@ -23,8 +23,6 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	meta "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/fields"
-	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/apimachinery/pkg/types"
 	client "k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/pkg/api/v1"
@@ -32,11 +30,6 @@ import (
 	batch "k8s.io/client-go/pkg/apis/batch/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
-
-var listEverything = meta.ListOptions{
-	LabelSelector: labels.Everything().String(),
-	FieldSelector: fields.Everything().String(),
-}
 
 // ResourceOwner is an structure representing resource owner, it may be Replication Controller,
 // Daemon Set, Job etc.
@@ -67,46 +60,40 @@ type ResourceController interface {
 
 // NewResourceController creates instance of ResourceController based on given reference. It allows
 // to convert owner/created by references to real objects.
-func NewResourceController(reference v1.ObjectReference, client client.Interface) (
-	ResourceController, error) {
-	switch strings.ToLower(reference.Kind) {
+func NewResourceController(ref v1.ObjectReference, client client.Interface) (ResourceController, error) {
+	switch strings.ToLower(ref.Kind) {
 	case api.ResourceKindJob:
-		job, err := client.BatchV1().Jobs(reference.Namespace).Get(reference.Name,
-			meta.GetOptions{})
+		job, err := client.BatchV1().Jobs(ref.Namespace).Get(ref.Name, meta.GetOptions{})
 		if err != nil {
 			return nil, err
 		}
 		return JobController(*job), nil
 	case api.ResourceKindReplicaSet:
-		rs, err := client.ExtensionsV1beta1().ReplicaSets(reference.Namespace).Get(reference.Name,
-			meta.GetOptions{})
+		rs, err := client.ExtensionsV1beta1().ReplicaSets(ref.Namespace).Get(ref.Name, meta.GetOptions{})
 		if err != nil {
 			return nil, err
 		}
 		return ReplicaSetController(*rs), nil
 	case api.ResourceKindReplicationController:
-		rc, err := client.CoreV1().ReplicationControllers(reference.Namespace).Get(
-			reference.Name, meta.GetOptions{})
+		rc, err := client.CoreV1().ReplicationControllers(ref.Namespace).Get(ref.Name, meta.GetOptions{})
 		if err != nil {
 			return nil, err
 		}
 		return ReplicationControllerController(*rc), nil
 	case api.ResourceKindDaemonSet:
-		ds, err := client.ExtensionsV1beta1().DaemonSets(reference.Namespace).Get(reference.Name,
-			meta.GetOptions{})
+		ds, err := client.ExtensionsV1beta1().DaemonSets(ref.Namespace).Get(ref.Name, meta.GetOptions{})
 		if err != nil {
 			return nil, err
 		}
 		return DaemonSetController(*ds), nil
 	case api.ResourceKindStatefulSet:
-		ss, err := client.AppsV1beta1().StatefulSets(reference.Namespace).Get(reference.Name,
-			meta.GetOptions{})
+		ss, err := client.AppsV1beta1().StatefulSets(ref.Namespace).Get(ref.Name, meta.GetOptions{})
 		if err != nil {
 			return nil, err
 		}
 		return StatefulSetController(*ss), nil
 	default:
-		return nil, fmt.Errorf("Unknown reference kind %s", reference.Kind)
+		return nil, fmt.Errorf("Unknown reference kind %s", ref.Kind)
 	}
 }
 
@@ -272,7 +259,7 @@ func (self StatefulSetController) GetLogSources(k8sClient *client.Clientset) Log
 }
 
 func getPodNames(k8sClient *client.Clientset, namespace string, uid types.UID) []string {
-	allPods, _ := k8sClient.CoreV1().Pods(namespace).List(listEverything)
+	allPods, _ := k8sClient.CoreV1().Pods(namespace).List(api.ListEverything)
 	matchingPods := common.FilterPodsByOwnerReference(namespace, uid, allPods.Items)
 	names := make([]string, 0)
 	for _, pod := range matchingPods {

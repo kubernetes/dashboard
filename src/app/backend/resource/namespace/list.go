@@ -65,11 +65,7 @@ func GetNamespaceListFromChannels(channels *common.ResourceChannels, dsQuery *da
 // GetNamespaceList returns a list of all namespaces in the cluster.
 func GetNamespaceList(client *client.Clientset, dsQuery *dataselect.DataSelectQuery) (*NamespaceList, error) {
 	log.Println("Getting list of namespaces")
-
-	namespaces, err := client.Namespaces().List(metaV1.ListOptions{
-		LabelSelector: labels.Everything().String(),
-		FieldSelector: fields.Everything().String(),
-	})
+	namespaces, err := client.Namespaces().List(common.ListEverything)
 
 	nonCriticalErrors, criticalError := errors.HandleError(err)
 	if criticalError != nil {

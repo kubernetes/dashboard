@@ -65,10 +65,7 @@ func GetNodeListFromChannels(client client.Interface, channels *common.ResourceC
 
 // GetNodeList returns a list of all Nodes in the cluster.
 func GetNodeList(client client.Interface, dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) (*NodeList, error) {
-	nodes, err := client.CoreV1().Nodes().List(metaV1.ListOptions{
-		LabelSelector: labels.Everything().String(),
-		FieldSelector: fields.Everything().String(),
-	})
+	nodes, err := client.CoreV1().Nodes().List(api.ListEverything)
 
 	nonCriticalErrors, criticalError := errors.HandleError(err)
 	if criticalError != nil {
