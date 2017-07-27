@@ -275,6 +275,7 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 		apiV1Ws.GET("/scale/{kind}/{namespace}/{name}").
 			To(apiHandler.handleGetReplicaCount).
 			Writes(scaling.ReplicaCounts{}))
+
 	apiV1Ws.Route(
 		apiV1Ws.GET("/daemonset").
 			To(apiHandler.handleGetDaemonSetList).
@@ -287,9 +288,6 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 		apiV1Ws.GET("/daemonset/{namespace}/{daemonSet}").
 			To(apiHandler.handleGetDaemonSetDetail).
 			Writes(daemonset.DaemonSetDetail{}))
-	apiV1Ws.Route(
-		apiV1Ws.DELETE("/daemonset/{namespace}/{daemonSet}").
-			To(apiHandler.handleDeleteDaemonSet))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/daemonset/{namespace}/{daemonSet}/pod").
 			To(apiHandler.handleGetDaemonSetPods).
@@ -1906,27 +1904,6 @@ func (apiHandler *APIHandler) handleGetDaemonSetEvents(request *restful.Request,
 		return
 	}
 	response.WriteHeaderAndEntity(http.StatusOK, result)
-}
-
-func (apiHandler *APIHandler) handleDeleteDaemonSet(request *restful.Request, response *restful.Response) {
-	k8sClient, err := apiHandler.cManager.Client(request)
-	if err != nil {
-		handleInternalError(response, err)
-		return
-	}
-
-	namespace := request.PathParameter("namespace")
-	name := request.PathParameter("daemonSet")
-	deleteServices, err := strconv.ParseBool(request.QueryParameter("deleteServices"))
-	if err != nil {
-		handleInternalError(response, err)
-		return
-	}
-	if err := daemonset.DeleteDaemonSet(k8sClient, namespace, name, deleteServices); err != nil {
-		handleInternalError(response, err)
-		return
-	}
-	response.WriteHeader(http.StatusOK)
 }
 
 func (apiHandler *APIHandler) handleGetHorizontalPodAutoscalerList(request *restful.Request,

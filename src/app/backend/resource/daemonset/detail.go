@@ -63,8 +63,8 @@ type DaemonSetDetail struct {
 // Returns detailed information about the given daemon set in the given namespace.
 func GetDaemonSetDetail(client k8sClient.Interface, metricClient metricapi.MetricClient,
 	namespace, name string) (*DaemonSetDetail, error) {
-	log.Printf("Getting details of %s daemon set in %s namespace", name, namespace)
 
+	log.Printf("Getting details of %s daemon set in %s namespace", name, namespace)
 	daemonSet, err := client.ExtensionsV1beta1().DaemonSets(namespace).Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
@@ -106,70 +106,8 @@ func GetDaemonSetDetail(client k8sClient.Interface, metricClient metricapi.Metri
 	}
 
 	for _, container := range daemonSet.Spec.Template.Spec.Containers {
-		daemonSetDetail.ContainerImages = append(daemonSetDetail.ContainerImages,
-			container.Image)
+		daemonSetDetail.ContainerImages = append(daemonSetDetail.ContainerImages, container.Image)
 	}
 
 	return daemonSetDetail, nil
-}
-
-// TODO(floreks): This should be transactional to make sure that DS will not be deleted without pods
-// Deletes daemon set with given name in given namespace and related pods.
-// Also deletes services related to daemon set if deleteServices is true.
-func DeleteDaemonSet(client k8sClient.Interface, namespace, name string, deleteServices bool) error {
-
-	log.Printf("Deleting %s daemon set from %s namespace", name, namespace)
-
-	if deleteServices {
-		if err := DeleteDaemonSetServices(client, namespace, name); err != nil {
-			return err
-		}
-	}
-
-	pods, err := getRawDaemonSetPods(client, namespace, name)
-	if err != nil {
-		return err
-	}
-
-	if err := client.Extensions().DaemonSets(namespace).Delete(name, &metaV1.DeleteOptions{}); err != nil {
-		return err
-	}
-
-	for _, pod := range pods {
-		if err := client.Core().Pods(namespace).Delete(pod.Name, &metaV1.DeleteOptions{}); err != nil {
-			return err
-		}
-	}
-
-	log.Printf("Successfully deleted %s daemon set from %s namespace", name, namespace)
-	return nil
-}
-
-// DeleteDaemonSetServices deletes services related to daemon set with given name in given namespace.
-func DeleteDaemonSetServices(client k8sClient.Interface, namespace, name string) error {
-	log.Printf("Deleting services related to %s daemon set from %s namespace", name, namespace)
-
-	daemonSet, err := client.Extensions().DaemonSets(namespace).Get(name, metaV1.GetOptions{})
-	if err != nil {
-		return err
-	}
-
-	labelSelector, err := metaV1.LabelSelectorAsSelector(daemonSet.Spec.Selector)
-	if err != nil {
-		return err
-	}
-
-	services, err := GetServicesForDSDeletion(client, labelSelector, namespace)
-	if err != nil {
-		return err
-	}
-
-	for _, service := range services {
-		if err := client.Core().Services(namespace).Delete(service.Name, &metaV1.DeleteOptions{}); err != nil {
-			return err
-		}
-	}
-
-	log.Printf("Successfully deleted services related to %s daemon set from %s namespace", name, namespace)
-	return nil
 }
