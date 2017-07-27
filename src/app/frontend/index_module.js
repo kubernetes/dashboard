@@ -36,6 +36,7 @@ import jobModule from './job/module';
 import logsModule from './logs/module';
 import namespaceModule from './namespace/module';
 import nodeModule from './node/module';
+import overviewModule from './overview/module';
 import persistentVolumeModule from './persistentvolume/module';
 import persistentVolumeClaimModule from './persistentvolumeclaim/module';
 import podModule from './pod/module';
@@ -66,6 +67,7 @@ export default angular
           'ngSanitize',
           'ui.router',
           aboutModule.name,
+          overviewModule.name,
           chromeModule.name,
           daemonSetModule.name,
           deployModule.name,

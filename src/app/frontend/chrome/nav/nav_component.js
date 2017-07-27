@@ -23,6 +23,7 @@ import {stateName as ingressState} from 'ingress/list/state';
 import {stateName as jobState} from 'job/list/state';
 import {stateName as namespaceState} from 'namespace/list/state';
 import {stateName as nodeState} from 'node/list/state';
+import {stateName as overviewState} from 'overview/state';
 import {stateName as persistentVolumeState} from 'persistentvolume/list/state';
 import {stateName as persistentVolumeClaimState} from 'persistentvolumeclaim/list/state';
 import {stateName as podState} from 'pod/list/state';
@@ -72,6 +73,7 @@ export class NavController {
       'config': configState,
       'storageClass': storageClassState,
       'about': aboutState,
+      'overview': overviewState,
     };
   }
 
