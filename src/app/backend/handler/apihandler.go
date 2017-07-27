@@ -25,6 +25,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/integration"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
+	"github.com/kubernetes/dashboard/src/app/backend/overview"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/cluster"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/config"
@@ -557,6 +558,16 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			To(apiHandler.handleLogs).
 			Writes(logs.LogDetails{}))
 
+	apiV1Ws.Route(
+		apiV1Ws.GET("/overview/").
+			To(apiHandler.handleOverview).
+			Writes(overview.OverviewObjectList{}))
+
+	apiV1Ws.Route(
+		apiV1Ws.GET("/overview/{namespace}").
+			To(apiHandler.handleOverview).
+			Writes(overview.OverviewObjectList{}))
+
 	return wsContainer, nil
 }
 
@@ -1032,6 +1043,25 @@ func (apiHandler *APIHandler) handleGetWorkloads(request *restful.Request, respo
 	dataSelect := parseDataSelectPathParameter(request)
 	dataSelect.MetricQuery = dataselect.NoMetrics
 	result, err := workload.GetWorkloads(k8sClient, apiHandler.iManager.Metric().Client(), namespace, dataSelect)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleOverview(request *restful.Request, response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	namespace := parseNamespacePathParameter(request)
+	dataSelect := parseDataSelectPathParameter(request)
+	dataSelect.FilterQuery = dataselect.NoFilter
+	dataSelect.MetricQuery = dataselect.NoMetrics
+	result, err := overview.GetOverview(k8sClient, apiHandler.iManager.Metric().Client(), namespace, dataSelect)
 	if err != nil {
 		handleInternalError(response, err)
 		return

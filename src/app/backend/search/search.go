@@ -45,7 +45,6 @@ import (
 
 // SearchResult is a list of resources matching search criteria found in whole cluster.
 type SearchResult struct {
-
 	// Cluster.
 	NamespaceList        namespace.NamespaceList               `json:"namespaceList"`
 	NodeList             node.NodeList                         `json:"nodeList"`
@@ -102,7 +101,6 @@ func Search(client *kubernetes.Clientset, metricClient metricapi.MetricClient,
 	}
 
 	return &SearchResult{
-
 		// Cluster.
 		NamespaceList:        clusterResources.NamespaceList,
 		NodeList:             clusterResources.NodeList,

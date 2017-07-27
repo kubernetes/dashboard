@@ -144,6 +144,25 @@ backendApi.ReplicationControllerList;
  *   podList: !backendApi.PodList,
  *   daemonSetList: !backendApi.DaemonSetList,
  *   statefulSetList: !backendApi.StatefulSetList,
+ *   serviceList: !backendApi.ServiceList,
+ *   ingressList: !backendApi.IngressList,
+ *   configMapList: !backendApi.ConfigMapList,
+ *   persistentVolumeClaimList: !backendApi.PersistentVolumeClaimList,
+ *   secretList: !backendApi.SecretList,
+ *   errors: !Array<!backendApi.Error>
+ * }}
+ */
+backendApi.Overview;
+
+/**
+ * @typedef {{
+ *   deploymentList: !backendApi.DeploymentList,
+ *   replicaSetList: !backendApi.ReplicaSetList,
+ *   jobList: !backendApi.JobList,
+ *   replicationControllerList: !backendApi.ReplicationControllerList,
+ *   podList: !backendApi.PodList,
+ *   daemonSetList: !backendApi.DaemonSetList,
+ *   statefulSetList: !backendApi.StatefulSetList,
  *   errors: !Array<!backendApi.Error>
  * }}
  */
