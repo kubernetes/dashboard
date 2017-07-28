@@ -10,8 +10,6 @@ Also a lovely [comune](http://en.wikipedia.org/wiki/Mergo) (municipality) in the
 
 It is ready for production use. It works fine although it may use more of testing. Here some projects in the wild using Mergo:
 
-- [GoogleCloudPlatform/kubernetes](https://github.com/GoogleCloudPlatform/kubernetes)
-- [soniah/dnsmadeeasy](https://github.com/soniah/dnsmadeeasy)
 - [EagerIO/Stout](https://github.com/EagerIO/Stout)
 - [lynndylanhurley/defsynth-api](https://github.com/lynndylanhurley/defsynth-api)
 - [russross/canvasassignments](https://github.com/russross/canvasassignments)

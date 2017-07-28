@@ -42,11 +42,6 @@ var basicTestCases = []struct {
 
 	// Charmap tests.
 	{
-		e:       charmap.CodePage037,
-		encoded: "\xc8\x51\xba\x93\xcf",
-		utf8:    "Hé[lõ",
-	},
-	{
 		e:       charmap.CodePage437,
 		encoded: "H\x82ll\x93 \x9d\xa7\xf4\x9c\xbe",
 		utf8:    "Héllô ¥º⌠£╛",
@@ -55,16 +50,6 @@ var basicTestCases = []struct {
 		e:       charmap.CodePage866,
 		encoded: "H\xf3\xd3o \x98\xfd\x9f\xdd\xa1",
 		utf8:    "Hє╙o Ш¤Я▌б",
-	},
-	{
-		e:       charmap.CodePage1047,
-		encoded: "\xc8\x54\x93\x93\x9f",
-		utf8:    "Hèll¤",
-	},
-	{
-		e:       charmap.CodePage1140,
-		encoded: "\xc8\x9f\x93\x93\xcf",
-		utf8:    "H€llõ",
 	},
 	{
 		e:       charmap.ISO8859_2,
@@ -100,11 +85,6 @@ var basicTestCases = []struct {
 		e:       charmap.ISO8859_8,
 		encoded: "Hel\xf5\xed",
 		utf8:    "Helץם",
-	},
-	{
-		e:       charmap.ISO8859_9,
-		encoded: "\xdeayet",
-		utf8:    "Şayet",
 	},
 	{
 		e:       charmap.ISO8859_10,

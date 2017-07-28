@@ -329,8 +329,8 @@ func TestSummaryDecay(t *testing.T) {
 }
 
 func getBounds(vars []float64, q, ε float64) (min, max float64) {
-	// TODO: This currently tolerates an error of up to 2*ε. The error must
-	// be at most ε, but for some reason, it's sometimes slightly
+	// TODO(beorn7): This currently tolerates an error of up to 2*ε. The
+	// error must be at most ε, but for some reason, it's sometimes slightly
 	// higher. That's a bug.
 	n := float64(len(vars))
 	lower := int((q - 2*ε) * n)

@@ -111,11 +111,22 @@ func TestMetricNameIsValid(t *testing.T) {
 			mn:    "a lid_23name",
 			valid: false,
 		},
+		{
+			mn:    ":leading_colon",
+			valid: true,
+		},
+		{
+			mn:    "colon:in:the:middle",
+			valid: true,
+		},
 	}
 
 	for _, s := range scenarios {
 		if IsValidMetricName(s.mn) != s.valid {
-			t.Errorf("Expected %v for %q", s.valid, s.mn)
+			t.Errorf("Expected %v for %q using IsValidMetricName function", s.valid, s.mn)
+		}
+		if MetricNameRE.MatchString(string(s.mn)) != s.valid {
+			t.Errorf("Expected %v for %q using regexp matching", s.valid, s.mn)
 		}
 	}
 }

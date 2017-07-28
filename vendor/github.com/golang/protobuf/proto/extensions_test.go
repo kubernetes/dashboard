@@ -66,6 +66,10 @@ func TestGetExtensionsWithMissingExtensions(t *testing.T) {
 func TestExtensionDescsWithMissingExtensions(t *testing.T) {
 	msg := &pb.MyMessage{Count: proto.Int32(0)}
 	extdesc1 := pb.E_Ext_More
+	if descs, err := proto.ExtensionDescs(msg); len(descs) != 0 || err != nil {
+		t.Errorf("proto.ExtensionDescs: got %d descs, error %v; want 0, nil", len(descs), err)
+	}
+
 	ext1 := &pb.Ext{}
 	if err := proto.SetExtension(msg, extdesc1, ext1); err != nil {
 		t.Fatalf("Could not set ext1: %s", err)

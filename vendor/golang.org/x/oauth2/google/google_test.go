@@ -31,6 +31,23 @@ var installedJSONKey = []byte(`{
     }
 }`)
 
+var jwtJSONKey = []byte(`{
+  "private_key_id": "268f54e43a1af97cfc71731688434f45aca15c8b",
+  "private_key": "super secret key",
+  "client_email": "gopher@developer.gserviceaccount.com",
+  "client_id": "gopher.apps.googleusercontent.com",
+  "token_uri": "https://accounts.google.com/o/gophers/token",
+  "type": "service_account"
+}`)
+
+var jwtJSONKeyNoTokenURL = []byte(`{
+  "private_key_id": "268f54e43a1af97cfc71731688434f45aca15c8b",
+  "private_key": "super secret key",
+  "client_email": "gopher@developer.gserviceaccount.com",
+  "client_id": "gopher.apps.googleusercontent.com",
+  "type": "service_account"
+}`)
+
 func TestConfigFromJSON(t *testing.T) {
 	conf, err := ConfigFromJSON(webJSONKey, "scope1", "scope2")
 	if err != nil {
@@ -63,5 +80,37 @@ func TestConfigFromJSON_Installed(t *testing.T) {
 	}
 	if got, want := conf.ClientID, "222-installed.apps.googleusercontent.com"; got != want {
 		t.Errorf("ClientID = %q; want %q", got, want)
+	}
+}
+
+func TestJWTConfigFromJSON(t *testing.T) {
+	conf, err := JWTConfigFromJSON(jwtJSONKey, "scope1", "scope2")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got, want := conf.Email, "gopher@developer.gserviceaccount.com"; got != want {
+		t.Errorf("Email = %q, want %q", got, want)
+	}
+	if got, want := string(conf.PrivateKey), "super secret key"; got != want {
+		t.Errorf("PrivateKey = %q, want %q", got, want)
+	}
+	if got, want := conf.PrivateKeyID, "268f54e43a1af97cfc71731688434f45aca15c8b"; got != want {
+		t.Errorf("PrivateKeyID = %q, want %q", got, want)
+	}
+	if got, want := strings.Join(conf.Scopes, ","), "scope1,scope2"; got != want {
+		t.Errorf("Scopes = %q; want %q", got, want)
+	}
+	if got, want := conf.TokenURL, "https://accounts.google.com/o/gophers/token"; got != want {
+		t.Errorf("TokenURL = %q; want %q", got, want)
+	}
+}
+
+func TestJWTConfigFromJSONNoTokenURL(t *testing.T) {
+	conf, err := JWTConfigFromJSON(jwtJSONKeyNoTokenURL, "scope1", "scope2")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got, want := conf.TokenURL, "https://accounts.google.com/o/oauth2/token"; got != want {
+		t.Errorf("TokenURL = %q; want %q", got, want)
 	}
 }

@@ -216,7 +216,7 @@ func (w *CodeWriter) WriteString(s string) {
 		r, sz = utf8.DecodeRuneInString(s[p:])
 		out := s[p : p+sz]
 		chars := 1
-		if !unicode.IsPrint(r) || r == utf8.RuneError {
+		if !unicode.IsPrint(r) || r == utf8.RuneError || r == '"' {
 			switch sz {
 			case 1:
 				out = fmt.Sprintf("\\x%02x", s[p])

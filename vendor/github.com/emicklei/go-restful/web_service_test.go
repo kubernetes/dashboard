@@ -44,6 +44,8 @@ func TestCapturePanic(t *testing.T) {
 	httpRequest, _ := http.NewRequest("GET", "http://here.com/fire", nil)
 	httpRequest.Header.Set("Accept", "*/*")
 	httpWriter := httptest.NewRecorder()
+	// override the default here
+	DefaultContainer.DoNotRecover(false)
 	DefaultContainer.dispatch(httpWriter, httpRequest)
 	if 500 != httpWriter.Code {
 		t.Error("500 expected on fire")
@@ -236,6 +238,29 @@ func TestContentTypeOctet_Issue170(t *testing.T) {
 	DefaultContainer.dispatch(httpWriter, httpRequest)
 	if 200 != httpWriter.Code {
 		t.Errorf("Expected 200, got %d", httpWriter.Code)
+	}
+}
+
+type exampleBody struct{}
+
+func TestParameterDataTypeDefaults(t *testing.T) {
+	tearDown()
+	ws := new(WebService)
+	route := ws.POST("/post").Reads(&exampleBody{})
+	if route.parameters[0].data.DataType != "*restful.exampleBody" {
+		t.Errorf("body parameter incorrect name: %#v", route.parameters[0].data)
+	}
+}
+
+func TestParameterDataTypeCustomization(t *testing.T) {
+	tearDown()
+	ws := new(WebService)
+	ws.TypeNameHandler(func(sample interface{}) string {
+		return "my.custom.type.name"
+	})
+	route := ws.POST("/post").Reads(&exampleBody{})
+	if route.parameters[0].data.DataType != "my.custom.type.name" {
+		t.Errorf("body parameter incorrect name: %#v", route.parameters[0].data)
 	}
 }
 

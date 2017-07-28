@@ -37,8 +37,6 @@ func TestToGoName(t *testing.T) {
 		{"sampleText", "SampleText"},
 		{"sample 2 Text", "Sample2Text"},
 		{"findThingById", "FindThingByID"},
-		{"日本語sample 2 Text", "X日本語sample2Text"},
-		{"日本語findThingById", "X日本語findThingByID"},
 	}
 
 	for k := range commonInitialisms {

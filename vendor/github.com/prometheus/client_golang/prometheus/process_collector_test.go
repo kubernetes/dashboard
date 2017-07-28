@@ -1,13 +1,12 @@
 package prometheus
 
 import (
-	"io/ioutil"
-	"net/http"
-	"net/http/httptest"
+	"bytes"
 	"os"
 	"regexp"
 	"testing"
 
+	"github.com/prometheus/common/expfmt"
 	"github.com/prometheus/procfs"
 )
 
@@ -16,21 +15,26 @@ func TestProcessCollector(t *testing.T) {
 		t.Skipf("skipping TestProcessCollector, procfs not available: %s", err)
 	}
 
-	registry := newRegistry()
-	registry.Register(NewProcessCollector(os.Getpid(), ""))
-	registry.Register(NewProcessCollectorPIDFn(
-		func() (int, error) { return os.Getpid(), nil }, "foobar"))
+	registry := NewRegistry()
+	if err := registry.Register(NewProcessCollector(os.Getpid(), "")); err != nil {
+		t.Fatal(err)
+	}
+	if err := registry.Register(NewProcessCollectorPIDFn(
+		func() (int, error) { return os.Getpid(), nil }, "foobar"),
+	); err != nil {
+		t.Fatal(err)
+	}
 
-	s := httptest.NewServer(InstrumentHandler("prometheus", registry))
-	defer s.Close()
-	r, err := http.Get(s.URL)
+	mfs, err := registry.Gather()
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer r.Body.Close()
-	body, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		t.Fatal(err)
+
+	var buf bytes.Buffer
+	for _, mf := range mfs {
+		if _, err := expfmt.MetricFamilyToText(&buf, mf); err != nil {
+			t.Fatal(err)
+		}
 	}
 
 	for _, re := range []*regexp.Regexp{
@@ -47,8 +51,8 @@ func TestProcessCollector(t *testing.T) {
 		regexp.MustCompile("foobar_process_resident_memory_bytes [1-9]"),
 		regexp.MustCompile("foobar_process_start_time_seconds [0-9.]{10,}"),
 	} {
-		if !re.Match(body) {
-			t.Errorf("want body to match %s\n%s", re, body)
+		if !re.Match(buf.Bytes()) {
+			t.Errorf("want body to match %s\n%s", re, buf.String())
 		}
 	}
 }

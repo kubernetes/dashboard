@@ -23,7 +23,6 @@ import (
 
 	"github.com/go-openapi/loads/fmts"
 	"github.com/go-openapi/spec"
-	"github.com/go-openapi/swag"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -183,22 +182,12 @@ func TestDefinitionAnalysis(t *testing.T) {
 		assertSchemaRefExists(t, definitions, "#/definitions/withAllOf/allOf/1")
 		allOfs := analyzer.allOfs
 		assert.Len(t, allOfs, 1)
-		assert.Contains(t, allOfs, "#/definitions/withAllOf")
+		_, hasAllOf := allOfs["#/definitions/withAllOf"]
+		assert.True(t, hasAllOf)
 	}
 }
 
 func loadSpec(path string) (*spec.Swagger, error) {
-	spec.PathLoader = func(path string) (json.RawMessage, error) {
-		ext := filepath.Ext(path)
-		if ext == ".yml" || ext == ".yaml" {
-			return fmts.YAMLDoc(path)
-		}
-		data, err := swag.LoadFromFileOrHTTP(path)
-		if err != nil {
-			return nil, err
-		}
-		return json.RawMessage(data), nil
-	}
 	data, err := fmts.YAMLDoc(path)
 	if err != nil {
 		return nil, err
@@ -219,9 +208,6 @@ func TestReferenceAnalysis(t *testing.T) {
 		// parameters
 		assertRefExists(t, definitions.parameters, "#/paths/~1some~1where~1{id}/parameters/0")
 		assertRefExists(t, definitions.parameters, "#/paths/~1some~1where~1{id}/get/parameters/0")
-
-		// path items
-		assertRefExists(t, definitions.pathItems, "#/paths/~1other~1place")
 
 		// responses
 		assertRefExists(t, definitions.responses, "#/paths/~1some~1where~1{id}/get/responses/404")
@@ -248,37 +234,4 @@ func assertSchemaRefExists(t testing.TB, data map[string]SchemaRef, key string) 
 		return assert.Fail(t, fmt.Sprintf("expected %q to exist in schema ref bag", key))
 	}
 	return true
-}
-
-func TestPatternAnalysis(t *testing.T) {
-	doc, err := loadSpec(filepath.Join("fixtures", "patterns.yml"))
-	if assert.NoError(t, err) {
-		pt := New(doc).patterns
-
-		// parameters
-		assertPattern(t, pt.parameters, "#/parameters/idParam", "a[A-Za-Z0-9]+")
-		assertPattern(t, pt.parameters, "#/paths/~1some~1where~1{id}/parameters/1", "b[A-Za-z0-9]+")
-		assertPattern(t, pt.parameters, "#/paths/~1some~1where~1{id}/get/parameters/0", "[abc][0-9]+")
-
-		// responses
-		assertPattern(t, pt.headers, "#/responses/notFound/headers/ContentLength", "[0-9]+")
-		assertPattern(t, pt.headers, "#/paths/~1some~1where~1{id}/get/responses/200/headers/X-Request-Id", "d[A-Za-z0-9]+")
-
-		// definitions
-		assertPattern(t, pt.schemas, "#/paths/~1other~1place/post/parameters/0/schema/properties/value", "e[A-Za-z0-9]+")
-		assertPattern(t, pt.schemas, "#/paths/~1other~1place/post/responses/200/schema/properties/data", "[0-9]+[abd]")
-		assertPattern(t, pt.schemas, "#/definitions/named", "f[A-Za-z0-9]+")
-		assertPattern(t, pt.schemas, "#/definitions/tag/properties/value", "g[A-Za-z0-9]+")
-
-		// items
-		assertPattern(t, pt.items, "#/paths/~1some~1where~1{id}/get/parameters/1/items", "c[A-Za-z0-9]+")
-		assertPattern(t, pt.items, "#/paths/~1other~1place/post/responses/default/headers/Via/items", "[A-Za-z]+")
-	}
-}
-
-func assertPattern(t testing.TB, data map[string]string, key, pattern string) bool {
-	if assert.Contains(t, data, key) {
-		return assert.Equal(t, pattern, data[key])
-	}
-	return false
 }

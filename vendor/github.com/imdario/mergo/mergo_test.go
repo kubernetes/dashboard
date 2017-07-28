@@ -136,28 +136,17 @@ func TestMaps(t *testing.T) {
 	m := map[string]simpleTest{
 		"a": simpleTest{},
 		"b": simpleTest{42},
-		"d": simpleTest{61},
 	}
 	n := map[string]simpleTest{
 		"a": simpleTest{16},
 		"b": simpleTest{},
 		"c": simpleTest{12},
-		"e": simpleTest{14},
 	}
-	expect := map[string]simpleTest{
-		"a": simpleTest{0},
-		"b": simpleTest{42},
-		"c": simpleTest{12},
-		"d": simpleTest{61},
-		"e": simpleTest{14},
-	}
-
 	if err := Merge(&m, n); err != nil {
 		t.Fatalf(err.Error())
 	}
-
-	if !reflect.DeepEqual(m, expect) {
-		t.Fatalf("Test failed:\ngot  :\n%#v\n\nwant :\n%#v\n\n", m, expect)
+	if len(m) != 3 {
+		t.Fatalf(`n not merged in m properly, m must have 3 elements instead of %d`, len(m))
 	}
 	if m["a"].Value != 0 {
 		t.Fatalf(`n merged in m because I solved non-addressable map values TODO: m["a"].Value(%d) != n["a"].Value(%d)`, m["a"].Value, n["a"].Value)

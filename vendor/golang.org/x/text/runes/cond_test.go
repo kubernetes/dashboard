@@ -19,12 +19,8 @@ var (
 	toLower = cases.Lower(language.Und)
 )
 
-type spanformer interface {
-	transform.SpanningTransformer
-}
-
 func TestPredicate(t *testing.T) {
-	testConditional(t, func(rt *unicode.RangeTable, t, f spanformer) spanformer {
+	testConditional(t, func(rt *unicode.RangeTable, t, f transform.Transformer) transform.Transformer {
 		return If(Predicate(func(r rune) bool {
 			return unicode.Is(rt, r)
 		}), t, f)
@@ -32,18 +28,18 @@ func TestPredicate(t *testing.T) {
 }
 
 func TestIn(t *testing.T) {
-	testConditional(t, func(rt *unicode.RangeTable, t, f spanformer) spanformer {
+	testConditional(t, func(rt *unicode.RangeTable, t, f transform.Transformer) transform.Transformer {
 		return If(In(rt), t, f)
 	})
 }
 
 func TestNotIn(t *testing.T) {
-	testConditional(t, func(rt *unicode.RangeTable, t, f spanformer) spanformer {
+	testConditional(t, func(rt *unicode.RangeTable, t, f transform.Transformer) transform.Transformer {
 		return If(NotIn(rt), f, t)
 	})
 }
 
-func testConditional(t *testing.T, f func(rt *unicode.RangeTable, t, f spanformer) spanformer) {
+func testConditional(t *testing.T, f func(rt *unicode.RangeTable, t, f transform.Transformer) transform.Transformer) {
 	lower := f(unicode.Latin, toLower, toLower)
 
 	for i, tt := range []transformTest{{
@@ -61,7 +57,6 @@ func testConditional(t *testing.T, f func(rt *unicode.RangeTable, t, f spanforme
 		in:      "B",
 		out:     "b",
 		outFull: "b",
-		errSpan: transform.ErrEndOfSpan,
 		t:       lower,
 	}, {
 		desc:    "short dst",
@@ -71,7 +66,6 @@ func testConditional(t *testing.T, f func(rt *unicode.RangeTable, t, f spanforme
 		out:     "aa",
 		outFull: "aaa",
 		err:     transform.ErrShortDst,
-		errSpan: transform.ErrEndOfSpan,
 		t:       lower,
 	}, {
 		desc:    "short dst writing error",
@@ -81,7 +75,6 @@ func testConditional(t *testing.T, f func(rt *unicode.RangeTable, t, f spanforme
 		out:     "a",
 		outFull: "a\x80",
 		err:     transform.ErrShortDst,
-		errSpan: transform.ErrEndOfSpan,
 		t:       lower,
 	}, {
 		desc:    "short dst writing incomplete rune",
@@ -119,18 +112,6 @@ func testConditional(t *testing.T, f func(rt *unicode.RangeTable, t, f spanforme
 		out:     "a",
 		outFull: "a\xc2",
 		err:     transform.ErrShortSrc,
-		errSpan: transform.ErrEndOfSpan,
-		t:       lower,
-	}, {
-		desc:    "short src no change",
-		szDst:   2,
-		atEOF:   false,
-		in:      "a\xc2",
-		out:     "a",
-		outFull: "a\xc2",
-		err:     transform.ErrShortSrc,
-		errSpan: transform.ErrShortSrc,
-		nSpan:   1,
 		t:       lower,
 	}, {
 		desc:    "invalid input, atEOF",
@@ -171,17 +152,7 @@ func testConditional(t *testing.T, f func(rt *unicode.RangeTable, t, f spanforme
 		in:      "THIS IS α ΤΕΣΤ",
 		out:     "this is α ΤΕΣΤ",
 		outFull: "this is α ΤΕΣΤ",
-		errSpan: transform.ErrEndOfSpan,
 		t:       f(unicode.Greek, nil, toLower),
-	}, {
-		desc:    "nop in latin",
-		szDst:   large,
-		atEOF:   true,
-		in:      "THIS IS α ΤΕΣΤ",
-		out:     "THIS IS α τεστ",
-		outFull: "THIS IS α τεστ",
-		errSpan: transform.ErrEndOfSpan,
-		t:       f(unicode.Latin, nil, toLower),
 	}, {
 		desc:    "nop not in",
 		szDst:   large,
@@ -189,7 +160,6 @@ func testConditional(t *testing.T, f func(rt *unicode.RangeTable, t, f spanforme
 		in:      "THIS IS α ΤΕΣΤ",
 		out:     "this is α ΤΕΣΤ",
 		outFull: "this is α ΤΕΣΤ",
-		errSpan: transform.ErrEndOfSpan,
 		t:       f(unicode.Latin, toLower, nil),
 	}, {
 		desc:    "pass atEOF is true when at end",
@@ -198,7 +168,6 @@ func testConditional(t *testing.T, f func(rt *unicode.RangeTable, t, f spanforme
 		in:      "hello",
 		out:     "HELLO",
 		outFull: "HELLO",
-		errSpan: transform.ErrEndOfSpan,
 		t:       f(unicode.Latin, upperAtEOF{}, nil),
 	}, {
 		desc:    "pass atEOF is true when at end of segment",
@@ -207,7 +176,6 @@ func testConditional(t *testing.T, f func(rt *unicode.RangeTable, t, f spanforme
 		in:      "hello ",
 		out:     "HELLO ",
 		outFull: "HELLO ",
-		errSpan: transform.ErrEndOfSpan,
 		t:       f(unicode.Latin, upperAtEOF{}, nil),
 	}, {
 		desc:    "don't pass atEOF is true when atEOF is false",
@@ -216,25 +184,8 @@ func testConditional(t *testing.T, f func(rt *unicode.RangeTable, t, f spanforme
 		in:      "hello",
 		out:     "",
 		outFull: "HELLO",
+		t:       f(unicode.Latin, upperAtEOF{}, nil),
 		err:     transform.ErrShortSrc,
-		errSpan: transform.ErrShortSrc,
-		t:       f(unicode.Latin, upperAtEOF{}, nil),
-	}, {
-		desc:    "pass atEOF is true when at end, no change",
-		szDst:   large,
-		atEOF:   true,
-		in:      "HELLO",
-		out:     "HELLO",
-		outFull: "HELLO",
-		t:       f(unicode.Latin, upperAtEOF{}, nil),
-	}, {
-		desc:    "pass atEOF is true when at end of segment, no change",
-		szDst:   large,
-		atEOF:   true,
-		in:      "HELLO ",
-		out:     "HELLO ",
-		outFull: "HELLO ",
-		t:       f(unicode.Latin, upperAtEOF{}, nil),
 	}, {
 		desc:    "large input ASCII",
 		szDst:   12000,
@@ -242,9 +193,8 @@ func testConditional(t *testing.T, f func(rt *unicode.RangeTable, t, f spanforme
 		in:      strings.Repeat("HELLO", 2000),
 		out:     strings.Repeat("hello", 2000),
 		outFull: strings.Repeat("hello", 2000),
-		errSpan: transform.ErrEndOfSpan,
-		err:     nil,
 		t:       lower,
+		err:     nil,
 	}, {
 		desc:    "large input non-ASCII",
 		szDst:   12000,
@@ -252,8 +202,8 @@ func testConditional(t *testing.T, f func(rt *unicode.RangeTable, t, f spanforme
 		in:      strings.Repeat("\u3333", 2000),
 		out:     strings.Repeat("\u3333", 2000),
 		outFull: strings.Repeat("\u3333", 2000),
-		err:     nil,
 		t:       lower,
+		err:     nil,
 	}} {
 		tt.check(t, i)
 	}
@@ -270,13 +220,14 @@ func (upperAtEOF) Transform(dst, src []byte, atEOF bool) (nDst, nSrc int, err er
 	return toUpper.Transform(dst, src, atEOF)
 }
 
-func (upperAtEOF) Span(src []byte, atEOF bool) (n int, err error) {
-	if !atEOF {
-		return 0, transform.ErrShortSrc
-	}
-	return toUpper.Span(src, atEOF)
-}
-
 func BenchmarkConditional(b *testing.B) {
-	doBench(b, If(In(unicode.Hangul), transform.Nop, transform.Nop))
+	dst := make([]byte, len(input))
+	src := []byte(input)
+
+	r := If(In(unicode.Hangul), transform.Nop, transform.Nop)
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		r.Transform(dst, src, true)
+	}
 }
