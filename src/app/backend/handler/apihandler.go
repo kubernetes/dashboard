@@ -25,7 +25,6 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/integration"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
-	"github.com/kubernetes/dashboard/src/app/backend/overview"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/cluster"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/config"
@@ -43,6 +42,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/logs"
 	ns "github.com/kubernetes/dashboard/src/app/backend/resource/namespace"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/node"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/overview"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolume"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolumeclaim"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
@@ -559,12 +559,12 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 	apiV1Ws.Route(
 		apiV1Ws.GET("/overview/").
 			To(apiHandler.handleOverview).
-			Writes(overview.OverviewObjectList{}))
+			Writes(overview.Overview{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/overview/{namespace}").
 			To(apiHandler.handleOverview).
-			Writes(overview.OverviewObjectList{}))
+			Writes(overview.Overview{}))
 
 	return wsContainer, nil
 }

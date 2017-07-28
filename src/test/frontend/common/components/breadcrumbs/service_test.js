@@ -14,7 +14,7 @@
 
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
 import componentsModule from 'common/components/module';
-import {stateName as defaultStateName} from 'workloads/state';
+import {stateName as defaultStateName} from 'overview/state';
 
 describe('Breadcrumbs service ', () => {
   /** @type {ui.router.$state} */
