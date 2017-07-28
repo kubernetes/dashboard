@@ -173,7 +173,7 @@ $ gulp check-javascript-format
 
 Before committing any changes, please link/copy the pre-commit hook into your .git directory. This will keep you from accidentally committing non formatted code.
 
-The hook requires gofmt to be in your PATH.
+The hook requires goimports to be in your PATH.
 
 ```shell
 cd <dashboard_home>/.git/hooks/
