@@ -48,7 +48,7 @@ type ClientManager interface {
 	Config(req *restful.Request) (*rest.Config, error)
 	ClientCmdConfig(req *restful.Request) (clientcmd.ClientConfig, error)
 	CSRFKey() string
-	HasAccess(authInfo api.AuthInfo) bool
+	HasAccess(authInfo api.AuthInfo) error
 	VerberClient(req *restful.Request) (ResourceVerber, error)
 }
 
@@ -145,10 +145,10 @@ func (self *clientManager) CSRFKey() string {
 	return self.csrfKey
 }
 
-func (self *clientManager) HasAccess(authInfo api.AuthInfo) bool {
+func (self *clientManager) HasAccess(authInfo api.AuthInfo) error {
 	cfg, err := self.buildConfigFromFlags(self.apiserverHost, self.kubeConfigPath)
 	if err != nil {
-		return false
+		return err
 	}
 
 	cmdCfg := api.NewConfig()
@@ -167,25 +167,23 @@ func (self *clientManager) HasAccess(authInfo api.AuthInfo) bool {
 
 	clientConfig := clientcmd.NewDefaultClientConfig(
 		*cmdCfg,
-		&clientcmd.ConfigOverrides{},
+		&clientcmd.ConfigOverrides{
+			AuthInfo: authInfo,
+		},
 	)
 
 	cfg, err = clientConfig.ClientConfig()
 	if err != nil {
-		return false
+		return err
 	}
 
 	client, err := kubernetes.NewForConfig(cfg)
 	if err != nil {
-		return false
+		return err
 	}
 
 	_, err = client.ServerVersion()
-	if err != nil {
-		return false
-	}
-
-	return true
+	return err
 }
 
 // VerberClient returns new verber client based on authentication information extracted from request

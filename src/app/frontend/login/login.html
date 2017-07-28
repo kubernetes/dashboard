@@ -14,20 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-warnings warnings="$ctrl.error"></kd-warnings>
+<kd-warnings warnings="$ctrl.errors"
+             class="kd-login-error"></kd-warnings>
 
 <form name="$ctrl.form"
       ng-submit="$ctrl.logIn()"
       novalidate>
   <kd-content-card class="kd-login-card">
     <kd-title>
-      [[Log in to Dashboard|TODO]]
+      [[Log in to Kubernetes Dashboard|TODO]]
     </kd-title>
     <kd-content class="kd-content-padded">
       <kd-login-options>
-        <kd-basic-login title="[[Basic|TODO]]"
-                        on-update="$ctrl.update(loginSpec)"></kd-basic-login>
-        <kd-token-login title="[[Token|TODO]]"
+        <!--TODO(floreks): enable once kubernetes#49709 is resolved -->
+        <!--<kd-basic-login title="[[Basic|Basic login]]" on-update="$ctrl.update(loginSpec)"></kd-basic-login>-->
+        <kd-token-login title="[[Token|Token login]]"
                         on-update="$ctrl.update(loginSpec)"></kd-token-login>
       </kd-login-options>
 

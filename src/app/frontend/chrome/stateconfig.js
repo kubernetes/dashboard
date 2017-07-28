@@ -31,9 +31,6 @@ export default function stateConfig($stateProvider) {
       '': {
         template: '<div ui-view class="kd-content-div-filled"></div>',
       },
-      [toolbarViewName]: {
-        template: `<div ui-view="${toolbarViewName}"></div>`,
-      },
       [actionbarViewName]: {
         template: `<div ui-view="${actionbarViewName}" layout="row"></div>`,
       },
@@ -50,7 +47,7 @@ export default function stateConfig($stateProvider) {
 function requireParentState(stateExtend, parentFn) {
   /** @type {!ui.router.$state} */
   let state = stateExtend['self'];
-  if (!state.parent && state.name !== stateName) {
+  if (!state.parent && state.name !== stateName && state.name !== 'login') {
     throw new Error(
         `State "${state.name}" requires parent state to be set to ` +
         `${stateName}. This is likely a programming error.`);

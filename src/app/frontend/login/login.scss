@@ -1,12 +1,28 @@
 @import './../variables';
 
+kd-login {
+  display: flex;
+  flex: 0 1 auto;
+  justify-content: center;
+  flex-direction: column;
+  padding-bottom: 96px;
+}
+
 .kd-login-card {
   width: 50%;
   margin: auto;
   padding-top: 2 * $baseline-grid;
-  padding-left: $baseline-grid;
 }
 
 .kd-login-card-content {
   padding: 0 2 * $baseline-grid;
+}
+
+.kd-login-error {
+  display: flex;
+  justify-content: center;
+
+  .kd-warnings-container {
+    width: 50%;
+  }
 }

@@ -17,8 +17,7 @@ package api
 import "k8s.io/client-go/tools/clientcmd/api"
 
 type AuthManager interface {
-	Login(*LoginSpec) (string, error)
-	DecryptToken(string) (*api.AuthInfo, error)
+	Login(*LoginSpec) (LoginResponse, error)
 }
 
 type TokenManager interface {
@@ -50,5 +49,6 @@ type LoginSpec struct {
 }
 
 type LoginResponse struct {
-	JWTToken string `json:"jwtToken"`
+	JWEToken string  `json:"jweToken"`
+	Errors   []error `json:"errors"`
 }

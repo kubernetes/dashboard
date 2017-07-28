@@ -41,15 +41,14 @@ func (self AuthHandler) handleLogin(request *restful.Request, response *restful.
 		return
 	}
 
-	token, err := self.manager.Login(loginSpec)
-	// TODO(floreks): check for non-critical errors
+	loginResponse, err := self.manager.Login(loginSpec)
 	if err != nil {
 		response.AddHeader("Content-Type", "text/plain")
 		response.WriteErrorString(http.StatusInternalServerError, err.Error()+"\n")
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusOK, authApi.LoginResponse{JWTToken: token})
+	response.WriteHeaderAndEntity(http.StatusOK, loginResponse)
 }
 
 func NewAuthHandler(manager authApi.AuthManager) AuthHandler {

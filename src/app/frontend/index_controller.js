@@ -12,34 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
-class BasicLoginController {
-  constructor() {
-    this.loginOptionsCtrl;
-    this.selected = false;
+/**
+ * @final
+ */
+export class MainController {
+  /**
+   * @param {!ui.router.$state} $state
+   * @ngInject
+   */
+  constructor($state) {
+    this.state_ = $state;
   }
 
-  $onInit() {
-    this.loginOptionsCtrl.addOption(this);
-  }
-
-  onUsernameUpdate() {
-    this.onUpdate({loginSpec: {username: this.username}})
-  }
-
-  onPasswordUpdate() {
-    this.onUpdate({loginSpec: {password: this.password}})
+  /**
+   * @export
+   * @return {boolean}
+   */
+  isLoginState() {
+    return this.state_.current.name === 'login';
   }
 }
-
-export const basicLoginComponent = {
-  templateUrl: 'login/basic.html',
-  require: {
-    'loginOptionsCtrl': '^kdLoginOptions',
-  },
-  bindings: {
-    'title': '@',
-    'onUpdate': '&',
-  },
-  controller: BasicLoginController,
-};

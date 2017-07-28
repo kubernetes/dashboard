@@ -20,6 +20,7 @@ import (
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 	"github.com/kubernetes/dashboard/src/app/backend/auth/jwt"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
+	kdErrors "github.com/kubernetes/dashboard/src/app/backend/errors"
 	"k8s.io/client-go/tools/clientcmd/api"
 )
 
@@ -29,41 +30,39 @@ type authManager struct {
 	clientManager client.ClientManager
 }
 
-func (self authManager) Login(spec *authApi.LoginSpec) (string, error) {
+func (self authManager) Login(spec *authApi.LoginSpec) (authApi.LoginResponse, error) {
 	authenticator, err := self.getAuthenticator(spec)
 	if err != nil {
-		return "", err
+		return authApi.LoginResponse{}, err
 	}
 
 	authInfo, err := authenticator.GetAuthInfo()
 	if err != nil {
-		return "", err
+		return authApi.LoginResponse{}, err
 	}
 
-	if err := self.healthCheck(authInfo); err != nil {
-		return "", err
+	err = self.healthCheck(authInfo)
+	nonCriticalErrors, criticalError := kdErrors.HandleError(err)
+	if criticalError != nil || len(nonCriticalErrors) > 0 {
+		return authApi.LoginResponse{Errors: nonCriticalErrors}, criticalError
 	}
 
 	token, err := self.tokenManager.Generate(authInfo)
 	if err != nil {
-		return "", err
+		return authApi.LoginResponse{}, err
 	}
 
-	return token, nil
-}
-
-func (self authManager) DecryptToken(token string) (*api.AuthInfo, error) {
-	return self.tokenManager.Decrypt(token)
+	return authApi.LoginResponse{JWEToken: token, Errors: nonCriticalErrors}, nil
 }
 
 func (self authManager) getAuthenticator(spec *authApi.LoginSpec) (authApi.Authenticator, error) {
 	switch {
 	case len(spec.Username) > 0 && len(spec.Password) > 0:
-		return NewBasicAuthenticator(spec), nil
+		return nil, errors.New("Not implemented.")
 	case len(spec.Token) > 0:
 		return NewTokenAuthenticator(spec), nil
 	case len(spec.ClientKey) > 0 && len(spec.ClientCert) > 0:
-		return NewX509Authenticator(spec), nil
+		return nil, errors.New("Not implemented.")
 	case len(spec.KubeConfig) > 0:
 		return nil, errors.New("Not implemented.")
 	}
@@ -72,12 +71,7 @@ func (self authManager) getAuthenticator(spec *authApi.LoginSpec) (authApi.Authe
 }
 
 func (self authManager) healthCheck(authInfo api.AuthInfo) error {
-	// TODO(floreks): do a health check against apiserver to see if given auth info is valid
-	if !self.clientManager.HasAccess(authInfo) {
-		return errors.New("Unauthorized")
-	}
-
-	return nil
+	return self.clientManager.HasAccess(authInfo)
 }
 
 func NewAuthManager(clientManager client.ClientManager) authApi.AuthManager {

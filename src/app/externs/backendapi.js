@@ -1455,7 +1455,8 @@ backendApi.LoginSpec;
 
 /**
  * @typedef {{
- *   jwtToken: string,
+ *   jweToken: string,
+ *   errors: !Array<!backendApi.Error>
  * }}
  */
 backendApi.LoginResponse;

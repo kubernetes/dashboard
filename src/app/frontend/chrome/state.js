@@ -18,9 +18,6 @@
  */
 export const stateName = 'chrome';
 
-/** Name of the view. Can be used in state config to define toolbar view */
-export const toolbarViewName = 'toolbar';
-
 /**
  * Name of the action bar view. Action bar is the second toolbar in the application and can
  * be used for, e.g., breadcrumbs or view-specific action buttons.

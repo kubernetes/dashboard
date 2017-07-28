@@ -20,12 +20,11 @@ class LoginController {
    * @param {!./../chrome/nav/nav_service.NavService} kdNavService
    * @ngInject
    */
-  constructor(kdNavService, kdAuthService, $state) {
+  constructor(kdNavService, kdAuthService, $state, $q) {
     /** @private {!./../chrome/nav/nav_service.NavService} */
     this.kdNavService_ = kdNavService;
     this.kdAuthService_ = kdAuthService;
     this.state_ = $state;
-    this.error;
 
     /**
      * Hide side menu while entering login page.
@@ -39,6 +38,10 @@ class LoginController {
     this.form;
 
     this.loginSpec;
+
+    this.q_ = $q;
+
+    this.errors = [];
   }
 
   $onInit() {
@@ -60,14 +63,23 @@ class LoginController {
    */
   logIn() {
     if (this.form.$valid) {
+      let defer = this.q_.defer();
+
       this.kdAuthService_.logIn(this.loginSpec)
           .then(
-              () => {
+              (errors) => {
+                if (errors.length !== 0) {
+                  this.errors = errors;
+                  defer.resolve();
+                  return;
+                }
+
                 this.kdNavService_.setVisibility(true);
                 this.state_.transitionTo('workload');
+                defer.resolve();
               },
               err => {
-                this.error = err.data;
+                defer.reject(err);
               });
     }
   }

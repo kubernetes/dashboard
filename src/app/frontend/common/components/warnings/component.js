@@ -17,7 +17,7 @@ export default class WarningsController {
    * Constructs warnings controller.
    * @ngInject
    */
-  constructor() {
+  constructor(localizerService) {
     /**
      * Limit of displayed warnings used by default.
      * @export {number}
@@ -34,6 +34,12 @@ export default class WarningsController {
      * @export {!Array<!backendApi.Error>}
      */
     this.warnings;
+
+    this.localizerService_ = localizerService;
+  }
+
+  getLocalizedMessage(msg) {
+    return this.localizerService_.localize(msg);
   }
 
   /**

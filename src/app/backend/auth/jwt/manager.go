@@ -73,6 +73,7 @@ func (self jwtTokenManager) Decrypt(token string) (*api.AuthInfo, error) {
 	}
 
 	decrypted, err := jweToken.Decrypt(tokenSigningKey)
+	// TODO(floreks): Check for decryption error and handle it
 	if err != nil {
 		return nil, err
 	}

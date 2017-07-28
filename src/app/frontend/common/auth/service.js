@@ -21,7 +21,8 @@ export class AuthService {
   /**
    * @ngInject
    */
-  constructor($cookies, $transitions, kdCsrfTokenService, $log, $state, $q, $resource) {
+  constructor(
+      $cookies, $transitions, kdCsrfTokenService, $log, $state, $q, $resource, localizerService) {
     this.cookies_ = $cookies;
     this.transitions_ = $transitions;
     this.state_ = $state;
@@ -32,6 +33,7 @@ export class AuthService {
     this.jwtCookieName_ = 'kdToken';
     this.skipLoginPageCookieName = 'skipLoginPage';
     this.log_ = $log;
+    this.localizerService_ = localizerService;
   }
 
   setJWTCookie(token) {
@@ -59,14 +61,11 @@ export class AuthService {
           resource.save(
               loginSpec,
               response => {
-                console.log(response);
-                if (!!response.jwtToken) {
-                  console.log(response.jwtToken);
-                  this.setJWTCookie(response.jwtToken);
-                  deferred.resolve();
+                if (response.jweToken.length !== 0 && response.errors.length === 0) {
+                  this.setJWTCookie(response.jweToken);
                 }
 
-                deferred.reject('Got empty token');
+                deferred.resolve(response.errors);
               },
               err => {
                 deferred.reject(err);

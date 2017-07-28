@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as chromeStateName} from 'chrome/state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
 
 import {stateName, stateUrl} from './state';
@@ -42,7 +41,6 @@ export default function stateConfig($stateProvider) {
  */
 export const config = {
   url: stateUrl,
-  parent: chromeStateName,
   resolve: {
     'loginStatus': getLoginStatus,
   },
@@ -51,11 +49,7 @@ export const config = {
       'label': i18n.MSG_BREADCRUMBS_LOGIN_LABEL,
     },
   },
-  views: {
-    '': {
-      component: 'kdLogin',
-    },
-  },
+  component: 'kdLogin',
 };
 
 function getLoginStatus($resource) {
