@@ -54,7 +54,7 @@ describe('Deploy from valid file user story test', () => {
     deployFromFilePage.deployButton.click();
 
     // then
-    expect(browser.getCurrentUrl()).toContain('workload');
+    expect(browser.getCurrentUrl()).toContain('overview');
 
     let cardNameLink = replicationControllersPage.getElementByAppName(
         replicationControllersPage.cardDetailsPageLinkQuery, appName);

@@ -20,55 +20,19 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/cluster"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/config"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/configmap"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/deployment"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/discovery"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/ingress"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/job"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/namespace"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/node"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolume"
-	pvc "github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolumeclaim"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/rbacroles"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
-	rc "github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/secret"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/service"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/statefulset"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/storageclass"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/workload"
 	"k8s.io/client-go/kubernetes"
 )
 
 // SearchResult is a list of resources matching search criteria found in whole cluster.
 type SearchResult struct {
-	// Cluster.
-	NamespaceList        namespace.NamespaceList               `json:"namespaceList"`
-	NodeList             node.NodeList                         `json:"nodeList"`
-	PersistentVolumeList persistentvolume.PersistentVolumeList `json:"persistentVolumeList"`
-	RoleList             rbacroles.RbacRoleList                `json:"roleList"`
-	StorageClassList     storageclass.StorageClassList         `json:"storageClassList"`
-
-	// Config and storage.
-	ConfigMapList             configmap.ConfigMapList       `json:"configMapList"`
-	PersistentVolumeClaimList pvc.PersistentVolumeClaimList `json:"persistentVolumeClaimList"`
-	SecretList                secret.SecretList             `json:"secretList"`
-
-	// Discovery and load balancing.
-	ServiceList service.ServiceList `json:"serviceList"`
-	IngressList ingress.IngressList `json:"ingressList"`
-
-	// Workloads.
-	DeploymentList            deployment.DeploymentList    `json:"deploymentList"`
-	ReplicaSetList            replicaset.ReplicaSetList    `json:"replicaSetList"`
-	JobList                   job.JobList                  `json:"jobList"`
-	ReplicationControllerList rc.ReplicationControllerList `json:"replicationControllerList"`
-	PodList                   pod.PodList                  `json:"podList"`
-	DaemonSetList             daemonset.DaemonSetList      `json:"daemonSetList"`
-	StatefulSetList           statefulset.StatefulSetList  `json:"statefulSetList"`
+	// Inherits fields from the cluster, config, discovery, and workloads objects.
+	cluster.Cluster     `json:",inline"`
+	config.Config       `json:",inline"`
+	discovery.Discovery `json:",inline"`
+	workload.Workloads  `json:",inline"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
@@ -76,8 +40,8 @@ type SearchResult struct {
 	// TODO(maciaszczykm): Add third party resources.
 }
 
-func Search(client *kubernetes.Clientset, metricClient metricapi.MetricClient,
-	nsQuery *common.NamespaceQuery,
+// Search returns a list of all objects matching search criteria (specified in namespace and data select queries).
+func Search(client *kubernetes.Clientset, metricClient metricapi.MetricClient, nsQuery *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery) (*SearchResult, error) {
 
 	clusterResources, err := cluster.GetCluster(client, dsQuery, metricClient)
@@ -101,32 +65,35 @@ func Search(client *kubernetes.Clientset, metricClient metricapi.MetricClient,
 	}
 
 	return &SearchResult{
-		// Cluster.
-		NamespaceList:        clusterResources.NamespaceList,
-		NodeList:             clusterResources.NodeList,
-		PersistentVolumeList: clusterResources.PersistentVolumeList,
-		RoleList:             clusterResources.RoleList,
-		StorageClassList:     clusterResources.StorageClassList,
+		Cluster: cluster.Cluster{
+			NamespaceList:        clusterResources.NamespaceList,
+			NodeList:             clusterResources.NodeList,
+			PersistentVolumeList: clusterResources.PersistentVolumeList,
+			RoleList:             clusterResources.RoleList,
+			StorageClassList:     clusterResources.StorageClassList,
+		},
 
-		// Config and storage.
-		ConfigMapList:             configResources.ConfigMapList,
-		PersistentVolumeClaimList: configResources.PersistentVolumeClaimList,
-		SecretList:                configResources.SecretList,
+		Config: config.Config{
+			ConfigMapList:             configResources.ConfigMapList,
+			PersistentVolumeClaimList: configResources.PersistentVolumeClaimList,
+			SecretList:                configResources.SecretList,
+		},
 
-		// Discovery and load balancing.
-		ServiceList: discoveryResources.ServiceList,
-		IngressList: discoveryResources.IngressList,
+		Discovery: discovery.Discovery{
+			ServiceList: discoveryResources.ServiceList,
+			IngressList: discoveryResources.IngressList,
+		},
 
-		// Workloads.
-		DeploymentList:            workloadsResources.DeploymentList,
-		ReplicaSetList:            workloadsResources.ReplicaSetList,
-		JobList:                   workloadsResources.JobList,
-		ReplicationControllerList: workloadsResources.ReplicationControllerList,
-		PodList:                   workloadsResources.PodList,
-		DaemonSetList:             workloadsResources.DaemonSetList,
-		StatefulSetList:           workloadsResources.StatefulSetList,
+		Workloads: workload.Workloads{
+			DeploymentList:            workloadsResources.DeploymentList,
+			ReplicaSetList:            workloadsResources.ReplicaSetList,
+			JobList:                   workloadsResources.JobList,
+			ReplicationControllerList: workloadsResources.ReplicationControllerList,
+			PodList:                   workloadsResources.PodList,
+			DaemonSetList:             workloadsResources.DaemonSetList,
+			StatefulSetList:           workloadsResources.StatefulSetList,
+		},
 
-		// Errors.
 		Errors: errors.MergeErrors(clusterResources.Errors, configResources.Errors,
 			discoveryResources.Errors, workloadsResources.Errors),
 	}, nil
