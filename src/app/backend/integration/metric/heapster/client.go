@@ -162,21 +162,16 @@ func (self heapsterClient) ithResourceDownload(selector heapsterSelector, metric
 		}
 		dataPoints := DataPointsFromMetricJSONFormat(rawResult)
 
-		metric := &metricapi.Metric{
+		result.Metric <- &metricapi.Metric{
 			DataPoints:   dataPoints,
 			MetricPoints: toMetricPoints(rawResult.Metrics),
 			MetricName:   metricName,
-		}
-
-		if len(selector.Label[selector.TargetResourceType]) > i {
-			metric.Label = metricapi.Label{
+			Label: metricapi.Label{
 				selector.TargetResourceType: []types.UID{
 					selector.Label[selector.TargetResourceType][i],
 				},
-			}
+			},
 		}
-
-		result.Metric <- metric
 		result.Error <- nil
 		return
 	}()
@@ -205,21 +200,16 @@ func (self heapsterClient) allInOneDownload(selector heapsterSelector, metricNam
 		for i, rawResult := range rawResults.Items {
 			dataPoints := DataPointsFromMetricJSONFormat(rawResult)
 
-			metric := &metricapi.Metric{
+			result[i].Metric <- &metricapi.Metric{
 				DataPoints:   dataPoints,
 				MetricPoints: toMetricPoints(rawResult.Metrics),
 				MetricName:   metricName,
-			}
-
-			if len(selector.Label[selector.TargetResourceType]) > i {
-				metric.Label = metricapi.Label{
+				Label: metricapi.Label{
 					selector.TargetResourceType: []types.UID{
 						selector.Label[selector.TargetResourceType][i],
 					},
-				}
+				},
 			}
-
-			result[i].Metric <- metric
 			result[i].Error <- nil
 		}
 		return
