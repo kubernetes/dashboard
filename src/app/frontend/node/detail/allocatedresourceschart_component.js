@@ -33,10 +33,22 @@ export class AllocatedResourcesChartController {
     this.outer;
 
     /**
+     * Outer graph color. Initialized from scope
+     * @export {string}
+     */
+    this.outercolor;
+
+    /**
      * Inner graph percent. Initialized from the scope.
      * @export {number}
      */
     this.inner;
+
+    /**
+     * Inner graph color. Initialized from scope
+     * @export {string}
+     */
+    this.innercolor;
   }
 
   $onInit() {
@@ -96,23 +108,26 @@ export class AllocatedResourcesChartController {
       let svg = d3.select(this.element_[0]).append('svg');
 
       if (this.outer !== undefined) {
+        this.outercolor = this.outercolor ? this.outercolor : '#00c752';
+
         this.initPieChart_(
             svg,
             [
               {value: this.outer},
               {value: 100 - this.outer},
             ],
-            '#00c752', 0, 0.61);
+            this.outercolor, 0, 0.61);
       }
 
       if (this.inner !== undefined) {
+        this.innercolor = this.innercolor ? this.innercolor : '#326de6';
         this.initPieChart_(
             svg,
             [
               {value: this.inner},
               {value: 100 - this.inner},
             ],
-            '#326de6', 36, 0.55);
+            this.innercolor, 36, 0.55);
       }
     });
   }
@@ -126,7 +141,9 @@ export class AllocatedResourcesChartController {
 export const allocatedResourcesChartComponent = {
   bindings: {
     'outer': '<',
+    'outercolor': '<',
     'inner': '<',
+    'innercolor': '<',
   },
   controller: AllocatedResourcesChartController,
   templateUrl: 'node/detail/allocatedresourceschart.html',
