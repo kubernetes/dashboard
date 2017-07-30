@@ -39,10 +39,10 @@ limitations under the License.
             Pending Pods
           </div>
           <div class="kd-graph-legend-entry">
-            <md-icon class="kd-graph-green">stop</md-icon>
-            [[Requests|Label 'Requests' for the allocated resources graphs legend.]]
+            <md-icon class="kd-graph-yellow">stop</md-icon>
+            [[Pending|Label 'Pending' for the pod statistics graphs legend.]]
             <span class="kd-graph-legend-value">
-              {{$ctrl.allocatedResources.cpuRequests | kdCores}}
+              {{$ctrl.podStats.pending}}
             </span>
           </div>
           <div class="kd-graph-legend-entry"></div>
@@ -59,9 +59,9 @@ limitations under the License.
           </div>
           <div class="kd-graph-legend-entry">
             <md-icon class="kd-graph-green">stop</md-icon>
-            [[Requests|Label 'Requests' for the allocated resources graphs legend.]]
+            [[Running|Label 'Running' for the pod statistics graphs legend.]]
             <span class="kd-graph-legend-value">
-              {{$ctrl.allocatedResources.cpuRequests | kdCores}}
+              {{$ctrl.podStats.success}}
             </span>
           </div>
           <div class="kd-graph-legend-entry"></div>
@@ -74,13 +74,13 @@ limitations under the License.
         </kd-allocated-resources-chart>
         <div class="kd-graph-legend">
           <div class="kd-graph-legend-title">
-            Failing Pods
+            Failed Pods
           </div>
           <div class="kd-graph-legend-entry">
-            <md-icon class="kd-graph-green">stop</md-icon>
-            [[Requests|Label 'Requests' for the allocated resources graphs legend.]]
+            <md-icon class="kd-graph-red">stop</md-icon>
+            [[Failed|Label 'Failed' for the allocated resources graphs legend.]]
             <span class="kd-graph-legend-value">
-              {{$ctrl.allocatedResources.cpuRequests | kdCores}}
+              {{$ctrl.podStats.failed}}
             </span>
           </div>
           <div class="kd-graph-legend-entry"></div>
