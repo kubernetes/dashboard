@@ -67,6 +67,15 @@ export function serviceEventsResource($resource) {
  * @return {!angular.Resource}
  * @ngInject
  */
+export function serviceEndpointResource($resource) {
+  return $resource('api/v1/service/:namespace/:name/endpoint');
+}
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
 export function servicePodsResource($resource) {
   return $resource('api/v1/service/:namespace/:name/pod');
 }

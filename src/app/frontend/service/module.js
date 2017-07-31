@@ -16,10 +16,11 @@ import chromeModule from 'chrome/module';
 import componentsModule from 'common/components/module';
 import filtersModule from 'common/filters/module';
 import namespaceModule from 'common/namespace/module';
+import endpointModule from 'endpoint/module';
 import eventsModule from 'events/module';
 
 import {serviceInfoComponent} from './detail/info_component';
-import {serviceEventsResource, servicePodsResource} from './detail/stateconfig';
+import {serviceEndpointResource, serviceEventsResource, servicePodsResource} from './detail/stateconfig';
 import {serviceCardComponent} from './list/card_component';
 import {serviceCardListComponent} from './list/cardlist_component';
 import {serviceListResource} from './list/stateconfig';
@@ -38,6 +39,7 @@ export default angular
           chromeModule.name,
           componentsModule.name,
           eventsModule.name,
+          endpointModule.name,
           filtersModule.name,
           namespaceModule.name,
         ])
@@ -47,4 +49,5 @@ export default angular
     .component('kdServiceInfo', serviceInfoComponent)
     .factory('kdServiceListResource', serviceListResource)
     .factory('kdServicePodsResource', servicePodsResource)
-    .factory('kdServiceEventsResource', serviceEventsResource);
+    .factory('kdServiceEventsResource', serviceEventsResource)
+    .factory('kdServiceEndpointResource', serviceEndpointResource);

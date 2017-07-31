@@ -20,17 +20,26 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/endpoint"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/pkg/api/v1"
 )
 
 func TestToServiceDetail(t *testing.T) {
 	cases := []struct {
-		service  *v1.Service
-		expected ServiceDetail
+		service      *v1.Service
+		eventList    common.EventList
+		podList      pod.PodList
+		endpointList endpoint.EndpointList
+		expected     ServiceDetail
 	}{
 		{
-			service: &v1.Service{}, expected: ServiceDetail{
+			service:      &v1.Service{},
+			eventList:    common.EventList{},
+			podList:      pod.PodList{},
+			endpointList: endpoint.EndpointList{},
+			expected: ServiceDetail{
 				TypeMeta: api.TypeMeta{Kind: api.ResourceKindService},
 			},
 		}, {
@@ -50,7 +59,7 @@ func TestToServiceDetail(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		actual := ToServiceDetail(c.service)
+		actual := ToServiceDetail(c.service, c.eventList, c.podList, c.endpointList, nil)
 
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("ToServiceDetail(%#v) == \ngot %#v, \nexpected %#v", c.service, actual,
