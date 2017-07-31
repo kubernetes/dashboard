@@ -14,9 +14,13 @@
 
 package validation
 
-import "github.com/emicklei/go-restful"
+import (
+	"github.com/emicklei/go-restful"
+	"github.com/kubernetes/dashboard/src/app/backend/client"
+)
 
-// LoginStatus TODO
+// LoginStatus is returned as a response to login status check. Used by the frontend to determine if is logged in
+// and if login page should be shown.
 type LoginStatus struct {
 	// True when token header indicating logged in user is found in request.
 	TokenPresent bool `json:"tokenPresent"`
@@ -30,7 +34,7 @@ type LoginStatus struct {
 // ValidateLoginStatus TODO
 func ValidateLoginStatus(request *restful.Request) *LoginStatus {
 	authHeader := request.HeaderParameter("Authorization")
-	tokenHeader := request.HeaderParameter("kdToken")
+	tokenHeader := request.HeaderParameter(client.JWETokenHeader)
 
 	return &LoginStatus{
 		TokenPresent:  len(tokenHeader) > 0,

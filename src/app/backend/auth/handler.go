@@ -19,6 +19,7 @@ import (
 
 	"github.com/emicklei/go-restful"
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
+	"github.com/kubernetes/dashboard/src/app/backend/validation"
 )
 
 // AuthHandler manages all endpoints related to dashboard auth, such as login.
@@ -34,6 +35,10 @@ func (self AuthHandler) Install(ws *restful.WebService) {
 			To(self.handleLogin).
 			Reads(authApi.LoginSpec{}).
 			Writes(authApi.LoginResponse{}))
+	ws.Route(
+		ws.GET("/login/status").
+			To(self.handleLoginStatus).
+			Writes(validation.LoginStatus{}))
 }
 
 func (self AuthHandler) handleLogin(request *restful.Request, response *restful.Response) {
@@ -52,6 +57,10 @@ func (self AuthHandler) handleLogin(request *restful.Request, response *restful.
 	}
 
 	response.WriteHeaderAndEntity(http.StatusOK, loginResponse)
+}
+
+func (self *AuthHandler) handleLoginStatus(request *restful.Request, response *restful.Response) {
+	response.WriteHeaderAndEntity(http.StatusOK, validation.ValidateLoginStatus(request))
 }
 
 // NewAuthHandler created AuthHandler instance.
