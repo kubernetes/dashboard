@@ -21,7 +21,6 @@ import (
 	"log"
 	"math"
 	"strconv"
-	"strings"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	errorHandler "github.com/kubernetes/dashboard/src/app/backend/errors"
@@ -36,7 +35,6 @@ import (
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/pkg/api/v1"
-	"k8s.io/apimachinery/pkg/api/meta"
 	kubeapi "k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/fieldpath"
 )
@@ -346,34 +344,4 @@ func extractContainerResourceValue(fs *v1.ResourceFieldSelector, container *v1.C
 	}
 
 	return "", fmt.Errorf("Unsupported container resource : %v", fs.Resource)
-}
-
-// extractFieldPathAsString extracts the field from the given object and returns it as a string.
-// The object must be a pointer to an API type.
-func extractFieldPathAsString(obj interface{}, fieldPath string) (string, error) {
-	accessor, err := meta.Accessor(obj)
-	if err != nil {
-		return "", nil
-	}
-
-	switch fieldPath {
-	case "metadata.annotations":
-		return formatMap(accessor.GetAnnotations()), nil
-	case "metadata.labels":
-		return formatMap(accessor.GetLabels()), nil
-	case "metadata.name":
-		return accessor.GetName(), nil
-	case "metadata.namespace":
-		return accessor.GetNamespace(), nil
-	}
-
-	return "", fmt.Errorf("unsupported fieldPath: %v", fieldPath)
-}
-
-func formatMap(m map[string]string) (fmtStr string) {
-	for key, value := range m {
-		fmtStr += fmt.Sprintf("%v=%q\n", key, value)
-	}
-	fmtStr = strings.TrimSuffix(fmtStr, "\n")
-	return
 }
