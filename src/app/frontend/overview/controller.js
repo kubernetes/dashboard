@@ -110,14 +110,14 @@ export class OverviewController {
    * @export
    */
   getPodStats() {
-    var podStats = {
+    let podStats = {
       'success': 0,
       'failed': 0,
       'pending': 0,
-      'total': this.overview.podList.listMeta.totalItems
+      'total': this.overview.podList.listMeta.totalItems,
     };
 
-    var pods = this.overview.podList.pods;
+    let pods = this.overview.podList.pods;
 
     pods.forEach(function(pod) {
       podStats[pod.podStatus.status] += 1;
