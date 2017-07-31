@@ -15,6 +15,7 @@
 package validation
 
 import (
+	restful "github.com/emicklei/go-restful"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 )
 
