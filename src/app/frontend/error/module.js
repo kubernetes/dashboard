@@ -38,7 +38,6 @@ export default angular
  */
 function errorConfig($state) {
   $state.defaultErrorHandler((err) => {
-    console.log(err);
     $state.go(stateName, new StateParams(err.detail, $state.params.namespace));
   });
 }

@@ -12,9 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * @final
- */
+/** @final */
 export class MainController {
   /**
    * @param {!ui.router.$state} $state

@@ -24,13 +24,12 @@ export class AuthService {
    * @param {!kdUiRouter.$state} $state
    * @param {!angular.$q} $q
    * @param {!angular.$resource} $resource
-   * @param {./../errorhandling/localizer_service.LocalizerService} localizerService
    * @param {string} kdTokenCookieName
    * @param {string} kdTokenHeaderName
    * @ngInject
    */
-  constructor($cookies, $transitions, kdCsrfTokenService, $log, $state, $q, $resource, localizerService,
-              kdTokenCookieName, kdTokenHeaderName) {
+  constructor(
+      $cookies, $transitions, kdCsrfTokenService, $log, $state, $q, $resource, kdTokenCookieName, kdTokenHeaderName) {
     /** @private {!angular.$cookies} */
     this.cookies_ = $cookies;
     /** @private {!kdUiRouter.$transitions} */
@@ -45,8 +44,6 @@ export class AuthService {
     this.q_ = $q;
     /** @private {!angular.$resource} */
     this.resource_ = $resource;
-    /** @private {./../errorhandling/localizer_service.LocalizerService} */
-    this.localizerService_ = localizerService;
     /** @private {string} */
     this.tokenCookieName_ = kdTokenCookieName;
     /** @private {string} */
@@ -108,7 +105,8 @@ export class AuthService {
    *
    * In order to determine if user is logged in one of below factors have to be fulfilled:
    *  - valid jwe token has to be present in a cookie (named 'kdToken')
-   *  - authorization header has to be present in request to dashboard ('Authorization: Bearer <token>')
+   *  - authorization header has to be present in request to dashboard ('Authorization: Bearer
+   * <token>')
    *
    * @param {!kdUiRouter.$transition$} transition
    * @return {!angular.$q.Promise}

@@ -12,9 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * @final
- */
+/** @final */
 export class AuthInterceptor {
   /**
    * @param {!angular.$cookies} $cookies
@@ -24,8 +22,8 @@ export class AuthInterceptor {
    */
   constructor($cookies, kdTokenCookieName, kdTokenHeaderName) {
     this.request = config => {
-      // Filter are requests made to our backend starting with 'api/v1' and append request header with token stored
-      // in a cookie.
+      // Filter are requests made to our backend starting with 'api/v1' and append request header
+      // with token stored in a cookie.
       if (config.url.startsWith('api/v1')) {
         config.headers[kdTokenHeaderName] = $cookies.get(kdTokenCookieName);
       }

@@ -12,8 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {actionbarViewName, namespaceParam, stateName, toolbarViewName} from './state';
 import {stateName as loginState} from 'login/state';
+
+import {actionbarViewName, namespaceParam, stateName, toolbarViewName} from './state';
 
 /**
  * Namespace is an abstract state with no path, but with one parameter ?namespace= that

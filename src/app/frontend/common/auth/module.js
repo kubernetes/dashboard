@@ -16,7 +16,7 @@ import {AuthInterceptor} from './interceptor';
 import {AuthService} from './service';
 
 /**
- * Angular module containing application configuration.
+ * Angular module containing auth configuration.
  */
 export default angular
     .module(

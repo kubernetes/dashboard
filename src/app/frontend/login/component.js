@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {stateName as workloadsState} from 'workloads/state';
-import LoginSpec from "./spec";
+import LoginSpec from './spec';
 
 /** @final */
 class LoginController {

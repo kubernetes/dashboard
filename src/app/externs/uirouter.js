@@ -107,3 +107,6 @@ kdUiRouter.$state.prototype.target = function(to, opt_toParams, opt_options) {};
 
 /** @type {!Object|undefined} */
 kdUiRouter.$state.prototype.params;
+
+/** @type {!kdUiRouter.$transition$} */
+kdUiRouter.$state.prototype.transition;

@@ -14,10 +14,11 @@
 
 /** @final **/
 export default class LoginSpec {
-  /**
-   * @return {!backendApi.LoginSpec}
-   */
-  constructor({username = '', password = '', token = '', kubeConfig = ''} = {username: '', password: '', token: '', kubeConfig: ''}) {
+  /** @return {!backendApi.LoginSpec} */
+  constructor({username = '',
+               password = '',
+               token = '',
+               kubeConfig = ''} = {username: '', password: '', token: '', kubeConfig: ''}) {
     /** @private {string} */
     this.username = username;
     /** @private {string} */

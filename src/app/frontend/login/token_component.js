@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import LoginSpec from "./spec";
+import LoginSpec from './spec';
 
 /** @final */
 class TokenLoginController {
