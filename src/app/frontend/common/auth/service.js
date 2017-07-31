@@ -14,55 +14,79 @@
 
 import {stateName as loginState} from 'login/state';
 
-/**
- * @final
- */
+/** @final */
 export class AuthService {
   /**
+   * @param {!angular.$cookies} $cookies
+   * @param {!kdUiRouter.$transitions} $transitions
+   * @param {./../csrftoken/service.CsrfTokenService} kdCsrfTokenService
+   * @param {!angular.$log} $log
+   * @param {!kdUiRouter.$state} $state
+   * @param {!angular.$q} $q
+   * @param {!angular.$resource} $resource
+   * @param {./../errorhandling/localizer_service.LocalizerService} localizerService
+   * @param {string} kdTokenCookieName
+   * @param {string} kdTokenHeaderName
    * @ngInject
    */
-  constructor(
-      $cookies, $transitions, kdCsrfTokenService, $log, $state, $q, $resource, localizerService) {
+  constructor($cookies, $transitions, kdCsrfTokenService, $log, $state, $q, $resource, localizerService,
+              kdTokenCookieName, kdTokenHeaderName) {
+    /** @private {!angular.$cookies} */
     this.cookies_ = $cookies;
+    /** @private {!kdUiRouter.$transitions} */
     this.transitions_ = $transitions;
-    this.state_ = $state;
     /** @private {!angular.$q.Promise} */
-    this.tokenPromise_ = kdCsrfTokenService.getTokenForAction('login');
-    this.q_ = $q;
-    this.resource_ = $resource;
-    this.jwtCookieName_ = 'kdToken';
-    this.skipLoginPageCookieName = 'skipLoginPage';
+    this.csrfTokenPromise_ = kdCsrfTokenService.getTokenForAction('login');
+    /** @private {!angular.$log} */
     this.log_ = $log;
+    /** @private {!kdUiRouter.$state} */
+    this.state_ = $state;
+    /** @private {!angular.$q} */
+    this.q_ = $q;
+    /** @private {!angular.$resource} */
+    this.resource_ = $resource;
+    /** @private {./../errorhandling/localizer_service.LocalizerService} */
     this.localizerService_ = localizerService;
-  }
-
-  setJWTCookie(token) {
-    this.cookies_.put(this.jwtCookieName_, token)
+    /** @private {string} */
+    this.tokenCookieName_ = kdTokenCookieName;
+    /** @private {string} */
+    this.tokenHeaderName_ = kdTokenHeaderName;
+    /** @private {string} */
+    this.skipLoginPageCookieName_ = 'skipLoginPage';
   }
 
   /**
+   * @param {string} token
+   * @private
+   */
+  setTokenCookie_(token) {
+    this.cookies_.put(this.tokenCookieName_, token)
+  }
+
+  /**
+   * Sends a login request to the backend with filled in login spec structure.
    *
    * @param {!backendApi.LoginSpec} loginSpec
    */
   logIn(loginSpec) {
     let deferred = this.q_.defer();
 
-    this.tokenPromise_.then(
-        token => {
+    this.csrfTokenPromise_.then(
+        csrfToken => {
           let resource = this.resource_('api/v1/login', {}, {
             save: {
               method: 'POST',
               headers: {
-                'X-CSRF-TOKEN': token,
+                'X-CSRF-TOKEN': csrfToken,
               },
             },
           });
 
           resource.save(
               loginSpec,
-              response => {
+              (/** @type {!backendApi.LoginResponse} */ response) => {
                 if (response.jweToken.length !== 0 && response.errors.length === 0) {
-                  this.setJWTCookie(response.jweToken);
+                  this.setTokenCookie_(response.jweToken);
                 }
 
                 deferred.resolve(response.errors);
@@ -73,7 +97,6 @@ export class AuthService {
         },
         err => {
           deferred.reject(err);
-          console.log(err);
         });
 
     return deferred.promise;
@@ -84,32 +107,31 @@ export class AuthService {
    * User is then redirected to target state (if logged in) or to login page.
    *
    * In order to determine if user is logged in one of below factors have to be fulfilled:
-   *  - valid jwt token has to be present in a cookie (named 'kdToken')
-   *  - authorization header has to be present in request to dashboard ('Authorization: Bearer
-   * <token>')
+   *  - valid jwe token has to be present in a cookie (named 'kdToken')
+   *  - authorization header has to be present in request to dashboard ('Authorization: Bearer <token>')
    *
-   * @param {} transition
+   * @param {!kdUiRouter.$transition$} transition
    * @return {!angular.$q.Promise}
    */
   isLoggedIn(transition) {
-    let deferred = this.q_.defer(), jwtCookie = this.cookies_.get(this.jwtCookieName_) || '',
+    let deferred = this.q_.defer(), token = this.cookies_.get(this.tokenCookieName_) || '',
         resource = this.resource_('api/v1/login/status', {}, {
           get: {
             method: 'GET',
             headers: {
-              [this.jwtCookieName_]: jwtCookie,
+              [this.tokenHeaderName_]: token,
             }
           }
         });
 
     // Skip log in check if user is going to login page already or has chosen to skip it.
-    if (!this.isLoginPageEnabled() || transition.$to().name === loginState) {
+    if (!this.isLoginPageEnabled() || transition.to().name === loginState) {
       deferred.resolve(true);
       return deferred.promise;
     }
 
     resource.get(
-        (loginStatus) => {
+        (/** @type {!backendApi.LoginStatus} */ loginStatus) => {
           if (loginStatus.headerPresent || loginStatus.tokenPresent) {
             return deferred.resolve(true);
           }
@@ -126,11 +148,10 @@ export class AuthService {
   }
 
   /**
-   *
    * @param {boolean} skip
    */
   skipLoginPage(skip) {
-    this.cookies_.put(this.skipLoginPageCookieName, skip);
+    this.cookies_.put(this.skipLoginPageCookieName_, skip.toString());
   }
 
   /**
@@ -141,7 +162,7 @@ export class AuthService {
    * @return {boolean}
    */
   isLoginPageEnabled() {
-    return !(this.cookies_.get(this.skipLoginPageCookieName) == 'true');
+    return !(this.cookies_.get(this.skipLoginPageCookieName_) == 'true');
   }
 
   /**

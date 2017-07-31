@@ -28,6 +28,8 @@ export default angular
     .service('kdAuthService', AuthService)
     .factory('kdAuthInterceptor', AuthInterceptor.NewAuthInterceptor)
     .config(initAuthInterceptor)
+    .constant('kdTokenCookieName', 'jweToken')
+    .constant('kdTokenHeaderName', 'jweToken')
     .run(initAuthService);
 
 /**

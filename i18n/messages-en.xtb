@@ -461,6 +461,9 @@
   <translation id="5794425570699478727" key="MSG_JOB_LIST_LIST_1" desc="Title for graph card displaying memory metric of jobs.">Memory usage</translation>
   <translation id="6300164314930034252" key="MSG_JOB_LIST_LIST_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by these jobs.</translation>
   <translation id="5485538583399563094" key="MSG_LESS_WARNINGS_LABEL" desc="Show less warnings button label.">Show <ph name="COUNT"> less</ph></translation>
+  <translation id="5259124924941383194" key="MSG_LOGIN_LOGIN_0" desc="TODO">Log in to Kubernetes Dashboard</translation>
+  <translation id="5474439021716449004" key="MSG_LOGIN_LOGIN_1" desc="Token login">Token</translation>
+  <translation id="6515096859873749762" key="MSG_LOGIN_UNAUTHORIZED_ERROR" desc="Text shown when unauthorized user tries to log in.">Authentication Failed. Please try again.</translation>
   <translation id="4722922095699681308" key="MSG_LOGS_LOGS_0" desc="Title prefix for logs card.">Logs from</translation>
   <translation id="6855662924451585032" key="MSG_LOGS_LOGS_1" desc="Title part for logs card.">in</translation>
   <translation id="6208229815004454576" key="MSG_LOGS_LOGS_2" desc="Title prefix for logs card.">Logs from</translation>

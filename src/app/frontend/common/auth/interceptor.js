@@ -12,19 +12,36 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+/**
+ * @final
+ */
 export class AuthInterceptor {
-  constructor($cookies) {
+  /**
+   * @param {!angular.$cookies} $cookies
+   * @param {string} kdTokenCookieName
+   * @param {string} kdTokenHeaderName
+   * @ngInject
+   */
+  constructor($cookies, kdTokenCookieName, kdTokenHeaderName) {
     this.request = config => {
-      // TODO: Better filtering for urls that do not require this token
+      // Filter are requests made to our backend starting with 'api/v1' and append request header with token stored
+      // in a cookie.
       if (config.url.startsWith('api/v1')) {
-        config.headers['kdToken'] = $cookies.get('kdToken');
+        config.headers[kdTokenHeaderName] = $cookies.get(kdTokenCookieName);
       }
 
       return config;
     }
   }
 
-  static NewAuthInterceptor($cookies) {
-    return new AuthInterceptor($cookies)
+  /**
+   * @param {!angular.$cookies} $cookies
+   * @param {string} kdTokenCookieName
+   * @param {string} kdTokenHeaderName
+   * @return {./interceptor.AuthInterceptor}
+   * @ngInject
+   */
+  static NewAuthInterceptor($cookies, kdTokenCookieName, kdTokenHeaderName) {
+    return new AuthInterceptor($cookies, kdTokenCookieName, kdTokenHeaderName)
   }
 }

@@ -12,26 +12,41 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import LoginSpec from './spec';
 
+/** @final */
 class BasicLoginController {
+  /** @ngInject */
   constructor() {
+    /** @export {!angular.Component} */
     this.loginOptionsCtrl;
+    /** @export {boolean} */
     this.selected = false;
+    /** @export {function({loginSpec: !backendApi.LoginSpec})} - Initialized from binding */
+    this.onUpdate;
+    /** @export {string} */
+    this.username;
+    /** @export {string} */
+    this.password;
   }
 
+  /** @export */
   $onInit() {
     this.loginOptionsCtrl.addOption(this);
   }
 
+  /** @export */
   onUsernameUpdate() {
-    this.onUpdate({loginSpec: {username: this.username}})
+    this.onUpdate({loginSpec: new LoginSpec({username: this.username})});
   }
 
+  /** @export */
   onPasswordUpdate() {
-    this.onUpdate({loginSpec: {password: this.password}})
+    this.onUpdate({loginSpec: new LoginSpec({password: this.password})});
   }
 }
 
+/** @type {!angular.Component} */
 export const basicLoginComponent = {
   templateUrl: 'login/basic.html',
   require: {

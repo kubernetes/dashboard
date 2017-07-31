@@ -12,22 +12,34 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import LoginSpec from "./spec";
 
+/** @final */
 class TokenLoginController {
+  /** @ngInject */
   constructor() {
+    /** @export {!angular.Component} */
     this.loginOptionsCtrl;
+    /** @export {boolean} */
     this.selected = false;
+    /** @export {function({loginSpec: !backendApi.LoginSpec})} - Initialized from binding */
+    this.onUpdate;
+    /** @export {string} */
+    this.token;
   }
 
+  /** @export */
   $onInit() {
     this.loginOptionsCtrl.addOption(this);
   }
 
+  /** @export */
   onTokenUpdate() {
-    this.onUpdate({loginSpec: {token: this.token}})
+    this.onUpdate({loginSpec: new LoginSpec({token: this.token})})
   }
 }
 
+/** @type {!angular.Component} */
 export const tokenLoginComponent = {
   templateUrl: 'login/token.html',
   require: {

@@ -12,12 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+/** @final */
 class LoginOptionsController {
+  /** @ngInject */
   constructor() {
+    /** @export {!Array<!angular.Component>} */
     this.options = [];
+    /** @export {!angular.Component} */
     this.selectedOption;
   }
 
+  /**
+   * @param {!angular.Component} option
+   * @export
+   */
   select(option) {
     this.options.forEach(option => {
       option.selected = false;
@@ -27,6 +35,10 @@ class LoginOptionsController {
     this.selectedOption = option.title;
   }
 
+  /**
+   * @param {!angular.Component} option
+   * @export
+   */
   addOption(option) {
     if (this.options.length === 0) {
       this.select(option);
@@ -35,6 +47,7 @@ class LoginOptionsController {
     this.options.push(option);
   }
 
+  /** @export */
   onOptionChange() {
     this.options.forEach(option => {
       option.selected = option.title === this.selectedOption;
@@ -42,6 +55,7 @@ class LoginOptionsController {
   }
 }
 
+/** @type {!angular.Component} */
 export const loginOptionsComponent = {
   transclude: true,
   templateUrl: 'login/options.html',

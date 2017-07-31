@@ -48,6 +48,13 @@ kdUiRouter.$transitions.prototype.onStart = function(criteria, callback, options
  * @param {Function} callback
  * @param {Object=} options
  */
+kdUiRouter.$transitions.prototype.onBefore = function(criteria, callback, options) {};
+
+/**
+ * @param {Object} criteria
+ * @param {Function} callback
+ * @param {Object=} options
+ */
 kdUiRouter.$transitions.prototype.onError = function(criteria, callback, options) {};
 
 /**
@@ -89,6 +96,14 @@ kdUiRouter.$state.prototype.defaultErrorHandler = function(callback) {};
  * @return {!angular.$q.Promise}
  */
 kdUiRouter.$state.prototype.go = function(to, opt_toParams, opt_options) {};
+
+/**
+ * @param {string|!ui.router.State} to
+ * @param {?ui.router.StateParams=} opt_toParams
+ * @param {!ui.router.StateOptions=} opt_options
+ * @return {!angular.$q.Promise}
+ */
+kdUiRouter.$state.prototype.target = function(to, opt_toParams, opt_options) {};
 
 /** @type {!Object|undefined} */
 kdUiRouter.$state.prototype.params;
