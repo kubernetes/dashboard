@@ -77,10 +77,10 @@ export class AllocatedResourcesChartController {
 
     let labelFunc = customLabelFunc;
     if (!customLabelFunc) {
-      labelFunc = (d, i) => {
+      labelFunc = (d) => {
         // Displays label only for allocated resources.
         return `${d.data.value.toFixed(2)}%`;
-      }
+      };
     }
 
     let chart = nv.models.pieChart()
@@ -171,7 +171,7 @@ export const allocatedResourcesChartComponent = {
     'inner': '<',
     'innercolor': '<',
     'data': '<',
-    'colorpalette': '<'
+    'colorpalette': '<',
   },
   controller: AllocatedResourcesChartController,
   templateUrl: 'node/detail/allocatedresourceschart.html',

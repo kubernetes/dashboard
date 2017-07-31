@@ -121,14 +121,13 @@ export class OverviewController {
       podStats[pod.podStatus.status] += 1;
     });
 
-    podStats.chartValues =
-        [
-          {value: podStats.success / podStats.total * 100},
-          {value: podStats.failed / podStats.total * 100},
-          {value: podStats.pending / podStats.total * 100}
-        ]
+    podStats.chartValues = [
+      {value: podStats.success / podStats.total * 100},
+      {value: podStats.failed / podStats.total * 100},
+      {value: podStats.pending / podStats.total * 100},
+    ];
 
-        this.podStats = podStats;
+    this.podStats = podStats;
   }
 
   $onInit() {
