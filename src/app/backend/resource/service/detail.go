@@ -22,11 +22,9 @@ import (
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/endpoint"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/fields"
-	"k8s.io/apimachinery/pkg/labels"
 	k8sClient "k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/pkg/api/v1"
 )
@@ -37,12 +35,15 @@ type ServiceDetail struct {
 	TypeMeta   api.TypeMeta   `json:"typeMeta"`
 
 	// InternalEndpoint of all Kubernetes services that have the same label selector as connected Replication
-	// Controller. Endpoint is DNS name merged with ports.
+	// Controller. Endpoints is DNS name merged with ports.
 	InternalEndpoint common.Endpoint `json:"internalEndpoint"`
 
 	// ExternalEndpoints of all Kubernetes services that have the same label selector as connected Replication
-	// Controller. Endpoint is external IP address name merged with ports.
+	// Controller. Endpoints is external IP address name merged with ports.
 	ExternalEndpoints []common.Endpoint `json:"externalEndpoints"`
+
+	// List of Endpoint obj. that are endpoints of this Service.
+	EndpointList endpoint.EndpointList `json:"endpointList"`
 
 	// Label selector of the service.
 	Selector map[string]string `json:"selector"`
@@ -60,6 +61,9 @@ type ServiceDetail struct {
 	// PodList represents list of pods targeted by same label selector as this service.
 	PodList pod.PodList `json:"podList"`
 
+	// Show the value of the SessionAffinity of the Service.
+	SessionAffinity v1.ServiceAffinity `json:"sessionAffinity"`
+
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
 }
@@ -74,8 +78,14 @@ func GetServiceDetail(client k8sClient.Interface, metricClient metricapi.MetricC
 		return nil, err
 	}
 
-	podList, err := GetServicePods(client, metricClient, namespace, name, dsQuery)
+	endpointList, err := endpoint.GetServiceEndpoints(client, namespace, name)
 	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
+	}
+
+	podList, err := GetServicePods(client, metricClient, namespace, name, dsQuery)
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -86,50 +96,6 @@ func GetServiceDetail(client k8sClient.Interface, metricClient metricapi.MetricC
 		return nil, criticalError
 	}
 
-	service := ToServiceDetail(serviceData)
-	service.PodList = *podList
-	service.EventList = *eventList
-	service.Errors = nonCriticalErrors
+	service := ToServiceDetail(serviceData, *eventList, *podList, *endpointList, nonCriticalErrors)
 	return &service, nil
-}
-
-// GetServicePods gets list of pods targeted by given label selector in given namespace.
-func GetServicePods(client k8sClient.Interface, metricClient metricapi.MetricClient, namespace,
-	name string, dsQuery *dataselect.DataSelectQuery) (*pod.PodList, error) {
-	podList := pod.PodList{
-		Pods:              []pod.Pod{},
-		CumulativeMetrics: []metricapi.Metric{},
-	}
-
-	service, err := client.CoreV1().Services(namespace).Get(name, metaV1.GetOptions{})
-	if err != nil {
-		return &podList, err
-	}
-
-	if service.Spec.Selector == nil {
-		return &podList, nil
-	}
-
-	labelSelector := labels.SelectorFromSet(service.Spec.Selector)
-	channels := &common.ResourceChannels{
-		PodList: common.GetPodListChannelWithOptions(client, common.NewSameNamespaceQuery(namespace),
-			metaV1.ListOptions{
-				LabelSelector: labelSelector.String(),
-				FieldSelector: fields.Everything().String(),
-			}, 1),
-	}
-
-	apiPodList := <-channels.PodList.List
-	if err := <-channels.PodList.Error; err != nil {
-		return &podList, err
-	}
-
-	events, err := event.GetPodsEvents(client, namespace, apiPodList.Items)
-	nonCriticalErrors, criticalError := errors.HandleError(err)
-	if criticalError != nil {
-		return &podList, criticalError
-	}
-
-	podList = pod.ToPodList(apiPodList.Items, events, nonCriticalErrors, dsQuery, metricClient)
-	return &podList, nil
 }

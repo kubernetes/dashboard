@@ -18,6 +18,8 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/endpoint"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"k8s.io/client-go/pkg/api/v1"
 )
 
@@ -35,15 +37,21 @@ func ToService(service *v1.Service) Service {
 }
 
 // ToServiceDetail returns api service object based on kubernetes service object
-func ToServiceDetail(service *v1.Service) ServiceDetail {
+func ToServiceDetail(service *v1.Service, events common.EventList, pods pod.PodList, endpointList endpoint.EndpointList,
+	nonCriticalErrors []error) ServiceDetail {
 	return ServiceDetail{
 		ObjectMeta:        api.NewObjectMeta(service.ObjectMeta),
 		TypeMeta:          api.NewTypeMeta(api.ResourceKindService),
 		InternalEndpoint:  common.GetInternalEndpoint(service.Name, service.Namespace, service.Spec.Ports),
 		ExternalEndpoints: common.GetExternalEndpoints(service),
+		EndpointList:      endpointList,
 		Selector:          service.Spec.Selector,
 		ClusterIP:         service.Spec.ClusterIP,
 		Type:              service.Spec.Type,
+		EventList:         events,
+		PodList:           pods,
+		SessionAffinity:   service.Spec.SessionAffinity,
+		Errors:            nonCriticalErrors,
 	}
 }
 

@@ -35,6 +35,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/deployment"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/discovery"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/endpoint"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/ingress"
@@ -708,6 +709,23 @@ func (apiHandler *APIHandler) handleGetServiceList(request *restful.Request, res
 	namespace := parseNamespacePathParameter(request)
 	dataSelect := parseDataSelectPathParameter(request)
 	result, err := resourceService.GetServiceList(k8sClient, namespace, dataSelect)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetServiceEndpoints(request *restful.Request, response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	namespace := request.PathParameter("namespace")
+	name := request.PathParameter("service")
+	result, err := endpoint.GetServiceEndpoints(k8sClient, namespace, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return

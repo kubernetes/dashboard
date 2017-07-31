@@ -57,6 +57,9 @@ type ResourceChannels struct {
 	// List and error channels to Services.
 	ServiceList ServiceListChannel
 
+	// List and error channels to Endpoints.
+	EndpointList EndpointListChannel
+
 	// List and error channels to Ingresses.
 	IngressList IngressListChannel
 
@@ -293,6 +296,36 @@ func GetEventListChannelWithOptions(client client.Interface,
 			}
 		}
 		list.Items = filteredItems
+		for i := 0; i < numReads; i++ {
+			channel.List <- list
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
+// EndpointListChannel is a list and error channels to Endpoints.
+type EndpointListChannel struct {
+	List  chan *v1.EndpointsList
+	Error chan error
+}
+
+func GetEndpointListChannel(client client.Interface, nsQuery *NamespaceQuery, numReads int) EndpointListChannel {
+	return GetEndpointListChannelWithOptions(client, nsQuery, api.ListEverything, numReads)
+}
+
+// GetEndpointListChannelWithOptions is GetEndpointListChannel plus list options.
+func GetEndpointListChannelWithOptions(client client.Interface,
+	nsQuery *NamespaceQuery, opt metaV1.ListOptions, numReads int) EndpointListChannel {
+	channel := EndpointListChannel{
+		List:  make(chan *v1.EndpointsList, numReads),
+		Error: make(chan error, numReads),
+	}
+
+	go func() {
+		list, err := client.CoreV1().Endpoints(nsQuery.ToRequestParam()).List(opt)
+
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
