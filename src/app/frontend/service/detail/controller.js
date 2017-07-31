@@ -20,9 +20,11 @@ export class ServiceDetailController {
    * @param {!backendApi.ServiceDetail} serviceDetail
    * @param {!angular.Resource} kdServicePodsResource
    * @param {!angular.Resource} kdServiceEventsResource
+   * @param {!angular.Resource} kdServiceEndpointResource
    * @ngInject
    */
-  constructor(serviceDetail, kdServicePodsResource, kdServiceEventsResource) {
+  constructor(
+      serviceDetail, kdServicePodsResource, kdServiceEventsResource, kdServiceEndpointResource) {
     /** @export {!backendApi.ServiceDetail} */
     this.serviceDetail = serviceDetail;
 
@@ -31,5 +33,8 @@ export class ServiceDetailController {
 
     /** @export {!angular.Resource} */
     this.eventListResource = kdServiceEventsResource;
+
+    /** @export {!angular.Resource} */
+    this.endpointListResource = kdServiceEndpointResource;
   }
 }
