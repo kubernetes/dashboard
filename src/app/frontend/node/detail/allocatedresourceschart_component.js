@@ -25,6 +25,17 @@ export class AllocatedResourcesChartController {
     /** @private {!angular.JQLite} */
     this.element_ = $element;
 
+    /**
+     * Data that fills a single pie chart
+     * @export {object}
+     */
+    this.data;
+
+    /**
+     * Colors for single ring pie chart
+     * @export {object}
+     */
+    this.colorpalette;
 
     /**
      * Outer graph percent. Initialized from the scope.
@@ -61,8 +72,17 @@ export class AllocatedResourcesChartController {
    *
    * @private
    */
-  initPieChart_(svg, data, color, margin, ratio) {
+  initPieChart_(svg, data, colors, margin, ratio, customLabelFunc) {
     let size = 280;
+
+    let labelFunc = customLabelFunc;
+    if (!customLabelFunc) {
+      labelFunc = (d, i) => {
+        // Displays label only for allocated resources.
+        return `${d.data.value.toFixed(2)}%`;
+      }
+    }
+
     let chart = nv.models.pieChart()
                     .showLegend(false)
                     .showLabels(true)
@@ -74,18 +94,12 @@ export class AllocatedResourcesChartController {
                     })
                     .donut(true)
                     .donutRatio(ratio)
-                    .color([color, '#ddd'])
+                    .color(colors)
                     .margin({top: margin, right: margin, bottom: margin, left: margin})
                     .width(size)
                     .height(size)
                     .growOnHover(false)
-                    .labelType((d, i) => {
-                      // Displays label only for allocated resources.
-                      if (i === 0) {
-                        return `${d.data.value.toFixed(2)}%`;
-                      }
-                      return '';
-                    });
+                    .labelType(labelFunc);
 
     chart.tooltip.enabled(false);
 
@@ -107,27 +121,39 @@ export class AllocatedResourcesChartController {
     nv.addGraph(() => {
       let svg = d3.select(this.element_[0]).append('svg');
 
-      if (this.outer !== undefined) {
-        this.outercolor = this.outercolor ? this.outercolor : '#00c752';
+      let displayOnlyAllocated = function(d, i) {
+        // Displays label only for allocated resources.
+        if (i === 0) {
+          return `${d.data.value.toFixed(2)}%`;
+        }
+        return '';
+      };
 
-        this.initPieChart_(
-            svg,
-            [
-              {value: this.outer},
-              {value: 100 - this.outer},
-            ],
-            this.outercolor, 0, 0.61);
-      }
+      if (!this.data) {
+        if (this.outer !== undefined) {
+          this.outercolor = this.outercolor ? this.outercolor : '#00c752';
 
-      if (this.inner !== undefined) {
-        this.innercolor = this.innercolor ? this.innercolor : '#326de6';
-        this.initPieChart_(
-            svg,
-            [
-              {value: this.inner},
-              {value: 100 - this.inner},
-            ],
-            this.innercolor, 36, 0.55);
+          this.initPieChart_(
+              svg,
+              [
+                {value: this.outer},
+                {value: 100 - this.outer},
+              ],
+              [this.outercolor, '#ddd'], 0, 0.61, displayOnlyAllocated);
+        }
+
+        if (this.inner !== undefined) {
+          this.innercolor = this.innercolor ? this.innercolor : '#326de6';
+          this.initPieChart_(
+              svg,
+              [
+                {value: this.inner},
+                {value: 100 - this.inner},
+              ],
+              [this.innercolor, '#ddd'], 36, 0.55, displayOnlyAllocated);
+        }
+      } else {
+        this.initPieChart_(svg, this.data, this.colorpalette, 0, 0.61);
       }
     });
   }
@@ -144,6 +170,8 @@ export const allocatedResourcesChartComponent = {
     'outercolor': '<',
     'inner': '<',
     'innercolor': '<',
+    'data': '<',
+    'colorpalette': '<'
   },
   controller: AllocatedResourcesChartController,
   templateUrl: 'node/detail/allocatedresourceschart.html',

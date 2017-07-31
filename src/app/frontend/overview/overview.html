@@ -29,71 +29,48 @@ limitations under the License.
   </kd-graph-card>
 </div>
 
-<div layout="row" layout-align="center" ng-if="$ctrl.podStats.total">
-    <div class="kd-graph-container">
-        <kd-allocated-resources-chart outer="$ctrl.podStats.pendingPodsFraction"
-                                      outercolor="$ctrl.pendingColor">
-        </kd-allocated-resources-chart>
-        <div class="kd-graph-legend">
-          <div class="kd-graph-legend-title">
-            Pending Pods
-          </div>
-          <div class="kd-graph-legend-entry">
-            <md-icon class="kd-graph-yellow">stop</md-icon>
-            [[Pending|Label 'Pending' for the pod statistics graphs legend.]]
-            <span class="kd-graph-legend-value">
-              {{$ctrl.podStats.pending}}
-            </span>
-          </div>
-          <div class="kd-graph-legend-entry"></div>
+<kd-content-card ng-if="$ctrl.overview.podList.pods.length">
+     <kd-title>[[Resource status|Label 'Resource status' for the overview section.]]</kd-title>
+    <kd-content>
+        <div class="kd-graph-container">
+            <kd-allocated-resources-chart colorpalette="$ctrl.colorPalette"
+                                          data="$ctrl.podStats.chartValues">
+            </kd-allocated-resources-chart>
+            <div class="kd-graph-legend">
+              <div class="kd-graph-legend-title">
+                Pods
+              </div>
+              <div class="kd-graph-legend-entry">
+                <md-icon class="kd-graph-green">stop</md-icon>
+                [[Running|Label 'Running' for the pod statistics graphs legend.]]
+                <span class="kd-graph-legend-value">
+                  {{$ctrl.podStats.success}}
+                </span>
+              </div>
+              <div class="kd-graph-legend-entry">
+                  <md-icon class="kd-graph-yellow">stop</md-icon>
+                  [[Pending|Label 'Pending' for the pod statistics graphs legend.]]
+                  <span class="kd-graph-legend-value">
+                    {{$ctrl.podStats.pending}}
+                  </span>
+              </div>
+              <div class="kd-graph-legend-entry">
+                  <md-icon class="kd-graph-red">stop</md-icon>
+                  [[Failed|Label 'Failed' for the pod statistics graphs legend.]]
+                  <span class="kd-graph-legend-value">
+                    {{$ctrl.podStats.failed}}
+                  </span>
+              </div>
+            </div>
         </div>
-    </div>
-
-    <div class="kd-graph-container">
-        <kd-allocated-resources-chart outer="$ctrl.podStats.runningPodsFraction"
-                                      outercolor="$ctrl.runningColor">
-        </kd-allocated-resources-chart>
-        <div class="kd-graph-legend">
-          <div class="kd-graph-legend-title">
-            Healthy Pods
-          </div>
-          <div class="kd-graph-legend-entry">
-            <md-icon class="kd-graph-green">stop</md-icon>
-            [[Running|Label 'Running' for the pod statistics graphs legend.]]
-            <span class="kd-graph-legend-value">
-              {{$ctrl.podStats.success}}
-            </span>
-          </div>
-          <div class="kd-graph-legend-entry"></div>
-        </div>
-    </div>
-
-    <div class="kd-graph-container">
-        <kd-allocated-resources-chart outer="$ctrl.podStats.failedPodsFraction"
-                                      outercolor="$ctrl.failingColor">
-        </kd-allocated-resources-chart>
-        <div class="kd-graph-legend">
-          <div class="kd-graph-legend-title">
-            Failed Pods
-          </div>
-          <div class="kd-graph-legend-entry">
-            <md-icon class="kd-graph-red">stop</md-icon>
-            [[Failed|Label 'Failed' for the allocated resources graphs legend.]]
-            <span class="kd-graph-legend-value">
-              {{$ctrl.podStats.failed}}
-            </span>
-          </div>
-          <div class="kd-graph-legend-entry"></div>
-        </div>
-    </div>
-</div>
+    <kd-content>
+</kd-content-card>
 
 <kd-content-card ng-if="$ctrl.overview.podList.pods.length">
   <kd-content>
     <kd-pod-card-list pod-list="$ctrl.overview.podList"
                       pod-list-resource="$ctrl.podListResource"
-                      with-statuses="true"
-                      ng-click="$ctrl.getPodStats()">
+                      with-statuses="true">
     </kd-pod-card-list>
   </kd-content>
 </kd-content-card>

@@ -78,9 +78,7 @@ export class OverviewController {
 
     this.podStats;
 
-    this.runningColor = 'green';
-    this.pendingColor = 'yellow';
-    this.failingColor = 'red';
+    this.colorPalette = ['#00c752', '#f00', '#ff0'];
   }
 
   /**
@@ -123,11 +121,14 @@ export class OverviewController {
       podStats[pod.podStatus.status] += 1;
     });
 
-    podStats.failedPodsFraction = podStats.failed / podStats.total * 100;
-    podStats.pendingPodsFraction = podStats.pending / podStats.total * 100;
-    podStats.runningPodsFraction = podStats.success / podStats.total * 100;
+    podStats.chartValues =
+        [
+          {value: podStats.success / podStats.total * 100},
+          {value: podStats.failed / podStats.total * 100},
+          {value: podStats.pending / podStats.total * 100}
+        ]
 
-    this.podStats = podStats;
+        this.podStats = podStats;
   }
 
   $onInit() {
