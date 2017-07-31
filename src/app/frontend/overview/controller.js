@@ -76,8 +76,7 @@ export class OverviewController {
     /** @export {!angular.Resource} */
     this.pvcListResource = kdPersistentVolumeClaimListResource;
 
-    this.podStats;
-
+    this.podStats = {};
     this.colorPalette = ['#00c752', '#f00', '#ff0'];
   }
 
@@ -103,10 +102,6 @@ export class OverviewController {
     return resourcesLength === 0;
   }
 
-  /**
-   * @return {object}
-   * @export
-   */
   getPodStats() {
     let podStats = {
       'success': 0,

@@ -27,13 +27,13 @@ export class AllocatedResourcesChartController {
 
     /**
      * Data that fills a single pie chart
-     * @export {object}
+     * @export {Object}
      */
     this.data;
 
     /**
      * Colors for single ring pie chart
-     * @export {object}
+     * @export {!Array.<string>}
      */
     this.colorpalette;
 
@@ -153,7 +153,8 @@ export class AllocatedResourcesChartController {
               [this.innercolor, '#ddd'], 36, 0.55, displayOnlyAllocated);
         }
       } else {
-        this.initPieChart_(svg, this.data, this.colorpalette, 0, 0.61);
+        // Initializes a pie chart with multiple entries in a single ring
+        this.initPieChart_(svg, this.data, this.colorpalette, 0, 0.61, null);
       }
     });
   }
