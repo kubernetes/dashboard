@@ -35,7 +35,7 @@ class TokenLoginController {
 
   /** @export */
   onTokenUpdate() {
-    this.onUpdate({loginSpec: new LoginSpec({token: this.token})})
+    this.onUpdate({loginSpec: new LoginSpec({token: this.token})});
   }
 }
 

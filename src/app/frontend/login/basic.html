@@ -16,14 +16,14 @@ limitations under the License.
 
 <div ng-if="$ctrl.selected">
   <md-input-container class="md-block">
-    <label>Username</label>
+    <label>[[Username|'Username' field label shown on login page for basic auth]]</label>
     <input ng-model="$ctrl.username"
            ng-change="$ctrl.onUsernameUpdate()"
            required>
   </md-input-container>
 
   <md-input-container class="md-block">
-    <label>Password</label>
+    <label>[[Password|'Password' field label shown on login page for basic auth]]</label>
     <input type="password"
            ng-model="$ctrl.password"
            ng-change="$ctrl.onPasswordUpdate()"

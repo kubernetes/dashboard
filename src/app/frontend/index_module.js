@@ -31,7 +31,7 @@ import discoveryModule from './discovery/module';
 import errorModule from './error/module';
 import horizontalPodAutoscalerModule from './horizontalpodautoscaler/module';
 import indexConfig from './index_config';
-import {MainController} from './index_controller';
+import {Controller} from './index_controller';
 import routeConfig from './index_route';
 import ingressModule from './ingress/module';
 import jobModule from './job/module';
@@ -110,4 +110,4 @@ export default angular
     .config(indexConfig)
     .config(routeConfig)
     .controller('kdTitle', TitleController)
-    .controller('kdMain', MainController);
+    .controller('kdMain', Controller);

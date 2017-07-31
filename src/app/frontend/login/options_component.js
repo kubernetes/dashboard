@@ -27,7 +27,7 @@ class LoginOptionsController {
    * @export
    */
   select(option) {
-    this.options.forEach(option => {
+    this.options.forEach((option) => {
       option.selected = false;
     });
 
@@ -49,9 +49,9 @@ class LoginOptionsController {
 
   /** @export */
   onOptionChange() {
-    this.options.forEach(option => {
+    this.options.forEach((option) => {
       option.selected = option.title === this.selectedOption;
-    })
+    });
   }
 }
 

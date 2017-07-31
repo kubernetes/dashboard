@@ -21,7 +21,7 @@ export class AuthInterceptor {
    * @ngInject
    */
   constructor($cookies, kdTokenCookieName, kdTokenHeaderName) {
-    this.request = config => {
+    this.request = (config) => {
       // Filter are requests made to our backend starting with 'api/v1' and append request header
       // with token stored in a cookie.
       if (config.url.startsWith('api/v1')) {
@@ -29,7 +29,7 @@ export class AuthInterceptor {
       }
 
       return config;
-    }
+    };
   }
 
   /**
@@ -40,6 +40,6 @@ export class AuthInterceptor {
    * @ngInject
    */
   static NewAuthInterceptor($cookies, kdTokenCookieName, kdTokenHeaderName) {
-    return new AuthInterceptor($cookies, kdTokenCookieName, kdTokenHeaderName)
+    return new AuthInterceptor($cookies, kdTokenCookieName, kdTokenHeaderName);
   }
 }

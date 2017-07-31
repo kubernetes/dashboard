@@ -14,7 +14,7 @@
 
 import {stateName as loginState} from 'login/state';
 
-import {actionbarViewName, namespaceParam, stateName, toolbarViewName} from './state';
+import {actionbarViewName, namespaceParam, stateName} from './state';
 
 /**
  * Namespace is an abstract state with no path, but with one parameter ?namespace= that

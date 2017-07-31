@@ -12,8 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {stateName as loginState} from 'login/state';
+
 /** @final */
-export class MainController {
+export class Controller {
   /**
    * @param {!ui.router.$state} $state
    * @ngInject
@@ -27,6 +29,6 @@ export class MainController {
    * @return {boolean}
    */
   isLoginState() {
-    return this.state_.current.name === 'login';
+    return this.state_.current.name === loginState;
   }
 }

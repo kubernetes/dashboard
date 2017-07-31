@@ -43,5 +43,5 @@ function initAuthService(kdAuthService) {
 }
 
 function initAuthInterceptor($httpProvider) {
-  $httpProvider.interceptors.push('kdAuthInterceptor')
+  $httpProvider.interceptors.push('kdAuthInterceptor');
 }

@@ -90,7 +90,7 @@ class LoginController {
                 this.state_.transitionTo(workloadsState);
                 defer.resolve();
               },
-              err => {
+              (err) => {
                 defer.reject(err);
               });
     }

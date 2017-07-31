@@ -17,15 +17,15 @@
 kd-login {
   display: flex;
   flex: 0 1 auto;
-  justify-content: center;
   flex-direction: column;
-  padding-bottom: 96px;
+  justify-content: center;
+  padding-bottom: 12 * $baseline-grid;
 }
 
 .kd-login-card {
-  width: 50%;
   margin: auto;
   padding-top: 2 * $baseline-grid;
+  width: 50%;
 }
 
 .kd-login-card-content {
@@ -39,4 +39,8 @@ kd-login {
   .kd-warnings-container {
     width: 50%;
   }
+}
+
+.kd-option-container {
+  padding-top: $baseline-grid / 2;
 }

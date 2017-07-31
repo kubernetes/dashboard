@@ -19,13 +19,13 @@ export default class LoginSpec {
                password = '',
                token = '',
                kubeConfig = ''} = {username: '', password: '', token: '', kubeConfig: ''}) {
-    /** @private {string} */
+    /** @export {string} */
     this.username = username;
-    /** @private {string} */
+    /** @export {string} */
     this.password = password;
-    /** @private {string} */
+    /** @export {string} */
     this.token = token;
-    /** @private {string} */
+    /** @export {string} */
     this.kubeConfig = kubeConfig;
   }
 }

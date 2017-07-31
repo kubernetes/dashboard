@@ -29,7 +29,8 @@ export class AuthService {
    * @ngInject
    */
   constructor(
-      $cookies, $transitions, kdCsrfTokenService, $log, $state, $q, $resource, kdTokenCookieName, kdTokenHeaderName) {
+      $cookies, $transitions, kdCsrfTokenService, $log, $state, $q, $resource, kdTokenCookieName,
+      kdTokenHeaderName) {
     /** @private {!angular.$cookies} */
     this.cookies_ = $cookies;
     /** @private {!kdUiRouter.$transitions} */
@@ -57,7 +58,7 @@ export class AuthService {
    * @private
    */
   setTokenCookie_(token) {
-    this.cookies_.put(this.tokenCookieName_, token)
+    this.cookies_.put(this.tokenCookieName_, token);
   }
 
   /**
@@ -69,7 +70,7 @@ export class AuthService {
     let deferred = this.q_.defer();
 
     this.csrfTokenPromise_.then(
-        csrfToken => {
+        (csrfToken) => {
           let resource = this.resource_('api/v1/login', {}, {
             save: {
               method: 'POST',
@@ -88,11 +89,11 @@ export class AuthService {
 
                 deferred.resolve(response.errors);
               },
-              err => {
+              (err) => {
                 deferred.reject(err);
-              })
+              });
         },
-        err => {
+        (err) => {
           deferred.reject(err);
         });
 
@@ -112,15 +113,16 @@ export class AuthService {
    * @return {!angular.$q.Promise}
    */
   isLoggedIn(transition) {
-    let deferred = this.q_.defer(), token = this.cookies_.get(this.tokenCookieName_) || '',
-        resource = this.resource_('api/v1/login/status', {}, {
-          get: {
-            method: 'GET',
-            headers: {
-              [this.tokenHeaderName_]: token,
-            }
-          }
-        });
+    let deferred = this.q_.defer();
+    let token = this.cookies_.get(this.tokenCookieName_) || '';
+    let resource = this.resource_('api/v1/login/status', {}, {
+      get: {
+        method: 'GET',
+        headers: {
+          [this.tokenHeaderName_]: token,
+        },
+      },
+    });
 
     // Skip log in check if user is going to login page already or has chosen to skip it.
     if (!this.isLoginPageEnabled() || transition.to().name === loginState) {
@@ -154,13 +156,13 @@ export class AuthService {
 
   /**
    * Returns true if user has selected to skip page, false otherwise.
-   * As cookie returns string or undefined we have to check for string match with type conversion.
+   * As cookie returns string or undefined we have to check for a string match.
    * In case cookie is not set login page will also be visible.
    *
    * @return {boolean}
    */
   isLoginPageEnabled() {
-    return !(this.cookies_.get(this.skipLoginPageCookieName_) == 'true');
+    return !(this.cookies_.get(this.skipLoginPageCookieName_) === 'true');
   }
 
   /**

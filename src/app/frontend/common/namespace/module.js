@@ -43,11 +43,13 @@ export default angular
  */
 function ensureNamespaceParamPresent($rootScope, $location, $transitions, $state) {
   /**
-   * Helper function which replaces namespace URL search param when the given namespace is undefined.
+   * Helper function which replaces namespace URL search param when the given namespace is
+   * undefined.
    * @param {string|undefined} namespace
    */
   function replaceUrlIfNeeded(namespace) {
-    if (namespace === undefined && !!$state.transition && $state.transition.to().name !== loginState) {
+    if (namespace === undefined && !!$state.transition &&
+        $state.transition.to().name !== loginState) {
       $location.search(namespaceParam, DEFAULT_NAMESPACE);
       $location.replace();
     }
