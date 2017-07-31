@@ -21,10 +21,13 @@ import (
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 )
 
+// AuthHandler manages all endpoints related to dashboard auth, such as login.
 type AuthHandler struct {
 	manager authApi.AuthManager
 }
 
+// Install creates new endpoints for dashboard auth, such as login. It allows user to log in to dashboard using
+// one of the supported methods. See AuthManager and Authenticator for more information.
 func (self AuthHandler) Install(ws *restful.WebService) {
 	ws.Route(
 		ws.POST("/login").
@@ -51,6 +54,7 @@ func (self AuthHandler) handleLogin(request *restful.Request, response *restful.
 	response.WriteHeaderAndEntity(http.StatusOK, loginResponse)
 }
 
+// NewAuthHandler created AuthHandler instance.
 func NewAuthHandler(manager authApi.AuthManager) AuthHandler {
 	return AuthHandler{manager: manager}
 }

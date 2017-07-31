@@ -19,21 +19,23 @@ import (
 	"k8s.io/client-go/tools/clientcmd/api"
 )
 
-// x509Authenticator implements Authenticator interface
-type BasicAuthenticator struct {
+// Implements Authenticator interface
+type basicAuthenticator struct {
 	username string
 	password string
 }
 
-func (self *BasicAuthenticator) GetAuthInfo() (api.AuthInfo, error) {
+// GetAuthInfo implements Authenticator interface. See Authenticator for more information.
+func (self *basicAuthenticator) GetAuthInfo() (api.AuthInfo, error) {
 	return api.AuthInfo{
 		Username: self.username,
 		Password: self.password,
 	}, nil
 }
 
+// NewBasicAuthenticator returns Authenticator based on LoginSpec.
 func NewBasicAuthenticator(spec *authApi.LoginSpec) authApi.Authenticator {
-	return &BasicAuthenticator{
+	return &basicAuthenticator{
 		username: spec.Username,
 		password: spec.Password,
 	}

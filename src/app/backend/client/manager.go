@@ -22,7 +22,6 @@ import (
 
 	restful "github.com/emicklei/go-restful"
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
-	"github.com/kubernetes/dashboard/src/app/backend/auth/jwt"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
@@ -41,6 +40,8 @@ const (
 	DefaultContentType = "application/vnd.kubernetes.protobuf"
 	// Default cluster/context/auth name to be set in clientcmd config
 	DefaultCmdConfigName = "kubernetes"
+	// Header name that contains token used for authorization. See TokenManager for more information.
+	JWETokenHeader = "jweToken"
 )
 
 // ClientManager is responsible for initializing and creating clients to communicate with
@@ -147,6 +148,8 @@ func (self *clientManager) CSRFKey() string {
 	return self.csrfKey
 }
 
+// HasAccess configures K8S api client with provided auth info and executes a basic check against apiserver to see
+// if it is valid.
 func (self *clientManager) HasAccess(authInfo api.AuthInfo) error {
 	cfg, err := self.buildConfigFromFlags(self.apiserverHost, self.kubeConfigPath)
 	if err != nil {
@@ -246,7 +249,7 @@ func (self *clientManager) extractAuthInfo(req *restful.Request) (*api.AuthInfo,
 	}
 
 	authHeader := req.HeaderParameter("Authorization")
-	jweToken := req.HeaderParameter("kdToken")
+	jweToken := req.HeaderParameter(JWETokenHeader)
 
 	// Authorization header will be more important than our token
 	token := self.extractTokenFromHeader(authHeader)
@@ -325,11 +328,11 @@ func (self *clientManager) isRunningInCluster() bool {
 
 // NewClientManager creates client manager based on kubeConfigPath and apiserverHost parameters.
 // If both are empty then in-cluster config is used.
-func NewClientManager(kubeConfigPath, apiserverHost string) ClientManager {
+func NewClientManager(kubeConfigPath, apiserverHost string, tokenManager authApi.TokenManager) ClientManager {
 	result := &clientManager{
 		kubeConfigPath: kubeConfigPath,
 		apiserverHost:  apiserverHost,
-		tokenManager:   jwt.NewJWTTokenManager(),
+		tokenManager:   tokenManager,
 	}
 
 	result.init()

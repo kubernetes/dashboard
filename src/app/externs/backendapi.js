@@ -1443,10 +1443,8 @@ backendApi.CsrfToken;
 
 /**
  * @typedef {{
- *   username: string
- *   password: string
- *   clientCert: Int8Array,
- *   clientData: Int8Array,
+ *   username: string,
+ *   password: string,
  *   token: string,
  *   kubeConfig: string,
  * }}

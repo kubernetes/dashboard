@@ -18,18 +18,18 @@ import (
 	"errors"
 
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
-	"github.com/kubernetes/dashboard/src/app/backend/auth/jwt"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	kdErrors "github.com/kubernetes/dashboard/src/app/backend/errors"
 	"k8s.io/client-go/tools/clientcmd/api"
 )
 
-// authManager implements AuthManager interface
+// Implements AuthManager interface
 type authManager struct {
 	tokenManager  authApi.TokenManager
 	clientManager client.ClientManager
 }
 
+// Implements auth manager. See AuthManager interface for more information.
 func (self authManager) Login(spec *authApi.LoginSpec) (authApi.LoginResponse, error) {
 	authenticator, err := self.getAuthenticator(spec)
 	if err != nil {
@@ -55,13 +55,12 @@ func (self authManager) Login(spec *authApi.LoginSpec) (authApi.LoginResponse, e
 	return authApi.LoginResponse{JWEToken: token, Errors: nonCriticalErrors}, nil
 }
 
+// Returns authenticator based on provided LoginSpec.
 func (self authManager) getAuthenticator(spec *authApi.LoginSpec) (authApi.Authenticator, error) {
 	switch {
-	case len(spec.Username) > 0 && len(spec.Password) > 0:
-		return nil, errors.New("Not implemented.")
 	case len(spec.Token) > 0:
 		return NewTokenAuthenticator(spec), nil
-	case len(spec.ClientKey) > 0 && len(spec.ClientCert) > 0:
+	case len(spec.Username) > 0 && len(spec.Password) > 0:
 		return nil, errors.New("Not implemented.")
 	case len(spec.KubeConfig) > 0:
 		return nil, errors.New("Not implemented.")
@@ -70,13 +69,16 @@ func (self authManager) getAuthenticator(spec *authApi.LoginSpec) (authApi.Authe
 	return nil, errors.New("Not enough data to create authenticator.")
 }
 
+// Checks if user data extracted from provided AuthInfo structure is valid and user is correctly authenticated
+// by K8S apiserver.
 func (self authManager) healthCheck(authInfo api.AuthInfo) error {
 	return self.clientManager.HasAccess(authInfo)
 }
 
-func NewAuthManager(clientManager client.ClientManager) authApi.AuthManager {
+// NewAuthManager creates auth manager.
+func NewAuthManager(clientManager client.ClientManager, tokenManager authApi.TokenManager) authApi.AuthManager {
 	return &authManager{
-		tokenManager:  jwt.NewJWTTokenManager(),
+		tokenManager:  tokenManager,
 		clientManager: clientManager,
 	}
 }
