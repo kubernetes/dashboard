@@ -30,7 +30,6 @@ limitations under the License.
 </div>
 
 <kd-content-card ng-if="$ctrl.overview.podList.pods.length">
-     <kd-title>[[Resource status|Label 'Resource status' for the overview section.]]</kd-title>
     <kd-content>
         <div class="kd-graph-container">
             <kd-allocated-resources-chart colorpalette="$ctrl.colorPalette"
@@ -42,21 +41,18 @@ limitations under the License.
               </div>
               <div class="kd-graph-legend-entry">
                 <md-icon class="kd-graph-green">stop</md-icon>
-                [[Running|Label 'Running' for the pod statistics graphs legend.]]
                 <span class="kd-graph-legend-value">
                   {{$ctrl.podStats.success}}
                 </span>
               </div>
               <div class="kd-graph-legend-entry">
                   <md-icon class="kd-graph-yellow">stop</md-icon>
-                  [[Pending|Label 'Pending' for the pod statistics graphs legend.]]
                   <span class="kd-graph-legend-value">
                     {{$ctrl.podStats.pending}}
                   </span>
               </div>
               <div class="kd-graph-legend-entry">
                   <md-icon class="kd-graph-red">stop</md-icon>
-                  [[Failed|Label 'Failed' for the pod statistics graphs legend.]]
                   <span class="kd-graph-legend-value">
                     {{$ctrl.podStats.failed}}
                   </span>
