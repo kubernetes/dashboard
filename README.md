@@ -12,6 +12,19 @@ itself.
 
 ![Dashboard UI workloads page](docs/dashboard-ui.png)
 
+## Compatibility matrix
+
+|                     | Kubernetes 1.4 | Kubernetes 1.5 | Kubernetes 1.6 | Kubernetes 1.7 |
+|---------------------|----------------|----------------|----------------|----------------|
+| Dashboard 1.4.x     | ✓              | ✕              | ✕              | ✕              |
+| Dashboard 1.5.x     | ✕              | ✓              | ✕              | ✕              |
+| Dashboard 1.6.x     | ✕              | ✕              | ✓              | ?              |
+| Dashboard HEAD      | ✕              | ✕              | ?              | ✓              |
+
+- `✓` All the functionalities are supported with given version.
+- `?` Some of the functionalities might not be working.
+- `✕` Most probably will not work with given version.
+
 ## Deployment
 It is likely that the Dashboard is already installed on your cluster. Check with the following command:
 ```shell
@@ -23,7 +36,7 @@ If it is missing, you can install the latest stable release by running the follo
 $ kubectl create -f https://git.io/kube-dashboard
 ```
 
-If you are using Kubernetes 1.5 or earlier, you can install the latest stable release by running the following command:
+If you are using the Dashboard on cluster without authorization setup, you can install the latest stable release by running the following command:
 ```shell
 $ kubectl create -f https://git.io/kube-dashboard-no-rbac
 ```
@@ -33,6 +46,8 @@ following the [development guide](docs/devel/head-releases.md).
 
 Note that for the metrics and graphs to be available you need to
 have [Heapster](https://github.com/kubernetes/heapster/) running in your cluster.
+
+
 
 ## Usage
 The easiest way to access Dashboard is to use kubectl. Run the following command in your desktop environment:
