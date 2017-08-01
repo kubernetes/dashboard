@@ -14,32 +14,32 @@
 # limitations under the License.
 
 # Starts local hypercube cluster in a Docker container.
-# Learn more at https://github.com/kubernetes/kubernetes/blob/master/docs/getting-started-guides/docker.md
+# Learn more at https://github.com/kubernetes/community/blob/master/contributors/devel/local-cluster/docker.md
 
-# Version of kubernetes to use.
-K8S_VERSION="v1.5.4"
+# Stable version of kubernetes to use.
+export K8S_VERSION=$(curl -sS https://storage.googleapis.com/kubernetes-release/release/stable.txt)
 # Version heapster to use.
 HEAPSTER_VERSION="v1.2.0"
 # Port of the heapster to serve on.
 HEAPSTER_PORT=8082
-
-docker run \
+export ARCH=amd64
+docker run -d \
+    --volume=/sys:/sys:rw \
+    --volume=/var/lib/docker/:/var/lib/docker:rw \
+    --volume=/var/lib/kubelet/:/var/lib/kubelet:rw,shared \
+    --volume=/var/run:/var/run:rw \
     --net=host \
     --pid=host \
-    --privileged=true \
-    -d \
-    gcr.io/google_containers/hyperkube-amd64:${K8S_VERSION} \
-    /nsenter \
-      --target=1 \
-      --mount \
-      --wd=. \
-      -- ./hyperkube kubelet \
-        --allow-privileged=true \
-        --hostname-override="127.0.0.1" \
-        --address="0.0.0.0" \
+    --privileged \
+    --name=kubelet \
+    gcr.io/google_containers/hyperkube-${ARCH}:${K8S_VERSION} \
+    /hyperkube kubelet \
+        --hostname-override=127.0.0.1 \
         --api-servers=http://localhost:8080 \
-        --config=etc/kubernetes/manifests \
-        --v=2
+        --kubeconfig=/etc/kubernetes/manifests \
+        --cluster-dns=10.0.0.10 \
+        --cluster-domain=cluster.local \
+        --allow-privileged --v=2
 
 
 # Runs Heapster in standalone mode
