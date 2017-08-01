@@ -51,5 +51,5 @@ func getLogSourcesFromController(k8sClient *client.Clientset, ns, resourceName, 
 	if err != nil {
 		return controller.LogSources{}, err
 	}
-	return rc.GetLogSources(allPods.Items)
+	return rc.GetLogSources(allPods.Items), nil
 }

@@ -22,10 +22,6 @@ import (
 	"k8s.io/client-go/pkg/api/v1"
 )
 
-type Person struct {
-	name string
-}
-
 func TestGetPodNames(t *testing.T) {
 	cases := []struct {
 		pods          []v1.Pod

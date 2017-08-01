@@ -55,7 +55,7 @@ type ResourceController interface {
 	// Get is a method, that returns ResourceOwner object.
 	Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOwner
 	// Returns all log sources of controlled resource (e.g. a list of containers and pods for a replica set)
-	GetLogSources(allPods []v1.Pod) (LogSources, error)
+	GetLogSources(allPods []v1.Pod) LogSources
 }
 
 // NewResourceController creates instance of ResourceController based on given reference. It allows
@@ -125,12 +125,12 @@ func (self JobController) UID() types.UID {
 }
 
 // GetLogSources is an implementation of the GetLogSources method from ResourceController interface.
-func (self JobController) GetLogSources(allPods []v1.Pod) (LogSources, error) {
+func (self JobController) GetLogSources(allPods []v1.Pod) LogSources {
 	controlledPods := common.FilterPodsForJob(batch.Job(self), allPods)
 	return LogSources{
 		PodNames:       getPodNames(controlledPods),
 		ContainerNames: common.GetContainerNames(&self.Spec.Template.Spec),
-	}, nil
+	}
 }
 
 // ReplicaSetController is an alias-type for Kubernetes API Replica Set type. It allows to provide
@@ -157,12 +157,12 @@ func (self ReplicaSetController) UID() types.UID {
 }
 
 // GetLogSources is an implementation of the GetLogSources method from ResourceController interface.
-func (self ReplicaSetController) GetLogSources(allPods []v1.Pod) (LogSources, error) {
+func (self ReplicaSetController) GetLogSources(allPods []v1.Pod) LogSources {
 	controlledPods := common.FilterPodsByOwnerReference(self.Namespace, self.UID(), allPods)
 	return LogSources{
 		PodNames:       getPodNames(controlledPods),
 		ContainerNames: common.GetContainerNames(&self.Spec.Template.Spec),
-	}, nil
+	}
 }
 
 // ReplicationControllerController is an alias-type for Kubernetes API Replication Controller type.
@@ -190,12 +190,12 @@ func (self ReplicationControllerController) UID() types.UID {
 }
 
 // GetLogSources is an implementation of the GetLogSources method from ResourceController interface.
-func (self ReplicationControllerController) GetLogSources(allPods []v1.Pod) (LogSources, error) {
+func (self ReplicationControllerController) GetLogSources(allPods []v1.Pod) LogSources {
 	controlledPods := common.FilterPodsByOwnerReference(self.Namespace, self.UID(), allPods)
 	return LogSources{
 		PodNames:       getPodNames(controlledPods),
 		ContainerNames: common.GetContainerNames(&self.Spec.Template.Spec),
-	}, nil
+	}
 }
 
 // DaemonSetController is an alias-type for Kubernetes API Daemon Set type. It allows to provide
@@ -223,12 +223,12 @@ func (self DaemonSetController) UID() types.UID {
 }
 
 // GetLogSources is an implementation of the GetLogSources method from ResourceController interface.
-func (self DaemonSetController) GetLogSources(allPods []v1.Pod) (LogSources, error) {
+func (self DaemonSetController) GetLogSources(allPods []v1.Pod) LogSources {
 	controlledPods := common.FilterPodsByOwnerReference(self.Namespace, self.UID(), allPods)
 	return LogSources{
 		PodNames:       getPodNames(controlledPods),
 		ContainerNames: common.GetContainerNames(&self.Spec.Template.Spec),
-	}, nil
+	}
 }
 
 // StatefulSetController is an alias-type for Kubernetes API Stateful Set type. It allows to provide
@@ -255,12 +255,12 @@ func (self StatefulSetController) UID() types.UID {
 }
 
 // GetLogSources is an implementation of the GetLogSources method from ResourceController interface.
-func (self StatefulSetController) GetLogSources(allPods []v1.Pod) (LogSources, error) {
+func (self StatefulSetController) GetLogSources(allPods []v1.Pod) LogSources {
 	controlledPods := common.FilterPodsByOwnerReference(self.Namespace, self.UID(), allPods)
 	return LogSources{
 		PodNames:       getPodNames(controlledPods),
 		ContainerNames: common.GetContainerNames(&self.Spec.Template.Spec),
-	}, nil
+	}
 }
 
 func getPodNames(pods []v1.Pod) []string {
