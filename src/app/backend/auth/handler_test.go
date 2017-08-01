@@ -14,4 +14,16 @@
 
 package auth
 
-// TODO(floreks): Add tests
+import (
+	"testing"
+)
+
+func TestIntegrationHandler_Install(t *testing.T) {
+	iHandler := NewAuthHandler(nil)
+	ws := new(restful.WebService)
+	iHandler.Install(ws)
+
+	if len(ws.Routes()) == 0 {
+		t.Error("Failed to install routes.")
+	}
+}

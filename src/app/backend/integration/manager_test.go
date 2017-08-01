@@ -18,7 +18,6 @@ import (
 	"testing"
 
 	"errors"
-	"fmt"
 
 	"github.com/kubernetes/dashboard/src/app/backend/auth/jwe"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
@@ -80,9 +79,8 @@ func TestIntegrationManager_GetState(t *testing.T) {
 		// Time is irrelevant so we don't need to check it
 		if c.expectedErr == nil && (!areErrorsEqual(state.Error, c.expected.Error) ||
 			state.Connected != c.expected.Connected) {
-			t.Errorf("Test Case: %s. Expected state error to be: %v, but got %v.",
+			t.Errorf("Test Case: %s. Expected state to be: %v, but got %v.",
 				c.info, c.expected, state)
-			fmt.Println(state.Error)
 		}
 	}
 }

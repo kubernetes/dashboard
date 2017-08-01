@@ -27,9 +27,10 @@ import (
 
 // Implements TokenManager interface
 type jweTokenManager struct {
-	// TODO(floreks): Add key synchronization, expiration and rotation options
+	encrypter jose.Encrypter
+	// TODO(floreks): Add key synchronization (between dashboard replicas), expiration and rotation options
 	// 256-byte random RSA key pair. It is generated during the first backend start.
-	tokenSigningKey *rsa.PrivateKey
+	tokenEncryptionKey *rsa.PrivateKey
 }
 
 // Generate and encrypt JWE token based on provided AuthInfo structure. AuthInfo will be embedded in a token payload and
@@ -38,19 +39,13 @@ type jweTokenManager struct {
 //    - Content encryption: AES-GCM (256)
 //    - Key management: RSA-OAEP-SHA256
 func (self *jweTokenManager) Generate(authInfo api.AuthInfo) (string, error) {
-	publicKey := &self.tokenSigningKey.PublicKey
-	encrypter, err := jose.NewEncrypter(jose.A256GCM, jose.Recipient{Algorithm: jose.RSA_OAEP_256, Key: publicKey}, nil)
-	if err != nil {
-		return "", err
-	}
-
 	marshalledAuthInfo, err := json.Marshal(authInfo)
 	if err != nil {
 		return "", err
 	}
 
 	// TODO(floreks): add token expiration header and handle it
-	jweObject, err := encrypter.Encrypt(marshalledAuthInfo)
+	jweObject, err := self.encrypter.Encrypt(marshalledAuthInfo)
 	if err != nil {
 		return "", err
 	}
@@ -65,7 +60,7 @@ func (self *jweTokenManager) Decrypt(jweToken string) (*api.AuthInfo, error) {
 		return nil, err
 	}
 
-	decrypted, err := jweTokenObject.Decrypt(self.tokenSigningKey)
+	decrypted, err := jweTokenObject.Decrypt(self.tokenEncryptionKey)
 	// TODO(floreks): Check for decryption error and handle it
 	if err != nil {
 		return nil, err
@@ -82,15 +77,33 @@ func (self *jweTokenManager) validate(jweToken string) (*jose.JSONWebEncryption,
 	return jose.ParseEncrypted(jweToken)
 }
 
-// Initializes token manager instance and generates signing key.
+// Initializes token manager instance.
 func (self *jweTokenManager) init() {
-	log.Print("Generating JWE signing key")
+	self.initEncryptionKey()
+	self.initEncrypter()
+}
+
+// Generates encryption key used to encrypt token payload.
+func (self *jweTokenManager) initEncryptionKey() {
+	log.Print("Generating JWE encryption key")
 	privateKey, err := rsa.GenerateKey(rand.Reader, 2048)
 	if err != nil {
 		panic(err)
 	}
 
-	self.tokenSigningKey = privateKey
+	self.tokenEncryptionKey = privateKey
+}
+
+// Creates encrypter instance based on generated encryption key.
+func (self *jweTokenManager) initEncrypter() {
+	log.Print("Initializing encrypter")
+	publicKey := &self.tokenEncryptionKey.PublicKey
+	encrypter, err := jose.NewEncrypter(jose.A256GCM, jose.Recipient{Algorithm: jose.RSA_OAEP_256, Key: publicKey}, nil)
+	if err != nil {
+		panic(err)
+	}
+
+	self.encrypter = encrypter
 }
 
 // Creates and returns JWE token manager instance.

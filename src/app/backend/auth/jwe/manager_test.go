@@ -14,4 +14,12 @@
 
 package jwe
 
-// TODO(floreks): Add tests
+import "testing"
+
+func TestJweTokenManager_Generate(t *testing.T) {
+
+}
+
+func TestJweTokenManager_Decrypt(t *testing.T) {
+
+}

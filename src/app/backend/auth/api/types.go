@@ -22,7 +22,7 @@ import (
 type AuthManager interface {
 	// Login authenticates user based on provided LoginSpec and returns LoginResponse. LoginResponse contains
 	// generated token and list of non-critical errors such as 'Failed authentication'.
-	Login(*LoginSpec) (LoginResponse, error)
+	Login(*LoginSpec) (*LoginResponse, error)
 }
 
 // TokenManager is responsible for generating and decrypting tokens used for authorization. Authorization is handled

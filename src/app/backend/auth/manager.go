@@ -30,29 +30,29 @@ type authManager struct {
 }
 
 // Implements auth manager. See AuthManager interface for more information.
-func (self authManager) Login(spec *authApi.LoginSpec) (authApi.LoginResponse, error) {
+func (self authManager) Login(spec *authApi.LoginSpec) (*authApi.LoginResponse, error) {
 	authenticator, err := self.getAuthenticator(spec)
 	if err != nil {
-		return authApi.LoginResponse{}, err
+		return nil, err
 	}
 
 	authInfo, err := authenticator.GetAuthInfo()
 	if err != nil {
-		return authApi.LoginResponse{}, err
+		return nil, err
 	}
 
 	err = self.healthCheck(authInfo)
 	nonCriticalErrors, criticalError := kdErrors.HandleError(err)
 	if criticalError != nil || len(nonCriticalErrors) > 0 {
-		return authApi.LoginResponse{Errors: nonCriticalErrors}, criticalError
+		return &authApi.LoginResponse{Errors: nonCriticalErrors}, criticalError
 	}
 
 	token, err := self.tokenManager.Generate(authInfo)
 	if err != nil {
-		return authApi.LoginResponse{}, err
+		return nil, err
 	}
 
-	return authApi.LoginResponse{JWEToken: token, Errors: nonCriticalErrors}, nil
+	return &authApi.LoginResponse{JWEToken: token, Errors: nonCriticalErrors}, nil
 }
 
 // Returns authenticator based on provided LoginSpec.
