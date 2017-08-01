@@ -50,12 +50,12 @@ func (self *jweTokenManager) Generate(authInfo api.AuthInfo) (string, error) {
 	}
 
 	// TODO(floreks): add token expiration header and handle it
-	jwtObject, err := encrypter.Encrypt(marshalledAuthInfo)
+	jweObject, err := encrypter.Encrypt(marshalledAuthInfo)
 	if err != nil {
 		return "", err
 	}
 
-	return jwtObject.FullSerialize(), nil
+	return jweObject.FullSerialize(), nil
 }
 
 // Decrypt provided token and return AuthInfo structure saved in a token payload.

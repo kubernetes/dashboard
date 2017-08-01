@@ -73,11 +73,11 @@ class LoginController {
   }
 
   /** @export */
-  logIn() {
+  login() {
     if (this.form.$valid) {
       let defer = this.q_.defer();
 
-      this.kdAuthService_.logIn(this.loginSpec)
+      this.kdAuthService_.login(this.loginSpec)
           .then(
               (errors) => {
                 if (errors.length !== 0) {

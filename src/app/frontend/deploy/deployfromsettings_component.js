@@ -35,10 +35,12 @@ export default class DeployFromSettingsController {
    * @param {!./../common/history/service.HistoryService} kdHistoryService
    * @param {!./../common/namespace/service.NamespaceService} kdNamespaceService
    * @param {!./../common/csrftoken/service.CsrfTokenService} kdCsrfTokenService
+   * @param {string} kdCsrfTokenHeader
    * @ngInject
    */
   constructor(
-      $log, $resource, $q, $mdDialog, kdHistoryService, kdNamespaceService, kdCsrfTokenService) {
+      $log, $resource, $q, $mdDialog, kdHistoryService, kdNamespaceService, kdCsrfTokenService,
+      kdCsrfTokenHeader) {
     /**
      * Initialized from the template.
      * @export {!angular.FormController}
@@ -173,6 +175,9 @@ export default class DeployFromSettingsController {
 
     /** @export */
     this.i18n = i18n;
+
+    /** @private {string} */
+    this.csrfHeaderName_ = kdCsrfTokenHeader;
   }
 
   /** @export */
@@ -241,7 +246,7 @@ export default class DeployFromSettingsController {
             /** @type {!angular.Resource<!backendApi.AppDeploymentSpec>} */
             let resource = this.resource_(
                 'api/v1/appdeployment', {},
-                {save: {method: 'POST', headers: {'X-CSRF-TOKEN': token}}});
+                {save: {method: 'POST', headers: {[this.csrfHeaderName_]: token}}});
             this.isDeployInProgress_ = true;
             resource.save(
                 appDeploymentSpec,

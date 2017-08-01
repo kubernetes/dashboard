@@ -26,11 +26,12 @@ export class AuthService {
    * @param {!angular.$resource} $resource
    * @param {string} kdTokenCookieName
    * @param {string} kdTokenHeaderName
+   * @param {string} kdCsrfTokenHeader
    * @ngInject
    */
   constructor(
       $cookies, $transitions, kdCsrfTokenService, $log, $state, $q, $resource, kdTokenCookieName,
-      kdTokenHeaderName) {
+      kdTokenHeaderName, kdCsrfTokenHeader) {
     /** @private {!angular.$cookies} */
     this.cookies_ = $cookies;
     /** @private {!kdUiRouter.$transitions} */
@@ -50,6 +51,8 @@ export class AuthService {
     /** @private {string} */
     this.tokenHeaderName_ = kdTokenHeaderName;
     /** @private {string} */
+    this.csrfHeaderName_ = kdCsrfTokenHeader;
+    /** @private {string} */
     this.skipLoginPageCookieName_ = 'skipLoginPage';
   }
 
@@ -66,7 +69,7 @@ export class AuthService {
    *
    * @param {!backendApi.LoginSpec} loginSpec
    */
-  logIn(loginSpec) {
+  login(loginSpec) {
     let deferred = this.q_.defer();
 
     this.csrfTokenPromise_.then(
@@ -75,7 +78,7 @@ export class AuthService {
             save: {
               method: 'POST',
               headers: {
-                'X-CSRF-TOKEN': csrfToken,
+                [this.csrfHeaderName_]: csrfToken,
               },
             },
           });
