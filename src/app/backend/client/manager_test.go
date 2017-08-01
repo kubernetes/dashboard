@@ -172,6 +172,10 @@ func TestClientCmdConfig(t *testing.T) {
 	}
 }
 
+func TestHasAccess(t *testing.T) {
+	// TODO(floreks): Add test
+}
+
 func TestVerberClient(t *testing.T) {
 	manager := NewClientManager("", "http://localhost:8080", jwe.NewJWETokenManager())
 	_, err := manager.VerberClient(nil)
