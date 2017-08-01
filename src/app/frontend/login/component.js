@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as workloadsState} from 'workloads/state';
+import {stateName as overviewState} from 'overview/state';
 import LoginSpec from './spec';
 
 /** @final */
@@ -87,7 +87,7 @@ class LoginController {
                 }
 
                 this.kdNavService_.setVisibility(true);
-                this.state_.transitionTo(workloadsState);
+                this.state_.transitionTo(overviewState);
                 defer.resolve();
               },
               (err) => {
@@ -100,7 +100,7 @@ class LoginController {
   skip() {
     this.kdAuthService_.skipLoginPage(true);
     this.kdNavService_.setVisibility(true);
-    this.state_.transitionTo(workloadsState);
+    this.state_.transitionTo(overviewState);
   }
 }
 

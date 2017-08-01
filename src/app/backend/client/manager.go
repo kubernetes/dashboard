@@ -123,24 +123,7 @@ func (self *clientManager) ClientCmdConfig(req *restful.Request) (clientcmd.Clie
 		authInfo = &defaultAuthInfo
 	}
 
-	cmdCfg := api.NewConfig()
-	cmdCfg.Clusters[DefaultCmdConfigName] = &api.Cluster{
-		Server:                   cfg.Host,
-		CertificateAuthority:     cfg.TLSClientConfig.CAFile,
-		CertificateAuthorityData: cfg.TLSClientConfig.CAData,
-		InsecureSkipTLSVerify:    cfg.TLSClientConfig.Insecure,
-	}
-	cmdCfg.AuthInfos[DefaultCmdConfigName] = authInfo
-	cmdCfg.Contexts[DefaultCmdConfigName] = &api.Context{
-		Cluster:  DefaultCmdConfigName,
-		AuthInfo: DefaultCmdConfigName,
-	}
-	cmdCfg.CurrentContext = DefaultCmdConfigName
-
-	return clientcmd.NewDefaultClientConfig(
-		*cmdCfg,
-		&clientcmd.ConfigOverrides{},
-	), nil
+	return self.buildCmdConfig(authInfo, cfg), nil
 }
 
 // CSRFKey returns key that is generated upon client manager creation
@@ -156,27 +139,7 @@ func (self *clientManager) HasAccess(authInfo api.AuthInfo) error {
 		return err
 	}
 
-	cmdCfg := api.NewConfig()
-	cmdCfg.Clusters[DefaultCmdConfigName] = &api.Cluster{
-		Server:                   cfg.Host,
-		CertificateAuthority:     cfg.TLSClientConfig.CAFile,
-		CertificateAuthorityData: cfg.TLSClientConfig.CAData,
-		InsecureSkipTLSVerify:    cfg.TLSClientConfig.Insecure,
-	}
-	cmdCfg.AuthInfos[DefaultCmdConfigName] = &authInfo
-	cmdCfg.Contexts[DefaultCmdConfigName] = &api.Context{
-		Cluster:  DefaultCmdConfigName,
-		AuthInfo: DefaultCmdConfigName,
-	}
-	cmdCfg.CurrentContext = DefaultCmdConfigName
-
-	clientConfig := clientcmd.NewDefaultClientConfig(
-		*cmdCfg,
-		&clientcmd.ConfigOverrides{
-			AuthInfo: authInfo,
-		},
-	)
-
+	clientConfig := self.buildCmdConfig(&authInfo, cfg)
 	cfg, err = clientConfig.ClientConfig()
 	if err != nil {
 		return err
@@ -239,6 +202,28 @@ func (self *clientManager) buildAuthInfoFromConfig(cfg *rest.Config) api.AuthInf
 		Username:              cfg.Username,
 		Password:              cfg.Password,
 	}
+}
+
+// Based on auth info and rest config creates client cmd config.
+func (self *clientManager) buildCmdConfig(authInfo *api.AuthInfo, cfg *rest.Config) clientcmd.ClientConfig {
+	cmdCfg := api.NewConfig()
+	cmdCfg.Clusters[DefaultCmdConfigName] = &api.Cluster{
+		Server:                   cfg.Host,
+		CertificateAuthority:     cfg.TLSClientConfig.CAFile,
+		CertificateAuthorityData: cfg.TLSClientConfig.CAData,
+		InsecureSkipTLSVerify:    cfg.TLSClientConfig.Insecure,
+	}
+	cmdCfg.AuthInfos[DefaultCmdConfigName] = authInfo
+	cmdCfg.Contexts[DefaultCmdConfigName] = &api.Context{
+		Cluster:  DefaultCmdConfigName,
+		AuthInfo: DefaultCmdConfigName,
+	}
+	cmdCfg.CurrentContext = DefaultCmdConfigName
+
+	return clientcmd.NewDefaultClientConfig(
+		*cmdCfg,
+		&clientcmd.ConfigOverrides{},
+	)
 }
 
 // Extracts authorization information from request header

@@ -20,6 +20,7 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/kubernetes/dashboard/src/app/backend/auth/jwe"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/integration/api"
 )
@@ -66,7 +67,7 @@ func TestIntegrationManager_GetState(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		cManager := client.NewClientManager("", c.apiServerHost)
+		cManager := client.NewClientManager("", c.apiServerHost, jwe.NewJWETokenManager())
 		iManager := NewIntegrationManager(cManager)
 		iManager.Metric().ConfigureHeapster(c.heapsterHost)
 

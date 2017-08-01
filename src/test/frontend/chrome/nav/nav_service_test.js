@@ -50,20 +50,6 @@ describe('Nav service', () => {
     kdFutureStateService = _kdFutureStateService_;
   }));
 
-  it('should deny toggle when not initialized', () => {
-    expect(() => {
-      navService.toggle();
-    }).toThrow(new Error('Navigation menu is not registered. This is likely a programming error.'));
-  });
-
-  it('should toggle nav', () => {
-    let comp = jasmine.createSpy('comp');
-    navService.registerNav({toggle: comp});
-    navService.toggle();
-
-    expect(comp).toHaveBeenCalled();
-  });
-
   it('should detect activity', () => {
     navService.registerState('fakeState');
     navService.registerState('fakeNonActive');
