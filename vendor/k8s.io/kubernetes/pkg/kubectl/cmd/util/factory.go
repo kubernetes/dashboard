@@ -230,17 +230,21 @@ type ObjectMappingFactory interface {
 // Generally they depend upon client mapper functions
 type BuilderFactory interface {
 	// PrinterForCommand returns the default printer for the command. It requires that certain options
-	// are declared on the command (see AddPrinterFlags). Returns a printer, true if the printer is
-	// generic (is not internal), or an error if a printer could not be found.
+	// are declared on the command (see AddPrinterFlags). Returns a printer, or an error if a printer
+	// could not be found.
 	// TODO: Break the dependency on cmd here.
-	PrinterForCommand(cmd *cobra.Command) (printers.ResourcePrinter, bool, error)
+	PrinterForCommand(cmd *cobra.Command, isLocal bool, outputOpts *printers.OutputOptions, options printers.PrintOptions) (printers.ResourcePrinter, error)
 	// PrinterForMapping returns a printer suitable for displaying the provided resource type.
 	// Requires that printer flags have been added to cmd (see AddPrinterFlags).
-	PrinterForMapping(cmd *cobra.Command, mapping *meta.RESTMapping, withNamespace bool) (printers.ResourcePrinter, error)
+	// Returns a printer, true if the printer is generic (is not internal), or
+	// an error if a printer could not be found.
+	PrinterForMapping(cmd *cobra.Command, isLocal bool, outputOpts *printers.OutputOptions, mapping *meta.RESTMapping, withNamespace bool) (printers.ResourcePrinter, error)
 	// PrintObject prints an api object given command line flags to modify the output format
-	PrintObject(cmd *cobra.Command, mapper meta.RESTMapper, obj runtime.Object, out io.Writer) error
+	PrintObject(cmd *cobra.Command, isLocal bool, mapper meta.RESTMapper, obj runtime.Object, out io.Writer) error
 	// One stop shopping for a Builder
-	NewBuilder() *resource.Builder
+	NewBuilder(allowRemoteCalls bool) *resource.Builder
+	// Resource builder for working with unstructured objects
+	NewUnstructuredBuilder(allowRemoteCalls bool) (*resource.Builder, error)
 	// PluginLoader provides the implementation to be used to load cli plugins.
 	PluginLoader() plugins.PluginLoader
 	// PluginRunner provides the implementation to be used to run cli plugins.

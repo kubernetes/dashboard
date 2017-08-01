@@ -6,17 +6,17 @@ bower_components/
 .go_workspace/
 .sass-cache/
 .tmp/
-coverage/
-dist/
 .tools/
+dist/
+coverage/
 
-## OS files
-# Mac OS
+## System specific files
+# macOS
 .DS_Store
 
 ## IDE specific files
 # IntelliJ
 .idea/
 *.iml
-# Vi temporary files
+# Vi
 *.swp
