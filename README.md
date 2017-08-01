@@ -47,8 +47,6 @@ following the [development guide](docs/devel/head-releases.md).
 Note that for the metrics and graphs to be available you need to
 have [Heapster](https://github.com/kubernetes/heapster/) running in your cluster.
 
-
-
 ## Usage
 The easiest way to access Dashboard is to use kubectl. Run the following command in your desktop environment:
 ```shell
