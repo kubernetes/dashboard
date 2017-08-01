@@ -16,9 +16,9 @@ itself.
 
 |                     | Kubernetes 1.4 | Kubernetes 1.5 | Kubernetes 1.6 | Kubernetes 1.7 |
 |---------------------|----------------|----------------|----------------|----------------|
-| Dashboard 1.4.x     | ✓              | ✕              | ✕              | ✕              |
-| Dashboard 1.5.x     | ✕              | ✓              | ✕              | ✕              |
-| Dashboard 1.6.x     | ✕              | ✕              | ✓              | ?              |
+| Dashboard 1.4       | ✓              | ✕              | ✕              | ✕              |
+| Dashboard 1.5       | ✕              | ✓              | ✕              | ✕              |
+| Dashboard 1.6       | ✕              | ✕              | ✓              | ?              |
 | Dashboard HEAD      | ✕              | ✕              | ?              | ✓              |
 
 - `✓` All the functionalities are supported with given version.
