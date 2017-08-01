@@ -32,7 +32,7 @@ var (
 	)
 	usernameCaseMap = NewIdentifier(
 		FoldWidth,
-		LowerCase(),
+		FoldCase(),
 		Norm(norm.NFC),
 		BidiRule,
 	)
@@ -43,17 +43,14 @@ var (
 	)
 	opaquestring = NewFreeform(
 		AdditionalMapping(func() transform.Transformer {
-			return mapSpaces
+			return runes.Map(func(r rune) rune {
+				if unicode.Is(unicode.Zs, r) {
+					return ' '
+				}
+				return r
+			})
 		}),
 		Norm(norm.NFC),
 		DisallowEmpty,
 	)
 )
-
-// mapSpaces is a shared value of a runes.Map transformer.
-var mapSpaces transform.Transformer = runes.Map(func(r rune) rune {
-	if unicode.Is(unicode.Zs, r) {
-		return ' '
-	}
-	return r
-})

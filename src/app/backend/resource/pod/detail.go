@@ -319,8 +319,6 @@ func evalValueFrom(src *v1.EnvVarSource, container *v1.Container, pod *v1.Pod,
 }
 
 // extractContainerResourceValue extracts the value of a resource in an already known container.
-// TODO(maciaszczykm): Replace this method with call to fieldpath.ExtractContainerResourceValue().
-// To do it update to new client-go and convert arguments to Kubernetes API.
 func extractContainerResourceValue(fs *v1.ResourceFieldSelector, container *v1.Container) (string,
 	error) {
 	divisor := res.Quantity{}
