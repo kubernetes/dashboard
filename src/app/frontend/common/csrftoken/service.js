@@ -21,7 +21,7 @@ export class CsrfTokenService {
    * @ngInject
    */
   constructor($resource) {
-    /** @private {!angular.$http} */
+    /** @private {!angular.$resource} */
     this.resource_ = $resource;
   }
 
