@@ -1,9 +1,6 @@
 ## Local copies of dependencies that should stay on developers' local machines
 node_modules/
 bower_components/
-vendor/**
-!vendor/**/*.go
-!vendor/**/*LICENSE*
 
 ## Build and test artifacts
 .go_workspace/
