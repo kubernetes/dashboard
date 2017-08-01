@@ -68,8 +68,7 @@
 [[projects]]
   name = "github.com/emicklei/go-restful"
   packages = [".","log"]
-  revision = "cf834cf8da5b681af81bde6fa32304e6ce8eec71"
-  version = "2.2.0"
+  revision = "1eaf4c9d1681d91b31eeb1414a8a715b8008c7a2"
 
 [[projects]]
   name = "github.com/emicklei/go-restful-swagger12"
@@ -333,6 +332,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "5dc68d1fb69981e969a34a770f43bc48455bc4ff3a7d2bd258f6f99da318cc37"
+  inputs-digest = "5a1a4769d1737e6a37e86df11d4089de639851824d8a2c174311d8890150d3b2"
   solver-name = "gps-cdcl"
   solver-version = 1

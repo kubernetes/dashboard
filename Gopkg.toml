@@ -5,10 +5,6 @@
   version = "2.6.2"
 
 [[constraint]]
-  name = "github.com/emicklei/go-restful"
-  version = "2.2.0"
-
-[[constraint]]
   branch = "master"
   name = "github.com/golang/glog"
 
@@ -49,5 +45,9 @@
   version = "1.7.2"
 
 [[override]]
-  revision = "8ff532a4cb6f39381eb9488efc71c394da932f05"
   name = "k8s.io/apiserver"
+  revision = "8ff532a4cb6f39381eb9488efc71c394da932f05"
+
+[[override]]
+  name = "github.com/emicklei/go-restful"
+  revision = "1eaf4c9d1681d91b31eeb1414a8a715b8008c7a2"
