@@ -70,7 +70,7 @@ kdUiRouter.$transitions.prototype.onSuccess = function(criteria, callback, optio
 kdUiRouter.$transition$ = function() {};
 
 /**
- * @return {!ui.router.$state}
+ * @return {!ui.router.State}
  */
 kdUiRouter.$transition$.prototype.to = function() {};
 

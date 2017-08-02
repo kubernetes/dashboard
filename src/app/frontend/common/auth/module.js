@@ -39,12 +39,17 @@ export default angular
  * Initializes the service to track state changes and make sure that user is logged in and
  * token has not expired.
  *
+ * @param {./service.AuthService} kdAuthService
  * @ngInject
  */
 function initAuthService(kdAuthService) {
   kdAuthService.init();
 }
 
+/**
+ * @param {!angular.$HttpProvider} $httpProvider
+ * @ngInject
+ */
 function initAuthInterceptor($httpProvider) {
   $httpProvider.interceptors.push('kdAuthInterceptor');
 }

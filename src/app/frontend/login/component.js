@@ -76,23 +76,16 @@ class LoginController {
   /** @export */
   login() {
     if (this.form.$valid) {
-      let defer = this.q_.defer();
-
       this.kdAuthService_.login(this.loginSpec)
           .then(
               (errors) => {
-                if (errors.length !== 0) {
+                if (errors.length > 0) {
                   this.errors = errors;
-                  defer.resolve();
                   return;
                 }
 
                 this.kdNavService_.setVisibility(true);
                 this.state_.transitionTo(overviewState);
-                defer.resolve();
-              },
-              (err) => {
-                defer.reject(err);
               });
     }
   }

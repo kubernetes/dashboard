@@ -19,7 +19,7 @@ export class AuthService {
   /**
    * @param {!angular.$cookies} $cookies
    * @param {!kdUiRouter.$transitions} $transitions
-   * @param {./../csrftoken/service.CsrfTokenService} kdCsrfTokenService
+   * @param {!./../csrftoken/service.CsrfTokenService} kdCsrfTokenService
    * @param {!angular.$log} $log
    * @param {!kdUiRouter.$state} $state
    * @param {!angular.$q} $q
@@ -36,8 +36,8 @@ export class AuthService {
     this.cookies_ = $cookies;
     /** @private {!kdUiRouter.$transitions} */
     this.transitions_ = $transitions;
-    /** @private {!angular.$q.Promise} */
-    this.csrfTokenPromise_ = kdCsrfTokenService.getTokenForAction('login');
+    /** @private {!./../csrftoken/service.CsrfTokenService} */
+    this.csrfTokenService_ = kdCsrfTokenService;
     /** @private {!angular.$log} */
     this.log_ = $log;
     /** @private {!kdUiRouter.$state} */
@@ -72,7 +72,9 @@ export class AuthService {
   login(loginSpec) {
     let deferred = this.q_.defer();
 
-    this.csrfTokenPromise_.then(
+    /** @type {!angular.$q.Promise} */
+    let csrfTokenPromise = this.csrfTokenService_.getTokenForAction('login');
+    csrfTokenPromise.then(
         (csrfToken) => {
           let resource = this.resource_('api/v1/login', {}, {
             save: {
@@ -128,23 +130,24 @@ export class AuthService {
     });
 
     // Skip log in check if user is going to login page already or has chosen to skip it.
-    if (!this.isLoginPageEnabled() || transition.to().name === loginState) {
-      deferred.resolve(true);
+    if (!this.isLoginPageEnabled() || transition.to().name === loginState || transition.to().name === 'internalerror') {
+      deferred.resolve();
       return deferred.promise;
     }
 
     resource.get(
         (/** @type {!backendApi.LoginStatus} */ loginStatus) => {
           if (loginStatus.headerPresent || loginStatus.tokenPresent) {
-            return deferred.resolve(true);
+            deferred.resolve();
+            return;
           }
 
-          return deferred.resolve(this.state_.target(loginState));
+          deferred.resolve(this.state_.target(loginState));
         },
         (err) => {
           this.log_.error(err);
           // In case of error let the transition to continue.
-          return deferred.resolve(true);
+          deferred.resolve();
         });
 
     return deferred.promise;

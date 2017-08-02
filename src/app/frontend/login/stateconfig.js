@@ -39,11 +39,8 @@ export default function stateConfig($stateProvider) {
  *
  * @type {!ui.router.StateConfig}
  */
-export const config = {
+const config = {
   url: stateUrl,
-  resolve: {
-    'loginStatus': getLoginStatus,
-  },
   data: {
     [breadcrumbsConfig]: {
       'label': i18n.MSG_BREADCRUMBS_LOGIN_LABEL,
@@ -51,7 +48,3 @@ export const config = {
   },
   component: 'kdLogin',
 };
-
-function getLoginStatus($resource) {
-  return $resource('api/v1/login/status').get().$promise;
-}
