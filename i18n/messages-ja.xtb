@@ -372,7 +372,7 @@
   <translation id="4158586803314397594" key="MSG_ENDPOINT_CARDLIST_1" desc="(no description provided)">There are currently no Endpoints selected by this Service.</translation>
   <translation id="2771036553361600987" key="MSG_ENDPOINT_CARDLIST_2" desc="Label \'Source\' for the endpoint source column of the endpoints table (endpoints list page).">Host</translation>
   <translation id="7755291325340264720" key="MSG_ENDPOINT_CARDLIST_3" desc="Label \'Sub-object\' for the respective column of the endpoints table (endpoints list page).">Ports (Name, Port, Protocol)</translation>
-  <translation id="212373317303144699" key="MSG_ENDPOINT_CARDLIST_4" desc="Label \'Sub-object\' for the respective column of the endpoints table (endpoints list page).">Node name</translation>
+  <translation id="6378019040175268379" key="MSG_ENDPOINT_CARDLIST_4" desc="Label \'Sub-object\' for the respective column of the endpoints table (endpoints list page).">Node</translation>
   <translation id="1608216445138526830" key="MSG_ENDPOINT_CARDLIST_5" desc="Label \'Sub-object\' for the respective column of the endpoints table (endpoints list page).">Ready </translation>
   <translation id="4162582061346784285" key="MSG_ERROR_HANDLING_DIALOG_CLOSE_ACTION" desc="Action &quot;Close&quot; which appears at the bottom of any displayed error dialog.">閉じる</translation>
   <translation id="6020266409089609793" key="MSG_ERROR_INTERNALERROR_0" desc="This is a label for button displayed on error page used to send feedback to GitHub new issue.">フィードバックを送信</translation>

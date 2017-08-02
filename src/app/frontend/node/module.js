@@ -13,13 +13,13 @@
 // limitations under the License.
 
 import chromeModule from 'chrome/module';
+import {allocatedResourcesChartComponent} from 'common/components/allocatedresourceschart/component';
 import componentsModule from 'common/components/module';
 import filtersModule from 'common/filters/module';
 import namespaceModule from 'common/namespace/module';
 import eventsModule from 'events/module';
 
 import {nodeAllocatedResourcesComponent} from './detail/allocatedresources_component';
-import {allocatedResourcesChartComponent} from './detail/allocatedresourceschart_component';
 import {nodeInfoComponent} from './detail/info_component';
 import {nodeEventsResource, nodePodsResource} from './detail/stateconfig';
 import {nodeCardComponent} from './list/card_component';

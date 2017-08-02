@@ -175,5 +175,5 @@ export const allocatedResourcesChartComponent = {
     'colorpalette': '<',
   },
   controller: AllocatedResourcesChartController,
-  templateUrl: 'node/detail/allocatedresourceschart.html',
+  templateUrl: 'common/components/allocatedresourceschart/allocatedresourceschart.html',
 };
