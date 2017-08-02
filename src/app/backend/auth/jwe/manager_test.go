@@ -14,12 +14,73 @@
 
 package jwe
 
-import "testing"
+import (
+	"reflect"
+	"testing"
+
+	"k8s.io/client-go/tools/clientcmd/api"
+)
+
+func areErrorsEqual(err1, err2 error) bool {
+	return (err1 != nil && err2 != nil && err1.Error() == err2.Error()) ||
+		(err1 == nil && err2 == nil)
+}
 
 func TestJweTokenManager_Generate(t *testing.T) {
+	cases := []struct {
+		info        string
+		authInfo    api.AuthInfo
+		expectedErr error
+	}{
+		{
+			"Should generate encrypted token",
+			api.AuthInfo{Token: "test-token"},
+			nil,
+		},
+	}
 
+	for _, c := range cases {
+		tokenManager := NewJWETokenManager()
+		token, err := tokenManager.Generate(c.authInfo)
+
+		if !areErrorsEqual(err, c.expectedErr) {
+			t.Errorf("Test Case: %s. Expected error to be: %v, but got %v.",
+				c.info, c.expectedErr, err)
+		}
+
+		if len(token) == 0 {
+			t.Errorf("Test Case: %s. Expected token not to be empty.", c.info)
+		}
+	}
 }
 
 func TestJweTokenManager_Decrypt(t *testing.T) {
+	cases := []struct {
+		info        string
+		authInfo    api.AuthInfo
+		expected    *api.AuthInfo
+		expectedErr error
+	}{
+		{
+			"Should decrypt encrypted token",
+			api.AuthInfo{Token: "test-token"},
+			&api.AuthInfo{Token: "test-token"},
+			nil,
+		},
+	}
 
+	for _, c := range cases {
+		tokenManager := NewJWETokenManager()
+		token, _ := tokenManager.Generate(c.authInfo)
+		authInfo, err := tokenManager.Decrypt(token)
+
+		if !areErrorsEqual(err, c.expectedErr) {
+			t.Errorf("Test Case: %s. Expected error to be: %v, but got %v.",
+				c.info, c.expectedErr, err)
+		}
+
+		if !reflect.DeepEqual(authInfo, c.expected) {
+			t.Errorf("Test Case: %s. Expected: %v, but got %v.", c.info, c.expected, authInfo)
+		}
+	}
 }

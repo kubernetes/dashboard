@@ -14,9 +14,7 @@
 
 package api
 
-import (
-	"k8s.io/client-go/tools/clientcmd/api"
-)
+import "k8s.io/client-go/tools/clientcmd/api"
 
 // AuthManager is used for user authentication management.
 type AuthManager interface {

@@ -19,6 +19,7 @@ import (
 	"reflect"
 	"testing"
 
+	restful "github.com/emicklei/go-restful"
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	k8sErrors "k8s.io/apimachinery/pkg/api/errors"

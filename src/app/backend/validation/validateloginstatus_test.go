@@ -14,4 +14,55 @@
 
 package validation
 
-// TODO(floreks): Add tests
+import (
+	"crypto/tls"
+	"net/http"
+	"net/textproto"
+	"reflect"
+	"testing"
+
+	"github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/emicklei/go-restful"
+)
+
+func TestValidateLoginStatus(t *testing.T) {
+	cases := []struct {
+		info     string
+		request  *restful.Request
+		expected *LoginStatus
+	}{
+		{
+			"Should indicate that user is logged in with token",
+			&restful.Request{Request: &http.Request{Header: http.Header(map[string][]string{
+				textproto.CanonicalMIMEHeaderKey(client.JWETokenHeader): {"test-token"},
+			})}},
+			&LoginStatus{TokenPresent: true},
+		},
+		{
+			"Should indicate that user is logged in using authorization header",
+			&restful.Request{Request: &http.Request{Header: http.Header(map[string][]string{
+				"Authorization": {"Bearer test-token"},
+			})}},
+			&LoginStatus{HeaderPresent: true},
+		},
+		{
+			"Should indicate that https is enabled",
+			&restful.Request{Request: &http.Request{TLS: &tls.ConnectionState{}}},
+			&LoginStatus{HTTPSMode: true},
+		},
+		{
+			"Should indicate that user is not logged in",
+			&restful.Request{Request: &http.Request{}},
+			&LoginStatus{},
+		},
+	}
+
+	for _, c := range cases {
+		status := ValidateLoginStatus(c.request)
+
+		if !reflect.DeepEqual(status, c.expected) {
+			t.Errorf("Test Case: %s. Expected status to be: %v, but got %v.",
+				c.info, c.expected, status)
+		}
+	}
+}

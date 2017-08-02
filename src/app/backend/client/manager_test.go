@@ -135,7 +135,7 @@ func TestClientCmdConfig(t *testing.T) {
 			&restful.Request{
 				Request: &http.Request{
 					Header: http.Header(map[string][]string{
-						"Authorization": []string{"Bearer test-token"},
+						"Authorization": {"Bearer test-token"},
 					}),
 				},
 			},
@@ -170,10 +170,6 @@ func TestClientCmdConfig(t *testing.T) {
 				c.request, c.expected, bearerToken)
 		}
 	}
-}
-
-func TestHasAccess(t *testing.T) {
-	// TODO(floreks): Add test
 }
 
 func TestVerberClient(t *testing.T) {

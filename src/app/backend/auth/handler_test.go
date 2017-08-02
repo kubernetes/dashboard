@@ -16,6 +16,8 @@ package auth
 
 import (
 	"testing"
+
+	restful "github.com/emicklei/go-restful"
 )
 
 func TestIntegrationHandler_Install(t *testing.T) {

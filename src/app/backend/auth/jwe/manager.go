@@ -106,7 +106,7 @@ func (self *jweTokenManager) initEncrypter() {
 	self.encrypter = encrypter
 }
 
-// Creates and returns JWE token manager instance.
+// Creates and returns default JWE token manager instance.
 func NewJWETokenManager() authApi.TokenManager {
 	manager := &jweTokenManager{}
 	manager.init()
