@@ -12,4 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// TODO(floreks): Add tests
+import componentsModule from 'common/components/module';
+import {kdErrors} from 'common/errorhandling/errors';
+import errorModule from 'common/errorhandling/module';
+
+describe('Warnings component', () => {
+  /** @type {!WarningsController} */
+  let ctrl;
+
+  beforeEach(() => {
+    angular.mock.module(errorModule.name);
+    angular.mock.module(componentsModule.name);
+
+    angular.mock.inject(($componentController, localizerService) => {
+      ctrl = $componentController('kdWarnings', {localizerService: localizerService}, {});
+    });
+  });
+
+  it('should return localized error message', () => {
+    // when
+    let msg = ctrl.getLocalizedMessage('MSG_LOGIN_UNAUTHORIZED_ERROR');
+
+    // then
+    expect(msg).toBe(kdErrors.MSG_LOGIN_UNAUTHORIZED_ERROR);
+  });
+});

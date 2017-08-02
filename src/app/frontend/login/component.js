@@ -55,10 +55,10 @@ class LoginController {
    * @param {!backendApi.LoginSpec} loginSpec
    * @export
    */
-  update(loginSpec) {
-    this.loginSpec.username = this.getValue(this.loginSpec.username, loginSpec.username);
-    this.loginSpec.password = this.getValue(this.loginSpec.password, loginSpec.password);
-    this.loginSpec.token = this.getValue(this.loginSpec.token, loginSpec.token);
+  onUpdate(loginSpec) {
+    this.loginSpec.username = this.getValue_(this.loginSpec.username, loginSpec.username);
+    this.loginSpec.password = this.getValue_(this.loginSpec.password, loginSpec.password);
+    this.loginSpec.token = this.getValue_(this.loginSpec.token, loginSpec.token);
   }
 
   /**
@@ -67,8 +67,9 @@ class LoginController {
    * @param {string} oldVal
    * @param {string} newVal
    * @return {string}
+   * @private
    */
-  getValue(oldVal, newVal) {
+  getValue_(oldVal, newVal) {
     return oldVal !== newVal && newVal !== undefined ? newVal : oldVal;
   }
 

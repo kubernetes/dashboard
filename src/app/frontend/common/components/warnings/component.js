@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export default class WarningsController {
+class WarningsController {
   /**
    * Constructs warnings controller.
    * @param {./../../errorhandling/localizer_service.LocalizerService} localizerService

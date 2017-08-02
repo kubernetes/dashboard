@@ -12,4 +12,38 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// TODO(floreks): Add tests
+import {Controller} from 'index_controller';
+import indexModule from 'index_module';
+import {stateName as loginState} from 'login/state';
+
+describe('Index controller', () => {
+  /** @type {!Controller} */
+  let ctrl;
+
+  let state;
+
+  beforeEach(() => {
+    angular.mock.module(indexModule.name);
+
+    angular.mock.inject(($controller, $uiRouterGlobals) => {
+      state = $uiRouterGlobals;
+      ctrl = $controller(Controller, {$state: state});
+    });
+  });
+
+  it('should return true if on login state', () => {
+    // given
+    state.current = {name: loginState};
+
+    // then
+    expect(ctrl.isLoginState()).toBeTruthy();
+  });
+
+  it('should return false if not on login state', () => {
+    // given
+    state.current = {name: 'someState'};
+
+    // then
+    expect(ctrl.isLoginState()).toBeFalsy();
+  });
+});

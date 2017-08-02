@@ -12,4 +12,47 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// TODO(floreks): Add tests
+import loginModule from 'login/module';
+
+describe('Login component', () => {
+  /** @type {!LoginController} */
+  let ctrl;
+
+  beforeEach(() => {
+    angular.mock.module(loginModule.name);
+
+    angular.mock.inject(($componentController) => {
+      ctrl = $componentController('kdLogin', {}, {});
+    });
+  });
+
+  it('should update login spec',
+     () => {
+         // TODO(floreks): add test
+     });
+
+  it('should return new value',
+     () => {
+         // TODO(floreks): add test
+     });
+
+  it('should return old value',
+     () => {
+         // TODO(floreks): add test
+     });
+
+  it('should redirect to overview after successful logging in',
+     () => {
+         // TODO(floreks): add test
+     });
+
+  it('should show errors if there was an error during logging in',
+     () => {
+         // TODO(floreks): add test
+     });
+
+  it('should skip login page',
+     () => {
+         // TODO(floreks): add test
+     });
+});

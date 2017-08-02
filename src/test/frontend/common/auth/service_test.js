@@ -12,4 +12,121 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// TODO(floreks): Add tests
+import authModule from 'common/auth/module';
+
+describe('Auth service', () => {
+  /** @type {!common/auth/service.AuthService} */
+  let authService;
+  /** @type {!chrome/state.StateParams} */
+  let stateParams;
+  /** @type {!angular.$httpBackend} */
+  let httpBackend;
+  /** @type {!angular.$cookies} */
+  let cookies;
+  /** @type {string} */
+  let tokenCookieName;
+
+  beforeEach(() => angular.mock.module(authModule.name));
+
+  beforeEach(angular.mock.inject(
+      (kdAuthService, $stateParams, $httpBackend, $cookies, kdTokenCookieName) => {
+        authService = kdAuthService;
+        stateParams = $stateParams;
+        httpBackend = $httpBackend;
+        cookies = $cookies;
+        tokenCookieName = kdTokenCookieName;
+
+        authService.skipLoginPage(false);
+      }));
+
+  it(`should log in and return generated JWE token`, () => {
+    // given
+    let csrfToken = {token: 'csrf-test'};
+    let generatedToken = {jweToken: 'jwe-test', errors: []};
+    httpBackend.whenGET('api/v1/csrftoken/login').respond(csrfToken);
+    httpBackend.whenPOST('api/v1/login').respond(generatedToken);
+
+    // when
+    authService.login({});
+    httpBackend.flush();
+
+    // then
+    let token = cookies.get(tokenCookieName);
+    expect(token).toEqual(generatedToken.jweToken);
+  });
+
+  it(`should throw an error during login attempt`, () => {
+    let error = 'error';
+    httpBackend.whenGET('api/v1/csrftoken/login').respond({});
+    httpBackend.whenPOST('api/v1/login').respond(400, error);
+
+    // when
+    authService.login({}).catch((err) => {
+      // then
+      expect(err.data).toBe(error);
+    });
+    httpBackend.flush();
+  });
+
+  it(`should resolve with non critical error during login attempt`, () => {
+    // given
+    let error = {jweToken: '', errors: ['auth error']};
+    httpBackend.whenGET('api/v1/csrftoken/login').respond({});
+    httpBackend.whenPOST('api/v1/login').respond(200, error);
+
+    // when
+    authService.login({}).then((errors) => {
+      // then
+      expect(errors.length).toBe(1);
+    });
+    httpBackend.flush();
+  });
+
+  it('should return true when user is logged in', () => {
+    // given
+    let transition = {to: () => {}};
+    spyOn(transition, 'to').and.returnValue({name: ''});
+
+    httpBackend.whenGET('api/v1/csrftoken/login').respond({});
+    httpBackend.whenGET('api/v1/login/status').respond(200, {tokenPresent: true});
+
+    // when
+    authService.isLoggedIn(transition).then((loggedIn) => {
+      // then
+      expect(loggedIn).toBe(true);
+    });
+    httpBackend.flush();
+  });
+
+  it('should skip login page', () => {
+    // when
+    authService.skipLoginPage(true);
+
+    // then
+    expect(cookies.get('skipLoginPage')).toBe('true');
+  });
+
+  it('should return false when login page is not enabled', () => {
+    // when
+    authService.skipLoginPage(true);
+
+    // then
+    expect(authService.isLoginPageEnabled()).toBe(false);
+  });
+
+  it('should redirect to login page when user is not logged in', () => {
+    // given
+    let transition = {to: () => {}};
+    spyOn(transition, 'to').and.returnValue({name: ''});
+
+    httpBackend.whenGET('api/v1/csrftoken/login').respond(200);
+    httpBackend.whenGET('api/v1/login/status').respond(200);
+
+    // when
+    authService.isLoggedIn(transition).then((state) => {
+      // then
+      expect(state.name()).toBe('login');
+    });
+    httpBackend.flush();
+  });
+});

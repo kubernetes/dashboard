@@ -18,7 +18,7 @@ class LoginOptionsController {
   constructor() {
     /** @export {!Array<!angular.Component>} */
     this.options = [];
-    /** @export {!angular.Component} */
+    /** @export {string} */
     this.selectedOption;
   }
 

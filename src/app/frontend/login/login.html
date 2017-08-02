@@ -29,7 +29,7 @@ limitations under the License.
         <!--TODO(floreks): enable once kubernetes#49709 is resolved -->
         <!--<kd-basic-login title="[[Basic|Basic login]]" on-update="$ctrl.update(loginSpec)"></kd-basic-login>-->
         <kd-token-login title="[[Token|'Token' option label shown on login page]]"
-                        on-update="$ctrl.update(loginSpec)"></kd-token-login>
+                        on-update="$ctrl.onUpdate(loginSpec)"></kd-token-login>
       </kd-login-options>
 
       <md-button class="md-raised md-primary"

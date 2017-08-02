@@ -12,4 +12,32 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// TODO(floreks): Add tests
+import loginModule from 'login/module';
+
+describe('Basic login component', () => {
+  /** @type {!BasicLoginController} */
+  let ctrl;
+  /** @type {!LoginOptionsController} */
+  let optionsCtrl;
+
+  beforeEach(() => {
+    angular.mock.module(loginModule.name);
+
+    angular.mock.inject(($componentController) => {
+      optionsCtrl = $componentController('kdLoginOptions', {}, {});
+      ctrl = $componentController('kdBasicLogin', {}, {loginOptionsCtrl: optionsCtrl});
+    });
+  });
+
+  it('should init controller', () => {
+    // given
+    spyOn(optionsCtrl, 'addOption');
+
+    // when
+    ctrl.$onInit();
+
+    // then
+    expect(ctrl).toBeDefined();
+    expect(optionsCtrl.addOption).toHaveBeenCalled();
+  });
+});
