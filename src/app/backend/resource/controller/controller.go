@@ -55,7 +55,7 @@ type ResourceController interface {
 	// Get is a method, that returns ResourceOwner object.
 	Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOwner
 	// Returns all log sources of controlled resource (e.g. a list of containers and pods for a replica set)
-	GetLogSources(k8sClient *client.Clientset) LogSources
+	GetLogSources(allPods []v1.Pod) LogSources
 }
 
 // NewResourceController creates instance of ResourceController based on given reference. It allows
@@ -125,9 +125,10 @@ func (self JobController) UID() types.UID {
 }
 
 // GetLogSources is an implementation of the GetLogSources method from ResourceController interface.
-func (self JobController) GetLogSources(k8sClient *client.Clientset) LogSources {
+func (self JobController) GetLogSources(allPods []v1.Pod) LogSources {
+	controlledPods := common.FilterPodsForJob(batch.Job(self), allPods)
 	return LogSources{
-		PodNames:       getPodNames(k8sClient, self.Namespace, self.UID()),
+		PodNames:       getPodNames(controlledPods),
 		ContainerNames: common.GetContainerNames(&self.Spec.Template.Spec),
 	}
 }
@@ -156,9 +157,10 @@ func (self ReplicaSetController) UID() types.UID {
 }
 
 // GetLogSources is an implementation of the GetLogSources method from ResourceController interface.
-func (self ReplicaSetController) GetLogSources(k8sClient *client.Clientset) LogSources {
+func (self ReplicaSetController) GetLogSources(allPods []v1.Pod) LogSources {
+	controlledPods := common.FilterPodsByOwnerReference(self.Namespace, self.UID(), allPods)
 	return LogSources{
-		PodNames:       getPodNames(k8sClient, self.Namespace, self.UID()),
+		PodNames:       getPodNames(controlledPods),
 		ContainerNames: common.GetContainerNames(&self.Spec.Template.Spec),
 	}
 }
@@ -188,9 +190,10 @@ func (self ReplicationControllerController) UID() types.UID {
 }
 
 // GetLogSources is an implementation of the GetLogSources method from ResourceController interface.
-func (self ReplicationControllerController) GetLogSources(k8sClient *client.Clientset) LogSources {
+func (self ReplicationControllerController) GetLogSources(allPods []v1.Pod) LogSources {
+	controlledPods := common.FilterPodsByOwnerReference(self.Namespace, self.UID(), allPods)
 	return LogSources{
-		PodNames:       getPodNames(k8sClient, self.Namespace, self.UID()),
+		PodNames:       getPodNames(controlledPods),
 		ContainerNames: common.GetContainerNames(&self.Spec.Template.Spec),
 	}
 }
@@ -220,9 +223,10 @@ func (self DaemonSetController) UID() types.UID {
 }
 
 // GetLogSources is an implementation of the GetLogSources method from ResourceController interface.
-func (self DaemonSetController) GetLogSources(k8sClient *client.Clientset) LogSources {
+func (self DaemonSetController) GetLogSources(allPods []v1.Pod) LogSources {
+	controlledPods := common.FilterPodsByOwnerReference(self.Namespace, self.UID(), allPods)
 	return LogSources{
-		PodNames:       getPodNames(k8sClient, self.Namespace, self.UID()),
+		PodNames:       getPodNames(controlledPods),
 		ContainerNames: common.GetContainerNames(&self.Spec.Template.Spec),
 	}
 }
@@ -251,18 +255,17 @@ func (self StatefulSetController) UID() types.UID {
 }
 
 // GetLogSources is an implementation of the GetLogSources method from ResourceController interface.
-func (self StatefulSetController) GetLogSources(k8sClient *client.Clientset) LogSources {
+func (self StatefulSetController) GetLogSources(allPods []v1.Pod) LogSources {
+	controlledPods := common.FilterPodsByOwnerReference(self.Namespace, self.UID(), allPods)
 	return LogSources{
-		PodNames:       getPodNames(k8sClient, self.Namespace, self.UID()),
+		PodNames:       getPodNames(controlledPods),
 		ContainerNames: common.GetContainerNames(&self.Spec.Template.Spec),
 	}
 }
 
-func getPodNames(k8sClient *client.Clientset, namespace string, uid types.UID) []string {
-	allPods, _ := k8sClient.CoreV1().Pods(namespace).List(api.ListEverything)
-	matchingPods := common.FilterPodsByOwnerReference(namespace, uid, allPods.Items)
+func getPodNames(pods []v1.Pod) []string {
 	names := make([]string, 0)
-	for _, pod := range matchingPods {
+	for _, pod := range pods {
 		names = append(names, pod.Name)
 	}
 	return names
