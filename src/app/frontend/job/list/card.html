@@ -75,6 +75,9 @@ limitations under the License.
       </div>
     </kd-resource-card-column>
     <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
+      <kd-logs-button object-meta="::$ctrl.job.objectMeta"
+                      resource-kind-name="::$ctrl.job.typeMeta.kind">
+      </kd-logs-button>
       <kd-resource-card-menu>
         <kd-scale-button resource-kind-name="[[Job|Label 'Job' which will appear in the job scale dialog opened from a job card on the list page.]]"
                          object-meta="$ctrl.job.objectMeta"
