@@ -143,7 +143,7 @@ gulp.task('format-go', function(doneFn) {
  */
 gulp.task('check-license-headers', () => {
   const HEADER_NOT_PRESENT = 'Header not present';
-  const commonFilter = filter('**/*.{js,go}', {restore: true});
+  const commonFilter = filter('**/*.{js,go,scss}', {restore: true});
   const htmlFilter = filter('**/*.html', {restore: true});
 
   let hasErrors = false;
@@ -159,7 +159,7 @@ gulp.task('check-license-headers', () => {
     }
   };
 
-  return gulp.src([path.join(conf.paths.src, '**/*.{js,go,html}')], {base: conf.paths.base})
+  return gulp.src([path.join(conf.paths.src, '**/*.{js,go,scss,html}')], {base: conf.paths.base})
       .pipe(commonFilter)
       .pipe(
           licenseCheck(licenseConfig('build/assets/license/header.txt')).on('log', handleLogEvent))
@@ -189,11 +189,11 @@ function licenseConfig(licenseFilePath) {
  * Updates license headers in all source files based on templates stored in 'license' directory.
  */
 gulp.task('update-license-headers', () => {
-  const commonFilter = filter('**/*.{js,go}', {restore: true});
+  const commonFilter = filter('**/*.{js,go,scss}', {restore: true});
   const htmlFilter = filter('**/*.html', {restore: true});
   const matchRate = 0.9;
 
-  gulp.src([path.join(conf.paths.src, '**/*.{js,go,html}')], {base: conf.paths.base})
+  gulp.src([path.join(conf.paths.src, '**/*.{js,go,scss,html}')], {base: conf.paths.base})
       .pipe(commonFilter)
       .pipe(license(fs.readFileSync('build/assets/license/header.txt', 'utf8'), {}, matchRate))
       .pipe(commonFilter.restore)
