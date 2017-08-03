@@ -59,8 +59,8 @@ If the username and password is configured but unknown to you, then use `kubectl
 | **Dashboard 1.6**   | ✕              | ✕              | ✓              | ?              |
 | **Dashboard HEAD**  | ✕              | ✕              | ?              | ✓              |
 
-- `✓` Supported version range.
-- `?` Some of the functionalities might not be working.
+- `✓` Fully supported version range.
+- `?` Due to breaking changes between Kubernetes API versions, some features might not work in Dashboard (logs, search etc.).
 - `✕` Not supported version range.
 
 ## Documentation
