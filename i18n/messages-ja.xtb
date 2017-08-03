@@ -482,7 +482,7 @@
   <translation id="5259124924941383194" key="MSG_LOGIN_LOGIN_0" desc="Title shown on login page on login card">Log in to Kubernetes Dashboard</translation>
   <translation id="5474439021716449004" key="MSG_LOGIN_LOGIN_1" desc="\'Token\' option label shown on login page">Token</translation>
   <translation id="3142285229708080307" key="MSG_LOGIN_TOKEN_0" desc="\'Token\' field label shown on login page for token auth">Token</translation>
-  <translation id="6515096859873749762" key="MSG_LOGIN_UNAUTHORIZED_ERROR" desc="Text shown when unauthorized user tries to log in.">Authentication Failed. Please try again.</translation>
+  <translation id="1813585001229142426" key="MSG_LOGIN_UNAUTHORIZED_ERROR" desc="Text shown when unauthorized user tries to log in.">Authentication failed. Please try again.</translation>
   <translation id="4722922095699681308" key="MSG_LOGS_LOGS_0" desc="Title prefix for logs card.">Logs from</translation>
   <translation id="6855662924451585032" key="MSG_LOGS_LOGS_1" desc="Title part for logs card.">in</translation>
   <translation id="6208229815004454576" key="MSG_LOGS_LOGS_2" desc="Title prefix for logs card.">Logs from</translation>

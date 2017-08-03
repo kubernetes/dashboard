@@ -29,7 +29,7 @@ type authManager struct {
 	clientManager client.ClientManager
 }
 
-// Implements auth manager. See AuthManager interface for more information.
+// Login implements auth manager. See AuthManager interface for more information.
 func (self authManager) Login(spec *authApi.LoginSpec) (*authApi.LoginResponse, error) {
 	authenticator, err := self.getAuthenticator(spec)
 	if err != nil {

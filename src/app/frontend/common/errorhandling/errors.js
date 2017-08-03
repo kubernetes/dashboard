@@ -26,5 +26,5 @@ export const kdErrors = {
       'Dashboard and your file do not specify any namespace to deploy a resource. Please select a specific namespace in dashboard or add one in yaml file.'),
 
   /** @export {string} @desc Text shown when unauthorized user tries to log in. */
-  MSG_LOGIN_UNAUTHORIZED_ERROR: goog.getMsg('Authentication Failed. Please try again.'),
+  MSG_LOGIN_UNAUTHORIZED_ERROR: goog.getMsg('Authentication failed. Please try again.'),
 };

@@ -31,7 +31,7 @@ type LoginStatus struct {
 	HTTPSMode bool `json:"httpsMode"`
 }
 
-// ValidateLoginStatus TODO
+// ValidateLoginStatus returns information about user login status and if request was made over HTTPS.
 func ValidateLoginStatus(request *restful.Request) *LoginStatus {
 	authHeader := request.HeaderParameter("Authorization")
 	tokenHeader := request.HeaderParameter(client.JWETokenHeader)

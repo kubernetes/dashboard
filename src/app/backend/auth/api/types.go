@@ -47,10 +47,8 @@ type LoginSpec struct {
 	Username string `json:"username"`
 	// Password is the password for basic authentication to the kubernetes cluster.
 	Password string `json:"password"`
-
 	// Token is the bearer token for authentication to the kubernetes cluster.
 	Token string `json:"token"`
-
 	// KubeConfig is the content of users' kubeconfig file. It will be parsed and auth data will be extracted.
 	// Kubeconfig can not contain any paths. All data has to be provided within the file.
 	KubeConfig string `json:"kubeConfig"`

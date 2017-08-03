@@ -53,7 +53,7 @@ func (self *jweTokenManager) Generate(authInfo api.AuthInfo) (string, error) {
 	return jweObject.FullSerialize(), nil
 }
 
-// Decrypt provided token and return AuthInfo structure saved in a token payload.
+// Decrypt provides token and returns AuthInfo structure saved in a token payload.
 func (self *jweTokenManager) Decrypt(jweToken string) (*api.AuthInfo, error) {
 	jweTokenObject, err := self.validate(jweToken)
 	if err != nil {
