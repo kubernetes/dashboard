@@ -13,26 +13,46 @@ itself.
 ![Dashboard UI workloads page](docs/dashboard-ui.png)
 
 ## Deployment
-It is likely that the Dashboard is already installed on your cluster. Check with the following command:
+Provided instructions are compliant with Kubernetes 1.6+. If you plan to deploy Dashboard on older Kubernetes version please
+follow [these instructions](docs/user-guide/deployment-old.md) or if you want to check out latest
+features that the team works on try our HEAD releases [installation guide](docs/devel/head-releases.md).
+
+For security reasons installation has been split into two parts:
+[Deployment](#deployment) and [Configuration](#configuration). Deployment part will deploy Dashboard on your
+cluster without any privileges. It will only work if RBACs are disabled on your cluster.
+
+It is likely that the Dashboard is already installed on your cluster. Check it with the following command:
 ```shell
 $ kubectl get pods --all-namespaces | grep dashboard
 ```
 
-If it is missing, you can install the latest stable release by running the following command:
+If it is missing deploy Dashboard by running:
 ```shell
 $ kubectl create -f https://git.io/kube-dashboard
 ```
 
-If you are using Kubernetes 1.5 or earlier, you can install the latest stable release by running the following command:
+## Configuration
+Now that Dashboard is deployed in your cluster you need to  grant it necessary privileges. Please choose one of the following
+configurations that suits you best.
+#### Multi-tenant configuration
+This configuration should be used if cluster will be used by multiple users with different privileges. It grants
+dashboard minimal access to apiserver required to start it. Read more about this configuration in [multi tenant setup](docs/user-guide/multi-tenant.md).
 ```shell
-$ kubectl create -f https://git.io/kube-dashboard-no-rbac
+TODO multi-tenant SA, Role deployment
 ```
 
-You can also install unstable HEAD builds with the newest features that the team works on by
-following the [development guide](docs/devel/head-releases.md).
+#### Single-tenant configuration
+This configuration should be used only if cluster will be used by trusted users and all of them are allowed to access all of its' resources.
+```shell
+TODO single-tenant SA, Role deployment
+```
 
-Note that for the metrics and graphs to be available you need to
-have [Heapster](https://github.com/kubernetes/heapster/) running in your cluster.
+## Addons
+Dashboard can use cluster addons to enhance user experience, i.e. show metrics and graphs.
+#### Graphs
+For the metrics and graphs to be available you need to
+have [Heapster](https://github.com/kubernetes/heapster/) running on your cluster. We require heapster to be deployed in `kube-system` namespace
+together with service named `heapster`. 
 
 ## Usage
 The easiest way to access Dashboard is to use kubectl. Run the following command in your desktop environment:
