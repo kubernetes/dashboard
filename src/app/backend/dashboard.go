@@ -107,11 +107,11 @@ func main() {
 	// Listen for http and https
 	addr := fmt.Sprintf("%s:%d", *argInsecureBindAddress, *argInsecurePort)
 	log.Printf("Serving insecurely on HTTP port: %d", *argInsecurePort)
-	go func() {log.Fatal(http.ListenAndServe(addr, nil))}()
+	go func() { log.Fatal(http.ListenAndServe(addr, nil)) }()
 	secureAddr := fmt.Sprintf("%s:%d", *argBindAddress, *argPort)
 	if *argCertFile != "" && *argKeyFile != "" {
 		log.Printf("Serving securely on HTTPS port: %d", *argPort)
-		go func() {log.Fatal(http.ListenAndServeTLS(secureAddr, *argCertFile, *argKeyFile, nil))}()
+		go func() { log.Fatal(http.ListenAndServeTLS(secureAddr, *argCertFile, *argKeyFile, nil)) }()
 	}
 	select {}
 }
