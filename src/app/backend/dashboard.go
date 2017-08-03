@@ -56,7 +56,6 @@ func main() {
 	pflag.Parse()
 	flag.CommandLine.Parse(make([]string, 0)) // Init for glog calls in kubernetes packages
 
-	log.Printf("Using HTTP port: %d", *argPort)
 	if *argApiserverHost != "" {
 		log.Printf("Using apiserver-host location: %s", *argApiserverHost)
 	}
@@ -104,10 +103,12 @@ func main() {
 
 	// Listen for http and https
 	addr := fmt.Sprintf("%s:%d", *argInsecureBindAddress, *argInsecurePort)
-	go log.Fatal(http.ListenAndServe(addr, nil))
+	log.Printf("Serving insecurely on HTTP port: %d", *argInsecurePort)
+	go func() {log.Fatal(http.ListenAndServe(addr, nil))}()
 	secureAddr := fmt.Sprintf("%s:%d", *argBindAddress, *argPort)
-	if len(*argCertFile) != 0 && len(*argKeyFile) != 0 {
-		go log.Fatal(http.ListenAndServeTLS(secureAddr, *argCertFile, *argKeyFile, nil))
+	if *argCertFile != "" && *argKeyFile != "" {
+		log.Printf("Serving securely on HTTPS port: %d", *argPort)
+		go func() {log.Fatal(http.ListenAndServeTLS(secureAddr, *argCertFile, *argKeyFile, nil))}()
 	}
 	select {}
 }
