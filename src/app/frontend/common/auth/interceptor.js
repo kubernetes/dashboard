@@ -24,7 +24,7 @@ export class AuthInterceptor {
     this.request = (config) => {
       // Filter are requests made to our backend starting with 'api/v1' and append request header
       // with token stored in a cookie.
-      if (config.url.startsWith('api/v1')) {
+      if (config.url.indexOf('api/v1') !== -1) {
         config.headers[kdTokenHeaderName] = $cookies.get(kdTokenCookieName);
       }
 
