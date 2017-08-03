@@ -48,7 +48,6 @@ export default angular
     .component('kdNodeCard', nodeCardComponent)
     .component('kdNodeCardList', nodeCardListComponent)
     .component('kdNodeInfo', nodeInfoComponent)
-    .component('kdAllocatedResourcesChart', allocatedResourcesChartComponent)
     .factory('kdNodeEventsResource', nodeEventsResource)
     .factory('kdNodeListResource', nodeListResource)
     .factory('kdNodePodsResource', nodePodsResource);

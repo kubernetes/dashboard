@@ -72,13 +72,11 @@ export class AllocatedResourcesChartController {
    *
    * @private
    */
-  initPieChart_(svg, data, colors, margin, ratio, customLabelFunc) {
+  initPieChart_(svg, data, colors, margin, ratio, labelFunc) {
     let size = 280;
 
-    let labelFunc = customLabelFunc;
-    if (!customLabelFunc) {
+    if (!labelFunc) {
       labelFunc = (d) => {
-        // Displays label only for allocated resources.
         return `${d.data.value.toFixed(2)}%`;
       };
     }
