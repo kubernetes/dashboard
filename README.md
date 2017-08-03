@@ -12,19 +12,6 @@ itself.
 
 ![Dashboard UI workloads page](docs/dashboard-ui.png)
 
-## Compatibility matrix
-
-|                     | Kubernetes 1.4 | Kubernetes 1.5 | Kubernetes 1.6 | Kubernetes 1.7 |
-|---------------------|----------------|----------------|----------------|----------------|
-| **Dashboard 1.4**   | ✓              | ✕              | ✕              | ✕              |
-| **Dashboard 1.5**   | ✕              | ✓              | ✕              | ✕              |
-| **Dashboard 1.6**   | ✕              | ✕              | ✓              | ?              |
-| **Dashboard HEAD**  | ✕              | ✕              | ?              | ✓              |
-
-- `✓` All the functionalities are supported with given version.
-- `?` Some of the functionalities might not be working.
-- `✕` Most probably will not work with given version.
-
 ## Deployment
 It is likely that the Dashboard is already installed on your cluster. Check with the following command:
 ```shell
@@ -62,6 +49,19 @@ You may access the UI directly via the apiserver proxy. Open a browser and navig
 Please note that this works only if the apiserver is set up to allow authentication with username and password or certificates, however certificates require some manual steps to be installed in the browser. This is not currently the case with the setup tool `kubeadm`. See [documentation](http://kubernetes.io/docs/admin/authentication/) if you want to configure it manually.
 
 If the username and password is configured but unknown to you, then use `kubectl config view` to find it.
+
+## Compatibility matrix
+
+|                     | Kubernetes 1.4 | Kubernetes 1.5 | Kubernetes 1.6 | Kubernetes 1.7 |
+|---------------------|----------------|----------------|----------------|----------------|
+| **Dashboard 1.4**   | ✓              | ✕              | ✕              | ✕              |
+| **Dashboard 1.5**   | ✕              | ✓              | ✕              | ✕              |
+| **Dashboard 1.6**   | ✕              | ✕              | ✓              | ?              |
+| **Dashboard HEAD**  | ✕              | ✕              | ?              | ✓              |
+
+- `✓` Supported version range.
+- `?` Some of the functionalities might not be working.
+- `✕` Not supported version range.
 
 ## Documentation
 
