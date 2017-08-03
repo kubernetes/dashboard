@@ -17,8 +17,6 @@ import authModule from 'common/auth/module';
 describe('Auth service', () => {
   /** @type {!common/auth/service.AuthService} */
   let authService;
-  /** @type {!chrome/state.StateParams} */
-  let stateParams;
   /** @type {!angular.$httpBackend} */
   let httpBackend;
   /** @type {!angular.$cookies} */
@@ -28,16 +26,14 @@ describe('Auth service', () => {
 
   beforeEach(() => angular.mock.module(authModule.name));
 
-  beforeEach(angular.mock.inject(
-      (kdAuthService, $stateParams, $httpBackend, $cookies, kdTokenCookieName) => {
-        authService = kdAuthService;
-        stateParams = $stateParams;
-        httpBackend = $httpBackend;
-        cookies = $cookies;
-        tokenCookieName = kdTokenCookieName;
+  beforeEach(angular.mock.inject((kdAuthService, $httpBackend, $cookies, kdTokenCookieName) => {
+    authService = kdAuthService;
+    httpBackend = $httpBackend;
+    cookies = $cookies;
+    tokenCookieName = kdTokenCookieName;
 
-        authService.skipLoginPage(false);
-      }));
+    authService.skipLoginPage(false);
+  }));
 
   it(`should log in and return generated JWE token`, () => {
     // given
@@ -87,7 +83,6 @@ describe('Auth service', () => {
     let transition = {to: () => {}};
     spyOn(transition, 'to').and.returnValue({name: ''});
 
-    httpBackend.whenGET('api/v1/csrftoken/login').respond({});
     httpBackend.whenGET('api/v1/login/status').respond(200, {tokenPresent: true});
 
     // when

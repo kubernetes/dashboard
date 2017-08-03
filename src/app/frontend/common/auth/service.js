@@ -130,15 +130,16 @@ export class AuthService {
     });
 
     // Skip log in check if user is going to login page already or has chosen to skip it.
-    if (!this.isLoginPageEnabled() || transition.to().name === loginState || transition.to().name === 'internalerror') {
-      deferred.resolve();
+    if (!this.isLoginPageEnabled() || transition.to().name === loginState ||
+        transition.to().name === 'internalerror') {
+      deferred.resolve(true);
       return deferred.promise;
     }
 
     resource.get(
         (/** @type {!backendApi.LoginStatus} */ loginStatus) => {
           if (loginStatus.headerPresent || loginStatus.tokenPresent) {
-            deferred.resolve();
+            deferred.resolve(true);
             return;
           }
 
@@ -147,7 +148,7 @@ export class AuthService {
         (err) => {
           this.log_.error(err);
           // In case of error let the transition to continue.
-          deferred.resolve();
+          deferred.resolve(true);
         });
 
     return deferred.promise;

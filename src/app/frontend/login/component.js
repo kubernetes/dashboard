@@ -76,17 +76,15 @@ class LoginController {
   /** @export */
   login() {
     if (this.form.$valid) {
-      this.kdAuthService_.login(this.loginSpec)
-          .then(
-              (errors) => {
-                if (errors.length > 0) {
-                  this.errors = errors;
-                  return;
-                }
+      this.kdAuthService_.login(this.loginSpec).then((errors) => {
+        if (errors.length > 0) {
+          this.errors = errors;
+          return;
+        }
 
-                this.kdNavService_.setVisibility(true);
-                this.state_.transitionTo(overviewState);
-              });
+        this.kdNavService_.setVisibility(true);
+        this.state_.transitionTo(overviewState);
+      });
     }
   }
 
