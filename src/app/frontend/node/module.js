@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import chromeModule from 'chrome/module';
-import {allocatedResourcesChartComponent} from 'common/components/allocatedresourceschart/component';
 import componentsModule from 'common/components/module';
 import filtersModule from 'common/filters/module';
 import namespaceModule from 'common/namespace/module';

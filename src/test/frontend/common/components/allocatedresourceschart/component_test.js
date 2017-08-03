@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import AllocatedResourcesChartController from 'common/components/allocatedresourceschart/component';
 import componentsModule from 'common/components/module';
 /**
  * @type {!Array<Object>}
@@ -21,7 +20,7 @@ let stdData = [{value: 20}, {value: 30}, {value: 50}];
 
 describe('AllocatedResourcesChart component controller', () => {
   /**
-   * @type {AllocatedResourcesChartController}
+   * @type {!common/components/allocatedresourceschart/allocatedresourceschart_component.AllocatedResourcesChartController}
    */
   let ctrl;
 
@@ -31,15 +30,12 @@ describe('AllocatedResourcesChart component controller', () => {
   beforeEach(function() {
     angular.mock.module(componentsModule.name);
 
-    angular.mock.inject(($componentController, $rootScope) => {
+    angular.mock.inject(($componentController) => {
       element = angular.element(document.createElement('div'));
       element.appendTo(document.body);
       ctrl = $componentController(
-          'kdAllocatedResourcesChart',
-          {$element: element},
-          {data: stdData},
-          {colorpalette: ['#ff0', '#f00', '#00f']},
-      );
+          'kdAllocatedResourcesChart', {$element: element}, {data: stdData},
+          {colorpalette: ['#ff0', '#f00', '#00f']});
     });
   });
 
