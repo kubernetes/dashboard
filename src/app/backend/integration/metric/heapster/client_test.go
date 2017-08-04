@@ -28,6 +28,7 @@ import (
 	"errors"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/auth/jwe"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	integrationapi "github.com/kubernetes/dashboard/src/app/backend/integration/api"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
@@ -443,7 +444,7 @@ func TestDownloadMetrics(t *testing.T) {
 }
 
 func TestCreateHeapsterClient(t *testing.T) {
-	k8sClient, _ := client.NewClientManager("", "http://localhost:8080").Client(nil)
+	k8sClient, _ := client.NewClientManager("", "http://localhost:8080", jwe.NewJWETokenManager()).Client(nil)
 	cases := []struct {
 		info         string
 		heapsterHost string

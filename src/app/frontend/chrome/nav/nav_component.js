@@ -44,9 +44,6 @@ export class NavController {
    * @ngInject
    */
   constructor(kdNavService) {
-    /** @export {boolean} */
-    this.isVisible = true;
-
     /** @private {!./nav_service.NavService} */
     this.kdNavService_ = kdNavService;
 
@@ -77,23 +74,28 @@ export class NavController {
     };
   }
 
-  /** @export */
-  $onInit() {
-    this.kdNavService_.registerNav(this);
+  /**
+   * @return {boolean}
+   * @export
+   */
+  isVisible() {
+    return this.kdNavService_.isVisible();
   }
 
   /**
    * Toggles visibility of the navigation component.
    */
   toggle() {
-    this.isVisible = !this.isVisible;
+    this.kdNavService_.toggle();
   }
 
   /**
    * Sets visibility of the navigation component.
+   * @param {boolean} isVisible
+   * @export
    */
   setVisibility(isVisible) {
-    this.isVisible = isVisible;
+    this.kdNavService_.setVisibility(isVisible);
   }
 }
 

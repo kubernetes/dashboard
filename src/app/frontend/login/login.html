@@ -1,0 +1,45 @@
+<!--
+Copyright 2017 The Kubernetes Dashboard Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-warnings warnings="$ctrl.errors"
+             class="kd-login-error"></kd-warnings>
+
+<form name="$ctrl.form"
+      ng-submit="$ctrl.login()"
+      novalidate>
+  <kd-content-card class="kd-login-card">
+    <kd-title>
+      [[Log in to Kubernetes Dashboard|Title shown on login page on login card]]
+    </kd-title>
+    <kd-content class="kd-content-padded">
+      <kd-login-options>
+        <!--TODO(floreks): enable once kubernetes#49709 is resolved -->
+        <!--<kd-basic-login title="[[Basic|Basic login]]" on-update="$ctrl.update(loginSpec)"></kd-basic-login>-->
+        <kd-token-login title="[[Token|'Token' option label shown on login page]]"
+                        on-update="$ctrl.onUpdate(loginSpec)"></kd-token-login>
+      </kd-login-options>
+
+      <md-button class="md-raised md-primary"
+                 type="submit">
+        Login
+      </md-button>
+      <md-button class="md-primary"
+                 ng-click="$ctrl.skip()">
+        Skip
+      </md-button>
+    </kd-content>
+  </kd-content-card>
+</form>

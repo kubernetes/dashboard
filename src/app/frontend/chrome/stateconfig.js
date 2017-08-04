@@ -12,7 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {actionbarViewName, namespaceParam, stateName, toolbarViewName} from './state';
+import {stateName as loginState} from 'login/state';
+
+import {actionbarViewName, namespaceParam, stateName} from './state';
 
 /**
  * Namespace is an abstract state with no path, but with one parameter ?namespace= that
@@ -31,9 +33,6 @@ export default function stateConfig($stateProvider) {
       '': {
         template: '<div ui-view class="kd-content-div-filled"></div>',
       },
-      [toolbarViewName]: {
-        template: `<div ui-view="${toolbarViewName}"></div>`,
-      },
       [actionbarViewName]: {
         template: `<div ui-view="${actionbarViewName}" layout="row"></div>`,
       },
@@ -50,7 +49,7 @@ export default function stateConfig($stateProvider) {
 function requireParentState(stateExtend, parentFn) {
   /** @type {!ui.router.$state} */
   let state = stateExtend['self'];
-  if (!state.parent && state.name !== stateName) {
+  if (!state.parent && state.name !== stateName && state.name !== loginState) {
     throw new Error(
         `State "${state.name}" requires parent state to be set to ` +
         `${stateName}. This is likely a programming error.`);
