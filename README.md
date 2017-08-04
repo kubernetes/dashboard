@@ -50,7 +50,7 @@ Please note that this works only if the apiserver is set up to allow authenticat
 
 If the username and password is configured but unknown to you, then use `kubectl config view` to find it.
 
-## Compatibility matrix
+## Compatibility Matrix
 
 |                     | Kubernetes 1.4 | Kubernetes 1.5 | Kubernetes 1.6 | Kubernetes 1.7 |
 |---------------------|----------------|----------------|----------------|----------------|
@@ -62,6 +62,12 @@ If the username and password is configured but unknown to you, then use `kubectl
 - `✓` Fully supported version range.
 - `?` Due to breaking changes between Kubernetes API versions, some features might not work in Dashboard (logs, search etc.).
 - `✕` Unsupported version range.
+
+## Browsers Support
+
+| [<img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/chrome.png" alt="Chrome" width="16px" height="16px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/firefox.png" alt="Firefox" width="16px" height="16px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/edge.png" alt="IE / Edge" width="16px" height="16px" />](http://godban.github.io/browsers-support-badges/)</br>IE / Edge |
+| --------- | --------- | --------- |
+| last version | last version | IE11, Edge |
 
 ## Documentation
 
