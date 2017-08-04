@@ -23,7 +23,7 @@ If it is missing, you can install the latest stable release by running the follo
 $ kubectl create -f https://git.io/kube-dashboard
 ```
 
-If you are using Kubernetes 1.5 or earlier, you can install the latest stable release by running the following command:
+If you are using Dashboard on a cluster with disabled authorization, you can install the latest stable release by running the following command:
 ```shell
 $ kubectl create -f https://git.io/kube-dashboard-no-rbac
 ```
@@ -49,6 +49,19 @@ You may access the UI directly via the apiserver proxy. Open a browser and navig
 Please note that this works only if the apiserver is set up to allow authentication with username and password or certificates, however certificates require some manual steps to be installed in the browser. This is not currently the case with the setup tool `kubeadm`. See [documentation](http://kubernetes.io/docs/admin/authentication/) if you want to configure it manually.
 
 If the username and password is configured but unknown to you, then use `kubectl config view` to find it.
+
+## Compatibility matrix
+
+|                     | Kubernetes 1.4 | Kubernetes 1.5 | Kubernetes 1.6 | Kubernetes 1.7 |
+|---------------------|----------------|----------------|----------------|----------------|
+| **Dashboard 1.4**   | ✓              | ✕              | ✕              | ✕              |
+| **Dashboard 1.5**   | ✕              | ✓              | ✕              | ✕              |
+| **Dashboard 1.6**   | ✕              | ✕              | ✓              | ?              |
+| **Dashboard HEAD**  | ✕              | ✕              | ?              | ✓              |
+
+- `✓` Fully supported version range.
+- `?` Due to breaking changes between Kubernetes API versions, some features might not work in Dashboard (logs, search etc.).
+- `✕` Unsupported version range.
 
 ## Documentation
 

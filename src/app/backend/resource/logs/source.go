@@ -19,6 +19,7 @@ import "github.com/kubernetes/dashboard/src/app/backend/resource/common"
 import client "k8s.io/client-go/kubernetes"
 import meta "k8s.io/apimachinery/pkg/apis/meta/v1"
 import "k8s.io/client-go/pkg/api/v1"
+import "github.com/kubernetes/dashboard/src/app/backend/api"
 
 // GetLogSources returns all log sources for a given resource. A log source identifies a log file through the combination of pod & container
 func GetLogSources(k8sClient *client.Clientset, ns string, resourceName string, resourceType string) (controller.LogSources, error) {
@@ -40,11 +41,15 @@ func getLogSourcesFromPod(k8sClient *client.Clientset, ns, resourceName string) 
 	}, nil
 }
 
-// GetLogSourcesFromController returns all pods and containers for a controller object, such as ReplicaSEt
+// GetLogSourcesFromController returns all pods and containers for a controller object, such as ReplicaSet
 func getLogSourcesFromController(k8sClient *client.Clientset, ns, resourceName, resourceType string) (controller.LogSources, error) {
 	rc, err := controller.NewResourceController(v1.ObjectReference{Kind: resourceType, Name: resourceName, Namespace: ns}, k8sClient)
 	if err != nil {
 		return controller.LogSources{}, err
 	}
-	return rc.GetLogSources(k8sClient), nil
+	allPods, err := k8sClient.CoreV1().Pods(ns).List(api.ListEverything)
+	if err != nil {
+		return controller.LogSources{}, err
+	}
+	return rc.GetLogSources(allPods.Items), nil
 }
