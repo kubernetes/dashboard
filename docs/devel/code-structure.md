@@ -22,7 +22,9 @@ If you're looking for ideas on what to contribute, in addition to taking a look 
 
 - The frontend also automatically generates localized translations. You can generate translations manually by running `gulp generate-xtbs` or `gulp serve:prod`.
 
-- The frontend uses [angular](https://angular.io/), a javascript model-view-controller framework.
+- The frontend uses [angular](https://angular.io/), a javascript model-view-controller framework along with [material design](https://material.angularjs.org/latest/getting-started) for cards, components, search bars, and all other visuals.
+
+- [Material design guidelines](https://material.io/guidelines/)
 
 ### Tests
 - The frontend tests can be found in the `src/test/` directory. That test directory is structured to mirror the `/src/app` directory.
