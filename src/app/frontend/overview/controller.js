@@ -107,7 +107,7 @@ export class OverviewController {
       'success': 0,
       'failed': 0,
       'pending': 0,
-      'total': this.overview.podList.listMeta.totalItems,
+      'total': this.overview.podList.pods.length,
     };
 
     let pods = this.overview.podList.pods;
