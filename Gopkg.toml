@@ -44,6 +44,10 @@
   name = "k8s.io/kubernetes"
   version = "1.7.2"
 
+[[constraint]]
+  name = "github.com/square/go-jose"
+  version = "2.1.2"
+
 [[override]]
   name = "k8s.io/apiserver"
   revision = "8ff532a4cb6f39381eb9488efc71c394da932f05"

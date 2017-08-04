@@ -286,6 +286,12 @@
   version = "v0.9.0"
 
 [[projects]]
+  name = "gopkg.in/square/go-jose.v2"
+  packages = [".","cipher","json"]
+  revision = "b25e6cab129e4a54675b42ea49d38e9c33ade9e6"
+  version = "v2.1.2"
+
+[[projects]]
   name = "gopkg.in/yaml.v2"
   packages = ["."]
   revision = "53feefa2559fb8dfa8d81baad31be332c97d6c77"
@@ -332,6 +338,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "5a1a4769d1737e6a37e86df11d4089de639851824d8a2c174311d8890150d3b2"
+  inputs-digest = "e162bf044a80ed19fa44d073772014b2dfa881da671c318e15c6e9a9975d2c74"
   solver-name = "gps-cdcl"
   solver-version = 1

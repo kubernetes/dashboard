@@ -23,7 +23,7 @@ import (
 
 // NonCriticalErrors is an array of error statuses, that are non-critical. That means, that this error can be
 // silenced and displayed to the user as a warning on the frontend side.
-var NonCriticalErrors = []int32{http.StatusForbidden}
+var NonCriticalErrors = []int32{http.StatusForbidden, http.StatusUnauthorized}
 
 // HandleError handles single error, that occurred during API GET call. If it is not critical, then it will be
 // returned as a part of error array. Otherwise, it will be returned as a second value. Usage of this functions
@@ -39,10 +39,10 @@ func HandleError(err error) ([]error, error) {
 func AppendError(err error, nonCriticalErrors []error) ([]error, error) {
 	if err != nil {
 		if isErrorCritical(err) {
-			return nonCriticalErrors, err
+			return nonCriticalErrors, LocalizeError(err)
 		} else {
 			log.Printf("Non-critical error occurred during resource retrieval: %s", err)
-			nonCriticalErrors = appendMissing(nonCriticalErrors, err)
+			nonCriticalErrors = appendMissing(nonCriticalErrors, LocalizeError(err))
 		}
 	}
 	return nonCriticalErrors, nil

@@ -23,4 +23,5 @@ export default angular
         [
           'ui.router',
         ])
-    .service('kdCsrfTokenService', CsrfTokenService);
+    .service('kdCsrfTokenService', CsrfTokenService)
+    .constant('kdCsrfTokenHeader', 'X-CSRF-TOKEN');

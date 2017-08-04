@@ -26,9 +26,11 @@ export default class CreateSecretController {
    * @param {!Object} errorDialog
    * @param {string} namespace
    * @param {!./../common/csrftoken/service.CsrfTokenService} kdCsrfTokenService
+   * @param {string} kdCsrfTokenHeader
    * @ngInject
    */
-  constructor($mdDialog, $log, $resource, errorDialog, namespace, kdCsrfTokenService) {
+  constructor(
+      $mdDialog, $log, $resource, errorDialog, namespace, kdCsrfTokenService, kdCsrfTokenHeader) {
     /** @private {!md.$dialog} */
     this.mdDialog_ = $mdDialog;
 
@@ -84,6 +86,9 @@ export default class CreateSecretController {
 
     /** @private {!angular.$q.Promise} */
     this.tokenPromise = kdCsrfTokenService.getTokenForAction('secret');
+
+    /** @private {string} */
+    this.csrfHeaderName_ = kdCsrfTokenHeader;
   }
 
   /**
@@ -111,7 +116,8 @@ export default class CreateSecretController {
         (token) => {
           /** @type {!angular.Resource<!backendApi.SecretSpec>} */
           let resource = this.resource_(
-              `api/v1/secret/`, {}, {save: {method: 'POST', headers: {'X-CSRF-TOKEN': token}}});
+              `api/v1/secret/`, {},
+              {save: {method: 'POST', headers: {[this.csrfHeaderName_]: token}}});
 
           resource.save(
               secretSpec,

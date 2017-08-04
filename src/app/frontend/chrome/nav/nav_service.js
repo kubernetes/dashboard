@@ -27,21 +27,14 @@ export class NavService {
     /** @private {!Array<string>} */
     this.states_ = [];
 
-    /** @private {./nav_component.NavController} */
-    this.navComponent_ = null;
-
     /** @private {!ui.router.$state} */
     this.state_ = $state;
 
     /** @private {!./../../common/state/service.FutureStateService} */
     this.kdFutureStateService_ = kdFutureStateService;
-  }
 
-  /**
-   * @param {!./nav_component.NavController} navComponent
-   */
-  registerNav(navComponent) {
-    this.navComponent_ = navComponent;
+    /** @export {boolean} */
+    this.isVisible_ = true;
   }
 
   /**
@@ -78,19 +71,21 @@ export class NavService {
    * Toggles visibility of the navigation component.
    */
   toggle() {
-    if (this.navComponent_) {
-      this.navComponent_.toggle();
-    } else {
-      throw new Error('Navigation menu is not registered. This is likely a programming error.');
-    }
+    this.isVisible_ = !this.isVisible_;
   }
 
   /**
    * Sets visibility of the navigation component.
+   * @param {boolean} isVisible
    */
   setVisibility(isVisible) {
-    if (this.navComponent_) {
-      this.navComponent_.setVisibility(isVisible);
-    }
+    this.isVisible_ = isVisible;
+  }
+
+  /**
+   * @return {boolean}
+   */
+  isVisible() {
+    return this.isVisible_;
   }
 }
