@@ -23,7 +23,7 @@ If it is missing, you can install the latest stable release by running the follo
 $ kubectl create -f https://git.io/kube-dashboard
 ```
 
-If you are using the Dashboard on cluster without authorization setup, you can install the latest stable release by running the following command:
+If you are using Dashboard on a cluster with disabled authorization, you can install the latest stable release by running the following command:
 ```shell
 $ kubectl create -f https://git.io/kube-dashboard-no-rbac
 ```
@@ -61,7 +61,7 @@ If the username and password is configured but unknown to you, then use `kubectl
 
 - `✓` Fully supported version range.
 - `?` Due to breaking changes between Kubernetes API versions, some features might not work in Dashboard (logs, search etc.).
-- `✕` Not supported version range.
+- `✕` Unsupported version range.
 
 ## Documentation
 
