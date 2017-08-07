@@ -28,7 +28,7 @@ import (
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
 
-// ReplicationSetList contains a list of Deployments in the cluster.
+// DeploymentList contains a list of Deployments in the cluster.
 type DeploymentList struct {
 	ListMeta          api.ListMeta       `json:"listMeta"`
 	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`
