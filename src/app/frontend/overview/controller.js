@@ -76,7 +76,22 @@ export class OverviewController {
     /** @export {!angular.Resource} */
     this.pvcListResource = kdPersistentVolumeClaimListResource;
 
+    /** @export {Object} */
     this.podStats = {};
+
+    /** @export {number} */
+    this.podStats.success;
+
+    /** @export {number} */
+    this.podStats.pending;
+
+    /** @export {number} */
+    this.podStats.failed;
+
+    /** @export {Array<Object>} */
+    this.podStats.chartValues = [];
+
+    /** @export {!Array<string>} */
     this.colorPalette = ['#00c752', '#f00', '#ff0'];
   }
 
@@ -102,6 +117,10 @@ export class OverviewController {
     return resourcesLength === 0;
   }
 
+  /**
+   * @return {Object}
+   * @export
+   */
   getPodStats() {
     let podStats = {
       'success': 0,
@@ -122,10 +141,10 @@ export class OverviewController {
       {value: podStats.pending / podStats.total * 100},
     ];
 
-    this.podStats = podStats;
+    return podStats;
   }
 
   $onInit() {
-    this.getPodStats();
+    this.podStats = this.getPodStats();
   }
 }

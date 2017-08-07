@@ -27,13 +27,13 @@ export class AllocatedResourcesChartController {
 
     /**
      * Data that fills a single pie chart
-     * @export {Object}
+     * @export {Array<Object>}
      */
     this.data;
 
     /**
      * Colors for single ring pie chart
-     * @export {!Array.<string>}
+     * @export {!Array<string>}
      */
     this.colorpalette;
 
