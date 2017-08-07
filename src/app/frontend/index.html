@@ -43,15 +43,20 @@ limitations under the License.
   <!-- endbuild -->
 </head>
 
-<body>
+<body ng-controller="kdMain as $ctrl">
   <!--[if lt IE 10]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser.
       Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your
       experience.</p>
     <![endif]-->
 
+  <kd-login layout="column"
+            layout-fill
+            ng-if="$ctrl.isLoginState()">
+  </kd-login>
   <kd-chrome layout="column"
-             layout-fill>
+             layout-fill
+             ng-if="!$ctrl.isLoginState()">
     <!-- Application content is inserted here. -->
   </kd-chrome>
   <!-- build:js static/vendor.js -->

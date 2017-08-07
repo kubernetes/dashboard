@@ -24,17 +24,16 @@ describe('Nav component', () => {
     angular.mock.module(module.name);
     angular.mock.inject(($componentController, $rootScope, kdNavService) => {
       ctrl = $componentController('kdNav', {$scope: $rootScope});
-      ctrl.$onInit();
       navService = kdNavService;
     });
   });
 
   it('should use kdNavService and toggle by it', () => {
     // initial state assert
-    expect(ctrl.isVisible).toBe(true);
+    expect(ctrl.isVisible()).toBe(true);
 
     navService.toggle();
 
-    expect(ctrl.isVisible).toBe(false);
+    expect(ctrl.isVisible()).toBe(false);
   });
 });

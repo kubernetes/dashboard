@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import {namespaceParam} from 'chrome/state';
+import {stateName as loginState} from 'login/state';
 
 import {DEFAULT_NAMESPACE, namespaceSelectComponent} from './component';
 import {NamespaceService} from './service';
@@ -36,23 +37,26 @@ export default angular
  * Ensures that namespaceParam is present in the URL.
  * @param {!angular.Scope} $rootScope
  * @param {!angular.$location} $location
+ * @param {!kdUiRouter.$transitions} $transitions
+ * @param {!kdUiRouter.$state} $state
  * @ngInject
  */
-function ensureNamespaceParamPresent($rootScope, $location) {
+function ensureNamespaceParamPresent($rootScope, $location, $transitions, $state) {
   /**
    * Helper function which replaces namespace URL search param when the given namespace is
    * undefined.
    * @param {string|undefined} namespace
    */
   function replaceUrlIfNeeded(namespace) {
-    if (namespace === undefined) {
+    if (namespace === undefined && !!$state.transition &&
+        $state.transition.to().name !== loginState) {
       $location.search(namespaceParam, DEFAULT_NAMESPACE);
       $location.replace();
     }
   }
 
   $rootScope.$watch(() => $location.search()[namespaceParam], replaceUrlIfNeeded);
-  $rootScope.$on('$locationChangeSuccess', () => {
+  $transitions.onSuccess({}, () => {
     replaceUrlIfNeeded($location.search()[namespaceParam]);
   });
 }

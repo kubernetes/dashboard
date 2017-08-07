@@ -17,22 +17,39 @@
  */
 export class CsrfTokenService {
   /**
-   * @param {!angular.$http} $http
+   * @param {!angular.$resource} $resource
    * @ngInject
    */
-  constructor($http) {
-    /** @private {!angular.$http} */
-    this.http_ = $http;
+  constructor($resource) {
+    /** @private {!angular.$resource} */
+    this.resource_ = $resource;
+  }
+
+  /**
+   * Get a CSRF token resource for an action you want to perform
+   * @param {string} action to get token for
+   * @return {!angular.$q.Promise}
+   * @private
+   */
+  getTokenResource_(action) {
+    return this.resource_(`api/v1/csrftoken/${action}`).get().$promise;
   }
 
   /**
    * Get a CSRF token for an action you want to perform
    * @param {string} action to get token for
-   * @returns {!angular.$q.Promise}
+   * @return {!angular.$q.Promise}
    */
   getTokenForAction(action) {
-    return this.http_.get(`api/v1/csrftoken/${action}`)
-        .then(
-            /** !angular.$http.Response<backendApi.CsrfToken>*/ (obj) => obj.data.token);
+    return this.getTokenResource_(action).then(this.onTokenResponse_);
+  }
+
+  /**
+   * @param {!backendApi.CsrfToken} csrfToken
+   * @return {string}
+   * @private
+   */
+  onTokenResponse_(csrfToken) {
+    return csrfToken.token;
   }
 }

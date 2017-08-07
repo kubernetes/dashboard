@@ -16,16 +16,21 @@ import path from 'path';
 import remote from 'selenium-webdriver/remote';
 
 import DeployFromFilePageObject from '../deploy/deployfromfile_po';
+import LoginPageObject from '../login/login_po';
 
 // Test assumes, that there are no replication controllers in the cluster at the beginning.
 describe('Deploy from invalid file user story test', () => {
-
   /** @type {!DeployFromFilePageObject} */
   let deployFromFilePage;
 
   beforeAll(() => {
     browser.driver.setFileDetector(new remote.FileDetector());
     deployFromFilePage = new DeployFromFilePageObject();
+
+    // skip login page
+    browser.get('#!/login');
+    new LoginPageObject().skipButton.click();
+
     browser.get('#!/deploy/file');
     // switches to deploy from file
     deployFromFilePage.deployFromFileRadioButton.click();
