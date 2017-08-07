@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as loginState} from 'login/state';
-
 /**
  * @final
  */
@@ -52,21 +50,21 @@ export class AuthController {
   }
 
   /**
-   * Logs out current user.
-   *
-   * @export
-   */
-  logout() {
-    this.kdAuthService_.logout();
-  }
-
-  /**
    * Checks if user is logged in using Dashboard log in mechanism.
    *
    * @return {boolean}
    */
   isLoggedIn() {
     return true;  // TODO(maciaszczykm)
+  }
+
+  /**
+   * Logs out current user.
+   *
+   * @export
+   */
+  logout() {
+    this.kdAuthService_.logout();
   }
 }
 
