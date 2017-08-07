@@ -25,6 +25,17 @@ export class AllocatedResourcesChartController {
     /** @private {!angular.JQLite} */
     this.element_ = $element;
 
+    /**
+     * Data that fills a single pie chart
+     * @export {Array<Object>}
+     */
+    this.data;
+
+    /**
+     * Colors for single ring pie chart
+     * @export {!Array<string>}
+     */
+    this.colorPalette;
 
     /**
      * Outer graph percent. Initialized from the scope.
@@ -33,10 +44,22 @@ export class AllocatedResourcesChartController {
     this.outer;
 
     /**
+     * Outer graph color. Initialized from scope
+     * @export {string}
+     */
+    this.outercolor;
+
+    /**
      * Inner graph percent. Initialized from the scope.
      * @export {number}
      */
     this.inner;
+
+    /**
+     * Inner graph color. Initialized from scope
+     * @export {string}
+     */
+    this.innercolor;
   }
 
   $onInit() {
@@ -49,8 +72,15 @@ export class AllocatedResourcesChartController {
    *
    * @private
    */
-  initPieChart_(svg, data, color, margin, ratio) {
+  initPieChart_(svg, data, colors, margin, ratio, labelFunc) {
     let size = 280;
+
+    if (!labelFunc) {
+      labelFunc = (d) => {
+        return `${d.data.value.toFixed(2)}%`;
+      };
+    }
+
     let chart = nv.models.pieChart()
                     .showLegend(false)
                     .showLabels(true)
@@ -62,18 +92,12 @@ export class AllocatedResourcesChartController {
                     })
                     .donut(true)
                     .donutRatio(ratio)
-                    .color([color, '#ddd'])
+                    .color(colors)
                     .margin({top: margin, right: margin, bottom: margin, left: margin})
                     .width(size)
                     .height(size)
                     .growOnHover(false)
-                    .labelType((d, i) => {
-                      // Displays label only for allocated resources.
-                      if (i === 0) {
-                        return `${d.data.value.toFixed(2)}%`;
-                      }
-                      return '';
-                    });
+                    .labelType(labelFunc);
 
     chart.tooltip.enabled(false);
 
@@ -95,24 +119,40 @@ export class AllocatedResourcesChartController {
     nv.addGraph(() => {
       let svg = d3.select(this.element_[0]).append('svg');
 
-      if (this.outer !== undefined) {
-        this.initPieChart_(
-            svg,
-            [
-              {value: this.outer},
-              {value: 100 - this.outer},
-            ],
-            '#00c752', 0, 0.61);
-      }
+      let displayOnlyAllocated = function(d, i) {
+        // Displays label only for allocated resources.
+        if (i === 0) {
+          return `${d.data.value.toFixed(2)}%`;
+        }
+        return '';
+      };
 
-      if (this.inner !== undefined) {
-        this.initPieChart_(
-            svg,
-            [
-              {value: this.inner},
-              {value: 100 - this.inner},
-            ],
-            '#326de6', 36, 0.55);
+      if (!this.data) {
+        if (this.outer !== undefined) {
+          this.outercolor = this.outercolor ? this.outercolor : '#00c752';
+
+          this.initPieChart_(
+              svg,
+              [
+                {value: this.outer},
+                {value: 100 - this.outer},
+              ],
+              [this.outercolor, '#ddd'], 0, 0.61, displayOnlyAllocated);
+        }
+
+        if (this.inner !== undefined) {
+          this.innercolor = this.innercolor ? this.innercolor : '#326de6';
+          this.initPieChart_(
+              svg,
+              [
+                {value: this.inner},
+                {value: 100 - this.inner},
+              ],
+              [this.innercolor, '#ddd'], 36, 0.55, displayOnlyAllocated);
+        }
+      } else {
+        // Initializes a pie chart with multiple entries in a single ring
+        this.initPieChart_(svg, this.data, this.colorPalette, 0, 0.61, null);
       }
     });
   }
@@ -126,8 +166,12 @@ export class AllocatedResourcesChartController {
 export const allocatedResourcesChartComponent = {
   bindings: {
     'outer': '<',
+    'outercolor': '<',
     'inner': '<',
+    'innercolor': '<',
+    'data': '<',
+    'colorPalette': '<',
   },
   controller: AllocatedResourcesChartController,
-  templateUrl: 'node/detail/allocatedresourceschart.html',
+  templateUrl: 'common/components/allocatedresourceschart/allocatedresourceschart.html',
 };
