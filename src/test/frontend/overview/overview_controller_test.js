@@ -35,6 +35,29 @@ describe('Overview list controller', () => {
     expect(ctrl.overview).toBe(overview);
   }));
 
+  it('should generate accurate podStates for pod visualizations', () => {
+    ctrl.overview = {
+      'podList': {
+        pods: [
+          {podStatus: {status: 'success'}},
+          {podStatus: {status: 'success'}},
+          {podStatus: {status: 'failed'}},
+          {podStatus: {status: 'pending'}},
+        ],
+      },
+    };
+
+    ctrl.$onInit();
+
+    expect(ctrl.podStats).not.toBeUndefined();
+    expect(ctrl.podStats.failed).toBe(1);
+    expect(ctrl.podStats.pending).toBe(1);
+    expect(ctrl.podStats.success).toBe(2);
+    expect(ctrl.podStats.total).toBe(4);
+    expect(ctrl.podStats.chartValues[0].value).toBe(50);
+    expect(ctrl.podStats.chartValues[1].value).toBe(25);
+  });
+
   it('should show zero state', () => {
     // given
     ctrl.overview = {
