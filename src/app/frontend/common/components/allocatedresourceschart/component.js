@@ -35,7 +35,7 @@ export class AllocatedResourcesChartController {
      * Colors for single ring pie chart
      * @export {!Array<string>}
      */
-    this.colorpalette;
+    this.colorPalette;
 
     /**
      * Outer graph percent. Initialized from the scope.
@@ -152,7 +152,7 @@ export class AllocatedResourcesChartController {
         }
       } else {
         // Initializes a pie chart with multiple entries in a single ring
-        this.initPieChart_(svg, this.data, this.colorpalette, 0, 0.61, null);
+        this.initPieChart_(svg, this.data, this.colorPalette, 0, 0.61, null);
       }
     });
   }
@@ -170,7 +170,7 @@ export const allocatedResourcesChartComponent = {
     'inner': '<',
     'innercolor': '<',
     'data': '<',
-    'colorpalette': '<',
+    'colorPalette': '<',
   },
   controller: AllocatedResourcesChartController,
   templateUrl: 'common/components/allocatedresourceschart/allocatedresourceschart.html',
