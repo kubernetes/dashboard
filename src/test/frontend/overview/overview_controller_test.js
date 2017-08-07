@@ -47,7 +47,7 @@ describe('Overview list controller', () => {
       },
     };
 
-    ctrl.getPodStats();
+    ctrl.$onInit();
 
     expect(ctrl.podStats).not.toBeUndefined();
     expect(ctrl.podStats.failed).toBe(1);
