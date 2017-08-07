@@ -16,6 +16,11 @@ package api
 
 import "k8s.io/client-go/tools/clientcmd/api"
 
+const (
+	EncryptionKeyHolderName      = "kubernetes-dashboard-key-holder"
+	EncryptionKeyHolderNamespace = "kube-system"
+)
+
 // AuthManager is used for user authentication management.
 type AuthManager interface {
 	// Login authenticates user based on provided LoginSpec and returns LoginResponse. LoginResponse contains

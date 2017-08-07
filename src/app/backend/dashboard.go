@@ -27,6 +27,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/handler"
 	"github.com/kubernetes/dashboard/src/app/backend/integration"
 	integrationapi "github.com/kubernetes/dashboard/src/app/backend/integration/api"
+	"github.com/kubernetes/dashboard/src/app/backend/sync"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/spf13/pflag"
 )
@@ -64,12 +65,15 @@ func main() {
 		log.Printf("Using kubeconfig file: %s", *argKubeConfigFile)
 	}
 
-	tokenManager := jwe.NewJWETokenManager()
-	clientManager := client.NewClientManager(*argKubeConfigFile, *argApiserverHost, tokenManager)
+	clientManager := client.NewClientManager(*argKubeConfigFile, *argApiserverHost)
 	apiserverClient, err := clientManager.Client(nil)
 	if err != nil {
 		handleFatalInitError(err)
 	}
+
+	synchronizer := sync.NewSynchronizer(apiserverClient)
+	tokenManager := jwe.NewJWETokenManager(synchronizer)
+	clientManager.SetTokenManager(tokenManager)
 
 	versionInfo, err := apiserverClient.ServerVersion()
 	if err != nil {

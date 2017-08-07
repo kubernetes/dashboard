@@ -53,6 +53,7 @@ type ClientManager interface {
 	CSRFKey() string
 	HasAccess(authInfo api.AuthInfo) error
 	VerberClient(req *restful.Request) (ResourceVerber, error)
+	SetTokenManager(manager authApi.TokenManager)
 }
 
 // clientManager implements ClientManager interface
@@ -67,7 +68,7 @@ type clientManager struct {
 	// Initialized on clientManager creation and used if kubeconfigPath and apiserverHost are
 	// empty
 	inClusterConfig *rest.Config
-
+	// Responsible for decrypting tokens coming in request header. Used for authentication.
 	tokenManager authApi.TokenManager
 }
 
@@ -165,6 +166,11 @@ func (self *clientManager) VerberClient(req *restful.Request) (ResourceVerber, e
 		client.ExtensionsV1beta1().RESTClient(), client.AppsV1beta1().RESTClient(),
 		client.BatchV1().RESTClient(), client.AutoscalingV1().RESTClient(),
 		client.StorageV1beta1().RESTClient()), nil
+}
+
+// SetTokenManager TODO(floreks)
+func (self *clientManager) SetTokenManager(manager authApi.TokenManager) {
+	self.tokenManager = manager
 }
 
 // Initializes config with default values
@@ -313,11 +319,10 @@ func (self *clientManager) isRunningInCluster() bool {
 
 // NewClientManager creates client manager based on kubeConfigPath and apiserverHost parameters.
 // If both are empty then in-cluster config is used.
-func NewClientManager(kubeConfigPath, apiserverHost string, tokenManager authApi.TokenManager) ClientManager {
+func NewClientManager(kubeConfigPath, apiserverHost string) ClientManager {
 	result := &clientManager{
 		kubeConfigPath: kubeConfigPath,
 		apiserverHost:  apiserverHost,
-		tokenManager:   tokenManager,
 	}
 
 	result.init()
