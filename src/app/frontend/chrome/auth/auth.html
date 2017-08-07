@@ -1,0 +1,46 @@
+<!--
+Copyright 2017 The Kubernetes Dashboard Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<md-menu>
+  <md-button class="md-icon-button"
+             ng-mousedown="$mdMenu.open()">
+    <!-- TODO(maciaszczykm): Disabled icon when user skipped login. -->
+    <i class="material-icons">account_circle</i>
+  </md-button>
+  <md-menu-content width="4">
+    <md-menu-item>
+      <md-button disabled="disabled">
+        <span class="kd-auth-status">
+          {{$ctrl.getAuthStatus()}}
+        </span>
+      </md-button>
+    </md-menu-item>
+    <md-menu-divider></md-menu-divider>
+
+    <md-menu-item>
+      <md-button>
+        [[Log out|Log out menu item.]]
+      </md-button>
+    </md-menu-item>
+
+    <md-menu-item ng-if="$ctrl.isAuthSkipped()">
+      <md-button ng-click="$ctrl.goToLoginPage()">
+        [[Log in|Log in menu item.]]
+      </md-button>
+    </md-menu-item>
+
+  </md-menu-content>
+</md-menu>
