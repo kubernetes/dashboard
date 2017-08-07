@@ -65,6 +65,14 @@ export class AuthService {
   }
 
   /**
+   * Cleans cookies, but does not remove them.
+   */
+  cleanAuthCookies() {
+    this.setTokenCookie_('');
+    this.skipLoginPage(false);
+  }
+
+  /**
    * Sends a login request to the backend with filled in login spec structure.
    *
    * @param {!backendApi.LoginSpec} loginSpec
@@ -103,6 +111,14 @@ export class AuthService {
         });
 
     return deferred.promise;
+  }
+
+  /**
+   * Cleans cookies and goes to login page.
+   */
+  logout() {
+    this.cleanAuthCookies();
+    this.state_.go(loginState)
   }
 
   /**

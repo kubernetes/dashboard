@@ -16,14 +16,15 @@ limitations under the License.
 
 <md-menu>
   <md-button class="md-icon-button"
-             ng-mousedown="$mdMenu.open()">
+             ng-click="$mdMenu.open($event)">
     <i class="material-icons">account_circle</i>
     <svg class="kd-cross-style"
          ng-if="$ctrl.isAuthSkipped()"
          width="40px"
          height="40px"
          viewBox="0 0 40 40">
-      <line class="kd-cross-line-style" x1="10" y1="10" x2="30" y2="30"/>
+      <line class="kd-cross-line-white" x1="10" x2="30" y1="10" y2="30"/>
+      <line class="kd-cross-line-blue" x1="10" x2="30" y1="10" y2="30"/>
     </svg>
     <md-tooltip md-delay="500">
       [[Authentication control panel|Tooltip for the authentication control panel.]]
@@ -37,21 +38,14 @@ limitations under the License.
         </span>
       </md-button>
     </md-menu-item>
-    <md-menu-divider></md-menu-divider>
-
-
-
-
-
-
-    <md-menu-item>
-      <md-button>
+    <md-menu-divider ng-if="$ctrl.isLoggedIn() || $ctrl.isAuthSkipped()"></md-menu-divider>
+    <md-menu-item ng-if="$ctrl.isLoggedIn()">
+      <md-button ng-click="$ctrl.logout()">
         [[Log out|Log out menu item.]]
       </md-button>
     </md-menu-item>
-
     <md-menu-item ng-if="$ctrl.isAuthSkipped()">
-      <md-button ng-click="$ctrl.goToLoginPage()">
+      <md-button ng-click="$ctrl.logout()">
         [[Log in|Log in menu item.]]
       </md-button>
     </md-menu-item>

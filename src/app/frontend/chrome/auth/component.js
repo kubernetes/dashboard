@@ -12,41 +12,61 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {stateName as loginState} from 'login/state';
+
 /**
  * @final
  */
 export class AuthController {
   /**
-   * @param {!./../common/auth/service.AuthService} kdAuthService
+   * @param {!ui.router.$state} $state
+   * @param {!./../../common/auth/service.AuthService} kdAuthService
    * @ngInject
    */
-  constructor(kdAuthService) {
+  constructor($state, kdAuthService) {
+    /** @private {!ui.router.$state} */
+    this.state_ = $state;
+
     /** @private {!./../common/auth/service.AuthService} */
     this.kdAuthService_ = kdAuthService;
   }
 
   /**
-   * TODO
-   * @returns {string}
+   * Returns current authentication status string.
+   *
+   * @return {string}
+   * @export
    */
   getAuthStatus() {
-    return 'logged in with token';
+    return 'Logged in with token';  // TODO(maciaszczykm)
   }
 
   /**
-   * TODO
-   * @returns {*}
+   * Checks if authentication was skipped and default service account is used.
+   *
+   * @return {boolean}
+   * @export
    */
   isAuthSkipped() {
-    console.log(this.kdAuthService_.isLoginPageEnabled());
-    return this.kdAuthService_.isLoginPageEnabled();
+    return !this.kdAuthService_.isLoginPageEnabled();
   }
 
   /**
-   * TODO
+   * Logs out current user.
+   *
+   * @export
    */
-  goToLoginPage() {
-    this.kdAuthService_.skipLoginPage(false);
+  logout() {
+    this.kdAuthService_.logout();
+  }
+
+  /**
+   * Checks if user is logged in using Dashboard log in mechanism.
+   *
+   * @return {boolean}
+   */
+  isLoggedIn() {
+    return true;  // TODO(maciaszczykm)
   }
 }
 

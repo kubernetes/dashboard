@@ -20,10 +20,16 @@
   text-transform: uppercase;
 }
 
-.kd-cross-line-style {
-  stroke: $secondary;
+.kd-cross-line-blue {
+  stroke: $primary;
   stroke-width: 2;
 }
+
+.kd-cross-line-white {
+  stroke: white;
+  stroke-width: 4;
+}
+
 .kd-cross-style {
   bottom:0;
   left: 0;
