@@ -12,8 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+@import '../../variables';
+
 .kd-auth-status {
-  font-size: 14px;
+  font-size: $body-font-size-base;
+  font-weight: $bold-font-weight;
   text-transform: uppercase;
-  font-weight: 500;
+}
+
+.kd-cross-line-style {
+  stroke: $secondary;
+  stroke-width: 2;
+}
+.kd-cross-style {
+  bottom:0;
+  left: 0;
+  position:absolute;
+  right: 0;
+  top:0;
 }

@@ -30,7 +30,7 @@ export class AuthController {
    * @returns {string}
    */
   getAuthStatus() {
-    return 'logged in using token';
+    return 'logged in with token';
   }
 
   /**
