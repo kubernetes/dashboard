@@ -34,6 +34,20 @@ export class AuthController {
   }
 
   /**
+   * Checks if user is logged in using Dashboard log in mechanism and sets class variable after
+   * backend responds.
+   */
+  $onInit() {
+    this.kdAuthService_.getLoginStatus().then(
+        (/** @type {!backendApi.LoginStatus} */ loginStatus) => {
+          this.loginStatus_ = loginStatus;
+        },
+        (err) => {
+          this.log_.error(err);
+        });
+  }
+
+  /**
    * Returns current authentication status string.
    *
    * @return {string}
@@ -70,22 +84,6 @@ export class AuthController {
    */
   isAuthSkipped() {
     return !this.kdAuthService_.isLoginPageEnabled();
-  }
-
-  /**
-   * Checks if user is logged in using Dashboard log in mechanism and sets class variable after
-   * backend responds.
-   *
-   * @export
-   */
-  checkLoginStatus() {
-    this.kdAuthService_.getLoginStatus().then(
-        (/** @type {!backendApi.LoginStatus} */ loginStatus) => {
-          this.loginStatus_ = loginStatus;
-        },
-        (err) => {
-          this.log_.error(err);
-        });
   }
 
   /**
