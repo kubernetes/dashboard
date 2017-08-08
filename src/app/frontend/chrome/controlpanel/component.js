@@ -15,7 +15,7 @@
 /**
  * @final
  */
-export class AuthController {
+export class ControlPanelController {
   /**
    * @param {!ui.router.$state} $state
    * @param {!angular.$log} $log
@@ -109,7 +109,7 @@ export class AuthController {
 /**
  * @type {!angular.Component}
  */
-export const authComponent = {
-  controller: AuthController,
-  templateUrl: 'chrome/auth/auth.html',
+export const controlPanelComponent = {
+  controller: ControlPanelController,
+  templateUrl: 'chrome/controlpanel/controlpanel.html',
 };

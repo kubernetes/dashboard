@@ -15,8 +15,8 @@
 import componentsModule from 'common/components/module';
 import namespaceModule from 'common/namespace/module';
 
-import {authComponent} from './auth/component';
 import {chromeComponent} from './component';
+import {controlPanelComponent} from './controlpanel/component';
 import navModule from './nav/module';
 import {searchComponent} from './search/component';
 import stateConfig from './stateconfig';
@@ -36,5 +36,5 @@ export default angular
         ])
     .config(stateConfig)
     .component('kdChrome', chromeComponent)
-    .component('kdAuth', authComponent)
+    .component('kdControlPanel', controlPanelComponent)
     .component('kdSearch', searchComponent);
