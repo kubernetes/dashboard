@@ -65,6 +65,14 @@ export class AuthService {
   }
 
   /**
+   * Cleans cookies, but does not remove them.
+   */
+  cleanAuthCookies() {
+    this.setTokenCookie_('');
+    this.skipLoginPage(false);
+  }
+
+  /**
    * Sends a login request to the backend with filled in login spec structure.
    *
    * @param {!backendApi.LoginSpec} loginSpec
@@ -106,6 +114,14 @@ export class AuthService {
   }
 
   /**
+   * Cleans cookies and goes to login page.
+   */
+  logout() {
+    this.cleanAuthCookies();
+    this.state_.go(loginState);
+  }
+
+  /**
    * Returns promise that returns TargetState once backend decides whether user is logged in or not.
    * User is then redirected to target state (if logged in) or to login page.
    *
@@ -119,15 +135,6 @@ export class AuthService {
    */
   isLoggedIn(transition) {
     let deferred = this.q_.defer();
-    let token = this.cookies_.get(this.tokenCookieName_) || '';
-    let resource = this.resource_('api/v1/login/status', {}, {
-      get: {
-        method: 'GET',
-        headers: {
-          [this.tokenHeaderName_]: token,
-        },
-      },
-    });
 
     // Skip log in check if user is going to login page already or has chosen to skip it.
     if (!this.isLoginPageEnabled() || transition.to().name === loginState ||
@@ -136,7 +143,7 @@ export class AuthService {
       return deferred.promise;
     }
 
-    resource.get(
+    this.getLoginStatus().then(
         (/** @type {!backendApi.LoginStatus} */ loginStatus) => {
           if (loginStatus.headerPresent || loginStatus.tokenPresent) {
             deferred.resolve(true);
@@ -152,6 +159,24 @@ export class AuthService {
         });
 
     return deferred.promise;
+  }
+
+  /**
+   * @return {!angular.$q.Promise}
+   */
+  getLoginStatus() {
+    let token = this.cookies_.get(this.tokenCookieName_) || '';
+    return this
+        .resource_('api/v1/login/status', {}, {
+          get: {
+            method: 'GET',
+            headers: {
+              [this.tokenHeaderName_]: token,
+            },
+          },
+        })
+        .get()
+        .$promise;
   }
 
   /**
