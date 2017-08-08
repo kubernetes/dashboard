@@ -21,7 +21,7 @@ import {stateName, stateUrl} from './state';
  */
 const i18n = {
   /** @type {string} @desc Label 'Log in' that appears as a breadcrumbs on the action bar. */
-  MSG_BREADCRUMBS_LOGIN_LABEL: goog.getMsg('Log in'),
+  MSG_BREADCRUMBS_LOGIN_LABEL: goog.getMsg('Login'),
 };
 
 /**
