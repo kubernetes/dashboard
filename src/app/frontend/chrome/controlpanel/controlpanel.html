@@ -1,0 +1,58 @@
+<!--
+Copyright 2017 The Kubernetes Dashboard Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<md-menu>
+  <md-button class="md-icon-button"
+             ng-click="$mdMenu.open($event)">
+    <i class="material-icons">account_circle</i>
+    <svg class="kd-cross-style"
+         ng-if="$ctrl.isAuthSkipped()"
+         width="40px"
+         height="40px"
+         viewBox="0 0 40 40">
+      <line class="kd-cross-line-white" x1="10" x2="30" y1="10" y2="30"/>
+      <line class="kd-cross-line-blue" x1="10" x2="30" y1="10" y2="30"/>
+    </svg>
+    <md-tooltip md-delay="500">
+      [[Control panel|Tooltip for the control panel displayed in the right top corner.]]
+    </md-tooltip>
+  </md-button>
+  <md-menu-content width="4">
+    <md-menu-item>
+      <md-button disabled="disabled">
+        <div class="kd-auth-status"
+             ng-if="$ctrl.isLoginStatusLoaded">
+          {{$ctrl.getAuthStatus()}}
+        </div>
+        <md-progress-circular class="kd-auth-status-spinner"
+                              ng-if="!$ctrl.isLoginStatusLoaded"
+                              md-diameter="24">
+        </md-progress-circular>
+      </md-button>
+    </md-menu-item>
+    <md-menu-divider ng-if="$ctrl.isLoggedIn() || $ctrl.isAuthSkipped()"></md-menu-divider>
+    <md-menu-item ng-if="$ctrl.isLoggedIn()">
+      <md-button ng-click="$ctrl.logout()">
+        [[Logout|Logout menu item.]]
+      </md-button>
+    </md-menu-item>
+    <md-menu-item ng-if="$ctrl.isAuthSkipped()">
+      <md-button ng-click="$ctrl.logout()">
+        [[Login|Login menu item.]]
+      </md-button>
+    </md-menu-item>
+  </md-menu-content>
+</md-menu>
