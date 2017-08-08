@@ -42,7 +42,7 @@ type Cluster struct {
 }
 
 // GetCluster returns a list of all cluster resources in the cluster.
-func GetCluster(client *kubernetes.Clientset, dsQuery *dataselect.DataSelectQuery,
+func GetCluster(client kubernetes.Interface, dsQuery *dataselect.DataSelectQuery,
 	metricClient metricapi.MetricClient) (*Cluster, error) {
 
 	log.Print("Getting cluster category")
@@ -59,7 +59,7 @@ func GetCluster(client *kubernetes.Clientset, dsQuery *dataselect.DataSelectQuer
 }
 
 // GetClusterFromChannels returns a list of all cluster in the cluster, from the channel sources.
-func GetClusterFromChannels(client *kubernetes.Clientset, channels *common.ResourceChannels,
+func GetClusterFromChannels(client kubernetes.Interface, channels *common.ResourceChannels,
 	dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) (*Cluster, error) {
 
 	numErrs := 5

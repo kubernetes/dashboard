@@ -15,31 +15,15 @@
 package jwe
 
 import (
-	"crypto/rand"
-	"crypto/rsa"
-	"log"
-	"sync"
-
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
-	kdSync "github.com/kubernetes/dashboard/src/app/backend/sync"
-	jose "gopkg.in/square/go-jose.v2"
-	k8sErrors "k8s.io/apimachinery/pkg/api/errors"
-	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"gopkg.in/square/go-jose.v2"
 	"k8s.io/apimachinery/pkg/util/json"
-	"k8s.io/client-go/pkg/api/v1"
 	"k8s.io/client-go/tools/clientcmd/api"
 )
 
 // Implements TokenManager interface
 type jweTokenManager struct {
-	synchronizer kdSync.Synchronizer
-	secretSync   *kdSync.SecretSynchronizer
-	encrypter    jose.Encrypter
-	// TODO(floreks): Add key synchronization (between dashboard replicas), expiration and rotation options
-	// 256-byte random RSA key pair. It is generated during the first backend start.
-	encryptionKey *rsa.PrivateKey
-
-	mux sync.Mutex
+	keyHolder KeyHolder
 }
 
 // Generate and encrypt JWE token based on provided AuthInfo structure. AuthInfo will be embedded in a token payload and
@@ -69,7 +53,7 @@ func (self *jweTokenManager) Decrypt(jweToken string) (*api.AuthInfo, error) {
 		return nil, err
 	}
 
-	decrypted, err := jweTokenObject.Decrypt(self.getEncryptionKey())
+	decrypted, err := jweTokenObject.Decrypt(self.keyHolder.Key())
 	// TODO(floreks): Check for decryption error and handle it
 	if err != nil {
 		return nil, err
@@ -81,19 +65,7 @@ func (self *jweTokenManager) Decrypt(jweToken string) (*api.AuthInfo, error) {
 }
 
 func (self *jweTokenManager) getEncrypter() jose.Encrypter {
-	publicKey := &self.getEncryptionKey().PublicKey
-	encrypter, err := jose.NewEncrypter(jose.A256GCM, jose.Recipient{Algorithm: jose.RSA_OAEP_256, Key: publicKey}, nil)
-	if err != nil {
-		panic(err)
-	}
-
-	return encrypter
-}
-
-func (self *jweTokenManager) getEncryptionKey() *rsa.PrivateKey {
-	self.mux.Lock()
-	defer self.mux.Unlock()
-	return self.encryptionKey
+	return self.keyHolder.Encrypter()
 }
 
 // Parses and validates provided token to check if it hasn't been manipulated with.
@@ -104,85 +76,12 @@ func (self *jweTokenManager) validate(jweToken string) (*jose.JSONWebEncryption,
 
 // Initializes token manager instance.
 func (self *jweTokenManager) init() {
-	self.initEncryptionKey()
-	self.initSynchronizer()
-}
 
-func (self *jweTokenManager) initSynchronizer() {
-	self.secretSync = self.synchronizer.Secret(authApi.EncryptionKeyHolderNamespace,
-		authApi.EncryptionKeyHolderName)
-	self.secretSync.RegisterOnUpdateHandler(self.onEncryptionKeyHolderUpdate)
-	// TODO(floreks) Handle errors
-	go self.secretSync.Start()
-
-	// Trying to create initial secret
-	secret, err := self.getEncryptionKeyHolder()
-	if err != nil {
-		panic(err)
-	}
-
-	err = self.secretSync.Create(*secret)
-	if err != nil && !k8sErrors.IsAlreadyExists(err) {
-		panic(err)
-	}
-}
-
-// Generates encryption key used to encrypt token payload.
-func (self *jweTokenManager) initEncryptionKey() {
-	log.Print("Generating JWE encryption key")
-	self.mux.Lock()
-	defer self.mux.Unlock()
-
-	privateKey, err := rsa.GenerateKey(rand.Reader, 2048)
-	if err != nil {
-		panic(err)
-	}
-
-	self.encryptionKey = privateKey
-}
-
-func (self *jweTokenManager) getEncryptionKeyHolder() (*v1.Secret, error) {
-	priv := ExportRsaPrivateKey(self.getEncryptionKey())
-	pub, err := ExportRsaPublicKey(&self.getEncryptionKey().PublicKey)
-	if err != nil {
-		return nil, err
-	}
-
-	return &v1.Secret{
-		ObjectMeta: metaV1.ObjectMeta{
-			Namespace: authApi.EncryptionKeyHolderNamespace,
-			Name:      authApi.EncryptionKeyHolderName,
-		},
-
-		StringData: map[string]string{
-			"priv": priv,
-			"pub":  pub,
-		},
-	}, nil
-}
-
-func (self *jweTokenManager) onEncryptionKeyHolderUpdate(secret v1.Secret) {
-	log.Printf("Updating JWE encryption key from secret: %s", secret.Name)
-	self.mux.Lock()
-	defer self.mux.Unlock()
-
-	priv, err := ParseRsaPrivateKey(string(secret.Data["priv"]))
-	if err != nil {
-		panic(err)
-	}
-
-	pub, err := ParseRsaPublicKey(string(secret.Data["pub"]))
-	if err != nil {
-		panic(err)
-	}
-
-	self.encryptionKey = priv
-	self.encryptionKey.PublicKey = *pub
 }
 
 // Creates and returns default JWE token manager instance.
-func NewJWETokenManager(synchronizer kdSync.Synchronizer) authApi.TokenManager {
-	manager := &jweTokenManager{synchronizer: synchronizer}
+func NewJWETokenManager(holder KeyHolder) authApi.TokenManager {
+	manager := &jweTokenManager{keyHolder: holder}
 	manager.init()
 	return manager
 }

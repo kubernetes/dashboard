@@ -21,29 +21,29 @@ import (
 	"reflect"
 	"sync"
 
+	syncApi "github.com/kubernetes/dashboard/src/app/backend/sync/api"
 	k8sErrors "k8s.io/apimachinery/pkg/api/errors"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/fields"
+	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/watch"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/pkg/api/v1"
 )
 
-type onSecretUpdateFn func(v1.Secret)
-
-type SecretSynchronizer struct {
+type secretSynchronizer struct {
 	namespace string
 	name      string
 
 	secret         *v1.Secret
 	client         kubernetes.Interface
-	onSecretUpdate onSecretUpdateFn
+	actionHandlers map[watch.EventType]syncApi.ActionHandlerFunction
 	errChan        chan error
 
 	mux sync.Mutex
 }
 
-func (self *SecretSynchronizer) Start() error {
+func (self *secretSynchronizer) Start() error {
 	watcher, err := self.watch(self.namespace, self.name)
 	if err != nil {
 		return err
@@ -64,15 +64,12 @@ func (self *SecretSynchronizer) Start() error {
 		}
 	}()
 
-	for err := range self.errChan {
-		return err
-	}
-
-	return nil
+	return <-self.errChan
 }
 
-func (self *SecretSynchronizer) Update(secret v1.Secret) error {
-	_, err := self.client.CoreV1().Secrets(secret.Namespace).Update(&secret)
+func (self *secretSynchronizer) Update(obj runtime.Object) error {
+	secret := self.getSecret(obj)
+	_, err := self.client.CoreV1().Secrets(secret.Namespace).Update(secret)
 	if err != nil {
 		return err
 	}
@@ -80,8 +77,9 @@ func (self *SecretSynchronizer) Update(secret v1.Secret) error {
 	return nil
 }
 
-func (self *SecretSynchronizer) Create(secret v1.Secret) error {
-	_, err := self.client.CoreV1().Secrets(secret.Namespace).Create(&secret)
+func (self *secretSynchronizer) Create(obj runtime.Object) error {
+	secret := self.getSecret(obj)
+	_, err := self.client.CoreV1().Secrets(secret.Namespace).Create(secret)
 	if err != nil {
 		return err
 	}
@@ -89,11 +87,33 @@ func (self *SecretSynchronizer) Create(secret v1.Secret) error {
 	return nil
 }
 
-func (self *SecretSynchronizer) RegisterOnUpdateHandler(fn onSecretUpdateFn) {
-	self.onSecretUpdate = fn
+func (self *secretSynchronizer) RegisterActionHandler(handler syncApi.ActionHandlerFunction, events ...watch.EventType) {
+	for _, ev := range events {
+		self.actionHandlers[ev] = handler
+	}
 }
 
-func (self *SecretSynchronizer) watch(namespace, name string) (watch.Interface, error) {
+func (self *secretSynchronizer) Get() runtime.Object {
+	self.mux.Lock()
+	defer self.mux.Unlock()
+
+	if self.secret == nil {
+		return nil
+	}
+
+	return self.secret
+}
+
+func (self *secretSynchronizer) getSecret(obj runtime.Object) *v1.Secret {
+	secret, ok := obj.(*v1.Secret)
+	if !ok {
+		panic("Provided object has to be a secret. Most likely this is a programming error")
+	}
+
+	return secret
+}
+
+func (self *secretSynchronizer) watch(namespace, name string) (watch.Interface, error) {
 	selector, err := fields.ParseSelector(fmt.Sprintf("metadata.name=%s", name))
 	if err != nil {
 		return nil, err
@@ -105,13 +125,11 @@ func (self *SecretSynchronizer) watch(namespace, name string) (watch.Interface, 
 	})
 }
 
-func (self *SecretSynchronizer) Get() *v1.Secret {
-	self.mux.Lock()
-	defer self.mux.Unlock()
-	return self.secret
-}
+func (self *secretSynchronizer) handleEvent(event watch.Event) error {
+	if handler, exists := self.actionHandlers[event.Type]; exists {
+		handler(event.Object)
+	}
 
-func (self *SecretSynchronizer) handleEvent(event watch.Event) error {
 	switch event.Type {
 	case watch.Added:
 		secret, ok := event.Object.(*v1.Secret)
@@ -137,14 +155,10 @@ func (self *SecretSynchronizer) handleEvent(event watch.Event) error {
 	return nil
 }
 
-func (self *SecretSynchronizer) update(secret v1.Secret) {
+func (self *secretSynchronizer) update(secret v1.Secret) {
 	if reflect.DeepEqual(self.secret, &secret) {
 		// Skip update if existing object is the same as new one
 		return
-	}
-
-	if self.onSecretUpdate != nil {
-		self.onSecretUpdate(secret)
 	}
 
 	self.mux.Lock()

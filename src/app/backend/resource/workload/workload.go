@@ -46,7 +46,7 @@ type Workloads struct {
 }
 
 // GetWorkloads returns a list of all workloads in the cluster.
-func GetWorkloads(client *kubernetes.Clientset, metricClient metricapi.MetricClient,
+func GetWorkloads(client kubernetes.Interface, metricClient metricapi.MetricClient,
 	nsQuery *common.NamespaceQuery, dsQuery *dataselect.DataSelectQuery) (*Workloads, error) {
 
 	log.Print("Getting lists of all workloads")

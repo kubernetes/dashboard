@@ -14,24 +14,25 @@
 
 package sync
 
-import "k8s.io/client-go/kubernetes"
+import (
+	syncApi "github.com/kubernetes/dashboard/src/app/backend/sync/api"
+	"k8s.io/apimachinery/pkg/watch"
+	"k8s.io/client-go/kubernetes"
+)
 
-type Synchronizer interface {
-	Secret(namespace, name string) *SecretSynchronizer
-}
-
-type synchronizer struct {
+type synchronizerManager struct {
 	client kubernetes.Interface
 }
 
-func (self *synchronizer) Secret(namespace, name string) *SecretSynchronizer {
-	return &SecretSynchronizer{
-		namespace: namespace,
-		name: name,
-		client: self.client,
+func (self *synchronizerManager) Secret(namespace, name string) syncApi.Synchronizer {
+	return &secretSynchronizer{
+		namespace:      namespace,
+		name:           name,
+		client:         self.client,
+		actionHandlers: make(map[watch.EventType]syncApi.ActionHandlerFunction),
 	}
 }
 
-func NewSynchronizer(client kubernetes.Interface) Synchronizer {
-	return &synchronizer{client: client}
+func NewSynchronizerManager(client kubernetes.Interface) syncApi.SynchronizerManager {
+	return &synchronizerManager{client: client}
 }

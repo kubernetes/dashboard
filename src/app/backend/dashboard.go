@@ -22,6 +22,8 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/kubernetes/dashboard/src/app/backend/auth"
+	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 	"github.com/kubernetes/dashboard/src/app/backend/auth/jwe"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/handler"
@@ -71,11 +73,16 @@ func main() {
 		handleFatalInitError(err)
 	}
 
-	synchronizer := sync.NewSynchronizer(apiserverClient)
-	tokenManager := jwe.NewJWETokenManager(synchronizer)
-	clientManager.SetTokenManager(tokenManager)
+	synchronizerManager := sync.NewSynchronizerManager(apiserverClient)
+	keySynchronizer := synchronizerManager.Secret(authApi.EncryptionKeyHolderNamespace, authApi.EncryptionKeyHolderName)
+	go keySynchronizer.Start()
 
-	versionInfo, err := apiserverClient.ServerVersion()
+	keyHolder := jwe.NewRSAKeyHolder(keySynchronizer)
+	tokenManager := jwe.NewJWETokenManager(keyHolder)
+	clientManager.SetTokenManager(tokenManager)
+	authManager := auth.NewAuthManager(clientManager, tokenManager)
+
+	versionInfo, err := apiserverClient.Discovery().ServerVersion()
 	if err != nil {
 		handleFatalInitError(err)
 	}
@@ -94,7 +101,7 @@ func main() {
 	apiHandler, err := handler.CreateHTTPAPIHandler(
 		integrationManager,
 		clientManager,
-		tokenManager)
+		authManager)
 	if err != nil {
 		handleFatalInitError(err)
 	}

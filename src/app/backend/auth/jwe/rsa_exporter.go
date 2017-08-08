@@ -23,6 +23,33 @@ import (
 
 // Credits to David W. https://stackoverflow.com/a/44688503
 
+func ExportRSAKeyOrDie(privKey *rsa.PrivateKey) (priv, pub string) {
+	privkey_bytes := x509.MarshalPKCS1PrivateKey(privKey)
+	privkey_pem := pem.EncodeToMemory(
+		&pem.Block{
+			Type:  "RSA PRIVATE KEY",
+			Bytes: privkey_bytes,
+		},
+	)
+
+	priv = string(privkey_pem)
+
+	pubkey_bytes, err := x509.MarshalPKIXPublicKey(&privKey.PublicKey)
+	if err != nil {
+		panic(err)
+	}
+
+	pubkey_pem := pem.EncodeToMemory(
+		&pem.Block{
+			Type:  "RSA PUBLIC KEY",
+			Bytes: pubkey_bytes,
+		},
+	)
+
+	pub = string(pubkey_pem)
+	return
+}
+
 func ExportRsaPrivateKey(privkey *rsa.PrivateKey) string {
 	privkey_bytes := x509.MarshalPKCS1PrivateKey(privkey)
 	privkey_pem := pem.EncodeToMemory(

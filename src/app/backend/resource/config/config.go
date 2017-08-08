@@ -37,7 +37,7 @@ type Config struct {
 }
 
 // GetConfig returns a list of all config resources in the cluster.
-func GetConfig(client *kubernetes.Clientset, nsQuery *common.NamespaceQuery,
+func GetConfig(client kubernetes.Interface, nsQuery *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery) (*Config, error) {
 
 	log.Print("Getting config category")

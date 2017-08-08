@@ -20,7 +20,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	client "k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/kubernetes"
 	rbac "k8s.io/client-go/pkg/apis/rbac/v1beta1"
 )
 
@@ -44,7 +44,7 @@ type RbacRoleBinding struct {
 }
 
 // GetRbacRoleBindingList returns a list of all RBAC Role Bindings in the cluster.
-func GetRbacRoleBindingList(client *client.Clientset, dsQuery *dataselect.DataSelectQuery) (*RbacRoleBindingList, error) {
+func GetRbacRoleBindingList(client kubernetes.Interface, dsQuery *dataselect.DataSelectQuery) (*RbacRoleBindingList, error) {
 	log.Print("Getting list rbac role bindings")
 	channels := &common.ResourceChannels{
 		RoleList:        common.GetRoleListChannel(client, 1),

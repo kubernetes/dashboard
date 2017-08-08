@@ -47,7 +47,7 @@ const (
 // ClientManager is responsible for initializing and creating clients to communicate with
 // kubernetes apiserver on demand
 type ClientManager interface {
-	Client(req *restful.Request) (*kubernetes.Clientset, error)
+	Client(req *restful.Request) (kubernetes.Interface, error)
 	Config(req *restful.Request) (*rest.Config, error)
 	ClientCmdConfig(req *restful.Request) (clientcmd.ClientConfig, error)
 	CSRFKey() string
@@ -74,7 +74,7 @@ type clientManager struct {
 
 // Client returns kubernetes client that is created based on authentication information extracted
 // from request. If request is nil then authentication will be skipped.
-func (self *clientManager) Client(req *restful.Request) (*kubernetes.Clientset, error) {
+func (self *clientManager) Client(req *restful.Request) (kubernetes.Interface, error) {
 	cfg, err := self.Config(req)
 	if err != nil {
 		return nil, err
