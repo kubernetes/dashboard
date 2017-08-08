@@ -17,7 +17,6 @@
   <translation id="2436932884134192170" key="MSG_AUTH_STATUS_HEADER" desc="Login status displayed when authorization header is used.">Logged in with auth header</translation>
   <translation id="2593766780781854099" key="MSG_AUTH_STATUS_SKIPPED" desc="Login status displayed when default service account is used.">Default service account</translation>
   <translation id="7811526624157700330" key="MSG_AUTH_STATUS_TOKEN" desc="Login status displayed when token is used.">Logged in with token</translation>
-  <translation id="4774916797936290735" key="MSG_AUTH_STATUS_UNKNOWN" desc="Unknown login status displayed when could not recognize auth method.">Unknown login status</translation>
   <translation id="6614117428496734699" key="MSG_BREADCRUMBS_ABOUT_LABEL" desc="Label 'About' that appears as a breadcrumbs on the action bar.">バージョン情報</translation>
   <translation id="1153397682574555638" key="MSG_BREADCRUMBS_CLUSTER_LABEL" desc="Label 'Cluster' that appears as a breadcrumbs on the action bar.">クラスター</translation>
   <translation id="5346529710805392125" key="MSG_BREADCRUMBS_CONFIG_AND_STORAGE_LABEL" desc="Label 'Config and storage' that appears as a breadcrumbs on the action bar.">コンフィグとストレージ</translation>

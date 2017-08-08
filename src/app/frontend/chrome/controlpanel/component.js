@@ -57,26 +57,19 @@ export class ControlPanelController {
    * @export
    */
   getAuthStatus() {
-    if (this.loginStatus_) {
-      if (this.loginStatus_.headerPresent) {
-        /** @type {string} @desc Login status displayed when authorization header is used. */
-        let MSG_AUTH_STATUS_HEADER = goog.getMsg('Logged in with auth header');
-        return MSG_AUTH_STATUS_HEADER;
-      }
-      if (this.loginStatus_.tokenPresent) {
-        /** @type {string} @desc Login status displayed when token is used. */
-        let MSG_AUTH_STATUS_TOKEN = goog.getMsg('Logged in with token');
-        return MSG_AUTH_STATUS_TOKEN;
-      }
+    if (this.loginStatus_.headerPresent) {
+      /** @type {string} @desc Login status displayed when authorization header is used. */
+      let MSG_AUTH_STATUS_HEADER = goog.getMsg('Logged in with auth header');
+      return MSG_AUTH_STATUS_HEADER;
     }
-    if (this.isAuthSkipped()) {
-      /** @type {string} @desc Login status displayed when default service account is used. */
-      let MSG_AUTH_STATUS_SKIPPED = goog.getMsg('Default service account');
-      return MSG_AUTH_STATUS_SKIPPED;
+    if (this.loginStatus_.tokenPresent) {
+      /** @type {string} @desc Login status displayed when token is used. */
+      let MSG_AUTH_STATUS_TOKEN = goog.getMsg('Logged in with token');
+      return MSG_AUTH_STATUS_TOKEN;
     }
-    /** @type {string} @desc Unknown login status displayed when could not recognize auth method. */
-    let MSG_AUTH_STATUS_UNKNOWN = goog.getMsg('Unknown login status');
-    return MSG_AUTH_STATUS_UNKNOWN;
+    /** @type {string} @desc Login status displayed when default service account is used. */
+    let MSG_AUTH_STATUS_SKIPPED = goog.getMsg('Default service account');
+    return MSG_AUTH_STATUS_SKIPPED;
   }
 
   /**
