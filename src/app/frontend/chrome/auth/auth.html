@@ -16,7 +16,7 @@ limitations under the License.
 
 <md-menu>
   <md-button class="md-icon-button"
-             ng-click="$mdMenu.open($event)">
+             ng-click="$mdMenu.open($event);$ctrl.checkLoginStatus()">
     <i class="material-icons">account_circle</i>
     <svg class="kd-cross-style"
          ng-if="$ctrl.isAuthSkipped()"

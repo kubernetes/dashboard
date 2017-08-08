@@ -135,15 +135,6 @@ export class AuthService {
    */
   isLoggedIn(transition) {
     let deferred = this.q_.defer();
-    let token = this.cookies_.get(this.tokenCookieName_) || '';
-    let resource = this.resource_('api/v1/login/status', {}, {
-      get: {
-        method: 'GET',
-        headers: {
-          [this.tokenHeaderName_]: token,
-        },
-      },
-    });
 
     // Skip log in check if user is going to login page already or has chosen to skip it.
     if (!this.isLoginPageEnabled() || transition.to().name === loginState ||
@@ -152,7 +143,7 @@ export class AuthService {
       return deferred.promise;
     }
 
-    resource.get(
+    this.getLoginStatus().then(
         (/** @type {!backendApi.LoginStatus} */ loginStatus) => {
           if (loginStatus.headerPresent || loginStatus.tokenPresent) {
             deferred.resolve(true);
@@ -168,6 +159,24 @@ export class AuthService {
         });
 
     return deferred.promise;
+  }
+
+  /**
+   * @return {!angular.$q.Promise}
+   */
+  getLoginStatus() {
+    let token = this.cookies_.get(this.tokenCookieName_) || '';
+    return this
+        .resource_('api/v1/login/status', {}, {
+          get: {
+            method: 'GET',
+            headers: {
+              [this.tokenHeaderName_]: token,
+            },
+          },
+        })
+        .get()
+        .$promise;
   }
 
   /**

@@ -18,15 +18,19 @@
 export class AuthController {
   /**
    * @param {!ui.router.$state} $state
+   * @param {!angular.$log} $log
    * @param {!./../../common/auth/service.AuthService} kdAuthService
    * @ngInject
    */
-  constructor($state, kdAuthService) {
+  constructor($state, $log, kdAuthService) {
     /** @private {!ui.router.$state} */
     this.state_ = $state;
-
-    /** @private {!./../common/auth/service.AuthService} */
+    /** @private {!angular.$log} */
+    this.log_ = $log;
+    /** @private {!./../../common/auth/service.AuthService} */
     this.kdAuthService_ = kdAuthService;
+    /** @private {!backendApi.LoginStatus} */
+    this.loginStatus_;
   }
 
   /**
@@ -36,7 +40,26 @@ export class AuthController {
    * @export
    */
   getAuthStatus() {
-    return 'Logged in with token';  // TODO(maciaszczykm)
+    if (this.loginStatus_) {
+      if (this.loginStatus_.headerPresent) {
+        /** @type {string} @desc Login status displayed when authorization header is used. */
+        let MSG_AUTH_STATUS_HEADER = goog.getMsg('Logged in with auth header');
+        return MSG_AUTH_STATUS_HEADER;
+      }
+      if (this.loginStatus_.tokenPresent) {
+        /** @type {string} @desc Login status displayed when token is used. */
+        let MSG_AUTH_STATUS_TOKEN = goog.getMsg('Logged in with token');
+        return MSG_AUTH_STATUS_TOKEN;
+      }
+    }
+    if (this.isAuthSkipped()) {
+      /** @type {string} @desc Login status displayed when default service account is used. */
+      let MSG_AUTH_STATUS_SKIPPED = goog.getMsg('Default service account');
+      return MSG_AUTH_STATUS_SKIPPED;
+    }
+    /** @type {string} @desc Unknown login status displayed when could not recognize auth method. */
+    let MSG_AUTH_STATUS_UNKNOWN = goog.getMsg('Unknown login status');
+    return MSG_AUTH_STATUS_UNKNOWN;
   }
 
   /**
@@ -50,12 +73,29 @@ export class AuthController {
   }
 
   /**
-   * Checks if user is logged in using Dashboard log in mechanism.
+   * Checks if user is logged in using Dashboard log in mechanism and sets class variable after
+   * backend responds.
+   *
+   * @export
+   */
+  checkLoginStatus() {
+    this.kdAuthService_.getLoginStatus().then(
+        (/** @type {!backendApi.LoginStatus} */ loginStatus) => {
+          this.loginStatus_ = loginStatus;
+        },
+        (err) => {
+          this.log_.error(err);
+        });
+  }
+
+  /**
+   * Checks if user is logged in.
    *
    * @return {boolean}
+   * @export
    */
   isLoggedIn() {
-    return true;  // TODO(maciaszczykm)
+    return this.loginStatus_ && (this.loginStatus_.headerPresent || this.loginStatus_.tokenPresent);
   }
 
   /**
