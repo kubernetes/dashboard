@@ -118,7 +118,7 @@ export class AuthService {
    */
   logout() {
     this.cleanAuthCookies();
-    this.state_.go(loginState)
+    this.state_.go(loginState);
   }
 
   /**

@@ -26,14 +26,14 @@
 }
 
 .kd-cross-line-white {
-  stroke: white;
+  stroke: $content-background;
   stroke-width: 4;
 }
 
 .kd-cross-style {
-  bottom:0;
+  bottom: 0;
   left: 0;
-  position:absolute;
+  position: absolute;
   right: 0;
-  top:0;
+  top: 0;
 }
