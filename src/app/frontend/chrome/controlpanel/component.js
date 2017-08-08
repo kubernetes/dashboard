@@ -31,6 +31,8 @@ export class ControlPanelController {
     this.kdAuthService_ = kdAuthService;
     /** @private {!backendApi.LoginStatus} */
     this.loginStatus_;
+    /** @export {boolean} */
+    this.isLoginStatusLoaded = false;
   }
 
   /**
@@ -41,6 +43,7 @@ export class ControlPanelController {
     this.kdAuthService_.getLoginStatus().then(
         (/** @type {!backendApi.LoginStatus} */ loginStatus) => {
           this.loginStatus_ = loginStatus;
+          this.isLoginStatusLoaded = true;
         },
         (err) => {
           this.log_.error(err);

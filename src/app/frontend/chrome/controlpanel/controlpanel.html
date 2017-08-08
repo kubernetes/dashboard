@@ -30,12 +30,17 @@ limitations under the License.
       [[Control panel|Tooltip for the control panel displayed in the right top corner.]]
     </md-tooltip>
   </md-button>
-  <md-menu-content>
+  <md-menu-content width="4">
     <md-menu-item>
       <md-button disabled="disabled">
-        <span class="kd-auth-status">
+        <div class="kd-auth-status"
+             ng-if="$ctrl.isLoginStatusLoaded">
           {{$ctrl.getAuthStatus()}}
-        </span>
+        </div>
+        <md-progress-circular class="kd-auth-status-spinner"
+                              ng-if="!$ctrl.isLoginStatusLoaded"
+                              md-diameter="24">
+        </md-progress-circular>
       </md-button>
     </md-menu-item>
     <md-menu-divider ng-if="$ctrl.isLoggedIn() || $ctrl.isAuthSkipped()"></md-menu-divider>
