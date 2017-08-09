@@ -45,6 +45,13 @@ export class HistoryService {
    * @param {string} defaultState
    */
   back(defaultState) {
-    this.state_.go(this.previousStateName_ || defaultState, this.previousStateParams_);
+    let targetState = this.previousStateName_ || defaultState;
+
+    // If previous state is same as current state then go to default state to avoid loop.
+    if (this.state_.current.name === this.previousStateName_) {
+      targetState = defaultState;
+    }
+
+    this.state_.go(targetState, this.previousStateParams_);
   }
 }

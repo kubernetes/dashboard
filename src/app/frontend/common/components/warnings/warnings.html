@@ -21,7 +21,7 @@ limitations under the License.
     <md-icon class="material-icons">warning</md-icon>
     <span class="kd-raw-warning"
           flex>
-      {{warning.ErrStatus.message}}
+      {{$ctrl.getLocalizedMessage(warning.ErrStatus.message)}}
     </span>
     <md-icon ng-click="$ctrl.dismissWarning($index)"
              class="material-icons kd-dismiss-icon">

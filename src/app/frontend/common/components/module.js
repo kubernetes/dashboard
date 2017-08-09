@@ -19,6 +19,7 @@ import filtersModule from '../filters/module';
 import dataSelectModule from './../dataselect/module';
 import namespaceModule from './../namespace/module';
 import actionbarModule from './actionbar/module';
+import allocatedResourcesChartModule from './allocatedresourceschart/module';
 import annotationsModule from './annotations/module';
 import {conditionListComponent} from './conditions/component';
 import {contentCardComponent} from './contentcard/component';
@@ -56,6 +57,7 @@ export default angular
           stateModule.name,
           graphModule.name,
           annotationsModule.name,
+          allocatedResourcesChartModule.name,
         ])
     .component('kdLabels', labelComponent)
     .component('kdZeroState', zeroStateComponent)
