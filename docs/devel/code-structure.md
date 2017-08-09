@@ -26,7 +26,7 @@ If you're looking for ideas on what to contribute, in addition to taking a look 
 
 - [Material design guidelines](https://material.io/guidelines/)
 
-- Production javascript is served via [google closure compiler](https://developers.google.com/closure/compiler/), so please make sure all functions and variables are properly type annotated.
+- Production javascript is compiled via [google closure compiler](https://developers.google.com/closure/compiler/), so please make sure all functions and variables are properly type annotated.
 
 - **Always run `gulp serve:prod` at least once before submitting a pull request**
 
