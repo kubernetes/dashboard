@@ -20,7 +20,7 @@ If you're looking for ideas on what to contribute, in addition to taking a look 
 ### Frontend
 - The frontend makes calls to the api and renders received data. The frontend also transforms some data on the client and provides visualizations for the user. The frontend also makes calls to the api server to do things like exec into a container directly from the dashboard.
 
-- The frontend also automatically generates localized translations. You can generate translations manually by running `gulp generate-xtbs` or `gulp serve:prod`.
+- The frontend also automatically generates localized translations. You can generate translations manually by running `gulp generate-xtbs` or `gulp serve:prod`. Take a look at the [localization guide](localization.md) and [text conventions](text-conventions.md) for more info.
 
 - The frontend uses [angular](https://angular.io/), a javascript model-view-controller framework along with [material design](https://material.angularjs.org/latest/getting-started) for cards, components, search bars, and all other visuals.
 
