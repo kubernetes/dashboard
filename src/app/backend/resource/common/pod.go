@@ -79,6 +79,15 @@ func GetContainerImages(podTemplate *v1.PodSpec) []string {
 	return containerImages
 }
 
+// GetContainerNames returns the container image name without the version number from the given pod spec.
+func GetContainerNames(podTemplate *v1.PodSpec) []string {
+	var containerNames []string
+	for _, container := range podTemplate.Containers {
+		containerNames = append(containerNames, container.Name)
+	}
+	return containerNames
+}
+
 // EqualIgnoreHash returns true if two given podTemplateSpec are equal, ignoring the diff in value of Labels[pod-template-hash]
 // We ignore pod-template-hash because the hash result would be different upon podTemplateSpec API changes
 // (e.g. the addition of a new field will cause the hash code to change)

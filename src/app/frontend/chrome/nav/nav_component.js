@@ -23,6 +23,7 @@ import {stateName as ingressState} from 'ingress/list/state';
 import {stateName as jobState} from 'job/list/state';
 import {stateName as namespaceState} from 'namespace/list/state';
 import {stateName as nodeState} from 'node/list/state';
+import {stateName as overviewState} from 'overview/state';
 import {stateName as persistentVolumeState} from 'persistentvolume/list/state';
 import {stateName as persistentVolumeClaimState} from 'persistentvolumeclaim/list/state';
 import {stateName as podState} from 'pod/list/state';
@@ -43,9 +44,6 @@ export class NavController {
    * @ngInject
    */
   constructor(kdNavService) {
-    /** @export {boolean} */
-    this.isVisible = true;
-
     /** @private {!./nav_service.NavService} */
     this.kdNavService_ = kdNavService;
 
@@ -72,26 +70,32 @@ export class NavController {
       'config': configState,
       'storageClass': storageClassState,
       'about': aboutState,
+      'overview': overviewState,
     };
   }
 
-  /** @export */
-  $onInit() {
-    this.kdNavService_.registerNav(this);
+  /**
+   * @return {boolean}
+   * @export
+   */
+  isVisible() {
+    return this.kdNavService_.isVisible();
   }
 
   /**
    * Toggles visibility of the navigation component.
    */
   toggle() {
-    this.isVisible = !this.isVisible;
+    this.kdNavService_.toggle();
   }
 
   /**
    * Sets visibility of the navigation component.
+   * @param {boolean} isVisible
+   * @export
    */
   setVisibility(isVisible) {
-    this.isVisible = isVisible;
+    this.kdNavService_.setVisibility(isVisible);
   }
 }
 

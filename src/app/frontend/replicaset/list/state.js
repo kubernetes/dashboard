@@ -13,4 +13,4 @@
 // limitations under the License.
 
 /** Name of the state. Can be used in, e.g., $state.go method. */
-export const stateName = 'replicaset.list';
+export const stateName = 'replicasetlist';

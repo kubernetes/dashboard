@@ -18,6 +18,7 @@
 export default class ReplicaSetInfoController {
   /**
    * Constructs replica set info object.
+   * @ngInject
    */
   constructor() {
     /**

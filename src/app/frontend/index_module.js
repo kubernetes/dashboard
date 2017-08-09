@@ -19,7 +19,9 @@
 import aboutModule from './about/module';
 import chromeModule from './chrome/module';
 import clusterModule from './cluster/module';
+import authModule from './common/auth/module';
 import csrfTokenModule from './common/csrftoken/module';
+import scalingModule from './common/scaling/module';
 import configModule from './config/module';
 import configMapModule from './configmap/module';
 import daemonSetModule from './daemonset/module';
@@ -29,12 +31,15 @@ import discoveryModule from './discovery/module';
 import errorModule from './error/module';
 import horizontalPodAutoscalerModule from './horizontalpodautoscaler/module';
 import indexConfig from './index_config';
+import {Controller} from './index_controller';
 import routeConfig from './index_route';
 import ingressModule from './ingress/module';
 import jobModule from './job/module';
+import loginModule from './login/module';
 import logsModule from './logs/module';
 import namespaceModule from './namespace/module';
 import nodeModule from './node/module';
+import overviewModule from './overview/module';
 import persistentVolumeModule from './persistentvolume/module';
 import persistentVolumeClaimModule from './persistentvolumeclaim/module';
 import podModule from './pod/module';
@@ -65,11 +70,14 @@ export default angular
           'ngSanitize',
           'ui.router',
           aboutModule.name,
+          authModule.name,
+          overviewModule.name,
           chromeModule.name,
           daemonSetModule.name,
           deployModule.name,
           errorModule.name,
           jobModule.name,
+          loginModule.name,
           logsModule.name,
           shellModule.name,
           replicationControllerModule.name,
@@ -97,7 +105,9 @@ export default angular
           storageClassModule.name,
           thirdPartyResourceModule.name,
           roleModule.name,
+          scalingModule.name,
         ])
     .config(indexConfig)
     .config(routeConfig)
-    .controller('kdTitle', TitleController);
+    .controller('kdTitle', TitleController)
+    .controller('kdMain', Controller);

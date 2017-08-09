@@ -30,12 +30,4 @@ export class ReplicationControllerListController {
     /** @export {!angular.Resource} */
     this.rcListResource = kdRCListResource;
   }
-
-  /**
-   * @return {boolean}
-   * @export
-   */
-  shouldShowZeroState() {
-    return this.replicationControllerList.replicationControllers.length === 0;
-  }
 }

@@ -16,8 +16,8 @@ import {actionbarViewName, stateName as chromeStateName} from 'chrome/state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
 import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
 import {stateName as replicationControllers} from 'replicationcontroller/list/state';
-import {stateUrl} from './../state';
 
+import {stateName as parentState, stateUrl} from './../state';
 import {ActionBarController} from './actionbar_controller';
 import ReplicationControllerDetailController from './controller';
 
@@ -28,9 +28,8 @@ import ReplicationControllerDetailController from './controller';
  */
 export const config = {
   url: appendDetailParamsToUrl(stateUrl),
-  parent: chromeStateName,
+  parent: parentState,
   resolve: {
-    'replicationControllerSpecPodsResource': getReplicationControllerSpecPodsResource,
     'replicationControllerDetail': resolveReplicationControllerDetails,
   },
   data: {
@@ -45,7 +44,7 @@ export const config = {
       controllerAs: '$ctrl',
       templateUrl: 'replicationcontroller/detail/detail.html',
     },
-    [actionbarViewName]: {
+    [`${actionbarViewName}@${chromeStateName}`]: {
       controller: ActionBarController,
       controllerAs: '$ctrl',
       templateUrl: 'replicationcontroller/detail/actionbar.html',
@@ -87,30 +86,6 @@ export function replicationControllerEventsResource($resource) {
  */
 export function replicationControllerServicesResource($resource) {
   return $resource('api/v1/replicationcontroller/:namespace/:name/service');
-}
-
-/**
- * @param {!./../../common/resource/resourcedetail.StateParams} $stateParams
- * @param {!angular.$resource} $resource
- * @return {!angular.Resource<!backendApi.ReplicationControllerSpec>}
- * @ngInject
- */
-export function getReplicationControllerSpecPodsResource($stateParams, $resource) {
-  return getReplicationControllerSpecPodsResourceWithActions($stateParams, $resource);
-}
-
-/**
- * @param {!./../../common/resource/resourcedetail.StateParams} $stateParams
- * @param {!angular.$resource} $resource
- * @param {!Object.<Object>=} actions
- * @return {!angular.Resource<!backendApi.ReplicationControllerSpec>}
- */
-export function getReplicationControllerSpecPodsResourceWithActions(
-    $stateParams, $resource, actions = {}) {
-  return $resource(
-      `api/v1/replicationcontroller/${$stateParams.objectNamespace}/` +
-          `${$stateParams.objectName}/update/pod`,
-      {}, actions);
 }
 
 /**

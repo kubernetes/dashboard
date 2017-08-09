@@ -17,7 +17,7 @@ import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
 import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
 import {stateName as horizontalPodAutoscalerList} from 'horizontalpodautoscaler/list/state';
 
-import {stateUrl} from './../state';
+import {stateName as parentState, stateUrl} from './../state';
 import {ActionBarController} from './actionbar_controller';
 import {HorizontalPodAutoscalerDetailController} from './controller';
 
@@ -28,7 +28,7 @@ import {HorizontalPodAutoscalerDetailController} from './controller';
  */
 export const config = {
   url: appendDetailParamsToUrl(stateUrl),
-  parent: chromeStateName,
+  parent: parentState,
   resolve: {
     'horizontalPodAutoscalerDetailResource': getHorizontalPodAutoscalerDetailResource,
     'horizontalPodAutoscalerDetail': getHorizontalPodAutoscalerDetail,
@@ -45,7 +45,7 @@ export const config = {
       controllerAs: '$ctrl',
       templateUrl: 'horizontalpodautoscaler/detail/detail.html',
     },
-    [actionbarViewName]: {
+    [`${actionbarViewName}@${chromeStateName}`]: {
       controller: ActionBarController,
       controllerAs: '$ctrl',
       templateUrl: 'horizontalpodautoscaler/detail/actionbar.html',

@@ -22,12 +22,14 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/emicklei/go-restful"
+	restful "github.com/emicklei/go-restful"
+	"github.com/kubernetes/dashboard/src/app/backend/auth/jwe"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 )
 
 func TestCreateHTTPAPIHandler(t *testing.T) {
-	_, err := CreateHTTPAPIHandler(nil, client.NewClientManager("", "http://localhost:8080"))
+	tokenManager := jwe.NewJWETokenManager()
+	_, err := CreateHTTPAPIHandler(nil, client.NewClientManager("", "http://localhost:8080", tokenManager), tokenManager)
 	if err != nil {
 		t.Fatal("CreateHTTPAPIHandler() cannot create HTTP API handler")
 	}

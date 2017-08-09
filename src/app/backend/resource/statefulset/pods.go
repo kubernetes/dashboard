@@ -17,6 +17,7 @@ package statefulset
 import (
 	"log"
 
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
@@ -36,30 +37,28 @@ func GetStatefulSetPods(client *k8sClient.Clientset, metricClient metricapi.Metr
 
 	pods, err := getRawStatefulSetPods(client, name, namespace)
 	if err != nil {
-		return nil, err
+		return pod.EmptyPodList, err
 	}
 
 	events, err := event.GetPodsEvents(client, namespace, pods)
-	if err != nil {
-		return nil, err
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	podList := pod.CreatePodList(pods, events, dsQuery, metricClient)
+	podList := pod.ToPodList(pods, events, nonCriticalErrors, dsQuery, metricClient)
 	return &podList, nil
 }
 
 // getRawStatefulSetPods return array of api pods targeting pet set with given name.
 func getRawStatefulSetPods(client *k8sClient.Clientset, name, namespace string) ([]v1.Pod, error) {
-
-	statefulSet, err := client.AppsV1beta1().StatefulSets(namespace).Get(name,
-		metaV1.GetOptions{})
+	statefulSet, err := client.AppsV1beta1().StatefulSets(namespace).Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
 
 	channels := &common.ResourceChannels{
-		PodList: common.GetPodListChannel(client, common.NewSameNamespaceQuery(namespace),
-			1),
+		PodList: common.GetPodListChannel(client, common.NewSameNamespaceQuery(namespace), 1),
 	}
 
 	podList := <-channels.PodList.List
@@ -67,14 +66,11 @@ func getRawStatefulSetPods(client *k8sClient.Clientset, name, namespace string) 
 		return nil, err
 	}
 
-	return common.FilterPodsByOwnerReference(statefulSet.Namespace, statefulSet.UID,
-		podList.Items), nil
+	return common.FilterPodsByOwnerReference(statefulSet.Namespace, statefulSet.UID, podList.Items), nil
 }
 
 // Returns simple info about pods(running, desired, failing, etc.) related to given pet set.
-func getStatefulSetPodInfo(client *k8sClient.Clientset, statefulSet *apps.StatefulSet) (
-	*common.PodInfo, error) {
-
+func getStatefulSetPodInfo(client *k8sClient.Clientset, statefulSet *apps.StatefulSet) (*common.PodInfo, error) {
 	pods, err := getRawStatefulSetPods(client, statefulSet.Name, statefulSet.Namespace)
 	if err != nil {
 		return nil, err

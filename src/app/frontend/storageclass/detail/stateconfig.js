@@ -14,9 +14,9 @@
 
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
-import {stateName as storageClassList} from './../list/state';
-import {stateUrl} from './../state';
 
+import {stateName as storageClassList} from './../list/state';
+import {stateName as parentState, stateUrl} from './../state';
 import {ActionBarController} from './actionbar_controller';
 import {StorageClassController} from './controller';
 
@@ -27,7 +27,7 @@ import {StorageClassController} from './controller';
  */
 export const config = {
   url: `${stateUrl}/:objectName`,
-  parent: chromeStateName,
+  parent: parentState,
   resolve: {
     'storageClassResource': getStorageClassResource,
     'storageClass': getStorageClass,
@@ -44,7 +44,7 @@ export const config = {
       controllerAs: '$ctrl',
       templateUrl: 'storageclass/detail/detail.html',
     },
-    [actionbarViewName]: {
+    [`${actionbarViewName}@${chromeStateName}`]: {
       controller: ActionBarController,
       controllerAs: '$ctrl',
       templateUrl: 'storageclass/detail/actionbar.html',

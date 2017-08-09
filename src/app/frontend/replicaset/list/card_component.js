@@ -33,10 +33,9 @@ export default class ReplicaSetCardController {
    * @param {!ui.router.$state} $state
    * @param {!angular.$interpolate} $interpolate
    * @param {!./../../common/namespace/service.NamespaceService} kdNamespaceService
-   * @param {!./../../common/scaling/service.ScaleService} kdScaleService
    * @ngInject
    */
-  constructor($state, $interpolate, kdNamespaceService, kdScaleService) {
+  constructor($state, $interpolate, kdNamespaceService) {
     /**
      * Initialized from the scope.
      * @export {!backendApi.ReplicaSet}
@@ -51,19 +50,6 @@ export default class ReplicaSetCardController {
 
     /** @private {!./../../common/namespace/service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
-
-    /** @private {!./../../common/scaling/service.ScaleService} */
-    this.kdScaleService_ = kdScaleService;
-  }
-
-
-  /**
-   * @export
-   */
-  showScaleDialog() {
-    this.kdScaleService_.showScaleDialog(
-        this.replicaSet.objectMeta.namespace, this.replicaSet.objectMeta.name,
-        this.replicaSet.pods.current, this.replicaSet.pods.desired, this.replicaSet.typeMeta.kind);
   }
 
   /**

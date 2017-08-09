@@ -44,7 +44,7 @@ func TestGetNamespaceDetail(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := toNamespaceDetail(c.namespace, common.EventList{}, nil, nil)
+		actual := toNamespaceDetail(c.namespace, common.EventList{}, nil, nil, nil)
 		if !reflect.DeepEqual(&actual, c.expected) {
 			t.Errorf("toNamespaceDetail(%#v) == \n%#v\nexpected \n%#v\n",
 				c.namespace, actual, c.expected)

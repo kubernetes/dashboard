@@ -24,7 +24,7 @@ import (
 	"k8s.io/client-go/pkg/api/v1"
 )
 
-func TestGetConfigMapList(t *testing.T) {
+func TestToConfigMapList(t *testing.T) {
 	cases := []struct {
 		configMaps []v1.ConfigMap
 		expected   *ConfigMapList
@@ -44,9 +44,9 @@ func TestGetConfigMapList(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := getConfigMapList(c.configMaps, dataselect.NoDataSelect)
+		actual := toConfigMapList(c.configMaps, nil, dataselect.NoDataSelect)
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("getConfigMapList(%#v) == \n%#v\nexpected \n%#v\n",
+			t.Errorf("toConfigMapList(%#v) == \n%#v\nexpected \n%#v\n",
 				c.configMaps, actual, c.expected)
 		}
 	}

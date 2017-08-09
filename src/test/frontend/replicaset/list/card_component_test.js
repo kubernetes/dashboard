@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import scalingModule from 'common/scaling/module';
 import replicaSetModule from 'replicaset/module';
 
 describe('Replica Set card', () => {
@@ -23,6 +24,7 @@ describe('Replica Set card', () => {
   let scaleData;
 
   beforeEach(() => {
+    angular.mock.module(scalingModule.name);
     angular.mock.module(replicaSetModule.name);
 
     angular.mock.inject(($componentController, $rootScope, kdScaleService) => {

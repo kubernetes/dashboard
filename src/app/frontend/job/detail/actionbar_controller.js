@@ -18,21 +18,10 @@
 export class ActionBarController {
   /**
    * @param {!backendApi.JobDetail} jobDetail
-   * @param {!./../../common/scaling/service.ScaleService} kdScaleService
    * @ngInject
    */
-  constructor(jobDetail, kdScaleService) {
-    /** @private {!./../../common/scaling/service.ScaleService} */
-    this.kdScaleService_ = kdScaleService;
-
+  constructor(jobDetail) {
     /** @export {!backendApi.JobDetail} */
     this.details = jobDetail;
-  }
-
-  /** @export */
-  handleScaleResourceDialog() {
-    this.kdScaleService_.showScaleDialog(
-        this.details.objectMeta.namespace, this.details.objectMeta.name, this.details.parallelism,
-        this.details.parallelism, this.details.typeMeta.kind);
   }
 }

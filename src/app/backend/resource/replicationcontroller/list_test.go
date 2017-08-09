@@ -210,10 +210,10 @@ func TestCreateReplicationControllerList(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := CreateReplicationControllerList(c.replicationControllers, dataselect.NoDataSelect,
-			c.pods, events, nil)
+		actual := toReplicationControllerList(c.replicationControllers, dataselect.NoDataSelect,
+			c.pods, events, nil, nil)
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("getReplicationControllerList(%#v, %#v) == \n%#v\nexpected \n%#v\n",
+			t.Errorf("toReplicationControllerList(%#v, %#v) == \n%#v\nexpected \n%#v\n",
 				c.replicationControllers, c.services, actual, c.expected)
 		}
 	}
@@ -257,17 +257,16 @@ func TestGetReplicationControllerList(t *testing.T) {
 					},
 				},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
+				Errors:            []error{},
 			},
 		},
 	}
 
 	for _, c := range cases {
 		fakeClient := fake.NewSimpleClientset(c.rcList)
-
-		actual, _ := GetReplicationControllerList(fakeClient, &common.NamespaceQuery{},
-			dataselect.NoDataSelect, nil)
-
+		actual, _ := GetReplicationControllerList(fakeClient, &common.NamespaceQuery{}, dataselect.NoDataSelect, nil)
 		actions := fakeClient.Actions()
+
 		if len(actions) != len(c.expectedActions) {
 			t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
 				len(c.expectedActions), len(actions))
@@ -276,14 +275,12 @@ func TestGetReplicationControllerList(t *testing.T) {
 
 		for i, verb := range c.expectedActions {
 			if actions[i].GetVerb() != verb {
-				t.Errorf("Unexpected action: %+v, expected %s",
-					actions[i], verb)
+				t.Errorf("Unexpected action: %+v, expected %s", actions[i], verb)
 			}
 		}
 
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("GetReplicationControllerList(client) == got\n%#v, expected\n %#v",
-				actual, c.expected)
+			t.Errorf("GetReplicationControllerList(client) == got\n%#v, expected\n %#v", actual, c.expected)
 		}
 	}
 }

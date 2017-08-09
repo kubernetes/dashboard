@@ -26,6 +26,8 @@ describe('Actionbar delete item component', () => {
   let q;
   /** @type {!angular.$scope} **/
   let scope;
+  /** {ui.router.$globals} */
+  let globals;
 
   /**
    * Create simple mock object for state.
@@ -52,8 +54,9 @@ describe('Actionbar delete item component', () => {
 
     angular.mock.inject(
         ($componentController, $state, _kdBreadcrumbsService_, _kdResourceVerberService_, $q,
-         $rootScope) => {
+         $rootScope, $uiRouterGlobals) => {
           state = $state;
+          globals = $uiRouterGlobals;
           kdResourceVerberService = _kdResourceVerberService_;
           q = $q;
           scope = $rootScope.$new();
@@ -78,7 +81,7 @@ describe('Actionbar delete item component', () => {
     let httpStatusOk = 200;
     spyOn(kdResourceVerberService, 'showDeleteDialog').and.returnValue(deferred.promise);
     spyOn(state, 'go');
-    state.$current = getStateMock('testState', 'testLabel', 'testParent');
+    globals.$current = getStateMock('testState', 'testLabel', 'testParent');
 
     // when
     ctrl.remove();

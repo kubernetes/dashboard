@@ -176,36 +176,43 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 				ListMeta:               api.ListMeta{TotalItems: len(c.rcs)},
 				CumulativeMetrics:      make([]metricapi.Metric, 0),
 				ReplicationControllers: c.rcs,
+				Errors:                 []error{},
 			},
 			ReplicaSetList: replicaset.ReplicaSetList{
 				ListMeta:          api.ListMeta{TotalItems: len(c.rs)},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
 				ReplicaSets:       c.rs,
+				Errors:            []error{},
 			},
 			JobList: job.JobList{
 				ListMeta:          api.ListMeta{TotalItems: len(c.jobs)},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
 				Jobs:              c.jobs,
+				Errors:            []error{},
 			},
 			DaemonSetList: daemonset.DaemonSetList{
 				ListMeta:          api.ListMeta{TotalItems: len(c.daemonset)},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
 				DaemonSets:        c.daemonset,
+				Errors:            []error{},
 			},
 			DeploymentList: deployment.DeploymentList{
 				ListMeta:          api.ListMeta{TotalItems: len(c.deployment)},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
 				Deployments:       c.deployment,
+				Errors:            []error{},
 			},
 			PodList: pod.PodList{
 				ListMeta:          api.ListMeta{TotalItems: len(c.pod)},
 				CumulativeMetrics: []metricapi.Metric{},
 				Pods:              c.pod,
+				Errors:            []error{},
 			},
 			StatefulSetList: statefulset.StatefulSetList{
 				ListMeta:          api.ListMeta{TotalItems: len(c.statefulSet)},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
 				StatefulSets:      c.statefulSet,
+				Errors:            []error{},
 			},
 		}
 		var expectedErr error

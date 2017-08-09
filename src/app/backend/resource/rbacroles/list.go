@@ -18,8 +18,10 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
 	rbac "k8s.io/client-go/pkg/apis/rbac/v1beta1"
 )
@@ -30,6 +32,9 @@ type RbacRoleList struct {
 
 	// Unordered list of RbacRoles
 	Items []RbacRole `json:"items"`
+
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
 // RbacRole provides the simplified, combined presentation layer view of Kubernetes' RBAC Roles and ClusterRoles.
@@ -50,53 +55,53 @@ func GetRbacRoleList(client *client.Clientset, dsQuery *dataselect.DataSelectQue
 	return GetRbacRoleListFromChannels(channels, dsQuery)
 }
 
-// GetRbacRoleListFromChannels returns a list of all RBAC roles in the cluster
-// reading required resource list once from the channels.
+// GetRbacRoleListFromChannels returns a list of all RBAC roles in the cluster reading required resource list once from the channels.
 func GetRbacRoleListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery) (*RbacRoleList, error) {
 	roles := <-channels.RoleList.List
-	if err := <-channels.RoleList.Error; err != nil {
-		return &RbacRoleList{Items: []RbacRole{}}, err
+	err := <-channels.RoleList.Error
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
 	}
+
 	clusterRoles := <-channels.ClusterRoleList.List
-	if err := <-channels.ClusterRoleList.Error; err != nil {
-		return &RbacRoleList{Items: []RbacRole{}}, err
+	err = <-channels.ClusterRoleList.Error
+	nonCriticalErrors, err = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	result := SimplifyRbacRoleLists(roles.Items, clusterRoles.Items, dsQuery)
-
+	result := toRbacRoleLists(roles.Items, clusterRoles.Items, nonCriticalErrors, dsQuery)
 	return result, nil
 }
 
-// SimplifyRbacRoleLists merges a list of Roles with a list of ClusterRoles to create a simpler, unified list
-func SimplifyRbacRoleLists(roles []rbac.Role, clusterRoles []rbac.ClusterRole, dsQuery *dataselect.DataSelectQuery) *RbacRoleList {
-	items := make([]RbacRole, 0)
+func toRbacRole(meta v1.ObjectMeta, kind api.ResourceKind) RbacRole {
+	return RbacRole{
+		ObjectMeta: api.NewObjectMeta(meta),
+		TypeMeta:   api.NewTypeMeta(kind),
+	}
+}
+
+// toRbacRoleLists merges a list of Roles with a list of ClusterRoles to create a simpler, unified list
+func toRbacRoleLists(roles []rbac.Role, clusterRoles []rbac.ClusterRole, nonCriticalErrors []error,
+	dsQuery *dataselect.DataSelectQuery) *RbacRoleList {
 
 	result := &RbacRoleList{
-		Items:    make([]RbacRole, 0),
 		ListMeta: api.ListMeta{TotalItems: len(roles) + len(clusterRoles)},
+		Errors:   nonCriticalErrors,
 	}
 
+	items := make([]RbacRole, 0)
 	for _, item := range roles {
-		items = append(items,
-			RbacRole{
-				ObjectMeta: api.NewObjectMeta(item.ObjectMeta),
-				TypeMeta:   api.NewTypeMeta(api.ResourceKindRbacRole),
-			})
+		items = append(items, toRbacRole(item.ObjectMeta, api.ResourceKindRbacRole))
 	}
 
 	for _, item := range clusterRoles {
-		items = append(items,
-			RbacRole{
-				ObjectMeta: api.NewObjectMeta(item.ObjectMeta),
-				TypeMeta:   api.NewTypeMeta(api.ResourceKindRbacClusterRole),
-			})
+		items = append(items, toRbacRole(item.ObjectMeta, api.ResourceKindRbacClusterRole))
 	}
 
 	roleCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(items), dsQuery)
-	items = fromCells(roleCells)
-
 	result.ListMeta = api.ListMeta{TotalItems: filteredTotal}
-	result.Items = items
-
+	result.Items = fromCells(roleCells)
 	return result
 }

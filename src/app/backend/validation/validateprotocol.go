@@ -35,14 +35,11 @@ type ProtocolValidity struct {
 	Valid bool `json:"valid"`
 }
 
-// ValidateProtocol validates protocol based on whether created service is set to NodePort or
-// NodeBalancer type.
+// ValidateProtocol validates protocol based on whether created service is set to NodePort or NodeBalancer type.
 func ValidateProtocol(spec *ProtocolValiditySpec) *ProtocolValidity {
-	log.Printf("Validating %s protocol for service with external set to %v", spec.Protocol,
-		spec.IsExternal)
+	log.Printf("Validating %s protocol for service with external set to %v", spec.Protocol, spec.IsExternal)
 
 	isValid := true
-
 	if spec.Protocol == api.ProtocolUDP && spec.IsExternal {
 		isValid = false
 	}

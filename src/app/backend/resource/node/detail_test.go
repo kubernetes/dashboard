@@ -54,6 +54,7 @@ func TestGetNodeDetail(t *testing.T) {
 				Unschedulable: true,
 				PodList: pod.PodList{
 					Pods:              []pod.Pod{},
+					Errors:            []error{},
 					CumulativeMetrics: make([]metricapi.Metric, 0),
 				},
 				EventList: common.EventList{
@@ -75,6 +76,7 @@ func TestGetNodeDetail(t *testing.T) {
 					PodFraction:            0,
 				},
 				Metrics: make([]metricapi.Metric, 0),
+				Errors:  []error{},
 			},
 		},
 	}
@@ -83,7 +85,7 @@ func TestGetNodeDetail(t *testing.T) {
 		fakeClient := fake.NewSimpleClientset(c.node)
 
 		dataselect.StdMetricsDataSelect.MetricQuery = dataselect.NoMetrics
-		actual, _ := GetNodeDetail(fakeClient, nil, c.name)
+		actual, _ := GetNodeDetail(fakeClient, nil, c.name, dataselect.NoDataSelect)
 
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("GetNodeDetail(client,metricClient,%#v, %#v) == \ngot: %#v, \nexpected %#v",

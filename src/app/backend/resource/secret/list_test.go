@@ -25,33 +25,29 @@ import (
 	"k8s.io/client-go/pkg/api/v1"
 )
 
-var k8SecretList = &v1.SecretList{
-	Items: []v1.Secret{
-		{
-			ObjectMeta: metaV1.ObjectMeta{
-				Name:              "user1",
-				Namespace:         "foo",
-				CreationTimestamp: metaV1.Unix(111, 222),
-			},
-		},
-		{
-			ObjectMeta: metaV1.ObjectMeta{
-				Name:              "user2",
-				Namespace:         "foo",
-				CreationTimestamp: metaV1.Unix(111, 222),
-			},
-		},
-	},
-}
-
-func TestNewSecretListCreation(t *testing.T) {
+func TestToSecretList(t *testing.T) {
 	cases := []struct {
-		k8sRs     *v1.SecretList
+		secrets   []v1.Secret
 		expected  *SecretList
 		namespace *common.NamespaceQuery
 	}{
 		{
-			k8SecretList,
+			[]v1.Secret{
+				{
+					ObjectMeta: metaV1.ObjectMeta{
+						Name:              "user1",
+						Namespace:         "foo",
+						CreationTimestamp: metaV1.Unix(111, 222),
+					},
+				},
+				{
+					ObjectMeta: metaV1.ObjectMeta{
+						Name:              "user2",
+						Namespace:         "foo",
+						CreationTimestamp: metaV1.Unix(111, 222),
+					},
+				},
+			},
 			&SecretList{
 				Secrets: []Secret{
 					{
@@ -71,16 +67,18 @@ func TestNewSecretListCreation(t *testing.T) {
 						TypeMeta: api.NewTypeMeta(api.ResourceKindSecret),
 					},
 				},
-				ListMeta: api.ListMeta{2},
+				ListMeta: api.ListMeta{
+					TotalItems: 2,
+				},
 			},
 			common.NewNamespaceQuery([]string{"foo"}),
 		},
 	}
 
 	for _, c := range cases {
-		actual := NewSecretList(c.k8sRs.Items, dataselect.NoDataSelect)
+		actual := toSecretList(c.secrets, nil, dataselect.NoDataSelect)
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("NewSecretList() ==\n          %#v\nExpected: %#v", actual, c.expected)
+			t.Errorf("toSecretList() ==\n%#v\nExpected: %#v", actual, c.expected)
 		}
 	}
 }

@@ -18,9 +18,11 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	ds "github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
 	"k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -53,36 +55,43 @@ type DaemonSetDetail struct {
 
 	// List of events related to this daemon set
 	EventList common.EventList `json:"eventList"`
+
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
 // Returns detailed information about the given daemon set in the given namespace.
 func GetDaemonSetDetail(client k8sClient.Interface, metricClient metricapi.MetricClient,
 	namespace, name string) (*DaemonSetDetail, error) {
-	log.Printf("Getting details of %s daemon set in %s namespace", name, namespace)
 
+	log.Printf("Getting details of %s daemon set in %s namespace", name, namespace)
 	daemonSet, err := client.ExtensionsV1beta1().DaemonSets(namespace).Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
 
-	podList, err := GetDaemonSetPods(client, metricClient, dataselect.DefaultDataSelectWithMetrics, name, namespace)
-	if err != nil {
-		return nil, err
+	podList, err := GetDaemonSetPods(client, metricClient, ds.DefaultDataSelectWithMetrics, name, namespace)
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
 	podInfo, err := getDaemonSetPodInfo(client, daemonSet)
-	if err != nil {
-		return nil, err
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	serviceList, err := GetDaemonSetServices(client, dataselect.DefaultDataSelect, namespace, name)
-	if err != nil {
-		return nil, err
+	serviceList, err := GetDaemonSetServices(client, ds.DefaultDataSelect, namespace, name)
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	eventList, err := GetDaemonSetEvents(client, dataselect.DefaultDataSelect, daemonSet.Namespace, daemonSet.Name)
-	if err != nil {
-		return nil, err
+	eventList, err := event.GetResourceEvents(client, ds.DefaultDataSelect, daemonSet.Namespace, daemonSet.Name)
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
 	daemonSetDetail := &DaemonSetDetail{
@@ -93,78 +102,12 @@ func GetDaemonSetDetail(client k8sClient.Interface, metricClient metricapi.Metri
 		PodList:       *podList,
 		ServiceList:   *serviceList,
 		EventList:     *eventList,
+		Errors:        nonCriticalErrors,
 	}
 
 	for _, container := range daemonSet.Spec.Template.Spec.Containers {
-		daemonSetDetail.ContainerImages = append(daemonSetDetail.ContainerImages,
-			container.Image)
+		daemonSetDetail.ContainerImages = append(daemonSetDetail.ContainerImages, container.Image)
 	}
 
 	return daemonSetDetail, nil
-}
-
-// TODO(floreks): This should be transactional to make sure that DS will not be deleted without pods
-// Deletes daemon set with given name in given namespace and related pods.
-// Also deletes services related to daemon set if deleteServices is true.
-func DeleteDaemonSet(client k8sClient.Interface, namespace, name string,
-	deleteServices bool) error {
-
-	log.Printf("Deleting %s daemon set from %s namespace", name, namespace)
-
-	if deleteServices {
-		if err := DeleteDaemonSetServices(client, namespace, name); err != nil {
-			return err
-		}
-	}
-
-	pods, err := getRawDaemonSetPods(client, namespace, name)
-	if err != nil {
-		return err
-	}
-
-	if err := client.Extensions().DaemonSets(namespace).Delete(name, &metaV1.DeleteOptions{}); err != nil {
-		return err
-	}
-
-	for _, pod := range pods {
-		if err := client.Core().Pods(namespace).Delete(pod.Name, &metaV1.DeleteOptions{}); err != nil {
-			return err
-		}
-	}
-
-	log.Printf("Successfully deleted %s daemon set from %s namespace", name, namespace)
-
-	return nil
-}
-
-// DeleteDaemonSetServices deletes services related to daemon set with given name in given namespace.
-func DeleteDaemonSetServices(client k8sClient.Interface, namespace, name string) error {
-	log.Printf("Deleting services related to %s daemon set from %s namespace", name,
-		namespace)
-
-	daemonSet, err := client.Extensions().DaemonSets(namespace).Get(name, metaV1.GetOptions{})
-	if err != nil {
-		return err
-	}
-
-	labelSelector, err := metaV1.LabelSelectorAsSelector(daemonSet.Spec.Selector)
-	if err != nil {
-		return err
-	}
-
-	services, err := GetServicesForDSDeletion(client, labelSelector, namespace)
-	if err != nil {
-		return err
-	}
-
-	for _, service := range services {
-		if err := client.Core().Services(namespace).Delete(service.Name, &metaV1.DeleteOptions{}); err != nil {
-			return err
-		}
-	}
-
-	log.Printf("Successfully deleted services related to %s daemon set from %s namespace",
-		name, namespace)
-
-	return nil
 }

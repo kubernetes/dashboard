@@ -30,12 +30,4 @@ export class ReplicaSetListController {
     /** @export {!angular.Resource} */
     this.replicaSetListResource = kdReplicaSetListResource;
   }
-
-  /**
-   * @return {boolean}
-   * @export
-   */
-  shouldShowZeroState() {
-    return this.replicaSetList.replicaSets.length === 0;
-  }
 }

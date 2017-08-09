@@ -14,7 +14,7 @@
 
 /**
  * This file contains all backend errors that can be localized. Should be kept in sync with
- * backend file: 'src/app/backend/resource/common/errors.go'.
+ * backend file: 'src/app/backend/errors/localizer.go'.
  */
 export const kdErrors = {
   /** @export {string} @desc Text shown on in error dialog when there is namespace mismatch between dashboard and yaml file. */
@@ -24,4 +24,7 @@ export const kdErrors = {
   /** @export {string} @desc Text shown on in error dialog when there is no namespace provided selected in both dashboard and yaml file. */
   MSG_DEPLOY_EMPTY_NAMESPACE_ERROR: goog.getMsg(
       'Dashboard and your file do not specify any namespace to deploy a resource. Please select a specific namespace in dashboard or add one in yaml file.'),
+
+  /** @export {string} @desc Text shown when unauthorized user tries to log in. */
+  MSG_LOGIN_UNAUTHORIZED_ERROR: goog.getMsg('Authentication failed. Please try again.'),
 };

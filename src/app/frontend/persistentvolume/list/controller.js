@@ -30,12 +30,4 @@ export class PersistentVolumeListController {
     /** @export {!angular.Resource} */
     this.persistentVolumeListResource = kdPersistentVolumeListResource;
   }
-
-  /**
-   * @return {boolean}
-   * @export
-   */
-  shouldShowZeroState() {
-    return this.persistentVolumeList.items.length === 0;
-  }
 }

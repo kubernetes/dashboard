@@ -27,7 +27,13 @@ describe('Internal error controller', () => {
 
     angular.mock.inject(($controller) => {
       stateParams = new StateParams({status: undefined});
-      ctrl = $controller(InternalErrorController, {$stateParams: stateParams});
+      ctrl = $controller(InternalErrorController, {
+        $transition$: {
+          'params': function() {
+            return stateParams;
+          },
+        },
+      });
     });
   });
 

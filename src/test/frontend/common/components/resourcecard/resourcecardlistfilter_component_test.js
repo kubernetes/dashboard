@@ -31,6 +31,10 @@ describe('Resource card list filtering', () => {
   let errDialog;
   /** @type {!angular.$q} **/
   let q;
+  /** @type {!angular.$timeout} */
+  let timeout;
+  /** @type {!angular.JQLite} */
+  let element = angular.element('<div><input></div>');
 
   beforeEach(() => {
     angular.mock.module(dataSelectModule.name);
@@ -39,11 +43,12 @@ describe('Resource card list filtering', () => {
 
     angular.mock.inject(
         ($componentController, _kdDataSelectService_, $rootScope, $resource, $httpBackend,
-         errorDialog, $q) => {
+         errorDialog, $q, $timeout) => {
           dataSelectService = _kdDataSelectService_;
           dataSelectService.registerInstance(selectId);
 
           errDialog = errorDialog;
+          timeout = $timeout;
           q = $q;
           resourceCardListCtrl = $componentController(
               'kdResourceCardList', {$transclude: {}},
@@ -52,6 +57,8 @@ describe('Resource card list filtering', () => {
           ctrl = $componentController(
               'kdResourceCardListFilter', {
                 errorDialog: errDialog,
+                $element: element,
+                $timeout: timeout,
               },
               {
                 selectId: selectId,
@@ -160,5 +167,22 @@ describe('Resource card list filtering', () => {
     expect(ctrl.inputText).toEqual('');
     expect(dataSelectService.filter).toHaveBeenCalled();
     expect(ctrl.isSearchVisible()).toBeFalsy();
+  });
+
+  it('should focus element on input show', () => {
+    // given
+    let inputElem = element.find('input')[0];
+    spyOn(ctrl, 'focusInput').and.callThrough();
+    spyOn(element, 'find').and.callThrough();
+    spyOn(inputElem, 'focus');
+
+    // when
+    ctrl.switchSearchVisibility();
+    timeout.flush();
+
+    // then
+    expect(ctrl.focusInput).toHaveBeenCalled();
+    expect(element.find).toHaveBeenCalled();
+    expect(inputElem.focus).toHaveBeenCalled();
   });
 });

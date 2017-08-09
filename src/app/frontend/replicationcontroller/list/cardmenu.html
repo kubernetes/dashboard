@@ -15,18 +15,14 @@ limitations under the License.
 -->
 
 <kd-resource-card-menu>
-  <md-menu-item>
-    <md-button ng-click="$ctrl.viewDetails()">
-      [[View details|Action 'View details' on the drop down menu for a single replication controller (replication controller list page).]]
-    </md-button>
-  </md-menu-item>
-  <md-menu-item>
-    <md-button ng-click="$ctrl.showScaleDialog()">
-      [[Scale|Action 'Edit Pod Count' on the drop down menu for a single replication controller (replication controller list page).]]
-    </md-button>
-  </md-menu-item>
-  <kd-resource-card-edit-menu-item resource-kind-name="[[Replication Controller|Label 'Replication Controller' which will appear in the replication Controller delete dialogm opened from a replication controller card on the list page.]]">
-  </kd-resource-card-edit-menu-item>
+  <kd-scale-button resource-kind-name="[[Replication Controller|Label 'Replication Controller' which will appear in the replication Controller scale dialog opened from a replication controller card on the list page.]]"
+                   object-meta="$ctrl.replicationController.objectMeta"
+                   current-pods="$ctrl.replicationController.pods.current"
+                   desired-pods="$ctrl.replicationController.pods.desired"
+                   menu-item="true">
+  </kd-scale-button>
   <kd-resource-card-delete-menu-item resource-kind-name="[[Replication Controller|Label 'Replication Controller' which will appear in the replication Controller delete dialogm opened from a replication controller card on the list page.]]">
   </kd-resource-card-delete-menu-item>
-  </md-menu>
+  <kd-resource-card-edit-menu-item resource-kind-name="[[Replication Controller|Label 'Replication Controller' which will appear in the replication Controller delete dialogm opened from a replication controller card on the list page.]]">
+  </kd-resource-card-edit-menu-item>
+</kd-resource-card-menu>

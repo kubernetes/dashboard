@@ -30,20 +30,26 @@ func TestGetSecretDetail(t *testing.T) {
 	}{
 		{
 			&v1.Secret{
-				Data: map[string][]byte{"app": {0, 1, 2, 3}}, ObjectMeta: metaV1.ObjectMeta{Name: "foo"},
+				Data: map[string][]byte{"app": {0, 1, 2, 3}},
+				ObjectMeta: metaV1.ObjectMeta{
+					Name: "foo",
+				},
 			},
 			&SecretDetail{
-				TypeMeta:   api.TypeMeta{Kind: "secret"},
-				ObjectMeta: api.ObjectMeta{Name: "foo"},
-				Data:       map[string][]byte{"app": {0, 1, 2, 3}},
+				TypeMeta: api.TypeMeta{
+					Kind: "secret",
+				},
+				ObjectMeta: api.ObjectMeta{
+					Name: "foo",
+				},
+				Data: map[string][]byte{"app": {0, 1, 2, 3}},
 			},
 		},
 	}
 	for _, c := range cases {
 		actual := getSecretDetail(c.secrets)
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("getSecretDetail(%#v) == \n%#v\nexpected \n%#v\n",
-				c.secrets, actual, c.expected)
+			t.Errorf("getSecretDetail(%#v) == \n%#v\nexpected \n%#v\n", c.secrets, actual, c.expected)
 		}
 	}
 }

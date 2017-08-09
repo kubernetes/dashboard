@@ -16,16 +16,8 @@ import {PersistentVolumeListController} from 'persistentvolume/list/controller';
 import persistentVolumeListModule from 'persistentvolume/module';
 
 describe('Persistent Volume list controller', () => {
-  /** @type {!PersistentVolumeListController}
-   */
-  let ctrl;
-
   beforeEach(() => {
     angular.mock.module(persistentVolumeListModule.name);
-
-    angular.mock.inject(($controller) => {
-      ctrl = $controller(PersistentVolumeListController, {persistentVolumeList: {items: []}});
-    });
   });
 
   it('should initialize persistent volume controller', angular.mock.inject(($controller) => {
@@ -35,16 +27,4 @@ describe('Persistent Volume list controller', () => {
 
     expect(ctrl.persistentVolumeList.items).toBe(ctrls);
   }));
-
-  it('should show zero state', () => {
-    expect(ctrl.shouldShowZeroState()).toBe(true);
-  });
-
-  it('should hide zero state', () => {
-    // given
-    ctrl.persistentVolumeList = {items: ['mock']};
-
-    // then
-    expect(ctrl.shouldShowZeroState()).toBe(false);
-  });
 });

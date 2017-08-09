@@ -1,4 +1,4 @@
-// Copyright 2015 Google Inc. All Rights Reserved.
+// Copyright 2017 The Kubernetes Dashboard Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -36,8 +36,9 @@ $font-family-medium: 'Roboto-Medium';
 
 $primary: #326de6;
 $secondary: #f51200;
-$warning: #ffa500;
 $delicate: #aaa;
+$warning: #ffad20;
+$warning-secondary: rgba(0, 0, 0, .65);
 $border: rgba(0, 0, 0, .12);
 $border-solid: rgba(0, 0, 0, .38);
 $muted: #888;
@@ -48,6 +49,12 @@ $emphasis: #000;
 $content-background: #fff;
 $chart-1: #00c752;
 $chart-2: #326de6;
+
+// Resource state chart colors
+$failed-resource-color: #f00;
+$running-resource-color: #00c752;
+$pending-resource-color: #ff0;
+
 $success-color: #008000;
 $error-color: #ff5722;
 
@@ -62,6 +69,7 @@ $hue-3: rgba(255, 255, 255, .26);
 $hue-4: rgba(255, 255, 255, .12);
 
 $background-1: rgba(158, 158, 158, .2);
+$background-2: rgba(226, 226, 226, .2);
 $overlay-color: $hue-2;
 
 $regular-font-weight: 400;

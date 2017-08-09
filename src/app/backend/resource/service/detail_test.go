@@ -22,6 +22,7 @@ import (
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/endpoint"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
@@ -40,7 +41,7 @@ func TestGetServiceDetail(t *testing.T) {
 				Name: "svc-1", Namespace: "ns-1", Labels: map[string]string{},
 			}},
 			namespace: "ns-1", name: "svc-1",
-			expectedActions: []string{"get", "get", "list"},
+			expectedActions: []string{"get", "list", "get", "list"},
 			expected: &ServiceDetail{
 				ObjectMeta: api.ObjectMeta{
 					Name:      "svc-1",
@@ -56,6 +57,10 @@ func TestGetServiceDetail(t *testing.T) {
 				EventList: common.EventList{
 					Events: []common.Event{},
 				},
+				EndpointList: endpoint.EndpointList{
+					Endpoints: []endpoint.Endpoint{},
+				},
+				Errors: []error{},
 			},
 		},
 		{
@@ -69,7 +74,7 @@ func TestGetServiceDetail(t *testing.T) {
 				},
 			},
 			namespace: "ns-2", name: "svc-2",
-			expectedActions: []string{"get", "get", "list", "list", "list"},
+			expectedActions: []string{"get", "list", "get", "list", "list", "list"},
 			expected: &ServiceDetail{
 				ObjectMeta: api.ObjectMeta{
 					Name:      "svc-2",
@@ -81,21 +86,24 @@ func TestGetServiceDetail(t *testing.T) {
 				PodList: pod.PodList{
 					Pods:              []pod.Pod{},
 					CumulativeMetrics: make([]metricapi.Metric, 0),
+					Errors:            []error{},
 				},
 				EventList: common.EventList{
 					Events: []common.Event{},
 				},
+				EndpointList: endpoint.EndpointList{
+					Endpoints: []endpoint.Endpoint{},
+				},
+				Errors: []error{},
 			},
 		},
 	}
 
 	for _, c := range cases {
 		fakeClient := fake.NewSimpleClientset(c.service)
-
-		actual, _ := GetServiceDetail(fakeClient, nil,
-			c.namespace, c.name, dataselect.NoDataSelect)
-
+		actual, _ := GetServiceDetail(fakeClient, nil, c.namespace, c.name, dataselect.NoDataSelect)
 		actions := fakeClient.Actions()
+
 		if len(actions) != len(c.expectedActions) {
 			t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
 				len(c.expectedActions), len(actions))
@@ -104,8 +112,7 @@ func TestGetServiceDetail(t *testing.T) {
 
 		for i, verb := range c.expectedActions {
 			if actions[i].GetVerb() != verb {
-				t.Errorf("Unexpected action: %+v, expected %s",
-					actions[i], verb)
+				t.Errorf("Unexpected action: %+v, expected %s", actions[i], verb)
 			}
 		}
 

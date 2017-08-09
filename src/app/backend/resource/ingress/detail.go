@@ -35,6 +35,9 @@ type IngressDetail struct {
 
 	// Status is the current state of the Ingress.
 	Status extensions.IngressStatus `json:"status"`
+
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
 // GetIngressDetail returns returns detailed information about an ingress

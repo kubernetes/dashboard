@@ -13,4 +13,4 @@
 // limitations under the License.
 
 /** Name of the state. Can be used in, e.g., $state.go method. */
-export const stateName = 'deployment.list';
+export const stateName = 'deploymentlist';

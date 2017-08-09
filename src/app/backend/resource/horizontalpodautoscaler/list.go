@@ -16,6 +16,7 @@ package horizontalpodautoscaler
 
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	k8sClient "k8s.io/client-go/kubernetes"
 	autoscaling "k8s.io/client-go/pkg/apis/autoscaling/v1"
@@ -26,41 +27,44 @@ type HorizontalPodAutoscalerList struct {
 
 	// Unordered list of Horizontal Pod Autoscalers.
 	HorizontalPodAutoscalers []HorizontalPodAutoscaler `json:"horizontalpodautoscalers"`
+
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
 // HorizontalPodAutoscaler (aka. Horizontal Pod Autoscaler)
 type HorizontalPodAutoscaler struct {
-	ObjectMeta api.ObjectMeta `json:"objectMeta"`
-	TypeMeta   api.TypeMeta   `json:"typeMeta"`
-
-	ScaleTargetRef ScaleTargetRef `json:"scaleTargetRef"`
-
-	MinReplicas *int32 `json:"minReplicas"`
-	MaxReplicas int32  `json:"maxReplicas"`
-
-	CurrentCPUUtilizationPercentage *int32 `json:"currentCPUUtilizationPercentage"`
-	TargetCPUUtilizationPercentage  *int32 `json:"targetCPUUtilizationPercentage"`
+	ObjectMeta                      api.ObjectMeta `json:"objectMeta"`
+	TypeMeta                        api.TypeMeta   `json:"typeMeta"`
+	ScaleTargetRef                  ScaleTargetRef `json:"scaleTargetRef"`
+	MinReplicas                     *int32         `json:"minReplicas"`
+	MaxReplicas                     int32          `json:"maxReplicas"`
+	CurrentCPUUtilizationPercentage *int32         `json:"currentCPUUtilizationPercentage"`
+	TargetCPUUtilizationPercentage  *int32         `json:"targetCPUUtilizationPercentage"`
 }
 
 func GetHorizontalPodAutoscalerList(client k8sClient.Interface, nsQuery *common.NamespaceQuery) (*HorizontalPodAutoscalerList, error) {
-
 	channel := common.GetHorizontalPodAutoscalerListChannel(client, nsQuery, 1)
 	hpaList := <-channel.List
-	if err := <-channel.Error; err != nil {
-		return nil, err
+	err := <-channel.Error
+
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	return createHorizontalPodAutoscalerList(hpaList.Items), nil
+	return toHorizontalPodAutoscalerList(hpaList.Items, nonCriticalErrors), nil
 }
 
 func GetHorizontalPodAutoscalerListForResource(client k8sClient.Interface, namespace, kind, name string) (*HorizontalPodAutoscalerList, error) {
-
 	nsQuery := common.NewSameNamespaceQuery(namespace)
-
 	channel := common.GetHorizontalPodAutoscalerListChannel(client, nsQuery, 1)
 	hpaList := <-channel.List
-	if err := <-channel.Error; err != nil {
-		return nil, err
+	err := <-channel.Error
+
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
 	filteredHpaList := make([]autoscaling.HorizontalPodAutoscaler, 0)
@@ -70,13 +74,14 @@ func GetHorizontalPodAutoscalerListForResource(client k8sClient.Interface, names
 		}
 	}
 
-	return createHorizontalPodAutoscalerList(filteredHpaList), nil
+	return toHorizontalPodAutoscalerList(filteredHpaList, nonCriticalErrors), nil
 }
 
-func createHorizontalPodAutoscalerList(hpas []autoscaling.HorizontalPodAutoscaler) *HorizontalPodAutoscalerList {
+func toHorizontalPodAutoscalerList(hpas []autoscaling.HorizontalPodAutoscaler, nonCriticalErrors []error) *HorizontalPodAutoscalerList {
 	hpaList := &HorizontalPodAutoscalerList{
 		HorizontalPodAutoscalers: make([]HorizontalPodAutoscaler, 0),
 		ListMeta:                 api.ListMeta{TotalItems: len(hpas)},
+		Errors:                   nonCriticalErrors,
 	}
 
 	for _, hpa := range hpas {
@@ -90,12 +95,10 @@ func toHorizontalPodAutoScaler(hpa *autoscaling.HorizontalPodAutoscaler) Horizon
 	return HorizontalPodAutoscaler{
 		ObjectMeta: api.NewObjectMeta(hpa.ObjectMeta),
 		TypeMeta:   api.NewTypeMeta(api.ResourceKindHorizontalPodAutoscaler),
-
 		ScaleTargetRef: ScaleTargetRef{
 			Kind: hpa.Spec.ScaleTargetRef.Kind,
 			Name: hpa.Spec.ScaleTargetRef.Name,
 		},
-
 		MinReplicas:                     hpa.Spec.MinReplicas,
 		MaxReplicas:                     hpa.Spec.MaxReplicas,
 		CurrentCPUUtilizationPercentage: hpa.Status.CurrentCPUUtilizationPercentage,

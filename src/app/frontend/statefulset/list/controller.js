@@ -30,12 +30,4 @@ export class StatefulSetListController {
     /** @export {!angular.Resource} */
     this.statefulSetListResource = kdStatefulSetListResource;
   }
-
-  /**
-   * @return {boolean}
-   * @export
-   */
-  shouldShowZeroState() {
-    return this.statefulSetList.statefulSets.length === 0;
-  }
 }

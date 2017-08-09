@@ -58,8 +58,7 @@ type RESTClient interface {
 	Get() *restclient.Request
 }
 
-// NewResourceVerber creates a new resource verber that uses the given client for performing
-// operations.
+// NewResourceVerber creates a new resource verber that uses the given client for performing operations.
 func NewResourceVerber(client, extensionsClient, appsClient,
 	batchClient, autoscalingClient, storageClient RESTClient) ResourceVerber {
 	return ResourceVerber{client, extensionsClient, appsClient, batchClient, autoscalingClient, storageClient}
@@ -88,18 +87,13 @@ func (verber *ResourceVerber) Delete(kind string, namespaceSet bool, namespace s
 		PropagationPolicy: &defaultPropagationPolicy,
 	}
 
-	req := client.Delete().
-		Resource(resourceSpec.Resource).
-		Name(name).
-		Body(defaultDeleteOptions)
+	req := client.Delete().Resource(resourceSpec.Resource).Name(name).Body(defaultDeleteOptions)
 
 	if resourceSpec.Namespaced {
 		req.Namespace(namespace)
 	}
 
-	return req.
-		Do().
-		Error()
+	return req.Do().Error()
 }
 
 // Put puts new resource version of the given kind in the given namespace with the given name.
@@ -131,9 +125,7 @@ func (verber *ResourceVerber) Put(kind string, namespaceSet bool, namespace stri
 		req.Namespace(namespace)
 	}
 
-	return req.
-		Do().
-		Error()
+	return req.Do().Error()
 }
 
 // Get gets the resource of the given kind in the given namespace with the given name.
@@ -152,20 +144,13 @@ func (verber *ResourceVerber) Get(kind string, namespaceSet bool, namespace stri
 	}
 
 	client := verber.getRESTClientByType(resourceSpec.ClientType)
-
 	result := &runtime.Unknown{}
-	req := client.Get().
-		Resource(resourceSpec.Resource).
-		Name(name).
-		SetHeader("Accept", "application/json")
+	req := client.Get().Resource(resourceSpec.Resource).Name(name).SetHeader("Accept", "application/json")
 
 	if resourceSpec.Namespaced {
 		req.Namespace(namespace)
 	}
 
-	err := req.
-		Do().
-		Into(result)
-
+	err := req.Do().Into(result)
 	return result, err
 }

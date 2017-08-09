@@ -25,10 +25,9 @@ export default class DeploymentCardController {
    * @param {!ui.router.$state} $state
    * @param {!angular.$interpolate} $interpolate
    * @param {!./../../common/namespace/service.NamespaceService} kdNamespaceService
-   * @param {!./../../common/scaling/service.ScaleService} kdScaleService
    * @ngInject
    */
-  constructor($state, $interpolate, kdNamespaceService, kdScaleService) {
+  constructor($state, $interpolate, kdNamespaceService) {
     /**
      * Initialized from the scope.
      * @export {!backendApi.Deployment}
@@ -43,9 +42,6 @@ export default class DeploymentCardController {
 
     /** @private {!./../../common/namespace/service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
-
-    /** @private {!./../../common/scaling/service.ScaleService} */
-    this.kdScaleService_ = kdScaleService;
   }
 
   /**
@@ -105,15 +101,6 @@ export default class DeploymentCardController {
     let MSG_DEPLOYMENT_LIST_CREATED_AT_TOOLTIP =
         goog.getMsg('Created at {$creationDate}', {'creationDate': filter({'date': creationDate})});
     return MSG_DEPLOYMENT_LIST_CREATED_AT_TOOLTIP;
-  }
-
-  /**
-   * @export
-   */
-  showScaleDialog() {
-    this.kdScaleService_.showScaleDialog(
-        this.deployment.objectMeta.namespace, this.deployment.objectMeta.name,
-        this.deployment.pods.current, this.deployment.pods.desired, this.deployment.typeMeta.kind);
   }
 }
 

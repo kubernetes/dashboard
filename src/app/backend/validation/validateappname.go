@@ -24,10 +24,7 @@ import (
 
 // AppNameValiditySpec is a specification for application name validation request.
 type AppNameValiditySpec struct {
-	// Name of the application.
-	Name string `json:"name"`
-
-	// Namespace of the application.
+	Name      string `json:"name"`
 	Namespace string `json:"namespace"`
 }
 

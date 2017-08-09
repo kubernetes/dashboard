@@ -50,45 +50,38 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 			&ReplicaSetList{
 				ListMeta:          api.ListMeta{},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
-				ReplicaSets:       []ReplicaSet{}},
-			nil,
-		},
-		{
-			extensions.ReplicaSetList{},
-			errors.New("MyCustomError"),
-			&v1.PodList{},
-			nil,
-			errors.New("MyCustomError"),
-		},
-		{
-			extensions.ReplicaSetList{},
-			&k8serrors.StatusError{},
-			&v1.PodList{},
-			nil,
-			&k8serrors.StatusError{},
-		},
-		{
-			extensions.ReplicaSetList{},
-			&k8serrors.StatusError{ErrStatus: metaV1.Status{}},
-			&v1.PodList{},
-			nil,
-			&k8serrors.StatusError{ErrStatus: metaV1.Status{}},
-		},
-		{
-			extensions.ReplicaSetList{},
-			&k8serrors.StatusError{ErrStatus: metaV1.Status{Reason: "foo-bar"}},
-			&v1.PodList{},
-			nil,
-			&k8serrors.StatusError{ErrStatus: metaV1.Status{Reason: "foo-bar"}},
-		},
-		{
-			extensions.ReplicaSetList{},
-			&k8serrors.StatusError{ErrStatus: metaV1.Status{Reason: "NotFound"}},
-			&v1.PodList{},
-			&ReplicaSetList{
-				ReplicaSets: make([]ReplicaSet, 0),
+				ReplicaSets:       []ReplicaSet{},
+				Errors:            []error{},
 			},
 			nil,
+		},
+		{
+			extensions.ReplicaSetList{},
+			errors.New("MyCustomError"),
+			&v1.PodList{},
+			nil,
+			errors.New("MyCustomError"),
+		},
+		{
+			extensions.ReplicaSetList{},
+			&k8serrors.StatusError{},
+			&v1.PodList{},
+			nil,
+			&k8serrors.StatusError{},
+		},
+		{
+			extensions.ReplicaSetList{},
+			&k8serrors.StatusError{ErrStatus: metaV1.Status{}},
+			&v1.PodList{},
+			nil,
+			&k8serrors.StatusError{ErrStatus: metaV1.Status{}},
+		},
+		{
+			extensions.ReplicaSetList{},
+			&k8serrors.StatusError{ErrStatus: metaV1.Status{Reason: "foo-bar"}},
+			&v1.PodList{},
+			nil,
+			&k8serrors.StatusError{ErrStatus: metaV1.Status{Reason: "foo-bar"}},
 		},
 		{
 			extensions.ReplicaSetList{
@@ -158,6 +151,7 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 						Warnings: []common.Event{},
 					},
 				}},
+				Errors: []error{},
 			},
 			nil,
 		},
@@ -248,10 +242,10 @@ func TestCreateReplicaSetList(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		actual := CreateReplicaSetList(c.replicaSets, c.pods, c.events, dataselect.NoDataSelect, nil)
+		actual := ToReplicaSetList(c.replicaSets, c.pods, c.events, nil, dataselect.NoDataSelect, nil)
 
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("CreateReplicaSetList(%#v, %#v, %#v, ...) == \ngot %#v, \nexpected %#v",
+			t.Errorf("ToReplicaSetList(%#v, %#v, %#v, ...) == \ngot %#v, \nexpected %#v",
 				c.replicaSets, c.pods, c.events, actual, c.expected)
 		}
 	}
@@ -293,6 +287,7 @@ func TestGetReplicaSetList(t *testing.T) {
 						},
 					},
 				},
+				Errors:            []error{},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
 			},
 		},
@@ -300,11 +295,9 @@ func TestGetReplicaSetList(t *testing.T) {
 
 	for _, c := range cases {
 		fakeClient := fake.NewSimpleClientset(c.rsList)
-
-		actual, _ := GetReplicaSetList(fakeClient, &common.NamespaceQuery{},
-			dataselect.NoDataSelect, nil)
-
+		actual, _ := GetReplicaSetList(fakeClient, &common.NamespaceQuery{}, dataselect.NoDataSelect, nil)
 		actions := fakeClient.Actions()
+
 		if len(actions) != len(c.expectedActions) {
 			t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
 				len(c.expectedActions), len(actions))
@@ -313,14 +306,12 @@ func TestGetReplicaSetList(t *testing.T) {
 
 		for i, verb := range c.expectedActions {
 			if actions[i].GetVerb() != verb {
-				t.Errorf("Unexpected action: %+v, expected %s",
-					actions[i], verb)
+				t.Errorf("Unexpected action: %+v, expected %s", actions[i], verb)
 			}
 		}
 
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("GetReplicaSetList(client) == got\n%#v, expected\n %#v",
-				actual, c.expected)
+			t.Errorf("GetReplicaSetList(client) == got\n%#v, expected\n %#v", actual, c.expected)
 		}
 	}
 }

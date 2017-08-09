@@ -29,13 +29,24 @@ func TestGetNamespaceList(t *testing.T) {
 		namespaces []v1.Namespace
 		expected   *NamespaceList
 	}{
-		{nil, &NamespaceList{Namespaces: []Namespace{}}},
+		{
+			nil,
+			&NamespaceList{
+				Namespaces: []Namespace{},
+			},
+		},
 		{
 			[]v1.Namespace{
-				{ObjectMeta: metaV1.ObjectMeta{Name: "foo"}},
+				{
+					ObjectMeta: metaV1.ObjectMeta{
+						Name: "foo",
+					},
+				},
 			},
 			&NamespaceList{
-				ListMeta: api.ListMeta{TotalItems: 1},
+				ListMeta: api.ListMeta{
+					TotalItems: 1,
+				},
 				Namespaces: []Namespace{{
 					TypeMeta:   api.TypeMeta{Kind: "namespace"},
 					ObjectMeta: api.ObjectMeta{Name: "foo"},
@@ -44,7 +55,7 @@ func TestGetNamespaceList(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := toNamespaceList(c.namespaces, dataselect.NoDataSelect)
+		actual := toNamespaceList(c.namespaces, nil, dataselect.NoDataSelect)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("getNamespaceList(%#v) == \n%#v\nexpected \n%#v\n",
 				c.namespaces, actual, c.expected)

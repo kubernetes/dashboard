@@ -8,7 +8,7 @@ Dashboard is currently localized through the Google Closure Compiler's `goog.get
 
 The localization process itself is integrated into the build pipeline and back-end component of Dashboard and happens automatically. Apart from placing new text into `MSG_` variables and using those in the angular templates, the developer is not required to do anything else.
 
-## The MSG variables
+## Localization with `MSG_` variables
 
 Here is an example of a single `MSG_` variable definition:
 
@@ -26,7 +26,7 @@ Guidelines:
 
 For a quick reference please see [this cheat sheet](http://www.closurecheatsheet.com/i18n).
 
-## Organizing the text variables
+#### Organizing the text variables
 
 Currently, the `MSG` variables are stored in a constant dictionary at the bottom of the controller, which scopes the place (template) where they are used. The variables can then be referenced directly in the respective template's HTML code.
 
@@ -47,7 +47,7 @@ class exampleController {
 }
 
 const i18n = {
-  /** @export {string} @desc a simple example */
+  /** @export {string} @desc a simple description for the translator */
   MSG_EXAMPLE_TEXT: goog.getMsg('This is an example'),
   ... // other variables
 }
@@ -60,6 +60,32 @@ const i18n = {
 ```
 
 In the HTML code, use one-time bindings like `{{::ctrl.i18n.MSG_EXAMPLE_TEXT}}` for efficiency.
+
+## Localization with `[[Message|]]` pattern
+
+Usage of `MSG_` variables in JavaScript and HTML files is not the only way to localize messages. The second option
+is to use specific pattern directly in HTML messages:
+
+```
+[[This is an example|a simple description for the translator]]
+```
+
+As you can see it is the same definition as in above section, but it is a lot easier to use. There is sample usage:
+
+```html
+<div>
+    [[This is an example|a simple description for the translator]]
+</div>
+```
+
+#### Warning
+
+This is a quick way of using multiple localized messages without changes in JavaScript files, but it does have few
+drawbacks. Please keep in mind this method requires some automated work and following rules apply:
+
+ * Message variables are generated automatically during build process. Their names depend on file name and message
+ position within a file. It means, that if message will be moved to another file, all it's translations will be lost.
+ * It is not possible to reference variables from `[[|]]` pattern.
 
 ## Naming conventions and guidelines
 * Consistently name the object containing the variables for a given controller `i18n`.

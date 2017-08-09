@@ -13,4 +13,4 @@
 // limitations under the License.
 
 /** Name of the state. Can be used in, e.g., $state.go method. */
-export const stateName = 'daemonset.list';
+export const stateName = 'daemonsetlist';

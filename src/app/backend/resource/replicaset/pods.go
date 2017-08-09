@@ -17,6 +17,7 @@ package replicaset
 import (
 	"log"
 
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
@@ -37,30 +38,27 @@ func GetReplicaSetPods(client k8sClient.Interface, metricClient metricapi.Metric
 
 	pods, err := getRawReplicaSetPods(client, petSetName, namespace)
 	if err != nil {
-		return nil, err
+		return pod.EmptyPodList, err
 	}
 
 	events, err := event.GetPodsEvents(client, namespace, pods)
-	if err != nil {
-		return nil, err
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	podList := pod.CreatePodList(pods, events, dsQuery, metricClient)
+	podList := pod.ToPodList(pods, events, nonCriticalErrors, dsQuery, metricClient)
 	return &podList, nil
 }
 
-// Returns array of api pods targeting replica set with given name.
-func getRawReplicaSetPods(client k8sClient.Interface, petSetName, namespace string) (
-	[]v1.Pod, error) {
-	rs, err := client.ExtensionsV1beta1().ReplicaSets(namespace).Get(petSetName,
-		metaV1.GetOptions{})
+func getRawReplicaSetPods(client k8sClient.Interface, petSetName, namespace string) ([]v1.Pod, error) {
+	rs, err := client.ExtensionsV1beta1().ReplicaSets(namespace).Get(petSetName, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
 
 	channels := &common.ResourceChannels{
-		PodList: common.GetPodListChannel(client, common.NewSameNamespaceQuery(namespace),
-			1),
+		PodList: common.GetPodListChannel(client, common.NewSameNamespaceQuery(namespace), 1),
 	}
 
 	podList := <-channels.PodList.List
@@ -71,15 +69,10 @@ func getRawReplicaSetPods(client k8sClient.Interface, petSetName, namespace stri
 	return common.FilterPodsByOwnerReference(rs.Namespace, rs.UID, podList.Items), nil
 }
 
-// getReplicaSetPodInfo returns simple info about pods(running, desired, failing, etc.) related to
-// given replica set.
-func getReplicaSetPodInfo(client k8sClient.Interface, replicaSet *extensions.ReplicaSet) (
-	*common.PodInfo, error) {
-
+func getReplicaSetPodInfo(client k8sClient.Interface, replicaSet *extensions.ReplicaSet) (*common.PodInfo, error) {
 	labelSelector := labels.SelectorFromSet(replicaSet.Spec.Selector.MatchLabels)
 	channels := &common.ResourceChannels{
-		PodList: common.GetPodListChannelWithOptions(client, common.NewSameNamespaceQuery(
-			replicaSet.Namespace),
+		PodList: common.GetPodListChannelWithOptions(client, common.NewSameNamespaceQuery(replicaSet.Namespace),
 			metaV1.ListOptions{
 				LabelSelector: labelSelector.String(),
 				FieldSelector: fields.Everything().String(),
@@ -91,7 +84,6 @@ func getReplicaSetPodInfo(client k8sClient.Interface, replicaSet *extensions.Rep
 		return nil, err
 	}
 
-	podInfo := common.GetPodInfo(replicaSet.Status.Replicas, *replicaSet.Spec.Replicas,
-		pods.Items)
+	podInfo := common.GetPodInfo(replicaSet.Status.Replicas, *replicaSet.Spec.Replicas, pods.Items)
 	return &podInfo, nil
 }

@@ -18,6 +18,7 @@ import (
 	"sort"
 
 	"errors"
+
 	"github.com/emicklei/go-restful/log"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 )
@@ -146,7 +147,7 @@ func (self *DataSelector) getMetrics(metricClient metricapi.MetricClient) (
 		// make sure data cells support metrics
 		metricDataCell, ok := dataCell.(MetricDataCell)
 		if !ok {
-			log.Printf("Data cell does not implemenet MetricDataCell. Skipping. %v", dataCell)
+			log.Printf("Data cell does not implement MetricDataCell. Skipping. %v", dataCell)
 			continue
 		}
 

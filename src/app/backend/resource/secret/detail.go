@@ -41,10 +41,9 @@ type SecretDetail struct {
 
 // GetSecretDetail returns returns detailed information about a secret
 func GetSecretDetail(client *client.Clientset, namespace, name string) (*SecretDetail, error) {
-	log.Printf("Getting details of %s secret in %s namespace", name, namespace)
+	log.Printf("Getting details of %s secret in %s namespace\n", name, namespace)
 
 	rawSecret, err := client.Secrets(namespace).Get(name, metaV1.GetOptions{})
-
 	if err != nil {
 		return nil, err
 	}

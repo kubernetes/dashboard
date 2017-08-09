@@ -56,6 +56,7 @@ func (self NodeCell) GetResourceSelector() *metricapi.ResourceSelector {
 		Namespace:    self.ObjectMeta.Namespace,
 		ResourceType: api.ResourceKindNode,
 		ResourceName: self.ObjectMeta.Name,
+		UID:          self.ObjectMeta.UID,
 	}
 }
 

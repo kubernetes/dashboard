@@ -22,13 +22,12 @@ import (
 )
 
 // GetJobEvents gets events associated to job.
-func GetJobEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery, namespace, jobName string) (
+func GetJobEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery, namespace, name string) (
 	*common.EventList, error) {
 
-	// Get events for job.
-	jobEvents, err := event.GetEvents(client, namespace, jobName)
+	jobEvents, err := event.GetEvents(client, namespace, name)
 	if err != nil {
-		return nil, err
+		return event.EmptyEventList, err
 	}
 
 	events := event.CreateEventList(jobEvents, dsQuery)

@@ -17,7 +17,7 @@ import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
 import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
 import {stateName as jobList} from 'job/list/state';
 
-import {stateUrl} from './../state';
+import {stateName as parentState, stateUrl} from './../state';
 import {ActionBarController} from './actionbar_controller';
 import {JobDetailController} from './controller';
 
@@ -28,7 +28,7 @@ import {JobDetailController} from './controller';
  */
 export const config = {
   url: appendDetailParamsToUrl(stateUrl),
-  parent: chromeStateName,
+  parent: parentState,
   resolve: {
     'jobDetailResource': getJobDetailResource,
     'jobDetail': getJobDetail,
@@ -45,7 +45,7 @@ export const config = {
       controllerAs: 'ctrl',
       templateUrl: 'job/detail/detail.html',
     },
-    [actionbarViewName]: {
+    [`${actionbarViewName}@${chromeStateName}`]: {
       templateUrl: 'job/detail/actionbar.html',
       controller: ActionBarController,
       controllerAs: '$ctrl',

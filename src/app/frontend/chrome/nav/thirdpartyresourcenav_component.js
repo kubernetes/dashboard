@@ -35,7 +35,7 @@ export class ThirdPartyResourceNavController {
     /** @private {!./../../common/state/service.FutureStateService} */
     this.kdFutureStateService_ = kdFutureStateService;
 
-    /** @export */
+    /** @export {boolean} */
     this.isVisible = false;
 
     /**

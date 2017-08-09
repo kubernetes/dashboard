@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {logsComponent} from './component';
 import {LogsService} from './service';
 import stateConfig from './stateconfig';
 
@@ -27,4 +28,5 @@ export default angular
           'ui.router',
         ])
     .service('logsService', LogsService)
+    .component('kdLogs', logsComponent)
     .config(stateConfig);

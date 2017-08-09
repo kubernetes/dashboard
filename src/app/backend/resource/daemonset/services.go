@@ -15,6 +15,7 @@
 package daemonset
 
 import (
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/service"
@@ -33,16 +34,17 @@ func GetDaemonSetServices(client client.Interface, dsQuery *dataselect.DataSelec
 	}
 
 	channels := &common.ResourceChannels{
-		ServiceList: common.GetServiceListChannel(client, common.NewSameNamespaceQuery(namespace),
-			1),
+		ServiceList: common.GetServiceListChannel(client, common.NewSameNamespaceQuery(namespace), 1),
 	}
 
 	services := <-channels.ServiceList.List
-	if err := <-channels.ServiceList.Error; err != nil {
-		return nil, err
+	err = <-channels.ServiceList.Error
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
 	matchingServices := common.FilterNamespacedServicesBySelector(services.Items, namespace,
 		daemonSet.Spec.Selector.MatchLabels)
-	return service.CreateServiceList(matchingServices, dsQuery), nil
+	return service.CreateServiceList(matchingServices, nonCriticalErrors, dsQuery), nil
 }

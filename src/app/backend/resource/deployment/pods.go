@@ -15,6 +15,7 @@
 package deployment
 
 import (
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
@@ -30,7 +31,7 @@ func GetDeploymentPods(client client.Interface, metricClient metricapi.MetricCli
 
 	deployment, err := client.ExtensionsV1beta1().Deployments(namespace).Get(deploymentName, metaV1.GetOptions{})
 	if err != nil {
-		return nil, err
+		return pod.EmptyPodList, err
 	}
 
 	channels := &common.ResourceChannels{
@@ -40,20 +41,23 @@ func GetDeploymentPods(client client.Interface, metricClient metricapi.MetricCli
 
 	rawPods := <-channels.PodList.List
 	if err := <-channels.PodList.Error; err != nil {
-		return nil, err
+		return pod.EmptyPodList, err
 	}
 
 	rawRs := <-channels.ReplicaSetList.List
-	if err := <-channels.ReplicaSetList.Error; err != nil {
-		return nil, err
+	err = <-channels.ReplicaSetList.Error
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return pod.EmptyPodList, criticalError
 	}
 
 	pods := common.FilterDeploymentPodsByOwnerReference(*deployment, rawRs.Items, rawPods.Items)
 	events, err := event.GetPodsEvents(client, namespace, pods)
-	if err != nil {
-		return nil, err
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return pod.EmptyPodList, criticalError
 	}
 
-	podList := pod.CreatePodList(pods, events, dsQuery, metricClient)
+	podList := pod.ToPodList(pods, events, nonCriticalErrors, dsQuery, metricClient)
 	return &podList, nil
 }

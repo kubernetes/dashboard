@@ -19,6 +19,7 @@ import filtersModule from '../filters/module';
 import dataSelectModule from './../dataselect/module';
 import namespaceModule from './../namespace/module';
 import actionbarModule from './actionbar/module';
+import allocatedResourcesChartModule from './allocatedresourceschart/module';
 import annotationsModule from './annotations/module';
 import {conditionListComponent} from './conditions/component';
 import {contentCardComponent} from './contentcard/component';
@@ -29,9 +30,11 @@ import {labelComponent} from './labels/component';
 import {middleEllipsisComponent} from './middleellipsis/component';
 import resourceCardModule from './resourcecard/resourcecard_module';
 import {infoCardComponent} from './resourcedetail/component';
+import {scaleButtonComponent} from './scale/component';
 import {serializedReferenceComponent} from './serializedreference/component';
 import {sparklineComponent} from './sparkline/component';
 import {toggleHiddenTextComponent} from './togglehiddentext/component';
+import {warningsComponent} from './warnings/component';
 import warnThresholdDirective from './warnthreshold/directive';
 import {zeroStateComponent} from './zerostate/component';
 
@@ -54,6 +57,7 @@ export default angular
           stateModule.name,
           graphModule.name,
           annotationsModule.name,
+          allocatedResourcesChartModule.name,
         ])
     .component('kdLabels', labelComponent)
     .component('kdZeroState', zeroStateComponent)
@@ -63,5 +67,7 @@ export default angular
     .component('kdSerializedReference', serializedReferenceComponent)
     .component('kdObjectMetaInfoCard', infoCardComponent)
     .component('kdContentCard', contentCardComponent)
+    .component('kdWarnings', warningsComponent)
     .component('kdConditionList', conditionListComponent)
+    .component('kdScaleButton', scaleButtonComponent)
     .directive('kdWarnThreshold', warnThresholdDirective);

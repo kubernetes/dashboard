@@ -18,7 +18,8 @@ import (
 	"testing"
 
 	"errors"
-	"fmt"
+
+	"github.com/kubernetes/dashboard/src/app/backend/auth/jwe"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/integration/api"
 )
@@ -52,7 +53,7 @@ func TestIntegrationManager_GetState(t *testing.T) {
 			"Server provided and using in-cluster heapster",
 			"http://127.0.0.1:8080", "", &api.IntegrationState{
 				Connected: false,
-				Error:     errors.New("Get http://127.0.0.1:8080/namespaces/kube-system/services/heapster/api/v1healthz: dial tcp 127.0.0.1:8080: getsockopt: connection refused"),
+				Error:     errors.New("Get http://127.0.0.1:8080/api/v1/proxy/namespaces/kube-system/services/heapster/healthz: dial tcp 127.0.0.1:8080: getsockopt: connection refused"),
 			}, nil,
 		},
 		{
@@ -65,7 +66,7 @@ func TestIntegrationManager_GetState(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		cManager := client.NewClientManager("", c.apiServerHost)
+		cManager := client.NewClientManager("", c.apiServerHost, jwe.NewJWETokenManager())
 		iManager := NewIntegrationManager(cManager)
 		iManager.Metric().ConfigureHeapster(c.heapsterHost)
 
@@ -78,9 +79,8 @@ func TestIntegrationManager_GetState(t *testing.T) {
 		// Time is irrelevant so we don't need to check it
 		if c.expectedErr == nil && (!areErrorsEqual(state.Error, c.expected.Error) ||
 			state.Connected != c.expected.Connected) {
-			t.Errorf("Test Case: %s. Expected state error to be: %v, but got %v.",
+			t.Errorf("Test Case: %s. Expected state to be: %v, but got %v.",
 				c.info, c.expected, state)
-			fmt.Println(state.Error)
 		}
 	}
 }

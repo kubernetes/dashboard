@@ -24,7 +24,7 @@ import (
 	rbac "k8s.io/client-go/pkg/apis/rbac/v1beta1"
 )
 
-func TestGetRbacRoleList(t *testing.T) {
+func TestToRbacRoleLists(t *testing.T) {
 	cases := []struct {
 		roles        []rbac.Role
 		clusterRoles []rbac.ClusterRole
@@ -63,9 +63,9 @@ func TestGetRbacRoleList(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := SimplifyRbacRoleLists(c.roles, c.clusterRoles, dataselect.NoDataSelect)
+		actual := toRbacRoleLists(c.roles, c.clusterRoles, nil, dataselect.NoDataSelect)
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("getRbacRoleList(%#v,%#v) == \n%#v\nexpected \n%#v\n",
+			t.Errorf("toRbacRoleLists(%#v,%#v) == \n%#v\nexpected \n%#v\n",
 				c.roles, c.clusterRoles, actual, c.expected)
 		}
 	}

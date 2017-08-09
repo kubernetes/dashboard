@@ -19,7 +19,7 @@ import (
 	"log"
 	"strings"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"k8s.io/apimachinery/pkg/api/resource"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/intstr"
@@ -334,6 +334,6 @@ func DeployAppFromFile(cfg clientcmd.ClientConfig, spec *AppDeploymentFromFileSp
 		return err
 	})
 
-	err = common.LocalizeError(err)
+	err = errors.LocalizeError(err)
 	return deployedResourcesCount > 0, err
 }

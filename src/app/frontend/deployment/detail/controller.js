@@ -37,6 +37,7 @@ export class DeploymentDetailController {
     this.newReplicaSetList = {
       replicaSets: [this.deploymentDetail.newReplicaSet],
       listMeta: {totalItems: 1},
+      errors: [],
     };
   }
 }

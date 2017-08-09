@@ -16,8 +16,8 @@ import {actionbarViewName, stateName as chromeStateName} from 'chrome/state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
 import {appendDetailParamsToUrl} from 'common/resource/globalresourcedetail';
 import {stateName as tprListState} from 'thirdpartyresource/list/state';
-import {stateUrl} from './../state';
 
+import {stateName as parentState, stateUrl} from './../state';
 import {ThirdPartyResourceDetailController} from './controller';
 
 /**
@@ -27,7 +27,7 @@ import {ThirdPartyResourceDetailController} from './controller';
  */
 export const config = {
   url: appendDetailParamsToUrl(stateUrl),
-  parent: chromeStateName,
+  parent: parentState,
   resolve: {
     'tprDetailResource': getTprDetailResource,
     'tprDetail': getTprDetail,
@@ -44,7 +44,7 @@ export const config = {
       controllerAs: '$ctrl',
       templateUrl: 'thirdpartyresource/detail/detail.html',
     },
-    [actionbarViewName]: {},
+    [`${actionbarViewName}@${chromeStateName}`]: {},
   },
 };
 

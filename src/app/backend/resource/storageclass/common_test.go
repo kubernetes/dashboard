@@ -44,11 +44,10 @@ func TestToStorageClass(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		actual := ToStorageClass(c.storage)
+		actual := toStorageClass(c.storage)
 
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("ToStorageClass(%#v) == \ngot %#v, \nexpected %#v", c.storage, actual,
-				c.expected)
+			t.Errorf("toStorageClass(%#v) == \ngot %#v, \nexpected %#v", c.storage, actual, c.expected)
 		}
 	}
 }

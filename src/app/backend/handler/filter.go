@@ -23,7 +23,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/emicklei/go-restful"
+	restful "github.com/emicklei/go-restful"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"golang.org/x/net/xsrftoken"
 	utilnet "k8s.io/apimachinery/pkg/util/net"
@@ -100,6 +100,7 @@ func validateXSRFFilter(csrfKey string) restful.FilterFunction {
 			log.Print(err)
 			resp.AddHeader("Content-Type", "text/plain")
 			resp.WriteErrorString(http.StatusUnauthorized, err.Error()+"\n")
+			return
 		}
 
 		chain.ProcessFilter(req, resp)
