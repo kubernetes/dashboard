@@ -19,16 +19,13 @@ import (
 	"log"
 	"strings"
 
-	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"k8s.io/apimachinery/pkg/api/resource"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/intstr"
 	client "k8s.io/client-go/kubernetes"
 	api "k8s.io/client-go/pkg/api/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
-	"k8s.io/client-go/tools/clientcmd"
-	cmdutil "k8s.io/kubernetes/pkg/kubectl/cmd/util"
-	kubectlResource "k8s.io/kubernetes/pkg/kubectl/resource"
+	"k8s.io/apimachinery/pkg/util/yaml"
 )
 
 const (
@@ -285,55 +282,26 @@ func getLabelsMap(labels []Label) map[string]string {
 	return result
 }
 
-type createObjectFromInfo func(info *kubectlResource.Info) (bool, error)
-
-// CreateObjectFromInfoFn is an implementation of createObjectFromInfo
-func CreateObjectFromInfoFn(info *kubectlResource.Info) (bool, error) {
-	createdResource, err := kubectlResource.NewHelper(info.Client, info.Mapping).Create(info.Namespace, true, info.Object)
-	return createdResource != nil, err
-}
-
 // DeployAppFromFile deploys an app based on the given yaml or json file.
-func DeployAppFromFile(cfg clientcmd.ClientConfig, spec *AppDeploymentFromFileSpec,
-	createObjectFromInfoFn createObjectFromInfo) (bool, error) {
-	const emptyCacheDir = ""
-	validate := spec.Validate
+func DeployAppFromFile(spec *AppDeploymentFromFileSpec, client client.Interface) (bool, error) {
+    reader := strings.NewReader(spec.Content)
+	log.Printf("Namespace for deploy from file: %s\n", spec.Namespace)
 
-	factory := cmdutil.NewFactory(cfg)
-	schema, err := factory.Validator(validate, emptyCacheDir)
-	if err != nil {
+	decoder := yaml.NewYAMLOrJSONDecoder(reader, 4096)
+
+	deployment := &extensions.Deployment{}
+	
+	if err := decoder.Decode(deployment); err != nil {
 		return false, err
 	}
+	
+	_, err := client.ExtensionsV1beta1().Deployments(spec.Namespace).Create(deployment)
 
-	mapper, typer := factory.Object()
-	reader := strings.NewReader(spec.Content)
-
-	fmt.Printf("Namespace for deploy from file: %s\n", spec.Namespace)
-
-	builder := kubectlResource.NewBuilder(mapper, kubectlResource.LegacyCategoryExpander, typer,
-		kubectlResource.ClientMapperFunc(factory.ClientForMapping), factory.Decoder(true)).
-		Schema(schema).
-		NamespaceParam(spec.Namespace).
-		Stream(reader, spec.Name).
-		Flatten()
-
-	if strings.Compare(spec.Namespace, "_all") != 0 {
-		builder.RequireNamespace()
+	if err != nil {
+		// TODO(bryk): Roll back created resources in case of error.
+		return false, err
 	}
-
-	r := builder.Do()
-
-	deployedResourcesCount := 0
-
-	err = r.Visit(func(info *kubectlResource.Info, err error) error {
-		isDeployed, err := createObjectFromInfoFn(info)
-		if isDeployed {
-			deployedResourcesCount++
-			log.Printf("%s is deployed", info.Name)
-		}
-		return err
-	})
-
-	err = errors.LocalizeError(err)
-	return deployedResourcesCount > 0, err
+	
+	return true, nil
 }
+
