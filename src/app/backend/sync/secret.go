@@ -119,10 +119,23 @@ func (self *secretSynchronizer) Get() runtime.Object {
 
 		log.Printf("Initializing secret synchronizer synchronously using secret %s from namespace %s", self.name,
 			self.namespace)
-		return secret
+		self.secret = secret
 	}
 
 	return self.secret
+}
+
+func (self *secretSynchronizer) Refresh() {
+	self.mux.Lock()
+	defer self.mux.Unlock()
+
+	secret, err := self.client.CoreV1().Secrets(self.namespace).Get(self.name, metaV1.GetOptions{})
+	if err != nil {
+		log.Printf("Secret synchronizer %s failed to refresh secret", self.Name())
+		return
+	}
+
+	self.secret = secret
 }
 
 func (self *secretSynchronizer) getSecret(obj runtime.Object) *v1.Secret {

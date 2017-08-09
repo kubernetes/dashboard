@@ -33,6 +33,7 @@ import (
 type KeyHolder interface {
 	Encrypter() jose.Encrypter
 	Key() *rsa.PrivateKey
+	Refresh()
 }
 
 type rsaKeyHolder struct {
@@ -52,6 +53,17 @@ func (self *rsaKeyHolder) Encrypter() jose.Encrypter {
 	return encrypter
 }
 
+func (self *rsaKeyHolder) Key() *rsa.PrivateKey {
+	self.mux.Lock()
+	defer self.mux.Unlock()
+	return self.key
+}
+
+func (self *rsaKeyHolder) Refresh() {
+	self.synchronizer.Refresh()
+	self.update(self.synchronizer.Get())
+}
+
 func (self *rsaKeyHolder) update(obj runtime.Object) {
 	self.mux.Lock()
 	defer self.mux.Unlock()
@@ -65,12 +77,6 @@ func (self *rsaKeyHolder) recreate(obj runtime.Object) {
 	log.Printf("Synchronized secret %s has been deleted. Recreating.", secret.Name)
 
 	self.synchronizer.Create(self.getEncryptionKeyHolder())
-}
-
-func (self *rsaKeyHolder) Key() *rsa.PrivateKey {
-	self.mux.Lock()
-	defer self.mux.Unlock()
-	return self.key
 }
 
 func (self *rsaKeyHolder) init() {
@@ -89,6 +95,7 @@ func (self *rsaKeyHolder) init() {
 	self.initEncryptionKey()
 
 	// Try to save generated key in a secret
+	log.Printf("Storing encryption key in a secret")
 	err := self.synchronizer.Create(self.getEncryptionKeyHolder())
 	if err != nil && !k8sErrors.IsAlreadyExists(err) {
 		panic(err)

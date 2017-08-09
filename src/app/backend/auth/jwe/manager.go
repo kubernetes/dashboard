@@ -16,6 +16,7 @@ package jwe
 
 import (
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	jose "gopkg.in/square/go-jose.v2"
 	"k8s.io/apimachinery/pkg/util/json"
 	"k8s.io/client-go/tools/clientcmd/api"
@@ -54,9 +55,14 @@ func (self *jweTokenManager) Decrypt(jweToken string) (*api.AuthInfo, error) {
 	}
 
 	decrypted, err := jweTokenObject.Decrypt(self.keyHolder.Key())
-	// TODO(floreks): Check for decryption error and handle it
+	if err == jose.ErrCryptoFailure {
+		// Force key refresh and try to decrypt again
+		self.keyHolder.Refresh()
+		decrypted, err = jweTokenObject.Decrypt(self.keyHolder.Key())
+	}
+
 	if err != nil {
-		return nil, err
+		return nil, errors.LocalizeError(err)
 	}
 
 	authInfo := new(api.AuthInfo)

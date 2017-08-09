@@ -68,13 +68,15 @@ func main() {
 	}
 
 	clientManager := client.NewClientManager(*argKubeConfigFile, *argApiserverHost)
-	authManager := initAuthManager(clientManager)
 	versionInfo, err := clientManager.InsecureClient().Discovery().ServerVersion()
 	if err != nil {
 		handleFatalInitError(err)
 	}
 
 	log.Printf("Successful initial request to the apiserver, version: %s", versionInfo.String())
+
+	// Init auth manager
+	authManager := initAuthManager(clientManager)
 
 	// Init integrations
 	integrationManager := integration.NewIntegrationManager(clientManager)

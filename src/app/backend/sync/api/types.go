@@ -28,6 +28,7 @@ type Synchronizer interface {
 	Update(runtime.Object) error
 	Create(runtime.Object) error
 	Get() runtime.Object
+	Refresh()
 	RegisterActionHandler(ActionHandlerFunction, ...watch.EventType)
 }
 
