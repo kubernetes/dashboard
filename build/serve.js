@@ -42,7 +42,10 @@ let runningBackendProcess = null;
  * @return {!Array<string>}
  */
 function getBackendArgs(mode) {
-  let args = [`--heapster-host=${conf.backend.heapsterServerHost}`];
+  let args = [
+    `--heapster-host=${conf.backend.heapsterServerHost}`, `--tls-cert-file=${conf.backend.tlsCert}`,
+    `--tls-key-file=${conf.backend.tlsKey}`
+  ];
 
   if (mode === conf.backend.production) {
     args.push(`--insecure-port=${conf.frontend.serverPort}`);
@@ -66,6 +69,8 @@ function getBackendArgs(mode) {
  * are proxied to a running backend instance. When includeBowerComponents is true, requests for
  * paths starting with '/bower_components' are routed to bower components directory.
  *
+ * TODO(maciaszczykm): Make `gulp serve` serve also on HTTPS (8443).
+ *
  * @param {!Array<string>|string} baseDir
  * @param {boolean} includeBowerComponents
  */
@@ -77,20 +82,26 @@ function browserSyncInit(baseDir, includeBowerComponents) {
 
   let apiRoute = '/api';
   let proxyMiddlewareOptions = {
-    target: `http://localhost:${conf.backend.devServerPort}`,
-    // proxy websockets
-    ws: true,
+    target: {// TODO try to do it another way
+      protocol: conf.frontend.serveHttps ? 'https' : 'http',
+      host: 'localhost',
+      port: conf.frontend.serveHttps ? conf.backend.secureDevServerPort :
+                                       conf.backend.devServerPort,
+    },
+
+    ws: true, // Proxy websockets.
+    secure: false,
   };
 
   let config = {
     browser: [],       // Needed so that the browser does not auto-launch.
     directory: false,  // Disable directory listings.
-    // TODO(bryk): Add proxy to the backend here.
     server: {
       baseDir: baseDir,
       middleware: proxyMiddleware(apiRoute, proxyMiddlewareOptions),
     },
     port: conf.frontend.serverPort,
+    https: conf.frontend.serveHttps,
     startPath: '/',
     notify: false,
   };

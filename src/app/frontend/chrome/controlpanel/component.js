@@ -44,6 +44,7 @@ export class ControlPanelController {
         (/** @type {!backendApi.LoginStatus} */ loginStatus) => {
           this.loginStatus_ = loginStatus;
           this.isLoginStatusLoaded = true;
+          console.log(this.loginStatus_)
         },
         (err) => {
           this.log_.error(err);

@@ -14,6 +14,14 @@
 
 @import '../../variables';
 
+.kd-control-panel-separator {
+  cursor: default;
+  font-weight: $light-font-weight;
+  line-height: 5 * $baseline-grid;
+  padding: 0 $baseline-grid;
+  user-select: none;
+}
+
 .kd-auth-status {
   font-weight: $bold-font-weight;
   text-transform: uppercase;
