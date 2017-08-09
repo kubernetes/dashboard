@@ -16,16 +16,15 @@ package sync
 
 import (
 	"log"
-	"sync"
 
 	syncApi "github.com/kubernetes/dashboard/src/app/backend/sync/api"
 	"k8s.io/apimachinery/pkg/util/wait"
 )
 
-var DefaultOverwatch *Overwatch
+var Overwatch *overwatch
 
 func init() {
-	DefaultOverwatch = &Overwatch{
+	Overwatch = &overwatch{
 		syncMap:   make(map[string]syncApi.Synchronizer),
 		policyMap: make(map[string]RestartPolicy),
 
@@ -33,7 +32,8 @@ func init() {
 		restartSignal:      make(chan string),
 	}
 
-	DefaultOverwatch.Run()
+	log.Print("Starting overwatch")
+	Overwatch.Run()
 }
 
 type RestartPolicy string
@@ -43,22 +43,31 @@ const (
 	NeverRestart  RestartPolicy = "never"
 )
 
-type Overwatch struct {
+type overwatch struct {
 	syncMap   map[string]syncApi.Synchronizer
 	policyMap map[string]RestartPolicy
 
 	registrationSignal chan string
 	restartSignal      chan string
-
-	mux sync.Mutex
 }
 
-func (self *Overwatch) Run() {
+func (self *overwatch) RegisterSynchronizer(synchronizer syncApi.Synchronizer, policy RestartPolicy) {
+	if _, exists := self.syncMap[synchronizer.Name()]; exists {
+		log.Printf("Synchronizer %s is already registered. Skipping", synchronizer.Name())
+		return
+	}
+
+	self.syncMap[synchronizer.Name()] = synchronizer
+	self.policyMap[synchronizer.Name()] = policy
+	self.broadcastRegistrationEvent(synchronizer.Name())
+}
+
+func (self *overwatch) Run() {
 	self.monitorRegistrationEvents()
 	self.monitorRestartEvents()
 }
 
-func (self *Overwatch) monitorRestartEvents() {
+func (self *overwatch) monitorRestartEvents() {
 	go wait.Forever(func() {
 		select {
 		case name := <-self.restartSignal:
@@ -70,19 +79,19 @@ func (self *Overwatch) monitorRestartEvents() {
 	}, 0)
 }
 
-func (self *Overwatch) monitorRegistrationEvents() {
+func (self *overwatch) monitorRegistrationEvents() {
 	go wait.Forever(func() {
 		select {
 		case name := <-self.registrationSignal:
 			synchronizer := self.syncMap[name]
-			log.Printf("New synchronizer has been registered: %s. Starting.", name)
+			log.Printf("New synchronizer has been registered: %s. Starting", name)
 			synchronizer.Start()
 			self.monitorSynchronizerStatus(synchronizer)
 		}
 	}, 0)
 }
 
-func (self *Overwatch) monitorSynchronizerStatus(synchronizer syncApi.Synchronizer) {
+func (self *overwatch) monitorSynchronizerStatus(synchronizer syncApi.Synchronizer) {
 	stopCh := make(chan struct{})
 	name := synchronizer.Name()
 	go wait.Until(func() {
@@ -97,21 +106,10 @@ func (self *Overwatch) monitorSynchronizerStatus(synchronizer syncApi.Synchroniz
 	}, 0, stopCh)
 }
 
-func (self *Overwatch) broadcastRegistrationEvent(name string) {
+func (self *overwatch) broadcastRegistrationEvent(name string) {
 	self.registrationSignal <- name
 }
 
-func (self *Overwatch) broadcastRestartEvent(name string) {
+func (self *overwatch) broadcastRestartEvent(name string) {
 	self.restartSignal <- name
-}
-
-func (self *Overwatch) RegisterSynchronizer(synchronizer syncApi.Synchronizer, policy RestartPolicy) {
-	if _, exists := self.syncMap[synchronizer.Name()]; exists {
-		log.Printf("Synchronizer %s is already registered. Skipping", synchronizer.Name())
-		return
-	}
-
-	self.syncMap[synchronizer.Name()] = synchronizer
-	self.policyMap[synchronizer.Name()] = policy
-	self.broadcastRegistrationEvent(synchronizer.Name())
 }

@@ -68,23 +68,8 @@ func main() {
 	}
 
 	clientManager := client.NewClientManager(*argKubeConfigFile, *argApiserverHost)
-	apiserverClient, err := clientManager.Client(nil)
-	if err != nil {
-		handleFatalInitError(err)
-	}
-
-	synchronizerManager := sync.NewSynchronizerManager(apiserverClient)
-	keySynchronizer := synchronizerManager.Secret(authApi.EncryptionKeyHolderNamespace, authApi.EncryptionKeyHolderName)
-
-	sync.DefaultOverwatch.RegisterSynchronizer(keySynchronizer, sync.AlwaysRestart)
-
-	keyHolder := jwe.NewRSAKeyHolder(keySynchronizer)
-	tokenManager := jwe.NewJWETokenManager(keyHolder)
-
-	clientManager.SetTokenManager(tokenManager)
-	authManager := auth.NewAuthManager(clientManager, tokenManager)
-
-	versionInfo, err := apiserverClient.Discovery().ServerVersion()
+	authManager := initAuthManager(clientManager)
+	versionInfo, err := clientManager.InsecureClient().Discovery().ServerVersion()
 	if err != nil {
 		handleFatalInitError(err)
 	}
@@ -127,6 +112,25 @@ func main() {
 		go func() { log.Fatal(http.ListenAndServeTLS(secureAddr, *argCertFile, *argKeyFile, nil)) }()
 	}
 	select {}
+}
+
+func initAuthManager(clientManager client.ClientManager) authApi.AuthManager {
+	insecureClient := clientManager.InsecureClient()
+
+	// Init default encryption key synchronizer
+	synchronizerManager := sync.NewSynchronizerManager(insecureClient)
+	keySynchronizer := synchronizerManager.Secret(authApi.EncryptionKeyHolderNamespace, authApi.EncryptionKeyHolderName)
+
+	// Register synchronizer. Overwatch will be responsible for restarting it in case of error.
+	sync.Overwatch.RegisterSynchronizer(keySynchronizer, sync.AlwaysRestart)
+
+	// Init encryption key holder and token manager
+	keyHolder := jwe.NewRSAKeyHolder(keySynchronizer)
+	tokenManager := jwe.NewJWETokenManager(keyHolder)
+
+	// Set token manager for client manager.
+	clientManager.SetTokenManager(tokenManager)
+	return auth.NewAuthManager(clientManager, tokenManager)
 }
 
 /**

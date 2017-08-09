@@ -57,7 +57,7 @@ func (self *secretSynchronizer) Start() {
 	}
 
 	go func() {
-		log.Printf("Watching on %s secret in namespace %s", self.name, self.namespace)
+		log.Printf("Starting secret synchronizer for %s in namespace %s", self.name, self.namespace)
 		defer watcher.Stop()
 		defer close(self.errChan)
 		for {
@@ -117,6 +117,8 @@ func (self *secretSynchronizer) Get() runtime.Object {
 			return nil
 		}
 
+		log.Printf("Initializing secret synchronizer synchronously using secret %s from namespace %s", self.name,
+			self.namespace)
 		return secret
 	}
 
