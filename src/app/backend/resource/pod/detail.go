@@ -29,6 +29,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/controller"
+	"github.com/kubernetes/dashboard/src/app/backend/userlinks"
 	"k8s.io/apimachinery/pkg/api/errors"
 	res "k8s.io/apimachinery/pkg/api/resource"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -76,6 +77,9 @@ type PodDetail struct {
 	// Events is list of events associated with a pod.
 	EventList common.EventList `json:"eventList"`
 
+	// Array of composed userlinks that have been derived from pod annotation.
+	UserLinks []userlinks.UserLink `json:"userLinks"`
+
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
 }
@@ -114,7 +118,7 @@ type EnvVar struct {
 
 // GetPodDetail returns the details (PodDetail) of a named Pod from a particular namespace.
 // TODO(maciaszczykm): Owner reference should be used instead of created by annotation.
-func GetPodDetail(client kubernetes.Interface, metricClient metricapi.MetricClient, namespace, name string) (*PodDetail, error) {
+func GetPodDetail(client kubernetes.Interface, metricClient metricapi.MetricClient, namespace, name, host string) (*PodDetail, error) {
 	log.Printf("Getting details of %s pod in %s namespace", name, namespace)
 
 	channels := &common.ResourceChannels{
@@ -161,7 +165,14 @@ func GetPodDetail(client kubernetes.Interface, metricClient metricapi.MetricClie
 		return nil, criticalError
 	}
 
-	podDetail := toPodDetail(pod, metrics, configMapList, secretList, controller, eventList, nonCriticalErrors)
+	userLinks, err := userlinks.GetUserLinks(client, namespace, name, api.ResourceKindPod, host)
+	nonCriticalErrors, criticalError = errorHandler.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
+	}
+
+	podDetail := toPodDetail(pod, metrics, configMapList, secretList, controller, eventList,
+		userLinks, nonCriticalErrors)
 	return &podDetail, nil
 }
 
@@ -253,7 +264,8 @@ func extractContainerInfo(containerList []v1.Container, pod *v1.Pod, configMaps 
 }
 
 func toPodDetail(pod *v1.Pod, metrics []metricapi.Metric, configMaps *v1.ConfigMapList, secrets *v1.SecretList,
-	controller controller.ResourceOwner, events *common.EventList, nonCriticalErrors []error) PodDetail {
+	controller controller.ResourceOwner, events *common.EventList, userLinks []userlinks.UserLink,
+	nonCriticalErrors []error) PodDetail {
 	return PodDetail{
 		ObjectMeta:     api.NewObjectMeta(pod.ObjectMeta),
 		TypeMeta:       api.NewTypeMeta(api.ResourceKindPod),
@@ -267,6 +279,7 @@ func toPodDetail(pod *v1.Pod, metrics []metricapi.Metric, configMaps *v1.ConfigM
 		Metrics:        metrics,
 		Conditions:     getPodConditions(*pod),
 		EventList:      *events,
+		UserLinks:      userLinks,
 		Errors:         nonCriticalErrors,
 	}
 }

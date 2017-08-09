@@ -24,6 +24,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/controller"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/userlinks"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
 	"k8s.io/client-go/pkg/api/v1"
@@ -31,10 +32,12 @@ import (
 
 func TestGetPodDetail(t *testing.T) {
 	cases := []struct {
+		host     string
 		pod      *v1.PodList
 		expected *PodDetail
 	}{
 		{
+			host: "http://localhost:8080",
 			pod: &v1.PodList{Items: []v1.Pod{{
 				ObjectMeta: metaV1.ObjectMeta{
 					Name: "test-pod", Namespace: "test-namespace",
@@ -51,6 +54,7 @@ func TestGetPodDetail(t *testing.T) {
 				Containers:     []Container{},
 				InitContainers: []Container{},
 				EventList:      common.EventList{Events: []common.Event{}},
+				UserLinks:      []userlinks.UserLink{},
 				Metrics:        []metricapi.Metric{},
 				Errors:         []error{},
 			},
@@ -61,7 +65,7 @@ func TestGetPodDetail(t *testing.T) {
 		fakeClient := fake.NewSimpleClientset(c.pod)
 
 		dataselect.DefaultDataSelectWithMetrics.MetricQuery = dataselect.NoMetrics
-		actual, err := GetPodDetail(fakeClient, nil, "test-namespace", "test-pod")
+		actual, err := GetPodDetail(fakeClient, nil, "test-namespace", "test-pod", c.host)
 
 		if err != nil {
 			t.Errorf("GetPodDetail(%#v) == \ngot err %#v", c.pod, err)

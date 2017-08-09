@@ -24,6 +24,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/endpoint"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
+	"github.com/kubernetes/dashboard/src/app/backend/userlinks"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
 	"k8s.io/client-go/pkg/api/v1"
@@ -31,17 +32,17 @@ import (
 
 func TestGetServiceDetail(t *testing.T) {
 	cases := []struct {
-		service         *v1.Service
-		namespace, name string
-		expectedActions []string
-		expected        *ServiceDetail
+		service               *v1.Service
+		namespace, name, host string
+		expectedActions       []string
+		expected              *ServiceDetail
 	}{
 		{
 			service: &v1.Service{ObjectMeta: metaV1.ObjectMeta{
 				Name: "svc-1", Namespace: "ns-1", Labels: map[string]string{},
 			}},
-			namespace: "ns-1", name: "svc-1",
-			expectedActions: []string{"get", "list", "get", "list"},
+			namespace: "ns-1", name: "svc-1", host: "http://localhost:8080",
+			expectedActions: []string{"get", "list", "get", "get", "list"},
 			expected: &ServiceDetail{
 				ObjectMeta: api.ObjectMeta{
 					Name:      "svc-1",
@@ -60,7 +61,8 @@ func TestGetServiceDetail(t *testing.T) {
 				EndpointList: endpoint.EndpointList{
 					Endpoints: []endpoint.Endpoint{},
 				},
-				Errors: []error{},
+				UserLink: []userlinks.UserLink{},
+				Errors:   []error{},
 			},
 		},
 		{
@@ -74,7 +76,7 @@ func TestGetServiceDetail(t *testing.T) {
 				},
 			},
 			namespace: "ns-2", name: "svc-2",
-			expectedActions: []string{"get", "list", "get", "list", "list", "list"},
+			expectedActions: []string{"get", "list", "get", "get", "list", "list", "list"},
 			expected: &ServiceDetail{
 				ObjectMeta: api.ObjectMeta{
 					Name:      "svc-2",
@@ -94,14 +96,15 @@ func TestGetServiceDetail(t *testing.T) {
 				EndpointList: endpoint.EndpointList{
 					Endpoints: []endpoint.Endpoint{},
 				},
-				Errors: []error{},
+				UserLink: []userlinks.UserLink{},
+				Errors:   []error{},
 			},
 		},
 	}
 
 	for _, c := range cases {
 		fakeClient := fake.NewSimpleClientset(c.service)
-		actual, _ := GetServiceDetail(fakeClient, nil, c.namespace, c.name, dataselect.NoDataSelect)
+		actual, _ := GetServiceDetail(fakeClient, nil, c.namespace, c.name, c.host, dataselect.NoDataSelect)
 		actions := fakeClient.Actions()
 
 		if len(actions) != len(c.expectedActions) {

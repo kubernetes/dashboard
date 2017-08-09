@@ -395,6 +395,10 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			To(apiHandler.handleGetServiceList).
 			Writes(resourceService.ServiceList{}))
 	apiV1Ws.Route(
+		apiV1Ws.GET("/service/{namespace}/{service}/endpoint").
+			To(apiHandler.handleGetServiceEndpoints).
+			Writes(endpoint.EndpointList{}))
+	apiV1Ws.Route(
 		apiV1Ws.GET("/service/{namespace}/{service}").
 			To(apiHandler.handleGetServiceDetail).
 			Writes(resourceService.ServiceDetail{}))
@@ -739,12 +743,17 @@ func (apiHandler *APIHandler) handleGetServiceDetail(request *restful.Request, r
 		handleInternalError(response, err)
 		return
 	}
-
+	config, err := apiHandler.cManager.Config(nil)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
 	namespace := request.PathParameter("namespace")
 	name := request.PathParameter("service")
 	dataSelect := parseDataSelectPathParameter(request)
 	dataSelect.MetricQuery = dataselect.StandardMetrics
-	result, err := resourceService.GetServiceDetail(k8sClient, apiHandler.iManager.Metric().Client(), namespace, name, dataSelect)
+	result, err := resourceService.GetServiceDetail(k8sClient, apiHandler.iManager.Metric().Client(), namespace, name,
+		config.Host, dataSelect)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1380,10 +1389,15 @@ func (apiHandler *APIHandler) handleGetPodDetail(request *restful.Request, respo
 		handleInternalError(response, err)
 		return
 	}
+	config, err := apiHandler.cManager.Config(nil)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
 
 	namespace := request.PathParameter("namespace")
 	name := request.PathParameter("pod")
-	result, err := pod.GetPodDetail(k8sClient, apiHandler.iManager.Metric().Client(), namespace, name)
+	result, err := pod.GetPodDetail(k8sClient, apiHandler.iManager.Metric().Client(), namespace, name, config.Host)
 	if err != nil {
 		handleInternalError(response, err)
 		return
