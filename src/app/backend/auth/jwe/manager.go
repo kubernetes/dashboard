@@ -16,6 +16,7 @@ package jwe
 
 import (
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
+	jose "gopkg.in/square/go-jose.v2"
 	"k8s.io/apimachinery/pkg/util/json"
 	"k8s.io/client-go/tools/clientcmd/api"
 )

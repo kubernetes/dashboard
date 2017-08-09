@@ -22,6 +22,7 @@ import (
 
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 	syncApi "github.com/kubernetes/dashboard/src/app/backend/sync/api"
+	jose "gopkg.in/square/go-jose.v2"
 	k8sErrors "k8s.io/apimachinery/pkg/api/errors"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -52,22 +53,11 @@ func (self *rsaKeyHolder) Encrypter() jose.Encrypter {
 }
 
 func (self *rsaKeyHolder) update(obj runtime.Object) {
-	secret := obj.(*v1.Secret)
 	self.mux.Lock()
 	defer self.mux.Unlock()
-
-	priv, err := ParseRsaPrivateKey(string(secret.Data["priv"]))
-	if err != nil {
-		panic(err)
-	}
-
-	pub, err := ParseRsaPublicKey(string(secret.Data["pub"]))
-	if err != nil {
-		panic(err)
-	}
-
+	secret := obj.(*v1.Secret)
+	priv := ParseRSAKeyOrDie(string(secret.Data["priv"]), string(secret.Data["pub"]))
 	self.key = priv
-	self.key.PublicKey = *pub
 }
 
 func (self *rsaKeyHolder) recreate(obj runtime.Object) {

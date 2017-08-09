@@ -18,7 +18,6 @@ import (
 	"crypto/rsa"
 	"crypto/x509"
 	"encoding/pem"
-	"errors"
 )
 
 // Credits to David W. https://stackoverflow.com/a/44688503
@@ -50,62 +49,32 @@ func ExportRSAKeyOrDie(privKey *rsa.PrivateKey) (priv, pub string) {
 	return
 }
 
-func ExportRsaPrivateKey(privkey *rsa.PrivateKey) string {
-	privkey_bytes := x509.MarshalPKCS1PrivateKey(privkey)
-	privkey_pem := pem.EncodeToMemory(
-		&pem.Block{
-			Type:  "RSA PRIVATE KEY",
-			Bytes: privkey_bytes,
-		},
-	)
-	return string(privkey_pem)
-}
-
-func ParseRsaPrivateKey(privPEM string) (*rsa.PrivateKey, error) {
-	block, _ := pem.Decode([]byte(privPEM))
+func ParseRSAKeyOrDie(privStr, pubStr string) *rsa.PrivateKey {
+	block, _ := pem.Decode([]byte(privStr))
 	if block == nil {
-		return nil, errors.New("failed to parse PEM block containing the key")
+		panic("Failed to parse PEM block containing the key")
 	}
 
 	priv, err := x509.ParsePKCS1PrivateKey(block.Bytes)
 	if err != nil {
-		return nil, err
+		panic(err)
 	}
 
-	return priv, nil
-}
-
-func ExportRsaPublicKey(pubkey *rsa.PublicKey) (string, error) {
-	pubkey_bytes, err := x509.MarshalPKIXPublicKey(pubkey)
-	if err != nil {
-		return "", err
-	}
-	pubkey_pem := pem.EncodeToMemory(
-		&pem.Block{
-			Type:  "RSA PUBLIC KEY",
-			Bytes: pubkey_bytes,
-		},
-	)
-
-	return string(pubkey_pem), nil
-}
-
-func ParseRsaPublicKey(pubPEM string) (*rsa.PublicKey, error) {
-	block, _ := pem.Decode([]byte(pubPEM))
+	block, _ = pem.Decode([]byte(pubStr))
 	if block == nil {
-		return nil, errors.New("failed to parse PEM block containing the key")
+		panic("Failed to parse PEM block containing the key")
 	}
 
-	pub, err := x509.ParsePKIXPublicKey(block.Bytes)
+	pubInterface, err := x509.ParsePKIXPublicKey(block.Bytes)
 	if err != nil {
-		return nil, err
+		panic(err)
 	}
 
-	switch pub := pub.(type) {
-	case *rsa.PublicKey:
-		return pub, nil
-	default:
-		break // fall through
+	pub, ok := pubInterface.(*rsa.PublicKey)
+	if !ok {
+		panic("Failed to parse public key")
 	}
-	return nil, errors.New("Key type is not RSA")
+
+	priv.PublicKey = *pub
+	return priv
 }
