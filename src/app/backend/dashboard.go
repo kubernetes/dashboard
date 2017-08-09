@@ -75,10 +75,12 @@ func main() {
 
 	synchronizerManager := sync.NewSynchronizerManager(apiserverClient)
 	keySynchronizer := synchronizerManager.Secret(authApi.EncryptionKeyHolderNamespace, authApi.EncryptionKeyHolderName)
-	go keySynchronizer.Start()
+
+	sync.DefaultOverwatch.RegisterSynchronizer(keySynchronizer, sync.AlwaysRestart)
 
 	keyHolder := jwe.NewRSAKeyHolder(keySynchronizer)
 	tokenManager := jwe.NewJWETokenManager(keyHolder)
+
 	clientManager.SetTokenManager(tokenManager)
 	authManager := auth.NewAuthManager(clientManager, tokenManager)
 

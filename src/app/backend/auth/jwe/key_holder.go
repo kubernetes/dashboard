@@ -22,7 +22,6 @@ import (
 
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 	syncApi "github.com/kubernetes/dashboard/src/app/backend/sync/api"
-	"gopkg.in/square/go-jose.v2"
 	k8sErrors "k8s.io/apimachinery/pkg/api/errors"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -33,12 +32,9 @@ import (
 type KeyHolder interface {
 	Encrypter() jose.Encrypter
 	Key() *rsa.PrivateKey
-	Update() error
-	Rotate() error
 }
 
 type rsaKeyHolder struct {
-	encrypter jose.Encrypter
 	// 256-byte random RSA key pair. Synced with a key saved in a secret.
 	key          *rsa.PrivateKey
 	synchronizer syncApi.Synchronizer
@@ -46,22 +42,17 @@ type rsaKeyHolder struct {
 }
 
 func (self *rsaKeyHolder) Encrypter() jose.Encrypter {
-	self.mux.Lock()
-	defer self.mux.Unlock()
-	return self.encrypter
-}
+	publicKey := &self.Key().PublicKey
+	encrypter, err := jose.NewEncrypter(jose.A256GCM, jose.Recipient{Algorithm: jose.RSA_OAEP_256, Key: publicKey}, nil)
+	if err != nil {
+		panic(err)
+	}
 
-func (self *rsaKeyHolder) Update() error {
-	panic("implement me")
-}
-
-func (self *rsaKeyHolder) Rotate() error {
-	panic("implement me")
+	return encrypter
 }
 
 func (self *rsaKeyHolder) update(obj runtime.Object) {
 	secret := obj.(*v1.Secret)
-	log.Printf("Updating JWE encryption key from secret: %s", secret.Name)
 	self.mux.Lock()
 	defer self.mux.Unlock()
 
@@ -79,6 +70,13 @@ func (self *rsaKeyHolder) update(obj runtime.Object) {
 	self.key.PublicKey = *pub
 }
 
+func (self *rsaKeyHolder) recreate(obj runtime.Object) {
+	secret := obj.(*v1.Secret)
+	log.Printf("Synchronized secret %s has been deleted. Recreating.", secret.Name)
+
+	self.synchronizer.Create(self.getEncryptionKeyHolder())
+}
+
 func (self *rsaKeyHolder) Key() *rsa.PrivateKey {
 	self.mux.Lock()
 	defer self.mux.Unlock()
@@ -88,6 +86,7 @@ func (self *rsaKeyHolder) Key() *rsa.PrivateKey {
 func (self *rsaKeyHolder) init() {
 	// Register event handlers
 	self.synchronizer.RegisterActionHandler(self.update, watch.Added, watch.Modified)
+	self.synchronizer.RegisterActionHandler(self.recreate, watch.Deleted)
 
 	// Try to init key from synchronized object
 	if obj := self.synchronizer.Get(); obj != nil {

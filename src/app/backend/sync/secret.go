@@ -37,16 +37,23 @@ type secretSynchronizer struct {
 
 	secret         *v1.Secret
 	client         kubernetes.Interface
-	actionHandlers map[watch.EventType]syncApi.ActionHandlerFunction
+	actionHandlers map[watch.EventType][]syncApi.ActionHandlerFunction
 	errChan        chan error
 
 	mux sync.Mutex
 }
 
-func (self *secretSynchronizer) Start() error {
+func (self *secretSynchronizer) Name() string {
+	return self.name
+}
+
+func (self *secretSynchronizer) Start() {
+	self.errChan = make(chan error)
 	watcher, err := self.watch(self.namespace, self.name)
 	if err != nil {
-		return err
+		self.errChan <- err
+		close(self.errChan)
+		return
 	}
 
 	go func() {
@@ -63,8 +70,10 @@ func (self *secretSynchronizer) Start() error {
 			}
 		}
 	}()
+}
 
-	return <-self.errChan
+func (self *secretSynchronizer) Error() chan error {
+	return self.errChan
 }
 
 func (self *secretSynchronizer) Update(obj runtime.Object) error {
@@ -89,7 +98,11 @@ func (self *secretSynchronizer) Create(obj runtime.Object) error {
 
 func (self *secretSynchronizer) RegisterActionHandler(handler syncApi.ActionHandlerFunction, events ...watch.EventType) {
 	for _, ev := range events {
-		self.actionHandlers[ev] = handler
+		if _, exists := self.actionHandlers[ev]; !exists {
+			self.actionHandlers[ev] = make([]syncApi.ActionHandlerFunction, 0)
+		}
+
+		self.actionHandlers[ev] = append(self.actionHandlers[ev], handler)
 	}
 }
 
@@ -98,7 +111,13 @@ func (self *secretSynchronizer) Get() runtime.Object {
 	defer self.mux.Unlock()
 
 	if self.secret == nil {
-		return nil
+		// In case secret was not yet initialized try to do it synchronously
+		secret, err := self.client.CoreV1().Secrets(self.namespace).Get(self.name, metaV1.GetOptions{})
+		if err != nil {
+			return nil
+		}
+
+		return secret
 	}
 
 	return self.secret
@@ -126,7 +145,7 @@ func (self *secretSynchronizer) watch(namespace, name string) (watch.Interface, 
 }
 
 func (self *secretSynchronizer) handleEvent(event watch.Event) error {
-	if handler, exists := self.actionHandlers[event.Type]; exists {
+	for _, handler := range self.actionHandlers[event.Type] {
 		handler(event.Object)
 	}
 
@@ -134,20 +153,17 @@ func (self *secretSynchronizer) handleEvent(event watch.Event) error {
 	case watch.Added:
 		secret, ok := event.Object.(*v1.Secret)
 		if !ok {
-			return errors.New("Not a secret")
+			return errors.New(fmt.Sprintf("Expected secret got %s", reflect.TypeOf(event.Object)))
 		}
 
 		self.update(*secret)
 	case watch.Modified:
 		secret, ok := event.Object.(*v1.Secret)
 		if !ok {
-			return errors.New("Not a secret")
+			return errors.New(fmt.Sprintf("Expected secret got %s", reflect.TypeOf(event.Object)))
 		}
 
 		self.update(*secret)
-	case watch.Deleted:
-		// Should be recreated
-		return errors.New("Critical error")
 	case watch.Error:
 		return &k8sErrors.UnexpectedObjectError{Object: event.Object}
 	}

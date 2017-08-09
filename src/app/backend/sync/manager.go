@@ -29,7 +29,7 @@ func (self *synchronizerManager) Secret(namespace, name string) syncApi.Synchron
 		namespace:      namespace,
 		name:           name,
 		client:         self.client,
-		actionHandlers: make(map[watch.EventType]syncApi.ActionHandlerFunction),
+		actionHandlers: make(map[watch.EventType][]syncApi.ActionHandlerFunction),
 	}
 }
 
