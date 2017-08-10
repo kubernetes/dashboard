@@ -18,6 +18,7 @@ import (
 	"crypto/rsa"
 	"crypto/x509"
 	"encoding/pem"
+	"errors"
 )
 
 // Credits to David W. https://stackoverflow.com/a/44688503
@@ -49,32 +50,32 @@ func ExportRSAKeyOrDie(privKey *rsa.PrivateKey) (priv, pub string) {
 	return
 }
 
-func ParseRSAKeyOrDie(privStr, pubStr string) *rsa.PrivateKey {
+func ParseRSAKeyOrDie(privStr, pubStr string) (*rsa.PrivateKey, error) {
 	block, _ := pem.Decode([]byte(privStr))
 	if block == nil {
-		panic("Failed to parse PEM block containing the key")
+		return nil, errors.New("Failed to parse PEM block containing the key")
 	}
 
 	priv, err := x509.ParsePKCS1PrivateKey(block.Bytes)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
 	block, _ = pem.Decode([]byte(pubStr))
 	if block == nil {
-		panic("Failed to parse PEM block containing the key")
+		return nil, errors.New("Failed to parse PEM block containing the key")
 	}
 
 	pubInterface, err := x509.ParsePKIXPublicKey(block.Bytes)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
 	pub, ok := pubInterface.(*rsa.PublicKey)
 	if !ok {
-		panic("Failed to parse public key")
+		return nil, errors.New("Failed to parse public key")
 	}
 
 	priv.PublicKey = *pub
-	return priv
+	return priv, nil
 }

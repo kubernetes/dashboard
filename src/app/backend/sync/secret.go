@@ -76,16 +76,6 @@ func (self *secretSynchronizer) Error() chan error {
 	return self.errChan
 }
 
-func (self *secretSynchronizer) Update(obj runtime.Object) error {
-	secret := self.getSecret(obj)
-	_, err := self.client.CoreV1().Secrets(secret.Namespace).Update(secret)
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
 func (self *secretSynchronizer) Create(obj runtime.Object) error {
 	secret := self.getSecret(obj)
 	_, err := self.client.CoreV1().Secrets(secret.Namespace).Create(secret)
@@ -94,16 +84,6 @@ func (self *secretSynchronizer) Create(obj runtime.Object) error {
 	}
 
 	return nil
-}
-
-func (self *secretSynchronizer) RegisterActionHandler(handler syncApi.ActionHandlerFunction, events ...watch.EventType) {
-	for _, ev := range events {
-		if _, exists := self.actionHandlers[ev]; !exists {
-			self.actionHandlers[ev] = make([]syncApi.ActionHandlerFunction, 0)
-		}
-
-		self.actionHandlers[ev] = append(self.actionHandlers[ev], handler)
-	}
 }
 
 func (self *secretSynchronizer) Get() runtime.Object {
@@ -123,6 +103,31 @@ func (self *secretSynchronizer) Get() runtime.Object {
 	}
 
 	return self.secret
+}
+
+func (self *secretSynchronizer) Update(obj runtime.Object) error {
+	secret := self.getSecret(obj)
+	_, err := self.client.CoreV1().Secrets(secret.Namespace).Update(secret)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (self *secretSynchronizer) Delete() error {
+	return self.client.CoreV1().Secrets(self.namespace).Delete(self.name,
+		&metaV1.DeleteOptions{GracePeriodSeconds: new(int64)})
+}
+
+func (self *secretSynchronizer) RegisterActionHandler(handler syncApi.ActionHandlerFunction, events ...watch.EventType) {
+	for _, ev := range events {
+		if _, exists := self.actionHandlers[ev]; !exists {
+			self.actionHandlers[ev] = make([]syncApi.ActionHandlerFunction, 0)
+		}
+
+		self.actionHandlers[ev] = append(self.actionHandlers[ev], handler)
+	}
 }
 
 func (self *secretSynchronizer) Refresh() {
@@ -189,6 +194,7 @@ func (self *secretSynchronizer) handleEvent(event watch.Event) error {
 func (self *secretSynchronizer) update(secret v1.Secret) {
 	if reflect.DeepEqual(self.secret, &secret) {
 		// Skip update if existing object is the same as new one
+		log.Print("Trying to update secret with same object. Skipping")
 		return
 	}
 

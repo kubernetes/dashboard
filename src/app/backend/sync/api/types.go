@@ -25,9 +25,10 @@ type Synchronizer interface {
 	Name() string
 	Start()
 	Error() chan error
-	Update(runtime.Object) error
 	Create(runtime.Object) error
 	Get() runtime.Object
+	Update(runtime.Object) error
+	Delete() error
 	Refresh()
 	RegisterActionHandler(ActionHandlerFunction, ...watch.EventType)
 }

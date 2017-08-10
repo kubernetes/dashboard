@@ -68,14 +68,23 @@ func (self *rsaKeyHolder) update(obj runtime.Object) {
 	self.mux.Lock()
 	defer self.mux.Unlock()
 	secret := obj.(*v1.Secret)
-	priv := ParseRSAKeyOrDie(string(secret.Data["priv"]), string(secret.Data["pub"]))
+	priv, err := ParseRSAKeyOrDie(string(secret.Data["priv"]), string(secret.Data["pub"]))
+	if err != nil {
+		// Secret was probably tampered with. Delete it and let it be recreated from local copy.
+		err := self.synchronizer.Delete()
+		if err != nil {
+			panic(err)
+		}
+
+		return
+	}
+
 	self.key = priv
 }
 
 func (self *rsaKeyHolder) recreate(obj runtime.Object) {
 	secret := obj.(*v1.Secret)
 	log.Printf("Synchronized secret %s has been deleted. Recreating.", secret.Name)
-
 	self.synchronizer.Create(self.getEncryptionKeyHolder())
 }
 
@@ -110,9 +119,9 @@ func (self *rsaKeyHolder) getEncryptionKeyHolder() runtime.Object {
 			Name:      authApi.EncryptionKeyHolderName,
 		},
 
-		StringData: map[string]string{
-			"priv": priv,
-			"pub":  pub,
+		Data: map[string][]byte{
+			"priv": []byte(priv),
+			"pub":  []byte(pub),
 		},
 	}
 }
