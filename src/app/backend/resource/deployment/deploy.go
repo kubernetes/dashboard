@@ -22,10 +22,10 @@ import (
 	"k8s.io/apimachinery/pkg/api/resource"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/intstr"
+	"k8s.io/apimachinery/pkg/util/yaml"
 	client "k8s.io/client-go/kubernetes"
 	api "k8s.io/client-go/pkg/api/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
-	"k8s.io/apimachinery/pkg/util/yaml"
 )
 
 const (
@@ -284,24 +284,23 @@ func getLabelsMap(labels []Label) map[string]string {
 
 // DeployAppFromFile deploys an app based on the given yaml or json file.
 func DeployAppFromFile(spec *AppDeploymentFromFileSpec, client client.Interface) (bool, error) {
-    reader := strings.NewReader(spec.Content)
+	reader := strings.NewReader(spec.Content)
 	log.Printf("Namespace for deploy from file: %s\n", spec.Namespace)
 
 	decoder := yaml.NewYAMLOrJSONDecoder(reader, 4096)
 
 	deployment := &extensions.Deployment{}
-	
+
 	if err := decoder.Decode(deployment); err != nil {
 		return false, err
 	}
-	
+
 	_, err := client.ExtensionsV1beta1().Deployments(spec.Namespace).Create(deployment)
 
 	if err != nil {
 		// TODO(bryk): Roll back created resources in case of error.
 		return false, err
 	}
-	
+
 	return true, nil
 }
-
