@@ -13,6 +13,8 @@
 // limitations under the License.
 
 import {stateName as loginState} from 'login/state';
+import {stateName as overviewState} from 'overview/state';
+
 
 /** @final */
 export class AuthService {
@@ -135,21 +137,28 @@ export class AuthService {
    */
   isLoggedIn(transition) {
     let deferred = this.q_.defer();
-
-    // Skip log in check if user is going to login page already or has chosen to skip it.
-    if (!this.isLoginPageEnabled() || transition.to().name === loginState ||
-        transition.to().name === 'internalerror') {
-      deferred.resolve(true);
-      return deferred.promise;
-    }
-
     this.getLoginStatus().then(
         (/** @type {!backendApi.LoginStatus} */ loginStatus) => {
+          // Disable entering login page from HTTP.
+          if (transition.to().name === loginState && !loginStatus.httpsMode) {
+            deferred.resolve(this.state_.target(overviewState));
+            return;
+          }
+
+          // Do not redirect if user is going to login page already or has chosen to skip it.
+          if (!this.isLoginPageEnabled() || transition.to().name === loginState ||
+              transition.to().name === 'internalerror') {
+            deferred.resolve(true);
+            return deferred.promise;
+          }
+
+          // Do not redirect to login if already authenticated or using HTTP.
           if (loginStatus.headerPresent || loginStatus.tokenPresent || !loginStatus.httpsMode) {
             deferred.resolve(true);
             return;
           }
 
+          // Go to login state.
           deferred.resolve(this.state_.target(loginState));
         },
         (err) => {
