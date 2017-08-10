@@ -15,9 +15,9 @@ limitations under the License.
 -->
 
 <div class="kd-control-panel-container"
-     ng-if="true">
+     ng-if="$ctrl.isHttpsMode()">
   <span class="kd-control-panel-separator">|</span>
-  <md-menu>
+  <md-menu md-position-mode="target-right target">
     <md-button class="md-icon-button"
                ng-click="$mdMenu.open($event)">
       <i class="material-icons">account_circle</i>

@@ -44,7 +44,6 @@ export class ControlPanelController {
         (/** @type {!backendApi.LoginStatus} */ loginStatus) => {
           this.loginStatus_ = loginStatus;
           this.isLoginStatusLoaded = true;
-          console.log(this.loginStatus_)
         },
         (err) => {
           this.log_.error(err);
@@ -91,6 +90,16 @@ export class ControlPanelController {
    */
   isLoggedIn() {
     return this.loginStatus_ && (this.loginStatus_.headerPresent || this.loginStatus_.tokenPresent);
+  }
+
+  /**
+   * Checks if HTTPS is used.
+   *
+   * @return {boolean}
+   * @export
+   */
+  isHttpsMode() {
+    return this.loginStatus_ && this.loginStatus_.httpsMode === true;
   }
 
   /**

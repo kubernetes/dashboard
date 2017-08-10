@@ -145,7 +145,7 @@ export class AuthService {
 
     this.getLoginStatus().then(
         (/** @type {!backendApi.LoginStatus} */ loginStatus) => {
-          if (loginStatus.headerPresent || loginStatus.tokenPresent) {
+          if (loginStatus.headerPresent || loginStatus.tokenPresent || loginStatus.httpsMode) {
             deferred.resolve(true);
             return;
           }
