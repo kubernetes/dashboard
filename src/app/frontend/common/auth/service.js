@@ -61,7 +61,7 @@ export class AuthService {
    * @private
    */
   setTokenCookie_(token) {
-    this.cookies_.put(this.tokenCookieName_, token);
+    this.cookies_.put(this.tokenCookieName_, token, {secure: true});
   }
 
   /**
