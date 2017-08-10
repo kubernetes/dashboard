@@ -65,11 +65,11 @@ export class AuthService {
   }
 
   /**
-   * Cleans cookies, but does not remove them.
+   * Remove auth cookies.
    */
-  cleanAuthCookies() {
-    this.setTokenCookie_('');
-    this.skipLoginPage(false);
+  removeAuthCookies() {
+    this.cookies_.remove(this.tokenCookieName_);
+    this.cookies_.remove(this.skipLoginPageCookieName_);
   }
 
   /**
@@ -117,7 +117,7 @@ export class AuthService {
    * Cleans cookies and goes to login page.
    */
   logout() {
-    this.cleanAuthCookies();
+    this.removeAuthCookies();
     this.state_.go(loginState);
   }
 

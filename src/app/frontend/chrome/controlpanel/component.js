@@ -99,7 +99,7 @@ export class ControlPanelController {
    * @export
    */
   isHttpsMode() {
-    return this.loginStatus_ && this.loginStatus_.httpsMode === true;
+    return this.loginStatus_ && this.loginStatus_.httpsMode;
   }
 
   /**
