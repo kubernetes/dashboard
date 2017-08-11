@@ -69,6 +69,11 @@ limitations under the License.
       <div ng-hide="::$ctrl.persistentVolume.accessModes">-</div>
     </kd-resource-card-column>
     <kd-resource-card-column>
+      <kd-middle-ellipsis display-string="{{$ctrl.persistentVolume.reclaimPolicy}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolume.reclaimPolicy">-</div>
+    </kd-resource-card-column>
+    <kd-resource-card-column>
       <kd-middle-ellipsis display-string="{{$ctrl.persistentVolume.status}}">
       </kd-middle-ellipsis>
       <div ng-hide="::$ctrl.persistentVolume.status">-</div>
@@ -77,6 +82,12 @@ limitations under the License.
       <kd-middle-ellipsis display-string="{{$ctrl.persistentVolume.claim}}">
       </kd-middle-ellipsis>
       <div ng-hide="::$ctrl.persistentVolume.claim">-</div>
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+      <kd-middle-ellipsis display-string="{{$ctrl.persistentVolume.storageClass}}">
+      </kd-middle-ellipsis>
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolume.storageClass">-</div>
     </kd-resource-card-column>
     <kd-resource-card-column>
       <kd-middle-ellipsis display-string="{{$ctrl.persistentVolume.reason}}">
