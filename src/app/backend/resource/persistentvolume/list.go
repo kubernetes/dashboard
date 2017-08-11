@@ -40,8 +40,8 @@ type PersistentVolume struct {
 	TypeMeta      api.TypeMeta                     `json:"typeMeta"`
 	Capacity      v1.ResourceList                  `json:"capacity"`
 	AccessModes   []v1.PersistentVolumeAccessMode  `json:"accessModes"`
-        ReclaimPolicy v1.PersistentVolumeReclaimPolicy `json:"reclaimPolicy"`
-        StorageClass  string                           `json:"storageClass"`
+	ReclaimPolicy v1.PersistentVolumeReclaimPolicy `json:"reclaimPolicy"`
+	StorageClass  string                           `json:"storageClass"`
 	Status        v1.PersistentVolumePhase         `json:"status"`
 	Claim         string                           `json:"claim"`
 	Reason        string                           `json:"reason"`
@@ -91,8 +91,8 @@ func toPersistentVolumeList(persistentVolumes []v1.PersistentVolume, nonCritical
 				TypeMeta:      api.NewTypeMeta(api.ResourceKindPersistentVolume),
 				Capacity:      item.Spec.Capacity,
 				AccessModes:   item.Spec.AccessModes,
-                                ReclaimPolicy: item.Spec.PersistentVolumeReclaimPolicy,
-                                StorageClass:  item.Spec.StorageClassName,
+				ReclaimPolicy: item.Spec.PersistentVolumeReclaimPolicy,
+				StorageClass:  item.Spec.StorageClassName,
 				Status:        item.Status.Phase,
 				Claim:         getPersistentVolumeClaim(&item),
 				Reason:        item.Status.Reason,

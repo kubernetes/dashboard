@@ -42,9 +42,9 @@ type PersistentVolumeClaim struct {
 	TypeMeta        api.TypeMeta                       `json:"typeMeta"`
 	Status          string                             `json:"status"` 
 	Volume          string                             `json:"volume"`
-        Capacity        v1.ResourceList                    `json:"capacity"`
-        AccessModes     []v1.PersistentVolumeAccessMode    `json:"accessModes"`
-        StorageClass    *string                            `json:"storageClass"`
+	Capacity        v1.ResourceList                    `json:"capacity"`
+	AccessModes     []v1.PersistentVolumeAccessMode    `json:"accessModes"`
+	StorageClass    *string                            `json:"storageClass"`
         
        
 }
@@ -82,9 +82,9 @@ func toPersistentVolumeClaim(pvc v1.PersistentVolumeClaim) PersistentVolumeClaim
 		TypeMeta:      api.NewTypeMeta(api.ResourceKindPersistentVolumeClaim),
 		Status:        string(pvc.Status.Phase),
 		Volume:        pvc.Spec.VolumeName,
-                Capacity:      pvc.Status.Capacity,
-                AccessModes:   pvc.Spec.AccessModes,
-                StorageClass:  pvc.Spec.StorageClassName,
+		Capacity:      pvc.Status.Capacity,
+		AccessModes:   pvc.Spec.AccessModes,
+		StorageClass:  pvc.Spec.StorageClassName,
 	}
 }
 
