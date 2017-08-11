@@ -208,3 +208,11 @@ $chip-margin: 0 $baseline-grid ($baseline-grid / 2) 0;
     background-color: $delicate;
   }
 }
+
+.kd-action-separator {
+  cursor: default;
+  font-weight: $light-font-weight;
+  line-height: 5 * $baseline-grid;
+  padding: 0 $baseline-grid;
+  user-select: none;
+}
