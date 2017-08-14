@@ -1122,7 +1122,13 @@ func (apiHandler *APIHandler) handleSearch(request *restful.Request, response *r
 func (apiHandler *APIHandler) handleGetScope(
 	request *restful.Request, response *restful.Response) {
 
-	result, err := scope.GetScope(getApiClient(request))
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	result, err := scope.GetScope(k8sClient)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1134,7 +1140,19 @@ func (apiHandler *APIHandler) handleGetScope(
 func (apiHandler *APIHandler) handlePostScope(
 	request *restful.Request, response *restful.Response) {
 
-	result, err := scope.PostScope(getApiClient(request))
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	cfg, err := apiHandler.cManager.ClientCmdConfig(request)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	result, err := scope.PostScope(k8sClient, cfg)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1145,6 +1163,11 @@ func (apiHandler *APIHandler) handlePostScope(
 
 func (apiHandler *APIHandler) handleGetDiscovery(
 	request *restful.Request, response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
 
 	namespace := parseNamespacePathParameter(request)
 	dsQuery := parseDataSelectPathParameter(request)

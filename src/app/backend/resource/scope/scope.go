@@ -23,6 +23,7 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/deployment"
 	client "k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/tools/clientcmd"
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
@@ -35,10 +36,11 @@ type Scope struct {
 }
 
 // PostScope deploys Scope onto the cluster.
-func PostScope(client client.Interface) (*Scope, error) {
+func PostScope(client client.Interface, cfg clientcmd.ClientConfig) (*Scope, error) {
 	log.Print("Installing scope on the cluster")
 
-	response, err := http.Get("https://raw.githubusercontent.com/kubernetes/dashboard/master/src/app/backend/resource/scope/scope.yaml")
+	//response, err := http.Get("https://raw.githubusercontent.com/kubernetes/dashboard/master/src/app/backend/resource/scope/scope.yaml")
+	response, err := http.Get("https://raw.githubusercontent.com/vlal/dashboard/9583aeb653891a8fb6036198d0ecd11827895834/src/app/backend/resource/scope/scope.yaml")
 
 	if err != nil {
 		log.Print(err)
@@ -55,7 +57,7 @@ func PostScope(client client.Interface) (*Scope, error) {
 		Validate:  true,
 	}
 
-	isDeploy, err := deployment.DeployAppFromFile(spec, deployment.CreateObjectFromInfoFn)
+	isDeploy, err := deployment.DeployAppFromFile(cfg, spec, deployment.CreateObjectFromInfoFn)
 
 	if !isDeploy {
 		log.Print("Something went wrong with deploying scope")
