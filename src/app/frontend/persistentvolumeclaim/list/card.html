@@ -73,9 +73,6 @@ limitations under the License.
       <div ng-hide="::$ctrl.persistentVolumeClaim.storageClass">-</div>
     </kd-resource-card-column>
     <kd-resource-card-column>
-      <kd-labels labels="::$ctrl.persistentVolumeClaim.objectMeta.labels"></kd-labels>
-    </kd-resource-card-column>
-    <kd-resource-card-column>
       {{::$ctrl.persistentVolumeClaim.objectMeta.creationTimestamp | relativeTime}}
       <md-tooltip>
         {{::$ctrl.getCreatedAtTooltip($ctrl.persistentVolumeClaim.objectMeta.creationTimestamp)}}
