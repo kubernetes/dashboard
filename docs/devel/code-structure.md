@@ -5,7 +5,7 @@
 An overview of the features provided by the dashboard can be found here:
 https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/
 
-If you're looking for ideas on what to contribute, in addition to taking a look at issues with the `help-wanted` tag, you may also want to view the dashboard roadmap:
+If you're looking for ideas on what to contribute, in addition to taking a look at issues with the `help-wanted` tag, you may also want to view the [dashboard roadmap](roadmap.md)
 
 ### Overall
 - Kube dashboard is split into a *backend api* and a *frontend app*. The api is located in the backend folder and the frontend is located in the frontend folder in the `src` directory.
