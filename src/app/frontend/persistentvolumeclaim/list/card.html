@@ -49,11 +49,28 @@ limitations under the License.
       </div>
     </kd-resource-card-column>
     <kd-resource-card-column>
-      <div ng-show="::$ctrl.persistentVolumeClaim.Volume">{{::$ctrl.persistentVolumeClaim.Volume}}</div>
-      <div ng-hide="::$ctrl.persistentVolumeClaim.Volume">-</div>
+      <div ng-show="::$ctrl.persistentVolumeClaim.status">{{::$ctrl.persistentVolumeClaim.status}}</div>
+      <div ng-hide="::$ctrl.persistentVolumeClaim.status">-</div>
     </kd-resource-card-column>
     <kd-resource-card-column>
-      <kd-labels labels="::$ctrl.persistentVolumeClaim.objectMeta.labels"></kd-labels>
+      <div ng-show="::$ctrl.persistentVolumeClaim.volume">{{::$ctrl.persistentVolumeClaim.volume}}</div>
+      <div ng-hide="::$ctrl.persistentVolumeClaim.volume">-</div>
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+      <kd-middle-ellipsis ng-repeat="(key, value) in ::$ctrl.persistentVolumeClaim.capacity"
+                          display-string="{{::value}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolumeClaim.capacity">-</div>
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+      <kd-middle-ellipsis ng-repeat="(key, value) in ::$ctrl.persistentVolumeClaim.accessModes"
+                          display-string="{{::value}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolumeClaim.accessModes">-</div>
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+      <div ng-show="::$ctrl.persistentVolumeClaim.storageClass">{{::$ctrl.persistentVolumeClaim.storageClass}}</div>
+      <div ng-hide="::$ctrl.persistentVolumeClaim.storageClass">-</div>
     </kd-resource-card-column>
     <kd-resource-card-column>
       {{::$ctrl.persistentVolumeClaim.objectMeta.creationTimestamp | relativeTime}}
