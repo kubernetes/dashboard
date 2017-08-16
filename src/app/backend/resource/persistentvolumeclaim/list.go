@@ -38,15 +38,13 @@ type PersistentVolumeClaimList struct {
 
 // PersistentVolumeClaim provides the simplified presentation layer view of Kubernetes Persistent Volume Claim resource.
 type PersistentVolumeClaim struct {
-	ObjectMeta      api.ObjectMeta                     `json:"objectMeta"`
-	TypeMeta        api.TypeMeta                       `json:"typeMeta"`
-	Status          string                             `json:"status"` 
-	Volume          string                             `json:"volume"`
-	Capacity        v1.ResourceList                    `json:"capacity"`
-	AccessModes     []v1.PersistentVolumeAccessMode    `json:"accessModes"`
-	StorageClass    *string                            `json:"storageClass"`
-        
-       
+	ObjectMeta   api.ObjectMeta                  `json:"objectMeta"`
+	TypeMeta     api.TypeMeta                    `json:"typeMeta"`
+	Status       string                          `json:"status"`
+	Volume       string                          `json:"volume"`
+	Capacity     v1.ResourceList                 `json:"capacity"`
+	AccessModes  []v1.PersistentVolumeAccessMode `json:"accessModes"`
+	StorageClass *string                         `json:"storageClass"`
 }
 
 // GetPersistentVolumeClaimList returns a list of all Persistent Volume Claims in the cluster.
@@ -78,13 +76,13 @@ func GetPersistentVolumeClaimListFromChannels(channels *common.ResourceChannels,
 
 func toPersistentVolumeClaim(pvc v1.PersistentVolumeClaim) PersistentVolumeClaim {
 	return PersistentVolumeClaim{
-		ObjectMeta:    api.NewObjectMeta(pvc.ObjectMeta),
-		TypeMeta:      api.NewTypeMeta(api.ResourceKindPersistentVolumeClaim),
-		Status:        string(pvc.Status.Phase),
-		Volume:        pvc.Spec.VolumeName,
-		Capacity:      pvc.Status.Capacity,
-		AccessModes:   pvc.Spec.AccessModes,
-		StorageClass:  pvc.Spec.StorageClassName,
+		ObjectMeta:   api.NewObjectMeta(pvc.ObjectMeta),
+		TypeMeta:     api.NewTypeMeta(api.ResourceKindPersistentVolumeClaim),
+		Status:       string(pvc.Status.Phase),
+		Volume:       pvc.Spec.VolumeName,
+		Capacity:     pvc.Status.Capacity,
+		AccessModes:  pvc.Spec.AccessModes,
+		StorageClass: pvc.Spec.StorageClassName,
 	}
 }
 

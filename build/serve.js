@@ -43,8 +43,9 @@ let runningBackendProcess = null;
  */
 function getBackendArgs(mode) {
   let args = [
-    `--heapster-host=${conf.backend.heapsterServerHost}`, `--tls-cert-file=${conf.backend.tlsCert}`,
-    `--tls-key-file=${conf.backend.tlsKey}`
+    `--heapster-host=${conf.backend.heapsterServerHost}`,
+    `--tls-cert-file=${conf.backend.tlsCert}`,
+    `--tls-key-file=${conf.backend.tlsKey}`,
   ];
 
   if (mode === conf.backend.production) {
