@@ -18,7 +18,7 @@ import (
 	"errors"
 	"strings"
 
-	"gopkg.in/square/go-jose.v2"
+	jose "gopkg.in/square/go-jose.v2"
 	k8sErrors "k8s.io/apimachinery/pkg/api/errors"
 )
 

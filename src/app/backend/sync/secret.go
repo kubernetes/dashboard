@@ -44,7 +44,7 @@ type secretSynchronizer struct {
 }
 
 func (self *secretSynchronizer) Name() string {
-	return self.name
+	return fmt.Sprintf("%s-%s", self.name, self.namespace)
 }
 
 func (self *secretSynchronizer) Start() {

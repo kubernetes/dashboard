@@ -258,7 +258,7 @@ func (self *clientManager) extractAuthInfo(req *restful.Request) (*api.AuthInfo,
 		return &api.AuthInfo{Token: token}, nil
 	}
 
-	if len(jweToken) > 0 {
+	if self.tokenManager != nil && len(jweToken) > 0 {
 		return self.tokenManager.Decrypt(jweToken)
 	}
 

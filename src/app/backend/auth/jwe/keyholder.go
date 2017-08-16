@@ -30,6 +30,11 @@ import (
 	"k8s.io/client-go/pkg/api/v1"
 )
 
+const (
+	holderMapKeyEntry  = "priv"
+	holderMapCertEntry = "pub"
+)
+
 type KeyHolder interface {
 	Encrypter() jose.Encrypter
 	Key() *rsa.PrivateKey
@@ -68,7 +73,7 @@ func (self *rsaKeyHolder) update(obj runtime.Object) {
 	self.mux.Lock()
 	defer self.mux.Unlock()
 	secret := obj.(*v1.Secret)
-	priv, err := ParseRSAKeyOrDie(string(secret.Data["priv"]), string(secret.Data["pub"]))
+	priv, err := ParseRSAKey(string(secret.Data[holderMapKeyEntry]), string(secret.Data[holderMapCertEntry]))
 	if err != nil {
 		// Secret was probably tampered with. Delete it and let it be recreated from local copy.
 		err := self.synchronizer.Delete()
@@ -120,8 +125,8 @@ func (self *rsaKeyHolder) getEncryptionKeyHolder() runtime.Object {
 		},
 
 		Data: map[string][]byte{
-			"priv": []byte(priv),
-			"pub":  []byte(pub),
+			holderMapKeyEntry:  []byte(priv),
+			holderMapCertEntry: []byte(pub),
 		},
 	}
 }

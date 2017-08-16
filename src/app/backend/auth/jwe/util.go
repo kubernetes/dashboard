@@ -50,7 +50,7 @@ func ExportRSAKeyOrDie(privKey *rsa.PrivateKey) (priv, pub string) {
 	return
 }
 
-func ParseRSAKeyOrDie(privStr, pubStr string) (*rsa.PrivateKey, error) {
+func ParseRSAKey(privStr, pubStr string) (*rsa.PrivateKey, error) {
 	block, _ := pem.Decode([]byte(privStr))
 	if block == nil {
 		return nil, errors.New("Failed to parse PEM block containing the key")
