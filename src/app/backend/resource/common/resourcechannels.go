@@ -22,10 +22,10 @@ import (
 	apps "k8s.io/client-go/pkg/apis/apps/v1beta1"
 	autoscaling "k8s.io/client-go/pkg/apis/autoscaling/v1"
 	batch "k8s.io/client-go/pkg/apis/batch/v1"
+	batch2 "k8s.io/client-go/pkg/apis/batch/v2alpha1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 	rbac "k8s.io/client-go/pkg/apis/rbac/v1beta1"
 	storage "k8s.io/client-go/pkg/apis/storage/v1beta1"
-	batch2 "k8s.io/client-go/pkg/apis/batch"
 )
 
 // ResourceChannels struct holds channels to resource lists. Each list channel is paired with
@@ -56,7 +56,7 @@ type ResourceChannels struct {
 	JobList JobListChannel
 
 	// List and error channels to Cron Jobs.
-	CronJobList JobListChannel
+	CronJobList CronJobListChannel
 
 	// List and error channels to Services.
 	ServiceList ServiceListChannel

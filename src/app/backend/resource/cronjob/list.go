@@ -22,11 +22,8 @@ import (
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	client "k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/pkg/api/v1"
-	batch "k8s.io/client-go/pkg/apis/batch/v1"
-	batch2 "k8s.io/client-go/pkg/apis/batch"
+	batch2 "k8s.io/client-go/pkg/apis/batch/v2alpha1"
 )
 
 // CronJobList contains a list of CronJobs in the cluster.
@@ -60,15 +57,16 @@ func GetCronJobList(client client.Interface, nsQuery *common.NamespaceQuery,
 	log.Print("Getting list of all cronJobs in the cluster")
 
 	channels := &common.ResourceChannels{
-		CronJobList:   common.GetCronJobListChannel(client, nsQuery, 1),
-		PodList:   common.GetPodListChannel(client, nsQuery, 1),
-		EventList: common.GetEventListChannel(client, nsQuery, 1),
+		CronJobList: common.GetCronJobListChannel(client, nsQuery, 1),
+		PodList:     common.GetPodListChannel(client, nsQuery, 1),
+		EventList:   common.GetEventListChannel(client, nsQuery, 1),
 	}
 
 	return GetCronJobListFromChannels(channels, dsQuery, metricClient)
 }
 
-// GetCronJobListFromChannels returns a list of all CronJobs in the cluster reading required resource list once from the channels.
+// GetCronJobListFromChannels returns a list of all CronJobs in the cluster reading required resource
+// list once from the channels.
 func GetCronJobListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery,
 	metricClient metricapi.MetricClient) (*CronJobList, error) {
 
@@ -86,11 +84,12 @@ func toCronJobList(cronJobs []batch2.CronJob, nonCriticalErrors []error, dsQuery
 	metricClient metricapi.MetricClient) *CronJobList {
 
 	cronJobList := &CronJobList{
-		CronJobs:     make([]CronJob, 0),
+		CronJobs: make([]CronJob, 0),
 		ListMeta: api.ListMeta{TotalItems: len(cronJobs)},
 		Errors:   nonCriticalErrors,
 	}
 
+	cachedResources := &metricapi.CachedResources{}
 
 	cronJobCells, metricPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(ToCells(cronJobs),
 		dsQuery, cachedResources, metricClient)
@@ -112,7 +111,7 @@ func toCronJobList(cronJobs []batch2.CronJob, nonCriticalErrors []error, dsQuery
 
 func toCronJob(cronJob *batch2.CronJob) CronJob {
 	return CronJob{
-		ObjectMeta:      api.NewObjectMeta(cronJob.ObjectMeta),
-		TypeMeta:        api.NewTypeMeta(api.ResourceKindCronJob),
+		ObjectMeta: api.NewObjectMeta(cronJob.ObjectMeta),
+		TypeMeta:   api.NewTypeMeta(api.ResourceKindCronJob),
 	}
 }

@@ -110,6 +110,7 @@ const (
 	ResourceKindHorizontalPodAutoscaler = "horizontalpodautoscaler"
 	ResourceKindIngress                 = "ingress"
 	ResourceKindJob                     = "job"
+	ResourceKindCronJob                 = "cronjob"
 	ResourceKindLimitRange              = "limitrange"
 	ResourceKindNamespace               = "namespace"
 	ResourceKindNode                    = "node"
@@ -164,6 +165,7 @@ var KindToAPIMapping = map[string]struct {
 	ResourceKindHorizontalPodAutoscaler: {"horizontalpodautoscalers", ClientTypeAutoscalingClient, true},
 	ResourceKindIngress:                 {"ingresses", ClientTypeExtensionClient, true},
 	ResourceKindJob:                     {"jobs", ClientTypeBatchClient, true},
+	ResourceKindCronJob:                 {"cronjobs", ClientTypeBatchClient, true},
 	ResourceKindLimitRange:              {"limitrange", ClientTypeDefault, true},
 	ResourceKindNamespace:               {"namespaces", ClientTypeDefault, false},
 	ResourceKindNode:                    {"nodes", ClientTypeDefault, false},
