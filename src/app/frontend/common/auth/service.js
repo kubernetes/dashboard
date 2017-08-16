@@ -140,20 +140,20 @@ export class AuthService {
     let deferred = this.q_.defer();
     this.getLoginStatus().then(
         (/** @type {!backendApi.LoginStatus} */ loginStatus) => {
-          // Do not allow entering login page if already authenticated or using HTTP.
+          // Do not allow entering login page if already authenticated or authentication is
+          // disabled.
           if (transition.to().name === loginState &&
-              (loginStatus.headerPresent || loginStatus.tokenPresent || !loginStatus.httpsMode)) {
+              (this.isAuthenticated(loginStatus) || !this.isAuthenticationEnabled(loginStatus))) {
             deferred.resolve(this.state_.target(overviewState));
             return;
           }
 
           // In following cases user should not be redirected and reach his target state:
-          if (transition.to().name === loginState ||  // User is going to login page.
-              transition.to().name === errorState ||  // User is going to error page.
-              !this.isLoginPageEnabled() ||           // User has chosen to skip login page.
-              loginStatus.headerPresent ||            // User is already authenticated.
-              loginStatus.tokenPresent ||             // User is already authenticated.
-              !loginStatus.httpsMode)                 // Authentication on HTTP is disabled.
+          if (transition.to().name === loginState ||         // User is going to login page.
+              transition.to().name === errorState ||         // User is going to error page.
+              !this.isLoginPageEnabled() ||                  // User has chosen to skip login page.
+              !this.isAuthenticationEnabled(loginStatus) ||  // Authentication is disabled.
+              this.isAuthenticated(loginStatus))             // User is already authenticated.
           {
             deferred.resolve(true);
             return;
@@ -169,6 +169,28 @@ export class AuthService {
         });
 
     return deferred.promise;
+  }
+
+  /**
+   * Checks if user is authenticated.
+   *
+   * TODO(maciaszczykm): Check with backend, not only for token/header presence.
+   *
+   * @param {!backendApi.LoginStatus} loginStatus
+   * @return {boolean}
+   */
+  isAuthenticated(loginStatus) {
+    return loginStatus.headerPresent || loginStatus.tokenPresent;
+  }
+
+  /**
+   * Checks authentication is enabled. It is enabled only on HTTPS.
+   *
+   * @param {!backendApi.LoginStatus} loginStatus
+   * @return {boolean}
+   */
+  isAuthenticationEnabled(loginStatus) {
+    return loginStatus.httpsMode;
   }
 
   /**
