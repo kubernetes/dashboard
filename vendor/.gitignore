@@ -1,11 +1,11 @@
-# Ignore everything
-*
-
-# Except self, .go  and LICENSE files
-!*/
-!*.go
-!LICENSE
-!/.gitignore
-
-# Ignore test files
-*_test.go
+-# Ignore everything
+-*
+-
+-# Except self, .go  and LICENSE files
+-!*/
+-!*.go
+-!LICENSE
+-!/.gitignore
+-
+-# Ignore test files
+-*_test.go
