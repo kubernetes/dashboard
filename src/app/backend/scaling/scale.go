@@ -47,7 +47,6 @@ func GetScaleSpec(client client.Interface, kind, namespace, name string) (rc *Re
 // method since the client scale method does not provide one for the job.
 func ScaleResource(client client.Interface, kind, namespace, name, count string) (rc *ReplicaCounts, err error) {
 	rc = new(ReplicaCounts)
-        kind = strings.Replace(kind, " ", "", -1)
 	if strings.ToLower(kind) == api.ResourceKindJob {
 		err = scaleJobResource(client, namespace, name, count, rc)
 	} else if strings.ToLower(kind) == api.ResourceKindStatefulSet {
