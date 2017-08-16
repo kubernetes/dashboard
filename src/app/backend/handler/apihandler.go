@@ -2236,4 +2236,3 @@ func parseDataSelectPathParameter(request *restful.Request) *dataselect.DataSele
 	metricQuery := parseMetricPathParameter(request)
 	return dataselect.NewDataSelectQuery(paginationQuery, sortQuery, filterQuery, metricQuery)
 }
-

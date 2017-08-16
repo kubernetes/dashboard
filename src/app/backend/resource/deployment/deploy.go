@@ -352,4 +352,3 @@ func DeployAppFromFile(cfg *rest.Config, spec *AppDeploymentFromFileSpec) (bool,
 	}
 	return true, nil
 }
-
