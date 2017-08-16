@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-scale-button resource-kind-name="[[Deployment|Label 'Deployment' which will appear in the deployment scale dialog opened from the deployment details page.]]"
+<kd-scale-button resource-kind-display-name="[[Deployment|Label 'Deployment' which will appear in the deployment scale dialog opened from the deployment details page.]]"
+                 resource-kind-name="$ctrl.details.typeMeta.kind"
                  object-meta="$ctrl.details.objectMeta"
                  current-pods="$ctrl.details.statusInfo.replicas"
                  desired-pods="$ctrl.details.statusInfo.available">

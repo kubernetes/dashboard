@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<md-dialog aria-label="[[Scale a {{::$ctrl.resourceKindName}}|Title for a scaling resource dialog.]]"
+<md-dialog aria-label="[[Scale a {{::$ctrl.resourceKindDisplayName}}|Title for a scaling resource dialog.]]"
            layout="column">
   <md-dialog-content layout-padding>
-    <h4 class="md-title">[[Scale a {{::$ctrl.resourceKindName}}|Title for a scaling resource dialog.]]</h4>
+    <h4 class="md-title">[[Scale a {{::$ctrl.resourceKindDisplayName}}|Title for a scaling resource dialog.]]</h4>
     <div>
       <br>[[Resource {{::$ctrl.resourceName}} will be updated to reflect the desired count.|User help for the pod count update dialog (on the replication controllers detail page).]]<br/> {{$ctrl.getCurrentPods()}},{{$ctrl.getDesiredPods()}}
     </div>
