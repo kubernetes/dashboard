@@ -324,11 +324,10 @@ func DeployAppFromFile(cfg *rest.Config, spec *AppDeploymentFromFileSpec) (bool,
 			return false, err
 		}
 		apiResources := apiResourceList.APIResources
-
-		resource := &metaV1.APIResource{}
+		var resource *metaV1.APIResource
 		for _, apiResource := range apiResources {
 			if apiResource.Kind == kind && !strings.Contains(apiResource.Name, "/") {
-				*resource = apiResource
+				resource = &apiResource
 				break
 			}
 		}
@@ -336,9 +335,9 @@ func DeployAppFromFile(cfg *rest.Config, spec *AppDeploymentFromFileSpec) (bool,
 			return false, fmt.Errorf("Unknown resource kind: %s", kind)
 		}
 
-		clientPool := dynamicclient.NewDynamicClientPool(cfg)
+		dynamicClientPool := dynamicclient.NewDynamicClientPool(cfg)
 
-		dynamicClient, err := clientPool.ClientForGroupVersionKind(groupVersionKind)
+		dynamicClient, err := dynamicClientPool.ClientForGroupVersionKind(groupVersionKind)
 
 		if err != nil {
 			return false, err
