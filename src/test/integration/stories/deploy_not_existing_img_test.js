@@ -14,9 +14,9 @@
 
 import DeployPageObject from '../deploy/deploy_po';
 import DeploymentPageObject from '../deploymentlist/deployment_po';
-import LoginPageObject from '../login/login_po';
 import DeleteReplicationControllerDialogObject from '../replicationcontrollerdetail/deletereplicationcontroller_po';
 import ReplicationControllerDetailPageObject from '../replicationcontrollerdetail/replicationcontrollerdetail_po';
+
 
 /**
  * This integration test will check complete user story in given order:
@@ -32,99 +32,96 @@ import ReplicationControllerDetailPageObject from '../replicationcontrollerdetai
  */
 describe('Deploy not existing image story', () => {
 
-  /** @type {!DeployPageObject} */
-  let deployPage;
+    /** @type {!DeployPageObject} */
+    let deployPage;
 
-  /** @type {!DeploymentPageObject} */
-  let replicationControllersPage;
+    /** @type {!DeploymentPageObject} */
+    let replicationControllersPage;
 
-  /** @type {!DeleteReplicationControllerDialogObject} */
-  let deleteDialog;
+    /** @type {!DeleteReplicationControllerDialogObject} */
+    let deleteDialog;
 
-  /** @type {!ReplicationControllerDetailPageObject} */
-  let replicationControllerDetailPage;
+    /** @type {!ReplicationControllerDetailPageObject} */
+    let replicationControllerDetailPage;
 
-  let appName = `test-${Date.now()}`;
-  let containerImage = 'test';
+    let appName = `test-${Date.now()}`;
+    let containerImage = 'test';
 
-  beforeAll(() => {
-    deployPage = new DeployPageObject();
-    replicationControllersPage = new DeploymentPageObject();
-    deleteDialog = new DeleteReplicationControllerDialogObject();
-    replicationControllerDetailPage = new ReplicationControllerDetailPageObject();
-
-    // skip login page
-    browser.get('#!/login');
-    new LoginPageObject().skipButton.click();
-  });
-
-  it('should deploy app', () => {
-    // For empty cluster this should actually redirect to zerostate page
-    browser.get('#!/deploy/app');
-    // given
-    deployPage.appNameField.sendKeys(appName);
-    deployPage.containerImageField.sendKeys(containerImage);
-
-    // when
-    deployPage.deployButton.click().then(() => {
-      // then
-      expect(browser.getCurrentUrl()).toContain('overview');
+    beforeAll(() => {
+        deployPage = new DeployPageObject();
+        replicationControllersPage = new DeploymentPageObject();
+        deleteDialog = new DeleteReplicationControllerDialogObject();
+        replicationControllerDetailPage = new ReplicationControllerDetailPageObject();
     });
 
-    // it should wait for card to be in error state
+    it('should deploy app', (doneFn) => {
+        // For empty cluster this should actually redirect to zerostate page
+        browser.get('#!/deploy/app');
+        // given
+        deployPage.appNameField.sendKeys(appName);
+        deployPage.containerImageField.sendKeys(containerImage);
 
-    // given
-    let cardErrors = replicationControllersPage.getElementByAppName(
-        replicationControllersPage.cardErrorsQuery, appName, true);
-    let cardErrorIcon = replicationControllersPage.getElementByAppName(
-        replicationControllersPage.cardErrorIconQuery, appName);
+        // when
+        deployPage.deployButton.click().then(() => {
+            // then
+            expect(browser.getCurrentUrl()).toContain('overview');
+            doneFn();
+        });
 
-    // when
-    browser.driver.wait(() => {
-      return cardErrorIcon.isPresent().then((result) => {
-        if (result) {
-          return true;
-        }
+        // it should wait for card to be in error state
 
-        browser.driver.navigate().refresh();
-        return false;
-      });
+        // given
+        let cardErrors = replicationControllersPage.getElementByAppName(
+            replicationControllersPage.cardErrorsQuery, appName, true);
+        let cardErrorIcon = replicationControllersPage.getElementByAppName(
+            replicationControllersPage.cardErrorIconQuery, appName);
+
+        // when
+        browser.driver.wait(() => {
+            return cardErrorIcon.isPresent().then((result) => {
+                if (result) {
+                    return true;
+                }
+
+                browser.driver.navigate().refresh();
+                return false;
+            });
+        });
+
+        // then
+        expect(cardErrorIcon.isDisplayed()).toBeTruthy();
+        cardErrors.then((errors) => {
+            expect(errors.length).not.toBe(0);
+        });
+
+        // it should go to details page
+
+        // given
+        let cardDetailsPageLink = replicationControllersPage.getElementByAppName(
+            replicationControllersPage.cardDetailsPageLinkQuery, appName);
+
+        // when
+        cardDetailsPageLink.click();
+
+        // then
+        expect(browser.getCurrentUrl()).toContain(`deployment/default/${appName}`);
+
+        // Checks whether events table is displayed.
+        expect(replicationControllerDetailPage.eventsTable.isDisplayed()).toBeTruthy();
+
     });
 
-    // then
-    expect(cardErrorIcon.isDisplayed()).toBeTruthy();
-    cardErrors.then((errors) => {
-      expect(errors.length).not.toBe(0);
+    // Clean up and delete created resources
+    afterAll((doneFn) => {
+        let cardMenuButton = replicationControllersPage.getElementByAppName(
+            replicationControllersPage.cardMenuButtonQuery, appName);
+
+        browser.get('#!/deployment');
+
+        cardMenuButton.click();
+        replicationControllersPage.deleteAppButton.click().then(() => {
+            deleteDialog.deleteAppButton.click();
+            doneFn();
+        });
     });
-
-    // it should go to details page
-
-    // given
-    let cardDetailsPageLink = replicationControllersPage.getElementByAppName(
-        replicationControllersPage.cardDetailsPageLinkQuery, appName);
-
-    // when
-    cardDetailsPageLink.click();
-
-    // then
-    expect(browser.getCurrentUrl()).toContain(`deployment/default/${appName}`);
-
-    // Checks whether events table is displayed.
-    expect(replicationControllerDetailPage.eventsTable.isDisplayed()).toBeTruthy();
-
-  });
-
-  // Clean up and delete created resources
-  afterAll((doneFn) => {
-    let cardMenuButton = replicationControllersPage.getElementByAppName(
-        replicationControllersPage.cardMenuButtonQuery, appName);
-
-    browser.get('#!/deployment');
-
-    cardMenuButton.click();
-    replicationControllersPage.deleteAppButton.click().then(() => {
-      deleteDialog.deleteAppButton.click();
-      doneFn();
-    });
-  });
 });

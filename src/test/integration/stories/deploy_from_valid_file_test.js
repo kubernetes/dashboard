@@ -16,64 +16,59 @@ import path from 'path';
 import remote from 'selenium-webdriver/remote';
 
 import DeployFromFilePageObject from '../deploy/deployfromfile_po';
-import LoginPageObject from '../login/login_po';
 import DeleteReplicationControllerDialogObject from '../replicationcontrollerdetail/deletereplicationcontroller_po';
 import ReplicationControllersPageObject from '../replicationcontrollerslist/replicationcontrollers_po';
+
 
 // Test assumes, that there are no replication controllers in the cluster at the beginning.
 describe('Deploy from valid file user story test', () => {
 
-  /** @type {!DeployFromFilePageObject} */
-  let deployFromFilePage;
+    /** @type {!DeployFromFilePageObject} */
+    let deployFromFilePage;
 
-  /** @type {!ReplicationControllersPageObject} */
-  let replicationControllersPage;
+    /** @type {!ReplicationControllersPageObject} */
+    let replicationControllersPage;
 
-  /** @type {!DeleteReplicationControllerDialogObject} */
-  let deleteDialog;
+    /** @type {!DeleteReplicationControllerDialogObject} */
+    let deleteDialog;
 
-  /** @type {!string} */
-  let appName = 'integration-test-valid-rc';
+    /** @type {!string} */
+    let appName = 'integration-test-valid-rc';
 
-  beforeAll(() => {
-    browser.driver.setFileDetector(new remote.FileDetector());
-    deployFromFilePage = new DeployFromFilePageObject();
-    replicationControllersPage = new ReplicationControllersPageObject();
-    deleteDialog = new DeleteReplicationControllerDialogObject();
-
-    // skip login page
-    browser.get('#!/login');
-    new LoginPageObject().skipButton.click();
-
-    browser.get('#!/deploy/file');
-  });
-
-  it('should upload the file', () => {
-    // given
-    let fileToUpload = '../deploy/valid-rc.yaml';
-    let absolutePath = path.resolve(__dirname, fileToUpload);
-
-    // when
-    deployFromFilePage.makeInputVisible();
-    deployFromFilePage.setFile(absolutePath);
-    deployFromFilePage.deployButton.click();
-
-    // then
-    expect(browser.getCurrentUrl()).toContain('overview');
-
-    let cardNameLink = replicationControllersPage.getElementByAppName(
-        replicationControllersPage.cardDetailsPageLinkQuery, appName);
-    expect(cardNameLink.isPresent()).toBe(true);
-  });
-
-  afterAll(() => {
-    // clean up
-    let cardMenuButton = replicationControllersPage.getElementByAppName(
-        replicationControllersPage.cardMenuButtonQuery, appName);
-    browser.get('#!/replicationcontroller');
-    cardMenuButton.click();
-    replicationControllersPage.deleteAppButton.click().then(() => {
-      deleteDialog.deleteAppButton.click();
+    beforeAll(() => {
+        browser.driver.setFileDetector(new remote.FileDetector());
+        deployFromFilePage = new DeployFromFilePageObject();
+        replicationControllersPage = new ReplicationControllersPageObject();
+        deleteDialog = new DeleteReplicationControllerDialogObject();
+        browser.get('#!/deploy/file');
     });
-  });
+
+    it('should upload the file', () => {
+        // given
+        let fileToUpload = '../deploy/valid-rc.yaml';
+        let absolutePath = path.resolve(__dirname, fileToUpload);
+
+        // when
+        deployFromFilePage.makeInputVisible();
+        deployFromFilePage.setFile(absolutePath);
+        deployFromFilePage.deployButton.click();
+
+        // then
+        expect(browser.getCurrentUrl()).toContain('overview');
+
+        let cardNameLink = replicationControllersPage.getElementByAppName(
+            replicationControllersPage.cardDetailsPageLinkQuery, appName);
+        expect(cardNameLink.isPresent()).toBe(true);
+    });
+
+    afterAll(() => {
+        // clean up
+        let cardMenuButton = replicationControllersPage.getElementByAppName(
+            replicationControllersPage.cardMenuButtonQuery, appName);
+        browser.get('#!/replicationcontroller');
+        cardMenuButton.click();
+        replicationControllersPage.deleteAppButton.click().then(() => {
+            deleteDialog.deleteAppButton.click();
+        });
+    });
 });
