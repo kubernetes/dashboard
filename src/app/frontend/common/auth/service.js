@@ -174,8 +174,6 @@ export class AuthService {
   /**
    * Checks if user is authenticated.
    *
-   * TODO(maciaszczykm): Check with backend, not only for token/header presence.
-   *
    * @param {!backendApi.LoginStatus} loginStatus
    * @return {boolean}
    */

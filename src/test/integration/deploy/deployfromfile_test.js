@@ -12,19 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import LoginPageObject from '../login/login_po';
-
 import DeployFromFilePageObject from './deployfromfile_po';
 
 describe('Deploy from file view', () => {
   /** @type {!DeployFromFilePageObject} */
   let page;
-
-  beforeAll(() => {
-    // skip login page
-    browser.get('#!/login');
-    new LoginPageObject().skipButton.click();
-  });
 
   beforeEach(() => {
     page = new DeployFromFilePageObject();
