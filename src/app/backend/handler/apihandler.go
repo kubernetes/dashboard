@@ -956,7 +956,7 @@ func (apiHandler *APIHandler) handleGetReplicaCount(request *restful.Request, re
 }
 
 func (apiHandler *APIHandler) handleDeployFromFile(request *restful.Request, response *restful.Response) {
-	k8sClient, err := apiHandler.cManager.Client(request)
+	cfg, err := apiHandler.cManager.Config(request)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -968,7 +968,7 @@ func (apiHandler *APIHandler) handleDeployFromFile(request *restful.Request, res
 		return
 	}
 
-	isDeployed, err := deployment.DeployAppFromFile(deploymentSpec, k8sClient)
+	isDeployed, err := deployment.DeployAppFromFile(cfg, deploymentSpec)
 	if !isDeployed {
 		handleInternalError(response, err)
 		return
@@ -2236,3 +2236,4 @@ func parseDataSelectPathParameter(request *restful.Request) *dataselect.DataSele
 	metricQuery := parseMetricPathParameter(request)
 	return dataselect.NewDataSelectQuery(paginationQuery, sortQuery, filterQuery, metricQuery)
 }
+

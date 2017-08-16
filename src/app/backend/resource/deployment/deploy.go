@@ -16,15 +16,23 @@ package deployment
 
 import (
 	"fmt"
+	"io"
 	"log"
 	"strings"
 
 	"k8s.io/apimachinery/pkg/api/resource"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
+	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/util/intstr"
 	"k8s.io/apimachinery/pkg/util/yaml"
+	"k8s.io/client-go/discovery"
+	dynamicclient "k8s.io/client-go/dynamic"
 	client "k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/rest"
+
 	api "k8s.io/client-go/pkg/api/v1"
+
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
 
@@ -283,24 +291,65 @@ func getLabelsMap(labels []Label) map[string]string {
 }
 
 // DeployAppFromFile deploys an app based on the given yaml or json file.
-func DeployAppFromFile(spec *AppDeploymentFromFileSpec, client client.Interface) (bool, error) {
+func DeployAppFromFile(cfg *rest.Config, spec *AppDeploymentFromFileSpec) (bool, error) {
 	reader := strings.NewReader(spec.Content)
 	log.Printf("Namespace for deploy from file: %s\n", spec.Namespace)
+	d := yaml.NewYAMLOrJSONDecoder(reader, 4096)
+	for {
+		data := unstructured.Unstructured{}
+		if err := d.Decode(&data); err != nil {
+			if err == io.EOF {
+				return true, nil
+			}
+			return false, err
+		}
 
-	decoder := yaml.NewYAMLOrJSONDecoder(reader, 4096)
+		version := data.GetAPIVersion()
+		kind := data.GetKind()
 
-	deployment := &extensions.Deployment{}
+		gv, err := schema.ParseGroupVersion(version)
+		if err != nil {
+			gv = schema.GroupVersion{Version: version}
+		}
 
-	if err := decoder.Decode(deployment); err != nil {
-		return false, err
+		groupVersionKind := schema.GroupVersionKind{Group: gv.Group, Version: gv.Version, Kind: kind}
+
+		discoveryClient, err := discovery.NewDiscoveryClientForConfig(cfg)
+		if err != nil {
+			return false, err
+		}
+
+		apiResourceList, err := discoveryClient.ServerResourcesForGroupVersion(version)
+		if err != nil {
+			return false, err
+		}
+		apiResources := apiResourceList.APIResources
+
+		resource := &metaV1.APIResource{}
+		for _, apiResource := range apiResources {
+			if apiResource.Kind == kind && !strings.Contains(apiResource.Name, "/") {
+				*resource = apiResource
+				break
+			}
+		}
+		if resource == nil {
+			return false, fmt.Errorf("Unknown resource kind: %s", kind)
+		}
+
+		clientPool := dynamicclient.NewDynamicClientPool(cfg)
+
+		dynamicClient, err := clientPool.ClientForGroupVersionKind(groupVersionKind)
+
+		if err != nil {
+			return false, err
+		}
+
+		_, err = dynamicClient.Resource(resource, spec.Namespace).Create(&data)
+
+		if err != nil {
+			return false, err
+		}
 	}
-
-	_, err := client.ExtensionsV1beta1().Deployments(spec.Namespace).Create(deployment)
-
-	if err != nil {
-		// TODO(bryk): Roll back created resources in case of error.
-		return false, err
-	}
-
 	return true, nil
 }
+
