@@ -21,8 +21,11 @@ import (
 	"k8s.io/apimachinery/pkg/util/wait"
 )
 
+// Overwatch is watching over every registered synchronizer. In case of error it will be logged and if RestartPolicy
+// is set to "Always" synchronizer will be restarted.
 var Overwatch *overwatch
 
+// Initializes and starts Overwatch instance. It is private to make sure that only one instance is running.
 func init() {
 	Overwatch = &overwatch{
 		syncMap:   make(map[string]syncApi.Synchronizer),
@@ -36,9 +39,11 @@ func init() {
 	Overwatch.Run()
 }
 
+// RestartPolicy is used by Overwatch to determine how to behave in case of synchronizer error.
 type RestartPolicy string
 
 const (
+	// In case of synchronizer error it will be restarted.
 	AlwaysRestart RestartPolicy = "always"
 	NeverRestart  RestartPolicy = "never"
 )
@@ -51,6 +56,7 @@ type overwatch struct {
 	restartSignal      chan string
 }
 
+// RegisterSynchronizer registers given synchronizer with given restart policy.
 func (self *overwatch) RegisterSynchronizer(synchronizer syncApi.Synchronizer, policy RestartPolicy) {
 	if _, exists := self.syncMap[synchronizer.Name()]; exists {
 		log.Printf("Synchronizer %s is already registered. Skipping", synchronizer.Name())
@@ -62,6 +68,7 @@ func (self *overwatch) RegisterSynchronizer(synchronizer syncApi.Synchronizer, p
 	self.broadcastRegistrationEvent(synchronizer.Name())
 }
 
+// Run starts overwatch.
 func (self *overwatch) Run() {
 	self.monitorRegistrationEvents()
 	self.monitorRestartEvents()

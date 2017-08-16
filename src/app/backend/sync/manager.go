@@ -20,10 +20,12 @@ import (
 	"k8s.io/client-go/kubernetes"
 )
 
+// Implements SynchronizerManager interface.
 type synchronizerManager struct {
 	client kubernetes.Interface
 }
 
+// Secret implements synchronizer manager. See SynchronizerManager interface for more information.
 func (self *synchronizerManager) Secret(namespace, name string) syncApi.Synchronizer {
 	return &secretSynchronizer{
 		namespace:      namespace,
@@ -33,6 +35,7 @@ func (self *synchronizerManager) Secret(namespace, name string) syncApi.Synchron
 	}
 }
 
+// NewSynchronizerManager creates new instace of SynchronizerManager.
 func NewSynchronizerManager(client kubernetes.Interface) syncApi.SynchronizerManager {
 	return &synchronizerManager{client: client}
 }

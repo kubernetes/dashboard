@@ -30,17 +30,24 @@ import (
 	"k8s.io/client-go/pkg/api/v1"
 )
 
+// Entries held by resource used to synchronize encryption key data.
 const (
 	holderMapKeyEntry  = "priv"
 	holderMapCertEntry = "pub"
 )
 
+// KeyHolder is responsible for generating, storing and synchronizing encryption key used for token
+// generation/decryption.
 type KeyHolder interface {
+	// Returns encrypter instance that can be used to encrypt data.
 	Encrypter() jose.Encrypter
+	// Returns encryption key that can be used to decrypt data.
 	Key() *rsa.PrivateKey
+	// Forces refresh of encryption key synchronized with kubernetes resource (secret).
 	Refresh()
 }
 
+// Implements KeyHolder interface
 type rsaKeyHolder struct {
 	// 256-byte random RSA key pair. Synced with a key saved in a secret.
 	key          *rsa.PrivateKey
@@ -48,6 +55,10 @@ type rsaKeyHolder struct {
 	mux          sync.Mutex
 }
 
+// Encrypter implements key holder interface. See KeyHolder for more information.
+// Used encryption algorithms:
+//    - Content encryption: AES-GCM (256)
+//    - Key management: RSA-OAEP-SHA256
 func (self *rsaKeyHolder) Encrypter() jose.Encrypter {
 	publicKey := &self.Key().PublicKey
 	encrypter, err := jose.NewEncrypter(jose.A256GCM, jose.Recipient{Algorithm: jose.RSA_OAEP_256, Key: publicKey}, nil)
@@ -58,17 +69,21 @@ func (self *rsaKeyHolder) Encrypter() jose.Encrypter {
 	return encrypter
 }
 
+// Key implements key holder interface. See KeyHolder for more information.
 func (self *rsaKeyHolder) Key() *rsa.PrivateKey {
 	self.mux.Lock()
 	defer self.mux.Unlock()
 	return self.key
 }
 
+// Refresh implements key holder interface. See KeyHolder for more information.
 func (self *rsaKeyHolder) Refresh() {
 	self.synchronizer.Refresh()
 	self.update(self.synchronizer.Get())
 }
 
+// Handler function executed by synchronizer used to store encryption key. It is called whenever watched object
+// is created or updated.
 func (self *rsaKeyHolder) update(obj runtime.Object) {
 	self.mux.Lock()
 	defer self.mux.Unlock()
@@ -87,6 +102,8 @@ func (self *rsaKeyHolder) update(obj runtime.Object) {
 	self.key = priv
 }
 
+// Handler function executed by synchronizer used to store encryption key. It is called whenever watched object
+// is gets deleted. It is then recreated based on local key.
 func (self *rsaKeyHolder) recreate(obj runtime.Object) {
 	secret := obj.(*v1.Secret)
 	log.Printf("Synchronized secret %s has been deleted. Recreating.", secret.Name)
@@ -145,6 +162,7 @@ func (self *rsaKeyHolder) initEncryptionKey() {
 	self.key = privateKey
 }
 
+// NewRSAKeyHolder creates new KeyHolder instance.
 func NewRSAKeyHolder(synchronizer syncApi.Synchronizer) KeyHolder {
 	holder := &rsaKeyHolder{
 		synchronizer: synchronizer,
