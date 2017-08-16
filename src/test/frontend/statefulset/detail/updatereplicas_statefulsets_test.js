@@ -55,6 +55,7 @@ describe('Update Deployment', () => {
         desiredPods: 2,
         resourceName: replicaSetMock,
         resourceKindName: resourceKindNameMock,
+        resourceKindDisplayName: resourceKindNameMock,
       });
     });
   });
