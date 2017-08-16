@@ -50,7 +50,7 @@ func TestToPersistentVolumeList(t *testing.T) {
 							Name:      "myclaim-name",
 							Namespace: "default",
 						},
-						Capacity: nil,
+						Capacity:         nil,
 						StorageClassName: "default-storageclass",
 					},
 					Status: v1.PersistentVolumeStatus{

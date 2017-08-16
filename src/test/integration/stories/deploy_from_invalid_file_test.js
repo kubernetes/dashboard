@@ -12,42 +12,116 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import path from 'path';
-import remote from 'selenium-webdriver/remote';
+import DeployPageObject from '../deploy/deploy_po';
+import DeploymentPageObject from '../deploymentlist/deployment_po';
+import DeleteReplicationControllerDialogObject from '../replicationcontrollerdetail/deletereplicationcontroller_po';
+import ReplicationControllerDetailPageObject from '../replicationcontrollerdetail/replicationcontrollerdetail_po';
 
-import DeployFromFilePageObject from '../deploy/deployfromfile_po';
-import LoginPageObject from '../login/login_po';
 
-// Test assumes, that there are no replication controllers in the cluster at the beginning.
-describe('Deploy from invalid file user story test', () => {
-  /** @type {!DeployFromFilePageObject} */
-  let deployFromFilePage;
+/**
+ * This integration test will check complete user story in given order:
+ *  - [Zerostate Page] - go to deploy page
+ *  - [Deploy Page] - provide data for not existing image and click deploy
+ *  - [Replication Controller List Page] - wait for card status error to appear and go to
+ *                                         details page
+ *  - [Replication Controller Details Page] - See events table
+ *  - [Replication Controller Details Page] - See pods table and click on Logs link near the
+ *                                            existing pod
+ *  - [Logs Page] - Check if pod logs show that pod is in pending state.
+ *  - Clean up and delete created resources
+ */
+describe('Deploy not existing image story', () => {
+
+  /** @type {!DeployPageObject} */
+  let deployPage;
+
+  /** @type {!DeploymentPageObject} */
+  let replicationControllersPage;
+
+  /** @type {!DeleteReplicationControllerDialogObject} */
+  let deleteDialog;
+
+  /** @type {!ReplicationControllerDetailPageObject} */
+  let replicationControllerDetailPage;
+
+  let appName = `test-${Date.now()}`;
+  let containerImage = 'test';
 
   beforeAll(() => {
-    browser.driver.setFileDetector(new remote.FileDetector());
-    deployFromFilePage = new DeployFromFilePageObject();
-
-    // skip login page
-    browser.get('#!/login');
-    new LoginPageObject().skipButton.click();
-
-    browser.get('#!/deploy/file');
-    // switches to deploy from file
-    deployFromFilePage.deployFromFileRadioButton.click();
+    deployPage = new DeployPageObject();
+    replicationControllersPage = new DeploymentPageObject();
+    deleteDialog = new DeleteReplicationControllerDialogObject();
+    replicationControllerDetailPage = new ReplicationControllerDetailPageObject();
   });
 
-  it('should pop up error dialog after uploading the invalid file', () => {
+  it('should deploy app', (doneFn) => {
+    // For empty cluster this should actually redirect to zerostate page
+    browser.get('#!/deploy/app');
     // given
-    let fileToUpload = '../deploy/invalid-rc.yaml';
-    let absolutePath = path.resolve(__dirname, fileToUpload);
+    deployPage.appNameField.sendKeys(appName);
+    deployPage.containerImageField.sendKeys(containerImage);
 
     // when
-    deployFromFilePage.makeInputVisible();
-    deployFromFilePage.setFile(absolutePath);
-    deployFromFilePage.deployButton.click();
+    deployPage.deployButton.click().then(() => {
+      // then
+      expect(browser.getCurrentUrl()).toContain('overview');
+      doneFn();
+    });
+
+    // it should wait for card to be in error state
+
+    // given
+    let cardErrors = replicationControllersPage.getElementByAppName(
+        replicationControllersPage.cardErrorsQuery, appName, true);
+    let cardErrorIcon = replicationControllersPage.getElementByAppName(
+        replicationControllersPage.cardErrorIconQuery, appName);
+
+    // when
+    browser.driver.wait(() => {
+      return cardErrorIcon.isPresent().then((result) => {
+        if (result) {
+          return true;
+        }
+
+        browser.driver.navigate().refresh();
+        return false;
+      });
+    });
 
     // then
-    expect(deployFromFilePage.mdDialog.isPresent()).toBeTruthy();
-    expect(browser.getCurrentUrl()).toContain('deploy');
+    expect(cardErrorIcon.isDisplayed()).toBeTruthy();
+    cardErrors.then((errors) => {
+      expect(errors.length).not.toBe(0);
+    });
+
+    // it should go to details page
+
+    // given
+    let cardDetailsPageLink = replicationControllersPage.getElementByAppName(
+        replicationControllersPage.cardDetailsPageLinkQuery, appName);
+
+    // when
+    cardDetailsPageLink.click();
+
+    // then
+    expect(browser.getCurrentUrl()).toContain(`deployment/default/${appName}`);
+
+    // Checks whether events table is displayed.
+    expect(replicationControllerDetailPage.eventsTable.isDisplayed()).toBeTruthy();
+
+  });
+
+  // Clean up and delete created resources
+  afterAll((doneFn) => {
+    let cardMenuButton = replicationControllersPage.getElementByAppName(
+        replicationControllersPage.cardMenuButtonQuery, appName);
+
+    browser.get('#!/deployment');
+
+    cardMenuButton.click();
+    replicationControllersPage.deleteAppButton.click().then(() => {
+      deleteDialog.deleteAppButton.click();
+      doneFn();
+    });
   });
 });

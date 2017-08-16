@@ -100,9 +100,13 @@ export default {
       'github.com/kubernetes/dashboard/src/app/backend/...',
     ],
     /**
-     * Port number of the backend server. Only used during development.
+     * Insecure port number of the backend server. Only used during development.
      */
     devServerPort: 9091,
+    /**
+     * Secure port number of the backend server. Only used during development.
+     */
+    secureDevServerPort: 8443,
     /**
      * Address for the Kubernetes API server.
      */
@@ -121,6 +125,14 @@ export default {
      */
     heapsterServerHost:
         gulpUtil.env.heapsterServerHost !== undefined ? gulpUtil.env.heapsterServerHost : '',
+    /**
+     * File containing the default x509 Certificate for HTTPS.
+     */
+    tlsCert: gulpUtil.env.tlsCert !== undefined ? gulpUtil.env.tlsCert : '',
+    /**
+     * File containing the default x509 private key matching --tlsCert.
+     */
+    tlsKey: gulpUtil.env.tlsKey !== undefined ? gulpUtil.env.tlsKey : '',
     /**
      * Variables used to differentiate between prod and dev build.
      */
@@ -183,6 +195,10 @@ export default {
      * The name of the root Angular module, i.e., the module that bootstraps the application.
      */
     rootModuleName: 'kubernetesDashboard',
+    /**
+     * If defined `gulp serve` will serve on HTTPS.
+     */
+    serveHttps: gulpUtil.env.serveHttps !== undefined,
   },
 
   /**

@@ -93,6 +93,16 @@ export class ControlPanelController {
   }
 
   /**
+   * Checks if HTTPS is used.
+   *
+   * @return {boolean}
+   * @export
+   */
+  isHttpsMode() {
+    return this.loginStatus_ && this.loginStatus_.httpsMode;
+  }
+
+  /**
    * Logs out current user.
    *
    * @export
