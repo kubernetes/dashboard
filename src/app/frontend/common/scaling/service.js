@@ -41,8 +41,10 @@ export class ScaleService {
    * @param {string} resourceKindName
    * @returns {!angular.$q.Promise}
    */
-  showScaleDialog(namespace, resource, currentPods, desiredPods, resourceKindName) {
+  showScaleDialog(
+      namespace, resource, currentPods, desiredPods, resourceKindName, resourceKindDisplayName) {
     return showScaleDialog(
-        this.mdDialog_, namespace, resource, currentPods, desiredPods, resourceKindName);
+        this.mdDialog_, namespace, resource, currentPods, desiredPods, resourceKindName,
+        resourceKindDisplayName);
   }
 }

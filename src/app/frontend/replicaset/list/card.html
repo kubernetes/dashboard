@@ -80,7 +80,8 @@ limitations under the License.
                       resource-kind-name="::$ctrl.replicaSet.typeMeta.kind">
       </kd-logs-button>
       <kd-resource-card-menu>
-        <kd-scale-button resource-kind-name="[[Replica Set|Label 'Replica Set' which appears at the top of the scale dialog, opened from a replica set list page.]]"
+        <kd-scale-button resource-kind-display-name="[[Replica Set|Label 'Replica Set' which appears at the top of the scale dialog, opened from a replica set list page.]]"
+                         resource-kind-name="$ctrl.replicaSet.typeMeta.kind"
                          object-meta="$ctrl.replicaSet.objectMeta"
                          current-pods="$ctrl.replicaSet.pods.current"
                          desired-pods="$ctrl.replicaSet.pods.desired"
