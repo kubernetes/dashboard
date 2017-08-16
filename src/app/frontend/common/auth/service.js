@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {stateName as errorState} from 'error/state';
 import {stateName as loginState} from 'login/state';
 import {stateName as overviewState} from 'overview/state';
 
@@ -139,26 +140,26 @@ export class AuthService {
     let deferred = this.q_.defer();
     this.getLoginStatus().then(
         (/** @type {!backendApi.LoginStatus} */ loginStatus) => {
-          // Disable entering login page from HTTP.
-          if (transition.to().name === loginState && !loginStatus.httpsMode) {
+          // Do not allow entering login page if already authenticated or using HTTP.
+          if (transition.to().name === loginState &&
+              (loginStatus.headerPresent || loginStatus.tokenPresent || !loginStatus.httpsMode)) {
             deferred.resolve(this.state_.target(overviewState));
             return;
           }
 
-          // Do not redirect if user is going to login page already or has chosen to skip it.
-          if (!this.isLoginPageEnabled() || transition.to().name === loginState ||
-              transition.to().name === 'internalerror') {
-            deferred.resolve(true);
-            return deferred.promise;
-          }
-
-          // Do not redirect to login if already authenticated or using HTTP.
-          if (loginStatus.headerPresent || loginStatus.tokenPresent || !loginStatus.httpsMode) {
+          // In following cases user should not be redirected and reach his target state:
+          if (transition.to().name === loginState ||  // User is going to login page.
+              transition.to().name === errorState ||  // User is going to error page.
+              !this.isLoginPageEnabled() ||           // User has chosen to skip login page.
+              loginStatus.headerPresent ||            // User is already authenticated.
+              loginStatus.tokenPresent ||             // User is already authenticated.
+              !loginStatus.httpsMode)                 // Authentication on HTTP is disabled.
+          {
             deferred.resolve(true);
             return;
           }
 
-          // Go to login state.
+          // In other cases redirect user to login state.
           deferred.resolve(this.state_.target(loginState));
         },
         (err) => {
