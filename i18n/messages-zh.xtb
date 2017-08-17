@@ -550,13 +550,16 @@
   <translation id="2412371468817393973" key="MSG_PERSISTENTVOLUMECLAIM_DETAIL_INFO_2" desc="Persistent volume claim info details section volume entry.">存储卷</translation>
   <translation id="6740597941261077457" key="MSG_PERSISTENTVOLUMECLAIM_DETAIL_INFO_3" desc="Persistent volume claim info details section capacity entry.">总量</translation>
   <translation id="297809042910539610" key="MSG_PERSISTENTVOLUMECLAIM_DETAIL_INFO_4" desc="Persistent volume claim info details section access modes entry.">访问模式</translation>
+  <translation id="4416635686473158703" key="MSG_PERSISTENTVOLUMECLAIM_DETAIL_INFO_5" desc="Persistent volume claim info details section storage class entry.">存储类型</translation>
   <translation id="29404782164326270" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">持久化存储卷索取</translation>
   <translation id="5483797855700474826" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of persistent volume claims (persistent volume claim list view).">名称</translation>
   <translation id="1258689958046107203" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARDLIST_2" desc="Label \'Namespace\' which appears as a column label in the table of persistent volume claims (persistent volume claim list view).">命名空间</translation>
   <translation id="1790149424209494199" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARDLIST_3" desc="Label \'Volume\' which appears as a column label in the table of persistent volume claims (persistent volume claim list view).">存储卷</translation>
-  <translation id="5942271040555588136" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARDLIST_4" desc="Label \'Labels\' which appears as a column label in the table of persistent volume claim (persistent volume claim list view).">标签</translation>
+  <translation id="6848550680164349416" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARDLIST_4" desc="Label \'Status\' which appears as a column label in the table of persistent volume claims (persistent volume claim list view).">状态</translation>
   <translation id="5458993660911534244" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARDLIST_5" desc="Label \'Age\' which appears as a column label in the table of persistent volume claims (persistent volume claim list view).">已创建</translation>
   <translation id="5623491181214143081" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARDLIST_6" desc="Text for persistent volume claim card list zerostate.">没有持久化存储卷索取可显示</translation>
+  <translation id="2711600512301130906" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARDLIST_7" desc="Label \'Capacity\' which appears as a column label in the table of persistent volume claims (persistent volume claim list view).">总量</translation> <translation id="3165687067342260212" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARDLIST_8" desc="Label \'AccessModes\' which appears as a column label in the table of persistent volume claims (persistent volume claim list view).">访问模式</translation>
+  <translation id="5181720011017192344" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARDLIST_9" desc="Label \'StorageClass\' which appears as a column label in the table of persistent volume claims (persistent volume claim list view).">存储类型</translation>
   <translation id="445776331089273321" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARD_0" desc="Tooltip text which appears on error icon hover.">此索取已丢失</translation>
   <translation id="2307976094948542528" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARD_1" desc="Tooltip text which appears on pending icon hover.">此索取等待中</translation>
   <translation id="739174621480425961" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARD_2" desc="Label \'Persistent Volume Claim\' which will appear in the persistent volume claim delete dialog opened from a persistentvolumeclaim card on the list page.">持久化存储卷索取</translation>
@@ -569,6 +572,8 @@
   <translation id="1048037683065603923" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_4" desc="Persistent volume info details section access modes entry.">访问模式</translation>
   <translation id="489198110526224081" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_5" desc="Persistent volume info details section capacity entry.">总量</translation>
   <translation id="7193098873360233228" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_6" desc="Persistent volume info details section message entry.">消息</translation>
+  <translation id="8677793784230574410" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_7" desc="Persistent volume info details section storage class entry.">存储类型</translation>
+  <translation id="4472860153979076217" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_8" desc="Persistent volume info details section reason entry.">原因</translation>
   <translation id="3344267084925697004" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_0" desc="Persistent volume source info title.">持久化存储卷来源</translation>
   <translation id="4229851576634547217" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_1" desc="Persistent volume source info host path title.">宿主机路径</translation>
   <translation id="2012274989896397034" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_10" desc="Persistent volume source info AWS block storage section FS type entry.">文件系统类型</translation>
@@ -616,9 +621,10 @@
   <translation id="2543608444657856177" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_9" desc="Persistent volume source info AWS block storage section volume ID entry.">存储卷 ID</translation>
   <translation id="7944617415298542080" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">持久化存储卷</translation>
   <translation id="132041398851471554" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_1" desc="Persistent volume list header: name.">名称</translation>
-  <translation id="5516067660249261426" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_2" desc="Persistent volume list header: labels.">标签</translation>
+  <translation id="2070585758124097852" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_10" desc="Persistent volume list header: storage class.">存储类型</translation>
+  <translation id="5310384443036079852" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_2" desc="Persistent volume list header: access modes.">访问模式</translation>
   <translation id="401484757289437256" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_3" desc="Persistent volume list header: capacity.">总量</translation>
-  <translation id="119943904947653278" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_4" desc="Persistent volume list header: access modes.">访问模式</translation>
+  <translation id="6261463560337562570" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_4" desc="Persistent volume list header: reclaim policy.">回收策略</translation>
   <translation id="384445450481051056" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_5" desc="Persistent volume list header: status.">状态</translation>
   <translation id="6387315119675278668" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_6" desc="Persistent volume list header: claim.">索取</translation>
   <translation id="1737383119058892029" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_7" desc="Persistent volume list header: reason.">原因</translation>

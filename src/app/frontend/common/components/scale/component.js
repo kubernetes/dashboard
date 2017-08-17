@@ -29,6 +29,8 @@ class ScaleButtonController {
     this.objectMeta;
     /** @export {string} - Initialized from binding */
     this.resourceKindName;
+    /** @export {string} - Initialized from binding */
+    this.resourceKindDisplayName;
     /** @export {number} - Initialized from binding */
     this.currentPods;
     /** @export {number} - Initialized from binding */
@@ -42,7 +44,7 @@ class ScaleButtonController {
   handleScaleResourceDialog() {
     this.kdScaleService_.showScaleDialog(
         this.objectMeta.namespace, this.objectMeta.name, this.currentPods, this.desiredPods,
-        this.resourceKindName);
+        this.resourceKindName, this.resourceKindDisplayName);
   }
 
   /**
@@ -63,7 +65,8 @@ export const scaleButtonComponent = {
   controller: ScaleButtonController,
   templateUrl: 'common/components/scale/scale.html',
   bindings: {
-    'resourceKindName': '@',
+    'resourceKindDisplayName': '@',
+    'resourceKindName': '<',
     'objectMeta': '<',
     'currentPods': '<',
     'desiredPods': '<',

@@ -57,16 +57,6 @@ export default class StatefulSetCardController {
   }
 
   /**
-   * @export
-   */
-  showScaleDialog() {
-    this.kdScaleService_.showScaleDialog(
-        this.statefulSet.objectMeta.namespace, this.statefulSet.objectMeta.name,
-        this.statefulSet.pods.current, this.statefulSet.pods.desired,
-        this.statefulSet.typeMeta.kind);
-  }
-
-  /**
    * @return {string}
    * @export
    */

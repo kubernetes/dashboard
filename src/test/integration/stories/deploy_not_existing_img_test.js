@@ -14,9 +14,9 @@
 
 import DeployPageObject from '../deploy/deploy_po';
 import DeploymentPageObject from '../deploymentlist/deployment_po';
-import LoginPageObject from '../login/login_po';
 import DeleteReplicationControllerDialogObject from '../replicationcontrollerdetail/deletereplicationcontroller_po';
 import ReplicationControllerDetailPageObject from '../replicationcontrollerdetail/replicationcontrollerdetail_po';
+
 
 /**
  * This integration test will check complete user story in given order:
@@ -52,13 +52,9 @@ describe('Deploy not existing image story', () => {
     replicationControllersPage = new DeploymentPageObject();
     deleteDialog = new DeleteReplicationControllerDialogObject();
     replicationControllerDetailPage = new ReplicationControllerDetailPageObject();
-
-    // skip login page
-    browser.get('#!/login');
-    new LoginPageObject().skipButton.click();
   });
 
-  it('should deploy app', () => {
+  it('should deploy app', (doneFn) => {
     // For empty cluster this should actually redirect to zerostate page
     browser.get('#!/deploy/app');
     // given
@@ -69,6 +65,7 @@ describe('Deploy not existing image story', () => {
     deployPage.deployButton.click().then(() => {
       // then
       expect(browser.getCurrentUrl()).toContain('overview');
+      doneFn();
     });
 
     // it should wait for card to be in error state

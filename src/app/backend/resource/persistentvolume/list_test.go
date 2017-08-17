@@ -42,7 +42,7 @@ func TestToPersistentVolumeList(t *testing.T) {
 						Name: "foo",
 					},
 					Spec: v1.PersistentVolumeSpec{
-						PersistentVolumeReclaimPolicy: v1.PersistentVolumeReclaimRecycle,
+						PersistentVolumeReclaimPolicy: "delete",
 						AccessModes: []v1.PersistentVolumeAccessMode{
 							v1.ReadWriteOnce,
 						},
@@ -50,7 +50,8 @@ func TestToPersistentVolumeList(t *testing.T) {
 							Name:      "myclaim-name",
 							Namespace: "default",
 						},
-						Capacity: nil,
+						Capacity:         nil,
+						StorageClassName: "default-storageclass",
 					},
 					Status: v1.PersistentVolumeStatus{
 						Phase:  v1.VolumePending,
@@ -69,11 +70,13 @@ func TestToPersistentVolumeList(t *testing.T) {
 					ObjectMeta: api.ObjectMeta{
 						Name: "foo",
 					},
-					Capacity:    nil,
-					AccessModes: []v1.PersistentVolumeAccessMode{v1.ReadWriteOnce},
-					Status:      v1.VolumePending,
-					Claim:       "default/myclaim-name",
-					Reason:      "my-reason",
+					Capacity:      nil,
+					AccessModes:   []v1.PersistentVolumeAccessMode{v1.ReadWriteOnce},
+					Status:        v1.VolumePending,
+					Claim:         "default/myclaim-name",
+					Reason:        "my-reason",
+					ReclaimPolicy: "delete",
+					StorageClass:  "default-storageclass",
 				}},
 			},
 		},
