@@ -61,34 +61,35 @@ type ResourceController interface {
 
 // NewResourceController creates instance of ResourceController based on given reference. It allows
 // to convert owner/created by references to real objects.
-func NewResourceController(ref v1.ObjectReference, client client.Interface) (ResourceController, error) {
+func NewResourceController(ref meta.OwnerReference, namespace string, client client.Interface) (
+	ResourceController, error) {
 	switch strings.ToLower(ref.Kind) {
 	case api.ResourceKindJob:
-		job, err := client.BatchV1().Jobs(ref.Namespace).Get(ref.Name, meta.GetOptions{})
+		job, err := client.BatchV1().Jobs(namespace).Get(ref.Name, meta.GetOptions{})
 		if err != nil {
 			return nil, err
 		}
 		return JobController(*job), nil
 	case api.ResourceKindReplicaSet:
-		rs, err := client.ExtensionsV1beta1().ReplicaSets(ref.Namespace).Get(ref.Name, meta.GetOptions{})
+		rs, err := client.ExtensionsV1beta1().ReplicaSets(namespace).Get(ref.Name, meta.GetOptions{})
 		if err != nil {
 			return nil, err
 		}
 		return ReplicaSetController(*rs), nil
 	case api.ResourceKindReplicationController:
-		rc, err := client.CoreV1().ReplicationControllers(ref.Namespace).Get(ref.Name, meta.GetOptions{})
+		rc, err := client.CoreV1().ReplicationControllers(namespace).Get(ref.Name, meta.GetOptions{})
 		if err != nil {
 			return nil, err
 		}
 		return ReplicationControllerController(*rc), nil
 	case api.ResourceKindDaemonSet:
-		ds, err := client.ExtensionsV1beta1().DaemonSets(ref.Namespace).Get(ref.Name, meta.GetOptions{})
+		ds, err := client.ExtensionsV1beta1().DaemonSets(namespace).Get(ref.Name, meta.GetOptions{})
 		if err != nil {
 			return nil, err
 		}
 		return DaemonSetController(*ds), nil
 	case api.ResourceKindStatefulSet:
-		ss, err := client.AppsV1beta1().StatefulSets(ref.Namespace).Get(ref.Name, meta.GetOptions{})
+		ss, err := client.AppsV1beta1().StatefulSets(namespace).Get(ref.Name, meta.GetOptions{})
 		if err != nil {
 			return nil, err
 		}

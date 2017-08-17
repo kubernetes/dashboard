@@ -16,7 +16,6 @@ package pod
 
 import (
 	"encoding/base64"
-	"encoding/json"
 	"fmt"
 	"log"
 	"math"
@@ -124,19 +123,9 @@ func GetPodDetail(client kubernetes.Interface, metricClient metricapi.MetricClie
 		return nil, err
 	}
 
-	controller := controller.ResourceOwner{}
-	creatorAnnotation, found := pod.ObjectMeta.Annotations[v1.CreatedByAnnotation]
-
-	//GetControllerOf
-	//metaV1.GetController
-	//if controllerRef := metav1.GetControllerOf(pod); controllerRef != nil {
-
-	if found {
-		creatorRef, err := getPodCreator(client, creatorAnnotation, common.NewSameNamespaceQuery(namespace), pod)
-		if err != nil {
-			return nil, err
-		}
-		controller = *creatorRef
+	controller, err := getPodCreator(client, common.NewSameNamespaceQuery(namespace), pod)
+	if err != nil {
+		return nil, err
 	}
 
 	_, metricPromises := dataselect.GenericDataSelectWithMetrics(toCells([]v1.Pod{*pod}),
@@ -167,14 +156,8 @@ func GetPodDetail(client kubernetes.Interface, metricClient metricapi.MetricClie
 	return &podDetail, nil
 }
 
-func getPodCreator(client kubernetes.Interface, creatorAnnotation string, nsQuery *common.NamespaceQuery,
-	pod *v1.Pod) (*controller.ResourceOwner, error) {
-
-	var serializedReference v1.SerializedReference
-	err := json.Unmarshal([]byte(creatorAnnotation), &serializedReference)
-	if err != nil {
-		return nil, err
-	}
+func getPodCreator(client kubernetes.Interface, nsQuery *common.NamespaceQuery, pod *v1.Pod) (
+	controller.ResourceOwner, error) {
 
 	channels := &common.ResourceChannels{
 		PodList:   common.GetPodListChannel(client, nsQuery, 1),
@@ -183,7 +166,7 @@ func getPodCreator(client kubernetes.Interface, creatorAnnotation string, nsQuer
 
 	pods := <-channels.PodList.List
 	if err := <-channels.PodList.Error; err != nil {
-		return nil, err
+		return controller.ResourceOwner{}, nil
 	}
 
 	events := <-channels.EventList.List
@@ -191,18 +174,15 @@ func getPodCreator(client kubernetes.Interface, creatorAnnotation string, nsQuer
 		events = &v1.EventList{}
 	}
 
-	reference := serializedReference.Reference
-	rc, err := controller.NewResourceController(reference, client)
+	rc, err := controller.NewResourceController(*common.GetControllerOf(pod), pod.Namespace, client)
 	if err != nil {
 		if isNotFoundError(err) {
-			return &controller.ResourceOwner{}, nil
+			return controller.ResourceOwner{}, nil
 		}
-
-		return nil, err
+		return controller.ResourceOwner{}, nil
 	}
 
-	controller := rc.Get(pods.Items, events.Items)
-	return &controller, err
+	return rc.Get(pods.Items, events.Items), err
 }
 
 // isNotFoundError returns true when the given error is 404-NotFound error.
