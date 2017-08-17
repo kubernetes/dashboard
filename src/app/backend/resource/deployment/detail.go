@@ -171,14 +171,15 @@ func GetDeploymentDetail(client client.Interface, metricClient metricapi.MetricC
 
 	var newReplicaSet replicaset.ReplicaSet
 	if newRs != nil {
-		newRsPodInfo := common.GetPodInfo(newRs.Status.Replicas, *newRs.Spec.Replicas, rawPods.Items)
-		events, err := event.GetPodsEvents(client, namespace, rawPods.Items)
+		matchingPods := common.FilterPodsByControllerRef(newRs, rawPods.Items)
+		newRsPodInfo := common.GetPodInfo(newRs.Status.Replicas, *newRs.Spec.Replicas, matchingPods)
+		events, err := event.GetPodsEvents(client, namespace, matchingPods)
 		nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
 		if criticalError != nil {
 			return nil, criticalError
 		}
 
-		newRsPodInfo.Warnings = event.GetPodsEventWarnings(events, rawPods.Items)
+		newRsPodInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)
 		newReplicaSet = replicaset.ToReplicaSet(newRs, &newRsPodInfo)
 	}
 

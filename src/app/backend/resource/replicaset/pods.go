@@ -66,7 +66,7 @@ func getRawReplicaSetPods(client k8sClient.Interface, petSetName, namespace stri
 		return nil, err
 	}
 
-	return common.FilterPodsByOwnerReference(rs.Namespace, rs.UID, podList.Items), nil
+	return common.FilterPodsByControllerRef(rs, podList.Items), nil
 }
 
 func getReplicaSetPodInfo(client k8sClient.Interface, replicaSet *extensions.ReplicaSet) (*common.PodInfo, error) {

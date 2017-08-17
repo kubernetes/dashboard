@@ -66,7 +66,7 @@ func getRawStatefulSetPods(client *k8sClient.Clientset, name, namespace string) 
 		return nil, err
 	}
 
-	return common.FilterPodsByOwnerReference(statefulSet.Namespace, statefulSet.UID, podList.Items), nil
+	return common.FilterPodsByControllerRef(statefulSet, podList.Items), nil
 }
 
 // Returns simple info about pods(running, desired, failing, etc.) related to given pet set.

@@ -115,8 +115,7 @@ func toStatefulSetList(statefulSets []apps.StatefulSet, pods []v1.Pod, events []
 	statefulSetList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
 	for _, statefulSet := range statefulSets {
-		matchingPods := common.FilterPodsByOwnerReference(statefulSet.Namespace, statefulSet.UID, pods)
-		// TODO(floreks): Conversion should be omitted when client type will be updated
+		matchingPods := common.FilterPodsByControllerRef(&statefulSet, pods)
 		podInfo := common.GetPodInfo(statefulSet.Status.Replicas, *statefulSet.Spec.Replicas, matchingPods)
 		podInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)
 		statefulSetList.StatefulSets = append(statefulSetList.StatefulSets, toStatefulSet(&statefulSet, &podInfo))

@@ -15,7 +15,7 @@
 package common
 
 import (
-	"k8s.io/apimachinery/pkg/types"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/pkg/api/helper"
 	"k8s.io/client-go/pkg/api/v1"
 	batch "k8s.io/client-go/pkg/apis/batch/v1"
@@ -23,8 +23,8 @@ import (
 )
 
 // FilterPodsByControllerResource returns a subset of pods controlled by given deployment.
-func FilterDeploymentPodsByOwnerReference(deployment extensions.Deployment,
-	allRS []extensions.ReplicaSet, allPods []v1.Pod) []v1.Pod {
+func FilterDeploymentPodsByOwnerReference(deployment extensions.Deployment, allRS []extensions.ReplicaSet,
+	allPods []v1.Pod) []v1.Pod {
 	var matchingPods []v1.Pod
 
 	rsTemplate := v1.PodTemplateSpec{
@@ -34,25 +34,19 @@ func FilterDeploymentPodsByOwnerReference(deployment extensions.Deployment,
 
 	for _, rs := range allRS {
 		if EqualIgnoreHash(rs.Spec.Template, rsTemplate) {
-			matchingPods = FilterPodsByOwnerReference(rs.Namespace, rs.UID, allPods)
+			matchingPods = FilterPodsByControllerRef(&rs, allPods)
 		}
 	}
 
 	return matchingPods
 }
 
-// FilterPodsByControllerResource returns a subset of pods controlled by given controller resource,
-// excluding deployments.
-func FilterPodsByOwnerReference(namespace string, uid types.UID, allPods []v1.Pod) []v1.Pod {
+// FilterPodsByControllerRef returns a subset of pods controlled by given controller resource, excluding deployments.
+func FilterPodsByControllerRef(owner metav1.Object, allPods []v1.Pod) []v1.Pod {
 	var matchingPods []v1.Pod
 	for _, pod := range allPods {
-		if pod.Namespace == namespace {
-			for _, ownerRef := range pod.OwnerReferences {
-				if ownerRef.Controller != nil && *ownerRef.Controller == true &&
-					ownerRef.UID == uid {
-					matchingPods = append(matchingPods, pod)
-				}
-			}
+		if IsControlledBy(&pod, owner) {
+			matchingPods = append(matchingPods, pod)
 		}
 	}
 	return matchingPods

@@ -67,7 +67,7 @@ func getRawReplicationControllerPods(client k8sClient.Interface, rcName, namespa
 		return nil, err
 	}
 
-	return common.FilterPodsByOwnerReference(rc.Namespace, rc.UID, podList.Items), nil
+	return common.FilterPodsByControllerRef(rc, podList.Items), nil
 }
 
 // getReplicationControllerPodInfo returns simple info about pods(running, desired, failing, etc.)

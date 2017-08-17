@@ -40,7 +40,8 @@ type ResourceOwner struct {
 	ContainerImages []string       `json:"containerImages"`
 }
 
-// LogSources is a structure that represents all log files (all combinations of pods and container) from a higher level controller (such as ReplicaSet)
+// LogSources is a structure that represents all log files (all combinations of pods and container)
+// from a higher level controller (such as ReplicaSet).
 type LogSources struct {
 	ContainerNames []string `json:"containerNames"`
 	PodNames       []string `json:"podNames"`
@@ -54,7 +55,7 @@ type ResourceController interface {
 	UID() types.UID
 	// Get is a method, that returns ResourceOwner object.
 	Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOwner
-	// Returns all log sources of controlled resource (e.g. a list of containers and pods for a replica set)
+	// Returns all log sources of controlled resource (e.g. a list of containers and pods for a replica set).
 	GetLogSources(allPods []v1.Pod) LogSources
 }
 
@@ -139,7 +140,7 @@ type ReplicaSetController extensions.ReplicaSet
 
 // Get is an implementation of Get method from ResourceController interface.
 func (self ReplicaSetController) Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOwner {
-	matchingPods := common.FilterPodsByOwnerReference(self.Namespace, self.UID(), allPods)
+	matchingPods := common.FilterPodsByControllerRef(&self, allPods)
 	podInfo := common.GetPodInfo(self.Status.Replicas, *self.Spec.Replicas, matchingPods)
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
@@ -158,7 +159,7 @@ func (self ReplicaSetController) UID() types.UID {
 
 // GetLogSources is an implementation of the GetLogSources method from ResourceController interface.
 func (self ReplicaSetController) GetLogSources(allPods []v1.Pod) LogSources {
-	controlledPods := common.FilterPodsByOwnerReference(self.Namespace, self.UID(), allPods)
+	controlledPods := common.FilterPodsByControllerRef(&self, allPods)
 	return LogSources{
 		PodNames:       getPodNames(controlledPods),
 		ContainerNames: common.GetContainerNames(&self.Spec.Template.Spec),
@@ -172,7 +173,7 @@ type ReplicationControllerController v1.ReplicationController
 // Get is an implementation of Get method from ResourceController interface.
 func (self ReplicationControllerController) Get(allPods []v1.Pod,
 	allEvents []v1.Event) ResourceOwner {
-	matchingPods := common.FilterPodsByOwnerReference(self.Namespace, self.UID(), allPods)
+	matchingPods := common.FilterPodsByControllerRef(&self, allPods)
 	podInfo := common.GetPodInfo(self.Status.Replicas, *self.Spec.Replicas, matchingPods)
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
@@ -191,7 +192,7 @@ func (self ReplicationControllerController) UID() types.UID {
 
 // GetLogSources is an implementation of the GetLogSources method from ResourceController interface.
 func (self ReplicationControllerController) GetLogSources(allPods []v1.Pod) LogSources {
-	controlledPods := common.FilterPodsByOwnerReference(self.Namespace, self.UID(), allPods)
+	controlledPods := common.FilterPodsByControllerRef(&self, allPods)
 	return LogSources{
 		PodNames:       getPodNames(controlledPods),
 		ContainerNames: common.GetContainerNames(&self.Spec.Template.Spec),
@@ -204,7 +205,7 @@ type DaemonSetController extensions.DaemonSet
 
 // Get is an implementation of Get method from ResourceController interface.
 func (self DaemonSetController) Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOwner {
-	matchingPods := common.FilterPodsByOwnerReference(self.Namespace, self.UID(), allPods)
+	matchingPods := common.FilterPodsByControllerRef(&self, allPods)
 	podInfo := common.GetPodInfo(self.Status.CurrentNumberScheduled,
 		self.Status.DesiredNumberScheduled, matchingPods)
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
@@ -224,7 +225,7 @@ func (self DaemonSetController) UID() types.UID {
 
 // GetLogSources is an implementation of the GetLogSources method from ResourceController interface.
 func (self DaemonSetController) GetLogSources(allPods []v1.Pod) LogSources {
-	controlledPods := common.FilterPodsByOwnerReference(self.Namespace, self.UID(), allPods)
+	controlledPods := common.FilterPodsByControllerRef(&self, allPods)
 	return LogSources{
 		PodNames:       getPodNames(controlledPods),
 		ContainerNames: common.GetContainerNames(&self.Spec.Template.Spec),
@@ -237,7 +238,7 @@ type StatefulSetController apps.StatefulSet
 
 // Get is an implementation of Get method from ResourceController interface.
 func (self StatefulSetController) Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOwner {
-	matchingPods := common.FilterPodsByOwnerReference(self.Namespace, self.UID(), allPods)
+	matchingPods := common.FilterPodsByControllerRef(&self, allPods)
 	podInfo := common.GetPodInfo(self.Status.Replicas, *self.Spec.Replicas, matchingPods)
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
@@ -256,7 +257,7 @@ func (self StatefulSetController) UID() types.UID {
 
 // GetLogSources is an implementation of the GetLogSources method from ResourceController interface.
 func (self StatefulSetController) GetLogSources(allPods []v1.Pod) LogSources {
-	controlledPods := common.FilterPodsByOwnerReference(self.Namespace, self.UID(), allPods)
+	controlledPods := common.FilterPodsByControllerRef(&self, allPods)
 	return LogSources{
 		PodNames:       getPodNames(controlledPods),
 		ContainerNames: common.GetContainerNames(&self.Spec.Template.Spec),
