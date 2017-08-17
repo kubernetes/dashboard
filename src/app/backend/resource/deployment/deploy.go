@@ -343,7 +343,11 @@ func DeployAppFromFile(cfg *rest.Config, spec *AppDeploymentFromFileSpec) (bool,
 			return false, err
 		}
 
-		_, err = dynamicClient.Resource(resource, spec.Namespace).Create(&data)
+		if strings.Compare(spec.Namespace, "_all") == 0 {
+			_, err = dynamicClient.Resource(resource, data.GetNamespace()).Create(&data)
+		} else {
+			_, err = dynamicClient.Resource(resource, spec.Namespace).Create(&data)
+		}
 
 		if err != nil {
 			return false, err
