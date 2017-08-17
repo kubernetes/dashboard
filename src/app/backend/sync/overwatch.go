@@ -107,8 +107,9 @@ func (self *overwatch) monitorSynchronizerStatus(synchronizer syncApi.Synchroniz
 			log.Printf("Synchronizer %s exited with error: %s", name, err.Error())
 			if self.policyMap[name] == AlwaysRestart {
 				self.broadcastRestartEvent(name)
-				close(stopCh)
 			}
+
+			close(stopCh)
 		}
 	}, 0, stopCh)
 }
