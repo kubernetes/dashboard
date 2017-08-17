@@ -44,8 +44,9 @@ const ignoredLicenseCheckFiles = ['fieldpath'];
  * @return {string}
  */
 function getLicenseFileFilter(...ext) {
-  let ignorePattern = ignoredLicenseCheckFiles.length > 0 ? `!(${ignoredLicenseCheckFiles.join()})` : '';
-  return `**/${ignorePattern}*.{${ext.join()}}`
+  let ignorePattern =
+      ignoredLicenseCheckFiles.length > 0 ? `!(${ignoredLicenseCheckFiles.join()})` : '';
+  return `**/${ignorePattern}*.{${ext.join()}}`;
 }
 
 /**
@@ -174,7 +175,10 @@ gulp.task('check-license-headers', () => {
     }
   };
 
-  return gulp.src([path.join(conf.paths.src, getLicenseFileFilter('js', 'go', 'scss', 'html'))], {base: conf.paths.base})
+  return gulp
+      .src(
+          [path.join(conf.paths.src, getLicenseFileFilter('js', 'go', 'scss', 'html'))],
+          {base: conf.paths.base})
       .pipe(commonFilter)
       .pipe(
           licenseCheck(licenseConfig('build/assets/license/header.txt')).on('log', handleLogEvent))
@@ -208,7 +212,9 @@ gulp.task('update-license-headers', () => {
   const htmlFilter = filter(getLicenseFileFilter('html'), {restore: true});
   const matchRate = 0.9;
 
-  gulp.src([path.join(conf.paths.src, getLicenseFileFilter('js', 'go', 'scss', 'html'))], {base: conf.paths.base})
+  gulp.src(
+          [path.join(conf.paths.src, getLicenseFileFilter('js', 'go', 'scss', 'html'))],
+          {base: conf.paths.base})
       .pipe(commonFilter)
       .pipe(license(fs.readFileSync('build/assets/license/header.txt', 'utf8'), {}, matchRate))
       .pipe(commonFilter.restore)
