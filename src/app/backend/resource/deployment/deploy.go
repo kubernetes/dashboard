@@ -20,7 +20,8 @@ import (
 	"log"
 	"strings"
 
-	"k8s.io/apimachinery/pkg/api/resource"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
+        "k8s.io/apimachinery/pkg/api/resource"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime/schema"
@@ -350,7 +351,7 @@ func DeployAppFromFile(cfg *rest.Config, spec *AppDeploymentFromFileSpec) (bool,
 		}
 
 		if err != nil {
-			return false, err
+			return false, errors.LocalizeError(err)
 		}
 	}
 	return true, nil
