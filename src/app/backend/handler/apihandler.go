@@ -956,7 +956,7 @@ func (apiHandler *APIHandler) handleGetReplicaCount(request *restful.Request, re
 }
 
 func (apiHandler *APIHandler) handleDeployFromFile(request *restful.Request, response *restful.Response) {
-	cfg, err := apiHandler.cManager.ClientCmdConfig(request)
+	cfg, err := apiHandler.cManager.Config(request)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -968,7 +968,7 @@ func (apiHandler *APIHandler) handleDeployFromFile(request *restful.Request, res
 		return
 	}
 
-	isDeployed, err := deployment.DeployAppFromFile(cfg, deploymentSpec, deployment.CreateObjectFromInfoFn)
+	isDeployed, err := deployment.DeployAppFromFile(cfg, deploymentSpec)
 	if !isDeployed {
 		handleInternalError(response, err)
 		return
