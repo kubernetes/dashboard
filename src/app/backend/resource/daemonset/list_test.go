@@ -41,13 +41,13 @@ func TestToDaemonSetList(t *testing.T) {
 			},
 		},
 	}
-	diffNamespacePodMeta := metaV1.ObjectMeta{
+	diffPodMeta := metaV1.ObjectMeta{
 		Namespace: "namespace-2",
 		OwnerReferences: []metaV1.OwnerReference{
 			{
 				Kind:       "DaemonSet",
-				Name:       "my-name-1",
-				UID:        "uid-1",
+				Name:       "my-name-2",
+				UID:        "uid-2",
 				Controller: &controller,
 			},
 		},
@@ -131,7 +131,7 @@ func TestToDaemonSetList(t *testing.T) {
 					},
 				},
 				{
-					ObjectMeta: diffNamespacePodMeta,
+					ObjectMeta: diffPodMeta,
 					Status: v1.PodStatus{
 						Phase: v1.PodPending,
 					},
