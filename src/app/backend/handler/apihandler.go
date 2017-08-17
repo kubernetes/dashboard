@@ -20,6 +20,9 @@ import (
 	"strconv"
 	"strings"
 
+	"fmt"
+	"io"
+
 	restful "github.com/emicklei/go-restful"
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/auth"
@@ -559,8 +562,8 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			To(apiHandler.handleLogs).
 			Writes(logs.LogDetails{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/log/{namespace}/{pod}/{container}").
-			To(apiHandler.handleLogs).
+		apiV1Ws.GET("/log/file/{namespace}/{pod}/{container}").
+			To(apiHandler.handleLogFile).
 			Writes(logs.LogDetails{}))
 
 	apiV1Ws.Route(
@@ -575,6 +578,7 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 
 	return wsContainer, nil
 }
+
 
 // TODO: Handle case in which RBAC feature is not enabled in API server. Currently returns 404 resource not found
 func (apiHandler *APIHandler) handleGetRbacRoleList(request *restful.Request, response *restful.Response) {
@@ -2156,12 +2160,37 @@ func (apiHandler *APIHandler) handleLogs(request *restful.Request, response *res
 		}
 	}
 
-	result, err := container.GetPodLogs(k8sClient, namespace, podID, containerID, logSelector)
+	result, err := container.GetLogDetails(k8sClient, namespace, podID, containerID, logSelector)
 	if err != nil {
 		handleInternalError(response, err)
 		return
 	}
 	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleLogFile(request *restful.Request, response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	namespace := request.PathParameter("namespace")
+	podID := request.PathParameter("pod")
+	containerID := request.PathParameter("container")
+
+	filename := fmt.Sprintf("attachment; filename='logs-from-%v-in-%v.txt'", containerID, podID)
+	response.AddHeader("Content-Disposition", filename)
+	logStream, err := container.GetLogFile(k8sClient, namespace, podID, containerID)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	defer logStream.Close()
+	_, err = io.Copy(response, logStream)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
 }
 
 // parseNamespacePathParameter parses namespace selector for list pages in path parameter.

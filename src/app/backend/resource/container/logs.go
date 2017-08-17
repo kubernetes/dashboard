@@ -17,6 +17,8 @@ package container
 import (
 	"io/ioutil"
 
+	"io"
+
 	"github.com/kubernetes/dashboard/src/app/backend/resource/logs"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
@@ -53,9 +55,16 @@ func GetPodContainers(client kubernetes.Interface, namespace, podID string) (*Po
 
 // GetPodLogs returns logs for particular pod and container. When container
 // is null, logs for the first one are returned.
+<<<<<<< 32b926c48920f4eb3e75ba9d9fea2777ba74043d
 func GetPodLogs(client kubernetes.Interface, namespace, podID string, container string,
 	logSelector *logs.Selection) (*logs.LogDetails, error) {
 	pod, err := client.CoreV1().Pods(namespace).Get(podID, metaV1.GetOptions{})
+=======
+func GetLogDetails(client *client.Clientset, namespace, podID string, container string,
+	logSelector *logs.Selection) (*logs.LogDetails, error) {
+
+	pod, err := client.Pods(namespace).Get(podID, metaV1.GetOptions{})
+>>>>>>> download-log-file
 	if err != nil {
 		return nil, err
 	}
@@ -65,11 +74,11 @@ func GetPodLogs(client kubernetes.Interface, namespace, podID string, container 
 	}
 
 	logOptions := mapToLogOptions(container, logSelector)
-	rawLogs, err := getRawPodLogs(client, namespace, podID, logOptions)
+	rawLogs, err := readRawLogs(client, namespace, podID, logOptions)
 	if err != nil {
 		return nil, err
 	}
-	details := ConstructLogs(podID, rawLogs, container, logSelector)
+	details := ConstructLogDetails(podID, rawLogs, container, logSelector)
 	return details, nil
 }
 
@@ -91,18 +100,11 @@ func mapToLogOptions(container string, logSelector *logs.Selection) *v1.PodLogOp
 
 	return logOptions
 }
-
+	
 // Construct a request for getting the logs for a pod and retrieves the logs.
 func getRawPodLogs(client kubernetes.Interface, namespace, podID string, logOptions *v1.PodLogOptions) (
 	string, error) {
-	req := client.Core().RESTClient().Get().
-		Namespace(namespace).
-		Name(podID).
-		Resource("pods").
-		SubResource("log").
-		VersionedParams(logOptions, scheme.ParameterCodec)
-
-	readCloser, err := req.Stream()
+	readCloser, err := openStream(client, namespace, podID, logOptions)
 	if err != nil {
 		return err.Error(), nil
 	}
@@ -117,8 +119,30 @@ func getRawPodLogs(client kubernetes.Interface, namespace, podID string, logOpti
 	return string(result), nil
 }
 
+// GetPodLogFile
+func GetLogFile(client *client.Clientset, namespace, podID string, container string) (io.ReadCloser, error) {
+	logOptions := &v1.PodLogOptions{
+		Container:  container,
+		Follow:     false,
+		Previous:   false,
+		Timestamps: false,
+	}
+	return openStream(client, namespace, podID, logOptions)
+}
+
+
+func openStream(client *client.Clientset, namespace, podID string, logOptions *v1.PodLogOptions) (io.ReadCloser, error) {
+	req := client.Core().RESTClient().Get().
+		Namespace(namespace).
+		Name(podID).
+		Resource("pods").
+		SubResource("log").
+		VersionedParams(logOptions, scheme.ParameterCodec)
+	return req.Stream()
+}
+
 // Build logs structure for given parameters.
-func ConstructLogs(podID string, rawLogs string, container string, logSelector *logs.Selection) *logs.LogDetails {
+func ConstructLogDetails(podID string, rawLogs string, container string, logSelector *logs.Selection) *logs.LogDetails {
 	parsedLines := logs.ToLogLines(rawLogs)
 	logLines, fromDate, toDate, logSelection, lastPage := parsedLines.SelectLogs(logSelector)
 

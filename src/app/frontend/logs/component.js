@@ -305,6 +305,15 @@ export class LogsController {
     return 'timer_off';
   }
 
+  /**
+   * Return the link to download the log file
+   * @export
+   * @returns {string}
+   */
+  getDownloadLink() {
+    let namespace = this.stateParams_.objectNamespace;
+    return `/api/v1/log/file/${namespace}/${this.pod}/${this.container}`;
+  }
 
   /**
    * Execute when a user changes the container from which logs should be loaded.
