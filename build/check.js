@@ -33,6 +33,22 @@ import {goimportsCommand} from './gocommand';
 /** HTML beautifier from js-beautify package */
 const htmlBeautify = beautify.html;
 
+/** List of names of files that should be ignored during license header check */
+const ignoredLicenseCheckFiles = ['fieldpath'];
+
+/**
+ * Returns correct file filter to check for license header match. Ignores files defined by
+ * @ref ignoredLicenseCheckFiles
+ *
+ * @param {...string} ext
+ * @return {string}
+ */
+function getLicenseFileFilter(...ext) {
+  let ignorePattern =
+      ignoredLicenseCheckFiles.length > 0 ? `!(${ignoredLicenseCheckFiles.join()})` : '';
+  return `**/${ignorePattern}*.{${ext.join()}}`;
+}
+
 /**
  * Builds Dashboard and ensures that the following requirements are met:
  *   * The code follows the style guidelines.
@@ -143,8 +159,8 @@ gulp.task('format-go', function(doneFn) {
  */
 gulp.task('check-license-headers', () => {
   const HEADER_NOT_PRESENT = 'Header not present';
-  const commonFilter = filter('**/*.{js,go,scss}', {restore: true});
-  const htmlFilter = filter('**/*.html', {restore: true});
+  const commonFilter = filter(getLicenseFileFilter('js', 'go', 'scss'), {restore: true});
+  const htmlFilter = filter(getLicenseFileFilter('html'), {restore: true});
 
   let hasErrors = false;
   const handleLogEvent = (event) => {
@@ -159,7 +175,10 @@ gulp.task('check-license-headers', () => {
     }
   };
 
-  return gulp.src([path.join(conf.paths.src, '**/*.{js,go,scss,html}')], {base: conf.paths.base})
+  return gulp
+      .src(
+          [path.join(conf.paths.src, getLicenseFileFilter('js', 'go', 'scss', 'html'))],
+          {base: conf.paths.base})
       .pipe(commonFilter)
       .pipe(
           licenseCheck(licenseConfig('build/assets/license/header.txt')).on('log', handleLogEvent))
@@ -189,11 +208,13 @@ function licenseConfig(licenseFilePath) {
  * Updates license headers in all source files based on templates stored in 'license' directory.
  */
 gulp.task('update-license-headers', () => {
-  const commonFilter = filter('**/*.{js,go,scss}', {restore: true});
-  const htmlFilter = filter('**/*.html', {restore: true});
+  const commonFilter = filter(getLicenseFileFilter('js', 'go', 'scss'), {restore: true});
+  const htmlFilter = filter(getLicenseFileFilter('html'), {restore: true});
   const matchRate = 0.9;
 
-  gulp.src([path.join(conf.paths.src, '**/*.{js,go,scss,html}')], {base: conf.paths.base})
+  gulp.src(
+          [path.join(conf.paths.src, getLicenseFileFilter('js', 'go', 'scss', 'html'))],
+          {base: conf.paths.base})
       .pipe(commonFilter)
       .pipe(license(fs.readFileSync('build/assets/license/header.txt', 'utf8'), {}, matchRate))
       .pipe(commonFilter.restore)

@@ -23,8 +23,8 @@ import (
 	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/labels"
 	k8sClient "k8s.io/client-go/kubernetes"
+	kubeapi "k8s.io/client-go/pkg/api"
 	"k8s.io/client-go/pkg/api/v1"
-	kubeapi "k8s.io/kubernetes/pkg/api"
 )
 
 type Endpoint struct {

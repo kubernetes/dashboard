@@ -138,8 +138,8 @@
   <translation id="7280957759518658382" key="MSG_COMMON_RESOURCE_EDITRESOURCE_2" desc="Label for cancel button.">キャンセル</translation>
   <translation id="874103626505058314" key="MSG_COMMON_RESOURCE_EDITRESOURCE_3" desc="Label for update button.">アップデート</translation>
   <translation id="2484996950399771862" key="MSG_COMMON_RESOURCE_EDITRESOURCE_4" desc="Label for copy button.">コピー</translation>
-  <translation id="6231407305842192181" key="MSG_COMMON_SCALING_SCALERESOURCE_0" desc="Title for a scaling resource dialog.">{{::$ctrl.resourceKindName}}のスケール</translation>
-  <translation id="8595969509136101884" key="MSG_COMMON_SCALING_SCALERESOURCE_1" desc="Title for a scaling resource dialog.">{{::$ctrl.resourceKindName}}のスケール</translation>
+  <translation id="4435278810119842088" key="MSG_COMMON_SCALING_SCALERESOURCE_0" desc="Title for a scaling resource dialog.">Scale a {{::$ctrl.resourceKindDisplayName}}</translation>
+  <translation id="6799841013413751791" key="MSG_COMMON_SCALING_SCALERESOURCE_1" desc="Title for a scaling resource dialog.">Scale a {{::$ctrl.resourceKindDisplayName}}</translation>
   <translation id="3101929086031362285" key="MSG_COMMON_SCALING_SCALERESOURCE_2" desc="User help for the pod count update dialog (on the replication controllers detail page).">リソース {{::$ctrl.resourceName}} は要求数を反映して更新されます。</translation>
   <translation id="3999312467829287271" key="MSG_COMMON_SCALING_SCALERESOURCE_3" desc="Label \'Desired number of pods\', which appears as a placeholder for the pods count input on the &quot;update pods count&quot; dialog (for a Deployment, ReplicaSet, Replication Controller resource).">要求ポッド数</translation>
   <translation id="536413431729659126" key="MSG_COMMON_SCALING_SCALERESOURCE_4" desc="Label \'Desired degree parallelism for a Job\', which appears as a placeholder for the parallelism count input on the &quot;update parallelism count&quot; dialog (for a Job resource).">ジョブの要求並列度</translation>

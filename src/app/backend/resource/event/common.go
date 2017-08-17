@@ -24,8 +24,8 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	client "k8s.io/client-go/kubernetes"
+	kubeapi "k8s.io/client-go/pkg/api"
 	"k8s.io/client-go/pkg/api/v1"
-	kubeapi "k8s.io/kubernetes/pkg/api"
 )
 
 // EmptyEventList is a empty list of events.

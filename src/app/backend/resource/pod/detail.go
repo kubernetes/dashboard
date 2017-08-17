@@ -26,17 +26,15 @@ import (
 	errorHandler "github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-
 	"github.com/kubernetes/dashboard/src/app/backend/resource/controller"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"k8s.io/apimachinery/pkg/api/errors"
 	res "k8s.io/apimachinery/pkg/api/resource"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/kubernetes"
+	kubeapi "k8s.io/client-go/pkg/api"
 	"k8s.io/client-go/pkg/api/v1"
-	kubeapi "k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/fieldpath"
 )
 
 // PodDetail is a presentation layer view of Kubernetes PodDetail resource. This means it is
@@ -308,7 +306,7 @@ func evalValueFrom(src *v1.EnvVarSource, container *v1.Container, pod *v1.Pod,
 			log.Println(err)
 			return ""
 		}
-		valueFrom, err := fieldpath.ExtractFieldPathAsString(pod, internalFieldPath)
+		valueFrom, err := ExtractFieldPathAsString(pod, internalFieldPath)
 		if err != nil {
 			log.Println(err)
 			return ""
