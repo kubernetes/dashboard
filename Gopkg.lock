@@ -230,15 +230,9 @@
   revision = "0f6d09f42ba924ee1510a1572b9575f8203ca4e2"
   version = "v1.4.0"
 
-[[projects]]
-  name = "k8s.io/kubernetes"
-  packages = ["pkg/api","pkg/fieldpath"]
-  revision = "922a86cfcd65915a9b2f69f3f193b8907d741d9c"
-  version = "v1.7.2"
-
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "fa7539893b39861c1ecede2cafe5d1d50be0151176fe5905f2d8345eb1b84872"
+  inputs-digest = "fb1f8213b08606f93daac8006c53371c63be2d464b871ebfd5ea61ad8851b0f6"
   solver-name = "gps-cdcl"
   solver-version = 1
