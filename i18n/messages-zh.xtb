@@ -134,8 +134,8 @@
   <translation id="7280957759518658382" key="MSG_COMMON_RESOURCE_EDITRESOURCE_2" desc="Label for cancel button.">取消</translation>
   <translation id="874103626505058314" key="MSG_COMMON_RESOURCE_EDITRESOURCE_3" desc="Label for update button.">更新</translation>
   <translation id="2484996950399771862" key="MSG_COMMON_RESOURCE_EDITRESOURCE_4" desc="Label for copy button.">复制</translation>
-  <translation id="6231407305842192181" key="MSG_COMMON_SCALING_SCALERESOURCE_0" desc="Title for a scaling resource dialog.">伸缩 {{::$ctrl.resourceKindName}}</translation>
-  <translation id="8595969509136101884" key="MSG_COMMON_SCALING_SCALERESOURCE_1" desc="Title for a scaling resource dialog.">伸缩 {{::$ctrl.resourceKindName}}</translation>
+  <translation id="4435278810119842088" key="MSG_COMMON_SCALING_SCALERESOURCE_0" desc="Title for a scaling resource dialog.">Scale a {{::$ctrl.resourceKindDisplayName}}</translation>
+  <translation id="6799841013413751791" key="MSG_COMMON_SCALING_SCALERESOURCE_1" desc="Title for a scaling resource dialog.">Scale a {{::$ctrl.resourceKindDisplayName}}</translation>
   <translation id="3101929086031362285" key="MSG_COMMON_SCALING_SCALERESOURCE_2" desc="User help for the pod count update dialog (on the replication controllers detail page).">资源 {{::$ctrl.resourceName}} 将更新以反映所需数量</translation>
   <translation id="3999312467829287271" key="MSG_COMMON_SCALING_SCALERESOURCE_3" desc="Label \'Desired number of pods\', which appears as a placeholder for the pods count input on the &quot;update pods count&quot; dialog (for a Deployment, ReplicaSet, Replication Controller resource).">所需容器组数量</translation>
   <translation id="536413431729659126" key="MSG_COMMON_SCALING_SCALERESOURCE_4" desc="Label \'Desired degree parallelism for a Job\', which appears as a placeholder for the parallelism count input on the &quot;update parallelism count&quot; dialog (for a Job resource).">所需任务并行度</translation>
@@ -558,7 +558,8 @@
   <translation id="6848550680164349416" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARDLIST_4" desc="Label \'Status\' which appears as a column label in the table of persistent volume claims (persistent volume claim list view).">状态</translation>
   <translation id="5458993660911534244" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARDLIST_5" desc="Label \'Age\' which appears as a column label in the table of persistent volume claims (persistent volume claim list view).">已创建</translation>
   <translation id="5623491181214143081" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARDLIST_6" desc="Text for persistent volume claim card list zerostate.">没有持久化存储卷索取可显示</translation>
-  <translation id="2711600512301130906" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARDLIST_7" desc="Label \'Capacity\' which appears as a column label in the table of persistent volume claims (persistent volume claim list view).">总量</translation> <translation id="3165687067342260212" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARDLIST_8" desc="Label \'AccessModes\' which appears as a column label in the table of persistent volume claims (persistent volume claim list view).">访问模式</translation>
+  <translation id="2711600512301130906" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARDLIST_7" desc="Label \'Capacity\' which appears as a column label in the table of persistent volume claims (persistent volume claim list view).">总量</translation>
+  <translation id="3165687067342260212" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARDLIST_8" desc="Label \'AccessModes\' which appears as a column label in the table of persistent volume claims (persistent volume claim list view).">访问模式</translation>
   <translation id="5181720011017192344" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARDLIST_9" desc="Label \'StorageClass\' which appears as a column label in the table of persistent volume claims (persistent volume claim list view).">存储类型</translation>
   <translation id="445776331089273321" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARD_0" desc="Tooltip text which appears on error icon hover.">此索取已丢失</translation>
   <translation id="2307976094948542528" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARD_1" desc="Tooltip text which appears on pending icon hover.">此索取等待中</translation>
