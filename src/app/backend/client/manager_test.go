@@ -18,8 +18,7 @@ import (
 	"net/http"
 	"testing"
 
-	restful "github.com/emicklei/go-restful"
-	"github.com/kubernetes/dashboard/src/app/backend/auth/jwe"
+	"github.com/emicklei/go-restful"
 )
 
 func TestNewClientManager(t *testing.T) {
@@ -32,7 +31,7 @@ func TestNewClientManager(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		manager := NewClientManager(c.kubeConfigPath, c.apiserverHost, jwe.NewJWETokenManager())
+		manager := NewClientManager(c.kubeConfigPath, c.apiserverHost)
 
 		if manager == nil {
 			t.Fatalf("NewClientManager(%s, %s): Expected manager not to be nil",
@@ -56,7 +55,7 @@ func TestClient(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		manager := NewClientManager("", "http://localhost:8080", jwe.NewJWETokenManager())
+		manager := NewClientManager("", "http://localhost:8080")
 		_, err := manager.Client(c.request)
 
 		if err != nil {
@@ -67,7 +66,7 @@ func TestClient(t *testing.T) {
 }
 
 func TestCSRFKey(t *testing.T) {
-	manager := NewClientManager("", "http://localhost:8080", jwe.NewJWETokenManager())
+	manager := NewClientManager("", "http://localhost:8080")
 	key := manager.CSRFKey()
 
 	if len(key) == 0 {
@@ -102,7 +101,7 @@ func TestConfig(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		manager := NewClientManager("", "https://localhost:8080", jwe.NewJWETokenManager())
+		manager := NewClientManager("", "https://localhost:8080")
 		cfg, err := manager.Config(c.request)
 
 		if err != nil {
@@ -145,7 +144,7 @@ func TestClientCmdConfig(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		manager := NewClientManager("", "https://localhost:8080", jwe.NewJWETokenManager())
+		manager := NewClientManager("", "https://localhost:8080")
 		cmdCfg, err := manager.ClientCmdConfig(c.request)
 
 		if err != nil {
@@ -173,11 +172,15 @@ func TestClientCmdConfig(t *testing.T) {
 }
 
 func TestVerberClient(t *testing.T) {
-	manager := NewClientManager("", "http://localhost:8080", jwe.NewJWETokenManager())
+	manager := NewClientManager("", "http://localhost:8080")
 	_, err := manager.VerberClient(nil)
 
 	if err != nil {
 		t.Fatalf("VerberClient(): Expected verber client to be created but got error: %s",
 			err.Error())
 	}
+}
+
+func TestClientManager_InsecureClient(t *testing.T) {
+	// TODO(floreks): test
 }

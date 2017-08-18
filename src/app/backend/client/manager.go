@@ -178,7 +178,7 @@ func (self *clientManager) VerberClient(req *restful.Request) (ResourceVerber, e
 		client.StorageV1beta1().RESTClient()), nil
 }
 
-// SetTokenManager TODO(floreks)
+// SetTokenManager sets the token manager that will be used for token decryption.
 func (self *clientManager) SetTokenManager(manager authApi.TokenManager) {
 	self.tokenManager = manager
 }
