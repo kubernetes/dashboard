@@ -123,7 +123,7 @@ func GetPodDetail(client kubernetes.Interface, metricClient metricapi.MetricClie
 		return nil, err
 	}
 
-	controller, err := getPodCreator(client, common.NewSameNamespaceQuery(namespace), pod)
+	controller, err := getPodController(client, common.NewSameNamespaceQuery(namespace), pod)
 	if err != nil {
 		return nil, err
 	}
@@ -156,7 +156,7 @@ func GetPodDetail(client kubernetes.Interface, metricClient metricapi.MetricClie
 	return &podDetail, nil
 }
 
-func getPodCreator(client kubernetes.Interface, nsQuery *common.NamespaceQuery, pod *v1.Pod) (
+func getPodController(client kubernetes.Interface, nsQuery *common.NamespaceQuery, pod *v1.Pod) (
 	controller.ResourceOwner, error) {
 
 	channels := &common.ResourceChannels{
