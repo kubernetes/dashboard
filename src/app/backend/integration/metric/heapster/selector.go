@@ -77,14 +77,12 @@ func getMyPodsFromCache(selector metricapi.ResourceSelector, cachedPods []v1.Pod
 	case cachedPods == nil:
 		err = fmt.Errorf(`Pods were not available in cache. Required for resource type: "%s"`,
 			selector.ResourceType)
-		return
 	case selector.ResourceType == api.ResourceKindDeployment:
 		for _, pod := range cachedPods {
 			if pod.ObjectMeta.Namespace == selector.Namespace && api.IsSelectorMatching(selector.Selector, pod.Labels) {
 				matchingPods = append(matchingPods, pod)
 			}
 		}
-		return
 	default:
 		for _, pod := range cachedPods {
 			if pod.Namespace == selector.Namespace {
@@ -96,7 +94,6 @@ func getMyPodsFromCache(selector metricapi.ResourceSelector, cachedPods []v1.Pod
 				}
 			}
 		}
-		return
 	}
 }
 
