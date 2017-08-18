@@ -157,7 +157,7 @@ func GetPodDetail(client kubernetes.Interface, metricClient metricapi.MetricClie
 }
 
 func getPodController(client kubernetes.Interface, nsQuery *common.NamespaceQuery, pod *v1.Pod) (
-	controller.ResourceOwner, error) {
+	ctrl controller.ResourceOwner, err error) {
 
 	channels := &common.ResourceChannels{
 		PodList:   common.GetPodListChannel(client, nsQuery, 1),
@@ -165,8 +165,9 @@ func getPodController(client kubernetes.Interface, nsQuery *common.NamespaceQuer
 	}
 
 	pods := <-channels.PodList.List
-	if err := <-channels.PodList.Error; err != nil {
-		return controller.ResourceOwner{}, nil
+	err = <-channels.PodList.Error
+	if err != nil {
+		return
 	}
 
 	events := <-channels.EventList.List
@@ -174,15 +175,16 @@ func getPodController(client kubernetes.Interface, nsQuery *common.NamespaceQuer
 		events = &v1.EventList{}
 	}
 
-	rc, err := controller.NewResourceController(*common.GetControllerOf(pod), pod.Namespace, client)
-	if err != nil {
-		if isNotFoundError(err) {
-			return controller.ResourceOwner{}, nil
+	ownerRef := common.GetControllerOf(pod)
+	if ownerRef != nil {
+		var rc controller.ResourceController
+		rc, err = controller.NewResourceController(*ownerRef, pod.Namespace, client)
+		if err == nil {
+			ctrl = rc.Get(pods.Items, events.Items)
 		}
-		return controller.ResourceOwner{}, nil
 	}
 
-	return rc.Get(pods.Items, events.Items), err
+	return
 }
 
 // isNotFoundError returns true when the given error is 404-NotFound error.
