@@ -16,7 +16,6 @@ package pod
 
 import (
 	"encoding/base64"
-	"encoding/json"
 	"fmt"
 	"log"
 	"math"
@@ -31,7 +30,6 @@ import (
 	"k8s.io/apimachinery/pkg/api/errors"
 	res "k8s.io/apimachinery/pkg/api/resource"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/kubernetes"
 	kubeapi "k8s.io/client-go/pkg/api"
 	"k8s.io/client-go/pkg/api/v1"
@@ -125,14 +123,9 @@ func GetPodDetail(client kubernetes.Interface, metricClient metricapi.MetricClie
 		return nil, err
 	}
 
-	controller := controller.ResourceOwner{}
-	creatorAnnotation, found := pod.ObjectMeta.Annotations[v1.CreatedByAnnotation]
-	if found {
-		creatorRef, err := getPodCreator(client, creatorAnnotation, common.NewSameNamespaceQuery(namespace), pod)
-		if err != nil {
-			return nil, err
-		}
-		controller = *creatorRef
+	controller, err := getPodController(client, common.NewSameNamespaceQuery(namespace), pod)
+	if err != nil {
+		return nil, err
 	}
 
 	_, metricPromises := dataselect.GenericDataSelectWithMetrics(toCells([]v1.Pod{*pod}),
@@ -163,14 +156,8 @@ func GetPodDetail(client kubernetes.Interface, metricClient metricapi.MetricClie
 	return &podDetail, nil
 }
 
-func getPodCreator(client kubernetes.Interface, creatorAnnotation string, nsQuery *common.NamespaceQuery,
-	pod *v1.Pod) (*controller.ResourceOwner, error) {
-
-	var serializedReference v1.SerializedReference
-	err := json.Unmarshal([]byte(creatorAnnotation), &serializedReference)
-	if err != nil {
-		return nil, err
-	}
+func getPodController(client kubernetes.Interface, nsQuery *common.NamespaceQuery, pod *v1.Pod) (
+	ctrl controller.ResourceOwner, err error) {
 
 	channels := &common.ResourceChannels{
 		PodList:   common.GetPodListChannel(client, nsQuery, 1),
@@ -178,8 +165,9 @@ func getPodCreator(client kubernetes.Interface, creatorAnnotation string, nsQuer
 	}
 
 	pods := <-channels.PodList.List
-	if err := <-channels.PodList.Error; err != nil {
-		return nil, err
+	err = <-channels.PodList.Error
+	if err != nil {
+		return
 	}
 
 	events := <-channels.EventList.List
@@ -187,31 +175,16 @@ func getPodCreator(client kubernetes.Interface, creatorAnnotation string, nsQuer
 		events = &v1.EventList{}
 	}
 
-	reference := serializedReference.Reference
-	rc, err := controller.NewResourceController(reference, client)
-	if err != nil {
-		if isNotFoundError(err) {
-			return &controller.ResourceOwner{}, nil
+	ownerRef := common.GetControllerOf(pod)
+	if ownerRef != nil {
+		var rc controller.ResourceController
+		rc, err = controller.NewResourceController(*ownerRef, pod.Namespace, client)
+		if err == nil {
+			ctrl = rc.Get(pods.Items, events.Items)
 		}
-
-		return nil, err
 	}
 
-	if hasInvalidControllerReference(rc.UID(), pod) {
-		// Delete creator annotation if it is targeting invalid resource
-		delete(pod.ObjectMeta.Annotations, v1.CreatedByAnnotation)
-		return &controller.ResourceOwner{}, nil
-	}
-
-	controller := rc.Get(pods.Items, events.Items)
-	return &controller, err
-}
-
-// Job pods are targeted using label 'controller-uid' set on both Pod and Job. We have to make
-// sure that orphaned job pod is not going to show different job with same name as its' creator.
-func hasInvalidControllerReference(jobUID types.UID, pod *v1.Pod) bool {
-	uidLabel, hasControllerLabel := pod.Labels["controller-uid"]
-	return hasControllerLabel && uidLabel != string(jobUID)
+	return
 }
 
 // isNotFoundError returns true when the given error is 404-NotFound error.

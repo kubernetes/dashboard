@@ -19,10 +19,85 @@ import (
 	"testing"
 
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/types"
 	api "k8s.io/client-go/pkg/api/v1"
 	batch "k8s.io/client-go/pkg/apis/batch/v1"
 )
+
+func TestFilterPodsByControllerRef(t *testing.T) {
+	controller := true
+	okOwnerRef := []metaV1.OwnerReference{{
+		Kind:       "ReplicationController",
+		Name:       "my-name-1",
+		UID:        "uid-1",
+		Controller: &controller,
+	}}
+	nokOwnerRef := []metaV1.OwnerReference{{
+		Kind:       "ReplicationController",
+		Name:       "my-name-1",
+		UID:        "",
+		Controller: &controller,
+	}}
+	cases := []struct {
+		obj      *metaObj
+		pods     []api.Pod
+		expected []api.Pod
+	}{
+		{
+			&metaObj{
+				ObjectMeta: metaV1.ObjectMeta{
+					UID:  "uid-1",
+					Name: "my-name-1",
+				},
+			},
+			[]api.Pod{
+				{
+					ObjectMeta: metaV1.ObjectMeta{
+						Name:            "first-pod-ok",
+						Namespace:       "default",
+						OwnerReferences: okOwnerRef,
+					},
+				},
+				{
+					ObjectMeta: metaV1.ObjectMeta{
+						Name:            "second-pod-ok",
+						Namespace:       "default",
+						OwnerReferences: okOwnerRef,
+					},
+				},
+				{
+					ObjectMeta: metaV1.ObjectMeta{
+						Name:            "third-pod-nok",
+						Namespace:       "default",
+						OwnerReferences: nokOwnerRef,
+					},
+				},
+			},
+			[]api.Pod{
+				{
+					ObjectMeta: metaV1.ObjectMeta{
+						Name:            "first-pod-ok",
+						Namespace:       "default",
+						OwnerReferences: okOwnerRef,
+					},
+				},
+				{
+					ObjectMeta: metaV1.ObjectMeta{
+						Name:            "second-pod-ok",
+						Namespace:       "default",
+						OwnerReferences: okOwnerRef,
+					},
+				},
+			},
+		},
+	}
+	for _, c := range cases {
+		actual := FilterPodsByControllerRef(c.obj, c.pods)
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("FilterPodsByControllerRef(%+v, %+v) == %+v, expected %+v",
+				c.pods, c.obj, actual, c.expected)
+		}
+	}
+}
 
 func TestGetContainerImages(t *testing.T) {
 	cases := []struct {
@@ -66,79 +141,6 @@ func TestGetContainerNames(t *testing.T) {
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("GetContainerNames(%+v) == %+v, expected %+v",
 				c.podTemplate, actual, c.expected)
-		}
-	}
-}
-
-func TestFilterPodsByOwnerReference(t *testing.T) {
-	controller := true
-	okOwnerRef := []metaV1.OwnerReference{{
-		Kind:       "ReplicationController",
-		Name:       "my-name-1",
-		UID:        "uid-1",
-		Controller: &controller,
-	}}
-	nokOwnerRef := []metaV1.OwnerReference{{
-		Kind:       "ReplicationController",
-		Name:       "my-name-1",
-		UID:        "",
-		Controller: &controller,
-	}}
-	cases := []struct {
-		namespace string
-		uid       types.UID
-		pods      []api.Pod
-		expected  []api.Pod
-	}{
-		{
-			"default",
-			"uid-1",
-			[]api.Pod{
-				{
-					ObjectMeta: metaV1.ObjectMeta{
-						Name:            "first-pod-ok",
-						Namespace:       "default",
-						OwnerReferences: okOwnerRef,
-					},
-				},
-				{
-					ObjectMeta: metaV1.ObjectMeta{
-						Name:            "second-pod-ok",
-						Namespace:       "default",
-						OwnerReferences: okOwnerRef,
-					},
-				},
-				{
-					ObjectMeta: metaV1.ObjectMeta{
-						Name:            "third-pod-nok",
-						Namespace:       "default",
-						OwnerReferences: nokOwnerRef,
-					},
-				},
-			},
-			[]api.Pod{
-				{
-					ObjectMeta: metaV1.ObjectMeta{
-						Name:            "first-pod-ok",
-						Namespace:       "default",
-						OwnerReferences: okOwnerRef,
-					},
-				},
-				{
-					ObjectMeta: metaV1.ObjectMeta{
-						Name:            "second-pod-ok",
-						Namespace:       "default",
-						OwnerReferences: okOwnerRef,
-					},
-				},
-			},
-		},
-	}
-	for _, c := range cases {
-		actual := FilterPodsByOwnerReference(c.namespace, c.uid, c.pods)
-		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("FilterPodsByOwnerReference(%+v, %+v, %+v) == %+v, expected %+v",
-				c.pods, c.namespace, c.uid, actual, c.expected)
 		}
 	}
 }

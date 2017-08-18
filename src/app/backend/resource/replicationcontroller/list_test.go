@@ -130,15 +130,6 @@ func TestCreateReplicationControllerList(t *testing.T) {
 				},
 				{
 					ObjectMeta: metaV1.ObjectMeta{
-						Namespace:       "namespace-2",
-						OwnerReferences: firstAppOwnerRef,
-					},
-					Status: v1.PodStatus{
-						Phase: v1.PodPending,
-					},
-				},
-				{
-					ObjectMeta: metaV1.ObjectMeta{
 						Namespace:       "namespace-1",
 						OwnerReferences: firstAppOwnerRef,
 					},
