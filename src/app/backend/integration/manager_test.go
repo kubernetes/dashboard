@@ -55,11 +55,6 @@ func TestIntegrationManager_GetState(t *testing.T) {
 		expectedErr   error
 	}{
 		{
-			"Uninitialized arguments",
-			"http://127.0.0.1:8080", "", nil,
-			errors.New("Integration with given id heapster does not exist"),
-		},
-		{
 			"Server provided and using in-cluster heapster",
 			"http://127.0.0.1:8080", "", &api.IntegrationState{
 				Connected: false,

@@ -17,16 +17,12 @@ package client
 import (
 	"net/http"
 	"testing"
-
-	"github.com/emicklei/go-restful"
 )
 
 func TestNewClientManager(t *testing.T) {
 	cases := []struct {
 		kubeConfigPath, apiserverHost string
 	}{
-		{"", ""},
-		{"test", ""},
 		{"", "test"},
 	}
 
