@@ -12,6 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// Copied from: https://github.com/kubernetes/kubernetes/blob/master/staging/src/
+// k8s.io/apimachinery/pkg/apis/meta/v1/controller_ref.go
+
 package common
 
 import "k8s.io/apimachinery/pkg/apis/meta/v1"
