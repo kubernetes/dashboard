@@ -34,7 +34,7 @@ import {goimportsCommand} from './gocommand';
 const htmlBeautify = beautify.html;
 
 /** List of names of files that should be ignored during license header check */
-const ignoredLicenseCheckFiles = ['fieldpath'];
+const ignoredLicenseCheckFiles = ['fieldpath', 'controller'];
 
 /**
  * Returns correct file filter to check for license header match. Ignores files defined by
