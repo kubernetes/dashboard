@@ -95,6 +95,7 @@ func getMyPodsFromCache(selector metricapi.ResourceSelector, cachedPods []v1.Pod
 			}
 		}
 	}
+	return
 }
 
 // NewHeapsterSelectorFromNativeResource returns new heapster selector for native resources specified in arguments.
