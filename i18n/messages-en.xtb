@@ -364,6 +364,7 @@
   <translation id="7869641598803414323" key="MSG_DESIRED_PODS_MSG" desc="Satisfies a way to make normal binding in angularjs to pass in google closure compiler.">
     <ph name="DESIRED_PODS"> desired.</ph>
   </translation>
+  <translation id="5000821072914833048" key="MSG_ENCRYPTION_KEY_CHANGED" desc="Text shown when saved token could not be decrypted by backend.">Session expired. Please log in again</translation>
   <translation id="778882191405410811" key="MSG_ENDPOINTS_WARNING_LABEL" desc="Label 'Warning' for the endpoint selection drop-down.">Warning</translation>
   <translation id="4983649641173165689" key="MSG_ENDPOINT_CARDLIST_0" desc="Label which appears above the list of such objects.">Endpoints</translation>
   <translation id="4158586803314397594" key="MSG_ENDPOINT_CARDLIST_1" desc="(no description provided)">There are currently no Endpoints selected by this Service.</translation>
