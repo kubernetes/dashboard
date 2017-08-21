@@ -17,6 +17,8 @@ package client
 import (
 	"net/http"
 	"testing"
+
+	restful "github.com/emicklei/go-restful"
 )
 
 func TestNewClientManager(t *testing.T) {
@@ -87,7 +89,7 @@ func TestConfig(t *testing.T) {
 			&restful.Request{
 				Request: &http.Request{
 					Header: http.Header(map[string][]string{
-						"Authorization": []string{"Bearer test-token"},
+						"Authorization": {"Bearer test-token"},
 					}),
 				},
 			},
@@ -178,5 +180,8 @@ func TestVerberClient(t *testing.T) {
 }
 
 func TestClientManager_InsecureClient(t *testing.T) {
-	// TODO(floreks): test
+	manager := NewClientManager("", "http://localhost:8080")
+	if manager.InsecureClient() == nil {
+		t.Fatalf("InsecureClient(): Expected insecure client not to be nil")
+	}
 }

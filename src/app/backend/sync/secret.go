@@ -194,6 +194,10 @@ func (self *secretSynchronizer) handleEvent(event watch.Event) error {
 		}
 
 		self.update(*secret)
+	case watch.Deleted:
+		self.mux.Lock()
+		self.secret = nil
+		self.mux.Unlock()
 	case watch.Error:
 		return &k8sErrors.UnexpectedObjectError{Object: event.Object}
 	}
