@@ -191,9 +191,7 @@ export class AuthService {
     return loginStatus.httpsMode;
   }
 
-  /**
-   * @return {!angular.$q.Promise}
-   */
+  /** @return {!angular.$q.Promise} */
   getLoginStatus() {
     let token = this.cookies_.get(this.tokenCookieName_) || '';
     return this
