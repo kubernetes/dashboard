@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {StateParams} from 'common/resource/resourcedetail';
-import {stateName} from 'replicaset/detail/state';
+import {StateParams} from '../../common/resource/resourcedetail';
+import {stateName} from '../../replicaset/detail/state';
 
 /**
  * Controller for the replica set card.
  *
  * @final
  */
-export default class ReplicaSetCardController {
+class ReplicaSetCardController {
   /**
    * @return {boolean}
    * @export

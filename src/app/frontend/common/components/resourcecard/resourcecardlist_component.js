@@ -58,7 +58,7 @@ export class ResourceCardListController {
     /** @export {{listMeta: !backendApi.ListMeta}|undefined} - Initialized from binding. */
     this.list;
 
-    /** @export {angular.$resource|undefined} - Initialized from binding. */
+    /** @export {angular.$resource} - Initialized from binding. */
     this.listResource;
   }
 
@@ -165,7 +165,7 @@ export const resourceCardListComponent = {
     'selectId': '@',
     /** {Array<Object>|undefined} List of objects to apply data selection */
     'list': '=',
-    /** {angular.$resource|undefined} */
+    /** {angular.$resource} */
     'listResource': '<',
   },
   bindToController: true,

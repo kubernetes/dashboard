@@ -1468,5 +1468,7 @@ backendApi.LoginResponse;
  */
 backendApi.LoginStatus;
 
-/** @typedef {{serverTime: number}} */
 const appConfig_DO_NOT_USE_DIRECTLY = {};
+
+/** @type {number} */
+appConfig_DO_NOT_USE_DIRECTLY.prototype.serverTime;

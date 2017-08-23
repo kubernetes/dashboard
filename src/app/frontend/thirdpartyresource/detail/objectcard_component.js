@@ -18,13 +18,9 @@
 export class ObjectCardController {
   /**
    * @ngInject
-   * @param {!ui.router.$state} $state
    * @param {!angular.$interpolate} $interpolate
    */
-  constructor($state, $interpolate) {
-    /** @private {!ui.router.$state} */
-    this.state_ = $state;
-
+  constructor($interpolate) {
     /** @private {!angular.$interpolate} */
     this.interpolate_ = $interpolate;
 

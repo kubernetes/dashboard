@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
+import {breadcrumbsConfig} from '../../common/components/breadcrumbs/service';
 
-import {stateName as parentState, stateUrl} from './../state';
+import {stateName as parentState, stateUrl} from '../state';
 import {ThirdPartyResourceListController} from './controller';
 
 /**

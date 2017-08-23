@@ -53,7 +53,7 @@ function createScriptsStream(throwError) {
         },
         output: {filename: 'app-dev.js'},
         resolve: {
-          // Set the module resolve root, so that webpack knows how to process non-relative imports.
+          // Set the modules resolve path, so that webpack knows how to process non-relative imports.
           // Should be kept in sync with respective Closure Compiler option.
           modules: [conf.paths.frontendSrc],
         },
@@ -130,7 +130,7 @@ function createCompileTask(translation) {
 
 
 /**
- * Compiles ES6 to ES3 for proper browser support
+ * Compiles ES2017 to ES3 for proper browser support
  *
  * @param {undefined|Object} translation - optional translation spec, otherwise compiles the default
  * application logic.
@@ -172,15 +172,17 @@ function compileES6(translation) {
 
   let closureCompilerConfig = {
     // ---- BASIC OPTIONS ----
-    compilation_level: 'ADVANCED_OPTIMIZATIONS',
+    compilation_level: 'ADVANCED',
     js_output_file: 'app.js',
-    language_in: 'ECMASCRIPT6_STRICT',
+    language_in: 'ECMASCRIPT_2017',
     language_out: 'ECMASCRIPT3',
     externs: externs,
 
     // ---- OUTPUT ----
     generate_exports: true,
     export_local_property_definitions: true,
+    // TODO: enable once all type checks are fixed
+    new_type_inf: true,
 
     // ---- WARNING AND ERROR MANAGEMENT ----
     // Enable all compiler checks by default and make them errors.
@@ -189,22 +191,16 @@ function compileES6(translation) {
     jscomp_off: [
       // Let ESLint handle all lint checks.
       'lintChecks',
-      // This checks aren't working with current google-closure-library version. Will be deleted
-      // once it's fixed there.
-      'analyzerChecks',
     ],
+    // new_type_inf: true,
 
     // ---- DEPENDENCY MANAGEMENT ----
-    dependency_mode: 'LOOSE',
-    entry_point: 'index_module',
+    dependency_mode: 'STRICT',
+    entry_point: `index_module`,
 
     // ---- JS MODULES ----
-    js_module_root: `/${path.relative(conf.paths.base, conf.paths.frontendSrc)}`,
-
-    // Specifies how the compiler locates modules. Default value 'BROWSER' requires all imports to
-    // begin with a '.' or '/' and have a file extension. Currently Dashboard does not meet these
-    // requirements, so 'LEGACY' value will be used.
-    module_resolution: `LEGACY`,
+    js_module_root: `${conf.paths.frontendSrc}`,
+    module_resolution: 'NODE',
 
     // ---- LIBRARY AND FRAMEWORK SPECIFIC OPTIONS ----
     angular_pass: true,

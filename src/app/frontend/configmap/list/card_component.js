@@ -12,19 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {StateParams} from 'common/resource/resourcedetail';
-import {stateName} from 'configmap/detail/state';
+import {StateParams} from '../../common/resource/resourcedetail';
+import {stateName} from '../../configmap/detail/state';
 
 /**
  * Controller for the config map card.
  *
  * @final
  */
-export default class ConfigMapCardController {
+class ConfigMapCardController {
   /**
    * @param {!ui.router.$state} $state
    * @param {!angular.$interpolate} $interpolate
-   * @param {!./../../common/namespace/service.NamespaceService} kdNamespaceService
+   * @param {!../../common/namespace/service.NamespaceService} kdNamespaceService
    * @ngInject
    */
   constructor($state, $interpolate, kdNamespaceService) {
@@ -40,7 +40,7 @@ export default class ConfigMapCardController {
     /** @private */
     this.interpolate_ = $interpolate;
 
-    /** @private {!./../../common/namespace/service.NamespaceService} */
+    /** @private {!../../common/namespace/service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
   }
 

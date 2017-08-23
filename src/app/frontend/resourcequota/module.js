@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import chromeModule from 'chrome/module';
-import componentsModule from 'common/components/module';
-import filtersModule from 'common/filters/module';
-import eventsModule from 'events/module';
+import chromeModule from '../chrome/module';
+import componentsModule from '../common/components/module';
+import filtersModule from '../common/filters/module';
+import eventsModule from '../events/module';
 
 import {resourceQuotaDetailComponent} from './detail/detail_component';
 import {resourceQuotaDetailStatusComponent} from './detail/status_component';

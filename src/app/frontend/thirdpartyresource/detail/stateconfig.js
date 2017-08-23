@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {actionbarViewName, stateName as chromeStateName} from 'chrome/state';
-import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
-import {appendDetailParamsToUrl} from 'common/resource/globalresourcedetail';
-import {stateName as tprListState} from 'thirdpartyresource/list/state';
+import {actionbarViewName, stateName as chromeStateName} from '../../chrome/state';
+import {breadcrumbsConfig} from '../../common/components/breadcrumbs/service';
+import {appendDetailParamsToUrl} from '../../common/resource/globalresourcedetail';
+import {stateName as tprListState} from '../../thirdpartyresource/list/state';
 
-import {stateName as parentState, stateUrl} from './../state';
+import {stateName as parentState, stateUrl} from '../state';
 import {ThirdPartyResourceDetailController} from './controller';
 
 /**
@@ -60,7 +60,7 @@ export function thirdPartyResourceObjectsResource($resource) {
 /**
  * @param {!./../../common/resource/resourcedetail.StateParams} $stateParams
  * @param {!angular.$resource} $resource
- * @return {!angular.Resource<!backendApi.ThirdPartyResource>}
+ * @return {!angular.Resource}
  * @ngInject
  */
 export function getTprDetailResource($resource, $stateParams) {
@@ -68,7 +68,7 @@ export function getTprDetailResource($resource, $stateParams) {
 }
 
 /**
- * @param {!angular.Resource<!backendApi.ThirdPartyResource>} tprDetailResource
+ * @param {!angular.Resource} tprDetailResource
  * @return {!angular.$q.Promise}
  * @ngInject
  */

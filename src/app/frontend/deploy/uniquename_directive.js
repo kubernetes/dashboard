@@ -55,7 +55,7 @@ export default function uniqueNameDirective($resource, $q) {
 function validate(name, namespace, resource, q) {
   let deferred = q.defer();
 
-  /** @type {!angular.Resource<!backendApi.AppNameValiditySpec>} */
+  /** @type {!angular.Resource} */
   let resourceClass = resource('api/v1/appdeployment/validate/name');
   /** @type {!backendApi.AppNameValiditySpec} */
   let spec = {name: name, namespace: namespace};

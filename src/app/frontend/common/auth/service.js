@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as errorState} from 'error/state';
-import {stateName as loginState} from 'login/state';
-import {stateName as overviewState} from 'overview/state';
+import {stateName as errorState} from '../../error/state';
+import {stateName as loginState} from '../../login/state';
+import {stateName as overviewState} from '../../overview/state';
 
 
 /** @final */

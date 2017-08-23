@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as overview} from 'overview/state';
+import {stateName as overview} from '../overview/state';
 import showNamespaceDialog from './createnamespace_dialog';
 import showCreateSecretDialog from './createsecret_dialog';
 import DeployLabel from './deploylabel';
@@ -243,7 +243,7 @@ export default class DeployFromSettingsController {
 
       this.tokenPromise.then(
           (token) => {
-            /** @type {!angular.Resource<!backendApi.AppDeploymentSpec>} */
+            /** @type {!angular.Resource} */
             let resource = this.resource_(
                 'api/v1/appdeployment', {},
                 {save: {method: 'POST', headers: {[this.csrfHeaderName_]: token}}});
@@ -332,7 +332,7 @@ export default class DeployFromSettingsController {
    * @export
    */
   getSecrets(namespace) {
-    /** @type {!angular.Resource<!backendApi.SecretsList>} */
+    /** @type {!angular.Resource} */
     let resource = this.resource_(`api/v1/secret/${namespace}`);
     resource.get(
         (res) => {

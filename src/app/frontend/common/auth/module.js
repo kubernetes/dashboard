@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import csrftokenModule from 'common/csrftoken/module';
+import csrftokenModule from '../csrftoken/module';
 import {AuthInterceptor} from './interceptor';
 import {AuthService} from './service';
 

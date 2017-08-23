@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {actionbarViewName, stateName as chromeStateName} from 'chrome/state';
-import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
-import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
+import {actionbarViewName, stateName as chromeStateName} from '../../chrome/state';
+import {breadcrumbsConfig} from '../../common/components/breadcrumbs/service';
+import {appendDetailParamsToUrl} from '../../common/resource/resourcedetail';
 
-import {stateName as serviceList} from './../list/state';
-import {stateName as parentState, stateUrl} from './../state';
+import {stateName as serviceList} from '../list/state';
+import {stateName as parentState, stateUrl} from '../state';
 import {ActionBarController} from './actionbar_controller';
 import {ServiceDetailController} from './controller';
 
@@ -83,7 +83,7 @@ export function servicePodsResource($resource) {
 /**
  * @param {!./../../common/resource/resourcedetail.StateParams} $stateParams
  * @param {!angular.$resource} $resource
- * @return {!angular.Resource<!backendApi.ServiceDetail>}
+ * @return {!angular.Resource}
  * @ngInject
  */
 export function getServiceDetailResource($stateParams, $resource) {
@@ -91,7 +91,7 @@ export function getServiceDetailResource($stateParams, $resource) {
 }
 
 /**
- * @param {!angular.Resource<!backendApi.ServiceDetail>} serviceDetailResource
+ * @param {!angular.Resource} serviceDetailResource
  * @return {!angular.$q.Promise}
  * @ngInject
  */

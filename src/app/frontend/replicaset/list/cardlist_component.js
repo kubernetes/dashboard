@@ -18,10 +18,9 @@
 export class ReplicaSetCardListController {
   /**
    * @param {!./../../common/namespace/service.NamespaceService} kdNamespaceService
-   * @param {!./../../common/scaling/service.ScaleService} kdScaleService
    * @ngInject
    */
-  constructor(kdNamespaceService, kdScaleService) {
+  constructor(kdNamespaceService) {
     /** @export {!backendApi.ReplicaSetList} Initialized from binding. */
     this.replicaSetList;
 
@@ -30,9 +29,6 @@ export class ReplicaSetCardListController {
 
     /** @private {!./../../common/namespace/service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
-
-    /** @private {!./../../common/scaling/service.ScaleService} */
-    this.kdScaleService_ = kdScaleService;
   }
 
   /**

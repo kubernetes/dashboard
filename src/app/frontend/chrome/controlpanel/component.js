@@ -17,14 +17,11 @@
  */
 export class ControlPanelController {
   /**
-   * @param {!ui.router.$state} $state
    * @param {!angular.$log} $log
    * @param {!./../../common/auth/service.AuthService} kdAuthService
    * @ngInject
    */
-  constructor($state, $log, kdAuthService) {
-    /** @private {!ui.router.$state} */
-    this.state_ = $state;
+  constructor($log, kdAuthService) {
     /** @private {!angular.$log} */
     this.log_ = $log;
     /** @private {!./../../common/auth/service.AuthService} */

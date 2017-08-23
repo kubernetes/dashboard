@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import stateModule from 'common/state/module';
+import stateModule from '../state/module';
 
 import filtersModule from '../filters/module';
 

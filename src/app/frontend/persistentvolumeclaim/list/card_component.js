@@ -12,18 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {StateParams} from 'common/resource/resourcedetail';
-import {stateName} from 'persistentvolumeclaim/detail/state';
+import {StateParams} from '../../common/resource/resourcedetail';
+import {stateName} from '../../persistentvolumeclaim/detail/state';
 
 /**
  * Controller for the persistent volume claim card.
  * @final
  */
-export default class PersistentVolumeClaimCardController {
+class PersistentVolumeClaimCardController {
   /**
    * @param {!ui.router.$state} $state
    * @param {!angular.$interpolate} $interpolate
-   * @param {!./../../common/namespace/service.NamespaceService} kdNamespaceService
+   * @param {!../../common/namespace/service.NamespaceService} kdNamespaceService
    * @ngInject
    */
   constructor($state, $interpolate, kdNamespaceService) {
@@ -39,7 +39,7 @@ export default class PersistentVolumeClaimCardController {
     /** @private */
     this.interpolate_ = $interpolate;
 
-    /** @private {!./../../common/namespace/service.NamespaceService} */
+    /** @private {!../../common/namespace/service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
   }
 

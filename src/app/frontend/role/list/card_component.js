@@ -17,21 +17,17 @@
  *
  * @final
  */
-export default class RoleCardController {
+class RoleCardController {
   /**
-   * @param {!ui.router.$state} $state
    * @param {!angular.$interpolate} $interpolate
    * @ngInject
    */
-  constructor($state, $interpolate) {
+  constructor($interpolate) {
     /**
      * Initialized from the scope.
      * @export {!backendApi.Role}
      */
     this.role;
-
-    /** @private {!ui.router.$state} */
-    this.state_ = $state;
 
     /** @private */
     this.interpolate_ = $interpolate;

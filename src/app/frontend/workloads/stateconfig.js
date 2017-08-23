@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as chromeStateName} from 'chrome/state';
-import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
+import {stateName as chromeStateName} from '../chrome/state';
+import {breadcrumbsConfig} from '../common/components/breadcrumbs/service';
 
 import {WorkloadsController} from './controller';
 import {stateName, stateUrl} from './state';
@@ -46,8 +46,8 @@ export default function stateConfig($stateProvider) {
 
 /**
  * @param {!angular.$resource} kdWorkloadResource
- * @param {!./../chrome/state.StateParams} $stateParams
- * @param {!./../common/dataselect/service.DataSelectService} kdDataSelectService
+ * @param {!../chrome/state.StateParams} $stateParams
+ * @param {!../common/dataselect/service.DataSelectService} kdDataSelectService
  * @return {!angular.$q.Promise}
  * @ngInject
  */

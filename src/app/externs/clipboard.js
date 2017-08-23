@@ -29,6 +29,5 @@ clipboard.Clipboard;
 
 /**
  * @param {string} text
- * @return
  */
 clipboard.Clipboard.prototype.copyText = function(text) {};

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {StateParams} from 'common/resource/resourcedetail';
-import {stateName} from 'daemonset/detail/state';
+import {StateParams} from '../../common/resource/resourcedetail';
+import {stateName} from '../../daemonset/detail/state';
 
 /**
  * Controller for daemon set card.
@@ -24,7 +24,7 @@ export class DaemonSetCardController {
   /**
    * @param {!ui.router.$state} $state
    * @param {!angular.$interpolate} $interpolate
-   * @param {!./../../common/namespace/service.NamespaceService} kdNamespaceService
+   * @param {!../../common/namespace/service.NamespaceService} kdNamespaceService
    * @ngInject
    */
   constructor($state, $interpolate, kdNamespaceService) {
@@ -37,7 +37,7 @@ export class DaemonSetCardController {
     /** @private {!angular.$interpolate} */
     this.interpolate_ = $interpolate;
 
-    /** @private {!./../../common/namespace/service.NamespaceService} */
+    /** @private {!../../common/namespace/service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
   }
 
