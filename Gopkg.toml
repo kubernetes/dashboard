@@ -6,7 +6,7 @@
 
 [[constraint]]
   name = "k8s.io/apimachinery"
-  branch = "master"
+  revision = "db23e9ab1e90f659fa5a557d183ebbb16f60300a"
 
 [[constraint]]
   name = "k8s.io/heapster"
