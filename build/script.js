@@ -35,11 +35,11 @@ const gulpClosureCompiler = closureCompiler.gulp();
  * Tasks used to set node process env variables. They are used by our compile tasks. Based on them
  * different preset configs defined in '.babelrc' are used.
  */
-gulp.task('set-dev-node-env', function() {
+gulp.task('set-dev-node-env', () => {
   return process.env.NODE_ENV = conf.build.development;
 });
 
-gulp.task('set-prod-node-env', function() {
+gulp.task('set-prod-node-env', () => {
   return process.env.NODE_ENV = conf.build.production;
 });
 
@@ -211,7 +211,7 @@ function compileES6(translation) {
 
     // ---- DEPENDENCY MANAGEMENT ----
     dependency_mode: 'LOOSE',
-    entry_point: `index_module.js`,
+    entry_point: `index_module`,
 
     // ---- JS MODULES ----
     js_module_root: `${conf.paths.frontendSrc}`,

@@ -1,16 +1,17 @@
 {
   "env": {
     "production": {
-      "presets": [["env", {
-        "targets": {
-              "browsers": [
-                ">1%",
-                "last 4 versions",
-                "not ie < 11"
-              ]
-            },
-        "useBuiltIns": true
-          }
+      "presets": [["env",
+        {
+          "targets": {
+            "browsers": [
+              ">1%",
+              "last 4 versions",
+              "not ie < 11"
+            ]
+          },
+          "useBuiltIns": true
+        }
         ]
       ]
     },
