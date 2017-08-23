@@ -27,8 +27,11 @@ import (
 	"k8s.io/client-go/pkg/api/v1"
 )
 
+func getReplicasPointer(replicas int32) *int32 {
+	return &replicas
+}
+
 func TestCreateReplicationControllerList(t *testing.T) {
-	replicas := int32(0)
 	events := []v1.Event{}
 	controller := true
 	firstAppOwnerRef := []metaV1.OwnerReference{{
@@ -60,7 +63,7 @@ func TestCreateReplicationControllerList(t *testing.T) {
 						UID:       "uid-1",
 					},
 					Spec: v1.ReplicationControllerSpec{
-						Replicas: &replicas,
+						Replicas: getReplicasPointer(0),
 						Selector: map[string]string{"app": "my-name-1"},
 						Template: &v1.PodTemplateSpec{
 							Spec: v1.PodSpec{Containers: []v1.Container{{Image: "my-container-image-1"}}},
@@ -74,7 +77,7 @@ func TestCreateReplicationControllerList(t *testing.T) {
 						UID:       "uid-2",
 					},
 					Spec: v1.ReplicationControllerSpec{
-						Replicas: &replicas,
+						Replicas: getReplicasPointer(0),
 						Selector: map[string]string{"app": "my-name-2", "ver": "2"},
 						Template: &v1.PodTemplateSpec{
 							Spec: v1.PodSpec{Containers: []v1.Container{{Image: "my-container-image-2"}}},
@@ -242,7 +245,7 @@ func TestGetReplicationControllerList(t *testing.T) {
 						},
 						TypeMeta: api.TypeMeta{Kind: api.ResourceKindReplicationController},
 						Pods: common.PodInfo{
-							Desired:  replicas,
+							Desired:  getReplicasPointer(0),
 							Warnings: make([]common.Event, 0),
 						},
 					},

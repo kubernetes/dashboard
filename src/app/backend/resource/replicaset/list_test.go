@@ -146,7 +146,7 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 					TypeMeta: api.TypeMeta{Kind: api.ResourceKindReplicaSet},
 					Pods: common.PodInfo{
 						Current:  7,
-						Desired:  21,
+						Desired:  getReplicasPointer(21),
 						Failed:   1,
 						Warnings: []common.Event{},
 					},
@@ -252,7 +252,6 @@ func TestCreateReplicaSetList(t *testing.T) {
 }
 
 func TestGetReplicaSetList(t *testing.T) {
-	replicas := int32(1)
 	cases := []struct {
 		rsList          *extensions.ReplicaSetList
 		expectedActions []string
@@ -267,7 +266,7 @@ func TestGetReplicaSetList(t *testing.T) {
 							Labels: map[string]string{},
 						},
 						Spec: extensions.ReplicaSetSpec{
-							Replicas: &replicas,
+							Replicas: getReplicasPointer(1),
 						},
 					},
 				}},
@@ -282,7 +281,7 @@ func TestGetReplicaSetList(t *testing.T) {
 						},
 						TypeMeta: api.TypeMeta{Kind: api.ResourceKindReplicaSet},
 						Pods: common.PodInfo{
-							Desired:  replicas,
+							Desired:  getReplicasPointer(1),
 							Warnings: make([]common.Event, 0),
 						},
 					},
