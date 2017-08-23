@@ -112,7 +112,7 @@ func toDaemonSetList(daemonSets []extensions.DaemonSet, pods []v1.Pod, events []
 	for _, daemonSet := range daemonSets {
 		matchingPods := common.FilterPodsByControllerRef(&daemonSet, pods)
 		podInfo := common.GetPodInfo(daemonSet.Status.CurrentNumberScheduled,
-			daemonSet.Status.DesiredNumberScheduled, matchingPods)
+			&daemonSet.Status.DesiredNumberScheduled, matchingPods)
 		podInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)
 
 		daemonSetList.DaemonSets = append(daemonSetList.DaemonSets, DaemonSet{

@@ -22,10 +22,12 @@ import (
 )
 
 func TestGetPodInfo(t *testing.T) {
+	var desired int32 = 4
 	cases := []struct {
-		current, desired int32
-		pods             []api.Pod
-		expected         PodInfo
+		current  int32
+		desired  *int32
+		pods     []api.Pod
+		expected PodInfo
 	}{
 		{
 			5,
@@ -39,7 +41,7 @@ func TestGetPodInfo(t *testing.T) {
 			},
 			PodInfo{
 				Current:  5,
-				Desired:  4,
+				Desired:  &desired,
 				Running:  1,
 				Pending:  0,
 				Failed:   0,
