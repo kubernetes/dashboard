@@ -48,11 +48,11 @@ function getBackendArgs(mode) {
     `--tls-key-file=${conf.backend.tlsKey}`,
   ];
 
-  if (mode === conf.backend.production) {
+  if (mode === conf.build.production) {
     args.push(`--insecure-port=${conf.frontend.serverPort}`);
   }
 
-  if (mode === conf.backend.development) {
+  if (mode === conf.build.development) {
     args.push(`--insecure-port=${conf.backend.devServerPort}`);
   }
 

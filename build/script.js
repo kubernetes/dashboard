@@ -31,12 +31,16 @@ import {processI18nMessages} from './i18n';
 
 const gulpClosureCompiler = closureCompiler.gulp();
 
+/**
+ * Tasks used to set node process env variables. They are used by our compile tasks. Based on them
+ * different preset configs defined in '.babelrc' are used.
+ */
 gulp.task('set-dev-node-env', function() {
-  return process.env.NODE_ENV = 'development';
+  return process.env.NODE_ENV = conf.build.development;
 });
 
 gulp.task('set-prod-node-env', function() {
-  return process.env.NODE_ENV = 'production';
+  return process.env.NODE_ENV = conf.build.production;
 });
 
 /**
