@@ -176,7 +176,7 @@
   branch = "master"
   name = "golang.org/x/net"
   packages = ["http2","http2/hpack","idna","lex/httplex","xsrftoken"]
-  revision = "f2499483f923065a842d38eb4c7f1927e6fc6e6d"
+  revision = "1c05540f6879653db88113bc4a2b70aec4bd491f"
 
 [[projects]]
   name = "golang.org/x/sys"
@@ -186,8 +186,8 @@
 [[projects]]
   branch = "master"
   name = "golang.org/x/text"
-  packages = ["cases","internal/gen","internal/tag","internal/triegen","internal/ucd","language","runes","secure/bidirule","secure/precis","transform","unicode/bidi","unicode/cldr","unicode/norm","unicode/rangetable","width"]
-  revision = "2910a502d2bf9e43193af9d68ca516529614eed3"
+  packages = ["cases","internal","internal/gen","internal/tag","internal/triegen","internal/ucd","language","runes","secure/bidirule","secure/precis","transform","unicode/bidi","unicode/cldr","unicode/norm","unicode/rangetable","width"]
+  revision = "e56139fd9c5bc7244c76116c68e500765bb6db6b"
 
 [[projects]]
   branch = "v2"
