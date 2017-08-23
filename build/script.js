@@ -45,16 +45,18 @@ const gulpClosureCompiler = closureCompiler.gulp();
 function createScriptsStream(throwError) {
   return function() {
     let webpackOptions = {
-      devtool: 'inline-source-map',
-      module: {
-        // ES6 modules have to be preprocessed with Babel loader to work in browsers.
-        loaders: [{test: /\.js$/, exclude: /node_modules/, loaders: ['babel-loader']}],
-      },
-      output: {filename: 'app-dev.js'},
-      resolve: {
-        // Set the module resolve root, so that webpack knows how to process non-relative imports.
-        // Should be kept in sync with respective Closure Compiler option.
-        root: conf.paths.frontendSrc,
+      config: {
+        devtool: 'inline-source-map',
+        module: {
+          // ES6 modules have to be preprocessed with Babel loader to work in browsers.
+          loaders: [{test: /\.js$/, exclude: /node_modules/, loaders: ['babel-loader']}],
+        },
+        output: {filename: 'app-dev.js'},
+        resolve: {
+          // Set the module resolve root, so that webpack knows how to process non-relative imports.
+          // Should be kept in sync with respective Closure Compiler option.
+          modules: [conf.paths.frontendSrc],
+        },
       },
       quiet: true,
     };
