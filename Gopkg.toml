@@ -5,7 +5,7 @@
   version = "4.0.0"
 
 [[constraint]]
-  name = "k8s.io/apimachinery"  # todo
+  name = "k8s.io/apimachinery"
   branch = "master"
 
 [[constraint]]
