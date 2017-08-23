@@ -23,6 +23,11 @@ import (
 	batch "k8s.io/client-go/pkg/apis/batch/v1"
 )
 
+type metaObj struct {
+	metaV1.ObjectMeta
+	metaV1.TypeMeta
+}
+
 func TestFilterPodsByControllerRef(t *testing.T) {
 	controller := true
 	okOwnerRef := []metaV1.OwnerReference{{
