@@ -5,7 +5,7 @@
   version = "4.0.0"
 
 [[constraint]]
-  name = "k8s.io/apimachinery"
+  name = "k8s.io/apimachinery"  # todo
   branch = "master"
 
 [[constraint]]
@@ -46,4 +46,4 @@
 
 [[override]]
   name = "github.com/emicklei/go-restful"
-  revision = "1eaf4c9d1681d91b31eeb1414a8a715b8008c7a2"
+  version = "1.0.0"
