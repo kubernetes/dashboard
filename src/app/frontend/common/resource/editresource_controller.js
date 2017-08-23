@@ -21,7 +21,7 @@ export class EditResourceController {
   /**
    * @param {!md.$dialog} $mdDialog
    * @param {!angular.$http} $http
-   * @param {!clipboard.Clipboard} clipboard
+   * @param {!kdClipboard.Clipboard} clipboard
    * @param {!md.$toast} $mdToast
    * @param {string} resourceKindName
    * @param {string} resourceUrl
@@ -43,10 +43,7 @@ export class EditResourceController {
     /** @private {!angular.$http} */
     this.http_ = $http;
 
-    /**
-     * @suppress {newCheckTypesAllChecks}
-     * @private {!clipboard.Clipboard}
-     */
+    /** @private {!kdClipboard.Clipboard} */
     this.clipboard_ = clipboard;
 
     /** @private {!md.$toast} */

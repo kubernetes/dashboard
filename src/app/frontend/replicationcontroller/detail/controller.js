@@ -26,8 +26,7 @@ export default class ReplicationControllerDetailController {
    * @ngInject
    */
   constructor(
-      replicationControllerDetail, kdRCPodsResource, kdRCServicesResource,
-      kdRCEventsResource) {
+      replicationControllerDetail, kdRCPodsResource, kdRCServicesResource, kdRCEventsResource) {
     /** @export {!backendApi.ReplicationControllerDetail} */
     this.replicationControllerDetail = replicationControllerDetail;
 

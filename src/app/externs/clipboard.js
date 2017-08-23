@@ -18,16 +18,16 @@
  * @externs
  */
 
-const clipboard = {};
+const kdClipboard = {};
 
 /**
  * @typedef {{
  *   supported: boolean,
  * }}
  */
-clipboard.Clipboard;
+kdClipboard.Clipboard;
 
 /**
  * @param {string} text
  */
-clipboard.Clipboard.prototype.copyText = function(text) {};
+kdClipboard.Clipboard.prototype.copyText = function(text) {};

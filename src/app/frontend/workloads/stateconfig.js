@@ -23,7 +23,7 @@ import {stateName, stateUrl} from './state';
  * @ngInject
  */
 export default function stateConfig($stateProvider) {
-  $stateProvider.state(stateName, {
+  $stateProvider.state(stateName, /** !ui.router.StateConfig */ {
     url: stateUrl,
     parent: chromeStateName,
     resolve: {
@@ -35,11 +35,11 @@ export default function stateConfig($stateProvider) {
       },
     },
     views: {
-      '': {
+      '': /** @type {!ui.router.State} */ ({
         controller: WorkloadsController,
         controllerAs: '$ctrl',
         templateUrl: 'workloads/workloads.html',
-      },
+      }),
     },
   });
 }

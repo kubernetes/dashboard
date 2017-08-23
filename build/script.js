@@ -53,7 +53,8 @@ function createScriptsStream(throwError) {
         },
         output: {filename: 'app-dev.js'},
         resolve: {
-          // Set the modules resolve path, so that webpack knows how to process non-relative imports.
+          // Set the modules resolve path, so that webpack knows how to process non-relative
+          // imports.
           // Should be kept in sync with respective Closure Compiler option.
           modules: [conf.paths.frontendSrc],
         },
@@ -158,6 +159,7 @@ function compileES6(translation) {
         conf.paths.bowerComponents,
         'cljsjs-packages-externs/nvd3/resources/cljsjs/nvd3/common/nvd3.ext.js'),
     // Dashboard externs
+    path.join(conf.paths.externs, 'appconfig.js'),
     path.join(conf.paths.externs, 'backendapi.js'),
     path.join(conf.paths.externs, 'ansiup.js'),
     path.join(conf.paths.externs, 'clipboard.js'),
@@ -168,6 +170,7 @@ function compileES6(translation) {
     path.join(conf.paths.externs, 'shell.js'),
     path.join(conf.paths.externs, 'hterm.js'),
     path.join(conf.paths.externs, 'sockjs.js'),
+    path.join(conf.paths.externs, 'graph.js'),
   ];
 
   let closureCompilerConfig = {
@@ -182,7 +185,7 @@ function compileES6(translation) {
     generate_exports: true,
     export_local_property_definitions: true,
     // TODO: enable once all type checks are fixed
-    new_type_inf: true,
+    // new_type_inf: true,
 
     // ---- WARNING AND ERROR MANAGEMENT ----
     // Enable all compiler checks by default and make them errors.
@@ -195,8 +198,8 @@ function compileES6(translation) {
     // new_type_inf: true,
 
     // ---- DEPENDENCY MANAGEMENT ----
-    dependency_mode: 'STRICT',
-    entry_point: `index_module`,
+    dependency_mode: 'LOOSE',
+    entry_point: `index_module.js`,
 
     // ---- JS MODULES ----
     js_module_root: `${conf.paths.frontendSrc}`,

@@ -13,38 +13,16 @@
 // limitations under the License.
 
 /**
- * @fileoverview API for data select operations.
+ * @fileoverview App config structure. Should only be used if you know what you're doing.
+ *
  * @externs
  */
 
-const DataSelectApi = {};
+const appConfig_DO_NOT_USE_DIRECTLY = {};
 
 /**
  * @typedef {{
- *  itemsPerPage: number,
- *  page: number,
- *  sortBy: string,
- *  namespace: string,
- *  name: string,
- *  filterBy: string
- *  }}
+ *   serverTime: number,
+ * }}
  */
-DataSelectApi.DataSelectQuery;
-
-/**
- * @typedef {{
- *  NAME: string,
- *  STATUS: string,
- *  AGE: string,
- *  }}
- */
-DataSelectApi.SortableProperties;
-
-/**
- * @typedef {{
- *  PAGINATE: number,
- *  SORT: number,
- *  FILTER: number,
- *  }}
- */
-DataSelectApi.SupportedActions;
+appConfig_DO_NOT_USE_DIRECTLY.config;
