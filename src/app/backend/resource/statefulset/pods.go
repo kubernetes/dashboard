@@ -24,13 +24,13 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	k8sClient "k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/pkg/api/v1"
 	apps "k8s.io/client-go/pkg/apis/apps/v1beta1"
 )
 
 // GetStatefulSetPods return list of pods targeting pet set.
-func GetStatefulSetPods(client *k8sClient.Clientset, metricClient metricapi.MetricClient,
+func GetStatefulSetPods(client kubernetes.Interface, metricClient metricapi.MetricClient,
 	dsQuery *dataselect.DataSelectQuery, name, namespace string) (*pod.PodList, error) {
 
 	log.Printf("Getting replication controller %s pods in namespace %s", name, namespace)
@@ -51,7 +51,7 @@ func GetStatefulSetPods(client *k8sClient.Clientset, metricClient metricapi.Metr
 }
 
 // getRawStatefulSetPods return array of api pods targeting pet set with given name.
-func getRawStatefulSetPods(client *k8sClient.Clientset, name, namespace string) ([]v1.Pod, error) {
+func getRawStatefulSetPods(client kubernetes.Interface, name, namespace string) ([]v1.Pod, error) {
 	statefulSet, err := client.AppsV1beta1().StatefulSets(namespace).Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
@@ -70,7 +70,7 @@ func getRawStatefulSetPods(client *k8sClient.Clientset, name, namespace string) 
 }
 
 // Returns simple info about pods(running, desired, failing, etc.) related to given pet set.
-func getStatefulSetPodInfo(client *k8sClient.Clientset, statefulSet *apps.StatefulSet) (*common.PodInfo, error) {
+func getStatefulSetPodInfo(client kubernetes.Interface, statefulSet *apps.StatefulSet) (*common.PodInfo, error) {
 	pods, err := getRawStatefulSetPods(client, statefulSet.Name, statefulSet.Namespace)
 	if err != nil {
 		return nil, err

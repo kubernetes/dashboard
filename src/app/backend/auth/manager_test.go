@@ -38,9 +38,15 @@ type fakeClientManager struct {
 	HasAccessError error
 }
 
-func (self *fakeClientManager) Client(req *restful.Request) (*kubernetes.Clientset, error) {
+func (self *fakeClientManager) Client(req *restful.Request) (kubernetes.Interface, error) {
 	return nil, nil
 }
+
+func (self *fakeClientManager) InsecureClient() kubernetes.Interface {
+	return nil
+}
+
+func (self *fakeClientManager) SetTokenManager(manager authApi.TokenManager) {}
 
 func (self *fakeClientManager) Config(req *restful.Request) (*rest.Config, error) {
 	return nil, nil

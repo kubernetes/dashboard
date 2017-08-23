@@ -35,7 +35,7 @@ type Discovery struct {
 }
 
 // GetDiscovery returns a list of all servicesAndDiscovery resources in the cluster.
-func GetDiscovery(client *kubernetes.Clientset, nsQuery *common.NamespaceQuery,
+func GetDiscovery(client kubernetes.Interface, nsQuery *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery) (*Discovery, error) {
 
 	log.Print("Getting discovery and load balancing category")

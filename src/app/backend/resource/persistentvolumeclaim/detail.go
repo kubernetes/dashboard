@@ -19,7 +19,7 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	client "k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/pkg/api/v1"
 )
 
@@ -35,10 +35,10 @@ type PersistentVolumeClaimDetail struct {
 }
 
 // GetPersistentVolumeClaimDetail returns detailed information about a persistent volume claim
-func GetPersistentVolumeClaimDetail(client *client.Clientset, namespace string, name string) (*PersistentVolumeClaimDetail, error) {
+func GetPersistentVolumeClaimDetail(client kubernetes.Interface, namespace string, name string) (*PersistentVolumeClaimDetail, error) {
 	log.Printf("Getting details of %s persistent volume claim", name)
 
-	rawPersistentVolumeClaim, err := client.PersistentVolumeClaims(namespace).Get(name, metaV1.GetOptions{})
+	rawPersistentVolumeClaim, err := client.CoreV1().PersistentVolumeClaims(namespace).Get(name, metaV1.GetOptions{})
 
 	if err != nil {
 		return nil, err

@@ -21,7 +21,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	client "k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/pkg/api/v1"
 )
 
@@ -48,7 +48,7 @@ type PersistentVolumeClaim struct {
 }
 
 // GetPersistentVolumeClaimList returns a list of all Persistent Volume Claims in the cluster.
-func GetPersistentVolumeClaimList(client *client.Clientset, nsQuery *common.NamespaceQuery,
+func GetPersistentVolumeClaimList(client kubernetes.Interface, nsQuery *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery) (*PersistentVolumeClaimList, error) {
 
 	log.Print("Getting list persistent volumes claims")
