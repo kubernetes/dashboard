@@ -15,9 +15,9 @@
 package container
 
 import (
-	"io/ioutil"
-
+	"fmt"
 	"io"
+	"io/ioutil"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/logs"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -53,18 +53,11 @@ func GetPodContainers(client kubernetes.Interface, namespace, podID string) (*Po
 	return containers, nil
 }
 
-// GetPodLogs returns logs for particular pod and container. When container
+// GetLogDetails returns logs for particular pod and container. When container
 // is null, logs for the first one are returned.
-<<<<<<< 32b926c48920f4eb3e75ba9d9fea2777ba74043d
-func GetPodLogs(client kubernetes.Interface, namespace, podID string, container string,
+func GetLogDetails(client kubernetes.Interface, namespace, podID string, container string,
 	logSelector *logs.Selection) (*logs.LogDetails, error) {
 	pod, err := client.CoreV1().Pods(namespace).Get(podID, metaV1.GetOptions{})
-=======
-func GetLogDetails(client *client.Clientset, namespace, podID string, container string,
-	logSelector *logs.Selection) (*logs.LogDetails, error) {
-
-	pod, err := client.Pods(namespace).Get(podID, metaV1.GetOptions{})
->>>>>>> download-log-file
 	if err != nil {
 		return nil, err
 	}
@@ -100,9 +93,9 @@ func mapToLogOptions(container string, logSelector *logs.Selection) *v1.PodLogOp
 
 	return logOptions
 }
-	
+
 // Construct a request for getting the logs for a pod and retrieves the logs.
-func getRawPodLogs(client kubernetes.Interface, namespace, podID string, logOptions *v1.PodLogOptions) (
+func readRawLogs(client kubernetes.Interface, namespace, podID string, logOptions *v1.PodLogOptions) (
 	string, error) {
 	readCloser, err := openStream(client, namespace, podID, logOptions)
 	if err != nil {
@@ -119,20 +112,21 @@ func getRawPodLogs(client kubernetes.Interface, namespace, podID string, logOpti
 	return string(result), nil
 }
 
-// GetPodLogFile
-func GetLogFile(client *client.Clientset, namespace, podID string, container string) (io.ReadCloser, error) {
+// GetLogFile returns a stream to the log file which can be piped directly to the respose. This avoids oom issues.
+func GetLogFile(client kubernetes.Interface, namespace, podID string, container string) (string, io.ReadCloser, error) {
 	logOptions := &v1.PodLogOptions{
 		Container:  container,
 		Follow:     false,
 		Previous:   false,
 		Timestamps: false,
 	}
-	return openStream(client, namespace, podID, logOptions)
+	filename := fmt.Sprintf("logs-from-%v-in-%v.txt", container, podID)
+	logStream, err := openStream(client, namespace, podID, logOptions)
+	return filename, logStream, err
 }
 
-
-func openStream(client *client.Clientset, namespace, podID string, logOptions *v1.PodLogOptions) (io.ReadCloser, error) {
-	req := client.Core().RESTClient().Get().
+func openStream(client kubernetes.Interface, namespace, podID string, logOptions *v1.PodLogOptions) (io.ReadCloser, error) {
+	req := client.CoreV1().RESTClient().Get().
 		Namespace(namespace).
 		Name(podID).
 		Resource("pods").
@@ -141,7 +135,7 @@ func openStream(client *client.Clientset, namespace, podID string, logOptions *v
 	return req.Stream()
 }
 
-// Build logs structure for given parameters.
+// ConstructLogDetails creates a new log details structure for given parameters.
 func ConstructLogDetails(podID string, rawLogs string, container string, logSelector *logs.Selection) *logs.LogDetails {
 	parsedLines := logs.ToLogLines(rawLogs)
 	logLines, fromDate, toDate, logSelection, lastPage := parsedLines.SelectLogs(logSelector)
