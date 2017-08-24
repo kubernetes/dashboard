@@ -29,11 +29,8 @@ import (
 	batch "k8s.io/client-go/pkg/apis/batch/v1"
 )
 
-func getCompletionsPointer(completions int32) *int32 {
-	return &completions
-}
-
 func TestGetJobListFromChannels(t *testing.T) {
+	var completions int32 = 21
 	controller := true
 	cases := []struct {
 		k8sRs         batch.JobList
@@ -94,7 +91,7 @@ func TestGetJobListFromChannels(t *testing.T) {
 					},
 					Spec: batch.JobSpec{
 						Selector:    &metaV1.LabelSelector{MatchLabels: map[string]string{"foo": "bar"}},
-						Completions: getCompletionsPointer(21),
+						Completions: &completions,
 					},
 					Status: batch.JobStatus{
 						Active: 7,
@@ -110,6 +107,7 @@ func TestGetJobListFromChannels(t *testing.T) {
 						},
 						Spec: batch.JobSpec{
 							Selector: &metaV1.LabelSelector{MatchLabels: map[string]string{"foo": "bar"}},
+							Completions: &completions,
 						},
 						Status: batch.JobStatus{
 							Active: 7,
@@ -161,7 +159,7 @@ func TestGetJobListFromChannels(t *testing.T) {
 					TypeMeta: api.TypeMeta{Kind: api.ResourceKindJob},
 					Pods: common.PodInfo{
 						Current:  7,
-						Desired:  getCompletionsPointer(21),
+						Desired:  &completions,
 						Failed:   2,
 						Warnings: []common.Event{},
 					},
@@ -175,7 +173,7 @@ func TestGetJobListFromChannels(t *testing.T) {
 					TypeMeta: api.TypeMeta{Kind: api.ResourceKindJob},
 					Pods: common.PodInfo{
 						Current:  7,
-						Desired:  getCompletionsPointer(0),
+						Desired:  &completions,
 						Failed:   2,
 						Warnings: []common.Event{},
 					},
