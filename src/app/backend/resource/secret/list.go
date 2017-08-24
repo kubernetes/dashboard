@@ -65,8 +65,9 @@ func (spec *ImagePullSecretSpec) GetData() map[string][]byte {
 
 // Secret is a single secret returned to the frontend.
 type Secret struct {
-	api.ObjectMeta `json:"objectMeta"`
-	api.TypeMeta   `json:"typeMeta"`
+	ObjectMeta    api.ObjectMeta  `json:"objectMeta"`
+	TypeMeta      api.TypeMeta    `json:"typeMeta"`
+	Type          v1.SecretType   `json:"type"`
 }
 
 // SecretsList is a response structure for a queried secrets list.
@@ -125,8 +126,9 @@ func CreateSecret(client kubernetes.Interface, spec SecretSpec) (*Secret, error)
 
 func toSecret(secret *v1.Secret) *Secret {
 	return &Secret{
-		api.NewObjectMeta(secret.ObjectMeta),
-		api.NewTypeMeta(api.ResourceKindSecret),
+		ObjectMeta:    api.NewObjectMeta(secret.ObjectMeta),
+		TypeMeta:      api.NewTypeMeta(api.ResourceKindSecret),
+		Type:          secret.Type,
 	}
 }
 
