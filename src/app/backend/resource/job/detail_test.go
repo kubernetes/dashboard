@@ -61,9 +61,9 @@ func TestGetJobDetail(t *testing.T) {
 				ObjectMeta: api.ObjectMeta{Name: "job-1", Namespace: "ns-1",
 					Labels: map[string]string{"app": "test"}},
 				TypeMeta: api.TypeMeta{Kind: api.ResourceKindJob},
-				PodInfo:  common.PodInfo{
+				PodInfo: common.PodInfo{
 					Warnings: []common.Event{},
-					Desired: &jobCompletions,
+					Desired:  &jobCompletions,
 				},
 				PodList: pod.PodList{
 					Pods:              []pod.Pod{},

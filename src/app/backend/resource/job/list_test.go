@@ -106,7 +106,7 @@ func TestGetJobListFromChannels(t *testing.T) {
 							CreationTimestamp: metaV1.Unix(111, 222),
 						},
 						Spec: batch.JobSpec{
-							Selector: &metaV1.LabelSelector{MatchLabels: map[string]string{"foo": "bar"}},
+							Selector:    &metaV1.LabelSelector{MatchLabels: map[string]string{"foo": "bar"}},
 							Completions: &completions,
 						},
 						Status: batch.JobStatus{

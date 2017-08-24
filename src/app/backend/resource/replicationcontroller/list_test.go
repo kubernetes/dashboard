@@ -27,11 +27,8 @@ import (
 	"k8s.io/client-go/pkg/api/v1"
 )
 
-func getReplicasPointer(replicas int32) *int32 {
-	return &replicas
-}
-
 func TestCreateReplicationControllerList(t *testing.T) {
+	replicas := int32(0)
 	events := []v1.Event{}
 	controller := true
 	firstAppOwnerRef := []metaV1.OwnerReference{{
@@ -63,7 +60,7 @@ func TestCreateReplicationControllerList(t *testing.T) {
 						UID:       "uid-1",
 					},
 					Spec: v1.ReplicationControllerSpec{
-						Replicas: getReplicasPointer(0),
+						Replicas: &replicas,
 						Selector: map[string]string{"app": "my-name-1"},
 						Template: &v1.PodTemplateSpec{
 							Spec: v1.PodSpec{Containers: []v1.Container{{Image: "my-container-image-1"}}},
@@ -77,7 +74,7 @@ func TestCreateReplicationControllerList(t *testing.T) {
 						UID:       "uid-2",
 					},
 					Spec: v1.ReplicationControllerSpec{
-						Replicas: getReplicasPointer(0),
+						Replicas: &replicas,
 						Selector: map[string]string{"app": "my-name-2", "ver": "2"},
 						Template: &v1.PodTemplateSpec{
 							Spec: v1.PodSpec{Containers: []v1.Container{{Image: "my-container-image-2"}}},
@@ -182,6 +179,7 @@ func TestCreateReplicationControllerList(t *testing.T) {
 						TypeMeta:        api.TypeMeta{Kind: api.ResourceKindReplicationController},
 						ContainerImages: []string{"my-container-image-1"},
 						Pods: common.PodInfo{
+							Desired:   &replicas,
 							Failed:    2,
 							Pending:   1,
 							Running:   1,
@@ -196,6 +194,7 @@ func TestCreateReplicationControllerList(t *testing.T) {
 						TypeMeta:        api.TypeMeta{Kind: api.ResourceKindReplicationController},
 						ContainerImages: []string{"my-container-image-2"},
 						Pods: common.PodInfo{
+							Desired:  &replicas,
 							Warnings: []common.Event{},
 						},
 					},
@@ -245,7 +244,7 @@ func TestGetReplicationControllerList(t *testing.T) {
 						},
 						TypeMeta: api.TypeMeta{Kind: api.ResourceKindReplicationController},
 						Pods: common.PodInfo{
-							Desired:  getReplicasPointer(0),
+							Desired:  &replicas,
 							Warnings: make([]common.Event, 0),
 						},
 					},
