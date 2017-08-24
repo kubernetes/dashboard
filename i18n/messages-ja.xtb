@@ -827,7 +827,7 @@
   <translation id="7478420130341878455" key="MSG_SECRET_LIST_CARDLIST_2" desc="Label \'Namespace\' which appears as a column label in the table of secrets (secret list view).">ネームスペース</translation>
   <translation id="4493598488188566434" key="MSG_SECRET_LIST_CARDLIST_3" desc="Label \'Age\' which appears as a column label in the table of secrets (secret list view).">起動時間</translation>
   <translation id="5636111591527461304" key="MSG_SECRET_LIST_CARDLIST_4" desc="Text for secret card list zerostate.">表示するものがありません</translation>
-  <translation id="4288994324802954049" key="MSG_SECRET_LIST_CARDLIST_5" desc="Label \'SecretType\' which appears as a column label in the table of secrets (secret list view).">秘密のタイプ</translation>
+  <translation id="2424849052809753229" key="MSG_SECRET_LIST_CARDLIST_5" desc="Label \'Type\' which appears as a column label in the table of secrets (secret list view).">タイプ</translation>
   <translation id="2799384691872397176" key="MSG_SECRET_LIST_STARTED_AT_TOOLTIP" desc="Tooltip 'Started at [some date]' showing the exact start time of the secret.">
     <ph name="START_DATE"> UTC に作成</ph>
   </translation>

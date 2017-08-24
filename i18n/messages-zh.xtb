@@ -795,7 +795,7 @@
   <translation id="7478420130341878455" key="MSG_SECRET_LIST_CARDLIST_2" desc="Label \'Namespace\' which appears as a column label in the table of secrets (secret list view).">命名空间</translation>
   <translation id="4493598488188566434" key="MSG_SECRET_LIST_CARDLIST_3" desc="Label \'Age\' which appears as a column label in the table of secrets (secret list view).">已创建</translation>
   <translation id="5636111591527461304" key="MSG_SECRET_LIST_CARDLIST_4" desc="Text for secret card list zerostate.">没有保密字典可显示</translation>
-  <translation id="4288994324802954049" key="MSG_SECRET_LIST_CARDLIST_5" desc="Label \'SecretType\' which appears as a column label in the table of secrets (secret list view).">密钥类型</translation>
+  <translation id="2424849052809753229" key="MSG_SECRET_LIST_CARDLIST_5" desc="Label \'Type\' which appears as a column label in the table of secrets (secret list view).">类型</translation>
   <translation id="2799384691872397176" key="MSG_SECRET_LIST_STARTED_AT_TOOLTIP" desc="Tooltip 'Started at [some date]' showing the exact start time of the secret.">创建于 <ph name="START_DATE"> UTC</ph></translation>
   <translation id="4995313458787786058" key="MSG_SERVICES_LABEL" desc="Label 'Services' that appears as a breadcrumbs on the action bar.">服务</translation>
   <translation id="2095406541360162780" key="MSG_SERVICE_DETAIL_DETAIL_1" desc="Text for pods card zerostate in stateful set details page.">此服务目前没有选中容器组</translation>

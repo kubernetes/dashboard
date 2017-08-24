@@ -67,7 +67,7 @@ func (spec *ImagePullSecretSpec) GetData() map[string][]byte {
 type Secret struct {
 	ObjectMeta    api.ObjectMeta  `json:"objectMeta"`
 	TypeMeta      api.TypeMeta    `json:"typeMeta"`
-	SecretType    v1.SecretType   `json:"secretType"`
+	Type          v1.SecretType   `json:"type"`
 }
 
 // SecretsList is a response structure for a queried secrets list.
@@ -128,7 +128,7 @@ func toSecret(secret *v1.Secret) *Secret {
 	return &Secret{
 		ObjectMeta:    api.NewObjectMeta(secret.ObjectMeta),
 		TypeMeta:      api.NewTypeMeta(api.ResourceKindSecret),
-		SecretType:    secret.Type,
+		Type:          secret.Type,
 	}
 }
 
