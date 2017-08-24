@@ -98,27 +98,35 @@ export default class NamespaceDialogController {
    * Creates new namespace based on the state of the controller.
    * @export
    */
-  async createNamespace() {
+  createNamespace() {
     if (!this.namespaceForm.$valid) return;
 
     /** @type {!backendApi.NamespaceSpec} */
     let namespaceSpec = {name: this.namespace};
 
-    try {
-      let token = await this.tokenPromise;
+    this.tokenPromise.then(
+        (token) => {
+          /** @type {!angular.Resource} */
+          let resource = this.resource_(
+              'api/v1/namespace', {},
+              {save: {method: 'POST', headers: {[this.csrfHeaderName_]: token}}});
 
-      /** @type {!angular.Resource} */
-      let resource = this.resource_(
-          'api/v1/namespace', {},
-          {save: {method: 'POST', headers: {[this.csrfHeaderName_]: token}}});
-
-      let savedConfig = await resource.save(namespaceSpec);
-      this.log_.info('Successfully created namespace:', savedConfig);
-      this.mdDialog_.hide(this.namespace);
-    } catch (err) {
-      this.mdDialog_.hide();
-      this.errorDialog_.open('Error creating namespace', err.data);
-      this.log_.info('Error creating namespace:', err);
-    }
+          resource.save(
+              namespaceSpec,
+              (savedConfig) => {
+                this.log_.info('Successfully created namespace:', savedConfig);
+                this.mdDialog_.hide(this.namespace);
+              },
+              (err) => {
+                this.mdDialog_.hide();
+                this.errorDialog_.open('Error creating namespace', err.data);
+                this.log_.info('Error creating namespace:', err);
+              });
+        },
+        (err) => {
+          this.mdDialog_.hide();
+          this.errorDialog_.open('Error creating namespace', err.data);
+          this.log_.info('Error creating namespace:', err);
+        });
   }
 }

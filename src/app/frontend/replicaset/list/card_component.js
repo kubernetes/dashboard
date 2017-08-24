@@ -22,14 +22,6 @@ import {stateName} from '../../replicaset/detail/state';
  */
 class ReplicaSetCardController {
   /**
-   * @return {boolean}
-   * @export
-   */
-  areMultipleNamespacesSelected() {
-    return this.kdNamespaceService_.areMultipleNamespacesSelected();
-  }
-
-  /**
    * @param {!ui.router.$state} $state
    * @param {!angular.$interpolate} $interpolate
    * @param {!./../../common/namespace/service.NamespaceService} kdNamespaceService
@@ -50,6 +42,14 @@ class ReplicaSetCardController {
 
     /** @private {!./../../common/namespace/service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
+  }
+
+  /**
+   * @return {boolean}
+   * @export
+   */
+  areMultipleNamespacesSelected() {
+    return this.kdNamespaceService_.areMultipleNamespacesSelected();
   }
 
   /**
