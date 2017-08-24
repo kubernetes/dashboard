@@ -107,7 +107,6 @@ func GetDeploymentDetail(client client.Interface, metricClient metricapi.MetricC
 		return nil, err
 	}
 
-	// TODO fix not to use kubernetes utils
 	selector, err := metaV1.LabelSelectorAsSelector(deployment.Spec.Selector)
 	if err != nil {
 		return nil, err
