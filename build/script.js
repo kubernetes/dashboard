@@ -46,7 +46,7 @@ gulp.task('set-prod-node-env', () => {
 /**
  * Returns function creating a stream that compiles frontend JavaScript files into development
  * bundle located in {conf.paths.serve} directory. This has to be done because currently browsers do
- * not handle ES6 syntax and modules correctly.
+ * not handle ES2017 syntax and modules correctly.
  *
  * Only dependencies of root application module are included in the bundle.
  * @param {boolean} throwError - whether task should throw an error in case of JS syntax errors.
@@ -60,7 +60,7 @@ function createScriptsStream(throwError) {
       config: {
         devtool: 'inline-source-map',
         module: {
-          // ES6 modules have to be preprocessed with Babel loader to work in browsers.
+          // ES2017 modules have to be preprocessed with Babel loader to work in browsers.
           loaders: [{test: /\.js$/, exclude: /node_modules/, loaders: ['babel-loader']}],
         },
         output: {filename: 'app-dev.js'},
@@ -89,7 +89,7 @@ function createScriptsStream(throwError) {
 }
 /**
  * Compiles frontend JavaScript files into development bundle located in
- * {conf.paths.serve} directory. This has to be done because currently browsers do not handle ES6
+ * {conf.paths.serve} directory. This has to be done because currently browsers do not handle ES2017
  * syntax and modules correctly.
  *
  * Only dependencies of root application module are included in the bundle.
@@ -100,7 +100,7 @@ gulp.task('scripts', ['set-dev-node-env'], createScriptsStream(true));
 
 /**
  * Compiles frontend JavaScript files into development bundle located in
- * {conf.paths.serve} directory. This has to be done because currently browsers do not handle ES6
+ * {conf.paths.serve} directory. This has to be done because currently browsers do not handle ES2017
  * syntax and modules correctly.
  *
  * Only dependencies of root application module are included in the bundle.
