@@ -53,6 +53,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/rbacroles"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/scope"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/secret"
 	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/statefulset"
@@ -175,6 +176,15 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 		apiV1Ws.GET("/replicationcontroller/{namespace}/{replicationController}/service").
 			To(apiHandler.handleGetReplicationControllerServices).
 			Writes(resourceService.ServiceList{}))
+
+	apiV1Ws.Route(
+		apiV1Ws.GET("/scope").
+			To(apiHandler.handleGetScope).
+			Writes(scope.Scope{}))
+	apiV1Ws.Route(
+		apiV1Ws.POST("/scope").
+			To(apiHandler.handlePostScope).
+			Writes(scope.Scope{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/workload").
@@ -1109,7 +1119,50 @@ func (apiHandler *APIHandler) handleSearch(request *restful.Request, response *r
 	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
-func (apiHandler *APIHandler) handleGetDiscovery(request *restful.Request, response *restful.Response) {
+func (apiHandler *APIHandler) handleGetScope(
+	request *restful.Request, response *restful.Response) {
+
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	result, err := scope.GetScope(k8sClient)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handlePostScope(
+	request *restful.Request, response *restful.Response) {
+
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	cfg, err := apiHandler.cManager.ClientCmdConfig(request)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	result, err := scope.PostScope(k8sClient, cfg)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetDiscovery(
+	request *restful.Request, response *restful.Response) {
 	k8sClient, err := apiHandler.cManager.Client(request)
 	if err != nil {
 		handleInternalError(response, err)

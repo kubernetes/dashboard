@@ -921,6 +921,14 @@ backendApi.ServiceList;
 
 /**
  * @typedef {{
+ *   deployed: string,
+ *   address: string
+ * }}
+ */
+backendApi.Scope;
+
+/**
+ * @typedef {{
  *  objectMeta: !backendApi.ObjectMeta,
  *  typeMeta: !backendApi.TypeMeta,
  *  labelSelector: !Object<string, string>,
