@@ -76,6 +76,6 @@ func getStatefulSetPodInfo(client kubernetes.Interface, statefulSet *apps.Statef
 		return nil, err
 	}
 
-	podInfo := common.GetPodInfo(statefulSet.Status.Replicas, *statefulSet.Spec.Replicas, pods)
+	podInfo := common.GetPodInfo(statefulSet.Status.Replicas, statefulSet.Spec.Replicas, pods)
 	return &podInfo, nil
 }

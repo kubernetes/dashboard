@@ -114,7 +114,7 @@ func TestGetDeploymentListFromChannels(t *testing.T) {
 					TypeMeta: api.TypeMeta{Kind: api.ResourceKindDeployment},
 					Pods: common.PodInfo{
 						Current:  7,
-						Desired:  21,
+						Desired:  getReplicasPointer(21),
 						Failed:   0,
 						Warnings: []common.Event{},
 					},

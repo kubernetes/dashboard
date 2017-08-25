@@ -21,15 +21,20 @@ import (
 	api "k8s.io/client-go/pkg/api/v1"
 )
 
+func getReplicasPointer(replicas int32) *int32 {
+	return &replicas
+}
+
 func TestGetPodInfo(t *testing.T) {
 	cases := []struct {
-		current, desired int32
-		pods             []api.Pod
-		expected         PodInfo
+		current  int32
+		desired  *int32
+		pods     []api.Pod
+		expected PodInfo
 	}{
 		{
 			5,
-			4,
+			getReplicasPointer(4),
 			[]api.Pod{
 				{
 					Status: api.PodStatus{
@@ -39,7 +44,7 @@ func TestGetPodInfo(t *testing.T) {
 			},
 			PodInfo{
 				Current:  5,
-				Desired:  4,
+				Desired:  getReplicasPointer(4),
 				Running:  1,
 				Pending:  0,
 				Failed:   0,

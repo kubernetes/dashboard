@@ -179,6 +179,7 @@ func TestCreateReplicationControllerList(t *testing.T) {
 						TypeMeta:        api.TypeMeta{Kind: api.ResourceKindReplicationController},
 						ContainerImages: []string{"my-container-image-1"},
 						Pods: common.PodInfo{
+							Desired:   &replicas,
 							Failed:    2,
 							Pending:   1,
 							Running:   1,
@@ -193,6 +194,7 @@ func TestCreateReplicationControllerList(t *testing.T) {
 						TypeMeta:        api.TypeMeta{Kind: api.ResourceKindReplicationController},
 						ContainerImages: []string{"my-container-image-2"},
 						Pods: common.PodInfo{
+							Desired:  &replicas,
 							Warnings: []common.Event{},
 						},
 					},
@@ -242,7 +244,7 @@ func TestGetReplicationControllerList(t *testing.T) {
 						},
 						TypeMeta: api.TypeMeta{Kind: api.ResourceKindReplicationController},
 						Pods: common.PodInfo{
-							Desired:  replicas,
+							Desired:  &replicas,
 							Warnings: make([]common.Event, 0),
 						},
 					},

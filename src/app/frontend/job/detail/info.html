@@ -32,7 +32,8 @@ limitations under the License.
         <kd-middle-ellipsis display-string="{{::image}}"></kd-middle-ellipsis>
       </div>
     </kd-info-card-entry>
-    <kd-info-card-entry title="[[Completions|Job completions. Appears in details section.]]">
+    <kd-info-card-entry ng-if="::$ctrl.job.completions"
+                        title="[[Completions|Job completions. Appears in details section.]]">
       {{::$ctrl.job.completions}}
     </kd-info-card-entry>
     <kd-info-card-entry title="[[Parallelism|Job parallelism. Appears in details section.]]">
