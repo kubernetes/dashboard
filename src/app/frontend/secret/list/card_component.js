@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {StateParams} from 'common/resource/resourcedetail';
-import {stateName} from 'secret/detail/state';
+import {StateParams} from '../../common/resource/resourcedetail';
+import {stateName} from '../../secret/detail/state';
 
 class SecretCardController {
   /**

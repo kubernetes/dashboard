@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {actionbarViewName, stateName as chromeStateName} from 'chrome/state';
-import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
-import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
+import {actionbarViewName, stateName as chromeStateName} from '../../chrome/state';
+import {breadcrumbsConfig} from '../../common/components/breadcrumbs/service';
+import {appendDetailParamsToUrl} from '../../common/resource/resourcedetail';
 
-import {stateName as secretList} from './../list/state';
-import {stateName as parentState, stateUrl} from './../state';
+import {stateName as secretList} from '../list/state';
+import {stateName as parentState, stateUrl} from '../state';
 import {ActionBarController} from './actionbar_controller';
 import {SecretDetailController} from './controller';
 
@@ -56,7 +56,7 @@ export const config = {
 /**
  * @param {!./../../common/resource/resourcedetail.StateParams} $stateParams
  * @param {!angular.$resource} $resource
- * @return {!angular.Resource<!backendApi.SecretDetail>}
+ * @return {!angular.Resource}
  * @ngInject
  */
 export function getSecretDetailResource($resource, $stateParams) {
@@ -64,7 +64,7 @@ export function getSecretDetailResource($resource, $stateParams) {
 }
 
 /**
- * @param {!angular.Resource<!backendApi.SecretDetail>} secretDetailResource
+ * @param {!angular.Resource} secretDetailResource
  * @return {!angular.$q.Promise}
  * @ngInject
  */

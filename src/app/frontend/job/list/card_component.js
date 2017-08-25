@@ -12,18 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {StateParams} from 'common/resource/resourcedetail';
-import {stateName} from 'job/detail/state';
+import {StateParams} from '../../common/resource/resourcedetail';
+import {stateName} from '../detail/state';
 
 /**
  * Controller for the job card.
  *
  * @final
  */
-export default class JobCardController {
+class JobCardController {
   /**
    * @param {!ui.router.$state} $state
-   * @param {!./../../common/namespace/service.NamespaceService} kdNamespaceService
+   * @param {!../../common/namespace/service.NamespaceService} kdNamespaceService
    * @ngInject
    */
   constructor($state, kdNamespaceService) {
@@ -36,7 +36,7 @@ export default class JobCardController {
     /** @private {!ui.router.$state} */
     this.state_ = $state;
 
-    /** @private {!./../../common/namespace/service.NamespaceService} */
+    /** @private {!../../common/namespace/service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
   }
 

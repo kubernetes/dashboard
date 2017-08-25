@@ -48,11 +48,11 @@ function getBackendArgs(mode) {
     `--tls-key-file=${conf.backend.tlsKey}`,
   ];
 
-  if (mode === conf.backend.production) {
+  if (mode === conf.build.production) {
     args.push(`--insecure-port=${conf.frontend.serverPort}`);
   }
 
-  if (mode === conf.backend.development) {
+  if (mode === conf.build.development) {
     args.push(`--insecure-port=${conf.backend.devServerPort}`);
   }
 
@@ -146,8 +146,8 @@ gulp.task('serve:prod', ['spawn-backend:prod']);
  */
 gulp.task('spawn-backend', ['backend', 'kill-backend', 'locales-for-backend:dev'], function() {
   runningBackendProcess = child.spawn(
-      path.join(conf.paths.serve, conf.backend.binaryName),
-      getBackendArgs(conf.backend.development), {stdio: 'inherit', cwd: conf.paths.serve});
+      path.join(conf.paths.serve, conf.backend.binaryName), getBackendArgs(conf.build.development),
+      {stdio: 'inherit', cwd: conf.paths.serve});
 
   runningBackendProcess.on('exit', function() {
     // Mark that there is no backend process running anymore.
@@ -162,7 +162,7 @@ gulp.task('spawn-backend', ['backend', 'kill-backend', 'locales-for-backend:dev'
  */
 gulp.task('spawn-backend:prod', ['build-frontend', 'backend:prod', 'kill-backend'], function() {
   runningBackendProcess = child.spawn(
-      path.join(conf.paths.dist, conf.backend.binaryName), getBackendArgs(conf.backend.production),
+      path.join(conf.paths.dist, conf.backend.binaryName), getBackendArgs(conf.build.production),
       {stdio: 'inherit', cwd: conf.paths.dist});
 
   runningBackendProcess.on('exit', function() {

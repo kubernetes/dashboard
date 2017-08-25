@@ -20,11 +20,11 @@
  */
 export class AppConfigService {
   /**
-   * @param {!appConfig_DO_NOT_USE_DIRECTLY} appConfig
+   * @param {!appConfig_DO_NOT_USE_DIRECTLY.config} appConfig
    * @ngInject
    */
   constructor(appConfig) {
-    /** @private {!appConfig_DO_NOT_USE_DIRECTLY} */
+    /** @private {!appConfig_DO_NOT_USE_DIRECTLY.config} */
     this.appConfig_ = appConfig;
 
     /** @private {number} */
@@ -80,7 +80,7 @@ export class AppConfigService {
  */
 export default class AppConfigServiceProvider {
   /**
-   * @param {appConfig_DO_NOT_USE_DIRECTLY} appConfig
+   * @param {appConfig_DO_NOT_USE_DIRECTLY.config} appConfig
    * @ngInject
    * @export
    */

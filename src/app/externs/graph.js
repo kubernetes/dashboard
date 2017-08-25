@@ -13,38 +13,35 @@
 // limitations under the License.
 
 /**
- * @fileoverview API for data select operations.
+ * @fileoverview Externs for search module.
+ *
  * @externs
  */
 
-const DataSelectApi = {};
+const kdGraph = {};
 
 /**
+ * Settings object that should be provided for every metric supported by graph frontend.
+ *
  * @typedef {{
- *  itemsPerPage: number,
- *  page: number,
- *  sortBy: string,
- *  namespace: string,
- *  name: string,
- *  filterBy: string
- *  }}
+ *   yAxisType: !backendApi.ObjectMeta,
+ *   area: boolean,
+ *   key: string,
+ *   color: string,
+ *   fillOpacity: number,
+ *   strokeWidth: number,
+ *   type: string,
+ *   yAxis: number,
+ * }}
  */
-DataSelectApi.DataSelectQuery;
+kdGraph.metricSetting;
 
 /**
+ * Settings object that should be provided for every axis type supported by graph frontend.
+ *
  * @typedef {{
- *  NAME: string,
- *  STATUS: string,
- *  AGE: string,
- *  }}
+ *   formatter: function(number):string,
+ *   label: string,
+ * }}
  */
-DataSelectApi.SortableProperties;
-
-/**
- * @typedef {{
- *  PAGINATE: number,
- *  SORT: number,
- *  FILTER: number,
- *  }}
- */
-DataSelectApi.SupportedActions;
+kdGraph.axisSetting;

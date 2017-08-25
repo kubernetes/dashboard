@@ -106,7 +106,7 @@ export default class NamespaceDialogController {
 
     this.tokenPromise.then(
         (token) => {
-          /** @type {!angular.Resource<!backendApi.NamespaceSpec>} */
+          /** @type {!angular.Resource} */
           let resource = this.resource_(
               'api/v1/namespace', {},
               {save: {method: 'POST', headers: {[this.csrfHeaderName_]: token}}});

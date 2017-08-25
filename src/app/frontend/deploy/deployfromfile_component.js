@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as overview} from 'overview/state';
+import {stateName as overview} from '../overview/state';
 import showDeployAnywayDialog from './deployanyway_dialog';
 
 /**
@@ -20,7 +20,7 @@ import showDeployAnywayDialog from './deployanyway_dialog';
  *
  * @final
  */
-export default class DeployFromFileController {
+class DeployFromFileController {
   /**
    * @param {!angular.$log} $log
    * @param {!angular.$resource} $resource
@@ -110,7 +110,7 @@ export default class DeployFromFileController {
 
       this.tokenPromise.then(
           (token) => {
-            /** @type {!angular.Resource<!backendApi.AppDeploymentFromFileSpec>} */
+            /** @type {!angular.Resource} */
             let resource = this.resource_(
                 'api/v1/appdeploymentfromfile', {},
                 {save: {method: 'POST', headers: {[this.csrfHeaderName_]: token}}});

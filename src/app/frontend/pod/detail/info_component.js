@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {GlobalStateParams} from 'common/resource/globalresourcedetail';
-import {stateName} from 'node/detail/state';
+import {GlobalStateParams} from '../../common/resource/globalresourcedetail';
+import {stateName} from '../../node/detail/state';
 
 /**
  * @final
  */
-export default class PodInfoController {
+class PodInfoController {
   /**
    * Constructs pod info object.
    * @param {!ui.router.$state} $state

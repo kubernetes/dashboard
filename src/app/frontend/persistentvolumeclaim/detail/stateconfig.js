@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {actionbarViewName, stateName as chromeStateName} from 'chrome/state';
-import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
-import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
+import {actionbarViewName, stateName as chromeStateName} from '../../chrome/state';
+import {breadcrumbsConfig} from '../../common/components/breadcrumbs/service';
+import {appendDetailParamsToUrl} from '../../common/resource/resourcedetail';
 
-import {stateName as persistentVolumeClaimList} from './../list/state';
-import {stateName as parentState, stateUrl} from './../state';
+import {stateName as persistentVolumeClaimList} from '../list/state';
+import {stateName as parentState, stateUrl} from '../state';
 import {ActionBarController} from './actionbar_controller';
 import {PersistentVolumeClaimDetailController} from './controller';
 
@@ -56,7 +56,7 @@ export const config = {
 /**
  * @param {!./../../common/resource/resourcedetail.StateParams} $stateParams
  * @param {!angular.$resource} $resource
- * @return {!angular.Resource<!backendApi.PersistentVolumeClaimDetail>}
+ * @return {!angular.Resource}
  * @ngInject
  */
 export function getPersistentVolumeClaimDetailResource($resource, $stateParams) {
@@ -65,7 +65,7 @@ export function getPersistentVolumeClaimDetailResource($resource, $stateParams) 
 }
 
 /**
- * @param {!angular.Resource<!backendApi.PersistentVolumeClaimDetail>} persistentVolumeClaimDetailResource
+ * @param {!angular.Resource} persistentVolumeClaimDetailResource
  * @return {!angular.$q.Promise}
  * @ngInject
  */

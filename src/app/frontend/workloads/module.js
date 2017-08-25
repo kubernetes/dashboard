@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import chromeModule from 'chrome/module';
-import componentsModule from 'common/components/module';
-import filtersModule from 'common/filters/module';
-import daemonSetModule from 'daemonset/module';
-import deploymentModule from 'deployment/module';
-import jobModule from 'job/module';
-import replicaSetModule from 'replicaset/module';
-import replicationControllerModule from 'replicationcontroller/module';
-import statefulSetModule from 'statefulset/module';
+import chromeModule from '../chrome/module';
+import componentsModule from '../common/components/module';
+import filtersModule from '../common/filters/module';
+import daemonSetModule from '../daemonset/module';
+import deploymentModule from '../deployment/module';
+import jobModule from '../job/module';
+import replicaSetModule from '../replicaset/module';
+import replicationControllerModule from '../replicationcontroller/module';
+import statefulSetModule from '../statefulset/module';
 
 import stateConfig from './stateconfig';
 

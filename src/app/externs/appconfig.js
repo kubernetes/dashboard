@@ -12,23 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as loginState} from './login/state';
+/**
+ * @fileoverview App config structure. Should only be used if you know what you're doing.
+ *
+ * @externs
+ */
 
-/** @final */
-export class Controller {
-  /**
-   * @param {!ui.router.$state} $state
-   * @ngInject
-   */
-  constructor($state) {
-    this.state_ = $state;
-  }
+const appConfig_DO_NOT_USE_DIRECTLY = {};
 
-  /**
-   * @export
-   * @return {boolean}
-   */
-  isLoginState() {
-    return this.state_.current.name === loginState;
-  }
-}
+/**
+ * @typedef {{
+ *   serverTime: number,
+ * }}
+ */
+appConfig_DO_NOT_USE_DIRECTLY.config;

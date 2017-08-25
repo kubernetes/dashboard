@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {GlobalStateParams} from 'common/resource/globalresourcedetail';
-import {stateName} from 'namespace/detail/state';
+import {GlobalStateParams} from '../../common/resource/globalresourcedetail';
+import {stateName} from '../../namespace/detail/state';
 
 /**
  * Controller for the namespace card.
  *
  * @final
  */
-export default class NamespaceCardController {
+class NamespaceCardController {
   /**
    * @param {!ui.router.$state} $state
    * @param {!angular.$interpolate} $interpolate

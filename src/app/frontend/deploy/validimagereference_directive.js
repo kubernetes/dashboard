@@ -51,7 +51,7 @@ export default function validImageReferenceDirective($resource, $q) {
 function validate(reference, scope, resource, q) {
   let deferred = q.defer();
 
-  /** @type {!angular.Resource<!backendApi.ImageReferenceValiditySpec>} */
+  /** @type {!angular.Resource} */
   let resourceClass = resource('api/v1/appdeployment/validate/imagereference');
   /** @type {!backendApi.ImageReferenceValiditySpec} */
   let spec = {reference: reference};

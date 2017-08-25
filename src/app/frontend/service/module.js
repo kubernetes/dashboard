@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import chromeModule from 'chrome/module';
-import componentsModule from 'common/components/module';
-import filtersModule from 'common/filters/module';
-import namespaceModule from 'common/namespace/module';
-import endpointModule from 'endpoint/module';
-import eventsModule from 'events/module';
+import chromeModule from '../chrome/module';
+import componentsModule from '../common/components/module';
+import filtersModule from '../common/filters/module';
+import namespaceModule from '../common/namespace/module';
+import endpointModule from '../endpoint/module';
+import eventsModule from '../events/module';
 
 import {serviceInfoComponent} from './detail/info_component';
 import {serviceEndpointResource, serviceEventsResource, servicePodsResource} from './detail/stateconfig';

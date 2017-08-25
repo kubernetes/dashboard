@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {namespaceParam} from 'chrome/state';
-import {stateName as loginState} from 'login/state';
+import {namespaceParam} from '../../chrome/state';
+import {stateName as loginState} from '../../login/state';
 
 import {DEFAULT_NAMESPACE, namespaceSelectComponent} from './component';
 import {NamespaceService} from './service';

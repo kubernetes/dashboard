@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as logsStateName, StateParams as LogsStateParams} from 'logs/state';
+import {stateName as logsStateName, StateParams as LogsStateParams} from '../../../logs/state';
 
 /**
  * Controller for the logs button component.

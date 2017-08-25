@@ -72,7 +72,10 @@ export class DataSelectService {
     this.instances_.set(dataSelectId, new DataSelectQueryBuilder().build());
   }
 
-  /** @export **/
+  /**
+   * @export
+   * @return {number}
+   */
   getMinRowsLimit() {
     return this.rowsLimit;
   }
@@ -86,10 +89,10 @@ export class DataSelectService {
   }
 
   /**
-   * @param listResource {!angular.$resource}
-   * @param dataSelectId {string}
-   * @param dataSelectQuery {!DataSelectApi.DataSelectQuery}
-   * @param action {number}
+   * @param {!angular.$resource} listResource
+   * @param {string} dataSelectId
+   * @param {!DataSelectApi.DataSelectQuery} dataSelectQuery
+   * @param {number} action
    * @return {!angular.$q.Promise}
    * @private
    */
@@ -131,7 +134,7 @@ export class DataSelectService {
   }
 
   /**
-   * @param query
+   * @param {!DataSelectApi.DataSelectQuery} query
    * @private
    */
   applySearch_(query) {
@@ -145,9 +148,9 @@ export class DataSelectService {
   }
 
   /**
-   * @param listResource {!angular.$resource}
-   * @param dataSelectId {string}
-   * @param dataSelectQuery {!DataSelectApi.DataSelectQuery}
+   * @param {!angular.$resource} listResource
+   * @param {string} dataSelectId
+   * @param {!DataSelectApi.DataSelectQuery} dataSelectQuery
    * @return {!angular.$q.Promise}
    * @export
    */
@@ -156,10 +159,10 @@ export class DataSelectService {
   }
 
   /**
-   * @param listResource {!angular.$resource}
-   * @param dataSelectId {string}
-   * @param ascending {boolean}
-   * @param sortBy {string}
+   * @param {!angular.$resource} listResource
+   * @param {string} dataSelectId
+   * @param {boolean} ascending
+   * @param {string} sortBy
    * @return {!angular.$q.Promise}
    * @export
    */
@@ -175,9 +178,9 @@ export class DataSelectService {
   }
 
   /**
-   * @param listResource {!angular.$resource}
-   * @param dataSelectId {string}
-   * @param filterBy {string}
+   * @param {!angular.$resource} listResource
+   * @param {string} dataSelectId
+   * @param {string} filterBy
    * @return {!angular.$q.Promise}
    * @export
    */
@@ -193,6 +196,8 @@ export class DataSelectService {
    * @export
    */
   getDefaultResourceQuery(namespace, name) {
+    namespace = namespace || '';
+    name = name || '';
     let query = new DataSelectQueryBuilder().setNamespace(namespace).setName(name).build();
 
     if (this.kdNamespaceService_.isMultiNamespace(query.namespace)) {

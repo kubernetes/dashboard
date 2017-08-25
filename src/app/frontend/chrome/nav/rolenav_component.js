@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as roleState} from 'role/list/state';
+import {stateName as roleState} from '../../role/list/state';
 
 /**
  * @final

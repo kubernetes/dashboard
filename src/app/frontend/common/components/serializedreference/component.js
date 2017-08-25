@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as daemonSetStateName} from 'daemonset/detail/state';
-import {stateName as deploymentStateName} from 'deployment/detail/state';
-import {stateName as jobStateName} from 'job/detail/state';
-import {stateName as replicaSetStateName} from 'replicaset/detail/state';
-import {stateName as replicationControllerStateName} from 'replicationcontroller/detail/state';
+import {stateName as daemonSetStateName} from '../../../daemonset/detail/state';
+import {stateName as deploymentStateName} from '../../../deployment/detail/state';
+import {stateName as jobStateName} from '../../../job/detail/state';
+import {stateName as replicaSetStateName} from '../../../replicaset/detail/state';
+import {stateName as replicationControllerStateName} from '../../../replicationcontroller/detail/state';
 import {stateName as statefulSetStateName} from '../../../statefulset/detail/state';
 import {StateParams} from '../../resource/resourcedetail.js';
 
@@ -29,10 +29,8 @@ const referenceKindToDetailStateName = {
   Job: jobStateName,
 };
 
-/**
- * @final
- */
-export default class SerializedReferenceController {
+/** @final */
+class SerializedReferenceController {
   /**
    * Constructs serialized reference controller.
    * @param {!ui.router.$state} $state
