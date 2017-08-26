@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import componentsModule from 'common/components/module';
-import filtersModule from 'common/filters/module';
+import componentsModule from '../common/components/module';
+import filtersModule from '../common/filters/module';
 
 
 import {eventCardListComponent} from './cardlist_component';

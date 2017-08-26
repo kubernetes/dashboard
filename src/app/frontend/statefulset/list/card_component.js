@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {StateParams} from 'common/resource/resourcedetail';
-import {stateName} from 'statefulset/detail/state';
+import {StateParams} from '../../common/resource/resourcedetail';
+import {stateName} from '../../statefulset/detail/state';
 
 /**
  * Controller for the stateful set card.
@@ -25,10 +25,9 @@ export default class StatefulSetCardController {
    * @param {!ui.router.$state} $state
    * @param {!angular.$interpolate} $interpolate
    * @param {!./../../common/namespace/service.NamespaceService} kdNamespaceService
-   * @param {!./../../common/scaling/service.ScaleService} kdScaleService
    * @ngInject
    */
-  constructor($state, $interpolate, kdNamespaceService, kdScaleService) {
+  constructor($state, $interpolate, kdNamespaceService) {
     /**
      * Initialized from the scope.
      * @export {!backendApi.StatefulSet}
@@ -43,9 +42,6 @@ export default class StatefulSetCardController {
 
     /** @private {!./../../common/namespace/service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
-
-    /** @private {!./../../common/scaling/service.ScaleService} */
-    this.kdScaleService_ = kdScaleService;
   }
 
   /**

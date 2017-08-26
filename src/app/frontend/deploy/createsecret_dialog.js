@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import CreateSecretController from 'deploy/createsecret_controller';
+import CreateSecretController from './createsecret_controller';
 
 /**
  * Displays new secret creation dialog.

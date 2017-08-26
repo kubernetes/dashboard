@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {actionbarViewName, stateName as chromeStateName} from 'chrome/state';
-import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
-import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
-import {stateName as daemonSetList} from 'daemonset/list/state';
+import {actionbarViewName, stateName as chromeStateName} from '../../chrome/state';
+import {breadcrumbsConfig} from '../../common/components/breadcrumbs/service';
+import {appendDetailParamsToUrl} from '../../common/resource/resourcedetail';
+import {stateName as daemonSetList} from '../../daemonset/list/state';
 
-import {stateName as parentState, stateUrl} from './../state';
+import {stateName as parentState, stateUrl} from '../state';
 import {ActionBarController} from './actionbar_controller';
 import {DaemonSetDetailController} from './controller';
 
@@ -83,7 +83,7 @@ export function daemonSetEventsResource($resource) {
 /**
  * @param {!./../../common/resource/resourcedetail.StateParams} $stateParams
  * @param {!angular.$resource} $resource
- * @return {!angular.Resource<!backendApi.DaemonSetDetail>}
+ * @return {!angular.Resource}
  * @ngInject
  */
 export function getDaemonSetDetailResource($resource, $stateParams) {
@@ -91,7 +91,7 @@ export function getDaemonSetDetailResource($resource, $stateParams) {
 }
 
 /**
- * @param {!angular.Resource<!backendApi.DaemonSetDetail>} daemonSetDetailResource
+ * @param {!angular.Resource} daemonSetDetailResource
  * @param {!./../../common/resource/resourcedetail.StateParams} $stateParams
  * @param {!./../../common/dataselect/service.DataSelectService} kdDataSelectService
  * @return {!angular.$q.Promise}

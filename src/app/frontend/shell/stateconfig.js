@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as chromeStateName} from 'chrome/state';
-import {fillContentConfig} from 'chrome/state';
-import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
-import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
+import {stateName as chromeStateName} from '../chrome/state';
+import {fillContentConfig} from '../chrome/state';
+import {breadcrumbsConfig} from '../common/components/breadcrumbs/service';
+import {appendDetailParamsToUrl} from '../common/resource/resourcedetail';
 
 import {ShellController} from './controller';
 import {stateName} from './state';
@@ -67,7 +67,7 @@ function resolvePodContainers($stateParams, $resource) {
   let namespace = $stateParams.objectNamespace;
   let podId = $stateParams.objectName;
 
-  /** @type {!angular.Resource<!backendApi.PodContainerList>} */
+  /** @type {!angular.Resource} */
   let resource = $resource(`api/v1/pod/${namespace}/${podId}/container`);
   return resource.get().$promise;
 }

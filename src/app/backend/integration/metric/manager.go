@@ -88,12 +88,7 @@ func (self *metricManager) List() []integrationapi.Integration {
 
 // ConfigureHeapster implements metric manager interface. See MetricManager for more information.
 func (self *metricManager) ConfigureHeapster(host string) MetricManager {
-	kubeClient, err := self.manager.Client(nil)
-	if err != nil {
-		log.Print(err)
-		return self
-	}
-
+	kubeClient := self.manager.InsecureClient()
 	metricClient, err := heapster.CreateHeapsterClient(host, kubeClient)
 	if err != nil {
 		log.Printf("There was an error during heapster client creation: %s", err.Error())

@@ -34,7 +34,7 @@ import {goimportsCommand} from './gocommand';
 const htmlBeautify = beautify.html;
 
 /** List of names of files that should be ignored during license header check */
-const ignoredLicenseCheckFiles = ['fieldpath', 'controller'];
+const ignoredLicenseCheckFiles = ['fieldpath'];
 
 /**
  * Returns correct file filter to check for license header match. Ignores files defined by
@@ -64,7 +64,7 @@ gulp.task('check', ['check-license-headers', 'lint', 'test', 'integration-test:p
  * Checks the code quality (integration tests only) of Dashboard. In addition a local kubernetes
  * cluster is spawned. NOTE: This is meant as an entry point for CI jobs.
  */
-gulp.task('check:local-cluster', ['local-cluster-integration-test:prod']);
+gulp.task('check:local-cluster', ['check-license-headers', 'local-cluster-integration-test:prod']);
 
 /**
  * Checks the code quality (frontend + backend tests) of Dashboard. In addition lints the code and

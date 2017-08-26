@@ -30,7 +30,7 @@ import (
 )
 
 func TestGetJobListFromChannels(t *testing.T) {
-	var jobCompletions int32 = 21
+	var completions int32 = 21
 	controller := true
 	cases := []struct {
 		k8sRs         batch.JobList
@@ -91,7 +91,7 @@ func TestGetJobListFromChannels(t *testing.T) {
 					},
 					Spec: batch.JobSpec{
 						Selector:    &metaV1.LabelSelector{MatchLabels: map[string]string{"foo": "bar"}},
-						Completions: &jobCompletions,
+						Completions: &completions,
 					},
 					Status: batch.JobStatus{
 						Active: 7,
@@ -106,7 +106,8 @@ func TestGetJobListFromChannels(t *testing.T) {
 							CreationTimestamp: metaV1.Unix(111, 222),
 						},
 						Spec: batch.JobSpec{
-							Selector: &metaV1.LabelSelector{MatchLabels: map[string]string{"foo": "bar"}},
+							Selector:    &metaV1.LabelSelector{MatchLabels: map[string]string{"foo": "bar"}},
+							Completions: &completions,
 						},
 						Status: batch.JobStatus{
 							Active: 7,
@@ -158,7 +159,7 @@ func TestGetJobListFromChannels(t *testing.T) {
 					TypeMeta: api.TypeMeta{Kind: api.ResourceKindJob},
 					Pods: common.PodInfo{
 						Current:  7,
-						Desired:  21,
+						Desired:  &completions,
 						Failed:   2,
 						Warnings: []common.Event{},
 					},
@@ -172,7 +173,7 @@ func TestGetJobListFromChannels(t *testing.T) {
 					TypeMeta: api.TypeMeta{Kind: api.ResourceKindJob},
 					Pods: common.PodInfo{
 						Current:  7,
-						Desired:  0,
+						Desired:  &completions,
 						Failed:   2,
 						Warnings: []common.Event{},
 					},

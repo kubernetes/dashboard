@@ -28,6 +28,7 @@ import (
 )
 
 func TestGetJobEvents(t *testing.T) {
+	var jobCompletions int32
 	cases := []struct {
 		namespace, name string
 		eventList       *v1.EventList
@@ -46,7 +47,7 @@ func TestGetJobEvents(t *testing.T) {
 			&v1.PodList{Items: []v1.Pod{{ObjectMeta: metaV1.ObjectMeta{
 				Name: "pod-1", Namespace: "ns-1",
 			}}}},
-			createJob("job-1", "ns-1", map[string]string{"app": "test"}),
+			createJob("job-1", "ns-1", jobCompletions, map[string]string{"app": "test"}),
 			[]string{"list"},
 			&common.EventList{
 				ListMeta: api.ListMeta{TotalItems: 1},

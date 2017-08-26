@@ -114,7 +114,7 @@ export default class CreateSecretController {
     };
     this.tokenPromise.then(
         (token) => {
-          /** @type {!angular.Resource<!backendApi.SecretSpec>} */
+          /** @type {!angular.Resource} */
           let resource = this.resource_(
               `api/v1/secret/`, {},
               {save: {method: 'POST', headers: {[this.csrfHeaderName_]: token}}});

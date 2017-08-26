@@ -175,7 +175,7 @@ func getPodController(client kubernetes.Interface, nsQuery *common.NamespaceQuer
 		events = &v1.EventList{}
 	}
 
-	ownerRef := common.GetControllerOf(pod)
+	ownerRef := metaV1.GetControllerOf(pod)
 	if ownerRef != nil {
 		var rc controller.ResourceController
 		rc, err = controller.NewResourceController(*ownerRef, pod.Namespace, client)

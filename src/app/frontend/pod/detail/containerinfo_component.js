@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {StateParams} from 'common/resource/resourcedetail';
-import {stateName as configMapState} from 'configmap/detail/state';
-import {stateName as secretState} from 'secret/detail/state';
+import {StateParams} from '../../common/resource/resourcedetail';
+import {stateName as configMapState} from '../../configmap/detail/state';
+import {stateName as secretState} from '../../secret/detail/state';
 
 /**
  * @final
  */
-export default class ContainerInfoController {
+class ContainerInfoController {
   /**
    * @param {!ui.router.$state} $state
    * @param {!angular.$window} $window

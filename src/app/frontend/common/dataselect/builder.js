@@ -80,14 +80,16 @@ export class DataSelectQueryBuilder {
     return this;
   }
 
-  /** @export */
+  /**
+   * @param {string} namespace
+   * @export
+   */
   setNamespace(namespace) {
     if (!namespace) {
       namespace = '';
     }
 
     this.namespace_ = namespace;
-
     return this;
   }
 
@@ -106,9 +108,9 @@ export class DataSelectQueryBuilder {
   }
 
   /**
-   * @param sortBy
-   * @param ascending
-   * @returns {string}
+   * @param {string} sortBy
+   * @param {boolean} ascending
+   * @return {string}
    * @private
    */
   getSortString_(sortBy, ascending) {
@@ -118,7 +120,7 @@ export class DataSelectQueryBuilder {
   /**
    * Filter only by name property.
    * TODO(floreks): extend filtering to support more fields
-   * @param filterBy
+   * @param {string} filterBy
    * @returns {string}
    * @private
    */

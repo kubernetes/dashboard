@@ -30,6 +30,7 @@ import (
 func TestToDaemonSetList(t *testing.T) {
 	events := []v1.Event{}
 	controller := true
+	var desired int32 = 1
 	validPodMeta := metaV1.ObjectMeta{
 		Namespace: "namespace-1",
 		OwnerReferences: []metaV1.OwnerReference{
@@ -60,9 +61,13 @@ func TestToDaemonSetList(t *testing.T) {
 		nodes      []v1.Node
 		expected   *DaemonSetList
 	}{
-		{nil, nil, nil, nil, &DaemonSetList{
-			DaemonSets:        []DaemonSet{},
-			CumulativeMetrics: make([]metricapi.Metric, 0)},
+		{nil,
+			nil,
+			nil,
+			nil,
+			&DaemonSetList{
+				DaemonSets:        []DaemonSet{},
+				CumulativeMetrics: make([]metricapi.Metric, 0)},
 		}, {
 			[]extensions.DaemonSet{
 				{
@@ -79,6 +84,9 @@ func TestToDaemonSetList(t *testing.T) {
 							Spec: v1.PodSpec{Containers: []v1.Container{{Image: "my-container-image-1"}}},
 						},
 					},
+					Status: extensions.DaemonSetStatus{
+						DesiredNumberScheduled: desired,
+					},
 				},
 				{
 					ObjectMeta: metaV1.ObjectMeta{
@@ -92,6 +100,9 @@ func TestToDaemonSetList(t *testing.T) {
 						Template: v1.PodTemplateSpec{
 							Spec: v1.PodSpec{Containers: []v1.Container{{Image: "my-container-image-2"}}},
 						},
+					},
+					Status: extensions.DaemonSetStatus{
+						DesiredNumberScheduled: desired,
 					},
 				},
 			},
@@ -178,6 +189,7 @@ func TestToDaemonSetList(t *testing.T) {
 						TypeMeta:        api.TypeMeta{Kind: api.ResourceKindDaemonSet},
 						ContainerImages: []string{"my-container-image-1"},
 						Pods: common.PodInfo{
+							Desired:   &desired,
 							Failed:    2,
 							Pending:   1,
 							Running:   1,
@@ -192,6 +204,7 @@ func TestToDaemonSetList(t *testing.T) {
 						TypeMeta:        api.TypeMeta{Kind: api.ResourceKindDaemonSet},
 						ContainerImages: []string{"my-container-image-2"},
 						Pods: common.PodInfo{
+							Desired:  &desired,
 							Warnings: []common.Event{},
 						},
 					},

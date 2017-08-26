@@ -23,13 +23,25 @@ import (
 	"strings"
 
 	restful "github.com/emicklei/go-restful"
+	"github.com/kubernetes/dashboard/src/app/backend/auth"
+	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 	"github.com/kubernetes/dashboard/src/app/backend/auth/jwe"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/sync"
+	"k8s.io/client-go/kubernetes/fake"
 )
 
+func getTokenManager() authApi.TokenManager {
+	c := fake.NewSimpleClientset()
+	syncManager := sync.NewSynchronizerManager(c)
+	holder := jwe.NewRSAKeyHolder(syncManager.Secret("", ""))
+	return jwe.NewJWETokenManager(holder)
+}
+
 func TestCreateHTTPAPIHandler(t *testing.T) {
-	tokenManager := jwe.NewJWETokenManager()
-	_, err := CreateHTTPAPIHandler(nil, client.NewClientManager("", "http://localhost:8080", tokenManager), tokenManager)
+	cManager := client.NewClientManager("", "http://localhost:8080")
+	authManager := auth.NewAuthManager(cManager, getTokenManager())
+	_, err := CreateHTTPAPIHandler(nil, cManager, authManager)
 	if err != nil {
 		t.Fatal("CreateHTTPAPIHandler() cannot create HTTP API handler")
 	}

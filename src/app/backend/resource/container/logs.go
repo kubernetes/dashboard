@@ -19,7 +19,7 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/logs"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	client "k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/kubernetes/scheme"
 	"k8s.io/client-go/pkg/api/v1"
 )
@@ -36,8 +36,8 @@ type PodContainerList struct {
 }
 
 // GetPodContainers returns containers that a pod has.
-func GetPodContainers(client *client.Clientset, namespace, podID string) (*PodContainerList, error) {
-	pod, err := client.Pods(namespace).Get(podID, metaV1.GetOptions{})
+func GetPodContainers(client kubernetes.Interface, namespace, podID string) (*PodContainerList, error) {
+	pod, err := client.CoreV1().Pods(namespace).Get(podID, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
@@ -53,9 +53,9 @@ func GetPodContainers(client *client.Clientset, namespace, podID string) (*PodCo
 
 // GetPodLogs returns logs for particular pod and container. When container
 // is null, logs for the first one are returned.
-func GetPodLogs(client *client.Clientset, namespace, podID string, container string,
+func GetPodLogs(client kubernetes.Interface, namespace, podID string, container string,
 	logSelector *logs.Selection) (*logs.LogDetails, error) {
-	pod, err := client.Pods(namespace).Get(podID, metaV1.GetOptions{})
+	pod, err := client.CoreV1().Pods(namespace).Get(podID, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +93,7 @@ func mapToLogOptions(container string, logSelector *logs.Selection) *v1.PodLogOp
 }
 
 // Construct a request for getting the logs for a pod and retrieves the logs.
-func getRawPodLogs(client *client.Clientset, namespace, podID string, logOptions *v1.PodLogOptions) (
+func getRawPodLogs(client kubernetes.Interface, namespace, podID string, logOptions *v1.PodLogOptions) (
 	string, error) {
 	req := client.Core().RESTClient().Get().
 		Namespace(namespace).

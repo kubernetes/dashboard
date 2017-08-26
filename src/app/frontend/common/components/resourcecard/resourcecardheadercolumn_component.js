@@ -42,7 +42,7 @@ export class ResourceCardHeaderColumnController {
     this.grow;
     /** @export {boolean|undefined} - Initialized from a binding. */
     this.sortable;
-    /** @export {string|undefined} - Initialized from a binding. */
+    /** @export {string} - Initialized from a binding. */
     this.sortId;
     /** @private {boolean|undefined} */
     this.ascending_;

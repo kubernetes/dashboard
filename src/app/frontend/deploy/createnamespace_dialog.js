@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import NamespaceDialogController from 'deploy/createnamespace_controller';
+import NamespaceDialogController from './createnamespace_controller';
 
 /**
  * Displays new namespace creation dialog.

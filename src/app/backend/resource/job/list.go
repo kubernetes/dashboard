@@ -116,12 +116,8 @@ func toJobList(jobs []batch.Job, pods []v1.Pod, events []v1.Event, nonCriticalEr
 	jobList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
 	for _, job := range jobs {
-		var completions int32
 		matchingPods := common.FilterPodsForJob(job, pods)
-		if job.Spec.Completions != nil {
-			completions = *job.Spec.Completions
-		}
-		podInfo := common.GetPodInfo(job.Status.Active, completions, matchingPods)
+		podInfo := common.GetPodInfo(job.Status.Active, job.Spec.Completions, matchingPods)
 		podInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)
 		jobList.Jobs = append(jobList.Jobs, toJob(&job, &podInfo))
 	}

@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import componentsModule from 'common/components/module';
-import SerializedReferenceController from 'common/components/serializedreference/component';
 import {stateName as jobState} from 'job/detail/state';
 
 describe('SerializedReference controller', () => {
@@ -27,9 +26,9 @@ describe('SerializedReference controller', () => {
 
   beforeEach(() => {
     angular.mock.module(componentsModule.name);
-    angular.mock.inject(($controller, $rootScope) => {
+    angular.mock.inject(($componentController, $rootScope) => {
       scope = $rootScope;
-      ctrl = $controller(SerializedReferenceController, {$scope: $rootScope});
+      ctrl = $componentController('kdSerializedReference', {$scope: $rootScope});
     });
     spyOn(ctrl.state_, 'href');
   });

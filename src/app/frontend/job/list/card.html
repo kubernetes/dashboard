@@ -59,8 +59,8 @@ limitations under the License.
     </kd-resource-card-column>
     <kd-resource-card-column>
       <span class="kd-replicase-card-pods-stat">
-        {{::$ctrl.job.pods.running}} /
-        {{::$ctrl.job.pods.desired}}
+        {{::$ctrl.job.pods.running}}
+        <span ng-if="::$ctrl.job.pods.desired">/  {{::$ctrl.job.pods.desired}}</span>
       </span>
     </kd-resource-card-column>
     <kd-resource-card-column>

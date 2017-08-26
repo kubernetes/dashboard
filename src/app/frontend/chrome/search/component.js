@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName} from 'search/state';
+import {stateName} from '../../search/state';
 
 /**
  * @final

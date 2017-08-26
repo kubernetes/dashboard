@@ -22,7 +22,7 @@ type PodInfo struct {
 	Current int32 `json:"current"`
 
 	// Number of pods that are desired.
-	Desired int32 `json:"desired"`
+	Desired *int32 `json:"desired,omitempty"`
 
 	// Number of pods that are currently running.
 	Running int32 `json:"running"`
@@ -41,7 +41,7 @@ type PodInfo struct {
 }
 
 // GetPodInfo returns aggregate information about a group of pods.
-func GetPodInfo(current int32, desired int32, pods []api.Pod) PodInfo {
+func GetPodInfo(current int32, desired *int32, pods []api.Pod) PodInfo {
 	result := PodInfo{
 		Current:  current,
 		Desired:  desired,

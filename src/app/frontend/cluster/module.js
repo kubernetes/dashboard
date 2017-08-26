@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import chromeModule from 'chrome/module';
-import namespaceModule from 'namespace/module';
-import nodeModule from 'node/module';
-import persistentVolumeModule from 'persistentvolume/module';
-import roleModule from 'role/module';
-import storageClassModule from 'storageclass/module';
+import chromeModule from '../chrome/module';
+import namespaceModule from '../namespace/module';
+import nodeModule from '../node/module';
+import persistentVolumeModule from '../persistentvolume/module';
+import roleModule from '../role/module';
+import storageClassModule from '../storageclass/module';
 
 import stateConfig from './stateconfig';
 

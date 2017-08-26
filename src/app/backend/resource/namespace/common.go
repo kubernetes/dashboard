@@ -19,7 +19,7 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	client "k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/kubernetes"
 	api "k8s.io/client-go/pkg/api/v1"
 )
 
@@ -30,7 +30,7 @@ type NamespaceSpec struct {
 }
 
 // CreateNamespace creates namespace based on given specification.
-func CreateNamespace(spec *NamespaceSpec, client *client.Clientset) error {
+func CreateNamespace(spec *NamespaceSpec, client kubernetes.Interface) error {
 	log.Printf("Creating namespace %s", spec.Name)
 
 	namespace := &api.Namespace{
@@ -39,7 +39,7 @@ func CreateNamespace(spec *NamespaceSpec, client *client.Clientset) error {
 		},
 	}
 
-	_, err := client.Namespaces().Create(namespace)
+	_, err := client.CoreV1().Namespaces().Create(namespace)
 	return err
 }
 

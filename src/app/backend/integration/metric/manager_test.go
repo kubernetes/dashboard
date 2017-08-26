@@ -20,7 +20,6 @@ import (
 
 	"reflect"
 
-	"github.com/kubernetes/dashboard/src/app/backend/auth/jwe"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	integrationapi "github.com/kubernetes/dashboard/src/app/backend/integration/api"
 	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
@@ -140,8 +139,7 @@ func TestMetricManager_ConfigureHeapster(t *testing.T) {
 		manager         MetricManager
 		expectedClients int
 	}{
-		{NewMetricManager(client.NewClientManager("", "", jwe.NewJWETokenManager())), 0},
-		{NewMetricManager(client.NewClientManager("", "http://localhost:8080", jwe.NewJWETokenManager())), 1},
+		{NewMetricManager(client.NewClientManager("", "http://localhost:8080")), 1},
 	}
 
 	for _, c := range cases {

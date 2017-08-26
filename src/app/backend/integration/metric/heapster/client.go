@@ -232,7 +232,7 @@ func (self heapsterClient) unmarshalType(path string, v interface{}) error {
 // string the function assumes that it is running inside a Kubernetes cluster and connects via
 // service proxy. heapsterHost param is in the format of protocol://address:port,
 // e.g., http://localhost:8002.
-func CreateHeapsterClient(host string, k8sClient *kubernetes.Clientset) (
+func CreateHeapsterClient(host string, k8sClient kubernetes.Interface) (
 	metricapi.MetricClient, error) {
 
 	if host == "" && k8sClient != nil {

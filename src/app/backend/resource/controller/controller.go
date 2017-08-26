@@ -106,11 +106,7 @@ type JobController batch.Job
 // Get is an implementation of Get method from ResourceController interface.
 func (self JobController) Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOwner {
 	matchingPods := common.FilterPodsForJob(batch.Job(self), allPods)
-	var completions int32
-	if self.Spec.Completions != nil {
-		completions = *self.Spec.Completions
-	}
-	podInfo := common.GetPodInfo(self.Status.Active, completions, matchingPods)
+	podInfo := common.GetPodInfo(self.Status.Active, self.Spec.Completions, matchingPods)
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
 	return ResourceOwner{
@@ -142,7 +138,7 @@ type ReplicaSetController extensions.ReplicaSet
 // Get is an implementation of Get method from ResourceController interface.
 func (self ReplicaSetController) Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOwner {
 	matchingPods := common.FilterPodsByControllerRef(&self, allPods)
-	podInfo := common.GetPodInfo(self.Status.Replicas, *self.Spec.Replicas, matchingPods)
+	podInfo := common.GetPodInfo(self.Status.Replicas, self.Spec.Replicas, matchingPods)
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
 	return ResourceOwner{
@@ -175,7 +171,7 @@ type ReplicationControllerController v1.ReplicationController
 func (self ReplicationControllerController) Get(allPods []v1.Pod,
 	allEvents []v1.Event) ResourceOwner {
 	matchingPods := common.FilterPodsByControllerRef(&self, allPods)
-	podInfo := common.GetPodInfo(self.Status.Replicas, *self.Spec.Replicas, matchingPods)
+	podInfo := common.GetPodInfo(self.Status.Replicas, self.Spec.Replicas, matchingPods)
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
 	return ResourceOwner{
@@ -208,7 +204,7 @@ type DaemonSetController extensions.DaemonSet
 func (self DaemonSetController) Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOwner {
 	matchingPods := common.FilterPodsByControllerRef(&self, allPods)
 	podInfo := common.GetPodInfo(self.Status.CurrentNumberScheduled,
-		self.Status.DesiredNumberScheduled, matchingPods)
+		&self.Status.DesiredNumberScheduled, matchingPods)
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
 	return ResourceOwner{
@@ -240,7 +236,7 @@ type StatefulSetController apps.StatefulSet
 // Get is an implementation of Get method from ResourceController interface.
 func (self StatefulSetController) Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOwner {
 	matchingPods := common.FilterPodsByControllerRef(&self, allPods)
-	podInfo := common.GetPodInfo(self.Status.Replicas, *self.Spec.Replicas, matchingPods)
+	podInfo := common.GetPodInfo(self.Status.Replicas, self.Spec.Replicas, matchingPods)
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
 	return ResourceOwner{

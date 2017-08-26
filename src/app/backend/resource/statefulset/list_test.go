@@ -147,7 +147,7 @@ func TestGetStatefulSetListFromChannels(t *testing.T) {
 					TypeMeta: api.TypeMeta{Kind: api.ResourceKindStatefulSet},
 					Pods: common.PodInfo{
 						Current:  7,
-						Desired:  21,
+						Desired:  getReplicasPointer(21),
 						Failed:   1,
 						Warnings: []common.Event{},
 					},

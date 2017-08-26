@@ -55,7 +55,10 @@ func TestGetReplicaSetDetail(t *testing.T) {
 				ObjectMeta: api.ObjectMeta{Name: "rs-1", Namespace: "ns-1",
 					Labels: map[string]string{"app": "test"}},
 				TypeMeta: api.TypeMeta{Kind: api.ResourceKindReplicaSet},
-				PodInfo:  common.PodInfo{Warnings: []common.Event{}},
+				PodInfo: common.PodInfo{
+					Warnings: []common.Event{},
+					Desired:  &replicas,
+				},
 				PodList: pod.PodList{
 					Pods:              []pod.Pod{},
 					CumulativeMetrics: make([]metricapi.Metric, 0),

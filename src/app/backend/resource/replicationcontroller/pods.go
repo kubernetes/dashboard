@@ -89,6 +89,6 @@ func getReplicationControllerPodInfo(client k8sClient.Interface, rc *v1.Replicat
 		return nil, err
 	}
 
-	podInfo := common.GetPodInfo(rc.Status.Replicas, *rc.Spec.Replicas, pods.Items)
+	podInfo := common.GetPodInfo(rc.Status.Replicas, rc.Spec.Replicas, pods.Items)
 	return &podInfo, nil
 }

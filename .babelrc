@@ -1,3 +1,20 @@
 {
-  "presets": ["es2015"]
+  "env": {
+    "production": {
+      "presets": [["env",
+        {
+          "targets": {
+            "browsers": [
+              ">1%",
+              "last 4 versions",
+              "not ie < 11"
+            ]
+          },
+          "useBuiltIns": true
+        }
+        ]
+      ]
+    },
+    "development": {"presets": [["env", {"targets": {"node": 7}, "useBuiltIns": true}]]}
+  }
 }

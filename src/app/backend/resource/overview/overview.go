@@ -37,7 +37,7 @@ type Overview struct {
 }
 
 // GetOverview returns a list of all objects in a given namespace.
-func GetOverview(client *kubernetes.Clientset, metricClient metricapi.MetricClient,
+func GetOverview(client kubernetes.Interface, metricClient metricapi.MetricClient,
 	nsQuery *common.NamespaceQuery, dsQuery *dataselect.DataSelectQuery) (*Overview, error) {
 
 	configResources, err := config.GetConfig(client, nsQuery, dsQuery)

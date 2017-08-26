@@ -18,8 +18,18 @@ import (
 	"reflect"
 	"testing"
 
+	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
+	"github.com/kubernetes/dashboard/src/app/backend/sync"
+	"k8s.io/client-go/kubernetes/fake"
 	"k8s.io/client-go/tools/clientcmd/api"
 )
+
+func getTokenManager() authApi.TokenManager {
+	c := fake.NewSimpleClientset()
+	syncManager := sync.NewSynchronizerManager(c)
+	holder := NewRSAKeyHolder(syncManager.Secret("", ""))
+	return NewJWETokenManager(holder)
+}
 
 func areErrorsEqual(err1, err2 error) bool {
 	return (err1 != nil && err2 != nil && err1.Error() == err2.Error()) ||
@@ -40,7 +50,7 @@ func TestJweTokenManager_Generate(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		tokenManager := NewJWETokenManager()
+		tokenManager := getTokenManager()
 		token, err := tokenManager.Generate(c.authInfo)
 
 		if !areErrorsEqual(err, c.expectedErr) {
@@ -70,7 +80,7 @@ func TestJweTokenManager_Decrypt(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		tokenManager := NewJWETokenManager()
+		tokenManager := getTokenManager()
 		token, _ := tokenManager.Generate(c.authInfo)
 		authInfo, err := tokenManager.Decrypt(token)
 
