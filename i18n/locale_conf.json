@@ -2,7 +2,7 @@
   "translations": [
     {"file": "messages-en.xtb",    "key": "en"},
     {"file": "messages-zh.xtb",    "key": "zh"},
-    {"file": "messages-zh-TW.xtb", "key": "zh-TW"},
+    {"file": "messages-zh-tw.xtb", "key": "zh-tw"},
     {"file": "messages-ja.xtb",    "key": "ja"}
   ]
 }
