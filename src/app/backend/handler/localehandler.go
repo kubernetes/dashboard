@@ -19,6 +19,8 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"strings"
+	"sort"
 
 	"github.com/golang/glog"
 	"golang.org/x/text/language"
@@ -72,6 +74,7 @@ func getSupportedLocales(configFile string) ([]string, error) {
 	for _, translation := range localization.Translations {
 		result = append(result, translation.Key)
 	}
+	sort.Sort(sort.Reverse(sort.StringSlice(result)))
 	return result, nil
 }
 
@@ -96,8 +99,7 @@ func (handler *LocaleHandler) determineLocalizedDir(locale string) string {
 	for _, tag := range tags {
 		matchedLocale := ""
 		for _, l := range handler.SupportedLocales {
-			base, _ := tag.Base()
-			if l == base.String() {
+			if isMatchedLocale(l, tag) {
 				matchedLocale = l
 				break
 			}
@@ -108,6 +110,16 @@ func (handler *LocaleHandler) determineLocalizedDir(locale string) string {
 		}
 	}
 	return defaultDir
+}
+
+func isMatchedLocale(locale string, tag language.Tag) bool {
+	base, _ := tag.Base()
+	if locale != strings.ToLower(tag.String()) {
+		if locale != base.String() {
+			return false
+		}
+	}
+	return true
 }
 
 func (handler *LocaleHandler) dirExists(name string) bool {
