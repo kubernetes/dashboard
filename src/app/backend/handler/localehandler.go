@@ -96,8 +96,7 @@ func (handler *LocaleHandler) determineLocalizedDir(locale string) string {
 	for _, tag := range tags {
 		matchedLocale := ""
 		for _, l := range handler.SupportedLocales {
-			base, _ := tag.Base()
-			if l == base.String() {
+			if l == tag.String() {
 				matchedLocale = l
 				break
 			}

@@ -1,7 +1,8 @@
 {
   "translations": [
-    {"file": "messages-en.xtb", "key": "en"},
-    {"file": "messages-zh.xtb", "key": "zh"},
-    {"file": "messages-ja.xtb", "key": "ja"}
+    {"file": "messages-en.xtb",    "key": "en"},
+    {"file": "messages-zh.xtb",    "key": "zh"},
+    {"file": "messages-zh-TW.xtb", "key": "zh-TW"},
+    {"file": "messages-ja.xtb",    "key": "ja"}
   ]
 }
