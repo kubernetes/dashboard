@@ -106,22 +106,25 @@ func (self *DataSelector) Sort() *DataSelector {
 // Filter the data inside as instructed by DataSelectQuery and returns itself to allow method chaining.
 func (self *DataSelector) Filter() *DataSelector {
 	filteredList := []DataCell{}
-
 	for _, c := range self.GenericDataList {
-		matches := true
+		matches := make([]bool, 0, len(self.DataSelectQuery.FilterQuery.FilterByList))
 		for _, filterBy := range self.DataSelectQuery.FilterQuery.FilterByList {
 			v := c.GetProperty(filterBy.Property)
 			if v == nil {
-				matches = false
+				matches = append(matches, false)
 				continue
 			}
 			if !v.Contains(filterBy.Value) {
-				matches = false
+				matches = append(matches, false)
 				continue
 			}
+			matches = append(matches, true)
 		}
-		if matches {
-			filteredList = append(filteredList, c)
+		for _, match := range matches {
+			if match {
+				filteredList = append(filteredList, c)
+				break
+			}
 		}
 	}
 

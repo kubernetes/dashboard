@@ -20,6 +20,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"k8s.io/client-go/pkg/api/v1"
+	"strings"
 )
 
 //getContainerImages returns container image strings from the given node.
@@ -45,6 +46,12 @@ func (self NodeCell) GetProperty(name dataselect.PropertyName) dataselect.Compar
 		return dataselect.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
 	case dataselect.NamespaceProperty:
 		return dataselect.StdComparableString(self.ObjectMeta.Namespace)
+	case dataselect.LabelsProperty:
+		values := make([]string, 0, len(self.ObjectMeta.Labels))
+		for _, value := range self.ObjectMeta.Labels {
+			values = append(values, value)
+		}
+		return dataselect.StdComparableString(strings.Join(values, ","))
 	default:
 		// if name is not supported then just return a constant dummy value, sort will have no effect.
 		return nil

@@ -123,7 +123,7 @@ export class DataSelectQueryBuilder {
    * @private
    */
   getFilterString_(filterBy) {
-    return filterBy.length > 0 ? `name,${filterBy}` : '';
+    return filterBy.length > 0 ? `name,${filterBy},labels,${filterBy}` : '';
   }
 
   /**
