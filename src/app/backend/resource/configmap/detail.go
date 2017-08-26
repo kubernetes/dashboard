@@ -19,7 +19,7 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	client "k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/pkg/api/v1"
 )
 
@@ -35,10 +35,10 @@ type ConfigMapDetail struct {
 }
 
 // GetConfigMapDetail returns detailed information about a config map
-func GetConfigMapDetail(client *client.Clientset, namespace, name string) (*ConfigMapDetail, error) {
+func GetConfigMapDetail(client kubernetes.Interface, namespace, name string) (*ConfigMapDetail, error) {
 	log.Printf("Getting details of %s config map in %s namespace", name, namespace)
 
-	rawConfigMap, err := client.ConfigMaps(namespace).Get(name, metaV1.GetOptions{})
+	rawConfigMap, err := client.CoreV1().ConfigMaps(namespace).Get(name, metaV1.GetOptions{})
 
 	if err != nil {
 		return nil, err

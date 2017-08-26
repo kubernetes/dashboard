@@ -348,45 +348,6 @@ export class LogsController {
     this.logsService.setShowTimestamp();
     this.logsSet = this.formatAllLogs_(this.podLogs.logs);
   }
-
-  /**
-   * Find Pod by name.
-   * Return object or undefined if can not find an object.
-   * @param {!Array<!backendApi.ReplicationControllerPodWithContainers>} array
-   * @param {!string} name
-   * @return {!backendApi.ReplicationControllerPodWithContainers|undefined}
-   * @private
-   */
-  findPodByName_(array, name) {
-    for (let i = 0; i < array.length; i++) {
-      if (array[i].name === name) {
-        return array[i];
-      }
-    }
-    return undefined;
-  }
-
-  /**
-   * Find Container by name.
-   * Return object or undefined if can not find an object.
-   * @param {!Array<!backendApi.PodContainer>} array
-   * @param {string} name
-   * @return {!backendApi.PodContainer}
-   * @private
-   */
-  initializeContainer_(array, name) {
-    let container = undefined;
-    for (let i = 0; i < array.length; i++) {
-      if (array[i].name === name) {
-        container = array[i];
-        break;
-      }
-    }
-    if (!container) {
-      container = array[0];
-    }
-    return container;
-  }
 }
 
 /**

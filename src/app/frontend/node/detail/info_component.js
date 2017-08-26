@@ -15,7 +15,7 @@
 /**
  * @final
  */
-export default class NodeInfoController {
+class NodeInfoController {
   /**
    * @ngInject
    */

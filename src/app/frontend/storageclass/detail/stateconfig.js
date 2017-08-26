@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {actionbarViewName, stateName as chromeStateName} from 'chrome/state';
-import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
+import {actionbarViewName, stateName as chromeStateName} from '../../chrome/state';
+import {breadcrumbsConfig} from '../../common/components/breadcrumbs/service';
 
-import {stateName as storageClassList} from './../list/state';
-import {stateName as parentState, stateUrl} from './../state';
+import {stateName as storageClassList} from '../list/state';
+import {stateName as parentState, stateUrl} from '../state';
 import {ActionBarController} from './actionbar_controller';
 import {StorageClassController} from './controller';
 
@@ -55,7 +55,7 @@ export const config = {
 /**
  * @param {!./../../common/resource/resourcedetail.StateParams} $stateParams
  * @param {!angular.$resource} $resource
- * @return {!angular.Resource<!backendApi.StorageClass>}
+ * @return {!angular.Resource}
  * @ngInject
  */
 export function getStorageClassResource($resource, $stateParams) {
@@ -63,7 +63,7 @@ export function getStorageClassResource($resource, $stateParams) {
 }
 
 /**
- * @param {!angular.Resource<!backendApi.StorageClass>} storageClassResource
+ * @param {!angular.Resource} storageClassResource
  * @return {!angular.$q.Promise}
  * @ngInject
  */

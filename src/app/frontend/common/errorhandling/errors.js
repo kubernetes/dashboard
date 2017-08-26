@@ -27,4 +27,7 @@ export const kdErrors = {
 
   /** @export {string} @desc Text shown when unauthorized user tries to log in. */
   MSG_LOGIN_UNAUTHORIZED_ERROR: goog.getMsg('Authentication failed. Please try again.'),
+
+  /** @export {string} @desc Text shown when saved token could not be decrypted by backend. */
+  MSG_ENCRYPTION_KEY_CHANGED: goog.getMsg('Session expired. Please log in again'),
 };

@@ -45,7 +45,7 @@ func FilterDeploymentPodsByOwnerReference(deployment extensions.Deployment, allR
 func FilterPodsByControllerRef(owner metav1.Object, allPods []v1.Pod) []v1.Pod {
 	var matchingPods []v1.Pod
 	for _, pod := range allPods {
-		if IsControlledBy(&pod, owner) {
+		if metav1.IsControlledBy(&pod, owner) {
 			matchingPods = append(matchingPods, pod)
 		}
 	}

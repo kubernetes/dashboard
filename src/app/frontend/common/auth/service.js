@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as errorState} from 'error/state';
-import {stateName as loginState} from 'login/state';
-import {stateName as overviewState} from 'overview/state';
+import {stateName as errorState} from '../../error/state';
+import {stateName as loginState} from '../../login/state';
+import {stateName as overviewState} from '../../overview/state';
 
 
 /** @final */
@@ -191,9 +191,7 @@ export class AuthService {
     return loginStatus.httpsMode;
   }
 
-  /**
-   * @return {!angular.$q.Promise}
-   */
+  /** @return {!angular.$q.Promise} */
   getLoginStatus() {
     let token = this.cookies_.get(this.tokenCookieName_) || '';
     return this

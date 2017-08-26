@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as overviewState} from 'overview/state';
+import {stateName as overviewState} from '../overview/state';
 import LoginSpec from './spec';
 
 /** @final */
@@ -21,10 +21,9 @@ class LoginController {
    * @param {!./../chrome/nav/nav_service.NavService} kdNavService
    * @param {!./../common/auth/service.AuthService} kdAuthService
    * @param {!ui.router.$state} $state
-   * @param {!angular.$q} $q
    * @ngInject
    */
-  constructor(kdNavService, kdAuthService, $state, $q) {
+  constructor(kdNavService, kdAuthService, $state) {
     /** @private {!./../chrome/nav/nav_service.NavService} */
     this.kdNavService_ = kdNavService;
     /** @private {!./../common/auth/service.AuthService} */
@@ -38,8 +37,6 @@ class LoginController {
     this.form;
     /** @export {!backendApi.LoginSpec} */
     this.loginSpec;
-    /** @private {!angular.$q} */
-    this.q_ = $q;
     /** @private {!Array<!backendApi.Error>} */
     this.errors = [];
   }

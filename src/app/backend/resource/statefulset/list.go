@@ -23,7 +23,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
-	client "k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/pkg/api/v1"
 	apps "k8s.io/client-go/pkg/apis/apps/v1beta1"
 )
@@ -55,7 +55,7 @@ type StatefulSet struct {
 }
 
 // GetStatefulSetList returns a list of all Stateful Sets in the cluster.
-func GetStatefulSetList(client *client.Clientset, nsQuery *common.NamespaceQuery,
+func GetStatefulSetList(client kubernetes.Interface, nsQuery *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) (*StatefulSetList, error) {
 	log.Print("Getting list of all pet sets in the cluster")
 
@@ -116,7 +116,7 @@ func toStatefulSetList(statefulSets []apps.StatefulSet, pods []v1.Pod, events []
 
 	for _, statefulSet := range statefulSets {
 		matchingPods := common.FilterPodsByControllerRef(&statefulSet, pods)
-		podInfo := common.GetPodInfo(statefulSet.Status.Replicas, *statefulSet.Spec.Replicas, matchingPods)
+		podInfo := common.GetPodInfo(statefulSet.Status.Replicas, statefulSet.Spec.Replicas, matchingPods)
 		podInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)
 		statefulSetList.StatefulSets = append(statefulSetList.StatefulSets, toStatefulSet(&statefulSet, &podInfo))
 	}

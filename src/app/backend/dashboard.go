@@ -22,11 +22,14 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/kubernetes/dashboard/src/app/backend/auth"
+	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 	"github.com/kubernetes/dashboard/src/app/backend/auth/jwe"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/handler"
 	"github.com/kubernetes/dashboard/src/app/backend/integration"
 	integrationapi "github.com/kubernetes/dashboard/src/app/backend/integration/api"
+	"github.com/kubernetes/dashboard/src/app/backend/sync"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/spf13/pflag"
 )
@@ -64,19 +67,16 @@ func main() {
 		log.Printf("Using kubeconfig file: %s", *argKubeConfigFile)
 	}
 
-	tokenManager := jwe.NewJWETokenManager()
-	clientManager := client.NewClientManager(*argKubeConfigFile, *argApiserverHost, tokenManager)
-	apiserverClient, err := clientManager.Client(nil)
-	if err != nil {
-		handleFatalInitError(err)
-	}
-
-	versionInfo, err := apiserverClient.ServerVersion()
+	clientManager := client.NewClientManager(*argKubeConfigFile, *argApiserverHost)
+	versionInfo, err := clientManager.InsecureClient().Discovery().ServerVersion()
 	if err != nil {
 		handleFatalInitError(err)
 	}
 
 	log.Printf("Successful initial request to the apiserver, version: %s", versionInfo.String())
+
+	// Init auth manager
+	authManager := initAuthManager(clientManager)
 
 	// Init integrations
 	integrationManager := integration.NewIntegrationManager(clientManager)
@@ -90,7 +90,7 @@ func main() {
 	apiHandler, err := handler.CreateHTTPAPIHandler(
 		integrationManager,
 		clientManager,
-		tokenManager)
+		authManager)
 	if err != nil {
 		handleFatalInitError(err)
 	}
@@ -114,6 +114,25 @@ func main() {
 		go func() { log.Fatal(http.ListenAndServeTLS(secureAddr, *argCertFile, *argKeyFile, nil)) }()
 	}
 	select {}
+}
+
+func initAuthManager(clientManager client.ClientManager) authApi.AuthManager {
+	insecureClient := clientManager.InsecureClient()
+
+	// Init default encryption key synchronizer
+	synchronizerManager := sync.NewSynchronizerManager(insecureClient)
+	keySynchronizer := synchronizerManager.Secret(authApi.EncryptionKeyHolderNamespace, authApi.EncryptionKeyHolderName)
+
+	// Register synchronizer. Overwatch will be responsible for restarting it in case of error.
+	sync.Overwatch.RegisterSynchronizer(keySynchronizer, sync.AlwaysRestart)
+
+	// Init encryption key holder and token manager
+	keyHolder := jwe.NewRSAKeyHolder(keySynchronizer)
+	tokenManager := jwe.NewJWETokenManager(keyHolder)
+
+	// Set token manager for client manager.
+	clientManager.SetTokenManager(tokenManager)
+	return auth.NewAuthManager(clientManager, tokenManager)
 }
 
 /**

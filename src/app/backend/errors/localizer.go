@@ -18,6 +18,7 @@ import (
 	"errors"
 	"strings"
 
+	jose "gopkg.in/square/go-jose.v2"
 	k8sErrors "k8s.io/apimachinery/pkg/api/errors"
 )
 
@@ -32,6 +33,7 @@ var partialsToErrorsMap = map[string]string{
 	"does not match the namespace":                               "MSG_DEPLOY_NAMESPACE_MISMATCH_ERROR",
 	"empty namespace may not be set":                             "MSG_DEPLOY_EMPTY_NAMESPACE_ERROR",
 	"the server has asked for the client to provide credentials": "MSG_LOGIN_UNAUTHORIZED_ERROR",
+	jose.ErrCryptoFailure.Error():                                "MSG_ENCRYPTION_KEY_CHANGED",
 }
 
 // LocalizeError returns error code (string) that can be used by frontend to localize error message.

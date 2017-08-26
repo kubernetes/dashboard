@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {actionbarViewName, stateName as chromeStateName} from 'chrome/state';
-import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
-import {appendDetailParamsToUrl} from 'common/resource/globalresourcedetail';
+import {actionbarViewName, stateName as chromeStateName} from '../../chrome/state';
+import {breadcrumbsConfig} from '../../common/components/breadcrumbs/service';
+import {appendDetailParamsToUrl} from '../../common/resource/globalresourcedetail';
 
-import {stateName as nodeList} from './../list/state';
-import {stateName as parentState, stateUrl} from './../state';
+import {stateName as nodeList} from '../list/state';
+import {stateName as parentState, stateUrl} from '../state';
 import {NodeDetailController} from './controller';
 
 /**
@@ -70,7 +70,7 @@ export function nodePodsResource($resource) {
 /**
  * @param {!angular.$resource} $resource
  * @param {!./../../common/resource/globalresourcedetail.GlobalStateParams} $stateParams
- * @return {!angular.Resource<!backendApi.NodeDetail>}
+ * @return {!angular.Resource}
  * @ngInject
  */
 export function getNodeDetailResource($resource, $stateParams) {
@@ -78,7 +78,7 @@ export function getNodeDetailResource($resource, $stateParams) {
 }
 
 /**
- * @param {!angular.Resource<!backendApi.NodeDetail>} nodeDetailResource
+ * @param {!angular.Resource} nodeDetailResource
  * @param {!./../../common/dataselect/service.DataSelectService} kdDataSelectService
  * @param {!./../../common/resource/globalresourcedetail.GlobalStateParams} $stateParams
  * @return {!angular.$q.Promise}

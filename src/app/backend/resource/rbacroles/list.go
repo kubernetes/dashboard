@@ -22,7 +22,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"k8s.io/apimachinery/pkg/apis/meta/v1"
-	client "k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/kubernetes"
 	rbac "k8s.io/client-go/pkg/apis/rbac/v1beta1"
 )
 
@@ -45,7 +45,7 @@ type RbacRole struct {
 }
 
 // GetRbacRoleList returns a list of all RBAC Roles in the cluster.
-func GetRbacRoleList(client *client.Clientset, dsQuery *dataselect.DataSelectQuery) (*RbacRoleList, error) {
+func GetRbacRoleList(client kubernetes.Interface, dsQuery *dataselect.DataSelectQuery) (*RbacRoleList, error) {
 	log.Println("Getting list of RBAC roles")
 	channels := &common.ResourceChannels{
 		RoleList:        common.GetRoleListChannel(client, 1),

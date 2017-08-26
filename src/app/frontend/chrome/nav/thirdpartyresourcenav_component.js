@@ -12,27 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as thirdPartyResourceDetailState} from 'thirdpartyresource/detail/state';
-import {stateName as thirdPartyResourceState} from 'thirdpartyresource/list/state';
+import {stateName as thirdPartyResourceDetailState} from '../../thirdpartyresource/detail/state';
+import {stateName as thirdPartyResourceState} from '../../thirdpartyresource/list/state';
 
 /**
  * @final
  */
 export class ThirdPartyResourceNavController {
   /**
-   * @param {!ui.router.$state} $state
    * @param {!angular.$resource} $resource
-   * @param {!./../../common/state/service.FutureStateService} kdFutureStateService
+   * @param {!../../common/state/service.FutureStateService} kdFutureStateService
    * @ngInject
    */
-  constructor($state, $resource, kdFutureStateService) {
-    /** @private {!ui.router.$state} */
-    this.state_ = $state;
-
+  constructor($resource, kdFutureStateService) {
     /** @private {!angular.$resource} */
     this.resource_ = $resource;
 
-    /** @private {!./../../common/state/service.FutureStateService} */
+    /** @private {!../../common/state/service.FutureStateService} */
     this.kdFutureStateService_ = kdFutureStateService;
 
     /** @export {boolean} */

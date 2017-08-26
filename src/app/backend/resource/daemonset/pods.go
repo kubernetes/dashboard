@@ -79,6 +79,6 @@ func getDaemonSetPodInfo(client k8sClient.Interface, daemonSet *extensions.Daemo
 	}
 
 	podInfo := common.GetPodInfo(daemonSet.Status.CurrentNumberScheduled,
-		daemonSet.Status.DesiredNumberScheduled, pods)
+		&daemonSet.Status.DesiredNumberScheduled, pods)
 	return &podInfo, nil
 }

@@ -12,13 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as chromeStateName} from 'chrome/state';
+import {stateName as chromeStateName} from '../chrome/state';
 
 import {stateName as detailState} from './detail/state';
 import {config as detailConfig} from './detail/stateconfig';
 import {stateName as listState} from './list/state';
 import {config as listConfig} from './list/stateconfig';
 import {stateName} from './state';
+
 /**
  * Configures states for the Replica Set resource.
  *

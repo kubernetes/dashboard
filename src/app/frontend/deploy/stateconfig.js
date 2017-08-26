@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as chromeStateName} from 'chrome/state';
-import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
+import {stateName as chromeStateName} from '../chrome/state';
+import {breadcrumbsConfig} from '../common/components/breadcrumbs/service';
 
 import {baseStateName, deployAppStateName, deployFileStateName} from './state';
 
@@ -63,7 +63,7 @@ export default function stateConfig($stateProvider) {
  * @ngInject
  */
 function resolveNamespaces($resource) {
-  /** @type {!angular.Resource<!backendApi.NamespaceList>} */
+  /** @type {!angular.Resource} */
   let resource = $resource('api/v1/namespace');
 
   return resource.get().$promise;
@@ -71,7 +71,7 @@ function resolveNamespaces($resource) {
 
 /**
  * @param {!angular.$resource} $resource
- * @return {!angular.Resource<!backendApi.ReplicationControllerSpec>}
+ * @return {!angular.Resource}
  * @ngInject
  */
 function getProtocolsResource($resource) {
@@ -79,7 +79,7 @@ function getProtocolsResource($resource) {
 }
 
 /**
- * @param {!angular.Resource<!backendApi.Protocols>} protocolsResource
+ * @param {!angular.Resource} protocolsResource
  * @returns {!angular.$q.Promise}
  * @ngInject
  */

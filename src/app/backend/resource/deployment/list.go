@@ -124,7 +124,7 @@ func toDeploymentList(deployments []extensions.Deployment, pods []v1.Pod, events
 
 	for _, deployment := range deployments {
 		matchingPods := common.FilterDeploymentPodsByOwnerReference(deployment, rs, pods)
-		podInfo := common.GetPodInfo(deployment.Status.Replicas, *deployment.Spec.Replicas, matchingPods)
+		podInfo := common.GetPodInfo(deployment.Status.Replicas, deployment.Spec.Replicas, matchingPods)
 		podInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)
 
 		deploymentList.Deployments = append(deploymentList.Deployments,

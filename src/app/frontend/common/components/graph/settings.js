@@ -53,7 +53,7 @@ export const TimeAxisType = 'TimeAxisType';
 /**
  * Settings used by GraphController to display different metrics.
  *
- * @type {!Object<string, !Object<string, !metricDisplaySettings.metricSetting>>}
+ * @type {!Object<string, !Object<string, !kdGraph.metricSetting>>}
  */
 export const metricDisplaySettings = {
   'cpu/usage_rate': {
@@ -89,25 +89,9 @@ export const metricDisplaySettings = {
 };
 
 /**
- * Settings object that should be provided for every metric supported by graph frontend.
- *
- * @typedef {{
- *   yAxisType: !backendApi.ObjectMeta,
- *   area: boolean,
- *   key: string,
- *   color: string,
- *   fillOpacity: number,
- *   strokeWidth: number,
- *   type: string,
- *   yAxis: number,
- * }}
- */
-metricDisplaySettings.metricSetting;
-
-/**
  * Settings used by GraphController to display different axes.
  *
- * @type {!Object<string, !Object<string, !axisSettings.axisSetting>>}
+ * @type {!Object<string, !Object<string, !kdGraph.axisSetting>>}
  */
 export const axisSettings = {
   'CPUAxisType': {
@@ -123,13 +107,3 @@ export const axisSettings = {
     label: i18n.MSG_GRAPH_TIME_AXIS_LABEL,
   },
 };
-
-/**
- * Settings object that should be provided for every axis type supported by graph frontend.
- *
- * @typedef {{
- *   formatter: function(number):string,
- *   label: string,
- * }}
- */
-axisSettings.axisSetting;

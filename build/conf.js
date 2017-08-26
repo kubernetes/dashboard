@@ -81,6 +81,17 @@ export default {
   containerRegistry: containerRegistry,
 
   /**
+   * Constants used by our build system.
+   */
+  build: {
+    /**
+     * Variables used to differentiate between production and development build.
+     */
+    production: 'production',
+    development: 'development',
+  },
+
+  /**
    * Backend application constants.
    */
   backend: {
@@ -133,11 +144,6 @@ export default {
      * File containing the default x509 private key matching --tlsCert.
      */
     tlsKey: gulpUtil.env.tlsKey !== undefined ? gulpUtil.env.tlsKey : '',
-    /**
-     * Variables used to differentiate between prod and dev build.
-     */
-    production: 'prod',
-    development: 'dev',
   },
 
   /**

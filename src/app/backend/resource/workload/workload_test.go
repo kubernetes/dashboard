@@ -38,7 +38,6 @@ import (
 
 func TestGetWorkloadsFromChannels(t *testing.T) {
 	replicas := int32(0)
-	var jobCompletions int32
 	cases := []struct {
 		k8sRs          extensions.ReplicaSetList
 		k8sJobs        batch.JobList
@@ -88,7 +87,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 						ObjectMeta: metaV1.ObjectMeta{Name: "job-name"},
 						Spec: batch.JobSpec{
 							Selector:    &metaV1.LabelSelector{},
-							Completions: &jobCompletions,
+							Completions: &replicas,
 						},
 					}},
 			},
@@ -127,6 +126,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 				TypeMeta: api.TypeMeta{Kind: api.ResourceKindReplicationController},
 				Pods: common.PodInfo{
 					Warnings: []common.Event{},
+					Desired:  &replicas,
 				},
 			}},
 			[]replicaset.ReplicaSet{{
@@ -136,6 +136,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 				TypeMeta: api.TypeMeta{Kind: api.ResourceKindReplicaSet},
 				Pods: common.PodInfo{
 					Warnings: []common.Event{},
+					Desired:  &replicas,
 				},
 			}},
 			[]job.Job{{
@@ -145,6 +146,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 				TypeMeta: api.TypeMeta{Kind: api.ResourceKindJob},
 				Pods: common.PodInfo{
 					Warnings: []common.Event{},
+					Desired:  &replicas,
 				},
 			}},
 			[]daemonset.DaemonSet{{
@@ -154,6 +156,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 				TypeMeta: api.TypeMeta{Kind: api.ResourceKindDaemonSet},
 				Pods: common.PodInfo{
 					Warnings: []common.Event{},
+					Desired:  &replicas,
 				},
 			}},
 			[]deployment.Deployment{{
@@ -163,6 +166,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 				TypeMeta: api.TypeMeta{Kind: api.ResourceKindDeployment},
 				Pods: common.PodInfo{
 					Warnings: []common.Event{},
+					Desired:  &replicas,
 				},
 			}},
 			[]pod.Pod{},

@@ -18,21 +18,15 @@ import replicaSetModule from 'replicaset/module';
 describe('Replica Set card', () => {
   /** @type {!ReplicaSetCardController} */
   let ctrl;
-  /**
-   * @type {!ScaleService}
-   */
-  let scaleData;
 
   beforeEach(() => {
     angular.mock.module(scalingModule.name);
     angular.mock.module(replicaSetModule.name);
 
-    angular.mock.inject(($componentController, $rootScope, kdScaleService) => {
-      /** @type {!ScaleService} */
-      scaleData = kdScaleService;
-      ctrl = $componentController('kdReplicaSetCard', {
-        $scope: $rootScope,
-        kdScaleService_: scaleData,
+    angular.mock.inject(($componentController, $state, $interpolate) => {
+      ctrl = $componentController('kdReplicaSetCard', {}, {
+        state_: $state,
+        interpolate_: $interpolate,
       });
     });
   });

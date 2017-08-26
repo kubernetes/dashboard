@@ -1,53 +1,49 @@
 # Refer to https://github.com/golang/dep/blob/master/docs/Gopkg.toml.md for detailed Gopkg.toml documentation.
 
 [[constraint]]
-  name = "github.com/docker/distribution"
-  version = "2.6.2"
+  name = "k8s.io/client-go"
+  version = "4.0.0"
 
 [[constraint]]
-  branch = "master"
-  name = "github.com/golang/glog"
+  name = "k8s.io/apimachinery"
+  revision = "db23e9ab1e90f659fa5a557d183ebbb16f60300a"
+
+[[constraint]]
+  name = "k8s.io/heapster"
+  version = "1.4.1"
 
 [[constraint]]
   name = "github.com/prometheus/client_golang"
   version = "0.8.0"
 
 [[constraint]]
+  name = "github.com/docker/distribution"
+  version = "2.6.2"
+
+[[constraint]]
+  name = "github.com/golang/glog"
+  branch = "master"
+
+[[constraint]]
   name = "github.com/spf13/pflag"
   version = "1.0.0"
 
 [[constraint]]
-  branch = "master"
   name = "golang.org/x/net"
+  branch = "master"
 
 [[constraint]]
-  branch = "master"
   name = "golang.org/x/text"
-
-[[constraint]]
-  branch = "v2"
-  name = "gopkg.in/igm/sockjs-go.v2"
-
-[[constraint]]
   branch = "master"
-  name = "k8s.io/apimachinery"
 
 [[constraint]]
-  name = "k8s.io/client-go"
-  version = "4.0.0-beta.0"
-
-[[constraint]]
-  name = "k8s.io/heapster"
-  version = "1.4.0"
+  name = "gopkg.in/igm/sockjs-go.v2"
+  branch = "v2"
 
 [[constraint]]
   name = "github.com/square/go-jose"
   version = "2.1.2"
 
 [[override]]
-  name = "k8s.io/apiserver"
-  revision = "8ff532a4cb6f39381eb9488efc71c394da932f05"
-
-[[override]]
   name = "github.com/emicklei/go-restful"
-  revision = "1eaf4c9d1681d91b31eeb1414a8a715b8008c7a2"
+  version = "1.0.0"

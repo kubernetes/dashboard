@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {namespaceParam} from 'chrome/state';
+import {namespaceParam} from '../../chrome/state';
 
 /**
  * Internal key for empty selection. To differentiate empty string from nulls.
@@ -185,7 +185,7 @@ export class NamespaceSelectController {
    */
   loadNamespacesIfNeeded() {
     if (!this.namespacesInitialized_) {
-      /** @type {!angular.Resource<!backendApi.NamespaceList>} */
+      /** @type {!angular.Resource} */
       let resource = this.resource_('api/v1/namespace');
 
       return resource.get().$promise.then((/** !backendApi.NamespaceList */ namespaceList) => {

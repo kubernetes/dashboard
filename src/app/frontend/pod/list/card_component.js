@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {StateParams} from 'common/resource/resourcedetail';
-import {stateName as logsStateName, StateParams as LogsStateParams} from 'logs/state';
-import {stateName} from 'pod/detail/state';
+import {StateParams} from '../../common/resource/resourcedetail';
+import {stateName as logsStateName, StateParams as LogsStateParams} from '../../logs/state';
+import {stateName} from '../../pod/detail/state';
 
 /**
  * @final
@@ -24,10 +24,10 @@ export class PodCardController {
    * @ngInject,
    * @param {!ui.router.$state} $state
    * @param {!angular.$interpolate} $interpolate
-   * @param {!./../../common/namespace/service.NamespaceService} kdNamespaceService
+   * @param {!../../common/namespace/service.NamespaceService} kdNamespaceService
    */
   constructor($state, $interpolate, kdNamespaceService) {
-    /** @private {!./../../common/namespace/service.NamespaceService} */
+    /** @private {!../../common/namespace/service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
 
     /** @private {!ui.router.$state} */

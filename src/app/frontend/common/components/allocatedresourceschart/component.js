@@ -15,13 +15,9 @@
 export class AllocatedResourcesChartController {
   /**
    * @ngInject
-   * @param {!angular.Scope} $scope
    * @param {!angular.JQLite} $element
    */
-  constructor($scope, $element) {
-    /** @private {!angular.Scope} */
-    this.scope_ = $scope;
-
+  constructor($element) {
     /** @private {!angular.JQLite} */
     this.element_ = $element;
 

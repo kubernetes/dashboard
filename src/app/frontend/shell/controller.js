@@ -22,16 +22,12 @@ import {stateName as shell, StateParams} from './state';
 export class ShellController {
   /**
    * @param {!backendApi.PodContainerList} podContainers
-   * @param {!angular.$sce} $sce
    * @param {!angular.$document} $document
    * @param {!angular.$resource} $resource
    * @param {!ui.router.$state} $state
    * @ngInject
    */
-  constructor(podContainers, $sce, $document, $resource, $state) {
-    /** @private {!angular.$sce} */
-    this.sce_ = $sce;
-
+  constructor(podContainers, $document, $resource, $state) {
     /** @private {!HTMLDocument} */
     this.document_ = $document[0];
 

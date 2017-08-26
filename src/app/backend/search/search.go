@@ -41,7 +41,7 @@ type SearchResult struct {
 }
 
 // Search returns a list of all objects matching search criteria (specified in namespace and data select queries).
-func Search(client *kubernetes.Clientset, metricClient metricapi.MetricClient, nsQuery *common.NamespaceQuery,
+func Search(client kubernetes.Interface, metricClient metricapi.MetricClient, nsQuery *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery) (*SearchResult, error) {
 
 	clusterResources, err := cluster.GetCluster(client, dsQuery, metricClient)

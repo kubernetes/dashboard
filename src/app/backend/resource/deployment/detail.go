@@ -107,7 +107,6 @@ func GetDeploymentDetail(client client.Interface, metricClient metricapi.MetricC
 		return nil, err
 	}
 
-	// TODO fix not to use kubernetes utils
 	selector, err := metaV1.LabelSelectorAsSelector(deployment.Spec.Selector)
 	if err != nil {
 		return nil, err
@@ -172,7 +171,7 @@ func GetDeploymentDetail(client client.Interface, metricClient metricapi.MetricC
 	var newReplicaSet replicaset.ReplicaSet
 	if newRs != nil {
 		matchingPods := common.FilterPodsByControllerRef(newRs, rawPods.Items)
-		newRsPodInfo := common.GetPodInfo(newRs.Status.Replicas, *newRs.Spec.Replicas, matchingPods)
+		newRsPodInfo := common.GetPodInfo(newRs.Status.Replicas, newRs.Spec.Replicas, matchingPods)
 		events, err := event.GetPodsEvents(client, namespace, matchingPods)
 		nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
 		if criticalError != nil {

@@ -101,7 +101,7 @@ func toReplicationControllerList(replicationControllers []v1.ReplicationControll
 	for _, rc := range replicationControllers {
 		matchingPods := common.FilterPodsByControllerRef(&rc, pods)
 
-		podInfo := common.GetPodInfo(rc.Status.Replicas, *rc.Spec.Replicas, matchingPods)
+		podInfo := common.GetPodInfo(rc.Status.Replicas, rc.Spec.Replicas, matchingPods)
 		podInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)
 
 		replicationController := ToReplicationController(&rc, &podInfo)

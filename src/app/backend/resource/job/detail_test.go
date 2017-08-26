@@ -28,8 +28,7 @@ import (
 	batch "k8s.io/client-go/pkg/apis/batch/v1"
 )
 
-func createJob(name, namespace string, labelSelector map[string]string) *batch.Job {
-	var jobCompletions int32
+func createJob(name, namespace string, jobCompletions int32, labelSelector map[string]string) *batch.Job {
 	var parallelism int32
 
 	return &batch.Job{
@@ -57,12 +56,15 @@ func TestGetJobDetail(t *testing.T) {
 		{
 			"ns-1", "job-1",
 			[]string{"get", "get", "list", "list", "list", "list"},
-			createJob("job-1", "ns-1", map[string]string{"app": "test"}),
+			createJob("job-1", "ns-1", jobCompletions, map[string]string{"app": "test"}),
 			&JobDetail{
 				ObjectMeta: api.ObjectMeta{Name: "job-1", Namespace: "ns-1",
 					Labels: map[string]string{"app": "test"}},
 				TypeMeta: api.TypeMeta{Kind: api.ResourceKindJob},
-				PodInfo:  common.PodInfo{Warnings: []common.Event{}},
+				PodInfo: common.PodInfo{
+					Warnings: []common.Event{},
+					Desired:  &jobCompletions,
+				},
 				PodList: pod.PodList{
 					Pods:              []pod.Pod{},
 					CumulativeMetrics: make([]metricapi.Metric, 0),

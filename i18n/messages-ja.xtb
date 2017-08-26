@@ -374,6 +374,7 @@
   <translation id="7869641598803414323" key="MSG_DESIRED_PODS_MSG" desc="Satisfies a way to make normal binding in angularjs to pass in google closure compiler.">
     <ph name="DESIRED_PODS"> の要求</ph>
   </translation>
+  <translation id="5000821072914833048" key="MSG_ENCRYPTION_KEY_CHANGED" desc="Text shown when saved token could not be decrypted by backend.">Session expired. Please log in again</translation>
   <translation id="778882191405410811" key="MSG_ENDPOINTS_WARNING_LABEL" desc="Label 'Warning' for the endpoint selection drop-down.">Warning</translation>
   <translation id="4983649641173165689" key="MSG_ENDPOINT_CARDLIST_0" desc="Label which appears above the list of such objects.">Endpoints</translation>
   <translation id="4158586803314397594" key="MSG_ENDPOINT_CARDLIST_1" desc="(no description provided)">There are currently no Endpoints selected by this Service.</translation>
@@ -828,11 +829,13 @@
   <translation id="4846548664493416435" key="MSG_SECRET_DETAIL_DETAIL_2" desc="Tooltip label for hiding secret content">シークレットコンテントを隠す</translation>
   <translation id="3077755770695564562" key="MSG_SECRET_DETAIL_DETAIL_3" desc="Secrets info details section bytes.">{{::$ctrl.formatDataValue(value).length}} バイト </translation>
   <translation id="7738406856610373390" key="MSG_SECRET_DETAIL_INFO_0" desc="Header in a detail view">詳細</translation>
+  <translation id="138292779983873593" key="MSG_SECRET_DETAIL_INFO_1" desc="Secret info details section type entry.">タイプ</translation>
   <translation id="482275567627182819" key="MSG_SECRET_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">シークレット</translation>
   <translation id="2133941155168166972" key="MSG_SECRET_LIST_CARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of secrets (secret list view).">名前</translation>
   <translation id="7478420130341878455" key="MSG_SECRET_LIST_CARDLIST_2" desc="Label \'Namespace\' which appears as a column label in the table of secrets (secret list view).">ネームスペース</translation>
   <translation id="4493598488188566434" key="MSG_SECRET_LIST_CARDLIST_3" desc="Label \'Age\' which appears as a column label in the table of secrets (secret list view).">起動時間</translation>
   <translation id="5636111591527461304" key="MSG_SECRET_LIST_CARDLIST_4" desc="Text for secret card list zerostate.">表示するものがありません</translation>
+  <translation id="2424849052809753229" key="MSG_SECRET_LIST_CARDLIST_5" desc="Label \'Type\' which appears as a column label in the table of secrets (secret list view).">タイプ</translation>
   <translation id="2799384691872397176" key="MSG_SECRET_LIST_STARTED_AT_TOOLTIP" desc="Tooltip 'Started at [some date]' showing the exact start time of the secret.">
     <ph name="START_DATE"> UTC に作成</ph>
   </translation>

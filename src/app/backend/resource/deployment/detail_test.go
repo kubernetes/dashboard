@@ -32,9 +32,8 @@ import (
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
 
-func createDeployment(name, namespace, podTemplateName string, podLabel,
+func createDeployment(name, namespace, podTemplateName string, replicas int32, podLabel,
 	labelSelector map[string]string) *extensions.Deployment {
-	replicas := int32(4)
 	maxSurge := intstr.FromInt(1)
 	maxUnavailable := intstr.FromString("25%")
 
@@ -43,8 +42,9 @@ func createDeployment(name, namespace, podTemplateName string, podLabel,
 			Name: name, Namespace: namespace, Labels: labelSelector,
 		},
 		Spec: extensions.DeploymentSpec{
-			Selector: &metaV1.LabelSelector{MatchLabels: labelSelector},
-			Replicas: &replicas, MinReadySeconds: 5,
+			Selector:        &metaV1.LabelSelector{MatchLabels: labelSelector},
+			Replicas:        &replicas,
+			MinReadySeconds: 5,
 			Strategy: extensions.DeploymentStrategy{
 				Type: extensions.RollingUpdateDeploymentStrategyType,
 				RollingUpdate: &extensions.RollingUpdateDeployment{
@@ -56,14 +56,13 @@ func createDeployment(name, namespace, podTemplateName string, podLabel,
 				ObjectMeta: metaV1.ObjectMeta{Name: podTemplateName, Labels: podLabel}},
 		},
 		Status: extensions.DeploymentStatus{
-			Replicas: 4, UpdatedReplicas: 2, AvailableReplicas: 3, UnavailableReplicas: 1,
+			Replicas: replicas, UpdatedReplicas: 2, AvailableReplicas: 3, UnavailableReplicas: 1,
 		},
 	}
 }
 
-func createReplicaSet(name, namespace string, labelSelector map[string]string,
+func createReplicaSet(name, namespace string, replicas int32, labelSelector map[string]string,
 	podTemplateSpec v1.PodTemplateSpec) extensions.ReplicaSet {
-	replicas := int32(0)
 	return extensions.ReplicaSet{
 		ObjectMeta: metaV1.ObjectMeta{
 			Name: name, Namespace: namespace, Labels: labelSelector,
@@ -78,18 +77,20 @@ func createReplicaSet(name, namespace string, labelSelector map[string]string,
 func TestGetDeploymentDetail(t *testing.T) {
 	podList := &v1.PodList{}
 	eventList := &v1.EventList{}
+	var replicas int32 = 4
 
-	deployment := createDeployment("dp-1", "ns-1", "pod-1", map[string]string{"track": "beta"},
-		map[string]string{"foo": "bar"})
+	deployment := createDeployment("dp-1", "ns-1", "pod-1", replicas,
+		map[string]string{"track": "beta"}, map[string]string{"foo": "bar"})
 
 	podTemplateSpec := GetNewReplicaSetTemplate(deployment)
 
-	newReplicaSet := createReplicaSet("rs-1", "ns-1", map[string]string{"foo": "bar"}, podTemplateSpec)
+	newReplicaSet := createReplicaSet("rs-1", "ns-1", replicas, map[string]string{"foo": "bar"},
+		podTemplateSpec)
 
 	replicaSetList := &extensions.ReplicaSetList{
 		Items: []extensions.ReplicaSet{
 			newReplicaSet,
-			createReplicaSet("rs-2", "ns-1", map[string]string{"foo": "bar"},
+			createReplicaSet("rs-2", "ns-1", replicas, map[string]string{"foo": "bar"},
 				podTemplateSpec),
 		},
 	}
@@ -140,7 +141,10 @@ func TestGetDeploymentDetail(t *testing.T) {
 				NewReplicaSet: replicaset.ReplicaSet{
 					ObjectMeta: api.NewObjectMeta(newReplicaSet.ObjectMeta),
 					TypeMeta:   api.NewTypeMeta(api.ResourceKindReplicaSet),
-					Pods:       common.PodInfo{Warnings: []common.Event{}},
+					Pods: common.PodInfo{
+						Warnings: []common.Event{},
+						Desired:  &replicas,
+					},
 				},
 				EventList: common.EventList{
 					Events: []common.Event{},

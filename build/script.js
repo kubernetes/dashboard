@@ -32,9 +32,21 @@ import {processI18nMessages} from './i18n';
 const gulpClosureCompiler = closureCompiler.gulp();
 
 /**
+ * Tasks used to set node process env variables. They are used by our compile tasks. Based on them
+ * different preset configs defined in '.babelrc' are used.
+ */
+gulp.task('set-dev-node-env', () => {
+  return process.env.NODE_ENV = conf.build.development;
+});
+
+gulp.task('set-prod-node-env', () => {
+  return process.env.NODE_ENV = conf.build.production;
+});
+
+/**
  * Returns function creating a stream that compiles frontend JavaScript files into development
  * bundle located in {conf.paths.serve} directory. This has to be done because currently browsers do
- * not handle ES6 syntax and modules correctly.
+ * not handle ES2017 syntax and modules correctly.
  *
  * Only dependencies of root application module are included in the bundle.
  * @param {boolean} throwError - whether task should throw an error in case of JS syntax errors.
@@ -45,16 +57,19 @@ const gulpClosureCompiler = closureCompiler.gulp();
 function createScriptsStream(throwError) {
   return function() {
     let webpackOptions = {
-      devtool: 'inline-source-map',
-      module: {
-        // ES6 modules have to be preprocessed with Babel loader to work in browsers.
-        loaders: [{test: /\.js$/, exclude: /node_modules/, loaders: ['babel-loader']}],
-      },
-      output: {filename: 'app-dev.js'},
-      resolve: {
-        // Set the module resolve root, so that webpack knows how to process non-relative imports.
-        // Should be kept in sync with respective Closure Compiler option.
-        root: conf.paths.frontendSrc,
+      config: {
+        devtool: 'inline-source-map',
+        module: {
+          // ES2017 modules have to be preprocessed with Babel loader to work in browsers.
+          loaders: [{test: /\.js$/, exclude: /node_modules/, loaders: ['babel-loader']}],
+        },
+        output: {filename: 'app-dev.js'},
+        resolve: {
+          // Set the modules resolve path, so that webpack knows how to process non-relative
+          // imports.
+          // Should be kept in sync with respective Closure Compiler option.
+          modules: [conf.paths.frontendSrc],
+        },
       },
       quiet: true,
     };
@@ -74,18 +89,18 @@ function createScriptsStream(throwError) {
 }
 /**
  * Compiles frontend JavaScript files into development bundle located in
- * {conf.paths.serve} directory. This has to be done because currently browsers do not handle ES6
+ * {conf.paths.serve} directory. This has to be done because currently browsers do not handle ES2017
  * syntax and modules correctly.
  *
  * Only dependencies of root application module are included in the bundle.
  *
  * Throws an error in case of JS syntax errors.
  */
-gulp.task('scripts', createScriptsStream(true));
+gulp.task('scripts', ['set-dev-node-env'], createScriptsStream(true));
 
 /**
  * Compiles frontend JavaScript files into development bundle located in
- * {conf.paths.serve} directory. This has to be done because currently browsers do not handle ES6
+ * {conf.paths.serve} directory. This has to be done because currently browsers do not handle ES2017
  * syntax and modules correctly.
  *
  * Only dependencies of root application module are included in the bundle.
@@ -128,7 +143,7 @@ function createCompileTask(translation) {
 
 
 /**
- * Compiles ES6 to ES3 for proper browser support
+ * Compiles ES2017 to ES3 for proper browser support
  *
  * @param {undefined|Object} translation - optional translation spec, otherwise compiles the default
  * application logic.
@@ -156,6 +171,7 @@ function compileES6(translation) {
         conf.paths.bowerComponents,
         'cljsjs-packages-externs/nvd3/resources/cljsjs/nvd3/common/nvd3.ext.js'),
     // Dashboard externs
+    path.join(conf.paths.externs, 'appconfig.js'),
     path.join(conf.paths.externs, 'backendapi.js'),
     path.join(conf.paths.externs, 'ansiup.js'),
     path.join(conf.paths.externs, 'clipboard.js'),
@@ -166,19 +182,22 @@ function compileES6(translation) {
     path.join(conf.paths.externs, 'shell.js'),
     path.join(conf.paths.externs, 'hterm.js'),
     path.join(conf.paths.externs, 'sockjs.js'),
+    path.join(conf.paths.externs, 'graph.js'),
   ];
 
   let closureCompilerConfig = {
     // ---- BASIC OPTIONS ----
-    compilation_level: 'ADVANCED_OPTIMIZATIONS',
+    compilation_level: 'ADVANCED',
     js_output_file: 'app.js',
-    language_in: 'ECMASCRIPT6_STRICT',
+    language_in: 'ECMASCRIPT_2017',
     language_out: 'ECMASCRIPT3',
     externs: externs,
 
     // ---- OUTPUT ----
     generate_exports: true,
     export_local_property_definitions: true,
+    // TODO: enable once all type checks are fixed
+    // new_type_inf: true,
 
     // ---- WARNING AND ERROR MANAGEMENT ----
     // Enable all compiler checks by default and make them errors.
@@ -187,22 +206,16 @@ function compileES6(translation) {
     jscomp_off: [
       // Let ESLint handle all lint checks.
       'lintChecks',
-      // This checks aren't working with current google-closure-library version. Will be deleted
-      // once it's fixed there.
-      'analyzerChecks',
     ],
+    // new_type_inf: true,
 
     // ---- DEPENDENCY MANAGEMENT ----
     dependency_mode: 'LOOSE',
-    entry_point: 'index_module',
+    entry_point: `index_module`,
 
     // ---- JS MODULES ----
-    js_module_root: `/${path.relative(conf.paths.base, conf.paths.frontendSrc)}`,
-
-    // Specifies how the compiler locates modules. Default value 'BROWSER' requires all imports to
-    // begin with a '.' or '/' and have a file extension. Currently Dashboard does not meet these
-    // requirements, so 'LEGACY' value will be used.
-    module_resolution: `LEGACY`,
+    js_module_root: `${conf.paths.frontendSrc}`,
+    module_resolution: 'NODE',
 
     // ---- LIBRARY AND FRAMEWORK SPECIFIC OPTIONS ----
     angular_pass: true,
@@ -237,26 +250,27 @@ function patchBuildInformation() {
  * Compiles frontend JavaScript files into production bundle located in {conf.paths.prodTmp}
  * directory. A separated bundle is created for each i18n locale.
  */
-gulp.task('scripts:prod', ['angular-templates', 'generate-xtbs'], function(doneFn) {
-  // add a compilation step to stream for each translation file
-  let streams = conf.translations.map((translation) => {
-    return createCompileTask(translation);
-  });
+gulp.task(
+    'scripts:prod', ['angular-templates', 'generate-xtbs', 'set-prod-node-env'], function(doneFn) {
+      // add a compilation step to stream for each translation file
+      let streams = conf.translations.map((translation) => {
+        return createCompileTask(translation);
+      });
 
-  // add a default compilation task (no localization)
-  streams = streams.concat(createCompileTask());
+      // add a default compilation task (no localization)
+      streams = streams.concat(createCompileTask());
 
-  // Handle unhandled rejections and fail immediately if any error occurs.
-  process.on('unhandledRejection', (reason) => {
-    if (reason.message.toLowerCase().includes('error')) {
-      doneFn(reason);
-    }
-  });
+      // Handle unhandled rejections and fail immediately if any error occurs.
+      process.on('unhandledRejection', (reason) => {
+        if (reason.message.toLowerCase().includes('error')) {
+          doneFn(reason);
+        }
+      });
 
-  // TODO (taimir) : do not run the tasks sequentially once
-  // gulp-closure-compiler can be run in parallel
-  async.series(streams, doneFn);
-});
+      // TODO (taimir) : do not run the tasks sequentially once
+      // gulp-closure-compiler can be run in parallel
+      async.series(streams, doneFn);
+    });
 
 /**
  * Compiles each Angular HTML template file (path/foo.html) into three processed forms:

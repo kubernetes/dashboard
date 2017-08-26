@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {StateParams} from 'common/resource/resourcedetail';
-import {stateName} from 'persistentvolume/detail/state';
+import {StateParams} from '../../common/resource/resourcedetail';
+import {stateName} from '../../persistentvolume/detail/state';
 
 /**
  * Controller for the persistent volume card.
  *
  * @final
  */
-export default class PersistentVolumeCardController {
+class PersistentVolumeCardController {
   /**
    * @param {!ui.router.$state} $state
    * @param {!angular.$interpolate} $interpolate

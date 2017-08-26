@@ -58,7 +58,7 @@ script:
   - 'if [ ${BUILD_SUITE} = "cluster-test" ]; then
       ./node_modules/.bin/gulp check:local-cluster --heapsterServerHost "http://localhost:8082";
     else
-      ./node_modules/.bin/gulp check:code-quality;
+      NODE_ENV=production ./node_modules/.bin/gulp check:code-quality;
     fi'
 
 after_success:

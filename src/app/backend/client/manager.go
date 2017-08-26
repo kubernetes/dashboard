@@ -47,12 +47,14 @@ const (
 // ClientManager is responsible for initializing and creating clients to communicate with
 // kubernetes apiserver on demand
 type ClientManager interface {
-	Client(req *restful.Request) (*kubernetes.Clientset, error)
+	Client(req *restful.Request) (kubernetes.Interface, error)
+	InsecureClient() kubernetes.Interface
 	Config(req *restful.Request) (*rest.Config, error)
 	ClientCmdConfig(req *restful.Request) (clientcmd.ClientConfig, error)
 	CSRFKey() string
 	HasAccess(authInfo api.AuthInfo) error
 	VerberClient(req *restful.Request) (ResourceVerber, error)
+	SetTokenManager(manager authApi.TokenManager)
 }
 
 // clientManager implements ClientManager interface
@@ -67,13 +69,16 @@ type clientManager struct {
 	// Initialized on clientManager creation and used if kubeconfigPath and apiserverHost are
 	// empty
 	inClusterConfig *rest.Config
-
+	// Responsible for decrypting tokens coming in request header. Used for authentication.
 	tokenManager authApi.TokenManager
+	// Kubernetes client created without providing auth info. It uses permissions granted to
+	// service account used by dashboard or kubeconfig file if it was passed during dashboard init.
+	insecureClient kubernetes.Interface
 }
 
 // Client returns kubernetes client that is created based on authentication information extracted
 // from request. If request is nil then authentication will be skipped.
-func (self *clientManager) Client(req *restful.Request) (*kubernetes.Clientset, error) {
+func (self *clientManager) Client(req *restful.Request) (kubernetes.Interface, error) {
 	cfg, err := self.Config(req)
 	if err != nil {
 		return nil, err
@@ -85,6 +90,12 @@ func (self *clientManager) Client(req *restful.Request) (*kubernetes.Clientset, 
 	}
 
 	return client, nil
+}
+
+// InsecureClient returns kubernetes client that was created without providing auth info. It uses permissions granted
+// to service account used by dashboard or kubeconfig file if it was passed during dashboard init.
+func (self *clientManager) InsecureClient() kubernetes.Interface {
+	return self.insecureClient
 }
 
 // Config creates rest Config based on authentication information extracted from request.
@@ -167,6 +178,11 @@ func (self *clientManager) VerberClient(req *restful.Request) (ResourceVerber, e
 		client.StorageV1beta1().RESTClient()), nil
 }
 
+// SetTokenManager sets the token manager that will be used for token decryption.
+func (self *clientManager) SetTokenManager(manager authApi.TokenManager) {
+	self.tokenManager = manager
+}
+
 // Initializes config with default values
 func (self *clientManager) initConfig(cfg *rest.Config) {
 	cfg.QPS = DefaultQPS
@@ -229,7 +245,7 @@ func (self *clientManager) buildCmdConfig(authInfo *api.AuthInfo, cfg *rest.Conf
 // Extracts authorization information from request header
 func (self *clientManager) extractAuthInfo(req *restful.Request) (*api.AuthInfo, error) {
 	if req == nil {
-		log.Print("No request provided. Skipping authorization.")
+		log.Print("No request provided. Skipping authorization")
 		return nil, nil
 	}
 
@@ -242,7 +258,7 @@ func (self *clientManager) extractAuthInfo(req *restful.Request) (*api.AuthInfo,
 		return &api.AuthInfo{Token: token}, nil
 	}
 
-	if len(jweToken) > 0 {
+	if self.tokenManager != nil && len(jweToken) > 0 {
 		return self.tokenManager.Decrypt(jweToken)
 	}
 
@@ -261,21 +277,7 @@ func (self *clientManager) extractTokenFromHeader(authHeader string) string {
 func (self *clientManager) init() {
 	self.initInClusterConfig()
 	self.initCSRFKey()
-}
-
-// Initializes csrfKey. If in-cluster config is detected then csrf key is initialized with
-// service account token, otherwise it is generated
-func (self *clientManager) initCSRFKey() {
-	if self.inClusterConfig == nil {
-		// Most likely running for a dev, so no replica issues, just generate a random key
-		log.Println("Using random key for csrf signing")
-		self.generateCSRFKey()
-		return
-	}
-
-	// We run in a cluster, so we should use a signing key that is the same for potential replications
-	log.Println("Using service account token for csrf signing")
-	self.csrfKey = self.inClusterConfig.BearerToken
+	self.initInsecureClient()
 }
 
 // Initializes in-cluster config if apiserverHost and kubeConfigPath were not provided.
@@ -293,6 +295,30 @@ func (self *clientManager) initInClusterConfig() {
 	}
 
 	self.inClusterConfig = cfg
+}
+
+// Initializes csrfKey. If in-cluster config is detected then csrf key is initialized with
+// service account token, otherwise it is generated
+func (self *clientManager) initCSRFKey() {
+	if self.inClusterConfig == nil {
+		// Most likely running for a dev, so no replica issues, just generate a random key
+		log.Println("Using random key for csrf signing")
+		self.generateCSRFKey()
+		return
+	}
+
+	// We run in a cluster, so we should use a signing key that is the same for potential replications
+	log.Println("Using service account token for csrf signing")
+	self.csrfKey = self.inClusterConfig.BearerToken
+}
+
+func (self *clientManager) initInsecureClient() {
+	insecureClient, err := self.Client(nil)
+	if err != nil {
+		panic(err)
+	}
+
+	self.insecureClient = insecureClient
 }
 
 // Generates random csrf key
@@ -313,11 +339,10 @@ func (self *clientManager) isRunningInCluster() bool {
 
 // NewClientManager creates client manager based on kubeConfigPath and apiserverHost parameters.
 // If both are empty then in-cluster config is used.
-func NewClientManager(kubeConfigPath, apiserverHost string, tokenManager authApi.TokenManager) ClientManager {
+func NewClientManager(kubeConfigPath, apiserverHost string) ClientManager {
 	result := &clientManager{
 		kubeConfigPath: kubeConfigPath,
 		apiserverHost:  apiserverHost,
-		tokenManager:   tokenManager,
 	}
 
 	result.init()
