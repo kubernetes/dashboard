@@ -68,6 +68,14 @@ export class AuthService {
   }
 
   /**
+   * @return {string}
+   * @private
+   */
+  getTokenCookie_() {
+    return this.cookies_.get(this.tokenCookieName_) || '';
+  }
+
+  /**
    * Remove auth cookies.
    */
   removeAuthCookies() {
@@ -79,6 +87,7 @@ export class AuthService {
    * Sends a login request to the backend with filled in login spec structure.
    *
    * @param {!backendApi.LoginSpec} loginSpec
+   * @return {!angular.$q.Promise}
    */
   login(loginSpec) {
     let deferred = this.q_.defer();
@@ -98,7 +107,7 @@ export class AuthService {
 
           resource.save(
               loginSpec,
-              (/** @type {!backendApi.LoginResponse} */ response) => {
+              (/** @type {!backendApi.AuthResponse} */ response) => {
                 if (response.jweToken.length !== 0 && response.errors.length === 0) {
                   this.setTokenCookie_(response.jweToken);
                 }
@@ -172,6 +181,55 @@ export class AuthService {
   }
 
   /**
+   * TODO(floreks)
+   *
+   * @return {!angular.$q.Promise}
+   */
+  refreshToken() {
+    let token = this.getTokenCookie_();
+    let deferred = this.q_.defer();
+
+    if(token.length === 0) {
+      deferred.resolve(true);
+      return deferred.promise;
+    }
+
+    /** @type {!angular.$q.Promise} */
+    let csrfTokenPromise = this.csrfTokenService_.getTokenForAction('token');
+    csrfTokenPromise.then(
+        (csrfToken) => {
+          let resource = this.resource_('api/v1/token/refresh', {}, {
+            save: {
+              method: 'POST',
+              headers: {
+                [this.csrfHeaderName_]: csrfToken,
+              },
+            },
+          });
+
+          resource.save(
+              {jweToken: token},
+              (/** @type {!backendApi.AuthResponse} */ response) => {
+                if (response.jweToken.length !== 0 && response.errors.length === 0) {
+                  this.setTokenCookie_(response.jweToken);
+                }
+
+                deferred.resolve(response.errors);
+              },
+              (err) => {
+                console.log(err);
+                deferred.resolve(err);
+              });
+        },
+        (err) => {
+          console.log(err);
+          deferred.resolve(err);
+        });
+
+    return deferred.promise;
+  }
+
+  /**
    * Checks if user is authenticated.
    *
    * @param {!backendApi.LoginStatus} loginStatus
@@ -193,7 +251,7 @@ export class AuthService {
 
   /** @return {!angular.$q.Promise} */
   getLoginStatus() {
-    let token = this.cookies_.get(this.tokenCookieName_) || '';
+    let token = this.getTokenCookie_();
     return this
         .resource_('api/v1/login/status', {}, {
           get: {
@@ -233,5 +291,9 @@ export class AuthService {
     this.transitions_.onBefore({}, (transition) => {
       return this.isLoggedIn(transition);
     }, {priority: 10});
+
+    this.transitions_.onBefore({}, () => {
+      return this.refreshToken();
+    });
   }
 }

@@ -1459,7 +1459,7 @@ backendApi.LoginSpec;
  *   errors: !Array<!backendApi.Error>
  * }}
  */
-backendApi.LoginResponse;
+backendApi.AuthResponse;
 
 /**
  * @typedef {{

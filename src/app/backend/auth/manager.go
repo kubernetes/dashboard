@@ -30,7 +30,7 @@ type authManager struct {
 }
 
 // Login implements auth manager. See AuthManager interface for more information.
-func (self authManager) Login(spec *authApi.LoginSpec) (*authApi.LoginResponse, error) {
+func (self authManager) Login(spec *authApi.LoginSpec) (*authApi.AuthResponse, error) {
 	authenticator, err := self.getAuthenticator(spec)
 	if err != nil {
 		return nil, err
@@ -44,7 +44,7 @@ func (self authManager) Login(spec *authApi.LoginSpec) (*authApi.LoginResponse, 
 	err = self.healthCheck(authInfo)
 	nonCriticalErrors, criticalError := kdErrors.HandleError(err)
 	if criticalError != nil || len(nonCriticalErrors) > 0 {
-		return &authApi.LoginResponse{Errors: nonCriticalErrors}, criticalError
+		return &authApi.AuthResponse{Errors: nonCriticalErrors}, criticalError
 	}
 
 	token, err := self.tokenManager.Generate(authInfo)
@@ -52,7 +52,12 @@ func (self authManager) Login(spec *authApi.LoginSpec) (*authApi.LoginResponse, 
 		return nil, err
 	}
 
-	return &authApi.LoginResponse{JWEToken: token, Errors: nonCriticalErrors}, nil
+	return &authApi.AuthResponse{JWEToken: token, Errors: nonCriticalErrors}, nil
+}
+
+// Refresh implements auth manager. See AuthManager interface for more information.
+func (self authManager) Refresh(jweToken string) (string, error) {
+	return self.tokenManager.Refresh(jweToken)
 }
 
 // Returns authenticator based on provided LoginSpec.
