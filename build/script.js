@@ -183,6 +183,7 @@ function compileES6(translation) {
     path.join(conf.paths.externs, 'hterm.js'),
     path.join(conf.paths.externs, 'sockjs.js'),
     path.join(conf.paths.externs, 'graph.js'),
+    path.join(conf.paths.externs, 'errors.js'),
   ];
 
   let closureCompilerConfig = {

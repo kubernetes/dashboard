@@ -47,8 +47,8 @@ func restrictedResourcesFilter(request *restful.Request, response *restful.Respo
 		return
 	}
 
-	err := errorsK8s.NewUnauthorized("")
-	response.WriteHeaderAndEntity(int(err.ErrStatus.Code), kdErrors.LocalizeError(err).Error())
+	err := errorsK8s.NewUnauthorized(kdErrors.MSG_DASHBOARD_EXCLUSIVE_RESOURCE_ERROR)
+	response.WriteHeaderAndEntity(int(err.ErrStatus.Code), err.Error())
 }
 
 // web-service filter function used for request and response logging.
