@@ -29,5 +29,9 @@ export const kdErrors = {
   MSG_LOGIN_UNAUTHORIZED_ERROR: goog.getMsg('Authentication failed. Please try again.'),
 
   /** @export {string} @desc Text shown when saved token could not be decrypted by backend. */
-  MSG_ENCRYPTION_KEY_CHANGED: goog.getMsg('Session expired. Please log in again'),
+  MSG_ENCRYPTION_KEY_CHANGED: goog.getMsg('Session expired. Please log in again.'),
+
+  /** @export {string} @desc Text shown on internal error page when user tries to access resource he does not have permissions to. */
+  MSG_ERROR_UNAUTHORIZED_ERROR:
+      goog.getMsg('Trying to access/modify dashboard exclusive resource.'),
 };

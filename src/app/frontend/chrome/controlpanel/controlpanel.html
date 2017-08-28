@@ -35,7 +35,8 @@ limitations under the License.
     </md-button>
     <md-menu-content width="4">
       <md-menu-item>
-        <md-button disabled="disabled">
+        <md-button disabled="disabled"
+                   aria-label="Control panel">
           <div class="kd-auth-status"
                ng-if="$ctrl.isLoginStatusLoaded">
             {{$ctrl.getAuthStatus()}}

@@ -65,6 +65,30 @@ export class InternalErrorController {
 
   /**
    * @export
+   * @return {boolean}
+   */
+  isKnownError() {
+    return !(this.isInternalError_() || !this.hasErrorCode_());
+  }
+
+  /**
+   * @return {boolean}
+   * @private
+   */
+  isInternalError_() {
+    return this.error && angular.isNumber(this.error.status) && this.error.status >= 500;
+  }
+
+  /**
+   * @return {boolean}
+   * @private
+   */
+  hasErrorCode_() {
+    return !!(this.error && this.error.status);
+  }
+
+  /**
+   * @export
    * @return {string}
    */
   getErrorData() {
