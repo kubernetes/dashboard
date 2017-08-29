@@ -19,6 +19,7 @@ import (
 	"time"
 
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
+	kdErrors "github.com/kubernetes/dashboard/src/app/backend/errors"
 	jose "gopkg.in/square/go-jose.v2"
 	"k8s.io/apimachinery/pkg/util/json"
 	"k8s.io/client-go/tools/clientcmd/api"
@@ -105,7 +106,7 @@ func (self *jweTokenManager) Refresh(jweToken string) (string, error) {
 
 	expired := self.isExpired(aad[IAT], aad[EXP])
 	if expired {
-		return "", errors.New("Token expired.")
+		return "", errors.New(kdErrors.MSG_TOKEN_EXPIRED_ERROR)
 	}
 
 	decrypted, err := jweTokenObject.Decrypt(self.keyHolder.Key())
@@ -146,7 +147,7 @@ func (self *jweTokenManager) validate(jweToken string) (*jose.JSONWebEncryption,
 
 	expired := self.isExpired(aad[IAT], aad[EXP])
 	if expired {
-		return nil, errors.New("Token expired.")
+		return nil, errors.New(kdErrors.MSG_TOKEN_EXPIRED_ERROR)
 	}
 
 	return jwe, nil

@@ -13,6 +13,8 @@
 // limitations under the License.
 
 import chromeModule from '../chrome/module';
+import {isError, kdErrors} from '../common/errorhandling/errors';
+import {stateName as loginState, StateParams as LoginStateParams} from '../login/state';
 
 import {stateName, StateParams} from './state';
 import stateConfig from './stateconfig';
@@ -34,13 +36,15 @@ export default angular
  * Configures event catchers for the error views.
  *
  * @param {!kdUiRouter.$state} $state
- * @param {!../common/errorhandling/localizer_service.LocalizerService} localizerService
+ * @param {!../common/auth/service.AuthService} kdAuthService
  * @ngInject
  */
-function errorConfig($state, localizerService) {
+function errorConfig($state, kdAuthService) {
   $state.defaultErrorHandler((err) => {
-    if (err.detail && err.detail.data) {
-      err.detail.data = localizerService.localize(err.detail.data);
+    if (isError(err.detail.data, kdErrors.TOKEN_EXPIRED, kdErrors.ENCRYPTION_KEY_CHANGED)) {
+      kdAuthService.removeAuthCookies();
+      $state.go(loginState, new LoginStateParams(err.detail));
+      return;
     }
 
     $state.go(stateName, new StateParams(err.detail, $state.params.namespace));

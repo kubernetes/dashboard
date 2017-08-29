@@ -17,3 +17,16 @@ export const stateName = 'login';
 
 /** Absolute URL of the state. */
 export const stateUrl = '/login';
+
+/**
+ * Parameters for this state.
+ */
+export class StateParams {
+  /**
+   * @param {!angular.$http.Response} [error]
+   */
+  constructor(error) {
+    /** @type {!angular.$http.Response|undefined} */
+    this.error = error;
+  }
+}

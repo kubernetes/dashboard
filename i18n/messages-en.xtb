@@ -22,9 +22,9 @@
   <translation id="9213553703311647006" key="MSG_BREADCRUMBS_DEPLOY_APP_LABEL" desc="Breadcrum label for the deploy containerized app form view.">Create an app</translation>
   <translation id="3098067826555563293" key="MSG_BREADCRUMBS_DEPLOY_FILE_LABEL" desc="Breadcrum label for the YAML upload form">Upload</translation>
   <translation id="8693076889249273053" key="MSG_BREADCRUMBS_DISCOVERY_AND_LOAD_BALANCING_LABEL" desc="Label 'Discovery and load balancing' that appears as a breadcrumbs on the action bar.">Discovery and load balancing</translation>
+  <translation id="2573868693589074300" key="MSG_BREADCRUMBS_ERROR_LABEL" desc="Label for error page for breadcrumbs on the action bar.">Error</translation>
   <translation id="2248903848244811172" key="MSG_BREADCRUMBS_HORIZONTAL_POD_AUTOSCALERS_LABEL" desc="Label 'Horizontal Pod Autoscalers' that appears as a breadcrumbs on the action bar.">Horizontal Pod Autoscalers</translation>
   <translation id="8885204956315323333" key="MSG_BREADCRUMBS_INGRESSS_LABEL" desc="Label 'Ingresses' that appears as a breadcrumbs on the action bar.">Ingresses</translation>
-  <translation id="2741276106482217695" key="MSG_BREADCRUMBS_INTERNALERROR_LABEL" desc="Label for internal error page for breadcrumbs on the action bar.">Internal error</translation>
   <translation id="2024511088483477440" key="MSG_BREADCRUMBS_JOBS_LABEL" desc="Label 'Jobs' that appears as a breadcrumbs on the action bar.">Jobs</translation>
   <translation id="7001335550079103928" key="MSG_BREADCRUMBS_LOGIN_LABEL" desc="Label 'Log in' that appears as a breadcrumbs on the action bar.">Login</translation>
   <translation id="1050029015813261838" key="MSG_BREADCRUMBS_LOGS_LABEL" desc="Breadcrum label for the logs view.">Logs</translation>
@@ -907,6 +907,7 @@
   <translation id="3967360362065546967" key="MSG_TIME_UNIT_SECOND_LABEL" desc="Time units label, a single second.">a second</translation>
   <translation id="270964281826728358" key="MSG_TIME_UNIT_YEARS_LABEL" desc="Time units label, many years (plural).">years</translation>
   <translation id="58035047264145239" key="MSG_TIME_UNIT_YEAR_LABEL" desc="Time units label, a single year.">a year</translation>
+  <translation id="7150924596944570535" key="MSG_TOKEN_EXPIRED_ERROR" desc="Text shown when saved token could not be decrypted by backend or it has expired.">Session expired. Please log in again.</translation>
   <translation id="7831482692212754207" key="MSG_TPR_LIST_STARTED_AT_TOOLTIP" desc="Tooltip 'Started at [some date]' showing the exact creation time of third party resource object.">Started at <ph name="START_DATE"> UTC</ph></translation>
   <translation id="4037658160328783864" key="MSG_UNKNOWN_SERVER_ERROR" desc="String to display when error object has invalid structure.">Unknown Server Error</translation>
   <translation id="5877596609986036290" key="MSG_UNSUPPORTED_TOAST" desc="Toast message appears when browser does not support clipboard">Unsupported browser</translation>

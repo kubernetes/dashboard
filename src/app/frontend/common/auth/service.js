@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {authRequired} from '../../chrome/state';
 import {stateName as errorState} from '../../error/state';
 import {stateName as loginState} from '../../login/state';
 import {stateName as overviewState} from '../../overview/state';
-
 
 /** @final */
 export class AuthService {
@@ -181,7 +181,8 @@ export class AuthService {
   }
 
   /**
-   * Sends a token refresh request to the backend. In case user is not logged in with token nothing will happen.
+   * Sends a token refresh request to the backend. In case user is not logged in with token nothing
+   * will happen.
    *
    * @return {!angular.$q.Promise}
    */
@@ -286,11 +287,15 @@ export class AuthService {
    * token has not expired.
    */
   init() {
-    this.transitions_.onBefore({}, (transition) => {
+    let requiresAuth = (state) => {
+      return (state.data && state.data[authRequired] === true);
+    };
+
+    this.transitions_.onBefore({to: requiresAuth}, (transition) => {
       return this.isLoggedIn(transition);
     }, {priority: 10});
 
-    this.transitions_.onBefore({}, () => {
+    this.transitions_.onBefore({to: requiresAuth}, () => {
       return this.refreshToken();
     });
   }

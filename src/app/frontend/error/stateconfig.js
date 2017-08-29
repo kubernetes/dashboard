@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as chromeStateName} from '../chrome/state';
+import {authRequired, stateName as chromeStateName} from '../chrome/state';
 import {breadcrumbsConfig} from '../common/components/breadcrumbs/service';
 
 import {InternalErrorController} from './controller';
@@ -32,15 +32,15 @@ export default function stateConfig($stateProvider) {
     params: new StateParams(/** @type {!angular.$http.Response} */ ({}), ''),
     templateUrl: 'error/internalerror.html',
     data: {
+      [authRequired]: false,
       [breadcrumbsConfig]: {
-        'label': i18n.MSG_BREADCRUMBS_INTERNALERROR_LABEL,
+        'label': i18n.MSG_BREADCRUMBS_ERROR_LABEL,
       },
     },
   });
 }
 
-
 const i18n = {
-  /** @type {string} @desc Label for internal error page for breadcrumbs on the action bar. */
-  MSG_BREADCRUMBS_INTERNALERROR_LABEL: goog.getMsg('Internal error'),
+  /** @type {string} @desc Label for error page for breadcrumbs on the action bar. */
+  MSG_BREADCRUMBS_ERROR_LABEL: goog.getMsg('Error'),
 };

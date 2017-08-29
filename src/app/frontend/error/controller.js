@@ -18,11 +18,12 @@
 export class InternalErrorController {
   /**
    * @param {!kdUiRouter.$transition$} $transition$
-   * * @param {!./../chrome/nav/nav_service.NavService} kdNavService
-   *   @param {!../common/appconfig/service.AppConfigService} kdAppConfigService
+   * @param {!./../chrome/nav/nav_service.NavService} kdNavService
+   * @param {!../common/appconfig/service.AppConfigService} kdAppConfigService
+   * @param {!../common/errorhandling/localizer_service.LocalizerService} localizerService
    * @ngInject
    */
-  constructor($transition$, kdNavService, kdAppConfigService) {
+  constructor($transition$, kdNavService, kdAppConfigService, localizerService) {
     /** @export {!angular.$http.Response} */
     this.error = $transition$.params().error;
 
@@ -42,6 +43,9 @@ export class InternalErrorController {
 
     /** @private {string} */
     this.gitCommit_ = kdAppConfigService.getGitCommit();
+
+    /** @private {!../common/errorhandling/localizer_service.LocalizerService} */
+    this.localizerService_ = localizerService;
   }
 
   /**
@@ -93,7 +97,7 @@ export class InternalErrorController {
    */
   getErrorData() {
     if (this.error && this.error.data && this.error.data.length > 0) {
-      return this.error.data;
+      return this.localizerService_.localize(this.error.data);
     }
     return this.i18n.MSG_NO_ERROR_DATA;
   }
