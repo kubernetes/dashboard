@@ -16,18 +16,28 @@
  * @final
  */
 export default class NamespaceInfoController {
-  /**
-   * @ngInject
-   */
-  constructor() {
+    /**
+     * @param {!ui.router.$state} $state
+     * @ngInject
+     */
+  constructor($state) {
     /**
      * Namespace details. Initialized from the scope.
      * @export {!backendApi.NamespaceDetail}
      */
     this.namespace;
+
+    /**
+     * Include link to other page
+     * @export {string}
+     */
+     this.link
+  }
+
+  $onInit() {
+      console.log(this.link);
   }
 }
-
 /**
  * Definition object for the component that displays namespace info.
  *
@@ -39,5 +49,6 @@ export const namespaceInfoComponent = {
   bindings: {
     /** {!backendApi.NamespaceDetail} */
     'namespace': '=',
+    'link': '<',
   },
 };

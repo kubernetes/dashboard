@@ -22,6 +22,11 @@ limitations under the License.
     <kd-info-card-entry title="[[Status|Label 'Status' for the namespace namespace on the namespace details page.]]"
                         ng-if="::$ctrl.namespace.phase">
       {{$ctrl.namespace.phase}}
-    </kd-info-card-entry>
+  </kd-info-card-entry>
+  <a ng-if="$ctrl.link" ng-href="{{::$ctrl.getNamespaceDetailHref()}}">
+    <md-button>
+      [[View overview|This is a label for button to go to the namespace overview page]]
+    </md-button>
+  </a>
   </kd-info-card-section>
 </kd-info-card>

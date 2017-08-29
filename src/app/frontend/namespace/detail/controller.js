@@ -21,11 +21,23 @@ export class NamespaceDetailController {
    * @param {!angular.Resource} kdNamespaceEventsResource
    * @ngInject
    */
-  constructor(namespaceDetail, kdNamespaceEventsResource) {
+  constructor($state, namespaceDetail, kdNamespaceEventsResource) {
     /** @export {!backendApi.NamespaceDetail} */
     this.namespaceDetail = namespaceDetail;
 
     /** @export {!angular.Resource} */
     this.eventListResource = kdNamespaceEventsResource;
+
+    /** @private {!ui.router.$state} */
+    this.state_ = $state;
   }
+
+  /**
+   * @return {string}
+   * @export
+   */
+  getNamespaceOverviewHref() {
+    return this.state_.href(stateName, new GlobalStateParams(this.namespace.objectMeta.name));
+  }
+
 }
