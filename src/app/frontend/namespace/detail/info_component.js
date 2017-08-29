@@ -16,10 +16,10 @@
  * @final
  */
 export default class NamespaceInfoController {
-    /**
-     * @param {!ui.router.$state} $state
-     * @ngInject
-     */
+  /**
+   * @param {!ui.router.$state} $state
+   * @ngInject
+   */
   constructor($state) {
     /**
      * Namespace details. Initialized from the scope.
@@ -31,11 +31,7 @@ export default class NamespaceInfoController {
      * Include link to other page
      * @export {string}
      */
-     this.link
-  }
-
-  $onInit() {
-      console.log(this.link);
+    this.link;
   }
 }
 /**

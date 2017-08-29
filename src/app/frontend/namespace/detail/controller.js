@@ -37,7 +37,6 @@ export class NamespaceDetailController {
    * @export
    */
   getNamespaceOverviewHref() {
-    return this.state_.href(stateName, new GlobalStateParams(this.namespace.objectMeta.name));
+    return this.state_.href('overview', {namespace: this.namespaceDetail.objectMeta.name});
   }
-
 }
