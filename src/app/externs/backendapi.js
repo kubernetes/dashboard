@@ -1469,3 +1469,10 @@ backendApi.AuthResponse;
  * }}
  */
 backendApi.LoginStatus;
+
+/**
+ * @typedef {{
+ *   jweToken: string
+ * }}
+ */
+backendApi.TokenRefreshSpec;

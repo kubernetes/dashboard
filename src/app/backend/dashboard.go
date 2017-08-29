@@ -21,6 +21,7 @@ import (
 	"net"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/kubernetes/dashboard/src/app/backend/auth"
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
@@ -32,7 +33,6 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/sync"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/spf13/pflag"
-	"time"
 )
 
 var (

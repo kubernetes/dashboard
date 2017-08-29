@@ -76,14 +76,7 @@ func (self *AuthHandler) handleJWETokenRefresh(request *restful.Request, respons
 		return
 	}
 
-	jweToken := tokenRefreshSpec.JWEToken
-	if len(jweToken) == 0 {
-		response.AddHeader("Content-Type", "text/plain")
-		response.WriteErrorString(http.StatusInternalServerError, "No token provided in request.\n")
-		return
-	}
-
-	refreshedJWEToken, err := self.manager.Refresh(jweToken)
+	refreshedJWEToken, err := self.manager.Refresh(tokenRefreshSpec.JWEToken)
 	if err != nil {
 		response.AddHeader("Content-Type", "text/plain")
 		response.WriteErrorString(http.StatusInternalServerError, err.Error()+"\n")

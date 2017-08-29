@@ -42,7 +42,8 @@ type AuthManager interface {
 	// Login authenticates user based on provided LoginSpec and returns AuthResponse. AuthResponse contains
 	// generated token and list of non-critical errors such as 'Failed authentication'.
 	Login(*LoginSpec) (*AuthResponse, error)
-	// TODO(floreks)
+	// Refresh takes valid token that hasn't expired yet and returns a new one with expiration time set to TokenTTL. In
+	// case provided token has expired, token expiration error is returned.
 	Refresh(string) (string, error)
 }
 
@@ -53,7 +54,7 @@ type TokenManager interface {
 	Generate(api.AuthInfo) (string, error)
 	// Decrypt generated token and return AuthInfo structure that will be used for K8S api client creation.
 	Decrypt(string) (*api.AuthInfo, error)
-	// Refresh returns refreshed token based on provided token. In case provided token has expired token expiration
+	// Refresh returns refreshed token based on provided token. In case provided token has expired, token expiration
 	// error is returned.
 	Refresh(string) (string, error)
 	// SetTokenTTL sets expiration time (in seconds) of generated tokens.
@@ -91,6 +92,8 @@ type AuthResponse struct {
 	Errors []error `json:"errors"`
 }
 
+// TokenRefreshSpec contains token that is required by token refresh operation.
 type TokenRefreshSpec struct {
+	// JWEToken is a token generated during login request that contains AuthInfo data in the payload.
 	JWEToken string `json:"jweToken"`
 }

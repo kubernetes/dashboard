@@ -181,7 +181,7 @@ export class AuthService {
   }
 
   /**
-   * TODO(floreks)
+   * Sends a token refresh request to the backend. In case user is not logged in with token nothing will happen.
    *
    * @return {!angular.$q.Promise}
    */
@@ -189,7 +189,7 @@ export class AuthService {
     let token = this.getTokenCookie_();
     let deferred = this.q_.defer();
 
-    if(token.length === 0) {
+    if (token.length === 0) {
       deferred.resolve(true);
       return deferred.promise;
     }
@@ -208,7 +208,7 @@ export class AuthService {
           });
 
           resource.save(
-              {jweToken: token},
+              /** !backendApi.TokenRefreshSpec */ {jweToken: token},
               (/** @type {!backendApi.AuthResponse} */ response) => {
                 if (response.jweToken.length !== 0 && response.errors.length === 0) {
                   this.setTokenCookie_(response.jweToken);
@@ -217,12 +217,10 @@ export class AuthService {
                 deferred.resolve(response.errors);
               },
               (err) => {
-                console.log(err);
                 deferred.resolve(err);
               });
         },
         (err) => {
-          console.log(err);
           deferred.resolve(err);
         });
 

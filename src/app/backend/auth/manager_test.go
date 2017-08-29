@@ -19,6 +19,8 @@ import (
 	"reflect"
 	"testing"
 
+	"time"
+
 	restful "github.com/emicklei/go-restful"
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
@@ -72,6 +74,12 @@ type fakeTokenManager struct {
 	GeneratedToken string
 	Error          error
 }
+
+func (self *fakeTokenManager) Refresh(string) (string, error) {
+	return "", nil
+}
+
+func (self *fakeTokenManager) SetTokenTTL(time.Duration) {}
 
 func (self *fakeTokenManager) Generate(authInfo api.AuthInfo) (string, error) {
 	return self.GeneratedToken, self.Error

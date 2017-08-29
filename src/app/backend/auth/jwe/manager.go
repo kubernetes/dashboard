@@ -18,8 +18,6 @@ import (
 	"errors"
 	"time"
 
-	"fmt"
-
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 	jose "gopkg.in/square/go-jose.v2"
 	"k8s.io/apimachinery/pkg/util/json"
@@ -32,14 +30,20 @@ type jweTokenManager struct {
 	tokenTTL  time.Duration
 }
 
+// AdditionalAuthData contains information required to validate token. It is integrity protected.
+// For more information check: https://tools.ietf.org/html/rfc7516 (Chapter 2: Terminology)
 type AdditionalAuthData map[Claim]string
 
+// Claim represent token claims used in AAD header. For more information check:
+// https://self-issued.info/docs/draft-ietf-oauth-json-web-token.html#rfc.section.4
 type Claim string
 
 const (
-	TimeFormat = time.RFC3339
-
+	// Time format used when generating AAD header for token. Required to set token creation/expiration time.
+	timeFormat = time.RFC3339
+	// IAT claim is part of token AAD header. It represents token "issued at" time.
 	IAT Claim = "iat"
+	// EXP claim is part of token AAD header. It represents token expiration time.
 	EXP Claim = "exp"
 )
 
@@ -84,6 +88,10 @@ func (self *jweTokenManager) Decrypt(jweToken string) (*api.AuthInfo, error) {
 
 // Refresh implements token manager interface. See TokenManager for more information.
 func (self *jweTokenManager) Refresh(jweToken string) (string, error) {
+	if len(jweToken) == 0 {
+		return "", errors.New("Can not refresh token. No token provided.")
+	}
+
 	jweTokenObject, err := jose.ParseEncrypted(jweToken)
 	if err != nil {
 		return "", err
@@ -145,26 +153,25 @@ func (self *jweTokenManager) validate(jweToken string) (*jose.JSONWebEncryption,
 }
 
 func (self *jweTokenManager) isExpired(iatStr, expStr string) bool {
-	iat, err := time.Parse(TimeFormat, iatStr)
+	iat, err := time.Parse(timeFormat, iatStr)
 	if err != nil {
 		return false
 	}
 
-	exp, err := time.Parse(TimeFormat, expStr)
+	exp, err := time.Parse(timeFormat, expStr)
 	if err != nil {
 		return false
 	}
 
 	age := time.Now().Sub(iat.Local())
-	fmt.Printf("Token age: %s\n", age)
 	return iat.Add(age).After(exp)
 }
 
 func (self *jweTokenManager) generateAAD() []byte {
 	now := time.Now()
 	aad := AdditionalAuthData{
-		EXP: now.Add(self.tokenTTL).Format(TimeFormat),
-		IAT: now.Format(TimeFormat),
+		EXP: now.Add(self.tokenTTL).Format(timeFormat),
+		IAT: now.Format(timeFormat),
 	}
 
 	rawAAD, _ := json.Marshal(aad)
