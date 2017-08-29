@@ -70,7 +70,7 @@ export class ChromeController {
    * @export
    */
   isFillContentView() {
-    return this.state_.current.data[fillContentConfig] === true;
+    return !!(this.state_.current.data && this.state_.current.data[fillContentConfig] === true);
   }
 
   registerStateChangeListeners() {

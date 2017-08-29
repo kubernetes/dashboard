@@ -14,13 +14,24 @@
 
 package api
 
-import "k8s.io/client-go/tools/clientcmd/api"
+import (
+	"strings"
+
+	"k8s.io/client-go/tools/clientcmd/api"
+)
 
 // Resource information that are used as encryption key storage. Can be accessible by multiple dashboard replicas.
 const (
 	EncryptionKeyHolderName      = "kubernetes-dashboard-key-holder"
 	EncryptionKeyHolderNamespace = "kube-system"
 )
+
+// ShouldRejectRequest returns true if url contains name and namespace of resource that should be filtered out from
+// dashboard.
+func ShouldRejectRequest(url string) bool {
+	// For now we have only one resource that should be checked
+	return strings.Contains(url, EncryptionKeyHolderName) && strings.Contains(url, EncryptionKeyHolderNamespace)
+}
 
 // AuthManager is used for user authentication management.
 type AuthManager interface {
