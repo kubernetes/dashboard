@@ -30,6 +30,9 @@ export class NamespaceDetailController {
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;
+
+    /** @export {string} */
+    this.buttonText = "View Overview";
   }
 
   /**

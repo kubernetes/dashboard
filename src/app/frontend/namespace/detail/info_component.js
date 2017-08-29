@@ -17,10 +17,9 @@
  */
 export default class NamespaceInfoController {
   /**
-   * @param {!ui.router.$state} $state
-   * @ngInject
+   * @export
    */
-  constructor($state) {
+  constructor() {
     /**
      * Namespace details. Initialized from the scope.
      * @export {!backendApi.NamespaceDetail}
@@ -32,6 +31,12 @@ export default class NamespaceInfoController {
      * @export {string}
      */
     this.link;
+
+    /**
+     * Include message to display on button-link
+     * @export {string}
+     */
+     this.buttonText;
   }
 }
 /**
@@ -46,5 +51,6 @@ export const namespaceInfoComponent = {
     /** {!backendApi.NamespaceDetail} */
     'namespace': '=',
     'link': '<',
+    'buttonText': '<',
   },
 };
