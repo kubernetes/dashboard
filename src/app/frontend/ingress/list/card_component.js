@@ -43,8 +43,10 @@ class IngressCardController {
    */
   getStartedAtTooltip(startDate) {
     let filter = this.interpolate_(`{{date | date}}`);
-    /** @type {string} @desc Tooltip 'Started at [some date]' showing the exact start time of
-     * the ingress.*/
+    /**
+     * @type {string} @desc Tooltip 'Started at [some date]' showing the exact start time of
+     * the ingress.
+     */
     let MSG_INGRESS_LIST_STARTED_AT_TOOLTIP =
         goog.getMsg('Created at {$startDate} UTC', {'startDate': filter({'date': startDate})});
     return MSG_INGRESS_LIST_STARTED_AT_TOOLTIP;

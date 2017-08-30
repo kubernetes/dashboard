@@ -88,8 +88,10 @@ function getDefaultProtocols(protocolsResource) {
 }
 
 const i18n = {
-  /** @type {string} @desc Breadcrum label for the deploy containerized
-      app form view. */
+  /**
+     @type {string} @desc Breadcrum label for the deploy containerized
+      app form view.
+   */
   MSG_BREADCRUMBS_DEPLOY_APP_LABEL: goog.getMsg('Create an app'),
 
   /** @type {string} @desc Breadcrum label for the YAML upload form */

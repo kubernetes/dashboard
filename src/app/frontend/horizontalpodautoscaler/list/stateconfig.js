@@ -21,8 +21,10 @@ import {HorizontalPodAutoscalerListController} from './controller';
  * I18n object that defines strings for translation used in this file.
  */
 const i18n = {
-  /** @type {string} @desc Label 'Horizontal Pod Autoscalers' that appears as a breadcrumbs on the
-   action bar. */
+  /**
+   @type {string} @desc Label 'Horizontal Pod Autoscalers' that appears as a breadcrumbs on the
+   action bar.
+ */
   MSG_BREADCRUMBS_HORIZONTAL_POD_AUTOSCALERS_LABEL: goog.getMsg('Horizontal Pod Autoscalers'),
 };
 

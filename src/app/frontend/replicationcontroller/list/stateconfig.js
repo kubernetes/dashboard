@@ -22,8 +22,10 @@ import {ReplicationControllerListController} from './controller';
  * I18n object that defines strings for translation used in this file.
  */
 const i18n = {
-  /** @type {string} @desc Label 'Replication Controllers' that appears as a breadcrumbs on the
-   action bar. */
+  /**
+   @type {string} @desc Label 'Replication Controllers' that appears as a breadcrumbs on the
+   action bar.
+ */
   MSG_BREADCRUMBS_RC_LABEL: goog.getMsg('Replication Controllers'),
 };
 

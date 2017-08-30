@@ -65,8 +65,10 @@ class HorizontalPodAutoscalerInfoController {
    */
   getLastScaledTooltip() {
     let filter = this.interpolate_(`{{date | date}}`);
-    /** @type {string} @desc Tooltip 'Last scaled at [some date]' showing the exact time of
-     * the last time the horizontal pod autoscaler was scaled.*/
+    /**
+     * @type {string} @desc Tooltip 'Last scaled at [some date]' showing the exact time of
+     * the last time the horizontal pod autoscaler was scaled.
+     */
     let MSG_HORIZONTAL_POD_AUTOSCALER_DETAIL_LAST_SCALED_TOOLTIP = goog.getMsg(
         'Last scaled at {$scaleDate}',
         {'scaleDate': filter({'date': this.horizontalPodAutoscaler.lastScaleTime})});

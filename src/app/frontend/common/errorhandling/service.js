@@ -44,7 +44,9 @@ export class ErrorDialog {
 }
 
 const i18n = {
-  /** @export {string} @desc Action "Close" which appears at the bottom of any displayed error
-     dialog. */
+  /**
+     @export {string} @desc Action "Close" which appears at the bottom of any displayed error
+     dialog.
+   */
   MSG_ERROR_HANDLING_DIALOG_CLOSE_ACTION: goog.getMsg('Close'),
 };

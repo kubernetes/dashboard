@@ -16,7 +16,8 @@ import {RoleListController} from 'role/list/controller';
 import roleModule from 'role/module';
 
 describe('Role controller', () => {
-  /** @type {!RoleListController}
+  /**
+   * @type {!RoleListController}
    */
   let ctrl;
 

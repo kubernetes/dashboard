@@ -16,7 +16,8 @@ import {DiscoveryController} from 'discovery/controller';
 import module from 'discovery/module';
 
 describe('Discovery list controller', () => {
-  /** @type {!DiscoveryController}
+  /**
+   * @type {!DiscoveryController}
    */
   let ctrl;
 

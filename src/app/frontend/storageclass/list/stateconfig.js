@@ -22,8 +22,10 @@ import {StorageClassListController} from './controller';
  * I18n object that defines strings for translation used in this file.
  */
 const i18n = {
-  /** @type {string} @desc Label 'Storage Classes' that appears as a breadcrumbs on the action
-   bar. */
+  /**
+   @type {string} @desc Label 'Storage Classes' that appears as a breadcrumbs on the action
+   bar.
+ */
   MSG_BREADCRUMBS_STORAGE_CLASSES_LABEL: goog.getMsg('Storage Classes'),
 };
 

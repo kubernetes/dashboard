@@ -57,7 +57,9 @@ export function resolveResource(kdDiscoveryResource, $stateParams, kdDataSelectS
 }
 
 const i18n = {
-  /** @type {string} @desc Label 'Discovery and load balancing' that appears as a breadcrumbs on the
-     action bar. */
+  /**
+     @type {string} @desc Label 'Discovery and load balancing' that appears as a breadcrumbs on the
+     action bar.
+   */
   MSG_BREADCRUMBS_DISCOVERY_AND_LOAD_BALANCING_LABEL: goog.getMsg('Discovery and load balancing'),
 };

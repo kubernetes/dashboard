@@ -96,8 +96,10 @@ class ReplicaSetCardController {
    */
   getCreatedAtTooltip(creationDate) {
     let filter = this.interpolate_(`{{date | date}}`);
-    /** @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
-     * replica set. */
+    /**
+     * @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
+     * replica set.
+     */
     let MSG_REPLICA_SET_LIST_CREATED_AT_TOOLTIP =
         goog.getMsg('Created at {$creationDate}', {'creationDate': filter({'date': creationDate})});
     return MSG_REPLICA_SET_LIST_CREATED_AT_TOOLTIP;

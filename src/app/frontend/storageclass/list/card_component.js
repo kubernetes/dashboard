@@ -55,8 +55,10 @@ class StorageClassCardController {
    */
   getCreatedAtTooltip(creationDate) {
     let filter = this.interpolate_(`{{date | date}}`);
-    /** @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
-     * storage class. */
+    /**
+     * @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
+     * storage class.
+     */
     let MSG_STORAGE_CLASS_LIST_CREATED_AT_TOOLTIP =
         goog.getMsg('Created at {$creationDate}', {'creationDate': filter({'date': creationDate})});
     return MSG_STORAGE_CLASS_LIST_CREATED_AT_TOOLTIP;

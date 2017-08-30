@@ -92,8 +92,10 @@ export class DaemonSetCardController {
    */
   getCreatedAtTooltip() {
     let filter = this.interpolate_(`{{date | date}}`);
-    /** @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
-     * the daemon set.*/
+    /**
+     * @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
+     * the daemon set.
+     */
     let MSG_DAEMON_SET_LIST_CREATED_AT_TOOLTIP = goog.getMsg(
         'Created at {$creationDate}',
         {'creationDate': filter({'date': this.daemonSet.objectMeta.creationTimestamp})});

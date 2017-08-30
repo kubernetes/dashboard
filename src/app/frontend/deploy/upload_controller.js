@@ -30,7 +30,8 @@ export class UploadController {
      * Browse file function which is defined by the clients.
      *
      * Initialized from the registerBrowseFileFunction method.
-     * @private {(function())|undefined} */
+     * @private {(function())|undefined}
+     */
     this.browseFileFunc_;
 
     /**

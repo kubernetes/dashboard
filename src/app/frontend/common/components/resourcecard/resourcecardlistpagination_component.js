@@ -24,8 +24,10 @@ export class ResourceCardListPaginationController {
    * @ngInject
    */
   constructor(kdDataSelectService, errorDialog) {
-    /** @export {!./resourcecardlist_component.ResourceCardListController} -
-     * Initialized from require just before $onInit is called. */
+    /**
+     * @export {!./resourcecardlist_component.ResourceCardListController} -
+     * Initialized from require just before $onInit is called.
+     */
     this.resourceCardListCtrl;
     /** @private {!../../dataselect/service.DataSelectService} */
     this.dataSelectService_ = kdDataSelectService;
