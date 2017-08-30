@@ -58,7 +58,9 @@ export function resolveResource(kdConfigResource, $stateParams, kdDataSelectServ
 }
 
 const i18n = {
-  /** @type {string} @desc Label 'Config and storage' that appears as a breadcrumbs on the action
-   * bar. */
+  /**
+   * @type {string} @desc Label 'Config and storage' that appears as a breadcrumbs on the action
+   * bar.
+   */
   MSG_BREADCRUMBS_CONFIG_AND_STORAGE_LABEL: goog.getMsg('Config and storage'),
 };

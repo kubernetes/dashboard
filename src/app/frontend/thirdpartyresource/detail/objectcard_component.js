@@ -38,8 +38,10 @@ export class ObjectCardController {
    */
   getStartedAtTooltip(startDate) {
     let filter = this.interpolate_(`{{date | date}}`);
-    /** @type {string} @desc Tooltip 'Started at [some date]' showing the exact creation time of
-     * third party resource object. */
+    /**
+     * @type {string} @desc Tooltip 'Started at [some date]' showing the exact creation time of
+     * third party resource object.
+     */
     let MSG_TPR_LIST_STARTED_AT_TOOLTIP =
         goog.getMsg('Started at {$startDate} UTC', {'startDate': filter({'date': startDate})});
     return MSG_TPR_LIST_STARTED_AT_TOOLTIP;

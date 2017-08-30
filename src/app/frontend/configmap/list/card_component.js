@@ -69,8 +69,10 @@ class ConfigMapCardController {
    */
   getCreatedAtTooltip(creationDate) {
     let filter = this.interpolate_(`{{date | date}}`);
-    /** @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
-     * config map. */
+    /**
+     * @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
+     * config map.
+     */
     let MSG_CONFIG_MAP_LIST_CREATED_AT_TOOLTIP =
         goog.getMsg('Created at {$creationDate}', {'creationDate': filter({'date': creationDate})});
     return MSG_CONFIG_MAP_LIST_CREATED_AT_TOOLTIP;

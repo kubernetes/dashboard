@@ -16,7 +16,8 @@ import jobModule from 'job/module';
 
 describe('Job card', () => {
   /**
-   * @type {!JobCardController} */
+   * @type {!JobCardController}
+   */
   let ctrl;
   /**
    * @type {!ScaleService}

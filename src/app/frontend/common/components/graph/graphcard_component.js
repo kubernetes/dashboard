@@ -24,7 +24,9 @@ export class GraphCardController {
     /** @export {string} - Initialized from binding */
     this.graphTitle;
 
-    /** @export {string|undefined} - Comma separated list of metric names. Initialized from binding */
+    /**
+     * @export {string|undefined} - Comma separated list of metric names. Initialized from binding
+     */
     this.selectedMetricNames;
 
     /** @export {!Array<!backendApi.Metric>}  */

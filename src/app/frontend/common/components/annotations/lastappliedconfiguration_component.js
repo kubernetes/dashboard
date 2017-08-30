@@ -39,8 +39,10 @@ export class Controller {
 const i18n = {
   /** @export {string} @desc Action "Close" on a dialog. */
   MSG_CONFIG_DIALOG_CLOSE_ACTION: goog.getMsg('Close'),
-  /** @export {string} @desc Label for the
-    kubectl.kubernetes.io/last-applied-configuration annotation. */
+  /**
+    @export {string} @desc Label for the
+    kubectl.kubernetes.io/last-applied-configuration annotation.
+  */
   MSG_CONFIG_DIALOG_TITLE: goog.getMsg('Last applied configuration'),
 };
 

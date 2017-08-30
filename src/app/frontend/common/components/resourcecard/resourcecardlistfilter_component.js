@@ -24,8 +24,10 @@ class ResourceCardListFilterController {
    * @ngInject
    */
   constructor(kdDataSelectService, errorDialog, $element, $timeout) {
-    /** @export {!./resourcecardlist_component.ResourceCardListController} -
-     * Initialized from require just before $onInit is called. */
+    /**
+     * @export {!./resourcecardlist_component.ResourceCardListController} -
+     * Initialized from require just before $onInit is called.
+     */
     this.resourceCardListCtrl;
     /** @private {!../../dataselect/service.DataSelectService} */
     this.dataSelectService_ = kdDataSelectService;
@@ -33,7 +35,9 @@ class ResourceCardListFilterController {
     this.errorDialog_ = errorDialog;
     /** @export {string} */
     this.inputText = '';
-    /** @private {string} - Unique data select id. Initialized from resource card list controller. */
+    /**
+     * @private {string} - Unique data select id. Initialized from resource card list controller.
+     */
     this.selectId_;
     /** @export */
     this.i18n = i18n;

@@ -199,14 +199,20 @@ export const portMappingsComponent = {
 };
 
 const i18n = {
-  /** @export {string} @desc Label 'None', which appears as an option in the service type
-   selection box on the deploy page.*/
+  /**
+   @export {string} @desc Label 'None', which appears as an option in the service type
+   selection box on the deploy page.
+ */
   MSG_PORT_MAPPINGS_SERVICE_TYPE_NONE_LABEL: goog.getMsg('None'),
-  /** @export {string} @desc Label 'Internal', which appears as an option in the service type
-   selection box on the deploy page.*/
+  /**
+   @export {string} @desc Label 'Internal', which appears as an option in the service type
+   selection box on the deploy page.
+ */
   MSG_PORT_MAPPINGS_SERVICE_TYPE_INTERNAL_LABEL: goog.getMsg('Internal'),
-  /** @export {string} @desc Label 'External', which appears as an option in the service type
-   selection box on the deploy page.*/
+  /**
+   @export {string} @desc Label 'External', which appears as an option in the service type
+   selection box on the deploy page.
+ */
   MSG_PORT_MAPPINGS_SERVICE_TYPE_EXTERNAL_LABEL: goog.getMsg('External'),
 };
 

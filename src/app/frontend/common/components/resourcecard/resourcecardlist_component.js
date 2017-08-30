@@ -158,7 +158,8 @@ export const resourceCardListComponent = {
     'selectable': '<',
     /** {boolean|undefined} whether to show statuses for list items */
     'withStatuses': '<',
-    /** Below properties are required if any data select operations (pagination, sort)
+    /**
+     * Below properties are required if any data select operations (pagination, sort)
      * should be supported.
      */
     /** {string|undefined} unique data select id */

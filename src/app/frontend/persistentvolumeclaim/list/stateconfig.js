@@ -22,8 +22,10 @@ import {PersistentVolumeClaimListController} from './controller';
  * I18n object that defines strings for translation used in this file.
  */
 const i18n = {
-  /** @type {string} @desc Label 'Persistent Volume Claims' that appears as a breadcrumbs on the
-   action bar. */
+  /**
+   @type {string} @desc Label 'Persistent Volume Claims' that appears as a breadcrumbs on the
+   action bar.
+ */
   MSG_BREADCRUMBS_PERSISTENT_VOLUME_CLAIM_LABEL: goog.getMsg('Persistent Volume Claims'),
 };
 

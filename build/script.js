@@ -235,7 +235,7 @@ function compileES6(translation) {
  */
 function patchBuildInformation() {
   let commit = process.env.TRAVIS_COMMIT;
-  if (typeof(commit) === 'undefined') {
+  if (typeof (commit) === 'undefined') {
     commit = '';
   }
   return gulpIf('**/appconfig/service.js', gulpReplaceTask({

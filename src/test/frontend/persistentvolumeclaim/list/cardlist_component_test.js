@@ -15,7 +15,8 @@
 import persistentVolumeClaimModule from 'persistentvolumeclaim/module';
 
 describe('Persistent Volume Claim card list', () => {
-  /** @type
+  /**
+   * @type
    * {!persistentvolumeclaimlist/persistentvolumeclaimcard_component.PersistentVolumeClaimCardListController}
    */
   let ctrl;

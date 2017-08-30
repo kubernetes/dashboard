@@ -21,8 +21,10 @@ import {ThirdPartyResourceListController} from './controller';
  * I18n object that defines strings for translation used in this file.
  */
 const i18n = {
-  /** @type {string} @desc Label 'Third Party Resources' that appears as a breadcrumbs on the
-   action bar. */
+  /**
+   @type {string} @desc Label 'Third Party Resources' that appears as a breadcrumbs on the
+   action bar.
+ */
   MSG_BREADCRUMBS_THIRD_PARTY_RESOURCES_LABEL: goog.getMsg('Third Party Resources'),
 };
 

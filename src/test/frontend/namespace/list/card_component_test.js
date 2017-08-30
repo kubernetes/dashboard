@@ -16,7 +16,8 @@ import namespaceModule from 'namespace/module';
 
 describe('Namespace card', () => {
   /**
-   * @type {!NamespaceCardController} */
+   * @type {!NamespaceCardController}
+   */
   let ctrl;
 
   beforeEach(() => {

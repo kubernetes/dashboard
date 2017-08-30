@@ -51,8 +51,10 @@ class ThirdPartyResourceCardController {
    */
   getCreatedAtTooltip(creationDate) {
     let filter = this.interpolate_(`{{date | date}}`);
-    /** @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
-     * third party resource. */
+    /**
+     * @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
+     * third party resource.
+     */
     let MSG_THIRD_PARTY_RESOURCE_LIST_CREATED_AT_TOOLTIP =
         goog.getMsg('Created at {$creationDate}', {'creationDate': filter({'date': creationDate})});
     return MSG_THIRD_PARTY_RESOURCE_LIST_CREATED_AT_TOOLTIP;
