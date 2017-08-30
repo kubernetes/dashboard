@@ -32,7 +32,7 @@ export class NamespaceDetailController {
     this.state_ = $state;
 
     /** @export {string} */
-    this.buttonText = "View Overview";
+    this.buttonText = 'View Overview';
   }
 
   /**

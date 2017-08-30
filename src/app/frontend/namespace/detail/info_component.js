@@ -36,7 +36,7 @@ export default class NamespaceInfoController {
      * Include message to display on button-link
      * @export {string}
      */
-     this.buttonText;
+    this.buttonText;
   }
 }
 /**
