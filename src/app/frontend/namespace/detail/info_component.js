@@ -17,7 +17,7 @@
  */
 export default class NamespaceInfoController {
   /**
-   * @export
+   * @ngInject
    */
   constructor() {
     /**
