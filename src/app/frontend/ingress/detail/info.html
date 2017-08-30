@@ -24,6 +24,9 @@ limitations under the License.
     <kd-info-card-entry title="[[Namespace|Resource info details section namespace entry.]]">
       {{::$ctrl.ingress.objectMeta.namespace}}
     </kd-info-card-entry>
+    <kd-info-card-entry title="[[Url Spec|Resource url spec for the ingress.]]" ng-repeat="rule in ::$ctrl.ingress.spec.rules">
+      <a href="https://{{rule.host}}">https://{{rule.host}}</a>
+    </kd-info-card-entry>
     <kd-info-card-entry title="[[Labels|Resource info details section labels entry.]]">
       <kd-labels labels="::$ctrl.ingress.objectMeta.labels"></kd-labels>
     </kd-info-card-entry>
