@@ -51,6 +51,11 @@ class LoginOptionsController {
   onOptionChange() {
     this.options.forEach((option) => {
       option.selected = option.title === this.selectedOption;
+      option.clear();
+
+      if(option.selected) {
+        this.onChange();
+      }
     });
   }
 }
@@ -60,4 +65,7 @@ export const loginOptionsComponent = {
   transclude: true,
   templateUrl: 'login/options.html',
   controller: LoginOptionsController,
+  bindings: {
+    'onChange': '&',
+  }
 };

@@ -15,15 +15,28 @@
 import {stateName as overviewState} from '../overview/state';
 import LoginSpec from './spec';
 
+/**
+ * Should be kept in sync with 'backend/auth/api/types.go' AuthenticationMode options and 'backendapi.js' file.
+ *
+ * @const {!backendApi.SupportedAuthenticationModes}
+ */
+const Modes = {
+  /** @export {!backendApi.AuthenticationMode} */
+  TOKEN: 'token',
+  /** @export {!backendApi.AuthenticationMod} */
+  BASIC: 'basic',
+};
+
 /** @final */
 class LoginController {
   /**
    * @param {!./../chrome/nav/nav_service.NavService} kdNavService
    * @param {!./../common/auth/service.AuthService} kdAuthService
    * @param {!ui.router.$state} $state
+   * @param {!angular.$q.Promise} kdAuthenticationModesResource
    * @ngInject
    */
-  constructor(kdNavService, kdAuthService, $state) {
+  constructor(kdNavService, kdAuthService, $state, kdAuthenticationModesResource) {
     /** @private {!./../chrome/nav/nav_service.NavService} */
     this.kdNavService_ = kdNavService;
     /** @private {!./../common/auth/service.AuthService} */
@@ -39,6 +52,12 @@ class LoginController {
     this.loginSpec;
     /** @private {!Array<!backendApi.Error>} */
     this.errors = [];
+    /** @private {!Array<!backendApi.AuthenticationMode>} */
+    this.enabledAuthenticationModes_;
+    /** @private {!angular.$q.Promise} */
+    this.authenticationModesResource_ = kdAuthenticationModesResource;
+    /** @export {!backendApi.SupportedAuthenticationModes} **/
+    this.supportedAuthenticationModes = Modes;
   }
 
   /** @export */
@@ -51,6 +70,29 @@ class LoginController {
     this.loginSpec = new LoginSpec();
     /** Hide side menu while entering login page. */
     this.kdNavService_.setVisibility(false);
+    /** Init authentication modes */
+    this.authenticationModesResource_.then((authModes) => {
+      this.enabledAuthenticationModes_ = authModes.modes;
+    });
+  }
+
+  /**
+   * @param {!backendApi.AuthenticationMode} mode
+   * @export
+   */
+  isAuthenticationModeEnabled(mode) {
+    let enabled = false;
+    this.enabledAuthenticationModes_.forEach((enabledMode) => {
+      if(mode === enabledMode) {
+        enabled = true;
+      }
+    });
+
+    return enabled;
+  }
+
+  isAnyAuthenticationModeEnabled() {
+    return this.enabledAuthenticationModes_.length > 0;
   }
 
   /**
@@ -80,15 +122,22 @@ class LoginController {
   }
 
   /**
-   * Returns new values if it differs from old value and is not undefined.
+   * On option change resets login spec to default state.
    *
+   * @export
+   */
+  onOptionChange() {
+    this.loginSpec = new LoginSpec();
+  }
+
+  /**
    * @param {string} oldVal
    * @param {string} newVal
    * @return {string}
    * @private
    */
   getValue_(oldVal, newVal) {
-    return oldVal !== newVal && newVal !== undefined ? newVal : oldVal;
+    return oldVal !== newVal && newVal.length > 0 ? newVal : oldVal;
   }
 
   /** @export */

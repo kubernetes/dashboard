@@ -37,6 +37,46 @@ func ShouldRejectRequest(url string) bool {
 	return strings.Contains(url, EncryptionKeyHolderName) && strings.Contains(url, EncryptionKeyHolderNamespace)
 }
 
+type AuthenticationModes map[AuthenticationMode]bool
+
+func (self AuthenticationModes) IsEnabled(mode AuthenticationMode) bool {
+	_, exists := self[mode]
+	return exists
+}
+
+func (self AuthenticationModes) Array() []AuthenticationMode {
+	modes := []AuthenticationMode{}
+	for mode := range self {
+		modes = append(modes, mode)
+	}
+
+	return modes
+}
+
+type AuthenticationMode string
+
+const (
+	Token AuthenticationMode = "token"
+	Basic AuthenticationMode = "basic"
+)
+
+func ToAuthenticationModes(modes []string) AuthenticationModes {
+	result := map[AuthenticationMode]bool{}
+	modesMap := map[string]bool{}
+
+	for _, mode := range modes {
+		modesMap[string(mode)] = true
+	}
+
+	for _, mode := range modes {
+		if _, exists := modesMap[mode]; exists {
+			result[AuthenticationMode(mode)] = true
+		}
+	}
+
+	return result
+}
+
 // AuthManager is used for user authentication management.
 type AuthManager interface {
 	// Login authenticates user based on provided LoginSpec and returns AuthResponse. AuthResponse contains
@@ -45,6 +85,8 @@ type AuthManager interface {
 	// Refresh takes valid token that hasn't expired yet and returns a new one with expiration time set to TokenTTL. In
 	// case provided token has expired, token expiration error is returned.
 	Refresh(string) (string, error)
+
+	AuthenticationModes() []AuthenticationMode
 }
 
 // TokenManager is responsible for generating and decrypting tokens used for authorization. Authorization is handled
@@ -80,7 +122,7 @@ type LoginSpec struct {
 	Token string `json:"token"`
 	// KubeConfig is the content of users' kubeconfig file. It will be parsed and auth data will be extracted.
 	// Kubeconfig can not contain any paths. All data has to be provided within the file.
-	KubeConfig string `json:"kubeConfig"`
+	KubeConfig []byte `json:"kubeConfig"`
 }
 
 // AuthResponse is returned from our backend as a response for login/refresh requests. It contains generated JWEToken
@@ -96,4 +138,8 @@ type AuthResponse struct {
 type TokenRefreshSpec struct {
 	// JWEToken is a token generated during login request that contains AuthInfo data in the payload.
 	JWEToken string `json:"jweToken"`
+}
+
+type LoginModesResponse struct {
+	Modes []AuthenticationMode `json:"modes"`
 }

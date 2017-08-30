@@ -44,6 +44,10 @@ func (self AuthHandler) Install(ws *restful.WebService) {
 			Reads(authApi.TokenRefreshSpec{}).
 			To(self.handleJWETokenRefresh).
 			Writes(authApi.AuthResponse{}))
+	ws.Route(
+		ws.GET("/login/modes").
+			To(self.handleLoginModes).
+			Writes(authApi.LoginModesResponse{}))
 }
 
 func (self AuthHandler) handleLogin(request *restful.Request, response *restful.Response) {
@@ -87,6 +91,10 @@ func (self *AuthHandler) handleJWETokenRefresh(request *restful.Request, respons
 		JWEToken: refreshedJWEToken,
 		Errors:   make([]error, 0),
 	})
+}
+
+func (self *AuthHandler) handleLoginModes(request *restful.Request, response *restful.Response) {
+	response.WriteHeaderAndEntity(http.StatusOK, authApi.LoginModesResponse{Modes: self.manager.AuthenticationModes()})
 }
 
 // NewAuthHandler created AuthHandler instance.

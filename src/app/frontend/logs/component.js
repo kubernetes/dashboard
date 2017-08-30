@@ -353,7 +353,7 @@ export class LogsController {
 /**
  * Returns component definition for logs component.
  *
- * @return {!angular.Component}
+ * @type {!angular.Component}
  */
 export const logsComponent = {
   controller: LogsController,

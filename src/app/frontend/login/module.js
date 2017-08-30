@@ -19,7 +19,9 @@ import {basicLoginComponent} from './basic_component';
 import {loginComponent} from './component';
 import {loginOptionsComponent} from './options_component';
 import stateConfig from './stateconfig';
+import {authenticationModesResource} from './stateconfig';
 import {tokenLoginComponent} from './token_component';
+import {kubeConfigLoginComponent} from "./kubeconfig_component";
 
 /**
  * Angular module for the Login view.
@@ -38,4 +40,6 @@ export default angular
     .component('kdLoginOptions', loginOptionsComponent)
     .component('kdBasicLogin', basicLoginComponent)
     .component('kdTokenLogin', tokenLoginComponent)
+    .component('kdKubeConfigLogin', kubeConfigLoginComponent)
+    .factory('kdAuthenticationModesResource', authenticationModesResource)
     .config(stateConfig);

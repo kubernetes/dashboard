@@ -1476,3 +1476,21 @@ backendApi.LoginStatus;
  * }}
  */
 backendApi.TokenRefreshSpec;
+
+/**
+ * @typedef {{
+ *    modes: !Array<!AuthenticationMode>
+ * }}
+ */
+backendApi.LoginModesResponse;
+
+/** @typedef {string} */
+backendApi.AuthenticationMode;
+
+/**
+ * @typedef {{
+ *  TOKEN: !backendApi.AuthenticationMode,
+ *  BASIC: !backendApi.AuthenticationMode,
+ *  }}
+ */
+backendApi.SupportedAuthenticationModes;
