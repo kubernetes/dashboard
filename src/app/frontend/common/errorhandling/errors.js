@@ -17,15 +17,15 @@
  * backend file: 'src/app/backend/errors/localizer.go'.
  */
 export const kdErrors = {
-  /**
-     @export {kdError} */
+  /** @export {kdError} */
   TOKEN_EXPIRED: 'MSG_TOKEN_EXPIRED_ERROR',
   /** @export {kdError} */
-  ENCRYPTION_KEY_CHANGED: 'MSG_ENCRYPTION_KEY_CHANGED'
+  ENCRYPTION_KEY_CHANGED: 'MSG_ENCRYPTION_KEY_CHANGED',
 };
 
 export const kdLocalizedErrors = {
-  /** @export {kdError} @desc Text shown on in error dialog when there is namespace mismatch between dashboard and yaml file.
+  /**
+   * @export {kdError} @desc Text shown on in error dialog when there is namespace mismatch between dashboard and yaml file.
    */
   MSG_DEPLOY_NAMESPACE_MISMATCH_ERROR: goog.getMsg(
       'Your file specifies a namespace that is inconsistent with the namespace currently selected in Dashboard. Either edit the namespace entry in your file or select a different namespace in Dashboard to deploy to (eg. \'All namespaces\' or the correct namespace provided in the file).'),
@@ -48,7 +48,9 @@ export const kdLocalizedErrors = {
   MSG_DASHBOARD_EXCLUSIVE_RESOURCE_ERROR:
       goog.getMsg('Trying to access/modify dashboard exclusive resource.'),
 
-  /** @export {kdError} @desc Text shown when saved token could not be decrypted by backend or it has expired. */
+  /**
+     @export {kdError} @desc Text shown when saved token could not be decrypted by backend or it has expired.
+   */
   MSG_TOKEN_EXPIRED_ERROR: goog.getMsg('Session expired. Please log in again.'),
 };
 

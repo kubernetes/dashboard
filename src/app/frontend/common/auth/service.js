@@ -213,6 +213,8 @@ export class AuthService {
               (/** @type {!backendApi.AuthResponse} */ response) => {
                 if (response.jweToken.length !== 0 && response.errors.length === 0) {
                   this.setTokenCookie_(response.jweToken);
+                  deferred.resolve(response.jweToken);
+                  return;
                 }
 
                 deferred.resolve(response.errors);

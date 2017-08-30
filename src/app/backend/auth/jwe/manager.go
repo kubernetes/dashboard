@@ -93,20 +93,9 @@ func (self *jweTokenManager) Refresh(jweToken string) (string, error) {
 		return "", errors.New("Can not refresh token. No token provided.")
 	}
 
-	jweTokenObject, err := jose.ParseEncrypted(jweToken)
+	jweTokenObject, err := self.validate(jweToken)
 	if err != nil {
 		return "", err
-	}
-
-	aad := AdditionalAuthData{}
-	err = json.Unmarshal(jweTokenObject.GetAuthData(), &aad)
-	if err != nil {
-		return "", errors.New("Token refresh error. Could not unmarshal AAD.")
-	}
-
-	expired := self.isExpired(aad[IAT], aad[EXP])
-	if expired {
-		return "", errors.New(kdErrors.MSG_TOKEN_EXPIRED_ERROR)
 	}
 
 	decrypted, err := jweTokenObject.Decrypt(self.keyHolder.Key())
@@ -125,6 +114,10 @@ func (self *jweTokenManager) Refresh(jweToken string) (string, error) {
 
 // SetTokenTTL implements token manager interface. See TokenManager for more information.
 func (self *jweTokenManager) SetTokenTTL(ttl time.Duration) {
+	if ttl < 0 {
+		ttl = 0
+	}
+
 	self.tokenTTL = ttl * time.Second
 }
 
@@ -139,29 +132,32 @@ func (self *jweTokenManager) validate(jweToken string) (*jose.JSONWebEncryption,
 		return nil, err
 	}
 
-	aad := AdditionalAuthData{}
-	err = json.Unmarshal(jwe.GetAuthData(), &aad)
-	if err != nil {
-		return nil, errors.New("Token validation error. Could not unmarshal AAD.")
-	}
+	if self.tokenTTL > 0 {
+		aad := AdditionalAuthData{}
+		err = json.Unmarshal(jwe.GetAuthData(), &aad)
+		if err != nil {
+			return nil, errors.New("Token validation error. Could not unmarshal AAD.")
+		}
 
-	expired := self.isExpired(aad[IAT], aad[EXP])
-	if expired {
-		return nil, errors.New(kdErrors.MSG_TOKEN_EXPIRED_ERROR)
+		if self.isExpired(aad[IAT], aad[EXP]) {
+			return nil, errors.New(kdErrors.MSG_TOKEN_EXPIRED_ERROR)
+		}
 	}
 
 	return jwe, nil
 }
 
+// Returns true if token has expired. In case time could not be parsed it might mean that token was tampered with and
+// token will be marked as expired. This will force user to log in again.
 func (self *jweTokenManager) isExpired(iatStr, expStr string) bool {
 	iat, err := time.Parse(timeFormat, iatStr)
 	if err != nil {
-		return false
+		return true
 	}
 
 	exp, err := time.Parse(timeFormat, expStr)
 	if err != nil {
-		return false
+		return true
 	}
 
 	age := time.Now().Sub(iat.Local())
@@ -171,8 +167,11 @@ func (self *jweTokenManager) isExpired(iatStr, expStr string) bool {
 func (self *jweTokenManager) generateAAD() []byte {
 	now := time.Now()
 	aad := AdditionalAuthData{
-		EXP: now.Add(self.tokenTTL).Format(timeFormat),
 		IAT: now.Format(timeFormat),
+	}
+
+	if self.tokenTTL > 0 {
+		aad[EXP] = now.Add(self.tokenTTL).Format(timeFormat)
 	}
 
 	rawAAD, _ := json.Marshal(aad)
