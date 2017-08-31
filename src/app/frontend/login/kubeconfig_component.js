@@ -26,12 +26,14 @@ class KubeConfigLoginController {
     this.onUpdate;
     /** @export {string} */
     this.kubeConfig = '';
+    /** @export {!kdFile} */
+    this.file = {name: '', content: ''};
   }
 
   /** export */
   clear() {
     this.kubeConfig = '';
-    this.onTokenUpdate();
+    this.onFileLoad({name: '', content: ''});
   }
 
   /** @export */
@@ -39,9 +41,12 @@ class KubeConfigLoginController {
     this.loginOptionsCtrl.addOption(this);
   }
 
-  /** @export */
-  onTokenUpdate() {
-    this.onUpdate({loginSpec: new LoginSpec({kubeConfig: this.kubeConfig})});
+  /**
+   * @param {!kdFile} file
+   * @export
+   */
+  onFileLoad(file) {
+    this.onUpdate({loginSpec: new LoginSpec({kubeConfig: file.content})});
   }
 }
 

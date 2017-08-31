@@ -1477,15 +1477,15 @@ backendApi.LoginStatus;
  */
 backendApi.TokenRefreshSpec;
 
+/** @typedef {string} */
+backendApi.AuthenticationMode;
+
 /**
  * @typedef {{
- *    modes: !Array<!AuthenticationMode>
+ *    modes: !Array<!backendApi.AuthenticationMode>
  * }}
  */
 backendApi.LoginModesResponse;
-
-/** @typedef {string} */
-backendApi.AuthenticationMode;
 
 /**
  * @typedef {{

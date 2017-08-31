@@ -25,16 +25,16 @@ limitations under the License.
       [[Kubernetes Dashboard|Title shown on login page on login card]]
     </kd-title>
     <kd-content class="kd-content-padded">
-      <kd-login-options on-change="$ctrl.onOptionChange(mode)">
-        <kd-kube-config-login ng-if="$ctrl.isAnyAuthenticationModeEnabled()"
-                              title="[[Kubeconfig|Kubeconfig option label shown on login page]]"
-                              on-update="$ctrl.onUpdate(loginSpec)"></kd-kube-config-login>
-        <kd-basic-login ng-if="$ctrl.isAuthenticationModeEnabled($ctrl.supportedAuthenticationModes.BASIC)"
-                        title="[[Basic|Basic login]]"
-                        on-update="$ctrl.onUpdate(loginSpec)"></kd-basic-login>
+      <kd-login-options on-change="$ctrl.onOptionChange()">
         <kd-token-login ng-if="$ctrl.isAuthenticationModeEnabled($ctrl.supportedAuthenticationModes.TOKEN)"
                         title="[[Token|Token option label shown on login page]]"
                         on-update="$ctrl.onUpdate(loginSpec)"></kd-token-login>
+        <kd-basic-login ng-if="$ctrl.isAuthenticationModeEnabled($ctrl.supportedAuthenticationModes.BASIC)"
+                        title="[[Basic|Basic login]]"
+                        on-update="$ctrl.onUpdate(loginSpec)"></kd-basic-login>
+        <kd-kube-config-login ng-if="$ctrl.isAnyAuthenticationModeEnabled()"
+                              title="[[Kubeconfig|Kubeconfig option label shown on login page]]"
+                              on-update="$ctrl.onUpdate(loginSpec)"></kd-kube-config-login>
       </kd-login-options>
 
       <md-button class="md-raised md-primary"

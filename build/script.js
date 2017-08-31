@@ -184,6 +184,7 @@ function compileES6(translation) {
     path.join(conf.paths.externs, 'sockjs.js'),
     path.join(conf.paths.externs, 'graph.js'),
     path.join(conf.paths.externs, 'errors.js'),
+    path.join(conf.paths.externs, 'file.js'),
   ];
 
   let closureCompilerConfig = {

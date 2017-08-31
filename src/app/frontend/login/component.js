@@ -16,14 +16,15 @@ import {stateName as overviewState} from '../overview/state';
 import LoginSpec from './spec';
 
 /**
- * Should be kept in sync with 'backend/auth/api/types.go' AuthenticationMode options and 'backendapi.js' file.
+ * Should be kept in sync with 'backend/auth/api/types.go' AuthenticationMode options and
+ * 'backendapi.js' file.
  *
  * @const {!backendApi.SupportedAuthenticationModes}
  */
 const Modes = {
   /** @export {!backendApi.AuthenticationMode} */
   TOKEN: 'token',
-  /** @export {!backendApi.AuthenticationMod} */
+  /** @export {!backendApi.AuthenticationMode} */
   BASIC: 'basic',
 };
 
@@ -34,9 +35,10 @@ class LoginController {
    * @param {!./../common/auth/service.AuthService} kdAuthService
    * @param {!ui.router.$state} $state
    * @param {!angular.$q.Promise} kdAuthenticationModesResource
+   * @param {!../common/errorhandling/service.ErrorService} kdErrorService
    * @ngInject
    */
-  constructor(kdNavService, kdAuthService, $state, kdAuthenticationModesResource) {
+  constructor(kdNavService, kdAuthService, $state, kdAuthenticationModesResource, kdErrorService) {
     /** @private {!./../chrome/nav/nav_service.NavService} */
     this.kdNavService_ = kdNavService;
     /** @private {!./../common/auth/service.AuthService} */
@@ -58,6 +60,8 @@ class LoginController {
     this.authenticationModesResource_ = kdAuthenticationModesResource;
     /** @export {!backendApi.SupportedAuthenticationModes} **/
     this.supportedAuthenticationModes = Modes;
+    /** @private {!../common/errorhandling/service.ErrorService} */
+    this.errorService_ = kdErrorService;
   }
 
   /** @export */
@@ -70,7 +74,10 @@ class LoginController {
     this.loginSpec = new LoginSpec();
     /** Hide side menu while entering login page. */
     this.kdNavService_.setVisibility(false);
-    /** Init authentication modes */
+    /**
+     * Init authentication modes
+     * TODO(floreks): Investigate why state resolve does not work here
+     */
     this.authenticationModesResource_.then((authModes) => {
       this.enabledAuthenticationModes_ = authModes.modes;
     });
@@ -82,17 +89,23 @@ class LoginController {
    */
   isAuthenticationModeEnabled(mode) {
     let enabled = false;
-    this.enabledAuthenticationModes_.forEach((enabledMode) => {
-      if(mode === enabledMode) {
-        enabled = true;
-      }
-    });
+    if (this.enabledAuthenticationModes_) {
+      this.enabledAuthenticationModes_.forEach((enabledMode) => {
+        if (mode === enabledMode) {
+          enabled = true;
+        }
+      });
+    }
 
     return enabled;
   }
 
+  /**
+   * @return {boolean}
+   * @export
+   */
   isAnyAuthenticationModeEnabled() {
-    return this.enabledAuthenticationModes_.length > 0;
+    return this.enabledAuthenticationModes_ && this.enabledAuthenticationModes_.length > 0;
   }
 
   /**
@@ -119,6 +132,7 @@ class LoginController {
     this.loginSpec.username = this.getValue_(this.loginSpec.username, loginSpec.username);
     this.loginSpec.password = this.getValue_(this.loginSpec.password, loginSpec.password);
     this.loginSpec.token = this.getValue_(this.loginSpec.token, loginSpec.token);
+    this.loginSpec.kubeConfig = this.getValue_(this.loginSpec.kubeConfig, loginSpec.kubeConfig);
   }
 
   /**
@@ -143,15 +157,19 @@ class LoginController {
   /** @export */
   login() {
     if (this.form.$valid) {
-      this.kdAuthService_.login(this.loginSpec).then((errors) => {
-        if (errors.length > 0) {
-          this.errors = errors;
-          return;
-        }
+      this.kdAuthService_.login(this.loginSpec)
+          .then((errors) => {
+            if (errors.length > 0) {
+              this.errors = errors;
+              return;
+            }
 
-        this.kdNavService_.setVisibility(true);
-        this.state_.transitionTo(overviewState);
-      });
+            this.kdNavService_.setVisibility(true);
+            this.state_.transitionTo(overviewState);
+          })
+          .catch((err) => {
+            this.errors = [this.errorService_.toBackendApiError(err)];
+          });
     }
   }
 

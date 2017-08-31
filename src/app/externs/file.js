@@ -12,20 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** @final */
-export class ErrorService {
-  /**
-   * @param {!angular.$http.Response} err
-   * @return {!backendApi.Error}
-   */
-  toBackendApiError(err) {
-    return {
-      ErrStatus: {
-        message: String(err.data),
-        code: err.status,
-        status: String(err.status),
-        reason: String(err.data),
-      },
-    };
-  }
-}
+/**
+ * @fileoverview Externs for frontend type representing file uploaded by user.
+ *
+ * @externs
+ */
+
+/**
+ * @typedef {{
+ *    name: string,
+ *    content: string,
+ * }}
+ */
+const kdFile = {};

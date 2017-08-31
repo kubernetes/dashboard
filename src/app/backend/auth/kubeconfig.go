@@ -18,7 +18,7 @@ import (
 	"errors"
 
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
-	"gopkg.in/yaml.v2"
+	yaml "gopkg.in/yaml.v2"
 	"k8s.io/client-go/tools/clientcmd/api"
 )
 
@@ -113,6 +113,6 @@ func (self *kubeConfigAuthenticator) getAuthInfo(info userInfo) (api.AuthInfo, e
 // NewBasicAuthenticator returns Authenticator based on LoginSpec.
 func NewKubeConfigAuthenticator(spec *authApi.LoginSpec) authApi.Authenticator {
 	return &kubeConfigAuthenticator{
-		fileContent: spec.KubeConfig,
+		fileContent: []byte(spec.KubeConfig),
 	}
 }

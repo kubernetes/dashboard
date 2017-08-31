@@ -20,6 +20,8 @@ class LoginOptionsController {
     this.options = [];
     /** @export {string} */
     this.selectedOption;
+    /** @export {function()} - Callback function initialized from binding */
+    this.onChange;
   }
 
   /**
@@ -51,9 +53,8 @@ class LoginOptionsController {
   onOptionChange() {
     this.options.forEach((option) => {
       option.selected = option.title === this.selectedOption;
-      option.clear();
 
-      if(option.selected) {
+      if (option.selected) {
         this.onChange();
       }
     });
@@ -67,5 +68,5 @@ export const loginOptionsComponent = {
   controller: LoginOptionsController,
   bindings: {
     'onChange': '&',
-  }
+  },
 };
