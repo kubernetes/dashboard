@@ -41,7 +41,7 @@ type Translation struct {
 // LocaleHandler serves different localized versions of the frontend application
 // based on the Accept-Language header.
 type LocaleHandler struct {
-	SupportedLocales []string
+	SupportedLocales []language.Tag
 }
 
 // CreateLocaleHandler loads the localization configuration and constructs a LocaleHandler.
@@ -49,16 +49,16 @@ func CreateLocaleHandler() *LocaleHandler {
 	locales, err := getSupportedLocales("./locale_conf.json")
 	if err != nil {
 		glog.Warningf("Error when loading the localization configuration. Dashboard will not be localized. %s", err)
-		locales = []string{}
+		locales = []language.Tag{}
 	}
 	return &LocaleHandler{SupportedLocales: locales}
 }
 
-func getSupportedLocales(configFile string) ([]string, error) {
+func getSupportedLocales(configFile string) ([]language.Tag, error) {
 	// read config file
 	localesFile, err := ioutil.ReadFile(configFile)
 	if err != nil {
-		return []string{}, err
+		return []language.Tag{}, err
 	}
 
 	// unmarshall
@@ -69,9 +69,9 @@ func getSupportedLocales(configFile string) ([]string, error) {
 	}
 
 	// filter locale keys
-	result := []string{}
+	result := []language.Tag{}
 	for _, translation := range localization.Translations {
-		result = append(result, translation.Key)
+		result = append(result, language.Make(translation.Key))
 	}
 	return result, nil
 }
@@ -94,30 +94,24 @@ func (handler *LocaleHandler) determineLocalizedDir(locale string) string {
 		return defaultDir
 	}
 
-	for _, tag := range tags {
-		matchedLocale := ""
-		for _, l := range handler.SupportedLocales {
-			if isMatchedLocale(l, tag) {
-				matchedLocale = l
-				break
+	locales := handler.SupportedLocales
+	tag, _, confidence := language.NewMatcher(locales).Match(tags...)
+	matchedLocale := strings.ToLower(tag.String())
+	if confidence != language.Exact {
+		matchedLocale = ""
+		for _, l := range locales {
+			base, _ := tag.Base()
+			if l.String() == base.String() {
+				matchedLocale = l.String()
 			}
 		}
-		localeDir := "./public/" + matchedLocale
-		if matchedLocale != "" && handler.dirExists(localeDir) {
-			return localeDir
-		}
+	}
+
+	localeDir := "./public/" + matchedLocale
+	if matchedLocale != "" && handler.dirExists(localeDir) {
+		return localeDir
 	}
 	return defaultDir
-}
-
-func isMatchedLocale(locale string, tag language.Tag) bool {
-	base, _ := tag.Base()
-	if locale != strings.ToLower(tag.String()) {
-		if locale != base.String() {
-			return false
-		}
-	}
-	return true
 }
 
 func (handler *LocaleHandler) dirExists(name string) bool {
