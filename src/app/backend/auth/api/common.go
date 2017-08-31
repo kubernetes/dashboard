@@ -20,7 +20,7 @@ func ToAuthenticationModes(modes []string) AuthenticationModes {
 	modesMap := map[string]bool{}
 
 	for _, mode := range []AuthenticationMode{Token, Basic} {
-		modesMap[string(mode)] = true
+		modesMap[mode.String()] = true
 	}
 
 	for _, mode := range modes {

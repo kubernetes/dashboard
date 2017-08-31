@@ -53,7 +53,15 @@ func (self AuthenticationModes) Array() []AuthenticationMode {
 	return modes
 }
 
+func (self AuthenticationModes) Add(mode AuthenticationMode) {
+	self[mode] = true
+}
+
 type AuthenticationMode string
+
+func (self AuthenticationMode) String() string {
+	return string(self)
+}
 
 const (
 	Token AuthenticationMode = "token"
