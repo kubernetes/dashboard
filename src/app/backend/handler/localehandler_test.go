@@ -160,14 +160,6 @@ func TestDetermineLocale(t *testing.T) {
 				SupportedLocales: languageMake([]string{"en", "zh-tw", "zh-hk", "zh", "ar-dz"}),
 			},
 			true,
-			"zh-hk",
-			"./public/zh-hk",
-		},
-		{
-			&LocaleHandler{
-				SupportedLocales: languageMake([]string{"en", "zh-tw", "zh-hk", "zh", "ar-dz"}),
-			},
-			true,
 			"zh-cn",
 			"./public/zh",
 		},
@@ -184,24 +176,8 @@ func TestDetermineLocale(t *testing.T) {
 				SupportedLocales: languageMake([]string{"en", "zh-tw", "zh-hk", "zh", "ar-dz"}),
 			},
 			true,
-			"ar-dz",
-			"./public/ar-dz",
-		},
-		{
-			&LocaleHandler{
-				SupportedLocales: languageMake([]string{"en", "zh-tw", "zh-hk", "zh", "ar-dz"}),
-			},
-			true,
 			"ar-bh",
 			"./public/en",
-		},
-		{
-			&LocaleHandler{
-				SupportedLocales: languageMake([]string{"en", "zh-tw", "zh-hk", "zh", "ar-dz"}),
-			},
-			true,
-			"af,zh-TW,zh;q=0.8,en;q=0.6",
-			"./public/zh-tw",
 		},
 		{
 			&LocaleHandler{
