@@ -32,8 +32,7 @@ limitations under the License.
         <kd-basic-login ng-if="$ctrl.isAuthenticationModeEnabled($ctrl.supportedAuthenticationModes.BASIC)"
                         title="[[Basic|Basic login]]"
                         on-update="$ctrl.onUpdate(loginSpec)"></kd-basic-login>
-        <kd-kube-config-login ng-if="$ctrl.isAnyAuthenticationModeEnabled()"
-                              title="[[Kubeconfig|Kubeconfig option label shown on login page]]"
+        <kd-kube-config-login title="[[Kubeconfig|Kubeconfig option label shown on login page]]"
                               on-update="$ctrl.onUpdate(loginSpec)"></kd-kube-config-login>
       </kd-login-options>
 

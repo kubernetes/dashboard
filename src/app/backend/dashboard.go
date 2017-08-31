@@ -139,7 +139,12 @@ func initAuthManager(clientManager client.ClientManager, tokenTTL time.Duration)
 
 	// Set token manager for client manager.
 	clientManager.SetTokenManager(tokenManager)
-	return auth.NewAuthManager(clientManager, tokenManager, authApi.ToAuthenticationModes(*argAuthenticationMode))
+	authModes := authApi.ToAuthenticationModes(*argAuthenticationMode)
+	if len(authModes) == 0 {
+		authModes[authApi.Token] = true
+	}
+
+	return auth.NewAuthManager(clientManager, tokenManager, authModes)
 }
 
 /**

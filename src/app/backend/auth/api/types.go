@@ -60,23 +60,6 @@ const (
 	Basic AuthenticationMode = "basic"
 )
 
-func ToAuthenticationModes(modes []string) AuthenticationModes {
-	result := map[AuthenticationMode]bool{}
-	modesMap := map[string]bool{}
-
-	for _, mode := range modes {
-		modesMap[string(mode)] = true
-	}
-
-	for _, mode := range modes {
-		if _, exists := modesMap[mode]; exists {
-			result[AuthenticationMode(mode)] = true
-		}
-	}
-
-	return result
-}
-
 // AuthManager is used for user authentication management.
 type AuthManager interface {
 	// Login authenticates user based on provided LoginSpec and returns AuthResponse. AuthResponse contains
@@ -85,7 +68,7 @@ type AuthManager interface {
 	// Refresh takes valid token that hasn't expired yet and returns a new one with expiration time set to TokenTTL. In
 	// case provided token has expired, token expiration error is returned.
 	Refresh(string) (string, error)
-
+	// AuthenticationModes TODO(floreks)
 	AuthenticationModes() []AuthenticationMode
 }
 
