@@ -20,12 +20,22 @@ import (
 	"os"
 	"reflect"
 	"testing"
+
+	"golang.org/x/text/language"
 )
+
+func languageMake(locales []string) []language.Tag {
+	result := []language.Tag{}
+	for _, locale := range locales {
+		result = append(result, language.Make(locale))
+	}
+	return result
+}
 
 func TestGetSupportedLocales(t *testing.T) {
 	cases := []struct {
 		localization Localization
-		expected     []string
+		expected     []language.Tag
 	}{
 		{
 			Localization{
@@ -34,11 +44,11 @@ func TestGetSupportedLocales(t *testing.T) {
 					{File: "ja/index.html", Key: "ja"},
 				},
 			},
-			[]string{"en", "ja"},
+			languageMake([]string{"en", "ja"}),
 		},
 		{
 			Localization{},
-			[]string{},
+			[]language.Tag{},
 		},
 	}
 
@@ -67,7 +77,7 @@ func TestDetermineLocale(t *testing.T) {
 	}{
 		{
 			&LocaleHandler{
-				SupportedLocales: []string{"en", "ja"},
+				SupportedLocales: languageMake([]string{"en", "ja"}),
 			},
 			false,
 			"en",
@@ -75,7 +85,7 @@ func TestDetermineLocale(t *testing.T) {
 		},
 		{
 			&LocaleHandler{
-				SupportedLocales: []string{"en", "ja"},
+				SupportedLocales: languageMake([]string{"en", "ja"}),
 			},
 			false,
 			"de",
@@ -83,7 +93,7 @@ func TestDetermineLocale(t *testing.T) {
 		},
 		{
 			&LocaleHandler{
-				SupportedLocales: []string{"en", "ja"},
+				SupportedLocales: languageMake([]string{"en", "ja"}),
 			},
 			false,
 			"ja",
@@ -91,7 +101,7 @@ func TestDetermineLocale(t *testing.T) {
 		},
 		{
 			&LocaleHandler{
-				SupportedLocales: []string{"en", "ja"},
+				SupportedLocales: languageMake([]string{"en", "ja"}),
 			},
 			true,
 			"ja",
@@ -99,7 +109,7 @@ func TestDetermineLocale(t *testing.T) {
 		},
 		{
 			&LocaleHandler{
-				SupportedLocales: []string{"en", "ja"},
+				SupportedLocales: languageMake([]string{"en", "ja"}),
 			},
 			true,
 			"ja,en-US;q=0.8,en;q=0.6",
@@ -107,7 +117,7 @@ func TestDetermineLocale(t *testing.T) {
 		},
 		{
 			&LocaleHandler{
-				SupportedLocales: []string{"en", "ja"},
+				SupportedLocales: languageMake([]string{"en", "ja"}),
 			},
 			true,
 			"af,ja,en-US;q=0.8,en;q=0.6",
@@ -115,7 +125,7 @@ func TestDetermineLocale(t *testing.T) {
 		},
 		{
 			&LocaleHandler{
-				SupportedLocales: []string{"en", "ja"},
+				SupportedLocales: languageMake([]string{"en", "ja"}),
 			},
 			true,
 			"af,en-US;q=0.8,en;q=0.6",
@@ -123,11 +133,59 @@ func TestDetermineLocale(t *testing.T) {
 		},
 		{
 			&LocaleHandler{
-				SupportedLocales: []string{"en", "ja"},
+				SupportedLocales: languageMake([]string{"en", "ja"}),
 			},
 			true,
 			"",
 			defaultDir,
+		},
+		{
+			&LocaleHandler{
+				SupportedLocales: languageMake([]string{"en", "zh-tw", "zh-hk", "zh", "ar-dz"}),
+			},
+			true,
+			"en",
+			"./public/en",
+		},
+		{
+			&LocaleHandler{
+				SupportedLocales: languageMake([]string{"en", "zh-tw", "zh-hk", "zh", "ar-dz"}),
+			},
+			true,
+			"zh",
+			"./public/zh",
+		},
+		{
+			&LocaleHandler{
+				SupportedLocales: languageMake([]string{"en", "zh-tw", "zh-hk", "zh", "ar-dz"}),
+			},
+			true,
+			"zh-cn",
+			"./public/zh",
+		},
+		{
+			&LocaleHandler{
+				SupportedLocales: languageMake([]string{"en", "zh-tw", "zh-hk", "zh", "ar-dz"}),
+			},
+			true,
+			"ar",
+			"./public/en",
+		},
+		{
+			&LocaleHandler{
+				SupportedLocales: languageMake([]string{"en", "zh-tw", "zh-hk", "zh", "ar-dz"}),
+			},
+			true,
+			"ar-bh",
+			"./public/en",
+		},
+		{
+			&LocaleHandler{
+				SupportedLocales: languageMake([]string{"en", "zh-tw", "zh", "ar-dz"}),
+			},
+			true,
+			"af,zh-HK,zh;q=0.8,en;q=0.6",
+			"./public/zh",
 		},
 	}
 
@@ -139,7 +197,7 @@ func TestDetermineLocale(t *testing.T) {
 					t.Fatalf("%s", err)
 				}
 				for _, lang := range c.handler.SupportedLocales {
-					err = os.Mkdir("./public/"+lang, 0777)
+					err = os.Mkdir("./public/"+lang.String(), 0777)
 					if err != nil {
 						t.Fatalf("%s", err)
 					}
