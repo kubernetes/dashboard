@@ -70,6 +70,9 @@ limitations under the License.
     <kd-resource-card-column>
       <div ng-repeat="image in ::$ctrl.deployment.containerImages track by $index">
         <kd-middle-ellipsis display-string="{{::image}}"></kd-middle-ellipsis>
+        <md-tooltip>
+          {{::$ctrl.getImageFullNameAtTooltip(image)}}
+        </md-tooltip>
       </div>
     </kd-resource-card-column>
     <kd-resource-card-column class="kd-row-layout-column kd-icon-column">

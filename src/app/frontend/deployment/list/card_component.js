@@ -104,6 +104,12 @@ class DeploymentCardController {
         goog.getMsg('Created at {$creationDate}', {'creationDate': filter({'date': creationDate})});
     return MSG_DEPLOYMENT_LIST_CREATED_AT_TOOLTIP;
   }
+
+  getImageFullNameAtTooltip(imageName) {
+    let MSG_DEPLOYMENT_LIST_IMAGE_FULL_NAME_AT_TOOLTIP =
+        goog.getMsg(imageName);
+    return MSG_DEPLOYMENT_LIST_IMAGE_FULL_NAME_AT_TOOLTIP;
+  }
 }
 
 /**
