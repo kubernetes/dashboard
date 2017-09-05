@@ -36,24 +36,4 @@ describe('Role controller', () => {
 
     expect(ctrl.roleList.items).toBe(ctrls);
   }));
-
-  it('should show zero state', () => {
-    expect(ctrl.shouldShowZeroState()).toBe(true);
-  });
-
-  it('should hide zero state', () => {
-    // given
-    ctrl.roleList = {items: ['mock']};
-
-    // then
-    expect(ctrl.shouldShowZeroState()).toBe(false);
-  });
-
-  it('should show zero state if returned items is null', () => {
-    // given
-    ctrl.roleList = {items: null};
-
-    // then
-    expect(ctrl.shouldShowZeroState()).toBe(true);
-  });
 });

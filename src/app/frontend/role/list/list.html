@@ -18,11 +18,9 @@ limitations under the License.
 
 <kd-content-card>
   <kd-content>
-    <kd-role-card-list ng-if="!$ctrl.shouldShowZeroState()"
-                       role-list="$ctrl.roleList"
+    <kd-role-card-list role-list="$ctrl.roleList"
                        role-list-resource="$ctrl.roleListResource"
                        with-statuses="false">
     </kd-role-card-list>
-    <kd-zero-state ng-if="$ctrl.shouldShowZeroState()"></kd-zero-state>
   </kd-content>
 </kd-content-card>
