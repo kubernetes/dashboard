@@ -105,6 +105,12 @@ class DeploymentCardController {
     return MSG_DEPLOYMENT_LIST_CREATED_AT_TOOLTIP;
   }
 
+  isTruncate(imageName) {
+    let boxWidth = document.getElementById("deployment_image_header").clientWidth;
+    let imageNameWidth=document.getElementById("deployment_image_"+imageName).clientWidth;
+    return imageNameWidth>boxWidth;
+  }
+
   getImageFullNameAtTooltip(imageName) {
     let MSG_DEPLOYMENT_LIST_IMAGE_FULL_NAME_AT_TOOLTIP =
         goog.getMsg(imageName);
