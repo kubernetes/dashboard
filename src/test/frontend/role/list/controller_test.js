@@ -16,17 +16,8 @@ import {RoleListController} from 'role/list/controller';
 import roleModule from 'role/module';
 
 describe('Role controller', () => {
-  /**
-   * @type {!RoleListController}
-   */
-  let ctrl;
-
   beforeEach(() => {
     angular.mock.module(roleModule.name);
-
-    angular.mock.inject(($controller) => {
-      ctrl = $controller(RoleListController, {roleList: {items: []}});
-    });
   });
 
   it('should initialize role controller', angular.mock.inject(($controller) => {
