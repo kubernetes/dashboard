@@ -136,7 +136,7 @@ describe('Auth service', () => {
 
   it('should resolve with new token when token refreshed successfully', () => {
     // given
-    cookies.put(tokenCookieName, 'oldToken', {secure: true});
+    cookies.put(tokenCookieName, 'oldToken');
     let expectedToken = 'newToken';
     httpBackend.whenGET('api/v1/csrftoken/token').respond(200);
     httpBackend.whenPOST('api/v1/token/refresh')
