@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {kdErrors} from './errors';
+import {kdLocalizedErrors} from './errors';
 
 /** @final */
 export class LocalizerService {
@@ -22,7 +22,7 @@ export class LocalizerService {
    * @export
    */
   localize(err) {
-    let localizedErr = kdErrors[err.trim()];
+    let localizedErr = kdLocalizedErrors[err.trim()];
     return localizedErr === undefined ? err : localizedErr;
   }
 }

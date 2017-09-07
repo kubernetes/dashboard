@@ -43,9 +43,30 @@ class LoginController {
 
   /** @export */
   $onInit() {
+    // Check for errors that came during state transition
+    if (this.state_.params.error) {
+      this.errors.push(this.toBackendApiError_((this.state_.params.error)));
+    }
+
     this.loginSpec = new LoginSpec();
     /** Hide side menu while entering login page. */
     this.kdNavService_.setVisibility(false);
+  }
+
+  /**
+   * @param {!angular.$http.Response} err
+   * @return {!backendApi.Error}
+   * @private
+   */
+  toBackendApiError_(err) {
+    return /** !backendApi.Error */ {
+      ErrStatus: {
+        message: String(err.data),
+        code: err.status,
+        status: err.status.toString(),
+        reason: String(err.data),
+      },
+    };
   }
 
   /**

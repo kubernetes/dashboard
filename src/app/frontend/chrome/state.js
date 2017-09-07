@@ -37,6 +37,13 @@ export const namespaceParam = 'namespace';
 export const fillContentConfig = 'fillContent';
 
 /**
+ * To be used with states that can only be accessed after user has been authenticated.
+ *
+ * Defaults to true.
+ */
+export const authRequired = 'authRequired';
+
+/**
  * All properties are @exported and in sync with URL param names.
  */
 export class StateParams {

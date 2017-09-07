@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import componentsModule from 'common/components/module';
-import {kdErrors} from 'common/errorhandling/errors';
+import {kdLocalizedErrors} from 'common/errorhandling/errors';
 import errorModule from 'common/errorhandling/module';
 
 describe('Warnings component', () => {
@@ -34,6 +34,6 @@ describe('Warnings component', () => {
     let msg = ctrl.getLocalizedMessage('MSG_LOGIN_UNAUTHORIZED_ERROR');
 
     // then
-    expect(msg).toBe(kdErrors.MSG_LOGIN_UNAUTHORIZED_ERROR);
+    expect(msg).toBe(kdLocalizedErrors.MSG_LOGIN_UNAUTHORIZED_ERROR);
   });
 });

@@ -14,7 +14,7 @@
 
 import {stateName as loginState} from '../login/state';
 
-import {actionbarViewName, namespaceParam, stateName} from './state';
+import {actionbarViewName, authRequired, namespaceParam, stateName} from './state';
 
 /**
  * Namespace is an abstract state with no path, but with one parameter ?namespace= that
@@ -29,6 +29,9 @@ export default function stateConfig($stateProvider) {
   $stateProvider.state(stateName, {
     url: `?${namespaceParam}`,
     abstract: true,
+    data: {
+      [authRequired]: true,
+    },
     views: {
       '': {
         template: '<div ui-view class="kd-content-div-filled"></div>',

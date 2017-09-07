@@ -14,7 +14,7 @@
 
 import {breadcrumbsConfig} from '../common/components/breadcrumbs/service';
 
-import {stateName, stateUrl} from './state';
+import {stateName, StateParams, stateUrl} from './state';
 
 /**
  * I18n object that defines strings for translation used in this file.
@@ -41,6 +41,7 @@ export default function stateConfig($stateProvider) {
  */
 const config = {
   url: stateUrl,
+  params: new StateParams(),
   data: {
     [breadcrumbsConfig]: {
       'label': i18n.MSG_BREADCRUMBS_LOGIN_LABEL,

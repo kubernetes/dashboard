@@ -34,11 +34,16 @@ func (self AuthHandler) Install(ws *restful.WebService) {
 		ws.POST("/login").
 			To(self.handleLogin).
 			Reads(authApi.LoginSpec{}).
-			Writes(authApi.LoginResponse{}))
+			Writes(authApi.AuthResponse{}))
 	ws.Route(
 		ws.GET("/login/status").
 			To(self.handleLoginStatus).
 			Writes(validation.LoginStatus{}))
+	ws.Route(
+		ws.POST("/token/refresh").
+			Reads(authApi.TokenRefreshSpec{}).
+			To(self.handleJWETokenRefresh).
+			Writes(authApi.AuthResponse{}))
 }
 
 func (self AuthHandler) handleLogin(request *restful.Request, response *restful.Response) {
@@ -61,6 +66,27 @@ func (self AuthHandler) handleLogin(request *restful.Request, response *restful.
 
 func (self *AuthHandler) handleLoginStatus(request *restful.Request, response *restful.Response) {
 	response.WriteHeaderAndEntity(http.StatusOK, validation.ValidateLoginStatus(request))
+}
+
+func (self *AuthHandler) handleJWETokenRefresh(request *restful.Request, response *restful.Response) {
+	tokenRefreshSpec := new(authApi.TokenRefreshSpec)
+	if err := request.ReadEntity(tokenRefreshSpec); err != nil {
+		response.AddHeader("Content-Type", "text/plain")
+		response.WriteErrorString(http.StatusInternalServerError, err.Error()+"\n")
+		return
+	}
+
+	refreshedJWEToken, err := self.manager.Refresh(tokenRefreshSpec.JWEToken)
+	if err != nil {
+		response.AddHeader("Content-Type", "text/plain")
+		response.WriteErrorString(http.StatusInternalServerError, err.Error()+"\n")
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusOK, &authApi.AuthResponse{
+		JWEToken: refreshedJWEToken,
+		Errors:   make([]error, 0),
+	})
 }
 
 // NewAuthHandler created AuthHandler instance.

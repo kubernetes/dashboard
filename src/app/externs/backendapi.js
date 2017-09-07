@@ -1459,7 +1459,7 @@ backendApi.LoginSpec;
  *   errors: !Array<!backendApi.Error>
  * }}
  */
-backendApi.LoginResponse;
+backendApi.AuthResponse;
 
 /**
  * @typedef {{
@@ -1469,3 +1469,10 @@ backendApi.LoginResponse;
  * }}
  */
 backendApi.LoginStatus;
+
+/**
+ * @typedef {{
+ *   jweToken: string
+ * }}
+ */
+backendApi.TokenRefreshSpec;

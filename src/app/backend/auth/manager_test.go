@@ -19,6 +19,8 @@ import (
 	"reflect"
 	"testing"
 
+	"time"
+
 	restful "github.com/emicklei/go-restful"
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
@@ -73,6 +75,12 @@ type fakeTokenManager struct {
 	Error          error
 }
 
+func (self *fakeTokenManager) Refresh(string) (string, error) {
+	return "", nil
+}
+
+func (self *fakeTokenManager) SetTokenTTL(time.Duration) {}
+
 func (self *fakeTokenManager) Generate(authInfo api.AuthInfo) (string, error) {
 	return self.GeneratedToken, self.Error
 }
@@ -89,7 +97,7 @@ func TestAuthManager_Login(t *testing.T) {
 		spec        *authApi.LoginSpec
 		cManager    client.ClientManager
 		tManager    authApi.TokenManager
-		expected    *authApi.LoginResponse
+		expected    *authApi.AuthResponse
 		expectedErr error
 	}{
 		{
@@ -104,21 +112,21 @@ func TestAuthManager_Login(t *testing.T) {
 			&authApi.LoginSpec{Token: "not-existing-token"},
 			&fakeClientManager{HasAccessError: unauthorizedErr},
 			&fakeTokenManager{},
-			&authApi.LoginResponse{Errors: []error{unauthorizedErr}},
+			&authApi.AuthResponse{Errors: []error{unauthorizedErr}},
 			nil,
 		}, {
 			"Recognized token should allow login and return JWE token",
 			&authApi.LoginSpec{Token: "existing-token"},
 			&fakeClientManager{HasAccessError: nil},
 			&fakeTokenManager{GeneratedToken: "generated-token"},
-			&authApi.LoginResponse{JWEToken: "generated-token", Errors: make([]error, 0)},
+			&authApi.AuthResponse{JWEToken: "generated-token", Errors: make([]error, 0)},
 			nil,
 		}, {
 			"Should propagate error on unexpected error",
 			&authApi.LoginSpec{Token: "test-token"},
 			&fakeClientManager{HasAccessError: errors.New("Unexpected error")},
 			&fakeTokenManager{},
-			&authApi.LoginResponse{Errors: make([]error, 0)},
+			&authApi.AuthResponse{Errors: make([]error, 0)},
 			errors.New("Unexpected error"),
 		},
 	}

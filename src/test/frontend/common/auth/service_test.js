@@ -125,4 +125,28 @@ describe('Auth service', () => {
     });
     httpBackend.flush();
   });
+
+  it('should do nothing when token cookie not set', () => {
+    // when
+    authService.refreshToken().then((result) => {
+      // then
+      expect(result).toBe(true);
+    });
+  });
+
+  it('should resolve with new token when token refreshed successfully', () => {
+    // given
+    cookies.put(tokenCookieName, 'oldToken');
+    let expectedToken = 'newToken';
+    httpBackend.whenGET('api/v1/csrftoken/token').respond(200);
+    httpBackend.whenPOST('api/v1/token/refresh')
+        .respond(200, {jweToken: expectedToken, errors: []});
+
+    // when
+    authService.refreshToken().then((result) => {
+      // then
+      expect(result).toEqual(expectedToken);
+    });
+    httpBackend.flush();
+  });
 });
