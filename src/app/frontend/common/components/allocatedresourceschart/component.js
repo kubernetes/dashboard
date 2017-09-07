@@ -63,18 +63,48 @@ export class AllocatedResourcesChartController {
   }
 
   /**
+   * Displays label only for allocated resources (with index equal to 0).
+   *
+   * @param {Object} d
+   * @param {number} i
+   * @return {string}
+   * @private
+   */
+  displayOnlyAllocated_(d, i) {
+    if (i === 0) {
+      return `${d.data.value.toFixed(2)}%`;
+    }
+    return '';
+  }
+
+  /**
+   * Formats percentage label to display in fixed format.
+   *
+   * @param {Object} d
+   * @return {string}
+   * @private
+   */
+  formatLabel_(d) {
+    return `${d.data.value.toFixed(2)}%`;
+  }
+
+  /**
    * Initializes pie chart graph. Check documentation at:
    * https://nvd3-community.github.io/nvd3/examples/documentation.html#pieChart
    *
+   * @param {Object} svg
+   * @param {Array<Object>} data
+   * @param {!Array<string>} colors
+   * @param {number} margin
+   * @param {number} ratio
+   * @param {function(Object, number)|null} labelFunc
    * @private
    */
   initPieChart_(svg, data, colors, margin, ratio, labelFunc) {
     let size = 280;
 
     if (!labelFunc) {
-      labelFunc = (d) => {
-        return `${d.data.value.toFixed(2)}%`;
-      };
+      labelFunc = this.formatLabel_;
     }
 
     let chart = nv.models.pieChart()
@@ -106,7 +136,6 @@ export class AllocatedResourcesChartController {
         .call(chart);
   }
 
-
   /**
    * Generates graph using provided requests and limits bindings.
    * @private
@@ -114,14 +143,6 @@ export class AllocatedResourcesChartController {
   generateGraph_() {
     nv.addGraph(() => {
       let svg = d3.select(this.element_[0]).append('svg');
-
-      let displayOnlyAllocated = function(d, i) {
-        // Displays label only for allocated resources.
-        if (i === 0) {
-          return `${d.data.value.toFixed(2)}%`;
-        }
-        return '';
-      };
 
       if (!this.data) {
         if (this.outer !== undefined) {
@@ -133,7 +154,7 @@ export class AllocatedResourcesChartController {
                 {value: this.outer},
                 {value: 100 - this.outer},
               ],
-              [this.outercolor, '#ddd'], 0, 0.61, displayOnlyAllocated);
+              [this.outercolor, '#ddd'], 0, 0.67, this.displayOnlyAllocated_);
         }
 
         if (this.inner !== undefined) {
@@ -144,11 +165,11 @@ export class AllocatedResourcesChartController {
                 {value: this.inner},
                 {value: 100 - this.inner},
               ],
-              [this.innercolor, '#ddd'], 36, 0.55, displayOnlyAllocated);
+              [this.innercolor, '#ddd'], 36, 0.55, this.displayOnlyAllocated_);
         }
       } else {
         // Initializes a pie chart with multiple entries in a single ring
-        this.initPieChart_(svg, this.data, this.colorPalette, 0, 0.61, null);
+        this.initPieChart_(svg, this.data, this.colorPalette, 0, 0.67, null);
       }
     });
   }
