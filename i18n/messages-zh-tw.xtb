@@ -22,9 +22,9 @@
   <translation id="9213553703311647006" key="MSG_BREADCRUMBS_DEPLOY_APP_LABEL" desc="Breadcrum label for the deploy containerized app form view.">創建應用程式</translation>
   <translation id="3098067826555563293" key="MSG_BREADCRUMBS_DEPLOY_FILE_LABEL" desc="Breadcrum label for the YAML upload form">上傳</translation>
   <translation id="8693076889249273053" key="MSG_BREADCRUMBS_DISCOVERY_AND_LOAD_BALANCING_LABEL" desc="Label 'Discovery and load balancing' that appears as a breadcrumbs on the action bar.">服務發現與負載平衡</translation>
+  <translation id="2573868693589074300" key="MSG_BREADCRUMBS_ERROR_LABEL" desc="Label for error page for breadcrumbs on the action bar.">錯誤</translation>
   <translation id="2248903848244811172" key="MSG_BREADCRUMBS_HORIZONTAL_POD_AUTOSCALERS_LABEL" desc="Label 'Horizontal Pod Autoscalers' that appears as a breadcrumbs on the action bar.">Horizontal Pod Autoscalers</translation>
   <translation id="8885204956315323333" key="MSG_BREADCRUMBS_INGRESSS_LABEL" desc="Label 'Ingresses' that appears as a breadcrumbs on the action bar.">Ingresses</translation>
-  <translation id="2741276106482217695" key="MSG_BREADCRUMBS_INTERNALERROR_LABEL" desc="Label for internal error page for breadcrumbs on the action bar.">內部錯誤</translation>
   <translation id="2024511088483477440" key="MSG_BREADCRUMBS_JOBS_LABEL" desc="Label 'Jobs' that appears as a breadcrumbs on the action bar.">Jobs</translation>
   <translation id="7001335550079103928" key="MSG_BREADCRUMBS_LOGIN_LABEL" desc="Label 'Log in' that appears as a breadcrumbs on the action bar.">登入</translation>
   <translation id="1050029015813261838" key="MSG_BREADCRUMBS_LOGS_LABEL" desc="Breadcrum label for the logs view.">日誌</translation>
@@ -57,14 +57,14 @@
   <translation id="727510939665067635" key="MSG_CHROME_NAV_NAV_13" desc="Stateful Sets menu entry.">Stateful Sets</translation>
   <translation id="3750547428998043153" key="MSG_CHROME_NAV_NAV_14" desc="Discovery and Load Balancing group menu entry.">服務發現與負載平衡</translation>
   <translation id="5657472840568954752" key="MSG_CHROME_NAV_NAV_15" desc="Ingresses menu entry.">Ingresses</translation>
-  <translation id="6209183557961833624" key="MSG_CHROME_NAV_NAV_16" desc="Services menu entry.">服務</translation>
+  <translation id="6209183557961833624" key="MSG_CHROME_NAV_NAV_16" desc="Services menu entry.">Services</translation>
   <translation id="6317635910843446189" key="MSG_CHROME_NAV_NAV_17" desc="All objects group menu entry.">概觀</translation>
   <translation id="5112568842026217488" key="MSG_CHROME_NAV_NAV_18" desc="Config Maps menu entry.">Config Maps</translation>
   <translation id="8817168805652183378" key="MSG_CHROME_NAV_NAV_19" desc="Persistent Volume Claims menu entry.">Persistent Volume Claims</translation>
   <translation id="1743316598408730775" key="MSG_CHROME_NAV_NAV_2" desc="Nodes menu entry.">節點</translation>
   <translation id="1040732924028857594" key="MSG_CHROME_NAV_NAV_20" desc="Secrets menu entry.">Secrets</translation>
   <translation id="8368599117962865229" key="MSG_CHROME_NAV_NAV_21" desc="About page menu entry.">關於</translation>
-  <translation id="4957526140740745953" key="MSG_CHROME_NAV_NAV_3" desc="Persistent Volumes menu entry.">Persistent Volumes</translation>
+  <translation id="4957526140740745953" key="MSG_CHROME_NAV_NAV_3" desc="Persistent Volumes menu entry.">持久性儲存</translation>
   <translation id="5886605472855359914" key="MSG_CHROME_NAV_NAV_4" desc="Config and Storage group menu entry.">配置與儲存</translation>
   <translation id="874273813471860738" key="MSG_CHROME_NAV_NAV_5" desc="Storage Classes menu entry.">儲存類別</translation>
   <translation id="4285258567654567328" key="MSG_CHROME_NAV_NAV_6" desc="Workloads group menu entry.">工作負載</translation>
@@ -162,7 +162,7 @@
   <translation id="6503474189903659041" key="MSG_CONFIG_DIALOG_TITLE" desc="Label for the kubectl.kubernetes.io/last-applied-configuration annotation.">最近應用組態</translation>
   <translation id="9181886817358182792" key="MSG_CONFIG_MAP_LIST_CREATED_AT_TOOLTIP" desc="Tooltip 'Created at [some date]' showing the exact creation time of config map.">創建於 <ph name="CREATION_DATE"/></translation>
   <translation id="6508331633234837511" key="MSG_COPIED_TOAST" desc="Toast message appears when copied to clipboard.">複製到剪貼簿</translation>
-  <translation id="2823218791264820502" key="MSG_CURRENT_PODS_MSG" desc="Satisfies a way to make normal binding in angularjs to pass in google closure compiler.">目前狀態: <ph name="CURRENT_PODS"> 已創建</ph></translation>
+  <translation id="2823218791264820502" key="MSG_CURRENT_PODS_MSG" desc="Satisfies a way to make normal binding in angularjs to pass in google closure compiler.">目前狀態: <ph name="CURRENT_PODS"> 個已創建</ph></translation>
   <translation id="3159284180115253445" key="MSG_DAEMONSET_DETAIL_DETAIL_0" desc="Title for graph card displaying CPU metric of one daemon set.">CPU 使用量</translation>
   <translation id="3656189643804804472" key="MSG_DAEMONSET_DETAIL_DETAIL_1" desc="Title for graph card displaying memory metric of one daemon set.">記憶體使用量</translation>
   <translation id="2830742900079405655" key="MSG_DAEMONSET_DETAIL_DETAIL_2" desc="Help message detailing what is included in the memory usage">記憶體使用量包含由這些 Daemon Set 管理的 Pod 中的佔用快取</translation>
@@ -334,7 +334,7 @@
   <translation id="5111944609518832752" key="MSG_DEPLOY_SETTINGS_IMAGE_PULL_SECRET_USER_HELP" desc="User help for the &quot;Image Pull Secret&quot; selection box on the deploy from settings page.">所選映像檔如果為私有則需要 Secret 憑證，可以從 Secret 中選取或新建</translation>
   <translation id="302338638356502088" key="MSG_DEPLOY_SETTINGS_LABELS_KEY_LABEL" desc="Label &quot;Key&quot; for the key input fields, in the labels section on the deploy from settings page.">鍵</translation>
   <translation id="215841056414165502" key="MSG_DEPLOY_SETTINGS_LABELS_TITLE" desc="Title of the labels input section on the deploy from settings page.">標籤</translation>
-  <translation id="7004903789599705230" key="MSG_DEPLOY_SETTINGS_LABELS_USER_HELP" desc="User help for the &quot;Labels&quot; section on the deploy from settings page.">所指定標籤將被新增到新建的 Replication Controller、服務（如果存在）以及 Pod，標籤通常包含發布、環境、階層、分區以及分支</translation>
+  <translation id="7004903789599705230" key="MSG_DEPLOY_SETTINGS_LABELS_USER_HELP" desc="User help for the &quot;Labels&quot; section on the deploy from settings page.">所指定標籤將被新增到新建的 Replication Controller、Service（如果存在）以及 Pod，標籤通常包 release、environment、tier、partition 以及 track</translation>
   <translation id="4605907629737798248" key="MSG_DEPLOY_SETTINGS_LABELS_VALUE_LABEL" desc="Label &quot;Value&quot; for the value input fields, in the labels section on the deploy from settings page.">值</translation>
   <translation id="7401526670608603194" key="MSG_DEPLOY_SETTINGS_LEARN_MORE_ACTION" desc="The text is used as a 'Learn more' link text on the deploy from settings page.">了解更多</translation>
   <translation id="7214715359451365159" key="MSG_DEPLOY_SETTINGS_MEMORY_NEGATIVE_WARNING" desc="Appears to tell the user that the typed in memory (on the deploy page) cannot be negative.">所需記憶體必須為整數</translation>
@@ -348,8 +348,8 @@
   <translation id="5828613424792759380" key="MSG_DEPLOY_SETTINGS_NUMBER_OF_PODS_LABEL" desc="Label &quot;Number of pods&quot;, which appears as a placeholder in an empty input field for the number of pods on the deploy from settings page.">Pod 數量</translation>
   <translation id="4777433913081542666" key="MSG_DEPLOY_SETTINGS_NUMBER_OF_PODS_MIN_WARNING" desc="Appears to tell the user that the number of pods on the deploy from settings page must be at least 1.">Pod 數量至少為 1</translation>
   <translation id="7055060476996275018" key="MSG_DEPLOY_SETTINGS_NUMBER_OF_PODS_REQUIRED_WARNING" desc="Appears to tell the user that the &quot;number of pods&quot; input on the deploy from settings page is required.">Pod 數量必填</translation>
-  <translation id="910445206482038336" key="MSG_DEPLOY_SETTINGS_NUMBER_OF_PODS_USER_HELP" desc="User help for the &quot;number of pods&quot; input on the deploy from settings page.">Deployment 將會被創建，由它維護叢集中 Pod 的所需數量</translation>
-  <translation id="4303314106798187730" key="MSG_DEPLOY_SETTINGS_PORT_MAPPINGS_USER_HELP" desc="User help for the &quot;port mappings&quot; input on the deploy from settings page.">可指定內部或外部服務埠號，來映射到容器所監聽的埠號</translation>
+  <translation id="910445206482038336" key="MSG_DEPLOY_SETTINGS_NUMBER_OF_PODS_USER_HELP" desc="User help for the &quot;number of pods&quot; input on the deploy from settings page.">Deployment 將會被創建，由它來維護叢集中 Pod 的所需數量</translation>
+  <translation id="4303314106798187730" key="MSG_DEPLOY_SETTINGS_PORT_MAPPINGS_USER_HELP" desc="User help for the &quot;port mappings&quot; input on the deploy from settings page.">可指定內部或外部服務埠號，以映射到容器所監聽的埠號上</translation>
   <translation id="4152187354482757329" key="MSG_DEPLOY_SETTINGS_RUN_AS_PRIVILEGED_LABEL" desc="Label &quot;Run as privileged&quot; for the corresponding checkbox on the deploy from settings page.">以特權身份執行</translation>
   <translation id="8947217119676480958" key="MSG_DEPLOY_SETTINGS_RUN_COMMAND_ARGUMENTS_LABEL" desc="Label &quot;Run command arguments&quot;, which serves as a placeholder for the command arguments input on the deploy from settings page.">執行指令參數</translation>
   <translation id="2530547307291673869" key="MSG_DEPLOY_SETTINGS_RUN_COMMAND_LABEL" desc="Label &quot;Run command&quot; (a noun, not a verb), which serves as a placeholder for the 'Command' input on the deploy from settings page.">執行指令</translation>
@@ -362,10 +362,8 @@
   <translation id="2829276195106359606" key="MSG_DEPLOY_UPLOAD_2" desc="User help for the YAML/JSON file upload form on the deploy page.">選擇一個 YAML 或 JSON 檔案，檔案中包含命名空間以及需要部署的資源</translation>
   <translation id="1706523109425956587" key="MSG_DEPLOY_UPLOAD_3" desc="The text is used as a \'Learn more\' link text besides the file upload on the deploy page.">了解更多</translation>
   <translation id="2854540335199012536" key="MSG_DEPLOY_UPLOAD_4" desc="User help for the YAML/JSON file upload form on the deploy page.">選擇一個 YAML 或 JSON 檔案，檔案中包含需要部署在當前（左側選單）的命名空間資源</translation>
-  <translation id="7869641598803414323" key="MSG_DESIRED_PODS_MSG" desc="Satisfies a way to make normal binding in angularjs to pass in google closure compiler.">
-    <ph name="DESIRED_PODS"> 需要</ph>
-  </translation>
-  <translation id="4942061082776173364" key="MSG_ENCRYPTION_KEY_CHANGED" desc="Text shown when saved token could not be decrypted by backend.">使用期限已過期。請重新登錄</translation>
+  <translation id="7869641598803414323" key="MSG_DESIRED_PODS_MSG" desc="Satisfies a way to make normal binding in angularjs to pass in google closure compiler."> 需要 <ph name="DESIRED_PODS"> 個</ph></translation>
+  <translation id="4942061082776173364" key="MSG_ENCRYPTION_KEY_CHANGED" desc="Text shown when saved token could not be decrypted by backend.">使用期限已過期。請重新登入</translation>
   <translation id="778882191405410811" key="MSG_ENDPOINTS_WARNING_LABEL" desc="Label 'Warning' for the endpoint selection drop-down.">警告</translation>
   <translation id="4983649641173165689" key="MSG_ENDPOINT_CARDLIST_0" desc="Label which appears above the list of such objects.">端點</translation>
   <translation id="4158586803314397594" key="MSG_ENDPOINT_CARDLIST_1" desc="(no description provided)">目前沒端點選擇此服務</translation>
@@ -449,7 +447,7 @@
   <translation id="3677864800975797430" key="MSG_JOB_DETAIL_INFO_4" desc="Job labels. Appears in details section.">標籤</translation>
   <translation id="4960487631004379061" key="MSG_JOB_DETAIL_INFO_5" desc="Job images. Appears in details section.">映像檔</translation>
   <translation id="7440600544272586624" key="MSG_JOB_DETAIL_INFO_6" desc="Job completions. Appears in details section.">完成</translation>
-  <translation id="3932529820663589356" key="MSG_JOB_DETAIL_INFO_7" desc="Job parallelism. Appears in details section.">平行</translation>
+  <translation id="3932529820663589356" key="MSG_JOB_DETAIL_INFO_7" desc="Job parallelism. Appears in details section.">平行執行數</translation>
   <translation id="5087019331139352594" key="MSG_JOB_DETAIL_INFO_8" desc="Job status. Appears in details section.">狀態</translation>
   <translation id="7217243907189605640" key="MSG_JOB_DETAIL_INFO_9" desc="Pod status section header. Appears below main header.">Pods</translation>
   <translation id="8899423721882867038" key="MSG_JOB_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">Jobs</translation>
@@ -907,6 +905,7 @@
   <translation id="3967360362065546967" key="MSG_TIME_UNIT_SECOND_LABEL" desc="Time units label, a single second.">1 秒</translation>
   <translation id="270964281826728358" key="MSG_TIME_UNIT_YEARS_LABEL" desc="Time units label, many years (plural).">年</translation>
   <translation id="58035047264145239" key="MSG_TIME_UNIT_YEAR_LABEL" desc="Time units label, a single year.">1 年</translation>
+  <translation id="7150924596944570535" key="MSG_TOKEN_EXPIRED_ERROR" desc="Text shown when saved token could not be decrypted by backend or it has expired.">使用期限已過期。請重新登入</translation>
   <translation id="7831482692212754207" key="MSG_TPR_LIST_STARTED_AT_TOOLTIP" desc="Tooltip 'Started at [some date]' showing the exact creation time of third party resource object.">開始於 <ph name="START_DATE"> UTC</ph></translation>
   <translation id="4037658160328783864" key="MSG_UNKNOWN_SERVER_ERROR" desc="String to display when error object has invalid structure.">未知伺服器錯誤</translation>
   <translation id="5877596609986036290" key="MSG_UNSUPPORTED_TOAST" desc="Toast message appears when browser does not support clipboard">不支援此瀏覽器</translation>
