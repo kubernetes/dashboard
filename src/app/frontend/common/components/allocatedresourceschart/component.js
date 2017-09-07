@@ -68,7 +68,7 @@ export class AllocatedResourcesChartController {
    * @return {string}
    * @private
    */
-  displayOnlyAllocated(d, i) {
+  displayOnlyAllocated_(d, i) {
     if (i === 0) {
       return `${d.data.value.toFixed(2)}%`;
     }
@@ -81,7 +81,7 @@ export class AllocatedResourcesChartController {
    * @return {string}
    * @private
    */
-  formatLabel(d) {
+  formatLabel_(d) {
     return `${d.data.value.toFixed(2)}%`;
   }
 
@@ -95,7 +95,7 @@ export class AllocatedResourcesChartController {
     let size = 280;
 
     if (!labelFunc) {
-      labelFunc = this.formatLabel;
+      labelFunc = this.formatLabel_;
     }
 
     let chart = nv.models.pieChart()
@@ -145,7 +145,7 @@ export class AllocatedResourcesChartController {
                 {value: this.outer},
                 {value: 100 - this.outer},
               ],
-              [this.outercolor, '#ddd'], 0, 0.67, this.displayOnlyAllocated);
+              [this.outercolor, '#ddd'], 0, 0.67, this.displayOnlyAllocated_);
         }
 
         if (this.inner !== undefined) {
@@ -156,7 +156,7 @@ export class AllocatedResourcesChartController {
                 {value: this.inner},
                 {value: 100 - this.inner},
               ],
-              [this.innercolor, '#ddd'], 36, 0.55, this.displayOnlyAllocated);
+              [this.innercolor, '#ddd'], 36, 0.55, this.displayOnlyAllocated_);
         }
       } else {
         // Initializes a pie chart with multiple entries in a single ring
