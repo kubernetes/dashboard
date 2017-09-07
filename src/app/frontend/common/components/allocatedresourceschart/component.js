@@ -97,7 +97,7 @@ export class AllocatedResourcesChartController {
    * @param {!Array<string>} colors
    * @param {number} margin
    * @param {number} ratio
-   * @param {function(Object|null)} labelFunc
+   * @param {function(Object)|null} labelFunc
    * @private
    */
   initPieChart_(svg, data, colors, margin, ratio, labelFunc) {
