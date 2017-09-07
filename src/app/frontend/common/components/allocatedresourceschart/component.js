@@ -65,6 +65,8 @@ export class AllocatedResourcesChartController {
   /**
    * Displays label only for allocated resources (with index equal to 0).
    *
+   * @param {Object} d
+   * @param {number} i
    * @return {string}
    * @private
    */
@@ -78,6 +80,7 @@ export class AllocatedResourcesChartController {
   /**
    * Formats percentage label to display in fixed format.
    *
+   * @param {Object} d
    * @return {string}
    * @private
    */
@@ -89,6 +92,12 @@ export class AllocatedResourcesChartController {
    * Initializes pie chart graph. Check documentation at:
    * https://nvd3-community.github.io/nvd3/examples/documentation.html#pieChart
    *
+   * @param {Object} svg
+   * @param {Array<Object>} data
+   * @param {!Array<string>} colors
+   * @param {number} margin
+   * @param {number} ratio
+   * @param {function(Object)} labelFunc
    * @private
    */
   initPieChart_(svg, data, colors, margin, ratio, labelFunc) {
