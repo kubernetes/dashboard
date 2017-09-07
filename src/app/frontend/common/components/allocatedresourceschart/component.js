@@ -133,7 +133,7 @@ export class AllocatedResourcesChartController {
                 {value: this.outer},
                 {value: 100 - this.outer},
               ],
-              [this.outercolor, '#ddd'], 0, 0.61, displayOnlyAllocated);
+              [this.outercolor, '#ddd'], 0, 0.67, displayOnlyAllocated);
         }
 
         if (this.inner !== undefined) {
@@ -148,7 +148,7 @@ export class AllocatedResourcesChartController {
         }
       } else {
         // Initializes a pie chart with multiple entries in a single ring
-        this.initPieChart_(svg, this.data, this.colorPalette, 0, 0.61, null);
+        this.initPieChart_(svg, this.data, this.colorPalette, 0, 0.67, null);
       }
     });
   }
