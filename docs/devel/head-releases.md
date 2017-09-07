@@ -27,7 +27,7 @@ NAME                                        READY     STATUS    RESTARTS   AGE
 kubernetes-dashboard-1230846811-b95sv       1/1       Running   0          5m
 ```
 
-And then deleting the pods in the `kube-system` namespace:
+And then deleting the Dashboard's pods in the `kube-system` namespace:
 ```sh
 $ kubectl --namespace=kube-system delete pods kubernetes-dashboard-1230846811-b95sv
 pod "kubernetes-dashboard-1230846811-b95sv" deleted
