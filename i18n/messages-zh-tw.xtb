@@ -31,7 +31,7 @@
   <translation id="7538864180606148657" key="MSG_BREADCRUMBS_NAMESPACES_LABEL" desc="Label 'Namespaces' that appears as a breadcrumbs on the action bar.">命名空間</translation>
   <translation id="1946322401100894439" key="MSG_BREADCRUMBS_NODES_LABEL" desc="Label 'Nodes' that appears as a breadcrumbs on the action bar.">節點</translation>
   <translation id="5901871651227680937" key="MSG_BREADCRUMBS_OVERVIEW_LABEL" desc="Label 'Overview' that appears as a breadcrumb on the action bar.">概觀</translation>
-  <translation id="8962145809533946028" key="MSG_BREADCRUMBS_PERSISTENT_VOLUMES_LABEL" desc="Label 'Persistent Volumes' that appears as a breadcrumbs on the action bar.">Persistent Volumes</translation>
+  <translation id="8962145809533946028" key="MSG_BREADCRUMBS_PERSISTENT_VOLUMES_LABEL" desc="Label 'Persistent Volumes' that appears as a breadcrumbs on the action bar.">持久性雲硬碟</translation>
   <translation id="6751018699028607617" key="MSG_BREADCRUMBS_PERSISTENT_VOLUME_CLAIM_LABEL" desc="Label 'Persistent Volume Claims' that appears as a breadcrumbs on the action bar.">Persistent Volume Claims</translation>
   <translation id="64391241316684157" key="MSG_BREADCRUMBS_PODS_LABEL" desc="Label 'Pods' that appears as a breadcrumbs on the action bar.">Pods</translation>
   <translation id="7569244915796303702" key="MSG_BREADCRUMBS_RC_LABEL" desc="Label 'Replication Controllers' that appears as a breadcrumbs on the action bar.">Replication Controllers</translation>
@@ -64,7 +64,7 @@
   <translation id="1743316598408730775" key="MSG_CHROME_NAV_NAV_2" desc="Nodes menu entry.">節點</translation>
   <translation id="1040732924028857594" key="MSG_CHROME_NAV_NAV_20" desc="Secrets menu entry.">Secrets</translation>
   <translation id="8368599117962865229" key="MSG_CHROME_NAV_NAV_21" desc="About page menu entry.">關於</translation>
-  <translation id="4957526140740745953" key="MSG_CHROME_NAV_NAV_3" desc="Persistent Volumes menu entry.">持久性儲存</translation>
+  <translation id="4957526140740745953" key="MSG_CHROME_NAV_NAV_3" desc="Persistent Volumes menu entry.">持久性雲硬碟</translation>
   <translation id="5886605472855359914" key="MSG_CHROME_NAV_NAV_4" desc="Config and Storage group menu entry.">配置與儲存</translation>
   <translation id="874273813471860738" key="MSG_CHROME_NAV_NAV_5" desc="Storage Classes menu entry.">儲存類別</translation>
   <translation id="4285258567654567328" key="MSG_CHROME_NAV_NAV_6" desc="Workloads group menu entry.">工作負載</translation>
@@ -125,10 +125,10 @@
   <translation id="5324906937580749197" key="MSG_COMMON_NAMESPACE_NAMESPACESELECT_3" desc="Label atop a list of namespaces">命名空間</translation>
   <translation id="395521352310086904" key="MSG_COMMON_RESOURCE_DELETERESOURCE_0" desc="Title for a delete resource dialog.">刪除 {{::$ctrl.resourceKindName}}</translation>
   <translation id="1507210670835642034" key="MSG_COMMON_RESOURCE_DELETERESOURCE_1" desc="Title for a delete resource dialog.">刪除 {{::$ctrl.resourceKindName}}</translation>
-  <translation id="4882763297660106258" key="MSG_COMMON_RESOURCE_DELETERESOURCE_2" desc="Confirmation question, appears before any dashboard resource will be deleted.">確定要刪除命名空間 &lt;i&gt;{{::$ctrl.objectMeta.namespace}}&lt;/i&gt; 中的 &lt;i&gt;{{::$ctrl.objectMeta.name}}&lt;/i&gt; {{::$ctrl.resourceKindName}} 嗎?</translation>
+  <translation id="4882763297660106258" key="MSG_COMMON_RESOURCE_DELETERESOURCE_2" desc="Confirmation question, appears before any dashboard resource will be deleted.">確定要刪除命名空間 &lt;i&gt;{{::$ctrl.objectMeta.namespace}}&lt;/i&gt; 中的 &lt;i&gt;{{::$ctrl.objectMeta.name}}&lt;/i&gt; {{::$ctrl.resourceKindName}}嗎?</translation>
   <translation id="4128050333493885311" key="MSG_COMMON_RESOURCE_DELETERESOURCE_3" desc="Label for cancel button.">取消</translation>
   <translation id="896694419951320432" key="MSG_COMMON_RESOURCE_DELETERESOURCE_4" desc="Label for delete button.">刪除</translation>
-  <translation id="4968436708987569734" key="MSG_COMMON_RESOURCE_DELETERESOURCE_5" desc="Confirmation question, appears before any dashboard resource will be deleted. (unnamespaced resources)">確定要刪除 &lt;i&gt;{{::$ctrl.objectMeta.name}}&lt;/i&gt; {{::$ctrl.resourceKindName}} 嗎?</translation>
+  <translation id="4968436708987569734" key="MSG_COMMON_RESOURCE_DELETERESOURCE_5" desc="Confirmation question, appears before any dashboard resource will be deleted. (unnamespaced resources)">確定要刪除 &lt;i&gt;{{::$ctrl.objectMeta.name}}&lt;/i&gt; {{::$ctrl.resourceKindName}}嗎?</translation>
   <translation id="5788637878898196013" key="MSG_COMMON_RESOURCE_EDITRESOURCE_0" desc="Title for a delete resource dialog.">編輯 {{::$ctrl.resourceKindName}}</translation>
   <translation id="6030718757273830989" key="MSG_COMMON_RESOURCE_EDITRESOURCE_1" desc="Title for a delete resource dialog.">編輯 {{::$ctrl.resourceKindName}}</translation>
   <translation id="7280957759518658382" key="MSG_COMMON_RESOURCE_EDITRESOURCE_2" desc="Label for cancel button.">取消</translation>
@@ -565,7 +565,7 @@
   <translation id="2307976094948542528" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARD_1" desc="Tooltip text which appears on pending icon hover.">此索取等待中</translation>
   <translation id="739174621480425961" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARD_2" desc="Label \'Persistent Volume Claim\' which will appear in the persistent volume claim delete dialog opened from a persistentvolumeclaim card on the list page.">Persistent Volume Claim</translation>
   <translation id="5269246278061874461" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARD_3" desc="Label \'Persistent Volume Claim\' which will appear in the persistent volume claim edit dialog opened from a persistentvolumeclaim card on the list page.">Persistent Volume Claim</translation>
-  <translation id="6410423382942434423" key="MSG_PERSISTENTVOLUME_DETAIL_ACTIONBAR_0" desc="Label \'Persistent Volume\' which appears at the top of the delete dialog, opened from a config map details page.">Persistent Volume</translation>
+  <translation id="6410423382942434423" key="MSG_PERSISTENTVOLUME_DETAIL_ACTIONBAR_0" desc="Label \'Persistent Volume\' which appears at the top of the delete dialog, opened from a config map details page.">持久性雲硬碟</translation>
   <translation id="6875466029803342193" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_0" desc="Header in a detail view">詳細資訊</translation>
   <translation id="5670456105080780751" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_1" desc="Persistent volume info details section status entry.">狀態</translation>
   <translation id="1183014090355571191" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_2" desc="Persistent volume info details section claim entry.">索取</translation>
@@ -575,7 +575,7 @@
   <translation id="7193098873360233228" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_6" desc="Persistent volume info details section message entry.">訊息</translation>
   <translation id="8677793784230574410" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_7" desc="Persistent volume info details section storage class entry.">儲存類別</translation>
   <translation id="4472860153979076217" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_8" desc="Persistent volume info details section reason entry.">原因</translation>
-  <translation id="3344267084925697004" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_0" desc="Persistent volume source info title.">Persistent volume 來源</translation>
+  <translation id="3344267084925697004" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_0" desc="Persistent volume source info title.">持久性雲硬碟來源</translation>
   <translation id="4229851576634547217" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_1" desc="Persistent volume source info host path title.">宿主機路徑</translation>
   <translation id="2012274989896397034" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_10" desc="Persistent volume source info AWS block storage section FS type entry.">檔案系統類型</translation>
   <translation id="1159922307397938960" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_11" desc="Persistent volume source info AWS block storage section partition entry.">分區</translation>
@@ -620,7 +620,7 @@
   <translation id="713683902153120640" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_7" desc="Persistent volume source info GCE persistent disk section read only entry.">唯讀</translation>
   <translation id="1527957761443744838" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_8" desc="Persistent volume source info AWS block storage title.">AWS 區塊儲存</translation>
   <translation id="2543608444657856177" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_9" desc="Persistent volume source info AWS block storage section volume ID entry.">Volume ID</translation>
-  <translation id="7944617415298542080" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">Persistent Volumes</translation>
+  <translation id="7944617415298542080" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">持久性雲硬碟</translation>
   <translation id="132041398851471554" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_1" desc="Persistent volume list header: name.">名稱</translation>
   <translation id="2070585758124097852" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_10" desc="Persistent volume list header: storage class.">儲存類別</translation>
   <translation id="5310384443036079852" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_2" desc="Persistent volume list header: access modes.">存取模式</translation>
@@ -630,9 +630,9 @@
   <translation id="6387315119675278668" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_6" desc="Persistent volume list header: claim.">索取</translation>
   <translation id="1737383119058892029" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_7" desc="Persistent volume list header: reason.">原因</translation>
   <translation id="6418120519158013412" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_8" desc="Persistent volume list header: age.">存活時間</translation>
-  <translation id="6613585718528767524" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_9" desc="Text for persistent volume card list zerostate.">無 Persistent Volumes 可顯示</translation>
-  <translation id="4551076669296579967" key="MSG_PERSISTENTVOLUME_LIST_CARD_0" desc="Label \'Persistent Volume\' which will appear in the persistent volume delete dialog opened from a persistentvolume card on the list page.">Persistent Volume</translation>
-  <translation id="7476369653916486566" key="MSG_PERSISTENTVOLUME_LIST_CARD_1" desc="Label \'Persistent Volume\' which will appear in the persistent volume edit dialog opened from a persistentvolume card on the list page.">Persistent Volume</translation>
+  <translation id="6613585718528767524" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_9" desc="Text for persistent volume card list zerostate.">無持久性雲硬碟可顯示</translation>
+  <translation id="4551076669296579967" key="MSG_PERSISTENTVOLUME_LIST_CARD_0" desc="Label \'Persistent Volume\' which will appear in the persistent volume delete dialog opened from a persistentvolume card on the list page.">持久性雲硬碟</translation>
+  <translation id="7476369653916486566" key="MSG_PERSISTENTVOLUME_LIST_CARD_1" desc="Label \'Persistent Volume\' which will appear in the persistent volume edit dialog opened from a persistentvolume card on the list page.">持久性雲硬碟</translation>
   <translation id="6860347532246002287" key="MSG_PERSISTENT_VOLUME_CLAIM_LIST_CREATED_AT_TOOLTIP" desc="Tooltip 'Created at [some date]' showing the exact creation time of persistent volume claim.">創建於 <ph name="CREATION_DATE"/></translation>
   <translation id="7869718532150162176" key="MSG_PERSISTENT_VOLUME_LIST_CREATED_AT_TOOLTIP" desc="Tooltip 'Created at [some date]' showing the exact creation time of persistent volume.">創建於 <ph name="CREATION_DATE"/></translation>
   <translation id="4867553232280640900" key="MSG_POD_DETAIL_ACTIONBAR_0" desc="Label \'Pod\' which appears at the top of the delete dialog, opened from a pod details page.">Pod</translation>
