@@ -20,8 +20,7 @@ limitations under the License.
     <md-icon class="material-icons kd-error"
              ng-if="::$ctrl.isLost()">
       error
-      <md-tooltip md-direction="right"
-                  md-delay="500"
+      <md-tooltip md-delay="500"
                   md-autohide>
         [[This claim is in lost state|Tooltip text which appears on error icon hover.]]
       </md-tooltip>
@@ -29,8 +28,7 @@ limitations under the License.
     <md-icon class="material-icons kd-"
              ng-if="::$ctrl.isPending()">
       timelapse
-      <md-tooltip md-direction="right"
-                  md-delay="500"
+      <md-tooltip md-delay="500"
                   md-autohide>
         [[This claim is in pending state|Tooltip text which appears on pending icon hover.]]
       </md-tooltip>
