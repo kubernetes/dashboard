@@ -101,14 +101,6 @@ class LoginController {
   }
 
   /**
-   * @return {boolean}
-   * @export
-   */
-  isAnyAuthenticationModeEnabled() {
-    return this.enabledAuthenticationModes_ && this.enabledAuthenticationModes_.length > 0;
-  }
-
-  /**
    * @param {!angular.$http.Response} err
    * @return {!backendApi.Error}
    * @private

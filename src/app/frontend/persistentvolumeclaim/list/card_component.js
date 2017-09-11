@@ -69,7 +69,7 @@ class PersistentVolumeClaimCardController {
      @export
    */
   isBound() {
-    return this.persistentVolumeClaim.Status === 'Bound';
+    return this.persistentVolumeClaim.status === 'Bound';
   }
 
   /**
@@ -78,7 +78,7 @@ class PersistentVolumeClaimCardController {
    * @export
    */
   isPending() {
-    return this.persistentVolumeClaim.Status === 'Pending';
+    return this.persistentVolumeClaim.status === 'Pending';
   }
 
   /**
@@ -87,7 +87,7 @@ class PersistentVolumeClaimCardController {
    * @export
    */
   isLost() {
-    return this.persistentVolumeClaim.Status === 'Lost';
+    return this.persistentVolumeClaim.status === 'Lost';
   }
 
   /**
