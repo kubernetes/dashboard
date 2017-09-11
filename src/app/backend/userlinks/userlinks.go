@@ -28,7 +28,7 @@ import (
 
 const (
 	annotationObj     = "alpha.dashboard.kubernetes.io/links"
-	apiserverProxyURL = "{{apiserver-proxy-url}}"
+	apiserverProxyURL = "http://{{apiserver-proxy-url}}"
 )
 
 // UserLink is an optional annotation attached to the pod or service resource objects.
