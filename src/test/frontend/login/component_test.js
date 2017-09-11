@@ -44,7 +44,7 @@ describe('Login component', () => {
           'kdLogin', {
             $state: $state,
             kdAuthService: authService,
-            kdAuthenticationModesResource: {then: () => {}}
+            kdAuthenticationModesResource: {then: () => {}},
           },
           {});
 
