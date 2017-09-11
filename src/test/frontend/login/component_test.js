@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import authModule from 'common/auth/module';
+import errorModule from 'common/errorhandling/module';
 import loginModule from 'login/module';
 import LoginSpec from 'login/spec';
 import {stateName as overviewState} from 'overview/state';
@@ -30,6 +31,7 @@ describe('Login component', () => {
   let scope;
 
   beforeEach(() => {
+    angular.mock.module(errorModule.name);
     angular.mock.module(authModule.name);
     angular.mock.module(loginModule.name);
 
@@ -38,7 +40,14 @@ describe('Login component', () => {
       state = $state;
       authService = kdAuthService;
       scope = $rootScope;
-      ctrl = $componentController('kdLogin', {$state: $state, kdAuthService: authService}, {});
+      ctrl = $componentController(
+          'kdLogin', {
+            $state: $state,
+            kdAuthService: authService,
+            kdAuthenticationModesResource: {then: () => {}}
+          },
+          {});
+
     });
   });
 
