@@ -1,6 +1,6 @@
 # Text conventions
 
-The document describes the proper way to introduce new text to the Kubernetes Dashboard.
+The document describes the proper way of introducing new text to the Kubernetes Dashboard.
 
 ## Overview
 Kubernetes Dashboard is a web-based user interface for Kubernetes clusters. It consists of multiple views like overview pages, list of resources and resource details pages. Much textual information is required within these elements. Let's consider sample dialog:

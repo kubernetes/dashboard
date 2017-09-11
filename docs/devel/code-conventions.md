@@ -1,6 +1,6 @@
 # Code conventions
 
-The document describes the proper way to introduce new code to the Kubernetes Dashboard.
+The document describes the proper way of introducing new code to the Kubernetes Dashboard.
 
 ## Backend
 
@@ -10,6 +10,11 @@ Go to our [Go Report Card](https://goreportcard.com/report/github.com/kubernetes
 we are doing.
 
 ## Frontend
+
+We are following conventions described in 
+[Angular 1 Style Guide](https://github.com/johnpapa/angular-styleguide/blob/master/a1/README.md).
+
+Check following subsections for more rules and tips.
 
 ### Naming conventions
 
