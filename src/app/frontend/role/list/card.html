@@ -41,7 +41,8 @@ limitations under the License.
     <kd-resource-card-column>
       <div ng-if="::$ctrl.role.objectMeta.creationTimestamp">
         {{::$ctrl.role.objectMeta.creationTimestamp | relativeTime}}
-        <md-tooltip>
+        <md-tooltip md-delay="500"
+                    md-autohide>
           {{::$ctrl.getStartedAtTooltip($ctrl.role.objectMeta.creationTimestamp)}}
         </md-tooltip>
       </div>

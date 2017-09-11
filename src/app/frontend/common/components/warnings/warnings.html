@@ -26,7 +26,10 @@ limitations under the License.
     <md-icon ng-click="$ctrl.dismissWarning($index)"
              class="material-icons kd-dismiss-icon">
       close
-      <md-tooltip md-delay="500">[[Dismiss|Tooltip for warning dismissal button.]]</md-tooltip>
+      <md-tooltip md-delay="500"
+                  md-autohide>
+        [[Dismiss|Tooltip for warning dismissal button.]]
+      </md-tooltip>
     </md-icon>
   </div>
   <div class="kd-more-warnings"

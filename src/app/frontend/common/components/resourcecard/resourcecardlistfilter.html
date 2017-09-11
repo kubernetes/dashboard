@@ -35,7 +35,10 @@ limitations under the License.
              ng-if="!$ctrl.isSearchVisible()"
              ng-click="$ctrl.switchSearchVisibility()">
       filter_list
-      <md-tooltip>{{::$ctrl.getTooltipMessage()}}</md-tooltip>
+      <md-tooltip md-delay="500"
+                  md-autohide>
+        {{::$ctrl.getTooltipMessage()}}
+      </md-tooltip>
     </md-icon>
     <md-icon class="material-icons kd-search-icon"
              ng-if="$ctrl.isSearchVisible()"
