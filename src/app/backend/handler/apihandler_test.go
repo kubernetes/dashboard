@@ -40,7 +40,7 @@ func getTokenManager() authApi.TokenManager {
 
 func TestCreateHTTPAPIHandler(t *testing.T) {
 	cManager := client.NewClientManager("", "http://localhost:8080")
-	authManager := auth.NewAuthManager(cManager, getTokenManager())
+	authManager := auth.NewAuthManager(cManager, getTokenManager(), authApi.AuthenticationModes{})
 	_, err := CreateHTTPAPIHandler(nil, cManager, authManager)
 	if err != nil {
 		t.Fatal("CreateHTTPAPIHandler() cannot create HTTP API handler")
