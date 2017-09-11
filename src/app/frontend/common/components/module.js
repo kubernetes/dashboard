@@ -36,7 +36,6 @@ import {toggleHiddenTextComponent} from './togglehiddentext/component';
 import {warningsComponent} from './warnings/component';
 import warnThresholdDirective from './warnthreshold/directive';
 import {zeroStateComponent} from './zerostate/component';
-import tooltipDirective from "./tooltip/directive";
 
 /**
  * Module containing common components for the application.
@@ -70,5 +69,4 @@ export default angular
     .component('kdWarnings', warningsComponent)
     .component('kdConditionList', conditionListComponent)
     .component('kdScaleButton', scaleButtonComponent)
-    .directive('kdTooltip', tooltipDirective)
     .directive('kdWarnThreshold', warnThresholdDirective);
