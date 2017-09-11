@@ -39,7 +39,8 @@ limitations under the License.
     </kd-resource-card-column>
     <kd-resource-card-column>
       {{::$ctrl.storageClass.objectMeta.creationTimestamp | relativeTime}}
-      <md-tooltip>
+      <md-tooltip md-delay="500"
+                  md-autohide>
         {{::$ctrl.getCreatedAtTooltip($ctrl.storageClass.objectMeta.creationTimestamp)}}
       </md-tooltip>
     </kd-resource-card-column>

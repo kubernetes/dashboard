@@ -20,12 +20,18 @@ limitations under the License.
     <md-icon class="material-icons kd-error"
              ng-if="::$ctrl.isLost()">
       error
-      <md-tooltip md-direction="right">[[This claim is in lost state|Tooltip text which appears on error icon hover.]]</md-tooltip>
+      <md-tooltip md-delay="500"
+                  md-autohide>
+        [[This claim is in lost state|Tooltip text which appears on error icon hover.]]
+      </md-tooltip>
     </md-icon>
     <md-icon class="material-icons kd-"
              ng-if="::$ctrl.isPending()">
       timelapse
-      <md-tooltip md-direction="right">[[This claim is in pending state|Tooltip text which appears on pending icon hover.]]</md-tooltip>
+      <md-tooltip md-delay="500"
+                  md-autohide>
+        [[This claim is in pending state|Tooltip text which appears on pending icon hover.]]
+      </md-tooltip>
     </md-icon>
     <md-icon class="material-icons kd-success"
              ng-if="::$ctrl.isBound()">
@@ -74,7 +80,8 @@ limitations under the License.
     </kd-resource-card-column>
     <kd-resource-card-column>
       {{::$ctrl.persistentVolumeClaim.objectMeta.creationTimestamp | relativeTime}}
-      <md-tooltip>
+      <md-tooltip md-delay="500"
+                  md-autohide>
         {{::$ctrl.getCreatedAtTooltip($ctrl.persistentVolumeClaim.objectMeta.creationTimestamp)}}
       </md-tooltip>
     </kd-resource-card-column>

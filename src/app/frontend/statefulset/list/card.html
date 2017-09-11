@@ -20,12 +20,16 @@ limitations under the License.
     <md-icon class="material-icons kd-error"
              ng-if="::$ctrl.hasWarnings()">
       error
-      <md-tooltip md-direction="right">[[One or more pods have errors|Tooltip text which appears on error icon hover.]]</md-tooltip>
+      <md-tooltip md-delay="500"
+                  md-autohide>
+        [[One or more pods have errors|Tooltip text which appears on error icon hover.]]
+      </md-tooltip>
     </md-icon>
     <md-icon class="material-icons"
              ng-if="::$ctrl.isPending()">
       timelapse
-      <md-tooltip md-direction="right">
+      <md-tooltip md-delay="500"
+                  md-autohide>
         [[One or more pods are in pending state|Tooltip text which appears on pending icon hover.]]
       </md-tooltip>
     </md-icon>
@@ -64,7 +68,8 @@ limitations under the License.
     </kd-resource-card-column>
     <kd-resource-card-column>
       {{::$ctrl.statefulSet.objectMeta.creationTimestamp | relativeTime}}
-      <md-tooltip>
+      <md-tooltip md-delay="500"
+                  md-autohide>
         {{::$ctrl.getCreatedAtTooltip($ctrl.statefulSet.objectMeta.creationTimestamp)}}
       </md-tooltip>
     </kd-resource-card-column>

@@ -33,7 +33,10 @@ limitations under the License.
                 <span ng-if="::$ctrl.isSecret(env)">
                     <md-button ng-if="!$ctrl.isSecretVisible" ng-click="::$ctrl.showSecret()" class="md-icon-button kd-env-secret-button">
                         <i class="material-icons kd-env-secret-icon">visibility</i>
-                        <md-tooltip md-direction="top">[[Show secret value|Tooltip on container env variables taken from secret]]</md-tooltip>
+                        <md-tooltip md-delay="500"
+                                    md-autohide>
+                          [[Show secret value|Tooltip on container env variables taken from secret]]
+                        </md-tooltip>
                     </md-button>
                     <span ng-if="$ctrl.isSecretVisible && env.value" class="kd-env-value">{{::$ctrl.formatSecretValue(env.value)}}</span>
           <span ng-if="$ctrl.isSecretVisible && !env.value">-</span>
