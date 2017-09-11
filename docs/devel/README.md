@@ -11,4 +11,5 @@ The developer guide is for anyone wanting to contribute to Dashboard
 * [Text conventions](text-conventions.md)
 * [Localization guide](localization.md)
 * [Providing new translations](translations.md)
-* [Updating code dependencies](updating-deps.md)
+* [Updating Go dependencies](updating-go-deps.md)
+* [Code conventions](code-conventions.md)
