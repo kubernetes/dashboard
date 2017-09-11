@@ -25,7 +25,8 @@ describe('Token login component', () => {
 
     angular.mock.inject(($componentController) => {
       optionsCtrl = $componentController('kdLoginOptions', {}, {});
-      ctrl = $componentController('kdTokenLogin', {}, {loginOptionsCtrl: optionsCtrl});
+      ctrl = $componentController(
+          'kdTokenLogin', {}, {loginOptionsCtrl: optionsCtrl, onUpdate: () => {}});
     });
   });
 
@@ -39,5 +40,18 @@ describe('Token login component', () => {
     // then
     expect(ctrl).toBeDefined();
     expect(optionsCtrl.addOption).toHaveBeenCalled();
+  });
+
+  it('should clear input', () => {
+    // given
+    spyOn(ctrl, 'onUpdate');
+    ctrl.token = 'test';
+
+    // when
+    ctrl.clear();
+
+    // then
+    expect(ctrl.token).toEqual('');
+    expect(ctrl.onUpdate).toHaveBeenCalled();
   });
 });

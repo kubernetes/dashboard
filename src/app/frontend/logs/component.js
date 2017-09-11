@@ -35,7 +35,7 @@ export class LogsController {
    * @param {!angular.$sce} $sce
    * @param {!angular.$document} $document
    * @param {!angular.$resource} $resource
-   * @param {!../common/errorhandling/service.ErrorDialog} errorDialog
+   * @param {!../common/errorhandling/dialog.ErrorDialog} errorDialog
    * @ngInject
    */
   constructor(logsService, $sce, $document, $resource, errorDialog) {
@@ -87,7 +87,7 @@ export class LogsController {
     /** @export {number} */
     this.topIndex = 0;
 
-    /** @private {!../common/errorhandling/service.ErrorDialog} */
+    /** @private {!../common/errorhandling/dialog.ErrorDialog} */
     this.errorDialog_ = errorDialog;
 
     /** @private {!ui.router.$stateParams} */
@@ -353,7 +353,7 @@ export class LogsController {
 /**
  * Returns component definition for logs component.
  *
- * @return {!angular.Component}
+ * @type {!angular.Component}
  */
 export const logsComponent = {
   controller: LogsController,

@@ -12,8 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {ErrorDialog} from './dialog';
 import {LocalizerService} from './localizer_service';
-import {ErrorDialog} from './service';
+import {ErrorService} from './service';
 
 /**
  * Angular module containing navigation chrome for the application.
@@ -25,4 +26,5 @@ export default angular
           'ngMaterial',
         ])
     .service('errorDialog', ErrorDialog)
+    .service('kdErrorService', ErrorService)
     .service('localizerService', LocalizerService);

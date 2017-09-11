@@ -37,6 +37,44 @@ func ShouldRejectRequest(url string) bool {
 	return strings.Contains(url, EncryptionKeyHolderName) && strings.Contains(url, EncryptionKeyHolderNamespace)
 }
 
+// AuthenticationModes represents auth modes supported by dashboard.
+type AuthenticationModes map[AuthenticationMode]bool
+
+// IsEnabled returns true if given auth mode is supported, false otherwise.
+func (self AuthenticationModes) IsEnabled(mode AuthenticationMode) bool {
+	_, exists := self[mode]
+	return exists
+}
+
+// Array returns array of auth modes supported by dashboard.
+func (self AuthenticationModes) Array() []AuthenticationMode {
+	modes := []AuthenticationMode{}
+	for mode := range self {
+		modes = append(modes, mode)
+	}
+
+	return modes
+}
+
+// Add adds given auth mode to AuthenticationModes map
+func (self AuthenticationModes) Add(mode AuthenticationMode) {
+	self[mode] = true
+}
+
+// AuthenticationMode represents auth mode supported by dashboard, i.e. basic.
+type AuthenticationMode string
+
+// String returns string representation of auth mode.
+func (self AuthenticationMode) String() string {
+	return string(self)
+}
+
+// Authentication modes supported by dashboard should be defined below.
+const (
+	Token AuthenticationMode = "token"
+	Basic AuthenticationMode = "basic"
+)
+
 // AuthManager is used for user authentication management.
 type AuthManager interface {
 	// Login authenticates user based on provided LoginSpec and returns AuthResponse. AuthResponse contains
@@ -45,6 +83,8 @@ type AuthManager interface {
 	// Refresh takes valid token that hasn't expired yet and returns a new one with expiration time set to TokenTTL. In
 	// case provided token has expired, token expiration error is returned.
 	Refresh(string) (string, error)
+	// AuthenticationModes returns array of auth modes supported by dashboard.
+	AuthenticationModes() []AuthenticationMode
 }
 
 // TokenManager is responsible for generating and decrypting tokens used for authorization. Authorization is handled
@@ -62,8 +102,10 @@ type TokenManager interface {
 }
 
 // Authenticator represents authentication methods supported by Dashboard. Currently supported types are:
-//    - Token based (any bearer token accepted by apiserver)
-// TODO(floreks): add basic and kubeconfig-based auth
+//    - Token based - Any bearer token accepted by apiserver
+//	  - Basic - Username and password based authentication. Requires that apiserver has basic auth enabled also
+//    - Kubeconfig based - Authenticates user based on kubeconfig file. Only tokne/basic modes are supported within
+// 		the kubeconfig file.
 type Authenticator interface {
 	// GetAuthInfo returns filled AuthInfo structure that can be used for K8S api client creation.
 	GetAuthInfo() (api.AuthInfo, error)
@@ -96,4 +138,9 @@ type AuthResponse struct {
 type TokenRefreshSpec struct {
 	// JWEToken is a token generated during login request that contains AuthInfo data in the payload.
 	JWEToken string `json:"jweToken"`
+}
+
+// LoginModesResponse contains list of auth modes supported by dashboard.
+type LoginModesResponse struct {
+	Modes []AuthenticationMode `json:"modes"`
 }

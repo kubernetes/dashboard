@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import authModule from 'common/auth/module';
+import errorModule from 'common/errorhandling/module';
 import loginModule from 'login/module';
 import LoginSpec from 'login/spec';
 import {stateName as overviewState} from 'overview/state';
@@ -20,25 +21,37 @@ import {stateName as overviewState} from 'overview/state';
 describe('Login component', () => {
   /** @type {!LoginController} */
   let ctrl;
-
+  /** @type {!ui.router.$state} */
   let state;
-
+  /** @type {!angular.$q} */
   let q;
-
+  /** @type {!AuthService} */
   let authService;
-
+  /** @type {!angular.$scope} */
   let scope;
+  /** @type {!angular.$q.Promise} */
+  let authModesResource;
+  /** @type {!angular.$q.Deferred} */
+  let deferred;
 
   beforeEach(() => {
+    angular.mock.module(errorModule.name);
     angular.mock.module(authModule.name);
     angular.mock.module(loginModule.name);
 
     angular.mock.inject(($componentController, $state, $q, kdAuthService, $rootScope) => {
       q = $q;
+      deferred = q.defer();
+      authModesResource = deferred.promise;
       state = $state;
       authService = kdAuthService;
       scope = $rootScope;
-      ctrl = $componentController('kdLogin', {$state: $state, kdAuthService: authService}, {});
+      ctrl = $componentController('kdLogin', {
+        $state: $state,
+        kdAuthService: authService,
+        kdAuthenticationModesResource: authModesResource,
+      });
+
     });
   });
 
@@ -96,5 +109,26 @@ describe('Login component', () => {
 
     // then
     expect(state.transitionTo).toHaveBeenCalledWith(overviewState);
+  });
+
+  it('should return true if given auth mode is enabled', () => {
+    // given
+    ctrl.$onInit();
+    deferred.resolve({modes: ['test']});
+    scope.$digest();
+
+    // when
+    let enabled = ctrl.isAuthenticationModeEnabled('test');
+
+    // then
+    expect(enabled).toEqual(true);
+  });
+
+  it('should return false if given auth mode is disabled', () => {
+    // when
+    let enabled = ctrl.isAuthenticationModeEnabled('test');
+
+    // then
+    expect(enabled).toEqual(false);
   });
 });

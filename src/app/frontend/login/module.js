@@ -17,8 +17,10 @@ import componentsModule from '../common/components/module';
 
 import {basicLoginComponent} from './basic_component';
 import {loginComponent} from './component';
+import {kubeConfigLoginComponent} from './kubeconfig_component';
 import {loginOptionsComponent} from './options_component';
 import stateConfig from './stateconfig';
+import {authenticationModesResource} from './stateconfig';
 import {tokenLoginComponent} from './token_component';
 
 /**
@@ -38,4 +40,6 @@ export default angular
     .component('kdLoginOptions', loginOptionsComponent)
     .component('kdBasicLogin', basicLoginComponent)
     .component('kdTokenLogin', tokenLoginComponent)
+    .component('kdKubeConfigLogin', kubeConfigLoginComponent)
+    .factory('kdAuthenticationModesResource', authenticationModesResource)
     .config(stateConfig);

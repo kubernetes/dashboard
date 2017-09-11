@@ -80,13 +80,14 @@ export class ControlPanelController {
   }
 
   /**
-   * Checks if user is logged in.
+   * Checks if user is logged in. In case he is logged in using authorization header logout should
+   * not be possible.
    *
    * @return {boolean}
    * @export
    */
   isLoggedIn() {
-    return this.loginStatus_ && (this.loginStatus_.headerPresent || this.loginStatus_.tokenPresent);
+    return this.loginStatus_ && !this.loginStatus_.headerPresent && this.loginStatus_.tokenPresent;
   }
 
   /**

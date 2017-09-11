@@ -132,7 +132,7 @@ func TestAuthManager_Login(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		authManager := NewAuthManager(c.cManager, c.tManager)
+		authManager := NewAuthManager(c.cManager, c.tManager, authApi.AuthenticationModes{authApi.Token: true})
 		response, err := authManager.Login(c.spec)
 
 		if !areErrorsEqual(err, c.expectedErr) {
@@ -143,6 +143,27 @@ func TestAuthManager_Login(t *testing.T) {
 		if !reflect.DeepEqual(response, c.expected) {
 			t.Errorf("Test Case: %s. Expected response to be: %v, but got %v.",
 				c.info, c.expected, response)
+		}
+	}
+}
+
+func TestAuthManager_AuthenticationModes(t *testing.T) {
+	cManager := &fakeClientManager{}
+	tManager := &fakeTokenManager{}
+	cases := []struct {
+		modes    authApi.AuthenticationModes
+		expected []authApi.AuthenticationMode
+	}{
+		{authApi.AuthenticationModes{}, []authApi.AuthenticationMode{}},
+		{authApi.AuthenticationModes{authApi.Token: true}, []authApi.AuthenticationMode{authApi.Token}},
+	}
+
+	for _, c := range cases {
+		authManager := NewAuthManager(cManager, tManager, c.modes)
+		got := authManager.AuthenticationModes()
+
+		if !reflect.DeepEqual(got, c.expected) {
+			t.Errorf("Expected %v, but got %v.", c.expected, got)
 		}
 	}
 }

@@ -14,8 +14,8 @@
 
 import loginModule from 'login/module';
 
-describe('Basic login component', () => {
-  /** @type {!BasicLoginController} */
+describe('Kubeconfig login component', () => {
+  /** @type {!KubeConfigLoginController} */
   let ctrl;
   /** @type {!LoginOptionsController} */
   let optionsCtrl;
@@ -26,7 +26,7 @@ describe('Basic login component', () => {
     angular.mock.inject(($componentController) => {
       optionsCtrl = $componentController('kdLoginOptions', {}, {});
       ctrl = $componentController(
-          'kdBasicLogin', {}, {loginOptionsCtrl: optionsCtrl, onUpdate: () => {}});
+          'kdKubeConfigLogin', {}, {loginOptionsCtrl: optionsCtrl, onUpdate: () => {}});
     });
   });
 
@@ -45,15 +45,13 @@ describe('Basic login component', () => {
   it('should clear input', () => {
     // given
     spyOn(ctrl, 'onUpdate');
-    ctrl.username = 'test-user';
-    ctrl.password = 'test-password';
+    ctrl.kubeConfig = 'test';
 
     // when
     ctrl.clear();
 
     // then
-    expect(ctrl.username).toEqual('');
-    expect(ctrl.password).toEqual('');
+    expect(ctrl.kubeConfig).toEqual('');
     expect(ctrl.onUpdate).toHaveBeenCalled();
   });
 });

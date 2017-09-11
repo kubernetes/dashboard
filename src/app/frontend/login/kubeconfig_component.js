@@ -15,7 +15,7 @@
 import LoginSpec from './spec';
 
 /** @final */
-class BasicLoginController {
+class KubeConfigLoginController {
   /** @ngInject */
   constructor() {
     /** @export {!angular.Component} */
@@ -25,17 +25,15 @@ class BasicLoginController {
     /** @export {function({loginSpec: !backendApi.LoginSpec})} - Initialized from binding */
     this.onUpdate;
     /** @export {string} */
-    this.username = '';
-    /** @export {string} */
-    this.password = '';
+    this.kubeConfig = '';
+    /** @export {!kdFile} */
+    this.file = {name: '', content: ''};
   }
 
-  /** @export */
+  /** export */
   clear() {
-    this.username = '';
-    this.password = '';
-    this.onUsernameUpdate();
-    this.onPasswordUpdate();
+    this.kubeConfig = '';
+    this.onFileLoad({name: '', content: ''});
   }
 
   /** @export */
@@ -43,20 +41,18 @@ class BasicLoginController {
     this.loginOptionsCtrl.addOption(this);
   }
 
-  /** @export */
-  onUsernameUpdate() {
-    this.onUpdate({loginSpec: new LoginSpec({username: this.username})});
-  }
-
-  /** @export */
-  onPasswordUpdate() {
-    this.onUpdate({loginSpec: new LoginSpec({password: this.password})});
+  /**
+   * @param {!kdFile} file
+   * @export
+   */
+  onFileLoad(file) {
+    this.onUpdate({loginSpec: new LoginSpec({kubeConfig: file.content})});
   }
 }
 
 /** @type {!angular.Component} */
-export const basicLoginComponent = {
-  templateUrl: 'login/basic.html',
+export const kubeConfigLoginComponent = {
+  templateUrl: 'login/kubeconfig.html',
   require: {
     'loginOptionsCtrl': '^kdLoginOptions',
   },
@@ -64,5 +60,5 @@ export const basicLoginComponent = {
     'title': '@',
     'onUpdate': '&',
   },
-  controller: BasicLoginController,
+  controller: KubeConfigLoginController,
 };

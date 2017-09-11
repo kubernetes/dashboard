@@ -22,7 +22,7 @@ export class ResourceCardHeaderColumnController {
   /**
    * @param {!angular.JQLite} $element
    * @param {!../../dataselect/service.DataSelectService} kdDataSelectService
-   * @param {!../../errorhandling/service.ErrorDialog} errorDialog
+   * @param {!../../errorhandling/dialog.ErrorDialog} errorDialog
    * @ngInject
    */
   constructor($element, kdDataSelectService, errorDialog) {
@@ -52,7 +52,7 @@ export class ResourceCardHeaderColumnController {
     this.dataSelectService_ = kdDataSelectService;
     /** @export {string} - Unique data select id. Initialized from resource card list controller. */
     this.selectId;
-    /** @private {!../../errorhandling/service.ErrorDialog} */
+    /** @private {!../../errorhandling/dialog.ErrorDialog} */
     this.errorDialog_ = errorDialog;
     /** @export */
     this.i18n = i18n;

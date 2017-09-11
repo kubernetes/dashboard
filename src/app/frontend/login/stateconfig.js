@@ -42,10 +42,19 @@ export default function stateConfig($stateProvider) {
 const config = {
   url: stateUrl,
   params: new StateParams(),
+  component: 'kdLogin',
   data: {
     [breadcrumbsConfig]: {
       'label': i18n.MSG_BREADCRUMBS_LOGIN_LABEL,
     },
   },
-  component: 'kdLogin',
 };
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.$q.Promise}
+ * @ngInject
+ */
+export function authenticationModesResource($resource) {
+  return $resource('api/v1/login/modes').get().$promise;
+}

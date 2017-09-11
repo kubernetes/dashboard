@@ -25,8 +25,9 @@ import (
 
 // Implements AuthManager interface
 type authManager struct {
-	tokenManager  authApi.TokenManager
-	clientManager client.ClientManager
+	tokenManager        authApi.TokenManager
+	clientManager       client.ClientManager
+	authenticationModes authApi.AuthenticationModes
 }
 
 // Login implements auth manager. See AuthManager interface for more information.
@@ -60,15 +61,23 @@ func (self authManager) Refresh(jweToken string) (string, error) {
 	return self.tokenManager.Refresh(jweToken)
 }
 
+func (self authManager) AuthenticationModes() []authApi.AuthenticationMode {
+	return self.authenticationModes.Array()
+}
+
 // Returns authenticator based on provided LoginSpec.
 func (self authManager) getAuthenticator(spec *authApi.LoginSpec) (authApi.Authenticator, error) {
+	if len(self.authenticationModes) == 0 {
+		return nil, errors.New("All authentication options disabled. Check --authentication-modes argument for more information.")
+	}
+
 	switch {
-	case len(spec.Token) > 0:
+	case len(spec.Token) > 0 && self.authenticationModes.IsEnabled(authApi.Token):
 		return NewTokenAuthenticator(spec), nil
-	case len(spec.Username) > 0 && len(spec.Password) > 0:
-		return nil, errors.New("Not implemented.")
+	case len(spec.Username) > 0 && len(spec.Password) > 0 && self.authenticationModes.IsEnabled(authApi.Basic):
+		return NewBasicAuthenticator(spec), nil
 	case len(spec.KubeConfig) > 0:
-		return nil, errors.New("Not implemented.")
+		return NewKubeConfigAuthenticator(spec, self.authenticationModes), nil
 	}
 
 	return nil, errors.New("Not enough data to create authenticator.")
@@ -81,9 +90,11 @@ func (self authManager) healthCheck(authInfo api.AuthInfo) error {
 }
 
 // NewAuthManager creates auth manager.
-func NewAuthManager(clientManager client.ClientManager, tokenManager authApi.TokenManager) authApi.AuthManager {
+func NewAuthManager(clientManager client.ClientManager, tokenManager authApi.TokenManager,
+	authenticationModes authApi.AuthenticationModes) authApi.AuthManager {
 	return &authManager{
-		tokenManager:  tokenManager,
-		clientManager: clientManager,
+		tokenManager:        tokenManager,
+		clientManager:       clientManager,
+		authenticationModes: authenticationModes,
 	}
 }

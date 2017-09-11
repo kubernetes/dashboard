@@ -25,7 +25,13 @@ class TokenLoginController {
     /** @export {function({loginSpec: !backendApi.LoginSpec})} - Initialized from binding */
     this.onUpdate;
     /** @export {string} */
-    this.token;
+    this.token = '';
+  }
+
+  /** export */
+  clear() {
+    this.token = '';
+    this.onTokenUpdate();
   }
 
   /** @export */

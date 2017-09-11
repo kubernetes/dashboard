@@ -12,20 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** @final */
-export class ErrorService {
-  /**
-   * @param {!angular.$http.Response} err
-   * @return {!backendApi.Error}
-   */
-  toBackendApiError(err) {
-    return {
-      ErrStatus: {
-        message: String(err.data),
-        code: err.status,
-        status: String(err.status),
-        reason: String(err.data),
-      },
-    };
-  }
+package api
+
+// ToAuthenticationModes transforms array of authentication mode strings to valid AuthenticationModes type.
+func ToAuthenticationModes(modes []string) AuthenticationModes {
+	result := AuthenticationModes{}
+	modesMap := map[string]bool{}
+
+	for _, mode := range []AuthenticationMode{Token, Basic} {
+		modesMap[mode.String()] = true
+	}
+
+	for _, mode := range modes {
+		if _, exists := modesMap[mode]; exists {
+			result.Add(AuthenticationMode(mode))
+		}
+	}
+
+	return result
 }

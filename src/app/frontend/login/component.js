@@ -15,15 +15,30 @@
 import {stateName as overviewState} from '../overview/state';
 import LoginSpec from './spec';
 
+/**
+ * Should be kept in sync with 'backend/auth/api/types.go' AuthenticationMode options and
+ * 'backendapi.js' file.
+ *
+ * @const {!backendApi.SupportedAuthenticationModes}
+ */
+const Modes = {
+  /** @export {!backendApi.AuthenticationMode} */
+  TOKEN: 'token',
+  /** @export {!backendApi.AuthenticationMode} */
+  BASIC: 'basic',
+};
+
 /** @final */
 class LoginController {
   /**
    * @param {!./../chrome/nav/nav_service.NavService} kdNavService
    * @param {!./../common/auth/service.AuthService} kdAuthService
    * @param {!ui.router.$state} $state
+   * @param {!angular.$q.Promise} kdAuthenticationModesResource
+   * @param {!../common/errorhandling/service.ErrorService} kdErrorService
    * @ngInject
    */
-  constructor(kdNavService, kdAuthService, $state) {
+  constructor(kdNavService, kdAuthService, $state, kdAuthenticationModesResource, kdErrorService) {
     /** @private {!./../chrome/nav/nav_service.NavService} */
     this.kdNavService_ = kdNavService;
     /** @private {!./../common/auth/service.AuthService} */
@@ -39,34 +54,50 @@ class LoginController {
     this.loginSpec;
     /** @private {!Array<!backendApi.Error>} */
     this.errors = [];
+    /** @private {!Array<!backendApi.AuthenticationMode>} */
+    this.enabledAuthenticationModes_;
+    /** @private {!angular.$q.Promise} */
+    this.authenticationModesResource_ = kdAuthenticationModesResource;
+    /** @export {!backendApi.SupportedAuthenticationModes} **/
+    this.supportedAuthenticationModes = Modes;
+    /** @private {!../common/errorhandling/service.ErrorService} */
+    this.errorService_ = kdErrorService;
   }
 
   /** @export */
   $onInit() {
     // Check for errors that came during state transition
     if (this.state_.params.error) {
-      this.errors.push(this.toBackendApiError_((this.state_.params.error)));
+      this.errors.push(this.errorService_.toBackendApiError(this.state_.params.error));
     }
 
     this.loginSpec = new LoginSpec();
     /** Hide side menu while entering login page. */
     this.kdNavService_.setVisibility(false);
+    /**
+     * Init authentication modes
+     * TODO(floreks): Investigate why state resolve does not work here
+     */
+    this.authenticationModesResource_.then((authModes) => {
+      this.enabledAuthenticationModes_ = authModes.modes;
+    });
   }
 
   /**
-   * @param {!angular.$http.Response} err
-   * @return {!backendApi.Error}
-   * @private
+   * @param {!backendApi.AuthenticationMode} mode
+   * @export
    */
-  toBackendApiError_(err) {
-    return /** !backendApi.Error */ {
-      ErrStatus: {
-        message: String(err.data),
-        code: err.status,
-        status: err.status.toString(),
-        reason: String(err.data),
-      },
-    };
+  isAuthenticationModeEnabled(mode) {
+    let enabled = false;
+    if (this.enabledAuthenticationModes_) {
+      this.enabledAuthenticationModes_.forEach((enabledMode) => {
+        if (mode === enabledMode) {
+          enabled = true;
+        }
+      });
+    }
+
+    return enabled;
   }
 
   /**
@@ -77,32 +108,44 @@ class LoginController {
     this.loginSpec.username = this.getValue_(this.loginSpec.username, loginSpec.username);
     this.loginSpec.password = this.getValue_(this.loginSpec.password, loginSpec.password);
     this.loginSpec.token = this.getValue_(this.loginSpec.token, loginSpec.token);
+    this.loginSpec.kubeConfig = this.getValue_(this.loginSpec.kubeConfig, loginSpec.kubeConfig);
   }
 
   /**
-   * Returns new values if it differs from old value and is not undefined.
+   * On option change resets login spec to default state.
    *
+   * @export
+   */
+  onOptionChange() {
+    this.loginSpec = new LoginSpec();
+  }
+
+  /**
    * @param {string} oldVal
    * @param {string} newVal
    * @return {string}
    * @private
    */
   getValue_(oldVal, newVal) {
-    return oldVal !== newVal && newVal !== undefined ? newVal : oldVal;
+    return oldVal !== newVal && newVal.length > 0 ? newVal : oldVal;
   }
 
   /** @export */
   login() {
     if (this.form.$valid) {
-      this.kdAuthService_.login(this.loginSpec).then((errors) => {
-        if (errors.length > 0) {
-          this.errors = errors;
-          return;
-        }
+      this.kdAuthService_.login(this.loginSpec)
+          .then((errors) => {
+            if (errors.length > 0) {
+              this.errors = errors;
+              return;
+            }
 
-        this.kdNavService_.setVisibility(true);
-        this.state_.transitionTo(overviewState);
-      });
+            this.kdNavService_.setVisibility(true);
+            this.state_.transitionTo(overviewState);
+          })
+          .catch((err) => {
+            this.errors = [this.errorService_.toBackendApiError(err)];
+          });
     }
   }
 

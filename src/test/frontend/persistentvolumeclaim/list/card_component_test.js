@@ -37,7 +37,7 @@ describe('Persistent Volume Claim card', () => {
   it('should return true when persistent volume claim is bound', () => {
     // given
     ctrl.persistentVolumeClaim = {
-      Status: 'Bound',
+      status: 'Bound',
     };
 
     // then
@@ -47,7 +47,7 @@ describe('Persistent Volume Claim card', () => {
   it('should return true when persistent volume claim is pending', () => {
     // given
     ctrl.persistentVolumeClaim = {
-      Status: 'Pending',
+      status: 'Pending',
     };
 
     // then
@@ -57,7 +57,7 @@ describe('Persistent Volume Claim card', () => {
   it('should return true when persistent volume claim is lost', () => {
     // given
     ctrl.persistentVolumeClaim = {
-      Status: 'Lost',
+      status: 'Lost',
     };
 
     // then

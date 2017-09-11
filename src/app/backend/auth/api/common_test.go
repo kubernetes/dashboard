@@ -12,20 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** @final */
-export class ErrorService {
-  /**
-   * @param {!angular.$http.Response} err
-   * @return {!backendApi.Error}
-   */
-  toBackendApiError(err) {
-    return {
-      ErrStatus: {
-        message: String(err.data),
-        code: err.status,
-        status: String(err.status),
-        reason: String(err.data),
-      },
-    };
-  }
+package api
+
+import (
+	"reflect"
+	"testing"
+)
+
+func TestToAuthenticationModes(t *testing.T) {
+	cases := []struct {
+		modes    []string
+		expected AuthenticationModes
+	}{
+		{[]string{}, AuthenticationModes{}},
+		{[]string{"token"}, AuthenticationModes{Token: true}},
+		{[]string{"token", "basic", "test"}, AuthenticationModes{Token: true, Basic: true}},
+	}
+
+	for _, c := range cases {
+		got := ToAuthenticationModes(c.modes)
+		if !reflect.DeepEqual(got, c.expected) {
+			t.Fatalf("ToAuthenticationModes(): expected %v, but got %v", c.expected, got)
+		}
+	}
 }
