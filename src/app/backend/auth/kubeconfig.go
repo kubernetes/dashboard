@@ -22,6 +22,9 @@ import (
 	"k8s.io/client-go/tools/clientcmd/api"
 )
 
+// Below structures represent structure of kubeconfig file. They only contain fields required to gather data needed
+// to log in user. It should support same auth options as defined in auth/api/types.go file. Currently: basic, token.
+
 type contextInfo struct {
 	User string `yaml:"user"`
 }
@@ -48,9 +51,10 @@ type kubeConfig struct {
 	Users          []userEntry    `yaml:"users"`
 }
 
-// Implements Authenticator interface
+// Implements Authenticator interface.
 type kubeConfigAuthenticator struct {
 	fileContent []byte
+	authModes   authApi.AuthenticationModes
 }
 
 // GetAuthInfo implements Authenticator interface. See Authenticator for more information.
@@ -68,6 +72,7 @@ func (self *kubeConfigAuthenticator) GetAuthInfo() (api.AuthInfo, error) {
 	return self.getAuthInfo(info)
 }
 
+// Parses kubeconfig file and returns kubeConfig object.
 func (self *kubeConfigAuthenticator) parseKubeConfig(bytes []byte) (*kubeConfig, error) {
 	kubeConfig := new(kubeConfig)
 	if err := yaml.Unmarshal(bytes, kubeConfig); err != nil {
@@ -77,6 +82,7 @@ func (self *kubeConfigAuthenticator) parseKubeConfig(bytes []byte) (*kubeConfig,
 	return kubeConfig, nil
 }
 
+// Returns user info based on defined current context. In case it is not found error is returned.
 func (self *kubeConfigAuthenticator) getCurrentUserInfo(config kubeConfig) (userInfo, error) {
 	userName := ""
 	for _, context := range config.Contexts {
@@ -98,21 +104,29 @@ func (self *kubeConfigAuthenticator) getCurrentUserInfo(config kubeConfig) (user
 	return userInfo{}, errors.New("User matching current context user not found. Check if your config file is valid.")
 }
 
+// Returns auth info structure based on provided user info or error in case not enough data has been provided.
 func (self *kubeConfigAuthenticator) getAuthInfo(info userInfo) (api.AuthInfo, error) {
 	if len(info.Token) == 0 && (len(info.Password) == 0 || len(info.Username) == 0) {
 		return api.AuthInfo{}, errors.New("Not enough data to create auth info structure.")
 	}
 
-	return api.AuthInfo{
-		Username: info.Username,
-		Password: info.Password,
-		Token:    info.Token,
-	}, nil
+	result := api.AuthInfo{}
+	if self.authModes.IsEnabled(authApi.Token) {
+		result.Token = info.Token
+	}
+
+	if self.authModes.IsEnabled(authApi.Basic) {
+		result.Username = info.Username
+		result.Password = info.Password
+	}
+
+	return result, nil
 }
 
 // NewBasicAuthenticator returns Authenticator based on LoginSpec.
-func NewKubeConfigAuthenticator(spec *authApi.LoginSpec) authApi.Authenticator {
+func NewKubeConfigAuthenticator(spec *authApi.LoginSpec, authModes authApi.AuthenticationModes) authApi.Authenticator {
 	return &kubeConfigAuthenticator{
 		fileContent: []byte(spec.KubeConfig),
+		authModes:   authModes,
 	}
 }
