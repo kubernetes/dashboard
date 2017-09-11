@@ -126,13 +126,12 @@ func GetLogFile(client kubernetes.Interface, namespace, podID string, container 
 }
 
 func openStream(client kubernetes.Interface, namespace, podID string, logOptions *v1.PodLogOptions) (io.ReadCloser, error) {
-	req := client.CoreV1().RESTClient().Get().
+	return client.CoreV1().RESTClient().Get().
 		Namespace(namespace).
 		Name(podID).
 		Resource("pods").
 		SubResource("log").
-		VersionedParams(logOptions, scheme.ParameterCodec)
-	return req.Stream()
+		VersionedParams(logOptions, scheme.ParameterCodec).Stream()
 }
 
 // ConstructLogDetails creates a new log details structure for given parameters.
