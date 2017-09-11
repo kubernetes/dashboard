@@ -14,20 +14,25 @@
 
 package api
 
-// ToAuthenticationModes transforms array of authentication mode strings to valid AuthenticationModes type.
-func ToAuthenticationModes(modes []string) AuthenticationModes {
-	result := AuthenticationModes{}
-	modesMap := map[string]bool{}
+import (
+	"reflect"
+	"testing"
+)
 
-	for _, mode := range []AuthenticationMode{Token, Basic} {
-		modesMap[mode.String()] = true
+func TestToAuthenticationModes(t *testing.T) {
+	cases := []struct {
+		modes    []string
+		expected AuthenticationModes
+	}{
+		{[]string{}, AuthenticationModes{}},
+		{[]string{"token"}, AuthenticationModes{Token: true}},
+		{[]string{"token", "basic", "test"}, AuthenticationModes{Token: true, Basic: true}},
 	}
 
-	for _, mode := range modes {
-		if _, exists := modesMap[mode]; exists {
-			result.Add(AuthenticationMode(mode))
+	for _, c := range cases {
+		got := ToAuthenticationModes(c.modes)
+		if !reflect.DeepEqual(got, c.expected) {
+			t.Fatalf("ToAuthenticationModes(): expected %v, but got %v", c.expected, got)
 		}
 	}
-
-	return result
 }

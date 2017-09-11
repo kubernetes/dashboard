@@ -146,3 +146,24 @@ func TestAuthManager_Login(t *testing.T) {
 		}
 	}
 }
+
+func TestAuthManager_AuthenticationModes(t *testing.T) {
+	cManager := &fakeClientManager{}
+	tManager := &fakeTokenManager{}
+	cases := []struct {
+		modes    authApi.AuthenticationModes
+		expected []authApi.AuthenticationMode
+	}{
+		{authApi.AuthenticationModes{}, []authApi.AuthenticationMode{}},
+		{authApi.AuthenticationModes{authApi.Token: true}, []authApi.AuthenticationMode{authApi.Token}},
+	}
+
+	for _, c := range cases {
+		authManager := NewAuthManager(cManager, tManager, c.modes)
+		got := authManager.AuthenticationModes()
+
+		if !reflect.DeepEqual(got, c.expected) {
+			t.Errorf("Expected %v, but got %v.", c.expected, got)
+		}
+	}
+}
