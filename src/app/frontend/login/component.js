@@ -68,7 +68,7 @@ class LoginController {
   $onInit() {
     // Check for errors that came during state transition
     if (this.state_.params.error) {
-      this.errors.push(this.toBackendApiError_((this.state_.params.error)));
+      this.errors.push(this.errorService_.toBackendApiError(this.state_.params.error));
     }
 
     this.loginSpec = new LoginSpec();
@@ -98,22 +98,6 @@ class LoginController {
     }
 
     return enabled;
-  }
-
-  /**
-   * @param {!angular.$http.Response} err
-   * @return {!backendApi.Error}
-   * @private
-   */
-  toBackendApiError_(err) {
-    return /** !backendApi.Error */ {
-      ErrStatus: {
-        message: String(err.data),
-        code: err.status,
-        status: err.status.toString(),
-        reason: String(err.data),
-      },
-    };
   }
 
   /**

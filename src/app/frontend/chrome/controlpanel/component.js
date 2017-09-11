@@ -80,8 +80,8 @@ export class ControlPanelController {
   }
 
   /**
-   * Checks if user is logged in. In case he is logged in using authorization header logout should not be
-   * possible.
+   * Checks if user is logged in. In case he is logged in using authorization header logout should
+   * not be possible.
    *
    * @return {boolean}
    * @export
