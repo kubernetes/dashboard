@@ -18,7 +18,7 @@ Here is a list of rules, that we follow:
 - self-explanatory names
 - private method and variable names should end with a `_`
  
-Please notice, that this is not a list of all standard programming rules. Use it as a list of tips designed fou this
+Please notice, that this is not a list of all common programming rules. Use it as a list of tips designed for this
 project.
 
 ### JavaScript Annotations
