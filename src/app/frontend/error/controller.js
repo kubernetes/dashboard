@@ -14,7 +14,7 @@
 
 import {stateName as overview} from '../overview/state';
 
-const REDIRECT_TIMEOUT = 5000;
+const REDIRECT_TIMEOUT = 3000;
 
 /**
  * @final

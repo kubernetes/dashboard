@@ -26,7 +26,7 @@ limitations under the License.
         <span>{{ctrl.getErrorStatus()}}</span>
       </h2>
       <pre ng-class="{'kd-error-spacer': ctrl.isKnownError()}">{{ctrl.getErrorData()}}</pre>
-      <pre ng-if="ctrl.isNotFoundError()">[[Redirecting to previous state in 5 seconds...|Redirect info in case of 404 error.]]</pre>
+      <pre ng-if="ctrl.isNotFoundError()">[[Redirecting to previous state in 3 seconds...|Redirect info in case of 404 error.]]</pre>
       <div ng-if="!ctrl.isKnownError()"
            layout="row"
            layout-align="end center">
