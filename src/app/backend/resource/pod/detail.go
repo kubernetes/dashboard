@@ -26,9 +26,8 @@ import (
 	errorHandler "github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-
 	"github.com/kubernetes/dashboard/src/app/backend/resource/controller"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/userlinks"
 	"k8s.io/apimachinery/pkg/api/errors"
 	res "k8s.io/apimachinery/pkg/api/resource"
