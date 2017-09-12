@@ -24,12 +24,13 @@ limitations under the License.
         <span>{{ctrl.getErrorStatus()}}</span>
       </h2>
       <pre ng-class="{'kd-error-spacer': ctrl.isKnownError()}">{{ctrl.getErrorData()}}</pre>
+      <pre ng-if="ctrl.isNotFoundError()">[[Redirecting to previous state in 3 seconds...|Redirect info in case of 404 error.]]</pre>
       <div ng-if="!ctrl.isKnownError()"
            layout="row"
            layout-align="end center">
         <a ng-href="{{ctrl.getLinkToFeedbackPage()}}">
           <md-button class="kd-error-feedback-button">
-            [[Send feedback|This is a label for button displayed on error page used to send feedback to GitHub new issue.]]
+            [[Send feedback|Label for a button displayed on error page used to send feedback to GitHub new issue.]]
           </md-button>
         </a>
       </div>
