@@ -16,8 +16,8 @@ logic and fetches raw data from the various Kubernetes APIs.
 Make sure the following software is installed and added to the `$PATH` variable:
 
 * Docker (1.10+)
-* go (1.7+)
-* nodejs (5.1.1+)
+* go (1.8.3+)
+* nodejs (6.10.3+)
 * npm (3+)
 * java (7+)
 * gulp (3.9+)

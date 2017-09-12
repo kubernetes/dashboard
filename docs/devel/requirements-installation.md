@@ -4,52 +4,24 @@ These instructions are an elaboration on how to install the requirements listed 
 
 Before you begin please make sure you can connect to your Linux machine and login. Command line instructions for Linux will be shown starting with `$`; you should only type the text following the `$`.
 
+This has been tested on:
+* Ubuntu 16.04.
+* Ubuntu 14.04.
+
 ## Initial System Setup
 
-Based on instructions from: https://docs.docker.com/engine/installation/linux/ubuntulinux/
-
-This will update and upgrade Linux.
-
+First update and upgrade Linux on your node:
 ```shell
 $ sudo apt-get update
 $ sudo apt-get upgrade
 ```
 
-### Check
-
+Install some programs that we'll need later on, and verify that they're there:
 ```shell
-$ uname -r
+$ sudo apt-get install curl git make g++
 ```
 
-You should get `3.2.0-23-generic` or something similar depending on what the current version is.
-
-
-```shell
-$ lsb_release -a
-```
-
-^ You should get a response like:
-
-```log
-No LSB modules are available.
-Distributor ID: Ubuntu
-Description:    Ubuntu 12.04.5 LTS
-Release:        12.04
-Codename:       precise
-```
-
-
-## Install Helpful Programs
-
-Install some programs that we'll need later on, and verify that they're there.
-
-```shell
-$ sudo apt-get install curl
-$ sudo apt-get install git
-```
-
-if you are fedora (install npm3)
-
+if you are fedora (install npm3):
 ```shell
 sudo dnf install -y fedora-repos-rawhide
 sudo dnf install -y --enablerepo rawhide nodejs libuv --best --allowerasing
@@ -57,15 +29,37 @@ sudo dnf install -y --enablerepo rawhide nodejs libuv --best --allowerasing
 
 ### Check
 
+Use the following command to check which kernel version your server is currently running:
+```shell
+$ uname -r
+```
+> You should get `3.13.0-129-generic` or something similar depending on what the current version is.
+
+Use this in the terminal to show the details about the installed Ubuntu "version":
+```shell
+$ lsb_release -a
+```
+
+^ You should get a response like:
+```log
+No LSB modules are available.
+Distributor ID:	Ubuntu
+Description:	Ubuntu 14.04.5 LTS
+Release:	14.04
+Codename:	trusty
+```
+
+Use the following command to check `git` and `curl` version:
 ```shell
 $ curl --version
 $ git --version
 ```
 
-These instructions were last tested with curl `7.22.0`, and git `1.7.9.5`.
+These instructions were last tested with curl `7.35.0+`, and git `1.9.1+`.
 
 ## Get Vagrant on Linux
 
+To install Vagrant using `apt-get`:
 ```shell
 $ sudo apt-get install vagrant
 $ vagrant --version
@@ -73,44 +67,40 @@ $ export KUBERNETES_PROVIDER=vagrant
 $ echo "export KUBERNETES_PROVIDER=vagrant" >> ~/.profile
 ```
 
-These instructions are using vagrant version 1.0.1.
+These instructions are using vagrant version `1.4.3+`.
 
 ## Install Docker
 
-Based on instructions from: https://docs.docker.com/engine/installation/linux/ubuntulinux/
+Based on instructions from: https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/.
 
 ### Setup
 
+Use the following command to set up the repository:
 ```shell
 $ sudo apt-get install apt-transport-https ca-certificates
-$ sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 ```
 
 Create a docker.list file with one command:
-
 ```shell
-$ sudo bash -c 'echo "deb https://apt.dockerproject.org/repo ubuntu-precise main" > /etc/apt/sources.list.d/docker.list'
+$ echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+$(lsb_release -cs) \
+stable" | sudo tee /etc/apt/sources.list.d/docker.list
 ```
 
+To get Docker package version:
 ```shell
 $ sudo apt-get update
 $ sudo apt-get purge lxc-docker
-$ apt-cache policy docker-engine
-```
-
-### Only needed for Ubuntu Precise 12.04
-
-```shell
-$ sudo apt-get update
-$ sudo apt-get install linux-image-generic-lts-trusty
-$ sudo reboot
+$ apt-cache policy docker-ce
 ```
 
 ### Do the Docker install
 
+To install latest version of Docker:
 ```shell
 $ sudo apt-get update
-$ sudo apt-get install docker-engine
+$ sudo apt-get install docker-ce
 $ sudo service docker start
 $ sudo docker run hello-world
 ```
@@ -119,7 +109,7 @@ You should receive a message that includes: `This message shows that your instal
 
 ### Configure Docker for your user
 
-Based on instructions from https://docs.docker.com/engine/installation/linux/ubuntulinux/#create-a-docker-group
+Based on instructions from https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/.
 
 The example below uses "username" as a placeholder. Please substitute with the user you are logged in as, which can be seen by using `$ id`.
 If you are running Linux in a VM using Vagrant, your username will be "vagrant".
@@ -132,6 +122,7 @@ $ sudo reboot
 
 #### Check
 
+To run Docker without `sudo` command:
 ```shell
 $ docker run hello-world
 ```
@@ -147,27 +138,28 @@ For an additional check you can run these commands:
 
 ## Install Go
 
-The instructions below are for install a specific version of Go (1.8 for linux amd64). If you want the latest Go version or have a different system, then you can get the latest download URL from https://golang.org/dl/
+The instructions below are for install a specific version of Go (1.8.3 for linux amd64). If you want the latest Go version or have a different system, then you can get the latest download URL from https://golang.org/dl/.
 
 ```shell
-$ wget https://storage.googleapis.com/golang/go1.8.linux-amd64.tar.gz
-$ sudo tar -C /usr/local -xzf go1.8.linux-amd64.tar.gz
+$ wget https://storage.googleapis.com/golang/go1.8.3.linux-amd64.tar.gz
+$ sudo tar -C /usr/local -xzf go1.8.3.linux-amd64.tar.gz
 $ export PATH=$PATH:/usr/local/go/bin
 $ echo "export PATH=$PATH:/usr/local/go/bin" >> ~/.profile
 ```
 
 ### Check
 
+To get Go version:
 ```shell
 $ go version
 $ echo $PATH
 ```
 
-The Go version should return something like `go version go1.8 linux/amd64`. Note that if you already had Go installed, ensure that `GO15VENDOREXPERIMENT` is unset.
+The Go version should return something like `go version go1.8.3 linux/amd64`. Note that if you already had Go installed, ensure that `GO15VENDOREXPERIMENT` is unset.
 
 ## Install Node and NPM
 
-For some reason doing `sudo apt-get install nodejs` gives a much older version, so instead we will get the more recent version:
+For some reason doing `sudo apt-get install nodejs` gives a much older version, so instead we will get the more recent version.
 
 ```shell
 $ curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
@@ -176,35 +168,39 @@ $ sudo apt-get install -y nodejs
 
 ### Check
 
+To get Node.js version:
 ```shell
 $ node -v
 $ npm -v
 ```
 
-The last time these instructions were updated, this returned `v6.3.1` and `3.10.3` respectively, but later versions will probably also work.
+The last time these instructions were updated, this returned `v6.11.3` and `3.10.10` respectively, but later versions will probably also work.
 
 ## Install Java runtime
 
+To install OpenJDK 7, execute the following command:
 ```shell
 $ sudo apt-get install openjdk-7-jre
 ```
+> Use `Ubuntu 16.04` need to change `openjdk-7-jre`to` openjdk-8-jre`.
 
-if you are fedora
-
+if you are fedora:
 ```shell
 $ sudo dnf install java-1.8.0-openjdk
 ```
 
 ### Check
 
+To get Java version:
 ```shell
 $ java -version
 ```
 
-Should return `java version "1.7.0_101"`.
+Should return `java version "1.7.0_151"`.
 
-## Install Gulp using npm
+## Install Gulp
 
+To install Gulp using npm:
 ```shell
 $ sudo npm install --global gulp-cli
 $ sudo npm install --global gulp
@@ -212,12 +208,12 @@ $ sudo npm install --global gulp
 
 ### Check
 
+To get Gulp version:
 ```shell
 $ gulp -v
 ```
 
 Should return `CLI version 3.9.1` and `Local version 3.9.1`.
-
 
 ## Get Kubernetes
 
@@ -238,9 +234,10 @@ $ git clone https://github.com/kubernetes/kubernetes.git
 
 ## Install Other Dashboard Dependencies Automatically with NPM
 
+To install the dependencies:
 ```shell
 $ cd ~/dashboard
-$ npm install
+$ npm i
 ```
 
 This will install all the dependencies that are in the `package.json` file in the dashboard repo. *This could take a while.*
@@ -251,14 +248,15 @@ Run the script included with the dashboard that checks out the latest Kubernetes
 
 ```shell
 $ cd ~/dashboard   
-   
+
 # Start cluster at first, because the dashboard need apiserver-host for requesting.
-$ gulp local-up-cluster   
-  
+$ gulp local-up-cluster --heapsterServerHost 'http://localhost:8082'
+
 # Run script to build docker image with name "kubernetes-dashboard-build-image ", and then start a container.
 # The parameter "serve" is necessary, otherwise, there will be a gulp task error.
 $ sudo build/run-gulp-in-docker.sh serve
 ```
+
 If you need append ENV variables to container, you should edit the Dockerfile.
 
 ```Dockerfile
@@ -266,9 +264,8 @@ ENV http_proxy="http://username:passowrd@10.0.58.88:8080/"
 ENV https_proxy="http://username:password@10.0.58.88:8080/"
 ```
 
-If you need to stop the cluster you can run `$ docker kill $(docker ps -aq)`, 
+If you need to stop the cluster you can run `$ docker kill $(docker ps -aq)`,
 and the dashboard container is stopped also.
-
 
 ### Check
 
