@@ -87,6 +87,7 @@ func (self *metricManager) EnableWithRetry(id integrationapi.IntegrationID, peri
 		metricClient, exists := self.clients[id]
 		if !exists {
 			log.Printf("Metric client with given id %s does not exist.", id)
+			return
 		}
 
 		err := metricClient.HealthCheck()
@@ -97,6 +98,7 @@ func (self *metricManager) EnableWithRetry(id integrationapi.IntegrationID, peri
 		}
 
 		if self.active == nil {
+			log.Printf("Successful request to %s", id)
 			self.active = metricClient
 		}
 	}, period*time.Second)
