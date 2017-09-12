@@ -16,12 +16,14 @@ package metric
 
 import (
 	"fmt"
+	"log"
+	"time"
 
-	"github.com/emicklei/go-restful/log"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	integrationapi "github.com/kubernetes/dashboard/src/app/backend/integration/api"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
+	"k8s.io/apimachinery/pkg/util/wait"
 )
 
 // MetricManager is responsible for management of all integrated applications related to metrics.
@@ -33,6 +35,9 @@ type MetricManager interface {
 	// Enable is responsible for switching active client if given integration application id
 	// is found and related application is healthy (we can connect to it).
 	Enable(integrationapi.IntegrationID) error
+	// EnableWithRetry works similar to enable. It runs in a separate thread and tries to enable integration with given
+	// id every 'period' seconds.
+	EnableWithRetry(id integrationapi.IntegrationID, period time.Duration)
 	// List returns list of available metric related integrations.
 	List() []integrationapi.Integration
 	// ConfigureHeapster configures and adds heapster to clients list.
@@ -74,6 +79,29 @@ func (self *metricManager) Enable(id integrationapi.IntegrationID) error {
 
 	self.active = metricClient
 	return nil
+}
+
+// EnableWithRetry implements metric manager interface. See MetricManager for more information.
+func (self *metricManager) EnableWithRetry(id integrationapi.IntegrationID, period time.Duration) {
+	go wait.Forever(func() {
+		metricClient, exists := self.clients[id]
+		if !exists {
+			log.Printf("Metric client with given id %s does not exist.", id)
+			return
+		}
+
+		err := metricClient.HealthCheck()
+		if err != nil {
+			self.active = nil
+			log.Printf("Metric client health check failed: %s. Retrying in %d seconds.", err, period)
+			return
+		}
+
+		if self.active == nil {
+			log.Printf("Successful request to %s", id)
+			self.active = metricClient
+		}
+	}, period*time.Second)
 }
 
 // List implements metric manager interface. See MetricManager for more information.
