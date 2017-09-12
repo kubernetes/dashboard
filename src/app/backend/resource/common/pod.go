@@ -79,6 +79,9 @@ func GetContainerNames(podTemplate *v1.PodSpec) []string {
 	for _, container := range podTemplate.Containers {
 		containerNames = append(containerNames, container.Name)
 	}
+	for _, container := range podTemplate.InitContainers {
+		containerNames = append(containerNames, container.Name)
+	}
 	return containerNames
 }
 

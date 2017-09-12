@@ -135,9 +135,10 @@ func TestGetContainerNames(t *testing.T) {
 		{&api.PodSpec{}, nil},
 		{
 			&api.PodSpec{
-				Containers: []api.Container{{Name: "container"}, {Name: "container"}},
+				Containers:     []api.Container{{Name: "container"}, {Name: "container"}},
+				InitContainers: []api.Container{{Name: "init-container-1"}, {Name: "init-container-2"}},
 			},
-			[]string{"container", "container"},
+			[]string{"container", "container", "init-container-1", "init-container-2"},
 		},
 	}
 
