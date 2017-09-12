@@ -62,7 +62,7 @@ func (self inClusterHeapsterClient) HealthCheck() error {
 		DoRaw()
 
 	if err == nil {
-		log.Print("Successful initial request to heapster")
+		log.Print("Successful request to heapster")
 	}
 
 	return err
@@ -84,7 +84,7 @@ func (c remoteHeapsterClient) Get(path string) RequestInterface {
 func (self remoteHeapsterClient) HealthCheck() error {
 	_, err := self.Get("healthz").AbsPath("/").DoRaw()
 	if err == nil {
-		log.Print("Successful initial request to heapster")
+		log.Print("Successful request to heapster")
 	}
 
 	return err
