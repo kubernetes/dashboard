@@ -103,8 +103,6 @@ limitations under the License.
     </kd-resource-card-column>
   </kd-resource-card-columns>
   <kd-resource-card-footer ng-if="::$ctrl.isFailed()">
-    <div ng-repeat="warning in ::$ctrl.pod.warnings">
-      <span class="kd-error">{{::warning.message}}</span>
-    </div>
+    <kd-pod-warnings warnings="::$ctrl.pod.warnings"></kd-pod-warnings>
   </kd-resource-card-footer>
 </kd-resource-card>

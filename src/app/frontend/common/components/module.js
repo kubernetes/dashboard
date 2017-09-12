@@ -27,6 +27,7 @@ import graphModule from './graph/module';
 import infoCardModule from './infocard/infocard_module';
 import {labelComponent} from './labels/component';
 import {middleEllipsisComponent} from './middleellipsis/component';
+import {podWarningsComponent} from './podwarnings/component';
 import resourceCardModule from './resourcecard/resourcecard_module';
 import {infoCardComponent} from './resourcedetail/component';
 import {scaleButtonComponent} from './scale/component';
@@ -70,5 +71,6 @@ export default angular
     .component('kdWarnings', warningsComponent)
     .component('kdConditionList', conditionListComponent)
     .component('kdScaleButton', scaleButtonComponent)
+    .component('kdPodWarnings', podWarningsComponent)
     .directive('kdWarnThreshold', warnThresholdDirective)
     .directive('kdUploadFile', uploadFileDirective);
