@@ -20,15 +20,14 @@
 export class EditResourceController {
   /**
    * @param {!md.$dialog} $mdDialog
-   * @param {!angular.$resource} $resource
    * @param {!angular.$http} $http
-   * @param {!clipboard.Clipboard} clipboard
+   * @param {!kdClipboard.Clipboard} clipboard
    * @param {!md.$toast} $mdToast
    * @param {string} resourceKindName
    * @param {string} resourceUrl
    * @ngInject
    */
-  constructor($mdDialog, $resource, $http, clipboard, $mdToast, resourceKindName, resourceUrl) {
+  constructor($mdDialog, $http, clipboard, $mdToast, resourceKindName, resourceUrl) {
     /** @export {string} */
     this.resourceKindName = resourceKindName;
 
@@ -41,13 +40,10 @@ export class EditResourceController {
     /** @private {!md.$dialog} */
     this.mdDialog_ = $mdDialog;
 
-    /** @private {!angular.$resource} */
-    this.resource_ = $resource;
-
     /** @private {!angular.$http} */
     this.http_ = $http;
 
-    /** @private {!clipboard.Clipboard} */
+    /** @private {!kdClipboard.Clipboard} */
     this.clipboard_ = clipboard;
 
     /** @private {!md.$toast} */

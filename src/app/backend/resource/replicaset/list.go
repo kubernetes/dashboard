@@ -104,9 +104,8 @@ func ToReplicaSetList(replicaSets []extensions.ReplicaSet, pods []v1.Pod, events
 	replicaSetList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
 	for _, replicaSet := range replicaSets {
-		matchingPods := common.FilterPodsByOwnerReference(replicaSet.Namespace,
-			replicaSet.UID, pods)
-		podInfo := common.GetPodInfo(replicaSet.Status.Replicas, *replicaSet.Spec.Replicas,
+		matchingPods := common.FilterPodsByControllerRef(&replicaSet, pods)
+		podInfo := common.GetPodInfo(replicaSet.Status.Replicas, replicaSet.Spec.Replicas,
 			matchingPods)
 		podInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)
 		replicaSetList.ReplicaSets = append(replicaSetList.ReplicaSets,

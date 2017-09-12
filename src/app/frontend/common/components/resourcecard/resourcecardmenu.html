@@ -18,7 +18,10 @@ limitations under the License.
   <md-button ng-click="$mdMenu.open($event)"
              class="md-icon-button">
     <md-icon md-font-library="material-icons">more_vert</md-icon>
-    <md-tooltip>[[Actions|Tooltip "Actions", which appears when you hover over the menu icon on any resource card.]]</md-tooltip>
+    <md-tooltip md-delay="500"
+                md-autohide>
+      [[Actions|Tooltip "Actions", which appears when you hover over the menu icon on any resource card.]]
+    </md-tooltip>
   </md-button>
   <md-menu-content ng-transclude>
   </md-menu-content>

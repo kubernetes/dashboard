@@ -21,6 +21,7 @@ import (
 	"strings"
 
 	restful "github.com/emicklei/go-restful"
+	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
@@ -39,16 +40,21 @@ const (
 	DefaultContentType = "application/vnd.kubernetes.protobuf"
 	// Default cluster/context/auth name to be set in clientcmd config
 	DefaultCmdConfigName = "kubernetes"
+	// Header name that contains token used for authorization. See TokenManager for more information.
+	JWETokenHeader = "jweToken"
 )
 
 // ClientManager is responsible for initializing and creating clients to communicate with
 // kubernetes apiserver on demand
 type ClientManager interface {
-	Client(req *restful.Request) (*kubernetes.Clientset, error)
+	Client(req *restful.Request) (kubernetes.Interface, error)
+	InsecureClient() kubernetes.Interface
 	Config(req *restful.Request) (*rest.Config, error)
 	ClientCmdConfig(req *restful.Request) (clientcmd.ClientConfig, error)
 	CSRFKey() string
+	HasAccess(authInfo api.AuthInfo) error
 	VerberClient(req *restful.Request) (ResourceVerber, error)
+	SetTokenManager(manager authApi.TokenManager)
 }
 
 // clientManager implements ClientManager interface
@@ -63,11 +69,16 @@ type clientManager struct {
 	// Initialized on clientManager creation and used if kubeconfigPath and apiserverHost are
 	// empty
 	inClusterConfig *rest.Config
+	// Responsible for decrypting tokens coming in request header. Used for authentication.
+	tokenManager authApi.TokenManager
+	// Kubernetes client created without providing auth info. It uses permissions granted to
+	// service account used by dashboard or kubeconfig file if it was passed during dashboard init.
+	insecureClient kubernetes.Interface
 }
 
 // Client returns kubernetes client that is created based on authentication information extracted
 // from request. If request is nil then authentication will be skipped.
-func (self *clientManager) Client(req *restful.Request) (*kubernetes.Clientset, error) {
+func (self *clientManager) Client(req *restful.Request) (kubernetes.Interface, error) {
 	cfg, err := self.Config(req)
 	if err != nil {
 		return nil, err
@@ -79,6 +90,12 @@ func (self *clientManager) Client(req *restful.Request) (*kubernetes.Clientset, 
 	}
 
 	return client, nil
+}
+
+// InsecureClient returns kubernetes client that was created without providing auth info. It uses permissions granted
+// to service account used by dashboard or kubeconfig file if it was passed during dashboard init.
+func (self *clientManager) InsecureClient() kubernetes.Interface {
+	return self.insecureClient
 }
 
 // Config creates rest Config based on authentication information extracted from request.
@@ -101,41 +118,51 @@ func (self *clientManager) Config(req *restful.Request) (*rest.Config, error) {
 // ClientCmdConfig creates ClientCmd Config based on authentication information extracted from request.
 // Currently request header is only checked for existence of 'Authentication: BearerToken'
 func (self *clientManager) ClientCmdConfig(req *restful.Request) (clientcmd.ClientConfig, error) {
-	authInfo := self.extractAuthInfo(req)
+	authInfo, err := self.extractAuthInfo(req)
+	if err != nil {
+		return nil, err
+	}
 
 	cfg, err := self.buildConfigFromFlags(self.apiserverHost, self.kubeConfigPath)
 	if err != nil {
 		return nil, err
 	}
 
-	// Use auth data provided in cfg if there is no token in header
-	if len(authInfo.Token) == 0 {
-		authInfo = self.buildAuthInfoFromConfig(cfg)
+	// Use auth data provided in cfg if extracted auth info is nil
+	if authInfo == nil {
+		defaultAuthInfo := self.buildAuthInfoFromConfig(cfg)
+		authInfo = &defaultAuthInfo
 	}
 
-	cmdCfg := api.NewConfig()
-	cmdCfg.Clusters[DefaultCmdConfigName] = &api.Cluster{
-		Server:                   cfg.Host,
-		CertificateAuthority:     cfg.TLSClientConfig.CAFile,
-		CertificateAuthorityData: cfg.TLSClientConfig.CAData,
-		InsecureSkipTLSVerify:    cfg.TLSClientConfig.Insecure,
-	}
-	cmdCfg.AuthInfos[DefaultCmdConfigName] = &authInfo
-	cmdCfg.Contexts[DefaultCmdConfigName] = &api.Context{
-		Cluster:  DefaultCmdConfigName,
-		AuthInfo: DefaultCmdConfigName,
-	}
-	cmdCfg.CurrentContext = DefaultCmdConfigName
-
-	return clientcmd.NewDefaultClientConfig(
-		*cmdCfg,
-		&clientcmd.ConfigOverrides{},
-	), nil
+	return self.buildCmdConfig(authInfo, cfg), nil
 }
 
 // CSRFKey returns key that is generated upon client manager creation
 func (self *clientManager) CSRFKey() string {
 	return self.csrfKey
+}
+
+// HasAccess configures K8S api client with provided auth info and executes a basic check against apiserver to see
+// if it is valid.
+func (self *clientManager) HasAccess(authInfo api.AuthInfo) error {
+	cfg, err := self.buildConfigFromFlags(self.apiserverHost, self.kubeConfigPath)
+	if err != nil {
+		return err
+	}
+
+	clientConfig := self.buildCmdConfig(&authInfo, cfg)
+	cfg, err = clientConfig.ClientConfig()
+	if err != nil {
+		return err
+	}
+
+	client, err := kubernetes.NewForConfig(cfg)
+	if err != nil {
+		return err
+	}
+
+	_, err = client.ServerVersion()
+	return err
 }
 
 // VerberClient returns new verber client based on authentication information extracted from request
@@ -149,6 +176,11 @@ func (self *clientManager) VerberClient(req *restful.Request) (ResourceVerber, e
 		client.ExtensionsV1beta1().RESTClient(), client.AppsV1beta1().RESTClient(),
 		client.BatchV1().RESTClient(), client.AutoscalingV1().RESTClient(),
 		client.StorageV1beta1().RESTClient()), nil
+}
+
+// SetTokenManager sets the token manager that will be used for token decryption.
+func (self *clientManager) SetTokenManager(manager authApi.TokenManager) {
+	self.tokenManager = manager
 }
 
 // Initializes config with default values
@@ -188,41 +220,64 @@ func (self *clientManager) buildAuthInfoFromConfig(cfg *rest.Config) api.AuthInf
 	}
 }
 
-// Extracts authentication information from request header
-func (self *clientManager) extractAuthInfo(req *restful.Request) api.AuthInfo {
+// Based on auth info and rest config creates client cmd config.
+func (self *clientManager) buildCmdConfig(authInfo *api.AuthInfo, cfg *rest.Config) clientcmd.ClientConfig {
+	cmdCfg := api.NewConfig()
+	cmdCfg.Clusters[DefaultCmdConfigName] = &api.Cluster{
+		Server:                   cfg.Host,
+		CertificateAuthority:     cfg.TLSClientConfig.CAFile,
+		CertificateAuthorityData: cfg.TLSClientConfig.CAData,
+		InsecureSkipTLSVerify:    cfg.TLSClientConfig.Insecure,
+	}
+	cmdCfg.AuthInfos[DefaultCmdConfigName] = authInfo
+	cmdCfg.Contexts[DefaultCmdConfigName] = &api.Context{
+		Cluster:  DefaultCmdConfigName,
+		AuthInfo: DefaultCmdConfigName,
+	}
+	cmdCfg.CurrentContext = DefaultCmdConfigName
+
+	return clientcmd.NewDefaultClientConfig(
+		*cmdCfg,
+		&clientcmd.ConfigOverrides{},
+	)
+}
+
+// Extracts authorization information from request header
+func (self *clientManager) extractAuthInfo(req *restful.Request) (*api.AuthInfo, error) {
 	if req == nil {
-		log.Print("No request provided. Skipping authorization header")
-		return api.AuthInfo{}
+		log.Print("No request provided. Skipping authorization")
+		return nil, nil
 	}
 
 	authHeader := req.HeaderParameter("Authorization")
-	token := ""
-	if strings.HasPrefix(authHeader, "Bearer ") {
-		token = strings.TrimPrefix(authHeader, "Bearer ")
+	jweToken := req.HeaderParameter(JWETokenHeader)
+
+	// Authorization header will be more important than our token
+	token := self.extractTokenFromHeader(authHeader)
+	if len(token) > 0 {
+		return &api.AuthInfo{Token: token}, nil
 	}
 
-	return api.AuthInfo{Token: token}
+	if self.tokenManager != nil && len(jweToken) > 0 {
+		return self.tokenManager.Decrypt(jweToken)
+	}
+
+	return nil, nil
+}
+
+func (self *clientManager) extractTokenFromHeader(authHeader string) string {
+	if strings.HasPrefix(authHeader, "Bearer ") {
+		return strings.TrimPrefix(authHeader, "Bearer ")
+	}
+
+	return ""
 }
 
 // Initializes client manager
 func (self *clientManager) init() {
 	self.initInClusterConfig()
 	self.initCSRFKey()
-}
-
-// Initializes csrfKey. If in-cluster config is detected then csrf key is initialized with
-// service account token, otherwise it is generated
-func (self *clientManager) initCSRFKey() {
-	if self.inClusterConfig == nil {
-		// Most likely running for a dev, so no replica issues, just generate a random key
-		log.Println("Using random key for csrf signing")
-		self.generateCSRFKey()
-		return
-	}
-
-	// We run in a cluster, so we should use a signing key that is the same for potential replications
-	log.Println("Using service account token for csrf signing")
-	self.csrfKey = self.inClusterConfig.BearerToken
+	self.initInsecureClient()
 }
 
 // Initializes in-cluster config if apiserverHost and kubeConfigPath were not provided.
@@ -240,6 +295,30 @@ func (self *clientManager) initInClusterConfig() {
 	}
 
 	self.inClusterConfig = cfg
+}
+
+// Initializes csrfKey. If in-cluster config is detected then csrf key is initialized with
+// service account token, otherwise it is generated
+func (self *clientManager) initCSRFKey() {
+	if self.inClusterConfig == nil {
+		// Most likely running for a dev, so no replica issues, just generate a random key
+		log.Println("Using random key for csrf signing")
+		self.generateCSRFKey()
+		return
+	}
+
+	// We run in a cluster, so we should use a signing key that is the same for potential replications
+	log.Println("Using service account token for csrf signing")
+	self.csrfKey = self.inClusterConfig.BearerToken
+}
+
+func (self *clientManager) initInsecureClient() {
+	insecureClient, err := self.Client(nil)
+	if err != nil {
+		panic(err)
+	}
+
+	self.insecureClient = insecureClient
 }
 
 // Generates random csrf key

@@ -28,7 +28,7 @@ import (
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
 
-// ReplicationSetList contains a list of Deployments in the cluster.
+// DeploymentList contains a list of Deployments in the cluster.
 type DeploymentList struct {
 	ListMeta          api.ListMeta       `json:"listMeta"`
 	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`
@@ -124,7 +124,7 @@ func toDeploymentList(deployments []extensions.Deployment, pods []v1.Pod, events
 
 	for _, deployment := range deployments {
 		matchingPods := common.FilterDeploymentPodsByOwnerReference(deployment, rs, pods)
-		podInfo := common.GetPodInfo(deployment.Status.Replicas, *deployment.Spec.Replicas, matchingPods)
+		podInfo := common.GetPodInfo(deployment.Status.Replicas, deployment.Spec.Replicas, matchingPods)
 		podInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)
 
 		deploymentList.Deployments = append(deploymentList.Deployments,

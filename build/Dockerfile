@@ -25,7 +25,7 @@ FROM golang
 # so there's no need to run it again
 RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - \
   && apt-get install -y --no-install-recommends \
-	openjdk-7-jre \
+	openjdk-8-jre \
 	nodejs \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& apt-get clean

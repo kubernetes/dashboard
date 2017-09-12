@@ -20,10 +20,9 @@
 export class StatefulSetCardListController {
   /**
    * @param {!./../../common/namespace/service.NamespaceService} kdNamespaceService
-   * @param {!./../../common/scaling/service.ScaleService} kdScaleService
    * @ngInject
    */
-  constructor(kdNamespaceService, kdScaleService) {
+  constructor(kdNamespaceService) {
     /** @private {!./../../common/namespace/service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
 
@@ -32,9 +31,6 @@ export class StatefulSetCardListController {
 
     /** @export {!angular.Resource} Initialized from binding. */
     this.statefulSetListResource;
-
-    /** @private {!./../../common/scaling/service.ScaleService} */
-    this.kdScaleService_ = kdScaleService;
   }
 
   /**

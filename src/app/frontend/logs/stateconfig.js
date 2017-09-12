@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as chromeStateName} from 'chrome/state';
-import {fillContentConfig} from 'chrome/state';
-import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
-import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
+import {stateName as chromeStateName} from '../chrome/state';
+import {fillContentConfig} from '../chrome/state';
+import {breadcrumbsConfig} from '../common/components/breadcrumbs/service';
+import {appendDetailParamsToUrl} from '../common/resource/resourcedetail';
 
 import {stateName} from './state';
 
@@ -60,7 +60,7 @@ function resolveLogSources($stateParams, $resource) {
   let objectName = $stateParams.objectName;
   let resourceType = $stateParams.resourceType || '';
 
-  /** @type {!angular.Resource<!backendApi.LogSources>} */
+  /** @type {!angular.Resource} */
   let resource = $resource(`api/v1/log/source/${namespace}/${objectName}/${resourceType}`);
   return resource.get().$promise;
 }
@@ -87,7 +87,7 @@ function resolvePodLogs($stateParams, $resource, logSources) {
     podName = logSources.podNames[0];
   }
 
-  /** @type {!angular.Resource<!backendApi.Logs>} */
+  /** @type {!angular.Resource} */
   let resource = $resource(`api/v1/log/${namespace}/${podName}`);
   return resource.get().$promise;
 }

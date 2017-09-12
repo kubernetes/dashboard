@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {StateParams} from 'common/resource/resourcedetail';
-import {stateName as deploymentStateName} from 'deployment/detail/state';
-import {stateName as replicaSetStateName} from 'replicaset/detail/state';
-import {stateName as replicationControllerStateName} from 'replicationcontroller/detail/state';
+import {StateParams} from '../../common/resource/resourcedetail';
+import {stateName as deploymentStateName} from '../../deployment/detail/state';
+import {stateName as replicaSetStateName} from '../../replicaset/detail/state';
+import {stateName as replicationControllerStateName} from '../../replicationcontroller/detail/state';
 
 const referenceKindToDetailStateName = {
   Deployment: deploymentStateName,
@@ -26,7 +26,7 @@ const referenceKindToDetailStateName = {
 /**
  * @final
  */
-export default class HorizontalPodAutoscalerInfoController {
+class HorizontalPodAutoscalerInfoController {
   /**
    * Constructs horizontal pod autoscaler controller info object.
    *
@@ -65,8 +65,10 @@ export default class HorizontalPodAutoscalerInfoController {
    */
   getLastScaledTooltip() {
     let filter = this.interpolate_(`{{date | date}}`);
-    /** @type {string} @desc Tooltip 'Last scaled at [some date]' showing the exact time of
-     * the last time the horizontal pod autoscaler was scaled.*/
+    /**
+     * @type {string} @desc Tooltip 'Last scaled at [some date]' showing the exact time of
+     * the last time the horizontal pod autoscaler was scaled.
+     */
     let MSG_HORIZONTAL_POD_AUTOSCALER_DETAIL_LAST_SCALED_TOOLTIP = goog.getMsg(
         'Last scaled at {$scaleDate}',
         {'scaleDate': filter({'date': this.horizontalPodAutoscaler.lastScaleTime})});

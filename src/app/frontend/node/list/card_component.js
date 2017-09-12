@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {GlobalStateParams} from 'common/resource/globalresourcedetail';
-import {stateName} from 'node/detail/state';
+import {GlobalStateParams} from '../../common/resource/globalresourcedetail';
+import {stateName} from '../../node/detail/state';
 
 /**
  * Controller for the node card.
  *
  * @final
  */
-export default class NodeCardController {
+class NodeCardController {
   /**
    * @param {!ui.router.$state} $state
    * @param {!angular.$interpolate} $interpolate
@@ -82,8 +82,10 @@ export default class NodeCardController {
    */
   getCreatedAtTooltip(creationDate) {
     let filter = this.interpolate_(`{{date | date}}`);
-    /** @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
-     * node. */
+    /**
+     * @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
+     * node.
+     */
     let MSG_NODE_LIST_CREATED_AT_TOOLTIP =
         goog.getMsg('Created at {$creationDate}', {'creationDate': filter({'date': creationDate})});
     return MSG_NODE_LIST_CREATED_AT_TOOLTIP;

@@ -25,7 +25,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	k8sClient "k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/kubernetes"
 	apps "k8s.io/client-go/pkg/apis/apps/v1beta1"
 )
 
@@ -44,7 +44,7 @@ type StatefulSetDetail struct {
 }
 
 // GetStatefulSetDetail gets Stateful Set details.
-func GetStatefulSetDetail(client *k8sClient.Clientset, metricClient metricapi.MetricClient, namespace,
+func GetStatefulSetDetail(client kubernetes.Interface, metricClient metricapi.MetricClient, namespace,
 	name string) (*StatefulSetDetail, error) {
 	log.Printf("Getting details of %s statefulset in %s namespace", name, namespace)
 

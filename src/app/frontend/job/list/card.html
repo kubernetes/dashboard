@@ -20,12 +20,18 @@ limitations under the License.
     <md-icon class="material-icons md-warn"
              ng-if="::$ctrl.hasWarnings()">
       error
-      <md-tooltip>One or more pods have errors</md-tooltip>
+      <md-tooltip md-delay="500"
+                  md-autohide>
+        One or more pods have errors
+      </md-tooltip>
     </md-icon>
     <md-icon class="material-icons"
              ng-if="::$ctrl.isPending()">
       timelapse
-      <md-tooltip>One or more pods are in pending state</md-tooltip>
+      <md-tooltip md-delay="500"
+                  md-autohide>
+        One or more pods are in pending state
+      </md-tooltip>
     </md-icon>
 
     <md-icon class="material-icons"
@@ -59,13 +65,14 @@ limitations under the License.
     </kd-resource-card-column>
     <kd-resource-card-column>
       <span class="kd-replicase-card-pods-stat">
-        {{::$ctrl.job.pods.running}} /
-        {{::$ctrl.job.pods.desired}}
+        {{::$ctrl.job.pods.running}}
+        <span ng-if="::$ctrl.job.pods.desired">/  {{::$ctrl.job.pods.desired}}</span>
       </span>
     </kd-resource-card-column>
     <kd-resource-card-column>
       {{::$ctrl.job.objectMeta.creationTimestamp | relativeTime}}
-      <md-tooltip>
+      <md-tooltip md-delay="500"
+                  md-autohide>
         Created at {{::$ctrl.job.objectMeta.creationTimestamp | date}}
       </md-tooltip>
     </kd-resource-card-column>
@@ -75,8 +82,12 @@ limitations under the License.
       </div>
     </kd-resource-card-column>
     <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
+      <kd-logs-button object-meta="::$ctrl.job.objectMeta"
+                      resource-kind-name="::$ctrl.job.typeMeta.kind">
+      </kd-logs-button>
       <kd-resource-card-menu>
-        <kd-scale-button resource-kind-name="[[Job|Label 'Job' which will appear in the job scale dialog opened from a job card on the list page.]]"
+        <kd-scale-button resource-kind-display-name="[[Job|Label 'Job' which will appear in the job scale dialog opened from a job card on the list page.]]"
+                         resource-kind-name="$ctrl.job.typeMeta.kind"
                          object-meta="$ctrl.job.objectMeta"
                          current-pods="$ctrl.job.parallelism"
                          desired-pods="$ctrl.job.parallelism"

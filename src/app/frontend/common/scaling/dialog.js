@@ -22,10 +22,12 @@ import ScaleResourceDialogController from './controller';
  * @param {number} currentPods
  * @param {number} desiredPods
  * @param {string} resourceKindName
+ * @param {string} resourceKindDisplayName
  * @return {!angular.$q.Promise}
  */
 export default function showUpdateReplicasDialog(
-    mdDialog, namespace, resourceName, currentPods, desiredPods, resourceKindName) {
+    mdDialog, namespace, resourceName, currentPods, desiredPods, resourceKindName,
+    resourceKindDisplayName) {
   return mdDialog.show({
     controller: ScaleResourceDialogController,
     controllerAs: '$ctrl',
@@ -37,6 +39,7 @@ export default function showUpdateReplicasDialog(
       'currentPods': currentPods,
       'desiredPods': desiredPods,
       'resourceKindName': resourceKindName,
+      'resourceKindDisplayName': resourceKindDisplayName,
     },
   });
 }

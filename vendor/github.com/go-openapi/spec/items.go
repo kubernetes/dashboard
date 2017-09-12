@@ -16,9 +16,7 @@ package spec
 
 import (
 	"encoding/json"
-	"strings"
 
-	"github.com/go-openapi/jsonpointer"
 	"github.com/go-openapi/swag"
 )
 
@@ -62,12 +60,11 @@ type CommonValidations struct {
 // Items a limited subset of JSON-Schema's items object.
 // It is used by parameter definitions that are not located in "body".
 //
-// For more information: http://goo.gl/8us55a#items-object
+// For more information: http://goo.gl/8us55a#items-object-
 type Items struct {
 	Refable
 	CommonValidations
 	SimpleSchema
-	VendorExtensible
 }
 
 // NewItems creates a new instance of items
@@ -199,21 +196,4 @@ func (i Items) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	return swag.ConcatJSON(b3, b1, b2), nil
-}
-
-// JSONLookup look up a value by the json property name
-func (p Items) JSONLookup(token string) (interface{}, error) {
-	if token == "$ref" {
-		return &p.Ref, nil
-	}
-
-	r, _, err := jsonpointer.GetForToken(p.CommonValidations, token)
-	if err != nil && !strings.HasPrefix(err.Error(), "object has no field") {
-		return nil, err
-	}
-	if r != nil {
-		return r, nil
-	}
-	r, _, err = jsonpointer.GetForToken(p.SimpleSchema, token)
-	return r, err
 }

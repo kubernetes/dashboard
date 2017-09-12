@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {StateParams as ChromeStateParams} from 'chrome/state';
+import {StateParams as ChromeStateParams} from '../chrome/state';
 
 /** Name of the state. Can be used in, e.g., $state.go method. */
 export const stateName = 'internalerror';

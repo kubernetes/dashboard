@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {StateParams} from 'common/resource/resourcedetail';
-import {stateName} from 'storageclass/detail/state';
+import {StateParams} from '../../common/resource/resourcedetail';
+import {stateName} from '../../storageclass/detail/state';
 
 /**
  * Controller for the storage class card.
  *
  * @final
  */
-export default class StorageClassCardController {
+class StorageClassCardController {
   /**
    * @param {!ui.router.$state} $state
    * @param {!angular.$interpolate} $interpolate
@@ -55,8 +55,10 @@ export default class StorageClassCardController {
    */
   getCreatedAtTooltip(creationDate) {
     let filter = this.interpolate_(`{{date | date}}`);
-    /** @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
-     * storage class. */
+    /**
+     * @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
+     * storage class.
+     */
     let MSG_STORAGE_CLASS_LIST_CREATED_AT_TOOLTIP =
         goog.getMsg('Created at {$creationDate}', {'creationDate': filter({'date': creationDate})});
     return MSG_STORAGE_CLASS_LIST_CREATED_AT_TOOLTIP;

@@ -20,7 +20,6 @@ import (
 	"github.com/emicklei/go-restful/log"
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/pkg/api/v1"
 )
@@ -73,24 +72,30 @@ func getHeapsterSelector(selector metricapi.ResourceSelector,
 // getMyPodsFromCache returns a full list of pods that belong to this resource.
 // It is important that cachedPods include ALL pods from the namespace of this resource (but they
 // can also include pods from other namespaces).
-func getMyPodsFromCache(selector metricapi.ResourceSelector, cachedPods []v1.Pod) (
-	[]v1.Pod, error) {
+func getMyPodsFromCache(selector metricapi.ResourceSelector, cachedPods []v1.Pod) (matchingPods []v1.Pod, err error) {
 	switch {
 	case cachedPods == nil:
-		return nil, fmt.Errorf(`getMyPodsFromCache: pods were not available in cache. Required for resource type: "%s"`, selector.ResourceType)
+		err = fmt.Errorf(`Pods were not available in cache. Required for resource type: "%s"`,
+			selector.ResourceType)
 	case selector.ResourceType == api.ResourceKindDeployment:
-		// TODO(maciaszczykm): Use api.FilterDeploymentPodsByOwnerReference() once it will be possible to get list of replica sets here.
-		var matchingPods []v1.Pod
 		for _, pod := range cachedPods {
-			// TODO fix deployments
 			if pod.ObjectMeta.Namespace == selector.Namespace && api.IsSelectorMatching(selector.Selector, pod.Labels) {
 				matchingPods = append(matchingPods, pod)
 			}
 		}
-		return matchingPods, nil
 	default:
-		return common.FilterPodsByOwnerReference(selector.Namespace, selector.UID, cachedPods), nil
+		for _, pod := range cachedPods {
+			if pod.Namespace == selector.Namespace {
+				for _, ownerRef := range pod.OwnerReferences {
+					if ownerRef.Controller != nil && *ownerRef.Controller == true &&
+						ownerRef.UID == selector.UID {
+						matchingPods = append(matchingPods, pod)
+					}
+				}
+			}
+		}
 	}
+	return
 }
 
 // NewHeapsterSelectorFromNativeResource returns new heapster selector for native resources specified in arguments.

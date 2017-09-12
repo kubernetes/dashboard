@@ -40,7 +40,8 @@ type ResourceOwner struct {
 	ContainerImages []string       `json:"containerImages"`
 }
 
-// LogSources is a structure that represents all log files (all combinations of pods and container) from a higher level controller (such as ReplicaSet)
+// LogSources is a structure that represents all log files (all combinations of pods and container)
+// from a higher level controller (such as ReplicaSet).
 type LogSources struct {
 	ContainerNames []string `json:"containerNames"`
 	PodNames       []string `json:"podNames"`
@@ -54,40 +55,41 @@ type ResourceController interface {
 	UID() types.UID
 	// Get is a method, that returns ResourceOwner object.
 	Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOwner
-	// Returns all log sources of controlled resource (e.g. a list of containers and pods for a replica set)
-	GetLogSources(k8sClient *client.Clientset) LogSources
+	// Returns all log sources of controlled resource (e.g. a list of containers and pods for a replica set).
+	GetLogSources(allPods []v1.Pod) LogSources
 }
 
 // NewResourceController creates instance of ResourceController based on given reference. It allows
 // to convert owner/created by references to real objects.
-func NewResourceController(ref v1.ObjectReference, client client.Interface) (ResourceController, error) {
+func NewResourceController(ref meta.OwnerReference, namespace string, client client.Interface) (
+	ResourceController, error) {
 	switch strings.ToLower(ref.Kind) {
 	case api.ResourceKindJob:
-		job, err := client.BatchV1().Jobs(ref.Namespace).Get(ref.Name, meta.GetOptions{})
+		job, err := client.BatchV1().Jobs(namespace).Get(ref.Name, meta.GetOptions{})
 		if err != nil {
 			return nil, err
 		}
 		return JobController(*job), nil
 	case api.ResourceKindReplicaSet:
-		rs, err := client.ExtensionsV1beta1().ReplicaSets(ref.Namespace).Get(ref.Name, meta.GetOptions{})
+		rs, err := client.ExtensionsV1beta1().ReplicaSets(namespace).Get(ref.Name, meta.GetOptions{})
 		if err != nil {
 			return nil, err
 		}
 		return ReplicaSetController(*rs), nil
 	case api.ResourceKindReplicationController:
-		rc, err := client.CoreV1().ReplicationControllers(ref.Namespace).Get(ref.Name, meta.GetOptions{})
+		rc, err := client.CoreV1().ReplicationControllers(namespace).Get(ref.Name, meta.GetOptions{})
 		if err != nil {
 			return nil, err
 		}
 		return ReplicationControllerController(*rc), nil
 	case api.ResourceKindDaemonSet:
-		ds, err := client.ExtensionsV1beta1().DaemonSets(ref.Namespace).Get(ref.Name, meta.GetOptions{})
+		ds, err := client.ExtensionsV1beta1().DaemonSets(namespace).Get(ref.Name, meta.GetOptions{})
 		if err != nil {
 			return nil, err
 		}
 		return DaemonSetController(*ds), nil
 	case api.ResourceKindStatefulSet:
-		ss, err := client.AppsV1beta1().StatefulSets(ref.Namespace).Get(ref.Name, meta.GetOptions{})
+		ss, err := client.AppsV1beta1().StatefulSets(namespace).Get(ref.Name, meta.GetOptions{})
 		if err != nil {
 			return nil, err
 		}
@@ -104,11 +106,7 @@ type JobController batch.Job
 // Get is an implementation of Get method from ResourceController interface.
 func (self JobController) Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOwner {
 	matchingPods := common.FilterPodsForJob(batch.Job(self), allPods)
-	var completions int32
-	if self.Spec.Completions != nil {
-		completions = *self.Spec.Completions
-	}
-	podInfo := common.GetPodInfo(self.Status.Active, completions, matchingPods)
+	podInfo := common.GetPodInfo(self.Status.Active, self.Spec.Completions, matchingPods)
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
 	return ResourceOwner{
@@ -125,9 +123,10 @@ func (self JobController) UID() types.UID {
 }
 
 // GetLogSources is an implementation of the GetLogSources method from ResourceController interface.
-func (self JobController) GetLogSources(k8sClient *client.Clientset) LogSources {
+func (self JobController) GetLogSources(allPods []v1.Pod) LogSources {
+	controlledPods := common.FilterPodsForJob(batch.Job(self), allPods)
 	return LogSources{
-		PodNames:       getPodNames(k8sClient, self.Namespace, self.UID()),
+		PodNames:       getPodNames(controlledPods),
 		ContainerNames: common.GetContainerNames(&self.Spec.Template.Spec),
 	}
 }
@@ -138,8 +137,8 @@ type ReplicaSetController extensions.ReplicaSet
 
 // Get is an implementation of Get method from ResourceController interface.
 func (self ReplicaSetController) Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOwner {
-	matchingPods := common.FilterPodsByOwnerReference(self.Namespace, self.UID(), allPods)
-	podInfo := common.GetPodInfo(self.Status.Replicas, *self.Spec.Replicas, matchingPods)
+	matchingPods := common.FilterPodsByControllerRef(&self, allPods)
+	podInfo := common.GetPodInfo(self.Status.Replicas, self.Spec.Replicas, matchingPods)
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
 	return ResourceOwner{
@@ -156,9 +155,10 @@ func (self ReplicaSetController) UID() types.UID {
 }
 
 // GetLogSources is an implementation of the GetLogSources method from ResourceController interface.
-func (self ReplicaSetController) GetLogSources(k8sClient *client.Clientset) LogSources {
+func (self ReplicaSetController) GetLogSources(allPods []v1.Pod) LogSources {
+	controlledPods := common.FilterPodsByControllerRef(&self, allPods)
 	return LogSources{
-		PodNames:       getPodNames(k8sClient, self.Namespace, self.UID()),
+		PodNames:       getPodNames(controlledPods),
 		ContainerNames: common.GetContainerNames(&self.Spec.Template.Spec),
 	}
 }
@@ -170,8 +170,8 @@ type ReplicationControllerController v1.ReplicationController
 // Get is an implementation of Get method from ResourceController interface.
 func (self ReplicationControllerController) Get(allPods []v1.Pod,
 	allEvents []v1.Event) ResourceOwner {
-	matchingPods := common.FilterPodsByOwnerReference(self.Namespace, self.UID(), allPods)
-	podInfo := common.GetPodInfo(self.Status.Replicas, *self.Spec.Replicas, matchingPods)
+	matchingPods := common.FilterPodsByControllerRef(&self, allPods)
+	podInfo := common.GetPodInfo(self.Status.Replicas, self.Spec.Replicas, matchingPods)
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
 	return ResourceOwner{
@@ -188,9 +188,10 @@ func (self ReplicationControllerController) UID() types.UID {
 }
 
 // GetLogSources is an implementation of the GetLogSources method from ResourceController interface.
-func (self ReplicationControllerController) GetLogSources(k8sClient *client.Clientset) LogSources {
+func (self ReplicationControllerController) GetLogSources(allPods []v1.Pod) LogSources {
+	controlledPods := common.FilterPodsByControllerRef(&self, allPods)
 	return LogSources{
-		PodNames:       getPodNames(k8sClient, self.Namespace, self.UID()),
+		PodNames:       getPodNames(controlledPods),
 		ContainerNames: common.GetContainerNames(&self.Spec.Template.Spec),
 	}
 }
@@ -201,9 +202,9 @@ type DaemonSetController extensions.DaemonSet
 
 // Get is an implementation of Get method from ResourceController interface.
 func (self DaemonSetController) Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOwner {
-	matchingPods := common.FilterPodsByOwnerReference(self.Namespace, self.UID(), allPods)
+	matchingPods := common.FilterPodsByControllerRef(&self, allPods)
 	podInfo := common.GetPodInfo(self.Status.CurrentNumberScheduled,
-		self.Status.DesiredNumberScheduled, matchingPods)
+		&self.Status.DesiredNumberScheduled, matchingPods)
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
 	return ResourceOwner{
@@ -220,9 +221,10 @@ func (self DaemonSetController) UID() types.UID {
 }
 
 // GetLogSources is an implementation of the GetLogSources method from ResourceController interface.
-func (self DaemonSetController) GetLogSources(k8sClient *client.Clientset) LogSources {
+func (self DaemonSetController) GetLogSources(allPods []v1.Pod) LogSources {
+	controlledPods := common.FilterPodsByControllerRef(&self, allPods)
 	return LogSources{
-		PodNames:       getPodNames(k8sClient, self.Namespace, self.UID()),
+		PodNames:       getPodNames(controlledPods),
 		ContainerNames: common.GetContainerNames(&self.Spec.Template.Spec),
 	}
 }
@@ -233,8 +235,8 @@ type StatefulSetController apps.StatefulSet
 
 // Get is an implementation of Get method from ResourceController interface.
 func (self StatefulSetController) Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOwner {
-	matchingPods := common.FilterPodsByOwnerReference(self.Namespace, self.UID(), allPods)
-	podInfo := common.GetPodInfo(self.Status.Replicas, *self.Spec.Replicas, matchingPods)
+	matchingPods := common.FilterPodsByControllerRef(&self, allPods)
+	podInfo := common.GetPodInfo(self.Status.Replicas, self.Spec.Replicas, matchingPods)
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
 	return ResourceOwner{
@@ -251,18 +253,17 @@ func (self StatefulSetController) UID() types.UID {
 }
 
 // GetLogSources is an implementation of the GetLogSources method from ResourceController interface.
-func (self StatefulSetController) GetLogSources(k8sClient *client.Clientset) LogSources {
+func (self StatefulSetController) GetLogSources(allPods []v1.Pod) LogSources {
+	controlledPods := common.FilterPodsByControllerRef(&self, allPods)
 	return LogSources{
-		PodNames:       getPodNames(k8sClient, self.Namespace, self.UID()),
+		PodNames:       getPodNames(controlledPods),
 		ContainerNames: common.GetContainerNames(&self.Spec.Template.Spec),
 	}
 }
 
-func getPodNames(k8sClient *client.Clientset, namespace string, uid types.UID) []string {
-	allPods, _ := k8sClient.CoreV1().Pods(namespace).List(api.ListEverything)
-	matchingPods := common.FilterPodsByOwnerReference(namespace, uid, allPods.Items)
+func getPodNames(pods []v1.Pod) []string {
 	names := make([]string, 0)
-	for _, pod := range matchingPods {
+	for _, pod := range pods {
 		names = append(names, pod.Name)
 	}
 	return names

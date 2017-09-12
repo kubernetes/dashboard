@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as chromeStateName} from 'chrome/state';
-import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
-import {DataSelectQueryBuilder} from 'common/dataselect/builder';
+import {stateName as chromeStateName} from '../chrome/state';
+import {breadcrumbsConfig} from '../common/components/breadcrumbs/service';
+import {DataSelectQueryBuilder} from '../common/dataselect/builder';
 
 import {SearchController} from './controller';
 import {stateName, stateUrl} from './state';

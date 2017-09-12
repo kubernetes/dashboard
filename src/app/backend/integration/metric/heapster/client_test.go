@@ -443,11 +443,11 @@ func TestDownloadMetrics(t *testing.T) {
 }
 
 func TestCreateHeapsterClient(t *testing.T) {
-	k8sClient, _ := client.NewClientManager("", "http://localhost:8080").Client(nil)
+	k8sClient := client.NewClientManager("", "http://localhost:8080").InsecureClient()
 	cases := []struct {
 		info         string
 		heapsterHost string
-		client       *kubernetes.Clientset
+		client       kubernetes.Interface
 		expected     HeapsterRESTClient
 		expectedErr  error
 	}{

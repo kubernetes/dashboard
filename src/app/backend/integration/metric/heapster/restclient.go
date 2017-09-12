@@ -15,8 +15,6 @@
 package heapster
 
 import (
-	"log"
-
 	"k8s.io/client-go/rest"
 )
 
@@ -60,11 +58,6 @@ func (self inClusterHeapsterClient) HealthCheck() error {
 		Name("heapster").
 		Suffix("/healthz").
 		DoRaw()
-
-	if err == nil {
-		log.Print("Successful initial request to heapster")
-	}
-
 	return err
 }
 
@@ -83,9 +76,5 @@ func (c remoteHeapsterClient) Get(path string) RequestInterface {
 // Returns nil if connection to application can be established, error object otherwise.
 func (self remoteHeapsterClient) HealthCheck() error {
 	_, err := self.Get("healthz").AbsPath("/").DoRaw()
-	if err == nil {
-		log.Print("Successful initial request to heapster")
-	}
-
 	return err
 }

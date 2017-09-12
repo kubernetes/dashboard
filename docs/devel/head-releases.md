@@ -17,6 +17,22 @@ kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/master/
 Once installed, the release of the UI is not automatically updated. In order to update it, delete
 the pod of the UI and wait for it to be recreated. After recreation it should use latest HEAD image.
 
+### Update to latest HEAD release
+
+Start by listing the pods in the `kube-system` namespace:
+```sh
+$ kubectl --namespace=kube-system get pods
+NAME                                        READY     STATUS    RESTARTS   AGE
+...
+kubernetes-dashboard-1230846811-b95sv       1/1       Running   0          5m
+```
+
+And then deleting the Dashboard's pods in the `kube-system` namespace:
+```sh
+$ kubectl --namespace=kube-system delete pods kubernetes-dashboard-1230846811-b95sv
+pod "kubernetes-dashboard-1230846811-b95sv" deleted
+```
+
 ## Development images
 
 Kubernetes Dashboard UI development images are published on every commit to master branch. They

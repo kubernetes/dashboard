@@ -25,8 +25,6 @@ func TestNewClientManager(t *testing.T) {
 	cases := []struct {
 		kubeConfigPath, apiserverHost string
 	}{
-		{"", ""},
-		{"test", ""},
 		{"", "test"},
 	}
 
@@ -91,7 +89,7 @@ func TestConfig(t *testing.T) {
 			&restful.Request{
 				Request: &http.Request{
 					Header: http.Header(map[string][]string{
-						"Authorization": []string{"Bearer test-token"},
+						"Authorization": {"Bearer test-token"},
 					}),
 				},
 			},
@@ -134,7 +132,7 @@ func TestClientCmdConfig(t *testing.T) {
 			&restful.Request{
 				Request: &http.Request{
 					Header: http.Header(map[string][]string{
-						"Authorization": []string{"Bearer test-token"},
+						"Authorization": {"Bearer test-token"},
 					}),
 				},
 			},
@@ -178,5 +176,12 @@ func TestVerberClient(t *testing.T) {
 	if err != nil {
 		t.Fatalf("VerberClient(): Expected verber client to be created but got error: %s",
 			err.Error())
+	}
+}
+
+func TestClientManager_InsecureClient(t *testing.T) {
+	manager := NewClientManager("", "http://localhost:8080")
+	if manager.InsecureClient() == nil {
+		t.Fatalf("InsecureClient(): Expected insecure client not to be nil")
 	}
 }

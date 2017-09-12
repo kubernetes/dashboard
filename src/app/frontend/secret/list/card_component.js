@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {StateParams} from 'common/resource/resourcedetail';
-import {stateName} from 'secret/detail/state';
+import {StateParams} from '../../common/resource/resourcedetail';
+import {stateName} from '../../secret/detail/state';
 
 class SecretCardController {
   /**
@@ -43,8 +43,10 @@ class SecretCardController {
    */
   getStartedAtTooltip(startDate) {
     let filter = this.interpolate_(`{{date | date}}`);
-    /** @type {string} @desc Tooltip 'Started at [some date]' showing the exact start time of
-     * the secret.*/
+    /**
+     * @type {string} @desc Tooltip 'Started at [some date]' showing the exact start time of
+     * the secret.
+     */
     let MSG_SECRET_LIST_STARTED_AT_TOOLTIP =
         goog.getMsg('Created at {$startDate} UTC', {'startDate': filter({'date': startDate})});
     return MSG_SECRET_LIST_STARTED_AT_TOOLTIP;

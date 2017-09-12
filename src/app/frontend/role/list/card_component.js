@@ -17,21 +17,17 @@
  *
  * @final
  */
-export default class RoleCardController {
+class RoleCardController {
   /**
-   * @param {!ui.router.$state} $state
    * @param {!angular.$interpolate} $interpolate
    * @ngInject
    */
-  constructor($state, $interpolate) {
+  constructor($interpolate) {
     /**
      * Initialized from the scope.
      * @export {!backendApi.Role}
      */
     this.role;
-
-    /** @private {!ui.router.$state} */
-    this.state_ = $state;
 
     /** @private */
     this.interpolate_ = $interpolate;
@@ -44,8 +40,10 @@ export default class RoleCardController {
    */
   getStartedAtTooltip(startDate) {
     let filter = this.interpolate_(`{{date | date}}`);
-    /** @type {string} @desc Tooltip 'Started at [some date]' showing the exact start time of
-     * the role.*/
+    /**
+     * @type {string} @desc Tooltip 'Started at [some date]' showing the exact start time of
+     * the role.
+     */
     let MSG_ROLE_LIST_STARTED_AT_TOOLTIP =
         goog.getMsg('Created at {$startDate} UTC', {'startDate': filter({'date': startDate})});
     return MSG_ROLE_LIST_STARTED_AT_TOOLTIP;

@@ -21,7 +21,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
-	client "k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/pkg/api/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
@@ -49,7 +49,7 @@ type DaemonSet struct {
 }
 
 // GetDaemonSetList returns a list of all Daemon Set in the cluster.
-func GetDaemonSetList(client *client.Clientset, nsQuery *common.NamespaceQuery, dsQuery *dataselect.DataSelectQuery,
+func GetDaemonSetList(client kubernetes.Interface, nsQuery *common.NamespaceQuery, dsQuery *dataselect.DataSelectQuery,
 	metricClient metricapi.MetricClient) (*DaemonSetList, error) {
 	channels := &common.ResourceChannels{
 		DaemonSetList: common.GetDaemonSetListChannel(client, nsQuery, 1),
@@ -110,9 +110,9 @@ func toDaemonSetList(daemonSets []extensions.DaemonSet, pods []v1.Pod, events []
 	daemonSetList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
 	for _, daemonSet := range daemonSets {
-		matchingPods := common.FilterPodsByOwnerReference(daemonSet.Namespace, daemonSet.UID, pods)
+		matchingPods := common.FilterPodsByControllerRef(&daemonSet, pods)
 		podInfo := common.GetPodInfo(daemonSet.Status.CurrentNumberScheduled,
-			daemonSet.Status.DesiredNumberScheduled, matchingPods)
+			&daemonSet.Status.DesiredNumberScheduled, matchingPods)
 		podInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)
 
 		daemonSetList.DaemonSets = append(daemonSetList.DaemonSets, DaemonSet{

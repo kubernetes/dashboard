@@ -12,18 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
-import {stateName as workloadsStateName} from 'workloads/state';
+import {breadcrumbsConfig} from '../../common/components/breadcrumbs/service';
+import {stateName as workloadsStateName} from '../../workloads/state';
 
-import {stateName as parentState, stateUrl} from './../state';
+import {stateName as parentState, stateUrl} from '../state';
 import {ReplicationControllerListController} from './controller';
 
 /**
  * I18n object that defines strings for translation used in this file.
  */
 const i18n = {
-  /** @type {string} @desc Label 'Replication Controllers' that appears as a breadcrumbs on the
-   action bar. */
+  /**
+   @type {string} @desc Label 'Replication Controllers' that appears as a breadcrumbs on the
+   action bar.
+ */
   MSG_BREADCRUMBS_RC_LABEL: goog.getMsg('Replication Controllers'),
 };
 

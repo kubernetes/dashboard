@@ -20,7 +20,9 @@ limitations under the License.
     <md-icon class="material-icons"
              ng-if="::$ctrl.isPending()">
       timelapse
-      <md-tooltip md-direction="right">[[This service is in a pending state|tooltip for pending service card icon]]
+      <md-tooltip md-delay="500"
+                  md-autohide>
+        [[This service is in a pending state|tooltip for pending service card icon]]
       </md-tooltip>
     </md-icon>
     <md-icon class="material-icons kd-success"
@@ -62,7 +64,8 @@ limitations under the License.
     <kd-resource-card-column>
       <div ng-if="::$ctrl.service.objectMeta.creationTimestamp">
         {{::$ctrl.service.objectMeta.creationTimestamp | relativeTime}}
-        <md-tooltip>
+        <md-tooltip md-delay="500"
+                    md-autohide>
           {{::$ctrl.getStartedAtTooltip($ctrl.service.objectMeta.creationTimestamp)}}
         </md-tooltip>
       </div>

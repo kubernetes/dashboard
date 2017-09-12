@@ -92,6 +92,6 @@ func getJobPodInfo(client k8sClient.Interface, job *batch.Job) (*common.PodInfo,
 		return nil, err
 	}
 
-	podInfo := common.GetPodInfo(job.Status.Active, *job.Spec.Completions, pods.Items)
+	podInfo := common.GetPodInfo(job.Status.Active, job.Spec.Completions, pods.Items)
 	return &podInfo, nil
 }

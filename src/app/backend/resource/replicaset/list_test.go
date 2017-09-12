@@ -30,11 +30,8 @@ import (
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
 
-func getReplicasPointer(replicas int32) *int32 {
-	return &replicas
-}
-
 func TestGetReplicaSetListFromChannels(t *testing.T) {
+	replicas := int32(21)
 	controller := true
 	cases := []struct {
 		k8sRs         extensions.ReplicaSetList
@@ -95,7 +92,7 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 					},
 					Spec: extensions.ReplicaSetSpec{
 						Selector: &metaV1.LabelSelector{MatchLabels: map[string]string{"foo": "bar"}},
-						Replicas: getReplicasPointer(21),
+						Replicas: &replicas,
 					},
 					Status: extensions.ReplicaSetStatus{
 						Replicas: 7,
@@ -146,7 +143,7 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 					TypeMeta: api.TypeMeta{Kind: api.ResourceKindReplicaSet},
 					Pods: common.PodInfo{
 						Current:  7,
-						Desired:  21,
+						Desired:  &replicas,
 						Failed:   1,
 						Warnings: []common.Event{},
 					},
@@ -234,7 +231,10 @@ func TestCreateReplicaSetList(t *testing.T) {
 					{
 						ObjectMeta: api.ObjectMeta{Name: "replica-set", Namespace: "ns-1"},
 						TypeMeta:   api.TypeMeta{Kind: api.ResourceKindReplicaSet},
-						Pods:       common.PodInfo{Warnings: []common.Event{}},
+						Pods: common.PodInfo{
+							Warnings: []common.Event{},
+							Desired:  &replicas,
+						},
 					},
 				},
 			},
@@ -252,7 +252,7 @@ func TestCreateReplicaSetList(t *testing.T) {
 }
 
 func TestGetReplicaSetList(t *testing.T) {
-	replicas := int32(1)
+	replicas := int32(21)
 	cases := []struct {
 		rsList          *extensions.ReplicaSetList
 		expectedActions []string
@@ -282,7 +282,7 @@ func TestGetReplicaSetList(t *testing.T) {
 						},
 						TypeMeta: api.TypeMeta{Kind: api.ResourceKindReplicaSet},
 						Pods: common.PodInfo{
-							Desired:  replicas,
+							Desired:  &replicas,
 							Warnings: make([]common.Event, 0),
 						},
 					},

@@ -19,7 +19,7 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	client "k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/pkg/api/v1"
 )
 
@@ -40,10 +40,10 @@ type SecretDetail struct {
 }
 
 // GetSecretDetail returns returns detailed information about a secret
-func GetSecretDetail(client *client.Clientset, namespace, name string) (*SecretDetail, error) {
+func GetSecretDetail(client kubernetes.Interface, namespace, name string) (*SecretDetail, error) {
 	log.Printf("Getting details of %s secret in %s namespace\n", name, namespace)
 
-	rawSecret, err := client.Secrets(namespace).Get(name, metaV1.GetOptions{})
+	rawSecret, err := client.CoreV1().Secrets(namespace).Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}

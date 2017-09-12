@@ -12,39 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Error dialog to display errors which could not be responded properly
- *
- * @final
- */
-export class ErrorDialog {
+/** @final */
+export class ErrorService {
   /**
-   * @param {!md.$dialog} $mdDialog
-   * @ngInject
+   * @param {!angular.$http.Response} err
+   * @return {!backendApi.Error}
    */
-  constructor($mdDialog) {
-    /** @private {!md.$dialog} */
-    this.mdDialog_ = $mdDialog;
-  }
-
-  /**
-   * Opens a pop-up window that displays the error message
-   *
-   * @param {string} title
-   * @param {string} text
-   * @export
-   */
-  open(title, text) {
-    let alert = this.mdDialog_.alert();
-    alert.title(title);
-    alert.textContent(text);
-    alert.ok(i18n.MSG_ERROR_HANDLING_DIALOG_CLOSE_ACTION);
-    this.mdDialog_.show(alert);
+  toBackendApiError(err) {
+    return {
+      ErrStatus: {
+        message: String(err.data),
+        code: err.status,
+        status: String(err.status),
+        reason: String(err.data),
+      },
+    };
   }
 }
-
-const i18n = {
-  /** @export {string} @desc Action "Close" which appears at the bottom of any displayed error
-     dialog. */
-  MSG_ERROR_HANDLING_DIALOG_CLOSE_ACTION: goog.getMsg('Close'),
-};

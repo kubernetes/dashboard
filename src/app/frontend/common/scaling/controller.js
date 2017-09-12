@@ -28,11 +28,12 @@ export default class ScaleResourceDialogController {
    * @param {number} currentPods
    * @param {number} desiredPods
    * @param {string} resourceKindName
+   * @param {string} resourceKindDisplayName
    * @ngInject
    */
   constructor(
       $mdDialog, $log, $state, $resource, namespace, currentPods, desiredPods, resourceName,
-      resourceKindName) {
+      resourceKindName, resourceKindDisplayName) {
     /** @export {number} */
     this.currentPods = currentPods;
 
@@ -56,6 +57,9 @@ export default class ScaleResourceDialogController {
 
     /** @export {string} */
     this.resourceKindName = resourceKindName;
+
+    /** @export {string} */
+    this.resourceKindDisplayName = resourceKindDisplayName;
 
     /** @export {string} */
     this.resourceName = resourceName;

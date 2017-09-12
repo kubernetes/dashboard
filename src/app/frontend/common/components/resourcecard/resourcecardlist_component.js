@@ -58,7 +58,7 @@ export class ResourceCardListController {
     /** @export {{listMeta: !backendApi.ListMeta}|undefined} - Initialized from binding. */
     this.list;
 
-    /** @export {angular.$resource|undefined} - Initialized from binding. */
+    /** @export {angular.$resource} - Initialized from binding. */
     this.listResource;
   }
 
@@ -158,14 +158,15 @@ export const resourceCardListComponent = {
     'selectable': '<',
     /** {boolean|undefined} whether to show statuses for list items */
     'withStatuses': '<',
-    /** Below properties are required if any data select operations (pagination, sort)
+    /**
+     * Below properties are required if any data select operations (pagination, sort)
      * should be supported.
      */
     /** {string|undefined} unique data select id */
     'selectId': '@',
     /** {Array<Object>|undefined} List of objects to apply data selection */
     'list': '=',
-    /** {angular.$resource|undefined} */
+    /** {angular.$resource} */
     'listResource': '<',
   },
   bindToController: true,

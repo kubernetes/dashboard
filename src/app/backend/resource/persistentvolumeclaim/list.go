@@ -21,7 +21,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	client "k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/pkg/api/v1"
 )
 
@@ -38,14 +38,17 @@ type PersistentVolumeClaimList struct {
 
 // PersistentVolumeClaim provides the simplified presentation layer view of Kubernetes Persistent Volume Claim resource.
 type PersistentVolumeClaim struct {
-	ObjectMeta api.ObjectMeta `json:"objectMeta"`
-	TypeMeta   api.TypeMeta   `json:"typeMeta"`
-	Status     string
-	Volume     string
+	ObjectMeta   api.ObjectMeta                  `json:"objectMeta"`
+	TypeMeta     api.TypeMeta                    `json:"typeMeta"`
+	Status       string                          `json:"status"`
+	Volume       string                          `json:"volume"`
+	Capacity     v1.ResourceList                 `json:"capacity"`
+	AccessModes  []v1.PersistentVolumeAccessMode `json:"accessModes"`
+	StorageClass *string                         `json:"storageClass"`
 }
 
 // GetPersistentVolumeClaimList returns a list of all Persistent Volume Claims in the cluster.
-func GetPersistentVolumeClaimList(client *client.Clientset, nsQuery *common.NamespaceQuery,
+func GetPersistentVolumeClaimList(client kubernetes.Interface, nsQuery *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery) (*PersistentVolumeClaimList, error) {
 
 	log.Print("Getting list persistent volumes claims")
@@ -73,10 +76,13 @@ func GetPersistentVolumeClaimListFromChannels(channels *common.ResourceChannels,
 
 func toPersistentVolumeClaim(pvc v1.PersistentVolumeClaim) PersistentVolumeClaim {
 	return PersistentVolumeClaim{
-		ObjectMeta: api.NewObjectMeta(pvc.ObjectMeta),
-		TypeMeta:   api.NewTypeMeta(api.ResourceKindPersistentVolumeClaim),
-		Status:     string(pvc.Status.Phase),
-		Volume:     pvc.Spec.VolumeName,
+		ObjectMeta:   api.NewObjectMeta(pvc.ObjectMeta),
+		TypeMeta:     api.NewTypeMeta(api.ResourceKindPersistentVolumeClaim),
+		Status:       string(pvc.Status.Phase),
+		Volume:       pvc.Spec.VolumeName,
+		Capacity:     pvc.Status.Capacity,
+		AccessModes:  pvc.Spec.AccessModes,
+		StorageClass: pvc.Spec.StorageClassName,
 	}
 }
 

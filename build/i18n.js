@@ -293,7 +293,7 @@ export function processI18nMessages(file, minifiedHtml) {
   // it was escaped by jsecs previously.
   file.pureHtmlContent = eval(`'${pureHtmlContent}'`);
   file.moduleContent = `` +
-      `import module from 'index_module';\n\n${file.messages}\n` +
+      `import module from '/index_module';\n\n${file.messages}\n` +
       `module.run(['$templateCache', ($templateCache) => {\n` +
       `    $templateCache.put('${filePath}', '${content}');\n` +
       `}]);\n`;

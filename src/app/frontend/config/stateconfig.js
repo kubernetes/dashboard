@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as chromeStateName} from 'chrome/state';
-import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
+import {stateName as chromeStateName} from '../chrome/state';
+import {breadcrumbsConfig} from '../common/components/breadcrumbs/service';
 
 import {ConfigController} from './controller';
 import {stateName} from './state';
@@ -58,7 +58,9 @@ export function resolveResource(kdConfigResource, $stateParams, kdDataSelectServ
 }
 
 const i18n = {
-  /** @type {string} @desc Label 'Config and storage' that appears as a breadcrumbs on the action
-   * bar. */
+  /**
+   * @type {string} @desc Label 'Config and storage' that appears as a breadcrumbs on the action
+   * bar.
+   */
   MSG_BREADCRUMBS_CONFIG_AND_STORAGE_LABEL: goog.getMsg('Config and storage'),
 };

@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {StateParams} from 'common/resource/resourcedetail';
-import {stateName} from 'ingress/detail/state';
+import {StateParams} from '../../common/resource/resourcedetail';
+import {stateName} from '../../ingress/detail/state';
 
 class IngressCardController {
   /**
-   * @param {!./../../common/namespace/service.NamespaceService} kdNamespaceService
+   * @param {!../../common/namespace/service.NamespaceService} kdNamespaceService
    * @param {!angular.$interpolate} $interpolate
    * @param {!ui.router.$state} $state
    * @ngInject
@@ -32,7 +32,7 @@ class IngressCardController {
     /** @private {!ui.router.$state} */
     this.state_ = $state;
 
-    /** @private {!./../../common/namespace/service.NamespaceService} */
+    /** @private {!../../common/namespace/service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
   }
 
@@ -43,8 +43,10 @@ class IngressCardController {
    */
   getStartedAtTooltip(startDate) {
     let filter = this.interpolate_(`{{date | date}}`);
-    /** @type {string} @desc Tooltip 'Started at [some date]' showing the exact start time of
-     * the ingress.*/
+    /**
+     * @type {string} @desc Tooltip 'Started at [some date]' showing the exact start time of
+     * the ingress.
+     */
     let MSG_INGRESS_LIST_STARTED_AT_TOOLTIP =
         goog.getMsg('Created at {$startDate} UTC', {'startDate': filter({'date': startDate})});
     return MSG_INGRESS_LIST_STARTED_AT_TOOLTIP;

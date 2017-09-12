@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import componentsModule from 'common/components/module';
-import csrfTokenModule from 'common/csrftoken/module';
-import historyModule from 'common/history/module';
-import validatorsModule from 'common/validators/module';
-
+import componentsModule from '../common/components/module';
+import csrfTokenModule from '../common/csrftoken/module';
 import errorHandlingModule from '../common/errorhandling/module';
+import historyModule from '../common/history/module';
+import validatorsModule from '../common/validators/module';
 
 import {deployComponent} from './component';
 import {deployFromFileComponent} from './deployfromfile_component';

@@ -33,7 +33,7 @@ const (
 	OldestTimestamp = "oldest"
 )
 
-// Load logs from the beginning or the end of the of the log file.
+// Load logs from the beginning or the end of the log file.
 // This matters only if the log file is too large to be loaded completely.
 const (
 	Beginning = "beginning"
@@ -136,7 +136,7 @@ type LogLineId struct {
 // slice of logs relatively to certain reference line ID.
 type LogLines []LogLine
 
-// A single log line. Split into timestamp and and the actual content
+// A single log line. Split into timestamp and the actual content
 type LogLine struct {
 	Timestamp LogTimestamp `json:"timestamp"`
 	Content   string       `json:"content"`

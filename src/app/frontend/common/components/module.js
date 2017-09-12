@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import stateModule from 'common/state/module';
-
 import filtersModule from '../filters/module';
+import stateModule from '../state/module';
 
 import dataSelectModule from './../dataselect/module';
 import namespaceModule from './../namespace/module';
 import actionbarModule from './actionbar/module';
+import allocatedResourcesChartModule from './allocatedresourceschart/module';
 import annotationsModule from './annotations/module';
 import {conditionListComponent} from './conditions/component';
 import {contentCardComponent} from './contentcard/component';
@@ -33,10 +33,11 @@ import {scaleButtonComponent} from './scale/component';
 import {serializedReferenceComponent} from './serializedreference/component';
 import {sparklineComponent} from './sparkline/component';
 import {toggleHiddenTextComponent} from './togglehiddentext/component';
-import {userLinksComponent} from './userlinks/component';
+import uploadFileDirective from './uploadfile/directive';
 import {warningsComponent} from './warnings/component';
 import warnThresholdDirective from './warnthreshold/directive';
 import {zeroStateComponent} from './zerostate/component';
+import {userLinksComponent} from './userlinks/component';
 
 /**
  * Module containing common components for the application.
@@ -57,6 +58,7 @@ export default angular
           stateModule.name,
           graphModule.name,
           annotationsModule.name,
+          allocatedResourcesChartModule.name,
         ])
     .component('kdLabels', labelComponent)
     .component('kdZeroState', zeroStateComponent)
@@ -70,4 +72,5 @@ export default angular
     .component('kdConditionList', conditionListComponent)
     .component('kdScaleButton', scaleButtonComponent)
     .component('kdUserLinks', userLinksComponent)
-    .directive('kdWarnThreshold', warnThresholdDirective);
+    .directive('kdWarnThreshold', warnThresholdDirective)
+    .directive('kdUploadFile', uploadFileDirective);

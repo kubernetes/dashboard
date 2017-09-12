@@ -12,19 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {StateParams} from 'common/resource/resourcedetail';
-import {stateName} from 'deployment/detail/state';
+import {StateParams} from '../../common/resource/resourcedetail';
+import {stateName} from '../../deployment/detail/state';
 
 /**
  * Controller for the replica set card.
  *
  * @final
  */
-export default class DeploymentCardController {
+class DeploymentCardController {
   /**
    * @param {!ui.router.$state} $state
    * @param {!angular.$interpolate} $interpolate
-   * @param {!./../../common/namespace/service.NamespaceService} kdNamespaceService
+   * @param {!../../common/namespace/service.NamespaceService} kdNamespaceService
    * @ngInject
    */
   constructor($state, $interpolate, kdNamespaceService) {
@@ -40,7 +40,7 @@ export default class DeploymentCardController {
     /** @private {!angular.$interpolate} */
     this.interpolate_ = $interpolate;
 
-    /** @private {!./../../common/namespace/service.NamespaceService} */
+    /** @private {!../../common/namespace/service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
   }
 
@@ -96,8 +96,10 @@ export default class DeploymentCardController {
    */
   getCreatedAtTooltip(creationDate) {
     let filter = this.interpolate_(`{{date | date}}`);
-    /** @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
-     * a deployment. */
+    /**
+     * @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
+     * a deployment.
+     */
     let MSG_DEPLOYMENT_LIST_CREATED_AT_TOOLTIP =
         goog.getMsg('Created at {$creationDate}', {'creationDate': filter({'date': creationDate})});
     return MSG_DEPLOYMENT_LIST_CREATED_AT_TOOLTIP;

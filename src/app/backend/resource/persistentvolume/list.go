@@ -21,7 +21,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	client "k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/pkg/api/v1"
 )
 
@@ -36,17 +36,19 @@ type PersistentVolumeList struct {
 
 // PersistentVolume provides the simplified presentation layer view of Kubernetes Persistent Volume resource.
 type PersistentVolume struct {
-	ObjectMeta  api.ObjectMeta                  `json:"objectMeta"`
-	TypeMeta    api.TypeMeta                    `json:"typeMeta"`
-	Capacity    v1.ResourceList                 `json:"capacity"`
-	AccessModes []v1.PersistentVolumeAccessMode `json:"accessModes"`
-	Status      v1.PersistentVolumePhase        `json:"status"`
-	Claim       string                          `json:"claim"`
-	Reason      string                          `json:"reason"`
+	ObjectMeta    api.ObjectMeta                   `json:"objectMeta"`
+	TypeMeta      api.TypeMeta                     `json:"typeMeta"`
+	Capacity      v1.ResourceList                  `json:"capacity"`
+	AccessModes   []v1.PersistentVolumeAccessMode  `json:"accessModes"`
+	ReclaimPolicy v1.PersistentVolumeReclaimPolicy `json:"reclaimPolicy"`
+	StorageClass  string                           `json:"storageClass"`
+	Status        v1.PersistentVolumePhase         `json:"status"`
+	Claim         string                           `json:"claim"`
+	Reason        string                           `json:"reason"`
 }
 
 // GetPersistentVolumeList returns a list of all Persistent Volumes in the cluster.
-func GetPersistentVolumeList(client *client.Clientset, dsQuery *dataselect.DataSelectQuery) (*PersistentVolumeList, error) {
+func GetPersistentVolumeList(client kubernetes.Interface, dsQuery *dataselect.DataSelectQuery) (*PersistentVolumeList, error) {
 	log.Print("Getting list persistent volumes")
 	channels := &common.ResourceChannels{
 		PersistentVolumeList: common.GetPersistentVolumeListChannel(client, 1),
@@ -85,13 +87,15 @@ func toPersistentVolumeList(persistentVolumes []v1.PersistentVolume, nonCritical
 	for _, item := range persistentVolumes {
 		result.Items = append(result.Items,
 			PersistentVolume{
-				ObjectMeta:  api.NewObjectMeta(item.ObjectMeta),
-				TypeMeta:    api.NewTypeMeta(api.ResourceKindPersistentVolume),
-				Capacity:    item.Spec.Capacity,
-				AccessModes: item.Spec.AccessModes,
-				Status:      item.Status.Phase,
-				Claim:       getPersistentVolumeClaim(&item),
-				Reason:      item.Status.Reason,
+				ObjectMeta:    api.NewObjectMeta(item.ObjectMeta),
+				TypeMeta:      api.NewTypeMeta(api.ResourceKindPersistentVolume),
+				Capacity:      item.Spec.Capacity,
+				AccessModes:   item.Spec.AccessModes,
+				ReclaimPolicy: item.Spec.PersistentVolumeReclaimPolicy,
+				StorageClass:  item.Spec.StorageClassName,
+				Status:        item.Status.Phase,
+				Claim:         getPersistentVolumeClaim(&item),
+				Reason:        item.Status.Reason,
 			})
 	}
 

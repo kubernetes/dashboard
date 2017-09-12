@@ -12,10 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {fillContentConfig} from 'chrome/state';
-import {deployAppStateName} from 'deploy/state';
+import {deployAppStateName} from '../deploy/state';
 
-import {actionbarViewName} from './state';
+import {actionbarViewName, fillContentConfig} from './state';
 
 /**
  * Controller for the chrome directive.
@@ -71,7 +70,7 @@ export class ChromeController {
    * @export
    */
   isFillContentView() {
-    return this.state_.current.data[fillContentConfig] === true;
+    return !!(this.state_.current.data && this.state_.current.data[fillContentConfig] === true);
   }
 
   registerStateChangeListeners() {

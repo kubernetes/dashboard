@@ -22,7 +22,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	client "k8s.io/client-go/kubernetes"
+	kubernetes "k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/pkg/api/v1"
 )
 
@@ -65,8 +65,9 @@ func (spec *ImagePullSecretSpec) GetData() map[string][]byte {
 
 // Secret is a single secret returned to the frontend.
 type Secret struct {
-	api.ObjectMeta `json:"objectMeta"`
-	api.TypeMeta   `json:"typeMeta"`
+	ObjectMeta api.ObjectMeta `json:"objectMeta"`
+	TypeMeta   api.TypeMeta   `json:"typeMeta"`
+	Type       v1.SecretType  `json:"type"`
 }
 
 // SecretsList is a response structure for a queried secrets list.
@@ -81,10 +82,10 @@ type SecretList struct {
 }
 
 // GetSecretList returns all secrets in the given namespace.
-func GetSecretList(client *client.Clientset, namespace *common.NamespaceQuery,
+func GetSecretList(client kubernetes.Interface, namespace *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery) (*SecretList, error) {
 	log.Printf("Getting list of secrets in %s namespace\n", namespace)
-	secretList, err := client.Secrets(namespace.ToRequestParam()).List(api.ListEverything)
+	secretList, err := client.CoreV1().Secrets(namespace.ToRequestParam()).List(api.ListEverything)
 
 	nonCriticalErrors, criticalError := errors.HandleError(err)
 	if criticalError != nil {
@@ -109,7 +110,7 @@ func GetSecretListFromChannels(channels *common.ResourceChannels, dsQuery *datas
 }
 
 // CreateSecret creates a single secret using the cluster API client
-func CreateSecret(client *client.Clientset, spec SecretSpec) (*Secret, error) {
+func CreateSecret(client kubernetes.Interface, spec SecretSpec) (*Secret, error) {
 	namespace := spec.GetNamespace()
 	secret := &v1.Secret{
 		ObjectMeta: metaV1.ObjectMeta{
@@ -119,14 +120,15 @@ func CreateSecret(client *client.Clientset, spec SecretSpec) (*Secret, error) {
 		Type: spec.GetType(),
 		Data: spec.GetData(),
 	}
-	_, err := client.Secrets(namespace).Create(secret)
+	_, err := client.CoreV1().Secrets(namespace).Create(secret)
 	return toSecret(secret), err
 }
 
 func toSecret(secret *v1.Secret) *Secret {
 	return &Secret{
-		api.NewObjectMeta(secret.ObjectMeta),
-		api.NewTypeMeta(api.ResourceKindSecret),
+		ObjectMeta: api.NewObjectMeta(secret.ObjectMeta),
+		TypeMeta:   api.NewTypeMeta(api.ResourceKindSecret),
+		Type:       secret.Type,
 	}
 }
 

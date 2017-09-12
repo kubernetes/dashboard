@@ -9,6 +9,8 @@ the backend. The frontend is a single page web application that runs in a browse
 its business data from the backend using standard HTTP methods. The backend implements UI-business
 logic and fetches raw data from the various Kubernetes APIs.
 
+[More information on the structure of the dashboard code](code-structure.md)
+
 ## Preparation
 
 Make sure the following software is installed and added to the `$PATH` variable:

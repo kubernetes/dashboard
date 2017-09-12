@@ -16,10 +16,11 @@
  * @fileoverview API for data select operations.
  * @externs
  */
+
 const DataSelectApi = {};
 
 /**
- * @typedef{{
+ * @typedef {{
  *  itemsPerPage: number,
  *  page: number,
  *  sortBy: string,
@@ -31,7 +32,7 @@ const DataSelectApi = {};
 DataSelectApi.DataSelectQuery;
 
 /**
- * @typedef{{
+ * @typedef {{
  *  NAME: string,
  *  STATUS: string,
  *  AGE: string,
@@ -40,7 +41,7 @@ DataSelectApi.DataSelectQuery;
 DataSelectApi.SortableProperties;
 
 /**
- * @typedef{{
+ * @typedef {{
  *  PAGINATE: number,
  *  SORT: number,
  *  FILTER: number,

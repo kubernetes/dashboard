@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as chromeStateName} from 'chrome/state';
-import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
+import {stateName as chromeStateName} from '../chrome/state';
+import {breadcrumbsConfig} from '../common/components/breadcrumbs/service';
 import {DiscoveryController} from './controller';
 import {stateName} from './state';
 import {stateUrl} from './state';
@@ -57,7 +57,9 @@ export function resolveResource(kdDiscoveryResource, $stateParams, kdDataSelectS
 }
 
 const i18n = {
-  /** @type {string} @desc Label 'Discovery and load balancing' that appears as a breadcrumbs on the
-     action bar. */
+  /**
+     @type {string} @desc Label 'Discovery and load balancing' that appears as a breadcrumbs on the
+     action bar.
+   */
   MSG_BREADCRUMBS_DISCOVERY_AND_LOAD_BALANCING_LABEL: goog.getMsg('Discovery and load balancing'),
 };

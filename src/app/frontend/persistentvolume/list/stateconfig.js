@@ -12,18 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as parentStateName} from 'cluster/state';
-import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
+import {stateName as parentStateName} from '../../cluster/state';
+import {breadcrumbsConfig} from '../../common/components/breadcrumbs/service';
 
-import {stateName as parentState, stateUrl} from './../state';
+import {stateName as parentState, stateUrl} from '../state';
 import {PersistentVolumeListController} from './controller';
 
 /**
  * I18n object that defines strings for translation used in this file.
  */
 const i18n = {
-  /** @type {string} @desc Label 'Persistent Volumes' that appears as a breadcrumbs on the action
-   bar. */
+  /**
+   @type {string} @desc Label 'Persistent Volumes' that appears as a breadcrumbs on the action
+   bar.
+ */
   MSG_BREADCRUMBS_PERSISTENT_VOLUMES_LABEL: goog.getMsg('Persistent Volumes'),
 };
 

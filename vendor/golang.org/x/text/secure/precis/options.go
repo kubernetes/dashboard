@@ -20,6 +20,7 @@ type options struct {
 	foldWidth bool
 
 	// Enforcement options
+	asciiLower    bool
 	cases         transform.SpanningTransformer
 	disallow      runes.Set
 	norm          transform.SpanningTransformer
@@ -123,6 +124,7 @@ func Norm(f norm.Form) Option {
 // provided to determine the type of case folding used.
 func FoldCase(opts ...cases.Option) Option {
 	return func(o *options) {
+		o.asciiLower = true
 		o.cases = cases.Fold(opts...)
 	}
 }
@@ -131,6 +133,7 @@ func FoldCase(opts ...cases.Option) Option {
 // provided to determine the type of case folding used.
 func LowerCase(opts ...cases.Option) Option {
 	return func(o *options) {
+		o.asciiLower = true
 		if len(opts) == 0 {
 			o.cases = cases.Lower(language.Und, cases.HandleFinalSigma(false))
 			return

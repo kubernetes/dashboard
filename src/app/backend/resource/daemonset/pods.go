@@ -65,7 +65,7 @@ func getRawDaemonSetPods(client k8sClient.Interface, daemonSetName, namespace st
 		return nil, err
 	}
 
-	matchingPods := common.FilterPodsByOwnerReference(daemonSet.Namespace, daemonSet.UID, podList.Items)
+	matchingPods := common.FilterPodsByControllerRef(daemonSet, podList.Items)
 	return matchingPods, nil
 }
 
@@ -79,6 +79,6 @@ func getDaemonSetPodInfo(client k8sClient.Interface, daemonSet *extensions.Daemo
 	}
 
 	podInfo := common.GetPodInfo(daemonSet.Status.CurrentNumberScheduled,
-		daemonSet.Status.DesiredNumberScheduled, pods)
+		&daemonSet.Status.DesiredNumberScheduled, pods)
 	return &podInfo, nil
 }

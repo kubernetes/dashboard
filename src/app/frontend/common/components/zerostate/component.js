@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {deployAppStateName} from 'deploy/state';
+import {deployAppStateName} from '../../../deploy/state';
 
 const TITLE_SLOT = 'title';
 const TEXT_SLOT = 'text';

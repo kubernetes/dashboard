@@ -31,9 +31,11 @@ type PersistentVolumeDetail struct {
 	Claim                  string                           `json:"claim"`
 	ReclaimPolicy          v1.PersistentVolumeReclaimPolicy `json:"reclaimPolicy"`
 	AccessModes            []v1.PersistentVolumeAccessMode  `json:"accessModes"`
+	StorageClass           string                           `json:"storageClass"`
 	Capacity               v1.ResourceList                  `json:"capacity"`
 	Message                string                           `json:"message"`
 	PersistentVolumeSource v1.PersistentVolumeSource        `json:"persistentVolumeSource"`
+	Reason                 string                           `json:"reason"`
 }
 
 // GetPersistentVolumeDetail returns detailed information about a persistent volume
@@ -56,8 +58,10 @@ func getPersistentVolumeDetail(persistentVolume *v1.PersistentVolume) *Persisten
 		Claim:                  getPersistentVolumeClaim(persistentVolume),
 		ReclaimPolicy:          persistentVolume.Spec.PersistentVolumeReclaimPolicy,
 		AccessModes:            persistentVolume.Spec.AccessModes,
+		StorageClass:           persistentVolume.Spec.StorageClassName,
 		Capacity:               persistentVolume.Spec.Capacity,
 		Message:                persistentVolume.Status.Message,
 		PersistentVolumeSource: persistentVolume.Spec.PersistentVolumeSource,
+		Reason:                 persistentVolume.Status.Reason,
 	}
 }

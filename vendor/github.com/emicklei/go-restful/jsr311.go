@@ -74,7 +74,7 @@ func (r RouterJSR311) detectRoute(routes []Route, httpRequest *http.Request) (*R
 	// accept
 	outputMediaOk := []Route{}
 	accept := httpRequest.Header.Get(HEADER_Accept)
-	if len(accept) == 0 {
+	if accept == "" {
 		accept = "*/*"
 	}
 	for _, each := range inputMediaOk {
@@ -88,8 +88,7 @@ func (r RouterJSR311) detectRoute(routes []Route, httpRequest *http.Request) (*R
 		}
 		return nil, NewError(http.StatusNotAcceptable, "406: Not Acceptable")
 	}
-	// return r.bestMatchByMedia(outputMediaOk, contentType, accept), nil
-	return &outputMediaOk[0], nil
+	return r.bestMatchByMedia(outputMediaOk, contentType, accept), nil
 }
 
 // http://jsr311.java.net/nonav/releases/1.1/spec/spec3.html#x3-360003.7.2

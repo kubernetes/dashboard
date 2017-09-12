@@ -118,8 +118,48 @@ var (
 // TODO: make this a method on profile.
 
 func (b *buffers) enforce(p *Profile, src []byte, comparing bool) (str []byte, err error) {
-	// TODO: ASCII fast path, if options allow.
 	b.src = src
+
+	ascii := true
+	for _, c := range src {
+		if c >= utf8.RuneSelf {
+			ascii = false
+			break
+		}
+	}
+	// ASCII fast path.
+	if ascii {
+		for _, f := range p.options.additional {
+			if err = b.apply(f()); err != nil {
+				return nil, err
+			}
+		}
+		switch {
+		case p.options.asciiLower || (comparing && p.options.ignorecase):
+			for i, c := range b.src {
+				if 'A' <= c && c <= 'Z' {
+					b.src[i] = c ^ 1<<5
+				}
+			}
+		case p.options.cases != nil:
+			b.apply(p.options.cases)
+		}
+		c := checker{p: p}
+		if _, err := c.span(b.src, true); err != nil {
+			return nil, err
+		}
+		if p.disallow != nil {
+			for _, c := range b.src {
+				if p.disallow.Contains(rune(c)) {
+					return nil, errDisallowedRune
+				}
+			}
+		}
+		if p.options.disallowEmpty && len(b.src) == 0 {
+			return nil, errEmptyString
+		}
+		return b.src, nil
+	}
 
 	// These transforms are applied in the order defined in
 	// https://tools.ietf.org/html/rfc7564#section-7
@@ -282,33 +322,35 @@ func (c *checker) span(src []byte, atEOF bool) (n int, err error) {
 			}
 			return n, errDisallowedRune
 		}
+		doLookAhead := false
 		if property(e) < c.p.class.validFrom {
 			if d.rule == nil {
 				return n, errDisallowedRune
 			}
-			doLookAhead, err := d.rule(c.beforeBits)
+			doLookAhead, err = d.rule(c.beforeBits)
 			if err != nil {
 				return n, err
-			}
-			if doLookAhead {
-				c.beforeBits &= d.keep
-				c.beforeBits |= d.set
-				// We may still have a lookahead rule which we will require to
-				// complete (by checking termBits == 0) before setting the new
-				// bits.
-				if c.termBits != 0 && (!c.checkLookahead() || c.termBits == 0) {
-					return n, err
-				}
-				c.termBits = d.term
-				c.acceptBits = d.accept
-				n += sz
-				continue
 			}
 		}
 		c.beforeBits &= d.keep
 		c.beforeBits |= d.set
-		if c.termBits != 0 && !c.checkLookahead() {
-			return n, errContext
+		if c.termBits != 0 {
+			// We are currently in an unterminated lookahead.
+			if c.beforeBits&c.termBits != 0 {
+				c.termBits = 0
+				c.acceptBits = 0
+			} else if c.beforeBits&c.acceptBits == 0 {
+				// Invalid continuation of the unterminated lookahead sequence.
+				return n, errContext
+			}
+		}
+		if doLookAhead {
+			if c.termBits != 0 {
+				// A previous lookahead run has not been terminated yet.
+				return n, errContext
+			}
+			c.termBits = d.term
+			c.acceptBits = d.accept
 		}
 		n += sz
 	}
@@ -316,18 +358,6 @@ func (c *checker) span(src []byte, atEOF bool) (n int, err error) {
 		err = errContext
 	}
 	return n, err
-}
-
-func (c *checker) checkLookahead() bool {
-	switch {
-	case c.beforeBits&c.termBits != 0:
-		c.termBits = 0
-		c.acceptBits = 0
-	case c.beforeBits&c.acceptBits != 0:
-	default:
-		return false
-	}
-	return true
 }
 
 // TODO: we may get rid of this transform if transform.Chain understands

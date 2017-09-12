@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {StateParams} from 'common/resource/resourcedetail';
-import {stateName as deploymentStateName} from 'deployment/detail/state';
-import {stateName} from 'horizontalpodautoscaler/detail/state';
-import {stateName as replicaSetStateName} from 'replicaset/detail/state';
-import {stateName as replicationControllerStateName} from 'replicationcontroller/detail/state';
+import {StateParams} from '../../common/resource/resourcedetail';
+import {stateName as deploymentStateName} from '../../deployment/detail/state';
+import {stateName} from '../../horizontalpodautoscaler/detail/state';
+import {stateName as replicaSetStateName} from '../../replicaset/detail/state';
+import {stateName as replicationControllerStateName} from '../../replicationcontroller/detail/state';
 
 const referenceKindToDetailStateName = {
   Deployment: deploymentStateName,
@@ -33,7 +33,7 @@ export class HorizontalPodAutoscalerCardController {
   /**
    * @param {!ui.router.$state} $state
    * @param {!angular.$interpolate} $interpolate
-   * @param {!./../../common/namespace/service.NamespaceService} kdNamespaceService
+   * @param {!../../common/namespace/service.NamespaceService} kdNamespaceService
    * @ngInject
    */
   constructor($state, $interpolate, kdNamespaceService) {
@@ -46,7 +46,7 @@ export class HorizontalPodAutoscalerCardController {
     /** @private {!angular.$interpolate} */
     this.interpolate_ = $interpolate;
 
-    /** @private {!./../../common/namespace/service.NamespaceService} */
+    /** @private {!../../common/namespace/service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
   }
 
@@ -88,8 +88,10 @@ export class HorizontalPodAutoscalerCardController {
    */
   getCreatedAtTooltip() {
     let filter = this.interpolate_(`{{date | date}}`);
-    /** @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
-     * the horizontal pod autoscaler.*/
+    /**
+     * @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
+     * the horizontal pod autoscaler.
+     */
     let MSG_HORIZONTAL_POD_AUTOSCALER_LIST_CREATED_AT_TOOLTIP =
         goog.getMsg('Created at {$creationDate}', {
           'creationDate':

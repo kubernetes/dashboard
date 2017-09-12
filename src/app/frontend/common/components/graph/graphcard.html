@@ -18,7 +18,9 @@ limitations under the License.
   <kd-title>{{$ctrl.graphTitle}}
     <span ng-if="::$ctrl.graphInfo">
       <md-icon md-font-library="material-icons">info</md-icon>
-      <md-tooltip>{{::$ctrl.graphInfo}}</md-tooltip>
+      <md-tooltip md-delay="500" md-autohide>
+        {{::$ctrl.graphInfo}}
+      </md-tooltip>
     </span>
   </kd-title>
   <kd-content>

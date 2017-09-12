@@ -24,8 +24,11 @@ import (
 	"time"
 
 	restful "github.com/emicklei/go-restful"
+	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
+	kdErrors "github.com/kubernetes/dashboard/src/app/backend/errors"
 	"golang.org/x/net/xsrftoken"
+	errorsK8s "k8s.io/apimachinery/pkg/api/errors"
 	utilnet "k8s.io/apimachinery/pkg/util/net"
 )
 
@@ -34,9 +37,21 @@ func InstallFilters(ws *restful.WebService, manager client.ClientManager) {
 	ws.Filter(requestAndResponseLogger)
 	ws.Filter(metricsFilter)
 	ws.Filter(validateXSRFFilter(manager.CSRFKey()))
+	ws.Filter(restrictedResourcesFilter)
 }
 
-// logRequestAndReponse is a web-service filter function used for request and response logging.
+// Filter used to restrict access to dashboard exclusive resource, i.e. secret used to store dashboard encryption key.
+func restrictedResourcesFilter(request *restful.Request, response *restful.Response, chain *restful.FilterChain) {
+	if !authApi.ShouldRejectRequest(request.Request.URL.String()) {
+		chain.ProcessFilter(request, response)
+		return
+	}
+
+	err := errorsK8s.NewUnauthorized(kdErrors.MSG_DASHBOARD_EXCLUSIVE_RESOURCE_ERROR)
+	response.WriteHeaderAndEntity(int(err.ErrStatus.Code), err.Error())
+}
+
+// web-service filter function used for request and response logging.
 func requestAndResponseLogger(request *restful.Request, response *restful.Response,
 	chain *restful.FilterChain) {
 	log.Printf(formatRequestLog(request))

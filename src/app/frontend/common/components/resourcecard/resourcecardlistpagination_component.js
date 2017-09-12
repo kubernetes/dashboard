@@ -20,16 +20,18 @@ import {DataSelectQueryBuilder} from './../../dataselect/builder';
 export class ResourceCardListPaginationController {
   /**
    * @param {!../../dataselect/service.DataSelectService} kdDataSelectService
-   * @param {!../../errorhandling/service.ErrorDialog} errorDialog
+   * @param {!../../errorhandling/dialog.ErrorDialog} errorDialog
    * @ngInject
    */
   constructor(kdDataSelectService, errorDialog) {
-    /** @export {!./resourcecardlist_component.ResourceCardListController} -
-     * Initialized from require just before $onInit is called. */
+    /**
+     * @export {!./resourcecardlist_component.ResourceCardListController} -
+     * Initialized from require just before $onInit is called.
+     */
     this.resourceCardListCtrl;
     /** @private {!../../dataselect/service.DataSelectService} */
     this.dataSelectService_ = kdDataSelectService;
-    /** @private {!../../errorhandling/service.ErrorDialog} */
+    /** @private {!../../errorhandling/dialog.ErrorDialog} */
     this.errorDialog_ = errorDialog;
     /** @export */
     this.i18n = i18n;

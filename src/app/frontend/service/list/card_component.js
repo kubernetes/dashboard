@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {StateParams} from 'common/resource/resourcedetail';
-import {stateName} from 'service/detail/state';
+import {StateParams} from '../../common/resource/resourcedetail';
+import {stateName} from '../../service/detail/state';
 
 /**
  * @final
@@ -22,11 +22,11 @@ export class ServiceCardController {
   /**
    * @param {!ui.router.$state} $state
    * @param {!angular.$interpolate} $interpolate
-   * @param {!./../../common/namespace/service.NamespaceService} kdNamespaceService
+   * @param {!../../common/namespace/service.NamespaceService} kdNamespaceService
    * @ngInject
    */
   constructor($state, $interpolate, kdNamespaceService) {
-    /** @private {!./../../common/namespace/service.NamespaceService} */
+    /** @private {!../../common/namespace/service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
 
     /** @export {!backendApi.Service} */
@@ -95,8 +95,10 @@ export class ServiceCardController {
    */
   getStartedAtTooltip(startDate) {
     let filter = this.interpolate_(`{{date | date}}`);
-    /** @type {string} @desc Tooltip 'Started at [some date]' showing the exact start time of
-     * the service.*/
+    /**
+     * @type {string} @desc Tooltip 'Started at [some date]' showing the exact start time of
+     * the service.
+     */
     let MSG_SERVICE_LIST_STARTED_AT_TOOLTIP =
         goog.getMsg('Created at {$startDate} UTC', {'startDate': filter({'date': startDate})});
     return MSG_SERVICE_LIST_STARTED_AT_TOOLTIP;

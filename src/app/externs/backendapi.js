@@ -1168,6 +1168,7 @@ backendApi.NamespaceDetail;
  * @typedef {{
  *   objectMeta: !backendApi.ObjectMeta,
  *   typeMeta: !backendApi.TypeMeta,
+ *   type: string,
  *   data: !Object<string, string>,
  * }}
  */
@@ -1176,7 +1177,8 @@ backendApi.SecretDetail;
 /**
  * @typedef {{
  *   objectMeta: !backendApi.ObjectMeta,
- *   typeMeta: !backendApi.TypeMeta
+ *   typeMeta: !backendApi.TypeMeta,
+ *   type: string
  * }}
  */
 backendApi.Secret;
@@ -1453,5 +1455,54 @@ backendApi.ThirdPartyResourceObjectList;
  */
 backendApi.CsrfToken;
 
-/** @typedef {{serverTime: number}} */
-const appConfig_DO_NOT_USE_DIRECTLY = {};
+/**
+ * @typedef {{
+ *   username: string,
+ *   password: string,
+ *   token: string,
+ *   kubeConfig: string,
+ * }}
+ */
+backendApi.LoginSpec;
+
+/**
+ * @typedef {{
+ *   jweToken: string,
+ *   errors: !Array<!backendApi.Error>
+ * }}
+ */
+backendApi.AuthResponse;
+
+/**
+ * @typedef {{
+ *   tokenPresent: boolean,
+ *   headerPresent: boolean,
+ *   httpsMode: boolean
+ * }}
+ */
+backendApi.LoginStatus;
+
+/**
+ * @typedef {{
+ *   jweToken: string
+ * }}
+ */
+backendApi.TokenRefreshSpec;
+
+/** @typedef {string} */
+backendApi.AuthenticationMode;
+
+/**
+ * @typedef {{
+ *    modes: !Array<!backendApi.AuthenticationMode>
+ * }}
+ */
+backendApi.LoginModesResponse;
+
+/**
+ * @typedef {{
+ *  TOKEN: !backendApi.AuthenticationMode,
+ *  BASIC: !backendApi.AuthenticationMode,
+ *  }}
+ */
+backendApi.SupportedAuthenticationModes;

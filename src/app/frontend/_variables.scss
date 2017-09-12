@@ -1,4 +1,4 @@
-// Copyright 2015 Google Inc. All Rights Reserved.
+// Copyright 2017 The Kubernetes Dashboard Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -49,6 +49,12 @@ $emphasis: #000;
 $content-background: #fff;
 $chart-1: #00c752;
 $chart-2: #326de6;
+
+// Resource state chart colors
+$failed-resource-color: #f00;
+$running-resource-color: #00c752;
+$pending-resource-color: #ff0;
+
 $success-color: #008000;
 $error-color: #ff5722;
 

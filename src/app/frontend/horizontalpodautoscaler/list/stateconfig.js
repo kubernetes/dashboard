@@ -12,17 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
+import {breadcrumbsConfig} from '../../common/components/breadcrumbs/service';
 
-import {stateName as parentState, stateUrl} from './../state';
+import {stateName as parentState, stateUrl} from '../state';
 import {HorizontalPodAutoscalerListController} from './controller';
 
 /**
  * I18n object that defines strings for translation used in this file.
  */
 const i18n = {
-  /** @type {string} @desc Label 'Horizontal Pod Autoscalers' that appears as a breadcrumbs on the
-   action bar. */
+  /**
+   @type {string} @desc Label 'Horizontal Pod Autoscalers' that appears as a breadcrumbs on the
+   action bar.
+ */
   MSG_BREADCRUMBS_HORIZONTAL_POD_AUTOSCALERS_LABEL: goog.getMsg('Horizontal Pod Autoscalers'),
 };
 

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import resourceModule from 'common/resource/module';
+import resourceModule from '../../resource/module';
 
 import {logsButtonComponent} from './logsbutton_component';
 import {resourceCardComponent} from './resourcecard_component';

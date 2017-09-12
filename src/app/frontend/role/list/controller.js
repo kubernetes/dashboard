@@ -28,12 +28,4 @@ export class RoleListController {
     /** @export {!angular.Resource} */
     this.roleListResource = kdRoleListResource;
   }
-
-  /**
-   * @return {boolean}
-   * @export
-   */
-  shouldShowZeroState() {
-    return this.roleList.items === null || this.roleList.items.length === 0;
-  }
 }

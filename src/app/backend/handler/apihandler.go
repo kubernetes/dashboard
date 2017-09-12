@@ -22,6 +22,8 @@ import (
 
 	restful "github.com/emicklei/go-restful"
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/auth"
+	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/integration"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
@@ -63,7 +65,7 @@ import (
 	"golang.org/x/net/xsrftoken"
 	errorsK8s "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/runtime"
-	"k8s.io/kubernetes/pkg/client/unversioned/remotecommand"
+	"k8s.io/client-go/tools/remotecommand"
 )
 
 const (
@@ -87,7 +89,8 @@ type TerminalResponse struct {
 }
 
 // CreateHTTPAPIHandler creates a new HTTP handler that handles all requests to the API of the backend.
-func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager client.ClientManager) (
+func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager client.ClientManager,
+	authManager authApi.AuthManager) (
 	http.Handler, error) {
 	apiHandler := APIHandler{iManager: iManager, cManager: cManager}
 	wsContainer := restful.NewContainer()
@@ -104,6 +107,9 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 
 	integrationHandler := integration.NewIntegrationHandler(iManager)
 	integrationHandler.Install(apiV1Ws)
+
+	authHandler := auth.NewAuthHandler(authManager)
+	authHandler.Install(apiV1Ws)
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("csrftoken/{action}").
@@ -959,7 +965,7 @@ func (apiHandler *APIHandler) handleGetReplicaCount(request *restful.Request, re
 }
 
 func (apiHandler *APIHandler) handleDeployFromFile(request *restful.Request, response *restful.Response) {
-	cfg, err := apiHandler.cManager.ClientCmdConfig(request)
+	cfg, err := apiHandler.cManager.Config(request)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -971,7 +977,7 @@ func (apiHandler *APIHandler) handleDeployFromFile(request *restful.Request, res
 		return
 	}
 
-	isDeployed, err := deployment.DeployAppFromFile(cfg, deploymentSpec, deployment.CreateObjectFromInfoFn)
+	isDeployed, err := deployment.DeployAppFromFile(cfg, deploymentSpec)
 	if !isDeployed {
 		handleInternalError(response, err)
 		return

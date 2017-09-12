@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {StateParams} from 'common/resource/resourcedetail';
-import {stateName} from 'persistentvolume/detail/state';
+import {StateParams} from '../../common/resource/resourcedetail';
+import {stateName} from '../../persistentvolume/detail/state';
 
 /**
  * Controller for the persistent volume card.
  *
  * @final
  */
-export default class PersistentVolumeCardController {
+class PersistentVolumeCardController {
   /**
    * @param {!ui.router.$state} $state
    * @param {!angular.$interpolate} $interpolate
@@ -55,8 +55,10 @@ export default class PersistentVolumeCardController {
    */
   getCreatedAtTooltip(creationDate) {
     let filter = this.interpolate_(`{{date | date}}`);
-    /** @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
-     * persistent volume. */
+    /**
+     * @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
+     * persistent volume.
+     */
     let MSG_PERSISTENT_VOLUME_LIST_CREATED_AT_TOOLTIP =
         goog.getMsg('Created at {$creationDate}', {'creationDate': filter({'date': creationDate})});
     return MSG_PERSISTENT_VOLUME_LIST_CREATED_AT_TOOLTIP;

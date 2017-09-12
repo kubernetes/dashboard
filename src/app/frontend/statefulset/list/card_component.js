@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {StateParams} from 'common/resource/resourcedetail';
-import {stateName} from 'statefulset/detail/state';
+import {StateParams} from '../../common/resource/resourcedetail';
+import {stateName} from '../../statefulset/detail/state';
 
 /**
  * Controller for the stateful set card.
@@ -25,10 +25,9 @@ export default class StatefulSetCardController {
    * @param {!ui.router.$state} $state
    * @param {!angular.$interpolate} $interpolate
    * @param {!./../../common/namespace/service.NamespaceService} kdNamespaceService
-   * @param {!./../../common/scaling/service.ScaleService} kdScaleService
    * @ngInject
    */
-  constructor($state, $interpolate, kdNamespaceService, kdScaleService) {
+  constructor($state, $interpolate, kdNamespaceService) {
     /**
      * Initialized from the scope.
      * @export {!backendApi.StatefulSet}
@@ -43,9 +42,6 @@ export default class StatefulSetCardController {
 
     /** @private {!./../../common/namespace/service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
-
-    /** @private {!./../../common/scaling/service.ScaleService} */
-    this.kdScaleService_ = kdScaleService;
   }
 
   /**
@@ -54,16 +50,6 @@ export default class StatefulSetCardController {
    */
   areMultipleNamespacesSelected() {
     return this.kdNamespaceService_.areMultipleNamespacesSelected();
-  }
-
-  /**
-   * @export
-   */
-  showScaleDialog() {
-    this.kdScaleService_.showScaleDialog(
-        this.statefulSet.objectMeta.namespace, this.statefulSet.objectMeta.name,
-        this.statefulSet.pods.current, this.statefulSet.pods.desired,
-        this.statefulSet.typeMeta.kind);
   }
 
   /**
@@ -110,8 +96,10 @@ export default class StatefulSetCardController {
    */
   getCreatedAtTooltip(creationDate) {
     let filter = this.interpolate_(`{{date | date}}`);
-    /** @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
-     * stateful set. */
+    /**
+     * @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
+     * stateful set.
+     */
     let MSG_STATEFUL_SET_LIST_CREATED_AT_TOOLTIP =
         goog.getMsg('Created at {$creationDate}', {'creationDate': filter({'date': creationDate})});
     return MSG_STATEFUL_SET_LIST_CREATED_AT_TOOLTIP;

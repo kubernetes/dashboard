@@ -19,14 +19,10 @@
  */
 export class ReplicationControllerService {
   /**
-   * @param {!md.$dialog} $mdDialog
    * @param {!./../../common/resource/verber_service.VerberService} kdResourceVerberService
    * @ngInject
    */
-  constructor($mdDialog, kdResourceVerberService) {
-    /** @private {!md.$dialog} */
-    this.mdDialog_ = $mdDialog;
-
+  constructor(kdResourceVerberService) {
     /** @private {!./../../common/resource/verber_service.VerberService}*/
     this.kdResourceVerberService_ = kdResourceVerberService;
   }
@@ -37,6 +33,7 @@ export class ReplicationControllerService {
    * @return {!angular.$q.Promise}
    */
   showDeleteDialog(typeMeta, objectMeta) {
+    // TODO: localize this name
     return this.kdResourceVerberService_.showDeleteDialog(
         'Replication Controller', typeMeta, objectMeta);
   }

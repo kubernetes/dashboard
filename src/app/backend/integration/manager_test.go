@@ -18,11 +18,21 @@ import (
 	"testing"
 
 	"errors"
-	"fmt"
 
+	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
+	"github.com/kubernetes/dashboard/src/app/backend/auth/jwe"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/integration/api"
+	"github.com/kubernetes/dashboard/src/app/backend/sync"
+	"k8s.io/client-go/kubernetes/fake"
 )
+
+func getTokenManager() authApi.TokenManager {
+	c := fake.NewSimpleClientset()
+	syncManager := sync.NewSynchronizerManager(c)
+	holder := jwe.NewRSAKeyHolder(syncManager.Secret("", ""))
+	return jwe.NewJWETokenManager(holder)
+}
 
 func areErrorsEqual(err1, err2 error) bool {
 	return (err1 != nil && err2 != nil && err1.Error() == err2.Error()) ||
@@ -44,11 +54,6 @@ func TestIntegrationManager_GetState(t *testing.T) {
 		expected      *api.IntegrationState
 		expectedErr   error
 	}{
-		{
-			"Uninitialized arguments",
-			"", "", nil,
-			errors.New("Integration with given id heapster does not exist"),
-		},
 		{
 			"Server provided and using in-cluster heapster",
 			"http://127.0.0.1:8080", "", &api.IntegrationState{
@@ -79,9 +84,8 @@ func TestIntegrationManager_GetState(t *testing.T) {
 		// Time is irrelevant so we don't need to check it
 		if c.expectedErr == nil && (!areErrorsEqual(state.Error, c.expected.Error) ||
 			state.Connected != c.expected.Connected) {
-			t.Errorf("Test Case: %s. Expected state error to be: %v, but got %v.",
+			t.Errorf("Test Case: %s. Expected state to be: %v, but got %v.",
 				c.info, c.expected, state)
-			fmt.Println(state.Error)
 		}
 	}
 }

@@ -140,8 +140,10 @@ export default class DeployLabelController {
    * @return {string}
    */
   getLabelKeyUniqueWarning() {
-    /** @type {string} @desc This warning appears when the key of a specified kubernetes label on
-     * the deploy page is not unique.*/
+    /**
+     * @type {string} @desc This warning appears when the key of a specified kubernetes label on
+     * the deploy page is not unique.
+     */
     let MSG_DEPLOY_LABEL_KEY_NOT_UNIQUE_WARNING =
         goog.getMsg('{$labelKey} is not unique.', {'labelKey': this.label.key});
     return MSG_DEPLOY_LABEL_KEY_NOT_UNIQUE_WARNING;

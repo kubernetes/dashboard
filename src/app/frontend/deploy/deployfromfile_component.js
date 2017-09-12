@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as overview} from 'overview/state';
+import {stateName as overview} from '../overview/state';
 import showDeployAnywayDialog from './deployanyway_dialog';
 
 /**
@@ -20,7 +20,7 @@ import showDeployAnywayDialog from './deployanyway_dialog';
  *
  * @final
  */
-export default class DeployFromFileController {
+class DeployFromFileController {
   /**
    * @param {!angular.$log} $log
    * @param {!angular.$resource} $resource
@@ -32,11 +32,12 @@ export default class DeployFromFileController {
    * @param {!./../common/csrftoken/service.CsrfTokenService} kdCsrfTokenService
    * @param {!../chrome/state.StateParams} $stateParams
    * @param {!../common/errorhandling/localizer_service.LocalizerService} localizerService
+   * @param {string} kdCsrfTokenHeader
    * @ngInject
    */
   constructor(
       $log, $resource, $q, errorDialog, kdHistoryService, $mdDialog, kdCsrfTokenService,
-      $stateParams, localizerService) {
+      $stateParams, localizerService, kdCsrfTokenHeader) {
     /**
      * Initialized the template.
      * @export {!angular.FormController}
@@ -85,6 +86,9 @@ export default class DeployFromFileController {
 
     /** @export */
     this.i18n = i18n;
+
+    /** @private {string} */
+    this.csrfHeaderName_ = kdCsrfTokenHeader;
   }
 
   /**
@@ -106,10 +110,10 @@ export default class DeployFromFileController {
 
       this.tokenPromise.then(
           (token) => {
-            /** @type {!angular.Resource<!backendApi.AppDeploymentFromFileSpec>} */
+            /** @type {!angular.Resource} */
             let resource = this.resource_(
                 'api/v1/appdeploymentfromfile', {},
-                {save: {method: 'POST', headers: {'X-CSRF-TOKEN': token}}});
+                {save: {method: 'POST', headers: {[this.csrfHeaderName_]: token}}});
             this.isDeployInProgress_ = true;
             resource.save(
                 deploymentSpec,

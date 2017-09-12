@@ -35,5 +35,9 @@ limitations under the License.
         <kd-middle-ellipsis display-string="{{::mode}}"></kd-middle-ellipsis>
       </div>
     </kd-info-card-entry>
+    <kd-info-card-entry title="[[Storage class|Persistent volume claim info details section storage class entry.]]">
+      <div ng-show="::$ctrl.persistentVolumeClaim.storageClass">{{::$ctrl.persistentVolumeClaim.storageClass}}</div>
+      <div ng-hide="::$ctrl.persistentVolumeClaim.storageClass">-</div>
+    </kd-info-card-entry>
   </kd-info-card-section>
 </kd-info-card>
