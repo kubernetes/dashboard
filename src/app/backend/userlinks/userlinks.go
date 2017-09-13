@@ -60,10 +60,7 @@ func GetUserLinks(client k8sClient.Interface, namespace, name, resource, host st
 func getServiceLinks(client k8sClient.Interface, namespace, name, host string) ([]UserLink, error) {
 	userLinks := []UserLink{}
 	service, err := client.CoreV1().Services(namespace).Get(name, metaV1.GetOptions{})
-	if err != nil {
-		return userLinks, err
-	}
-	if len(service.Annotations[annotationObj]) == 0 {
+	if err != nil || len(service.Annotations[annotationObj]) == 0 {
 		return userLinks, err
 	}
 	m := map[string]string{}
@@ -90,7 +87,7 @@ func getServiceLinks(client k8sClient.Interface, namespace, name, host string) (
 			userLink.Valid = true
 		} else if strings.Contains(val, apiserverProxyURL) { //dealing with relative path
 			//strip the url of apiserver-proxy-url
-			userLink.Link = host + "/api/" + "v1" + "/namespaces/" + service.ObjectMeta.Namespace +
+			userLink.Link = host + "/api/v1/namespaces/" + service.ObjectMeta.Namespace +
 				"/services/" + service.ObjectMeta.Name + "/proxy" + strings.TrimLeft(val, apiserverProxyURL)
 			userLink.Valid = true
 		} else {
@@ -106,10 +103,7 @@ func getServiceLinks(client k8sClient.Interface, namespace, name, host string) (
 func getPodLinks(client k8sClient.Interface, namespace, name, host string) ([]UserLink, error) {
 	userLinks := []UserLink{}
 	pod, err := client.CoreV1().Pods(namespace).Get(name, metaV1.GetOptions{})
-	if err != nil {
-		return userLinks, err
-	}
-	if len(pod.Annotations[annotationObj]) == 0 {
+	if err != nil || len(pod.Annotations[annotationObj]) == 0 {
 		return userLinks, err
 	}
 
@@ -125,7 +119,7 @@ func getPodLinks(client k8sClient.Interface, namespace, name, host string) ([]Us
 		//use api server proxy url
 		if strings.Contains(val, apiserverProxyURL) {
 			//strip the url of apiserver-proxy-url
-			userLink.Link = host + "/api/" + "v1" + "/namespaces/" + pod.ObjectMeta.Namespace +
+			userLink.Link = host + "/api/v1/namespaces/" + pod.ObjectMeta.Namespace +
 				"/pods/" + pod.ObjectMeta.Name + "/proxy" + strings.TrimLeft(val, apiserverProxyURL)
 			userLink.Valid = true
 		} else if strings.Contains(val, "http://") { //dealing with absolute path
