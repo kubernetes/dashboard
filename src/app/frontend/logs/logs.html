@@ -56,8 +56,15 @@ limitations under the License.
       <md-button class="kd-logs-toolbar-button"
                  ng-click="ctrl.onShowTimestamp()">
         <md-icon md-font-library="material-icons"
-                 class="kd-logs-timer-icon">
+                 class="kd-logs-icon">
           {{ctrl.getTimestampIcon()}}
+        </md-icon>
+      </md-button>
+      <md-button class="kd-logs-toolbar-button"
+                 ng-href="{{ctrl.getDownloadLink()}}">
+        <md-icon md-font-library="material-icons"
+                 class="kd-logs-icon">
+          file_download
         </md-icon>
       </md-button>
     </div>

@@ -14,6 +14,7 @@
 
 import authModule from 'common/auth/module';
 import commonErrorModule from 'common/errorhandling/module';
+import historyModule from 'common/history/module';
 import {InternalErrorController} from 'error/controller';
 import errorModule from 'error/module';
 import {StateParams} from 'error/state';
@@ -28,6 +29,7 @@ describe('Internal error controller', () => {
     angular.mock.module(errorModule.name);
     angular.mock.module(commonErrorModule.name);
     angular.mock.module(authModule.name);
+    angular.mock.module(historyModule.name);
 
     angular.mock.inject(($controller) => {
       stateParams = new StateParams({status: undefined});

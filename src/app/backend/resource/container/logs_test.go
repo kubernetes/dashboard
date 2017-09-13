@@ -317,7 +317,7 @@ func TestGetLogs(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := ConstructLogs(c.podId, c.rawLogs, c.container, c.logSelector)
+		actual := ConstructLogDetails(c.podId, c.rawLogs, c.container, c.logSelector)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("Test Case: %s.\nReceived: %#v \nExpected: %#v\n\n", c.info, actual, c.expected)
 		}

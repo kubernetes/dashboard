@@ -257,7 +257,7 @@ export class LogsController {
   /**
    * Return proper style class for logs content.
    * @export
-   * @returns {string}
+   * @return {string}
    */
   getStyleClass() {
     const logsTextColor = 'kd-logs-text-color';
@@ -270,7 +270,7 @@ export class LogsController {
   /**
    * Return proper style class for text color icon.
    * @export
-   * @returns {string}
+   * @return {string}
    */
   getColorIconClass() {
     const logsTextColor = 'kd-logs-color-icon';
@@ -283,7 +283,7 @@ export class LogsController {
   /**
    * Return proper style class for font size icon.
    * @export
-   * @returns {string}
+   * @return {string}
    */
   getSizeIconClass() {
     const logsTextColor = 'kd-logs-size-icon';
@@ -296,7 +296,7 @@ export class LogsController {
   /**
    * Return the proper icon depending on the selection state
    * @export
-   * @returns {string}
+   * @return {string}
    */
   getTimestampIcon() {
     if (this.logsService.getShowTimestamp()) {
@@ -305,6 +305,15 @@ export class LogsController {
     return 'timer_off';
   }
 
+  /**
+   * Return the link to download the log file
+   * @export
+   * @return {string}
+   */
+  getDownloadLink() {
+    let namespace = this.stateParams_.objectNamespace;
+    return `/api/v1/log/file/${namespace}/${this.pod}/${this.container}`;
+  }
 
   /**
    * Execute when a user changes the container from which logs should be loaded.
