@@ -22,5 +22,5 @@ spec:
   containers:
     - name: succeeded
       image: alpine:3.4
-      command: ["/bin/sh", "-c", "echo start----; base64 /dev/urandom | head -c 10000000; echo ----end"]
+      command: ["/bin/sh", "-c", "echo start----; base64 /dev/urandom | head -c 100000000; echo ----end"]
   restartPolicy: Never

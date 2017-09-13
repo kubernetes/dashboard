@@ -564,6 +564,11 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			Writes(logs.LogDetails{}))
 
 	apiV1Ws.Route(
+		apiV1Ws.GET("/log/file/{namespace}/{pod}/{container}").
+			To(apiHandler.handleLogFile).
+			Writes(logs.LogDetails{}))
+
+	apiV1Ws.Route(
 		apiV1Ws.GET("/overview/").
 			To(apiHandler.handleOverview).
 			Writes(overview.Overview{}))
@@ -2156,12 +2161,30 @@ func (apiHandler *APIHandler) handleLogs(request *restful.Request, response *res
 		}
 	}
 
-	result, err := container.GetPodLogs(k8sClient, namespace, podID, containerID, logSelector)
+	result, err := container.GetLogDetails(k8sClient, namespace, podID, containerID, logSelector)
 	if err != nil {
 		handleInternalError(response, err)
 		return
 	}
 	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleLogFile(request *restful.Request, response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	namespace := request.PathParameter("namespace")
+	podID := request.PathParameter("pod")
+	containerID := request.PathParameter("container")
+
+	filename, logStream, err := container.GetLogFile(k8sClient, namespace, podID, containerID)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	handleDownload(response, logStream, filename)
 }
 
 // parseNamespacePathParameter parses namespace selector for list pages in path parameter.
