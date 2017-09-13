@@ -103,6 +103,8 @@
   <translation id="3496419655731709621" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_9" desc="Label when there is no data.">-</translation>
   <translation id="3570731037158883626" key="MSG_COMMON_COMPONENTS_LABELS_LABELS_0" desc="Tooltip on the &quot;show less&quot; button for the labels of any kubernetes resource. Usually appears on the resource details pages.">顯示簡要標籤</translation>
   <translation id="8950559770902715649" key="MSG_COMMON_COMPONENTS_LABELS_LABELS_1" desc="Tooltip on the &quot;show all&quot; button for the labels of any kubernetes resource. Usually appears on the resource details pages.">顯示全部標籤</translation>
+  <translation id="194613042127042077" key="MSG_COMMON_COMPONENTS_PODWARNINGS_PODWARNINGS_0" desc="Message shown below pod warnings on pod list">Show more</translation>
+  <translation id="6174601589723043241" key="MSG_COMMON_COMPONENTS_PODWARNINGS_PODWARNINGS_1" desc="Message shown below pod warnings on pod list">Show less</translation>
   <translation id="7262450799096886396" key="MSG_COMMON_COMPONENTS_RESOURCECARD_LOGSBUTTON_0" desc="Label for logs tooltip.">日誌</translation>
   <translation id="8077948432236649947" key="MSG_COMMON_COMPONENTS_RESOURCECARD_RESOURCECARDDELETEMENUITEM_0" desc="Action &quot;Delete&quot; (verb), which appears as a menu item on the cards for kubernetes resources.">刪除</translation>
   <translation id="1786717544428328487" key="MSG_COMMON_COMPONENTS_RESOURCECARD_RESOURCECARDEDITMENUITEM_0" desc="Label for YAML edit menu item.">檢視與編輯 YAML</translation>
