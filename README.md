@@ -13,6 +13,46 @@ itself.
 ![Dashboard UI workloads page](docs/dashboard-ui.png)
 
 ## Deployment
+
+**IMPORTANT:** As of version 1.7 Dashboard uses minimal privileges setup by default. 
+It means, that some manual steps are required to make it fully secured and functional. 
+
+### Recommended setup
+
+Full security can be ensured only by accessing Dashboard over HTTPS. In order to enable HTTPS mode certificates need
+to be passed to the application. This can be achieved by providing `--tls-cert-file` and `--tls-cert-key` flags to the
+Dashboard. 
+
+You need to download and edit our [YAML file](/src/deploy/kubernetes-dashboard.yaml) to set correct path of
+certificates:
+
+
+
+
+
+
+<!-- TODO -->
+
+```yaml
+args:
+  ...
+  # Uncomment the following lines to provide certificates and enable HTTPS in Dashboard.
+  #- --tls-key-file=/path/to/cert.crt
+  #- --tls-cert-file=/path/to/cert.key
+```
+
+Read our [Access Control](https://github.com/kubernetes/dashboard/wiki/Access-control) guide to 
+After performing these changes...
+
+
+
+
+
+
+
+
+
+
 It is likely that the Dashboard is already installed on your cluster. Check with the following command:
 ```shell
 $ kubectl get pods --all-namespaces | grep dashboard
@@ -21,11 +61,6 @@ $ kubectl get pods --all-namespaces | grep dashboard
 If it is missing, you can install the latest stable release by running the following command:
 ```shell
 $ kubectl create -f https://git.io/kube-dashboard
-```
-
-If you are using Dashboard on a cluster with disabled authorization, you can install the latest stable release by running the following command:
-```shell
-$ kubectl create -f https://git.io/kube-dashboard-no-rbac
 ```
 
 You can also install unstable HEAD builds with the newest features that the team works on by
@@ -57,6 +92,7 @@ If the username and password is configured but unknown to you, then use `kubectl
 | **Dashboard 1.4**   | ✓              | ✕              | ✕              | ✕              |
 | **Dashboard 1.5**   | ✕              | ✓              | ✕              | ✕              |
 | **Dashboard 1.6**   | ✕              | ✕              | ✓              | ?              |
+| **Dashboard 1.7**   | ✕              | ✕              | ?              | ✓              |
 | **Dashboard HEAD**  | ✕              | ✕              | ?              | ✓              |
 
 - `✓` Fully supported version range.
@@ -65,13 +101,13 @@ If the username and password is configured but unknown to you, then use `kubectl
 
 ## Documentation
 
-* [User Guide](http://kubernetes.io/docs/user-guide/ui/): Entry-level overview
+Dashboard documentation can be found on [Wiki pages](https://github.com/kubernetes/dashboard/wiki), it includes:
 
-* [Developer Guide](docs/devel/README.md): For anyone interested in contributing
+* Common: Entry-level overview
 
-* [Design Guide](docs/design/README.md): For anyone interested in contributing _design_ (less technical)
+* User Guide: For anyone interested in using Dashboard
 
-* [Troubleshooting Guide](docs/user-guide/troubleshooting.md): Common issues encountered while setting up Dashboard
+* Development Guide: For anyone interested in contributing
 
 ## License
 
