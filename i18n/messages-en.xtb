@@ -428,6 +428,8 @@
   <translation id="5740003858384112864" key="MSG_INGRESS_DETAIL_INFO_2" desc="Resource info details section namespace entry.">Namespace</translation>
   <translation id="5275379574716211763" key="MSG_INGRESS_DETAIL_INFO_3" desc="Resource info details section labels entry.">Labels</translation>
   <translation id="7691713819120999107" key="MSG_INGRESS_DETAIL_INFO_4" desc="Resource info details section annotations entry.">Annotations</translation>
+  <translation id="3793287340554103358" key="MSG_INGRESS_DETAIL_INFO_5" desc="Resource info details section creation time entry.">Creation time</translation>
+  <translation id="949646125676604078" key="MSG_INGRESS_DETAIL_INFO_6" desc="Resource rules spec for the ingress.">Rules</translation>
   <translation id="1439690942149691720" key="MSG_INGRESS_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">Ingresses</translation>
   <translation id="4939251984111923775" key="MSG_INGRESS_LIST_CARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of ingresses (ingress list view).">Name</translation>
   <translation id="2888039058521136770" key="MSG_INGRESS_LIST_CARDLIST_2" desc="Label \'Namespace\' which appears as a column label in the table of ingresses (ingress list view).">Namespace</translation>
