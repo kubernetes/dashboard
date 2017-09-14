@@ -20,8 +20,8 @@ import {stateName, StateParams, stateUrl} from './state';
  * I18n object that defines strings for translation used in this file.
  */
 const i18n = {
-  /** @type {string} @desc Label 'Log in' that appears as a breadcrumbs on the action bar. */
-  MSG_BREADCRUMBS_LOGIN_LABEL: goog.getMsg('Login'),
+  /** @type {string} @desc Label 'Sign in' that appears as a breadcrumbs on the action bar. */
+  MSG_BREADCRUMBS_LOGIN_LABEL: goog.getMsg('Sign in'),
 };
 
 /**

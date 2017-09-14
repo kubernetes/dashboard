@@ -76,7 +76,7 @@ export class ControlPanelController {
    * @export
    */
   isAuthSkipped() {
-    return !this.kdAuthService_.isLoginPageEnabled();
+    return !this.kdAuthService_.isLoginPageEnabled() && !this.loginStatus_.headerPresent;
   }
 
   /**
