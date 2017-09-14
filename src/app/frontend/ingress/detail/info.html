@@ -35,12 +35,13 @@ limitations under the License.
     </kd-info-card-entry>
   </kd-info-card-section>
   <kd-info-card-section name="[[Rules|Resource rules spec for the ingress.]]">
-    <div ng-repeat="rule in ::$ctrl.ingress.spec.rules">
+    <div ng-if="::$ctrl.ingress.spec.rules.length" ng-repeat="rule in ::$ctrl.ingress.spec.rules">
       <kd-info-card-entry title="{{::rule.host}}">
         <div ng-repeat="http in ::rule.http.paths">
           {{::http.path}} => {{::http.backend.serviceName}}:{{::http.backend.servicePort}}
         </div>
       </kd-info-card-entry>
     </div>
+    <div ng-hide="::$ctrl.ingress.spec.rules">-</div>
   </kd-info-card-section>
 </kd-info-card>
