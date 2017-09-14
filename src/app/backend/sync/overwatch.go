@@ -92,8 +92,8 @@ func (self *overwatch) monitorRegistrationEvents() {
 		case name := <-self.registrationSignal:
 			synchronizer := self.syncMap[name]
 			log.Printf("New synchronizer has been registered: %s. Starting", name)
-			synchronizer.Start()
 			self.monitorSynchronizerStatus(synchronizer)
+			synchronizer.Start()
 		}
 	}, 0)
 }

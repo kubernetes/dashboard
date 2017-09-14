@@ -13,9 +13,11 @@
 # limitations under the License.
 
 # Configuration to deploy head version of the Dashboard UI compatible with
-# Kubernetes 1.6 (RBAC enabled).
+# Kubernetes 1.7.
 #
 # Example usage: kubectl create -f <this_file>
+
+# ------------------- Dashboard Service Account ------------------- #
 
 apiVersion: v1
 kind: ServiceAccount
@@ -24,22 +26,48 @@ metadata:
     k8s-app: kubernetes-dashboard-head
   name: kubernetes-dashboard-head
   namespace: kube-system
+
+---
+# ------------------- Dashboard Role & Role Binding ------------------- #
+
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: kubernetes-dashboard-minimal
+  namespace: kube-system
+rules:
+  # Allow Dashboard to create and watch for changes of 'kubernetes-dashboard-key-holder' secret.
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["create", "watch"]
+- apiGroups: [""]
+  resources: ["secrets"]
+  # Allow Dashboard to get, update and delete 'kubernetes-dashboard-key-holder' secret.
+  resourceNames: ["kubernetes-dashboard-key-holder"]
+  verbs: ["get", "update", "delete"]
+  # Allow Dashboard to get metrics from heapster.
+- apiGroups: [""]
+  resources: ["services"]
+  resourceNames: ["heapster"]
+  verbs: ["proxy"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
-  name: kubernetes-dashboard-head
-  labels:
-    k8s-app: kubernetes-dashboard-head
+  name: kubernetes-dashboard-minimal
+  namespace: kube-system
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: cluster-admin
+  kind: Role
+  name: kubernetes-dashboard-minimal
 subjects:
 - kind: ServiceAccount
   name: kubernetes-dashboard-head
   namespace: kube-system
+
 ---
+# ------------------- Dashboard Deployment ------------------- #
+
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
@@ -49,6 +77,7 @@ metadata:
   namespace: kube-system
 spec:
   replicas: 1
+  revisionHistoryLimit: 10
   selector:
     matchLabels:
       k8s-app: kubernetes-dashboard-head
@@ -70,6 +99,9 @@ spec:
           # If not specified, Dashboard will attempt to auto discover the API server and connect
           # to it. Uncomment only if the default does not work.
           # - --apiserver-host=http://my-address:port
+          # Uncomment the following lines to provide certificates and enable HTTPS in Dashboard.
+          #- --tls-key-file=/path/to/cert.crt
+          #- --tls-cert-file=/path/to/cert.key
         livenessProbe:
           httpGet:
             path: /
@@ -81,7 +113,10 @@ spec:
       tolerations:
       - key: node-role.kubernetes.io/master
         effect: NoSchedule
+
 ---
+# ------------------- Dashboard Service ------------------- #
+
 kind: Service
 apiVersion: v1
 metadata:
@@ -91,7 +126,11 @@ metadata:
   namespace: kube-system
 spec:
   ports:
-  - port: 80
+  - name: http
+    port: 80
     targetPort: 9090
+  - name: https
+    port: 443
+    targetPort: 8443
   selector:
     k8s-app: kubernetes-dashboard-head
