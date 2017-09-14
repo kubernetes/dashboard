@@ -94,19 +94,25 @@ spec:
         - containerPort: 9090
           protocol: TCP
         args:
+          - --tls-key-file=/certs/dashboard.key
+          - --tls-cert-file=/certs/dashboard.crt
           # Uncomment the following line to manually specify Kubernetes API server Host
           # If not specified, Dashboard will attempt to auto discover the API server and connect
           # to it. Uncomment only if the default does not work.
           # - --apiserver-host=http://my-address:port
-          # Uncomment the following lines to provide certificates and enable HTTPS in Dashboard.
-          #- --tls-key-file=/path/to/cert.crt
-          #- --tls-cert-file=/path/to/cert.key
+        volumeMounts:
+        - name: kubernetes-dashboard-certs
+          mountPath: /certs
         livenessProbe:
           httpGet:
             path: /
             port: 9090
           initialDelaySeconds: 30
           timeoutSeconds: 30
+      volumes:
+      - name: kubernetes-dashboard-certs
+        configMap:
+          name: certs
       serviceAccountName: kubernetes-dashboard
       # Comment the following tolerations if Dashboard must not be deployed on master
       tolerations:
