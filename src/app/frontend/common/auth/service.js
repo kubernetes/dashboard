@@ -64,7 +64,11 @@ export class AuthService {
    * @private
    */
   setTokenCookie_(token) {
+    // This will only work for HTTPS connection
     this.cookies_.put(this.tokenCookieName_, token, {secure: true});
+    // This will only work when accessing Dashboard at 'localhost' or '127.0.0.1'
+    this.cookies_.put(this.tokenCookieName_, token, {domain: 'localhost'});
+    this.cookies_.put(this.tokenCookieName_, token, {domain: '127.0.0.1'});
   }
 
   /**
