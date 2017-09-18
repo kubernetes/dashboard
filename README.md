@@ -17,17 +17,19 @@ running in the cluster and troubleshoot them, as well as manage the cluster itse
 are required to make it fully secure and functional. Before performing any steps read [Access Control](
 https://github.com/kubernetes/dashboard/wiki/Access-control) guide.
 
-### Recommended setup
+### Recommended Setup
 
 Full security can be ensured only by accessing Dashboard over HTTPS. In order to enable HTTPS mode certificates need
-to be passed to the application. This can be achieved by providing `--tls-cert-file` and `--tls-cert-key` flags to the
-Dashboard. 
+to be passed to the application. Certificates can be generated using public trusted Certificate Authorities like
+[Let's Encrypt](https://letsencrypt.org/) or [generated on your own](
+https://github.com/kubernetes/dashboard/wiki/Certificate-management). 
 
-Assuming that you have `dashboard.crt` and `dashboard.key` files stored under `$HOME/certs` directory,
-you need to create config map with contents of these files:
+This setup requires, that certificates are stored in a secret named `kubernetes-dashboard-certs` in `kube-system`
+namespace. Assuming that you have `dashboard.crt` and `dashboard.key` files stored under `$HOME/certs` directory,
+you should create secret with contents of these files:
 
 ```bash
-kubectl apply configmap kubernetes-dasboard-certs --from-file=$HOME/certs -n kube-system
+kubectl apply secret kubernetes-dasboard-certs --from-file=$HOME/certs -n kube-system
 ```
 
 Afterwards, you are ready to deploy Dashboard using following command:
@@ -36,7 +38,7 @@ Afterwards, you are ready to deploy Dashboard using following command:
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
 ```
 
-### Alternative setup
+### Alternative Setup
 
 This setup is not fully secure, however it does not require any additional steps. In this setup access control can be
 ensured only by using [Authorization Header](
@@ -46,6 +48,8 @@ following command:
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/alternative/kubernetes-dashboard.yaml
 ```
+
+-----
 
 **NOTE:** You can also install latest development builds with the newest features that the team works on by
 following the [Development Release](https://github.com/kubernetes/dashboard/wiki/Installation#development-release)
