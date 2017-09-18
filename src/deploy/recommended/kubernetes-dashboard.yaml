@@ -111,8 +111,8 @@ spec:
           timeoutSeconds: 30
       volumes:
       - name: kubernetes-dashboard-certs
-        configMap:
-          name: certs
+        secret:
+          secretName: kubernetes-dashboard-certs
       serviceAccountName: kubernetes-dashboard
       # Comment the following tolerations if Dashboard must not be deployed on master
       tolerations:
