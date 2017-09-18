@@ -22,7 +22,7 @@ https://github.com/kubernetes/dashboard/wiki/Access-control) guide.
 Full security can be ensured only by accessing Dashboard over HTTPS. In order to enable HTTPS mode certificates need
 to be passed to the application. Certificates can be generated using public trusted Certificate Authorities like
 [Let's Encrypt](https://letsencrypt.org/) or [generated on your own](
-https://github.com/kubernetes/dashboard/wiki/Certificate-management). 
+https://github.com/kubernetes/dashboard/wiki/Certificate-management#self-signed-certificate). 
 
 This setup requires, that certificates are stored in a secret named `kubernetes-dashboard-certs` in `kube-system`
 namespace. Assuming that you have `dashboard.crt` and `dashboard.key` files stored under `$HOME/certs` directory,
@@ -40,8 +40,8 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/s
 
 ### Alternative Setup
 
-This setup is not fully secure, however it does not require any additional steps. In this setup access control can be
-ensured only by using [Authorization Header](
+This setup is not fully secure, however installation does not require any additional steps. In this setup access
+control can be ensured only by using [Authorization Header](
 https://github.com/kubernetes/dashboard/wiki/Access-control#authorization-header) feature. To deploy Dashboard execute
 following command:
 
