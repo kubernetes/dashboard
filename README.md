@@ -29,7 +29,7 @@ namespace. Assuming that you have `dashboard.crt` and `dashboard.key` files stor
 you should create secret with contents of these files:
 
 ```bash
-kubectl create secret generic kubernetes-dasboard-certs --from-file=$HOME/certs -n kube-system
+kubectl create secret generic kubernetes-dashboard-certs --from-file=$HOME/certs -n kube-system
 ```
 
 Afterwards, you are ready to deploy Dashboard using following command:
