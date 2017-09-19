@@ -124,7 +124,7 @@ spec:
         livenessProbe:
           httpGet:
             path: /
-            port: 9090
+            port: 8443
           initialDelaySeconds: 30
           timeoutSeconds: 30
       volumes:
