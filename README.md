@@ -11,77 +11,30 @@ running in the cluster and troubleshoot them, as well as manage the cluster itse
 
 ![Dashboard UI workloads page](docs/dashboard-ui.png)
 
-## Deployment
+## Getting Started
 
-**IMPORTANT:** As of version 1.7 Dashboard uses minimal privileges setup by default. It means, that some manual steps
-are required to make it fully secure and functional. Before performing any steps read [Access Control](
-https://github.com/kubernetes/dashboard/wiki/Access-control) guide.
+**IMPORTANT:** Since version 1.7 Dashboard uses more secure setup. It means, that by default it has minimal set of
+privileges and is accessed over HTTPS. Follow instructions below to quickly start using Dashboard or read
+[Installation](https://github.com/kubernetes/dashboard/wiki/Installation) and [Access Control](
+https://github.com/kubernetes/dashboard/wiki/Access-control) guides to learn about other possible setups.
 
-### Recommended Setup
+You can start using Dashboard executing following command:
 
-Full security can be ensured only by accessing Dashboard over HTTPS. In order to enable HTTPS mode certificates need
-to be passed to the application. Certificates can be generated using public trusted Certificate Authorities like
-[Let's Encrypt](https://letsencrypt.org/) or [generated on your own](
-https://github.com/kubernetes/dashboard/wiki/Certificate-management#self-signed-certificate). 
+```sh
 
-This setup requires, that certificates are stored in a secret named `kubernetes-dashboard-certs` in `kube-system`
-namespace. Assuming that you have `dashboard.crt` and `dashboard.key` files stored under `$HOME/certs` directory,
-you should create secret with contents of these files:
-
-```bash
-kubectl create secret generic kubernetes-dashboard-certs --from-file=$HOME/certs -n kube-system
 ```
 
-Afterwards, you are ready to deploy Dashboard using following command:
-
-```bash
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
-```
-
-### Alternative Setup
-
-This setup is not fully secure, however installation does not require any additional steps. In this setup access
-control can be ensured only by using [Authorization Header](
-https://github.com/kubernetes/dashboard/wiki/Access-control#authorization-header) feature. To deploy Dashboard execute
-following command:
-
-```bash
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/alternative/kubernetes-dashboard.yaml
-```
-
------
-
-**NOTE:** You can also install latest development builds with the newest features that the team works on by
-following the [Development Release](https://github.com/kubernetes/dashboard/wiki/Installation#development-release)
-guide.
+After installing Dashboard check [Accessing Dashboard](
+https://github.com/kubernetes/dashboard/wiki/Accessing-dashboard) guide.
 
 **NOTE:** You need to have [Heapster](https://github.com/kubernetes/heapster/) running in your cluster for the metrics
 and graphs to be available. You can read more about it in [Integrations](
 https://github.com/kubernetes/dashboard/wiki/Integrations) guide.
 
-## Usage
-
-After installing Dashboard check [Accessing Dashboard](https://github.com/kubernetes/dashboard/wiki/Accessing-dashboard)
-guide.
-
-## Compatibility Matrix
-
-|                     | Kubernetes 1.4 | Kubernetes 1.5 | Kubernetes 1.6 | Kubernetes 1.7 |
-|---------------------|----------------|----------------|----------------|----------------|
-| **Dashboard 1.4**   | ✓              | ✕              | ✕              | ✕              |
-| **Dashboard 1.5**   | ✕              | ✓              | ✕              | ✕              |
-| **Dashboard 1.6**   | ✕              | ✕              | ✓              | ?              |
-| **Dashboard 1.7**   | ✕              | ✕              | ?              | ✓              |
-| **Dashboard HEAD**  | ✕              | ✕              | ?              | ✓              |
-
-- `✓` Fully supported version range.
-- `?` Due to breaking changes between Kubernetes API versions, some features might not work in Dashboard (logs, search
-etc.).
-- `✕` Unsupported version range.
 
 ## Documentation
 
-Dashboard documentation can be found on [Wiki pages](https://github.com/kubernetes/dashboard/wiki), it includes:
+Dashboard documentation can be found on [Wiki](https://github.com/kubernetes/dashboard/wiki) pages, it includes:
 
 * Common: Entry-level overview
 
