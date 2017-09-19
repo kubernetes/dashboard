@@ -48,8 +48,8 @@ https://github.com/kubernetes/dashboard/wiki/Accessing-dashboard) and more guide
 Dashboard
 
 * Developer Guide: [Getting Started](https://github.com/kubernetes/dashboard/wiki/Getting-started), [Dependency
-Management](https://github.com/kubernetes/dashboard/wiki/Dependency-management) and more for anyone interested in
-contributing
+Management](https://github.com/kubernetes/dashboard/wiki/Dependency-management) and more guides for anyone interested
+in contributing
 
 ## License
 
