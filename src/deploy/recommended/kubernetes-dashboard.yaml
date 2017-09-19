@@ -124,6 +124,7 @@ spec:
           readOnly: true
         livenessProbe:
           httpGet:
+            scheme: HTTPS
             path: /
             port: 8443
           initialDelaySeconds: 30
