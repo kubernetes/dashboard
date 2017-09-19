@@ -14,8 +14,8 @@ running in the cluster and troubleshoot them, as well as manage the cluster itse
 ## Getting Started
 
 **IMPORTANT:** Since version 1.7 Dashboard uses more secure setup. It means, that by default it has minimal set of
-privileges and is accessed over HTTPS. Follow instructions below to quickly start using Dashboard or read
-[Installation](https://github.com/kubernetes/dashboard/wiki/Installation) and [Access Control](
+privileges and is accessed over HTTPS. Follow instructions below to quickly start using it or read [Installation](
+https://github.com/kubernetes/dashboard/wiki/Installation) and [Access Control](
 https://github.com/kubernetes/dashboard/wiki/Access-control) guides to learn about other possible setups.
 
 You can start using Dashboard executing following command:
