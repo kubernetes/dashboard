@@ -13,11 +13,22 @@
 # limitations under the License.
 
 # Dockerfile used to build tool that helps in deploying Dashboard. Supports Dashboard v1.7+.
+# Usage:
+#   installation:
+#       $ docker run -v /path/to/kubeconfig:/config kubernetesdashboarddev/kd-deploy-helper install
+#   removal:
+#       $ docker run -v /path/to/kubeconfig:/config kubernetesdashboarddev/kd-deploy-helper remove
+#
+# In case you want to override default IMAGE_URL execute:
+#   $ docker run -v /path/to/kubeconfig_file:/config -e IMAGE_URL=<yaml_file_url> kubernetesdashboarddev/kd-deploy-helper ...
+#
+# You can also override self-signed certs with your own:
+#   $ docker run -v /path/to/kubeconfig:/config -v /path/to/certs_dir:/certs kubernetesdashboarddev/kd-deploy-helper ...
+#
 
 FROM ubuntu
 
 ENV IMAGE_URL https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
-ENV OVERRIDE_CERTS_DIR false
 
 # Update cache and install necessary deps
 RUN apt-get update && apt-get install -y apt-transport-https curl
@@ -35,13 +46,15 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN echo '#!/bin/bash\n\
     if [ "$1" == "install" ]; then\n\
         echo "Installing Kubernetes Dashboard"\n\
-        if [ "$OVERRIDE_CERTS_DIR" == "false" ]; then\n\
+        if [ ! -d /certs ]; then\n\
             mkdir /certs\n\
+            echo "Generating self-signed certificates..."\n\
+            openssl req -nodes -newkey rsa:2048 -keyout /certs/dashboard.key -out /certs/dashboard.csr -subj "/C=/ST=/L=/O=/OU=/CN=kubernetes-dashboard" &> /dev/null\n\
+            openssl x509 -req -sha256 -days 365 -in /certs/dashboard.csr -signkey /certs/dashboard.key -out /certs/dashboard.crt &> /dev/null\n\
+            echo "Certificates stored in /certs dir"\n\
+        else\n\
+            echo "Using provided certificate files"\n\
         fi\n\
-        echo "Generating certificates..."\n\
-        openssl req -nodes -newkey rsa:2048 -keyout /certs/dashboard.key -out /certs/dashboard.csr -subj "/C=/ST=/L=/O=/OU=/CN=kubernetes-dashboard" &> /dev/null\n\
-        openssl x509 -req -sha256 -days 365 -in /certs/dashboard.csr -signkey /certs/dashboard.key -out /certs/dashboard.crt &> /dev/null\n\
-        echo "Certificates stored in /certs dir"\n\
         kubectl --kubeconfig /config -n kube-system create secret generic kubernetes-dashboard-certs --from-file=/certs\n\
         kubectl --kubeconfig /config apply -f $IMAGE_URL\n\
     elif [ "$1" == "remove" ]; then\n\
