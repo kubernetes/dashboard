@@ -184,8 +184,13 @@ $chip-margin: 0 $baseline-grid ($baseline-grid / 2) 0;
 }
 
 .kd-chip {
-  display: block;
+  display: inline;
+  float: left;
+  max-width: 99%;
   padding: ($baseline-grid / 4) $baseline-grid;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .kd-chips-switch {
