@@ -54,8 +54,8 @@ rules:
   verbs: ["create", "watch"]
 - apiGroups: [""]
   resources: ["secrets"]
-  # Allow Dashboard to get, update and delete 'kubernetes-dashboard-key-holder' secret.
-  resourceNames: ["kubernetes-dashboard-key-holder"]
+  # Allow Dashboard to get, update and delete 'kubernetes-dashboard-key-holder' and 'kubernetes-dashboard-certs' secrets.
+  resourceNames: ["kubernetes-dashboard-key-holder", "kubernetes-dashboard-certs"]
   verbs: ["get", "update", "delete"]
   # Allow Dashboard to get metrics from heapster.
 - apiGroups: [""]
@@ -100,7 +100,7 @@ spec:
     spec:
       initContainers:
       - name: kubernetes-dashboard-init
-        image: kubernetesdashboarddev/kubernetes-dashboard-init
+        image: floreks/kubernetes-dashboard-init
         volumeMounts:
         - name: kubernetes-dashboard-certs
           mountPath: /certs
@@ -122,6 +122,7 @@ spec:
         volumeMounts:
         - name: kubernetes-dashboard-certs
           mountPath: /certs
+          readOnly: true
         livenessProbe:
           httpGet:
             path: /
