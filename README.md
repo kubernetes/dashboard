@@ -14,23 +14,28 @@ running in the cluster and troubleshoot them, as well as manage the cluster itse
 ## Getting Started
 
 **IMPORTANT:** Since version 1.7 Dashboard uses more secure setup. It means, that by default it has minimal set of
-privileges and is accessed over HTTPS. Follow instructions below to quickly start using it or read [Installation](
-https://github.com/kubernetes/dashboard/wiki/Installation) and [Access Control](
-https://github.com/kubernetes/dashboard/wiki/Access-control) guides to learn about other possible setups.
+privileges and can only be accessed over HTTPS. It is recommended to read [Access Control](
+https://github.com/kubernetes/dashboard/wiki/Access-control) guide before performing any further steps.
 
-You can start using Dashboard executing following command:
+To deploy Dashboard execute following command:
 
 ```sh
-
+$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
 ```
 
-After installing Dashboard check [Accessing Dashboard](
-https://github.com/kubernetes/dashboard/wiki/Accessing-dashboard) guide.
+To start using Dashboard run following command:
 
-**NOTE:** You need to have [Heapster](https://github.com/kubernetes/heapster/) running in your cluster for the metrics
-and graphs to be available. You can read more about it in [Integrations](
+```sh
+$ kubectl proxy
+```
+
+Dashboard is now available at 
+[`http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy`](
+http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy).
+
+**NOTE:** [Heapster](https://github.com/kubernetes/heapster/) has to be running in the cluster for the metrics
+and graphs to be available. Read more about it in [Integrations](
 https://github.com/kubernetes/dashboard/wiki/Integrations) guide.
-
 
 ## Documentation
 
@@ -38,9 +43,13 @@ Dashboard documentation can be found on [Wiki](https://github.com/kubernetes/das
 
 * Common: Entry-level overview
 
-* User Guide: For anyone interested in using Dashboard
+* User Guide: [Installation](https://github.com/kubernetes/dashboard/wiki/Installation), [Accessing Dashboard](
+https://github.com/kubernetes/dashboard/wiki/Accessing-dashboard) and more guides for anyone interested in using
+Dashboard
 
-* Development Guide: For anyone interested in contributing
+* Developer Guide: [Getting Started](https://github.com/kubernetes/dashboard/wiki/Getting-started), [Dependency
+Management](https://github.com/kubernetes/dashboard/wiki/Dependency-management) and more for anyone interested in
+contributing
 
 ## License
 

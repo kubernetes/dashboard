@@ -17,6 +17,18 @@
 #
 # Example usage: kubectl create -f <this_file>
 
+# ------------------- Dashboard Secret ------------------- #
+
+apiVersion: v1
+kind: Secret
+metadata:
+  labels:
+    k8s-app: kubernetes-dashboard-head
+  name: kubernetes-dashboard-certs
+  namespace: kube-system
+type: Opaque
+
+---
 # ------------------- Dashboard Service Account ------------------- #
 
 apiVersion: v1
@@ -86,6 +98,12 @@ spec:
       labels:
         k8s-app: kubernetes-dashboard-head
     spec:
+      initContainers:
+      - name: kubernetes-dashboard-init
+        image: kubernetesdashboarddev/kubernetes-dashboard-init
+        volumeMounts:
+        - name: kubernetes-dashboard-certs
+          mountPath: /certs
       containers:
       - name: kubernetes-dashboard-head
         image: kubernetesdashboarddev/kubernetes-dashboard-arm:head
@@ -114,7 +132,7 @@ spec:
       - name: kubernetes-dashboard-certs
         secret:
           secretName: kubernetes-dashboard-certs
-      serviceAccountName: kubernetes-dashboard
+      serviceAccountName: kubernetes-dashboard-head
       # Comment the following tolerations if Dashboard must not be deployed on master
       tolerations:
       - key: node-role.kubernetes.io/master

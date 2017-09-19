@@ -17,6 +17,18 @@
 #
 # Example usage: kubectl create -f <this_file>
 
+# ------------------- Dashboard Secret ------------------- #
+
+apiVersion: v1
+kind: Secret
+metadata:
+  labels:
+    k8s-app: kubernetes-dashboard
+  name: kubernetes-dashboard-certs
+  namespace: kube-system
+type: Opaque
+
+---
 # ------------------- Dashboard Service Account ------------------- #
 
 apiVersion: v1
@@ -86,6 +98,12 @@ spec:
       labels:
         k8s-app: kubernetes-dashboard
     spec:
+      initContainers:
+      - name: kubernetes-dashboard-init
+        image: kubernetesdashboarddev/kubernetes-dashboard-init
+        volumeMounts:
+        - name: kubernetes-dashboard-certs
+          mountPath: /certs
       containers:
       - name: kubernetes-dashboard
         image: gcr.io/google_containers/kubernetes-dashboard-arm:v1.7.0
