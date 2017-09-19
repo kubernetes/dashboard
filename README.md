@@ -44,12 +44,11 @@ Dashboard documentation can be found on [Wiki](https://github.com/kubernetes/das
 * Common: Entry-level overview
 
 * User Guide: [Installation](https://github.com/kubernetes/dashboard/wiki/Installation), [Accessing Dashboard](
-https://github.com/kubernetes/dashboard/wiki/Accessing-dashboard) and more guides for anyone interested in using
-Dashboard
+https://github.com/kubernetes/dashboard/wiki/Accessing-dashboard) and more for users
 
 * Developer Guide: [Getting Started](https://github.com/kubernetes/dashboard/wiki/Getting-started), [Dependency
-Management](https://github.com/kubernetes/dashboard/wiki/Dependency-management) and more guides for anyone interested
-in contributing
+Management](https://github.com/kubernetes/dashboard/wiki/Dependency-management) and more for anyone interested in
+contributing
 
 ## License
 
