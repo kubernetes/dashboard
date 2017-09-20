@@ -14,4 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div class="kd-middleellipsis">{{ellipsisCtrl.displayString}}</div>
+<div class="kd-middleellipsis2">
+  <div class="kd-middleellipsis">
+    {{ellipsisCtrl.displayString}}
+    <md-tooltip ng-if="ellipsisCtrl.isTrancated()">
+      {{ellipsisCtrl.getDisplayStringAtTooltip();}}
+      <div class="test"></div>
+    </md-tooltip>
+  </div>
+</div>

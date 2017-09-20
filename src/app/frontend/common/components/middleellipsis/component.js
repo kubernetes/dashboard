@@ -19,10 +19,26 @@ export default class MiddleEllipsisController {
   /**
    * Constructs middle ellipsis controller.
    * @ngInject
+   * @param {!angular.JQLite} $element
    */
-  constructor() {
+  constructor($element) {
     /** @export {string} Initialized from the scope. */
     this.displayString;
+
+    /** @private {!angular.JQLite} */
+    this.element_ = $element;
+  }
+
+  isTrancated() {
+    let c = this.element_;
+    c.addClass("kd-middleellipsis_width");
+    let c_ofs_width = c[0].offsetWidth;
+    c.removeClass("kd-middleellipsis_width");
+    return c_ofs_width > this.element_[0].offsetWidth;
+  }
+
+  getDisplayStringAtTooltip() {
+    return goog.getMsg(this.displayString);
   }
 }
 
