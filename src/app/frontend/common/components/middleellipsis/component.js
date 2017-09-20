@@ -15,7 +15,7 @@
 /**
  * @final
  */
-export default class MiddleEllipsisController {
+class MiddleEllipsisController {
   /**
    * Constructs middle ellipsis controller.
    * @ngInject
