@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import MiddleEllipsisController from 'common/components/middleellipsis/component';
 import componentsModule from 'common/components/module';
 
 describe('Middle ellipsis controller', () => {
@@ -24,8 +23,8 @@ describe('Middle ellipsis controller', () => {
   beforeEach(() => {
     angular.mock.module(componentsModule.name);
 
-    angular.mock.inject(($controller, $rootScope) => {
-      ctrl = $controller(MiddleEllipsisController, {$scope: $rootScope});
+    angular.mock.inject(($componentController, $rootScope) => {
+      ctrl = $componentController('kdMiddleEllipsis', {$scope: $rootScope});
     });
   });
 
