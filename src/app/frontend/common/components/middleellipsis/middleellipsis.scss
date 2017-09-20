@@ -17,3 +17,14 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+.kd-middleellipsis2 {
+  display: inline-block;
+  max-width: 100%;
+  vertical-align: bottom;
+}
+
+.kd-middleellipsis_width{
+  width: auto;
+  display: inline-block;
+}
