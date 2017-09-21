@@ -17,9 +17,9 @@ package userlinks
 import (
 	"encoding/json"
 	"log"
+	"net/url"
 	"strconv"
 	"strings"
-	"net/url"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
