@@ -30,8 +30,8 @@ $ kubectl proxy
 ```
 
 Dashboard is now available at 
-[`http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy`](
-http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy).
+[`http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/`](
+http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/).
 
 **NOTE:** [Heapster](https://github.com/kubernetes/heapster/) has to be running in the cluster for the metrics
 and graphs to be available. Read more about it in [Integrations](
