@@ -13,11 +13,9 @@
 # limitations under the License.
 
 # Configuration to deploy release version of the Dashboard UI compatible with
-# Kubernetes 1.7.
+# Kubernetes 1.6 (RBAC enabled).
 #
 # Example usage: kubectl create -f <this_file>
-
-# ------------------- Dashboard Service Account ------------------- #
 
 apiVersion: v1
 kind: ServiceAccount
@@ -26,48 +24,22 @@ metadata:
     k8s-app: kubernetes-dashboard
   name: kubernetes-dashboard
   namespace: kube-system
-
----
-# ------------------- Dashboard Role & Role Binding ------------------- #
-
-kind: Role
-apiVersion: rbac.authorization.k8s.io/v1beta1
-metadata:
-  name: kubernetes-dashboard-minimal
-  namespace: kube-system
-rules:
-  # Allow Dashboard to create and watch for changes of 'kubernetes-dashboard-key-holder' secret.
-- apiGroups: [""]
-  resources: ["secrets"]
-  verbs: ["create", "watch"]
-- apiGroups: [""]
-  resources: ["secrets"]
-  # Allow Dashboard to get, update and delete 'kubernetes-dashboard-key-holder' secret.
-  resourceNames: ["kubernetes-dashboard-key-holder"]
-  verbs: ["get", "update", "delete"]
-  # Allow Dashboard to get metrics from heapster.
-- apiGroups: [""]
-  resources: ["services"]
-  resourceNames: ["heapster"]
-  verbs: ["proxy"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
-kind: RoleBinding
+kind: ClusterRoleBinding
 metadata:
-  name: kubernetes-dashboard-minimal
-  namespace: kube-system
+  name: kubernetes-dashboard
+  labels:
+    k8s-app: kubernetes-dashboard
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: kubernetes-dashboard-minimal
+  kind: ClusterRole
+  name: cluster-admin
 subjects:
 - kind: ServiceAccount
   name: kubernetes-dashboard
   namespace: kube-system
-
 ---
-# ------------------- Dashboard Deployment ------------------- #
-
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
@@ -77,7 +49,6 @@ metadata:
   namespace: kube-system
 spec:
   replicas: 1
-  revisionHistoryLimit: 10
   selector:
     matchLabels:
       k8s-app: kubernetes-dashboard
@@ -88,7 +59,7 @@ spec:
     spec:
       containers:
       - name: kubernetes-dashboard
-        image: gcr.io/google_containers/kubernetes-dashboard-arm:v1.7.0
+        image: gcr.io/google_containers/kubernetes-dashboard-arm:v1.6.3
         ports:
         - containerPort: 9090
           protocol: TCP
@@ -108,10 +79,7 @@ spec:
       tolerations:
       - key: node-role.kubernetes.io/master
         effect: NoSchedule
-
 ---
-# ------------------- Dashboard Service ------------------- #
-
 kind: Service
 apiVersion: v1
 metadata:
