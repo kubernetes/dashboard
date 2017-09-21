@@ -434,6 +434,8 @@
   <translation id="6177082876544143675" key="MSG_INGRESS_LIST_CARDLIST_3" desc="Label \'endpoints\' which appears as a column label in the table of ingresses (ingress list view).">端點</translation>
   <translation id="5470067088066957568" key="MSG_INGRESS_LIST_CARDLIST_4" desc="Label \'Age\' which appears as a column label in the table of ingresses (ingress list view).">存活時間</translation>
   <translation id="6006534028215971090" key="MSG_INGRESS_LIST_CARDLIST_5" desc="Text for ingress card list zerostate.">無 Ingresses 可顯示</translation>
+  <translation id="7490379960582024546" key="MSG_INGRESS_LIST_CARD_0" desc="Name of the ingress resource">Ingress</translation>
+  <translation id="7421603507730193172" key="MSG_INGRESS_LIST_CARD_1" desc="Name of the ingress resource">Ingress</translation>
   <translation id="6014322650743882966" key="MSG_INGRESS_LIST_STARTED_AT_TOOLTIP" desc="Tooltip 'Started at [some date]' showing the exact start time of the ingress.">創建於 <ph name="START_DATE"> UTC</ph></translation>
   <translation id="3490469769225638472" key="MSG_JOB_DETAIL_ACTIONBAR_0" desc="Label \'Job\' which appears at the top of the dialog, opened from a job details page.">Job</translation>
   <translation id="6834336408129965832" key="MSG_JOB_DETAIL_ACTIONBAR_1" desc="Label \'Job\' which appears at the top of the dialog, opened from a job details page.">Job</translation>
