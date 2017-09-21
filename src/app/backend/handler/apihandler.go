@@ -2143,6 +2143,7 @@ func (apiHandler *APIHandler) handleLogs(request *restful.Request, response *res
 	if err != nil {
 		refLineNum = 0
 	}
+	previous := request.QueryParameter("previous") == "true"
 
 	offsetFrom, err1 := strconv.Atoi(request.QueryParameter("offsetFrom"))
 	offsetTo, err2 := strconv.Atoi(request.QueryParameter("offsetTo"))
@@ -2161,7 +2162,7 @@ func (apiHandler *APIHandler) handleLogs(request *restful.Request, response *res
 		}
 	}
 
-	result, err := container.GetLogDetails(k8sClient, namespace, podID, containerID, logSelector)
+	result, err := container.GetLogDetails(k8sClient, namespace, podID, containerID, logSelector, previous)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -2178,8 +2179,9 @@ func (apiHandler *APIHandler) handleLogFile(request *restful.Request, response *
 	namespace := request.PathParameter("namespace")
 	podID := request.PathParameter("pod")
 	containerID := request.PathParameter("container")
+	previous := request.QueryParameter("previous") == "true"
 
-	filename, logStream, err := container.GetLogFile(k8sClient, namespace, podID, containerID)
+	filename, logStream, err := container.GetLogFile(k8sClient, namespace, podID, containerID, previous)
 	if err != nil {
 		handleInternalError(response, err)
 		return

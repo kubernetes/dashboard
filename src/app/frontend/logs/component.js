@@ -161,7 +161,6 @@ export class LogsController {
    */
   loadView(logFilePosition, referenceTimestamp, referenceLinenum, offsetFrom, offsetTo) {
     let namespace = this.stateParams_.objectNamespace;
-
     this.resource_(`api/v1/log/${namespace}/${this.pod}/${this.container}`)
         .get(
             {
@@ -170,6 +169,7 @@ export class LogsController {
               'referenceLineNum': referenceLinenum,
               'offsetFrom': offsetFrom,
               'offsetTo': offsetTo,
+              'previous': this.logsService.getPrevious(),
             },
             (podLogs) => {
               this.updateUiModel(podLogs);
@@ -294,7 +294,7 @@ export class LogsController {
   }
 
   /**
-   * Return the proper icon depending on the selection state
+   * Return the proper icon depending on the timestamp selection state
    * @export
    * @return {string}
    */
@@ -306,13 +306,26 @@ export class LogsController {
   }
 
   /**
+   * Return the proper icon depending on the previous-container-logs selection state
+   * @export
+   * @return {string}
+   */
+  getPreviousIcon() {
+    if (this.logsService.getPrevious()) {
+      return 'exposure_neg_1';
+    }
+    return 'exposure_zero';
+  }
+
+  /**
    * Return the link to download the log file
    * @export
    * @return {string}
    */
   getDownloadLink() {
     let namespace = this.stateParams_.objectNamespace;
-    return `/api/v1/log/file/${namespace}/${this.pod}/${this.container}`;
+    return `/api/v1/log/file/${namespace}/${this.pod}/${this.container}?previous=${
+        this.logsService.getPrevious()}`;
   }
 
   /**
@@ -356,6 +369,15 @@ export class LogsController {
   onShowTimestamp() {
     this.logsService.setShowTimestamp();
     this.logsSet = this.formatAllLogs_(this.podLogs.logs);
+  }
+
+  /**
+   * Execute when a user changes the selected option for show previous container logs.
+   * @export
+   */
+  onPreviousChange() {
+    this.logsService.setPrevious();
+    this.loadNewest();
   }
 }
 
