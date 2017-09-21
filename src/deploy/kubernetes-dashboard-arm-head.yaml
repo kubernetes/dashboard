@@ -17,18 +17,6 @@
 #
 # Example usage: kubectl create -f <this_file>
 
-# ------------------- Dashboard Secret ------------------- #
-
-apiVersion: v1
-kind: Secret
-metadata:
-  labels:
-    k8s-app: kubernetes-dashboard-head
-  name: kubernetes-dashboard-certs
-  namespace: kube-system
-type: Opaque
-
----
 # ------------------- Dashboard Service Account ------------------- #
 
 apiVersion: v1
@@ -55,7 +43,7 @@ rules:
 - apiGroups: [""]
   resources: ["secrets"]
   # Allow Dashboard to get, update and delete 'kubernetes-dashboard-key-holder' secret.
-  resourceNames: ["kubernetes-dashboard-key-holder", "kubernetes-dashboard-certs"]
+  resourceNames: ["kubernetes-dashboard-key-holder"]
   verbs: ["get", "update", "delete"]
   # Allow Dashboard to get metrics from heapster.
 - apiGroups: [""]
@@ -98,12 +86,6 @@ spec:
       labels:
         k8s-app: kubernetes-dashboard-head
     spec:
-      initContainers:
-      - name: kubernetes-dashboard-init
-        image: kubernetesdashboarddev/kubernetes-dashboard-init
-        volumeMounts:
-        - name: kubernetes-dashboard-certs
-          mountPath: /certs
       containers:
       - name: kubernetes-dashboard-head
         image: kubernetesdashboarddev/kubernetes-dashboard-arm:head
@@ -113,27 +95,19 @@ spec:
         - containerPort: 9090
           protocol: TCP
         args:
-          - --tls-key-file=/certs/dashboard.key
-          - --tls-cert-file=/certs/dashboard.crt
           # Uncomment the following line to manually specify Kubernetes API server Host
           # If not specified, Dashboard will attempt to auto discover the API server and connect
           # to it. Uncomment only if the default does not work.
           # - --apiserver-host=http://my-address:port
-        volumeMounts:
-        - name: kubernetes-dashboard-certs
-          mountPath: /certs
-          readOnly: true
+          # Uncomment the following lines to provide certificates and enable HTTPS in Dashboard.
+          #- --tls-key-file=/path/to/cert.crt
+          #- --tls-cert-file=/path/to/cert.key
         livenessProbe:
           httpGet:
-            scheme: HTTPS
             path: /
-            port: 8443
+            port: 9090
           initialDelaySeconds: 30
           timeoutSeconds: 30
-      volumes:
-      - name: kubernetes-dashboard-certs
-        secret:
-          secretName: kubernetes-dashboard-certs
       serviceAccountName: kubernetes-dashboard-head
       # Comment the following tolerations if Dashboard must not be deployed on master
       tolerations:
@@ -152,7 +126,11 @@ metadata:
   namespace: kube-system
 spec:
   ports:
-  - port: 443
+  - name: http
+    port: 80
+    targetPort: 9090
+  - name: https
+    port: 443
     targetPort: 8443
   selector:
     k8s-app: kubernetes-dashboard-head
