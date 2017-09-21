@@ -18,8 +18,8 @@ import (
 	"encoding/json"
 	"log"
 	"strconv"
-
 	"strings"
+	"net/url"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -41,7 +41,7 @@ type UserLink struct {
 	Valid bool `json:"valid"`
 }
 
-// GetUserLinks delagates getting of user links based on passed in resource kind (ResourceKindService, ResourceKindPod)
+// GetUserLinks delegates getting of user links based on passed in resource kind (ResourceKindService, ResourceKindPod)
 func GetUserLinks(client k8sClient.Interface, namespace, name, resource, host string) (userLinks []UserLink, err error) {
 	log.Printf("Getting %s resource in %s namespace", name, namespace)
 
@@ -69,30 +69,31 @@ func getServiceLinks(client k8sClient.Interface, namespace, name, host string) (
 		return userLinks, err
 	}
 
-	for key, val := range m {
+	for key, uri := range m {
 		userLink := new(UserLink)
-		userLink.Description = strings.ToUpper(key)
-		if len(service.Status.LoadBalancer.Ingress) > 0 {
-			ingress := service.Status.LoadBalancer.Ingress[0]
-			ip := ingress.IP
-			if ip == "" {
-				ip = ingress.Hostname
-			}
-			for _, port := range service.Spec.Ports {
-				userLink.Link += "http://" + ip + ":" + strconv.Itoa(int(port.Port)) + " "
+		userLink.Description = key
+		if strings.Contains(uri, apiserverProxyURL) {
+			userLink.Link = host + "/api/v1/namespaces/" + service.ObjectMeta.Namespace +
+				"/services/" + service.ObjectMeta.Name + "/proxy/" + strings.TrimLeft(uri, apiserverProxyURL)
+			userLink.Valid = true
+		} else if _, err := url.ParseRequestURI(uri); err != nil {
+			userLink.Link = "Invalid User Link: " + uri
+			userLink.Valid = false
+		} else {
+			if len(service.Status.LoadBalancer.Ingress) > 0 {
+				ingress := service.Status.LoadBalancer.Ingress[0]
+				ip := ingress.IP
+				if ip == "" {
+					ip = ingress.Hostname
+				}
+				for _, port := range service.Spec.Ports {
+					userLink.Link += "http://" + ip + ":" + strconv.Itoa(int(port.Port)) + uri
+					userLink.Valid = true
+				}
+			} else {
+				userLink.Link = uri
 				userLink.Valid = true
 			}
-		} else if strings.Contains(val, "http://") { //dealing with absolute path
-			userLink.Link = val
-			userLink.Valid = true
-		} else if strings.Contains(val, apiserverProxyURL) { //dealing with relative path
-			//strip the url of apiserver-proxy-url
-			userLink.Link = host + "/api/v1/namespaces/" + service.ObjectMeta.Namespace +
-				"/services/" + service.ObjectMeta.Name + "/proxy" + strings.TrimLeft(val, apiserverProxyURL)
-			userLink.Valid = true
-		} else {
-			userLink.Link = "Invalid User Link: " + val
-			userLink.Valid = false
 		}
 		userLinks = append(userLinks, *userLink)
 	}
@@ -113,22 +114,19 @@ func getPodLinks(client k8sClient.Interface, namespace, name, host string) ([]Us
 		return userLinks, err
 	}
 
-	for key, val := range m {
+	for key, uri := range m {
 		userLink := new(UserLink)
-		userLink.Description = strings.ToUpper(key)
-		//use api server proxy url
-		if strings.Contains(val, apiserverProxyURL) {
-			//strip the url of apiserver-proxy-url
+		userLink.Description = key
+		if strings.Contains(uri, apiserverProxyURL) {
 			userLink.Link = host + "/api/v1/namespaces/" + pod.ObjectMeta.Namespace +
-				"/pods/" + pod.ObjectMeta.Name + "/proxy" + strings.TrimLeft(val, apiserverProxyURL)
+				"/pods/" + pod.ObjectMeta.Name + "/proxy/" + strings.TrimLeft(uri, apiserverProxyURL)
 			userLink.Valid = true
-		} else if strings.Contains(val, "http://") { //dealing with absolute path
-			userLink.Link = val
-			userLink.Valid = true
-		} else {
-			//strip the url of apiserver-proxy-url
-			userLink.Link = "Invalid User Link: " + val
+		} else if _, err := url.ParseRequestURI(uri); err != nil {
+			userLink.Link = "Invalid User Link: " + uri
 			userLink.Valid = false
+		} else {
+			userLink.Link = uri
+			userLink.Valid = true
 		}
 		userLinks = append(userLinks, *userLink)
 	}
