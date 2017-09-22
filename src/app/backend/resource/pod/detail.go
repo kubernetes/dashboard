@@ -213,6 +213,57 @@ func extractContainerInfo(containerList []v1.Container, pod *v1.Pod, configMaps 
 			}
 			vars = append(vars, variable)
 		}
+
+		for _, envFromVar := range container.EnvFrom {
+			switch {
+			case envFromVar.ConfigMapRef != nil:
+				name := envFromVar.ConfigMapRef.LocalObjectReference.Name
+				for _, configMap := range configMaps.Items {
+					if configMap.ObjectMeta.Name == name {
+						for key, value := range configMap.Data {
+							valueFrom := &v1.EnvVarSource{
+								ConfigMapKeyRef: &v1.ConfigMapKeySelector{
+									LocalObjectReference: v1.LocalObjectReference{
+										Name: name,
+									},
+									Key: key,
+								},
+							}
+							variable := EnvVar{
+								Name:      envFromVar.Prefix + key,
+								Value:     value,
+								ValueFrom: valueFrom,
+							}
+							vars = append(vars, variable)
+						}
+						break
+					}
+				}
+			case envFromVar.SecretRef != nil:
+				name := envFromVar.SecretRef.LocalObjectReference.Name
+				for _, secret := range secrets.Items {
+					if secret.ObjectMeta.Name == name {
+						for key, value := range secret.Data {
+							valueFrom := &v1.EnvVarSource{
+								SecretKeyRef: &v1.SecretKeySelector{
+									LocalObjectReference: v1.LocalObjectReference{
+										Name: name,
+									},
+									Key: key,
+								},
+							}
+							variable := EnvVar{
+								Name:      envFromVar.Prefix + key,
+								Value:     base64.StdEncoding.EncodeToString(value),
+								ValueFrom: valueFrom,
+							}
+							vars = append(vars, variable)
+						}
+						break
+					}
+				}
+			}
+		}
 		containers = append(containers, Container{
 			Name:     container.Name,
 			Image:    container.Image,
