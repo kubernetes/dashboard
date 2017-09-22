@@ -6,76 +6,51 @@
 [![GitHub release](https://img.shields.io/github/release/kubernetes/dashboard.svg)](https://github.com/kubernetes/dashboard/releases/latest)
 [![Greenkeeper badge](https://badges.greenkeeper.io/kubernetes/dashboard.svg)](https://greenkeeper.io/)
 
-Kubernetes Dashboard is a general purpose, web-based UI for Kubernetes clusters. It allows users to
-manage applications running in the cluster and troubleshoot them, as well as manage the cluster
-itself.
+Kubernetes Dashboard is a general purpose, web-based UI for Kubernetes clusters. It allows users to manage applications
+running in the cluster and troubleshoot them, as well as manage the cluster itself.
 
 ![Dashboard UI workloads page](docs/dashboard-ui.png)
 
-## Deployment
-It is likely that the Dashboard is already installed on your cluster. Check with the following command:
-```shell
-$ kubectl get pods --all-namespaces | grep dashboard
+## Getting Started
+
+**IMPORTANT:** Since version 1.7 Dashboard uses more secure setup. It means, that by default it has minimal set of
+privileges and can only be accessed over HTTPS. It is recommended to read [Access Control](
+https://github.com/kubernetes/dashboard/wiki/Access-control) guide before performing any further steps.
+
+To deploy Dashboard execute following command:
+
+```sh
+$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
 ```
 
-If it is missing, you can install the latest stable release by running the following command:
-```shell
-$ kubectl create -f https://git.io/kube-dashboard
-```
+To start using Dashboard run following command:
 
-If you are using Dashboard on a cluster with disabled authorization, you can install the latest stable release by running the following command:
-```shell
-$ kubectl create -f https://git.io/kube-dashboard-no-rbac
-```
-
-You can also install unstable HEAD builds with the newest features that the team works on by
-following the [development guide](docs/devel/head-releases.md).
-
-Note that for the metrics and graphs to be available you need to
-have [Heapster](https://github.com/kubernetes/heapster/) running in your cluster.
-
-## Usage
-The easiest way to access Dashboard is to use kubectl. Run the following command in your desktop environment:
-```shell
+```sh
 $ kubectl proxy
 ```
-kubectl will handle authentication with apiserver and make Dashboard available at [http://localhost:8001/ui](http://localhost:8001/ui)
 
-The UI can _only_ be accessed from the machine where the command is executed. See `kubectl proxy --help` for more options.
+Dashboard is now available at 
+[`http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/`](
+http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/).
 
-## Alternative Usage
-You may access the UI directly via the apiserver proxy. Open a browser and navigate to `https://<kubernetes-master>/ui`.
-
-Please note that this works only if the apiserver is set up to allow authentication with username and password or certificates, however certificates require some manual steps to be installed in the browser. This is not currently the case with the setup tool `kubeadm`. See [documentation](http://kubernetes.io/docs/admin/authentication/) if you want to configure it manually.
-
-If the username and password is configured but unknown to you, then use `kubectl config view` to find it.
-
-## Compatibility matrix
-
-|                     | Kubernetes 1.4 | Kubernetes 1.5 | Kubernetes 1.6 | Kubernetes 1.7 |
-|---------------------|----------------|----------------|----------------|----------------|
-| **Dashboard 1.4**   | ✓              | ✕              | ✕              | ✕              |
-| **Dashboard 1.5**   | ✕              | ✓              | ✕              | ✕              |
-| **Dashboard 1.6**   | ✕              | ✕              | ✓              | ?              |
-| **Dashboard HEAD**  | ✕              | ✕              | ?              | ✓              |
-
-- `✓` Fully supported version range.
-- `?` Due to breaking changes between Kubernetes API versions, some features might not work in Dashboard (logs, search etc.).
-- `✕` Unsupported version range.
+**NOTE:** [Heapster](https://github.com/kubernetes/heapster/) has to be running in the cluster for the metrics
+and graphs to be available. Read more about it in [Integrations](
+https://github.com/kubernetes/dashboard/wiki/Integrations) guide.
 
 ## Documentation
 
-* [User Guide](http://kubernetes.io/docs/user-guide/ui/): Entry-level overview
+Dashboard documentation can be found on [Wiki](https://github.com/kubernetes/dashboard/wiki) pages, it includes:
 
-* [Developer Guide](docs/devel/README.md): For anyone interested in contributing
+* Common: Entry-level overview
 
-* [Design Guide](docs/design/README.md): For anyone interested in contributing _design_ (less technical)
+* User Guide: [Installation](https://github.com/kubernetes/dashboard/wiki/Installation), [Accessing Dashboard](
+https://github.com/kubernetes/dashboard/wiki/Accessing-dashboard) and more for users
 
-* [Troubleshooting Guide](docs/user-guide/troubleshooting.md): Common issues encountered while setting up Dashboard
+* Developer Guide: [Getting Started](https://github.com/kubernetes/dashboard/wiki/Getting-started), [Dependency
+Management](https://github.com/kubernetes/dashboard/wiki/Dependency-management) and more for anyone interested in
+contributing
 
 ## License
 
-The work done has been licensed under Apache License 2.0. The license file can be found
-[here](LICENSE). You can find out more about the license at:
-
-http://www.apache.org/licenses/LICENSE-2.0
+The work done has been licensed under Apache License 2.0. The license file can be found [here](LICENSE). You can find
+out more about the license at [www.apache.org/licenses/LICENSE-2.0](www.apache.org/licenses/LICENSE-2.0).

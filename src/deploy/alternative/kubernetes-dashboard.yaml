@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Configuration to deploy head version of the Dashboard UI compatible with
+# Configuration to deploy release version of the Dashboard UI compatible with
 # Kubernetes 1.7.
 #
 # Example usage: kubectl create -f <this_file>
@@ -23,8 +23,8 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   labels:
-    k8s-app: kubernetes-dashboard-head
-  name: kubernetes-dashboard-head
+    k8s-app: kubernetes-dashboard
+  name: kubernetes-dashboard
   namespace: kube-system
 
 ---
@@ -50,6 +50,7 @@ rules:
   resources: ["services"]
   resourceNames: ["heapster"]
   verbs: ["proxy"]
+
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: RoleBinding
@@ -62,7 +63,7 @@ roleRef:
   name: kubernetes-dashboard-minimal
 subjects:
 - kind: ServiceAccount
-  name: kubernetes-dashboard-head
+  name: kubernetes-dashboard
   namespace: kube-system
 
 ---
@@ -72,25 +73,23 @@ kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
   labels:
-    k8s-app: kubernetes-dashboard-head
-  name: kubernetes-dashboard-head
+    k8s-app: kubernetes-dashboard
+  name: kubernetes-dashboard
   namespace: kube-system
 spec:
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      k8s-app: kubernetes-dashboard-head
+      k8s-app: kubernetes-dashboard
   template:
     metadata:
       labels:
-        k8s-app: kubernetes-dashboard-head
+        k8s-app: kubernetes-dashboard
     spec:
       containers:
-      - name: kubernetes-dashboard-head
-        image: kubernetesdashboarddev/kubernetes-dashboard-arm:head
-        # Image is tagged and updated with :head, so always pull it.
-        imagePullPolicy: Always
+      - name: kubernetes-dashboard
+        image: gcr.io/google_containers/kubernetes-dashboard-amd64:v1.7.0
         ports:
         - containerPort: 9090
           protocol: TCP
@@ -99,16 +98,13 @@ spec:
           # If not specified, Dashboard will attempt to auto discover the API server and connect
           # to it. Uncomment only if the default does not work.
           # - --apiserver-host=http://my-address:port
-          # Uncomment the following lines to provide certificates and enable HTTPS in Dashboard.
-          #- --tls-key-file=/path/to/cert.crt
-          #- --tls-cert-file=/path/to/cert.key
         livenessProbe:
           httpGet:
             path: /
             port: 9090
           initialDelaySeconds: 30
           timeoutSeconds: 30
-      serviceAccountName: kubernetes-dashboard-head
+      serviceAccountName: kubernetes-dashboard
       # Comment the following tolerations if Dashboard must not be deployed on master
       tolerations:
       - key: node-role.kubernetes.io/master
@@ -121,16 +117,12 @@ kind: Service
 apiVersion: v1
 metadata:
   labels:
-    k8s-app: kubernetes-dashboard-head
-  name: kubernetes-dashboard-head
+    k8s-app: kubernetes-dashboard
+  name: kubernetes-dashboard
   namespace: kube-system
 spec:
   ports:
-  - name: http
-    port: 80
+  - port: 80
     targetPort: 9090
-  - name: https
-    port: 443
-    targetPort: 8443
   selector:
-    k8s-app: kubernetes-dashboard-head
+    k8s-app: kubernetes-dashboard
