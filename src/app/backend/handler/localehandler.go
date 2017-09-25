@@ -83,7 +83,10 @@ func (handler *LocaleHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) 
 		// we want a different index.html (for the right locale) to be served when the page refreshes.
 		w.Header().Add("Cache-Control", "no-store")
 	}
-	acceptLanguage := r.Header.Get("Accept-Language")
+	acceptLanguage := os.Getenv("ACCEPT_LANGUAGE")
+	if acceptLanguage == "" {
+		acceptLanguage = r.Header.Get("Accept-Language")
+	}
 	dirName := handler.determineLocalizedDir(acceptLanguage)
 	http.FileServer(http.Dir(dirName)).ServeHTTP(w, r)
 }
