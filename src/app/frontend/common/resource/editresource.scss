@@ -14,37 +14,66 @@
 
 @import '../../variables';
 
+.kd-edit-dialog {
+  @media (max-width: $layout-breakpoint-xs) {
+    min-height: $layout-breakpoint-xs * .5;
+    min-width: $layout-breakpoint-xs * .5;
+  }
+
+  @media (min-width: $layout-breakpoint-xs) {
+    min-height: $layout-breakpoint-xs * .8;
+    min-width: $layout-breakpoint-xs * .8;
+  }
+
+  @media (min-width: $layout-breakpoint-lg) {
+    min-height: $layout-breakpoint-sm * .72;
+    min-width: $layout-breakpoint-sm * .72;
+  }
+}
+
 .kd-json-edit-dialog-content {
   display: flex;
   flex-direction: column;
-  min-height: $layout-breakpoint-xs / 2;
-  min-width: $layout-breakpoint-xs / 2;
+  @media (max-width: $layout-breakpoint-xs) {
+    min-height: $layout-breakpoint-xs * .5;
+    min-width: $layout-breakpoint-xs * .5;
+  }
+
+  @media (min-width: $layout-breakpoint-xs) {
+    min-height: $layout-breakpoint-xs * .8;
+    min-width: $layout-breakpoint-xs * .8;
+  }
+
+  @media (min-width: $layout-breakpoint-lg) {
+    min-height: $layout-breakpoint-sm * .7;
+    min-width: $layout-breakpoint-sm * .7;
+  }
 }
 
 .kd-json-edit-editor {
   display: flex;
   flex: 1;
   overflow: hidden;
-}
 
-.jsoneditor {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  height: initial;
-  overflow: hidden;
+  .jsoneditor {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    height: initial !important;
+    overflow: hidden;
 
-  div {
-    &.outer {
-      display: flex;
-      flex: 1;
-      margin: 0;
-      overflow: auto;
-      padding: 0;
+    div {
+      &.jsoneditor-outer {
+        display: flex;
+        flex: 1;
+        margin: 0;
+        overflow: auto;
+        padding: 0;
+      }
     }
-  }
 
-  .menu {
-    flex-shrink: 0;
+    .menu {
+      flex-shrink: 0;
+    }
   }
 }

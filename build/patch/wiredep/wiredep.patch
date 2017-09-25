@@ -1,0 +1,10 @@
+--- wiredep.js	2017-09-28 16:10:46.051840240 +0200
++++ wiredep_new.js	2017-09-28 16:09:22.611110264 +0200
+@@ -35,6 +35,7 @@
+   config.set
+     ('bower.json', opts.bowerJson || JSON.parse($.fs.readFileSync($.path.join(cwd, './bower.json'))))
+     ('bower-directory', opts.directory || findBowerDirectory(cwd))
++    ('custom-dependencies', opts.customDependencies || [])
+     ('cwd', cwd)
+     ('dependencies', opts.dependencies === false ? false : true)
+     ('detectable-file-types', [])

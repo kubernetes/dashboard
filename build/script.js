@@ -11,7 +11,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
 /**
  * Gulp tasks for processing and compiling frontend JavaScript files.
  */
@@ -87,6 +86,7 @@ function createScriptsStream(throwError) {
     return compiled.pipe(gulp.dest(conf.paths.serve));
   };
 }
+
 /**
  * Compiles frontend JavaScript files into development bundle located in
  * {conf.paths.serve} directory. This has to be done because currently browsers do not handle ES2017
@@ -132,8 +132,7 @@ function createCompileTask(translation) {
                 path.join(conf.paths.partials, '**/*.js'),
                 // Include base.js to enable some compiler functions, e.g., @export annotation
                 // handling and getMsg() translations.
-                path.join(
-                    conf.paths.bowerComponents, 'google-closure-library/closure/goog/base.js'),
+                path.join(conf.paths.nodeModules, 'google-closure-library/closure/goog/base.js'),
               ])
               .pipe(patchBuildInformation())
               .pipe(compileES6(translation))
@@ -165,10 +164,9 @@ function compileES6(translation) {
     path.join(
         conf.paths.nodeModules, 'google-closure-compiler/contrib/externs/angular-1.6-resource.js'),
     path.join(
-        conf.paths.bowerComponents,
-        'cljsjs-packages-externs/d3/resources/cljsjs/d3/common/d3.ext.js'),
+        conf.paths.nodeModules, 'cljsjs-packages-externs/d3/resources/cljsjs/d3/common/d3.ext.js'),
     path.join(
-        conf.paths.bowerComponents,
+        conf.paths.nodeModules,
         'cljsjs-packages-externs/nvd3/resources/cljsjs/nvd3/common/nvd3.ext.js'),
     // Dashboard externs
     path.join(conf.paths.externs, 'appconfig.js'),
