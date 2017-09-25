@@ -145,38 +145,34 @@ func TestEvalValueFrom(t *testing.T) {
 	}
 }
 
-func TestExtractContainerInfo(t *testing.T) {
+func TestEvalEnvFrom(t *testing.T) {
 	cases := []struct {
-		containerList []v1.Container
-		pod           *v1.Pod
-		configMaps    *v1.ConfigMapList
-		secrets       *v1.SecretList
-		expected      []Container
+		container  v1.Container
+		configMaps *v1.ConfigMapList
+		secrets    *v1.SecretList
+		expected   []EnvVar
 	}{
 		{
-			containerList: []v1.Container{
-				{
-					Name:  "echoserver",
-					Image: "gcr.io/google_containers/echoserver",
-					EnvFrom: []v1.EnvFromSource{
-						v1.EnvFromSource{
-							SecretRef: &v1.SecretEnvSource{
-								LocalObjectReference: v1.LocalObjectReference{
-									Name: "secret-env",
-								},
+			container: v1.Container{
+				Name:  "echoserver",
+				Image: "gcr.io/google_containers/echoserver",
+				EnvFrom: []v1.EnvFromSource{
+					v1.EnvFromSource{
+						SecretRef: &v1.SecretEnvSource{
+							LocalObjectReference: v1.LocalObjectReference{
+								Name: "secret-env",
 							},
-						}, v1.EnvFromSource{
-							Prefix: "test_",
-							ConfigMapRef: &v1.ConfigMapEnvSource{
-								LocalObjectReference: v1.LocalObjectReference{
-									Name: "config-map-env",
-								},
+						},
+					}, v1.EnvFromSource{
+						Prefix: "test_",
+						ConfigMapRef: &v1.ConfigMapEnvSource{
+							LocalObjectReference: v1.LocalObjectReference{
+								Name: "config-map-env",
 							},
 						},
 					},
 				},
 			},
-			pod: nil,
 			configMaps: &v1.ConfigMapList{
 				Items: []v1.ConfigMap{
 					{
@@ -201,33 +197,28 @@ func TestExtractContainerInfo(t *testing.T) {
 					},
 				},
 			},
-			expected: []Container{
+			expected: []EnvVar{
 				{
-					Name:  "echoserver",
-					Image: "gcr.io/google_containers/echoserver",
-					Env: []EnvVar{
-						EnvVar{
-							Name:  "username",
-							Value: base64.StdEncoding.EncodeToString([]byte("top-secret")),
-							ValueFrom: &v1.EnvVarSource{
-								SecretKeyRef: &v1.SecretKeySelector{
-									LocalObjectReference: v1.LocalObjectReference{
-										Name: "secret-env",
-									},
-									Key: "username",
-								},
+					Name:  "username",
+					Value: base64.StdEncoding.EncodeToString([]byte("top-secret")),
+					ValueFrom: &v1.EnvVarSource{
+						SecretKeyRef: &v1.SecretKeySelector{
+							LocalObjectReference: v1.LocalObjectReference{
+								Name: "secret-env",
 							},
-						}, EnvVar{
-							Name:  "test_username",
-							Value: "joey",
-							ValueFrom: &v1.EnvVarSource{
-								ConfigMapKeyRef: &v1.ConfigMapKeySelector{
-									LocalObjectReference: v1.LocalObjectReference{
-										Name: "config-map-env",
-									},
-									Key: "username",
-								},
+							Key: "username",
+						},
+					},
+				},
+				{
+					Name:  "test_username",
+					Value: "joey",
+					ValueFrom: &v1.EnvVarSource{
+						ConfigMapKeyRef: &v1.ConfigMapKeySelector{
+							LocalObjectReference: v1.LocalObjectReference{
+								Name: "config-map-env",
 							},
+							Key: "username",
 						},
 					},
 				},
@@ -237,10 +228,10 @@ func TestExtractContainerInfo(t *testing.T) {
 
 	for _, c := range cases {
 		dataselect.DefaultDataSelectWithMetrics.MetricQuery = dataselect.NoMetrics
-		actual := extractContainerInfo(c.containerList, c.pod, c.configMaps, c.secrets)
+		actual := evalEnvFrom(c.container, c.configMaps, c.secrets)
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("extractContainerInfo(%#v, %#v, %#v, %#v) == \ngot %#v, \nexpected %#v",
-				c.containerList, c.pod, c.configMaps, c.secrets, actual, c.expected)
+			t.Errorf("evalEnvFrom(%#v, %#v, %#v) == \ngot %#v, \nexpected %#v",
+				c.container, c.configMaps, c.secrets, actual, c.expected)
 		}
 	}
 }
