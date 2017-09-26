@@ -132,7 +132,7 @@ describe('Logs controller', () => {
     expect(ctrl.logsSet.length).toEqual(3);
     httpBackend
         .expectGET(
-            'api/v1/log/namespace11/test-pod/container-name?logFilePosition=beginning&offsetFrom=25&offsetTo=125&referenceLineNum=11&referenceTimestamp=X')
+            'api/v1/log/namespace11/test-pod/container-name?logFilePosition=beginning&offsetFrom=25&offsetTo=125&previous=false&referenceLineNum=11&referenceTimestamp=X')
         .respond(200, otherLogs);
     httpBackend.flush();
     expect(ctrl.logsSet.length).toEqual(2);
@@ -145,7 +145,7 @@ describe('Logs controller', () => {
     expect(ctrl.logsSet.length).toEqual(3);
     httpBackend
         .expectGET(
-            'api/v1/log/namespace11/test-pod/container-name?logFilePosition=beginning&offsetFrom=-78&offsetTo=22&referenceLineNum=11&referenceTimestamp=X')
+            'api/v1/log/namespace11/test-pod/container-name?logFilePosition=beginning&offsetFrom=-78&offsetTo=22&previous=false&referenceLineNum=11&referenceTimestamp=X')
         .respond(200, otherLogs);
     httpBackend.flush();
     expect(ctrl.logsSet.length).toEqual(2);
@@ -158,7 +158,7 @@ describe('Logs controller', () => {
     expect(ctrl.logsSet.length).toEqual(3);
     httpBackend
         .expectGET(
-            'api/v1/log/namespace11/test-pod/container-name?logFilePosition=end&offsetFrom=2000000000&offsetTo=2000000100&referenceLineNum=0&referenceTimestamp=newest')
+            'api/v1/log/namespace11/test-pod/container-name?logFilePosition=end&offsetFrom=2000000000&offsetTo=2000000100&previous=false&referenceLineNum=0&referenceTimestamp=newest')
         .respond(200, otherLogs);
     httpBackend.flush();
     expect(ctrl.logsSet.length).toEqual(2);
@@ -172,7 +172,7 @@ describe('Logs controller', () => {
     expect(ctrl.logsSet.length).toEqual(3);
     httpBackend
         .expectGET(
-            'api/v1/log/namespace11/test-pod/container-name?logFilePosition=beginning&offsetFrom=-2000000100&offsetTo=-2000000000&referenceLineNum=0&referenceTimestamp=oldest')
+            'api/v1/log/namespace11/test-pod/container-name?logFilePosition=beginning&offsetFrom=-2000000100&offsetTo=-2000000000&previous=false&referenceLineNum=0&referenceTimestamp=oldest')
         .respond(200, otherLogs);
     httpBackend.flush();
     expect(ctrl.logsSet.length).toEqual(2);

@@ -29,6 +29,9 @@ export class LogsService {
 
     /** @private {boolean} */
     this.showTimestamp_ = false;
+
+    /** @private {boolean} */
+    this.previous_ = false;
   }
 
   /**
@@ -74,5 +77,20 @@ export class LogsService {
    */
   getShowTimestamp() {
     return this.showTimestamp_;
+  }
+
+  /**
+   * Switches the show previous flag
+   */
+  setPrevious() {
+    this.previous_ = !this.previous_;
+  }
+
+  /**
+   * Getter for the show previous flag
+   * @returns {boolean}
+   */
+  getPrevious() {
+    return this.previous_;
   }
 }

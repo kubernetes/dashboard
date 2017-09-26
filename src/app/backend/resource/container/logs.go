@@ -53,10 +53,10 @@ func GetPodContainers(client kubernetes.Interface, namespace, podID string) (*Po
 	return containers, nil
 }
 
-// GetLogDetails returns logs for particular pod and container. When container
-// is null, logs for the first one are returned.
+// GetLogDetails returns logs for particular pod and container. When container is null, logs for the first one
+// are returned. Previous indicates to read archived logs created by log rotation or container crash
 func GetLogDetails(client kubernetes.Interface, namespace, podID string, container string,
-	logSelector *logs.Selection) (*logs.LogDetails, error) {
+	logSelector *logs.Selection, usePreviousLogs bool) (*logs.LogDetails, error) {
 	pod, err := client.CoreV1().Pods(namespace).Get(podID, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
@@ -66,7 +66,7 @@ func GetLogDetails(client kubernetes.Interface, namespace, podID string, contain
 		container = pod.Spec.Containers[0].Name
 	}
 
-	logOptions := mapToLogOptions(container, logSelector)
+	logOptions := mapToLogOptions(container, logSelector, usePreviousLogs)
 	rawLogs, err := readRawLogs(client, namespace, podID, logOptions)
 	if err != nil {
 		return nil, err
@@ -77,11 +77,11 @@ func GetLogDetails(client kubernetes.Interface, namespace, podID string, contain
 
 // Maps the log selection to the corresponding api object
 // Read limits are set to avoid out of memory issues
-func mapToLogOptions(container string, logSelector *logs.Selection) *v1.PodLogOptions {
+func mapToLogOptions(container string, logSelector *logs.Selection, previous bool) *v1.PodLogOptions {
 	logOptions := &v1.PodLogOptions{
 		Container:  container,
 		Follow:     false,
-		Previous:   false,
+		Previous:   previous,
 		Timestamps: true,
 	}
 
@@ -112,12 +112,13 @@ func readRawLogs(client kubernetes.Interface, namespace, podID string, logOption
 	return string(result), nil
 }
 
-// GetLogFile returns a stream to the log file which can be piped directly to the respose. This avoids oom issues.
-func GetLogFile(client kubernetes.Interface, namespace, podID string, container string) (string, io.ReadCloser, error) {
+// GetLogFile returns a stream to the log file which can be piped directly to the response. This avoids out of memory
+// issues. Previous indicates to read archived logs created by log rotation or container crash
+func GetLogFile(client kubernetes.Interface, namespace, podID string, container string, usePreviousLogs bool) (string, io.ReadCloser, error) {
 	logOptions := &v1.PodLogOptions{
 		Container:  container,
 		Follow:     false,
-		Previous:   false,
+		Previous:   usePreviousLogs,
 		Timestamps: false,
 	}
 	filename := fmt.Sprintf("logs-from-%v-in-%v.txt", container, podID)

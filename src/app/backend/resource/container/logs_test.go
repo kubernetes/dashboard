@@ -315,6 +315,32 @@ func TestGetLogs(t *testing.T) {
 				},
 			},
 		},
+		{
+			"don't try to split timestamp for error message",
+			"pod-1",
+			"an error message from api server",
+			"test",
+			logs.AllSelection,
+			&logs.LogDetails{
+				Info: logs.LogInfo{
+					PodName:       "pod-1",
+					ContainerName: "test",
+					FromDate:      "0",
+					ToDate:        "0",
+				},
+				LogLines: logs.LogLines{logs.LogLine{
+					Timestamp: "0",
+					Content:   "an error message from api server",
+				},},
+				Selection: logs.Selection{
+					ReferencePoint: logs.LogLineId{
+						LogTimestamp: "0",
+						LineNum:      1,
+					},
+					OffsetFrom: 0,
+					OffsetTo:   1},
+			},
+		},
 	}
 	for _, c := range cases {
 		actual := ConstructLogDetails(c.podId, c.rawLogs, c.container, c.logSelector)
@@ -356,7 +382,7 @@ func TestMapToLogOptions(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := mapToLogOptions(c.container, c.logSelector)
+		actual := mapToLogOptions(c.container, c.logSelector, false)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("Test Case: %s.\nReceived: %#v \nExpected: %#v\n\n", c.info, actual, c.expected)
 		}
