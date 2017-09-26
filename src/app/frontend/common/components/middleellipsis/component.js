@@ -29,7 +29,7 @@ export default class MiddleEllipsisController {
     this.element_ = $element;
   }
 
-  isTrancated() {
+  isTruncated() {
     let c = this.element_;
     c.addClass("kd-middleellipsis_width");
     let cOfsWidth = c[0].offsetWidth;
