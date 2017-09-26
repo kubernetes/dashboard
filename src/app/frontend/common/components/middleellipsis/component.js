@@ -32,9 +32,9 @@ export default class MiddleEllipsisController {
   isTrancated() {
     let c = this.element_;
     c.addClass("kd-middleellipsis_width");
-    let c_ofs_width = c[0].offsetWidth;
+    let cOfsWidth = c[0].offsetWidth;
     c.removeClass("kd-middleellipsis_width");
-    return c_ofs_width > this.element_[0].offsetWidth;
+    return cOfsWidth > this.element_[0].offsetWidth;
   }
 
   getDisplayStringAtTooltip() {
