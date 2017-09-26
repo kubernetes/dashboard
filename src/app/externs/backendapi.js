@@ -877,7 +877,8 @@ backendApi.RoleList;
  * @typedef {{
  *  description: string,
  *  link: string,
- *  valid: string
+ *  valid: string,
+ *  proxyURL: string
  * }}
  */
 backendApi.UserLinks;

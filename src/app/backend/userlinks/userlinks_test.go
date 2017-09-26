@@ -40,6 +40,8 @@ func TestGetUserLinksForService(t *testing.T) {
 					Name: "svc-1", Namespace: "ns-1",
 					Annotations: map[string]string{
 						"alpha.dashboard.kubernetes.io/links": "{" +
+							strconv.Quote("dns-svc") + ":" +
+							strconv.Quote("http://{{svc.dns_name}}:80/debug") + "," +
 							strconv.Quote("absolute_path") + ":" +
 							strconv.Quote("http://monitoring.com/debug/requests") + "," +
 							strconv.Quote("invalid") + ":" +
@@ -53,6 +55,7 @@ func TestGetUserLinksForService(t *testing.T) {
 				}},
 			namespace: "ns-1", name: "svc-1", resource: api.ResourceKindService, host: "http://localhost:8080",
 			expected: []UserLink{
+				UserLink{Description: "dns-svc", Link: "svc-1.ns-1.svc.cluster.local:80/debug", Valid: true},
 				UserLink{Description: "absolute_path", Link: "http://monitoring.com/debug/requests", Valid: true},
 				UserLink{Description: "invalid", Link: "Invalid User Link: http://{{apirver-proxy-url}}/debug/requests", Valid: false},
 				UserLink{Description: "invalid2", Link: "Invalid User Link: ://www.logs.com/click/here", Valid: false},
@@ -104,28 +107,33 @@ func TestGetUserLinksForPod(t *testing.T) {
 		expected                        []UserLink
 	}{
 		{
-			pod: &v1.Pod{ObjectMeta: metaV1.ObjectMeta{
-				Name: "pod-1", Namespace: "ns-1",
-				Annotations: map[string]string{
-					"alpha.dashboard.kubernetes.io/links": "{" +
-						strconv.Quote("absolute_path") + ":" +
-						strconv.Quote("http://monitoring.com/debug/requests") + "," +
-						strconv.Quote("invalid") + ":" +
-						strconv.Quote("http://{{apirver-proxy-url}}/debug/requests") + "," +
-						strconv.Quote("invalid2") + ":" +
-						strconv.Quote("://www.logs.com/click/here") + "," +
-						strconv.Quote("debug") + ":" +
-						strconv.Quote("http://{{apiserver-proxy-url}}/debug/requests") + "," +
-						strconv.Quote("debug2") + ":" +
-						strconv.Quote("http://{{apiserver-proxy-url}}/debug/requests") + "}"},
-			}},
+			pod: &v1.Pod{
+				Status: v1.PodStatus{PodIP: "1.2.3.4"},
+				ObjectMeta: metaV1.ObjectMeta{
+					Name: "pod-1", Namespace: "ns-1",
+					Annotations: map[string]string{
+						"alpha.dashboard.kubernetes.io/links": "{" +
+							strconv.Quote("pod-dns") + ":" +
+							strconv.Quote("http://{{pod.dns_name}}:80/debug") + "," +
+							strconv.Quote("absolute_path") + ":" +
+							strconv.Quote("http://monitoring.com/debug/requests") + "," +
+							strconv.Quote("invalid") + ":" +
+							strconv.Quote("http://{{apirver-proxy-url}}/debug/requests") + "," +
+							strconv.Quote("invalid2") + ":" +
+							strconv.Quote("://www.logs.com/click/here") + "," +
+							strconv.Quote("debug") + ":" +
+							strconv.Quote("http://{{apiserver-proxy-url}}/debug/requests") + "," +
+							strconv.Quote("debug2") + ":" +
+							strconv.Quote("http://{{apiserver-proxy-url}}/debug/requests") + "}"},
+				}},
 			namespace: "ns-1", name: "pod-1", resource: api.ResourceKindPod, host: "http://localhost:8080",
 			expected: []UserLink{
 				UserLink{Description: "absolute_path", Link: "http://monitoring.com/debug/requests", Valid: true},
 				UserLink{Description: "invalid", Link: "Invalid User Link: http://{{apirver-proxy-url}}/debug/requests", Valid: false},
 				UserLink{Description: "invalid2", Link: "Invalid User Link: ://www.logs.com/click/here", Valid: false},
 				UserLink{Description: "debug", Link: "http://localhost:8080/api/v1/namespaces/ns-1/pods/pod-1/proxy/debug/requests", Valid: true},
-				UserLink{Description: "debug2", Link: "http://localhost:8080/api/v1/namespaces/ns-1/pods/pod-1/proxy/debug/requests", Valid: true}},
+				UserLink{Description: "debug2", Link: "http://localhost:8080/api/v1/namespaces/ns-1/pods/pod-1/proxy/debug/requests", Valid: true},
+				UserLink{Description: "pod-dns", Link: "1-2-3-4.ns-1.pod.cluster.local:80/debug", Valid: true}},
 		},
 	}
 
