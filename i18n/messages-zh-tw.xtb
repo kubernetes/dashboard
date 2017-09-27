@@ -1,56 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE translationbundle><translationbundle lang="zh-tw">
-  <translation id="961242340990264399" key="MSG_ABOUT_ABOUT_0" desc="This is a label for button displayed on about page used to open documentaion in browser">&#x5B98;&#x65B9;&#x6587;&#x4EF6;</translation>
-  <translation id="5634646746226609179" key="MSG_ABOUT_ABOUT_1" desc="Label \&apos;Dashboard Version\&apos; for the about page.">&#x5100;&#x8868;&#x677F;&#x7248;&#x672C;</translation>
-  <translation id="4718120324314749596" key="MSG_ABOUT_ABOUT_2" desc="Label \&apos;Git Commit\&apos; for the about page.">Git &#x63D0;&#x4EA4;</translation>
-  <translation id="5788105450172886273" key="MSG_ABOUT_ABOUT_3" desc="This is a label for button displayed on about page used to send feedback to GitHub new issue.">&#x767C;&#x9001;&#x56DE;&#x994B;</translation>
-  <translation id="4249662097435421699" key="MSG_ABOUT_ABOUT_4" desc="This is the copyright statement displayed on the about page">&#x7248;&#x6B0A;&#x6240;&#x6709; 2015-{{ $ctrl.latestCopyrightYear}} Kubernetes &#x5718;&#x968A;</translation>
-  <translation id="4171916442768740608" key="MSG_ABOUT_ABOUT_5" desc="This is the creator reference on the footer of the about page"> Kubernetes &#x5100;&#x8868;&#x677F;&#x662F;&#x7531;&lt;a href=&quot;https://github.com/kubernetes/dashboard/graphs/contributors&quot;&gt;&#x793E;&#x5340;&lt;/a&gt;&#x4F5C;&#x70BA;&lt;a href=&quot;https://github.com/kubernetes/dashboard&quot;&gt;&#x958B;&#x653E;&#x5F0F;&#x539F;&#x59CB;&#x78BC;&#x5C08;&#x6848;&lt;/a&gt;&#x6253;&#x9020;&#x800C;&#x6210; </translation>
-  <translation id="4426231252111230009" key="MSG_ABOUT_ABOUT_6" desc="Dashbord moto on the about page, just below the header">Kubernetes &#x53E2;&#x96C6;&#x901A;&#x7528;&#x7DB2;&#x9801;&#x4ECB;&#x9762;</translation>
-  <translation id="6783150167357318030" key="MSG_ACTION_BAR_DELETE_TOOLTIP" desc="Generic &quot;Delete some resource&quot; tooltip text which appears over the delete icon on the global action bar.">&#x522A;&#x9664;<ph name="RESOURCE_NAME"></ph></translation>
-  <translation id="1421031463694814701" key="MSG_ACTION_BAR_EDIT_TOOLTIP" desc="Generic &quot;Edit some resource&quot; tooltip text which appears over the edit icon on the global action bar.">&#x7DE8;&#x8F2F;<ph name="RESOURCE_NAME"></ph></translation>
-  <translation id="1024358167652076581" key="MSG_ALL_NAMESPACES" desc="Text for dropdown item that indicates that no namespace was selected">&#x5168;&#x90E8;&#x547D;&#x540D;&#x7A7A;&#x9593;</translation>
-  <translation id="2436932884134192170" key="MSG_AUTH_STATUS_HEADER" desc="Login status displayed when authorization header is used.">&#x4EE5; Auth header &#x65B9;&#x5F0F;&#x767B;&#x5165;</translation>
-  <translation id="2593766780781854099" key="MSG_AUTH_STATUS_SKIPPED" desc="Login status displayed when default service account is used.">&#x9810;&#x8A2D;&#x670D;&#x52D9;&#x5E33;&#x6236;</translation>
-  <translation id="7811526624157700330" key="MSG_AUTH_STATUS_TOKEN" desc="Login status displayed when token is used.">&#x4EE5; Token &#x65B9;&#x5F0F;&#x767B;&#x5165;</translation>
-  <translation id="6614117428496734699" key="MSG_BREADCRUMBS_ABOUT_LABEL" desc="Label &apos;About&apos; that appears as a breadcrumbs on the action bar.">&#x95DC;&#x65BC;</translation>
-  <translation id="1153397682574555638" key="MSG_BREADCRUMBS_CLUSTER_LABEL" desc="Label &apos;Cluster&apos; that appears as a breadcrumbs on the action bar.">&#x53E2;&#x96C6;</translation>
-  <translation id="5346529710805392125" key="MSG_BREADCRUMBS_CONFIG_AND_STORAGE_LABEL" desc="Label &apos;Config and storage&apos; that appears as a breadcrumbs on the action bar.">&#x914D;&#x7F6E;&#x8207;&#x5132;&#x5B58;</translation>
-  <translation id="3212328899649855136" key="MSG_BREADCRUMBS_CONFIG_MAPS_LABEL" desc="Label &apos;Config Maps&apos; that appears as a breadcrumbs on the action bar.">Config Maps</translation>
-  <translation id="3217932097841975938" key="MSG_BREADCRUMBS_DAEMON_SETS_LABEL" desc="Label &apos;Daemon Sets&apos; that appears as a breadcrumbs on the action bar.">Daemon Sets</translation>
-  <translation id="1744394420157932960" key="MSG_BREADCRUMBS_DEPLOYMENTS_LABEL" desc="Label &apos;Deployments&apos; that appears as a breadcrumbs on the action bar.">Deployments</translation>
-  <translation id="9213553703311647006" key="MSG_BREADCRUMBS_DEPLOY_APP_LABEL" desc="Breadcrum label for the deploy containerized app form view.">&#x5275;&#x5EFA;&#x61C9;&#x7528;&#x7A0B;&#x5F0F;</translation>
-  <translation id="3098067826555563293" key="MSG_BREADCRUMBS_DEPLOY_FILE_LABEL" desc="Breadcrum label for the YAML upload form">&#x4E0A;&#x50B3;</translation>
-  <translation id="8693076889249273053" key="MSG_BREADCRUMBS_DISCOVERY_AND_LOAD_BALANCING_LABEL" desc="Label &apos;Discovery and load balancing&apos; that appears as a breadcrumbs on the action bar.">&#x670D;&#x52D9;&#x767C;&#x73FE;&#x8207;&#x8CA0;&#x8F09;&#x5E73;&#x8861;</translation>
-  <translation id="2573868693589074300" key="MSG_BREADCRUMBS_ERROR_LABEL" desc="Label for error page for breadcrumbs on the action bar.">&#x5167;&#x90E8;&#x932F;&#x8AA4;</translation>
-  <translation id="2248903848244811172" key="MSG_BREADCRUMBS_HORIZONTAL_POD_AUTOSCALERS_LABEL" desc="Label &apos;Horizontal Pod Autoscalers&apos; that appears as a breadcrumbs on the action bar.">Horizontal Pod Autoscalers</translation>
-  <translation id="8885204956315323333" key="MSG_BREADCRUMBS_INGRESSS_LABEL" desc="Label &apos;Ingresses&apos; that appears as a breadcrumbs on the action bar.">Ingresses</translation>
-  <translation id="2024511088483477440" key="MSG_BREADCRUMBS_JOBS_LABEL" desc="Label &apos;Jobs&apos; that appears as a breadcrumbs on the action bar.">Jobs</translation>
-  <translation id="7001335550079103928" key="MSG_BREADCRUMBS_LOGIN_LABEL" desc="Label &apos;Log in&apos; that appears as a breadcrumbs on the action bar.">&#x767B;&#x5165;</translation>
-  <translation id="1050029015813261838" key="MSG_BREADCRUMBS_LOGS_LABEL" desc="Breadcrum label for the logs view.">&#x65E5;&#x8A8C;</translation>
-  <translation id="7538864180606148657" key="MSG_BREADCRUMBS_NAMESPACES_LABEL" desc="Label &apos;Namespaces&apos; that appears as a breadcrumbs on the action bar.">&#x547D;&#x540D;&#x7A7A;&#x9593;</translation>
-  <translation id="1946322401100894439" key="MSG_BREADCRUMBS_NODES_LABEL" desc="Label &apos;Nodes&apos; that appears as a breadcrumbs on the action bar.">&#x7BC0;&#x9EDE;</translation>
-  <translation id="5901871651227680937" key="MSG_BREADCRUMBS_OVERVIEW_LABEL" desc="Label &apos;Overview&apos; that appears as a breadcrumb on the action bar.">&#x6982;&#x89C0;</translation>
-  <translation id="8962145809533946028" key="MSG_BREADCRUMBS_PERSISTENT_VOLUMES_LABEL" desc="Label &apos;Persistent Volumes&apos; that appears as a breadcrumbs on the action bar.">&#x6301;&#x4E45;&#x6027;&#x96F2;&#x786C;&#x789F;</translation>
-  <translation id="6751018699028607617" key="MSG_BREADCRUMBS_PERSISTENT_VOLUME_CLAIM_LABEL" desc="Label &apos;Persistent Volume Claims&apos; that appears as a breadcrumbs on the action bar.">Persistent Volume Claims</translation>
-  <translation id="64391241316684157" key="MSG_BREADCRUMBS_PODS_LABEL" desc="Label &apos;Pods&apos; that appears as a breadcrumbs on the action bar.">Pods</translation>
-  <translation id="7569244915796303702" key="MSG_BREADCRUMBS_RC_LABEL" desc="Label &apos;Replication Controllers&apos; that appears as a breadcrumbs on the action bar.">Replication Controllers</translation>
-  <translation id="837518421741773666" key="MSG_BREADCRUMBS_REPLICA_SETS_LABEL" desc="Label &apos;Replica Sets&apos; that appears as a breadcrumbs on the action bar.">Replica Sets</translation>
-  <translation id="5794147661362074597" key="MSG_BREADCRUMBS_ROLES_LABEL" desc="Label &apos;Roles&apos; that appears as a breadcrumbs on the action bar.">&#x89D2;&#x8272;</translation>
-  <translation id="2851304790534826779" key="MSG_BREADCRUMBS_SEARCH_LABEL" desc="Label &apos;Search&apos; that appears as a breadcrumbs on the action bar.">&#x641C;&#x5C0B;</translation>
-  <translation id="391192137756114804" key="MSG_BREADCRUMBS_SECRETS_LABEL" desc="Label &apos;Secrets&apos; that appears as a breadcrumbs on the action bar.">Secrets</translation>
-  <translation id="6064633767606789407" key="MSG_BREADCRUMBS_SHELL_LABEL" desc="Breadcrumb label for the shell view.">&#x6307;&#x4EE4;&#x5217;</translation>
-  <translation id="7318741060898365517" key="MSG_BREADCRUMBS_STATEFUL_SETS_LABEL" desc="Label &apos;Stateful Sets&apos; that appears as a breadcrumbs on the action bar.">Stateful Sets</translation>
-  <translation id="1427200251427963672" key="MSG_BREADCRUMBS_STORAGE_CLASSES_LABEL" desc="Label &apos;Storage Classes&apos; that appears as a breadcrumbs on the action bar.">&#x5132;&#x5B58;&#x985E;&#x5225;</translation>
-  <translation id="6132384114487014259" key="MSG_BREADCRUMBS_THIRD_PARTY_RESOURCES_LABEL" desc="Label &apos;Third Party Resources&apos; that appears as a breadcrumbs on the action bar.">Third Party Resources</translation>
-  <translation id="1656728804447365846" key="MSG_BREADCRUMBS_WORKLOADS_LABEL" desc="Label &apos;Workloads&apos; that appears as a breadcrumbs on the action bar.">&#x5DE5;&#x4F5C;&#x8CA0;&#x8F09;</translation>
-  <translation id="5441724995487814814" key="MSG_CHROME_CHROME_0" desc="Tooltip for global action bar create button tooltip.">&#x5275;&#x5EFA;&#x61C9;&#x7528;&#x7A0B;&#x5F0F;&#x6216;&#x4EFB;&#x4F55; Kubernetes &#x8CC7;&#x6E90;</translation>
-  <translation id="152996649337797552" key="MSG_CHROME_CHROME_1" desc="Label for global action bar create button.">&#x65B0;&#x5EFA;</translation>
-  <translation id="8711874778657823772" key="MSG_CHROME_CONTROLPANEL_CONTROLPANEL_0" desc="Tooltip for the control panel displayed in the right top corner.">&#x63A7;&#x5236;&#x9762;&#x677F;</translation>
-  <translation id="7284639485141385452" key="MSG_CHROME_CONTROLPANEL_CONTROLPANEL_1" desc="Logout menu item.">&#x767B;&#x51FA;</translation>
-  <translation id="7210325010968831729" key="MSG_CHROME_CONTROLPANEL_CONTROLPANEL_2" desc="Login menu item.">&#x767B;&#x5165;</translation>
-  <translation id="5023828914132135944" key="MSG_CHROME_NAV_NAV_0" desc="Cluster group menu entry.">&#x53E2;&#x96C6;</translation>
-  <translation id="6343362656986122693" key="MSG_CHROME_NAV_NAV_1" desc="Namespaces menu entry.">&#x547D;&#x540D;&#x7A7A;&#x9593;</translation>
+  <translation id="961242340990264399" key="MSG_ABOUT_ABOUT_0" desc="This is a label for button displayed on about page used to open documentaion in browser">官方文件</translation>
+  <translation id="5634646746226609179" key="MSG_ABOUT_ABOUT_1" desc="Label \'Dashboard Version\' for the about page.">儀表板版本</translation>
+  <translation id="4718120324314749596" key="MSG_ABOUT_ABOUT_2" desc="Label \'Git Commit\' for the about page.">Git 提交</translation>
+  <translation id="5788105450172886273" key="MSG_ABOUT_ABOUT_3" desc="This is a label for button displayed on about page used to send feedback to GitHub new issue.">發送回饋</translation>
+  <translation id="4249662097435421699" key="MSG_ABOUT_ABOUT_4" desc="This is the copyright statement displayed on the about page">版權所有 2015-{{ $ctrl.latestCopyrightYear}} Kubernetes 團隊</translation>
+  <translation id="4171916442768740608" key="MSG_ABOUT_ABOUT_5" desc="This is the creator reference on the footer of the about page"> Kubernetes 儀表板是由&lt;a href="https://github.com/kubernetes/dashboard/graphs/contributors"&gt;社區&lt;/a&gt;作為&lt;a href="https://github.com/kubernetes/dashboard"&gt;開放式原始碼專案&lt;/a&gt;打造而成 </translation>
+  <translation id="4426231252111230009" key="MSG_ABOUT_ABOUT_6" desc="Dashbord moto on the about page, just below the header">Kubernetes 叢集通用網頁介面</translation>
+  <translation id="6783150167357318030" key="MSG_ACTION_BAR_DELETE_TOOLTIP" desc="Generic &quot;Delete some resource&quot; tooltip text which appears over the delete icon on the global action bar.">刪除<ph name="RESOURCE_NAME"/></translation>
+  <translation id="1421031463694814701" key="MSG_ACTION_BAR_EDIT_TOOLTIP" desc="Generic &quot;Edit some resource&quot; tooltip text which appears over the edit icon on the global action bar.">編輯<ph name="RESOURCE_NAME"/></translation>
+  <translation id="1024358167652076581" key="MSG_ALL_NAMESPACES" desc="Text for dropdown item that indicates that no namespace was selected">全部命名空間</translation>
+  <translation id="2436932884134192170" key="MSG_AUTH_STATUS_HEADER" desc="Login status displayed when authorization header is used.">以 Auth header 方式登入</translation>
+  <translation id="2593766780781854099" key="MSG_AUTH_STATUS_SKIPPED" desc="Login status displayed when default service account is used.">預設服務帳戶</translation>
+  <translation id="7811526624157700330" key="MSG_AUTH_STATUS_TOKEN" desc="Login status displayed when token is used.">以 Token 方式登入</translation>
+  <translation id="6614117428496734699" key="MSG_BREADCRUMBS_ABOUT_LABEL" desc="Label 'About' that appears as a breadcrumbs on the action bar.">關於</translation>
+  <translation id="1153397682574555638" key="MSG_BREADCRUMBS_CLUSTER_LABEL" desc="Label 'Cluster' that appears as a breadcrumbs on the action bar.">叢集</translation>
+  <translation id="5346529710805392125" key="MSG_BREADCRUMBS_CONFIG_AND_STORAGE_LABEL" desc="Label 'Config and storage' that appears as a breadcrumbs on the action bar.">配置與儲存</translation>
+  <translation id="3212328899649855136" key="MSG_BREADCRUMBS_CONFIG_MAPS_LABEL" desc="Label 'Config Maps' that appears as a breadcrumbs on the action bar.">Config Maps</translation>
+  <translation id="3217932097841975938" key="MSG_BREADCRUMBS_DAEMON_SETS_LABEL" desc="Label 'Daemon Sets' that appears as a breadcrumbs on the action bar.">Daemon Sets</translation>
+  <translation id="1744394420157932960" key="MSG_BREADCRUMBS_DEPLOYMENTS_LABEL" desc="Label 'Deployments' that appears as a breadcrumbs on the action bar.">Deployments</translation>
+  <translation id="9213553703311647006" key="MSG_BREADCRUMBS_DEPLOY_APP_LABEL" desc="Breadcrum label for the deploy containerized app form view.">創建應用程式</translation>
+  <translation id="3098067826555563293" key="MSG_BREADCRUMBS_DEPLOY_FILE_LABEL" desc="Breadcrum label for the YAML upload form">上傳</translation>
+  <translation id="8693076889249273053" key="MSG_BREADCRUMBS_DISCOVERY_AND_LOAD_BALANCING_LABEL" desc="Label 'Discovery and load balancing' that appears as a breadcrumbs on the action bar.">服務發現與負載平衡</translation>
+  <translation id="2573868693589074300" key="MSG_BREADCRUMBS_ERROR_LABEL" desc="Label for error page for breadcrumbs on the action bar.">內部錯誤</translation>
+  <translation id="2248903848244811172" key="MSG_BREADCRUMBS_HORIZONTAL_POD_AUTOSCALERS_LABEL" desc="Label 'Horizontal Pod Autoscalers' that appears as a breadcrumbs on the action bar.">Horizontal Pod Autoscalers</translation>
+  <translation id="8885204956315323333" key="MSG_BREADCRUMBS_INGRESSS_LABEL" desc="Label 'Ingresses' that appears as a breadcrumbs on the action bar.">Ingresses</translation>
+  <translation id="2024511088483477440" key="MSG_BREADCRUMBS_JOBS_LABEL" desc="Label 'Jobs' that appears as a breadcrumbs on the action bar.">Jobs</translation>
+  <translation id="3285134270275399073" key="MSG_BREADCRUMBS_LOGIN_LABEL" desc="Label 'Sign in' that appears as a breadcrumbs on the action bar.">Sign in</translation>
+  <translation id="1050029015813261838" key="MSG_BREADCRUMBS_LOGS_LABEL" desc="Breadcrum label for the logs view.">日誌</translation>
+  <translation id="7538864180606148657" key="MSG_BREADCRUMBS_NAMESPACES_LABEL" desc="Label 'Namespaces' that appears as a breadcrumbs on the action bar.">命名空間</translation>
+  <translation id="1946322401100894439" key="MSG_BREADCRUMBS_NODES_LABEL" desc="Label 'Nodes' that appears as a breadcrumbs on the action bar.">節點</translation>
+  <translation id="5901871651227680937" key="MSG_BREADCRUMBS_OVERVIEW_LABEL" desc="Label 'Overview' that appears as a breadcrumb on the action bar.">概觀</translation>
+  <translation id="8962145809533946028" key="MSG_BREADCRUMBS_PERSISTENT_VOLUMES_LABEL" desc="Label 'Persistent Volumes' that appears as a breadcrumbs on the action bar.">持久性雲硬碟</translation>
+  <translation id="6751018699028607617" key="MSG_BREADCRUMBS_PERSISTENT_VOLUME_CLAIM_LABEL" desc="Label 'Persistent Volume Claims' that appears as a breadcrumbs on the action bar.">Persistent Volume Claims</translation>
+  <translation id="64391241316684157" key="MSG_BREADCRUMBS_PODS_LABEL" desc="Label 'Pods' that appears as a breadcrumbs on the action bar.">Pods</translation>
+  <translation id="7569244915796303702" key="MSG_BREADCRUMBS_RC_LABEL" desc="Label 'Replication Controllers' that appears as a breadcrumbs on the action bar.">Replication Controllers</translation>
+  <translation id="837518421741773666" key="MSG_BREADCRUMBS_REPLICA_SETS_LABEL" desc="Label 'Replica Sets' that appears as a breadcrumbs on the action bar.">Replica Sets</translation>
+  <translation id="5794147661362074597" key="MSG_BREADCRUMBS_ROLES_LABEL" desc="Label 'Roles' that appears as a breadcrumbs on the action bar.">角色</translation>
+  <translation id="2851304790534826779" key="MSG_BREADCRUMBS_SEARCH_LABEL" desc="Label 'Search' that appears as a breadcrumbs on the action bar.">搜尋</translation>
+  <translation id="391192137756114804" key="MSG_BREADCRUMBS_SECRETS_LABEL" desc="Label 'Secrets' that appears as a breadcrumbs on the action bar.">Secrets</translation>
+  <translation id="6064633767606789407" key="MSG_BREADCRUMBS_SHELL_LABEL" desc="Breadcrumb label for the shell view.">指令列</translation>
+  <translation id="7318741060898365517" key="MSG_BREADCRUMBS_STATEFUL_SETS_LABEL" desc="Label 'Stateful Sets' that appears as a breadcrumbs on the action bar.">Stateful Sets</translation>
+  <translation id="1427200251427963672" key="MSG_BREADCRUMBS_STORAGE_CLASSES_LABEL" desc="Label 'Storage Classes' that appears as a breadcrumbs on the action bar.">儲存類別</translation>
+  <translation id="6132384114487014259" key="MSG_BREADCRUMBS_THIRD_PARTY_RESOURCES_LABEL" desc="Label 'Third Party Resources' that appears as a breadcrumbs on the action bar.">Third Party Resources</translation>
+  <translation id="1656728804447365846" key="MSG_BREADCRUMBS_WORKLOADS_LABEL" desc="Label 'Workloads' that appears as a breadcrumbs on the action bar.">工作負載</translation>
+  <translation id="5441724995487814814" key="MSG_CHROME_CHROME_0" desc="Tooltip for global action bar create button tooltip.">創建應用程式或任何 Kubernetes 資源</translation>
+  <translation id="152996649337797552" key="MSG_CHROME_CHROME_1" desc="Label for global action bar create button.">新建</translation>
+  <translation id="8711874778657823772" key="MSG_CHROME_CONTROLPANEL_CONTROLPANEL_0" desc="Tooltip for the control panel displayed in the right top corner.">控制面板</translation>
+  <translation id="5588778838458035939" key="MSG_CHROME_CONTROLPANEL_CONTROLPANEL_1" desc="Sign out menu item.">Sign out</translation>
+  <translation id="3494123731165126874" key="MSG_CHROME_CONTROLPANEL_CONTROLPANEL_2" desc="Sign in menu item.">Sign in</translation>
+  <translation id="5023828914132135944" key="MSG_CHROME_NAV_NAV_0" desc="Cluster group menu entry.">叢集</translation>
+  <translation id="6343362656986122693" key="MSG_CHROME_NAV_NAV_1" desc="Namespaces menu entry.">命名空間</translation>
   <translation id="716443703088219571" key="MSG_CHROME_NAV_NAV_10" desc="Pods menu entry.">Pods</translation>
   <translation id="5165405066720776929" key="MSG_CHROME_NAV_NAV_11" desc="Replica Sets entry.">Replica Sets</translation>
   <translation id="1368029980670062566" key="MSG_CHROME_NAV_NAV_12" desc="Replication Controllers menu entry.">Replication Controllers</translation>
@@ -477,82 +477,84 @@
   <translation id="1503565493122422406" key="MSG_LOGIN_LOGIN_1" desc="Kubeconfig option label shown on login page">Kubeconfig</translation>
   <translation id="916148502449125508" key="MSG_LOGIN_LOGIN_2" desc="Basic option label shown on login page">Basic</translation>
   <translation id="9041317912268999764" key="MSG_LOGIN_LOGIN_3" desc="Token option label shown on login page">Token</translation>
-  <translation id="7903955345350777049" key="MSG_LOGIN_OPTIONS_0" desc="Label of authentication method selector.">&#x8A8D;&#x8B49;&#x65B9;&#x5F0F;:</translation>
-  <translation id="3142285229708080307" key="MSG_LOGIN_TOKEN_0" desc="\&apos;Token\&apos; field label shown on login page for token auth">Token</translation>
-  <translation id="1813585001229142426" key="MSG_LOGIN_UNAUTHORIZED_ERROR" desc="Text shown when unauthorized user tries to log in.">&#x8A8D;&#x8B49;&#x5931;&#x6557;&#xFF0C;&#x8ACB;&#x518D;&#x5617;&#x8A66;&#x4E00;&#x6B21;</translation>
-  <translation id="4722922095699681308" key="MSG_LOGS_LOGS_0" desc="Title prefix for logs card.">&#x5BB9;&#x5668;&#x65E5;&#x8A8C;</translation>
-  <translation id="6855662924451585032" key="MSG_LOGS_LOGS_1" desc="Title part for logs card.">&#x4F4D;&#x65BC;</translation>
-  <translation id="6208229815004454576" key="MSG_LOGS_LOGS_2" desc="Title prefix for logs card.">&#x65E5;&#x8A8C;&#x7BC4;&#x570D;&#x5F9E;</translation>
-  <translation id="1223986507449568472" key="MSG_LOGS_LOGS_3" desc="Footer part for logs card.">&#x5230;</translation>
-  <translation id="3402202863027894322" key="MSG_LOGS_TRUNCATED_WARNING" desc="Error dialog indicating that parts of the log file is missing due to memory constraints.">&#x65E5;&#x8A8C;&#x6A94;&#x6848;&#x904E;&#x5927;&#xFF0C;&#x4E2D;&#x9593;&#x90E8;&#x5206;&#x7121;&#x6CD5;&#x8F09;&#x5165;</translation>
-  <translation id="7594890250973129963" key="MSG_LOGS_ZEROSTATE_TEXT" desc="Text for logs card zerostate in logs page.">&#x9078;&#x64C7;&#x7684;&#x5BB9;&#x5668;&#x6C92;&#x6709;&#x65E5;&#x8A8C;&#x8A0A;&#x606F;</translation>
-  <translation id="2533795620042066843" key="MSG_MORE_WARNINGS_LABEL" desc="Show more warnings button label.">&#x986F;&#x793A;&#x66F4;&#x591A; <ph name="COUNT"> &#x5247;</ph></translation>
-  <translation id="8066049814492652432" key="MSG_NAMESPACE_DETAIL_INFO_0" desc="Header in a detail view">&#x8A73;&#x7D30;&#x8CC7;&#x8A0A;</translation>
-  <translation id="6352041840775187168" key="MSG_NAMESPACE_DETAIL_INFO_1" desc="Label \&apos;Status\&apos; for the namespace namespace on the namespace details page.">&#x72C0;&#x614B;</translation>
-  <translation id="2794451768196559104" key="MSG_NAMESPACE_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">&#x547D;&#x540D;&#x7A7A;&#x9593;</translation>
-  <translation id="5403498579453928243" key="MSG_NAMESPACE_LIST_CARDLIST_1" desc="Label \&apos;Name\&apos; which appears as a column label in the table of namespaces (namespace list view).">&#x540D;&#x7A31;</translation>
-  <translation id="1576456781675309581" key="MSG_NAMESPACE_LIST_CARDLIST_2" desc="Label \&apos;Labels\&apos; which appears as a column label in the table of namespaces (namespace list view).">&#x6A19;&#x7C64;</translation>
-  <translation id="3598200911441557553" key="MSG_NAMESPACE_LIST_CARDLIST_3" desc="Label \&apos;Status\&apos; which appears as a column label in the table of namespaces (namespace list view).">&#x72C0;&#x614B;</translation>
-  <translation id="2325476578537884124" key="MSG_NAMESPACE_LIST_CARDLIST_4" desc="Label \&apos;Age\&apos; which appears as a column label in the table of namespaces (namespace list view).">&#x5B58;&#x6D3B;&#x6642;&#x9593;</translation>
-  <translation id="2075541801746082922" key="MSG_NAMESPACE_LIST_CARDLIST_5" desc="Text for namespace card list zerostate.">&#x7121;&#x547D;&#x540D;&#x7A7A;&#x9593;&#x53EF;&#x986F;&#x793A;</translation>
-  <translation id="2940798370079834880" key="MSG_NAMESPACE_LIST_CREATED_AT_TOOLTIP" desc="Tooltip &apos;Created at [some date]&apos; showing the exact creation time of namespace.">&#x5275;&#x5EFA;&#x65BC; <ph name="CREATION_DATE"></ph></translation>
-  <translation id="5143266087600531180" key="MSG_NAMESPACE_SELECT_ARIA_LABEL" desc="Text describing what namespace selector is">&#x6240;&#x9078;&#x7684;&#x547D;&#x540D;&#x7A7A;&#x9593;&#x6A19;&#x7C64;</translation>
-  <translation id="5644753445531072726" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_0" desc="Label \&apos;Allocated resources\&apos; for the allocated resources section.">&#x5DF2;&#x5206;&#x914D;&#x8CC7;&#x6E90;</translation>
-  <translation id="3448064978953547706" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_1" desc="Label \&apos;Requests\&apos; for the allocated resources graphs legend.">&#x8981;&#x6C42;&#x503C;</translation>
-  <translation id="7138692152606832108" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_2" desc="Label \&apos;Limits\&apos; for the allocated resources graphs legend.">&#x9650;&#x5236;&#x503C;</translation>
-  <translation id="9137523745385232068" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_3" desc="Label \&apos;Capacity\&apos; for the allocated resources graphs legend.">&#x5BB9;&#x91CF;</translation>
-  <translation id="4929249194769778893" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_4" desc="Label \&apos;Requests\&apos; for the allocated resources graphs legend.">&#x8981;&#x6C42;&#x503C;</translation>
-  <translation id="495272876191440718" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_5" desc="Label \&apos;Limits\&apos; for the allocated resources graphs legend.">&#x9650;&#x5236;&#x503C;</translation>
-  <translation id="2228308297469848373" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_6" desc="Label \&apos;Capacity\&apos; for the allocated resources graphs legend.">&#x5BB9;&#x91CF;</translation>
-  <translation id="3729099716287586109" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_7" desc="Label \&apos;Allocation\&apos; for the allocated resources graphs legend.">&#x5DF2;&#x5206;&#x914D;</translation>
-  <translation id="1870534195313284860" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_8" desc="Label \&apos;Capacity\&apos; for the allocated resources graphs legend.">&#x5BB9;&#x91CF;</translation>
-  <translation id="8825218677764515340" key="MSG_NODE_DETAIL_DETAIL_0" desc="Title for graph card displaying CPU metric of one node.">CPU &#x4F7F;&#x7528;&#x91CF;</translation>
-  <translation id="1397958944434227282" key="MSG_NODE_DETAIL_DETAIL_1" desc="Title for graph card displaying memory metric of one node.">&#x8A18;&#x61B6;&#x9AD4;&#x4F7F;&#x7528;&#x91CF;</translation>
-  <translation id="1964687474867368783" key="MSG_NODE_DETAIL_DETAIL_2" desc="Help message detailing what is included in the memory usage">&#x8A18;&#x61B6;&#x9AD4;&#x4F7F;&#x7528;&#x91CF;&#x5305;&#x542B;&#x5FEB;&#x53D6;</translation>
-  <translation id="7278964988916967478" key="MSG_NODE_DETAIL_DETAIL_4" desc="Text for pods card zerostate in node details page.">&#x7576;&#x524D;&#x6C92;&#x6709;&#x4EFB;&#x4F55; Pod &#x88AB;&#x6392;&#x7A0B;&#x5230;&#x6B64;&#x7BC0;&#x9EDE;</translation>
-  <translation id="2128002365715974283" key="MSG_NODE_DETAIL_INFO_0" desc="Header in a detail view">&#x8A73;&#x7D30;&#x8CC7;&#x8A0A;</translation>
-  <translation id="1545993044656301071" key="MSG_NODE_DETAIL_INFO_1" desc="Label \&apos;Phase\&apos; for the node namespace on the node details page.">&#x968E;&#x6BB5;</translation>
-  <translation id="7199224922769170090" key="MSG_NODE_DETAIL_INFO_10" desc="Label \&apos;Kernel Version\&apos; for the node kernel version displayed on its details page.">&#x6838;&#x5FC3;&#x7248;&#x672C;</translation>
-  <translation id="9150708343514384042" key="MSG_NODE_DETAIL_INFO_11" desc="Label \&apos;OS Image\&apos; for the node OS image displayed on its details page.">&#x4F5C;&#x696D;&#x7CFB;&#x7D71;&#x6620;&#x50CF;&#x6A94;</translation>
-  <translation id="5435737724872052823" key="MSG_NODE_DETAIL_INFO_12" desc="Label \&apos;Container Runtime Version\&apos; for the node container runtime version displayed on its details page.">&#x5BB9;&#x5668; Runtime &#x7248;&#x672C;</translation>
-  <translation id="4342372933200360270" key="MSG_NODE_DETAIL_INFO_13" desc="Label \&apos;Kubelet Version\&apos; for the node Kubelet version displayed on its details page.">Kubelet &#x7248;&#x672C;</translation>
-  <translation id="104208579964546346" key="MSG_NODE_DETAIL_INFO_14" desc="Label \&apos;Kube-Proxy Version\&apos; for the node Kube-Proxy version displayed on its details page.">Kube-Proxy &#x7248;&#x672C;</translation>
-  <translation id="6424547851609840629" key="MSG_NODE_DETAIL_INFO_15" desc="Label \&apos;Operating system\&apos; for the node operating system displayed on its details page.">&#x4F5C;&#x696D;&#x7CFB;&#x7D71;</translation>
-  <translation id="6375391815927008544" key="MSG_NODE_DETAIL_INFO_16" desc="Label \&apos;Architecture\&apos; for the node architecture displayed on its details page.">&#x6307;&#x4EE4;&#x96C6;&#x67B6;&#x69CB;</translation>
-  <translation id="8469658566308340861" key="MSG_NODE_DETAIL_INFO_17" desc="Label \&apos;Taints\&apos; for the node taints displayed on its details page.">Taints</translation>
-  <translation id="6713664714270681129" key="MSG_NODE_DETAIL_INFO_2" desc="Label \&apos;External ID\&apos; for the node external ID displayed on its details page.">&#x5916;&#x90E8; ID</translation>
-  <translation id="684407257893900868" key="MSG_NODE_DETAIL_INFO_3" desc="Label \&apos;Pod CIDR\&apos; for the node external ID displayed on its details page.">Pod CIDR</translation>
-  <translation id="3412686708492919268" key="MSG_NODE_DETAIL_INFO_4" desc="Label \&apos;Provider ID\&apos; for the node external ID displayed on its details page.">&#x63D0;&#x4F9B;&#x8005; ID</translation>
-  <translation id="4308082913059054249" key="MSG_NODE_DETAIL_INFO_5" desc="Label \&apos;Unschedulable\&apos; for the node external ID displayed on its details page.">&#x7121;&#x6CD5;&#x6392;&#x7A0B;</translation>
-  <translation id="2600858180408528492" key="MSG_NODE_DETAIL_INFO_6" desc="Subtitle \&apos;System info\&apos; for the right section with general information about node system on the node details page.">&#x7CFB;&#x7D71;&#x8CC7;&#x8A0A;</translation>
-  <translation id="4872640972002083253" key="MSG_NODE_DETAIL_INFO_7" desc="Label \&apos;Machine ID\&apos; for the node machine ID displayed on its details page.">&#x6A5F;&#x5668; ID</translation>
-  <translation id="8031159424504518385" key="MSG_NODE_DETAIL_INFO_8" desc="Label \&apos;System UUID\&apos; for the node system UUID displayed on its details page.">&#x7CFB;&#x7D71; UUID</translation>
-  <translation id="2870803363346147220" key="MSG_NODE_DETAIL_INFO_9" desc="Label \&apos;Boot ID\&apos; for the node boot ID displayed on its details page.">&#x555F;&#x52D5; ID</translation>
-  <translation id="7623646557609839039" key="MSG_NODE_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">&#x7BC0;&#x9EDE;</translation>
-  <translation id="4079495084138822779" key="MSG_NODE_LIST_CARDLIST_1" desc="Label \&apos;Name\&apos; which appears as a column label in the table of nodes (node list view).">&#x540D;&#x7A31;</translation>
-  <translation id="666977111261221823" key="MSG_NODE_LIST_CARDLIST_2" desc="Label \&apos;Labels\&apos; which appears as a column label in the table of nodes (node list view).">&#x6A19;&#x7C64;</translation>
-  <translation id="5568169056290988879" key="MSG_NODE_LIST_CARDLIST_3" desc="Label \&apos;Ready\&apos; which appears as a column label in the table of nodes (node list view).">&#x5DF2;&#x5C31;&#x7DD2;</translation>
-  <translation id="7563356541739732697" key="MSG_NODE_LIST_CARDLIST_4" desc="Label \&apos;Age\&apos; which appears as a column label in the table of nodes (node list view).">&#x5B58;&#x6D3B;&#x6642;&#x9593;</translation>
-  <translation id="2936243005887118324" key="MSG_NODE_LIST_CARDLIST_5" desc="Text for node card list zerostate.">&#x7121;&#x7BC0;&#x9EDE;&#x53EF;&#x986F;&#x793A;</translation>
-  <translation id="122468837221390322" key="MSG_NODE_LIST_CARDLIST_6" desc="Label \&apos;CPU requests (cores)\&apos; which appears as a column label in the table of nodes (node list view).">CPU &#x8981;&#x6C42;&#x503C; (&#x6838;&#x5FC3;)</translation>
-  <translation id="3265578351261846339" key="MSG_NODE_LIST_CARDLIST_7" desc="Label \&apos;CPU limits (cores)\&apos; which appears as a column label in the table of nodes (node list view).">CPU &#x9650;&#x5236;&#x503C; (&#x6838;&#x5FC3;)</translation>
-  <translation id="6356771158000155450" key="MSG_NODE_LIST_CARDLIST_8" desc="Label \&apos;Memory requests (bytes)\&apos; which appears as a column label in the table of nodes (node list view).">&#x8A18;&#x61B6;&#x9AD4;&#x8981;&#x6C42;&#x503C; (&#x4F4D;&#x5143;&#x7D44;)</translation>
-  <translation id="3809309296866504854" key="MSG_NODE_LIST_CARDLIST_9" desc="Label \&apos;Memory limits (bytes)\&apos; which appears as a column label in the table of nodes (node list view).">&#x8A18;&#x61B6;&#x9AD4;&#x9650;&#x5236;&#x503C; (&#x4F4D;&#x5143;&#x7D44;)</translation>
-  <translation id="3161651495562825748" key="MSG_NODE_LIST_CREATED_AT_TOOLTIP" desc="Tooltip &apos;Created at [some date]&apos; showing the exact creation time of node.">&#x5275;&#x5EFA;&#x65BC; <ph name="CREATION_DATE"></ph></translation>
-  <translation id="7165645741606687474" key="MSG_NODE_LIST_LIST_0" desc="Title for graph card displaying CPU metric of nodes.">CPU &#x4F7F;&#x7528;&#x91CF;</translation>
-  <translation id="7938673888851238901" key="MSG_NODE_LIST_LIST_1" desc="Title for graph card displaying memory metric of nodes.">&#x8A18;&#x61B6;&#x9AD4;&#x4F7F;&#x7528;&#x91CF;</translation>
-  <translation id="1363994976459428521" key="MSG_NODE_LIST_LIST_2" desc="Help message detailing what is included in the memory usage">&#x8A18;&#x61B6;&#x9AD4;&#x4F7F;&#x7528;&#x91CF;&#x5305;&#x542B;&#x5FEB;&#x53D6;</translation>
-  <translation id="2230058550547139309" key="MSG_NO_ERROR_DATA" desc="String to display when error object has no data.">&#x6C92;&#x6709;&#x932F;&#x8AA4;&#x8CC7;&#x6599;</translation>
-  <translation id="6625981490964311612" key="MSG_OVERVIEW_OVERVIEW_0" desc="Title for graph card displaying CPU metric of one all resources.">CPU &#x4F7F;&#x7528;&#x91CF;</translation>
-  <translation id="3564212625628389301" key="MSG_OVERVIEW_OVERVIEW_1" desc="Title for graph card displaying memory metric of one all resources.">&#x8A18;&#x61B6;&#x9AD4;&#x4F7F;&#x7528;&#x91CF;</translation>
-  <translation id="6700629949579250334" key="MSG_OVERVIEW_OVERVIEW_2" desc="Help message detailing what is included in the memory usage">&#x8A18;&#x61B6;&#x9AD4;&#x4F7F;&#x7528;&#x91CF;&#x5305;&#x542B;&#x7531;&#x9019;&#x4E9B;&#x8CC7;&#x6E90;&#x7BA1;&#x7406;&#x7684; Pod &#x4E2D;&#x7684;&#x4F54;&#x7528;&#x5FEB;&#x53D6;&#xFF08;&#x4E0D;&#x6703;&#x91CD;&#x8907;&#x8A08;&#x7B97; Pod&#xFF0C;&#x56E0;&#x70BA; Pod &#x5217;&#x8868;&#x8207;&#x63A7;&#x5236;&#x5668;&#x4E2D;&#x90FD;&#x6703;&#x5305;&#x542B;&#x5B83;&#x5011;&#xFF0C;&#x4F8B;&#x5982; Replica Set&#xFF09;</translation>
-  <translation id="1832825701282536040" key="MSG_OVERVIEW_OVERVIEW_3" desc="Label \&apos;Running\&apos; for the pod statistics graphs legend.">&#x57F7;&#x884C;&#x4E2D;</translation>
-  <translation id="4365683886500017575" key="MSG_OVERVIEW_OVERVIEW_4" desc="Label \&apos;Pending\&apos; for the pod statistics graphs legend.">&#x7B49;&#x5F85;&#x4E2D;</translation>
-  <translation id="4259410587538084934" key="MSG_OVERVIEW_OVERVIEW_5" desc="Label \&apos;Failed\&apos; for the pod statistics graphs legend.">&#x5DF2;&#x51FA;&#x932F;</translation>
-  <translation id="3270849695317288728" key="MSG_OVERVIEW_OVERVIEW_6" desc="Label \&apos;Resource Status\&apos; for the allocated resources section.">&#x8CC7;&#x6E90;&#x72C0;&#x614B;</translation>
-  <translation id="486388281806331038" key="MSG_PERSISTENTVOLUMECLAIM_DETAIL_ACTIONBAR_0" desc="Label \&apos;Persistent Volume Claim\&apos; which appears at the top of the delete dialog, opened from a persistent volume claim details page.">Persistent Volume Claim</translation>
-  <translation id="1482471968556330090" key="MSG_PERSISTENTVOLUMECLAIM_DETAIL_INFO_0" desc="Header in a detail view">&#x8A73;&#x7D30;&#x8CC7;&#x8A0A;</translation>
-  <translation id="6385503627780441862" key="MSG_PERSISTENTVOLUMECLAIM_DETAIL_INFO_1" desc="Persistent volume claim info details section status entry.">&#x72C0;&#x614B;</translation>
+  <translation id="5728098885822861128" key="MSG_LOGIN_LOGIN_4" desc="Text shown on the sign in button on login page">Sign in</translation>
+  <translation id="3587575593965850303" key="MSG_LOGIN_LOGIN_5" desc="Text shown on skip button on login page">Skip</translation>
+  <translation id="7903955345350777049" key="MSG_LOGIN_OPTIONS_0" desc="Label of authentication method selector.">認證方式:</translation>
+  <translation id="3142285229708080307" key="MSG_LOGIN_TOKEN_0" desc="\'Token\' field label shown on login page for token auth">Token</translation>
+  <translation id="1813585001229142426" key="MSG_LOGIN_UNAUTHORIZED_ERROR" desc="Text shown when unauthorized user tries to log in.">認證失敗，請再嘗試一次</translation>
+  <translation id="4722922095699681308" key="MSG_LOGS_LOGS_0" desc="Title prefix for logs card.">容器日誌</translation>
+  <translation id="6855662924451585032" key="MSG_LOGS_LOGS_1" desc="Title part for logs card.">位於</translation>
+  <translation id="6208229815004454576" key="MSG_LOGS_LOGS_2" desc="Title prefix for logs card.">日誌範圍從</translation>
+  <translation id="1223986507449568472" key="MSG_LOGS_LOGS_3" desc="Footer part for logs card.">到</translation>
+  <translation id="3402202863027894322" key="MSG_LOGS_TRUNCATED_WARNING" desc="Error dialog indicating that parts of the log file is missing due to memory constraints.">日誌檔案過大，中間部分無法載入</translation>
+  <translation id="7594890250973129963" key="MSG_LOGS_ZEROSTATE_TEXT" desc="Text for logs card zerostate in logs page.">選擇的容器沒有日誌訊息</translation>
+  <translation id="2533795620042066843" key="MSG_MORE_WARNINGS_LABEL" desc="Show more warnings button label.">顯示更多 <ph name="COUNT"> 則</ph></translation>
+  <translation id="8066049814492652432" key="MSG_NAMESPACE_DETAIL_INFO_0" desc="Header in a detail view">詳細資訊</translation>
+  <translation id="6352041840775187168" key="MSG_NAMESPACE_DETAIL_INFO_1" desc="Label \'Status\' for the namespace namespace on the namespace details page.">狀態</translation>
+  <translation id="2794451768196559104" key="MSG_NAMESPACE_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">命名空間</translation>
+  <translation id="5403498579453928243" key="MSG_NAMESPACE_LIST_CARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of namespaces (namespace list view).">名稱</translation>
+  <translation id="1576456781675309581" key="MSG_NAMESPACE_LIST_CARDLIST_2" desc="Label \'Labels\' which appears as a column label in the table of namespaces (namespace list view).">標籤</translation>
+  <translation id="3598200911441557553" key="MSG_NAMESPACE_LIST_CARDLIST_3" desc="Label \'Status\' which appears as a column label in the table of namespaces (namespace list view).">狀態</translation>
+  <translation id="2325476578537884124" key="MSG_NAMESPACE_LIST_CARDLIST_4" desc="Label \'Age\' which appears as a column label in the table of namespaces (namespace list view).">存活時間</translation>
+  <translation id="2075541801746082922" key="MSG_NAMESPACE_LIST_CARDLIST_5" desc="Text for namespace card list zerostate.">無命名空間可顯示</translation>
+  <translation id="2940798370079834880" key="MSG_NAMESPACE_LIST_CREATED_AT_TOOLTIP" desc="Tooltip 'Created at [some date]' showing the exact creation time of namespace.">創建於 <ph name="CREATION_DATE"/></translation>
+  <translation id="5143266087600531180" key="MSG_NAMESPACE_SELECT_ARIA_LABEL" desc="Text describing what namespace selector is">所選的命名空間標籤</translation>
+  <translation id="5644753445531072726" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_0" desc="Label \'Allocated resources\' for the allocated resources section.">已分配資源</translation>
+  <translation id="3448064978953547706" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_1" desc="Label \'Requests\' for the allocated resources graphs legend.">要求值</translation>
+  <translation id="7138692152606832108" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_2" desc="Label \'Limits\' for the allocated resources graphs legend.">限制值</translation>
+  <translation id="9137523745385232068" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_3" desc="Label \'Capacity\' for the allocated resources graphs legend.">容量</translation>
+  <translation id="4929249194769778893" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_4" desc="Label \'Requests\' for the allocated resources graphs legend.">要求值</translation>
+  <translation id="495272876191440718" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_5" desc="Label \'Limits\' for the allocated resources graphs legend.">限制值</translation>
+  <translation id="2228308297469848373" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_6" desc="Label \'Capacity\' for the allocated resources graphs legend.">容量</translation>
+  <translation id="3729099716287586109" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_7" desc="Label \'Allocation\' for the allocated resources graphs legend.">已分配</translation>
+  <translation id="1870534195313284860" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_8" desc="Label \'Capacity\' for the allocated resources graphs legend.">容量</translation>
+  <translation id="8825218677764515340" key="MSG_NODE_DETAIL_DETAIL_0" desc="Title for graph card displaying CPU metric of one node.">CPU 使用量</translation>
+  <translation id="1397958944434227282" key="MSG_NODE_DETAIL_DETAIL_1" desc="Title for graph card displaying memory metric of one node.">記憶體使用量</translation>
+  <translation id="1964687474867368783" key="MSG_NODE_DETAIL_DETAIL_2" desc="Help message detailing what is included in the memory usage">記憶體使用量包含快取</translation>
+  <translation id="7278964988916967478" key="MSG_NODE_DETAIL_DETAIL_4" desc="Text for pods card zerostate in node details page.">當前沒有任何 Pod 被排程到此節點</translation>
+  <translation id="2128002365715974283" key="MSG_NODE_DETAIL_INFO_0" desc="Header in a detail view">詳細資訊</translation>
+  <translation id="1545993044656301071" key="MSG_NODE_DETAIL_INFO_1" desc="Label \'Phase\' for the node namespace on the node details page.">階段</translation>
+  <translation id="7199224922769170090" key="MSG_NODE_DETAIL_INFO_10" desc="Label \'Kernel Version\' for the node kernel version displayed on its details page.">核心版本</translation>
+  <translation id="9150708343514384042" key="MSG_NODE_DETAIL_INFO_11" desc="Label \'OS Image\' for the node OS image displayed on its details page.">作業系統映像檔</translation>
+  <translation id="5435737724872052823" key="MSG_NODE_DETAIL_INFO_12" desc="Label \'Container Runtime Version\' for the node container runtime version displayed on its details page.">容器 Runtime 版本</translation>
+  <translation id="4342372933200360270" key="MSG_NODE_DETAIL_INFO_13" desc="Label \'Kubelet Version\' for the node Kubelet version displayed on its details page.">Kubelet 版本</translation>
+  <translation id="104208579964546346" key="MSG_NODE_DETAIL_INFO_14" desc="Label \'Kube-Proxy Version\' for the node Kube-Proxy version displayed on its details page.">Kube-Proxy 版本</translation>
+  <translation id="6424547851609840629" key="MSG_NODE_DETAIL_INFO_15" desc="Label \'Operating system\' for the node operating system displayed on its details page.">作業系統</translation>
+  <translation id="6375391815927008544" key="MSG_NODE_DETAIL_INFO_16" desc="Label \'Architecture\' for the node architecture displayed on its details page.">指令集架構</translation>
+  <translation id="8469658566308340861" key="MSG_NODE_DETAIL_INFO_17" desc="Label \'Taints\' for the node taints displayed on its details page.">Taints</translation>
+  <translation id="6713664714270681129" key="MSG_NODE_DETAIL_INFO_2" desc="Label \'External ID\' for the node external ID displayed on its details page.">外部 ID</translation>
+  <translation id="684407257893900868" key="MSG_NODE_DETAIL_INFO_3" desc="Label \'Pod CIDR\' for the node external ID displayed on its details page.">Pod CIDR</translation>
+  <translation id="3412686708492919268" key="MSG_NODE_DETAIL_INFO_4" desc="Label \'Provider ID\' for the node external ID displayed on its details page.">提供者 ID</translation>
+  <translation id="4308082913059054249" key="MSG_NODE_DETAIL_INFO_5" desc="Label \'Unschedulable\' for the node external ID displayed on its details page.">無法排程</translation>
+  <translation id="2600858180408528492" key="MSG_NODE_DETAIL_INFO_6" desc="Subtitle \'System info\' for the right section with general information about node system on the node details page.">系統資訊</translation>
+  <translation id="4872640972002083253" key="MSG_NODE_DETAIL_INFO_7" desc="Label \'Machine ID\' for the node machine ID displayed on its details page.">機器 ID</translation>
+  <translation id="8031159424504518385" key="MSG_NODE_DETAIL_INFO_8" desc="Label \'System UUID\' for the node system UUID displayed on its details page.">系統 UUID</translation>
+  <translation id="2870803363346147220" key="MSG_NODE_DETAIL_INFO_9" desc="Label \'Boot ID\' for the node boot ID displayed on its details page.">啟動 ID</translation>
+  <translation id="7623646557609839039" key="MSG_NODE_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">節點</translation>
+  <translation id="4079495084138822779" key="MSG_NODE_LIST_CARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of nodes (node list view).">名稱</translation>
+  <translation id="666977111261221823" key="MSG_NODE_LIST_CARDLIST_2" desc="Label \'Labels\' which appears as a column label in the table of nodes (node list view).">標籤</translation>
+  <translation id="5568169056290988879" key="MSG_NODE_LIST_CARDLIST_3" desc="Label \'Ready\' which appears as a column label in the table of nodes (node list view).">已就緒</translation>
+  <translation id="7563356541739732697" key="MSG_NODE_LIST_CARDLIST_4" desc="Label \'Age\' which appears as a column label in the table of nodes (node list view).">存活時間</translation>
+  <translation id="2936243005887118324" key="MSG_NODE_LIST_CARDLIST_5" desc="Text for node card list zerostate.">無節點可顯示</translation>
+  <translation id="122468837221390322" key="MSG_NODE_LIST_CARDLIST_6" desc="Label \'CPU requests (cores)\' which appears as a column label in the table of nodes (node list view).">CPU 要求值 (核心)</translation>
+  <translation id="3265578351261846339" key="MSG_NODE_LIST_CARDLIST_7" desc="Label \'CPU limits (cores)\' which appears as a column label in the table of nodes (node list view).">CPU 限制值 (核心)</translation>
+  <translation id="6356771158000155450" key="MSG_NODE_LIST_CARDLIST_8" desc="Label \'Memory requests (bytes)\' which appears as a column label in the table of nodes (node list view).">記憶體要求值 (位元組)</translation>
+  <translation id="3809309296866504854" key="MSG_NODE_LIST_CARDLIST_9" desc="Label \'Memory limits (bytes)\' which appears as a column label in the table of nodes (node list view).">記憶體限制值 (位元組)</translation>
+  <translation id="3161651495562825748" key="MSG_NODE_LIST_CREATED_AT_TOOLTIP" desc="Tooltip 'Created at [some date]' showing the exact creation time of node.">創建於 <ph name="CREATION_DATE"/></translation>
+  <translation id="7165645741606687474" key="MSG_NODE_LIST_LIST_0" desc="Title for graph card displaying CPU metric of nodes.">CPU 使用量</translation>
+  <translation id="7938673888851238901" key="MSG_NODE_LIST_LIST_1" desc="Title for graph card displaying memory metric of nodes.">記憶體使用量</translation>
+  <translation id="1363994976459428521" key="MSG_NODE_LIST_LIST_2" desc="Help message detailing what is included in the memory usage">記憶體使用量包含快取</translation>
+  <translation id="2230058550547139309" key="MSG_NO_ERROR_DATA" desc="String to display when error object has no data.">沒有錯誤資料</translation>
+  <translation id="6625981490964311612" key="MSG_OVERVIEW_OVERVIEW_0" desc="Title for graph card displaying CPU metric of one all resources.">CPU 使用量</translation>
+  <translation id="3564212625628389301" key="MSG_OVERVIEW_OVERVIEW_1" desc="Title for graph card displaying memory metric of one all resources.">記憶體使用量</translation>
+  <translation id="6700629949579250334" key="MSG_OVERVIEW_OVERVIEW_2" desc="Help message detailing what is included in the memory usage">記憶體使用量包含由這些資源管理的 Pod 中的佔用快取（不會重複計算 Pod，因為 Pod 列表與控制器中都會包含它們，例如 Replica Set）</translation>
+  <translation id="1832825701282536040" key="MSG_OVERVIEW_OVERVIEW_3" desc="Label \'Running\' for the pod statistics graphs legend.">執行中</translation>
+  <translation id="4365683886500017575" key="MSG_OVERVIEW_OVERVIEW_4" desc="Label \'Pending\' for the pod statistics graphs legend.">等待中</translation>
+  <translation id="4259410587538084934" key="MSG_OVERVIEW_OVERVIEW_5" desc="Label \'Failed\' for the pod statistics graphs legend.">已出錯</translation>
+  <translation id="3270849695317288728" key="MSG_OVERVIEW_OVERVIEW_6" desc="Label \'Resource Status\' for the allocated resources section.">資源狀態</translation>
+  <translation id="486388281806331038" key="MSG_PERSISTENTVOLUMECLAIM_DETAIL_ACTIONBAR_0" desc="Label \'Persistent Volume Claim\' which appears at the top of the delete dialog, opened from a persistent volume claim details page.">Persistent Volume Claim</translation>
+  <translation id="1482471968556330090" key="MSG_PERSISTENTVOLUMECLAIM_DETAIL_INFO_0" desc="Header in a detail view">詳細資訊</translation>
+  <translation id="6385503627780441862" key="MSG_PERSISTENTVOLUMECLAIM_DETAIL_INFO_1" desc="Persistent volume claim info details section status entry.">狀態</translation>
   <translation id="2412371468817393973" key="MSG_PERSISTENTVOLUMECLAIM_DETAIL_INFO_2" desc="Persistent volume claim info details section volume entry.">Volume</translation>
   <translation id="6740597941261077457" key="MSG_PERSISTENTVOLUMECLAIM_DETAIL_INFO_3" desc="Persistent volume claim info details section capacity entry.">&#x5BB9;&#x91CF;</translation>
   <translation id="297809042910539610" key="MSG_PERSISTENTVOLUMECLAIM_DETAIL_INFO_4" desc="Persistent volume claim info details section access modes entry.">&#x5B58;&#x53D6;&#x6A21;&#x5F0F;</translation>

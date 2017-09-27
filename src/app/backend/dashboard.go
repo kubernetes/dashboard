@@ -105,14 +105,15 @@ func main() {
 	http.Handle("/api/sockjs/", handler.CreateAttachHandler("/api/sockjs"))
 	http.Handle("/metrics", prometheus.Handler())
 
-	// Listen for http and https
-	addr := fmt.Sprintf("%s:%d", *argInsecureBindAddress, *argInsecurePort)
-	log.Printf("Serving insecurely on HTTP port: %d", *argInsecurePort)
-	go func() { log.Fatal(http.ListenAndServe(addr, nil)) }()
-	secureAddr := fmt.Sprintf("%s:%d", *argBindAddress, *argPort)
+	// Listen for http or https
 	if *argCertFile != "" && *argKeyFile != "" {
 		log.Printf("Serving securely on HTTPS port: %d", *argPort)
+		secureAddr := fmt.Sprintf("%s:%d", *argBindAddress, *argPort)
 		go func() { log.Fatal(http.ListenAndServeTLS(secureAddr, *argCertFile, *argKeyFile, nil)) }()
+	} else {
+		log.Printf("Serving insecurely on HTTP port: %d", *argInsecurePort)
+		addr := fmt.Sprintf("%s:%d", *argInsecureBindAddress, *argInsecurePort)
+		go func() { log.Fatal(http.ListenAndServe(addr, nil)) }()
 	}
 	select {}
 }
