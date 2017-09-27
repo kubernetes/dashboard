@@ -55,12 +55,12 @@ func TestGetUserLinksForService(t *testing.T) {
 				}},
 			namespace: "ns-1", name: "svc-1", resource: api.ResourceKindService, host: "http://localhost:8080",
 			expected: []UserLink{
-				UserLink{Description: "dns-svc", Link: "svc-1.ns-1.svc.cluster.local:80/debug", Valid: true},
-				UserLink{Description: "absolute_path", Link: "http://monitoring.com/debug/requests", Valid: true},
-				UserLink{Description: "invalid", Link: "Invalid User Link: http://{{apirver-proxy-url}}/debug/requests", Valid: false},
-				UserLink{Description: "invalid2", Link: "Invalid User Link: ://www.logs.com/click/here", Valid: false},
-				UserLink{Description: "debug", Link: "http://localhost:8080/api/v1/namespaces/ns-1/services/svc-1/proxy/debug/requests", Valid: true},
-				UserLink{Description: "debug2", Link: "http://localhost:8080/api/v1/namespaces/ns-1/services/svc-1/proxy/debug/requests", Valid: true}},
+				UserLink{Description: "dns-svc", Link: "svc-1.ns-1.svc.cluster.local:80/debug", IsURLValid: true},
+				UserLink{Description: "absolute_path", Link: "http://monitoring.com/debug/requests", IsURLValid: true},
+				UserLink{Description: "invalid", Link: "Invalid User Link: http://{{apirver-proxy-url}}/debug/requests", IsURLValid: false},
+				UserLink{Description: "invalid2", Link: "Invalid User Link: ://www.logs.com/click/here", IsURLValid: false},
+				UserLink{Description: "debug", Link: "http://localhost:8080/api/v1/namespaces/ns-1/services/svc-1/proxy/debug/requests", IsURLValid: true, IsProxyURL: true},
+				UserLink{Description: "debug2", Link: "http://localhost:8080/api/v1/namespaces/ns-1/services/svc-1/proxy/debug/requests", IsURLValid: true, IsProxyURL: true}},
 		},
 		{
 			service: &v1.Service{
@@ -76,7 +76,7 @@ func TestGetUserLinksForService(t *testing.T) {
 			},
 			namespace: "ns-2", name: "svc-2", resource: api.ResourceKindService, host: "http://localhost:8080",
 			expected: []UserLink{
-				UserLink{Description: "ingress", Link: "http://127.0.0.1:55/debug/request", Valid: true},
+				UserLink{Description: "ingress", Link: "http://127.0.0.1:55/debug/request", IsURLValid: true},
 			},
 		},
 	}
@@ -128,12 +128,12 @@ func TestGetUserLinksForPod(t *testing.T) {
 				}},
 			namespace: "ns-1", name: "pod-1", resource: api.ResourceKindPod, host: "http://localhost:8080",
 			expected: []UserLink{
-				UserLink{Description: "absolute_path", Link: "http://monitoring.com/debug/requests", Valid: true},
-				UserLink{Description: "invalid", Link: "Invalid User Link: http://{{apirver-proxy-url}}/debug/requests", Valid: false},
-				UserLink{Description: "invalid2", Link: "Invalid User Link: ://www.logs.com/click/here", Valid: false},
-				UserLink{Description: "debug", Link: "http://localhost:8080/api/v1/namespaces/ns-1/pods/pod-1/proxy/debug/requests", Valid: true},
-				UserLink{Description: "debug2", Link: "http://localhost:8080/api/v1/namespaces/ns-1/pods/pod-1/proxy/debug/requests", Valid: true},
-				UserLink{Description: "pod-dns", Link: "1-2-3-4.ns-1.pod.cluster.local:80/debug", Valid: true}},
+				UserLink{Description: "absolute_path", Link: "http://monitoring.com/debug/requests", IsURLValid: true},
+				UserLink{Description: "invalid", Link: "Invalid User Link: http://{{apirver-proxy-url}}/debug/requests", IsURLValid: false},
+				UserLink{Description: "invalid2", Link: "Invalid User Link: ://www.logs.com/click/here", IsURLValid: false},
+				UserLink{Description: "debug", Link: "http://localhost:8080/api/v1/namespaces/ns-1/pods/pod-1/proxy/debug/requests", IsURLValid: true, IsProxyURL: true},
+				UserLink{Description: "debug2", Link: "http://localhost:8080/api/v1/namespaces/ns-1/pods/pod-1/proxy/debug/requests", IsURLValid: true, IsProxyURL: true},
+				UserLink{Description: "pod-dns", Link: "1-2-3-4.ns-1.pod.cluster.local:80/debug", IsURLValid: true}},
 		},
 	}
 

@@ -55,8 +55,8 @@ export class ServiceDetailController {
    */
   checkUserlinksForProxyURL(serviceDetail, $location) {
     for (let i = 0; i < serviceDetail.userLinks.length; i++) {
-      if (serviceDetail.userLinks[i].valid.toString() === 'true' &&
-          serviceDetail.userLinks[i].proxyURL.toString() === 'true') {
+      if (serviceDetail.userLinks[i].isURLValid.toString() === 'true' &&
+          serviceDetail.userLinks[i].isProxyURL.toString() === 'true') {
         let currentLocationURL = document.createElement('a');
         let proxyURL = document.createElement('a');
 

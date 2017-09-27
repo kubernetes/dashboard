@@ -46,8 +46,8 @@ export class PodDetailController {
    */
   checkUserlinksForProxyURL(podDetail, $location) {
     for (let i = 0; i < podDetail.userLinks.length; i++) {
-      if (podDetail.userLinks[i].valid.toString() === 'true' &&
-          podDetail.userLinks[i].proxyURL.toString() === 'true') {
+      if (podDetail.userLinks[i].isURLValid.toString() === 'true' &&
+          podDetail.userLinks[i].isProxyURL.toString() === 'true') {
         let currentLocationURL = document.createElement('a');
         let proxyURL = document.createElement('a');
 

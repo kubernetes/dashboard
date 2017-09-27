@@ -40,9 +40,9 @@ type UserLink struct {
 	// Link is the value specified in the annotationObj set
 	Link string `json:"link"`
 	// Link status
-	Valid bool `json:"valid"`
+	IsURLValid bool `json:"isURLValid"`
 	// Is it a proxyURL
-	ProxyURL bool `json:"proxyURL"`
+	IsProxyURL bool `json:"isProxyURL"`
 }
 
 // GetUserLinks delegates getting of user links based on passed in resource kind (ResourceKindService, ResourceKindPod)
@@ -79,11 +79,11 @@ func getServiceLinks(client k8sClient.Interface, namespace, name, host string) (
 		if strings.Contains(uri, apiserverProxyURL) {
 			userLink.Link = host + "/api/v1/namespaces/" + service.ObjectMeta.Namespace +
 				"/services/" + service.ObjectMeta.Name + "/proxy" + strings.TrimPrefix(uri, apiserverProxyURL)
-			userLink.Valid = true
-			userLink.ProxyURL = true
+			userLink.IsURLValid = true
+			userLink.IsProxyURL = true
 		} else if strings.Contains(uri, svcDNSName) {
 			userLink.Link = name + "." + namespace + ".svc.cluster.local" + strings.TrimPrefix(uri, svcDNSName)
-			userLink.Valid = true
+			userLink.IsURLValid = true
 		} else if _, err := url.ParseRequestURI(uri); err != nil {
 			userLink.Link = "Invalid User Link: " + uri
 		} else {
@@ -95,11 +95,11 @@ func getServiceLinks(client k8sClient.Interface, namespace, name, host string) (
 				}
 				for _, port := range service.Spec.Ports {
 					userLink.Link += "http://" + ip + ":" + strconv.Itoa(int(port.Port)) + uri
-					userLink.Valid = true
+					userLink.IsURLValid = true
 				}
 			} else {
 				userLink.Link = uri
-				userLink.Valid = true
+				userLink.IsURLValid = true
 			}
 		}
 		userLinks = append(userLinks, *userLink)
@@ -128,17 +128,17 @@ func getPodLinks(client k8sClient.Interface, namespace, name, host string) ([]Us
 		if strings.Contains(uri, apiserverProxyURL) {
 			userLink.Link = host + "/api/v1/namespaces/" + pod.ObjectMeta.Namespace +
 				"/pods/" + pod.ObjectMeta.Name + "/proxy" + strings.TrimPrefix(uri, apiserverProxyURL)
-			userLink.Valid = true
-			userLink.ProxyURL = true
+			userLink.IsURLValid = true
+			userLink.IsProxyURL = true
 		} else if strings.Contains(uri, podDNSName) {
 			//10-192-3-8.default.pod.cluster.localhttp://{{pod.dns_name}}:9090/debug
 			userLink.Link = strings.Replace(pod.Status.PodIP, ".", "-", -1) + "." + namespace + ".pod.cluster.local" + strings.TrimPrefix(uri, podDNSName)
-			userLink.Valid = true
+			userLink.IsURLValid = true
 		} else if _, err := url.ParseRequestURI(uri); err != nil {
 			userLink.Link = "Invalid User Link: " + uri
 		} else {
 			userLink.Link = uri
-			userLink.Valid = true
+			userLink.IsURLValid = true
 		}
 		userLinks = append(userLinks, *userLink)
 	}
