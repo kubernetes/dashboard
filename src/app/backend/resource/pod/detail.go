@@ -128,8 +128,9 @@ func GetPodDetail(client kubernetes.Interface, metricClient metricapi.MetricClie
 	}
 
 	controller, err := getPodController(client, common.NewSameNamespaceQuery(namespace), pod)
-	if err != nil {
-		return nil, err
+	nonCriticalErrors, criticalError := errorHandler.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
 	_, metricPromises := dataselect.GenericDataSelectWithMetrics(toCells([]v1.Pod{*pod}),
@@ -138,7 +139,7 @@ func GetPodDetail(client kubernetes.Interface, metricClient metricapi.MetricClie
 
 	configMapList := <-channels.ConfigMapList.List
 	err = <-channels.ConfigMapList.Error
-	nonCriticalErrors, criticalError := errorHandler.HandleError(err)
+	nonCriticalErrors, criticalError = errorHandler.AppendError(err, nonCriticalErrors)
 	if criticalError != nil {
 		return nil, criticalError
 	}

@@ -1,0 +1,44 @@
+# Copyright 2017 The Kubernetes Dashboard Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Dockerfile used to build tool that helps in deploying Dashboard. Supports Dashboard v1.7+.
+
+FROM ubuntu
+
+# Update cache and install necessary deps
+RUN apt-get update && apt-get install -y apt-transport-https curl
+
+# Add pgp key
+RUN curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+# Add kubernetes source repo
+RUN echo 'deb http://apt.kubernetes.io/ kubernetes-xenial main' >> /etc/apt/sources.list.d/kubernetes.list
+# Update deps and install kubectl
+RUN apt-get update && apt-get install -y kubectl
+
+# Clean cache
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+RUN echo '#!/bin/bash\n\
+    if [ -z "$(ls -A /certs)" ]; then\n\
+      echo "Creating self-signed certificates"\n\
+      cd /certs\n\
+      openssl req -nodes -newkey rsa:2048 -keyout dashboard.key -out dashboard.csr -subj "/C=/ST=/L=/O=/OU=/CN=kubernetes-dashboard"\n\
+      openssl x509 -req -sha256 -days 365 -in dashboard.csr -signkey dashboard.key -out dashboard.crt\n\
+      export TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)\n\
+      rm dashboard.csr\n\
+      kubectl --token $TOKEN -n kube-system delete secret kubernetes-dashboard-certs\n\
+      kubectl --token $TOKEN -n kube-system create secret generic kubernetes-dashboard-certs --from-file=/certs\n\
+    fi\n\' >> /bootstrap.sh
+
+CMD ["/bin/bash", "bootstrap.sh"]

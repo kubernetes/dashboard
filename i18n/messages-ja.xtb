@@ -27,41 +27,41 @@
   <translation id="3098067826555563293" key="MSG_BREADCRUMBS_DEPLOY_FILE_LABEL" desc="Breadcrum label for the YAML upload form">&#x30A2;&#x30C3;&#x30D7;&#x30ED;&#x30FC;&#x30C9;</translation>
   <translation id="8693076889249273053" key="MSG_BREADCRUMBS_DISCOVERY_AND_LOAD_BALANCING_LABEL" desc="Label &apos;Discovery and load balancing&apos; that appears as a breadcrumbs on the action bar.">&#x30C7;&#x30A3;&#x30B9;&#x30AB;&#x30D0;&#x30EA;&#x30FC;&#x3068;&#x30ED;&#x30FC;&#x30C9;&#x30D0;&#x30E9;&#x30F3;&#x30B7;&#x30F3;&#x30B0;</translation>
   <translation id="2573868693589074300" key="MSG_BREADCRUMBS_ERROR_LABEL" desc="Label for error page for breadcrumbs on the action bar.">Error</translation>
-  <translation id="2248903848244811172" key="MSG_BREADCRUMBS_HORIZONTAL_POD_AUTOSCALERS_LABEL" desc="Label &apos;Horizontal Pod Autoscalers&apos; that appears as a breadcrumbs on the action bar.">&#x6C34;&#x5E73;&#x30DD;&#x30C3;&#x30C9;&#x30AA;&#x30FC;&#x30C8;&#x30B9;&#x30B1;&#x30FC;&#x30E9;&#x30FC;</translation>
-  <translation id="8885204956315323333" key="MSG_BREADCRUMBS_INGRESSS_LABEL" desc="Label &apos;Ingresses&apos; that appears as a breadcrumbs on the action bar.">&#x30A4;&#x30F3;&#x30B0;&#x30EC;&#x30B9;</translation>
-  <translation id="2024511088483477440" key="MSG_BREADCRUMBS_JOBS_LABEL" desc="Label &apos;Jobs&apos; that appears as a breadcrumbs on the action bar.">&#x30B8;&#x30E7;&#x30D6;</translation>
-  <translation id="7001335550079103928" key="MSG_BREADCRUMBS_LOGIN_LABEL" desc="Label &apos;Log in&apos; that appears as a breadcrumbs on the action bar.">Login</translation>
-  <translation id="1050029015813261838" key="MSG_BREADCRUMBS_LOGS_LABEL" desc="Breadcrum label for the logs view.">&#x30ED;&#x30B0;</translation>
-  <translation id="7538864180606148657" key="MSG_BREADCRUMBS_NAMESPACES_LABEL" desc="Label &apos;Namespaces&apos; that appears as a breadcrumbs on the action bar.">&#x30CD;&#x30FC;&#x30E0;&#x30B9;&#x30DA;&#x30FC;&#x30B9;</translation>
-  <translation id="1946322401100894439" key="MSG_BREADCRUMBS_NODES_LABEL" desc="Label &apos;Nodes&apos; that appears as a breadcrumbs on the action bar.">&#x30CE;&#x30FC;&#x30C9;</translation>
-  <translation id="5901871651227680937" key="MSG_BREADCRUMBS_OVERVIEW_LABEL" desc="Label &apos;Overview&apos; that appears as a breadcrumb on the action bar.">Overview</translation>
-  <translation id="8962145809533946028" key="MSG_BREADCRUMBS_PERSISTENT_VOLUMES_LABEL" desc="Label &apos;Persistent Volumes&apos; that appears as a breadcrumbs on the action bar.">&#x6C38;&#x7D9A;&#x30DC;&#x30EA;&#x30E5;&#x30FC;&#x30E0;</translation>
-  <translation id="6751018699028607617" key="MSG_BREADCRUMBS_PERSISTENT_VOLUME_CLAIM_LABEL" desc="Label &apos;Persistent Volume Claims&apos; that appears as a breadcrumbs on the action bar.">&#x6C38;&#x7D9A;&#x30DC;&#x30EA;&#x30E5;&#x30FC;&#x30E0;&#x8981;&#x6C42;</translation>
-  <translation id="64391241316684157" key="MSG_BREADCRUMBS_PODS_LABEL" desc="Label &apos;Pods&apos; that appears as a breadcrumbs on the action bar.">&#x30DD;&#x30C3;&#x30C9;</translation>
-  <translation id="7569244915796303702" key="MSG_BREADCRUMBS_RC_LABEL" desc="Label &apos;Replication Controllers&apos; that appears as a breadcrumbs on the action bar.">&#x30EC;&#x30D7;&#x30EA;&#x30B1;&#x30FC;&#x30B7;&#x30E7;&#x30F3;&#x30B3;&#x30F3;&#x30C8;&#x30ED;&#x30FC;&#x30E9;&#x30FC;</translation>
-  <translation id="837518421741773666" key="MSG_BREADCRUMBS_REPLICA_SETS_LABEL" desc="Label &apos;Replica Sets&apos; that appears as a breadcrumbs on the action bar.">&#x30EC;&#x30D7;&#x30EA;&#x30AB;&#x30BB;&#x30C3;&#x30C8;</translation>
-  <translation id="5794147661362074597" key="MSG_BREADCRUMBS_ROLES_LABEL" desc="Label &apos;Roles&apos; that appears as a breadcrumbs on the action bar.">&#x30ED;&#x30FC;&#x30EB;</translation>
-  <translation id="2851304790534826779" key="MSG_BREADCRUMBS_SEARCH_LABEL" desc="Label &apos;Search&apos; that appears as a breadcrumbs on the action bar.">&#x691C;&#x7D22;</translation>
-  <translation id="391192137756114804" key="MSG_BREADCRUMBS_SECRETS_LABEL" desc="Label &apos;Secrets&apos; that appears as a breadcrumbs on the action bar.">&#x30B7;&#x30FC;&#x30AF;&#x30EC;&#x30C3;&#x30C8;</translation>
-  <translation id="6064633767606789407" key="MSG_BREADCRUMBS_SHELL_LABEL" desc="Breadcrum label for the shell view.">&#x30B7;&#x30A7;&#x30EB;</translation>
-  <translation id="7318741060898365517" key="MSG_BREADCRUMBS_STATEFUL_SETS_LABEL" desc="Label &apos;Stateful Sets&apos; that appears as a breadcrumbs on the action bar.">&#x30B9;&#x30C6;&#x30FC;&#x30C8;&#x30D5;&#x30EB;&#x30BB;&#x30C3;&#x30C8;</translation>
-  <translation id="1427200251427963672" key="MSG_BREADCRUMBS_STORAGE_CLASSES_LABEL" desc="Label &apos;Storage Classes&apos; that appears as a breadcrumbs on the action bar.">&#x30B9;&#x30C8;&#x30EC;&#x30FC;&#x30B8;&#x30AF;&#x30E9;&#x30B9;</translation>
-  <translation id="6132384114487014259" key="MSG_BREADCRUMBS_THIRD_PARTY_RESOURCES_LABEL" desc="Label &apos;Third Party Resources&apos; that appears as a breadcrumbs on the action bar.">&#x30B5;&#x30FC;&#x30C9;&#x30D1;&#x30FC;&#x30C6;&#x30A3;&#x30FC;&#x30EA;&#x30BD;&#x30FC;&#x30B9;</translation>
-  <translation id="1656728804447365846" key="MSG_BREADCRUMBS_WORKLOADS_LABEL" desc="Label &apos;Workloads&apos; that appears as a breadcrumbs on the action bar.">&#x30EF;&#x30FC;&#x30AF;&#x30ED;&#x30FC;&#x30C9;</translation>
-  <translation id="5441724995487814814" key="MSG_CHROME_CHROME_0" desc="Tooltip for global action bar create button tooltip.">&#x30A2;&#x30D7;&#x30EA;&#x30B1;&#x30FC;&#x30B7;&#x30E7;&#x30F3;&#x307E;&#x305F;&#x306F;Kubernetes&#x30EA;&#x30BD;&#x30FC;&#x30B9;&#x3092;&#x4F5C;&#x6210;</translation>
-  <translation id="152996649337797552" key="MSG_CHROME_CHROME_1" desc="Label for global action bar create button.">&#x4F5C;&#x6210;</translation>
+  <translation id="2248903848244811172" key="MSG_BREADCRUMBS_HORIZONTAL_POD_AUTOSCALERS_LABEL" desc="Label 'Horizontal Pod Autoscalers' that appears as a breadcrumbs on the action bar.">水平ポッドオートスケーラー</translation>
+  <translation id="8885204956315323333" key="MSG_BREADCRUMBS_INGRESSS_LABEL" desc="Label 'Ingresses' that appears as a breadcrumbs on the action bar.">イングレス</translation>
+  <translation id="2024511088483477440" key="MSG_BREADCRUMBS_JOBS_LABEL" desc="Label 'Jobs' that appears as a breadcrumbs on the action bar.">ジョブ</translation>
+  <translation id="3285134270275399073" key="MSG_BREADCRUMBS_LOGIN_LABEL" desc="Label 'Sign in' that appears as a breadcrumbs on the action bar.">Sign in</translation>
+  <translation id="1050029015813261838" key="MSG_BREADCRUMBS_LOGS_LABEL" desc="Breadcrum label for the logs view.">ログ</translation>
+  <translation id="7538864180606148657" key="MSG_BREADCRUMBS_NAMESPACES_LABEL" desc="Label 'Namespaces' that appears as a breadcrumbs on the action bar.">ネームスペース</translation>
+  <translation id="1946322401100894439" key="MSG_BREADCRUMBS_NODES_LABEL" desc="Label 'Nodes' that appears as a breadcrumbs on the action bar.">ノード</translation>
+  <translation id="5901871651227680937" key="MSG_BREADCRUMBS_OVERVIEW_LABEL" desc="Label 'Overview' that appears as a breadcrumb on the action bar.">Overview</translation>
+  <translation id="8962145809533946028" key="MSG_BREADCRUMBS_PERSISTENT_VOLUMES_LABEL" desc="Label 'Persistent Volumes' that appears as a breadcrumbs on the action bar.">永続ボリューム</translation>
+  <translation id="6751018699028607617" key="MSG_BREADCRUMBS_PERSISTENT_VOLUME_CLAIM_LABEL" desc="Label 'Persistent Volume Claims' that appears as a breadcrumbs on the action bar.">永続ボリューム要求</translation>
+  <translation id="64391241316684157" key="MSG_BREADCRUMBS_PODS_LABEL" desc="Label 'Pods' that appears as a breadcrumbs on the action bar.">ポッド</translation>
+  <translation id="7569244915796303702" key="MSG_BREADCRUMBS_RC_LABEL" desc="Label 'Replication Controllers' that appears as a breadcrumbs on the action bar.">レプリケーションコントローラー</translation>
+  <translation id="837518421741773666" key="MSG_BREADCRUMBS_REPLICA_SETS_LABEL" desc="Label 'Replica Sets' that appears as a breadcrumbs on the action bar.">レプリカセット</translation>
+  <translation id="5794147661362074597" key="MSG_BREADCRUMBS_ROLES_LABEL" desc="Label 'Roles' that appears as a breadcrumbs on the action bar.">ロール</translation>
+  <translation id="2851304790534826779" key="MSG_BREADCRUMBS_SEARCH_LABEL" desc="Label 'Search' that appears as a breadcrumbs on the action bar.">検索</translation>
+  <translation id="391192137756114804" key="MSG_BREADCRUMBS_SECRETS_LABEL" desc="Label 'Secrets' that appears as a breadcrumbs on the action bar.">シークレット</translation>
+  <translation id="6064633767606789407" key="MSG_BREADCRUMBS_SHELL_LABEL" desc="Breadcrum label for the shell view.">シェル</translation>
+  <translation id="7318741060898365517" key="MSG_BREADCRUMBS_STATEFUL_SETS_LABEL" desc="Label 'Stateful Sets' that appears as a breadcrumbs on the action bar.">ステートフルセット</translation>
+  <translation id="1427200251427963672" key="MSG_BREADCRUMBS_STORAGE_CLASSES_LABEL" desc="Label 'Storage Classes' that appears as a breadcrumbs on the action bar.">ストレージクラス</translation>
+  <translation id="6132384114487014259" key="MSG_BREADCRUMBS_THIRD_PARTY_RESOURCES_LABEL" desc="Label 'Third Party Resources' that appears as a breadcrumbs on the action bar.">サードパーティーリソース</translation>
+  <translation id="1656728804447365846" key="MSG_BREADCRUMBS_WORKLOADS_LABEL" desc="Label 'Workloads' that appears as a breadcrumbs on the action bar.">ワークロード</translation>
+  <translation id="5441724995487814814" key="MSG_CHROME_CHROME_0" desc="Tooltip for global action bar create button tooltip.">アプリケーションまたはKubernetesリソースを作成</translation>
+  <translation id="152996649337797552" key="MSG_CHROME_CHROME_1" desc="Label for global action bar create button.">作成</translation>
   <translation id="8711874778657823772" key="MSG_CHROME_CONTROLPANEL_CONTROLPANEL_0" desc="Tooltip for the control panel displayed in the right top corner.">Control panel</translation>
-  <translation id="7284639485141385452" key="MSG_CHROME_CONTROLPANEL_CONTROLPANEL_1" desc="Logout menu item.">Logout</translation>
-  <translation id="7210325010968831729" key="MSG_CHROME_CONTROLPANEL_CONTROLPANEL_2" desc="Login menu item.">Login</translation>
-  <translation id="5023828914132135944" key="MSG_CHROME_NAV_NAV_0" desc="Cluster group menu entry.">&#x30AF;&#x30E9;&#x30B9;&#x30BF;&#x30FC;</translation>
-  <translation id="6343362656986122693" key="MSG_CHROME_NAV_NAV_1" desc="Namespaces menu item in the nav.">&#x30CD;&#x30FC;&#x30E0;&#x30B9;&#x30DA;&#x30FC;&#x30B9;</translation>
-  <translation id="716443703088219571" key="MSG_CHROME_NAV_NAV_10" desc="Pods menu entry.">&#x30DD;&#x30C3;&#x30C9;</translation>
-  <translation id="5165405066720776929" key="MSG_CHROME_NAV_NAV_11" desc="Replica Sets entry.">&#x30EC;&#x30D7;&#x30EA;&#x30AB;&#x30BB;&#x30C3;&#x30C8;</translation>
-  <translation id="1368029980670062566" key="MSG_CHROME_NAV_NAV_12" desc="Replication Controllers menu entry.">&#x30EC;&#x30D7;&#x30EA;&#x30B1;&#x30FC;&#x30B7;&#x30E7;&#x30F3;&#x30B3;&#x30F3;&#x30C8;&#x30ED;&#x30FC;&#x30E9;&#x30FC;</translation>
-  <translation id="727510939665067635" key="MSG_CHROME_NAV_NAV_13" desc="Stateful Sets menu entry.">&#x30B9;&#x30C6;&#x30FC;&#x30C8;&#x30D5;&#x30EB;&#x30BB;&#x30C3;&#x30C8;</translation>
-  <translation id="3750547428998043153" key="MSG_CHROME_NAV_NAV_14" desc="Discovery and Load Balancing group menu entry.">&#x30C7;&#x30A3;&#x30B9;&#x30AB;&#x30D0;&#x30EA;&#x30FC;&#x3068;&#x30ED;&#x30FC;&#x30C9;&#x30D0;&#x30E9;&#x30F3;&#x30B7;&#x30F3;&#x30B0;</translation>
-  <translation id="5657472840568954752" key="MSG_CHROME_NAV_NAV_15" desc="Ingresses menu entry.">&#x30A4;&#x30F3;&#x30B0;&#x30EC;&#x30B9;</translation>
-  <translation id="6209183557961833624" key="MSG_CHROME_NAV_NAV_16" desc="Services menu entry.">&#x30B5;&#x30FC;&#x30D3;&#x30B9;</translation>
+  <translation id="5588778838458035939" key="MSG_CHROME_CONTROLPANEL_CONTROLPANEL_1" desc="Sign out menu item.">Sign out</translation>
+  <translation id="3494123731165126874" key="MSG_CHROME_CONTROLPANEL_CONTROLPANEL_2" desc="Sign in menu item.">Sign in</translation>
+  <translation id="5023828914132135944" key="MSG_CHROME_NAV_NAV_0" desc="Cluster group menu entry.">クラスター</translation>
+  <translation id="6343362656986122693" key="MSG_CHROME_NAV_NAV_1" desc="Namespaces menu item in the nav.">ネームスペース</translation>
+  <translation id="716443703088219571" key="MSG_CHROME_NAV_NAV_10" desc="Pods menu entry.">ポッド</translation>
+  <translation id="5165405066720776929" key="MSG_CHROME_NAV_NAV_11" desc="Replica Sets entry.">レプリカセット</translation>
+  <translation id="1368029980670062566" key="MSG_CHROME_NAV_NAV_12" desc="Replication Controllers menu entry.">レプリケーションコントローラー</translation>
+  <translation id="727510939665067635" key="MSG_CHROME_NAV_NAV_13" desc="Stateful Sets menu entry.">ステートフルセット</translation>
+  <translation id="3750547428998043153" key="MSG_CHROME_NAV_NAV_14" desc="Discovery and Load Balancing group menu entry.">ディスカバリーとロードバランシング</translation>
+  <translation id="5657472840568954752" key="MSG_CHROME_NAV_NAV_15" desc="Ingresses menu entry.">イングレス</translation>
+  <translation id="6209183557961833624" key="MSG_CHROME_NAV_NAV_16" desc="Services menu entry.">サービス</translation>
   <translation id="6317635910843446189" key="MSG_CHROME_NAV_NAV_17" desc="All objects group menu entry.">Overview</translation>
   <translation id="5112568842026217488" key="MSG_CHROME_NAV_NAV_18" desc="Config Maps menu entry.">&#x30B3;&#x30F3;&#x30D5;&#x30A3;&#x30B0;&#x30DE;&#x30C3;&#x30D7;</translation>
   <translation id="8817168805652183378" key="MSG_CHROME_NAV_NAV_19" desc="Persistent Volume Claims menu entry.">&#x6C38;&#x7D9A;&#x30DC;&#x30EA;&#x30E5;&#x30FC;&#x30E0;&#x8981;&#x6C42;</translation>
@@ -495,6 +495,8 @@
   <translation id="1503565493122422406" key="MSG_LOGIN_LOGIN_1" desc="Kubeconfig option label shown on login page">Kubeconfig</translation>
   <translation id="916148502449125508" key="MSG_LOGIN_LOGIN_2" desc="Basic login">Basic</translation>
   <translation id="9041317912268999764" key="MSG_LOGIN_LOGIN_3" desc="Token option label shown on login page">Token</translation>
+  <translation id="5728098885822861128" key="MSG_LOGIN_LOGIN_4" desc="Text shown on the sign in button on login page">Sign in</translation>
+  <translation id="3587575593965850303" key="MSG_LOGIN_LOGIN_5" desc="Text shown on skip button on login page">Skip</translation>
   <translation id="7903955345350777049" key="MSG_LOGIN_OPTIONS_0" desc="Label of authentication method selector.">Authentication method:</translation>
   <translation id="3142285229708080307" key="MSG_LOGIN_TOKEN_0" desc="\&apos;Token\&apos; field label shown on login page for token auth">Token</translation>
   <translation id="1813585001229142426" key="MSG_LOGIN_UNAUTHORIZED_ERROR" desc="Text shown when unauthorized user tries to log in.">Authentication failed. Please try again.</translation>

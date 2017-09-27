@@ -1,4 +1,4 @@
-# Copyright 2017 The Kubernetes Dashboard Authors.
+# Copyright 2017 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,8 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# A manifest that creates a container that crashes after 100s and will be restarted by Kubernetes
 
 apiVersion: v1
-kind: ReplicationController
+kind: Pod
 metadata:
-  name: integration-test-invalid-rc
+  name: crashing
+spec:
+  containers:
+    - name: crashing
+      image: alpine:3.4
+      command: ["/bin/sh", "-c", "for NUM in `seq 1 1 100`; do date; sleep 1; done"]
+  restartPolicy: Always
