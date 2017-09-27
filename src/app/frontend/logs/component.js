@@ -324,7 +324,7 @@ export class LogsController {
    */
   getDownloadLink() {
     let namespace = this.stateParams_.objectNamespace;
-    return `/api/v1/log/file/${namespace}/${this.pod}/${this.container}?previous=${
+    return `api/v1/log/file/${namespace}/${this.pod}/${this.container}?previous=${
         this.logsService.getPrevious()}`;
   }
 
