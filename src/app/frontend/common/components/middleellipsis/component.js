@@ -31,9 +31,9 @@ export default class MiddleEllipsisController {
 
   isTruncated() {
     let c = this.element_;
-    c.addClass("kd-middleellipsis_width");
+    c.addClass("kd-middleellipsis-width");
     let cOfsWidth = c[0].offsetWidth;
-    c.removeClass("kd-middleellipsis_width");
+    c.removeClass("kd-middleellipsis-width");
     return cOfsWidth > this.element_[0].offsetWidth;
   }
 
