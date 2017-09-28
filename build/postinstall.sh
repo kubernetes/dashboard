@@ -19,6 +19,9 @@ cd ./node_modules
 # Download old bower dependencies
 if [ ! -d "easyfont-roboto-mono" ]; then
     git clone https://github.com/easyfont/roboto-mono easyfont-roboto-mono
+    cd easyfont-roboto-mono
+    git checkout fa7971ea56f68bfdb2771f9cb560c99aca0164c1
+    cd ..
 fi
 
 if [ ! -d "cljsjs-packages-externs" ]; then

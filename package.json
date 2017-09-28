@@ -133,11 +133,12 @@
     "vinyl-paths": "~2.1.0",
     "watchify": "~3.9.0",
     "webpack-stream": "~4.0.0",
-    "wiredep": "~4.0.0",
+    "wiredep": "4.0.0",
     "wrench": "~1.5.9"
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=8.0.0",
+    "npm": ">=5.0.0"
   },
   "scripts": {
     "postinstall": "build/postinstall.sh"
