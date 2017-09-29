@@ -35,7 +35,7 @@ function getFileList() {
     bowerJson: JSON.parse(fs.readFileSync(path.join(conf.paths.base, 'package.json'))),
     directory: conf.paths.nodeModules,
     devDependencies: false,
-    customDependencies: ['angular-mocks'],
+    customDependencies: ['angular-mocks', 'google-closure-library'],
     onError: (msg) => {
       console.log(msg);
     },
