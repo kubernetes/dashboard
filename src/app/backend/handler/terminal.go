@@ -27,7 +27,8 @@ import (
 	"gopkg.in/igm/sockjs-go.v2/sockjs"
 	remotecommandconsts "k8s.io/apimachinery/pkg/util/remotecommand"
 	"k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/pkg/api"
+	"k8s.io/client-go/kubernetes/scheme"
+	"k8s.io/client-go/pkg/api/v1"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/remotecommand"
 )
@@ -192,14 +193,14 @@ func startProcess(k8sClient kubernetes.Interface, cfg *rest.Config, request *res
 		Namespace(namespace).
 		SubResource("exec")
 
-	req.VersionedParams(&api.PodExecOptions{
+	req.VersionedParams(&v1.PodExecOptions{
 		Container: containerName,
 		Command:   cmd,
 		Stdin:     true,
 		Stdout:    true,
 		Stderr:    true,
 		TTY:       true,
-	}, api.ParameterCodec)
+	}, scheme.ParameterCodec)
 
 	exec, err := remotecommand.NewExecutor(cfg, "POST", req.URL())
 	if err != nil {
