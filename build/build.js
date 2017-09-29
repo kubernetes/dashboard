@@ -217,7 +217,7 @@ function createFrontendCopies(outputDirs) {
   let searchPath = [
     // To resolve local paths.
     path.relative(conf.paths.base, conf.paths.prodTmp),
-    // To resolve bower_components/... paths.
+    // To resolve node_modules/... paths.
     path.relative(conf.paths.base, conf.paths.base),
   ];
 

@@ -67,15 +67,13 @@ function getBackendArgs(mode) {
 
 /**
  * Initializes BrowserSync tool. Files are served from baseDir directory list and all API calls
- * are proxied to a running backend instance. When includeBowerComponents is true, requests for
- * paths starting with '/bower_components' are routed to bower components directory.
+ * are proxied to a running backend instance.
  *
  * HTTP/HTTPS is served on 9090 when using `gulp serve`.
  *
  * @param {!Array<string>|string} baseDir
- * @param {boolean} includeBowerComponents
  */
-function browserSyncInit(baseDir, includeBowerComponents) {
+function browserSyncInit(baseDir) {
   // Enable custom support for Angular apps, e.g., history management.
   browserSyncInstance.use(browserSyncSpa({
     selector: '[ng-app]',
@@ -96,18 +94,15 @@ function browserSyncInit(baseDir, includeBowerComponents) {
     server: {
       baseDir: baseDir,
       middleware: proxyMiddleware(apiRoute, proxyMiddlewareOptions),
+      routes: {
+        '/node_modules': conf.paths.nodeModules,
+      },
     },
     port: conf.frontend.serverPort,
     https: conf.frontend.serveHttps,  // Will serve only on HTTPS if flag is set.
     startPath: '/',
     notify: false,
   };
-
-  if (includeBowerComponents) {
-    config.server.routes = {
-      '/bower_components': conf.paths.bowerComponents,
-    };
-  }
 
   browserSyncInstance.init(config);
 }
@@ -116,12 +111,10 @@ function browserSyncInit(baseDir, includeBowerComponents) {
  * Serves the application in development mode.
  */
 function serveDevelopmentMode() {
-  browserSyncInit(
-      [
-        conf.paths.serve,
-        conf.paths.app,  // For assets to work.
-      ],
-      true);
+  browserSyncInit([
+    conf.paths.serve,
+    conf.paths.app,  // For assets to work.
+  ]);
 }
 
 /**
@@ -200,7 +193,7 @@ gulp.task('kill-backend', function(doneFn) {
  * Watches for changes in source files and runs Gulp tasks to rebuild them.
  */
 gulp.task('watch', ['index', 'angular-templates'], function() {
-  gulp.watch([path.join(conf.paths.frontendSrc, 'index.html'), 'bower.json'], ['index']);
+  gulp.watch([path.join(conf.paths.frontendSrc, 'index.html'), 'package.json'], ['index']);
 
   gulp.watch(
       [

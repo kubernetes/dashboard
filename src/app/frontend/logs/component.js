@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 const logsPerView = 100;
 const maxLogSize = 2e9;
 // Load logs from the beginning of the log file. This matters only if the log file is too large to
@@ -218,7 +217,7 @@ export class LogsController {
     // not contain any HTML markup, and formattedLine is the result of passing
     // ecapedLine to ansi_to_html, which is known to only add span tags.
     let escapedContent =
-        this.sce_.trustAsHtml(ansi_up.ansi_to_html(this.escapeHtml_(line.content)));
+        this.sce_.trustAsHtml(new AnsiUp().ansi_to_html(this.escapeHtml_(line.content)));
 
     // add timestamp if needed
     let showTimestamp = this.logsService.getShowTimestamp();

@@ -36,21 +36,7 @@ gulp.task('check-npm-dependencies', function() {
 });
 
 /**
- * Updates bower dependencies.
- */
-gulp.task('update-bower-dependencies', function() {
-  return gulp.src([path.join(conf.paths.base, 'bower.json')]).pipe(updateDependencies('bower'));
-});
-
-/**
- * Checks bower dependencies which need to be updated.
- */
-gulp.task('check-bower-dependencies', function() {
-  return gulp.src([path.join(conf.paths.base, 'bower.json')]).pipe(checkDependencies('bower'));
-});
-
-/**
- * Updates dependencies of given package manager by updating related package/bower json file.
+ * Updates dependencies of given package manager by updating related package json file.
  *
  * @param {string} packageManager
  * @return {stream}

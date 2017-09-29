@@ -15,6 +15,7 @@
  * @fileoverview Gulp tasks that index files with dependencies (e.g., CSS or JS) injected.
  */
 import browserSync from 'browser-sync';
+import fs from 'fs';
 import gulp from 'gulp';
 import gulpInject from 'gulp-inject';
 import path from 'path';
@@ -26,14 +27,12 @@ import conf from './conf';
  * Creates index file in the given directory with dependencies injected from that directory.
  *
  * @param {string} indexPath
- * @param {boolean} dev - development or production build
+ * @param {boolean} dev
  * @return {!stream.Stream}
  */
 function createIndexFile(indexPath, dev) {
   let injectStyles = gulp.src(path.join(indexPath, '**/*.css'), {read: false});
-
   let injectScripts = gulp.src(path.join(indexPath, '**/*.js'), {read: false});
-
   let injectOptions = {
     // Make the dependencies relative to the deps directory.
     ignorePath: [path.relative(conf.paths.base, indexPath)],
@@ -42,12 +41,19 @@ function createIndexFile(indexPath, dev) {
   };
 
   let wiredepOptions = {
-    // Make wiredep dependencies begin with "bower_components/" not "../../...".
+    // Make wiredep dependencies begin with "node_modules/" not "../../...".
     ignorePath: path.relative(conf.paths.frontendSrc, conf.paths.base),
+    bowerJson: JSON.parse(fs.readFileSync(path.join(conf.paths.base, 'package.json'))),
+    directory: conf.paths.nodeModules,
+    devDependencies: false,
+    customDependencies: ['easyfont-roboto-mono'],
+    onError: (msg) => {
+      console.log(msg);
+    },
   };
 
   if (dev) {
-    wiredepOptions.devDependencies = true;
+    wiredepOptions.customDependencies.push('google-closure-library');
   }
 
   return gulp.src(path.join(conf.paths.frontendSrc, 'index.html'))

@@ -15,16 +15,16 @@ limitations under the License.
 -->
 
 <md-dialog aria-label="[[Edit a {{::$ctrl.resourceKindName}}|Title for a delete resource dialog.]]"
-           layout="column">
+           layout="column"
+           class="kd-edit-dialog">
   <md-dialog-content layout-padding
                      class="kd-json-edit-dialog-content">
     <h4 class="md-title">[[Edit a {{::$ctrl.resourceKindName}}|Title for a delete resource dialog.]]</h4>
-    <div ng-if="$ctrl.data"
-         ng-jsoneditor
-         ng-model="$ctrl.data"
-         options="{ mode: 'tree', name: $ctrl.resourceKindName, history: false, expanded: true}"
-         class="kd-json-edit-editor">
-    </div>
+    <angular-jsoneditor ng-if="$ctrl.data"
+                        ng-model="$ctrl.data"
+                        options="{ mode: 'code', name: this.resourceKindName, history: false }"
+                        class="kd-json-edit-editor">
+    </angular-jsoneditor>
     <md-dialog-actions>
       <md-button class="md-primary kd-cancel-btn"
                  ng-click="$ctrl.cancel()">

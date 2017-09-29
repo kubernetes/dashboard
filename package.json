@@ -1,5 +1,5 @@
 {
-  "//": "Specification of this file can be found at: https://docs.npmjs.com/files/package.json",
+  "//-1-//": "Specification of this file can be found at: https://docs.npmjs.com/files/package.json",
   "name": "kubernetes-dashboard",
   "version": "1.7.0",
   "repository": {
@@ -7,23 +7,71 @@
     "url": "https://github.com/kubernetes/dashboard.git"
   },
   "license": "Apache-2.0",
+  "//-2-//": "Do not change ordering of 'dependencies' section. It is important to keep it this way.",
+  "dependencies": {
+    "angular": "~1.6.6",
+    "@uirouter/core": "~5.0.7",
+    "@uirouter/angularjs": "~1.0.6",
+    "angular-animate": "~1.6.6",
+    "angular-aria": "~1.6.6",
+    "angular-clipboard": "~1.6.1",
+    "angular-cookies": "~1.6.6",
+    "angular-jsoneditor": "~0.0.2",
+    "angular-material": "~1.1.4",
+    "angular-messages": "~1.6.6",
+    "angular-resource": "~1.6.6",
+    "angular-sanitize": "~1.6.6",
+    "angular-utils-pagination": "~0.11.1",
+    "ansi_up": "~2.0.2",
+    "d3": "~3.5.17",
+    "hterm": "~1.0.0",
+    "material-design-icons": "~3.0.1",
+    "nvd3": "~1.8.6",
+    "roboto-fontface": "0.8.0",
+    "sockjs-client": "~1.1.4"
+  },
+  "overrides": {
+    "sockjs-client": {
+      "main": "dist/sockjs.js"
+    },
+    "hterm": {
+      "main": "index.js"
+    },
+    "material-design-icons": {
+      "main": "iconfont/material-icons.css"
+    },
+    "roboto-fontface": {
+      "main": "css/roboto/roboto-fontface.css"
+    },
+    "easyfont-roboto-mono": {
+      "main": "css/roboto-mono.css"
+    },
+    "google-closure-library": {
+      "main": [
+        "closure/goog/base.js",
+        "closure/goog/deps.js"
+      ]
+    }
+  },
   "devDependencies": {
+    "angular-mocks": "~1.6.6",
     "async": "~2.5.0",
     "babel": "~6.23.0",
     "babel-core": "~6.26.0",
     "babel-loader": "~7.1.2",
-    "babel-preset-env": "^1.6.0",
+    "babel-preset-env": "~1.6.0",
     "babelify": "~7.3.0",
-    "bower": "~1.8.0",
     "browser-sync": "~2.18.13",
     "browser-sync-spa": "~1.0.3",
     "browserify": "~14.4.0",
     "browserify-istanbul": "~2.0.0",
     "clang-format": "1.0.55",
+    "cljsjs-packages-externs": "https://github.com/cljsjs/packages.git#0c44b38658ad789a45d342bff4f13706276f293a",
     "del": "~3.0.0",
     "eslint-plugin-angular": "~3.1.0",
     "file-exists": "5.0.0",
     "google-closure-compiler": "~20170910.0.0",
+    "google-closure-library": "~20170910.0.0",
     "gulp": "~3.9.1",
     "gulp-autoprefixer": "~4.0.0",
     "gulp-browserify": "~0.5.1",
@@ -31,16 +79,16 @@
     "gulp-clang-format": "1.0.23",
     "gulp-codecov.io": "~1.0.1",
     "gulp-concat": "~2.6.1",
-    "gulp-css-url-adjuster": "^0.2.3",
+    "gulp-css-url-adjuster": "~0.2.3",
     "gulp-eslint": "~4.0.0",
-    "gulp-filter": "^5.0.1",
-    "gulp-findreplace": "^1.5.0",
+    "gulp-filter": "~5.0.1",
+    "gulp-findreplace": "~1.5.0",
     "gulp-flatten": "~0.3.1",
-    "gulp-header-license": "^1.0.9",
+    "gulp-header-license": "~1.0.9",
     "gulp-htmlmin": "~3.0.0",
     "gulp-if": "~2.0.2",
     "gulp-inject": "~4.3.0",
-    "gulp-license-check": "^1.2.1",
+    "gulp-license-check": "~1.2.1",
     "gulp-minify-css": "~1.2.4",
     "gulp-modify": "~0.1.1",
     "gulp-protractor": "~4.1.0",
@@ -58,9 +106,9 @@
     "gulp-watch": "~4.3.11",
     "gulp-xslt": "~2.0.0",
     "html-minifier": "~3.5.3",
-    "http-proxy-middleware": "^0.17.4",
+    "http-proxy-middleware": "~0.17.4",
     "isparta": "~4.0.0",
-    "js-beautify": "^1.6.14",
+    "js-beautify": "~1.6.14",
     "jsesc": "~2.5.1",
     "karma": "1.7.1",
     "karma-browserify": "~5.1.1",
@@ -85,11 +133,12 @@
     "vinyl-paths": "~2.1.0",
     "watchify": "~3.9.0",
     "webpack-stream": "~4.0.0",
-    "wiredep": "~4.0.0",
+    "wiredep": "4.0.0",
     "wrench": "~1.5.9"
   },
   "engines": {
-    "node": ">=4.2.2"
+    "node": ">=8.0.0",
+    "npm": ">=5.0.0"
   },
   "scripts": {
     "postinstall": "build/postinstall.sh"

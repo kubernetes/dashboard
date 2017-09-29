@@ -42,11 +42,11 @@ addons:
 matrix:
   include:
     # Job 1 - Local cluster + integration tests
-    - node_js: 7.7.3
+    - node_js: 8.6.0
       env: BUILD_SUITE=cluster-test SAUCE_USERNAME=k8s-dashboard-ci
 
     # Job 2 - Code tests (frontend + backend)
-    - node_js: 7.7.3
+    - node_js: 8.6.0
       env: BUILD_SUITE=code-test SAUCE_USERNAME=k8s-dashboard-ci
 
 before_script:

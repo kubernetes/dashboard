@@ -1,0 +1,28 @@
+--- detect-dependencies.js	2017-09-28 16:10:46.051840240 +0200
++++ detect-dependencies_new.js	2017-09-28 16:09:37.466528914 +0200
+@@ -31,6 +31,12 @@
+     allDependencies[config.get('bower.json').name] = config.get('bower.json').version;
+   }
+ 
++  if (config.get('custom-dependencies').length > 0) {
++    config.get('custom-dependencies').forEach(function(depName) {
++      $._.assign(allDependencies, {[depName]: ''});
++    });
++  }
++
+   $._.each(allDependencies, gatherInfo(config));
+ 
+   config.set('global-dependencies-sorted', filterExcludedDependencies(
+@@ -177,12 +183,6 @@
+       config.get('on-main-not-found')(component);
+     }
+ 
+-    if (componentConfigFile.dependencies) {
+-      dep.dependencies = componentConfigFile.dependencies;
+-
+-      $._.each(componentConfigFile.dependencies, gatherInfo(config));
+-    }
+-
+     config.get('global-dependencies').set(component, dep);
+   };
+ }
