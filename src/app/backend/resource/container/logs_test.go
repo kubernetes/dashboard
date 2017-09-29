@@ -331,7 +331,7 @@ func TestGetLogs(t *testing.T) {
 				LogLines: logs.LogLines{logs.LogLine{
 					Timestamp: "0",
 					Content:   "an error message from api server",
-				},},
+				}},
 				Selection: logs.Selection{
 					ReferencePoint: logs.LogLineId{
 						LogTimestamp: "0",

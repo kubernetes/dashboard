@@ -37,8 +37,9 @@ func getLogSourcesFromPod(k8sClient kubernetes.Interface, ns, resourceName strin
 		return controller.LogSources{}, err
 	}
 	return controller.LogSources{
-		ContainerNames: common.GetContainerNames(&pod.Spec),
-		PodNames:       []string{resourceName},
+		ContainerNames:     common.GetContainerNames(&pod.Spec),
+		InitContainerNames: common.GetInitContainerNames(&pod.Spec),
+		PodNames:           []string{resourceName},
 	}, nil
 }
 

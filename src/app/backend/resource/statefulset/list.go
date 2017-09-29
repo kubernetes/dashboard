@@ -52,6 +52,9 @@ type StatefulSet struct {
 
 	// Container images of the Stateful Set.
 	ContainerImages []string `json:"containerImages"`
+
+	// Init container images of the Stateful Set.
+	InitContainerImages []string `json:"initContainerImages"`
 }
 
 // GetStatefulSetList returns a list of all Stateful Sets in the cluster.
@@ -132,9 +135,10 @@ func toStatefulSetList(statefulSets []apps.StatefulSet, pods []v1.Pod, events []
 
 func toStatefulSet(statefulSet *apps.StatefulSet, podInfo *common.PodInfo) StatefulSet {
 	return StatefulSet{
-		ObjectMeta:      api.NewObjectMeta(statefulSet.ObjectMeta),
-		TypeMeta:        api.NewTypeMeta(api.ResourceKindStatefulSet),
-		ContainerImages: common.GetContainerImages(&statefulSet.Spec.Template.Spec),
-		Pods:            *podInfo,
+		ObjectMeta:          api.NewObjectMeta(statefulSet.ObjectMeta),
+		TypeMeta:            api.NewTypeMeta(api.ResourceKindStatefulSet),
+		ContainerImages:     common.GetContainerImages(&statefulSet.Spec.Template.Spec),
+		InitContainerImages: common.GetInitContainerImages(&statefulSet.Spec.Template.Spec),
+		Pods:                *podInfo,
 	}
 }

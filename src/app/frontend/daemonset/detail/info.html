@@ -31,6 +31,9 @@ limitations under the License.
       <div ng-repeat="image in $ctrl.daemonSet.containerImages track by $index">
         <kd-middle-ellipsis display-string="{{::image}}"></kd-middle-ellipsis>
       </div>
+      <div ng-repeat="image in $ctrl.daemonSet.initContainerImages track by $index">
+        <kd-middle-ellipsis display-string="{{::image}}"></kd-middle-ellipsis>
+      </div>
     </kd-info-card-entry>
   </kd-info-card-section>
 

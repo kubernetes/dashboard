@@ -74,6 +74,9 @@ limitations under the License.
       <div ng-repeat="image in ::$ctrl.deployment.containerImages track by $index">
         <kd-middle-ellipsis display-string="{{::image}}"></kd-middle-ellipsis>
       </div>
+      <div ng-repeat="image in ::$ctrl.deployment.initContainerImages track by $index">
+        <kd-middle-ellipsis display-string="{{::image}}"></kd-middle-ellipsis>
+      </div>
     </kd-resource-card-column>
     <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
       <kd-resource-card-menu>

@@ -42,6 +42,9 @@ type JobDetail struct {
 	// Container images of the Job.
 	ContainerImages []string `json:"containerImages"`
 
+	// Init container images of the Job.
+	InitContainerImages []string `json:"initContainerImages"`
+
 	// List of events related to this Job.
 	EventList common.EventList `json:"eventList"`
 
@@ -89,14 +92,15 @@ func GetJobDetail(client k8sClient.Interface, metricClient metricapi.MetricClien
 func toJobDetail(job *batch.Job, eventList common.EventList, podList pod.PodList, podInfo common.PodInfo,
 	nonCriticalErrors []error) JobDetail {
 	return JobDetail{
-		ObjectMeta:      api.NewObjectMeta(job.ObjectMeta),
-		TypeMeta:        api.NewTypeMeta(api.ResourceKindJob),
-		ContainerImages: common.GetContainerImages(&job.Spec.Template.Spec),
-		PodInfo:         podInfo,
-		PodList:         podList,
-		EventList:       eventList,
-		Parallelism:     job.Spec.Parallelism,
-		Completions:     job.Spec.Completions,
-		Errors:          nonCriticalErrors,
+		ObjectMeta:          api.NewObjectMeta(job.ObjectMeta),
+		TypeMeta:            api.NewTypeMeta(api.ResourceKindJob),
+		ContainerImages:     common.GetContainerImages(&job.Spec.Template.Spec),
+		InitContainerImages: common.GetInitContainerImages(&job.Spec.Template.Spec),
+		PodInfo:             podInfo,
+		PodList:             podList,
+		EventList:           eventList,
+		Parallelism:         job.Spec.Parallelism,
+		Completions:         job.Spec.Completions,
+		Errors:              nonCriticalErrors,
 	}
 }

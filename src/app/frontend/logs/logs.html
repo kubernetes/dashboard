@@ -22,10 +22,20 @@ limitations under the License.
                ng-model="ctrl.container"
                md-on-close="ctrl.onContainerChange(ctrl.container)"
                required>
-      <md-option ng-repeat="item in ctrl.logSources.containerNames"
-                 ng-value="item">
-        <span class="kd-logs-toolbar-text">{{::item}}</span>
-      </md-option>
+      <md-optgroup label="[[Containers|Label atop a list of Containers]]"
+                   class="kd-namespace-select-namespace-list">
+        <md-option ng-repeat="item in ctrl.logSources.containerNames"
+                   ng-value="item">
+          <span class="kd-logs-toolbar-text">{{::item}}</span>
+        </md-option>
+      </md-optgroup>
+      <md-optgroup label="[[Init Containers|Label atop a list of Init Containers]]"
+                   class="kd-namespace-select-namespace-list">
+        <md-option ng-repeat="item in ctrl.logSources.initContainerNames"
+                   ng-value="item">
+          <span class="kd-logs-toolbar-text">{{::item}}</span>
+        </md-option>
+      </md-optgroup>
     </md-select>
     [[in|Title part for logs card.]]
     <md-select class="kd-logs-toolbar-select"

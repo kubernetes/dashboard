@@ -52,6 +52,9 @@ type Job struct {
 	// Container images of the Job.
 	ContainerImages []string `json:"containerImages"`
 
+	// Init Container images of the Job.
+	InitContainerImages []string `json:"initContainerImages"`
+
 	// number of parallel jobs defined.
 	Parallelism *int32 `json:"parallelism"`
 }
@@ -133,10 +136,11 @@ func toJobList(jobs []batch.Job, pods []v1.Pod, events []v1.Event, nonCriticalEr
 
 func toJob(job *batch.Job, podInfo *common.PodInfo) Job {
 	return Job{
-		ObjectMeta:      api.NewObjectMeta(job.ObjectMeta),
-		TypeMeta:        api.NewTypeMeta(api.ResourceKindJob),
-		ContainerImages: common.GetContainerImages(&job.Spec.Template.Spec),
-		Pods:            *podInfo,
-		Parallelism:     job.Spec.Parallelism,
+		ObjectMeta:          api.NewObjectMeta(job.ObjectMeta),
+		TypeMeta:            api.NewTypeMeta(api.ResourceKindJob),
+		ContainerImages:     common.GetContainerImages(&job.Spec.Template.Spec),
+		InitContainerImages: common.GetInitContainerImages(&job.Spec.Template.Spec),
+		Pods:                *podInfo,
+		Parallelism:         job.Spec.Parallelism,
 	}
 }

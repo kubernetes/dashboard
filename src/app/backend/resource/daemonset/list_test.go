@@ -81,7 +81,8 @@ func TestToDaemonSetList(t *testing.T) {
 							MatchLabels: map[string]string{"app": "my-name-1"},
 						},
 						Template: v1.PodTemplateSpec{
-							Spec: v1.PodSpec{Containers: []v1.Container{{Image: "my-container-image-1"}}},
+							Spec: v1.PodSpec{Containers: []v1.Container{{Image: "my-container-image-1"}},
+								InitContainers: []v1.Container{{Image: "my-init-container-image-1"}}},
 						},
 					},
 					Status: extensions.DaemonSetStatus{
@@ -98,7 +99,8 @@ func TestToDaemonSetList(t *testing.T) {
 							MatchLabels: map[string]string{"app": "my-name-2", "ver": "2"},
 						},
 						Template: v1.PodTemplateSpec{
-							Spec: v1.PodSpec{Containers: []v1.Container{{Image: "my-container-image-2"}}},
+							Spec: v1.PodSpec{Containers: []v1.Container{{Image: "my-container-image-2"}},
+								InitContainers: []v1.Container{{Image: "my-init-container-image-2"}}},
 						},
 					},
 					Status: extensions.DaemonSetStatus{
@@ -186,8 +188,9 @@ func TestToDaemonSetList(t *testing.T) {
 							Name:      "my-app-1",
 							Namespace: "namespace-1",
 						},
-						TypeMeta:        api.TypeMeta{Kind: api.ResourceKindDaemonSet},
-						ContainerImages: []string{"my-container-image-1"},
+						TypeMeta:            api.TypeMeta{Kind: api.ResourceKindDaemonSet},
+						ContainerImages:     []string{"my-container-image-1"},
+						InitContainerImages: []string{"my-init-container-image-1"},
 						Pods: common.PodInfo{
 							Desired:   &desired,
 							Failed:    2,
@@ -201,8 +204,9 @@ func TestToDaemonSetList(t *testing.T) {
 							Name:      "my-app-2",
 							Namespace: "namespace-2",
 						},
-						TypeMeta:        api.TypeMeta{Kind: api.ResourceKindDaemonSet},
-						ContainerImages: []string{"my-container-image-2"},
+						TypeMeta:            api.TypeMeta{Kind: api.ResourceKindDaemonSet},
+						ContainerImages:     []string{"my-container-image-2"},
+						InitContainerImages: []string{"my-init-container-image-2"},
 						Pods: common.PodInfo{
 							Desired:  &desired,
 							Warnings: []common.Event{},

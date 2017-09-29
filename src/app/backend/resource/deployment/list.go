@@ -52,6 +52,9 @@ type Deployment struct {
 
 	// Container images of the Deployment.
 	ContainerImages []string `json:"containerImages"`
+
+	// Init Container images of the Deployment.
+	InitContainerImages []string `json:"initContainerImages"`
 }
 
 // GetDeploymentList returns a list of all Deployments in the cluster.
@@ -129,10 +132,11 @@ func toDeploymentList(deployments []extensions.Deployment, pods []v1.Pod, events
 
 		deploymentList.Deployments = append(deploymentList.Deployments,
 			Deployment{
-				ObjectMeta:      api.NewObjectMeta(deployment.ObjectMeta),
-				TypeMeta:        api.NewTypeMeta(api.ResourceKindDeployment),
-				ContainerImages: common.GetContainerImages(&deployment.Spec.Template.Spec),
-				Pods:            podInfo,
+				ObjectMeta:          api.NewObjectMeta(deployment.ObjectMeta),
+				TypeMeta:            api.NewTypeMeta(api.ResourceKindDeployment),
+				ContainerImages:     common.GetContainerImages(&deployment.Spec.Template.Spec),
+				InitContainerImages: common.GetInitContainerImages(&deployment.Spec.Template.Spec),
+				Pods:                podInfo,
 			})
 	}
 

@@ -73,6 +73,15 @@ func GetContainerImages(podTemplate *v1.PodSpec) []string {
 	return containerImages
 }
 
+// GetInitContainerImages returns init container image strings from the given pod spec.
+func GetInitContainerImages(podTemplate *v1.PodSpec) []string {
+	var initContainerImages []string
+	for _, initContainer := range podTemplate.InitContainers {
+		initContainerImages = append(initContainerImages, initContainer.Image)
+	}
+	return initContainerImages
+}
+
 // GetContainerNames returns the container image name without the version number from the given pod spec.
 func GetContainerNames(podTemplate *v1.PodSpec) []string {
 	var containerNames []string
@@ -80,6 +89,15 @@ func GetContainerNames(podTemplate *v1.PodSpec) []string {
 		containerNames = append(containerNames, container.Name)
 	}
 	return containerNames
+}
+
+// GetInitContainerNames returns the init container image name without the version number from the given pod spec.
+func GetInitContainerNames(podTemplate *v1.PodSpec) []string {
+	var initContainerNames []string
+	for _, initContainer := range podTemplate.InitContainers {
+		initContainerNames = append(initContainerNames, initContainer.Name)
+	}
+	return initContainerNames
 }
 
 // EqualIgnoreHash returns true if two given podTemplateSpec are equal, ignoring the diff in value of Labels[pod-template-hash]
