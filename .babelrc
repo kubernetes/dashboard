@@ -15,6 +15,6 @@
         ]
       ]
     },
-    "development": {"presets": [["env", {"targets": {"node": 7}, "useBuiltIns": true}]]}
+    "development": {"presets": [["env", {"targets": {"node": 8}, "useBuiltIns": true}]]}
   }
 }
