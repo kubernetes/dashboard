@@ -52,7 +52,7 @@ function createIndexFile(indexPath, dev) {
     },
   };
 
-  if(dev) {
+  if (dev) {
     wiredepOptions.customDependencies.push('google-closure-library');
   }
 
