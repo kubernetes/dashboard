@@ -98,12 +98,19 @@ spec:
           # If not specified, Dashboard will attempt to auto discover the API server and connect
           # to it. Uncomment only if the default does not work.
           # - --apiserver-host=http://my-address:port
+        volumeMounts:
+          # Create on-disk volume to store exec logs
+        - mountPath: /tmp
+          name: tmp-volume
         livenessProbe:
           httpGet:
             path: /
             port: 9090
           initialDelaySeconds: 30
           timeoutSeconds: 30
+      volumes:
+      - name: tmp-volume
+        emptyDir: {}
       serviceAccountName: kubernetes-dashboard
       # Comment the following tolerations if Dashboard must not be deployed on master
       tolerations:

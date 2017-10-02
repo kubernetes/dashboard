@@ -123,6 +123,9 @@ spec:
         - name: kubernetes-dashboard-certs
           mountPath: /certs
           readOnly: true
+          # Create on-disk volume to store exec logs
+        - mountPath: /tmp
+          name: tmp-volume
         livenessProbe:
           httpGet:
             scheme: HTTPS
@@ -134,6 +137,8 @@ spec:
       - name: kubernetes-dashboard-certs
         secret:
           secretName: kubernetes-dashboard-certs
+      - name: tmp-volume
+        emptyDir: {}
       serviceAccountName: kubernetes-dashboard-head
       # Comment the following tolerations if Dashboard must not be deployed on master
       tolerations:
