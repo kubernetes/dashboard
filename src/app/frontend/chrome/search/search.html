@@ -16,9 +16,16 @@ limitations under the License.
 
 <form class="kd-search"
       ng-submit="$ctrl.submit()">
-  <md-icon class="kd-search-icon">search</md-icon>
+  <md-icon class="kd-search-icon"
+           type="submit">search</md-icon>
   <input type="search"
          placeholder="Search"
          ng-model="$ctrl.query"
+         ui-keydown="{esc: '$ctrl.clear()'}"
          required>
+  <md-icon class="kd-search-icon"
+           ng-click="$ctrl.clear()"
+           ng-show="$ctrl.query">
+    close
+  </md-icon>
 </form>

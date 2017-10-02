@@ -20,12 +20,33 @@ import {stateName} from '../../search/state';
 export class SearchController {
   /**
    * @param {!ui.router.$state} $state
+   * @param {!kdUiRouter.$transitions} $transitions
    * @ngInject
    */
-  constructor($state) {
+  constructor($state, $transitions) {
     /** @private {!ui.router.$state} */
     this.state_ = $state;
 
+    /** @private {!kdUiRouter.$transitions} */
+    this.transitions_ = $transitions;
+
+    /** @export {string} */
+    this.query = '';
+  }
+
+  /**
+   * Register state change listener to empty search bar with every state change.
+   */
+  $onInit() {
+    this.transitions_.onStart({}, () => {
+      this.clear();
+    });
+  }
+
+  /**
+   * @export
+   */
+  clear() {
     this.query = '';
   }
 
