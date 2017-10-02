@@ -65,7 +65,11 @@ func (self *secretSynchronizer) Start() {
 		defer close(self.errChan)
 		for {
 			select {
-			case ev := <-watcher.ResultChan():
+			case ev, ok := <-watcher.ResultChan():
+				if !ok {
+					self.errChan <- fmt.Errorf("%s watch ended with timeout", self.Name())
+					return
+				}
 				if err := self.handleEvent(ev); err != nil {
 					self.errChan <- err
 					return
