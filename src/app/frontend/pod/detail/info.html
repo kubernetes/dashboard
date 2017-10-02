@@ -23,13 +23,18 @@ limitations under the License.
       {{::$ctrl.pod.podPhase}}
     </kd-info-card-entry>
   </kd-info-card-section>
-
   <kd-info-card-section name="[[Network|Subtitle 'Network' at the top of the column about network connectivity (right) at the pod detail view.]]">
     <kd-info-card-entry title="[[Node|Label 'Node' for the node a pods is running on, appears in the connectivity part (right) of the pod details view.]]">
       <a href="{{$ctrl.getNodeDetailsHref()}}">{{::$ctrl.pod.nodeName}}</a>
     </kd-info-card-entry>
     <kd-info-card-entry title="[[IP|Label 'IP' for the pod internal IP, appears in the connectivity part (right) of the pod details view.]]">
       {{::$ctrl.pod.podIP}}
+    </kd-info-card-entry>
+  </kd-info-card-section>
+  <kd-info-card-section name="[[User links|Subtitle 'User links' at the top of the column about user links attached in resource objects annotations, (right) at the pod detail view.]]"
+                        ng-if="::$ctrl.pod.userLinks.length">
+    <kd-info-card-entry>
+      <kd-user-links userlinks="::$ctrl.pod.userLinks"></kd-user-links>
     </kd-info-card-entry>
   </kd-info-card-section>
 </kd-info-card>

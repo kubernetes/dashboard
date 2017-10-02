@@ -59,7 +59,7 @@ func TestToServiceDetail(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		actual := ToServiceDetail(c.service, c.eventList, c.podList, c.endpointList, nil)
+		actual := ToServiceDetail(c.service, c.eventList, c.podList, c.endpointList, nil, nil)
 
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("ToServiceDetail(%#v) == \ngot %#v, \nexpected %#v", c.service, actual,

@@ -20,6 +20,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/endpoint"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
+	"github.com/kubernetes/dashboard/src/app/backend/userlinks"
 	"k8s.io/client-go/pkg/api/v1"
 )
 
@@ -38,6 +39,7 @@ func ToService(service *v1.Service) Service {
 
 // ToServiceDetail returns api service object based on kubernetes service object
 func ToServiceDetail(service *v1.Service, events common.EventList, pods pod.PodList, endpointList endpoint.EndpointList,
+	userLinks []userlinks.UserLink,
 	nonCriticalErrors []error) ServiceDetail {
 	return ServiceDetail{
 		ObjectMeta:        api.NewObjectMeta(service.ObjectMeta),
@@ -50,6 +52,7 @@ func ToServiceDetail(service *v1.Service, events common.EventList, pods pod.PodL
 		Type:              service.Spec.Type,
 		EventList:         events,
 		PodList:           pods,
+		UserLink:          userLinks,
 		SessionAffinity:   service.Spec.SessionAffinity,
 		Errors:            nonCriticalErrors,
 	}

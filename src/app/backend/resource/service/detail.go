@@ -24,6 +24,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/endpoint"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
+	"github.com/kubernetes/dashboard/src/app/backend/userlinks"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/pkg/api/v1"
@@ -61,6 +62,9 @@ type ServiceDetail struct {
 	// PodList represents list of pods targeted by same label selector as this service.
 	PodList pod.PodList `json:"podList"`
 
+	// Array of composed userlinks that have been derived from service annotation.
+	UserLink []userlinks.UserLink `json:"userLinks"`
+
 	// Show the value of the SessionAffinity of the Service.
 	SessionAffinity v1.ServiceAffinity `json:"sessionAffinity"`
 
@@ -69,7 +73,7 @@ type ServiceDetail struct {
 }
 
 // GetServiceDetail gets service details.
-func GetServiceDetail(client k8sClient.Interface, metricClient metricapi.MetricClient, namespace, name string,
+func GetServiceDetail(client k8sClient.Interface, metricClient metricapi.MetricClient, namespace, name, host string,
 	dsQuery *dataselect.DataSelectQuery) (*ServiceDetail, error) {
 
 	log.Printf("Getting details of %s service in %s namespace", name, namespace)
@@ -80,6 +84,12 @@ func GetServiceDetail(client k8sClient.Interface, metricClient metricapi.MetricC
 
 	endpointList, err := endpoint.GetServiceEndpoints(client, namespace, name)
 	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
+	}
+
+	userLinks, err := userlinks.GetUserLinks(client, namespace, name, api.ResourceKindService, host)
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -96,6 +106,6 @@ func GetServiceDetail(client k8sClient.Interface, metricClient metricapi.MetricC
 		return nil, criticalError
 	}
 
-	service := ToServiceDetail(serviceData, *eventList, *podList, *endpointList, nonCriticalErrors)
+	service := ToServiceDetail(serviceData, *eventList, *podList, *endpointList, userLinks, nonCriticalErrors)
 	return &service, nil
 }

@@ -48,4 +48,10 @@ limitations under the License.
       <kd-external-endpoint endpoints="::$ctrl.service.externalEndpoints"></kd-external-endpoint>
     </kd-info-card-entry>
   </kd-info-card-section>
+  <kd-info-card-section name="[[User links|Subtitle 'User links' at the top of the column about user links attached to resource objects annotations, (right) at the service detail view.]]"
+                        ng-if="::$ctrl.service.userLinks.length">
+    <kd-info-card-entry>
+      <kd-user-links userlinks="::$ctrl.service.userLinks"></kd-user-links>
+    </kd-info-card-entry>
+  </kd-info-card-section>
 </kd-info-card>
