@@ -104,3 +104,36 @@ func TestGetJobDetail(t *testing.T) {
 		}
 	}
 }
+
+func TestDeleteJob(t *testing.T) {
+	cases := []struct {
+		namespace, name string
+		expectedActions []string
+		job             *batch.Job
+	}{
+		{
+			"ns-1", "job-1",
+			[]string{"get", "get", "update", "get", "get", "get", "list", "delete"},
+			createJob("job-1", "ns-1", map[string]string{"app": "test"}),
+		},
+	}
+
+	for _, c := range cases {
+		fakeClient := fake.NewSimpleClientset(c.job)
+
+		DeleteJob(fakeClient, c.namespace, c.name)
+
+		actions := fakeClient.Actions()
+		if len(actions) != len(c.expectedActions) {
+			t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
+				len(c.expectedActions), len(actions))
+			continue
+		}
+		for i, verb := range c.expectedActions {
+			if actions[i].GetVerb() != verb {
+				t.Errorf("Unexpected action: %+v, expected %s",
+					actions[i], verb)
+			}
+		}
+	}
+}

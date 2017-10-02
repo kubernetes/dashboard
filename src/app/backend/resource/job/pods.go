@@ -34,7 +34,7 @@ import (
 // GetJobPods return list of pods targeting job.
 func GetJobPods(client k8sClient.Interface, metricClient metricapi.MetricClient,
 	dsQuery *dataselect.DataSelectQuery, namespace string, jobName string) (*pod.PodList, error) {
-	log.Printf("Getting replication controller %s pods in namespace %s", jobName, namespace)
+	log.Printf("Getting job controller %s pods in namespace %s", jobName, namespace)
 
 	pods, err := getRawJobPods(client, jobName, namespace)
 	if err != nil {
@@ -52,8 +52,8 @@ func GetJobPods(client k8sClient.Interface, metricClient metricapi.MetricClient,
 }
 
 // Returns array of api pods targeting job with given name.
-func getRawJobPods(client k8sClient.Interface, petSetName, namespace string) ([]v1.Pod, error) {
-	job, err := client.Batch().Jobs(namespace).Get(petSetName, metaV1.GetOptions{})
+func getRawJobPods(client k8sClient.Interface, jobName, namespace string) ([]v1.Pod, error) {
+	job, err := client.Batch().Jobs(namespace).Get(jobName, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
