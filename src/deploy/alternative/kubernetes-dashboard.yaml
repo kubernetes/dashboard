@@ -100,7 +100,7 @@ spec:
           # to it. Uncomment only if the default does not work.
           # - --apiserver-host=http://my-address:port
         volumeMounts:
-          # Create in-memory volume to store exec logs
+          # Create on-disk volume to store exec logs
         - mountPath: /tmp
           name: tmp-volume
         livenessProbe:
@@ -111,8 +111,7 @@ spec:
           timeoutSeconds: 30
       volumes:
       - name: tmp-volume
-        emptyDir:
-          medium: Memory
+        emptyDir: {}
       serviceAccountName: kubernetes-dashboard
       # Comment the following tolerations if Dashboard must not be deployed on master
       tolerations:
