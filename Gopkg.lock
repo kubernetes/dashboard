@@ -255,8 +255,8 @@
 [[projects]]
   name = "k8s.io/heapster"
   packages = ["metrics/api/v1/types"]
-  revision = "d7df1c0f868a5d897581db030d999e35080661fe"
-  version = "v1.4.1"
+  revision = "b1d70b4d9b2766e0ed1b69cbe5a76b44ae4a4841"
+  version = "v1.4.3"
 
 [[projects]]
   branch = "master"
@@ -267,6 +267,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "6404a8cf87d61e93e67d3774708ab1737a27fbe1019f9b132313819c01800c7a"
+  inputs-digest = "3b2a94f89e64c7bfdbd0002b70020ff691daaab8a4d0e40741fafd2ecfb79e21"
   solver-name = "gps-cdcl"
   solver-version = 1
