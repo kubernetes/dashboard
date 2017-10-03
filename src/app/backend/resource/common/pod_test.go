@@ -18,9 +18,9 @@ import (
 	"reflect"
 	"testing"
 
+	batch "k8s.io/api/batch/v1"
+	api "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	api "k8s.io/client-go/pkg/api/v1"
-	batch "k8s.io/client-go/pkg/apis/batch/v1"
 )
 
 type metaObj struct {

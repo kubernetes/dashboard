@@ -21,13 +21,14 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	extensions "k8s.io/api/extensions/v1beta1"
+	apiv1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	runtime "k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/util/json"
 	k8sClient "k8s.io/client-go/kubernetes"
-	kubeapi "k8s.io/client-go/pkg/api"
-	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 	"k8s.io/client-go/rest"
 )
 
@@ -35,6 +36,23 @@ import (
 type ThirdPartyResourceObject struct {
 	metav1.TypeMeta `json:",inline"`
 	Metadata        metav1.ObjectMeta `json:"metadata,omitempty"`
+}
+
+func (in *ThirdPartyResourceObject) DeepCopyObject() runtime.Object {
+	if c := in.DeepCopy(); c != nil {
+		return c
+	} else {
+		return nil
+	}
+}
+
+func (in *ThirdPartyResourceObject) DeepCopy() *ThirdPartyResourceObject {
+	if in == nil {
+		return nil
+	}
+	out := new(ThirdPartyResourceObject)
+	*out = *in
+	return out
 }
 
 // ThirdPartyResourceObjectList is a list of third party resource instances.
@@ -45,6 +63,23 @@ type ThirdPartyResourceObjectList struct {
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
+}
+
+func (in *ThirdPartyResourceObjectList) DeepCopyObject() runtime.Object {
+	if c := in.DeepCopy(); c != nil {
+		return c
+	} else {
+		return nil
+	}
+}
+
+func (in *ThirdPartyResourceObjectList) DeepCopy() *ThirdPartyResourceObjectList {
+	if in == nil {
+		return nil
+	}
+	out := new(ThirdPartyResourceObjectList)
+	*out = *in
+	return out
 }
 
 // GetThirdPartyResourceObjects return list of third party resource instances. Channels cannot be
@@ -67,7 +102,7 @@ func GetThirdPartyResourceObjects(client k8sClient.Interface, config *rest.Confi
 	}
 
 	raw, err := restClient.Get().Resource(getThirdPartyResourcePluralName(thirdPartyResource)).
-		Namespace(kubeapi.NamespaceAll).Do().Raw()
+		Namespace(apiv1.NamespaceAll).Do().Raw()
 	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
 	if criticalError != nil {
 		return list, criticalError

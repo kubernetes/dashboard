@@ -21,20 +21,19 @@ import (
 	"strings"
 
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
+	api "k8s.io/api/core/v1"
+	extensions "k8s.io/api/extensions/v1beta1"
 	"k8s.io/apimachinery/pkg/api/resource"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/util/intstr"
+	"k8s.io/apimachinery/pkg/util/rand"
 	"k8s.io/apimachinery/pkg/util/yaml"
 	"k8s.io/client-go/discovery"
 	dynamicclient "k8s.io/client-go/dynamic"
 	client "k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
-
-	api "k8s.io/client-go/pkg/api/v1"
-
-	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
 
 const (
@@ -274,10 +273,18 @@ func convertEnvVarsSpec(variables []EnvironmentVariable) []api.EnvVar {
 }
 
 func generatePortMappingName(portMapping PortMapping) string {
-	base := fmt.Sprintf("%s-%d-%d-", strings.ToLower(string(portMapping.Protocol)),
-		portMapping.Port, portMapping.TargetPort)
+	return generateName(fmt.Sprintf("%s-%d-%d-", strings.ToLower(string(portMapping.Protocol)),
+		portMapping.Port, portMapping.TargetPort))
+}
 
-	return api.SimpleNameGenerator.GenerateName(base)
+func generateName(base string) string {
+	maxNameLength := 63
+	randomLength := 5
+	maxGeneratedNameLength := maxNameLength - randomLength
+	if len(base) > maxGeneratedNameLength {
+		base = base[:maxGeneratedNameLength]
+	}
+	return fmt.Sprintf("%s%s", base, rand.String(randomLength))
 }
 
 // Converts array of labels to map[string]string

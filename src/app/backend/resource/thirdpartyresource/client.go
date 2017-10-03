@@ -19,7 +19,7 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/runtime/serializer"
-	"k8s.io/client-go/pkg/api"
+	"k8s.io/client-go/kubernetes/scheme"
 	"k8s.io/client-go/rest"
 )
 
@@ -31,7 +31,7 @@ func newRESTConfig(config *rest.Config, groupVersion schema.GroupVersion) *rest.
 	config.GroupVersion = &groupVersion
 	config.APIPath = "/apis"
 	config.ContentType = runtime.ContentTypeJSON
-	config.NegotiatedSerializer = serializer.DirectCodecFactory{CodecFactory: api.Codecs}
+	config.NegotiatedSerializer = serializer.DirectCodecFactory{CodecFactory: scheme.Codecs}
 
 	schemeBuilder := runtime.NewSchemeBuilder(
 		func(scheme *runtime.Scheme) error {
@@ -45,6 +45,6 @@ func newRESTConfig(config *rest.Config, groupVersion schema.GroupVersion) *rest.
 			return nil
 		})
 
-	schemeBuilder.AddToScheme(api.Scheme)
+	schemeBuilder.AddToScheme(scheme.Scheme)
 	return config
 }

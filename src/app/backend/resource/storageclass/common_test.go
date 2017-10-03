@@ -19,8 +19,8 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	storage "k8s.io/api/storage/v1beta1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	storage "k8s.io/client-go/pkg/apis/storage/v1beta1"
 )
 
 func TestToStorageClass(t *testing.T) {

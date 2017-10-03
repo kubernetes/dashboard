@@ -18,9 +18,9 @@ import (
 	"fmt"
 	"sort"
 
+	auth "k8s.io/api/authorization/v1beta1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
-	rbac "k8s.io/client-go/pkg/apis/rbac/v1beta1"
 )
 
 // RBACStatus describes status of RBAC in the cluster.
@@ -39,7 +39,7 @@ func ValidateRbacStatus(client kubernetes.Interface) (*RbacStatus, error) {
 
 	apiVersions := metav1.ExtractGroupVersions(groupList)
 	return &RbacStatus{
-		Enabled: contains(apiVersions, rbac.SchemeGroupVersion.String()),
+		Enabled: contains(apiVersions, auth.SchemeGroupVersion.String()),
 	}, nil
 }
 

@@ -17,7 +17,7 @@ package validation
 import (
 	"log"
 
-	api "k8s.io/client-go/pkg/api/v1"
+	api "k8s.io/api/core/v1"
 )
 
 // ProtocolValiditySpec is a specification of protocol validation request.

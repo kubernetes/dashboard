@@ -20,8 +20,8 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	rbac "k8s.io/api/rbac/v1beta1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	rbac "k8s.io/client-go/pkg/apis/rbac/v1beta1"
 )
 
 func TestToRbacRoleLists(t *testing.T) {

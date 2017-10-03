@@ -18,7 +18,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	batch "k8s.io/client-go/pkg/apis/batch/v1"
+	batch "k8s.io/api/batch/v1"
 )
 
 // The code below allows to perform complex data section on []batch.Job

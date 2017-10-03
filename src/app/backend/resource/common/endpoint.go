@@ -17,7 +17,7 @@ package common
 import (
 	"bytes"
 
-	api "k8s.io/client-go/pkg/api/v1"
+	api "k8s.io/api/core/v1"
 )
 
 // Endpoint describes an endpoint that is host and a list of available ports for that host.

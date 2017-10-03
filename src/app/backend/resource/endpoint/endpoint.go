@@ -19,12 +19,11 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/labels"
 	k8sClient "k8s.io/client-go/kubernetes"
-	kubeapi "k8s.io/client-go/pkg/api"
-	"k8s.io/client-go/pkg/api/v1"
 )
 
 type Endpoint struct {
@@ -63,7 +62,7 @@ func GetServiceEndpoints(client k8sClient.Interface, namespace, name string) (*E
 
 // GetEndpoints gets endpoints associated to resource with given name.
 func GetEndpoints(client k8sClient.Interface, namespace, name string) ([]v1.Endpoints, error) {
-	fieldSelector, err := fields.ParseSelector(kubeapi.ObjectNameField + "=" + name)
+	fieldSelector, err := fields.ParseSelector("metadata.name" + "=" + name)
 	if err != nil {
 		return nil, err
 	}

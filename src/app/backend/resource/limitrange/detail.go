@@ -14,7 +14,7 @@
 
 package limitrange
 
-import api "k8s.io/client-go/pkg/api/v1"
+import api "k8s.io/api/core/v1"
 
 // limitRanges provides set of limit ranges by limit types and resource names
 type limitRangesMap map[api.LimitType]rangeMap
