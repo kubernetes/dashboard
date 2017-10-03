@@ -1,12 +1,16 @@
 # Refer to https://github.com/golang/dep/blob/master/docs/Gopkg.toml.md for detailed Gopkg.toml documentation.
 
 [[constraint]]
-  name = "k8s.io/client-go"
-  version = "4.0.0"
+  name = "k8s.io/api"
+  branch = "master"
 
 [[constraint]]
   name = "k8s.io/apimachinery"
-  revision = "db23e9ab1e90f659fa5a557d183ebbb16f60300a"
+  branch = "master"
+
+[[constraint]]
+  name = "k8s.io/client-go"
+  branch = "master"
 
 [[constraint]]
   name = "k8s.io/heapster"
