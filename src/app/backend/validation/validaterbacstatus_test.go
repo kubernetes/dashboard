@@ -75,7 +75,7 @@ func TestValidateRbacStatus(t *testing.T) {
 				return &metav1.APIGroupList{Groups: []metav1.APIGroup{
 					{Name: "rbac", Versions: []metav1.GroupVersionForDiscovery{
 						{
-							GroupVersion: "rbac.authorization.k8s.io/v1alpha1",
+							GroupVersion: "authorization.k8s.io/v1alpha1",
 							Version:      "v1alpha1",
 						},
 					}},
@@ -90,7 +90,7 @@ func TestValidateRbacStatus(t *testing.T) {
 				return &metav1.APIGroupList{Groups: []metav1.APIGroup{
 					{Name: "rbac", Versions: []metav1.GroupVersionForDiscovery{
 						{
-							GroupVersion: "rbac.authorization.k8s.io/v1beta1",
+							GroupVersion: "authorization.k8s.io/v1beta1",
 							Version:      "v1beta1",
 						},
 					}},

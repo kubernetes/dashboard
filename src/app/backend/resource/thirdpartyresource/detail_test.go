@@ -19,8 +19,8 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	extensions "k8s.io/api/extensions/v1beta1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
 
 func TestGetThirdPartyResourceDetail(t *testing.T) {

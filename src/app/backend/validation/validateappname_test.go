@@ -17,10 +17,10 @@ package validation
 import (
 	"testing"
 
+	api "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/client-go/kubernetes/fake"
-	api "k8s.io/client-go/pkg/api/v1"
 )
 
 func TestValidateName(t *testing.T) {

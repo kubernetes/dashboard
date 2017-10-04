@@ -25,9 +25,9 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/service"
+	extensions "k8s.io/api/extensions/v1beta1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
-	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
 
 func TestGetReplicaSetDetail(t *testing.T) {

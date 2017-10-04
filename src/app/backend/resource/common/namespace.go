@@ -14,7 +14,7 @@
 
 package common
 
-import api "k8s.io/client-go/pkg/api/v1"
+import api "k8s.io/api/core/v1"
 
 // NamespaceQuery is a query for namespaces of a list of objects.
 // There's three cases:

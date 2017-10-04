@@ -17,7 +17,7 @@ package storageclass
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	storage "k8s.io/client-go/pkg/apis/storage/v1beta1"
+	storage "k8s.io/api/storage/v1beta1"
 )
 
 func toStorageClass(storageClass *storage.StorageClass) StorageClass {

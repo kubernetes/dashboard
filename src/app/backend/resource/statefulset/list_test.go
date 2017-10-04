@@ -23,10 +23,10 @@ import (
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	apps "k8s.io/api/apps/v1beta1"
+	"k8s.io/api/core/v1"
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/client-go/pkg/api/v1"
-	apps "k8s.io/client-go/pkg/apis/apps/v1beta1"
 )
 
 func getReplicasPointer(replicas int32) *int32 {

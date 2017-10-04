@@ -25,10 +25,9 @@ import (
 
 	restful "github.com/emicklei/go-restful"
 	"gopkg.in/igm/sockjs-go.v2/sockjs"
-	remotecommandconsts "k8s.io/apimachinery/pkg/util/remotecommand"
+	"k8s.io/api/core/v1"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/kubernetes/scheme"
-	"k8s.io/client-go/pkg/api/v1"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/remotecommand"
 )
@@ -202,18 +201,17 @@ func startProcess(k8sClient kubernetes.Interface, cfg *rest.Config, request *res
 		TTY:       true,
 	}, scheme.ParameterCodec)
 
-	exec, err := remotecommand.NewExecutor(cfg, "POST", req.URL())
+	exec, err := remotecommand.NewSPDYExecutor(cfg, "POST", req.URL())
 	if err != nil {
 		return err
 	}
 
 	err = exec.Stream(remotecommand.StreamOptions{
-		SupportedProtocols: remotecommandconsts.SupportedStreamingProtocols,
-		Stdin:              ptyHandler,
-		Stdout:             ptyHandler,
-		Stderr:             ptyHandler,
-		TerminalSizeQueue:  ptyHandler,
-		Tty:                true,
+		Stdin:             ptyHandler,
+		Stdout:            ptyHandler,
+		Stderr:            ptyHandler,
+		TerminalSizeQueue: ptyHandler,
+		Tty:               true,
 	})
 	if err != nil {
 		return err

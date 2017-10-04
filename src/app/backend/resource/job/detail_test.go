@@ -23,9 +23,9 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
+	batch "k8s.io/api/batch/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
-	batch "k8s.io/client-go/pkg/apis/batch/v1"
 )
 
 func createJob(name, namespace string, jobCompletions int32, labelSelector map[string]string) *batch.Job {

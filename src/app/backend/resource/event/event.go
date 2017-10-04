@@ -18,8 +18,8 @@ import (
 	"strings"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	api "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/types"
-	api "k8s.io/client-go/pkg/api/v1"
 )
 
 // FailedReasonPartials  is an array of partial strings to correctly filter warning events.

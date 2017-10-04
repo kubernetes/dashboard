@@ -18,7 +18,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
+	extensions "k8s.io/api/extensions/v1beta1"
 )
 
 // The code below allows to perform complex data section on []extensions.Deployment

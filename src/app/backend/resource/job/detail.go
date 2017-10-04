@@ -21,9 +21,9 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
+	batch "k8s.io/api/batch/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
-	batch "k8s.io/client-go/pkg/apis/batch/v1"
 )
 
 // JobDetail is a presentation layer view of Kubernetes Job resource. This means

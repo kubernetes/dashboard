@@ -15,8 +15,8 @@
 package common
 
 import (
+	api "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1"
-	api "k8s.io/client-go/pkg/api/v1"
 )
 
 // Condition represents a single condition of a pod or node.

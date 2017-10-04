@@ -18,14 +18,13 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	client "k8s.io/client-go/kubernetes"
-	kubeapi "k8s.io/client-go/pkg/api"
-	"k8s.io/client-go/pkg/api/v1"
 )
 
 // EmptyEventList is a empty list of events.
@@ -38,7 +37,7 @@ var EmptyEventList = &common.EventList{
 
 // GetEvents gets events associated to resource with given name.
 func GetEvents(client client.Interface, namespace, resourceName string) ([]v1.Event, error) {
-	fieldSelector, err := fields.ParseSelector(kubeapi.EventInvolvedNameField + "=" + resourceName)
+	fieldSelector, err := fields.ParseSelector("involvedObject.name" + "=" + resourceName)
 
 	if err != nil {
 		return nil, err

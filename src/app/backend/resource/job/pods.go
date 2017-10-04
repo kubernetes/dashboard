@@ -23,12 +23,12 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
+	batch "k8s.io/api/batch/v1"
+	"k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/labels"
 	k8sClient "k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/pkg/api/v1"
-	batch "k8s.io/client-go/pkg/apis/batch/v1"
 )
 
 // GetJobPods return list of pods targeting job.

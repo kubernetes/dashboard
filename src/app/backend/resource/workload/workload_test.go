@@ -29,11 +29,11 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/statefulset"
+	apps "k8s.io/api/apps/v1beta1"
+	batch "k8s.io/api/batch/v1"
+	"k8s.io/api/core/v1"
+	extensions "k8s.io/api/extensions/v1beta1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/client-go/pkg/api/v1"
-	apps "k8s.io/client-go/pkg/apis/apps/v1beta1"
-	batch "k8s.io/client-go/pkg/apis/batch/v1"
-	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
 
 func TestGetWorkloadsFromChannels(t *testing.T) {
