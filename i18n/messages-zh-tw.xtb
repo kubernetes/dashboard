@@ -486,6 +486,8 @@
   <translation id="6855662924451585032" key="MSG_LOGS_LOGS_1" desc="Title part for logs card.">位於</translation>
   <translation id="6208229815004454576" key="MSG_LOGS_LOGS_2" desc="Title prefix for logs card.">日誌範圍從</translation>
   <translation id="1223986507449568472" key="MSG_LOGS_LOGS_3" desc="Footer part for logs card.">到</translation>
+  <translation id="8510779305487405945" key="MSG_LOGS_LOGS_4" desc="Label atop a list of Containers">Containers</translation>
+  <translation id="7432843701863632053" key="MSG_LOGS_LOGS_5" desc="Label atop a list of Init Containers">Init Containers</translation>
   <translation id="3402202863027894322" key="MSG_LOGS_TRUNCATED_WARNING" desc="Error dialog indicating that parts of the log file is missing due to memory constraints.">日誌檔案過大，中間部分無法載入</translation>
   <translation id="7594890250973129963" key="MSG_LOGS_ZEROSTATE_TEXT" desc="Text for logs card zerostate in logs page.">選擇的容器沒有日誌訊息</translation>
   <translation id="2533795620042066843" key="MSG_MORE_WARNINGS_LABEL" desc="Show more warnings button label.">顯示更多 <ph name="COUNT"> 則</ph></translation>

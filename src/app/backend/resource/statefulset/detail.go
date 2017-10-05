@@ -32,12 +32,13 @@ import (
 // StatefulSetDetail is a presentation layer view of Kubernetes Stateful Set resource. This means it is Stateful
 // Set plus additional augmented data we can get from other sources (like services that target the same pods).
 type StatefulSetDetail struct {
-	ObjectMeta      api.ObjectMeta   `json:"objectMeta"`
-	TypeMeta        api.TypeMeta     `json:"typeMeta"`
-	PodInfo         common.PodInfo   `json:"podInfo"`
-	PodList         pod.PodList      `json:"podList"`
-	ContainerImages []string         `json:"containerImages"`
-	EventList       common.EventList `json:"eventList"`
+	ObjectMeta          api.ObjectMeta   `json:"objectMeta"`
+	TypeMeta            api.TypeMeta     `json:"typeMeta"`
+	PodInfo             common.PodInfo   `json:"podInfo"`
+	PodList             pod.PodList      `json:"podList"`
+	ContainerImages     []string         `json:"containerImages"`
+	InitContainerImages []string         `json:"initContainerImages"`
+	EventList           common.EventList `json:"eventList"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
@@ -78,12 +79,13 @@ func GetStatefulSetDetail(client kubernetes.Interface, metricClient metricapi.Me
 func getStatefulSetDetail(statefulSet *apps.StatefulSet, eventList common.EventList, podList pod.PodList,
 	podInfo common.PodInfo, nonCriticalErrors []error) StatefulSetDetail {
 	return StatefulSetDetail{
-		ObjectMeta:      api.NewObjectMeta(statefulSet.ObjectMeta),
-		TypeMeta:        api.NewTypeMeta(api.ResourceKindStatefulSet),
-		ContainerImages: common.GetContainerImages(&statefulSet.Spec.Template.Spec),
-		PodInfo:         podInfo,
-		PodList:         podList,
-		EventList:       eventList,
-		Errors:          nonCriticalErrors,
+		ObjectMeta:          api.NewObjectMeta(statefulSet.ObjectMeta),
+		TypeMeta:            api.NewTypeMeta(api.ResourceKindStatefulSet),
+		ContainerImages:     common.GetContainerImages(&statefulSet.Spec.Template.Spec),
+		InitContainerImages: common.GetInitContainerImages(&statefulSet.Spec.Template.Spec),
+		PodInfo:             podInfo,
+		PodList:             podList,
+		EventList:           eventList,
+		Errors:              nonCriticalErrors,
 	}
 }

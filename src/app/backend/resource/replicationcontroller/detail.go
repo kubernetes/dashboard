@@ -42,6 +42,9 @@ type ReplicationControllerDetail struct {
 	// Container image list of the pod template specified by this Replication Controller.
 	ContainerImages []string `json:"containerImages"`
 
+	// Init Container image list of the pod template specified by this Replication Controller.
+	InitContainerImages []string `json:"initContainerImages"`
+
 	// Aggregate information about pods of this replication controller.
 	PodInfo common.PodInfo `json:"podInfo"`
 
@@ -154,6 +157,7 @@ func toReplicationControllerDetail(replicationController *v1.ReplicationControll
 		ServiceList:                 serviceList,
 		HorizontalPodAutoscalerList: hpas,
 		ContainerImages:             common.GetContainerImages(&replicationController.Spec.Template.Spec),
+		InitContainerImages:         common.GetInitContainerImages(&replicationController.Spec.Template.Spec),
 		Errors:                      nonCriticalErrors,
 	}
 }

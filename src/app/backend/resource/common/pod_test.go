@@ -127,6 +127,29 @@ func TestGetContainerImages(t *testing.T) {
 	}
 }
 
+func TestGetInitContainerImages(t *testing.T) {
+	cases := []struct {
+		podTemplate *api.PodSpec
+		expected    []string
+	}{
+		{&api.PodSpec{}, nil},
+		{
+			&api.PodSpec{
+				InitContainers: []api.Container{{Image: "initContainer:v3"}, {Image: "initContainer:v4"}},
+			},
+			[]string{"initContainer:v3", "initContainer:v4"},
+		},
+	}
+
+	for _, c := range cases {
+		actual := GetInitContainerImages(c.podTemplate)
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("GetInitContainerImages(%+v) == %+v, expected %+v",
+				c.podTemplate, actual, c.expected)
+		}
+	}
+}
+
 func TestGetContainerNames(t *testing.T) {
 	cases := []struct {
 		podTemplate *api.PodSpec
@@ -145,6 +168,29 @@ func TestGetContainerNames(t *testing.T) {
 		actual := GetContainerNames(c.podTemplate)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("GetContainerNames(%+v) == %+v, expected %+v",
+				c.podTemplate, actual, c.expected)
+		}
+	}
+}
+
+func TestGetInitContainerNames(t *testing.T) {
+	cases := []struct {
+		podTemplate *api.PodSpec
+		expected    []string
+	}{
+		{&api.PodSpec{}, nil},
+		{
+			&api.PodSpec{
+				InitContainers: []api.Container{{Name: "initContainer"}, {Name: "initContainer"}},
+			},
+			[]string{"initContainer", "initContainer"},
+		},
+	}
+
+	for _, c := range cases {
+		actual := GetInitContainerNames(c.podTemplate)
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("GetInitContainerNames(%+v) == %+v, expected %+v",
 				c.podTemplate, actual, c.expected)
 		}
 	}

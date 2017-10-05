@@ -88,6 +88,9 @@ type LogInfo struct {
 	// The name of the container the logs are for.
 	ContainerName string `json:"containerName"`
 
+	// The name of the init container the logs are for.
+	InitContainerName string `json:"initContainerName"`
+
 	// Date of the first log line
 	FromDate LogTimestamp `json:"fromDate"`
 

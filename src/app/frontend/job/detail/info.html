@@ -31,6 +31,9 @@ limitations under the License.
       <div ng-repeat="image in $ctrl.job.containerImages track by $index">
         <kd-middle-ellipsis display-string="{{::image}}"></kd-middle-ellipsis>
       </div>
+      <div ng-repeat="image in $ctrl.job.initContainerImages track by $index">
+        <kd-middle-ellipsis display-string="{{::image}}"></kd-middle-ellipsis>
+      </div>
     </kd-info-card-entry>
     <kd-info-card-entry ng-if="::$ctrl.job.completions"
                         title="[[Completions|Job completions. Appears in details section.]]">

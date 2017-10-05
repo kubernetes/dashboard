@@ -37,6 +37,9 @@ type ReplicationController struct {
 
 	// Container images of the Replication Controller.
 	ContainerImages []string `json:"containerImages"`
+
+	// Init Container images of the Replication Controller.
+	InitContainerImages []string `json:"initContainerImages"`
 }
 
 // Transforms simple selector map to labels.Selector object that can be used when querying for
@@ -89,10 +92,11 @@ func ToReplicationController(replicationController *v1.ReplicationController,
 	podInfo *common.PodInfo) ReplicationController {
 
 	return ReplicationController{
-		ObjectMeta:      api.NewObjectMeta(replicationController.ObjectMeta),
-		TypeMeta:        api.NewTypeMeta(api.ResourceKindReplicationController),
-		Pods:            *podInfo,
-		ContainerImages: common.GetContainerImages(&replicationController.Spec.Template.Spec),
+		ObjectMeta:          api.NewObjectMeta(replicationController.ObjectMeta),
+		TypeMeta:            api.NewTypeMeta(api.ResourceKindReplicationController),
+		Pods:                *podInfo,
+		ContainerImages:     common.GetContainerImages(&replicationController.Spec.Template.Spec),
+		InitContainerImages: common.GetInitContainerImages(&replicationController.Spec.Template.Spec),
 	}
 }
 
