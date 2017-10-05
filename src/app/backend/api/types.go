@@ -164,7 +164,7 @@ var KindToAPIMapping = map[string]struct {
 	ResourceKindHorizontalPodAutoscaler: {"horizontalpodautoscalers", ClientTypeAutoscalingClient, true},
 	ResourceKindIngress:                 {"ingresses", ClientTypeExtensionClient, true},
 	ResourceKindJob:                     {"jobs", ClientTypeBatchClient, true},
-	ResourceKindJob:                     {"cronjobs", ClientTypeBatchClient, true},
+	ResourceKindCronJob:                 {"cronjobs", ClientTypeBatchClient, true},
 	ResourceKindLimitRange:              {"limitrange", ClientTypeDefault, true},
 	ResourceKindNamespace:               {"namespaces", ClientTypeDefault, false},
 	ResourceKindNode:                    {"nodes", ClientTypeDefault, false},
