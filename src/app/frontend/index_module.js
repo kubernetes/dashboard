@@ -35,6 +35,7 @@ import {Controller} from './index_controller';
 import routeConfig from './index_route';
 import ingressModule from './ingress/module';
 import jobModule from './job/module';
+import cronJobModule from './cronjob/module';
 import loginModule from './login/module';
 import logsModule from './logs/module';
 import namespaceModule from './namespace/module';
@@ -76,6 +77,7 @@ export default angular
           deployModule.name,
           errorModule.name,
           jobModule.name,
+            cronJobModule.name,
           loginModule.name,
           logsModule.name,
           shellModule.name,

@@ -21,6 +21,7 @@ import {stateName as deploymentState} from '../../deployment/list/state';
 import {stateName as discoveryState} from '../../discovery/state';
 import {stateName as ingressState} from '../../ingress/list/state';
 import {stateName as jobState} from '../../job/list/state';
+import {stateName as cronJobState} from '../../cronjob/list/state';
 import {stateName as namespaceState} from '../../namespace/list/state';
 import {stateName as nodeState} from '../../node/list/state';
 import {stateName as overviewState} from '../../overview/state';
@@ -61,6 +62,7 @@ export class NavController {
       'persistentVolume': persistentVolumeState,
       'statefulSet': statefulSetState,
       'job': jobState,
+      'cronJob': cronJobState,
       'service': serviceState,
       'persistentVolumeClaim': persistentVolumeClaimState,
       'secret': secretState,
