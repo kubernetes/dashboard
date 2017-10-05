@@ -20,6 +20,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/cronjob"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/deployment"
@@ -36,6 +37,7 @@ type Workloads struct {
 	DeploymentList            deployment.DeploymentList    `json:"deploymentList"`
 	ReplicaSetList            replicaset.ReplicaSetList    `json:"replicaSetList"`
 	JobList                   job.JobList                  `json:"jobList"`
+	CronJobList               cronjob.CronJobList          `json:"cronJobList"`
 	ReplicationControllerList rc.ReplicationControllerList `json:"replicationControllerList"`
 	PodList                   pod.PodList                  `json:"podList"`
 	DaemonSetList             daemonset.DaemonSetList      `json:"daemonSetList"`
@@ -54,6 +56,7 @@ func GetWorkloads(client kubernetes.Interface, metricClient metricapi.MetricClie
 		ReplicationControllerList: common.GetReplicationControllerListChannel(client, nsQuery, 1),
 		ReplicaSetList:            common.GetReplicaSetListChannel(client, nsQuery, 2),
 		JobList:                   common.GetJobListChannel(client, nsQuery, 1),
+		CronJobList:               common.GetCronJobListChannel(client, nsQuery, 1),
 		DaemonSetList:             common.GetDaemonSetListChannel(client, nsQuery, 1),
 		DeploymentList:            common.GetDeploymentListChannel(client, nsQuery, 1),
 		StatefulSetList:           common.GetStatefulSetListChannel(client, nsQuery, 1),
@@ -69,10 +72,11 @@ func GetWorkloads(client kubernetes.Interface, metricClient metricapi.MetricClie
 func GetWorkloadsFromChannels(channels *common.ResourceChannels, metricClient metricapi.MetricClient,
 	dsQuery *dataselect.DataSelectQuery) (*Workloads, error) {
 
-	numErrs := 7
+	numErrs := 8
 	errChan := make(chan error, numErrs)
 	rsChan := make(chan *replicaset.ReplicaSetList)
 	jobChan := make(chan *job.JobList)
+	cjChan := make(chan *cronjob.CronJobList)
 	deploymentChan := make(chan *deployment.DeploymentList)
 	rcChan := make(chan *rc.ReplicationControllerList)
 	podChan := make(chan *pod.PodList)
@@ -95,6 +99,12 @@ func GetWorkloadsFromChannels(channels *common.ResourceChannels, metricClient me
 		jobList, err := job.GetJobListFromChannels(channels, dsQuery, nil)
 		errChan <- err
 		jobChan <- jobList
+	}()
+
+	go func() {
+		cronJobList, err := cronjob.GetCronJobListFromChannels(channels, dsQuery, nil)
+		errChan <- err
+		cjChan <- cronJobList
 	}()
 
 	go func() {
@@ -133,6 +143,7 @@ func GetWorkloadsFromChannels(channels *common.ResourceChannels, metricClient me
 	workloads := &Workloads{
 		ReplicaSetList:            *(<-rsChan),
 		JobList:                   *(<-jobChan),
+		CronJobList:               *(<-cjChan),
 		ReplicationControllerList: *(<-rcChan),
 		DeploymentList:            *(<-deploymentChan),
 		PodList:                   *(<-podChan),
@@ -141,8 +152,8 @@ func GetWorkloadsFromChannels(channels *common.ResourceChannels, metricClient me
 	}
 
 	workloads.Errors = errors.MergeErrors(workloads.DaemonSetList.Errors, workloads.DeploymentList.Errors,
-		workloads.JobList.Errors, workloads.PodList.Errors, workloads.ReplicaSetList.Errors,
-		workloads.ReplicationControllerList.Errors, workloads.StatefulSetList.Errors)
+		workloads.JobList.Errors, workloads.CronJobList.Errors, workloads.PodList.Errors,
+		workloads.ReplicaSetList.Errors, workloads.ReplicationControllerList.Errors, workloads.StatefulSetList.Errors)
 
 	return workloads, nil
 }

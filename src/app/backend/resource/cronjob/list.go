@@ -22,17 +22,16 @@ import (
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"k8s.io/api/batch/v1beta1"
+	"k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
-	batch2 "k8s.io/api/batch/v1beta1"
 )
 
 // CronJobList contains a list of CronJobs in the cluster.
 type CronJobList struct {
 	ListMeta          api.ListMeta       `json:"listMeta"`
 	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`
-
-	// Unordered list of CronJobs.
-	CronJobs []CronJob `json:"cronJobs"`
+	Items             []CronJob          `json:"items"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
@@ -41,25 +40,21 @@ type CronJobList struct {
 // CronJob is a presentation layer view of Kubernetes CronJob resource. This means it is CronJob plus additional
 // augmented data we can get from other sources
 type CronJob struct {
-	ObjectMeta api.ObjectMeta `json:"objectMeta"`
-	TypeMeta   api.TypeMeta   `json:"typeMeta"`
-
-	// Aggregate information about pods belonging to this CronJob.
-	Pods common.PodInfo `json:"pods"`
-
-	// Container images of the CronJob.
-	ContainerImages []string `json:"containerImages"`
+	ObjectMeta   api.ObjectMeta `json:"objectMeta"`
+	TypeMeta     api.TypeMeta   `json:"typeMeta"`
+	Schedule     string         `json:"schedule"`
+	Suspend      *bool          `json:"suspend"`
+	Active       int            `json:"active"`
+	LastSchedule *v1.Time       `json:"lastSchedule"`
 }
 
 // GetCronJobList returns a list of all CronJobs in the cluster.
 func GetCronJobList(client client.Interface, nsQuery *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) (*CronJobList, error) {
-	log.Print("Getting list of all cronJobs in the cluster")
+	log.Print("Getting list of all cron jobs in the cluster")
 
 	channels := &common.ResourceChannels{
 		CronJobList: common.GetCronJobListChannel(client, nsQuery, 1),
-		PodList:     common.GetPodListChannel(client, nsQuery, 1),
-		EventList:   common.GetEventListChannel(client, nsQuery, 1),
 	}
 
 	return GetCronJobListFromChannels(channels, dsQuery, metricClient)
@@ -80,11 +75,11 @@ func GetCronJobListFromChannels(channels *common.ResourceChannels, dsQuery *data
 	return toCronJobList(cronJobs.Items, nonCriticalErrors, dsQuery, metricClient), nil
 }
 
-func toCronJobList(cronJobs []batch2.CronJob, nonCriticalErrors []error, dsQuery *dataselect.DataSelectQuery,
+func toCronJobList(cronJobs []v1beta1.CronJob, nonCriticalErrors []error, dsQuery *dataselect.DataSelectQuery,
 	metricClient metricapi.MetricClient) *CronJobList {
 
-	cronJobList := &CronJobList{
-		CronJobs: make([]CronJob, 0),
+	list := &CronJobList{
+		Items:    make([]CronJob, 0),
 		ListMeta: api.ListMeta{TotalItems: len(cronJobs)},
 		Errors:   nonCriticalErrors,
 	}
@@ -94,24 +89,28 @@ func toCronJobList(cronJobs []batch2.CronJob, nonCriticalErrors []error, dsQuery
 	cronJobCells, metricPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(ToCells(cronJobs),
 		dsQuery, cachedResources, metricClient)
 	cronJobs = FromCells(cronJobCells)
-	cronJobList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
+	list.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
 	for _, cronJob := range cronJobs {
-		cronJobList.CronJobs = append(cronJobList.CronJobs, toCronJob(&cronJob))
+		list.Items = append(list.Items, toCronJob(&cronJob))
 	}
 
 	cumulativeMetrics, err := metricPromises.GetMetrics()
-	cronJobList.CumulativeMetrics = cumulativeMetrics
+	list.CumulativeMetrics = cumulativeMetrics
 	if err != nil {
-		cronJobList.CumulativeMetrics = make([]metricapi.Metric, 0)
+		list.CumulativeMetrics = make([]metricapi.Metric, 0)
 	}
 
-	return cronJobList
+	return list
 }
 
-func toCronJob(cronJob *batch2.CronJob) CronJob {
+func toCronJob(cj *v1beta1.CronJob) CronJob {
 	return CronJob{
-		ObjectMeta: api.NewObjectMeta(cronJob.ObjectMeta),
-		TypeMeta:   api.NewTypeMeta(api.ResourceKindCronJob),
+		ObjectMeta:   api.NewObjectMeta(cj.ObjectMeta),
+		TypeMeta:     api.NewTypeMeta(api.ResourceKindCronJob),
+		Schedule:     cj.Spec.Schedule,
+		Suspend:      cj.Spec.Suspend,
+		Active:       len(cj.Status.Active),
+		LastSchedule: cj.Status.LastScheduleTime,
 	}
 }
