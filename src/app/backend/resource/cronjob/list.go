@@ -37,8 +37,7 @@ type CronJobList struct {
 	Errors []error `json:"errors"`
 }
 
-// CronJob is a presentation layer view of Kubernetes CronJob resource. This means it is CronJob plus additional
-// augmented data we can get from other sources
+// CronJob is a presentation layer view of Kubernetes Cron Job resource.
 type CronJob struct {
 	ObjectMeta   api.ObjectMeta `json:"objectMeta"`
 	TypeMeta     api.TypeMeta   `json:"typeMeta"`
@@ -96,9 +95,10 @@ func toCronJobList(cronJobs []v1beta1.CronJob, nonCriticalErrors []error, dsQuer
 	}
 
 	cumulativeMetrics, err := metricPromises.GetMetrics()
-	list.CumulativeMetrics = cumulativeMetrics
 	if err != nil {
 		list.CumulativeMetrics = make([]metricapi.Metric, 0)
+	} else {
+		list.CumulativeMetrics = cumulativeMetrics
 	}
 
 	return list
