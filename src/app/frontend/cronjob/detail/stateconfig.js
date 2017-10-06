@@ -22,8 +22,6 @@ import {ActionBarController} from './actionbar_controller';
 import {CronJobDetailController} from './controller';
 
 /**
- * Config state object for the Cron Job detail view.
- *
  * @type {!ui.router.StateConfig}
  */
 export const config = {

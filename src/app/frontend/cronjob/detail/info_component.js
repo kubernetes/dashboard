@@ -13,28 +13,9 @@
 // limitations under the License.
 
 /**
- * @final
- */
-export default class CronJobInfoController {
-  /**
-   * Constructs replication controller info object.
-   */
-  constructor() {
-    /**
-     * Cron Job details. Initialized from the scope.
-     * @export {!backendApi.CronJobDetail}
-     */
-    this.cronJob;
-  }
-}
-
-/**
- * Definition object for the component that displays cron job info.
- *
  * @return {!angular.Component}
  */
 export const cronJobInfoComponent = {
-  controller: CronJobInfoController,
   templateUrl: 'cronjob/detail/info.html',
   bindings: {
     /** {!backendApi.CronJobDetail} */
