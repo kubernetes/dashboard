@@ -23,13 +23,15 @@ export class WorkloadsController {
    * @param {!angular.Resource} kdDaemonSetListResource
    * @param {!angular.Resource} kdDeploymentListResource
    * @param {!angular.Resource} kdStatefulSetListResource
+   * @param {!angular.Resource} kdCronJobListResource
    * @param {!angular.Resource} kdJobListResource
    * @param {!angular.Resource} kdRCListResource
    * @ngInject
    */
   constructor(
       workloads, kdPodListResource, kdReplicaSetListResource, kdDaemonSetListResource,
-      kdDeploymentListResource, kdStatefulSetListResource, kdJobListResource, kdRCListResource) {
+      kdDeploymentListResource, kdStatefulSetListResource, kdCronJobListResource, kdJobListResource,
+      kdRCListResource) {
     /** @export {!backendApi.Workloads} */
     this.workloads = workloads;
 
@@ -52,6 +54,9 @@ export class WorkloadsController {
     this.jobListResource = kdJobListResource;
 
     /** @export {!angular.Resource} */
+    this.cronJobListResource = kdCronJobListResource;
+
+    /** @export {!angular.Resource} */
     this.rcListResource = kdRCListResource;
   }
 
@@ -64,6 +69,7 @@ export class WorkloadsController {
     let resourcesLength = this.workloads.deploymentList.listMeta.totalItems +
         this.workloads.replicaSetList.listMeta.totalItems +
         this.workloads.jobList.listMeta.totalItems +
+        this.workloads.cronJobList.listMeta.totalItems +
         this.workloads.replicationControllerList.listMeta.totalItems +
         this.workloads.podList.listMeta.totalItems +
         this.workloads.daemonSetList.listMeta.totalItems +

@@ -16,6 +16,20 @@ limitations under the License.
 
 <kd-resource-card object-meta="$ctrl.cronJob.objectMeta"
                   type-meta="$ctrl.cronJob.typeMeta">
+  <kd-resource-card-status layout="row" ng-switch="$ctrl.cronJob.suspend">
+    <md-icon class="material-icons kd-error"
+             ng-switch-when="true">
+      error
+      <md-tooltip md-delay="500"
+                  md-autohide>
+        [[Cron Job is suspended|]]
+      </md-tooltip>
+    </md-icon>
+    <md-icon class="material-icons kd-success"
+             ng-switch-default>
+      check_circle
+    </md-icon>
+  </kd-resource-card-status>
   <kd-resource-card-columns>
     <kd-resource-card-column>
       <div>

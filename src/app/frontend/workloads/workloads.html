@@ -29,6 +29,14 @@ limitations under the License.
   </kd-graph-card>
 </div>
 
+<kd-content-card ng-if="$ctrl.workloads.cronJobList.items.length">
+  <kd-content>
+    <kd-cron-job-card-list cron-job-list="$ctrl.workloads.cronJobList"
+                           cron-job-list-resource="$ctrl.cronJobListResource">
+    </kd-cron-job-card-list>
+  </kd-content>
+</kd-content-card>
+
 <div ng-if="!$ctrl.shouldShowZeroState()">
   <kd-content-card ng-if="$ctrl.workloads.daemonSetList.daemonSets.length">
     <kd-content>
