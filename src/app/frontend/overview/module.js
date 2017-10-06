@@ -20,6 +20,7 @@ import daemonSetModule from '../daemonset/module';
 import deploymentModule from '../deployment/module';
 import ingressModule from '../ingress/module';
 import jobModule from '../job/module';
+import cronJobModule from '../cronjob/module';
 import persistentVolumeClaimModule from '../persistentvolumeclaim/module';
 import replicaSetModule from '../replicaset/module';
 import replicationControllerModule from '../replicationcontroller/module';
@@ -44,6 +45,7 @@ export default angular
           componentsModule.name,
           chromeModule.name,
           jobModule.name,
+          cronJobModule.name,
           replicationControllerModule.name,
           replicaSetModule.name,
           deploymentModule.name,

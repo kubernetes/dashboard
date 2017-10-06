@@ -18,7 +18,7 @@ import filtersModule from '../common/filters/module';
 import daemonSetModule from '../daemonset/module';
 import deploymentModule from '../deployment/module';
 import jobModule from '../job/module';
-import cronJobModule from '../job/module';
+import cronJobModule from '../cronjob/module';
 import replicaSetModule from '../replicaset/module';
 import replicationControllerModule from '../replicationcontroller/module';
 import statefulSetModule from '../statefulset/module';

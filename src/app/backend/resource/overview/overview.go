@@ -70,6 +70,7 @@ func GetOverview(client kubernetes.Interface, metricClient metricapi.MetricClien
 		Workloads: workload.Workloads{
 			DeploymentList:            workloadsResources.DeploymentList,
 			ReplicaSetList:            workloadsResources.ReplicaSetList,
+			CronJobList:               workloadsResources.CronJobList,
 			JobList:                   workloadsResources.JobList,
 			ReplicationControllerList: workloadsResources.ReplicationControllerList,
 			PodList:                   workloadsResources.PodList,
