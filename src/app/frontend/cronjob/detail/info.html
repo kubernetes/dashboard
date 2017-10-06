@@ -15,39 +15,31 @@ limitations under the License.
 -->
 
 <kd-info-card>
-  <kd-info-card-header>[[Details|Header in a detail view]]</kd-info-card-header>
-  <kd-info-card-section name="[[Metadata|]]">
-    <kd-info-card-entry title="[[Name|]]">
-      <kd-middle-ellipsis display-string="{{::$ctrl.cronJob.objectMeta.name}}">
-      </kd-middle-ellipsis>
-    </kd-info-card-entry>
-    <kd-info-card-entry title="[[Namespace|]]">
-      {{::$ctrl.cronJob.objectMeta.namespace}}
-    </kd-info-card-entry>
-    <kd-info-card-entry title="[[Labels|]]">
-      <kd-labels labels="::$ctrl.cronJob.objectMeta.labels"></kd-labels>
-    </kd-info-card-entry>
-    <kd-info-card-entry title="[[Schedule|]]"
+  <kd-info-card-header>[[Details|Cron Job's details card header.]]</kd-info-card-header>
+  <kd-info-card-section>
+    <kd-object-meta-info-card object-meta="::$ctrl.cronJob.objectMeta">
+    </kd-object-meta-info-card>
+    <kd-info-card-entry title="[[Schedule|Cron Job's attribute label.]]"
                         ng-if="::$ctrl.cronJob.schedule">
       {{::$ctrl.cronJob.schedule}}
     </kd-info-card-entry>
-    <kd-info-card-entry title="[[Active|]]"
+    <kd-info-card-entry title="[[Active|Cron Job's attribute label.]]"
                         ng-if="::$ctrl.cronJob.active">
       {{::$ctrl.cronJob.active}}
     </kd-info-card-entry>
-    <kd-info-card-entry title="[[Suspend|]]"
+    <kd-info-card-entry title="[[Suspend|Cron Job's attribute label.]]"
                         ng-if="::$ctrl.cronJob.suspend">
       {{::$ctrl.cronJob.suspend}}
     </kd-info-card-entry>
-    <kd-info-card-entry title="[[Last Schedule|]]"
+    <kd-info-card-entry title="[[Last Schedule|Cron Job's attribute label.]]"
                         ng-if="::$ctrl.cronJob.lastSchedule">
       {{::$ctrl.cronJob.lastSchedule}}
     </kd-info-card-entry>
-    <kd-info-card-entry title="[[Concurrency Policy|]]"
+    <kd-info-card-entry title="[[Concurrency Policy|Cron Job's attribute label.]]"
                         ng-if="::$ctrl.cronJob.concurrencyPolicy">
       {{::$ctrl.cronJob.concurrencyPolicy}}
     </kd-info-card-entry>
-    <kd-info-card-entry title="[[Starting Deadline Seconds|]]"
+    <kd-info-card-entry title="[[Starting Deadline Seconds|Cron Job's attribute label.]]"
                         ng-if="::$ctrl.cronJob.startingDeadlineSeconds">
       {{::$ctrl.cronJob.startingDeadlineSeconds}}
     </kd-info-card-entry>

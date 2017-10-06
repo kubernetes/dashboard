@@ -13,20 +13,6 @@
 // limitations under the License.
 
 /**
- * A component that displays common resource detail properties from object meta.
- * @final
- */
-export class InfoCardController {
-  /**
-   * @ngInject
-   */
-  constructor() {
-    /** @export {!backendApi.ObjectMeta} */
-    this.objectMeta;
-  }
-}
-
-/**
  * @type {!angular.Component}
  */
 export const infoCardComponent = {
@@ -34,5 +20,4 @@ export const infoCardComponent = {
   bindings: {
     'objectMeta': '<',
   },
-  controller: InfoCardController,
 };
