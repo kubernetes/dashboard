@@ -27,10 +27,9 @@ export class Controller {
 
   /** @export */
   openDetails() {
-    // TODO make this dialog prettier
     let dialog = this.mdDialog_.alert()
-                     .title(i18n.MSG_CONFIG_DIALOG_TITLE)
-                     .textContent(`kubectl.kubernetes.io/last-applied-configuration: ${this.value}`)
+                     .title(`kubectl.kubernetes.io/last-applied-configuration`)
+                     .textContent(this.value)
                      .ok(i18n.MSG_CONFIG_DIALOG_CLOSE_ACTION);
     this.mdDialog_.show(dialog);
   }
@@ -39,11 +38,6 @@ export class Controller {
 const i18n = {
   /** @export {string} @desc Action "Close" on a dialog. */
   MSG_CONFIG_DIALOG_CLOSE_ACTION: goog.getMsg('Close'),
-  /**
-    @export {string} @desc Label for the
-    kubectl.kubernetes.io/last-applied-configuration annotation.
-  */
-  MSG_CONFIG_DIALOG_TITLE: goog.getMsg('Last applied configuration'),
 };
 
 /**
