@@ -39,6 +39,20 @@ limitations under the License.
       <kd-labels labels="::$ctrl.cronJob.objectMeta.labels"></kd-labels>
     </kd-resource-card-column>
     <kd-resource-card-column>
+      <span>{{::$ctrl.cronJob.schedule}}</span>
+      <span ng-hide="::$ctrl.cronJob.schedule">-</span>
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+      {{::!!$ctrl.cronJob.suspend}}
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+      {{::$ctrl.cronJob.active}}
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+      <span>{{::$ctrl.cronJob.lastSchedule | relativeTime}}</span>
+      <span ng-hide="::$ctrl.cronJob.lastSchedule">-</span>
+    </kd-resource-card-column>
+    <kd-resource-card-column>
       {{::$ctrl.cronJob.objectMeta.creationTimestamp | relativeTime}}
       <md-tooltip md-delay="500"
                   md-autohide>
