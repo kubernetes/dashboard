@@ -24,6 +24,7 @@ import csrfTokenModule from './common/csrftoken/module';
 import scalingModule from './common/scaling/module';
 import configModule from './config/module';
 import configMapModule from './configmap/module';
+import cronJobModule from './cronjob/module';
 import daemonSetModule from './daemonset/module';
 import deployModule from './deploy/module';
 import deploymentModule from './deployment/module';
@@ -35,7 +36,6 @@ import {Controller} from './index_controller';
 import routeConfig from './index_route';
 import ingressModule from './ingress/module';
 import jobModule from './job/module';
-import cronJobModule from './cronjob/module';
 import loginModule from './login/module';
 import logsModule from './logs/module';
 import namespaceModule from './namespace/module';
@@ -77,7 +77,7 @@ export default angular
           deployModule.name,
           errorModule.name,
           jobModule.name,
-            cronJobModule.name,
+          cronJobModule.name,
           loginModule.name,
           logsModule.name,
           shellModule.name,

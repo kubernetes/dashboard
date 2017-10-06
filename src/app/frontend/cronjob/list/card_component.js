@@ -54,7 +54,8 @@ class CronJobCardController {
    */
   getCronJobDetailHref() {
     return this.state_.href(
-        stateName, new StateParams(this.cronJob.objectMeta.namespace, this.cronJob.objectMeta.name));
+        stateName,
+        new StateParams(this.cronJob.objectMeta.namespace, this.cronJob.objectMeta.name));
   }
 }
 

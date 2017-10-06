@@ -63,10 +63,10 @@ limitations under the License.
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
   <kd-cron-job-card pagination-id="{{::$ctrl.getSelectId()}}"
-               dir-paginate="cronJob in $ctrl.cronJobList.items | itemsPerPage: default"
-               cron-job="cronJob"
-               show-resource-kind="::$ctrl.showResourceKind"
-               total-items="::$ctrl.cronJobList.listMeta.totalItems">
+                    dir-paginate="cronJob in $ctrl.cronJobList.items | itemsPerPage: default"
+                    cron-job="cronJob"
+                    show-resource-kind="::$ctrl.showResourceKind"
+                    total-items="::$ctrl.cronJobList.listMeta.totalItems">
   </kd-cron-job-card>
   <kd-resource-card-list-footer>
     <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
