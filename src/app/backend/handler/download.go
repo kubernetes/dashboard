@@ -22,7 +22,7 @@ import (
 )
 
 func handleDownload(response *restful.Response, result io.ReadCloser, filename string) {
-	header := fmt.Sprintf("attachment; filename='%v'", filename)
+	header := fmt.Sprintf("attachment; filename=\"%v\"", filename)
 	response.AddHeader("Content-Disposition", header)
 
 	defer result.Close()
