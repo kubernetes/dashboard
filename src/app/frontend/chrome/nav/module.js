@@ -15,6 +15,7 @@
 
 import stateModule from '../../common/state/module';
 
+import {customResourceDefinitionNavComponent} from './customresourcedefinitionnav_component';
 import {hamburgerComponent} from './hamburger_component';
 import {navComponent} from './nav_component';
 import {NavService} from './nav_service';
@@ -40,4 +41,5 @@ export default angular
     .component('kdNavItem', navItemComponent)
     .component('kdNav', navComponent)
     .component('kdRoleNav', roleNavComponent)
-    .component('kdThirdPartyResourceNav', thirdPartyResourceNavComponent);
+    .component('kdThirdPartyResourceNav', thirdPartyResourceNavComponent)
+    .component('kdCustomResourceDefinitionNav', customResourceDefinitionNavComponent);

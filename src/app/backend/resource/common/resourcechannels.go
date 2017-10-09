@@ -23,6 +23,8 @@ import (
 	extensions "k8s.io/api/extensions/v1beta1"
 	rbac "k8s.io/api/rbac/v1beta1"
 	storage "k8s.io/api/storage/v1beta1"
+	"k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
+	apiextensionsclient "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
 )
@@ -105,6 +107,9 @@ type ResourceChannels struct {
 
 	// List and error channels to ThirdPartyResources
 	ThirdPartyResourceList ThirdPartyResourceListChannel
+
+	// List and error channels to ThirdPartyResources
+	CustomResourceDefinitionList CustomResourceDefinitionListChannel
 
 	// List and error channels to StorageClasses
 	StorageClassList StorageClassListChannel
@@ -877,6 +882,31 @@ func GetThirdPartyResourceListChannel(client client.Interface,
 
 	go func() {
 		list, err := client.ExtensionsV1beta1().ThirdPartyResources().List(api.ListEverything)
+		for i := 0; i < numReads; i++ {
+			channel.List <- list
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
+// ThirdPartyResourceListChannel is a list and error channels to third party resources.
+type CustomResourceDefinitionListChannel struct {
+	List  chan *v1beta1.CustomResourceDefinitionList
+	Error chan error
+}
+
+// GetThirdPartyResourceListChannel returns a pair of channels to a third party resource list and
+// errors that both must be read numReads times.
+func GetCustomResourceDefinitionListChannel(client apiextensionsclient.Interface, numReads int) CustomResourceDefinitionListChannel {
+	channel := CustomResourceDefinitionListChannel{
+		List:  make(chan *v1beta1.CustomResourceDefinitionList, numReads),
+		Error: make(chan error, numReads),
+	}
+
+	go func() {
+		list, err := client.ApiextensionsV1beta1().CustomResourceDefinitions().List(api.ListEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err

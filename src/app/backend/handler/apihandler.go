@@ -66,6 +66,10 @@ import (
 	errorsK8s "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/client-go/tools/remotecommand"
+
+	apiextensionsclient "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
+
+	"github.com/kubernetes/dashboard/src/app/backend/resource/customresourcedefinition"
 )
 
 const (
@@ -518,6 +522,19 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 		apiV1Ws.GET("/persistentvolumeclaim/{namespace}/{name}").
 			To(apiHandler.handleGetPersistentVolumeClaimDetail).
 			Writes(persistentvolumeclaim.PersistentVolumeClaimDetail{}))
+
+	apiV1Ws.Route(
+		apiV1Ws.GET("/customresourcedefinition").
+			To(apiHandler.handleGetCustomResourceDefinition).
+			Writes(customresourcedefinition.CustomResourceDefinition{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/customresourcedefinition/{customresourcedefinition}/object").
+			To(apiHandler.handleGetCustomResourceObjects).
+			Writes(customresourcedefinition.CustomResourceDefinitionObjList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/customresourcedefinition/{customresourcedefinition}").
+			To(apiHandler.handleGetCustomResourceDefinitionDetail).
+			Writes(customresourcedefinition.CustomResourceDefinitionDetail{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/thirdpartyresource").
@@ -1751,6 +1768,67 @@ func (apiHandler *APIHandler) handleGetThirdPartyResourceObjects(request *restfu
 	name := request.PathParameter("thirdpartyresource")
 	dataSelect := parseDataSelectPathParameter(request)
 	result, err := thirdpartyresource.GetThirdPartyResourceObjects(k8sClient, cfg, dataSelect, name)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+//handleGetCustomResourceDefinition
+func (apiHandler *APIHandler) handleGetCustomResourceDefinition(request *restful.Request, response *restful.Response) {
+	cfg, err := apiHandler.cManager.Config(request)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	apiextensionsclientset, err := apiextensionsclient.NewForConfig(cfg)
+	if err != nil {
+		panic(err)
+	}
+
+	dataSelect := parseDataSelectPathParameter(request)
+	result, err := customresourcedefinition.ListCustomResourceDefinition(apiextensionsclientset, dataSelect)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetCustomResourceObjects(request *restful.Request, response *restful.Response) {
+	cfg, err := apiHandler.cManager.Config(request)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	apiextensionsclientset, err := apiextensionsclient.NewForConfig(cfg)
+	if err != nil {
+		panic(err)
+	}
+
+	name := request.PathParameter("customresourcedefinition")
+	dataSelect := parseDataSelectPathParameter(request)
+	result, err := customresourcedefinition.GetCustomResourceDefinitionObjs(apiextensionsclientset, cfg, dataSelect, name)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetCustomResourceDefinitionDetail(request *restful.Request, response *restful.Response) {
+	cfg, err := apiHandler.cManager.Config(request)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	apiextensionsclientset, err := apiextensionsclient.NewForConfig(cfg)
+	if err != nil {
+		panic(err)
+	}
+	name := request.PathParameter("customresourcedefinition")
+	result, err := customresourcedefinition.GetCustomResourceDefinitionDetail(apiextensionsclientset, cfg, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return

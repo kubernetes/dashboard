@@ -12,41 +12,43 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package thirdpartyresource
+package customresourcedefinition
 
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
-	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/runtime/serializer"
-	"k8s.io/client-go/kubernetes/scheme"
 	"k8s.io/client-go/rest"
+
+	"k8s.io/apiextensions-apiserver/pkg/client/clientset/internalclientset/scheme"
+	"k8s.io/apimachinery/pkg/runtime/schema"
 )
 
-// this is a rest client that takes a config file
-func newRESTClient(config *rest.Config) (*rest.RESTClient, error) {
-	return rest.RESTClientFor(config)
-}
-
-// gives back a rest config
-func newRESTConfig(config *rest.Config, groupVersion schema.GroupVersion) *rest.Config {
-	config.GroupVersion = &groupVersion
-	config.APIPath = "/apis"
-	config.ContentType = runtime.ContentTypeJSON
-	config.NegotiatedSerializer = serializer.DirectCodecFactory{CodecFactory: scheme.Codecs}
-
+func newRESTClient(config *rest.Config, groupVersion schema.GroupVersion) (*rest.RESTClient, error) {
 	schemeBuilder := runtime.NewSchemeBuilder(
 		func(scheme *runtime.Scheme) error {
 			scheme.AddKnownTypes(
 				groupVersion,
 				&metav1.ListOptions{},
 				&metav1.DeleteOptions{},
-				&ThirdPartyResourceObject{},
-				&ThirdPartyResourceObjectList{},
+				&CustomResourceDefinitionObj{},
+				&CustomResourceDefinitionObjList{},
 			)
 			return nil
 		})
+	if err := schemeBuilder.AddToScheme(scheme.Scheme); err != nil {
+		return nil, err
+	}
 
-	schemeBuilder.AddToScheme(scheme.Scheme)
-	return config
+	config.GroupVersion = &groupVersion
+	config.APIPath = "/apis"
+	config.ContentType = runtime.ContentTypeJSON
+	config.NegotiatedSerializer = serializer.DirectCodecFactory{CodecFactory: scheme.Codecs}
+
+	client, err := rest.RESTClientFor(config)
+	if err != nil {
+		return nil, err
+	}
+
+	return client, nil
 }
