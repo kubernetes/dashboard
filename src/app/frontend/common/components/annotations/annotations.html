@@ -45,7 +45,7 @@ limitations under the License.
   <div class="kd-chips kd-chips-switch"
        ng-show="annotationsCtrl.isMoreAvailable()"
        ng-click="annotationsCtrl.switchLabelsView()">
-    {{annotationsCtrl.isShowingAll() ? "[[show fewer annotations|Text on the button to show fewer annotations.]]" : "[[show all annotations|Text on the button to show all the annotations.]]"}}
+    {{annotationsCtrl.isShowingAll() ? "[[show less|]]" : "[[show all|]]"}}
   </div>
 </div>
 <div ng-hide="::annotationsCtrl.labels">-</div>
