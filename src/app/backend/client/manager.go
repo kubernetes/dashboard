@@ -174,7 +174,7 @@ func (self *clientManager) VerberClient(req *restful.Request) (ResourceVerber, e
 
 	return NewResourceVerber(client.CoreV1().RESTClient(),
 		client.ExtensionsV1beta1().RESTClient(), client.AppsV1beta1().RESTClient(),
-		client.BatchV1().RESTClient(), client.AutoscalingV1().RESTClient(),
+		client.BatchV1().RESTClient(), client.BatchV1beta1().RESTClient(), client.AutoscalingV1().RESTClient(),
 		client.StorageV1beta1().RESTClient()), nil
 }
 
