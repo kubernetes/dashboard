@@ -1,4 +1,4 @@
-// Copyright 2017 The Kubernetes Dashboard Authors.
+// Copyright 2017 The Kubernetes Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -87,6 +87,9 @@ type LogInfo struct {
 
 	// The name of the container the logs are for.
 	ContainerName string `json:"containerName"`
+
+	// The name of the init container the logs are for.
+	InitContainerName string `json:"initContainerName"`
 
 	// Date of the first log line
 	FromDate LogTimestamp `json:"fromDate"`

@@ -1,4 +1,4 @@
-// Copyright 2017 The Kubernetes Dashboard Authors.
+// Copyright 2017 The Kubernetes Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -34,15 +34,19 @@ type ReplicaSet struct {
 
 	// Container images of the Replica Set.
 	ContainerImages []string `json:"containerImages"`
+
+	// Init Container images of the Replica Set.
+	InitContainerImages []string `json:"initContainerImages"`
 }
 
 // ToReplicaSet converts replica set api object to replica set model object.
 func ToReplicaSet(replicaSet *extensions.ReplicaSet, podInfo *common.PodInfo) ReplicaSet {
 	return ReplicaSet{
-		ObjectMeta:      api.NewObjectMeta(replicaSet.ObjectMeta),
-		TypeMeta:        api.NewTypeMeta(api.ResourceKindReplicaSet),
-		ContainerImages: common.GetContainerImages(&replicaSet.Spec.Template.Spec),
-		Pods:            *podInfo,
+		ObjectMeta:          api.NewObjectMeta(replicaSet.ObjectMeta),
+		TypeMeta:            api.NewTypeMeta(api.ResourceKindReplicaSet),
+		ContainerImages:     common.GetContainerImages(&replicaSet.Spec.Template.Spec),
+		InitContainerImages: common.GetInitContainerImages(&replicaSet.Spec.Template.Spec),
+		Pods:                *podInfo,
 	}
 }
 

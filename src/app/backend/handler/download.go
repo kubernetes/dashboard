@@ -1,4 +1,4 @@
-// Copyright 2017 The Kubernetes Dashboard Authors.
+// Copyright 2017 The Kubernetes Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import (
 )
 
 func handleDownload(response *restful.Response, result io.ReadCloser, filename string) {
-	header := fmt.Sprintf("attachment; filename='%v'", filename)
+	header := fmt.Sprintf("attachment; filename=\"%v\"", filename)
 	response.AddHeader("Content-Disposition", header)
 
 	defer result.Close()

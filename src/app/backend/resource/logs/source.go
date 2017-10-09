@@ -1,4 +1,4 @@
-// Copyright 2017 The Kubernetes Dashboard Authors.
+// Copyright 2017 The Kubernetes Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -37,8 +37,9 @@ func getLogSourcesFromPod(k8sClient kubernetes.Interface, ns, resourceName strin
 		return controller.LogSources{}, err
 	}
 	return controller.LogSources{
-		ContainerNames: common.GetContainerNames(&pod.Spec),
-		PodNames:       []string{resourceName},
+		ContainerNames:     common.GetContainerNames(&pod.Spec),
+		InitContainerNames: common.GetInitContainerNames(&pod.Spec),
+		PodNames:           []string{resourceName},
 	}, nil
 }
 

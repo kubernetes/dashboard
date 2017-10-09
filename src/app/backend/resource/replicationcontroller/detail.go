@@ -1,4 +1,4 @@
-// Copyright 2017 The Kubernetes Dashboard Authors.
+// Copyright 2017 The Kubernetes Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -41,6 +41,9 @@ type ReplicationControllerDetail struct {
 
 	// Container image list of the pod template specified by this Replication Controller.
 	ContainerImages []string `json:"containerImages"`
+
+	// Init Container image list of the pod template specified by this Replication Controller.
+	InitContainerImages []string `json:"initContainerImages"`
 
 	// Aggregate information about pods of this replication controller.
 	PodInfo common.PodInfo `json:"podInfo"`
@@ -154,6 +157,7 @@ func toReplicationControllerDetail(replicationController *v1.ReplicationControll
 		ServiceList:                 serviceList,
 		HorizontalPodAutoscalerList: hpas,
 		ContainerImages:             common.GetContainerImages(&replicationController.Spec.Template.Spec),
+		InitContainerImages:         common.GetInitContainerImages(&replicationController.Spec.Template.Spec),
 		Errors:                      nonCriticalErrors,
 	}
 }

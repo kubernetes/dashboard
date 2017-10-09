@@ -1,4 +1,4 @@
-// Copyright 2017 The Kubernetes Dashboard Authors.
+// Copyright 2017 The Kubernetes Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -46,6 +46,9 @@ type DaemonSet struct {
 
 	// Container images of the Daemon Set.
 	ContainerImages []string `json:"containerImages"`
+
+	// InitContainer images of the Daemon Set.
+	InitContainerImages []string `json:"initContainerImages"`
 }
 
 // GetDaemonSetList returns a list of all Daemon Set in the cluster.
@@ -116,10 +119,11 @@ func toDaemonSetList(daemonSets []extensions.DaemonSet, pods []v1.Pod, events []
 		podInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)
 
 		daemonSetList.DaemonSets = append(daemonSetList.DaemonSets, DaemonSet{
-			ObjectMeta:      api.NewObjectMeta(daemonSet.ObjectMeta),
-			TypeMeta:        api.NewTypeMeta(api.ResourceKindDaemonSet),
-			Pods:            podInfo,
-			ContainerImages: common.GetContainerImages(&daemonSet.Spec.Template.Spec),
+			ObjectMeta:          api.NewObjectMeta(daemonSet.ObjectMeta),
+			TypeMeta:            api.NewTypeMeta(api.ResourceKindDaemonSet),
+			Pods:                podInfo,
+			ContainerImages:     common.GetContainerImages(&daemonSet.Spec.Template.Spec),
+			InitContainerImages: common.GetInitContainerImages(&daemonSet.Spec.Template.Spec),
 		})
 	}
 

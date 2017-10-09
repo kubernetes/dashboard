@@ -1,4 +1,4 @@
-// Copyright 2017 The Kubernetes Dashboard Authors.
+// Copyright 2017 The Kubernetes Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -49,6 +49,9 @@ type ReplicaSetDetail struct {
 
 	// Container images of the Replica Set.
 	ContainerImages []string `json:"containerImages"`
+
+	// Init Container images of the Replica Set.
+	InitContainerImages []string `json:"initContainerImages"`
 
 	// List of events related to this Replica Set.
 	EventList common.EventList `json:"eventList"`
@@ -115,6 +118,7 @@ func toReplicaSetDetail(replicaSet *extensions.ReplicaSet, eventList common.Even
 		ObjectMeta:                  api.NewObjectMeta(replicaSet.ObjectMeta),
 		TypeMeta:                    api.NewTypeMeta(api.ResourceKindReplicaSet),
 		ContainerImages:             common.GetContainerImages(&replicaSet.Spec.Template.Spec),
+		InitContainerImages:         common.GetInitContainerImages(&replicaSet.Spec.Template.Spec),
 		Selector:                    replicaSet.Spec.Selector,
 		PodInfo:                     podInfo,
 		PodList:                     podList,

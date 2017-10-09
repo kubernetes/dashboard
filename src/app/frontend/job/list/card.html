@@ -80,6 +80,9 @@ limitations under the License.
       <div ng-repeat="image in ::$ctrl.job.containerImages track by $index">
         <kd-middle-ellipsis display-string="{{::image}}"></kd-middle-ellipsis>
       </div>
+      <div ng-repeat="image in ::$ctrl.job.initContainerImages track by $index">
+        <kd-middle-ellipsis display-string="{{::image}}"></kd-middle-ellipsis>
+      </div>
     </kd-resource-card-column>
     <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
       <kd-logs-button object-meta="::$ctrl.job.objectMeta"
