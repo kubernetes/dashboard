@@ -21,11 +21,14 @@ export class CronJobDetailController {
    * @param {!angular.Resource} kdActiveJobsResource
    * @ngInject
    */
-  constructor(cronJobDetail, kdActiveJobsResource) {
+  constructor(cronJobDetail, kdActiveJobsResource, kdEventsResource) {
     /** @export {!backendApi.CronJobDetail} */
     this.cronJobDetail = cronJobDetail;
 
     /** @export {!angular.Resource} */
     this.activeJobsResource = kdActiveJobsResource;
+
+    /** @export {!angular.Resource} */
+    this.eventsResource = kdEventsResource;
   }
 }

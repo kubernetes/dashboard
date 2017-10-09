@@ -15,8 +15,6 @@
 package cronjob
 
 import (
-	"fmt"
-
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
@@ -84,8 +82,6 @@ func filterJobsByOwnerReferences(refs []v1.ObjectReference, jobs []batch.Job) (m
 	for _, j := range jobs {
 		m[j.UID] = j // Map job to their UIDs to enable quick access.
 	}
-
-	fmt.Println(refs)
 
 	for _, ref := range refs {
 		matchedJob, hasMatch := m[ref.UID]

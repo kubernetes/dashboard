@@ -18,7 +18,7 @@ import filtersModule from '../common/filters/module';
 import namespaceModule from '../common/namespace/module';
 
 import {cronJobInfoComponent} from './detail/info_component';
-import {activeJobsResource} from './detail/stateconfig';
+import {activeJobsResource, eventsResource} from './detail/stateconfig';
 import {cronJobCardComponent} from './list/card_component';
 import {cronJobCardListComponent} from './list/cardlist_component';
 import {cronJobListResource} from './list/stateconfig';
@@ -44,4 +44,5 @@ export default angular
     .component('kdCronJobCardList', cronJobCardListComponent)
     .component('kdCronJobInfo', cronJobInfoComponent)
     .factory('kdActiveJobsResource', activeJobsResource)
+    .factory('kdEventsResource', eventsResource)
     .factory('kdCronJobListResource', cronJobListResource);

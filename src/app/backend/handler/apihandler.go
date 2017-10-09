@@ -358,6 +358,10 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 	apiV1Ws.Route(
 		apiV1Ws.GET("/cronjob/{namespace}/{name}/job").
 			To(apiHandler.handleGetCronJobJobs).
+			Writes(job.JobList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/cronjob/{namespace}/{name}/event").
+			To(apiHandler.handleGetCronJobEvents).
 			Writes(common.EventList{}))
 
 	apiV1Ws.Route(
@@ -2070,6 +2074,24 @@ func (apiHandler *APIHandler) handleGetCronJobJobs(request *restful.Request, res
 	name := request.PathParameter("name")
 	dataSelect := parseDataSelectPathParameter(request)
 	result, err := cronjob.GetCronJobJobs(k8sClient, apiHandler.iManager.Metric().Client(), dataSelect, namespace, name)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetCronJobEvents(request *restful.Request, response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	namespace := request.PathParameter("namespace")
+	name := request.PathParameter("name")
+	dataSelect := parseDataSelectPathParameter(request)
+	result, err := cronjob.GetCronJobEvents(k8sClient, dataSelect, namespace, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return

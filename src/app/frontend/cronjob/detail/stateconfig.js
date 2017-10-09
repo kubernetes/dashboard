@@ -71,6 +71,15 @@ export function activeJobsResource($resource) {
 }
 
 /**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+export function eventsResource($resource) {
+  return $resource('api/v1/cronjob/:namespace/:name/event');
+}
+
+/**
  * @param {!angular.Resource} cronJobDetailResource
  * @return {!angular.$q.Promise}
  * @ngInject

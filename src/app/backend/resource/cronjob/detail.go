@@ -15,9 +15,9 @@
 package cronjob
 
 import (
-	"fmt"
-
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/job"
 	batch2 "k8s.io/api/batch/v1beta1"
@@ -27,9 +27,10 @@ import (
 
 // CronJobDetail contains Cron Job details.
 type CronJobDetail struct {
-	ConcurrencyPolicy       string      `json:"concurrencyPolicy"`
-	StartingDeadLineSeconds *int64      `json:"startingDeadlineSeconds"`
-	ActiveJobs              job.JobList `json:"activeJobs"`
+	ConcurrencyPolicy       string           `json:"concurrencyPolicy"`
+	StartingDeadLineSeconds *int64           `json:"startingDeadlineSeconds"`
+	ActiveJobs              job.JobList      `json:"activeJobs"`
+	Events                  common.EventList `json:"events"'`
 
 	// Extends list item structure.
 	CronJob `json:",inline"`
@@ -47,25 +48,30 @@ func GetCronJobDetail(client k8sClient.Interface, dsQuery *dataselect.DataSelect
 		return nil, err
 	}
 
-	fmt.Println(rawObject)
-	fmt.Println(rawObject.Status.Active)
-	fmt.Println(len(rawObject.Status.Active))
-
 	activeJobs, err := GetCronJobJobs(client, metricClient, dsQuery, namespace, name)
-	if err != nil {
-		return nil, err
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	cj := toCronJobDetail(rawObject, *activeJobs, []error{})
+	events, err := GetCronJobEvents(client, dsQuery, namespace, name)
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
+	}
+
+	cj := toCronJobDetail(rawObject, *activeJobs, *events, nonCriticalErrors)
 	return &cj, nil
 }
 
-func toCronJobDetail(cj *batch2.CronJob, activeJobs job.JobList, nonCriticalErrors []error) CronJobDetail {
+func toCronJobDetail(cj *batch2.CronJob, activeJobs job.JobList, events common.EventList,
+	nonCriticalErrors []error) CronJobDetail {
 	return CronJobDetail{
 		CronJob:                 toCronJob(cj),
 		ConcurrencyPolicy:       string(cj.Spec.ConcurrencyPolicy),
 		StartingDeadLineSeconds: cj.Spec.StartingDeadlineSeconds,
 		ActiveJobs:              activeJobs,
+		Events:                  events,
 		Errors:                  nonCriticalErrors,
 	}
 }
