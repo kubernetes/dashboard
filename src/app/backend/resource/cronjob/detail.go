@@ -15,7 +15,11 @@
 package cronjob
 
 import (
+	"fmt"
+
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/job"
 	batch2 "k8s.io/api/batch/v1beta1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
@@ -23,8 +27,9 @@ import (
 
 // CronJobDetail contains Cron Job details.
 type CronJobDetail struct {
-	ConcurrencyPolicy       string `json:"concurrencyPolicy"`
-	StartingDeadLineSeconds *int64 `json:"startingDeadlineSeconds"`
+	ConcurrencyPolicy       string      `json:"concurrencyPolicy"`
+	StartingDeadLineSeconds *int64      `json:"startingDeadlineSeconds"`
+	ActiveJobs              job.JobList `json:"activeJobs"`
 
 	// Extends list item structure.
 	CronJob `json:",inline"`
@@ -34,23 +39,33 @@ type CronJobDetail struct {
 }
 
 // GetCronJobDetail gets Cron Job details.
-func GetCronJobDetail(client k8sClient.Interface, metricClient metricapi.MetricClient, namespace, name string) (
-	*CronJobDetail, error) {
+func GetCronJobDetail(client k8sClient.Interface, dsQuery *dataselect.DataSelectQuery,
+	metricClient metricapi.MetricClient, namespace, name string) (*CronJobDetail, error) {
 
 	rawObject, err := client.BatchV1beta1().CronJobs(namespace).Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
 
-	job := toCronJobDetail(rawObject, []error{})
-	return &job, nil
+	fmt.Println(rawObject)
+	fmt.Println(rawObject.Status.Active)
+	fmt.Println(len(rawObject.Status.Active))
+
+	activeJobs, err := GetCronJobJobs(client, metricClient, dsQuery, namespace, name)
+	if err != nil {
+		return nil, err
+	}
+
+	cj := toCronJobDetail(rawObject, *activeJobs, []error{})
+	return &cj, nil
 }
 
-func toCronJobDetail(cj *batch2.CronJob, nonCriticalErrors []error) CronJobDetail {
+func toCronJobDetail(cj *batch2.CronJob, activeJobs job.JobList, nonCriticalErrors []error) CronJobDetail {
 	return CronJobDetail{
 		CronJob:                 toCronJob(cj),
 		ConcurrencyPolicy:       string(cj.Spec.ConcurrencyPolicy),
 		StartingDeadLineSeconds: cj.Spec.StartingDeadlineSeconds,
+		ActiveJobs:              activeJobs,
 		Errors:                  nonCriticalErrors,
 	}
 }

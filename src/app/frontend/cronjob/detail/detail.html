@@ -17,3 +17,14 @@ limitations under the License.
 <kd-warnings warnings="::ctrl.cronJobDetail.errors"></kd-warnings>
 
 <kd-cron-job-info cron-job="::ctrl.cronJobDetail"></kd-cron-job-info>
+
+<kd-content-card>
+  <kd-content>
+    <kd-job-card-list job-list="ctrl.cronJobDetail.activeJobs"
+                      job-list-resource="ctrl.jobListResource">
+      <kd-empty-list-text>
+        [[There are currently no Jobs managed by this Cron Job.|]]
+      </kd-empty-list-text>
+    </kd-job-card-list>
+  </kd-content>
+</kd-content-card>
