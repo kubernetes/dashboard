@@ -108,7 +108,7 @@
     "html-minifier": "~3.5.3",
     "http-proxy-middleware": "~0.17.4",
     "isparta": "~4.0.0",
-    "js-beautify": "~1.6.14",
+    "js-beautify": "~1.7.4",
     "jsesc": "~2.5.1",
     "karma": "1.7.1",
     "karma-browserify": "~5.1.1",
