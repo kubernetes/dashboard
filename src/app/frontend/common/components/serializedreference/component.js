@@ -15,6 +15,7 @@
 import {stateName as daemonSetStateName} from '../../../daemonset/detail/state';
 import {stateName as deploymentStateName} from '../../../deployment/detail/state';
 import {stateName as jobStateName} from '../../../job/detail/state';
+import {stateName as cronJobStateName} from '../../../cronjob/detail/state';
 import {stateName as replicaSetStateName} from '../../../replicaset/detail/state';
 import {stateName as replicationControllerStateName} from '../../../replicationcontroller/detail/state';
 import {stateName as statefulSetStateName} from '../../../statefulset/detail/state';
@@ -27,6 +28,7 @@ const referenceKindToDetailStateName = {
   DaemonSet: daemonSetStateName,
   StatefulSet: statefulSetStateName,
   Job: jobStateName,
+  CronJob: cronJobStateName,
 };
 
 /** @final */
