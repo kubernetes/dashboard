@@ -14,10 +14,15 @@
 
 package cronjob_test
 
+import (
+	"errors"
+)
+
 var (
 	name         = "test-name"
 	namespace    = "test-namespace"
 	suspend      = false
 	labels       = map[string]string{"app": "test-app"}
 	eventMessage = "test-message"
+	customError  = errors.New("test-error")
 )
