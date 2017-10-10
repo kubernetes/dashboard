@@ -21,6 +21,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/cronjob"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/deployment"
@@ -31,6 +32,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/statefulset"
 	apps "k8s.io/api/apps/v1beta1"
 	batch "k8s.io/api/batch/v1"
+	batch2 "k8s.io/api/batch/v1beta1"
 	"k8s.io/api/core/v1"
 	extensions "k8s.io/api/extensions/v1beta1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -41,6 +43,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 	cases := []struct {
 		k8sRs          extensions.ReplicaSetList
 		k8sJobs        batch.JobList
+		k8sCronJobs    batch2.CronJobList
 		k8sDaemonSet   extensions.DaemonSetList
 		k8sDeployment  extensions.DeploymentList
 		k8sRc          v1.ReplicationControllerList
@@ -49,6 +52,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 		rcs            []replicationcontroller.ReplicationController
 		rs             []replicaset.ReplicaSet
 		jobs           []job.Job
+		cjs            []cronjob.CronJob
 		daemonset      []daemonset.DaemonSet
 		deployment     []deployment.Deployment
 		pod            []pod.Pod
@@ -57,6 +61,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 		{
 			extensions.ReplicaSetList{},
 			batch.JobList{},
+			batch2.CronJobList{},
 			extensions.DaemonSetList{},
 			extensions.DeploymentList{},
 			v1.ReplicationControllerList{},
@@ -65,6 +70,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 			[]replicationcontroller.ReplicationController{},
 			[]replicaset.ReplicaSet{},
 			[]job.Job{},
+			[]cronjob.CronJob{},
 			[]daemonset.DaemonSet{},
 			[]deployment.Deployment{},
 			[]pod.Pod{},
@@ -89,6 +95,12 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 							Selector:    &metaV1.LabelSelector{},
 							Completions: &replicas,
 						},
+					}},
+			},
+			batch2.CronJobList{
+				Items: []batch2.CronJob{
+					{
+						ObjectMeta: metaV1.ObjectMeta{Name: "cj-name"},
 					}},
 			},
 			extensions.DaemonSetList{
@@ -149,6 +161,12 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 					Desired:  &replicas,
 				},
 			}},
+			[]cronjob.CronJob{{
+				ObjectMeta: api.ObjectMeta{
+					Name: "cj-name",
+				},
+				TypeMeta: api.TypeMeta{Kind: api.ResourceKindCronJob},
+			}},
 			[]daemonset.DaemonSet{{
 				ObjectMeta: api.ObjectMeta{
 					Name: "ds-name",
@@ -194,6 +212,12 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 				Jobs:              c.jobs,
 				Errors:            []error{},
 			},
+			CronJobList: cronjob.CronJobList{
+				ListMeta:          api.ListMeta{TotalItems: len(c.jobs)},
+				CumulativeMetrics: make([]metricapi.Metric, 0),
+				Items:             c.cjs,
+				Errors:            []error{},
+			},
 			DaemonSetList: daemonset.DaemonSetList{
 				ListMeta:          api.ListMeta{TotalItems: len(c.daemonset)},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
@@ -228,6 +252,10 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 			},
 			JobList: common.JobListChannel{
 				List:  make(chan *batch.JobList, 1),
+				Error: make(chan error, 1),
+			},
+			CronJobList: common.CronJobListChannel{
+				List:  make(chan *batch2.CronJobList, 1),
 				Error: make(chan error, 1),
 			},
 			ReplicationControllerList: common.ReplicationControllerListChannel{
@@ -271,6 +299,9 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 
 		channels.JobList.Error <- nil
 		channels.JobList.List <- &c.k8sJobs
+
+		channels.CronJobList.Error <- nil
+		channels.CronJobList.List <- &c.k8sCronJobs
 
 		channels.DaemonSetList.Error <- nil
 		channels.DaemonSetList.List <- &c.k8sDaemonSet
