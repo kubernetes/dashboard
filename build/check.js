@@ -47,6 +47,9 @@ const ignoredLicenseCheckFiles = ['fieldpath'];
 function getLicenseFileFilter(...ext) {
   let ignorePattern =
       ignoredLicenseCheckFiles.length > 0 ? `!(${ignoredLicenseCheckFiles.join()})` : '';
+  if (ext.length === 1) {
+    return `**/${ignorePattern}*.${ext}`;
+  }
   return `**/${ignorePattern}*.{${ext.join()}}`;
 }
 
