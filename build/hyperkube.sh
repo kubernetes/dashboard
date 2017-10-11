@@ -13,12 +13,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Starts local hypercube cluster in a Docker container.
-# Learn more at https://github.com/kubernetes/kubernetes/blob/master/docs/getting-started-guides/docker.md
+ETCD_VERSION=v3.2.9
+ETCD_DIR=/tmp/etcd
+KUBECTL_BIN=/tmp/kubectl
 
-curl -s https://raw.githubusercontent.com/Mirantis/kubeadm-dind-cluster/master/fixed/dind-cluster-v1.7.sh | bash /dev/stdin up
+set -x
 
-curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.8.0/bin/linux/amd64/kubectl
-sudo chmod +x ./kubectl
+# Download etcd.
+mkdir -p ${ETCD_DIR}
+curl -L https://github.com/coreos/etcd/releases/download/${ETCD_VERSION}/etcd-${ETCD_VERSION}-linux-amd64.tar.gz -o /tmp/etcd-${ETCD_VERSION}-linux-amd64.tar.gz
+tar xzvf /tmp/etcd-${ETCD_VERSION}-linux-amd64.tar.gz -C ${ETCD_DIR} --strip-components=1
 
-./kubectl get nodes
+# Download kubectl.
+curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl -o ${KUBECTL_BIN}
+sudo chmod +x ${KUBECTL_BIN}
+
+# Install cfssl.
+go get -u github.com/cloudflare/cfssl/cmd/...
+
+# Download Kubernetes.
+# TODO
