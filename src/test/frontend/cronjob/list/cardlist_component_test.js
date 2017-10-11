@@ -27,8 +27,7 @@ describe('CronJob Card List controller', () => {
       /** @type {!NamespaceService} */
       data = kdNamespaceService;
       /** @type {!CronJobCardListController} */
-      ctrl = $componentController(
-          'kdCronJobCardList', {kdNamespaceService_: data});
+      ctrl = $componentController('kdCronJobCardList', {kdNamespaceService_: data});
     });
   });
 
