@@ -16,32 +16,12 @@
 # Starts local hypercube cluster in a Docker container.
 # Learn more at https://github.com/kubernetes/kubernetes/blob/master/docs/getting-started-guides/docker.md
 
-# Version of kubernetes to use.
-K8S_VERSION="v1.5.4"
-# Version heapster to use.
-HEAPSTER_VERSION="v1.2.0"
-# Port of the heapster to serve on.
-HEAPSTER_PORT=8082
-
-docker run \
-    --net=host \
-    --pid=host \
-    --privileged=true \
-    -d \
-    gcr.io/google_containers/hyperkube-amd64:${K8S_VERSION} \
-    /nsenter \
-      --target=1 \
-      --mount \
-      --wd=. \
-      -- ./hyperkube kubelet \
-        --allow-privileged=true \
-        --hostname-override="127.0.0.1" \
-        --address="0.0.0.0" \
-        --api-servers=http://localhost:8080 \
-        --config=etc/kubernetes/manifests \
-        --v=2
+apt-get update && apt-get install -y apt-transport-https
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+cat <<EOF >/etc/apt/sources.list.d/kubernetes.list
+deb http://apt.kubernetes.io/ kubernetes-xenial main
+EOF
+apt-get update
+apt-get install -y kubelet kubeadm kubectl
 
 
-# Runs Heapster in standalone mode
-docker run --net=host -d gcr.io/google_containers/heapster:${HEAPSTER_VERSION} -port ${HEAPSTER_PORT} \
-    --source=kubernetes:http://127.0.0.1:8080?inClusterConfig=false&auth=""
