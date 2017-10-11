@@ -16,6 +16,10 @@
 ETCD_VERSION=v3.2.9
 ETCD_DIR=/tmp/etcd
 KUBECTL_BIN=/tmp/kubectl
+K8S_VERSION=v1.8.0
+K8S_DIR=/tmp/k8s
+
+# TODO Cache build.
 
 set -x
 
@@ -24,12 +28,20 @@ mkdir -p ${ETCD_DIR}
 curl -L https://github.com/coreos/etcd/releases/download/${ETCD_VERSION}/etcd-${ETCD_VERSION}-linux-amd64.tar.gz -o /tmp/etcd-${ETCD_VERSION}-linux-amd64.tar.gz
 tar xzvf /tmp/etcd-${ETCD_VERSION}-linux-amd64.tar.gz -C ${ETCD_DIR} --strip-components=1
 
-# Download kubectl.
-curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl -o ${KUBECTL_BIN}
-sudo chmod +x ${KUBECTL_BIN}
-
 # Install cfssl.
 go get -u github.com/cloudflare/cfssl/cmd/...
 
+# Download and setup kubectl.
+curl -L https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl -o ${KUBECTL_BIN}
+sudo chmod +x ${KUBECTL_BIN}
+${KUBECTL_BIN} config set-credentials myself --username=admin --password=admin
+${KUBECTL_BIN} config set-context local --cluster=local --user=myself
+${KUBECTL_BIN} config set-cluster local --server=http://localhost:8080
+${KUBECTL_BIN} config use-context local
+
 # Download Kubernetes.
+mkdir -p ${K8S_DIR}
+curl -L https://github.com/kubernetes/kubernetes/releases/download/${K8S_VERSION}/kubernetes.tar.gz -o /tmp/k8s-${K8S_VERSION}.tar.gz
+tar xzvf /tmp/k8s-${K8S_VERSION}.tar.gz -C ${K8S_DIR} --strip-components=1
+
 # TODO
