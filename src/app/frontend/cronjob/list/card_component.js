@@ -23,10 +23,11 @@ import {stateName} from '../detail/state';
 class CronJobCardController {
   /**
    * @param {!ui.router.$state} $state
+   * @param {!angular.$interpolate} $interpolate
    * @param {!../../common/namespace/service.NamespaceService} kdNamespaceService
    * @ngInject
    */
-  constructor($state, kdNamespaceService) {
+  constructor($state, $interpolate, kdNamespaceService) {
     /**
      * Initialized from the scope.
      * @export {!backendApi.CronJob}
@@ -35,6 +36,9 @@ class CronJobCardController {
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;
+
+    /** @private */
+    this.interpolate_ = $interpolate;
 
     /** @private {!../../common/namespace/service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
@@ -56,6 +60,21 @@ class CronJobCardController {
     return this.state_.href(
         stateName,
         new StateParams(this.cronJob.objectMeta.namespace, this.cronJob.objectMeta.name));
+  }
+
+  /**
+   * @export
+   * @param  {string} creationDate
+   * @return {string} localized tooltip with the formatted creation date
+   */
+  getCreatedAtTooltip(creationDate) {
+    let filter = this.interpolate_(`{{date | date}}`);
+    /**
+     * @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time.
+     */
+    let MSG_CRON_JOB_LIST_CREATED_AT_TOOLTIP =
+        goog.getMsg('Created at {$creationDate}', {'creationDate': filter({'date': creationDate})});
+    return MSG_CRON_JOB_LIST_CREATED_AT_TOOLTIP;
   }
 }
 

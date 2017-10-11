@@ -19,20 +19,20 @@ limitations under the License.
 </kd-info-card-entry>
 
 <kd-info-card-entry ng-if="::$ctrl.objectMeta.namespace"
-                    title="[[Namespace|]]">
+                    title="[[Namespace|Label 'Namespace' for a resource.]]">
   {{::$ctrl.objectMeta.namespace}}
 </kd-info-card-entry>
 
 <kd-info-card-entry ng-if="::$ctrl.objectMeta.labels"
-                    title="[[Labels|]]">
+                    title="[[Labels|Label 'Labels' for a resource.]]">
   <kd-labels labels="::$ctrl.objectMeta.labels"></kd-labels>
 </kd-info-card-entry>
 
 <kd-info-card-entry ng-if="::$ctrl.objectMeta.annotations"
-                    title="[[Annotations|]]">
+                    title="[[Annotations|Label 'Annotations' for a resource.]]">
   <kd-annotations labels="::$ctrl.objectMeta.annotations"></kd-annotations>
 </kd-info-card-entry>
 
-<kd-info-card-entry title="[[Age|]]">
-  {{::$ctrl.objectMeta.creationTimestamp | relativeTime}}
+<kd-info-card-entry title="[[Creation Time|Label 'Creation Time' for a resource.]]">
+  {{::$ctrl.objectMeta.creationTimestamp | date}}
 </kd-info-card-entry>
