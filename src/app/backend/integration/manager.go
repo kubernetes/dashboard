@@ -44,8 +44,7 @@ func (self *integrationManager) Metric() metric.MetricManager {
 }
 
 // GetState implements integration manager interface. See IntegrationManager for more information.
-func (self *integrationManager) GetState(id api.IntegrationID) (
-	*api.IntegrationState, error) {
+func (self *integrationManager) GetState(id api.IntegrationID) (*api.IntegrationState, error) {
 	for _, i := range self.List() {
 		if i.ID() == id {
 			return self.getState(i), nil

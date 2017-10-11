@@ -146,6 +146,15 @@ export default {
      * File containing the default x509 private key matching --tlsCert.
      */
     tlsKey: gulpUtil.env.tlsKey !== undefined ? gulpUtil.env.tlsKey : '',
+    /**
+     * When set to true, Dashboard will automatically generate certificates used to serve HTTPS. Matches dashboard
+     * '--auto-generate-certificates' flag.
+     */
+    autoGenerateCerts: gulpUtil.env.autoGenerateCerts !== undefined ? gulpUtil.env.autoGenerateCerts : '',
+    /**
+     * Directory path containing certificate files. Matches dashboard '--default-cert-dir' flag.
+     */
+    defaultCertDir: gulpUtil.env.defaultCertDir !== undefined ? gulpUtil.env.defaultCertDir : '',
   },
 
   /**

@@ -24,7 +24,8 @@ import (
 
 // AuthHandler manages all endpoints related to dashboard auth, such as login.
 type AuthHandler struct {
-	manager authApi.AuthManager
+	manager             authApi.AuthManager
+	enableInsecureLogin bool
 }
 
 // Install creates new endpoints for dashboard auth, such as login. It allows user to log in to dashboard using
@@ -69,7 +70,7 @@ func (self AuthHandler) handleLogin(request *restful.Request, response *restful.
 }
 
 func (self *AuthHandler) handleLoginStatus(request *restful.Request, response *restful.Response) {
-	response.WriteHeaderAndEntity(http.StatusOK, validation.ValidateLoginStatus(request))
+	response.WriteHeaderAndEntity(http.StatusOK, validation.ValidateLoginStatus(request, self.enableInsecureLogin))
 }
 
 func (self *AuthHandler) handleJWETokenRefresh(request *restful.Request, response *restful.Response) {
@@ -98,6 +99,6 @@ func (self *AuthHandler) handleLoginModes(request *restful.Request, response *re
 }
 
 // NewAuthHandler created AuthHandler instance.
-func NewAuthHandler(manager authApi.AuthManager) AuthHandler {
-	return AuthHandler{manager: manager}
+func NewAuthHandler(manager authApi.AuthManager, enableInsecureLogin bool) AuthHandler {
+	return AuthHandler{manager: manager, enableInsecureLogin: enableInsecureLogin}
 }
