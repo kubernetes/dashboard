@@ -30,8 +30,8 @@ limitations under the License.
       {{::$ctrl.cronJob.suspend}}
     </kd-info-card-entry>
     <kd-info-card-entry title="[[Last Schedule|Cron Job's attribute label.]]">
-      <span>{{::$ctrl.cronJob.lastSchedule | relativeTime}}</span>
-      <span ng-hide="::$ctrl.cronJob.lastSchedule">-</span>
+      <span ng-if="::$ctrl.cronJob.lastSchedule">{{::$ctrl.cronJob.lastSchedule | relativeTime}}</span>
+      <span ng-if="::!$ctrl.cronJob.lastSchedule">-</span>
     </kd-info-card-entry>
     <kd-info-card-entry title="[[Concurrency Policy|Cron Job's attribute label.]]">
       <span>{{::$ctrl.cronJob.concurrencyPolicy}}</span>

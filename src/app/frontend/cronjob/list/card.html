@@ -55,7 +55,7 @@ limitations under the License.
     </kd-resource-card-column>
     <kd-resource-card-column>
       <span>{{::$ctrl.cronJob.schedule}}</span>
-      <span ng-hide="::$ctrl.cronJob.schedule">-</span>
+      <span ng-if="::!$ctrl.cronJob.schedule">-</span>
     </kd-resource-card-column>
     <kd-resource-card-column>
       {{::!!$ctrl.cronJob.suspend}}
@@ -64,8 +64,8 @@ limitations under the License.
       {{::$ctrl.cronJob.active}}
     </kd-resource-card-column>
     <kd-resource-card-column>
-      <span>{{::$ctrl.cronJob.lastSchedule | relativeTime}}</span>
-      <span ng-hide="::$ctrl.cronJob.lastSchedule">-</span>
+      <span ng-if="::$ctrl.cronJob.lastSchedule">{{::$ctrl.cronJob.lastSchedule | relativeTime}}</span>
+      <span ng-if="::!$ctrl.cronJob.lastSchedule">-</span>
     </kd-resource-card-column>
     <kd-resource-card-column>
       {{::$ctrl.cronJob.objectMeta.creationTimestamp | relativeTime}}
@@ -83,7 +83,4 @@ limitations under the License.
       </kd-resource-card-menu>
     </kd-resource-card-column>
   </kd-resource-card-columns>
-  <kd-resource-card-footer ng-if="::$ctrl.hasWarnings()">
-    <kd-pod-warnings warnings="::$ctrl.cronJob.pods.warnings"></kd-pod-warnings>
-  </kd-resource-card-footer>
 </kd-resource-card>
