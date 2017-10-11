@@ -93,5 +93,10 @@ func getJobPodInfo(client k8sClient.Interface, job *batch.Job) (*common.PodInfo,
 	}
 
 	podInfo := common.GetPodInfo(job.Status.Active, job.Spec.Completions, pods.Items)
+
+	// This pod info for jobs should be get from job status, similar to kubectl describe logic.
+	podInfo.Running = job.Status.Active
+	podInfo.Succeeded = job.Status.Succeeded
+	podInfo.Failed = job.Status.Failed
 	return &podInfo, nil
 }
