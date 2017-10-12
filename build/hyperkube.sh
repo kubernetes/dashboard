@@ -24,7 +24,7 @@ K8S_VERSION=$(curl -sSL https://dl.k8s.io/release/stable.txt)
 echo "Downloading kubectl ${K8S_VERSION}"
 curl -L https://storage.googleapis.com/kubernetes-release/release/${K8S_VERSION}/bin/linux/amd64/kubectl
 chmod +x kubectl
-kubectl version -c
+kubectl version --client
 
 echo "Downloading minikube"
 curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
