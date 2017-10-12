@@ -19,7 +19,7 @@ BASE_DIR=/tmp
 # Architecture.
 ARCH=amd64
 
-# Binaries versions.
+# Versions.
 ETCD_VERSION=v3.2.9
 K8S_VERSION=$(curl -sSL https://dl.k8s.io/release/stable.txt)
 
