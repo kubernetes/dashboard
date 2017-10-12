@@ -93,7 +93,7 @@ function heapsterHealthCheck(doneFn) {
 gulp.task('local-up-cluster', ['spawn-cluster', 'wait-for-cluster', 'wait-for-heapster']);
 
 /**
- * Spawns a local Kubernetes cluster.:
+ * Spawns a local Kubernetes cluster.
  */
 gulp.task('spawn-cluster', function(doneFn) {
   childProcess.execFile(conf.paths.minikube, function(err, stdout, stderr) {
