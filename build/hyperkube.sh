@@ -15,45 +15,42 @@
 
 set -x
 
-# We can cache it to speed up builds
+# TODO Base directory, that needs to be cached.
 BASE_DIR=/k8s
-
-# Binaries
-KUBECTL_BIN=${BASE_DIR}/kubectl
-MINIKUBE_BIN=${BASE_DIR}/minikube
-
-# Latest stable minikube version
-MINIKUBE_VERSION=v0.22.3
-
-# Latest version supported by minikube
-K8S_VERSION=v1.7.5
-
-# Make sure base dir exists
 sudo mkdir -p ${BASE_DIR}
 sudo chown -R $(whoami) ${BASE_DIR}
 
-# Download minikube
+# Binaries location.
+KUBECTL_BIN=${BASE_DIR}/kubectl
+MINIKUBE_BIN=${BASE_DIR}/minikube
+
+# Latest stable minikube version.
+MINIKUBE_VERSION=v0.22.3
+
+# Latest stable Kubernetes version.
+K8S_VERSION=$(curl -sSL https://dl.k8s.io/release/stable.txt)
+
 echo "Downloading minikube ${MINIKUBE_VERSION}"
 curl -L https://storage.googleapis.com/minikube/releases/${MINIKUBE_VERSION}/minikube-linux-amd64 -o ${MINIKUBE_BIN}
 chmod +x ${MINIKUBE_BIN}
+${MINIKUBE_BIN} version
 
-# Download kubectl
 echo "Downloading kubectl ${K8S_VERSION}"
 curl -L https://storage.googleapis.com/kubernetes-release/release/${K8S_VERSION}/bin/linux/amd64/kubectl -o ${KUBECTL_BIN}
 chmod +x ${KUBECTL_BIN}
+${KUBECTL_BIN} version --client
 
-# Export env variables required by minikube
+# Export environment variables required by minikube.
 export MINIKUBE_WANTUPDATENOTIFICATION=false
 export MINIKUBE_WANTREPORTERRORPROMPT=false
 export MINIKUBE_HOME=$HOME
 export CHANGE_MINIKUBE_NONE_USER=true
 
-# Prepare environment
+# Prepare environment.
 mkdir -p $HOME/.kube
 touch $HOME/.kube/config
 
-# Start cluster
-echo "Starting kubernetes cluster ${K8S_VERSION}"
+echo "Starting Kubernetes ${K8S_VERSION}"
 sudo -E ${MINIKUBE_BIN} start --vm-driver=none
 
 echo "Waiting for the cluster to be started"
@@ -65,8 +62,8 @@ do
  fi
     sleep 2
 done
-echo "Cluster up and running"
+echo "Cluster is up and running"
 
-# Deploy influxdb and heapster
+# Deploy influxdb and heapster.
 ${KUBECTL_BIN} create -f https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/influxdb/influxdb.yaml
 ${KUBECTL_BIN} create -f https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/influxdb/heapster.yaml
