@@ -41,7 +41,7 @@ ${KUBECTL_BIN} version --client
 # Export environment variables required by minikube.
 export MINIKUBE_WANTUPDATENOTIFICATION=false
 export MINIKUBE_WANTREPORTERRORPROMPT=false
-export MINIKUBE_HOME=$HOME
+export MINIKUBE_HOME=${BASE_DIR}
 export CHANGE_MINIKUBE_NONE_USER=true
 
 # Prepare environment.
