@@ -36,6 +36,7 @@ class JobCardController {
     /** @private {!ui.router.$state} */
     this.state_ = $state;
 
+
     /** @private {!../../common/namespace/service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
   }

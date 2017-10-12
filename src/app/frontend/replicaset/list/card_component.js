@@ -23,11 +23,10 @@ import {stateName} from '../../replicaset/detail/state';
 class ReplicaSetCardController {
   /**
    * @param {!ui.router.$state} $state
-   * @param {!angular.$interpolate} $interpolate
    * @param {!./../../common/namespace/service.NamespaceService} kdNamespaceService
    * @ngInject
    */
-  constructor($state, $interpolate, kdNamespaceService) {
+  constructor($state, kdNamespaceService) {
     /**
      * Initialized from the scope.
      * @export {!backendApi.ReplicaSet}
@@ -36,9 +35,6 @@ class ReplicaSetCardController {
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;
-
-    /** @private */
-    this.interpolate_ = $interpolate;
 
     /** @private {!./../../common/namespace/service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
@@ -87,22 +83,6 @@ class ReplicaSetCardController {
    */
   isSuccess() {
     return !this.isPending() && !this.hasWarnings();
-  }
-
-  /**
-   * @export
-   * @param  {string} creationDate - creation date of the replica set
-   * @return {string} localized tooltip with the formated creation date
-   */
-  getCreatedAtTooltip(creationDate) {
-    let filter = this.interpolate_(`{{date | date}}`);
-    /**
-     * @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
-     * replica set.
-     */
-    let MSG_REPLICA_SET_LIST_CREATED_AT_TOOLTIP =
-        goog.getMsg('Created at {$creationDate}', {'creationDate': filter({'date': creationDate})});
-    return MSG_REPLICA_SET_LIST_CREATED_AT_TOOLTIP;
   }
 }
 

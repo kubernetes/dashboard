@@ -69,7 +69,7 @@ limitations under the License.
         {{::$ctrl.pod.objectMeta.creationTimestamp | relativeTime}}
         <md-tooltip md-delay="500"
                     md-autohide>
-          {{::$ctrl.getStartedAtTooltip($ctrl.pod.objectMeta.creationTimestamp)}}
+          [[Started at | Tooltip for the age column ]] {{::$ctrl.pod.objectMeta.creationTimestamp | date}}
         </md-tooltip>
       </div>
       <div ng-if="::!$ctrl.pod.objectMeta.creationTimestamp">-</div>

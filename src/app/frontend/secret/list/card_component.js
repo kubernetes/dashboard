@@ -18,38 +18,19 @@ import {stateName} from '../../secret/detail/state';
 class SecretCardController {
   /**
    * @param {!./../../common/namespace/service.NamespaceService} kdNamespaceService
-   * @param {!angular.$interpolate} $interpolate
    * @param {!ui.router.$state} $state
    * @ngInject
    */
-  constructor($interpolate, $state, kdNamespaceService) {
+  constructor($state, kdNamespaceService) {
     /** @export {!backendApi.Secret} Secret initialised from a bindig. */
     this.secret;
 
-    /** @private {!angular.$interpolate} */
-    this.interpolate_ = $interpolate;
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;
 
     /** @private {!./../../common/namespace/service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
-  }
-
-  /**
-   * @export
-   * @param  {string} startDate - start date of the secret
-   * @return {string} localized tooltip with the formated start date
-   */
-  getStartedAtTooltip(startDate) {
-    let filter = this.interpolate_(`{{date | date}}`);
-    /**
-     * @type {string} @desc Tooltip 'Started at [some date]' showing the exact start time of
-     * the secret.
-     */
-    let MSG_SECRET_LIST_STARTED_AT_TOOLTIP =
-        goog.getMsg('Created at {$startDate} UTC', {'startDate': filter({'date': startDate})});
-    return MSG_SECRET_LIST_STARTED_AT_TOOLTIP;
   }
 
   /**

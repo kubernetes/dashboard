@@ -21,7 +21,7 @@
  */
 export default function dateFilter($delegate) {
   let original = $delegate;
-  const defaultFormat = 'yyyy-MM-ddTHH:mm';
+  const defaultFormat = 'yyyy-MM-ddTHH:mm UTC';
   const defaultTZ = 'UTC';
   /**
    * If no format or TZ are given use the default ones.

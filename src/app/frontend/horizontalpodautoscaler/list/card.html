@@ -61,7 +61,7 @@ limitations under the License.
       {{::$ctrl.horizontalPodAutoscaler.objectMeta.creationTimestamp | relativeTime}}
       <md-tooltip md-delay="500"
                   md-autohide>
-        {{::$ctrl.getCreatedAtTooltip()}}
+        [[Created at| Tooltip for the age column ]] {{::$ctrl.horizontalPodAutoscaler.objectMeta.creationTimestamp | date}}
       </md-tooltip>
     </kd-resource-card-column>
     <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
