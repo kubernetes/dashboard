@@ -15,15 +15,21 @@
 
 set -x
 
+# TODO Base directory, that needs to be cached.
 BASE_DIR=/tmp
+
+# Latest Kubernetes version, that is stable.
 K8S_VERSION=$(curl -sSL https://dl.k8s.io/release/stable.txt)
-KUBECTL_BIN=${BASE_DIR}/kubectl
 
-curl -L https://storage.googleapis.com/kubernetes-release/release/${K8S_VERSION}/bin/linux/amd64/kubectl -o ${KUBECTL_BIN}
-chmod +x ${KUBECTL_BIN}
+# Download and setup kubectl.
+curl -L https://storage.googleapis.com/kubernetes-release/release/${K8S_VERSION}/bin/linux/amd64/kubectl
+chmod +x kubectl
 
+# Download and setup minikube.
 curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
 chmod +x minikube
+
+# TODO
 
 export MINIKUBE_WANTUPDATENOTIFICATION=false
 export MINIKUBE_WANTREPORTERRORPROMPT=false
@@ -45,7 +51,5 @@ do
   fi
   sleep 2
 done
-
-# TODO kubectl commands are now able to interact with Minikube cluster
 
 kubectl get pods --all-namespaces
