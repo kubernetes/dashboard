@@ -38,20 +38,20 @@ curl -L https://storage.googleapis.com/kubernetes-release/release/${K8S_VERSION}
 chmod +x ${KUBECTL_BIN}
 ${KUBECTL_BIN} version --client
 
-# Export environment variables required by minikube.
+echo "Setting up minikube"
 export MINIKUBE_WANTUPDATENOTIFICATION=false
 export MINIKUBE_WANTREPORTERRORPROMPT=false
 export MINIKUBE_HOME=${BASE_DIR}
 export CHANGE_MINIKUBE_NONE_USER=true
 
-# Prepare environment.
+echo "Setting up environment"
 mkdir -p $HOME/.kube
 touch $HOME/.kube/config
 
 echo "Starting Kubernetes ${K8S_VERSION}"
 sudo -E ${MINIKUBE_BIN} start --vm-driver=none
 
-echo "Waiting for the cluster to be started"
+echo "Waiting for Kubernetes to start"
 for i in {1..150}
 do
  ${KUBECTL_BIN} get po &> /dev/null
@@ -60,8 +60,10 @@ do
  fi
  sleep 2
 done
-echo "Cluster is up and running"
+echo "Kubernetes is up and running"
 
-# Deploy influxdb and heapster.
+echo "Deploying heapster and InfluxDB"
 ${KUBECTL_BIN} create -f https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/influxdb/influxdb.yaml
 ${KUBECTL_BIN} create -f https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/influxdb/heapster.yaml
+
+echo "Kubernetes is ready to use"
