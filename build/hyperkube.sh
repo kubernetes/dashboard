@@ -55,4 +55,11 @@ curl -sSL https://dl.k8s.io/release/${K8S_VERSION}/bin/linux/${ARCH}/kubeadm > $
 sudo chmod a+rx ${KUBEADM_BIN}
 
 ${KUBEADM_BIN} version
+
+sudo ${KUBEADM_BIN} init --pod-network-cidr=10.244.0.0/16
+
+sudo cp /etc/kubernetes/admin.conf ${HOME}/.kube/config
+
+${KUBECTL_BIN} taint nodes --all node-role.kubernetes.io/master-
+
 # TODO
