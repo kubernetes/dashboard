@@ -17,6 +17,11 @@
 BASE_DIR=.k8s
 sudo mkdir -p ${BASE_DIR}
 
+# Version heapster to use.
+HEAPSTER_VERSION="v1.4.0"
+# Port of the heapster to serve on.
+HEAPSTER_PORT=8082
+
 # Latest stable minikube version.
 MINIKUBE_VERSION=v0.22.3
 
@@ -52,19 +57,19 @@ touch $HOME/.kube/config
 echo "Starting Kubernetes ${K8S_VERSION}"
 sudo -E ${MINIKUBE_BIN} start --vm-driver=none
 
-echo "Waiting for Kubernetes to start"
+${KUBECTL_BIN} proxy -p 8080 &
+
+# Run Heapster in standalone mode.
+docker run --net=host -d gcr.io/google_containers/heapster-amd64:${HEAPSTER_VERSION} --heapster-port ${HEAPSTER_PORT} --source=kubernetes:http://127.0.0.1:8080?inClusterConfig=false&auth=""
+
+echo "Waiting for heapster to be started"
 for i in {1..150}
 do
- ${KUBECTL_BIN} get po &> /dev/null
- if [ $? -ne 1 ]; then
+  HEAPSTER_STATUS=$(curl -sb -H "Accept: application/json" "127.0.0.1:8082/healthz")
+  if [ "$HEAPSTER_STATUS" == "ok" ]; then
     break
- fi
- sleep 2
+  fi
+  sleep 2
 done
-echo "Kubernetes is up and running"
-
-echo "Deploying heapster and InfluxDB"
-${KUBECTL_BIN} create -f https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/influxdb/influxdb.yaml
-${KUBECTL_BIN} create -f https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/influxdb/heapster.yaml
-
+echo "Heapster is up and running"
 echo "Kubernetes is ready to use"
