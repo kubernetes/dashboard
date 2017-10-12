@@ -31,7 +31,7 @@ cache:
     - node_modules
     - bower_components
     - .tools
-    - /k8s
+    - .k8s
 
 addons:
   # Run tests that require a browser on SauceLabs CI provider. Learn more at: https://saucelabs.com

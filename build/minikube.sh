@@ -13,14 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# TODO Base directory, that needs to be cached.
-BASE_DIR=/k8s
+# Base directory, that is cached.
+BASE_DIR=.k8s
 sudo mkdir -p ${BASE_DIR}
-sudo chown -R $(whoami) ${BASE_DIR}
-
-# Binaries location.
-KUBECTL_BIN=${BASE_DIR}/kubectl
-MINIKUBE_BIN=${BASE_DIR}/minikube
 
 # Latest stable minikube version.
 MINIKUBE_VERSION=v0.22.3
@@ -28,11 +23,17 @@ MINIKUBE_VERSION=v0.22.3
 # Latest stable Kubernetes version.
 K8S_VERSION=$(curl -sSL https://dl.k8s.io/release/stable.txt)
 
+# Binaries location.
+KUBECTL_BIN=${BASE_DIR}/kubectl-${K8S_VERSION}
+MINIKUBE_BIN=${BASE_DIR}/minikube-${MINIKUBE_VERSION}
+
+# TODO Check if it doesn't exist in cache.
 echo "Downloading minikube ${MINIKUBE_VERSION}"
 curl -L https://storage.googleapis.com/minikube/releases/${MINIKUBE_VERSION}/minikube-linux-amd64 -o ${MINIKUBE_BIN}
 chmod +x ${MINIKUBE_BIN}
 ${MINIKUBE_BIN} version
 
+# TODO Check if it doesn't exist in cache.
 echo "Downloading kubectl ${K8S_VERSION}"
 curl -L https://storage.googleapis.com/kubernetes-release/release/${K8S_VERSION}/bin/linux/amd64/kubectl -o ${KUBECTL_BIN}
 chmod +x ${KUBECTL_BIN}
