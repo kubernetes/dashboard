@@ -33,12 +33,22 @@ RUN echo '#!/bin/bash\n\
     if [ -z "$(ls -A /certs)" ]; then\n\
       echo "Creating self-signed certificates"\n\
       cd /certs\n\
-      openssl req -nodes -newkey rsa:2048 -keyout dashboard.key -out dashboard.csr -subj "/C=/ST=/L=/O=/OU=/CN=kubernetes-dashboard"\n\
-      openssl x509 -req -sha256 -days 365 -in dashboard.csr -signkey dashboard.key -out dashboard.crt\n\
-      export TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)\n\
-      rm dashboard.csr\n\
-      kubectl --token $TOKEN -n kube-system delete secret kubernetes-dashboard-certs\n\
-      kubectl --token $TOKEN -n kube-system create secret generic kubernetes-dashboard-certs --from-file=/certs\n\
+      while true; do\n\
+        if [[ -f dashboard.key && -f dashboard.crt ]]; then\n\
+          export TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)\n\
+          if ! kubectl --token $TOKEN -n kube-system get secret kubernetes-dashboard-certs -o=custom-columns=NAME:.data >/dev/null; then\n\
+            kubectl --token $TOKEN -n kube-system delete secret kubernetes-dashboard-certs\n\
+            kubectl --token $TOKEN -n kube-system create secret generic kubernetes-dashboard-certs --from-file=/certs\n\
+          else\n\
+            break\n\
+          fi\n\
+        else\n\
+          openssl req -nodes -newkey rsa:2048 -keyout dashboard.key -out dashboard.csr -subj "/C=/ST=/L=/O=/OU=/CN=kubernetes-dashboard"\n\
+          openssl x509 -req -sha256 -days 365 -in dashboard.csr -signkey dashboard.key -out dashboard.crt\n\
+          rm dashboard.csr\n\
+          echo $(ls -lah /certs)\n\
+        fi\n\
+      done\n\
     fi\n\' >> /bootstrap.sh
 
 CMD ["/bin/bash", "bootstrap.sh"]
