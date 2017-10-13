@@ -38,14 +38,11 @@ addons:
 
 matrix:
   include:
-    # Integration and end-to-end tests.
     - node_js: 8.6.0
       env:
-      - BUILD_SUITE=cluster-test
+      - BUILD_SUITE=integration-test
       - SAUCE_USERNAME=k8s-dashboard-ci
       - KUBE_DASHBOARD_KUBECONFIG=$HOME/.kube/config
-
-    # Unit tests.
     - node_js: 8.6.0
       env:
       - BUILD_SUITE=code-test
@@ -56,7 +53,7 @@ before_script:
   - docker --version
 
 script:
-  - 'if [ ${BUILD_SUITE} = "cluster-test" ]; then
+  - 'if [ ${BUILD_SUITE} = "integration-test" ]; then
       ./build/minikube.sh;
       ./node_modules/.bin/gulp check:ci --heapsterServerHost "http://localhost:8082";
     else
@@ -64,8 +61,7 @@ script:
     fi'
 
 after_success:
-  - 'if [ ${BUILD_SUITE} = "cluster-test" ]; then
+  - './node_modules/.bin/gulp coverage-upload:ci;
+    if [ ${BUILD_SUITE} = "integration-test" ]; then
       ./node_modules/.bin/gulp push-to-docker:ci;
-    else
-      ./node_modules/.bin/gulp coverage-upload:ci;
     fi'
