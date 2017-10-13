@@ -13,15 +13,34 @@
 // limitations under the License.
 
 /**
- * @fileoverview Entrypoint tasks for ci environments.
+ * @fileoverview Entrypoint tasks for CI environments.
  */
 import childProcess from 'child_process';
 import gulp from 'gulp';
+import codecov from 'gulp-codecov.io';
+import conf from './conf';
+
+
+/**
+ * Builds Dashboard and ensures that integration tests against Kubernetes are successful.
+ * The cluster is expected to be up and running as a prerequisite.
+ **/
+gulp.task('check:ci', ['check-license-headers', 'integration-test:prod']);
+
+/**
+ * Execute gulp-codecov task and uploads generated coverage report to http://codecov.io.
+ * Should be used only by external CI tools, as gulp-codecov plugin is already designed
+ * to work with them. Does not work locally.
+ */
+gulp.task('coverage-upload:ci', function() {
+  gulp.src(conf.paths.coverageFrontend).pipe(codecov());
+  gulp.src(conf.paths.coverageBackend).pipe(codecov());
+});
 
 /**
  * Entry point for CI to push head images to Docker Hub when master builds successfully.
  */
-gulp.task('ci-push-to-docker:head:cross', function(doneFn) {
+gulp.task('push-to-docker:ci', function(doneFn) {
   if (process.env.TRAVIS) {
     // Pushes head images when docker user and password are available.
     if (process.env.TRAVIS_PULL_REQUEST === 'false' && process.env.DOCKER_USER &&
