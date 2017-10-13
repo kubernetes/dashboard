@@ -53,6 +53,7 @@ export const tokenLoginComponent = {
   },
   bindings: {
     'title': '@',
+    'desc': '@',
     'onUpdate': '&',
   },
   controller: TokenLoginController,

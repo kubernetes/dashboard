@@ -58,6 +58,7 @@ export const kubeConfigLoginComponent = {
   },
   bindings: {
     'title': '@',
+    'desc': '@',
     'onUpdate': '&',
   },
   controller: KubeConfigLoginController,
