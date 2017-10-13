@@ -27,9 +27,10 @@ wget -nc -O ${MINIKUBE_BIN} https://storage.googleapis.com/minikube/releases/${M
 chmod +x ${MINIKUBE_BIN}
 ${MINIKUBE_BIN} version
 
-echo "Making sure that kubeconfig file exists"
+echo "Making sure that kubeconfig file exists and will be used by Dashboard"
 mkdir -p $HOME/.kube
 touch $HOME/.kube/config
+export KUBE_DASHBOARD_KUBECONFIG=$HOME/.kube/config
 
 echo "Starting minikube"
 export MINIKUBE_WANTUPDATENOTIFICATION=false
@@ -46,7 +47,7 @@ docker run --net=host -d gcr.io/google_containers/heapster-amd64:${HEAPSTER_VERS
 echo "Waiting for heapster to be started"
 for i in {1..150}
 do
-  HEAPSTER_STATUS=$(curl -sb -H "Accept: application/json" "127.0.0.1:8082/healthz")
+  HEAPSTER_STATUS=$(curl -sb -H "Accept: application/json" "127.0.0.1:${HEAPSTER_PORT}/healthz")
   if [ "$HEAPSTER_STATUS" == "ok" ]; then
     break
   fi
