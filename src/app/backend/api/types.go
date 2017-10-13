@@ -103,32 +103,33 @@ type ResourceKind string
 
 // List of all resource kinds supported by the UI.
 const (
-	ResourceKindConfigMap               = "configmap"
-	ResourceKindDaemonSet               = "daemonset"
-	ResourceKindDeployment              = "deployment"
-	ResourceKindEvent                   = "event"
-	ResourceKindHorizontalPodAutoscaler = "horizontalpodautoscaler"
-	ResourceKindIngress                 = "ingress"
-	ResourceKindJob                     = "job"
-	ResourceKindLimitRange              = "limitrange"
-	ResourceKindNamespace               = "namespace"
-	ResourceKindNode                    = "node"
-	ResourceKindPersistentVolumeClaim   = "persistentvolumeclaim"
-	ResourceKindPersistentVolume        = "persistentvolume"
-	ResourceKindPod                     = "pod"
-	ResourceKindReplicaSet              = "replicaset"
-	ResourceKindReplicationController   = "replicationcontroller"
-	ResourceKindResourceQuota           = "resourcequota"
-	ResourceKindSecret                  = "secret"
-	ResourceKindService                 = "service"
-	ResourceKindStatefulSet             = "statefulset"
-	ResourceKindThirdPartyResource      = "thirdpartyresource"
-	ResourceKindStorageClass            = "storageclass"
-	ResourceKindRbacRole                = "role"
-	ResourceKindRbacClusterRole         = "clusterrole"
-	ResourceKindRbacRoleBinding         = "rolebinding"
-	ResourceKindRbacClusterRoleBinding  = "clusterrolebinding"
-	ResourceKindEndpoint                = "endpoint"
+	ResourceKindConfigMap                = "configmap"
+	ResourceKindDaemonSet                = "daemonset"
+	ResourceKindDeployment               = "deployment"
+	ResourceKindEvent                    = "event"
+	ResourceKindHorizontalPodAutoscaler  = "horizontalpodautoscaler"
+	ResourceKindIngress                  = "ingress"
+	ResourceKindJob                      = "job"
+	ResourceKindLimitRange               = "limitrange"
+	ResourceKindNamespace                = "namespace"
+	ResourceKindNode                     = "node"
+	ResourceKindPersistentVolumeClaim    = "persistentvolumeclaim"
+	ResourceKindPersistentVolume         = "persistentvolume"
+	ResourceKindPod                      = "pod"
+	ResourceKindReplicaSet               = "replicaset"
+	ResourceKindReplicationController    = "replicationcontroller"
+	ResourceKindResourceQuota            = "resourcequota"
+	ResourceKindSecret                   = "secret"
+	ResourceKindService                  = "service"
+	ResourceKindStatefulSet              = "statefulset"
+	ResourceKindThirdPartyResource       = "thirdpartyresource"
+	ResourceKindCustomResourceDefinition = "customresourcedefinition"
+	ResourceKindStorageClass             = "storageclass"
+	ResourceKindRbacRole                 = "role"
+	ResourceKindRbacClusterRole          = "clusterrole"
+	ResourceKindRbacRoleBinding          = "rolebinding"
+	ResourceKindRbacClusterRoleBinding   = "clusterrolebinding"
+	ResourceKindEndpoint                 = "endpoint"
 )
 
 // ClientType represents type of client that is used to perform generic operations on resources.
@@ -138,12 +139,13 @@ type ClientType string
 
 // List of client types supported by the UI.
 const (
-	ClientTypeDefault           = "restclient"
-	ClientTypeExtensionClient   = "extensionclient"
-	ClientTypeAppsClient        = "appsclient"
-	ClientTypeBatchClient       = "batchclient"
-	ClientTypeAutoscalingClient = "autoscalingclient"
-	ClientTypeStorageClient     = "storageclient"
+	ClientTypeDefault             = "restclient"
+	ClientTypeExtensionClient     = "extensionclient"
+	ClientTypeAppsClient          = "appsclient"
+	ClientTypeBatchClient         = "batchclient"
+	ClientTypeAutoscalingClient   = "autoscalingclient"
+	ClientTypeStorageClient       = "storageclient"
+	ClientTypeAPIExtensionsClient = "apiextensionsclient"
 )
 
 // Mapping from resource kind to K8s apiserver API path. This is mostly pluralization, because
@@ -157,28 +159,29 @@ var KindToAPIMapping = map[string]struct {
 	// Is this object global scoped (not below a namespace).
 	Namespaced bool
 }{
-	ResourceKindConfigMap:               {"configmaps", ClientTypeDefault, true},
-	ResourceKindDaemonSet:               {"daemonsets", ClientTypeExtensionClient, true},
-	ResourceKindDeployment:              {"deployments", ClientTypeExtensionClient, true},
-	ResourceKindEvent:                   {"events", ClientTypeDefault, true},
-	ResourceKindHorizontalPodAutoscaler: {"horizontalpodautoscalers", ClientTypeAutoscalingClient, true},
-	ResourceKindIngress:                 {"ingresses", ClientTypeExtensionClient, true},
-	ResourceKindJob:                     {"jobs", ClientTypeBatchClient, true},
-	ResourceKindLimitRange:              {"limitrange", ClientTypeDefault, true},
-	ResourceKindNamespace:               {"namespaces", ClientTypeDefault, false},
-	ResourceKindNode:                    {"nodes", ClientTypeDefault, false},
-	ResourceKindPersistentVolumeClaim:   {"persistentvolumeclaims", ClientTypeDefault, true},
-	ResourceKindPersistentVolume:        {"persistentvolumes", ClientTypeDefault, false},
-	ResourceKindPod:                     {"pods", ClientTypeDefault, true},
-	ResourceKindReplicaSet:              {"replicasets", ClientTypeExtensionClient, true},
-	ResourceKindReplicationController:   {"replicationcontrollers", ClientTypeDefault, true},
-	ResourceKindResourceQuota:           {"resourcequotas", ClientTypeDefault, true},
-	ResourceKindSecret:                  {"secrets", ClientTypeDefault, true},
-	ResourceKindService:                 {"services", ClientTypeDefault, true},
-	ResourceKindStatefulSet:             {"statefulsets", ClientTypeAppsClient, true},
-	ResourceKindThirdPartyResource:      {"thirdpartyresources", ClientTypeExtensionClient, true},
-	ResourceKindStorageClass:            {"storageclasses", ClientTypeStorageClient, false},
-	ResourceKindEndpoint:                {"endpoints", ClientTypeDefault, true},
+	ResourceKindConfigMap:                {"configmaps", ClientTypeDefault, true},
+	ResourceKindDaemonSet:                {"daemonsets", ClientTypeExtensionClient, true},
+	ResourceKindDeployment:               {"deployments", ClientTypeExtensionClient, true},
+	ResourceKindEvent:                    {"events", ClientTypeDefault, true},
+	ResourceKindHorizontalPodAutoscaler:  {"horizontalpodautoscalers", ClientTypeAutoscalingClient, true},
+	ResourceKindIngress:                  {"ingresses", ClientTypeExtensionClient, true},
+	ResourceKindJob:                      {"jobs", ClientTypeBatchClient, true},
+	ResourceKindLimitRange:               {"limitrange", ClientTypeDefault, true},
+	ResourceKindNamespace:                {"namespaces", ClientTypeDefault, false},
+	ResourceKindNode:                     {"nodes", ClientTypeDefault, false},
+	ResourceKindPersistentVolumeClaim:    {"persistentvolumeclaims", ClientTypeDefault, true},
+	ResourceKindPersistentVolume:         {"persistentvolumes", ClientTypeDefault, false},
+	ResourceKindPod:                      {"pods", ClientTypeDefault, true},
+	ResourceKindReplicaSet:               {"replicasets", ClientTypeExtensionClient, true},
+	ResourceKindReplicationController:    {"replicationcontrollers", ClientTypeDefault, true},
+	ResourceKindResourceQuota:            {"resourcequotas", ClientTypeDefault, true},
+	ResourceKindSecret:                   {"secrets", ClientTypeDefault, true},
+	ResourceKindService:                  {"services", ClientTypeDefault, true},
+	ResourceKindStatefulSet:              {"statefulsets", ClientTypeAppsClient, true},
+	ResourceKindThirdPartyResource:       {"thirdpartyresources", ClientTypeExtensionClient, true},
+	ResourceKindCustomResourceDefinition: {"CustomResourceDefinition", ClientTypeAPIExtensionsClient, true},
+	ResourceKindStorageClass:             {"storageclasses", ClientTypeStorageClient, false},
+	ResourceKindEndpoint:                 {"endpoints", ClientTypeDefault, true},
 }
 
 // IsSelectorMatching returns true when an object with the given selector targets the same

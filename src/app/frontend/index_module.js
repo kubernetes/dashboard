@@ -24,6 +24,7 @@ import csrfTokenModule from './common/csrftoken/module';
 import scalingModule from './common/scaling/module';
 import configModule from './config/module';
 import configMapModule from './configmap/module';
+import customResourceDefinitionModule from './customresourcedefinition/module';
 import daemonSetModule from './daemonset/module';
 import deployModule from './deploy/module';
 import deploymentModule from './deployment/module';
@@ -104,6 +105,7 @@ export default angular
           csrfTokenModule.name,
           storageClassModule.name,
           thirdPartyResourceModule.name,
+          customResourceDefinitionModule.name,
           roleModule.name,
           scalingModule.name,
         ])
