@@ -47,5 +47,13 @@ limitations under the License.
       </div>
       <div ng-if="::!$ctrl.ingress.objectMeta.creationTimestamp">-</div>
     </kd-resource-card-column>
+    <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
+      <kd-resource-card-menu>
+        <kd-resource-card-delete-menu-item resource-kind-name="[[Ingress|Name of the ingress resource]]">
+        </kd-resource-card-delete-menu-item>
+        <kd-resource-card-edit-menu-item resource-kind-name="[[Ingress|Name of the ingress resource]]">
+        </kd-resource-card-edit-menu-item>
+      </kd-resource-card-menu>
+    </kd-resource-card-column>
   </kd-resource-card-columns>
 </kd-resource-card>

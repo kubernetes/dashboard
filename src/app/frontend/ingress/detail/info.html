@@ -30,5 +30,18 @@ limitations under the License.
     <kd-info-card-entry title="[[Annotations|Resource info details section annotations entry.]]">
       <kd-labels labels="::$ctrl.ingress.objectMeta.annotations"></kd-labels>
     </kd-info-card-entry>
+    <kd-info-card-entry title="[[Creation time|Resource info details section creation time entry.]]">
+      {{::$ctrl.ingress.objectMeta.creationTimestamp | date}}
+    </kd-info-card-entry>
+  </kd-info-card-section>
+  <kd-info-card-section ng-if="::$ctrl.ingress.spec.rules.length"
+                        name="[[Rules|Resource rules spec for the ingress.]]">
+    <div ng-repeat="rule in ::$ctrl.ingress.spec.rules">
+      <kd-info-card-entry title="{{::rule.host}}">
+        <div ng-repeat="http in ::rule.http.paths">
+          {{::http.path}} => {{::http.backend.serviceName}}:{{::http.backend.servicePort}}
+        </div>
+      </kd-info-card-entry>
+    </div>
   </kd-info-card-section>
 </kd-info-card>
