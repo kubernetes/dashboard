@@ -40,14 +40,4 @@ describe('Daemon Set card', () => {
     // then
     expect(ctrl.getDaemonSetDetailHref()).toEqual('#!/daemonset/foo-namespace/foo-name');
   });
-
-  it('should format the "created at" tooltip correctly', () => {
-    ctrl.daemonSet = {
-      objectMeta: {
-        creationTimestamp: '2016-06-06T09:13:12Z',
-      },
-    };
-
-    expect(ctrl.getCreatedAtTooltip()).toMatch('Created at 2016-06-06T09:13.*');
-  });
 });
