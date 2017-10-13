@@ -13,11 +13,9 @@
 # limitations under the License.
 
 # Travis continuous integration system configuration file.
-#
 # Overview on how to customize the configuration is located at:
 # http://docs.travis-ci.com/user/customizing-the-build/
 
-# Sudo-enabled Ubuntu Trusty environment: https://docs.travis-ci.com/user/trusty-ci-environment/.
 sudo: required
 dist: trusty
 group: edge
@@ -34,19 +32,24 @@ cache:
 addons:
   # Run tests that require a browser on SauceLabs CI provider. Learn more at: https://saucelabs.com
   sauce_connect: true
-  # Enables sauce labs for pull requests
+  # Enables sauce labs for pull requests.
   jwt:
     secure: NfCHCQULhYH0JUobRTBGF4QuQxMoj0Zs9iH71oSgI+eW7ClpNDp0cEF8h+IelTdPGQY7T9Kz4tyrZkUeXD5Mi/jjZT0YnjxSS8Ip6rRRxPDCWEmxbhOrZTEBXYfa4vqCY7rLnor8g579WOZ+RyoiotPC8tlc955nEgBk1jDxyAgXoUy0SdA/05r6A2IqKfs95u+yq0nsYqYJBj/3onx2SQv94eMQ7qq9GMhsAWMoNzLsBfU8AkZLsJ2w/W2p9tQURNk1hgCEewMwe6E6+G3XMAnDoIXBHkRAU335FBUE+f2kZ5Gl3GKE8pvWJaUWLePzfBvlmzCi4GW6lPlrRE5m+3wiiSzcbEAJnWOVPBrD/6mogYaJ5RijKzWk5o91eV8lU/lttp0hpH7PdWj1CEZk7EmyKO7ZF7ScALOZgs/dGyGgWcAvA0zwCDzdxXIitq9Eegc0xU+bB9jyJgi4dV9H1T1prwtS/TdhBU6sXKEjFVIgPUQa/TqBgaSs634kqRueH3bNfSD8Nf655AFeSgwdGiW0pBDm/WESftFWBMW3eV+KYtBFmGU/b3g+eEmd04j+lIOkK6EzU1QetUCKhpeMc5509So/+k4XghPHldWYzRldpY0kbp32VnAY8egsDdAHxgPrs2mTIDD1W//D/XJI9J072/z47GN4Af5zryz/3Nc=
 
 matrix:
   include:
-    # Job 1 - Local cluster + integration tests
-    - node_js: 8.6.0
-      env: BUILD_SUITE=cluster-test SAUCE_USERNAME=k8s-dashboard-ci
+    # Integration and end-to-end tests.
+    node_js: 8.6.0
+    env:
+      - BUILD_SUITE=cluster-test
+      - SAUCE_USERNAME=k8s-dashboard-ci
+      - KUBE_DASHBOARD_KUBECONFIG=$HOME/.kube/config
 
-    # Job 2 - Code tests (frontend + backend)
-    - node_js: 8.6.0
-      env: BUILD_SUITE=code-test SAUCE_USERNAME=k8s-dashboard-ci
+    # Unit tests.
+    node_js: 8.6.0
+    env:
+      - BUILD_SUITE=code-test
+      - SAUCE_USERNAME=k8s-dashboard-ci
 
 before_script:
   - eval "$(gimme 1.8.3)"

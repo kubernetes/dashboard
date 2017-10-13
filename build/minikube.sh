@@ -30,7 +30,6 @@ ${MINIKUBE_BIN} version
 echo "Making sure that kubeconfig file exists and will be used by Dashboard"
 mkdir -p $HOME/.kube
 touch $HOME/.kube/config
-export KUBE_DASHBOARD_KUBECONFIG=$HOME/.kube/config
 
 echo "Starting minikube"
 export MINIKUBE_WANTUPDATENOTIFICATION=false
