@@ -13,10 +13,17 @@
 // limitations under the License.
 
 /**
- * @fileoverview Entrypoint tasks for ci environments.
+ * @fileoverview Entrypoint tasks for CI environments.
  */
 import childProcess from 'child_process';
 import gulp from 'gulp';
+
+
+/**
+ * Builds Dashboard and ensures that integration tests against Kubernetes are successful.
+ * The cluster is expected to be up and running as a prerequisite.
+ **/
+gulp.task('check:ci', ['check-license-headers', 'integration-test:prod']);
 
 /**
  * Entry point for CI to push head images to Docker Hub when master builds successfully.

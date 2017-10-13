@@ -25,10 +25,6 @@ mkdir -p ${BASE_DIR}
 echo "Downloading minikube ${MINIKUBE_VERSION} if it is not cached"
 wget -nc -O ${MINIKUBE_BIN} https://storage.googleapis.com/minikube/releases/${MINIKUBE_VERSION}/minikube-linux-amd64
 chmod +x ${MINIKUBE_BIN}
-export MINIKUBE_WANTUPDATENOTIFICATION=false
-export MINIKUBE_WANTREPORTERRORPROMPT=false
-export MINIKUBE_HOME=${HOME}
-export CHANGE_MINIKUBE_NONE_USER=true
 ${MINIKUBE_BIN} version
 
 echo "Making sure that kubeconfig file exists"
@@ -36,6 +32,10 @@ mkdir -p $HOME/.kube
 touch $HOME/.kube/config
 
 echo "Starting minikube"
+export MINIKUBE_WANTUPDATENOTIFICATION=false
+export MINIKUBE_WANTREPORTERRORPROMPT=false
+export MINIKUBE_HOME=${HOME}
+export CHANGE_MINIKUBE_NONE_USER=true
 sudo -E ${MINIKUBE_BIN} start --vm-driver=none
 
 echo "Running heapster in standalone mode"
