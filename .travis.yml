@@ -65,7 +65,7 @@ script:
 
 after_success:
   - 'if [ ${BUILD_SUITE} = "cluster-test" ]; then
-      ./node_modules/.bin/gulp ci-push-to-docker:head:cross;
+      ./node_modules/.bin/gulp push-to-docker:ci;
     else
-      ./node_modules/.bin/gulp coverage-codecov-upload;
+      ./node_modules/.bin/gulp coverage-upload:ci;
     fi'

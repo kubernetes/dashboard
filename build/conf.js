@@ -256,7 +256,6 @@ export default {
     frontendTest: path.join(basePath, 'src/test/frontend'),
     goTools: path.join(basePath, '.tools/go'),
     goWorkspace: path.join(basePath, '.go_workspace'),
-    minikube: path.join(basePath, 'build/minikube.sh'),
     goTestScript: path.join(basePath, 'build/go-test.sh'),
     i18nProd: path.join(basePath, '.tmp/i18n'),
     integrationTest: path.join(basePath, 'src/test/integration'),
