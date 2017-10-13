@@ -54,7 +54,7 @@ before_script:
 
 script:
   - 'if [ ${BUILD_SUITE} = "cluster-test" ]; then
-      ./build/minikube.sh
+      ./build/minikube.sh;
       ./node_modules/.bin/gulp check --heapsterServerHost "http://localhost:8082";
     else
       NODE_ENV=production ./node_modules/.bin/gulp check:code-quality;

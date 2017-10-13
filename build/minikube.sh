@@ -27,7 +27,7 @@ wget -nc -O ${MINIKUBE_BIN} https://storage.googleapis.com/minikube/releases/${M
 chmod +x ${MINIKUBE_BIN}
 export MINIKUBE_WANTUPDATENOTIFICATION=false
 export MINIKUBE_WANTREPORTERRORPROMPT=false
-export MINIKUBE_HOME=${BASE_DIR}
+export MINIKUBE_HOME=${HOME}
 export CHANGE_MINIKUBE_NONE_USER=true
 ${MINIKUBE_BIN} version
 
