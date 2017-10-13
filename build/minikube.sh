@@ -13,54 +13,35 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Base directory, that is cached.
-BASE_DIR=.k8s
-sudo mkdir -p ${BASE_DIR}
-
-# Version heapster to use.
+BASE_DIR=.tools/k8s
 HEAPSTER_VERSION="v1.4.0"
-# Port of the heapster to serve on.
 HEAPSTER_PORT=8082
-
-# Latest stable minikube version.
 MINIKUBE_VERSION=v0.22.3
-
-# Latest stable Kubernetes version.
-K8S_VERSION=$(curl -sSL https://dl.k8s.io/release/stable.txt)
-
-# Binaries location.
-KUBECTL_BIN=${BASE_DIR}/kubectl-${K8S_VERSION}
 MINIKUBE_BIN=${BASE_DIR}/minikube-${MINIKUBE_VERSION}
 
-# TODO Check if it doesn't exist in cache.
-echo "Downloading minikube ${MINIKUBE_VERSION}"
-curl -L https://storage.googleapis.com/minikube/releases/${MINIKUBE_VERSION}/minikube-linux-amd64 -o ${MINIKUBE_BIN}
+echo "Making sure that ${BASE_DIR} directory exists"
+mkdir -p ${BASE_DIR}
+
+echo "Downloading minikube ${MINIKUBE_VERSION} if it is not cached"
+wget -nc -O ${MINIKUBE_BIN} https://storage.googleapis.com/minikube/releases/${MINIKUBE_VERSION}/minikube-linux-amd64
 chmod +x ${MINIKUBE_BIN}
-${MINIKUBE_BIN} version
-
-# TODO Check if it doesn't exist in cache.
-echo "Downloading kubectl ${K8S_VERSION}"
-curl -L https://storage.googleapis.com/kubernetes-release/release/${K8S_VERSION}/bin/linux/amd64/kubectl -o ${KUBECTL_BIN}
-chmod +x ${KUBECTL_BIN}
-${KUBECTL_BIN} version --client
-
-echo "Setting up minikube"
 export MINIKUBE_WANTUPDATENOTIFICATION=false
 export MINIKUBE_WANTREPORTERRORPROMPT=false
 export MINIKUBE_HOME=${BASE_DIR}
 export CHANGE_MINIKUBE_NONE_USER=true
+${MINIKUBE_BIN} version
 
-echo "Setting up environment"
+echo "Making sure that kubeconfig file exists"
 mkdir -p $HOME/.kube
 touch $HOME/.kube/config
 
-echo "Starting Kubernetes ${K8S_VERSION}"
+echo "Starting minikube"
 sudo -E ${MINIKUBE_BIN} start --vm-driver=none
 
-${KUBECTL_BIN} proxy -p 8080 &
-
-# Run Heapster in standalone mode.
-docker run --net=host -d gcr.io/google_containers/heapster-amd64:${HEAPSTER_VERSION} --heapster-port ${HEAPSTER_PORT} --source=kubernetes:http://127.0.0.1:8080?inClusterConfig=false&auth=""
+echo "Running heapster in standalone mode"
+docker run --net=host -d gcr.io/google_containers/heapster-amd64:${HEAPSTER_VERSION} \
+           --heapster-port ${HEAPSTER_PORT} \
+           --source=kubernetes:http://127.0.0.1:8080?inClusterConfig=false&auth=""
 
 echo "Waiting for heapster to be started"
 for i in {1..150}
@@ -72,4 +53,5 @@ do
   sleep 2
 done
 echo "Heapster is up and running"
+
 echo "Kubernetes is ready to use"

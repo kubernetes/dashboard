@@ -150,13 +150,6 @@ gulp.task('integration-test', ['serve:nowatch', 'webdriver-update'], runProtract
 gulp.task('integration-test:prod', ['serve:prod', 'webdriver-update'], runProtractorTests);
 
 /**
- * Runs application integration tests. Uses production version of the application.
- */
-gulp.task(
-    'local-cluster-integration-test:prod', ['serve:prod', 'local-up-cluster', 'webdriver-update'],
-    runProtractorTests);
-
-/**
  * Downloads and updates webdriver. Required to keep it up to date.
  */
 gulp.task('webdriver-update', gulpProtractor.webdriver_update);

@@ -25,13 +25,11 @@ group: edge
 # Use Node.js as primary language because Gulp is the build system used in the project.
 language: node_js
 
-# Cache for faster builds.
 cache:
   directories:
     - node_modules
     - bower_components
     - .tools
-    - .k8s
 
 addons:
   # Run tests that require a browser on SauceLabs CI provider. Learn more at: https://saucelabs.com
@@ -51,13 +49,13 @@ matrix:
       env: BUILD_SUITE=code-test SAUCE_USERNAME=k8s-dashboard-ci
 
 before_script:
-  # Install go 1.8.3. It is not there by default.
   - eval "$(gimme 1.8.3)"
   - docker --version
 
 script:
   - 'if [ ${BUILD_SUITE} = "cluster-test" ]; then
-      ./node_modules/.bin/gulp check:local-cluster --heapsterServerHost "http://localhost:8082";
+      ./build/minikube.sh
+      ./node_modules/.bin/gulp check --heapsterServerHost "http://localhost:8082";
     else
       NODE_ENV=production ./node_modules/.bin/gulp check:code-quality;
     fi'
