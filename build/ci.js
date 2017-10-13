@@ -18,6 +18,7 @@
 import childProcess from 'child_process';
 import gulp from 'gulp';
 import codecov from 'gulp-codecov.io';
+import conf from './conf';
 
 
 /**
