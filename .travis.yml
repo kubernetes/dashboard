@@ -39,15 +39,15 @@ addons:
 matrix:
   include:
     # Integration and end-to-end tests.
-    node_js: 8.6.0
-    env:
+    - node_js: 8.6.0
+      env:
       - BUILD_SUITE=cluster-test
       - SAUCE_USERNAME=k8s-dashboard-ci
       - KUBE_DASHBOARD_KUBECONFIG=$HOME/.kube/config
 
     # Unit tests.
-    node_js: 8.6.0
-    env:
+    - node_js: 8.6.0
+      env:
       - BUILD_SUITE=code-test
       - SAUCE_USERNAME=k8s-dashboard-ci
 
