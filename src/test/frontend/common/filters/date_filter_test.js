@@ -27,7 +27,7 @@ describe('Items per page filter', () => {
   });
 
   it('should format date with a default format', () => {
-    expect(dateFilter('2016-06-06T19:13:12Z')).toEqual('2016-06-06T19:13');
+    expect(dateFilter('2016-06-06T19:13:12Z')).toEqual('2016-06-06T19:13 UTC');
   });
   it('should format date with an explicit format', () => {
     expect(dateFilter('2016-06-06T19:13:12Z', 'yyyy-MM-ddThh:mm:ss'))

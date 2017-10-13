@@ -21,7 +21,7 @@
  */
 export default function dateFilter($delegate) {
   let original = $delegate;
-  const defaultFormat = 'yyyy-MM-ddTHH:mm UTC';
+  const defaultFormat = 'yyyy-MM-ddTHH:mm';
   const defaultTZ = 'UTC';
   /**
    * If no format or TZ are given use the default ones.
@@ -32,11 +32,15 @@ export default function dateFilter($delegate) {
    * @return {string}
    */
   let filterFunction = function(date, format, timezone) {
-    if (!format) {
-      format = defaultFormat;
-    }
     if (!timezone) {
       timezone = defaultTZ;
+    }
+    if (!format) {
+      if (timezone === defaultTZ) {
+        format = `${defaultFormat} UTC`;
+      } else {
+        format = defaultFormat;
+      }
     }
     return original(date, format, timezone);
   };
