@@ -22,7 +22,6 @@ import {stateName} from '../../persistentvolumeclaim/detail/state';
 class PersistentVolumeClaimCardController {
   /**
    * @param {!ui.router.$state} $state
-   * @param {!angular.$interpolate} $interpolate
    * @param {!../../common/namespace/service.NamespaceService} kdNamespaceService
    * @ngInject
    */
@@ -35,9 +34,6 @@ class PersistentVolumeClaimCardController {
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;
-
-    /** @private */
-    this.interpolate_ = $interpolate;
 
     /** @private {!../../common/namespace/service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
@@ -88,22 +84,6 @@ class PersistentVolumeClaimCardController {
    */
   isLost() {
     return this.persistentVolumeClaim.status === 'Lost';
-  }
-
-  /**
-   * @export
-   * @param  {string} creationDate - creation date of the persistent volume claim
-   * @return {string} localized tooltip with the formatted creation date
-   */
-  getCreatedAtTooltip(creationDate) {
-    let filter = this.interpolate_(`{{date | date}}`);
-    /**
-     * @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
-     * persistent volume claim.
-     */
-    let MSG_PERSISTENT_VOLUME_CLAIM_LIST_CREATED_AT_TOOLTIP =
-        goog.getMsg('Created at {$creationDate}', {'creationDate': filter({'date': creationDate})});
-    return MSG_PERSISTENT_VOLUME_CLAIM_LIST_CREATED_AT_TOOLTIP;
   }
 }
 

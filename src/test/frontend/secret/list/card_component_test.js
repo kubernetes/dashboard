@@ -33,9 +33,4 @@ describe('Secret card', () => {
     spyOn(ctrl.kdNamespaceService_, 'areMultipleNamespacesSelected').and.returnValue(true);
     expect(ctrl.areMultipleNamespacesSelected()).toBe(true);
   });
-
-  it('should format the "secret start date" tooltip correctly', () => {
-    expect(ctrl.getStartedAtTooltip('2016-06-06T09:13:12Z'))
-        .toBe('Created at 2016-06-06T09:13 UTC');
-  });
 });

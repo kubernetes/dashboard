@@ -176,11 +176,6 @@ describe('Pod card controller', () => {
     expect(ctrl.isFailed()).toBeFalsy();
   });
 
-  it('should format the "pod start date" tooltip correctly', () => {
-    expect(ctrl.getStartedAtTooltip('2016-06-06T09:13:12Z'))
-        .toBe('Started at 2016-06-06T09:13 UTC');
-  });
-
   it('should show and hide cpu metrics', () => {
     let cases = [
       {pod: {}, expected: false},

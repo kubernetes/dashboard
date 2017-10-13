@@ -23,19 +23,15 @@ import {stateName} from '../../daemonset/detail/state';
 export class DaemonSetCardController {
   /**
    * @param {!ui.router.$state} $state
-   * @param {!angular.$interpolate} $interpolate
    * @param {!../../common/namespace/service.NamespaceService} kdNamespaceService
    * @ngInject
    */
-  constructor($state, $interpolate, kdNamespaceService) {
+  constructor($state, kdNamespaceService) {
     /** @export {!backendApi.DaemonSet} - Initialized from binding. */
     this.daemonSet;
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;
-
-    /** @private {!angular.$interpolate} */
-    this.interpolate_ = $interpolate;
 
     /** @private {!../../common/namespace/service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
@@ -84,22 +80,6 @@ export class DaemonSetCardController {
    */
   isSuccess() {
     return !this.isPending() && !this.hasWarnings();
-  }
-
-  /**
-   * @export
-   * @return {string} localized tooltip with the formatted creation date
-   */
-  getCreatedAtTooltip() {
-    let filter = this.interpolate_(`{{date | date}}`);
-    /**
-     * @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
-     * the daemon set.
-     */
-    let MSG_DAEMON_SET_LIST_CREATED_AT_TOOLTIP = goog.getMsg(
-        'Created at {$creationDate}',
-        {'creationDate': filter({'date': this.daemonSet.objectMeta.creationTimestamp})});
-    return MSG_DAEMON_SET_LIST_CREATED_AT_TOOLTIP;
   }
 }
 

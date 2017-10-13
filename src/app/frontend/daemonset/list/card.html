@@ -66,7 +66,7 @@ limitations under the License.
       {{::$ctrl.daemonSet.objectMeta.creationTimestamp | relativeTime}}
       <md-tooltip md-delay="500"
                   md-autohide>
-        {{::$ctrl.getCreatedAtTooltip()}}
+        [[Created at| Tooltip for the age column ]] {{::$ctrl.daemonSet.objectMeta.creationTimestamp | date}}
       </md-tooltip>
     </kd-resource-card-column>
     <kd-resource-card-column>

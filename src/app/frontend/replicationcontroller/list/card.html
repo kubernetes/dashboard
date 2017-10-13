@@ -71,7 +71,7 @@ limitations under the License.
       {{::$ctrl.replicationController.objectMeta.creationTimestamp | relativeTime}}
       <md-tooltip md-delay="500"
                   md-autohide>
-        {{::$ctrl.getCreatedAtTooltip($ctrl.replicationController.objectMeta.creationTimestamp)}}
+        [[Created at | Tooltip for the age column ]] {{::$ctrl.replicationController.objectMeta.creationTimestamp | date}}
       </md-tooltip>
     </kd-resource-card-column>
     <kd-resource-card-column>

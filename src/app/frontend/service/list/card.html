@@ -66,7 +66,7 @@ limitations under the License.
         {{::$ctrl.service.objectMeta.creationTimestamp | relativeTime}}
         <md-tooltip md-delay="500"
                     md-autohide>
-          {{::$ctrl.getStartedAtTooltip($ctrl.service.objectMeta.creationTimestamp)}}
+          [[Created at| Tooltip for the age column ]] {{::$ctrl.service.objectMeta.creationTimestamp | date}}
         </md-tooltip>
       </div>
       <div ng-if="::!$ctrl.service.objectMeta.creationTimestamp">-</div>

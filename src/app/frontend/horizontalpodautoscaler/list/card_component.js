@@ -32,19 +32,15 @@ const referenceKindToDetailStateName = {
 export class HorizontalPodAutoscalerCardController {
   /**
    * @param {!ui.router.$state} $state
-   * @param {!angular.$interpolate} $interpolate
    * @param {!../../common/namespace/service.NamespaceService} kdNamespaceService
    * @ngInject
    */
-  constructor($state, $interpolate, kdNamespaceService) {
+  constructor($state, kdNamespaceService) {
     /** @export {!backendApi.HorizontalPodAutoscaler} - Initialized from binding. */
     this.horizontalPodAutoscaler;
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;
-
-    /** @private {!angular.$interpolate} */
-    this.interpolate_ = $interpolate;
 
     /** @private {!../../common/namespace/service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
@@ -80,24 +76,6 @@ export class HorizontalPodAutoscalerCardController {
         new StateParams(
             this.horizontalPodAutoscaler.objectMeta.namespace,
             this.horizontalPodAutoscaler.scaleTargetRef.name));
-  }
-
-  /**
-   * @export
-   * @return {string} localized tooltip with the formatted creation date
-   */
-  getCreatedAtTooltip() {
-    let filter = this.interpolate_(`{{date | date}}`);
-    /**
-     * @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
-     * the horizontal pod autoscaler.
-     */
-    let MSG_HORIZONTAL_POD_AUTOSCALER_LIST_CREATED_AT_TOOLTIP =
-        goog.getMsg('Created at {$creationDate}', {
-          'creationDate':
-              filter({'date': this.horizontalPodAutoscaler.objectMeta.creationTimestamp}),
-        });
-    return MSG_HORIZONTAL_POD_AUTOSCALER_LIST_CREATED_AT_TOOLTIP;
   }
 }
 

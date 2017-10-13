@@ -23,10 +23,9 @@ import {stateName} from '../../namespace/detail/state';
 class NamespaceCardController {
   /**
    * @param {!ui.router.$state} $state
-   * @param {!angular.$interpolate} $interpolate
    * @ngInject
    */
-  constructor($state, $interpolate) {
+  constructor($state) {
     /**
      * Initialized from the scope.
      * @export {!backendApi.Namespace}
@@ -35,9 +34,6 @@ class NamespaceCardController {
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;
-
-    /** @private */
-    this.interpolate_ = $interpolate;
   }
 
   /**
@@ -64,22 +60,6 @@ class NamespaceCardController {
    */
   getNamespaceDetailHref() {
     return this.state_.href(stateName, new GlobalStateParams(this.namespace.objectMeta.name));
-  }
-
-  /**
-   * @export
-   * @param  {string} creationDate - creation date of the namespace
-   * @return {string} localized tooltip with the formated creation date
-   */
-  getCreatedAtTooltip(creationDate) {
-    let filter = this.interpolate_(`{{date | date}}`);
-    /**
-     * @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
-     * namespace.
-     */
-    let MSG_NAMESPACE_LIST_CREATED_AT_TOOLTIP =
-        goog.getMsg('Created at {$creationDate}', {'creationDate': filter({'date': creationDate})});
-    return MSG_NAMESPACE_LIST_CREATED_AT_TOOLTIP;
   }
 }
 

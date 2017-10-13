@@ -70,7 +70,7 @@ limitations under the License.
       {{::$ctrl.statefulSet.objectMeta.creationTimestamp | relativeTime}}
       <md-tooltip md-delay="500"
                   md-autohide>
-        {{::$ctrl.getCreatedAtTooltip($ctrl.statefulSet.objectMeta.creationTimestamp)}}
+        [[Created at| Tooltip for the age column ]] {{::$ctrl.statefulSet.objectMeta.creationTimestamp| date}}
       </md-tooltip>
     </kd-resource-card-column>
     <kd-resource-card-column>

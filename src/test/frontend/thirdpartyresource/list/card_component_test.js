@@ -29,9 +29,4 @@ describe('Third party resource card', () => {
   it('should instantiate the controller properly', () => {
     expect(ctrl).not.toBeUndefined();
   });
-
-  it('should format the "created at" tooltip correctly', () => {
-    expect(ctrl.getCreatedAtTooltip('2016-06-06T09:13:12Z'))
-        .toMatch('Created at 2016-06-06T09:13.*');
-  });
 });

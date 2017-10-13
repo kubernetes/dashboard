@@ -39,7 +39,7 @@ limitations under the License.
       {{::$ctrl.configMap.objectMeta.creationTimestamp | relativeTime}}
       <md-tooltip md-delay="500"
                   md-autohide>
-        {{::$ctrl.getCreatedAtTooltip($ctrl.configMap.objectMeta.creationTimestamp)}}
+        [[Created at| Tooltip for the age column ]] {{::$ctrl.configMap.objectMeta.creationTimestamp | date}}
       </md-tooltip>
     </kd-resource-card-column>
     <kd-resource-card-column class="kd-row-layout-column kd-icon-column">

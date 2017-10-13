@@ -23,10 +23,9 @@ import {stateName} from '../../node/detail/state';
 class NodeCardController {
   /**
    * @param {!ui.router.$state} $state
-   * @param {!angular.$interpolate} $interpolate
    * @ngInject
    */
-  constructor($state, $interpolate) {
+  constructor($state) {
     /**
      * Initialized from the scope.
      * @export {!backendApi.Node}
@@ -35,9 +34,6 @@ class NodeCardController {
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;
-
-    /** @private */
-    this.interpolate_ = $interpolate;
   }
 
   /**
@@ -73,22 +69,6 @@ class NodeCardController {
    */
   getNodeDetailHref() {
     return this.state_.href(stateName, new GlobalStateParams(this.node.objectMeta.name));
-  }
-
-  /**
-   * @export
-   * @param  {string} creationDate - creation date of the node
-   * @return {string} localized tooltip with the formated creation date
-   */
-  getCreatedAtTooltip(creationDate) {
-    let filter = this.interpolate_(`{{date | date}}`);
-    /**
-     * @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
-     * node.
-     */
-    let MSG_NODE_LIST_CREATED_AT_TOOLTIP =
-        goog.getMsg('Created at {$creationDate}', {'creationDate': filter({'date': creationDate})});
-    return MSG_NODE_LIST_CREATED_AT_TOOLTIP;
   }
 }
 
