@@ -587,7 +587,6 @@
   <translation id="1183014090355571191" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_2" desc="Persistent volume info details section claim entry.">索取</translation>
   <translation id="8253469971637153606" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_3" desc="Persistent volume info details section reclaim policy entry.">回收策略</translation>
   <translation id="1048037683065603923" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_4" desc="Persistent volume info details section access modes entry.">访问模式</translation>
-  <translation id="489198110526224081" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_5" desc="Persistent volume info details section capacity entry.">总量</translation>
   <translation id="7193098873360233228" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_6" desc="Persistent volume info details section message entry.">消息</translation>
   <translation id="8677793784230574410" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_7" desc="Persistent volume info details section storage class entry.">存储类型</translation>
   <translation id="4472860153979076217" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_8" desc="Persistent volume info details section reason entry.">原因</translation>
