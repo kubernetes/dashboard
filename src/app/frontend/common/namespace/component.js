@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import {namespaceParam} from '../../chrome/state';
+import {showNamespaceChangeInfoDialog} from './dialog';
 
 /**
  * Internal key for empty selection. To differentiate empty string from nulls.
@@ -42,9 +43,10 @@ export class NamespaceSelectController {
    * @param {!angular.Scope} $scope
    * @param {!./../state/service.FutureStateService} kdFutureStateService
    * @param {!./../components/breadcrumbs/service.BreadcrumbsService} kdBreadcrumbsService
+   * @param {!md.$dialog} $mdDialog
    * @ngInject
    */
-  constructor($resource, $state, $scope, kdFutureStateService, kdBreadcrumbsService) {
+  constructor($resource, $state, $scope, kdFutureStateService, kdBreadcrumbsService, $mdDialog) {
     /**
      * Initialized with all namespaces on first open.
      * @export {!Array<string>}
@@ -81,6 +83,9 @@ export class NamespaceSelectController {
     /** @private {!./../components/breadcrumbs/service.BreadcrumbsService}} */
     this.kdBreadcrumbsService_ = kdBreadcrumbsService;
 
+    /** @private {!md.$dialog} */
+    this.mdDialog_ = $mdDialog;
+
     /** @export */
     this.i18n = i18n;
   }
@@ -108,18 +113,6 @@ export class NamespaceSelectController {
   shouldRedirect_(toParams) {
     return toParams && toParams.namespace && toParams.objectNamespace &&
         toParams.namespace !== '_all' && toParams.namespace !== toParams.objectNamespace;
-  }
-
-  /**
-   * Redirects to parent state. It should be list state, because redirect takes place when user
-   * is detail state.
-   *
-   * @param {Object<string, string>} toParams
-   * @private
-   */
-  redirectToParentState_(toParams) {
-    this.state_.go(
-        this.kdBreadcrumbsService_.getParentStateName(this.state_['$current']), toParams);
   }
 
   /**
@@ -156,8 +149,16 @@ export class NamespaceSelectController {
     }
 
     if (this.shouldRedirect_(toParams)) {
-      this.redirectToParentState_(toParams);
+      this.handleNamespaceChangeDialog_(toParams);
     }
+  }
+
+  /**
+   * @param {Object<string, string>} toParams
+   * @private
+   */
+  handleNamespaceChangeDialog_(toParams) {
+    showNamespaceChangeInfoDialog(this.mdDialog_, toParams.objectNamespace);
   }
 
   /**
