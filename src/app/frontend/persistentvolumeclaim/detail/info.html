@@ -26,10 +26,6 @@ limitations under the License.
       <div ng-show="::$ctrl.persistentVolumeClaim.volume">{{::$ctrl.persistentVolumeClaim.volume}}</div>
       <div ng-hide="::$ctrl.persistentVolumeClaim.volume">-</div>
     </kd-info-card-entry>
-    <kd-info-card-entry title="[[Capacity|Persistent volume claim info details section capacity entry.]]">
-      <div ng-show="::$ctrl.persistentVolumeClaim.capacity">{{::$ctrl.persistentVolumeClaim.capacity}}</div>
-      <div ng-hide="::$ctrl.persistentVolumeClaim.capacity">-</div>
-    </kd-info-card-entry>
     <kd-info-card-entry title="[[Access modes|Persistent volume claim info details section access modes entry.]]">
       <div ng-repeat="mode in $ctrl.persistentVolumeClaim.accessModes">
         <kd-middle-ellipsis display-string="{{::mode}}"></kd-middle-ellipsis>

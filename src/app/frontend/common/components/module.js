@@ -12,14 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import dataSelectModule from '../dataselect/module';
 import filtersModule from '../filters/module';
+import namespaceModule from '../namespace/module';
 import stateModule from '../state/module';
 
-import dataSelectModule from './../dataselect/module';
-import namespaceModule from './../namespace/module';
 import actionbarModule from './actionbar/module';
 import allocatedResourcesChartModule from './allocatedresourceschart/module';
 import annotationsModule from './annotations/module';
+import {capacityComponent} from './capacity/component';
 import {conditionListComponent} from './conditions/component';
 import {contentCardComponent} from './contentcard/component';
 import endpointModule from './endpoint/module';
@@ -72,5 +73,6 @@ export default angular
     .component('kdConditionList', conditionListComponent)
     .component('kdScaleButton', scaleButtonComponent)
     .component('kdPodWarnings', podWarningsComponent)
+    .component('kdCapacity', capacityComponent)
     .directive('kdWarnThreshold', warnThresholdDirective)
     .directive('kdUploadFile', uploadFileDirective);

@@ -17,7 +17,7 @@ import Breadcrumb from './breadcrumb';
 /**
  * @final
  */
-export default class BreadcrumbsController {
+class BreadcrumbsController {
   /**
    * Constructs breadcrumbs controller.
    *

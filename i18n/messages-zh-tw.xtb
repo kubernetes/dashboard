@@ -88,6 +88,9 @@
   <translation id="1417978160910275828" key="MSG_COMMON_COMPONENTS_ANNOTATIONS_ANNOTATIONS_1" desc="Text on the button to show fewer annotations.">顯示簡要註釋</translation>
   <translation id="6884163988875905686" key="MSG_COMMON_COMPONENTS_ANNOTATIONS_ANNOTATIONS_2" desc="Text on the button to show all the annotations.">顯示全部註釋</translation>
   <translation id="6935188165410090417" key="MSG_COMMON_COMPONENTS_ANNOTATIONS_LASTAPPLIEDCONFIGURATION_0" desc="Label for the kubectl.kubernetes.io/last-applied-configuration annotation">最近應用組態</translation>
+  <translation id="6113138181366048141" key="MSG_COMMON_COMPONENTS_CAPACITY_CAPACITY_0" desc="Persistent volume claim\'s capacity list.">Capacity</translation>
+  <translation id="5435782630213904388" key="MSG_COMMON_COMPONENTS_CAPACITY_CAPACITY_1" desc="Persistent volume claim\'s resource name displayed on capacity list.">Resource name</translation>
+  <translation id="2148969238321481833" key="MSG_COMMON_COMPONENTS_CAPACITY_CAPACITY_2" desc="Persistent volume claim\'s quantity displayed on capacity list.">Quantity</translation>
   <translation id="6456481460873145449" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_0" desc="Label \'Conditions\' for the conditions section.">現況</translation>
   <translation id="8993677465322195935" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_1" desc="Label \'Type\' for the condition table header.">類型</translation>
   <translation id="286975103376271553" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_10" desc="Label when there is no data.">-</translation>
@@ -559,7 +562,6 @@
   <translation id="1482471968556330090" key="MSG_PERSISTENTVOLUMECLAIM_DETAIL_INFO_0" desc="Header in a detail view">詳細資訊</translation>
   <translation id="6385503627780441862" key="MSG_PERSISTENTVOLUMECLAIM_DETAIL_INFO_1" desc="Persistent volume claim info details section status entry.">狀態</translation>
   <translation id="2412371468817393973" key="MSG_PERSISTENTVOLUMECLAIM_DETAIL_INFO_2" desc="Persistent volume claim info details section volume entry.">Volume</translation>
-  <translation id="6740597941261077457" key="MSG_PERSISTENTVOLUMECLAIM_DETAIL_INFO_3" desc="Persistent volume claim info details section capacity entry.">容量</translation>
   <translation id="297809042910539610" key="MSG_PERSISTENTVOLUMECLAIM_DETAIL_INFO_4" desc="Persistent volume claim info details section access modes entry.">存取模式</translation>
   <translation id="4416635686473158703" key="MSG_PERSISTENTVOLUMECLAIM_DETAIL_INFO_5" desc="Persistent volume claim info details section storage class entry.">儲存類別</translation>
   <translation id="29404782164326270" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">Persistent Volume Claims</translation>
@@ -583,11 +585,10 @@
   <translation id="1183014090355571191" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_2" desc="Persistent volume info details section claim entry.">索取</translation>
   <translation id="8253469971637153606" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_3" desc="Persistent volume info details section reclaim policy entry.">回收策略</translation>
   <translation id="1048037683065603923" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_4" desc="Persistent volume info details section access modes entry.">存取模式</translation>
-  <translation id="489198110526224081" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_5" desc="Persistent volume info details section capacity entry.">容量</translation>
   <translation id="7193098873360233228" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_6" desc="Persistent volume info details section message entry.">訊息</translation>
   <translation id="8677793784230574410" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_7" desc="Persistent volume info details section storage class entry.">儲存類別</translation>
   <translation id="4472860153979076217" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_8" desc="Persistent volume info details section reason entry.">原因</translation>
-  <translation id="3344267084925697004" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_0" desc="Persistent volume source info title.">持久性雲硬碟來源</translation>
+  <translation id="2194822468753418857" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_0" desc="Persistent volume source info title.">Source</translation>
   <translation id="4229851576634547217" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_1" desc="Persistent volume source info host path title.">宿主機路徑</translation>
   <translation id="2012274989896397034" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_10" desc="Persistent volume source info AWS block storage section FS type entry.">檔案系統類型</translation>
   <translation id="1159922307397938960" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_11" desc="Persistent volume source info AWS block storage section partition entry.">分區</translation>

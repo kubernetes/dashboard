@@ -12,26 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../variables';
+import module from 'common/components/module';
 
-.kd-about-footer-container {
-  padding-bottom: $baseline-grid;
-}
+describe('capacity component', () => {
+  /** @type {!CapacityController} */
+  let ctrl;
 
-.kd-about-kubernetes-logo {
-  height: $logo-height;
-  padding-right: $baseline-grid * 2;
-}
+  beforeEach(() => {
+    angular.mock.module(module.name);
 
-.kd-about-button {
-  margin: ($baseline-grid * 2) 0;
-}
+    angular.mock.inject(($componentController) => {
+      ctrl = $componentController('kdCapacity');
+    });
+  });
 
-.kd-copyright-title {
-  padding-top: $baseline-grid * 8;
-}
-
-.kd-footer {
-  color: $foreground-2;
-  font-size: $footer-font-size-base;
-}
+  it('should initialize controller', () => {
+    expect(ctrl).not.toBeNull();
+  });
+});

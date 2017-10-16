@@ -15,7 +15,7 @@
 /**
  * @final
  */
-export default class PersistentVolumeClaimInfoController {
+class PersistentVolumeClaimInfoController {
   /**
    * Constructs persistent volume claim controller info object.
    */

@@ -12,26 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../variables';
-
-.kd-about-footer-container {
-  padding-bottom: $baseline-grid;
-}
-
-.kd-about-kubernetes-logo {
-  height: $logo-height;
-  padding-right: $baseline-grid * 2;
-}
-
-.kd-about-button {
-  margin: ($baseline-grid * 2) 0;
-}
-
-.kd-copyright-title {
-  padding-top: $baseline-grid * 8;
-}
-
-.kd-footer {
-  color: $foreground-2;
-  font-size: $footer-font-size-base;
-}
+export const capacityComponent = {
+  bindings: {
+    'capacity': '<',
+  },
+  templateUrl: 'common/components/capacity/capacity.html',
+};
