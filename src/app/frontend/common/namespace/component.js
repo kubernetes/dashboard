@@ -98,7 +98,7 @@ export class NamespaceSelectController {
   }
 
   /**
-   *  Redirect should happen if user is on details page (toParams.objectNamespace), not all
+   *  Dialog should be shown if user is on details page (toParams.objectNamespace), not all
    *  namespaces are selected (toParams.namespace !== "_all") and current object namespace is
    *  different than selected namespace (toParams.namespace !== toParams.objectNamespace).
    *
@@ -106,7 +106,7 @@ export class NamespaceSelectController {
    * @return {boolean}
    * @private
    */
-  shouldRedirect_(toParams) {
+  shouldShowNamespaceChangeDialog_(toParams) {
     return toParams && toParams.namespace && toParams.objectNamespace &&
         toParams.namespace !== '_all' && toParams.namespace !== toParams.objectNamespace;
   }
@@ -144,7 +144,7 @@ export class NamespaceSelectController {
       this.selectedNamespace = DEFAULT_NAMESPACE;
     }
 
-    if (this.shouldRedirect_(toParams)) {
+    if (this.shouldShowNamespaceChangeDialog_(toParams)) {
       this.handleNamespaceChangeDialog_(toParams);
     }
   }
