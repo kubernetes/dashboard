@@ -36,7 +36,7 @@ limitations under the License.
       </kd-resource-card-header-columns>
 
       <kd-resource-card-columns ng-repeat="(key, value) in ::$ctrl.capacity">
-        <kd-resource-card-column>{{$ctrl.capitalize(key)}}</kd-resource-card-column>
+        <kd-resource-card-column class="kd-capitalize">{{key}}</kd-resource-card-column>
         <kd-resource-card-column>{{value}}</kd-resource-card-column>
       </kd-resource-card-columns>
     </kd-resource-card-list>

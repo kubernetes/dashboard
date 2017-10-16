@@ -29,25 +29,4 @@ describe('capacity component', () => {
   it('should initialize controller', () => {
     expect(ctrl).not.toBeNull();
   });
-
-  it('should capitalize resource name', () => {
-    // given
-    let cases = [
-      {resourceName: '', expected: ''},
-      {resourceName: 't', expected: 'T'},
-      {resourceName: 'T', expected: 'T'},
-      {resourceName: 'te', expected: 'Te'},
-      {resourceName: 'Te', expected: 'Te'},
-      {resourceName: 'test', expected: 'Test'},
-      {resourceName: 'Test', expected: 'Test'},
-    ];
-
-    // when
-    cases.forEach((c) => {
-      let result = ctrl.capitalize(c.resourceName);
-
-      // then
-      expect(result).toEqual(c.expected);
-    });
-  });
 });
