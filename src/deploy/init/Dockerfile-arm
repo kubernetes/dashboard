@@ -32,12 +32,10 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN echo '#!/bin/bash\n\
     if [ -z "$(ls -A /certs)" ]; then\n\
       echo "Creating self-signed certificates"\n\
-      cd /certs\n\
-      openssl req -nodes -newkey rsa:2048 -keyout dashboard.key -out dashboard.csr -subj "/C=/ST=/L=/O=/OU=/CN=kubernetes-dashboard"\n\
-      openssl x509 -req -sha256 -days 365 -in dashboard.csr -signkey dashboard.key -out dashboard.crt\n\
       export TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)\n\
-      rm dashboard.csr\n\
       kubectl --token $TOKEN -n kube-system delete secret kubernetes-dashboard-certs\n\
+      cd /certs\n\
+      openssl req -x509 -nodes -newkey rsa:2048 -keyout dashboard.key -out dashboard.crt -days 365 -subj "/C=/ST=/L=/O=/OU=/CN=kubernetes-dashboard"\n\
       kubectl --token $TOKEN -n kube-system create secret generic kubernetes-dashboard-certs --from-file=/certs\n\
     fi\n\' >> /bootstrap.sh
 
