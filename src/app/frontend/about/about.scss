@@ -14,6 +14,9 @@
 
 @import '../variables';
 
+.kd-about-footer-container {
+  padding-bottom: $baseline-grid;
+}
 
 .kd-about-kubernetes-logo {
   height: $logo-height;
