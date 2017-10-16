@@ -12,22 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../../variables';
+/** @final */
+class CapacityController {
+  /**
+   * @param {string} str
+   * @return {string}
+   * @export
+   */
+  capitalize(str) {
+    if (str.length === 0) {
+      return str;
+    }
 
-.kd-info-card-section {
-  padding-bottom: 0;
+    if (str.length === 1) {
+      return str.charAt(0).toUpperCase();
+    }
 
-  kd-info-card-section {
-    padding: 0 $baseline-grid;
+    return str.charAt(0).toUpperCase() + str.substring(1);
   }
 }
 
-.kd-info-card-section-container {
-  display: flex;
-  flex-grow: 1;
-  max-width: 100%;
-}
-
-.kd-info-card-section-name {
-  padding-bottom: $baseline-grid;
-}
+export const capacityComponent = {
+  bindings: {
+    'capacity': '<',
+  },
+  controller: CapacityController,
+  templateUrl: 'common/components/capacity/capacity.html',
+};
