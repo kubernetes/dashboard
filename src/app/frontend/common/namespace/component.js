@@ -42,11 +42,10 @@ export class NamespaceSelectController {
    * @param {!ui.router.$state} $state
    * @param {!angular.Scope} $scope
    * @param {!./../state/service.FutureStateService} kdFutureStateService
-   * @param {!./../components/breadcrumbs/service.BreadcrumbsService} kdBreadcrumbsService
    * @param {!md.$dialog} $mdDialog
    * @ngInject
    */
-  constructor($resource, $state, $scope, kdFutureStateService, kdBreadcrumbsService, $mdDialog) {
+  constructor($resource, $state, $scope, kdFutureStateService, $mdDialog) {
     /**
      * Initialized with all namespaces on first open.
      * @export {!Array<string>}
@@ -79,9 +78,6 @@ export class NamespaceSelectController {
 
     /** @private {!./../state/service.FutureStateService}} */
     this.futureStateService_ = kdFutureStateService;
-
-    /** @private {!./../components/breadcrumbs/service.BreadcrumbsService}} */
-    this.kdBreadcrumbsService_ = kdBreadcrumbsService;
 
     /** @private {!md.$dialog} */
     this.mdDialog_ = $mdDialog;
