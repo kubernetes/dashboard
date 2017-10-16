@@ -100,7 +100,7 @@ spec:
     spec:
       initContainers:
       - name: kubernetes-dashboard-init
-        image: kubernetesdashboarddev/kubernetes-dashboard-init-amd64:v1.0.0
+        image: kubernetesdashboarddev/kubernetes-dashboard-init-amd64:v1.0.1
         volumeMounts:
         - name: kubernetes-dashboard-certs
           mountPath: /certs
