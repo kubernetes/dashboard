@@ -45,12 +45,6 @@ limitations under the License.
       </kd-middle-ellipsis>
       <div ng-hide="::$ctrl.persistentVolume.storageClass">-</div>
     </kd-info-card-entry>
-    <kd-info-card-entry title="[[Capacity|Persistent volume info details section capacity entry.]]">
-      <kd-middle-ellipsis ng-repeat="(key, value) in ::$ctrl.persistentVolume.capacity"
-                          display-string="{{::value}}">
-      </kd-middle-ellipsis>
-      <div ng-hide="::$ctrl.persistentVolume.capacity">-</div>
-    </kd-info-card-entry>
     <kd-info-card-entry title="[[Reason|Persistent volume info details section reason entry.]]">
       <kd-middle-ellipsis display-string="{{::$ctrl.persistentVolume.reason}}">
       </kd-middle-ellipsis>
