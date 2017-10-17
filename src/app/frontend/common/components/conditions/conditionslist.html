@@ -60,12 +60,22 @@ limitations under the License.
       </kd-resource-card-column>
       <kd-resource-card-column>
         <div ng-if="::condition.lastProbeTime">{{condition.lastProbeTime | relativeTime}}</div>
+        <md-tooltip ng-if="::condition.lastProbeTime"
+                    md-delay="500"
+                    md-autohide>
+          [[Probed at | Tooltip heartbeat column of pod conditions ]] {{condition.lastProbeTime | date}}
+        </md-tooltip>
         <div ng-if="::!condition.lastProbeTime">[[-|Label when there is no data.]]</div>
       </kd-resource-card-column>
       <kd-resource-card-column>
         <div ng-if="::condition.lastTransitionTime">
           {{condition.lastTransitionTime | relativeTime}}
         </div>
+        <md-tooltip ng-if="::condition.lastTransitionTime"
+                    md-delay="500"
+                    md-autohide>
+          [[Probed at | Tooltip transistion column of pod conditions ]] {{condition.lastTransitionTime | date}}
+        </md-tooltip>
         <div ng-if="::!condition.lastTransitionTime">[[-|Label when there is no data.]]</div>
       </kd-resource-card-column>
       <kd-resource-card-column>
