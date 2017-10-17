@@ -22,8 +22,11 @@ limitations under the License.
     <kd-info-card-entry title="[[Status|Label 'Status' for the pod status in details part (left) of the pod details view.]]">
       {{::$ctrl.pod.podPhase}}
     </kd-info-card-entry>
+    <kd-info-card-entry title="[[QoS Class|Label 'QoS Class' for the pod QoS class in the pod details view.]]">
+      <span ng-if="$ctrl.pod.qosClass">{{::$ctrl.pod.qosClass}}</span>
+      <span ng-if="!$ctrl.pod.qosClass">-</span>
+    </kd-info-card-entry>
   </kd-info-card-section>
-
   <kd-info-card-section name="[[Network|Subtitle 'Network' at the top of the column about network connectivity (right) at the pod detail view.]]">
     <kd-info-card-entry title="[[Node|Label 'Node' for the node a pods is running on, appears in the connectivity part (right) of the pod details view.]]">
       <a href="{{$ctrl.getNodeDetailsHref()}}">{{::$ctrl.pod.nodeName}}</a>

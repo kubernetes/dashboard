@@ -28,49 +28,27 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/controller"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"k8s.io/api/core/v1"
-	"k8s.io/apimachinery/pkg/api/errors"
 	res "k8s.io/apimachinery/pkg/api/resource"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/client-go/kubernetes"
 )
 
-// PodDetail is a presentation layer view of Kubernetes PodDetail resource. This means it is
-// PodDetail plus additional augmented data we can get from other sources (like services that
-// target it).
+// PodDetail is a presentation layer view of Kubernetes Pod resource.
 type PodDetail struct {
-	ObjectMeta api.ObjectMeta `json:"objectMeta"`
-	TypeMeta   api.TypeMeta   `json:"typeMeta"`
-
-	// Status of the Pod. See Kubernetes API for reference.
-	PodPhase v1.PodPhase `json:"podPhase"`
-
-	// IP address of the Pod.
-	PodIP string `json:"podIP"`
-
-	// Name of the Node this Pod runs on.
-	NodeName string `json:"nodeName"`
-
-	// Count of containers restarts.
-	RestartCount int32 `json:"restartCount"`
-
-	// Reference to the Controller
-	Controller controller.ResourceOwner `json:"controller"`
-
-	// List of container of this pod.
-	Containers []Container `json:"containers"`
-
-	// List of initContainer of this pod.
-	InitContainers []Container `json:"initContainers"`
-
-	// Metrics collected for this resource
-	Metrics []metricapi.Metric `json:"metrics"`
-
-	// Conditions of this pod.
-	Conditions []common.Condition `json:"conditions"`
-
-	// Events is list of events associated with a pod.
-	EventList common.EventList `json:"eventList"`
+	ObjectMeta     api.ObjectMeta           `json:"objectMeta"`
+	TypeMeta       api.TypeMeta             `json:"typeMeta"`
+	PodPhase       v1.PodPhase              `json:"podPhase"`
+	PodIP          string                   `json:"podIP"`
+	NodeName       string                   `json:"nodeName"`
+	RestartCount   int32                    `json:"restartCount"`
+	QOSClass       string                   `json:"qosClass"`
+	Controller     controller.ResourceOwner `json:"controller"`
+	Containers     []Container              `json:"containers"`
+	InitContainers []Container              `json:"initContainers"`
+	Metrics        []metricapi.Metric       `json:"metrics"`
+	Conditions     []common.Condition       `json:"conditions"`
+	EventList      common.EventList         `json:"eventList"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
@@ -108,9 +86,9 @@ type EnvVar struct {
 	ValueFrom *v1.EnvVarSource `json:"valueFrom"`
 }
 
-// GetPodDetail returns the details (PodDetail) of a named Pod from a particular namespace.
-// TODO(maciaszczykm): Owner reference should be used instead of created by annotation.
-func GetPodDetail(client kubernetes.Interface, metricClient metricapi.MetricClient, namespace, name string) (*PodDetail, error) {
+// GetPodDetail returns the details of a named Pod from a particular namespace.
+func GetPodDetail(client kubernetes.Interface, metricClient metricapi.MetricClient, namespace, name string) (
+	*PodDetail, error) {
 	log.Printf("Getting details of %s pod in %s namespace", name, namespace)
 
 	channels := &common.ResourceChannels{
@@ -188,15 +166,6 @@ func getPodController(client kubernetes.Interface, nsQuery *common.NamespaceQuer
 	return
 }
 
-// isNotFoundError returns true when the given error is 404-NotFound error.
-func isNotFoundError(err error) bool {
-	statusErr, ok := err.(*errors.StatusError)
-	if !ok {
-		return false
-	}
-	return statusErr.ErrStatus.Code == 404
-}
-
 func extractContainerInfo(containerList []v1.Container, pod *v1.Pod, configMaps *v1.ConfigMapList, secrets *v1.SecretList) []Container {
 	containers := make([]Container, 0)
 	for _, container := range containerList {
@@ -234,6 +203,7 @@ func toPodDetail(pod *v1.Pod, metrics []metricapi.Metric, configMaps *v1.ConfigM
 		PodPhase:       pod.Status.Phase,
 		PodIP:          pod.Status.PodIP,
 		RestartCount:   getRestartCount(*pod),
+		QOSClass:       string(pod.Status.QOSClass),
 		NodeName:       pod.Spec.NodeName,
 		Controller:     controller,
 		Containers:     extractContainerInfo(pod.Spec.Containers, pod, configMaps, secrets),
