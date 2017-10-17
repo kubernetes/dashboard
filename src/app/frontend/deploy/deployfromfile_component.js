@@ -23,6 +23,7 @@ import showDeployAnywayDialog from './deployanyway_dialog';
 class DeployFromFileController {
   /**
    * @param {!angular.$log} $log
+   * @param {!ui.router.$state} $state
    * @param {!angular.$resource} $resource
    * @param {!angular.$q} $q
    * TODO (cheld) Set correct type after fixing issue #159
@@ -36,7 +37,7 @@ class DeployFromFileController {
    * @ngInject
    */
   constructor(
-      $log, $resource, $q, errorDialog, kdHistoryService, $mdDialog, kdCsrfTokenService,
+      $log, $state, $resource, $q, errorDialog, kdHistoryService, $mdDialog, kdCsrfTokenService,
       $stateParams, localizerService, kdCsrfTokenHeader) {
     /**
      * Initialized the template.
@@ -59,6 +60,9 @@ class DeployFromFileController {
 
     /** @private {!angular.$log} */
     this.log_ = $log;
+
+    /** @private {!ui.router.$state} */
+    this.state_ = $state;
 
     /**
      * TODO (cheld) Set correct type after fixing issue #159
@@ -123,7 +127,7 @@ class DeployFromFileController {
                   if (response.error.length > 0) {
                     this.errorDialog_.open('Deployment has been partly completed', response.error);
                   }
-                  this.kdHistoryService_.back(overview);
+                  this.state_.go(overview);
                 },
                 (err) => {
                   defer.reject(err);  // Progress ends
