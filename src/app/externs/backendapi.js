@@ -820,6 +820,7 @@ backendApi.PodStatus;
  *   podStatus: !backendApi.PodStatus,
  *   podIP: string,
  *   restartCount: number,
+ *   qosClass: string,
  *   metrics: backendApi.PodMetrics,
  *   warnings: !Array<!backendApi.Event>,
  *   nodeName: string
