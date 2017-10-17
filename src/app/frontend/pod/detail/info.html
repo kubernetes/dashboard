@@ -23,7 +23,7 @@ limitations under the License.
       {{::$ctrl.pod.podPhase}}
     </kd-info-card-entry>
     <kd-info-card-entry title="[[QoS Class|Label 'QoS Class' for the pod QoS class in the pod details view.]]">
-      <span ng-if="!!$ctrl.pod.qosClass">{{::$ctrl.pod.qosClass}}</span>
+      <span ng-if="$ctrl.pod.qosClass">{{::$ctrl.pod.qosClass}}</span>
       <span ng-if="!$ctrl.pod.qosClass">-</span>
     </kd-info-card-entry>
   </kd-info-card-section>
