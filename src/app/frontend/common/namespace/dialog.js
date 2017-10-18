@@ -22,10 +22,9 @@ class NamespaceChangeInfoDialogController {
    * @param {string} newNamespace
    * @param {!./../state/service.FutureStateService} kdFutureStateService
    * @param {!kdUiRouter.$state} $state
-   * @param {!../history/service.HistoryService} kdHistoryService
    * @ngInject
    */
-  constructor($mdDialog, newNamespace, kdFutureStateService, $state, kdHistoryService) {
+  constructor($mdDialog, newNamespace, kdFutureStateService, $state) {
     /** @private {!md.$dialog} */
     this.mdDialog_ = $mdDialog;
 
@@ -37,9 +36,6 @@ class NamespaceChangeInfoDialogController {
 
     /** @export {string} */
     this.newNamespace = newNamespace;
-
-    /** @private {!../history/service.HistoryService} */
-    this.kdHistoryService_ = kdHistoryService;
   }
 
   /**
