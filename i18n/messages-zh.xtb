@@ -128,6 +128,11 @@
   <translation id="7328790086203280450" key="MSG_COMMON_COMPONENTS_WARNINGS_WARNINGS_1" desc="Tooltip for all warning dismissal button.">忽略所有</translation>
   <translation id="6941584785589389821" key="MSG_COMMON_COMPONENTS_ZEROSTATE_ZEROSTATE_0" desc="Title text which appears on zero state view.">无内容显示</translation>
   <translation id="8000678649572976545" key="MSG_COMMON_COMPONENTS_ZEROSTATE_ZEROSTATE_1" desc="Description for a zero state page.">现在就&lt;a href="{{::$ctrl.getStateHref()}}"&gt;部署容器应用&lt;/a&gt;、查看其它命名空间，或&lt;a href="http://kubernetes.io/docs/user-guide/ui/" target="_blank"&gt;浏览控制面板概览&lt;i class="material-icons kd-zerostate-icon"&gt;open_in_new&lt;/i&gt;&lt;/a&gt;来了解更多</translation>
+  <translation id="4149717000499670158" key="MSG_COMMON_NAMESPACE_DIALOG_0" desc="(no description provided)">Change namespace?</translation>
+  <translation id="1716771106236346382" key="MSG_COMMON_NAMESPACE_DIALOG_1" desc="(no description provided)">Selected resource is in a different namespace than currently selected.</translation>
+  <translation id="6445329193254792187" key="MSG_COMMON_NAMESPACE_DIALOG_2" desc="(no description provided)">Do you want to change namespace?</translation>
+  <translation id="5902174388191116331" key="MSG_COMMON_NAMESPACE_DIALOG_3" desc="(no description provided)">Yes</translation>
+  <translation id="7374326576991357026" key="MSG_COMMON_NAMESPACE_DIALOG_4" desc="(no description provided)">No</translation>
   <translation id="4492076728105331074" key="MSG_COMMON_NAMESPACE_NAMESPACESELECT_0" desc="Title for namespace select.">命名空间</translation>
   <translation id="5174603006239796789" key="MSG_COMMON_NAMESPACE_NAMESPACESELECT_1" desc="Text describing what namespace selector is">所选的命名空间标签</translation>
   <translation id="7324783266461564175" key="MSG_COMMON_NAMESPACE_NAMESPACESELECT_2" desc="Text for dropdown item that indicates that no namespace was selected.">所有命名空间</translation>

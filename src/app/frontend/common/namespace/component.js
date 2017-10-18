@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import {namespaceParam} from '../../chrome/state';
+import {showNamespaceChangeInfoDialog} from './dialog';
 
 /**
  * Internal key for empty selection. To differentiate empty string from nulls.
@@ -41,10 +42,10 @@ export class NamespaceSelectController {
    * @param {!ui.router.$state} $state
    * @param {!angular.Scope} $scope
    * @param {!./../state/service.FutureStateService} kdFutureStateService
-   * @param {!./../components/breadcrumbs/service.BreadcrumbsService} kdBreadcrumbsService
+   * @param {!md.$dialog} $mdDialog
    * @ngInject
    */
-  constructor($resource, $state, $scope, kdFutureStateService, kdBreadcrumbsService) {
+  constructor($resource, $state, $scope, kdFutureStateService, $mdDialog) {
     /**
      * Initialized with all namespaces on first open.
      * @export {!Array<string>}
@@ -78,8 +79,8 @@ export class NamespaceSelectController {
     /** @private {!./../state/service.FutureStateService}} */
     this.futureStateService_ = kdFutureStateService;
 
-    /** @private {!./../components/breadcrumbs/service.BreadcrumbsService}} */
-    this.kdBreadcrumbsService_ = kdBreadcrumbsService;
+    /** @private {!md.$dialog} */
+    this.mdDialog_ = $mdDialog;
 
     /** @export */
     this.i18n = i18n;
@@ -97,7 +98,7 @@ export class NamespaceSelectController {
   }
 
   /**
-   *  Redirect should happen if user is on details page (toParams.objectNamespace), not all
+   *  Dialog should be shown if user is on details page (toParams.objectNamespace), not all
    *  namespaces are selected (toParams.namespace !== "_all") and current object namespace is
    *  different than selected namespace (toParams.namespace !== toParams.objectNamespace).
    *
@@ -105,21 +106,9 @@ export class NamespaceSelectController {
    * @return {boolean}
    * @private
    */
-  shouldRedirect_(toParams) {
+  shouldShowNamespaceChangeDialog_(toParams) {
     return toParams && toParams.namespace && toParams.objectNamespace &&
         toParams.namespace !== '_all' && toParams.namespace !== toParams.objectNamespace;
-  }
-
-  /**
-   * Redirects to parent state. It should be list state, because redirect takes place when user
-   * is detail state.
-   *
-   * @param {Object<string, string>} toParams
-   * @private
-   */
-  redirectToParentState_(toParams) {
-    this.state_.go(
-        this.kdBreadcrumbsService_.getParentStateName(this.state_['$current']), toParams);
   }
 
   /**
@@ -155,9 +144,17 @@ export class NamespaceSelectController {
       this.selectedNamespace = DEFAULT_NAMESPACE;
     }
 
-    if (this.shouldRedirect_(toParams)) {
-      this.redirectToParentState_(toParams);
+    if (this.shouldShowNamespaceChangeDialog_(toParams)) {
+      this.handleNamespaceChangeDialog_(toParams);
     }
+  }
+
+  /**
+   * @param {Object<string, string>} toParams
+   * @private
+   */
+  handleNamespaceChangeDialog_(toParams) {
+    showNamespaceChangeInfoDialog(this.mdDialog_, toParams.objectNamespace);
   }
 
   /**

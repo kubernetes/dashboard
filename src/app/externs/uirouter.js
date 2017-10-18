@@ -90,7 +90,7 @@ kdUiRouter.$state = function() {};
 kdUiRouter.$state.prototype.defaultErrorHandler = function(callback) {};
 
 /**
- * @param {string|!ui.router.State} to
+ * @param {string|!ui.router.State|!ui.router.$state} to
  * @param {?ui.router.StateParams=} opt_toParams
  * @param {!ui.router.StateOptions=} opt_options
  * @return {!angular.$q.Promise}

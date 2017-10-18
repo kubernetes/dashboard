@@ -12,22 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../../variables';
+@import '../../variables';
 
-kd-graph-card {
-  flex: 1;
-
-  &>kd-content-card {
-    margin-bottom: 0;
-  }
-
-  &:last-child {
-    &>kd-content-card {
-      margin-left: 0;
-    }
-  }
-}
-
-.kd-graph-card-icon {
-  line-height: 2.5 * $baseline-grid;
+.kd-namespace-change-dialog-text {
+  padding-bottom: $baseline-grid / 2;
+  padding-top: 0;
 }
