@@ -145,6 +145,17 @@ export class LogsController {
   }
 
   /**
+   * Refreshes logs view.
+   * @export
+   */
+  refresh() {
+    this.loadView(
+        this.currentSelection.logFilePosition, this.currentSelection.referencePoint.timestamp,
+        this.currentSelection.referencePoint.lineNum, this.currentSelection.offsetFrom,
+        this.currentSelection.offsetTo);
+  }
+
+  /**
    * Downloads and loads slice of logs as specified by offsetFrom and offsetTo.
    * It works just like normal slicing, but indices are referenced relatively to certain reference
    * line.
