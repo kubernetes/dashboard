@@ -35,8 +35,8 @@ class NamespaceChangeInfoDialogController {
     /** @private {!kdUiRouter.$state} */
     this.state_ = $state;
 
-    /** @private {string} */
-    this.newNamespace_ = newNamespace;
+    /** @export {string} */
+    this.newNamespace = newNamespace;
 
     /** @private {!../history/service.HistoryService} */
     this.kdHistoryService_ = kdHistoryService;
@@ -49,13 +49,21 @@ class NamespaceChangeInfoDialogController {
    */
   cancel() {
     this.mdDialog_.cancel();
-    this.kdHistoryService_.back(overview);
+    this.state_.go(overview, {[namespaceParam]: this.currentNamespace()});
   }
 
   /** @export */
   changeNamespace() {
     this.mdDialog_.hide();
-    this.state_.go(this.futureStateService_.state, {[namespaceParam]: this.newNamespace_});
+    this.state_.go(this.futureStateService_.state, {[namespaceParam]: this.newNamespace});
+  }
+
+  /**
+   * @return {string}
+   * @export
+   */
+  currentNamespace() {
+    return this.state_.params[namespaceParam];
   }
 }
 

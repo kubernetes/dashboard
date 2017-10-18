@@ -44,7 +44,8 @@ describe('Namespace select component ', () => {
     angular.mock.inject(
         ($componentController, $rootScope, $httpBackend, $state, _kdFutureStateService_) => {
           scope = $rootScope;
-          ctrl = $componentController('kdNamespaceSelect', {$scope: $rootScope});
+          let element = angular.element('<div></div>');
+          ctrl = $componentController('kdNamespaceSelect', {$scope: $rootScope, $element: element});
           httpBackend = $httpBackend;
           state = $state;
           kdFutureStateService = _kdFutureStateService_;
@@ -68,7 +69,7 @@ describe('Namespace select component ', () => {
     });
     httpBackend.flush();
     expect(ctrl.namespaces).toEqual(['a', 'b', 'c']);
-    expect(ctrl.selectedNamespace).toBe('default');
+    expect(ctrl.selectedNamespace).toBe('non-existing-namespace2');
   });
 
   it('should initialize from exisitng namespace and watch for state changes', () => {
