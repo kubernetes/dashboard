@@ -54,7 +54,6 @@ import serviceModule from './service/module';
 import shellModule from './shell/module';
 import statefulSetModule from './statefulset/module';
 import storageClassModule from './storageclass/module';
-import thirdPartyResourceModule from './thirdpartyresource/module';
 import {TitleController} from './title_controller';
 import workloadsModule from './workloads/module';
 
@@ -103,7 +102,6 @@ export default angular
           configModule.name,
           csrfTokenModule.name,
           storageClassModule.name,
-          thirdPartyResourceModule.name,
           roleModule.name,
           scalingModule.name,
         ])

@@ -57,7 +57,6 @@ import (
 	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/statefulset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/storageclass"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/thirdpartyresource"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/workload"
 	"github.com/kubernetes/dashboard/src/app/backend/scaling"
 	"github.com/kubernetes/dashboard/src/app/backend/search"
@@ -518,19 +517,6 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 		apiV1Ws.GET("/persistentvolumeclaim/{namespace}/{name}").
 			To(apiHandler.handleGetPersistentVolumeClaimDetail).
 			Writes(persistentvolumeclaim.PersistentVolumeClaimDetail{}))
-
-	apiV1Ws.Route(
-		apiV1Ws.GET("/thirdpartyresource").
-			To(apiHandler.handleGetThirdPartyResource).
-			Writes(thirdpartyresource.ThirdPartyResourceList{}))
-	apiV1Ws.Route(
-		apiV1Ws.GET("/thirdpartyresource/{thirdpartyresource}").
-			To(apiHandler.handleGetThirdPartyResourceDetail).
-			Writes(thirdpartyresource.ThirdPartyResourceDetail{}))
-	apiV1Ws.Route(
-		apiV1Ws.GET("/thirdpartyresource/{thirdpartyresource}/object").
-			To(apiHandler.handleGetThirdPartyResourceObjects).
-			Writes(thirdpartyresource.ThirdPartyResourceObjectList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/storageclass").
@@ -1690,67 +1676,6 @@ func (apiHandler *APIHandler) handleGetPersistentVolumeList(request *restful.Req
 
 	dataSelect := parseDataSelectPathParameter(request)
 	result, err := persistentvolume.GetPersistentVolumeList(k8sClient, dataSelect)
-	if err != nil {
-		handleInternalError(response, err)
-		return
-	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
-}
-
-func (apiHandler *APIHandler) handleGetThirdPartyResource(request *restful.Request, response *restful.Response) {
-	k8sClient, err := apiHandler.cManager.Client(request)
-	if err != nil {
-		handleInternalError(response, err)
-		return
-	}
-
-	dataSelect := parseDataSelectPathParameter(request)
-	result, err := thirdpartyresource.GetThirdPartyResourceList(k8sClient, dataSelect)
-	if err != nil {
-		handleInternalError(response, err)
-		return
-	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
-}
-
-func (apiHandler *APIHandler) handleGetThirdPartyResourceDetail(request *restful.Request, response *restful.Response) {
-	k8sClient, err := apiHandler.cManager.Client(request)
-	if err != nil {
-		handleInternalError(response, err)
-		return
-	}
-
-	cfg, err := apiHandler.cManager.Config(request)
-	if err != nil {
-		handleInternalError(response, err)
-		return
-	}
-
-	name := request.PathParameter("thirdpartyresource")
-	result, err := thirdpartyresource.GetThirdPartyResourceDetail(k8sClient, cfg, name)
-	if err != nil {
-		handleInternalError(response, err)
-		return
-	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
-}
-
-func (apiHandler *APIHandler) handleGetThirdPartyResourceObjects(request *restful.Request, response *restful.Response) {
-	k8sClient, err := apiHandler.cManager.Client(request)
-	if err != nil {
-		handleInternalError(response, err)
-		return
-	}
-
-	cfg, err := apiHandler.cManager.Config(request)
-	if err != nil {
-		handleInternalError(response, err)
-		return
-	}
-
-	name := request.PathParameter("thirdpartyresource")
-	dataSelect := parseDataSelectPathParameter(request)
-	result, err := thirdpartyresource.GetThirdPartyResourceObjects(k8sClient, cfg, dataSelect, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return
