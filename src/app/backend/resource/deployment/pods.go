@@ -29,7 +29,7 @@ import (
 func GetDeploymentPods(client client.Interface, metricClient metricapi.MetricClient,
 	dsQuery *dataselect.DataSelectQuery, namespace, deploymentName string) (*pod.PodList, error) {
 
-	deployment, err := client.ExtensionsV1beta1().Deployments(namespace).Get(deploymentName, metaV1.GetOptions{})
+	deployment, err := client.AppsV1beta2().Deployments(namespace).Get(deploymentName, metaV1.GetOptions{})
 	if err != nil {
 		return pod.EmptyPodList, err
 	}
