@@ -84,6 +84,8 @@
   <translation id="8440773175603161155" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBARLISTBUTTONS_1" desc="Label for upload YAML button.">YAML をアップロード</translation>
   <translation id="4823508741067150667" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBARLOGS_0" desc="Tooltip for the \'logs\' button on the action bar.">View logs</translation>
   <translation id="1841242100396658719" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBARLOGS_1" desc="Tooltip for the \'logs\' button on the action bar.">Logs</translation>
+  <translation id="8757730841434571562" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBARNAMESPACEOVERVIEW_0" desc="(no description provided)">Overview</translation>
+  <translation id="4582904353054937598" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBARNAMESPACEOVERVIEW_1" desc="(no description provided)">Go to namespace overview page</translation>
   <translation id="4246093411879805828" key="MSG_COMMON_COMPONENTS_ACTIONBAR_SHELL_0" desc="Exec button tooltip located on pod detail page actionbar">Exec into Pod</translation>
   <translation id="1980816672340986356" key="MSG_COMMON_COMPONENTS_ACTIONBAR_SHELL_1" desc="Execute shell in the container">Exec</translation>
   <translation id="1745702155571319443" key="MSG_COMMON_COMPONENTS_ANNOTATIONS_ANNOTATIONS_0" desc="Friendly name of the kubernetest.io/created-by annotation">作成者:</translation>

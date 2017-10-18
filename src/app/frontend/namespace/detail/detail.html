@@ -16,7 +16,11 @@ limitations under the License.
 
 <kd-warnings warnings="::ctrl.namespaceDetail.errors"></kd-warnings>
 
-<kd-namespace-info namespace="::ctrl.namespaceDetail"></kd-namespace-info>
+<kd-namespace-info link="::ctrl.getNamespaceOverviewHref()"
+                   namespace="::ctrl.namespaceDetail"
+                   button-text="::ctrl.buttonText">
+</kd-namespace-info>
+
 <div ng-if="ctrl.namespaceDetail.resourceQuotaList.items">
   <div ng-repeat="resourceQuota in ::ctrl.namespaceDetail.resourceQuotaList.items">
     <kd-resource-quota-detail resource-quota-detail="::resourceQuota"></kd-resource-quota-detail>

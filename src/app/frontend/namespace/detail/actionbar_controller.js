@@ -13,14 +13,15 @@
 // limitations under the License.
 
 /**
- * Definition object for the component that displays namespace info.
- *
- * @return {!angular.Component}
+ * @final
  */
-export const namespaceInfoComponent = {
-  templateUrl: 'namespace/detail/info.html',
-  bindings: {
-    /** {!backendApi.NamespaceDetail} */
-    'namespace': '=',
-  },
-};
+export class ActionBarController {
+  /**
+   * @param {!backendApi.NamespaceDetail} namespaceDetail
+   * @ngInject
+   */
+  constructor(namespaceDetail) {
+    /** @export {!backendApi.NamespaceDetail} */
+    this.details = namespaceDetail;
+  }
+}
