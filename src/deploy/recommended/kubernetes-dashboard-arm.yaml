@@ -108,7 +108,7 @@ spec:
       - name: kubernetes-dashboard
         image: gcr.io/google_containers/kubernetes-dashboard-arm:v1.7.1
         ports:
-        - containerPort: 9090
+        - containerPort: 8443
           protocol: TCP
         args:
           - --tls-key-file=/certs/dashboard.key
