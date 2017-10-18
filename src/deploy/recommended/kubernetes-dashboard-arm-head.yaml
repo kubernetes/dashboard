@@ -110,7 +110,7 @@ spec:
         # Image is tagged and updated with :head, so always pull it.
         imagePullPolicy: Always
         ports:
-        - containerPort: 9090
+        - containerPort: 8443
           protocol: TCP
         args:
           - --tls-key-file=/certs/dashboard.key
