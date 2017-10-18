@@ -16,4 +16,11 @@ limitations under the License.
 
 <div layout="column">
   <kd-storage-class-info storage-class="::$ctrl.storageClass"></kd-storage-class-info>
+  <kd-content-card>
+    <kd-content>
+      <kd-persistent-volume-card-list persistent-volume-list="::$ctrl.storageClass.persistentVolumeList"
+                                      persistent-volume-list-resource="::$ctrl.storageClassPersistentVolumesResource">
+      </kd-persistent-volume-card-list>
+    </kd-content>
+  </kd-content-card>
 </div>

@@ -17,6 +17,7 @@ package storageclass
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolume"
 	storage "k8s.io/api/storage/v1beta1"
 )
 
@@ -26,6 +27,17 @@ func toStorageClass(storageClass *storage.StorageClass) StorageClass {
 		TypeMeta:    api.NewTypeMeta(api.ResourceKindStorageClass),
 		Provisioner: storageClass.Provisioner,
 		Parameters:  storageClass.Parameters,
+	}
+}
+
+func toStorageClassDetail(storageClass *storage.StorageClass,
+	persistentVolumeList *persistentvolume.PersistentVolumeList) StorageClassDetail {
+	return StorageClassDetail{
+		ObjectMeta:           api.NewObjectMeta(storageClass.ObjectMeta),
+		TypeMeta:             api.NewTypeMeta(api.ResourceKindStorageClass),
+		Provisioner:          storageClass.Provisioner,
+		Parameters:           storageClass.Parameters,
+		PersistentVolumeList: *persistentVolumeList,
 	}
 }
 

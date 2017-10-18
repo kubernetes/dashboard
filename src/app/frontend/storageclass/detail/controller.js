@@ -18,10 +18,13 @@
 export class StorageClassController {
   /**
    * @param {!backendApi.StorageClass} storageClass
+   * @param {!angular.Resource} kdStorageClassPersistentVolumesResource
    * @ngInject
    */
-  constructor(storageClass) {
+  constructor(storageClass, kdStorageClassPersistentVolumesResource) {
     /** @export {!backendApi.StorageClass} */
     this.storageClass = storageClass;
+    /** @export {!angular.Resource} */
+    this.storageClassPersistentVolumesResource = kdStorageClassPersistentVolumesResource;
   }
 }

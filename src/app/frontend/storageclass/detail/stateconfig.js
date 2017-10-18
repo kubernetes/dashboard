@@ -70,3 +70,12 @@ export function getStorageClassResource($resource, $stateParams) {
 export function getStorageClass(storageClassResource) {
   return storageClassResource.get().$promise;
 }
+
+/**
+ * @param {!angular.Resource} storageClassResource
+ * @return {!angular.$q.Promise}
+ * @ngInject
+ */
+export function storageClassPersistentVolumesResource($resource) {
+  return $resource('api/v1/storageclass/:name/persistentvolume');
+}
