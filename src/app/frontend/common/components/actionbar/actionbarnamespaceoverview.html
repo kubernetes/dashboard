@@ -14,14 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-info-card>
-  <kd-info-card-header>[[Details|Header in a detail view]]</kd-info-card-header>
-  <kd-info-card-section>
-    <kd-object-meta-info-card object-meta="::$ctrl.namespace.objectMeta">
-    </kd-object-meta-info-card>
-    <kd-info-card-entry title="[[Status|Label 'Status' for the namespace namespace on the namespace details page.]]"
-                        ng-if="::$ctrl.namespace.phase">
-      {{$ctrl.namespace.phase}}
-    </kd-info-card-entry>
-  </kd-info-card-section>
-</kd-info-card>
+<md-button ng-href="{{$ctrl.getNamespaceOverviewHref()}}">
+  <md-icon class="kd-actionbar-icon-button">assessment</md-icon>
+  <md-tooltip md-delay="500"
+              md-autohide>
+    [[Go to namespace overview page|]]
+  </md-tooltip>
+  [[Overview|]]
+</md-button>

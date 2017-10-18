@@ -15,17 +15,13 @@
 /**
  * @final
  */
-export class NamespaceDetailController {
+export class ActionBarController {
   /**
    * @param {!backendApi.NamespaceDetail} namespaceDetail
-   * @param {!angular.Resource} kdNamespaceEventsResource
    * @ngInject
    */
-  constructor(namespaceDetail, kdNamespaceEventsResource) {
+  constructor(namespaceDetail) {
     /** @export {!backendApi.NamespaceDetail} */
-    this.namespaceDetail = namespaceDetail;
-
-    /** @export {!angular.Resource} */
-    this.eventListResource = kdNamespaceEventsResource;
+    this.details = namespaceDetail;
   }
 }

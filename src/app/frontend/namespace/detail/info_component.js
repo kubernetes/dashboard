@@ -13,44 +13,14 @@
 // limitations under the License.
 
 /**
- * @final
- */
-export default class NamespaceInfoController {
-  /**
-   * @ngInject
-   */
-  constructor() {
-    /**
-     * Namespace details. Initialized from the scope.
-     * @export {!backendApi.NamespaceDetail}
-     */
-    this.namespace;
-
-    /**
-     * Include link to other page
-     * @export {string}
-     */
-    this.link;
-
-    /**
-     * Include message to display on button-link
-     * @export {string}
-     */
-    this.buttonText;
-  }
-}
-/**
  * Definition object for the component that displays namespace info.
  *
  * @return {!angular.Component}
  */
 export const namespaceInfoComponent = {
-  controller: NamespaceInfoController,
   templateUrl: 'namespace/detail/info.html',
   bindings: {
     /** {!backendApi.NamespaceDetail} */
     'namespace': '=',
-    'link': '<',
-    'buttonText': '<',
   },
 };
