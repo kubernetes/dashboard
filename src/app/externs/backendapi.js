@@ -1421,39 +1421,6 @@ backendApi.APIVersion;
 
 /**
  * @typedef {{
- *   objectMeta: !backendApi.ObjectMeta,
- *   typeMeta: !backendApi.TypeMeta,
- *   description: string,
- *   versions: !Array<!backendApi.APIVersion>,
- * }}
- */
-backendApi.ThirdPartyResource;
-
-/**
- * @typedef {{
- *   listMeta: !backendApi.ListMeta,
- *   thirdPartyResources: !Array<!backendApi.ThirdPartyResource>
- * }}
- */
-backendApi.ThirdPartyResourceList;
-
-/**
- * @typedef {{
- *   objectMeta: !backendApi.ObjectMeta,
- * }}
- */
-backendApi.ThirdPartyResourceObject;
-
-/**
- * @typedef {{
- *   listMeta: !backendApi.ListMeta,
- *   items: !Array<!backendApi.ThirdPartyResourceObject>
- * }}
- */
-backendApi.ThirdPartyResourceObjectList;
-
-/**
- * @typedef {{
  *   token: string
  * }}
  */

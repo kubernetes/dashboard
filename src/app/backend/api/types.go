@@ -122,7 +122,6 @@ const (
 	ResourceKindSecret                  = "secret"
 	ResourceKindService                 = "service"
 	ResourceKindStatefulSet             = "statefulset"
-	ResourceKindThirdPartyResource      = "thirdpartyresource"
 	ResourceKindStorageClass            = "storageclass"
 	ResourceKindRbacRole                = "role"
 	ResourceKindRbacClusterRole         = "clusterrole"
@@ -176,7 +175,6 @@ var KindToAPIMapping = map[string]struct {
 	ResourceKindSecret:                  {"secrets", ClientTypeDefault, true},
 	ResourceKindService:                 {"services", ClientTypeDefault, true},
 	ResourceKindStatefulSet:             {"statefulsets", ClientTypeAppsClient, true},
-	ResourceKindThirdPartyResource:      {"thirdpartyresources", ClientTypeExtensionClient, true},
 	ResourceKindStorageClass:            {"storageclasses", ClientTypeStorageClient, false},
 	ResourceKindEndpoint:                {"endpoints", ClientTypeDefault, true},
 }
