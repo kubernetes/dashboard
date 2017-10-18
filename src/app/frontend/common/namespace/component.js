@@ -43,7 +43,7 @@ export class NamespaceSelectController {
    * @param {!angular.Scope} $scope
    * @param {!./../state/service.FutureStateService} kdFutureStateService
    * @param {!md.$dialog} $mdDialog
-   * @param {!angular.$element} $element
+   * @param {!angular.JQLite} $element
    * @param {!angular.$timeout} $timeout
    * @param {!md.$select} $mdSelect
    * @param {!angular.$document} $document
@@ -94,7 +94,7 @@ export class NamespaceSelectController {
     /** @export {string} */
     this.namespaceInput;
 
-    /** @private {!angular.$element} */
+    /** @private {!angular.JQLite} */
     this.element_ = $element;
 
     /** @private {!angular.$timeout} */
