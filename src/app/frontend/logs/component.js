@@ -166,6 +166,9 @@ export class LogsController {
    */
   toggleFollow() {
     this.isFollowing = !this.isFollowing;
+    if (this.isFollowing) {
+      this.loadNewest();
+    }
   }
 
   /**
