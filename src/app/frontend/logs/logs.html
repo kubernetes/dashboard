@@ -71,11 +71,23 @@ limitations under the License.
         </md-icon>
       </md-button>
       <md-button class="kd-logs-toolbar-button"
-                 ng-click="ctrl.refresh()">
+                 ng-click="ctrl.toggleFollow()">
         <md-icon md-font-library="material-icons"
                  class="kd-logs-icon">
           refresh
+          <svg class="kd-cross-style"
+               ng-if="!ctrl.isFollowing"
+               width="32px"
+               height="32px"
+               viewBox="0 0 32 32">
+            <line class="kd-cross-line-white" x1="9" x2="27" y1="9" y2="27"/>
+            <line class="kd-cross-line-black" x1="9" x2="27" y1="10" y2="28"/>
+          </svg>
         </md-icon>
+        <md-tooltip md-delay="500"
+                    md-autohide>
+          [[Toggle log follow|]]
+        </md-tooltip>
       </md-button>
       <md-button class="kd-logs-toolbar-button"
                  ng-click="ctrl.onPreviousChange()">

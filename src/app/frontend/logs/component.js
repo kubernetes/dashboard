@@ -34,10 +34,11 @@ export class LogsController {
    * @param {!angular.$sce} $sce
    * @param {!angular.$document} $document
    * @param {!angular.$resource} $resource
+   * @param {!angular.$interval} $interval
    * @param {!../common/errorhandling/dialog.ErrorDialog} errorDialog
    * @ngInject
    */
-  constructor(logsService, $sce, $document, $resource, errorDialog) {
+  constructor(logsService, $sce, $document, $resource, $interval, errorDialog) {
     /** @private {!angular.$sce} */
     this.sce_ = $sce;
 
@@ -46,6 +47,9 @@ export class LogsController {
 
     /** @private {!angular.$resource} */
     this.resource_ = $resource;
+
+    /** @private {!angular.$interval} */
+    this.interval_ = $interval;
 
     /** @export {!./service.LogsService} */
     this.logsService = logsService;
@@ -92,8 +96,19 @@ export class LogsController {
     /** @private {!ui.router.$stateParams} */
     this.stateParams_;
 
-    /** @export {!kdUiRouter.$transition$} - initialized from resolve */
+    /** @export {!kdUiRouter.$transition$} */
     this.$transition$;
+
+    /** @type {boolean} */
+    this.isFollowing = false;
+
+    // TODO(maciaszczykm): Add time interval to settings page.
+    this.interval_(() => {
+      if (this.isFollowing) {
+        // TODO Add log.
+        this.loadNewest();
+      }
+    }, 5000);
   }
 
 
@@ -145,14 +160,12 @@ export class LogsController {
   }
 
   /**
-   * Refreshes logs view.
+   * Toggles follow mechanism.
+   *
    * @export
    */
-  refresh() {
-    this.loadView(
-        this.currentSelection.logFilePosition, this.currentSelection.referencePoint.timestamp,
-        this.currentSelection.referencePoint.lineNum, this.currentSelection.offsetFrom,
-        this.currentSelection.offsetTo);
+  toggleFollow() {
+    this.isFollowing = !this.isFollowing;
   }
 
   /**
@@ -313,6 +326,17 @@ export class LogsController {
       return 'timer';
     }
     return 'timer_off';
+  }
+
+  /**
+   * @export
+   * @return {string}
+   */
+  getFollowIcon() {
+    if (this.isFollowing) {
+      return 'refresh';
+    }
+    return 'refresh_off';
   }
 
   /**
