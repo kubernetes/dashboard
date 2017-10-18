@@ -43,9 +43,15 @@ export class NamespaceSelectController {
    * @param {!angular.Scope} $scope
    * @param {!./../state/service.FutureStateService} kdFutureStateService
    * @param {!md.$dialog} $mdDialog
+   * @param {!angular.JQLite} $element
+   * @param {!angular.$timeout} $timeout
+   * @param {!md.$select} $mdSelect
+   * @param {!angular.$document} $document
    * @ngInject
    */
-  constructor($resource, $state, $scope, kdFutureStateService, $mdDialog) {
+  constructor(
+      $resource, $state, $scope, kdFutureStateService, $mdDialog, $element, $timeout, $mdSelect,
+      $document) {
     /**
      * Initialized with all namespaces on first open.
      * @export {!Array<string>}
@@ -84,12 +90,30 @@ export class NamespaceSelectController {
 
     /** @export */
     this.i18n = i18n;
+
+    /** @export {string} */
+    this.namespaceInput;
+
+    /** @private {!angular.JQLite} */
+    this.element_ = $element;
+
+    /** @private {!angular.$timeout} */
+    this.timeout_ = $timeout;
+
+    /** @private {!md.$select} */
+    this.mdSelect_ = $mdSelect;
+
+    /** @private {!angular.$document} */
+    this.document_ = $document;
   }
 
-  /**
-   * @export
-   */
+  /** @export */
   $onInit() {
+    // Disable event propagation on select menu to allow typing in input field.
+    this.element_.find('input').on('keydown', (ev) => {
+      ev.stopPropagation();
+    });
+
     this.onNamespaceChanged_(this.futureStateService_.params);
 
     this.scope_.$watch(() => this.futureStateService_.params, (toParams) => {
@@ -97,10 +121,20 @@ export class NamespaceSelectController {
     });
   }
 
+  /** @export */
+  selectNamespace() {
+    if (this.namespaceInput.length > 0) {
+      this.selectedNamespace = this.namespaceInput;
+      this.clearNamespaceInput_();
+      this.mdSelect_.hide();
+      this.state_.go('.', {[namespaceParam]: this.selectedNamespace});
+    }
+  }
+
   /**
-   *  Dialog should be shown if user is on details page (toParams.objectNamespace), not all
-   *  namespaces are selected (toParams.namespace !== "_all") and current object namespace is
-   *  different than selected namespace (toParams.namespace !== toParams.objectNamespace).
+   * Dialog should be shown if user is on details page (toParams.objectNamespace), not all
+   * namespaces are selected (toParams.namespace !== "_all") and current object namespace is
+   * different than selected namespace (toParams.namespace !== toParams.objectNamespace).
    *
    * @param {Object<string, string>} toParams
    * @return {boolean}
@@ -123,7 +157,7 @@ export class NamespaceSelectController {
       /** @type {?string} */
       let newNamespace = toParams[namespaceParam];
       if (newNamespace) {
-        if (this.namespacesInitialized_) {
+        if (this.namespacesInitialized_ && this.namespaces.length > 0) {
           if (this.namespaces.indexOf(newNamespace) >= 0 || newNamespace === ALL_NAMESPACES) {
             this.selectedNamespace = newNamespace;
           } else {
@@ -131,7 +165,6 @@ export class NamespaceSelectController {
           }
         } else {
           if (NAMESPACE_REGEX.test(newNamespace)) {
-            this.namespaces = [newNamespace];
             this.selectedNamespace = newNamespace;
           } else {
             this.selectedNamespace = DEFAULT_NAMESPACE;
@@ -170,17 +203,15 @@ export class NamespaceSelectController {
     }
   }
 
-  /**
-   * @export
-   */
+  /** @export */
   changeNamespace() {
+    this.clearNamespaceInput_();
     this.state_.go('.', {[namespaceParam]: this.selectedNamespace});
   }
 
-  /**
-   * @export
-   */
+  /** @export */
   loadNamespacesIfNeeded() {
+    this.focusNamespaceInput_();
     if (!this.namespacesInitialized_) {
       /** @type {!angular.Resource} */
       let resource = this.resource_('api/v1/namespace');
@@ -188,13 +219,26 @@ export class NamespaceSelectController {
       return resource.get().$promise.then((/** !backendApi.NamespaceList */ namespaceList) => {
         this.namespaces = namespaceList.namespaces.map((n) => n.objectMeta.name);
         this.namespacesInitialized_ = true;
-        if (this.namespaces.indexOf(this.selectedNamespace) === -1 &&
-            this.selectedNamespace !== ALL_NAMESPACES) {
-          this.selectedNamespace = DEFAULT_NAMESPACE;
-          this.changeNamespace();
-        }
       });
     }
+  }
+
+  /**
+   * Focuses namespace input field after clicking on namespace selector menu.
+   *
+   * @private
+   */
+  focusNamespaceInput_() {
+    // Wrap in a timeout to make sure that element is rendered before looking for it.
+    this.timeout_(() => {
+      let elem = this.document_.find('md-select-menu').find('input');
+      elem[0].focus();
+    }, 150);
+  }
+
+  /** @private */
+  clearNamespaceInput_() {
+    this.namespaceInput = '';
   }
 }
 

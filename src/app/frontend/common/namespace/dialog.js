@@ -16,16 +16,15 @@ import {namespaceParam} from '../../chrome/state';
 import {stateName as overview} from '../../overview/state';
 
 /** @final */
-class NamespaceChangeInfoDialogController {
+export class NamespaceChangeInfoDialogController {
   /**
    * @param {!md.$dialog} $mdDialog
    * @param {string} newNamespace
    * @param {!./../state/service.FutureStateService} kdFutureStateService
    * @param {!kdUiRouter.$state} $state
-   * @param {!../history/service.HistoryService} kdHistoryService
    * @ngInject
    */
-  constructor($mdDialog, newNamespace, kdFutureStateService, $state, kdHistoryService) {
+  constructor($mdDialog, newNamespace, kdFutureStateService, $state) {
     /** @private {!md.$dialog} */
     this.mdDialog_ = $mdDialog;
 
@@ -35,11 +34,8 @@ class NamespaceChangeInfoDialogController {
     /** @private {!kdUiRouter.$state} */
     this.state_ = $state;
 
-    /** @private {string} */
-    this.newNamespace_ = newNamespace;
-
-    /** @private {!../history/service.HistoryService} */
-    this.kdHistoryService_ = kdHistoryService;
+    /** @export {string} */
+    this.newNamespace = newNamespace;
   }
 
   /**
@@ -49,13 +45,21 @@ class NamespaceChangeInfoDialogController {
    */
   cancel() {
     this.mdDialog_.cancel();
-    this.kdHistoryService_.back(overview);
+    this.state_.go(overview, {[namespaceParam]: this.currentNamespace()});
   }
 
   /** @export */
   changeNamespace() {
     this.mdDialog_.hide();
-    this.state_.go(this.futureStateService_.state, {[namespaceParam]: this.newNamespace_});
+    this.state_.go(this.futureStateService_.state, {[namespaceParam]: this.newNamespace});
+  }
+
+  /**
+   * @return {string}
+   * @export
+   */
+  currentNamespace() {
+    return this.state_.params[namespaceParam];
   }
 }
 

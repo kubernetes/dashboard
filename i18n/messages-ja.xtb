@@ -134,13 +134,15 @@
   <translation id="8000678649572976545" key="MSG_COMMON_COMPONENTS_ZEROSTATE_ZEROSTATE_1" desc="Description for a zero state page.">&lt;a href="{{::$ctrl.getStateHref()}}"&gt;コンテナアプリを配備&lt;/a&gt;、他のネームスペースを選択、もっと知るために&lt;a href="http://kubernetes.io/docs/user-guide/ui/" target="_blank"&gt;ダッシュボードツアーに出る&lt;i class="material-icons kd-zerostate-icon"&gt;open_in_new&lt;/i&gt;&lt;/a&gt; が可能です。</translation>
   <translation id="4149717000499670158" key="MSG_COMMON_NAMESPACE_DIALOG_0" desc="(no description provided)">Change namespace?</translation>
   <translation id="1716771106236346382" key="MSG_COMMON_NAMESPACE_DIALOG_1" desc="(no description provided)">Selected resource is in a different namespace than currently selected.</translation>
-  <translation id="6445329193254792187" key="MSG_COMMON_NAMESPACE_DIALOG_2" desc="(no description provided)">Do you want to change namespace?</translation>
+  <translation id="8393679939521140300" key="MSG_COMMON_NAMESPACE_DIALOG_2" desc="(no description provided)">Change namespace?</translation>
   <translation id="5902174388191116331" key="MSG_COMMON_NAMESPACE_DIALOG_3" desc="(no description provided)">Yes</translation>
   <translation id="7374326576991357026" key="MSG_COMMON_NAMESPACE_DIALOG_4" desc="(no description provided)">No</translation>
+  <translation id="7550995980277409495" key="MSG_COMMON_NAMESPACE_DIALOG_5" desc="(no description provided)">Do you want to change namespace from &lt;i&gt;{{ $ctrl.currentNamespace()}}&lt;/i&gt; to &lt;i&gt;{{::$ctrl.newNamespace}}&lt;/i&gt;?</translation>
   <translation id="4492076728105331074" key="MSG_COMMON_NAMESPACE_NAMESPACESELECT_0" desc="Title for namespace select.">ネームスペース</translation>
   <translation id="5174603006239796789" key="MSG_COMMON_NAMESPACE_NAMESPACESELECT_1" desc="Text describing what namespace selector is">ネームスペースセレクター</translation>
   <translation id="7324783266461564175" key="MSG_COMMON_NAMESPACE_NAMESPACESELECT_2" desc="Text for dropdown item that indicates that no namespace was selected.">すべてのネームスペース</translation>
   <translation id="5324906937580749197" key="MSG_COMMON_NAMESPACE_NAMESPACESELECT_3" desc="Label atop a list of namespaces">ネームスペース</translation>
+  <translation id="1071151632434666377" key="MSG_COMMON_NAMESPACE_NAMESPACESELECT_4" desc="(no description provided)">Select namespace...</translation>
   <translation id="395521352310086904" key="MSG_COMMON_RESOURCE_DELETERESOURCE_0" desc="Title for a delete resource dialog.">{{::$ctrl.resourceKindName}} を削除</translation>
   <translation id="1507210670835642034" key="MSG_COMMON_RESOURCE_DELETERESOURCE_1" desc="Title for a delete resource dialog.">{{::$ctrl.resourceKindName}} を削除</translation>
   <translation id="4882763297660106258" key="MSG_COMMON_RESOURCE_DELETERESOURCE_2" desc="Confirmation question, appears before any dashboard resource will be deleted.">本当にネームスペース &lt;i&gt;{{::$ctrl.objectMeta.namespace}}&lt;/i&gt; 内の {{::$ctrl.resourceKindName}} &lt;i&gt;{{::$ctrl.objectMeta.name}}&lt;/i&gt; を削除しますか？</translation>

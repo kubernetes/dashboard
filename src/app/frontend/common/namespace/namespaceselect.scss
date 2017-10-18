@@ -17,6 +17,7 @@
 kd-namespace-select {
   display: block;
   padding-left: 3 * $baseline-grid;
+  padding-top: 0;
 
   .kd-namespace-select-title {
     color: $foreground-2;
@@ -27,18 +28,20 @@ kd-namespace-select {
 .kd-namespace-select-input-container {
   font-family: $font-family-monospace;
   margin: $baseline-grid 0;
+  max-width: 100%;
 }
 
 md-select {
   &.kd-namespace-select {
     font-size: $body-font-size-base;
-    padding-left: $baseline-grid;
+    padding: 0 $baseline-grid;
 
     .md-select-value {
       padding-bottom: .5 * $baseline-grid;
       padding-right: 0;
 
       span {
+        color: $foreground-1;
         font-family: $font-family-medium;
       }
 
@@ -70,17 +73,30 @@ md-select {
 
 .kd-namespace-select-container {
   md-content {
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
+    padding: 0;
+  }
+}
 
-    .kd-namespace-select-namespace-list {
-      overflow: auto;
+.kd-namespace-select-input-header {
+  align-items: center;
+  display: flex;
+  padding: (2 * $baseline-grid) 0 (2 * $baseline-grid) (2 * $baseline-grid);
+
+  md-input-container {
+    height: 3 * $baseline-grid;
+    margin: 0;
+    padding: 0;
+
+    .kd-namespace-select-input {
+      border: 0;
+      height: 3 * $baseline-grid;
+      outline: none;
+      padding: 0;
+      width: 100%;
     }
   }
+}
 
-  .kd-namespace-select-all {
-    height: $table-cell-height;
-    min-height: $table-cell-height;
-  }
+.kd-namespace-select-input-header-border {
+  border-bottom: 1px solid $foreground-4;
 }

@@ -14,13 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<md-dialog aria-label="Change namespace"
+<md-dialog aria-label="[[Change namespace?|]]"
            layout="column">
   <md-dialog-content layout-padding>
     <h4 class="md-title">[[Change namespace?|]]</h4>
     <div class="kd-namespace-change-dialog-text">[[Selected resource is in a different namespace than currently selected.|]]</div>
-    <div class="kd-namespace-change-dialog-text">[[Do you want to change namespace?|]]</div>
-
+    <div class="kd-namespace-change-dialog-text">
+      [[Do you want to change namespace from <i>{{$ctrl.currentNamespace()}}</i> to <i>{{::$ctrl.newNamespace}}</i>?|]]
+    </div>
     <md-dialog-actions layout="row">
       <md-button ng-click="$ctrl.changeNamespace()"
                  class="md-primary">[[Yes|]]</md-button>
