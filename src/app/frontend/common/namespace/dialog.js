@@ -16,7 +16,7 @@ import {namespaceParam} from '../../chrome/state';
 import {stateName as overview} from '../../overview/state';
 
 /** @final */
-class NamespaceChangeInfoDialogController {
+export class NamespaceChangeInfoDialogController {
   /**
    * @param {!md.$dialog} $mdDialog
    * @param {string} newNamespace

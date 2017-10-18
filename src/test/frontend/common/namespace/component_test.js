@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import chromeModule from 'chrome/module';
-import {StateParams} from 'chrome/state';
+import {namespaceParam, StateParams} from 'chrome/state';
 import module from 'common/namespace/module';
 
 describe('Namespace select component ', () => {
@@ -137,5 +137,20 @@ describe('Namespace select component ', () => {
     state.go('fakeState', {namespace: unsafe});
     scope.$digest();
     expect(ctrl.selectedNamespace).toBe('default');
+  });
+
+  it('should select namespace', () => {
+    // given
+    spyOn(state, 'go');
+    let newNamespace = 'namespace-1';
+    ctrl.namespaceInput = newNamespace;
+
+    // when
+    ctrl.selectNamespace();
+
+    // then
+    expect(ctrl.namespaceInput).toEqual('');
+    expect(ctrl.selectedNamespace).toEqual(newNamespace);
+    expect(state.go).toHaveBeenCalledWith('.', {[namespaceParam]: ctrl.selectedNamespace});
   });
 });
