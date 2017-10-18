@@ -60,3 +60,12 @@
   margin-left: 1.5 * $baseline-grid;
   margin-right: $baseline-grid;
 }
+
+.kd-actionbar-button {
+  display: flex;
+  flex-direction: row;
+
+  .kd-actionbar-button-text {
+    padding-left: $baseline-grid / 2;
+  }
+}
