@@ -2119,8 +2119,9 @@ func (apiHandler *APIHandler) handleGetStorageClassPersistentVolumes(request *re
 	}
 
 	name := request.PathParameter("storageclass")
+	dataSelect := parseDataSelectPathParameter(request)
 	result, err := persistentvolume.GetStorageClassPersistentVolumes(k8sClient,
-		name, dataselect.DefaultDataSelect)
+		name, dataSelect)
 	if err != nil {
 		handleInternalError(response, err)
 		return
