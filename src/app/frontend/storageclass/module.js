@@ -20,12 +20,11 @@ import eventsModule from '../events/module';
 import persistentvolumeModule from '../persistentvolume/module';
 
 import {storageClassInfoComponent} from './detail/info_component';
+import {storageClassPersistentVolumesResource} from './detail/stateconfig';
 import {storageClassCardComponent} from './list/card_component';
 import {storageClassCardListComponent} from './list/cardlist_component';
 import {storageClassListResource} from './list/stateconfig';
 import stateConfig from './stateconfig';
-
-import {storageClassPersistentVolumesResource} from './detail/stateconfig';
 
 /**
  * Angular module for the Storage Class resource.
