@@ -509,11 +509,16 @@
   <translation id="1813585001229142426" key="MSG_LOGIN_UNAUTHORIZED_ERROR" desc="Text shown when unauthorized user tries to log in.">Authentication failed. Please try again.</translation>
   <translation id="4722922095699681308" key="MSG_LOGS_LOGS_0" desc="Title prefix for logs card.">Logs from</translation>
   <translation id="6855662924451585032" key="MSG_LOGS_LOGS_1" desc="Title part for logs card.">in</translation>
+  <translation id="6427964323602885868" key="MSG_LOGS_LOGS_10" desc="Tooltip for button that switches to showing the previous logs.">Show previous logs</translation>
+  <translation id="1817220895156019614" key="MSG_LOGS_LOGS_11" desc="Tooltip for button that downloads the logs as a file.">Download logs</translation>
   <translation id="6208229815004454576" key="MSG_LOGS_LOGS_2" desc="Title prefix for logs card.">Logs from</translation>
   <translation id="1223986507449568472" key="MSG_LOGS_LOGS_3" desc="Footer part for logs card.">to</translation>
   <translation id="8510779305487405945" key="MSG_LOGS_LOGS_4" desc="Label atop a list of Containers">Containers</translation>
   <translation id="7432843701863632053" key="MSG_LOGS_LOGS_5" desc="Label atop a list of Init Containers">Init Containers</translation>
   <translation id="2297835557948059978" key="MSG_LOGS_LOGS_6" desc="(no description provided)">Toggle auto-refresh (every {{ctrl.refreshInterval / 1000}} seconds)</translation>
+  <translation id="7542681487528728469" key="MSG_LOGS_LOGS_7" desc="Tooltip for button that toggles between light &amp; dark background in log viewer.">Invert colors</translation>
+  <translation id="3561952584674269373" key="MSG_LOGS_LOGS_8" desc="Tooltip for button that toggles between a larger and smaller font option in the log viewer.">Toggle font size</translation>
+  <translation id="1193096800305895006" key="MSG_LOGS_LOGS_9" desc="Tooltip for button that switches to showing the current logs.">Show current logs</translation>
   <translation id="3402202863027894322" key="MSG_LOGS_TRUNCATED_WARNING" desc="Error dialog indicating that parts of the log file is missing due to memory constraints.">The middle part of the log file cannot be loaded, because it is too big.</translation>
   <translation id="7594890250973129963" key="MSG_LOGS_ZEROSTATE_TEXT" desc="Text for logs card zerostate in logs page.">The selected container has not logged any messages yet.</translation>
   <translation id="2533795620042066843" key="MSG_MORE_WARNINGS_LABEL" desc="Show more warnings button label.">Show <ph name="COUNT"> more</ph></translation>
