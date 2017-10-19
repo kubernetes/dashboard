@@ -71,7 +71,7 @@ limitations under the License.
         </md-icon>
       </md-button>
       <md-button class="kd-logs-toolbar-button"
-                 ng-click="ctrl.toggleFollow()">
+                 ng-click="ctrl.toggleLogFollow()">
         <md-icon md-font-library="material-icons"
                  class="kd-logs-icon">
           refresh
@@ -86,7 +86,7 @@ limitations under the License.
         </md-icon>
         <md-tooltip md-delay="500"
                     md-autohide>
-          [[Toggle log follow|]]
+          [[Toggle auto-refresh (every {{ctrl.refreshInterval / 1000}} seconds)|]]
         </md-tooltip>
       </md-button>
       <md-button class="kd-logs-toolbar-button"

@@ -35,10 +35,11 @@ export class LogsController {
    * @param {!angular.$document} $document
    * @param {!angular.$resource} $resource
    * @param {!angular.$interval} $interval
+   * @param {!angular.$log} $log
    * @param {!../common/errorhandling/dialog.ErrorDialog} errorDialog
    * @ngInject
    */
-  constructor(logsService, $sce, $document, $resource, $interval, errorDialog) {
+  constructor(logsService, $sce, $document, $resource, $interval, $log, errorDialog) {
     /** @private {!angular.$sce} */
     this.sce_ = $sce;
 
@@ -50,6 +51,9 @@ export class LogsController {
 
     /** @private {!angular.$interval} */
     this.interval_ = $interval;
+
+    /** @private {!angular.$log} */
+    this.log_ = $log;
 
     /** @export {!./service.LogsService} */
     this.logsService = logsService;
@@ -99,16 +103,13 @@ export class LogsController {
     /** @export {!kdUiRouter.$transition$} */
     this.$transition$;
 
-    /** @type {boolean} */
+    /** @export {boolean} */
     this.isFollowing = false;
 
-    // TODO(maciaszczykm): Add time interval to settings page.
-    this.interval_(() => {
-      if (this.isFollowing) {
-        // TODO Add log.
-        this.loadNewest();
-      }
-    }, 5000);
+    /** @export {number} Refresh interval in miliseconds. */
+    this.refreshInterval = 5000;
+
+    this.registerIntervalFunction_();
   }
 
 
@@ -118,6 +119,20 @@ export class LogsController {
     this.stateParams_ = this.$transition$.params();
     this.updateUiModel(this.podLogs);
     this.topIndex = this.podLogs.logs.length;
+  }
+
+  /**
+   * Registers interval function used to automatically refresh logs.
+   *
+   * @private
+   */
+  registerIntervalFunction_() {
+    this.interval_(() => {
+      if (this.isFollowing) {
+        this.loadNewest();
+        this.log_.info('Automatically refreshed logs');
+      }
+    }, this.refreshInterval);
   }
 
 
@@ -160,11 +175,11 @@ export class LogsController {
   }
 
   /**
-   * Toggles follow mechanism.
+   * Toggles log follow mechanism.
    *
    * @export
    */
-  toggleFollow() {
+  toggleLogFollow() {
     this.isFollowing = !this.isFollowing;
     if (this.isFollowing) {
       this.loadNewest();
