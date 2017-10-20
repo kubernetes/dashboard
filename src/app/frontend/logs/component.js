@@ -103,13 +103,8 @@ export class LogsController {
     /** @export {!kdUiRouter.$transition$} */
     this.$transition$;
 
-    /** @export {boolean} */
-    this.isFollowing = false;
-
     /** @export {number} Refresh interval in miliseconds. */
     this.refreshInterval = 5000;
-
-    this.registerIntervalFunction_();
   }
 
 
@@ -119,6 +114,7 @@ export class LogsController {
     this.stateParams_ = this.$transition$.params();
     this.updateUiModel(this.podLogs);
     this.topIndex = this.podLogs.logs.length;
+    this.registerIntervalFunction_();
   }
 
   /**
@@ -128,7 +124,7 @@ export class LogsController {
    */
   registerIntervalFunction_() {
     this.interval_(() => {
-      if (this.isFollowing) {
+      if (this.logsService.getFollowing()) {
         this.loadNewest();
         this.log_.info('Automatically refreshed logs');
       }
@@ -180,8 +176,8 @@ export class LogsController {
    * @export
    */
   toggleLogFollow() {
-    this.isFollowing = !this.isFollowing;
-    if (this.isFollowing) {
+    this.logsService.setFollowing();
+    if (this.logsService.getFollowing()) {
       this.loadNewest();
     }
   }
@@ -281,94 +277,6 @@ export class LogsController {
     return div.innerHTML;
   }
 
-
-  /**
-   * Indicates log area font size.
-   * @export
-   * @return {string}
-   */
-  getLogsClass() {
-    const logsTextSize = 'kd-logs-element';
-    if (this.logsService.getCompact()) {
-      return `${logsTextSize}-compact`;
-    }
-    return logsTextSize;
-  }
-
-  /**
-   * Return proper style class for logs content.
-   * @export
-   * @return {string}
-   */
-  getStyleClass() {
-    const logsTextColor = 'kd-logs-text-color';
-    if (this.logsService.getInverted()) {
-      return `${logsTextColor}-invert`;
-    }
-    return logsTextColor;
-  }
-
-  /**
-   * Return proper style class for text color icon.
-   * @export
-   * @return {string}
-   */
-  getColorIconClass() {
-    const logsTextColor = 'kd-logs-color-icon';
-    if (this.logsService.getInverted()) {
-      return `${logsTextColor}-invert`;
-    }
-    return logsTextColor;
-  }
-
-  /**
-   * Return proper style class for font size icon.
-   * @export
-   * @return {string}
-   */
-  getSizeIconClass() {
-    const logsTextColor = 'kd-logs-size-icon';
-    if (this.logsService.getCompact()) {
-      return `${logsTextColor}-compact`;
-    }
-    return logsTextColor;
-  }
-
-  /**
-   * Return the proper icon depending on the timestamp selection state
-   * @export
-   * @return {string}
-   */
-  getTimestampIcon() {
-    if (this.logsService.getShowTimestamp()) {
-      return 'timer';
-    }
-    return 'timer_off';
-  }
-
-  /**
-   * @export
-   * @return {string}
-   */
-  getFollowIcon() {
-    if (this.isFollowing) {
-      return 'refresh';
-    }
-    return 'refresh_off';
-  }
-
-  /**
-   * Return the proper icon depending on the previous-container-logs selection state
-   * @export
-   * @return {string}
-   */
-  getPreviousIcon() {
-    if (this.logsService.getPrevious()) {
-      return 'exposure_neg_1';
-    }
-    return 'exposure_zero';
-  }
-
   /**
    * Return the link to download the log file
    * @export
@@ -378,24 +286,6 @@ export class LogsController {
     let namespace = this.stateParams_.objectNamespace;
     return `api/v1/log/file/${namespace}/${this.pod}/${this.container}?previous=${
         this.logsService.getPrevious()}`;
-  }
-
-  /**
-   * Execute when a user changes the container from which logs should be loaded.
-
-   * @export
-   */
-  onContainerChange() {
-    this.loadNewest();
-  }
-
-  /**
-   * Execute when a user changes the pod from which logs should be loaded.
-   *
-   * @export
-   */
-  onPodChange() {
-    this.loadNewest();
   }
 
   /**
