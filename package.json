@@ -63,7 +63,7 @@
     "babelify": "~7.3.0",
     "browser-sync": "~2.18.13",
     "browser-sync-spa": "~1.0.3",
-    "browserify": "~14.4.0",
+    "browserify": "~14.5.0",
     "browserify-istanbul": "~2.0.0",
     "clang-format": "1.1.0",
     "cljsjs-packages-externs": "https://github.com/cljsjs/packages.git#0c44b38658ad789a45d342bff4f13706276f293a",
