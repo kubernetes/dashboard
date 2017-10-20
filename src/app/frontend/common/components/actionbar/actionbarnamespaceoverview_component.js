@@ -28,10 +28,7 @@ export class ActionbarNamespaceOverviewController {
     this.state_ = $state;
   }
 
-  /**
-   * @return {string}
-   * @export
-   */
+  /** @export */
   goToNamespaceOverview() {
     this.state_.go(overview, {[namespaceParam]: this.namespace});
   }
