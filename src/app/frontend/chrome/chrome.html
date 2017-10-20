@@ -26,11 +26,14 @@ limitations under the License.
     </div>
     <kd-search class="kd-search-bar"></kd-search>
     <div class="kd-global-actions">
-      <md-button ng-click="$ctrl.create()">
+      <md-button ng-click="$ctrl.create()"
+                 class="kd-actionbar-button">
         <md-icon class="kd-global-action-icon">add</md-icon>
         <md-tooltip md-delay="500"
                     md-autohide>
-          [[Create an application or any Kubernetes resource|Tooltip for global action bar create button tooltip.]]
+          <div class="kd-actionbar-button-text">
+            [[Create an application or any Kubernetes resource|Tooltip for global action bar create button tooltip.]]
+          </div>
         </md-tooltip>
         [[Create|Label for global action bar create button.]]
       </md-button>

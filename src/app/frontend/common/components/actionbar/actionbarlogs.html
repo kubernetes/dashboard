@@ -14,11 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<md-button ng-click="::$ctrl.viewLogs()">
-  <md-icon class="kd-actionbar-icon-button">subject</md-icon>
+<md-button ng-click="::$ctrl.viewLogs()"
+           class="kd-actionbar-button">
+  <md-icon>subject</md-icon>
   <md-tooltip md-delay="500"
               md-autohide>
     [[View logs|Tooltip for the 'logs' button on the action bar.]]
   </md-tooltip>
-  [[Logs|Tooltip for the 'logs' button on the action bar.]]
+  <div class="kd-actionbar-button-text">[[Logs|Tooltip for the 'logs' button on the action bar.]]</div>
 </md-button>

@@ -14,11 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<md-button ng-click="$ctrl.edit()">
-  <md-icon class="kd-actionbar-icon-button">edit</md-icon>
+<md-button ng-click="$ctrl.edit()"
+           class="kd-actionbar-button">
+  <md-icon>edit</md-icon>
   <md-tooltip md-delay="500"
               md-autohide>
     {{::$ctrl.getEditTooltip()}}
   </md-tooltip>
-  [[Edit|Action 'Edit' for the edit button on the global action bar.]]
+  <div class="kd-actionbar-button-text">
+    [[Edit|Action 'Edit' for the edit button on the global action bar.]]
+  </div>
 </md-button>

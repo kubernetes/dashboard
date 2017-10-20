@@ -14,11 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<md-button ng-click="::$ctrl.openShell()">
-  <md-icon class="kd-actionbar-icon-button">input</md-icon>
+<md-button ng-click="::$ctrl.openShell()"
+           class="kd-actionbar-button">
+  <md-icon>input</md-icon>
   <md-tooltip md-delay="500"
               md-autohide>
     [[Exec into Pod|Exec button tooltip located on pod detail page actionbar]]
   </md-tooltip>
-  [[Exec|Execute shell in the container]]
+  <div class="kd-actionbar-button-text">[[Exec|Execute shell in the container]]</div>
 </md-button>

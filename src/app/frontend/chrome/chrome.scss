@@ -60,7 +60,8 @@ kd-chrome {
 
     .kd-global-action-icon {
       color: $primary;
-      margin-right: .25 * $baseline-grid;
+      margin-right: $baseline-grid / 4;
+      margin-top: .6 * $baseline-grid;
     }
   }
 }

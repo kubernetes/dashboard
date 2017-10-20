@@ -50,13 +50,19 @@
   }
 }
 
-.kd-actionbar-icon-button {
-  margin-right: .25 * $baseline-grid;
-}
-
 .kd-actionbar-divider {
   border-left: 1px solid $foreground-4;
   height: 4 * $baseline-grid;
   margin-left: 1.5 * $baseline-grid;
   margin-right: $baseline-grid;
+}
+
+.kd-actionbar-button {
+  display: flex;
+  flex-direction: row;
+
+  .kd-actionbar-button-text {
+    margin-left: $baseline-grid / 2;
+    padding-right: $baseline-grid / 2;
+  }
 }

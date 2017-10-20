@@ -14,12 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<md-button ng-click="$ctrl.deployApp()">
-  <md-icon class="kd-actionbar-icon-button">add</md-icon>
-  [[Deploy app|Label for deploy app button.]]
+<md-button ng-click="$ctrl.deployApp()"
+           class="kd-actionbar-button">
+  <md-icon>add</md-icon>
+  <div class="kd-actionbar-button-text">[[Deploy app|Label for deploy app button.]]</div>
 </md-button>
 
 <md-button ng-click="$ctrl.deployFile()">
-  <md-icon class="kd-actionbar-icon-button">file_upload</md-icon>
+  <md-icon>file_upload</md-icon>
   [[Upload YAML|Label for upload YAML button.]]
 </md-button>
