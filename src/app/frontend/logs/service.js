@@ -53,10 +53,10 @@ export class LogsService {
     this.inverted_ = !this.inverted_;
   }
 
-    /**
-     * @return {boolean}
-     * @export
-     */
+  /**
+   * @return {boolean}
+   * @export
+   */
   getInverted() {
     return this.inverted_;
   }
@@ -65,10 +65,10 @@ export class LogsService {
     this.compact_ = !this.compact_;
   }
 
-    /**
-     * @return {boolean}
-     * @export
-     */
+  /**
+   * @return {boolean}
+   * @export
+   */
   getCompact() {
     return this.compact_;
   }
@@ -77,10 +77,10 @@ export class LogsService {
     this.showTimestamp_ = !this.showTimestamp_;
   }
 
-    /**
-     * @return {boolean}
-     * @export
-     */
+  /**
+   * @return {boolean}
+   * @export
+   */
   getShowTimestamp() {
     return this.showTimestamp_;
   }
@@ -89,10 +89,10 @@ export class LogsService {
     this.previous_ = !this.previous_;
   }
 
-    /**
-     * @return {boolean}
-     * @export
-     */
+  /**
+   * @return {boolean}
+   * @export
+   */
   getPrevious() {
     return this.previous_;
   }

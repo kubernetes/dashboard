@@ -96,12 +96,6 @@ describe('Logs controller', () => {
     expect(ctrl).not.toBeUndefined();
   });
 
-  it('should return style classes for logs content', () => {
-    // expect
-    expect(ctrl.getStyleClass()).toEqual(`${logsTextColorClassName}`);
-    expect(ctrl.getLogsClass()).toEqual(`${logsTextSizeClassName}`);
-  });
-
   it('should display zero state log line if server returned no logs', () => {
     ctrl.podLogs.logs = [];
     ctrl.$onInit();
