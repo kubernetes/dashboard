@@ -18,13 +18,6 @@ import LogsModule from 'logs/module';
 import {StateParams} from 'logs/state';
 
 describe('Logs controller', () => {
-
-  /** @type {string} */
-  const logsTextColorClassName = 'kd-logs-text-color-invert';
-
-  /** @type {string} */
-  const logsTextSizeClassName = 'kd-logs-element';
-
   /** @type {!LogsController} */
   let ctrl;
 
