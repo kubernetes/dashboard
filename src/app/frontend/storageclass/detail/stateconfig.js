@@ -73,7 +73,7 @@ export function getStorageClass(storageClassResource) {
 
 /**
  * @param {!./../../common/resource/resourcedetail.StateParams} $stateParams
- * @param {!angular.Resource} $resource
+ * @param {!angular.$resource} $resource
  * @return {!angular.Resource}
  * @ngInject
  */
