@@ -504,6 +504,7 @@
   <translation id="1223986507449568472" key="MSG_LOGS_LOGS_3" desc="Footer part for logs card.">to</translation>
   <translation id="8510779305487405945" key="MSG_LOGS_LOGS_4" desc="Label atop a list of Containers">Containers</translation>
   <translation id="7432843701863632053" key="MSG_LOGS_LOGS_5" desc="Label atop a list of Init Containers">Init Containers</translation>
+  <translation id="2297835557948059978" key="MSG_LOGS_LOGS_6" desc="(no description provided)">Toggle auto-refresh (every {{ctrl.refreshInterval / 1000}} seconds)</translation>
   <translation id="3402202863027894322" key="MSG_LOGS_TRUNCATED_WARNING" desc="Error dialog indicating that parts of the log file is missing due to memory constraints.">The middle part of the log file cannot be loaded, because it is too big.</translation>
   <translation id="7594890250973129963" key="MSG_LOGS_ZEROSTATE_TEXT" desc="Text for logs card zerostate in logs page.">The selected container has not logged any messages yet.</translation>
   <translation id="2533795620042066843" key="MSG_MORE_WARNINGS_LABEL" desc="Show more warnings button label.">Show <ph name="COUNT"> more</ph></translation>

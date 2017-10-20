@@ -34,10 +34,12 @@ export class LogsController {
    * @param {!angular.$sce} $sce
    * @param {!angular.$document} $document
    * @param {!angular.$resource} $resource
+   * @param {!angular.$interval} $interval
+   * @param {!angular.$log} $log
    * @param {!../common/errorhandling/dialog.ErrorDialog} errorDialog
    * @ngInject
    */
-  constructor(logsService, $sce, $document, $resource, errorDialog) {
+  constructor(logsService, $sce, $document, $resource, $interval, $log, errorDialog) {
     /** @private {!angular.$sce} */
     this.sce_ = $sce;
 
@@ -46,6 +48,12 @@ export class LogsController {
 
     /** @private {!angular.$resource} */
     this.resource_ = $resource;
+
+    /** @private {!angular.$interval} */
+    this.interval_ = $interval;
+
+    /** @private {!angular.$log} */
+    this.log_ = $log;
 
     /** @export {!./service.LogsService} */
     this.logsService = logsService;
@@ -92,8 +100,11 @@ export class LogsController {
     /** @private {!ui.router.$stateParams} */
     this.stateParams_;
 
-    /** @export {!kdUiRouter.$transition$} - initialized from resolve */
+    /** @export {!kdUiRouter.$transition$} */
     this.$transition$;
+
+    /** @export {number} Refresh interval in miliseconds. */
+    this.refreshInterval = 5000;
   }
 
 
@@ -103,6 +114,21 @@ export class LogsController {
     this.stateParams_ = this.$transition$.params();
     this.updateUiModel(this.podLogs);
     this.topIndex = this.podLogs.logs.length;
+    this.registerIntervalFunction_();
+  }
+
+  /**
+   * Registers interval function used to automatically refresh logs.
+   *
+   * @private
+   */
+  registerIntervalFunction_() {
+    this.interval_(() => {
+      if (this.logsService.getFollowing()) {
+        this.loadNewest();
+        this.log_.info('Automatically refreshed logs');
+      }
+    }, this.refreshInterval);
   }
 
 
@@ -142,6 +168,18 @@ export class LogsController {
         this.currentSelection.logFilePosition, this.currentSelection.referencePoint.timestamp,
         this.currentSelection.referencePoint.lineNum, this.currentSelection.offsetTo,
         this.currentSelection.offsetTo + logsPerView);
+  }
+
+  /**
+   * Toggles log follow mechanism.
+   *
+   * @export
+   */
+  toggleLogFollow() {
+    this.logsService.setFollowing();
+    if (this.logsService.getFollowing()) {
+      this.loadNewest();
+    }
   }
 
   /**
@@ -239,83 +277,6 @@ export class LogsController {
     return div.innerHTML;
   }
 
-
-  /**
-   * Indicates log area font size.
-   * @export
-   * @return {string}
-   */
-  getLogsClass() {
-    const logsTextSize = 'kd-logs-element';
-    if (this.logsService.getCompact()) {
-      return `${logsTextSize}-compact`;
-    }
-    return logsTextSize;
-  }
-
-  /**
-   * Return proper style class for logs content.
-   * @export
-   * @return {string}
-   */
-  getStyleClass() {
-    const logsTextColor = 'kd-logs-text-color';
-    if (this.logsService.getInverted()) {
-      return `${logsTextColor}-invert`;
-    }
-    return logsTextColor;
-  }
-
-  /**
-   * Return proper style class for text color icon.
-   * @export
-   * @return {string}
-   */
-  getColorIconClass() {
-    const logsTextColor = 'kd-logs-color-icon';
-    if (this.logsService.getInverted()) {
-      return `${logsTextColor}-invert`;
-    }
-    return logsTextColor;
-  }
-
-  /**
-   * Return proper style class for font size icon.
-   * @export
-   * @return {string}
-   */
-  getSizeIconClass() {
-    const logsTextColor = 'kd-logs-size-icon';
-    if (this.logsService.getCompact()) {
-      return `${logsTextColor}-compact`;
-    }
-    return logsTextColor;
-  }
-
-  /**
-   * Return the proper icon depending on the timestamp selection state
-   * @export
-   * @return {string}
-   */
-  getTimestampIcon() {
-    if (this.logsService.getShowTimestamp()) {
-      return 'timer';
-    }
-    return 'timer_off';
-  }
-
-  /**
-   * Return the proper icon depending on the previous-container-logs selection state
-   * @export
-   * @return {string}
-   */
-  getPreviousIcon() {
-    if (this.logsService.getPrevious()) {
-      return 'exposure_neg_1';
-    }
-    return 'exposure_zero';
-  }
-
   /**
    * Return the link to download the log file
    * @export
@@ -325,24 +286,6 @@ export class LogsController {
     let namespace = this.stateParams_.objectNamespace;
     return `api/v1/log/file/${namespace}/${this.pod}/${this.container}?previous=${
         this.logsService.getPrevious()}`;
-  }
-
-  /**
-   * Execute when a user changes the container from which logs should be loaded.
-
-   * @export
-   */
-  onContainerChange() {
-    this.loadNewest();
-  }
-
-  /**
-   * Execute when a user changes the pod from which logs should be loaded.
-   *
-   * @export
-   */
-  onPodChange() {
-    this.loadNewest();
   }
 
   /**

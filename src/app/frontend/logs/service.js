@@ -32,63 +32,66 @@ export class LogsService {
 
     /** @private {boolean} */
     this.previous_ = false;
+
+    /** @private {boolean} */
+    this.following_ = false;
+  }
+
+  setFollowing() {
+    this.following_ = !this.following_;
   }
 
   /**
-   * Getter for inverted flag.
    * @return {boolean}
+   * @export
    */
-  getInverted() {
-    return this.inverted_;
+  getFollowing() {
+    return this.following_;
   }
 
-  /**
-   * Switches the inverted flag.
-   */
   setInverted() {
     this.inverted_ = !this.inverted_;
   }
 
   /**
-   * Switches the compact flag.
+   * @return {boolean}
+   * @export
    */
+  getInverted() {
+    return this.inverted_;
+  }
+
   setCompact() {
     this.compact_ = !this.compact_;
   }
 
   /**
-   * Getter for compact flag.
    * @return {boolean}
+   * @export
    */
   getCompact() {
     return this.compact_;
   }
 
-  /**
-   * Switches the show timestamp flag
-   */
   setShowTimestamp() {
     this.showTimestamp_ = !this.showTimestamp_;
   }
 
   /**
-   * Getter for the show timestamp flag
-   * @returns {boolean}
+   * @return {boolean}
+   * @export
    */
   getShowTimestamp() {
     return this.showTimestamp_;
   }
 
-  /**
-   * Switches the show previous flag
-   */
   setPrevious() {
     this.previous_ = !this.previous_;
   }
 
   /**
-   * Getter for the show previous flag
-   * @returns {boolean}
+   * @return {boolean}
+   * @export
    */
   getPrevious() {
     return this.previous_;

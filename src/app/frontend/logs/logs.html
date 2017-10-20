@@ -20,7 +20,7 @@ limitations under the License.
     <md-select class="kd-logs-toolbar-select"
                aria-label="container"
                ng-model="ctrl.container"
-               md-on-close="ctrl.onContainerChange(ctrl.container)"
+               md-on-close="ctrl.loadNewest()"
                required>
       <md-optgroup label="[[Containers|Label atop a list of Containers]]"
                    class="kd-namespace-select-namespace-list">
@@ -41,7 +41,7 @@ limitations under the License.
     <md-select class="kd-logs-toolbar-select"
                aria-label="resource"
                ng-model="ctrl.pod"
-               md-on-close="ctrl.onContainerChange(ctrl.pod)"
+               md-on-close="ctrl.loadNewest()"
                required>
       <md-option ng-repeat="item in ctrl.logSources.podNames"
                  ng-value="item">
@@ -51,47 +51,58 @@ limitations under the License.
     <div class="kd-logs-style-buttons">
       <md-button class="kd-logs-toolbar-button"
                  ng-click="ctrl.onTextColorChange()">
-        <md-icon md-font-library="material-icons"
-                 ng-class="ctrl.getColorIconClass()">
+        <md-icon ng-class="{'kd-logs-color-icon-invert': ctrl.logsService.getInverted(),
+                            'kd-logs-color-icon': !ctrl.logsService.getInverted()}">
           format_color_text
         </md-icon>
       </md-button>
       <md-button class="kd-logs-toolbar-button"
                  ng-click="ctrl.onFontSizeChange()">
-        <md-icon md-font-library="material-icons"
-                 ng-class="ctrl.getSizeIconClass()">
+        <md-icon ng-class="{'kd-logs-size-icon-compact': ctrl.logsService.getCompact(),
+                            'kd-logs-size-icon': !ctrl.logsService.getCompact()}">
           text_fields
         </md-icon>
       </md-button>
       <md-button class="kd-logs-toolbar-button"
                  ng-click="ctrl.onShowTimestamp()">
-        <md-icon md-font-library="material-icons"
-                 class="kd-logs-icon">
-          {{ctrl.getTimestampIcon()}}
+        <md-icon class="kd-logs-icon">{{ctrl.logsService.getShowTimestamp() ? 'timer' : 'timer_off'}}</md-icon>
+      </md-button>
+      <md-button class="kd-logs-toolbar-button"
+                 ng-click="ctrl.toggleLogFollow()">
+        <md-icon class="kd-logs-icon">
+          refresh
+          <svg class="kd-cross-style"
+               ng-if="!ctrl.logsService.getFollowing()"
+               width="32px"
+               height="32px"
+               viewBox="0 0 32 32">
+            <line class="kd-cross-line-white" x1="9" x2="27" y1="9" y2="27"/>
+            <line class="kd-cross-line-black" x1="9" x2="27" y1="10" y2="28"/>
+          </svg>
         </md-icon>
+        <md-tooltip md-delay="500"
+                    md-autohide>
+          [[Toggle auto-refresh (every {{ctrl.refreshInterval / 1000}} seconds)|]]
+        </md-tooltip>
       </md-button>
       <md-button class="kd-logs-toolbar-button"
                  ng-click="ctrl.onPreviousChange()">
-        <md-icon md-font-library="material-icons"
-                 class="kd-logs-icon">
-          {{ctrl.getPreviousIcon()}}
-        </md-icon>
+        <md-icon class="kd-logs-icon">{{ctrl.logsService.getPrevious() ? 'exposure_neg_1' : 'exposure_zero'}}</md-icon>
       </md-button>
       <md-button class="kd-logs-toolbar-button"
                  ng-href="{{ctrl.getDownloadLink()}}">
-        <md-icon md-font-library="material-icons"
-                 class="kd-logs-icon">
-          file_download
-        </md-icon>
+        <md-icon class="kd-logs-icon">file_download</md-icon>
       </md-button>
     </div>
   </kd-title>
   <kd-content>
     <md-virtual-repeat-container class="kd-log-view"
-                                 ng-class="ctrl.getStyleClass()"
+                                 ng-class="{'kd-logs-text-color-invert': ctrl.logsService.getInverted(),
+                                            'kd-logs-text-color': !ctrl.logsService.getInverted()}"
                                  md-top-index="ctrl.topIndex">
       <div md-virtual-repeat="item in ctrl.logsSet"
-           ng-class="ctrl.getLogsClass()">
+           ng-class="{'kd-logs-element-compact': ctrl.logsService.getCompact(),
+                      'kd-logs-element': !ctrl.logsService.getCompact()}">
         <span ng-bind-html="item"
               class="kd-log-line">&nbsp;</span>
       </div>
