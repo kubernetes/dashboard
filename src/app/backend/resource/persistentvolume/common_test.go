@@ -18,20 +18,25 @@ import (
 	"reflect"
 	"testing"
 
-	api "k8s.io/api/core/v1"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+
+	v1 "k8s.io/api/core/v1"
+	storage "k8s.io/api/storage/v1beta1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/client-go/kubernetes/fake"
 )
 
 func TestGetPersistentVolumeClaim(t *testing.T) {
 	cases := []struct {
-		persistentVolume *api.PersistentVolume
+		persistentVolume *v1.PersistentVolume
 		expected         string
 	}{
 		{
-			&api.PersistentVolume{
+			&v1.PersistentVolume{
 				ObjectMeta: metaV1.ObjectMeta{Name: "foo"},
-				Spec: api.PersistentVolumeSpec{
-					ClaimRef: &api.ObjectReference{
+				Spec: v1.PersistentVolumeSpec{
+					ClaimRef: &v1.ObjectReference{
 						Namespace: "default",
 						Name:      "my-claim"},
 				},
@@ -39,9 +44,9 @@ func TestGetPersistentVolumeClaim(t *testing.T) {
 			"default/my-claim",
 		},
 		{
-			&api.PersistentVolume{
+			&v1.PersistentVolume{
 				ObjectMeta: metaV1.ObjectMeta{Name: "foo"},
-				Spec:       api.PersistentVolumeSpec{},
+				Spec:       v1.PersistentVolumeSpec{},
 			},
 			"",
 		},
@@ -51,6 +56,54 @@ func TestGetPersistentVolumeClaim(t *testing.T) {
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("getPersistentVolumeClaim(%#v) == \n%#v\nexpected \n%#v\n",
 				c.persistentVolume, actual, c.expected)
+		}
+	}
+}
+
+func TestGetStorageClassPersistentVolumes(t *testing.T) {
+	cases := []struct {
+		storageClass         *storage.StorageClass
+		name                 string
+		persistentVolumeList *v1.PersistentVolumeList
+		expected             *PersistentVolumeList
+	}{
+		{
+			storageClass: &storage.StorageClass{ObjectMeta: metaV1.ObjectMeta{
+				Name: "test-storage", Labels: map[string]string{"app": "test"},
+			}},
+			name: "test-storage",
+			persistentVolumeList: &v1.PersistentVolumeList{Items: []v1.PersistentVolume{
+				{
+					ObjectMeta: metaV1.ObjectMeta{
+						Name: "pv-1", Labels: map[string]string{"app": "test"},
+					},
+					Spec: v1.PersistentVolumeSpec{
+						StorageClassName: "test-storage",
+					},
+				},
+			}},
+			expected: &PersistentVolumeList{
+				ListMeta: api.ListMeta{TotalItems: 1},
+				Items: []PersistentVolume{{
+					TypeMeta:     api.TypeMeta{Kind: api.ResourceKindPersistentVolume},
+					StorageClass: "test-storage",
+					ObjectMeta: api.ObjectMeta{Name: "pv-1",
+						Labels: map[string]string{"app": "test"}},
+				}},
+				Errors: []error{},
+			},
+		},
+	}
+
+	for _, c := range cases {
+
+		fakeClient := fake.NewSimpleClientset(c.persistentVolumeList, c.storageClass)
+
+		actual, _ := GetStorageClassPersistentVolumes(fakeClient, c.name, dataselect.NoDataSelect)
+
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("GetStorageClassPersistentVolumes(client, %#v) == \ngot: %#v, \nexpected %#v",
+				c.name, actual, c.expected)
 		}
 	}
 }

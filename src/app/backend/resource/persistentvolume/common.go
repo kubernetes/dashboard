@@ -15,9 +15,52 @@
 package persistentvolume
 
 import (
+	"log"
+	"strings"
+
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"k8s.io/api/core/v1"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	client "k8s.io/client-go/kubernetes"
 )
+
+// GetStorageClassPersistentVolumes gets persistentvolumes that are associated with this storageclass.
+func GetStorageClassPersistentVolumes(client client.Interface, storageClassName string,
+	dsQuery *dataselect.DataSelectQuery) (*PersistentVolumeList, error) {
+
+	storageClass, err := client.StorageV1beta1().StorageClasses().Get(storageClassName, metaV1.GetOptions{})
+
+	if err != nil {
+		return nil, err
+	}
+
+	channels := &common.ResourceChannels{
+		PersistentVolumeList: common.GetPersistentVolumeListChannel(
+			client, 1),
+	}
+
+	persistentVolumeList := <-channels.PersistentVolumeList.List
+
+	err = <-channels.PersistentVolumeList.Error
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
+	}
+
+	storagePersistentVolumes := make([]v1.PersistentVolume, 0)
+	for _, pv := range persistentVolumeList.Items {
+		if strings.Compare(pv.Spec.StorageClassName, storageClass.Name) == 0 {
+			storagePersistentVolumes = append(storagePersistentVolumes, pv)
+		}
+	}
+
+	log.Printf("Found %d persistentvolumes related to %s storageclass",
+		len(storagePersistentVolumes), storageClassName)
+
+	return toPersistentVolumeList(storagePersistentVolumes, nonCriticalErrors, dsQuery), nil
+}
 
 // getPersistentVolumeClaim returns Persistent Volume claim using "namespace/claim" format.
 func getPersistentVolumeClaim(pv *v1.PersistentVolume) string {

@@ -528,6 +528,11 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			Writes(storageclass.StorageClass{}))
 
 	apiV1Ws.Route(
+		apiV1Ws.GET("/storageclass/{storageclass}/persistentvolume").
+			To(apiHandler.handleGetStorageClassPersistentVolumes).
+			Writes(persistentvolume.PersistentVolumeList{}))
+
+	apiV1Ws.Route(
 		apiV1Ws.GET("/search").
 			To(apiHandler.handleSearch).
 			Writes(search.SearchResult{}))
@@ -2023,6 +2028,25 @@ func (apiHandler *APIHandler) handleGetStorageClass(request *restful.Request, re
 
 	name := request.PathParameter("storageclass")
 	result, err := storageclass.GetStorageClass(k8sClient, name)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetStorageClassPersistentVolumes(request *restful.Request,
+	response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	name := request.PathParameter("storageclass")
+	dataSelect := parseDataSelectPathParameter(request)
+	result, err := persistentvolume.GetStorageClassPersistentVolumes(k8sClient,
+		name, dataSelect)
 	if err != nil {
 		handleInternalError(response, err)
 		return

@@ -18,6 +18,8 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolume"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 )
@@ -42,8 +44,18 @@ type StorageClass struct {
 	Parameters map[string]string `json:"parameters"`
 }
 
+// StorageClassDetail provides the presentation layer view of Kubernetes StorageClass resource,
+// It is StorageClassDetail plus PersistentVolumes associated with StorageClass.
+type StorageClassDetail struct {
+	ObjectMeta           api.ObjectMeta                        `json:"objectMeta"`
+	TypeMeta             api.TypeMeta                          `json:"typeMeta"`
+	Provisioner          string                                `json:"provisioner"`
+	Parameters           map[string]string                     `json:"parameters"`
+	PersistentVolumeList persistentvolume.PersistentVolumeList `json:"persistentVolumeList"`
+}
+
 // GetStorageClass returns storage class object.
-func GetStorageClass(client kubernetes.Interface, name string) (*StorageClass, error) {
+func GetStorageClass(client kubernetes.Interface, name string) (*StorageClassDetail, error) {
 	log.Printf("Getting details of %s storage class", name)
 
 	storage, err := client.StorageV1beta1().StorageClasses().Get(name, metaV1.GetOptions{})
@@ -51,6 +63,9 @@ func GetStorageClass(client kubernetes.Interface, name string) (*StorageClass, e
 		return nil, err
 	}
 
-	storageClass := toStorageClass(storage)
-	return &storageClass, nil
+	persistentVolumeList, err := persistentvolume.GetStorageClassPersistentVolumes(client,
+		storage.Name, dataselect.DefaultDataSelect)
+
+	storageClass := toStorageClassDetail(storage, persistentVolumeList)
+	return &storageClass, err
 }

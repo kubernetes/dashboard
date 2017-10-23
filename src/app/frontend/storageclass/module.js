@@ -17,8 +17,10 @@ import componentsModule from '../common/components/module';
 import filtersModule from '../common/filters/module';
 import namespaceModule from '../common/namespace/module';
 import eventsModule from '../events/module';
+import persistentvolumeModule from '../persistentvolume/module';
 
 import {storageClassInfoComponent} from './detail/info_component';
+import {storageClassPersistentVolumesResource} from './detail/stateconfig';
 import {storageClassCardComponent} from './list/card_component';
 import {storageClassCardListComponent} from './list/cardlist_component';
 import {storageClassListResource} from './list/stateconfig';
@@ -39,9 +41,11 @@ export default angular
           eventsModule.name,
           filtersModule.name,
           namespaceModule.name,
+          persistentvolumeModule.name,
         ])
     .config(stateConfig)
     .component('kdStorageClassCard', storageClassCardComponent)
     .component('kdStorageClassCardList', storageClassCardListComponent)
     .component('kdStorageClassInfo', storageClassInfoComponent)
-    .factory('kdStorageClassListResource', storageClassListResource);
+    .factory('kdStorageClassListResource', storageClassListResource)
+    .factory('kdStorageClassPersistentVolumesResource', storageClassPersistentVolumesResource);
