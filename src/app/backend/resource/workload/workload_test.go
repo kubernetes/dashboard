@@ -29,20 +29,19 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/statefulset"
-	apps "k8s.io/api/apps/v1beta1"
+	apps "k8s.io/api/apps/v1beta2"
 	batch "k8s.io/api/batch/v1"
 	"k8s.io/api/core/v1"
-	extensions "k8s.io/api/extensions/v1beta1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 func TestGetWorkloadsFromChannels(t *testing.T) {
 	replicas := int32(0)
 	cases := []struct {
-		k8sRs          extensions.ReplicaSetList
+		k8sRs          apps.ReplicaSetList
 		k8sJobs        batch.JobList
-		k8sDaemonSet   extensions.DaemonSetList
-		k8sDeployment  extensions.DeploymentList
+		k8sDaemonSet   apps.DaemonSetList
+		k8sDeployment  apps.DeploymentList
 		k8sRc          v1.ReplicationControllerList
 		k8sPod         v1.PodList
 		k8sStatefulSet apps.StatefulSetList
@@ -55,10 +54,10 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 		statefulSet    []statefulset.StatefulSet
 	}{
 		{
-			extensions.ReplicaSetList{},
+			apps.ReplicaSetList{},
 			batch.JobList{},
-			extensions.DaemonSetList{},
-			extensions.DeploymentList{},
+			apps.DaemonSetList{},
+			apps.DeploymentList{},
 			v1.ReplicationControllerList{},
 			v1.PodList{},
 			apps.StatefulSetList{},
@@ -71,11 +70,11 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 			[]statefulset.StatefulSet{},
 		},
 		{
-			extensions.ReplicaSetList{
-				Items: []extensions.ReplicaSet{
+			apps.ReplicaSetList{
+				Items: []apps.ReplicaSet{
 					{
 						ObjectMeta: metaV1.ObjectMeta{Name: "rs-name"},
-						Spec: extensions.ReplicaSetSpec{
+						Spec: apps.ReplicaSetSpec{
 							Replicas: &replicas,
 							Selector: &metaV1.LabelSelector{},
 						},
@@ -91,18 +90,18 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 						},
 					}},
 			},
-			extensions.DaemonSetList{
-				Items: []extensions.DaemonSet{
+			apps.DaemonSetList{
+				Items: []apps.DaemonSet{
 					{
 						ObjectMeta: metaV1.ObjectMeta{Name: "ds-name"},
-						Spec:       extensions.DaemonSetSpec{Selector: &metaV1.LabelSelector{}},
+						Spec:       apps.DaemonSetSpec{Selector: &metaV1.LabelSelector{}},
 					}},
 			},
-			extensions.DeploymentList{
-				Items: []extensions.Deployment{
+			apps.DeploymentList{
+				Items: []apps.Deployment{
 					{
 						ObjectMeta: metaV1.ObjectMeta{Name: "deployment-name"},
-						Spec: extensions.DeploymentSpec{
+						Spec: apps.DeploymentSpec{
 							Selector: &metaV1.LabelSelector{},
 							Replicas: &replicas,
 						},
@@ -223,7 +222,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 
 		channels := &common.ResourceChannels{
 			ReplicaSetList: common.ReplicaSetListChannel{
-				List:  make(chan *extensions.ReplicaSetList, 2),
+				List:  make(chan *apps.ReplicaSetList, 2),
 				Error: make(chan error, 2),
 			},
 			JobList: common.JobListChannel{
@@ -235,11 +234,11 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 				Error: make(chan error, 1),
 			},
 			DaemonSetList: common.DaemonSetListChannel{
-				List:  make(chan *extensions.DaemonSetList, 1),
+				List:  make(chan *apps.DaemonSetList, 1),
 				Error: make(chan error, 1),
 			},
 			DeploymentList: common.DeploymentListChannel{
-				List:  make(chan *extensions.DeploymentList, 1),
+				List:  make(chan *apps.DeploymentList, 1),
 				Error: make(chan error, 1),
 			},
 			StatefulSetList: common.StatefulSetListChannel{

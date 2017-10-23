@@ -16,13 +16,13 @@ package common
 
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
-	apps "k8s.io/api/apps/v1beta1"
+	apps "k8s.io/api/apps/v1beta2"
 	autoscaling "k8s.io/api/autoscaling/v1"
 	batch "k8s.io/api/batch/v1"
 	"k8s.io/api/core/v1"
 	extensions "k8s.io/api/extensions/v1beta1"
-	rbac "k8s.io/api/rbac/v1beta1"
-	storage "k8s.io/api/storage/v1beta1"
+	rbac "k8s.io/api/rbac/v1"
+	storage "k8s.io/api/storage/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
 )
@@ -413,7 +413,7 @@ func GetReplicationControllerListChannel(client client.Interface,
 
 // DeploymentListChannel is a list and error channels to Deployments.
 type DeploymentListChannel struct {
-	List  chan *extensions.DeploymentList
+	List  chan *apps.DeploymentList
 	Error chan error
 }
 
@@ -423,14 +423,14 @@ func GetDeploymentListChannel(client client.Interface,
 	nsQuery *NamespaceQuery, numReads int) DeploymentListChannel {
 
 	channel := DeploymentListChannel{
-		List:  make(chan *extensions.DeploymentList, numReads),
+		List:  make(chan *apps.DeploymentList, numReads),
 		Error: make(chan error, numReads),
 	}
 
 	go func() {
-		list, err := client.ExtensionsV1beta1().Deployments(nsQuery.ToRequestParam()).
+		list, err := client.AppsV1beta2().Deployments(nsQuery.ToRequestParam()).
 			List(api.ListEverything)
-		var filteredItems []extensions.Deployment
+		var filteredItems []apps.Deployment
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
 				filteredItems = append(filteredItems, item)
@@ -448,7 +448,7 @@ func GetDeploymentListChannel(client client.Interface,
 
 // ReplicaSetListChannel is a list and error channels to Replica Sets.
 type ReplicaSetListChannel struct {
-	List  chan *extensions.ReplicaSetList
+	List  chan *apps.ReplicaSetList
 	Error chan error
 }
 
@@ -464,14 +464,14 @@ func GetReplicaSetListChannel(client client.Interface,
 func GetReplicaSetListChannelWithOptions(client client.Interface, nsQuery *NamespaceQuery,
 	options metaV1.ListOptions, numReads int) ReplicaSetListChannel {
 	channel := ReplicaSetListChannel{
-		List:  make(chan *extensions.ReplicaSetList, numReads),
+		List:  make(chan *apps.ReplicaSetList, numReads),
 		Error: make(chan error, numReads),
 	}
 
 	go func() {
-		list, err := client.ExtensionsV1beta1().ReplicaSets(nsQuery.ToRequestParam()).
+		list, err := client.AppsV1beta2().ReplicaSets(nsQuery.ToRequestParam()).
 			List(options)
-		var filteredItems []extensions.ReplicaSet
+		var filteredItems []apps.ReplicaSet
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
 				filteredItems = append(filteredItems, item)
@@ -489,7 +489,7 @@ func GetReplicaSetListChannelWithOptions(client client.Interface, nsQuery *Names
 
 // DaemonSetListChannel is a list and error channels to Nodes.
 type DaemonSetListChannel struct {
-	List  chan *extensions.DaemonSetList
+	List  chan *apps.DaemonSetList
 	Error chan error
 }
 
@@ -497,13 +497,13 @@ type DaemonSetListChannel struct {
 // numReads times.
 func GetDaemonSetListChannel(client client.Interface, nsQuery *NamespaceQuery, numReads int) DaemonSetListChannel {
 	channel := DaemonSetListChannel{
-		List:  make(chan *extensions.DaemonSetList, numReads),
+		List:  make(chan *apps.DaemonSetList, numReads),
 		Error: make(chan error, numReads),
 	}
 
 	go func() {
-		list, err := client.ExtensionsV1beta1().DaemonSets(nsQuery.ToRequestParam()).List(api.ListEverything)
-		var filteredItems []extensions.DaemonSet
+		list, err := client.AppsV1beta2().DaemonSets(nsQuery.ToRequestParam()).List(api.ListEverything)
+		var filteredItems []apps.DaemonSet
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
 				filteredItems = append(filteredItems, item)
@@ -567,7 +567,7 @@ func GetStatefulSetListChannel(client client.Interface,
 	}
 
 	go func() {
-		statefulSets, err := client.AppsV1beta1().StatefulSets(nsQuery.ToRequestParam()).List(api.ListEverything)
+		statefulSets, err := client.AppsV1beta2().StatefulSets(nsQuery.ToRequestParam()).List(api.ListEverything)
 		var filteredItems []apps.StatefulSet
 		for _, item := range statefulSets.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
@@ -667,7 +667,7 @@ func GetRoleListChannel(client client.Interface, numReads int) RoleListChannel {
 	}
 
 	go func() {
-		list, err := client.RbacV1beta1().Roles("").List(api.ListEverything)
+		list, err := client.RbacV1().Roles("").List(api.ListEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -692,7 +692,7 @@ func GetClusterRoleListChannel(client client.Interface, numReads int) ClusterRol
 	}
 
 	go func() {
-		list, err := client.RbacV1beta1().ClusterRoles().List(api.ListEverything)
+		list, err := client.RbacV1().ClusterRoles().List(api.ListEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -717,7 +717,7 @@ func GetRoleBindingListChannel(client client.Interface, numReads int) RoleBindin
 	}
 
 	go func() {
-		list, err := client.RbacV1beta1().RoleBindings("").List(api.ListEverything)
+		list, err := client.RbacV1().RoleBindings("").List(api.ListEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -743,7 +743,7 @@ func GetClusterRoleBindingListChannel(client client.Interface,
 	}
 
 	go func() {
-		list, err := client.RbacV1beta1().ClusterRoleBindings().List(api.ListEverything)
+		list, err := client.RbacV1().ClusterRoleBindings().List(api.ListEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -901,7 +901,7 @@ func GetStorageClassListChannel(client client.Interface, numReads int) StorageCl
 	}
 
 	go func() {
-		list, err := client.StorageV1beta1().StorageClasses().List(api.ListEverything)
+		list, err := client.StorageV1().StorageClasses().List(api.ListEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
