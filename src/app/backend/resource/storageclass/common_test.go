@@ -19,6 +19,7 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolume"
 	storage "k8s.io/api/storage/v1beta1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
@@ -48,6 +49,44 @@ func TestToStorageClass(t *testing.T) {
 
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("toStorageClass(%#v) == \ngot %#v, \nexpected %#v", c.storage, actual, c.expected)
+		}
+	}
+}
+
+func TestToStorageClassDetail(t *testing.T) {
+	cases := []struct {
+		storage              *storage.StorageClass
+		persistentVolumeList persistentvolume.PersistentVolumeList
+		expected             StorageClassDetail
+	}{
+		{
+			&storage.StorageClass{},
+			persistentvolume.PersistentVolumeList{},
+			StorageClassDetail{
+				TypeMeta: api.TypeMeta{Kind: api.ResourceKindStorageClass},
+			},
+		},
+		{
+			&storage.StorageClass{ObjectMeta: metaV1.ObjectMeta{Name: "storage-class"}},
+			persistentvolume.PersistentVolumeList{Items: []persistentvolume.PersistentVolume{{ObjectMeta: api.ObjectMeta{Name: "pv-1"}}}},
+			StorageClassDetail{
+				ObjectMeta: api.ObjectMeta{Name: "storage-class"},
+				TypeMeta:   api.TypeMeta{Kind: api.ResourceKindStorageClass},
+				PersistentVolumeList: persistentvolume.PersistentVolumeList{
+					Items: []persistentvolume.PersistentVolume{{
+						ObjectMeta: api.ObjectMeta{Name: "pv-1"},
+					}},
+				},
+			},
+		},
+	}
+
+	for _, c := range cases {
+		actual := toStorageClassDetail(c.storage, &c.persistentVolumeList)
+
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("toStorageClassDetail(%#v, %#v) == \ngot %#v, \nexpected %#v",
+				c.storage, c.persistentVolumeList, actual, c.expected)
 		}
 	}
 }
