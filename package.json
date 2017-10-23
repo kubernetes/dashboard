@@ -104,7 +104,7 @@
     "gulp-useref": "~3.1.2",
     "gulp-util": "~3.0.8",
     "gulp-watch": "~4.3.11",
-    "gulp-xslt": "~2.0.0",
+    "gulp-xslt": "~3.0.0",
     "html-minifier": "~3.5.3",
     "http-proxy-middleware": "~0.17.4",
     "isparta": "~4.0.0",
