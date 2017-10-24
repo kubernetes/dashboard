@@ -17,6 +17,7 @@ BASE_DIR=.tools/k8s
 HEAPSTER_VERSION="v1.4.0"
 HEAPSTER_PORT=8082
 MINIKUBE_VERSION=v0.22.3
+MINIKUBE_K8S_VERSION=v1.8.0
 MINIKUBE_BIN=${BASE_DIR}/minikube-${MINIKUBE_VERSION}
 
 echo "Making sure that ${BASE_DIR} directory exists"
@@ -36,7 +37,7 @@ export MINIKUBE_WANTUPDATENOTIFICATION=false
 export MINIKUBE_WANTREPORTERRORPROMPT=false
 export MINIKUBE_HOME=${HOME}
 export CHANGE_MINIKUBE_NONE_USER=true
-sudo -E ${MINIKUBE_BIN} start --vm-driver=none
+sudo -E ${MINIKUBE_BIN} start --vm-driver=none --kubernetes-version ${MINIKUBE_K8S_VERSION}
 
 echo "Running heapster in standalone mode"
 docker run --net=host -d gcr.io/google_containers/heapster-amd64:${HEAPSTER_VERSION} \
