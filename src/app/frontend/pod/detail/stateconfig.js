@@ -88,5 +88,6 @@ export function getPodDetail(podDetailResource) {
  * @ngInject
  */
 export function podPersistentVolumeClaimsResource($resource, $stateParams) {
-  return $resource(`api/v1/pod/${$stateParams.objectNamespace}/${$stateParams.objectName}/persistentvolumeclaim`);
+  return $resource(`api/v1/pod/${$stateParams.objectNamespace}/${
+    $stateParams.objectName}/persistentvolumeclaim`);
 }

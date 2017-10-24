@@ -24,10 +24,10 @@ import {containerInfoComponent} from './detail/containerinfo_component';
 import {creatorInfoComponent} from './detail/creatorinfo_component';
 import {podInfoComponent} from './detail/info_component';
 import {podEventsResource} from './detail/stateconfig';
+import {podPersistentVolumeClaimsResource} from './detail/stateconfig';
 import {podCardComponent} from './list/card_component';
 import {podCardListComponent} from './list/cardlist_component';
 import {podListResource} from './list/stateconfig';
-import {podPersistentVolumeClaimsResource} from './detail/stateconfig';
 import stateConfig from './stateconfig';
 
 /**
