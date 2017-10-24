@@ -24,6 +24,7 @@ export class OverviewController {
    * @param {!angular.Resource} kdDeploymentListResource
    * @param {!angular.Resource} kdStatefulSetListResource
    * @param {!angular.Resource} kdJobListResource
+   * @param {!angular.Resource} kdCronJobListResource
    * @param {!angular.Resource} kdRCListResource
    * @param {!angular.Resource} kdServiceListResource
    * @param {!angular.Resource} kdIngressListResource
@@ -34,9 +35,9 @@ export class OverviewController {
    */
   constructor(
       overview, kdPodListResource, kdReplicaSetListResource, kdDaemonSetListResource,
-      kdDeploymentListResource, kdStatefulSetListResource, kdJobListResource, kdRCListResource,
-      kdServiceListResource, kdIngressListResource, kdConfigMapListResource, kdSecretListResource,
-      kdPersistentVolumeClaimListResource) {
+      kdDeploymentListResource, kdStatefulSetListResource, kdJobListResource, kdCronJobListResource,
+      kdRCListResource, kdServiceListResource, kdIngressListResource, kdConfigMapListResource,
+      kdSecretListResource, kdPersistentVolumeClaimListResource) {
     /** @export {!backendApi.Overview} */
     this.overview = overview;
 
@@ -57,6 +58,9 @@ export class OverviewController {
 
     /** @export {!angular.Resource} */
     this.jobListResource = kdJobListResource;
+
+    /** @export {!angular.Resource} */
+    this.cronJobListResource = kdCronJobListResource;
 
     /** @export {!angular.Resource} */
     this.rcListResource = kdRCListResource;
@@ -103,7 +107,7 @@ export class OverviewController {
     /** @type {number} */
     let resourcesLength = this.overview.deploymentList.listMeta.totalItems +
         this.overview.replicaSetList.listMeta.totalItems +
-        this.overview.jobList.listMeta.totalItems +
+        this.overview.cronJobList.listMeta.totalItems + this.overview.jobList.listMeta.totalItems +
         this.overview.replicationControllerList.listMeta.totalItems +
         this.overview.podList.listMeta.totalItems +
         this.overview.daemonSetList.listMeta.totalItems +

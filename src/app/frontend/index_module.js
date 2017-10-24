@@ -24,6 +24,7 @@ import csrfTokenModule from './common/csrftoken/module';
 import scalingModule from './common/scaling/module';
 import configModule from './config/module';
 import configMapModule from './configmap/module';
+import cronJobModule from './cronjob/module';
 import daemonSetModule from './daemonset/module';
 import deployModule from './deploy/module';
 import deploymentModule from './deployment/module';
@@ -76,6 +77,7 @@ export default angular
           deployModule.name,
           errorModule.name,
           jobModule.name,
+          cronJobModule.name,
           loginModule.name,
           logsModule.name,
           shellModule.name,

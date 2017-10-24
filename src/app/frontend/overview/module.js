@@ -16,6 +16,7 @@ import chromeModule from '../chrome/module';
 import componentsModule from '../common/components/module';
 import filtersModule from '../common/filters/module';
 import configMapModule from '../configmap/module';
+import cronJobModule from '../cronjob/module';
 import daemonSetModule from '../daemonset/module';
 import deploymentModule from '../deployment/module';
 import ingressModule from '../ingress/module';
@@ -44,6 +45,7 @@ export default angular
           componentsModule.name,
           chromeModule.name,
           jobModule.name,
+          cronJobModule.name,
           replicationControllerModule.name,
           replicaSetModule.name,
           deploymentModule.name,

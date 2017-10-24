@@ -17,16 +17,8 @@ limitations under the License.
 <kd-info-card>
   <kd-info-card-header>[[Details|Header in a detail view]]</kd-info-card-header>
   <kd-info-card-section>
-    <kd-info-card-entry title="[[Name|Label 'Name' for the deployment name on the deployment details page.]]">
-      <kd-middle-ellipsis display-string="{{::$ctrl.deployment.objectMeta.name}}">
-      </kd-middle-ellipsis>
-    </kd-info-card-entry>
-    <kd-info-card-entry title="[[Namespace|Label 'Namespace' for the deployment namespace on the deployment details page.]]">
-      {{::$ctrl.deployment.objectMeta.namespace}}
-    </kd-info-card-entry>
-    <kd-info-card-entry title="[[Labels|Label 'Labels' for the deployment's labels list on the deployment details page.]]">
-      <kd-labels labels="::$ctrl.deployment.objectMeta.labels"></kd-labels>
-    </kd-info-card-entry>
+    <kd-object-meta-info-card object-meta="::$ctrl.deployment.objectMeta">
+    </kd-object-meta-info-card>
     <kd-info-card-entry title="[[Selector|Label 'Selector' for the deployment's labels list on the deployment details page.]]">
       <kd-labels labels="::$ctrl.deployment.selector"></kd-labels>
     </kd-info-card-entry>

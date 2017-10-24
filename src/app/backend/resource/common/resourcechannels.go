@@ -19,6 +19,7 @@ import (
 	apps "k8s.io/api/apps/v1beta1"
 	autoscaling "k8s.io/api/autoscaling/v1"
 	batch "k8s.io/api/batch/v1"
+	batch2 "k8s.io/api/batch/v1beta1"
 	"k8s.io/api/core/v1"
 	extensions "k8s.io/api/extensions/v1beta1"
 	rbac "k8s.io/api/rbac/v1beta1"
@@ -53,6 +54,9 @@ type ResourceChannels struct {
 
 	// List and error channels to Jobs.
 	JobList JobListChannel
+
+	// List and error channels to Cron Jobs.
+	CronJobList CronJobListChannel
 
 	// List and error channels to Services.
 	ServiceList ServiceListChannel
@@ -536,6 +540,37 @@ func GetJobListChannel(client client.Interface,
 	go func() {
 		list, err := client.BatchV1().Jobs(nsQuery.ToRequestParam()).List(api.ListEverything)
 		var filteredItems []batch.Job
+		for _, item := range list.Items {
+			if nsQuery.Matches(item.ObjectMeta.Namespace) {
+				filteredItems = append(filteredItems, item)
+			}
+		}
+		list.Items = filteredItems
+		for i := 0; i < numReads; i++ {
+			channel.List <- list
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
+// CronJobListChannel is a list and error channels to Cron Jobs.
+type CronJobListChannel struct {
+	List  chan *batch2.CronJobList
+	Error chan error
+}
+
+// GetCronJobListChannel returns a pair of channels to a Cron Job list and errors that both must be read numReads times.
+func GetCronJobListChannel(client client.Interface, nsQuery *NamespaceQuery, numReads int) CronJobListChannel {
+	channel := CronJobListChannel{
+		List:  make(chan *batch2.CronJobList, numReads),
+		Error: make(chan error, numReads),
+	}
+
+	go func() {
+		list, err := client.BatchV1beta1().CronJobs(nsQuery.ToRequestParam()).List(api.ListEverything)
+		var filteredItems []batch2.CronJob
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
 				filteredItems = append(filteredItems, item)

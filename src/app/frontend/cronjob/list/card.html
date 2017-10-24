@@ -1,0 +1,86 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-resource-card object-meta="$ctrl.cronJob.objectMeta"
+                  type-meta="$ctrl.cronJob.typeMeta">
+  <kd-resource-card-status layout="row"
+                           ng-switch="$ctrl.cronJob.suspend">
+    <md-icon class="material-icons kd-error"
+             ng-switch-when="true">
+      error
+      <md-tooltip md-delay="500"
+                  md-autohide>
+        [[Cron Job is suspended|]]
+      </md-tooltip>
+    </md-icon>
+    <md-icon class="material-icons kd-success"
+             ng-switch-default>
+      check_circle
+    </md-icon>
+  </kd-resource-card-status>
+  <kd-resource-card-columns>
+    <kd-resource-card-column>
+      <div>
+        <a ng-href="{{::$ctrl.getCronJobDetailHref()}}"
+           class="kd-middle-ellipsised-link">
+          <kd-middle-ellipsis display-string="{{$ctrl.cronJob.objectMeta.name}}">
+          </kd-middle-ellipsis>
+        </a>
+      </div>
+    </kd-resource-card-column>
+    <kd-resource-card-column ng-if="::$ctrl.showResourceKind">
+      <div>[[Cron Job|Column 'Cron Job' that shows if the resource kind should be shown in a Cron Job List]]</div>
+    </kd-resource-card-column>
+    <kd-resource-card-column ng-if="$ctrl.areMultipleNamespacesSelected()">
+      <div>
+        <kd-middle-ellipsis display-string="{{::$ctrl.cronJob.objectMeta.namespace}}">
+        </kd-middle-ellipsis>
+      </div>
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+      <kd-labels labels="::$ctrl.cronJob.objectMeta.labels"></kd-labels>
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+      <span>{{::$ctrl.cronJob.schedule}}</span>
+      <span ng-if="::!$ctrl.cronJob.schedule">-</span>
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+      {{::!!$ctrl.cronJob.suspend}}
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+      {{::$ctrl.cronJob.active}}
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+      <span ng-if="::$ctrl.cronJob.lastSchedule">{{::$ctrl.cronJob.lastSchedule | relativeTime}}</span>
+      <span ng-if="::!$ctrl.cronJob.lastSchedule">-</span>
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+      {{::$ctrl.cronJob.objectMeta.creationTimestamp | relativeTime}}
+      <md-tooltip md-delay="500"
+                  md-autohide>
+        {{::$ctrl.getCreatedAtTooltip($ctrl.cronJob.objectMeta.creationTimestamp)}}
+      </md-tooltip>
+    </kd-resource-card-column>
+    <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
+      <kd-resource-card-menu>
+        <kd-resource-card-delete-menu-item resource-kind-name="[[Cron Job|]]">
+        </kd-resource-card-delete-menu-item>
+        <kd-resource-card-edit-menu-item resource-kind-name="[[Cron Job|]]">
+        </kd-resource-card-edit-menu-item>
+      </kd-resource-card-menu>
+    </kd-resource-card-column>
+  </kd-resource-card-columns>
+</kd-resource-card>

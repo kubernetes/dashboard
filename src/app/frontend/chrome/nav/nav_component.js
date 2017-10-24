@@ -16,6 +16,7 @@ import {stateName as aboutState} from '../../about/state';
 import {stateName as clusterState} from '../../cluster/state';
 import {stateName as configState} from '../../config/state';
 import {stateName as configMapState} from '../../configmap/list/state';
+import {stateName as cronJobState} from '../../cronjob/list/state';
 import {stateName as daemonSetState} from '../../daemonset/list/state';
 import {stateName as deploymentState} from '../../deployment/list/state';
 import {stateName as discoveryState} from '../../discovery/state';
@@ -61,6 +62,7 @@ export class NavController {
       'persistentVolume': persistentVolumeState,
       'statefulSet': statefulSetState,
       'job': jobState,
+      'cronJob': cronJobState,
       'service': serviceState,
       'persistentVolumeClaim': persistentVolumeClaimState,
       'secret': secretState,

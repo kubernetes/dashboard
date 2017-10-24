@@ -14,9 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-info-card-entry title="[[Name|Label 'Name' for a resource.]]">
-  <kd-middle-ellipsis display-string="{{::$ctrl.objectMeta.name}}">
-  </kd-middle-ellipsis>
+<kd-info-card-entry title="[[Name|]]">
+  <kd-middle-ellipsis display-string="{{::$ctrl.objectMeta.name}}"></kd-middle-ellipsis>
 </kd-info-card-entry>
 
 <kd-info-card-entry ng-if="::$ctrl.objectMeta.namespace"
@@ -34,6 +33,6 @@ limitations under the License.
   <kd-annotations labels="::$ctrl.objectMeta.annotations"></kd-annotations>
 </kd-info-card-entry>
 
-<kd-info-card-entry title="[[Creation time|Label 'Creation time' for a resource.]]">
+<kd-info-card-entry title="[[Creation Time|Label 'Creation Time' for a resource.]]">
   {{::$ctrl.objectMeta.creationTimestamp | date}}
 </kd-info-card-entry>

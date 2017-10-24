@@ -17,7 +17,6 @@ limitations under the License.
 <md-sidenav md-is-locked-open="$ctrl.isVisible()"
             class="kd-nav"
             layout="column">
-  <!-- TODO(bryk): Add overview. -->
   <div class="kd-nav-group">
     <kd-nav-item class="kd-nav-group-item"
                  state="{{::$ctrl.states.cluster}}">[[Cluster|Cluster group menu entry.]]</kd-nav-item>
@@ -41,6 +40,8 @@ limitations under the License.
   <div class="kd-nav-group">
     <kd-nav-item class="kd-nav-group-item"
                  state="{{::$ctrl.states.workload}}">[[Workloads|Workloads group menu entry.]]</kd-nav-item>
+    <kd-nav-item class="kd-nav-item"
+                 state="{{::$ctrl.states.cronJob}}">[[Cron Jobs|Cron Jobs menu entry.]]</kd-nav-item>
     <kd-nav-item class="kd-nav-item"
                  state="{{::$ctrl.states.daemonSet}}">[[Daemon Sets|Daemon Sets menu entry.]]</kd-nav-item>
     <kd-nav-item class="kd-nav-item"

@@ -1,0 +1,90 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-resource-card-list selectable="false"
+                       with-statuses="true"
+                       select-id="{{::$ctrl.getSelectId()}}"
+                       list="$ctrl.cronJobList"
+                       list-resource="::$ctrl.cronJobListResource">
+  <kd-resource-card-list-header>
+    <kd-resource-card-list-title ng-transclude="header">
+      [[Cron Jobs|Cron Jobs list header.]]
+    </kd-resource-card-list-title>
+    <kd-resource-card-list-filter></kd-resource-card-list-filter>
+  </kd-resource-card-list-header>
+
+  <kd-zero-state ng-if="!$ctrl.cronJobList.listMeta.totalItems">
+    <kd-zero-state-text ng-transclude="zerostate">
+      [[There are no Cron Jobs to display.|Zero state message.]]
+    </kd-zero-state-text>
+  </kd-zero-state>
+  <kd-resource-card-header-columns ng-show="$ctrl.cronJobList.listMeta.totalItems">
+    <kd-resource-card-header-column size="small"
+                                    grow="2"
+                                    sortable="true"
+                                    sort-id="$root.SortableProperties.NAME">
+      [[Name|Cron Jobs list header.]]
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small"
+                                    grow="1"
+                                    ng-if=::$ctrl.showResourceKind>
+      [[Kind|Cron Jobs list header.]]
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small"
+                                    grow="2"
+                                    ng-if="$ctrl.areMultipleNamespacesSelected()">
+      [[Namespace|Cron Jobs list header.]]
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small"
+                                    grow="2">
+      [[Labels|Cron Jobs list header.]]
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small"
+                                    grow="2">
+      [[Schedule|Cron Jobs list header.]]
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small"
+                                    grow="2">
+      [[Suspend|Cron Jobs list header.]]
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small"
+                                    grow="2">
+      [[Active|Cron Jobs list header.]]
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small"
+                                    grow="2">
+      [[Last Schedule|Cron Jobs list header.]]
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small"
+                                    grow="1"
+                                    sortable="true"
+                                    sort-id="$root.SortableProperties.AGE">
+      [[Age|Label 'Age' which appears as a column label in the table of cron jobs.]]
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small"
+                                    grow="nogrow">
+    </kd-resource-card-header-column>
+  </kd-resource-card-header-columns>
+  <kd-cron-job-card pagination-id="{{::$ctrl.getSelectId()}}"
+                    dir-paginate="cronJob in $ctrl.cronJobList.items | itemsPerPage: default"
+                    cron-job="cronJob"
+                    show-resource-kind="::$ctrl.showResourceKind"
+                    total-items="::$ctrl.cronJobList.listMeta.totalItems">
+  </kd-cron-job-card>
+  <kd-resource-card-list-footer>
+    <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
+  </kd-resource-card-list-footer>
+</kd-resource-card-list>

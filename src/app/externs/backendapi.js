@@ -140,6 +140,7 @@ backendApi.ReplicationControllerList;
  *   deploymentList: !backendApi.DeploymentList,
  *   replicaSetList: !backendApi.ReplicaSetList,
  *   jobList: !backendApi.JobList,
+ *   cronJobList: !backendApi.CronJobList,
  *   replicationControllerList: !backendApi.ReplicationControllerList,
  *   podList: !backendApi.PodList,
  *   daemonSetList: !backendApi.DaemonSetList,
@@ -159,6 +160,7 @@ backendApi.Overview;
  *   deploymentList: !backendApi.DeploymentList,
  *   replicaSetList: !backendApi.ReplicaSetList,
  *   jobList: !backendApi.JobList,
+ *   cronJobList: !backendApi.CronJobList,
  *   replicationControllerList: !backendApi.ReplicationControllerList,
  *   podList: !backendApi.PodList,
  *   daemonSetList: !backendApi.DaemonSetList,
@@ -342,6 +344,43 @@ backendApi.JobDetail;
  * }}
  */
 backendApi.JobList;
+
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
+ *   schedule: string,
+ *   suspend: boolean,
+ *   active: number,
+ *   lastSchedule: string
+ * }}
+ */
+backendApi.CronJob;
+
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
+ *   schedule: string,
+ *   suspend: boolean,
+ *   active: number,
+ *   lastSchedule: string,
+ *   concurrencyPolicy: string,
+ *   startingDeadlineSeconds: number,
+ *   activeJobs: !backendApi.JobList,
+ *   events: !backendApi.EventList
+ * }}
+ */
+backendApi.CronJobDetail;
+
+/**
+ * @typedef {{
+ *   items: !Array<!backendApi.CronJob>,
+ *   listMeta: !backendApi.ListMeta,
+ *   errors: !Array<!backendApi.Error>
+ * }}
+ */
+backendApi.CronJobList;
 
 /**
  * @typedef {{
