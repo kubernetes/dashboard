@@ -2,15 +2,15 @@
 
 [[constraint]]
   name = "k8s.io/api"
-  branch = "master"
+  version = "kubernetes-1.8.0"
 
 [[constraint]]
   name = "k8s.io/apimachinery"
-  branch = "master"
+  version = "kubernetes-1.8.0"
 
 [[constraint]]
   name = "k8s.io/client-go"
-  branch = "master"
+  version = "v5.0.0"
 
 [[constraint]]
   name = "k8s.io/heapster"
