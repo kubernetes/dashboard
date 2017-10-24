@@ -24,6 +24,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/controller"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolumeclaim"
 	"k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
@@ -47,12 +48,13 @@ func TestGetPodDetail(t *testing.T) {
 					Namespace: "test-namespace",
 					Labels:    map[string]string{"app": "test"},
 				},
-				Controller:     controller.ResourceOwner{},
-				Containers:     []Container{},
-				InitContainers: []Container{},
-				EventList:      common.EventList{Events: []common.Event{}},
-				Metrics:        []metricapi.Metric{},
-				Errors:         []error{},
+				Controller:                controller.ResourceOwner{},
+				Containers:                []Container{},
+				InitContainers:            []Container{},
+				EventList:                 common.EventList{Events: []common.Event{}},
+				Metrics:                   []metricapi.Metric{},
+				PersistentvolumeclaimList: persistentvolumeclaim.PersistentVolumeClaimList{},
+				Errors: []error{},
 			},
 		},
 	}
