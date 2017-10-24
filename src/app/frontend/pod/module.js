@@ -18,11 +18,13 @@ import filtersModule from '../common/filters/module';
 import namespaceModule from '../common/namespace/module';
 import configMapModule from '../configmap/module';
 import eventsModule from '../events/module';
+import persistentvolumeclaimModule from '../persistentvolumeclaim/module';
 
 import {containerInfoComponent} from './detail/containerinfo_component';
 import {creatorInfoComponent} from './detail/creatorinfo_component';
 import {podInfoComponent} from './detail/info_component';
 import {podEventsResource} from './detail/stateconfig';
+import {podPersistentVolumeClaimsResource} from './detail/stateconfig';
 import {podCardComponent} from './list/card_component';
 import {podCardListComponent} from './list/cardlist_component';
 import {podListResource} from './list/stateconfig';
@@ -44,6 +46,7 @@ export default angular
           eventsModule.name,
           filtersModule.name,
           namespaceModule.name,
+          persistentvolumeclaimModule.name,
         ])
     .config(stateConfig)
     .component('kdContainerInfo', containerInfoComponent)
@@ -52,4 +55,5 @@ export default angular
     .component('kdPodCardList', podCardListComponent)
     .component('kdPodInfo', podInfoComponent)
     .factory('kdPodEventsResource', podEventsResource)
-    .factory('kdPodListResource', podListResource);
+    .factory('kdPodListResource', podListResource)
+    .factory('kdPodPersistentVolumeClaimsResource', podPersistentVolumeClaimsResource);

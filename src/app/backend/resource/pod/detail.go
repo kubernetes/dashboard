@@ -27,6 +27,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/controller"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolumeclaim"
 	"k8s.io/api/core/v1"
 	res "k8s.io/apimachinery/pkg/api/resource"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -36,19 +37,20 @@ import (
 
 // PodDetail is a presentation layer view of Kubernetes Pod resource.
 type PodDetail struct {
-	ObjectMeta     api.ObjectMeta           `json:"objectMeta"`
-	TypeMeta       api.TypeMeta             `json:"typeMeta"`
-	PodPhase       v1.PodPhase              `json:"podPhase"`
-	PodIP          string                   `json:"podIP"`
-	NodeName       string                   `json:"nodeName"`
-	RestartCount   int32                    `json:"restartCount"`
-	QOSClass       string                   `json:"qosClass"`
-	Controller     controller.ResourceOwner `json:"controller"`
-	Containers     []Container              `json:"containers"`
-	InitContainers []Container              `json:"initContainers"`
-	Metrics        []metricapi.Metric       `json:"metrics"`
-	Conditions     []common.Condition       `json:"conditions"`
-	EventList      common.EventList         `json:"eventList"`
+	ObjectMeta                api.ObjectMeta                                  `json:"objectMeta"`
+	TypeMeta                  api.TypeMeta                                    `json:"typeMeta"`
+	PodPhase                  v1.PodPhase                                     `json:"podPhase"`
+	PodIP                     string                                          `json:"podIP"`
+	NodeName                  string                                          `json:"nodeName"`
+	RestartCount              int32                                           `json:"restartCount"`
+	QOSClass                  string                                          `json:"qosClass"`
+	Controller                controller.ResourceOwner                        `json:"controller"`
+	Containers                []Container                                     `json:"containers"`
+	InitContainers            []Container                                     `json:"initContainers"`
+	Metrics                   []metricapi.Metric                              `json:"metrics"`
+	Conditions                []common.Condition                              `json:"conditions"`
+	EventList                 common.EventList                                `json:"eventList"`
+	PersistentvolumeclaimList persistentvolumeclaim.PersistentVolumeClaimList `json:"persistentVolumeClaimList"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
@@ -131,7 +133,15 @@ func GetPodDetail(client kubernetes.Interface, metricClient metricapi.MetricClie
 		return nil, criticalError
 	}
 
-	podDetail := toPodDetail(pod, metrics, configMapList, secretList, controller, eventList, nonCriticalErrors)
+	persistentVolumeClaimList, err := persistentvolumeclaim.GetPodPersistentVolumeClaims(client,
+		namespace, name, dataselect.DefaultDataSelect)
+	nonCriticalErrors, criticalError = errorHandler.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
+	}
+
+	podDetail := toPodDetail(pod, metrics, configMapList, secretList, controller,
+		eventList, persistentVolumeClaimList, nonCriticalErrors)
 	return &podDetail, nil
 }
 
@@ -196,22 +206,24 @@ func extractContainerInfo(containerList []v1.Container, pod *v1.Pod, configMaps 
 }
 
 func toPodDetail(pod *v1.Pod, metrics []metricapi.Metric, configMaps *v1.ConfigMapList, secrets *v1.SecretList,
-	controller controller.ResourceOwner, events *common.EventList, nonCriticalErrors []error) PodDetail {
+	controller controller.ResourceOwner, events *common.EventList,
+	persistentVolumeClaimList *persistentvolumeclaim.PersistentVolumeClaimList, nonCriticalErrors []error) PodDetail {
 	return PodDetail{
-		ObjectMeta:     api.NewObjectMeta(pod.ObjectMeta),
-		TypeMeta:       api.NewTypeMeta(api.ResourceKindPod),
-		PodPhase:       pod.Status.Phase,
-		PodIP:          pod.Status.PodIP,
-		RestartCount:   getRestartCount(*pod),
-		QOSClass:       string(pod.Status.QOSClass),
-		NodeName:       pod.Spec.NodeName,
-		Controller:     controller,
-		Containers:     extractContainerInfo(pod.Spec.Containers, pod, configMaps, secrets),
-		InitContainers: extractContainerInfo(pod.Spec.InitContainers, pod, configMaps, secrets),
-		Metrics:        metrics,
-		Conditions:     getPodConditions(*pod),
-		EventList:      *events,
-		Errors:         nonCriticalErrors,
+		ObjectMeta:                api.NewObjectMeta(pod.ObjectMeta),
+		TypeMeta:                  api.NewTypeMeta(api.ResourceKindPod),
+		PodPhase:                  pod.Status.Phase,
+		PodIP:                     pod.Status.PodIP,
+		RestartCount:              getRestartCount(*pod),
+		QOSClass:                  string(pod.Status.QOSClass),
+		NodeName:                  pod.Spec.NodeName,
+		Controller:                controller,
+		Containers:                extractContainerInfo(pod.Spec.Containers, pod, configMaps, secrets),
+		InitContainers:            extractContainerInfo(pod.Spec.InitContainers, pod, configMaps, secrets),
+		Metrics:                   metrics,
+		Conditions:                getPodConditions(*pod),
+		EventList:                 *events,
+		PersistentvolumeclaimList: *persistentVolumeClaimList,
+		Errors: nonCriticalErrors,
 	}
 }
 

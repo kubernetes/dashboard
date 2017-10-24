@@ -253,6 +253,10 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 		apiV1Ws.GET("/pod/{namespace}/{pod}/shell/{container}").
 			To(apiHandler.handleExecShell).
 			Writes(TerminalResponse{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/pod/{namespace}/{pod}/persistentvolumeclaim").
+			To(apiHandler.handleGetPodPersistentVolumeClaims).
+			Writes(persistentvolumeclaim.PersistentVolumeClaimList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/deployment").
@@ -2143,6 +2147,26 @@ func (apiHandler *APIHandler) handleGetStorageClassPersistentVolumes(request *re
 	dataSelect := parseDataSelectPathParameter(request)
 	result, err := persistentvolume.GetStorageClassPersistentVolumes(k8sClient,
 		name, dataSelect)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetPodPersistentVolumeClaims(request *restful.Request,
+	response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	name := request.PathParameter("pod")
+	namespace := request.PathParameter("namespace")
+	dataSelect := parseDataSelectPathParameter(request)
+	result, err := persistentvolumeclaim.GetPodPersistentVolumeClaims(k8sClient,
+		namespace, name, dataSelect)
 	if err != nil {
 		handleInternalError(response, err)
 		return

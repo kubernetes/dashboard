@@ -19,13 +19,17 @@ export class PodDetailController {
   /**
    * @param {!backendApi.PodDetail} podDetail
    * @param {!angular.Resource} kdPodEventsResource
+   * @param {!angular.Resource} kdPodPersistentVolumeClaimsResource
    * @ngInject
    */
-  constructor(podDetail, kdPodEventsResource) {
+  constructor(podDetail, kdPodEventsResource, kdPodPersistentVolumeClaimsResource) {
     /** @export {!backendApi.PodDetail} */
     this.podDetail = podDetail;
 
     /** @export {!angular.Resource} */
     this.eventListResource = kdPodEventsResource;
+
+    /**@export {!angular.Resource} */
+    this.persistentVolumeClaimsResource = kdPodPersistentVolumeClaimsResource;
   }
 }
