@@ -89,5 +89,5 @@ export function getPodDetail(podDetailResource) {
  */
 export function podPersistentVolumeClaimsResource($resource, $stateParams) {
   return $resource(`api/v1/pod/${$stateParams.objectNamespace}/${
-    $stateParams.objectName}/persistentvolumeclaim`);
+  $stateParams.objectName}/persistentvolumeclaim`);
 }
