@@ -33,3 +33,10 @@ func TestSynchronizerManager_Secret(t *testing.T) {
 		t.Fatalf("Secret(%s, %s): Expected secret synchronizer not to be nil", "", "")
 	}
 }
+
+func TestSynchronizerManager_ConfigMap(t *testing.T) {
+	manager := NewSynchronizerManager(fake.NewSimpleClientset())
+	if manager.ConfigMap("", "") == nil {
+		t.Fatalf("ConfigMap(%s, %s): Expected config map synchronizer not to be nil", "", "")
+	}
+}

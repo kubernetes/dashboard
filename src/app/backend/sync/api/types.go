@@ -51,4 +51,6 @@ type Synchronizer interface {
 type SynchronizerManager interface {
 	// Secret created single secret synchronizer based on name and namespace information.
 	Secret(namespace, name string) Synchronizer
+	// ConfigMap created single config map synchronizer based on name and namespace information.
+	ConfigMap(namespace, name string) Synchronizer
 }

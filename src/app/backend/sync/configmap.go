@@ -32,11 +32,11 @@ import (
 )
 
 // Implements Synchronizer interface. See Synchronizer for more information.
-type secretSynchronizer struct {
+type configMapSynchronizer struct {
 	namespace string
 	name      string
 
-	secret         *v1.Secret
+	configMap      *v1.ConfigMap
 	client         kubernetes.Interface
 	actionHandlers map[watch.EventType][]syncApi.ActionHandlerFunction
 	errChan        chan error
@@ -45,12 +45,12 @@ type secretSynchronizer struct {
 }
 
 // Name implements Synchronizer interface. See Synchronizer for more information.
-func (self *secretSynchronizer) Name() string {
+func (self *configMapSynchronizer) Name() string {
 	return fmt.Sprintf("%s-%s", self.name, self.namespace)
 }
 
 // Start implements Synchronizer interface. See Synchronizer for more information.
-func (self *secretSynchronizer) Start() {
+func (self *configMapSynchronizer) Start() {
 	self.errChan = make(chan error)
 	watcher, err := self.watch(self.namespace, self.name)
 	if err != nil {
@@ -60,7 +60,7 @@ func (self *secretSynchronizer) Start() {
 	}
 
 	go func() {
-		log.Printf("Starting secret synchronizer for %s in namespace %s", self.name, self.namespace)
+		log.Printf("Starting config map synchronizer for %s in namespace %s", self.name, self.namespace)
 		defer watcher.Stop()
 		defer close(self.errChan)
 		for {
@@ -80,41 +80,14 @@ func (self *secretSynchronizer) Start() {
 }
 
 // Error implements Synchronizer interface. See Synchronizer for more information.
-func (self *secretSynchronizer) Error() chan error {
+func (self *configMapSynchronizer) Error() chan error {
 	return self.errChan
 }
 
 // Create implements Synchronizer interface. See Synchronizer for more information.
-func (self *secretSynchronizer) Create(obj runtime.Object) error {
-	secret := self.getSecret(obj)
-	_, err := self.client.CoreV1().Secrets(secret.Namespace).Create(secret)
-	return err
-}
-
-// Get implements Synchronizer interface. See Synchronizer for more information.
-func (self *secretSynchronizer) Get() runtime.Object {
-	self.mux.Lock()
-	defer self.mux.Unlock()
-
-	if self.secret == nil {
-		// In case secret was not yet initialized try to do it synchronously
-		secret, err := self.client.CoreV1().Secrets(self.namespace).Get(self.name, metaV1.GetOptions{})
-		if err != nil {
-			return nil
-		}
-
-		log.Printf("Initializing secret synchronizer synchronously using secret %s from namespace %s", self.name,
-			self.namespace)
-		self.secret = secret
-	}
-
-	return self.secret
-}
-
-// Update implements Synchronizer interface. See Synchronizer for more information.
-func (self *secretSynchronizer) Update(obj runtime.Object) error {
-	secret := self.getSecret(obj)
-	_, err := self.client.CoreV1().Secrets(secret.Namespace).Update(secret)
+func (self *configMapSynchronizer) Create(obj runtime.Object) error {
+	configMap := self.getConfigMap(obj)
+	_, err := self.client.CoreV1().ConfigMaps(configMap.Namespace).Create(configMap)
 	if err != nil {
 		return err
 	}
@@ -122,14 +95,42 @@ func (self *secretSynchronizer) Update(obj runtime.Object) error {
 	return nil
 }
 
+// Get implements Synchronizer interface. See Synchronizer for more information.
+func (self *configMapSynchronizer) Get() runtime.Object {
+	self.mux.Lock()
+	defer self.mux.Unlock()
+
+	if self.configMap == nil {
+		// In case configMap was not yet initialized try to do it synchronously
+		configMap, err := self.client.CoreV1().ConfigMaps(self.namespace).Get(self.name, metaV1.GetOptions{})
+		if err != nil {
+			return nil
+		}
+
+		log.Printf("Initializing config map synchronizer synchronously using configMap %s from namespace %s",
+			self.name, self.namespace)
+		self.configMap = configMap
+	}
+
+	return self.configMap
+}
+
+// Update implements Synchronizer interface. See Synchronizer for more information.
+func (self *configMapSynchronizer) Update(obj runtime.Object) error {
+	configMap := self.getConfigMap(obj)
+	_, err := self.client.CoreV1().ConfigMaps(configMap.Namespace).Update(configMap)
+	return err
+}
+
 // Delete implements Synchronizer interface. See Synchronizer for more information.
-func (self *secretSynchronizer) Delete() error {
-	return self.client.CoreV1().Secrets(self.namespace).Delete(self.name,
+func (self *configMapSynchronizer) Delete() error {
+	return self.client.CoreV1().ConfigMaps(self.namespace).Delete(self.name,
 		&metaV1.DeleteOptions{GracePeriodSeconds: new(int64)})
 }
 
 // RegisterActionHandler implements Synchronizer interface. See Synchronizer for more information.
-func (self *secretSynchronizer) RegisterActionHandler(handler syncApi.ActionHandlerFunction, events ...watch.EventType) {
+func (self *configMapSynchronizer) RegisterActionHandler(handler syncApi.ActionHandlerFunction,
+	events ...watch.EventType) {
 	for _, ev := range events {
 		if _, exists := self.actionHandlers[ev]; !exists {
 			self.actionHandlers[ev] = make([]syncApi.ActionHandlerFunction, 0)
@@ -140,63 +141,63 @@ func (self *secretSynchronizer) RegisterActionHandler(handler syncApi.ActionHand
 }
 
 // Refresh implements Synchronizer interface. See Synchronizer for more information.
-func (self *secretSynchronizer) Refresh() {
+func (self *configMapSynchronizer) Refresh() {
 	self.mux.Lock()
 	defer self.mux.Unlock()
 
-	secret, err := self.client.CoreV1().Secrets(self.namespace).Get(self.name, metaV1.GetOptions{})
+	configMap, err := self.client.CoreV1().ConfigMaps(self.namespace).Get(self.name, metaV1.GetOptions{})
 	if err != nil {
-		log.Printf("Secret synchronizer %s failed to refresh secret", self.Name())
+		log.Printf("Config map synchronizer %s failed to refresh config map", self.Name())
 		return
 	}
 
-	self.secret = secret
+	self.configMap = configMap
 }
 
-func (self *secretSynchronizer) getSecret(obj runtime.Object) *v1.Secret {
-	secret, ok := obj.(*v1.Secret)
+func (self *configMapSynchronizer) getConfigMap(obj runtime.Object) *v1.ConfigMap {
+	configMap, ok := obj.(*v1.ConfigMap)
 	if !ok {
-		panic("Provided object has to be a secret. Most likely this is a programming error")
+		panic("Provided object has to be a config map. Most likely this is a programming error")
 	}
 
-	return secret
+	return configMap
 }
 
-func (self *secretSynchronizer) watch(namespace, name string) (watch.Interface, error) {
+func (self *configMapSynchronizer) watch(namespace, name string) (watch.Interface, error) {
 	selector, err := fields.ParseSelector(fmt.Sprintf("metadata.name=%s", name))
 	if err != nil {
 		return nil, err
 	}
 
-	return self.client.CoreV1().Secrets(namespace).Watch(metaV1.ListOptions{
+	return self.client.CoreV1().ConfigMaps(namespace).Watch(metaV1.ListOptions{
 		FieldSelector: selector.String(),
 		Watch:         true,
 	})
 }
 
-func (self *secretSynchronizer) handleEvent(event watch.Event) error {
+func (self *configMapSynchronizer) handleEvent(event watch.Event) error {
 	for _, handler := range self.actionHandlers[event.Type] {
 		handler(event.Object)
 	}
 
 	switch event.Type {
 	case watch.Added:
-		secret, ok := event.Object.(*v1.Secret)
+		configMap, ok := event.Object.(*v1.ConfigMap)
 		if !ok {
-			return errors.New(fmt.Sprintf("Expected secret got %s", reflect.TypeOf(event.Object)))
+			return errors.New(fmt.Sprintf("Expected config map got %s", reflect.TypeOf(event.Object)))
 		}
 
-		self.update(*secret)
+		self.update(*configMap)
 	case watch.Modified:
-		secret, ok := event.Object.(*v1.Secret)
+		configMap, ok := event.Object.(*v1.ConfigMap)
 		if !ok {
-			return errors.New(fmt.Sprintf("Expected secret got %s", reflect.TypeOf(event.Object)))
+			return errors.New(fmt.Sprintf("Expected config map got %s", reflect.TypeOf(event.Object)))
 		}
 
-		self.update(*secret)
+		self.update(*configMap)
 	case watch.Deleted:
 		self.mux.Lock()
-		self.secret = nil
+		self.configMap = nil
 		self.mux.Unlock()
 	case watch.Error:
 		return &k8sErrors.UnexpectedObjectError{Object: event.Object}
@@ -205,14 +206,14 @@ func (self *secretSynchronizer) handleEvent(event watch.Event) error {
 	return nil
 }
 
-func (self *secretSynchronizer) update(secret v1.Secret) {
-	if reflect.DeepEqual(self.secret, &secret) {
+func (self *configMapSynchronizer) update(configMap v1.ConfigMap) {
+	if reflect.DeepEqual(self.configMap, &configMap) {
 		// Skip update if existing object is the same as new one
-		log.Print("Trying to update secret with same object. Skipping")
+		log.Print("Trying to update config map with same object. Skipping")
 		return
 	}
 
 	self.mux.Lock()
-	self.secret = &secret
+	self.configMap = &configMap
 	self.mux.Unlock()
 }

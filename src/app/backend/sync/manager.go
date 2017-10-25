@@ -35,6 +35,16 @@ func (self *synchronizerManager) Secret(namespace, name string) syncApi.Synchron
 	}
 }
 
+// ConfigMap implements synchronizer manager. See SynchronizerManager interface for more information.
+func (self *synchronizerManager) ConfigMap(namespace, name string) syncApi.Synchronizer {
+	return &configMapSynchronizer{
+		namespace:      namespace,
+		name:           name,
+		client:         self.client,
+		actionHandlers: make(map[watch.EventType][]syncApi.ActionHandlerFunction),
+	}
+}
+
 // NewSynchronizerManager creates new instace of SynchronizerManager.
 func NewSynchronizerManager(client kubernetes.Interface) syncApi.SynchronizerManager {
 	return &synchronizerManager{client: client}
