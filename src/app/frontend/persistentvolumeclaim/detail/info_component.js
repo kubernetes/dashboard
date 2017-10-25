@@ -42,7 +42,8 @@ class PersistentVolumeClaimInfoController {
    * @export
    */
   getPersistentVolumeDetailsHref() {
-    return this.state_.href(persistentVolumeStateName, new GlobalStateParams(this.persistentVolumeClaim.volume));
+    return this.state_.href(
+        persistentVolumeStateName, new GlobalStateParams(this.persistentVolumeClaim.volume));
   }
 
   /**
@@ -51,7 +52,8 @@ class PersistentVolumeClaimInfoController {
    * @export
    */
   getStorageClassDetailsHref() {
-    return this.state_.href(storageClassStateName, new GlobalStateParams(this.persistentVolumeClaim.storageClass));
+    return this.state_.href(
+        storageClassStateName, new GlobalStateParams(this.persistentVolumeClaim.storageClass));
   }
 }
 
