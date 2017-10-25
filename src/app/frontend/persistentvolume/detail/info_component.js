@@ -49,6 +49,7 @@ export default class PersistentVolumeInfoController {
         return this.state_.href(stateName, new StateParams(namespace, claimName));
       }
     }
+    return ''
   }
 }
 
