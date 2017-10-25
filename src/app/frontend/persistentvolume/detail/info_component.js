@@ -41,15 +41,13 @@ export default class PersistentVolumeInfoController {
    * @export
    */
   getPersistentVolumeClaimDetailsHref() {
-    if(this.persistentVolume.claim) {
-      let claim = this.persistentVolume.claim.split('/')
-      if(claim.length >= 2) {
-        let namespace = claim[0]
-        let claimName = claim[1]
-        return this.state_.href(stateName, new StateParams(namespace, claimName));
+    if (this.persistentVolume.claim) {
+      let claim = this.persistentVolume.claim.split('/');
+      if (claim.length >= 2) {
+        return this.state_.href(stateName, new StateParams(claim[0], claim[1]));
       }
     }
-    return ''
+    return '';
   }
 }
 
