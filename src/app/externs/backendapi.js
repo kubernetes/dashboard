@@ -1339,6 +1339,7 @@ backendApi.NodeList;
  *   status: string,
  *   volume: string,
  *   capacity: string,
+ *   storageClass: string,
  *   accessModes: !Array<string>
  * }}
  */

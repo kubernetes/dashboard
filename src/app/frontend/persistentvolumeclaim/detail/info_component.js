@@ -13,7 +13,8 @@
 // limitations under the License.
 
 import {GlobalStateParams} from '../../common/resource/globalresourcedetail';
-import {stateName} from '../../persistentvolume/detail/state';
+import {stateName as persistentVolumeStateName} from '../../persistentvolume/detail/state';
+import {stateName as storageClassStateName} from '../../storageclass/detail/state';
 
 /**
  * @final
@@ -41,7 +42,16 @@ class PersistentVolumeClaimInfoController {
    * @export
    */
   getPersistentVolumeDetailsHref() {
-    return this.state_.href(stateName, new GlobalStateParams(this.persistentVolumeClaim.volume));
+    return this.state_.href(persistentVolumeStateName, new GlobalStateParams(this.persistentVolumeClaim.volume));
+  }
+
+  /**
+   * Returns link to storageclass details page.
+   * @return {string}
+   * @export
+   */
+  getStorageClassDetailsHref() {
+    return this.state_.href(storageClassStateName, new GlobalStateParams(this.persistentVolumeClaim.storageClass));
   }
 }
 
