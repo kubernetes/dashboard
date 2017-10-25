@@ -25,8 +25,9 @@ limitations under the License.
       <div ng-hide="::$ctrl.persistentVolume.status">-</div>
     </kd-info-card-entry>
     <kd-info-card-entry title="[[Claim|Persistent volume info details section claim entry.]]">
-      <kd-middle-ellipsis display-string="{{::$ctrl.persistentVolume.claim}}">
-      </kd-middle-ellipsis>
+      <div ng-show="::$ctrl.persistentVolume.claim">
+        <a ng-href="{{$ctrl.getPersistentVolumeClaimDetailsHref()}}">{{::$ctrl.persistentVolume.claim}}</a>
+      </div>
       <div ng-hide="::$ctrl.persistentVolume.claim">-</div>
     </kd-info-card-entry>
     <kd-info-card-entry title="[[Reclaim policy|Persistent volume info details section reclaim policy entry.]]">
