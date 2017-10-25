@@ -12,19 +12,36 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {GlobalStateParams} from '../../common/resource/globalresourcedetail';
+import {stateName} from '../../persistentvolume/detail/state';
+
 /**
  * @final
  */
 class PersistentVolumeClaimInfoController {
   /**
    * Constructs persistent volume claim controller info object.
+   * @param {!ui.router.$state} $state
+   * @ngInject
    */
-  constructor() {
+  constructor($state) {
     /**
      * Persistent Volume Claim details. Initialized from the scope.
      * @export {!backendApi.PersistentVolumeClaimDetail}
      */
     this.persistentVolumeClaim;
+
+    /** @private {!ui.router.$state} */
+    this.state_ = $state;
+  }
+
+  /**
+   * Returns link to persistentvolume details page.
+   * @return {string}
+   * @export
+   */
+  getPersistentVolumeDetailsHref() {
+    return this.state_.href(stateName, new GlobalStateParams(this.persistentVolumeClaim.volume));
   }
 }
 
