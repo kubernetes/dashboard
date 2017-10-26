@@ -12,8 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {GlobalStateParams} from '../../common/resource/globalresourcedetail';
 import {StateParams} from '../../common/resource/resourcedetail';
-import {stateName} from '../../persistentvolumeclaim/detail/state';
+import {stateName as persistentVolumeClaimStateName} from '../../persistentvolumeclaim/detail/state';
+import {stateName as storageClassStateName} from '../../storageclass/detail/state';
 
 /**
  * @final
@@ -44,10 +46,21 @@ export default class PersistentVolumeInfoController {
     if (this.persistentVolume.claim) {
       let claim = this.persistentVolume.claim.split('/');
       if (claim.length >= 2) {
-        return this.state_.href(stateName, new StateParams(claim[0], claim[1]));
+        return this.state_.href(
+            persistentVolumeClaimStateName, new StateParams(claim[0], claim[1]));
       }
     }
     return '';
+  }
+
+  /**
+   * Returns link to storageclass details page.
+   * @return {string}
+   * @export
+   */
+  getStorageClassDetailsHref() {
+    return this.state_.href(
+        storageClassStateName, new GlobalStateParams(this.persistentVolume.storageClass));
   }
 }
 

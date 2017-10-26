@@ -42,8 +42,9 @@ limitations under the License.
       <div ng-hide="::$ctrl.persistentVolume.accessModes">-</div>
     </kd-info-card-entry>
     <kd-info-card-entry title="[[Storage class|Persistent volume info details section storage class entry.]]">
-      <kd-middle-ellipsis display-string="{{::$ctrl.persistentVolume.storageClass}}">
-      </kd-middle-ellipsis>
+      <div ng-show="::$ctrl.persistentVolume.storageClass">
+        <a ng-href="{{$ctrl.getStorageClassDetailsHref()}}">{{::$ctrl.persistentVolume.storageClass}}</a>
+      </div>
       <div ng-hide="::$ctrl.persistentVolume.storageClass">-</div>
     </kd-info-card-entry>
     <kd-info-card-entry title="[[Reason|Persistent volume info details section reason entry.]]">
