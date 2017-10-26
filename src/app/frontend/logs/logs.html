@@ -55,6 +55,10 @@ limitations under the License.
                             'kd-logs-color-icon': !ctrl.logsService.getInverted()}">
           format_color_text
         </md-icon>
+        <md-tooltip md-delay="500"
+                    md-autohide>
+          [[Invert colors|Tooltip for button that toggles between light & dark background in log viewer.]]
+        </md-tooltip>
       </md-button>
       <md-button class="kd-logs-toolbar-button"
                  ng-click="ctrl.onFontSizeChange()">
@@ -62,6 +66,10 @@ limitations under the License.
                             'kd-logs-size-icon': !ctrl.logsService.getCompact()}">
           text_fields
         </md-icon>
+        <md-tooltip md-delay="500"
+                    md-autohide>
+          [[Toggle font size|Tooltip for button that toggles between a larger and smaller font option in the log viewer.]]
+        </md-tooltip>
       </md-button>
       <md-button class="kd-logs-toolbar-button"
                  ng-click="ctrl.onShowTimestamp()">
@@ -88,10 +96,24 @@ limitations under the License.
       <md-button class="kd-logs-toolbar-button"
                  ng-click="ctrl.onPreviousChange()">
         <md-icon class="kd-logs-icon">{{ctrl.logsService.getPrevious() ? 'exposure_neg_1' : 'exposure_zero'}}</md-icon>
+        <md-tooltip ng-if="ctrl.logsService.getPrevious()"
+                    md-delay="500"
+                    md-autohide>
+          [[Show current logs|Tooltip for button that switches to showing the current logs.]]
+        </md-tooltip>
+        <md-tooltip ng-if="!ctrl.logsService.getPrevious()"
+                    md-delay="500"
+                    md-autohide>
+          [[Show previous logs|Tooltip for button that switches to showing the previous logs.]]
+        </md-tooltip>
       </md-button>
       <md-button class="kd-logs-toolbar-button"
                  ng-href="{{ctrl.getDownloadLink()}}">
         <md-icon class="kd-logs-icon">file_download</md-icon>
+        <md-tooltip md-delay="500"
+                    md-autohide>
+          [[Download logs|Tooltip for button that downloads the logs as a file.]]
+        </md-tooltip>
       </md-button>
     </div>
   </kd-title>
