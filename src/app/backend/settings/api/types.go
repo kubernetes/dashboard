@@ -16,7 +16,6 @@ package api
 
 import (
 	"encoding/json"
-	"log"
 
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -51,14 +50,13 @@ func (s Settings) Marshal() string {
 	return string(bytes)
 }
 
-// TODO During unmarshal if any new field is empty fill it with defaults to allow adding new settings.
-func (s *Settings) Unmarshal(data string) {
-	err := json.Unmarshal([]byte(data), s)
-	if err != nil {
-		log.Printf("Cannot unmarshal settings data: %s", err.Error())
-	}
+// Unmarshal settings from JSON string into object.
+func Unmarshal(data string) (s Settings, err error) {
+	err = json.Unmarshal([]byte(data), s)
+	return
 }
 
+// defaultSettings contains default values for every setting.
 var defaultSettings = Settings{
 	ClusterName:  "",
 	ItemsPerPage: 15,

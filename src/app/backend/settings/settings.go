@@ -17,67 +17,82 @@ package settings
 import (
 	"log"
 
+	"reflect"
+
 	"github.com/kubernetes/dashboard/src/app/backend/settings/api"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 )
 
 // SettingsManager is a structure containing all settings manager members.
+// TODO(maciaszczykm): Use hashing instead of raw settings for better performance.
 type SettingsManager struct {
-	GlobalSettings api.Settings
-	UserSettings   map[string]api.Settings
-	Client         kubernetes.Interface
+	settings    map[string]api.Settings
+	rawSettings map[string]string
+	client      kubernetes.Interface
 }
 
 // NewSettingsManager creates new settings manager.
 func NewSettingsManager(client kubernetes.Interface) SettingsManager {
 	sm := SettingsManager{
-		GlobalSettings: api.GetDefaultSettings(),
-		UserSettings:   map[string]api.Settings{},
-		Client:         client,
+		settings: make(map[string]api.Settings),
+		client:   client,
 	}
 
 	sm.load()
 	return sm
 }
 
-// load config map data into settings manager.
-func (sm *SettingsManager) load() {
-	cm, err := sm.Client.CoreV1().ConfigMaps(api.SettingsConfigMapNamespace).
+// load config map data into settings manager and return true if new settings are different.
+func (sm *SettingsManager) load() (isDifferent bool) {
+	cm, err := sm.client.CoreV1().ConfigMaps(api.SettingsConfigMapNamespace).
 		Get(api.SettingsConfigMapName, metav1.GetOptions{})
 	if err != nil {
 		log.Printf("Cannot find settings config map: %s", err.Error())
-		sm.restoreDefaults()
+		sm.restoreConfigMap()
 		return
 	}
 
-	// Load global settings.
-	value, ok := cm.Data[api.GlobalSettingsKey]
-	if !ok {
-		log.Printf("Cannot find global settings key %s in config map %s",
-			api.GlobalSettingsKey, api.SettingsConfigMapName)
-	} else {
-		loadedGlobalSettings := api.Settings{}
-		loadedGlobalSettings.Unmarshal(value)
-		sm.GlobalSettings = loadedGlobalSettings
+	isDifferent = reflect.DeepEqual(sm.rawSettings, cm.Data)
+	sm.rawSettings = cm.Data
+
+	if isDifferent {
+		sm.settings = make(map[string]api.Settings)
+		for key, value := range sm.rawSettings {
+			s, err := api.Unmarshal(value)
+			if err != nil {
+				log.Printf("Cannot unmarshal %s settings key with %s value: %s", key, value, err.Error())
+			} else {
+				sm.settings[key] = s
+			}
+		}
 	}
 
-	// TODO(maciaszczykm): Load user settings.
+	return
 }
 
-func (sm *SettingsManager) restoreDefaults() {
-	_, err := sm.Client.CoreV1().ConfigMaps(api.SettingsConfigMapNamespace).Create(api.GetDefaultSettingsConfigMap())
+// restoreConfigMap restores settings config map using default global settings.
+func (sm *SettingsManager) restoreConfigMap() {
+	_, err := sm.client.CoreV1().ConfigMaps(api.SettingsConfigMapNamespace).Create(api.GetDefaultSettingsConfigMap())
 	if err != nil {
 		log.Printf("Cannot restore settings config map: %s", err.Error())
 	} else {
-		sm.GlobalSettings = api.GetDefaultSettings()
+		sm.settings = make(map[string]api.Settings)
+		sm.settings[api.GlobalSettingsKey] = api.GetDefaultSettings()
 	}
 }
 
-// Get settings respecting following priority: user settings (if available), global settings (if available), defaults.
+// TODO(maciaszczykm): Respect priority order and always fallback.
+// TODO During unmarshal if any new field is empty fill it with defaults to allow adding new settings.
 func (sm *SettingsManager) Get() (s api.Settings) {
 	sm.load()
 
-	// TODO(maciaszczykm): Respect priority order and allways fallback .
+	return
+}
+
+func (sm *SettingsManager) Set(key, value string) {
+	isDifferent := sm.load()
+	log.Printf("Settings changed since last reload: %s", isDifferent)
+
 	return
 }
