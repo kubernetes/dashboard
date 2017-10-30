@@ -19,6 +19,7 @@ import (
 
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/client-go/kubernetes"
 )
 
 const (
@@ -37,6 +38,12 @@ const (
 	// GlobalSettingsKey is a settings map key which maps to current global settings.
 	GlobalSettingsKey = "_global"
 )
+
+// SettingsManager is used for user settings management.
+type SettingsManager interface {
+	// GetGlobalSettings gets current global settings from config map.
+	GetGlobalSettings(client kubernetes.Interface) (s *Settings)
+}
 
 // Settings is a single instance of settings without context.
 type Settings struct {

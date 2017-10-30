@@ -16,9 +16,9 @@ package settings
 
 import (
 	"log"
-
 	"reflect"
 
+	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/settings/api"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
@@ -27,29 +27,26 @@ import (
 // SettingsManager is a structure containing all settings manager members.
 // TODO(maciaszczykm): Use hashing instead of raw settings for better performance.
 type SettingsManager struct {
-	settings    map[string]api.Settings
-	rawSettings map[string]string
-	client      kubernetes.Interface
+	settings      map[string]api.Settings
+	rawSettings   map[string]string
+	clientManager client.ClientManager
 }
 
 // NewSettingsManager creates new settings manager.
-func NewSettingsManager(client kubernetes.Interface) SettingsManager {
-	sm := SettingsManager{
-		settings: make(map[string]api.Settings),
-		client:   client,
+func NewSettingsManager(clientManager client.ClientManager) SettingsManager {
+	return SettingsManager{
+		settings:      make(map[string]api.Settings),
+		clientManager: clientManager,
 	}
-
-	sm.load()
-	return sm
 }
 
 // load config map data into settings manager and return true if new settings are different.
-func (sm *SettingsManager) load() (isDifferent bool) {
-	cm, err := sm.client.CoreV1().ConfigMaps(api.SettingsConfigMapNamespace).
+func (sm *SettingsManager) load(client kubernetes.Interface) (isDifferent bool) {
+	cm, err := client.CoreV1().ConfigMaps(api.SettingsConfigMapNamespace).
 		Get(api.SettingsConfigMapName, metav1.GetOptions{})
 	if err != nil {
 		log.Printf("Cannot find settings config map: %s", err.Error())
-		sm.restoreConfigMap()
+		sm.restoreConfigMap(client)
 		return
 	}
 
@@ -72,8 +69,8 @@ func (sm *SettingsManager) load() (isDifferent bool) {
 }
 
 // restoreConfigMap restores settings config map using default global settings.
-func (sm *SettingsManager) restoreConfigMap() {
-	_, err := sm.client.CoreV1().ConfigMaps(api.SettingsConfigMapNamespace).Create(api.GetDefaultSettingsConfigMap())
+func (sm *SettingsManager) restoreConfigMap(client kubernetes.Interface) {
+	_, err := client.CoreV1().ConfigMaps(api.SettingsConfigMapNamespace).Create(api.GetDefaultSettingsConfigMap())
 	if err != nil {
 		log.Printf("Cannot restore settings config map: %s", err.Error())
 	} else {
@@ -82,17 +79,14 @@ func (sm *SettingsManager) restoreConfigMap() {
 	}
 }
 
-// TODO(maciaszczykm): Respect priority order and always fallback.
-// TODO During unmarshal if any new field is empty fill it with defaults to allow adding new settings.
-func (sm *SettingsManager) Get() (s api.Settings) {
-	sm.load()
+// GetGlobalSettings implements SettingsManager interface. Check it for more information.
+func (sm *SettingsManager) GetGlobalSettings(client kubernetes.Interface) (s api.Settings) {
+	sm.load(client)
 
-	return
-}
-
-func (sm *SettingsManager) Set(key, value string) {
-	isDifferent := sm.load()
-	log.Printf("Settings changed since last reload: %s", isDifferent)
+	s, ok := sm.settings[api.GlobalSettingsKey]
+	if !ok {
+		s = api.GetDefaultSettings()
+	}
 
 	return
 }
