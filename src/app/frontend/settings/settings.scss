@@ -13,3 +13,9 @@
 // limitations under the License.
 
 @import '../variables';
+
+.kd-setting-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr;
+  grid-gap: $baseline-grid;
+}

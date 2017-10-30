@@ -36,6 +36,9 @@ export default function stateConfig($stateProvider) {
         templateUrl: 'settings/settings.html',
       },
     },
+      resolve: {
+          'globalSettings': resolveGlobalSettings,
+      },
     data: {
       [breadcrumbsConfig]: {
         'label': i18n.MSG_BREADCRUMBS_SETTINGS_LABEL,
@@ -48,3 +51,14 @@ const i18n = {
   /** @type {string} @desc Label 'Settings' that appears as a breadcrumbs on the action bar. */
   MSG_BREADCRUMBS_SETTINGS_LABEL: goog.getMsg('Settings'),
 };
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.$q.Promise}
+ * @ngInject
+ */
+function resolveGlobalSettings($resource) {
+    /** @type {!angular.Resource} */
+    let resource = $resource('api/v1/settings/global');
+    return resource.get().$promise;
+}

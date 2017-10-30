@@ -21,5 +21,7 @@ export class SettingsController {
   /**
    * @ngInject
    */
-  constructor() {}
+  constructor(globalSettings) {
+    this.global = globalSettings;
+  }
 }
