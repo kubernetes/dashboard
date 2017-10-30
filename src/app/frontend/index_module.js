@@ -52,6 +52,7 @@ import roleModule from './role/module';
 import searchModule from './search/module';
 import secretModule from './secret/module';
 import serviceModule from './service/module';
+import settingsModule from './settings/module';
 import shellModule from './shell/module';
 import statefulSetModule from './statefulset/module';
 import storageClassModule from './storageclass/module';
@@ -70,6 +71,7 @@ export default angular
           'ngSanitize',
           'ui.router',
           aboutModule.name,
+          settingsModule.name,
           authModule.name,
           overviewModule.name,
           chromeModule.name,

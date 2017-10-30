@@ -30,10 +30,10 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/handler"
 	"github.com/kubernetes/dashboard/src/app/backend/integration"
 	integrationapi "github.com/kubernetes/dashboard/src/app/backend/integration/api"
+	"github.com/kubernetes/dashboard/src/app/backend/settings"
 	"github.com/kubernetes/dashboard/src/app/backend/sync"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/spf13/pflag"
-	"github.com/kubernetes/dashboard/src/app/backend/settings"
 )
 
 var (
