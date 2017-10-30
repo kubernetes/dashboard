@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import stateConfig from './stateconfig';
+import {settingsEntryComponent} from './settingsentry/component'
 
 /**
  * Angular module for the settings view.
@@ -24,4 +25,5 @@ export default angular
           'ngMaterial',
           'ui.router',
         ])
-    .config(stateConfig);
+    .config(stateConfig)
+    .component('kdSettingsEntry', settingsEntryComponent);

@@ -16,13 +16,24 @@ limitations under the License.
 
 <kd-content-card>
   <kd-title>[[Global settings|Global settings header.]]</kd-title>
-  <kd-content>
+  <kd-content class="kd-settings-container">
 
     <div class="kd-setting-container">
       <span>Items per page:</span>
       <span>{{$ctrl.global.itemsPerPage}}</span>
       <span>description</span>
     </div>
+
+    <div class="kd-setting-container">
+      <span>Cluster name:</span>
+      <span>{{$ctrl.global.clusterName}}</span>
+      <span>description</span>
+    </div>
+
+    <kd-settings-entry key="[[Items per page|Items per page setting]]"
+                       desc="[[desc items per page|]]">
+      sdfsdf
+    </kd-settings-entry>
 
   </kd-content>
 </kd-content-card>

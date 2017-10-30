@@ -12,8 +12,34 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../variables';
+/**
+ * @final
+ */
+export default class SettingsEntryController {
+  /**
+   * @ngInject
+   */
+  constructor() {
+    /** @export {string} Initialized from the scope. */
+    this.key;
 
-.kd-settings-container {
-  padding: 2 * $baseline-grid;
+      /** @export {string} Initialized from the scope. */
+      this.desc;
+  }
+
 }
+
+/**
+ * Labels component definition.
+ *
+ * @type {!angular.Component}
+ */
+export const settingsEntryComponent = {
+  bindings: {
+    'key': '@',
+    'desc': '@',
+  },
+  controller: SettingsEntryController,
+  templateUrl: 'settings/settingsentry/settingsentry.html',
+
+};

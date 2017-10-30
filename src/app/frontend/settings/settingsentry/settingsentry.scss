@@ -12,8 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../variables';
+@import '../../variables';
 
-.kd-settings-container {
-  padding: 2 * $baseline-grid;
+kd-settings-entry {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr;
+  grid-gap: $baseline-grid;
 }
