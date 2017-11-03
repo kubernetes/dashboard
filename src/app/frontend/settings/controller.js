@@ -19,9 +19,11 @@
  */
 export class SettingsController {
   /**
+   * @param {!backendApi.Settings} globalSettings
    * @ngInject
    */
   constructor(globalSettings) {
+    /** @export {!backendApi.Settings} */
     this.global = globalSettings;
 
     /** @export {Array<number>} */

@@ -20,17 +20,15 @@ export default class SettingsEntryController {
    * @ngInject
    */
   constructor() {
-    /** @export {string} Initialized from the scope. */
+    /** @export {string} */
     this.key;
 
-    /** @export {string} Initialized from the scope. */
+    /** @export {string} */
     this.desc;
   }
 }
 
 /**
- * Labels component definition.
- *
  * @type {!angular.Component}
  */
 export const settingsEntryComponent = {

@@ -15,20 +15,20 @@
 @import '../../variables';
 
 kd-settings-entry {
-    border-bottom: 1px solid $foreground-4;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: $baseline-grid;
-    padding: 2 * $baseline-grid;
+  border-bottom: 1px solid $foreground-4;
+  display: grid;
+  grid-gap: $baseline-grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 2 * $baseline-grid;
 }
 
 .kd-settings-entry-desc {
-    color: $muted;
-    font-weight: $regular-font-weight;
+  color: $muted;
+  font-weight: $regular-font-weight;
 }
 
 .kd-settings-entry-form {
-    md-input-container {
-        margin: 0 auto;
-    }
+  md-input-container {
+    margin: 0 auto;
+  }
 }

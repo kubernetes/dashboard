@@ -1453,6 +1453,14 @@ backendApi.Controller;
 
 /**
  * @typedef {{
+ *   clusterName: string,
+ *   itemsPerPage: number
+ * }}
+ */
+backendApi.Settings;
+
+/**
+ * @typedef {{
  *   name: string
  * }}
  */
