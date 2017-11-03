@@ -32,11 +32,16 @@ type SettingsHandler struct {
 func (self SettingsHandler) Install(ws *restful.WebService) {
 	ws.Route(
 		ws.GET("/settings/global").
-			To(self.handleSettingsGlobal).
+			To(self.handleSettingsGlobalGet).
+			Writes(api.Settings{}))
+	ws.Route(
+		ws.PUT("/settings/global").
+			To(self.handleSettingsGlobalSave).
+			Reads(api.Settings{}).
 			Writes(api.Settings{}))
 }
 
-func (self SettingsHandler) handleSettingsGlobal(request *restful.Request, response *restful.Response) {
+func (self SettingsHandler) handleSettingsGlobalGet(request *restful.Request, response *restful.Response) {
 	client, err := self.manager.clientManager.Client(request)
 	if err != nil {
 		handleInternalError(response, err)
@@ -45,6 +50,26 @@ func (self SettingsHandler) handleSettingsGlobal(request *restful.Request, respo
 
 	result := self.manager.GetGlobalSettings(client)
 	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (self SettingsHandler) handleSettingsGlobalSave(request *restful.Request, response *restful.Response) {
+	settings := new(api.Settings)
+	if err := request.ReadEntity(settings); err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	client, err := self.manager.clientManager.Client(request)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	if err := self.manager.SaveGlobalSettings(client, settings); err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusCreated, settings)
 }
 
 // handleInternalError writes the given error to the response and sets appropriate HTTP status headers.

@@ -18,6 +18,10 @@ import (
 	"log"
 	"reflect"
 
+	"errors"
+
+	"fmt"
+
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/settings/api"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -50,20 +54,24 @@ func (sm *SettingsManager) load(client kubernetes.Interface) (isDifferent bool) 
 		return
 	}
 
+	// TODO reflect.DeepEqual fix
 	isDifferent = reflect.DeepEqual(sm.rawSettings, cm.Data)
 	sm.rawSettings = cm.Data
+	fmt.Println(isDifferent)
+	fmt.Println(sm.rawSettings)
+	fmt.Println(cm.Data)
 
-	if isDifferent {
-		sm.settings = make(map[string]api.Settings)
-		for key, value := range sm.rawSettings {
-			s, err := api.Unmarshal(value)
-			if err != nil {
-				log.Printf("Cannot unmarshal %s settings key with %s value: %s", key, value, err.Error())
-			} else {
-				sm.settings[key] = s
-			}
+	//if isDifferent {
+	sm.settings = make(map[string]api.Settings)
+	for key, value := range sm.rawSettings {
+		s, err := api.Unmarshal(value)
+		if err != nil {
+			log.Printf("Cannot unmarshal settings key %s with %s value: %s", key, value, err.Error())
+		} else {
+			sm.settings[key] = *s
 		}
 	}
+	//}
 
 	return
 }
@@ -89,4 +97,17 @@ func (sm *SettingsManager) GetGlobalSettings(client kubernetes.Interface) (s api
 	}
 
 	return
+}
+
+func (sm *SettingsManager) SaveGlobalSettings(client kubernetes.Interface, s *api.Settings) error {
+	if sm.load(client) {
+		return errors.New("settings changed since last reload")
+	}
+
+	// TODO(maciaszczykm): Merge with data from server to not lose user data. Create methods to avoid code duplication.
+	defaults := api.GetDefaultSettingsConfigMap()
+	defaults.Data[api.GlobalSettingsKey] = s.Marshal()
+
+	_, err := client.CoreV1().ConfigMaps(api.SettingsConfigMapNamespace).Update(defaults)
+	return err
 }

@@ -52,7 +52,8 @@ export class SettingsController {
 
   /**
    * @export
-   * TODO(maciaszczykm): Show progress bar during save.
+   * TODO(maciaszczykm): Show progress bar during save and export some code to service. Add force save/refresh dialog.
+   * TODO(maciaszczykm): Change indicator.
    */
   saveGlobal() {
     /** @type {!backendApi.Settings} */
@@ -61,27 +62,17 @@ export class SettingsController {
       itemsPerPage: this.global.itemsPerPage,
     };
 
-    let defer = this.q_.defer();
+    /** @type {!angular.Resource} */
+    let resource = this.resource_(
+        'api/v1/settings/global', {},
+        {update: {method: 'PUT', headers: {'Content-Type': 'application/json'}}});
 
-    this.tokenPromise.then(
-        (token) => {
-          /** @type {!angular.Resource} */
-          let resource = this.resource_(
-              'api/v1/settings/global', {},
-              {save: {method: 'POST', headers: {[this.csrfHeaderName_]: token}}});
-          resource.save(
-              settings,
-              (savedSettings) => {
-                defer.resolve(savedSettings);
-                this.log_.info('Successfully saved settings: ', savedSettings);
-              },
-              (err) => {
-                defer.reject(err);
-                this.log_.error('Error during saving settings:', err);
-              });
+    resource.update(
+        settings,
+        (savedSettings) => {
+          this.log_.info('Successfully saved settings: ', savedSettings);
         },
         (err) => {
-          defer.reject(err);
           this.log_.error('Error during saving settings:', err);
         });
   }

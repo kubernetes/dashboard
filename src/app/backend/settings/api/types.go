@@ -58,9 +58,10 @@ func (s Settings) Marshal() string {
 }
 
 // Unmarshal settings from JSON string into object.
-func Unmarshal(data string) (s Settings, err error) {
-	err = json.Unmarshal([]byte(data), s)
-	return
+func Unmarshal(data string) (*Settings, error) {
+	s := new(Settings)
+	err := json.Unmarshal([]byte(data), s)
+	return s, err
 }
 
 // defaultSettings contains default values for every setting.
