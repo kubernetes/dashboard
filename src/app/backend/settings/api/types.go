@@ -66,7 +66,7 @@ func Unmarshal(data string) (s Settings, err error) {
 // defaultSettings contains default values for every setting.
 var defaultSettings = Settings{
 	ClusterName:  "",
-	ItemsPerPage: 15,
+	ItemsPerPage: 10,
 }
 
 // GetDefaultSettings returns settings structure, that should be used if there are no

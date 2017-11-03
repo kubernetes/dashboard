@@ -15,14 +15,11 @@
 @import '../../variables';
 
 kd-settings-entry {
+    border-bottom: 1px solid $foreground-4;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: $baseline-grid;
     padding: 2 * $baseline-grid;
-
-    &:not(:last-child) {
-        border-bottom: 1px solid $foreground-4;
-    }
 }
 
 .kd-settings-entry-desc {
@@ -34,8 +31,4 @@ kd-settings-entry {
     md-input-container {
         margin: 0 auto;
     }
-}
-
-md-input-container .md-errors-spacer{
-    min-height: 0px !important;
 }

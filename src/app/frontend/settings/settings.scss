@@ -12,19 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Controller for the settings view.
- *
- * @final
- */
-export class SettingsController {
-  /**
-   * @ngInject
-   */
-  constructor(globalSettings) {
-    this.global = globalSettings;
+@import '../variables';
 
-    /** @export {Array<number>} */
-    this.itemsPerPageAllowedValues = [10, 25, 50];
-  }
+.kd-settings-control-panel {
+    padding: $baseline-grid;
+    text-align: right;
 }

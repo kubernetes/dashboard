@@ -22,6 +22,7 @@ limitations under the License.
                        desc="[[Cluster name appears in the browser window title if is set|Cluster name parameter description]]">
       <md-input-container md-no-float>
         <input placeholder="[[Cluster name|Cluster name parameter placeholder]]"
+               type="text"
                ng-model="$ctrl.global.clusterName">
       </md-input-container>
     </kd-settings-entry>
@@ -29,10 +30,18 @@ limitations under the License.
     <kd-settings-entry key="[[Items per page|Items per page parameter name]]"
                        desc="[[Max number of items that can be displayed on each list page|Items per page parameter description]]">
       <md-input-container md-no-float>
-        <input placeholder="[[Items per page|Items per page parameter placeholder]]"
-               ng-model="$ctrl.global.itemsPerPage">
+        <md-select ng-model="$ctrl.global.itemsPerPage">
+          <md-option ng-repeat="allowedValue in $ctrl.itemsPerPageAllowedValues"
+                     ng-value="allowedValue">
+            {{allowedValue}}
+          </md-option>
+        </md-select>
       </md-input-container>
     </kd-settings-entry>
+
+    <div class="kd-settings-control-panel">
+      <md-button class="md-raised md-primary">[[Save|Save button label]]</md-button>
+    </div>
 
   </kd-content>
 </kd-content-card>
