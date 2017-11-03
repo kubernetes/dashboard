@@ -19,7 +19,7 @@ limitations under the License.
   <kd-content class="kd-settings-container">
 
     <kd-settings-entry key="[[Cluster name|Cluster name parameter name]]"
-                       desc="[[Cluster name appears in the browser window title if is set|Cluster name parameter description]]">
+                       desc="[[Cluster name appears in the browser window title if it is set|Cluster name parameter description]]">
       <md-input-container md-no-float>
         <input placeholder="[[Cluster name|Cluster name parameter placeholder]]"
                type="text"
@@ -40,7 +40,10 @@ limitations under the License.
     </kd-settings-entry>
 
     <div class="kd-settings-control-panel">
-      <md-button class="md-raised md-primary">[[Save|Save button label]]</md-button>
+      <md-button class="md-raised md-primary"
+                 ng-click="$ctrl.saveGlobal()">
+        [[Save|Save button label]]
+      </md-button>
     </div>
 
   </kd-content>

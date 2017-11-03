@@ -19,14 +19,70 @@
  */
 export class SettingsController {
   /**
+   * @param {!angular.$q} $q
+   * @param {!angular.$resource} $resource
+   * @param {!angular.$log} $log
    * @param {!backendApi.Settings} globalSettings
+   * @param {!./../common/csrftoken/service.CsrfTokenService} kdCsrfTokenService
+   * @param {string} kdCsrfTokenHeader
    * @ngInject
    */
-  constructor(globalSettings) {
+  constructor($q, $resource, $log, globalSettings, kdCsrfTokenService, kdCsrfTokenHeader) {
+    /** @private {!angular.$q} */
+    this.q_ = $q;
+
+    /** @private {!angular.$resource} */
+    this.resource_ = $resource;
+
+    /** @private {!angular.$log} */
+    this.log_ = $log;
+
     /** @export {!backendApi.Settings} */
     this.global = globalSettings;
 
+    /** @private {!angular.$q.Promise} */
+    this.tokenPromise = kdCsrfTokenService.getTokenForAction('settingsmanagement');
+
+    /** @private {string} */
+    this.csrfHeaderName_ = kdCsrfTokenHeader;
+
     /** @export {Array<number>} */
     this.itemsPerPageAllowedValues = [10, 25, 50];
+  }
+
+  /**
+   * @export
+   * TODO(maciaszczykm): Show progress bar during save.
+   */
+  saveGlobal() {
+    /** @type {!backendApi.Settings} */
+    let settings = {
+      clusterName: this.global.clusterName,
+      itemsPerPage: this.global.itemsPerPage,
+    };
+
+    let defer = this.q_.defer();
+
+    this.tokenPromise.then(
+        (token) => {
+          /** @type {!angular.Resource} */
+          let resource = this.resource_(
+              'api/v1/settings/global', {},
+              {save: {method: 'POST', headers: {[this.csrfHeaderName_]: token}}});
+          resource.save(
+              settings,
+              (savedSettings) => {
+                defer.resolve(savedSettings);
+                this.log_.info('Successfully saved settings: ', savedSettings);
+              },
+              (err) => {
+                defer.reject(err);
+                this.log_.error('Error during saving settings:', err);
+              });
+        },
+        (err) => {
+          defer.reject(err);
+          this.log_.error('Error during saving settings:', err);
+        });
   }
 }

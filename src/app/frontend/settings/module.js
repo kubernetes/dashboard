@@ -12,8 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import csrfTokenModule from '../common/csrftoken/module';
+
 import {settingsEntryComponent} from './settingsentry/component';
 import stateConfig from './stateconfig';
+
 
 /**
  * Angular module for the settings view.
@@ -24,6 +27,7 @@ export default angular
         [
           'ngMaterial',
           'ui.router',
+          csrfTokenModule.name,
         ])
     .config(stateConfig)
     .component('kdSettingsEntry', settingsEntryComponent);
