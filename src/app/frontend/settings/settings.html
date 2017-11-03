@@ -18,17 +18,21 @@ limitations under the License.
   <kd-title>[[Global settings|Global settings header.]]</kd-title>
   <kd-content class="kd-settings-container">
 
-      <md-input-container>
-        <input placeholder="[[Cluster name (optional)|Cluster name parameter name]]"
+    <kd-settings-entry key="[[Cluster name|Cluster name parameter name]]"
+                       desc="[[Cluster name appears in the browser window title if is set|Cluster name parameter description]]">
+      <md-input-container md-no-float>
+        <input placeholder="[[Cluster name|Cluster name parameter placeholder]]"
                ng-model="$ctrl.global.clusterName">
-        <div class="hint">[[Cluster name appears in the browser window title|Cluster name parameter description]]</div>
       </md-input-container>
+    </kd-settings-entry>
 
-      <md-input-container>
-        <input placeholder="[[Items per page|Items per page parameter name]]"
+    <kd-settings-entry key="[[Items per page|Items per page parameter name]]"
+                       desc="[[Max number of items that can be displayed on each list page|Items per page parameter description]]">
+      <md-input-container md-no-float>
+        <input placeholder="[[Items per page|Items per page parameter placeholder]]"
                ng-model="$ctrl.global.itemsPerPage">
-        <div class="hint">[[Max number of items that can be displayed on each list page|Items per page parameter description]]</div>
       </md-input-container>
+    </kd-settings-entry>
 
   </kd-content>
 </kd-content-card>

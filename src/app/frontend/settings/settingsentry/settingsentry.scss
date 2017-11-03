@@ -12,26 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../variables';
+@import '../../variables';
 
-.kd-settings-container {
-  padding: $baseline-grid * 2;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 5 * $baseline-grid;
+kd-settings-entry {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: $baseline-grid;
+    padding: 2 * $baseline-grid;
 
+    &:not(:last-child) {
+        border-bottom: 1px solid $foreground-4;
+    }
 }
 
-.hint {
-  position: absolute;
-  left: 2px;
-  right: auto;
-  bottom: 7px;
-  /* Copy styles from ng-messages */
-  font-size: 11px;
-  line-height: 14px;
-  transition: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2);
-  color: grey;
-  //fix wrapping
-  //less compCT VIEW?
+.kd-settings-entry-desc {
+    color: $muted;
+    font-weight: $regular-font-weight;
+}
+
+.kd-settings-entry-form {
+    md-input-container {
+        margin: 0 auto;
+    }
+}
+
+md-input-container .md-errors-spacer{
+    min-height: 0px !important;
 }

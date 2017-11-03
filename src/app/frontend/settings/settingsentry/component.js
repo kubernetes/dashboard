@@ -12,18 +12,33 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {settingsEntryComponent} from './settingsentry/component';
-import stateConfig from './stateconfig';
+/**
+ * @final
+ */
+export default class SettingsEntryController {
+  /**
+   * @ngInject
+   */
+  constructor() {
+    /** @export {string} Initialized from the scope. */
+    this.key;
+
+    /** @export {string} Initialized from the scope. */
+    this.desc;
+  }
+}
 
 /**
- * Angular module for the settings view.
+ * Labels component definition.
+ *
+ * @type {!angular.Component}
  */
-export default angular
-    .module(
-        'kubernetesDashboard.settings',
-        [
-          'ngMaterial',
-          'ui.router',
-        ])
-    .config(stateConfig)
-    .component('kdSettingsEntry', settingsEntryComponent);
+export const settingsEntryComponent = {
+  bindings: {
+    'key': '@',
+    'desc': '@',
+  },
+  controller: SettingsEntryController,
+  templateUrl: 'settings/settingsentry/settingsentry.html',
+  transclude: true,
+};
