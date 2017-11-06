@@ -16,6 +16,7 @@ package settings
 
 import (
 	"errors"
+	"fmt"
 	"log"
 	"reflect"
 
@@ -100,14 +101,14 @@ func (sm *SettingsManager) GetGlobalSettings(client kubernetes.Interface) api.Se
 
 // GetGlobalSettings implements SettingsManager interface. Check it for more information.
 func (sm *SettingsManager) SaveGlobalSettings(client kubernetes.Interface, s *api.Settings) error {
-	_, isDiff := sm.load(client)
+	cm, isDiff := sm.load(client)
 	if isDiff {
 		return errors.New("settings changed since last reload")
 	}
 
-	defaults := api.GetDefaultSettingsConfigMap()
-	defaults.Data[api.GlobalSettingsKey] = s.Marshal()
+	fmt.Println(cm.Data)
+	cm.Data[api.GlobalSettingsKey] = s.Marshal()
 
-	_, err := client.CoreV1().ConfigMaps(api.SettingsConfigMapNamespace).Update(defaults)
+	_, err := client.CoreV1().ConfigMaps(api.SettingsConfigMapNamespace).Update(cm)
 	return err
 }
