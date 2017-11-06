@@ -52,8 +52,6 @@ export class SettingsController {
 
   /**
    * @export
-   * TODO(maciaszczykm): Show progress bar during save and export some code to service. Add force save/refresh dialog.
-   * TODO(maciaszczykm): Change indicator.
    */
   saveGlobal() {
     /** @type {!backendApi.Settings} */

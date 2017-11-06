@@ -21,14 +21,12 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/settings/api"
+	"k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
-	"k8s.io/api/core/v1"
-	"fmt"
 )
 
 // SettingsManager is a structure containing all settings manager members.
-// TODO(maciaszczykm): Use hashing instead of raw settings for better performance.
 type SettingsManager struct {
 	settings      map[string]api.Settings
 	rawSettings   map[string]string
@@ -100,14 +98,11 @@ func (sm *SettingsManager) GetGlobalSettings(client kubernetes.Interface) api.Se
 }
 
 func (sm *SettingsManager) SaveGlobalSettings(client kubernetes.Interface, s *api.Settings) error {
-	cm, isDiff := sm.load(client)
+	_, isDiff := sm.load(client)
 	if isDiff {
-		// TODO(maciaszczczykm): Handle on the frontend.
 		return errors.New("settings changed since last reload")
 	}
 
-	// TODO(maciaszczykm): Merge with data from server to not lose user data. Create methods to avoid code duplication.
-	fmt.Println(cm)
 	defaults := api.GetDefaultSettingsConfigMap()
 	defaults.Data[api.GlobalSettingsKey] = s.Marshal()
 
