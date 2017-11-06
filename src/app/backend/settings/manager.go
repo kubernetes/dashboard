@@ -23,6 +23,8 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/settings/api"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
+	"k8s.io/api/core/v1"
+	"fmt"
 )
 
 // SettingsManager is a structure containing all settings manager members.
@@ -42,8 +44,8 @@ func NewSettingsManager(clientManager client.ClientManager) SettingsManager {
 }
 
 // load config map data into settings manager and return true if new settings are different.
-func (sm *SettingsManager) load(client kubernetes.Interface) (isDifferent bool) {
-	cm, err := client.CoreV1().ConfigMaps(api.SettingsConfigMapNamespace).
+func (sm *SettingsManager) load(client kubernetes.Interface) (configMap *v1.ConfigMap, isDifferent bool) {
+	configMap, err := client.CoreV1().ConfigMaps(api.SettingsConfigMapNamespace).
 		Get(api.SettingsConfigMapName, metav1.GetOptions{})
 	if err != nil {
 		log.Printf("Cannot find settings config map: %s", err.Error())
@@ -51,10 +53,10 @@ func (sm *SettingsManager) load(client kubernetes.Interface) (isDifferent bool) 
 		return
 	}
 
-	isDifferent = !reflect.DeepEqual(sm.rawSettings, cm.Data)
+	isDifferent = !reflect.DeepEqual(sm.rawSettings, configMap.Data)
 
 	if isDifferent {
-		sm.rawSettings = cm.Data
+		sm.rawSettings = configMap.Data
 		sm.settings = make(map[string]api.Settings)
 		for key, value := range sm.rawSettings {
 			s, err := api.Unmarshal(value)
@@ -83,24 +85,29 @@ func (sm *SettingsManager) restoreConfigMap(client kubernetes.Interface) {
 }
 
 // GetGlobalSettings implements SettingsManager interface. Check it for more information.
-func (sm *SettingsManager) GetGlobalSettings(client kubernetes.Interface) (s api.Settings) {
-	sm.load(client)
+func (sm *SettingsManager) GetGlobalSettings(client kubernetes.Interface) api.Settings {
+	cm, _ := sm.load(client)
+	if cm == nil {
+		return api.GetDefaultSettings()
+	}
 
 	s, ok := sm.settings[api.GlobalSettingsKey]
 	if !ok {
-		s = api.GetDefaultSettings()
+		return api.GetDefaultSettings()
 	}
 
-	return
+	return s
 }
 
 func (sm *SettingsManager) SaveGlobalSettings(client kubernetes.Interface, s *api.Settings) error {
-	if sm.load(client) {
+	cm, isDiff := sm.load(client)
+	if isDiff {
 		// TODO(maciaszczczykm): Handle on the frontend.
 		return errors.New("settings changed since last reload")
 	}
 
 	// TODO(maciaszczykm): Merge with data from server to not lose user data. Create methods to avoid code duplication.
+	fmt.Println(cm)
 	defaults := api.GetDefaultSettingsConfigMap()
 	defaults.Data[api.GlobalSettingsKey] = s.Marshal()
 
