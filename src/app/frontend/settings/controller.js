@@ -28,6 +28,9 @@ export class SettingsController {
    * @ngInject
    */
   constructor($q, $resource, $log, globalSettings, kdCsrfTokenService, kdCsrfTokenHeader) {
+    /** @export {!angular.FormController} */
+    this.globalForm;
+
     /** @private {!angular.$q} */
     this.q_ = $q;
 
@@ -69,6 +72,7 @@ export class SettingsController {
         settings,
         (savedSettings) => {
           this.log_.info('Successfully saved settings: ', savedSettings);
+          this.globalForm.$setPristine();
         },
         (err) => {
           this.log_.error('Error during saving settings:', err);

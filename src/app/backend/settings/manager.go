@@ -51,6 +51,7 @@ func (sm *SettingsManager) load(client kubernetes.Interface) (configMap *v1.Conf
 		return
 	}
 
+	// Check if anything has changed from the last time when function was executed.
 	isDifferent = !reflect.DeepEqual(sm.rawSettings, configMap.Data)
 
 	if isDifferent {

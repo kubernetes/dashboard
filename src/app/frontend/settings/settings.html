@@ -17,34 +17,37 @@ limitations under the License.
 <kd-content-card>
   <kd-title>[[Global settings|Global settings header.]]</kd-title>
   <kd-content class="kd-settings-container">
+    <form name="$ctrl.globalForm"
+          ng-submit="$ctrl.saveGlobal()">
 
-    <kd-settings-entry key="[[Cluster name|Cluster name parameter name]]"
-                       desc="[[Cluster name appears in the browser window title if it is set|Cluster name parameter description]]">
-      <md-input-container md-no-float>
-        <input placeholder="[[Cluster name|Cluster name parameter placeholder]]"
-               type="text"
-               ng-model="$ctrl.global.clusterName">
-      </md-input-container>
-    </kd-settings-entry>
+      <kd-settings-entry key="[[Cluster name|Cluster name parameter name]]"
+                         desc="[[Cluster name appears in the browser window title if it is set|Cluster name parameter description]]">
+        <md-input-container md-no-float>
+          <input placeholder="[[Cluster name|Cluster name parameter placeholder]]"
+                 type="text"
+                 ng-model="$ctrl.global.clusterName">
+        </md-input-container>
+      </kd-settings-entry>
 
-    <kd-settings-entry key="[[Items per page|Items per page parameter name]]"
-                       desc="[[Max number of items that can be displayed on each list page|Items per page parameter description]]">
-      <md-input-container md-no-float>
-        <md-select ng-model="$ctrl.global.itemsPerPage">
-          <md-option ng-repeat="allowedValue in $ctrl.itemsPerPageAllowedValues"
-                     ng-value="allowedValue">
-            {{allowedValue}}
-          </md-option>
-        </md-select>
-      </md-input-container>
-    </kd-settings-entry>
+      <kd-settings-entry key="[[Items per page|Items per page parameter name]]"
+                         desc="[[Max number of items that can be displayed on each list page|Items per page parameter description]]">
+        <md-input-container md-no-float>
+          <md-select ng-model="$ctrl.global.itemsPerPage">
+            <md-option ng-repeat="allowedValue in $ctrl.itemsPerPageAllowedValues"
+                       ng-value="allowedValue">
+              {{allowedValue}}
+            </md-option>
+          </md-select>
+        </md-input-container>
+      </kd-settings-entry>
 
-    <div class="kd-settings-control-panel">
-      <md-button class="md-raised md-primary"
-                 ng-click="$ctrl.saveGlobal()">
-        [[Save|Save button label]]
-      </md-button>
-    </div>
-
+      <div class="kd-settings-control-panel">
+        <md-button class="md-raised md-primary"
+                   type="submit"
+                   ng-disabled="$ctrl.globalForm.$pristine">
+          [[Save|Save button label]]
+        </md-button>
+      </div>
+    </form>
   </kd-content>
 </kd-content-card>
