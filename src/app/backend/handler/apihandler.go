@@ -1778,9 +1778,13 @@ func (apiHandler *APIHandler) handleGetPersistentVolumeDetail(request *restful.R
 		handleInternalError(response, err)
 		return
 	}
-
+	config, err := apiHandler.cManager.Config(nil)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
 	name := request.PathParameter("persistentvolume")
-	result, err := persistentvolume.GetPersistentVolumeDetail(k8sClient, name)
+	result, err := persistentvolume.GetPersistentVolumeDetail(k8sClient, name, config.Host)
 	if err != nil {
 		handleInternalError(response, err)
 		return

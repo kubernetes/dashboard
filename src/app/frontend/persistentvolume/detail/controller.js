@@ -18,10 +18,44 @@
 export class PersistentVolumeDetailController {
   /**
    * @param {!backendApi.PersistentVolumeDetail} persistentVolumeDetail
+   * @param {!angular.$location} $location
    * @ngInject
    */
-  constructor(persistentVolumeDetail) {
+  constructor(persistentVolumeDetail, $location) {
     /** @export {!backendApi.PersistentVolumeDetail} */
-    this.persistentVolumeDetail = persistentVolumeDetail;
+    this.persistentVolumeDetail = persistentVolumeDetail.userLinks ?
+        this.checkUserlinksForProxyURL(persistentVolumeDetail, $location) :
+        persistentVolumeDetail;
+  }
+
+  /**
+   * This func looks for user defined links that use the k8's api server proxy addresses. Since the
+   * default way of deploying/running dashboard is in a container we concluded that, for the time
+   * being, we will parse the host:port address from the current browser window used to access the
+   * k8's api server and inject it into the userlink proxy address so that its accessible from the
+   * browser running dashboard.
+   *
+   * @param {!backendApi.PersistentVolumeDetail} persistentVolumeDetail
+   * @param {!angular.$location} $location
+   * @return {!backendApi.PersistentVolumeDetail} persistentVolumeDetail
+   */
+  checkUserlinksForProxyURL(persistentVolumeDetail, $location) {
+    for (let i = 0; i < persistentVolumeDetail.userLinks.length; i++) {
+      if (persistentVolumeDetail.userLinks[i].isURLValid.toString() === 'true' &&
+          persistentVolumeDetail.userLinks[i].isProxyURL.toString() === 'true') {
+        let currentLocationURL = document.createElement('a');
+        let proxyURL = document.createElement('a');
+
+        currentLocationURL.href = $location.absUrl();
+        proxyURL.href = persistentVolumeDetail.userLinks[i].link;
+
+        proxyURL.protocol = currentLocationURL.protocol;
+        proxyURL.hostname = currentLocationURL.hostname;
+        proxyURL.port = currentLocationURL.port;
+        persistentVolumeDetail.userLinks[i].link = proxyURL.toString();
+      }
+    }
+
+    return persistentVolumeDetail;
   }
 }

@@ -156,3 +156,58 @@ func TestGetUserLinksForPod(t *testing.T) {
 		}
 	}
 }
+
+func TestGetUserLinksForPersistentVolume(t *testing.T) {
+	cases := []struct {
+		persistentVolume     *v1.PersistentVolume
+		name, resource, host string
+		expected             []UserLink
+	}{
+		{
+			persistentVolume: &v1.PersistentVolume{
+				ObjectMeta: metaV1.ObjectMeta{
+					Name: "pv-1",
+					Annotations: map[string]string{
+						"alpha.dashboard.kubernetes.io/links": "{" +
+							strconv.Quote("dns-pv") + ":" +
+							strconv.Quote("http://{{pv.dns_name}}:80/debug") + "," +
+							strconv.Quote("absolute_path") + ":" +
+							strconv.Quote("http://monitoring.com/debug/requests") + "," +
+							strconv.Quote("invalid") + ":" +
+							strconv.Quote("http://{{apirver-proxy-url}}/debug/requests") + "," +
+							strconv.Quote("invalid2") + ":" +
+							strconv.Quote("://www.logs.com/click/here") + "," +
+							strconv.Quote("debug") + ":" +
+							strconv.Quote("http://{{apiserver-proxy-url}}/debug/requests") + "," +
+							strconv.Quote("debug2") + ":" +
+							strconv.Quote("http://{{apiserver-proxy-url}}/debug/requests") + "}"},
+				}},
+			name: "pv-1", resource: api.ResourceKindPersistentVolume, host: "http://localhost:8080",
+			expected: []UserLink{
+				UserLink{Description: "dns-pv", Link: "pv-1.pv.cluster.local:80/debug", IsURLValid: true},
+				UserLink{Description: "absolute_path", Link: "http://monitoring.com/debug/requests", IsURLValid: true},
+				UserLink{Description: "invalid", Link: "Invalid User Link: http://{{apirver-proxy-url}}/debug/requests", IsURLValid: false},
+				UserLink{Description: "invalid2", Link: "Invalid User Link: ://www.logs.com/click/here", IsURLValid: false},
+				UserLink{Description: "debug", Link: "http://localhost:8080/api/v1/persistentvolumes/pv-1/proxy/debug/requests", IsURLValid: true, IsProxyURL: true},
+				UserLink{Description: "debug2", Link: "http://localhost:8080/api/v1/persistentvolumes/pv-1/proxy/debug/requests", IsURLValid: true, IsProxyURL: true}},
+		},
+	}
+
+	for _, c := range cases {
+		fakeClient := fake.NewSimpleClientset(c.persistentVolume)
+
+		actual, _ := GetUserLinks(fakeClient, v1.NamespaceAll, c.name, c.resource, c.host)
+
+		sort.Slice(actual, func(i, j int) bool {
+			return actual[i].Description < actual[j].Description
+		})
+		sort.Slice(c.expected, func(i, j int) bool {
+			return c.expected[i].Description < c.expected[j].Description
+		})
+
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("GetUserLinksForService(client,%#v) == \ngot: %#v, \nexpected %#v",
+				c.name, actual, c.expected)
+		}
+	}
+}

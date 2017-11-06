@@ -429,6 +429,8 @@ backendApi.PersistentVolumeList;
  *   capacity: Object<string, string>,
  *   message: string,
  *   persistentVolumeSource: backendApi.PersistentVolumeSource,
+ *   userLinks: !Array<!backendApi.UserLinks>,
+ *   errors: !Array<!backendApi.Error>,
  * }}
  */
 backendApi.PersistentVolumeDetail;
