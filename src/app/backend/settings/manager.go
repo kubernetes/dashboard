@@ -15,12 +15,9 @@
 package settings
 
 import (
+	"errors"
 	"log"
 	"reflect"
-
-	"errors"
-
-	"fmt"
 
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/settings/api"
@@ -54,36 +51,34 @@ func (sm *SettingsManager) load(client kubernetes.Interface) (isDifferent bool) 
 		return
 	}
 
-	// TODO reflect.DeepEqual fix
-	isDifferent = reflect.DeepEqual(sm.rawSettings, cm.Data)
-	sm.rawSettings = cm.Data
-	fmt.Println(isDifferent)
-	fmt.Println(sm.rawSettings)
-	fmt.Println(cm.Data)
+	isDifferent = !reflect.DeepEqual(sm.rawSettings, cm.Data)
 
-	//if isDifferent {
-	sm.settings = make(map[string]api.Settings)
-	for key, value := range sm.rawSettings {
-		s, err := api.Unmarshal(value)
-		if err != nil {
-			log.Printf("Cannot unmarshal settings key %s with %s value: %s", key, value, err.Error())
-		} else {
-			sm.settings[key] = *s
+	if isDifferent {
+		sm.rawSettings = cm.Data
+		sm.settings = make(map[string]api.Settings)
+		for key, value := range sm.rawSettings {
+			s, err := api.Unmarshal(value)
+			if err != nil {
+				log.Printf("Cannot unmarshal settings key %s with %s value: %s", key, value, err.Error())
+			} else {
+				sm.settings[key] = *s
+			}
 		}
 	}
-	//}
 
 	return
 }
 
 // restoreConfigMap restores settings config map using default global settings.
 func (sm *SettingsManager) restoreConfigMap(client kubernetes.Interface) {
-	_, err := client.CoreV1().ConfigMaps(api.SettingsConfigMapNamespace).Create(api.GetDefaultSettingsConfigMap())
+	restoredConfigMap, err := client.CoreV1().ConfigMaps(api.SettingsConfigMapNamespace).
+		Create(api.GetDefaultSettingsConfigMap())
 	if err != nil {
 		log.Printf("Cannot restore settings config map: %s", err.Error())
 	} else {
 		sm.settings = make(map[string]api.Settings)
 		sm.settings[api.GlobalSettingsKey] = api.GetDefaultSettings()
+		sm.rawSettings = restoredConfigMap.Data
 	}
 }
 
@@ -101,6 +96,7 @@ func (sm *SettingsManager) GetGlobalSettings(client kubernetes.Interface) (s api
 
 func (sm *SettingsManager) SaveGlobalSettings(client kubernetes.Interface, s *api.Settings) error {
 	if sm.load(client) {
+		// TODO(maciaszczczykm): Handle on the frontend.
 		return errors.New("settings changed since last reload")
 	}
 

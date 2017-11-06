@@ -29,7 +29,7 @@ type SettingsHandler struct {
 }
 
 // Install creates new endpoints for settings management.
-func (self SettingsHandler) Install(ws *restful.WebService) {
+func (self *SettingsHandler) Install(ws *restful.WebService) {
 	ws.Route(
 		ws.GET("/settings/global").
 			To(self.handleSettingsGlobalGet).
@@ -41,7 +41,7 @@ func (self SettingsHandler) Install(ws *restful.WebService) {
 			Writes(api.Settings{}))
 }
 
-func (self SettingsHandler) handleSettingsGlobalGet(request *restful.Request, response *restful.Response) {
+func (self *SettingsHandler) handleSettingsGlobalGet(request *restful.Request, response *restful.Response) {
 	client, err := self.manager.clientManager.Client(request)
 	if err != nil {
 		handleInternalError(response, err)
@@ -52,7 +52,7 @@ func (self SettingsHandler) handleSettingsGlobalGet(request *restful.Request, re
 	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
-func (self SettingsHandler) handleSettingsGlobalSave(request *restful.Request, response *restful.Response) {
+func (self *SettingsHandler) handleSettingsGlobalSave(request *restful.Request, response *restful.Response) {
 	settings := new(api.Settings)
 	if err := request.ReadEntity(settings); err != nil {
 		handleInternalError(response, err)
