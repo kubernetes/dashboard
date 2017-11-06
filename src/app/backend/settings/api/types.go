@@ -43,6 +43,8 @@ const (
 type SettingsManager interface {
 	// GetGlobalSettings gets current global settings from config map.
 	GetGlobalSettings(client kubernetes.Interface) (s *Settings)
+	// SaveGlobalSettings saves provided global settings in config map.
+	SaveGlobalSettings(client kubernetes.Interface, s *Settings)
 }
 
 // Settings is a single instance of settings without context.

@@ -97,6 +97,7 @@ func (sm *SettingsManager) GetGlobalSettings(client kubernetes.Interface) api.Se
 	return s
 }
 
+// GetGlobalSettings implements SettingsManager interface. Check it for more information.
 func (sm *SettingsManager) SaveGlobalSettings(client kubernetes.Interface, s *api.Settings) error {
 	_, isDiff := sm.load(client)
 	if isDiff {
