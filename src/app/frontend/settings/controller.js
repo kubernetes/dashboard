@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+const CONCURRENT_CHANGE_ERROR = 'settings changed since last reload'
+
 /**
  * Controller for the settings view.
  *
@@ -27,7 +29,8 @@ export class SettingsController {
    * @param {string} kdCsrfTokenHeader
    * @ngInject
    */
-  constructor($q, $resource, $log, globalSettings, kdCsrfTokenService, kdCsrfTokenHeader) {
+  constructor(
+      $q, $resource, $log, $mdDialog, globalSettings, kdCsrfTokenService, kdCsrfTokenHeader) {
     /** @export {!angular.FormController} */
     this.globalForm;
 
@@ -40,6 +43,8 @@ export class SettingsController {
     /** @private {!angular.$log} */
     this.log_ = $log;
 
+    this.mdDialog_ = $mdDialog;
+
     /** @export {!backendApi.Settings} */
     this.global = globalSettings;
 
@@ -51,12 +56,19 @@ export class SettingsController {
 
     /** @export {Array<number>} */
     this.itemsPerPageAllowedValues = [10, 25, 50];
+
+    this.saveAnywaysDialog = this.mdDialog_.confirm()
+                                 .title('Settings have changed since last reload')
+                                 .textContent('Do you want to save them anyways?')
+                                 .ok('Force save')
+                                 .cancel('Refresh');
   }
 
   /**
+   * @param {boolean} force
    * @export
    */
-  saveGlobal() {
+  saveGlobal(force) {
     /** @type {!backendApi.Settings} */
     let settings = {
       clusterName: this.global.clusterName,
@@ -76,6 +88,19 @@ export class SettingsController {
         },
         (err) => {
           this.log_.error('Error during saving settings:', err);
+          if (!force && err && err.data.indexOf(CONCURRENT_CHANGE_ERROR) !== -1) {
+            this.mdDialog_.show(this.saveAnywaysDialog)
+                .then(
+                    () => {
+                      this.log_.info('Trying to deploy again with force');
+                      this.saveGlobal(true);
+                      // TODO
+                    },
+                    () => {
+                      this.log_.info('Reloading settings');
+                      // TODO
+                    });
+          }
         });
   }
 }
