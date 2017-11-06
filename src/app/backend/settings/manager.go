@@ -16,7 +16,6 @@ package settings
 
 import (
 	"errors"
-	"fmt"
 	"log"
 	"reflect"
 
@@ -106,9 +105,7 @@ func (sm *SettingsManager) SaveGlobalSettings(client kubernetes.Interface, s *ap
 		return errors.New("settings changed since last reload")
 	}
 
-	fmt.Println(cm.Data)
 	cm.Data[api.GlobalSettingsKey] = s.Marshal()
-
 	_, err := client.CoreV1().ConfigMaps(api.SettingsConfigMapNamespace).Update(cm)
 	return err
 }
