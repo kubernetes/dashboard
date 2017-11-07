@@ -56,12 +56,12 @@ export class TitleController {
     if (conf && conf.label) {
       let params = this.futureStateService_.params;
       let stateLabel = this.interpolate_(conf.label)({'$stateParams': params}).toString();
-      windowTitle += `${stateLabel} - `
+      windowTitle += `${stateLabel} - `;
     }
 
     let clusterName = this.settingsService_.getClusterName();
     if (clusterName) {
-      windowTitle += `${clusterName} - `
+      windowTitle += `${clusterName} - `;
     }
 
     windowTitle += this.defaultTitle_;
