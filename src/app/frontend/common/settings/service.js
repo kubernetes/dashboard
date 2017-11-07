@@ -61,7 +61,8 @@ export class SettingsService {
   }
 
   /**
-   * Gets currently loaded cluster name. To load changes from the backend use load() function.
+   * Gets currently loaded cluster name parameter. To load changes from the backend use load()
+   * function.
    *
    * @export
    * @return {string}
@@ -72,5 +73,20 @@ export class SettingsService {
       clusterName = this.global_.clusterName;
     }
     return clusterName;
+  }
+
+  /**
+   * Gets currently loaded items per page parameter. To load changes from the backend use load()
+   * function.
+   *
+   * @export
+   * @return {number}
+   */
+  getItemsPerPage() {
+    let itemsPerPage = 10;
+    if (this.isInitialized_()) {
+      itemsPerPage = this.global_.itemsPerPage;
+    }
+    return itemsPerPage;
   }
 }
