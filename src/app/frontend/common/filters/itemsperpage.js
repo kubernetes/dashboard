@@ -18,10 +18,11 @@
  *
  * @param {function(!Array<Object>, number, string): !Array<Object>} $delegate
  * @param {!../dataselect/service.DataSelectService} kdDataSelectService
+ * @param {!../settings/service.SettingsService} kdSettingsService
  * @return {function(!Array<Object>, number, string): !Array<Object>}
  * @ngInject
  */
-export default function itemsPerPageFilter($delegate, kdDataSelectService) {
+export default function itemsPerPageFilter($delegate, kdDataSelectService, kdSettingsService) {
   /** @type {function(!Array<Object>, number, string): !Array<Object>} */
   let sourceFilter = $delegate;
 
@@ -37,7 +38,7 @@ export default function itemsPerPageFilter($delegate, kdDataSelectService) {
         kdDataSelectService.registerInstance(dataSelectId);
       }
 
-      return sourceFilter(collection, kdDataSelectService.getMinRowsLimit(), dataSelectId);
+      return sourceFilter(collection, kdSettingsService.getItemsPerPage(), dataSelectId);
     }
 
     return sourceFilter(collection, itemsPerPage, dataSelectId);

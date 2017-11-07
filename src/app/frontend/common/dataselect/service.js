@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {DataSelectQueryBuilder, ItemsPerPage, SortableProperties} from './builder';
+import {DataSelectQueryBuilder, SortableProperties} from './builder';
 
 /** @const {!DataSelectApi.SupportedActions} **/
 const Actions = {
@@ -34,19 +34,24 @@ export class DataSelectService {
    * @param {!{setCurrentPage: function(string, number)}} paginationService
    * @ngInject
    */
-  constructor(kdNamespaceService, $stateParams, paginationService) {
+  constructor(kdNamespaceService, kdSettingsService, $stateParams, paginationService) {
     /** @private {!Map<string, !DataSelectApi.DataSelectQuery>} */
     this.instances_ = new Map();
+
     /** @private {!./../namespace/service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
+
+    /** @private {!./../settings/service.SettingsService} */
+    this.settingsService_ = kdSettingsService;
+
     /** @export {!DataSelectApi.SupportedActions} **/
     this.actions_ = Actions;
-    /** @export {number} **/
-    this.rowsLimit = ItemsPerPage;
+
     /**
      * {!searchApi.StateParams|!../../../chrome/chrome_state.StateParams|!../../resource/resourcedetail.StateParams}
      */
     this.stateParams_ = $stateParams;
+
     /** @private {!{setCurrentPage: function(string, number)}} */
     this.paginationService_ = paginationService;
   }
@@ -69,15 +74,7 @@ export class DataSelectService {
    * @export
    */
   registerInstance(dataSelectId) {
-    this.instances_.set(dataSelectId, new DataSelectQueryBuilder().build());
-  }
-
-  /**
-   * @export
-   * @return {number}
-   */
-  getMinRowsLimit() {
-    return this.rowsLimit;
+    this.instances_.set(dataSelectId, this.newDataSelectQueryBuilder().build());
   }
 
   /**
@@ -173,7 +170,7 @@ export class DataSelectService {
     }
 
     let dataSelectQuery =
-        new DataSelectQueryBuilder().setAscending(ascending).setSortBy(sortBy).build();
+        this.newDataSelectQueryBuilder().setAscending(ascending).setSortBy(sortBy).build();
     return this.selectData_(listResource, dataSelectId, dataSelectQuery, this.actions_.SORT);
   }
 
@@ -185,7 +182,7 @@ export class DataSelectService {
    * @export
    */
   filter(listResource, dataSelectId, filterBy) {
-    let dataSelectQuery = new DataSelectQueryBuilder().setFilterBy(filterBy).build();
+    let dataSelectQuery = this.newDataSelectQueryBuilder().setFilterBy(filterBy).build();
     return this.selectData_(listResource, dataSelectId, dataSelectQuery, this.actions_.FILTER);
   }
 
@@ -198,12 +195,20 @@ export class DataSelectService {
   getDefaultResourceQuery(namespace, name) {
     namespace = namespace || '';
     name = name || '';
-    let query = new DataSelectQueryBuilder().setNamespace(namespace).setName(name).build();
+    let query = this.newDataSelectQueryBuilder().setNamespace(namespace).setName(name).build();
 
     if (this.kdNamespaceService_.isMultiNamespace(query.namespace)) {
       query.namespace = '';
     }
 
     return query;
+  }
+
+  /**
+   * @return {DataSelectQueryBuilder}
+   * @export
+   */
+  newDataSelectQueryBuilder() {
+    return new DataSelectQueryBuilder(this.settingsService_.getItemsPerPage());
   }
 }

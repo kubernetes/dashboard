@@ -55,10 +55,6 @@ describe('Data Select service ', () => {
     expect(result).toBeFalsy();
   });
 
-  it('min rows limit should be defined', () => {
-    expect(service.getMinRowsLimit()).toEqual(ItemsPerPage);
-  });
-
   it('should return default resource query', () => {
     // given
     let namespace = 'test-ns';

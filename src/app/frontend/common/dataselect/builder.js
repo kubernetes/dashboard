@@ -22,20 +22,19 @@ export const SortableProperties = {
   AGE: 'creationTimestamp',
 };
 
-/** @const {number} **/
-export const ItemsPerPage = 15;
-
 /**
  * @final
  */
 export class DataSelectQueryBuilder {
   /**
-   * Initialized with default values. By default sort by age and show 10 items per page.
+   * Initialized with default values. By default sort by age.
+   *
+   * @param {number} itemsPerPage
    * @export
    */
-  constructor() {
+  constructor(itemsPerPage) {
     /** @private {number} */
-    this.itemsPerPage_ = ItemsPerPage;
+    this.itemsPerPage_ = itemsPerPage;
     /** @private {number} */
     this.page_ = 1;
     /** @private {string} */
@@ -55,28 +54,24 @@ export class DataSelectQueryBuilder {
   /** @export */
   setItemsPerPage(itemsPerPage) {
     this.itemsPerPage_ = itemsPerPage;
-
     return this;
   }
 
   /** @export */
   setPage(page) {
     this.page_ = page;
-
     return this;
   }
 
   /** @export */
   setSortBy(sortBy) {
     this.sortBy_ = sortBy;
-
     return this;
   }
 
   /** @export */
   setAscending(ascending) {
     this.ascending_ = ascending;
-
     return this;
   }
 
@@ -96,14 +91,12 @@ export class DataSelectQueryBuilder {
   /** @export */
   setName(name) {
     this.name_ = name;
-
     return this;
   }
 
   /** @export */
   setFilterBy(filterBy) {
     this.filterBy_ = filterBy;
-
     return this;
   }
 
