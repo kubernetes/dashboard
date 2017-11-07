@@ -38,10 +38,11 @@ export class SettingsController {
    * @param {!angular.$resource} $resource
    * @param {!angular.$log} $log
    * @param {!md.$dialog} $mdDialog
+   * @param {!../common/settings/service.SettingsService}  kdSettingsService
    * @param {!backendApi.Settings} globalSettings
    * @ngInject
    */
-  constructor($resource, $log, $mdDialog, globalSettings) {
+  constructor($resource, $log, $mdDialog, kdSettingsService, globalSettings) {
     /** @export {!angular.FormController} */
     this.globalForm;
 
@@ -53,6 +54,9 @@ export class SettingsController {
 
     /** @private {!md.$dialog} */
     this.mdDialog_ = $mdDialog;
+
+    /** @private {!../common/settings/service.SettingsService} */
+    this.settingsService_ = kdSettingsService;
 
     /** @export {!backendApi.Settings} */
     this.global = globalSettings;
@@ -101,7 +105,10 @@ export class SettingsController {
         settings,
         (savedSettings) => {
           this.log_.info('Successfully saved settings: ', savedSettings);
+          // It will disable "save" button until user will modify at least one setting.
           this.globalForm.$setPristine();
+          // Reload settings service to apply changes in the whole app without need to refresh.
+          this.settingsService_.load();
         },
         (err) => {
           this.log_.error('Error during saving settings:', err);

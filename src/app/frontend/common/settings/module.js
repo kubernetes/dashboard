@@ -12,22 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import settingsServiceModule from '../common/settings/module';
-
-import {settingsEntryComponent} from './settingsentry/component';
-import stateConfig from './stateconfig';
-
+import {SettingsService} from './service';
 
 /**
- * Angular module for the settings view.
+ * Module congaining a settings service.
  */
 export default angular
     .module(
-        'kubernetesDashboard.settings',
+        'kubernetesDashboard.common.settings',
         [
-          'ngMaterial',
           'ui.router',
-          settingsServiceModule.name,
         ])
-    .config(stateConfig)
-    .component('kdSettingsEntry', settingsEntryComponent);
+    .service('kdSettingsService', SettingsService)
+    .run(initSettingsService);
+
+/**
+ * @param {!SettingsService} kdSettingsService
+ * @ngInject
+ */
+function initSettingsService(kdSettingsService) {
+  kdSettingsService.load();
+}

@@ -22,6 +22,7 @@ import clusterModule from './cluster/module';
 import authModule from './common/auth/module';
 import csrfTokenModule from './common/csrftoken/module';
 import scalingModule from './common/scaling/module';
+import settingsServiceModule from './common/settings/module';
 import configModule from './config/module';
 import configMapModule from './configmap/module';
 import cronJobModule from './cronjob/module';
@@ -72,6 +73,7 @@ export default angular
           'ui.router',
           aboutModule.name,
           settingsModule.name,
+          settingsServiceModule.name,
           authModule.name,
           overviewModule.name,
           chromeModule.name,
