@@ -12,7 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-const CONCURRENT_CHANGE_ERROR = 'settings changed since last reload'
+const CONCURRENT_CHANGE_ERROR = 'settings changed since last reload';
+
+const i18n = {
+  /** @export {string} @desc Title of "save anyways" dialog from settings page. */
+  MSG_SETTINGS_SAVE_ANYWAYS_DIALOG_TITLE: goog.getMsg(`Settings have changed since last reload`),
+
+  /** @export {string} @desc Content of "save anyways" dialog from settings page. */
+  MSG_SETTINGS_SAVE_ANYWAYS_DIALOG_CONTENT: goog.getMsg(`Do you want to save them anyways?`),
+
+  /** @export {string} @desc Confirm label of "save anyways" dialog from settings page. */
+  MSG_SETTINGS_SAVE_ANYWAYS_DIALOG_CONFIRM_LABEL: goog.getMsg(`Save`),
+
+  /** @export {string} @desc Cancel label of "save anyways" dialog from settings page. */
+  MSG_SETTINGS_SAVE_ANYWAYS_DIALOG_CANCEL_LABEL: goog.getMsg(`Refresh`),
+};
 
 /**
  * Controller for the settings view.
@@ -21,22 +35,15 @@ const CONCURRENT_CHANGE_ERROR = 'settings changed since last reload'
  */
 export class SettingsController {
   /**
-   * @param {!angular.$q} $q
    * @param {!angular.$resource} $resource
    * @param {!angular.$log} $log
    * @param {!md.$dialog} $mdDialog
    * @param {!backendApi.Settings} globalSettings
-   * @param {!./../common/csrftoken/service.CsrfTokenService} kdCsrfTokenService
-   * @param {string} kdCsrfTokenHeader
    * @ngInject
    */
-  constructor(
-      $q, $resource, $log, $mdDialog, globalSettings, kdCsrfTokenService, kdCsrfTokenHeader) {
+  constructor($resource, $log, $mdDialog, globalSettings) {
     /** @export {!angular.FormController} */
     this.globalForm;
-
-    /** @private {!angular.$q} */
-    this.q_ = $q;
 
     /** @private {!angular.$resource} */
     this.resource_ = $resource;
@@ -50,20 +57,14 @@ export class SettingsController {
     /** @export {!backendApi.Settings} */
     this.global = globalSettings;
 
-    /** @private {!angular.$q.Promise} */
-    this.tokenPromise = kdCsrfTokenService.getTokenForAction('settingsmanagement');
-
-    /** @private {string} */
-    this.csrfHeaderName_ = kdCsrfTokenHeader;
-
     /** @export {Array<number>} */
     this.itemsPerPageAllowedValues = [10, 25, 50];
 
     this.saveAnywaysDialog_ = this.mdDialog_.confirm()
-                                  .title('Settings have changed since last reload')
-                                  .textContent('Do you want to save them anyways?')
-                                  .ok('Save')
-                                  .cancel('Refresh');
+                                  .title(i18n.MSG_SETTINGS_SAVE_ANYWAYS_DIALOG_TITLE)
+                                  .textContent(i18n.MSG_SETTINGS_SAVE_ANYWAYS_DIALOG_CONTENT)
+                                  .ok(i18n.MSG_SETTINGS_SAVE_ANYWAYS_DIALOG_CONFIRM_LABEL)
+                                  .cancel(i18n.MSG_SETTINGS_SAVE_ANYWAYS_DIALOG_CANCEL_LABEL);
   }
 
   /**
@@ -94,9 +95,9 @@ export class SettingsController {
     /** @type {!angular.Resource} */
     let resource = this.resource_(
         'api/v1/settings/global', {},
-        {update: {method: 'PUT', headers: {'Content-Type': 'application/json'}}});
+        {save: {method: 'PUT', headers: {'Content-Type': 'application/json'}}});
 
-    resource.update(
+    resource.save(
         settings,
         (savedSettings) => {
           this.log_.info('Successfully saved settings: ', savedSettings);
