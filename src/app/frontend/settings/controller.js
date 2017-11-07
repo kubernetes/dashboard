@@ -24,6 +24,7 @@ export class SettingsController {
    * @param {!angular.$q} $q
    * @param {!angular.$resource} $resource
    * @param {!angular.$log} $log
+   * @param {!md.$dialog} $mdDialog
    * @param {!backendApi.Settings} globalSettings
    * @param {!./../common/csrftoken/service.CsrfTokenService} kdCsrfTokenService
    * @param {string} kdCsrfTokenHeader
@@ -43,6 +44,7 @@ export class SettingsController {
     /** @private {!angular.$log} */
     this.log_ = $log;
 
+    /** @private {!md.$dialog} */
     this.mdDialog_ = $mdDialog;
 
     /** @export {!backendApi.Settings} */
@@ -57,18 +59,32 @@ export class SettingsController {
     /** @export {Array<number>} */
     this.itemsPerPageAllowedValues = [10, 25, 50];
 
-    this.saveAnywaysDialog = this.mdDialog_.confirm()
-                                 .title('Settings have changed since last reload')
-                                 .textContent('Do you want to save them anyways?')
-                                 .ok('Force save')
-                                 .cancel('Refresh');
+    this.saveAnywaysDialog_ = this.mdDialog_.confirm()
+                                  .title('Settings have changed since last reload')
+                                  .textContent('Do you want to save them anyways?')
+                                  .ok('Save')
+                                  .cancel('Refresh');
   }
 
   /**
-   * @param {boolean} force
+   * @private
+   */
+  refreshGlobal_() {
+    this.resource_('api/v1/settings/global')
+        .get(
+            (global) => {
+              this.global = global;
+              this.log_.info('Reloaded global settings: ', global);
+            },
+            (err) => {
+              this.log_.info('Error during global settings reload: ', err);
+            });
+  }
+
+  /**
    * @export
    */
-  saveGlobal(force) {
+  saveGlobal() {
     /** @type {!backendApi.Settings} */
     let settings = {
       clusterName: this.global.clusterName,
@@ -88,17 +104,17 @@ export class SettingsController {
         },
         (err) => {
           this.log_.error('Error during saving settings:', err);
-          if (!force && err && err.data.indexOf(CONCURRENT_CHANGE_ERROR) !== -1) {
-            this.mdDialog_.show(this.saveAnywaysDialog)
+          if (err && err.data.indexOf(CONCURRENT_CHANGE_ERROR) !== -1) {
+            this.mdDialog_.show(this.saveAnywaysDialog_)
                 .then(
                     () => {
-                      this.log_.info('Trying to deploy again with force');
-                      this.saveGlobal(true);
-                      // TODO
+                      // Backend was refreshed with the PUT request, so the second try will be
+                      // successful unless yet another concurrent change will happen. In that case
+                      // "save anyways" dialog will be shown again.
+                      this.saveGlobal();
                     },
                     () => {
-                      this.log_.info('Reloading settings');
-                      // TODO
+                      this.refreshGlobal_();
                     });
           }
         });
