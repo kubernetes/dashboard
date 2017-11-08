@@ -20,6 +20,5 @@ build/run-gulp-in-docker.sh
 .git
 .tmp/
 .tools/
-bower_components/
 dist/
 node_modules/
