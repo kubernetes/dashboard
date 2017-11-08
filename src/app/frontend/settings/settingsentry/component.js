@@ -13,22 +13,6 @@
 // limitations under the License.
 
 /**
- * @final
- */
-export default class SettingsEntryController {
-  /**
-   * @ngInject
-   */
-  constructor() {
-    /** @export {string} */
-    this.key;
-
-    /** @export {string} */
-    this.desc;
-  }
-}
-
-/**
  * @type {!angular.Component}
  */
 export const settingsEntryComponent = {
@@ -36,7 +20,6 @@ export const settingsEntryComponent = {
     'key': '@',
     'desc': '@',
   },
-  controller: SettingsEntryController,
   templateUrl: 'settings/settingsentry/settingsentry.html',
   transclude: true,
 };
