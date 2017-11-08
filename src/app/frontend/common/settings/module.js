@@ -22,6 +22,7 @@ export default angular
         'kubernetesDashboard.common.settings',
         [
           'ui.router',
+          'ngResource',
         ])
     .service('kdSettingsService', SettingsService)
     .run(initSettingsService);
