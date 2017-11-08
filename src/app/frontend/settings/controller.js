@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+
+// Keep it in sync with ConcurrentSettingsChangeError constant from the backend.
 const CONCURRENT_CHANGE_ERROR = 'settings changed since last reload';
 
 const i18n = {
@@ -60,9 +62,6 @@ export class SettingsController {
 
     /** @export {!backendApi.Settings} */
     this.global = globalSettings;
-
-    /** @export {Array<number>} */
-    this.itemsPerPageAllowedValues = [10, 25, 50];
 
     this.saveAnywaysDialog_ = this.mdDialog_.confirm()
                                   .title(i18n.MSG_SETTINGS_SAVE_ANYWAYS_DIALOG_TITLE)

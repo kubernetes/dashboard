@@ -16,7 +16,7 @@ limitations under the License.
 
 <kd-content-card>
   <kd-title>[[Global settings|Global settings header.]]</kd-title>
-  <kd-content class="kd-settings-container">
+  <kd-content>
     <form name="$ctrl.globalForm"
           ng-submit="$ctrl.saveGlobal(false)">
 
@@ -25,20 +25,24 @@ limitations under the License.
         <md-input-container md-no-float>
           <input placeholder="[[Cluster name|Cluster name parameter placeholder]]"
                  type="text"
+                 aria-label="clusterName"
                  ng-model="$ctrl.global.clusterName">
         </md-input-container>
       </kd-settings-entry>
 
       <kd-settings-entry key="[[Items per page|Items per page parameter name]]"
                          desc="[[Max number of items that can be displayed on each list page|Items per page parameter description]]">
-        <md-input-container md-no-float>
-          <md-select ng-model="$ctrl.global.itemsPerPage">
-            <md-option ng-repeat="allowedValue in $ctrl.itemsPerPageAllowedValues"
-                       ng-value="allowedValue">
-              {{allowedValue}}
-            </md-option>
-          </md-select>
-        </md-input-container>
+        <md-slider-container>
+          <md-slider md-discrete
+                     flex
+                     min="5"
+                     max="50"
+                     step="5"
+                     ng-model="$ctrl.global.itemsPerPage"
+                     aria-label="itemsPerPage">
+          </md-slider>
+          <div class="kd-slider-value">{{$ctrl.global.itemsPerPage}}</div>
+        </md-slider-container>
       </kd-settings-entry>
 
       <div class="kd-settings-control-panel">

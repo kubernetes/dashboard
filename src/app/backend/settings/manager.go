@@ -102,7 +102,7 @@ func (sm *SettingsManager) GetGlobalSettings(client kubernetes.Interface) api.Se
 func (sm *SettingsManager) SaveGlobalSettings(client kubernetes.Interface, s *api.Settings) error {
 	cm, isDiff := sm.load(client)
 	if isDiff {
-		return errors.New("settings changed since last reload")
+		return errors.New(api.ConcurrentSettingsChangeError)
 	}
 
 	cm.Data[api.GlobalSettingsKey] = s.Marshal()

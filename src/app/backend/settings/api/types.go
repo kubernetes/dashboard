@@ -37,6 +37,10 @@ const (
 
 	// GlobalSettingsKey is a settings map key which maps to current global settings.
 	GlobalSettingsKey = "_global"
+
+	// ConcurrentSettingsChangeError occurs during settings save if settings were modified concurrently.
+	// Keep it in sync with CONCURRENT_CHANGE_ERROR constant from the frontend.
+	ConcurrentSettingsChangeError = "settings changed since last reload"
 )
 
 // SettingsManager is used for user settings management.
