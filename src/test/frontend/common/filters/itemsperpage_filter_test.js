@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ItemsPerPage} from 'common/dataselect/builder';
 import dataSelectModule from 'common/dataselect/module';
 import filtersModule from 'common/filters/module';
+import settingsServiceModule from 'common/settings/module';
 
 describe('Items per page filter', () => {
   /** @type {function(!Array<Object>, number, string): !Array<Object>} */
@@ -23,18 +23,22 @@ describe('Items per page filter', () => {
   let dataSelectService;
   /** @type {!Object} */
   let paginationService;
-
+  /** @type {number} */
+  let itemsPerPage = 10;
 
   beforeEach(() => {
     angular.mock.module(dataSelectModule.name);
     angular.mock.module('angularUtils.directives.dirPagination');
     angular.mock.module(filtersModule.name);
+    angular.mock.module(settingsServiceModule.name);
 
-    angular.mock.inject((_itemsPerPageFilter_, _kdDataSelectService_, _paginationService_) => {
-      itemsPerPageFilter = _itemsPerPageFilter_;
-      dataSelectService = _kdDataSelectService_;
-      paginationService = _paginationService_;
-    });
+    angular.mock.inject(
+        (_itemsPerPageFilter_, _kdDataSelectService_, _paginationService_, _kdSettingsService_) => {
+          itemsPerPageFilter = _itemsPerPageFilter_;
+          dataSelectService = _kdDataSelectService_;
+          paginationService = _paginationService_;
+          itemsPerPage = _kdSettingsService_.getItemsPerPage();
+        });
   });
 
   it('should format memory', () => {
@@ -46,13 +50,13 @@ describe('Items per page filter', () => {
     // then
     expect(itemsPerPageFilter(new Array(20), 5, dataSelectId).length).toEqual(5);
     expect(itemsPerPageFilter(new Array(100), 0, dataSelectId).length).toEqual(100);
-    expect(itemsPerPageFilter(new Array(ItemsPerPage + 10), undefined, dataSelectId).length)
-        .toEqual(ItemsPerPage);
-    expect(itemsPerPageFilter(new Array(ItemsPerPage + 1), undefined, dataSelectId).length)
-        .toEqual(ItemsPerPage);
-    expect(itemsPerPageFilter(new Array(ItemsPerPage), undefined, dataSelectId).length)
-        .toEqual(ItemsPerPage);
-    expect(itemsPerPageFilter(new Array(ItemsPerPage - 1), undefined, dataSelectId).length)
-        .toEqual(ItemsPerPage - 1);
+    expect(itemsPerPageFilter(new Array(itemsPerPage + 10), undefined, dataSelectId).length)
+        .toEqual(itemsPerPage);
+    expect(itemsPerPageFilter(new Array(itemsPerPage + 1), undefined, dataSelectId).length)
+        .toEqual(itemsPerPage);
+    expect(itemsPerPageFilter(new Array(itemsPerPage), undefined, dataSelectId).length)
+        .toEqual(itemsPerPage);
+    expect(itemsPerPageFilter(new Array(itemsPerPage - 1), undefined, dataSelectId).length)
+        .toEqual(itemsPerPage - 1);
   });
 });

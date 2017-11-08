@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import settingsServiceModule from 'common/settings/module';
 import {resolveDeploymentList} from 'deployment/list/stateconfig';
 import deploymentListModule from 'deployment/module';
 
@@ -21,6 +22,7 @@ describe('StateConfig for deployment list', () => {
 
   beforeEach(() => {
     angular.mock.module(deploymentListModule.name);
+    angular.mock.module(settingsServiceModule.name);
     angular.mock.inject((_kdDataSelectService_) => {
       kdDataSelectService = _kdDataSelectService_;
     });

@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import settingsServiceModule from 'common/settings/module';
 import {resolveCronJobList} from 'cronjob/list/stateconfig';
 import cronJobModule from 'cronjob/module';
 
@@ -21,6 +22,7 @@ describe('StateConfig for cron job list', () => {
 
   beforeEach(() => {
     angular.mock.module(cronJobModule.name);
+    angular.mock.module(settingsServiceModule.name);
     angular.mock.inject((_kdDataSelectService_) => {
       kdDataSelectService = _kdDataSelectService_;
     });

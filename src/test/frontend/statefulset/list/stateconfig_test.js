@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import settingsServiceModule from 'common/settings/module';
 import {resolveStatefulSetList} from 'statefulset/list/stateconfig';
 import statefulSetModule from 'statefulset/module';
 
@@ -21,6 +22,7 @@ describe('StateConfig for stateful set controller list', () => {
 
   beforeEach(() => {
     angular.mock.module(statefulSetModule.name);
+    angular.mock.module(settingsServiceModule.name);
     angular.mock.inject((_kdDataSelectService_) => {
       kdDataSelectService = _kdDataSelectService_;
     });

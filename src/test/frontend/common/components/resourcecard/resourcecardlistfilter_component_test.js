@@ -15,6 +15,7 @@
 import resourceCardModule from 'common/components/resourcecard/resourcecard_module';
 import dataSelectModule from 'common/dataselect/module';
 import errorHandlingModule from 'common/errorhandling/module';
+import settingsServiceModule from 'common/settings/module';
 
 describe('Resource card list filtering', () => {
   /** @type {!ResourceCardListFilterController} */
@@ -40,6 +41,7 @@ describe('Resource card list filtering', () => {
     angular.mock.module(dataSelectModule.name);
     angular.mock.module(resourceCardModule.name);
     angular.mock.module(errorHandlingModule.name);
+    angular.mock.module(settingsServiceModule.name);
 
     angular.mock.inject(
         ($componentController, _kdDataSelectService_, $rootScope, $resource, $httpBackend,

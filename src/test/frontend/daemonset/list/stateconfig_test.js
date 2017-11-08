@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import settingsServiceModule from 'common/settings/module';
 import {resolveDaemonSetList} from 'daemonset/list/stateconfig';
 import daemonSetModule from 'daemonset/module';
 
@@ -21,6 +22,7 @@ describe('StateConfig for daemon set list', () => {
 
   beforeEach(() => {
     angular.mock.module(daemonSetModule.name);
+    angular.mock.module(settingsServiceModule.name);
     angular.mock.inject((_kdDataSelectService_) => {
       kdDataSelectService = _kdDataSelectService_;
     });

@@ -14,6 +14,7 @@
 
 import module from 'cluster/module';
 import {resolveResource} from 'cluster/stateconfig';
+import settingsServiceModule from 'common/settings/module';
 
 describe('StateConfig for cluster list', () => {
   /** @type {!common/dataselect/dataselect_service.DataSelectService} */
@@ -21,6 +22,7 @@ describe('StateConfig for cluster list', () => {
 
   beforeEach(() => {
     angular.mock.module(module.name);
+    angular.mock.module(settingsServiceModule.name);
     angular.mock.inject((_kdDataSelectService_) => {
       kdDataSelectService = _kdDataSelectService_;
     });
