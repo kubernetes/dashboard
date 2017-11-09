@@ -59,8 +59,9 @@ export default function stateConfig($stateProvider) {
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveSearch(kdSearchResource, $stateParams, kdNamespaceService) {
-  let query = new DataSelectQueryBuilder()
+export function resolveSearch(
+    kdSearchResource, kdSettingsService, $stateParams, kdNamespaceService) {
+  let query = new DataSelectQueryBuilder(kdSettingsService.getItemsPerPage())
                   .setNamespace($stateParams.namespace)
                   .setFilterBy($stateParams.q)
                   .build();

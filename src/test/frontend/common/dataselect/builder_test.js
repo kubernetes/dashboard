@@ -12,20 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {DataSelectQueryBuilder, ItemsPerPage, SortableProperties} from 'common/dataselect/builder';
+import {DataSelectQueryBuilder, SortableProperties} from 'common/dataselect/builder';
 
 describe('Data select query builder', () => {
   /** @type {!DataSelectQueryBuilder} */
   let builder;
 
+  /** @type {number} */
+  const itemsPerPage = 10;
+
   beforeEach(() => {
-    builder = new DataSelectQueryBuilder();
+    builder = new DataSelectQueryBuilder(itemsPerPage);
   });
 
   it('should build query with default values', () => {
     // given
     let expectedQuery = {
-      itemsPerPage: ItemsPerPage,
+      itemsPerPage: itemsPerPage,
       page: 1,
       sortBy: `d,${SortableProperties.AGE}`,
       namespace: '',

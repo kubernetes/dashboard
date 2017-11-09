@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import settingsServiceModule from 'common/settings/module';
 import {resolveRoleList} from 'role/list/stateconfig';
 import roleListModule from 'role/module';
 
@@ -21,6 +22,7 @@ describe('StateConfig for role', () => {
 
   beforeEach(() => {
     angular.mock.module(roleListModule.name);
+    angular.mock.module(settingsServiceModule.name);
     angular.mock.inject((_kdDataSelectService_) => {
       kdDataSelectService = _kdDataSelectService_;
     });

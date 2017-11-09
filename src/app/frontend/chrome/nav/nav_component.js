@@ -32,6 +32,7 @@ import {stateName as replicaSetState} from '../../replicaset/list/state';
 import {stateName as replicationControllerState} from '../../replicationcontroller/list/state';
 import {stateName as secretState} from '../../secret/list/state';
 import {stateName as serviceState} from '../../service/list/state';
+import {stateName as settingsState} from '../../settings/state';
 import {stateName as statefulSetState} from '../../statefulset/list/state';
 import {stateName as storageClassState} from '../../storageclass/list/state';
 import {stateName as workloadState} from '../../workloads/state';
@@ -72,6 +73,7 @@ export class NavController {
       'config': configState,
       'storageClass': storageClassState,
       'about': aboutState,
+      'settings': settingsState,
       'overview': overviewState,
     };
   }

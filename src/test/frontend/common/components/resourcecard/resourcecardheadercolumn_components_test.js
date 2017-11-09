@@ -16,6 +16,7 @@ import resourceCardModule from 'common/components/resourcecard/resourcecard_modu
 import {SortableProperties} from 'common/dataselect/builder';
 import dataSelectModule from 'common/dataselect/module';
 import errorModule from 'common/errorhandling/module';
+import settingsServiceModule from 'common/settings/module';
 
 describe('Resource card header column', () => {
   /** @type {!ResourceCardHeaderColumnController} */
@@ -33,6 +34,7 @@ describe('Resource card header column', () => {
     angular.mock.module(resourceCardModule.name);
     angular.mock.module(dataSelectModule.name);
     angular.mock.module(errorModule.name);
+    angular.mock.module(settingsServiceModule.name);
 
     angular.mock.inject(
         ($componentController, _kdDataSelectService_, _errorDialog_, $q, $rootScope) => {

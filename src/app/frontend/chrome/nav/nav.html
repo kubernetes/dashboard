@@ -75,8 +75,13 @@ limitations under the License.
     <kd-nav-item class="kd-nav-item"
                  state="{{::$ctrl.states.secret}}">[[Secrets|Secrets menu entry.]]</kd-nav-item>
   </div>
+
+  <div class="kd-nav-group-divider"></div>
+
   <div class="kd-nav-group">
-    <kd-nav-item class="kd-nav-group-item kd-about"
+    <kd-nav-item class="kd-nav-group-item"
+                 state="{{::$ctrl.states.settings}}">[[Settings|Settings page menu entry.]]</kd-nav-item>
+    <kd-nav-item class="kd-nav-group-item"
                  state="{{::$ctrl.states.about}}">[[About|About page menu entry.]]</kd-nav-item>
   </div>
 </md-sidenav>

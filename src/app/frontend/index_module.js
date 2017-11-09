@@ -22,6 +22,7 @@ import clusterModule from './cluster/module';
 import authModule from './common/auth/module';
 import csrfTokenModule from './common/csrftoken/module';
 import scalingModule from './common/scaling/module';
+import settingsServiceModule from './common/settings/module';
 import configModule from './config/module';
 import configMapModule from './configmap/module';
 import cronJobModule from './cronjob/module';
@@ -52,6 +53,7 @@ import roleModule from './role/module';
 import searchModule from './search/module';
 import secretModule from './secret/module';
 import serviceModule from './service/module';
+import settingsModule from './settings/module';
 import shellModule from './shell/module';
 import statefulSetModule from './statefulset/module';
 import storageClassModule from './storageclass/module';
@@ -70,6 +72,8 @@ export default angular
           'ngSanitize',
           'ui.router',
           aboutModule.name,
+          settingsModule.name,
+          settingsServiceModule.name,
           authModule.name,
           overviewModule.name,
           chromeModule.name,

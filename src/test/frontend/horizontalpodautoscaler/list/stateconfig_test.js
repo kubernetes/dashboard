@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import settingsServiceModule from 'common/settings/module';
 import {resolveHorizontalPodAutoscalerList} from 'horizontalpodautoscaler/list/stateconfig';
 import horizontalPodAutoscalerModule from 'horizontalpodautoscaler/module';
 
@@ -21,6 +22,7 @@ describe('StateConfig for horizontal pod autoscaler controller list', () => {
 
   beforeEach(() => {
     angular.mock.module(horizontalPodAutoscalerModule.name);
+    angular.mock.module(settingsServiceModule.name);
     angular.mock.inject((_kdDataSelectService_) => {
       kdDataSelectService = _kdDataSelectService_;
     });

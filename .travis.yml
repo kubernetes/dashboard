@@ -26,8 +26,11 @@ language: node_js
 cache:
   directories:
     - node_modules
-    - bower_components
     - .tools
+
+# Remove dependencies that are downloaded by postinstall.sh script.
+before_cache:
+  - rm -rf node_modules/easyfont-roboto-mono node_modules/cljsjs-packages-externs
 
 addons:
   # Run tests that require a browser on SauceLabs CI provider. Learn more at: https://saucelabs.com

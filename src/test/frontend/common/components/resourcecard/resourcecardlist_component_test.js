@@ -15,6 +15,7 @@
 import componentsModule from 'common/components/module';
 import resourceCardModule from 'common/components/resourcecard/resourcecard_module';
 import errorModule from 'common/errorhandling/module';
+import settingsServiceModule from 'common/settings/module';
 
 describe('Resource card list', () => {
   /** @type {!angular.Scope} */
@@ -26,6 +27,7 @@ describe('Resource card list', () => {
     angular.mock.module(resourceCardModule.name);
     angular.mock.module(componentsModule.name);
     angular.mock.module(errorModule.name);
+    angular.mock.module(settingsServiceModule.name);
 
     angular.mock.inject(($rootScope, $compile) => {
       scope = $rootScope.$new();

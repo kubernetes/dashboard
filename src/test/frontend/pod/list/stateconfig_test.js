@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import settingsServiceModule from 'common/settings/module';
 import {resolvePodList} from 'pod/list/stateconfig';
 import podListModule from 'pod/module';
 
@@ -21,6 +22,7 @@ describe('StateConfig for pod list', () => {
 
   beforeEach(() => {
     angular.mock.module(podListModule.name);
+    angular.mock.module(settingsServiceModule.name);
     angular.mock.inject((_kdDataSelectService_) => {
       kdDataSelectService = _kdDataSelectService_;
     });

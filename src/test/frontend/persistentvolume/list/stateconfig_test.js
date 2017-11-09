@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import settingsServiceModule from 'common/settings/module';
 import {resolvePersistentVolumeList} from 'persistentvolume/list/stateconfig';
 import persistentVolumeListModule from 'persistentvolume/module';
 
@@ -21,6 +22,7 @@ describe('StateConfig for persistent volume controller list', () => {
 
   beforeEach(() => {
     angular.mock.module(persistentVolumeListModule.name);
+    angular.mock.module(settingsServiceModule.name);
     angular.mock.inject((_kdDataSelectService_) => {
       kdDataSelectService = _kdDataSelectService_;
     });

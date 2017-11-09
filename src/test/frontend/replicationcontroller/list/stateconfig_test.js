@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import settingsServiceModule from 'common/settings/module';
 import {resolveReplicationControllerList} from 'replicationcontroller/list/stateconfig';
 import replicationControllerModule from 'replicationcontroller/module';
 
@@ -21,6 +22,7 @@ describe('StateConfig for replication controller list', () => {
 
   beforeEach(() => {
     angular.mock.module(replicationControllerModule.name);
+    angular.mock.module(settingsServiceModule.name);
     angular.mock.inject((_kdDataSelectService_) => {
       kdDataSelectService = _kdDataSelectService_;
     });

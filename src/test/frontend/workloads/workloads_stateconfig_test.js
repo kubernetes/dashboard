@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import settingsServiceModule from 'common/settings/module';
 import workloadListModule from 'workloads/module';
 import {resolveWorkloads} from 'workloads/stateconfig';
 
@@ -21,6 +22,7 @@ describe('StateConfig for workload list', () => {
 
   beforeEach(() => {
     angular.mock.module(workloadListModule.name);
+    angular.mock.module(settingsServiceModule.name);
     angular.mock.inject((_kdDataSelectService_) => {
       kdDataSelectService = _kdDataSelectService_;
     });

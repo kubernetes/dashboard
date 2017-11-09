@@ -44,6 +44,7 @@
   <translation id="5794147661362074597" key="MSG_BREADCRUMBS_ROLES_LABEL" desc="Label 'Roles' that appears as a breadcrumbs on the action bar.">ロール</translation>
   <translation id="2851304790534826779" key="MSG_BREADCRUMBS_SEARCH_LABEL" desc="Label 'Search' that appears as a breadcrumbs on the action bar.">検索</translation>
   <translation id="391192137756114804" key="MSG_BREADCRUMBS_SECRETS_LABEL" desc="Label 'Secrets' that appears as a breadcrumbs on the action bar.">シークレット</translation>
+  <translation id="7289015346195603694" key="MSG_BREADCRUMBS_SETTINGS_LABEL" desc="Label 'Settings' that appears as a breadcrumbs on the action bar.">Settings</translation>
   <translation id="6064633767606789407" key="MSG_BREADCRUMBS_SHELL_LABEL" desc="Breadcrum label for the shell view.">シェル</translation>
   <translation id="7318741060898365517" key="MSG_BREADCRUMBS_STATEFUL_SETS_LABEL" desc="Label 'Stateful Sets' that appears as a breadcrumbs on the action bar.">ステートフルセット</translation>
   <translation id="1427200251427963672" key="MSG_BREADCRUMBS_STORAGE_CLASSES_LABEL" desc="Label 'Storage Classes' that appears as a breadcrumbs on the action bar.">ストレージクラス</translation>
@@ -69,6 +70,7 @@
   <translation id="1040732924028857594" key="MSG_CHROME_NAV_NAV_20" desc="Secrets menu entry.">シークレット</translation>
   <translation id="8368599117962865229" key="MSG_CHROME_NAV_NAV_21" desc="About page menu entry.">バージョン情報</translation>
   <translation id="7160486052155717528" key="MSG_CHROME_NAV_NAV_22" desc="Cron Jobs menu entry.">Cron Jobs</translation>
+  <translation id="5937278785382848812" key="MSG_CHROME_NAV_NAV_23" desc="Settings page menu entry.">Settings</translation>
   <translation id="4957526140740745953" key="MSG_CHROME_NAV_NAV_3" desc="Persistent Volumes menu item in the nav.">永続ボリューム</translation>
   <translation id="5886605472855359914" key="MSG_CHROME_NAV_NAV_4" desc="Config and Storage group menu entry.">コンフィグとストレージ</translation>
   <translation id="874273813471860738" key="MSG_CHROME_NAV_NAV_5" desc="Storage Classes menu entry.">ストレージクラス</translation>
@@ -871,6 +873,17 @@
   <translation id="7871952624539430064" key="MSG_SERVICE_LIST_CARDLIST_8" desc="Text for service card list zerostate.">表示するものがありません</translation>
   <translation id="3019719082217228018" key="MSG_SERVICE_LIST_CARD_0" desc="tooltip for pending service card icon">このサービスは待機状態です</translation>
   <translation id="1499203949044274957" key="MSG_SERVICE_LIST_CARD_1" desc="Tooltip for the age column">Created at</translation>
+  <translation id="896880463373184359" key="MSG_SETTINGS_SAVE_ANYWAYS_DIALOG_CANCEL_LABEL" desc="Cancel label of &quot;save anyways&quot; dialog from settings page.">Refresh</translation>
+  <translation id="1582696918556995155" key="MSG_SETTINGS_SAVE_ANYWAYS_DIALOG_CONFIRM_LABEL" desc="Confirm label of &quot;save anyways&quot; dialog from settings page.">Save</translation>
+  <translation id="9067767842000757599" key="MSG_SETTINGS_SAVE_ANYWAYS_DIALOG_CONTENT" desc="Content of &quot;save anyways&quot; dialog from settings page.">Do you want to save them anyways?</translation>
+  <translation id="4555037291904526118" key="MSG_SETTINGS_SAVE_ANYWAYS_DIALOG_TITLE" desc="Title of &quot;save anyways&quot; dialog from settings page.">Settings have changed since last reload</translation>
+  <translation id="6572029615878487230" key="MSG_SETTINGS_SETTINGS_0" desc="Global settings header.">Global settings</translation>
+  <translation id="3924205532807559531" key="MSG_SETTINGS_SETTINGS_1" desc="Cluster name parameter name">Cluster name</translation>
+  <translation id="1823065339814921136" key="MSG_SETTINGS_SETTINGS_2" desc="Cluster name parameter description">Cluster name appears in the browser window title if it is set</translation>
+  <translation id="1078110966378219022" key="MSG_SETTINGS_SETTINGS_3" desc="Cluster name parameter placeholder">Cluster name</translation>
+  <translation id="5876711404835511637" key="MSG_SETTINGS_SETTINGS_4" desc="Items per page parameter name">Items per page</translation>
+  <translation id="8451116602974083200" key="MSG_SETTINGS_SETTINGS_5" desc="Items per page parameter description">Max number of items that can be displayed on each list page</translation>
+  <translation id="6310132095834954202" key="MSG_SETTINGS_SETTINGS_6" desc="Save button label">Save</translation>
   <translation id="3162800940071393879" key="MSG_SHELL_SHELL_0" desc="Title prefix for the shell card.">Shell in</translation>
   <translation id="6124573494636381071" key="MSG_SHELL_SHELL_1" desc="Title part for the shell card.">in</translation>
   <translation id="2232943352979399383" key="MSG_STATEFULSET_DETAIL_ACTIONBAR_0" desc="Label \'Stateful Set\' which appears at the top of the delete dialog, opened from a stateful set details page.">ステートフルセット</translation>

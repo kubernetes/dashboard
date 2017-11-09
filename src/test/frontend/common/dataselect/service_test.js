@@ -13,18 +13,24 @@
 // limitations under the License.
 
 import componentsModule from 'common/components/module';
-import {ItemsPerPage, SortableProperties} from 'common/dataselect/builder';
+import {SortableProperties} from 'common/dataselect/builder';
 import {ALL_NAMESPACES} from 'common/namespace/component';
+import settingsServiceModule from 'common/settings/module';
+
 
 describe('Data Select service ', () => {
   /** @type {!DataSelectService} */
   let service;
+  /** @type {number} */
+  let itemsPerPage = 10;
 
   beforeEach(() => {
     angular.mock.module(componentsModule.name);
+    angular.mock.module(settingsServiceModule.name);
 
-    angular.mock.inject((_kdDataSelectService_) => {
+    angular.mock.inject((_kdDataSelectService_, _kdSettingsService_) => {
       service = _kdDataSelectService_;
+      itemsPerPage = _kdSettingsService_.getItemsPerPage();
     });
   });
 
@@ -55,16 +61,12 @@ describe('Data Select service ', () => {
     expect(result).toBeFalsy();
   });
 
-  it('min rows limit should be defined', () => {
-    expect(service.getMinRowsLimit()).toEqual(ItemsPerPage);
-  });
-
   it('should return default resource query', () => {
     // given
     let namespace = 'test-ns';
     let name = 'test-name';
     let expected = {
-      itemsPerPage: ItemsPerPage,
+      itemsPerPage: itemsPerPage,
       page: 1,
       sortBy: `d,${SortableProperties.AGE}`,
       namespace: namespace,
@@ -84,7 +86,7 @@ describe('Data Select service ', () => {
     let namespace = ALL_NAMESPACES;
     let name = 'test-name';
     let expected = {
-      itemsPerPage: ItemsPerPage,
+      itemsPerPage: itemsPerPage,
       page: 1,
       sortBy: `d,${SortableProperties.AGE}`,
       namespace: '',

@@ -22,14 +22,18 @@ export class TitleController {
    * @param {!angular.$interpolate} $interpolate
    * @param {!./common/state/service.FutureStateService} kdFutureStateService
    * @param {!./common/components/breadcrumbs/service.BreadcrumbsService} kdBreadcrumbsService
+   * @param {!./common/settings/service.SettingsService} kdSettingsService
    * @ngInject
    */
-  constructor($interpolate, kdFutureStateService, kdBreadcrumbsService) {
+  constructor($interpolate, kdFutureStateService, kdBreadcrumbsService, kdSettingsService) {
     /** @private {!./common/state/service.FutureStateService} */
     this.futureStateService_ = kdFutureStateService;
 
     /** @private {!./common/components/breadcrumbs/service.BreadcrumbsService} */
     this.kdBreadcrumbsService_ = kdBreadcrumbsService;
+
+    /** @private {!./common/settings/service.SettingsService} */
+    this.settingsService_ = kdSettingsService;
 
     /** @private {!angular.$interpolate} */
     this.interpolate_ = $interpolate;
@@ -39,22 +43,28 @@ export class TitleController {
   }
 
   /**
-   * Returns title of browser window based on current state's breadcrumb label.
+   * Returns title of browser window based on current state's breadcrumb label and cluster name set
+   * in settings.
    *
    * @export
    * @return {string}
    */
   title() {
-    let conf = this.kdBreadcrumbsService_.getBreadcrumbConfig(this.futureStateService_.state);
+    let windowTitle = '';
 
-    // When conf is undefined or label is undefined or empty then fallback to default title
-    if (!conf || !conf.label) {
-      return this.defaultTitle_;
+    let clusterName = this.settingsService_.getClusterName();
+    if (clusterName) {
+      windowTitle += `${clusterName} - `;
     }
 
-    let params = this.futureStateService_.params;
-    let stateLabel = this.interpolate_(conf.label)({'$stateParams': params}).toString();
+    let conf = this.kdBreadcrumbsService_.getBreadcrumbConfig(this.futureStateService_.state);
+    if (conf && conf.label) {
+      let params = this.futureStateService_.params;
+      let stateLabel = this.interpolate_(conf.label)({'$stateParams': params}).toString();
+      windowTitle += `${stateLabel} - `;
+    }
 
-    return `${stateLabel} - ${this.defaultTitle_}`;
+    windowTitle += this.defaultTitle_;
+    return windowTitle;
   }
 }

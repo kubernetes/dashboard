@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import settingsServiceModule from 'common/settings/module';
 import {resolveSecretList} from 'secret/list/stateconfig';
 import secretModule from 'secret/module';
 
@@ -21,6 +22,7 @@ describe('StateConfig for secret list', () => {
 
   beforeEach(() => {
     angular.mock.module(secretModule.name);
+    angular.mock.module(settingsServiceModule.name);
     angular.mock.inject((_kdDataSelectService_) => {
       kdDataSelectService = _kdDataSelectService_;
     });

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import resourceCardModule from 'common/components/resourcecard/resourcecard_module';
+import settingsServiceModule from 'common/settings/module';
 
 describe('Resource card header columns', () => {
   /** @type {!ResourceCardHeaderColumnsController} */
@@ -22,6 +23,7 @@ describe('Resource card header columns', () => {
 
   beforeEach(() => {
     angular.mock.module(resourceCardModule.name);
+    angular.mock.module(settingsServiceModule.name);
 
     angular.mock.inject(($componentController) => {
       cardListCtrl = {

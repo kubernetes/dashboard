@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import settingsServiceModule from 'common/settings/module';
 import overviewListModule from 'overview/module';
 import {resolveOverview} from 'overview/stateconfig';
 
@@ -21,6 +22,7 @@ describe('StateConfig for all objects list', () => {
 
   beforeEach(() => {
     angular.mock.module(overviewListModule.name);
+    angular.mock.module(settingsServiceModule.name);
     angular.mock.inject((_kdDataSelectService_) => {
       kdDataSelectService = _kdDataSelectService_;
     });

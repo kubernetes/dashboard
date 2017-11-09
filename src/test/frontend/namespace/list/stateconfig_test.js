@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import settingsServiceModule from 'common/settings/module';
 import {resolveNamespaceList} from 'namespace/list/stateconfig';
 import namespaceModule from 'namespace/module';
 
@@ -21,6 +22,7 @@ describe('StateConfig for namespace list', () => {
 
   beforeEach(() => {
     angular.mock.module(namespaceModule.name);
+    angular.mock.module(settingsServiceModule.name);
     angular.mock.inject((_kdDataSelectService_) => {
       kdDataSelectService = _kdDataSelectService_;
     });

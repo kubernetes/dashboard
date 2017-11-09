@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import settingsServiceModule from 'common/settings/module';
 import {resolveStorageClassList} from 'storageclass/list/stateconfig';
 import storageClassModule from 'storageclass/module';
 
@@ -21,6 +22,7 @@ describe('StateConfig for storage class controller list', () => {
 
   beforeEach(() => {
     angular.mock.module(storageClassModule.name);
+    angular.mock.module(settingsServiceModule.name);
     angular.mock.inject((_kdDataSelectService_) => {
       kdDataSelectService = _kdDataSelectService_;
     });

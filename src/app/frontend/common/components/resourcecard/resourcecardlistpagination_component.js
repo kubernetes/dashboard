@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {DataSelectQueryBuilder} from './../../dataselect/builder';
-
 /**
  * @final
  */
@@ -23,7 +21,7 @@ export class ResourceCardListPaginationController {
    * @param {!../../errorhandling/dialog.ErrorDialog} errorDialog
    * @ngInject
    */
-  constructor(kdDataSelectService, errorDialog) {
+  constructor(kdDataSelectService, kdSettingsService, errorDialog) {
     /**
      * @export {!./resourcecardlist_component.ResourceCardListController} -
      * Initialized from require just before $onInit is called.
@@ -31,6 +29,9 @@ export class ResourceCardListPaginationController {
     this.resourceCardListCtrl;
     /** @private {!../../dataselect/service.DataSelectService} */
     this.dataSelectService_ = kdDataSelectService;
+
+    this.settingsService_ = kdSettingsService;
+
     /** @private {!../../errorhandling/dialog.ErrorDialog} */
     this.errorDialog_ = errorDialog;
     /** @export */
@@ -68,7 +69,7 @@ export class ResourceCardListPaginationController {
    */
   shouldShowPagination() {
     return this.resourceCardListCtrl.list.listMeta.totalItems >
-        this.dataSelectService_.getMinRowsLimit() &&
+        this.settingsService_.getItemsPerPage() &&
         this.shouldEnablePagination();
   }
 
@@ -79,7 +80,8 @@ export class ResourceCardListPaginationController {
    * @export
    */
   pageChanged(newPageNumber) {
-    let dataSelectQuery = new DataSelectQueryBuilder().setPage(newPageNumber).build();
+    let dataSelectQuery =
+        this.dataSelectService_.newDataSelectQueryBuilder().setPage(newPageNumber).build();
 
     let promise = this.dataSelectService_.paginate(
         this.resourceCardListCtrl.listResource, this.selectId, dataSelectQuery);

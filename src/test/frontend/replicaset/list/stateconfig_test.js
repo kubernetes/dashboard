@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import settingsServiceModule from 'common/settings/module';
 import {resolveReplicaSetList} from 'replicaset/list/stateconfig';
 import replicaSetModule from 'replicaset/module';
 
@@ -21,6 +22,7 @@ describe('StateConfig for replica set list', () => {
 
   beforeEach(() => {
     angular.mock.module(replicaSetModule.name);
+    angular.mock.module(settingsServiceModule.name);
     angular.mock.inject((_kdDataSelectService_) => {
       kdDataSelectService = _kdDataSelectService_;
     });

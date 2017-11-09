@@ -30,6 +30,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/handler"
 	"github.com/kubernetes/dashboard/src/app/backend/integration"
 	integrationapi "github.com/kubernetes/dashboard/src/app/backend/integration/api"
+	"github.com/kubernetes/dashboard/src/app/backend/settings"
 	"github.com/kubernetes/dashboard/src/app/backend/sync"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/spf13/pflag"
@@ -83,6 +84,9 @@ func main() {
 	// Init auth manager
 	authManager := initAuthManager(clientManager, time.Duration(*argTokenTTL))
 
+	// Init settings manager
+	settingsManager := settings.NewSettingsManager(clientManager)
+
 	// Init integrations
 	integrationManager := integration.NewIntegrationManager(clientManager)
 	integrationManager.Metric().ConfigureHeapster(*argHeapsterHost).
@@ -91,7 +95,8 @@ func main() {
 	apiHandler, err := handler.CreateHTTPAPIHandler(
 		integrationManager,
 		clientManager,
-		authManager)
+		authManager,
+		settingsManager)
 	if err != nil {
 		handleFatalInitError(err)
 	}
