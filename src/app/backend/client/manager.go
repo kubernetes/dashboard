@@ -42,7 +42,12 @@ const (
 	DefaultCmdConfigName = "kubernetes"
 	// Header name that contains token used for authorization. See TokenManager for more information.
 	JWETokenHeader = "jweToken"
+	// Default http header for user-agent
+	DefaultUserAgent = "dashboard"
 )
+
+// VERSION of this binary
+var Version = "UNKNOWN"
 
 // ClientManager is responsible for initializing and creating clients to communicate with
 // kubernetes apiserver on demand
@@ -188,6 +193,7 @@ func (self *clientManager) initConfig(cfg *rest.Config) {
 	cfg.QPS = DefaultQPS
 	cfg.Burst = DefaultBurst
 	cfg.ContentType = DefaultContentType
+	cfg.UserAgent = DefaultUserAgent + "/" + Version
 }
 
 // Returns rest Config based on provided apiserverHost and kubeConfigPath flags. If both are

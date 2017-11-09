@@ -76,6 +76,12 @@ const imageNameBase = 'kubernetes-dashboard';
  */
 export default {
   /**
+   * the expression of recording version info into src/app/backend/client/manager.go
+   */
+  recordVersionExpression:
+      `-X github.com/kubernetes/dashboard/src/app/backend/client.Version=${version.release}`,
+
+  /**
    * Configuration for container registry to push images to.
    */
   containerRegistry: containerRegistry,
