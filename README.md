@@ -18,19 +18,18 @@ running in the cluster and troubleshoot them, as well as manage the cluster itse
 privileges and can only be accessed over HTTPS. It is recommended to read [Access Control](
 https://github.com/kubernetes/dashboard/wiki/Access-control) guide before performing any further steps.
 
-To deploy Dashboard execute following command:
+To deploy Dashboard, execute following command:
 
 ```sh
 $ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
 ```
 
-To start using Dashboard run following command:
+To access Dashboard from your local workstation you must create a secure channel to your Kubernetes cluster. Run the following command:
 
 ```sh
 $ kubectl proxy
 ```
-This command creates a secure channel with your Kubernetes cluster and provides local access
-to Dashboard at:
+Now access Dashboard at:
 
 
 [`http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/`](
