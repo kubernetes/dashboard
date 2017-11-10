@@ -1325,7 +1325,7 @@ backendApi.NodeAddress;
  *   initContainerImages: !Array<string>,
  *   podList: !backendApi.PodList,
  *   eventList: !backendApi.EventList,
- *   addresses: !backendApi.NodeAddress
+ *   addresses: !backendApi.NodeAddress,
  *   errors: !Array<!backendApi.Error>
  * }}
  */
