@@ -110,7 +110,7 @@ func main() {
 
 	if *argAutoGenerateCertificates {
 		log.Println("Auto-generating certificates")
-		certCreator := ecdsa.NewECDSACreator(argKeyFile, argCertFile, elliptic.P256(), clientManager.InsecureClient())
+		certCreator := ecdsa.NewECDSACreator(argKeyFile, argCertFile, elliptic.P256())
 		certManager := cert.NewCertManager(certCreator, *argDefaultCertDir)
 		certManager.GenerateCertificates()
 	}

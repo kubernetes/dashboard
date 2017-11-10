@@ -26,6 +26,3 @@ type Creator interface {
 	// GetCertFileName returns certificate file name
 	GetCertFileName() string
 }
-
-// TODO(floreks): Implement certificate signing
-type Signer interface{}

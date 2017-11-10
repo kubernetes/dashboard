@@ -15,15 +15,13 @@ import (
 	certapi "github.com/kubernetes/dashboard/src/app/backend/cert/api"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/client-go/kubernetes"
 )
 
 // Implements certificate Creator interface. See Creator for more information.
 type ecdsaCreator struct {
-	keyFile, certFile *string
-
-	curve  elliptic.Curve
-	client kubernetes.Interface
+	keyFile  *string
+	certFile *string
+	curve    elliptic.Curve
 }
 
 // GenerateKey implements certificate Creator interface. See Creator for more information.
@@ -143,10 +141,9 @@ func (self *ecdsaCreator) init() {
 }
 
 // NewECDSACreator creates ECDSACreator instance.
-func NewECDSACreator(keyFile, certFile *string, curve elliptic.Curve, client kubernetes.Interface) certapi.Creator {
+func NewECDSACreator(keyFile, certFile *string, curve elliptic.Curve) certapi.Creator {
 	creator := &ecdsaCreator{
 		curve:    curve,
-		client:   client,
 		keyFile:  keyFile,
 		certFile: certFile,
 	}
