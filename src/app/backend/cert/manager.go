@@ -7,11 +7,13 @@ import (
 	certapi "github.com/kubernetes/dashboard/src/app/backend/cert/api"
 )
 
+// Implements cert/api/types.Manager interface. See Manager for more information.
 type Manager struct {
 	creator certapi.Creator
 	certDir string
 }
 
+// GenerateCertificates implements Manager interface. See Manager for more information.
 func (self *Manager) GenerateCertificates() {
 	if self.keyFileExists() && self.certFileExists() {
 		log.Println("Certificates already exist. Skipping.")
@@ -41,6 +43,7 @@ func (self *Manager) exists(file string) bool {
 	return !os.IsNotExist(err)
 }
 
+// NewCertManager creates Manager object.
 func NewCertManager(creator certapi.Creator, certDir string) certapi.Manager {
 	return &Manager{creator: creator, certDir: certDir}
 }

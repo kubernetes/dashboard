@@ -126,8 +126,8 @@ func main() {
 
 	// Listen for http or https
 	if *argCertFile != "" && *argKeyFile != "" {
-		certFilePath := certPath(*argCertFile)
-		keyFilePath := certPath(*argKeyFile)
+		certFilePath := *argDefaultCertDir + string(os.PathSeparator) + *argCertFile
+		keyFilePath := *argDefaultCertDir + string(os.PathSeparator) + *argKeyFile
 		log.Printf("Serving securely on HTTPS port: %d", *argPort)
 		secureAddr := fmt.Sprintf("%s:%d", *argBindAddress, *argPort)
 		go func() { log.Fatal(http.ListenAndServeTLS(secureAddr, certFilePath, keyFilePath, nil)) }()
@@ -164,10 +164,6 @@ func initAuthManager(clientManager client.ClientManager, tokenTTL time.Duration)
 	}
 
 	return auth.NewAuthManager(clientManager, tokenManager, authModes)
-}
-
-func certPath(certFileName string) string {
-	return *argDefaultCertDir + string(os.PathSeparator) + certFileName
 }
 
 /**

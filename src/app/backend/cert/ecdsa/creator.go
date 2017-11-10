@@ -18,7 +18,7 @@ import (
 	"k8s.io/client-go/kubernetes"
 )
 
-// Implements certificate Creator interface
+// Implements certificate Creator interface. See Creator for more information.
 type ecdsaCreator struct {
 	keyFile, certFile *string
 
@@ -26,6 +26,7 @@ type ecdsaCreator struct {
 	client kubernetes.Interface
 }
 
+// GenerateKey implements certificate Creator interface. See Creator for more information.
 func (self *ecdsaCreator) GenerateKey() interface{} {
 	key, err := ecdsa.GenerateKey(self.curve, rand.Reader)
 	if err != nil {
@@ -35,6 +36,7 @@ func (self *ecdsaCreator) GenerateKey() interface{} {
 	return key
 }
 
+// GenerateCertificate implements certificate Creator interface. See Creator for more information.
 func (self *ecdsaCreator) GenerateCertificate(key interface{}) []byte {
 	ecdsaKey := self.getKey(key)
 	pod := self.getDashboardPod()
@@ -60,6 +62,7 @@ func (self *ecdsaCreator) GenerateCertificate(key interface{}) []byte {
 	return certBytes
 }
 
+// StoreCertificates implements certificate Creator interface. See Creator for more information.
 func (self *ecdsaCreator) StoreCertificates(path string, key interface{}, certBytes []byte) {
 	ecdsaKey := self.getKey(key)
 	certOut, err := os.Create(path + string(os.PathSeparator) + self.GetCertFileName())
@@ -83,10 +86,12 @@ func (self *ecdsaCreator) StoreCertificates(path string, key interface{}, certBy
 	keyOut.Close()
 }
 
+// GetKeyFileName implements certificate Creator interface. See Creator for more information.
 func (self *ecdsaCreator) GetKeyFileName() string {
 	return *self.keyFile
 }
 
+// GetCertFileName implements certificate Creator interface. See Creator for more information.
 func (self *ecdsaCreator) GetCertFileName() string {
 	return *self.certFile
 }
@@ -137,6 +142,7 @@ func (self *ecdsaCreator) init() {
 	}
 }
 
+// NewECDSACreator creates ECDSACreator instance.
 func NewECDSACreator(keyFile, certFile *string, curve elliptic.Curve, client kubernetes.Interface) certapi.Creator {
 	creator := &ecdsaCreator{
 		curve:    curve,
