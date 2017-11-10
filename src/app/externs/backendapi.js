@@ -1304,11 +1304,18 @@ backendApi.NodeAllocatedResources;
 
 /**
  * @typedef {{
+ *   type: string,
+ *   address: string
+ * }}
+ */
+backendApi.NodeAddress;
+
+/**
+ * @typedef {{
  *   objectMeta: !backendApi.ObjectMeta,
  *   typeMeta: !backendApi.TypeMeta,
  *   phase: string,
  *   allocatedResources: !backendApi.NodeAllocatedResources,
- *   externalID: string,
  *   podCIDR: string,
  *   providerID: string,
  *   unschedulable: boolean,
@@ -1318,6 +1325,7 @@ backendApi.NodeAllocatedResources;
  *   initContainerImages: !Array<string>,
  *   podList: !backendApi.PodList,
  *   eventList: !backendApi.EventList,
+ *   addresses: !backendApi.NodeAddress,
  *   errors: !Array<!backendApi.Error>
  * }}
  */

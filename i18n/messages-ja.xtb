@@ -563,7 +563,7 @@
   <translation id="6424547851609840629" key="MSG_NODE_DETAIL_INFO_15" desc="Label \'Operating system\' for the node operating system displayed on its details page.">オペレーティングシステム</translation>
   <translation id="6375391815927008544" key="MSG_NODE_DETAIL_INFO_16" desc="Label \'Architecture\' for the node architecture displayed on its details page.">アーキテクチャ</translation>
   <translation id="8469658566308340861" key="MSG_NODE_DETAIL_INFO_17" desc="Label \'Taints\' for the node taints displayed on its details page.">テイント</translation>
-  <translation id="6713664714270681129" key="MSG_NODE_DETAIL_INFO_2" desc="Label \'External ID\' for the node external ID displayed on its details page.">外部 ID</translation>
+  <translation id="7399289210232632098" key="MSG_NODE_DETAIL_INFO_2" desc="Label \'Addresses\' for the node addresses displayed on its details page.">Addresses</translation>
   <translation id="684407257893900868" key="MSG_NODE_DETAIL_INFO_3" desc="Label \'Pod CIDR\' for the node external ID displayed on its details page.">ポッド CIDR</translation>
   <translation id="3412686708492919268" key="MSG_NODE_DETAIL_INFO_4" desc="Label \'Provider ID\' for the node external ID displayed on its details page.">プロバイダー ID</translation>
   <translation id="4308082913059054249" key="MSG_NODE_DETAIL_INFO_5" desc="Label \'Unschedulable\' for the node external ID displayed on its details page.">スケジューリング不可</translation>
