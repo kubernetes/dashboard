@@ -48,7 +48,6 @@ func TestGetNodeDetail(t *testing.T) {
 			&NodeDetail{
 				ObjectMeta:    api.ObjectMeta{Name: "test-node"},
 				TypeMeta:      api.TypeMeta{Kind: api.ResourceKindNode},
-				ExternalID:    "127.0.0.1",
 				PodCIDR:       "127.0.0.1",
 				ProviderID:    "ID-1",
 				Unschedulable: true,
