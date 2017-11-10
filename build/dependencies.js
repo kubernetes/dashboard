@@ -24,14 +24,14 @@ import conf from './conf';
 /**
  * Updates npm dependencies.
  */
-gulp.task('update-npm-dependencies', function() {
+gulp.task('update-npm-deps', function() {
   return gulp.src([path.join(conf.paths.base, 'package.json')]).pipe(updateDependencies('npm'));
 });
 
 /**
  * Checks npm dependencies which need to be updated.
  */
-gulp.task('check-npm-dependencies', function() {
+gulp.task('check-npm-deps', function() {
   return gulp.src([path.join(conf.paths.base, 'package.json')]).pipe(checkDependencies('npm'));
 });
 
@@ -80,7 +80,7 @@ function checkDependencies(packageManager) {
           if (dependenciesStr.length !== 0) {
             gulputil.log(gulputil.colors.yellow(
                 `Dependencies needed to update:\n${dependenciesStr}\n` +
-                `Run: 'gulp update-${packageManager}-dependencies', then '${packageManager} ` +
+                `Run: 'gulp update-${packageManager}-deps', then '${packageManager} ` +
                 `install' to update dependencies.\n`));
           }
 
