@@ -23,9 +23,14 @@ limitations under the License.
   <kd-info-card-section>
     <kd-object-meta-info-card object-meta="::$ctrl.node.objectMeta">
     </kd-object-meta-info-card>
-    <kd-info-card-entry ng-repeat="address in ::$ctrl.node.addresses"
-                        title="{{address.type}}">
-      {{address.address}}
+    <kd-info-card-entry title="[[Addresses|Label 'Addresses' for the node addresses displayed on its details page.]]"
+                        ng-if="::$ctrl.node.addresses">
+      <div ng-repeat="(index, address) in $ctrl.node.addresses"
+           class="kd-chips">
+        <kd-middle-ellipsis display-string="{{::address.type}}: {{::address.address}}"
+                            class="kd-chip">
+        </kd-middle-ellipsis>
+      </div>
     </kd-info-card-entry>
     <kd-info-card-entry title="[[Taints|Label 'Taints' for the node taints displayed on its details page.]]"
                         ng-if="::$ctrl.node.taints">
