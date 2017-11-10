@@ -153,7 +153,7 @@ export default {
      */
     autoGenerateCerts: gulpUtil.env.autoGenerateCerts !== undefined ?
         gulpUtil.env.autoGenerateCerts :
-        '',
+        'false',
     /**
      * Directory path containing certificate files. Matches dashboard '--default-cert-dir' flag.
      */
