@@ -32,13 +32,18 @@ type LoginStatus struct {
 }
 
 // ValidateLoginStatus returns information about user login status and if request was made over HTTPS.
-func ValidateLoginStatus(request *restful.Request) *LoginStatus {
+func ValidateLoginStatus(request *restful.Request, enableInsecureLogin bool) *LoginStatus {
 	authHeader := request.HeaderParameter("Authorization")
 	tokenHeader := request.HeaderParameter(client.JWETokenHeader)
+
+	httpsMode := request.Request.TLS != nil
+	if enableInsecureLogin {
+		httpsMode = true
+	}
 
 	return &LoginStatus{
 		TokenPresent:  len(tokenHeader) > 0,
 		HeaderPresent: len(authHeader) > 0,
-		HTTPSMode:     request.Request.TLS != nil,
+		HTTPSMode:     httpsMode,
 	}
 }

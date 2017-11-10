@@ -245,7 +245,8 @@ export class AuthService {
   }
 
   /**
-   * Checks authentication is enabled. It is enabled only on HTTPS.
+   * Checks authentication is enabled. It is enabled only on HTTPS. Can be overridden by
+   * 'enable-insecure-login' flag passed to dashboard.
    *
    * @param {!backendApi.LoginStatus} loginStatus
    * @return {boolean}

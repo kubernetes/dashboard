@@ -46,7 +46,12 @@ function getBackendArgs(mode) {
     `--heapster-host=${conf.backend.heapsterServerHost}`,
     `--tls-cert-file=${conf.backend.tlsCert}`,
     `--tls-key-file=${conf.backend.tlsKey}`,
+    `--auto-generate-certificates=${conf.backend.autoGenerateCerts}`,
   ];
+
+  if (conf.backend.defaultCertDir.length > 0) {
+    args.push(`--default-cert-dir=${conf.backend.defaultCertDir}`);
+  }
 
   if (mode === conf.build.production) {
     args.push(`--insecure-port=${conf.frontend.serverPort}`);

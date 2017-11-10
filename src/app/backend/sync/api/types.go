@@ -19,7 +19,7 @@ import (
 	"k8s.io/apimachinery/pkg/watch"
 )
 
-// ActionHandlerFunction is a callback function that can be registered on an watch event.
+// ActionHandlerFunction is a callback function that can be registered on a watch event.
 type ActionHandlerFunction func(runtime.Object)
 
 // Synchronizer is used to watch over a kubernetes resource changes in real time. It can be used to i.e. synchronize
