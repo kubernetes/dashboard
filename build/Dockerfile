@@ -20,27 +20,25 @@
 # golang is based on debian:jessie
 FROM golang
 
-# Install java and nodejs. go is already installed
-# A small tweak, apt-get update is already run by the nodejs setup script,
-# so there's no need to run it again
-RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - \
+# Install Java and Node.js. Go is already installed.
+# A small tweak, apt-get update is already run by the nodejs setup script, so there's no need to run it again.
+RUN curl -sL https://deb.nodesource.com/setup_9.x | bash - \
   && apt-get install -y --no-install-recommends \
 	openjdk-8-jre \
 	nodejs \
+	patch \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& apt-get clean
 
-# Download a statically linked docker client, so the container is able to build images on the host
+# Download a statically linked docker client, so the container is able to build images on the host.
 RUN curl -sSL https://get.docker.com/builds/Linux/x86_64/docker-1.9.1 > /usr/bin/docker && \
     chmod +x /usr/bin/docker
 
-# Current directory is always /dashboard
+# Current directory is always /dashboard.
 WORKDIR /dashboard
-
-# Install all npm deps. This will take a while.
-COPY package.json ./
-COPY build/postinstall.sh build/
-RUN npm install --unsafe-perm
 
 # Copy entire source tree.
 COPY ./ ./
+
+# Install dependencies. This will take a while.
+RUN npm install --unsafe-perm
