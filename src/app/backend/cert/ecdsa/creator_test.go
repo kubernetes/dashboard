@@ -46,7 +46,7 @@ func TestEcdsaCreator_GetKeyFileName(t *testing.T) {
 	certFile := "cert.crt"
 	creator := ecdsa.NewECDSACreator(&keyFile, &certFile, elliptic.P256())
 
-	if creator.GetKeyFileName() != certFile {
-		t.Fatalf("Expected cert key file name to equal %s but got %s.", keyFile, creator.GenerateKey())
+	if creator.GetKeyFileName() != keyFile {
+		t.Fatalf("Expected cert key file name to equal %s but got %s.", keyFile, creator.GetKeyFileName())
 	}
 }
