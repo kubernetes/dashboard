@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import {deployAppStateName} from '../deploy/state';
+import {stateName as overviewState} from '../overview/state';
 
 import {actionbarViewName, fillContentConfig} from './state';
 
@@ -101,6 +102,13 @@ export class ChromeController {
    */
   create() {
     this.state_.go(deployAppStateName);
+  }
+
+  /**
+   * @export
+   */
+  overviewState() {
+    return overviewState;
   }
 }
 
