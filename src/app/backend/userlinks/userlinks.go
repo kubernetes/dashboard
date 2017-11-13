@@ -56,7 +56,7 @@ func GetUserLinks(client k8sClient.Interface, namespace, name, resource, host st
 	case resource == api.ResourceKindPod:
 		return getPodLinks(client, namespace, name, host)
 	case resource == api.ResourceKindPersistentVolume:
-		return getPersistentVolumeLinks(client, name, host)
+		return getPersistentVolumeLinks(client, namespace, name, host)
 	default:
 		log.Printf("Unknown resource types %T!\n", resource)
 	}
@@ -148,10 +148,11 @@ func getPodLinks(client k8sClient.Interface, namespace, name, host string) ([]Us
 	return userLinks, err
 }
 
-// getPersistentvolumeLinks get userlinks for persistentvolume
-func getPersistentVolumeLinks(client k8sClient.Interface, name, host string) ([]UserLink, error) {
+// getPersistentVolumeLinks get userlinks for persistentvolume
+func getPersistentVolumeLinks(client k8sClient.Interface, namespace, name, host string) ([]UserLink, error) {
 	userLinks := []UserLink{}
 	persistentVolume, err := client.CoreV1().PersistentVolumes().Get(name, metaV1.GetOptions{})
+
 	if err != nil || len(persistentVolume.Annotations[annotationObj]) == 0 {
 		return userLinks, err
 	}
@@ -165,14 +166,7 @@ func getPersistentVolumeLinks(client k8sClient.Interface, name, host string) ([]
 	for key, uri := range m {
 		userLink := new(UserLink)
 		userLink.Description = key
-		if strings.Contains(uri, apiserverProxyURL) {
-			userLink.Link = host + "/api/v1/persistentvolumes/" + persistentVolume.ObjectMeta.Name + "/proxy" + strings.TrimPrefix(uri, apiserverProxyURL)
-			userLink.IsURLValid = true
-			userLink.IsProxyURL = true
-		} else if strings.Contains(uri, pvDNSName) {
-			userLink.Link = name + ".pv.cluster.local" + strings.TrimPrefix(uri, pvDNSName)
-			userLink.IsURLValid = true
-		} else if _, err := url.ParseRequestURI(uri); err != nil {
+		if _, err := url.ParseRequestURI(uri); err != nil {
 			userLink.Link = "Invalid User Link: " + uri
 		} else {
 			userLink.Link = uri
