@@ -15,6 +15,8 @@
 package api
 
 import (
+	"time"
+
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/watch"
 )
@@ -51,4 +53,11 @@ type Synchronizer interface {
 type SynchronizerManager interface {
 	// Secret created single secret synchronizer based on name and namespace information.
 	Secret(namespace, name string) Synchronizer
+}
+
+// Poller interface is responsible for periodically polling specific resource.
+type Poller interface {
+	// Poll polls specific resource every 'interval' time. Watch interface is returned in order to use it
+	// in the same way as regular watch on resource.
+	Poll(interval time.Duration) watch.Interface
 }
