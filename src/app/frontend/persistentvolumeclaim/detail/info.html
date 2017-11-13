@@ -23,7 +23,9 @@ limitations under the License.
       {{::$ctrl.persistentVolumeClaim.status}}
     </kd-info-card-entry>
     <kd-info-card-entry title="[[Volume|Persistent volume claim info details section volume entry.]]">
-      <div ng-show="::$ctrl.persistentVolumeClaim.volume">{{::$ctrl.persistentVolumeClaim.volume}}</div>
+      <div ng-show="::$ctrl.persistentVolumeClaim.volume">
+        <a ng-href="{{$ctrl.getPersistentVolumeDetailsHref()}}">{{::$ctrl.persistentVolumeClaim.volume}}</a>
+      </div>
       <div ng-hide="::$ctrl.persistentVolumeClaim.volume">-</div>
     </kd-info-card-entry>
     <kd-info-card-entry title="[[Access modes|Persistent volume claim info details section access modes entry.]]">
@@ -32,7 +34,9 @@ limitations under the License.
       </div>
     </kd-info-card-entry>
     <kd-info-card-entry title="[[Storage class|Persistent volume claim info details section storage class entry.]]">
-      <div ng-show="::$ctrl.persistentVolumeClaim.storageClass">{{::$ctrl.persistentVolumeClaim.storageClass}}</div>
+      <div ng-show="::$ctrl.persistentVolumeClaim.storageClass">
+        <a ng-href="{{$ctrl.getStorageClassDetailsHref()}}">{{::$ctrl.persistentVolumeClaim.storageClass}}</a>
+      </div>
       <div ng-hide="::$ctrl.persistentVolumeClaim.storageClass">-</div>
     </kd-info-card-entry>
   </kd-info-card-section>
