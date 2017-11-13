@@ -76,8 +76,13 @@ limitations under the License.
       <div ng-hide="::$ctrl.persistentVolume.status">-</div>
     </kd-resource-card-column>
     <kd-resource-card-column>
-      <kd-middle-ellipsis display-string="{{$ctrl.persistentVolume.claim}}">
-      </kd-middle-ellipsis>
+      <div ng-show="::$ctrl.persistentVolume.claim">
+        <a ng-href="{{::$ctrl.getPersistentVolumeClaimDetailsHref()}}"
+           class="kd-middle-ellipsised-link">
+          <kd-middle-ellipsis display-string="{{$ctrl.persistentVolume.claim}}">
+          </kd-middle-ellipsis>
+        </a>
+      </div>
       <div ng-hide="::$ctrl.persistentVolume.claim">-</div>
     </kd-resource-card-column>
     <kd-resource-card-column>

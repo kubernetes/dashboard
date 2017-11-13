@@ -14,6 +14,7 @@
 
 import {StateParams} from '../../common/resource/resourcedetail';
 import {stateName} from '../../persistentvolume/detail/state';
+import {stateName as persistentVolumeClaimStateName} from '../../persistentvolumeclaim/detail/state';
 
 /**
  * Controller for the persistent volume card.
@@ -42,6 +43,22 @@ class PersistentVolumeCardController {
    */
   getPersistentVolumeDetailHref() {
     return this.state_.href(stateName, new StateParams('', this.persistentVolume.objectMeta.name));
+  }
+
+  /**
+   * Returns link to persistentvolumeclaim to which this persistentvolume is associated.
+   * @return {string}
+   * @export
+   */
+  getPersistentVolumeClaimDetailsHref() {
+    if (this.persistentVolume.claim) {
+      let claim = this.persistentVolume.claim.split('/');
+      if (claim.length >= 2) {
+        return this.state_.href(
+            persistentVolumeClaimStateName, new StateParams(claim[0], claim[1]));
+      }
+    }
+    return '';
   }
 }
 
