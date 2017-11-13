@@ -15,6 +15,9 @@
         ]
       ]
     },
-    "development": {"presets": [["env", {"targets": {"node": 8}, "useBuiltIns": true}]]}
+    "development": {
+      "presets": [["env", {"targets": {"node": 8}, "useBuiltIns": true}]],
+      "plugins": ["istanbul"]
+    }
   }
 }

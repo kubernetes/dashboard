@@ -98,14 +98,11 @@ module.exports = function(config) {
 
     // karma-browserify plugin config.
     browserify: {
-      // Add source maps to outpus bundles.
+      // Add source maps to output bundles.
       debug: true,
       // Make 'import ...' statements relative to the following paths.
       paths: [conf.paths.frontendSrc, conf.paths.frontendTest],
       transform: [
-        // Browserify transform for the istanbul code coverage tool. Isparta instrumenter for ES6
-        // code coverage. TODO(floreks): try to make import work instead of require
-        ['browserify-istanbul', {'instrumenter': require('isparta')}],
         // Transform ES2017 code into ES5 so that browsers can digest it.
         ['babelify'],
       ],
