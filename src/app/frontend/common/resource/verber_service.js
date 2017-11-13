@@ -24,14 +24,16 @@ export class VerberService {
   /**
    * @param {!md.$dialog} $mdDialog
    * @param {!angular.$q} $q
+   * @param {./../errorhandling/localizer_service.LocalizerService} localizerService
    * @ngInject
    */
-  constructor($mdDialog, $q) {
+  constructor($mdDialog, $q, localizerService) {
     /** @private {!md.$dialog} */
     this.mdDialog_ = $mdDialog;
-
     /** @private {!angular.$q} */
     this.q_ = $q;
+    /** @private {./../errorhandling/localizer_service.LocalizerService} */
+    this.localizerService_ = localizerService;
   }
 
   /**
@@ -92,7 +94,7 @@ export class VerberService {
       this.mdDialog_.show(this.mdDialog_.alert()
                               .ok('Ok')
                               .title(err.statusText || 'Internal server error')
-                              .textContent(err.data || 'Could not delete the resource'));
+                              .textContent(this.localizerService_.localize(err.data) || 'Could not delete the resource'));
     }
   }
 
@@ -107,7 +109,7 @@ export class VerberService {
       this.mdDialog_.show(this.mdDialog_.alert()
                               .ok('Ok')
                               .title(err.statusText || 'Internal server error')
-                              .textContent(err.data || 'Could not edit the resource'));
+                              .textContent(this.localizerService_.localize(err.data) || 'Could not edit the resource'));
     }
   }
 }
