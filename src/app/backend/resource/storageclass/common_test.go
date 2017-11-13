@@ -20,7 +20,7 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolume"
-	storage "k8s.io/api/storage/v1beta1"
+	storage "k8s.io/api/storage/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 

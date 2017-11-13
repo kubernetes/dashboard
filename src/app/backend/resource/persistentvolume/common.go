@@ -30,7 +30,7 @@ import (
 func GetStorageClassPersistentVolumes(client client.Interface, storageClassName string,
 	dsQuery *dataselect.DataSelectQuery) (*PersistentVolumeList, error) {
 
-	storageClass, err := client.StorageV1beta1().StorageClasses().Get(storageClassName, metaV1.GetOptions{})
+	storageClass, err := client.StorageV1().StorageClasses().Get(storageClassName, metaV1.GetOptions{})
 
 	if err != nil {
 		return nil, err

@@ -23,7 +23,7 @@ import (
 	"k8s.io/api/core/v1"
 	extensions "k8s.io/api/extensions/v1beta1"
 	rbac "k8s.io/api/rbac/v1"
-	storage "k8s.io/api/storage/v1beta1"
+	storage "k8s.io/api/storage/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
 )
@@ -936,7 +936,7 @@ func GetStorageClassListChannel(client client.Interface, numReads int) StorageCl
 	}
 
 	go func() {
-		list, err := client.StorageV1beta1().StorageClasses().List(api.ListEverything)
+		list, err := client.StorageV1().StorageClasses().List(api.ListEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
