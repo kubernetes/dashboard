@@ -24,7 +24,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	api "k8s.io/api/core/v1"
-	extensions "k8s.io/api/extensions/v1beta1"
+	apps "k8s.io/api/apps/v1beta2"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
 )
@@ -70,7 +70,7 @@ func getRawDaemonSetPods(client k8sClient.Interface, daemonSetName, namespace st
 }
 
 // Returns simple info about pods(running, desired, failing, etc.) related to given daemon set.
-func getDaemonSetPodInfo(client k8sClient.Interface, daemonSet *extensions.DaemonSet) (
+func getDaemonSetPodInfo(client k8sClient.Interface, daemonSet *apps.DaemonSet) (
 	*common.PodInfo, error) {
 
 	pods, err := getRawDaemonSetPods(client, daemonSet.Name, daemonSet.Namespace)
