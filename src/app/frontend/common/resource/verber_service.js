@@ -91,10 +91,12 @@ export class VerberService {
   deleteErrorCallback(err) {
     if (err) {
       // Show dialog if there was an error, not user canceling dialog.
-      this.mdDialog_.show(this.mdDialog_.alert()
-                              .ok('Ok')
-                              .title(err.statusText || 'Internal server error')
-                              .textContent(this.localizerService_.localize(err.data) || 'Could not delete the resource'));
+      this.mdDialog_.show(
+          this.mdDialog_.alert()
+              .ok('Ok')
+              .title(err.statusText || 'Internal server error')
+              .textContent(
+                  this.localizerService_.localize(err.data) || 'Could not delete the resource'));
     }
   }
 
@@ -106,10 +108,12 @@ export class VerberService {
   editErrorCallback(err) {
     if (err) {
       // Show dialog if there was an error, not user canceling dialog.
-      this.mdDialog_.show(this.mdDialog_.alert()
-                              .ok('Ok')
-                              .title(err.statusText || 'Internal server error')
-                              .textContent(this.localizerService_.localize(err.data) || 'Could not edit the resource'));
+      this.mdDialog_.show(
+          this.mdDialog_.alert()
+              .ok('Ok')
+              .title(err.statusText || 'Internal server error')
+              .textContent(
+                  this.localizerService_.localize(err.data) || 'Could not edit the resource'));
     }
   }
 }

@@ -28,7 +28,8 @@ export class EditResourceController {
    * @param {./../errorhandling/localizer_service.LocalizerService} localizerService
    * @ngInject
    */
-  constructor($mdDialog, $http, clipboard, $mdToast, resourceKindName, resourceUrl, localizerService) {
+  constructor(
+      $mdDialog, $http, clipboard, $mdToast, resourceKindName, resourceUrl, localizerService) {
     /** @export {string} */
     this.resourceKindName = resourceKindName;
     /** @export {Object} JSON representation of the edited resource. */
@@ -54,11 +55,13 @@ export class EditResourceController {
    */
   init_() {
     let promise = this.http_.get(this.resourceUrl);
-    promise.then((/** !angular.$http.Response<Object>*/ response) => {
-      this.data = response.data;
-    }, (err) => {
-      this.showMessage_(`Error: ${this.localizerService_.localize(err.data)}`);
-    });
+    promise.then(
+        (/** !angular.$http.Response<Object>*/ response) => {
+          this.data = response.data;
+        },
+        (err) => {
+          this.showMessage_(`Error: ${this.localizerService_.localize(err.data)}`);
+        });
   }
 
   /**
@@ -106,12 +109,13 @@ export class EditResourceController {
    * @param {string} message
    */
   showMessage_(message) {
-    this.toast_.show(this.toast_.simple()
-                         .textContent(message)
-                         .position('top right')
-                         .parent(document.getElementsByTagName('md-dialog')[0]))
-                         .then(() => {
-      this.cancel();
-    });
+    this.toast_
+        .show(this.toast_.simple()
+                  .textContent(message)
+                  .position('top right')
+                  .parent(document.getElementsByTagName('md-dialog')[0]))
+        .then(() => {
+          this.cancel();
+        });
   }
 }
