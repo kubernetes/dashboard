@@ -88,7 +88,7 @@ export default {
      * Variables used to differentiate between production and development build.
      */
     production: 'production',
-    development: 'development',
+    test: 'test',
   },
 
   /**

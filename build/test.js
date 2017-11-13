@@ -75,7 +75,7 @@ gulp.task('test', ['frontend-test', 'backend-test-with-coverage']);
 /**
  * Runs once all unit tests of the frontend application.
  */
-gulp.task('frontend-test', function(doneFn) {
+gulp.task('frontend-test', ['set-test-node-env'], function(doneFn) {
   runFrontendUnitTests(true, doneFn);
 });
 
@@ -115,7 +115,7 @@ gulp.task('test:watch', ['frontend-test:watch', 'backend-test:watch']);
  * Runs frontend backend application tests. Watches for changes in the source files to rerun
  * the tests.
  */
-gulp.task('frontend-test:watch', function(doneFn) {
+gulp.task('frontend-test:watch', ['set-test-node-env'], function(doneFn) {
   runFrontendUnitTests(false, doneFn);
 });
 

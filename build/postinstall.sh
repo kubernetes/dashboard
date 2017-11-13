@@ -16,7 +16,7 @@
 DIR=$(pwd)
 
 # Patch wiredep so we can use it to manage NPM dependencies instead of bower
-cd wiredep
+cd ./node_modules/wiredep
 patch -N < ../../build/patch/wiredep/wiredep.patch
 cd lib
 patch -N < ../../../build/patch/wiredep/detect-dependencies.patch

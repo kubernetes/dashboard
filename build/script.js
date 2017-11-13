@@ -34,12 +34,12 @@ const gulpClosureCompiler = closureCompiler.gulp();
  * Tasks used to set node process env variables. They are used by our compile tasks. Based on them
  * different preset configs defined in '.babelrc' are used.
  */
-gulp.task('set-dev-node-env', () => {
-  return process.env.NODE_ENV = conf.build.development;
-});
-
 gulp.task('set-prod-node-env', () => {
   return process.env.NODE_ENV = conf.build.production;
+});
+
+gulp.task('set-test-node-env', () => {
+  return process.env.NODE_ENV = conf.build.test;
 });
 
 /**
@@ -96,7 +96,7 @@ function createScriptsStream(throwError) {
  *
  * Throws an error in case of JS syntax errors.
  */
-gulp.task('scripts', ['set-dev-node-env'], createScriptsStream(true));
+gulp.task('scripts', createScriptsStream(true));
 
 /**
  * Compiles frontend JavaScript files into development bundle located in
@@ -250,27 +250,26 @@ function patchBuildInformation() {
  * Compiles frontend JavaScript files into production bundle located in {conf.paths.prodTmp}
  * directory. A separated bundle is created for each i18n locale.
  */
-gulp.task(
-    'scripts:prod', ['angular-templates', 'generate-xtbs', 'set-prod-node-env'], function(doneFn) {
-      // add a compilation step to stream for each translation file
-      let streams = conf.translations.map((translation) => {
-        return createCompileTask(translation);
-      });
+gulp.task('scripts:prod', ['angular-templates', 'generate-xtbs'], function(doneFn) {
+  // add a compilation step to stream for each translation file
+  let streams = conf.translations.map((translation) => {
+    return createCompileTask(translation);
+  });
 
-      // add a default compilation task (no localization)
-      streams = streams.concat(createCompileTask());
+  // add a default compilation task (no localization)
+  streams = streams.concat(createCompileTask());
 
-      // Handle unhandled rejections and fail immediately if any error occurs.
-      process.on('unhandledRejection', (reason) => {
-        if (reason.message.toLowerCase().includes('error')) {
-          doneFn(reason);
-        }
-      });
+  // Handle unhandled rejections and fail immediately if any error occurs.
+  process.on('unhandledRejection', (reason) => {
+    if (reason.message.toLowerCase().includes('error')) {
+      doneFn(reason);
+    }
+  });
 
-      // TODO (taimir) : do not run the tasks sequentially once
-      // gulp-closure-compiler can be run in parallel
-      async.series(streams, doneFn);
-    });
+  // TODO (taimir) : do not run the tasks sequentially once
+  // gulp-closure-compiler can be run in parallel
+  async.series(streams, doneFn);
+});
 
 /**
  * Compiles each Angular HTML template file (path/foo.html) into three processed forms:
