@@ -52,7 +52,6 @@ class PersistentVolumeCardController {
    */
   getPersistentVolumeClaimDetailsHref() {
     if (this.persistentVolume.claim) {
-      // claim is in the format 'namespace/claim-name', split this into namespace and claim-name to form the url.
       let claim = this.persistentVolume.claim.split('/');
       if (claim.length >= 2) {
         return this.state_.href(
