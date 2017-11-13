@@ -60,7 +60,8 @@ script:
     fi'
 
 after_success:
-  - './node_modules/.bin/gulp coverage-upload:ci;
-    if [ ${BUILD_SUITE} = "integration-test" ]; then
+  - 'if [ ${BUILD_SUITE} = "integration-test" ]; then
       ./node_modules/.bin/gulp push-to-docker:ci;
+    else
+      ./node_modules/.bin/gulp coverage-upload:ci;
     fi'
