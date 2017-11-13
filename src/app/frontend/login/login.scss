@@ -53,10 +53,6 @@ kd-login {
   }
 }
 
-.kd-login-options {
-  background-color: red;
-}
-
 .kd-option-container {
   padding-top: $baseline-grid / 2;
 
@@ -71,5 +67,5 @@ kd-login {
 
 .kd-login-option-desc {
   font-size: $body-font-size-base;
-  margin: 0 (3.75 * $baseline-grid) (2 * $baseline-grid) (3.75 * $baseline-grid) ;
+  margin: 0 (3.75 * $baseline-grid) (2 * $baseline-grid);
 }
