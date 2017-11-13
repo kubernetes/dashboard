@@ -22,14 +22,16 @@
   width: 4 * $baseline-grid;
 }
 
-.kd-toolbar-logo {
-  @extend %kd-toolbar-logo-placeholder;
-}
+.kd-toolbar-logo-link {
+  .kd-toolbar-logo {
+    @extend %kd-toolbar-logo-placeholder;
+  }
 
-.kd-toolbar-logo-text {
-  @extend %kd-toolbar-logo-placeholder;
-  min-width: 14 * $baseline-grid;
-  width: 14 * $baseline-grid;
+  .kd-toolbar-logo-text {
+    @extend %kd-toolbar-logo-placeholder;
+    min-width: 14 * $baseline-grid;
+    width: 14 * $baseline-grid;
+  }
 }
 
 .kd-middle-ellipsised-link {

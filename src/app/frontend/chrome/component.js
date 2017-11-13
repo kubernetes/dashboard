@@ -105,9 +105,10 @@ export class ChromeController {
   }
 
   /**
+   * @return {string}
    * @export
    */
-  overviewState() {
+  getOverviewStateName() {
     return overviewState;
   }
 }
