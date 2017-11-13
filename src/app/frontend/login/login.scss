@@ -24,7 +24,6 @@ kd-login {
 
 .kd-login-card {
   margin: auto;
-  padding-top: 2 * $baseline-grid;
   width: 50%;
 
   h1 {
@@ -33,6 +32,11 @@ kd-login {
     border-top-right-radius: 2px;
     color: $content-background;
     margin: -1px;
+  }
+
+  kd-content {
+    display: block;
+    padding: 3 * $baseline-grid;
   }
 }
 
@@ -49,10 +53,19 @@ kd-login {
   }
 }
 
-.kd-option-title {
-  margin-bottom: 2 * $baseline-grid;
-}
-
 .kd-option-container {
   padding-top: $baseline-grid / 2;
+
+  md-input-container {
+    margin: (2.5 * $baseline-grid) (3.25 * $baseline-grid);
+  }
+}
+
+.kd-login-option {
+  margin-bottom: $baseline-grid;
+}
+
+.kd-login-option-desc {
+  font-size: $body-font-size-base;
+  margin: 0 (3.75 * $baseline-grid) (2 * $baseline-grid);
 }

@@ -14,14 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div class="kd-option-title">[[Authentication method:|Label of authentication method selector.]]</div>
 <md-radio-group ng-model="$ctrl.selectedOption"
                 ng-change="$ctrl.onOptionChange()">
-  <md-radio-button ng-repeat="option in $ctrl.options"
-                   value="{{::option.title}}"
-                   class="md-primary">
-    {{::option.title}}
-  </md-radio-button>
+  <div ng-repeat="option in $ctrl.options">
+    <md-radio-button value="{{::option.title}}"
+                     class="kd-login-option md-primary">
+      {{::option.title}}
+    </md-radio-button>
+    <div class="kd-login-option-desc"
+         ng-bind-html="$ctrl.acceptHtmlContent(option.desc)"></div>
+  </div>
 </md-radio-group>
 <div ng-transclude
      class="kd-option-container">

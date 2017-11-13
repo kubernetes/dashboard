@@ -62,6 +62,7 @@ export const basicLoginComponent = {
   },
   bindings: {
     'title': '@',
+    'desc': '@',
     'onUpdate': '&',
   },
   controller: BasicLoginController,
