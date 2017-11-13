@@ -69,7 +69,6 @@
     "browser-sync-spa": "~1.0.3",
     "browserify": "~14.5.0",
     "clang-format": "1.1.0",
-    "cljsjs-packages-externs": "https://github.com/cljsjs/packages.git#0c44b38658ad789a45d342bff4f13706276f293a",
     "del": "~3.0.0",
     "eslint-plugin-angular": "~3.1.1",
     "file-exists": "5.0.0",
@@ -125,6 +124,7 @@
     "karma-sourcemap-loader": "~0.3.7",
     "lodash": "~4.17.4",
     "merge-stream": "~1.0.1",
+    "napa": "~3.0.0",
     "npm-check-updates": "~2.13.0",
     "proxy-middleware": "~0.15.0",
     "q": "~1.5.1",
@@ -143,6 +143,11 @@
     "npm": ">=5.0.0"
   },
   "scripts": {
+    "install": "napa",
     "postinstall": "build/postinstall.sh"
+  },
+  "napa": {
+    "cljsjs-packages-externs": "git+https://github.com/cljsjs/packages.git#0c44b38658ad789a45d342bff4f13706276f293a",
+    "easyfont-roboto-mono": "git+https://github.com/easyfont/roboto-mono.git#fa7971ea56f68bfdb2771f9cb560c99aca0164c1"
   }
 }
