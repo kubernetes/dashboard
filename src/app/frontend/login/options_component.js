@@ -14,8 +14,13 @@
 
 /** @final */
 class LoginOptionsController {
-  /** @ngInject */
-  constructor() {
+  /**
+   * @param {!angular.$sce} $sce
+   * @ngInject
+   */
+  constructor($sce) {
+    /** @private {!angular.$sce} */
+    this.sce_ = $sce;
     /** @export {!Array<!angular.Component>} */
     this.options = [];
     /** @export {string} */
@@ -58,6 +63,14 @@ class LoginOptionsController {
         this.onChange();
       }
     });
+  }
+
+  /**
+   * @export
+   * @return {*}
+   */
+  acceptHtmlContent(content) {
+    return this.sce_.trustAsHtml(content);
   }
 }
 

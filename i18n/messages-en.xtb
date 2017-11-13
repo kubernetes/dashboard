@@ -125,7 +125,7 @@
   <translation id="5724590208757461876" key="MSG_COMMON_COMPONENTS_SCALE_SCALE_0" desc="Action \'Scale\' on the drop down menu on resource list page.">Scale</translation>
   <translation id="2699323907720130275" key="MSG_COMMON_COMPONENTS_SCALE_SCALE_1" desc="Tooltip for the \'scale\' button on the action bar on a resource details view.">Edit number of pods</translation>
   <translation id="8982112402145698888" key="MSG_COMMON_COMPONENTS_SCALE_SCALE_2" desc="Tooltip for the \'Scale\' button on the action bar on a resource details view.">Scale</translation>
-  <translation id="7713882577210679812" key="MSG_COMMON_COMPONENTS_UPLOADFILE_UPLOADFILE_0" desc="A \'YAML file\' label, serving as placeholder for an empty file input field on login page.">Kubeconfig YAML file</translation>
+  <translation id="1133469054914349060" key="MSG_COMMON_COMPONENTS_UPLOADFILE_UPLOADFILE_0" desc="A \'Choose kubeconfig file\' placeholder for an empty file input field on login page.">Choose kubeconfig file</translation>
   <translation id="8514425134682432381" key="MSG_COMMON_COMPONENTS_WARNINGS_WARNINGS_0" desc="Tooltip for warning dismissal button.">Dismiss</translation>
   <translation id="7328790086203280450" key="MSG_COMMON_COMPONENTS_WARNINGS_WARNINGS_1" desc="Tooltip for all warning dismissal button.">Dismiss all</translation>
   <translation id="6941584785589389821" key="MSG_COMMON_COMPONENTS_ZEROSTATE_ZEROSTATE_0" desc="Title text which appears on zero state view.">There is nothing to display here</translation>
@@ -502,12 +502,13 @@
   <translation id="2222883722971802152" key="MSG_LOGIN_BASIC_1" desc="\'Password\' field label shown on login page for basic auth">Password</translation>
   <translation id="1409623546562132476" key="MSG_LOGIN_LOGIN_0" desc="Title shown on login page on login card">Kubernetes Dashboard</translation>
   <translation id="1503565493122422406" key="MSG_LOGIN_LOGIN_1" desc="Kubeconfig option label shown on login page">Kubeconfig</translation>
-  <translation id="916148502449125508" key="MSG_LOGIN_LOGIN_2" desc="Basic login">Basic</translation>
+  <translation id="8732662932191668041" key="MSG_LOGIN_LOGIN_2" desc="(no description provided)">Every Service Account has a Secret with valid Bearer Token that can be used to log in to Dashboard. To find out more about how to configure and use Bearer Tokens, please refer to the &lt;a href='https://kubernetes.io/docs/admin/authentication/'&gt;Authentication&lt;/a&gt; section.</translation>
   <translation id="9041317912268999764" key="MSG_LOGIN_LOGIN_3" desc="Token option label shown on login page">Token</translation>
   <translation id="5728098885822861128" key="MSG_LOGIN_LOGIN_4" desc="Text shown on the sign in button on login page">Sign in</translation>
   <translation id="3587575593965850303" key="MSG_LOGIN_LOGIN_5" desc="Text shown on skip button on login page">Skip</translation>
-  <translation id="7903955345350777049" key="MSG_LOGIN_OPTIONS_0" desc="Label of authentication method selector.">Authentication method:</translation>
-  <translation id="3142285229708080307" key="MSG_LOGIN_TOKEN_0" desc="\'Token\' field label shown on login page for token auth">Token</translation>
+  <translation id="374834757787325940" key="MSG_LOGIN_LOGIN_6" desc="Basic option label shown on login page">Basic</translation>
+  <translation id="5295755962056443196" key="MSG_LOGIN_LOGIN_7" desc="(no description provided)">Please select the kubeconfig file that you have created to configure access to the cluster. To find out more about how to configure and use kubeconfig file, please refer to the &lt;a href='https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/'&gt;Configure Access to Multiple Clusters&lt;/a&gt; section.</translation>
+  <translation id="7931742467615349833" key="MSG_LOGIN_TOKEN_0" desc="\'Token\' field label shown on login page for token auth">Enter token</translation>
   <translation id="1813585001229142426" key="MSG_LOGIN_UNAUTHORIZED_ERROR" desc="Text shown when unauthorized user tries to log in.">Authentication failed. Please try again.</translation>
   <translation id="4722922095699681308" key="MSG_LOGS_LOGS_0" desc="Title prefix for logs card.">Logs from</translation>
   <translation id="6855662924451585032" key="MSG_LOGS_LOGS_1" desc="Title part for logs card.">in</translation>
