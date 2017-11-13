@@ -19,7 +19,7 @@ type SecretPoller struct {
 	watcher   *PollWatcher
 }
 
-// Poll, polls new secret every 'interval' time and sends it to watcher channel. See Poller for more information.
+// Poll new secret every 'interval' time and send it to watcher channel. See Poller for more information.
 func (self *SecretPoller) Poll(interval time.Duration) watch.Interface {
 	stopCh := make(chan struct{})
 
