@@ -26,7 +26,7 @@ import (
 	hpa "github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
-	extensions "k8s.io/api/extensions/v1beta1"
+	apps "k8s.io/api/apps/v1beta2"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
 )
@@ -71,7 +71,7 @@ func GetReplicaSetDetail(client k8sClient.Interface, metricClient metricapi.Metr
 	namespace, name string) (*ReplicaSetDetail, error) {
 	log.Printf("Getting details of %s service in %s namespace", name, namespace)
 
-	rs, err := client.ExtensionsV1beta1().ReplicaSets(namespace).Get(name, metaV1.GetOptions{})
+	rs, err := client.AppsV1beta2().ReplicaSets(namespace).Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
@@ -110,7 +110,7 @@ func GetReplicaSetDetail(client k8sClient.Interface, metricClient metricapi.Metr
 	return &rsDetail, nil
 }
 
-func toReplicaSetDetail(replicaSet *extensions.ReplicaSet, eventList common.EventList, podList pod.PodList,
+func toReplicaSetDetail(replicaSet *apps.ReplicaSet, eventList common.EventList, podList pod.PodList,
 	podInfo common.PodInfo, serviceList resourceService.ServiceList,
 	hpas hpa.HorizontalPodAutoscalerList, nonCriticalErrors []error) ReplicaSetDetail {
 

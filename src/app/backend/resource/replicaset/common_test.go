@@ -20,18 +20,18 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	extensions "k8s.io/api/extensions/v1beta1"
+	apps "k8s.io/api/apps/v1beta2"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 func TestToReplicaSet(t *testing.T) {
 	cases := []struct {
-		replicaSet *extensions.ReplicaSet
+		replicaSet *apps.ReplicaSet
 		podInfo    *common.PodInfo
 		expected   ReplicaSet
 	}{
 		{
-			&extensions.ReplicaSet{ObjectMeta: metaV1.ObjectMeta{Name: "replica-set"}},
+			&apps.ReplicaSet{ObjectMeta: metaV1.ObjectMeta{Name: "replica-set"}},
 			&common.PodInfo{Running: 1, Warnings: []common.Event{}},
 			ReplicaSet{
 				ObjectMeta: api.ObjectMeta{Name: "replica-set"},

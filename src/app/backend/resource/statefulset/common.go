@@ -18,7 +18,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	apps "k8s.io/api/apps/v1beta1"
+	apps "k8s.io/api/apps/v1beta2"
 )
 
 // The code below allows to perform complex data section on []apps.StatefulSet

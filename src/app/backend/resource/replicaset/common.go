@@ -19,7 +19,8 @@ import (
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	extensions "k8s.io/api/extensions/v1beta1"
+	apps "k8s.io/api/apps/v1beta2"
+	"k8s.io/kubernetes/pkg/apis/extensions"
 )
 
 // ReplicaSet is a presentation layer view of Kubernetes Replica Set resource. This means
@@ -40,7 +41,7 @@ type ReplicaSet struct {
 }
 
 // ToReplicaSet converts replica set api object to replica set model object.
-func ToReplicaSet(replicaSet *extensions.ReplicaSet, podInfo *common.PodInfo) ReplicaSet {
+func ToReplicaSet(replicaSet *apps.ReplicaSet, podInfo *common.PodInfo) ReplicaSet {
 	return ReplicaSet{
 		ObjectMeta:          api.NewObjectMeta(replicaSet.ObjectMeta),
 		TypeMeta:            api.NewTypeMeta(api.ResourceKindReplicaSet),

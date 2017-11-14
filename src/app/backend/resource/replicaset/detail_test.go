@@ -25,7 +25,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/service"
-	extensions "k8s.io/api/extensions/v1beta1"
+	apps "k8s.io/api/apps/v1beta2"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
 )
@@ -35,16 +35,16 @@ func TestGetReplicaSetDetail(t *testing.T) {
 	cases := []struct {
 		namespace, name string
 		expectedActions []string
-		replicaSet      *extensions.ReplicaSet
+		replicaSet      *apps.ReplicaSet
 		expected        *ReplicaSetDetail
 	}{
 		{
 			"ns-1", "rs-1",
 			[]string{"get", "list", "get", "list", "list", "list", "get", "list", "list"},
-			&extensions.ReplicaSet{
+			&apps.ReplicaSet{
 				ObjectMeta: metaV1.ObjectMeta{Name: "rs-1", Namespace: "ns-1",
 					Labels: map[string]string{"app": "test"}},
-				Spec: extensions.ReplicaSetSpec{
+				Spec: apps.ReplicaSetSpec{
 					Replicas: &replicas,
 					Selector: &metaV1.LabelSelector{
 						MatchLabels: map[string]string{"app": "test"},
@@ -110,7 +110,7 @@ func TestGetReplicaSetDetail(t *testing.T) {
 
 func TestToReplicaSetDetail(t *testing.T) {
 	cases := []struct {
-		replicaSet  *extensions.ReplicaSet
+		replicaSet  *apps.ReplicaSet
 		eventList   common.EventList
 		podList     pod.PodList
 		podInfo     common.PodInfo
@@ -119,7 +119,7 @@ func TestToReplicaSetDetail(t *testing.T) {
 		expected    ReplicaSetDetail
 	}{
 		{
-			&extensions.ReplicaSet{},
+			&apps.ReplicaSet{},
 			common.EventList{},
 			pod.PodList{},
 			common.PodInfo{},
@@ -130,7 +130,7 @@ func TestToReplicaSetDetail(t *testing.T) {
 				Errors:   []error{},
 			},
 		}, {
-			&extensions.ReplicaSet{ObjectMeta: metaV1.ObjectMeta{Name: "replica-set"}},
+			&apps.ReplicaSet{ObjectMeta: metaV1.ObjectMeta{Name: "replica-set"}},
 			common.EventList{Events: []common.Event{{Message: "event-msg"}}},
 			pod.PodList{Pods: []pod.Pod{{ObjectMeta: api.ObjectMeta{Name: "pod-1"}}}},
 			common.PodInfo{},
