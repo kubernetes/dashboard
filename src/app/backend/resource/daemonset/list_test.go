@@ -22,8 +22,8 @@ import (
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	apps "k8s.io/api/apps/v1beta2"
 	"k8s.io/api/core/v1"
-	extensions "k8s.io/api/extensions/v1beta1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -55,7 +55,7 @@ func TestToDaemonSetList(t *testing.T) {
 	}
 
 	cases := []struct {
-		daemonSets []extensions.DaemonSet
+		daemonSets []apps.DaemonSet
 		services   []v1.Service
 		pods       []v1.Pod
 		nodes      []v1.Node
@@ -69,14 +69,14 @@ func TestToDaemonSetList(t *testing.T) {
 				DaemonSets:        []DaemonSet{},
 				CumulativeMetrics: make([]metricapi.Metric, 0)},
 		}, {
-			[]extensions.DaemonSet{
+			[]apps.DaemonSet{
 				{
 					ObjectMeta: metaV1.ObjectMeta{
 						Name:      "my-app-1",
 						Namespace: "namespace-1",
 						UID:       "uid-1",
 					},
-					Spec: extensions.DaemonSetSpec{
+					Spec: apps.DaemonSetSpec{
 						Selector: &metaV1.LabelSelector{
 							MatchLabels: map[string]string{"app": "my-name-1"},
 						},
@@ -85,7 +85,7 @@ func TestToDaemonSetList(t *testing.T) {
 								InitContainers: []v1.Container{{Image: "my-init-container-image-1"}}},
 						},
 					},
-					Status: extensions.DaemonSetStatus{
+					Status: apps.DaemonSetStatus{
 						DesiredNumberScheduled: desired,
 					},
 				},
@@ -94,7 +94,7 @@ func TestToDaemonSetList(t *testing.T) {
 						Name:      "my-app-2",
 						Namespace: "namespace-2",
 					},
-					Spec: extensions.DaemonSetSpec{
+					Spec: apps.DaemonSetSpec{
 						Selector: &metaV1.LabelSelector{
 							MatchLabels: map[string]string{"app": "my-name-2", "ver": "2"},
 						},
@@ -103,7 +103,7 @@ func TestToDaemonSetList(t *testing.T) {
 								InitContainers: []v1.Container{{Image: "my-init-container-image-2"}}},
 						},
 					},
-					Status: extensions.DaemonSetStatus{
+					Status: apps.DaemonSetStatus{
 						DesiredNumberScheduled: desired,
 					},
 				},

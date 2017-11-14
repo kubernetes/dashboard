@@ -15,15 +15,15 @@
 package common
 
 import (
+	apps "k8s.io/api/apps/v1beta2"
 	batch "k8s.io/api/batch/v1"
 	"k8s.io/api/core/v1"
-	extensions "k8s.io/api/extensions/v1beta1"
 	"k8s.io/apimachinery/pkg/api/equality"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 // FilterPodsByControllerResource returns a subset of pods controlled by given deployment.
-func FilterDeploymentPodsByOwnerReference(deployment extensions.Deployment, allRS []extensions.ReplicaSet,
+func FilterDeploymentPodsByOwnerReference(deployment apps.Deployment, allRS []apps.ReplicaSet,
 	allPods []v1.Pod) []v1.Pod {
 	var matchingPods []v1.Pod
 
@@ -112,7 +112,7 @@ func EqualIgnoreHash(template1, template2 v1.PodTemplateSpec) bool {
 	}
 	// We make sure len(labels2) >= len(labels1)
 	for k, v := range labels2 {
-		if labels1[k] != v && k != extensions.DefaultDeploymentUniqueLabelKey {
+		if labels1[k] != v && k != apps.DefaultDeploymentUniqueLabelKey {
 			return false
 		}
 	}

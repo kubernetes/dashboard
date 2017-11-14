@@ -22,10 +22,9 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
-	apps "k8s.io/api/apps/v1beta1"
+	apps "k8s.io/api/apps/v1beta2"
 	batch "k8s.io/api/batch/v1"
 	"k8s.io/api/core/v1"
-	extensions "k8s.io/api/extensions/v1beta1"
 	meta "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/types"
 	client "k8s.io/client-go/kubernetes"
@@ -73,7 +72,7 @@ func NewResourceController(ref meta.OwnerReference, namespace string, client cli
 		}
 		return JobController(*job), nil
 	case api.ResourceKindReplicaSet:
-		rs, err := client.ExtensionsV1beta1().ReplicaSets(namespace).Get(ref.Name, meta.GetOptions{})
+		rs, err := client.AppsV1beta2().ReplicaSets(namespace).Get(ref.Name, meta.GetOptions{})
 		if err != nil {
 			return nil, err
 		}
@@ -85,13 +84,13 @@ func NewResourceController(ref meta.OwnerReference, namespace string, client cli
 		}
 		return ReplicationControllerController(*rc), nil
 	case api.ResourceKindDaemonSet:
-		ds, err := client.ExtensionsV1beta1().DaemonSets(namespace).Get(ref.Name, meta.GetOptions{})
+		ds, err := client.AppsV1beta2().DaemonSets(namespace).Get(ref.Name, meta.GetOptions{})
 		if err != nil {
 			return nil, err
 		}
 		return DaemonSetController(*ds), nil
 	case api.ResourceKindStatefulSet:
-		ss, err := client.AppsV1beta1().StatefulSets(namespace).Get(ref.Name, meta.GetOptions{})
+		ss, err := client.AppsV1beta2().StatefulSets(namespace).Get(ref.Name, meta.GetOptions{})
 		if err != nil {
 			return nil, err
 		}
@@ -137,7 +136,7 @@ func (self JobController) GetLogSources(allPods []v1.Pod) LogSources {
 
 // ReplicaSetController is an alias-type for Kubernetes API Replica Set type. It allows to provide
 // custom set of functions for already existing type.
-type ReplicaSetController extensions.ReplicaSet
+type ReplicaSetController apps.ReplicaSet
 
 // Get is an implementation of Get method from ResourceController interface.
 func (self ReplicaSetController) Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOwner {
@@ -156,7 +155,7 @@ func (self ReplicaSetController) Get(allPods []v1.Pod, allEvents []v1.Event) Res
 
 // UID is an implementation of UID method from ResourceController interface.
 func (self ReplicaSetController) UID() types.UID {
-	return extensions.ReplicaSet(self).UID
+	return apps.ReplicaSet(self).UID
 }
 
 // GetLogSources is an implementation of the GetLogSources method from ResourceController interface.
@@ -206,7 +205,7 @@ func (self ReplicationControllerController) GetLogSources(allPods []v1.Pod) LogS
 
 // DaemonSetController is an alias-type for Kubernetes API Daemon Set type. It allows to provide
 // custom set of functions for already existing type.
-type DaemonSetController extensions.DaemonSet
+type DaemonSetController apps.DaemonSet
 
 // Get is an implementation of Get method from ResourceController interface.
 func (self DaemonSetController) Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOwner {
@@ -226,7 +225,7 @@ func (self DaemonSetController) Get(allPods []v1.Pod, allEvents []v1.Event) Reso
 
 // UID is an implementation of UID method from ResourceController interface.
 func (self DaemonSetController) UID() types.UID {
-	return extensions.DaemonSet(self).UID
+	return apps.DaemonSet(self).UID
 }
 
 // GetLogSources is an implementation of the GetLogSources method from ResourceController interface.

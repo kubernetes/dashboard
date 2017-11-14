@@ -18,8 +18,8 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	apps "k8s.io/api/apps/v1beta2"
 	"k8s.io/api/core/v1"
-	extensions "k8s.io/api/extensions/v1beta1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/labels"
@@ -32,7 +32,7 @@ import (
 func GetServicesForDSDeletion(client client.Interface, labelSelector labels.Selector,
 	namespace string) ([]v1.Service, error) {
 
-	daemonSet, err := client.Extensions().DaemonSets(namespace).List(metaV1.ListOptions{
+	daemonSet, err := client.AppsV1beta2().DaemonSets(namespace).List(metaV1.ListOptions{
 		LabelSelector: labelSelector.String(),
 		FieldSelector: fields.Everything().String(),
 	})
@@ -58,9 +58,9 @@ func GetServicesForDSDeletion(client client.Interface, labelSelector labels.Sele
 	return services.Items, nil
 }
 
-// The code below allows to perform complex data section on []extensions.DaemonSet
+// The code below allows to perform complex data section on Daemon Set
 
-type DaemonSetCell extensions.DaemonSet
+type DaemonSetCell apps.DaemonSet
 
 func (self DaemonSetCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
 	switch name {
@@ -85,7 +85,7 @@ func (self DaemonSetCell) GetResourceSelector() *metricapi.ResourceSelector {
 	}
 }
 
-func ToCells(std []extensions.DaemonSet) []dataselect.DataCell {
+func ToCells(std []apps.DaemonSet) []dataselect.DataCell {
 	cells := make([]dataselect.DataCell, len(std))
 	for i := range std {
 		cells[i] = DaemonSetCell(std[i])
@@ -93,10 +93,10 @@ func ToCells(std []extensions.DaemonSet) []dataselect.DataCell {
 	return cells
 }
 
-func FromCells(cells []dataselect.DataCell) []extensions.DaemonSet {
-	std := make([]extensions.DaemonSet, len(cells))
+func FromCells(cells []dataselect.DataCell) []apps.DaemonSet {
+	std := make([]apps.DaemonSet, len(cells))
 	for i := range std {
-		std[i] = extensions.DaemonSet(cells[i].(DaemonSetCell))
+		std[i] = apps.DaemonSet(cells[i].(DaemonSetCell))
 	}
 	return std
 }

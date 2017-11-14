@@ -21,8 +21,8 @@ import (
 	"strings"
 
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
+	apps "k8s.io/api/apps/v1beta2"
 	api "k8s.io/api/core/v1"
-	extensions "k8s.io/api/extensions/v1beta1"
 	"k8s.io/apimachinery/pkg/api/resource"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
@@ -208,14 +208,14 @@ func DeployApp(spec *AppDeploymentSpec, client client.Interface) error {
 		Spec:       podSpec,
 	}
 
-	deployment := &extensions.Deployment{
+	deployment := &apps.Deployment{
 		ObjectMeta: objectMeta,
-		Spec: extensions.DeploymentSpec{
+		Spec: apps.DeploymentSpec{
 			Replicas: &spec.Replicas,
 			Template: podTemplate,
 		},
 	}
-	_, err := client.ExtensionsV1beta1().Deployments(spec.Namespace).Create(deployment)
+	_, err := client.AppsV1beta2().Deployments(spec.Namespace).Create(deployment)
 
 	if err != nil {
 		// TODO(bryk): Roll back created resources in case of error.

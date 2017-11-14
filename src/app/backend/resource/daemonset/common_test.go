@@ -17,17 +17,17 @@ package daemonset
 import (
 	"testing"
 
+	apps "k8s.io/api/apps/v1beta2"
 	api "k8s.io/api/core/v1"
-	extensions "k8s.io/api/extensions/v1beta1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/client-go/kubernetes/fake"
 )
 
-func CreateDaemonSet(name, namespace string, labelSelector map[string]string) extensions.DaemonSet {
-	return extensions.DaemonSet{
+func CreateDaemonSet(name, namespace string, labelSelector map[string]string) apps.DaemonSet {
+	return apps.DaemonSet{
 		ObjectMeta: metaV1.ObjectMeta{Name: name, Namespace: namespace, Labels: labelSelector},
-		Spec: extensions.DaemonSetSpec{
+		Spec: apps.DaemonSetSpec{
 			Selector: &metaV1.LabelSelector{MatchLabels: labelSelector},
 		},
 	}
@@ -47,14 +47,14 @@ var TestLabel = map[string]string{"app": "test"}
 func TestGetServicesForDeletionforDS(t *testing.T) {
 	cases := []struct {
 		labelSelector   labels.Selector
-		DaemonSetList   *extensions.DaemonSetList
+		DaemonSetList   *apps.DaemonSetList
 		expected        *api.ServiceList
 		expectedActions []string
 	}{
 		{
 			labels.SelectorFromSet(TestLabel),
-			&extensions.DaemonSetList{
-				Items: []extensions.DaemonSet{
+			&apps.DaemonSetList{
+				Items: []apps.DaemonSet{
 					CreateDaemonSet("ds-1", TestNamespace, TestLabel),
 				},
 			},
@@ -67,8 +67,8 @@ func TestGetServicesForDeletionforDS(t *testing.T) {
 		},
 		{
 			labels.SelectorFromSet(TestLabel),
-			&extensions.DaemonSetList{
-				Items: []extensions.DaemonSet{
+			&apps.DaemonSetList{
+				Items: []apps.DaemonSet{
 					CreateDaemonSet("ds-1", TestNamespace, TestLabel),
 					CreateDaemonSet("ds-2", TestNamespace, TestLabel),
 				},
@@ -82,7 +82,7 @@ func TestGetServicesForDeletionforDS(t *testing.T) {
 		},
 		{
 			labels.SelectorFromSet(TestLabel),
-			&extensions.DaemonSetList{},
+			&apps.DaemonSetList{},
 			&api.ServiceList{
 				Items: []api.Service{
 					CreateService("svc-1", TestNamespace, TestLabel),

@@ -23,8 +23,8 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
-	"k8s.io/api/core/v1"
 	apps "k8s.io/api/apps/v1beta2"
+	"k8s.io/api/core/v1"
 	client "k8s.io/client-go/kubernetes"
 )
 
