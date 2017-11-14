@@ -14,25 +14,9 @@
 # limitations under the License.
 
 DIR=$(pwd)
-cd ./node_modules
-
-# Download old bower dependencies
-if [ ! -d "easyfont-roboto-mono" ]; then
-    git clone https://github.com/easyfont/roboto-mono easyfont-roboto-mono
-    cd easyfont-roboto-mono
-    git checkout fa7971ea56f68bfdb2771f9cb560c99aca0164c1
-    cd ..
-fi
-
-if [ ! -d "cljsjs-packages-externs" ]; then
-    git clone https://github.com/cljsjs/packages cljsjs-packages-externs
-    cd cljsjs-packages-externs
-    git checkout 0c44b38658ad789a45d342bff4f13706276f293a
-    cd ..
-fi
 
 # Patch wiredep so we can use it to manage NPM dependencies instead of bower
-cd wiredep
+cd ./node_modules/wiredep
 patch -N < ../../build/patch/wiredep/wiredep.patch
 cd lib
 patch -N < ../../../build/patch/wiredep/detect-dependencies.patch

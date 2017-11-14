@@ -44,7 +44,6 @@ function getFileList() {
   return wiredep(wiredepOptions).js.concat([
     path.join(conf.paths.frontendTest, '**/*.json'),
     path.join(conf.paths.frontendTest, '**/*.js'),
-    {pattern: path.join(conf.paths.frontendSrc, '**/*.js'), included: false},
     path.join(conf.paths.frontendSrc, '**/*.html'),
   ]);
 }
@@ -60,7 +59,7 @@ module.exports = function(config) {
 
     files: getFileList(),
 
-    logLevel: 'WARN',
+    logLevel: 'INFO',
 
     browserConsoleLogOptions: {terminal: true, level: ''},
 
@@ -83,18 +82,6 @@ module.exports = function(config) {
     },
 
     preprocessors: {},  // This field is filled with values later.
-
-    plugins: [
-      'karma-chrome-launcher',
-      'karma-closure',
-      'karma-jasmine',
-      'karma-jasmine-jquery',
-      'karma-coverage',
-      'karma-ng-html2js-preprocessor',
-      'karma-sourcemap-loader',
-      'karma-browserify',
-      'karma-sauce-launcher',
-    ],
 
     // karma-browserify plugin config.
     browserify: {
@@ -157,8 +144,6 @@ module.exports = function(config) {
   // Convert all JS code written ES2017 with modules to ES5 bundles that browsers can digest.
   configuration.preprocessors[path.join(conf.paths.frontendTest, '**/*.js')] =
       ['browserify', 'closure', 'closure-iit'];
-  configuration.preprocessors[path.join(conf.paths.frontendSrc, '**/*.js')] =
-      ['browserify', 'closure'];
   configuration.preprocessors[path.join(
       conf.paths.nodeModules, 'google-closure-library/closure/goog/deps.js')] = ['closure-deps'];
 

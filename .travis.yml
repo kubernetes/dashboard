@@ -28,10 +28,6 @@ cache:
     - node_modules
     - .tools
 
-# Remove dependencies that are downloaded by postinstall.sh script.
-before_cache:
-  - rm -rf node_modules/easyfont-roboto-mono node_modules/cljsjs-packages-externs
-
 addons:
   # Run tests that require a browser on SauceLabs CI provider. Learn more at: https://saucelabs.com
   sauce_connect: true
@@ -60,11 +56,12 @@ script:
       ./build/minikube.sh;
       ./node_modules/.bin/gulp check:ci --heapsterServerHost "http://localhost:8082";
     else
-      NODE_ENV=production ./node_modules/.bin/gulp check:code-quality;
+      NODE_ENV=test ./node_modules/.bin/gulp check:code-quality;
     fi'
 
 after_success:
-  - './node_modules/.bin/gulp coverage-upload:ci;
-    if [ ${BUILD_SUITE} = "integration-test" ]; then
+  - 'if [ ${BUILD_SUITE} = "integration-test" ]; then
       ./node_modules/.bin/gulp push-to-docker:ci;
+    else
+      ./node_modules/.bin/gulp coverage-upload:ci;
     fi'

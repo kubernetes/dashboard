@@ -17,7 +17,16 @@
     },
     "development": {
       "presets": [["env", {"targets": {"node": 8}, "useBuiltIns": true}]],
-      "plugins": ["istanbul"]
+    },
+    "test": {
+      "presets": ["env"],
+      "plugins": [
+        ["istanbul", {
+          "exclude": [
+            "**/*_test.js"
+          ]
+        }]
+      ]
     }
   }
 }

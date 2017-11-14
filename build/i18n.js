@@ -64,6 +64,7 @@ gulp.task('generate-xtbs', [
   'remove-unused-translations',
   'remove-duplicated-translations',
   'sort-translations',
+  'set-prod-node-env',
 ]);
 
 let prevMsgs = {};
