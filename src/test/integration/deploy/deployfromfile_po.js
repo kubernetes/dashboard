@@ -20,9 +20,6 @@ export default class DeployFromFilePageObject {
     this.deployButtonQuery = by.css('.kd-deploy-submit-button');
     this.deployButton = element(this.deployButtonQuery);
 
-    this.cancelButtonQuery = by.css('.kd-deploy-cancel-button');
-    this.cancelButton = element(this.cancelButtonQuery);
-
     this.inputContainerQuery = by.css('.kd-upload-file-container');
     this.inputContainer = element(this.inputContainerQuery);
 
