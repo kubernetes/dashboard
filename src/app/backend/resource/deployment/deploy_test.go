@@ -43,6 +43,9 @@ func TestDeployApp(t *testing.T) {
 			Annotations: map[string]string{},
 		},
 		Spec: apps.DeploymentSpec{
+			Selector: &metaV1.LabelSelector{
+				MatchLabels: map[string]string{},
+			},
 			Replicas: &replicas,
 			Template: api.PodTemplateSpec{
 				ObjectMeta: metaV1.ObjectMeta{
