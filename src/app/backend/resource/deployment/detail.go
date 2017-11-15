@@ -26,7 +26,7 @@ import (
 	hpa "github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
-	extensions "k8s.io/api/extensions/v1beta1"
+	apps "k8s.io/api/apps/v1beta2"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/intstr"
 	client "k8s.io/client-go/kubernetes"
@@ -69,7 +69,7 @@ type DeploymentDetail struct {
 
 	// The deployment strategy to use to replace existing pods with new ones.
 	// Valid options: Recreate, RollingUpdate
-	Strategy extensions.DeploymentStrategyType `json:"strategy"`
+	Strategy apps.DeploymentStrategyType `json:"strategy"`
 
 	// Min ready seconds
 	MinReadySeconds int32 `json:"minReadySeconds"`
@@ -102,7 +102,7 @@ func GetDeploymentDetail(client client.Interface, metricClient metricapi.MetricC
 
 	log.Printf("Getting details of %s deployment in %s namespace", deploymentName, namespace)
 
-	deployment, err := client.ExtensionsV1beta1().Deployments(namespace).Get(deploymentName, metaV1.GetOptions{})
+	deployment, err := client.AppsV1beta2().Deployments(namespace).Get(deploymentName, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
@@ -158,7 +158,7 @@ func GetDeploymentDetail(client client.Interface, metricClient metricapi.MetricC
 		return nil, criticalError
 	}
 
-	rawRepSets := make([]*extensions.ReplicaSet, 0)
+	rawRepSets := make([]*apps.ReplicaSet, 0)
 	for i := range rawRs.Items {
 		rawRepSets = append(rawRepSets, &rawRs.Items[i])
 	}
@@ -210,7 +210,7 @@ func GetDeploymentDetail(client client.Interface, metricClient metricapi.MetricC
 
 }
 
-func GetStatusInfo(deploymentStatus *extensions.DeploymentStatus) StatusInfo {
+func GetStatusInfo(deploymentStatus *apps.DeploymentStatus) StatusInfo {
 	return StatusInfo{
 		Replicas:    deploymentStatus.Replicas,
 		Updated:     deploymentStatus.UpdatedReplicas,

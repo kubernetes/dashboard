@@ -19,7 +19,7 @@ import (
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	extensions "k8s.io/api/extensions/v1beta1"
+	apps "k8s.io/api/apps/v1beta2"
 )
 
 // ReplicaSet is a presentation layer view of Kubernetes Replica Set resource. This means
@@ -40,7 +40,7 @@ type ReplicaSet struct {
 }
 
 // ToReplicaSet converts replica set api object to replica set model object.
-func ToReplicaSet(replicaSet *extensions.ReplicaSet, podInfo *common.PodInfo) ReplicaSet {
+func ToReplicaSet(replicaSet *apps.ReplicaSet, podInfo *common.PodInfo) ReplicaSet {
 	return ReplicaSet{
 		ObjectMeta:          api.NewObjectMeta(replicaSet.ObjectMeta),
 		TypeMeta:            api.NewTypeMeta(api.ResourceKindReplicaSet),
@@ -50,9 +50,9 @@ func ToReplicaSet(replicaSet *extensions.ReplicaSet, podInfo *common.PodInfo) Re
 	}
 }
 
-// The code below allows to perform complex data section on []extensions.ReplicaSet
+// The code below allows to perform complex data section on Replica Set
 
-type ReplicaSetCell extensions.ReplicaSet
+type ReplicaSetCell apps.ReplicaSet
 
 func (self ReplicaSetCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
 	switch name {
@@ -77,7 +77,7 @@ func (self ReplicaSetCell) GetResourceSelector() *metricapi.ResourceSelector {
 	}
 }
 
-func ToCells(std []extensions.ReplicaSet) []dataselect.DataCell {
+func ToCells(std []apps.ReplicaSet) []dataselect.DataCell {
 	cells := make([]dataselect.DataCell, len(std))
 	for i := range std {
 		cells[i] = ReplicaSetCell(std[i])
@@ -85,10 +85,10 @@ func ToCells(std []extensions.ReplicaSet) []dataselect.DataCell {
 	return cells
 }
 
-func FromCells(cells []dataselect.DataCell) []extensions.ReplicaSet {
-	std := make([]extensions.ReplicaSet, len(cells))
+func FromCells(cells []dataselect.DataCell) []apps.ReplicaSet {
+	std := make([]apps.ReplicaSet, len(cells))
 	for i := range std {
-		std[i] = extensions.ReplicaSet(cells[i].(ReplicaSetCell))
+		std[i] = apps.ReplicaSet(cells[i].(ReplicaSetCell))
 	}
 	return std
 }

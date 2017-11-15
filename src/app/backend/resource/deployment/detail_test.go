@@ -25,29 +25,29 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
+	apps "k8s.io/api/apps/v1beta2"
 	"k8s.io/api/core/v1"
-	extensions "k8s.io/api/extensions/v1beta1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/intstr"
 	"k8s.io/client-go/kubernetes/fake"
 )
 
 func createDeployment(name, namespace, podTemplateName string, replicas int32, podLabel,
-	labelSelector map[string]string) *extensions.Deployment {
+	labelSelector map[string]string) *apps.Deployment {
 	maxSurge := intstr.FromInt(1)
 	maxUnavailable := intstr.FromString("25%")
 
-	return &extensions.Deployment{
+	return &apps.Deployment{
 		ObjectMeta: metaV1.ObjectMeta{
 			Name: name, Namespace: namespace, Labels: labelSelector,
 		},
-		Spec: extensions.DeploymentSpec{
+		Spec: apps.DeploymentSpec{
 			Selector:        &metaV1.LabelSelector{MatchLabels: labelSelector},
 			Replicas:        &replicas,
 			MinReadySeconds: 5,
-			Strategy: extensions.DeploymentStrategy{
-				Type: extensions.RollingUpdateDeploymentStrategyType,
-				RollingUpdate: &extensions.RollingUpdateDeployment{
+			Strategy: apps.DeploymentStrategy{
+				Type: apps.RollingUpdateDeploymentStrategyType,
+				RollingUpdate: &apps.RollingUpdateDeployment{
 					MaxSurge:       &maxSurge,
 					MaxUnavailable: &maxUnavailable,
 				},
@@ -55,19 +55,19 @@ func createDeployment(name, namespace, podTemplateName string, replicas int32, p
 			Template: v1.PodTemplateSpec{
 				ObjectMeta: metaV1.ObjectMeta{Name: podTemplateName, Labels: podLabel}},
 		},
-		Status: extensions.DeploymentStatus{
+		Status: apps.DeploymentStatus{
 			Replicas: replicas, UpdatedReplicas: 2, AvailableReplicas: 3, UnavailableReplicas: 1,
 		},
 	}
 }
 
 func createReplicaSet(name, namespace string, replicas int32, labelSelector map[string]string,
-	podTemplateSpec v1.PodTemplateSpec) extensions.ReplicaSet {
-	return extensions.ReplicaSet{
+	podTemplateSpec v1.PodTemplateSpec) apps.ReplicaSet {
+	return apps.ReplicaSet{
 		ObjectMeta: metaV1.ObjectMeta{
 			Name: name, Namespace: namespace, Labels: labelSelector,
 		},
-		Spec: extensions.ReplicaSetSpec{
+		Spec: apps.ReplicaSetSpec{
 			Replicas: &replicas,
 			Template: podTemplateSpec,
 		},
@@ -87,8 +87,8 @@ func TestGetDeploymentDetail(t *testing.T) {
 	newReplicaSet := createReplicaSet("rs-1", "ns-1", replicas, map[string]string{"foo": "bar"},
 		podTemplateSpec)
 
-	replicaSetList := &extensions.ReplicaSetList{
-		Items: []extensions.ReplicaSet{
+	replicaSetList := &apps.ReplicaSetList{
+		Items: []apps.ReplicaSet{
 			newReplicaSet,
 			createReplicaSet("rs-2", "ns-1", replicas, map[string]string{"foo": "bar"},
 				podTemplateSpec),
@@ -101,7 +101,7 @@ func TestGetDeploymentDetail(t *testing.T) {
 	cases := []struct {
 		namespace, name string
 		expectedActions []string
-		deployment      *extensions.Deployment
+		deployment      *apps.Deployment
 		expected        *DeploymentDetail
 	}{
 		{

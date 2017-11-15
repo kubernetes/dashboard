@@ -21,8 +21,8 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
+	apps "k8s.io/api/apps/v1beta2"
 	"k8s.io/api/core/v1"
-	extensions "k8s.io/api/extensions/v1beta1"
 	"k8s.io/client-go/kubernetes"
 )
 
@@ -94,7 +94,7 @@ func GetDaemonSetListFromChannels(channels *common.ResourceChannels, dsQuery *da
 	return result, nil
 }
 
-func toDaemonSetList(daemonSets []extensions.DaemonSet, pods []v1.Pod, events []v1.Event, nonCriticalErrors []error,
+func toDaemonSetList(daemonSets []apps.DaemonSet, pods []v1.Pod, events []v1.Event, nonCriticalErrors []error,
 	dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) *DaemonSetList {
 
 	daemonSetList := &DaemonSetList{

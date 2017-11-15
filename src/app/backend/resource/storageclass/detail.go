@@ -58,7 +58,7 @@ type StorageClassDetail struct {
 func GetStorageClass(client kubernetes.Interface, name string) (*StorageClassDetail, error) {
 	log.Printf("Getting details of %s storage class", name)
 
-	storage, err := client.StorageV1beta1().StorageClasses().Get(name, metaV1.GetOptions{})
+	storage, err := client.StorageV1().StorageClasses().Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}

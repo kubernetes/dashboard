@@ -23,8 +23,8 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
+	apps "k8s.io/api/apps/v1beta2"
 	"k8s.io/api/core/v1"
-	extensions "k8s.io/api/extensions/v1beta1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/labels"
@@ -52,7 +52,7 @@ func GetReplicaSetPods(client k8sClient.Interface, metricClient metricapi.Metric
 }
 
 func getRawReplicaSetPods(client k8sClient.Interface, petSetName, namespace string) ([]v1.Pod, error) {
-	rs, err := client.ExtensionsV1beta1().ReplicaSets(namespace).Get(petSetName, metaV1.GetOptions{})
+	rs, err := client.AppsV1beta2().ReplicaSets(namespace).Get(petSetName, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
@@ -69,7 +69,7 @@ func getRawReplicaSetPods(client k8sClient.Interface, petSetName, namespace stri
 	return common.FilterPodsByControllerRef(rs, podList.Items), nil
 }
 
-func getReplicaSetPodInfo(client k8sClient.Interface, replicaSet *extensions.ReplicaSet) (*common.PodInfo, error) {
+func getReplicaSetPodInfo(client k8sClient.Interface, replicaSet *apps.ReplicaSet) (*common.PodInfo, error) {
 	labelSelector := labels.SelectorFromSet(replicaSet.Spec.Selector.MatchLabels)
 	channels := &common.ResourceChannels{
 		PodList: common.GetPodListChannelWithOptions(client, common.NewSameNamespaceQuery(replicaSet.Namespace),

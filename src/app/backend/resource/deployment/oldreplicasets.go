@@ -20,7 +20,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
-	extensions "k8s.io/api/extensions/v1beta1"
+	apps "k8s.io/api/apps/v1beta2"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
 )
@@ -34,7 +34,7 @@ func GetDeploymentOldReplicaSets(client client.Interface, dsQuery *dataselect.Da
 		ListMeta:    api.ListMeta{TotalItems: 0},
 	}
 
-	deployment, err := client.ExtensionsV1beta1().Deployments(namespace).Get(deploymentName, metaV1.GetOptions{})
+	deployment, err := client.AppsV1beta2().Deployments(namespace).Get(deploymentName, metaV1.GetOptions{})
 	if err != nil {
 		return oldReplicaSetList, err
 	}
@@ -71,7 +71,7 @@ func GetDeploymentOldReplicaSets(client client.Interface, dsQuery *dataselect.Da
 		return oldReplicaSetList, criticalError
 	}
 
-	rawRepSets := make([]*extensions.ReplicaSet, 0)
+	rawRepSets := make([]*apps.ReplicaSet, 0)
 	for i := range rawRs.Items {
 		rawRepSets = append(rawRepSets, &rawRs.Items[i])
 	}
@@ -80,7 +80,7 @@ func GetDeploymentOldReplicaSets(client client.Interface, dsQuery *dataselect.Da
 		return oldReplicaSetList, err
 	}
 
-	oldReplicaSets := make([]extensions.ReplicaSet, len(oldRs))
+	oldReplicaSets := make([]apps.ReplicaSet, len(oldRs))
 	for i, replicaSet := range oldRs {
 		oldReplicaSets[i] = *replicaSet
 	}

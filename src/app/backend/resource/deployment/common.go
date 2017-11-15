@@ -18,12 +18,12 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	extensions "k8s.io/api/extensions/v1beta1"
+	apps "k8s.io/api/apps/v1beta2"
 )
 
-// The code below allows to perform complex data section on []extensions.Deployment
+// The code below allows to perform complex data section on Deployment
 
-type DeploymentCell extensions.Deployment
+type DeploymentCell apps.Deployment
 
 func (self DeploymentCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
 	switch name {
@@ -49,7 +49,7 @@ func (self DeploymentCell) GetResourceSelector() *metricapi.ResourceSelector {
 	}
 }
 
-func toCells(std []extensions.Deployment) []dataselect.DataCell {
+func toCells(std []apps.Deployment) []dataselect.DataCell {
 	cells := make([]dataselect.DataCell, len(std))
 	for i := range std {
 		cells[i] = DeploymentCell(std[i])
@@ -57,10 +57,10 @@ func toCells(std []extensions.Deployment) []dataselect.DataCell {
 	return cells
 }
 
-func fromCells(cells []dataselect.DataCell) []extensions.Deployment {
-	std := make([]extensions.Deployment, len(cells))
+func fromCells(cells []dataselect.DataCell) []apps.Deployment {
+	std := make([]apps.Deployment, len(cells))
 	for i := range std {
-		std[i] = extensions.Deployment(cells[i].(DeploymentCell))
+		std[i] = apps.Deployment(cells[i].(DeploymentCell))
 	}
 	return std
 }
