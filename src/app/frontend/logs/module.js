@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import settingsServiceModule from '../common/settings/module';
+
 import {logsComponent} from './component';
 import {LogsService} from './service';
 import stateConfig from './stateconfig';
@@ -26,6 +28,7 @@ export default angular
         [
           'ngResource',
           'ui.router',
+          settingsServiceModule.name,
         ])
     .service('logsService', LogsService)
     .component('kdLogs', logsComponent)

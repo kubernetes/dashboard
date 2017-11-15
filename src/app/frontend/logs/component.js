@@ -37,9 +37,11 @@ export class LogsController {
    * @param {!angular.$interval} $interval
    * @param {!angular.$log} $log
    * @param {!../common/errorhandling/dialog.ErrorDialog} errorDialog
+   * @param {!../common/settings/service.SettingsService} kdSettingsService
    * @ngInject
    */
-  constructor(logsService, $sce, $document, $resource, $interval, $log, errorDialog) {
+  constructor(
+      logsService, $sce, $document, $resource, $interval, $log, errorDialog, kdSettingsService) {
     /** @private {!angular.$sce} */
     this.sce_ = $sce;
 
@@ -105,6 +107,12 @@ export class LogsController {
 
     /** @export {number} Refresh interval in miliseconds. */
     this.refreshInterval = 5000;
+
+    /** @private {boolean} */
+    this.isIntervalRegistered_ = false;
+
+    /** @private {!../common/settings/service.SettingsService} */
+    this.settingsService_ = kdSettingsService;
   }
 
 
@@ -114,7 +122,7 @@ export class LogsController {
     this.stateParams_ = this.$transition$.params();
     this.updateUiModel(this.podLogs);
     this.topIndex = this.podLogs.logs.length;
-    this.registerIntervalFunction_();
+    this.refreshInterval = this.settingsService_.getAutoRefreshTimeInterval() * 1000;
   }
 
   /**
@@ -123,12 +131,15 @@ export class LogsController {
    * @private
    */
   registerIntervalFunction_() {
-    this.interval_(() => {
-      if (this.logsService.getFollowing()) {
-        this.loadNewest();
-        this.log_.info('Automatically refreshed logs');
-      }
-    }, this.refreshInterval);
+    if (!this.isIntervalRegistered_) {
+      this.interval_(() => {
+        if (this.logsService.getFollowing()) {
+          this.loadNewest();
+          this.log_.info('Automatically refreshed logs');
+        }
+      }, this.refreshInterval);
+      this.isIntervalRegistered_ = true;
+    }
   }
 
 
@@ -176,6 +187,7 @@ export class LogsController {
    * @export
    */
   toggleLogFollow() {
+    this.registerIntervalFunction_();
     this.logsService.setFollowing();
     if (this.logsService.getFollowing()) {
       this.loadNewest();
