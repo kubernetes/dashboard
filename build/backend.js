@@ -35,6 +35,9 @@ gulp.task('backend', ['package-backend'], function(doneFn) {
         'build',
         // Install dependencies to speed up subsequent compilations.
         '-i',
+        // record version info into src/version/version.go
+        '-ldflags',
+        conf.recordVersionExpression,
         '-o',
         path.join(conf.paths.serve, conf.backend.binaryName),
         conf.backend.mainPackageName,
@@ -116,6 +119,9 @@ function backendProd(outputBinaryPathsAndArchs) {
             '-a',
             '-installsuffix',
             'cgo',
+            // record version info into src/version/version.go
+            '-ldflags',
+            conf.recordVersionExpression,
             '-o',
             path,
             conf.backend.mainPackageName,
