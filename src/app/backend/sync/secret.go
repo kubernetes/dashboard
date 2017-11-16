@@ -44,6 +44,7 @@ type secretSynchronizer struct {
 	client         kubernetes.Interface
 	actionHandlers map[watch.EventType][]syncApi.ActionHandlerFunction
 	errChan        chan error
+	poller         syncApi.Poller
 
 	mux sync.Mutex
 }
@@ -161,6 +162,11 @@ func (self *secretSynchronizer) Refresh() {
 	self.secret = secret
 }
 
+// SetPoller implements Synchronizer interface. See Synchronizer for more information.
+func (self *secretSynchronizer) SetPoller(poller syncApi.Poller) {
+	self.poller = poller
+}
+
 func (self *secretSynchronizer) getSecret(obj runtime.Object) *v1.Secret {
 	secret, ok := obj.(*v1.Secret)
 	if !ok {
@@ -171,8 +177,11 @@ func (self *secretSynchronizer) getSecret(obj runtime.Object) *v1.Secret {
 }
 
 func (self *secretSynchronizer) watch(namespace, name string) (watch.Interface, error) {
-	poller := poll.NewSecretPoller(name, namespace, self.client)
-	return poller.Poll(secretSyncPeriod), nil
+	if self.poller == nil {
+		self.poller = poll.NewSecretPoller(name, namespace, self.client)
+	}
+
+	return self.poller.Poll(secretSyncPeriod), nil
 }
 
 func (self *secretSynchronizer) handleEvent(event watch.Event) error {

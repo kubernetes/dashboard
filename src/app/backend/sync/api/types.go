@@ -47,6 +47,8 @@ type Synchronizer interface {
 	// RegisterActionHandler registers callback functions on given event types. They are automatically called by
 	// watcher.
 	RegisterActionHandler(ActionHandlerFunction, ...watch.EventType)
+	// SetPoller allows to set custom poller to synchronize objects.
+	SetPoller(poller Poller)
 }
 
 // SynchronizerManager interface is responsible for creating specific synchronizers.

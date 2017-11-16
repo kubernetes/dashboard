@@ -51,6 +51,7 @@ func TestNewSecretPoller_Poll(t *testing.T) {
 	case ev := <-watcher.ResultChan():
 		watchEvent = &ev
 	case <-time.After(3 * time.Second):
+		t.Fatal("Timeout while waiting for watcher data.")
 	}
 
 	if watchEvent == nil {
