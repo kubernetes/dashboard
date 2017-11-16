@@ -18,8 +18,9 @@ import (
 	"time"
 
 	syncapi "github.com/kubernetes/dashboard/src/app/backend/sync/api"
+	"k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
-	"k8s.io/apimachinery/pkg/apis/meta/v1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/wait"
 	"k8s.io/apimachinery/pkg/watch"
 	"k8s.io/client-go/kubernetes"
@@ -29,6 +30,7 @@ import (
 type SecretPoller struct {
 	name      string
 	namespace string
+	secret    *v1.Secret
 	client    kubernetes.Interface
 	watcher   *PollWatcher
 }
@@ -51,7 +53,11 @@ func (self *SecretPoller) Poll(interval time.Duration) watch.Interface {
 
 // Gets secret from API server and transforms it to watch.Event object.
 func (self *SecretPoller) getSecretEvent() watch.Event {
-	secret, err := self.client.CoreV1().Secrets(self.namespace).Get(self.name, v1.GetOptions{})
+	secret, err := self.client.CoreV1().Secrets(self.namespace).Get(self.name, metav1.GetOptions{})
+	if secret != nil {
+		self.secret = secret
+	}
+
 	event := watch.Event{
 		Object: secret,
 		Type:   watch.Added,
@@ -61,8 +67,9 @@ func (self *SecretPoller) getSecretEvent() watch.Event {
 		event.Type = watch.Error
 	}
 
-	if self.isNotFoundError(err) {
+	if self.isNotFoundError(err) && self.secret != nil {
 		event.Type = watch.Deleted
+		self.secret = nil
 	}
 
 	return event
