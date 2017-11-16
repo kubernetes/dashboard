@@ -29,7 +29,13 @@ describe('Edit resource menu item', () => {
   let mdDialog;
 
   beforeEach(() => {
-    angular.mock.module(resourceCardModule.name);
+    angular.mock.module(resourceCardModule.name, ($provide) => {
+
+      let localizerService = {localize: function() {}};
+
+      $provide.value('localizerService', localizerService);
+    });
+
 
     angular.mock.inject(
         ($rootScope, $componentController, _kdResourceVerberService_, $q, $state, $mdDialog) => {

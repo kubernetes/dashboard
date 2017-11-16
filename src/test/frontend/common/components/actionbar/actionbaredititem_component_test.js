@@ -27,7 +27,13 @@ describe('Actionbar edit item component', () => {
   let scope;
 
   beforeEach(() => {
-    angular.mock.module(componentsModule.name);
+    angular.mock.module(componentsModule.name, ($provide) => {
+
+      let localizerService = {localize: function() {}};
+
+      $provide.value('localizerService', localizerService);
+    });
+
     let fakeModule = angular.module('fakeModule', []);
     fakeModule.config(($stateProvider) => {
       $stateProvider.state('fakeState', {
@@ -38,7 +44,8 @@ describe('Actionbar edit item component', () => {
     angular.mock.module(fakeModule.name);
 
     angular.mock.inject(
-        ($componentController, $state, _kdResourceVerberService_, $q, $rootScope) => {
+        ($componentController, $state, _kdResourceVerberService_, $q, $rootScope,
+         localizerService) => {
           state = $state;
           kdResourceVerberService = _kdResourceVerberService_;
           q = $q;
@@ -46,6 +53,7 @@ describe('Actionbar edit item component', () => {
           ctrl = $componentController(
               'kdActionbarEditItem', {
                 $scope: scope,
+                localizerService: localizerService,
               },
               {
                 resourceKindName: 'resource',

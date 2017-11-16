@@ -24,17 +24,24 @@ describe('Delete resource controller', () => {
   let httpBackend;
   let testResourceUrl = 'foo';
 
-  beforeEach(() => angular.mock.module(resourceModule.name));
+  beforeEach(() => {
+    angular.mock.module(resourceModule.name, ($provide) => {
 
-  beforeEach(angular.mock.inject(($controller, $mdDialog, $httpBackend) => {
-    ctrl = $controller(DeleteResourceController, {
-      resourceKindName: 'My Resource',
-      objectMeta: {name: 'Foo', namespace: 'Bar'},
-      resourceUrl: testResourceUrl,
+      let localizerService = {localize: function() {}};
+
+      $provide.value('localizerService', localizerService);
     });
-    mdDialog = $mdDialog;
-    httpBackend = $httpBackend;
-  }));
+
+    angular.mock.inject(($controller, $mdDialog, $httpBackend) => {
+      ctrl = $controller(DeleteResourceController, {
+        resourceKindName: 'My Resource',
+        objectMeta: {name: 'Foo', namespace: 'Bar'},
+        resourceUrl: testResourceUrl,
+      });
+      mdDialog = $mdDialog;
+      httpBackend = $httpBackend;
+    });
+  });
 
   it('should delete resource', () => {
     spyOn(mdDialog, 'hide');

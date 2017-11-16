@@ -29,12 +29,20 @@ describe('Delete resource menu item', () => {
   let mdDialog;
 
   beforeEach(() => {
-    angular.mock.module(resourceCardModule.name);
+    angular.mock.module(resourceCardModule.name, ($provide) => {
+
+      let localizerService = {localize: function() {}};
+
+      $provide.value('localizerService', localizerService);
+    });
 
     angular.mock.inject(
-        ($rootScope, $componentController, _kdResourceVerberService_, $q, $state, $mdDialog) => {
+        ($rootScope, $componentController, _kdResourceVerberService_, $q, $state, $mdDialog,
+         localizerService) => {
           scope = $rootScope;
-          ctrl = $componentController('kdResourceCardDeleteMenuItem', {$scope: $rootScope});
+          ctrl = $componentController(
+              'kdResourceCardDeleteMenuItem',
+              {$scope: $rootScope, localizerService: localizerService});
           ctrl.resourceCardCtrl = {
             objectMeta: {name: 'foo-name', namespace: 'foo-namespace'},
             typeMeta: {kind: 'foo'},

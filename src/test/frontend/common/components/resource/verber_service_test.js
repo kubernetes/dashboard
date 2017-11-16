@@ -28,17 +28,24 @@ describe('Verber service', () => {
   /** @type {!angular.$log} */
   let log;
 
-  beforeEach(() => angular.mock.module(resourceModule.name));
+  beforeEach(() => {
+    angular.mock.module(resourceModule.name, ($provide) => {
 
-  beforeEach(
-      angular.mock.inject((kdResourceVerberService, $mdDialog, $q, $rootScope, $state, $log) => {
-        verber = kdResourceVerberService;
-        mdDialog = $mdDialog;
-        q = $q;
-        scope = $rootScope.$new();
-        state = $state;
-        log = $log;
-      }));
+      let localizerService = {localize: function() {}};
+
+      $provide.value('localizerService', localizerService);
+    });
+
+    angular.mock.inject((kdResourceVerberService, $mdDialog, $q, $rootScope, $state, $log) => {
+      verber = kdResourceVerberService;
+      mdDialog = $mdDialog;
+      q = $q;
+      scope = $rootScope.$new();
+      state = $state;
+      log = $log;
+    });
+  });
+
 
   it('should show delete dialog resource', (doneFn) => {
     let deferred = q.defer();

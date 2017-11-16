@@ -847,6 +847,8 @@
   <translation id="5636111591527461304" key="MSG_SECRET_LIST_CARDLIST_4" desc="Text for secret card list zerostate.">There are no Secrets to display.</translation>
   <translation id="2424849052809753229" key="MSG_SECRET_LIST_CARDLIST_5" desc="Label \'Type\' which appears as a column label in the table of secrets (secret list view).">Type</translation>
   <translation id="3633911909434472281" key="MSG_SECRET_LIST_CARD_0" desc="Tooltip for the age column">Created at</translation>
+  <translation id="6664148008036181831" key="MSG_SECRET_LIST_CARD_1" desc="Label \'Secret\' which appears at the top of the delete dialog, opened from a secret list page.">Secret</translation>
+  <translation id="8861268134666616872" key="MSG_SECRET_LIST_CARD_2" desc="Label \'Secret\' which appears at the top of the edit dialog, opened from a secret list page.">Secret</translation>
   <translation id="4995313458787786058" key="MSG_SERVICES_LABEL" desc="Label 'Services' that appears as a breadcrumbs on the action bar.">Services</translation>
   <translation id="2095406541360162780" key="MSG_SERVICE_DETAIL_DETAIL_1" desc="Text for pods card zerostate in stateful set details page.">There are currently no Pods selected by this Service.</translation>
   <translation id="8542374982013786209" key="MSG_SERVICE_DETAIL_INFO_0" desc="Header in a detail view">Details</translation>

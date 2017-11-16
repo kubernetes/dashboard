@@ -50,11 +50,16 @@ describe('Actionbar delete item component', () => {
   }
 
   beforeEach(() => {
-    angular.mock.module(componentsModule.name);
+    angular.mock.module(componentsModule.name, ($provide) => {
+
+      let localizerService = {localize: function() {}};
+
+      $provide.value('localizerService', localizerService);
+    });
 
     angular.mock.inject(
         ($componentController, $state, _kdBreadcrumbsService_, _kdResourceVerberService_, $q,
-         $rootScope, $uiRouterGlobals) => {
+         $rootScope, $uiRouterGlobals, localizerService) => {
           state = $state;
           globals = $uiRouterGlobals;
           kdResourceVerberService = _kdResourceVerberService_;
@@ -66,6 +71,7 @@ describe('Actionbar delete item component', () => {
                 kdBreadcrumbsService: _kdBreadcrumbsService_,
                 kdResourceVerberService: _kdResourceVerberService_,
                 $scope: scope,
+                localizerService: localizerService,
               },
               {
                 resourceKindName: 'resource',
