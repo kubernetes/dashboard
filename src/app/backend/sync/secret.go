@@ -20,16 +20,20 @@ import (
 	"log"
 	"reflect"
 	"sync"
+	"time"
 
 	syncApi "github.com/kubernetes/dashboard/src/app/backend/sync/api"
+	"github.com/kubernetes/dashboard/src/app/backend/sync/poll"
 	"k8s.io/api/core/v1"
 	k8sErrors "k8s.io/apimachinery/pkg/api/errors"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/watch"
 	"k8s.io/client-go/kubernetes"
 )
+
+// Time interval between which secret should be resynchronized.
+const secretSyncPeriod = 5 * time.Minute
 
 // Implements Synchronizer interface. See Synchronizer for more information.
 type secretSynchronizer struct {
@@ -40,6 +44,7 @@ type secretSynchronizer struct {
 	client         kubernetes.Interface
 	actionHandlers map[watch.EventType][]syncApi.ActionHandlerFunction
 	errChan        chan error
+	poller         syncApi.Poller
 
 	mux sync.Mutex
 }
@@ -157,6 +162,11 @@ func (self *secretSynchronizer) Refresh() {
 	self.secret = secret
 }
 
+// SetPoller implements Synchronizer interface. See Synchronizer for more information.
+func (self *secretSynchronizer) SetPoller(poller syncApi.Poller) {
+	self.poller = poller
+}
+
 func (self *secretSynchronizer) getSecret(obj runtime.Object) *v1.Secret {
 	secret, ok := obj.(*v1.Secret)
 	if !ok {
@@ -167,15 +177,11 @@ func (self *secretSynchronizer) getSecret(obj runtime.Object) *v1.Secret {
 }
 
 func (self *secretSynchronizer) watch(namespace, name string) (watch.Interface, error) {
-	selector, err := fields.ParseSelector(fmt.Sprintf("metadata.name=%s", name))
-	if err != nil {
-		return nil, err
+	if self.poller == nil {
+		self.poller = poll.NewSecretPoller(name, namespace, self.client)
 	}
 
-	return self.client.CoreV1().Secrets(namespace).Watch(metaV1.ListOptions{
-		FieldSelector: selector.String(),
-		Watch:         true,
-	})
+	return self.poller.Poll(secretSyncPeriod), nil
 }
 
 func (self *secretSynchronizer) handleEvent(event watch.Event) error {
@@ -212,7 +218,6 @@ func (self *secretSynchronizer) handleEvent(event watch.Event) error {
 func (self *secretSynchronizer) update(secret v1.Secret) {
 	if reflect.DeepEqual(self.secret, &secret) {
 		// Skip update if existing object is the same as new one
-		log.Print("Trying to update secret with same object. Skipping")
 		return
 	}
 

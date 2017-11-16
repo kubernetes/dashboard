@@ -28,6 +28,15 @@ import (
 	k8stest "k8s.io/client-go/testing"
 )
 
+// Implements sync api Poller interface
+type fakePoller struct {
+	watch watch.Interface
+}
+
+func (self *fakePoller) Poll(time.Duration) watch.Interface {
+	return self.watch
+}
+
 // Implements k8s watch Interface
 type fakeWatch struct {
 	events chan watch.Event
@@ -97,12 +106,9 @@ func validateSyncedObject(sync syncApi.Synchronizer, timeout time.Duration, f co
 func TestSecretSynchronizer_Start(t *testing.T) {
 	fWatch := &fakeWatch{events: make(chan watch.Event)}
 	fClient := fake.NewSimpleClientset()
-	fClient.PrependWatchReactor("*",
-		func(action k8stest.Action) (handled bool, ret watch.Interface, err error) {
-			return true, fWatch, nil
-		})
 
 	secretSync := NewSynchronizerManager(fClient).Secret("test-ns", "test-secret")
+	secretSync.SetPoller(&fakePoller{watch: fWatch})
 	secretSync.Start()
 
 	secret := secretSync.Get()
@@ -112,7 +118,6 @@ func TestSecretSynchronizer_Start(t *testing.T) {
 
 	// Emit secret that should be synced and available through Get() method
 	fWatch.emitEvent(getSecretEvent("test-secret", "test-ns", watch.Added))
-
 	if !validateSyncedObject(secretSync, 2*time.Second, expectNotNil) {
 		t.Fatal("secretSync.Start(): Expected secret not to be nil")
 	}
@@ -122,11 +127,6 @@ func TestSecretSynchronizer_Create(t *testing.T) {
 	fWatch := &fakeWatch{events: make(chan watch.Event)}
 	fClient := fake.NewSimpleClientset()
 	obj := &v1.Secret{ObjectMeta: metaV1.ObjectMeta{Name: "test-secret", Namespace: "test-ns"}}
-
-	fClient.PrependWatchReactor("*",
-		func(action k8stest.Action) (handled bool, ret watch.Interface, err error) {
-			return true, fWatch, nil
-		})
 
 	fClient.PrependReactor("create", "*",
 		func(action k8stest.Action) (handled bool, ret runtime.Object, err error) {
@@ -140,6 +140,7 @@ func TestSecretSynchronizer_Create(t *testing.T) {
 		})
 
 	secretSync := NewSynchronizerManager(fClient).Secret("test-ns", "test-secret")
+	secretSync.SetPoller(&fakePoller{watch: fWatch})
 	secretSync.Start()
 
 	secret := secretSync.Get()
@@ -159,11 +160,6 @@ func TestSecretSynchronizer_Delete(t *testing.T) {
 	obj := &v1.Secret{ObjectMeta: metaV1.ObjectMeta{Name: "test-secret", Namespace: "test-ns"}}
 	fClient := fake.NewSimpleClientset()
 
-	fClient.PrependWatchReactor("*",
-		func(action k8stest.Action) (handled bool, ret watch.Interface, err error) {
-			return true, fWatch, nil
-		})
-
 	fClient.PrependReactor("delete", "*",
 		func(action k8stest.Action) (handled bool, ret runtime.Object, err error) {
 			ev := watch.Event{
@@ -176,6 +172,7 @@ func TestSecretSynchronizer_Delete(t *testing.T) {
 		})
 
 	secretSync := NewSynchronizerManager(fClient).Secret("test-ns", "test-secret")
+	secretSync.SetPoller(&fakePoller{watch: fWatch})
 	secretSync.Start()
 
 	// Emit secret that should be synced and available through Get() method
@@ -201,11 +198,6 @@ func TestSecretSynchronizer_Update(t *testing.T) {
 		Data: map[string][]byte{"test-key": []byte("test-val")}}
 	fClient := fake.NewSimpleClientset()
 
-	fClient.PrependWatchReactor("*",
-		func(action k8stest.Action) (handled bool, ret watch.Interface, err error) {
-			return true, fWatch, nil
-		})
-
 	fClient.PrependReactor("update", "*",
 		func(action k8stest.Action) (handled bool, ret runtime.Object, err error) {
 			ev := watch.Event{
@@ -218,6 +210,7 @@ func TestSecretSynchronizer_Update(t *testing.T) {
 		})
 
 	secretSync := NewSynchronizerManager(fClient).Secret("test-ns", "test-secret")
+	secretSync.SetPoller(&fakePoller{watch: fWatch})
 	secretSync.Start()
 
 	// Emit secret that should be synced and available through Get() method
@@ -250,11 +243,6 @@ func TestSecretSynchronizer_Error(t *testing.T) {
 	fClient := fake.NewSimpleClientset()
 	obj := &v1.Pod{ObjectMeta: metaV1.ObjectMeta{Name: "test-pod", Namespace: "test-ns"}}
 
-	fClient.PrependWatchReactor("*",
-		func(action k8stest.Action) (handled bool, ret watch.Interface, err error) {
-			return true, fWatch, nil
-		})
-
 	fClient.PrependReactor("create", "*",
 		func(action k8stest.Action) (handled bool, ret runtime.Object, err error) {
 			ev := watch.Event{
@@ -267,6 +255,7 @@ func TestSecretSynchronizer_Error(t *testing.T) {
 		})
 
 	secretSync := NewSynchronizerManager(fClient).Secret("test-ns", "test-secret")
+	secretSync.SetPoller(&fakePoller{watch: fWatch})
 	secretSync.Start()
 
 	secret := secretSync.Get()
@@ -296,17 +285,13 @@ func TestSecretSynchronizer_Refresh(t *testing.T) {
 	fClient := fake.NewSimpleClientset()
 	obj := &v1.Secret{ObjectMeta: metaV1.ObjectMeta{Name: "test-pod", Namespace: "test-ns"}}
 
-	fClient.PrependWatchReactor("*",
-		func(action k8stest.Action) (handled bool, ret watch.Interface, err error) {
-			return true, fWatch, nil
-		})
-
 	fClient.PrependReactor("get", "*",
 		func(action k8stest.Action) (handled bool, ret runtime.Object, err error) {
 			return true, obj, nil
 		})
 
 	secretSync := NewSynchronizerManager(fClient).Secret("test-ns", "test-secret")
+	secretSync.SetPoller(&fakePoller{watch: fWatch})
 	secretSync.Start()
 	secretSync.Refresh()
 
@@ -320,12 +305,8 @@ func TestSecretSynchronizer_RegisterActionHandler(t *testing.T) {
 	fClient := fake.NewSimpleClientset()
 	executedActionHandler := false
 
-	fClient.PrependWatchReactor("*",
-		func(action k8stest.Action) (handled bool, ret watch.Interface, err error) {
-			return true, fWatch, nil
-		})
-
 	secretSync := NewSynchronizerManager(fClient).Secret("test-ns", "test-secret")
+	secretSync.SetPoller(&fakePoller{watch: fWatch})
 	secretSync.Start()
 	secretSync.RegisterActionHandler(func(obj runtime.Object) {
 		executedActionHandler = true
