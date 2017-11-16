@@ -50,6 +50,10 @@ func GetPodContainers(client kubernetes.Interface, namespace, podID string) (*Po
 		containers.Containers = append(containers.Containers, container.Name)
 	}
 
+	for _, container := range pod.Spec.InitContainers {
+		containers.Containers = append(containers.Containers, container.Name)
+	}
+
 	return containers, nil
 }
 
