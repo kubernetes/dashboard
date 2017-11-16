@@ -54,7 +54,7 @@ describe('Actionbar delete item component', () => {
 
       let localizerService = {localize: function() {}};
 
-      $provide.value('localizerService', localizerService)
+      $provide.value('localizerService', localizerService);
     });
 
     angular.mock.inject(

@@ -33,7 +33,7 @@ describe('Verber service', () => {
 
       let localizerService = {localize: function() {}};
 
-      $provide.value('localizerService', localizerService)
+      $provide.value('localizerService', localizerService);
     });
 
     angular.mock.inject((kdResourceVerberService, $mdDialog, $q, $rootScope, $state, $log) => {
@@ -43,7 +43,7 @@ describe('Verber service', () => {
       scope = $rootScope.$new();
       state = $state;
       log = $log;
-    })
+    });
   });
 
 

@@ -33,7 +33,7 @@ describe('Edit resource menu item', () => {
 
       let localizerService = {localize: function() {}};
 
-      $provide.value('localizerService', localizerService)
+      $provide.value('localizerService', localizerService);
     });
 
 

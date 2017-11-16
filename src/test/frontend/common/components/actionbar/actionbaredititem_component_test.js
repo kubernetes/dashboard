@@ -31,7 +31,7 @@ describe('Actionbar edit item component', () => {
 
       let localizerService = {localize: function() {}};
 
-      $provide.value('localizerService', localizerService)
+      $provide.value('localizerService', localizerService);
     });
 
     let fakeModule = angular.module('fakeModule', []);

@@ -29,7 +29,7 @@ describe('Delete resource controller', () => {
 
       let localizerService = {localize: function() {}};
 
-      $provide.value('localizerService', localizerService)
+      $provide.value('localizerService', localizerService);
     });
 
     angular.mock.inject(($controller, $mdDialog, $httpBackend) => {
@@ -40,7 +40,7 @@ describe('Delete resource controller', () => {
       });
       mdDialog = $mdDialog;
       httpBackend = $httpBackend;
-    })
+    });
   });
 
   it('should delete resource', () => {
