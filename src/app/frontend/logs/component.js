@@ -35,11 +35,11 @@ export class LogsController {
    * @param {!angular.$document} $document
    * @param {!angular.$resource} $resource
    * @param {!angular.$interval} $interval
-   * @param {!angular.$log} $log
    * @param {!../common/errorhandling/dialog.ErrorDialog} errorDialog
+   * @param {!../common/settings/service.SettingsService} kdSettingsService
    * @ngInject
    */
-  constructor(logsService, $sce, $document, $resource, $interval, $log, errorDialog) {
+  constructor(logsService, $sce, $document, $resource, $interval, errorDialog, kdSettingsService) {
     /** @private {!angular.$sce} */
     this.sce_ = $sce;
 
@@ -51,9 +51,6 @@ export class LogsController {
 
     /** @private {!angular.$interval} */
     this.interval_ = $interval;
-
-    /** @private {!angular.$log} */
-    this.log_ = $log;
 
     /** @export {!./service.LogsService} */
     this.logsService = logsService;
@@ -105,8 +102,13 @@ export class LogsController {
 
     /** @export {number} Refresh interval in miliseconds. */
     this.refreshInterval = 5000;
-  }
 
+    /** @private {!angular.$q.Promise|null} */
+    this.intervalPromise_ = null;
+
+    /** @private {!../common/settings/service.SettingsService} */
+    this.settingsService_ = kdSettingsService;
+  }
 
   $onInit() {
     this.container = this.podLogs.info.containerName;
@@ -114,23 +116,29 @@ export class LogsController {
     this.stateParams_ = this.$transition$.params();
     this.updateUiModel(this.podLogs);
     this.topIndex = this.podLogs.logs.length;
-    this.registerIntervalFunction_();
+    this.refreshInterval = this.settingsService_.getAutoRefreshTimeInterval() * 1000;
+  }
+
+  $onDestroy() {
+    if (this.intervalPromise_) {
+      this.interval_.cancel(this.intervalPromise_);
+      this.intervalPromise_ = null;
+    }
   }
 
   /**
-   * Registers interval function used to automatically refresh logs.
+   * Starts and stops interval function used to automatically refresh logs.
    *
    * @private
    */
-  registerIntervalFunction_() {
-    this.interval_(() => {
-      if (this.logsService.getFollowing()) {
-        this.loadNewest();
-        this.log_.info('Automatically refreshed logs');
-      }
-    }, this.refreshInterval);
+  toggleIntervalFunction_() {
+    if (this.intervalPromise_) {
+      this.interval_.cancel(this.intervalPromise_);
+      this.intervalPromise_ = null;
+    } else {
+      this.intervalPromise_ = this.interval_(() => this.loadNewest(), this.refreshInterval);
+    }
   }
-
 
   /**
    * Loads maxLogSize oldest lines of logs.
@@ -177,9 +185,7 @@ export class LogsController {
    */
   toggleLogFollow() {
     this.logsService.setFollowing();
-    if (this.logsService.getFollowing()) {
-      this.loadNewest();
-    }
+    this.toggleIntervalFunction_();
   }
 
   /**
@@ -259,9 +265,7 @@ export class LogsController {
 
     // add timestamp if needed
     let showTimestamp = this.logsService.getShowTimestamp();
-    let logLine = showTimestamp ? `${line.timestamp} ${escapedContent}` : escapedContent;
-
-    return logLine;
+    return showTimestamp ? `${line.timestamp} ${escapedContent}` : escapedContent;
   }
 
   /**

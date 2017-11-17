@@ -93,6 +93,7 @@ export class SettingsController {
     let settings = {
       clusterName: this.global.clusterName,
       itemsPerPage: this.global.itemsPerPage,
+      autoRefreshTimeInterval: this.global.autoRefreshTimeInterval,
     };
 
     /** @type {!angular.Resource} */

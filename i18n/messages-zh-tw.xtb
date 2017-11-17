@@ -879,6 +879,8 @@
   <translation id="5876711404835511637" key="MSG_SETTINGS_SETTINGS_4" desc="Items per page parameter name">Items per page</translation>
   <translation id="8451116602974083200" key="MSG_SETTINGS_SETTINGS_5" desc="Items per page parameter description">Max number of items that can be displayed on each list page</translation>
   <translation id="6310132095834954202" key="MSG_SETTINGS_SETTINGS_6" desc="Save button label">Save</translation>
+  <translation id="3527362347741016568" key="MSG_SETTINGS_SETTINGS_7" desc="Auto-refresh time interval parameter name">Auto-refresh time interval</translation>
+  <translation id="2677003006851990822" key="MSG_SETTINGS_SETTINGS_8" desc="Auto-refresh time interval parameter description">Number of seconds between every auto-refresh of logs</translation>
   <translation id="3162800940071393879" key="MSG_SHELL_SHELL_0" desc="Title prefix for the shell card.">指令列</translation>
   <translation id="6124573494636381071" key="MSG_SHELL_SHELL_1" desc="Title part for the shell card.">在</translation>
   <translation id="2232943352979399383" key="MSG_STATEFULSET_DETAIL_ACTIONBAR_0" desc="Label \'Stateful Set\' which appears at the top of the scale dialog, opened from a stateful set details page.">Stateful Set</translation>

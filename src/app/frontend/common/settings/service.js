@@ -89,4 +89,19 @@ export class SettingsService {
     }
     return itemsPerPage;
   }
+
+  /**
+   * Gets currently loaded auto refresh time interval parameter. To load changes from the backend
+   * use load() function.
+   *
+   * @export
+   * @return {number}
+   */
+  getAutoRefreshTimeInterval() {
+    let autoRefreshTimeInterval = 5;
+    if (this.isInitialized_()) {
+      autoRefreshTimeInterval = this.global_.autoRefreshTimeInterval;
+    }
+    return autoRefreshTimeInterval;
+  }
 }

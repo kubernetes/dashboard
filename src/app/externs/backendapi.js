@@ -1463,7 +1463,8 @@ backendApi.Controller;
 /**
  * @typedef {{
  *   clusterName: string,
- *   itemsPerPage: number
+ *   itemsPerPage: number,
+ *   autoRefreshTimeInterval: number
  * }}
  */
 backendApi.Settings;
