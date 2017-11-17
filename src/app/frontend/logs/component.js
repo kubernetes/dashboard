@@ -35,13 +35,12 @@ export class LogsController {
    * @param {!angular.$document} $document
    * @param {!angular.$resource} $resource
    * @param {!angular.$interval} $interval
-   * @param {!angular.$log} $log
    * @param {!../common/errorhandling/dialog.ErrorDialog} errorDialog
    * @param {!../common/settings/service.SettingsService} kdSettingsService
    * @ngInject
    */
   constructor(
-      logsService, $sce, $document, $resource, $interval, $log, errorDialog, kdSettingsService) {
+      logsService, $sce, $document, $resource, $interval, errorDialog, kdSettingsService) {
     /** @private {!angular.$sce} */
     this.sce_ = $sce;
 
@@ -53,9 +52,6 @@ export class LogsController {
 
     /** @private {!angular.$interval} */
     this.interval_ = $interval;
-
-    /** @private {!angular.$log} */
-    this.log_ = $log;
 
     /** @export {!./service.LogsService} */
     this.logsService = logsService;
