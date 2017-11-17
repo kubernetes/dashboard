@@ -39,8 +39,7 @@ export class LogsController {
    * @param {!../common/settings/service.SettingsService} kdSettingsService
    * @ngInject
    */
-  constructor(
-      logsService, $sce, $document, $resource, $interval, errorDialog, kdSettingsService) {
+  constructor(logsService, $sce, $document, $resource, $interval, errorDialog, kdSettingsService) {
     /** @private {!angular.$sce} */
     this.sce_ = $sce;
 
@@ -111,7 +110,6 @@ export class LogsController {
     this.settingsService_ = kdSettingsService;
   }
 
-
   $onInit() {
     this.container = this.podLogs.info.containerName;
     this.pod = this.podLogs.info.podName;
@@ -119,6 +117,13 @@ export class LogsController {
     this.updateUiModel(this.podLogs);
     this.topIndex = this.podLogs.logs.length;
     this.refreshInterval = this.settingsService_.getAutoRefreshTimeInterval() * 1000;
+  }
+
+  $onDestroy() {
+    if (this.intervalPromise_) {
+      this.interval_.cancel(this.intervalPromise_);
+      this.intervalPromise_ = null;
+    }
   }
 
   /**
@@ -131,11 +136,7 @@ export class LogsController {
       this.interval_.cancel(this.intervalPromise_);
       this.intervalPromise_ = null;
     } else {
-      this.intervalPromise_ = this.interval_(() => {
-        if (this.logsService.getFollowing()) {
-          this.loadNewest();
-        }
-      }, this.refreshInterval);
+      this.intervalPromise_ = this.interval_(() => this.loadNewest(), this.refreshInterval);
     }
   }
 
@@ -183,11 +184,8 @@ export class LogsController {
    * @export
    */
   toggleLogFollow() {
-    this.toggleIntervalFunction_();
     this.logsService.setFollowing();
-    if (this.logsService.getFollowing()) {
-      this.loadNewest();
-    }
+    this.toggleIntervalFunction_();
   }
 
   /**
