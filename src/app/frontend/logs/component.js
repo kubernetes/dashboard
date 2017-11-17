@@ -108,8 +108,8 @@ export class LogsController {
     /** @export {number} Refresh interval in miliseconds. */
     this.refreshInterval = 5000;
 
-    /** @private {boolean} */
-    this.isIntervalRegistered_ = false;
+    /** @private {!angular.$q.Promise|null} */
+    this.intervalPromise_ = null;
 
     /** @private {!../common/settings/service.SettingsService} */
     this.settingsService_ = kdSettingsService;
@@ -126,22 +126,22 @@ export class LogsController {
   }
 
   /**
-   * Registers interval function used to automatically refresh logs.
+   * Starts and stops interval function used to automatically refresh logs.
    *
    * @private
    */
-  registerIntervalFunction_() {
-    if (!this.isIntervalRegistered_) {
-      this.interval_(() => {
+  toggleIntervalFunction_() {
+    if (this.intervalPromise_) {
+      this.interval_.cancel(this.intervalPromise_);
+      this.intervalPromise_ = null;
+    } else {
+      this.intervalPromise_ = this.interval_(() => {
         if (this.logsService.getFollowing()) {
           this.loadNewest();
-          this.log_.info('Automatically refreshed logs');
         }
       }, this.refreshInterval);
-      this.isIntervalRegistered_ = true;
     }
   }
-
 
   /**
    * Loads maxLogSize oldest lines of logs.
@@ -187,7 +187,7 @@ export class LogsController {
    * @export
    */
   toggleLogFollow() {
-    this.registerIntervalFunction_();
+    this.toggleIntervalFunction_();
     this.logsService.setFollowing();
     if (this.logsService.getFollowing()) {
       this.loadNewest();
@@ -271,9 +271,7 @@ export class LogsController {
 
     // add timestamp if needed
     let showTimestamp = this.logsService.getShowTimestamp();
-    let logLine = showTimestamp ? `${line.timestamp} ${escapedContent}` : escapedContent;
-
-    return logLine;
+    return showTimestamp ? `${line.timestamp} ${escapedContent}` : escapedContent;
   }
 
   /**
