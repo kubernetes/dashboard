@@ -40,21 +40,21 @@ limitations under the License.
             Pods
           </div>
           <div class="kd-graph-legend-entry">
-            <md-icon class="kd-graph-green">stop</md-icon>
+            <md-icon class="kd-graph-running">stop</md-icon>
             [[Running|Label 'Running' for the pod statistics graphs legend.]]
             <span class="kd-graph-legend-value">
                       {{$ctrl.podStats.success}}
                     </span>
           </div>
           <div class="kd-graph-legend-entry">
-            <md-icon class="kd-graph-yellow">stop</md-icon>
+            <md-icon class="kd-graph-pending">stop</md-icon>
             [[Pending|Label 'Pending' for the pod statistics graphs legend.]]
             <span class="kd-graph-legend-value">
                         {{$ctrl.podStats.pending}}
                       </span>
           </div>
           <div class="kd-graph-legend-entry">
-            <md-icon class="kd-graph-red">stop</md-icon>
+            <md-icon class="kd-graph-failed">stop</md-icon>
             [[Failed|Label 'Failed' for the pod statistics graphs legend.]]
             <span class="kd-graph-legend-value">
                         {{$ctrl.podStats.failed}}
@@ -62,7 +62,8 @@ limitations under the License.
           </div>
         </div>
         <kd-allocated-resources-chart color-palette="$ctrl.colorPalette"
-                                      data="$ctrl.podStats.chartValues">
+                                      data="$ctrl.podStats.chartValues"
+                                      ratio="$ctrl.chartRatio">
         </kd-allocated-resources-chart>
       </div>
     </div>

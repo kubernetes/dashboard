@@ -96,7 +96,10 @@ export class OverviewController {
     this.podStats.chartValues = [];
 
     /** @export {!Array<string>} */
-    this.colorPalette = ['#00c752', '#f00', '#ff0'];
+    this.colorPalette = ['#00c752', '#f00', '#ffad20'];
+
+    /** @export {number} */
+    this.chartRatio = 0;
   }
 
   /**

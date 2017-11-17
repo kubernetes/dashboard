@@ -57,16 +57,16 @@
   text-align: right;
 }
 
-.kd-graph-red {
+.kd-graph-failed {
   color: $failed-resource-color;
 }
 
-.kd-graph-green {
+.kd-graph-running {
   color: $running-resource-color;
 }
 
-.kd-graph-yellow {
-  color: $pending-resource-color;
+.kd-graph-pending {
+  color: $warning;
 }
 
 .kd-graph-blue {
