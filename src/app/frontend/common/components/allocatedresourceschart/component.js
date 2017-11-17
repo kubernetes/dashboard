@@ -56,6 +56,12 @@ export class AllocatedResourcesChartController {
      * @export {string}
      */
     this.innercolor;
+
+    /**
+     * Ratio of inner to outer pie chart.
+     * @export {number}
+     */
+    this.ratio = 0.67;
   }
 
   $onInit() {
@@ -169,7 +175,7 @@ export class AllocatedResourcesChartController {
         }
       } else {
         // Initializes a pie chart with multiple entries in a single ring
-        this.initPieChart_(svg, this.data, this.colorPalette, 0, 0.67, null);
+        this.initPieChart_(svg, this.data, this.colorPalette, 0, this.ratio, null);
       }
     });
   }
@@ -188,6 +194,7 @@ export const allocatedResourcesChartComponent = {
     'innercolor': '<',
     'data': '<',
     'colorPalette': '<',
+    'ratio': '<',
   },
   controller: AllocatedResourcesChartController,
   templateUrl: 'common/components/allocatedresourceschart/allocatedresourceschart.html',
