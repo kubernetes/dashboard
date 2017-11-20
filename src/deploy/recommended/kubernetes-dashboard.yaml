@@ -52,7 +52,7 @@ rules:
 - apiGroups: [""]
   resources: ["secrets"]
   verbs: ["create", "watch"]
-  # Allow Dashboard to get, update and delete 'kubernetes-dashboard-key-holder' secret.
+  # Allow Dashboard to get, update and delete Dashboard exclusive secrets.
 - apiGroups: [""]
   resources: ["secrets"]
   resourceNames: ["kubernetes-dashboard-key-holder", "kubernetes-dashboard-certs"]
