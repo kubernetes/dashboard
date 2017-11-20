@@ -41,10 +41,15 @@ rules:
 - apiGroups: [""]
   resources: ["secrets"]
   verbs: ["create", "watch"]
+  # Allow Dashboard to get, update and delete 'kubernetes-dashboard-key-holder' secret.
 - apiGroups: [""]
   resources: ["secrets"]
-  # Allow Dashboard to get, update and delete 'kubernetes-dashboard-key-holder' secret.
   resourceNames: ["kubernetes-dashboard-key-holder"]
+  verbs: ["get", "update", "delete"]
+  # Allow Dashboard to get, update and delete 'kubernetes-dashboard-settings' config map.
+- apiGroups: [""]
+  resources: ["configmaps"]
+  resourceNames: ["kubernetes-dashboard-settings"]
   verbs: ["get", "update", "delete"]
   # Allow Dashboard to get metrics from heapster.
 - apiGroups: [""]
