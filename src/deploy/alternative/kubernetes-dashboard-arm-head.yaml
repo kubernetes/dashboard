@@ -14,7 +14,7 @@
 
 
 # Configuration to deploy head version of the Dashboard UI compatible with
-# Kubernetes 1.7.
+# Kubernetes 1.8.
 #
 # Example usage: kubectl create -f <this_file>
 
