@@ -80,26 +80,25 @@ export class OverviewController {
     /** @export {!angular.Resource} */
     this.pvcListResource = kdPersistentVolumeClaimListResource;
 
-    /** @export {Object} */
-    this.podStats = {};
-
-    /** @export {number} */
-    this.podStats.success;
-
-    /** @export {number} */
-    this.podStats.pending;
-
-    /** @export {number} */
-    this.podStats.failed;
-
-    /** @export {Array<Object>} */
-    this.podStats.chartValues = [];
-
     /** @export {!Array<string>} */
-    this.colorPalette = ['#00c752', '#f00', '#ffad20'];
+    this.colorPalette = ['#00c752', '#f00', '#ffad20', '#006028'];
 
     /** @export {number} */
     this.chartRatio = 0;
+
+    /** @export {!Object<Array<Object>>} */
+    this.resourcesStatusRatio = {};
+  }
+
+  $onInit() {
+    this.resourcesStatusRatio.cronJobRatio = this.getCronJobRatio();
+    this.resourcesStatusRatio.daemonSetRatio = this.getDaemonSetRatio();
+    this.resourcesStatusRatio.deploymentRatio = this.getDeploymentRatio();
+    this.resourcesStatusRatio.jobRatio = this.getJobRatio();
+    this.resourcesStatusRatio.podRatio = this.getPodRatio();
+    this.resourcesStatusRatio.replicaSetRatio = this.getReplicaSetRatio();
+    this.resourcesStatusRatio.rcRatio = this.getRCRatio();
+    this.resourcesStatusRatio.statefulSetRatio = this.getStatefulSetRatio();
   }
 
   /**
@@ -125,33 +124,199 @@ export class OverviewController {
   }
 
   /**
-   * @return {Object}
+   * @return {!Array<Object>}
    * @export
    */
-  getPodStats() {
-    let podStats = {
-      'success': 0,
-      'failed': 0,
-      'pending': 0,
-      'total': this.overview.podList.pods.length,
-    };
-
-    let pods = this.overview.podList.pods;
-
-    pods.forEach(function(pod) {
-      podStats[pod.podStatus.status] += 1;
-    });
-
-    podStats.chartValues = [
-      {value: podStats.success / podStats.total * 100},
-      {value: podStats.failed / podStats.total * 100},
-      {value: podStats.pending / podStats.total * 100},
+  getCronJobRatio() {
+    return [
+      {
+        key: `Running: ${this.overview.cronJobList.status.running}`,
+        value: this.overview.cronJobList.status.running /
+            this.overview.cronJobList.listMeta.totalItems * 100,
+      },
+      {
+        key: `Suspended: ${this.overview.cronJobList.status.failed}`,
+        value: this.overview.cronJobList.status.failed /
+            this.overview.cronJobList.listMeta.totalItems * 100,
+      },
     ];
-
-    return podStats;
   }
 
-  $onInit() {
-    this.podStats = this.getPodStats();
+  /**
+   * @return {!Array<Object>}
+   * @export
+   */
+  getDaemonSetRatio() {
+    return [
+      {
+        key: `Running: ${this.overview.daemonSetList.status.running}`,
+        value: this.overview.daemonSetList.status.running /
+            this.overview.daemonSetList.listMeta.totalItems * 100,
+      },
+      {
+        key: `Failed: ${this.overview.daemonSetList.status.failed}`,
+        value: this.overview.daemonSetList.status.failed /
+            this.overview.daemonSetList.listMeta.totalItems * 100,
+      },
+      {
+        key: `Pending: ${this.overview.daemonSetList.status.pending}`,
+        value: this.overview.daemonSetList.status.pending /
+            this.overview.daemonSetList.listMeta.totalItems * 100,
+      },
+    ];
+  }
+
+  /**
+   * @return {!Array<Object>}
+   * @export
+   */
+  getDeploymentRatio() {
+    return [
+      {
+        key: `Running: ${this.overview.deploymentList.status.running}`,
+        value: this.overview.deploymentList.status.running /
+            this.overview.deploymentList.listMeta.totalItems * 100,
+      },
+      {
+        key: `Failed: ${this.overview.deploymentList.status.failed}`,
+        value: this.overview.deploymentList.status.failed /
+            this.overview.deploymentList.listMeta.totalItems * 100,
+      },
+      {
+        key: `Pending: ${this.overview.deploymentList.status.pending}`,
+        value: this.overview.deploymentList.status.pending /
+            this.overview.deploymentList.listMeta.totalItems * 100,
+      },
+    ];
+  }
+
+  /**
+   * @return {!Array<Object>}
+   * @export
+   */
+  getJobRatio() {
+    return [
+      {
+        key: `Running: ${this.overview.jobList.status.running}`,
+        value:
+            this.overview.jobList.status.running / this.overview.jobList.listMeta.totalItems * 100,
+      },
+      {
+        key: `Failed: ${this.overview.jobList.status.failed}`,
+        value:
+            this.overview.jobList.status.failed / this.overview.jobList.listMeta.totalItems * 100,
+      },
+      {
+        key: `Pending: ${this.overview.jobList.status.pending}`,
+        value:
+            this.overview.jobList.status.pending / this.overview.jobList.listMeta.totalItems * 100,
+      },
+      {
+        key: `Succeeded: ${this.overview.jobList.status.succeeded}`,
+        value: this.overview.jobList.status.succeeded / this.overview.jobList.listMeta.totalItems *
+            100,
+      },
+    ];
+  }
+
+  /**
+   * @return {!Array<Object>}
+   * @export
+   */
+  getPodRatio() {
+    return [
+      {
+        key: `Running: ${this.overview.podList.status.running}`,
+        value:
+            this.overview.podList.status.running / this.overview.podList.listMeta.totalItems * 100,
+      },
+      {
+        key: `Failed: ${this.overview.podList.status.failed}`,
+        value:
+            this.overview.podList.status.failed / this.overview.podList.listMeta.totalItems * 100,
+      },
+      {
+        key: `Pending: ${this.overview.podList.status.pending}`,
+        value:
+            this.overview.podList.status.pending / this.overview.podList.listMeta.totalItems * 100,
+      },
+      {
+        key: `Succeeded: ${this.overview.podList.status.succeeded}`,
+        value: this.overview.podList.status.succeeded / this.overview.podList.listMeta.totalItems *
+            100,
+      },
+    ];
+  }
+
+  /**
+   * @return {!Array<Object>}
+   * @export
+   */
+  getReplicaSetRatio() {
+    return [
+      {
+        key: `Running: ${this.overview.replicaSetList.status.running}`,
+        value: this.overview.replicaSetList.status.running /
+            this.overview.replicaSetList.listMeta.totalItems * 100,
+      },
+      {
+        key: `Failed: ${this.overview.replicaSetList.status.failed}`,
+        value: this.overview.replicaSetList.status.failed /
+            this.overview.replicaSetList.listMeta.totalItems * 100,
+      },
+      {
+        key: `Pending: ${this.overview.replicaSetList.status.pending}`,
+        value: this.overview.replicaSetList.status.pending /
+            this.overview.replicaSetList.listMeta.totalItems * 100,
+      },
+    ];
+  }
+
+  /**
+   * @return {!Array<Object>}
+   * @export
+   */
+  getRCRatio() {
+    return [
+      {
+        key: `Running: ${this.overview.replicationControllerList.status.running}`,
+        value: this.overview.replicationControllerList.status.running /
+            this.overview.replicationControllerList.listMeta.totalItems * 100,
+      },
+      {
+        key: `Failed: ${this.overview.replicationControllerList.status.failed}`,
+        value: this.overview.replicationControllerList.status.failed /
+            this.overview.replicationControllerList.listMeta.totalItems * 100,
+      },
+      {
+        key: `Pending: ${this.overview.replicationControllerList.status.pending}`,
+        value: this.overview.replicationControllerList.status.pending /
+            this.overview.replicationControllerList.listMeta.totalItems * 100,
+      },
+    ];
+  }
+
+  /**
+   * @return {!Array<Object>}
+   * @export
+   */
+  getStatefulSetRatio() {
+    return [
+      {
+        key: `Running: ${this.overview.statefulSetList.status.running}`,
+        value: this.overview.statefulSetList.status.running /
+            this.overview.statefulSetList.listMeta.totalItems * 100,
+      },
+      {
+        key: `Failed: ${this.overview.statefulSetList.status.failed}`,
+        value: this.overview.statefulSetList.status.failed /
+            this.overview.statefulSetList.listMeta.totalItems * 100,
+      },
+      {
+        key: `Pending: ${this.overview.statefulSetList.status.pending}`,
+        value: this.overview.statefulSetList.status.pending /
+            this.overview.statefulSetList.listMeta.totalItems * 100,
+      },
+    ];
   }
 }

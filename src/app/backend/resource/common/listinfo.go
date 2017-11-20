@@ -12,36 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../variables';
+package common
 
-.kd-allocated-resources {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-}
+// Status provides basic information about resources status on the list.
+type Status struct {
+	// Number of resources that are currently in running state.
+	Running int32 `json:"running"`
 
-.kd-graph-container {
-  flex: auto;
-  text-align: center;
-}
+	// Number of resources that are currently in pending state.
+	Pending int32 `json:"pending"`
 
-.kd-graph-title {
-  font-size: $subhead-font-size-base;
-  padding-bottom: 2 * $baseline-grid;
-}
+	// Number of resources that are in failed state.
+	Failed int32 `json:"failed"`
 
-.kd-graph-failed {
-  color: $failed-resource-color;
-}
-
-.kd-graph-running {
-  color: $running-resource-color;
-}
-
-.kd-graph-pending {
-  color: $warning;
-}
-
-.kd-graph-blue {
-  color: $chart-2;
+	// Number of resources that are in succeeded state.
+	Succeeded int32 `json:"succeeded"`
 }

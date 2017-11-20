@@ -186,7 +186,7 @@ func startProcess(k8sClient kubernetes.Interface, cfg *rest.Config, request *res
 	podName := request.PathParameter("pod")
 	containerName := request.PathParameter("container")
 
-	req := k8sClient.Core().RESTClient().Post().
+	req := k8sClient.CoreV1().RESTClient().Post().
 		Resource("pods").
 		Name(podName).
 		Namespace(namespace).

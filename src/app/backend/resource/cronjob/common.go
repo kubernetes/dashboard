@@ -17,6 +17,7 @@ package cronjob
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	batch2 "k8s.io/api/batch/v1beta1"
 )
@@ -62,4 +63,18 @@ func FromCells(cells []dataselect.DataCell) []batch2.CronJob {
 		std[i] = batch2.CronJob(cells[i].(CronJobCell))
 	}
 	return std
+}
+
+func getStatus(cronJobList *batch2.CronJobList) common.Status {
+	info := common.Status{}
+
+	for _, cronJob := range cronJobList.Items {
+		if cronJob.Spec.Suspend != nil && !(*cronJob.Spec.Suspend) {
+			info.Running++
+		} else {
+			info.Failed++
+		}
+	}
+
+	return info
 }

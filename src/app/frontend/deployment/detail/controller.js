@@ -38,6 +38,12 @@ export class DeploymentDetailController {
       replicaSets: [this.deploymentDetail.newReplicaSet],
       listMeta: {totalItems: 1},
       errors: [],
+      status: {
+        failed: 0,
+        pending: 0,
+        running: 0,
+        succeeded: 0,
+      },
     };
   }
 }

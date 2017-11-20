@@ -62,6 +62,12 @@ export class AllocatedResourcesChartController {
      * @export {number}
      */
     this.ratio = 0.67;
+
+    /** @export {boolean} */
+    this.enableTooltips = false;
+
+    /** @export {number} */
+    this.size;
   }
 
   $onInit() {
@@ -107,7 +113,7 @@ export class AllocatedResourcesChartController {
    * @private
    */
   initPieChart_(svg, data, colors, margin, ratio, labelFunc) {
-    let size = 280;
+    let size = this.size || 280;
 
     if (!labelFunc) {
       labelFunc = this.formatLabel_;
@@ -131,7 +137,10 @@ export class AllocatedResourcesChartController {
                     .growOnHover(false)
                     .labelType(labelFunc);
 
-    chart.tooltip.enabled(false);
+    chart.tooltip.enabled(this.enableTooltips);
+    chart.tooltip.contentGenerator((obj) => {
+      return obj.data.key;
+    });
 
     svg.attr('height', size)
         .attr('width', size)
@@ -195,6 +204,8 @@ export const allocatedResourcesChartComponent = {
     'data': '<',
     'colorPalette': '<',
     'ratio': '<',
+    'enableTooltips': '<',
+    'size': '<',
   },
   controller: AllocatedResourcesChartController,
   templateUrl: 'common/components/allocatedresourceschart/allocatedresourceschart.html',

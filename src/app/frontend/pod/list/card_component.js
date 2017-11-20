@@ -61,7 +61,7 @@ export class PodCardController {
    */
   isPending() {
     // podPhase should be Pending if init containers are running but we are being extra thorough.
-    return this.pod.podStatus.status === 'pending';
+    return this.pod.podStatus.status === 'Pending';
   }
 
   /**
@@ -69,7 +69,7 @@ export class PodCardController {
    * @export
    */
   isSuccess() {
-    return this.pod.podStatus.status === 'success';
+    return this.pod.podStatus.status === 'Succeeded' || this.pod.podStatus.status === 'Running';
   }
 
   /**
@@ -78,7 +78,7 @@ export class PodCardController {
    * @export
    */
   isFailed() {
-    return this.pod.podStatus.status === 'failed';
+    return this.pod.podStatus.status === 'Failed';
   }
 
   /**

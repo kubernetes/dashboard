@@ -88,11 +88,7 @@ func filterEventsByPodsUID(events []api.Event, pods []api.Pod) []api.Event {
 // Returns filtered list of event objects.
 // Event list object is filtered to get only warning events.
 func getWarningEvents(events []api.Event) []api.Event {
-	if !IsTypeFilled(events) {
-		events = FillEventsType(events)
-	}
-
-	return filterEventsByType(events, api.EventTypeWarning)
+	return filterEventsByType(FillEventsType(events), api.EventTypeWarning)
 }
 
 // Filters kubernetes API event objects based on event type.

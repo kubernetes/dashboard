@@ -132,7 +132,7 @@ func UpdateReplicasCount(client k8sClient.Interface, namespace, name string, spe
 
 	replicationController.Spec.Replicas = &spec.Replicas
 
-	_, err = client.Core().ReplicationControllers(namespace).Update(replicationController)
+	_, err = client.CoreV1().ReplicationControllers(namespace).Update(replicationController)
 	if err != nil {
 		return err
 	}

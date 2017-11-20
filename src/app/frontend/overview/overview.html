@@ -29,53 +29,146 @@ limitations under the License.
   </kd-graph-card>
 </div>
 
-<kd-content-card ng-if="$ctrl.overview.podList.pods.length">
-  <kd-title>[[Resource Status|Label 'Resource Status' for the allocated resources section.]]</kd-title>
-  <kd-content>
-    <div class="kd-graph-container">
-      <div layout="row"
+<kd-content-card ng-if="::!$ctrl.shouldShowZeroState()">
+  <kd-title>[[Workloads Statuses|Label 'Resource Statuses' for the resource status section on overview page.]]</kd-title>
+  <kd-content layout="row"
+              layout-wrap>
+    <div class="kd-graph-container"
+         ng-if="$ctrl.overview.cronJobList.listMeta.totalItems">
+      <div layout="column"
            layout-align="center center">
-        <div class="kd-graph-legend">
-          <div class="kd-graph-legend-title">
-            Pods
-          </div>
-          <div class="kd-graph-legend-entry">
-            <md-icon class="kd-graph-running">stop</md-icon>
-            [[Running|Label 'Running' for the pod statistics graphs legend.]]
-            <span class="kd-graph-legend-value">
-                      {{$ctrl.podStats.success}}
-                    </span>
-          </div>
-          <div class="kd-graph-legend-entry">
-            <md-icon class="kd-graph-pending">stop</md-icon>
-            [[Pending|Label 'Pending' for the pod statistics graphs legend.]]
-            <span class="kd-graph-legend-value">
-                        {{$ctrl.podStats.pending}}
-                      </span>
-          </div>
-          <div class="kd-graph-legend-entry">
-            <md-icon class="kd-graph-failed">stop</md-icon>
-            [[Failed|Label 'Failed' for the pod statistics graphs legend.]]
-            <span class="kd-graph-legend-value">
-                        {{$ctrl.podStats.failed}}
-                      </span>
-          </div>
-        </div>
-        <kd-allocated-resources-chart color-palette="$ctrl.colorPalette"
-                                      data="$ctrl.podStats.chartValues"
-                                      ratio="$ctrl.chartRatio">
+        <kd-allocated-resources-chart color-palette="::$ctrl.colorPalette"
+                                      data="::$ctrl.resourcesStatusRatio.cronJobRatio"
+                                      ratio="::$ctrl.chartRatio"
+                                      enable-tooltips="true"
+                                      size="140">
         </kd-allocated-resources-chart>
+        <div class="kd-graph-title">
+          [[Cron Jobs|Label 'Cron Jobs' for the resource status chart on overview page.]]
+        </div>
       </div>
     </div>
-    <kd-content>
+
+    <div class="kd-graph-container"
+         ng-if="$ctrl.overview.daemonSetList.listMeta.totalItems">
+      <div layout="column"
+           layout-align="center center">
+        <kd-allocated-resources-chart color-palette="::$ctrl.colorPalette"
+                                      data="::$ctrl.resourcesStatusRatio.daemonSetRatio"
+                                      ratio="::$ctrl.chartRatio"
+                                      enable-tooltips="true"
+                                      size="140">
+        </kd-allocated-resources-chart>
+        <div class="kd-graph-title">
+          [[Daemon Sets|Label 'Daemon Sets' for the resource status chart on overview page.]]
+        </div>
+      </div>
+    </div>
+
+    <div class="kd-graph-container"
+         ng-if="$ctrl.overview.deploymentList.listMeta.totalItems">
+      <div layout="column"
+           layout-align="center center">
+        <kd-allocated-resources-chart color-palette="::$ctrl.colorPalette"
+                                      data="::$ctrl.resourcesStatusRatio.deploymentRatio"
+                                      ratio="::$ctrl.chartRatio"
+                                      enable-tooltips="true"
+                                      size="140">
+        </kd-allocated-resources-chart>
+        <div class="kd-graph-title">
+          [[Deployments|Label 'Deployments' for the resource status chart on overview page.]]
+        </div>
+      </div>
+    </div>
+
+    <div class="kd-graph-container"
+         ng-if="$ctrl.overview.jobList.listMeta.totalItems">
+      <div layout="column"
+           layout-align="center center">
+        <kd-allocated-resources-chart color-palette="::$ctrl.colorPalette"
+                                      data="::$ctrl.resourcesStatusRatio.jobRatio"
+                                      ratio="::$ctrl.chartRatio"
+                                      enable-tooltips="true"
+                                      size="140">
+        </kd-allocated-resources-chart>
+        <div class="kd-graph-title">
+          [[Jobs|Label 'Jobs' for the resource status chart on overview page.]]
+        </div>
+      </div>
+    </div>
+
+    <div class="kd-graph-container"
+         ng-if="$ctrl.overview.podList.listMeta.totalItems">
+      <div layout="column"
+           layout-align="center center">
+        <kd-allocated-resources-chart color-palette="::$ctrl.colorPalette"
+                                      data="::$ctrl.resourcesStatusRatio.podRatio"
+                                      ratio="::$ctrl.chartRatio"
+                                      enable-tooltips="true"
+                                      size="140">
+        </kd-allocated-resources-chart>
+        <div class="kd-graph-title">
+          [[Pods|Label 'Pods' for the resource status chart on overview page.]]
+        </div>
+      </div>
+    </div>
+
+    <div class="kd-graph-container"
+         ng-if="$ctrl.overview.replicaSetList.listMeta.totalItems">
+      <div layout="column"
+           layout-align="center center">
+        <kd-allocated-resources-chart color-palette="::$ctrl.colorPalette"
+                                      data="::$ctrl.resourcesStatusRatio.replicaSetRatio"
+                                      ratio="::$ctrl.chartRatio"
+                                      enable-tooltips="true"
+                                      size="140">
+        </kd-allocated-resources-chart>
+        <div class="kd-graph-title">
+          [[Replica Sets|Label 'Replica Sets' for the resource status chart on overview page.]]
+        </div>
+      </div>
+    </div>
+
+    <div class="kd-graph-container"
+         ng-if="$ctrl.overview.replicationControllerList.listMeta.totalItems">
+      <div layout="column"
+           layout-align="center center">
+        <kd-allocated-resources-chart color-palette="::$ctrl.colorPalette"
+                                      data="::$ctrl.resourcesStatusRatio.rcRatio"
+                                      ratio="::$ctrl.chartRatio"
+                                      enable-tooltips="true"
+                                      size="140">
+        </kd-allocated-resources-chart>
+        <div class="kd-graph-title">
+          [[Replication Controllers|Label 'RCs' for the resource status chart on overview page.]]
+        </div>
+      </div>
+    </div>
+
+    <div class="kd-graph-container"
+         ng-if="$ctrl.overview.statefulSetList.listMeta.totalItems">
+      <div layout="column"
+           layout-align="center center">
+        <kd-allocated-resources-chart color-palette="::$ctrl.colorPalette"
+                                      data="::$ctrl.resourcesStatusRatio.statefulSetRatio"
+                                      ratio="::$ctrl.chartRatio"
+                                      enable-tooltips="true"
+                                      size="140">
+        </kd-allocated-resources-chart>
+        <div class="kd-graph-title">
+          [[Stateful Sets|Label 'Stateful Sets' for the resource status chart on overview page.]]
+        </div>
+      </div>
+    </div>
+  </kd-content>
 </kd-content-card>
 
-<kd-content-card ng-if="$ctrl.overview.podList.pods.length">
+<kd-content-card ng-if="$ctrl.overview.configMapList.items.length">
   <kd-content>
-    <kd-pod-card-list pod-list="$ctrl.overview.podList"
-                      pod-list-resource="$ctrl.podListResource"
-                      with-statuses="true">
-    </kd-pod-card-list>
+    <kd-config-map-card-list config-map-list="$ctrl.overview.configMapList"
+                             with-statuses="true"
+                             config-map-list-resource="$ctrl.kdConfigMapListResource">
+    </kd-config-map-card-list>
   </kd-content>
 </kd-content-card>
 
@@ -105,11 +198,37 @@ limitations under the License.
     </kd-content>
   </kd-content-card>
 
+  <kd-content-card ng-if="$ctrl.overview.ingressList.items.length">
+    <kd-content>
+      <kd-ingress-card-list ingress-list="$ctrl.overview.ingressList"
+                            with-statuses="true"
+                            ingress-list-resource="$ctrl.kdIngressListResource">
+      </kd-ingress-card-list>
+    </kd-content>
+  </kd-content-card>
+
   <kd-content-card ng-if="$ctrl.overview.jobList.jobs.length">
     <kd-content>
       <kd-job-card-list job-list="$ctrl.overview.jobList"
                         job-list-resource="$ctrl.jobListResource">
       </kd-job-card-list>
+    </kd-content>
+  </kd-content-card>
+
+  <kd-content-card ng-if=$ctrl.overview.persistentVolumeClaimList.items.length>
+    <kd-content>
+      <kd-persistent-volume-claim-card-list persistent-volume-claim-list="$ctrl.overview.persistentVolumeClaimList"
+                                            persistent-volume-claim-list-resource="$ctrl.pvcListResource">
+      </kd-persistent-volume-claim-card-list>
+    </kd-content>
+  </kd-content-card>
+
+  <kd-content-card ng-if="$ctrl.overview.podList.pods.length">
+    <kd-content>
+      <kd-pod-card-list pod-list="$ctrl.overview.podList"
+                        pod-list-resource="$ctrl.podListResource"
+                        with-statuses="true">
+      </kd-pod-card-list>
     </kd-content>
   </kd-content-card>
 
@@ -129,20 +248,12 @@ limitations under the License.
     </kd-content>
   </kd-content-card>
 
-  <kd-content-card ng-if="$ctrl.overview.statefulSetList.statefulSets.length">
+  <kd-content-card ng-if="$ctrl.overview.secretList.secrets.length">
     <kd-content>
-      <kd-stateful-set-card-list stateful-set-list="$ctrl.overview.statefulSetList"
-                                 stateful-set-list-resource="$ctrl.statefulSetListResource">
-      </kd-stateful-set-card-list>
-    </kd-content>
-  </kd-content-card>
-
-  <kd-content-card ng-if="$ctrl.overview.ingressList.items.length">
-    <kd-content>
-      <kd-ingress-card-list ingress-list="$ctrl.overview.ingressList"
-                            with-statuses="true"
-                            ingress-list-resource="$ctrl.kdIngressListResource">
-      </kd-ingress-card-list>
+      <kd-secret-card-list secret-list="$ctrl.overview.secretList"
+                           with-statuses="true"
+                           secret-list-resource="$ctrl.kdSecretListResource">
+      </kd-secret-card-list>
     </kd-content>
   </kd-content-card>
 
@@ -155,29 +266,11 @@ limitations under the License.
     </kd-content>
   </kd-content-card>
 
-  <kd-content-card ng-if="$ctrl.overview.configMapList.items.length">
+  <kd-content-card ng-if="$ctrl.overview.statefulSetList.statefulSets.length">
     <kd-content>
-      <kd-config-map-card-list config-map-list="$ctrl.overview.configMapList"
-                               with-statuses="true"
-                               config-map-list-resource="$ctrl.kdConfigMapListResource">
-      </kd-config-map-card-list>
-    </kd-content>
-  </kd-content-card>
-
-  <kd-content-card ng-if=$ctrl.overview.persistentVolumeClaimList.items.length>
-    <kd-content>
-      <kd-persistent-volume-claim-card-list persistent-volume-claim-list="$ctrl.overview.persistentVolumeClaimList"
-                                            persistent-volume-claim-list-resource="$ctrl.pvcListResource">
-      </kd-persistent-volume-claim-card-list>
-    </kd-content>
-  </kd-content-card>
-
-  <kd-content-card ng-if="$ctrl.overview.secretList.secrets.length">
-    <kd-content>
-      <kd-secret-card-list secret-list="$ctrl.overview.secretList"
-                           with-statuses="true"
-                           secret-list-resource="$ctrl.kdSecretListResource">
-      </kd-secret-card-list>
+      <kd-stateful-set-card-list stateful-set-list="$ctrl.overview.statefulSetList"
+                                 stateful-set-list-resource="$ctrl.statefulSetListResource">
+      </kd-stateful-set-card-list>
     </kd-content>
   </kd-content-card>
 </div>

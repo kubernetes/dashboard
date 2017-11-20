@@ -304,41 +304,6 @@ func TestIsReadyOrSucceeded(t *testing.T) {
 	}
 }
 
-func TestIsTypeFilled(t *testing.T) {
-	cases := []struct {
-		events   []api.Event
-		expected bool
-	}{
-		{nil, false},
-		{
-			[]api.Event{
-				{Type: api.EventTypeWarning},
-			},
-			true,
-		},
-		{
-			[]api.Event{},
-			false,
-		},
-		{
-			[]api.Event{
-				{Type: api.EventTypeWarning},
-				{Type: api.EventTypeNormal},
-				{Type: ""},
-			},
-			false,
-		},
-	}
-
-	for _, c := range cases {
-		actual := IsTypeFilled(c.events)
-		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("IsTypeFilled(%#v) == \n%#v\nexpected \n%#v\n",
-				c.events, actual, c.expected)
-		}
-	}
-}
-
 func TestFillEventsType(t *testing.T) {
 	cases := []struct {
 		events   []api.Event
