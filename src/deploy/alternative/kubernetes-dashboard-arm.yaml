@@ -46,7 +46,7 @@ rules:
   resources: ["secrets"]
   resourceNames: ["kubernetes-dashboard-key-holder"]
   verbs: ["get", "update", "delete"]
-  # Allow Dashboard to get, update and delete 'kubernetes-dashboard-settings' config map.
+  # Allow Dashboard to get and update 'kubernetes-dashboard-settings' config map.
 - apiGroups: [""]
   resources: ["configmaps"]
   resourceNames: ["kubernetes-dashboard-settings"]
