@@ -91,13 +91,21 @@ export class OverviewController {
   }
 
   $onInit() {
+    /** @export {Array<Object>} */
     this.resourcesStatusRatio.cronJobRatio = this.getCronJobRatio();
+    /** @export {Array<Object>} */
     this.resourcesStatusRatio.daemonSetRatio = this.getDaemonSetRatio();
+    /** @export {Array<Object>} */
     this.resourcesStatusRatio.deploymentRatio = this.getDeploymentRatio();
+    /** @export {Array<Object>} */
     this.resourcesStatusRatio.jobRatio = this.getJobRatio();
+    /** @export {Array<Object>} */
     this.resourcesStatusRatio.podRatio = this.getPodRatio();
+    /** @export {Array<Object>} */
     this.resourcesStatusRatio.replicaSetRatio = this.getReplicaSetRatio();
+    /** @export {Array<Object>} */
     this.resourcesStatusRatio.rcRatio = this.getRCRatio();
+    /** @export {Array<Object>} */
     this.resourcesStatusRatio.statefulSetRatio = this.getStatefulSetRatio();
   }
 
