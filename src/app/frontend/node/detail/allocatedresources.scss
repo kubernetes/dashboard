@@ -25,6 +25,37 @@
   text-align: center;
 }
 
+.kd-graph-legend {
+  padding-bottom: 2 * $baseline-grid;
+}
+
+.kd-graph-legend-title {
+  font-size: $subhead-font-size-base-lg;
+  padding-bottom: $baseline-grid;
+  text-align: center;
+}
+
+.kd-graph-legend-entry {
+  display: flex;
+  margin: 0 auto;
+  padding: $baseline-grid;
+  text-align: left;
+  width: 240px;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid $foreground-4;
+  }
+}
+
+.kd-graph-legend-placeholder {
+  width: 2.75 * $baseline-grid;
+}
+
+.kd-graph-legend-value {
+  flex: 1 auto;
+  text-align: right;
+}
+
 .kd-graph-title {
   font-size: $subhead-font-size-base;
   padding-bottom: 2 * $baseline-grid;

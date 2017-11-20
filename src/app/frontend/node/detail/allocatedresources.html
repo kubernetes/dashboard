@@ -27,7 +27,7 @@ limitations under the License.
             CPU allocation (cores)
           </div>
           <div class="kd-graph-legend-entry">
-            <md-icon class="kd-graph-green">stop</md-icon>
+            <md-icon class="kd-graph-running">stop</md-icon>
             [[Requests|Label 'Requests' for the allocated resources graphs legend.]]
             <span class="kd-graph-legend-value">
               {{$ctrl.allocatedResources.cpuRequests | kdCores}}
@@ -58,7 +58,7 @@ limitations under the License.
             Memory allocation (bytes)
           </div>
           <div class="kd-graph-legend-entry">
-            <md-icon class="kd-graph-green">stop</md-icon>
+            <md-icon class="kd-graph-running">stop</md-icon>
             [[Requests|Label 'Requests' for the allocated resources graphs legend.]]
             <span class="kd-graph-legend-value">
             {{$ctrl.allocatedResources.memoryRequests | kdMemory}}
@@ -88,7 +88,7 @@ limitations under the License.
             Pods allocation
           </div>
           <div class="kd-graph-legend-entry">
-            <md-icon class="kd-graph-green">stop</md-icon>
+            <md-icon class="kd-graph-running">stop</md-icon>
             [[Allocation|Label 'Allocation' for the allocated resources graphs legend.]]
             <span class="kd-graph-legend-value">
             {{$ctrl.allocatedResources.allocatedPods}}
