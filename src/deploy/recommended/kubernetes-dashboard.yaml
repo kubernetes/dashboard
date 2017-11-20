@@ -48,10 +48,10 @@ metadata:
   name: kubernetes-dashboard-minimal
   namespace: kube-system
 rules:
-  # Allow Dashboard to create and watch for changes of 'kubernetes-dashboard-key-holder' secret.
+  # Allow Dashboard to create 'kubernetes-dashboard-key-holder' secret.
 - apiGroups: [""]
   resources: ["secrets"]
-  verbs: ["create", "watch"]
+  verbs: ["create"]
   # Allow Dashboard to get, update and delete Dashboard exclusive secrets.
 - apiGroups: [""]
   resources: ["secrets"]
@@ -104,12 +104,6 @@ spec:
       labels:
         k8s-app: kubernetes-dashboard
     spec:
-      initContainers:
-      - name: kubernetes-dashboard-init
-        image: gcr.io/google_containers/kubernetes-dashboard-init-amd64:v1.0.1
-        volumeMounts:
-        - name: kubernetes-dashboard-certs
-          mountPath: /certs
       containers:
       - name: kubernetes-dashboard
         image: gcr.io/google_containers/kubernetes-dashboard-amd64:v1.8.0
@@ -117,8 +111,7 @@ spec:
         - containerPort: 8443
           protocol: TCP
         args:
-          - --tls-key-file=/certs/dashboard.key
-          - --tls-cert-file=/certs/dashboard.crt
+          - --auto-generate-certificates
           # Uncomment the following line to manually specify Kubernetes API server Host
           # If not specified, Dashboard will attempt to auto discover the API server and connect
           # to it. Uncomment only if the default does not work.
@@ -126,7 +119,6 @@ spec:
         volumeMounts:
         - name: kubernetes-dashboard-certs
           mountPath: /certs
-          readOnly: true
           # Create on-disk volume to store exec logs
         - mountPath: /tmp
           name: tmp-volume
