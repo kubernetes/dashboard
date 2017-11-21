@@ -33,7 +33,7 @@ type DaemonSetList struct {
 	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`
 
 	// Basic information about resources status on the list.
-	Status common.Status `json:"status"`
+	Status common.ResourceStatus `json:"status"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`

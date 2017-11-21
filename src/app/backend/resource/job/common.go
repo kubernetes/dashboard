@@ -67,8 +67,8 @@ func FromCells(cells []dataselect.DataCell) []batch.Job {
 	return std
 }
 
-func getStatus(list *batch.JobList, pods []v1.Pod, events []v1.Event) common.Status {
-	info := common.Status{}
+func getStatus(list *batch.JobList, pods []v1.Pod, events []v1.Event) common.ResourceStatus {
+	info := common.ResourceStatus{}
 
 	for _, job := range list.Items {
 		matchingPods := common.FilterPodsForJob(job, pods)

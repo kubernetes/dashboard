@@ -103,8 +103,8 @@ func FromCells(cells []dataselect.DataCell) []apps.DaemonSet {
 	return std
 }
 
-func getStatus(list *apps.DaemonSetList, pods []v1.Pod, events []v1.Event) common.Status {
-	info := common.Status{}
+func getStatus(list *apps.DaemonSetList, pods []v1.Pod, events []v1.Event) common.ResourceStatus {
+	info := common.ResourceStatus{}
 
 	for _, daemonSet := range list.Items {
 		matchingPods := common.FilterPodsByControllerRef(&daemonSet, pods)

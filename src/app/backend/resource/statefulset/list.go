@@ -33,7 +33,7 @@ type StatefulSetList struct {
 	ListMeta api.ListMeta `json:"listMeta"`
 
 	// Basic information about resources status on the list.
-	Status common.Status `json:"status"`
+	Status common.ResourceStatus `json:"status"`
 
 	// Unordered list of Pet Sets.
 	StatefulSets      []StatefulSet      `json:"statefulSets"`

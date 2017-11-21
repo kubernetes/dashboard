@@ -64,7 +64,7 @@ type DeploymentDetail struct {
 	// Label selector of the service.
 	Selector map[string]string `json:"selector"`
 
-	// Status information on the deployment
+	// ResourceStatus information on the deployment
 	StatusInfo `json:"statusInfo"`
 
 	// The deployment strategy to use to replace existing pods with new ones.

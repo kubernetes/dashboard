@@ -34,7 +34,7 @@ type PodList struct {
 	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`
 
 	// Basic information about resources status on the list.
-	Status common.Status `json:"status"`
+	Status common.ResourceStatus `json:"status"`
 
 	// Unordered list of Pods.
 	Pods []Pod `json:"pods"`

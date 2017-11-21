@@ -33,7 +33,7 @@ type ReplicationControllerList struct {
 	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`
 
 	// Basic information about resources status on the list.
-	Status common.Status `json:"status"`
+	Status common.ResourceStatus `json:"status"`
 
 	// Unordered list of Replication Controllers.
 	ReplicationControllers []ReplicationController `json:"replicationControllers"`

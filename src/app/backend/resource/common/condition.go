@@ -23,7 +23,7 @@ import (
 type Condition struct {
 	// Type of a condition.
 	Type string `json:"type"`
-	// Status of a condition.
+	// ResourceStatus of a condition.
 	Status api.ConditionStatus `json:"status"`
 	// Last probe time of a condition.
 	LastProbeTime v1.Time `json:"lastProbeTime"`

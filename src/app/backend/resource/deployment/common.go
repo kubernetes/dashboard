@@ -68,8 +68,8 @@ func fromCells(cells []dataselect.DataCell) []apps.Deployment {
 	return std
 }
 
-func getStatus(list *apps.DeploymentList, rs []apps.ReplicaSet, pods []v1.Pod, events []v1.Event) common.Status {
-	info := common.Status{}
+func getStatus(list *apps.DeploymentList, rs []apps.ReplicaSet, pods []v1.Pod, events []v1.Event) common.ResourceStatus {
+	info := common.ResourceStatus{}
 
 	for _, deployment := range list.Items {
 		matchingPods := common.FilterDeploymentPodsByOwnerReference(deployment, rs, pods)

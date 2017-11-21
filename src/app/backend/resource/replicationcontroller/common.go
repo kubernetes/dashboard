@@ -143,8 +143,8 @@ func fromCells(cells []dataselect.DataCell) []v1.ReplicationController {
 	return std
 }
 
-func getStatus(list *v1.ReplicationControllerList, pods []v1.Pod, events []v1.Event) common.Status {
-	info := common.Status{}
+func getStatus(list *v1.ReplicationControllerList, pods []v1.Pod, events []v1.Event) common.ResourceStatus {
+	info := common.ResourceStatus{}
 
 	for _, ss := range list.Items {
 		matchingPods := common.FilterPodsByControllerRef(&ss, pods)
