@@ -17,14 +17,14 @@ package common
 // ResourceStatus provides basic information about resources status on the list.
 type ResourceStatus struct {
 	// Number of resources that are currently in running state.
-	Running int32 `json:"running"`
+	Running int `json:"running"`
 
 	// Number of resources that are currently in pending state.
-	Pending int32 `json:"pending"`
+	Pending int `json:"pending"`
 
 	// Number of resources that are in failed state.
-	Failed int32 `json:"failed"`
+	Failed int `json:"failed"`
 
 	// Number of resources that are in succeeded state.
-	Succeeded int32 `json:"succeeded"`
+	Succeeded int `json:"succeeded"`
 }

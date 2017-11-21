@@ -150,10 +150,13 @@ func GetNamespaceEvents(client client.Interface, dsQuery *dataselect.DataSelectQ
 // Based on event Reason fills event Type in order to allow correct filtering by Type.
 func FillEventsType(events []v1.Event) []v1.Event {
 	for i := range events {
-		if isFailedReason(events[i].Reason, FailedReasonPartials...) {
-			events[i].Type = v1.EventTypeWarning
-		} else {
-			events[i].Type = v1.EventTypeNormal
+		// Fill in only events with empty type.
+		if len(events[i].Type) == 0 {
+			if isFailedReason(events[i].Reason, FailedReasonPartials...) {
+				events[i].Type = v1.EventTypeWarning
+			} else {
+				events[i].Type = v1.EventTypeNormal
+			}
 		}
 	}
 

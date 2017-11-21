@@ -27,7 +27,7 @@ import (
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-func TestGetJobListFromChannels(t *testing.T) {
+func TestGetCronJobListFromChannels(t *testing.T) {
 	cases := []struct {
 		raw           batch.CronJobList
 		rawError      error
@@ -40,6 +40,7 @@ func TestGetJobListFromChannels(t *testing.T) {
 			&cronjob.CronJobList{
 				ListMeta:          api.ListMeta{},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
+				Status:            common.ResourceStatus{},
 				Items:             []cronjob.CronJob{},
 				Errors:            []error{},
 			},
@@ -74,6 +75,7 @@ func TestGetJobListFromChannels(t *testing.T) {
 			&cronjob.CronJobList{
 				ListMeta:          api.ListMeta{TotalItems: 2},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
+				Status:            common.ResourceStatus{Failed: 2},
 				Items: []cronjob.CronJob{{
 					ObjectMeta: api.ObjectMeta{
 						Name:      name,

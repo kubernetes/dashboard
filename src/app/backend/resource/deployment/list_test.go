@@ -104,6 +104,7 @@ func TestGetDeploymentListFromChannels(t *testing.T) {
 			&DeploymentList{
 				ListMeta:          api.ListMeta{TotalItems: 1},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
+				Status:            common.ResourceStatus{Running: 1},
 				Deployments: []Deployment{{
 					ObjectMeta: api.ObjectMeta{
 						Name:              "rs-name",

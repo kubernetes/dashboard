@@ -137,6 +137,7 @@ func TestGetStatefulSetListFromChannels(t *testing.T) {
 			&StatefulSetList{
 				ListMeta:          api.ListMeta{TotalItems: 1},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
+				Status:            common.ResourceStatus{Running: 1},
 				StatefulSets: []StatefulSet{{
 					ObjectMeta: api.ObjectMeta{
 						Name:              "rs-name",

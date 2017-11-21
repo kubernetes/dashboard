@@ -133,6 +133,7 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 			&ReplicaSetList{
 				ListMeta:          api.ListMeta{TotalItems: 1},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
+				Status:            common.ResourceStatus{Running: 1},
 				ReplicaSets: []ReplicaSet{{
 					ObjectMeta: api.ObjectMeta{
 						Name:              "rs-name",
@@ -203,7 +204,7 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 	}
 }
 
-func TestCreateReplicaSetList(t *testing.T) {
+func TestToReplicaSetList(t *testing.T) {
 	replicas := int32(0)
 	cases := []struct {
 		replicaSets []apps.ReplicaSet
@@ -274,6 +275,7 @@ func TestGetReplicaSetList(t *testing.T) {
 			expectedActions: []string{"list", "list", "list"},
 			expected: &ReplicaSetList{
 				ListMeta: api.ListMeta{TotalItems: 1},
+				Status:   common.ResourceStatus{Running: 1},
 				ReplicaSets: []ReplicaSet{
 					{
 						ObjectMeta: api.ObjectMeta{

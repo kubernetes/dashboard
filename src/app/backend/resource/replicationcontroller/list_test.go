@@ -27,7 +27,7 @@ import (
 	"k8s.io/client-go/kubernetes/fake"
 )
 
-func TestCreateReplicationControllerList(t *testing.T) {
+func TestToReplicationControllerList(t *testing.T) {
 	replicas := int32(0)
 	events := []v1.Event{}
 	controller := true
@@ -236,6 +236,7 @@ func TestGetReplicationControllerList(t *testing.T) {
 			expectedActions: []string{"list", "list", "list"},
 			expected: &ReplicationControllerList{
 				ListMeta: api.ListMeta{TotalItems: 1},
+				Status:   common.ResourceStatus{Running: 1},
 				ReplicationControllers: []ReplicationController{
 					{
 						ObjectMeta: api.ObjectMeta{
