@@ -14,8 +14,8 @@
 
 package common
 
-// ResourceStatus provides basic information about resources status on the list.
-type ResourceStatus struct {
+// Status provides basic information about resources status on the list.
+type Status struct {
 	// Number of resources that are currently in running state.
 	Running int32 `json:"running"`
 

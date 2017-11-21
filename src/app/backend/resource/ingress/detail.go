@@ -33,7 +33,7 @@ type IngressDetail struct {
 	// Spec is the desired state of the Ingress.
 	Spec extensions.IngressSpec `json:"spec"`
 
-	// ResourceStatus is the current state of the Ingress.
+	// Status is the current state of the Ingress.
 	Status extensions.IngressStatus `json:"status"`
 
 	// List of non-critical errors, that occurred during resource retrieval.

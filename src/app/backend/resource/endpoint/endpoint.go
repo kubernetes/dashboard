@@ -36,7 +36,7 @@ type Endpoint struct {
 	// Name of the node the endpoint is located
 	NodeName *string `json:"nodeName"`
 
-	// ResourceStatus of the endpoint
+	// Status of the endpoint
 	Ready bool `json:"ready"`
 
 	// Array of endpoint ports
