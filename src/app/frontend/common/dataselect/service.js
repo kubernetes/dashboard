@@ -30,6 +30,7 @@ const Actions = {
 export class DataSelectService {
   /**
    * @param {!./../namespace/service.NamespaceService} kdNamespaceService
+   * @param {!./../settings/service.SettingsService} kdSettingsService
    * @param {!searchApi.StateParams|!../../chrome/state.StateParams|!../resource/resourcedetail.StateParams} $stateParams
    * @param {!{setCurrentPage: function(string, number)}} paginationService
    * @ngInject
@@ -112,6 +113,7 @@ export class DataSelectService {
 
     switch (action) {
       case this.actions_.PAGINATE:
+        query.itemsPerPage = dataSelectQuery.itemsPerPage;
         query.page = dataSelectQuery.page;
         break;
       case this.actions_.SORT:

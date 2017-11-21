@@ -69,6 +69,7 @@ func (self *SecretPoller) getSecretEvent() watch.Event {
 
 	if self.isNotFoundError(err) && self.secret != nil {
 		event.Type = watch.Deleted
+		event.Object = self.secret
 		self.secret = nil
 	}
 
@@ -91,5 +92,6 @@ func NewSecretPoller(name, namespace string, client kubernetes.Interface) syncap
 		namespace: namespace,
 		client:    client,
 		watcher:   NewPollWatcher(),
+		secret:    nil,
 	}
 }
