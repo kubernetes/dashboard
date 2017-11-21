@@ -69,6 +69,9 @@ func fromCells(cells []dataselect.DataCell) []apps.StatefulSet {
 
 func getStatus(list *apps.StatefulSetList, pods []v1.Pod, events []v1.Event) common.ResourceStatus {
 	info := common.ResourceStatus{}
+	if list == nil {
+		return info
+	}
 
 	for _, ss := range list.Items {
 		matchingPods := common.FilterPodsByControllerRef(&ss, pods)

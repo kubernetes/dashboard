@@ -69,6 +69,9 @@ func FromCells(cells []dataselect.DataCell) []batch.Job {
 
 func getStatus(list *batch.JobList, pods []v1.Pod, events []v1.Event) common.ResourceStatus {
 	info := common.ResourceStatus{}
+	if list == nil {
+		return info
+	}
 
 	for _, job := range list.Items {
 		matchingPods := common.FilterPodsForJob(job, pods)

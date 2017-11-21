@@ -105,6 +105,9 @@ func FromCells(cells []dataselect.DataCell) []apps.DaemonSet {
 
 func getStatus(list *apps.DaemonSetList, pods []v1.Pod, events []v1.Event) common.ResourceStatus {
 	info := common.ResourceStatus{}
+	if list == nil {
+		return info
+	}
 
 	for _, daemonSet := range list.Items {
 		matchingPods := common.FilterPodsByControllerRef(&daemonSet, pods)

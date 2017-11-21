@@ -166,6 +166,9 @@ func getPodConditions(pod v1.Pod) []common.Condition {
 
 func getStatus(list *v1.PodList, events []v1.Event) common.ResourceStatus {
 	info := common.ResourceStatus{}
+	if list == nil {
+		return info
+	}
 
 	for _, pod := range list.Items {
 		warnings := event.GetPodsEventWarnings(events, []v1.Pod{pod})

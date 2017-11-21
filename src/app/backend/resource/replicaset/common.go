@@ -97,6 +97,9 @@ func FromCells(cells []dataselect.DataCell) []apps.ReplicaSet {
 
 func getStatus(list *apps.ReplicaSetList, pods []v1.Pod, events []v1.Event) common.ResourceStatus {
 	info := common.ResourceStatus{}
+	if list == nil {
+		return info
+	}
 
 	for _, rs := range list.Items {
 		matchingPods := common.FilterPodsByControllerRef(&rs, pods)

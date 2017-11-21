@@ -70,6 +70,9 @@ func fromCells(cells []dataselect.DataCell) []apps.Deployment {
 
 func getStatus(list *apps.DeploymentList, rs []apps.ReplicaSet, pods []v1.Pod, events []v1.Event) common.ResourceStatus {
 	info := common.ResourceStatus{}
+	if list == nil {
+		return info
+	}
 
 	for _, deployment := range list.Items {
 		matchingPods := common.FilterDeploymentPodsByOwnerReference(deployment, rs, pods)

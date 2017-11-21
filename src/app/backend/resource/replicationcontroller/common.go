@@ -145,6 +145,9 @@ func fromCells(cells []dataselect.DataCell) []v1.ReplicationController {
 
 func getStatus(list *v1.ReplicationControllerList, pods []v1.Pod, events []v1.Event) common.ResourceStatus {
 	info := common.ResourceStatus{}
+	if list == nil {
+		return info
+	}
 
 	for _, ss := range list.Items {
 		matchingPods := common.FilterPodsByControllerRef(&ss, pods)

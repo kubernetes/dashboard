@@ -65,10 +65,13 @@ func FromCells(cells []dataselect.DataCell) []batch2.CronJob {
 	return std
 }
 
-func getStatus(cronJobList *batch2.CronJobList) common.ResourceStatus {
+func getStatus(list *batch2.CronJobList) common.ResourceStatus {
 	info := common.ResourceStatus{}
+	if list == nil {
+		return info
+	}
 
-	for _, cronJob := range cronJobList.Items {
+	for _, cronJob := range list.Items {
 		if cronJob.Spec.Suspend != nil && !(*cronJob.Spec.Suspend) {
 			info.Running++
 		} else {
