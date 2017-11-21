@@ -275,6 +275,7 @@ export class AuthService {
    * @param {boolean} skip
    */
   skipLoginPage(skip) {
+    this.removeAuthCookies();
     this.cookies_.put(this.skipLoginPageCookieName_, skip.toString());
   }
 
