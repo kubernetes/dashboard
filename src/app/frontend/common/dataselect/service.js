@@ -211,7 +211,6 @@ export class DataSelectService {
    * @export
    */
   newDataSelectQueryBuilder() {
-    console.log(this.settingsService_.getItemsPerPage())
     return new DataSelectQueryBuilder(this.settingsService_.getItemsPerPage());
   }
 }
