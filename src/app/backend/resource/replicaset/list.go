@@ -33,6 +33,9 @@ type ReplicaSetList struct {
 	ListMeta          api.ListMeta       `json:"listMeta"`
 	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`
 
+	// Basic information about resources status on the list.
+	Status common.ResourceStatus `json:"status"`
+
 	// Unordered list of Replica Sets.
 	ReplicaSets []ReplicaSet `json:"replicaSets"`
 
@@ -80,7 +83,9 @@ func GetReplicaSetListFromChannels(channels *common.ResourceChannels,
 		return nil, criticalError
 	}
 
-	return ToReplicaSetList(replicaSets.Items, pods.Items, events.Items, nonCriticalErrors, dsQuery, metricClient), nil
+	rsList := ToReplicaSetList(replicaSets.Items, pods.Items, events.Items, nonCriticalErrors, dsQuery, metricClient)
+	rsList.Status = getStatus(replicaSets, pods.Items, events.Items)
+	return rsList, nil
 }
 
 // ToReplicaSetList creates paginated list of Replica Set model

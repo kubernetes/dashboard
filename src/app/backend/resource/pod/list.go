@@ -33,6 +33,9 @@ type PodList struct {
 	ListMeta          api.ListMeta       `json:"listMeta"`
 	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`
 
+	// Basic information about resources status on the list.
+	Status common.ResourceStatus `json:"status"`
+
 	// Unordered list of Pods.
 	Pods []Pod `json:"pods"`
 
@@ -109,6 +112,7 @@ func GetPodListFromChannels(channels *common.ResourceChannels, dsQuery *datasele
 	}
 
 	podList := ToPodList(pods.Items, eventList.Items, nonCriticalErrors, dsQuery, metricClient)
+	podList.Status = getStatus(pods, eventList.Items)
 	return &podList, nil
 }
 

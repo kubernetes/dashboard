@@ -57,7 +57,7 @@ func TestGetServicePods(t *testing.T) {
 							Name:      "pod-1",
 							Namespace: "ns-1"},
 						TypeMeta:  api.TypeMeta{Kind: api.ResourceKindPod},
-						PodStatus: pod.PodStatus{Status: "pending"},
+						PodStatus: pod.PodStatus{Status: string(v1.PodPending)},
 						Warnings:  []common.Event{},
 					},
 				},

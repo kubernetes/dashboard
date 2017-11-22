@@ -1,0 +1,146 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<div layout="row"
+     layout-wrap>
+  <div class="kd-graph-container"
+       ng-if="::$ctrl.resourcesRatio.cronJobRatio.length">
+    <div layout="column"
+         layout-align="center center">
+      <kd-allocated-resources-chart color-palette="::$ctrl.colorPalette"
+                                    data="::$ctrl.resourcesRatio.cronJobRatio"
+                                    ratio="0"
+                                    enable-tooltips="true"
+                                    size="140">
+      </kd-allocated-resources-chart>
+      <div class="kd-graph-title">
+        [[Cron Jobs|Label 'Cron Jobs' for the resource status chart on overview page.]]
+      </div>
+    </div>
+  </div>
+
+  <div class="kd-graph-container"
+       ng-if="::$ctrl.resourcesRatio.daemonSetRatio.length">
+    <div layout="column"
+         layout-align="center center">
+      <kd-allocated-resources-chart color-palette="::$ctrl.colorPalette"
+                                    data="::$ctrl.resourcesRatio.daemonSetRatio"
+                                    ratio="0"
+                                    enable-tooltips="true"
+                                    size="140">
+      </kd-allocated-resources-chart>
+      <div class="kd-graph-title">
+        [[Daemon Sets|Label 'Daemon Sets' for the resource status chart on overview page.]]
+      </div>
+    </div>
+  </div>
+
+  <div class="kd-graph-container"
+       ng-if="::$ctrl.resourcesRatio.deploymentRatio.length">
+    <div layout="column"
+         layout-align="center center">
+      <kd-allocated-resources-chart color-palette="::$ctrl.colorPalette"
+                                    data="::$ctrl.resourcesRatio.deploymentRatio"
+                                    ratio="0"
+                                    enable-tooltips="true"
+                                    size="140">
+      </kd-allocated-resources-chart>
+      <div class="kd-graph-title">
+        [[Deployments|Label 'Deployments' for the resource status chart on overview page.]]
+      </div>
+    </div>
+  </div>
+
+  <div class="kd-graph-container"
+       ng-if="::$ctrl.resourcesRatio.jobRatio.length">
+    <div layout="column"
+         layout-align="center center">
+      <kd-allocated-resources-chart color-palette="::$ctrl.colorPalette"
+                                    data="::$ctrl.resourcesRatio.jobRatio"
+                                    ratio="0"
+                                    enable-tooltips="true"
+                                    size="140">
+      </kd-allocated-resources-chart>
+      <div class="kd-graph-title">
+        [[Jobs|Label 'Jobs' for the resource status chart on overview page.]]
+      </div>
+    </div>
+  </div>
+
+  <div class="kd-graph-container"
+       ng-if="::$ctrl.resourcesRatio.podRatio.length">
+    <div layout="column"
+         layout-align="center center">
+      <kd-allocated-resources-chart color-palette="::$ctrl.colorPalette"
+                                    data="::$ctrl.resourcesRatio.podRatio"
+                                    ratio="0"
+                                    enable-tooltips="true"
+                                    size="140">
+      </kd-allocated-resources-chart>
+      <div class="kd-graph-title">
+        [[Pods|Label 'Pods' for the resource status chart on overview page.]]
+      </div>
+    </div>
+  </div>
+
+  <div class="kd-graph-container"
+       ng-if="::$ctrl.resourcesRatio.replicaSetRatio.length">
+    <div layout="column"
+         layout-align="center center">
+      <kd-allocated-resources-chart color-palette="::$ctrl.colorPalette"
+                                    data="::$ctrl.resourcesRatio.replicaSetRatio"
+                                    ratio="0"
+                                    enable-tooltips="true"
+                                    size="140">
+      </kd-allocated-resources-chart>
+      <div class="kd-graph-title">
+        [[Replica Sets|Label 'Replica Sets' for the resource status chart on overview page.]]
+      </div>
+    </div>
+  </div>
+
+  <div class="kd-graph-container"
+       ng-if="::$ctrl.resourcesRatio.rcRatio.length">
+    <div layout="column"
+         layout-align="center center">
+      <kd-allocated-resources-chart color-palette="::$ctrl.colorPalette"
+                                    data="::$ctrl.resourcesRatio.rcRatio"
+                                    ratio="0"
+                                    enable-tooltips="true"
+                                    size="140">
+      </kd-allocated-resources-chart>
+      <div class="kd-graph-title">
+        [[Replication Controllers|Label 'RCs' for the resource status chart on overview page.]]
+      </div>
+    </div>
+  </div>
+
+  <div class="kd-graph-container"
+       ng-if="::$ctrl.resourcesRatio.statefulSetRatio.length">
+    <div layout="column"
+         layout-align="center center">
+      <kd-allocated-resources-chart color-palette="::$ctrl.colorPalette"
+                                    data="::$ctrl.resourcesRatio.statefulSetRatio"
+                                    ratio="0"
+                                    enable-tooltips="true"
+                                    size="140">
+      </kd-allocated-resources-chart>
+      <div class="kd-graph-title">
+        [[Stateful Sets|Label 'Stateful Sets' for the resource status chart on overview page.]]
+      </div>
+    </div>
+  </div>
+</div>

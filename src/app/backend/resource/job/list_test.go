@@ -45,6 +45,7 @@ func TestGetJobListFromChannels(t *testing.T) {
 			&v1.PodList{},
 			&JobList{
 				ListMeta:          api.ListMeta{},
+				Status:            common.ResourceStatus{},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
 				Jobs:              []Job{},
 				Errors:            []error{},
@@ -149,6 +150,7 @@ func TestGetJobListFromChannels(t *testing.T) {
 			&JobList{
 				ListMeta:          api.ListMeta{TotalItems: 2},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
+				Status:            common.ResourceStatus{Succeeded: 2},
 				Jobs: []Job{{
 					ObjectMeta: api.ObjectMeta{
 						Name:              "rs-name",

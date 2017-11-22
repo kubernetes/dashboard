@@ -19,6 +19,7 @@ import (
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/fields"
@@ -60,7 +61,7 @@ func toLabelSelector(selector map[string]string) (labels.Selector, error) {
 func getServicesForDeletion(client client.Interface, labelSelector labels.Selector,
 	namespace string) ([]v1.Service, error) {
 
-	replicationControllers, err := client.Core().ReplicationControllers(namespace).List(metaV1.ListOptions{
+	replicationControllers, err := client.CoreV1().ReplicationControllers(namespace).List(metaV1.ListOptions{
 		LabelSelector: labelSelector.String(),
 		FieldSelector: fields.Everything().String(),
 	})
@@ -75,7 +76,7 @@ func getServicesForDeletion(client client.Interface, labelSelector labels.Select
 		return []v1.Service{}, nil
 	}
 
-	services, err := client.Core().Services(namespace).List(metaV1.ListOptions{
+	services, err := client.CoreV1().Services(namespace).List(metaV1.ListOptions{
 		LabelSelector: labelSelector.String(),
 		FieldSelector: fields.Everything().String(),
 	})
@@ -140,4 +141,27 @@ func fromCells(cells []dataselect.DataCell) []v1.ReplicationController {
 		std[i] = v1.ReplicationController(cells[i].(ReplicationControllerCell))
 	}
 	return std
+}
+
+func getStatus(list *v1.ReplicationControllerList, pods []v1.Pod, events []v1.Event) common.ResourceStatus {
+	info := common.ResourceStatus{}
+	if list == nil {
+		return info
+	}
+
+	for _, ss := range list.Items {
+		matchingPods := common.FilterPodsByControllerRef(&ss, pods)
+		podInfo := common.GetPodInfo(ss.Status.Replicas, ss.Spec.Replicas, matchingPods)
+		warnings := event.GetPodsEventWarnings(events, matchingPods)
+
+		if len(warnings) > 0 {
+			info.Failed++
+		} else if podInfo.Pending > 0 {
+			info.Pending++
+		} else {
+			info.Running++
+		}
+	}
+
+	return info
 }

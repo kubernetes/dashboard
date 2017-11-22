@@ -59,11 +59,7 @@ func GetEvents(client client.Interface, namespace, resourceName string) ([]v1.Ev
 		return nil, err
 	}
 
-	if !IsTypeFilled(eventList.Items) {
-		eventList.Items = FillEventsType(eventList.Items)
-	}
-
-	return eventList.Items, nil
+	return FillEventsType(eventList.Items), nil
 }
 
 // GetPodsEvents gets events targeting given list of pods.
@@ -117,12 +113,7 @@ func GetPodEvents(client client.Interface, namespace, podName string) ([]v1.Even
 	}
 
 	events := filterEventsByPodsUID(eventList.Items, l)
-
-	if !IsTypeFilled(events) {
-		events = FillEventsType(events)
-	}
-
-	return events, nil
+	return FillEventsType(events), nil
 }
 
 // GetNodeEvents gets events associated to node with given name.
@@ -146,52 +137,30 @@ func GetNodeEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery,
 		return &eventList, err
 	}
 
-	if !IsTypeFilled(events.Items) {
-		events.Items = FillEventsType(events.Items)
-	}
-
-	eventList = CreateEventList(events.Items, dsQuery)
+	eventList = CreateEventList(FillEventsType(events.Items), dsQuery)
 	return &eventList, nil
 }
 
 // GetNamespaceEvents gets events associated to a namespace with given name.
 func GetNamespaceEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery, namespace string) (common.EventList, error) {
-	events, _ := client.Core().Events(namespace).List(api.ListEverything)
-
-	if !IsTypeFilled(events.Items) {
-		events.Items = FillEventsType(events.Items)
-	}
-
-	return CreateEventList(events.Items, dsQuery), nil
+	events, _ := client.CoreV1().Events(namespace).List(api.ListEverything)
+	return CreateEventList(FillEventsType(events.Items), dsQuery), nil
 }
 
 // Based on event Reason fills event Type in order to allow correct filtering by Type.
 func FillEventsType(events []v1.Event) []v1.Event {
 	for i := range events {
-		if isFailedReason(events[i].Reason, FailedReasonPartials...) {
-			events[i].Type = v1.EventTypeWarning
-		} else {
-			events[i].Type = v1.EventTypeNormal
+		// Fill in only events with empty type.
+		if len(events[i].Type) == 0 {
+			if isFailedReason(events[i].Reason, FailedReasonPartials...) {
+				events[i].Type = v1.EventTypeWarning
+			} else {
+				events[i].Type = v1.EventTypeNormal
+			}
 		}
 	}
 
 	return events
-}
-
-// IsTypeFilled returns true if all given events type is filled, false otherwise.
-// This is needed as some older versions of kubernetes do not have Type property filled.
-func IsTypeFilled(events []v1.Event) bool {
-	if len(events) == 0 {
-		return false
-	}
-
-	for _, event := range events {
-		if len(event.Type) == 0 {
-			return false
-		}
-	}
-
-	return true
 }
 
 // ToEvent converts event api Event to Event model object.

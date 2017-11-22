@@ -23,7 +23,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"k8s.io/api/batch/v1beta1"
-	"k8s.io/apimachinery/pkg/apis/meta/v1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
 )
 
@@ -32,6 +32,9 @@ type CronJobList struct {
 	ListMeta          api.ListMeta       `json:"listMeta"`
 	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`
 	Items             []CronJob          `json:"items"`
+
+	// Basic information about resources status on the list.
+	Status common.ResourceStatus `json:"status"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
@@ -44,7 +47,7 @@ type CronJob struct {
 	Schedule     string         `json:"schedule"`
 	Suspend      *bool          `json:"suspend"`
 	Active       int            `json:"active"`
-	LastSchedule *v1.Time       `json:"lastSchedule"`
+	LastSchedule *metav1.Time   `json:"lastSchedule"`
 }
 
 // GetCronJobList returns a list of all CronJobs in the cluster.
@@ -71,7 +74,9 @@ func GetCronJobListFromChannels(channels *common.ResourceChannels, dsQuery *data
 		return nil, criticalError
 	}
 
-	return toCronJobList(cronJobs.Items, nonCriticalErrors, dsQuery, metricClient), nil
+	cronJobList := toCronJobList(cronJobs.Items, nonCriticalErrors, dsQuery, metricClient)
+	cronJobList.Status = getStatus(cronJobs)
+	return cronJobList, nil
 }
 
 func toCronJobList(cronJobs []v1beta1.CronJob, nonCriticalErrors []error, dsQuery *dataselect.DataSelectQuery,

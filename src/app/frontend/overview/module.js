@@ -29,6 +29,7 @@ import serviceModule from '../service/module';
 import statefulSetModule from '../statefulset/module';
 
 import stateConfig from './stateconfig';
+import {workloadStatusesComponent} from './workloadstatuses/component';
 
 /**
  * Module with a view that displays all resources categorized as objects
@@ -58,7 +59,8 @@ export default angular
           persistentVolumeClaimModule.name,
         ])
     .config(stateConfig)
-    .factory('kdOverviewResource', overviewResource);
+    .factory('kdOverviewResource', overviewResource)
+    .component('kdWorkloadStatuses', workloadStatusesComponent);
 
 /**
  * @param {!angular.$resource} $resource

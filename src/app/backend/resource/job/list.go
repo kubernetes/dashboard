@@ -33,6 +33,9 @@ type JobList struct {
 	ListMeta          api.ListMeta       `json:"listMeta"`
 	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`
 
+	// Basic information about resources status on the list.
+	Status common.ResourceStatus `json:"status"`
+
 	// Unordered list of Jobs.
 	Jobs []Job `json:"jobs"`
 
@@ -98,7 +101,9 @@ func GetJobListFromChannels(channels *common.ResourceChannels, dsQuery *datasele
 		return nil, criticalError
 	}
 
-	return ToJobList(jobs.Items, pods.Items, events.Items, nonCriticalErrors, dsQuery, metricClient), nil
+	jobList := ToJobList(jobs.Items, pods.Items, events.Items, nonCriticalErrors, dsQuery, metricClient)
+	jobList.Status = getStatus(jobs, pods.Items, events.Items)
+	return jobList, nil
 }
 
 func ToJobList(jobs []batch.Job, pods []v1.Pod, events []v1.Event, nonCriticalErrors []error,

@@ -32,6 +32,9 @@ import (
 type StatefulSetList struct {
 	ListMeta api.ListMeta `json:"listMeta"`
 
+	// Basic information about resources status on the list.
+	Status common.ResourceStatus `json:"status"`
+
 	// Unordered list of Pet Sets.
 	StatefulSets      []StatefulSet      `json:"statefulSets"`
 	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`
@@ -97,7 +100,9 @@ func GetStatefulSetListFromChannels(channels *common.ResourceChannels, dsQuery *
 		return nil, criticalError
 	}
 
-	return toStatefulSetList(statefulSets.Items, pods.Items, events.Items, nonCriticalErrors, dsQuery, metricClient), nil
+	ssList := toStatefulSetList(statefulSets.Items, pods.Items, events.Items, nonCriticalErrors, dsQuery, metricClient)
+	ssList.Status = getStatus(statefulSets, pods.Items, events.Items)
+	return ssList, nil
 }
 
 func toStatefulSetList(statefulSets []apps.StatefulSet, pods []v1.Pod, events []v1.Event, nonCriticalErrors []error,

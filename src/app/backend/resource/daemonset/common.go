@@ -17,7 +17,9 @@ package daemonset
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	apps "k8s.io/api/apps/v1beta2"
 	"k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -47,7 +49,7 @@ func GetServicesForDSDeletion(client client.Interface, labelSelector labels.Sele
 		return []v1.Service{}, nil
 	}
 
-	services, err := client.Core().Services(namespace).List(metaV1.ListOptions{
+	services, err := client.CoreV1().Services(namespace).List(metaV1.ListOptions{
 		LabelSelector: labelSelector.String(),
 		FieldSelector: fields.Everything().String(),
 	})
@@ -99,4 +101,28 @@ func FromCells(cells []dataselect.DataCell) []apps.DaemonSet {
 		std[i] = apps.DaemonSet(cells[i].(DaemonSetCell))
 	}
 	return std
+}
+
+func getStatus(list *apps.DaemonSetList, pods []v1.Pod, events []v1.Event) common.ResourceStatus {
+	info := common.ResourceStatus{}
+	if list == nil {
+		return info
+	}
+
+	for _, daemonSet := range list.Items {
+		matchingPods := common.FilterPodsByControllerRef(&daemonSet, pods)
+		podInfo := common.GetPodInfo(daemonSet.Status.CurrentNumberScheduled,
+			&daemonSet.Status.DesiredNumberScheduled, matchingPods)
+		warnings := event.GetPodsEventWarnings(events, matchingPods)
+
+		if len(warnings) > 0 {
+			info.Failed++
+		} else if podInfo.Pending > 0 {
+			info.Pending++
+		} else {
+			info.Running++
+		}
+	}
+
+	return info
 }

@@ -21,8 +21,7 @@
 }
 
 .kd-graph-container {
-  flex: 1 auto;
-  margin: 0 auto;
+  flex: auto;
   text-align: center;
 }
 
@@ -55,6 +54,11 @@
 .kd-graph-legend-value {
   flex: 1 auto;
   text-align: right;
+}
+
+.kd-graph-title {
+  font-size: $subhead-font-size-base;
+  padding-bottom: 2 * $baseline-grid;
 }
 
 .kd-graph-failed {

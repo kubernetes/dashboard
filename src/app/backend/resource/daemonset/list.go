@@ -32,6 +32,9 @@ type DaemonSetList struct {
 	DaemonSets        []DaemonSet        `json:"daemonSets"`
 	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`
 
+	// Basic information about resources status on the list.
+	Status common.ResourceStatus `json:"status"`
+
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
 }
@@ -90,8 +93,9 @@ func GetDaemonSetListFromChannels(channels *common.ResourceChannels, dsQuery *da
 		return nil, criticalError
 	}
 
-	result := toDaemonSetList(daemonSets.Items, pods.Items, events.Items, nonCriticalErrors, dsQuery, metricClient)
-	return result, nil
+	dsList := toDaemonSetList(daemonSets.Items, pods.Items, events.Items, nonCriticalErrors, dsQuery, metricClient)
+	dsList.Status = getStatus(daemonSets, pods.Items, events.Items)
+	return dsList, nil
 }
 
 func toDaemonSetList(daemonSets []apps.DaemonSet, pods []v1.Pod, events []v1.Event, nonCriticalErrors []error,

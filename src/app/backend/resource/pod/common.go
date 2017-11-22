@@ -19,6 +19,7 @@ import (
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"k8s.io/api/core/v1"
 )
 
@@ -39,22 +40,43 @@ func getPodStatus(pod v1.Pod, warnings []common.Event) PodStatus {
 	}
 
 	return PodStatus{
-		Status:          getPodStatusStatus(pod, warnings),
+		Status:          string(getPodStatusPhase(pod, warnings)),
 		PodPhase:        pod.Status.Phase,
 		ContainerStates: states,
 	}
 }
 
+// getPodStatusInfo returns correct info about pod statuses. Should be used when correct pod statuses are required.
+func getPodStatusInfo(pods []v1.Pod, events []v1.Event) common.PodInfo {
+	podInfo := common.PodInfo{}
+
+	for _, pod := range pods {
+		warnings := event.GetPodsEventWarnings(events, []v1.Pod{pod})
+		switch getPodStatusPhase(pod, warnings) {
+		case v1.PodFailed:
+			podInfo.Failed++
+		case v1.PodSucceeded:
+			podInfo.Succeeded++
+		case v1.PodRunning:
+			podInfo.Running++
+		case v1.PodPending:
+			podInfo.Pending++
+		}
+	}
+
+	return podInfo
+}
+
 // getPodStatus returns one of three pod statuses (pending, success, failed)
-func getPodStatusStatus(pod v1.Pod, warnings []common.Event) string {
+func getPodStatusPhase(pod v1.Pod, warnings []common.Event) v1.PodPhase {
 	// For terminated pods that failed
 	if pod.Status.Phase == v1.PodFailed {
-		return "failed"
+		return v1.PodFailed
 	}
 
 	// For successfully terminated pods
 	if pod.Status.Phase == v1.PodSucceeded {
-		return "success"
+		return v1.PodSucceeded
 	}
 
 	ready := false
@@ -68,18 +90,18 @@ func getPodStatusStatus(pod v1.Pod, warnings []common.Event) string {
 		}
 	}
 
-	if initialized && ready {
-		return "success"
+	if initialized && ready && pod.Status.Phase == v1.PodRunning {
+		return v1.PodRunning
 	}
 
 	// If the pod would otherwise be pending but has warning then label it as
 	// failed and show and error to the user.
 	if len(warnings) > 0 {
-		return "failed"
+		return v1.PodFailed
 	}
 
 	// Unknown?
-	return "pending"
+	return v1.PodPending
 }
 
 // The code below allows to perform complex data section on []api.Pod
@@ -140,4 +162,27 @@ func getPodConditions(pod v1.Pod) []common.Condition {
 		})
 	}
 	return conditions
+}
+
+func getStatus(list *v1.PodList, events []v1.Event) common.ResourceStatus {
+	info := common.ResourceStatus{}
+	if list == nil {
+		return info
+	}
+
+	for _, pod := range list.Items {
+		warnings := event.GetPodsEventWarnings(events, []v1.Pod{pod})
+		switch getPodStatusPhase(pod, warnings) {
+		case v1.PodFailed:
+			info.Failed++
+		case v1.PodSucceeded:
+			info.Succeeded++
+		case v1.PodRunning:
+			info.Running++
+		case v1.PodPending:
+			info.Pending++
+		}
+	}
+
+	return info
 }

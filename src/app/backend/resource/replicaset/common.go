@@ -19,7 +19,9 @@ import (
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	apps "k8s.io/api/apps/v1beta2"
+	"k8s.io/api/core/v1"
 )
 
 // ReplicaSet is a presentation layer view of Kubernetes Replica Set resource. This means
@@ -91,4 +93,27 @@ func FromCells(cells []dataselect.DataCell) []apps.ReplicaSet {
 		std[i] = apps.ReplicaSet(cells[i].(ReplicaSetCell))
 	}
 	return std
+}
+
+func getStatus(list *apps.ReplicaSetList, pods []v1.Pod, events []v1.Event) common.ResourceStatus {
+	info := common.ResourceStatus{}
+	if list == nil {
+		return info
+	}
+
+	for _, rs := range list.Items {
+		matchingPods := common.FilterPodsByControllerRef(&rs, pods)
+		podInfo := common.GetPodInfo(rs.Status.Replicas, rs.Spec.Replicas, matchingPods)
+		warnings := event.GetPodsEventWarnings(events, matchingPods)
+
+		if len(warnings) > 0 {
+			info.Failed++
+		} else if podInfo.Pending > 0 {
+			info.Pending++
+		} else {
+			info.Running++
+		}
+	}
+
+	return info
 }

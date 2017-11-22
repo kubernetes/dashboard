@@ -130,6 +130,7 @@ backendApi.Event;
  * @typedef {{
  *   replicationControllers: !Array<!backendApi.ReplicationController>,
  *   listMeta: !backendApi.ListMeta,
+ *   status: !backendApi.Status,
  *   errors: !Array<!backendApi.Error>
  * }}
  */
@@ -304,6 +305,7 @@ backendApi.ReplicaSetDetail;
  * @typedef {{
  *   replicaSets: !Array<!backendApi.ReplicaSet>,
  *   listMeta: !backendApi.ListMeta,
+ *   status: !backendApi.Status,
  *   errors: !Array<!backendApi.Error>
  * }}
  */
@@ -340,6 +342,7 @@ backendApi.JobDetail;
  * @typedef {{
  *   jobs: !Array<!backendApi.Job>,
  *   listMeta: !backendApi.ListMeta,
+ *   status: !backendApi.Status,
  *   errors: !Array<!backendApi.Error>
  * }}
  */
@@ -377,6 +380,7 @@ backendApi.CronJobDetail;
  * @typedef {{
  *   items: !Array<!backendApi.CronJob>,
  *   listMeta: !backendApi.ListMeta,
+ *   status: !backendApi.Status,
  *   errors: !Array<!backendApi.Error>
  * }}
  */
@@ -411,6 +415,7 @@ backendApi.StatefulSetDetail;
  * @typedef {{
  *   statefulSets: !Array<!backendApi.StatefulSet>,
  *   listMeta: !backendApi.ListMeta,
+ *   status: !backendApi.Status,
  *   errors: !Array<!backendApi.Error>
  * }}
  */
@@ -651,6 +656,7 @@ backendApi.Deployment;
  * @typedef {{
  *   deployments: !Array<!backendApi.Deployment>,
  *   listMeta: !backendApi.ListMeta,
+ *   status: !backendApi.Status,
  *   errors: !Array<!backendApi.Error>
  * }}
  */
@@ -696,6 +702,8 @@ backendApi.DeploymentDetail;
  * @typedef {{
  *   pods: !Array<!backendApi.Pod>,
  *   listMeta: !backendApi.ListMeta,
+ *   status: !backendApi.Status,
+ *   podInfo: !backendApi.PodInfo,
  *   cumulativeMetrics: (!Array<!backendApi.Metric>|null),
  *   errors: !Array<!backendApi.Error>
  * }}
@@ -1000,6 +1008,7 @@ backendApi.DaemonSet;
  * @typedef {{
  *  daemonSets: !Array<backendApi.DaemonSet>,
  *  listMeta: !backendApi.ListMeta,
+ *  status: !backendApi.Status,
  *  errors: !Array<!backendApi.Error>
  * }}
  */
@@ -1534,3 +1543,13 @@ backendApi.LoginModesResponse;
  *  }}
  */
 backendApi.SupportedAuthenticationModes;
+
+/**
+ * @typedef {{
+ *  running: number,
+ *  failed: number,
+ *  pending: number,
+ *  succeeded: number,
+ *  }}
+ */
+backendApi.Status;

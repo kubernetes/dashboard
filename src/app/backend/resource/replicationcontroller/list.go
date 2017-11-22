@@ -32,6 +32,9 @@ type ReplicationControllerList struct {
 	ListMeta          api.ListMeta       `json:"listMeta"`
 	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`
 
+	// Basic information about resources status on the list.
+	Status common.ResourceStatus `json:"status"`
+
 	// Unordered list of Replication Controllers.
 	ReplicationControllers []ReplicationController `json:"replicationControllers"`
 
@@ -79,7 +82,10 @@ func GetReplicationControllerListFromChannels(channels *common.ResourceChannels,
 		return nil, criticalError
 	}
 
-	return toReplicationControllerList(rcList.Items, dsQuery, podList.Items, eventList.Items, nonCriticalErrors, metricClient), nil
+	rcs := toReplicationControllerList(rcList.Items, dsQuery, podList.Items, eventList.Items, nonCriticalErrors,
+		metricClient)
+	rcs.Status = getStatus(rcList, podList.Items, eventList.Items)
+	return rcs, nil
 }
 
 func toReplicationControllerList(replicationControllers []v1.ReplicationController, dsQuery *dataselect.DataSelectQuery,

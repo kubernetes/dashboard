@@ -29,57 +29,19 @@ limitations under the License.
   </kd-graph-card>
 </div>
 
-<kd-content-card ng-if="$ctrl.overview.podList.pods.length">
-  <kd-title>[[Resource Status|Label 'Resource Status' for the allocated resources section.]]</kd-title>
-  <kd-content>
-    <div class="kd-graph-container">
-      <div layout="row"
-           layout-align="center center">
-        <div class="kd-graph-legend">
-          <div class="kd-graph-legend-title">
-            Pods
-          </div>
-          <div class="kd-graph-legend-entry">
-            <md-icon class="kd-graph-running">stop</md-icon>
-            [[Running|Label 'Running' for the pod statistics graphs legend.]]
-            <span class="kd-graph-legend-value">
-                      {{$ctrl.podStats.success}}
-                    </span>
-          </div>
-          <div class="kd-graph-legend-entry">
-            <md-icon class="kd-graph-pending">stop</md-icon>
-            [[Pending|Label 'Pending' for the pod statistics graphs legend.]]
-            <span class="kd-graph-legend-value">
-                        {{$ctrl.podStats.pending}}
-                      </span>
-          </div>
-          <div class="kd-graph-legend-entry">
-            <md-icon class="kd-graph-failed">stop</md-icon>
-            [[Failed|Label 'Failed' for the pod statistics graphs legend.]]
-            <span class="kd-graph-legend-value">
-                        {{$ctrl.podStats.failed}}
-                      </span>
-          </div>
-        </div>
-        <kd-allocated-resources-chart color-palette="$ctrl.colorPalette"
-                                      data="$ctrl.podStats.chartValues"
-                                      ratio="$ctrl.chartRatio">
-        </kd-allocated-resources-chart>
-      </div>
-    </div>
-    <kd-content>
-</kd-content-card>
-
-<kd-content-card ng-if="$ctrl.overview.podList.pods.length">
-  <kd-content>
-    <kd-pod-card-list pod-list="$ctrl.overview.podList"
-                      pod-list-resource="$ctrl.podListResource"
-                      with-statuses="true">
-    </kd-pod-card-list>
-  </kd-content>
-</kd-content-card>
-
 <div ng-if="!$ctrl.shouldShowZeroState()">
+  <div class="kd-overview-section"
+       ng-if="::$ctrl.shouldShowWorkloadsSection()">
+    [[Workloads|Section label shown on overview page]]
+  </div>
+
+  <kd-content-card ng-if="::$ctrl.shouldShowWorkloadsSection()">
+    <kd-title>[[Workloads Statuses|Label 'Resource Statuses' for the resource status section on overview page.]]</kd-title>
+    <kd-content>
+      <kd-workload-statuses resources-ratio="::$ctrl.resourcesRatio"></kd-workload-statuses>
+    </kd-content>
+  </kd-content-card>
+
   <kd-content-card ng-if="$ctrl.overview.cronJobList.items.length">
     <kd-content>
       <kd-cron-job-card-list cron-job-list="$ctrl.overview.cronJobList"
@@ -113,6 +75,15 @@ limitations under the License.
     </kd-content>
   </kd-content-card>
 
+  <kd-content-card ng-if="$ctrl.overview.podList.pods.length">
+    <kd-content>
+      <kd-pod-card-list pod-list="$ctrl.overview.podList"
+                        pod-list-resource="$ctrl.podListResource"
+                        with-statuses="true">
+      </kd-pod-card-list>
+    </kd-content>
+  </kd-content-card>
+
   <kd-content-card ng-if="$ctrl.overview.replicaSetList.replicaSets.length">
     <kd-content>
       <kd-replica-set-card-list replica-set-list="$ctrl.overview.replicaSetList"
@@ -137,6 +108,11 @@ limitations under the License.
     </kd-content>
   </kd-content-card>
 
+  <div class="kd-overview-section"
+       ng-if="::$ctrl.shouldShowDiscoverySection()">
+    [[Discovery and Load Balancing|Section label shown on overview page]]
+  </div>
+
   <kd-content-card ng-if="$ctrl.overview.ingressList.items.length">
     <kd-content>
       <kd-ingress-card-list ingress-list="$ctrl.overview.ingressList"
@@ -154,6 +130,11 @@ limitations under the License.
       </kd-service-card-list>
     </kd-content>
   </kd-content-card>
+
+  <div class="kd-overview-section"
+       ng-if="::$ctrl.shouldShowConfigSection()">
+    [[Config and Storage|Section label shown on overview page]]
+  </div>
 
   <kd-content-card ng-if="$ctrl.overview.configMapList.items.length">
     <kd-content>

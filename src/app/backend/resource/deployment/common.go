@@ -17,8 +17,11 @@ package deployment
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	apps "k8s.io/api/apps/v1beta2"
+	"k8s.io/api/core/v1"
 )
 
 // The code below allows to perform complex data section on Deployment
@@ -63,4 +66,27 @@ func fromCells(cells []dataselect.DataCell) []apps.Deployment {
 		std[i] = apps.Deployment(cells[i].(DeploymentCell))
 	}
 	return std
+}
+
+func getStatus(list *apps.DeploymentList, rs []apps.ReplicaSet, pods []v1.Pod, events []v1.Event) common.ResourceStatus {
+	info := common.ResourceStatus{}
+	if list == nil {
+		return info
+	}
+
+	for _, deployment := range list.Items {
+		matchingPods := common.FilterDeploymentPodsByOwnerReference(deployment, rs, pods)
+		podInfo := common.GetPodInfo(deployment.Status.Replicas, deployment.Spec.Replicas, matchingPods)
+		warnings := event.GetPodsEventWarnings(events, matchingPods)
+
+		if len(warnings) > 0 {
+			info.Failed++
+		} else if podInfo.Pending > 0 {
+			info.Pending++
+		} else {
+			info.Running++
+		}
+	}
+
+	return info
 }

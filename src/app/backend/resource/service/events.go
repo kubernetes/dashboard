@@ -37,11 +37,7 @@ func GetServiceEvents(client client.Interface, dsQuery *dataselect.DataSelectQue
 		return &eventList, err
 	}
 
-	if !event.IsTypeFilled(serviceEvents) {
-		serviceEvents = event.FillEventsType(serviceEvents)
-	}
-
-	eventList = event.CreateEventList(serviceEvents, dsQuery)
+	eventList = event.CreateEventList(event.FillEventsType(serviceEvents), dsQuery)
 	log.Printf("Found %d events related to %s service in %s namespace", len(eventList.Events), name, namespace)
 	return &eventList, nil
 }

@@ -80,26 +80,36 @@ export class OverviewController {
     /** @export {!angular.Resource} */
     this.pvcListResource = kdPersistentVolumeClaimListResource;
 
-    /** @export {Object} */
-    this.podStats = {};
+    /** @export {!Object<Array<Object>>} */
+    this.resourcesRatio = {};
+  }
 
-    /** @export {number} */
-    this.podStats.success;
-
-    /** @export {number} */
-    this.podStats.pending;
-
-    /** @export {number} */
-    this.podStats.failed;
-
+  $onInit() {
     /** @export {Array<Object>} */
-    this.podStats.chartValues = [];
-
-    /** @export {!Array<string>} */
-    this.colorPalette = ['#00c752', '#f00', '#ffad20'];
-
-    /** @export {number} */
-    this.chartRatio = 0;
+    this.resourcesRatio.cronJobRatio = this.getSuspendableResourceRatio(
+        this.overview.cronJobList.status, this.overview.cronJobList.listMeta.totalItems);
+    /** @export {Array<Object>} */
+    this.resourcesRatio.daemonSetRatio = this.getDefaultResourceRatio(
+        this.overview.daemonSetList.status, this.overview.daemonSetList.listMeta.totalItems);
+    /** @export {Array<Object>} */
+    this.resourcesRatio.deploymentRatio = this.getDefaultResourceRatio(
+        this.overview.deploymentList.status, this.overview.deploymentList.listMeta.totalItems);
+    /** @export {Array<Object>} */
+    this.resourcesRatio.jobRatio = this.getCompletableResourceRatio(
+        this.overview.jobList.status, this.overview.jobList.listMeta.totalItems);
+    /** @export {Array<Object>} */
+    this.resourcesRatio.podRatio = this.getCompletableResourceRatio(
+        this.overview.podList.status, this.overview.podList.listMeta.totalItems);
+    /** @export {Array<Object>} */
+    this.resourcesRatio.replicaSetRatio = this.getDefaultResourceRatio(
+        this.overview.replicaSetList.status, this.overview.replicaSetList.listMeta.totalItems);
+    /** @export {Array<Object>} */
+    this.resourcesRatio.rcRatio = this.getDefaultResourceRatio(
+        this.overview.replicationControllerList.status,
+        this.overview.replicationControllerList.listMeta.totalItems);
+    /** @export {Array<Object>} */
+    this.resourcesRatio.statefulSetRatio = this.getDefaultResourceRatio(
+        this.overview.statefulSetList.status, this.overview.statefulSetList.listMeta.totalItems);
   }
 
   /**
@@ -107,6 +117,15 @@ export class OverviewController {
    * @export
    */
   shouldShowZeroState() {
+    return !this.shouldShowWorkloadsSection() && !this.shouldShowDiscoverySection() &&
+        !this.shouldShowConfigSection();
+  }
+
+  /**
+   * @export
+   * @return {boolean}
+   */
+  shouldShowWorkloadsSection() {
     /** @type {number} */
     let resourcesLength = this.overview.deploymentList.listMeta.totalItems +
         this.overview.replicaSetList.listMeta.totalItems +
@@ -114,44 +133,108 @@ export class OverviewController {
         this.overview.replicationControllerList.listMeta.totalItems +
         this.overview.podList.listMeta.totalItems +
         this.overview.daemonSetList.listMeta.totalItems +
-        this.overview.statefulSetList.listMeta.totalItems +
-        this.overview.serviceList.listMeta.totalItems +
-        this.overview.ingressList.listMeta.totalItems +
-        this.overview.configMapList.listMeta.totalItems +
-        this.overview.secretList.listMeta.totalItems +
-        this.overview.persistentVolumeClaimList.listMeta.totalItems;
+        this.overview.statefulSetList.listMeta.totalItems;
 
-    return resourcesLength === 0;
+    return resourcesLength !== 0;
   }
 
   /**
-   * @return {Object}
    * @export
+   * @return {boolean}
    */
-  getPodStats() {
-    let podStats = {
-      'success': 0,
-      'failed': 0,
-      'pending': 0,
-      'total': this.overview.podList.pods.length,
-    };
+  shouldShowDiscoverySection() {
+    /** @type {number} */
+    let resourcesLength = this.overview.serviceList.listMeta.totalItems +
+        this.overview.ingressList.listMeta.totalItems;
 
-    let pods = this.overview.podList.pods;
-
-    pods.forEach(function(pod) {
-      podStats[pod.podStatus.status] += 1;
-    });
-
-    podStats.chartValues = [
-      {value: podStats.success / podStats.total * 100},
-      {value: podStats.failed / podStats.total * 100},
-      {value: podStats.pending / podStats.total * 100},
-    ];
-
-    return podStats;
+    return resourcesLength !== 0;
   }
 
-  $onInit() {
-    this.podStats = this.getPodStats();
+  /**
+   * @export
+   * @return {boolean}
+   */
+  shouldShowConfigSection() {
+    /** @type {number} */
+    let resourcesLength = this.overview.configMapList.listMeta.totalItems +
+        this.overview.secretList.listMeta.totalItems +
+        this.overview.persistentVolumeClaimList.listMeta.totalItems;
+
+    return resourcesLength !== 0;
+  }
+
+  /**
+   * @param {!backendApi.Status} status
+   * @param {number} totalItems
+   * @return {!Array<Object>}
+   * @export
+   */
+  getSuspendableResourceRatio(status, totalItems) {
+    return totalItems > 0 ?
+        [
+          {
+            key: `Running: ${status.running}`,
+            value: status.running / totalItems * 100,
+          },
+          {
+            key: `Suspended: ${status.failed}`,
+            value: status.failed / totalItems * 100,
+          },
+        ] :
+        [];
+  }
+
+  /**
+   * @param {!backendApi.Status} status
+   * @param {number} totalItems
+   * @return {!Array<Object>}
+   * @export
+   */
+  getDefaultResourceRatio(status, totalItems) {
+    return totalItems > 0 ?
+        [
+          {
+            key: `Running: ${status.running}`,
+            value: status.running / totalItems * 100,
+          },
+          {
+            key: `Failed: ${status.failed}`,
+            value: status.failed / totalItems * 100,
+          },
+          {
+            key: `Pending: ${status.pending}`,
+            value: status.pending / totalItems * 100,
+          },
+        ] :
+        [];
+  }
+
+  /**
+   * @param {!backendApi.Status} status
+   * @param {number} totalItems
+   * @return {!Array<Object>}
+   * @export
+   */
+  getCompletableResourceRatio(status, totalItems) {
+    return totalItems > 0 ?
+        [
+          {
+            key: `Running: ${status.running}`,
+            value: status.running / totalItems * 100,
+          },
+          {
+            key: `Failed: ${status.failed}`,
+            value: status.failed / totalItems * 100,
+          },
+          {
+            key: `Pending: ${status.pending}`,
+            value: status.pending / totalItems * 100,
+          },
+          {
+            key: `Succeeded: ${status.succeeded}`,
+            value: status.succeeded / totalItems * 100,
+          },
+        ] :
+        [];
   }
 }

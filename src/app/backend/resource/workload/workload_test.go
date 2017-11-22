@@ -52,7 +52,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 		rs             []replicaset.ReplicaSet
 		jobs           []job.Job
 		cjs            []cronjob.CronJob
-		daemonset      []daemonset.DaemonSet
+		daemonsets     []daemonset.DaemonSet
 		deployment     []deployment.Deployment
 		pod            []pod.Pod
 		statefulSet    []statefulset.StatefulSet
@@ -173,7 +173,6 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 				TypeMeta: api.TypeMeta{Kind: api.ResourceKindDaemonSet},
 				Pods: common.PodInfo{
 					Warnings: []common.Event{},
-					Desired:  &replicas,
 				},
 			}},
 			[]deployment.Deployment{{
@@ -196,36 +195,42 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 			ReplicationControllerList: replicationcontroller.ReplicationControllerList{
 				ListMeta:               api.ListMeta{TotalItems: len(c.rcs)},
 				CumulativeMetrics:      make([]metricapi.Metric, 0),
+				Status:                 common.ResourceStatus{Running: len(c.k8sRc.Items)},
 				ReplicationControllers: c.rcs,
 				Errors:                 []error{},
 			},
 			ReplicaSetList: replicaset.ReplicaSetList{
 				ListMeta:          api.ListMeta{TotalItems: len(c.rs)},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
+				Status:            common.ResourceStatus{Running: len(c.k8sRs.Items)},
 				ReplicaSets:       c.rs,
 				Errors:            []error{},
 			},
 			JobList: job.JobList{
 				ListMeta:          api.ListMeta{TotalItems: len(c.jobs)},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
+				Status:            common.ResourceStatus{Succeeded: len(c.k8sJobs.Items)},
 				Jobs:              c.jobs,
 				Errors:            []error{},
 			},
 			CronJobList: cronjob.CronJobList{
-				ListMeta:          api.ListMeta{TotalItems: len(c.jobs)},
+				ListMeta:          api.ListMeta{TotalItems: len(c.cjs)},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
+				Status:            common.ResourceStatus{Failed: len(c.k8sCronJobs.Items)},
 				Items:             c.cjs,
 				Errors:            []error{},
 			},
 			DaemonSetList: daemonset.DaemonSetList{
-				ListMeta:          api.ListMeta{TotalItems: len(c.daemonset)},
+				ListMeta:          api.ListMeta{TotalItems: len(c.daemonsets)},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
-				DaemonSets:        c.daemonset,
+				Status:            common.ResourceStatus{Running: len(c.k8sDaemonSet.Items)},
+				DaemonSets:        c.daemonsets,
 				Errors:            []error{},
 			},
 			DeploymentList: deployment.DeploymentList{
 				ListMeta:          api.ListMeta{TotalItems: len(c.deployment)},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
+				Status:            common.ResourceStatus{Running: len(c.k8sDeployment.Items)},
 				Deployments:       c.deployment,
 				Errors:            []error{},
 			},
@@ -375,6 +380,11 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 		channels.EventList.Error <- nil
 
 		actual, err := GetWorkloadsFromChannels(channels, nil, dataselect.DefaultDataSelect)
+		// Fix daemonset pod info desired address
+		for i := range actual.DaemonSetList.DaemonSets {
+			actual.DaemonSetList.DaemonSets[i].Pods.Desired = nil
+		}
+
 		if !reflect.DeepEqual(actual, expected) {
 			t.Errorf("GetWorkloadsFromChannels() ==\n          %#v\nExpected: %#v", actual, expected)
 		}
