@@ -30,9 +30,12 @@ limitations under the License.
 </div>
 
 <div ng-if="!$ctrl.shouldShowZeroState()">
-  <div class="kd-overview-section">[[Workloads|Section label shown on overview page]]</div>
+  <div class="kd-overview-section"
+       ng-if="::$ctrl.shouldShowWorkloadsSection()">
+    [[Workloads|Section label shown on overview page]]
+  </div>
 
-  <kd-content-card ng-if="::$ctrl.shouldShowWorkloadStatuses()">
+  <kd-content-card ng-if="::$ctrl.shouldShowWorkloadsSection()">
     <kd-title>[[Workloads Statuses|Label 'Resource Statuses' for the resource status section on overview page.]]</kd-title>
     <kd-content>
       <kd-workload-statuses resources-ratio="::$ctrl.resourcesRatio"></kd-workload-statuses>
@@ -105,7 +108,10 @@ limitations under the License.
     </kd-content>
   </kd-content-card>
 
-  <div class="kd-overview-section">[[Discovery and Load Balancing|Section label shown on overview page]]</div>
+  <div class="kd-overview-section"
+       ng-if="::$ctrl.shouldShowDiscoverySection()">
+    [[Discovery and Load Balancing|Section label shown on overview page]]
+  </div>
 
   <kd-content-card ng-if="$ctrl.overview.ingressList.items.length">
     <kd-content>
@@ -125,7 +131,10 @@ limitations under the License.
     </kd-content>
   </kd-content-card>
 
-  <div class="kd-overview-section">[[Config and Storage|Section label shown on overview page]]</div>
+  <div class="kd-overview-section"
+       ng-if="::$ctrl.shouldShowConfigSection()">
+    [[Config and Storage|Section label shown on overview page]]
+  </div>
 
   <kd-content-card ng-if="$ctrl.overview.configMapList.items.length">
     <kd-content>

@@ -117,21 +117,15 @@ export class OverviewController {
    * @export
    */
   shouldShowZeroState() {
-    /** @type {number} */
-    let resourcesLength = this.overview.serviceList.listMeta.totalItems +
-        this.overview.ingressList.listMeta.totalItems +
-        this.overview.configMapList.listMeta.totalItems +
-        this.overview.secretList.listMeta.totalItems +
-        this.overview.persistentVolumeClaimList.listMeta.totalItems;
-
-    return resourcesLength === 0 && !this.shouldShowWorkloadStatuses();
+    return !this.shouldShowWorkloadsSection() && !this.shouldShowDiscoverySection() &&
+        !this.shouldShowConfigSection();
   }
 
   /**
    * @export
    * @return {boolean}
    */
-  shouldShowWorkloadStatuses() {
+  shouldShowWorkloadsSection() {
     /** @type {number} */
     let resourcesLength = this.overview.deploymentList.listMeta.totalItems +
         this.overview.replicaSetList.listMeta.totalItems +
@@ -140,6 +134,31 @@ export class OverviewController {
         this.overview.podList.listMeta.totalItems +
         this.overview.daemonSetList.listMeta.totalItems +
         this.overview.statefulSetList.listMeta.totalItems;
+
+    return resourcesLength !== 0;
+  }
+
+  /**
+   * @export
+   * @return {boolean}
+   */
+  shouldShowDiscoverySection() {
+    /** @type {number} */
+    let resourcesLength = this.overview.serviceList.listMeta.totalItems +
+        this.overview.ingressList.listMeta.totalItems;
+
+    return resourcesLength !== 0;
+  }
+
+  /**
+   * @export
+   * @return {boolean}
+   */
+  shouldShowConfigSection() {
+    /** @type {number} */
+    let resourcesLength = this.overview.configMapList.listMeta.totalItems +
+        this.overview.secretList.listMeta.totalItems +
+        this.overview.persistentVolumeClaimList.listMeta.totalItems;
 
     return resourcesLength !== 0;
   }
