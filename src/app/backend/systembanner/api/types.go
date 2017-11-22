@@ -14,19 +14,8 @@
 
 package api
 
-const (
-	// SystemBannerSeverityInfo is the lowest of allowed system banner severities.
-	SystemBannerSeverityInfo = "INFO"
-
-	// SystemBannerSeverityInfo is in the middle of allowed system banner severities.
-	SystemBannerSeverityWarning = "WARNING"
-
-	// SystemBannerSeverityInfo is the highest of allowed system banner severities.
-	SystemBannerSeverityError = "ERROR"
-)
-
-// SettingsManager is used for user settings management.
-type SettingsManager interface {
+// SystemBannerManager is used for user system banner management.
+type SystemBannerManager interface {
 	// Get system banner.
 	Get() *SystemBanner
 }
@@ -37,11 +26,28 @@ type SystemBanner struct {
 	Severity string `json:"severity"`
 }
 
-// GetSeverity returns one of allowed severity values based on given parameter.
-func GetSeverity(severity string) string {
-	if severity != SystemBannerSeverityWarning && severity != SystemBannerSeverityError {
-		severity = SystemBannerSeverityInfo
-	}
+// SystemBannerSeverity represents severity of system banner.
+type SystemBannerSeverity string
 
-	return severity
+const (
+	// SystemBannerSeverityInfo is the lowest of allowed system banner severities.
+	SystemBannerSeverityInfo SystemBannerSeverity = "INFO"
+
+	// SystemBannerSeverityInfo is in the middle of allowed system banner severities.
+	SystemBannerSeverityWarning SystemBannerSeverity = "WARNING"
+
+	// SystemBannerSeverityInfo is the highest of allowed system banner severities.
+	SystemBannerSeverityError SystemBannerSeverity = "ERROR"
+)
+
+// GetSeverity returns one of allowed severity values based on given parameter.
+func GetSeverity(severity string) SystemBannerSeverity {
+	switch severity {
+	case "WARNING":
+		return SystemBannerSeverityWarning
+	case "ERROR":
+		return SystemBannerSeverityError
+	default:
+		return SystemBannerSeverityInfo
+	}
 }
