@@ -33,7 +33,8 @@ type SettingsManager interface {
 
 // SystemBanner represents system banner.
 type SystemBanner struct {
-	Message, Severity string
+	Message  string `json:"message"`
+	Severity string `json:"severity"`
 }
 
 // GetSeverity returns one of allowed severity values based on given parameter.

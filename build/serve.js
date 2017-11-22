@@ -49,6 +49,14 @@ function getBackendArgs(mode) {
     `--auto-generate-certificates=${conf.backend.autoGenerateCerts}`,
   ];
 
+  if (conf.backend.systemBanner.length > 0) {
+    args.push(`--system-banner=${conf.backend.systemBanner}`);
+  }
+
+  if (conf.backend.systemBannerSeverity.length > 0) {
+    args.push(`--system-banner-severity=${conf.backend.systemBannerSeverity}`);
+  }
+
   if (conf.backend.defaultCertDir.length > 0) {
     args.push(`--default-cert-dir=${conf.backend.defaultCertDir}`);
   }
