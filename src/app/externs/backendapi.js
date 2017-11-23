@@ -1553,3 +1553,11 @@ backendApi.SupportedAuthenticationModes;
  *  }}
  */
 backendApi.Status;
+
+/**
+ * @typedef {{
+ *  message: string,
+ *  severity: string
+ *  }}
+ */
+backendApi.SystemBanner;
