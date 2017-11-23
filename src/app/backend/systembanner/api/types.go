@@ -22,8 +22,8 @@ type SystemBannerManager interface {
 
 // SystemBanner represents system banner.
 type SystemBanner struct {
-	Message  string `json:"message"`
-	Severity string `json:"severity"`
+	Message  string               `json:"message"`
+	Severity SystemBannerSeverity `json:"severity"`
 }
 
 // SystemBannerSeverity represents severity of system banner.
@@ -43,9 +43,9 @@ const (
 // GetSeverity returns one of allowed severity values based on given parameter.
 func GetSeverity(severity string) SystemBannerSeverity {
 	switch severity {
-	case "WARNING":
+	case string(SystemBannerSeverityWarning):
 		return SystemBannerSeverityWarning
-	case "ERROR":
+	case string(SystemBannerSeverityError):
 		return SystemBannerSeverityError
 	default:
 		return SystemBannerSeverityInfo
