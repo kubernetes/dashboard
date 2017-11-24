@@ -66,6 +66,28 @@ kd-chrome {
       margin-top: .6 * $baseline-grid;
     }
   }
+
+  .kd-system-banner {
+    background-color: $running-resource-color;
+    box-shadow: $whiteframe-shadow-1dp;
+    color: $foreground-1;
+    display: inline;
+    font-size: $body-font-size-base;
+    height: 6 * $baseline-grid;
+    line-height: 6 * $baseline-grid;
+    min-height: 6 * $baseline-grid;
+    overflow: hidden;
+    padding: 0 (3 * $baseline-grid);
+    white-space: nowrap;
+  }
+
+  .kd-system-banner-error {
+    background-color: $error-color;
+  }
+
+  .kd-system-banner-warning {
+    background-color: $warning;
+  }
 }
 
 .kd-second-toolbar {

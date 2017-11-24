@@ -62,6 +62,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/scaling"
 	"github.com/kubernetes/dashboard/src/app/backend/search"
 	"github.com/kubernetes/dashboard/src/app/backend/settings"
+	"github.com/kubernetes/dashboard/src/app/backend/systembanner"
 	"github.com/kubernetes/dashboard/src/app/backend/validation"
 	"golang.org/x/net/xsrftoken"
 	errorsK8s "k8s.io/apimachinery/pkg/api/errors"
@@ -92,7 +93,9 @@ type TerminalResponse struct {
 
 // CreateHTTPAPIHandler creates a new HTTP handler that handles all requests to the API of the backend.
 func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager client.ClientManager,
-	authManager authApi.AuthManager, enableInsecureLogin bool, sManager settings.SettingsManager) (
+	authManager authApi.AuthManager, enableInsecureLogin bool, sManager settings.SettingsManager,
+	sbManager systembanner.SystemBannerManager) (
+
 	http.Handler, error) {
 	apiHandler := APIHandler{iManager: iManager, cManager: cManager}
 	wsContainer := restful.NewContainer()
@@ -115,6 +118,9 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 
 	settingsHandler := settings.NewSettingsHandler(sManager)
 	settingsHandler.Install(apiV1Ws)
+
+	systemBannerHandler := systembanner.NewSystemBannerHandler(sbManager)
+	systemBannerHandler.Install(apiV1Ws)
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("csrftoken/{action}").

@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Function
-//-- Must be defined before variables
 @function rem($multiplier) {
   $font-size: 10px;
   @return $multiplier * $font-size;
@@ -50,16 +48,11 @@ $emphasis: #000;
 $content-background: #fff;
 $chart-1: #00c752;
 $chart-2: #326de6;
-
-// Resource state chart colors
 $failed-resource-color: #f00;
 $running-resource-color: #00c752;
 $pending-resource-color: #ff0;
-
 $success-color: #008000;
 $error-color: #ff5722;
-
-// TODO(bryk): Get those variables from Angular Material scss files.
 $foreground-1: rgba(0, 0, 0, .87);
 $foreground-2: rgba(0, 0, 0, .54);
 $foreground-3: rgba(0, 0, 0, .38);
@@ -68,7 +61,6 @@ $hue-1: rgba(255, 255, 255, .87);
 $hue-2: rgba(255, 255, 255, .54);
 $hue-3: rgba(255, 255, 255, .26);
 $hue-4: rgba(255, 255, 255, .12);
-
 $background-1: rgba(158, 158, 158, .2);
 $background-2: rgba(226, 226, 226, .2);
 $overlay-color: $hue-2;

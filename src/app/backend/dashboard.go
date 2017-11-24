@@ -35,6 +35,7 @@ import (
 	integrationapi "github.com/kubernetes/dashboard/src/app/backend/integration/api"
 	"github.com/kubernetes/dashboard/src/app/backend/settings"
 	"github.com/kubernetes/dashboard/src/app/backend/sync"
+	"github.com/kubernetes/dashboard/src/app/backend/systembanner"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/spf13/pflag"
 )
@@ -62,6 +63,8 @@ var (
 	argMetricClientCheckPeriod  = pflag.Int("metric-client-check-period", 30, "Time in seconds that defines how often configured metric client health check should be run. Default: 30 seconds.")
 	argAutoGenerateCertificates = pflag.Bool("auto-generate-certificates", false, "When set to true, Dashboard will automatically generate certificates used to serve HTTPS. Default: false.")
 	argEnableInsecureLogin      = pflag.Bool("enable-insecure-login", false, "When enabled, Dashboard login view will also be shown when Dashboard is not served over HTTPS. Default: false.")
+	argSystemBanner             = pflag.String("system-banner", "", "When non-empty displays message to Dashboard users. Accepts simple HTML tags. Default: ''.")
+	argSystemBannerSeverity     = pflag.String("system-banner-severity", "INFO", "Severity of system banner. Should be one of 'INFO|WARNING|ERROR'. Default: 'INFO'.")
 )
 
 func main() {
@@ -93,6 +96,9 @@ func main() {
 	// Init settings manager
 	settingsManager := settings.NewSettingsManager(clientManager)
 
+	// Init system banner manager
+	systemBannerManager := systembanner.NewSystemBannerManager(*argSystemBanner, *argSystemBannerSeverity)
+
 	// Init integrations
 	integrationManager := integration.NewIntegrationManager(clientManager)
 	integrationManager.Metric().ConfigureHeapster(*argHeapsterHost).
@@ -103,7 +109,8 @@ func main() {
 		clientManager,
 		authManager,
 		*argEnableInsecureLogin,
-		settingsManager)
+		settingsManager,
+		systemBannerManager)
 	if err != nil {
 		handleFatalInitError(err)
 	}

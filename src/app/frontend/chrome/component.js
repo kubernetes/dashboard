@@ -27,9 +27,11 @@ export class ChromeController {
    * @param {!ui.router.$state} $state
    * @param {!angular.$timeout} $timeout
    * @param {!kdUiRouter.$transitions} $transitions
+   * @param {!angular.$resource} $resource
+   * @param {!angular.$sce} $sce
    * @ngInject
    */
-  constructor($state, $timeout, $transitions) {
+  constructor($state, $timeout, $transitions, $resource, $sce) {
     /**
      * By default this is true to show loading spinner for the first page.
      * @export {boolean}
@@ -50,11 +52,60 @@ export class ChromeController {
 
     /** @private {!kdUiRouter.$transitions} */
     this.transitions_ = $transitions;
+
+    /** @private {!angular.$resource} */
+    this.resource_ = $resource;
+
+    /** @private {!angular.$sce} */
+    this.sce_ = $sce;
+
+    /** @private {!backendApi.SystemBanner} */
+    this.systemBanner_;
   }
 
   /** @export */
   $onInit() {
     this.registerStateChangeListeners();
+    this.initSystemBanner_();
+  }
+
+  /**
+   * @private
+   */
+  initSystemBanner_() {
+    this.resource_('api/v1/systembanner').get((sb) => {
+      this.systemBanner_ = sb;
+    });
+  }
+
+  /**
+   * @export
+   * @return {boolean}
+   */
+  isSystemBannerVisible() {
+    return this.systemBanner_ !== undefined && this.systemBanner_.message.length > 0;
+  }
+
+  /**
+   * @export
+   * @return {string}
+   */
+  getSystemBannerClass() {
+    if (this.systemBanner_ && this.systemBanner_.severity) {
+      return `kd-system-banner-${this.systemBanner_.severity.toLowerCase()}`;
+    }
+    return '';
+  }
+
+  /**
+   * @export
+   * @return {*}
+   */
+  getSystemBannerMessage() {
+    if (this.isSystemBannerVisible()) {
+      return this.sce_.trustAsHtml(this.systemBanner_.message);
+    }
+    return '';
   }
 
   /**

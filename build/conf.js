@@ -164,6 +164,16 @@ export default {
      * Directory path containing certificate files. Matches dashboard '--default-cert-dir' flag.
      */
     defaultCertDir: gulpUtil.env.defaultCertDir !== undefined ? gulpUtil.env.defaultCertDir : '',
+    /**
+     * System banner message. Matches dashboard '--system-banner' flag.
+     */
+    systemBanner: gulpUtil.env.systemBanner !== undefined ? gulpUtil.env.systemBanner : '',
+    /**
+     * System banner severity. Matches dashboard '--system-banner-severity' flag.
+     */
+    systemBannerSeverity: gulpUtil.env.systemBannerSeverity !== undefined ?
+        gulpUtil.env.systemBannerSeverity :
+        '',
   },
 
   /**

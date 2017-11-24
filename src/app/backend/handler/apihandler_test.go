@@ -29,6 +29,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/settings"
 	"github.com/kubernetes/dashboard/src/app/backend/sync"
+	"github.com/kubernetes/dashboard/src/app/backend/systembanner"
 	"k8s.io/client-go/kubernetes/fake"
 )
 
@@ -43,7 +44,8 @@ func TestCreateHTTPAPIHandler(t *testing.T) {
 	cManager := client.NewClientManager("", "http://localhost:8080")
 	authManager := auth.NewAuthManager(cManager, getTokenManager(), authApi.AuthenticationModes{})
 	sManager := settings.NewSettingsManager(cManager)
-	_, err := CreateHTTPAPIHandler(nil, cManager, authManager, false, sManager)
+	sbManager := systembanner.NewSystemBannerManager("Hello world!", "INFO")
+	_, err := CreateHTTPAPIHandler(nil, cManager, authManager, false, sManager, sbManager)
 	if err != nil {
 		t.Fatal("CreateHTTPAPIHandler() cannot create HTTP API handler")
 	}
