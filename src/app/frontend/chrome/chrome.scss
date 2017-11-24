@@ -73,9 +73,9 @@ kd-chrome {
     color: $foreground-1;
     display: inline;
     font-size: $body-font-size-base;
-    height: 3 * $baseline-grid;
-    line-height: 3 * $baseline-grid;
-    min-height: 3 * $baseline-grid;
+    height: 6 * $baseline-grid;
+    line-height: 6 * $baseline-grid;
+    min-height: 6 * $baseline-grid;
     overflow: hidden;
     padding: 0 (3 * $baseline-grid);
     white-space: nowrap;
