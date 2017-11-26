@@ -24,7 +24,7 @@ kind: Secret
 metadata:
   labels:
     k8s-app: kubernetes-dashboard-head
-  name: kubernetes-dashboard-certs-head
+  name: kubernetes-dashboard-certs
   namespace: kube-system
 type: Opaque
 
