@@ -55,7 +55,7 @@ rules:
   # Allow Dashboard to get, update and delete Dashboard exclusive secrets.
 - apiGroups: [""]
   resources: ["secrets"]
-  resourceNames: ["kubernetes-dashboard-key-holder", "kubernetes-dashboard-certs"]
+  resourceNames: ["kubernetes-dashboard-key-holder", "kubernetes-dashboard-certs-head"]
   verbs: ["get", "update", "delete"]
   # Allow Dashboard to get and update 'kubernetes-dashboard-settings' config map.
 - apiGroups: [""]
@@ -118,7 +118,7 @@ spec:
           # to it. Uncomment only if the default does not work.
           # - --apiserver-host=http://my-address:port
         volumeMounts:
-        - name: kubernetes-dashboard-certs
+        - name: kubernetes-dashboard-certs-head
           mountPath: /certs
           # Create on-disk volume to store exec logs
         - mountPath: /tmp
@@ -131,9 +131,9 @@ spec:
           initialDelaySeconds: 30
           timeoutSeconds: 30
       volumes:
-      - name: kubernetes-dashboard-certs
+      - name: kubernetes-dashboard-certs-head
         secret:
-          secretName: kubernetes-dashboard-certs
+          secretName: kubernetes-dashboard-certs-head
       - name: tmp-volume
         emptyDir: {}
       serviceAccountName: kubernetes-dashboard-head
