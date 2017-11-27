@@ -58,7 +58,7 @@ func TestIntegrationManager_GetState(t *testing.T) {
 			"Server provided and using in-cluster heapster",
 			"http://127.0.0.1:8080", "", &api.IntegrationState{
 				Connected: false,
-				Error:     errors.New("Get http://127.0.0.1:8080/api/v1/proxy/namespaces/kube-system/services/heapster/healthz: dial tcp 127.0.0.1:8080: getsockopt: connection refused"),
+				Error:     errors.New("Get http://127.0.0.1:8080/api/v1/namespaces/kube-system/services/heapster/proxy/healthz: dial tcp 127.0.0.1:8080: getsockopt: connection refused"),
 			}, nil,
 		},
 		{
