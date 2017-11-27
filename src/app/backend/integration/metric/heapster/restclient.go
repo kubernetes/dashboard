@@ -42,20 +42,22 @@ type inClusterHeapsterClient struct {
 
 // Get creates request to given path.
 func (c inClusterHeapsterClient) Get(path string) RequestInterface {
-	return c.client.Get().Prefix("proxy").
+	return c.client.Get().
 		Namespace("kube-system").
 		Resource("services").
 		Name("heapster").
+		SubResource("proxy").
 		Suffix("/api/v1/" + path)
 }
 
 // HealthCheck does a health check of the application.
 // Returns nil if connection to application can be established, error object otherwise.
 func (self inClusterHeapsterClient) HealthCheck() error {
-	_, err := self.client.Get().Prefix("proxy").
+	_, err := self.client.Get().
 		Namespace("kube-system").
 		Resource("services").
 		Name("heapster").
+		SubResource("proxy").
 		Suffix("/healthz").
 		DoRaw()
 	return err
