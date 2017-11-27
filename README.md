@@ -36,7 +36,7 @@ Now access Dashboard at:
 http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/).
 
 **NOTE:**
-* The shortcut `http://localhost:8001/ui` is not working with the latest version of Dashboard
+* The shortcut `http://localhost:8001/ui` is deprecated. Use the full proxy URL shown above.
 * [Heapster](https://github.com/kubernetes/heapster/) has to be running in the cluster for the metrics
 and graphs to be available. Read more about it in [Integrations](
 https://github.com/kubernetes/dashboard/wiki/Integrations) guide.
