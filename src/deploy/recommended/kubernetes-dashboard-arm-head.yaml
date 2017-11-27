@@ -43,7 +43,7 @@ metadata:
 # ------------------- Dashboard Role & Role Binding ------------------- #
 
 kind: Role
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: kubernetes-dashboard-minimal-head
   namespace: kube-system
@@ -68,7 +68,7 @@ rules:
   resourceNames: ["heapster"]
   verbs: ["proxy"]
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: kubernetes-dashboard-minimal-head
@@ -86,7 +86,7 @@ subjects:
 # ------------------- Dashboard Deployment ------------------- #
 
 kind: Deployment
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1beta2
 metadata:
   labels:
     k8s-app: kubernetes-dashboard-head

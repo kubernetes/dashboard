@@ -13,7 +13,7 @@
 # limitations under the License.
 
 # Configuration to deploy release version of the Dashboard UI compatible with
-# Kubernetes 1.7.
+# Kubernetes 1.8.
 #
 # Example usage: kubectl create -f <this_file>
 
@@ -43,15 +43,15 @@ metadata:
 # ------------------- Dashboard Role & Role Binding ------------------- #
 
 kind: Role
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: kubernetes-dashboard-minimal
   namespace: kube-system
 rules:
-  # Allow Dashboard to create and watch for changes of 'kubernetes-dashboard-key-holder' secret.
+  # Allow Dashboard to create 'kubernetes-dashboard-key-holder' secret.
 - apiGroups: [""]
   resources: ["secrets"]
-  verbs: ["create", "watch"]
+  verbs: ["create"]
   # Allow Dashboard to get, update and delete Dashboard exclusive secrets.
 - apiGroups: [""]
   resources: ["secrets"]
@@ -69,7 +69,7 @@ rules:
   verbs: ["proxy"]
 
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: kubernetes-dashboard-minimal
@@ -87,7 +87,7 @@ subjects:
 # ------------------- Dashboard Deployment ------------------- #
 
 kind: Deployment
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1beta2
 metadata:
   labels:
     k8s-app: kubernetes-dashboard
@@ -104,21 +104,14 @@ spec:
       labels:
         k8s-app: kubernetes-dashboard
     spec:
-      initContainers:
-      - name: kubernetes-dashboard-init
-        image: gcr.io/google_containers/kubernetes-dashboard-init-amd64:v1.0.1
-        volumeMounts:
-        - name: kubernetes-dashboard-certs
-          mountPath: /certs
       containers:
       - name: kubernetes-dashboard
-        image: gcr.io/google_containers/kubernetes-dashboard-amd64:v1.7.1
+        image: gcr.io/google_containers/kubernetes-dashboard-amd64:v1.8.0
         ports:
         - containerPort: 8443
           protocol: TCP
         args:
-          - --tls-key-file=/certs/dashboard.key
-          - --tls-cert-file=/certs/dashboard.crt
+          - --auto-generate-certificates
           # Uncomment the following line to manually specify Kubernetes API server Host
           # If not specified, Dashboard will attempt to auto discover the API server and connect
           # to it. Uncomment only if the default does not work.
@@ -126,7 +119,6 @@ spec:
         volumeMounts:
         - name: kubernetes-dashboard-certs
           mountPath: /certs
-          readOnly: true
           # Create on-disk volume to store exec logs
         - mountPath: /tmp
           name: tmp-volume
