@@ -12,13 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import helpSectionDirective from './helpsection_directive';
-import userHelpDirective from './userhelp_directive';
+@import '../../variables';
 
-/**
- * Angular module for a reusable section with user help and a preset layout.
- *
- */
-export default angular.module('kubernetesDashboard.helpsection', [])
-    .directive('kdHelpSection', helpSectionDirective)
-    .directive('kdUserHelp', userHelpDirective);
+.kd-deploy-from-input-info {
+  margin-bottom: $baseline-grid * 3;
+  padding: 0 (0.5 * $baseline-grid);
+
+  .material-icons {
+    font-size: $body-font-size-base;
+  }
+}
+
+.ace_editor {
+  border: 1px solid $border;
+  height: 50 * $baseline-grid;
+  margin-bottom: 3 * $baseline-grid;
+
+  .ace_gutter-layer {
+    background-color: $background-2;
+  }
+}
+
+.kd-deploy-from-input-button {
+  margin-left: 0;
+}

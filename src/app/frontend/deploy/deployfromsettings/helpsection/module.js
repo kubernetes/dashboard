@@ -12,8 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** Name of the state. Can be used in, e.g., $state.go method. */
-export const stateName = 'deploy';
+import helpSectionDirective from './directive';
+import userHelpDirective from './userhelp/directive';
 
-/** Absolute URL of the state. */
-export const stateUrl = '/deploy';
+/**
+ * Angular module for a reusable section with user help and a preset layout.
+ *
+ */
+export default angular.module('kubernetesDashboard.helpsection', [])
+    .directive('kdHelpSection', helpSectionDirective)
+    .directive('kdUserHelp', userHelpDirective);

@@ -12,19 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-.kd-upload-button {
-  padding-left: 0;
-  padding-right: 0;
-}
-
-.kd-upload-label {
-  cursor: inherit;
-  display: inline-block;
-  width: 100%;
-}
-
-.kd-upload-file-picker {
-  height: 0;
-  visibility: hidden;
-  width: 0;
+/**
+ * Returns a reusable directive which adds user help.
+ * @return {!angular.Directive} the directive definition
+ */
+export default function() {
+  return {
+    scope: {},
+    templateUrl: 'deploy/deployfromsettings/helpsection/userhelp/userhelp.html',
+    transclude: true,
+  };
 }

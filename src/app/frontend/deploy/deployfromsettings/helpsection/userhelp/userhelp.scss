@@ -12,16 +12,33 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../variables';
+@import '../../../../variables';
 
-// This rule is meant to align items only in the current layout (kd-help-section).
-.kd-help-section > * {
-  flex: 1;
-  flex-basis: auto;
-  margin: $baseline-grid 0;
-  width: 100%;
+.kd-user-help {
+  font-size: $body-font-size-base;
 
-  &:last-child {
-    padding-left: 4 * $baseline-grid;
+  .kd-emphasized {
+    color: $emphasis;
+    word-wrap: break-word;
+  }
+
+  .material-icons {
+    color: $primary;
+    font-size: $caption-font-size-base;
+    vertical-align: middle;
+  }
+
+  * {
+    color: $muted;
+  }
+
+  a {
+    color: $primary;
+    opacity: 1;
+    text-decoration: none;
+
+    &:hover {
+      color: $hover-primary;
+    }
   }
 }

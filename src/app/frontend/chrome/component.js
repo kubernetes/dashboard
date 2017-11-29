@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {deployAppStateName} from '../deploy/state';
+import {stateName as deployState} from '../deploy/state';
 import {stateName as overviewState} from '../overview/state';
 
 import {actionbarViewName, fillContentConfig} from './state';
@@ -152,7 +152,7 @@ export class ChromeController {
    * @export
    */
   create() {
-    this.state_.go(deployAppStateName);
+    this.state_.go(deployState);
   }
 
   /**

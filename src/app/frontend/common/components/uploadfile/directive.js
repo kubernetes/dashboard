@@ -23,6 +23,8 @@ export default function uploadFileDirective($log) {
     templateUrl: 'common/components/uploadfile/uploadfile.html',
     scope: {
       /** @export */ onLoad: '&',
+                     /** @export */
+                     label: '@',
     },
     link: (scope, element) => {
       if (!scope.onLoad) {

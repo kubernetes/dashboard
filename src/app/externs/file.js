@@ -21,7 +21,7 @@
 /**
  * @typedef {{
  *    name: string,
- *    content: string,
+ *    content: string
  * }}
  */
 const kdFile = {};

@@ -12,31 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../variables';
-$bar-height: 2px;
-
-md-progress-linear {
-  &.kd-deploy-form-progress {
-    clear: left;
-    height: $bar-height;
-    margin-bottom: -$bar-height;
-    overflow: hidden;
-    top: -$bar-height;
-
-    &:not(.kd-deploy-form-progress-show) {
-      visibility: hidden;
-    }
-  }
-}
-
-.kd-deploy-input-row {
-  margin-bottom: $baseline-grid;
-  margin-top: $baseline-grid;
-}
-
-.kd-help-section {
-  & kd-port-mappings {
-    margin-bottom: 0;
-    margin-top: 0;
-  }
+/**
+ * Returns a directive definition object for sections with help.
+ * @return {!angular.Directive} the directive definition
+ */
+export default function() {
+  return {
+    scope: {},
+    templateUrl: 'deploy/deployfromsettings/helpsection/helpsection.html',
+    transclude: true,
+  };
 }
