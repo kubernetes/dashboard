@@ -57,8 +57,6 @@ const i18n = {
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-function resolveGlobalSettings($resource) {
-  /** @type {!angular.Resource} */
-  let resource = $resource('api/v1/settings/global');
-  return resource.get().$promise;
+function resolveGlobalSettings(kdAuthorizerService) {
+  return kdAuthorizerService.proxyGET('api/v1/settings/global');
 }

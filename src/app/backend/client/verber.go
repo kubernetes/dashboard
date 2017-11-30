@@ -18,14 +18,15 @@ import (
 	"fmt"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
 	"k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	restclient "k8s.io/client-go/rest"
 )
 
-// ResourceVerber is a struct responsible for doing common verb operations on resources, like
+// resourceVerber is a struct responsible for doing common verb operations on resources, like
 // DELETE, PUT, UPDATE.
-type ResourceVerber struct {
+type resourceVerber struct {
 	client            RESTClient
 	extensionsClient  RESTClient
 	appsClient        RESTClient
@@ -35,7 +36,7 @@ type ResourceVerber struct {
 	storageClient     RESTClient
 }
 
-func (verber *ResourceVerber) getRESTClientByType(clientType api.ClientType) RESTClient {
+func (verber *resourceVerber) getRESTClientByType(clientType api.ClientType) RESTClient {
 	switch clientType {
 	case api.ClientTypeExtensionClient:
 		return verber.extensionsClient
@@ -63,12 +64,13 @@ type RESTClient interface {
 
 // NewResourceVerber creates a new resource verber that uses the given client for performing operations.
 func NewResourceVerber(client, extensionsClient, appsClient,
-	batchClient, betaBatchClient, autoscalingClient, storageClient RESTClient) ResourceVerber {
-	return ResourceVerber{client, extensionsClient, appsClient, batchClient, betaBatchClient, autoscalingClient, storageClient}
+	batchClient, betaBatchClient, autoscalingClient, storageClient RESTClient) clientapi.ResourceVerber {
+	return &resourceVerber{client, extensionsClient, appsClient,
+		batchClient, betaBatchClient, autoscalingClient, storageClient}
 }
 
 // Delete deletes the resource of the given kind in the given namespace with the given name.
-func (verber *ResourceVerber) Delete(kind string, namespaceSet bool, namespace string, name string) error {
+func (verber *resourceVerber) Delete(kind string, namespaceSet bool, namespace string, name string) error {
 	resourceSpec, ok := api.KindToAPIMapping[kind]
 	if !ok {
 		return fmt.Errorf("Unknown resource kind: %s", kind)
@@ -100,7 +102,7 @@ func (verber *ResourceVerber) Delete(kind string, namespaceSet bool, namespace s
 }
 
 // Put puts new resource version of the given kind in the given namespace with the given name.
-func (verber *ResourceVerber) Put(kind string, namespaceSet bool, namespace string, name string,
+func (verber *resourceVerber) Put(kind string, namespaceSet bool, namespace string, name string,
 	object *runtime.Unknown) error {
 
 	resourceSpec, ok := api.KindToAPIMapping[kind]
@@ -132,7 +134,7 @@ func (verber *ResourceVerber) Put(kind string, namespaceSet bool, namespace stri
 }
 
 // Get gets the resource of the given kind in the given namespace with the given name.
-func (verber *ResourceVerber) Get(kind string, namespaceSet bool, namespace string, name string) (runtime.Object, error) {
+func (verber *resourceVerber) Get(kind string, namespaceSet bool, namespace string, name string) (runtime.Object, error) {
 	resourceSpec, ok := api.KindToAPIMapping[kind]
 	if !ok {
 		return nil, fmt.Errorf("Unknown resource kind: %s", kind)

@@ -19,6 +19,7 @@ import (
 	"net/http"
 
 	restful "github.com/emicklei/go-restful"
+	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
 	"github.com/kubernetes/dashboard/src/app/backend/settings/api"
 	errorsK8s "k8s.io/apimachinery/pkg/api/errors"
 )
@@ -34,11 +35,30 @@ func (self *SettingsHandler) Install(ws *restful.WebService) {
 		ws.GET("/settings/global").
 			To(self.handleSettingsGlobalGet).
 			Writes(api.Settings{}))
+	ws.Route(ws.GET("/settings/global/cani").
+		To(self.handleSettingsGlobalCanI).
+		Writes(clientapi.CanIResponse{}))
 	ws.Route(
 		ws.PUT("/settings/global").
 			To(self.handleSettingsGlobalSave).
 			Reads(api.Settings{}).
 			Writes(api.Settings{}))
+}
+
+func (self *SettingsHandler) handleSettingsGlobalCanI(request *restful.Request, response *restful.Response) {
+	verb := request.QueryParameter("verb")
+	if len(verb) == 0 {
+		verb = http.MethodGet
+	}
+
+	canI := self.manager.clientManager.CanI(request, clientapi.ToSelfSubjectAccessReview(
+		api.SettingsConfigMapNamespace,
+		api.SettingsConfigMapName,
+		api.ConfigMapKindName,
+		verb,
+	))
+
+	response.WriteHeaderAndEntity(http.StatusOK, clientapi.CanIResponse{canI})
 }
 
 func (self *SettingsHandler) handleSettingsGlobalGet(request *restful.Request, response *restful.Response) {

@@ -19,7 +19,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/kubernetes/dashboard/src/app/backend/client"
+	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
 	integrationapi "github.com/kubernetes/dashboard/src/app/backend/integration/api"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
@@ -46,7 +46,7 @@ type MetricManager interface {
 
 // Implements MetricManager interface.
 type metricManager struct {
-	manager client.ClientManager
+	manager clientapi.ClientManager
 	clients map[integrationapi.IntegrationID]metricapi.MetricClient
 	active  metricapi.MetricClient
 }
@@ -128,7 +128,7 @@ func (self *metricManager) ConfigureHeapster(host string) MetricManager {
 }
 
 // NewMetricManager creates metric manager.
-func NewMetricManager(manager client.ClientManager) MetricManager {
+func NewMetricManager(manager clientapi.ClientManager) MetricManager {
 	return &metricManager{
 		manager: manager,
 		clients: make(map[integrationapi.IntegrationID]metricapi.MetricClient),

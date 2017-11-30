@@ -17,7 +17,7 @@ package integration
 import (
 	"fmt"
 
-	"github.com/kubernetes/dashboard/src/app/backend/client"
+	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
 	"github.com/kubernetes/dashboard/src/app/backend/integration/api"
 	"github.com/kubernetes/dashboard/src/app/backend/integration/metric"
 	"k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -59,14 +59,14 @@ func (self *integrationManager) getState(integration api.Integration) *api.Integ
 		Error: integration.HealthCheck(),
 	}
 
-	result.Connected = (result.Error == nil)
+	result.Connected = result.Error == nil
 	result.LastChecked = v1.Now()
 
 	return result
 }
 
 // NewIntegrationManager creates integration manager.
-func NewIntegrationManager(manager client.ClientManager) IntegrationManager {
+func NewIntegrationManager(manager clientapi.ClientManager) IntegrationManager {
 	return &integrationManager{
 		metric: metric.NewMetricManager(manager),
 	}

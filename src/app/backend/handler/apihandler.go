@@ -24,7 +24,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/auth"
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
-	"github.com/kubernetes/dashboard/src/app/backend/client"
+	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
 	"github.com/kubernetes/dashboard/src/app/backend/integration"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/cluster"
@@ -78,21 +78,21 @@ const (
 	ResponseLogString = "[%s] Outcoming response to %s with %d status code"
 )
 
-// APIHandler is a representation of API handler. Structure contains client, Heapster client and client configuration.
+// APIHandler is a representation of API handler. Structure contains clientapi, Heapster clientapi and clientapi configuration.
 type APIHandler struct {
 	iManager integration.IntegrationManager
-	cManager client.ClientManager
+	cManager clientapi.ClientManager
 	sManager settings.SettingsManager
 }
 
 // TerminalResponse is sent by handleExecShell. The Id is a random session id that binds the original REST request and the SockJS connection.
-// Any client in possession of this Id can hijack the terminal session.
+// Any clientapi in possession of this Id can hijack the terminal session.
 type TerminalResponse struct {
 	Id string `json:"id"`
 }
 
 // CreateHTTPAPIHandler creates a new HTTP handler that handles all requests to the API of the backend.
-func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager client.ClientManager,
+func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clientapi.ClientManager,
 	authManager authApi.AuthManager, enableInsecureLogin bool, sManager settings.SettingsManager,
 	sbManager systembanner.SystemBannerManager) (
 

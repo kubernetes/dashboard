@@ -19,7 +19,7 @@ import (
 	"log"
 	"reflect"
 
-	"github.com/kubernetes/dashboard/src/app/backend/client"
+	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
 	"github.com/kubernetes/dashboard/src/app/backend/settings/api"
 	"k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -30,11 +30,11 @@ import (
 type SettingsManager struct {
 	settings      map[string]api.Settings
 	rawSettings   map[string]string
-	clientManager client.ClientManager
+	clientManager clientapi.ClientManager
 }
 
 // NewSettingsManager creates new settings manager.
-func NewSettingsManager(clientManager client.ClientManager) SettingsManager {
+func NewSettingsManager(clientManager clientapi.ClientManager) SettingsManager {
 	return SettingsManager{
 		settings:      make(map[string]api.Settings),
 		clientManager: clientManager,
