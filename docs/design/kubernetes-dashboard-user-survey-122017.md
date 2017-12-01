@@ -33,7 +33,7 @@ Please provide feedback on the current Kubernetes Dashboard, as it exists today.
 **Please describe the common tasks that you perform using Kubernetes Dashboard:**
 
 **Kubernetes Dashboard is a useful tool to monitor cluster and deployment health**
-* Strongly Agree-Strongly Disagree, 1-5 rating scale
+* Strongly Agree-Strongly Disagree (1-5 rating scale)
 
 **What other tools do you use to monitor your Kubernetes cluster and deployments?**
 
@@ -41,11 +41,11 @@ Please provide feedback on the current Kubernetes Dashboard, as it exists today.
 
 **What can be improved to simplify the troubleshooting and debugging in the Kubernetes Dashboard?**
 
-**Rate the Kubernetes cluster management tools based on your experience and preference (1-5 scale)**
+**Rate the Kubernetes cluster management interfaces based on your experience**
 * Kubectl (CLI)
 * Dashboard UI
 
-**For the previous question, please describe why you like one over the other:**
+**For the above interface options, please describe why you like one over the other:**
 
 **What is the biggest pain point related to managing your cluster and applications using Kubernetes Dashboard?**
 
