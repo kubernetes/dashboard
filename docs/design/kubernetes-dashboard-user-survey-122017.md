@@ -45,37 +45,37 @@ Please provide feedback on the current Kubernetes Dashboard, as it exists today.
 * Kubectl (CLI)
 * Dashboard UI
 
-For the previous question, please describe why you like one over the other:
+**For the previous question, please describe why you like one over the other:**
 
-What is the biggest pain point related to managing your cluster and applications using Kubernetes Dashboard?
+**What is the biggest pain point related to managing your cluster and applications using Kubernetes Dashboard?**
 
-Section 2: About You
+## Section 2: About You
 Please tell us who you are, so that we can make the UI better for you.
  
-Which of the following best describes your role in your organization?
-Developer
-DevOps
-Operations
-QA
-SecOps
-Sales/Marketing/Product
-Other
+**Which of the following best describes your role in your organization?**
+* Developer
+* DevOps
+* Operations
+* QA
+* SecOps
+* Sales/Marketing/Product
+* Other
  
-How often do you use Kubernetes Dashboard?
-More than once a day
-Once per day
-Between once a day and once a week
-Less than once per month
-I have never used the Kubernetes Dashboard
+**How often do you use Kubernetes Dashboard?**
+* More than once a day
+* Once per day
+* Between once a day and once a week
+* Less than once per month
+* I have never used the Kubernetes Dashboard
  
-How long have you been working with Kubernetes?
-0-6 Months
-6 Months – 1 Year
-1-2 Years
-2+ Years
+**How long have you been working with Kubernetes?**
+* 0-6 Months
+* 6 Months – 1 Year
+* 1-2 Years
+* 2+ Years
  
-If you are using Kubernetes to develop an application or service, please briefly describe at a high level what you are building. 
+**If you are using Kubernetes to develop an application or service, please briefly describe at a high level what you are building.** 
  
-Do you have any final comments or suggestions to improve the Kubernetes Dashboard?
+**Do you have any final comments or suggestions to improve the Kubernetes Dashboard?**
  
 
