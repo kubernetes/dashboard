@@ -423,6 +423,8 @@
   <translation id="8546806166673222480" key="MSG_EVENTS_CARDLIST_6" desc="Label \'Last seen\' for the respective column of the events table (events list page).">直近</translation>
   <translation id="8384910280515978185" key="MSG_EVENTS_CARDLIST_8" desc="User help on the events page when no events are to be displayed.">すべてのイベントが期限切れの可能性があります。</translation>
   <translation id="4919061456654775514" key="MSG_EVENTS_WARNING_LABEL" desc="Label 'Warning' for the event selection drop-down.">警告</translation>
+  <translation id="6870755296074399906" key="MSG_FORBIDDEN_ERROR" desc="Text shown on internal error page when user is forbidden to access some page.">You do not have required permissions to access this page.</translation>
+  <translation id="2570930006862369513" key="MSG_FORBIDDEN_TITLE_ERROR" desc="Title shown on internal error page when user is forbidden to access some page.">Forbidden</translation>
   <translation id="339987725992094148" key="MSG_GRAPH_CPU_AXIS_LABEL" desc="Name of Y axis showing CPU usage.">CPU (コア数)</translation>
   <translation id="4576303150557908117" key="MSG_GRAPH_CPU_LIMIT_LEGEND_LABEL" desc="Name of the CPU usage metric as displayed in the legend.">CPU上限</translation>
   <translation id="6172878964647554384" key="MSG_GRAPH_CPU_USAGE_LEGEND_LABEL" desc="Name of the CPU usage metric as displayed in the legend.">CPU使用量</translation>
