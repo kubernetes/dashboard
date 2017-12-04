@@ -24,6 +24,8 @@ import (
 	restful "github.com/emicklei/go-restful"
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
+	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
+	"k8s.io/api/authorization/v1"
 	k8sErrors "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
@@ -66,8 +68,13 @@ func (self *fakeClientManager) HasAccess(authInfo api.AuthInfo) error {
 	return self.HasAccessError
 }
 
-func (self *fakeClientManager) VerberClient(req *restful.Request) (client.ResourceVerber, error) {
-	return client.ResourceVerber{}, nil
+func (self *fakeClientManager) VerberClient(req *restful.Request) (clientapi.ResourceVerber, error) {
+	return client.NewResourceVerber(nil, nil, nil, nil, nil,
+		nil, nil), nil
+}
+
+func (self *fakeClientManager) CanI(req *restful.Request, ssar *v1.SelfSubjectAccessReview) bool {
+	return true
 }
 
 type fakeTokenManager struct {
@@ -95,7 +102,7 @@ func TestAuthManager_Login(t *testing.T) {
 	cases := []struct {
 		info        string
 		spec        *authApi.LoginSpec
-		cManager    client.ClientManager
+		cManager    clientapi.ClientManager
 		tManager    authApi.TokenManager
 		expected    *authApi.AuthResponse
 		expectedErr error
