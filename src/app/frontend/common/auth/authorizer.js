@@ -33,7 +33,7 @@ export class AuthorizerService {
 
   /**
    * @param {string} url
-   * @return {!angular.Promise}
+   * @return {!angular.$q.Promise}
    */
   proxyGET(url) {
     return this.resource_(`${url}${this.authorizationSubUrl_}`)
@@ -51,7 +51,7 @@ export class AuthorizerService {
             });
   }
 
-  /** @return {!angular.$http.Response} */
+  /** @return {!Object} */
   getAccessForbiddenError() {
     return {
       error: {

@@ -53,7 +53,7 @@ const i18n = {
 };
 
 /**
- * @param {!angular.$resource} $resource
+ * @param {!../common/auth/authorizer.AuthorizerService} kdAuthorizerService
  * @return {!angular.$q.Promise}
  * @ngInject
  */
