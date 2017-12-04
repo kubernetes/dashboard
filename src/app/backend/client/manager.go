@@ -20,6 +20,7 @@ import (
 	"log"
 	"strings"
 
+	"github.com/emicklei/go-restful"
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
 	"k8s.io/api/authorization/v1"
@@ -91,6 +92,7 @@ func (self *clientManager) InsecureClient() kubernetes.Interface {
 	return self.insecureClient
 }
 
+// CanI returns true when user is allowed to access data provided within SelfSubjectAccessReview, false otherwise.
 func (self *clientManager) CanI(req *restful.Request, ssar *v1.SelfSubjectAccessReview) bool {
 	// In case user is not authenticated (uses skip option) do not allow access.
 	if info, _ := self.extractAuthInfo(req); info == nil {
