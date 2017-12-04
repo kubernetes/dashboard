@@ -47,6 +47,7 @@ kd-login {
 .kd-login-error {
   display: flex;
   justify-content: center;
+  margin-bottom: 2 * $baseline-grid;
 
   .kd-warnings-container {
     width: 50%;
