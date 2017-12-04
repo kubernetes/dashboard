@@ -39,7 +39,7 @@ export class AuthorizerService {
     return this.resource_(`${url}${this.authorizationSubUrl_}`)
         .get()
         .$promise.then(
-            (response) => {
+            (/** @type {!backendApi.CanIResponse} */ response) => {
               if (response.allowed) {
                 return this.resource_(url).get().$promise;
               }
