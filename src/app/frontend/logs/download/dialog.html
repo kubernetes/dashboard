@@ -1,0 +1,23 @@
+<div class="kd-download-dialog">
+  <div class="kd-download-info">
+    <h3>Downloading log file</h3>
+    Please wait until download has finished.
+    <div class="kd-download-progress">
+      Downloaded: {{ $ctrl.loaded | kdMemory }}
+    </div>
+  </div>
+
+  <md-progress-linear md-mode="{{$ctrl.getDownloadMode()}}"
+                      value="100"
+                      class="kd-download-progress-bar">
+  </md-progress-linear>
+
+  <div class="kd-download-buttons">
+    <md-button class="md-primary md-raised "
+               ng-disabled="!$ctrl.hasDownloadFinished()"
+               ng-click="$ctrl.save()">
+      Save
+    </md-button>
+    <md-button ng-click="$ctrl.abort()">Abort</md-button>
+  </div>
+</div>

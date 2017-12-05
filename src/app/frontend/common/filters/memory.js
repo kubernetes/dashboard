@@ -16,7 +16,7 @@
 const base = 1024;
 
 /** Names of the suffixes where I-th name is for base^I suffix. */
-const powerSuffixes = ['', 'Ki', 'Mi', 'Gi', 'Ti', 'Pi'];
+const powerSuffixes = ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB'];
 
 /**
  * Returns filter function that formats memory in bytes.

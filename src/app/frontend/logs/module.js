@@ -17,6 +17,7 @@ import settingsServiceModule from '../common/settings/module';
 import {logsComponent} from './component';
 import {LogsService} from './service';
 import stateConfig from './stateconfig';
+import {DownloadService} from "./download/service";
 
 /**
  * Angular module for the logs view.
@@ -27,9 +28,24 @@ export default angular
         'kubernetesDashboard.logs',
         [
           'ngResource',
+          'ngFileSaver',
           'ui.router',
           settingsServiceModule.name,
         ])
     .service('logsService', LogsService)
+    .service('kdDownloadService', DownloadService)
     .component('kdLogs', logsComponent)
-    .config(stateConfig);
+    .config(stateConfig)
+    .decorator('$xhrFactory', ($delegate, $injector) => {
+      return (method, url) => {
+        let xhr = $delegate(method, url);
+        let http = $injector.get('$http');
+        let callConfig = http.pendingRequests[http.pendingRequests.length - 1];
+
+        if(angular.isFunction(callConfig.onProgress)) {
+          xhr.addEventListener('progress', callConfig.onProgress);
+        }
+
+        return xhr;
+      }
+    });
