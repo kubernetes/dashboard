@@ -20,9 +20,9 @@ export default class CreateSecretController {
    * @param {!md.$dialog} $mdDialog
    * @param {!angular.$log} $log
    * @param {!angular.$resource} $resource
-   * @param {!../common/errorhandling/dialog.ErrorDialog} errorDialog
+   * @param {!../../../common/errorhandling/dialog.ErrorDialog} errorDialog
    * @param {string} namespace
-   * @param {!./../common/csrftoken/service.CsrfTokenService} kdCsrfTokenService
+   * @param {!../../../common/csrftoken/service.CsrfTokenService} kdCsrfTokenService
    * @param {string} kdCsrfTokenHeader
    * @ngInject
    */
@@ -37,7 +37,7 @@ export default class CreateSecretController {
     /** @private {!angular.$resource} */
     this.resource_ = $resource;
 
-    /** @private {!../common/errorhandling/dialog.ErrorDialog} */
+    /** @private {!../../../common/errorhandling/dialog.ErrorDialog} */
     this.errorDialog_ = errorDialog;
 
     /** @export {!angular.FormController} */

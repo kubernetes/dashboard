@@ -118,7 +118,7 @@ export class DeployService {
     /** @type {!backendApi.AppDeploymentContentSpec} */
     let spec = {
       name: name,
-      namespace: this.stateParams_.namespace,
+      namespace: this.stateParams_.namespace || '',
       content: content,
       validate: validate,
     };
@@ -212,7 +212,7 @@ export class DeployService {
                      .ok(i18n.MSG_DEPLOY_ANYWAY_DIALOG_OK)
                      .cancel(i18n.MSG_DEPLOY_ANYWAY_DIALOG_CANCEL);
 
-    return mdDialog.show(dialog);
+    return this.mdDialog_.show(dialog);
   }
 }
 

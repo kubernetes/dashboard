@@ -15,17 +15,14 @@
 import CreateSecretController from './controller';
 
 /**
- * Displays new secret creation dialog.
- *
  * @param {!md.$dialog} mdDialog
  * @param {!angular.Scope.Event} event
- * @param {string} namespace - the currently selected namespace
+ * @param {string} namespace
  * @return {!angular.$q.Promise}
  */
 export default function showSecretDialog(mdDialog, event, namespace) {
   return mdDialog.show({
     controller: CreateSecretController,
-    controllerAs: 'ctrl',
     clickOutsideToClose: true,
     targetEvent: event,
     templateUrl: 'deploy/deployfromsettings/createsecret/createsecret.html',

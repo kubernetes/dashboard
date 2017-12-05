@@ -17,19 +17,19 @@ import {stateName as overview} from '../../overview/state';
 /** @final */
 class DeployFromInputController {
   /**
-   * @param {!./../common/history/service.HistoryService} kdHistoryService
-   * @param {!../service/service.DeployService} kdDeployService
+   * @param {!../../common/history/service.HistoryService} kdHistoryService
+   * @param {!../service.DeployService} kdDeployService
    * @param {!../../common/namespace/service.NamespaceService} kdNamespaceService
    * @ngInject
    */
   constructor(kdHistoryService, kdDeployService, kdNamespaceService) {
-    /** @private {!./../common/history/service.HistoryService} */
+    /** @private {!../../common/history/service.HistoryService} */
     this.historyService_ = kdHistoryService;
 
     /** @private {!../../common/namespace/service.NamespaceService} */
     this.namespaceService_ = kdNamespaceService;
 
-    /** @private {!../service/service.DeployService} */
+    /** @private {!../service.DeployService} */
     this.deployService_ = kdDeployService;
 
     /** @private {string} */

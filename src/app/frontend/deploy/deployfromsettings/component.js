@@ -20,7 +20,7 @@ import DeployLabel from './deploylabel/deploylabel';
 import {uniqueNameValidationKey} from './uniquename_directive';
 
 // Label keys for predefined labels
-const APP_LABEL_KEY = 'app';
+const APP_LABEL_KEY = 'k8s-app';
 
 /** @final */
 class DeployFromSettingsController {
@@ -28,10 +28,10 @@ class DeployFromSettingsController {
    * @param {!angular.$log} $log
    * @param {!angular.$resource} $resource
    * @param {!md.$dialog} $mdDialog
-   * @param {!../chrome/state.StateParams} $stateParams
-   * @param {!./../common/history/service.HistoryService} kdHistoryService
-   * @param {!./../common/namespace/service.NamespaceService} kdNamespaceService
-   * @param {!../service/service.DeployService} kdDeployService
+   * @param {!../../chrome/state.StateParams} $stateParams
+   * @param {!../../common/history/service.HistoryService} kdHistoryService
+   * @param {!../../common/namespace/service.NamespaceService} kdNamespaceService
+   * @param {!../service.DeployService} kdDeployService
    * @ngInject
    */
   constructor(
@@ -40,7 +40,7 @@ class DeployFromSettingsController {
     /** @export {!angular.FormController} */
     this.form;
 
-    /** @private {!./../common/namespace/service.NamespaceService} */
+    /** @private {!../../common/namespace/service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
 
     /** @private {boolean} */
@@ -121,10 +121,10 @@ class DeployFromSettingsController {
     /** @private {!md.$dialog} */
     this.mdDialog_ = $mdDialog;
 
-    /** @private {!../chrome/state.StateParams} */
+    /** @private {!../../chrome/state.StateParams} */
     this.stateParams_ = $stateParams;
 
-    /** @private {!./../common/history/service.HistoryService} */
+    /** @private {!../../common/history/service.HistoryService} */
     this.kdHistoryService_ = kdHistoryService;
 
     /** @export {!Array<string>} */
@@ -133,7 +133,10 @@ class DeployFromSettingsController {
     /** @export {!Array<string>} */
     this.namespaces;
 
-    /** @private {!../service/service.DeployService} */
+    /** @export {string} */
+    this.namespace = this.stateParams_.namespace || '';
+
+    /** @private {!../service.DeployService} */
     this.deployService_ = kdDeployService;
   }
 

@@ -17,8 +17,8 @@ import {stateName as overview} from '../../overview/state';
 /** @final */
 class DeployFromFileController {
   /**
-   * @param {!./../common/history/service.HistoryService} kdHistoryService
-   * @param {!../service/service.DeployService} kdDeployService
+   * @param {!../../common/history/service.HistoryService} kdHistoryService
+   * @param {!../service.DeployService} kdDeployService
    * @param {!../../common/namespace/service.NamespaceService} kdNamespaceService
    * @ngInject
    */
@@ -26,13 +26,13 @@ class DeployFromFileController {
     /** @export {!angular.FormController} */
     this.form;
 
-    /** @private {!./../common/history/service.HistoryService} */
+    /** @private {!../../common/history/service.HistoryService} */
     this.historyService_ = kdHistoryService;
 
     /** @private {!../../common/namespace/service.NamespaceService} */
     this.namespaceService_ = kdNamespaceService;
 
-    /** @private {!../service/service.DeployService} */
+    /** @private {!../service.DeployService} */
     this.deployService_ = kdDeployService;
 
     /** @export {!kdFile} */
