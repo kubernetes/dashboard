@@ -18,7 +18,6 @@ import (
 	"time"
 
 	syncapi "github.com/kubernetes/dashboard/src/app/backend/sync/api"
-	"k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/wait"
@@ -30,7 +29,6 @@ import (
 type SecretPoller struct {
 	name      string
 	namespace string
-	secret    *v1.Secret
 	client    kubernetes.Interface
 	watcher   *PollWatcher
 }
@@ -52,13 +50,9 @@ func (self *SecretPoller) Poll(interval time.Duration) watch.Interface {
 }
 
 // Gets secret from API server and transforms it to watch.Event object.
-func (self *SecretPoller) getSecretEvent() watch.Event {
+func (self *SecretPoller) getSecretEvent() (event watch.Event) {
 	secret, err := self.client.CoreV1().Secrets(self.namespace).Get(self.name, metav1.GetOptions{})
-	if secret != nil {
-		self.secret = secret
-	}
-
-	event := watch.Event{
+	event = watch.Event{
 		Object: secret,
 		Type:   watch.Added,
 	}
@@ -67,13 +61,12 @@ func (self *SecretPoller) getSecretEvent() watch.Event {
 		event.Type = watch.Error
 	}
 
-	if self.isNotFoundError(err) && self.secret != nil {
+	// In case it was never created we can still mark it as deleted and let secret be recreated.
+	if self.isNotFoundError(err) {
 		event.Type = watch.Deleted
-		event.Object = self.secret
-		self.secret = nil
 	}
 
-	return event
+	return
 }
 
 // Checks whether or not given error is a not found error (404).
@@ -92,6 +85,5 @@ func NewSecretPoller(name, namespace string, client kubernetes.Interface) syncap
 		namespace: namespace,
 		client:    client,
 		watcher:   NewPollWatcher(),
-		secret:    nil,
 	}
 }

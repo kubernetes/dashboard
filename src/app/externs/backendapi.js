@@ -1561,3 +1561,10 @@ backendApi.Status;
  *  }}
  */
 backendApi.SystemBanner;
+
+/**
+ * @typedef {{
+ *  allowed: boolean
+ * }}
+ */
+backendApi.CanIResponse;

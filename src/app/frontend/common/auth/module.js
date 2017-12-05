@@ -13,6 +13,8 @@
 // limitations under the License.
 
 import csrftokenModule from '../csrftoken/module';
+
+import {AuthorizerService} from './authorizer';
 import {AuthInterceptor} from './interceptor';
 import {AuthService} from './service';
 
@@ -29,6 +31,7 @@ export default angular
           csrftokenModule.name,
         ])
     .service('kdAuthService', AuthService)
+    .service('kdAuthorizerService', AuthorizerService)
     .factory('kdAuthInterceptor', AuthInterceptor.NewAuthInterceptor)
     .config(initAuthInterceptor)
     .constant('kdTokenCookieName', 'jweToken')

@@ -52,6 +52,16 @@ export const kdLocalizedErrors = {
      @export {kdError} @desc Text shown when saved token could not be decrypted by backend or it has expired.
    */
   MSG_TOKEN_EXPIRED_ERROR: goog.getMsg('Session expired. Please log in again.'),
+
+  /**
+   * @export {kdError} @desc Text shown on internal error page when user is forbidden to access some page.
+   */
+  MSG_FORBIDDEN_ERROR: goog.getMsg('You do not have required permissions to access this page.'),
+
+  /**
+   * @export {kdError} @desc Title shown on internal error page when user is forbidden to access some page.
+   */
+  MSG_FORBIDDEN_TITLE_ERROR: goog.getMsg('Forbidden'),
 };
 
 /**

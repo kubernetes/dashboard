@@ -25,7 +25,7 @@ import (
 
 	restful "github.com/emicklei/go-restful"
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
-	"github.com/kubernetes/dashboard/src/app/backend/client"
+	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
 	kdErrors "github.com/kubernetes/dashboard/src/app/backend/errors"
 	"golang.org/x/net/xsrftoken"
 	errorsK8s "k8s.io/apimachinery/pkg/api/errors"
@@ -33,7 +33,7 @@ import (
 )
 
 // InstallFilters installs defined filter for given web service
-func InstallFilters(ws *restful.WebService, manager client.ClientManager) {
+func InstallFilters(ws *restful.WebService, manager clientapi.ClientManager) {
 	ws.Filter(requestAndResponseLogger)
 	ws.Filter(metricsFilter)
 	ws.Filter(validateXSRFFilter(manager.CSRFKey()))

@@ -111,6 +111,8 @@ func (self *rsaKeyHolder) recreate(obj runtime.Object) {
 }
 
 func (self *rsaKeyHolder) init() {
+	self.initEncryptionKey()
+
 	// Register event handlers
 	self.synchronizer.RegisterActionHandler(self.update, watch.Added, watch.Modified)
 	self.synchronizer.RegisterActionHandler(self.recreate, watch.Deleted)
@@ -121,9 +123,6 @@ func (self *rsaKeyHolder) init() {
 		self.update(obj)
 		return
 	}
-
-	// If secret with key was not found generate new key
-	self.initEncryptionKey()
 
 	// Try to save generated key in a secret
 	log.Printf("Storing encryption key in a secret")

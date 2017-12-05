@@ -20,8 +20,10 @@ import (
 	"log"
 	"strings"
 
-	restful "github.com/emicklei/go-restful"
+	"github.com/emicklei/go-restful"
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
+	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
+	"k8s.io/api/authorization/v1"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
@@ -48,19 +50,6 @@ const (
 
 // VERSION of this binary
 var Version = "UNKNOWN"
-
-// ClientManager is responsible for initializing and creating clients to communicate with
-// kubernetes apiserver on demand
-type ClientManager interface {
-	Client(req *restful.Request) (kubernetes.Interface, error)
-	InsecureClient() kubernetes.Interface
-	Config(req *restful.Request) (*rest.Config, error)
-	ClientCmdConfig(req *restful.Request) (clientcmd.ClientConfig, error)
-	CSRFKey() string
-	HasAccess(authInfo api.AuthInfo) error
-	VerberClient(req *restful.Request) (ResourceVerber, error)
-	SetTokenManager(manager authApi.TokenManager)
-}
 
 // clientManager implements ClientManager interface
 type clientManager struct {
@@ -101,6 +90,28 @@ func (self *clientManager) Client(req *restful.Request) (kubernetes.Interface, e
 // to service account used by dashboard or kubeconfig file if it was passed during dashboard init.
 func (self *clientManager) InsecureClient() kubernetes.Interface {
 	return self.insecureClient
+}
+
+// CanI returns true when user is allowed to access data provided within SelfSubjectAccessReview, false otherwise.
+func (self *clientManager) CanI(req *restful.Request, ssar *v1.SelfSubjectAccessReview) bool {
+	// In case user is not authenticated (uses skip option) do not allow access.
+	if info, _ := self.extractAuthInfo(req); info == nil {
+		return false
+	}
+
+	client, err := self.Client(req)
+	if err != nil {
+		log.Println(err)
+		return false
+	}
+
+	response, err := client.AuthorizationV1().SelfSubjectAccessReviews().Create(ssar)
+	if err != nil {
+		log.Println(err)
+		return false
+	}
+
+	return response.Status.Allowed
 }
 
 // Config creates rest Config based on authentication information extracted from request.
@@ -171,10 +182,10 @@ func (self *clientManager) HasAccess(authInfo api.AuthInfo) error {
 }
 
 // VerberClient returns new verber client based on authentication information extracted from request
-func (self *clientManager) VerberClient(req *restful.Request) (ResourceVerber, error) {
+func (self *clientManager) VerberClient(req *restful.Request) (clientapi.ResourceVerber, error) {
 	client, err := self.Client(req)
 	if err != nil {
-		return ResourceVerber{}, err
+		return nil, err
 	}
 
 	return NewResourceVerber(client.CoreV1().RESTClient(),
@@ -345,7 +356,7 @@ func (self *clientManager) isRunningInCluster() bool {
 
 // NewClientManager creates client manager based on kubeConfigPath and apiserverHost parameters.
 // If both are empty then in-cluster config is used.
-func NewClientManager(kubeConfigPath, apiserverHost string) ClientManager {
+func NewClientManager(kubeConfigPath, apiserverHost string) clientapi.ClientManager {
 	result := &clientManager{
 		kubeConfigPath: kubeConfigPath,
 		apiserverHost:  apiserverHost,

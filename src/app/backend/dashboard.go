@@ -30,6 +30,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/cert"
 	"github.com/kubernetes/dashboard/src/app/backend/cert/ecdsa"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
+	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
 	"github.com/kubernetes/dashboard/src/app/backend/handler"
 	"github.com/kubernetes/dashboard/src/app/backend/integration"
 	integrationapi "github.com/kubernetes/dashboard/src/app/backend/integration/api"
@@ -146,7 +147,7 @@ func main() {
 	select {}
 }
 
-func initAuthManager(clientManager client.ClientManager, tokenTTL time.Duration) authApi.AuthManager {
+func initAuthManager(clientManager clientapi.ClientManager, tokenTTL time.Duration) authApi.AuthManager {
 	insecureClient := clientManager.InsecureClient()
 
 	// Init default encryption key synchronizer

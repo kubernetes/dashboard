@@ -68,7 +68,7 @@ func (c *FakeRESTClient) Get() *restclient.Request {
 }
 
 func TestDeleteShouldPropagateErrorsAndChoseClient(t *testing.T) {
-	verber := ResourceVerber{
+	verber := resourceVerber{
 		client:           &FakeRESTClient{err: errors.New("err")},
 		extensionsClient: &FakeRESTClient{err: errors.New("err from extensions")},
 		appsClient:       &FakeRESTClient{err: errors.New("err from apps")},
@@ -94,7 +94,7 @@ func TestDeleteShouldPropagateErrorsAndChoseClient(t *testing.T) {
 }
 
 func TestGetShouldPropagateErrorsAndChoseClient(t *testing.T) {
-	verber := ResourceVerber{
+	verber := resourceVerber{
 		client:           &FakeRESTClient{err: errors.New("err")},
 		extensionsClient: &FakeRESTClient{err: errors.New("err from extensions")},
 		appsClient:       &FakeRESTClient{err: errors.New("err from apps")},
@@ -120,7 +120,7 @@ func TestGetShouldPropagateErrorsAndChoseClient(t *testing.T) {
 }
 
 func TestDeleteShouldThrowErrorOnUnknownResourceKind(t *testing.T) {
-	verber := ResourceVerber{client: &FakeRESTClient{}}
+	verber := resourceVerber{client: &FakeRESTClient{}}
 
 	err := verber.Delete("foo", true, "bar", "baz")
 
@@ -130,7 +130,7 @@ func TestDeleteShouldThrowErrorOnUnknownResourceKind(t *testing.T) {
 }
 
 func TestGetShouldThrowErrorOnUnknownResourceKind(t *testing.T) {
-	verber := ResourceVerber{client: &FakeRESTClient{}}
+	verber := resourceVerber{client: &FakeRESTClient{}}
 
 	_, err := verber.Get("foo", true, "bar", "baz")
 
@@ -140,7 +140,7 @@ func TestGetShouldThrowErrorOnUnknownResourceKind(t *testing.T) {
 }
 
 func TestPutShouldThrowErrorOnUnknownResourceKind(t *testing.T) {
-	verber := ResourceVerber{client: &FakeRESTClient{}}
+	verber := resourceVerber{client: &FakeRESTClient{}}
 
 	err := verber.Put("foo", false, "", "baz", nil)
 
@@ -150,7 +150,7 @@ func TestPutShouldThrowErrorOnUnknownResourceKind(t *testing.T) {
 }
 
 func TestGetShouldRespectNamespacednessOfResourceKind(t *testing.T) {
-	verber := ResourceVerber{client: &FakeRESTClient{}}
+	verber := resourceVerber{client: &FakeRESTClient{}}
 
 	_, err := verber.Get("service", false, "", "baz")
 
@@ -160,7 +160,7 @@ func TestGetShouldRespectNamespacednessOfResourceKind(t *testing.T) {
 }
 
 func TestPutShouldRespectNamespacednessOfResourceKind(t *testing.T) {
-	verber := ResourceVerber{client: &FakeRESTClient{}}
+	verber := resourceVerber{client: &FakeRESTClient{}}
 
 	err := verber.Put("service", false, "", "baz", nil)
 
@@ -170,7 +170,7 @@ func TestPutShouldRespectNamespacednessOfResourceKind(t *testing.T) {
 }
 
 func TestDeleteShouldRespectNamespacednessOfResourceKind(t *testing.T) {
-	verber := ResourceVerber{client: &FakeRESTClient{}}
+	verber := resourceVerber{client: &FakeRESTClient{}}
 
 	err := verber.Delete("service", false, "", "baz")
 
@@ -180,7 +180,7 @@ func TestDeleteShouldRespectNamespacednessOfResourceKind(t *testing.T) {
 }
 
 func TestGetShouldRespectNotNamespacednessOfResourceKind(t *testing.T) {
-	verber := ResourceVerber{client: &FakeRESTClient{}}
+	verber := resourceVerber{client: &FakeRESTClient{}}
 
 	_, err := verber.Get("namespace", true, "bar", "baz")
 
@@ -190,7 +190,7 @@ func TestGetShouldRespectNotNamespacednessOfResourceKind(t *testing.T) {
 }
 
 func TestPutShouldRespectNotNamespacednessOfResourceKind(t *testing.T) {
-	verber := ResourceVerber{client: &FakeRESTClient{}}
+	verber := resourceVerber{client: &FakeRESTClient{}}
 
 	err := verber.Put("namespace", true, "bar", "baz", nil)
 
@@ -200,7 +200,7 @@ func TestPutShouldRespectNotNamespacednessOfResourceKind(t *testing.T) {
 }
 
 func TestDeleteShouldRespectNotNamespacednessOfResourceKind(t *testing.T) {
-	verber := ResourceVerber{client: &FakeRESTClient{}}
+	verber := resourceVerber{client: &FakeRESTClient{}}
 
 	err := verber.Delete("namespace", true, "bar", "baz")
 

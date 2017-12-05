@@ -18,7 +18,7 @@ import (
 	"errors"
 
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
-	"github.com/kubernetes/dashboard/src/app/backend/client"
+	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
 	kdErrors "github.com/kubernetes/dashboard/src/app/backend/errors"
 	"k8s.io/client-go/tools/clientcmd/api"
 )
@@ -26,7 +26,7 @@ import (
 // Implements AuthManager interface
 type authManager struct {
 	tokenManager        authApi.TokenManager
-	clientManager       client.ClientManager
+	clientManager       clientapi.ClientManager
 	authenticationModes authApi.AuthenticationModes
 }
 
@@ -90,7 +90,7 @@ func (self authManager) healthCheck(authInfo api.AuthInfo) error {
 }
 
 // NewAuthManager creates auth manager.
-func NewAuthManager(clientManager client.ClientManager, tokenManager authApi.TokenManager,
+func NewAuthManager(clientManager clientapi.ClientManager, tokenManager authApi.TokenManager,
 	authenticationModes authApi.AuthenticationModes) authApi.AuthManager {
 	return &authManager{
 		tokenManager:        tokenManager,
