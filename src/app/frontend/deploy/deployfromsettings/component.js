@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {namespaceParam} from '../../chrome/state';
 import {stateName as overview} from '../../overview/state';
 
 import showNamespaceDialog from '../createnamespace_dialog';
@@ -27,23 +26,14 @@ const APP_LABEL_KEY = 'app';
 class DeployFromSettingsController {
   /**
    * @param {!angular.$log} $log
-   * @param {!ui.router.$state} $state
    * @param {!angular.$resource} $resource
-   * @param {!angular.$q} $q
    * @param {!md.$dialog} $mdDialog
    * @param {!./../common/history/service.HistoryService} kdHistoryService
    * @param {!./../common/namespace/service.NamespaceService} kdNamespaceService
-   * @param {!./../common/csrftoken/service.CsrfTokenService} kdCsrfTokenService
-   * @param {string} kdCsrfTokenHeader
    * @ngInject
    */
-  constructor(
-      $log, $state, $resource, $q, $mdDialog, kdHistoryService, kdNamespaceService,
-      kdCsrfTokenService, kdCsrfTokenHeader) {
-    /**
-     * Initialized from the template.
-     * @export {!angular.FormController}
-     */
+  constructor($log, $resource, $mdDialog, kdHistoryService, kdNamespaceService, kdDeployService) {
+    /** @export {!angular.FormController} */
     this.form;
 
     /** @private {!./../common/namespace/service.NamespaceService} */
@@ -73,16 +63,10 @@ class DeployFromSettingsController {
     /** @export {string} */
     this.description = '';
 
-    /**
-     * Initialized from the template.
-     * @export {!Array<!backendApi.PortMapping>}
-     */
+    /** @export {!Array<!backendApi.PortMapping>} */
     this.portMappings = [];
 
-    /**
-     * Initialized from the template.
-     * @export {!Array<!backendApi.EnvironmentVariable>}
-     */
+    /** @export {!Array<!backendApi.EnvironmentVariable>} */
     this.variables = [];
 
     /** @export {boolean} */
@@ -95,15 +79,13 @@ class DeployFromSettingsController {
     ];
 
     /**
-     * List of available secrets.
-     * It is updated every time the user clicks on the imagePullSecret field.
+     * List of available secrets. It is updated every time the user clicks on the imagePullSecret
+     * field.
      * @export {!Array<string>}
      */
     this.secrets = [];
 
-    /**
-     * @export {string}
-     */
+    /** @export {string} */
     this.name = '';
 
     /**
@@ -114,30 +96,17 @@ class DeployFromSettingsController {
      */
     this.namePattern = new RegExp('^[a-z]([-a-z0-9]*[a-z0-9])?$');
 
-    /**
-     * Maximum length for Application name
-     * @export {string}
-     */
+    /** @export {string} */
     this.nameMaxLength = '24';
 
-    /**
-     * Whether to run the container as privileged user.
-     * @export {boolean}
-     */
+    /** @export {boolean} */
     this.runAsPrivileged = false;
 
-    /**
-     * @export {?number}
-     */
+    /** @export {?number} */
     this.cpuRequirement = null;
 
-    /**
-     * @type {?number}
-     */
+    /** @type {?number} */
     this.memoryRequirement = null;
-
-    /** @private {!angular.$q} */
-    this.q_ = $q;
 
     /** @private {!angular.$resource} */
     this.resource_ = $resource;
@@ -145,20 +114,11 @@ class DeployFromSettingsController {
     /** @private {!angular.$log} */
     this.log_ = $log;
 
-    /** @private {!ui.router.$state} */
-    this.state_ = $state;
-
     /** @private {!md.$dialog} */
     this.mdDialog_ = $mdDialog;
 
     /** @private {!./../common/history/service.HistoryService} */
     this.kdHistoryService_ = kdHistoryService;
-
-    /** @private {boolean} */
-    this.isDeployInProgress_ = false;
-
-    /** @private {!angular.$q.Promise} */
-    this.tokenPromise = kdCsrfTokenService.getTokenForAction('appdeployment');
 
     /** @export {!Array<string>} */
     this.protocols;
@@ -175,19 +135,14 @@ class DeployFromSettingsController {
     /** @export {!kdUiRouter.$transition$} - initialized from resolve */
     this.$transition$;
 
-    /** @private {string} */
-    this.csrfHeaderName_ = kdCsrfTokenHeader;
+    /** @private {!../service/service.DeployService} */
+    this.deployService_ = kdDeployService;
   }
 
   /** @export */
   $onInit() {
     this.protocols = this.protocolList.protocols;
     this.namespaces = this.namespaceList.namespaces.map((n) => n.objectMeta.name);
-
-    /**
-     * Currently chosen namespace.
-     * @export {string}
-     */
     this.namespace = !this.kdNamespaceService_.areMultipleNamespacesSelected() ?
         this.$transition$.params().namespace || this.namespaces[0] :
         this.namespaces[0];
@@ -199,7 +154,7 @@ class DeployFromSettingsController {
    * @export
    */
   isDeployDisabled() {
-    return this.isDeployInProgress_;
+    return !this.form.$valid || this.deployService_.isDeployDisabled();
   }
 
   /**
@@ -211,62 +166,30 @@ class DeployFromSettingsController {
   }
 
   /**
-   * Deploys the application based on the state of the controller.
-   *
    * @export
    */
   deploy() {
-    if (this.form.$valid) {
-      // TODO(bryk): Validate input data before sending to the server.
-      /** @type {!backendApi.AppDeploymentSpec} */
-      let appDeploymentSpec = {
-        containerImage: this.containerImage,
-        imagePullSecret: this.imagePullSecret ? this.imagePullSecret : null,
-        containerCommand: this.containerCommand ? this.containerCommand : null,
-        containerCommandArgs: this.containerCommandArgs ? this.containerCommandArgs : null,
-        isExternal: this.isExternal,
-        name: this.name,
-        description: this.description ? this.description : null,
-        portMappings: this.portMappings.filter(this.isPortMappingFilled_),
-        variables: this.variables.filter(this.isVariableFilled_),
-        replicas: this.replicas,
-        namespace: this.namespace,
-        cpuRequirement: angular.isNumber(this.cpuRequirement) ? this.cpuRequirement : null,
-        memoryRequirement:
-            angular.isNumber(this.memoryRequirement) ? `${this.memoryRequirement}Mi` : null,
-        labels: this.toBackendApiLabels_(this.labels),
-        runAsPrivileged: this.runAsPrivileged,
-      };
+    /** @type {!backendApi.AppDeploymentSpec} */
+    let spec = {
+      containerImage: this.containerImage,
+      imagePullSecret: this.imagePullSecret ? this.imagePullSecret : null,
+      containerCommand: this.containerCommand ? this.containerCommand : null,
+      containerCommandArgs: this.containerCommandArgs ? this.containerCommandArgs : null,
+      isExternal: this.isExternal,
+      name: this.name,
+      description: this.description ? this.description : null,
+      portMappings: this.portMappings.filter(this.isPortMappingFilled_),
+      variables: this.variables.filter(this.isVariableFilled_),
+      replicas: this.replicas,
+      namespace: this.namespace,
+      cpuRequirement: angular.isNumber(this.cpuRequirement) ? this.cpuRequirement : null,
+      memoryRequirement: angular.isNumber(this.memoryRequirement) ? `${this.memoryRequirement}Mi` :
+                                                                    null,
+      labels: this.toBackendApiLabels_(this.labels),
+      runAsPrivileged: this.runAsPrivileged,
+    };
 
-      let defer = this.q_.defer();
-
-      this.tokenPromise.then(
-          (token) => {
-            /** @type {!angular.Resource} */
-            let resource = this.resource_(
-                'api/v1/appdeployment', {},
-                {save: {method: 'POST', headers: {[this.csrfHeaderName_]: token}}});
-            this.isDeployInProgress_ = true;
-            resource.save(
-                appDeploymentSpec,
-                (savedConfig) => {
-                  defer.resolve(savedConfig);  // Progress ends
-                  this.log_.info('Successfully deployed application: ', savedConfig);
-                  this.state_.go(overview, {[namespaceParam]: appDeploymentSpec.namespace});
-                },
-                (err) => {
-                  defer.reject(err);  // Progress ends
-                  this.log_.error('Error deploying application:', err);
-                });
-          },
-          (err) => {
-            defer.reject(err);
-            this.log_.error('Error deploying application:', err);
-          });
-      defer.promise.finally(() => {
-        this.isDeployInProgress_ = false;
-      });
-    }
+    this.deployService_.deploy(spec);
   }
 
   /**
@@ -394,7 +317,6 @@ class DeployFromSettingsController {
   }
 
   /**
-   * Returns true when the given environment variable is filled by the user, i.e., is not empty.
    * @param {!backendApi.EnvironmentVariable} variable
    * @return {boolean}
    * @private
@@ -402,10 +324,6 @@ class DeployFromSettingsController {
   isVariableFilled_(variable) {
     return !!variable.name;
   }
-
-  /**
-   * Callbacks used in DeployLabel model to make it aware of controller state changes.
-   */
 
   /**
    * Returns application name.

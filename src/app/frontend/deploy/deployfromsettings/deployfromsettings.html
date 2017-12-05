@@ -46,7 +46,7 @@ limitations under the License.
             [[Application name must start with a lowercase letter and contain only lowercase letters, numbers, and '-' between words.|Appears when the app name input on the deploy from settings page does not match the expected pattern.]]
           </ng-message>
           <ng-message when="md-maxlength">
-            [[Name must be up to 24 characters long.|Name max length warning on deploy from settings page.]]
+            [[Name must be up to {{$ctrl.nameMaxLength}} characters long.|Name max length warning on deploy from settings page.]]
           </ng-message>
         </ng-messages>
       </div>

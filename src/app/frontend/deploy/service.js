@@ -12,7 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {namespaceParam} from '../chrome/state';
 import {stateName as overview} from '../overview/state';
+
 import showDeployAnywayDialog from './deployanyway_dialog';
 
 /** @final */
@@ -71,12 +73,45 @@ export class DeployService {
   }
 
   /**
-   * Callback function to show dialog with error message if resource edit fails.
-   *
+   * @param {!backendApi.AppDeploymentSpec} spec
+   */
+  deploy(spec) {
+    let defer = this.q_.defer();
+    let tokenPromise = this.tokenService_.getTokenForAction('appdeploymentfromfile');
+
+    tokenPromise.then(
+        (token) => {
+          /** @type {!angular.Resource} */
+          let resource = this.resource_(
+              'api/v1/appdeployment', {},
+              {save: {method: 'POST', headers: {[this.csrfHeaderName_]: token}}});
+          this.isDeployInProgress_ = true;
+          resource.save(
+              spec,
+              (savedConfig) => {
+                defer.resolve(savedConfig);
+                this.log_.info('Successfully deployed application: ', savedConfig);
+                this.state_.go(overview, {[namespaceParam]: spec.namespace});
+              },
+              (err) => {
+                defer.reject(err);
+                this.log_.error('Error deploying application:', err);
+              });
+        },
+        (err) => {
+          defer.reject(err);
+          this.log_.error('Error deploying application:', err);
+        });
+
+    defer.promise.finally(() => {
+      this.isDeployInProgress_ = false;
+    });
+  }
+
+  /**
    * @param {string} content
    * @param {boolean} validate
    * @param {string} name
-   * @return {!angular.$q.Promise}
    */
   deployContent(content, validate = true, name = '') {
     let defer = this.q_.defer();
@@ -130,8 +165,6 @@ export class DeployService {
         .catch((err) => {
           this.log_.error('Error:', err);
         });
-
-    return defer.promise;
   }
 
   /**

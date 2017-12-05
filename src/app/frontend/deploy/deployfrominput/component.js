@@ -45,11 +45,10 @@ class DeployFromInputController {
   }
 
   /**
-   * @return {!angular.$q.Promise}
    * @export
    */
   deploy() {
-    return this.deployService_.deployContent(this.inputData_);
+    this.deployService_.deployContent(this.inputData_);
   }
 
   /**

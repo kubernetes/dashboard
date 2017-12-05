@@ -56,11 +56,10 @@ class DeployFromFileController {
   }
 
   /**
-   * @return {!angular.$q.Promise}
    * @export
    */
   deploy() {
-    return this.deployService_.deployContent(this.file.content, true, this.file.name);
+    this.deployService_.deployContent(this.file.content, true, this.file.name);
   }
 
   /**
