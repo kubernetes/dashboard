@@ -13,11 +13,11 @@
 // limitations under the License.
 
 import {stateName as overview} from '../../overview/state';
-import showNamespaceDialog from './createnamespace/dialog';
-import {uniqueNameValidationKey} from './uniquename_directive';
 
+import showNamespaceDialog from './createnamespace/dialog';
 import showCreateSecretDialog from './createsecret/dialog';
 import DeployLabel from './deploylabel/deploylabel';
+import {uniqueNameValidationKey} from './uniquename_directive';
 
 // Label keys for predefined labels
 const APP_LABEL_KEY = 'app';
@@ -28,12 +28,15 @@ class DeployFromSettingsController {
    * @param {!angular.$log} $log
    * @param {!angular.$resource} $resource
    * @param {!md.$dialog} $mdDialog
+   * @param {!../chrome/state.StateParams} $stateParams
    * @param {!./../common/history/service.HistoryService} kdHistoryService
    * @param {!./../common/namespace/service.NamespaceService} kdNamespaceService
    * @param {!../service/service.DeployService} kdDeployService
    * @ngInject
    */
-  constructor($log, $resource, $mdDialog, kdHistoryService, kdNamespaceService, kdDeployService) {
+  constructor(
+      $log, $resource, $mdDialog, $stateParams, kdHistoryService, kdNamespaceService,
+      kdDeployService) {
     /** @export {!angular.FormController} */
     this.form;
 
@@ -118,6 +121,9 @@ class DeployFromSettingsController {
     /** @private {!md.$dialog} */
     this.mdDialog_ = $mdDialog;
 
+    /** @private {!../chrome/state.StateParams} */
+    this.stateParams_ = $stateParams;
+
     /** @private {!./../common/history/service.HistoryService} */
     this.kdHistoryService_ = kdHistoryService;
 
@@ -127,9 +133,6 @@ class DeployFromSettingsController {
     /** @export {!Array<string>} */
     this.namespaces;
 
-    /** @export {!kdUiRouter.$transition$} - initialized from resolve */
-    this.$transition$;
-
     /** @private {!../service/service.DeployService} */
     this.deployService_ = kdDeployService;
   }
@@ -137,21 +140,25 @@ class DeployFromSettingsController {
   /** @export */
   $onInit() {
     let namespacesResource = this.resource_('api/v1/namespace');
-    namespacesResource.get((namespaces) => {
-      namespaces.namespaces.map((n) => n.objectMeta.name);
-      this.namespace = !this.kdNamespaceService_.areMultipleNamespacesSelected() ?
-        this.$transition$.params().namespace || this.namespaces[0] :
-        this.namespaces[0];
-    }, (err) => {
-            this.log_.log(`Error during getting namespaces: ${err}`);
-    });
+    namespacesResource.get(
+        (namespaces) => {
+          this.namespaces = namespaces.namespaces.map((n) => n.objectMeta.name);
+          this.namespace = !this.kdNamespaceService_.areMultipleNamespacesSelected() ?
+              this.stateParams_.namespace || this.namespaces[0] :
+              this.namespaces[0];
+        },
+        (err) => {
+          this.log_.log(`Error during getting namespaces: ${err}`);
+        });
 
     let protocolsResource = this.resource_('api/v1/appdeployment/protocols');
-    protocolsResource.get((protocols) => {
-      this.protocols = protocols.protocols;
-    }, (err) => {
-      this.log_.log(`Error during getting protocols: ${err}`);
-    });
+    protocolsResource.get(
+        (protocols) => {
+          this.protocols = protocols.protocols;
+        },
+        (err) => {
+          this.log_.log(`Error during getting protocols: ${err}`);
+        });
   }
 
   /**
@@ -360,7 +367,4 @@ class DeployFromSettingsController {
 export const deployFromSettingsComponent = {
   controller: DeployFromSettingsController,
   templateUrl: 'deploy/deployfromsettings/deployfromsettings.html',
-  bindings: {
-    '$transition$': '<',
-  },
 };
