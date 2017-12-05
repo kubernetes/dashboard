@@ -22,16 +22,16 @@ limitations under the License.
                       flex="45">
     <input name="key"
            aria-label="key"
-           ng-model="labelCtrl.label.key"
-           ng-change="labelCtrl.check(labelForm)"
-           placeholder="{{labelCtrl.label.key}}"
-           ng-disabled="!labelCtrl.label.editable"
+           ng-model="$ctrl.label.key"
+           ng-change="$ctrl.check(labelForm)"
+           placeholder="{{$ctrl.label.key}}"
+           ng-disabled="!$ctrl.label.editable"
            kd-validate="labelKeyNameLength,labelKeyPrefixLength,labelKeyNamePattern,labelKeyPrefixPattern"
            ng-model-options="{allowInvalid: true}">
     <ng-messages for="labelForm.key.$error"
                  ng-if="labelForm.key.$touched && labelForm.key.$invalid">
       <ng-message when="unique">
-        {{::labelCtrl.getLabelKeyUniqueWarning()}}
+        [[{{$ctrl.label.key}} is not unique|Label is not unique warning on deploy label component.]]
       </ng-message>
       <ng-message when="kdValidLabelKeyPrefixPattern">
         [[Prefix is not a valid DNS subdomain prefix (eg. my-domain.com).|This warning appears when the key of a specified kubernetes label (on the deploy page) does not start with a proper prefix.]]
@@ -49,11 +49,11 @@ limitations under the License.
                       flex="40">
     <input name="value"
            aria-label="value"
-           ng-model="labelCtrl.label.value"
-           placeholder="{{labelCtrl.label.value()}}"
-           ng-disabled="!labelCtrl.label.editable"
+           ng-model="$ctrl.label.value"
+           placeholder="{{$ctrl.label.value()}}"
+           ng-disabled="!$ctrl.label.editable"
            kd-validate="labelValuePattern"
-           ng-change="labelCtrl.check()"
+           ng-change="$ctrl.check()"
            md-maxlength="253"
            ng-model-options="{ getterSetter: true, allowInvalid: true }">
     <ng-messages for="labelForm.value.$error"
@@ -65,8 +65,8 @@ limitations under the License.
     </ng-messages>
   </md-input-container>
   <md-button type="button"
-             ng-show="labelCtrl.isRemovable()"
-             ng-click="labelCtrl.deleteLabel()"
+             ng-show="$ctrl.isRemovable()"
+             ng-click="$ctrl.deleteLabel()"
              class="material-icons md-icon-button">delete
   </md-button>
 </ng-form>

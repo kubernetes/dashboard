@@ -18,11 +18,10 @@
  */
 export default class DeployLabel {
   /**
-   * Constructs DeployLabel object.
    * @param {string} key
    * @param {string} value
    * @param {boolean} editable
-   * @param {function(string): string|undefined} derivedValueGetterFn - callback
+   * @param {function(string): string|undefined} derivedValueGetterFn
    */
   constructor(key = '', value = '', editable = true, derivedValueGetterFn = undefined) {
     /** @export {boolean} */
@@ -48,10 +47,8 @@ export default class DeployLabel {
       if (newValue !== undefined) {
         throw Error('Can not set value of derived label.');
       }
-
       return this.derivedValueGetter_(this.key);
     }
-
     return newValue !== undefined ? (this.value_ = newValue) : this.value_;
   }
 

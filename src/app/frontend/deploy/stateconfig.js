@@ -27,11 +27,6 @@ export default function stateConfig($stateProvider) {
   $stateProvider.state(stateName, {
     parent: parentState,
     url: stateUrl,
-    resolve: {
-      'namespaceList': resolveNamespaces,
-      'protocolsResource': getProtocolsResource,
-      'protocolList': getDefaultProtocols,
-    },
     views: {
       '': {
         templateUrl: 'deploy/deploy.html',
@@ -45,40 +40,7 @@ export default function stateConfig($stateProvider) {
   });
 }
 
-/**
- * @param {!angular.$resource} $resource
- * @return {!angular.$q.Promise}
- * @ngInject
- */
-function resolveNamespaces($resource) {
-  /** @type {!angular.Resource} */
-  let resource = $resource('api/v1/namespace');
-
-  return resource.get().$promise;
-}
-
-/**
- * @param {!angular.$resource} $resource
- * @return {!angular.Resource}
- * @ngInject
- */
-function getProtocolsResource($resource) {
-  return $resource('api/v1/appdeployment/protocols');
-}
-
-/**
- * @param {!angular.Resource} protocolsResource
- * @returns {!angular.$q.Promise}
- * @ngInject
- */
-function getDefaultProtocols(protocolsResource) {
-  return protocolsResource.get().$promise;
-}
-
 const i18n = {
-  /**
-     @type {string} @desc Breadcrum label for the deploy containerized
-      app form view.
-   */
-  MSG_BREADCRUMBS_DEPLOY_APP_LABEL: goog.getMsg('Create an app'),
+  /** @type {string} @desc Breadcrumb label for the deploy view. */
+  MSG_BREADCRUMBS_DEPLOY_APP_LABEL: goog.getMsg('Resource creation'),
 };

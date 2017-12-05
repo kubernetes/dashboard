@@ -13,8 +13,6 @@
 // limitations under the License.
 
 /**
- * Namespace creation dialog controller.
- *
  * @final
  */
 export default class NamespaceDialogController {

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import CreateSecretController from './createsecret_controller';
+import CreateSecretController from './controller';
 
 /**
  * Displays new secret creation dialog.
@@ -28,7 +28,7 @@ export default function showSecretDialog(mdDialog, event, namespace) {
     controllerAs: 'ctrl',
     clickOutsideToClose: true,
     targetEvent: event,
-    templateUrl: 'deploy/createsecret.html',
+    templateUrl: 'deploy/deployfromsettings/createsecret/createsecret.html',
     locals: {
       'namespace': namespace,
     },

@@ -93,7 +93,7 @@ export class EnvironmentVariablesController {
 export const environmentVariablesComponent = {
   controller: EnvironmentVariablesController,
   controllerAs: 'ctrl',
-  templateUrl: 'deploy/environmentvariables.html',
+  templateUrl: 'deploy/deployfromsettings/environmentvariables/environmentvariables.html',
   bindings: {
     'variables': '=',
   },

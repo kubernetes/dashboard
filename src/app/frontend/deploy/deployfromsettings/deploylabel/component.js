@@ -134,20 +134,6 @@ export default class DeployLabelController {
   isFilled_(label) {
     return label.key.length !== 0 && label.value().length !== 0;
   }
-
-  /**
-   * @export
-   * @return {string}
-   */
-  getLabelKeyUniqueWarning() {
-    /**
-     * @type {string} @desc This warning appears when the key of a specified kubernetes label on
-     * the deploy page is not unique.
-     */
-    let MSG_DEPLOY_LABEL_KEY_NOT_UNIQUE_WARNING =
-        goog.getMsg('{$labelKey} is not unique.', {'labelKey': this.label.key});
-    return MSG_DEPLOY_LABEL_KEY_NOT_UNIQUE_WARNING;
-  }
 }
 
 /**
@@ -157,8 +143,7 @@ export default class DeployLabelController {
  */
 export const deployLabelComponent = {
   controller: DeployLabelController,
-  controllerAs: 'labelCtrl',
-  templateUrl: 'deploy/deploylabel.html',
+  templateUrl: 'deploy/deployfromsettings/deploylabel/deploylabel.html',
   bindings: {
     'label': '=',
     'labels': '=',

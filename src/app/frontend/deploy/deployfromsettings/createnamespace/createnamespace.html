@@ -20,20 +20,20 @@ limitations under the License.
     <h4 class="md-title">[[Create a new namespace|Create namespace dialog title. The message appears at the top of the dialog box.]]</h4>
     <div>[[The new namespace will be added to the cluster.|Create namespace dialog subtitle. Appears right below the title.]]</div>
 
-    <form name="ctrl.namespaceForm"
-          ng-submit="ctrl.createNamespace()"
+    <form name="$ctrl.namespaceForm"
+          ng-submit="$ctrl.createNamespace()"
           novalidate>
       <kd-help-section>
         <md-input-container class="md-block">
           <label>[[Namespace name|Label 'Namespace name', which appears as a placeholder in an empty input field in the create namespace dialog.]]</label>
           <input name="namespace"
-                 ng-model="ctrl.namespace"
-                 md-maxlength="{{ctrl.namespaceMaxLength}}"
-                 ng-pattern="ctrl.namespacePattern"
+                 ng-model="$ctrl.namespace"
+                 md-maxlength="{{$ctrl.namespaceMaxLength}}"
+                 ng-pattern="$ctrl.namespacePattern"
                  required>
-          <div ng-messages="ctrl.namespaceForm.namespace.$error">
+          <div ng-messages="$ctrl.namespaceForm.namespace.$error">
             <div ng-message="pattern">[[Name must be alphanumeric and may contain dashes.|The text appears when the namespace name does not match the expected pattern.]]</div>
-            <div ng-message="md-maxlength">[[Name must be up to {{::$ctrl.namespaceMaxLength}} characters long.|The text appears when the namespace name exceeds the maximal length.]]</div>
+            <div ng-message="md-maxlength">[[Name must be up to {{::$$ctrl.namespaceMaxLength}} characters long.|The text appears when the namespace name exceeds the maximal length.]]</div>
             <div ng-message="required">[[Name is required.|Warning which tells the user that the namespace name is required.]]</div>
           </div>
         </md-input-container>
@@ -48,12 +48,12 @@ limitations under the License.
         </kd-user-help>
       </kd-help-section>
       <md-dialog-actions layout="row">
-        <md-button ng-disabled="ctrl.isDisabled()"
+        <md-button ng-disabled="$ctrl.isDisabled()"
                    class="md-primary"
                    type="submit">
           [[Create|The text is put on the 'Create' button in the namespace creation dialog.]]
         </md-button>
-        <md-button ng-click="ctrl.cancel()">[[Cancel|The text is put on the 'Cancel' button in the namespace creation dialog.]]</md-button>
+        <md-button ng-click="$ctrl.cancel()">[[Cancel|The text is put on the 'Cancel' button in the namespace creation dialog.]]</md-button>
       </md-dialog-actions>
     </form>
   </md-dialog-content>

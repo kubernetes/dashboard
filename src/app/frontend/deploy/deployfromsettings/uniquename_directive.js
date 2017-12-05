@@ -73,8 +73,7 @@ function validate(name, namespace, resource, q) {
       },
       () => {
         // On error assume that the name is valid. If it is not, the error is caught
-        // later in the
-        // deploy pipeline.
+        // later in the deploy pipeline.
         deferred.resolve();
       });
 

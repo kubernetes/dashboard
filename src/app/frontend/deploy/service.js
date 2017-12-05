@@ -15,8 +15,6 @@
 import {namespaceParam} from '../chrome/state';
 import {stateName as overview} from '../overview/state';
 
-import showDeployAnywayDialog from './deployanyway_dialog';
-
 /** @final */
 export class DeployService {
   /**
@@ -77,7 +75,7 @@ export class DeployService {
    */
   deploy(spec) {
     let defer = this.q_.defer();
-    let tokenPromise = this.tokenService_.getTokenForAction('appdeploymentfromfile');
+    let tokenPromise = this.tokenService_.getTokenForAction('appdeployment');
 
     tokenPromise.then(
         (token) => {
@@ -196,13 +194,41 @@ export class DeployService {
    * @private
    */
   handleDeployAnywayDialog_(content, err) {
-    showDeployAnywayDialog(this.mdDialog_, err).then(() => {
+    this.showDeployAnywayDialog(err).then(() => {
       this.deployContent(content, false);
     });
+  }
+
+  /**
+   * Displays deploy anyway confirm dialog.
+   *
+   * @param {string} errorMessage
+   * @return {!angular.$q.Promise}
+   */
+  showDeployAnywayDialog(errorMessage) {
+    let dialog = this.mdDialog_.confirm()
+                     .title(i18n.MSG_DEPLOY_ANYWAY_DIALOG_TITLE)
+                     .htmlContent(`${errorMessage}<br><br>${i18n.MSG_DEPLOY_ANYWAY_DIALOG_CONTENT}`)
+                     .ok(i18n.MSG_DEPLOY_ANYWAY_DIALOG_OK)
+                     .cancel(i18n.MSG_DEPLOY_ANYWAY_DIALOG_CANCEL);
+
+    return mdDialog.show(dialog);
   }
 }
 
 const i18n = {
   /** @export {string} @desc Text shown on failed deploy in error dialog. */
   MSG_DEPLOY_DIALOG_ERROR: goog.getMsg('Deploying file has failed'),
+
+  /** @export {string} @desc Title for the dialog shown on deploy validation error. */
+  MSG_DEPLOY_ANYWAY_DIALOG_TITLE: goog.getMsg('Validation error occurred'),
+
+  /** @export {string} @desc Content for the dialog shown on deploy validation error. */
+  MSG_DEPLOY_ANYWAY_DIALOG_CONTENT: goog.getMsg('Would you like to deploy anyway?'),
+
+  /** @export {string} @desc Confirmation text for the dialog shown on deploy validation error. */
+  MSG_DEPLOY_ANYWAY_DIALOG_OK: goog.getMsg('Yes'),
+
+  /** @export {string} @desc Cancellation text for the dialog shown on deploy validation error. */
+  MSG_DEPLOY_ANYWAY_DIALOG_CANCEL: goog.getMsg('No'),
 };

@@ -13,11 +13,11 @@
 // limitations under the License.
 
 import {stateName as overview} from '../../overview/state';
+import showNamespaceDialog from './createnamespace/dialog';
+import {uniqueNameValidationKey} from './uniquename_directive';
 
-import showNamespaceDialog from '../createnamespace_dialog';
-import showCreateSecretDialog from '../createsecret_dialog';
-import DeployLabel from '../deploylabel';
-import {uniqueNameValidationKey} from '../uniquename_directive';
+import showCreateSecretDialog from './createsecret/dialog';
+import DeployLabel from './deploylabel/deploylabel';
 
 // Label keys for predefined labels
 const APP_LABEL_KEY = 'app';
@@ -30,6 +30,7 @@ class DeployFromSettingsController {
    * @param {!md.$dialog} $mdDialog
    * @param {!./../common/history/service.HistoryService} kdHistoryService
    * @param {!./../common/namespace/service.NamespaceService} kdNamespaceService
+   * @param {!../service/service.DeployService} kdDeployService
    * @ngInject
    */
   constructor($log, $resource, $mdDialog, kdHistoryService, kdNamespaceService, kdDeployService) {
@@ -126,12 +127,6 @@ class DeployFromSettingsController {
     /** @export {!Array<string>} */
     this.namespaces;
 
-    /** @export {!backendApi.Protocols} - initialized from resolve */
-    this.protocolList;
-
-    /** @export {!backendApi.NamespaceList} - initialized from resolve */
-    this.namespaceList;
-
     /** @export {!kdUiRouter.$transition$} - initialized from resolve */
     this.$transition$;
 
@@ -141,11 +136,22 @@ class DeployFromSettingsController {
 
   /** @export */
   $onInit() {
-    this.protocols = this.protocolList.protocols;
-    this.namespaces = this.namespaceList.namespaces.map((n) => n.objectMeta.name);
-    this.namespace = !this.kdNamespaceService_.areMultipleNamespacesSelected() ?
+    let namespacesResource = this.resource_('api/v1/namespace');
+    namespacesResource.get((namespaces) => {
+      namespaces.namespaces.map((n) => n.objectMeta.name);
+      this.namespace = !this.kdNamespaceService_.areMultipleNamespacesSelected() ?
         this.$transition$.params().namespace || this.namespaces[0] :
         this.namespaces[0];
+    }, (err) => {
+            this.log_.log(`Error during getting namespaces: ${err}`);
+    });
+
+    let protocolsResource = this.resource_('api/v1/appdeployment/protocols');
+    protocolsResource.get((protocols) => {
+      this.protocols = protocols.protocols;
+    }, (err) => {
+      this.log_.log(`Error during getting protocols: ${err}`);
+    });
   }
 
   /**
@@ -158,7 +164,6 @@ class DeployFromSettingsController {
   }
 
   /**
-   * Cancels the deployment form.
    * @export
    */
   cancel() {
@@ -193,8 +198,6 @@ class DeployFromSettingsController {
   }
 
   /**
-   * Displays new namespace creation dialog.
-   *
    * @param {!angular.Scope.Event} event
    * @export
    */
@@ -221,8 +224,6 @@ class DeployFromSettingsController {
   }
 
   /**
-   * Displays new secret creation dialog.
-   *
    * @param {!angular.Scope.Event} event
    * @export
    */
@@ -249,7 +250,6 @@ class DeployFromSettingsController {
   }
 
   /**
-   * Queries all secrets for the given namespace.
    * @param {string} namespace
    * @export
    */
@@ -266,7 +266,6 @@ class DeployFromSettingsController {
   }
 
   /**
-   * Resets the currently selected image pull secret.
    * @export
    */
   resetImagePullSecret() {
@@ -276,6 +275,7 @@ class DeployFromSettingsController {
   /**
    * Returns true when name input should show error. This overrides default behavior to show name
    * uniqueness errors even in the middle of typing.
+   *
    * @return {boolean}
    * @export
    */
@@ -288,7 +288,8 @@ class DeployFromSettingsController {
   }
 
   /**
-   * Converts array of DeployLabel to array of backend api label
+   * Converts array of DeployLabel to array of backend api label.
+   *
    * @param {!Array<!DeployLabel>} labels
    * @return {!Array<!backendApi.Label>}
    * @private
@@ -308,6 +309,7 @@ class DeployFromSettingsController {
 
   /**
    * Returns true when the given port mapping is filled by the user, i.e., is not empty.
+   *
    * @param {!backendApi.PortMapping} portMapping
    * @return {boolean}
    * @private
@@ -326,7 +328,6 @@ class DeployFromSettingsController {
   }
 
   /**
-   * Returns application name.
    * @return {string}
    * @private
    */
@@ -336,6 +337,7 @@ class DeployFromSettingsController {
 
   /**
    * Returns true if more options have been enabled and should be shown, false otherwise.
+   *
    * @return {boolean}
    * @export
    */
@@ -353,16 +355,12 @@ class DeployFromSettingsController {
 }
 
 /**
- * Returns component definition for deploy from settings component.
- *
  * @return {!angular.Component}
  */
 export const deployFromSettingsComponent = {
   controller: DeployFromSettingsController,
   templateUrl: 'deploy/deployfromsettings/deployfromsettings.html',
   bindings: {
-    'namespaceList': '<',
-    'protocolList': '<',
     '$transition$': '<',
   },
 };

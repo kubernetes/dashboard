@@ -189,8 +189,7 @@ export class PortMappingsController {
  */
 export const portMappingsComponent = {
   controller: PortMappingsController,
-  controllerAs: 'ctrl',
-  templateUrl: 'deploy/portmappings.html',
+  templateUrl: 'deploy/deployfromsettings/portmappings/portmappings.html',
   bindings: {
     'portMappings': '=',
     'protocols': '=',

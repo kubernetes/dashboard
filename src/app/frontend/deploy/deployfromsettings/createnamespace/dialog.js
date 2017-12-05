@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import NamespaceDialogController from './createnamespace_controller';
+import NamespaceDialogController from '../createnamespace/controller';
 
 /**
  * Displays new namespace creation dialog.
@@ -25,10 +25,9 @@ import NamespaceDialogController from './createnamespace_controller';
 export default function showNamespaceDialog(mdDialog, event, namespaces) {
   return mdDialog.show({
     controller: NamespaceDialogController,
-    controllerAs: 'ctrl',
     clickOutsideToClose: true,
     targetEvent: event,
-    templateUrl: 'deploy/createnamespace.html',
+    templateUrl: 'deploy/deployfromsettings/createnamespace/createnamespace.html',
     locals: {
       'namespaces': namespaces,
     },

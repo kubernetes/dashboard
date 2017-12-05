@@ -21,20 +21,20 @@ import validatorsModule from '../common/validators/module';
 import {deployFromFileComponent} from './deployfromfile/component';
 import {deployFromInputComponent} from './deployfrominput/component';
 import {deployFromSettingsComponent} from './deployfromsettings/component';
+import {deployLabelComponent} from './deployfromsettings/deploylabel/component';
+import {environmentVariablesComponent} from './deployfromsettings/environmentvariables/component';
 import helpSectionModule from './deployfromsettings/helpsection/module';
-import {deployLabelComponent} from './deploylabel_component';
-import {environmentVariablesComponent} from './environmentvariables_component';
-import {portMappingsComponent} from './portmappings_component';
+import {portMappingsComponent} from './deployfromsettings/portmappings/component';
+import uniqueNameDirective from './deployfromsettings/uniquename_directive';
+import validImageReferenceDirective from './deployfromsettings/validimagereference_directive';
+import validProtocolDirective from './deployfromsettings/validprotocol_directive';
 import {DeployService} from './service';
 import stateConfig from './stateconfig';
-import uniqueNameDirective from './uniquename_directive';
 import {LabelKeyNameLengthValidator} from './validators/labelkeynamelengthvalidator';
 import {LabelKeyNamePatternValidator} from './validators/labelkeynamepatternvalidator';
 import {LabelKeyPrefixLengthValidator} from './validators/labelkeyprefixlengthvalidator';
 import {LabelKeyPrefixPatternValidator} from './validators/labelkeyprefixpatternvalidator';
 import {LabelValuePatternValidator} from './validators/labelvaluepatternvalidator';
-import validImageReferenceDirective from './validimagereference_directive';
-import validProtocolDirective from './validprotocol_directive';
 
 /**
  * Angular module for the deploy view.

@@ -13,8 +13,6 @@
 // limitations under the License.
 
 /**
- * Secret creation dialog controller.
- *
  * @final
  */
 export default class CreateSecretController {
