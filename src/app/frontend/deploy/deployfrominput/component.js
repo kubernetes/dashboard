@@ -74,10 +74,12 @@ class DeployFromInputController {
    */
   getEditorConfig() {
     return {
-      useWrapMode: true, mode: 'yaml', advanced: {
+      useWrapMode: true,
+      mode: 'yaml',
+      advanced: {
         fontSize: '16px',
       },
-    }
+    };
   }
 }
 
