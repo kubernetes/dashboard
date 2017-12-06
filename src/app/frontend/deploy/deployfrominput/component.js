@@ -32,8 +32,8 @@ class DeployFromInputController {
     /** @private {!../service.DeployService} */
     this.deployService_ = kdDeployService;
 
-    /** @private {string} */
-    this.inputData_ = '';
+    /** @export {string} */
+    this.inputData = '';
   }
 
   /**
@@ -41,14 +41,14 @@ class DeployFromInputController {
    * @export
    */
   isDeployDisabled() {
-    return this.inputData_.length === 0 || this.deployService_.isDeployDisabled();
+    return this.inputData.length === 0 || this.deployService_.isDeployDisabled();
   }
 
   /**
    * @export
    */
   deploy() {
-    this.deployService_.deployContent(this.inputData_);
+    this.deployService_.deployContent(this.inputData);
   }
 
   /**
