@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import DeployLabel from 'deploy/deploylabel';
+import DeployLabel from 'deploy/deployfromsettings/deploylabel/deploylabel';
 import deployModule from 'deploy/module';
-import {uniqueNameValidationKey} from 'deploy/uniquename_directive';
+import {uniqueNameValidationKey} from 'deploy/deployfromsettings/uniquename_directive';
 
 describe('DeployFromSettings controller', () => {
   /** @type {!DeployFromSettingController} */

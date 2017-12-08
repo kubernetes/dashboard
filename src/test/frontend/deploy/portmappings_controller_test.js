@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import deployModule from 'deploy/module';
-import * as serviceTypes from 'deploy/portmappings_component';
-import {PortMappingsController} from 'deploy/portmappings_component';
+import * as serviceTypes from 'deploy/deployfromsettings/portmappings/component';
+import {PortMappingsController} from 'deploy/deployfromsettings/portmappings/component';
 
 describe('PortMappingsController controller', () => {
   /** @type {!PortMappingsController} */

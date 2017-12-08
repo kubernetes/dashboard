@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import DeployLabel from 'deploy/deploylabel';
-import DeployLabelController from 'deploy/deploylabel_component';
+import DeployLabel from 'deploy/deployfromsettings/deploylabel/deploylabel';
+import DeployLabelController from 'deploy/deployfromsettings/deploylabel/component';
 import deployModule from 'deploy/module';
 
 describe('DeployLabel controller', () => {
