@@ -32,9 +32,6 @@ describe('Create-Secret dialog', () => {
     });
   });
 
-  /**
-   * Test the secret name validation pattern.
-   */
   it('should validate proper secret names as correct', () => {
     // given the k8s rule for secret names
     let rule = ctrl.secretNamePattern;
@@ -60,9 +57,6 @@ describe('Create-Secret dialog', () => {
     expect('  '.match(rule)).toBeNull();
   });
 
-  /**
-   * Test the Base64 validation pattern for the .dockercfg data.
-   */
   it('should validate Base64 data as correct', () => {
     // given a Base64 matching regex
     let rule = ctrl.dataPattern;
@@ -97,7 +91,7 @@ describe('Create-Secret dialog', () => {
     expect(httpBackend.flush).toThrow();
   });
 
-  it('should submit if the form has no valiadtion errors', () => {
+  it('should submit if the form has no validation errors', () => {
     // given no validation error in the html form
     ctrl.secretForm = {};
     ctrl.secretForm.$valid = true;

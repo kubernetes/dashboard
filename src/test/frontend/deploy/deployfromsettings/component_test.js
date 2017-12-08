@@ -212,7 +212,6 @@ describe('DeployFromSettings controller', () => {
     ctrl.memoryRequirement = '';
 
     // when
-    form.$valid = true;
     ctrl.deploy();
     httpBackend.flush(1);
 
@@ -320,31 +319,6 @@ describe('DeployFromSettings controller', () => {
       ctrl.handleCreateSecretDialog({});
       // then
       expect(ctrl.imagePullSecret).toEqual(response);
-    });
-
-    it('should filter out empty variables', () => {
-      // given
-      ctrl.variables = [{name: 'foo', value: 'bar'}, {}, {name: ''}];
-      let resourceObject = {
-        save: jasmine.createSpy('save'),
-      };
-      mockResource.and.returnValue(resourceObject);
-      resourceObject.save.and.callFake(function(spec) {
-        // then
-        expect(spec.variables).toEqual([{name: 'foo', value: 'bar'}]);
-      });
-      ctrl.cpuRequirement = 77;
-      ctrl.memoryRequirement = 88;
-
-      // when
-      form.$valid = true;
-      expect(ctrl.isDeployDisabled()).toBe(false);
-      ctrl.deploy();
-      httpBackend.flush(1);
-      expect(ctrl.isDeployDisabled()).toBe(true);
-
-      // then
-      expect(resourceObject.save).toHaveBeenCalled();
     });
 
     it('unsuccessful image pull secret creation should reset ctrl.imagePullSecret', () => {

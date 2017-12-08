@@ -31,13 +31,16 @@ describe('DeployFromFile controller', () => {
   let q;
   /** @type {!angular.$scope} **/
   let scope;
+  /** @type {!DeployService} */
+  let service;
 
   beforeEach(() => {
     angular.mock.module(deployModule.name);
 
     angular.mock.inject(
-        ($componentController, $httpBackend, $resource, $mdDialog, _kdCsrfTokenService_, $q,
+        ($componentController, $httpBackend, $resource, $mdDialog, _kdCsrfTokenService_, kdDeployService, $q,
          $rootScope) => {
+          service = kdDeployService;
           mockResource = jasmine.createSpy('$resource');
           resource = $resource;
           mdDialog = $mdDialog;
@@ -80,131 +83,9 @@ describe('DeployFromFile controller', () => {
     expect(resourceObject.save).toHaveBeenCalled();
   });
 
-  it('should open error dialog and redirect the page', () => {
-    spyOn(ctrl.errorDialog_, 'open');
-    spyOn(ctrl.state_, 'go');
-    let response = {
-      name: 'foo-name',
-      content: 'foo-content',
-      error: 'service already exists',
-    };
-    httpBackend.expectPOST('api/v1/appdeploymentfromfile').respond(201, response);
-    mockResource.and.callFake(resource);
-    expect(ctrl.isDeployDisabled()).toBe(false);
-    ctrl.deploy();
-    httpBackend.flush(1);
-    expect(ctrl.isDeployDisabled()).toBe(true);
-    httpBackend.flush();
-    expect(ctrl.isDeployDisabled()).toBe(false);
-
-    // then
-    expect(ctrl.errorDialog_.open).toHaveBeenCalled();
-    expect(ctrl.state_.go).toHaveBeenCalled();
-  });
-
-  it('should redirect the page and not open error dialog', () => {
-    spyOn(ctrl.errorDialog_, 'open');
-    spyOn(ctrl.state_, 'go');
-    mockResource.and.callFake(resource);
-    let response = {
-      name: 'foo-name',
-      content: 'foo-content',
-      error: '',
-    };
-    httpBackend.expectPOST('api/v1/appdeploymentfromfile').respond(201, response);
-    // when
-    ctrl.deploy();
-    httpBackend.flush();
-
-    // then
-    expect(ctrl.errorDialog_.open).not.toHaveBeenCalled();
-    expect(ctrl.state_.go).toHaveBeenCalled();
-  });
-
-  it('should not redirect the page and but open error dialog', (doneFn) => {
-    spyOn(ctrl.errorDialog_, 'open');
-    spyOn(ctrl.kdHistoryService_, 'back');
-    mockResource.and.callFake(resource);
-    httpBackend.expectPOST('api/v1/appdeploymentfromfile').respond(500, 'Deployment failed');
-    // when
-    let promise = ctrl.deploy();
-    promise.catch(doneFn);
-    httpBackend.flush();
-
-    // then
-    expect(ctrl.errorDialog_.open).toHaveBeenCalled();
-    expect(ctrl.kdHistoryService_.back).not.toHaveBeenCalled();
-  });
-
   it('should cancel', () => {
     spyOn(ctrl.kdHistoryService_, 'back');
     ctrl.cancel();
     expect(ctrl.kdHistoryService_.back).toHaveBeenCalled();
-  });
-
-  it('should open deploy anyway dialog when validation error occurs', (doneFn) => {
-    spyOn(ctrl, 'handleDeployAnywayDialog_');
-    mockResource.and.callFake(resource);
-    httpBackend.expectPOST('api/v1/appdeploymentfromfile')
-        .respond(500, `error: use --validate=false`);
-
-    // when
-    let promise = ctrl.deploy();
-    promise.catch(doneFn);
-    httpBackend.flush();
-
-    // then
-    expect(ctrl.handleDeployAnywayDialog_).toHaveBeenCalled();
-  });
-
-  // TODO(maciaszczykm): Reenable this after fixing random flakes.
-  xit('should redeploy on deploy anyway', (doneFn) => {
-    let deferred = q.defer();
-    spyOn(mdDialog, 'show').and.returnValue(deferred.promise);
-    spyOn(mdDialog, 'confirm').and.callThrough();
-    spyOn(ctrl, 'deploy').and.callThrough();
-    mockResource.and.callFake(resource);
-    httpBackend.expectPOST('api/v1/appdeploymentfromfile')
-        .respond(500, `error: use --validate=false`);
-
-    // first deploy
-    let promise = ctrl.deploy();
-    promise.catch(doneFn);
-    httpBackend.flush();
-
-    // dialog shown and redeploy accepted
-    expect(mdDialog.show).toHaveBeenCalled();
-    expect(mdDialog.confirm).toHaveBeenCalled();
-
-    // redeploying
-    deferred.resolve();
-    httpBackend.expectPOST('api/v1/appdeploymentfromfile').respond(200, 'ok');
-    scope.$digest();
-
-    expect(ctrl.deploy).toHaveBeenCalledTimes(2);
-  });
-
-  // TODO(maciaszczykm): Reenable this after fixing 'Possibly unhandled rejection...'.
-  xit('should do nothing on cancel deploy anyway', (doneFn) => {
-    let deferred = q.defer();
-    spyOn(mdDialog, 'show').and.returnValue(deferred.promise);
-    spyOn(mdDialog, 'confirm').and.callThrough();
-    spyOn(ctrl, 'deploy').and.callThrough();
-    mockResource.and.callFake(resource);
-    httpBackend.expectPOST('api/v1/appdeploymentfromfile')
-        .respond(500, `error: use --validate=false`);
-
-    // first deploy
-    let promise = ctrl.deploy();
-    promise.catch(doneFn);
-    httpBackend.flush();
-
-    // dialog shown and redeploy cancelled
-    expect(mdDialog.show).toHaveBeenCalled();
-    expect(mdDialog.confirm).toHaveBeenCalled();
-    deferred.reject();
-    scope.$digest();
-
-    expect(ctrl.deploy).toHaveBeenCalledTimes(1);
   });
 });

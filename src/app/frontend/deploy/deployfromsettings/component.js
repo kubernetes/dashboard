@@ -268,6 +268,10 @@ class DeployFromSettingsController {
     let resource = this.resource_(`api/v1/secret/${namespace}`);
     resource.get(
         (res) => {
+
+          console.log(this.secrets)
+          console.log(res)
+
           this.secrets = res.secrets.map((e) => e.objectMeta.name);
         },
         (err) => {

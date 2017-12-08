@@ -110,6 +110,7 @@ export class DeployService {
    * @param {string} content
    * @param {boolean} validate
    * @param {string} name
+   * @return {!angular.$q.Promise}
    */
   deployContent(content, validate = true, name = '') {
     let defer = this.q_.defer();
@@ -163,6 +164,8 @@ export class DeployService {
         .catch((err) => {
           this.log_.error('Error:', err);
         });
+
+    return defer.promise;
   }
 
   /**
