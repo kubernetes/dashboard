@@ -15,7 +15,7 @@
 /**
  * @final
  */
-class NamespaceDialogController {
+export class NamespaceDialogController {
   /**
    * @param {!md.$dialog} $mdDialog
    * @param {!angular.$log} $log

@@ -15,7 +15,7 @@
 /**
  * @final
  */
-class CreateSecretController {
+export class CreateSecretController {
   /**
    * @param {!md.$dialog} $mdDialog
    * @param {!angular.$log} $log

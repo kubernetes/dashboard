@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import CreateSecretController from 'deploy/deployfromsettings/createsecret/dialog';
+import {CreateSecretController} from 'deploy/deployfromsettings/createsecret/dialog';
 import deployModule from 'deploy/module';
 
 describe('Create-Secret dialog', () => {
