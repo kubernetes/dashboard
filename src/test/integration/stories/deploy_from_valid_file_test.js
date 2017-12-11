@@ -50,7 +50,7 @@ describe('Deploy from valid file user story test', () => {
     let absolutePath = path.resolve(__dirname, fileToUpload);
 
     // when
-    deployFromFilePage.setFile(absolutePath);
+    deployFromFilePage.filePicker.sendKeys(absolutePath);
     deployFromFilePage.deployButton.click();
 
     // then

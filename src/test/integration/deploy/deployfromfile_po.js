@@ -20,18 +20,10 @@ export default class DeployFromFilePageObject {
     this.deployButtonQuery = by.css('.kd-deploy-from-file-button');
     this.deployButton = element(this.deployButtonQuery);
 
-    this.filePickerQuery = by.css('.kd-upload-button');
-    this.filePicker_ = element(this.filePickerQuery);
+    this.filePickerQuery = by.xpath('//input[@id="fileInput"]');
+    this.filePicker = element(this.filePickerQuery);
 
     this.mdDialogQuery = by.tagName('md-dialog');
     this.mdDialog = element(this.mdDialogQuery);
-  }
-
-  /**
-   * Sets filepath on the filePicker input field
-   * @param {string} filePath
-   */
-  setFile(filePath) {
-    this.filePicker_.sendKeys(filePath);
   }
 }
