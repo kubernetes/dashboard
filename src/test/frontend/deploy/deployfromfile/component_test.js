@@ -17,20 +17,13 @@ import deployModule from 'deploy/module';
 describe('DeployFromFile controller', () => {
   /** @type {!DeployFromFileController} */
   let ctrl;
-  /** @type {!angular.FormController} */
-  let form;
-  /** @type {!angular.$httpBackend} */
-  let httpBackend;
 
   beforeEach(() => {
     angular.mock.module(deployModule.name);
 
-    angular.mock.inject(
-        ($componentController, $httpBackend, $resource, $mdDialog, _kdHistoryService_) => {
-          ctrl = $componentController(
-              'kdDeployFromFile', {historyService_: _kdHistoryService_}, {form: form});
-          httpBackend = $httpBackend;
-        });
+    angular.mock.inject(($componentController, $resource, $mdDialog, _kdHistoryService_) => {
+      ctrl = $componentController('kdDeployFromFile', {historyService_: _kdHistoryService_});
+    });
   });
 
   it('should cancel', () => {
