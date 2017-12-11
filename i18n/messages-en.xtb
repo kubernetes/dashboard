@@ -512,6 +512,11 @@
   <translation id="5295755962056443196" key="MSG_LOGIN_LOGIN_7" desc="(no description provided)">Please select the kubeconfig file that you have created to configure access to the cluster. To find out more about how to configure and use kubeconfig file, please refer to the &lt;a href='https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/'&gt;Configure Access to Multiple Clusters&lt;/a&gt; section.</translation>
   <translation id="7931742467615349833" key="MSG_LOGIN_TOKEN_0" desc="\'Token\' field label shown on login page for token auth">Enter token</translation>
   <translation id="1813585001229142426" key="MSG_LOGIN_UNAUTHORIZED_ERROR" desc="Text shown when unauthorized user tries to log in.">Authentication failed. Please try again.</translation>
+  <translation id="6905890758241326832" key="MSG_LOGS_DOWNLOAD_DIALOG_0" desc="Log file download dialog title.">Downloading log file</translation>
+  <translation id="7920142392085872110" key="MSG_LOGS_DOWNLOAD_DIALOG_1" desc="Log file download dialog info.">Please wait until download has finished.</translation>
+  <translation id="3238335709642538928" key="MSG_LOGS_DOWNLOAD_DIALOG_2" desc="Log file download dialog download status info.">Downloaded: </translation>
+  <translation id="2306078941708704664" key="MSG_LOGS_DOWNLOAD_DIALOG_3" desc="Log file download dialog \'Save\' button.">Save</translation>
+  <translation id="6309042137906110314" key="MSG_LOGS_DOWNLOAD_DIALOG_4" desc="Log file download dialog \'Abort\' button.">Abort</translation>
   <translation id="4722922095699681308" key="MSG_LOGS_LOGS_0" desc="Title prefix for logs card.">Logs from</translation>
   <translation id="6855662924451585032" key="MSG_LOGS_LOGS_1" desc="Title part for logs card.">in</translation>
   <translation id="6427964323602885868" key="MSG_LOGS_LOGS_10" desc="Tooltip for button that switches to showing the previous logs.">Show previous logs</translation>

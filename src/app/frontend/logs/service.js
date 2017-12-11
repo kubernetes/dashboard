@@ -17,9 +17,7 @@
  * @final
  */
 export class LogsService {
-  /**
-   * @ngInject
-   */
+  /** @ngInject */
   constructor() {
     /** @private {boolean} */
     this.inverted_ = true;
@@ -95,5 +93,14 @@ export class LogsService {
    */
   getPrevious() {
     return this.previous_;
+  }
+
+  /**
+   * @param {string} pod
+   * @param {string} container
+   * @return {string}
+   */
+  getLogFileName(pod, container) {
+    return `logs-from-${container}-in-${pod}.txt`;
   }
 }

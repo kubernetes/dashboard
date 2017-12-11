@@ -2260,12 +2260,12 @@ func (apiHandler *APIHandler) handleLogFile(request *restful.Request, response *
 	containerID := request.PathParameter("container")
 	usePreviousLogs := request.QueryParameter("previous") == "true"
 
-	filename, logStream, err := container.GetLogFile(k8sClient, namespace, podID, containerID, usePreviousLogs)
+	logStream, err := container.GetLogFile(k8sClient, namespace, podID, containerID, usePreviousLogs)
 	if err != nil {
 		handleInternalError(response, err)
 		return
 	}
-	handleDownload(response, logStream, filename)
+	handleDownload(response, logStream)
 }
 
 // parseNamespacePathParameter parses namespace selector for list pages in path parameter.

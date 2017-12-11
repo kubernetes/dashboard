@@ -1,0 +1,41 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<div class="kd-download-dialog">
+  <div class="kd-download-info">
+    <h3>[[Downloading log file|Log file download dialog title.]]</h3>
+    [[Please wait until download has finished.|Log file download dialog info.]]
+    <div class="kd-download-progress">
+      [[Downloaded: |Log file download dialog download status info.]] {{ $ctrl.loaded | kdMemory }}
+    </div>
+  </div>
+
+  <md-progress-linear md-mode="{{$ctrl.getDownloadMode()}}"
+                      value="100"
+                      class="kd-download-progress-bar">
+  </md-progress-linear>
+
+  <div class="kd-download-buttons">
+    <md-button class="md-primary md-raised "
+               ng-disabled="!$ctrl.hasDownloadFinished()"
+               ng-click="$ctrl.save()">
+      [[Save|Log file download dialog 'Save' button.]]
+    </md-button>
+    <md-button ng-click="$ctrl.abort()">
+      [[Abort|Log file download dialog 'Abort' button.]]
+    </md-button>
+  </div>
+</div>

@@ -16,6 +16,7 @@
     "angular-aria": "~1.6.6",
     "angular-clipboard": "~1.6.2",
     "angular-cookies": "~1.6.6",
+    "angular-file-saver": "^1.1.3",
     "angular-jsoneditor": "~0.0.2",
     "angular-material": "~1.1.5",
     "angular-messages": "~1.6.6",

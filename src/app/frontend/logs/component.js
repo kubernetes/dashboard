@@ -23,11 +23,7 @@ const endOfLogFile = 'end';
 const oldestTimestamp = 'oldest';
 const newestTimestamp = 'newest';
 
-/**
- * Controller for the logs view.
- *
- * @final
- */
+/** @final */
 export class LogsController {
   /**
    * @param {!./service.LogsService} logsService
@@ -37,9 +33,12 @@ export class LogsController {
    * @param {!angular.$interval} $interval
    * @param {!../common/errorhandling/dialog.ErrorDialog} errorDialog
    * @param {!../common/settings/service.SettingsService} kdSettingsService
+   * @param {!./download/service.DownloadService} kdDownloadService
    * @ngInject
    */
-  constructor(logsService, $sce, $document, $resource, $interval, errorDialog, kdSettingsService) {
+  constructor(
+      logsService, $sce, $document, $resource, $interval, errorDialog, kdSettingsService,
+      kdDownloadService) {
     /** @private {!angular.$sce} */
     this.sce_ = $sce;
 
@@ -108,6 +107,9 @@ export class LogsController {
 
     /** @private {!../common/settings/service.SettingsService} */
     this.settingsService_ = kdSettingsService;
+
+    /** @private {!./download/service.DownloadService} */
+    this.downloadService_ = kdDownloadService;
   }
 
   $onInit() {
@@ -282,14 +284,15 @@ export class LogsController {
   }
 
   /**
-   * Return the link to download the log file
+   * Initiate logs download.
    * @export
-   * @return {string}
    */
-  getDownloadLink() {
+  downloadLog() {
     let namespace = this.stateParams_.objectNamespace;
-    return `api/v1/log/file/${namespace}/${this.pod}/${this.container}?previous=${
+    let logUrl = `api/v1/log/file/${namespace}/${this.pod}/${this.container}?previous=${
         this.logsService.getPrevious()}`;
+    this.downloadService_.download(
+        logUrl, this.logsService.getLogFileName(this.pod, this.container));
   }
 
   /**
@@ -347,7 +350,7 @@ const i18n = {
   /** @export {string} @desc Text for logs card zerostate in logs page. */
   MSG_LOGS_ZEROSTATE_TEXT: goog.getMsg('The selected container has not logged any messages yet.'),
   /**
-     @export {string} @desc Error dialog indicating that parts of the log file is missing due to memory constraints.
+   @export {string} @desc Error dialog indicating that parts of the log file is missing due to memory constraints.
    */
   MSG_LOGS_TRUNCATED_WARNING:
       goog.getMsg('The middle part of the log file cannot be loaded, because it is too big.'),

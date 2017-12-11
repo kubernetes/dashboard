@@ -12,20 +12,36 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package handler
+@import '../../variables';
 
-import (
-	"io"
+.kd-download-dialog {
+  display: grid;
+  grid-auto-rows: minmax(2 * $baseline-grid, auto);
+  grid-gap: 2 * $baseline-grid;
+  grid-template-columns: $baseline-grid auto $baseline-grid;
+}
 
-	"github.com/emicklei/go-restful"
-)
+.kd-download-progress {
+  padding-top: .5 * $baseline-grid;
+}
 
-func handleDownload(response *restful.Response, result io.ReadCloser) {
-	response.AddHeader(restful.HEADER_ContentType, "text/plain")
-	defer result.Close()
-	_, err := io.Copy(response, result)
-	if err != nil {
-		handleInternalError(response, err)
-		return
-	}
+.kd-download-progress-bar {
+  grid-column: 2;
+  grid-row: 2;
+  margin-top: $baseline-grid;
+}
+
+.kd-download-info {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.kd-download-buttons {
+  grid-column: 2;
+  grid-row: 3;
+
+  .md-button {
+    margin-bottom: 2 * $baseline-grid;
+    margin-left: 0;
+  }
 }

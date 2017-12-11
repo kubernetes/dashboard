@@ -12,20 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package handler
+/**
+ * @fileoverview Externs for angular-file-saver module
+ *
+ * @externs
+ */
 
-import (
-	"io"
+const kdFileApi = {};
 
-	"github.com/emicklei/go-restful"
-)
+/** @constructor */
+kdFileApi.FileSaver = function() {};
 
-func handleDownload(response *restful.Response, result io.ReadCloser) {
-	response.AddHeader(restful.HEADER_ContentType, "text/plain")
-	defer result.Close()
-	_, err := io.Copy(response, result)
-	if err != nil {
-		handleInternalError(response, err)
-		return
-	}
-}
+/**
+ * @param {Blob} data
+ * @param {string} filename
+ * @param {boolean} [disableAutoBom]
+ */
+kdFileApi.FileSaver.prototype.saveAs = function(data, filename, disableAutoBom) {};
