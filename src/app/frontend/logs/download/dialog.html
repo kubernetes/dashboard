@@ -16,10 +16,10 @@ limitations under the License.
 
 <div class="kd-download-dialog">
   <div class="kd-download-info">
-    <h3>[[Downloading log file|]]</h3>
-    [[Please wait until download has finished.|]]
+    <h3>[[Downloading log file|Log file download dialog title.]]</h3>
+    [[Please wait until download has finished.|Log file download dialog info.]]
     <div class="kd-download-progress">
-      [[Downloaded: |]] {{ $ctrl.loaded | kdMemory }}
+      [[Downloaded: |Log file download dialog download status info.]] {{ $ctrl.loaded | kdMemory }}
     </div>
   </div>
 
@@ -32,10 +32,10 @@ limitations under the License.
     <md-button class="md-primary md-raised "
                ng-disabled="!$ctrl.hasDownloadFinished()"
                ng-click="$ctrl.save()">
-      [[Save|]]
+      [[Save|Log file download dialog 'Save' button.]]
     </md-button>
     <md-button ng-click="$ctrl.abort()">
-      [[Abort|]]
+      [[Abort|Log file download dialog 'Abort' button.]]
     </md-button>
   </div>
 </div>
