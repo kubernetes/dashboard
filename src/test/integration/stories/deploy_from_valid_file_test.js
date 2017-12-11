@@ -40,7 +40,8 @@ describe('Deploy from valid file user story test', () => {
     deployFromFilePage = new DeployFromFilePageObject();
     replicationControllersPage = new ReplicationControllersPageObject();
     deleteDialog = new DeleteReplicationControllerDialogObject();
-    browser.get('#!/deploy/file');
+    browser.get('#!/deploy');
+    deployFromFilePage.deployFromFileTab.click();
   });
 
   it('should upload the file', () => {
@@ -49,7 +50,6 @@ describe('Deploy from valid file user story test', () => {
     let absolutePath = path.resolve(__dirname, fileToUpload);
 
     // when
-    deployFromFilePage.makeInputVisible();
     deployFromFilePage.setFile(absolutePath);
     deployFromFilePage.deployButton.click();
 
