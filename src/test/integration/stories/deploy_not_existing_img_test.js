@@ -56,7 +56,7 @@ describe('Deploy not existing image story', () => {
 
   it('should deploy app', (doneFn) => {
     browser.get('#!/deploy');
-    page.deployFromSettingsTab.click();
+    deployPage.deployFromSettingsTab.click();
 
     deployPage.appNameField.sendKeys(appName);
     deployPage.containerImageField.sendKeys(containerImage);
