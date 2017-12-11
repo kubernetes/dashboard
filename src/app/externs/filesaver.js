@@ -12,36 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../variables';
+/**
+ * @fileoverview Externs for angular-file-saver module
+ *
+ * @externs
+ */
 
-.kd-download-dialog {
-  display: grid;
-  grid-template-columns: $baseline-grid auto $baseline-grid;
-  grid-gap: 2 * $baseline-grid;
-  grid-auto-rows: minmax(2 * $baseline-grid, auto);
-}
+const kdFileApi = {};
 
-.kd-download-progress {
-  padding-top: .5 * $baseline-grid;
-}
+/** @constructor */
+kdFileApi.FileSaver = function() {};
 
-.kd-download-progress-bar {
-  margin-top: $baseline-grid;
-  grid-column: 2;
-  grid-row: 2;
-}
-
-.kd-download-info {
-  grid-column: 2;
-  grid-row: 1;
-}
-
-.kd-download-buttons {
-  grid-column: 2;
-  grid-row: 3;
-
-  .md-button {
-    margin-left: 0;
-    margin-bottom: 2 * $baseline-grid;
-  }
-}
+/**
+ * @param {Blob} data
+ * @param {string} filename
+ * @param {boolean} [disableAutoBom]
+ */
+kdFileApi.FileSaver.prototype.saveAs = function(data, filename, disableAutoBom) {};

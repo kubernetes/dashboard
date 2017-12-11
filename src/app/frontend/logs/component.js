@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {showDownloadDialog} from "./download/dialog";
-
 const logsPerView = 100;
 const maxLogSize = 2e9;
 // Load logs from the beginning of the log file. This matters only if the log file is too large to
@@ -25,11 +23,7 @@ const endOfLogFile = 'end';
 const oldestTimestamp = 'oldest';
 const newestTimestamp = 'newest';
 
-/**
- * Controller for the logs view.
- *
- * @final
- */
+/** @final */
 export class LogsController {
   /**
    * @param {!./service.LogsService} logsService
@@ -39,9 +33,12 @@ export class LogsController {
    * @param {!angular.$interval} $interval
    * @param {!../common/errorhandling/dialog.ErrorDialog} errorDialog
    * @param {!../common/settings/service.SettingsService} kdSettingsService
+   * @param {!./download/service.DownloadService} kdDownloadService
    * @ngInject
    */
-  constructor(logsService, $sce, $document, $resource, $interval, errorDialog, kdSettingsService, kdDownloadService) {
+  constructor(
+      logsService, $sce, $document, $resource, $interval, errorDialog, kdSettingsService,
+      kdDownloadService) {
     /** @private {!angular.$sce} */
     this.sce_ = $sce;
 
@@ -111,6 +108,7 @@ export class LogsController {
     /** @private {!../common/settings/service.SettingsService} */
     this.settingsService_ = kdSettingsService;
 
+    /** @private {!./download/service.DownloadService} */
     this.downloadService_ = kdDownloadService;
   }
 
@@ -291,8 +289,10 @@ export class LogsController {
    */
   downloadLog() {
     let namespace = this.stateParams_.objectNamespace;
-    let logUrl = `api/v1/log/file/${namespace}/${this.pod}/${this.container}?previous=${this.logsService.getPrevious()}`;
-    this.downloadService_.startDownload(logUrl, this.logsService.getLogFileName(this.pod, this.container));
+    let logUrl = `api/v1/log/file/${namespace}/${this.pod}/${this.container}?previous=${
+        this.logsService.getPrevious()}`;
+    this.downloadService_.download(
+        logUrl, this.logsService.getLogFileName(this.pod, this.container));
   }
 
   /**

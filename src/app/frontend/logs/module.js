@@ -15,9 +15,9 @@
 import settingsServiceModule from '../common/settings/module';
 
 import {logsComponent} from './component';
+import {DownloadService} from './download/service';
 import {LogsService} from './service';
 import stateConfig from './stateconfig';
-import {DownloadService} from "./download/service";
 
 /**
  * Angular module for the logs view.
@@ -36,16 +36,29 @@ export default angular
     .service('kdDownloadService', DownloadService)
     .component('kdLogs', logsComponent)
     .config(stateConfig)
-    .decorator('$xhrFactory', ($delegate, $injector) => {
-      return (method, url) => {
-        let xhr = $delegate(method, url);
-        let http = $injector.get('$http');
-        let callConfig = http.pendingRequests[http.pendingRequests.length - 1];
+    .decorator('$xhrFactory', httpProgressUpdateDecorator);
 
-        if(angular.isFunction(callConfig.onProgress)) {
-          xhr.addEventListener('progress', callConfig.onProgress);
-        }
+/**
+ * Decorator used to expose `onProgress` function in order to be able to track download progress of
+ * files. Usage: $http.get(url, {
+ *    ...
+ *    onProgress: (event) => {...}
+ *  });
+ *
+ * @param {!function(*, string)} $delegate
+ * @param {!angular.$injector} $injector
+ * @return {!function(*, string)}
+ */
+function httpProgressUpdateDecorator($delegate, $injector) {
+  return (method, url) => {
+    let xhr = $delegate(method, url);
+    let http = $injector.get('$http');
+    let callConfig = http.pendingRequests[http.pendingRequests.length - 1];
 
-        return xhr;
-      }
-    });
+    if (angular.isFunction(callConfig.onProgress)) {
+      xhr.addEventListener('progress', callConfig.onProgress);
+    }
+
+    return xhr;
+  };
+}
