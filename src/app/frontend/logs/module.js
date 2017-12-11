@@ -29,6 +29,7 @@ export default angular
         [
           'ngResource',
           'ngFileSaver',
+          'ngMaterial',
           'ui.router',
           settingsServiceModule.name,
         ])

@@ -16,7 +16,7 @@
 const PROGRESS_UPDATE_TIMEOUT = 500;
 
 /** @final */
-class DownloadDialogController {
+export class DownloadDialogController {
   /**
    * @param {string} downloadUrl
    * @param {string} fileName
