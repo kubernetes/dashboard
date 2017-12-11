@@ -43,8 +43,8 @@ export class DownloadService {
       responseType: 'blob',
       timeout: canceler.promise,
       onProgress: (event) => {
-        progressUpdateFn(event)
-      }
+        progressUpdateFn(event);
+      },
     });
   }
 

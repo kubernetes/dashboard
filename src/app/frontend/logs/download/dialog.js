@@ -142,6 +142,6 @@ export function showDownloadDialog(mdDialog, downloadUrl, fileName) {
       'fileName': fileName,
     },
     templateUrl: 'logs/download/dialog.html',
-    escapeToClose: false
-  })
+    escapeToClose: false,
+  });
 }

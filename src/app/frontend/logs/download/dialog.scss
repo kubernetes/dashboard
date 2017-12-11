@@ -16,9 +16,9 @@
 
 .kd-download-dialog {
   display: grid;
-  grid-template-columns: $baseline-grid auto $baseline-grid;
-  grid-gap: 2 * $baseline-grid;
   grid-auto-rows: minmax(2 * $baseline-grid, auto);
+  grid-gap: 2 * $baseline-grid;
+  grid-template-columns: $baseline-grid auto $baseline-grid;
 }
 
 .kd-download-progress {
@@ -26,9 +26,9 @@
 }
 
 .kd-download-progress-bar {
-  margin-top: $baseline-grid;
   grid-column: 2;
   grid-row: 2;
+  margin-top: $baseline-grid;
 }
 
 .kd-download-info {
@@ -41,7 +41,7 @@
   grid-row: 3;
 
   .md-button {
-    margin-left: 0;
     margin-bottom: 2 * $baseline-grid;
+    margin-left: 0;
   }
 }
