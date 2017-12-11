@@ -17,75 +17,24 @@ import deployModule from 'deploy/module';
 describe('DeployFromFile controller', () => {
   /** @type {!DeployFromFileController} */
   let ctrl;
-  /** @type {!angular.$resource} */
-  let mockResource;
-  /** @type {!angular.$resource} */
-  let resource;
   /** @type {!angular.FormController} */
   let form;
   /** @type {!angular.$httpBackend} */
   let httpBackend;
-  /** @type {!md.$dialog} */
-  let mdDialog;
-  /** @type {!angular.$q} **/
-  let q;
-  /** @type {!angular.$scope} **/
-  let scope;
-  /** @type {!DeployService} */
-  let service;
 
   beforeEach(() => {
     angular.mock.module(deployModule.name);
 
     angular.mock.inject(
-        ($componentController, $httpBackend, $resource, $mdDialog, _kdCsrfTokenService_, kdDeployService, $q,
-         $rootScope) => {
-          service = kdDeployService;
-          mockResource = jasmine.createSpy('$resource');
-          resource = $resource;
-          mdDialog = $mdDialog;
-          q = $q;
-          scope = $rootScope.$new();
-          form = {
-            $valid: true,
-          };
-          ctrl = $componentController(
-              'kdDeployFromFile', {
-                $resource: mockResource,
-                $mdDialog: mdDialog,
-                kdCsrfTokenService: _kdCsrfTokenService_,
-              },
-              {form: form});
+        ($componentController, $httpBackend, $resource, $mdDialog, _kdHistoryService_) => {
+          ctrl = $componentController('kdDeployFromFile', {historyService_: _kdHistoryService_}, {form: form});
           httpBackend = $httpBackend;
-          httpBackend.expectGET('api/v1/csrftoken/appdeploymentfromfile')
-              .respond(200, '{"token": "x"}');
         });
   });
 
-  it('should deploy with file name and content', () => {
-    // given
-    let resourceObject = {
-      save: jasmine.createSpy('save'),
-    };
-    ctrl.file.name = 'test.yaml';
-    ctrl.file.content = 'test_content';
-    mockResource.and.callFake(() => resourceObject);
-    resourceObject.save.and.callFake((spec) => {
-      // then
-      expect(spec.name).toBe('test.yaml');
-      expect(spec.content).toBe('test_content');
-    });
-    // when
-    ctrl.deploy();
-    httpBackend.flush(1);
-
-    // then
-    expect(resourceObject.save).toHaveBeenCalled();
-  });
-
   it('should cancel', () => {
-    spyOn(ctrl.kdHistoryService_, 'back');
+    spyOn(ctrl.historyService_, 'back');
     ctrl.cancel();
-    expect(ctrl.kdHistoryService_.back).toHaveBeenCalled();
+    expect(ctrl.historyService_.back).toHaveBeenCalled();
   });
 });

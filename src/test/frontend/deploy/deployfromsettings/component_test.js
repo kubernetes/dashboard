@@ -33,7 +33,6 @@ describe('DeployFromSettings controller', () => {
 
     angular.mock.inject(($componentController, $httpBackend, $resource) => {
       httpBackend = $httpBackend;
-      httpBackend.expectGET('api/v1/csrftoken/appdeployment').respond(200, '{"token": "x"}');
       angularResource = $resource;
       mockResource = jasmine.createSpy('$resource');
       form = {
@@ -46,54 +45,30 @@ describe('DeployFromSettings controller', () => {
           },
         },
       };
-      ctrl = $componentController(
-          'kdDeployFromSettings',
-          {$resource: mockResource, namespaceList: {namespaces: []}, protocolList: {protocols: []}},
-          {form: form});
+      ctrl = $componentController('kdDeployFromSettings', {$resource: mockResource}, {form: form});
       ctrl.portMappings = [];
       ctrl.variables = [];
     });
   });
 
-  it('should select initial namespace', angular.mock.inject(($componentController) => {
-    // given
-    let $transition$ = {params: function() {}};
-    spyOn($transition$, 'params').and.returnValue({namespace: 'foo'});
-    ctrl = $componentController('kdDeployFromSettings', {$stateParams: {}}, {
-      namespaceList: {namespaces: [{objectMeta: {name: 'foo'}}, {objectMeta: {name: 'bar'}}]},
-      protocolList: {protocols: []},
-      $transition$: $transition$,
-    });
-
-    // when
+  it('should select initial namespace', () => {
+    ctrl.resource_ = angularResource;
+    let response = {
+      'namespaces': [
+        {'objectMeta': {'name': 'namespace1'}},
+        {'objectMeta': {'name': 'namespace2'}},
+        {'objectMeta': {'name': 'namespace3'}},
+      ],
+    };
+    httpBackend.expectGET('api/v1/namespace').respond(200, response);
     ctrl.$onInit();
-
-    // then
-    expect(ctrl.namespace).toBe('foo');
-
-    // given
-    $transition$.params.and.returnValue({namespace: 'bar'});
-    ctrl = $componentController('kdDeployFromSettings', {$stateParams: {namespace: 'bar'}}, {
-      namespaceList: {namespaces: [{objectMeta: {name: 'foo'}}, {objectMeta: {name: 'bar'}}]},
-      protocolList: {protocols: []},
-      $transition$: $transition$,
-    });
-
-    // when
-    ctrl.$onInit();
-
-    // then
-    expect(ctrl.namespace).toBe('bar');
-  }));
+    httpBackend.flush();
+    expect(ctrl.namespace).toEqual('namespace1');
+  });
 
   it('should return empty array when labels array is empty', () => {
-    // given
     let labels = [];
-
-    // when
     let result = ctrl.toBackendApiLabels_(labels);
-
-    // then
     expect(result).toEqual([]);
   });
 
@@ -197,49 +172,18 @@ describe('DeployFromSettings controller', () => {
     expect(resourceObject.save).toHaveBeenCalled();
   });
 
-  it('should deploy with empty resource requirements', () => {
-    // given
-    let resourceObject = {
-      save: jasmine.createSpy('save'),
-    };
-    mockResource.and.returnValue(resourceObject);
-    resourceObject.save.and.callFake(function(spec) {
-      // then
-      expect(spec.cpuRequirement).toBe(null);
-      expect(spec.memoryRequirement).toBe(null);
-    });
-    ctrl.cpuRequirement = null;
-    ctrl.memoryRequirement = '';
-
-    // when
-    ctrl.deploy();
-    httpBackend.flush(1);
-
-    // then
-    expect(resourceObject.save).toHaveBeenCalled();
-  });
-
   it('should hide more options by default', () => {
-    // this is default behavior so no given/when
-    // then
     expect(ctrl.isMoreOptionsEnabled()).toBe(false);
   });
 
   it('should show more options after switch', () => {
-    // when
     ctrl.switchMoreOptions();
-
-    // then
     expect(ctrl.isMoreOptionsEnabled()).toBe(true);
   });
 
   it('should cancel', angular.mock.inject(($state) => {
     spyOn($state, 'go');
-
-    // when
     ctrl.cancel();
-
-    // then
     expect($state.go).toHaveBeenCalled();
   }));
 
@@ -290,10 +234,8 @@ describe('DeployFromSettings controller', () => {
         ],
       };
       httpBackend.expectGET('api/v1/secret/default').respond(200, response);
-      // when
       ctrl.getSecrets('default');
       httpBackend.flush();
-      // expect
       expect(ctrl.secrets).toEqual(['secret1', 'secret2', 'secret3']);
     });
 
