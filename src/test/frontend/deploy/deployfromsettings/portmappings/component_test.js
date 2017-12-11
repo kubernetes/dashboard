@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import deployModule from 'deploy/module';
 import * as serviceTypes from 'deploy/deployfromsettings/portmappings/component';
 import {PortMappingsController} from 'deploy/deployfromsettings/portmappings/component';
+import deployModule from 'deploy/module';
 
 describe('PortMappingsController controller', () => {
   /** @type {!PortMappingsController} */

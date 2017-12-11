@@ -44,9 +44,9 @@ describe('Deploy service', () => {
   });
 
   it('should correctly detect validation errors', () => {
-    expect(service.hasValidationError_("try to set validate=false to retry")).toBe(true);
-    expect(service.hasValidationError_("everything works fine")).toBe(false);
-    expect(service.hasValidationError_("")).toBe(false);
+    expect(service.hasValidationError_('try to set validate=false to retry')).toBe(true);
+    expect(service.hasValidationError_('everything works fine')).toBe(false);
+    expect(service.hasValidationError_('')).toBe(false);
   });
 
   it('should redirect and not open error dialog after successful deploy from settings', () => {
@@ -91,30 +91,32 @@ describe('Deploy service', () => {
     expect(service.state_.go).toHaveBeenCalled();
   });
 
-  it('should open error dialog and redirect the page when service already exists during deploy from file', () => {
-    spyOn(service.errorDialog_, 'open');
-    spyOn(service.state_, 'go');
+  it('should open error dialog and redirect the page when service already exists during deploy from file',
+     () => {
+       spyOn(service.errorDialog_, 'open');
+       spyOn(service.state_, 'go');
 
-    mockResource.and.callFake(angularResource);
-    let response = {
-      name: 'foo-name',
-      content: 'sample-yaml-content',
-      error: 'service already exists',
-    };
+       mockResource.and.callFake(angularResource);
+       let response = {
+         name: 'foo-name',
+         content: 'sample-yaml-content',
+         error: 'service already exists',
+       };
 
-    httpBackend.expectGET('api/v1/csrftoken/appdeploymentfromfile').respond(200, '{"token": "x"}');
-    httpBackend.expectPOST('api/v1/appdeploymentfromfile').respond(201, response);
+       httpBackend.expectGET('api/v1/csrftoken/appdeploymentfromfile')
+           .respond(200, '{"token": "x"}');
+       httpBackend.expectPOST('api/v1/appdeploymentfromfile').respond(201, response);
 
-    expect(service.isDeployDisabled()).toBe(false);
-    service.deployContent('sample-yaml-content');
-    httpBackend.flush(1);
-    expect(service.isDeployDisabled()).toBe(true);
-    httpBackend.flush();
-    expect(service.isDeployDisabled()).toBe(false);
+       expect(service.isDeployDisabled()).toBe(false);
+       service.deployContent('sample-yaml-content');
+       httpBackend.flush(1);
+       expect(service.isDeployDisabled()).toBe(true);
+       httpBackend.flush();
+       expect(service.isDeployDisabled()).toBe(false);
 
-    expect(service.errorDialog_.open).toHaveBeenCalled();
-    expect(service.state_.go).toHaveBeenCalled();
-  });
+       expect(service.errorDialog_.open).toHaveBeenCalled();
+       expect(service.state_.go).toHaveBeenCalled();
+     });
 
   it('should not redirect the page and but open error dialog', (doneFn) => {
     spyOn(service.errorDialog_, 'open');
@@ -131,18 +133,20 @@ describe('Deploy service', () => {
     expect(service.state_.go).not.toHaveBeenCalled();
   });
 
-  it('should open deploy anyway dialog when validation error occurs during deploy from file', (doneFn) => {
-    spyOn(service, 'handleDeployAnywayDialog_');
-    mockResource.and.callFake(angularResource);
+  it('should open deploy anyway dialog when validation error occurs during deploy from file',
+     (doneFn) => {
+       spyOn(service, 'handleDeployAnywayDialog_');
+       mockResource.and.callFake(angularResource);
 
-    httpBackend.expectGET('api/v1/csrftoken/appdeploymentfromfile').respond(200, '{"token": "x"}');
-    httpBackend.expectPOST('api/v1/appdeploymentfromfile').respond(500, `error: use --validate=false`);
-    let promise = service.deployContent('sample-yaml-content');
-    promise.catch(doneFn);
-    httpBackend.flush();
+       httpBackend.expectGET('api/v1/csrftoken/appdeploymentfromfile')
+           .respond(200, '{"token": "x"}');
+       httpBackend.expectPOST('api/v1/appdeploymentfromfile')
+           .respond(500, `error: use --validate=false`);
+       let promise = service.deployContent('sample-yaml-content');
+       promise.catch(doneFn);
+       httpBackend.flush();
 
-    // then
-    expect(service.handleDeployAnywayDialog_).toHaveBeenCalled();
-  });
+       // then
+       expect(service.handleDeployAnywayDialog_).toHaveBeenCalled();
+     });
 });
-

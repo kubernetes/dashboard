@@ -27,7 +27,8 @@ describe('DeployFromFile controller', () => {
 
     angular.mock.inject(
         ($componentController, $httpBackend, $resource, $mdDialog, _kdHistoryService_) => {
-          ctrl = $componentController('kdDeployFromFile', {historyService_: _kdHistoryService_}, {form: form});
+          ctrl = $componentController(
+              'kdDeployFromFile', {historyService_: _kdHistoryService_}, {form: form});
           httpBackend = $httpBackend;
         });
   });
