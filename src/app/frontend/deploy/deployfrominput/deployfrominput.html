@@ -15,10 +15,10 @@ limitations under the License.
 -->
 
 <div class="kd-deploy-from-input-info">
-  <span ng-show="ctrl.areMultipleNamespacesSelected()">
+  <span ng-show="$ctrl.areMultipleNamespacesSelected()">
     [[Enter YAML or JSON content specifying the resources to deploy to the namespace specified in the file.|User help for the input upload form on the deploy page.]]
   </span>
-  <span ng-hide="ctrl.areMultipleNamespacesSelected()">
+  <span ng-hide="$ctrl.areMultipleNamespacesSelected()">
     [[Enter YAML or JSON content specifying the resources to deploy to the currently selected namespace.|User help for the input upload form on the deploy page.]]
   </span>
   <a href="http://kubernetes.io/docs/user-guide/deploying-applications/"
