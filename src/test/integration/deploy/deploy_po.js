@@ -20,10 +20,10 @@ export default class DeployPageObject {
     this.deployButtonQuery = by.css('.kd-deploy-submit-button');
     this.deployButton = element(this.deployButtonQuery);
 
-    this.appNameFieldQuery = by.xpath('//input[@name="name"]');
+    this.appNameFieldQuery = by.model('$ctrl.name');
     this.appNameField = element(this.appNameFieldQuery);
 
-    this.containerImageFieldQuery = by.xpath('//input[@name="containerImage"]');
+    this.containerImageFieldQuery = by.model('$ctrl.containerImage');
     this.containerImageField = element(this.containerImageFieldQuery);
   }
 }
