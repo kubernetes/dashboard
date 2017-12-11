@@ -27,10 +27,6 @@
   border: 1px solid $border;
   height: 50 * $baseline-grid;
   margin-bottom: 3 * $baseline-grid;
-
-  .ace_gutter-layer {
-    background-color: $background-2;
-  }
 }
 
 .kd-deploy-from-input-button {
