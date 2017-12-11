@@ -48,6 +48,8 @@ export default angular
  * @param {!function(*, string)} $delegate
  * @param {!angular.$injector} $injector
  * @return {!function(*, string)}
+ * @export
+ * @ngInject
  */
 function httpProgressUpdateDecorator($delegate, $injector) {
   return (method, url) => {

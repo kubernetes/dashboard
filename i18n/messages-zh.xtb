@@ -513,7 +513,7 @@
   <translation id="1813585001229142426" key="MSG_LOGIN_UNAUTHORIZED_ERROR" desc="Text shown when unauthorized user tries to log in.">验证失败，请重试</translation>
   <translation id="6905890758241326832" key="MSG_LOGS_DOWNLOAD_DIALOG_0" desc="(no description provided)">Downloading log file</translation>
   <translation id="7920142392085872110" key="MSG_LOGS_DOWNLOAD_DIALOG_1" desc="(no description provided)">Please wait until download has finished.</translation>
-  <translation id="9071411568337764822" key="MSG_LOGS_DOWNLOAD_DIALOG_2" desc="kdMemory }}|">Downloaded: {{ $ctrl.loaded </translation>
+  <translation id="3238335709642538928" key="MSG_LOGS_DOWNLOAD_DIALOG_2" desc="(no description provided)">Downloaded: </translation>
   <translation id="2306078941708704664" key="MSG_LOGS_DOWNLOAD_DIALOG_3" desc="(no description provided)">Save</translation>
   <translation id="6309042137906110314" key="MSG_LOGS_DOWNLOAD_DIALOG_4" desc="(no description provided)">Abort</translation>
   <translation id="4722922095699681308" key="MSG_LOGS_LOGS_0" desc="Title prefix for logs card.">容器日志</translation>
