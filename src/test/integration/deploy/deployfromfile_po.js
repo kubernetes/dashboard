@@ -14,16 +14,13 @@
 
 export default class DeployFromFilePageObject {
   constructor() {
-    this.deployFromFileRadioButtonQuery = by.xpath('//md-radio-button[@value="deployFile"]');
-    this.deployFromFileRadioButton = element(this.deployFromFileRadioButtonQuery);
+    this.deployFromFileTabQuery = by.xpath('//md-tab-item[contains(text(),"from file")]');
+    this.deployFromFileTab = element(this.deployFromFileTabQuery);
 
-    this.deployButtonQuery = by.css('.kd-deploy-submit-button');
+    this.deployButtonQuery = by.css('.kd-deploy-from-file-button');
     this.deployButton = element(this.deployButtonQuery);
 
-    this.inputContainerQuery = by.css('.kd-upload-file-container');
-    this.inputContainer = element(this.inputContainerQuery);
-
-    this.filePickerQuery = by.css('.kd-upload-file-picker');
+    this.filePickerQuery = by.css('.kd-upload-button');
     this.filePicker_ = element(this.filePickerQuery);
 
     this.mdDialogQuery = by.tagName('md-dialog');

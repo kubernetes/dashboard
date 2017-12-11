@@ -14,13 +14,16 @@
 
 export default class DeployPageObject {
   constructor() {
+    this.deployFromSettingsTabQuery = by.xpath('//md-tab-item[contains(text(),"deployment details")]');
+    this.deployFromSettingsTab = element(this.deployFromSettingsTabQuery);
+
     this.deployButtonQuery = by.css('.kd-deploy-submit-button');
     this.deployButton = element(this.deployButtonQuery);
 
-    this.appNameFieldQuery = by.model('ctrl.name');
+    this.appNameFieldQuery = by.xpath('//input[@name="name"]');
     this.appNameField = element(this.appNameFieldQuery);
 
-    this.containerImageFieldQuery = by.model('ctrl.containerImage');
+    this.containerImageFieldQuery = by.xpath('//input[@name="containerImage"]');
     this.containerImageField = element(this.containerImageFieldQuery);
   }
 }
