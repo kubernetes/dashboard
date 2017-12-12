@@ -14,7 +14,8 @@
 
 export default class DeployPageObject {
   constructor() {
-    this.deployFromSettingsTabQuery = by.xpath('//md-tab-item[contains(text(),"deployment details")]');
+    this.deployFromSettingsTabQuery =
+        by.xpath('//md-tab-item[contains(text(),"deployment details")]');
     this.deployFromSettingsTab = element(this.deployFromSettingsTabQuery);
 
     this.deployButtonQuery = by.css('.kd-deploy-submit-button');
