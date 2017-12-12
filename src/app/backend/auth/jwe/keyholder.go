@@ -90,8 +90,8 @@ func (self *rsaKeyHolder) update(obj runtime.Object) {
 	secret := obj.(*v1.Secret)
 	priv, err := ParseRSAKey(string(secret.Data[holderMapKeyEntry]), string(secret.Data[holderMapCertEntry]))
 	if err != nil {
-		// Secret was probably tampered with. Delete it and let it be recreated from local copy.
-		err := self.synchronizer.Delete()
+		// Secret was probably tampered with. Update it based on local key.
+		err := self.synchronizer.Update(self.getEncryptionKeyHolder())
 		if err != nil {
 			panic(err)
 		}
