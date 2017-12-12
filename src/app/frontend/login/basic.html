@@ -19,7 +19,8 @@ limitations under the License.
     <label>[[Username|'Username' field label shown on login page for basic auth]]</label>
     <input ng-model="$ctrl.username"
            ng-change="$ctrl.onUsernameUpdate()"
-           required>
+           required
+           md-no-asterisk>
   </md-input-container>
 
   <md-input-container class="md-block">
@@ -27,6 +28,7 @@ limitations under the License.
     <input type="password"
            ng-model="$ctrl.password"
            ng-change="$ctrl.onPasswordUpdate()"
-           required>
+           required
+           md-no-asterisk>
   </md-input-container>
 </div>
