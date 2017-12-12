@@ -51,6 +51,11 @@ describe('DeployFromSettings controller', () => {
     });
   });
 
+  it('should disable input when form is invalid', () => {
+    ctrl.form.$valid = false;
+    expect(ctrl.isDeployDisabled()).toBeTruthy();
+  });
+
   it('should select initial namespace', () => {
     ctrl.resource_ = angularResource;
     let response = {
@@ -64,6 +69,29 @@ describe('DeployFromSettings controller', () => {
     ctrl.$onInit();
     httpBackend.flush();
     expect(ctrl.namespace).toEqual('namespace1');
+  });
+
+  it('should select new namespace after it is created', () => {
+    ctrl.namespaces = ['a', 'b', 'c'];
+    ctrl.namespace = ctrl.namespaces[1];
+    let newNamespace = 'd';
+
+    ctrl.mdDialog_ = {
+      show: (arg) => {
+        arg;
+        return {
+          then: (success, fail) => {
+            // ignore fail
+            fail;
+            // execute success
+            success(newNamespace);
+          },
+        };
+      },
+    };
+
+    ctrl.handleNamespaceDialog();
+    expect(ctrl.namespace).toEqual(newNamespace);
   });
 
   it('should return empty array when labels array is empty', () => {

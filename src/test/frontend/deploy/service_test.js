@@ -31,8 +31,9 @@ describe('Deploy service', () => {
   beforeEach(() => {
     angular.mock.module(module.name);
 
-    angular.mock.inject((kdDeployService, $httpBackend, $resource) => {
+    angular.mock.inject((kdDeployService, $httpBackend, $resource, $mdDialog) => {
       service = kdDeployService;
+      service.mdDialog_ = $mdDialog;
       httpBackend = $httpBackend;
       angularResource = $resource;
       mockResource = jasmine.createSpy('$resource');
@@ -47,6 +48,12 @@ describe('Deploy service', () => {
     expect(service.hasValidationError_('try to set validate=false to retry')).toBe(true);
     expect(service.hasValidationError_('everything works fine')).toBe(false);
     expect(service.hasValidationError_('')).toBe(false);
+  });
+
+  it('should show deploy anyway dialog', () => {
+    spyOn(service.mdDialog_, 'show');
+    service.showDeployAnywayDialog('error message');
+    expect(service.mdDialog_.show).toHaveBeenCalled();
   });
 
   it('should redirect and not open error dialog after successful deploy from settings', () => {
