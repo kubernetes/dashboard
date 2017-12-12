@@ -95,11 +95,12 @@ backendApi.AppDeploymentSpec;
 /**
  * @typedef {{
  *   name: string,
+ *   namespace: string,
  *   content: string,
  *   validate: boolean,
  * }}
  */
-backendApi.AppDeploymentFromFileSpec;
+backendApi.AppDeploymentContentSpec;
 
 /**
  * @typedef {{

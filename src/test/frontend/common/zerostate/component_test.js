@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import componentsModule from 'common/components/module';
-import {deployAppStateName} from 'deploy/state';
+import {stateName as deployAppStateName} from 'deploy/state';
 
 describe('Zero state', () => {
   /** @type {!Object} */

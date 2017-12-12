@@ -1,0 +1,58 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<div class="kd-environment-variables-title md-body-2">
+  [[Environment variables|Title of the Environment Variables section on the deploy page.]]
+</div>
+<div ng-repeat="variable in ctrl.variables">
+  <ng-form name="variablesForm"
+           layout="row">
+    <md-input-container flex="auto"
+                        class="kd-deploy-input-row">
+      <label>
+          [[Name|Label "Name" which appears as a placeholder for the input of an environment variable name on the deploy page.]]
+      </label>
+      <input ng-model="variable.name"
+             name="name"
+             ng-change="ctrl.addVariableIfNeeed()"
+             ng-pattern="ctrl.namePattern">
+      <ng-messages for="variablesForm.name.$error"
+                   role="alert"
+                   multiple>
+        <ng-message when="pattern">
+          [[Variable name must be a valid C identifier.|Label "Value" which appears as a placeholder for the input of an environment variable value on the deploy page.]]
+        </ng-message>
+      </ng-messages>
+    </md-input-container>
+    <div flex="5"></div>
+    <md-input-container flex="auto"
+                        class="kd-deploy-input-row">
+      <label>
+          [[Value|Label "Value" which appears as a placeholder for the input of an environment variable value on the deploy page.]]
+      </label>
+      <input ng-model="variable.value"
+             name="value">
+    </md-input-container>
+    <div flex="10">
+      <md-button type="button"
+                 ng-if="ctrl.isRemovable($index)"
+                 ng-click="ctrl.remove($index)"
+                 class="material-icons md-icon-button">
+        delete
+      </md-button>
+    </div>
+  </ng-form>
+</div>

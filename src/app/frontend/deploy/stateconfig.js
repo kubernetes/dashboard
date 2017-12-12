@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as chromeStateName} from '../chrome/state';
+import {stateName as parentState} from '../chrome/state';
 import {breadcrumbsConfig} from '../common/components/breadcrumbs/service';
 
-import {baseStateName, deployAppStateName, deployFileStateName} from './state';
+import {stateName, stateUrl} from './state';
 
 /**
  * Configures states for the deploy view.
@@ -24,20 +24,13 @@ import {baseStateName, deployAppStateName, deployFileStateName} from './state';
  * @ngInject
  */
 export default function stateConfig($stateProvider) {
-  $stateProvider.state(baseStateName, {
-    parent: chromeStateName,
-    component: 'kdDeploy',
-    abstract: true,
-    url: '/deploy',
-  });
-  $stateProvider.state(deployAppStateName, {
-    parent: baseStateName,
-    component: 'kdDeployFromSettings',
-    url: '/app',
-    resolve: {
-      'namespaceList': resolveNamespaces,
-      'protocolsResource': getProtocolsResource,
-      'protocolList': getDefaultProtocols,
+  $stateProvider.state(stateName, {
+    parent: parentState,
+    url: stateUrl,
+    views: {
+      '': {
+        templateUrl: 'deploy/deploy.html',
+      },
     },
     data: {
       [breadcrumbsConfig]: {
@@ -45,55 +38,9 @@ export default function stateConfig($stateProvider) {
       },
     },
   });
-  $stateProvider.state(deployFileStateName, {
-    parent: baseStateName,
-    component: 'kdDeployFromFile',
-    url: '/file',
-    data: {
-      [breadcrumbsConfig]: {
-        'label': i18n.MSG_BREADCRUMBS_DEPLOY_FILE_LABEL,
-      },
-    },
-  });
-}
-
-/**
- * @param {!angular.$resource} $resource
- * @return {!angular.$q.Promise}
- * @ngInject
- */
-function resolveNamespaces($resource) {
-  /** @type {!angular.Resource} */
-  let resource = $resource('api/v1/namespace');
-
-  return resource.get().$promise;
-}
-
-/**
- * @param {!angular.$resource} $resource
- * @return {!angular.Resource}
- * @ngInject
- */
-function getProtocolsResource($resource) {
-  return $resource('api/v1/appdeployment/protocols');
-}
-
-/**
- * @param {!angular.Resource} protocolsResource
- * @returns {!angular.$q.Promise}
- * @ngInject
- */
-function getDefaultProtocols(protocolsResource) {
-  return protocolsResource.get().$promise;
 }
 
 const i18n = {
-  /**
-     @type {string} @desc Breadcrum label for the deploy containerized
-      app form view.
-   */
-  MSG_BREADCRUMBS_DEPLOY_APP_LABEL: goog.getMsg('Create an app'),
-
-  /** @type {string} @desc Breadcrum label for the YAML upload form */
-  MSG_BREADCRUMBS_DEPLOY_FILE_LABEL: goog.getMsg('Upload'),
+  /** @type {string} @desc Breadcrumb label for the deploy view. */
+  MSG_BREADCRUMBS_DEPLOY_APP_LABEL: goog.getMsg('Resource creation'),
 };

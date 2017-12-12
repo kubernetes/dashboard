@@ -1,0 +1,47 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<div class="kd-deploy-from-file-info">
+  <span ng-show="$ctrl.areMultipleNamespacesSelected()">
+    [[Select YAML or JSON file specifying the resources to deploy to the namespace specified in the file.|User help for the file upload form on the deploy page.]]
+  </span>
+  <span ng-hide="$ctrl.areMultipleNamespacesSelected()">
+    [[Select YAML or JSON file specifying the resources to deploy to the currently selected namespace.|User help for the file upload form on the deploy page.]]
+  </span>
+  <a href="http://kubernetes.io/docs/user-guide/deploying-applications/"
+     target="_blank">
+    [[Learn more|Learn more link label nearby the file upload on the deploy page.]] <i class="material-icons">open_in_new</i>
+  </a>
+</div>
+
+<form name="$ctrl.form"
+      ng-submit="$ctrl.deploy()">
+
+  <kd-upload-file on-load="$ctrl.onFileLoad(file)"
+                  label="[[Choose YAML or JSON file|Choose YAML or JSON file label from deploy from file view.]]">
+  </kd-upload-file>
+
+  <md-button class="md-raised md-primary kd-deploy-from-file-button"
+             type="submit"
+             ng-disabled="$ctrl.isDeployDisabled()">
+    [[Upload|Upload button label from deploy from file view.]]
+  </md-button>
+
+  <md-button class="md-primary"
+             ng-click="$ctrl.cancel()">
+    [[Cancel|Cancel button label from deploy from file view.]]
+  </md-button>
+</form>

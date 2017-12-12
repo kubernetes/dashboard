@@ -22,6 +22,8 @@
     "angular-messages": "~1.6.6",
     "angular-resource": "~1.6.6",
     "angular-sanitize": "~1.6.6",
+    "ace-builds": "^1.2.9",
+    "angular-ui-ace": "^0.2.3",
     "angular-utils-pagination": "~0.11.1",
     "ansi_up": "~2.0.2",
     "d3": "3.5.17",
@@ -32,6 +34,13 @@
     "sockjs-client": "~1.1.4"
   },
   "overrides": {
+    "ace-builds": {
+      "main": [
+        "src-noconflict/ace.js",
+        "src-noconflict/mode-json.js",
+        "src-noconflict/mode-yaml.js"
+      ]
+    },
     "sockjs-client": {
       "main": "dist/sockjs.js"
     },

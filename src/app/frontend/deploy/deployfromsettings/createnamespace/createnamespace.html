@@ -1,0 +1,60 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<md-dialog aria-label="Create a new namespace"
+           layout="column">
+  <md-dialog-content layout-padding>
+    <h4 class="md-title">[[Create a new namespace|Create namespace dialog title. The message appears at the top of the dialog box.]]</h4>
+    <div>[[The new namespace will be added to the cluster.|Create namespace dialog subtitle. Appears right below the title.]]</div>
+
+    <form name="$ctrl.namespaceForm"
+          ng-submit="$ctrl.createNamespace()"
+          novalidate>
+      <kd-help-section>
+        <md-input-container class="md-block">
+          <label>[[Namespace name|Label 'Namespace name', which appears as a placeholder in an empty input field in the create namespace dialog.]]</label>
+          <input name="namespace"
+                 ng-model="$ctrl.namespace"
+                 md-maxlength="{{$ctrl.namespaceMaxLength}}"
+                 ng-pattern="$ctrl.namespacePattern"
+                 required>
+          <div ng-messages="$ctrl.namespaceForm.namespace.$error">
+            <div ng-message="pattern">[[Name must be alphanumeric and may contain dashes.|The text appears when the namespace name does not match the expected pattern.]]</div>
+            <div ng-message="md-maxlength">[[Name must be up to {{::$$ctrl.namespaceMaxLength}} characters long.|The text appears when the namespace name exceeds the maximal length.]]</div>
+            <div ng-message="required">[[Name is required.|Warning which tells the user that the namespace name is required.]]</div>
+          </div>
+        </md-input-container>
+        <kd-user-help>
+          [[A namespace with the specified name will be added to the cluster.|User help text for the input of the 'Namespace' data.]]
+          <a href="http://kubernetes.io/docs/admin/namespaces/"
+             target="_blank"
+             tabindex="-1">
+            [[Learn more|The text is used as a 'Learn more' link text in the namespace creation dialog]]
+            <i class="material-icons">open_in_new</i>
+          </a>
+        </kd-user-help>
+      </kd-help-section>
+      <md-dialog-actions layout="row">
+        <md-button ng-disabled="$ctrl.isDisabled()"
+                   class="md-primary"
+                   type="submit">
+          [[Create|The text is put on the 'Create' button in the namespace creation dialog.]]
+        </md-button>
+        <md-button ng-click="$ctrl.cancel()">[[Cancel|The text is put on the 'Cancel' button in the namespace creation dialog.]]</md-button>
+      </md-dialog-actions>
+    </form>
+  </md-dialog-content>
+</md-dialog>
