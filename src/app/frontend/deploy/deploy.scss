@@ -15,6 +15,10 @@
 @import '../variables';
 
 .kd-deploy-tabs {
+  [role='tabpanel'] {
+    transition: none;
+  }
+
   md-tab-content {
     padding: 2.5 * $baseline-grid;
   }
