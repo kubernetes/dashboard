@@ -20,7 +20,7 @@ import (
 	"log"
 	"strings"
 
-	"github.com/emicklei/go-restful"
+	restful "github.com/emicklei/go-restful"
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
 	"k8s.io/api/authorization/v1"

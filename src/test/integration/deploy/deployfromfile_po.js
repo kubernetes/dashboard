@@ -14,7 +14,7 @@
 
 export default class DeployFromFilePageObject {
   constructor() {
-    this.deployFromFileTabQuery = by.xpath('//md-tab-item[contains(text(),"from file")]');
+    this.deployFromFileTabQuery = by.xpath('//md-tab-item[contains(text(),"Create from file")]');
     this.deployFromFileTab = element(this.deployFromFileTabQuery);
 
     this.deployButtonQuery = by.css('.kd-deploy-from-file-button');

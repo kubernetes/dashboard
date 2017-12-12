@@ -401,9 +401,9 @@
   <translation id="9067256908595321378" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_PORTMAPPINGS_PORTMAPPINGS_7" desc="This warning appears when the user specifies a non-integer target port number in the port mappings section on the deploy page.">Target port must be an integer.</translation>
   <translation id="1304740736131929587" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_PORTMAPPINGS_PORTMAPPINGS_8" desc="This warning appears when the user specifies a negative target port number in the port mappings section on the deploy page.">Target port must be greater than 0.</translation>
   <translation id="4959747095671365781" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_PORTMAPPINGS_PORTMAPPINGS_9" desc="This warning appears when the user specifies an empty target port.">Target port cannot be empty.</translation>
-  <translation id="7356485569034773634" key="MSG_DEPLOY_DEPLOY_0" desc="Upload from input tab on deploy page.">Upload from input</translation>
-  <translation id="6177606493902455952" key="MSG_DEPLOY_DEPLOY_1" desc="Upload from file tab on deploy page.">Upload from file</translation>
-  <translation id="4747874764396939956" key="MSG_DEPLOY_DEPLOY_2" desc="Specify deployment details tab on deploy page.">Specify deployment details</translation>
+  <translation id="8605693895947164988" key="MSG_DEPLOY_DEPLOY_0" desc="Create from text input tab on deploy page.">Create from text input</translation>
+  <translation id="3083001039522631621" key="MSG_DEPLOY_DEPLOY_1" desc="Create from file tab on deploy page.">Create from file</translation>
+  <translation id="7857344752818643535" key="MSG_DEPLOY_DEPLOY_2" desc="Create an app tab on deploy page.">Create an app</translation>
   <translation id="6885083433056530489" key="MSG_DEPLOY_DIALOG_ERROR" desc="Text shown on failed deploy in error dialog.">ファイルの展開に失敗しました</translation>
   <translation id="3201385994827441255" key="MSG_DEPLOY_EMPTY_NAMESPACE_ERROR" desc="Text shown on in error dialog when there is no namespace provided selected in both dashboard and yaml file.">ダッシュボードとファイルに、リソースを配備するネームスペースが指定されていません。ダッシュボードで特定のネームスペースを選択するか、YAMLファイルで指定してください。</translation>
   <translation id="9076157973282612479" key="MSG_DEPLOY_NAMESPACE_MISMATCH_ERROR" desc="Text shown on in error dialog when there is namespace mismatch between dashboard and yaml file.">ファイルに指定されたネームスペースが、現在ダッシュボードで選択しているネームスペースと一致しません。ファイルのネームスペースを編集するか、ダッシュボードで違うネームスペース（例: 'すべてのネームスペース' か、ファイルに指定した正しいネームスペース）を選択してください。</translation>
