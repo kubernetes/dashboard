@@ -21,6 +21,13 @@
   grid-template-columns: $baseline-grid auto $baseline-grid;
 }
 
+.kd-download-dialog-error {
+  display: grid;
+  grid-auto-rows: minmax(2 * $baseline-grid, auto);
+  grid-gap: $baseline-grid;
+  grid-template-columns: $baseline-grid auto $baseline-grid;
+}
+
 .kd-download-progress {
   padding-top: .5 * $baseline-grid;
 }
@@ -43,5 +50,15 @@
   .md-button {
     margin-bottom: 2 * $baseline-grid;
     margin-left: 0;
+  }
+}
+
+.kd-download-error-button {
+  grid-column: 2;
+  grid-row: 2;
+  justify-self: end;
+
+  .md-button {
+    margin: $baseline-grid 0 (2 * $baseline-grid);
   }
 }

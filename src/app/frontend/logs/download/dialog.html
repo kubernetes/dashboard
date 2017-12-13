@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div class="kd-download-dialog">
+<div class="kd-download-dialog"
+     ng-if="!$ctrl.hasForbiddenError()">
   <div class="kd-download-info">
     <h3>[[Downloading log file|Log file download dialog title.]]</h3>
     [[Please wait until download has finished.|Log file download dialog info.]]
@@ -36,6 +37,20 @@ limitations under the License.
     </md-button>
     <md-button ng-click="$ctrl.abort()">
       [[Abort|Log file download dialog 'Abort' button.]]
+    </md-button>
+  </div>
+</div>
+
+<div class="kd-download-dialog-error"
+     ng-if="$ctrl.hasForbiddenError()">
+  <div class="kd-download-info">
+    <h3>[[Forbidden (403)|Error title displayed on log file download dialog.]]</h3>
+    {{$ctrl.kdLocalizerErrors.MSG_FORBIDDEN_RESOURCE_ERROR}}
+  </div>
+
+  <div class="kd-download-error-button">
+    <md-button ng-click="$ctrl.abort()">
+      [[Close|Log file download dialog 'Close' button.]]
     </md-button>
   </div>
 </div>

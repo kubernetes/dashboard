@@ -59,6 +59,12 @@ export const kdLocalizedErrors = {
   MSG_FORBIDDEN_ERROR: goog.getMsg('You do not have required permissions to access this page.'),
 
   /**
+   * @export {kdError} @desc Error message shown when user does not have access to given resource.
+   */
+  MSG_FORBIDDEN_RESOURCE_ERROR:
+      goog.getMsg('You do not have required permissions to access this resource.'),
+
+  /**
    * @export {kdError} @desc Title shown on internal error page when user is forbidden to access some page.
    */
   MSG_FORBIDDEN_TITLE_ERROR: goog.getMsg('Forbidden'),

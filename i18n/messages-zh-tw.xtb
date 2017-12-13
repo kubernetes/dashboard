@@ -425,6 +425,7 @@
   <translation id="8384910280515978185" key="MSG_EVENTS_CARDLIST_8" desc="User help on the events page when no events are to be displayed.">全部事件可能已過期</translation>
   <translation id="4919061456654775514" key="MSG_EVENTS_WARNING_LABEL" desc="Label 'Warning' for the event selection drop-down.">警告</translation>
   <translation id="6870755296074399906" key="MSG_FORBIDDEN_ERROR" desc="Text shown on internal error page when user is forbidden to access some page.">你沒有存取此頁面的權限</translation>
+  <translation id="360219762714344048" key="MSG_FORBIDDEN_RESOURCE_ERROR" desc="Error message shown when user does not have access to given resource.">You do not have required permissions to access this resource.</translation>
   <translation id="2570930006862369513" key="MSG_FORBIDDEN_TITLE_ERROR" desc="Title shown on internal error page when user is forbidden to access some page.">無法存取</translation>
   <translation id="339987725992094148" key="MSG_GRAPH_CPU_AXIS_LABEL" desc="Name of Y axis showing CPU usage.">CPU(核心)</translation>
   <translation id="4576303150557908117" key="MSG_GRAPH_CPU_LIMIT_LEGEND_LABEL" desc="Name of the CPU limit metric as displayed in the legend.">CPU 限制值</translation>
@@ -523,6 +524,8 @@
   <translation id="3238335709642538928" key="MSG_LOGS_DOWNLOAD_DIALOG_2" desc="Log file download dialog download status info.">Downloaded: </translation>
   <translation id="2306078941708704664" key="MSG_LOGS_DOWNLOAD_DIALOG_3" desc="Log file download dialog \'Save\' button.">Save</translation>
   <translation id="6309042137906110314" key="MSG_LOGS_DOWNLOAD_DIALOG_4" desc="Log file download dialog \'Abort\' button.">Abort</translation>
+  <translation id="2500363004551972927" key="MSG_LOGS_DOWNLOAD_DIALOG_5" desc="Error title displayed on log file download dialog.">Forbidden (403)</translation>
+  <translation id="8509185303237588116" key="MSG_LOGS_DOWNLOAD_DIALOG_6" desc="Log file download dialog \'Close\' button.">Close</translation>
   <translation id="4722922095699681308" key="MSG_LOGS_LOGS_0" desc="Title prefix for logs card.">容器日誌</translation>
   <translation id="6855662924451585032" key="MSG_LOGS_LOGS_1" desc="Title part for logs card.">位於</translation>
   <translation id="6427964323602885868" key="MSG_LOGS_LOGS_10" desc="Tooltip for button that switches to showing the previous logs.">顯示先前日誌</translation>
