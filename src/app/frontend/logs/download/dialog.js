@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {kdLocalizedErrors} from '../../common/errorhandling/errors';
+
 /** @const {number} */
 const PROGRESS_UPDATE_TIMEOUT = 500;
 
@@ -52,6 +54,10 @@ export class DownloadDialogController {
     this.timeout_ = $timeout;
     /** @private {angular.$q.Promise|undefined} */
     this.progressUpdateTimeoutFinished_;
+    /** @export {number} */
+    this.error;
+    /** @export {Object} */
+    this.kdLocalizerErrors = kdLocalizedErrors;
   }
 
   /** @export */
@@ -59,8 +65,9 @@ export class DownloadDialogController {
     this.downloadService_
         .downloadFile(this.downloadUrl_, this.progressUpdateCallback_.bind(this), this.canceler_)
         .then(this.downloadFinishedCallback_.bind(this))
-        // Silence the error as we are handling abort in abort function
-        .catch(() => {});
+        .catch((err) => {
+          this.error = err.status;
+        });
   }
 
   /**
@@ -125,6 +132,14 @@ export class DownloadDialogController {
    */
   getDownloadMode() {
     return this.finished ? 'determinate' : 'indeterminate';
+  }
+
+  /**
+   * @return {boolean}
+   * @export
+   */
+  hasForbiddenError() {
+    return this.error !== undefined && this.error === 403;
   }
 }
 
