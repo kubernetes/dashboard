@@ -54,9 +54,9 @@
 }
 
 .kd-download-error-button {
-  justify-self: end;
   grid-column: 2;
   grid-row: 2;
+  justify-self: end;
 
   .md-button {
     margin: $baseline-grid 0 (2 * $baseline-grid);
