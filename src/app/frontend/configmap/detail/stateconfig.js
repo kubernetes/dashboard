@@ -18,7 +18,6 @@ import {appendDetailParamsToUrl} from '../../common/resource/resourcedetail';
 import {stateName as configMapList} from '../../configmap/list/state';
 
 import {stateName as parentState, stateUrl} from '../state';
-import {ActionBarController} from './actionbar_controller';
 import {ConfigMapDetailController} from './controller';
 
 /**
@@ -46,7 +45,6 @@ export const config = {
       templateUrl: 'configmap/detail/detail.html',
     },
     [`${actionbarViewName}@${chromeStateName}`]: {
-      controller: ActionBarController,
       controllerAs: '$ctrl',
       templateUrl: 'configmap/detail/actionbar.html',
     },
