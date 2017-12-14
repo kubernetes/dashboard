@@ -217,15 +217,14 @@ describe('Relative time filter', () => {
        expect(relativeTime).toEqual('11 months');
      });
 
-  it(`should return 'didn't happen yet' string if given time is null`,
-     () => {
-       // given
-       // null
-       
-       // when
-       let relativeTime = relativeTimeFilter(null);
+  it(`should return 'didn't happen yet' string if given time is null`, () => {
+    // given
+    // null
 
-       // then
-       expect(relativeTime).toEqual(`-`);
-     });
+    // when
+    let relativeTime = relativeTimeFilter(null);
+
+    // then
+    expect(relativeTime).toEqual(`-`);
+  });
 });
