@@ -15,14 +15,21 @@ limitations under the License.
 -->
 
 <div layout="column">
-  <kd-config-map-info config-map="::$ctrl.configMapDetail"></kd-config-map-info>
-  <kd-info-card>
-    <kd-info-card-header>[[Data|Header in a detail view of config map deta]]</kd-info-card-header>
-    <kd-info-card-section>
-      <kd-info-card-entry ng-repeat="(key, value) in ::$ctrl.configMapDetail.data"
-                          title="{{::key}}">
-        <pre class="kd-pre-block">{{::value}}</pre>
+  <kd-config-map-info config-map="$ctrl.configMapDetail"></kd-config-map-info>
+    <kd-info-card>
+    <kd-info-card-header>[[Data|Config map data header on details page]]</kd-info-card-header>
+    <kd-info-card-section ng-if="$ctrl.configMapDetail.data">
+      <kd-info-card-entry ng-repeat="(key, value) in $ctrl.configMapDetail.data"
+                          title="{{key}}">
+        <pre class="kd-pre-block">{{value}}</pre>
       </kd-info-card-entry>
     </kd-info-card-section>
+        <kd-info-card-section class="kd-config-map-zero-state"
+                              ng-if="!$ctrl.configMapDetail.data">
+            <kd-zero-state>
+                <kd-zero-state-title>[[There is no data to display|Zero state text on config map details view.]]</kd-zero-state-title>
+                <kd-zero-state-text>[[You can edit config map to add data.|Zero state text on config map details view.]]</kd-zero-state-text>
+            </kd-zero-state>
+        </kd-info-card-section>
   </kd-info-card>
 </div>

@@ -13,28 +13,11 @@
 // limitations under the License.
 
 /**
- * @final
- */
-export default class ConfigMapInfoController {
-  /**
-   * Constructs statefultion controller info object.
-   */
-  constructor() {
-    /**
-     * Config map details. Initialized from the scope.
-     * @export {!backendApi.ConfigMapDetail}
-     */
-    this.configMap;
-  }
-}
-
-/**
  * Definition object for the component that displays config map info.
  *
  * @return {!angular.Component}
  */
 export const configMapInfoComponent = {
-  controller: ConfigMapInfoController,
   templateUrl: 'configmap/detail/info.html',
   bindings: {
     /** {!backendApi.ConfigMapDetail} */

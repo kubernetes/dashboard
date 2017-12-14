@@ -160,6 +160,8 @@
   <translation id="486192895688311189" key="MSG_COMMON_SCALING_SCALERESOURCE_9" desc="Action \'OK\' for the confirmation button on the &quot;update number of pods dialog&quot;.">确定</translation>
   <translation id="2290466353199139171" key="MSG_CONFIGMAP_DETAIL_ACTIONBAR_0" desc="Label \'Config Map\' which appears at the top of the\n      delete dialog, opened from a config map details page.">配置字典</translation>
   <translation id="1345195277871602727" key="MSG_CONFIGMAP_DETAIL_DETAIL_0" desc="Header in a detail view of config map deta">数据</translation>
+  <translation id="5478435235468315342" key="MSG_CONFIGMAP_DETAIL_DETAIL_1" desc="Zero state text on config map details view.">There is no data to display</translation>
+  <translation id="5220920321462587761" key="MSG_CONFIGMAP_DETAIL_DETAIL_2" desc="Zero state text on config map details view.">You can edit config map to add data.</translation>
   <translation id="998665058731826460" key="MSG_CONFIGMAP_DETAIL_INFO_0" desc="Header in a detail view">详情</translation>
   <translation id="9090261468074115569" key="MSG_CONFIGMAP_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">配置字典</translation>
   <translation id="5434719528055235183" key="MSG_CONFIGMAP_LIST_CARDLIST_1" desc="Config map list header: name.">名称</translation>

@@ -28,10 +28,13 @@
 .kd-zerostate-title {
   color: $muted;
   font-size: $headline-font-size-base;
+  font-weight: $regular-font-weight;
   margin-bottom: $baseline-grid / 2;
 }
 
 .kd-zerostate-text {
   color: $delicate;
+  font-size: $body-font-size-base;
+  font-weight: $regular-font-weight;
   word-break: break-all;
 }
