@@ -16,10 +16,10 @@ import {actionbarViewName, stateName as chromeStateName} from '../../chrome/stat
 import {breadcrumbsConfig} from '../../common/components/breadcrumbs/service';
 import {appendDetailParamsToUrl} from '../../common/resource/resourcedetail';
 import {stateName as configMapList} from '../../configmap/list/state';
-
 import {stateName as parentState, stateUrl} from '../state';
+
+import {ActionBarController} from './actionbar_controller';
 import {ConfigMapDetailController} from './controller';
-import {ActionBarController} from "./actionbar_controller";
 
 /**
  * Config state object for the Config Map detail view.
