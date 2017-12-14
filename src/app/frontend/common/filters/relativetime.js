@@ -27,6 +27,9 @@ export default function relativeTimeFilter(kdAppConfigService) {
    * @return {string}
    */
   let filterFunction = function(value) {
+    if (value == null) {
+      return TimeConstants.NOT_YET;
+    }
     // Current server time.
     let serverTime = kdAppConfigService.getServerTime();
 
