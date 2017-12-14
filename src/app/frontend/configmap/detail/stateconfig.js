@@ -19,6 +19,7 @@ import {stateName as configMapList} from '../../configmap/list/state';
 
 import {stateName as parentState, stateUrl} from '../state';
 import {ConfigMapDetailController} from './controller';
+import {ActionBarController} from "./actionbar_controller";
 
 /**
  * Config state object for the Config Map detail view.
@@ -45,6 +46,7 @@ export const config = {
       templateUrl: 'configmap/detail/detail.html',
     },
     [`${actionbarViewName}@${chromeStateName}`]: {
+      controller: ActionBarController,
       controllerAs: '$ctrl',
       templateUrl: 'configmap/detail/actionbar.html',
     },
