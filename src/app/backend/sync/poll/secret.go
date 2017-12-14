@@ -17,8 +17,8 @@ package poll
 import (
 	"time"
 
+	kdErrors "github.com/kubernetes/dashboard/src/app/backend/errors"
 	syncapi "github.com/kubernetes/dashboard/src/app/backend/sync/api"
-	"k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/wait"
 	"k8s.io/apimachinery/pkg/watch"
@@ -62,20 +62,11 @@ func (self *SecretPoller) getSecretEvent() (event watch.Event) {
 	}
 
 	// In case it was never created we can still mark it as deleted and let secret be recreated.
-	if self.isNotFoundError(err) {
+	if kdErrors.IsNotFoundError(err) {
 		event.Type = watch.Deleted
 	}
 
 	return
-}
-
-// Checks whether or not given error is a not found error (404).
-func (self *SecretPoller) isNotFoundError(err error) bool {
-	statusErr, ok := err.(*errors.StatusError)
-	if !ok {
-		return false
-	}
-	return statusErr.ErrStatus.Code == 404
 }
 
 // NewSecretPoller returns instance of Poller interface.

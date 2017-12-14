@@ -17,7 +17,7 @@ package validation
 import (
 	"log"
 
-	"k8s.io/apimachinery/pkg/api/errors"
+	kdErrors "github.com/kubernetes/dashboard/src/app/backend/errors"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
 )
@@ -39,13 +39,13 @@ type AppNameValidity struct {
 func ValidateAppName(spec *AppNameValiditySpec, client client.Interface) (*AppNameValidity, error) {
 	log.Printf("Validating %s application name in %s namespace", spec.Name, spec.Namespace)
 
-	isValidRc := false
+	isValidDeployment := false
 	isValidService := false
 
-	_, err := client.CoreV1().ReplicationControllers(spec.Namespace).Get(spec.Name, metaV1.GetOptions{})
+	_, err := client.AppsV1beta2().Deployments(spec.Namespace).Get(spec.Name, metaV1.GetOptions{})
 	if err != nil {
-		if isNotFoundError(err) {
-			isValidRc = true
+		if kdErrors.IsNotFoundError(err) || kdErrors.IsForbiddenError(err) {
+			isValidDeployment = true
 		} else {
 			return nil, err
 		}
@@ -53,26 +53,17 @@ func ValidateAppName(spec *AppNameValiditySpec, client client.Interface) (*AppNa
 
 	_, err = client.CoreV1().Services(spec.Namespace).Get(spec.Name, metaV1.GetOptions{})
 	if err != nil {
-		if isNotFoundError(err) {
+		if kdErrors.IsNotFoundError(err) || kdErrors.IsForbiddenError(err) {
 			isValidService = true
 		} else {
 			return nil, err
 		}
 	}
 
-	isValid := isValidRc && isValidService
+	isValid := isValidDeployment && isValidService
 
 	log.Printf("Validation result for %s application name in %s namespace is %t", spec.Name,
 		spec.Namespace, isValid)
 
 	return &AppNameValidity{Valid: isValid}, nil
-}
-
-// Returns true when the given error is 404-NotFound error.
-func isNotFoundError(err error) bool {
-	statusErr, ok := err.(*errors.StatusError)
-	if !ok {
-		return false
-	}
-	return statusErr.ErrStatus.Code == 404
 }
