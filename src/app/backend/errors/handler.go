@@ -18,7 +18,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/emicklei/go-restful"
+	restful "github.com/emicklei/go-restful"
 	"k8s.io/apimachinery/pkg/api/errors"
 )
 
