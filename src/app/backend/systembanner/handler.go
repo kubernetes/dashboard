@@ -15,12 +15,10 @@
 package systembanner
 
 import (
-	"log"
 	"net/http"
 
 	restful "github.com/emicklei/go-restful"
 	"github.com/kubernetes/dashboard/src/app/backend/systembanner/api"
-	"k8s.io/apimachinery/pkg/api/errors"
 )
 
 // SystemBannerHandler manages all endpoints related to system banner management.
@@ -38,18 +36,6 @@ func (self *SystemBannerHandler) Install(ws *restful.WebService) {
 
 func (self *SystemBannerHandler) handleGet(request *restful.Request, response *restful.Response) {
 	response.WriteHeaderAndEntity(http.StatusOK, self.manager.Get())
-}
-
-// handleInternalError writes the given error to the response and sets appropriate HTTP status headers.
-func handleInternalError(response *restful.Response, err error) {
-	log.Print(err)
-	statusCode := http.StatusInternalServerError
-	statusError, ok := err.(*errors.StatusError)
-	if ok && statusError.Status().Code > 0 {
-		statusCode = int(statusError.Status().Code)
-	}
-	response.AddHeader("Content-Type", "text/plain")
-	response.WriteErrorString(statusCode, err.Error()+"\n")
 }
 
 // NewSystemBannerHandler creates SystemBannerHandler.

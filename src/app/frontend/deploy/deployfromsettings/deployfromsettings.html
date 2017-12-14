@@ -39,7 +39,7 @@ limitations under the License.
                      multiple>
           <ng-message when="required">[[Application name is required.|Appears to tell the user that app name input on the deploy from settings page is required.]]</ng-message>
           <ng-message when="uniqueName">
-            [[Replication controller or service with this name already exists within namespace.|Appears as warning when the user has typed in an app name that already exists. The text is followed by a specific namespace name.]]
+            [[Deployment or service with this name already exists within namespace.|Appears as warning when the user has typed in an app name that already exists. The text is followed by a specific namespace name.]]
             <i>{{$ctrl.namespace}}</i>.
           </ng-message>
           <ng-message when="pattern">
@@ -121,7 +121,7 @@ limitations under the License.
     </md-input-container>
     <kd-user-help>
       [[A Deployment will be created to maintain the desired number of pods across your cluster.|User help for number of pods on deploy from settings page.]]
-      <a href="http://kubernetes.io/docs/user-guide/replication-controller/"
+      <a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment/"
          target="_blank"
          tabindex="-1">
           [[Learn more|Learn more link on deploy from settings page.]] <i class="material-icons">open_in_new</i>
@@ -155,7 +155,7 @@ limitations under the License.
         <textarea ng-model="$ctrl.description"></textarea>
       </md-input-container>
       <kd-user-help>
-        [[The description will be added as an annotation to the Replication Controller and displayed in the application's details.|User help for description on deploy from settings page.]]
+        [[The description will be added as an annotation to the Deployment and displayed in the application's details.|User help for description on deploy from settings page.]]
       </kd-user-help>
     </kd-help-section>
 
@@ -178,7 +178,7 @@ limitations under the License.
       </div>
 
       <kd-user-help>
-        [[The specified labels will be applied to the created Replication Controller, Service (if any) and Pods. Common labels include release, environment, tier, partition and track.|User help for the labels section on the deploy from settings page.]]
+        [[The specified labels will be applied to the created Deployment, Service (if any) and Pods. Common labels include release, environment, tier, partition and track.|User help for the labels section on the deploy from settings page.]]
         <a href="http://kubernetes.io/docs/user-guide/labels/"
            target="_blank"
            tabindex="-1">
