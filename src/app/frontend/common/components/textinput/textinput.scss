@@ -12,17 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../variables';
+@import '../../../variables';
 
-.kd-deploy-from-input-info {
-  margin-bottom: $baseline-grid * 3;
-  padding: 0 (.5 * $baseline-grid);
-
-  .material-icons {
-    font-size: $body-font-size-base;
-  }
-}
-
-.kd-deploy-from-input-button {
-  margin-left: 0;
+.kd-text-input {
+  border: 1px solid $border;
+  height: 50 * $baseline-grid;
+  margin-bottom: 3 * $baseline-grid;
 }

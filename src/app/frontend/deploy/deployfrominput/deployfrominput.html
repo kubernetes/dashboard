@@ -27,10 +27,7 @@ limitations under the License.
   </a>
 </div>
 
-<div ui-ace="{{ $ctrl.getEditorConfig() }}"
-     class="kd-deploy-from-input-editor"
-     ng-model="$ctrl.inputData">
-</div>
+<kd-text-input input-data="$ctrl.inputData"></kd-text-input>
 
 <md-button class="md-raised md-primary kd-deploy-from-input-button"
            ng-click="$ctrl.deploy()"

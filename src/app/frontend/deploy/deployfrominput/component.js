@@ -65,22 +65,6 @@ class DeployFromInputController {
   areMultipleNamespacesSelected() {
     return this.namespaceService_.areMultipleNamespacesSelected();
   }
-
-  /**
-   * Returns ui-ace editor config. Read more at https://github.com/angular-ui/ui-ace#options.
-   *
-   * @return {Object}
-   * @export
-   */
-  getEditorConfig() {
-    return {
-      useWrapMode: true,
-      mode: 'yaml',
-      advanced: {
-        fontSize: '16px',
-      },
-    };
-  }
 }
 
 /** @return {!angular.Component} */
