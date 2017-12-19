@@ -85,8 +85,6 @@ func (self *rsaKeyHolder) Refresh() {
 // Handler function executed by synchronizer used to store encryption key. It is called whenever watched object
 // is created or updated.
 func (self *rsaKeyHolder) update(obj runtime.Object) {
-	self.mux.Lock()
-	defer self.mux.Unlock()
 	secret := obj.(*v1.Secret)
 	priv, err := ParseRSAKey(string(secret.Data[holderMapKeyEntry]), string(secret.Data[holderMapCertEntry]))
 	if err != nil {
@@ -99,6 +97,8 @@ func (self *rsaKeyHolder) update(obj runtime.Object) {
 		return
 	}
 
+	self.mux.Lock()
+	defer self.mux.Unlock()
 	self.key = priv
 }
 
