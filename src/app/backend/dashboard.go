@@ -64,10 +64,10 @@ var (
 		"Note that basic option should only be used if apiserver has '--authorization-mode=ABAC' and '--basic-auth-file' flags set.")
 	argMetricClientCheckPeriod  = pflag.Int("metric-client-check-period", 30, "Time in seconds that defines how often configured metric client health check should be run. Default: 30 seconds.")
 	argAutoGenerateCertificates = pflag.Bool("auto-generate-certificates", false, "When set to true, Dashboard will automatically generate certificates used to serve HTTPS. Default: false.")
-	argEnableInsecureLogin      = pflag.Bool("enable-insecure-login", false, "When enabled, Dashboard login view will also be shown when Dashboard is not served over HTTPS. Default: false.")
-	argSystemBanner             = pflag.String("system-banner", "", "When non-empty displays message to Dashboard users. Accepts simple HTML tags. Default: ''.")
-	argSystemBannerSeverity     = pflag.String("system-banner-severity", "INFO", "Severity of system banner. Should be one of 'INFO|WARNING|ERROR'. Default: 'INFO'.")
-	argEnableSettingsAuthorizer = pflag.Bool("enable-settings-authorizer", true, "When enabled, Dashboard settings page will require user to be logged in and authorized to access it.")
+	argEnableInsecureLogin       = pflag.Bool("enable-insecure-login", false, "When enabled, Dashboard login view will also be shown when Dashboard is not served over HTTPS. Default: false.")
+	argSystemBanner              = pflag.String("system-banner", "", "When non-empty displays message to Dashboard users. Accepts simple HTML tags. Default: ''.")
+	argSystemBannerSeverity      = pflag.String("system-banner-severity", "INFO", "Severity of system banner. Should be one of 'INFO|WARNING|ERROR'. Default: 'INFO'.")
+	argDisableSettingsAuthorizer = pflag.Bool("disable-settings-authorizer", false, "When enabled, Dashboard settings page will not require user to be logged in and authorized to access settings page.")
 )
 
 func main() {
@@ -81,14 +81,14 @@ func main() {
 	// Initializes dashboard arguments holder so we can read them in other packages
 	initArgHolder()
 
-	if args.ArgHolder.GetApiServerHost() != "" {
-		log.Printf("Using apiserver-host location: %s", args.ArgHolder.GetApiServerHost())
+	if args.Holder.GetApiServerHost() != "" {
+		log.Printf("Using apiserver-host location: %s", args.Holder.GetApiServerHost())
 	}
-	if args.ArgHolder.GetKubeConfigFile() != "" {
-		log.Printf("Using kubeconfig file: %s", args.ArgHolder.GetKubeConfigFile())
+	if args.Holder.GetKubeConfigFile() != "" {
+		log.Printf("Using kubeconfig file: %s", args.Holder.GetKubeConfigFile())
 	}
 
-	clientManager := client.NewClientManager(args.ArgHolder.GetKubeConfigFile(), args.ArgHolder.GetApiServerHost())
+	clientManager := client.NewClientManager(args.Holder.GetKubeConfigFile(), args.Holder.GetApiServerHost())
 	versionInfo, err := clientManager.InsecureClient().Discovery().ServerVersion()
 	if err != nil {
 		handleFatalInitError(err)
@@ -103,13 +103,13 @@ func main() {
 	settingsManager := settings.NewSettingsManager(clientManager)
 
 	// Init system banner manager
-	systemBannerManager := systembanner.NewSystemBannerManager(args.ArgHolder.GetSystemBanner(),
-		args.ArgHolder.GetSystemBannerSeverity())
+	systemBannerManager := systembanner.NewSystemBannerManager(args.Holder.GetSystemBanner(),
+		args.Holder.GetSystemBannerSeverity())
 
 	// Init integrations
 	integrationManager := integration.NewIntegrationManager(clientManager)
-	integrationManager.Metric().ConfigureHeapster(args.ArgHolder.GetHeapsterHost()).
-		EnableWithRetry(integrationapi.HeapsterIntegrationID, time.Duration(args.ArgHolder.GetMetricClientCheckPeriod()))
+	integrationManager.Metric().ConfigureHeapster(args.Holder.GetHeapsterHost()).
+		EnableWithRetry(integrationapi.HeapsterIntegrationID, time.Duration(args.Holder.GetMetricClientCheckPeriod()))
 
 	apiHandler, err := handler.CreateHTTPAPIHandler(
 		integrationManager,
@@ -121,10 +121,10 @@ func main() {
 		handleFatalInitError(err)
 	}
 
-	if args.ArgHolder.GetAutoGenerateCertificates() {
+	if args.Holder.GetAutoGenerateCertificates() {
 		log.Println("Auto-generating certificates")
-		certCreator := ecdsa.NewECDSACreator(args.ArgHolder.GetKeyFile(), args.ArgHolder.GetCertFile(), elliptic.P256())
-		certManager := cert.NewCertManager(certCreator, args.ArgHolder.GetDefaultCertDir())
+		certCreator := ecdsa.NewECDSACreator(args.Holder.GetKeyFile(), args.Holder.GetCertFile(), elliptic.P256())
+		certManager := cert.NewCertManager(certCreator, args.Holder.GetDefaultCertDir())
 		certManager.GenerateCertificates()
 	}
 
@@ -138,15 +138,15 @@ func main() {
 	http.Handle("/metrics", prometheus.Handler())
 
 	// Listen for http or https
-	if args.ArgHolder.GetCertFile() != "" && args.ArgHolder.GetKeyFile() != "" {
-		certFilePath := args.ArgHolder.GetDefaultCertDir() + string(os.PathSeparator) + args.ArgHolder.GetCertFile()
-		keyFilePath := args.ArgHolder.GetDefaultCertDir() + string(os.PathSeparator) + args.ArgHolder.GetKeyFile()
-		log.Printf("Serving securely on HTTPS port: %d", args.ArgHolder.GetPort())
-		secureAddr := fmt.Sprintf("%s:%d", args.ArgHolder.GetBindAddress(), args.ArgHolder.GetPort())
+	if args.Holder.GetCertFile() != "" && args.Holder.GetKeyFile() != "" {
+		certFilePath := args.Holder.GetDefaultCertDir() + string(os.PathSeparator) + args.Holder.GetCertFile()
+		keyFilePath := args.Holder.GetDefaultCertDir() + string(os.PathSeparator) + args.Holder.GetKeyFile()
+		log.Printf("Serving securely on HTTPS port: %d", args.Holder.GetPort())
+		secureAddr := fmt.Sprintf("%s:%d", args.Holder.GetBindAddress(), args.Holder.GetPort())
 		go func() { log.Fatal(http.ListenAndServeTLS(secureAddr, certFilePath, keyFilePath, nil)) }()
 	} else {
-		log.Printf("Serving insecurely on HTTP port: %d", args.ArgHolder.GetInsecurePort())
-		addr := fmt.Sprintf("%s:%d", args.ArgHolder.GetInsecureBindAddress(), args.ArgHolder.GetInsecurePort())
+		log.Printf("Serving insecurely on HTTP port: %d", args.Holder.GetInsecurePort())
+		addr := fmt.Sprintf("%s:%d", args.Holder.GetInsecureBindAddress(), args.Holder.GetInsecurePort())
 		go func() { log.Fatal(http.ListenAndServe(addr, nil)) }()
 	}
 	select {}
@@ -165,14 +165,14 @@ func initAuthManager(clientManager clientapi.ClientManager) authApi.AuthManager 
 	// Init encryption key holder and token manager
 	keyHolder := jwe.NewRSAKeyHolder(keySynchronizer)
 	tokenManager := jwe.NewJWETokenManager(keyHolder)
-	tokenTTL := time.Duration(args.ArgHolder.GetTokenTTL())
+	tokenTTL := time.Duration(args.Holder.GetTokenTTL())
 	if tokenTTL != authApi.DefaultTokenTTL {
 		tokenManager.SetTokenTTL(tokenTTL)
 	}
 
 	// Set token manager for client manager.
 	clientManager.SetTokenManager(tokenManager)
-	authModes := authApi.ToAuthenticationModes(args.ArgHolder.GetAuthenticationMode())
+	authModes := authApi.ToAuthenticationModes(args.Holder.GetAuthenticationMode())
 	if len(authModes) == 0 {
 		authModes.Add(authApi.Token)
 	}
@@ -181,7 +181,7 @@ func initAuthManager(clientManager clientapi.ClientManager) authApi.AuthManager 
 }
 
 func initArgHolder() {
-	builder := args.GetArgHolderBuilder()
+	builder := args.GetHolderBuilder()
 	builder.SetInsecurePort(*argInsecurePort)
 	builder.SetPort(*argPort)
 	builder.SetTokenTTL(*argTokenTTL)
@@ -199,7 +199,7 @@ func initArgHolder() {
 	builder.SetAuthenticationMode(*argAuthenticationMode)
 	builder.SetAutoGenerateCertificates(*argAutoGenerateCertificates)
 	builder.SetEnableInsecureLogin(*argEnableInsecureLogin)
-	builder.SetEnableSettingsAuthorizer(*argEnableSettingsAuthorizer)
+	builder.SetDisableSettingsAuthorizer(*argDisableSettingsAuthorizer)
 }
 
 /**

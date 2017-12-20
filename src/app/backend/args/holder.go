@@ -6,9 +6,11 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/cert/api"
 )
 
-var ArgHolder = &argHolder{}
+var Holder = &holder{}
 
-type argHolder struct {
+// Argument holder structure. It is private to make sure that only 1 instance can be created. It holds all
+// arguments values passed to Dashboard binary.
+type holder struct {
 	insecurePort            int
 	port                    int
 	tokenTTL                int
@@ -28,40 +30,48 @@ type argHolder struct {
 
 	authenticationMode []string
 
-	autoGenerateCertificates bool
-	enableInsecureLogin      bool
-	enableSettingsAuthorizer bool
+	autoGenerateCertificates  bool
+	enableInsecureLogin       bool
+	disableSettingsAuthorizer bool
 }
 
-func (self *argHolder) GetInsecurePort() int {
+// GetInsecurePort 'insecure-port' argument of Dashboard binary.
+func (self *holder) GetInsecurePort() int {
 	return self.insecurePort
 }
 
-func (self *argHolder) GetPort() int {
+// GetPort 'port' argument of Dashboard binary.
+func (self *holder) GetPort() int {
 	return self.port
 }
 
-func (self *argHolder) GetTokenTTL() int {
+// GetTokenTTL 'token-ttl' argument of Dashboard binary.
+func (self *holder) GetTokenTTL() int {
 	return self.tokenTTL
 }
 
-func (self *argHolder) GetMetricClientCheckPeriod() int {
+// GetMetricClientCheckPeriod 'metric-client-check-period' argument of Dashboard binary.
+func (self *holder) GetMetricClientCheckPeriod() int {
 	return self.metricClientCheckPeriod
 }
 
-func (self *argHolder) GetInsecureBindAddress() net.IP {
+// GetInsecureBindAddress 'insecure-bind-address' argument of Dashboard binary.
+func (self *holder) GetInsecureBindAddress() net.IP {
 	return self.insecureBindAddress
 }
 
-func (self *argHolder) GetBindAddress() net.IP {
+// GetBindAddress 'bind-address' argument of Dashboard binary.
+func (self *holder) GetBindAddress() net.IP {
 	return self.bindAddress
 }
 
-func (self *argHolder) GetDefaultCertDir() string {
+// GetDefaultCertDir 'default-cert-dir' argument of Dashboard binary.
+func (self *holder) GetDefaultCertDir() string {
 	return self.defaultCertDir
 }
 
-func (self *argHolder) GetCertFile() string {
+// GetCertFile 'tls-cert-file' argument of Dashboard binary.
+func (self *holder) GetCertFile() string {
 	if len(self.certFile) == 0 && self.autoGenerateCertificates {
 		return api.DashboardCertName
 	}
@@ -69,7 +79,8 @@ func (self *argHolder) GetCertFile() string {
 	return self.certFile
 }
 
-func (self *argHolder) GetKeyFile() string {
+// GetKeyFile 'tls-key-file' argument of Dashboard binary.
+func (self *holder) GetKeyFile() string {
 	if len(self.keyFile) == 0 && self.autoGenerateCertificates {
 		return api.DashboardKeyName
 	}
@@ -77,38 +88,47 @@ func (self *argHolder) GetKeyFile() string {
 	return self.keyFile
 }
 
-func (self *argHolder) GetApiServerHost() string {
+// GetApiServerHost 'apiserver-host' argument of Dashboard binary.
+func (self *holder) GetApiServerHost() string {
 	return self.apiServerHost
 }
 
-func (self *argHolder) GetHeapsterHost() string {
+// GetHeapsterHost 'heapster-host' argument of Dashboard binary.
+func (self *holder) GetHeapsterHost() string {
 	return self.heapsterHost
 }
 
-func (self *argHolder) GetKubeConfigFile() string {
+// GetKubeConfigFile 'kubeconfig' argument of Dashboard binary.
+func (self *holder) GetKubeConfigFile() string {
 	return self.kubeConfigFile
 }
 
-func (self *argHolder) GetSystemBanner() string {
+// GetSystemBanner 'system-banner' argument of Dashboard binary.
+func (self *holder) GetSystemBanner() string {
 	return self.systemBanner
 }
 
-func (self *argHolder) GetSystemBannerSeverity() string {
+// GetSystemBannerSeverity 'system-banner-severity' argument of Dashboard binary.
+func (self *holder) GetSystemBannerSeverity() string {
 	return self.systemBannerSeverity
 }
 
-func (self *argHolder) GetAuthenticationMode() []string {
+// GetAuthenticationMode 'authentication-mode' argument of Dashboard binary.
+func (self *holder) GetAuthenticationMode() []string {
 	return self.authenticationMode
 }
 
-func (self *argHolder) GetAutoGenerateCertificates() bool {
+// GetAutoGenerateCertificates 'auto-generate-certificates' argument of Dashboard binary.
+func (self *holder) GetAutoGenerateCertificates() bool {
 	return self.autoGenerateCertificates
 }
 
-func (self *argHolder) GetEnableInsecureLogin() bool {
+// GetEnableInsecureLogin 'enable-insecure-login' argument of Dashboard binary.
+func (self *holder) GetEnableInsecureLogin() bool {
 	return self.enableInsecureLogin
 }
 
-func (self *argHolder) GetEnableSettingsAuthorizer() bool {
-	return self.enableSettingsAuthorizer
+// GetDisableSettingsAuthorizer 'disable-settings-authorizer' argument of Dashboard binary.
+func (self *holder) GetDisableSettingsAuthorizer() bool {
+	return self.disableSettingsAuthorizer
 }

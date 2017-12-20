@@ -2,102 +2,123 @@ package args
 
 import "net"
 
-var builder = &argHolderBuilder{holder: ArgHolder}
+var builder = &holderBuilder{holder: Holder}
 
-type argHolderBuilder struct {
-	holder *argHolder
+// Used to build argument holder structure. It is private to make sure that only 1 instance can be created
+// that modifies singletone instance of argument holder.
+type holderBuilder struct {
+	holder *holder
 }
 
-func (self *argHolderBuilder) SetInsecurePort(port int) *argHolderBuilder {
+// SetInsecurePort 'insecure-port' argument of Dashboard binary.
+func (self *holderBuilder) SetInsecurePort(port int) *holderBuilder {
 	self.holder.insecurePort = port
 	return self
 }
 
-func (self *argHolderBuilder) SetPort(port int) *argHolderBuilder {
+// SetPort 'port' argument of Dashboard binary.
+func (self *holderBuilder) SetPort(port int) *holderBuilder {
 	self.holder.port = port
 	return self
 }
 
-func (self *argHolderBuilder) SetTokenTTL(ttl int) *argHolderBuilder {
+// SetTokenTTL 'token-ttl' argument of Dashboard binary.
+func (self *holderBuilder) SetTokenTTL(ttl int) *holderBuilder {
 	self.holder.tokenTTL = ttl
 	return self
 }
 
-func (self *argHolderBuilder) SetMetricClientCheckPeriod(period int) *argHolderBuilder {
+// SetMetricClientCheckPeriod 'metric-client-check-eriod' argument of Dashboard binary.
+func (self *holderBuilder) SetMetricClientCheckPeriod(period int) *holderBuilder {
 	self.holder.metricClientCheckPeriod = period
 	return self
 }
 
-func (self *argHolderBuilder) SetInsecureBindAddress(ip net.IP) *argHolderBuilder {
+// SetInsecureBindAddress 'insecure-bind-address' argument of Dashboard binary.
+func (self *holderBuilder) SetInsecureBindAddress(ip net.IP) *holderBuilder {
 	self.holder.insecureBindAddress = ip
 	return self
 }
 
-func (self *argHolderBuilder) SetBindAddress(ip net.IP) *argHolderBuilder {
+// SetBindAddress 'bind-address' argument of Dashboard binary.
+func (self *holderBuilder) SetBindAddress(ip net.IP) *holderBuilder {
 	self.holder.bindAddress = ip
 	return self
 }
 
-func (self *argHolderBuilder) SetDefaultCertDir(certDir string) *argHolderBuilder {
+// SetDefaultCertDir 'default-cert-dir' argument of Dashboard binary.
+func (self *holderBuilder) SetDefaultCertDir(certDir string) *holderBuilder {
 	self.holder.defaultCertDir = certDir
 	return self
 }
 
-func (self *argHolderBuilder) SetCertFile(certFile string) *argHolderBuilder {
+// SetCertFile 'tls-cert-file' argument of Dashboard binary.
+func (self *holderBuilder) SetCertFile(certFile string) *holderBuilder {
 	self.holder.certFile = certFile
 	return self
 }
 
-func (self *argHolderBuilder) SetKeyFile(keyFile string) *argHolderBuilder {
+// SetKeyFile 'tls-key-file' argument of Dashboard binary.
+func (self *holderBuilder) SetKeyFile(keyFile string) *holderBuilder {
 	self.holder.keyFile = keyFile
 	return self
 }
 
-func (self *argHolderBuilder) SetApiServerHost(apiServerHost string) *argHolderBuilder {
+// SetApiServerHost 'api-server-host' argument of Dashboard binary.
+func (self *holderBuilder) SetApiServerHost(apiServerHost string) *holderBuilder {
 	self.holder.apiServerHost = apiServerHost
 	return self
 }
 
-func (self *argHolderBuilder) SetHeapsterHost(heapsterHost string) *argHolderBuilder {
+// SetHeapsterHost 'heapster-host' argument of Dashboard binary.
+func (self *holderBuilder) SetHeapsterHost(heapsterHost string) *holderBuilder {
 	self.holder.heapsterHost = heapsterHost
 	return self
 }
 
-func (self *argHolderBuilder) SetKubeConfigFile(kubeConfigFile string) *argHolderBuilder {
+// SetKubeConfigFile 'kubeconfig' argument of Dashboard binary.
+func (self *holderBuilder) SetKubeConfigFile(kubeConfigFile string) *holderBuilder {
 	self.holder.kubeConfigFile = kubeConfigFile
 	return self
 }
 
-func (self *argHolderBuilder) SetSystemBanner(systemBanner string) *argHolderBuilder {
+// SetSystemBanner 'system-banner' argument of Dashboard binary.
+func (self *holderBuilder) SetSystemBanner(systemBanner string) *holderBuilder {
 	self.holder.systemBanner = systemBanner
 	return self
 }
 
-func (self *argHolderBuilder) SetSystemBannerSeverity(systemBannerSeverity string) *argHolderBuilder {
+// SetSystemBannerSeverity 'system-banner-severity' argument of Dashboard binary.
+func (self *holderBuilder) SetSystemBannerSeverity(systemBannerSeverity string) *holderBuilder {
 	self.holder.systemBannerSeverity = systemBannerSeverity
 	return self
 }
 
-func (self *argHolderBuilder) SetAuthenticationMode(authMode []string) *argHolderBuilder {
+// SetAuthenticationMode 'authentication-mode' argument of Dashboard binary.
+func (self *holderBuilder) SetAuthenticationMode(authMode []string) *holderBuilder {
 	self.holder.authenticationMode = authMode
 	return self
 }
 
-func (self *argHolderBuilder) SetAutoGenerateCertificates(autoGenerateCertificates bool) *argHolderBuilder {
+// SetAutoGenerateCertificates 'auto-generate-certificates' argument of Dashboard binary.
+func (self *holderBuilder) SetAutoGenerateCertificates(autoGenerateCertificates bool) *holderBuilder {
 	self.holder.autoGenerateCertificates = autoGenerateCertificates
 	return self
 }
 
-func (self *argHolderBuilder) SetEnableInsecureLogin(enableInsecureLogin bool) *argHolderBuilder {
+// SetEnableInsecureLogin 'enable-insecure-login' argument of Dashboard binary.
+func (self *holderBuilder) SetEnableInsecureLogin(enableInsecureLogin bool) *holderBuilder {
 	self.holder.enableInsecureLogin = enableInsecureLogin
 	return self
 }
 
-func (self *argHolderBuilder) SetEnableSettingsAuthorizer(enableSettingsAuthorizer bool) *argHolderBuilder {
-	self.holder.enableSettingsAuthorizer = enableSettingsAuthorizer
+// SetDisableSettingsAuthorizer 'enable-settings-authorizer' argument of Dashboard binary.
+func (self *holderBuilder) SetDisableSettingsAuthorizer(enableSettingsAuthorizer bool) *holderBuilder {
+	self.holder.disableSettingsAuthorizer = enableSettingsAuthorizer
 	return self
 }
 
-func GetArgHolderBuilder() *argHolderBuilder {
+// GetHolderBuilder returns singletone instance of argument holder builder.
+func GetHolderBuilder() *holderBuilder {
 	return builder
 }

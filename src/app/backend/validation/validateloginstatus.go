@@ -38,7 +38,7 @@ func ValidateLoginStatus(request *restful.Request) *LoginStatus {
 	tokenHeader := request.HeaderParameter(client.JWETokenHeader)
 
 	httpsMode := request.Request.TLS != nil
-	if args.ArgHolder.GetEnableInsecureLogin() {
+	if args.Holder.GetEnableInsecureLogin() {
 		httpsMode = true
 	}
 

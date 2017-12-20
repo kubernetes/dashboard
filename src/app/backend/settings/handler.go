@@ -58,7 +58,7 @@ func (self *SettingsHandler) handleSettingsGlobalCanI(request *restful.Request, 
 		verb,
 	))
 
-	if !args.ArgHolder.GetEnableSettingsAuthorizer() {
+	if args.Holder.GetDisableSettingsAuthorizer() {
 		canI = true
 	}
 
