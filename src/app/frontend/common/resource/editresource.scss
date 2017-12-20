@@ -50,30 +50,17 @@
   }
 }
 
-.kd-json-edit-editor {
+.kd-edit-dialog-text-input {
   display: flex;
   flex: 1;
   overflow: hidden;
 
-  .jsoneditor {
+  .kd-text-input {
     display: flex;
     flex: 1;
     flex-direction: column;
-    height: initial !important;
+    height: initial;
+    margin: 0;
     overflow: hidden;
-
-    div {
-      &.jsoneditor-outer {
-        display: flex;
-        flex: 1;
-        margin: 0;
-        overflow: auto;
-        padding: 0;
-      }
-    }
-
-    .menu {
-      flex-shrink: 0;
-    }
   }
 }

@@ -26,6 +26,5 @@ export default angular
           'ngMaterial',
           'ui.router',
           'ngResource',
-          'angular-jsoneditor',
         ])
     .service('kdResourceVerberService', VerberService);

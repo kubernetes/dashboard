@@ -32,8 +32,8 @@ export class EditResourceController {
       $mdDialog, $http, clipboard, $mdToast, resourceKindName, resourceUrl, localizerService) {
     /** @export {string} */
     this.resourceKindName = resourceKindName;
-    /** @export {Object} JSON representation of the edited resource. */
-    this.data = null;
+    /** @export {string} */
+    this.data = '';
     /** @private {string} */
     this.resourceUrl = resourceUrl;
     /** @private {!md.$dialog} */
@@ -57,7 +57,7 @@ export class EditResourceController {
     let promise = this.http_.get(this.resourceUrl);
     promise.then(
         (/** !angular.$http.Response<Object>*/ response) => {
-          this.data = response.data;
+          this.data = angular.toJson(response.data, true);
         },
         (err) => {
           this.showMessage_(`Error: ${this.localizerService_.localize(err.data)}`);
@@ -84,11 +84,10 @@ export class EditResourceController {
      * @type {string} @desc Toast message appears when copied to clipboard.
      */
     let MSG_COPIED_TOAST = goog.getMsg('Copied to clipboard');
-    /* if the clipboard functionality is not supported */
     if (!this.clipboard_.supported) {
       this.showMessage_(MSG_UNSUPPORTED_TOAST);
     } else {
-      this.clipboard_.copyText(JSON.stringify(this.data, null, 2));
+      this.clipboard_.copyText(this.data);
       this.showMessage_(MSG_COPIED_TOAST);
     }
   }

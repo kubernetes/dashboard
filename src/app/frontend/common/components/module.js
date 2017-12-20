@@ -34,6 +34,7 @@ import {infoCardComponent} from './resourcedetail/component';
 import {scaleButtonComponent} from './scale/component';
 import {serializedReferenceComponent} from './serializedreference/component';
 import {sparklineComponent} from './sparkline/component';
+import {textInputComponent} from './textinput/component';
 import {toggleHiddenTextComponent} from './togglehiddentext/component';
 import uploadFileDirective from './uploadfile/directive';
 import {warningsComponent} from './warnings/component';
@@ -65,6 +66,7 @@ export default angular
     .component('kdZeroState', zeroStateComponent)
     .component('kdMiddleEllipsis', middleEllipsisComponent)
     .component('kdSparkline', sparklineComponent)
+    .component('kdTextInput', textInputComponent)
     .component('kdToggleHiddenText', toggleHiddenTextComponent)
     .component('kdSerializedReference', serializedReferenceComponent)
     .component('kdObjectMetaInfoCard', infoCardComponent)
