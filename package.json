@@ -133,7 +133,7 @@
     "lodash": "~4.17.4",
     "merge-stream": "~1.0.1",
     "napa": "~3.0.0",
-    "npm-check-updates": "~2.13.0",
+    "npm-check-updates": "~2.14.0",
     "proxy-middleware": "~0.15.0",
     "q": "~1.5.1",
     "regexp-clone": "~0.0.1",
