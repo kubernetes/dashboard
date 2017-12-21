@@ -120,7 +120,7 @@
     "http-proxy-middleware": "~0.17.4",
     "js-beautify": "~1.7.4",
     "jsesc": "~2.5.1",
-    "karma": "~1.7.1",
+    "karma": "~2.0.0",
     "karma-browserify": "~5.1.2",
     "karma-chrome-launcher": "~2.2.0",
     "karma-closure": "~0.1.1",
