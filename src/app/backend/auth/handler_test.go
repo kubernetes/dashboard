@@ -21,7 +21,7 @@ import (
 )
 
 func TestIntegrationHandler_Install(t *testing.T) {
-	iHandler := NewAuthHandler(nil, false)
+	iHandler := NewAuthHandler(nil)
 	ws := new(restful.WebService)
 	iHandler.Install(ws)
 
