@@ -47,7 +47,7 @@ const arch = {
  * Configuration for container registry to push images to.
  */
 const containerRegistry = {
-  release: 'gcr.io/google_containers',
+  release: 'k8s.gcr.io',
   /** Default to an environment variable */
   head: process.env.DOCKER_HUB_PREFIX || 'kubernetes',
 };
