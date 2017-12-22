@@ -16,6 +16,7 @@ package validation
 
 import (
 	restful "github.com/emicklei/go-restful"
+	"github.com/kubernetes/dashboard/src/app/backend/args"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 )
 
@@ -32,12 +33,12 @@ type LoginStatus struct {
 }
 
 // ValidateLoginStatus returns information about user login status and if request was made over HTTPS.
-func ValidateLoginStatus(request *restful.Request, enableInsecureLogin bool) *LoginStatus {
+func ValidateLoginStatus(request *restful.Request) *LoginStatus {
 	authHeader := request.HeaderParameter("Authorization")
 	tokenHeader := request.HeaderParameter(client.JWETokenHeader)
 
 	httpsMode := request.Request.TLS != nil
-	if enableInsecureLogin {
+	if args.Holder.GetEnableInsecureLogin() {
 		httpsMode = true
 	}
 

@@ -18,6 +18,7 @@ import (
 	"net/http"
 
 	restful "github.com/emicklei/go-restful"
+	"github.com/kubernetes/dashboard/src/app/backend/args"
 	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
 	kdErrors "github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/settings/api"
@@ -56,6 +57,10 @@ func (self *SettingsHandler) handleSettingsGlobalCanI(request *restful.Request, 
 		api.ConfigMapKindName,
 		verb,
 	))
+
+	if args.Holder.GetDisableSettingsAuthorizer() {
+		canI = true
+	}
 
 	response.WriteHeaderAndEntity(http.StatusOK, clientapi.CanIResponse{canI})
 }

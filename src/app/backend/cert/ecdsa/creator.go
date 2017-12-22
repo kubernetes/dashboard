@@ -33,8 +33,8 @@ import (
 
 // Implements certificate Creator interface. See Creator for more information.
 type ecdsaCreator struct {
-	keyFile  *string
-	certFile *string
+	keyFile  string
+	certFile string
 	curve    elliptic.Curve
 }
 
@@ -100,12 +100,12 @@ func (self *ecdsaCreator) StoreCertificates(path string, key interface{}, certBy
 
 // GetKeyFileName implements certificate Creator interface. See Creator for more information.
 func (self *ecdsaCreator) GetKeyFileName() string {
-	return *self.keyFile
+	return self.keyFile
 }
 
 // GetCertFileName implements certificate Creator interface. See Creator for more information.
 func (self *ecdsaCreator) GetCertFileName() string {
-	return *self.certFile
+	return self.certFile
 }
 
 func (self *ecdsaCreator) getKey(key interface{}) *ecdsa.PrivateKey {
@@ -145,17 +145,17 @@ func (self *ecdsaCreator) getDashboardPod() *corev1.Pod {
 }
 
 func (self *ecdsaCreator) init() {
-	if len(*self.certFile) == 0 {
-		*self.certFile = certapi.DashboardCertName
+	if len(self.certFile) == 0 {
+		self.certFile = certapi.DashboardCertName
 	}
 
-	if len(*self.keyFile) == 0 {
-		*self.keyFile = certapi.DashboardKeyName
+	if len(self.keyFile) == 0 {
+		self.keyFile = certapi.DashboardKeyName
 	}
 }
 
 // NewECDSACreator creates ECDSACreator instance.
-func NewECDSACreator(keyFile, certFile *string, curve elliptic.Curve) certapi.Creator {
+func NewECDSACreator(keyFile, certFile string, curve elliptic.Curve) certapi.Creator {
 	creator := &ecdsaCreator{
 		curve:    curve,
 		keyFile:  keyFile,

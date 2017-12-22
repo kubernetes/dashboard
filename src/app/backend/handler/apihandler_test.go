@@ -45,7 +45,7 @@ func TestCreateHTTPAPIHandler(t *testing.T) {
 	authManager := auth.NewAuthManager(cManager, getTokenManager(), authApi.AuthenticationModes{})
 	sManager := settings.NewSettingsManager(cManager)
 	sbManager := systembanner.NewSystemBannerManager("Hello world!", "INFO")
-	_, err := CreateHTTPAPIHandler(nil, cManager, authManager, false, sManager, sbManager)
+	_, err := CreateHTTPAPIHandler(nil, cManager, authManager, sManager, sbManager)
 	if err != nil {
 		t.Fatal("CreateHTTPAPIHandler() cannot create HTTP API handler")
 	}

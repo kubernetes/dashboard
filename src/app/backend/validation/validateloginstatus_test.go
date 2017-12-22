@@ -58,7 +58,7 @@ func TestValidateLoginStatus(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		status := ValidateLoginStatus(c.request, false)
+		status := ValidateLoginStatus(c.request)
 
 		if !reflect.DeepEqual(status, c.expected) {
 			t.Errorf("Test Case: %s. Expected status to be: %v, but got %v.",

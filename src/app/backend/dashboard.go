@@ -24,6 +24,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/kubernetes/dashboard/src/app/backend/args"
 	"github.com/kubernetes/dashboard/src/app/backend/auth"
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 	"github.com/kubernetes/dashboard/src/app/backend/auth/jwe"
@@ -63,9 +64,10 @@ var (
 		"Note that basic option should only be used if apiserver has '--authorization-mode=ABAC' and '--basic-auth-file' flags set.")
 	argMetricClientCheckPeriod  = pflag.Int("metric-client-check-period", 30, "Time in seconds that defines how often configured metric client health check should be run. Default: 30 seconds.")
 	argAutoGenerateCertificates = pflag.Bool("auto-generate-certificates", false, "When set to true, Dashboard will automatically generate certificates used to serve HTTPS. Default: false.")
-	argEnableInsecureLogin      = pflag.Bool("enable-insecure-login", false, "When enabled, Dashboard login view will also be shown when Dashboard is not served over HTTPS. Default: false.")
-	argSystemBanner             = pflag.String("system-banner", "", "When non-empty displays message to Dashboard users. Accepts simple HTML tags. Default: ''.")
-	argSystemBannerSeverity     = pflag.String("system-banner-severity", "INFO", "Severity of system banner. Should be one of 'INFO|WARNING|ERROR'. Default: 'INFO'.")
+	argEnableInsecureLogin       = pflag.Bool("enable-insecure-login", false, "When enabled, Dashboard login view will also be shown when Dashboard is not served over HTTPS. Default: false.")
+	argSystemBanner              = pflag.String("system-banner", "", "When non-empty displays message to Dashboard users. Accepts simple HTML tags. Default: ''.")
+	argSystemBannerSeverity      = pflag.String("system-banner-severity", "INFO", "Severity of system banner. Should be one of 'INFO|WARNING|ERROR'. Default: 'INFO'.")
+	argDisableSettingsAuthorizer = pflag.Bool("disable-settings-authorizer", false, "When enabled, Dashboard settings page will not require user to be logged in and authorized to access settings page.")
 )
 
 func main() {
@@ -76,14 +78,17 @@ func main() {
 	pflag.Parse()
 	flag.CommandLine.Parse(make([]string, 0)) // Init for glog calls in kubernetes packages
 
-	if *argApiserverHost != "" {
-		log.Printf("Using apiserver-host location: %s", *argApiserverHost)
+	// Initializes dashboard arguments holder so we can read them in other packages
+	initArgHolder()
+
+	if args.Holder.GetApiServerHost() != "" {
+		log.Printf("Using apiserver-host location: %s", args.Holder.GetApiServerHost())
 	}
-	if *argKubeConfigFile != "" {
-		log.Printf("Using kubeconfig file: %s", *argKubeConfigFile)
+	if args.Holder.GetKubeConfigFile() != "" {
+		log.Printf("Using kubeconfig file: %s", args.Holder.GetKubeConfigFile())
 	}
 
-	clientManager := client.NewClientManager(*argKubeConfigFile, *argApiserverHost)
+	clientManager := client.NewClientManager(args.Holder.GetKubeConfigFile(), args.Holder.GetApiServerHost())
 	versionInfo, err := clientManager.InsecureClient().Discovery().ServerVersion()
 	if err != nil {
 		handleFatalInitError(err)
@@ -92,34 +97,34 @@ func main() {
 	log.Printf("Successful initial request to the apiserver, version: %s", versionInfo.String())
 
 	// Init auth manager
-	authManager := initAuthManager(clientManager, time.Duration(*argTokenTTL))
+	authManager := initAuthManager(clientManager)
 
 	// Init settings manager
 	settingsManager := settings.NewSettingsManager(clientManager)
 
 	// Init system banner manager
-	systemBannerManager := systembanner.NewSystemBannerManager(*argSystemBanner, *argSystemBannerSeverity)
+	systemBannerManager := systembanner.NewSystemBannerManager(args.Holder.GetSystemBanner(),
+		args.Holder.GetSystemBannerSeverity())
 
 	// Init integrations
 	integrationManager := integration.NewIntegrationManager(clientManager)
-	integrationManager.Metric().ConfigureHeapster(*argHeapsterHost).
-		EnableWithRetry(integrationapi.HeapsterIntegrationID, time.Duration(*argMetricClientCheckPeriod))
+	integrationManager.Metric().ConfigureHeapster(args.Holder.GetHeapsterHost()).
+		EnableWithRetry(integrationapi.HeapsterIntegrationID, time.Duration(args.Holder.GetMetricClientCheckPeriod()))
 
 	apiHandler, err := handler.CreateHTTPAPIHandler(
 		integrationManager,
 		clientManager,
 		authManager,
-		*argEnableInsecureLogin,
 		settingsManager,
 		systemBannerManager)
 	if err != nil {
 		handleFatalInitError(err)
 	}
 
-	if *argAutoGenerateCertificates {
+	if args.Holder.GetAutoGenerateCertificates() {
 		log.Println("Auto-generating certificates")
-		certCreator := ecdsa.NewECDSACreator(argKeyFile, argCertFile, elliptic.P256())
-		certManager := cert.NewCertManager(certCreator, *argDefaultCertDir)
+		certCreator := ecdsa.NewECDSACreator(args.Holder.GetKeyFile(), args.Holder.GetCertFile(), elliptic.P256())
+		certManager := cert.NewCertManager(certCreator, args.Holder.GetDefaultCertDir())
 		certManager.GenerateCertificates()
 	}
 
@@ -133,21 +138,21 @@ func main() {
 	http.Handle("/metrics", prometheus.Handler())
 
 	// Listen for http or https
-	if *argCertFile != "" && *argKeyFile != "" {
-		certFilePath := *argDefaultCertDir + string(os.PathSeparator) + *argCertFile
-		keyFilePath := *argDefaultCertDir + string(os.PathSeparator) + *argKeyFile
-		log.Printf("Serving securely on HTTPS port: %d", *argPort)
-		secureAddr := fmt.Sprintf("%s:%d", *argBindAddress, *argPort)
+	if args.Holder.GetCertFile() != "" && args.Holder.GetKeyFile() != "" {
+		certFilePath := args.Holder.GetDefaultCertDir() + string(os.PathSeparator) + args.Holder.GetCertFile()
+		keyFilePath := args.Holder.GetDefaultCertDir() + string(os.PathSeparator) + args.Holder.GetKeyFile()
+		log.Printf("Serving securely on HTTPS port: %d", args.Holder.GetPort())
+		secureAddr := fmt.Sprintf("%s:%d", args.Holder.GetBindAddress(), args.Holder.GetPort())
 		go func() { log.Fatal(http.ListenAndServeTLS(secureAddr, certFilePath, keyFilePath, nil)) }()
 	} else {
-		log.Printf("Serving insecurely on HTTP port: %d", *argInsecurePort)
-		addr := fmt.Sprintf("%s:%d", *argInsecureBindAddress, *argInsecurePort)
+		log.Printf("Serving insecurely on HTTP port: %d", args.Holder.GetInsecurePort())
+		addr := fmt.Sprintf("%s:%d", args.Holder.GetInsecureBindAddress(), args.Holder.GetInsecurePort())
 		go func() { log.Fatal(http.ListenAndServe(addr, nil)) }()
 	}
 	select {}
 }
 
-func initAuthManager(clientManager clientapi.ClientManager, tokenTTL time.Duration) authApi.AuthManager {
+func initAuthManager(clientManager clientapi.ClientManager) authApi.AuthManager {
 	insecureClient := clientManager.InsecureClient()
 
 	// Init default encryption key synchronizer
@@ -160,18 +165,41 @@ func initAuthManager(clientManager clientapi.ClientManager, tokenTTL time.Durati
 	// Init encryption key holder and token manager
 	keyHolder := jwe.NewRSAKeyHolder(keySynchronizer)
 	tokenManager := jwe.NewJWETokenManager(keyHolder)
+	tokenTTL := time.Duration(args.Holder.GetTokenTTL())
 	if tokenTTL != authApi.DefaultTokenTTL {
 		tokenManager.SetTokenTTL(tokenTTL)
 	}
 
 	// Set token manager for client manager.
 	clientManager.SetTokenManager(tokenManager)
-	authModes := authApi.ToAuthenticationModes(*argAuthenticationMode)
+	authModes := authApi.ToAuthenticationModes(args.Holder.GetAuthenticationMode())
 	if len(authModes) == 0 {
 		authModes.Add(authApi.Token)
 	}
 
 	return auth.NewAuthManager(clientManager, tokenManager, authModes)
+}
+
+func initArgHolder() {
+	builder := args.GetHolderBuilder()
+	builder.SetInsecurePort(*argInsecurePort)
+	builder.SetPort(*argPort)
+	builder.SetTokenTTL(*argTokenTTL)
+	builder.SetMetricClientCheckPeriod(*argMetricClientCheckPeriod)
+	builder.SetInsecureBindAddress(*argInsecureBindAddress)
+	builder.SetBindAddress(*argBindAddress)
+	builder.SetDefaultCertDir(*argDefaultCertDir)
+	builder.SetCertFile(*argCertFile)
+	builder.SetKeyFile(*argKeyFile)
+	builder.SetApiServerHost(*argApiserverHost)
+	builder.SetHeapsterHost(*argHeapsterHost)
+	builder.SetKubeConfigFile(*argKubeConfigFile)
+	builder.SetSystemBanner(*argSystemBanner)
+	builder.SetSystemBannerSeverity(*argSystemBannerSeverity)
+	builder.SetAuthenticationMode(*argAuthenticationMode)
+	builder.SetAutoGenerateCertificates(*argAutoGenerateCertificates)
+	builder.SetEnableInsecureLogin(*argEnableInsecureLogin)
+	builder.SetDisableSettingsAuthorizer(*argDisableSettingsAuthorizer)
 }
 
 /**
