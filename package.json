@@ -74,7 +74,7 @@
     "babel-plugin-istanbul": "~4.1.5",
     "babel-preset-env": "~1.6.1",
     "babelify": "~8.0.0",
-    "browser-sync": "~2.20.0",
+    "browser-sync": "~2.21.0",
     "browser-sync-spa": "~1.0.3",
     "browserify": "~14.5.0",
     "clang-format": "1.1.0",
