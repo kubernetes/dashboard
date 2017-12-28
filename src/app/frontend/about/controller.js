@@ -12,15 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Controller for the about view. The view shows details about the installation
- * enviornment. The information can be used when creating issues.
- *
- * @final
- */
+/** @final */
 export class AboutController {
   /**
-   *   @param {!../common/appconfig/service.AppConfigService} kdAppConfigService
+   * @param {!../common/appconfig/service.AppConfigService} kdAppConfigService
    * @ngInject
    */
   constructor(kdAppConfigService) {
@@ -32,24 +27,5 @@ export class AboutController {
 
     /** @export {string} */
     this.latestCopyrightYear = kdAppConfigService.getBuildYear();
-  }
-
-  /**
-   * Returns URL of GitHub page used to report bugs with partly filled issue template
-   * (check .github/ISSUE_TEMPLATE.md file). IMPORTANT: Remember to keep these templates in sync.
-   *
-   * @export
-   * @return {string} URL of GitHub page used to report bugs.
-   */
-  getLinkToFeedbackPage() {
-    let title = ``;
-    let body = `##### Steps to reproduce\n<!-- Describe all steps needed to reproduce the ` +
-        `issue. It is a good place to use numbered list. -->\n\n\n##### Environment\n\`\`\`\n` +
-        `Installation method: \nKubernetes version:\nDashboard version: ` +
-        `${this.dashboardVersion}\nCommit: ${this.gitCommit}\n\`\`\`\n\n##### Observed result\n` +
-        `<!-- Describe observed result as precisely as possible. -->\n\n\n` +
-        `##### Comments\n<!-- If you have any comments or more details, put them here. -->`;
-    return `https://github.com/kubernetes/dashboard/issues/new?title=${encodeURIComponent(title)}` +
-        `&body=${encodeURIComponent(body)}`;
   }
 }
