@@ -109,7 +109,7 @@
     "gulp-rev-all": "~0.9.7",
     "gulp-sass": "~3.1.0",
     "gulp-sass-lint": "~1.3.4",
-    "gulp-size": "~2.1.0",
+    "gulp-size": "~3.0.0",
     "gulp-sourcemaps": "~2.6.1",
     "gulp-uglify": "~3.0.0",
     "gulp-useref": "~3.1.3",
