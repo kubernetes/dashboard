@@ -113,7 +113,7 @@ spec:
     spec:
       containers:
       - name: kubernetes-dashboard
-        image: gcr.io/google_containers/kubernetes-dashboard-arm:v1.8.1
+        image: k8s.gcr.io/kubernetes-dashboard-arm:v1.8.1
         ports:
         - containerPort: 8443
           protocol: TCP

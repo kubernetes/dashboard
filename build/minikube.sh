@@ -40,7 +40,7 @@ export CHANGE_MINIKUBE_NONE_USER=true
 sudo -E ${MINIKUBE_BIN} start --vm-driver=none --kubernetes-version ${MINIKUBE_K8S_VERSION}
 
 echo "Running heapster in standalone mode"
-docker run --net=host -d gcr.io/google_containers/heapster-amd64:${HEAPSTER_VERSION} \
+docker run --net=host -d k8s.gcr.io/heapster-amd64:${HEAPSTER_VERSION} \
            --heapster-port ${HEAPSTER_PORT} \
            --source=kubernetes:http://127.0.0.1:8080?inClusterConfig=false&auth=""
 
