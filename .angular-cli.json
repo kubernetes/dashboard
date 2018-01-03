@@ -1,0 +1,50 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "project": {
+    "name": "kubernetes-dashboard"
+  },
+  "apps": [
+    {
+      "root": "src/app/frontend",
+      "outDir": ".tmp/frontend",
+      "assets": [
+        "assets"
+      ],
+      "index": "index.html",
+      "main": "index.ts",
+      "polyfills": "polyfills.ts",
+      "test": "index_test.ts",
+      "tsconfig": "../../../aio/tsconfig.app.json",
+      "testTsconfig": "../../../aio/tsconfig.spec.json",
+      "prefix": "kd",
+      "styles": [
+        "../../../node_modules/material-design-icons/iconfont/material-icons.css",
+        "../../../node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
+        "index.scss"
+      ],
+      "scripts": [],
+      "environmentSource": "environments/environment.ts",
+      "environments": {
+        "dev": "environments/environment.ts",
+        "prod": "environments/environment.prod.ts"
+      }
+    }
+  ],
+  "defaults": {
+    "component": {},
+    "serve": {
+      "port": 8080
+    },
+    "styleExt": "scss"
+  },
+  "test": {
+    "karma": {
+      "config": "aio/karma.conf.js"
+    }
+  },
+  "e2e": {
+    "protractor": {
+      "config": "aio/protractor.conf.js"
+    }
+  }
+}

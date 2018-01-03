@@ -1,67 +1,52 @@
-# Copyright 2015 Google Inc. All Rights Reserved.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
 # Travis continuous integration system configuration file.
-# Overview on how to customize the configuration is located at:
-# http://docs.travis-ci.com/user/customizing-the-build/
+# Read more at: http://docs.travis-ci.com/user/customizing-the-build/
 
 sudo: required
 dist: trusty
 group: edge
-
-# Use Node.js as primary language because Gulp is the build system used in the project.
 language: node_js
+node_js: 8.6.0
 
 cache:
   directories:
+    - .cached_tools
     - node_modules
-    - .tools
 
-addons:
-  # Run tests that require a browser on SauceLabs CI provider. Learn more at: https://saucelabs.com
-  sauce_connect: true
-  # Enables sauce labs for pull requests.
-  jwt:
-    secure: NfCHCQULhYH0JUobRTBGF4QuQxMoj0Zs9iH71oSgI+eW7ClpNDp0cEF8h+IelTdPGQY7T9Kz4tyrZkUeXD5Mi/jjZT0YnjxSS8Ip6rRRxPDCWEmxbhOrZTEBXYfa4vqCY7rLnor8g579WOZ+RyoiotPC8tlc955nEgBk1jDxyAgXoUy0SdA/05r6A2IqKfs95u+yq0nsYqYJBj/3onx2SQv94eMQ7qq9GMhsAWMoNzLsBfU8AkZLsJ2w/W2p9tQURNk1hgCEewMwe6E6+G3XMAnDoIXBHkRAU335FBUE+f2kZ5Gl3GKE8pvWJaUWLePzfBvlmzCi4GW6lPlrRE5m+3wiiSzcbEAJnWOVPBrD/6mogYaJ5RijKzWk5o91eV8lU/lttp0hpH7PdWj1CEZk7EmyKO7ZF7ScALOZgs/dGyGgWcAvA0zwCDzdxXIitq9Eegc0xU+bB9jyJgi4dV9H1T1prwtS/TdhBU6sXKEjFVIgPUQa/TqBgaSs634kqRueH3bNfSD8Nf655AFeSgwdGiW0pBDm/WESftFWBMW3eV+KYtBFmGU/b3g+eEmd04j+lIOkK6EzU1QetUCKhpeMc5509So/+k4XghPHldWYzRldpY0kbp32VnAY8egsDdAHxgPrs2mTIDD1W//D/XJI9J072/z47GN4Af5zryz/3Nc=
-
-matrix:
-  include:
-    - node_js: 8.6.0
-      env:
-      - BUILD_SUITE=integration-test
-      - SAUCE_USERNAME=k8s-dashboard-ci
-      - KUBE_DASHBOARD_KUBECONFIG=$HOME/.kube/config
-    - node_js: 8.6.0
-      env:
-      - BUILD_SUITE=code-test
-      - SAUCE_USERNAME=k8s-dashboard-ci
+before_install:
+  - export GOPATH=$TRAVIS_BUILD_DIR/.tmp
+  - mkdir -p $TRAVIS_BUILD_DIR/.tmp/src/github.com/kubernetes/dashboard/src/app
+  - cp -r $TRAVIS_BUILD_DIR/src/app/backend $TRAVIS_BUILD_DIR/.tmp/src/github.com/kubernetes/dashboard/src/app
+  - ln -s $TRAVIS_BUILD_DIR/vendor $TRAVIS_BUILD_DIR/.tmp/src/github.com/kubernetes/dashboard/src/app/backend/vendor
 
 before_script:
-  - eval "$(gimme 1.8.3)"
+  - eval "$(gimme 1.9.2)"
   - docker --version
 
-script:
-  - 'if [ ${BUILD_SUITE} = "integration-test" ]; then
-      ./build/minikube.sh;
-      ./node_modules/.bin/gulp check:ci --heapsterServerHost "http://localhost:8082";
-    else
-      NODE_ENV=test ./node_modules/.bin/gulp check:code-quality;
-    fi'
+jobs:
+  include:
+    - stage: test
+      script: npm run check:static
+    - script: npm run test:coverage
+      after_success:
+        - bash <(curl -s https://codecov.io/bash)
+    - addons:
+        # Run tests that require a browser on SauceLabs CI provider.
+        # Read more at: https://saucelabs.com
+        sauce_connect: true
+        jwt:
+          secure: NfCHCQULhYH0JUobRTBGF4QuQxMoj0Zs9iH71oSgI+eW7ClpNDp0cEF8h+IelTdPGQY7T9Kz4tyrZkUeXD5Mi/jjZT0YnjxSS8Ip6rRRxPDCWEmxbhOrZTEBXYfa4vqCY7rLnor8g579WOZ+RyoiotPC8tlc955nEgBk1jDxyAgXoUy0SdA/05r6A2IqKfs95u+yq0nsYqYJBj/3onx2SQv94eMQ7qq9GMhsAWMoNzLsBfU8AkZLsJ2w/W2p9tQURNk1hgCEewMwe6E6+G3XMAnDoIXBHkRAU335FBUE+f2kZ5Gl3GKE8pvWJaUWLePzfBvlmzCi4GW6lPlrRE5m+3wiiSzcbEAJnWOVPBrD/6mogYaJ5RijKzWk5o91eV8lU/lttp0hpH7PdWj1CEZk7EmyKO7ZF7ScALOZgs/dGyGgWcAvA0zwCDzdxXIitq9Eegc0xU+bB9jyJgi4dV9H1T1prwtS/TdhBU6sXKEjFVIgPUQa/TqBgaSs634kqRueH3bNfSD8Nf655AFeSgwdGiW0pBDm/WESftFWBMW3eV+KYtBFmGU/b3g+eEmd04j+lIOkK6EzU1QetUCKhpeMc5509So/+k4XghPHldWYzRldpY0kbp32VnAY8egsDdAHxgPrs2mTIDD1W//D/XJI9J072/z47GN4Af5zryz/3Nc=
+      script:
+        - npm run cluster
+        - npm run test:e2e
+      env:
+        - SAUCE_USERNAME=k8s-dashboard-ci
+        - KUBE_DASHBOARD_KUBECONFIG=$HOME/.kube/config
+    - stage: deploy
+      script:
+        - docker login -u $DOCKER_USER -p $DOCKER_PASS
+        - npm run docker-push:head:cross
 
-after_success:
-  - 'if [ ${BUILD_SUITE} = "integration-test" ]; then
-      ./node_modules/.bin/gulp push-to-docker:ci;
-    else
-      ./node_modules/.bin/gulp coverage-upload:ci;
-    fi'
+stages:
+  - test
+  - name: deploy
+    if: branch = master AND type not (pull_request)

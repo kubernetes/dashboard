@@ -1,32 +1,3 @@
 {
-  "env": {
-    "production": {
-      "presets": [["env",
-        {
-          "targets": {
-            "browsers": [
-              ">1%",
-              "last 4 versions",
-              "not ie < 11"
-            ]
-          },
-          "useBuiltIns": true
-        }
-        ]
-      ]
-    },
-    "development": {
-      "presets": [["env", {"targets": {"node": 8}, "useBuiltIns": true}]],
-    },
-    "test": {
-      "presets": ["env"],
-      "plugins": [
-        ["istanbul", {
-          "exclude": [
-            "**/*_test.js"
-          ]
-        }]
-      ]
-    }
-  }
+  "presets": ["env"]
 }

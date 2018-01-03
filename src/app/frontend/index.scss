@@ -1,0 +1,115 @@
+// Copyright 2017 The Kubernetes Authors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+@import './variables';
+@import './mixins';
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+// TODO: Remove that once component is created
+@import './common/components/actionbar/actionbar';
+
+// Globally applied/used styles should be defined in this file
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+a {
+  color: $primary;
+  text-decoration: inherit;
+}
+
+////////////////////////////////////////////
+// Custom classes used across application //
+////////////////////////////////////////////
+
+.kd-no-margin {
+  margin: 0;
+}
+
+.kd-card-footer {
+  padding: 0 3 * $baseline-grid 3 * $baseline-grid;
+}
+
+.kd-comma-separated-item {
+  display: inline-block;
+
+  &:not(:last-child) {
+    &::after {
+      content: ',';
+    }
+  }
+}
+
+.kd-pre-block {
+  margin: 0;
+  min-width: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+// Style taken(mostly) from angular material md-chip style.
+.kd-chips {
+  background-color: $body;
+  border-radius: $baseline-grid;
+  display: inline-block;
+  margin: $chip-margin;
+  max-width: 100%;
+  vertical-align: bottom;
+}
+
+.kd-chip {
+  display: inline;
+  float: left;
+  max-width: 99%;
+  overflow: hidden;
+  padding: ($baseline-grid / 4) $baseline-grid;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.kd-chips-switch {
+  color: $primary;
+  cursor: pointer;
+  margin-left: -$baseline-grid / 2;
+  outline: none;
+  padding: ($baseline-grid / 4) $baseline-grid;
+}
+
+///////////////////////////////
+// Overridden default styles //
+///////////////////////////////
+
+.mat-button {
+  text-transform: uppercase;
+}
+
+.mat-card {
+  margin: (2.5 * $baseline-grid) (2.5 * $baseline-grid) 0;
+}
+
+// Style scrollbars on Webkit-based browsers (e.g., Chrome or Safari).
+* {
+  &::-webkit-scrollbar {
+    background: transparent;
+    height: $baseline-grid;
+    width: $baseline-grid;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $delicate;
+  }
+}

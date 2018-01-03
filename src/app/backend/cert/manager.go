@@ -37,7 +37,7 @@ func (self *Manager) GenerateCertificates() {
 	key := self.creator.GenerateKey()
 	cert := self.creator.GenerateCertificate(key)
 	self.creator.StoreCertificates(self.certDir, key, cert)
-	log.Println("Successfuly created and stored certificates")
+	log.Println("Successfully created and stored certificates")
 }
 
 func (self *Manager) keyFileExists() bool {

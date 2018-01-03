@@ -66,7 +66,7 @@ func GetRbacRoleListFromChannels(channels *common.ResourceChannels, dsQuery *dat
 
 	clusterRoles := <-channels.ClusterRoleList.List
 	err = <-channels.ClusterRoleList.Error
-	nonCriticalErrors, err = errors.AppendError(err, nonCriticalErrors)
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
 	if criticalError != nil {
 		return nil, criticalError
 	}

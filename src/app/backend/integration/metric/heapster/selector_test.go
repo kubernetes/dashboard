@@ -111,7 +111,7 @@ func TestGetHeapsterSelector(t *testing.T) {
 	}
 	for _, testCase := range testCases {
 		sel, err := getHeapsterSelector(testCase.ResourceSelector,
-			&metricapi.CachedResources{cachedPodList})
+			&metricapi.CachedResources{Pods: cachedPodList})
 		if err != nil {
 			t.Errorf("Test Case: %s. Failed to get HeapsterSelector. - %s", testCase.Info, err)
 			return

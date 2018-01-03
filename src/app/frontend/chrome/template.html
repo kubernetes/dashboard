@@ -1,0 +1,93 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<div fxLayout="column"
+     fxFill
+     fxFlexFill>
+  <mat-toolbar class="kd-toolbar">
+    <div class="kd-toolbar-tools"
+         fxLayout="row"
+         fxFlex="auto">
+      <div class="kd-logo-bar">
+        <a [href]="getOverviewStateName()"
+           class="kd-toolbar-logo-link">
+          <mat-icon [svgIcon]="assets.getAppLogo()"
+                    class="kd-toolbar-logo">
+          </mat-icon>
+          <mat-icon [svgIcon]="assets.getAppLogoText()"
+                    class="kd-toolbar-logo-text">
+          </mat-icon>
+        </a>
+      </div>
+      <!--<kd-search class="kd-search-bar"></kd-search>-->
+      <div>
+        <button mat-button
+                (click)="create()"
+                i18n-matTooltip
+                matTooltip="Create an application or any Kubernetes resource"
+                class="kd-actionbar-button">
+          <mat-icon class="kd-global-action-icon">add</mat-icon>
+          <span>Create</span>
+        </button>
+        <!--<kd-control-panel></kd-control-panel>-->
+      </div>
+    </div>
+  </mat-toolbar>
+
+  <mat-toolbar class="kd-second-toolbar">
+    <div class="kd-toolbar-tools">
+      <!--<kd-nav-hamburger flex="none"></kd-nav-hamburger>-->
+      <!--<kd-breadcrumbs class="kd-actionbar-breadcrumbs"-->
+      <!--limit="3"-->
+      <!--flex="auto"-->
+      <!--layout="row"></kd-breadcrumbs>-->
+      <!--<div flex="auto"-->
+      <!--ui-view="toolbar"></div>-->
+      <!--<kd-actionbar></kd-actionbar>-->
+    </div>
+  </mat-toolbar>
+
+  <mat-toolbar class="kd-system-banner"
+               ng-class="$ctrl.getSystemBannerClass()"
+               *ngIf="isSystemBannerVisible()"
+               ng-bind-html="$ctrl.getSystemBannerMessage()">
+  </mat-toolbar>
+
+  <div fxFlex="auto"
+       fxLayout="row"
+       class="kd-app-entire-content">
+    <kd-nav flex="none"></kd-nav>
+    <div fxFlex="auto"
+         class="kd-main-content-box">
+      <div [ngSwitch]="loading"
+           class="kd-content-div-filled kd-main-content-div">
+        <div *ngSwitchCase="true"
+             class="kd-spinner">
+          <mat-spinner *ngIf="showLoadingSpinner"
+                       mode="indeterminate"
+                       [diameter]="48">
+          </mat-spinner>
+        </div>
+        <div *ngSwitchCase="false"
+             class="kd-app-content">
+          <ui-view class="md-body-1"
+                   ng-class="{'kd-content-div-filled': $ctrl.isFillContentView()}">
+          </ui-view>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

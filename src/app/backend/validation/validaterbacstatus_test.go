@@ -102,9 +102,8 @@ func TestValidateRbacStatus(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		fakePtr := &test.Fake{}
 		client := &FakeClient{
-			Clientset:              fake.Clientset{Fake: *fakePtr},
+			Clientset:              fake.Clientset{Fake: test.Fake{}},
 			fakeServerGroupsMethod: c.mockMethod,
 		}
 

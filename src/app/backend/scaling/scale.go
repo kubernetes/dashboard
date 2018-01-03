@@ -84,6 +84,10 @@ func scaleGenericResource(client client.Interface, kind, namespace, name, count 
 // scaleJobResource is exclusively used for jobs as it does not increase/decrease pods but jobs parallelism attribute.
 func scaleJobResource(client client.Interface, namespace, name, count string, rc *ReplicaCounts) error {
 	j, err := client.BatchV1().Jobs(namespace).Get(name, metaV1.GetOptions{})
+	if err != nil {
+		return err
+	}
+
 	c, err := strconv.Atoi(count)
 	if err != nil {
 		return err
@@ -104,6 +108,10 @@ func scaleJobResource(client client.Interface, namespace, name, count string, rc
 // scaleStatefulSet is exclusively used for statefulsets
 func scaleStatefulSetResource(client client.Interface, namespace, name, count string, rc *ReplicaCounts) error {
 	ss, err := client.AppsV1beta1().StatefulSets(namespace).Get(name, metaV1.GetOptions{})
+	if err != nil {
+		return err
+	}
+
 	c, err := strconv.Atoi(count)
 	if err != nil {
 		return err
