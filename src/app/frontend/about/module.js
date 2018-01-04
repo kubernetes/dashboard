@@ -14,12 +14,6 @@
 
 import stateConfig from './stateconfig';
 
-/**
- * Angular module for the about view.
- *
- * The view shows details about the installation enviornment. The information
- * can be used when creating issues.
- */
 export default angular
     .module(
         'kubernetesDashboard.about',
