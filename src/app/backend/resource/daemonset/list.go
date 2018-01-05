@@ -67,7 +67,7 @@ func GetDaemonSetList(client kubernetes.Interface, nsQuery *common.NamespaceQuer
 	return GetDaemonSetListFromChannels(channels, dsQuery, metricClient)
 }
 
-// GetDaemonSetListFromChannels returns a list of all Daemon Seet in the cluster
+// GetDaemonSetListFromChannels returns a list of all Daemon Set in the cluster
 // reading required resource list once from the channels.
 func GetDaemonSetListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery,
 	metricClient metricapi.MetricClient) (*DaemonSetList, error) {

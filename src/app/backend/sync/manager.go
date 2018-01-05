@@ -35,7 +35,7 @@ func (self *synchronizerManager) Secret(namespace, name string) syncApi.Synchron
 	}
 }
 
-// NewSynchronizerManager creates new instace of SynchronizerManager.
+// NewSynchronizerManager creates new instance of SynchronizerManager.
 func NewSynchronizerManager(client kubernetes.Interface) syncApi.SynchronizerManager {
 	return &synchronizerManager{client: client}
 }

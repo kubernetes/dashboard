@@ -51,7 +51,7 @@ type TerminalSession struct {
 //
 // OP      DIRECTION  FIELD(S) USED  DESCRIPTION
 // ---------------------------------------------------------------------
-// bind    fe->be     SessionID      Id sent back from TerminalReponse
+// bind    fe->be     SessionID      Id sent back from TerminalResponse
 // stdin   fe->be     Data           Keystrokes/paste buffer
 // resize  fe->be     Rows, Cols     New terminal size
 // stdout  be->fe     Data           Output from the process
