@@ -30,7 +30,7 @@ type CronJobDetail struct {
 	ConcurrencyPolicy       string           `json:"concurrencyPolicy"`
 	StartingDeadLineSeconds *int64           `json:"startingDeadlineSeconds"`
 	ActiveJobs              job.JobList      `json:"activeJobs"`
-	Events                  common.EventList `json:"events"'`
+	Events                  common.EventList `json:"events"`
 
 	// Extends list item structure.
 	CronJob `json:",inline"`
