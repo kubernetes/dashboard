@@ -18,6 +18,8 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	errorHandler "github.com/kubernetes/dashboard/src/app/backend/errors"
+	"github.com/kubernetes/dashboard/src/app/backend/userlinks"
 	"k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
@@ -36,6 +38,8 @@ type PersistentVolumeDetail struct {
 	Message                string                           `json:"message"`
 	PersistentVolumeSource v1.PersistentVolumeSource        `json:"persistentVolumeSource"`
 	Reason                 string                           `json:"reason"`
+	UserLinks              []userlinks.UserLink             `json:"userLinks"`
+	Errors                 []error                          `json:"errors"`
 }
 
 // GetPersistentVolumeDetail returns detailed information about a persistent volume
@@ -47,10 +51,17 @@ func GetPersistentVolumeDetail(client client.Interface, name string) (*Persisten
 		return nil, err
 	}
 
-	return getPersistentVolumeDetail(rawPersistentVolume), nil
+	userLinks, err := userlinks.GetUserLinks(client, v1.NamespaceAll, name, api.ResourceKindPersistentVolume)
+	nonCriticalErrors, criticalError := errorHandler.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
+	}
+
+	return getPersistentVolumeDetail(rawPersistentVolume, userLinks, nonCriticalErrors), nil
 }
 
-func getPersistentVolumeDetail(persistentVolume *v1.PersistentVolume) *PersistentVolumeDetail {
+func getPersistentVolumeDetail(persistentVolume *v1.PersistentVolume, userLinks []userlinks.UserLink,
+	nonCriticalErrors []error) *PersistentVolumeDetail {
 	return &PersistentVolumeDetail{
 		ObjectMeta:             api.NewObjectMeta(persistentVolume.ObjectMeta),
 		TypeMeta:               api.NewTypeMeta(api.ResourceKindPersistentVolume),
@@ -63,5 +74,7 @@ func getPersistentVolumeDetail(persistentVolume *v1.PersistentVolume) *Persisten
 		Message:                persistentVolume.Status.Message,
 		PersistentVolumeSource: persistentVolume.Spec.PersistentVolumeSource,
 		Reason:                 persistentVolume.Status.Reason,
+		UserLinks:              userLinks,
+		Errors:                 nonCriticalErrors,
 	}
 }
