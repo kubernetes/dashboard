@@ -120,8 +120,10 @@ function backendProd(outputBinaryPathsAndArchs) {
             '-installsuffix',
             'cgo',
             // record version info into src/version/version.go
+            // remove symbol tables and debug info to reduce binary size, see:
+            // https://golang.org/cmd/link/
             '-ldflags',
-            conf.recordVersionExpression,
+            `${conf.recordVersionExpression} -w -s`,
             '-o',
             path,
             conf.backend.mainPackageName,
