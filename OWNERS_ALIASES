@@ -1,0 +1,22 @@
+# See the OWNERS docs: https://git.k8s.io/community/docs/devel/owners.md
+
+aliases:
+  sig-ui-leads:
+    - danielromlein
+    - floreks
+  dashboard-maintainers:
+    - konryd
+    - ianlewis
+    - cupofcat
+    - mijajasinksi
+    - bryk
+    - floreks
+    - maciaszczykm
+    - rf232
+    - danielromlein
+    - pewu
+    - cheld
+    - olekzabl
+    - mhenc
+  dashboard-admins:
+    - bryk
