@@ -87,7 +87,7 @@
     "gulp-autoprefixer": "~4.1.0",
     "gulp-browserify": "~0.5.1",
     "gulp-cheerio": "~0.6.2",
-    "gulp-clang-format": "1.0.23",
+    "gulp-clang-format": "1.0.25",
     "gulp-codecov.io": "~1.0.1",
     "gulp-concat": "~2.6.1",
     "gulp-css-url-adjuster": "~0.2.3",
