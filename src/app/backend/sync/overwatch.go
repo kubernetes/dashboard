@@ -16,6 +16,7 @@ package sync
 
 import (
 	"log"
+	"time"
 
 	syncApi "github.com/kubernetes/dashboard/src/app/backend/sync/api"
 	"k8s.io/apimachinery/pkg/util/wait"
@@ -46,6 +47,8 @@ const (
 	// In case of synchronizer error it will be restarted.
 	AlwaysRestart RestartPolicy = "always"
 	NeverRestart  RestartPolicy = "never"
+
+	RestartDelay = 2 * time.Second
 )
 
 type overwatch struct {
@@ -106,6 +109,8 @@ func (self *overwatch) monitorSynchronizerStatus(synchronizer syncApi.Synchroniz
 		case err := <-synchronizer.Error():
 			log.Printf("Synchronizer %s exited with error: %s", name, err.Error())
 			if self.policyMap[name] == AlwaysRestart {
+				// Wait a sec before restarting synchronizer in case it exited with error.
+				time.Sleep(RestartDelay)
 				self.broadcastRestartEvent(name)
 			}
 
