@@ -5,7 +5,7 @@ node_modules/
 .go_workspace/
 .sass-cache/
 .tmp/
-.tools/
+.cached_tools/
 dist/
 coverage/
 
