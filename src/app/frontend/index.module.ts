@@ -12,14 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {enableProdMode} from '@angular/core';
-import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {UIView} from '@uirouter/angular';
 
-import {environment} from './environments/environment';
-import {RootModule} from './index.module';
+import {AboutModule} from './about/module';
+import {ChromeModule} from './chrome/module';
+import {CoreModule} from './core.module';
+import {LoginModule} from './login/module';
 
-if (environment.production) {
-  enableProdMode();
-}
-
-platformBrowserDynamic().bootstrapModule(RootModule).catch(err => console.log(err));
+@NgModule({
+  imports: [
+    BrowserModule,
+    // Application modules
+    CoreModule,
+    ChromeModule,
+    LoginModule,
+    AboutModule,
+  ],
+  bootstrap: [UIView]
+})
+export class RootModule {}

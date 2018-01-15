@@ -12,14 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {enableProdMode} from '@angular/core';
-import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
+import {NgModule} from '@angular/core';
 
-import {environment} from './environments/environment';
-import {RootModule} from './index.module';
+import {SharedModule} from '../shared.module';
 
-if (environment.production) {
-  enableProdMode();
-}
+import {LoginComponent} from './component';
 
-platformBrowserDynamic().bootstrapModule(RootModule).catch(err => console.log(err));
+@NgModule({
+  declarations: [LoginComponent],
+  imports: [
+    SharedModule,
+  ]
+})
+export class LoginModule {}

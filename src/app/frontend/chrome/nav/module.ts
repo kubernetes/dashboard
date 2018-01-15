@@ -14,7 +14,7 @@
 
 import {NgModule} from '@angular/core';
 
-import {SharedModule} from '../../shared_module';
+import {SharedModule} from '../../shared.module';
 
 import {NavComponent} from './component';
 import {NavItemComponent} from './item/component';

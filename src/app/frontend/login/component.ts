@@ -12,14 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {enableProdMode} from '@angular/core';
-import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
+import {Component} from '@angular/core';
 
-import {environment} from './environments/environment';
-import {RootModule} from './index.module';
-
-if (environment.production) {
-  enableProdMode();
-}
-
-platformBrowserDynamic().bootstrapModule(RootModule).catch(err => console.log(err));
+@Component({selector: 'kd-login', templateUrl: './template.html'})
+export class LoginComponent {}

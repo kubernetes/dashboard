@@ -15,7 +15,9 @@
 import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
 
-import {SharedModule} from '../shared_module';
+import {aboutState} from '../about/state';
+import {loginState} from '../login/state';
+import {SharedModule} from '../shared.module';
 
 import {ChromeComponent} from './component';
 import {NavModule} from './nav/module';
@@ -26,9 +28,9 @@ import {chromeState} from './state';
   imports: [
     SharedModule,
     UIRouterModule.forRoot({
-      states: [chromeState],
+      states: [chromeState, loginState],
       useHash: true,
-      otherwise: {state: 'about'},
+      otherwise: {state: aboutState.name},
     }),
     // Application modules
     NavModule,

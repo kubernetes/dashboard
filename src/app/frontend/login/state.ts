@@ -12,22 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
-import {UIView} from '@uirouter/angular';
+import {Ng2StateDeclaration} from '@uirouter/angular';
+import {LoginComponent} from './component';
 
-import {AboutModule} from './about/module';
-import {ChromeModule} from './chrome/module';
-import {CoreModule} from './core_module';
-
-@NgModule({
-  imports: [
-    BrowserModule,
-    // Application modules
-    CoreModule,
-    ChromeModule,
-    AboutModule,
-  ],
-  bootstrap: [UIView]
-})
-export class RootModule {}
+export const loginState: Ng2StateDeclaration = {
+  name: 'login',
+  url: '/login',
+  component: LoginComponent,
+};
