@@ -15,7 +15,7 @@
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import {MatButtonModule, MatCardModule, MatGridListModule, MatIconModule, MatProgressSpinnerModule, MatToolbarModule, MatTooltipModule} from '@angular/material';
+import {MatButtonModule, MatCardModule, MatGridListModule, MatIconModule, MatProgressSpinnerModule, MatSidenavModule, MatToolbarModule, MatTooltipModule} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import {PipesModule} from './common/pipes/module';
@@ -30,6 +30,7 @@ const sharedDependencies = [
   MatGridListModule,
   MatIconModule,
   MatProgressSpinnerModule,
+  MatSidenavModule,
   MatToolbarModule,
   MatTooltipModule,
 

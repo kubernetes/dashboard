@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
-import {MatIconRegistry} from '@angular/material';
 import {UIRouterModule} from '@uirouter/angular';
 
 import {SharedModule} from '../shared_module';
@@ -33,9 +32,6 @@ import {chromeState} from './state';
     }),
     // Application modules
     NavModule,
-  ],
-  providers: [
-    MatIconRegistry,
-  ],
+  ]
 })
 export class ChromeModule {}
