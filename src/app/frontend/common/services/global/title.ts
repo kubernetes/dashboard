@@ -15,24 +15,26 @@
 import {Inject, Injectable} from '@angular/core';
 import {Title} from '@angular/platform-browser';
 import {Transition} from '@uirouter/angular';
+import {SettingsService} from './settings';
 
 @Injectable()
 export class TitleService {
-  private readonly defaultTitle_ = 'Kubernetes Dashboard';
-
-  constructor(private titleService: Title) {}
+  constructor(private titleService: Title, private settingsService: SettingsService) {}
 
   setTitle(transition: Transition) {
-    let windowTitle = '';
-
-    const clusterName = '';  // TODO Get from settings.
-    if (clusterName) {
-      windowTitle += `${clusterName} - `;
-    }
-
     const targetState = transition.to().name;  // TODO Use breadcrumb value instead.
 
-    windowTitle += `${targetState} - ${this.defaultTitle_}`;
-    this.titleService.setTitle(windowTitle);
+    this.settingsService.getGlobalSettings().subscribe(
+        (globalSettings) => {
+          const clusterName = globalSettings.clusterName;
+          if (clusterName) {
+            this.titleService.setTitle(`${clusterName} - ${targetState} - Kubernetes Dashboard`);
+          } else {
+            this.titleService.setTitle(`${targetState} - Kubernetes Dashboard`);
+          }
+        },
+        (err) => {
+          this.titleService.setTitle(`${targetState} - Kubernetes Dashboard`);
+        });
   }
 }

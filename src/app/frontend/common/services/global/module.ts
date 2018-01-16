@@ -12,11 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
+
 import {AssetsService} from './assets';
+import {SettingsService} from './settings';
 import {TitleService} from './title';
 
 @NgModule({
-  providers: [AssetsService, TitleService],
+  providers: [
+    AssetsService, SettingsService, TitleService, {
+      provide: APP_INITIALIZER,
+      useFactory: initFactory,
+      deps: [SettingsService],
+      multi: true,
+    }
+  ],
 })
 export class GlobalServicesModule {}
+
+export function initFactory(settings: SettingsService) {
+  return () => initServices(settings);
+}
+
+export function initServices(settings: SettingsService) {
+  settings.init();
+}
