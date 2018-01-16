@@ -14,8 +14,9 @@
 
 import {NgModule} from '@angular/core';
 import {AssetsService} from './assets';
+import {TitleService} from './title';
 
 @NgModule({
-  providers: [AssetsService],
+  providers: [AssetsService, TitleService],
 })
 export class GlobalServicesModule {}
