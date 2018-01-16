@@ -13,9 +13,10 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
-import {UIRouterModule} from '@uirouter/angular';
+import {UIRouter, UIRouterModule} from '@uirouter/angular';
 
 import {aboutState} from '../about/state';
+import {TitleService} from '../common/services/global/title';
 import {loginState} from '../login/state';
 import {SharedModule} from '../shared.module';
 
@@ -31,9 +32,20 @@ import {chromeState} from './state';
       states: [chromeState, loginState],
       useHash: true,
       otherwise: {state: aboutState.name},
+      config: configureRouter,
     }),
     // Application modules
     NavModule,
   ]
 })
 export class ChromeModule {}
+
+export function configureRouter(router: UIRouter) {
+  const transitionService = router.transitionService;
+
+  // Register transition hook to adjust window title.
+  transitionService.onBefore({}, (transition) => {
+    const titleService = transition.injector().get(TitleService);
+    titleService.setTitle(transition);
+  });
+}
