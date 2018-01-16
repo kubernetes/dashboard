@@ -12,12 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {AssetsService} from './assets';
-import {AuthService} from './auth/service';
-import {CsrfTokenService} from './csrftoken';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {CsrfToken} from '@api/backendapi';
+import {Observable} from 'rxjs/Observable';
 
-@NgModule({
-  providers: [AssetsService, AuthService, CsrfTokenService],
-})
-export class GlobalServicesModule {}
+@Injectable()
+export class CsrfTokenService {
+  constructor(private http_: HttpClient) {}
+
+  /** Get a CSRF token for an action you want to perform. */
+  getTokenForAction(action: string): Observable<CsrfToken> {
+    return this.http_.get<CsrfToken>(`api/v1/csrftoken/${action}`);
+  }
+}

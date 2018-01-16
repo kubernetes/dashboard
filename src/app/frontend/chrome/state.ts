@@ -21,6 +21,8 @@ import {ChromeComponent} from './component';
 
 export const stateName = 'chrome';
 
+export const requiresAuth = true;
+
 /**
  * Name of the action bar view. Action bar is the second toolbar in the
  * application and can be used for, e.g., breadcrumbs or view-specific action

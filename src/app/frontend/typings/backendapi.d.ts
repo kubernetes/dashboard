@@ -12,12 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {AssetsService} from './assets';
-import {AuthService} from './auth/service';
-import {CsrfTokenService} from './csrftoken';
+export interface ErrStatus {
+  message: string;
+  code: number;
+  status: string;
+  reason: string;
+}
 
-@NgModule({
-  providers: [AssetsService, AuthService, CsrfTokenService],
-})
-export class GlobalServicesModule {}
+export interface Error { ErrStatus: ErrStatus; }
+
+export interface CsrfToken { token: string; }
+
+export interface LoginSpec {
+  username: string;
+  password: string;
+  token: string;
+  kubeconfig: string;
+}
+
+export interface LoginStatus {
+  tokenPresent: boolean;
+  headerPresent: boolean;
+  httpsMode: boolean;
+}
+
+export interface AuthResponse {
+  jweToken: string;
+  errors: Error[];
+}

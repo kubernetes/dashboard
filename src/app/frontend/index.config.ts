@@ -12,10 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {AssetsService} from './assets';
+import {InjectionToken} from '@angular/core';
 
-@NgModule({
-  providers: [AssetsService],
-})
-export class ServicesModule {}
+export let KD_CONFIG = new InjectionToken<KdConfig>('kd.config');
+
+export class KdConfig {
+  tokenCookieName: string;
+  skipLoginPageCookieName: string;
+  csrfHeaderName: string;
+  authTokenHeaderName: string;
+}
+
+// TODO fill this out
+export const KD_DI_CONFIG: KdConfig = {
+  tokenCookieName: 'a',
+  skipLoginPageCookieName: 'a',
+  csrfHeaderName: 'a',
+  authTokenHeaderName: 'a',
+};

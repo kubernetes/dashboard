@@ -13,11 +13,15 @@
 // limitations under the License.
 
 import {HttpClientModule} from '@angular/common/http';
-import {Inject, NgModule, Optional, SkipSelf} from '@angular/core';
+import {ClassProvider, Inject, NgModule, Optional, SkipSelf} from '@angular/core';
 
 import {GlobalServicesModule} from './common/services/global/module';
+import {KD_CONFIG, KdConfig} from './index.config';
 
-@NgModule({imports: [HttpClientModule, GlobalServicesModule]})
+@NgModule({
+  providers: [{provide: KD_CONFIG, useClass: KdConfig} as ClassProvider],
+  imports: [HttpClientModule, GlobalServicesModule]
+})
 export class CoreModule {
   /* make sure CoreModule is imported only by one NgModule the RootModule */
   constructor(@Inject(CoreModule) @Optional() @SkipSelf() parentModule: CoreModule) {

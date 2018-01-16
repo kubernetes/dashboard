@@ -5,6 +5,10 @@
   },
   "compileOnSave": false,
   "compilerOptions": {
+    "baseUrl": "src/app/frontend",
+    "paths": {
+      "@api/*": ["typings/*"]
+    },
     "outDir": ".tmp/out-tsc",
     "target": "es6",
     "module": "es2015",
@@ -18,7 +22,8 @@
       "dom"
     ],
     "typeRoots": [
-      "./node_modules/@types"
+      "./node_modules/@types",
+      "./src/app/frontend/typings"
     ]
   }
 }
