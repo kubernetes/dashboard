@@ -10,8 +10,8 @@
       "@api/*": ["typings/*"]
     },
     "outDir": ".tmp/out-tsc",
-    "target": "es6",
-    "module": "es2015",
+    "target": "esnext",
+    "module": "es6",
     "moduleResolution": "node",
     "sourceMap": true,
     "emitDecoratorMetadata": true,

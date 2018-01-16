@@ -12,12 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
+
 import {AssetsService} from './assets';
 import {AuthService} from './auth/service';
 import {CsrfTokenService} from './csrftoken';
+import {TitleService} from './title';
 
 @NgModule({
-  providers: [AssetsService, AuthService, CsrfTokenService],
+  providers: [
+    AssetsService, TitleService, AuthService, CsrfTokenService,
+    {provide: APP_INITIALIZER, useFactory: init, deps: [AuthService], multi: true}
+  ],
 })
 export class GlobalServicesModule {}
+
+export function init(authService: AuthService) {
+  return () => {
+    authService.init();
+  };
+}

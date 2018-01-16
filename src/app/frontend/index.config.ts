@@ -14,19 +14,19 @@
 
 import {InjectionToken} from '@angular/core';
 
-export let KD_CONFIG = new InjectionToken<KdConfig>('kd.config');
+export let CONFIG_DI_TOKEN = new InjectionToken<Config>('kd.config');
 
-export class KdConfig {
-  tokenCookieName: string;
+export interface Config {
+  authTokenCookieName: string;
   skipLoginPageCookieName: string;
   csrfHeaderName: string;
   authTokenHeaderName: string;
 }
 
 // TODO fill this out
-export const KD_DI_CONFIG: KdConfig = {
-  tokenCookieName: 'a',
-  skipLoginPageCookieName: 'a',
-  csrfHeaderName: 'a',
-  authTokenHeaderName: 'a',
+export const CONFIG: Config = {
+  authTokenCookieName: 'jweToken',
+  authTokenHeaderName: 'jweToken',
+  csrfHeaderName: 'X-CSRF-TOKEN',
+  skipLoginPageCookieName: 'skipLoginPage'
 };

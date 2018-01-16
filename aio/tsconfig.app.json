@@ -3,7 +3,7 @@
   "compilerOptions": {
     "outDir": "../out-tsc/app",
     "baseUrl": "../src/app/frontend",
-    "module": "es2015",
+    "module": "es6",
     "types": []
   },
   "exclude": [

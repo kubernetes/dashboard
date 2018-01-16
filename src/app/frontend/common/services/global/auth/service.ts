@@ -16,7 +16,7 @@
 // import {stateName as loginState} from '../../login/state';
 // import {stateName as overviewState} from '../../overview/state';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {AuthResponse, CsrfToken, LoginSpec, LoginStatus} from '@api/backendapi';
 import {StateService, TransitionService} from '@uirouter/angular';
 import {HookMatchCriteria, HookMatchCriterion, Transition} from '@uirouter/core';
@@ -24,34 +24,34 @@ import {CookieService} from 'ngx-cookie-service';
 import {Observable} from 'rxjs/Observable';
 
 import {aboutState} from '../../../../about/state';
-import {KdConfig} from '../../../../index.config';
+import {CONFIG} from '../../../../index.config';
 import {loginState} from '../../../../login/state';
 import {CsrfTokenService} from '../csrftoken';
 
 @Injectable()
 export class AuthService {
-  skipLoginPageCookieName_ = 'skipLoginPage';
+  private readonly config_ = CONFIG;
 
   constructor(
       private cookies_: CookieService, private transitions_: TransitionService,
       private state_: StateService, private http_: HttpClient,
-      private csrfTokenService_: CsrfTokenService, private kdConfig_: KdConfig) {}
+      private csrfTokenService_: CsrfTokenService) {}
 
   private setTokenCookie_(token: string) {
     // This will only work for HTTPS connection
-    this.cookies_.set(this.kdConfig_.tokenCookieName, token, null, null, null, true);
+    this.cookies_.set(this.config_.authTokenCookieName, token, null, null, null, true);
     // This will only work when accessing Dashboard at 'localhost' or '127.0.0.1'
-    this.cookies_.set(this.kdConfig_.tokenCookieName, token, null, null, 'localhost');
-    this.cookies_.set(this.kdConfig_.tokenCookieName, token, null, null, '127.0.0.1');
+    this.cookies_.set(this.config_.authTokenCookieName, token, null, null, 'localhost');
+    this.cookies_.set(this.config_.authTokenCookieName, token, null, null, '127.0.0.1');
   }
 
   private getTokenCookie_(): string {
-    return this.cookies_.get(this.kdConfig_.tokenCookieName) || '';
+    return this.cookies_.get(this.config_.authTokenCookieName) || '';
   }
 
   private removeAuthCookies_() {
-    this.cookies_.delete(this.kdConfig_.tokenCookieName);
-    this.cookies_.delete(this.kdConfig_.skipLoginPageCookieName);
+    this.cookies_.delete(this.config_.authTokenCookieName);
+    this.cookies_.delete(this.config_.skipLoginPageCookieName);
   }
 
   /** Sends a login request to the backend with filled in login spec structure. */
@@ -61,7 +61,7 @@ export class AuthService {
             csrfToken => {
               return this.http_.post<AuthResponse>(
                   'api/v1/login', loginSpec,
-                  {headers: new HttpHeaders().set(this.kdConfig_.csrfHeaderName, csrfToken.token)});
+                  {headers: new HttpHeaders().set(this.config_.csrfHeaderName, csrfToken.token)});
             });
 
     return loginObs.subscribe(
@@ -92,11 +92,14 @@ export class AuthService {
   redirectToLogin(transition: Transition) {
     const state = transition.router.stateService;
     this.getLoginStatus().subscribe(loginStatus => {
+      console.log(loginStatus);
+      console.log(transition.to().name);
       if (transition.to().name === loginState.name &&
           // Do not allow entering login page if already authenticated or authentication is
           // disabled.
           (this.isAuthenticated(loginStatus) || !this.isAuthenticationEnabled(loginStatus))) {
         // Todo change to overview state
+        console.log('go to about')
         return state.target(aboutState);
       }
 
@@ -125,7 +128,7 @@ export class AuthService {
             csrfToken => {
               return this.http_.post<AuthResponse>(
                   'api/v1/token/refresh', {jweToken: token},
-                  {headers: new HttpHeaders().set(this.kdConfig_.csrfHeaderName, csrfToken.token)});
+                  {headers: new HttpHeaders().set(this.config_.csrfHeaderName, csrfToken.token)});
             });
 
     tokenRefreshObs.subscribe(
@@ -159,12 +162,12 @@ export class AuthService {
     const token = this.getTokenCookie_();
     return this.http_.get<LoginStatus>(
         'api/v1/login/status',
-        {headers: new HttpHeaders().set(this.kdConfig_.authTokenHeaderName, token)});
+        {headers: new HttpHeaders().set(this.config_.authTokenHeaderName, token)});
   }
 
   skipLoginPage(skip: boolean) {
     this.removeAuthCookies_();
-    this.cookies_.set(this.skipLoginPageCookieName_, skip.toString());
+    this.cookies_.set(this.config_.skipLoginPageCookieName, skip.toString());
   }
 
   /**
@@ -173,7 +176,7 @@ export class AuthService {
    * In case cookie is not set login page will also be visible.
    */
   isLoginPageEnabled(): boolean {
-    return !(this.cookies_.get(this.skipLoginPageCookieName_) === 'true');
+    return !(this.cookies_.get(this.config_.skipLoginPageCookieName) === 'true');
   }
 
   /**

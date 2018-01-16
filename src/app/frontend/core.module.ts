@@ -13,13 +13,14 @@
 // limitations under the License.
 
 import {HttpClientModule} from '@angular/common/http';
-import {ClassProvider, Inject, NgModule, Optional, SkipSelf} from '@angular/core';
+import {Inject, NgModule, Optional, SkipSelf} from '@angular/core';
+import {CookieService} from 'ngx-cookie-service';
 
 import {GlobalServicesModule} from './common/services/global/module';
-import {KD_CONFIG, KdConfig} from './index.config';
+import {CONFIG, CONFIG_DI_TOKEN} from './index.config';
 
 @NgModule({
-  providers: [{provide: KD_CONFIG, useClass: KdConfig} as ClassProvider],
+  providers: [{provide: CONFIG_DI_TOKEN, useValue: CONFIG}, CookieService],
   imports: [HttpClientModule, GlobalServicesModule]
 })
 export class CoreModule {
