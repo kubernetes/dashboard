@@ -137,7 +137,7 @@
     "proxy-middleware": "~0.15.0",
     "q": "~1.5.1",
     "regexp-clone": "~0.0.1",
-    "semver": "~5.4.1",
+    "semver": "~5.5.0",
     "through2": "~2.0.3",
     "uglify-save-license": "~0.4.1",
     "vinyl-paths": "~2.1.0",
