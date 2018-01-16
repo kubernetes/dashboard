@@ -41,7 +41,7 @@ const namespaceParam = 'namespace';
  */
 const fillContentConfig = 'fillContent';
 
-export let chromeState: Ng2StateDeclaration = {
+export const chromeState: Ng2StateDeclaration = {
   name: stateName,
   url: `?${namespaceParam}`,
   abstract: true,

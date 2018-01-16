@@ -13,13 +13,12 @@
 // limitations under the License.
 
 // import {stateName as errorState} from '../../error/state';
-// import {stateName as loginState} from '../../login/state';
 // import {stateName as overviewState} from '../../overview/state';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Inject, Injectable} from '@angular/core';
-import {AuthResponse, CsrfToken, LoginSpec, LoginStatus} from '@api/backendapi';
+import {Injectable} from '@angular/core';
+import {AuthResponse, CsrfToken, Error, LoginSpec, LoginStatus} from '@api/backendapi';
 import {StateService, TransitionService} from '@uirouter/angular';
-import {HookMatchCriteria, HookMatchCriterion, Transition} from '@uirouter/core';
+import {TargetState, Transition} from '@uirouter/core';
 import {CookieService} from 'ngx-cookie-service';
 import {Observable} from 'rxjs/Observable';
 
@@ -89,29 +88,26 @@ export class AuthService {
    *  - authorization header has to be present in request to dashboard ('Authorization: Bearer
    * <token>')
    */
-  redirectToLogin(transition: Transition) {
+  redirectToLogin(transition: Transition): Promise<boolean|TargetState> {
     const state = transition.router.stateService;
-    this.getLoginStatus().subscribe(loginStatus => {
-      console.log(loginStatus);
-      console.log(transition.to().name);
+    return this.getLoginStatus().toPromise().then<boolean|TargetState>(loginStatus => {
       if (transition.to().name === loginState.name &&
           // Do not allow entering login page if already authenticated or authentication is
           // disabled.
           (this.isAuthenticated(loginStatus) || !this.isAuthenticationEnabled(loginStatus))) {
         // Todo change to overview state
-        console.log('go to about')
-        return state.target(aboutState);
+        return state.target(aboutState.name, null, {location: true, reload: true});
       }
 
       // In following cases user should not be redirected and reach his target state:
       if (transition.to().name === loginState.name || transition.to().name === 'error' ||
           !this.isLoginPageEnabled() || !this.isAuthenticationEnabled(loginStatus) ||
           this.isAuthenticated(loginStatus)) {
-        return;
+        return true;
       }
 
       // In other cases redirect user to login state.
-      state.target(loginState.name);
+      return state.target(loginState.name);
     });
   }
 
@@ -119,9 +115,9 @@ export class AuthService {
    * Sends a token refresh request to the backend. In case user is not logged in with token nothing
    * will happen.
    */
-  refreshToken() {
+  refreshToken(): Promise<string|Error[]|boolean> {
     const token = this.getTokenCookie_();
-    if (token.length === 0) return;
+    if (token.length === 0) return Promise.resolve(true);
 
     const tokenRefreshObs =
         this.csrfTokenService_.getTokenForAction('token').switchMap<CsrfToken, AuthResponse>(
@@ -131,17 +127,17 @@ export class AuthService {
                   {headers: new HttpHeaders().set(this.config_.csrfHeaderName, csrfToken.token)});
             });
 
-    tokenRefreshObs.subscribe(
+    return tokenRefreshObs.toPromise().then<string|Error[]>(
         authResponse => {
           if (authResponse.jweToken.length !== 0 && authResponse.errors.length === 0) {
             this.setTokenCookie_(authResponse.jweToken);
-            return;
+            return authResponse.jweToken;
           }
 
-          return Observable.throw(authResponse.errors);
+          return authResponse.errors;
         },
         err => {
-          return Observable.throw(err);
+          return err;
         });
   }
 
@@ -177,23 +173,5 @@ export class AuthService {
    */
   isLoginPageEnabled(): boolean {
     return !(this.cookies_.get(this.config_.skipLoginPageCookieName) === 'true');
-  }
-
-  /**
-   * Initializes the service to track state changes and make sure that user is logged in and
-   * token has not expired.
-   */
-  init() {
-    const requiresAuthCriteria = {
-      to: (state): HookMatchCriterion => state.data && state.data.requiresAuth
-    } as HookMatchCriteria;
-
-    this.transitions_.onBefore(requiresAuthCriteria, (transition) => {
-      return this.redirectToLogin(transition);
-    }, {priority: 10});
-
-    this.transitions_.onBefore(requiresAuthCriteria, () => {
-      return this.refreshToken();
-    });
   }
 }

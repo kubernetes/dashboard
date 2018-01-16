@@ -13,9 +13,12 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
-import {UIRouterModule} from '@uirouter/angular';
+import {UIRouter, UIRouterModule} from '@uirouter/angular';
+import {Category, HookMatchCriteria, HookMatchCriterion} from '@uirouter/core';
 
 import {aboutState} from '../about/state';
+import {AuthService} from '../common/services/global/auth/service';
+import {TitleService} from '../common/services/global/title';
 import {loginState} from '../login/state';
 import {SharedModule} from '../shared.module';
 
@@ -31,9 +34,38 @@ import {chromeState} from './state';
       states: [chromeState, loginState],
       useHash: true,
       otherwise: {state: aboutState.name},
+      config: configureRouter,
     }),
     // Application modules
     NavModule,
   ]
 })
 export class ChromeModule {}
+
+export function configureRouter(router: UIRouter) {
+  const transitionService = router.transitionService;
+  // router.trace.enable(Category.HOOK);
+  // router.trace.enable(Category.RESOLVE);
+  // router.trace.enable(Category.TRANSITION);
+
+  // Register transition hook to adjust window title.
+  transitionService.onBefore({}, (transition) => {
+    const titleService = transition.injector().get(TitleService);
+    titleService.setTitle(transition);
+  });
+
+  // Register transition hooks for authentication.
+  const requiresAuthCriteria = {
+    to: (state): HookMatchCriterion => state.data && state.data.requiresAuth
+  } as HookMatchCriteria;
+
+  transitionService.onBefore(requiresAuthCriteria, (transition) => {
+    const authService = transition.injector().get(AuthService);
+    return authService.redirectToLogin(transition);
+  }, {priority: 10});
+
+  transitionService.onBefore(requiresAuthCriteria, (transition) => {
+    const authService = transition.injector().get(AuthService);
+    return authService.refreshToken();
+  });
+}

@@ -17,18 +17,23 @@ import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {AssetsService} from './assets';
 import {AuthService} from './auth/service';
 import {CsrfTokenService} from './csrftoken';
+import {SettingsService} from './settings';
 import {TitleService} from './title';
 
 @NgModule({
   providers: [
-    AssetsService, TitleService, AuthService, CsrfTokenService,
-    {provide: APP_INITIALIZER, useFactory: init, deps: [AuthService], multi: true}
+    AssetsService, SettingsService, TitleService, AuthService, CsrfTokenService, {
+      provide: APP_INITIALIZER,
+      useFactory: init,
+      deps: [SettingsService],
+      multi: true,
+    }
   ],
 })
 export class GlobalServicesModule {}
 
-export function init(authService: AuthService) {
+export function init(settings: SettingsService) {
   return () => {
-    authService.init();
+    settings.init();
   };
 }

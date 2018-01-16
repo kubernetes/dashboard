@@ -19,4 +19,7 @@ export const loginState: Ng2StateDeclaration = {
   name: 'login',
   url: '/login',
   component: LoginComponent,
+  data: {
+    requiresAuth: true,
+  },
 };
