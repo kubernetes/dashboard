@@ -21,11 +21,13 @@ limitations under the License.
     <mat-icon class="kd-about-logo-icon"
               [svgIcon]="assets.getAppLogo()"></mat-icon>
     <div class="kd-about-logo-text">
-      <div class="mat-h1 kd-no-margin">Dashboard</div>
+      <div class="mat-h1 kd-no-margin">
+        <span>Dashboard</span>
+        <span *ngIf="appVersion">v{{appVersion}}</span>
+        <span *ngIf="!appVersion && gitCommit">#{{gitCommit}}</span>
+      </div>
       <div class="mat-h3 kd-no-margin">General-purpose web UI for Kubernetes clusters</div>
     </div>
-    <div>App version:</div>
-    <div>Git commit:</div>
   </mat-card-content>
   <mat-card-footer class="mat-small kd-card-footer">
     <div>Copyright 2015 - {{latestCopyrightYear}} The Kubernetes Authors.</div>
@@ -36,15 +38,3 @@ limitations under the License.
     </div>
   </mat-card-footer>
 </mat-card>
-
-<!--
-    <kd-info-card-entry title="[[Dashboard Version|Label 'Dashboard Version' for the about page.]]"
-                        ng-if="::$ctrl.dashboardVersion">
-    {{$ctrl.dashboardVersion}}
-    </kd-info-card-entry>
-
-    <kd-info-card-entry title="[[Git Commit|Label 'Git Commit' for the about page.]]"
-                        ng-if="::$ctrl.gitCommit">
-    {{$ctrl.gitCommit}}
-    </kd-info-card-entry>
--->
