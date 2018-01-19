@@ -17,4 +17,3 @@ export const environment = {
   version: '%VERSION%',
   gitCommit: '%GIT_COMMIT%',
 };
-
