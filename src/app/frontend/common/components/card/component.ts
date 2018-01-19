@@ -12,21 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../variables';
-@import '../mixins';
+import {Component} from '@angular/core';
 
-@mixin kd-about-logo {
-  display: inline-block;
-}
-
-.kd-about-logo-icon {
-  @include kd-icon-size(8 * $baseline-grid);
-  @include kd-about-logo;
-
-  margin: 0 (2 * $baseline-grid) 0 0;
-  vertical-align: bottom;
-}
-
-.kd-about-logo-text {
-  @include kd-about-logo;
-}
+@Component({selector: 'kd-card', templateUrl: './template.html', styleUrls: ['./style.scss']})
+export class CardComponent {}

@@ -12,18 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
 
+import {ComponentsModule} from '../common/components/module';
 import {SharedModule} from '../shared.module';
+
 import {AboutComponent} from './component';
 import {aboutState} from './state';
 
 @NgModule({
   imports: [
     SharedModule,
+    ComponentsModule,
     UIRouterModule.forChild({states: [aboutState]}),
   ],
   declarations: [AboutComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AboutModule {}

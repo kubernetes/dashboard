@@ -19,6 +19,7 @@ import {MatButtonModule, MatCardModule, MatDividerModule, MatGridListModule, Mat
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {UIRouterModule} from '@uirouter/angular';
 
+import {ComponentsModule} from './common/components/module';
 import {PipesModule} from './common/pipes/module';
 
 const sharedDependencies = [

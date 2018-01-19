@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<mat-card class="kd-about-card">
-  <mat-card-title>About</mat-card-title>
-  <mat-divider></mat-divider>
-  <mat-card-content>
+<kd-card>
+  <kd-card-title>About</kd-card-title>
+
+  <kd-card-content>
     <mat-icon class="kd-about-logo-icon"
               [svgIcon]="assets.getAppLogo()"></mat-icon>
     <div class="kd-about-logo-text">
@@ -27,8 +27,9 @@ limitations under the License.
       </div>
       <div class="mat-h3 kd-no-margin">General-purpose web UI for Kubernetes clusters</div>
     </div>
-  </mat-card-content>
-  <mat-card-footer class="mat-small kd-card-footer">
+  </kd-card-content>
+
+  <kd-card-footer>
     <div *ngIf="gitCommit">Built from <a [href]="getCommitLink()">{{gitCommit}}</a> commit.</div>
     <div>Copyright 2015 - {{latestCopyrightYear}} The Kubernetes Authors.</div>
     <div>
@@ -36,5 +37,5 @@ limitations under the License.
       <a href="https://github.com/kubernetes/dashboard/graphs/contributors">community</a> as an
       <a href="https://github.com/kubernetes/dashboard">open source project</a>.
     </div>
-  </mat-card-footer>
-</mat-card>
+  </kd-card-footer>
+</kd-card>
