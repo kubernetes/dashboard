@@ -21,4 +21,8 @@ export class AboutComponent {
   gitCommit = 'e2caa22fa1dcf860cbca9807016de3c8b92d24dd';
   appVersion = '1.8.2';
   constructor(@Inject(AssetsService) public assets: AssetsService) {}
+
+  getCommitLink() {
+    return `https://github.com/kubernetes/dashboard/commit/${this.gitCommit}`;
+  }
 }

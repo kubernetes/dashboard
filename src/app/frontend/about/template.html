@@ -23,13 +23,13 @@ limitations under the License.
     <div class="kd-about-logo-text">
       <div class="mat-h1 kd-no-margin">
         <span>Dashboard</span>
-        <span *ngIf="appVersion">v{{appVersion}}</span>
-        <span *ngIf="!appVersion && gitCommit">#{{gitCommit}}</span>
+        <span *ngIf="appVersion">{{appVersion}}</span>
       </div>
       <div class="mat-h3 kd-no-margin">General-purpose web UI for Kubernetes clusters</div>
     </div>
   </mat-card-content>
   <mat-card-footer class="mat-small kd-card-footer">
+    <div *ngIf="gitCommit">Built from <a [href]="getCommitLink()">{{gitCommit}}</a> commit.</div>
     <div>Copyright 2015 - {{latestCopyrightYear}} The Kubernetes Authors.</div>
     <div>
       Kubernetes Dashboard is made possible by the Dashboard
