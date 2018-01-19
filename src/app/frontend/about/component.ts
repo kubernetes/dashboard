@@ -22,11 +22,7 @@ export class AboutComponent {
   appVersion = '1.8.2';
   constructor(@Inject(AssetsService) public assets: AssetsService) {}
 
-  showAppVersion(): boolean {
-    return !!this.appVersion;
-  }
-
-  showGitCommit(): boolean {
-    return !this.appVersion && !!this.gitCommit;
+  getCommitLink() {
+    return `https://github.com/kubernetes/dashboard/commit/${this.gitCommit}`;
   }
 }
