@@ -32,10 +32,8 @@ import conf from './conf';
  * @return {string}
  */
 function getLicenseFileFilter(...ext) {
-  return `**/*.{${ext.join()}}`;
+  return ext.length > 1 ? `**/*.{${ext.join()}}` : `**/*.${ext}`;
 }
-
-/**
 
 /**
  * Checks and prints all source files for presence of up-to-date license headers.

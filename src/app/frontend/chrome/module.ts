@@ -46,7 +46,6 @@ import {ReplicationControllerModule} from '../resource/workloads/replicationcont
 import {StatefulSetModule} from '../resource/workloads/statefulset/module';
 import {SettingsModule} from '../settings/module';
 import {SharedModule} from '../shared.module';
-
 import {ChromeComponent} from './component';
 import {NavModule} from './nav/module';
 import {chromeState} from './state';
