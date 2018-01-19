@@ -1,0 +1,82 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<!doctype html>
+<html ng-app="kubernetesDashboard">
+<!-- TODO(bryk): Add ng-strict-di setting for production builds. -->
+
+<head>
+  <meta charset="utf-8">
+  <title ng-controller="kdTitle as $ctrl"
+         ng-bind="$ctrl.title()"></title>
+  <link rel="icon"
+        type="image/png"
+        href="assets/images/kubernetes-logo.png" />
+  <meta name="viewport"
+        content="width=device-width">
+
+  <!-- build:css static/vendor.css -->
+  <!-- bower:css -->
+  <!-- Application CSS dependencies are populated here (dev build) and compiled
+         into vendor.css (prod build). -->
+  <!-- endbower -->
+  <!-- endbuild -->
+
+  <!-- build:css static/app.css -->
+  <!-- inject:css -->
+  <!-- Application CSS files are populated here (dev build) and compiled
+       into app.css (prod build). -->
+  <!-- endinject -->
+  <!-- endbuild -->
+</head>
+
+<body ng-controller="kdMain as $ctrl">
+  <!--[if lt IE 10]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser.
+      Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your
+      experience.</p>
+    <![endif]-->
+
+  <kd-login layout="column"
+            layout-fill
+            ng-if="$ctrl.isLoginState()">
+  </kd-login>
+  <kd-chrome layout="column"
+             layout-fill
+             ng-if="!$ctrl.isLoginState()">
+    <!-- Application content is inserted here. -->
+  </kd-chrome>
+
+  <!-- build:js static/vendor.js -->
+  <!-- bower:js -->
+  <!-- Application JS dependencies are populated here (dev build) and compiled
+         into vendor.js (prod build). -->
+  <!-- endbower -->
+  <!-- endbuild -->
+
+  <!-- Script with configuration generated at backend. -->
+  <script src="api/appConfig.json"></script>
+
+  <!-- build:js static/app.js -->
+  <!-- inject:js -->
+  <!-- Application JS files are populated here (dev build) and compiled
+       into app.js (prod build). -->
+  <!-- endinject -->
+  <!-- endbuild -->
+
+</body>
+
+</html>

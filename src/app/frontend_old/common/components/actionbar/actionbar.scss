@@ -1,0 +1,68 @@
+// Copyright 2017 The Kubernetes Authors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+@import '../../../variables';
+
+.kd-toolbar {
+  &.kd-actionbar {
+    background: $content-background;
+    color: $foreground-1;
+  }
+}
+
+.kd-actionbar-not-scrolled {
+  .kd-actionbar {
+    border-bottom: 1px solid $border;
+    box-shadow: none;
+  }
+}
+
+.kd-actionbar-breadcrumbs {
+  align-items: center;
+  line-height: 2 * $baseline-grid;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.kd-actionbar {
+  &.kd-toolbar {
+    button {
+      &.md-button {
+        color: $primary;
+
+        md-icon {
+          color: $primary;
+        }
+      }
+    }
+  }
+}
+
+.kd-actionbar-divider {
+  border-left: 1px solid $foreground-4;
+  height: 4 * $baseline-grid;
+  margin-left: 1.5 * $baseline-grid;
+  margin-right: $baseline-grid;
+}
+
+.kd-actionbar-button {
+  display: flex;
+  flex-direction: row;
+
+  .kd-actionbar-button-text {
+    margin-left: $baseline-grid / 2;
+    padding-right: $baseline-grid / 2;
+  }
+}

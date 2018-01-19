@@ -45,7 +45,7 @@ func AggregateData(metricList []metricapi.Metric, metricName string,
 	sort.Sort(Xs) // ensure X data points are sorted
 	for _, x := range Xs {
 		y := metricapi.AggregatingFunctions[aggregationName](aggrMap[x])
-		newDataPoints = append(newDataPoints, metricapi.DataPoint{x, y})
+		newDataPoints = append(newDataPoints, metricapi.DataPoint{X: x, Y: y})
 	}
 
 	// We need metric points for sparklines so we can't aggregate them as they are per

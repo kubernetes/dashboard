@@ -368,5 +368,4 @@ func DeployAppFromFile(cfg *rest.Config, spec *AppDeploymentFromFileSpec) (bool,
 			return false, errors.LocalizeError(err)
 		}
 	}
-	return true, nil
 }

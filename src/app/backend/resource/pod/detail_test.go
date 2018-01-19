@@ -159,13 +159,13 @@ func TestEvalEnvFrom(t *testing.T) {
 				Name:  "echoserver",
 				Image: "k8s.gcr.io/echoserver",
 				EnvFrom: []v1.EnvFromSource{
-					v1.EnvFromSource{
+					{
 						SecretRef: &v1.SecretEnvSource{
 							LocalObjectReference: v1.LocalObjectReference{
 								Name: "secret-env",
 							},
 						},
-					}, v1.EnvFromSource{
+					}, {
 						Prefix: "test_",
 						ConfigMapRef: &v1.ConfigMapEnvSource{
 							LocalObjectReference: v1.LocalObjectReference{

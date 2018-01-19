@@ -62,7 +62,7 @@ func (self *SettingsHandler) handleSettingsGlobalCanI(request *restful.Request, 
 		canI = true
 	}
 
-	response.WriteHeaderAndEntity(http.StatusOK, clientapi.CanIResponse{canI})
+	response.WriteHeaderAndEntity(http.StatusOK, clientapi.CanIResponse{Allowed: canI})
 }
 
 func (self *SettingsHandler) handleSettingsGlobalGet(request *restful.Request, response *restful.Response) {
