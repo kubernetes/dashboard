@@ -14,13 +14,17 @@
 
 import {HttpClientModule} from '@angular/common/http';
 import {Inject, NgModule, Optional, SkipSelf} from '@angular/core';
+import {MAT_TOOLTIP_DEFAULT_OPTIONS} from '@angular/material';
 import {CookieService} from 'ngx-cookie-service';
 
 import {GlobalServicesModule} from './common/services/global/module';
-import {CONFIG, CONFIG_DI_TOKEN} from './index.config';
+import {CONFIG, CONFIG_DI_TOKEN, MAT_TOOLTIP_OVERRIDE} from './index.config';
 
 @NgModule({
-  providers: [{provide: CONFIG_DI_TOKEN, useValue: CONFIG}, CookieService],
+  providers: [
+    {provide: CONFIG_DI_TOKEN, useValue: CONFIG}, CookieService,
+    {provide: MAT_TOOLTIP_DEFAULT_OPTIONS, useValue: MAT_TOOLTIP_OVERRIDE}
+  ],
   imports: [HttpClientModule, GlobalServicesModule]
 })
 export class CoreModule {

@@ -30,3 +30,7 @@
 .kd-about-logo-text {
   @include kd-about-logo;
 }
+
+.kd-about-footer {
+  color: $foreground-2;
+}

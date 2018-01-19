@@ -19,9 +19,11 @@
 }
 
 .kd-card-title {
+  font-size: $title-font-size-base;
   padding: 0;
 }
 
 .kd-card-footer {
+  font-size: $footer-font-size-base;
   padding: 0 3 * $baseline-grid 3 * $baseline-grid;
 }

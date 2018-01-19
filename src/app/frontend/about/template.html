@@ -29,7 +29,7 @@ limitations under the License.
     </div>
   </kd-card-content>
 
-  <kd-card-footer>
+  <kd-card-footer class="kd-about-footer">
     <div *ngIf="gitCommit">Built from <a [href]="getCommitLink()">{{gitCommit}}</a> commit.</div>
     <div>Copyright 2015 - {{latestCopyrightYear}} The Kubernetes Authors.</div>
     <div>
