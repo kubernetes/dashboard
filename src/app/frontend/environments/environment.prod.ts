@@ -14,7 +14,6 @@
 
 export const environment = {
   production: true,
-  version: '1.8.2',
-  gitCommit:
-      '/home/maciaszczykm/go/src/github.com/kubernetes/dashboard/src/app/frontend/environments/environment.prod.ts',
+  version: '%VERSION%',
+  gitCommit: '%GIT_COMMIT%',
 };
