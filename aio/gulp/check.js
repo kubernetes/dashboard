@@ -36,8 +36,6 @@ function getLicenseFileFilter(...ext) {
 }
 
 /**
-
-/**
  * Checks and prints all source files for presence of up-to-date license headers.
  * License header templates are stored in 'license' directory.
  */

@@ -30,9 +30,9 @@ function clean {
 
 function build::frontend {
   # It is placed only here because all Docker-related scripts use it.
-  say "\nReplacing variables in ${ENV_PROD_FILE} file to [${APP_VERSION}, ${TRAVIS_COMMIT}]"
-  replace '%GIT_COMMIT%' ${TRAVIS_COMMIT} ${ENV_PROD_FILE}
-  replace '%VERSION%' ${APP_VERSION} ${ENV_PROD_FILE}
+  say "\nReplacing variables in ${ENV_PROD_FILE} file"
+  [[ -n ${TRAVIS_COMMIT} ]] && ${REPLACE_BIN} '%GIT_COMMIT%' ${TRAVIS_COMMIT} ${ENV_PROD_FILE}
+  [[ -n ${APP_VERSION} ]] && ${REPLACE_BIN} '%VERSION%' ${APP_VERSION} ${ENV_PROD_FILE}
 
   say "\nBuilding frontend for default locale: en"
   mkdir -p ${FRONTEND_DIR}/en
@@ -51,8 +51,8 @@ function build::frontend {
   done
 
   say "\nReverting variables in ${ENV_PROD_FILE} file"
-  replace ${TRAVIS_COMMIT} '%GIT_COMMIT%' ${ENV_PROD_FILE}
-  replace '%VERSION%' ${APP_VERSION} ${ENV_PROD_FILE}
+  [[ -n ${TRAVIS_COMMIT} ]] && ${REPLACE_BIN} ${TRAVIS_COMMIT} '%GIT_COMMIT%' ${ENV_PROD_FILE}
+  [[ -n ${APP_VERSION} ]] && ${REPLACE_BIN} '%VERSION%' ${APP_VERSION} ${ENV_PROD_FILE}
 }
 
 function build::backend {
