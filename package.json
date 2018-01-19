@@ -47,7 +47,7 @@
     "format:backend": "goimports -w src/app/backend",
     "postinstall": "webdriver-manager update && go get golang.org/x/tools/cmd/goimports",
     "precommit": "npm run check:static",
-    "clean": "rm -rf .go_workspace .tmp .cached_tools coverage dist npm-debug.log"
+    "clean": "rm -rf .go_workspace .tmp coverage dist npm-debug.log"
   },
   "dependencies": {
     "@angular/animations": "^5.1.3",
@@ -111,6 +111,7 @@
     "protractor": "~5.2.2",
     "q": "latest",
     "raw-loader": "^0.5.1",
+    "replace": "^0.3.0",
     "sass-lint": "^1.12.1",
     "sass-loader": "^6.0.6",
     "scssfmt": "^1.0.4",
