@@ -99,6 +99,14 @@ a {
 
 .mat-card {
   margin: (2.5 * $baseline-grid) (2.5 * $baseline-grid) 0;
+
+  .mat-card-title {
+    margin-bottom: $baseline-grid;
+  }
+
+  .mat-card-content {
+    padding-top: 2 * $baseline-grid;
+  }
 }
 
 // Style scrollbars on Webkit-based browsers (e.g., Chrome or Safari).
