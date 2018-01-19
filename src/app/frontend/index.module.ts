@@ -18,6 +18,7 @@ import {UIView} from '@uirouter/angular';
 
 import {AboutModule} from './about/module';
 import {ChromeModule} from './chrome/module';
+import {ClusterModule} from './cluster/module';
 import {CoreModule} from './core.module';
 import {LoginModule} from './login/module';
 
@@ -29,6 +30,7 @@ import {LoginModule} from './login/module';
     ChromeModule,
     LoginModule,
     AboutModule,
+    ClusterModule,
   ],
   bootstrap: [UIView]
 })

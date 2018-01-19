@@ -16,16 +16,17 @@
 // import {stateName as overviewState} from '../../overview/state';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {AuthResponse, CsrfToken, Error, LoginSpec, LoginStatus} from '@api/backendapi';
 import {StateService, TransitionService} from '@uirouter/angular';
 import {TargetState, Transition} from '@uirouter/core';
 import {CookieService} from 'ngx-cookie-service';
 import {Observable} from 'rxjs/Observable';
+import {AuthResponse, CsrfToken, Error, LoginSpec, LoginStatus} from 'typings/backendapi';
 
-import {aboutState} from '../../../../about/state';
-import {CONFIG} from '../../../../index.config';
-import {loginState} from '../../../../login/state';
-import {CsrfTokenService} from '../csrftoken';
+import {aboutState} from '../../../about/state';
+import {CONFIG} from '../../../index.config';
+import {loginState} from '../../../login/state';
+
+import {CsrfTokenService} from './csrftoken';
 
 @Injectable()
 export class AuthService {

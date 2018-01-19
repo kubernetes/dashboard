@@ -17,6 +17,7 @@ import {NgModule} from '@angular/core';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {MatButtonModule, MatCardModule, MatGridListModule, MatIconModule, MatProgressSpinnerModule, MatSidenavModule, MatToolbarModule, MatTooltipModule} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {UIRouterModule} from '@uirouter/angular';
 
 import {PipesModule} from './common/pipes/module';
 
@@ -37,6 +38,7 @@ const sharedDependencies = [
   // Other 3rd party modules
   BrowserAnimationsModule,
   FlexLayoutModule,
+  UIRouterModule,
 
   // Custom application modules
   PipesModule,

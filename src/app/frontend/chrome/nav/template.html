@@ -19,12 +19,90 @@ limitations under the License.
               mode="side">
     <div class="kd-nav-group">
       <kd-nav-item class="kd-nav-group-item"
+                   [state]="states.cluster"
                    i18n>Cluster</kd-nav-item>
-      <kd-nav-item class="kd-nav-item">Namespaces</kd-nav-item>
-      <kd-nav-item class="kd-nav-item">Nodes</kd-nav-item>
-      <kd-nav-item class="kd-nav-item">Persistent Volumes</kd-nav-item>
-      <kd-nav-item class="kd-nav-item">Storage Classes</kd-nav-item>
+      <kd-nav-item class="kd-nav-item"
+                   state="TODO"
+                   i18n>Namespaces</kd-nav-item>
+      <kd-nav-item class="kd-nav-item"
+                   state="TODO"
+                   i18n>Nodes</kd-nav-item>
+      <kd-nav-item class="kd-nav-item"
+                   state="TODO"
+                   i18n>Persistent Volumes</kd-nav-item>
+      <kd-nav-item class="kd-nav-item"
+                   state="TODO"
+                   i18n>Roles</kd-nav-item>
+      <kd-nav-item class="kd-nav-item"
+                   state="TODO"
+                   i18n>Storage Classes</kd-nav-item>
     </div>
+
     <div class="kd-nav-group-divider"></div>
+
+    <kd-nav-item class="kd-nav-group-item"
+                 state="TODO"
+                 i18n>Overview</kd-nav-item>
+
+    <kd-nav-item class="kd-nav-group-item"
+                 state="TODO"
+                 i18n>Workloads</kd-nav-item>
+    <kd-nav-item class="kd-nav-item"
+                 state="TODO"
+                 i18n>Cron Jobs</kd-nav-item>
+    <kd-nav-item class="kd-nav-item"
+                 state="TODO"
+                 i18n>Daemon Sets</kd-nav-item>
+    <kd-nav-item class="kd-nav-item"
+                 state="TODO"
+                 i18n>Deployments</kd-nav-item>
+    <kd-nav-item class="kd-nav-item"
+                 state="TODO"
+                 i18n>Jobs</kd-nav-item>
+    <kd-nav-item class="kd-nav-item"
+                 state="TODO"
+                 i18n>Pods</kd-nav-item>
+    <kd-nav-item class="kd-nav-item"
+                 state="TODO"
+                 i18n>Replica Sets</kd-nav-item>
+    <kd-nav-item class="kd-nav-item"
+                 state="TODO"
+                 i18n>Replication Controllers</kd-nav-item>
+    <kd-nav-item class="kd-nav-item"
+                 state="TODO"
+                 i18n>Stateful Sets</kd-nav-item>
+
+    <kd-nav-item class="kd-nav-group-item"
+                 state="TODO"
+                 i18n>Discovery and Load Balancing</kd-nav-item>
+    <kd-nav-item class="kd-nav-item"
+                 state="TODO"
+                 i18n>Ingresses</kd-nav-item>
+    <kd-nav-item class="kd-nav-item"
+                 state="TODO"
+                 i18n>Services</kd-nav-item>
+
+    <kd-nav-item class="kd-nav-group-item"
+                 state="TODO"
+                 i18n>Config and Storage</kd-nav-item>
+    <kd-nav-item class="kd-nav-item"
+                 state="TODO"
+                 i18n>Config Maps</kd-nav-item>
+    <kd-nav-item class="kd-nav-item"
+                 state="TODO"
+                 i18n>Persistent Volume Claims</kd-nav-item>
+    <kd-nav-item class="kd-nav-item"
+                 state="TODO"
+                 i18n>Secrets</kd-nav-item>
+
+    <div class="kd-nav-group-divider"></div>
+
+    <kd-nav-item class="kd-nav-group-item"
+                 state="TODO"
+                 i18n>Settings</kd-nav-item>
+
+    <kd-nav-item class="kd-nav-group-item"
+                 [state]="states.about"
+                 i18n>About</kd-nav-item>
   </mat-drawer>
 </mat-drawer-container>

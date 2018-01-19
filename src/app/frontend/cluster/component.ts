@@ -12,17 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Input} from '@angular/core';
+import {Component, Inject} from '@angular/core';
+import {AssetsService} from '../common/services/global/assets';
 
-@Component({
-  selector: 'kd-nav-item',
-  templateUrl: 'template.html',
-  styleUrls: ['style.scss'],
-})
-export class NavItemComponent {
-  @Input() state: string;
-
-  isActive() {
-    return false;
-  }
+@Component({selector: 'kd-cluster', templateUrl: './template.html', styleUrls: ['./style.scss']})
+export class ClusterComponent {
+  constructor() {}
 }

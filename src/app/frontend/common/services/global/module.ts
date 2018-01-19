@@ -15,7 +15,7 @@
 import {APP_INITIALIZER, NgModule} from '@angular/core';
 
 import {AssetsService} from './assets';
-import {AuthService} from './auth/service';
+import {AuthService} from './authentication';
 import {CsrfTokenService} from './csrftoken';
 import {SettingsService} from './settings';
 import {TitleService} from './title';

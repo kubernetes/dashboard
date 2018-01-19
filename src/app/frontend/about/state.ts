@@ -14,7 +14,7 @@
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
-import {stateName as chromeState} from '../chrome/state';
+import {chromeState} from '../chrome/state';
 
 import {AboutComponent} from './component';
 

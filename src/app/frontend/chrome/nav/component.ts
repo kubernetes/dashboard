@@ -15,6 +15,9 @@
 import {AfterContentInit, Component, ViewChild} from '@angular/core';
 import {MatDrawer} from '@angular/material';
 
+import {aboutState} from '../../about/state';
+import {clusterState} from '../../cluster/state';
+
 @Component({
   selector: 'kd-nav',
   templateUrl: './template.html',
@@ -22,6 +25,10 @@ import {MatDrawer} from '@angular/material';
 })
 export class NavComponent implements AfterContentInit {
   @ViewChild(MatDrawer) private sidenav_: MatDrawer;
+  states = {
+    cluster: clusterState.name,
+    about: aboutState.name,
+  };
 
   ngAfterContentInit() {
     this.sidenav_.open();

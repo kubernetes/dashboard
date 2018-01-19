@@ -17,7 +17,7 @@ import {UIRouter, UIRouterModule} from '@uirouter/angular';
 import {Category, HookMatchCriteria, HookMatchCriterion} from '@uirouter/core';
 
 import {aboutState} from '../about/state';
-import {AuthService} from '../common/services/global/auth/service';
+import {AuthService} from '../common/services/global/authentication';
 import {TitleService} from '../common/services/global/title';
 import {loginState} from '../login/state';
 import {SharedModule} from '../shared.module';

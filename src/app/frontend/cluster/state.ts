@@ -12,17 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Input} from '@angular/core';
+import {Ng2StateDeclaration} from '@uirouter/angular';
 
-@Component({
-  selector: 'kd-nav-item',
-  templateUrl: 'template.html',
-  styleUrls: ['style.scss'],
-})
-export class NavItemComponent {
-  @Input() state: string;
+import {chromeState} from '../chrome/state';
+import {ClusterComponent} from './component';
 
-  isActive() {
-    return false;
-  }
-}
+export const clusterState: Ng2StateDeclaration = {
+  parent: chromeState,
+  name: 'cluster',
+  url: '/cluster',
+  component: ClusterComponent,
+};

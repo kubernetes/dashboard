@@ -12,14 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Name of the namespace state. This state should be used as a parent state for
- * all root states. It provides gobal namespace option for all URLs.
- */
-import {Ng2StateDeclaration, StateDeclaration} from '@uirouter/angular';
+import {Ng2StateDeclaration} from '@uirouter/angular';
 import {ChromeComponent} from './component';
-
-export const stateName = 'chrome';
 
 /**
  * Name of the action bar view. Action bar is the second toolbar in the
@@ -42,7 +36,7 @@ const namespaceParam = 'namespace';
 const fillContentConfig = 'fillContent';
 
 export const chromeState: Ng2StateDeclaration = {
-  name: stateName,
+  name: 'chrome',
   url: `?${namespaceParam}`,
   abstract: true,
   data: {
