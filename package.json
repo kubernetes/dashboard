@@ -67,6 +67,7 @@
     "core-js": "^2.5.3",
     "material-design-icons": "^3.0.1",
     "ngx-cookie-service": "^1.0.10",
+    "normalize.css": "^7.0.0",
     "roboto-fontface": "^0.8.0",
     "rxjs": "^5.5.6",
     "web-animations-js": "^2.3.1",

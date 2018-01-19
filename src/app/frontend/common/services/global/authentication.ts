@@ -13,7 +13,6 @@
 // limitations under the License.
 
 // import {stateName as errorState} from '../../error/state';
-// import {stateName as overviewState} from '../../overview/state';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {StateService, TransitionService} from '@uirouter/angular';
@@ -22,9 +21,9 @@ import {CookieService} from 'ngx-cookie-service';
 import {Observable} from 'rxjs/Observable';
 import {AuthResponse, CsrfToken, Error, LoginSpec, LoginStatus} from 'typings/backendapi';
 
-import {aboutState} from '../../../about/state';
 import {CONFIG} from '../../../index.config';
 import {loginState} from '../../../login/state';
+import {overviewState} from '../../../overview/state';
 
 import {CsrfTokenService} from './csrftoken';
 
@@ -96,8 +95,7 @@ export class AuthService {
           // Do not allow entering login page if already authenticated or authentication is
           // disabled.
           (this.isAuthenticated(loginStatus) || !this.isAuthenticationEnabled(loginStatus))) {
-        // Todo change to overview state
-        return state.target(aboutState.name, null, {location: true, reload: true});
+        return state.target(overviewState.name, null, {location: true, reload: true});
       }
 
       // In following cases user should not be redirected and reach his target state:

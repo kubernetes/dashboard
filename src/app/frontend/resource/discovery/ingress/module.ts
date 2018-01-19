@@ -12,10 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Inject} from '@angular/core';
-import {AssetsService} from '../common/services/global/assets';
+import {NgModule} from '@angular/core';
+import {UIRouterModule} from '@uirouter/angular';
 
-@Component({selector: 'kd-cluster', templateUrl: './template.html', styleUrls: ['./style.scss']})
-export class ClusterComponent {
-  constructor() {}
-}
+import {SharedModule} from '../../../shared.module';
+import {IngressComponent} from './component';
+import {ingressState} from './state';
+
+@NgModule({
+  imports: [
+    SharedModule,
+    UIRouterModule.forChild({states: [ingressState]}),
+  ],
+  declarations: [IngressComponent],
+})
+export class IngressModule {}

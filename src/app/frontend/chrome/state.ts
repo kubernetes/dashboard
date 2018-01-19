@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
+
 import {ChromeComponent} from './component';
 
 /**
@@ -35,6 +36,10 @@ const namespaceParam = 'namespace';
  */
 const fillContentConfig = 'fillContent';
 
+/**
+ * One of the root application views. Every view should be a child of this view except for login
+ * view.
+ */
 export const chromeState: Ng2StateDeclaration = {
   name: 'chrome',
   url: `?${namespaceParam}`,
