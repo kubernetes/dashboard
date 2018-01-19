@@ -14,12 +14,10 @@
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
-import {chromeState} from '../chrome/state';
-
 import {AboutComponent} from './component';
 
 export const aboutState: Ng2StateDeclaration = {
-  parent: chromeState,
+  parent: 'chrome',
   name: 'about',
   url: '/about',
   component: AboutComponent,

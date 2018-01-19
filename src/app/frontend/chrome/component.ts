@@ -12,9 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 import {AssetsService} from '../common/services/global/assets';
+import {overviewState} from '../overview/state';
 
 @Component({selector: 'kd-chrome', templateUrl: './template.html', styleUrls: ['./style.scss']})
 export class ChromeComponent implements OnInit {
@@ -23,7 +24,7 @@ export class ChromeComponent implements OnInit {
   constructor(public assets: AssetsService) {}
 
   getOverviewStateName() {
-    return 'someName';
+    return overviewState.name;
   }
 
   isSystemBannerVisible() {

@@ -13,8 +13,13 @@
 // limitations under the License.
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
+
 import {LoginComponent} from './component';
 
+/**
+ * One of the root application views. It is the only view that does not have to be a child
+ * of chrome view.
+ */
 export const loginState: Ng2StateDeclaration = {
   name: 'login',
   url: '/login',

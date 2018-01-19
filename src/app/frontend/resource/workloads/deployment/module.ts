@@ -15,16 +15,15 @@
 import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
 
-import {SharedModule} from '../shared.module';
-
-import {ClusterComponent} from './component';
-import {clusterState} from './state';
+import {SharedModule} from '../../../shared.module';
+import {DeploymentComponent} from './component';
+import {deploymentState} from './state';
 
 @NgModule({
   imports: [
     SharedModule,
-    UIRouterModule.forChild({states: [clusterState]}),
+    UIRouterModule.forChild({states: [deploymentState]}),
   ],
-  declarations: [ClusterComponent],
+  declarations: [DeploymentComponent],
 })
-export class ClusterModule {}
+export class DeploymentModule {}

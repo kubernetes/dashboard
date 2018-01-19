@@ -14,7 +14,7 @@
 
 import {NgModule} from '@angular/core';
 import {UIRouter, UIRouterModule} from '@uirouter/angular';
-import {Category, HookMatchCriteria, HookMatchCriterion} from '@uirouter/core';
+import {HookMatchCriteria, HookMatchCriterion} from '@uirouter/core';
 
 import {aboutState} from '../about/state';
 import {AuthService} from '../common/services/global/authentication';

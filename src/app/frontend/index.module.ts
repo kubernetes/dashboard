@@ -18,19 +18,65 @@ import {UIView} from '@uirouter/angular';
 
 import {AboutModule} from './about/module';
 import {ChromeModule} from './chrome/module';
-import {ClusterModule} from './cluster/module';
 import {CoreModule} from './core.module';
 import {LoginModule} from './login/module';
+import {OverviewModule} from './overview/module';
+import {ClusterModule} from './resource/cluster/module';
+import {NamespaceModule} from './resource/cluster/namespace/module';
+import {NodeModule} from './resource/cluster/node/module';
+import {PersistentVolumeModule} from './resource/cluster/persistentvolume/module';
+import {RoleModule} from './resource/cluster/role/module';
+import {StorageClassModule} from './resource/cluster/storageclass/module';
+import {ConfigMapModule} from './resource/config/configmap/module';
+import {ConfigModule} from './resource/config/module';
+import {PersistentVolumeClaimModule} from './resource/config/persistentvolumeclaim/module';
+import {SecretModule} from './resource/config/secret/module';
+import {IngressModule} from './resource/discovery/ingress/module';
+import {DiscoveryModule} from './resource/discovery/module';
+import {ServiceModule} from './resource/discovery/service/module';
+import {CronJobModule} from './resource/workloads/cronjob/module';
+import {DaemonSetModule} from './resource/workloads/daemonset/module';
+import {DeploymentModule} from './resource/workloads/deployment/module';
+import {JobModule} from './resource/workloads/job/module';
+import {WorkloadsModule} from './resource/workloads/module';
+import {PodModule} from './resource/workloads/pod/module';
+import {ReplicaSetModule} from './resource/workloads/replicaset/module';
+import {ReplicationControllerModule} from './resource/workloads/replicationcontroller/module';
+import {StatefulSetModule} from './resource/workloads/statefulset/module';
+import {SettingsModule} from './settings/module';
 
 @NgModule({
   imports: [
     BrowserModule,
     // Application modules
     CoreModule,
-    ChromeModule,
-    LoginModule,
     AboutModule,
+    ChromeModule,
     ClusterModule,
+    ConfigModule,
+    ConfigMapModule,
+    CronJobModule,
+    DaemonSetModule,
+    DeploymentModule,
+    DiscoveryModule,
+    IngressModule,
+    JobModule,
+    LoginModule,
+    NamespaceModule,
+    NodeModule,
+    OverviewModule,
+    PersistentVolumeModule,
+    PersistentVolumeClaimModule,
+    PodModule,
+    ReplicaSetModule,
+    ReplicationControllerModule,
+    RoleModule,
+    SecretModule,
+    ServiceModule,
+    SettingsModule,
+    StatefulSetModule,
+    StorageClassModule,
+    WorkloadsModule,
   ],
   bootstrap: [UIView]
 })

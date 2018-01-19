@@ -16,7 +16,6 @@ import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
 
 import {SharedModule} from '../shared.module';
-
 import {AboutComponent} from './component';
 import {aboutState} from './state';
 
