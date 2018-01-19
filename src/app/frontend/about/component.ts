@@ -18,5 +18,15 @@ import {AssetsService} from '../common/services/global/assets';
 @Component({selector: 'kd-about', templateUrl: './template.html', styleUrls: ['./style.scss']})
 export class AboutComponent {
   latestCopyrightYear = '2018';
+  gitCommit = 'e2caa22fa1dcf860cbca9807016de3c8b92d24dd';
+  appVersion = '1.8.2';
   constructor(@Inject(AssetsService) public assets: AssetsService) {}
+
+  showAppVersion(): boolean {
+    return !!this.appVersion;
+  }
+
+  showGitCommit(): boolean {
+    return !this.appVersion && !!this.gitCommit;
+  }
 }

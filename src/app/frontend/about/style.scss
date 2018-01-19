@@ -28,7 +28,7 @@
   @include kd-icon-size(8 * $baseline-grid);
   @include kd-about-logo;
 
-  margin-right: 2 * $baseline-grid;
+  margin: 0 (2 * $baseline-grid) 0 0;
   vertical-align: bottom;
 }
 

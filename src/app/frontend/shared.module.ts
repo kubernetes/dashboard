@@ -15,7 +15,7 @@
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import {MatButtonModule, MatCardModule, MatGridListModule, MatIconModule, MatProgressSpinnerModule, MatSidenavModule, MatToolbarModule, MatTooltipModule} from '@angular/material';
+import {MatButtonModule, MatCardModule, MatDividerModule, MatGridListModule, MatIconModule, MatProgressSpinnerModule, MatSidenavModule, MatToolbarModule, MatTooltipModule} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {UIRouterModule} from '@uirouter/angular';
 
@@ -28,6 +28,7 @@ const sharedDependencies = [
   // Material imports
   MatButtonModule,
   MatCardModule,
+  MatDividerModule,
   MatGridListModule,
   MatIconModule,
   MatProgressSpinnerModule,
