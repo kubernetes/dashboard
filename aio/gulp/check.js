@@ -32,7 +32,7 @@ import conf from './conf';
  * @return {string}
  */
 function getLicenseFileFilter(...ext) {
-  return `**/*.{${ext.join()}}`;
+  return ext.length > 1 ? `**/*.{${ext.join()}}` : `**/*.${ext}`;
 }
 
 /**
