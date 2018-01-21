@@ -187,7 +187,7 @@ export class NamespaceSelectController {
    * @private
    */
   handleNamespaceChangeDialog_(toParams) {
-    showNamespaceChangeInfoDialog(this.mdDialog_, toParams.objectNamespace);
+    showNamespaceChangeInfoDialog(this.mdDialog_, toParams.objectNamespace, toParams.namespace);
   }
 
   /**

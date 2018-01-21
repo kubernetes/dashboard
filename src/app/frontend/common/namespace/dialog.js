@@ -19,12 +19,13 @@ import {stateName as overview} from '../../overview/state';
 export class NamespaceChangeInfoDialogController {
   /**
    * @param {!md.$dialog} $mdDialog
+   * @param {string} currentNamespace
    * @param {string} newNamespace
    * @param {!./../state/service.FutureStateService} kdFutureStateService
    * @param {!kdUiRouter.$state} $state
    * @ngInject
    */
-  constructor($mdDialog, newNamespace, kdFutureStateService, $state) {
+  constructor($mdDialog, currentNamespace, newNamespace, kdFutureStateService, $state) {
     /** @private {!md.$dialog} */
     this.mdDialog_ = $mdDialog;
 
@@ -33,6 +34,9 @@ export class NamespaceChangeInfoDialogController {
 
     /** @private {!kdUiRouter.$state} */
     this.state_ = $state;
+
+    /** @export {string} */
+    this.currentNamespace = currentNamespace;
 
     /** @export {string} */
     this.newNamespace = newNamespace;
@@ -45,21 +49,13 @@ export class NamespaceChangeInfoDialogController {
    */
   cancel() {
     this.mdDialog_.cancel();
-    this.state_.go(overview, {[namespaceParam]: this.currentNamespace()});
+    this.state_.go(this.futureStateService_.state, {[namespaceParam]: this.currentNamespace});
   }
 
   /** @export */
   changeNamespace() {
     this.mdDialog_.hide();
-    this.state_.go(this.futureStateService_.state, {[namespaceParam]: this.newNamespace});
-  }
-
-  /**
-   * @return {string}
-   * @export
-   */
-  currentNamespace() {
-    return this.state_.params[namespaceParam];
+    this.state_.go(overview, {[namespaceParam]: this.newNamespace});
   }
 }
 
@@ -67,16 +63,18 @@ export class NamespaceChangeInfoDialogController {
  * Displays new namespace change info dialog.
  *
  * @param {!md.$dialog} mdDialog
+ * @param {string} currentNamespace
  * @param {string} newNamespace
  * @return {!angular.$q.Promise}
  */
-export function showNamespaceChangeInfoDialog(mdDialog, newNamespace) {
+export function showNamespaceChangeInfoDialog(mdDialog, currentNamespace, newNamespace) {
   return mdDialog.show({
     controller: NamespaceChangeInfoDialogController,
     controllerAs: '$ctrl',
     clickOutsideToClose: false,
     templateUrl: 'common/namespace/dialog.html',
     locals: {
+      'currentNamespace': currentNamespace,
       'newNamespace': newNamespace,
     },
   });
