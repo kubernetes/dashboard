@@ -21,4 +21,9 @@ export const workloadsState: Ng2StateDeclaration = {
   name: 'workloads',
   url: '/workloads',
   component: WorkloadsComponent,
+  data: {
+    kdBreadcrumbs: {
+      label: 'Workloads',
+    }
+  },
 };

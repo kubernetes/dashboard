@@ -12,21 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Ng2StateDeclaration} from '@uirouter/angular';
-
-import {workloadsState} from '../state';
-
-import {CronJobComponent} from './component';
-
-export const cronJobState: Ng2StateDeclaration = {
-  parent: 'chrome',
-  name: 'cronJob',
-  url: '/cronJob',
-  component: CronJobComponent,
-  data: {
-    kdBreadcrumbs: {
-      label: 'Cron Jobs',
-      parent: workloadsState.name,
-    }
-  },
-};
+export interface BreadcrumbConfig {
+  label?: string;
+  parent?: string;
+}

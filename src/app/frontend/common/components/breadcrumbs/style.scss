@@ -12,21 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Ng2StateDeclaration} from '@uirouter/angular';
+@import '../../../variables';
 
-import {workloadsState} from '../state';
+.kd-breadcrumbs-container {
+  display: flex;
+  float: left;
+  font-family: $font-family-medium;
+  font-size: $subhead-font-size-base-lg;
+  max-width: 100%;
+  padding: (.25 * $baseline-grid) 0 0 $baseline-grid;
+}
 
-import {CronJobComponent} from './component';
+.kd-faded-breadcrumb {
+  color: $hue-2;
+}
 
-export const cronJobState: Ng2StateDeclaration = {
-  parent: 'chrome',
-  name: 'cronJob',
-  url: '/cronJob',
-  component: CronJobComponent,
-  data: {
-    kdBreadcrumbs: {
-      label: 'Cron Jobs',
-      parent: workloadsState.name,
-    }
-  },
-};
+.kd-inline-breadcrumb {
+  display: flex;
+}
+
+.kd-breadcrumb-divider {
+  align-self: center;
+  padding: 0 (.5 * $baseline-grid);
+}

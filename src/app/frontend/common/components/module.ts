@@ -16,11 +16,12 @@ import {NgModule} from '@angular/core';
 
 import {SharedModule} from '../../shared.module';
 
+import {BreadcrumbsComponent} from './breadcrumbs/component';
 import {CardComponent} from './card/component';
 
 @NgModule({
   imports: [SharedModule],
-  declarations: [CardComponent],
-  exports: [CardComponent],
+  declarations: [CardComponent, BreadcrumbsComponent],
+  exports: [CardComponent, BreadcrumbsComponent],
 })
 export class ComponentsModule {}

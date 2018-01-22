@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {AfterContentInit, Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterContentInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatDrawer} from '@angular/material';
 
 import {aboutState} from '../../about/state';

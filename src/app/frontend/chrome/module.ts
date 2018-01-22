@@ -18,6 +18,7 @@ import {HookMatchCriteria, HookMatchCriterion} from '@uirouter/core';
 
 import {AboutModule} from '../about/module';
 import {aboutState} from '../about/state';
+import {ComponentsModule} from '../common/components/module';
 import {AuthService} from '../common/services/global/authentication';
 import {TitleService} from '../common/services/global/title';
 import {loginState} from '../login/state';
@@ -46,6 +47,7 @@ import {ReplicationControllerModule} from '../resource/workloads/replicationcont
 import {StatefulSetModule} from '../resource/workloads/statefulset/module';
 import {SettingsModule} from '../settings/module';
 import {SharedModule} from '../shared.module';
+
 import {ChromeComponent} from './component';
 import {NavModule} from './nav/module';
 import {chromeState} from './state';
@@ -54,6 +56,7 @@ import {chromeState} from './state';
   declarations: [ChromeComponent],
   imports: [
     SharedModule,
+    ComponentsModule,
     UIRouterModule.forRoot({
       states: [chromeState, loginState],
       useHash: true,
