@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import {InjectionToken} from '@angular/core';
-import {MatTooltipDefaultOptions} from '@angular/material';
 
 export let CONFIG_DI_TOKEN = new InjectionToken<Config>('kd.config');
 
@@ -30,10 +29,4 @@ export const CONFIG: Config = {
   authTokenHeaderName: 'jweToken',
   csrfHeaderName: 'X-CSRF-TOKEN',
   skipLoginPageCookieName: 'skipLoginPage'
-};
-
-export const MAT_TOOLTIP_OVERRIDE: MatTooltipDefaultOptions = {
-  showDelay: 2000,
-  hideDelay: 2000,
-  touchendHideDelay: 2000,
 };
