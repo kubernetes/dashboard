@@ -47,10 +47,10 @@ export class ConfigService {
   }
 
   getAppVersion() {
-    return environment.version;
+    return environment.version.startsWith('%') ? undefined : environment.version;
   }
 
   getGitCommit() {
-    return environment.gitCommit;
+    return environment.gitCommit.startsWith('%') ? undefined : environment.gitCommit;
   }
 }

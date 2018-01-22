@@ -52,7 +52,7 @@ function build::frontend {
 
   say "\nReverting variables in ${ENV_PROD_FILE} file"
   [[ -n ${TRAVIS_COMMIT} ]] && ${REPLACE_BIN} ${TRAVIS_COMMIT} '%GIT_COMMIT%' ${ENV_PROD_FILE}
-  [[ -n ${APP_VERSION} ]] && ${REPLACE_BIN} '%VERSION%' ${APP_VERSION} ${ENV_PROD_FILE}
+  [[ -n ${APP_VERSION} ]] && ${REPLACE_BIN} ${APP_VERSION} '%VERSION%'  ${ENV_PROD_FILE}
 }
 
 function build::backend {
