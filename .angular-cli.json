@@ -20,7 +20,8 @@
       "styles": [
         "../../../node_modules/material-design-icons/iconfont/material-icons.css",
         "../../../node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
-        "index.scss"
+        "index.scss",
+        "themes.scss"
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",

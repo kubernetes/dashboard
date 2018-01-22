@@ -2,8 +2,10 @@
 <!-- Describe your setup. Versions of Node.js, Go etc. are needed only from developers. -->
 
 ```
-Dashboard version:
+Installation method:
 Kubernetes version:
+Dashboard version:
+Git commit:
 Operating system:
 Node.js version ('node --version' output):
 Go version ('go version' output):

@@ -14,4 +14,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<span>about actionbar</span>
+<a href="https://kubernetes.io/docs/user-guide/ui/"
+   target="_blank">
+  <button mat-button
+          color="accent"
+          i18n-matTooltip
+          matTooltip="Read Kubernetes Dashboard documentation">
+    <mat-icon>description</mat-icon>
+    <span>Documentation</span>
+  </button>
+</a>
+
+<a [href]="getFeedbackLink()"
+   target="_blank">
+  <button mat-button
+          color="accent"
+          i18n-matTooltip
+          matTooltip="Create new issue on GitHub">
+    <mat-icon>description</mat-icon>
+    <span>Feedback</span>npm
+  </button>
+</a>
