@@ -14,15 +14,7 @@
 
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-
-
-interface Settings {
-  itemsPerPage: number;
-  clusterName: string;
-  autoRefreshTimeInterval: number;
-}
-
+import {Settings} from '@api/backendapi';
 
 @Injectable()
 export class SettingsService {

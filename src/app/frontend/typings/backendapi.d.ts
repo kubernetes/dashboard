@@ -40,3 +40,11 @@ export interface AuthResponse {
   jweToken: string;
   errors: Error[];
 }
+
+export interface Settings {
+  itemsPerPage: number;
+  clusterName: string;
+  autoRefreshTimeInterval: number;
+}
+
+export interface AppConfig { serverTime: number; }
