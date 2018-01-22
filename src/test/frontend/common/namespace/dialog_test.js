@@ -33,54 +33,43 @@ describe('Namespace change info dialog ', () => {
     angular.mock.module(chromeModule.name);
 
     angular.mock.inject(($state, _kdFutureStateService_, $mdDialog) => {
-      ctrl = new NamespaceChangeInfoDialogController($mdDialog, '', _kdFutureStateService_, $state);
+      ctrl = new NamespaceChangeInfoDialogController(
+          $mdDialog, '', '', _kdFutureStateService_, $state);
       state = $state;
       kdFutureStateService = _kdFutureStateService_;
       mdDialog = $mdDialog;
     });
   });
 
-  it('should cancel state change and redirect to overview page of current namespace', () => {
+  it('should cancel state change and reload current page', () => {
     // given
     let currentNamespace = 'namespace-1';
     spyOn(mdDialog, 'cancel');
     spyOn(state, 'go');
-    state.params[namespaceParam] = currentNamespace;
+    let futureState = {name: overview};
+    kdFutureStateService.state = futureState;
+    ctrl.currentNamespace = currentNamespace;
 
     // when
     ctrl.cancel();
 
     // then
     expect(mdDialog.cancel).toHaveBeenCalled();
-    expect(state.go).toHaveBeenCalledWith(overview, {[namespaceParam]: currentNamespace});
+    expect(state.go).toHaveBeenCalledWith(futureState, {[namespaceParam]: currentNamespace});
   });
 
-  it('should change namespace and reload current page', () => {
+  it('should change namespace and redirect to overview page of current namespace', () => {
     // given
     let newNamespace = 'namespace-2';
-    let futureState = {name: overview};
     spyOn(mdDialog, 'hide');
     spyOn(state, 'go');
     ctrl.newNamespace = newNamespace;
-    kdFutureStateService.state = futureState;
 
     // when
     ctrl.changeNamespace();
 
     // then
     expect(mdDialog.hide).toHaveBeenCalled();
-    expect(state.go).toHaveBeenCalledWith(futureState, {[namespaceParam]: newNamespace});
-  });
-
-  it('should return current selected namespace', () => {
-    // given
-    let currentNamespace = 'namespace-1';
-    state.params[namespaceParam] = currentNamespace;
-
-    // when
-    let result = ctrl.currentNamespace();
-
-    // then
-    expect(result).toEqual(currentNamespace);
+    expect(state.go).toHaveBeenCalledWith(overview, {[namespaceParam]: newNamespace});
   });
 });
