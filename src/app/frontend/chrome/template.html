@@ -48,8 +48,10 @@ limitations under the License.
   </mat-toolbar>
 
   <mat-toolbar class="kd-second-toolbar">
-    <div class="kd-toolbar-tools">
-      <!--<kd-nav-hamburger flex="none"></kd-nav-hamburger>-->
+    <div class="kd-toolbar-tools"
+         fxFlex>
+      <kd-nav-hamburger fxFlex="none"
+                        (opened)="onNavToggle($event)"></kd-nav-hamburger>
       <!--<kd-breadcrumbs class="kd-actionbar-breadcrumbs"-->
       <!--limit="3"-->
       <!--flex="auto"-->
@@ -69,7 +71,7 @@ limitations under the License.
   <div fxFlex="auto"
        fxLayout="row"
        class="kd-app-entire-content">
-    <kd-nav flex="none"></kd-nav>
+    <kd-nav fxFlex="none"></kd-nav>
     <div fxFlex="auto"
          class="kd-main-content-box">
       <div [ngSwitch]="loading"
@@ -83,8 +85,7 @@ limitations under the License.
         </div>
         <div *ngSwitchCase="false"
              class="kd-app-content">
-          <ui-view class="md-body-1"
-                   ng-class="{'kd-content-div-filled': $ctrl.isFillContentView()}">
+          <ui-view class="md-body-1">
           </ui-view>
         </div>
       </div>

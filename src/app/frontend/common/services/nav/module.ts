@@ -14,16 +14,9 @@
 
 import {NgModule} from '@angular/core';
 
-import {NavServiceModule} from '../../common/services/nav/module';
-import {SharedModule} from '../../shared.module';
-
-import {NavComponent} from './component';
-import {HamburgerComponent} from './hamburger/component';
-import {NavItemComponent} from './item/component';
+import {NavService} from './service';
 
 @NgModule({
-  declarations: [NavComponent, NavItemComponent, HamburgerComponent],
-  exports: [NavComponent, NavItemComponent, HamburgerComponent],
-  imports: [SharedModule, NavServiceModule]
+  providers: [NavService],
 })
-export class NavModule {}
+export class NavServiceModule {}

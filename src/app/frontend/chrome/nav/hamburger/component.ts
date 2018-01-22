@@ -12,18 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
+import {Component} from '@angular/core';
+import {NavService} from '../../../common/services/nav/service';
 
-import {NavServiceModule} from '../../common/services/nav/module';
-import {SharedModule} from '../../shared.module';
-
-import {NavComponent} from './component';
-import {HamburgerComponent} from './hamburger/component';
-import {NavItemComponent} from './item/component';
-
-@NgModule({
-  declarations: [NavComponent, NavItemComponent, HamburgerComponent],
-  exports: [NavComponent, NavItemComponent, HamburgerComponent],
-  imports: [SharedModule, NavServiceModule]
+@Component({
+  selector: 'kd-nav-hamburger',
+  templateUrl: 'template.html',
+  styleUrls: ['style.scss'],
 })
-export class NavModule {}
+export class HamburgerComponent {
+  constructor(private navService_: NavService) {}
+
+  toggle() {
+    this.navService_.toggle();
+  }
+}
