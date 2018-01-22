@@ -16,11 +16,6 @@
 @import './mixins';
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
-// TODO: Remove that once component is created
-@import './common/components/actionbar/actionbar';
-
-// Globally applied/used styles should be defined in this file
-
 html,
 body {
   height: 100%;

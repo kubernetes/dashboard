@@ -12,21 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Ng2StateDeclaration} from '@uirouter/angular';
+import {Component} from '@angular/core';
 
-import {ActionbarComponent} from './actionbar/component';
-import {AboutComponent} from './component';
-
-export const aboutState: Ng2StateDeclaration = {
-  parent: 'chrome',
-  name: 'about',
-  url: '/about',
-  views: {
-    '$default': {
-      component: AboutComponent,
-    },
-    'actionbar': {
-      component: ActionbarComponent,
-    }
-  },
-};
+@Component({selector: '', templateUrl: './template.html'})
+export class ActionbarComponent {}

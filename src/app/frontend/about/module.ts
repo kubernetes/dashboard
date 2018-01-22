@@ -18,6 +18,7 @@ import {UIRouterModule} from '@uirouter/angular';
 import {ComponentsModule} from '../common/components/module';
 import {SharedModule} from '../shared.module';
 
+import {ActionbarComponent} from './actionbar/component';
 import {AboutComponent} from './component';
 import {aboutState} from './state';
 
@@ -27,7 +28,7 @@ import {aboutState} from './state';
     ComponentsModule,
     UIRouterModule.forChild({states: [aboutState]}),
   ],
-  declarations: [AboutComponent],
+  declarations: [AboutComponent, ActionbarComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AboutModule {}
