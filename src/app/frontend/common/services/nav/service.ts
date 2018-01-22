@@ -12,18 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
+import {MatDrawer} from '@angular/material';
 
-import {NavServiceModule} from '../../common/services/nav/module';
-import {SharedModule} from '../../shared.module';
+export class NavService {
+  private nav_: MatDrawer;
 
-import {NavComponent} from './component';
-import {HamburgerComponent} from './hamburger/component';
-import {NavItemComponent} from './item/component';
+  toggle() {
+    this.nav_.toggle();
+  }
 
-@NgModule({
-  declarations: [NavComponent, NavItemComponent, HamburgerComponent],
-  exports: [NavComponent, NavItemComponent, HamburgerComponent],
-  imports: [SharedModule, NavServiceModule]
-})
-export class NavModule {}
+  setVisibility(isVisible: boolean) {
+    this.nav_.toggle(isVisible);
+  }
+
+  setNav(nav: MatDrawer) {
+    this.nav_ = nav;
+  }
+
+  isVisible(): boolean {
+    return this.nav_.opened;
+  }
+}

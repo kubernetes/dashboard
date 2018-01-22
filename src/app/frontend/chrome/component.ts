@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 
 import {AssetsService} from '../common/services/global/assets';
 import {overviewState} from '../overview/state';
 
 @Component({selector: 'kd-chrome', templateUrl: './template.html', styleUrls: ['./style.scss']})
-export class ChromeComponent implements OnInit {
+export class ChromeComponent {
   loading = false;
 
   constructor(public assets: AssetsService) {}
@@ -32,6 +32,4 @@ export class ChromeComponent implements OnInit {
   }
 
   create() {}
-
-  ngOnInit() {}
 }

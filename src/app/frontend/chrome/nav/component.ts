@@ -12,10 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {AfterContentInit, Component, ViewChild} from '@angular/core';
+import {AfterContentInit, Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {MatDrawer} from '@angular/material';
 
 import {aboutState} from '../../about/state';
+import {NavService} from '../../common/services/nav/service';
 import {overviewState} from '../../overview/state';
 import {namespaceState} from '../../resource/cluster/namespace/state';
 import {nodeState} from '../../resource/cluster/node/state';
@@ -46,8 +47,8 @@ import {settingsState} from '../../settings/state';
   templateUrl: './template.html',
   styleUrls: ['./style.scss'],
 })
-export class NavComponent implements AfterContentInit {
-  @ViewChild(MatDrawer) private sidenav_: MatDrawer;
+export class NavComponent implements AfterContentInit, OnInit {
+  @ViewChild(MatDrawer) private nav_: MatDrawer;
   states = {
     cluster: clusterState.name,
     namespace: namespaceState.name,
@@ -76,7 +77,13 @@ export class NavComponent implements AfterContentInit {
     about: aboutState.name,
   };
 
+  constructor(private navService_: NavService) {}
+
+  ngOnInit() {
+    this.navService_.setNav(this.nav_);
+  }
+
   ngAfterContentInit() {
-    this.sidenav_.open();
+    this.nav_.open();
   }
 }
