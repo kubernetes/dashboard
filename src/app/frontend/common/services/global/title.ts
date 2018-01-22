@@ -35,6 +35,7 @@ export class TitleService {
         },
         (err) => {
           this.titleService.setTitle(`${targetState} - Kubernetes Dashboard`);
+          throw err;
         });
   }
 }
