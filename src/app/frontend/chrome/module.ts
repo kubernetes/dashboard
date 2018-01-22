@@ -90,6 +90,7 @@ import {chromeState} from './state';
     StatefulSetModule,
     StorageClassModule,
     WorkloadsModule,
+    ComponentsModule,
   ]
 })
 export class ChromeModule {}

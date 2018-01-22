@@ -15,14 +15,13 @@
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import {MatButtonModule, MatCardModule, MatDividerModule, MatGridListModule, MatIconModule, MatProgressSpinnerModule, MatSidenavModule, MatToolbarModule, MatTooltipModule} from '@angular/material';
+import {MAT_TOOLTIP_DEFAULT_OPTIONS, MatButtonModule, MatCardModule, MatDividerModule, MatGridListModule, MatIconModule, MatProgressSpinnerModule, MatSidenavModule, MatToolbarModule, MatTooltipDefaultOptions, MatTooltipModule} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {UIRouterModule} from '@uirouter/angular';
 
-import {ComponentsModule} from './common/components/module';
 import {PipesModule} from './common/pipes/module';
 
-const sharedDependencies = [
+const SHARED_DEPENDENCIES = [
   // Angular imports
   CommonModule,
 
@@ -46,5 +45,16 @@ const sharedDependencies = [
   PipesModule,
 ];
 
-@NgModule({imports: sharedDependencies, exports: sharedDependencies})
+@NgModule({
+  imports: SHARED_DEPENDENCIES,
+  exports: SHARED_DEPENDENCIES,
+  providers: [{
+    provide: MAT_TOOLTIP_DEFAULT_OPTIONS,
+    useValue: {
+      showDelay: 500,
+      hideDelay: 0,
+      touchendHideDelay: 0,
+    }
+  }],
+})
 export class SharedModule {}

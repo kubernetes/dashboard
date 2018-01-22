@@ -14,11 +14,19 @@
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
+import {ActionbarComponent} from './actionbar/component';
 import {AboutComponent} from './component';
 
 export const aboutState: Ng2StateDeclaration = {
   parent: 'chrome',
   name: 'about',
   url: '/about',
-  component: AboutComponent,
+  views: {
+    '$default': {
+      component: AboutComponent,
+    },
+    'actionbar': {
+      component: ActionbarComponent,
+    }
+  },
 };

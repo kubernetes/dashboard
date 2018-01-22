@@ -12,21 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {InjectionToken} from '@angular/core';
+@import '../../../variables';
 
-export let CONFIG_DI_TOKEN = new InjectionToken<Config>('kd.config');
-
-export interface Config {
-  authTokenCookieName: string;
-  skipLoginPageCookieName: string;
-  csrfHeaderName: string;
-  authTokenHeaderName: string;
-}
-
-// TODO fill this out
-export const CONFIG: Config = {
-  authTokenCookieName: 'jweToken',
-  authTokenHeaderName: 'jweToken',
-  csrfHeaderName: 'X-CSRF-TOKEN',
-  skipLoginPageCookieName: 'skipLoginPage'
-};

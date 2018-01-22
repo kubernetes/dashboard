@@ -97,20 +97,10 @@ export class BreadcrumbsComponent implements OnInit {
     this.breadcrumbs = breadcrumbs.reverse();
   }
 
-  /** Returns breadcrumb config object if it is defined on state, undefined otherwise. */
   private getBreadcrumbConfig_(state: StateObject|StateDeclaration): BreadcrumbConfig {
-    let conf = state.data;
-
-    if (conf) {
-      conf = conf[breadcrumbsConfig];
-    }
-
-    return conf;
+    return state.data ? state.data[breadcrumbsConfig] : state.data;
   }
 
-  /**
-   * Returns parent state of the given state based on defined breadcrumbs config state parent name.
-   */
   getParentState(state: StateObject|StateDeclaration): StateObject|StateDeclaration {
     const conf = this.getBreadcrumbConfig_(state);
     let result = null;
@@ -132,7 +122,6 @@ export class BreadcrumbsComponent implements OnInit {
     return this.limit === undefined || this.limit > breadcrumbs.length;
   }
 
-  /** Creates breadcrumb object based on state object. */
   private getBreadcrumb_(state: StateObject|StateDeclaration): Breadcrumb {
     const breadcrumb = new Breadcrumb();
 

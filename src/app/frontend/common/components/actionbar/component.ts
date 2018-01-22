@@ -12,10 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * @type {!angular.Component}
- */
-export const actionbarComponent = {
-  templateUrl: 'common/components/actionbar/actionbar.html',
-  transclude: true,
-};
+import {Component} from '@angular/core';
+
+@Component({selector: 'kd-actionbar', templateUrl: './template.html', styleUrls: ['./style.scss']})
+export class ActionbarComponent {}
