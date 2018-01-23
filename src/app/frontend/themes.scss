@@ -19,8 +19,8 @@
 
 @include mat-core;
 
-$primary: mat-palette($mat-blue, 200);
-$accent: mat-palette($mat-grey, 200);
+$primary: mat-palette($mat-blue, 800);
+$accent: mat-palette($mat-grey, 50);
 
 $theme: mat-light-theme($primary, $accent);
 
