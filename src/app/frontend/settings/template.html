@@ -18,68 +18,59 @@ limitations under the License.
   <kd-card-title i18n>Global settings</kd-card-title>
   <kd-card-content>
     <div *ngIf="isInitialized else loading">
-      <form>
+      <form (ngSubmit)="saveGlobal(false)">
 
         <kd-settings-entry key="Cluster name"
                            desc="Cluster name appears in the browser window title if it is set">
-          <mat-form-field>
-            <input placeholder="Cluster name"
+          <mat-form-field fxFlex>
+            <input ngModel="global.clusterName"
+                   placeholder="Cluster name"
                    type="text"
-                   ngModel="global.clusterName"
                    matInput>
           </mat-form-field>
         </kd-settings-entry>
 
-        {{global.clusterName}}
+        <kd-settings-entry key="Items per page"
+                           desc="Max number of items that can be displayed on each list page">
+          <div fxFlex>
+            <mat-slider ngModel="global.itemsPerPage"
+                        color="primary"
+                        min="5"
+                        max="50"
+                        step="5"
+                        fxFlex>
+            </mat-slider>
+            <div class="kd-slider-value"
+                 fxFlexAlign=" center">
+              {{global.itemsPerPage}}
+            </div>
+          </div>
+        </kd-settings-entry>
+
+        <kd-settings-entry key="Auto-refresh time interval"
+                           desc="Number of seconds between every auto-refresh of logs">
+          <div fxFlex>
+            <mat-slider ngModel="global.autoRefreshTimeInterval"
+                        color="primary"
+                        min="1"
+                        max="10"
+                        step="1"
+                        fxFlex>
+            </mat-slider>
+            <span class="kd-slider-value"
+                  fxFlexAlign=" center">
+            {{global.autoRefreshTimeInterval}}
+            </span>
+          </div>
+        </kd-settings-entry>
 
         <button type="submit"
+                color="primary"
                 mat-button
                 i18n>
-           Save
-          </button>
-      </form>
-
-      <!--<form name="$ctrl.globalForm"
-          ng-submit="$ctrl.saveGlobal(false)">
-
-      <kd-settings-entry key="[[Items per page|Items per page parameter name]]"
-                         desc="[[Max number of items that can be displayed on each list page|Items per page parameter description]]">
-        <md-slider-container>
-          <md-slider md-discrete
-                     flex
-                     min="5"
-                     max="50"
-                     step="5"
-                     ng-model="$ctrl.global.itemsPerPage"
-                     aria-label="itemsPerPage">
-          </md-slider>
-          <div class="kd-slider-value">{{$ctrl.global.itemsPerPage}}</div>
-        </md-slider-container>
-      </kd-settings-entry>
-
-      <kd-settings-entry key="[[Auto-refresh time interval|Auto-refresh time interval parameter name]]"
-                         desc="[[Number of seconds between every auto-refresh of logs|Auto-refresh time interval parameter description]]">
-        <md-slider-container>
-          <md-slider md-discrete
-                     flex
-                     min="1"
-                     max="10"
-                     step="1"
-                     ng-model="$ctrl.global.autoRefreshTimeInterval"
-                     aria-label="autoRefreshTimeInterval">
-          </md-slider>
-          <div class="kd-slider-value">{{$ctrl.global.autoRefreshTimeInterval}}</div>
-        </md-slider-container>
-      </kd-settings-entry>
-
-      <div class="kd-settings-control-panel">
-        <md-button class="md-raised md-primary"
-                   type="submit"
-                   ng-disabled="$ctrl.globalForm.$pristine">
           Save
-        </md-button>
-      </div>
-    </form>-->
+        </button>
+      </form>
     </div>
     <ng-template #loading>
       <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>

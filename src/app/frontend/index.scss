@@ -82,6 +82,13 @@ a {
   padding: 0 3 * $baseline-grid 3 * $baseline-grid;
 }
 
+.kd-slider-value {
+  color: $muted;
+  font-size: $subhead-font-size-base-lg;
+  text-align: right;
+  width: 2 * $baseline-grid;
+}
+
 .kd-comma-separated-item {
   display: inline-block;
 

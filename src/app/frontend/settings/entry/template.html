@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div class="kd-settings-entry">
-  <div>
-    <div>{{key}}</div>
-    <div class="kd-color-muted">{{desc}}</div>
-  </div>
-  <ng-content class="kd-settings-entry-form"
-              select="mat-form-field">
-  </ng-content>
+<div fxLayout="column"
+     fxLayoutAlign="center none"
+     fxFlex>
+  <div>{{key}}</div>
+  <div class="kd-color-muted">{{desc}}</div>
 </div>
+<ng-content class="kd-settings-entry-form"
+            fxFlex>
+</ng-content>
