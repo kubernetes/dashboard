@@ -1,0 +1,14 @@
+{
+  "/api": {
+    "target": "https://localhost:8443",
+    "secure": false,
+    "ws": true,
+    "changeOrigin": true
+  },
+  "/config": {
+    "target": "https://localhost:8443",
+    "secure": false,
+    "ws": true,
+    "changeOrigin": true
+  }
+}

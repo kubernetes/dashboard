@@ -8,8 +8,11 @@
   "license": "Apache-2.0",
   "scripts": {
     "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+    "start:https": "concurrently \"npm run start:backend:https\" \"npm run start:frontend:https\"",
     "start:frontend": "ng serve --aot --proxy-config aio/proxy.conf.json",
+    "start:frontend:https": "ng serve --aot --proxy-config aio/https-proxy.conf.json --ssl",
     "start:backend": "gulp serve --kubeconfig $npm_package_config_kubeconfig",
+    "start:backend:https": "gulp serve --kubeconfig $npm_package_config_kubeconfig --autoGenerateCerts true --defaultCertDir $npm_package_config_kubeconfig_dir",
     "start:prod": "npm run build && ./$npm_package_config_dashboard_binary_path --kubeconfig $npm_package_config_kubeconfig",
     "build": "./aio/scripts/build.sh",
     "build:cross": "./aio/scripts/build.sh -c",

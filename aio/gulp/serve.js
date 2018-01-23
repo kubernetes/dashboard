@@ -30,10 +30,9 @@ let runningBackendProcess = null;
 /**
  * Builds array of arguments for backend process based on env variables and prod/dev mode.
  *
- * @param {string} mode
  * @return {!Array<string>}
  */
-function getBackendArgs(mode) {
+function getBackendArgs() {
   let args = [
     `--heapster-host=${conf.backend.heapsterServerHost}`,
     `--tls-cert-file=${conf.backend.tlsCert}`,
@@ -51,14 +50,6 @@ function getBackendArgs(mode) {
 
   if (conf.backend.defaultCertDir.length > 0) {
     args.push(`--default-cert-dir=${conf.backend.defaultCertDir}`);
-  }
-
-  if (mode === conf.build.production) {
-    args.push(`--insecure-port=${conf.frontend.serverPort}`);
-  }
-
-  if (mode === conf.build.development) {
-    args.push(`--insecure-port=${conf.backend.devServerPort}`);
   }
 
   if (conf.backend.kubeconfig) {
@@ -82,24 +73,8 @@ gulp.task('serve', ['spawn-backend', 'watch']);
  */
 gulp.task('spawn-backend', ['backend', 'kill-backend', 'locales-for-backend:dev'], function() {
   runningBackendProcess = child.spawn(
-      path.join(conf.paths.serve, conf.backend.binaryName), getBackendArgs(conf.build.development),
+      path.join(conf.paths.serve, conf.backend.binaryName), getBackendArgs(),
       {stdio: 'inherit', cwd: conf.paths.serve});
-
-  runningBackendProcess.on('exit', function() {
-    // Mark that there is no backend process running anymore.
-    runningBackendProcess = null;
-  });
-});
-
-/**
- * Spawns new backend application process and finishes the task immediately. Previously spawned
- * backend process is killed beforehand, if any. In production the backend does serve the frontend
- * pages as well.
- */
-gulp.task('spawn-backend:prod', ['build-frontend', 'backend:prod', 'kill-backend'], function() {
-  runningBackendProcess = child.spawn(
-      path.join(conf.paths.dist, conf.backend.binaryName), getBackendArgs(conf.build.production),
-      {stdio: 'inherit', cwd: conf.paths.dist});
 
   runningBackendProcess.on('exit', function() {
     // Mark that there is no backend process running anymore.

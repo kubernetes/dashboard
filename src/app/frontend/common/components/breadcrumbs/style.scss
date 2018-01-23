@@ -15,11 +15,9 @@
 @import '../../../variables';
 
 .kd-breadcrumbs-container {
+  color: $content-background;
   display: flex;
-  float: left;
-  font-family: $font-family-medium;
   font-size: $subhead-font-size-base-lg;
-  max-width: 100%;
   padding: (.25 * $baseline-grid) 0 0 $baseline-grid;
 }
 
