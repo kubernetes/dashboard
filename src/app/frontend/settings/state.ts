@@ -20,5 +20,14 @@ export const settingsState: Ng2StateDeclaration = {
   parent: 'chrome',
   name: 'settings',
   url: '/settings',
-  component: SettingsComponent,
+  views: {
+    '$default': {
+      component: SettingsComponent,
+    },
+  },
+  data: {
+    kdBreadcrumbs: {
+      label: 'Settings',
+    }
+  },
 };
