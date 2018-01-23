@@ -13,6 +13,9 @@
 // limitations under the License.
 
 import {Component} from '@angular/core';
+import {StateService} from '@uirouter/core';
+import {AuthService} from '../common/services/global/authentication';
+import {overviewState} from '../overview/state';
 
 enum LoginModes {
   Token = 'Token',
@@ -22,13 +25,18 @@ enum LoginModes {
 
 @Component({selector: 'kd-login', templateUrl: './template.html', styleUrls: ['./style.scss']})
 export class LoginComponent {
-  constructor() {
-    console.log(Object.keys(LoginModes));
-  }
+  selectedAuthenticationMode = LoginModes.Token;
+
+  constructor(private authService_: AuthService, private state_: StateService) {}
 
   getSupportedAuthenticationModes(): string[] {
     return Object.keys(LoginModes);
   }
 
   login() {}
+
+  skip() {
+    this.authService_.skipLoginPage(true);
+    this.state_.go(overviewState.name);
+  }
 }

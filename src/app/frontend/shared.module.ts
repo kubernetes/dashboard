@@ -15,15 +15,18 @@
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
 import {FlexLayoutModule} from '@angular/flex-layout';
+import {FormsModule} from '@angular/forms';
 import {MAT_TOOLTIP_DEFAULT_OPTIONS, MatButtonModule, MatCardModule, MatDividerModule, MatFormFieldModule, MatGridListModule, MatIconModule, MatInputModule, MatProgressSpinnerModule, MatRadioModule, MatSidenavModule, MatToolbarModule, MatTooltipModule} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {UIRouterModule} from '@uirouter/angular';
 
 import {PipesModule} from './common/pipes/module';
+import {KD_TOOLTIP_DEFAULT_OPTIONS} from './index.config';
 
 const SHARED_DEPENDENCIES = [
   // Angular imports
   CommonModule,
+  FormsModule,
 
   // Material imports
   MatButtonModule,
@@ -53,11 +56,7 @@ const SHARED_DEPENDENCIES = [
   exports: SHARED_DEPENDENCIES,
   providers: [{
     provide: MAT_TOOLTIP_DEFAULT_OPTIONS,
-    useValue: {
-      showDelay: 500,
-      hideDelay: 0,
-      touchendHideDelay: 0,
-    }
+    useValue: KD_TOOLTIP_DEFAULT_OPTIONS,
   }],
 })
 export class SharedModule {}

@@ -22,7 +22,6 @@ import {Observable} from 'rxjs/Observable';
 import {AuthResponse, CsrfToken, Error, LoginSpec, LoginStatus} from 'typings/backendapi';
 
 import {CONFIG} from '../../../index.config';
-import {loginState} from '../../../login/state';
 import {overviewState} from '../../../overview/state';
 
 import {CsrfTokenService} from './csrftoken';
@@ -79,7 +78,7 @@ export class AuthService {
   /** Cleans cookies and goes to login page. */
   logout() {
     this.removeAuthCookies_();
-    this.state_.go(loginState);
+    this.state_.go('login');
   }
 
   /**
@@ -91,7 +90,7 @@ export class AuthService {
   redirectToLogin(transition: Transition): Promise<boolean|TargetState> {
     const state = transition.router.stateService;
     return this.getLoginStatus().toPromise().then<boolean|TargetState>(loginStatus => {
-      if (transition.to().name === loginState.name &&
+      if (transition.to().name === 'login' &&
           // Do not allow entering login page if already authenticated or authentication is
           // disabled.
           (this.isAuthenticated(loginStatus) || !this.isAuthenticationEnabled(loginStatus))) {
@@ -99,14 +98,14 @@ export class AuthService {
       }
 
       // In following cases user should not be redirected and reach his target state:
-      if (transition.to().name === loginState.name || transition.to().name === 'error' ||
+      if (transition.to().name === 'login' || transition.to().name === 'error' ||
           !this.isLoginPageEnabled() || !this.isAuthenticationEnabled(loginStatus) ||
           this.isAuthenticated(loginStatus)) {
         return true;
       }
 
       // In other cases redirect user to login state.
-      return state.target(loginState.name, null, {location: true, reload: true});
+      return state.target('login', null, {location: true, reload: true});
     });
   }
 

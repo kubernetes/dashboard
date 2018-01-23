@@ -19,10 +19,4 @@ import {Component, Input} from '@angular/core';
   templateUrl: 'template.html',
   styleUrls: ['style.scss'],
 })
-export class NavItemComponent {
-  @Input() state: string;
-
-  isActive() {
-    return false;
-  }
-}
+export class NavItemComponent { @Input() state: string; }

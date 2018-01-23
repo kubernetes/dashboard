@@ -24,7 +24,6 @@ import {LoginModule} from './login/module';
 @NgModule({
   imports: [
     BrowserModule,
-    FormsModule,
     CoreModule,
     ChromeModule,
     LoginModule,

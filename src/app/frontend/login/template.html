@@ -21,12 +21,14 @@ limitations under the License.
   <kd-card class="kd-login-card">
     <kd-card-title>Kubernetes Dashboard</kd-card-title>
     <kd-card-content>
-      <form name="form"
-            (submit)="login()"
-            novalidate>
-        <mat-radio-group>
+      <form>
+        <mat-radio-group name="login"
+                         [(ngModel)]="selectedAuthenticationMode">
           <div *ngFor="let loginMode of getSupportedAuthenticationModes()">
-            <mat-radio-button [value]="loginMode">{{loginMode}}</mat-radio-button>
+            <mat-radio-button [value]="loginMode"
+                              color="primary">
+              {{loginMode}}
+            </mat-radio-button>
             <div class="kd-login-mode-description">
               Please select the kubeconfig file that you have created to configure access to the cluster. To find out more about how to configure and use kubeconfig file, please refer to the Configure Access to Multiple Clusters section.
             </div>
@@ -41,12 +43,14 @@ limitations under the License.
 
         <button mat-raised-button
                 color="primary"
-                class="kd-login-button">
+                class="kd-login-button"
+                (click)="login()">
           Sign in
         </button>
         <button mat-button
                 color="primary"
-                class="kd-login-button">
+                class="kd-login-button"
+                (click)="skip()">
           Skip
         </button>
       </form>
