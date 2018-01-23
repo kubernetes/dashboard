@@ -12,22 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import settingsServiceModule from '../common/settings/module';
+@import '../../variables';
 
-import {settingsEntryComponent} from './settingsentry/component';
-import stateConfig from './stateconfig';
+.kd-settings-entry {
+  display: grid;
+  grid-gap: $baseline-grid;
+  grid-template-columns: 1fr 1fr;
+}
 
+.kd-settings-entry-form {
+  user-select: none;
 
-/**
- * Angular module for the settings view.
- */
-export default angular
-    .module(
-        'kubernetesDashboard.settings',
-        [
-          'ngMaterial',
-          'ui.router',
-          settingsServiceModule.name,
-        ])
-    .config(stateConfig)
-    .component('kdSettingsEntry', settingsEntryComponent);
+  .mat-form-field {
+    margin: 0 auto;
+    width: 100%;
+  }
+}

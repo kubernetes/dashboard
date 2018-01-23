@@ -12,8 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** Name of the state. Can be used in, e.g., $state.go method. */
-export const stateName = 'settings';
+import {Component, Input} from '@angular/core';
 
-/** Absolute URL of the state. */
-export const stateUrl = '/settings';
+@Component(
+    {selector: 'kd-settings-entry', templateUrl: './template.html', styleUrls: ['./style.scss']})
+export class SettingsEntryComponent {
+  @Input() key: string;
+  @Input() desc: string;
+
+  constructor() {}
+}

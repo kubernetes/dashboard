@@ -21,6 +21,11 @@ export const aboutState: Ng2StateDeclaration = {
   parent: 'chrome',
   name: 'about',
   url: '/about',
+  data: {
+    kdBreadcrumbs: {
+      label: 'About',
+    }
+  },
   views: {
     '$default': {
       component: AboutComponent,

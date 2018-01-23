@@ -12,10 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Inject} from '@angular/core';
-import {AssetsService} from '../common/services/global/assets';
+import {Component, OnInit} from '@angular/core';
+import {Settings} from '@api/backendapi';
+
+import {SettingsService} from '../common/services/global/settings';
 
 @Component({selector: 'kd-settings', templateUrl: './template.html', styleUrls: ['./style.scss']})
-export class SettingsComponent {
-  constructor() {}
+export class SettingsComponent implements OnInit {
+  global: Settings;
+  isInitialized = false;
+
+  constructor(public settings: SettingsService) {}
+
+  ngOnInit() {
+    this.settings.getGlobalSettings().subscribe((g) => {
+      this.global = g;
+      this.isInitialized = true;
+    });
+  }
 }

@@ -14,11 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div>
-  <div>{{::$ctrl.key}}</div>
-  <div class="kd-settings-entry-desc">{{::$ctrl.desc}}</div>
-</div>
-
-<div class="kd-settings-entry-form">
-  <ng-transclude></ng-transclude>
+<div class="kd-settings-entry">
+  <div>
+    <div>{{key}}</div>
+    <div class="kd-color-muted">{{desc}}</div>
+  </div>
+  <ng-content class="kd-settings-entry-form"
+              select="mat-form-field">
+  </ng-content>
 </div>
