@@ -14,16 +14,32 @@
 
 @import '../../../variables';
 
-.kd-card {
-  padding: $baseline-grid 2 * $baseline-grid $baseline-grid;
+:host {
+  .mat-card {
+    padding: 0;
+  }
+
+  .mat-card-title {
+    margin: 0;
+  }
+
+  .mat-card-content {
+    margin: 0;
+    padding: 2 * $baseline-grid;
+  }
+
+  .mat-card-footer {
+    display: inline;
+    margin: 0;
+  }
 }
 
 .kd-card-title {
   font-size: $title-font-size-base;
-  padding: 0;
+  padding: $baseline-grid (2 * $baseline-grid);
 }
 
 .kd-card-footer {
   font-size: $footer-font-size-base;
-  padding: 0 3 * $baseline-grid 3 * $baseline-grid;
+  padding: 0 (2 * $baseline-grid) $baseline-grid;
 }

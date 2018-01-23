@@ -30,6 +30,10 @@ a {
 // Custom classes used across application //
 ////////////////////////////////////////////
 
+.kd-primary {
+  background: $primary;
+}
+
 .kd-no-margin {
   margin: 0;
 }
@@ -83,13 +87,14 @@ a {
   padding: ($baseline-grid / 4) $baseline-grid;
 }
 
+.kd-fill {
+  height: 100%;
+  max-height: 100%;
+}
+
 ///////////////////////////////
 // Overridden default styles //
 ///////////////////////////////
-
-.mat-button {
-  text-transform: uppercase;
-}
 
 .mat-card {
   margin: (2.5 * $baseline-grid) (2.5 * $baseline-grid) 0;

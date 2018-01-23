@@ -12,15 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 
+import {ComponentsModule} from '../common/components/module';
 import {SharedModule} from '../shared.module';
+
 import {LoginComponent} from './component';
 
 @NgModule({
   declarations: [LoginComponent],
   imports: [
     SharedModule,
-  ]
+    ComponentsModule,
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class LoginModule {}

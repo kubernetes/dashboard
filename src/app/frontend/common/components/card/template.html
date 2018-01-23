@@ -14,18 +14,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<mat-card class="kd-card">
-  <mat-card-title class="kd-card-title">
-    <ng-content select="kd-card-title"></ng-content>
+<mat-card>
+  <mat-card-title>
+    <div class="kd-card-title">
+      <ng-content select="kd-card-title"></ng-content>
+    </div>
   </mat-card-title>
 
   <mat-divider></mat-divider>
 
   <mat-card-content>
-    <ng-content select="kd-card-content"></ng-content>
+    <div class="kd-card-content">
+      <ng-content select="kd-card-content"></ng-content>
+    </div>
   </mat-card-content>
 
-  <mat-card-footer class="mat-small kd-card-footer">
-    <ng-content select="kd-card-footer"></ng-content>
+  <mat-card-footer>
+    <div class="mat-small kd-card-footer">
+      <ng-content select="kd-card-footer"></ng-content>
+    </div>
   </mat-card-footer>
 </mat-card>
