@@ -14,5 +14,21 @@
 
 import {Component} from '@angular/core';
 
-@Component({selector: 'kd-login', templateUrl: './template.html'})
-export class LoginComponent {}
+enum LoginModes {
+  Token = 'Token',
+  Basic = 'Basic',
+  Kubeconfig = 'Kubeconfig'
+}
+
+@Component({selector: 'kd-login', templateUrl: './template.html', styleUrls: ['./style.scss']})
+export class LoginComponent {
+  constructor() {
+    console.log(Object.keys(LoginModes));
+  }
+
+  getSupportedAuthenticationModes(): string[] {
+    return Object.keys(LoginModes);
+  }
+
+  login() {}
+}

@@ -106,7 +106,7 @@ export class AuthService {
       }
 
       // In other cases redirect user to login state.
-      return state.target(loginState.name);
+      return state.target(loginState.name, null, {location: true, reload: true});
     });
   }
 

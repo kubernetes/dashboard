@@ -19,9 +19,15 @@
 
 @include mat-core;
 
-$primary: mat-palette($mat-blue, 800);
-$accent: mat-palette($mat-grey, 50);
+// sass-lint:disable function-name-format
+$kd-palette-primary: map_merge($mat-blue, (500: $primary));
+$kd-palette-accent: map_merge($mat-blue, (500: $content-background));
+// sass-lint:enable function-name-format
 
-$theme: mat-light-theme($primary, $accent);
+$kd-theme-primary: mat-palette($kd-palette-primary);
+$kd-theme-accent: mat-palette($kd-palette-accent);
+$kd-theme-warn: mat-palette($mat-red);
 
-@include angular-material-theme($theme);
+$kd-theme: mat-light-theme($kd-theme-primary, $kd-theme-accent, $kd-theme-warn);
+
+@include angular-material-theme($kd-theme);

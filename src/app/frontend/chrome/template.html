@@ -21,7 +21,8 @@ limitations under the License.
     <div class="kd-toolbar-tools"
          fxLayout="row"
          fxFlex="auto">
-      <div class="kd-logo-bar">
+      <div class="kd-logo-bar"
+           fxFlex>
         <a uiSref="{{getOverviewStateName()}}"
            class="kd-toolbar-logo-link">
           <mat-icon [svgIcon]="assets.getAppLogo()"
@@ -32,7 +33,7 @@ limitations under the License.
           </mat-icon>
         </a>
       </div>
-      <!--<kd-search class="kd-search-bar"></kd-search>-->
+      <!--<kd-search class="kd-search-bar" fxFlex="2"></kd-search>-->
       <div>
         <button mat-button
                 (click)="create()"
@@ -67,26 +68,22 @@ limitations under the License.
                ng-bind-html="$ctrl.getSystemBannerMessage()">
   </mat-toolbar>
 
-  <div fxFlex="auto"
+  <div fxFlex
        fxLayout="row"
-       class="kd-app-entire-content">
-    <kd-nav fxFlex="none"></kd-nav>
-    <div fxFlex="auto"
-         class="kd-main-content-box">
-      <div [ngSwitch]="loading"
-           class="kd-content-div-filled kd-main-content-div">
-        <div *ngSwitchCase="true"
-             class="kd-spinner">
-          <mat-spinner *ngIf="showLoadingSpinner"
-                       mode="indeterminate"
-                       [diameter]="48">
-          </mat-spinner>
-        </div>
-        <div *ngSwitchCase="false"
-             class="kd-app-content">
-          <ui-view class="md-body-1">
-          </ui-view>
-        </div>
+       class="kd-chrome-container">
+    <kd-nav></kd-nav>
+    <div [ngSwitch]="loading"
+         fxLayoutAlign="center"
+         fxFlex>
+      <div *ngSwitchCase="true"
+           fxFlexAlign="center">
+        <mat-spinner mode="indeterminate"
+                     [diameter]="48">
+        </mat-spinner>
+      </div>
+      <div *ngSwitchCase="false"
+           fxFlex>
+        <ui-view></ui-view>
       </div>
     </div>
   </div>
