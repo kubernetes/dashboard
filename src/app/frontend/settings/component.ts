@@ -17,7 +17,7 @@ import {Settings} from '@api/backendapi';
 
 import {SettingsService} from '../common/services/global/settings';
 
-@Component({selector: 'kd-settings', templateUrl: './template.html', styleUrls: ['./style.scss']})
+@Component({selector: 'kd-settings', templateUrl: './template.html'})
 export class SettingsComponent implements OnInit {
   global: Settings;
   isInitialized = false;
@@ -30,4 +30,8 @@ export class SettingsComponent implements OnInit {
       this.isInitialized = true;
     });
   }
+
+  saveGlobal() {}
+
+  // TODO ng-disabled="$ctrl.globalForm.$pristine"
 }
