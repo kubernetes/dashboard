@@ -15,6 +15,10 @@
 @import './variables';
 @import './mixins';
 
+/////////////////////////////////
+// Overrides of default styles //
+/////////////////////////////////
+
 html,
 body {
   height: 100%;
@@ -26,13 +30,49 @@ a {
   text-decoration: inherit;
 }
 
-mat-progress-spinner {
+* {
+  &::-webkit-scrollbar {
+    background: transparent;
+    height: $baseline-grid;
+    width: $baseline-grid;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $delicate;
+  }
+}
+
+//////////////////////////////////////////
+// Overrides of Angular Material styles //
+//////////////////////////////////////////
+
+.mat-progress-spinner {
   margin: 0 auto;
+}
+
+.mat-button {
+  text-transform: uppercase;
+}
+
+.mat-card {
+  margin: (2.5 * $baseline-grid) (2.5 * $baseline-grid) 0;
+
+  .mat-card-title {
+    margin-bottom: $baseline-grid;
+  }
+
+  .mat-card-content {
+    padding-top: 2 * $baseline-grid;
+  }
 }
 
 ////////////////////////////////////////////
 // Custom classes used across application //
 ////////////////////////////////////////////
+
+.kd-color-muted {
+  color: $muted;
+}
 
 .kd-no-margin {
   margin: 0;
@@ -57,65 +97,4 @@ mat-progress-spinner {
   min-width: 0;
   white-space: pre-wrap;
   word-wrap: break-word;
-}
-
-// Style taken(mostly) from angular material md-chip style.
-.kd-chips {
-  background-color: $body;
-  border-radius: $baseline-grid;
-  display: inline-block;
-  margin: $chip-margin;
-  max-width: 100%;
-  vertical-align: bottom;
-}
-
-.kd-chip {
-  display: inline;
-  float: left;
-  max-width: 99%;
-  overflow: hidden;
-  padding: ($baseline-grid / 4) $baseline-grid;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.kd-chips-switch {
-  color: $primary;
-  cursor: pointer;
-  margin-left: -$baseline-grid / 2;
-  outline: none;
-  padding: ($baseline-grid / 4) $baseline-grid;
-}
-
-///////////////////////////////
-// Overridden default styles //
-///////////////////////////////
-
-.mat-button {
-  text-transform: uppercase;
-}
-
-.mat-card {
-  margin: (2.5 * $baseline-grid) (2.5 * $baseline-grid) 0;
-
-  .mat-card-title {
-    margin-bottom: $baseline-grid;
-  }
-
-  .mat-card-content {
-    padding-top: 2 * $baseline-grid;
-  }
-}
-
-// Style scrollbars on Webkit-based browsers (e.g., Chrome or Safari).
-* {
-  &::-webkit-scrollbar {
-    background: transparent;
-    height: $baseline-grid;
-    width: $baseline-grid;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: $delicate;
-  }
 }

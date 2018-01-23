@@ -20,14 +20,10 @@
   grid-template-columns: 1fr 1fr;
 }
 
-.kd-settings-entry-desc {
-  color: $muted;
-}
-
 .kd-settings-entry-form {
   user-select: none;
 
-  mat-form-field {
+  .mat-form-field {
     margin: 0 auto;
     width: 100%;
   }
