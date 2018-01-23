@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
+import {FormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 import {UIView} from '@uirouter/angular';
 
@@ -23,8 +24,10 @@ import {LoginModule} from './login/module';
 @NgModule({
   imports: [
     BrowserModule,
-    // Application core modules
-    CoreModule, ChromeModule, LoginModule
+    FormsModule,
+    CoreModule,
+    ChromeModule,
+    LoginModule,
   ],
   bootstrap: [UIView]
 })

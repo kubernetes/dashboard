@@ -19,6 +19,7 @@ import {ComponentsModule} from '../common/components/module';
 import {SharedModule} from '../shared.module';
 
 import {SettingsComponent} from './component';
+import {SettingsEntryComponent} from './entry/component';
 import {settingsState} from './state';
 
 @NgModule({
@@ -27,7 +28,7 @@ import {settingsState} from './state';
     ComponentsModule,
     UIRouterModule.forChild({states: [settingsState]}),
   ],
-  declarations: [SettingsComponent],
+  declarations: [SettingsComponent, SettingsEntryComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class SettingsModule {}

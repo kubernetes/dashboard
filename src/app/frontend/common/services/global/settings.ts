@@ -20,13 +20,19 @@ import {Settings} from '@api/backendapi';
 export class SettingsService {
   private readonly globalSettingsEndpoint_ = 'api/v1/settings/global';
   private globalSettings_: Settings;
+  private isInitialized_ = false;
 
   constructor(private http: HttpClient) {}
 
   init() {
     this.getGlobalSettings().subscribe((globalSettings) => {
       this.globalSettings_ = globalSettings;
+      this.isInitialized_ = true;
     });
+  }
+
+  isInitialized() {
+    return this.isInitialized_;
   }
 
   getGlobalSettings() {
