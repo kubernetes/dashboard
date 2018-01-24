@@ -14,7 +14,12 @@
 
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
+import {CanIResponse, Error} from '@api/backendapi';
 import {StateService} from '@uirouter/angular';
+import {StateParams} from '@uirouter/core';
+import {Observable} from 'rxjs/Observable';
+
+import {overviewState} from '../../../overview/state';
 
 @Injectable()
 export class AuthorizerService {
@@ -22,20 +27,19 @@ export class AuthorizerService {
 
   constructor(private http_: HttpClient, private state_: StateService) {}
 
-  // proxyGET(url) {
-  //   return this.http_.get(`${url}${this.authorizationSubUrl_}`).subscribe(
-  //     (response) => {
-  //       if(response.allowed) {
-  //         return this.http_.get(url);
-  //       }
-  //
-  //       this.state_.go(stateName, this.getAccessForbiddenError());
-  //     },
-  //     (err) => {
-  //       this.state_.go(stateName, new StateParams(err.detail, ''));
-  //     }
-  //   );
-  // }
+  proxyGET<T>(url: string): Observable<T> {
+    return this.http_.get<CanIResponse>(`${url}${this.authorizationSubUrl_}`)
+        .switchMap<CanIResponse, T>(response => {
+          if (!response.allowed) {
+            return Observable.throw('not allowed');
+          }
+
+          return this.http_.get<T>(url);
+        })
+        .catch(e => {
+          return Observable.throw(e);
+        });
+  }
 
   // getAccessForbiddenError() {
   //   return {

@@ -12,43 +12,50 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {Settings} from '@api/backendapi';
+import {Subscription} from 'rxjs/Subscription';
 
 import {SettingsService} from '../common/services/global/settings';
 
 import {SaveAnywayDialog} from './saveanywaysdialog/dialog';
 
 @Component({selector: 'kd-settings', templateUrl: './template.html'})
-export class SettingsComponent implements OnInit {
+export class SettingsComponent implements OnInit, OnDestroy {
   // Keep it in sync with ConcurrentSettingsChangeError constant from the backend.
   private readonly concurrentChangeErr_ = 'settings changed since last reload';
-  global: Settings;
+  global: Settings = {
+    clusterName: '',
+    itemsPerPage: 10,
+    autoRefreshTimeInterval: 5,
+  };
+  settingsSubscription: Subscription;
   isInitialized = false;
-
-  constructor(public settings: SettingsService, public dialog: MatDialog) {}
+  constructor(private settings_: SettingsService, private dialog_: MatDialog) {}
 
   ngOnInit() {
     this.reloadGlobal();
   }
 
-  // TODO Should not subscribe more than once.
+  ngOnDestroy() {
+    this.settingsSubscription.unsubscribe();
+  }
+
+  // TODO should not subscribe more than once
   reloadGlobal() {
-    this.settings.getGlobalSettings().subscribe((g) => {
-      this.global = g;
-      this.isInitialized = true;
-    });
+    this.settingsSubscription = this.settings_.getGlobalSettings().subscribe(
+        (g) => {
+          this.global = g;
+          this.isInitialized = true;
+        },
+        err => {
+          // TODO Go to error state
+          console.log(err);
+        });
   }
 
   saveGlobal() {
-    const settings: Settings = {
-      clusterName: '',
-      itemsPerPage: 10,
-      autoRefreshTimeInterval: 5,
-    };  // TODO Read from form.
-
-
     // TODO save button and reload button + padding
     // TODO ng-disabled="$ctrl.globalForm.$pristine"
     // TODO kdAuthorizerService
@@ -68,7 +75,7 @@ export class SettingsComponent implements OnInit {
     //
     //     if (err && err.data.indexOf(this.concurrentChangeErr_) !== -1) {
 
-    this.dialog.open(SaveAnywayDialog, {width: '420px'}).afterClosed().subscribe((result) => {
+    this.dialog_.open(SaveAnywayDialog, {width: '420px'}).afterClosed().subscribe((result) => {
       if (result === true) {
         // Backend was refreshed with the PUT request, so the second try will be successful unless
         // yet another concurrent change will happen. In that case "save anyways" dialog will be

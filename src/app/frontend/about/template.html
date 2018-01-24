@@ -15,9 +15,9 @@ limitations under the License.
 -->
 
 <kd-card>
-  <kd-card-title>About</kd-card-title>
+  <div title>About</div>
 
-  <kd-card-content>
+  <div content>
     <mat-icon class="kd-about-logo-icon"
               [svgIcon]="assets.getAppLogo()"></mat-icon>
     <div class="kd-about-logo-text">
@@ -27,9 +27,10 @@ limitations under the License.
       </div>
       <div class="mat-h3 kd-no-margin">General-purpose web UI for Kubernetes clusters</div>
     </div>
-  </kd-card-content>
+  </div>
 
-  <kd-card-footer class="kd-about-footer">
+  <div class="kd-about-footer"
+       footer>
     <div *ngIf="gitCommit">Built from <a [href]="getCommitLink()">{{gitCommit}}</a> commit.</div>
     <div>Copyright 2015 - {{latestCopyrightYear}} The Kubernetes Authors.</div>
     <div>
@@ -37,5 +38,5 @@ limitations under the License.
       <a href="https://github.com/kubernetes/dashboard/graphs/contributors">community</a> as an
       <a href="https://github.com/kubernetes/dashboard">open source project</a>.
     </div>
-  </kd-card-footer>
+  </div>
 </kd-card>

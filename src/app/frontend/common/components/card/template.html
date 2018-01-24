@@ -17,21 +17,25 @@ limitations under the License.
 <mat-card>
   <mat-card-title>
     <div class="kd-card-title">
-      <ng-content select="kd-card-title"></ng-content>
+      <ng-content select="[title]"></ng-content>
     </div>
   </mat-card-title>
 
   <mat-divider></mat-divider>
 
   <mat-card-content>
-    <div class="kd-card-content">
-      <ng-content select="kd-card-content"></ng-content>
+    <div class="kd-card-content"
+         *ngIf="initialized; else loading">
+      <ng-content select="[content]"></ng-content>
     </div>
+    <ng-template #loading>
+      <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    </ng-template>
   </mat-card-content>
 
   <mat-card-footer>
     <div class="mat-small kd-card-footer">
-      <ng-content select="kd-card-footer"></ng-content>
+      <ng-content select="[footer]"></ng-content>
     </div>
   </mat-card-footer>
 </mat-card>

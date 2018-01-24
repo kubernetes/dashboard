@@ -48,3 +48,5 @@ export interface Settings {
 }
 
 export interface AppConfig { serverTime: number; }
+
+export interface CanIResponse { allowed: boolean; }

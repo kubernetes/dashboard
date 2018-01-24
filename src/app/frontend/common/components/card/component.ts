@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 @Component({selector: 'kd-card', templateUrl: './template.html', styleUrls: ['./style.scss']})
-export class CardComponent {}
+export class CardComponent { @Input() initialized = true; }

@@ -15,6 +15,7 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Settings} from '@api/backendapi';
+import {AuthorizerService} from './authorizer';
 
 @Injectable()
 export class SettingsService {
@@ -22,13 +23,17 @@ export class SettingsService {
   private globalSettings_: Settings;
   private isInitialized_ = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http_: HttpClient, private authorizer_: AuthorizerService) {}
 
   init() {
-    this.getGlobalSettings().subscribe((globalSettings) => {
-      this.globalSettings_ = globalSettings;
-      this.isInitialized_ = true;
-    });
+    this.getGlobalSettings().subscribe(
+        (globalSettings) => {
+          this.globalSettings_ = globalSettings;
+          this.isInitialized_ = true;
+        },
+        () => {
+          this.isInitialized_ = false;
+        });
   }
 
   isInitialized() {
@@ -36,7 +41,7 @@ export class SettingsService {
   }
 
   getGlobalSettings() {
-    return this.http.get<Settings>(this.globalSettingsEndpoint_);
+    return this.authorizer_.proxyGET<Settings>(this.globalSettingsEndpoint_);
   }
 
   getClusterName() {
