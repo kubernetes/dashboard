@@ -18,12 +18,13 @@ limitations under the License.
   <kd-card-title i18n>Global settings</kd-card-title>
   <kd-card-content>
     <div *ngIf="isInitialized else loading">
-      <form (ngSubmit)="saveGlobal(false)">
+      <form (ngSubmit)="saveGlobal()">
 
         <kd-settings-entry key="Cluster name"
                            desc="Cluster name appears in the browser window title if it is set">
           <mat-form-field fxFlex>
-            <input ngModel="global.clusterName"
+            <input [(ngModel)]="global.clusterName"
+                   name="clusterName"
                    placeholder="Cluster name"
                    type="text"
                    matInput>
@@ -33,7 +34,8 @@ limitations under the License.
         <kd-settings-entry key="Items per page"
                            desc="Max number of items that can be displayed on each list page">
           <div fxFlex>
-            <mat-slider ngModel="global.itemsPerPage"
+            <mat-slider [(ngModel)]="global.itemsPerPage"
+                        name="itemsPerPage"
                         color="primary"
                         min="5"
                         max="50"
@@ -50,7 +52,8 @@ limitations under the License.
         <kd-settings-entry key="Auto-refresh time interval"
                            desc="Number of seconds between every auto-refresh of logs">
           <div fxFlex>
-            <mat-slider ngModel="global.autoRefreshTimeInterval"
+            <mat-slider [(ngModel)]="global.autoRefreshTimeInterval"
+                        name="autoRefreshTimeInterval"
                         color="primary"
                         min="1"
                         max="10"

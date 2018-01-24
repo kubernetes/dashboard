@@ -20,6 +20,7 @@ import {SharedModule} from '../shared.module';
 
 import {SettingsComponent} from './component';
 import {SettingsEntryComponent} from './entry/component';
+import {SaveAnywayDialog} from './saveanywaysdialog/dialog';
 import {settingsState} from './state';
 
 @NgModule({
@@ -28,7 +29,16 @@ import {settingsState} from './state';
     ComponentsModule,
     UIRouterModule.forChild({states: [settingsState]}),
   ],
-  declarations: [SettingsComponent, SettingsEntryComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  declarations: [
+    SettingsComponent,
+    SettingsEntryComponent,
+    SaveAnywayDialog,
+  ],
+  entryComponents: [
+    SaveAnywayDialog,
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA,
+  ],
 })
 export class SettingsModule {}
