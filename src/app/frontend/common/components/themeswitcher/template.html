@@ -14,21 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<!doctype html>
-<html>
-
-<head>
-  <meta charset="utf-8">
-  <title>Kubernetes Dashboard</title>
-  <link rel="icon"
-        type="image/png"
-        href="assets/images/kubernetes-logo.png" />
-  <meta name="viewport"
-        content="width=device-width">
-</head>
-
-<body>
-  <kd-root></kd-root>
-</body>
-
-</html>
+<button mat-icon-button
+        matTooltip="Switch theme!"
+        (click)="switchTheme()">
+  <mat-icon>format_color_fill</mat-icon>
+</button>

@@ -13,13 +13,17 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
-import {UIView} from '@uirouter/angular';
+import {UIRouterModule} from '@uirouter/angular';
 
 import {ChromeModule} from './chrome/module';
+import {chromeState} from './chrome/state';
 import {CoreModule} from './core.module';
+import {RootComponent} from './index.component';
+import {configureRouter} from './index.router.config';
 import {LoginModule} from './login/module';
+import {loginState} from './login/state';
+import {overviewState} from './overview/state';
 
 @NgModule({
   imports: [
@@ -27,7 +31,14 @@ import {LoginModule} from './login/module';
     CoreModule,
     ChromeModule,
     LoginModule,
+    UIRouterModule.forRoot({
+      states: [chromeState, loginState],
+      useHash: true,
+      otherwise: {state: overviewState.name},
+      config: configureRouter,
+    }),
   ],
-  bootstrap: [UIView]
+  declarations: [RootComponent],
+  bootstrap: [RootComponent]
 })
 export class RootModule {}

@@ -13,15 +13,9 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
-import {UIRouter, UIRouterModule} from '@uirouter/angular';
-import {HookMatchCriteria, HookMatchCriterion} from '@uirouter/core';
 
 import {AboutModule} from '../about/module';
-import {aboutState} from '../about/state';
 import {ComponentsModule} from '../common/components/module';
-import {AuthService} from '../common/services/global/authentication';
-import {TitleService} from '../common/services/global/title';
-import {loginState} from '../login/state';
 import {OverviewModule} from '../overview/module';
 import {ClusterModule} from '../resource/cluster/module';
 import {NamespaceModule} from '../resource/cluster/namespace/module';
@@ -50,19 +44,12 @@ import {SharedModule} from '../shared.module';
 
 import {ChromeComponent} from './component';
 import {NavModule} from './nav/module';
-import {chromeState} from './state';
 
 @NgModule({
   declarations: [ChromeComponent],
   imports: [
     SharedModule,
     ComponentsModule,
-    UIRouterModule.forRoot({
-      states: [chromeState, loginState],
-      useHash: true,
-      otherwise: {state: aboutState.name},
-      config: configureRouter,
-    }),
     // Application modules
     NavModule,
     AboutModule,
@@ -94,28 +81,3 @@ import {chromeState} from './state';
   ]
 })
 export class ChromeModule {}
-
-export function configureRouter(router: UIRouter) {
-  const transitionService = router.transitionService;
-
-  // Register transition hook to adjust window title.
-  transitionService.onBefore({}, (transition) => {
-    const titleService = transition.injector().get(TitleService);
-    titleService.setTitle(transition);
-  });
-
-  // Register transition hooks for authentication.
-  const requiresAuthCriteria = {
-    to: (state): HookMatchCriterion => state.data && state.data.requiresAuth
-  } as HookMatchCriteria;
-
-  transitionService.onBefore(requiresAuthCriteria, (transition) => {
-    const authService = transition.injector().get(AuthService);
-    return authService.redirectToLogin(transition);
-  }, {priority: 10});
-
-  transitionService.onBefore(requiresAuthCriteria, (transition) => {
-    const authService = transition.injector().get(AuthService);
-    return authService.refreshToken();
-  });
-}

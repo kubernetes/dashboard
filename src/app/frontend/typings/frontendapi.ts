@@ -16,3 +16,5 @@ export interface BreadcrumbConfig {
   label?: string;
   parent?: string;
 }
+
+export type ThemeSwitchCallback = (isLightThemeEnabled: boolean) => void;

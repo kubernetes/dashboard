@@ -12,29 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {OverlayContainer} from '@angular/cdk/overlay';
 import {Component, OnInit} from '@angular/core';
+import {ThemeService} from './common/services/global/theme';
 
-import {AssetsService} from '../common/services/global/assets';
-import {overviewState} from '../overview/state';
-
-@Component({selector: 'kd-chrome', templateUrl: './template.html', styleUrls: ['./style.scss']})
-export class ChromeComponent implements OnInit {
-  loading = false;
-
-  constructor(public assets: AssetsService, private overlayContainer_: OverlayContainer) {}
-
-  getOverviewStateName() {
-    return overviewState.name;
+@Component({
+  selector: 'kd-root',
+  template: '<ui-view [ngClass]="{\'kd-dark-theme\': !isLightThemeEnabled}"></ui-view>'
+})
+export class RootComponent implements OnInit {
+  isLightThemeEnabled: boolean;
+  constructor(private themeService_: ThemeService) {
+    this.isLightThemeEnabled = this.themeService_.isLightThemeEnabled();
   }
-
-  isSystemBannerVisible() {
-    return false;
-  }
-
-  create() {}
 
   ngOnInit() {
-    this.overlayContainer_.getContainerElement().classList.add('kd-dark-theme');
+    this.themeService_.subscribe(this.onThemeChange.bind(this));
+  }
+
+  onThemeChange(isLightThemeEnabled: boolean) {
+    this.isLightThemeEnabled = isLightThemeEnabled;
   }
 }

@@ -12,18 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
+import {Component} from '@angular/core';
+import {ThemeService} from '../../services/global/theme';
 
-import {SharedModule} from '../../shared.module';
+@Component({selector: 'kd-theme-switcher', templateUrl: './template.html'})
+export class ThemeSwitcherComponent {
+  constructor(public themeService: ThemeService) {}
 
-import {ActionbarComponent} from './actionbar/component';
-import {BreadcrumbsComponent} from './breadcrumbs/component';
-import {CardComponent} from './card/component';
-import {ThemeSwitcherComponent} from './themeswitcher/component';
-
-@NgModule({
-  imports: [SharedModule],
-  declarations: [CardComponent, ActionbarComponent, BreadcrumbsComponent, ThemeSwitcherComponent],
-  exports: [CardComponent, ActionbarComponent, BreadcrumbsComponent, ThemeSwitcherComponent],
-})
-export class ComponentsModule {}
+  switchTheme() {
+    console.log('switching theme');
+    this.themeService.switchTheme();
+  }
+}

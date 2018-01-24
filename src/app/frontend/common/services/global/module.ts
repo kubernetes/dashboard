@@ -19,11 +19,13 @@ import {AuthService} from './authentication';
 import {ConfigService} from './config';
 import {CsrfTokenService} from './csrftoken';
 import {SettingsService} from './settings';
+import {ThemeService} from './theme';
 import {TitleService} from './title';
 
 @NgModule({
   providers: [
-    AssetsService, SettingsService, ConfigService, TitleService, AuthService, CsrfTokenService, {
+    AssetsService, SettingsService, ConfigService, TitleService, AuthService, CsrfTokenService,
+    ThemeService, {
       provide: APP_INITIALIZER,
       useFactory: init,
       deps: [SettingsService, ConfigService],

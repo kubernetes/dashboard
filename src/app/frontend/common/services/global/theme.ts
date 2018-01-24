@@ -12,18 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
+import {ThemeSwitchCallback} from '@api/frontendapi';
 
-import {SharedModule} from '../../shared.module';
+@Injectable()
+export class ThemeService {
+  private isLightThemeEnabled_ = true;
+  private onThemeSwitchEvent_ = new EventEmitter<boolean>();
 
-import {ActionbarComponent} from './actionbar/component';
-import {BreadcrumbsComponent} from './breadcrumbs/component';
-import {CardComponent} from './card/component';
-import {ThemeSwitcherComponent} from './themeswitcher/component';
+  isLightThemeEnabled(): boolean {
+    return this.isLightThemeEnabled_;
+  }
 
-@NgModule({
-  imports: [SharedModule],
-  declarations: [CardComponent, ActionbarComponent, BreadcrumbsComponent, ThemeSwitcherComponent],
-  exports: [CardComponent, ActionbarComponent, BreadcrumbsComponent, ThemeSwitcherComponent],
-})
-export class ComponentsModule {}
+  switchTheme() {
+    this.isLightThemeEnabled_ = !this.isLightThemeEnabled_;
+    this.onThemeSwitchEvent_.emit(this.isLightThemeEnabled_);
+  }
+
+  subscribe(callback: ThemeSwitchCallback) {
+    this.onThemeSwitchEvent_.subscribe(callback);
+  }
+}
