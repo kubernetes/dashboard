@@ -16,6 +16,7 @@ package main
 
 import (
 	"crypto/elliptic"
+	"crypto/tls"
 	"flag"
 	"fmt"
 	"log"
@@ -121,11 +122,24 @@ func main() {
 		handleFatalInitError(err)
 	}
 
+	var servingCerts []tls.Certificate
 	if args.Holder.GetAutoGenerateCertificates() {
 		log.Println("Auto-generating certificates")
 		certCreator := ecdsa.NewECDSACreator(args.Holder.GetKeyFile(), args.Holder.GetCertFile(), elliptic.P256())
 		certManager := cert.NewCertManager(certCreator, args.Holder.GetDefaultCertDir())
-		certManager.GenerateCertificates()
+		servingCert, err := certManager.GetCertificates()
+		if err != nil {
+			handleFatalInitError(err)
+		}
+		servingCerts = []tls.Certificate{servingCert}
+	} else if args.Holder.GetCertFile() != "" && args.Holder.GetKeyFile() != "" {
+		certFilePath := args.Holder.GetDefaultCertDir() + string(os.PathSeparator) + args.Holder.GetCertFile()
+		keyFilePath := args.Holder.GetDefaultCertDir() + string(os.PathSeparator) + args.Holder.GetKeyFile()
+		servingCert, err := tls.LoadX509KeyPair(certFilePath, keyFilePath)
+		if err != nil {
+			handleFatalInitError(err)
+		}
+		servingCerts = []tls.Certificate{servingCert}
 	}
 
 	// Run a HTTP server that serves static public files from './public' and handles API calls.
@@ -138,12 +152,15 @@ func main() {
 	http.Handle("/metrics", prometheus.Handler())
 
 	// Listen for http or https
-	if args.Holder.GetCertFile() != "" && args.Holder.GetKeyFile() != "" {
-		certFilePath := args.Holder.GetDefaultCertDir() + string(os.PathSeparator) + args.Holder.GetCertFile()
-		keyFilePath := args.Holder.GetDefaultCertDir() + string(os.PathSeparator) + args.Holder.GetKeyFile()
+	if servingCerts != nil {
 		log.Printf("Serving securely on HTTPS port: %d", args.Holder.GetPort())
 		secureAddr := fmt.Sprintf("%s:%d", args.Holder.GetBindAddress(), args.Holder.GetPort())
-		go func() { log.Fatal(http.ListenAndServeTLS(secureAddr, certFilePath, keyFilePath, nil)) }()
+		server := &http.Server{
+			Addr:      secureAddr,
+			Handler:   http.DefaultServeMux,
+			TLSConfig: &tls.Config{Certificates: servingCerts},
+		}
+		go func() { log.Fatal(server.ListenAndServeTLS("", "")) }()
 	} else {
 		log.Printf("Serving insecurely on HTTP port: %d", args.Holder.GetInsecurePort())
 		addr := fmt.Sprintf("%s:%d", args.Holder.GetInsecureBindAddress(), args.Holder.GetInsecurePort())

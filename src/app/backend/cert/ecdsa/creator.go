@@ -21,6 +21,7 @@ import (
 	"crypto/x509"
 	"crypto/x509/pkix"
 	"encoding/pem"
+	"io/ioutil"
 	"log"
 	"math/big"
 	"net"
@@ -76,26 +77,26 @@ func (self *ecdsaCreator) GenerateCertificate(key interface{}) []byte {
 
 // StoreCertificates implements certificate Creator interface. See Creator for more information.
 func (self *ecdsaCreator) StoreCertificates(path string, key interface{}, certBytes []byte) {
-	ecdsaKey := self.getKey(key)
-	certOut, err := os.Create(path + string(os.PathSeparator) + self.GetCertFileName())
+	keyPEM, certPEM, err := self.KeyCertPEMBytes(key, certBytes)
 	if err != nil {
+		log.Fatalf("[ECDSAManager] Failed to marshal cert/key pair: %v", err)
+	}
+	if err := ioutil.WriteFile(path+string(os.PathSeparator)+self.GetCertFileName(), certPEM, os.FileMode(0644)); err != nil {
 		log.Fatalf("[ECDSAManager] Failed to open %s for writing: %s", self.GetCertFileName(), err)
 	}
-
-	pem.Encode(certOut, &pem.Block{Type: "CERTIFICATE", Bytes: certBytes})
-	certOut.Close()
-
-	keyOut, err := os.OpenFile(path+string(os.PathSeparator)+self.GetKeyFileName(), os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0600)
-	if err != nil {
+	if err := ioutil.WriteFile(path+string(os.PathSeparator)+self.GetKeyFileName(), keyPEM, os.FileMode(0600)); err != nil {
 		log.Fatalf("[ECDSAManager] Failed to open %s for writing: %s", self.GetKeyFileName(), err)
 	}
+}
 
-	marshaledKey, err := x509.MarshalECPrivateKey(ecdsaKey)
+func (self *ecdsaCreator) KeyCertPEMBytes(key interface{}, certBytes []byte) ([]byte, []byte, error) {
+	marshaledKey, err := x509.MarshalECPrivateKey(self.getKey(key))
 	if err != nil {
-		log.Fatalf("[ECDSAManager] Unable to marshal %s: %v", self.GetKeyFileName(), err)
+		return nil, nil, err
 	}
-	pem.Encode(keyOut, &pem.Block{Type: "EC PRIVATE KEY", Bytes: marshaledKey})
-	keyOut.Close()
+	keyPEM := pem.EncodeToMemory(&pem.Block{Type: "EC PRIVATE KEY", Bytes: marshaledKey})
+	certPEM := pem.EncodeToMemory(&pem.Block{Type: "CERTIFICATE", Bytes: certBytes})
+	return keyPEM, certPEM, nil
 }
 
 // GetKeyFileName implements certificate Creator interface. See Creator for more information.
