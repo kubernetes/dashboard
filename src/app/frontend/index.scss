@@ -12,6 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import './dark';
+@import './default';
 @import './variables';
 @import './mixins';
 
@@ -26,7 +29,7 @@ body {
 }
 
 a {
-  color: $primary;
+  color: #326DE6;
   text-decoration: inherit;
 }
 
@@ -38,7 +41,7 @@ a {
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: $delicate;
+    background-color: pink;
   }
 }
 
@@ -66,8 +69,16 @@ a {
 // Custom classes used across application //
 ////////////////////////////////////////////
 
+.kd-h1 {
+  font-size: 24px;
+}
+
+.kd-h3 {
+  font-size: 16px;
+}
+
 .kd-color-muted {
-  color: $muted;
+  color: #888888;
 }
 
 .kd-no-margin {
@@ -79,7 +90,7 @@ a {
 }
 
 .kd-slider-value {
-  color: $muted;
+  color: #888888;
   font-size: $subhead-font-size-base-lg;
   text-align: right;
   width: 2 * $baseline-grid;

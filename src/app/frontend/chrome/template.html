@@ -17,7 +17,7 @@ limitations under the License.
 <div fxLayout="column"
      fxFill
      fxFlexFill>
-  <mat-toolbar class="kd-toolbar">
+  <mat-toolbar class="kd-toolbar kd-bg-accent">
     <div class="kd-toolbar-tools"
          fxLayout="row"
          fxFlex="auto">
@@ -49,7 +49,7 @@ limitations under the License.
     </div>
   </mat-toolbar>
 
-  <mat-toolbar class="kd-second-toolbar">
+  <mat-toolbar class="kd-second-toolbar kd-bg-primary">
     <div class="kd-toolbar-tools"
          fxFlex>
       <kd-nav-hamburger fxFlex="none"></kd-nav-hamburger>
@@ -71,7 +71,7 @@ limitations under the License.
 
   <div fxFlex
        fxLayout="row"
-       class="kd-chrome-container">
+       class="kd-chrome-container kd-bg-background">
     <kd-nav></kd-nav>
     <div [ngSwitch]="loading"
          fxLayoutAlign="center"

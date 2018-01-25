@@ -15,14 +15,14 @@
 @import '../../../variables';
 
 .kd-breadcrumbs-container {
-  color: $content-background;
+  color: white;
   display: flex;
   font-size: $subhead-font-size-base-lg;
   padding: (.25 * $baseline-grid) 0 0 $baseline-grid;
 }
 
 .kd-faded-breadcrumb {
-  color: $hue-2;
+  color: yellow;
 }
 
 .kd-inline-breadcrumb {

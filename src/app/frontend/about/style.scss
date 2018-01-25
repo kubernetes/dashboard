@@ -15,22 +15,8 @@
 @import '../variables';
 @import '../mixins';
 
-@mixin kd-about-logo {
-  display: inline-block;
-}
-
 .kd-about-logo-icon {
   @include kd-icon-size(8 * $baseline-grid);
-  @include kd-about-logo;
 
   margin: 0 (2 * $baseline-grid) 0 0;
-  vertical-align: bottom;
-}
-
-.kd-about-logo-text {
-  @include kd-about-logo;
-}
-
-.kd-about-footer {
-  color: $foreground-2;
 }

@@ -17,19 +17,20 @@ limitations under the License.
 <kd-card>
   <div title>About</div>
 
-  <div content>
+  <div content
+       fxLayout="row">
     <mat-icon class="kd-about-logo-icon"
               [svgIcon]="assets.getAppLogo()"></mat-icon>
-    <div class="kd-about-logo-text">
-      <div class="mat-h1 kd-no-margin">
+    <div fxFlexAlign="center">
+      <div class="kd-h1">
         <span>Dashboard</span>
         <span *ngIf="appVersion">{{appVersion}}</span>
       </div>
-      <div class="mat-h3 kd-no-margin">General-purpose web UI for Kubernetes clusters</div>
+      <div class="kd-h3">General-purpose web UI for Kubernetes clusters</div>
     </div>
   </div>
 
-  <div class="kd-about-footer"
+  <div class="kd-fg-secondary-text"
        footer>
     <div *ngIf="gitCommit">Built from <a [href]="getCommitLink()">{{gitCommit}}</a> commit.</div>
     <div>Copyright 2015 - {{latestCopyrightYear}} The Kubernetes Authors.</div>

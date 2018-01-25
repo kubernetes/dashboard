@@ -23,8 +23,6 @@
 }
 
 .kd-toolbar {
-  background-color: $content-background;
-  color: $primary;
   height: 6 * $baseline-grid;
   min-height: 6 * $baseline-grid;
   padding-left: 1.75 * $baseline-grid;
@@ -55,12 +53,10 @@
 }
 
 .kd-global-action-icon {
-  color: $primary;
   margin: .6 * $baseline-grid 0 $baseline-grid 0;
 }
 
 .kd-second-toolbar {
-  background: $primary;
   box-shadow: $whiteframe-shadow-1dp;
   height: 7 * $baseline-grid;
   min-height: 7 * $baseline-grid;
@@ -71,9 +67,9 @@
 }
 
 .kd-system-banner {
-  background-color: $running-resource-color;
+  background-color: green;
   box-shadow: $whiteframe-shadow-1dp;
-  color: $foreground-1;
+  color: black;
   display: inline;
   font-size: $body-font-size-base;
   height: 6 * $baseline-grid;
@@ -85,15 +81,14 @@
 }
 
 .kd-system-banner-error {
-  background-color: $error-color;
+  background-color: red;
 }
 
 .kd-system-banner-warning {
-  background-color: $warning;
+  background-color: orange;
 }
 
 .kd-chrome-container {
-  background-color: $body;
   // Set overflow property to disable margin-collapse, which in turn
   // prevents scrollbar from being always visible.
   overflow-x: hidden;
