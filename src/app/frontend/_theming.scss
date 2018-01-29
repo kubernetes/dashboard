@@ -17,11 +17,17 @@
 @mixin kd-theme($theme) {
   $primary-palette: map-get($theme, primary);
   $accent-palette: map-get($theme, accent);
-  $warn-palette: map-get($theme, accent);
+  $warn-palette: map-get($theme, warn);
   $foreground-palette: map-get($theme, foreground);
   $background-palette: map-get($theme, background);
 
   $primary: mat-color($primary-palette);
+  $accent: mat-color($accent-palette);
+  $background: mat-color($background-palette, background);
+
+  $success: mat-color($warn-palette, lighter);
+  $warning: mat-color($warn-palette);
+  $error: mat-color($warn-palette, darker);
 
   // Global style overrides
 
@@ -46,7 +52,31 @@
   }
 
   .kd-accent {
-    color: mat-color($accent-palette);
+    color: $accent;
+  }
+
+  .kd-success {
+    color: $success;
+  }
+
+  .kd-bg-success {
+    background-color: $success;
+  }
+
+  .kd-warning {
+    color: $warning;
+  }
+
+  .kd-bg-warning {
+    background-color: $warning;
+  }
+
+  .kd-error {
+    color: $error;
+  }
+
+  .kd-bg-error {
+    background-color: $error;
   }
 
   .kd-primary-button {
@@ -54,7 +84,7 @@
   }
 
   .kd-bg-background {
-    background-color: mat-color($background-palette, background);
+    background-color: $background;
   }
 
   .kd-fg-secondary-text {
@@ -64,7 +94,7 @@
   // Component-level styles
 
   .kd-primary-toolbar {
-    background-color: lighten(mat-color($background-palette, background), 5%);
+    background-color: lighten($background, 5%);
   }
 
   .kd-nav-item-button {

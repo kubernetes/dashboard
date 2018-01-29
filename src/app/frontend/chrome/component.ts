@@ -32,6 +32,14 @@ export class ChromeComponent implements OnInit {
     return false;
   }
 
+  getSystemBannerClass() {
+    return 'kd-bg-warning';
+  }
+
+  getSystemBannerMessage() {
+    return `<b>System is going to be shut down in 5 min...</b>`;
+  }
+
   create() {}
 
   ngOnInit() {

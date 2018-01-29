@@ -72,10 +72,6 @@ a {
   font-size: 16px;
 }
 
-.kd-color-muted {
-  color: #888888;
-}
-
 .kd-no-margin {
   margin: 0;
 }
@@ -85,7 +81,7 @@ a {
 }
 
 .kd-slider-value {
-  color: #888888;
+  color: #888;
   font-size: $subhead-font-size-base-lg;
   text-align: right;
   width: 2 * $baseline-grid;

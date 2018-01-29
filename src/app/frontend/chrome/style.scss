@@ -67,7 +67,6 @@
 }
 
 .kd-system-banner {
-  background-color: green;
   box-shadow: $whiteframe-shadow-1dp;
   color: black;
   display: inline;
@@ -78,14 +77,7 @@
   overflow: hidden;
   padding: 0 (3 * $baseline-grid);
   white-space: nowrap;
-}
-
-.kd-system-banner-error {
-  background-color: red;
-}
-
-.kd-system-banner-warning {
-  background-color: orange;
+  z-index: 1;
 }
 
 .kd-chrome-container {
