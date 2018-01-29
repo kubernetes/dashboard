@@ -15,6 +15,7 @@
 package cert
 
 import (
+	"crypto/tls"
 	"log"
 	"os"
 
@@ -28,16 +29,23 @@ type Manager struct {
 }
 
 // GenerateCertificates implements Manager interface. See Manager for more information.
-func (self *Manager) GenerateCertificates() {
+func (self *Manager) GetCertificates() (tls.Certificate, error) {
 	if self.keyFileExists() && self.certFileExists() {
-		log.Println("Certificates already exist. Skipping.")
-		return
+		log.Println("Certificates already exist. Returning.")
+		return tls.LoadX509KeyPair(
+			self.path(self.creator.GetCertFileName()),
+			self.path(self.creator.GetKeyFileName()),
+		)
 	}
 
 	key := self.creator.GenerateKey()
 	cert := self.creator.GenerateCertificate(key)
-	self.creator.StoreCertificates(self.certDir, key, cert)
-	log.Println("Successfully created and stored certificates")
+	log.Println("Successfuly created certificates")
+	keyPEM, certPEM, err := self.creator.KeyCertPEMBytes(key, cert)
+	if err != nil {
+		return tls.Certificate{}, err
+	}
+	return tls.X509KeyPair(certPEM, keyPEM)
 }
 
 func (self *Manager) keyFileExists() bool {
