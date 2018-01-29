@@ -18,7 +18,6 @@ import {NavService} from '../../../common/services/nav/service';
 @Component({
   selector: 'kd-nav-hamburger',
   templateUrl: 'template.html',
-  styleUrls: ['style.scss'],
 })
 export class HamburgerComponent {
   constructor(private navService_: NavService) {}

@@ -43,8 +43,6 @@
 }
 
 :host ::ng-deep .kd-card-title {
-  background: blue;
   border-top-left-radius: .25 * $baseline-grid;
   border-top-right-radius: .25 * $baseline-grid;
-  color: pink;
 }

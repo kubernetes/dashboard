@@ -31,15 +31,6 @@
   text-transform: none;
   white-space: nowrap;
   width: 100%;
-
-  &:visited {
-    color: inherit;
-  }
-
-  &.kd-nav-item-active {
-    background-color: grey;
-    color: #326DE6;
-  }
 }
 
 :host-context(.kd-nav-item) {

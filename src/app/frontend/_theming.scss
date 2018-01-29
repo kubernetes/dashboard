@@ -21,12 +21,36 @@
   $foreground-palette: map-get($theme, foreground);
   $background-palette: map-get($theme, background);
 
-  .kd-bg-primary {
-    background-color: mat-color($primary-palette);
+  $primary: mat-color($primary-palette);
+
+  // Global style overrides
+
+  a {
+    color: $primary;
   }
 
-  .kd-bg-accent {
-    background-color: mat-color($accent-palette);
+  * {
+    &::-webkit-scrollbar-thumb {
+      background-color: mat-color($foreground-palette, divider);
+    }
+  }
+
+  // Global application styles
+
+  .kd-primary {
+    color: $primary;
+  }
+
+  .kd-bg-primary {
+    background-color: $primary;
+  }
+
+  .kd-accent {
+    color: mat-color($accent-palette);
+  }
+
+  .kd-primary-button {
+    color: mat-color($primary-palette, 50);
   }
 
   .kd-bg-background {
@@ -35,5 +59,20 @@
 
   .kd-fg-secondary-text {
     color: mat-color($foreground-palette, secondary-text);
+  }
+
+  // Component-level styles
+
+  .kd-primary-toolbar {
+    background-color: lighten(mat-color($background-palette, background), 5%);
+  }
+
+  .kd-nav-item-button {
+    color: mat-color($primary-palette, lighter);
+  }
+
+  .kd-nav-item-button-active {
+    background-color: mat-color($background-palette, selected-button);
+    color: $primary;
   }
 }

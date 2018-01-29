@@ -23,6 +23,10 @@
   padding-top: $baseline-grid;
   white-space: nowrap;
 
+  .mat-divider {
+    margin: $baseline-grid $baseline-grid (2 * $baseline-grid) 0;
+  }
+
   // Next rule is to only show the scrollbar on hover, but always enable scrolling.
   &:not(:hover) {
     &::-webkit-scrollbar-thumb {
@@ -54,11 +58,4 @@
 
 .kd-nav-item {
   margin-left: 3 * $baseline-grid;
-}
-
-.kd-nav-group-divider {
-  border-top: 1px solid red;
-  margin-bottom: 2 * $baseline-grid;
-  margin-right: 1 * $baseline-grid;
-  margin-top: $baseline-grid;
 }

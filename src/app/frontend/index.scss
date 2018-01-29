@@ -29,8 +29,7 @@ body {
 }
 
 a {
-  color: #326DE6;
-  text-decoration: inherit;
+  text-decoration: none;
 }
 
 * {
@@ -38,10 +37,6 @@ a {
     background: transparent;
     height: $baseline-grid;
     width: $baseline-grid;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: pink;
   }
 }
 

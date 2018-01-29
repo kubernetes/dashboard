@@ -15,10 +15,12 @@
 import {Component, OnInit} from '@angular/core';
 import {ThemeService} from './common/services/global/theme';
 
-@Component({
-  selector: 'kd-root',
-  template: '<ui-view [ngClass]="{\'kd-dark-theme\': !isLightThemeEnabled}"></ui-view>'
-})
+enum Themes {
+  Light = 'kd-light-theme',
+  Dark = 'kd-dark-theme'
+}
+
+@Component({selector: 'kd-root', template: '<ui-view [ngClass]="getTheme()"></ui-view>'})
 export class RootComponent implements OnInit {
   isLightThemeEnabled: boolean;
   constructor(private themeService_: ThemeService) {
@@ -31,5 +33,9 @@ export class RootComponent implements OnInit {
 
   onThemeChange(isLightThemeEnabled: boolean) {
     this.isLightThemeEnabled = isLightThemeEnabled;
+  }
+
+  getTheme(): string {
+    return this.isLightThemeEnabled ? Themes.Light : Themes.Dark;
   }
 }
