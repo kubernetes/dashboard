@@ -20,7 +20,7 @@
   <translation id="700116227671235444" key="MSG_BREADCRUMBS_CRON_JOBS_LABEL" desc="Label 'Cron Jobs' that appears as a breadcrumbs on the action bar.">定时任务</translation>
   <translation id="3217932097841975938" key="MSG_BREADCRUMBS_DAEMON_SETS_LABEL" desc="Label 'Daemon Sets' that appears as a breadcrumbs on the action bar.">守护进程集</translation>
   <translation id="1744394420157932960" key="MSG_BREADCRUMBS_DEPLOYMENTS_LABEL" desc="Label 'Deployments' that appears as a breadcrumbs on the action bar.">部署</translation>
-  <translation id="3070611681004399610" key="MSG_BREADCRUMBS_DEPLOY_APP_LABEL" desc="Breadcrumb label for the deploy view.">Resource creation</translation>
+  <translation id="3070611681004399610" key="MSG_BREADCRUMBS_DEPLOY_APP_LABEL" desc="Breadcrumb label for the deploy view.">创建资源</translation>
   <translation id="8693076889249273053" key="MSG_BREADCRUMBS_DISCOVERY_AND_LOAD_BALANCING_LABEL" desc="Label 'Discovery and load balancing' that appears as a breadcrumbs on the action bar.">服务发现与负载均衡</translation>
   <translation id="2573868693589074300" key="MSG_BREADCRUMBS_ERROR_LABEL" desc="Label for error page for breadcrumbs on the action bar.">错误</translation>
   <translation id="2248903848244811172" key="MSG_BREADCRUMBS_HORIZONTAL_POD_AUTOSCALERS_LABEL" desc="Label 'Horizontal Pod Autoscalers' that appears as a breadcrumbs on the action bar.">容器组水平伸缩器</translation>
@@ -160,8 +160,8 @@
   <translation id="486192895688311189" key="MSG_COMMON_SCALING_SCALERESOURCE_9" desc="Action \'OK\' for the confirmation button on the &quot;update number of pods dialog&quot;.">确定</translation>
   <translation id="2290466353199139171" key="MSG_CONFIGMAP_DETAIL_ACTIONBAR_0" desc="Label \'Config Map\' which appears at the top of the\n      delete dialog, opened from a config map details page.">配置字典</translation>
   <translation id="1345195277871602727" key="MSG_CONFIGMAP_DETAIL_DETAIL_0" desc="Header in a detail view of config map deta">数据</translation>
-  <translation id="5478435235468315342" key="MSG_CONFIGMAP_DETAIL_DETAIL_1" desc="Zero state text on config map details view.">There is no data to display</translation>
-  <translation id="5220920321462587761" key="MSG_CONFIGMAP_DETAIL_DETAIL_2" desc="Zero state text on config map details view.">You can edit config map to add data.</translation>
+  <translation id="5478435235468315342" key="MSG_CONFIGMAP_DETAIL_DETAIL_1" desc="Zero state text on config map details view.">没有配置数据</translation>
+  <translation id="5220920321462587761" key="MSG_CONFIGMAP_DETAIL_DETAIL_2" desc="Zero state text on config map details view.">您可以编辑配置字典添加数据</translation>
   <translation id="998665058731826460" key="MSG_CONFIGMAP_DETAIL_INFO_0" desc="Header in a detail view">详情</translation>
   <translation id="9090261468074115569" key="MSG_CONFIGMAP_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">配置字典</translation>
   <translation id="5434719528055235183" key="MSG_CONFIGMAP_LIST_CARDLIST_1" desc="Config map list header: name.">名称</translation>
