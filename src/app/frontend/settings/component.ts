@@ -66,8 +66,7 @@ export class SettingsComponent implements OnInit {
         // shown again.
         this.saveGlobal();
       } else {
-        this.settings_.load().then(
-            this.onSettingsLoad.bind(this), this.onSettingsLoadError.bind(this));
+        this.settings_.load(this.onSettingsLoad.bind(this), this.onSettingsLoadError.bind(this));
       }
     });
   }
