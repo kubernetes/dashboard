@@ -44,9 +44,13 @@ import {SharedModule} from '../shared.module';
 
 import {ChromeComponent} from './component';
 import {NavModule} from './nav/module';
+import {SearchComponent} from './search/component';
 
 @NgModule({
-  declarations: [ChromeComponent],
+  declarations: [
+    ChromeComponent,
+    SearchComponent,
+  ],
   imports: [
     SharedModule,
     ComponentsModule,

@@ -12,27 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * @final
- */
-export class HamburgerController {
-  /**
-   * @param {!./nav_service.NavService} kdNavService
-   * @ngInject
-   */
-  constructor(kdNavService) {
-    /** @private {!./nav_service.NavService} */
-    this.kdNavService_ = kdNavService;
+@import '../../variables';
+
+.kd-search {
+  border-radius: $baseline-grid / 4;
+  padding-left: $baseline-grid;
+
+  input {
+    background-color: transparent;
+    border: 0;
+    font-size: $subhead-font-size-base;
+    outline: none;
+    padding: $baseline-grid * 1.25;
   }
 
-  /** @export */
-  toggle() {
-    this.kdNavService_.toggle();
+  .kd-search-icon {
+    margin-left: $baseline-grid / 2;
+    padding-right: $baseline-grid * 4;
   }
 }
-
-/** @type {!angular.Component} */
-export const hamburgerComponent = {
-  controller: HamburgerController,
-  templateUrl: 'chrome/nav/hamburger.html',
-};

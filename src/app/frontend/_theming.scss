@@ -15,21 +15,25 @@
 @import '~@angular/material/theming';
 
 @mixin kd-theme($theme) {
+
+  // Palettes.
+
   $primary-palette: map-get($theme, primary);
   $accent-palette: map-get($theme, accent);
   $warn-palette: map-get($theme, warn);
   $foreground-palette: map-get($theme, foreground);
   $background-palette: map-get($theme, background);
 
+  // Colors.
+
   $primary: mat-color($primary-palette);
   $accent: mat-color($accent-palette);
   $background: mat-color($background-palette, background);
-
   $success: mat-color($warn-palette, lighter);
   $warning: mat-color($warn-palette);
   $error: mat-color($warn-palette, darker);
 
-  // Global style overrides
+  // Global style overrides.
 
   a {
     color: $primary;
@@ -41,7 +45,7 @@
     }
   }
 
-  // Global application styles
+  // Universal application styles.
 
   .kd-primary {
     color: $primary;
@@ -95,6 +99,18 @@
 
   .kd-primary-toolbar {
     background-color: lighten($background, 5%);
+  }
+
+  .kd-search {
+    background-color: darken($background, 5%);
+
+    input {
+      color: mat-color($foreground-palette, base);
+    }
+  }
+
+  .kd-slider-value {
+    color: mat-color($background-palette, selected-button);
   }
 
   .kd-nav-item-button {

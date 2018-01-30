@@ -14,5 +14,9 @@
 
 import {Component, Input} from '@angular/core';
 
-@Component({selector: 'kd-card', templateUrl: './template.html', styleUrls: ['./style.scss']})
+@Component({
+  selector: 'kd-card',
+  templateUrl: './template.html',
+  styleUrls: ['./style.scss'],
+})
 export class CardComponent { @Input() initialized = true; }

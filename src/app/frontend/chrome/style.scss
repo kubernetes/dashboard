@@ -68,7 +68,6 @@
 
 .kd-system-banner {
   box-shadow: $whiteframe-shadow-1dp;
-  color: black;
   display: inline;
   font-size: $body-font-size-base;
   height: 6 * $baseline-grid;
@@ -77,7 +76,9 @@
   overflow: hidden;
   padding: 0 (3 * $baseline-grid);
   white-space: nowrap;
-  z-index: 1;
+  // Move entire system banner above content to avoid elements overlap with
+  // shadow (there was problem with it on IE).
+  z-index: 2;
 }
 
 .kd-chrome-container {
