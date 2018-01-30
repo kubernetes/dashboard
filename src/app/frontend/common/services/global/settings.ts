@@ -14,57 +14,57 @@
 
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {Settings} from '@api/backendapi';
+
+import {Error, Settings} from '@api/backendapi';
 import {AuthorizerService} from './authorizer';
+
+type onLoadCb = (settings?: Settings) => void;
+type onFailCb = (err?: string|Error) => void;
 
 @Injectable()
 export class SettingsService {
   private readonly globalSettingsEndpoint_ = 'api/v1/settings/global';
-  private globalSettings_: Settings;
+  private globalSettings_: Settings = {
+    itemsPerPage: 10,
+    clusterName: '',
+    autoRefreshTimeInterval: 5,
+  };
   private isInitialized_ = false;
 
   constructor(private http_: HttpClient, private authorizer_: AuthorizerService) {}
 
   init() {
-    this.getGlobalSettings().subscribe(
-        (globalSettings) => {
-          this.globalSettings_ = globalSettings;
-          this.isInitialized_ = true;
-        },
-        () => {
-          this.isInitialized_ = false;
-        });
+    this.load();
   }
 
   isInitialized() {
     return this.isInitialized_;
   }
 
-  getGlobalSettings() {
-    return this.authorizer_.proxyGET<Settings>(this.globalSettingsEndpoint_);
+  load(onLoad?: onLoadCb, onFail?: onFailCb) {
+    this.authorizer_.proxyGET<Settings>(this.globalSettingsEndpoint_)
+        .toPromise()
+        .then(
+            (settings) => {
+              this.globalSettings_ = settings;
+              this.isInitialized_ = true;
+              if (onLoad) onLoad(settings);
+            },
+            (err) => {
+              this.isInitialized_ = false;
+              if (onFail) onFail(err);
+            });
   }
 
   getClusterName() {
-    let clusterName = '';
-    if (this.globalSettings_) {
-      clusterName = this.globalSettings_.clusterName;
-    }
-    return clusterName;
+    return this.globalSettings_.clusterName;
   }
 
   getItemsPerPage() {
-    let itemsPerPage = 10;
-    if (this.globalSettings_) {
-      itemsPerPage = this.globalSettings_.itemsPerPage;
-    }
-    return itemsPerPage;
+    return this.globalSettings_.itemsPerPage;
   }
 
   getAutoRefreshTimeInterval() {
-    let autoRefreshTimeInterval = 5;
-    if (this.globalSettings_) {
-      autoRefreshTimeInterval = this.globalSettings_.autoRefreshTimeInterval;
-    }
-    return autoRefreshTimeInterval;
+    return this.globalSettings_.autoRefreshTimeInterval;
   }
 }

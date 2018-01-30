@@ -13,16 +13,22 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
+import {UIRouterModule} from '@uirouter/angular';
 
 import {ComponentsModule} from '../common/components/module';
+import {NavServiceModule} from '../common/services/nav/module';
 import {SharedModule} from '../shared.module';
-import {LoginComponent} from './component';
+
+import {ErrorComponent} from './component';
+import {errorState} from './state';
 
 @NgModule({
-  declarations: [LoginComponent],
   imports: [
     SharedModule,
     ComponentsModule,
+    NavServiceModule,
+    UIRouterModule.forChild({states: [errorState]}),
   ],
+  declarations: [ErrorComponent],
 })
-export class LoginModule {}
+export class ErrorModule {}

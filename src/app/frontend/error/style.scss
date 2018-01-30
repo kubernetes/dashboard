@@ -12,17 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
+@import '../variables';
+@import '../mixins';
 
-import {ComponentsModule} from '../common/components/module';
-import {SharedModule} from '../shared.module';
-import {LoginComponent} from './component';
+.kd-about-logo-icon {
+  @include kd-icon-size(8 * $baseline-grid);
 
-@NgModule({
-  declarations: [LoginComponent],
-  imports: [
-    SharedModule,
-    ComponentsModule,
-  ],
-})
-export class LoginModule {}
+  margin: 0 (2 * $baseline-grid) 0 0;
+}
+
+.kd-error-view-icon {
+  margin-right: $baseline-grid;
+}

@@ -12,47 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {Settings} from '@api/backendapi';
-import {Subscription} from 'rxjs/Subscription';
+import {StateService} from '@uirouter/core';
 
 import {SettingsService} from '../common/services/global/settings';
+import {errorState, ErrorStateParams} from '../error/state';
 
 import {SaveAnywayDialog} from './saveanywaysdialog/dialog';
 
 @Component({selector: 'kd-settings', templateUrl: './template.html'})
-export class SettingsComponent implements OnInit, OnDestroy {
+export class SettingsComponent implements OnInit {
   // Keep it in sync with ConcurrentSettingsChangeError constant from the backend.
   private readonly concurrentChangeErr_ = 'settings changed since last reload';
-  global: Settings = {
-    clusterName: '',
-    itemsPerPage: 10,
-    autoRefreshTimeInterval: 5,
-  };
-  settingsSubscription: Subscription;
-  isInitialized = false;
-  constructor(private settings_: SettingsService, private dialog_: MatDialog) {}
+  global: Settings = {} as Settings;
+  constructor(
+      private settings_: SettingsService, private dialog_: MatDialog,
+      private state_: StateService) {}
 
   ngOnInit() {
-    this.reloadGlobal();
+    this.settings_.load(this.onSettingsLoad.bind(this), this.onSettingsLoadError.bind(this));
   }
 
-  ngOnDestroy() {
-    this.settingsSubscription.unsubscribe();
-  }
-
-  // TODO should not subscribe more than once
-  reloadGlobal() {
-    this.settingsSubscription = this.settings_.getGlobalSettings().subscribe(
-        (g) => {
-          this.global = g;
-          this.isInitialized = true;
-        },
-        err => {
-          // TODO Go to error state
-          console.log(err);
-        });
+  isInitialized(): boolean {
+    return this.settings_.isInitialized();
   }
 
   saveGlobal() {
@@ -82,8 +66,19 @@ export class SettingsComponent implements OnInit, OnDestroy {
         // shown again.
         this.saveGlobal();
       } else {
-        this.reloadGlobal();
+        this.settings_.load().then(
+            this.onSettingsLoad.bind(this), this.onSettingsLoadError.bind(this));
       }
     });
+  }
+
+  onSettingsLoad() {
+    this.global.itemsPerPage = this.settings_.getItemsPerPage();
+    this.global.clusterName = this.settings_.getClusterName();
+    this.global.autoRefreshTimeInterval = this.settings_.getAutoRefreshTimeInterval();
+  }
+
+  onSettingsLoadError(err: string) {
+    this.state_.go(errorState.name, new ErrorStateParams(err));
   }
 }

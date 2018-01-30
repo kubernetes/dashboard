@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
+import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
 
 import {ComponentsModule} from '../../common/components/module';
@@ -28,6 +28,5 @@ import {workloadsState} from './state';
     UIRouterModule.forChild({states: [workloadsState]}),
   ],
   declarations: [WorkloadsComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class WorkloadsModule {}

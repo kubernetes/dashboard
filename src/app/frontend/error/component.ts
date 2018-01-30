@@ -12,17 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
+import {Component} from '@angular/core';
+import {StateService} from '@uirouter/core';
 
-import {ComponentsModule} from '../common/components/module';
-import {SharedModule} from '../shared.module';
-import {LoginComponent} from './component';
+import {NavService} from '../common/services/nav/service';
 
-@NgModule({
-  declarations: [LoginComponent],
-  imports: [
-    SharedModule,
-    ComponentsModule,
-  ],
-})
-export class LoginModule {}
+@Component({selector: 'kd-error', templateUrl: './template.html', styleUrls: ['./style.scss']})
+export class ErrorComponent {
+  constructor(private nav_: NavService, private state_: StateService) {
+    this.nav_.setVisibility(false);
+  }
+}

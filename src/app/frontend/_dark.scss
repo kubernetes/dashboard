@@ -74,12 +74,12 @@ $kd-dark-palette-warn: (
     500: $black-87-opacity,
     600: $black-87-opacity,
     700: $black-87-opacity,
-    800: white,
-    900: white,
+    800: #fff,
+    900: #fff,
     A100: $black-87-opacity,
     A200: $black-87-opacity,
     A400: $black-87-opacity,
-    A700: black,
+    A700: #000,
   )
 );
 
@@ -98,6 +98,6 @@ $kd-dark-theme: mat-dark-theme($kd-dark-theme-primary, $kd-dark-theme-accent, $k
   @include kd-theme($kd-dark-theme);
 
   .kd-toolbar-logo-text {
-    filter: brightness(10);
+    filter: brightness(100);
   }
 }

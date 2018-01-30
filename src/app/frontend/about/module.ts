@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
+import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
 
 import {ComponentsModule} from '../common/components/module';
@@ -29,6 +29,5 @@ import {aboutState} from './state';
     UIRouterModule.forChild({states: [aboutState]}),
   ],
   declarations: [AboutComponent, ActionbarComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AboutModule {}

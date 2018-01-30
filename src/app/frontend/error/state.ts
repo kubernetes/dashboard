@@ -12,17 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
+import {Ng2StateDeclaration} from '@uirouter/angular';
+import {StateParams} from '@uirouter/core';
 
-import {ComponentsModule} from '../common/components/module';
-import {SharedModule} from '../shared.module';
-import {LoginComponent} from './component';
+import {ErrorComponent} from './component';
 
-@NgModule({
-  declarations: [LoginComponent],
-  imports: [
-    SharedModule,
-    ComponentsModule,
-  ],
-})
-export class LoginModule {}
+export class ErrorStateParams extends StateParams {
+  constructor(private error_: string) {
+    super({error: error_});
+  }
+}
+
+export const errorState: Ng2StateDeclaration = {
+  parent: 'chrome',
+  name: 'error',
+  url: '/error',
+  data: {
+    requiresAuth: false,
+    kdBreadcrumbs: {
+      label: 'Error',
+    }
+  },
+  views: {
+    '$default': {
+      component: ErrorComponent,
+    },
+  },
+  params: ErrorStateParams,
+};

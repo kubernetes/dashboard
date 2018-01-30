@@ -20,6 +20,12 @@ import {TitleService} from './common/services/global/title';
 
 export function configureRouter(router: UIRouter) {
   const transitionService = router.transitionService;
+  const stateService = router.stateService;
+
+  // Register default error handler for state transition errors.
+  stateService.defaultErrorHandler((err) => {
+    stateService.go('error', {error: err});
+  });
 
   // Register transition hook to adjust window title.
   transitionService.onBefore({}, (transition) => {
