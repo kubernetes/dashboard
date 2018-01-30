@@ -27,7 +27,7 @@
     margin: $baseline-grid $baseline-grid (2 * $baseline-grid) 0;
   }
 
-  // Next rule is to only show the scrollbar on hover, but always enable scrolling.
+  // Only show the scrollbar on hover, but always enable scrolling.
   &:not(:hover) {
     &::-webkit-scrollbar-thumb {
       background-color: transparent;

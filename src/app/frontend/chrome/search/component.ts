@@ -12,32 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../variables';
+import {Component} from '@angular/core';
 
-.kd-search {
-  background-color: $foreground-4;
-  border-radius: $baseline-grid / 4;
-  display: flex;
-  flex-direction: row;
-  padding-left: $baseline-grid;
+@Component({selector: 'kd-search', templateUrl: './template.html', styleUrls: ['./style.scss']})
+export class SearchComponent {
+  query = '';
 
-  input {
-    background-color: transparent;
-    border: 0;
-    color: $foreground-1;
-    font-size: $subhead-font-size-base;
-    outline: none;
-    padding: $baseline-grid * 1.25;
-    width: 100%;
+  constructor() {}
 
-    ::-webkit-input-placeholder {
-      color: $foreground-2;
-    }
+  clear() {
+    this.query = '';
   }
 
-  .kd-search-icon {
-    color: $foreground-2;
-    margin-left: $baseline-grid / 2;
-    padding-right: $baseline-grid * 4;
+  submit() {
+    // TODO this.state_.go(stateName, {q: this.query});
   }
+
+  //  * TODO Register state change listener to empty search bar with every state change.
+  // $onInit() {
+  //   this.transitions_.onStart({}, () => {
+  //     this.clear();
+  //   });
+  // }
 }

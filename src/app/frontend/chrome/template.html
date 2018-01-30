@@ -21,8 +21,7 @@ limitations under the License.
     <div class="kd-toolbar-tools"
          fxLayout="row"
          fxFlex="auto">
-      <div class="kd-logo-bar"
-           fxFlex>
+      <div class="kd-logo-bar">
         <a uiSref="{{getOverviewStateName()}}"
            class="kd-toolbar-logo-link">
           <mat-icon [svgIcon]="assets.getAppLogo()"
@@ -33,7 +32,9 @@ limitations under the License.
           </mat-icon>
         </a>
       </div>
-      <!--<kd-search class="kd-search-bar" fxFlex="2"></kd-search>-->
+      <kd-search class="kd-search-bar"
+                 fxFlex>
+      </kd-search>
       <div>
         <kd-theme-switcher></kd-theme-switcher>
         <button mat-button

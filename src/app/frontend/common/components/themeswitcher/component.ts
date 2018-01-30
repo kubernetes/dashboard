@@ -15,12 +15,14 @@
 import {Component} from '@angular/core';
 import {ThemeService} from '../../services/global/theme';
 
-@Component({selector: 'kd-theme-switcher', templateUrl: './template.html'})
+@Component({
+  selector: 'kd-theme-switcher',
+  templateUrl: './template.html',
+})
 export class ThemeSwitcherComponent {
   constructor(public themeService: ThemeService) {}
 
   switchTheme() {
-    console.log('switching theme');
     this.themeService.switchTheme();
   }
 }

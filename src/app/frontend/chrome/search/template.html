@@ -14,7 +14,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<md-button ng-click="$ctrl.toggle()"
-           class="md-icon-button">
-  <md-icon md-font-library="material-icons">menu</md-icon>
-</md-button>
+<div fxFlex></div>
+<div class="kd-search"
+     fxFlex="66">
+  <form (submit)="submit()"
+        fxFlex
+        fxLayout="row"
+        fxLayoutAlign=" center">
+    <mat-icon type="submit">search</mat-icon>
+    <input type="search"
+           placeholder="Search"
+           [(ngModel)]="query"
+           required
+           fxFlex>
+    <mat-icon class="kd-search-icon"
+              (ngClick)="clear()"
+              *ngIf="query">
+      close
+    </mat-icon>
+  </form>
+</div>
+<div fxFlex></div>
