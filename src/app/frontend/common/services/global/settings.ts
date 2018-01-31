@@ -14,22 +14,26 @@
 
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
+import {GlobalSettings, LocalSettings} from '@api/backendapi';
 
-import {Settings} from '@api/backendapi';
 import {onSettingsFailCallback, onSettingsLoadCallback} from '@api/frontendapi';
 import {AuthorizerService} from './authorizer';
+import {ThemeService} from './theme';
 
 @Injectable()
 export class SettingsService {
   private readonly globalSettingsEndpoint_ = 'api/v1/settings/global';
-  private globalSettings_: Settings = {
+  private globalSettings_: GlobalSettings = {
     itemsPerPage: 10,
     clusterName: '',
     autoRefreshTimeInterval: 5,
   };
+  private localSetttings_: LocalSettings;
   private isInitialized_ = false;
 
-  constructor(private http_: HttpClient, private authorizer_: AuthorizerService) {}
+  constructor(
+      private http_: HttpClient, private authorizer_: AuthorizerService,
+      private theme_: ThemeService) {}
 
   init() {
     this.load();
@@ -40,7 +44,7 @@ export class SettingsService {
   }
 
   load(onLoad?: onSettingsLoadCallback, onFail?: onSettingsFailCallback) {
-    this.authorizer_.proxyGET<Settings>(this.globalSettingsEndpoint_)
+    this.authorizer_.proxyGET<GlobalSettings>(this.globalSettingsEndpoint_)
         .toPromise()
         .then(
             (settings) => {
@@ -64,5 +68,27 @@ export class SettingsService {
 
   getAutoRefreshTimeInterval() {
     return this.globalSettings_.autoRefreshTimeInterval;
+  }
+
+  // TODO
+  getLocalSettings(): LocalSettings {
+    return {isThemeDark: false};
+  }
+
+  /*
+   * Save local settings into the cookies and call apply function.
+   */
+  saveLocalSettings(localSettings: LocalSettings) {
+    // TODO Save into cookies.
+
+    this.localSetttings_ = localSettings;
+    this.applyLocalSettings();
+  }
+
+  /*
+   * Apply local settings in the whole app.
+   */
+  applyLocalSettings() {
+    this.theme_.switchTheme(this.localSetttings_.isThemeDark);
   }
 }

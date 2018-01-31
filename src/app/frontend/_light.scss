@@ -15,7 +15,7 @@
 @import '~@angular/material/theming';
 @import './theming';
 
-$kd-palette-primary: (
+$kd-light-palette-primary: (
   // Used for primary toolbar button
   50: #326de6,
   100: #000,
@@ -50,7 +50,7 @@ $kd-palette-primary: (
 );
 
 // Palette with colors from success to error.
-$kd-palette-warn: (
+$kd-light-palette-warn: (
   50: #00c752,
   100: #008000,
   200: #ffcc80,
@@ -84,16 +84,16 @@ $kd-palette-warn: (
 );
 
 // sass-lint:disable function-name-format
-$kd-palette-accent: map_merge($mat-blue, (500: #fff));
+$kd-light-palette-accent: map_merge($mat-blue, (500: #fff));
 // sass-lint:enable function-name-format
 
-$kd-theme-primary: mat-palette($kd-palette-primary);
-$kd-theme-accent: mat-palette($kd-palette-accent);
-$kd-theme-warn: mat-palette($kd-palette-warn);
+$kd-light-theme-primary: mat-palette($kd-light-palette-primary);
+$kd-light-theme-accent: mat-palette($kd-light-palette-accent);
+$kd-light-theme-warn: mat-palette($kd-light-palette-warn);
 
-$kd-default-theme: mat-light-theme($kd-theme-primary, $kd-theme-accent, $kd-theme-warn);
+$kd-light-theme: mat-light-theme($kd-light-theme-primary, $kd-light-theme-accent, $kd-light-theme-warn);
 
 .kd-light-theme {
-  @include angular-material-theme($kd-default-theme);
-  @include kd-theme($kd-default-theme);
+  @include angular-material-theme($kd-light-theme);
+  @include kd-theme($kd-light-theme);
 }

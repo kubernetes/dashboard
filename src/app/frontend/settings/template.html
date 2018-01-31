@@ -18,8 +18,12 @@ limitations under the License.
   <div title
        i18n>Global settings</div>
   <div content>
+    <p i18n>
+      Global settings are stored in <code>kubernetes-dashboard-settings</code> config map inside
+      <code>kube-system</code> namespace, so all of them are applied for every instance of the app.
+    </p>
+    <br>
     <form (ngSubmit)="saveGlobal()">
-
       <kd-settings-entry key="Cluster name"
                          desc="Cluster name appears in the browser window title if it is set">
         <mat-form-field fxFlex>
@@ -30,7 +34,6 @@ limitations under the License.
                  matInput>
         </mat-form-field>
       </kd-settings-entry>
-
       <kd-settings-entry key="Items per page"
                          desc="Max number of items that can be displayed on each list page">
         <div fxFlex>
@@ -48,7 +51,6 @@ limitations under the License.
           </div>
         </div>
       </kd-settings-entry>
-
       <kd-settings-entry key="Auto-refresh time interval"
                          desc="Number of seconds between every auto-refresh of logs">
         <div fxFlex>
@@ -66,9 +68,37 @@ limitations under the License.
           </span>
         </div>
       </kd-settings-entry>
+      <br><br>
+      <button type="submit"
+              color="primary"
+              mat-raised-button
+              i18n>
+        Save
+      </button>
+    </form>
+  </div>
+</kd-card>
 
-      <br>
-
+<kd-card>
+  <div title
+       i18n>Local settings</div>
+  <div content>
+    <p i18n>
+      Local settings are stored in the browser cookies, so they are not synchronized between multiple devices.
+    </p>
+    <br>
+    <form #form="ngForm"
+          (ngSubmit)="saveLocal(form.value)">
+      <kd-settings-entry key="Dark theme"
+                         desc="Use dark theme in the whole app">
+        <div fxFlex>
+          <mat-slide-toggle color="primary"
+                            name="isThemeDark"
+                            ngModel>
+          </mat-slide-toggle>
+        </div>
+      </kd-settings-entry>
+      <br><br>
       <button type="submit"
               color="primary"
               mat-raised-button

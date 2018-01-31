@@ -19,11 +19,10 @@ import {SharedModule} from '../../shared.module';
 import {ActionbarComponent} from './actionbar/component';
 import {BreadcrumbsComponent} from './breadcrumbs/component';
 import {CardComponent} from './card/component';
-import {ThemeSwitcherComponent} from './themeswitcher/component';
 
 @NgModule({
   imports: [SharedModule],
-  declarations: [CardComponent, ActionbarComponent, BreadcrumbsComponent, ThemeSwitcherComponent],
-  exports: [CardComponent, ActionbarComponent, BreadcrumbsComponent, ThemeSwitcherComponent],
+  declarations: [CardComponent, ActionbarComponent, BreadcrumbsComponent],
+  exports: [CardComponent, ActionbarComponent, BreadcrumbsComponent],
 })
 export class ComponentsModule {}

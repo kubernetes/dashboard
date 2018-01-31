@@ -14,12 +14,14 @@
 
 import {Component, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material';
-import {K8SError, Settings} from '@api/backendapi';
+import {GlobalSettings, LocalSettings} from '@api/backendapi';
+import {K8SError} from '@api/backendapi';
 import {KdError} from '@api/frontendapi';
 import {StateService} from '@uirouter/core';
 
 import {ErrorStateParams} from '../common/params/params';
 import {SettingsService} from '../common/services/global/settings';
+import {ThemeService} from '../common/services/global/theme';
 import {errorState} from '../error/state';
 
 import {SaveAnywayDialog} from './saveanywaysdialog/dialog';
@@ -28,13 +30,17 @@ import {SaveAnywayDialog} from './saveanywaysdialog/dialog';
 export class SettingsComponent implements OnInit {
   // Keep it in sync with ConcurrentSettingsChangeError constant from the backend.
   private readonly concurrentChangeErr_ = 'settings changed since last reload';
-  global: Settings = {} as Settings;
+  global: GlobalSettings = {} as GlobalSettings;
+  local: LocalSettings = {
+    isThemeDark: false,
+  };
   constructor(
-      private settings_: SettingsService, private dialog_: MatDialog,
-      private state_: StateService) {}
+      private settings_: SettingsService, private dialog_: MatDialog, private state_: StateService,
+      private theme_: ThemeService) {}
 
   ngOnInit() {
     this.settings_.load(this.onSettingsLoad.bind(this), this.onSettingsLoadError.bind(this));
+    this.loadLocal();
   }
 
   isInitialized(): boolean {
@@ -71,6 +77,16 @@ export class SettingsComponent implements OnInit {
         this.settings_.load(this.onSettingsLoad.bind(this), this.onSettingsLoadError.bind(this));
       }
     });
+  }
+
+  loadLocal() {
+    this.local = this.settings_.getLocalSettings();
+  }
+
+  saveLocal(form: LocalSettings) {
+    this.local = {isThemeDark: form.isThemeDark};
+
+    this.settings_.saveLocalSettings(this.local);
   }
 
   onSettingsLoad() {
