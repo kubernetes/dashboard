@@ -18,7 +18,7 @@ import {StateService, TransitionService} from '@uirouter/angular';
 import {TargetState, Transition} from '@uirouter/core';
 import {CookieService} from 'ngx-cookie-service';
 import {Observable} from 'rxjs/Observable';
-import {AuthResponse, CsrfToken, Error, LoginSpec, LoginStatus} from 'typings/backendapi';
+import {AuthResponse, CsrfToken, K8SError, LoginSpec, LoginStatus} from 'typings/backendapi';
 
 import {errorState} from '../../../error/state';
 import {CONFIG} from '../../../index.config';
@@ -113,7 +113,7 @@ export class AuthService {
    * Sends a token refresh request to the backend. In case user is not logged in with token nothing
    * will happen.
    */
-  refreshToken(): Promise<string|Error[]|boolean> {
+  refreshToken(): Promise<string|K8SError[]|boolean> {
     const token = this.getTokenCookie_();
     if (token.length === 0) return Promise.resolve(true);
 
@@ -125,7 +125,7 @@ export class AuthService {
                   {headers: new HttpHeaders().set(this.config_.csrfHeaderName, csrfToken.token)});
             });
 
-    return tokenRefreshObs.toPromise().then<string|Error[]>(
+    return tokenRefreshObs.toPromise().then<string|K8SError[]>(
         authResponse => {
           if (authResponse.jweToken.length !== 0 && authResponse.errors.length === 0) {
             this.setTokenCookie_(authResponse.jweToken);

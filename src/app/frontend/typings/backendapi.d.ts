@@ -19,7 +19,7 @@ export interface ErrStatus {
   reason: string;
 }
 
-export interface Error { ErrStatus: ErrStatus; }
+export interface K8SError { errStatus: ErrStatus; }
 
 export interface CsrfToken { token: string; }
 
@@ -38,7 +38,7 @@ export interface LoginStatus {
 
 export interface AuthResponse {
   jweToken: string;
-  errors: Error[];
+  errors: K8SError[];
 }
 
 export interface GlobalSettings {

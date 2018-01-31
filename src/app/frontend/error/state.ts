@@ -13,15 +13,10 @@
 // limitations under the License.
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
-import {StateParams} from '@uirouter/core';
+
+import {ErrorStateParams} from '../common/params/params';
 
 import {ErrorComponent} from './component';
-
-export class ErrorStateParams extends StateParams {
-  constructor(private error_: string) {
-    super({error: error_});
-  }
-}
 
 export const errorState: Ng2StateDeclaration = {
   parent: 'chrome',
@@ -38,5 +33,8 @@ export const errorState: Ng2StateDeclaration = {
       component: ErrorComponent,
     },
   },
-  params: ErrorStateParams,
+  params: {
+    namespace: null,
+    error: null,
+  } as ErrorStateParams,
 };

@@ -14,24 +14,22 @@
 
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {CanIResponse, Error} from '@api/backendapi';
-import {StateService} from '@uirouter/angular';
-import {StateParams} from '@uirouter/core';
+import {CanIResponse} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
-
-import {overviewState} from '../../../overview/state';
+import {KdError, KNOWN_ERRORS} from '../../errors/errors';
 
 @Injectable()
 export class AuthorizerService {
   authorizationSubUrl_ = '/cani';
 
-  constructor(private http_: HttpClient, private state_: StateService) {}
+  constructor(private http_: HttpClient) {}
 
   proxyGET<T>(url: string): Observable<T> {
     return this.http_.get<CanIResponse>(`${url}${this.authorizationSubUrl_}`)
         .switchMap<CanIResponse, T>(response => {
           if (!response.allowed) {
-            return Observable.throw('not allowed');
+            // TODO localize
+            return Observable.throw(KNOWN_ERRORS.Unauthorized);
           }
 
           return this.http_.get<T>(url);

@@ -12,14 +12,45 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {StateService} from '@uirouter/core';
 
+import {K8SError, KdError} from '../common/errors/errors';
 import {NavService} from '../common/services/nav/service';
 
 @Component({selector: 'kd-error', templateUrl: './template.html', styleUrls: ['./style.scss']})
-export class ErrorComponent {
+export class ErrorComponent implements OnInit {
+  private error_: KdError|K8SError;
   constructor(private nav_: NavService, private state_: StateService) {
     this.nav_.setVisibility(false);
+  }
+
+  ngOnInit() {
+    this.error_ = this.state_.params.error;
+  }
+
+  getErrorStatus(): string {
+    if (this.error_ instanceof K8SError) {
+      return (this.error_ as K8SError).errStatus.status;
+    }
+
+    if (this.error_ instanceof KdError) {
+      const error = (this.error_ as KdError);
+      return `${error.status} (${error.code})`;
+    }
+
+    return 'Unknown Error';
+  }
+
+  getErrorData(): string {
+    if (this.error_ instanceof K8SError) {
+      return (this.error_ as K8SError).errStatus.message;
+    }
+
+    if (this.error_ instanceof KdError) {
+      return (this.error_ as KdError).message;
+    }
+
+    return 'No error data available.';
   }
 }

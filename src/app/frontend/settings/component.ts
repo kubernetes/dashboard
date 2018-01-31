@@ -15,12 +15,14 @@
 import {Component, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {GlobalSettings, LocalSettings} from '@api/backendapi';
+import {K8SError} from '@api/backendapi';
+import {KdError} from '@api/frontendapi';
 import {StateService} from '@uirouter/core';
-import {Subscription} from 'rxjs/Subscription';
 
+import {ErrorStateParams} from '../common/params/params';
 import {SettingsService} from '../common/services/global/settings';
 import {ThemeService} from '../common/services/global/theme';
-import {errorState, ErrorStateParams} from '../error/state';
+import {errorState} from '../error/state';
 
 import {SaveAnywayDialog} from './saveanywaysdialog/dialog';
 
@@ -93,7 +95,7 @@ export class SettingsComponent implements OnInit {
     this.global.autoRefreshTimeInterval = this.settings_.getAutoRefreshTimeInterval();
   }
 
-  onSettingsLoadError(err: string) {
-    this.state_.go(errorState.name, new ErrorStateParams(err));
+  onSettingsLoadError(err: KdError|K8SError) {
+    this.state_.go(errorState.name, new ErrorStateParams(err, ''));
   }
 }

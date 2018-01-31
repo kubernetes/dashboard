@@ -12,29 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Ng2StateDeclaration} from '@uirouter/angular';
-
-import {ChromeComponent} from './component';
-
-/**
- * Parameter name of the namespace selection param. Mostly for internal use.
- */
-const namespaceParam = 'namespace';
+import {ErrStatus, K8SError as K8SApiError} from '@api/backendapi';
+import {KdError as KdApiError, KnownErrors} from '@api/frontendapi';
 
 /**
- * One of the root application views. Every view should be a child of this view except for login
- * view.
+ * Error returned as a part of backend api calls. All server errors should be in this format.
  */
-export const chromeState: Ng2StateDeclaration = {
-  name: 'chrome',
-  url: `?${namespaceParam}`,
-  abstract: true,
-  data: {
-    requiresAuth: true,
-  },
-  views: {
-    '$default': {
-      component: ChromeComponent,
-    },
-  },
+export class K8SError implements K8SApiError { errStatus: ErrStatus; }
+
+/**
+ * Frontend specific errors or errors transformed based on server response.
+ */
+export class KdError implements KdApiError {
+  constructor(public status: string, public code: number, public message: string) {}
+}
+
+export const KNOWN_ERRORS: KnownErrors = {
+  unauthorized: new KdError('Unauthorized', 401, 'Not allowed.'),
 };

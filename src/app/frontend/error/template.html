@@ -18,12 +18,12 @@ limitations under the License.
   <kd-card fxFlex="none">
     <div title
          fxLayout>
-      <mat-icon class="kd-error-view-icon">error_outline</mat-icon>
-      <div>Internal Server Error</div>
+      <mat-icon class="kd-error-icon">error_outline</mat-icon>
+      <div>{{getErrorStatus()}}</div>
     </div>
 
     <div content>
-      Redirecting to previous state in 3 seconds...
+      {{getErrorData()}}
     </div>
   </kd-card>
 </div>
