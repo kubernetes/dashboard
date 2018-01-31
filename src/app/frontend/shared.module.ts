@@ -19,6 +19,7 @@ import {FormsModule} from '@angular/forms';
 import {MAT_TOOLTIP_DEFAULT_OPTIONS, MatButtonModule, MatCardModule, MatDialogModule, MatDividerModule, MatFormFieldModule, MatGridListModule, MatIconModule, MatInputModule, MatProgressSpinnerModule, MatRadioModule, MatSidenavModule, MatSliderModule, MatSlideToggleModule, MatToolbarModule, MatTooltipModule} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {UIRouterModule} from '@uirouter/angular';
+import {CookieService} from 'ngx-cookie-service';
 
 import {PipesModule} from './common/pipes/module';
 import {KD_TOOLTIP_DEFAULT_OPTIONS} from './index.config';
@@ -57,9 +58,12 @@ const SHARED_DEPENDENCIES = [
 @NgModule({
   imports: SHARED_DEPENDENCIES,
   exports: SHARED_DEPENDENCIES,
-  providers: [{
-    provide: MAT_TOOLTIP_DEFAULT_OPTIONS,
-    useValue: KD_TOOLTIP_DEFAULT_OPTIONS,
-  }],
+  providers: [
+    CookieService,
+    {
+      provide: MAT_TOOLTIP_DEFAULT_OPTIONS,
+      useValue: KD_TOOLTIP_DEFAULT_OPTIONS,
+    },
+  ],
 })
 export class SharedModule {}

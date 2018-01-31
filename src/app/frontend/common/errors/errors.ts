@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ErrStatus, K8SError as K8SApiError} from '@api/backendapi';
+import {ErrStatus, K8sError as K8SApiError} from '@api/backendapi';
 import {KdError as KdApiError, KnownErrors} from '@api/frontendapi';
 
 /**

@@ -14,14 +14,12 @@
 
 import {Component, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material';
-import {GlobalSettings, LocalSettings} from '@api/backendapi';
-import {K8SError} from '@api/backendapi';
+import {GlobalSettings, K8sError, LocalSettings} from '@api/backendapi';
 import {KdError} from '@api/frontendapi';
 import {StateService} from '@uirouter/core';
 
 import {ErrorStateParams} from '../common/params/params';
 import {SettingsService} from '../common/services/global/settings';
-import {ThemeService} from '../common/services/global/theme';
 import {errorState} from '../error/state';
 
 import {SaveAnywayDialog} from './saveanywaysdialog/dialog';
@@ -31,24 +29,38 @@ export class SettingsComponent implements OnInit {
   // Keep it in sync with ConcurrentSettingsChangeError constant from the backend.
   private readonly concurrentChangeErr_ = 'settings changed since last reload';
   global: GlobalSettings = {} as GlobalSettings;
-  local: LocalSettings = {
-    isThemeDark: false,
-  };
+  local: LocalSettings = {} as LocalSettings;
+
   constructor(
-      private settings_: SettingsService, private dialog_: MatDialog, private state_: StateService,
-      private theme_: ThemeService) {}
+      private settings_: SettingsService, private dialog_: MatDialog,
+      private state_: StateService) {}
 
   ngOnInit() {
-    this.settings_.load(this.onSettingsLoad.bind(this), this.onSettingsLoadError.bind(this));
-    this.loadLocal();
+    this.loadGlobalSettings();
+    this.loadLocalSettings();
   }
 
   isInitialized(): boolean {
     return this.settings_.isInitialized();
   }
 
-  saveGlobal() {
-    // TODO save button and reload button + padding
+  loadGlobalSettings() {
+    this.settings_.loadGlobalSettings(
+        this.onSettingsLoad.bind(this), this.onSettingsLoadError.bind(this));
+  }
+
+  onSettingsLoad() {
+    this.global.itemsPerPage = this.settings_.getItemsPerPage();
+    this.global.clusterName = this.settings_.getClusterName();
+    this.global.autoRefreshTimeInterval = this.settings_.getAutoRefreshTimeInterval();
+  }
+
+  onSettingsLoadError(err: KdError|K8sError) {
+    this.state_.go(errorState.name, new ErrorStateParams(err, ''));
+  }
+
+  saveGlobalSettings() {
+    // TODO save button and reload button
     // TODO ng-disabled="$ctrl.globalForm.$pristine"
     // TODO kdAuthorizerService
     // let resource = this.resource_(
@@ -72,30 +84,19 @@ export class SettingsComponent implements OnInit {
         // Backend was refreshed with the PUT request, so the second try will be successful unless
         // yet another concurrent change will happen. In that case "save anyways" dialog will be
         // shown again.
-        this.saveGlobal();
+        this.saveGlobalSettings();
       } else {
-        this.settings_.load(this.onSettingsLoad.bind(this), this.onSettingsLoadError.bind(this));
+        this.loadGlobalSettings();
       }
     });
   }
 
-  loadLocal() {
+  loadLocalSettings() {
     this.local = this.settings_.getLocalSettings();
   }
 
-  saveLocal(form: LocalSettings) {
-    this.local = {isThemeDark: form.isThemeDark};
-
-    this.settings_.saveLocalSettings(this.local);
-  }
-
-  onSettingsLoad() {
-    this.global.itemsPerPage = this.settings_.getItemsPerPage();
-    this.global.clusterName = this.settings_.getClusterName();
-    this.global.autoRefreshTimeInterval = this.settings_.getAutoRefreshTimeInterval();
-  }
-
-  onSettingsLoadError(err: KdError|K8SError) {
-    this.state_.go(errorState.name, new ErrorStateParams(err, ''));
+  saveLocalSettings(form: LocalSettings) {
+    const localSettings = {isThemeDark: form.isThemeDark};
+    this.settings_.saveLocalSettings(localSettings);
   }
 }

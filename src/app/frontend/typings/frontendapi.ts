@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {GlobalSettings, K8SError} from '@api/backendapi';
+import {GlobalSettings, K8sError} from '@api/backendapi';
 
 export interface BreadcrumbConfig {
   label?: string;
@@ -22,7 +22,7 @@ export interface BreadcrumbConfig {
 export type ThemeSwitchCallback = (isLightThemeEnabled: boolean) => void;
 
 export type onSettingsLoadCallback = (settings?: GlobalSettings) => void;
-export type onSettingsFailCallback = (err?: KdError|K8SError) => void;
+export type onSettingsFailCallback = (err?: KdError|K8sError) => void;
 
 export interface KnownErrors { unauthorized: KdError; }
 
