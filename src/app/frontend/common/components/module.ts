@@ -19,7 +19,6 @@ import {SharedModule} from '../../shared.module';
 import {ActionbarComponent} from './actionbar/component';
 import {BreadcrumbsComponent} from './breadcrumbs/component';
 import {CardComponent} from './card/component';
-import {ThemeSwitcherComponent} from './themeswitcher/component';
 
 @NgModule({
   imports: [SharedModule],
