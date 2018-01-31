@@ -15,7 +15,6 @@
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
 import {ErrorStateParams} from '../common/params/params';
-
 import {ErrorComponent} from './component';
 
 export const errorState: Ng2StateDeclaration = {

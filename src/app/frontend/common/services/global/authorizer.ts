@@ -29,7 +29,7 @@ export class AuthorizerService {
         .switchMap<CanIResponse, T>(response => {
           if (!response.allowed) {
             // TODO localize
-            return Observable.throw(KNOWN_ERRORS.Unauthorized);
+            return Observable.throw(KNOWN_ERRORS.unauthorized);
           }
 
           return this.http_.get<T>(url);
