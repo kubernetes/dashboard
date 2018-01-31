@@ -12,55 +12,37 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {GlobalSettings, LocalSettings} from '@api/backendapi';
+import {StateService} from '@uirouter/core';
 import {Subscription} from 'rxjs/Subscription';
 
 import {SettingsService} from '../common/services/global/settings';
 import {ThemeService} from '../common/services/global/theme';
+import {errorState, ErrorStateParams} from '../error/state';
 
 import {SaveAnywayDialog} from './saveanywaysdialog/dialog';
 
 @Component({selector: 'kd-settings', templateUrl: './template.html'})
-export class SettingsComponent implements OnInit, OnDestroy {
+export class SettingsComponent implements OnInit {
   // Keep it in sync with ConcurrentSettingsChangeError constant from the backend.
   private readonly concurrentChangeErr_ = 'settings changed since last reload';
-  global: GlobalSettings = {
-    clusterName: '',
-    itemsPerPage: 10,
-    autoRefreshTimeInterval: 5,
-  };
-  settingsSubscription: Subscription;
-  isInitialized = false;
+  global: GlobalSettings = {} as GlobalSettings;
   local: LocalSettings = {
     isThemeDark: false,
   };
-
   constructor(
-      private settings_: SettingsService, private theme_: ThemeService,
-      private dialog_: MatDialog) {}
+      private settings_: SettingsService, private dialog_: MatDialog, private state_: StateService,
+      private theme_: ThemeService) {}
 
   ngOnInit() {
-    this.reloadGlobal();
+    this.settings_.load(this.onSettingsLoad.bind(this), this.onSettingsLoadError.bind(this));
     this.loadLocal();
   }
 
-  ngOnDestroy() {
-    this.settingsSubscription.unsubscribe();
-  }
-
-  // TODO should not subscribe more than once
-  reloadGlobal() {
-    this.settingsSubscription = this.settings_.getGlobalSettings().subscribe(
-        (g) => {
-          this.global = g;
-          this.isInitialized = true;
-        },
-        err => {
-          // TODO Go to error state
-          console.log(err);
-        });
+  isInitialized(): boolean {
+    return this.settings_.isInitialized();
   }
 
   saveGlobal() {
@@ -90,7 +72,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
         // shown again.
         this.saveGlobal();
       } else {
-        this.reloadGlobal();
+        this.settings_.load(this.onSettingsLoad.bind(this), this.onSettingsLoadError.bind(this));
       }
     });
   }
@@ -103,5 +85,15 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this.local = {isThemeDark: form.isThemeDark};
 
     this.settings_.saveLocalSettings(this.local);
+  }
+
+  onSettingsLoad() {
+    this.global.itemsPerPage = this.settings_.getItemsPerPage();
+    this.global.clusterName = this.settings_.getClusterName();
+    this.global.autoRefreshTimeInterval = this.settings_.getAutoRefreshTimeInterval();
+  }
+
+  onSettingsLoadError(err: string) {
+    this.state_.go(errorState.name, new ErrorStateParams(err));
   }
 }

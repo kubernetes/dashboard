@@ -19,23 +19,22 @@ import {SettingsService} from './settings';
 
 @Injectable()
 export class TitleService {
-  constructor(private titleService: Title, private settingsService: SettingsService) {}
+  constructor(private titleService_: Title, private settingsService_: SettingsService) {}
 
   setTitle(transition: Transition) {
     const targetState = transition.to().name;  // TODO Use breadcrumb value instead.
 
-    this.settingsService.getGlobalSettings().subscribe(
-        (globalSettings) => {
-          const clusterName = globalSettings.clusterName;
+    this.settingsService_.load(
+        () => {
+          const clusterName = this.settingsService_.getClusterName();
           if (clusterName) {
-            this.titleService.setTitle(`${clusterName} - ${targetState} - Kubernetes Dashboard`);
+            this.titleService_.setTitle(`${clusterName} - ${targetState} - Kubernetes Dashboard`);
           } else {
-            this.titleService.setTitle(`${targetState} - Kubernetes Dashboard`);
+            this.titleService_.setTitle(`${targetState} - Kubernetes Dashboard`);
           }
         },
-        (err) => {
-          this.titleService.setTitle(`${targetState} - Kubernetes Dashboard`);
-          throw err;
+        () => {
+          this.titleService_.setTitle(`${targetState} - Kubernetes Dashboard`);
         });
   }
 }

@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// import {stateName as errorState} from '../../error/state';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {StateService, TransitionService} from '@uirouter/angular';
@@ -21,6 +20,7 @@ import {CookieService} from 'ngx-cookie-service';
 import {Observable} from 'rxjs/Observable';
 import {AuthResponse, CsrfToken, Error, LoginSpec, LoginStatus} from 'typings/backendapi';
 
+import {errorState} from '../../../error/state';
 import {CONFIG} from '../../../index.config';
 import {overviewState} from '../../../overview/state';
 
@@ -98,7 +98,7 @@ export class AuthService {
       }
 
       // In following cases user should not be redirected and reach his target state:
-      if (transition.to().name === 'login' || transition.to().name === 'error' ||
+      if (transition.to().name === 'login' || transition.to().name === errorState.name ||
           !this.isLoginPageEnabled() || !this.isAuthenticationEnabled(loginStatus) ||
           this.isAuthenticated(loginStatus)) {
         return true;

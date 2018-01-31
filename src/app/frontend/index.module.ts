@@ -19,6 +19,7 @@ import {UIRouterModule} from '@uirouter/angular';
 import {ChromeModule} from './chrome/module';
 import {chromeState} from './chrome/state';
 import {CoreModule} from './core.module';
+import {ErrorModule} from './error/module';
 import {RootComponent} from './index.component';
 import {configureRouter} from './index.router.config';
 import {LoginModule} from './login/module';
@@ -31,6 +32,7 @@ import {overviewState} from './overview/state';
     CoreModule,
     ChromeModule,
     LoginModule,
+    ErrorModule,
     UIRouterModule.forRoot({
       states: [chromeState, loginState],
       useHash: true,

@@ -98,6 +98,6 @@ $kd-dark-theme: mat-dark-theme($kd-dark-theme-primary, $kd-dark-theme-accent, $k
   @include kd-theme($kd-dark-theme);
 
   .kd-toolbar-logo-text {
-    filter: brightness(10);
+    filter: brightness(100);
   }
 }

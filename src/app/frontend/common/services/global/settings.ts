@@ -14,14 +14,22 @@
 
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {GlobalSettings, LocalSettings} from '@api/backendapi';
+import {Error, GlobalSettings, LocalSettings} from '@api/backendapi';
+
 import {AuthorizerService} from './authorizer';
 import {ThemeService} from './theme';
+
+type onLoadCb = (settings?: GlobalSettings) => void;
+type onFailCb = (err?: string|Error) => void;
 
 @Injectable()
 export class SettingsService {
   private readonly globalSettingsEndpoint_ = 'api/v1/settings/global';
-  private globalSettings_: GlobalSettings;
+  private globalSettings_: GlobalSettings = {
+    itemsPerPage: 10,
+    clusterName: '',
+    autoRefreshTimeInterval: 5,
+  };
   private localSetttings_: LocalSettings;
   private isInitialized_ = false;
 
@@ -30,46 +38,38 @@ export class SettingsService {
       private theme_: ThemeService) {}
 
   init() {
-    this.getGlobalSettings().subscribe(
-        (globalSettings) => {
-          this.globalSettings_ = globalSettings;
-          this.isInitialized_ = true;
-        },
-        () => {
-          this.isInitialized_ = false;
-        });
+    this.load();
   }
 
   isInitialized() {
     return this.isInitialized_;
   }
 
-  getGlobalSettings() {
-    return this.authorizer_.proxyGET<GlobalSettings>(this.globalSettingsEndpoint_);
+  load(onLoad?: onLoadCb, onFail?: onFailCb) {
+    this.authorizer_.proxyGET<GlobalSettings>(this.globalSettingsEndpoint_)
+        .toPromise()
+        .then(
+            (settings) => {
+              this.globalSettings_ = settings;
+              this.isInitialized_ = true;
+              if (onLoad) onLoad(settings);
+            },
+            (err) => {
+              this.isInitialized_ = false;
+              if (onFail) onFail(err);
+            });
   }
 
   getClusterName() {
-    let clusterName = '';
-    if (this.globalSettings_) {
-      clusterName = this.globalSettings_.clusterName;
-    }
-    return clusterName;
+    return this.globalSettings_.clusterName;
   }
 
   getItemsPerPage() {
-    let itemsPerPage = 10;
-    if (this.globalSettings_) {
-      itemsPerPage = this.globalSettings_.itemsPerPage;
-    }
-    return itemsPerPage;
+    return this.globalSettings_.itemsPerPage;
   }
 
   getAutoRefreshTimeInterval() {
-    let autoRefreshTimeInterval = 5;
-    if (this.globalSettings_) {
-      autoRefreshTimeInterval = this.globalSettings_.autoRefreshTimeInterval;
-    }
-    return autoRefreshTimeInterval;
+    return this.globalSettings_.autoRefreshTimeInterval;
   }
 
   // TODO
