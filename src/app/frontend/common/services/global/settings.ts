@@ -15,11 +15,9 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 
-import {Error, Settings} from '@api/backendapi';
+import {Settings} from '@api/backendapi';
+import {onSettingsFailCallback, onSettingsLoadCallback} from '@api/frontendapi';
 import {AuthorizerService} from './authorizer';
-
-type onLoadCb = (settings?: Settings) => void;
-type onFailCb = (err?: string|Error) => void;
 
 @Injectable()
 export class SettingsService {
@@ -41,7 +39,7 @@ export class SettingsService {
     return this.isInitialized_;
   }
 
-  load(onLoad?: onLoadCb, onFail?: onFailCb) {
+  load(onLoad?: onSettingsLoadCallback, onFail?: onSettingsFailCallback) {
     this.authorizer_.proxyGET<Settings>(this.globalSettingsEndpoint_)
         .toPromise()
         .then(

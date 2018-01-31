@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {OverlayContainer} from '@angular/cdk/overlay';
 import {Component, OnInit} from '@angular/core';
 
 import {AssetsService} from '../common/services/global/assets';
@@ -22,7 +21,7 @@ import {overviewState} from '../overview/state';
 export class ChromeComponent implements OnInit {
   loading = false;
 
-  constructor(public assets: AssetsService, private overlayContainer_: OverlayContainer) {}
+  constructor(public assets: AssetsService) {}
 
   getOverviewStateName() {
     return overviewState.name;
@@ -42,7 +41,5 @@ export class ChromeComponent implements OnInit {
 
   create() {}
 
-  ngOnInit() {
-    this.overlayContainer_.getContainerElement().classList.add('kd-dark-theme');
-  }
+  ngOnInit() {}
 }
