@@ -14,16 +14,20 @@
 
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {Settings} from '@api/backendapi';
+import {GlobalSettings, LocalSettings} from '@api/backendapi';
 import {AuthorizerService} from './authorizer';
+import {ThemeService} from './theme';
 
 @Injectable()
 export class SettingsService {
   private readonly globalSettingsEndpoint_ = 'api/v1/settings/global';
-  private globalSettings_: Settings;
+  private globalSettings_: GlobalSettings;
+  private localSetttings_: LocalSettings;
   private isInitialized_ = false;
 
-  constructor(private http_: HttpClient, private authorizer_: AuthorizerService) {}
+  constructor(
+      private http_: HttpClient, private authorizer_: AuthorizerService,
+      private theme_: ThemeService) {}
 
   init() {
     this.getGlobalSettings().subscribe(
@@ -41,7 +45,7 @@ export class SettingsService {
   }
 
   getGlobalSettings() {
-    return this.authorizer_.proxyGET<Settings>(this.globalSettingsEndpoint_);
+    return this.authorizer_.proxyGET<GlobalSettings>(this.globalSettingsEndpoint_);
   }
 
   getClusterName() {
@@ -66,5 +70,27 @@ export class SettingsService {
       autoRefreshTimeInterval = this.globalSettings_.autoRefreshTimeInterval;
     }
     return autoRefreshTimeInterval;
+  }
+
+  // TODO
+  getLocalSettings(): LocalSettings {
+    return {isThemeDark: false};
+  }
+
+  /*
+   * Save local settings into the cookies and call apply function.
+   */
+  saveLocalSettings(localSettings: LocalSettings) {
+    // TODO Save into cookies.
+
+    this.localSetttings_ = localSettings;
+    this.applyLocalSettings();
+  }
+
+  /*
+   * Apply local settings in the whole app.
+   */
+  applyLocalSettings() {
+    this.theme_.switchTheme(this.localSetttings_.isThemeDark);
   }
 }

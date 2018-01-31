@@ -24,9 +24,8 @@ export class ThemeService {
     return this.isLightThemeEnabled_;
   }
 
-  switchTheme() {
-    this.isLightThemeEnabled_ = !this.isLightThemeEnabled_;
-    this.onThemeSwitchEvent_.emit(this.isLightThemeEnabled_);
+  switchTheme(isThemeDark: boolean) {
+    this.onThemeSwitchEvent_.emit(!isThemeDark);
   }
 
   subscribe(callback: ThemeSwitchCallback) {

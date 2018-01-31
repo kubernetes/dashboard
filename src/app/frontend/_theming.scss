@@ -32,11 +32,16 @@
   $success: mat-color($warn-palette, lighter);
   $warning: mat-color($warn-palette);
   $error: mat-color($warn-palette, darker);
+  $muted: mat-color($foreground-palette, secondary-text);
 
   // Global style overrides.
 
   a {
     color: $primary;
+  }
+
+  code {
+    background-color: darken(mat-color($background-palette, card), 5%);
   }
 
   * {
@@ -83,16 +88,16 @@
     background-color: $error;
   }
 
+  .kd-muted {
+    color: $muted;
+  }
+
   .kd-primary-button {
     color: mat-color($primary-palette, 50);
   }
 
   .kd-bg-background {
     background-color: $background;
-  }
-
-  .kd-fg-secondary-text {
-    color: mat-color($foreground-palette, secondary-text);
   }
 
   // Component-level styles
@@ -110,7 +115,7 @@
   }
 
   .kd-slider-value {
-    color: mat-color($background-palette, selected-button);
+    color: $muted;
   }
 
   .kd-nav-item-button {

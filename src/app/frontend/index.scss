@@ -14,7 +14,7 @@
 
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import './dark';
-@import './default';
+@import './light';
 @import './variables';
 @import './mixins';
 
@@ -30,6 +30,11 @@ body {
 
 a {
   text-decoration: none;
+}
+
+code {
+  font-family: $font-family-monospace;
+  padding: .25 * $baseline-grid;
 }
 
 * {

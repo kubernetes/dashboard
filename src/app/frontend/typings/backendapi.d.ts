@@ -41,11 +41,13 @@ export interface AuthResponse {
   errors: Error[];
 }
 
-export interface Settings {
+export interface GlobalSettings {
   itemsPerPage: number;
   clusterName: string;
   autoRefreshTimeInterval: number;
 }
+
+export interface LocalSettings { isThemeDark: boolean; }
 
 export interface AppConfig { serverTime: number; }
 

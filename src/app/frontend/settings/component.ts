@@ -14,10 +14,11 @@
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material';
-import {Settings} from '@api/backendapi';
+import {GlobalSettings, LocalSettings} from '@api/backendapi';
 import {Subscription} from 'rxjs/Subscription';
 
 import {SettingsService} from '../common/services/global/settings';
+import {ThemeService} from '../common/services/global/theme';
 
 import {SaveAnywayDialog} from './saveanywaysdialog/dialog';
 
@@ -25,17 +26,24 @@ import {SaveAnywayDialog} from './saveanywaysdialog/dialog';
 export class SettingsComponent implements OnInit, OnDestroy {
   // Keep it in sync with ConcurrentSettingsChangeError constant from the backend.
   private readonly concurrentChangeErr_ = 'settings changed since last reload';
-  global: Settings = {
+  global: GlobalSettings = {
     clusterName: '',
     itemsPerPage: 10,
     autoRefreshTimeInterval: 5,
   };
   settingsSubscription: Subscription;
   isInitialized = false;
-  constructor(private settings_: SettingsService, private dialog_: MatDialog) {}
+  local: LocalSettings = {
+    isThemeDark: false,
+  };
+
+  constructor(
+      private settings_: SettingsService, private theme_: ThemeService,
+      private dialog_: MatDialog) {}
 
   ngOnInit() {
     this.reloadGlobal();
+    this.loadLocal();
   }
 
   ngOnDestroy() {
@@ -85,5 +93,15 @@ export class SettingsComponent implements OnInit, OnDestroy {
         this.reloadGlobal();
       }
     });
+  }
+
+  loadLocal() {
+    this.local = this.settings_.getLocalSettings();
+  }
+
+  saveLocal(form: LocalSettings) {
+    this.local = {isThemeDark: form.isThemeDark};
+
+    this.settings_.saveLocalSettings(this.local);
   }
 }
