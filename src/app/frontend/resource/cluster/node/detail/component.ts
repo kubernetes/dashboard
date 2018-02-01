@@ -13,25 +13,23 @@
 // limitations under the License.
 
 import {Component, OnInit} from '@angular/core';
-import {StateService} from '@uirouter/core';
+import {NodeDetail} from '@api/backendapi';
 
-import {NodeService} from '../../../common/services/resource/node';
+import {NodeService} from '../../../../common/services/resource/node';
 
-import {nodeDetailState} from './detail/state';
+@Component({
+  selector: 'kd-node-detail',
+  templateUrl: './template.html',
+  styleUrls: ['./style.scss'],
+})
+export class NodeDetailComponent implements OnInit {
+  node: NodeDetail;
 
-@Component({selector: 'kd-node', templateUrl: './template.html', styleUrls: ['./style.scss']})
-export class NodeComponent implements OnInit {
-  node: NodeList;
-
-  constructor(private state_: StateService, private node_: NodeService) {}
+  constructor(private node_: NodeService) {}
 
   ngOnInit() {
-    this.node_.getNodeList().subscribe((res) => {
-      this.node = res;
+    this.node_.getNodeDetail('kube-master').subscribe((d: NodeDetail) => {
+      this.node = d;
     });
-  }
-
-  getDetailsHref(name: string) {
-    return this.state_.href(nodeDetailState, {name});
   }
 }
