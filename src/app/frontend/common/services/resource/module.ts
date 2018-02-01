@@ -13,20 +13,9 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
-import {UIRouterModule} from '@uirouter/angular';
-
-import {ResourceModule} from '../../../common/services/resource/module';
-import {SharedModule} from '../../../shared.module';
-
-import {NodeComponent} from './component';
-import {nodeState} from './state';
+import {NodeService} from './node';
 
 @NgModule({
-  imports: [
-    SharedModule,
-    ResourceModule,
-    UIRouterModule.forChild({states: [nodeState]}),
-  ],
-  declarations: [NodeComponent],
+  providers: [NodeService],
 })
-export class NodeModule {}
+export class ResourceModule {}
