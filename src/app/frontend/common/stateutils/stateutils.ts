@@ -12,21 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {UIRouterModule} from '@uirouter/angular';
+const RESOURCE_DETAILS_URL_PARAMS = '/:resourceName';
 
-import {ResourceModule} from '../../../../common/services/resource/module';
-import {SharedModule} from '../../../../shared.module';
+export function getResourceListStateName(stateName: string) {
+  return `${stateName}list`;
+}
 
-import {NodeDetailComponent} from './component';
-import {nodeDetailState} from './state';
+export function getResourceListStateUrl(stateName: string) {
+  return `/${stateName}`;
+}
 
-@NgModule({
-  imports: [
-    SharedModule,
-    ResourceModule,
-    UIRouterModule.forChild({states: [nodeDetailState]}),
-  ],
-  declarations: [NodeDetailComponent],
-})
-export class NodeDetailModule {}
+export function getResourceDetailsStateName(stateName: string) {
+  return `${stateName}details`;
+}
+
+export function getResourceDetailsStateUrl(stateName: string) {
+  return `/${stateName}${RESOURCE_DETAILS_URL_PARAMS}`;
+}
+
+// TODO namespaced resources
