@@ -11,22 +11,3 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
-import {NgModule} from '@angular/core';
-import {UIRouterModule} from '@uirouter/angular';
-
-import {ResourceModule} from '../../../common/services/resource/module';
-import {SharedModule} from '../../../shared.module';
-
-import {NodeComponent} from './component';
-import {nodeState} from './state';
-
-@NgModule({
-  imports: [
-    SharedModule,
-    ResourceModule,
-    UIRouterModule.forChild({states: [nodeState]}),
-  ],
-  declarations: [NodeComponent],
-})
-export class NodeModule {}

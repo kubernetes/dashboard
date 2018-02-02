@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {K8SError} from '@api/backendapi';
+import {K8sError} from '@api/backendapi';
 import {KdError} from '@api/frontendapi';
 import {StateParams} from '@uirouter/core';
 
@@ -35,7 +35,7 @@ export class NamespacedResourceStateParams extends ChromeStateParams {
 }
 
 export class ErrorStateParams extends ChromeStateParams {
-  constructor(public error: KdError|K8SError, namespace: string) {
+  constructor(public error: KdError|K8sError, namespace: string) {
     super(namespace);
   }
 }

@@ -15,18 +15,18 @@
 import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
 
-import {ResourceModule} from '../../../common/services/resource/module';
-import {SharedModule} from '../../../shared.module';
+import {ResourceModule} from '../../../../common/services/resource/module';
+import {SharedModule} from '../../../../shared.module';
 
-import {NodeComponent} from './component';
-import {nodeState} from './state';
+import {NodeDetailComponent} from './component';
+import {nodeDetailState} from './state';
 
 @NgModule({
   imports: [
     SharedModule,
     ResourceModule,
-    UIRouterModule.forChild({states: [nodeState]}),
+    UIRouterModule.forChild({states: [nodeDetailState]}),
   ],
-  declarations: [NodeComponent],
+  declarations: [NodeDetailComponent],
 })
 export class NodeModule {}

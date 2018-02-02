@@ -12,21 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {UIRouterModule} from '@uirouter/angular';
+import {Component, OnInit} from '@angular/core';
+import {NodeDetail} from '@api/backendapi';
 
-import {ResourceModule} from '../../../common/services/resource/module';
-import {SharedModule} from '../../../shared.module';
+import {NodeService} from '../../../../common/services/resource/node';
 
-import {NodeComponent} from './component';
-import {nodeState} from './state';
-
-@NgModule({
-  imports: [
-    SharedModule,
-    ResourceModule,
-    UIRouterModule.forChild({states: [nodeState]}),
-  ],
-  declarations: [NodeComponent],
+@Component({
+  selector: 'kd-node-detail',
+  templateUrl: './template.html',
+  styleUrls: ['./style.scss'],
 })
-export class NodeModule {}
+export class NodeDetailComponent implements OnInit {
+  node: NodeDetail;
+
+  constructor(private node_: NodeService) {}
+
+  ngOnInit() {
+    this.node_.getNodeDetail('kube-master').subscribe((d: NodeDetail) => {
+      this.node = d;
+    });
+  }
+}

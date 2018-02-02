@@ -24,7 +24,7 @@ export class TitleService {
   setTitle(transition: Transition) {
     const targetState = transition.to().name;  // TODO Use breadcrumb value instead.
 
-    this.settingsService_.load(
+    this.settingsService_.loadGlobalSettings(
         () => {
           const clusterName = this.settingsService_.getClusterName();
           if (clusterName) {

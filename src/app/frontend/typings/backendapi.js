@@ -13,42 +13,6 @@
 // limitations under the License.
 
 /**
- * @fileoverview Externs for backend API and model objects. This should be kept in sync with the
- * backend code.
- *
- * Guidelines:
- *  - Model JSONs should have the same name as backend structs.
- *
- * @externs
- */
-
-const backendApi = {};
-
-/**
- * @typedef {{
- *   ErrStatus: !backendApi.ErrStatus,
- * }}
- */
-backendApi.Error;
-
-/**
- * @typedef {{
- *   message: string,
- *   code: number,
- *   status: string,
- *   reason: string
- * }}
- */
-backendApi.ErrStatus;
-
-/**
- * @typedef {{
- *   totalItems: number,
- * }}
- */
-backendApi.ListMeta;
-
-/**
  * @typedef {{
  *   port: (number|null),
  *   protocol: string,
@@ -101,31 +65,6 @@ backendApi.AppDeploymentSpec;
  * }}
  */
 backendApi.AppDeploymentContentSpec;
-
-/**
- * @typedef {{
- *   events: !Array<!backendApi.Event>,
- *   listMeta: !backendApi.ListMeta
- * }}
- */
-backendApi.EventList;
-
-/**
- * @typedef {{
- *   objectMeta: !backendApi.ObjectMeta,
- *   typeMeta: !backendApi.TypeMeta,
- *   message: string,
- *   sourceComponent: string,
- *   sourceHost: string,
- *   object: string,
- *   count: number,
- *   firstSeen: string,
- *   lastSeen: string,
- *   reason: string,
- *   type: string
- * }}
- */
-backendApi.Event;
 
 /**
  * @typedef {{
@@ -227,13 +166,7 @@ backendApi.Config;
  */
 backendApi.Search;
 
-/**
- * @typedef {{
- *   timestamp: string,
- *   value: number
- * }}
- */
-backendApi.MetricResult;
+
 
 /**
  * @typedef {{
@@ -243,28 +176,7 @@ backendApi.MetricResult;
  */
 backendApi.PodEvent;
 
-/**
- * @typedef {{
- *   cpuUsage: ?number,
- *   memoryUsage: ?number,
- *   cpuUsageHistory: !Array<!backendApi.MetricResult>,
- *   memoryUsageHistory: !Array<!backendApi.MetricResult>
- * }}
- */
-backendApi.PodMetrics;
 
-/**
- * @typedef {{
- *   current: number,
- *   desired: number,
- *   running: number,
- *   pending: number,
- *   failed: number,
- *   succeeded: number,
- *   warnings: !Array<!backendApi.Event>
- * }}
- */
-backendApi.PodInfo;
 
 /**
  * @typedef {{
@@ -701,53 +613,6 @@ backendApi.DeploymentDetail;
 
 /**
  * @typedef {{
- *   pods: !Array<!backendApi.Pod>,
- *   listMeta: !backendApi.ListMeta,
- *   status: !backendApi.Status,
- *   podInfo: !backendApi.PodInfo,
- *   cumulativeMetrics: (!Array<!backendApi.Metric>|null),
- *   errors: !Array<!backendApi.Error>
- * }}
- */
-backendApi.PodList;
-
-/**
- * @typedef {{
- *   dataPoints: !Array<!backendApi.DataPoint>,
- *   metricName: string,
- *   aggregation: string,
- * }}
- */
-backendApi.Metric;
-
-/**
- * @typedef {{
- *   x: number,
- *   y: number,
- * }}
- */
-backendApi.DataPoint;
-
-/**
- * @typedef {{
- *   name: string,
- *   namespace: string,
- *   labels: !Object<string, string>,
- *   creationTimestamp: string,
- *   annotations: !Object<string, string>
- * }}
- */
-backendApi.ObjectMeta;
-
-/**
- * @typedef {{
- *   kind: string,
- * }}
- */
-backendApi.TypeMeta;
-
-/**
- * @typedef {{
  *   objectMeta: !backendApi.ObjectMeta,
  *   typeMeta: !backendApi.TypeMeta,
  *   labelSelector: !Object<string, string>,
@@ -817,73 +682,6 @@ backendApi.ReplicaCounts;
  * }}
  */
 backendApi.DeleteReplicationControllerSpec;
-
-/**
- * @typedef {{
- *   reason: string
- * }}
- */
-backendApi.ContainerStateWaiting;
-
-/**
- * @typedef {{
- *   reason: string,
- *   signal: number,
- *   exitCode: number
- * }}
- */
-backendApi.ContainerStateTerminated;
-
-/**
- * @typedef {{
- *   waiting: !backendApi.ContainerStateWaiting,
- *   terminated: !backendApi.ContainerStateTerminated
- * }}
- */
-backendApi.ContainerState;
-
-/**
- * @typedef {{
- *   type: string,
- *   status: string,
- *   lastProbeTime: ?string,
- *   lastTransitionTime: ?string,
- *   reason: string,
- *   message: string
- * }}
- */
-backendApi.Condition;
-
-/**
- * @typedef {{
- *   nodes: !Array<!backendApi.Condition>
- * }}
- */
-backendApi.ConditionList;
-
-/**
- * @typedef {{
- *   podPhase: string,
- *   status: string,
- *   containerStates: !Array<!backendApi.ContainerState>
- * }}
- */
-backendApi.PodStatus;
-
-/**
- * @typedef {{
- *   objectMeta: !backendApi.ObjectMeta,
- *   typeMeta: !backendApi.TypeMeta,
- *   podStatus: !backendApi.PodStatus,
- *   podIP: string,
- *   restartCount: number,
- *   qosClass: string,
- *   metrics: backendApi.PodMetrics,
- *   warnings: !Array<!backendApi.Event>,
- *   nodeName: string
- * }}
- */
-backendApi.Pod;
 
 /**
  * @typedef {{
@@ -1268,87 +1066,7 @@ backendApi.Ingress;
  */
 backendApi.IngressList;
 
-/**
- * @typedef {{
- *   objectMeta: !backendApi.ObjectMeta,
- *   typeMeta: !backendApi.TypeMeta,
- *   ready: string
- * }}
- */
-backendApi.Node;
 
-/**
- * @typedef {{
- *   machineID: string,
- *   systemUUID: string,
- *   bootID: string,
- *   kernelVersion: string,
- *   osImage: string,
- *   containerRuntimeVersion: string,
- *   kubeletVersion: string,
- *   kubeProxyVersion: string,
- *   operatingSystem: string,
- *   architecture: string
- * }}
- */
-backendApi.NodeInfo;
-
-/**
- * @typedef {{
- *   cpuRequests: number,
- *   cpuRequestsFraction: number,
- *   cpuLimits: number,
- *   cpuLimitsFraction: number,
- *   cpuCapacity: number,
- *   memoryRequests: number,
- *   memoryRequestsFraction: number,
- *   memoryLimits: number,
- *   memoryLimitsFraction: number,
- *   memoryCapacity: number,
- *   allocatedPods: number,
- *   podCapacity: number,
- *   podFraction: number
- * }}
- */
-backendApi.NodeAllocatedResources;
-
-/**
- * @typedef {{
- *   type: string,
- *   address: string
- * }}
- */
-backendApi.NodeAddress;
-
-/**
- * @typedef {{
- *   objectMeta: !backendApi.ObjectMeta,
- *   typeMeta: !backendApi.TypeMeta,
- *   phase: string,
- *   allocatedResources: !backendApi.NodeAllocatedResources,
- *   podCIDR: string,
- *   providerID: string,
- *   unschedulable: boolean,
- *   nodeInfo: !backendApi.NodeInfo,
- *   conditions: !backendApi.ConditionList,
- *   containerImages: !Array<string>,
- *   initContainerImages: !Array<string>,
- *   podList: !backendApi.PodList,
- *   eventList: !backendApi.EventList,
- *   addresses: !backendApi.NodeAddress,
- *   errors: !Array<!backendApi.Error>
- * }}
- */
-backendApi.NodeDetail;
-
-/**
- * @typedef {{
- *   nodes: !Array<!backendApi.Node>,
- *   listMeta: !backendApi.ListMeta,
- *   errors: !Array<!backendApi.Error>
- * }}
- */
-backendApi.NodeList;
 
 /**
  * @typedef {{
@@ -1545,15 +1263,7 @@ backendApi.LoginModesResponse;
  */
 backendApi.SupportedAuthenticationModes;
 
-/**
- * @typedef {{
- *  running: number,
- *  failed: number,
- *  pending: number,
- *  succeeded: number,
- *  }}
- */
-backendApi.Status;
+
 
 /**
  * @typedef {{

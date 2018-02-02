@@ -12,9 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {StateService} from '@uirouter/core';
+
+import {NodeService} from '../../../common/services/resource/node';
+
+import {nodeDetailState} from './detail/state';
 
 @Component({selector: 'kd-node', templateUrl: './template.html', styleUrls: ['./style.scss']})
-export class NodeComponent {
-  constructor() {}
+export class NodeComponent implements OnInit {
+  node: NodeList;
+
+  constructor(private state_: StateService, private node_: NodeService) {}
+
+  ngOnInit() {
+    this.node_.getNodeList().subscribe((res) => {
+      this.node = res;
+    });
+  }
+
+  getDetailsHref(name: string) {
+    return this.state_.href(nodeDetailState, {name});
+  }
 }

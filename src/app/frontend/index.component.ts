@@ -13,6 +13,8 @@
 // limitations under the License.
 
 import {Component, OnInit} from '@angular/core';
+
+import {SettingsService} from './common/services/global/settings';
 import {ThemeService} from './common/services/global/theme';
 
 enum Themes {
@@ -23,11 +25,16 @@ enum Themes {
 @Component({selector: 'kd-root', template: '<ui-view [ngClass]="getTheme()"></ui-view>'})
 export class RootComponent implements OnInit {
   isLightThemeEnabled: boolean;
-  constructor(private themeService_: ThemeService) {
+  constructor(private themeService_: ThemeService, private settings_: SettingsService) {
     this.isLightThemeEnabled = this.themeService_.isLightThemeEnabled();
   }
 
   ngOnInit() {
+    const localSettings = this.settings_.getLocalSettings();
+    if (localSettings && localSettings.isThemeDark) {
+      this.onThemeChange(!localSettings.isThemeDark);
+    }
+
     this.themeService_.subscribe(this.onThemeChange.bind(this));
   }
 

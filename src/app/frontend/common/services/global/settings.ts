@@ -15,8 +15,9 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {GlobalSettings, LocalSettings} from '@api/backendapi';
-
 import {onSettingsFailCallback, onSettingsLoadCallback} from '@api/frontendapi';
+import {CookieService} from 'ngx-cookie-service';
+
 import {AuthorizerService} from './authorizer';
 import {ThemeService} from './theme';
 
@@ -28,22 +29,25 @@ export class SettingsService {
     clusterName: '',
     autoRefreshTimeInterval: 5,
   };
-  private localSetttings_: LocalSettings;
+  private readonly localSettingsCookie_ = 'localSettings';
+  private localSetttings_: LocalSettings = {
+    isThemeDark: false,
+  };
   private isInitialized_ = false;
 
   constructor(
       private http_: HttpClient, private authorizer_: AuthorizerService,
-      private theme_: ThemeService) {}
+      private theme_: ThemeService, private cookies_: CookieService) {}
 
   init() {
-    this.load();
+    this.loadGlobalSettings();
   }
 
   isInitialized() {
     return this.isInitialized_;
   }
 
-  load(onLoad?: onSettingsLoadCallback, onFail?: onSettingsFailCallback) {
+  loadGlobalSettings(onLoad?: onSettingsLoadCallback, onFail?: onSettingsFailCallback) {
     this.authorizer_.proxyGET<GlobalSettings>(this.globalSettingsEndpoint_)
         .toPromise()
         .then(
@@ -70,24 +74,19 @@ export class SettingsService {
     return this.globalSettings_.autoRefreshTimeInterval;
   }
 
-  // TODO
-  getLocalSettings(): LocalSettings {
-    return {isThemeDark: false};
+  getLocalSettings() {
+    const cookieValue = this.cookies_.get(this.localSettingsCookie_);
+    this.localSetttings_ = JSON.parse(cookieValue);
+    return this.localSetttings_;
   }
 
-  /*
-   * Save local settings into the cookies and call apply function.
-   */
   saveLocalSettings(localSettings: LocalSettings) {
-    // TODO Save into cookies.
-
+    this.cookies_.set(this.localSettingsCookie_, JSON.stringify(localSettings));
     this.localSetttings_ = localSettings;
     this.applyLocalSettings();
+    return this.localSetttings_;
   }
 
-  /*
-   * Apply local settings in the whole app.
-   */
   applyLocalSettings() {
     this.theme_.switchTheme(this.localSetttings_.isThemeDark);
   }

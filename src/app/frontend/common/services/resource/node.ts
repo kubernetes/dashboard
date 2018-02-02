@@ -12,21 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {UIRouterModule} from '@uirouter/angular';
+import {HttpClient} from '@angular/common/http';
+import {NodeDetail} from '@api/backendapi';
 
-import {ResourceModule} from '../../../common/services/resource/module';
-import {SharedModule} from '../../../shared.module';
+export class NodeService {
+  private readonly nodeEndpoint_ = 'api/v1/node/';
 
-import {NodeComponent} from './component';
-import {nodeState} from './state';
+  constructor(private http_: HttpClient) {}
 
-@NgModule({
-  imports: [
-    SharedModule,
-    ResourceModule,
-    UIRouterModule.forChild({states: [nodeState]}),
-  ],
-  declarations: [NodeComponent],
-})
-export class NodeModule {}
+  getNodeList() {
+    return this.http_.get<NodeList>(this.nodeEndpoint_);
+  }
+
+  getNodeDetail(name: string) {
+    return this.http_.get<NodeDetail>(this.nodeEndpoint_ + name);
+  }
+}

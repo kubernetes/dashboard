@@ -12,21 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {UIRouterModule} from '@uirouter/angular';
+import {Ng2StateDeclaration} from '@uirouter/angular';
 
-import {ResourceModule} from '../../../common/services/resource/module';
-import {SharedModule} from '../../../shared.module';
+import {NodeDetailComponent} from './component';
 
-import {NodeComponent} from './component';
-import {nodeState} from './state';
-
-@NgModule({
-  imports: [
-    SharedModule,
-    ResourceModule,
-    UIRouterModule.forChild({states: [nodeState]}),
-  ],
-  declarations: [NodeComponent],
-})
-export class NodeModule {}
+export const nodeDetailState: Ng2StateDeclaration = {
+  parent: 'node',
+  name: 'nodedetail',
+  url: '/node/:name',
+  component: NodeDetailComponent,
+};

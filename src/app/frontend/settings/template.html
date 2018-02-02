@@ -23,7 +23,7 @@ limitations under the License.
       <code>kube-system</code> namespace, so all of them are applied for every instance of the app.
     </p>
     <br>
-    <form (ngSubmit)="saveGlobal()">
+    <form (ngSubmit)="saveGlobalSettings()">
       <kd-settings-entry key="Cluster name"
                          desc="Cluster name appears in the browser window title if it is set">
         <mat-form-field fxFlex>
@@ -88,13 +88,13 @@ limitations under the License.
     </p>
     <br>
     <form #form="ngForm"
-          (ngSubmit)="saveLocal(form.value)">
+          (ngSubmit)="saveLocalSettings(form.value)">
       <kd-settings-entry key="Dark theme"
                          desc="Use dark theme in the whole app">
         <div fxFlex>
           <mat-slide-toggle color="primary"
                             name="isThemeDark"
-                            ngModel>
+                            [(ngModel)]="local.isThemeDark">
           </mat-slide-toggle>
         </div>
       </kd-settings-entry>
@@ -104,6 +104,12 @@ limitations under the License.
               mat-raised-button
               i18n>
         Save
+      </button>
+      <button type="reset"
+              color="primary"
+              mat-raised-button
+              i18n>
+        Refresh
       </button>
     </form>
   </div>
