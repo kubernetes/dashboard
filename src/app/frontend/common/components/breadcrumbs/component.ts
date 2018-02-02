@@ -144,7 +144,7 @@ export class BreadcrumbsComponent implements OnInit {
     }
 
     // If there is a state parameter with with name equal to conf.label then return its value,
-    // otherwise just return label.
+    // otherwise just return label. It allows to "interpolate" resource names into breadcrumbs.
     return stateParams && stateParams[conf.label] ? stateParams[conf.label] : conf.label;
   }
 }
