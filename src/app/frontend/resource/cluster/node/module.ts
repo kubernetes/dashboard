@@ -19,12 +19,14 @@ import {ResourceModule} from '../../../common/services/resource/module';
 import {SharedModule} from '../../../shared.module';
 
 import {NodeComponent} from './component';
+import {NodeDetailModule} from './detail/module';
 import {nodeState} from './state';
 
 @NgModule({
   imports: [
     SharedModule,
     ResourceModule,
+    NodeDetailModule,
     UIRouterModule.forChild({states: [nodeState]}),
   ],
   declarations: [NodeComponent],

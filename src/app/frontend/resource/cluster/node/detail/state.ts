@@ -14,11 +14,13 @@
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
+import {RESOURCE_DETAILS_URL} from '../../../../common/params/params';
+
 import {NodeDetailComponent} from './component';
 
 export const nodeDetailState: Ng2StateDeclaration = {
-  parent: 'node',
-  name: 'nodedetail',
-  url: '/node/:name',
+  name: 'node.detail',
+  url: RESOURCE_DETAILS_URL,
   component: NodeDetailComponent,
+  data: {kdBreadcrumbs: {label: 'TODO resource name', parent: 'node'}},
 };

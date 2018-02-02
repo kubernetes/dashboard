@@ -29,4 +29,4 @@ import {nodeDetailState} from './state';
   ],
   declarations: [NodeDetailComponent],
 })
-export class NodeModule {}
+export class NodeDetailModule {}

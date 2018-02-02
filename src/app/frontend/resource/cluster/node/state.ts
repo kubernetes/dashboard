@@ -21,4 +21,5 @@ export const nodeState: Ng2StateDeclaration = {
   name: 'node',
   url: '/node',
   component: NodeComponent,
+  data: {kdBreadcrumbs: {label: 'Nodes', parent: 'cluster'}},
 };
