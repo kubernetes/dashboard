@@ -133,24 +133,18 @@ export class BreadcrumbsComponent implements OnInit {
 
   /**
    * Returns display name for given state.
-   *
-   * If label for the state is defined it is interpolated against given state default view scope.
-   * If interpolation fails then given label string is returned.
-   * If label string is empty then state name is returned.
    */
   getDisplayName_(state: StateObject|StateDeclaration): string {
     const conf = this.getBreadcrumbConfig_(state);
+    const stateParams = this.state_.params;
 
     // When conf is undefined and label is undefined or empty then fallback to state name
     if (!conf || !conf.label) {
       return state.name;
     }
 
-    // Check if provided label is a property of state params object.
-    if (state.params && state.params[conf.label]) {
-      return state.params[conf.label].value();
-    }
-
-    return conf.label;
+    // If there is a state parameter with with name equal to conf.label then return its value,
+    // otherwise just return label.
+    return stateParams && stateParams[conf.label] ? stateParams[conf.label] : conf.label;
   }
 }
