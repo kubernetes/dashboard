@@ -12,10 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
+import {Node} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 
-import {ResourceStateParams} from '../../../../common/params/params';
+import {ResourceList} from '../../../../common/resources/resourcelist';
 import {NodeService} from '../../../../common/services/resource/node';
 import {nodeDetailState} from '../detail/state';
 
@@ -24,18 +25,12 @@ import {nodeDetailState} from '../detail/state';
   templateUrl: './template.html',
   styleUrls: ['./style.scss'],
 })
-export class NodeListComponent implements OnInit {
-  node: NodeList;
-
-  constructor(private state_: StateService, private node_: NodeService) {}
-
-  ngOnInit() {
-    this.node_.getNodeList().subscribe((res) => {
-      this.node = res;
-    });
+export class NodeListComponent extends ResourceList<Node> {
+  constructor(state: StateService, private nodeService_: NodeService) {
+    super(nodeDetailState.name, state, nodeService_.getNodes());
   }
 
-  getDetailsHref(name: string) {
-    return this.state_.href(nodeDetailState.name, new ResourceStateParams(name));
+  getDisplayedColumns(): string[] {
+    return ['name', 'labels', 'ready', 'cpureq', 'cpulim', 'memreq', 'memlim', 'age'];
   }
 }

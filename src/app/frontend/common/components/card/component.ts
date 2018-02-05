@@ -19,4 +19,8 @@ import {Component, Input} from '@angular/core';
   templateUrl: './template.html',
   styleUrls: ['./style.scss'],
 })
-export class CardComponent { @Input() initialized = true; }
+export class CardComponent {
+  @Input() initialized = true;
+  @Input() role: string;
+  @Input() withFooter = false;
+}

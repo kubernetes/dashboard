@@ -16,6 +16,7 @@ import {Component, OnInit} from '@angular/core';
 import {StateService} from '@uirouter/core';
 
 import {K8SError, KdError} from '../common/errors/errors';
+import {ErrorStateParams} from '../common/params/params';
 import {NavService} from '../common/services/nav/service';
 
 @Component({selector: 'kd-error', templateUrl: './template.html', styleUrls: ['./style.scss']})
@@ -26,7 +27,7 @@ export class ErrorComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.error_ = this.state_.params.error;
+    this.error_ = (this.state_.params as ErrorStateParams).error;
   }
 
   getErrorStatus(): string {

@@ -17,7 +17,7 @@ import {Pipe, PipeTransform} from '@angular/core';
 /**
  * Formats memory in bytes to a binary prefix format, e.g., 789,21 MiB.
  */
-@Pipe({name: 'memoryFormatter'})
+@Pipe({name: 'kdMemory'})
 export class MemoryFormatter implements PipeTransform {
   readonly base = 1024;
   readonly powerSuffixes = ['', 'Ki', 'Mi', 'Gi', 'Ti', 'Pi'];

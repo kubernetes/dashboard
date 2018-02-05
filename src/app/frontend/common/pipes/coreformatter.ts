@@ -17,12 +17,12 @@ import {Pipe, PipeTransform} from '@angular/core';
 /**
  * Formats cores usage in millicores to a decimal prefix format, e.g. 321,20 kCPU.
  */
-@Pipe({name: 'coreFormatter'})
+@Pipe({name: 'kdCores'})
 export class CoreFormatter implements PipeTransform {
   readonly base = 1000;
   readonly powerSuffixes = ['', 'k', 'M', 'G', 'T'];
 
-  transform(value: number) {
+  transform(value: number): string {
     value = value / 1000;
     let divider = 1;
     let power = 0;
@@ -32,8 +32,8 @@ export class CoreFormatter implements PipeTransform {
       power += 1;
     }
 
-    const formatted = Math.round(value / divider);
+    const formatted = value / divider;
     const suffix = this.powerSuffixes[power];
-    return suffix ? `${formatted} ${suffix}` : formatted;
+    return suffix ? `${formatted} ${suffix}` : `${formatted}`;
   }
 }
