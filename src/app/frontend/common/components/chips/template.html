@@ -14,9 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-card [initialized]="isInitialized">
-  <div title>Details</div>
-  <div content>
-    <kd-object-meta [objectMeta]="node.objectMeta"></kd-object-meta>
-  </div>
-</kd-card>
+<mat-chip-list>
+  <mat-chip *ngFor="let key of keys; let i = index">
+    <!-- TODO Check if visible (i) -->
+    <span>{{key}}</span>
+    <!-- TODO Check if URL -->
+    <span *ngIf="map[key]">: {{map[key]}}</span>
+  </mat-chip>
+  <mat-chip *ngIf="isAnythingHidden()"
+            (click)="toggleView()"
+            color="primary"
+            [selected]="true">
+    <span *ngIf="isShowingAll">Show less</span>
+    <span *ngIf="!isShowingAll">Show all</span>
+  </mat-chip>
+</mat-chip-list>

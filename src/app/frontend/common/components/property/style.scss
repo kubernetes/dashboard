@@ -14,7 +14,6 @@
 
 @import '../../../variables';
 
-kd-annotations {
-  display: block;
-  margin-bottom: -($baseline-grid / 2);
+.kd-property-container {
+  margin: (.75 * $baseline-grid) 0;
 }

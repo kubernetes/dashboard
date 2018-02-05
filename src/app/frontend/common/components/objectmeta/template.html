@@ -32,11 +32,13 @@ limitations under the License.
 <kd-property *ngIf="objectMeta.labels">
   <div key>Labels</div>
   <div value>
-    <kd-labels [labels]="objectMeta.labels"></kd-labels>
+    <kd-chips [map]="objectMeta.labels"></kd-chips>
   </div>
 </kd-property>
 
 <kd-property *ngIf="objectMeta.annotations">
   <div key>Annotations</div>
-  <div value>{{objectMeta.annotations | json}}</div>
+  <div value>
+    <kd-chips [map]="objectMeta.annotations"></kd-chips>
+  </div>
 </kd-property>

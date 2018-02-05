@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import LabelsController from 'common/components/labels/component';
+import LabelsController from 'common/components/chips/component';
 import componentsModule from 'common/components/module';
 
 describe('Labels controller', () => {
