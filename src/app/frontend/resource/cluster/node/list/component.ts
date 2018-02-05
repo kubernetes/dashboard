@@ -15,12 +15,16 @@
 import {Component, OnInit} from '@angular/core';
 import {StateService} from '@uirouter/core';
 
-import {NodeService} from '../../../common/services/resource/node';
+import {ResourceStateParams} from '../../../../common/params/params';
+import {NodeService} from '../../../../common/services/resource/node';
+import {nodeDetailState} from '../detail/state';
 
-import {nodeDetailState} from './detail/state';
-
-@Component({selector: 'kd-node', templateUrl: './template.html', styleUrls: ['./style.scss']})
-export class NodeComponent implements OnInit {
+@Component({
+  selector: 'kd-node-list',
+  templateUrl: './template.html',
+  styleUrls: ['./style.scss'],
+})
+export class NodeListComponent implements OnInit {
   node: NodeList;
 
   constructor(private state_: StateService, private node_: NodeService) {}
@@ -32,6 +36,6 @@ export class NodeComponent implements OnInit {
   }
 
   getDetailsHref(name: string) {
-    return this.state_.href(nodeDetailState, {name});
+    return this.state_.href(nodeDetailState.name, new ResourceStateParams(name));
   }
 }

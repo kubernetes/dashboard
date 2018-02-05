@@ -19,7 +19,7 @@ import {aboutState} from '../../about/state';
 import {NavService} from '../../common/services/nav/service';
 import {overviewState} from '../../overview/state';
 import {namespaceState} from '../../resource/cluster/namespace/state';
-import {nodeState} from '../../resource/cluster/node/state';
+import {nodeListState} from '../../resource/cluster/node/list/state';
 import {persistentVolumeState} from '../../resource/cluster/persistentvolume/state';
 import {roleState} from '../../resource/cluster/role/state';
 import {clusterState} from '../../resource/cluster/state';
@@ -52,7 +52,7 @@ export class NavComponent implements AfterContentInit, OnInit {
   states = {
     cluster: clusterState.name,
     namespace: namespaceState.name,
-    node: nodeState.name,
+    node: nodeListState.name,
     persistentVolume: persistentVolumeState.name,
     role: roleState.name,
     storageClass: storageClassState.name,

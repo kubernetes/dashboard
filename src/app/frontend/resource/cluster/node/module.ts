@@ -15,18 +15,24 @@
 import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
 
+import {ComponentsModule} from '../../../common/components/module';
 import {ResourceModule} from '../../../common/services/resource/module';
 import {SharedModule} from '../../../shared.module';
 
-import {NodeComponent} from './component';
-import {nodeState} from './state';
+import {NodeDetailComponent} from './detail/component';
+import {nodeDetailState} from './detail/state';
+import {NodeListComponent} from './list/component';
+import {nodeListState} from './list/state';
 
 @NgModule({
   imports: [
     SharedModule,
+    ComponentsModule,
     ResourceModule,
-    UIRouterModule.forChild({states: [nodeState]}),
+    UIRouterModule.forChild({states: [nodeListState, nodeDetailState]}),
   ],
-  declarations: [NodeComponent],
+  declarations: [NodeListComponent, NodeDetailComponent],
 })
 export class NodeModule {}
+
+export const STATE_NAME = 'node';

@@ -12,21 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Parameters for this state.
- *
- * All properties are @exported and in sync with URL param names.
- */
-export class GlobalStateParams {
-  /**
-   * @param {string} objectName
-   */
-  constructor(objectName) {
-    /** @export {string} Name of this object. */
-    this.objectName = objectName;
-  }
+const RESOURCE_DETAILS_URL_PARAMS = '/:resourceName';
+
+export function getResourceListStateName(stateName: string) {
+  return `${stateName}list`;
 }
 
-export function appendDetailParamsToUrl(baseUrl) {
-  return `${baseUrl}/:objectName`;
+export function getResourceListStateUrl(stateName: string) {
+  return `/${stateName}`;
 }
+
+export function getResourceDetailsStateName(stateName: string) {
+  return `${stateName}details`;
+}
+
+export function getResourceDetailsStateUrl(stateName: string) {
+  return `/${stateName}${RESOURCE_DETAILS_URL_PARAMS}`;
+}
+
+// TODO namespaced resources
