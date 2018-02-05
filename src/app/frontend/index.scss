@@ -81,6 +81,10 @@ code {
   font-size: $body-font-size-base;
 }
 
+.mat-column-status {
+  flex: 0 0 ($baseline-grid * 5) !important;
+}
+
 ////////////////////////////////////////////
 // Custom classes used across application //
 ////////////////////////////////////////////

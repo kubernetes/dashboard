@@ -14,13 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-
 <kd-card role="table">
   <div title>Nodes</div>
 
   <div content>
     <mat-table [dataSource]="getData()">
       <ng-container [matColumnDef]="getDisplayedColumns()[0]">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let node">
+          <mat-icon>
+            {{getIcon(node)}}
+          </mat-icon>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getDisplayedColumns()[1]">
         <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
         <mat-cell *matCellDef="let node">
           <a [href]="getDetailsHref(node.objectMeta.name)">
@@ -29,45 +37,45 @@ limitations under the License.
         </mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayedColumns()[1]">
+      <ng-container [matColumnDef]="getDisplayedColumns()[2]">
         <mat-header-cell *matHeaderCellDef>Labels</mat-header-cell>
         <mat-cell *matCellDef="let node">{{node.objectMeta.labels}}</mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayedColumns()[2]">
+      <ng-container [matColumnDef]="getDisplayedColumns()[3]">
         <mat-header-cell *matHeaderCellDef>Ready</mat-header-cell>
         <mat-cell *matCellDef="let node">{{node.ready}}</mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayedColumns()[3]">
+      <ng-container [matColumnDef]="getDisplayedColumns()[4]">
         <mat-header-cell *matHeaderCellDef>CPU requests (cores)</mat-header-cell>
         <mat-cell *matCellDef="let node">
           {{node.allocatedResources.cpuRequests | kdCores}} ({{node.allocatedResources.cpuRequestsFraction | number:"1.2-2"}}%)
         </mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayedColumns()[4]">
+      <ng-container [matColumnDef]="getDisplayedColumns()[5]">
         <mat-header-cell *matHeaderCellDef>CPU limits (cores)</mat-header-cell>
         <mat-cell *matCellDef="let node">
           {{node.allocatedResources.cpuLimits | kdCores}} ({{node.allocatedResources.cpuLimitsFraction | number:"1.2-2"}}%)
         </mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayedColumns()[5]">
+      <ng-container [matColumnDef]="getDisplayedColumns()[6]">
         <mat-header-cell *matHeaderCellDef>Memory requestes (bytes)</mat-header-cell>
         <mat-cell *matCellDef="let node">
           {{node.allocatedResources.memoryRequests | kdMemory}} ({{node.allocatedResources.memoryRequestsFraction | number:"1.2-2"}}%)
         </mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayedColumns()[6]">
+      <ng-container [matColumnDef]="getDisplayedColumns()[7]">
         <mat-header-cell *matHeaderCellDef>Memory limits (bytes)</mat-header-cell>
         <mat-cell *matCellDef="let node">
           {{node.allocatedResources.memoryLimits | kdMemory}} ({{node.allocatedResources.memoryLimitsFraction | number:"1.2-2"}}%)
         </mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayedColumns()[7]">
+      <ng-container [matColumnDef]="getDisplayedColumns()[8]">
         <mat-header-cell *matHeaderCellDef>Age</mat-header-cell>
         <mat-cell *matCellDef="let node">{{node.objectMeta.creationTimestamp}}</mat-cell>
       </ng-container>

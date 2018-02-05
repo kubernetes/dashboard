@@ -16,7 +16,7 @@ import {Component} from '@angular/core';
 import {Node} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 
-import {ResourceList} from '../../../../common/resources/resourcelist';
+import {ResourceList, ResourceListBase, ResourceListWithStatuses} from '../../../../common/resources/resourcelist';
 import {NodeService} from '../../../../common/services/resource/node';
 import {nodeDetailState} from '../detail/state';
 
@@ -25,12 +25,27 @@ import {nodeDetailState} from '../detail/state';
   templateUrl: './template.html',
   styleUrls: ['./style.scss'],
 })
-export class NodeListComponent extends ResourceList<Node> {
+export class NodeListComponent extends ResourceListWithStatuses<Node> {
   constructor(state: StateService, private nodeService_: NodeService) {
     super(nodeDetailState.name, state, nodeService_.getNodes());
+
+    // Override default warning icon.
+    this.setWarningIcon('help');
+  }
+
+  isInErrorState(resource: Node): boolean {
+    return resource.ready === 'False';
+  }
+
+  isInWarningState(resource: Node): boolean {
+    return resource.ready === 'Unknown';
+  }
+
+  isInSuccessState(resource: Node): boolean {
+    return resource.ready === 'True';
   }
 
   getDisplayedColumns(): string[] {
-    return ['name', 'labels', 'ready', 'cpureq', 'cpulim', 'memreq', 'memlim', 'age'];
+    return ['status', 'name', 'labels', 'ready', 'cpureq', 'cpulim', 'memreq', 'memlim', 'age'];
   }
 }

@@ -12,13 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Pipe, PipeTransform} from '@angular/core';
+import {DecimalPipe} from '@angular/common';
+import {Pipe} from '@angular/core';
 
 /**
  * Formats cores usage in millicores to a decimal prefix format, e.g. 321,20 kCPU.
  */
 @Pipe({name: 'kdCores'})
-export class CoreFormatter implements PipeTransform {
+export class CoreFormatter extends DecimalPipe {
   readonly base = 1000;
   readonly powerSuffixes = ['', 'k', 'M', 'G', 'T'];
 
@@ -32,7 +33,7 @@ export class CoreFormatter implements PipeTransform {
       power += 1;
     }
 
-    const formatted = value / divider;
+    const formatted = super.transform(value / divider, '1.2-2');
     const suffix = this.powerSuffixes[power];
     return suffix ? `${formatted} ${suffix}` : `${formatted}`;
   }

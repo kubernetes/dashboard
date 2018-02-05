@@ -21,7 +21,7 @@ import {Subscription} from 'rxjs/Subscription';
 
 import {ResourceStateParams} from '../params/params';
 
-export abstract class ResourceList<T> implements OnInit, OnDestroy {
+export abstract class ResourceListBase<T> implements OnInit, OnDestroy {
   private data_ = new MatTableDataSource<T>();
   private dataSubscription_: Subscription;
 
@@ -45,5 +45,36 @@ export abstract class ResourceList<T> implements OnInit, OnDestroy {
 
   getData(): DataSource<T> {
     return this.data_;
+  }
+}
+
+export abstract class ResourceListWithStatuses<T> extends ResourceListBase<T> {
+  private errorIcon_ = 'error';
+  private warningIcon_ = 'timelapse';
+  private successIcon_ = 'check_circle';
+
+  /**
+   * Allows to override warning icon.
+   */
+  setWarningIcon(iconName: string) {
+    this.warningIcon_ = iconName;
+  }
+
+  abstract isInErrorState(resource: T): boolean;
+  abstract isInWarningState(resource: T): boolean;
+  abstract isInSuccessState(resource: T): boolean;
+
+  getIcon(resource: T): string {
+    if (this.isInErrorState(resource)) {
+      return this.errorIcon_;
+    }
+
+    if (this.isInWarningState(resource)) {
+      return this.warningIcon_;
+    }
+
+    if (this.isInSuccessState(resource)) {
+      return this.successIcon_;
+    }
   }
 }
