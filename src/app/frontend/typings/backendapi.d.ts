@@ -31,7 +31,7 @@ export interface AppConfig { serverTime: number }
 export interface CanIResponse { allowed: boolean }
 
 interface StringMap {
-  [name: string]: string
+  [key: string]: string
 }
 
 export interface ErrStatus { message: string, code: number, status: string, reason: string }
@@ -39,7 +39,7 @@ export interface ErrStatus { message: string, code: number, status: string, reas
 export interface K8sError { errStatus: ErrStatus }
 
 export interface ObjectMeta {
-  name: string, namespace: string, labels: StringMap, annotation: StringMap,
+  name: string, namespace: string, labels: StringMap, annotations: StringMap,
       creationTimestamp: string
 }
 

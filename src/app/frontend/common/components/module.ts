@@ -19,6 +19,9 @@ import {SharedModule} from '../../shared.module';
 import {ActionbarComponent} from './actionbar/component';
 import {BreadcrumbsComponent} from './breadcrumbs/component';
 import {CardComponent} from './card/component';
+import {LabelsComponent} from './labels/component';
+import {ObjectMetaComponent} from './objectmeta/component';
+import {PropertyComponent} from './property/component';
 
 @NgModule({
   imports: [SharedModule],
@@ -26,11 +29,17 @@ import {CardComponent} from './card/component';
     CardComponent,
     ActionbarComponent,
     BreadcrumbsComponent,
+    PropertyComponent,
+    ObjectMetaComponent,
+    LabelsComponent,
   ],
   exports: [
     CardComponent,
     ActionbarComponent,
     BreadcrumbsComponent,
+    PropertyComponent,
+    ObjectMetaComponent,
+    LabelsComponent,
   ],
 })
 export class ComponentsModule {}

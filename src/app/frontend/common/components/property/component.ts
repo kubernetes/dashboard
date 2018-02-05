@@ -12,9 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../../variables';
+import {Component, Input} from '@angular/core';
 
-kd-labels {
-  display: block;
-  margin-bottom: -($baseline-grid / 2);
-}
+@Component({
+  selector: 'kd-property',
+  templateUrl: './template.html',
+})
+export class PropertyComponent {}

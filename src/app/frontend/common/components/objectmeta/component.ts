@@ -12,16 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Represents single info card group. See info card component for documentation.
- *
- * @type {!angular.Component}
- */
-export const infoCardSectionComponent = {
-  templateUrl: 'common/components/infocard/infocardsection.html',
-  transclude: true,
-  bindings: {
-    /** {string|undefined} */
-    'name': '@',
-  },
-};
+import {Component, Input} from '@angular/core';
+import {ObjectMeta} from '@api/backendapi';
+
+@Component({
+  selector: 'kd-object-meta',
+  templateUrl: './template.html',
+})
+export class ObjectMetaComponent { @Input() objectMeta: ObjectMeta; }

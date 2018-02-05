@@ -12,5 +12,6 @@
   ],
   "include": [
     "../src/app/frontend/**/*"
-  ]
+  ],
+  "lib": ["es2017", "dom"]
 }
