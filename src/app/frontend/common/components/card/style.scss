@@ -23,15 +23,19 @@
     margin: 0;
   }
 
-  .mat-card-content {
-    margin: 0;
-    padding: 2 * $baseline-grid;
-  }
-
   .mat-card-footer {
     display: inline;
     margin: 0;
   }
+}
+
+.kd-card-content {
+  margin: 0;
+  padding: 2 * $baseline-grid;
+}
+
+.kd-card-content-table {
+  padding: 0;
 }
 
 .kd-card-title {

@@ -71,6 +71,16 @@ code {
   }
 }
 
+.mat-header-row,
+.mat-row {
+  min-height: (5 * $baseline-grid) !important;
+  padding: 0 (2 * $baseline-grid) !important;
+}
+
+.mat-header-cell {
+  font-size: $body-font-size-base;
+}
+
 ////////////////////////////////////////////
 // Custom classes used across application //
 ////////////////////////////////////////////

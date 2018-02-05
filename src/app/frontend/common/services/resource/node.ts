@@ -13,18 +13,25 @@
 // limitations under the License.
 
 import {HttpClient} from '@angular/common/http';
-import {NodeDetail} from '@api/backendapi';
+import {Node, NodeDetail, NodeList} from '@api/backendapi';
+import {Observable} from 'rxjs/Observable';
 
 export class NodeService {
   private readonly nodeEndpoint_ = 'api/v1/node/';
 
   constructor(private http_: HttpClient) {}
 
-  getNodeList() {
+  getNodeList(): Observable<NodeList> {
     return this.http_.get<NodeList>(this.nodeEndpoint_);
   }
 
-  getNodeDetail(name: string) {
+  getNodes(): Observable<Node[]> {
+    return this.getNodeList().map<NodeList, Node[]>(nodeList => {
+      return nodeList.nodes;
+    });
+  }
+
+  getNodeDetail(name: string): Observable<NodeDetail> {
     return this.http_.get<NodeDetail>(this.nodeEndpoint_ + name);
   }
 }

@@ -22,7 +22,15 @@ import {CardComponent} from './card/component';
 
 @NgModule({
   imports: [SharedModule],
-  declarations: [CardComponent, ActionbarComponent, BreadcrumbsComponent],
-  exports: [CardComponent, ActionbarComponent, BreadcrumbsComponent],
+  declarations: [
+    CardComponent,
+    ActionbarComponent,
+    BreadcrumbsComponent,
+  ],
+  exports: [
+    CardComponent,
+    ActionbarComponent,
+    BreadcrumbsComponent,
+  ],
 })
 export class ComponentsModule {}

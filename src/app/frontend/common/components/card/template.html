@@ -23,9 +23,9 @@ limitations under the License.
 
   <mat-divider></mat-divider>
 
-  <mat-card-content>
-    <div class="kd-card-content"
-         *ngIf="initialized; else loading">
+  <mat-card-content class="kd-card-content"
+                    [ngClass]="{'kd-card-content-table': role === 'table'}">
+    <div *ngIf="initialized; else loading">
       <ng-content select="[content]"></ng-content>
     </div>
     <ng-template #loading>
@@ -34,7 +34,8 @@ limitations under the License.
   </mat-card-content>
 
   <mat-card-footer>
-    <div class="mat-small kd-card-footer">
+    <div class="mat-small"
+         [ngClass]="{'kd-card-footer': withFooter}">
       <ng-content select="[footer]"></ng-content>
     </div>
   </mat-card-footer>
