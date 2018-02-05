@@ -17,6 +17,17 @@ limitations under the License.
 <kd-card>
   <div title>Details</div>
   <div content>
-    {{node | json}}
+    <kd-object-meta [objectMeta]="node.objectMeta"></kd-object-meta>
+
+    <!-- TODO property block, property card? -->
+
+    <kd-property>
+      <div key>Name</div>
+      <div value>{{node.objectMeta.name}}</div>
+    </kd-property>
+
+    <br>
+    <br>
+    <br> {{node | json}}
   </div>
 </kd-card>

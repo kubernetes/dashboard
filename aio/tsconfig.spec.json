@@ -16,5 +16,6 @@
   "include": [
     "../src/app/frontend/**/*.spec.ts",
     "../src/app/frontend/**/*.d.ts"
-  ]
+  ],
+  "lib": ["es2017", "dom"]
 }

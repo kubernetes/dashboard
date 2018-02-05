@@ -11,5 +11,6 @@
       "node"
     ]
   },
-  "include": ["../src/test/e2e/**/*"]
+  "include": ["../src/test/e2e/**/*"],
+  "lib": ["es2017", "dom"]
 }

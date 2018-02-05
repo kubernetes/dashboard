@@ -75,6 +75,10 @@ code {
 // Custom classes used across application //
 ////////////////////////////////////////////
 
+.kd-bold {
+  font-weight: $bold-font-weight;
+}
+
 .kd-h1 {
   font-size: 24px;
 }
