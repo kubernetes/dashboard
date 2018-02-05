@@ -24,12 +24,14 @@ import {NodeService} from '../../../../common/services/resource/node';
 })
 export class NodeDetailComponent implements OnInit {
   node: NodeDetail;
+  isInitialized = false;
 
   constructor(private node_: NodeService) {}
 
   ngOnInit() {
     this.node_.getNodeDetail('kube-master').subscribe((d: NodeDetail) => {
       this.node = d;
+      this.isInitialized = true;
     });
   }
 }

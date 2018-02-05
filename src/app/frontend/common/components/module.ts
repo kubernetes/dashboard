@@ -19,7 +19,7 @@ import {SharedModule} from '../../shared.module';
 import {ActionbarComponent} from './actionbar/component';
 import {BreadcrumbsComponent} from './breadcrumbs/component';
 import {CardComponent} from './card/component';
-import {LabelsComponent} from './labels/component';
+import {ChipsComponent} from './chips/component';
 import {ObjectMetaComponent} from './objectmeta/component';
 import {PropertyComponent} from './property/component';
 
@@ -31,7 +31,7 @@ import {PropertyComponent} from './property/component';
     BreadcrumbsComponent,
     PropertyComponent,
     ObjectMetaComponent,
-    LabelsComponent,
+    ChipsComponent,
   ],
   exports: [
     CardComponent,
@@ -39,7 +39,7 @@ import {PropertyComponent} from './property/component';
     BreadcrumbsComponent,
     PropertyComponent,
     ObjectMetaComponent,
-    LabelsComponent,
+    ChipsComponent,
   ],
 })
 export class ComponentsModule {}
