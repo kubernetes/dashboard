@@ -15,12 +15,21 @@ limitations under the License.
 -->
 
 <mat-chip-list>
-  <mat-chip *ngFor="let key of keys; let i = index">
-    <!-- TODO Check if visible (i) -->
-    <span>{{key}}</span>
-    <!-- TODO Check if URL -->
-    <span *ngIf="map[key]">: {{map[key]}}</span>
-  </mat-chip>
+  <ng-container *ngFor="let key of keys; let i = index">
+    <mat-chip *ngIf="isVisible(i)">
+      <span>{{key}}</span>
+      <ng-container [ngSwitch]="isHref(map[key])">
+        <ng-container *ngSwitchCase="true">
+          <span>:&nbsp;</span>
+          <a [href]="map[key]"
+             target="_blank">
+            {{map[key]}}
+          </a>
+        </ng-container>
+        <span *ngSwitchDefault>:&nbsp;{{map[key]}}</span>
+      </ng-container>
+    </mat-chip>
+  </ng-container>
   <mat-chip *ngIf="isAnythingHidden()"
             (click)="toggleView()"
             color="primary"
