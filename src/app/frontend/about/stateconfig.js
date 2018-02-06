@@ -13,15 +13,14 @@
 // limitations under the License.
 
 
-import {stateName as chromeStateName} from '../chrome/state';
+import {actionbarViewName, stateName as chromeStateName} from '../chrome/state';
 import {breadcrumbsConfig} from '../common/components/breadcrumbs/service';
 
+import {ActionBarController} from './actionbar_controller';
 import {AboutController} from './controller';
 import {stateName, stateUrl} from './state';
 
 /**
- * Configures states for the about view.
- *
  * @param {!ui.router.$stateProvider} $stateProvider
  * @ngInject
  */
@@ -34,6 +33,11 @@ export default function stateConfig($stateProvider) {
         controller: AboutController,
         controllerAs: '$ctrl',
         templateUrl: 'about/about.html',
+      },
+      [`${actionbarViewName}@${chromeStateName}`]: {
+        controller: ActionBarController,
+        controllerAs: '$ctrl',
+        templateUrl: 'about/actionbar.html',
       },
     },
     data: {

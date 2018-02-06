@@ -47,7 +47,7 @@ const arch = {
  * Configuration for container registry to push images to.
  */
 const containerRegistry = {
-  release: 'gcr.io/google_containers',
+  release: 'k8s.gcr.io',
   /** Default to an environment variable */
   head: process.env.DOCKER_HUB_PREFIX || 'kubernetes',
 };
@@ -59,7 +59,7 @@ const version = {
   /**
    * Current release version of the project.
    */
-  release: 'v1.8.1',
+  release: 'v1.8.2',
   /**
    * Version name of the head release of the project.
    */

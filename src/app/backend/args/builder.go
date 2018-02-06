@@ -42,7 +42,7 @@ func (self *holderBuilder) SetTokenTTL(ttl int) *holderBuilder {
 	return self
 }
 
-// SetMetricClientCheckPeriod 'metric-client-check-eriod' argument of Dashboard binary.
+// SetMetricClientCheckPeriod 'metric-client-check-period' argument of Dashboard binary.
 func (self *holderBuilder) SetMetricClientCheckPeriod(period int) *holderBuilder {
 	self.holder.metricClientCheckPeriod = period
 	return self
