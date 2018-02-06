@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {APP_INITIALIZER, NgModule} from '@angular/core';
+import {APP_INITIALIZER, Injector, NgModule} from '@angular/core';
 
 import {AssetsService} from './assets';
 import {AuthService} from './authentication';
@@ -34,7 +34,12 @@ import {TitleService} from './title';
     }
   ],
 })
-export class GlobalServicesModule {}
+export class GlobalServicesModule {
+  static injector: Injector;
+  constructor(injector: Injector) {
+    GlobalServicesModule.injector = injector;
+  }
+}
 
 export function init(settings: SettingsService, config: ConfigService) {
   return () => {

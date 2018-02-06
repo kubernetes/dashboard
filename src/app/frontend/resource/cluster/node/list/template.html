@@ -18,7 +18,14 @@ limitations under the License.
   <div title>Nodes</div>
 
   <div content>
-    <mat-table [dataSource]="getData()">
+    <div kdLoadingSpinner
+         [isLoading]="isLoading"></div>
+
+    <mat-table [dataSource]="getData()"
+               matSort
+               [matSortActive]="getDisplayColumns()[8]"
+               matSortDisableClear
+               matSortDirection="asc">
       <ng-container [matColumnDef]="getDisplayColumns()[0]">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let node">
@@ -83,5 +90,8 @@ limitations under the License.
       <mat-header-row *matHeaderRowDef="getDisplayColumns()"></mat-header-row>
       <mat-row *matRowDef="let row; columns: getDisplayColumns();"></mat-row>
     </mat-table>
+
+    <mat-paginator [length]="totalItems"
+                   [pageSize]="itemsPerPage"></mat-paginator>
   </div>
 </kd-card>

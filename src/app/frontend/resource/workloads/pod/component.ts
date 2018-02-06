@@ -16,17 +16,16 @@ import {Component} from '@angular/core';
 import {Pod, PodList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 
-import {ResourceListWithStatusesAndDataSelect} from '../../../common/resources/list';
+import {ResourceListWithStatuses} from '../../../common/resources/list';
 import {PodService} from '../../../common/services/resource/pod';
 
-@Component({selector: 'kd-pod', templateUrl: './template.html', styleUrls: ['./style.scss']})
-export class PodListComponent extends ResourceListWithStatusesAndDataSelect<PodList, Pod> {
+@Component({selector: 'kd-pod', templateUrl: './template.html'})
+export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
   constructor(state: StateService, private podService_: PodService) {
     super('pod', state, podService_);
   }
 
   map(podList: PodList): Pod[] {
-    this.isLoading = false;
     return podList.pods;
   }
 

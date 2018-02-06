@@ -22,6 +22,7 @@ import {CardComponent} from './card/component';
 import {ChipsComponent} from './chips/component';
 import {ObjectMetaComponent} from './objectmeta/component';
 import {PropertyComponent} from './property/component';
+import {LoadingSpinner} from './table/loadingspinner';
 
 @NgModule({
   imports: [SharedModule],
@@ -32,6 +33,7 @@ import {PropertyComponent} from './property/component';
     PropertyComponent,
     ObjectMetaComponent,
     ChipsComponent,
+    LoadingSpinner,
   ],
   exports: [
     CardComponent,
@@ -40,6 +42,7 @@ import {PropertyComponent} from './property/component';
     PropertyComponent,
     ObjectMetaComponent,
     ChipsComponent,
+    LoadingSpinner,
   ],
 })
 export class ComponentsModule {}

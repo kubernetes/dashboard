@@ -14,33 +14,68 @@
 
 import {DataSource} from '@angular/cdk/collections';
 import {HttpParams} from '@angular/common/http';
-import {AfterViewInit, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {ResourceList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {merge} from 'rxjs/observable/merge';
-import {map, startWith, switchMap} from 'rxjs/operators';
+import {startWith, switchMap} from 'rxjs/operators';
 import {Subscription} from 'rxjs/Subscription';
 
 import {ResourceStateParams} from '../params/params';
+import {GlobalServicesModule} from '../services/global/module';
+import {SettingsService} from '../services/global/settings';
 
 import {ResourceListService} from './service';
 
 // TODO: NEEDS DOCUMENTATION!!!
-export abstract class ResourceListBase<T, R> implements OnInit, OnDestroy {
-  protected data_ = new MatTableDataSource<R>();
-  protected dataSubscription_: Subscription;
+export abstract class ResourceListBase<T extends ResourceList, R> implements OnInit, OnDestroy {
+  // Base properties
+  private data_ = new MatTableDataSource<R>();
+  private dataSubscription_: Subscription;
+  private settingsService_: SettingsService;
+
+  // Data select properties
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  isLoading = false;
+  totalItems = 0;
+  itemsPerPage: number;
 
   constructor(
       private detailStateName_: string, private state_: StateService,
-      protected resourceListService_: ResourceListService<T>) {}
-
-  ngOnInit() {
-    this.dataSubscription_ =
-        this.resourceListService_.getResourceList().map<T, R[]>(this.map).subscribe(
-            data => this.data_.data = data);
+      protected resourceListService_: ResourceListService<T>) {
+    this.settingsService_ = GlobalServicesModule.injector.get(SettingsService);
+    this.itemsPerPage = this.settingsService_.getItemsPerPage();
   }
 
-  ngOnDestroy() {
+  ngOnInit(): void {
+    if (this.sort === undefined) {
+      throw Error('MatSort has to be defined on a table.');
+    }
+
+    if (this.paginator === undefined) {
+      throw Error('MatPaginator has to be defined on a table.');
+    }
+
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+
+    this.dataSubscription_ = merge(this.sort.sortChange, this.paginator.page)
+                                 .pipe(startWith({}), switchMap<T, T>(() => {
+                                         let params = this.sort_();
+                                         params = this.paginate_(params);
+
+                                         this.isLoading = true;
+                                         return this.resourceListService_.getResourceList(params);
+                                       }))
+                                 .subscribe((data: T) => {
+                                   this.totalItems = data.listMeta.totalItems;
+                                   this.isLoading = false;
+                                   this.data_.data = this.map(data);
+                                 });
+  }
+
+  ngOnDestroy(): void {
     this.dataSubscription_.unsubscribe();
   }
 
@@ -52,11 +87,60 @@ export abstract class ResourceListBase<T, R> implements OnInit, OnDestroy {
     return this.data_;
   }
 
-  abstract map(value: T, index: number): R[];
+  private sort_(params?: HttpParams): HttpParams {
+    let result = new HttpParams();
+    if (params) {
+      result = params;
+    }
+
+    return result.set('sortBy', this.getSortBy_());
+  }
+
+  private paginate_(params?: HttpParams): HttpParams {
+    let result = new HttpParams();
+    if (params) {
+      result = params;
+    }
+
+    return result.set('itemsPerPage', `${this.settingsService_.getItemsPerPage()}`)
+        .set('page', `${this.paginator.pageIndex + 1}`);
+  }
+
+  private getSortBy_(): string {
+    // Default values.
+    let ascending = true;
+    let active = 'age';
+
+    if (this.sort.direction) {
+      ascending = this.sort.direction === 'asc';
+    }
+
+    if (this.sort.active) {
+      active = this.sort.active;
+    }
+
+    if (active === 'age') {
+      ascending = !ascending;
+    }
+
+    return `${ascending ? 'a' : 'd'},${this.mapToBackendValue_(active)}`;
+  }
+
+  private mapToBackendValue_(sortByColumnName: string): string {
+    switch (sortByColumnName) {
+      case 'age':
+        return 'creationTimestamp';
+      default:
+        return sortByColumnName;
+    }
+  }
+
+  abstract map(value: T): R[];
   abstract getDisplayColumns(): string[];
 }
 
-export abstract class ResourceListWithStatuses<T, R> extends ResourceListBase<T, R> {
+export abstract class ResourceListWithStatuses<T extends ResourceList, R> extends
+    ResourceListBase<T, R> {
   private errorIcon_ = 'error';
   private warningIcon_ = 'timelapse';
   private successIcon_ = 'check_circle';
@@ -87,44 +171,4 @@ export abstract class ResourceListWithStatuses<T, R> extends ResourceListBase<T,
   abstract isInErrorState(resource: R): boolean;
   abstract isInWarningState(resource: R): boolean;
   abstract isInSuccessState(resource: R): boolean;
-}
-
-export abstract class ResourceListWithStatusesAndDataSelect<T, R> extends
-    ResourceListWithStatuses<T, R> implements AfterViewInit {
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  isLoading = false;
-  totalItems = 0;
-
-  constructor(
-      detailStateName: string, state: StateService, resourceListService: ResourceListService<T>) {
-    super(detailStateName, state, resourceListService);
-  }
-
-  private getSortBy_() {
-    let ascending = this.sort.direction === 'asc';
-    let active = this.sort.active;
-    if (this.sort.active === 'age') {
-      active = 'creationTimestamp';
-      ascending = !ascending;
-    }
-
-    return `${ascending ? 'a' : 'd'},${active}`;
-  }
-
-  ngOnInit() {
-    this.dataSubscription_ = merge(this.sort.sortChange)
-                                 .pipe(
-                                     startWith({}), switchMap<T, T>(() => {
-                                       this.isLoading = true;
-
-                                       let params = new HttpParams();
-                                       params = params.set('sortBy', this.getSortBy_());
-                                       return this.resourceListService_.getResourceList(params);
-                                     }),
-                                     map(this.map))
-                                 .subscribe(data => this.data_.data = data);
-  }
-
-  ngAfterViewInit() {}
 }

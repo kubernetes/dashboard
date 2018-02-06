@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Component} from '@angular/core';
-import {Node, NodeList} from '@api/backendapi';
+import {Node, NodeList, PodList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 
 import {ResourceListWithStatuses} from '../../../../common/resources/list';

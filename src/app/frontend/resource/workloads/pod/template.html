@@ -18,13 +18,10 @@ limitations under the License.
   <div title>Pods</div>
 
   <div content>
-    <div class="example-loading-shade"
-         *ngIf="isLoading">
-      <mat-spinner *ngIf="isLoading"></mat-spinner>
-    </div>
+    <div kdLoadingSpinner
+         [isLoading]="isLoading"></div>
 
-    <mat-table #table
-               [dataSource]="getData()"
+    <mat-table [dataSource]="getData()"
                matSort
                [matSortActive]="getDisplayColumns()[5]"
                matSortDisableClear
@@ -76,5 +73,8 @@ limitations under the License.
       <mat-header-row *matHeaderRowDef="getDisplayColumns()"></mat-header-row>
       <mat-row *matRowDef="let row; columns: getDisplayColumns();"></mat-row>
     </mat-table>
+
+    <mat-paginator [length]="totalItems"
+                   [pageSize]="itemsPerPage"></mat-paginator>
   </div>
 </kd-card>

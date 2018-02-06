@@ -64,7 +64,7 @@ export interface ContainerState {
   waiting: ContainerStateWaiting, terminated: ContainerStateTerminated
 }
 
-export interface EventList { events: Event[], listMeta: ListMeta }
+export interface EventList extends ResourceList { events: Event[] }
 
 export interface Event {
   objectMeta: ObjectMeta, typeMeta: TypeMeta, message: string, sourceComponent: string,
@@ -98,10 +98,9 @@ export interface Pod {
       nodeName: string
 }
 
-export interface PodList {
+export interface PodList extends ResourceList {
   pods: Pod[];
-  listMeta: ListMeta, status: Status, podInfo: PodInfo, cumulativeMetrics: Metric[]|null,
-      errors: K8sError[]
+  status: Status, podInfo: PodInfo, cumulativeMetrics: Metric[]|null, errors: K8sError[]
 }
 
 export interface NodeAllocatedResources {
@@ -128,4 +127,6 @@ export interface NodeDetail {
 
 export interface Node { objectMeta: ObjectMeta, typeMeta: TypeMeta, ready: string }
 
-export interface NodeList { nodes: Node[], listMeta: ListMeta, errors: K8sError[] }
+export interface NodeList extends ResourceList { nodes: Node[], errors: K8sError[] }
+
+export interface ResourceList { listMeta: ListMeta; }
