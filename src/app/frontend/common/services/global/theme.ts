@@ -17,14 +17,14 @@ import {ThemeSwitchCallback} from '@api/frontendapi';
 
 @Injectable()
 export class ThemeService {
-  private isLightThemeEnabled_ = true;
-  private onThemeSwitchEvent_ = new EventEmitter<boolean>();
+  private readonly isLightThemeEnabled_ = true;
+  private readonly onThemeSwitchEvent_ = new EventEmitter<boolean>();
 
   isLightThemeEnabled(): boolean {
     return this.isLightThemeEnabled_;
   }
 
-  switchTheme(isThemeDark: boolean) {
+  switchTheme(isThemeDark: boolean): void {
     this.onThemeSwitchEvent_.emit(!isThemeDark);
   }
 

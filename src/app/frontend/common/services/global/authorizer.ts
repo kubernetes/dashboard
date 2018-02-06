@@ -22,7 +22,7 @@ import {KdError, KNOWN_ERRORS} from '../../errors/errors';
 export class AuthorizerService {
   authorizationSubUrl_ = '/cani';
 
-  constructor(private http_: HttpClient) {}
+  constructor(private readonly http_: HttpClient) {}
 
   proxyGET<T>(url: string): Observable<T> {
     return this.http_.get<CanIResponse>(`${url}${this.authorizationSubUrl_}`)

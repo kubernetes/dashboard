@@ -25,7 +25,7 @@ export class ConfigService {
   private config_: AppConfig;
   private initTime_: number;
 
-  constructor(private http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {}
 
   init(): void {
     this.getAppConfig().subscribe((config) => {

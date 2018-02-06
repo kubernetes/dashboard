@@ -48,7 +48,7 @@ import {settingsState} from '../../settings/state';
   styleUrls: ['./style.scss'],
 })
 export class NavComponent implements AfterContentInit, OnInit {
-  @ViewChild(MatDrawer) private nav_: MatDrawer;
+  @ViewChild(MatDrawer) private readonly nav_: MatDrawer;
   states = {
     cluster: clusterState.name,
     namespace: namespaceState.name,
@@ -77,7 +77,7 @@ export class NavComponent implements AfterContentInit, OnInit {
     about: aboutState.name,
   };
 
-  constructor(private navService_: NavService) {}
+  constructor(private readonly navService_: NavService) {}
 
   ngOnInit(): void {
     this.navService_.setNav(this.nav_);

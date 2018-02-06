@@ -70,7 +70,7 @@ const breadcrumbsConfig = 'kdBreadcrumbs';
 export class BreadcrumbsComponent implements OnInit {
   @Input() limit: number;
   breadcrumbs: Breadcrumb[];
-  constructor(private state_: StateService, private transition_: TransitionService) {}
+  constructor(private readonly state_: StateService, private readonly transition_: TransitionService) {}
 
   ngOnInit(): void {
     this.initBreadcrumbs_();

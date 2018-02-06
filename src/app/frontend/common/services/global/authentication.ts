@@ -33,9 +33,9 @@ export class AuthService {
   private readonly config_ = CONFIG;
 
   constructor(
-      private cookies_: CookieService, private transitions_: TransitionService,
-      private state_: StateService, private http_: HttpClient,
-      private csrfTokenService_: CsrfTokenService) {}
+      private readonly cookies_: CookieService, private readonly transitions_: TransitionService,
+      private readonly state_: StateService, private readonly http_: HttpClient,
+      private readonly csrfTokenService_: CsrfTokenService) {}
 
   private setTokenCookie_(token: string): void {
     // This will only work for HTTPS connection

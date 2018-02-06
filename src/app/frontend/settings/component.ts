@@ -32,8 +32,8 @@ export class SettingsComponent implements OnInit {
   local: LocalSettings = {} as LocalSettings;
 
   constructor(
-      private settings_: SettingsService, private dialog_: MatDialog,
-      private state_: StateService) {}
+      private readonly settings_: SettingsService, private readonly dialog_: MatDialog,
+      private readonly state_: StateService) {}
 
   ngOnInit(): void {
     this.loadGlobalSettings();

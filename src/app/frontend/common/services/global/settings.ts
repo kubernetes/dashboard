@@ -36,8 +36,8 @@ export class SettingsService {
   private isInitialized_ = false;
 
   constructor(
-      private http_: HttpClient, private authorizer_: AuthorizerService,
-      private theme_: ThemeService, private cookies_: CookieService) {}
+      private readonly http_: HttpClient, private readonly authorizer_: AuthorizerService,
+      private readonly theme_: ThemeService, private readonly cookies_: CookieService) {}
 
   init(): void {
     this.loadGlobalSettings();

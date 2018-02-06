@@ -31,7 +31,7 @@ export abstract class ResourceListBase<T, R> implements OnInit, OnDestroy {
   protected dataSubscription_: Subscription;
 
   constructor(
-      private detailStateName_: string, private state_: StateService,
+      private readonly detailStateName_: string, private readonly state_: StateService,
       protected resourceListService_: ResourceListService<T>) {}
 
   ngOnInit(): void {
@@ -57,9 +57,9 @@ export abstract class ResourceListBase<T, R> implements OnInit, OnDestroy {
 }
 
 export abstract class ResourceListWithStatuses<T, R> extends ResourceListBase<T, R> {
-  private errorIcon_ = 'error';
+  private readonly errorIcon_ = 'error';
   private warningIcon_ = 'timelapse';
-  private successIcon_ = 'check_circle';
+  private readonly successIcon_ = 'check_circle';
 
   /**
    * Allows to override warning icon.

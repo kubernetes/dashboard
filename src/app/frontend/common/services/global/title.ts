@@ -19,7 +19,7 @@ import {SettingsService} from './settings';
 
 @Injectable()
 export class TitleService {
-  constructor(private titleService_: Title, private settingsService_: SettingsService) {}
+  constructor(private readonly titleService_: Title, private readonly settingsService_: SettingsService) {}
 
   setTitle(transition: Transition): void {
     const targetState = transition.to().name;  // TODO Use breadcrumb value instead.

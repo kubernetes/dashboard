@@ -25,7 +25,7 @@ enum Themes {
 @Component({selector: 'kd-root', template: '<ui-view [ngClass]="getTheme()"></ui-view>'})
 export class RootComponent implements OnInit {
   isLightThemeEnabled: boolean;
-  constructor(private themeService_: ThemeService, private settings_: SettingsService) {
+  constructor(private readonly themeService_: ThemeService, private readonly settings_: SettingsService) {
     this.isLightThemeEnabled = this.themeService_.isLightThemeEnabled();
   }
 

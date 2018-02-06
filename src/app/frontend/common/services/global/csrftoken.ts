@@ -19,7 +19,7 @@ import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class CsrfTokenService {
-  constructor(private http_: HttpClient) {}
+  constructor(private readonly http_: HttpClient) {}
 
   /** Get a CSRF token for an action you want to perform. */
   getTokenForAction(action: string): Observable<CsrfToken> {

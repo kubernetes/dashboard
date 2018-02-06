@@ -21,7 +21,7 @@ import {PodService} from '../../../common/services/resource/pod';
 
 @Component({selector: 'kd-pod', templateUrl: './template.html', styleUrls: ['./style.scss']})
 export class PodListComponent extends ResourceListWithStatusesAndDataSelect<PodList, Pod> {
-  constructor(state: StateService, private podService_: PodService) {
+  constructor(state: StateService, private readonly podService_: PodService) {
     super('pod', state, podService_);
   }
 
