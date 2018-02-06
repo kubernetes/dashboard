@@ -19,6 +19,11 @@ export interface BreadcrumbConfig {
   parent?: string;
 }
 
+export class Breadcrumb {
+  label: string;
+  stateLink: string;
+}
+
 export type ThemeSwitchCallback = (isLightThemeEnabled: boolean) => void;
 
 export type onSettingsLoadCallback = (settings?: GlobalSettings) => void;

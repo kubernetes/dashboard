@@ -13,14 +13,9 @@
 // limitations under the License.
 
 import {Component, Input, OnInit} from '@angular/core';
-import {BreadcrumbConfig} from '@api/frontendapi';
+import {Breadcrumb} from '@api/frontendapi';
 import {StateDeclaration, StateObject, StateService, TransitionService} from '@uirouter/core';
 import {BreadcrumbsService} from '../../services/global/breadcrumbs';
-
-class Breadcrumb {
-  label: string;
-  stateLink: string;
-}
 
 /**
  * Should be used only within actionbar component.
@@ -91,23 +86,10 @@ export class BreadcrumbsComponent implements OnInit {
         breadcrumbs.push(breadcrumb);
       }
 
-      state = this.getParentState(state);
+      state = this.breadcrumbs_.getParentState(state);
     }
 
     this.breadcrumbs = breadcrumbs.reverse();
-  }
-
-  getParentState(state: StateObject|StateDeclaration): StateObject|StateDeclaration {
-    const conf = this.breadcrumbs_.getBreadcrumbConfig_(state);
-    let result = null;
-    if (conf && conf.parent) {
-      if (typeof conf.parent === 'string') {
-        result = this.state_.get(conf.parent);
-      } else {
-        result = conf.parent;
-      }
-    }
-    return result;
   }
 
   /**

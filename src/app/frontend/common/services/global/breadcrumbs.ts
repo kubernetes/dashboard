@@ -23,12 +23,25 @@ const breadcrumbsConfig = 'kdBreadcrumbs';
 export class BreadcrumbsService {
   constructor(private readonly state_: StateService) {}
 
-  getBreadcrumbConfig_(state: StateObject|StateDeclaration): BreadcrumbConfig {
+  getParentState(state: StateObject|StateDeclaration): StateObject|StateDeclaration {
+    const conf = this.getBreadcrumbConfig(state);
+    let result = null;
+    if (conf && conf.parent) {
+      if (typeof conf.parent === 'string') {
+        result = this.state_.get(conf.parent);
+      } else {
+        result = conf.parent;
+      }
+    }
+    return result;
+  }
+
+  getBreadcrumbConfig(state: StateObject|StateDeclaration): BreadcrumbConfig {
     return state.data ? state.data[breadcrumbsConfig] : state.data;
   }
 
   getDisplayName(state: StateObject|StateDeclaration): string {
-    const conf = this.getBreadcrumbConfig_(state);
+    const conf = this.getBreadcrumbConfig(state);
     const stateParams = this.state_.params;
 
     // When conf is undefined and label is undefined or empty then fallback to state name

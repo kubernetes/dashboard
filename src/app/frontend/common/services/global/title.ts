@@ -27,7 +27,8 @@ export class TitleService {
       private readonly breadcrumbs_: BreadcrumbsService) {}
 
   setTitle(transition: Transition): void {
-    const state = this.breadcrumbs_.getDisplayName(transition.targetState().state());
+    const state = this.breadcrumbs_.getDisplayName(
+        transition.targetState().state());  // TODO Fix resourceName.
     this.settings_.loadGlobalSettings(
         () => {
           const clusterName = this.settings_.getClusterName();
