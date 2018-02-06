@@ -44,6 +44,10 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
   isLoading = false;
   totalItems = 0;
 
+  get itemsPerPage(): number {
+    return this.settingsService_.getItemsPerPage();
+  }
+
   constructor(
       private readonly detailStateName_: string, private readonly state_: StateService,
       protected resourceListService_: ResourceListService<T>) {
@@ -94,10 +98,6 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
     return this.data_;
   }
 
-  getItemsPerPage(): number {
-    return this.settingsService_.getItemsPerPage();
-  }
-
   private sort_(params?: HttpParams): HttpParams {
     let result = new HttpParams();
     if (params) {
@@ -113,7 +113,7 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
       result = params;
     }
 
-    return result.set('itemsPerPage', `${this.getItemsPerPage()}`)
+    return result.set('itemsPerPage', `${this.itemsPerPage}`)
         .set('page', `${this.paginator.pageIndex + 1}`);
   }
 
