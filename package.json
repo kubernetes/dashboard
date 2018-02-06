@@ -33,7 +33,7 @@
     "test:e2e": "ng e2e",
     "cluster": "./aio/scripts/start-cluster.sh",
     "check": "npm run check:static && npm run test && npm run test:e2e",
-    "check:static": "npm run check:license && npm run check:format && npm run lint",
+    "check:static": "npm run check:license && npm run lint && npm run check:format",
     "check:license": "gulp check-license-headers",
     "check:format": "concurrently \"npm run check:format:code\" \"npm run check:format:styles\" \"npm run check:format:html\"",
     "check:format:code": "./aio/scripts/format.sh --code --check",
@@ -41,7 +41,7 @@
     "check:format:html": "./aio/scripts/format.sh --html --check",
     "lint": "npm run lint:frontend && npm run lint:backend",
     "lint:frontend": "npm run lint:frontend:code && npm run lint:frontend:styles",
-    "lint:frontend:code": "tslint -c tslint.json --project . -t codeFrame",
+    "lint:frontend:code": "tslint -c tslint.json --project . -t codeFrame --fix",
     "lint:frontend:styles": "./node_modules/sass-lint/bin/sass-lint.js -c .sass-lint.yml 'src/app/frontend/**/*.scss' -v -q",
     "lint:backend": "./aio/scripts/lint-backend.sh",
     "format": "npm run format:headers && concurrently \"npm run format:frontend\" \"npm run format:backend\"",
@@ -122,7 +122,7 @@
     "source-map-explorer": "~1.5.0",
     "through2": "^2.0.3",
     "ts-node": "~4.1.0",
-    "tslint": "~5.8.0",
+    "tslint": "~5.9.1",
     "typescript": "~2.4.2"
   },
   "engines": {

@@ -20,9 +20,9 @@ import {NavService} from '../../../common/services/nav/service';
   templateUrl: 'template.html',
 })
 export class HamburgerComponent {
-  constructor(private navService_: NavService) {}
+  constructor(private readonly navService_: NavService) {}
 
-  toggle() {
+  toggle(): void {
     this.navService_.toggle();
   }
 }

@@ -100,6 +100,10 @@
     background-color: $background;
   }
 
+  .kd-loading-shade {
+    background: mat-color($foreground-palette, divider);
+  }
+
   // Component-level styles
 
   .kd-primary-toolbar {

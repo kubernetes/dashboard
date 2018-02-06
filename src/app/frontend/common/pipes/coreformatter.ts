@@ -35,6 +35,6 @@ export class CoreFormatter extends DecimalPipe {
 
     const formatted = super.transform(value / divider, '1.2-2');
     const suffix = this.powerSuffixes[power];
-    return suffix ? `${formatted} ${suffix}` : `${formatted}`;
+    return suffix ? `${formatted} ${suffix}` : formatted;
   }
 }

@@ -19,7 +19,7 @@ import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {ResourceList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {merge} from 'rxjs/observable/merge';
-import {startWith, switchMap} from 'rxjs/operators';
+import {delay, startWith, switchMap} from 'rxjs/operators';
 import {Subscription} from 'rxjs/Subscription';
 
 import {ResourceStateParams} from '../params/params';
@@ -31,9 +31,9 @@ import {ResourceListService} from './service';
 // TODO: NEEDS DOCUMENTATION!!!
 export abstract class ResourceListBase<T extends ResourceList, R> implements OnInit, OnDestroy {
   // Base properties
-  private data_ = new MatTableDataSource<R>();
+  private readonly data_ = new MatTableDataSource<R>();
   private dataSubscription_: Subscription;
-  private settingsService_: SettingsService;
+  private readonly settingsService_: SettingsService;
 
   // Data select properties
   @ViewChild(MatSort) sort: MatSort;
@@ -43,7 +43,7 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
   itemsPerPage: number;
 
   constructor(
-      private detailStateName_: string, private state_: StateService,
+      private readonly detailStateName_: string, private readonly state_: StateService,
       protected resourceListService_: ResourceListService<T>) {
     this.settingsService_ = GlobalServicesModule.injector.get(SettingsService);
     this.itemsPerPage = this.settingsService_.getItemsPerPage();
@@ -61,13 +61,15 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
     this.dataSubscription_ = merge(this.sort.sortChange, this.paginator.page)
-                                 .pipe(startWith({}), switchMap<T, T>(() => {
-                                         let params = this.sort_();
-                                         params = this.paginate_(params);
+                                 .pipe(
+                                     startWith({}), switchMap<T, T>(() => {
+                                       let params = this.sort_();
+                                       params = this.paginate_(params);
 
-                                         this.isLoading = true;
-                                         return this.resourceListService_.getResourceList(params);
-                                       }))
+                                       this.isLoading = true;
+                                       return this.resourceListService_.getResourceList(params);
+                                     }),
+                                     delay(2000))
                                  .subscribe((data: T) => {
                                    this.totalItems = data.listMeta.totalItems;
                                    this.isLoading = false;
@@ -141,14 +143,14 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
 
 export abstract class ResourceListWithStatuses<T extends ResourceList, R> extends
     ResourceListBase<T, R> {
-  private errorIcon_ = 'error';
+  private readonly errorIcon_ = 'error';
   private warningIcon_ = 'timelapse';
-  private successIcon_ = 'check_circle';
+  private readonly successIcon_ = 'check_circle';
 
   /**
    * Allows to override warning icon.
    */
-  setWarningIcon(iconName: string) {
+  setWarningIcon(iconName: string): void {
     this.warningIcon_ = iconName;
   }
 

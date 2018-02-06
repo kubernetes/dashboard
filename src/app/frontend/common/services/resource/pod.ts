@@ -19,9 +19,9 @@ import {ResourceListService} from '../../resources/service';
 
 export class PodService implements ResourceListService<PodList> {
   private readonly podEndpoint_ = 'api/v1/pod/';
-  constructor(private http_: HttpClient) {}
+  constructor(private readonly http_: HttpClient) {}
 
   getResourceList(params?: HttpParams): Observable<PodList> {
-    return this.http_.get<PodList>(this.podEndpoint_, {params: params});
+    return this.http_.get<PodList>(this.podEndpoint_, {params});
   }
 }

@@ -20,10 +20,10 @@ import {ResourceDetailService, ResourceListService} from '../../resources/servic
 export class NodeService implements ResourceListService<NodeList>,
                                     ResourceDetailService<NodeDetail> {
   private readonly nodeEndpoint_ = 'api/v1/node/';
-  constructor(private http_: HttpClient) {}
+  constructor(private readonly http_: HttpClient) {}
 
   getResourceList(params?: HttpParams): Observable<NodeList> {
-    return this.http_.get<NodeList>(this.nodeEndpoint_, {params: params});
+    return this.http_.get<NodeList>(this.nodeEndpoint_, {params});
   }
 
   getResource(name: string): Observable<NodeDetail> {

@@ -21,7 +21,7 @@ import {PodService} from '../../../common/services/resource/pod';
 
 @Component({selector: 'kd-pod', templateUrl: './template.html'})
 export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
-  constructor(state: StateService, private podService_: PodService) {
+  constructor(state: StateService, private readonly podService_: PodService) {
     super('pod', state, podService_);
   }
 
@@ -62,7 +62,7 @@ export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
       // started yet.
 
       for (let i = pod.podStatus.containerStates.length - 1; i >= 0; i--) {
-        let state = pod.podStatus.containerStates[i];
+        const state = pod.podStatus.containerStates[i];
 
         if (state.waiting) {
           msgState = 'waiting';

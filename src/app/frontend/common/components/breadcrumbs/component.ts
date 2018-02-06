@@ -70,9 +70,10 @@ const breadcrumbsConfig = 'kdBreadcrumbs';
 export class BreadcrumbsComponent implements OnInit {
   @Input() limit: number;
   breadcrumbs: Breadcrumb[];
-  constructor(private state_: StateService, private transition_: TransitionService) {}
+  constructor(
+      private readonly state_: StateService, private readonly transition_: TransitionService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.initBreadcrumbs_();
     this.transition_.onSuccess({}, () => {
       this.initBreadcrumbs_();
@@ -80,7 +81,7 @@ export class BreadcrumbsComponent implements OnInit {
   }
 
   /** Initializes breadcrumbs array by traversing states parents until none is found. */
-  initBreadcrumbs_() {
+  initBreadcrumbs_(): void {
     let state: StateObject|StateDeclaration = this.state_.$current;
     const breadcrumbs: Breadcrumb[] = [];
 
@@ -136,7 +137,7 @@ export class BreadcrumbsComponent implements OnInit {
    */
   getDisplayName_(state: StateObject|StateDeclaration): string {
     const conf = this.getBreadcrumbConfig_(state);
-    const stateParams = this.state_.params;
+    const stateParams = this.state_.params;  // TODO
 
     // When conf is undefined and label is undefined or empty then fallback to state name
     if (!conf || !conf.label) {

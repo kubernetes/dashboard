@@ -26,7 +26,7 @@ import {nodeDetailState} from '../detail/state';
   styleUrls: ['./style.scss'],
 })
 export class NodeListComponent extends ResourceListWithStatuses<NodeList, Node> {
-  constructor(state: StateService, private nodeService_: NodeService) {
+  constructor(state: StateService, private readonly nodeService_: NodeService) {
     super(nodeDetailState.name, state, nodeService_);
 
     // Override default warning icon.

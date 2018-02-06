@@ -27,15 +27,15 @@ enum LoginModes {
 export class LoginComponent {
   selectedAuthenticationMode = LoginModes.Token;
 
-  constructor(private authService_: AuthService, private state_: StateService) {}
+  constructor(private readonly authService_: AuthService, private readonly state_: StateService) {}
 
   getSupportedAuthenticationModes(): string[] {
     return Object.keys(LoginModes);
   }
 
-  login() {}
+  login(): void {}
 
-  skip() {
+  skip(): void {
     this.authService_.skipLoginPage(true);
     this.state_.go(overviewState.name);
   }

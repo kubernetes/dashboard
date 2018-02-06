@@ -18,7 +18,7 @@ import {HookMatchCriteria, HookMatchCriterion} from '@uirouter/core';
 import {AuthService} from './common/services/global/authentication';
 import {TitleService} from './common/services/global/title';
 
-export function configureRouter(router: UIRouter) {
+export function configureRouter(router: UIRouter): void {
   const transitionService = router.transitionService;
   const stateService = router.stateService;
 

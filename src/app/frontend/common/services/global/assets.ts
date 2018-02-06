@@ -25,8 +25,8 @@ export class AssetsService {
   private readonly appLogoTextIcon_ = 'kd-logo-text';
 
   constructor(
-      @Inject(MatIconRegistry) private iconRegistry_: MatIconRegistry,
-      @Inject(DomSanitizer) private sanitizer_: DomSanitizer) {
+      @Inject(MatIconRegistry) private readonly iconRegistry_: MatIconRegistry,
+      @Inject(DomSanitizer) private readonly sanitizer_: DomSanitizer) {
     iconRegistry_.addSvgIcon(
         this.appLogoIcon_,
         sanitizer_.bypassSecurityTrustResourceUrl(`${this.assetsPath_}/${this.appLogoSvg_}`));
@@ -35,11 +35,11 @@ export class AssetsService {
         sanitizer_.bypassSecurityTrustResourceUrl(`${this.assetsPath_}/${this.appLogoTextSvg_}`));
   }
 
-  getAppLogo() {
+  getAppLogo(): string {
     return this.appLogoIcon_;
   }
 
-  getAppLogoText() {
+  getAppLogoText(): string {
     return this.appLogoTextIcon_;
   }
 }
