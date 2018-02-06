@@ -23,23 +23,23 @@ export class ChromeComponent implements OnInit {
 
   constructor(public assets: AssetsService) {}
 
-  getOverviewStateName() {
+  getOverviewStateName(): string {
     return overviewState.name;
   }
 
-  isSystemBannerVisible() {
+  isSystemBannerVisible(): boolean {
     return false;
   }
 
-  getSystemBannerClass() {
+  getSystemBannerClass(): string {
     return 'kd-bg-warning';
   }
 
-  getSystemBannerMessage() {
+  getSystemBannerMessage(): string {
     return `<b>System is going to be shut down in 5 min...</b>`;
   }
 
-  create() {}
+  create(): void {}
 
-  ngOnInit() {}
+  ngOnInit(): void {}
 }

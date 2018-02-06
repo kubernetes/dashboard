@@ -15,6 +15,8 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {AppConfig} from '@api/backendapi';
+import {Observable} from 'rxjs/Observable';
+
 import {environment} from '../../../environments/environment.prod';
 
 @Injectable()
@@ -25,7 +27,7 @@ export class ConfigService {
 
   constructor(private http: HttpClient) {}
 
-  init() {
+  init(): void {
     this.getAppConfig().subscribe((config) => {
       // Set init time when response from the backend will arrive.
       this.config_ = config;
@@ -33,11 +35,11 @@ export class ConfigService {
     });
   }
 
-  getAppConfig() {
+  getAppConfig(): Observable<AppConfig> {
     return this.http.get<AppConfig>(this.configPath_);
   }
 
-  getServerTime() {
+  getServerTime(): Date {
     if (this.config_.serverTime) {
       const elapsed = (new Date()).getTime() - this.initTime_;
       return new Date(this.config_.serverTime + elapsed);
@@ -46,11 +48,11 @@ export class ConfigService {
     }
   }
 
-  getAppVersion() {
+  getAppVersion(): undefined|string {
     return environment.version.startsWith('%') ? undefined : environment.version;
   }
 
-  getGitCommit() {
+  getGitCommit(): undefined|string {
     return environment.gitCommit.startsWith('%') ? undefined : environment.gitCommit;
   }
 }

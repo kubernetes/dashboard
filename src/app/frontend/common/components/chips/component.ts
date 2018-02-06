@@ -38,7 +38,7 @@ export class ChipsComponent implements OnInit {
   readonly numberOfAlwaysVisibleChips = 2;  // TODO Set to 5.
   isShowingAll = false;
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.keys = Object.keys(this.map);
   }
 
@@ -50,7 +50,7 @@ export class ChipsComponent implements OnInit {
     return this.keys.length > this.numberOfAlwaysVisibleChips;
   }
 
-  toggleView() {
+  toggleView(): void {
     this.isShowingAll = !this.isShowingAll;
   }
 

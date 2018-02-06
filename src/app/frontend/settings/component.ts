@@ -35,7 +35,7 @@ export class SettingsComponent implements OnInit {
       private settings_: SettingsService, private dialog_: MatDialog,
       private state_: StateService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadGlobalSettings();
     this.loadLocalSettings();
   }
@@ -44,22 +44,22 @@ export class SettingsComponent implements OnInit {
     return this.settings_.isInitialized();
   }
 
-  loadGlobalSettings() {
+  loadGlobalSettings(): void {
     this.settings_.loadGlobalSettings(
         this.onSettingsLoad.bind(this), this.onSettingsLoadError.bind(this));
   }
 
-  onSettingsLoad() {
+  onSettingsLoad(): void {
     this.global.itemsPerPage = this.settings_.getItemsPerPage();
     this.global.clusterName = this.settings_.getClusterName();
     this.global.autoRefreshTimeInterval = this.settings_.getAutoRefreshTimeInterval();
   }
 
-  onSettingsLoadError(err: KdError|K8sError) {
+  onSettingsLoadError(err: KdError|K8sError): void {
     this.state_.go(errorState.name, new ErrorStateParams(err, ''));
   }
 
-  saveGlobalSettings() {
+  saveGlobalSettings(): void {
     // TODO save button and reload button
     // TODO ng-disabled="$ctrl.globalForm.$pristine"
     // TODO kdAuthorizerService
@@ -91,11 +91,11 @@ export class SettingsComponent implements OnInit {
     });
   }
 
-  loadLocalSettings() {
+  loadLocalSettings(): void {
     this.local = this.settings_.getLocalSettings();
   }
 
-  saveLocalSettings(form: LocalSettings) {
+  saveLocalSettings(form: LocalSettings): void {
     const localSettings = {isThemeDark: form.isThemeDark};
     this.settings_.saveLocalSettings(localSettings);
   }

@@ -79,11 +79,11 @@ export class NavComponent implements AfterContentInit, OnInit {
 
   constructor(private navService_: NavService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.navService_.setNav(this.nav_);
   }
 
-  ngAfterContentInit() {
+  ngAfterContentInit(): void {
     this.nav_.open();
   }
 }

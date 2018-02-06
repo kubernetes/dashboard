@@ -18,6 +18,8 @@ import {StateService, TransitionService} from '@uirouter/angular';
 import {TargetState, Transition} from '@uirouter/core';
 import {CookieService} from 'ngx-cookie-service';
 import {Observable} from 'rxjs/Observable';
+import {ErrorObservable} from 'rxjs/observable/ErrorObservable';
+import {Subscription} from 'rxjs/Subscription';
 import {AuthResponse, CsrfToken, K8sError, LoginSpec, LoginStatus} from 'typings/backendapi';
 
 import {errorState} from '../../../error/state';
@@ -35,7 +37,7 @@ export class AuthService {
       private state_: StateService, private http_: HttpClient,
       private csrfTokenService_: CsrfTokenService) {}
 
-  private setTokenCookie_(token: string) {
+  private setTokenCookie_(token: string): void {
     // This will only work for HTTPS connection
     this.cookies_.set(this.config_.authTokenCookieName, token, null, null, null, true);
     // This will only work when accessing Dashboard at 'localhost' or '127.0.0.1'
@@ -47,13 +49,13 @@ export class AuthService {
     return this.cookies_.get(this.config_.authTokenCookieName) || '';
   }
 
-  private removeAuthCookies_() {
+  private removeAuthCookies_(): void {
     this.cookies_.delete(this.config_.authTokenCookieName);
     this.cookies_.delete(this.config_.skipLoginPageCookieName);
   }
 
   /** Sends a login request to the backend with filled in login spec structure. */
-  login(loginSpec: LoginSpec) {
+  login(loginSpec: LoginSpec): Subscription {
     const loginObs =
         this.csrfTokenService_.getTokenForAction('login').switchMap<CsrfToken, AuthResponse>(
             csrfToken => {
@@ -67,7 +69,6 @@ export class AuthService {
           if (authResponse.jweToken.length !== 0 && authResponse.errors.length === 0) {
             this.setTokenCookie_(authResponse.jweToken);
           }
-
           return authResponse.errors;
         },
         err => {
@@ -75,8 +76,7 @@ export class AuthService {
         });
   }
 
-  /** Cleans cookies and goes to login page. */
-  logout() {
+  logout(): void {
     this.removeAuthCookies_();
     this.state_.go('login');
   }
@@ -159,7 +159,7 @@ export class AuthService {
         {headers: new HttpHeaders().set(this.config_.authTokenHeaderName, token)});
   }
 
-  skipLoginPage(skip: boolean) {
+  skipLoginPage(skip: boolean): void {
     this.removeAuthCookies_();
     this.cookies_.set(this.config_.skipLoginPageCookieName, skip.toString());
   }

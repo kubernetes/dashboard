@@ -20,11 +20,11 @@ export class SearchComponent {
 
   constructor() {}
 
-  clear() {
+  clear(): void {
     this.query = '';
   }
 
-  submit() {
+  submit(): void {
     // TODO this.state_.go(stateName, {q: this.query});
   }
 

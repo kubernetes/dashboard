@@ -28,7 +28,7 @@ export class NodeDetailComponent implements OnInit {
 
   constructor(private node_: NodeService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.node_.getResource('kube-master').subscribe((d: NodeDetail) => {
       this.node = d;
       this.isInitialized = true;

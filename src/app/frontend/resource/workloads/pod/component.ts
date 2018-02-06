@@ -63,7 +63,7 @@ export class PodListComponent extends ResourceListWithStatusesAndDataSelect<PodL
       // started yet.
 
       for (let i = pod.podStatus.containerStates.length - 1; i >= 0; i--) {
-        let state = pod.podStatus.containerStates[i];
+        const state = pod.podStatus.containerStates[i];
 
         if (state.waiting) {
           msgState = 'waiting';

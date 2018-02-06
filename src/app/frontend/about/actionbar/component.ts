@@ -25,7 +25,7 @@ export class ActionbarComponent {
     this.gitCommit = config.getGitCommit();
   }
 
-  getFeedbackLink() {
+  getFeedbackLink(): string {
     const body = `##### Environment\n<!-- Describe your setup. Versions of Node.js, Go etc. are ` +
         `needed only from developers. -->\n\n\`\`\`\nInstallation method:\nKubernetes version:\n` +
         `Dashboard version: ${this.appVersion}\nGit commit: ${this.gitCommit}\nOperating system:` +

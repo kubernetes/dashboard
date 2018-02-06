@@ -18,6 +18,4 @@ import {Component, Input} from '@angular/core';
 export class SettingsEntryComponent {
   @Input() key: string;
   @Input() desc: string;
-
-  constructor() {}
 }

@@ -39,15 +39,15 @@ export class SettingsService {
       private http_: HttpClient, private authorizer_: AuthorizerService,
       private theme_: ThemeService, private cookies_: CookieService) {}
 
-  init() {
+  init(): void {
     this.loadGlobalSettings();
   }
 
-  isInitialized() {
+  isInitialized(): boolean {
     return this.isInitialized_;
   }
 
-  loadGlobalSettings(onLoad?: onSettingsLoadCallback, onFail?: onSettingsFailCallback) {
+  loadGlobalSettings(onLoad?: onSettingsLoadCallback, onFail?: onSettingsFailCallback): void {
     this.authorizer_.proxyGET<GlobalSettings>(this.globalSettingsEndpoint_)
         .toPromise()
         .then(
@@ -62,32 +62,32 @@ export class SettingsService {
             });
   }
 
-  getClusterName() {
+  getClusterName(): string {
     return this.globalSettings_.clusterName;
   }
 
-  getItemsPerPage() {
+  getItemsPerPage(): number {
     return this.globalSettings_.itemsPerPage;
   }
 
-  getAutoRefreshTimeInterval() {
+  getAutoRefreshTimeInterval(): number {
     return this.globalSettings_.autoRefreshTimeInterval;
   }
 
-  getLocalSettings() {
+  getLocalSettings(): LocalSettings {
     const cookieValue = this.cookies_.get(this.localSettingsCookie_);
     this.localSetttings_ = JSON.parse(cookieValue);
     return this.localSetttings_;
   }
 
-  saveLocalSettings(localSettings: LocalSettings) {
+  saveLocalSettings(localSettings: LocalSettings): LocalSettings {
     this.cookies_.set(this.localSettingsCookie_, JSON.stringify(localSettings));
     this.localSetttings_ = localSettings;
     this.applyLocalSettings();
     return this.localSetttings_;
   }
 
-  applyLocalSettings() {
+  applyLocalSettings(): void {
     this.theme_.switchTheme(this.localSetttings_.isThemeDark);
   }
 }

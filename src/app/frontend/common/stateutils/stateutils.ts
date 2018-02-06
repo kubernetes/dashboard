@@ -14,19 +14,19 @@
 
 const RESOURCE_DETAILS_URL_PARAMS = '/:resourceName';
 
-export function getResourceListStateName(stateName: string) {
+export function getResourceListStateName(stateName: string): string {
   return `${stateName}list`;
 }
 
-export function getResourceListStateUrl(stateName: string) {
+export function getResourceListStateUrl(stateName: string): string {
   return `/${stateName}`;
 }
 
-export function getResourceDetailsStateName(stateName: string) {
+export function getResourceDetailsStateName(stateName: string): string {
   return `${stateName}details`;
 }
 
-export function getResourceDetailsStateUrl(stateName: string) {
+export function getResourceDetailsStateUrl(stateName: string): string {
   return `/${stateName}${RESOURCE_DETAILS_URL_PARAMS}`;
 }
 

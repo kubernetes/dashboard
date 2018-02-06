@@ -22,7 +22,7 @@ import {NavService} from '../../../common/services/nav/service';
 export class HamburgerComponent {
   constructor(private navService_: NavService) {}
 
-  toggle() {
+  toggle(): void {
     this.navService_.toggle();
   }
 }

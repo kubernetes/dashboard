@@ -17,15 +17,15 @@ import {MatDrawer} from '@angular/material';
 export class NavService {
   private nav_: MatDrawer;
 
-  toggle() {
+  toggle(): void {
     this.nav_.toggle();
   }
 
-  setVisibility(isVisible: boolean) {
+  setVisibility(isVisible: boolean): void {
     this.nav_.toggle(isVisible);
   }
 
-  setNav(nav: MatDrawer) {
+  setNav(nav: MatDrawer): void {
     this.nav_ = nav;
   }
 

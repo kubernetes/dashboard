@@ -28,7 +28,7 @@ export class ThemeService {
     this.onThemeSwitchEvent_.emit(!isThemeDark);
   }
 
-  subscribe(callback: ThemeSwitchCallback) {
+  subscribe(callback: ThemeSwitchCallback): void {
     this.onThemeSwitchEvent_.subscribe(callback);
   }
 }

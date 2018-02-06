@@ -33,9 +33,9 @@ export class LoginComponent {
     return Object.keys(LoginModes);
   }
 
-  login() {}
+  login(): void {}
 
-  skip() {
+  skip(): void {
     this.authService_.skipLoginPage(true);
     this.state_.go(overviewState.name);
   }

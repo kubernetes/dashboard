@@ -26,7 +26,7 @@ export class ErrorComponent implements OnInit {
     this.nav_.setVisibility(false);
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.error_ = (this.state_.params as ErrorStateParams).error;
   }
 

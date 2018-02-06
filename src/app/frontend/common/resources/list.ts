@@ -34,13 +34,13 @@ export abstract class ResourceListBase<T, R> implements OnInit, OnDestroy {
       private detailStateName_: string, private state_: StateService,
       protected resourceListService_: ResourceListService<T>) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.dataSubscription_ =
         this.resourceListService_.getResourceList().map<T, R[]>(this.map).subscribe(
             data => this.data_.data = data);
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.dataSubscription_.unsubscribe();
   }
 
@@ -64,7 +64,7 @@ export abstract class ResourceListWithStatuses<T, R> extends ResourceListBase<T,
   /**
    * Allows to override warning icon.
    */
-  setWarningIcon(iconName: string) {
+  setWarningIcon(iconName: string): void {
     this.warningIcon_ = iconName;
   }
 
@@ -101,7 +101,7 @@ export abstract class ResourceListWithStatusesAndDataSelect<T, R> extends
     super(detailStateName, state, resourceListService);
   }
 
-  private getSortBy_() {
+  private getSortBy_(): string {
     let ascending = this.sort.direction === 'asc';
     let active = this.sort.active;
     if (this.sort.active === 'age') {
@@ -112,7 +112,7 @@ export abstract class ResourceListWithStatusesAndDataSelect<T, R> extends
     return `${ascending ? 'a' : 'd'},${active}`;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.dataSubscription_ = merge(this.sort.sortChange)
                                  .pipe(
                                      startWith({}), switchMap<T, T>(() => {
@@ -126,5 +126,5 @@ export abstract class ResourceListWithStatusesAndDataSelect<T, R> extends
                                  .subscribe(data => this.data_.data = data);
   }
 
-  ngAfterViewInit() {}
+  ngAfterViewInit(): void {}
 }

@@ -21,7 +21,7 @@ import {SettingsService} from './settings';
 export class TitleService {
   constructor(private titleService_: Title, private settingsService_: SettingsService) {}
 
-  setTitle(transition: Transition) {
+  setTitle(transition: Transition): void {
     const targetState = transition.to().name;  // TODO Use breadcrumb value instead.
 
     this.settingsService_.loadGlobalSettings(
