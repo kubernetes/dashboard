@@ -2352,7 +2352,7 @@ func parseDataSelectPathParameter(request *restful.Request) *dataselect.DataSele
 
 
 func (apiHandler *APIHandler) handleGetNetworkPolicyList(request *restful.Request, response *restful.Response) {
-	k8sClient,_, err := apiHandler.cManager.Client(request,false)
+	k8sClient, err := apiHandler.cManager.Client(request)
 	if err != nil {
     kdErrors.HandleInternalError(response, err)
     return
@@ -2368,7 +2368,7 @@ func (apiHandler *APIHandler) handleGetNetworkPolicyList(request *restful.Reques
 }
 
 func (apiHandler *APIHandler) handleGetNetworkPolicy(request *restful.Request, response *restful.Response) {
-	k8sClient,_, err := apiHandler.cManager.Client(request)
+	k8sClient, err := apiHandler.cManager.Client(request)
 	if err != nil {
     kdErrors.HandleInternalError(response, err)
     return
@@ -2385,7 +2385,7 @@ func (apiHandler *APIHandler) handleGetNetworkPolicy(request *restful.Request, r
 }
 
 func (apiHandler *APIHandler) deleteNetworkPolicy(request *restful.Request, response *restful.Response) {
-	k8sClient,_, err := apiHandler.cManager.Client(request)
+	k8sClient, err := apiHandler.cManager.Client(request)
 	if err != nil {
     kdErrors.HandleInternalError(response, err)
     return
