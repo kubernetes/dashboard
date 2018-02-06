@@ -68,7 +68,7 @@ import (
 	"golang.org/x/net/xsrftoken"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/client-go/tools/remotecommand"
-	"gitserver/kubernetes/dashboard/src/app/backend/resource/networkpolicy"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/networkpolicy"
 )
 
 const (
