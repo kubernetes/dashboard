@@ -28,7 +28,7 @@ export class AboutComponent {
     this.latestCopyrightYear = new Date().getFullYear();
   }
 
-  getCommitLink(): void {
+  getCommitLink(): string {
     return `https://github.com/kubernetes/dashboard/commit/${this.gitCommit}`;
   }
 }
