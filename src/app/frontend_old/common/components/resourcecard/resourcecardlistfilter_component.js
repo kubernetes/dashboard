@@ -99,6 +99,22 @@ class ResourceCardListFilterController {
     this.switchSearchVisibility();
     // Do not call backend if it is not needed
     if (this.inputText.length > 0) {
+      onTextUpdate() {
+        this.resourceCardListCtrl.setPending(true);
+
+        let promise = this.dataSelectService_.filter(
+            this.resourceCardListCtrl.listResource, this.selectId_, this.inputText);
+
+        promise
+            .then((list) => {
+              this.resourceCardListCtrl.list = list;
+              this.resourceCardListCtrl.setPending(false);
+            })
+            .catch((err) => {
+              this.errorDialog_.open(this.i18n.MSG_RESOURCE_CARD_LIST_FILTERING_ERROR, err.data);
+              this.resourceCardListCtrl.setPending(false);
+            });
+      }
       this.inputText = '';
       this.onTextUpdate();
     }

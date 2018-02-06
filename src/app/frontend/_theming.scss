@@ -130,4 +130,10 @@
     background-color: mat-color($background-palette, selected-button);
     color: $primary;
   }
+
+  .kd-search-input {
+    background: mat-color($background-palette, card);
+    border-bottom-color: mat-color($foreground-palette, divider);
+    color: mat-color($foreground-palette, text);
+  }
 }

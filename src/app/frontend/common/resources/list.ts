@@ -22,6 +22,7 @@ import {merge} from 'rxjs/observable/merge';
 import {delay, startWith, switchMap} from 'rxjs/operators';
 import {Subscription} from 'rxjs/Subscription';
 
+import {CardListFilterComponent} from '../components/table/filter/component';
 import {ResourceStateParams} from '../params/params';
 import {GlobalServicesModule} from '../services/global/module';
 import {SettingsService} from '../services/global/settings';
@@ -38,6 +39,7 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
   // Data select properties
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(CardListFilterComponent) filter: CardListFilterComponent;
   isLoading = false;
   totalItems = 0;
   itemsPerPage: number;
@@ -58,23 +60,27 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
       throw Error('MatPaginator has to be defined on a table.');
     }
 
+    if (this.filter === undefined) {
+      throw Error('CardListFilter has to be defined on a table.');
+    }
+
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
-    this.dataSubscription_ = merge(this.sort.sortChange, this.paginator.page)
-                                 .pipe(
-                                     startWith({}), switchMap<T, T>(() => {
-                                       let params = this.sort_();
-                                       params = this.paginate_(params);
+    this.dataSubscription_ =
+        merge(this.sort.sortChange, this.paginator.page, this.filter.filterEvent)
+            .pipe(startWith({}), switchMap<T, T>(() => {
+                    let params = this.sort_();
+                    params = this.paginate_(params);
+                    params = this.filter_(params);
 
-                                       this.isLoading = true;
-                                       return this.resourceListService_.getResourceList(params);
-                                     }),
-                                     delay(2000))
-                                 .subscribe((data: T) => {
-                                   this.totalItems = data.listMeta.totalItems;
-                                   this.isLoading = false;
-                                   this.data_.data = this.map(data);
-                                 });
+                    this.isLoading = true;
+                    return this.resourceListService_.getResourceList(params);
+                  }))
+            .subscribe((data: T) => {
+              this.totalItems = data.listMeta.totalItems;
+              this.isLoading = false;
+              this.data_.data = this.map(data);
+            });
   }
 
   ngOnDestroy(): void {
@@ -106,6 +112,17 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
 
     return result.set('itemsPerPage', `${this.settingsService_.getItemsPerPage()}`)
         .set('page', `${this.paginator.pageIndex + 1}`);
+  }
+
+  private filter_(params?: HttpParams): HttpParams {
+    let result = new HttpParams();
+    if (params) {
+      result = params;
+    }
+
+    // TODO: support filtering by different columns
+    const filterByQuery = `name,${this.filter.query}`;
+    return result.set('filterBy', filterByQuery);
   }
 
   private getSortBy_(): string {
