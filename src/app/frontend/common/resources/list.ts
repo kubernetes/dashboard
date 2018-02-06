@@ -17,6 +17,7 @@ import {HttpParams} from '@angular/common/http';
 import {Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {ResourceList} from '@api/backendapi';
+import {Status} from '@api/frontendapi';
 import {StateService} from '@uirouter/core';
 import {merge} from 'rxjs/observable/merge';
 import {delay, startWith, switchMap} from 'rxjs/operators';
@@ -48,7 +49,6 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
       private readonly detailStateName_: string, private readonly state_: StateService,
       protected resourceListService_: ResourceListService<T>) {
     this.settingsService_ = GlobalServicesModule.injector.get(SettingsService);
-    this.itemsPerPage = this.settingsService_.getItemsPerPage();
   }
 
   ngOnInit(): void {
@@ -66,21 +66,24 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
 
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
-    this.dataSubscription_ =
-        merge(this.sort.sortChange, this.paginator.page, this.filter.filterEvent)
-            .pipe(startWith({}), switchMap<T, T>(() => {
-                    let params = this.sort_();
-                    params = this.paginate_(params);
-                    params = this.filter_(params);
+    this.settingsService_.loadGlobalSettings(settings => {
+      this.itemsPerPage = settings.itemsPerPage;
+      this.dataSubscription_ =
+          merge(this.sort.sortChange, this.paginator.page, this.filter.filterEvent)
+              .pipe(startWith({}), switchMap<T, T>(() => {
+                      let params = this.sort_();
+                      params = this.paginate_(params);
+                      params = this.filter_(params);
 
-                    this.isLoading = true;
-                    return this.resourceListService_.getResourceList(params);
-                  }))
-            .subscribe((data: T) => {
-              this.totalItems = data.listMeta.totalItems;
-              this.isLoading = false;
-              this.data_.data = this.map(data);
-            });
+                      this.isLoading = true;
+                      return this.resourceListService_.getResourceList(params);
+                    }))
+              .subscribe((data: T) => {
+                this.totalItems = data.listMeta.totalItems;
+                this.isLoading = false;
+                this.data_.data = this.map(data);
+              });
+    });
   }
 
   ngOnDestroy(): void {
@@ -164,6 +167,9 @@ export abstract class ResourceListWithStatuses<T extends ResourceList, R> extend
   private warningIcon_ = 'timelapse';
   private readonly successIcon_ = 'check_circle';
 
+  private readonly errorIconClassName_ = 'kd-error';
+  private readonly successIconClassName_ = 'kd-success';
+
   /**
    * Allows to override warning icon.
    */
@@ -171,20 +177,29 @@ export abstract class ResourceListWithStatuses<T extends ResourceList, R> extend
     this.warningIcon_ = iconName;
   }
 
-  getIcon(resource: R): string {
+  getStatus(resource: R): Status {
     if (this.isInErrorState(resource)) {
-      return this.errorIcon_;
+      return {
+        iconName: this.errorIcon_,
+        cssClass: {[this.errorIconClassName_]: true},
+      } as Status;
     }
 
     if (this.isInWarningState(resource)) {
-      return this.warningIcon_;
+      return {
+        iconName: this.warningIcon_,
+        cssClass: {},
+      } as Status;
     }
 
     if (this.isInSuccessState(resource)) {
-      return this.successIcon_;
+      return {
+        iconName: this.successIcon_,
+        cssClass: {[this.successIconClassName_]: true},
+      } as Status;
     }
 
-    return '';
+    return {} as Status;
   }
 
   abstract isInErrorState(resource: R): boolean;
