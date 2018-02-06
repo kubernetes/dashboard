@@ -15,14 +15,12 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {BreadcrumbConfig} from '@api/frontendapi';
 import {StateDeclaration, StateObject, StateService, TransitionService} from '@uirouter/core';
+import {BreadcrumbsService} from '../../services/global/breadcrumbs';
 
 class Breadcrumb {
   label: string;
   stateLink: string;
 }
-
-/** Breadcrumbs config string used on state config. **/
-const breadcrumbsConfig = 'kdBreadcrumbs';
 
 /**
  * Should be used only within actionbar component.
@@ -71,7 +69,8 @@ export class BreadcrumbsComponent implements OnInit {
   @Input() limit: number;
   breadcrumbs: Breadcrumb[];
   constructor(
-      private readonly state_: StateService, private readonly transition_: TransitionService) {}
+      private readonly state_: StateService, private readonly transition_: TransitionService,
+      private readonly breadcrumbs_: BreadcrumbsService) {}
 
   ngOnInit(): void {
     this.initBreadcrumbs_();
@@ -98,12 +97,8 @@ export class BreadcrumbsComponent implements OnInit {
     this.breadcrumbs = breadcrumbs.reverse();
   }
 
-  private getBreadcrumbConfig_(state: StateObject|StateDeclaration): BreadcrumbConfig {
-    return state.data ? state.data[breadcrumbsConfig] : state.data;
-  }
-
   getParentState(state: StateObject|StateDeclaration): StateObject|StateDeclaration {
-    const conf = this.getBreadcrumbConfig_(state);
+    const conf = this.breadcrumbs_.getBreadcrumbConfig_(state);
     let result = null;
     if (conf && conf.parent) {
       if (typeof conf.parent === 'string') {
@@ -126,26 +121,9 @@ export class BreadcrumbsComponent implements OnInit {
   private getBreadcrumb_(state: StateObject|StateDeclaration): Breadcrumb {
     const breadcrumb = new Breadcrumb();
 
-    breadcrumb.label = this.getDisplayName_(state);
+    breadcrumb.label = this.breadcrumbs_.getDisplayName(state);
     breadcrumb.stateLink = this.state_.href(state.name, null);
 
     return breadcrumb;
-  }
-
-  /**
-   * Returns display name for given state.
-   */
-  getDisplayName_(state: StateObject|StateDeclaration): string {
-    const conf = this.getBreadcrumbConfig_(state);
-    const stateParams = this.state_.params;  // TODO
-
-    // When conf is undefined and label is undefined or empty then fallback to state name
-    if (!conf || !conf.label) {
-      return state.name;
-    }
-
-    // If there is a state parameter with with name equal to conf.label then return its value,
-    // otherwise just return label. It allows to "interpolate" resource names into breadcrumbs.
-    return stateParams && stateParams[conf.label] ? stateParams[conf.label] : conf.label;
   }
 }

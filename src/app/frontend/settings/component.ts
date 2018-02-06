@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import {Component, OnInit} from '@angular/core';
+import {NgForm} from '@angular/forms';
 import {MatDialog} from '@angular/material';
 import {GlobalSettings, K8sError, LocalSettings} from '@api/backendapi';
 import {KdError} from '@api/frontendapi';
@@ -45,6 +46,7 @@ export class SettingsComponent implements OnInit {
   }
 
   loadGlobalSettings(): void {
+    // TODO Make form pristine.
     this.settings_.loadGlobalSettings(
         this.onSettingsLoad.bind(this), this.onSettingsLoadError.bind(this));
   }
@@ -59,44 +61,40 @@ export class SettingsComponent implements OnInit {
     this.state_.go(errorState.name, new ErrorStateParams(err, ''));
   }
 
-  saveGlobalSettings(): void {
-    // TODO save button and reload button
-    // TODO ng-disabled="$ctrl.globalForm.$pristine"
-    // TODO kdAuthorizerService
-    // let resource = this.resource_(
-    //   'api/v1/settings/global', {},
-    //   {save: {method: 'PUT', headers: {'Content-Type': 'application/json'}}});
-    //
-    // resource.save(
-    //   settings,
-    //   (savedSettings) => {
-    //     // It will disable "save" button until user will modify at least one setting.
-    //     this.globalForm.$setPristine();
-    //     // Reload settings service to apply changes in the whole app without need to refresh.
-    //     this.settingsService_.load();
-    //   },
-    //   (err) => {
-    //
-    //     if (err && err.data.indexOf(this.concurrentChangeErr_) !== -1) {
-
-    this.dialog_.open(SaveAnywayDialog, {width: '420px'}).afterClosed().subscribe((result) => {
-      if (result === true) {
-        // Backend was refreshed with the PUT request, so the second try will be successful unless
-        // yet another concurrent change will happen. In that case "save anyways" dialog will be
-        // shown again.
-        this.saveGlobalSettings();
-      } else {
-        this.loadGlobalSettings();
-      }
-    });
+  saveGlobalSettings(form: NgForm): void {
+    this.settings_.saveGlobalSettings(this.global)
+        .subscribe(
+            () => {
+              this.loadGlobalSettings();
+              // TODO This apply settings like browser title.
+            },
+            (err) => {
+              if (err && err.data.indexOf(this.concurrentChangeErr_) !== -1) {
+                this.dialog_.open(SaveAnywayDialog, {width: '420px'})
+                    .afterClosed()
+                    .subscribe((result) => {
+                      if (result === true) {
+                        // Backend was refreshed with the PUT request, so the second try will be
+                        // successful unless yet another concurrent change will happen. In that case
+                        // "save anyways" dialog will be shown again.
+                        this.saveGlobalSettings(form);
+                      } else {
+                        this.loadGlobalSettings();
+                      }
+                    });
+              }
+            });
   }
 
-  loadLocalSettings(): void {
+  loadLocalSettings(form?: NgForm): void {
     this.local = this.settings_.getLocalSettings();
+
+    if (form) {
+      form.resetForm(this.local);
+    }
   }
 
-  saveLocalSettings(form: LocalSettings): void {
-    const localSettings = {isThemeDark: form.isThemeDark};
-    this.settings_.saveLocalSettings(localSettings);
+  saveLocalSettings(form: NgForm): void {
+    form.resetForm(this.settings_.saveLocalSettings(this.local));
   }
 }

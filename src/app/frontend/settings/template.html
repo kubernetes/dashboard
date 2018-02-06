@@ -23,7 +23,8 @@ limitations under the License.
       <code>kube-system</code> namespace, so all of them are applied for every instance of the app.
     </p>
     <br>
-    <form (ngSubmit)="saveGlobalSettings()">
+    <form #globalForm="ngForm"
+          (ngSubmit)="saveGlobalSettings(globalForm)">
       <kd-settings-entry key="Cluster name"
                          desc="Cluster name appears in the browser window title if it is set">
         <mat-form-field fxFlex>
@@ -69,11 +70,20 @@ limitations under the License.
         </div>
       </kd-settings-entry>
       <br><br>
-      <button type="submit"
+      <button [disabled]="globalForm.pristine"
+              type="submit"
               color="primary"
               mat-raised-button
               i18n>
         Save
+      </button>
+      <button [disabled]="globalForm.pristine"
+              type="button"
+              (click)="loadGlobalSettings()"
+              color="primary"
+              mat-raised-button
+              i18n>
+        Reload
       </button>
     </form>
   </div>
@@ -87,8 +97,8 @@ limitations under the License.
       Local settings are stored in the browser cookies, so they are not synchronized between multiple devices.
     </p>
     <br>
-    <form #form="ngForm"
-          (ngSubmit)="saveLocalSettings(form.value)">
+    <form #localForm="ngForm"
+          (ngSubmit)="saveLocalSettings(localForm)">
       <kd-settings-entry key="Dark theme"
                          desc="Use dark theme in the whole app">
         <div fxFlex>
@@ -99,17 +109,20 @@ limitations under the License.
         </div>
       </kd-settings-entry>
       <br><br>
-      <button type="submit"
+      <button [disabled]="localForm.pristine"
+              type="submit"
               color="primary"
               mat-raised-button
               i18n>
         Save
       </button>
-      <button type="reset"
+      <button [disabled]="localForm.pristine"
+              type="button"
+              (click)="loadLocalSettings(localForm)"
               color="primary"
               mat-raised-button
               i18n>
-        Refresh
+        Reload
       </button>
     </form>
   </div>

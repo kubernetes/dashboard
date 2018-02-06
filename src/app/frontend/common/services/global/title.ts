@@ -15,27 +15,30 @@
 import {Inject, Injectable} from '@angular/core';
 import {Title} from '@angular/platform-browser';
 import {Transition} from '@uirouter/angular';
+import {StateService} from '@uirouter/core';
+
+import {BreadcrumbsService} from './breadcrumbs';
 import {SettingsService} from './settings';
 
 @Injectable()
 export class TitleService {
   constructor(
-      private readonly titleService_: Title, private readonly settingsService_: SettingsService) {}
+      private readonly title_: Title, private readonly settings_: SettingsService,
+      private readonly breadcrumbs_: BreadcrumbsService) {}
 
   setTitle(transition: Transition): void {
-    const targetState = transition.to().name;  // TODO Use breadcrumb value instead.
-
-    this.settingsService_.loadGlobalSettings(
+    const state = this.breadcrumbs_.getDisplayName(transition.targetState().state());
+    this.settings_.loadGlobalSettings(
         () => {
-          const clusterName = this.settingsService_.getClusterName();
+          const clusterName = this.settings_.getClusterName();
           if (clusterName) {
-            this.titleService_.setTitle(`${clusterName} - ${targetState} - Kubernetes Dashboard`);
+            this.title_.setTitle(`${clusterName} - ${state} - Kubernetes Dashboard`);
           } else {
-            this.titleService_.setTitle(`${targetState} - Kubernetes Dashboard`);
+            this.title_.setTitle(`${state} - Kubernetes Dashboard`);
           }
         },
         () => {
-          this.titleService_.setTitle(`${targetState} - Kubernetes Dashboard`);
+          this.title_.setTitle(`${state} - Kubernetes Dashboard`);
         });
   }
 }

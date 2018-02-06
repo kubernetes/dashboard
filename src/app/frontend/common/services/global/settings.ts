@@ -12,11 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {GlobalSettings, LocalSettings} from '@api/backendapi';
 import {onSettingsFailCallback, onSettingsLoadCallback} from '@api/frontendapi';
 import {CookieService} from 'ngx-cookie-service';
+import {Observable} from 'rxjs/Observable';
 
 import {AuthorizerService} from './authorizer';
 import {ThemeService} from './theme';
@@ -60,6 +61,17 @@ export class SettingsService {
               this.isInitialized_ = false;
               if (onFail) onFail(err);
             });
+  }
+
+  saveGlobalSettings(globalSettings: GlobalSettings): Observable<GlobalSettings> {
+    const httpOptions = {
+      method: 'PUT',
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    };
+    return this.http_.put<GlobalSettings>(
+        this.globalSettingsEndpoint_, globalSettings, httpOptions);
   }
 
   getClusterName(): string {
