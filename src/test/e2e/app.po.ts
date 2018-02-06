@@ -15,11 +15,11 @@
 import {browser, by, element} from 'protractor';
 
 export class AppPage {
-  navigateTo(): void {
+  navigateTo(): Promise<{}> {
     return browser.get('/');
   }
 
-  getParagraphText() {
+  getParagraphText(): Promise<string> {
     return element(by.css('app-root h1')).getText();
   }
 }

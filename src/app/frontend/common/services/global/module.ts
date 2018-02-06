@@ -36,7 +36,7 @@ import {TitleService} from './title';
 })
 export class GlobalServicesModule {}
 
-export function init(settings: SettingsService, config: ConfigService) {
+export function init(settings: SettingsService, config: ConfigService): Function {
   return () => {
     settings.init();
     config.init();
