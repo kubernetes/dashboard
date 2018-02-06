@@ -1569,3 +1569,74 @@ backendApi.SystemBanner;
  * }}
  */
 backendApi.CanIResponse;
+
+/**
+ * @typedef {{
+ *    cidr:  string,
+ *    except:  !Array<string>
+ * }}
+ */
+backendApi.IPBlock;
+/**
+ * @typedef {{
+ *    podSelector:  !backendApi.podSelector,
+ *    namespaceSelector:  !backendApi.podSelector,
+ *    ipBlock:  !backendApi.IPBlock
+ * }}
+ */
+backendApi.NetworkPolicyPeer;
+/**
+ * @typedef {{
+ *    protocol:  string,
+ *    port:  (number|null)
+ *  }}
+ */
+backendApi.NetworkPolicyPort;
+/**
+ * @typedef {{
+ *    ports:  !Array<!backendApi.NetworkPolicyPort>,
+ *    from:  !Array<!backendApi.NetworkPolicyPeer>
+ *  }}
+ */
+backendApi.NetworkPolicyIngressRule;
+/**
+ * @typedef {{
+ *    ports:  !Array<!backendApi.NetworkPolicyPort>,
+ *    to:  !Array<!backendApi.NetworkPolicyPeer>
+ *  }}
+ */
+backendApi.NetworkPolicyEgressRule;
+/**
+ * @typedef {{
+ *    matchLabels:  !Object<string, string>,
+ *    matchExpressions:string
+ *  }}
+ */
+backendApi.podSelector;
+/**
+ * @typedef {{
+ *    podSelector:  !backendApi.podSelector,
+ *    ingress:  !Array<!backendApi.NetworkPolicyIngressRule>,
+ *    egress:  !Array<!backendApi.NetworkPolicyEgressRule>,
+ *    policyTypes:  !Array<string>
+ *   }}
+ */
+backendApi.NetworkPolicySpec;
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
+ *   spec:  !backendApi.NetworkPolicySpec
+ *   }}
+ */
+backendApi.NetworkPolicy;
+
+/**
+ * @typedef {{
+ *   listMeta: !backendApi.ListMeta,
+ *   networkPolicy:!Array<!backendApi.NetworkPolicy>,
+ *   errors: !Array<!backendApi.Error>
+ *  }}
+ */
+
+backendApi.NetworkPolicyList;

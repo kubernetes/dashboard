@@ -36,6 +36,7 @@ import {stateName as settingsState} from '../../settings/state';
 import {stateName as statefulSetState} from '../../statefulset/list/state';
 import {stateName as storageClassState} from '../../storageclass/list/state';
 import {stateName as workloadState} from '../../workloads/state';
+import {stateName as networkPolicyState} from '../../networkpolicy/list/state';
 
 /**
  * @final
@@ -75,6 +76,7 @@ export class NavController {
       'about': aboutState,
       'settings': settingsState,
       'overview': overviewState,
+      'networkPolicy':networkPolicyState,
     };
   }
 

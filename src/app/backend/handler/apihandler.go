@@ -68,6 +68,7 @@ import (
 	"golang.org/x/net/xsrftoken"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/client-go/tools/remotecommand"
+	"gitserver/kubernetes/dashboard/src/app/backend/resource/networkpolicy"
 )
 
 const (
@@ -605,6 +606,26 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 		apiV1Ws.GET("/overview/{namespace}").
 			To(apiHandler.handleOverview).
 			Writes(overview.Overview{}))
+
+	apiV1Ws.Route(
+		apiV1Ws.GET("/networkpolicy/{namespace}").
+			To(apiHandler.handleGetNetworkPolicyList).
+			Writes(networkpolicy.NetworkPolicyList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/networkpolicy").
+			To(apiHandler.handleGetNetworkPolicyList).
+			Writes(networkpolicy.NetworkPolicyList{}))
+
+	apiV1Ws.Route(
+		apiV1Ws.GET("/networkpolicy/{namespace}/{networkpolicy}").
+			To(apiHandler.handleGetNetworkPolicy).
+			Writes(networkpolicy.NetworkPolicy{}))
+
+	apiV1Ws.Route(
+		apiV1Ws.DELETE("/networkpolicy/{namespace}/{networkpolicy}").
+			To(apiHandler.deleteNetworkPolicy).
+			Param(apiV1Ws.PathParameter("networkpolicy", "the networkpolicy name to be deleted")))
+
 
 	return wsContainer, nil
 }
@@ -2327,4 +2348,55 @@ func parseDataSelectPathParameter(request *restful.Request) *dataselect.DataSele
 	filterQuery := parseFilterPathParameter(request)
 	metricQuery := parseMetricPathParameter(request)
 	return dataselect.NewDataSelectQuery(paginationQuery, sortQuery, filterQuery, metricQuery)
+}
+
+
+func (apiHandler *APIHandler) handleGetNetworkPolicyList(request *restful.Request, response *restful.Response) {
+	k8sClient,_, err := apiHandler.cManager.Client(request,false)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	dataSelect := parseDataSelectPathParameter(request)
+	namespace := parseNamespacePathParameter(request)
+	result, err := networkpolicy.GetNetworkPolicyList(k8sClient,namespace,dataSelect)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetNetworkPolicy(request *restful.Request, response *restful.Response) {
+	k8sClient,_, err := apiHandler.cManager.Client(request,false)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	name := request.PathParameter("networkpolicy")
+	namespace := parseNamespacePathParameter(request)
+	result, err :=networkpolicy.GetNetworkPolicy(k8sClient,namespace,name)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) deleteNetworkPolicy(request *restful.Request, response *restful.Response) {
+	k8sClient,_, err := apiHandler.cManager.Client(request,false)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	name := request.PathParameter("networkpolicy")
+	namespace := parseNamespacePathParameter(request)
+	err = networkpolicy.DeleteNetworkPolicy(k8sClient,namespace,name)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeader(http.StatusOK)
 }

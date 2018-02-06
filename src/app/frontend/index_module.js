@@ -59,6 +59,7 @@ import statefulSetModule from './statefulset/module';
 import storageClassModule from './storageclass/module';
 import {TitleController} from './title_controller';
 import workloadsModule from './workloads/module';
+import netWorkPolicyModule from './networkpolicy/module';
 
 export default angular
     .module(
@@ -110,6 +111,7 @@ export default angular
           storageClassModule.name,
           roleModule.name,
           scalingModule.name,
+          netWorkPolicyModule.name,
         ])
     .config(indexConfig)
     .config(routeConfig)
