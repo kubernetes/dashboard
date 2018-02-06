@@ -31,3 +31,8 @@ export interface KdError {
   code: number;
   message: string;
 }
+
+export interface Status {
+  iconName: string;
+  cssClass: {[className: string]: boolean};
+}

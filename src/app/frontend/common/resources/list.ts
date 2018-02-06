@@ -17,6 +17,7 @@ import {HttpParams} from '@angular/common/http';
 import {Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {ResourceList} from '@api/backendapi';
+import {Status} from '@api/frontendapi';
 import {StateService} from '@uirouter/core';
 import {merge} from 'rxjs/observable/merge';
 import {delay, startWith, switchMap} from 'rxjs/operators';
@@ -42,13 +43,15 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
   @ViewChild(CardListFilterComponent) filter: CardListFilterComponent;
   isLoading = false;
   totalItems = 0;
-  itemsPerPage: number;
+
+  get itemsPerPage(): number {
+    return this.settingsService_.getItemsPerPage();
+  }
 
   constructor(
       private readonly detailStateName_: string, private readonly state_: StateService,
       protected resourceListService_: ResourceListService<T>) {
     this.settingsService_ = GlobalServicesModule.injector.get(SettingsService);
-    this.itemsPerPage = this.settingsService_.getItemsPerPage();
   }
 
   ngOnInit(): void {
@@ -110,7 +113,7 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
       result = params;
     }
 
-    return result.set('itemsPerPage', `${this.settingsService_.getItemsPerPage()}`)
+    return result.set('itemsPerPage', `${this.itemsPerPage}`)
         .set('page', `${this.paginator.pageIndex + 1}`);
   }
 
@@ -164,6 +167,9 @@ export abstract class ResourceListWithStatuses<T extends ResourceList, R> extend
   private warningIcon_ = 'timelapse';
   private readonly successIcon_ = 'check_circle';
 
+  private readonly errorIconClassName_ = 'kd-error';
+  private readonly successIconClassName_ = 'kd-success';
+
   /**
    * Allows to override warning icon.
    */
@@ -171,20 +177,29 @@ export abstract class ResourceListWithStatuses<T extends ResourceList, R> extend
     this.warningIcon_ = iconName;
   }
 
-  getIcon(resource: R): string {
+  getStatus(resource: R): Status {
     if (this.isInErrorState(resource)) {
-      return this.errorIcon_;
+      return {
+        iconName: this.errorIcon_,
+        cssClass: {[this.errorIconClassName_]: true},
+      } as Status;
     }
 
     if (this.isInWarningState(resource)) {
-      return this.warningIcon_;
+      return {
+        iconName: this.warningIcon_,
+        cssClass: {},
+      } as Status;
     }
 
     if (this.isInSuccessState(resource)) {
-      return this.successIcon_;
+      return {
+        iconName: this.successIcon_,
+        cssClass: {[this.successIconClassName_]: true},
+      } as Status;
     }
 
-    return '';
+    return {} as Status;
   }
 
   abstract isInErrorState(resource: R): boolean;
