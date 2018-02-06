@@ -43,7 +43,6 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
   @ViewChild(CardListFilterComponent) filter: CardListFilterComponent;
   isLoading = false;
   totalItems = 0;
-  itemsPerPage: number;
 
   constructor(
       private readonly detailStateName_: string, private readonly state_: StateService,
@@ -66,24 +65,21 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
 
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
-    this.settingsService_.loadGlobalSettings(settings => {
-      this.itemsPerPage = settings.itemsPerPage;
-      this.dataSubscription_ =
-          merge(this.sort.sortChange, this.paginator.page, this.filter.filterEvent)
-              .pipe(startWith({}), switchMap<T, T>(() => {
-                      let params = this.sort_();
-                      params = this.paginate_(params);
-                      params = this.filter_(params);
+    this.dataSubscription_ =
+        merge(this.sort.sortChange, this.paginator.page, this.filter.filterEvent)
+            .pipe(startWith({}), switchMap<T, T>(() => {
+                    let params = this.sort_();
+                    params = this.paginate_(params);
+                    params = this.filter_(params);
 
-                      this.isLoading = true;
-                      return this.resourceListService_.getResourceList(params);
-                    }))
-              .subscribe((data: T) => {
-                this.totalItems = data.listMeta.totalItems;
-                this.isLoading = false;
-                this.data_.data = this.map(data);
-              });
-    });
+                    this.isLoading = true;
+                    return this.resourceListService_.getResourceList(params);
+                  }))
+            .subscribe((data: T) => {
+              this.totalItems = data.listMeta.totalItems;
+              this.isLoading = false;
+              this.data_.data = this.map(data);
+            });
   }
 
   ngOnDestroy(): void {
@@ -96,6 +92,10 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
 
   getData(): DataSource<R> {
     return this.data_;
+  }
+
+  getItemsPerPage(): number {
+    return this.settingsService_.getItemsPerPage();
   }
 
   private sort_(params?: HttpParams): HttpParams {
@@ -113,7 +113,7 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
       result = params;
     }
 
-    return result.set('itemsPerPage', `${this.settingsService_.getItemsPerPage()}`)
+    return result.set('itemsPerPage', `${this.getItemsPerPage()}`)
         .set('page', `${this.paginator.pageIndex + 1}`);
   }
 
