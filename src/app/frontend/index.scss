@@ -90,6 +90,10 @@ code {
   flex: 0 0 ($baseline-grid * 5) !important;
 }
 
+.mat-sort-header-arrow {
+  align-self: center;
+}
+
 ////////////////////////////////////////////
 // Custom classes used across application //
 ////////////////////////////////////////////

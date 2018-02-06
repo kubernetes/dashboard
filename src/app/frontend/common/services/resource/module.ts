@@ -14,8 +14,9 @@
 
 import {NgModule} from '@angular/core';
 import {NodeService} from './node';
+import {PodService} from './pod';
 
 @NgModule({
-  providers: [NodeService],
+  providers: [NodeService, PodService],
 })
 export class ResourceModule {}

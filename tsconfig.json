@@ -16,6 +16,8 @@
     "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "noImplicitReturns": true,
+    "noUnusedParameters": true,
     "noImplicitAny": true,
     "lib": [
       "es2017",

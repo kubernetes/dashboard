@@ -14,4 +14,67 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-Pod
+<kd-card role="table">
+  <div title>Pods</div>
+
+  <div content>
+    <div class="example-loading-shade"
+         *ngIf="isLoading">
+      <mat-spinner *ngIf="isLoading"></mat-spinner>
+    </div>
+
+    <mat-table #table
+               [dataSource]="getData()"
+               matSort
+               [matSortActive]="getDisplayColumns()[5]"
+               matSortDisableClear
+               matSortDirection="asc">
+      <ng-container [matColumnDef]="getDisplayColumns()[0]">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let pod">
+          <mat-icon>
+            {{getIcon(pod)}}
+          </mat-icon>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getDisplayColumns()[1]">
+        <mat-header-cell *matHeaderCellDef
+                         mat-sort-header
+                         disableClear="true">Name</mat-header-cell>
+        <mat-cell *matCellDef="let pod">
+          <a [href]="getDetailsHref(pod.objectMeta.name)">
+      {{pod.objectMeta.name}}
+      </a>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getDisplayColumns()[2]">
+        <mat-header-cell *matHeaderCellDef>Node</mat-header-cell>
+        <mat-cell *matCellDef="let pod">{{pod.nodeName}}</mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getDisplayColumns()[3]">
+        <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+        <mat-cell *matCellDef="let pod">{{getDisplayStatus(pod)}}</mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getDisplayColumns()[4]">
+        <mat-header-cell *matHeaderCellDef>Restarts</mat-header-cell>
+        <mat-cell *matCellDef="let pod">
+          {{pod.restartCount}}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getDisplayColumns()[5]">
+        <mat-header-cell *matHeaderCellDef
+                         mat-sort-header
+                         disableClear="true">Age</mat-header-cell>
+        <mat-cell *matCellDef="let pod">{{pod.objectMeta.creationTimestamp}}</mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="getDisplayColumns()"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: getDisplayColumns();"></mat-row>
+    </mat-table>
+  </div>
+</kd-card>

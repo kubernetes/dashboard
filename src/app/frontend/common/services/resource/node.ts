@@ -12,26 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HttpClient} from '@angular/common/http';
-import {Node, NodeDetail, NodeList} from '@api/backendapi';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {NodeDetail, NodeList} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
+import {ResourceDetailService, ResourceListService} from '../../resources/service';
 
-export class NodeService {
+export class NodeService implements ResourceListService<NodeList>,
+                                    ResourceDetailService<NodeDetail> {
   private readonly nodeEndpoint_ = 'api/v1/node/';
-
   constructor(private http_: HttpClient) {}
 
-  getNodeList(): Observable<NodeList> {
-    return this.http_.get<NodeList>(this.nodeEndpoint_);
+  getResourceList(params?: HttpParams): Observable<NodeList> {
+    return this.http_.get<NodeList>(this.nodeEndpoint_, {params: params});
   }
 
-  getNodes(): Observable<Node[]> {
-    return this.getNodeList().map<NodeList, Node[]>(nodeList => {
-      return nodeList.nodes;
-    });
-  }
-
-  getNodeDetail(name: string): Observable<NodeDetail> {
+  getResource(name: string): Observable<NodeDetail> {
     return this.http_.get<NodeDetail>(this.nodeEndpoint_ + name);
   }
 }

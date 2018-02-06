@@ -12,13 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Ng2StateDeclaration} from '@uirouter/angular';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {PodList} from '@api/backendapi';
+import {Observable} from 'rxjs/Observable';
+import {ResourceListService} from '../../resources/service';
 
-import {PodListComponent} from './component';
+export class PodService implements ResourceListService<PodList> {
+  private readonly podEndpoint_ = 'api/v1/pod/';
+  constructor(private http_: HttpClient) {}
 
-export const podState: Ng2StateDeclaration = {
-  parent: 'chrome',
-  name: 'pod',
-  url: '/pod',
-  component: PodListComponent,
-};
+  getResourceList(params?: HttpParams): Observable<PodList> {
+    return this.http_.get<PodList>(this.podEndpoint_, {params: params});
+  }
+}

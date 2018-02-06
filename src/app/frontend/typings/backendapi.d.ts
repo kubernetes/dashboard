@@ -99,7 +99,7 @@ export interface Pod {
 }
 
 export interface PodList {
-  pods: Pod;
+  pods: Pod[];
   listMeta: ListMeta, status: Status, podInfo: PodInfo, cumulativeMetrics: Metric[]|null,
       errors: K8sError[]
 }

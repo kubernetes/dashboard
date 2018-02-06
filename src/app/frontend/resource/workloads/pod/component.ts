@@ -13,8 +13,84 @@
 // limitations under the License.
 
 import {Component} from '@angular/core';
+import {Pod, PodList} from '@api/backendapi';
+import {StateService} from '@uirouter/core';
+
+import {ResourceListWithStatusesAndDataSelect} from '../../../common/resources/list';
+import {PodService} from '../../../common/services/resource/pod';
 
 @Component({selector: 'kd-pod', templateUrl: './template.html', styleUrls: ['./style.scss']})
-export class PodComponent {
-  constructor() {}
+export class PodListComponent extends ResourceListWithStatusesAndDataSelect<PodList, Pod> {
+  constructor(state: StateService, private podService_: PodService) {
+    super('pod', state, podService_);
+  }
+
+  map(podList: PodList): Pod[] {
+    this.isLoading = false;
+    return podList.pods;
+  }
+
+  isInErrorState(resource: Pod): boolean {
+    return resource.podStatus.status === 'Failed';
+  }
+
+  isInWarningState(resource: Pod): boolean {
+    return resource.podStatus.status === 'Pending';
+  }
+
+  isInSuccessState(resource: Pod): boolean {
+    return resource.podStatus.status === 'Succeeded' || resource.podStatus.status === 'Running';
+  }
+
+  getDisplayColumns(): string[] {
+    return ['status', 'name', 'node', 'statusname', 'restarts', 'age'];
+  }
+
+  /**
+   * Returns a displayable status message for the pod.
+   */
+  getDisplayStatus(pod: Pod): string {
+    // See kubectl printers.go for logic in kubectl.
+    // https://github.com/kubernetes/kubernetes/blob/39857f486511bd8db81868185674e8b674b1aeb9/pkg/printers/internalversion/printers.go
+    let msgState = 'running';
+    let reason = undefined;
+
+    // NOTE: Init container statuses are currently not taken into account.
+    // However, init containers with errors will still show as failed because
+    // of warnings.
+    if (pod.podStatus.containerStates) {
+      // Container states array may be null when no containers have
+      // started yet.
+
+      for (let i = pod.podStatus.containerStates.length - 1; i >= 0; i--) {
+        let state = pod.podStatus.containerStates[i];
+
+        if (state.waiting) {
+          msgState = 'waiting';
+          reason = state.waiting.reason;
+        }
+        if (state.terminated) {
+          msgState = 'terminated';
+          reason = state.terminated.reason;
+          if (!reason) {
+            if (state.terminated.signal) {
+              reason = `Signal:${state.terminated.signal}`;
+            } else {
+              reason = `ExitCode:${state.terminated.exitCode}`;
+            }
+          }
+        }
+      }
+    }
+
+    if (msgState === 'waiting') {
+      return `Waiting: ${reason}`;
+    }
+
+    if (msgState === 'terminated') {
+      return `Terminated: ${reason}`;
+    }
+
+    return pod.podStatus.podPhase;
+  }
 }

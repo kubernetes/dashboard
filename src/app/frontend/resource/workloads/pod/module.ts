@@ -15,15 +15,18 @@
 import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
 
+import {ComponentsModule} from '../../../common/components/module';
 import {SharedModule} from '../../../shared.module';
-import {PodComponent} from './component';
+
+import {PodListComponent} from './component';
 import {podState} from './state';
 
 @NgModule({
   imports: [
     SharedModule,
+    ComponentsModule,
     UIRouterModule.forChild({states: [podState]}),
   ],
-  declarations: [PodComponent],
+  declarations: [PodListComponent],
 })
 export class PodModule {}
