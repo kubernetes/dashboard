@@ -4,7 +4,7 @@
     "outDir": "../out-tsc/app",
     "baseUrl": "../src/app/frontend",
     "module": "es6",
-    "types": []
+    "types": ["node"]
   },
   "exclude": [
     "../src/app/frontend/index_test.ts",

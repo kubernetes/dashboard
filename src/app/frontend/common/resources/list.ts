@@ -68,7 +68,7 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
 
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
-    let timeoutObj;
+    let timeoutObj: NodeJS.Timer;
     this.dataSubscription_ =
         merge(this.sort.sortChange, this.paginator.page, this.filter.filterEvent)
             .pipe(startWith({}), switchMap<T, T>(() => {
