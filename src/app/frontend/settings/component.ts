@@ -21,6 +21,7 @@ import {StateService} from '@uirouter/core';
 
 import {ErrorStateParams} from '../common/params/params';
 import {SettingsService} from '../common/services/global/settings';
+import {TitleService} from '../common/services/global/title';
 import {errorState} from '../error/state';
 
 import {SaveAnywayDialog} from './saveanywaysdialog/dialog';
@@ -34,7 +35,7 @@ export class SettingsComponent implements OnInit {
 
   constructor(
       private readonly settings_: SettingsService, private readonly dialog_: MatDialog,
-      private readonly state_: StateService) {}
+      private readonly state_: StateService, private readonly title_: TitleService) {}
 
   ngOnInit(): void {
     this.loadGlobalSettings();
@@ -45,8 +46,11 @@ export class SettingsComponent implements OnInit {
     return this.settings_.isInitialized();
   }
 
-  loadGlobalSettings(): void {
-    // TODO Make form pristine.
+  loadGlobalSettings(form?: NgForm): void {
+    if (form) {
+      form.resetForm();
+    }
+
     this.settings_.loadGlobalSettings(
         this.onSettingsLoad.bind(this), this.onSettingsLoadError.bind(this));
   }
@@ -65,8 +69,8 @@ export class SettingsComponent implements OnInit {
     this.settings_.saveGlobalSettings(this.global)
         .subscribe(
             () => {
-              this.loadGlobalSettings();
-              // TODO This apply settings like browser title.
+              this.loadGlobalSettings(form);
+              this.title_.update();
             },
             (err) => {
               if (err && err.data.indexOf(this.concurrentChangeErr_) !== -1) {
@@ -79,7 +83,7 @@ export class SettingsComponent implements OnInit {
                         // "save anyways" dialog will be shown again.
                         this.saveGlobalSettings(form);
                       } else {
-                        this.loadGlobalSettings();
+                        this.loadGlobalSettings(form);
                       }
                     });
               }
