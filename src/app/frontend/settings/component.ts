@@ -21,6 +21,7 @@ import {StateService} from '@uirouter/core';
 
 import {ErrorStateParams} from '../common/params/params';
 import {SettingsService} from '../common/services/global/settings';
+import {TitleService} from '../common/services/global/title';
 import {errorState} from '../error/state';
 
 import {SaveAnywayDialog} from './saveanywaysdialog/dialog';
@@ -34,7 +35,7 @@ export class SettingsComponent implements OnInit {
 
   constructor(
       private readonly settings_: SettingsService, private readonly dialog_: MatDialog,
-      private readonly state_: StateService) {}
+      private readonly state_: StateService, private readonly title_: TitleService) {}
 
   ngOnInit(): void {
     this.loadGlobalSettings();
@@ -66,7 +67,7 @@ export class SettingsComponent implements OnInit {
         .subscribe(
             () => {
               this.loadGlobalSettings();
-              // TODO This apply settings like browser title.
+              this.title_.update();
             },
             (err) => {
               if (err && err.data.indexOf(this.concurrentChangeErr_) !== -1) {

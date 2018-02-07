@@ -28,9 +28,10 @@ export function configureRouter(router: UIRouter): void {
   });
 
   // Register transition hook to adjust window title.
-  transitionService.onBefore({}, (transition) => {
+  // It cannot be registered "on before" because state params are not available then.
+  transitionService.onSuccess({}, (transition) => {
     const titleService = transition.injector().get(TitleService);
-    titleService.setTitle(transition);
+    titleService.update(transition);
   });
 
   // Register transition hooks for authentication.
