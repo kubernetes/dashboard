@@ -17,11 +17,11 @@ import {StateService} from '@uirouter/core';
 import {Pod, PodList} from 'typings/backendapi';
 
 import {ResourceListWithStatuses} from '../../../../common/resources/list';
-import {ResourceListService} from '../../../../common/services/resource/resourcelist';
+import {NamespacedResourceListService} from '../../../../common/services/resource/resourcelist';
 
 @Component({selector: 'kd-pod', templateUrl: './template.html'})
 export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
-  constructor(state: StateService, podListService: ResourceListService<PodList>) {
+  constructor(state: StateService, podListService: NamespacedResourceListService<PodList>) {
     super('pod', state, podListService);
   }
 

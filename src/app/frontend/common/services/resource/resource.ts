@@ -19,20 +19,6 @@ import {Observable} from 'rxjs/Observable';
 import {ResourceBase} from '../../resources/resource';
 
 @Injectable()
-export class NamespacedResourceService<T> extends ResourceBase<T> {
-  get(name: string, namespace?: string, params?: HttpParams): Observable<T> {
-    if (!name) {
-      throw Error('Name can not be empty.');
-    }
-
-    namespace = namespace ? namespace : this.namespace_;
-    const endpoint =
-        this.baseEndpoint_.concat(this.baseEndpoint_.endsWith('/') ? namespace : `/${namespace}`);
-    return this.http_.get<T>(endpoint.concat(`/${name}`), {params});
-  }
-}
-
-@Injectable()
 export class ResourceService<T> extends ResourceBase<T> {
   get(name: string, params?: HttpParams): Observable<T> {
     if (!name) {
@@ -40,5 +26,19 @@ export class ResourceService<T> extends ResourceBase<T> {
     }
 
     return this.http_.get<T>(this.baseEndpoint_.concat(`/${name}`), {params});
+  }
+}
+
+@Injectable()
+export class NamespacedResourceService<T> extends ResourceBase<T> {
+  get(name: string, namespace?: string, params?: HttpParams): Observable<T> {
+    if (!name) {
+      throw Error('Name can not be empty.');
+    }
+
+    namespace = namespace ? namespace : this.getNamespace();
+    const endpoint =
+        this.baseEndpoint_.concat(this.baseEndpoint_.endsWith('/') ? namespace : `/${namespace}`);
+    return this.http_.get<T>(endpoint.concat(`/${name}`), {params});
   }
 }

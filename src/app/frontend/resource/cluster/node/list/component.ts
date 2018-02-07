@@ -17,7 +17,7 @@ import {Node, NodeList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 
 import {ResourceListWithStatuses} from '../../../../common/resources/list';
-import {ResourceListService} from '../../../../common/services/resource/resourcelist';
+import {NamespacedResourceListService, ResourceListService} from '../../../../common/services/resource/resourcelist';
 import {nodeDetailState} from '../detail/state';
 
 @Component({

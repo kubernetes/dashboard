@@ -26,13 +26,10 @@ export abstract class ResourceBase<T> {
       @Inject(RESOURCE_ENDPOINT_DI_TOKEN) resourceEndpoint: ResourceEndpoint,
       protected readonly http_: HttpClient, private readonly state_: StateService) {
     this.baseEndpoint_ = resourceEndpoint.url;
-    this.initNamespace_();
   }
 
-  private initNamespace_(): void {
+  getNamespace(): string {
     // TODO get from service
-    if (this.state_.params.namespace) {
-      this.namespace_ = this.state_.params.namespace;
-    }
+    return this.state_.params.namespace;
   }
 }

@@ -13,10 +13,12 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
-import {ResourceService} from './resource';
-import {ResourceListService} from './resourcelist';
+import {NamespacedResourceService, ResourceService} from './resource';
+import {NamespacedResourceListService, ResourceListService} from './resourcelist';
 
 @NgModule({
-  providers: [ResourceService, ResourceListService],
+  providers: [
+    ResourceService, NamespacedResourceService, ResourceListService, NamespacedResourceListService
+  ],
 })
 export class ResourceModule {}

@@ -19,19 +19,19 @@ import {Observable} from 'rxjs/Observable';
 import {ResourceBase} from '../../resources/resource';
 
 @Injectable()
-export class NamespacedResourceListService<T> extends ResourceBase<T> {
-  get(params?: HttpParams, namespace?: string): Observable<T> {
-    namespace = namespace ? namespace : this.namespace_;
-    const endpoint =
-        this.baseEndpoint_.concat(this.baseEndpoint_.endsWith('/') ? namespace : `/${namespace}`);
-
-    return this.http_.get<T>(endpoint, {params});
+export class ResourceListService<T> extends ResourceBase<T> {
+  get(params?: HttpParams): Observable<T> {
+    return this.http_.get<T>(this.baseEndpoint_, {params});
   }
 }
 
 @Injectable()
-export class ResourceListService<T> extends ResourceBase<T> {
-  get(params?: HttpParams): Observable<T> {
-    return this.http_.get<T>(this.baseEndpoint_, {params});
+export class NamespacedResourceListService<T> extends ResourceListService<T> {
+  get(params?: HttpParams, namespace?: string): Observable<T> {
+    namespace = namespace ? namespace : this.getNamespace();
+    const endpoint =
+        this.baseEndpoint_.concat(this.baseEndpoint_.endsWith('/') ? namespace : `/${namespace}`);
+
+    return this.http_.get<T>(endpoint, {params});
   }
 }

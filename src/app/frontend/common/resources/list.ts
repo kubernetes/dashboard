@@ -27,7 +27,7 @@ import {CardListFilterComponent} from '../components/table/filter/component';
 import {NamespacedResourceStateParams, ResourceStateParams} from '../params/params';
 import {GlobalServicesModule} from '../services/global/module';
 import {SettingsService} from '../services/global/settings';
-import {ResourceListService} from '../services/resource/resourcelist';
+import {NamespacedResourceListService} from '../services/resource/resourcelist';
 
 // TODO: NEEDS DOCUMENTATION!!!
 export abstract class ResourceListBase<T extends ResourceList, R> implements OnInit, OnDestroy {
@@ -49,7 +49,7 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
 
   constructor(
       private readonly detailStateName_: string, private readonly state_: StateService,
-      protected resourceListService_: ResourceListService<T>) {
+      protected resourceListService_: NamespacedResourceListService<T>) {
     this.settingsService_ = GlobalServicesModule.injector.get(SettingsService);
   }
 
