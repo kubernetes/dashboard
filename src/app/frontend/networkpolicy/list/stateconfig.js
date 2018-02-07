@@ -25,7 +25,7 @@ import {NetworkPolicyListController} from './controller';
 const i18n = {
   /** @type {string} @desc Label 'Network Policy' that appears as a breadcrumbs on the
    action bar. */
-  MSG_BREADCRUMBS_NETWORKPOLICY_AT_LABEL: goog.getMsg('NetworkPolicy'),
+  MSG_BREADCRUMBS_NETWORKPOLICY_AT_LABEL: goog.getMsg('Network Policy'),
 };
 
 /**
