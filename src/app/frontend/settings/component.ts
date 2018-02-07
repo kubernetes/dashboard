@@ -46,8 +46,11 @@ export class SettingsComponent implements OnInit {
     return this.settings_.isInitialized();
   }
 
-  loadGlobalSettings(): void {
-    // TODO Make form pristine.
+  loadGlobalSettings(form?: NgForm): void {
+    if (form) {
+      form.resetForm();
+    }
+
     this.settings_.loadGlobalSettings(
         this.onSettingsLoad.bind(this), this.onSettingsLoadError.bind(this));
   }
@@ -66,7 +69,7 @@ export class SettingsComponent implements OnInit {
     this.settings_.saveGlobalSettings(this.global)
         .subscribe(
             () => {
-              this.loadGlobalSettings();
+              this.loadGlobalSettings(form);
               this.title_.update();
             },
             (err) => {
@@ -80,7 +83,7 @@ export class SettingsComponent implements OnInit {
                         // "save anyways" dialog will be shown again.
                         this.saveGlobalSettings(form);
                       } else {
-                        this.loadGlobalSettings();
+                        this.loadGlobalSettings(form);
                       }
                     });
               }

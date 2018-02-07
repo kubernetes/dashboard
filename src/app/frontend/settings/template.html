@@ -77,9 +77,8 @@ limitations under the License.
               i18n>
         Save
       </button>
-      <button [disabled]="globalForm.pristine"
-              type="button"
-              (click)="loadGlobalSettings()"
+      <button type="button"
+              (click)="loadGlobalSettings(globalForm)"
               color="primary"
               mat-raised-button
               i18n>
@@ -116,8 +115,7 @@ limitations under the License.
               i18n>
         Save
       </button>
-      <button [disabled]="localForm.pristine"
-              type="button"
+      <button type="button"
               (click)="loadLocalSettings(localForm)"
               color="primary"
               mat-raised-button
