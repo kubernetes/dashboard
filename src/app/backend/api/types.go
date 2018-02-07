@@ -129,7 +129,7 @@ const (
 	ResourceKindRbacRoleBinding         = "rolebinding"
 	ResourceKindRbacClusterRoleBinding  = "clusterrolebinding"
 	ResourceKindEndpoint                = "endpoint"
-	ResourceKindNetworkPolicy           ="networkpolicy"
+	ResourceKindNetworkPolicy           = "networkpolicy"
 )
 
 // ClientType represents type of client that is used to perform generic operations on resources.
