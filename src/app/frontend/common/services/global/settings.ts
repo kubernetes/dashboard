@@ -88,7 +88,9 @@ export class SettingsService {
 
   getLocalSettings(): LocalSettings {
     const cookieValue = this.cookies_.get(this.localSettingsCookie_);
-    this.localSetttings_ = JSON.parse(cookieValue);
+    if (cookieValue && cookieValue.length > 0) {
+      this.localSetttings_ = JSON.parse(cookieValue);
+    }
     return this.localSetttings_;
   }
 
