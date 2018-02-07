@@ -1,4 +1,4 @@
-// Copyright 2017 The Kubernetes Dashboard Authors.
+// Copyright 2017 The Kubernetes Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,16 +20,10 @@ import namespaceModule from '../common/namespace/module';
 import {ScaleService} from '../common/scaling/service';
 import eventsModule from '../events/module';
 import podModule from '../pod/module';
-
-//import {NetworkPolicyService} from './detail/delete_service';
-//import {networkPolicyInfoComponent} from './detail/info_component';
-//import {networkPolicyVersionResource} from './detail/stateconfig';
-
 import {networkPolicyCardComponent} from './list/card_component';
 import {networkPolicyCardListComponent} from './list/cardlist_component';
 import {networkPolicyCardMenuComponent} from './list/cardmenu_component';
 import {networkPolicyInfoComponent} from './detail/info_component';
-
 import {networkPolicyListResource} from './list/stateconfig';
 import stateConfig from './stateconfig';
 
@@ -57,7 +51,5 @@ export default angular
     .component('kdNetworkPolicyCardList', networkPolicyCardListComponent)
     .component('kdNetworkPolicyMenu', networkPolicyCardMenuComponent)
     .component('kdNetworkPolicyInfo', networkPolicyInfoComponent)
-    //.service('kdNetworkPolicyService', NetworkPolicyService)
     .service('kdScaleService', ScaleService)
     .factory('kdNetworkPolicyListResource', networkPolicyListResource)
-    //.factory('kdATVersionResource', networkPolicyVersionResource)
