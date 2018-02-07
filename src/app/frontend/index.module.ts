@@ -33,8 +33,8 @@ import {settingsFutureState} from './settings/state';
 
 @NgModule({
   imports: [
-    BrowserAnimationsModule,
     BrowserModule,
+    BrowserAnimationsModule,
     CoreModule,
     ChromeModule,
     LoginModule,
