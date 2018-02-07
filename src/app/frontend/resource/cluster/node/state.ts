@@ -12,11 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {ResourceService} from './resource';
-import {ResourceListService} from './resourcelist';
+import {Ng2StateDeclaration} from '@uirouter/angular';
 
-@NgModule({
-  providers: [ResourceService, ResourceListService],
-})
-export class ResourceModule {}
+import {chromeState} from '../../../chrome/state';
+import {ProxyComponent} from '../../../common/components/proxy/component';
+
+export const stateName = 'node';
+
+export const stateUrl = '/node';
+
+export const nodeFutureState: Ng2StateDeclaration = {
+  name: `${stateName}.**`,
+  url: stateUrl,
+  loadChildren: './resource/cluster/node/module#NodeModule'
+};
+
+export const nodeState: Ng2StateDeclaration = {
+  abstract: true,
+  parent: chromeState.name,
+  name: stateName,
+  component: ProxyComponent,
+};

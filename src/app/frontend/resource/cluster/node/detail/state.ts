@@ -14,21 +14,18 @@
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
-import {chromeState} from '../../../../chrome/state';
-import {getResourceDetailsStateName, getResourceDetailsStateUrl} from '../../../../common/stateutils/stateutils';
-import {STATE_NAME} from '../module';
+import {stateName, stateUrl} from '../state';
 
 import {NodeDetailComponent} from './component';
 
 export const nodeDetailState: Ng2StateDeclaration = {
-  parent: chromeState.name,
-  name: getResourceDetailsStateName(STATE_NAME),
-  url: getResourceDetailsStateUrl(STATE_NAME),
+  name: `${stateName}.detail`,
+  url: stateUrl,
   component: NodeDetailComponent,
   data: {
     kdBreadcrumbs: {
       label: 'resourceName',
-      parent: 'nodelist',
+      parent: `${stateName}.list`,
     },
   },
 };

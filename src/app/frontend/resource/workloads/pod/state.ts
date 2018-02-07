@@ -13,12 +13,22 @@
 // limitations under the License.
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
+import {chromeState} from '../../../chrome/state';
+import {ProxyComponent} from '../../../common/components/proxy/component';
 
-import {PodListComponent} from './component';
+export const stateName = 'pod';
+
+export const stateUrl = '/pod';
+
+export const podFutureState: Ng2StateDeclaration = {
+  name: `${stateName}.**`,
+  url: stateUrl,
+  loadChildren: './resource/workloads/pod/module#PodModule'
+};
 
 export const podState: Ng2StateDeclaration = {
-  parent: 'chrome',
-  name: 'pod',
-  url: '/pod',
-  component: PodListComponent,
+  abstract: true,
+  parent: chromeState.name,
+  name: stateName,
+  component: ProxyComponent,
 };

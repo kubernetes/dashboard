@@ -14,10 +14,18 @@
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
+import {chromeState} from '../chrome/state';
+
 import {SettingsComponent} from './component';
 
+export const settingsFutureState: Ng2StateDeclaration = {
+  name: 'settings.**',
+  url: '/settings',
+  loadChildren: './settings/module#SettingsModule'
+};
+
 export const settingsState: Ng2StateDeclaration = {
-  parent: 'chrome',
+  parent: chromeState.name,
   name: 'settings',
   url: '/settings',
   views: {

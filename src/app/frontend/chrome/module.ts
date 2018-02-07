@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
+import {NgModule, OnDestroy, OnInit} from '@angular/core';
 
 import {AboutModule} from '../about/module';
 import {ComponentsModule} from '../common/components/module';
@@ -54,34 +54,7 @@ import {SearchComponent} from './search/component';
   imports: [
     SharedModule,
     ComponentsModule,
-    // Application modules
     NavModule,
-    AboutModule,
-    ClusterModule,
-    ConfigModule,
-    ConfigMapModule,
-    CronJobModule,
-    DaemonSetModule,
-    DeploymentModule,
-    DiscoveryModule,
-    IngressModule,
-    JobModule,
-    NamespaceModule,
-    NodeModule,
-    OverviewModule,
-    PersistentVolumeModule,
-    PersistentVolumeClaimModule,
-    PodModule,
-    ReplicaSetModule,
-    ReplicationControllerModule,
-    RoleModule,
-    SecretModule,
-    ServiceModule,
-    SettingsModule,
-    StatefulSetModule,
-    StorageClassModule,
-    WorkloadsModule,
-    ComponentsModule,
   ]
 })
 export class ChromeModule {}

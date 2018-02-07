@@ -16,17 +16,22 @@ import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
 
 import {ComponentsModule} from '../../../common/components/module';
+import {ResourceModule} from '../../../common/services/resource/module';
+import {POD_ENDPOINT, RESOURCE_ENDPOINT_DI_TOKEN} from '../../../index.config';
 import {SharedModule} from '../../../shared.module';
 
-import {PodListComponent} from './component';
+import {PodListComponent} from './list/component';
+import {podListState} from './list/state';
 import {podState} from './state';
 
 @NgModule({
   imports: [
     SharedModule,
     ComponentsModule,
-    UIRouterModule.forChild({states: [podState]}),
+    ResourceModule,
+    UIRouterModule.forChild({states: [podState, podListState]}),
   ],
+  providers: [{provide: RESOURCE_ENDPOINT_DI_TOKEN, useValue: POD_ENDPOINT}],
   declarations: [PodListComponent],
 })
 export class PodModule {}

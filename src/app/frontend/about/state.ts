@@ -14,11 +14,19 @@
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
+import {chromeState} from '../chrome/state';
+
 import {ActionbarComponent} from './actionbar/component';
 import {AboutComponent} from './component';
 
+export const aboutFutureState: Ng2StateDeclaration = {
+  name: 'about.**',
+  url: '/about',
+  loadChildren: './about/module#AboutModule'
+};
+
 export const aboutState: Ng2StateDeclaration = {
-  parent: 'chrome',
+  parent: chromeState.name,
   name: 'about',
   url: '/about',
   data: {

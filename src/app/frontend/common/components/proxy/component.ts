@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HttpParams} from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
+import {Component} from '@angular/core';
 
-export interface ResourceListService<T> { getResourceList(params?: HttpParams): Observable<T>; }
-
-export interface ResourceDetailService<T> { getResource(name: string): Observable<T>; }
+@Component({
+  template: '<ui-view></ui-view>',
+})
+export class ProxyComponent {}

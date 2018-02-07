@@ -22,6 +22,7 @@ export interface Config {
   skipLoginPageCookieName: string;
   csrfHeaderName: string;
   authTokenHeaderName: string;
+  defaultNamespace: string;
 }
 
 // TODO fill this out
@@ -29,7 +30,8 @@ export const CONFIG: Config = {
   authTokenCookieName: 'jweToken',
   authTokenHeaderName: 'jweToken',
   csrfHeaderName: 'X-CSRF-TOKEN',
-  skipLoginPageCookieName: 'skipLoginPage'
+  skipLoginPageCookieName: 'skipLoginPage',
+  defaultNamespace: 'default',
 };
 
 // Override default material tooltip values.
@@ -37,4 +39,19 @@ export const KD_TOOLTIP_DEFAULT_OPTIONS: MatTooltipDefaultOptions = {
   showDelay: 500,
   hideDelay: 0,
   touchendHideDelay: 0,
+};
+
+export let RESOURCE_ENDPOINT_DI_TOKEN = new InjectionToken<ResourceEndpoint>('kd.endpoint');
+
+// TODO export somewhere else?
+const apiv1 = '/api/v1';
+
+export interface ResourceEndpoint { url: string; }
+
+export const POD_ENDPOINT = {
+  url: apiv1.concat('/pod'),
+};
+
+export const NODE_ENDPOINT = {
+  url: apiv1.concat('/node'),
 };

@@ -13,16 +13,16 @@
 // limitations under the License.
 
 import {Component} from '@angular/core';
-import {Pod, PodList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
+import {Pod, PodList} from 'typings/backendapi';
 
-import {ResourceListWithStatuses} from '../../../common/resources/list';
-import {PodService} from '../../../common/services/resource/pod';
+import {ResourceListWithStatuses} from '../../../../common/resources/list';
+import {ResourceListService} from '../../../../common/services/resource/resourcelist';
 
 @Component({selector: 'kd-pod', templateUrl: './template.html'})
 export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
-  constructor(state: StateService, private readonly podService_: PodService) {
-    super('pod', state, podService_);
+  constructor(state: StateService, podListService: ResourceListService<PodList>) {
+    super('pod', state, podListService);
   }
 
   map(podList: PodList): Pod[] {

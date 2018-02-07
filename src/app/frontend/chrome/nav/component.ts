@@ -35,7 +35,7 @@ import {cronJobState} from '../../resource/workloads/cronjob/state';
 import {daemonSetState} from '../../resource/workloads/daemonset/state';
 import {deploymentState} from '../../resource/workloads/deployment/state';
 import {jobState} from '../../resource/workloads/job/state';
-import {podState} from '../../resource/workloads/pod/state';
+import {podListState} from '../../resource/workloads/pod/list/state';
 import {replicaSetState} from '../../resource/workloads/replicaset/state';
 import {replicationControllerState} from '../../resource/workloads/replicationcontroller/state';
 import {workloadsState} from '../../resource/workloads/state';
@@ -62,7 +62,7 @@ export class NavComponent implements AfterContentInit, OnInit {
     daemonSet: daemonSetState.name,
     deployment: deploymentState.name,
     job: jobState.name,
-    pod: podState.name,
+    pod: podListState.name,
     replicaSet: replicaSetState.name,
     replicationController: replicationControllerState.name,
     statefulSet: statefulSetState.name,

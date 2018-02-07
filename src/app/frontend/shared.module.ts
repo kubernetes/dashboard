@@ -19,7 +19,6 @@ import {FormsModule} from '@angular/forms';
 import {MAT_TOOLTIP_DEFAULT_OPTIONS, MatButtonModule, MatCardModule, MatChipsModule, MatDialogModule, MatDividerModule, MatFormFieldModule, MatGridListModule, MatIconModule, MatInputModule, MatPaginatorModule, MatProgressSpinnerModule, MatRadioModule, MatSidenavModule, MatSliderModule, MatSlideToggleModule, MatSortModule, MatTableModule, MatToolbarModule, MatTooltipModule} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {UIRouterModule} from '@uirouter/angular';
-import {CookieService} from 'ngx-cookie-service';
 
 import {PipesModule} from './common/pipes/module';
 import {KD_TOOLTIP_DEFAULT_OPTIONS} from './index.config';
@@ -51,7 +50,6 @@ const SHARED_DEPENDENCIES = [
   MatPaginatorModule,
 
   // Other 3rd party modules
-  BrowserAnimationsModule,
   FlexLayoutModule,
   UIRouterModule,
 
@@ -63,7 +61,6 @@ const SHARED_DEPENDENCIES = [
   imports: SHARED_DEPENDENCIES,
   exports: SHARED_DEPENDENCIES,
   providers: [
-    CookieService,
     {
       provide: MAT_TOOLTIP_DEFAULT_OPTIONS,
       useValue: KD_TOOLTIP_DEFAULT_OPTIONS,

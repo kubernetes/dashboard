@@ -18,14 +18,12 @@ import {StateService, TransitionService} from '@uirouter/angular';
 import {TargetState, Transition} from '@uirouter/core';
 import {CookieService} from 'ngx-cookie-service';
 import {Observable} from 'rxjs/Observable';
-import {ErrorObservable} from 'rxjs/observable/ErrorObservable';
 import {Subscription} from 'rxjs/Subscription';
 import {AuthResponse, CsrfToken, K8sError, LoginSpec, LoginStatus} from 'typings/backendapi';
 
 import {errorState} from '../../../error/state';
 import {CONFIG} from '../../../index.config';
 import {overviewState} from '../../../overview/state';
-
 import {CsrfTokenService} from './csrftoken';
 
 @Injectable()

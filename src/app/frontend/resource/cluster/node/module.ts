@@ -17,22 +17,23 @@ import {UIRouterModule} from '@uirouter/angular';
 
 import {ComponentsModule} from '../../../common/components/module';
 import {ResourceModule} from '../../../common/services/resource/module';
+import {NODE_ENDPOINT, RESOURCE_ENDPOINT_DI_TOKEN} from '../../../index.config';
 import {SharedModule} from '../../../shared.module';
 
 import {NodeDetailComponent} from './detail/component';
 import {nodeDetailState} from './detail/state';
 import {NodeListComponent} from './list/component';
 import {nodeListState} from './list/state';
+import {nodeState} from './state';
 
 @NgModule({
   imports: [
     SharedModule,
     ComponentsModule,
     ResourceModule,
-    UIRouterModule.forChild({states: [nodeListState, nodeDetailState]}),
+    UIRouterModule.forChild({states: [nodeState, nodeListState, nodeDetailState]}),
   ],
+  providers: [{provide: RESOURCE_ENDPOINT_DI_TOKEN, useValue: NODE_ENDPOINT}],
   declarations: [NodeListComponent, NodeDetailComponent],
 })
 export class NodeModule {}
-
-export const STATE_NAME = 'node';

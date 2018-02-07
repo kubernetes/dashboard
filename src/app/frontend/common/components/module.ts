@@ -22,6 +22,7 @@ import {CardComponent} from './card/component';
 import {ChipsComponent} from './chips/component';
 import {ObjectMetaComponent} from './objectmeta/component';
 import {PropertyComponent} from './property/component';
+import {ProxyComponent} from './proxy/component';
 import {CardListFilterComponent} from './table/filter/component';
 import {LoadingSpinner} from './table/spinner/component';
 
@@ -36,6 +37,7 @@ import {LoadingSpinner} from './table/spinner/component';
     ChipsComponent,
     LoadingSpinner,
     CardListFilterComponent,
+    ProxyComponent,
   ],
   exports: [
     CardComponent,
@@ -46,6 +48,7 @@ import {LoadingSpinner} from './table/spinner/component';
     ChipsComponent,
     LoadingSpinner,
     CardListFilterComponent,
+    ProxyComponent,
   ],
 })
 export class ComponentsModule {}

@@ -13,13 +13,11 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
 
 import {CoreFormatter} from './coreformatter';
 import {MemoryFormatter} from './memoryformatter';
 
 @NgModule({
-  imports: [BrowserModule],
   declarations: [MemoryFormatter, CoreFormatter],
   exports: [MemoryFormatter, CoreFormatter],
 })

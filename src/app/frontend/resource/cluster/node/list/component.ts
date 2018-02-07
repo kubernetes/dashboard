@@ -13,11 +13,11 @@
 // limitations under the License.
 
 import {Component} from '@angular/core';
-import {Node, NodeList, PodList} from '@api/backendapi';
+import {Node, NodeList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 
 import {ResourceListWithStatuses} from '../../../../common/resources/list';
-import {NodeService} from '../../../../common/services/resource/node';
+import {ResourceListService} from '../../../../common/services/resource/resourcelist';
 import {nodeDetailState} from '../detail/state';
 
 @Component({
@@ -26,8 +26,8 @@ import {nodeDetailState} from '../detail/state';
   styleUrls: ['./style.scss'],
 })
 export class NodeListComponent extends ResourceListWithStatuses<NodeList, Node> {
-  constructor(state: StateService, private readonly nodeService_: NodeService) {
-    super(nodeDetailState.name, state, nodeService_);
+  constructor(state: StateService, nodeListService: ResourceListService<NodeList>) {
+    super(nodeDetailState.name, state, nodeListService);
 
     // Override default warning icon.
     this.setWarningIcon('help');

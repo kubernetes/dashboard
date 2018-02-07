@@ -12,16 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HttpClient, HttpParams} from '@angular/common/http';
-import {PodList} from '@api/backendapi';
-import {Observable} from 'rxjs/Observable';
-import {ResourceListService} from '../../resources/service';
+import {Ng2StateDeclaration} from '@uirouter/angular';
 
-export class PodService implements ResourceListService<PodList> {
-  private readonly podEndpoint_ = 'api/v1/pod/';
-  constructor(private readonly http_: HttpClient) {}
+import {overviewState} from '../../../../overview/state';
+import {stateName, stateUrl} from '../state';
 
-  getResourceList(params?: HttpParams): Observable<PodList> {
-    return this.http_.get<PodList>(this.podEndpoint_, {params});
-  }
-}
+import {PodListComponent} from './component';
+
+export const podListState: Ng2StateDeclaration = {
+  name: `${stateName}.list`,
+  url: stateUrl,
+  component: PodListComponent,
+  data: {
+    kdBreadcrumbs: {
+      label: 'Pods',
+      parent: overviewState.name,
+    },
+  },
+};

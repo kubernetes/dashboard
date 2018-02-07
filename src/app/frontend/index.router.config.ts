@@ -17,6 +17,7 @@ import {HookMatchCriteria, HookMatchCriterion} from '@uirouter/core';
 
 import {AuthService} from './common/services/global/authentication';
 import {TitleService} from './common/services/global/title';
+import {CONFIG} from './index.config';
 
 export function configureRouter(router: UIRouter): void {
   const transitionService = router.transitionService;
@@ -31,6 +32,14 @@ export function configureRouter(router: UIRouter): void {
   transitionService.onBefore({}, (transition) => {
     const titleService = transition.injector().get(TitleService);
     titleService.setTitle(transition);
+  });
+
+  transitionService.onSuccess({}, (transition) => {
+    const namespaceParam = transition.params().namespace;
+    if (namespaceParam === undefined && transition.to().name !== 'login') {
+      stateService.params.namespace = CONFIG.defaultNamespace;
+      stateService.reload();
+    }
   });
 
   // Register transition hooks for authentication.

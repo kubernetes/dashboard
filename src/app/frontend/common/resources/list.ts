@@ -14,21 +14,20 @@
 
 import {DataSource} from '@angular/cdk/collections';
 import {HttpParams} from '@angular/common/http';
-import {Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {ResourceList} from '@api/backendapi';
 import {Status} from '@api/frontendapi';
 import {StateService} from '@uirouter/core';
 import {merge} from 'rxjs/observable/merge';
-import {delay, startWith, switchMap} from 'rxjs/operators';
+import {startWith, switchMap} from 'rxjs/operators';
 import {Subscription} from 'rxjs/Subscription';
 
 import {CardListFilterComponent} from '../components/table/filter/component';
-import {ResourceStateParams} from '../params/params';
+import {NamespacedResourceStateParams, ResourceStateParams} from '../params/params';
 import {GlobalServicesModule} from '../services/global/module';
 import {SettingsService} from '../services/global/settings';
-
-import {ResourceListService} from './service';
+import {ResourceListService} from '../services/resource/resourcelist';
 
 // TODO: NEEDS DOCUMENTATION!!!
 export abstract class ResourceListBase<T extends ResourceList, R> implements OnInit, OnDestroy {
@@ -69,6 +68,7 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
 
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
+    let timeoutObj;
     this.dataSubscription_ =
         merge(this.sort.sortChange, this.paginator.page, this.filter.filterEvent)
             .pipe(startWith({}), switchMap<T, T>(() => {
@@ -76,22 +76,34 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
                     params = this.paginate_(params);
                     params = this.filter_(params);
 
-                    this.isLoading = true;
-                    return this.resourceListService_.getResourceList(params);
+                    // Show loading animation only for long loading data to avoid flickering.
+                    timeoutObj = setTimeout(() => {
+                      this.isLoading = true;
+                    }, 100);
+
+                    return this.resourceListService_.get(params);
                   }))
             .subscribe((data: T) => {
               this.totalItems = data.listMeta.totalItems;
+              clearTimeout(timeoutObj);
               this.isLoading = false;
               this.data_.data = this.map(data);
             });
   }
 
   ngOnDestroy(): void {
-    this.dataSubscription_.unsubscribe();
+    if (this.dataSubscription_) {
+      this.dataSubscription_.unsubscribe();
+    }
   }
 
-  getDetailsHref(resourceName: string): string {
-    return this.state_.href(this.detailStateName_, new ResourceStateParams(resourceName));
+  getDetailsHref(resourceName: string, namespace?: string): string {
+    let stateParams = new ResourceStateParams(resourceName);
+    if (namespace) {
+      stateParams = new NamespacedResourceStateParams(namespace, resourceName);
+    }
+
+    return this.state_.href(this.detailStateName_, stateParams);
   }
 
   getData(): DataSource<R> {
@@ -124,7 +136,7 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
     }
 
     // TODO: support filtering by different columns
-    const filterByQuery = `name,${this.filter.query}`;
+    const filterByQuery = this.filter.query ? `name,${this.filter.query}` : '';
     return result.set('filterBy', filterByQuery);
   }
 

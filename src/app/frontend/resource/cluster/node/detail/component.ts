@@ -14,8 +14,7 @@
 
 import {Component, OnInit} from '@angular/core';
 import {NodeDetail} from '@api/backendapi';
-
-import {NodeService} from '../../../../common/services/resource/node';
+import {ResourceService} from '../../../../common/services/resource/resource';
 
 @Component({
   selector: 'kd-node-detail',
@@ -26,10 +25,10 @@ export class NodeDetailComponent implements OnInit {
   node: NodeDetail;
   isInitialized = false;
 
-  constructor(private readonly node_: NodeService) {}
+  constructor(private readonly node_: ResourceService<NodeDetail>) {}
 
   ngOnInit(): void {
-    this.node_.getResource('kube-master').subscribe((d: NodeDetail) => {
+    this.node_.get('kube-master').subscribe((d: NodeDetail) => {
       this.node = d;
       this.isInitialized = true;
     });
