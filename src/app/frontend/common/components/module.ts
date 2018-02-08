@@ -25,10 +25,12 @@ import {PropertyComponent} from './property/component';
 import {ProxyComponent} from './proxy/component';
 import {CardListFilterComponent} from './table/filter/component';
 import {LoadingSpinner} from './table/spinner/component';
+import {AllocationChartComponent} from "./allocationchart/component";
 
 @NgModule({
   imports: [SharedModule],
   declarations: [
+    AllocationChartComponent,
     CardComponent,
     ActionbarComponent,
     BreadcrumbsComponent,
@@ -40,6 +42,7 @@ import {LoadingSpinner} from './table/spinner/component';
     ProxyComponent,
   ],
   exports: [
+    AllocationChartComponent,
     CardComponent,
     ActionbarComponent,
     BreadcrumbsComponent,
