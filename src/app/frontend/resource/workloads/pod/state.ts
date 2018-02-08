@@ -23,7 +23,7 @@ export const stateUrl = '/pod';
 export const podFutureState: Ng2StateDeclaration = {
   name: `${stateName}.**`,
   url: stateUrl,
-  loadChildren: './resource/workloads/pod/module#PodModule'
+  loadChildren: './resource/workloads/pod/module#PodModule',
 };
 
 export const podState: Ng2StateDeclaration = {

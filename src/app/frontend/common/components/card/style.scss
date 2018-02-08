@@ -16,6 +16,7 @@
 
 :host {
   .mat-card {
+    min-width: 100 * $baseline-grid;
     padding: 0;
   }
 

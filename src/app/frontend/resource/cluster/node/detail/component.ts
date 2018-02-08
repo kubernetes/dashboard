@@ -12,8 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {NodeDetail} from '@api/backendapi';
+import {StateService} from '@uirouter/core';
+import {Subscription} from 'rxjs/Subscription';
+
 import {ResourceService} from '../../../../common/services/resource/resource';
 
 @Component({
@@ -21,16 +24,25 @@ import {ResourceService} from '../../../../common/services/resource/resource';
   templateUrl: './template.html',
   styleUrls: ['./style.scss'],
 })
-export class NodeDetailComponent implements OnInit {
+export class NodeDetailComponent implements OnInit, OnDestroy {
+  private nodeSubscription_: Subscription;
+  private nodeName_: string;
   node: NodeDetail;
   isInitialized = false;
 
-  constructor(private readonly node_: ResourceService<NodeDetail>) {}
+  constructor(
+      private readonly node_: ResourceService<NodeDetail>, private readonly state_: StateService) {}
 
   ngOnInit(): void {
-    this.node_.get('kube-master').subscribe((d: NodeDetail) => {
-      this.node = d;
-      this.isInitialized = true;
-    });
+    this.nodeName_ = this.state_.params.resourceName;
+    this.nodeSubscription_ =
+        this.node_.get(this.nodeName_).startWith({}).subscribe((d: NodeDetail) => {
+          this.node = d;
+          this.isInitialized = true;
+        });
+  }
+
+  ngOnDestroy(): void {
+    this.nodeSubscription_.unsubscribe();
   }
 }

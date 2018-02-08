@@ -15,7 +15,7 @@
 const RESOURCE_DETAILS_URL_PARAMS = '/:resourceName';
 
 export function getResourceListStateName(stateName: string): string {
-  return `${stateName}list`;
+  return `${stateName}.list`;
 }
 
 export function getResourceListStateUrl(stateName: string): string {
@@ -23,7 +23,7 @@ export function getResourceListStateUrl(stateName: string): string {
 }
 
 export function getResourceDetailsStateName(stateName: string): string {
-  return `${stateName}details`;
+  return `${stateName}.detail`;
 }
 
 export function getResourceDetailsStateUrl(stateName: string): string {

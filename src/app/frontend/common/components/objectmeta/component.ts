@@ -19,4 +19,18 @@ import {ObjectMeta} from '@api/backendapi';
   selector: 'kd-object-meta',
   templateUrl: './template.html',
 })
-export class ObjectMetaComponent { @Input() objectMeta: ObjectMeta; }
+export class ObjectMetaComponent {
+  private objectMeta_: ObjectMeta;
+  get objectMeta(): ObjectMeta {
+    return this.objectMeta_;
+  }
+
+  @Input()
+  set objectMeta(val: ObjectMeta) {
+    if (val === undefined) {
+      this.objectMeta_ = {} as ObjectMeta;
+    } else {
+      this.objectMeta_ = val;
+    }
+  }
+}

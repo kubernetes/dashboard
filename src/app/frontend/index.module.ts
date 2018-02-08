@@ -26,15 +26,15 @@ import {RootComponent} from './index.component';
 import {configureRouter} from './index.router.config';
 import {LoginModule} from './login/module';
 import {loginState} from './login/state';
-import {overviewState} from './overview/state';
+import {overviewFutureState, overviewState} from './overview/state';
 import {nodeFutureState} from './resource/cluster/node/state';
 import {podFutureState} from './resource/workloads/pod/state';
 import {settingsFutureState} from './settings/state';
 
 @NgModule({
   imports: [
-    BrowserAnimationsModule,
     BrowserModule,
+    BrowserAnimationsModule,
     CoreModule,
     ChromeModule,
     LoginModule,
@@ -44,7 +44,7 @@ import {settingsFutureState} from './settings/state';
         // Core states
         chromeState, loginState,
         // Lazy-loaded states
-        aboutFutureState, nodeFutureState, podFutureState, settingsFutureState
+        aboutFutureState, nodeFutureState, podFutureState, settingsFutureState, overviewFutureState
       ],
       useHash: true,
       otherwise: {state: overviewState.name},

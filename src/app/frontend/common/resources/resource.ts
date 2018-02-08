@@ -19,7 +19,6 @@ import {StateService} from '@uirouter/core';
 import {RESOURCE_ENDPOINT_DI_TOKEN, ResourceEndpoint} from '../../index.config';
 
 export abstract class ResourceBase<T> {
-  protected namespace_: string;
   protected baseEndpoint_: string;
 
   constructor(

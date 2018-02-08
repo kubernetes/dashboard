@@ -16,7 +16,6 @@ import {Ng2StateDeclaration} from '@uirouter/angular';
 
 import {overviewState} from '../../../../overview/state';
 import {stateName, stateUrl} from '../state';
-
 import {PodListComponent} from './component';
 
 export const podListState: Ng2StateDeclaration = {
