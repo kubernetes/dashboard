@@ -33,6 +33,9 @@
   $warning: mat-color($warn-palette);
   $error: mat-color($warn-palette, darker);
   $muted: mat-color($foreground-palette, secondary-text);
+  $border: mat-color($foreground-palette, divider);
+  $chart-green: mat-color($warn-palette, 50);
+  $chart-blue: $primary;
 
   // Global style overrides.
 
@@ -92,6 +95,14 @@
     color: $muted;
   }
 
+  .kd-chart-green {
+    color: $chart-green;
+  }
+
+  .kd-chart-blue {
+    color: $chart-blue;
+  }
+
   .kd-primary-button {
     color: mat-color($primary-palette, 50);
   }
@@ -101,7 +112,7 @@
   }
 
   .kd-loading-shade {
-    background: mat-color($foreground-palette, divider);
+    background: $border;
   }
 
   // Component-level styles
@@ -133,7 +144,13 @@
 
   .kd-search-input {
     background: mat-color($background-palette, card);
-    border-bottom-color: mat-color($foreground-palette, divider);
+    border-bottom-color: $border;
     color: mat-color($foreground-palette, text);
+  }
+
+  .kd-graph-legend-entry {
+    &:not(:last-child) {
+      border-bottom: 1px solid $border;
+    }
   }
 }

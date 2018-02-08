@@ -20,3 +20,96 @@ limitations under the License.
     <kd-object-meta [objectMeta]="node.objectMeta"></kd-object-meta>
   </div>
 </kd-card>
+
+<kd-card [initialized]="isInitialized">
+  <div title>Allocated resources</div>
+  <div content>
+    <div class="kd-allocated-resources">
+
+      <div class="kd-graph-container"
+           fxFlex>
+        <kd-allocation-chart [innerPercent]="node.allocatedResources.cpuRequestsFraction"
+                             [outerPercent]="node.allocatedResources.cpuLimitsFraction"
+                             id="cpu">
+        </kd-allocation-chart>
+        <div class="kd-graph-legend">
+          <div class="kd-graph-legend-title">CPU allocation (cores)</div>
+          <div class="kd-graph-legend-entry">
+            <mat-icon class="kd-chart-green">stop</mat-icon>
+            <span>Requests</span>
+            <span class="kd-graph-legend-value">
+            {{node.allocatedResources.cpuRequests | kdCores}}
+            </span>
+          </div>
+          <div class="kd-graph-legend-entry">
+            <mat-icon class="kd-chart-blue">stop</mat-icon>
+            <span>Limits</span>
+            <span class="kd-graph-legend-value">
+            {{node.allocatedResources.cpuLimits | kdCores}}
+            </span>
+          </div>
+          <div class="kd-graph-legend-entry">
+            <div class="kd-graph-legend-placeholder"></div>
+            <span>Capacity</span>
+            <span class="kd-graph-legend-value">
+            {{node.allocatedResources.cpuCapacity | kdCores}}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="kd-graph-container"
+           fxFlex>
+        <kd-allocation-chart [outerPercent]="node.allocatedResources.memoryRequestsFraction"
+                             [innerPercent]="node.allocatedResources.memoryLimitsFraction"
+                             id="memory">
+        </kd-allocation-chart>
+        <div class="kd-graph-legend">
+          <div class="kd-graph-legend-title">Memory allocation (bytes)</div>
+          <div class="kd-graph-legend-entry">
+            <mat-icon class="kd-chart-green">stop</mat-icon>
+            <span>Requests</span>
+            <span class="kd-graph-legend-value">
+            {{node.allocatedResources.memoryRequests | kdMemory}}
+            </span>
+          </div>
+          <div class="kd-graph-legend-entry">
+            <mat-icon class="kd-chart-blue">stop</mat-icon>
+            <span>Limits</span>
+            <span class="kd-graph-legend-value">
+            {{node.allocatedResources.memoryLimits | kdMemory}}
+            </span>
+          </div>
+          <div class="kd-graph-legend-entry">
+            <div class="kd-graph-legend-placeholder"></div>
+            <span>Capacity</span>
+            <span class="kd-graph-legend-value">
+            {{node.allocatedResources.memoryCapacity | kdMemory}}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="kd-graph-container"
+           fxFlex>
+        <kd-allocation-chart [outerPercent]="node.allocatedResources.podFraction"
+                             id="pods">
+        </kd-allocation-chart>
+        <div class="kd-graph-legend">
+          <div class="kd-graph-legend-title">Pods allocation</div>
+          <div class="kd-graph-legend-entry">
+            <mat-icon class="kd-chart-green">stop</mat-icon>
+            <span>Allocation</span>
+            <span class="kd-graph-legend-value">{{node.allocatedResources.allocatedPods}}</span>
+          </div>
+          <div class="kd-graph-legend-entry">
+            <div class="kd-graph-legend-placeholder"></div>
+            <span>Capacity</span>
+            <span class="kd-graph-legend-value">{{node.allocatedResources.podCapacity}}</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</kd-card>

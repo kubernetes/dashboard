@@ -17,6 +17,7 @@ import {NgModule} from '@angular/core';
 import {SharedModule} from '../../shared.module';
 
 import {ActionbarComponent} from './actionbar/component';
+import {AllocationChartComponent} from './allocationchart/component';
 import {BreadcrumbsComponent} from './breadcrumbs/component';
 import {CardComponent} from './card/component';
 import {ChipsComponent} from './chips/component';
@@ -25,7 +26,6 @@ import {PropertyComponent} from './property/component';
 import {ProxyComponent} from './proxy/component';
 import {CardListFilterComponent} from './table/filter/component';
 import {LoadingSpinner} from './table/spinner/component';
-import {AllocationChartComponent} from "./allocationchart/component";
 
 @NgModule({
   imports: [SharedModule],
