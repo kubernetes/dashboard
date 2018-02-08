@@ -48,11 +48,6 @@ func toNetworkPolicy(networkpolicy *networkpolicy.NetworkPolicy) NetworkPolicy {
 
 	log.Println("unmarshl networkpolicy result ",result)
 	return result
-/*	return NetworkPolicy{
-		ObjectMeta:  api.NewObjectMeta(networkpolicy.ObjectMeta),
-		TypeMeta:    api.NewTypeMeta(api.ResourceKindNetworkPolicy),
-		Spec:        result,
-	}*/
 }
 
 type NetworkPolicyCell networkpolicy.NetworkPolicy
