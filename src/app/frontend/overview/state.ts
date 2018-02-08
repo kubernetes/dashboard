@@ -13,12 +13,32 @@
 // limitations under the License.
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
+import {LazyLoadResult} from '@uirouter/core';
+
+import {ActionbarComponent} from '../about/actionbar/component';
+import {AboutComponent} from '../about/component';
+import {chromeState} from '../chrome/state';
 
 import {OverviewComponent} from './component';
+
+export const overviewFutureState: Ng2StateDeclaration = {
+  name: 'overview.**',
+  url: '/overview',
+  loadChildren: './overview/module#OverviewModule',
+  data: {
+    kdBreadcrumbs: {
+      label: 'Overview',
+    }
+  },
+};
 
 export const overviewState: Ng2StateDeclaration = {
   parent: 'chrome',
   name: 'overview',
   url: '/overview',
-  component: OverviewComponent,
+  views: {
+    '$default': {
+      component: OverviewComponent,
+    },
+  },
 };

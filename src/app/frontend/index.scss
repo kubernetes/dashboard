@@ -84,6 +84,16 @@ code {
 
 .mat-header-cell {
   font-size: $body-font-size-base;
+  padding: 0 ($baseline-grid / 2);
+
+  &:first-child,
+  &:last-child {
+    padding: 0;
+  }
+}
+
+.mat-cell:not(:first-child):not(:last-child) {
+  padding: 0 ($baseline-grid / 2);
 }
 
 .mat-column-status {

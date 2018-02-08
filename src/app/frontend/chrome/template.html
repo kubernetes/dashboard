@@ -71,7 +71,8 @@ limitations under the License.
     <kd-nav></kd-nav>
     <div [ngSwitch]="loading"
          fxLayoutAlign="center"
-         fxFlex>
+         fxFlex
+         class="kd-scroll-container">
       <div *ngSwitchCase="true"
            fxFlexAlign="center">
         <mat-spinner mode="indeterminate"
@@ -79,7 +80,8 @@ limitations under the License.
         </mat-spinner>
       </div>
       <div *ngSwitchCase="false"
-           fxFlex>
+           fxFlex
+           class="kd-scroll-container">
         <ui-view></ui-view>
       </div>
     </div>

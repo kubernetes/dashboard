@@ -33,6 +33,7 @@ export class BreadcrumbsService {
         result = conf.parent;
       }
     }
+
     return result;
   }
 

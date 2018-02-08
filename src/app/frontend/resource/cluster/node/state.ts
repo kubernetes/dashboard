@@ -24,7 +24,7 @@ export const stateUrl = '/node';
 export const nodeFutureState: Ng2StateDeclaration = {
   name: `${stateName}.**`,
   url: stateUrl,
-  loadChildren: './resource/cluster/node/module#NodeModule'
+  loadChildren: './resource/cluster/node/module#NodeModule',
 };
 
 export const nodeState: Ng2StateDeclaration = {
