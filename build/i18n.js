@@ -118,7 +118,7 @@ gulp.task('sort-translations', ['remove-duplicated-translations'], function() {
 
 /**
  * Task to remove duplicated translations (should remove old translations from XTB when entries are
- * updated in source code). It has to be runned before 'sort-translations' as original translation
+ * updated in source code). It has to be ran before 'sort-translations' as original translation
  * order is required.
  */
 gulp.task('remove-duplicated-translations', ['extract-translations'], function() {
@@ -212,7 +212,7 @@ export let translationsManager = (function() {
 // Regex to match [[Foo | Bar]] or [[Foo]] i18n placeholders.
 // Technical details:
 // * First capturing group is lazy math for any string not-containing |. This is to make
-//   both [[ message | desription ]] and [[ message ]] work.
+//   both [[ message | description ]] and [[ message ]] work.
 // * Second is non-capturing and optional. It has a capturing group inside. This is to
 //   extract description that is optional.
 const I18N_REGEX = /\[\[([^|]*?)(?:\|(.*?))?\]\]/g;
