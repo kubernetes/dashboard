@@ -22,18 +22,16 @@ describe('Network Policy card', () => {
     angular.mock.module(networkPolicyModule.name);
 
     angular.mock.inject(($componentController, $rootScope) => {
-      ctrl = $componentController('kdNetworkPolicyCard', {$scope: $rootScope});
+      ctrl = $componentController('kdNetworkPolicyCard', {$scope: $rootScope},{
+        objectMeta: {
+          namespace: 'foo',
+          name: 'bar',
+        },
+      });
     });
   });
 
   it('should get details href', () => {
-    ctrl.networkPolicy = {
-      objectMeta: {
-        namespace: 'foo',
-        name: 'bar',
-      },
-    };
-
     expect(ctrl.getNetworkPolicyDetailHref()).toBe('#!/networkpolicy/foo/bar');
   });
 });
