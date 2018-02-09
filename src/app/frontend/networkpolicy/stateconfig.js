@@ -40,6 +40,5 @@ export default function stateConfig($stateProvider) {
 const config = {
   abstract: true,
   parent: chromeStateName,
-  url: stateUrl,
   template: '<ui-view/>',
 };
