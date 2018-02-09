@@ -73,7 +73,7 @@ code {
 
 .mat-chip {
   box-shadow: none !important;
-  margin: .5 * $baseline-grid !important;
+  margin: (.5 * $baseline-grid) ($baseline-grid) (.5 * $baseline-grid) 0 !important;
   transition: none !important;
 }
 
