@@ -59,9 +59,9 @@ export default class NetworkPolicyCardController {
    */
   getNetworkPolicyDetailHref() {
     return this.state_.href(
-      stateName,
-      new StateParams(
-          this.networkPolicy.objectMeta.namespace, this.networkPolicy.objectMeta.name));
+        stateName,
+        new StateParams(
+            this.networkPolicy.objectMeta.namespace, this.networkPolicy.objectMeta.name));
   }
 
   /**

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NetworkPolicyController} from 'networkpolicy/detail/controller';
+import {NetworkPolicyDetailController} from 'networkpolicy/detail/controller';
 import networkPolicyModule from 'networkpolicy/module';
 
 describe('Network Policy Detail controller', () => {
@@ -23,8 +23,8 @@ describe('Network Policy Detail controller', () => {
 
   it('should initialize network policy controller', angular.mock.inject(($controller) => {
     let data = {};
-    /** @type {!NetworkPolicyController} */
-    let ctrl = $controller(NetworkPolicyController, {networkPolicyDetail: data});
+    /** @type {!NetworkPolicyDetailController} */
+    let ctrl = $controller(NetworkPolicyDetailController, {networkPolicyDetail: data});
 
     expect(ctrl.networkPolicyDetail).toBe(data);
   }));
