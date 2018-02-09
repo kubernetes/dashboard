@@ -24,10 +24,11 @@ limitations under the License.
             </a>
         </div>
     </kd-resource-card-column>
-    <kd-resource-card-column>
-        <span>
-            {{::$ctrl.networkPolicy.objectMeta.namespace}}
-        </span>
+    <kd-resource-card-column ng-if="$ctrl.areMultipleNamespacesSelected()">
+    <div>
+      <kd-middle-ellipsis display-string="{{::$ctrl.networkPolicy.objectMeta.namespace}}">
+    </kd-middle-ellipsis>
+    </div>
     </kd-resource-card-column>
     <kd-resource-card-column>
         <span>
