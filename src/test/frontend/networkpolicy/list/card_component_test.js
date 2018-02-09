@@ -29,10 +29,11 @@ describe('Network Policy card', () => {
   it('should get details href', () => {
     ctrl.networkPolicy = {
       objectMeta: {
+        namespace: 'foo',
         name: 'bar',
       },
     };
 
-    expect(ctrl.getNetworkPolicyDetailHref()).toBe('#!/networkpolicy/bar');
+    expect(ctrl.getNetworkPolicyDetailHref()).toBe('#!/networkpolicy/foo/bar');
   });
 });

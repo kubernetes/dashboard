@@ -45,4 +45,4 @@ export default angular
     .component('kdNetworkPolicyCardList', networkPolicyCardListComponent)
     .component('kdNetworkPolicyMenu', networkPolicyCardMenuComponent)
     .component('kdNetworkPolicyInfo', networkPolicyInfoComponent)
-    .factory('kdNetworkPolicyListResource', networkPolicyListResource)
+    .factory('kdNetworkPolicyListResource', networkPolicyListResource);
