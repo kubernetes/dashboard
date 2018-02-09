@@ -32,7 +32,6 @@ export default class NetworkPolicyCardMenuController {
   openMenu($mdOpenMenu, $event) {
     $mdOpenMenu($event);
   }
-
 }
 
 /**

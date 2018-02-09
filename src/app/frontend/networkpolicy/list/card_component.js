@@ -42,7 +42,6 @@ export default class NetworkPolicyCardController {
 
     /** @private {!./../../common/namespace/service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
-
   }
 
   /**
