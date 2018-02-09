@@ -14,12 +14,9 @@
 
 import chromeModule from '../chrome/module';
 import componentsModule from '../common/components/module';
-import csrfTokenModule from '../common/csrftoken/module';
 import filtersModule from '../common/filters/module';
 import namespaceModule from '../common/namespace/module';
-import {ScaleService} from '../common/scaling/service';
 import eventsModule from '../events/module';
-import podModule from '../pod/module';
 import {networkPolicyInfoComponent} from './detail/info_component';
 import {networkPolicyCardComponent} from './list/card_component';
 import {networkPolicyCardListComponent} from './list/cardlist_component';
@@ -42,13 +39,10 @@ export default angular
           eventsModule.name,
           filtersModule.name,
           namespaceModule.name,
-          csrfTokenModule.name,
-          podModule.name,
         ])
     .config(stateConfig)
     .component('kdNetworkPolicyCard', networkPolicyCardComponent)
     .component('kdNetworkPolicyCardList', networkPolicyCardListComponent)
     .component('kdNetworkPolicyMenu', networkPolicyCardMenuComponent)
     .component('kdNetworkPolicyInfo', networkPolicyInfoComponent)
-    .service('kdScaleService', ScaleService)
     .factory('kdNetworkPolicyListResource', networkPolicyListResource)

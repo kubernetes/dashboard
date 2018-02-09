@@ -25,15 +25,20 @@ limitations under the License.
         </div>
     </kd-resource-card-column>
     <kd-resource-card-column ng-if="$ctrl.areMultipleNamespacesSelected()">
-    <div>
-      <kd-middle-ellipsis display-string="{{::$ctrl.networkPolicy.objectMeta.namespace}}">
-    </kd-middle-ellipsis>
-    </div>
+      <div>
+        <kd-middle-ellipsis display-string="{{::$ctrl.networkPolicy.objectMeta.namespace}}">
+      </kd-middle-ellipsis>
+      </div>
     </kd-resource-card-column>
     <kd-resource-card-column>
-        <span>
-            {{::$ctrl.networkPolicy.objectMeta.creationTimestamp}}
-        </span>
+      <div ng-if="::$ctrl.networkPolicy.objectMeta.creationTimestamp">
+        {{::$ctrl.networkPolicy.objectMeta.creationTimestamp}}
+        <md-tooltip md-delay="500"
+                    md-autohide>
+          [[Created at| Tooltip for the age column ]] {{::$ctrl.networkPolicy.objectMeta.creationTimestamp}}
+        </md-tooltip>
+      </div>
+      <div ng-if="::!$ctrl.ingress.objectMeta.creationTimestamp">-</div>
     </kd-resource-card-column>
     <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
         <kd-resource-card-menu>
