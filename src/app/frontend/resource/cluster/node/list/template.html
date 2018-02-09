@@ -50,7 +50,9 @@ limitations under the License.
 
       <ng-container [matColumnDef]="getDisplayColumns()[2]">
         <mat-header-cell *matHeaderCellDef>Labels</mat-header-cell>
-        <mat-cell *matCellDef="let node">{{node.objectMeta.labels}}</mat-cell>
+        <mat-cell *matCellDef="let node">
+          <kd-chips [map]="node.objectMeta.labels"></kd-chips>
+        </mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getDisplayColumns()[3]">
@@ -88,7 +90,7 @@ limitations under the License.
 
       <ng-container [matColumnDef]="getDisplayColumns()[8]">
         <mat-header-cell *matHeaderCellDef>Age</mat-header-cell>
-        <mat-cell *matCellDef="let node">{{node.objectMeta.creationTimestamp}}</mat-cell>
+        <mat-cell *matCellDef="let node">{{node.objectMeta.creationTimestamp | kdRelativeTime}}</mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="getDisplayColumns()"></mat-header-row>

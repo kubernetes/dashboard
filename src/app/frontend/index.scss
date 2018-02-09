@@ -73,6 +73,7 @@ code {
 
 .mat-chip {
   box-shadow: none !important;
+  margin: .5 * $baseline-grid !important;
   transition: none !important;
 }
 
@@ -98,6 +99,10 @@ code {
 
 .mat-column-status {
   flex: 0 0 ($baseline-grid * 5) !important;
+}
+
+.mat-column-labels {
+  flex-grow: 2 !important;
 }
 
 .mat-sort-header-arrow {

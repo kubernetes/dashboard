@@ -71,7 +71,7 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true">Age</mat-header-cell>
-        <mat-cell *matCellDef="let pod">{{pod.objectMeta.creationTimestamp}}</mat-cell>
+        <mat-cell *matCellDef="let pod">{{pod.objectMeta.creationTimestamp | kdRelativeTime}}</mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="getDisplayColumns()"></mat-header-row>
