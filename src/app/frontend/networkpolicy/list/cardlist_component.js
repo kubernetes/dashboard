@@ -38,8 +38,7 @@ class NetworkPolicyCardListController {
    */
   getSelectId() {
     const selectId = 'networkPolicy';
-    if (this.networkPolicyList !== undefined &&
-        this.networkPolicyListResource !== undefined) {
+    if (this.networkPolicyList !== undefined && this.networkPolicyListResource !== undefined) {
       return selectId;
     }
 

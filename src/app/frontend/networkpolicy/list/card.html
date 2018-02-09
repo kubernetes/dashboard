@@ -16,41 +16,24 @@ limitations under the License.
 
 <kd-resource-card object-meta="::$ctrl.networkPolicy.objectMeta"
                   type-meta="::$ctrl.networkPolicy.typeMeta">
-  <kd-resource-card-status layout="row">
-    <md-icon class="material-icons kd-error"
-             ng-if="::$ctrl.hasWarnings()">
-      error
-      <md-tooltip md-direction="right">[[One or more Network Policy have errors|Tooltip saying that some Network Policy in a cluster have errors.]]</md-tooltip>
-    </md-icon>
-    <md-icon class="material-icons"
-             ng-if="::$ctrl.isPending()">
-      timelapse
-      <md-tooltip md-direction="right">[[One or more Network Policy are in pending state|Tooltip saying that some Network Policy in cluster are pending.]]</md-tooltip>
-    </md-icon>
-    <md-icon class="material-icons kd-success"
-             ng-if="::$ctrl.isSuccess()">
-      check_circle
-    </md-icon>
-  </kd-resource-card-status>
     <kd-resource-card-columns>
     <kd-resource-card-column>
         <div>
             <a ng-href="{{::$ctrl.getNetworkPolicyDetailHref()}}" class="kd-middle-ellipsised-link">
-                <kd-middle-ellipsis display-string="{{::$ctrl.networkPolicy.objectMeta.name}}">
-                </kd-middle-ellipsis>
+                <kd-middle-ellipsis display-string="{{::$ctrl.networkPolicy.objectMeta.name}}"></kd-middle-ellipsis>
             </a>
         </div>
     </kd-resource-card-column>
     <kd-resource-card-column>
-<span>
-{{::$ctrl.networkPolicy.objectMeta.namespace}}
-</span>
-</kd-resource-card-column>
-<kd-resource-card-column>
-<span>
-{{::$ctrl.networkPolicy.objectMeta.creationTimestamp}}
-</span>
-</kd-resource-card-column>
+        <span>
+            {{::$ctrl.networkPolicy.objectMeta.namespace}}
+        </span>
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+        <span>
+            {{::$ctrl.networkPolicy.objectMeta.creationTimestamp}}
+        </span>
+    </kd-resource-card-column>
     <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
         <kd-resource-card-menu>
             <kd-resource-card-delete-menu-item resource-kind-name="[[Network Policy|Name of the Network Policy resource]]">
@@ -59,6 +42,5 @@ limitations under the License.
             </kd-resource-card-edit-menu-item>
         </kd-resource-card-menu>
     </kd-resource-card-column>
-
   </kd-resource-card-columns>
 </kd-resource-card>

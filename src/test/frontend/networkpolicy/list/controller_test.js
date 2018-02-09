@@ -24,7 +24,8 @@ describe('Network Policy list controller', () => {
   it('should initialize network policy controller', angular.mock.inject(($controller) => {
     let ctrls = {};
     /** @type {!NetworkPolicyListController} */
-    let ctrl = $controller(NetworkPolicyListController, {networkPolicyList: {networkPolicy: ctrls}});
+    let ctrl =
+        $controller(NetworkPolicyListController, {networkPolicyList: {networkPolicy: ctrls}});
 
     expect(ctrl.networkPolicyList.networkPolicy).toBe(ctrls);
   }));

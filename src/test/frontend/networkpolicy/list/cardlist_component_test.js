@@ -33,7 +33,7 @@ describe('Network Policy Card List controller', () => {
 
   it('should return correct select id', () => {
     // given
-    let expected = 'networkpolicy';
+    let expected = 'networkPolicy';
     ctrl.networkPolicyList = {};
     ctrl.networkPolicyListResource = {};
 

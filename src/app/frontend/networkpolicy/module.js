@@ -20,13 +20,12 @@ import namespaceModule from '../common/namespace/module';
 import {ScaleService} from '../common/scaling/service';
 import eventsModule from '../events/module';
 import podModule from '../pod/module';
+import {networkPolicyInfoComponent} from './detail/info_component';
 import {networkPolicyCardComponent} from './list/card_component';
 import {networkPolicyCardListComponent} from './list/cardlist_component';
 import {networkPolicyCardMenuComponent} from './list/cardmenu_component';
-import {networkPolicyInfoComponent} from './detail/info_component';
 import {networkPolicyListResource} from './list/stateconfig';
 import stateConfig from './stateconfig';
-
 
 /**
  * Angular module for the networkPolicy resource.

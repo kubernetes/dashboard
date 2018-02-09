@@ -36,6 +36,6 @@ export class NetworkPolicyListController {
    * @export
    */
   shouldShowZeroState() {
-    return this.networkPolicyList.listMeta.totalItems=== 0;
+    return this.networkPolicyList.listMeta.totalItems === 0;
   }
 }

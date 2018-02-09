@@ -58,7 +58,10 @@ export default class NetworkPolicyCardController {
    * @export
    */
   getNetworkPolicyDetailHref() {
-    return this.state_.href(stateName, new StateParams(this.networkPolicy.objectMeta.namespace, this.networkPolicy.objectMeta.name));
+    return this.state_.href(
+      stateName,
+      new StateParams(
+          this.networkPolicy.objectMeta.namespace, this.networkPolicy.objectMeta.name));
   }
 
   /**
@@ -96,8 +99,10 @@ export default class NetworkPolicyCardController {
    */
   getCreatedAtTooltip(creationDate) {
     let filter = this.interpolate_(`{{date | date}}`);
-    /** @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
-     * replication controller. */
+    /**
+     * @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
+     * replication controller.
+     */
     let MSG_NETWORKPOLICY_LIST_CREATED_AT_TOOLTIP =
         goog.getMsg('Created at {$creationDate}', {'creationDate': filter({'date': creationDate})});
     return MSG_NETWORKPOLICY_LIST_CREATED_AT_TOOLTIP;
@@ -109,7 +114,7 @@ export default class NetworkPolicyCardController {
  */
 export const networkPolicyCardComponent = {
   bindings: {
-    'networkPolicy': '=' ,
+    'networkPolicy': '=',
   },
   controller: NetworkPolicyCardController,
   templateUrl: 'networkpolicy/list/card.html',
