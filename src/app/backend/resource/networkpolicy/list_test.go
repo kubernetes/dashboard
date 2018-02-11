@@ -61,7 +61,9 @@ func TestGetNetworkPolicyList(t *testing.T){
 
   for _,c := range cases {
     fakeClient := fake.NewSimpleClientset(c.networkPolicyList)
-    actual, _ :=GetNetworkPolicyList(fakeClient, common.NewNamespaceQuery,dataselect.NoDataSelect)
+    nonEmptyNamespaces := [1]string {"default"}
+    nsQuery := common.NewNamespaceQuery(nonEmptyNamespaces)
+    actual, _ :=GetNetworkPolicyList(fakeClient, nsQuery, dataselect.NoDataSelect)
     actions := fakeClient.Actions()
     if len(actions) != len(c.expectedActions) {
       t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
