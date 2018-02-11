@@ -17,7 +17,7 @@ limitations under the License.
 <div layout="column">
   <kd-network-policy-info network-policy="::$ctrl.networkPolicyDetail"></kd-network-policy-info>
     <kd-info-card>
-        <kd-info-card-header>[[podSelector|Header in a detail view of network policy]]</kd-info-card-header>
+        <kd-info-card-header>[[PodSelector|Header in a detail view of network policy]]</kd-info-card-header>
         <kd-info-card-section>
             <kd-info-card-entry ng-repeat="(key, value) in ::$ctrl.networkPolicyDetail.spec.podSelector.matchLabels"
             title="{{::key}}">
@@ -26,7 +26,7 @@ limitations under the License.
         </kd-info-card-section>
     </kd-info-card>
     <kd-info-card>
-        <kd-info-card-header>[[policyTypes|Header in a detail view of network policy]]</kd-info-card-header>
+        <kd-info-card-header>[[PolicyTypes|Header in a detail view of network policy]]</kd-info-card-header>
         <kd-info-card-section>
           <kd-info-card-entry ng-repeat="(key, value) in ::$ctrl.networkPolicyDetail.spec.policyTypes">
             <pre class="kd-pre-block">{{::value}}</pre>
