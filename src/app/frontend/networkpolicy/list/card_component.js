@@ -64,34 +64,6 @@ export default class NetworkPolicyCardController {
   }
 
   /**
-   * Returns true if any of the networkpolicy controller's pods have warning, false otherwise
-   * @return {boolean}
-   * @export
-   */
-  hasWarnings() {
-    return false;
-  }
-
-  /**
-   * Returns true if the networkpolicy controller's pods have no warnings and there is at least one
-   * pod
-   * in pending state, false otherwise
-   * @return {boolean}
-   * @export
-   */
-  isPending() {
-    return false;
-  }
-
-  /**
-   * @return {boolean}
-   * @export
-   */
-  isSuccess() {
-    return !this.isPending() && !this.hasWarnings();
-  }
-
-  /**
    * @export
    * @param  {string} creationDate - creation date of the pod
    * @return {string} localized tooltip with the formated creation date
