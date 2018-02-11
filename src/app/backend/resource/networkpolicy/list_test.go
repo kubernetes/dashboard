@@ -61,7 +61,7 @@ func TestGetNetworkPolicyList(t *testing.T){
 
   for _,c := range cases {
     fakeClient := fake.NewSimpleClientset(c.networkPolicyList)
-    nonEmptyNamespaces := [1]string {"default"}
+    nonEmptyNamespaces := []string {"default"}
     nsQuery := common.NewNamespaceQuery(nonEmptyNamespaces)
     actual, _ :=GetNetworkPolicyList(fakeClient, nsQuery, dataselect.NoDataSelect)
     actions := fakeClient.Actions()
