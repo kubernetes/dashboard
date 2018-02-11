@@ -40,7 +40,7 @@ func TestGetNetworkPolicyList(t *testing.T){
               Labels: map[string]string{},
             },
             },
-          }
+          },
         },
         expectedActions: []string{"list"},
         expected: &NetworkPolicyList{
