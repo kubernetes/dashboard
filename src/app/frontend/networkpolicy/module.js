@@ -20,7 +20,6 @@ import eventsModule from '../events/module';
 import {networkPolicyInfoComponent} from './detail/info_component';
 import {networkPolicyCardComponent} from './list/card_component';
 import {networkPolicyCardListComponent} from './list/cardlist_component';
-import {networkPolicyCardMenuComponent} from './list/cardmenu_component';
 import {networkPolicyListResource} from './list/stateconfig';
 import stateConfig from './stateconfig';
 
@@ -43,6 +42,5 @@ export default angular
     .config(stateConfig)
     .component('kdNetworkPolicyCard', networkPolicyCardComponent)
     .component('kdNetworkPolicyCardList', networkPolicyCardListComponent)
-    .component('kdNetworkPolicyMenu', networkPolicyCardMenuComponent)
     .component('kdNetworkPolicyInfo', networkPolicyInfoComponent)
     .factory('kdNetworkPolicyListResource', networkPolicyListResource);
