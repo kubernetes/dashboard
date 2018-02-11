@@ -37,6 +37,7 @@ func TestGetNetworkPolicyList(t *testing.T){
             {
               ObjectMeta: metaV1.ObjectMeta{
               Name:   "networkpolicy",
+              Namespace: "default",
               Labels: map[string]string{},
             },
             },
@@ -62,9 +63,7 @@ func TestGetNetworkPolicyList(t *testing.T){
 
   for _,c := range cases {
     fakeClient := fake.NewSimpleClientset(c.networkPolicyList)
-    nonEmptyNamespaces := []string {"default"}
-    nsQuery := common.NewNamespaceQuery(nonEmptyNamespaces)
-    actual, _ :=GetNetworkPolicyList(fakeClient, nsQuery, dataselect.NoDataSelect)
+    actual, _ :=GetNetworkPolicyList(fakeClient, common.NewNamespaceQuery(nil), dataselect.NoDataSelect)
     actions := fakeClient.Actions()
     if len(actions) != len(c.expectedActions) {
       t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
