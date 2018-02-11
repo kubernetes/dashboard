@@ -77,7 +77,7 @@ func TestGetNetworkPolicyList(t *testing.T){
                   {
                     Ports: []NetworkPolicyPort{
                       {
-                        Protocol: protocol,
+                        Protocol: &protocol,
                       },
                     },
                   },
