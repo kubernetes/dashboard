@@ -25,7 +25,7 @@ import (
   "k8s.io/client-go/kubernetes/fake"
 )
 
-function GetNetworkPolicyList(t *testing.T){
+func TestGetNetworkPolicyList(t *testing.T){
   cases :=[]struct {
     networkPolicyList *networking.NetworkPolicyList
     expectedActions  []string
