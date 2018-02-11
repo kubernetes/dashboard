@@ -27,8 +27,7 @@ import (
 )
 
 func TestGetNetworkPolicyList(t *testing.T){
-  protocol:= new (core.Protocol)
-  *protocol= core.ProtocolTCP
+  protocol:= core.ProtocolTCP
   cases :=[]struct {
     networkPolicyList *networking.NetworkPolicyList
     expectedActions  []string
@@ -51,7 +50,7 @@ func TestGetNetworkPolicyList(t *testing.T){
                   {
                     Ports: []networking.NetworkPolicyPort{
                       {
-                        Protocol: protocol,
+                        Protocol: &protocol,
                       },
                     },
                   },
