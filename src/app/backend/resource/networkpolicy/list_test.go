@@ -49,6 +49,7 @@ func TestGetNetworkPolicyList(t *testing.T){
             {
               ObjectMeta: api.ObjectMeta{
                 Name:   "networkpolicy",
+                Namespace: "default",
                 Labels: map[string]string{},
               },
               TypeMeta: api.TypeMeta{Kind: api.ResourceKindNetworkPolicy},
