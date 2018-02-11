@@ -42,7 +42,7 @@ func TestGetNetworkPolicyList(t *testing.T){
             },
               Spec: networking.NetworkPolicySpec{
                 PodSelector:  metaV1.LabelSelector{
-                  MatchLabels: map[string]string{},
+                  MatchLabels: map[string]string{"matchKey":"value",},
                 },
                 Ingress: []networking.NetworkPolicyIngressRule{
                   {
@@ -67,7 +67,7 @@ func TestGetNetworkPolicyList(t *testing.T){
               },
               Spec: NetworkPolicySpec{
                 PodSelector: metaV1.LabelSelector{
-                  MatchLabels: map[string]string{},
+                  MatchLabels: map[string]string{"matchKey":"value",},
                 },
                 Ingress: []NetworkPolicyIngressRule{
                   {
