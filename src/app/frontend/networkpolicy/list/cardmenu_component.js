@@ -22,7 +22,7 @@ export default class NetworkPolicyCardMenuController {
    * @param {!ui.router.$state} $state
    * @ngInject
    */
-  constructor($state) {}
+  constructor() {}
 
   /**
    * @param {!function(!MouseEvent)} $mdOpenMenu
