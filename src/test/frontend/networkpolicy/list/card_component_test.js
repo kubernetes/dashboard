@@ -30,7 +30,7 @@ describe('Network Policy card', () => {
       data = kdNamespaceService;
 
       ctrl = $componentController(
-          'kdNetworkPolicyCard', {$scope: $rootScope , kdNamespaceService_: data}, {});
+          'kdNetworkPolicyCard', {$scope: $rootScope, kdNamespaceService_: data}, {});
     });
   });
 
