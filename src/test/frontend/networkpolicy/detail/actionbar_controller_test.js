@@ -24,7 +24,7 @@ describe('Action Bar controller', () => {
     angular.mock.module(module.name);
 
     angular.mock.inject(($controller) => {
-      ctrl = $controller(ActionBarController, {details: details});
+      ctrl = $controller(ActionBarController, {networkPolicyDetail: details});
     });
   });
 

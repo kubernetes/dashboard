@@ -29,7 +29,6 @@ export default function stateConfig($stateProvider) {
   $stateProvider.state(stateName, config)
       .state(listState, listConfig)
       .state(detailState, detailConfig);
-  ;
 }
 
 /**
