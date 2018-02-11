@@ -20,12 +20,15 @@ import (
   "github.com/kubernetes/dashboard/src/app/backend/api"
   "github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
   "github.com/kubernetes/dashboard/src/app/backend/resource/common"
+  core "k8s.io/api/core/v1"
   networking "k8s.io/api/networking/v1"
   metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
   "k8s.io/client-go/kubernetes/fake"
 )
 
 func TestGetNetworkPolicyList(t *testing.T){
+  protocol:= new (core.Protocol)
+  *protocol= core.ProtocolTCP
   cases :=[]struct {
     networkPolicyList *networking.NetworkPolicyList
     expectedActions  []string
@@ -40,6 +43,20 @@ func TestGetNetworkPolicyList(t *testing.T){
               Namespace: "default",
               Labels: map[string]string{},
             },
+              Spec: networking.NetworkPolicySpec{
+                PodSelector:  metaV1.LabelSelector{
+                  MatchLabels: map[string]string{},
+                },
+                Ingress: []networking.NetworkPolicyIngressRule{
+                  {
+                    Ports: []networking.NetworkPolicyPort{
+                      {
+                        Protocol: protocol,
+                      },
+                    },
+                  },
+                },
+              },
             },
           },
         },
@@ -52,6 +69,20 @@ func TestGetNetworkPolicyList(t *testing.T){
                 Name:   "networkpolicy",
                 Namespace: "default",
                 Labels: map[string]string{},
+              },
+              Spec: NetworkPolicySpec{
+                PodSelector: metaV1.LabelSelector{
+                  MatchLabels: map[string]string{},
+                },
+                Ingress: []NetworkPolicyIngressRule{
+                  {
+                    Ports: []NetworkPolicyPort{
+                      {
+                        Protocol: protocol,
+                      },
+                    },
+                  },
+                },
               },
               TypeMeta: api.TypeMeta{Kind: api.ResourceKindNetworkPolicy},
             },
