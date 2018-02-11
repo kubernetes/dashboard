@@ -70,12 +70,11 @@ func TestGetNetworkPolicyList(t *testing.T){
       len(c.expectedActions), len(actions))
       continue
     }
-  }
 
-  if !reflect.DeepEqual(actual, c.expected) {
-    t.Errorf("GetNetworkPolicyList(client) == got\n%#v, expected\n %#v", actual, c.expected)
+    if !reflect.DeepEqual(actual, c.expected) {
+      t.Errorf("GetNetworkPolicyList(client) == got\n%#v, expected\n %#v", actual, c.expected)
+    }
   }
-
 }
 
 
