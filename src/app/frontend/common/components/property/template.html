@@ -15,12 +15,13 @@ limitations under the License.
 -->
 
 <div class="kd-property-container"
-     fxLayout="row">
-  <div class="kd-bold"
+     fxLayout="column">
+  <div class="kd-property-label kd-muted"
        fxLayout="row"
        fxLayoutAlign=" center">
     <ng-content select="[key]"></ng-content>
-    <span>:&nbsp;</span>
   </div>
-  <ng-content select="[value]"></ng-content>
+  <div class="kd-property-value">
+    <ng-content select="[value]"></ng-content>
+  </div>
 </div>
