@@ -12,121 +12,245 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export interface CsrfToken { token: string }
+export interface CsrfToken { token: string; }
 
-export interface LoginSpec { username: string, password: string, token: string, kubeconfig: string }
+export interface LoginSpec {
+  username: string;
+  password: string;
+  token: string;
+  kubeconfig: string;
+}
 
-export interface LoginStatus { tokenPresent: boolean, headerPresent: boolean, httpsMode: boolean }
+export interface LoginStatus {
+  tokenPresent: boolean;
+  headerPresent: boolean;
+  httpsMode: boolean;
+}
 
-export interface AuthResponse { jweToken: string, errors: K8sError[] }
+export interface AuthResponse {
+  jweToken: string;
+  errors: K8sError[];
+}
 
 export interface GlobalSettings {
-  itemsPerPage: number, clusterName: string, autoRefreshTimeInterval: number
+  itemsPerPage: number;
+  clusterName: string;
+  autoRefreshTimeInterval: number;
 }
 
-export interface LocalSettings { isThemeDark: boolean }
+export interface LocalSettings { isThemeDark: boolean; }
 
-export interface AppConfig { serverTime: number }
+export interface AppConfig { serverTime: number; }
 
-export interface CanIResponse { allowed: boolean }
+export interface CanIResponse { allowed: boolean; }
 
 interface StringMap {
-  [key: string]: string
+  [key: string]: string;
 }
 
-export interface ErrStatus { message: string, code: number, status: string, reason: string }
+export interface ErrStatus {
+  message: string;
+  code: number;
+  status: string;
+  reason: string;
+}
 
-export interface K8sError { errStatus: ErrStatus }
+export interface K8sError { errStatus: ErrStatus; }
 
 export interface ObjectMeta {
-  name: string, namespace: string, labels: StringMap, annotations: StringMap,
-      creationTimestamp: string, uid: string
+  name: string;
+  namespace: string;
+  labels: StringMap;
+  annotations: StringMap;
+  creationTimestamp: string;
+  uid: string;
 }
 
-export interface TypeMeta { kind: string }
+export interface TypeMeta { kind: string; }
 
-export interface ListMeta { totalItems: number }
+export interface ListMeta { totalItems: number; }
 
 export interface Condition {
-  type: string, status: string, lastProbeTime: string, lastTransitionTime: string, reason: string,
-      message: string
+  type: string;
+  status: string;
+  lastProbeTime: string;
+  lastTransitionTime: string;
+  reason: string;
+  message: string;
 }
 
-export interface ConditionList { conditions: Condition[] }
+export interface ConditionList { conditions: Condition[]; }
 
-export interface ContainerStateWaiting { reason: string }
+export interface ContainerStateWaiting { reason: string; }
 
-
-export interface ContainerStateTerminated { reason: string, signal: number, exitCode: number }
-
+export interface ContainerStateTerminated {
+  reason: string;
+  signal: number;
+  exitCode: number;
+}
 
 export interface ContainerState {
-  waiting: ContainerStateWaiting, terminated: ContainerStateTerminated
+  waiting: ContainerStateWaiting;
+  terminated: ContainerStateTerminated;
 }
 
-export interface EventList extends ResourceList { events: Event[] }
+export interface EventList extends ResourceList { events: Event[]; }
 
 export interface Event {
-  objectMeta: ObjectMeta, typeMeta: TypeMeta, message: string, sourceComponent: string,
-      sourceHost: string, object: string, count: number, firstSeen: string, lastSeen: string,
-      reason: string, type: string
+  objectMeta: ObjectMeta;
+  typeMeta: TypeMeta;
+  message: string;
+  sourceComponent: string;
+  sourceHost: string;
+  object: string;
+  count: number;
+  firstSeen: string;
+  lastSeen: string;
+  reason: string;
+  type: string;
 }
 
-export interface MetricResult { timestamp: string, value: number }
+export interface MetricResult {
+  timestamp: string;
+  value: number;
+}
 
-export interface Metric { dataPoints: DataPoint[], metricName: string, aggregation: string }
+export interface Metric {
+  dataPoints: DataPoint[];
+  metricName: string;
+  aggregation: string;
+}
 
-export interface DataPoint { x: number, y: number }
+export interface DataPoint {
+  x: number;
+  y: number;
+}
 
 export interface PodMetrics {
-  cpuUsage: number, memoryUsage: number, cpuUsageHistory: MetricResult[],
-      memoryUsageHistory: MetricResult[]
+  cpuUsage: number;
+  memoryUsage: number;
+  cpuUsageHistory: MetricResult[];
+  memoryUsageHistory: MetricResult[];
 }
 
-export interface Status { running: number, failed: number, pending: number, succeeded: number }
+export interface Status {
+  running: number;
+  failed: number;
+  pending: number;
+  succeeded: number;
+}
 
-export interface PodStatus { podPhase: string, status: string, containerStates: ContainerState[] }
+export interface PodStatus {
+  podPhase: string;
+  status: string;
+  containerStates: ContainerState[];
+}
 
 export interface PodInfo {
-  current: number, desired: number, running: number, pending: number, failed: number,
-      succeeded: number, warnings: Event[]
+  current: number;
+  desired: number;
+  running: number;
+  pending: number;
+  failed: number;
+  succeeded: number;
+  warnings: Event[];
 }
 
 export interface Pod {
-  objectMeta: ObjectMeta, typeMeta: TypeMeta, podStatus: PodStatus, podIP: string,
-      restartCount: number, qosClass: string, metrics: PodMetrics, warnings: Event[],
-      nodeName: string
+  objectMeta: ObjectMeta;
+  typeMeta: TypeMeta;
+  podStatus: PodStatus;
+  podIP: string;
+  restartCount: number;
+  qosClass: string;
+  metrics: PodMetrics;
+  warnings: Event[];
+  nodeName: string;
 }
 
 export interface PodList extends ResourceList {
   pods: Pod[];
-  status: Status, podInfo: PodInfo, cumulativeMetrics: Metric[]|null, errors: K8sError[]
+  status: Status;
+  podInfo: PodInfo;
+  cumulativeMetrics: Metric[]|null;
+  errors: K8sError[];
 }
 
 export interface NodeAllocatedResources {
-  cpuRequests: number, cpuRequestsFraction: number, cpuLimits: number, cpuLimitsFraction: number,
-      cpuCapacity: number, memoryRequests: number, memoryRequestsFraction: number,
-      memoryLimits: number, memoryLimitsFraction: number, memoryCapacity: number,
-      allocatedPods: number, podCapacity: number, podFraction: number
+  cpuRequests: number;
+  cpuRequestsFraction: number;
+  cpuLimits: number;
+  cpuLimitsFraction: number;
+  cpuCapacity: number;
+  memoryRequests: number;
+  memoryRequestsFraction: number;
+  memoryLimits: number;
+  memoryLimitsFraction: number;
+  memoryCapacity: number;
+  allocatedPods: number;
+  podCapacity: number;
+  podFraction: number;
 }
 
 export interface NodeInfo {
-  machineID: string, systemUUID: string, bootID: string, kernelVersion: string, osImage: string,
-      containerRuntimeVersion: string, kubeletVersion: string, kubeProxyVersion: string,
-      operatingSystem: string, architecture: string
+  machineID: string;
+  systemUUID: string;
+  bootID: string;
+  kernelVersion: string;
+  osImage: string;
+  containerRuntimeVersion: string;
+  kubeletVersion: string;
+  kubeProxyVersion: string;
+  operatingSystem: string;
+  architecture: string;
 }
 
-export interface NodeAddress { type: string, address: string }
+export interface NodeAddress {
+  type: string;
+  address: string;
+}
 
 export interface NodeDetail {
-  objectMeta: ObjectMeta, typeMeta: TypeMeta, phase: string, podCIDR: string, providerID: string,
-      unschedulable: boolean, allocatedResources: NodeAllocatedResources, nodeInfo: NodeInfo,
-      containerImages: string[], initContainerImages: string[], addresses: NodeAddress,
-      conditions: ConditionList, podList: PodList, eventList: EventList, errors: K8sError[]
+  objectMeta: ObjectMeta;
+  typeMeta: TypeMeta;
+  phase: string;
+  podCIDR: string;
+  providerID: string;
+  unschedulable: boolean;
+  allocatedResources: NodeAllocatedResources;
+  nodeInfo: NodeInfo;
+  containerImages: string[];
+  initContainerImages: string[];
+  addresses: NodeAddress;
+  conditions: ConditionList;
+  podList: PodList;
+  eventList: EventList;
+  errors: K8sError[];
 }
 
-export interface Node { objectMeta: ObjectMeta, typeMeta: TypeMeta, ready: string }
+export interface Node {
+  objectMeta: ObjectMeta;
+  typeMeta: TypeMeta;
+  ready: string;
+}
 
-export interface NodeList extends ResourceList { nodes: Node[], errors: K8sError[] }
+export interface NodeList extends ResourceList {
+  nodes: Node[];
+  errors: K8sError[];
+}
+
+export interface ReplicaSet {
+  objectMeta: ObjectMeta;
+  typeMeta: TypeMeta;
+  pods: PodInfo;
+  containerImages: string[];
+  initContainerImages: string[];
+}
+
+export interface ReplicaSetList extends ResourceList {
+  replicaSets: ReplicaSet[];
+  status: Status;
+  errors: K8sError[];
+}
 
 export interface ResourceList { listMeta: ListMeta; }
