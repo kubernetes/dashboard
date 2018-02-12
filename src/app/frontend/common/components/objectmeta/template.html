@@ -14,31 +14,38 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-property>
-  <div key>Name</div>
-  <div value>{{objectMeta.name}}</div>
-</kd-property>
+<div fxLayout="row"
+     fxLayoutWrap>
 
-<kd-property *ngIf="objectMeta.namespace">
-  <div key>Namespace</div>
-  <div value>{{objectMeta.namespace}}</div>
-</kd-property>
+  <kd-property>
+    <div key>Name</div>
+    <div value>{{objectMeta.name}}</div>
+  </kd-property>
 
-<kd-property>
-  <div key>Creation time</div>
-  <div value>{{objectMeta.creationTimestamp | date}}</div>
-</kd-property>
+  <kd-property *ngIf="objectMeta.namespace">
+    <div key>Namespace</div>
+    <div value>{{objectMeta.namespace}}</div>
+  </kd-property>
 
-<kd-property *ngIf="objectMeta.labels">
-  <div key>Labels</div>
-  <div value>
-    <kd-chips [map]="objectMeta.labels"></kd-chips>
-  </div>
-</kd-property>
+  <kd-property>
+    <div key>Creation time</div>
+    <div value>{{objectMeta.creationTimestamp | date : "MMM d, y H:mm:ss" : "UTC"}}</div>
+  </kd-property>
 
-<kd-property *ngIf="objectMeta.annotations">
-  <div key>Annotations</div>
-  <div value>
-    <kd-chips [map]="objectMeta.annotations"></kd-chips>
-  </div>
-</kd-property>
+  <kd-property *ngIf="objectMeta.labels"
+               fxFlex="100">
+    <div key>Labels</div>
+    <div value>
+      <kd-chips [map]="objectMeta.labels"></kd-chips>
+    </div>
+  </kd-property>
+
+  <kd-property *ngIf="objectMeta.annotations"
+               fxFlex="100">
+    <div key>Annotations</div>
+    <div value>
+      <kd-chips [map]="objectMeta.annotations"></kd-chips>
+    </div>
+  </kd-property>
+
+</div>
