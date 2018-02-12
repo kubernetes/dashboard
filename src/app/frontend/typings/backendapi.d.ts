@@ -40,7 +40,7 @@ export interface K8sError { errStatus: ErrStatus }
 
 export interface ObjectMeta {
   name: string, namespace: string, labels: StringMap, annotations: StringMap,
-      creationTimestamp: string
+      creationTimestamp: string, uid: string
 }
 
 export interface TypeMeta { kind: string }

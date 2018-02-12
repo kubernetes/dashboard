@@ -19,6 +19,7 @@ import (
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/labels"
+	"k8s.io/apimachinery/pkg/types"
 )
 
 // CsrfToken is used to secure requests from CSRF attacks
@@ -59,6 +60,11 @@ type ObjectMeta struct {
 	// created. It is not guaranteed to be set in happens-before order across separate operations.
 	// Clients may not set this value. It is represented in RFC3339 form and is in UTC.
 	CreationTimestamp v1.Time `json:"creationTimestamp,omitempty"`
+
+	// UID is a type that holds unique ID values, including UUIDs.  Because we
+	// don't ONLY use UUIDs, this is an alias to string.  Being a type captures
+	// intent and helps make sure that UIDs and names do not get conflated.
+	UID types.UID `json:"uid,omitempty"`
 }
 
 // TypeMeta describes an individual object in an API response or request with strings representing
@@ -86,6 +92,7 @@ func NewObjectMeta(k8SObjectMeta metaV1.ObjectMeta) ObjectMeta {
 		Labels:            k8SObjectMeta.Labels,
 		CreationTimestamp: k8SObjectMeta.CreationTimestamp,
 		Annotations:       k8SObjectMeta.Annotations,
+		UID:               k8SObjectMeta.UID,
 	}
 }
 

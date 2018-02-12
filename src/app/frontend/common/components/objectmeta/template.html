@@ -32,6 +32,11 @@ limitations under the License.
     <div value>{{objectMeta.creationTimestamp | date : "MMM d, y H:mm:ss" : "UTC"}}</div>
   </kd-property>
 
+  <kd-property *ngIf="objectMeta.uid">
+    <div key>UID</div>
+    <div value>{{objectMeta.uid}}</div>
+  </kd-property>
+
   <kd-property *ngIf="objectMeta.labels"
                fxFlex="100">
     <div key>Labels</div>
