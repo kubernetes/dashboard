@@ -50,6 +50,6 @@ export class NodeListComponent extends ResourceListWithStatuses<NodeList, Node> 
   }
 
   getDisplayColumns(): string[] {
-    return ['status', 'name', 'labels', 'ready', 'cpureq', 'cpulim', 'memreq', 'memlim', 'age'];
+    return ['statusicon', 'name', 'labels', 'ready', 'cpureq', 'cpulim', 'memreq', 'memlim', 'age'];
   }
 }

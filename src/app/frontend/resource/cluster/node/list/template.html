@@ -40,7 +40,9 @@ limitations under the License.
       </ng-container>
 
       <ng-container [matColumnDef]="getDisplayColumns()[1]">
-        <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         mat-sort-header
+                         disableClear="true">Name</mat-header-cell>
         <mat-cell *matCellDef="let node">
           <a [href]="getDetailsHref(node.objectMeta.name)">
             {{node.objectMeta.name}}
@@ -89,7 +91,9 @@ limitations under the License.
       </ng-container>
 
       <ng-container [matColumnDef]="getDisplayColumns()[8]">
-        <mat-header-cell *matHeaderCellDef>Age</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         mat-sort-header
+                         disableClear="true">Age</mat-header-cell>
         <mat-cell *matCellDef="let node">{{node.objectMeta.creationTimestamp | kdRelativeTime}}</mat-cell>
       </ng-container>
 
