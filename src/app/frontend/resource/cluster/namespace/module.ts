@@ -16,14 +16,15 @@ import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
 
 import {SharedModule} from '../../../shared.module';
-import {NamespaceComponent} from './component';
+import {NamespaceListComponent} from './list/component';
+import {namespaceListState} from './list/state';
 import {namespaceState} from './state';
 
 @NgModule({
   imports: [
     SharedModule,
-    UIRouterModule.forChild({states: [namespaceState]}),
+    UIRouterModule.forChild({states: [namespaceState, namespaceListState]}),
   ],
-  declarations: [NamespaceComponent],
+  declarations: [NamespaceListComponent],
 })
 export class NamespaceModule {}

@@ -16,14 +16,15 @@ import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
 
 import {SharedModule} from '../../../shared.module';
-import {ReplicaSetComponent} from './component';
+import {ReplicaSetListComponent} from './list/component';
+import {replicaSetListState} from './list/state';
 import {replicaSetState} from './state';
 
 @NgModule({
   imports: [
     SharedModule,
-    UIRouterModule.forChild({states: [replicaSetState]}),
+    UIRouterModule.forChild({states: [replicaSetState, replicaSetListState]}),
   ],
-  declarations: [ReplicaSetComponent],
+  declarations: [ReplicaSetListComponent],
 })
 export class ReplicaSetModule {}

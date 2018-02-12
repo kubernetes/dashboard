@@ -14,19 +14,21 @@
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
-import {workloadsState} from '../state';
+import {chromeState} from '../../../chrome/state';
+import {ProxyComponent} from '../../../common/components/proxy/component';
 
-import {CronJobComponent} from './component';
+export const stateName = 'cronjob';
+export const stateUrl = '/cronjob';
+
+export const cronJobFutureState: Ng2StateDeclaration = {
+  name: `${stateName}.**`,
+  url: stateUrl,
+  loadChildren: './resource/workloads/cronjob/module#CronJobModule',
+};
 
 export const cronJobState: Ng2StateDeclaration = {
-  parent: 'chrome',
-  name: 'cronJob',
-  url: '/cronJob',
-  component: CronJobComponent,
-  data: {
-    kdBreadcrumbs: {
-      label: 'Cron Jobs',
-      parent: workloadsState.name,
-    }
-  },
+  abstract: true,
+  parent: chromeState.name,
+  name: stateName,
+  component: ProxyComponent,
 };

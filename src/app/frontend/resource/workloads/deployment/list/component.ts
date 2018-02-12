@@ -14,11 +14,7 @@
 
 import {Component} from '@angular/core';
 
-@Component({
-  selector: 'kd-persistent-volume-claim',
-  templateUrl: './template.html',
-  styleUrls: ['./style.scss']
-})
-export class PersistentVolumeClaimComponent {
+@Component({selector: 'kd-deployment', templateUrl: './template.html', styleUrls: ['./style.scss']})
+export class DeploymentListComponent {
   constructor() {}
 }

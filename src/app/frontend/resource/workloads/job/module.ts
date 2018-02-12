@@ -16,14 +16,15 @@ import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
 
 import {SharedModule} from '../../../shared.module';
-import {JobComponent} from './component';
+import {JobListComponent} from './list/component';
+import {jobListState} from './list/state';
 import {jobState} from './state';
 
 @NgModule({
   imports: [
     SharedModule,
-    UIRouterModule.forChild({states: [jobState]}),
+    UIRouterModule.forChild({states: [jobState, jobListState]}),
   ],
-  declarations: [JobComponent],
+  declarations: [JobListComponent],
 })
 export class JobModule {}

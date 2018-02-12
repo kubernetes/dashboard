@@ -14,11 +14,21 @@
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
-import {StatefulSetComponent} from './component';
+import {chromeState} from '../../../chrome/state';
+import {ProxyComponent} from '../../../common/components/proxy/component';
+
+export const stateName = 'statefulset';
+export const stateUrl = '/statefulset';
+
+export const statefulSetFutureState: Ng2StateDeclaration = {
+  name: `${stateName}.**`,
+  url: stateUrl,
+  loadChildren: './resource/workloads/statefulset/module#StatefulSetModule',
+};
 
 export const statefulSetState: Ng2StateDeclaration = {
-  parent: 'chrome',
-  name: 'statefulSet',
-  url: '/statefulSet',
-  component: StatefulSetComponent,
+  abstract: true,
+  parent: chromeState.name,
+  name: stateName,
+  component: ProxyComponent,
 };

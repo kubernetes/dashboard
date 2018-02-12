@@ -13,12 +13,21 @@
 // limitations under the License.
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
+import {chromeState} from '../../../chrome/state';
+import {ProxyComponent} from '../../../common/components/proxy/component';
 
-import {DaemonSetComponent} from './component';
+export const stateName = 'daemonset';
+export const stateUrl = '/daemonset';
+
+export const daemonSetFutureState: Ng2StateDeclaration = {
+  name: `${stateName}.**`,
+  url: stateUrl,
+  loadChildren: './resource/workloads/daemonset/module#DaemonSetModule',
+};
 
 export const daemonSetState: Ng2StateDeclaration = {
-  parent: 'chrome',
-  name: 'daemonSet',
-  url: '/daemonSet',
-  component: DaemonSetComponent,
+  abstract: true,
+  parent: chromeState.name,
+  name: stateName,
+  component: ProxyComponent,
 };

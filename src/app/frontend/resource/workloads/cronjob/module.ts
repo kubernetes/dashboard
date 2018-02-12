@@ -14,16 +14,21 @@
 
 import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
+import {ComponentsModule} from '../../../common/components/module';
+import {ResourceModule} from '../../../common/services/resource/module';
 
 import {SharedModule} from '../../../shared.module';
-import {CronJobComponent} from './component';
+import {CronJobListComponent} from './list/component';
+import {cronJobListState} from './list/state';
 import {cronJobState} from './state';
 
 @NgModule({
   imports: [
     SharedModule,
-    UIRouterModule.forChild({states: [cronJobState]}),
+    ComponentsModule,
+    ResourceModule,
+    UIRouterModule.forChild({states: [cronJobState, cronJobListState]}),
   ],
-  declarations: [CronJobComponent],
+  declarations: [CronJobListComponent],
 })
 export class CronJobModule {}

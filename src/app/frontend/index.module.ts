@@ -27,8 +27,28 @@ import {configureRouter} from './index.router.config';
 import {LoginModule} from './login/module';
 import {loginState} from './login/state';
 import {overviewFutureState, overviewState} from './overview/state';
+import {namespaceFutureState} from './resource/cluster/namespace/state';
 import {nodeFutureState} from './resource/cluster/node/state';
+import {persistentVolumeFutureState} from './resource/cluster/persistentvolume/state';
+import {roleFutureState} from './resource/cluster/role/state';
+import {clusterFutureState} from './resource/cluster/state';
+import {storageClassFutureState} from './resource/cluster/storageclass/state';
+import {configMapFutureState} from './resource/config/configmap/state';
+import {persistentVolumeClaimFutureState} from './resource/config/persistentvolumeclaim/state';
+import {secretFutureState} from './resource/config/secret/state';
+import {configFutureState} from './resource/config/state';
+import {ingressFutureState} from './resource/discovery/ingress/state';
+import {serviceFutureState} from './resource/discovery/service/state';
+import {discoveryFutureState} from './resource/discovery/state';
+import {cronJobFutureState} from './resource/workloads/cronjob/state';
+import {daemonSetFutureState} from './resource/workloads/daemonset/state';
+import {deploymentFutureState} from './resource/workloads/deployment/state';
+import {jobFutureState} from './resource/workloads/job/state';
 import {podFutureState} from './resource/workloads/pod/state';
+import {replicaSetFutureState} from './resource/workloads/replicaset/state';
+import {replicationControllerFutureState} from './resource/workloads/replicationcontroller/state';
+import {workloadsFutureState} from './resource/workloads/state';
+import {statefulSetFutureState} from './resource/workloads/statefulset/state';
 import {settingsFutureState} from './settings/state';
 
 @NgModule({
@@ -42,9 +62,39 @@ import {settingsFutureState} from './settings/state';
     UIRouterModule.forRoot({
       states: [
         // Core states
-        chromeState, loginState,
+        chromeState,
+        loginState,
         // Lazy-loaded states
-        aboutFutureState, nodeFutureState, podFutureState, settingsFutureState, overviewFutureState
+        // Cluster section
+        clusterFutureState,
+        namespaceFutureState,
+        nodeFutureState,
+        persistentVolumeFutureState,
+        roleFutureState,
+        storageClassFutureState,
+        // Workloads section
+        workloadsFutureState,
+        cronJobFutureState,
+        daemonSetFutureState,
+        deploymentFutureState,
+        jobFutureState,
+        podFutureState,
+        replicaSetFutureState,
+        replicationControllerFutureState,
+        statefulSetFutureState,
+        // Discovery section
+        discoveryFutureState,
+        ingressFutureState,
+        serviceFutureState,
+        // Config section
+        configFutureState,
+        configMapFutureState,
+        persistentVolumeClaimFutureState,
+        secretFutureState,
+        // Others
+        aboutFutureState,
+        settingsFutureState,
+        overviewFutureState,
       ],
       useHash: true,
       otherwise: {state: overviewState.name},

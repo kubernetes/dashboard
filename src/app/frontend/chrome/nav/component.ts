@@ -18,28 +18,28 @@ import {MatDrawer} from '@angular/material';
 import {aboutState} from '../../about/state';
 import {NavService} from '../../common/services/nav/service';
 import {overviewState} from '../../overview/state';
-import {namespaceState} from '../../resource/cluster/namespace/state';
+import {namespaceListState} from '../../resource/cluster/namespace/list/state';
 import {nodeListState} from '../../resource/cluster/node/list/state';
-import {persistentVolumeState} from '../../resource/cluster/persistentvolume/state';
-import {roleState} from '../../resource/cluster/role/state';
+import {persistentVolumeListState} from '../../resource/cluster/persistentvolume/list/state';
+import {roleListState} from '../../resource/cluster/role/list/state';
 import {clusterState} from '../../resource/cluster/state';
-import {storageClassState} from '../../resource/cluster/storageclass/state';
-import {configMapState} from '../../resource/config/configmap/state';
-import {persistentVolumeClaimState} from '../../resource/config/persistentvolumeclaim/state';
-import {secretState} from '../../resource/config/secret/state';
+import {storageClassListState} from '../../resource/cluster/storageclass/list/state';
+import {configMapListState} from '../../resource/config/configmap/list/state';
+import {persistentVolumeClaimListState} from '../../resource/config/persistentvolumeclaim/list/state';
+import {secretListState} from '../../resource/config/secret/list/state';
 import {configState} from '../../resource/config/state';
-import {ingressState} from '../../resource/discovery/ingress/state';
-import {serviceState} from '../../resource/discovery/service/state';
+import {ingressListState} from '../../resource/discovery/ingress/list/state';
+import {serviceListState} from '../../resource/discovery/service/list/state';
 import {discoveryState} from '../../resource/discovery/state';
-import {cronJobState} from '../../resource/workloads/cronjob/state';
-import {daemonSetState} from '../../resource/workloads/daemonset/state';
-import {deploymentState} from '../../resource/workloads/deployment/state';
-import {jobState} from '../../resource/workloads/job/state';
+import {cronJobListState} from '../../resource/workloads/cronjob/list/state';
+import {daemonSetListState} from '../../resource/workloads/daemonset/list/state';
+import {deploymentListState} from '../../resource/workloads/deployment/list/state';
+import {jobListState} from '../../resource/workloads/job/list/state';
 import {podListState} from '../../resource/workloads/pod/list/state';
-import {replicaSetState} from '../../resource/workloads/replicaset/state';
-import {replicationControllerState} from '../../resource/workloads/replicationcontroller/state';
+import {replicaSetListState} from '../../resource/workloads/replicaset/list/state';
+import {replicationControllerListState} from '../../resource/workloads/replicationcontroller/list/state';
 import {workloadsState} from '../../resource/workloads/state';
-import {statefulSetState} from '../../resource/workloads/statefulset/state';
+import {statefulSetListState} from '../../resource/workloads/statefulset/list/state';
 import {settingsState} from '../../settings/state';
 
 @Component({
@@ -51,28 +51,33 @@ export class NavComponent implements AfterContentInit, OnInit {
   @ViewChild(MatDrawer) private readonly nav_: MatDrawer;
   states = {
     cluster: clusterState.name,
-    namespace: namespaceState.name,
+    namespace: namespaceListState.name,
     node: nodeListState.name,
-    persistentVolume: persistentVolumeState.name,
-    role: roleState.name,
-    storageClass: storageClassState.name,
+    persistentVolume: persistentVolumeListState.name,
+    role: roleListState.name,
+    storageClass: storageClassListState.name,
+
     overview: overviewState.name,
+
     workloads: workloadsState.name,
-    cronJob: cronJobState.name,
-    daemonSet: daemonSetState.name,
-    deployment: deploymentState.name,
-    job: jobState.name,
+    cronJob: cronJobListState.name,
+    daemonSet: daemonSetListState.name,
+    deployment: deploymentListState.name,
+    job: jobListState.name,
     pod: podListState.name,
-    replicaSet: replicaSetState.name,
-    replicationController: replicationControllerState.name,
-    statefulSet: statefulSetState.name,
+    replicaSet: replicaSetListState.name,
+    replicationController: replicationControllerListState.name,
+    statefulSet: statefulSetListState.name,
+
     discovery: discoveryState.name,
-    ingress: ingressState.name,
-    service: serviceState.name,
+    ingress: ingressListState.name,
+    service: serviceListState.name,
+
     config: configState.name,
-    configMap: configMapState.name,
-    persistentVolumeClaim: persistentVolumeClaimState.name,
-    secret: secretState.name,
+    configMap: configMapListState.name,
+    persistentVolumeClaim: persistentVolumeClaimListState.name,
+    secret: secretListState.name,
+
     settings: settingsState.name,
     about: aboutState.name,
   };

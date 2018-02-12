@@ -12,9 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component} from '@angular/core';
+import {Ng2StateDeclaration} from '@uirouter/angular';
 
-@Component({selector: 'kd-cron-job', templateUrl: './template.html', styleUrls: ['./style.scss']})
-export class CronJobComponent {
-  constructor() {}
-}
+import {workloadsState} from '../../state';
+import {stateName, stateUrl} from '../state';
+import {DaemonSetListComponent} from './component';
+
+export const daemonSetListState: Ng2StateDeclaration = {
+  name: `${stateName}.list`,
+  url: stateUrl,
+  component: DaemonSetListComponent,
+  data: {
+    kdBreadcrumbs: {
+      label: 'Daemon Sets',
+      parent: workloadsState.name,
+    }
+  },
+};

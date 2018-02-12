@@ -14,7 +14,11 @@
 
 import {Component} from '@angular/core';
 
-@Component({selector: 'kd-job', templateUrl: './template.html', styleUrls: ['./style.scss']})
-export class JobComponent {
+@Component({
+  selector: 'kd-replication-controller-list',
+  templateUrl: './template.html',
+  styleUrls: ['./style.scss']
+})
+export class ReplicationControllerListComponent {
   constructor() {}
 }

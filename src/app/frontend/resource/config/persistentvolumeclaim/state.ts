@@ -14,11 +14,21 @@
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
-import {PersistentVolumeClaimComponent} from './component';
+import {chromeState} from '../../../chrome/state';
+import {ProxyComponent} from '../../../common/components/proxy/component';
+
+export const stateName = 'persistentvolumeclaim';
+export const stateUrl = '/persistentvolumeclaim';
+
+export const persistentVolumeClaimFutureState: Ng2StateDeclaration = {
+  name: `${stateName}.**`,
+  url: stateUrl,
+  loadChildren: './resource/config/persistentvolumeclaim/module#PersistentVolumeClaimModule',
+};
 
 export const persistentVolumeClaimState: Ng2StateDeclaration = {
-  parent: 'chrome',
-  name: 'persistentVolumeClaim',
-  url: '/persistentVolumeClaim',
-  component: PersistentVolumeClaimComponent,
+  abstract: true,
+  parent: chromeState.name,
+  name: stateName,
+  component: ProxyComponent,
 };

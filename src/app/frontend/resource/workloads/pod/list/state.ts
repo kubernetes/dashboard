@@ -13,8 +13,7 @@
 // limitations under the License.
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
-
-import {overviewState} from '../../../../overview/state';
+import {workloadsState} from '../../state';
 import {stateName, stateUrl} from '../state';
 import {PodListComponent} from './component';
 
@@ -25,7 +24,7 @@ export const podListState: Ng2StateDeclaration = {
   data: {
     kdBreadcrumbs: {
       label: 'Pods',
-      parent: overviewState.name,
+      parent: workloadsState.name,
     },
   },
 };

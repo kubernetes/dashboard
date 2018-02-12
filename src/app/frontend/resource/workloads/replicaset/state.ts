@@ -13,12 +13,23 @@
 // limitations under the License.
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
+import {chromeState} from '../../../chrome/state';
+import {ProxyComponent} from '../../../common/components/proxy/component';
 
-import {ReplicaSetComponent} from './component';
+import {ReplicaSetListComponent} from './list/component';
+
+export const stateName = 'replicaset';
+export const stateUrl = '/replicaset';
+
+export const replicaSetFutureState: Ng2StateDeclaration = {
+  name: `${stateName}.**`,
+  url: stateUrl,
+  loadChildren: './resource/workloads/replicaset/module#ReplicaSetModule',
+};
 
 export const replicaSetState: Ng2StateDeclaration = {
-  parent: 'chrome',
-  name: 'replicaSet',
-  url: '/replicaSet',
-  component: ReplicaSetComponent,
+  abstract: true,
+  parent: chromeState.name,
+  name: stateName,
+  component: ProxyComponent,
 };

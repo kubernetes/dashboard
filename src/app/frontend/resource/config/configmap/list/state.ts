@@ -12,13 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component} from '@angular/core';
+import {Ng2StateDeclaration} from '@uirouter/angular';
 
-@Component({
-  selector: 'kd-replication-controller',
-  templateUrl: './template.html',
-  styleUrls: ['./style.scss']
-})
-export class ReplicationControllerComponent {
-  constructor() {}
-}
+import {configState} from '../../state';
+import {stateName, stateUrl} from '../state';
+import {ConfigMapListComponent} from './component';
+
+export const configMapListState: Ng2StateDeclaration = {
+  name: `${stateName}.list`,
+  url: stateUrl,
+  component: ConfigMapListComponent,
+  data: {
+    kdBreadcrumbs: {
+      label: 'Config Maps',
+      parent: configState.name,
+    }
+  },
+};

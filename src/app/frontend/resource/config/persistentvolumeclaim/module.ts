@@ -16,14 +16,15 @@ import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
 
 import {SharedModule} from '../../../shared.module';
-import {PersistentVolumeClaimComponent} from './component';
-import {persistentVolumeClaimState} from './state';
+import {PersistentVolumeClaimListComponent} from './list/component';
+import {persistentVolumeClaimListState} from './list/state';
+import {persistentVolumeClaimFutureState, persistentVolumeClaimState} from './state';
 
 @NgModule({
   imports: [
     SharedModule,
-    UIRouterModule.forChild({states: [persistentVolumeClaimState]}),
+    UIRouterModule.forChild({states: [persistentVolumeClaimState, persistentVolumeClaimListState]}),
   ],
-  declarations: [PersistentVolumeClaimComponent],
+  declarations: [PersistentVolumeClaimListComponent],
 })
 export class PersistentVolumeClaimModule {}

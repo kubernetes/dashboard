@@ -16,14 +16,15 @@ import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
 
 import {SharedModule} from '../../../shared.module';
-import {PersistentVolumeComponent} from './component';
+import {PersistentVolumeListComponent} from './list/component';
+import {persistentVolumeListState} from './list/state';
 import {persistentVolumeState} from './state';
 
 @NgModule({
   imports: [
     SharedModule,
-    UIRouterModule.forChild({states: [persistentVolumeState]}),
+    UIRouterModule.forChild({states: [persistentVolumeState, persistentVolumeListState]}),
   ],
-  declarations: [PersistentVolumeComponent],
+  declarations: [PersistentVolumeListComponent],
 })
 export class PersistentVolumeModule {}

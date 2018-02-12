@@ -12,9 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component} from '@angular/core';
+import {Ng2StateDeclaration} from '@uirouter/angular';
 
-@Component({selector: 'kd-secret', templateUrl: './template.html', styleUrls: ['./style.scss']})
-export class SecretComponent {
-  constructor() {}
-}
+import {workloadsState} from '../../state';
+import {stateName, stateUrl} from '../state';
+import {DeploymentListComponent} from './component';
+
+export const deploymentListState: Ng2StateDeclaration = {
+  name: `${stateName}.list`,
+  url: stateUrl,
+  component: DeploymentListComponent,
+  data: {
+    kdBreadcrumbs: {
+      label: 'Deployments',
+      parent: workloadsState.name,
+    }
+  },
+};

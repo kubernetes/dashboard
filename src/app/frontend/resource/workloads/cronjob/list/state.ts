@@ -12,9 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component} from '@angular/core';
+import {Ng2StateDeclaration} from '@uirouter/angular';
 
-@Component({selector: 'kd-role', templateUrl: './template.html', styleUrls: ['./style.scss']})
-export class RoleComponent {
-  constructor() {}
-}
+import {workloadsState} from '../../state';
+import {stateName, stateUrl} from '../state';
+import {CronJobListComponent} from './component';
+
+export const cronJobListState: Ng2StateDeclaration = {
+  name: `${stateName}.list`,
+  url: stateUrl,
+  component: CronJobListComponent,
+  data: {
+    kdBreadcrumbs: {
+      label: 'Cron Jobs',
+      parent: workloadsState.name,
+    }
+  },
+};

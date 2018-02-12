@@ -14,11 +14,21 @@
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
-import {StorageClassComponent} from './component';
+import {chromeState} from '../../../chrome/state';
+import {ProxyComponent} from '../../../common/components/proxy/component';
+
+export const stateName = 'storageclass';
+export const stateUrl = '/storageclass';
+
+export const storageClassFutureState: Ng2StateDeclaration = {
+  name: `${stateName}.**`,
+  url: stateUrl,
+  loadChildren: './resource/cluster/storageclass/module#StorageClassModule',
+};
 
 export const storageClassState: Ng2StateDeclaration = {
-  parent: 'chrome',
-  name: 'storageClass',
-  url: '/storageClass',
-  component: StorageClassComponent,
+  abstract: true,
+  parent: chromeState.name,
+  name: stateName,
+  component: ProxyComponent,
 };

@@ -15,7 +15,7 @@
 import {Component} from '@angular/core';
 
 @Component(
-    {selector: 'kd-stateful-set', templateUrl: './template.html', styleUrls: ['./style.scss']})
-export class StatefulSetComponent {
+    {selector: 'kd-ingress-list', templateUrl: './template.html', styleUrls: ['./style.scss']})
+export class IngressListComponent {
   constructor() {}
 }

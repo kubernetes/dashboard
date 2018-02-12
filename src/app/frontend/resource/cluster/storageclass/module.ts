@@ -16,14 +16,15 @@ import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
 
 import {SharedModule} from '../../../shared.module';
-import {StorageClassComponent} from './component';
+import {StorageClassListComponent} from './list/component';
+import {storageClassListState} from './list/state';
 import {storageClassState} from './state';
 
 @NgModule({
   imports: [
     SharedModule,
-    UIRouterModule.forChild({states: [storageClassState]}),
+    UIRouterModule.forChild({states: [storageClassState, storageClassListState]}),
   ],
-  declarations: [StorageClassComponent],
+  declarations: [StorageClassListComponent],
 })
 export class StorageClassModule {}

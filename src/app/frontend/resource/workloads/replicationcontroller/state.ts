@@ -14,11 +14,21 @@
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
-import {ReplicationControllerComponent} from './component';
+import {chromeState} from '../../../chrome/state';
+import {ProxyComponent} from '../../../common/components/proxy/component';
+
+export const stateName = 'replicationcontroller';
+export const stateUrl = '/replicationcontroller';
+
+export const replicationControllerFutureState: Ng2StateDeclaration = {
+  name: `${stateName}.**`,
+  url: stateUrl,
+  loadChildren: './resource/workloads/replicationcontroller/module#ReplicationControllerModule',
+};
 
 export const replicationControllerState: Ng2StateDeclaration = {
-  parent: 'chrome',
-  name: 'replicationController',
-  url: '/replicationController',
-  component: ReplicationControllerComponent,
+  abstract: true,
+  parent: chromeState.name,
+  name: stateName,
+  component: ProxyComponent,
 };

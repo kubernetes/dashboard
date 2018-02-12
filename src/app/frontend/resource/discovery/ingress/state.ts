@@ -14,11 +14,21 @@
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
-import {IngressComponent} from './component';
+import {chromeState} from '../../../chrome/state';
+import {ProxyComponent} from '../../../common/components/proxy/component';
+
+export const stateName = 'ingress';
+export const stateUrl = '/ingress';
+
+export const ingressFutureState: Ng2StateDeclaration = {
+  name: `${stateName}.**`,
+  url: stateUrl,
+  loadChildren: './resource/discovery/ingress/module#IngressModule',
+};
 
 export const ingressState: Ng2StateDeclaration = {
-  parent: 'chrome',
-  name: 'ingress',
-  url: '/ingress',
-  component: IngressComponent,
+  abstract: true,
+  parent: chromeState.name,
+  name: stateName,
+  component: ProxyComponent,
 };

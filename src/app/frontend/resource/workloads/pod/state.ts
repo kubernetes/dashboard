@@ -17,7 +17,6 @@ import {chromeState} from '../../../chrome/state';
 import {ProxyComponent} from '../../../common/components/proxy/component';
 
 export const stateName = 'pod';
-
 export const stateUrl = '/pod';
 
 export const podFutureState: Ng2StateDeclaration = {

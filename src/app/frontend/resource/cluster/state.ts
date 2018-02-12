@@ -16,6 +16,17 @@ import {Ng2StateDeclaration} from '@uirouter/angular';
 
 import {ClusterComponent} from './component';
 
+export const clusterFutureState: Ng2StateDeclaration = {
+  name: 'cluster.**',
+  url: '/cluster',
+  loadChildren: './resource/cluster/module#ClusterModule',
+  data: {
+    kdBreadcrumbs: {
+      label: 'Cluster',
+    }
+  },
+};
+
 export const clusterState: Ng2StateDeclaration = {
   parent: 'chrome',
   name: 'cluster',
@@ -24,6 +35,6 @@ export const clusterState: Ng2StateDeclaration = {
   data: {
     kdBreadcrumbs: {
       label: 'Cluster',
-    },
+    }
   },
 };

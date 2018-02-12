@@ -14,8 +14,7 @@
 
 import {Component} from '@angular/core';
 
-@Component(
-    {selector: 'kd-replica-set', templateUrl: './template.html', styleUrls: ['./style.scss']})
-export class ReplicaSetComponent {
+@Component({selector: 'kd-role-list', templateUrl: './template.html', styleUrls: ['./style.scss']})
+export class RoleListComponent {
   constructor() {}
 }

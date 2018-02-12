@@ -14,11 +14,21 @@
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
-import {RoleComponent} from './component';
+import {chromeState} from '../../../chrome/state';
+import {ProxyComponent} from '../../../common/components/proxy/component';
+
+export const stateName = 'role';
+export const stateUrl = '/role';
+
+export const roleFutureState: Ng2StateDeclaration = {
+  name: `${stateName}.**`,
+  url: stateUrl,
+  loadChildren: './resource/cluster/role/module#RoleModule',
+};
 
 export const roleState: Ng2StateDeclaration = {
-  parent: 'chrome',
-  name: 'role',
-  url: '/role',
-  component: RoleComponent,
+  abstract: true,
+  parent: chromeState.name,
+  name: stateName,
+  component: ProxyComponent,
 };

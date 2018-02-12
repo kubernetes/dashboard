@@ -16,6 +16,17 @@ import {Ng2StateDeclaration} from '@uirouter/angular';
 
 import {WorkloadsComponent} from './component';
 
+export const workloadsFutureState: Ng2StateDeclaration = {
+  name: 'workloads.**',
+  url: '/workloads',
+  loadChildren: './resource/workloads/module#WorkloadsModule',
+  data: {
+    kdBreadcrumbs: {
+      label: 'Workloads',
+    }
+  },
+};
+
 export const workloadsState: Ng2StateDeclaration = {
   parent: 'chrome',
   name: 'workloads',

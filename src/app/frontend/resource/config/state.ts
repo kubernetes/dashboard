@@ -16,9 +16,25 @@ import {Ng2StateDeclaration} from '@uirouter/angular';
 
 import {ConfigComponent} from './component';
 
+export const configFutureState: Ng2StateDeclaration = {
+  name: 'config.**',
+  url: '/config',
+  loadChildren: './resource/config/module#ConfigModule',
+  data: {
+    kdBreadcrumbs: {
+      label: 'Config',
+    }
+  },
+};
+
 export const configState: Ng2StateDeclaration = {
   parent: 'chrome',
   name: 'config',
   url: '/config',
   component: ConfigComponent,
+  data: {
+    kdBreadcrumbs: {
+      label: 'Config and Storage',
+    }
+  },
 };

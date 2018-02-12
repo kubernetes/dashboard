@@ -14,7 +14,8 @@
 
 import {Component} from '@angular/core';
 
-@Component({selector: 'kd-daemon-set', templateUrl: './template.html', styleUrls: ['./style.scss']})
-export class DaemonSetComponent {
+@Component(
+    {selector: 'kd-stateful-set', templateUrl: './template.html', styleUrls: ['./style.scss']})
+export class StatefulSetListComponent {
   constructor() {}
 }

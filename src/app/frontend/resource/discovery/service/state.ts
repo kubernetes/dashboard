@@ -14,11 +14,21 @@
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
-import {ServiceComponent} from './component';
+import {chromeState} from '../../../chrome/state';
+import {ProxyComponent} from '../../../common/components/proxy/component';
+
+export const stateName = 'service';
+export const stateUrl = '/service';
+
+export const serviceFutureState: Ng2StateDeclaration = {
+  name: `${stateName}.**`,
+  url: stateUrl,
+  loadChildren: './resource/discovery/service/module#ServiceModule',
+};
 
 export const serviceState: Ng2StateDeclaration = {
-  parent: 'chrome',
-  name: 'service',
-  url: '/service',
-  component: ServiceComponent,
+  abstract: true,
+  parent: chromeState.name,
+  name: stateName,
+  component: ProxyComponent,
 };

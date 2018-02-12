@@ -13,12 +13,21 @@
 // limitations under the License.
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
+import {chromeState} from '../../../chrome/state';
+import {ProxyComponent} from '../../../common/components/proxy/component';
 
-import {JobComponent} from './component';
+export const stateName = 'job';
+export const stateUrl = '/job';
+
+export const jobFutureState: Ng2StateDeclaration = {
+  name: `${stateName}.**`,
+  url: stateUrl,
+  loadChildren: './resource/workloads/job/module#JobModule',
+};
 
 export const jobState: Ng2StateDeclaration = {
-  parent: 'chrome',
-  name: 'job',
-  url: '/job',
-  component: JobComponent,
+  abstract: true,
+  parent: chromeState.name,
+  name: stateName,
+  component: ProxyComponent,
 };

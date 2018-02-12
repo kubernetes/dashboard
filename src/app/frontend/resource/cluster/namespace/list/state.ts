@@ -12,10 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component} from '@angular/core';
+import {Ng2StateDeclaration} from '@uirouter/angular';
 
-@Component(
-    {selector: 'kd-storage-class', templateUrl: './template.html', styleUrls: ['./style.scss']})
-export class StorageClassComponent {
-  constructor() {}
-}
+import {clusterState} from '../../state';
+import {stateName, stateUrl} from '../state';
+
+import {NamespaceListComponent} from './component';
+
+export const namespaceListState: Ng2StateDeclaration = {
+  name: `${stateName}.list`,
+  url: stateUrl,
+  component: NamespaceListComponent,
+  data: {
+    kdBreadcrumbs: {
+      label: 'Namespaces',
+      parent: clusterState.name,
+    },
+  },
+};

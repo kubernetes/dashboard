@@ -18,7 +18,6 @@ import {chromeState} from '../../../chrome/state';
 import {ProxyComponent} from '../../../common/components/proxy/component';
 
 export const stateName = 'node';
-
 export const stateUrl = '/node';
 
 export const nodeFutureState: Ng2StateDeclaration = {

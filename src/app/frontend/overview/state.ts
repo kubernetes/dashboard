@@ -41,4 +41,9 @@ export const overviewState: Ng2StateDeclaration = {
       component: OverviewComponent,
     },
   },
+  data: {
+    kdBreadcrumbs: {
+      label: 'Overview',
+    }
+  },
 };

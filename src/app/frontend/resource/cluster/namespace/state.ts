@@ -14,11 +14,21 @@
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
-import {NamespaceComponent} from './component';
+import {chromeState} from '../../../chrome/state';
+import {ProxyComponent} from '../../../common/components/proxy/component';
+
+export const stateName = 'namespace';
+export const stateUrl = '/namespace';
+
+export const namespaceFutureState: Ng2StateDeclaration = {
+  name: `${stateName}.**`,
+  url: stateUrl,
+  loadChildren: './resource/cluster/namespace/module#NamespaceModule',
+};
 
 export const namespaceState: Ng2StateDeclaration = {
-  parent: 'chrome',
-  name: 'namespace',
-  url: '/namespace',
-  component: NamespaceComponent,
+  abstract: true,
+  parent: chromeState.name,
+  name: stateName,
+  component: ProxyComponent,
 };

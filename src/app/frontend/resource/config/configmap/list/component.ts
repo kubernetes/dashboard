@@ -15,7 +15,7 @@
 import {Component} from '@angular/core';
 
 @Component(
-    {selector: 'kd-persistent-volume', templateUrl: './template.html', styleUrls: ['./style.scss']})
-export class PersistentVolumeComponent {
+    {selector: 'kd-config-map-list', templateUrl: './template.html', styleUrls: ['./style.scss']})
+export class ConfigMapListComponent {
   constructor() {}
 }

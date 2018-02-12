@@ -16,14 +16,15 @@ import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
 
 import {SharedModule} from '../../../shared.module';
-import {RoleComponent} from './component';
+import {RoleListComponent} from './list/component';
+import {roleListState} from './list/state';
 import {roleState} from './state';
 
 @NgModule({
   imports: [
     SharedModule,
-    UIRouterModule.forChild({states: [roleState]}),
+    UIRouterModule.forChild({states: [roleState, roleListState]}),
   ],
-  declarations: [RoleComponent],
+  declarations: [RoleListComponent],
 })
 export class RoleModule {}

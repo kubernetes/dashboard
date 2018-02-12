@@ -14,11 +14,21 @@
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
-import {SecretComponent} from './component';
+import {chromeState} from '../../../chrome/state';
+import {ProxyComponent} from '../../../common/components/proxy/component';
+
+export const stateName = 'secret';
+export const stateUrl = '/secret';
+
+export const secretFutureState: Ng2StateDeclaration = {
+  name: `${stateName}.**`,
+  url: stateUrl,
+  loadChildren: './resource/config/secret/module#SecretModule',
+};
 
 export const secretState: Ng2StateDeclaration = {
-  parent: 'chrome',
-  name: 'secret',
-  url: '/secret',
-  component: SecretComponent,
+  abstract: true,
+  parent: chromeState.name,
+  name: stateName,
+  component: ProxyComponent,
 };

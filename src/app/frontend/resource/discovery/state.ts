@@ -16,9 +16,25 @@ import {Ng2StateDeclaration} from '@uirouter/angular';
 
 import {DiscoveryComponent} from './component';
 
+export const discoveryFutureState: Ng2StateDeclaration = {
+  name: 'discovery.**',
+  url: '/discovery',
+  loadChildren: './resource/discovery/module#DiscoveryModule',
+  data: {
+    kdBreadcrumbs: {
+      label: 'Discovery',
+    }
+  },
+};
+
 export const discoveryState: Ng2StateDeclaration = {
   parent: 'chrome',
   name: 'discovery',
   url: '/discovery',
   component: DiscoveryComponent,
+  data: {
+    kdBreadcrumbs: {
+      label: 'Discovery and Load Balancing',
+    }
+  },
 };

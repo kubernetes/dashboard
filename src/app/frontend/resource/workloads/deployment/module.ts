@@ -16,14 +16,15 @@ import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
 
 import {SharedModule} from '../../../shared.module';
-import {DeploymentComponent} from './component';
+import {DeploymentListComponent} from './list/component';
+import {deploymentListState} from './list/state';
 import {deploymentState} from './state';
 
 @NgModule({
   imports: [
     SharedModule,
-    UIRouterModule.forChild({states: [deploymentState]}),
+    UIRouterModule.forChild({states: [deploymentState, deploymentListState]}),
   ],
-  declarations: [DeploymentComponent],
+  declarations: [DeploymentListComponent],
 })
 export class DeploymentModule {}

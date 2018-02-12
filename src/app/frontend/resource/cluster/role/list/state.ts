@@ -12,9 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component} from '@angular/core';
+import {Ng2StateDeclaration} from '@uirouter/angular';
 
-@Component({selector: 'kd-service', templateUrl: './template.html', styleUrls: ['./style.scss']})
-export class ServiceComponent {
-  constructor() {}
-}
+import {clusterState} from '../../state';
+import {stateName, stateUrl} from '../state';
+
+import {RoleListComponent} from './component';
+
+export const roleListState: Ng2StateDeclaration = {
+  name: `${stateName}.list`,
+  url: stateUrl,
+  component: RoleListComponent,
+  data: {
+    kdBreadcrumbs: {
+      label: 'Roles',
+      parent: clusterState.name,
+    },
+  },
+};

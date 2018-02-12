@@ -12,9 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component} from '@angular/core';
+import {Ng2StateDeclaration} from '@uirouter/angular';
+import {workloadsState} from '../../state';
+import {stateName, stateUrl} from '../state';
+import {StatefulSetListComponent} from './component';
 
-@Component({selector: 'kd-config-map', templateUrl: './template.html', styleUrls: ['./style.scss']})
-export class ConfigMapComponent {
-  constructor() {}
-}
+export const statefulSetListState: Ng2StateDeclaration = {
+  name: `${stateName}.list`,
+  url: stateUrl,
+  component: StatefulSetListComponent,
+  data: {
+    kdBreadcrumbs: {
+      label: 'Stateful Sets',
+      parent: workloadsState.name,
+    },
+  },
+};
