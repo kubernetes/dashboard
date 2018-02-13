@@ -74,10 +74,7 @@ limitations under the License.
       <ng-container [matColumnDef]="getDisplayColumns()[5]">
         <mat-header-cell *matHeaderCellDef>Images</mat-header-cell>
         <mat-cell *matCellDef="let replicaSet">
-          <div *ngFor="let image of replicaSet.containerImages"
-               style="margin: 4px">
-            {{image}}
-          </div>
+          <kd-chips [map]="replicaSet.containerImages"></kd-chips>
         </mat-cell>
       </ng-container>
 

@@ -101,7 +101,12 @@ code {
   flex: 0 0 ($baseline-grid * 5) !important;
 }
 
-.mat-column-labels {
+.mat-column-labels,
+.mat-column-images {
+  flex-grow: 3 !important;
+}
+
+.mat-column-name {
   flex-grow: 2 !important;
 }
 
