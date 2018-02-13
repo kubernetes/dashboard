@@ -59,7 +59,7 @@ const version = {
   /**
    * Current release version of the project.
    */
-  release: 'v1.8.2',
+  release: 'v1.8.3',
   /**
    * Version name of the head release of the project.
    */
