@@ -21,7 +21,7 @@ import ReplicationControllersPageObject from '../replicationcontrollerslist/repl
 
 
 // Test assumes, that there are no replication controllers in the cluster at the beginning.
-describe('Deploy from valid file user story test', () => {
+xdescribe('Deploy from valid file user story test', () => {
 
   /** @type {!DeployFromFilePageObject} */
   let deployFromFilePage;
