@@ -13,9 +13,36 @@
 // limitations under the License.
 
 import {Component} from '@angular/core';
+import {ReplicaSet, ReplicaSetList} from '@api/backendapi';
+import {StateService} from '@uirouter/core';
+import {ResourceListWithStatuses} from '../../../../common/resources/list';
+import {NamespacedResourceListService} from '../../../../common/services/resource/resourcelist';
 
 @Component(
     {selector: 'kd-replica-set-list', templateUrl: './template.html', styleUrls: ['./style.scss']})
-export class ReplicaSetListComponent {
-  constructor() {}
+export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSetList, ReplicaSet> {
+  constructor(
+      state: StateService, replicaSetListService: NamespacedResourceListService<ReplicaSetList>) {
+    super('pod', state, replicaSetListService);
+  }
+
+  map(rsList: ReplicaSetList): ReplicaSet[] {
+    return rsList.replicaSets;
+  }
+
+  isInErrorState(resource: ReplicaSet): boolean {
+    return resource.pods.warnings.length > 0;
+  }
+
+  isInWarningState(resource: ReplicaSet): boolean {
+    return !this.isInErrorState(resource) && resource.pods.pending > 0;
+  }
+
+  isInSuccessState(resource: ReplicaSet): boolean {
+    return !this.isInErrorState(resource) && !this.isInWarningState(resource);
+  }
+
+  getDisplayColumns(): string[] {
+    return ['statusicon', 'name', 'labels', 'pods', 'age', 'images'];
+  }
 }

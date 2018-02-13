@@ -55,3 +55,7 @@ export const POD_ENDPOINT = {
 export const NODE_ENDPOINT = {
   url: apiv1.concat('/node'),
 };
+
+export const REPLICA_SET_ENDPOINT = {
+  url: apiv1.concat('/replicaset'),
+};
