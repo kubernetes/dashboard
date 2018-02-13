@@ -18,7 +18,8 @@ limitations under the License.
   <ng-container *ngFor="let key of keys; let i = index">
     <mat-chip *ngIf="isVisible(i)">
       <span>{{key}}</span>
-      <ng-container [ngSwitch]="isHref(map[key])">
+      <ng-container *ngIf="map[key]"
+                    [ngSwitch]="isHref(map[key])">
         <ng-container *ngSwitchCase="true">
           <span>:&nbsp;</span>
           <a [href]="map[key]"
