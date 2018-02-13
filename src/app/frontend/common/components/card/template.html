@@ -19,24 +19,35 @@ limitations under the License.
     <div class="kd-card-title">
       <ng-content select="[title]"></ng-content>
     </div>
+    <span fxFlex></span>
+    <div fxLayoutAlign="center center">
+      <mat-icon class="kd-card-toggle"
+                (click)="minimalized = !minimalized">
+        <ng-container *ngIf="minimalized">arrow_drop_down</ng-container>
+        <ng-container *ngIf="!minimalized">arrow_drop_up</ng-container>
+      </mat-icon>
+    </div>
   </mat-card-title>
 
-  <mat-divider></mat-divider>
+  <ng-container *ngIf="!minimalized">
+    <mat-divider></mat-divider>
 
-  <mat-card-content class="kd-card-content"
-                    [ngClass]="{'kd-card-content-table': role === 'table'}">
-    <div *ngIf="initialized; else loading">
-      <ng-content select="[content]"></ng-content>
-    </div>
-    <ng-template #loading>
-      <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-    </ng-template>
-  </mat-card-content>
+    <mat-card-content class="kd-card-content"
+                      [ngClass]="{'kd-card-content-table': role === 'table'}">
+      <div *ngIf="initialized; else loading">
+        <ng-content select="[content]"></ng-content>
+      </div>
+      <ng-template #loading>
+        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+      </ng-template>
+    </mat-card-content>
 
-  <mat-card-footer>
-    <div class="mat-small"
-         [ngClass]="{'kd-card-footer': withFooter}">
-      <ng-content select="[footer]"></ng-content>
-    </div>
-  </mat-card-footer>
+    <mat-card-footer>
+      <div class="mat-small"
+           [ngClass]="{'kd-card-footer': withFooter}">
+        <ng-content select="[footer]"></ng-content>
+      </div>
+    </mat-card-footer>
+  </ng-container>
+
 </mat-card>
