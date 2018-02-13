@@ -33,13 +33,17 @@ const URL_REGEXP = new RegExp(
   templateUrl: './template.html',
 })
 export class ChipsComponent implements OnInit {
-  @Input() map: StringMap;
+  @Input() map: StringMap|string[];
   keys: string[];
   readonly numberOfAlwaysVisibleChips = 3;
   isShowingAll = false;
 
   ngOnInit(): void {
-    this.keys = Object.keys(this.map);
+    if (Array.isArray(this.map)) {
+      this.keys = this.map as string[];
+    } else {
+      this.keys = Object.keys(this.map);
+    }
   }
 
   isVisible(index: number): boolean {
