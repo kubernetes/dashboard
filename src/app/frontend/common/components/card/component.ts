@@ -23,4 +23,5 @@ export class CardComponent {
   @Input() initialized = true;
   @Input() role: string;
   @Input() withFooter = false;
+  minimalized = false;
 }
