@@ -16,14 +16,16 @@ limitations under the License.
 
 <kd-card [initialized]="isInitialized">
   <div title>Details</div>
-  <div content>
+  <div content
+       *ngIf="isInitialized">
     <kd-object-meta [objectMeta]="node.objectMeta"></kd-object-meta>
   </div>
 </kd-card>
 
 <kd-card [initialized]="isInitialized">
   <div title>Allocated resources</div>
-  <div content>
+  <div content
+       *ngIf="isInitialized">
     <div class="kd-allocated-resources">
 
       <div class="kd-graph-container"

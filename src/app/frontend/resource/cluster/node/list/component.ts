@@ -12,12 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {HttpParams} from '@angular/common/http';
 import {Component} from '@angular/core';
 import {Node, NodeList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
+import {Observable} from 'rxjs/Observable';
 
 import {ResourceListWithStatuses} from '../../../../common/resources/list';
-import {NamespacedResourceListService, ResourceListService} from '../../../../common/services/resource/resourcelist';
+import {ResourceListService} from '../../../../common/services/resource/resourcelist';
 import {nodeDetailState} from '../detail/state';
 
 @Component({
@@ -26,11 +28,16 @@ import {nodeDetailState} from '../detail/state';
   styleUrls: ['./style.scss'],
 })
 export class NodeListComponent extends ResourceListWithStatuses<NodeList, Node> {
-  constructor(state: StateService, nodeListService: ResourceListService<NodeList>) {
-    super(nodeDetailState.name, state, nodeListService);
+  constructor(
+      state: StateService, private readonly nodeListService_: ResourceListService<NodeList>) {
+    super(nodeDetailState.name, state);
 
     // Override default warning icon.
     this.setWarningIcon('help');
+  }
+
+  getResourceObservable(params?: HttpParams): Observable<NodeList> {
+    return this.nodeListService_.get(params);
   }
 
   map(nodeList: NodeList): Node[] {

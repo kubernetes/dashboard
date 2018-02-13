@@ -33,5 +33,6 @@ import {podState} from './state';
   ],
   providers: [{provide: RESOURCE_ENDPOINT_DI_TOKEN, useValue: POD_ENDPOINT}],
   declarations: [PodListComponent],
+  exports: [PodListComponent],
 })
 export class PodModule {}

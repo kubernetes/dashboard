@@ -12,17 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component} from '@angular/core';
+import {HttpParams} from '@angular/common/http';
+import {Component, Input} from '@angular/core';
 import {StateService} from '@uirouter/core';
+import {Observable} from 'rxjs/Observable';
 import {Pod, PodList} from 'typings/backendapi';
 
 import {ResourceListWithStatuses} from '../../../../common/resources/list';
 import {NamespacedResourceListService} from '../../../../common/services/resource/resourcelist';
 
-@Component({selector: 'kd-pod', templateUrl: './template.html'})
+@Component({selector: 'kd-pod-list', templateUrl: './template.html'})
 export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
-  constructor(state: StateService, podListService: NamespacedResourceListService<PodList>) {
-    super('pod', state, podListService);
+  @Input() baseHref: string;
+
+  constructor(
+      state: StateService,
+      private readonly podListService_: NamespacedResourceListService<PodList>) {
+    super('pod', state);
+  }
+
+  getResourceObservable(params?: HttpParams): Observable<PodList> {
+    return this.podListService_.get(params);
   }
 
   map(podList: PodList): Pod[] {

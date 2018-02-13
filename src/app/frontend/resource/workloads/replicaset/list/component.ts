@@ -12,9 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {HttpParams} from '@angular/common/http';
 import {Component} from '@angular/core';
 import {ReplicaSet, ReplicaSetList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
+import {Observable} from 'rxjs/Observable';
 import {ResourceListWithStatuses} from '../../../../common/resources/list';
 import {NamespacedResourceListService} from '../../../../common/services/resource/resourcelist';
 
@@ -22,8 +24,13 @@ import {NamespacedResourceListService} from '../../../../common/services/resourc
     {selector: 'kd-replica-set-list', templateUrl: './template.html', styleUrls: ['./style.scss']})
 export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSetList, ReplicaSet> {
   constructor(
-      state: StateService, replicaSetListService: NamespacedResourceListService<ReplicaSetList>) {
-    super('pod', state, replicaSetListService);
+      state: StateService,
+      private readonly replicaSetListService_: NamespacedResourceListService<ReplicaSetList>) {
+    super('pod', state);
+  }
+
+  getResourceObservable(params?: HttpParams): Observable<ReplicaSetList> {
+    return this.replicaSetListService_.get(params);
   }
 
   map(rsList: ReplicaSetList): ReplicaSet[] {

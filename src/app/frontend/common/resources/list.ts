@@ -19,6 +19,7 @@ import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {ResourceList} from '@api/backendapi';
 import {Status} from '@api/frontendapi';
 import {StateService} from '@uirouter/core';
+import {Observable} from 'rxjs/Observable';
 import {merge} from 'rxjs/observable/merge';
 import {startWith, switchMap} from 'rxjs/operators';
 import {Subscription} from 'rxjs/Subscription';
@@ -27,7 +28,6 @@ import {CardListFilterComponent} from '../components/table/filter/component';
 import {NamespacedResourceStateParams, ResourceStateParams} from '../params/params';
 import {GlobalServicesModule} from '../services/global/module';
 import {SettingsService} from '../services/global/settings';
-import {NamespacedResourceListService} from '../services/resource/resourcelist';
 
 // TODO: NEEDS DOCUMENTATION!!!
 export abstract class ResourceListBase<T extends ResourceList, R> implements OnInit, OnDestroy {
@@ -47,9 +47,7 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
     return this.settingsService_.getItemsPerPage();
   }
 
-  constructor(
-      private readonly detailStateName_: string, private readonly state_: StateService,
-      protected resourceListService_: NamespacedResourceListService<T>) {
+  constructor(private readonly detailStateName_: string, private readonly state_: StateService) {
     this.settingsService_ = GlobalServicesModule.injector.get(SettingsService);
   }
 
@@ -81,7 +79,7 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
                       this.isLoading = true;
                     }, 100);
 
-                    return this.resourceListService_.get(params);
+                    return this.getResourceObservable(params);
                   }))
             .subscribe((data: T) => {
               this.totalItems = data.listMeta.totalItems;
@@ -170,6 +168,7 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
   }
 
   abstract map(value: T): R[];
+  abstract getResourceObservable(params?: HttpParams): Observable<T>;
   abstract getDisplayColumns(): string[];
 }
 

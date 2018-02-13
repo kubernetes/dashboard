@@ -35,11 +35,10 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.nodeName_ = this.state_.params.resourceName;
-    this.nodeSubscription_ =
-        this.node_.get(this.nodeName_).startWith({}).subscribe((d: NodeDetail) => {
-          this.node = d;
-          this.isInitialized = true;
-        });
+    this.nodeSubscription_ = this.node_.get(this.nodeName_).subscribe((d: NodeDetail) => {
+      this.node = d;
+      this.isInitialized = true;
+    });
   }
 
   ngOnDestroy(): void {

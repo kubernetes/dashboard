@@ -19,6 +19,7 @@ import {ComponentsModule} from '../../../common/components/module';
 import {ResourceModule} from '../../../common/services/resource/module';
 import {NODE_ENDPOINT, RESOURCE_ENDPOINT_DI_TOKEN} from '../../../index.config';
 import {SharedModule} from '../../../shared.module';
+import {PodModule} from '../../workloads/pod/module';
 
 import {NodeDetailComponent} from './detail/component';
 import {nodeDetailState} from './detail/state';

@@ -90,4 +90,10 @@
 
 .kd-scroll-container {
   overflow-x: auto;
+
+  :after {
+    content: '';
+    display: block;
+    padding-bottom: 2 * $baseline-grid;
+  }
 }
