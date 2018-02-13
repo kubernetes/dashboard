@@ -21,6 +21,7 @@ import {POD_ENDPOINT, RESOURCE_ENDPOINT_DI_TOKEN} from '../../../index.config';
 import {SharedModule} from '../../../shared.module';
 
 import {PodDetailComponent} from './detail/component';
+import {podDetailState} from './detail/state';
 import {PodListComponent} from './list/component';
 import {podListState} from './list/state';
 import {podState} from './state';
@@ -30,7 +31,7 @@ import {podState} from './state';
     SharedModule,
     ComponentsModule,
     ResourceModule,
-    UIRouterModule.forChild({states: [podState, podListState]}),
+    UIRouterModule.forChild({states: [podState, podListState, podDetailState]}),
   ],
   providers: [{provide: RESOURCE_ENDPOINT_DI_TOKEN, useValue: POD_ENDPOINT}],
   declarations: [PodListComponent, PodDetailComponent],
