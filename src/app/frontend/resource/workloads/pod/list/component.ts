@@ -20,6 +20,7 @@ import {Pod, PodList} from 'typings/backendapi';
 
 import {ResourceListWithStatuses} from '../../../../common/resources/list';
 import {NamespacedResourceListService} from '../../../../common/services/resource/resourcelist';
+import {podDetailState} from '../detail/state';
 
 @Component({selector: 'kd-pod-list', templateUrl: './template.html'})
 export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
@@ -59,21 +60,17 @@ export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
    * Returns a displayable status message for the pod.
    */
   getDisplayStatus(pod: Pod): string {
-    // See kubectl printers.go for logic in kubectl.
+    // See kubectl printers.go for logic in kubectl:
     // https://github.com/kubernetes/kubernetes/blob/39857f486511bd8db81868185674e8b674b1aeb9/pkg/printers/internalversion/printers.go
     let msgState = 'running';
     let reason = undefined;
 
-    // NOTE: Init container statuses are currently not taken into account.
-    // However, init containers with errors will still show as failed because
-    // of warnings.
+    // Init container statuses are currently not taken into account.
+    // However, init containers with errors will still show as failed because of warnings.
     if (pod.podStatus.containerStates) {
-      // Container states array may be null when no containers have
-      // started yet.
-
+      // Container states array may be null when no containers have started yet.
       for (let i = pod.podStatus.containerStates.length - 1; i >= 0; i--) {
         const state = pod.podStatus.containerStates[i];
-
         if (state.waiting) {
           msgState = 'waiting';
           reason = state.waiting.reason;

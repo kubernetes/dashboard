@@ -25,7 +25,6 @@ import {nodeDetailState} from '../detail/state';
 @Component({
   selector: 'kd-node-list',
   templateUrl: './template.html',
-  styleUrls: ['./style.scss'],
 })
 export class NodeListComponent extends ResourceListWithStatuses<NodeList, Node> {
   constructor(

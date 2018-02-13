@@ -12,5 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** Name of the state. Can be used in, e.g., $state.go method. */
-export const stateName = 'nodedetail';
+import {Ng2StateDeclaration} from '@uirouter/angular';
+
+import {NAMESPACED_RESOURCE_DETAILS_STATE_PARAMS} from '../../../../common/params/params';
+import {stateUrl} from '../../../cluster/node/state';
+import {stateName} from '../state';
+
+import {PodDetailComponent} from './component';
+
+export const podDetailState: Ng2StateDeclaration = {
+  name: `${stateName}.detail`,
+  url: `${stateUrl}${NAMESPACED_RESOURCE_DETAILS_STATE_PARAMS}`,
+  component: PodDetailComponent,
+  data: {
+    kdBreadcrumbs: {
+      label: 'resourceName',
+      parent: 'pod.list',
+    },
+  },
+};

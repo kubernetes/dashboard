@@ -16,6 +16,9 @@ import {K8sError} from '@api/backendapi';
 import {KdError} from '@api/frontendapi';
 import {StateParams} from '@uirouter/core';
 
+export const RESOURCE_DETAILS_STATE_PARAMS = '/:resourceName';
+export const NAMESPACED_RESOURCE_DETAILS_STATE_PARAMS = '/:namespace/:resourceName';
+
 export class ChromeStateParams extends StateParams {
   constructor(public namespace: string) {
     super();
