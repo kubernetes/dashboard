@@ -14,7 +14,7 @@
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MatTableDataSource} from '@angular/material';
-import {Condition, NodeAddress, NodeDetail, Pod, PodList} from '@api/backendapi';
+import {Condition, NodeAddress, NodeDetail, NodeTaint, Pod, PodList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Address} from 'cluster';
 import {Subscription} from 'rxjs/Subscription';
@@ -51,6 +51,13 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
 
   getAdresses(): string[] {
     return this.node.addresses.map((address: NodeAddress) => `${address.type}: ${address.address}`);
+  }
+
+  getTaints(): string[] {
+    return this.node.taints.map((taint: NodeTaint) => {
+      return taint.value ? `${taint.key}=${taint.value}:${taint.effect}` :
+                           `${taint.key}=${taint.effect}`;
+    });
   }
 
   getConditionsColumns(): string[] {

@@ -251,6 +251,13 @@ export interface NodeAddress {
   address: string;
 }
 
+export interface NodeTaint {
+  key: string;
+  value: string;
+  effect: string;
+  timeAdded: number;
+}
+
 export interface NodeDetail {
   objectMeta: ObjectMeta;
   typeMeta: TypeMeta;
@@ -263,6 +270,7 @@ export interface NodeDetail {
   containerImages: string[];
   initContainerImages: string[];
   addresses: NodeAddress[];
+  taints: NodeTaint[];
   conditions: Condition[];
   podList: PodList;
   eventList: EventList;

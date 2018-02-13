@@ -54,9 +54,9 @@ limitations under the License.
     <kd-property *ngIf="node.taints"
                  fxFlex="100">
       <div key>Taints</div>
-      <div value>{{node.taints}}</div>
-      <!-- TODO {{::taint.key}}={{::taint.value}}:{{::taint.effect}}-->
-      <!-- TODO {{::taint.key}}:{{::taint.effect}}-->
+      <div value>
+        <kd-chips [map]="getTaints()"></kd-chips>
+      </div>
     </kd-property>
   </div>
 </kd-card>
