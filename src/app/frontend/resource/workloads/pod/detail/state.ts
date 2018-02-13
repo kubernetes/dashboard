@@ -12,12 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export function getResourceDetailsStateName(stateName: string): string {
-  return `${stateName}.detail`;
-}
+import {Ng2StateDeclaration} from '@uirouter/angular';
 
-export function getResourceDetailsStateUrl(stateName: string): string {
-  return `/${stateName}/:resourceName`;
-}
+import {getResourceDetailsStateName, getResourceDetailsStateUrl} from '../../../../common/stateutils/stateutils';
+import {stateName} from '../state';
 
-// TODO namespaced resources
+import {PodDetailComponent} from './component';
+
+export const podDetailState: Ng2StateDeclaration = {
+  name: getResourceDetailsStateName(stateName),
+  url: getResourceDetailsStateUrl(stateName),
+  component: PodDetailComponent,
+  data: {
+    kdBreadcrumbs: {
+      label: 'resourceName',
+      parent: 'pod.list',
+    },
+  },
+};

@@ -126,6 +126,35 @@ export interface DataPoint {
   y: number;
 }
 
+export interface ConfigMapKeyRef {
+  name: string;
+  key: string;
+}
+
+export interface SecretKeyRef {
+  name: string;
+  key: string;
+}
+
+export interface EnvVar {
+  name: string;
+  value: string;
+  valueFrom: EnvVarSource;
+}
+
+export interface EnvVarSource {
+  configMapKeyRef: ConfigMapKeyRef;
+  secretKeyRef: SecretKeyRef;
+}
+
+export interface Container {
+  name: string;
+  image: string;
+  env: EnvVar[];
+  commands: string[];
+  args: string[];
+}
+
 export interface PodMetrics {
   cpuUsage: number;
   memoryUsage: number;
@@ -154,6 +183,20 @@ export interface PodInfo {
   failed: number;
   succeeded: number;
   warnings: Event[];
+}
+
+export interface PodDetail {
+  objectMeta: ObjectMeta;
+  typeMeta: TypeMeta;
+  initContainers: Container[];
+  containers: Container[];
+  podPhase: string;
+  podIP: string;
+  nodeName: string;
+  restartCount: number;
+  metrics: PodMetrics;
+  conditions: ConditionList;
+  errors: K8sError[];
 }
 
 export interface Pod {

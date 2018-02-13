@@ -630,39 +630,6 @@ backendApi.ReplicationControllerDetail;
 
 /**
  * @typedef {{
- *   name: string,
- *   value: string,
- *   valueFrom: backendApi.EnvVarSource
- * }}
- */
-backendApi.EnvVar;
-
-/**
- * @typedef {{
- *   configMapKeyRef: backendApi.ConfigMapKeyRef,
- *   secretKeyRef: backendApi.SecretKeyRef
- * }}
- */
-backendApi.EnvVarSource;
-
-/**
- * @typedef {{
- *   name: string,
- *   key: string,
- * }}
- */
-backendApi.ConfigMapKeyRef;
-
-/**
- * @typedef {{
- *   name: string,
- *   key: string,
- * }}
- */
-backendApi.SecretKeyRef;
-
-/**
- * @typedef {{
  *   replicas: number
  * }}
  */
@@ -683,33 +650,7 @@ backendApi.ReplicaCounts;
  */
 backendApi.DeleteReplicationControllerSpec;
 
-/**
- * @typedef {{
- *   name: string,
- *   image: string,
- *   env: !Array<!backendApi.EnvVar>,
- *   commands: Array<string>,
- *   args: Array<string>
- * }}
- */
-backendApi.Container;
 
-/**
- * @typedef {{
- *   objectMeta: !backendApi.ObjectMeta,
- *   typeMeta: !backendApi.TypeMeta,
- *   initContainers: !Array<!backendApi.Container>,
- *   containers: !Array<!backendApi.Container>,
- *   podPhase: string,
- *   podIP: string,
- *   nodeName: string,
- *   restartCount: number,
- *   metrics: backendApi.PodMetrics,
- *   conditions: !backendApi.ConditionList,
- *   errors: !Array<!backendApi.Error>
- * }}
- */
-backendApi.PodDetail;
 
 /**
  * @typedef {{
