@@ -23,13 +23,10 @@ import {nodeDetailState} from '../detail/state';
 @Component({
   selector: 'kd-node-list',
   templateUrl: './template.html',
-  styleUrls: ['./style.scss'],
 })
 export class NodeListComponent extends ResourceListWithStatuses<NodeList, Node> {
   constructor(state: StateService, nodeListService: ResourceListService<NodeList>) {
     super(nodeDetailState.name, state, nodeListService);
-
-    // Override default warning icon.
     this.setWarningIcon('help');
   }
 

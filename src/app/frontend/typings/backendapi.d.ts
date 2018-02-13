@@ -79,8 +79,6 @@ export interface Condition {
   message: string;
 }
 
-export interface ConditionList { conditions: Condition[]; }
-
 export interface ContainerStateWaiting { reason: string; }
 
 export interface ContainerStateTerminated {
@@ -195,7 +193,7 @@ export interface PodDetail {
   nodeName: string;
   restartCount: number;
   metrics: PodMetrics;
-  conditions: ConditionList;
+  conditions: Condition[];
   errors: K8sError[];
 }
 
@@ -265,7 +263,7 @@ export interface NodeDetail {
   containerImages: string[];
   initContainerImages: string[];
   addresses: NodeAddress;
-  conditions: ConditionList;
+  conditions: Condition[];
   podList: PodList;
   eventList: EventList;
   errors: K8sError[];

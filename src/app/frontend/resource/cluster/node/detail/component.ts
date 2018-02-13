@@ -13,7 +13,8 @@
 // limitations under the License.
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {NodeDetail} from '@api/backendapi';
+import {MatTableDataSource} from '@angular/material';
+import {Condition, NodeDetail, Pod, PodList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Subscription} from 'rxjs/Subscription';
 
@@ -27,6 +28,7 @@ import {ResourceService} from '../../../../common/services/resource/resource';
 export class NodeDetailComponent implements OnInit, OnDestroy {
   private nodeSubscription_: Subscription;
   private nodeName_: string;
+  conditionsData = new MatTableDataSource<Condition>();
   node: NodeDetail;
   isInitialized = false;
 
@@ -38,11 +40,16 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
     this.nodeSubscription_ =
         this.node_.get(this.nodeName_).startWith({}).subscribe((d: NodeDetail) => {
           this.node = d;
+          this.conditionsData.data = d.conditions;
           this.isInitialized = true;
         });
   }
 
   ngOnDestroy(): void {
     this.nodeSubscription_.unsubscribe();
+  }
+
+  getConditionsColumns(): string[] {
+    return ['type', 'status', 'lastProbeTime', 'lastTransitionTime', 'reason', 'message'];
   }
 }

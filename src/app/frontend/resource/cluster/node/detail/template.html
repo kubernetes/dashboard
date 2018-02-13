@@ -25,7 +25,6 @@ limitations under the License.
   <div title>Allocation</div>
   <div content>
     <div class="kd-allocated-resources">
-
       <div class="kd-graph-container"
            fxFlex>
         <kd-allocation-chart [innerPercent]="node.allocatedResources.cpuRequestsFraction"
@@ -57,7 +56,6 @@ limitations under the License.
           </div>
         </div>
       </div>
-
       <div class="kd-graph-container"
            fxFlex>
         <kd-allocation-chart [outerPercent]="node.allocatedResources.memoryRequestsFraction"
@@ -89,7 +87,6 @@ limitations under the License.
           </div>
         </div>
       </div>
-
       <div class="kd-graph-container"
            fxFlex>
         <kd-allocation-chart [outerPercent]="node.allocatedResources.podFraction"
@@ -111,5 +108,62 @@ limitations under the License.
       </div>
 
     </div>
+  </div>
+</kd-card>
+
+<kd-card [initialized]="isInitialized"
+         role="table">
+  <div title>Conditions</div>
+  <div content>
+    <mat-table [dataSource]="conditionsData">
+      <ng-container [matColumnDef]="getConditionsColumns()[0]">
+        <mat-header-cell *matHeaderCellDef>Type</mat-header-cell>
+        <mat-cell *matCellDef="let condition">
+          <ng-container *ngIf="condition.type">{{condition.type}}</ng-container>
+          <ng-container *ngIf="!condition.type">-</ng-container>
+        </mat-cell>
+      </ng-container>
+      <ng-container [matColumnDef]="getConditionsColumns()[1]">
+        <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+        <mat-cell *matCellDef="let condition">
+          <ng-container *ngIf="condition.status">{{condition.status}}</ng-container>
+          <ng-container *ngIf="!condition.status">-</ng-container>
+        </mat-cell>
+      </ng-container>
+      <ng-container [matColumnDef]="getConditionsColumns()[2]">
+        <mat-header-cell *matHeaderCellDef>Last probe time</mat-header-cell>
+        <mat-cell *matCellDef="let condition">
+          <ng-container *ngIf="condition.lastProbeTime">
+            {{condition.lastProbeTime| kdRelativeTime}}
+          </ng-container>
+          <ng-container *ngIf="!condition.lastProbeTime">-</ng-container>
+        </mat-cell>
+      </ng-container>
+      <ng-container [matColumnDef]="getConditionsColumns()[3]">
+        <mat-header-cell *matHeaderCellDef>Last transition time</mat-header-cell>
+        <mat-cell *matCellDef="let condition">
+          <ng-container *ngIf="condition.lastTransitionTime">
+            {{condition.lastTransitionTime| kdRelativeTime}}
+          </ng-container>
+          <ng-container *ngIf="!condition.lastTransitionTime">-</ng-container>
+        </mat-cell>
+      </ng-container>
+      <ng-container [matColumnDef]="getConditionsColumns()[4]">
+        <mat-header-cell *matHeaderCellDef>Reason</mat-header-cell>
+        <mat-cell *matCellDef="let condition">
+          <ng-container *ngIf="condition.reason">{{condition.reason}}</ng-container>
+          <ng-container *ngIf="!condition.reason">-</ng-container>
+        </mat-cell>
+      </ng-container>
+      <ng-container [matColumnDef]="getConditionsColumns()[5]">
+        <mat-header-cell *matHeaderCellDef>Message</mat-header-cell>
+        <mat-cell *matCellDef="let condition">
+          <ng-container *ngIf="condition.message">{{condition.message}}</ng-container>
+          <ng-container *ngIf="!condition.message">-</ng-container>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="getConditionsColumns()"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: getConditionsColumns();"></mat-row>
+    </mat-table>
   </div>
 </kd-card>
