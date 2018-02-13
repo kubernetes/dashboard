@@ -24,16 +24,15 @@ import {podDetailState} from '../detail/state';
 
 @Component({selector: 'kd-pod-list', templateUrl: './template.html'})
 export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
-  @Input() baseHref: string;
+  @Input() endpoint: string;
 
   constructor(
-      state: StateService,
-      private readonly podListService_: NamespacedResourceListService<PodList>) {
+      state: StateService, private readonly podList: NamespacedResourceListService<PodList>) {
     super('pod', state);
   }
 
   getResourceObservable(params?: HttpParams): Observable<PodList> {
-    return this.podListService_.get(params);
+    return this.podList.get(this.endpoint, params);
   }
 
   map(podList: PodList): Pod[] {

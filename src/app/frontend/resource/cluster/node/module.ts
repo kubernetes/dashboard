@@ -32,9 +32,9 @@ import {nodeState} from './state';
     SharedModule,
     ComponentsModule,
     ResourceModule,
+    PodModule,
     UIRouterModule.forChild({states: [nodeState, nodeListState, nodeDetailState]}),
   ],
-  providers: [{provide: RESOURCE_ENDPOINT_DI_TOKEN, useValue: NODE_ENDPOINT}],
   declarations: [NodeListComponent, NodeDetailComponent],
 })
 export class NodeModule {}

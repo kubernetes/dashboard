@@ -30,7 +30,7 @@ export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSet
   }
 
   getResourceObservable(params?: HttpParams): Observable<ReplicaSetList> {
-    return this.replicaSetListService_.get(params);
+    return this.replicaSetListService_.get('', params);
   }
 
   map(rsList: ReplicaSetList): ReplicaSet[] {

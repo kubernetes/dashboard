@@ -20,18 +20,15 @@ import {ResourceBase} from '../../resources/resource';
 
 @Injectable()
 export class ResourceListService<T> extends ResourceBase<T> {
-  get(params?: HttpParams): Observable<T> {
-    return this.http_.get<T>(this.baseEndpoint_, {params});
+  get(endpoint: string, params?: HttpParams): Observable<T> {
+    return this.http_.get<T>(endpoint, {params});
   }
 }
 
 @Injectable()
 export class NamespacedResourceListService<T> extends ResourceListService<T> {
-  get(params?: HttpParams, namespace?: string): Observable<T> {
-    namespace = namespace ? namespace : this.getNamespace();
-    const endpoint =
-        this.baseEndpoint_.concat(this.baseEndpoint_.endsWith('/') ? namespace : `/${namespace}`);
-
+  get(endpoint: string, params?: HttpParams): Observable<T> {
+    endpoint = endpoint.replace(':namespace', this.getNamespace());
     return this.http_.get<T>(endpoint, {params});
   }
 }

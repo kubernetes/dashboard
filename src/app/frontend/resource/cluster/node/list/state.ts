@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
+import {EndpointManager} from '../../../../common/services/resource/endpoint';
 
 import {clusterState} from '../../state';
 import {stateName, stateUrl} from '../state';
@@ -29,4 +30,10 @@ export const nodeListState: Ng2StateDeclaration = {
       parent: clusterState.name,
     },
   },
+  resolve: [
+    {
+      token: 'endpoint',
+      resolveFn: EndpointManager.node.list,
+    },
+  ],
 };

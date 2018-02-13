@@ -20,25 +20,25 @@ import {ResourceBase} from '../../resources/resource';
 
 @Injectable()
 export class ResourceService<T> extends ResourceBase<T> {
-  get(name: string, params?: HttpParams): Observable<T> {
+  get(endpoint: string, name: string, params?: HttpParams): Observable<T> {
     if (!name) {
       throw Error('Name can not be empty.');
     }
 
-    return this.http_.get<T>(this.baseEndpoint_.concat(`/${name}`), {params});
+    endpoint = endpoint.replace(':name', name);
+    return this.http_.get<T>(endpoint, {params});
   }
 }
 
 @Injectable()
 export class NamespacedResourceService<T> extends ResourceBase<T> {
-  get(name: string, namespace?: string, params?: HttpParams): Observable<T> {
+  get(endpoint: string, name: string, params?: HttpParams): Observable<T> {
     if (!name) {
       throw Error('Name can not be empty.');
     }
 
-    namespace = namespace ? namespace : this.getNamespace();
-    const endpoint =
-        this.baseEndpoint_.concat(this.baseEndpoint_.endsWith('/') ? namespace : `/${namespace}`);
-    return this.http_.get<T>(endpoint.concat(`/${name}`), {params});
+    endpoint = endpoint.replace(':namespace', this.getNamespace());
+    endpoint = endpoint.replace(':name', name);
+    return this.http_.get<T>(endpoint, {params});
   }
 }

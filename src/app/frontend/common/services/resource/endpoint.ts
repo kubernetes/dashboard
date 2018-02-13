@@ -12,14 +12,33 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {EndpointManager} from './endpoint';
-import {NamespacedResourceService, ResourceService} from './resource';
-import {NamespacedResourceListService, ResourceListService} from './resourcelist';
+import {Injectable} from '@angular/core';
 
-@NgModule({
-  providers: [
-    ResourceService, NamespacedResourceService, ResourceListService, NamespacedResourceListService
-  ],
-})
-export class ResourceModule {}
+const baseHref = '/api/v1';
+
+@Injectable()
+export class EndpointManager {
+  static pod = class {
+    static list(): string {
+      return `${baseHref}/pod/:namespace`;
+    }
+
+    static detail(): string {
+      return `${baseHref}/pod/:namespace/:name`;
+    }
+  };
+
+  static node = class {
+    static list(): string {
+      return `${baseHref}/node`;
+    }
+
+    static detail(): string {
+      return `${baseHref}/node/:name`;
+    }
+
+    static pods(nodeName: string): string {
+      return `${baseHref}/node/${nodeName}/pod`;
+    }
+  };
+}

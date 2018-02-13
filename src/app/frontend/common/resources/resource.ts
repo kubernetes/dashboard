@@ -19,13 +19,7 @@ import {StateService} from '@uirouter/core';
 import {RESOURCE_ENDPOINT_DI_TOKEN, ResourceEndpoint} from '../../index.config';
 
 export abstract class ResourceBase<T> {
-  protected baseEndpoint_: string;
-
-  constructor(
-      @Inject(RESOURCE_ENDPOINT_DI_TOKEN) resourceEndpoint: ResourceEndpoint,
-      protected readonly http_: HttpClient, private readonly state_: StateService) {
-    this.baseEndpoint_ = resourceEndpoint.url;
-  }
+  constructor(protected readonly http_: HttpClient, private readonly state_: StateService) {}
 
   getNamespace(): string {
     // TODO get from service

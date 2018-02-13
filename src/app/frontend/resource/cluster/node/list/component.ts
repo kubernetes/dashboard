@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {HttpParams} from '@angular/common/http';
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Node, NodeList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
@@ -27,6 +27,8 @@ import {nodeDetailState} from '../detail/state';
   templateUrl: './template.html',
 })
 export class NodeListComponent extends ResourceListWithStatuses<NodeList, Node> {
+  @Input() endpoint: string;
+
   constructor(
       state: StateService, private readonly nodeListService_: ResourceListService<NodeList>) {
     super(nodeDetailState.name, state);
@@ -36,7 +38,7 @@ export class NodeListComponent extends ResourceListWithStatuses<NodeList, Node> 
   }
 
   getResourceObservable(params?: HttpParams): Observable<NodeList> {
-    return this.nodeListService_.get(params);
+    return this.nodeListService_.get(this.endpoint, params);
   }
 
   map(nodeList: NodeList): Node[] {

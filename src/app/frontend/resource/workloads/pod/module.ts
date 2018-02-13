@@ -33,7 +33,6 @@ import {podState} from './state';
     ResourceModule,
     UIRouterModule.forChild({states: [podState, podListState, podDetailState]}),
   ],
-  providers: [{provide: RESOURCE_ENDPOINT_DI_TOKEN, useValue: POD_ENDPOINT}],
   declarations: [PodListComponent, PodDetailComponent],
   exports: [PodListComponent],
 })
