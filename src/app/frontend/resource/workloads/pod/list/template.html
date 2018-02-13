@@ -44,7 +44,7 @@ limitations under the License.
                          mat-sort-header
                          disableClear="true">Name</mat-header-cell>
         <mat-cell *matCellDef="let pod">
-          <a [href]="getDetailsHref(pod.objectMeta.name)">
+          <a [href]="getDetailsHref(pod.objectMeta.name, pod.objectMeta.namespace)">
       {{pod.objectMeta.name}}
       </a>
         </mat-cell>
@@ -72,8 +72,12 @@ limitations under the License.
       <ng-container [matColumnDef]="getDisplayColumns()[5]">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
-                         disableClear="true">Age</mat-header-cell>
-        <mat-cell *matCellDef="let pod">{{pod.objectMeta.creationTimestamp | kdRelativeTime}}</mat-cell>
+                         disableClear="true">
+          Age
+        </mat-header-cell>
+        <mat-cell *matCellDef="let pod">
+          {{pod.objectMeta.creationTimestamp | kdRelativeTime}}
+        </mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="getDisplayColumns()"></mat-header-row>

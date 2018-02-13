@@ -14,14 +14,15 @@
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
-import {getResourceDetailsStateName, getResourceDetailsStateUrl} from '../../../../common/stateutils/stateutils';
+import {NAMESPACED_RESOURCE_DETAILS_STATE_PARAMS} from '../../../../common/params/params';
+import {stateUrl} from '../../../cluster/node/state';
 import {stateName} from '../state';
 
 import {PodDetailComponent} from './component';
 
 export const podDetailState: Ng2StateDeclaration = {
-  name: getResourceDetailsStateName(stateName),
-  url: getResourceDetailsStateUrl(stateName),
+  name: `${stateName}.detail`,
+  url: `${stateUrl}${NAMESPACED_RESOURCE_DETAILS_STATE_PARAMS}`,
   component: PodDetailComponent,
   data: {
     kdBreadcrumbs: {
