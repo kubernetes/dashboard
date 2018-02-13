@@ -14,8 +14,9 @@
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MatTableDataSource} from '@angular/material';
-import {Condition, NodeDetail, Pod, PodList} from '@api/backendapi';
+import {Condition, NodeAddress, NodeDetail, Pod, PodList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
+import {Address} from 'cluster';
 import {Subscription} from 'rxjs/Subscription';
 
 import {ResourceService} from '../../../../common/services/resource/resource';
@@ -46,6 +47,10 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.nodeSubscription_.unsubscribe();
+  }
+
+  getAdresses(): string[] {
+    return this.node.addresses.map((address: NodeAddress) => `${address.type}: ${address.address}`);
   }
 
   getConditionsColumns(): string[] {

@@ -262,7 +262,7 @@ export interface NodeDetail {
   nodeInfo: NodeInfo;
   containerImages: string[];
   initContainerImages: string[];
-  addresses: NodeAddress;
+  addresses: NodeAddress[];
   conditions: Condition[];
   podList: PodList;
   eventList: EventList;

@@ -23,22 +23,11 @@ limitations under the License.
 </kd-card>
 
 <kd-card [initialized]="isInitialized">
-  <div title>Details</div>
+  <div title>Node information</div>
   <div content
        *ngIf="isInitialized"
        fxLayout="row"
        fxLayoutWrap>
-    <kd-property *ngIf="node.addresses">
-      <div key>Addresses</div>
-      <div value>{{node.addresses}}</div>
-      <!-- TODO {{::address.type}}: {{::address.address}} -->
-    </kd-property>
-    <kd-property *ngIf="node.taints">
-      <div key>Taints</div>
-      <div value>{{node.taints}}</div>
-      <!-- TODO {{::taint.key}}={{::taint.value}}:{{::taint.effect}}-->
-      <!-- TODO {{::taint.key}}:{{::taint.effect}}-->
-    </kd-property>
     <kd-property *ngIf="node.phase">
       <div key>Phase</div>
       <div value>{{node.phase}}</div>
@@ -55,7 +44,20 @@ limitations under the License.
       <div key>Unschedulable</div>
       <div value>{{node.unschedulable}}</div>
     </kd-property>
-
+    <kd-property *ngIf="node.addresses"
+                 fxFlex="100">
+      <div key>Addresses</div>
+      <div value>
+        <kd-chips [map]="getAdresses()"></kd-chips>
+      </div>
+    </kd-property>
+    <kd-property *ngIf="node.taints"
+                 fxFlex="100">
+      <div key>Taints</div>
+      <div value>{{node.taints}}</div>
+      <!-- TODO {{::taint.key}}={{::taint.value}}:{{::taint.effect}}-->
+      <!-- TODO {{::taint.key}}:{{::taint.effect}}-->
+    </kd-property>
   </div>
 </kd-card>
 
