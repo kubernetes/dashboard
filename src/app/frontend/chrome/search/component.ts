@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import {Component, OnInit} from '@angular/core';
+import {NgForm} from '@angular/forms';
 import {StateService, TransitionService} from '@uirouter/core';
 
 import {SearchStateParams} from '../../common/params/params';
@@ -31,7 +32,9 @@ export class SearchComponent implements OnInit {
     });
   }
 
-  submit(): void {
-    this.state_.go(searchState.name, new SearchStateParams(this.query));  // TODO fix
+  submit(form: NgForm): void {
+    if (form.valid) {
+      this.state_.go(searchState.name, new SearchStateParams(this.query));
+    }
   }
 }

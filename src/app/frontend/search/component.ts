@@ -12,7 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {StateService} from '@uirouter/core';
+import {SEARCH_QUERY_STATE_PARAM} from '../common/params/params';
 
 @Component({selector: 'kd-search', templateUrl: './template.html'})
-export class SearchComponent {}
+export class SearchComponent implements OnInit {
+  constructor(private readonly state_: StateService) {}
+
+  ngOnInit(): void {
+    const query = this.state_.params[SEARCH_QUERY_STATE_PARAM];
+  }
+}
