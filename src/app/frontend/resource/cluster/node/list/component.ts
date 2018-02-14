@@ -19,7 +19,7 @@ import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 
 import {ResourceListWithStatuses} from '../../../../common/resources/list';
-import {ResourceListService} from '../../../../common/services/resource/resourcelist';
+import {ResourceService} from '../../../../common/services/resource/resource';
 import {nodeDetailState} from '../detail/state';
 
 @Component({
@@ -29,8 +29,7 @@ import {nodeDetailState} from '../detail/state';
 export class NodeListComponent extends ResourceListWithStatuses<NodeList, Node> {
   @Input() endpoint: string;
 
-  constructor(
-      state: StateService, private readonly nodeListService_: ResourceListService<NodeList>) {
+  constructor(state: StateService, private readonly node_: ResourceService<NodeList>) {
     super(nodeDetailState.name, state);
 
     // Override default warning icon.
@@ -38,7 +37,7 @@ export class NodeListComponent extends ResourceListWithStatuses<NodeList, Node> 
   }
 
   getResourceObservable(params?: HttpParams): Observable<NodeList> {
-    return this.nodeListService_.get(this.endpoint, params);
+    return this.node_.get(this.endpoint, undefined, params);
   }
 
   map(nodeList: NodeList): Node[] {

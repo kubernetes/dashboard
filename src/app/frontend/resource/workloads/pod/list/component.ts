@@ -19,20 +19,19 @@ import {Observable} from 'rxjs/Observable';
 import {Pod, PodList} from 'typings/backendapi';
 
 import {ResourceListWithStatuses} from '../../../../common/resources/list';
-import {NamespacedResourceListService} from '../../../../common/services/resource/resourcelist';
+import {NamespacedResourceService} from '../../../../common/services/resource/resource';
 import {podDetailState} from '../detail/state';
 
 @Component({selector: 'kd-pod-list', templateUrl: './template.html'})
 export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
   @Input() endpoint: string;
 
-  constructor(
-      state: StateService, private readonly podList: NamespacedResourceListService<PodList>) {
+  constructor(state: StateService, private readonly pod_: NamespacedResourceService<PodList>) {
     super(podDetailState.name, state);
   }
 
   getResourceObservable(params?: HttpParams): Observable<PodList> {
-    return this.podList.get(this.endpoint, params);
+    return this.pod_.get(this.endpoint, undefined, params);
   }
 
   map(podList: PodList): Pod[] {
