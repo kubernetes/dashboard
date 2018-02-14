@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-card [initialized]="isInitialized()">
+<kd-card [initialized]="isInitialized()"
+         [expandable]="true">
   <div title
        i18n>Global settings</div>
   <div content>
@@ -88,7 +89,7 @@ limitations under the License.
   </div>
 </kd-card>
 
-<kd-card>
+<kd-card [expandable]="true">
   <div title
        i18n>Local settings</div>
   <div content>
