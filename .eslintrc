@@ -1,5 +1,5 @@
 {
-  // This file contains root configuration for ESLint. Its rules may be overriden in a specific
+  // This file contains root configuration for ESLint. Its rules may be overridden in a specific
   // folder (e.g., tests) by placing .eslintrc in it.
   // All lint rules should be placed here unless they do not apply to entire JavaScript codebase.
   // For example, indentation rules should be here (applies to all JS files), but Protractor
