@@ -14,12 +14,9 @@
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
-import {ChromeComponent} from './component';
+import {NAMESPACE_STATE_PARAM} from '../common/params/params';
 
-/**
- * Parameter name of the namespace selection param. Mostly for internal use.
- */
-const namespaceParam = 'namespace';
+import {ChromeComponent} from './component';
 
 /**
  * One of the root application views. Every view should be a child of this view except for login
@@ -27,7 +24,7 @@ const namespaceParam = 'namespace';
  */
 export const chromeState: Ng2StateDeclaration = {
   name: 'chrome',
-  url: `?${namespaceParam}`,
+  url: `?${NAMESPACE_STATE_PARAM}`,
   abstract: true,
   data: {
     requiresAuth: true,

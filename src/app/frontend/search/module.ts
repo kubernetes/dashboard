@@ -13,24 +13,22 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
+import {UIRouterModule} from '@uirouter/angular';
 
 import {ComponentsModule} from '../common/components/module';
-
 import {SharedModule} from '../shared.module';
 
-import {ChromeComponent} from './component';
-import {NavModule} from './nav/module';
-import {SearchComponent} from './search/component';
+import {SearchComponent} from './component';
+import {searchState} from './state';
 
 @NgModule({
-  declarations: [
-    ChromeComponent,
-    SearchComponent,
-  ],
   imports: [
     SharedModule,
     ComponentsModule,
-    NavModule,
-  ]
+    UIRouterModule.forChild({states: [searchState]}),
+  ],
+  declarations: [
+    SearchComponent,
+  ],
 })
-export class ChromeModule {}
+export class SearchModule {}

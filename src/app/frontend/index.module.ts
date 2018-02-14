@@ -49,6 +49,7 @@ import {replicaSetFutureState} from './resource/workloads/replicaset/state';
 import {replicationControllerFutureState} from './resource/workloads/replicationcontroller/state';
 import {workloadsFutureState} from './resource/workloads/state';
 import {statefulSetFutureState} from './resource/workloads/statefulset/state';
+import {searchFutureState} from './search/state';
 import {settingsFutureState} from './settings/state';
 
 @NgModule({
@@ -94,6 +95,7 @@ import {settingsFutureState} from './settings/state';
         // Others
         aboutFutureState,
         settingsFutureState,
+        searchFutureState,
         overviewFutureState,
       ],
       useHash: true,

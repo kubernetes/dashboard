@@ -16,6 +16,11 @@ import {K8sError} from '@api/backendapi';
 import {KdError} from '@api/frontendapi';
 import {StateParams} from '@uirouter/core';
 
+/**
+ * Parameter name of the namespace selection param. Mostly for internal use.
+ */
+export const NAMESPACE_STATE_PARAM = 'namespace';
+
 export class ChromeStateParams extends StateParams {
   constructor(public namespace: string) {
     super();

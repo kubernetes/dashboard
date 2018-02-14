@@ -12,25 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
+import {Ng2StateDeclaration} from '@uirouter/angular';
 
-import {ComponentsModule} from '../common/components/module';
+import {chromeState} from '../chrome/state';
 
-import {SharedModule} from '../shared.module';
+import {SearchComponent} from './component';
 
-import {ChromeComponent} from './component';
-import {NavModule} from './nav/module';
-import {SearchComponent} from './search/component';
+export const searchFutureState: Ng2StateDeclaration = {
+  name: 'search.**',
+  url: '/search',
+  loadChildren: './search/module#SearchModule'
+};
 
-@NgModule({
-  declarations: [
-    ChromeComponent,
-    SearchComponent,
-  ],
-  imports: [
-    SharedModule,
-    ComponentsModule,
-    NavModule,
-  ]
-})
-export class ChromeModule {}
+export const searchState: Ng2StateDeclaration = {
+  parent: chromeState.name,
+  name: 'search',
+  url: '/search',
+  views: {
+    '$default': {
+      component: SearchComponent,
+    },
+  },
+  data: {
+    kdBreadcrumbs: {
+      label: 'Search results for xxx query',
+    }
+  },
+};
