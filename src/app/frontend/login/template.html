@@ -16,12 +16,14 @@ limitations under the License.
 
 <!--<kd-warnings warnings="$ctrl.errors"
              class="kd-login-error"></kd-warnings>-->
-<div class="kd-login-container"
+<div class="kd-login-container kd-bg-background"
      fxFlex>
-  <kd-card class="kd-login-card">
+  <kd-card titleClasses="kd-card-top-radius kd-bg-primary kd-accent"
+           class="kd-login-card">
     <div title>Kubernetes Dashboard</div>
     <div content>
-      <form>
+      <form fxLayout="column"
+            (ngSubmit)="login()">
         <mat-radio-group name="login"
                          [(ngModel)]="selectedAuthenticationMode">
           <div *ngFor="let loginMode of getSupportedAuthenticationModes()">
@@ -29,30 +31,73 @@ limitations under the License.
                               color="primary">
               {{loginMode}}
             </mat-radio-button>
-            <div class="kd-login-mode-description">
-              Please select the kubeconfig file that you have created to configure access to the cluster. To find out more about how to configure and use kubeconfig file, please refer to the Configure Access to Multiple Clusters section.
+            <div class="kd-login-mode-description"
+                 [ngSwitch]="loginMode">
+              <ng-container *ngSwitchCase="loginModes.Kubeconfig">
+                Please select the kubeconfig file that you have created to configure access to the cluster. To find out more about how to configure and use kubeconfig file, please refer to the <a href='https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/'>Configure Access to Multiple Clusters</a> section.
+              </ng-container>
+              <ng-container *ngSwitchCase="loginModes.Basic">
+                Basic login description.
+              </ng-container>
+              <ng-container *ngSwitchCase="loginModes.Token">
+                Every Service Account has a Secret with valid Bearer Token that can be used to log in to Dashboard. To find out more about how to configure and use Bearer Tokens, please refer to the <a href='https://kubernetes.io/docs/admin/authentication/'>Authentication</a> section.
+              </ng-container>
             </div>
           </div>
         </mat-radio-group>
 
-        <mat-form-field class="kd-login-input">
-          <input matInput
-                 placeholder="Token"
-                 required>
-        </mat-form-field>
+        <ng-container [ngSwitch]="selectedAuthenticationMode">
+          <mat-form-field *ngSwitchCase="loginModes.Token"
+                          class="kd-login-input">
+            <input matInput
+                   placeholder="Token"
+                   type="password"
+                   required>
+          </mat-form-field>
 
-        <button mat-raised-button
-                color="primary"
-                class="kd-login-button"
-                (click)="login()">
-          Sign in
-        </button>
-        <button mat-button
-                color="primary"
-                class="kd-login-button"
-                (click)="skip()">
-          Skip
-        </button>
+          <div *ngSwitchCase="loginModes.Basic"
+               fxLayout="column">
+            <mat-form-field fxFlex
+                            class="kd-login-input">
+              <input id="username"
+                     name="username"
+                     matInput
+                     placeholder="Username"
+                     required>
+            </mat-form-field>
+
+            <mat-form-field fxFlex
+                            class="kd-login-input">
+              <input id="password"
+                     name="password"
+                     matInput
+                     placeholder="Password"
+                     type="password"
+                     required>
+            </mat-form-field>
+          </div>
+
+          <div *ngSwitchCase="loginModes.Kubeconfig"
+               class="kd-login-input">
+            kubeconfig placeholder
+          </div>
+        </ng-container>
+
+        <div fxFlex="none"
+             fxLayout="row">
+          <button mat-raised-button
+                  color="primary"
+                  type="submit"
+                  class="kd-login-button">
+            Sign in
+          </button>
+          <button mat-button
+                  color="primary"
+                  class="kd-login-button"
+                  (click)="skip()">
+            Skip
+          </button>
+        </div>
       </form>
     </div>
   </kd-card>

@@ -17,10 +17,11 @@ limitations under the License.
 <mat-card>
   <mat-card-title>
     <div class="kd-card-title"
+         [ngClass]="[titleClasses]"
          fxFlex>
       <ng-content select="[title]"></ng-content>
     </div>
-    <button class="kd-card-toggle"
+    <button class="kd-card-toggle kd-muted"
             mat-icon-button
             *ngIf="expandable"
             (click)="expanded = !expanded">
