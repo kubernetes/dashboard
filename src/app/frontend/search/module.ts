@@ -12,8 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** Name of the state. Can be used in, e.g., $state.go method. */
-export const stateName = 'search';
+import {NgModule} from '@angular/core';
+import {UIRouterModule} from '@uirouter/angular';
 
-/** Absolute URL of the state. */
-export const stateUrl = '/search?q';
+import {ComponentsModule} from '../common/components/module';
+import {SharedModule} from '../shared.module';
+
+import {SearchComponent} from './component';
+import {searchState} from './state';
+
+@NgModule({
+  imports: [
+    SharedModule,
+    ComponentsModule,
+    UIRouterModule.forChild({states: [searchState]}),
+  ],
+  declarations: [
+    SearchComponent,
+  ],
+})
+export class SearchModule {}

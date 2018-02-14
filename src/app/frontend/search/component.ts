@@ -12,25 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
+import {Component} from '@angular/core';
 
-import {ComponentsModule} from '../common/components/module';
-
-import {SharedModule} from '../shared.module';
-
-import {ChromeComponent} from './component';
-import {NavModule} from './nav/module';
-import {SearchComponent} from './search/component';
-
-@NgModule({
-  declarations: [
-    ChromeComponent,
-    SearchComponent,
-  ],
-  imports: [
-    SharedModule,
-    ComponentsModule,
-    NavModule,
-  ]
-})
-export class ChromeModule {}
+@Component({selector: 'kd-search', templateUrl: './template.html'})
+export class SearchComponent {}

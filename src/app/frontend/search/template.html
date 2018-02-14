@@ -14,21 +14,4 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div fxFlex></div>
-<div class="kd-search"
-     fxFlex="60">
-  <form (submit)="submit()"
-        fxFlex
-        fxLayout="row"
-        fxLayoutAlign=" center">
-    <mat-icon type="submit"
-              class="kd-search-icon kd-muted">search</mat-icon>
-    <input type="search"
-           name="search"
-           placeholder="Search"
-           [(ngModel)]="query"
-           required
-           fxFlex>
-  </form>
-</div>
-<div fxFlex></div>
+<kd-card>Search</kd-card>

@@ -35,7 +35,7 @@
   $muted: mat-color($foreground-palette, secondary-text);
   $border: mat-color($foreground-palette, divider);
   $chart-green: mat-color($warn-palette, 50);
-  $chart-blue: $primary;
+  $chart-blue: mat-color($warn-palette, 200);
 
   // Global style overrides.
 
@@ -49,7 +49,7 @@
 
   * {
     &::-webkit-scrollbar-thumb {
-      background-color: mat-color($foreground-palette, divider);
+      background-color: $border;
     }
   }
 
@@ -127,14 +127,6 @@
     input {
       color: mat-color($foreground-palette, base);
     }
-  }
-
-  .kd-search-icon {
-    color: $muted;
-  }
-
-  .kd-slider-value {
-    color: $muted;
   }
 
   .kd-nav-item-button {

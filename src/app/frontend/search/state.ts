@@ -14,24 +14,29 @@
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
-import {NAMESPACE_STATE_PARAM} from '../common/params/params';
+import {chromeState} from '../chrome/state';
+import {SEARCH_QUERY_STATE_PARAM} from '../common/params/params';
 
-import {ChromeComponent} from './component';
+import {SearchComponent} from './component';
 
-/**
- * One of the root application views. Every view should be a child of this view except for login
- * view.
- */
-export const chromeState: Ng2StateDeclaration = {
-  name: 'chrome',
-  url: `?${NAMESPACE_STATE_PARAM}`,
-  abstract: true,
-  data: {
-    requiresAuth: true,
-  },
+export const searchFutureState: Ng2StateDeclaration = {
+  name: 'search.**',
+  url: '/search',
+  loadChildren: './search/module#SearchModule'
+};
+
+export const searchState: Ng2StateDeclaration = {
+  parent: chromeState.name,
+  name: 'search',
+  url: `/search?${SEARCH_QUERY_STATE_PARAM}`,
   views: {
     '$default': {
-      component: ChromeComponent,
+      component: SearchComponent,
     },
+  },
+  data: {
+    kdBreadcrumbs: {
+      label: 'Search for xxx',
+    }
   },
 };

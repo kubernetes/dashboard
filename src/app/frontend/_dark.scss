@@ -16,8 +16,7 @@
 @import './theming';
 
 $kd-dark-palette-primary: (
-  // Used for primary toolbar button
-  50: #fff,
+  50: #fff, // Primary toolbar buttons.
   100: #fff,
   200: #d47f16,
   300: #9575cd,
@@ -49,12 +48,11 @@ $kd-dark-palette-primary: (
   )
 );
 
-// Palette with colors from success to error.
 $kd-dark-palette-warn: (
-  50: #00c752,
+  50: #00c752, // Chart green.
   100: #008000,
-  200: #ffcc80,
-  300: #ffb74d,
+  200: #326de6, // Chart blue.
+  300: #0d47a1,
   400: #ff0,
   500: #ffad20,
   600: #ff5722,

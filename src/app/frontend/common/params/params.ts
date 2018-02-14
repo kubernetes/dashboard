@@ -16,6 +16,16 @@ import {K8sError} from '@api/backendapi';
 import {KdError} from '@api/frontendapi';
 import {StateParams} from '@uirouter/core';
 
+/**
+ * Parameter name of the namespace selection param. Mostly for internal use.
+ */
+export const NAMESPACE_STATE_PARAM = 'namespace';
+
+/**
+ * Paramterer name of the search query.
+ */
+export const SEARCH_QUERY_STATE_PARAM = 'q';
+
 export class ChromeStateParams extends StateParams {
   constructor(public namespace: string) {
     super();
@@ -31,6 +41,12 @@ export class ResourceStateParams extends StateParams {
 export class NamespacedResourceStateParams extends ChromeStateParams {
   constructor(namespace: string, public resourceName: string) {
     super(namespace);
+  }
+}
+
+export class SearchStateParams extends StateParams {
+  constructor(public q: string) {
+    super();
   }
 }
 

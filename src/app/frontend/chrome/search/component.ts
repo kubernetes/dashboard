@@ -12,26 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {StateService, TransitionService} from '@uirouter/core';
+
+import {SearchStateParams} from '../../common/params/params';
+import {searchState} from '../../search/state';
 
 @Component({selector: 'kd-search', templateUrl: './template.html', styleUrls: ['./style.scss']})
-export class SearchComponent {
+export class SearchComponent implements OnInit {
   query = '';
 
-  constructor() {}
+  constructor(
+      private readonly state_: StateService, private readonly transition_: TransitionService) {}
 
-  clear(): void {
-    this.query = '';
+  ngOnInit(): void {
+    this.transition_.onStart({}, () => {
+      this.query = '';
+    });
   }
 
   submit(): void {
-    // TODO this.state_.go(stateName, {q: this.query});
+    this.state_.go(searchState.name, new SearchStateParams(this.query));  // TODO fix
   }
-
-  //  * TODO Register state change listener to empty search bar with every state change.
-  // $onInit() {
-  //   this.transitions_.onStart({}, () => {
-  //     this.clear();
-  //   });
-  // }
 }
