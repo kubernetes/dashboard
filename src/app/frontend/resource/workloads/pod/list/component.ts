@@ -25,6 +25,7 @@ import {podDetailState} from '../detail/state';
 @Component({selector: 'kd-pod-list', templateUrl: './template.html'})
 export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
   @Input() endpoint: string;
+  @Input() expandable = false;
 
   constructor(state: StateService, private readonly pod_: NamespacedResourceService<PodList>) {
     super(podDetailState.name, state);
