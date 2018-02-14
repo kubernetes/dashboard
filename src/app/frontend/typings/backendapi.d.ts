@@ -32,12 +32,6 @@ export interface AuthResponse {
   errors: K8sError[];
 }
 
-export interface GlobalSettings {
-  itemsPerPage: number;
-  clusterName: string;
-  autoRefreshTimeInterval: number;
-}
-
 export interface LocalSettings { isThemeDark: boolean; }
 
 export interface AppConfig { serverTime: number; }
@@ -661,389 +655,245 @@ export interface LogDetails {
   selection: LogSelection;
 }
 
-/**
-@typedef {{
+export interface LogInfo {
   podName: string;
   containerName: string;
   initContainerName: string;
   fromDate: string;
   toDate: string;
-  truncated: boolean
-}}
- */
-export interface LogInfo {}
+  truncated: boolean;
+}
 
-/**
-@typedef {{
+
+export interface LogLine {
   timestamp: string;
   content: string;
-}}
- */
-export interface LogLine {}
+}
 
-/**
-@typedef {{
+export interface LogSelection {
   logFilePosition: string;
   referencePoint: LogLineReference;
   offsetFrom: number;
-  offsetTo: number
-}}
- */
-export interface LogSelection {}
+  offsetTo: number;
+}
 
-/**
-@typedef {{
+export interface LogLineReference {
   timestamp: string;
   lineNum: number;
-}}
- */
-export interface LogLineReference {}
+}
 
-/**
-@typedef {{
+export interface AppNameValiditySpec {
   name: string;
-  namespace: string
-}}
- */
-export interface AppNameValiditySpec {}
+  namespace: string;
+}
 
-/**
-@typedef {{
-  valid: boolean
-}}
- */
-export interface AppNameValidity {}
+export interface AppNameValidity { valid: boolean; }
 
-/**
-@typedef {{
-  reference: string
-}}
- */
-export interface ImageReferenceValiditySpec {}
+export interface ImageReferenceValiditySpec { reference: string; }
 
-/**
-@typedef {{
+export interface ImageReferenceValidity {
   valid: boolean;
-  reason: string
-}}
- */
-export interface ImageReferenceValidity {}
+  reason: string;
+}
 
-/**
-@typedef {{
-   protocols: string[]
-}}
- */
-export interface Protocols {}
+export interface Protocols { protocols: string[]; }
 
-/**
-@typedef {{
-   valid: boolean
-}}
- */
-export interface ProtocolValidity {}
 
-/**
-@typedef {{
-   protocol: string;
-   isExternal: boolean
-}}
- */
-export interface ProtocolValiditySpec {}
+export interface ProtocolValidity { valid: boolean; }
 
-/**
- @typedef {{
-   name: string;
-   namespace: string;
-   data: string;
- }}
- */
-export interface SecretSpec {}
+export interface ProtocolValiditySpec {
+  protocol: string;
+  isExternal: boolean;
+}
 
-/**
-@typedef {{
+export interface SecretSpec {
+  name: string;
+  namespace: string;
+  data: string;
+}
+
+export interface Namespace {
   objectMeta: ObjectMeta;
   typeMeta: TypeMeta;
-  phase: string
-}}
- */
-export interface Namespace {}
+  phase: string;
+}
 
-/**
-@typedef {{
+export interface NamespaceList {
   listMeta: ListMeta;
-  namespaces: Array<Namespace>;
+  namespaces: Namespace[];
   errors: K8sError[];
-}}
- */
-export interface NamespaceList {}
+}
 
-/**
-@typedef {{
+export interface NamespaceDetail {
   objectMeta: ObjectMeta;
   typeMeta: TypeMeta;
   phase: string;
   eventList: EventList;
-  resourceLimits: Array<LimitRange>;
+  resourceLimits: LimitRange[];
   resourceQuotaList: ResourceQuotaDetailList;
   errors: K8sError[];
-}}
- */
-export interface NamespaceDetail {}
+}
 
-/**
-@typedef {{
+export interface SecretDetail {
   objectMeta: ObjectMeta;
   typeMeta: TypeMeta;
   type: string;
-  data: Object<string; string>;
-}}
- */
-export interface SecretDetail {}
+  data: StringMap;
+}
 
-/**
-@typedef {{
+export interface Secret {
   objectMeta: ObjectMeta;
   typeMeta: TypeMeta;
-  type: string
-}}
- */
-export interface Secret {}
+  type: string;
+}
 
-/**
-@typedef {{
+export interface SecretList {
   secrets: Array<Secret>;
   listMeta: ListMeta;
   errors: K8sError[];
-}}
- */
-export interface SecretList {}
+}
 
-/**
-@typedef {{
+export interface IngressDetail {
   objectMeta: ObjectMeta;
   typeMeta: TypeMeta;
-}}
- */
-export interface IngressDetail {}
+}
 
-/**
-@typedef {{
+export interface Ingress {
   objectMeta: ObjectMeta;
-  typeMeta: TypeMeta
-}}
- */
-export interface Ingress {}
+  typeMeta: TypeMeta;
+}
 
-/**
-@typedef {{
+export interface IngressList {
   listMeta: ListMeta;
   items: Array<Ingress>;
   errors: K8sError[];
-}}
- */
-export interface IngressList {}
+}
 
-
-
-/**
-@typedef {{
+export interface PersistentVolumeClaimDetail {
   objectMeta: ObjectMeta;
   typeMeta: TypeMeta;
   status: string;
   volume: string;
   capacity: string;
   storageClass: string;
-  accessModes: string[]
-}}
- */
-export interface PersistentVolumeClaimDetail {}
+  accessModes: string[];
+}
 
-/**
-@typedef {{
+export interface PersistentVolumeClaim {
   objectMeta: ObjectMeta;
   typeMeta: TypeMeta;
   Status: string;
-  Volume: string
-}}
- */
-export interface PersistentVolumeClaim {}
+  Volume: string;
+}
 
-/**
-@typedef {{
+export interface PersistentVolumeClaimList {
   listMeta: ListMeta;
   items: Array<PersistentVolumeClaim>;
   errors: K8sError[];
-}}
- */
-export interface PersistentVolumeClaimList {}
+}
 
-/**
-@typedef {{
+export interface LimitRange {
   resourceType: string;
   resourceName: string;
   min: string;
   max: string;
   default: string;
   defaultRequest: string;
-  maxLimitRequestRatio: string
-}}
- */
-export interface LimitRange {}
+  maxLimitRequestRatio: string;
+}
 
-/**
-@typedef {{
+export interface HorizontalPodAutoscalerDetail {
   objectMeta: ObjectMeta;
   typeMeta: TypeMeta;
   scaleTargetRef: ScaleTargetRef;
   minReplicas: number;
   maxReplicas: number;
   currentCPUUtilization: number;
-  targetCPUUtilization: ?number;
+  targetCPUUtilization?: number;
   currentReplicas: number;
   desiredReplicas: number;
-  lastScaleTime: string
-}}
- */
-export interface HorizontalPodAutoscalerDetail {}
+  lastScaleTime: string;
+}
 
-/**
-@typedef {{
+export interface ScaleTargetRef {
   kind: string;
   name: string;
-}}
- */
-export interface ScaleTargetRef {}
+}
 
-/**
-@typedef {{
+export interface HorizontalPodAutoscaler {
   objectMeta: ObjectMeta;
   typeMeta: TypeMeta;
   scaleTargetRef: ScaleTargetRef;
   minReplicas: number;
   maxReplicas: number;
   currentCPUUtilization: number;
-  targetCPUUtilization: ?number
-}}
- */
-export interface HorizontalPodAutoscaler {}
+  targetCPUUtilization?: number;
+}
 
-/**
-@typedef {{
+export interface HorizontalPodAutoscalerList {
   listMeta: ListMeta;
-  horizontalpodautoscalers: Array<HorizontalPodAutoscaler>
-}}
- */
-export interface HorizontalPodAutoscalerList {}
+  horizontalpodautoscalers: HorizontalPodAutoscaler[];
+}
 
-/**
-@typedef {{
+export interface StorageClass {
   objectMeta: ObjectMeta;
   typeMeta: TypeMeta;
   provisioner: string;
-  parameters: Array<Object<string;string>>
-}}
- */
-export interface StorageClass {}
+  parameters: StringMap[];
+}
 
-/**
-@typedef {{
+export interface StorageClassList {
   listMeta: ListMeta;
-  storageClasses: Array<StorageClass>;
+  storageClasses: StorageClass[];
   errors: K8sError[];
-}}
- */
-export interface StorageClassList {}
+}
 
-/**
-@typedef {{
+export interface Controller {
   objectMeta: ObjectMeta;
   typeMeta: TypeMeta;
   pods: PodInfo;
   containerImages: string[];
-  initContainerImages: string[]
-}}
- */
-export interface Controller {}
+  initContainerImages: string[];
+}
 
-/**
-@typedef {{
+export interface GlobalSettings {
   clusterName: string;
   itemsPerPage: number;
-  autoRefreshTimeInterval: number
-}}
- */
-export interface Settings {}
+  autoRefreshTimeInterval: number;
+}
 
-/**
-@typedef {{
-  name: string
-}}
- */
-export interface APIVersion {}
+export interface APIVersion { name: string; }
 
-/**
-@typedef {{
-  token: string
-}}
- */
-export interface CsrfToken {}
-
-/**
-@typedef {{
+export interface LoginSpec {
   username: string;
   password: string;
   token: string;
   kubeConfig: string;
-}}
- */
-export interface LoginSpec {}
+}
 
-/**
-@typedef {{
+export interface AuthResponse {
   jweToken: string;
   errors: K8sError[];
-}}
- */
-export interface AuthResponse {}
+}
 
-/**
-@typedef {{
+export interface LoginStatus {
   tokenPresent: boolean;
   headerPresent: boolean;
-  httpsMode: boolean
-}}
- */
-export interface LoginStatus {}
+  httpsMode: boolean;
+}
 
-/**
-@typedef {{
-  jweToken: string
-}}
- */
-export interface TokenRefreshSpec {}
+export interface TokenRefreshSpec { jweToken: string; }
 
-/** @typedef {string} */
-export interface AuthenticationMode {}
+export interface LoginModesResponse { modes: string[]; }
 
-/**
-@typedef {{
-   modes: Array<AuthenticationMode>
-}}
- */
-export interface LoginModesResponse {}
-
-/**
-@typedef {{
- TOKEN: AuthenticationMode;
- BASIC: AuthenticationMode;
- }}
- */
-export interface SupportedAuthenticationModes {}
+export interface SupportedAuthenticationModes {
+  // TODO TOKEN: AuthenticationMode;
+  // TODO BASIC: AuthenticationMode;
+}
 
 export interface SystemBanner {
   message: string;
-  severity: string
+  severity: string;
 }
 
 export interface ConfigMap {
