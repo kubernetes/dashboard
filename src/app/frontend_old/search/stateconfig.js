@@ -12,45 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as chromeStateName} from '../chrome/state';
-import {breadcrumbsConfig} from '../common/components/breadcrumbs/service';
-import {DataSelectQueryBuilder} from '../common/dataselect/builder';
-
-import {SearchController} from './controller';
-import {stateName, stateUrl} from './state';
-
-/**
- * @return {string}
- */
-function getBreadcrumbLabel() {
-  return `${i18n.MSG_BREADCRUMBS_SEARCH_LABEL} {{$stateParams.q}}`;
-}
-
-/**
- * @param {!ui.router.$stateProvider} $stateProvider
- * @ngInject
- */
-export default function stateConfig($stateProvider) {
-  $stateProvider.state(stateName, {
-    url: stateUrl,
-    parent: chromeStateName,
-    resolve: {
-      'search': resolveSearch,
-    },
-    data: {
-      [breadcrumbsConfig]: {
-        'label': getBreadcrumbLabel(),
-      },
-    },
-    views: {
-      '': {
-        controller: SearchController,
-        controllerAs: '$ctrl',
-        templateUrl: 'search/search.html',
-      },
-    },
-  });
-}
 
 /**
  * @param {!angular.$resource} kdSearchResource
@@ -72,8 +33,3 @@ export function resolveSearch(
 
   return kdSearchResource.get(query).$promise;
 }
-
-const i18n = {
-  /** @type {string} @desc Label 'Search' that appears as a breadcrumbs on the action bar. */
-  MSG_BREADCRUMBS_SEARCH_LABEL: goog.getMsg('Search for'),
-};

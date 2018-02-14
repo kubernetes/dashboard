@@ -15,6 +15,7 @@
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
 import {chromeState} from '../chrome/state';
+import {SEARCH_QUERY_STATE_PARAM} from '../common/params/params';
 
 import {SearchComponent} from './component';
 
@@ -27,7 +28,7 @@ export const searchFutureState: Ng2StateDeclaration = {
 export const searchState: Ng2StateDeclaration = {
   parent: chromeState.name,
   name: 'search',
-  url: '/search',
+  url: `/search?${SEARCH_QUERY_STATE_PARAM}`,
   views: {
     '$default': {
       component: SearchComponent,
@@ -35,7 +36,7 @@ export const searchState: Ng2StateDeclaration = {
   },
   data: {
     kdBreadcrumbs: {
-      label: 'Search results for xxx query',
+      label: 'Search for xxx',
     }
   },
 };

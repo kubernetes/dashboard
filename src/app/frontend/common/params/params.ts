@@ -21,6 +21,11 @@ import {StateParams} from '@uirouter/core';
  */
 export const NAMESPACE_STATE_PARAM = 'namespace';
 
+/**
+ * Paramterer name of the search query.
+ */
+export const SEARCH_QUERY_STATE_PARAM = 'q';
+
 export class ChromeStateParams extends StateParams {
   constructor(public namespace: string) {
     super();
