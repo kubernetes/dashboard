@@ -14,22 +14,24 @@
 
 import {Component, OnInit} from '@angular/core';
 import {StateService, TransitionService} from '@uirouter/core';
+
+import {SearchStateParams} from '../../common/params/params';
 import {searchState} from '../../search/state';
 
 @Component({selector: 'kd-search', templateUrl: './template.html', styleUrls: ['./style.scss']})
 export class SearchComponent implements OnInit {
-  private query_ = '';
+  query = '';
 
   constructor(
       private readonly state_: StateService, private readonly transition_: TransitionService) {}
 
   ngOnInit(): void {
     this.transition_.onStart({}, () => {
-      this.query_ = '';
+      this.query = '';
     });
   }
 
   submit(): void {
-    this.state_.go(searchState.name, {SEARCH_QUERY_STATE_PARAM: this.query_});  // TODO fix
+    this.state_.go(searchState.name, new SearchStateParams(this.query));  // TODO fix
   }
 }

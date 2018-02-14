@@ -44,6 +44,12 @@ export class NamespacedResourceStateParams extends ChromeStateParams {
   }
 }
 
+export class SearchStateParams extends StateParams {
+  constructor(public q: string) {
+    super();
+  }
+}
+
 export class ErrorStateParams extends ChromeStateParams {
   constructor(public error: KdError|K8sError, namespace: string) {
     super(namespace);
