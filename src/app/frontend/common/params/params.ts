@@ -16,9 +16,6 @@ import {K8sError} from '@api/backendapi';
 import {KdError} from '@api/frontendapi';
 import {StateParams} from '@uirouter/core';
 
-export const RESOURCE_DETAILS_STATE_PARAMS = '/:resourceName';
-export const NAMESPACED_RESOURCE_DETAILS_STATE_PARAMS = '/:namespace/:resourceName';
-
 export class ChromeStateParams extends StateParams {
   constructor(public namespace: string) {
     super();
@@ -41,4 +38,12 @@ export class ErrorStateParams extends ChromeStateParams {
   constructor(public error: KdError|K8sError, namespace: string) {
     super(namespace);
   }
+}
+
+export function addResourceStateParamsToUrl(url: string): string {
+  return `${url}/:resourceName`;
+}
+
+export function addNamespacedResourceStateParamsToUrl(url: string): string {
+  return `${url}/:namespace/:resourceName`;
 }

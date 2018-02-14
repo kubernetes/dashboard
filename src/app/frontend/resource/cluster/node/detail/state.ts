@@ -14,14 +14,14 @@
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
-import {RESOURCE_DETAILS_STATE_PARAMS} from '../../../../common/params/params';
+import {addResourceStateParamsToUrl} from '../../../../common/params/params';
 import {stateName, stateUrl} from '../state';
 
 import {NodeDetailComponent} from './component';
 
 export const nodeDetailState: Ng2StateDeclaration = {
   name: `${stateName}.detail`,
-  url: `${stateUrl}${RESOURCE_DETAILS_STATE_PARAMS}`,
+  url: addResourceStateParamsToUrl(stateUrl),
   component: NodeDetailComponent,
   data: {
     kdBreadcrumbs: {
