@@ -32,9 +32,7 @@
 }
 
 .kd-card-toggle {
-  @include kd-icon-size;
-
-  margin-right: 2 * $baseline-grid;
+  margin-right: $baseline-grid;
 }
 
 .kd-card-content {

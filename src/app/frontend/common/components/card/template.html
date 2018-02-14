@@ -20,16 +20,16 @@ limitations under the License.
          fxFlex>
       <ng-content select="[title]"></ng-content>
     </div>
-    <div fxLayoutAlign="center center">
-      <mat-icon class="kd-card-toggle"
-                (click)="minimalized = !minimalized">
-        <ng-container *ngIf="minimalized">arrow_drop_down</ng-container>
-        <ng-container *ngIf="!minimalized">arrow_drop_up</ng-container>
-      </mat-icon>
-    </div>
+    <button class="kd-card-toggle"
+            mat-icon-button
+            *ngIf="expandable"
+            (click)="expanded = !expanded">
+      <mat-icon *ngIf="expanded">arrow_drop_up</mat-icon>
+      <mat-icon *ngIf="!expanded">arrow_drop_down</mat-icon>
+    </button>
   </mat-card-title>
 
-  <ng-container *ngIf="!minimalized">
+  <ng-container *ngIf="isExpanded()">
     <mat-divider></mat-divider>
 
     <mat-card-content class="kd-card-content"

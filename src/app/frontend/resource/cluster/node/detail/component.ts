@@ -18,7 +18,6 @@ import {Condition, NodeAddress, NodeDetail, NodeTaint} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Subscription} from 'rxjs/Subscription';
 import {EndpointManager} from '../../../../common/services/resource/endpoint';
-
 import {ResourceService} from '../../../../common/services/resource/resource';
 
 @Component({
@@ -50,7 +49,7 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
     this.nodeSubscription_.unsubscribe();
   }
 
-  getAdresses(): string[] {
+  getAddresses(): string[] {
     return this.node.addresses.map((address: NodeAddress) => `${address.type}: ${address.address}`);
   }
 

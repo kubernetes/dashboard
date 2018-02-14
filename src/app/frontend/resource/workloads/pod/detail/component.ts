@@ -16,6 +16,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {PodDetail} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Subscription} from 'rxjs/Subscription';
+import {EndpointManager} from '../../../../common/services/resource/endpoint';
 
 import {NamespacedResourceService, ResourceService} from '../../../../common/services/resource/resource';
 
@@ -35,11 +36,12 @@ export class PodDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.podName_ = this.state_.params.resourceName;
-    this.podSubscription_ =
-        this.pod_.get('', this.podName_).startWith({}).subscribe((d: PodDetail) => {
-          this.pod = d;
-          this.isInitialized = true;
-        });
+    this.podSubscription_ = this.pod_.get(EndpointManager.pod.detail(), this.podName_)
+                                .startWith({})
+                                .subscribe((d: PodDetail) => {
+                                  this.pod = d;
+                                  this.isInitialized = true;
+                                });
   }
 
   ngOnDestroy(): void {

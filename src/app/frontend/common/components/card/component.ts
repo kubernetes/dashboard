@@ -23,5 +23,10 @@ export class CardComponent {
   @Input() initialized = true;
   @Input() role: string;
   @Input() withFooter = false;
-  minimalized = false;
+  @Input() expandable = false;
+  expanded = true;
+
+  isExpanded(): boolean {
+    return !this.expandable || this.expanded;
+  }
 }

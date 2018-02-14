@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-card [initialized]="isInitialized">
+<kd-card [initialized]="isInitialized"
+         [expandable]="true">
   <div title>Metadata</div>
   <div content
        *ngIf="isInitialized">
@@ -22,7 +23,8 @@ limitations under the License.
   </div>
 </kd-card>
 
-<kd-card [initialized]="isInitialized">
+<kd-card [initialized]="isInitialized"
+         [expandable]="true">
   <div title>Node information</div>
   <div content
        *ngIf="isInitialized"
@@ -48,7 +50,7 @@ limitations under the License.
                  fxFlex="100">
       <div key>Addresses</div>
       <div value>
-        <kd-chips [map]="getAdresses()"></kd-chips>
+        <kd-chips [map]="getAddresses()"></kd-chips>
       </div>
     </kd-property>
     <kd-property *ngIf="node.taints"
@@ -61,7 +63,8 @@ limitations under the License.
   </div>
 </kd-card>
 
-<kd-card [initialized]="isInitialized">
+<kd-card [initialized]="isInitialized"
+         [expandable]="true">
   <div title>System information</div>
   <div content
        *ngIf="isInitialized"
@@ -110,7 +113,8 @@ limitations under the License.
   </div>
 </kd-card>
 
-<kd-card [initialized]="isInitialized">
+<kd-card [initialized]="isInitialized"
+         [expandable]="true">
   <div title>Allocation</div>
   <div content
        *ngIf="isInitialized">
@@ -202,7 +206,8 @@ limitations under the License.
 </kd-card>
 
 <kd-card [initialized]="isInitialized"
-         role="table">
+         role="table"
+         [expandable]="true">
   <div title>Conditions</div>
   <div content>
     <mat-table [dataSource]="conditionsData">

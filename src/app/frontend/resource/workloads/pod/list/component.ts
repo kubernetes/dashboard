@@ -28,7 +28,7 @@ export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
 
   constructor(
       state: StateService, private readonly podList: NamespacedResourceListService<PodList>) {
-    super('pod', state);
+    super(podDetailState.name, state);
   }
 
   getResourceObservable(params?: HttpParams): Observable<PodList> {
