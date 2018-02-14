@@ -16,23 +16,19 @@ limitations under the License.
 
 <div fxFlex></div>
 <div class="kd-search"
-     fxFlex="66">
+     fxFlex="60">
   <form (submit)="submit()"
         fxFlex
         fxLayout="row"
         fxLayoutAlign=" center">
-    <mat-icon type="submit">search</mat-icon>
+    <mat-icon type="submit"
+              class="kd-search-icon">search</mat-icon>
     <input type="search"
            name="search"
            placeholder="Search"
            [(ngModel)]="query"
            required
            fxFlex>
-    <mat-icon class="kd-search-icon"
-              (ngClick)="clear()"
-              *ngIf="query">
-      close
-    </mat-icon>
   </form>
 </div>
 <div fxFlex></div>
