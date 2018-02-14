@@ -49,12 +49,11 @@ $kd-light-palette-primary: (
   )
 );
 
-// Palette with colors from success to error.
 $kd-light-palette-warn: (
-  50: #00c752,
+  50: #00c752, // Chart green.
   100: #008000,
-  200: #ffcc80,
-  300: #ffb74d,
+  200: #326de6, // Chart blue.
+  300: #0d47a1,
   400: #ff0,
   500: #ffad20,
   600: #ff5722,
