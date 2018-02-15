@@ -18,7 +18,7 @@ import {UIRouterModule} from '@uirouter/angular';
 import {SharedModule} from '../../../shared.module';
 import {PersistentVolumeClaimListComponent} from './list/component';
 import {persistentVolumeClaimListState} from './list/state';
-import {persistentVolumeClaimFutureState, persistentVolumeClaimState} from './state';
+import {persistentVolumeClaimState} from './state';
 
 @NgModule({
   imports: [

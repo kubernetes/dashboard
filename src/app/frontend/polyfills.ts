@@ -57,7 +57,10 @@
 // import 'core-js/es6/reflect';
 
 import 'hammerjs';
-
+/**
+ * RxJS is required to support additional Observable methods such as map or switchMap.
+ */
+import 'rxjs/Rx';
 /**
  * Required to support Web Animations `@angular/platform-browser/animations`.
  * Needed for: All but Chrome, Firefox and Opera.
@@ -65,13 +68,7 @@ import 'hammerjs';
  * http://caniuse.com/#feat=web-animation
  **/
 import 'web-animations-js';
-
 /**
  * Zone JS is required by default for Angular itself.
  */
 import 'zone.js/dist/zone';
-
-/**
- * RxJS is required to support additional Observable methods such as map or switchMap.
- */
-import 'rxjs/Rx';

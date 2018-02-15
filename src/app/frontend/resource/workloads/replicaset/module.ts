@@ -16,7 +16,7 @@ import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
 import {ComponentsModule} from '../../../common/components/module';
 import {ResourceModule} from '../../../common/services/resource/module';
-import {POD_ENDPOINT, REPLICA_SET_ENDPOINT, RESOURCE_ENDPOINT_DI_TOKEN} from '../../../index.config';
+import {REPLICA_SET_ENDPOINT, RESOURCE_ENDPOINT_DI_TOKEN} from '../../../index.config';
 
 import {SharedModule} from '../../../shared.module';
 import {ReplicaSetListComponent} from './list/component';

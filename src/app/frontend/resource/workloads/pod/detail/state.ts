@@ -15,8 +15,7 @@
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
 import {addNamespacedResourceStateParamsToUrl} from '../../../../common/params/params';
-import {stateUrl} from '../state';
-import {stateName} from '../state';
+import {stateName, stateUrl} from '../state';
 
 import {PodDetailComponent} from './component';
 

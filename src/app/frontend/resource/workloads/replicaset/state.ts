@@ -16,8 +16,6 @@ import {Ng2StateDeclaration} from '@uirouter/angular';
 import {chromeState} from '../../../chrome/state';
 import {ProxyComponent} from '../../../common/components/proxy/component';
 
-import {ReplicaSetListComponent} from './list/component';
-
 export const stateName = 'replicaset';
 export const stateUrl = '/replicaset';
 

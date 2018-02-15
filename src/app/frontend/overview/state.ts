@@ -13,11 +13,6 @@
 // limitations under the License.
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
-import {LazyLoadResult} from '@uirouter/core';
-
-import {ActionbarComponent} from '../about/actionbar/component';
-import {AboutComponent} from '../about/component';
-import {chromeState} from '../chrome/state';
 
 import {OverviewComponent} from './component';
 

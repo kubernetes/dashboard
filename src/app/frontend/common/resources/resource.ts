@@ -13,10 +13,7 @@
 // limitations under the License.
 
 import {HttpClient} from '@angular/common/http';
-import {Inject} from '@angular/core';
 import {StateService} from '@uirouter/core';
-
-import {RESOURCE_ENDPOINT_DI_TOKEN, ResourceEndpoint} from '../../index.config';
 
 export abstract class ResourceBase<T> {
   constructor(protected readonly http_: HttpClient, private readonly state_: StateService) {}

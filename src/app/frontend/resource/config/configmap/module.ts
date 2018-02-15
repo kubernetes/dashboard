@@ -18,7 +18,7 @@ import {UIRouterModule} from '@uirouter/angular';
 import {SharedModule} from '../../../shared.module';
 import {ConfigMapListComponent} from './list/component';
 import {configMapListState} from './list/state';
-import {configMapFutureState, configMapState} from './state';
+import {configMapState} from './state';
 
 @NgModule({
   imports: [

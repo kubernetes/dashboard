@@ -14,7 +14,7 @@
 
 import {Component, Input, OnInit} from '@angular/core';
 import {Breadcrumb} from '@api/frontendapi';
-import {StateDeclaration, StateObject, StateService, TransitionService} from '@uirouter/core';
+import {StateDeclaration, StateObject, StateService, TransitionService} from '@uirouter/angular';
 import {BreadcrumbsService} from '../../services/global/breadcrumbs';
 
 /**
