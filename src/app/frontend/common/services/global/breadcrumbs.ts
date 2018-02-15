@@ -14,7 +14,7 @@
 
 import {Injectable} from '@angular/core';
 import {BreadcrumbConfig} from '@api/frontendapi';
-import {StateDeclaration, StateObject, StateService} from '@uirouter/angular';
+import {StateDeclaration, StateObject, StateService} from '@uirouter/core';
 
 /** Breadcrumbs config string used on state config. **/
 const breadcrumbsConfig = 'kdBreadcrumbs';

@@ -12,7 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HookMatchCriteria, HookMatchCriterion, UIRouter} from '@uirouter/angular';
+import {UIRouter} from '@uirouter/angular';
+import {HookMatchCriteria, HookMatchCriterion} from '@uirouter/core';
 
 import {AuthService} from './common/services/global/authentication';
 import {TitleService} from './common/services/global/title';
