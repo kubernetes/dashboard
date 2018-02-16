@@ -14,7 +14,7 @@
 
 import {DataSource} from '@angular/cdk/collections';
 import {HttpParams} from '@angular/common/http';
-import {OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {ResourceList} from '@api/backendapi';
 import {Status} from '@api/frontendapi';
@@ -24,8 +24,9 @@ import {merge} from 'rxjs/observable/merge';
 import {startWith, switchMap} from 'rxjs/operators';
 import {Subscription} from 'rxjs/Subscription';
 
+import {searchState} from '../../search/state';
 import {CardListFilterComponent} from '../components/table/filter/component';
-import {NamespacedResourceStateParams, ResourceStateParams} from '../params/params';
+import {NamespacedResourceStateParams, ResourceStateParams, SEARCH_QUERY_STATE_PARAM} from '../params/params';
 import {GlobalServicesModule} from '../services/global/module';
 import {SettingsService} from '../services/global/settings';
 
@@ -35,6 +36,7 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
   private readonly data_ = new MatTableDataSource<R>();
   private dataSubscription_: Subscription;
   private readonly settingsService_: SettingsService;
+  @Input() hideIfEmpty = false;
 
   // Data select properties
   @ViewChild(MatSort) sort: MatSort;
@@ -127,6 +129,9 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
         .set('page', `${this.paginator.pageIndex + 1}`);
   }
 
+  /**
+   * Handles local filtering and search.
+   */
   private filter_(params?: HttpParams): HttpParams {
     let result = new HttpParams();
     if (params) {
@@ -134,7 +139,21 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
     }
 
     // TODO: support filtering by different columns
-    const filterByQuery = this.filter.query ? `name,${this.filter.query}` : '';
+    let filterByQuery = this.filter.query ? `name,${this.filter.query}` : '';
+
+    // Handle search.
+    // TODO Ensure it works with namespaces.
+    // TODO Rework to put only one call to backend? Or is it better like this (no additional endp.)?
+    if (this.state_.current.name === searchState.name) {
+      const query = this.state_.params[SEARCH_QUERY_STATE_PARAM];
+      if (query) {
+        if (filterByQuery) {
+          filterByQuery += ','
+        }
+        filterByQuery += `name,${query}`
+      }
+    }
+
     return result.set('filterBy', filterByQuery);
   }
 
@@ -165,6 +184,10 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
       default:
         return sortByColumnName;
     }
+  }
+
+  isHidden(): boolean {
+    return this.hideIfEmpty && !this.data_.data.length;
   }
 
   abstract map(value: T): R[];
