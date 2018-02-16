@@ -12,52 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HttpParams} from '@angular/common/http';
-import {Component, Input} from '@angular/core';
-import {Node, NodeList} from '@api/backendapi';
-import {StateService} from '@uirouter/core';
-import {Observable} from 'rxjs/Observable';
-
-import {ResourceListWithStatuses} from '../../../../common/resources/list';
-import {ResourceListService} from '../../../../common/services/resource/resourcelist';
-import {nodeDetailState} from '../detail/state';
+import {Component} from '@angular/core';
 
 @Component({
-  selector: 'kd-node-list',
-  templateUrl: './template.html',
+  selector: 'kd-node-list-state',
+  template: '<kd-node-list></kd-node-list>',
 })
-export class NodeListComponent extends ResourceListWithStatuses<NodeList, Node> {
-  @Input() endpoint: string;
-
-  constructor(
-      state: StateService, private readonly nodeListService_: ResourceListService<NodeList>) {
-    super(nodeDetailState.name, state);
-
-    // Override default warning icon.
-    this.setWarningIcon('help');
-  }
-
-  getResourceObservable(params?: HttpParams): Observable<NodeList> {
-    return this.nodeListService_.get(this.endpoint, params);
-  }
-
-  map(nodeList: NodeList): Node[] {
-    return nodeList.nodes;
-  }
-
-  isInErrorState(resource: Node): boolean {
-    return resource.ready === 'False';
-  }
-
-  isInWarningState(resource: Node): boolean {
-    return resource.ready === 'Unknown';
-  }
-
-  isInSuccessState(resource: Node): boolean {
-    return resource.ready === 'True';
-  }
-
-  getDisplayColumns(): string[] {
-    return ['statusicon', 'name', 'labels', 'ready', 'cpureq', 'cpulim', 'memreq', 'memlim', 'age'];
-  }
-}
+export class NodeListComponent {}

@@ -14,7 +14,8 @@
 
 import {Component} from '@angular/core';
 
-@Component({selector: 'kd-cluster', templateUrl: './template.html', styleUrls: ['./style.scss']})
-export class ClusterComponent {
-  constructor() {}
-}
+@Component({
+  selector: 'kd-cluster',
+  templateUrl: './template.html',
+})
+export class ClusterComponent {}

@@ -24,11 +24,15 @@ import {ChipsComponent} from './chips/component';
 import {ObjectMetaComponent} from './objectmeta/component';
 import {PropertyComponent} from './property/component';
 import {ProxyComponent} from './proxy/component';
+import {NodeListComponent} from './resourcelist/node/component';
+import {PodListComponent} from './resourcelist/pod/component';
 import {CardListFilterComponent} from './table/filter/component';
 import {LoadingSpinner} from './table/spinner/component';
 
 @NgModule({
-  imports: [SharedModule],
+  imports: [
+    SharedModule,
+  ],
   declarations: [
     AllocationChartComponent,
     CardComponent,
@@ -40,6 +44,8 @@ import {LoadingSpinner} from './table/spinner/component';
     LoadingSpinner,
     CardListFilterComponent,
     ProxyComponent,
+    PodListComponent,
+    NodeListComponent,
   ],
   exports: [
     AllocationChartComponent,
@@ -52,6 +58,8 @@ import {LoadingSpinner} from './table/spinner/component';
     LoadingSpinner,
     CardListFilterComponent,
     ProxyComponent,
+    PodListComponent,
+    NodeListComponent,
   ],
 })
 export class ComponentsModule {}

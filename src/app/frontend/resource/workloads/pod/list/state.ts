@@ -13,8 +13,6 @@
 // limitations under the License.
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
-import {ProviderLike, StateService} from '@uirouter/core';
-import {EndpointManager} from '../../../../common/services/resource/endpoint';
 import {workloadsState} from '../../state';
 import {stateName, stateUrl} from '../state';
 import {PodListComponent} from './component';
@@ -29,10 +27,4 @@ export const podListState: Ng2StateDeclaration = {
       parent: workloadsState.name,
     },
   },
-  resolve: [
-    {
-      token: 'endpoint',
-      resolveFn: EndpointManager.pod.list,
-    },
-  ],
 };

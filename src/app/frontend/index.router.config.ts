@@ -57,4 +57,7 @@ export function configureRouter(router: UIRouter): void {
     const authService = transition.injector().get(AuthService);
     return authService.refreshToken();
   });
+
+  // TODO Remove.
+  router.trace.enable();
 }

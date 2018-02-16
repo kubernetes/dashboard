@@ -30,10 +30,4 @@ export const nodeListState: Ng2StateDeclaration = {
       parent: clusterState.name,
     },
   },
-  resolve: [
-    {
-      token: 'endpoint',
-      resolveFn: EndpointManager.node.list,
-    },
-  ],
 };

@@ -14,7 +14,10 @@
 
 import {Component} from '@angular/core';
 
-@Component({selector: 'kd-workloads', templateUrl: './template.html', styleUrls: ['./style.scss']})
+@Component({
+  selector: 'kd-workloads',
+  templateUrl: './template.html',
+})
 export class WorkloadsComponent {
   constructor() {}
 }
