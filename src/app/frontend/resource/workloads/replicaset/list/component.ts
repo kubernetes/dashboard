@@ -12,45 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HttpParams} from '@angular/common/http';
 import {Component} from '@angular/core';
-import {ReplicaSet, ReplicaSetList} from '@api/backendapi';
-import {StateService} from '@uirouter/core';
-import {Observable} from 'rxjs/Observable';
-import {ResourceListWithStatuses} from '../../../../common/resources/list';
-import {EndpointManager} from '../../../../common/services/resource/endpoint';
-import {NamespacedResourceService} from '../../../../common/services/resource/resource';
 
-@Component(
-    {selector: 'kd-replica-set-list', templateUrl: './template.html', styleUrls: ['./style.scss']})
-export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSetList, ReplicaSet> {
-  constructor(
-      state: StateService,
-      private readonly replicaSet_: NamespacedResourceService<ReplicaSetList>) {
-    super('pod', state);
-  }
-
-  getResourceObservable(params?: HttpParams): Observable<ReplicaSetList> {
-    return this.replicaSet_.get(EndpointManager.replicaSet.list(), undefined, params);
-  }
-
-  map(rsList: ReplicaSetList): ReplicaSet[] {
-    return rsList.replicaSets;
-  }
-
-  isInErrorState(resource: ReplicaSet): boolean {
-    return resource.pods.warnings.length > 0;
-  }
-
-  isInWarningState(resource: ReplicaSet): boolean {
-    return !this.isInErrorState(resource) && resource.pods.pending > 0;
-  }
-
-  isInSuccessState(resource: ReplicaSet): boolean {
-    return !this.isInErrorState(resource) && !this.isInWarningState(resource);
-  }
-
-  getDisplayColumns(): string[] {
-    return ['statusicon', 'name', 'labels', 'pods', 'age', 'images'];
-  }
-}
+@Component({
+  selector: 'kd-replica-set-list-state',
+  template: '<kd-replica-set-list></kd-replica-set-list>',
+})
+export class ReplicaSetListComponent {}

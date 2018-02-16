@@ -26,6 +26,7 @@ import {PropertyComponent} from './property/component';
 import {ProxyComponent} from './proxy/component';
 import {NodeListComponent} from './resourcelist/node/component';
 import {PodListComponent} from './resourcelist/pod/component';
+import {ReplicaSetListComponent} from './resourcelist/replicaset/component';
 import {CardListFilterComponent} from './table/filter/component';
 import {LoadingSpinner} from './table/spinner/component';
 
@@ -46,6 +47,7 @@ import {LoadingSpinner} from './table/spinner/component';
     ProxyComponent,
     PodListComponent,
     NodeListComponent,
+    ReplicaSetListComponent,
   ],
   exports: [
     AllocationChartComponent,
@@ -60,6 +62,7 @@ import {LoadingSpinner} from './table/spinner/component';
     ProxyComponent,
     PodListComponent,
     NodeListComponent,
+    ReplicaSetListComponent,
   ],
 })
 export class ComponentsModule {}
