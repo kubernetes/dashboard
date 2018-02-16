@@ -19,16 +19,4 @@ import {StateService} from '@uirouter/core';
 import {SEARCH_QUERY_STATE_PARAM} from '../common/params/params';
 
 @Component({selector: 'kd-search', templateUrl: './template.html'})
-export class SearchComponent implements OnInit {
-  search: Search;
-  test: string;
-
-  constructor(private readonly state_: StateService) {}
-
-  ngOnInit(): void {
-    this.test = this.state_.params[SEARCH_QUERY_STATE_PARAM];
-
-    // TODO add resource modules with additional filtering set to the same value as here
-    // TODO it should allow to make search + filtering, sorting and pagination work
-  }
-}
+export class SearchComponent {}

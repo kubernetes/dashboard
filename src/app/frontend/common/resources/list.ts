@@ -148,9 +148,9 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
       const query = this.state_.params[SEARCH_QUERY_STATE_PARAM];
       if (query) {
         if (filterByQuery) {
-          filterByQuery += ','
+          filterByQuery += ',';
         }
-        filterByQuery += `name,${query}`
+        filterByQuery += `name,${query}`;
       }
     }
 

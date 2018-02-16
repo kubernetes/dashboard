@@ -18,6 +18,4 @@ import {Component} from '@angular/core';
   selector: 'kd-workloads',
   templateUrl: './template.html',
 })
-export class WorkloadsComponent {
-  constructor() {}
-}
+export class WorkloadsComponent {}
