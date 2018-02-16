@@ -15,7 +15,10 @@
 import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
 
+import {ComponentsModule} from '../../../common/components/module';
+import {ResourceModule} from '../../../common/services/resource/module';
 import {SharedModule} from '../../../shared.module';
+
 import {NamespaceListComponent} from './list/component';
 import {namespaceListState} from './list/state';
 import {namespaceState} from './state';
@@ -23,6 +26,8 @@ import {namespaceState} from './state';
 @NgModule({
   imports: [
     SharedModule,
+    ComponentsModule,
+    ResourceModule,
     UIRouterModule.forChild({states: [namespaceState, namespaceListState]}),
   ],
   declarations: [NamespaceListComponent],

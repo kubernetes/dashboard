@@ -51,4 +51,14 @@ export class EndpointManager {
       return `${baseHref}/node/${nodeName}/pod`;
     }
   };
+
+  static namespace = class {
+    static list(): string {
+      return `${baseHref}/namespace`;
+    }
+
+    static detail(): string {
+      return `${baseHref}/namespace/:name`;
+    }
+  };
 }

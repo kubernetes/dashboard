@@ -24,6 +24,7 @@ import {ChipsComponent} from './chips/component';
 import {ObjectMetaComponent} from './objectmeta/component';
 import {PropertyComponent} from './property/component';
 import {ProxyComponent} from './proxy/component';
+import {NamespaceListComponent} from './resourcelist/namespace/component';
 import {NodeListComponent} from './resourcelist/node/component';
 import {PodListComponent} from './resourcelist/pod/component';
 import {ReplicaSetListComponent} from './resourcelist/replicaset/component';
@@ -48,6 +49,7 @@ import {LoadingSpinner} from './table/spinner/component';
     PodListComponent,
     NodeListComponent,
     ReplicaSetListComponent,
+    NamespaceListComponent,
   ],
   exports: [
     AllocationChartComponent,
@@ -63,6 +65,7 @@ import {LoadingSpinner} from './table/spinner/component';
     PodListComponent,
     NodeListComponent,
     ReplicaSetListComponent,
+    NamespaceListComponent,
   ],
 })
 export class ComponentsModule {}

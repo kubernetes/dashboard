@@ -14,8 +14,8 @@
 
 import {Component} from '@angular/core';
 
-@Component(
-    {selector: 'kd-namespace-list', templateUrl: './template.html', styleUrls: ['./style.scss']})
-export class NamespaceListComponent {
-  constructor() {}
-}
+@Component({
+  selector: 'kd-namespace-list-view',
+  templateUrl: './template.html',
+})
+export class NamespaceListComponent {}
