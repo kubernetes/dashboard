@@ -36,7 +36,7 @@ export const searchState: Ng2StateDeclaration = {
   },
   data: {
     kdBreadcrumbs: {
-      label: 'Search for xxx',
+      label: 'Search',
     }
   },
 };

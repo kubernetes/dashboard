@@ -48,7 +48,7 @@ export class NamespaceListComponent extends ResourceListWithStatuses<NamespaceLi
   // Not used as namespace can only be in two states according to:
   // https://kubernetes.io/docs/tasks/administer-cluster/namespaces/
   isInWarningState(resource: Namespace): boolean {
-    return false;
+    return resource.phase === undefined;
   }
 
   isInSuccessState(resource: Namespace): boolean {

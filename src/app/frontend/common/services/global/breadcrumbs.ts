@@ -15,6 +15,8 @@
 import {Injectable} from '@angular/core';
 import {BreadcrumbConfig} from '@api/frontendapi';
 import {StateDeclaration, StateObject, StateService} from '@uirouter/core';
+import {searchState} from '../../../search/state';
+import {SEARCH_QUERY_STATE_PARAM} from '../../params/params';
 
 /** Breadcrumbs config string used on state config. **/
 const breadcrumbsConfig = 'kdBreadcrumbs';
@@ -45,9 +47,15 @@ export class BreadcrumbsService {
     const conf = this.getBreadcrumbConfig(state);
     const stateParams = this.state_.params;
 
-    // When conf is undefined and label is undefined or empty then fallback to state name
+    // When conf is undefined and label is undefined or empty then fallback to state name.
     if (!conf || !conf.label) {
       return state.name;
+    }
+
+    // When state search is active use specific logic to display custom breadcrumb.
+    if (state.name === searchState.name) {
+      const query = stateParams[SEARCH_QUERY_STATE_PARAM];
+      return `Search for "${query}"`;
     }
 
     // If there is a state parameter with with name equal to conf.label then return its value,
