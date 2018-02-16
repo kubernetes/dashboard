@@ -30,8 +30,7 @@
 }
 
 .kd-login-input {
-  display: block;
-  padding: (2 * $baseline-grid) $baseline-grid 0 (3.5 * $baseline-grid);
+  padding: 0 $baseline-grid 0 (3.5 * $baseline-grid);
 }
 
 .kd-login-button {
@@ -40,9 +39,4 @@
 
 :host {
   height: 100vh;
-}
-
-:host ::ng-deep .kd-card-title {
-  border-top-left-radius: .25 * $baseline-grid;
-  border-top-right-radius: .25 * $baseline-grid;
 }

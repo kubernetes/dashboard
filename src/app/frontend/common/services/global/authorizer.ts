@@ -16,7 +16,7 @@ import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {CanIResponse} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
-import {KdError, KNOWN_ERRORS} from '../../errors/errors';
+import {KNOWN_ERRORS} from '../../errors/errors';
 
 @Injectable()
 export class AuthorizerService {

@@ -28,6 +28,16 @@ export class EndpointManager {
     }
   };
 
+  static replicaSet = class {
+    static list(): string {
+      return `${baseHref}/replicaset/:namespace`;
+    }
+
+    static detail(): string {
+      return `${baseHref}/replicaset/:namespace/:name`;
+    }
+  };
+
   static node = class {
     static list(): string {
       return `${baseHref}/node`;

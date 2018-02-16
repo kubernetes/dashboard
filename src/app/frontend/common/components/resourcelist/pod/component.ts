@@ -21,19 +21,18 @@ import {Pod, PodList} from 'typings/backendapi';
 import {podDetailState} from '../../../../resource/workloads/pod/detail/state';
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {EndpointManager} from '../../../services/resource/endpoint';
-import {NamespacedResourceListService} from '../../../services/resource/resourcelist';
+import {NamespacedResourceService} from '../../../services/resource/resource';
 
 @Component({selector: 'kd-pod-list', templateUrl: './template.html'})
 export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
   @Input() endpoint = EndpointManager.pod.list();
 
-  constructor(
-      state: StateService, private readonly podList: NamespacedResourceListService<PodList>) {
+  constructor(state: StateService, private readonly podList: NamespacedResourceService<PodList>) {
     super(podDetailState.name, state);
   }
 
   getResourceObservable(params?: HttpParams): Observable<PodList> {
-    return this.podList.get(this.endpoint, params);
+    return this.podList.get(this.endpoint, undefined, params);
   }
 
   map(podList: PodList): Pod[] {

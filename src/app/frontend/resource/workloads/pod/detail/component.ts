@@ -18,7 +18,7 @@ import {StateService} from '@uirouter/core';
 import {Subscription} from 'rxjs/Subscription';
 import {EndpointManager} from '../../../../common/services/resource/endpoint';
 
-import {NamespacedResourceService, ResourceService} from '../../../../common/services/resource/resource';
+import {NamespacedResourceService} from '../../../../common/services/resource/resource';
 
 @Component({
   selector: 'kd-pod-detail',

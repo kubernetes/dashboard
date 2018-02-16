@@ -21,7 +21,7 @@ import {Observable} from 'rxjs/Observable';
 import {nodeDetailState} from '../../../../resource/cluster/node/detail/state';
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {EndpointManager} from '../../../services/resource/endpoint';
-import {ResourceListService} from '../../../services/resource/resourcelist';
+import {ResourceService} from '../../../services/resource/resource';
 
 @Component({
   selector: 'kd-node-list',
@@ -30,14 +30,13 @@ import {ResourceListService} from '../../../services/resource/resourcelist';
 export class NodeListComponent extends ResourceListWithStatuses<NodeList, Node> {
   @Input() endpoint = EndpointManager.node.list();
 
-  constructor(
-      state: StateService, private readonly nodeListService_: ResourceListService<NodeList>) {
+  constructor(state: StateService, private readonly node_: ResourceService<NodeList>) {
     super(nodeDetailState.name, state);
     this.setWarningIcon('help');
   }
 
   getResourceObservable(params?: HttpParams): Observable<NodeList> {
-    return this.nodeListService_.get(this.endpoint, params);
+    return this.node_.get(this.endpoint, undefined, params);
   }
 
   map(nodeList: NodeList): Node[] {

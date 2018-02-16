@@ -31,12 +31,14 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
   conditionsData = new MatTableDataSource<Condition>();
   node: NodeDetail;
   isInitialized = false;
+  podListEndpoint: string;
 
   constructor(
       private readonly node_: ResourceService<NodeDetail>, private readonly state_: StateService) {}
 
   ngOnInit(): void {
     this.nodeName_ = this.state_.params.resourceName;
+    this.podListEndpoint = EndpointManager.node.pods(this.nodeName_);
     this.nodeSubscription_ =
         this.node_.get(EndpointManager.node.detail(), this.nodeName_).subscribe((d: NodeDetail) => {
           this.node = d;
@@ -58,10 +60,6 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
       return taint.value ? `${taint.key}=${taint.value}:${taint.effect}` :
                            `${taint.key}=${taint.effect}`;
     });
-  }
-
-  getPodListEndpoint(): string {
-    return EndpointManager.node.pods(this.nodeName_);
   }
 
   getConditionsColumns(): string[] {

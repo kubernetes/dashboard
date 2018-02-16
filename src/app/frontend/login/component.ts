@@ -18,13 +18,14 @@ import {AuthService} from '../common/services/global/authentication';
 import {overviewState} from '../overview/state';
 
 enum LoginModes {
-  Token = 'Token',
+  Kubeconfig = 'Kubeconfig',
   Basic = 'Basic',
-  Kubeconfig = 'Kubeconfig'
+  Token = 'Token',
 }
 
 @Component({selector: 'kd-login', templateUrl: './template.html', styleUrls: ['./style.scss']})
 export class LoginComponent {
+  loginModes = LoginModes;
   selectedAuthenticationMode = LoginModes.Token;
 
   constructor(private readonly authService_: AuthService, private readonly state_: StateService) {}

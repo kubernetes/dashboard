@@ -124,6 +124,11 @@ code {
 // Custom classes used across application //
 ////////////////////////////////////////////
 
+.kd-card-top-radius {
+  border-top-left-radius: .25 * $baseline-grid;
+  border-top-right-radius: .25 * $baseline-grid;
+}
+
 .kd-bold {
   font-weight: $bold-font-weight;
 }

@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import {Component, ElementRef, EventEmitter, OnInit, ViewChild} from '@angular/core';
-import {FormControl} from '@angular/forms';
 import {Subject} from 'rxjs/Subject';
 
 @Component({

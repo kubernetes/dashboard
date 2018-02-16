@@ -18,19 +18,20 @@ import {ReplicaSet, ReplicaSetList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 import {ResourceListWithStatuses} from '../../../../common/resources/list';
-import {NamespacedResourceListService} from '../../../../common/services/resource/resourcelist';
+import {EndpointManager} from '../../../../common/services/resource/endpoint';
+import {NamespacedResourceService} from '../../../../common/services/resource/resource';
 
 @Component(
     {selector: 'kd-replica-set-list', templateUrl: './template.html', styleUrls: ['./style.scss']})
 export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSetList, ReplicaSet> {
   constructor(
       state: StateService,
-      private readonly replicaSetListService_: NamespacedResourceListService<ReplicaSetList>) {
+      private readonly replicaSet_: NamespacedResourceService<ReplicaSetList>) {
     super('pod', state);
   }
 
   getResourceObservable(params?: HttpParams): Observable<ReplicaSetList> {
-    return this.replicaSetListService_.get('', params);
+    return this.replicaSet_.get(EndpointManager.replicaSet.list(), undefined, params);
   }
 
   map(rsList: ReplicaSetList): ReplicaSet[] {
