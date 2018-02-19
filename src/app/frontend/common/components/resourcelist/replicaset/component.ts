@@ -30,6 +30,7 @@ export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSet
       state: StateService,
       private readonly replicaSet_: NamespacedResourceService<ReplicaSetList>) {
     super('pod', state);
+    this.id = 'replicaSetList';
   }
 
   getResourceObservable(params?: HttpParams): Observable<ReplicaSetList> {

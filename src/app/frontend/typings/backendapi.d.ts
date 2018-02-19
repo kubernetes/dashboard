@@ -338,7 +338,7 @@ export interface AppDeploymentContentSpec {
 }
 
 export interface ReplicationControllerList {
-  replicationControllers: Array<ReplicationController>;
+  replicationControllers: ReplicationController[];
   listMeta: ListMeta;
   status: Status;
   errors: K8sError[];
@@ -377,7 +377,7 @@ export interface ReplicaSetDetail {
 }
 
 export interface ReplicaSetList {
-  replicaSets: Array<ReplicaSet>;
+  replicaSets: ReplicaSet[];
   listMeta: ListMeta;
   status: Status;
   errors: K8sError[];
@@ -482,7 +482,7 @@ export interface Deployment {
 }
 
 export interface DeploymentList {
-  deployments: Array<Deployment>;
+  deployments: Deployment[];
   listMeta: ListMeta;
   status: Status;
   errors: K8sError[];
@@ -503,7 +503,7 @@ export interface DeploymentInfo {
 export interface DeploymentDetail {
   objectMeta: ObjectMeta;
   typeMeta: TypeMeta;
-  selector: Array<Label>;
+  selector: Label[];
   statusInfo: DeploymentInfo;
   strategy: string;
   minReadySeconds: number;
@@ -544,23 +544,22 @@ export interface Role {
 }
 
 export interface RoleList {
-  items: Array<Role>;
+  items: Role[];
   listMeta: ListMeta;
   errors: K8sError[];
 }
 
 export interface EndpointList {
-  endpoints: Array<Endpoint>;
+  endpoints: Endpoint[];
   listMeta: ListMeta;
 }
-
 
 export interface ServiceDetail {
   objectMeta: ObjectMeta;
   typeMeta: TypeMeta;
   internalEndpoint: Endpoint;
-  externalEndpoints: Array<Endpoint>;
-  endpointList: Array<Endpoint>;
+  externalEndpoints: Endpoint[];
+  endpointList: Endpoint[];
   selector: StringMap;
   type: string;
   clusterIP: string;
@@ -569,19 +568,18 @@ export interface ServiceDetail {
   errors: K8sError[];
 }
 
-
 export interface Service {
   objectMeta: ObjectMeta;
   typeMeta: TypeMeta;
   internalEndpoint: Endpoint;
-  externalEndpoints: Array<Endpoint>;
+  externalEndpoints: Endpoint[];
   selector: StringMap;
   type: string;
   clusterIP: string;
 }
 
 export interface ServiceList {
-  services: Array<Service>;
+  services: Service[];
   listMeta: ListMeta;
   errors: K8sError[];
 }
@@ -609,7 +607,7 @@ export interface DaemonSet {
 }
 
 export interface DaemonSetList {
-  daemonSets: Array<DaemonSet>;
+  daemonSets: DaemonSet[];
   listMeta: ListMeta;
   status: Status;
   errors: K8sError[];
@@ -619,7 +617,7 @@ export interface Endpoint {
   objectMeta: ObjectMeta;
   typeMeta: TypeMeta;
   host: string;
-  ports: {port: number, protocol: string}[];
+  ports: Array<{port: number, protocol: string}>;
   nodeName: string;
   port: number;
   ready: string;
@@ -638,7 +636,7 @@ export interface ReplicationControllerPodWithContainers {
   name: string;
   startTime?: string;
   totalRestartCount: number;
-  podContainers: Array<PodContainer>;
+  podContainers: PodContainer[];
 }
 
 export interface ReplicationControllerPods { pods: ReplicationControllerPodWithContainers[]; }
@@ -663,7 +661,6 @@ export interface LogInfo {
   toDate: string;
   truncated: boolean;
 }
-
 
 export interface LogLine {
   timestamp: string;
@@ -697,7 +694,6 @@ export interface ImageReferenceValidity {
 }
 
 export interface Protocols { protocols: string[]; }
-
 
 export interface ProtocolValidity { valid: boolean; }
 
@@ -748,7 +744,7 @@ export interface Secret {
 }
 
 export interface SecretList {
-  secrets: Array<Secret>;
+  secrets: Secret[];
   listMeta: ListMeta;
   errors: K8sError[];
 }
@@ -765,7 +761,7 @@ export interface Ingress {
 
 export interface IngressList {
   listMeta: ListMeta;
-  items: Array<Ingress>;
+  items: Ingress[];
   errors: K8sError[];
 }
 
@@ -788,7 +784,7 @@ export interface PersistentVolumeClaim {
 
 export interface PersistentVolumeClaimList {
   listMeta: ListMeta;
-  items: Array<PersistentVolumeClaim>;
+  items: PersistentVolumeClaim[];
   errors: K8sError[];
 }
 
@@ -908,7 +904,7 @@ export interface ConfigMapDetail {
 }
 
 export interface ConfigMapList {
-  items: Array<ConfigMap>;
+  items: ConfigMap[];
   listMeta: ListMeta;
   errors: K8sError[];
 }
@@ -924,7 +920,7 @@ export interface PersistentVolume {
 }
 
 export interface PersistentVolumeList {
-  items: Array<PersistentVolume>;
+  items: PersistentVolume[];
   listMeta: ListMeta;
   errors: K8sError[];
 }
@@ -960,7 +956,7 @@ export interface Job {
   pods: PodInfo;
   containerImages: string[];
   initContainerImages: string[];
-  parallelism: number
+  parallelism: number;
 }
 
 export interface JobDetail {
@@ -972,11 +968,11 @@ export interface JobDetail {
   initContainerImages: string[];
   eventList: EventList;
   parallelism: number;
-  completions: number
+  completions: number;
 }
 
 export interface JobList {
-  jobs: Array<Job>;
+  jobs: Job[];
   listMeta: ListMeta;
   status: Status;
   errors: K8sError[];
@@ -988,7 +984,7 @@ export interface CronJob {
   schedule: string;
   suspend: boolean;
   active: number;
-  lastSchedule: string
+  lastSchedule: string;
 }
 
 export interface CronJobDetail {
@@ -1001,7 +997,7 @@ export interface CronJobDetail {
   concurrencyPolicy: string;
   startingDeadlineSeconds: number;
   activeJobs: JobList;
-  events: EventList
+  events: EventList;
 }
 
 export interface CronJobList {
@@ -1016,7 +1012,7 @@ export interface StatefulSet {
   typeMeta: TypeMeta;
   pods: PodInfo;
   containerImages: string[];
-  initContainerImages: string[]
+  initContainerImages: string[];
 }
 
 export interface StatefulSetDetail {

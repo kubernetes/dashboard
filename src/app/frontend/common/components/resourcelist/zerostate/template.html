@@ -14,9 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div [hidden]="!hasItems">
-  <kd-pod-list (onchange)="onListUpdate($event)"></kd-pod-list>
-  <kd-replica-set-list (onchange)="onListUpdate($event)"></kd-replica-set-list>
+<div fxLayout="column"
+     class="kd-muted kd-zerostate-container">
+  <div fxFlexAlign="center"
+       class="kd-zerostate-title">There is nothing to display here.</div>
+  <div fxFlexAlign="center"
+       class="kd-zerostate-text">No resources found.</div>
 </div>
-
-<kd-zero-state [hidden]="hasItems"></kd-zero-state>

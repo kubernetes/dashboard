@@ -33,6 +33,5 @@ import {podState} from './state';
     UIRouterModule.forChild({states: [podState, podListState, podDetailState]}),
   ],
   declarations: [PodListComponent, PodDetailComponent],
-  exports: [PodListComponent],
 })
 export class PodModule {}

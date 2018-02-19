@@ -15,7 +15,7 @@ limitations under the License.
 -->
 
 <mat-card>
-  <mat-card-title>
+  <mat-card-title *ngIf="withTitle">
     <div class="kd-card-title"
          [ngClass]="[titleClasses]"
          fxFlex>

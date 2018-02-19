@@ -33,10 +33,8 @@ export class CardListFilterComponent implements OnInit {
   }
 
   private onFilterTriggered_(newVal: string): void {
-    if (newVal) {
-      this.query = newVal;
-      this.filterEvent.emit(true);
-    }
+    this.query = newVal;
+    this.filterEvent.emit(true);
   }
 
   isSearchVisible(): boolean {
