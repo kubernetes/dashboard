@@ -12,11 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnInit} from '@angular/core';
-import {Search} from '@api/backendapi';
-import {StateService} from '@uirouter/core';
-
-import {SEARCH_QUERY_STATE_PARAM} from '../common/params/params';
+import {Component} from '@angular/core';
 
 @Component({selector: 'kd-search', templateUrl: './template.html'})
 export class SearchComponent {}

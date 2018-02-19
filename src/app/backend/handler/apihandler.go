@@ -44,7 +44,6 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/logs"
 	ns "github.com/kubernetes/dashboard/src/app/backend/resource/namespace"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/node"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/overview"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolume"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolumeclaim"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
@@ -550,16 +549,6 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			To(apiHandler.handleLogFile).
 			Writes(logs.LogDetails{}))
 
-	apiV1Ws.Route(
-		apiV1Ws.GET("/overview/").
-			To(apiHandler.handleOverview).
-			Writes(overview.Overview{}))
-
-	apiV1Ws.Route(
-		apiV1Ws.GET("/overview/{namespace}").
-			To(apiHandler.handleOverview).
-			Writes(overview.Overview{}))
-
 	return wsContainer, nil
 }
 
@@ -1017,25 +1006,6 @@ func (apiHandler *APIHandler) handleGetReplicationControllerList(request *restfu
 	dataSelect := parseDataSelectPathParameter(request)
 	dataSelect.MetricQuery = dataselect.StandardMetrics
 	result, err := replicationcontroller.GetReplicationControllerList(k8sClient, namespace, dataSelect, apiHandler.iManager.Metric().Client())
-	if err != nil {
-		kdErrors.HandleInternalError(response, err)
-		return
-	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
-}
-
-func (apiHandler *APIHandler) handleOverview(request *restful.Request, response *restful.Response) {
-	k8sClient, err := apiHandler.cManager.Client(request)
-	if err != nil {
-		kdErrors.HandleInternalError(response, err)
-		return
-	}
-
-	namespace := parseNamespacePathParameter(request)
-	dataSelect := parseDataSelectPathParameter(request)
-	dataSelect.FilterQuery = dataselect.NoFilter
-	dataSelect.MetricQuery = dataselect.NoMetrics
-	result, err := overview.GetOverview(k8sClient, apiHandler.iManager.Metric().Client(), namespace, dataSelect)
 	if err != nil {
 		kdErrors.HandleInternalError(response, err)
 		return
