@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
+import {PersistentVolumeList} from '@api/backendapi';
 
 import {SharedModule} from '../../shared.module';
 
@@ -27,6 +28,7 @@ import {ProxyComponent} from './proxy/component';
 import {CardListFilterComponent} from './resourcelist/filter/component';
 import {NamespaceListComponent} from './resourcelist/namespace/component';
 import {NodeListComponent} from './resourcelist/node/component';
+import {PersistentVolumeListComponent} from './resourcelist/persistentvolume/component';
 import {PodListComponent} from './resourcelist/pod/component';
 import {ReplicaSetListComponent} from './resourcelist/replicaset/component';
 import {LoadingSpinner} from './resourcelist/spinner/component';
@@ -52,6 +54,7 @@ import {ZeroState} from './zerostate/component';
     NodeListComponent,
     ReplicaSetListComponent,
     NamespaceListComponent,
+    PersistentVolumeListComponent,
     ListZeroState,
     ZeroState,
   ],
@@ -70,6 +73,7 @@ import {ZeroState} from './zerostate/component';
     NodeListComponent,
     ReplicaSetListComponent,
     NamespaceListComponent,
+    PersistentVolumeListComponent,
     ZeroState,
   ],
 })

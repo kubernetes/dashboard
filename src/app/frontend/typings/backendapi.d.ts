@@ -914,6 +914,7 @@ export interface PersistentVolume {
   typeMeta: TypeMeta;
   capacity: StringMap;
   accessModes: string[];
+  reclaimPolicy: string;
   status: string;
   claim: string;
   reason: string;
@@ -1030,77 +1031,5 @@ export interface StatefulSetList {
   statefulSets: StatefulSet[];
   listMeta: ListMeta;
   status: Status;
-  errors: K8sError[];
-}
-
-export interface Overview {
-  deploymentList: DeploymentList;
-  replicaSetList: ReplicaSetList;
-  jobList: JobList;
-  cronJobList: CronJobList;
-  replicationControllerList: ReplicationControllerList;
-  podList: PodList;
-  daemonSetList: DaemonSetList;
-  statefulSetList: StatefulSetList;
-  serviceList: ServiceList;
-  ingressList: IngressList;
-  configMapList: ConfigMapList;
-  persistentVolumeClaimList: PersistentVolumeClaimList;
-  secretList: SecretList;
-  errors: K8sError[];
-}
-
-export interface Workloads {
-  deploymentList: DeploymentList;
-  replicaSetList: ReplicaSetList;
-  jobList: JobList;
-  cronJobList: CronJobList;
-  replicationControllerList: ReplicationControllerList;
-  podList: PodList;
-  daemonSetList: DaemonSetList;
-  statefulSetList: StatefulSetList;
-  errors: K8sError[];
-}
-
-export interface Cluster {
-  nodeList: NodeList;
-  namespaceList: NamespaceList;
-  persistentVolumeList: PersistentVolumeList;
-  roleList: RoleList;
-  storageClassList: StorageClassList;
-  errors: K8sError[];
-}
-
-export interface Discovery {
-  serviceList: ServiceList;
-  ingressList: IngressList;
-  errors: K8sError[];
-}
-
-export interface Config {
-  configMapList: ConfigMapList;
-  persistentVolumeClaimList: PersistentVolumeClaimList;
-  secretList: SecretList;
-  errors: K8sError[];
-}
-
-export interface Search {
-  deploymentList: DeploymentList;
-  replicaSetList: ReplicaSetList;
-  jobList: JobList;
-  replicationControllerList: ReplicationControllerList;
-  podList: PodList;
-  daemonSetList: DaemonSetList;
-  statefulSetList: StatefulSetList;
-  nodeList: NodeList;
-  namespaceList: NamespaceList;
-  persistentVolumeList: PersistentVolumeList;
-  roleList: RoleList;
-  storageClassList: StorageClassList;
-  serviceList: ServiceList;
-  ingressList: IngressList;
-  configMapList: ConfigMapList;
-  persistentVolumeClaimList: PersistentVolumeClaimList;
-  secretList: SecretList;
   errors: K8sError[];
 }
