@@ -14,19 +14,21 @@
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
-import {clusterState} from '../../state';
-import {stateName, stateUrl} from '../state';
+import {chromeState} from '../../../chrome/state';
+import {ProxyComponent} from '../../../common/components/proxy/component';
 
-import {RoleListComponent} from './component';
+export const stateName = 'clusterrole';
+export const stateUrl = '/clusterrole';
 
-export const roleListState: Ng2StateDeclaration = {
-  name: `${stateName}.list`,
+export const clusterRoleFutureState: Ng2StateDeclaration = {
+  name: `${stateName}.**`,
   url: stateUrl,
-  component: RoleListComponent,
-  data: {
-    kdBreadcrumbs: {
-      label: 'Roles',
-      parent: clusterState.name,
-    },
-  },
+  loadChildren: './resource/cluster/clusterrole/module#ClusterRoleModule',
+};
+
+export const clusterRoleState: Ng2StateDeclaration = {
+  abstract: true,
+  parent: chromeState.name,
+  name: stateName,
+  component: ProxyComponent,
 };

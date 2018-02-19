@@ -538,13 +538,13 @@ export interface ReplicaCounts {
 
 export interface DeleteReplicationControllerSpec { deleteServices: boolean; }
 
-export interface Role {
+export interface ClusterRole {
   objectMeta: ObjectMeta;
   typeMeta: TypeMeta;
 }
 
-export interface RoleList {
-  items: Role[];
+export interface ClusterRoleList {
+  items: ClusterRole[];
   listMeta: ListMeta;
   errors: K8sError[];
 }

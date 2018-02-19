@@ -27,10 +27,10 @@ import {configureRouter} from './index.router.config';
 import {LoginModule} from './login/module';
 import {loginState} from './login/state';
 import {overviewFutureState, overviewState} from './overview/state';
+import {clusterRoleFutureState} from './resource/cluster/clusterrole/state';
 import {namespaceFutureState} from './resource/cluster/namespace/state';
 import {nodeFutureState} from './resource/cluster/node/state';
 import {persistentVolumeFutureState} from './resource/cluster/persistentvolume/state';
-import {roleFutureState} from './resource/cluster/role/state';
 import {clusterFutureState} from './resource/cluster/state';
 import {storageClassFutureState} from './resource/cluster/storageclass/state';
 import {configMapFutureState} from './resource/config/configmap/state';
@@ -71,7 +71,7 @@ import {settingsFutureState} from './settings/state';
         namespaceFutureState,
         nodeFutureState,
         persistentVolumeFutureState,
-        roleFutureState,
+        clusterRoleFutureState,
         storageClassFutureState,
         // Workloads section
         workloadsFutureState,

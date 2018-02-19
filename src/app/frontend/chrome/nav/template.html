@@ -23,6 +23,10 @@ limitations under the License.
                    i18n>Cluster
       </kd-nav-item>
       <kd-nav-item class="kd-nav-item"
+                   [state]="states.clusterRole"
+                   i18n>Cluster Roles
+      </kd-nav-item>
+      <kd-nav-item class="kd-nav-item"
                    [state]="states.namespace"
                    i18n>Namespaces
       </kd-nav-item>
@@ -33,10 +37,6 @@ limitations under the License.
       <kd-nav-item class="kd-nav-item"
                    [state]="states.persistentVolume"
                    i18n>Persistent Volumes
-      </kd-nav-item>
-      <kd-nav-item class="kd-nav-item"
-                   [state]="states.role"
-                   i18n>Roles
       </kd-nav-item>
       <kd-nav-item class="kd-nav-item"
                    [state]="states.storageClass"

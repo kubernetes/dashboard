@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package rbacroles
+package clusterrole
 
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
-// The code below allows to perform complex data section on []RbacRole
+// The code below allows to perform complex data section on []ClusterRole
 
-type RoleCell RbacRole
+type RoleCell ClusterRole
 
 func (self RoleCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
 	switch name {
@@ -36,7 +36,7 @@ func (self RoleCell) GetProperty(name dataselect.PropertyName) dataselect.Compar
 	}
 }
 
-func toCells(std []RbacRole) []dataselect.DataCell {
+func toCells(std []ClusterRole) []dataselect.DataCell {
 	cells := make([]dataselect.DataCell, len(std))
 	for i := range std {
 		cells[i] = RoleCell(std[i])
@@ -44,10 +44,10 @@ func toCells(std []RbacRole) []dataselect.DataCell {
 	return cells
 }
 
-func fromCells(cells []dataselect.DataCell) []RbacRole {
-	std := make([]RbacRole, len(cells))
+func fromCells(cells []dataselect.DataCell) []ClusterRole {
+	std := make([]ClusterRole, len(cells))
 	for i := range std {
-		std[i] = RbacRole(cells[i].(RoleCell))
+		std[i] = ClusterRole(cells[i].(RoleCell))
 	}
 	return std
 }

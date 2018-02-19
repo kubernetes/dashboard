@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
-import {PersistentVolumeList} from '@api/backendapi';
 
 import {SharedModule} from '../../shared.module';
 
@@ -25,6 +24,7 @@ import {ChipsComponent} from './chips/component';
 import {ObjectMetaComponent} from './objectmeta/component';
 import {PropertyComponent} from './property/component';
 import {ProxyComponent} from './proxy/component';
+import {ClusterRoleListComponent} from './resourcelist/clusterrole/component';
 import {CardListFilterComponent} from './resourcelist/filter/component';
 import {NamespaceListComponent} from './resourcelist/namespace/component';
 import {NodeListComponent} from './resourcelist/node/component';
@@ -57,6 +57,7 @@ import {ZeroState} from './zerostate/component';
     PersistentVolumeListComponent,
     ListZeroState,
     ZeroState,
+    ClusterRoleListComponent,
   ],
   exports: [
     AllocationChartComponent,
@@ -75,6 +76,7 @@ import {ZeroState} from './zerostate/component';
     NamespaceListComponent,
     PersistentVolumeListComponent,
     ZeroState,
+    ClusterRoleListComponent,
   ],
 })
 export class ComponentsModule {}

@@ -12,8 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** Name of the state. Can be used in, e.g., $state.go method. */
-export const stateName = 'role';
+import {Component} from '@angular/core';
 
-/** Absolute URL of the state. */
-export const stateUrl = '/role';
+@Component({
+  selector: 'kd-cluster-role-list-state',
+  template: '<kd-cluster-role-list></kd-cluster-role-list>',
+})
+export class ClusterRoleListComponent {}

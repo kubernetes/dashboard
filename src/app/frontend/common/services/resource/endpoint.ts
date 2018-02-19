@@ -71,4 +71,10 @@ export class EndpointManager {
       return `${baseHref}/persistentvolume/:name`;
     }
   };
+
+  static clusterRole = class {
+    static list(): string {
+      return `${baseHref}/clusterrole`;
+    }
+  };
 }

@@ -18,10 +18,10 @@ import {MatDrawer} from '@angular/material';
 import {aboutState} from '../../about/state';
 import {NavService} from '../../common/services/nav/service';
 import {overviewState} from '../../overview/state';
+import {clusterRoleListState} from '../../resource/cluster/clusterrole/list/state';
 import {namespaceListState} from '../../resource/cluster/namespace/list/state';
 import {nodeListState} from '../../resource/cluster/node/list/state';
 import {persistentVolumeListState} from '../../resource/cluster/persistentvolume/list/state';
-import {roleListState} from '../../resource/cluster/role/list/state';
 import {clusterState} from '../../resource/cluster/state';
 import {storageClassListState} from '../../resource/cluster/storageclass/list/state';
 import {configMapListState} from '../../resource/config/configmap/list/state';
@@ -54,7 +54,7 @@ export class NavComponent implements AfterContentInit, OnInit {
     namespace: namespaceListState.name,
     node: nodeListState.name,
     persistentVolume: persistentVolumeListState.name,
-    role: roleListState.name,
+    clusterRole: clusterRoleListState.name,
     storageClass: storageClassListState.name,
 
     overview: overviewState.name,
