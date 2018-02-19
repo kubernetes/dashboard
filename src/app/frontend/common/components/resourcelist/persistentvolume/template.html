@@ -51,14 +51,18 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true">Capacity</mat-header-cell>
-        <mat-cell *matCellDef="let pv">{{pv.capacity | json}}</mat-cell>
+        <mat-cell *matCellDef="let pv">
+          <kd-chips [map]="pv.capacity"></kd-chips>
+        </mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getDisplayColumns()[3]">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true">Access Modes</mat-header-cell>
-        <mat-cell *matCellDef="let pv">{{pv.accessModes | json}}</mat-cell>
+        <mat-cell *matCellDef="let pv">
+          <kd-chips [map]="pv.accessModes"></kd-chips>
+        </mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getDisplayColumns()[4]">
