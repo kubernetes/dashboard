@@ -15,16 +15,21 @@
 import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
 
+import {ComponentsModule} from '../../../common/components/module';
+import {ResourceModule} from '../../../common/services/resource/module';
 import {SharedModule} from '../../../shared.module';
-import {RoleListComponent} from './list/component';
-import {roleListState} from './list/state';
-import {roleState} from './state';
+
+import {ClusterRoleListComponent} from './list/component';
+import {clusterRoleListState} from './list/state';
+import {clusterRoleState} from './state';
 
 @NgModule({
   imports: [
     SharedModule,
-    UIRouterModule.forChild({states: [roleState, roleListState]}),
+    ResourceModule,
+    ComponentsModule,
+    UIRouterModule.forChild({states: [clusterRoleState, clusterRoleListState]}),
   ],
-  declarations: [RoleListComponent],
+  declarations: [ClusterRoleListComponent],
 })
-export class RoleModule {}
+export class ClusterRoleModule {}

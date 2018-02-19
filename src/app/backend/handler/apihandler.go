@@ -28,6 +28,7 @@ import (
 	kdErrors "github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/integration"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/clusterrole"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/configmap"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/container"
@@ -48,7 +49,6 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolumeclaim"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/rbacrolebindings"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/rbacroles"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/secret"
@@ -479,10 +479,6 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			To(apiHandler.handlePutResource))
 
 	apiV1Ws.Route(
-		apiV1Ws.GET("/rbac/role").
-			To(apiHandler.handleGetRbacRoleList).
-			Writes(rbacroles.RbacRoleList{}))
-	apiV1Ws.Route(
 		apiV1Ws.GET("/rbac/rolebinding").
 			To(apiHandler.handleGetRbacRoleBindingList).
 			Writes(rbacrolebindings.RbacRoleBindingList{}))
@@ -490,6 +486,11 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 		apiV1Ws.GET("/rbac/status").
 			To(apiHandler.handleRbacStatus).
 			Writes(validation.RbacStatus{}))
+
+	apiV1Ws.Route(
+		apiV1Ws.GET("/clusterrole").
+			To(apiHandler.handleGetClusterRoleList).
+			Writes(clusterrole.ClusterRoleList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/persistentvolume").
@@ -553,7 +554,7 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 }
 
 // TODO: Handle case in which RBAC feature is not enabled in API server. Currently returns 404 resource not found
-func (apiHandler *APIHandler) handleGetRbacRoleList(request *restful.Request, response *restful.Response) {
+func (apiHandler *APIHandler) handleGetClusterRoleList(request *restful.Request, response *restful.Response) {
 	k8sClient, err := apiHandler.cManager.Client(request)
 	if err != nil {
 		kdErrors.HandleInternalError(response, err)
@@ -561,7 +562,7 @@ func (apiHandler *APIHandler) handleGetRbacRoleList(request *restful.Request, re
 	}
 
 	dataSelect := parseDataSelectPathParameter(request)
-	result, err := rbacroles.GetRbacRoleList(k8sClient, dataSelect)
+	result, err := clusterrole.GetClusterRoleList(k8sClient, dataSelect)
 	if err != nil {
 		kdErrors.HandleInternalError(response, err)
 		return

@@ -12,22 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Controller for the persistent volume list view.
- *
- * @final
- */
-export class PersistentVolumeListController {
-  /**
-   * @param {!backendApi.PersistentVolumeList} persistentVolumeList
-   * @param {!angular.Resource}kdPersistentVolumeListResource
-   * @ngInject
-   */
-  constructor(persistentVolumeList, kdPersistentVolumeListResource) {
-    /** @export {!backendApi.PersistentVolumeList} */
-    this.persistentVolumeList = persistentVolumeList;
+import {Ng2StateDeclaration} from '@uirouter/angular';
 
-    /** @export {!angular.Resource} */
-    this.persistentVolumeListResource = kdPersistentVolumeListResource;
-  }
-}
+import {clusterState} from '../../state';
+import {stateName, stateUrl} from '../state';
+import {ClusterRoleListComponent} from './component';
+
+export const clusterRoleListState: Ng2StateDeclaration = {
+  name: `${stateName}.list`,
+  url: stateUrl,
+  component: ClusterRoleListComponent,
+  data: {
+    kdBreadcrumbs: {
+      label: 'Cluster Roles',
+      parent: clusterState.name,
+    },
+  },
+};

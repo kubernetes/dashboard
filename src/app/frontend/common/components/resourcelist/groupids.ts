@@ -16,6 +16,7 @@ export enum ListIdentifiers {
   namespace = 'namespaceList',
   node = 'nodeList',
   persistentVolume = 'persistentVolumeList',
+  clusterRole = 'clusterRoleList',
   pod = 'podList',
   replicaSet = 'replicaSetList',
 }

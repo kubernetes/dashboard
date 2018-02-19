@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package rbacroles
+package clusterrole
 
 import (
 	"reflect"
@@ -26,21 +26,11 @@ import (
 
 func TestToRbacRoleLists(t *testing.T) {
 	cases := []struct {
-		roles        []rbac.Role
 		clusterRoles []rbac.ClusterRole
-		expected     *RbacRoleList
+		expected     *ClusterRoleList
 	}{
-		{nil, nil, &RbacRoleList{Items: []RbacRole{}}},
+		{nil, &ClusterRoleList{Items: []ClusterRole{}}},
 		{
-			[]rbac.Role{
-				{
-					ObjectMeta: metaV1.ObjectMeta{Name: "Role", Namespace: "Testing"},
-					Rules: []rbac.PolicyRule{{
-						Verbs:     []string{"get", "put"},
-						Resources: []string{"pods"},
-					}},
-				},
-			},
 			[]rbac.ClusterRole{
 				{
 					ObjectMeta: metaV1.ObjectMeta{Name: "cluster-role"},
@@ -50,12 +40,9 @@ func TestToRbacRoleLists(t *testing.T) {
 					}},
 				},
 			},
-			&RbacRoleList{
-				ListMeta: api.ListMeta{TotalItems: 2},
-				Items: []RbacRole{{
-					ObjectMeta: api.ObjectMeta{Name: "Role", Namespace: "Testing"},
-					TypeMeta:   api.TypeMeta{Kind: api.ResourceKindRbacRole},
-				}, {
+			&ClusterRoleList{
+				ListMeta: api.ListMeta{TotalItems: 1},
+				Items: []ClusterRole{{
 					ObjectMeta: api.ObjectMeta{Name: "cluster-role", Namespace: ""},
 					TypeMeta:   api.TypeMeta{Kind: api.ResourceKindRbacClusterRole},
 				}},
@@ -63,10 +50,10 @@ func TestToRbacRoleLists(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := toRbacRoleLists(c.roles, c.clusterRoles, nil, dataselect.NoDataSelect)
+		actual := toClusterRoleLists(c.clusterRoles, nil, dataselect.NoDataSelect)
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("toRbacRoleLists(%#v,%#v) == \n%#v\nexpected \n%#v\n",
-				c.roles, c.clusterRoles, actual, c.expected)
+			t.Errorf("toRbacRoleLists(%#v) == \n%#v\nexpected \n%#v\n",
+				c.clusterRoles, actual, c.expected)
 		}
 	}
 }
