@@ -44,6 +44,7 @@ export interface Status {
 
 export interface OnListChangeEvent {
   id: string;
+  groupId: string;
   items: number;
   filtered: boolean;
 }

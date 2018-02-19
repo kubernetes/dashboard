@@ -14,6 +14,7 @@
 
 import {Component} from '@angular/core';
 import {OnListChangeEvent} from '@api/frontendapi';
+import {ListGroupIdentifiers} from '../../common/components/resourcelist/groupids';
 
 @Component({
   selector: 'kd-workloads',
@@ -24,15 +25,16 @@ export class WorkloadsComponent {
 
   get hasItems(): boolean {
     let totalItems = 0;
-    Object.keys(this.items_).forEach(id => totalItems += this.items_[id]);
-    return totalItems > 0 || Object.keys(this.items_).length === 0;
+    const itemsArr = Object.keys(this.items_);
+    itemsArr.forEach(id => totalItems += this.items_[id]);
+    return totalItems > 0;
   }
 
   onListUpdate(listEvent: OnListChangeEvent): void {
     this.items_[listEvent.id] = listEvent.items;
 
     if (listEvent.filtered) {
-      delete this.items_[listEvent.id];
+      this.items_[listEvent.id] = 1;
     }
   }
 }

@@ -93,8 +93,12 @@ code {
   }
 }
 
-.mat-cell:not(:first-child):not(:last-child) {
-  padding: 0 ($baseline-grid / 2);
+.mat-cell {
+  &:not(:first-child) {
+    &:not(:last-child) {
+      padding: 0 ($baseline-grid / 2);
+    }
+  }
 }
 
 .mat-column-statusicon {

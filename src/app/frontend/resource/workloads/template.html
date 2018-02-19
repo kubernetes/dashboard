@@ -15,8 +15,10 @@ limitations under the License.
 -->
 
 <div [hidden]="!hasItems">
-  <kd-pod-list (onchange)="onListUpdate($event)"></kd-pod-list>
-  <kd-replica-set-list (onchange)="onListUpdate($event)"></kd-replica-set-list>
+  <kd-pod-list (onchange)="onListUpdate($event)"
+               [hideable]="true"></kd-pod-list>
+  <kd-replica-set-list (onchange)="onListUpdate($event)"
+                       [hideable]="true"></kd-replica-set-list>
 </div>
 
 <kd-zero-state [hidden]="hasItems"></kd-zero-state>

@@ -78,20 +78,18 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
     let timeoutObj: NodeJS.Timer;
     this.dataSubscription_ =
         merge(this.sort.sortChange, this.paginator.page, this.filter.filterEvent)
-            .pipe(
-                startWith({}), switchMap<T, T>(() => {
-                  let params = this.sort_();
-                  params = this.paginate_(params);
-                  params = this.filter_(params);
+            .pipe(startWith({}), switchMap<T, T>(() => {
+                    let params = this.sort_();
+                    params = this.paginate_(params);
+                    params = this.filter_(params);
 
-                  // Show loading animation only for long loading data to avoid flickering.
-                  timeoutObj = setTimeout(() => {
-                    this.isLoading = true;
-                  }, 100);
+                    // Show loading animation only for long loading data to avoid flickering.
+                    timeoutObj = setTimeout(() => {
+                      this.isLoading = true;
+                    }, 100);
 
-                  return this.getResourceObservable(params);
-                }),
-                delay(1000))
+                    return this.getResourceObservable(params);
+                  }))
             .subscribe((data: T) => {
               this.totalItems = data.listMeta.totalItems;
               clearTimeout(timeoutObj);
@@ -125,7 +123,7 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
   }
 
   isHidden(): boolean {
-    return this.hideable && this.showZeroState();
+    return this.hideable && !this.filtered_() && this.showZeroState();
   }
 
   private sort_(params?: HttpParams): HttpParams {
@@ -179,6 +177,10 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
     return result;
   }
 
+  private filtered_(): boolean {
+    return !!this.filter_().get('filterBy');
+  }
+
   private getSortBy_(): string {
     // Default values.
     let ascending = true;
@@ -211,8 +213,9 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
   private onListChange_(): void {
     this.onChange.emit({
       id: this.id,
+      groupId: this.groupId,
       items: this.totalItems,
-      filtered: !!this.filter_().get('filterBy'),
+      filtered: this.filtered_(),
     });
   }
 

@@ -14,6 +14,7 @@
 
 import {Component} from '@angular/core';
 import {OnListChangeEvent} from '@api/frontendapi';
+import {ListGroupIdentifiers} from '../common/components/resourcelist/groupids';
 
 @Component({
   selector: 'kd-overview',
@@ -21,18 +22,46 @@ import {OnListChangeEvent} from '@api/frontendapi';
 })
 export class OverviewComponent {
   private readonly items_: {[id: string]: number} = {};
+  private readonly groupItems_: {[groupId: string]: {[id: string]: number}} = {
+    [ListGroupIdentifiers.workloads]: {},
+    [ListGroupIdentifiers.discovery]: {},
+    [ListGroupIdentifiers.config]: {},
+  };
 
   get hasItems(): boolean {
     let totalItems = 0;
-    Object.keys(this.items_).forEach(id => totalItems += this.items_[id]);
-    return totalItems > 0 || Object.keys(this.items_).length === 0;
+    const ids = Object.keys(this.items_);
+    ids.forEach(id => totalItems += this.items_[id]);
+    return totalItems > 0;
+  }
+
+  get hasWorkloads(): boolean {
+    return this.hasGroupItems_(ListGroupIdentifiers.workloads);
+  }
+
+  get hasDiscovery(): boolean {
+    return this.hasGroupItems_(ListGroupIdentifiers.discovery);
+  }
+
+  get hasConfig(): boolean {
+    return this.hasGroupItems_(ListGroupIdentifiers.config);
+  }
+
+  private hasGroupItems_(groupId: string): boolean {
+    let totalItems = 0;
+    const ids = Object.keys(this.groupItems_[groupId]);
+    ids.forEach(id => totalItems += this.groupItems_[groupId][id]);
+    return totalItems > 0;
   }
 
   onListUpdate(listEvent: OnListChangeEvent): void {
     this.items_[listEvent.id] = listEvent.items;
+    if (!(listEvent.id in this.groupItems_[listEvent.groupId])) {
+      this.groupItems_[listEvent.groupId][listEvent.id] = listEvent.items;
+    }
 
     if (listEvent.filtered) {
-      delete this.items_[listEvent.id];
+      this.items_[listEvent.id] = 1;
     }
   }
 }
