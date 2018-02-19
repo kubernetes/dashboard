@@ -14,15 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-card role="table"
-         [hidden]="isHidden()">
+<kd-card role="table">
   <div title
        fxLayout="row">
     Persistent Volumes
     <kd-card-list-filter></kd-card-list-filter>
   </div>
 
-  <div content>
+  <div content
+       [hidden]="showZeroState()">
     <div kdLoadingSpinner
          [isLoading]="isLoading"></div>
 
@@ -115,5 +115,10 @@ limitations under the License.
 
     <mat-paginator [length]="totalItems"
                    [pageSize]="itemsPerPage"></mat-paginator>
+  </div>
+
+  <div content
+       [hidden]="!showZeroState()">
+    <kd-list-zero-state></kd-list-zero-state>
   </div>
 </kd-card>
