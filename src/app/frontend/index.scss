@@ -124,6 +124,12 @@ code {
 // Custom classes used across application //
 ////////////////////////////////////////////
 
+.kd-card-group-header {
+  font-family: $font-family-sans;
+  font-size: $title-font-size-base;
+  margin: (3 * $baseline-grid) 0 (2 * $baseline-grid) (5 * $baseline-grid);
+}
+
 .kd-card-top-radius {
   border-top-left-radius: .25 * $baseline-grid;
   border-top-right-radius: .25 * $baseline-grid;
