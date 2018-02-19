@@ -28,14 +28,14 @@ limitations under the License.
 
     <mat-table [dataSource]="getData()"
                matSort
-               [matSortActive]="getDisplayColumns()[8]"
+               [matSortActive]="getDisplayColumns()[3]"
                matSortDisableClear
                matSortDirection="asc">
       <ng-container [matColumnDef]="getDisplayColumns()[0]">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let node">
-          <mat-icon [ngClass]="getStatus(node).cssClass">
-            {{getStatus(node).iconName}}
+        <mat-cell *matCellDef="let namespace">
+          <mat-icon [ngClass]="getStatus(namespace).cssClass">
+            {{getStatus(namespace).iconName}}
           </mat-icon>
         </mat-cell>
       </ng-container>

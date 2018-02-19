@@ -918,6 +918,7 @@ export interface PersistentVolume {
   typeMeta: TypeMeta;
   capacity: StringMap;
   accessModes: string[];
+  reclaimPolicy: string;
   status: string;
   claim: string;
   reason: string;

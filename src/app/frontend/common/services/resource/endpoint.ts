@@ -61,4 +61,14 @@ export class EndpointManager {
       return `${baseHref}/namespace/:name`;
     }
   };
+
+  static persistentVolume = class {
+    static list(): string {
+      return `${baseHref}/persistentvolume`;
+    }
+
+    static detail(): string {
+      return `${baseHref}/persistentvolume/:name`;
+    }
+  };
 }
