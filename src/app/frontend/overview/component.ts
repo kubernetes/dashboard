@@ -13,55 +13,23 @@
 // limitations under the License.
 
 import {Component} from '@angular/core';
-import {OnListChangeEvent} from '@api/frontendapi';
 import {ListGroupIdentifiers} from '../common/components/resourcelist/groupids';
+import {GroupedResourceList} from '../common/resources/groupedlist';
 
 @Component({
   selector: 'kd-overview',
   templateUrl: './template.html',
 })
-export class OverviewComponent {
-  private readonly items_: {[id: string]: number} = {};
-  private readonly groupItems_: {[groupId: string]: {[id: string]: number}} = {
-    [ListGroupIdentifiers.workloads]: {},
-    [ListGroupIdentifiers.discovery]: {},
-    [ListGroupIdentifiers.config]: {},
-  };
-
-  get hasItems(): boolean {
-    let totalItems = 0;
-    const ids = Object.keys(this.items_);
-    ids.forEach(id => totalItems += this.items_[id]);
-    return totalItems > 0;
+export class OverviewComponent extends GroupedResourceList {
+  hasWorkloads(): boolean {
+    return this.isGroupVisible(ListGroupIdentifiers.workloads);
   }
 
-  get hasWorkloads(): boolean {
-    return this.hasGroupItems_(ListGroupIdentifiers.workloads);
+  hasDiscovery(): boolean {
+    return this.isGroupVisible(ListGroupIdentifiers.discovery);
   }
 
-  get hasDiscovery(): boolean {
-    return this.hasGroupItems_(ListGroupIdentifiers.discovery);
-  }
-
-  get hasConfig(): boolean {
-    return this.hasGroupItems_(ListGroupIdentifiers.config);
-  }
-
-  private hasGroupItems_(groupId: string): boolean {
-    let totalItems = 0;
-    const ids = Object.keys(this.groupItems_[groupId]);
-    ids.forEach(id => totalItems += this.groupItems_[groupId][id]);
-    return totalItems > 0;
-  }
-
-  onListUpdate(listEvent: OnListChangeEvent): void {
-    this.items_[listEvent.id] = listEvent.items;
-    if (!(listEvent.id in this.groupItems_[listEvent.groupId])) {
-      this.groupItems_[listEvent.groupId][listEvent.id] = listEvent.items;
-    }
-
-    if (listEvent.filtered) {
-      this.items_[listEvent.id] = 1;
-    }
+  hasConfig(): boolean {
+    return this.isGroupVisible(ListGroupIdentifiers.config);
   }
 }

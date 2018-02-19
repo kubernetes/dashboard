@@ -14,16 +14,30 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div class="kd-card-group-header kd-muted">Cluster</div>
-<kd-cluster-role-list></kd-cluster-role-list>
-<kd-namespace-list></kd-namespace-list>
-<kd-node-list></kd-node-list>
-<kd-persistent-volume-list></kd-persistent-volume-list>
+<div [hidden]="shouldShowZeroState()">
+  <div class="kd-card-group-header kd-muted"
+       [hidden]="!hasCluster()">Cluster</div>
+  <kd-cluster-role-list (onchange)="onListUpdate($event)"
+                        [hideable]="true"></kd-cluster-role-list>
+  <kd-namespace-list (onchange)="onListUpdate($event)"
+                     [hideable]="true"></kd-namespace-list>
+  <kd-node-list (onchange)="onListUpdate($event)"
+                [hideable]="true"></kd-node-list>
+  <kd-persistent-volume-list (onchange)="onListUpdate($event)"
+                             [hideable]="true"></kd-persistent-volume-list>
 
-<div class="kd-card-group-header kd-muted">Workloads</div>
-<kd-pod-list></kd-pod-list>
-<kd-replica-set-list></kd-replica-set-list>
+  <div class="kd-card-group-header kd-muted"
+       [hidden]="!hasWorkloads()">Workloads</div>
+  <kd-pod-list (onchange)="onListUpdate($event)"
+               [hideable]="true"></kd-pod-list>
+  <kd-replica-set-list (onchange)="onListUpdate($event)"
+                       [hideable]="true"></kd-replica-set-list>
 
-<div class="kd-card-group-header kd-muted">Discovery and Load Balancing</div>
+  <div class="kd-card-group-header kd-muted"
+       [hidden]="!hasDiscovery()">Discovery and Load Balancing</div>
 
-<div class="kd-card-group-header kd-muted">Config and Storage</div>
+  <div class="kd-card-group-header kd-muted"
+       [hidden]="!hasConfig()">Config and Storage</div>
+</div>
+
+<kd-zero-state [hidden]="!shouldShowZeroState()"></kd-zero-state>

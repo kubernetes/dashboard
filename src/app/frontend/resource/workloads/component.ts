@@ -15,26 +15,10 @@
 import {Component} from '@angular/core';
 import {OnListChangeEvent} from '@api/frontendapi';
 import {ListGroupIdentifiers} from '../../common/components/resourcelist/groupids';
+import {GroupedResourceList} from '../../common/resources/groupedlist';
 
 @Component({
   selector: 'kd-workloads',
   templateUrl: './template.html',
 })
-export class WorkloadsComponent {
-  private readonly items_: {[id: string]: number} = {};
-
-  get hasItems(): boolean {
-    let totalItems = 0;
-    const itemsArr = Object.keys(this.items_);
-    itemsArr.forEach(id => totalItems += this.items_[id]);
-    return totalItems > 0;
-  }
-
-  onListUpdate(listEvent: OnListChangeEvent): void {
-    this.items_[listEvent.id] = listEvent.items;
-
-    if (listEvent.filtered) {
-      this.items_[listEvent.id] = 1;
-    }
-  }
-}
+export class WorkloadsComponent extends GroupedResourceList {}

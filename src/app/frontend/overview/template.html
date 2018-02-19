@@ -14,19 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div [hidden]="!hasItems">
+<div [hidden]="shouldShowZeroState()">
   <div class="kd-card-group-header kd-muted"
-       [hidden]="!hasWorkloads">Workloads</div>
+       [hidden]="!hasWorkloads()">Workloads</div>
   <kd-pod-list (onchange)="onListUpdate($event)"
                [hideable]="true"></kd-pod-list>
   <kd-replica-set-list (onchange)="onListUpdate($event)"
                        [hideable]="true"></kd-replica-set-list>
 
   <div class="kd-card-group-header kd-muted"
-       [hidden]="!hasDiscovery">Discovery and Load Balancing</div>
+       [hidden]="!hasDiscovery()">Discovery and Load Balancing</div>
 
   <div class="kd-card-group-header kd-muted"
-       [hidden]="!hasConfig">Config and Storage</div>
+       [hidden]="!hasConfig()">Config and Storage</div>
 </div>
 
-<kd-zero-state [hidden]="hasItems"></kd-zero-state>
+<kd-zero-state [hidden]="!shouldShowZeroState()"></kd-zero-state>

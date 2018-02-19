@@ -13,6 +13,24 @@
 // limitations under the License.
 
 import {Component} from '@angular/core';
+import {ListGroupIdentifiers} from '../common/components/resourcelist/groupids';
+import {GroupedResourceList} from '../common/resources/groupedlist';
 
 @Component({selector: 'kd-search', templateUrl: './template.html'})
-export class SearchComponent {}
+export class SearchComponent extends GroupedResourceList {
+  hasCluster(): boolean {
+    return this.isGroupVisible(ListGroupIdentifiers.cluster);
+  }
+
+  hasWorkloads(): boolean {
+    return this.isGroupVisible(ListGroupIdentifiers.workloads);
+  }
+
+  hasDiscovery(): boolean {
+    return this.isGroupVisible(ListGroupIdentifiers.discovery);
+  }
+
+  hasConfig(): boolean {
+    return this.isGroupVisible(ListGroupIdentifiers.config);
+  }
+}

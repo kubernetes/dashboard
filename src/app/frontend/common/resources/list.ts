@@ -82,6 +82,7 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
                     let params = this.sort_();
                     params = this.paginate_(params);
                     params = this.filter_(params);
+                    params = this.search_(params);
 
                     // Show loading animation only for long loading data to avoid flickering.
                     timeoutObj = setTimeout(() => {
@@ -155,11 +156,23 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
     }
 
     // TODO: support filtering by different columns
-    let filterByQuery = this.filter.query ? `name,${this.filter.query}` : '';
+    const filterByQuery = this.filter.query ? `name,${this.filter.query}` : '';
+    if (filterByQuery) {
+      return result.set('filterBy', filterByQuery);
+    }
 
-    // Handle search.
+    return result;
+  }
+
+  private search_(params?: HttpParams): HttpParams {
+    let result = new HttpParams();
+    if (params) {
+      result = params;
+    }
+
     // TODO Ensure it works with namespaces.
     // TODO Rework to put only one call to backend? Or is it better like this (no additional endp.)?
+    let filterByQuery = result.get('filterBy') || '';
     if (this.state_.current.name === searchState.name) {
       const query = this.state_.params[SEARCH_QUERY_STATE_PARAM];
       if (query) {
