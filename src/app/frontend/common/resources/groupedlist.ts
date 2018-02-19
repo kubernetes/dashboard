@@ -28,7 +28,7 @@ export class GroupedResourceList {
     let totalItems = 0;
     const ids = Object.keys(this.items_);
     ids.forEach(id => totalItems += this.items_[id]);
-    return !(totalItems > 0);
+    return totalItems === 0 && ids.length > 0;
   }
 
   isGroupVisible(groupId: string): boolean {
