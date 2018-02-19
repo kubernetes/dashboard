@@ -12,23 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Input} from '@angular/core';
+@import '../../../../variables';
 
-@Component({
-  selector: 'kd-card',
-  templateUrl: './template.html',
-  styleUrls: ['./style.scss'],
-})
-export class CardComponent {
-  @Input() initialized = true;
-  @Input() role: string;
-  @Input() withFooter = false;
-  @Input() withTitle = true;
-  @Input() expandable = false;
-  @Input() titleClasses = '';
-  expanded = true;
+.kd-zerostate-container {
+  padding: 2 * $baseline-grid;
+}
 
-  isExpanded(): boolean {
-    return !this.expandable || this.expanded;
-  }
+.kd-zerostate-title {
+  font-size: $headline-font-size-base;
+  font-weight: $regular-font-weight;
+  margin-bottom: $baseline-grid / 2;
+}
+
+.kd-zerostate-text {
+  font-size: $body-font-size-base;
+  font-weight: $regular-font-weight;
+  word-break: break-all;
 }

@@ -41,3 +41,9 @@ export interface Status {
   iconName: string;
   cssClass: {[className: string]: boolean};
 }
+
+export interface OnListChangeEvent {
+  id: string;
+  items: number;
+  filtered: boolean;
+}

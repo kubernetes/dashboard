@@ -25,13 +25,15 @@ import {ChipsComponent} from './chips/component';
 import {ObjectMetaComponent} from './objectmeta/component';
 import {PropertyComponent} from './property/component';
 import {ProxyComponent} from './proxy/component';
+import {CardListFilterComponent} from './resourcelist/filter/component';
 import {NamespaceListComponent} from './resourcelist/namespace/component';
 import {NodeListComponent} from './resourcelist/node/component';
 import {PersistentVolumeListComponent} from './resourcelist/persistentvolume/component';
 import {PodListComponent} from './resourcelist/pod/component';
 import {ReplicaSetListComponent} from './resourcelist/replicaset/component';
-import {CardListFilterComponent} from './table/filter/component';
-import {LoadingSpinner} from './table/spinner/component';
+import {LoadingSpinner} from './resourcelist/spinner/component';
+import {ListZeroState} from './resourcelist/zerostate/component';
+import {ZeroState} from './zerostate/component';
 
 @NgModule({
   imports: [
@@ -53,6 +55,8 @@ import {LoadingSpinner} from './table/spinner/component';
     ReplicaSetListComponent,
     NamespaceListComponent,
     PersistentVolumeListComponent,
+    ListZeroState,
+    ZeroState,
   ],
   exports: [
     AllocationChartComponent,
@@ -70,6 +74,7 @@ import {LoadingSpinner} from './table/spinner/component';
     ReplicaSetListComponent,
     NamespaceListComponent,
     PersistentVolumeListComponent,
+    ZeroState,
   ],
 })
 export class ComponentsModule {}

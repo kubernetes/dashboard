@@ -14,5 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-pod-list [hideIfEmpty]="true"></kd-pod-list>
-<kd-replica-set-list [hideIfEmpty]="true"></kd-replica-set-list>
+<div [hidden]="!hasItems">
+  <kd-pod-list (onchange)="onListUpdate($event)"></kd-pod-list>
+  <kd-replica-set-list (onchange)="onListUpdate($event)"></kd-replica-set-list>
+</div>
+
+<kd-zero-state [hidden]="hasItems"></kd-zero-state>

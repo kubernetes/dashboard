@@ -31,6 +31,7 @@ export class NamespaceListComponent extends ResourceListWithStatuses<NamespaceLi
 
   constructor(state: StateService, private readonly namespace_: ResourceService<NamespaceList>) {
     super('node', state);
+    this.id = 'namespaceList';
   }
 
   getResourceObservable(params?: HttpParams): Observable<NamespaceList> {

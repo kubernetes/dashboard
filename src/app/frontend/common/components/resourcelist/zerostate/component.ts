@@ -13,26 +13,7 @@
 // limitations under the License.
 
 import {Component} from '@angular/core';
-import {OnListChangeEvent} from '@api/frontendapi';
 
-@Component({
-  selector: 'kd-workloads',
-  templateUrl: './template.html',
-})
-export class WorkloadsComponent {
-  private readonly items_: {[id: string]: number} = {};
-
-  get hasItems(): boolean {
-    let totalItems = 0;
-    Object.keys(this.items_).forEach(id => totalItems += this.items_[id]);
-    return totalItems > 0 || Object.keys(this.items_).length === 0;
-  }
-
-  onListUpdate(listEvent: OnListChangeEvent): void {
-    this.items_[listEvent.id] = listEvent.items;
-
-    if (listEvent.filtered) {
-      delete this.items_[listEvent.id];
-    }
-  }
-}
+@Component(
+    {selector: 'kd-list-zero-state', templateUrl: './template.html', styleUrls: ['./style.scss']})
+export class ListZeroState {}

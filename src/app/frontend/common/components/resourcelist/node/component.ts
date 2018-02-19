@@ -33,6 +33,7 @@ export class NodeListComponent extends ResourceListWithStatuses<NodeList, Node> 
   constructor(state: StateService, private readonly node_: ResourceService<NodeList>) {
     super(nodeDetailState.name, state);
     this.setWarningIcon('help');
+    this.id = 'nodeList';
   }
 
   getResourceObservable(params?: HttpParams): Observable<NodeList> {

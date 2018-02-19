@@ -14,18 +14,18 @@
 
 import {DataSource} from '@angular/cdk/collections';
 import {HttpParams} from '@angular/common/http';
-import {Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {ResourceList} from '@api/backendapi';
-import {Status} from '@api/frontendapi';
+import {OnListChangeEvent, Status} from '@api/frontendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 import {merge} from 'rxjs/observable/merge';
-import {startWith, switchMap} from 'rxjs/operators';
+import {delay, startWith, switchMap} from 'rxjs/operators';
 import {Subscription} from 'rxjs/Subscription';
 
 import {searchState} from '../../search/state';
-import {CardListFilterComponent} from '../components/table/filter/component';
+import {CardListFilterComponent} from '../components/resourcelist/filter/component';
 import {NamespacedResourceStateParams, ResourceStateParams, SEARCH_QUERY_STATE_PARAM} from '../params/params';
 import {GlobalServicesModule} from '../services/global/module';
 import {SettingsService} from '../services/global/settings';
@@ -36,13 +36,14 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
   private readonly data_ = new MatTableDataSource<R>();
   private dataSubscription_: Subscription;
   private readonly settingsService_: SettingsService;
-  @Input() hideIfEmpty = false;
+  @Output('onchange') onChange: EventEmitter<OnListChangeEvent> = new EventEmitter();
+  @Input() id: string;
 
   // Data select properties
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(CardListFilterComponent) filter: CardListFilterComponent;
-  isLoading = false;
+  isLoading = true;
   totalItems = 0;
 
   get itemsPerPage(): number {
@@ -54,6 +55,10 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
   }
 
   ngOnInit(): void {
+    if (!this.id) {
+      throw Error('ID is a required attribute of list component.');
+    }
+
     if (this.sort === undefined) {
       throw Error('MatSort has to be defined on a table.');
     }
@@ -71,23 +76,26 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
     let timeoutObj: NodeJS.Timer;
     this.dataSubscription_ =
         merge(this.sort.sortChange, this.paginator.page, this.filter.filterEvent)
-            .pipe(startWith({}), switchMap<T, T>(() => {
-                    let params = this.sort_();
-                    params = this.paginate_(params);
-                    params = this.filter_(params);
+            .pipe(
+                startWith({}), switchMap<T, T>(() => {
+                  let params = this.sort_();
+                  params = this.paginate_(params);
+                  params = this.filter_(params);
 
-                    // Show loading animation only for long loading data to avoid flickering.
-                    timeoutObj = setTimeout(() => {
-                      this.isLoading = true;
-                    }, 100);
+                  // Show loading animation only for long loading data to avoid flickering.
+                  timeoutObj = setTimeout(() => {
+                    this.isLoading = true;
+                  }, 100);
 
-                    return this.getResourceObservable(params);
-                  }))
+                  return this.getResourceObservable(params);
+                }),
+                delay(1000))
             .subscribe((data: T) => {
               this.totalItems = data.listMeta.totalItems;
               clearTimeout(timeoutObj);
               this.isLoading = false;
               this.data_.data = this.map(data);
+              this.onListChange_();
             });
   }
 
@@ -108,6 +116,10 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
 
   getData(): DataSource<R> {
     return this.data_;
+  }
+
+  showZeroState(): boolean {
+    return this.totalItems === 0 && !this.isLoading;
   }
 
   private sort_(params?: HttpParams): HttpParams {
@@ -154,7 +166,11 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
       }
     }
 
-    return result.set('filterBy', filterByQuery);
+    if (filterByQuery) {
+      return result.set('filterBy', filterByQuery);
+    }
+
+    return result;
   }
 
   private getSortBy_(): string {
@@ -186,8 +202,12 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
     }
   }
 
-  isHidden(): boolean {
-    return this.hideIfEmpty && !this.data_.data.length;
+  private onListChange_(): void {
+    this.onChange.emit({
+      id: this.id,
+      items: this.totalItems,
+      filtered: !!this.filter_().get('filterBy'),
+    });
   }
 
   abstract map(value: T): R[];

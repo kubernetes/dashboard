@@ -32,6 +32,7 @@ export class PersistentVolumeListComponent extends
 
   constructor(state: StateService, private readonly pv_: ResourceService<PersistentVolumeList>) {
     super('node', state);
+    this.id = 'persistentVolumeList';
   }
 
   getResourceObservable(params?: HttpParams): Observable<PersistentVolumeList> {
