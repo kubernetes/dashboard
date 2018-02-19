@@ -83,7 +83,10 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true">Claim</mat-header-cell>
-        <mat-cell *matCellDef="let pv">{{pv.claim}}</mat-cell>
+        <mat-cell *matCellDef="let pv">
+          <ng-container *ngIf="pv.claim">{{pv.claim}}</ng-container>
+          <ng-container *ngIf="!pv.claim">-</ng-container>
+        </mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getDisplayColumns()[7]">
@@ -97,7 +100,10 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true">Reason</mat-header-cell>
-        <mat-cell *matCellDef="let pv">{{pv.reason}}</mat-cell>
+        <mat-cell *matCellDef="let pv">
+          <ng-container *ngIf="pv.reason">{{pv.reason}}</ng-container>
+          <ng-container *ngIf="!pv.reason">-</ng-container>
+        </mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getDisplayColumns()[9]">
