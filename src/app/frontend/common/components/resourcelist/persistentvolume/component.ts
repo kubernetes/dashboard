@@ -21,6 +21,7 @@ import {Observable} from 'rxjs/Observable';
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {EndpointManager} from '../../../services/resource/endpoint';
 import {ResourceService} from '../../../services/resource/resource';
+import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
 
 @Component({
   selector: 'kd-persistent-volume-list',
@@ -32,7 +33,8 @@ export class PersistentVolumeListComponent extends
 
   constructor(state: StateService, private readonly pv_: ResourceService<PersistentVolumeList>) {
     super('node', state);
-    this.id = 'persistentVolumeList';
+    this.id = ListIdentifiers.persistentVolume;
+    this.groupId = ListGroupIdentifiers.cluster;
   }
 
   getResourceObservable(params?: HttpParams): Observable<PersistentVolumeList> {

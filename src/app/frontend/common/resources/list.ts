@@ -38,6 +38,8 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
   private readonly settingsService_: SettingsService;
   @Output('onchange') onChange: EventEmitter<OnListChangeEvent> = new EventEmitter();
   @Input() id: string;
+  @Input() groupId: string;
+  @Input() hideable = false;
 
   // Data select properties
   @ViewChild(MatSort) sort: MatSort;
@@ -120,6 +122,10 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
 
   showZeroState(): boolean {
     return this.totalItems === 0 && !this.isLoading;
+  }
+
+  isHidden(): boolean {
+    return this.hideable && this.showZeroState();
   }
 
   private sort_(params?: HttpParams): HttpParams {

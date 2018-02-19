@@ -22,6 +22,7 @@ import {podDetailState} from '../../../../resource/workloads/pod/detail/state';
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {EndpointManager} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
+import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
 
 @Component({selector: 'kd-pod-list', templateUrl: './template.html'})
 export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
@@ -29,7 +30,8 @@ export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
 
   constructor(state: StateService, private readonly podList: NamespacedResourceService<PodList>) {
     super(podDetailState.name, state);
-    this.id = 'podList';
+    this.id = ListIdentifiers.pod;
+    this.groupId = ListGroupIdentifiers.workloads;
   }
 
   getResourceObservable(params?: HttpParams): Observable<PodList> {

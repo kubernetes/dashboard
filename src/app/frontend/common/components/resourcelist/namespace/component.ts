@@ -21,6 +21,7 @@ import {Observable} from 'rxjs/Observable';
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {EndpointManager} from '../../../services/resource/endpoint';
 import {ResourceService} from '../../../services/resource/resource';
+import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
 
 @Component({
   selector: 'kd-namespace-list',
@@ -31,7 +32,8 @@ export class NamespaceListComponent extends ResourceListWithStatuses<NamespaceLi
 
   constructor(state: StateService, private readonly namespace_: ResourceService<NamespaceList>) {
     super('node', state);
-    this.id = 'namespaceList';
+    this.id = ListIdentifiers.namespace;
+    this.groupId = ListGroupIdentifiers.cluster;
   }
 
   getResourceObservable(params?: HttpParams): Observable<NamespaceList> {

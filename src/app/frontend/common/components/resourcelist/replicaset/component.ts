@@ -20,6 +20,7 @@ import {Observable} from 'rxjs/Observable';
 import {ResourceListWithStatuses} from '../../../../common/resources/list';
 import {EndpointManager} from '../../../../common/services/resource/endpoint';
 import {NamespacedResourceService} from '../../../../common/services/resource/resource';
+import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
 
 @Component({
   selector: 'kd-replica-set-list',
@@ -30,7 +31,8 @@ export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSet
       state: StateService,
       private readonly replicaSet_: NamespacedResourceService<ReplicaSetList>) {
     super('pod', state);
-    this.id = 'replicaSetList';
+    this.id = ListIdentifiers.replicaSet;
+    this.groupId = ListGroupIdentifiers.workloads;
   }
 
   getResourceObservable(params?: HttpParams): Observable<ReplicaSetList> {

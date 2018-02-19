@@ -22,6 +22,7 @@ import {nodeDetailState} from '../../../../resource/cluster/node/detail/state';
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {EndpointManager} from '../../../services/resource/endpoint';
 import {ResourceService} from '../../../services/resource/resource';
+import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
 
 @Component({
   selector: 'kd-node-list',
@@ -33,7 +34,8 @@ export class NodeListComponent extends ResourceListWithStatuses<NodeList, Node> 
   constructor(state: StateService, private readonly node_: ResourceService<NodeList>) {
     super(nodeDetailState.name, state);
     this.setWarningIcon('help');
-    this.id = 'nodeList';
+    this.id = ListIdentifiers.node;
+    this.groupId = ListGroupIdentifiers.cluster;
   }
 
   getResourceObservable(params?: HttpParams): Observable<NodeList> {
