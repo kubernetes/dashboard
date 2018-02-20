@@ -39,7 +39,7 @@ export interface KdError {
 
 export interface Status {
   iconName: string;
-  cssClass: {[className: string]: boolean};
+  iconClass: {[className: string]: boolean};
 }
 
 export interface OnListChangeEvent {

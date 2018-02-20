@@ -34,6 +34,12 @@ export class NamespaceListComponent extends ResourceListWithStatuses<NamespaceLi
     super('node', state);
     this.id = ListIdentifiers.namespace;
     this.groupId = ListGroupIdentifiers.cluster;
+
+    // Register status icon handlers
+    this.registerBinding(
+        this.state.success, this.icon.check_circle, 'kd-success', this.isInSuccessState);
+    this.registerBinding(this.state.warning, this.icon.timelapse, '', this.isInWarningState);
+    this.registerBinding(this.state.error, this.icon.error, 'kd-error', this.isInErrorState);
   }
 
   getResourceObservable(params?: HttpParams): Observable<NamespaceList> {

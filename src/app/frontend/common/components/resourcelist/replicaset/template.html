@@ -35,7 +35,7 @@ limitations under the License.
       <ng-container [matColumnDef]="getDisplayColumns()[0]">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let replicaSet">
-          <mat-icon [ngClass]="getStatus(replicaSet).cssClass">
+          <mat-icon [ngClass]="getStatus(replicaSet).iconClass">
             {{getStatus(replicaSet).iconName}}
           </mat-icon>
         </mat-cell>

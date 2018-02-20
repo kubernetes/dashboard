@@ -33,6 +33,12 @@ export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSet
     super('pod', state);
     this.id = ListIdentifiers.replicaSet;
     this.groupId = ListGroupIdentifiers.workloads;
+
+    // Register status icon handlers
+    this.registerBinding(
+        this.state.success, this.icon.check_circle, 'kd-success', this.isInSuccessState);
+    this.registerBinding(this.state.pending, this.icon.timelapse, '', this.isInPendingState);
+    this.registerBinding(this.state.error, this.icon.error, 'kd-error', this.isInErrorState);
   }
 
   getResourceObservable(params?: HttpParams): Observable<ReplicaSetList> {
@@ -47,12 +53,12 @@ export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSet
     return resource.pods.warnings.length > 0;
   }
 
-  isInWarningState(resource: ReplicaSet): boolean {
-    return !this.isInErrorState(resource) && resource.pods.pending > 0;
+  isInPendingState(resource: ReplicaSet): boolean {
+    return resource.pods.warnings.length === 0 && resource.pods.pending > 0;
   }
 
   isInSuccessState(resource: ReplicaSet): boolean {
-    return !this.isInErrorState(resource) && !this.isInWarningState(resource);
+    return resource.pods.warnings.length === 0 && resource.pods.pending === 0;
   }
 
   getDisplayColumns(): string[] {

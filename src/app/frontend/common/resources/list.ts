@@ -16,12 +16,12 @@ import {DataSource} from '@angular/cdk/collections';
 import {HttpParams} from '@angular/common/http';
 import {EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {ResourceList} from '@api/backendapi';
+import {Resource, ResourceList} from '@api/backendapi';
 import {OnListChangeEvent, Status} from '@api/frontendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 import {merge} from 'rxjs/observable/merge';
-import {delay, startWith, switchMap} from 'rxjs/operators';
+import {startWith, switchMap} from 'rxjs/operators';
 import {Subscription} from 'rxjs/Subscription';
 
 import {searchState} from '../../search/state';
@@ -237,48 +237,48 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
   abstract getDisplayColumns(): string[];
 }
 
-export abstract class ResourceListWithStatuses<T extends ResourceList, R> extends
+enum State {
+  error = 'error',
+  warning = 'warning',
+  success = 'success',
+  pending = 'pending',
+}
+
+enum Icon {
+  error = 'error',
+  timelapse = 'timelapse',
+  check_circle = 'check_circle',
+  help = 'help',
+}
+
+type StateCheckCallback<T> = (resource: T) => boolean;
+
+export abstract class ResourceListWithStatuses<T extends ResourceList, R extends Resource> extends
     ResourceListBase<T, R> {
-  private readonly errorIcon_ = 'error';
-  private warningIcon_ = 'timelapse';
-  private readonly successIcon_ = 'check_circle';
+  private readonly bindings_: {
+    [stateName: string]:
+        {iconName: string, iconClass: string, callbackFunction: StateCheckCallback<R>}
+  } = {};
 
-  private readonly errorIconClassName_ = 'kd-error';
-  private readonly successIconClassName_ = 'kd-success';
+  protected state = State;
+  protected icon = Icon;
 
-  /**
-   * Allows to override warning icon.
-   */
-  setWarningIcon(iconName: string): void {
-    this.warningIcon_ = iconName;
+  protected registerBinding(
+      stateName: State, iconName: Icon, iconClass: string,
+      callbackFunction: StateCheckCallback<R>): void {
+    this.bindings_[stateName] = {iconName, iconClass, callbackFunction};
   }
 
   getStatus(resource: R): Status {
-    if (this.isInErrorState(resource)) {
-      return {
-        iconName: this.errorIcon_,
-        cssClass: {[this.errorIconClassName_]: true},
-      } as Status;
+    for (const stateName of Object.keys(this.bindings_)) {
+      if (this.bindings_[stateName].callbackFunction(resource)) {
+        return {
+          iconName: this.bindings_[stateName].iconName,
+          iconClass: {[this.bindings_[stateName].iconClass]: true},
+        } as Status;
+      }
     }
 
-    if (this.isInWarningState(resource)) {
-      return {
-        iconName: this.warningIcon_,
-        cssClass: {},
-      } as Status;
-    }
-
-    if (this.isInSuccessState(resource)) {
-      return {
-        iconName: this.successIcon_,
-        cssClass: {[this.successIconClassName_]: true},
-      } as Status;
-    }
-
-    return {} as Status;
+    throw Error(`No status registered for ${resource.typeMeta.kind} list.`);
   }
-
-  abstract isInErrorState(resource?: R): boolean;
-  abstract isInWarningState(resource?: R): boolean;
-  abstract isInSuccessState(resource?: R): boolean;
 }

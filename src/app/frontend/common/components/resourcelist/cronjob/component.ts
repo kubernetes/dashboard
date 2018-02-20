@@ -32,6 +32,11 @@ export class CronJobListComponent extends ResourceListWithStatuses<CronJobList, 
     super('pod', state);
     this.id = ListIdentifiers.cronJob;
     this.groupId = ListGroupIdentifiers.workloads;
+
+    // Register status icon handlers
+    this.registerBinding(
+        this.state.success, this.icon.check_circle, 'kd-success', this.isInSuccessState);
+    this.registerBinding(this.state.error, this.icon.error, 'kd-error', this.isInErrorState);
   }
 
   getResourceObservable(params?: HttpParams): Observable<CronJobList> {
@@ -46,12 +51,8 @@ export class CronJobListComponent extends ResourceListWithStatuses<CronJobList, 
     return resource.suspend;
   }
 
-  isInWarningState(): boolean {
-    return false;
-  }
-
   isInSuccessState(resource: CronJob): boolean {
-    return !this.isInErrorState(resource) && !this.isInWarningState();
+    return !resource.suspend;
   }
 
   getDisplayColumns(): string[] {

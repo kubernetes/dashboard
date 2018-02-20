@@ -33,9 +33,14 @@ export class NodeListComponent extends ResourceListWithStatuses<NodeList, Node> 
 
   constructor(state: StateService, private readonly node_: ResourceService<NodeList>) {
     super(nodeDetailState.name, state);
-    this.setWarningIcon('help');
     this.id = ListIdentifiers.node;
     this.groupId = ListGroupIdentifiers.cluster;
+
+    // Register status icon handlers
+    this.registerBinding(
+        this.state.success, this.icon.check_circle, 'kd-success', this.isInSuccessState);
+    this.registerBinding(this.state.warning, this.icon.help, '', this.isInWarningState);
+    this.registerBinding(this.state.error, this.icon.error, 'kd-error', this.isInErrorState);
   }
 
   getResourceObservable(params?: HttpParams): Observable<NodeList> {

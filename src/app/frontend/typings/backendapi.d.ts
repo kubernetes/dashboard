@@ -12,7 +12,510 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export interface CsrfToken { token: string; }
+// Shared resource types
+export interface ListMeta { totalItems: number; }
+
+export interface ObjectMeta {
+  name: string;
+  namespace: string;
+  labels: StringMap;
+  annotations: StringMap;
+  creationTimestamp: string;
+  uid: string;
+}
+
+export interface ResourceList { listMeta: ListMeta; }
+
+export interface Resource {
+  objectMeta: ObjectMeta;
+  typeMeta: TypeMeta;
+}
+
+export interface TypeMeta { kind: string; }
+
+// List types
+export interface ClusterRoleList extends ResourceList {
+  items: ClusterRole[];
+  errors: K8sError[];
+}
+
+export interface ConfigMapList extends ResourceList {
+  items: ConfigMap[];
+  errors: K8sError[];
+}
+
+export interface CronJobList extends ResourceList {
+  items: CronJob[];
+  status: Status;
+  errors: K8sError[];
+}
+
+export interface DaemonSetList extends ResourceList {
+  daemonSets: DaemonSet[];
+  status: Status;
+  errors: K8sError[];
+}
+
+export interface DeploymentList extends ResourceList {
+  deployments: Deployment[];
+  status: Status;
+  errors: K8sError[];
+}
+
+export interface EndpointList extends ResourceList { endpoints: Endpoint[]; }
+
+export interface EventList extends ResourceList { events: Event[]; }
+
+export interface HorizontalPodAutoscalerList extends ResourceList {
+  horizontalpodautoscalers: HorizontalPodAutoscaler[];
+}
+
+export interface IngressList extends ResourceList {
+  items: Ingress[];
+  errors: K8sError[];
+}
+
+export interface JobList extends ResourceList {
+  jobs: Job[];
+  status: Status;
+  errors: K8sError[];
+}
+
+export interface NamespaceList extends ResourceList {
+  namespaces: Namespace[];
+  errors: K8sError[];
+}
+
+export interface NodeList extends ResourceList {
+  nodes: Node[];
+  errors: K8sError[];
+}
+
+export interface PersistentVolumeClaimList extends ResourceList {
+  items: PersistentVolumeClaim[];
+  errors: K8sError[];
+}
+
+export interface PersistentVolumeList extends ResourceList {
+  items: PersistentVolume[];
+  errors: K8sError[];
+}
+
+export interface PodContainerList { containers: string[]; }
+
+export interface PodList extends ResourceList {
+  pods: Pod[];
+  status: Status;
+  podInfo: PodInfo;
+  cumulativeMetrics: Metric[]|null;
+  errors: K8sError[];
+}
+
+export interface ReplicaSetList extends ResourceList {
+  replicaSets: ReplicaSet[];
+  status: Status;
+  errors: K8sError[];
+}
+
+export interface ReplicationControllerList extends ResourceList {
+  replicationControllers: ReplicationController[];
+  status: Status;
+  errors: K8sError[];
+}
+
+export interface ResourceQuotaDetailList extends ResourceList { items: ResourceQuotaDetail[]; }
+
+export interface SecretList extends ResourceList {
+  secrets: Secret[];
+  errors: K8sError[];
+}
+
+export interface ServiceList extends ResourceList {
+  services: Service[];
+  errors: K8sError[];
+}
+
+export interface StatefulSetList extends ResourceList {
+  statefulSets: StatefulSet[];
+  status: Status;
+  errors: K8sError[];
+}
+
+export interface StorageClassList extends ResourceList {
+  storageClasses: StorageClass[];
+  errors: K8sError[];
+}
+
+// Simple detail types
+export interface ClusterRole extends Resource {}
+
+export interface ConfigMap extends Resource {}
+
+export interface Controller extends Resource {
+  pods: PodInfo;
+  containerImages: string[];
+  initContainerImages: string[];
+}
+
+export interface CronJob extends Resource {
+  schedule: string;
+  suspend: boolean;
+  active: number;
+  lastSchedule: string;
+}
+
+export interface DaemonSet extends Resource {
+  pods: PodInfo;
+  containerImages: string[];
+  initContainerImages: string[];
+}
+
+export interface Deployment extends Resource {
+  pods: PodInfo;
+  containerImages: string[];
+  initContainerImages: string[];
+}
+
+export interface Endpoint extends Resource {
+  host: string;
+  ports: Array<{port: number, protocol: string}>;
+  nodeName: string;
+  port: number;
+  ready: string;
+}
+
+export interface Event extends Resource {
+  message: string;
+  sourceComponent: string;
+  sourceHost: string;
+  object: string;
+  count: number;
+  firstSeen: string;
+  lastSeen: string;
+  reason: string;
+  type: string;
+}
+
+export interface HorizontalPodAutoscaler extends Resource {
+  scaleTargetRef: ScaleTargetRef;
+  minReplicas: number;
+  maxReplicas: number;
+  currentCPUUtilization: number;
+  targetCPUUtilization?: number;
+}
+
+export interface Ingress extends Resource {}
+
+export interface Job extends Resource {
+  pods: PodInfo;
+  containerImages: string[];
+  initContainerImages: string[];
+  parallelism: number;
+}
+
+export interface Namespace extends Resource { phase: string; }
+
+export interface Node extends Resource { ready: string; }
+
+export interface PersistentVolume extends Resource {
+  capacity: StringMap;
+  accessModes: string[];
+  reclaimPolicy: string;
+  status: string;
+  claim: string;
+  reason: string;
+}
+
+export interface PersistentVolumeClaim extends Resource {
+  Status: string;
+  Volume: string;
+}
+
+export interface Pod extends Resource {
+  podStatus: PodStatus;
+  podIP: string;
+  restartCount: number;
+  qosClass: string;
+  metrics: PodMetrics;
+  warnings: Event[];
+  nodeName: string;
+}
+
+export interface PodContainer {
+  name: string;
+  restartCount: number;
+}
+
+export interface ReplicaSet extends Resource {
+  pods: PodInfo;
+  containerImages: string[];
+  initContainerImages: string[];
+}
+
+export interface ReplicationController extends Resource {
+  pods: PodInfo;
+  containerImages: string[];
+  initContainerImages: string[];
+}
+
+export interface Secret extends Resource { type: string; }
+
+export interface Service extends Resource {
+  internalEndpoint: Endpoint;
+  externalEndpoints: Endpoint[];
+  selector: StringMap;
+  type: string;
+  clusterIP: string;
+}
+
+export interface StatefulSet extends Resource {
+  pods: PodInfo;
+  containerImages: string[];
+  initContainerImages: string[];
+}
+
+export interface StorageClass extends Resource {
+  provisioner: string;
+  parameters: StringMap[];
+}
+
+// Detail types
+
+export interface ReplicaSetDetail {
+  objectMeta: ObjectMeta;
+  typeMeta: TypeMeta;
+  podInfo: PodInfo;
+  podList: PodList;
+  containerImages: string[];
+  initContainerImages: string[];
+  eventList: EventList;
+  errors: K8sError[];
+}
+
+export interface ResourceQuotaDetail {
+  objectMeta: ObjectMeta;
+  typeMeta: TypeMeta;
+  scopes: string[];
+  statusList: {[key: string]: ResourceQuotaStatus};
+}
+
+export interface DeploymentDetail {
+  objectMeta: ObjectMeta;
+  typeMeta: TypeMeta;
+  selector: Label[];
+  statusInfo: DeploymentInfo;
+  strategy: string;
+  minReadySeconds: number;
+  revisionHistoryLimit?: number;
+  rollingUpdateStrategy?: RollingUpdateStrategy;
+  oldReplicaSetList: ReplicaSetList;
+  newReplicaSet: ReplicaSet;
+  events: EventList;
+  errors: K8sError[];
+}
+
+export interface ReplicationControllerDetail {
+  objectMeta: ObjectMeta;
+  typeMeta: TypeMeta;
+  labelSelector: StringMap;
+  containerImages: string[];
+  initContainerImages: string[];
+  podInfo: PodInfo;
+  podList: PodList;
+  serviceList: ServiceList;
+  eventList: EventList;
+  hasMetrics: boolean;
+  errors: K8sError[];
+}
+
+export interface ServiceDetail {
+  objectMeta: ObjectMeta;
+  typeMeta: TypeMeta;
+  internalEndpoint: Endpoint;
+  externalEndpoints: Endpoint[];
+  endpointList: Endpoint[];
+  selector: StringMap;
+  type: string;
+  clusterIP: string;
+  podList: PodList;
+  sessionAffinity: string;
+  errors: K8sError[];
+}
+
+export interface DaemonSetDetail {
+  objectMeta: ObjectMeta;
+  typeMeta: TypeMeta;
+  labelSelector: StringMap;
+  containerImages: string[];
+  initContainerImages: string[];
+  podInfo: PodInfo;
+  podList: PodList;
+  serviceList: ServiceList;
+  hasMetrics: boolean;
+  eventList: EventList;
+  errors: K8sError[];
+}
+
+export interface NamespaceDetail {
+  objectMeta: ObjectMeta;
+  typeMeta: TypeMeta;
+  phase: string;
+  eventList: EventList;
+  resourceLimits: LimitRange[];
+  resourceQuotaList: ResourceQuotaDetailList;
+  errors: K8sError[];
+}
+
+export interface SecretDetail {
+  objectMeta: ObjectMeta;
+  typeMeta: TypeMeta;
+  type: string;
+  data: StringMap;
+}
+
+export interface IngressDetail {
+  objectMeta: ObjectMeta;
+  typeMeta: TypeMeta;
+}
+
+export interface PersistentVolumeClaimDetail extends Resource {
+  typeMeta: TypeMeta;
+  status: string;
+  volume: string;
+  capacity: string;
+  storageClass: string;
+  accessModes: string[];
+}
+
+export interface ConfigMapDetail {
+  objectMeta: ObjectMeta;
+  typeMeta: TypeMeta;
+  ata: StringMap;
+}
+
+export interface JobDetail {
+  objectMeta: ObjectMeta;
+  typeMeta: TypeMeta;
+  podInfo: PodInfo;
+  podList: PodList;
+  containerImages: string[];
+  initContainerImages: string[];
+  eventList: EventList;
+  parallelism: number;
+  completions: number;
+}
+
+export interface CronJobDetail {
+  objectMeta: ObjectMeta;
+  typeMeta: TypeMeta;
+  schedule: string;
+  suspend: boolean;
+  active: number;
+  lastSchedule: string;
+  concurrencyPolicy: string;
+  startingDeadlineSeconds: number;
+  activeJobs: JobList;
+  events: EventList;
+}
+
+export interface StatefulSetDetail {
+  objectMeta: ObjectMeta;
+  typeMeta: TypeMeta;
+  podInfo: PodInfo;
+  podList: PodList;
+  containerImages: string[];
+  initContainerImages: string[];
+  eventList: EventList;
+  errors: K8sError[];
+}
+
+export interface PersistentVolumeDetail {
+  objectMeta: ObjectMeta;
+  typeMeta: TypeMeta;
+  status: string;
+  claim: string;
+  reclaimPolicy: string;
+  accessModes: string[];
+  capacity: StringMap;
+  message: string;
+  persistentVolumeSource: PersistentVolumeSource;
+}
+
+export interface PodDetail {
+  objectMeta: ObjectMeta;
+  typeMeta: TypeMeta;
+  initContainers: Container[];
+  containers: Container[];
+  podPhase: string;
+  podIP: string;
+  nodeName: string;
+  restartCount: number;
+  metrics: PodMetrics;
+  conditions: Condition[];
+  errors: K8sError[];
+}
+
+export interface NodeDetail {
+  objectMeta: ObjectMeta;
+  typeMeta: TypeMeta;
+  phase: string;
+  podCIDR: string;
+  providerID: string;
+  unschedulable: boolean;
+  allocatedResources: NodeAllocatedResources;
+  nodeInfo: NodeInfo;
+  containerImages: string[];
+  initContainerImages: string[];
+  addresses: NodeAddress[];
+  taints: NodeTaint[];
+  conditions: Condition[];
+  podList: PodList;
+  eventList: EventList;
+  errors: K8sError[];
+}
+
+export interface HorizontalPodAutoscalerDetail {
+  objectMeta: ObjectMeta;
+  typeMeta: TypeMeta;
+  scaleTargetRef: ScaleTargetRef;
+  minReplicas: number;
+  maxReplicas: number;
+  currentCPUUtilization: number;
+  targetCPUUtilization?: number;
+  currentReplicas: number;
+  desiredReplicas: number;
+  lastScaleTime: string;
+}
+
+// Validation types
+export interface AppNameValidity { valid: boolean; }
+
+export interface AppNameValiditySpec {
+  name: string;
+  namespace: string;
+}
+
+export interface ImageReferenceValidity {
+  valid: boolean;
+  reason: string;
+}
+
+export interface ImageReferenceValiditySpec { reference: string; }
+
+export interface ProtocolValidity { valid: boolean; }
+
+export interface ProtocolValiditySpec {
+  protocol: string;
+  isExternal: boolean;
+}
+
+// Auth related types
+export interface AuthResponse {
+  jweToken: string;
+  errors: K8sError[];
+}
+
+export interface CanIResponse { allowed: boolean; }
 
 export interface LoginSpec {
   username: string;
@@ -27,16 +530,35 @@ export interface LoginStatus {
   httpsMode: boolean;
 }
 
-export interface AuthResponse {
-  jweToken: string;
-  errors: K8sError[];
+// Other types | TODO: sort these types alphabetically
+export interface AppDeploymentContentSpec {
+  name: string;
+  namespace: string;
+  content: string;
+  validate: boolean;
 }
+
+export interface AppDeploymentSpec {
+  containerImage: string;
+  containerCommand?: string;
+  containerCommandArgs?: string;
+  isExternal: boolean;
+  name: string;
+  description?: string;
+  portMappings: PortMapping[];
+  labels: Label[];
+  replicas: number;
+  namespace: string;
+  memoryRequirement?: string;
+  cpuRequirement?: number;
+  runAsPrivileged: boolean;
+}
+
+export interface CsrfToken { token: string; }
 
 export interface LocalSettings { isThemeDark: boolean; }
 
 export interface AppConfig { serverTime: number; }
-
-export interface CanIResponse { allowed: boolean; }
 
 interface StringMap {
   [key: string]: string;
@@ -50,19 +572,6 @@ export interface ErrStatus {
 }
 
 export interface K8sError { errStatus: ErrStatus; }
-
-export interface ObjectMeta {
-  name: string;
-  namespace: string;
-  labels: StringMap;
-  annotations: StringMap;
-  creationTimestamp: string;
-  uid: string;
-}
-
-export interface TypeMeta { kind: string; }
-
-export interface ListMeta { totalItems: number; }
 
 export interface Condition {
   type: string;
@@ -86,20 +595,9 @@ export interface ContainerState {
   terminated: ContainerStateTerminated;
 }
 
-export interface EventList extends ResourceList { events: Event[]; }
-
-export interface Event {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-  message: string;
-  sourceComponent: string;
-  sourceHost: string;
-  object: string;
-  count: number;
-  firstSeen: string;
-  lastSeen: string;
-  reason: string;
-  type: string;
+export interface ResourceQuotaStatus {
+  used: string;
+  hard: string;
 }
 
 export interface MetricResult {
@@ -177,40 +675,6 @@ export interface PodInfo {
   warnings: Event[];
 }
 
-export interface PodDetail {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-  initContainers: Container[];
-  containers: Container[];
-  podPhase: string;
-  podIP: string;
-  nodeName: string;
-  restartCount: number;
-  metrics: PodMetrics;
-  conditions: Condition[];
-  errors: K8sError[];
-}
-
-export interface Pod {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-  podStatus: PodStatus;
-  podIP: string;
-  restartCount: number;
-  qosClass: string;
-  metrics: PodMetrics;
-  warnings: Event[];
-  nodeName: string;
-}
-
-export interface PodList extends ResourceList {
-  pods: Pod[];
-  status: Status;
-  podInfo: PodInfo;
-  cumulativeMetrics: Metric[]|null;
-  errors: K8sError[];
-}
-
 export interface NodeAllocatedResources {
   cpuRequests: number;
   cpuRequestsFraction: number;
@@ -252,52 +716,6 @@ export interface NodeTaint {
   timeAdded: number;
 }
 
-export interface NodeDetail {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-  phase: string;
-  podCIDR: string;
-  providerID: string;
-  unschedulable: boolean;
-  allocatedResources: NodeAllocatedResources;
-  nodeInfo: NodeInfo;
-  containerImages: string[];
-  initContainerImages: string[];
-  addresses: NodeAddress[];
-  taints: NodeTaint[];
-  conditions: Condition[];
-  podList: PodList;
-  eventList: EventList;
-  errors: K8sError[];
-}
-
-export interface Node {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-  ready: string;
-}
-
-export interface NodeList extends ResourceList {
-  nodes: Node[];
-  errors: K8sError[];
-}
-
-export interface ReplicaSet {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-  pods: PodInfo;
-  containerImages: string[];
-  initContainerImages: string[];
-}
-
-export interface ReplicaSetList extends ResourceList {
-  replicaSets: ReplicaSet[];
-  status: Status;
-  errors: K8sError[];
-}
-
-export interface ResourceList { listMeta: ListMeta; }
-
 export interface PortMapping {
   port: number|null;
   protocol: string;
@@ -314,90 +732,9 @@ export interface Label {
   value: string;
 }
 
-export interface AppDeploymentSpec {
-  containerImage: string;
-  containerCommand?: string;
-  containerCommandArgs?: string;
-  isExternal: boolean;
-  name: string;
-  description?: string;
-  portMappings: PortMapping[];
-  labels: Label[];
-  replicas: number;
-  namespace: string;
-  memoryRequirement?: string;
-  cpuRequirement?: number;
-  runAsPrivileged: boolean;
-}
-
-export interface AppDeploymentContentSpec {
-  name: string;
-  namespace: string;
-  content: string;
-  validate: boolean;
-}
-
-export interface ReplicationControllerList {
-  replicationControllers: ReplicationController[];
-  listMeta: ListMeta;
-  status: Status;
-  errors: K8sError[];
-}
-
 export interface PodEvent {
   reason: string;
   message: string;
-}
-
-export interface ReplicationController {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-  pods: PodInfo;
-  containerImages: string[];
-  initContainerImages: string[];
-}
-
-export interface ReplicaSet {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-  pods: PodInfo;
-  containerImages: string[];
-  initContainerImages: string[];
-}
-
-export interface ReplicaSetDetail {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-  podInfo: PodInfo;
-  podList: PodList;
-  containerImages: string[];
-  initContainerImages: string[];
-  eventList: EventList;
-  errors: K8sError[];
-}
-
-export interface ReplicaSetList {
-  replicaSets: ReplicaSet[];
-  listMeta: ListMeta;
-  status: Status;
-  errors: K8sError[];
-}
-
-export interface ResourceQuotaDetail {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-  scopes: string[];
-  // TODO statusList: Object<string; ResourceQuotaStatus>;
-}
-
-export interface ResourceQuotaStatus {
-  used: string;
-  hard: string;
-}
-
-export interface ResourceQuotaDetailList {
-  items: ResourceQuotaDetail[];
-  listMeta: ListMeta;
 }
 
 export interface GCEPersistentDiskVolumeSource {
@@ -441,6 +778,7 @@ export interface RBDVolumeSource {
 
 export interface LocalObjectReference { name: string; }
 
+/* tslint:disable */
 export interface ISCSIVolumeSource {
   targetPortal: string;
   iqn: string;
@@ -448,6 +786,7 @@ export interface ISCSIVolumeSource {
   fsType: string;
   readOnly: boolean;
 }
+/* tslint:enable */
 
 export interface CinderVolumeSource {
   volumeID: string;
@@ -473,21 +812,6 @@ export interface FCVolumeSource {
 
 export interface FlockerVolumeSource { datasetName: string; }
 
-export interface Deployment {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-  pods: PodInfo;
-  containerImages: string[];
-  initContainerImages: string[];
-}
-
-export interface DeploymentList {
-  deployments: Deployment[];
-  listMeta: ListMeta;
-  status: Status;
-  errors: K8sError[];
-}
-
 export interface RollingUpdateStrategy {
   maxSurge: (number|string);
   maxUnavailable: (number|string);
@@ -500,35 +824,6 @@ export interface DeploymentInfo {
   unavailable: number;
 }
 
-export interface DeploymentDetail {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-  selector: Label[];
-  statusInfo: DeploymentInfo;
-  strategy: string;
-  minReadySeconds: number;
-  revisionHistoryLimit?: number;
-  rollingUpdateStrategy?: RollingUpdateStrategy;
-  oldReplicaSetList: ReplicaSetList;
-  newReplicaSet: ReplicaSet;
-  events: EventList;
-  errors: K8sError[];
-}
-
-export interface ReplicationControllerDetail {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-  labelSelector: StringMap;
-  containerImages: string[];
-  initContainerImages: string[];
-  podInfo: PodInfo;
-  podList: PodList;
-  serviceList: ServiceList;
-  eventList: EventList;
-  hasMetrics: boolean;
-  errors: K8sError[];
-}
-
 export interface ReplicationControllerSpec { replicas: number; }
 
 export interface ReplicaCounts {
@@ -538,99 +833,7 @@ export interface ReplicaCounts {
 
 export interface DeleteReplicationControllerSpec { deleteServices: boolean; }
 
-export interface ClusterRole {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-}
-
-export interface ClusterRoleList {
-  items: ClusterRole[];
-  listMeta: ListMeta;
-  errors: K8sError[];
-}
-
-export interface EndpointList {
-  endpoints: Endpoint[];
-  listMeta: ListMeta;
-}
-
-export interface ServiceDetail {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-  internalEndpoint: Endpoint;
-  externalEndpoints: Endpoint[];
-  endpointList: Endpoint[];
-  selector: StringMap;
-  type: string;
-  clusterIP: string;
-  podList: PodList;
-  sessionAffinity: string;
-  errors: K8sError[];
-}
-
-export interface Service {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-  internalEndpoint: Endpoint;
-  externalEndpoints: Endpoint[];
-  selector: StringMap;
-  type: string;
-  clusterIP: string;
-}
-
-export interface ServiceList {
-  services: Service[];
-  listMeta: ListMeta;
-  errors: K8sError[];
-}
-
-export interface DaemonSetDetail {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-  labelSelector: StringMap;
-  containerImages: string[];
-  initContainerImages: string[];
-  podInfo: PodInfo;
-  podList: PodList;
-  serviceList: ServiceList;
-  hasMetrics: boolean;
-  eventList: EventList;
-  errors: K8sError[];
-}
-
-export interface DaemonSet {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-  pods: PodInfo;
-  containerImages: string[];
-  initContainerImages: string[];
-}
-
-export interface DaemonSetList {
-  daemonSets: DaemonSet[];
-  listMeta: ListMeta;
-  status: Status;
-  errors: K8sError[];
-}
-
-export interface Endpoint {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-  host: string;
-  ports: Array<{port: number, protocol: string}>;
-  nodeName: string;
-  port: number;
-  ready: string;
-}
-
 export interface NamespaceSpec { name: string; }
-
-export interface PodContainer {
-  name: string;
-  restartCount: number;
-}
-
-export interface PodContainerList { containers: string[]; }
 
 export interface ReplicationControllerPodWithContainers {
   name: string;
@@ -679,113 +882,12 @@ export interface LogLineReference {
   lineNum: number;
 }
 
-export interface AppNameValiditySpec {
-  name: string;
-  namespace: string;
-}
-
-export interface AppNameValidity { valid: boolean; }
-
-export interface ImageReferenceValiditySpec { reference: string; }
-
-export interface ImageReferenceValidity {
-  valid: boolean;
-  reason: string;
-}
-
 export interface Protocols { protocols: string[]; }
-
-export interface ProtocolValidity { valid: boolean; }
-
-export interface ProtocolValiditySpec {
-  protocol: string;
-  isExternal: boolean;
-}
 
 export interface SecretSpec {
   name: string;
   namespace: string;
   data: string;
-}
-
-export interface Namespace {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-  phase: string;
-}
-
-export interface NamespaceList {
-  listMeta: ListMeta;
-  namespaces: Namespace[];
-  errors: K8sError[];
-}
-
-export interface NamespaceDetail {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-  phase: string;
-  eventList: EventList;
-  resourceLimits: LimitRange[];
-  resourceQuotaList: ResourceQuotaDetailList;
-  errors: K8sError[];
-}
-
-export interface SecretDetail {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-  type: string;
-  data: StringMap;
-}
-
-export interface Secret {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-  type: string;
-}
-
-export interface SecretList {
-  secrets: Secret[];
-  listMeta: ListMeta;
-  errors: K8sError[];
-}
-
-export interface IngressDetail {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-}
-
-export interface Ingress {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-}
-
-export interface IngressList {
-  listMeta: ListMeta;
-  items: Ingress[];
-  errors: K8sError[];
-}
-
-export interface PersistentVolumeClaimDetail {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-  status: string;
-  volume: string;
-  capacity: string;
-  storageClass: string;
-  accessModes: string[];
-}
-
-export interface PersistentVolumeClaim {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-  Status: string;
-  Volume: string;
-}
-
-export interface PersistentVolumeClaimList {
-  listMeta: ListMeta;
-  items: PersistentVolumeClaim[];
-  errors: K8sError[];
 }
 
 export interface LimitRange {
@@ -798,58 +900,9 @@ export interface LimitRange {
   maxLimitRequestRatio: string;
 }
 
-export interface HorizontalPodAutoscalerDetail {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-  scaleTargetRef: ScaleTargetRef;
-  minReplicas: number;
-  maxReplicas: number;
-  currentCPUUtilization: number;
-  targetCPUUtilization?: number;
-  currentReplicas: number;
-  desiredReplicas: number;
-  lastScaleTime: string;
-}
-
 export interface ScaleTargetRef {
   kind: string;
   name: string;
-}
-
-export interface HorizontalPodAutoscaler {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-  scaleTargetRef: ScaleTargetRef;
-  minReplicas: number;
-  maxReplicas: number;
-  currentCPUUtilization: number;
-  targetCPUUtilization?: number;
-}
-
-export interface HorizontalPodAutoscalerList {
-  listMeta: ListMeta;
-  horizontalpodautoscalers: HorizontalPodAutoscaler[];
-}
-
-export interface StorageClass {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-  provisioner: string;
-  parameters: StringMap[];
-}
-
-export interface StorageClassList {
-  listMeta: ListMeta;
-  storageClasses: StorageClass[];
-  errors: K8sError[];
-}
-
-export interface Controller {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-  pods: PodInfo;
-  containerImages: string[];
-  initContainerImages: string[];
 }
 
 export interface GlobalSettings {
@@ -892,52 +945,6 @@ export interface SystemBanner {
   severity: string;
 }
 
-export interface ConfigMap {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-}
-
-export interface ConfigMapDetail {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-  ata: StringMap;
-}
-
-export interface ConfigMapList {
-  items: ConfigMap[];
-  listMeta: ListMeta;
-  errors: K8sError[];
-}
-
-export interface PersistentVolume {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-  capacity: StringMap;
-  accessModes: string[];
-  reclaimPolicy: string;
-  status: string;
-  claim: string;
-  reason: string;
-}
-
-export interface PersistentVolumeList {
-  items: PersistentVolume[];
-  listMeta: ListMeta;
-  errors: K8sError[];
-}
-
-export interface PersistentVolumeDetail {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-  status: string;
-  claim: string;
-  reclaimPolicy: string;
-  accessModes: string[];
-  capacity: StringMap;
-  message: string;
-  persistentVolumeSource: PersistentVolumeSource;
-}
-
 export interface PersistentVolumeSource {
   gcePersistentDisk: GCEPersistentDiskVolumeSource;
   awsElasticBlockStore: AWSElasticBlockStorageVolumeSource;
@@ -949,87 +956,4 @@ export interface PersistentVolumeSource {
   cinder: CinderVolumeSource;
   fc: FCVolumeSource;
   flocker: FlockerVolumeSource;
-}
-
-export interface Job {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-  pods: PodInfo;
-  containerImages: string[];
-  initContainerImages: string[];
-  parallelism: number;
-}
-
-export interface JobDetail {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-  podInfo: PodInfo;
-  podList: PodList;
-  containerImages: string[];
-  initContainerImages: string[];
-  eventList: EventList;
-  parallelism: number;
-  completions: number;
-}
-
-export interface JobList {
-  jobs: Job[];
-  listMeta: ListMeta;
-  status: Status;
-  errors: K8sError[];
-}
-
-export interface CronJob {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-  schedule: string;
-  suspend: boolean;
-  active: number;
-  lastSchedule: string;
-}
-
-export interface CronJobDetail {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-  schedule: string;
-  suspend: boolean;
-  active: number;
-  lastSchedule: string;
-  concurrencyPolicy: string;
-  startingDeadlineSeconds: number;
-  activeJobs: JobList;
-  events: EventList;
-}
-
-export interface CronJobList {
-  items: CronJob[];
-  listMeta: ListMeta;
-  status: Status;
-  errors: K8sError[];
-}
-
-export interface StatefulSet {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-  pods: PodInfo;
-  containerImages: string[];
-  initContainerImages: string[];
-}
-
-export interface StatefulSetDetail {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-  podInfo: PodInfo;
-  podList: PodList;
-  containerImages: string[];
-  initContainerImages: string[];
-  eventList: EventList;
-  errors: K8sError[];
-}
-
-export interface StatefulSetList {
-  statefulSets: StatefulSet[];
-  listMeta: ListMeta;
-  status: Status;
-  errors: K8sError[];
 }

@@ -35,6 +35,12 @@ export class PersistentVolumeListComponent extends
     super('node', state);
     this.id = ListIdentifiers.persistentVolume;
     this.groupId = ListGroupIdentifiers.cluster;
+
+    // Register status icon handlers
+    this.registerBinding(
+        this.state.success, this.icon.check_circle, 'kd-success', this.isInSuccessState);
+    this.registerBinding(this.state.warning, this.icon.help, '', this.isInWarningState);
+    this.registerBinding(this.state.error, this.icon.error, 'kd-error', this.isInErrorState);
   }
 
   getResourceObservable(params?: HttpParams): Observable<PersistentVolumeList> {

@@ -35,7 +35,7 @@ limitations under the License.
       <ng-container [matColumnDef]="getDisplayColumns()[0]">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let namespace">
-          <mat-icon [ngClass]="getStatus(namespace).cssClass">
+          <mat-icon [ngClass]="getStatus(namespace).iconClass">
             {{getStatus(namespace).iconName}}
           </mat-icon>
         </mat-cell>
