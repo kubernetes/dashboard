@@ -254,12 +254,16 @@ enum Icon {
 
 type StateCheckCallback<T> = (resource: T) => boolean;
 
+type StateBinding<T> = {
+  iconName: string,
+  iconClass: string,
+  callbackFunction: StateCheckCallback<T>
+};
+
 export abstract class ResourceListWithStatuses<T extends ResourceList, R extends Resource> extends
     ResourceListBase<T, R> {
-  private readonly bindings_: {
-    [stateName: string]:
-        {iconName: string, iconClass: string, callbackFunction: StateCheckCallback<R>}
-  } = {};
+  private readonly bindings_: {[stateName: string]: StateBinding<R>} = {};
+  private lastStateName_: string;
 
   protected state = State;
   protected icon = Icon;
@@ -271,15 +275,28 @@ export abstract class ResourceListWithStatuses<T extends ResourceList, R extends
   }
 
   getStatus(resource: R): Status {
+    if (this.lastStateName_) {
+      const stateBinding = this.bindings_[this.lastStateName_];
+      if (stateBinding.callbackFunction(resource)) {
+        return this.getStatusObject_(stateBinding);
+      }
+    }
+
     for (const stateName of Object.keys(this.bindings_)) {
-      if (this.bindings_[stateName].callbackFunction(resource)) {
-        return {
-          iconName: this.bindings_[stateName].iconName,
-          iconClass: {[this.bindings_[stateName].iconClass]: true},
-        } as Status;
+      const stateBinding = this.bindings_[stateName];
+      if (stateBinding.callbackFunction(resource)) {
+        this.lastStateName_ = stateName;
+        return this.getStatusObject_(stateBinding);
       }
     }
 
     throw Error(`No status registered for ${resource.typeMeta.kind} list.`);
+  }
+
+  private getStatusObject_(stateBinding: StateBinding<R>): Status {
+    return {
+      iconName: stateBinding.iconName,
+      iconClass: {[stateBinding.iconClass]: true},
+    };
   }
 }

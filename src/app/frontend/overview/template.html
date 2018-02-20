@@ -21,6 +21,8 @@ limitations under the License.
                [hideable]="true"></kd-pod-list>
   <kd-replica-set-list (onchange)="onListUpdate($event)"
                        [hideable]="true"></kd-replica-set-list>
+  <kd-cron-job-list (onchange)="onListUpdate($event)"
+                    [hideable]="true"></kd-cron-job-list>
 
   <div class="kd-card-group-header kd-muted"
        [hidden]="!hasDiscovery()">Discovery and Load Balancing</div>
