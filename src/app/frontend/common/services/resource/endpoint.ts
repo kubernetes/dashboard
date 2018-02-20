@@ -28,6 +28,12 @@ export class EndpointManager {
     }
   };
 
+  static cronJob = class {
+    static list(): string {
+      return `${baseHref}/cronjob/:namespace`;
+    }
+  };
+
   static replicaSet = class {
     static list(): string {
       return `${baseHref}/replicaset/:namespace`;

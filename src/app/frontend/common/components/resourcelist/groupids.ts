@@ -17,6 +17,7 @@ export enum ListIdentifiers {
   node = 'nodeList',
   persistentVolume = 'persistentVolumeList',
   clusterRole = 'clusterRoleList',
+  cronJob = 'cronJob',
   pod = 'podList',
   replicaSet = 'replicaSetList',
 }
