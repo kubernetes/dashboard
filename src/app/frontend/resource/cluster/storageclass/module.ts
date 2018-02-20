@@ -15,7 +15,10 @@
 import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
 
+import {ComponentsModule} from '../../../common/components/module';
+import {ResourceModule} from '../../../common/services/resource/module';
 import {SharedModule} from '../../../shared.module';
+
 import {StorageClassListComponent} from './list/component';
 import {storageClassListState} from './list/state';
 import {storageClassState} from './state';
@@ -23,6 +26,8 @@ import {storageClassState} from './state';
 @NgModule({
   imports: [
     SharedModule,
+    ResourceModule,
+    ComponentsModule,
     UIRouterModule.forChild({states: [storageClassState, storageClassListState]}),
   ],
   declarations: [StorageClassListComponent],

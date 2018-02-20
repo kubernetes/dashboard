@@ -72,6 +72,16 @@ export class EndpointManager {
     }
   };
 
+  static storageClass = class {
+    static list(): string {
+      return `${baseHref}/storageclass`;
+    }
+
+    static detail(): string {
+      return `${baseHref}/storageclass/:name`;
+    }
+  };
+
   static clusterRole = class {
     static list(): string {
       return `${baseHref}/clusterrole`;
