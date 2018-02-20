@@ -13,8 +13,7 @@
 // limitations under the License.
 
 import {Component} from '@angular/core';
+import {GroupedResourceList} from '../../common/resources/groupedlist';
 
 @Component({selector: 'kd-discovery', templateUrl: './template.html', styleUrls: ['./style.scss']})
-export class DiscoveryComponent {
-  constructor() {}
-}
+export class DiscoveryComponent extends GroupedResourceList {}

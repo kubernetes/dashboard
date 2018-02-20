@@ -13,8 +13,7 @@
 // limitations under the License.
 
 import {Component} from '@angular/core';
+import {GroupedResourceList} from '../../common/resources/groupedlist';
 
 @Component({selector: 'kd-config', templateUrl: './template.html', styleUrls: ['./style.scss']})
-export class ConfigComponent {
-  constructor() {}
-}
+export class ConfigComponent extends GroupedResourceList {}

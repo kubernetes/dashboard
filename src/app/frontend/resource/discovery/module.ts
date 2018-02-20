@@ -15,13 +15,16 @@
 import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
 
+import {ComponentsModule} from '../../common/components/module';
 import {SharedModule} from '../../shared.module';
+
 import {DiscoveryComponent} from './component';
 import {discoveryState} from './state';
 
 @NgModule({
   imports: [
     SharedModule,
+    ComponentsModule,
     UIRouterModule.forChild({states: [discoveryState]}),
   ],
   declarations: [DiscoveryComponent],

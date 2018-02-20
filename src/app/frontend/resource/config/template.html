@@ -14,4 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-Config
+<div [hidden]="shouldShowZeroState()">
+
+</div>
+
+<kd-zero-state [hidden]="!shouldShowZeroState()"></kd-zero-state>
