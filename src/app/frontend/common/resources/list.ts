@@ -278,7 +278,7 @@ export abstract class ResourceListWithStatuses<T extends ResourceList, R> extend
     return {} as Status;
   }
 
-  abstract isInErrorState(resource: R): boolean;
-  abstract isInWarningState(resource: R): boolean;
-  abstract isInSuccessState(resource: R): boolean;
+  abstract isInErrorState(resource?: R): boolean;
+  abstract isInWarningState(resource?: R): boolean;
+  abstract isInSuccessState(resource?: R): boolean;
 }

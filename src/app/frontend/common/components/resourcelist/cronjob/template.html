@@ -18,7 +18,7 @@ limitations under the License.
          [hidden]="isHidden()">
   <div title
        fxLayout="row">
-    Replica Sets
+    Cron Jobs
     <kd-card-list-filter></kd-card-list-filter>
   </div>
 
@@ -29,14 +29,14 @@ limitations under the License.
 
     <mat-table [dataSource]="getData()"
                matSort
-               [matSortActive]="getDisplayColumns()[4]"
+               [matSortActive]="getDisplayColumns()[7]"
                matSortDisableClear
                matSortDirection="asc">
       <ng-container [matColumnDef]="getDisplayColumns()[0]">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let replicaSet">
-          <mat-icon [ngClass]="getStatus(replicaSet).cssClass">
-            {{getStatus(replicaSet).iconName}}
+        <mat-cell *matCellDef="let cronJob">
+          <mat-icon [ngClass]="getStatus(cronJob).cssClass">
+            {{getStatus(cronJob).iconName}}
           </mat-icon>
         </mat-cell>
       </ng-container>
@@ -45,39 +45,51 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true">Name</mat-header-cell>
-        <mat-cell *matCellDef="let replicaSet">
-          <a [href]="getDetailsHref(replicaSet.objectMeta.name)">
-          {{replicaSet.objectMeta.name}}
+        <mat-cell *matCellDef="let cronJob">
+          <a [href]="getDetailsHref(cronJob.objectMeta.name)">
+          {{cronJob.objectMeta.name}}
           </a>
         </mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getDisplayColumns()[2]">
         <mat-header-cell *matHeaderCellDef>Labels</mat-header-cell>
-        <mat-cell *matCellDef="let replicaSet">
-          <kd-chips [map]="replicaSet.objectMeta.labels"></kd-chips>
+        <mat-cell *matCellDef="let cronJob">
+          <kd-chips [map]="cronJob.objectMeta.labels"></kd-chips>
         </mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getDisplayColumns()[3]">
-        <mat-header-cell *matHeaderCellDef>Pods</mat-header-cell>
-        <mat-cell *matCellDef="let replicaSet">
-          {{replicaSet.pods.running}} / {{replicaSet.pods.desired}}
+        <mat-header-cell *matHeaderCellDef>Schedule</mat-header-cell>
+        <mat-cell *matCellDef="let cronJob">
+          <span>{{cronJob.schedule}}</span>
+          <span *ngIf="!cronJob.schedule">-</span>
         </mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getDisplayColumns()[5]">
+        <mat-header-cell *matHeaderCellDef>Suspend</mat-header-cell>
+        <mat-cell *matCellDef="let cronJob">{{!!cronJob.suspend}}</mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getDisplayColumns()[4]">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
-                         disableClear="true">Age</mat-header-cell>
-        <mat-cell *matCellDef="let replicaSet">{{replicaSet.objectMeta.creationTimestamp | kdRelativeTime}}</mat-cell>
+                         disableClear="true">Active</mat-header-cell>
+        <mat-cell *matCellDef="let cronJob">{{cronJob.active}}</mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayColumns()[5]">
-        <mat-header-cell *matHeaderCellDef>Images</mat-header-cell>
-        <mat-cell *matCellDef="let replicaSet">
-          <kd-chips [map]="replicaSet.containerImages"></kd-chips>
+      <ng-container [matColumnDef]="getDisplayColumns()[6]">
+        <mat-header-cell *matHeaderCellDef>Last Schedule</mat-header-cell>
+        <mat-cell *matCellDef="let cronJob">
+          <span>{{cronJob.lastSchedule | kdRelativeTime}}</span>
+          <span *ngIf="!cronJob.lastSchedule">-</span>
         </mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getDisplayColumns()[7]">
+        <mat-header-cell *matHeaderCellDef>Age</mat-header-cell>
+        <mat-cell *matCellDef="let cronJob">{{cronJob.objectMeta.creationTimestamp | kdRelativeTime}}</mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="getDisplayColumns()"></mat-header-row>

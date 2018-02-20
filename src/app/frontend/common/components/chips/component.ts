@@ -39,6 +39,10 @@ export class ChipsComponent implements OnInit {
   isShowingAll = false;
 
   ngOnInit(): void {
+    if (this.map === undefined) {
+      this.map = [];
+    }
+
     if (Array.isArray(this.map)) {
       this.keys = this.map as string[];
     } else {
