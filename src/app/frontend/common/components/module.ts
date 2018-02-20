@@ -33,6 +33,7 @@ import {PersistentVolumeListComponent} from './resourcelist/persistentvolume/com
 import {PodListComponent} from './resourcelist/pod/component';
 import {ReplicaSetListComponent} from './resourcelist/replicaset/component';
 import {LoadingSpinner} from './resourcelist/spinner/component';
+import {StorageClassListComponent} from './resourcelist/storageclass/component';
 import {ListZeroState} from './resourcelist/zerostate/component';
 import {ZeroState} from './zerostate/component';
 
@@ -59,6 +60,7 @@ import {ZeroState} from './zerostate/component';
     ListZeroState,
     ZeroState,
     ClusterRoleListComponent,
+    StorageClassListComponent,
     CronJobListComponent,
   ],
   exports: [
@@ -80,6 +82,7 @@ import {ZeroState} from './zerostate/component';
     ZeroState,
     ClusterRoleListComponent,
     CronJobListComponent,
+    StorageClassListComponent,
   ],
 })
 export class ComponentsModule {}

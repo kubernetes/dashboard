@@ -13,10 +13,11 @@
 // limitations under the License.
 
 export enum ListIdentifiers {
+  clusterRole = 'clusterRoleList',
   namespace = 'namespaceList',
   node = 'nodeList',
   persistentVolume = 'persistentVolumeList',
-  clusterRole = 'clusterRoleList',
+  storageClass = 'storageClassList',
   cronJob = 'cronJob',
   pod = 'podList',
   replicaSet = 'replicaSetList',
