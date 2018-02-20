@@ -36,7 +36,8 @@ export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
     // Register status icon handlers
     this.registerBinding(
         this.state.success, this.icon.check_circle, 'kd-success', this.isInSuccessState);
-    this.registerBinding(this.state.warning, this.icon.timelapse, '', this.isInWarningState);
+    this.registerBinding(
+        this.state.pending, this.icon.timelapse, 'kd-muted', this.isInPendingState);
     this.registerBinding(this.state.error, this.icon.error, 'kd-error', this.isInErrorState);
   }
 
@@ -52,7 +53,7 @@ export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
     return resource.podStatus.status === 'Failed';
   }
 
-  isInWarningState(resource: Pod): boolean {
+  isInPendingState(resource: Pod): boolean {
     return resource.podStatus.status === 'Pending';
   }
 

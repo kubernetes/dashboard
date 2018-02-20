@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {HttpParams} from '@angular/common/http';
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {ReplicaSet, ReplicaSetList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
@@ -27,6 +27,8 @@ import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
   templateUrl: './template.html',
 })
 export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSetList, ReplicaSet> {
+  @Input() endpoint = EndpointManager.replicaSet.list();
+
   constructor(
       state: StateService,
       private readonly replicaSet_: NamespacedResourceService<ReplicaSetList>) {
@@ -37,12 +39,13 @@ export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSet
     // Register status icon handlers
     this.registerBinding(
         this.state.success, this.icon.check_circle, 'kd-success', this.isInSuccessState);
-    this.registerBinding(this.state.pending, this.icon.timelapse, '', this.isInPendingState);
+    this.registerBinding(
+        this.state.pending, this.icon.timelapse, 'kd-muted', this.isInPendingState);
     this.registerBinding(this.state.error, this.icon.error, 'kd-error', this.isInErrorState);
   }
 
   getResourceObservable(params?: HttpParams): Observable<ReplicaSetList> {
-    return this.replicaSet_.get(EndpointManager.replicaSet.list(), undefined, params);
+    return this.replicaSet_.get(this.endpoint, undefined, params);
   }
 
   map(rsList: ReplicaSetList): ReplicaSet[] {

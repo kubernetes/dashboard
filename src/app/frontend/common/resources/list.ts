@@ -242,6 +242,7 @@ enum State {
   warning = 'warning',
   success = 'success',
   pending = 'pending',
+  unknown = 'unknown',
 }
 
 enum Icon {

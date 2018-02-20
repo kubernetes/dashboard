@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {HttpParams} from '@angular/common/http';
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {CronJob, CronJobList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
@@ -27,6 +27,7 @@ import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
   templateUrl: './template.html',
 })
 export class CronJobListComponent extends ResourceListWithStatuses<CronJobList, CronJob> {
+  @Input() endpoint = EndpointManager.cronJob.list();
   constructor(
       state: StateService, private readonly cronJob_: NamespacedResourceService<CronJobList>) {
     super('pod', state);
@@ -40,7 +41,7 @@ export class CronJobListComponent extends ResourceListWithStatuses<CronJobList, 
   }
 
   getResourceObservable(params?: HttpParams): Observable<CronJobList> {
-    return this.cronJob_.get(EndpointManager.cronJob.list(), undefined, params);
+    return this.cronJob_.get(this.endpoint, undefined, params);
   }
 
   map(cronJobList: CronJobList): CronJob[] {

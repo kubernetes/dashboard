@@ -38,7 +38,6 @@ export class NamespaceListComponent extends ResourceListWithStatuses<NamespaceLi
     // Register status icon handlers
     this.registerBinding(
         this.state.success, this.icon.check_circle, 'kd-success', this.isInSuccessState);
-    this.registerBinding(this.state.warning, this.icon.timelapse, '', this.isInWarningState);
     this.registerBinding(this.state.error, this.icon.error, 'kd-error', this.isInErrorState);
   }
 
@@ -52,12 +51,6 @@ export class NamespaceListComponent extends ResourceListWithStatuses<NamespaceLi
 
   isInErrorState(resource: Namespace): boolean {
     return resource.phase === 'Terminating';
-  }
-
-  // Not used as namespace can only be in two states according to:
-  // https://kubernetes.io/docs/tasks/administer-cluster/namespaces/
-  isInWarningState(resource: Namespace): boolean {
-    return resource.phase === undefined;
   }
 
   isInSuccessState(resource: Namespace): boolean {

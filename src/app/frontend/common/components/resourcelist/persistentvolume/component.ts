@@ -39,7 +39,7 @@ export class PersistentVolumeListComponent extends
     // Register status icon handlers
     this.registerBinding(
         this.state.success, this.icon.check_circle, 'kd-success', this.isInSuccessState);
-    this.registerBinding(this.state.warning, this.icon.help, '', this.isInWarningState);
+    this.registerBinding(this.state.pending, this.icon.help, 'kd-muted', this.isInPendingState);
     this.registerBinding(this.state.error, this.icon.error, 'kd-error', this.isInErrorState);
   }
 
@@ -55,7 +55,7 @@ export class PersistentVolumeListComponent extends
     return resource.status === 'Failed';
   }
 
-  isInWarningState(resource: PersistentVolume): boolean {
+  isInPendingState(resource: PersistentVolume): boolean {
     return resource.status === 'Pending' || resource.status === 'Released';
   }
 

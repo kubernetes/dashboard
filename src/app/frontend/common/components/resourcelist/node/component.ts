@@ -39,7 +39,7 @@ export class NodeListComponent extends ResourceListWithStatuses<NodeList, Node> 
     // Register status icon handlers
     this.registerBinding(
         this.state.success, this.icon.check_circle, 'kd-success', this.isInSuccessState);
-    this.registerBinding(this.state.warning, this.icon.help, '', this.isInWarningState);
+    this.registerBinding(this.state.unknown, this.icon.help, 'kd-muted', this.isInUnknownState);
     this.registerBinding(this.state.error, this.icon.error, 'kd-error', this.isInErrorState);
   }
 
@@ -55,7 +55,7 @@ export class NodeListComponent extends ResourceListWithStatuses<NodeList, Node> 
     return resource.ready === 'False';
   }
 
-  isInWarningState(resource: Node): boolean {
+  isInUnknownState(resource: Node): boolean {
     return resource.ready === 'Unknown';
   }
 
