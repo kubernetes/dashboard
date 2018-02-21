@@ -1,4 +1,4 @@
-// Copyright 2017 The Kubernetes Dashboard Authors.
+// Copyright 2017 The Kubernetes Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -38,8 +38,7 @@ class NetworkPolicyCardListController {
    */
   getSelectId() {
     const selectId = 'networkPolicy';
-    if (this.networkPolicyList !== undefined &&
-        this.networkPolicyListResource !== undefined) {
+    if (this.networkPolicyList !== undefined && this.networkPolicyListResource !== undefined) {
       return selectId;
     }
 

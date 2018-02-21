@@ -1,5 +1,5 @@
 <!--
-Copyright 2017 The Kubernetes Dashboard Authors.
+Copyright 2017 The Kubernetes Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,7 +15,6 @@ limitations under the License.
 -->
 
 <kd-resource-card-list selectable="false"
-                       with-statuses="true"
                        select-id="{{::$ctrl.getSelectId()}}"
                        list="$ctrl.networkPolicyList"
                        list-resource="$ctrl.networkPolicyListResource">
@@ -42,7 +41,7 @@ limitations under the License.
 
     <kd-resource-card-header-column size="small"
                                     grow="4">
-      [[namespace|The namespace of this network policy.]]
+      [[Namespace|The namespace of this network policy.]]
     </kd-resource-card-header-column>
 
     <kd-resource-card-header-column size="small"

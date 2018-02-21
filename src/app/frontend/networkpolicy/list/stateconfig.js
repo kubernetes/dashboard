@@ -1,4 +1,4 @@
-// Copyright 2017 The Kubernetes Dashboard Authors.
+// Copyright 2017 The Kubernetes Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,20 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as chromeStateName} from '../../chrome/state';
 import {breadcrumbsConfig} from '../../common/components/breadcrumbs/service';
 import {stateName as workloadsStateName} from '../../discovery/state';
 
-import {stateUrl} from './../state';
+import {stateName as parentState, stateUrl} from './../state';
 import {NetworkPolicyListController} from './controller';
 
 /**
  * I18n object that defines strings for translation used in this file.
  */
 const i18n = {
-  /** @type {string} @desc Label 'Network Policy' that appears as a breadcrumbs on the
-   action bar. */
-  MSG_BREADCRUMBS_NETWORKPOLICY_AT_LABEL: goog.getMsg('NetworkPolicy'),
+  /**
+   * @type {string} @desc Label 'Network Policy' that appears as a breadcrumbs on the
+   action bar.
+   */
+  MSG_BREADCRUMBS_NETWORKPOLICY_AT_LABEL: goog.getMsg('Network Policy'),
 };
 
 /**
@@ -35,7 +36,7 @@ const i18n = {
  */
 export const config = {
   url: stateUrl,
-  parent: chromeStateName,
+  parent: parentState,
   resolve: {
     'networkPolicyList': resolveNetworkPolicyList,
   },

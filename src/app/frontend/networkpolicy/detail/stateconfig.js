@@ -60,7 +60,8 @@ export const config = {
  * @ngInject
  */
 export function getNetworkPolicyDetailResource($resource, $stateParams) {
-  return $resource(`api/v1/networkpolicy/${$stateParams.objectNamespace}/${$stateParams.objectName}`);
+  return $resource(
+      `api/v1/networkpolicy/${$stateParams.objectNamespace}/${$stateParams.objectName}`);
 }
 
 /**

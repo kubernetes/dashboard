@@ -12,8 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** Name of the state. */
-export const stateName = 'networkpolicy';
+import {ActionBarController} from 'networkpolicy/detail/actionbar_controller';
+import module from 'networkpolicy/module';
 
-/** Absolute URL of the state. */
-export const stateUrl = '/networkpolicy';
+describe('Action Bar controller', () => {
+  /** @type {!ActionBarController} */
+  let ctrl;
+  let details = {};
+
+  beforeEach(() => {
+    angular.mock.module(module.name);
+
+    angular.mock.inject(($controller) => {
+      ctrl = $controller(ActionBarController, {networkPolicyDetail: details});
+    });
+  });
+
+  it('should initialize details', () => {
+    expect(ctrl.details).toBe(details);
+  });
+});

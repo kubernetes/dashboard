@@ -1,4 +1,4 @@
-// Copyright 2017 The Kubernetes Dashboard Authors.
+// Copyright 2017 The Kubernetes Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,11 +13,12 @@
 // limitations under the License.
 
 import {stateName as chromeStateName} from '../chrome/state';
-import {stateName as listState} from './list/state';
-import {config as listConfig} from './list/stateconfig';
-import {stateName, stateUrl} from './state';
 import {stateName as detailState} from './detail/state';
 import {config as detailConfig} from './detail/stateconfig';
+import {stateName as listState} from './list/state';
+import {config as listConfig} from './list/stateconfig';
+import {stateName} from './state';
+
 /**
  * Configures states for the networkpolicy resource.
  *
@@ -27,7 +28,7 @@ import {config as detailConfig} from './detail/stateconfig';
 export default function stateConfig($stateProvider) {
   $stateProvider.state(stateName, config)
       .state(listState, listConfig)
-      .state(detailState, detailConfig);;
+      .state(detailState, detailConfig);
 }
 
 /**
@@ -38,6 +39,5 @@ export default function stateConfig($stateProvider) {
 const config = {
   abstract: true,
   parent: chromeStateName,
-  url: stateUrl,
   template: '<ui-view/>',
 };

@@ -12,8 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** Name of the state. */
-export const stateName = 'networkpolicy';
+import {NetworkPolicyDetailController} from 'networkpolicy/detail/controller';
+import networkPolicyModule from 'networkpolicy/module';
 
-/** Absolute URL of the state. */
-export const stateUrl = '/networkpolicy';
+describe('Network Policy Detail controller', () => {
+
+  beforeEach(() => {
+    angular.mock.module(networkPolicyModule.name);
+  });
+
+  it('should initialize network policy controller', angular.mock.inject(($controller) => {
+    let data = {};
+    /** @type {!NetworkPolicyDetailController} */
+    let ctrl = $controller(NetworkPolicyDetailController, {networkPolicyDetail: data});
+
+    expect(ctrl.networkPolicyDetail).toBe(data);
+  }));
+});

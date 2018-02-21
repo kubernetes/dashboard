@@ -23,6 +23,7 @@ import {stateName as discoveryState} from '../../discovery/state';
 import {stateName as ingressState} from '../../ingress/list/state';
 import {stateName as jobState} from '../../job/list/state';
 import {stateName as namespaceState} from '../../namespace/list/state';
+import {stateName as networkPolicyState} from '../../networkpolicy/list/state';
 import {stateName as nodeState} from '../../node/list/state';
 import {stateName as overviewState} from '../../overview/state';
 import {stateName as persistentVolumeState} from '../../persistentvolume/list/state';
@@ -36,7 +37,6 @@ import {stateName as settingsState} from '../../settings/state';
 import {stateName as statefulSetState} from '../../statefulset/list/state';
 import {stateName as storageClassState} from '../../storageclass/list/state';
 import {stateName as workloadState} from '../../workloads/state';
-import {stateName as networkPolicyState} from '../../networkpolicy/list/state';
 
 /**
  * @final
@@ -76,7 +76,7 @@ export class NavController {
       'about': aboutState,
       'settings': settingsState,
       'overview': overviewState,
-      'networkPolicy':networkPolicyState,
+      'networkPolicy': networkPolicyState,
     };
   }
 

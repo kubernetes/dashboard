@@ -15,9 +15,9 @@
 package networkpolicy
 
 import (
-	"gitserver/kubernetes/dashboard/src/app/backend/api"
-	metricapi "gitserver/kubernetes/dashboard/src/app/backend/integration/metric/api"
-	"gitserver/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	networkpolicy "k8s.io/api/networking/v1"
 	"encoding/json"
 	"log"
@@ -48,11 +48,6 @@ func toNetworkPolicy(networkpolicy *networkpolicy.NetworkPolicy) NetworkPolicy {
 
 	log.Println("unmarshl networkpolicy result ",result)
 	return result
-/*	return NetworkPolicy{
-		ObjectMeta:  api.NewObjectMeta(networkpolicy.ObjectMeta),
-		TypeMeta:    api.NewTypeMeta(api.ResourceKindNetworkPolicy),
-		Spec:        result,
-	}*/
 }
 
 type NetworkPolicyCell networkpolicy.NetworkPolicy

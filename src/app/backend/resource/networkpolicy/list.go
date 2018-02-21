@@ -17,10 +17,10 @@ package networkpolicy
 import (
 	"log"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"gitserver/kubernetes/dashboard/src/app/backend/api"
-	"gitserver/kubernetes/dashboard/src/app/backend/errors"
-	"gitserver/kubernetes/dashboard/src/app/backend/resource/common"
-	"gitserver/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	networking "k8s.io/api/networking/v1"
 	"k8s.io/client-go/kubernetes"
 )

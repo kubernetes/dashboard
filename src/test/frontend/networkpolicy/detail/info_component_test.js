@@ -12,8 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** Name of the state. */
-export const stateName = 'networkpolicy';
+import networkPolicyModule from 'networkpolicy/module';
 
-/** Absolute URL of the state. */
-export const stateUrl = '/networkpolicy';
+describe('Network Policy Info controller', () => {
+  /** @type {!NetworkPolicyInfoController} */
+  let ctrl;
+
+  beforeEach(() => {
+    angular.mock.module(networkPolicyModule.name);
+
+    angular.mock.inject(($componentController, $rootScope) => {
+      ctrl = $componentController('kdNetworkPolicyInfo', {$scope: $rootScope}, {networkPolicy: {}});
+    });
+  });
+
+  it('should initialize the ctrl', () => {
+    expect(ctrl.networkPolicy).not.toBeUndefined();
+  });
+});

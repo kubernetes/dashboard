@@ -68,7 +68,7 @@ import (
 	"golang.org/x/net/xsrftoken"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/client-go/tools/remotecommand"
-	"gitserver/kubernetes/dashboard/src/app/backend/resource/networkpolicy"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/networkpolicy"
 )
 
 const (
@@ -2352,51 +2352,51 @@ func parseDataSelectPathParameter(request *restful.Request) *dataselect.DataSele
 
 
 func (apiHandler *APIHandler) handleGetNetworkPolicyList(request *restful.Request, response *restful.Response) {
-	k8sClient,_, err := apiHandler.cManager.Client(request,false)
+	k8sClient, err := apiHandler.cManager.Client(request)
 	if err != nil {
-		handleInternalError(response, err)
-		return
+    kdErrors.HandleInternalError(response, err)
+    return
 	}
 	dataSelect := parseDataSelectPathParameter(request)
 	namespace := parseNamespacePathParameter(request)
 	result, err := networkpolicy.GetNetworkPolicyList(k8sClient,namespace,dataSelect)
 	if err != nil {
-		handleInternalError(response, err)
-		return
+    kdErrors.HandleInternalError(response, err)
+    return
 	}
 	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetNetworkPolicy(request *restful.Request, response *restful.Response) {
-	k8sClient,_, err := apiHandler.cManager.Client(request,false)
+	k8sClient, err := apiHandler.cManager.Client(request)
 	if err != nil {
-		handleInternalError(response, err)
-		return
+    kdErrors.HandleInternalError(response, err)
+    return
 	}
 
 	name := request.PathParameter("networkpolicy")
 	namespace := parseNamespacePathParameter(request)
 	result, err :=networkpolicy.GetNetworkPolicy(k8sClient,namespace,name)
 	if err != nil {
-		handleInternalError(response, err)
-		return
+    kdErrors.HandleInternalError(response, err)
+    return
 	}
 	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) deleteNetworkPolicy(request *restful.Request, response *restful.Response) {
-	k8sClient,_, err := apiHandler.cManager.Client(request,false)
+	k8sClient, err := apiHandler.cManager.Client(request)
 	if err != nil {
-		handleInternalError(response, err)
-		return
+    kdErrors.HandleInternalError(response, err)
+    return
 	}
 
 	name := request.PathParameter("networkpolicy")
 	namespace := parseNamespacePathParameter(request)
 	err = networkpolicy.DeleteNetworkPolicy(k8sClient,namespace,name)
 	if err != nil {
-		handleInternalError(response, err)
-		return
+    kdErrors.HandleInternalError(response, err)
+    return
 	}
 	response.WriteHeader(http.StatusOK)
 }

@@ -40,6 +40,7 @@ import jobModule from './job/module';
 import loginModule from './login/module';
 import logsModule from './logs/module';
 import namespaceModule from './namespace/module';
+import netWorkPolicyModule from './networkpolicy/module';
 import nodeModule from './node/module';
 import overviewModule from './overview/module';
 import persistentVolumeModule from './persistentvolume/module';
@@ -59,7 +60,6 @@ import statefulSetModule from './statefulset/module';
 import storageClassModule from './storageclass/module';
 import {TitleController} from './title_controller';
 import workloadsModule from './workloads/module';
-import netWorkPolicyModule from './networkpolicy/module';
 
 export default angular
     .module(

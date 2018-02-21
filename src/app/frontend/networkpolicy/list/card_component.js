@@ -1,4 +1,4 @@
-// Copyright 2017 The Kubernetes Dashboard Authors.
+// Copyright 2017 The Kubernetes Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -42,7 +42,6 @@ export default class NetworkPolicyCardController {
 
     /** @private {!./../../common/namespace/service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
-	
   }
 
   /**
@@ -58,35 +57,10 @@ export default class NetworkPolicyCardController {
    * @export
    */
   getNetworkPolicyDetailHref() {
-    return this.state_.href(stateName, new StateParams(this.networkPolicy.objectMeta.namespace, this.networkPolicy.objectMeta.name));
-  }
-
-  /**
-   * Returns true if any of the networkpolicy controller's pods have warning, false otherwise
-   * @return {boolean}
-   * @export
-   */
-  hasWarnings() {
-    return false;
-  }
-
-  /**
-   * Returns true if the networkpolicy controller's pods have no warnings and there is at least one
-   * pod
-   * in pending state, false otherwise
-   * @return {boolean}
-   * @export
-   */
-  isPending() {
-    return false;
-  }
-
-  /**
-   * @return {boolean}
-   * @export
-   */
-  isSuccess() {
-    return !this.isPending() && !this.hasWarnings();
+    return this.state_.href(
+        stateName,
+        new StateParams(
+            this.networkPolicy.objectMeta.namespace, this.networkPolicy.objectMeta.name));
   }
 
   /**
@@ -96,8 +70,10 @@ export default class NetworkPolicyCardController {
    */
   getCreatedAtTooltip(creationDate) {
     let filter = this.interpolate_(`{{date | date}}`);
-    /** @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
-     * replication controller. */
+    /**
+     * @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
+     * replication controller.
+     */
     let MSG_NETWORKPOLICY_LIST_CREATED_AT_TOOLTIP =
         goog.getMsg('Created at {$creationDate}', {'creationDate': filter({'date': creationDate})});
     return MSG_NETWORKPOLICY_LIST_CREATED_AT_TOOLTIP;
@@ -109,7 +85,7 @@ export default class NetworkPolicyCardController {
  */
 export const networkPolicyCardComponent = {
   bindings: {
-    'networkPolicy': '=' ,
+    'networkPolicy': '=',
   },
   controller: NetworkPolicyCardController,
   templateUrl: 'networkpolicy/list/card.html',
