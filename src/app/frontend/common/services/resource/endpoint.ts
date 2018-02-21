@@ -103,4 +103,14 @@ export class EndpointManager {
       return `${baseHref}/configmap/:namespace/:name`;
     }
   };
+
+  static secret = class {
+    static list(): string {
+      return `${baseHref}/secret/:namespace`;
+    }
+
+    static detail(): string {
+      return `${baseHref}/secret/:namespace/:name`;
+    }
+  };
 }

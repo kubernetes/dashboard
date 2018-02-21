@@ -33,6 +33,7 @@ import {NodeListComponent} from './resourcelist/node/component';
 import {PersistentVolumeListComponent} from './resourcelist/persistentvolume/component';
 import {PodListComponent} from './resourcelist/pod/component';
 import {ReplicaSetListComponent} from './resourcelist/replicaset/component';
+import {SecretListComponent} from './resourcelist/secret/component';
 import {LoadingSpinner} from './resourcelist/spinner/component';
 import {StorageClassListComponent} from './resourcelist/storageclass/component';
 import {ListZeroState} from './resourcelist/zerostate/component';
@@ -64,6 +65,7 @@ import {ZeroState} from './zerostate/component';
     StorageClassListComponent,
     CronJobListComponent,
     ConfigMapListComponent,
+    SecretListComponent,
   ],
   exports: [
     AllocationChartComponent,
@@ -86,6 +88,7 @@ import {ZeroState} from './zerostate/component';
     CronJobListComponent,
     StorageClassListComponent,
     ConfigMapListComponent,
+    SecretListComponent,
   ],
 })
 export class ComponentsModule {}
