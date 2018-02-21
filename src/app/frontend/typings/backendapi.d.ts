@@ -390,7 +390,7 @@ export interface PersistentVolumeClaimDetail extends Resource {
 export interface ConfigMapDetail {
   objectMeta: ObjectMeta;
   typeMeta: TypeMeta;
-  ata: StringMap;
+  data: StringMap;
 }
 
 export interface JobDetail {
