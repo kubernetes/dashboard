@@ -19,24 +19,23 @@ import {Observable} from 'rxjs/Observable';
 import {ConfigMap, ConfigMapList} from 'typings/backendapi';
 
 import {ResourceListBase} from '../../../resources/list';
-import {EndpointManager} from '../../../services/resource/endpoint';
+import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
 
 @Component({selector: 'kd-config-map-list', templateUrl: './template.html'})
 export class ConfigMapListComponent extends ResourceListBase<ConfigMapList, ConfigMap> {
-  @Input() endpoint = EndpointManager.configMap.list();
+  @Input() endpoint = EndpointManager.resource(Resource.configMap, true).list();
 
   constructor(
-      state: StateService,
-      private readonly configMapList: NamespacedResourceService<ConfigMapList>) {
+      state: StateService, private readonly configMap_: NamespacedResourceService<ConfigMapList>) {
     super('node', state);
     this.id = ListIdentifiers.configMap;
     this.groupId = ListGroupIdentifiers.config;
   }
 
   getResourceObservable(params?: HttpParams): Observable<ConfigMapList> {
-    return this.configMapList.get(this.endpoint, undefined, params);
+    return this.configMap_.get(this.endpoint, undefined, params);
   }
 
   map(configMapList: ConfigMapList): ConfigMap[] {

@@ -14,13 +14,12 @@
 
 import {HttpParams} from '@angular/common/http';
 import {Component, Input} from '@angular/core';
-import {Node} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 import {PersistentVolumeClaim, PersistentVolumeClaimList} from 'typings/backendapi';
 
-import {ResourceListBase, ResourceListWithStatuses} from '../../../resources/list';
-import {EndpointManager} from '../../../services/resource/endpoint';
+import {ResourceListWithStatuses} from '../../../resources/list';
+import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
 
@@ -30,11 +29,11 @@ import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
 })
 export class PersistentVolumeClaimListComponent extends
     ResourceListWithStatuses<PersistentVolumeClaimList, PersistentVolumeClaim> {
-  @Input() endpoint = EndpointManager.persistentVolumeClaim.list();
+  @Input() endpoint = EndpointManager.resource(Resource.persistentVolumeClaim, true).list();
 
   constructor(
       state: StateService,
-      private readonly persistentVolumeClaimList:
+      private readonly persistentVolumeClaim_:
           NamespacedResourceService<PersistentVolumeClaimList>) {
     super('node', state);
     this.id = ListIdentifiers.persistentVolumeClaim;
@@ -59,7 +58,7 @@ export class PersistentVolumeClaimListComponent extends
   }
 
   getResourceObservable(params?: HttpParams): Observable<PersistentVolumeClaimList> {
-    return this.persistentVolumeClaimList.get(this.endpoint, undefined, params);
+    return this.persistentVolumeClaim_.get(this.endpoint, undefined, params);
   }
 
   map(persistentVolumeClaimList: PersistentVolumeClaimList): PersistentVolumeClaim[] {

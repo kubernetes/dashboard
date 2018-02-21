@@ -19,23 +19,23 @@ import {Observable} from 'rxjs/Observable';
 import {Secret, SecretList} from 'typings/backendapi';
 
 import {ResourceListBase} from '../../../resources/list';
-import {EndpointManager} from '../../../services/resource/endpoint';
+import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
 
 @Component({selector: 'kd-secret-list', templateUrl: './template.html'})
 export class SecretListComponent extends ResourceListBase<SecretList, Secret> {
-  @Input() endpoint = EndpointManager.secret.list();
+  @Input() endpoint = EndpointManager.resource(Resource.secret, true).list();
 
   constructor(
-      state: StateService, private readonly secretList: NamespacedResourceService<SecretList>) {
+      state: StateService, private readonly secret_: NamespacedResourceService<SecretList>) {
     super('node', state);
     this.id = ListIdentifiers.secret;
     this.groupId = ListGroupIdentifiers.config;
   }
 
   getResourceObservable(params?: HttpParams): Observable<SecretList> {
-    return this.secretList.get(this.endpoint, undefined, params);
+    return this.secret_.get(this.endpoint, undefined, params);
   }
 
   map(secretList: SecretList): Secret[] {
