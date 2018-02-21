@@ -18,6 +18,7 @@ import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 import {ConfigMap, ConfigMapList} from 'typings/backendapi';
 
+import {configMapDetailState} from '../../../../resource/config/configmap/detail/state';
 import {ResourceListBase} from '../../../resources/list';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
@@ -29,7 +30,7 @@ export class ConfigMapListComponent extends ResourceListBase<ConfigMapList, Conf
 
   constructor(
       state: StateService, private readonly configMap_: NamespacedResourceService<ConfigMapList>) {
-    super('node', state);
+    super(configMapDetailState.name, state);
     this.id = ListIdentifiers.configMap;
     this.groupId = ListGroupIdentifiers.config;
   }

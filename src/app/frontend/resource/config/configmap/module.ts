@@ -19,6 +19,8 @@ import {ComponentsModule} from '../../../common/components/module';
 import {ResourceModule} from '../../../common/services/resource/module';
 import {SharedModule} from '../../../shared.module';
 
+import {ConfigMapDetailComponent} from './detail/component';
+import {configMapDetailState} from './detail/state';
 import {ConfigMapListComponent} from './list/component';
 import {configMapListState} from './list/state';
 import {configMapState} from './state';
@@ -28,8 +30,8 @@ import {configMapState} from './state';
     SharedModule,
     ResourceModule,
     ComponentsModule,
-    UIRouterModule.forChild({states: [configMapState, configMapListState]}),
+    UIRouterModule.forChild({states: [configMapState, configMapListState, configMapDetailState]}),
   ],
-  declarations: [ConfigMapListComponent],
+  declarations: [ConfigMapListComponent, ConfigMapDetailComponent],
 })
 export class ConfigMapModule {}

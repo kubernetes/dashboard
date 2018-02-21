@@ -14,10 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-info-card>
-  <kd-info-card-header>[[Details|Header in a detail view]]</kd-info-card-header>
-  <kd-info-card-section>
-    <kd-object-meta-info-card object-meta="::$ctrl.configMap.objectMeta">
-    </kd-object-meta-info-card>
-  </kd-info-card-section>
-</kd-info-card>
+<kd-card [initialized]="isInitialized"
+         [expandable]="true">
+  <div title>Metadata</div>
+  <div content>
+    <kd-object-meta [objectMeta]="configMap.objectMeta"></kd-object-meta>
+  </div>
+</kd-card>
+
+<kd-card [initialized]="isInitialized"
+         [expandable]="true">
+  <div title>Data</div>
+  <div content>
+    <ng-container *ngIf="configMap.data"><code>{{configMap.data | json}}</code></ng-container>
+    <ng-container *ngIf="!configMap.data">There is no data to display.</ng-container>
+  </div>
+</kd-card>

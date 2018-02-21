@@ -12,16 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * @final
- */
-export class ConfigMapDetailController {
-  /**
-   * @param {!backendApi.ConfigMapDetail} configMapDetail
-   * @ngInject
-   */
-  constructor(configMapDetail) {
-    /** @export {!backendApi.ConfigMapDetail} */
-    this.configMapDetail = configMapDetail;
-  }
-}
+import {Ng2StateDeclaration} from '@uirouter/angular';
+
+import {addNamespacedResourceStateParamsToUrl} from '../../../../common/params/params';
+import {stateName, stateUrl} from '../state';
+
+import {ConfigMapDetailComponent} from './component';
+
+export const configMapDetailState: Ng2StateDeclaration = {
+  name: `${stateName}.detail`,
+  url: addNamespacedResourceStateParamsToUrl(stateUrl),
+  component: ConfigMapDetailComponent,
+  data: {
+    kdBreadcrumbs: {
+      label: 'resourceName',
+      parent: 'configmap.list',
+    },
+  },
+};
