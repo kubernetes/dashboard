@@ -31,6 +31,7 @@ import {CardListFilterComponent} from './resourcelist/filter/component';
 import {NamespaceListComponent} from './resourcelist/namespace/component';
 import {NodeListComponent} from './resourcelist/node/component';
 import {PersistentVolumeListComponent} from './resourcelist/persistentvolume/component';
+import {PersistentVolumeClaimListComponent} from './resourcelist/persistentvolumeclaim/component';
 import {PodListComponent} from './resourcelist/pod/component';
 import {ReplicaSetListComponent} from './resourcelist/replicaset/component';
 import {SecretListComponent} from './resourcelist/secret/component';
@@ -66,6 +67,7 @@ import {ZeroState} from './zerostate/component';
     CronJobListComponent,
     ConfigMapListComponent,
     SecretListComponent,
+    PersistentVolumeClaimListComponent,
   ],
   exports: [
     AllocationChartComponent,
@@ -89,6 +91,7 @@ import {ZeroState} from './zerostate/component';
     StorageClassListComponent,
     ConfigMapListComponent,
     SecretListComponent,
+    PersistentVolumeClaimListComponent,
   ],
 })
 export class ComponentsModule {}

@@ -104,6 +104,16 @@ export class EndpointManager {
     }
   };
 
+  static persistentVolumeClaim = class {
+    static list(): string {
+      return `${baseHref}/persistentvolumeclaim/:namespace`;
+    }
+
+    static detail(): string {
+      return `${baseHref}/persistentvolumeclaim/:namespace/:name`;
+    }
+  };
+
   static secret = class {
     static list(): string {
       return `${baseHref}/secret/:namespace`;

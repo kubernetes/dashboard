@@ -43,14 +43,12 @@ limitations under the License.
       </ng-container>
 
       <ng-container [matColumnDef]="getDisplayColumns()[1]">
-        <mat-header-cell *matHeaderCellDef
-                         disableClear="true">Provisioner</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef>Provisioner</mat-header-cell>
         <mat-cell *matCellDef="let sc">{{sc.provisioner}}</mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getDisplayColumns()[2]">
-        <mat-header-cell *matHeaderCellDef
-                         disableClear="true">Parameters</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef>Parameters</mat-header-cell>
         <mat-cell *matCellDef="let sc">
           <kd-chips [map]="sc.parameters"></kd-chips>
         </mat-cell>

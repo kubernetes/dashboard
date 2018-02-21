@@ -44,8 +44,7 @@ limitations under the License.
       </ng-container>
 
       <ng-container [matColumnDef]="getDisplayColumns()[1]">
-        <mat-header-cell *matHeaderCellDef
-                         disableClear="true">Labels</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef>Labels</mat-header-cell>
         <mat-cell *matCellDef="let cm">
           <kd-chips [map]="cm.objectMeta.labels"></kd-chips>
         </mat-cell>
