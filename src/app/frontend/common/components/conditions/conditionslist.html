@@ -74,7 +74,7 @@ limitations under the License.
         <md-tooltip ng-if="::condition.lastTransitionTime"
                     md-delay="500"
                     md-autohide>
-          [[Probed at | Tooltip transistion column of pod conditions ]] {{condition.lastTransitionTime | date}}
+          [[Probed at | Tooltip transition column of pod conditions ]] {{condition.lastTransitionTime | date}}
         </md-tooltip>
         <div ng-if="::!condition.lastTransitionTime">[[-|Label when there is no data.]]</div>
       </kd-resource-card-column>
