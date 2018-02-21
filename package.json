@@ -92,7 +92,7 @@
     "gulp-concat": "~2.6.1",
     "gulp-css-url-adjuster": "~0.2.3",
     "gulp-eslint": "~4.0.0",
-    "gulp-filter": "~5.0.1",
+    "gulp-filter": "~5.1.0",
     "gulp-findreplace": "~1.5.0",
     "gulp-flatten": "~0.4.0",
     "gulp-header-license": "~1.0.9",
