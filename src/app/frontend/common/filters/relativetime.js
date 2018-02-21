@@ -33,7 +33,7 @@ export default function relativeTimeFilter(kdAppConfigService) {
     // Current server time.
     let serverTime = kdAppConfigService.getServerTime();
 
-    // Current and given times in miliseconds.
+    // Current and given times in milliseconds.
     let currentTime = getCurrentTime(serverTime);
     let givenTime = (new Date(value)).getTime();
 
