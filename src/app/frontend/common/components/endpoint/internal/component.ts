@@ -12,10 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component} from '@angular/core';
-
-@Component({
-  selector: 'kd-service-list-state',
-  template: '<kd-service-list></kd-service-list>',
-})
-export class ServiceList {}
+/**
+ * Returns directive definition object for the component that displays the service
+ * endpoint (type {backendApi.Endpoint}) which is accessible only from the inside of the cluster
+ * @return {!angular.Component}
+ */
+export const internalEndpointComponent = {
+  templateUrl: 'common/components/endpoint/internal/template.html',
+  bindings: {
+    /** {backendApi.Endpoint} */
+    'endpoint': '<',
+  },
+};

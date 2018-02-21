@@ -14,8 +14,8 @@
 
 import {Component} from '@angular/core';
 
-@Component(
-    {selector: 'kd-ingress-list', templateUrl: './template.html', styleUrls: ['./style.scss']})
-export class IngressListComponent {
-  constructor() {}
-}
+@Component({
+  selector: 'kd-ingress-list-state',
+  template: '<kd-ingress-list></kd-ingress-list>',
+})
+export class IngressList {}

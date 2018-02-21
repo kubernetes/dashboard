@@ -21,6 +21,7 @@ import {AllocationChartComponent} from './allocationchart/component';
 import {BreadcrumbsComponent} from './breadcrumbs/component';
 import {CardComponent} from './card/component';
 import {ChipsComponent} from './chips/component';
+import {ExternalEndpointComponent} from './endpoint/external/component';
 import {ObjectMetaComponent} from './objectmeta/component';
 import {PropertyComponent} from './property/component';
 import {ProxyComponent} from './proxy/component';
@@ -30,6 +31,7 @@ import {CronJobListComponent} from './resourcelist/cronjob/component';
 import {DaemonSetListComponent} from './resourcelist/daemonset/component';
 import {DeploymentListComponent} from './resourcelist/deployment/component';
 import {CardListFilterComponent} from './resourcelist/filter/component';
+import {IngressListComponent} from './resourcelist/ingress/component';
 import {JobListComponent} from './resourcelist/job/component';
 import {NamespaceListComponent} from './resourcelist/namespace/component';
 import {NodeListComponent} from './resourcelist/node/component';
@@ -39,6 +41,7 @@ import {PodListComponent} from './resourcelist/pod/component';
 import {ReplicaSetListComponent} from './resourcelist/replicaset/component';
 import {ReplicationControllerListComponent} from './resourcelist/replicationcontroller/component';
 import {SecretListComponent} from './resourcelist/secret/component';
+import {ServiceListComponent} from './resourcelist/service/component';
 import {LoadingSpinner} from './resourcelist/spinner/component';
 import {StatefulSetListComponent} from './resourcelist/statefulset/component';
 import {StorageClassListComponent} from './resourcelist/storageclass/component';
@@ -78,6 +81,9 @@ import {ZeroState} from './zerostate/component';
     ConfigMapListComponent,
     SecretListComponent,
     PersistentVolumeClaimListComponent,
+    IngressListComponent,
+    ServiceListComponent,
+    ExternalEndpointComponent,
   ],
   exports: [
     AllocationChartComponent,
@@ -107,6 +113,9 @@ import {ZeroState} from './zerostate/component';
     ConfigMapListComponent,
     SecretListComponent,
     PersistentVolumeClaimListComponent,
+    IngressListComponent,
+    ServiceListComponent,
+    ExternalEndpointComponent,
   ],
 })
 export class ComponentsModule {}

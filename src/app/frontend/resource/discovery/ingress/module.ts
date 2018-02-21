@@ -14,17 +14,21 @@
 
 import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
+import {ComponentsModule} from '../../../common/components/module';
+import {ResourceModule} from '../../../common/services/resource/module';
 
 import {SharedModule} from '../../../shared.module';
-import {IngressListComponent} from './list/component';
+import {IngressList} from './list/component';
 import {ingressListState} from './list/state';
 import {ingressState} from './state';
 
 @NgModule({
   imports: [
     SharedModule,
+    ComponentsModule,
+    ResourceModule,
     UIRouterModule.forChild({states: [ingressState, ingressListState]}),
   ],
-  declarations: [IngressListComponent],
+  declarations: [IngressList],
 })
 export class IngressModule {}

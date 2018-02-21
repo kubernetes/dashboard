@@ -31,6 +31,8 @@ export enum Resource {
   configMap = 'configmap',
   persistentVolumeClaim = 'persistentvolumeclaim',
   secret = 'secret',
+  ingress = 'ingress',
+  service = 'service',
 }
 
 class ResourceEndpoint {

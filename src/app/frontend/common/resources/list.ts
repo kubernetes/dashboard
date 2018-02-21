@@ -73,6 +73,7 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
       throw Error('CardListFilter has to be defined on a table.');
     }
 
+    let loadingTimeout: NodeJS.Timer;
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
     this.dataSubscription_ =
         merge(this.sort.sortChange, this.paginator.page, this.filter.filterEvent)
@@ -82,13 +83,16 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
                     params = this.filter_(params);
                     params = this.search_(params);
 
-                    this.isLoading = true;
+                    loadingTimeout = setTimeout(() => {
+                      this.isLoading = true;
+                    }, 100);
                     return this.getResourceObservable(params);
                   }))
             .subscribe((data: T) => {
               this.totalItems = data.listMeta.totalItems;
               this.isLoading = false;
               this.data_.data = this.map(data);
+              clearTimeout(loadingTimeout);
               this.onListChange_();
             });
   }

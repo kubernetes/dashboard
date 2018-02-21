@@ -204,7 +204,7 @@ export interface HorizontalPodAutoscaler extends Resource {
   targetCPUUtilization?: number;
 }
 
-export interface Ingress extends Resource {}
+export interface Ingress extends Resource { endpoints: Endpoint[]; }
 
 export interface Job extends Resource {
   pods: PodInfo;

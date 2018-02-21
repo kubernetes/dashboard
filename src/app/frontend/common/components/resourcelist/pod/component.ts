@@ -60,7 +60,7 @@ export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
   }
 
   getDisplayColumns(): string[] {
-    return ['statusicon', 'name', 'node', 'status', 'restarts', 'age'];
+    return ['statusicon', 'name', 'labels', 'node', 'status', 'restarts', 'age'];
   }
 
   getDisplayStatus(pod: Pod): string {

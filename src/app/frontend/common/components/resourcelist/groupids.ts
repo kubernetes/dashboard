@@ -25,7 +25,7 @@ export enum ListIdentifiers {
   pod = 'podList',
   replicaSet = 'replicaSetList',
   ingress = 'ingressList',
-  service = 'serviceLise',
+  service = 'serviceList',
   configMap = 'configMapList',
   persistentVolumeClaim = 'persistentVolumeClaimList',
   secret = 'secretList',

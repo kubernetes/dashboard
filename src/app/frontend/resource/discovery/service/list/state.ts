@@ -16,12 +16,12 @@ import {Ng2StateDeclaration} from '@uirouter/angular';
 
 import {discoveryState} from '../../state';
 import {stateName, stateUrl} from '../state';
-import {ServiceListComponent} from './component';
+import {ServiceList} from './component';
 
 export const serviceListState: Ng2StateDeclaration = {
   name: `${stateName}.list`,
   url: stateUrl,
-  component: ServiceListComponent,
+  component: ServiceList,
   data: {
     kdBreadcrumbs: {
       label: 'Services',

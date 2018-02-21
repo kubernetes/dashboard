@@ -14,4 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-Ingress
+<div>
+  <div ng-repeat="port in ::$ctrl.endpoint.ports">
+    <div>
+      <kd-middle-ellipsis display-string="{{::$ctrl.endpoint.host}}:{{::port.port}} {{::port.protocol}}">
+      </kd-middle-ellipsis>
+    </div>
+    <div>
+      <kd-middle-ellipsis display-string="{{::$ctrl.endpoint.host}}:{{::port.nodePort}} {{::port.protocol}}">
+      </kd-middle-ellipsis>
+    </div>
+  </div>
+</div>
