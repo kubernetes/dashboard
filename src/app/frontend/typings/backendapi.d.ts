@@ -227,8 +227,8 @@ export interface PersistentVolume extends Resource {
 }
 
 export interface PersistentVolumeClaim extends Resource {
-  Status: string;
-  Volume: string;
+  status: string;
+  volume: string;
 }
 
 export interface Pod extends Resource {

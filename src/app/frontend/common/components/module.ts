@@ -25,6 +25,7 @@ import {ObjectMetaComponent} from './objectmeta/component';
 import {PropertyComponent} from './property/component';
 import {ProxyComponent} from './proxy/component';
 import {ClusterRoleListComponent} from './resourcelist/clusterrole/component';
+import {ConfigMapListComponent} from './resourcelist/configmap/component';
 import {CronJobListComponent} from './resourcelist/cronjob/component';
 import {DaemonSetListComponent} from './resourcelist/daemonset/component';
 import {DeploymentListComponent} from './resourcelist/deployment/component';
@@ -33,9 +34,11 @@ import {JobListComponent} from './resourcelist/job/component';
 import {NamespaceListComponent} from './resourcelist/namespace/component';
 import {NodeListComponent} from './resourcelist/node/component';
 import {PersistentVolumeListComponent} from './resourcelist/persistentvolume/component';
+import {PersistentVolumeClaimListComponent} from './resourcelist/persistentvolumeclaim/component';
 import {PodListComponent} from './resourcelist/pod/component';
 import {ReplicaSetListComponent} from './resourcelist/replicaset/component';
 import {ReplicationControllerListComponent} from './resourcelist/replicationcontroller/component';
+import {SecretListComponent} from './resourcelist/secret/component';
 import {LoadingSpinner} from './resourcelist/spinner/component';
 import {StatefulSetListComponent} from './resourcelist/statefulset/component';
 import {StorageClassListComponent} from './resourcelist/storageclass/component';
@@ -72,6 +75,9 @@ import {ZeroState} from './zerostate/component';
     JobListComponent,
     ReplicationControllerListComponent,
     StatefulSetListComponent,
+    ConfigMapListComponent,
+    SecretListComponent,
+    PersistentVolumeClaimListComponent,
   ],
   exports: [
     AllocationChartComponent,
@@ -98,6 +104,9 @@ import {ZeroState} from './zerostate/component';
     JobListComponent,
     ReplicationControllerListComponent,
     StatefulSetListComponent,
+    ConfigMapListComponent,
+    SecretListComponent,
+    PersistentVolumeClaimListComponent,
   ],
 })
 export class ComponentsModule {}

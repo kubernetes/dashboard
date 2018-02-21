@@ -24,6 +24,11 @@ export enum ListIdentifiers {
   daemonSet = 'daemonSetList',
   pod = 'podList',
   replicaSet = 'replicaSetList',
+  ingress = 'ingressList',
+  service = 'serviceLise',
+  configMap = 'configMapList',
+  persistentVolumeClaim = 'persistentVolumeClaimList',
+  secret = 'secretList',
   replicationController = 'replicationControllerList',
   statefulSet = 'statefulSetList',
 }

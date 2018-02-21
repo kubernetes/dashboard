@@ -15,7 +15,10 @@
 import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
 
+import {ComponentsModule} from '../../../common/components/module';
+import {ResourceModule} from '../../../common/services/resource/module';
 import {SharedModule} from '../../../shared.module';
+
 import {ConfigMapListComponent} from './list/component';
 import {configMapListState} from './list/state';
 import {configMapState} from './state';
@@ -23,6 +26,8 @@ import {configMapState} from './state';
 @NgModule({
   imports: [
     SharedModule,
+    ResourceModule,
+    ComponentsModule,
     UIRouterModule.forChild({states: [configMapState, configMapListState]}),
   ],
   declarations: [ConfigMapListComponent],
