@@ -37,11 +37,6 @@ export interface KdError {
   message: string;
 }
 
-export interface Status {
-  iconName: string;
-  iconClass: {[className: string]: boolean};
-}
-
 export interface OnListChangeEvent {
   id: string;
   groupId: string;

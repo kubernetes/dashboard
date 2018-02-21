@@ -35,9 +35,8 @@ export class CronJobListComponent extends ResourceListWithStatuses<CronJobList, 
     this.groupId = ListGroupIdentifiers.workloads;
 
     // Register status icon handlers
-    this.registerBinding(
-        this.state.success, this.icon.check_circle, 'kd-success', this.isInSuccessState);
-    this.registerBinding(this.state.error, this.icon.error, 'kd-error', this.isInErrorState);
+    this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);
+    this.registerBinding(this.icon.error, 'kd-error', this.isInErrorState);
   }
 
   getResourceObservable(params?: HttpParams): Observable<CronJobList> {

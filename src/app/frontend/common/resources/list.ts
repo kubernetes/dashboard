@@ -17,7 +17,7 @@ import {HttpParams} from '@angular/common/http';
 import {EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {Resource, ResourceList} from '@api/backendapi';
-import {OnListChangeEvent, Status} from '@api/frontendapi';
+import {OnListChangeEvent} from '@api/frontendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 import {merge} from 'rxjs/observable/merge';
@@ -237,66 +237,91 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
   abstract getDisplayColumns(): string[];
 }
 
-enum State {
-  error = 'error',
-  warning = 'warning',
-  success = 'success',
-  pending = 'pending',
-  unknown = 'unknown',
-}
-
-enum Icon {
-  error = 'error',
-  timelapse = 'timelapse',
-  check_circle = 'check_circle',
-  help = 'help',
-}
-
-type StateCheckCallback<T> = (resource: T) => boolean;
-
-type StateBinding<T> = {
-  iconName: string,
-  iconClass: string,
-  callbackFunction: StateCheckCallback<T>
-};
-
 export abstract class ResourceListWithStatuses<T extends ResourceList, R extends Resource> extends
     ResourceListBase<T, R> {
-  private readonly bindings_: {[stateName: string]: StateBinding<R>} = {};
-  private lastStateName_: string;
-
-  protected state = State;
-  protected icon = Icon;
+  private readonly bindings_: {[hash: number]: StateBinding<R>} = {};
+  private lastHash_: number;
+  protected icon = IconName;
+  private readonly unknownStatus: StatusIcon = {
+    iconName: 'help',
+    iconClass: {'': true},
+  };
 
   protected registerBinding(
-      stateName: State, iconName: Icon, iconClass: string,
-      callbackFunction: StateCheckCallback<R>): void {
-    this.bindings_[stateName] = {iconName, iconClass, callbackFunction};
+      iconName: IconName, iconClass: string, callbackFunction: StatusCheckCallback<R>): void {
+    const icon = new Icon(String(iconName), iconClass);
+    this.bindings_[icon.hash()] = {icon, callbackFunction};
   }
 
-  getStatus(resource: R): Status {
-    if (this.lastStateName_) {
-      const stateBinding = this.bindings_[this.lastStateName_];
+  getStatus(resource: R): StatusIcon {
+    if (this.lastHash_) {
+      const stateBinding = this.bindings_[this.lastHash_];
       if (stateBinding.callbackFunction(resource)) {
         return this.getStatusObject_(stateBinding);
       }
     }
 
-    for (const stateName of Object.keys(this.bindings_)) {
-      const stateBinding = this.bindings_[stateName];
+    // map() is needed here to cast hash from string to number. Without it compiler will not
+    // recognize stateBinding type.
+    for (const hash of Object.keys(this.bindings_).map((hash): number => Number(hash))) {
+      const stateBinding = this.bindings_[hash];
       if (stateBinding.callbackFunction(resource)) {
-        this.lastStateName_ = stateName;
+        this.lastHash_ = Number(hash);
         return this.getStatusObject_(stateBinding);
       }
     }
 
-    throw Error(`No status registered for ${resource.typeMeta.kind} list.`);
+    return this.unknownStatus;
   }
 
-  private getStatusObject_(stateBinding: StateBinding<R>): Status {
+  private getStatusObject_(stateBinding: StateBinding<R>): StatusIcon {
     return {
-      iconName: stateBinding.iconName,
-      iconClass: {[stateBinding.iconClass]: true},
+      iconName: stateBinding.icon.name,
+      iconClass: {[stateBinding.icon.cssClass]: true},
     };
   }
 }
+
+interface StatusIcon {
+  iconName: string;
+  iconClass: {[className: string]: boolean};
+}
+
+enum IconName {
+  error = 'error',
+  timelapse = 'timelapse',
+  checkCircle = 'check_circle',
+  help = 'help',
+}
+
+class Icon {
+  name: string;
+  cssClass: string;
+
+  constructor(name: string, cssClass: string) {
+    this.name = name;
+    this.cssClass = cssClass;
+  }
+
+  /**
+   * Implementation of djb2 hash function:
+   * http://www.cse.yorku.ca/~oz/hash.html
+   */
+  hash(): number {
+    const value = `${this.name}#${this.cssClass}`;
+    return value.split('')
+        .map((str) => {
+          return str.charCodeAt(0);
+        })
+        .reduce((prev, curr) => {
+          return ((prev << 5) + prev) + curr;
+        }, 5381);
+  }
+}
+
+type StatusCheckCallback<T> = (resource: T) => boolean;
+
+type StateBinding<T> = {
+  icon: Icon,
+  callbackFunction: StatusCheckCallback<T>
+};
