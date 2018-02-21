@@ -19,7 +19,7 @@ import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 
 import {ResourceListWithStatuses} from '../../../resources/list';
-import {EndpointManager} from '../../../services/resource/endpoint';
+import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {ResourceService} from '../../../services/resource/resource';
 import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
 
@@ -28,7 +28,7 @@ import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
   templateUrl: './template.html',
 })
 export class NamespaceListComponent extends ResourceListWithStatuses<NamespaceList, Namespace> {
-  @Input() endpoint = EndpointManager.namespace.list();
+  @Input() endpoint = EndpointManager.resource(Resource.namespace).list();
 
   constructor(state: StateService, private readonly namespace_: ResourceService<NamespaceList>) {
     super('node', state);

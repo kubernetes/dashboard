@@ -14,7 +14,7 @@
 
 import {HttpParams} from '@angular/common/http';
 import {Component, Input} from '@angular/core';
-import {ReplicaSet, ReplicaSetList} from '@api/backendapi';
+import {Deployment, DeploymentList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 import {ResourceListWithStatuses} from '../../../resources/list';
@@ -23,17 +23,17 @@ import {NamespacedResourceService} from '../../../services/resource/resource';
 import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
 
 @Component({
-  selector: 'kd-replica-set-list',
+  selector: 'kd-deployment-list',
   templateUrl: './template.html',
 })
-export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSetList, ReplicaSet> {
-  @Input() endpoint = EndpointManager.resource(Resource.replicaSet, true).list();
+export class DeploymentListComponent extends ResourceListWithStatuses<DeploymentList, Deployment> {
+  @Input() endpoint = EndpointManager.resource(Resource.deployment, true).list();
 
   constructor(
       state: StateService,
-      private readonly replicaSet_: NamespacedResourceService<ReplicaSetList>) {
+      private readonly deployment_: NamespacedResourceService<DeploymentList>) {
     super('pod', state);
-    this.id = ListIdentifiers.replicaSet;
+    this.id = ListIdentifiers.deployment;
     this.groupId = ListGroupIdentifiers.workloads;
 
     // Register status icon handlers
@@ -42,23 +42,23 @@ export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSet
     this.registerBinding(this.icon.error, 'kd-error', this.isInErrorState);
   }
 
-  getResourceObservable(params?: HttpParams): Observable<ReplicaSetList> {
-    return this.replicaSet_.get(this.endpoint, undefined, params);
+  getResourceObservable(params?: HttpParams): Observable<DeploymentList> {
+    return this.deployment_.get(this.endpoint, undefined, params);
   }
 
-  map(rsList: ReplicaSetList): ReplicaSet[] {
-    return rsList.replicaSets;
+  map(deploymentList: DeploymentList): Deployment[] {
+    return deploymentList.deployments;
   }
 
-  isInErrorState(resource: ReplicaSet): boolean {
+  isInErrorState(resource: Deployment): boolean {
     return resource.pods.warnings.length > 0;
   }
 
-  isInPendingState(resource: ReplicaSet): boolean {
+  isInPendingState(resource: Deployment): boolean {
     return resource.pods.warnings.length === 0 && resource.pods.pending > 0;
   }
 
-  isInSuccessState(resource: ReplicaSet): boolean {
+  isInSuccessState(resource: Deployment): boolean {
     return resource.pods.warnings.length === 0 && resource.pods.pending === 0;
   }
 

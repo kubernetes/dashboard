@@ -14,17 +14,21 @@
 
 import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
+import {ComponentsModule} from '../../../common/components/module';
+import {ResourceModule} from '../../../common/services/resource/module';
 
 import {SharedModule} from '../../../shared.module';
-import {JobListComponent} from './list/component';
+import {JobList} from './list/component';
 import {jobListState} from './list/state';
 import {jobState} from './state';
 
 @NgModule({
   imports: [
     SharedModule,
+    ComponentsModule,
+    ResourceModule,
     UIRouterModule.forChild({states: [jobState, jobListState]}),
   ],
-  declarations: [JobListComponent],
+  declarations: [JobList],
 })
 export class JobModule {}

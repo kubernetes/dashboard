@@ -15,10 +15,7 @@
 import {Component} from '@angular/core';
 
 @Component({
-  selector: 'kd-replication-controller-list',
-  templateUrl: './template.html',
-  styleUrls: ['./style.scss']
+  selector: 'kd-replication-controller-list-state',
+  template: '<kd-replication-controller-list></kd-replication-controller-list>',
 })
-export class ReplicationControllerListComponent {
-  constructor() {}
-}
+export class ReplicationControllerList {}

@@ -14,7 +14,7 @@
 
 import {HttpParams} from '@angular/common/http';
 import {Component, Input} from '@angular/core';
-import {ReplicaSet, ReplicaSetList} from '@api/backendapi';
+import {StatefulSet, StatefulSetList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 import {ResourceListWithStatuses} from '../../../resources/list';
@@ -23,17 +23,18 @@ import {NamespacedResourceService} from '../../../services/resource/resource';
 import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
 
 @Component({
-  selector: 'kd-replica-set-list',
+  selector: 'kd-stateful-set-list',
   templateUrl: './template.html',
 })
-export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSetList, ReplicaSet> {
-  @Input() endpoint = EndpointManager.resource(Resource.replicaSet, true).list();
+export class StatefulSetListComponent extends
+    ResourceListWithStatuses<StatefulSetList, StatefulSet> {
+  @Input() endpoint = EndpointManager.resource(Resource.statefulSet, true).list();
 
   constructor(
       state: StateService,
-      private readonly replicaSet_: NamespacedResourceService<ReplicaSetList>) {
+      private readonly statefulSet_: NamespacedResourceService<StatefulSetList>) {
     super('pod', state);
-    this.id = ListIdentifiers.replicaSet;
+    this.id = ListIdentifiers.statefulSet;
     this.groupId = ListGroupIdentifiers.workloads;
 
     // Register status icon handlers
@@ -42,23 +43,23 @@ export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSet
     this.registerBinding(this.icon.error, 'kd-error', this.isInErrorState);
   }
 
-  getResourceObservable(params?: HttpParams): Observable<ReplicaSetList> {
-    return this.replicaSet_.get(this.endpoint, undefined, params);
+  getResourceObservable(params?: HttpParams): Observable<StatefulSetList> {
+    return this.statefulSet_.get(this.endpoint, undefined, params);
   }
 
-  map(rsList: ReplicaSetList): ReplicaSet[] {
-    return rsList.replicaSets;
+  map(statefulSetList: StatefulSetList): StatefulSet[] {
+    return statefulSetList.statefulSets;
   }
 
-  isInErrorState(resource: ReplicaSet): boolean {
+  isInErrorState(resource: StatefulSet): boolean {
     return resource.pods.warnings.length > 0;
   }
 
-  isInPendingState(resource: ReplicaSet): boolean {
+  isInPendingState(resource: StatefulSet): boolean {
     return resource.pods.warnings.length === 0 && resource.pods.pending > 0;
   }
 
-  isInSuccessState(resource: ReplicaSet): boolean {
+  isInSuccessState(resource: StatefulSet): boolean {
     return resource.pods.warnings.length === 0 && resource.pods.pending === 0;
   }
 

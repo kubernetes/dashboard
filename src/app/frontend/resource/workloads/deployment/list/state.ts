@@ -16,12 +16,12 @@ import {Ng2StateDeclaration} from '@uirouter/angular';
 
 import {workloadsState} from '../../state';
 import {stateName, stateUrl} from '../state';
-import {DeploymentListComponent} from './component';
+import {DeploymentList} from './component';
 
 export const deploymentListState: Ng2StateDeclaration = {
   name: `${stateName}.list`,
   url: stateUrl,
-  component: DeploymentListComponent,
+  component: DeploymentList,
   data: {
     kdBreadcrumbs: {
       label: 'Deployments',

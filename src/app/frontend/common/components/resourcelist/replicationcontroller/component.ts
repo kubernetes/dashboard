@@ -14,7 +14,7 @@
 
 import {HttpParams} from '@angular/common/http';
 import {Component, Input} from '@angular/core';
-import {ReplicaSet, ReplicaSetList} from '@api/backendapi';
+import {ReplicationController, ReplicationControllerList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 import {ResourceListWithStatuses} from '../../../resources/list';
@@ -23,17 +23,19 @@ import {NamespacedResourceService} from '../../../services/resource/resource';
 import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
 
 @Component({
-  selector: 'kd-replica-set-list',
+  selector: 'kd-replication-controller-list',
   templateUrl: './template.html',
 })
-export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSetList, ReplicaSet> {
-  @Input() endpoint = EndpointManager.resource(Resource.replicaSet, true).list();
+export class ReplicationControllerListComponent extends
+    ResourceListWithStatuses<ReplicationControllerList, ReplicationController> {
+  @Input() endpoint = EndpointManager.resource(Resource.replicationController, true).list();
 
   constructor(
       state: StateService,
-      private readonly replicaSet_: NamespacedResourceService<ReplicaSetList>) {
+      private readonly replicationController_:
+          NamespacedResourceService<ReplicationControllerList>) {
     super('pod', state);
-    this.id = ListIdentifiers.replicaSet;
+    this.id = ListIdentifiers.replicationController;
     this.groupId = ListGroupIdentifiers.workloads;
 
     // Register status icon handlers
@@ -42,23 +44,23 @@ export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSet
     this.registerBinding(this.icon.error, 'kd-error', this.isInErrorState);
   }
 
-  getResourceObservable(params?: HttpParams): Observable<ReplicaSetList> {
-    return this.replicaSet_.get(this.endpoint, undefined, params);
+  getResourceObservable(params?: HttpParams): Observable<ReplicationControllerList> {
+    return this.replicationController_.get(this.endpoint, undefined, params);
   }
 
-  map(rsList: ReplicaSetList): ReplicaSet[] {
-    return rsList.replicaSets;
+  map(rcList: ReplicationControllerList): ReplicationController[] {
+    return rcList.replicationControllers;
   }
 
-  isInErrorState(resource: ReplicaSet): boolean {
+  isInErrorState(resource: ReplicationController): boolean {
     return resource.pods.warnings.length > 0;
   }
 
-  isInPendingState(resource: ReplicaSet): boolean {
+  isInPendingState(resource: ReplicationController): boolean {
     return resource.pods.warnings.length === 0 && resource.pods.pending > 0;
   }
 
-  isInSuccessState(resource: ReplicaSet): boolean {
+  isInSuccessState(resource: ReplicationController): boolean {
     return resource.pods.warnings.length === 0 && resource.pods.pending === 0;
   }
 

@@ -20,13 +20,13 @@ import {Pod, PodList} from 'typings/backendapi';
 
 import {podDetailState} from '../../../../resource/workloads/pod/detail/state';
 import {ResourceListWithStatuses} from '../../../resources/list';
-import {EndpointManager} from '../../../services/resource/endpoint';
+import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
 
 @Component({selector: 'kd-pod-list', templateUrl: './template.html'})
 export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
-  @Input() endpoint = EndpointManager.pod.list();
+  @Input() endpoint = EndpointManager.resource(Resource.pod, true).list();
 
   constructor(state: StateService, private readonly podList: NamespacedResourceService<PodList>) {
     super(podDetailState.name, state);

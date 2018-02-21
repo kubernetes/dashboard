@@ -16,12 +16,12 @@ import {Ng2StateDeclaration} from '@uirouter/angular';
 
 import {workloadsState} from '../../state';
 import {stateName, stateUrl} from '../state';
-import {DaemonSetListComponent} from './component';
+import {DaemonSetList} from './component';
 
 export const daemonSetListState: Ng2StateDeclaration = {
   name: `${stateName}.list`,
   url: stateUrl,
-  component: DaemonSetListComponent,
+  component: DaemonSetList,
   data: {
     kdBreadcrumbs: {
       label: 'Daemon Sets',

@@ -14,17 +14,21 @@
 
 import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
+import {ComponentsModule} from '../../../common/components/module';
+import {ResourceModule} from '../../../common/services/resource/module';
 
 import {SharedModule} from '../../../shared.module';
-import {ReplicationControllerListComponent} from './list/component';
+import {ReplicationControllerList} from './list/component';
 import {replicationControllerListState} from './list/state';
 import {replicationControllerState} from './state';
 
 @NgModule({
   imports: [
     SharedModule,
+    ComponentsModule,
+    ResourceModule,
     UIRouterModule.forChild({states: [replicationControllerState, replicationControllerListState]}),
   ],
-  declarations: [ReplicationControllerListComponent],
+  declarations: [ReplicationControllerList],
 })
 export class ReplicationControllerModule {}

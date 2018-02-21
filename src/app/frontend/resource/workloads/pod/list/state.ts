@@ -15,12 +15,12 @@
 import {Ng2StateDeclaration} from '@uirouter/angular';
 import {workloadsState} from '../../state';
 import {stateName, stateUrl} from '../state';
-import {PodListComponent} from './component';
+import {PodList} from './component';
 
 export const podListState: Ng2StateDeclaration = {
   name: `${stateName}.list`,
   url: stateUrl,
-  component: PodListComponent,
+  component: PodList,
   data: {
     kdBreadcrumbs: {
       label: 'Pods',

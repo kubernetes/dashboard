@@ -21,7 +21,7 @@ import {SharedModule} from '../../../shared.module';
 
 import {PodDetailComponent} from './detail/component';
 import {podDetailState} from './detail/state';
-import {PodListComponent} from './list/component';
+import {PodList} from './list/component';
 import {podListState} from './list/state';
 import {podState} from './state';
 
@@ -32,6 +32,6 @@ import {podState} from './state';
     ResourceModule,
     UIRouterModule.forChild({states: [podState, podListState, podDetailState]}),
   ],
-  declarations: [PodListComponent, PodDetailComponent],
+  declarations: [PodList, PodDetailComponent],
 })
 export class PodModule {}

@@ -14,7 +14,8 @@
 
 import {Component} from '@angular/core';
 
-@Component({selector: 'kd-daemon-set', templateUrl: './template.html', styleUrls: ['./style.scss']})
-export class DaemonSetListComponent {
-  constructor() {}
-}
+@Component({
+  selector: 'kd-daemon-set-list-state',
+  template: '<kd-daemon-set-list></kd-daemon-set-list>',
+})
+export class DaemonSetList {}

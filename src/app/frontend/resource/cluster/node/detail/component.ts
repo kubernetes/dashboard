@@ -17,7 +17,7 @@ import {MatTableDataSource} from '@angular/material';
 import {Condition, NodeAddress, NodeDetail, NodeTaint} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Subscription} from 'rxjs/Subscription';
-import {EndpointManager} from '../../../../common/services/resource/endpoint';
+import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
 import {ResourceService} from '../../../../common/services/resource/resource';
 
 @Component({
@@ -38,13 +38,15 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.nodeName_ = this.state_.params.resourceName;
-    this.podListEndpoint = EndpointManager.node.pods(this.nodeName_);
+    this.podListEndpoint =
+        EndpointManager.resource(Resource.node).child(this.nodeName_, Resource.pod);
     this.nodeSubscription_ =
-        this.node_.get(EndpointManager.node.detail(), this.nodeName_).subscribe((d: NodeDetail) => {
-          this.node = d;
-          this.conditionsData.data = d.conditions;
-          this.isInitialized = true;
-        });
+        this.node_.get(EndpointManager.resource(Resource.node).detail(), this.nodeName_)
+            .subscribe((d: NodeDetail) => {
+              this.node = d;
+              this.conditionsData.data = d.conditions;
+              this.isInitialized = true;
+            });
   }
 
   ngOnDestroy(): void {

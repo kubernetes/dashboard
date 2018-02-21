@@ -19,7 +19,7 @@ import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 
 import {ResourceListBase} from '../../../resources/list';
-import {EndpointManager} from '../../../services/resource/endpoint';
+import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {ResourceService} from '../../../services/resource/resource';
 import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
 
@@ -28,7 +28,7 @@ import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
   templateUrl: './template.html',
 })
 export class StorageClassListComponent extends ResourceListBase<StorageClassList, StorageClass> {
-  @Input() endpoint = EndpointManager.storageClass.list();
+  @Input() endpoint = EndpointManager.resource(Resource.storageClass).list();
 
   constructor(state: StateService, private readonly sc_: ResourceService<StorageClassList>) {
     super('node', state);

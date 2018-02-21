@@ -16,12 +16,12 @@ import {Ng2StateDeclaration} from '@uirouter/angular';
 
 import {workloadsState} from '../../state';
 import {stateName, stateUrl} from '../state';
-import {JobListComponent} from './component';
+import {JobList} from './component';
 
 export const jobListState: Ng2StateDeclaration = {
   name: `${stateName}.list`,
   url: stateUrl,
-  component: JobListComponent,
+  component: JobList,
   data: {
     kdBreadcrumbs: {
       label: 'Jobs',

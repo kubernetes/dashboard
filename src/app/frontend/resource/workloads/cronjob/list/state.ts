@@ -16,12 +16,12 @@ import {Ng2StateDeclaration} from '@uirouter/angular';
 
 import {workloadsState} from '../../state';
 import {stateName, stateUrl} from '../state';
-import {CronJobListComponent} from './component';
+import {CronJobList} from './component';
 
 export const cronJobListState: Ng2StateDeclaration = {
   name: `${stateName}.list`,
   url: stateUrl,
-  component: CronJobListComponent,
+  component: CronJobList,
   data: {
     kdBreadcrumbs: {
       label: 'Cron Jobs',

@@ -14,7 +14,8 @@
 
 import {Component} from '@angular/core';
 
-@Component({selector: 'kd-deployment', templateUrl: './template.html', styleUrls: ['./style.scss']})
-export class DeploymentListComponent {
-  constructor() {}
-}
+@Component({
+  selector: 'kd-deployment-list-state',
+  template: '<kd-deployment-list></kd-deployment-list>',
+})
+export class DeploymentList {}

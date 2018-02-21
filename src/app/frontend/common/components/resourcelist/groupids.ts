@@ -18,9 +18,14 @@ export enum ListIdentifiers {
   node = 'nodeList',
   persistentVolume = 'persistentVolumeList',
   storageClass = 'storageClassList',
-  cronJob = 'cronJob',
+  cronJob = 'cronJobList',
+  job = 'jobList',
+  deployment = 'deploymentList',
+  daemonSet = 'daemonSetList',
   pod = 'podList',
   replicaSet = 'replicaSetList',
+  replicationController = 'replicationControllerList',
+  statefulSet = 'statefulSetList',
 }
 
 export enum ListGroupIdentifiers {

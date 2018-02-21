@@ -15,12 +15,12 @@
 import {Ng2StateDeclaration} from '@uirouter/angular';
 import {workloadsState} from '../../state';
 import {stateName, stateUrl} from '../state';
-import {ReplicationControllerListComponent} from './component';
+import {ReplicationControllerList} from './component';
 
 export const replicationControllerListState: Ng2StateDeclaration = {
   name: `${stateName}.list`,
   url: stateUrl,
-  component: ReplicationControllerListComponent,
+  component: ReplicationControllerList,
   data: {
     kdBreadcrumbs: {
       label: 'ReplicationControllers',

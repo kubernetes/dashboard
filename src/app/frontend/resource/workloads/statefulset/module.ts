@@ -14,17 +14,21 @@
 
 import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
+import {ComponentsModule} from '../../../common/components/module';
+import {ResourceModule} from '../../../common/services/resource/module';
 
 import {SharedModule} from '../../../shared.module';
-import {StatefulSetListComponent} from './list/component';
+import {StatefulSetList} from './list/component';
 import {statefulSetListState} from './list/state';
 import {statefulSetState} from './state';
 
 @NgModule({
   imports: [
     SharedModule,
+    ComponentsModule,
+    ResourceModule,
     UIRouterModule.forChild({states: [statefulSetState, statefulSetListState]}),
   ],
-  declarations: [StatefulSetListComponent],
+  declarations: [StatefulSetList],
 })
 export class StatefulSetModule {}

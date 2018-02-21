@@ -26,13 +26,18 @@ import {PropertyComponent} from './property/component';
 import {ProxyComponent} from './proxy/component';
 import {ClusterRoleListComponent} from './resourcelist/clusterrole/component';
 import {CronJobListComponent} from './resourcelist/cronjob/component';
+import {DaemonSetListComponent} from './resourcelist/daemonset/component';
+import {DeploymentListComponent} from './resourcelist/deployment/component';
 import {CardListFilterComponent} from './resourcelist/filter/component';
+import {JobListComponent} from './resourcelist/job/component';
 import {NamespaceListComponent} from './resourcelist/namespace/component';
 import {NodeListComponent} from './resourcelist/node/component';
 import {PersistentVolumeListComponent} from './resourcelist/persistentvolume/component';
 import {PodListComponent} from './resourcelist/pod/component';
 import {ReplicaSetListComponent} from './resourcelist/replicaset/component';
+import {ReplicationControllerListComponent} from './resourcelist/replicationcontroller/component';
 import {LoadingSpinner} from './resourcelist/spinner/component';
+import {StatefulSetListComponent} from './resourcelist/statefulset/component';
 import {StorageClassListComponent} from './resourcelist/storageclass/component';
 import {ListZeroState} from './resourcelist/zerostate/component';
 import {ZeroState} from './zerostate/component';
@@ -62,6 +67,11 @@ import {ZeroState} from './zerostate/component';
     ClusterRoleListComponent,
     StorageClassListComponent,
     CronJobListComponent,
+    DaemonSetListComponent,
+    DeploymentListComponent,
+    JobListComponent,
+    ReplicationControllerListComponent,
+    StatefulSetListComponent,
   ],
   exports: [
     AllocationChartComponent,
@@ -81,8 +91,13 @@ import {ZeroState} from './zerostate/component';
     PersistentVolumeListComponent,
     ZeroState,
     ClusterRoleListComponent,
-    CronJobListComponent,
     StorageClassListComponent,
+    CronJobListComponent,
+    DaemonSetListComponent,
+    DeploymentListComponent,
+    JobListComponent,
+    ReplicationControllerListComponent,
+    StatefulSetListComponent,
   ],
 })
 export class ComponentsModule {}

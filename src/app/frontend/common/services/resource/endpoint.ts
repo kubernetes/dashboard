@@ -12,85 +12,43 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Injectable} from '@angular/core';
-
 const baseHref = '/api/v1';
 
-@Injectable()
+export enum Resource {
+  job = 'job',
+  cronJob = 'cronjob',
+  daemonSet = 'daemonset',
+  deployment = 'deployment',
+  pod = 'pod',
+  replicaSet = 'replicaset',
+  replicationController = 'replicationcontroller',
+  statefulSet = 'statefulset',
+  node = 'node',
+  namespace = 'namespace',
+  persistentVolume = 'persistentvolume',
+  storageClass = 'storageclass',
+  clusterRole = 'clusterrole',
+}
+
+class ResourceEndpoint {
+  constructor(private readonly resource_: Resource, private readonly namespaced_ = false) {}
+
+  list(): string {
+    return `${baseHref}/${this.resource_}${this.namespaced_ ? '/:namespace' : ''}`;
+  }
+
+  detail(): string {
+    return `${baseHref}/${this.resource_}${this.namespaced_ ? '/:namespace' : ''}/:name`;
+  }
+
+  child(resourceName: string, relatedResource: Resource): string {
+    return `${baseHref}/${this.resource_}${this.namespaced_ ? '/:namespace' : ''}/${resourceName}/${
+        relatedResource}`;
+  }
+}
+
 export class EndpointManager {
-  static pod = class {
-    static list(): string {
-      return `${baseHref}/pod/:namespace`;
-    }
-
-    static detail(): string {
-      return `${baseHref}/pod/:namespace/:name`;
-    }
-  };
-
-  static cronJob = class {
-    static list(): string {
-      return `${baseHref}/cronjob/:namespace`;
-    }
-  };
-
-  static replicaSet = class {
-    static list(): string {
-      return `${baseHref}/replicaset/:namespace`;
-    }
-
-    static detail(): string {
-      return `${baseHref}/replicaset/:namespace/:name`;
-    }
-  };
-
-  static node = class {
-    static list(): string {
-      return `${baseHref}/node`;
-    }
-
-    static detail(): string {
-      return `${baseHref}/node/:name`;
-    }
-
-    static pods(nodeName: string): string {
-      return `${baseHref}/node/${nodeName}/pod`;
-    }
-  };
-
-  static namespace = class {
-    static list(): string {
-      return `${baseHref}/namespace`;
-    }
-
-    static detail(): string {
-      return `${baseHref}/namespace/:name`;
-    }
-  };
-
-  static persistentVolume = class {
-    static list(): string {
-      return `${baseHref}/persistentvolume`;
-    }
-
-    static detail(): string {
-      return `${baseHref}/persistentvolume/:name`;
-    }
-  };
-
-  static storageClass = class {
-    static list(): string {
-      return `${baseHref}/storageclass`;
-    }
-
-    static detail(): string {
-      return `${baseHref}/storageclass/:name`;
-    }
-  };
-
-  static clusterRole = class {
-    static list(): string {
-      return `${baseHref}/clusterrole`;
-    }
-  };
+  static resource(resource: Resource, namespaced?: boolean): ResourceEndpoint {
+    return new ResourceEndpoint(resource, namespaced);
+  }
 }

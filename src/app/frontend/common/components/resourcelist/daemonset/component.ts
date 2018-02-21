@@ -14,55 +14,54 @@
 
 import {HttpParams} from '@angular/common/http';
 import {Component, Input} from '@angular/core';
-import {Node, NodeList} from '@api/backendapi';
+import {DaemonSet, DaemonSetList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
-
-import {nodeDetailState} from '../../../../resource/cluster/node/detail/state';
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
-import {ResourceService} from '../../../services/resource/resource';
+import {NamespacedResourceService} from '../../../services/resource/resource';
 import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
 
 @Component({
-  selector: 'kd-node-list',
+  selector: 'kd-daemon-set-list',
   templateUrl: './template.html',
 })
-export class NodeListComponent extends ResourceListWithStatuses<NodeList, Node> {
-  @Input() endpoint = EndpointManager.resource(Resource.node).list();
+export class DaemonSetListComponent extends ResourceListWithStatuses<DaemonSetList, DaemonSet> {
+  @Input() endpoint = EndpointManager.resource(Resource.daemonSet, true).list();
 
-  constructor(state: StateService, private readonly node_: ResourceService<NodeList>) {
-    super(nodeDetailState.name, state);
-    this.id = ListIdentifiers.node;
-    this.groupId = ListGroupIdentifiers.cluster;
+  constructor(
+      state: StateService, private readonly daemonSet_: NamespacedResourceService<DaemonSetList>) {
+    super('pod', state);
+    this.id = ListIdentifiers.daemonSet;
+    this.groupId = ListGroupIdentifiers.workloads;
 
     // Register status icon handlers
     this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);
-    this.registerBinding(this.icon.help, 'kd-muted', this.isInUnknownState);
+    this.registerBinding(this.icon.timelapse, 'kd-muted', this.isInPendingState);
     this.registerBinding(this.icon.error, 'kd-error', this.isInErrorState);
   }
 
-  getResourceObservable(params?: HttpParams): Observable<NodeList> {
-    return this.node_.get(this.endpoint, undefined, params);
+  getResourceObservable(params?: HttpParams): Observable<DaemonSetList> {
+    return this.daemonSet_.get(this.endpoint, undefined, params);
   }
 
-  map(nodeList: NodeList): Node[] {
-    return nodeList.nodes;
+  map(daemonSetList: DaemonSetList): DaemonSet[] {
+    return daemonSetList.daemonSets;
   }
 
-  isInErrorState(resource: Node): boolean {
-    return resource.ready === 'False';
+  isInErrorState(resource: DaemonSet): boolean {
+    return resource.pods.warnings.length > 0;
   }
 
-  isInUnknownState(resource: Node): boolean {
-    return resource.ready === 'Unknown';
+  isInPendingState(resource: DaemonSet): boolean {
+    return resource.pods.warnings.length === 0 && resource.pods.pending > 0;
   }
 
-  isInSuccessState(resource: Node): boolean {
-    return resource.ready === 'True';
+  isInSuccessState(resource: DaemonSet): boolean {
+    return resource.pods.warnings.length === 0 && resource.pods.pending === 0;
   }
 
   getDisplayColumns(): string[] {
-    return ['statusicon', 'name', 'labels', 'ready', 'cpureq', 'cpulim', 'memreq', 'memlim', 'age'];
+    return ['statusicon', 'name', 'labels', 'pods', 'age', 'images'];
   }
 }

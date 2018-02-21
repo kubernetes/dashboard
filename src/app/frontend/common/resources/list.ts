@@ -21,7 +21,7 @@ import {OnListChangeEvent} from '@api/frontendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 import {merge} from 'rxjs/observable/merge';
-import {startWith, switchMap} from 'rxjs/operators';
+import {delay, startWith, switchMap} from 'rxjs/operators';
 import {Subscription} from 'rxjs/Subscription';
 
 import {searchState} from '../../search/state';
@@ -45,7 +45,7 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(CardListFilterComponent) filter: CardListFilterComponent;
-  isLoading = true;
+  isLoading = false;
   totalItems = 0;
 
   get itemsPerPage(): number {
@@ -74,8 +74,6 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
     }
 
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-
-    let timeoutObj: NodeJS.Timer;
     this.dataSubscription_ =
         merge(this.sort.sortChange, this.paginator.page, this.filter.filterEvent)
             .pipe(startWith({}), switchMap<T, T>(() => {
@@ -84,16 +82,11 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
                     params = this.filter_(params);
                     params = this.search_(params);
 
-                    // Show loading animation only for long loading data to avoid flickering.
-                    timeoutObj = setTimeout(() => {
-                      this.isLoading = true;
-                    }, 100);
-
+                    this.isLoading = true;
                     return this.getResourceObservable(params);
                   }))
             .subscribe((data: T) => {
               this.totalItems = data.listMeta.totalItems;
-              clearTimeout(timeoutObj);
               this.isLoading = false;
               this.data_.data = this.map(data);
               this.onListChange_();
