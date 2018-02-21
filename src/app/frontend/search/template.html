@@ -30,6 +30,8 @@ limitations under the License.
 
   <div class="kd-card-group-header kd-muted"
        [hidden]="!hasWorkloads()">Workloads</div>
+  <kd-cron-job-list (onchange)="onListUpdate($event)"
+                    [hideable]="true"></kd-cron-job-list>
   <kd-pod-list (onchange)="onListUpdate($event)"
                [hideable]="true"></kd-pod-list>
   <kd-replica-set-list (onchange)="onListUpdate($event)"

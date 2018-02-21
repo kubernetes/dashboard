@@ -17,12 +17,12 @@ limitations under the License.
 <div [hidden]="shouldShowZeroState()">
   <div class="kd-card-group-header kd-muted"
        [hidden]="!hasWorkloads()">Workloads</div>
+  <kd-cron-job-list (onchange)="onListUpdate($event)"
+                    [hideable]="true"></kd-cron-job-list>
   <kd-pod-list (onchange)="onListUpdate($event)"
                [hideable]="true"></kd-pod-list>
   <kd-replica-set-list (onchange)="onListUpdate($event)"
                        [hideable]="true"></kd-replica-set-list>
-  <kd-cron-job-list (onchange)="onListUpdate($event)"
-                    [hideable]="true"></kd-cron-job-list>
 
   <div class="kd-card-group-header kd-muted"
        [hidden]="!hasDiscovery()">Discovery and Load Balancing</div>

@@ -15,12 +15,12 @@ limitations under the License.
 -->
 
 <div [hidden]="shouldShowZeroState()">
+  <kd-cron-job-list (onchange)="onListUpdate($event)"
+                    [hideable]="true"></kd-cron-job-list>
   <kd-pod-list (onchange)="onListUpdate($event)"
                [hideable]="true"></kd-pod-list>
   <kd-replica-set-list (onchange)="onListUpdate($event)"
                        [hideable]="true"></kd-replica-set-list>
-  <kd-cron-job-list (onchange)="onListUpdate($event)"
-                    [hideable]="true"></kd-cron-job-list>
 </div>
 
 <kd-zero-state [hidden]="!shouldShowZeroState()"></kd-zero-state>
