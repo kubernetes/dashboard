@@ -226,7 +226,7 @@ func initArgHolder() {
 func handleFatalInitError(err error) {
 	log.Fatalf("Error while initializing connection to Kubernetes apiserver. "+
 		"This most likely means that the cluster is misconfigured (e.g., it has "+
-		"invalid apiserver certificates or service accounts configuration) or the "+
+		"invalid apiserver certificates or service account's configuration) or the "+
 		"--apiserver-host param points to a server that does not exist. Reason: %s\n"+
 		"Refer to our FAQ and wiki pages for more information: "+
 		"https://github.com/kubernetes/dashboard/wiki/FAQ", err)
