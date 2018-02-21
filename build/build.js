@@ -254,7 +254,7 @@ function createFrontendCopies(outputDirs) {
 
 /**
  * Creates revisions of all .js anc .css files at once (for production).
- * Replaces the occurances of those files in index.html with their new names.
+ * Replaces the occurences of those files in index.html with their new names.
  * index.html does not get renamed in the process.
  * The processed files are then moved to the dist directory.
  * @return {stream}
