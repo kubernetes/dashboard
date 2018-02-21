@@ -25,6 +25,7 @@ import {ObjectMetaComponent} from './objectmeta/component';
 import {PropertyComponent} from './property/component';
 import {ProxyComponent} from './proxy/component';
 import {ClusterRoleListComponent} from './resourcelist/clusterrole/component';
+import {ConfigMapListComponent} from './resourcelist/configmap/component';
 import {CronJobListComponent} from './resourcelist/cronjob/component';
 import {CardListFilterComponent} from './resourcelist/filter/component';
 import {NamespaceListComponent} from './resourcelist/namespace/component';
@@ -62,6 +63,7 @@ import {ZeroState} from './zerostate/component';
     ClusterRoleListComponent,
     StorageClassListComponent,
     CronJobListComponent,
+    ConfigMapListComponent,
   ],
   exports: [
     AllocationChartComponent,
@@ -83,6 +85,7 @@ import {ZeroState} from './zerostate/component';
     ClusterRoleListComponent,
     CronJobListComponent,
     StorageClassListComponent,
+    ConfigMapListComponent,
   ],
 })
 export class ComponentsModule {}

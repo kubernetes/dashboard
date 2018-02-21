@@ -29,6 +29,8 @@ limitations under the License.
 
   <div class="kd-card-group-header kd-muted"
        [hidden]="!hasConfig()">Config and Storage</div>
+  <kd-config-map-list (onchange)="onListUpdate($event)"
+                      [hideable]="true"></kd-config-map-list>
 </div>
 
 <kd-zero-state [hidden]="!shouldShowZeroState()"></kd-zero-state>

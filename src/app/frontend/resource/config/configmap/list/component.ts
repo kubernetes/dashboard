@@ -14,8 +14,8 @@
 
 import {Component} from '@angular/core';
 
-@Component(
-    {selector: 'kd-config-map-list', templateUrl: './template.html', styleUrls: ['./style.scss']})
-export class ConfigMapListComponent {
-  constructor() {}
-}
+@Component({
+  selector: 'kd-config-map-list-state',
+  template: '<kd-config-map-list></kd-config-map-list>',
+})
+export class ConfigMapListComponent {}

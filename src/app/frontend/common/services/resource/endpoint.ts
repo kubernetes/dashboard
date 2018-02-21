@@ -93,4 +93,14 @@ export class EndpointManager {
       return `${baseHref}/clusterrole`;
     }
   };
+
+  static configMap = class {
+    static list(): string {
+      return `${baseHref}/configmap/:namespace`;
+    }
+
+    static detail(): string {
+      return `${baseHref}/configmap/:namespace/:name`;
+    }
+  };
 }

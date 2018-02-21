@@ -21,6 +21,11 @@ export enum ListIdentifiers {
   cronJob = 'cronJob',
   pod = 'podList',
   replicaSet = 'replicaSetList',
+  ingress = 'ingressList',
+  service = 'serviceLise',
+  configMap = 'configMapList',
+  persistentVolumeClaim = 'persistentVolumeClaimList',
+  secret = 'secretList',
 }
 
 export enum ListGroupIdentifiers {
