@@ -14,7 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<a href
-   ng-click="$ctrl.openDetails()">
-  kubectl.kubernetes.io/last-applied-configuration
-</a>
+<kd-card [initialized]="isInitialized"
+         [expandable]="true">
+  <div title>Metadata</div>
+  <div content>
+    <kd-object-meta [objectMeta]="configMap.objectMeta"></kd-object-meta>
+  </div>
+</kd-card>
+
+<kd-card [initialized]="isInitialized"
+         [expandable]="true">
+  <div title>Data</div>
+  <div content>
+    <ng-container *ngIf="configMap.data"><code>{{configMap.data | json}}</code></ng-container>
+    <ng-container *ngIf="!configMap.data">There is no data to display.</ng-container>
+  </div>
+</kd-card>

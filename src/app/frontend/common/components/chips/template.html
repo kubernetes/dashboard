@@ -16,19 +16,33 @@ limitations under the License.
 
 <mat-chip-list>
   <ng-container *ngFor="let key of keys; let i = index">
-    <mat-chip *ngIf="isVisible(i)">
-      <span>{{key}}</span>
-      <ng-container *ngIf="map[key]"
-                    [ngSwitch]="isHref(map[key])">
-        <ng-container *ngSwitchCase="true">
-          <span>:&nbsp;</span>
-          <a [href]="map[key]"
-             target="_blank">
-            {{map[key]}}
-          </a>
-        </ng-container>
-        <span *ngSwitchDefault>:&nbsp;{{map[key]}}</span>
+    <mat-chip *ngIf="isVisible(i)"
+              [ngSwitch]="key">
+
+      <ng-container *ngSwitchCase="'kubernetes.io/created-by'">
+        <span>{{key}}</span>
+        <!-- TODO -->
       </ng-container>
+
+      <ng-container *ngSwitchCase="'kubectl.kubernetes.io/last-applied-configuration'">
+        <span>{{key}}</span>
+        <!-- TODO -->
+      </ng-container>
+
+      <ng-container *ngSwitchDefault>
+        <span>{{key}}</span>
+        <ng-container *ngIf="map[key]">
+          <ng-container *ngIf="isHref(map[key])">
+            <span>:&nbsp;</span>
+            <a [href]="map[key]"
+               target="_blank">
+              {{map[key]}}
+            </a>
+          </ng-container>
+          <span *ngIf="!isHref(map[key])">:&nbsp;{{map[key]}}</span>
+        </ng-container>
+      </ng-container>
+
     </mat-chip>
   </ng-container>
   <mat-chip *ngIf="isAnythingHidden()"

@@ -34,8 +34,8 @@ const URL_REGEXP = new RegExp(
 })
 export class ChipsComponent implements OnInit {
   @Input() map: StringMap|string[];
+  @Input() minChipsVisible = 2;
   keys: string[];
-  readonly numberOfAlwaysVisibleChips = 3;
   isShowingAll = false;
 
   ngOnInit(): void {
@@ -51,11 +51,11 @@ export class ChipsComponent implements OnInit {
   }
 
   isVisible(index: number): boolean {
-    return this.isShowingAll || index < this.numberOfAlwaysVisibleChips;
+    return this.isShowingAll || index < this.minChipsVisible;
   }
 
   isAnythingHidden(): boolean {
-    return this.keys.length > this.numberOfAlwaysVisibleChips;
+    return this.keys.length > this.minChipsVisible;
   }
 
   toggleView(): void {
@@ -66,3 +66,18 @@ export class ChipsComponent implements OnInit {
     return URL_REGEXP.test(value.trim());
   }
 }
+
+
+// <a href
+// ng-click="$ctrl.openDetails()">
+//   kubectl.kubernetes.io/last-applied-configuration
+//   </a>
+//
+//   openDetails() {
+//   let dialog = this.mdDialog_.alert()
+//     .title(`kubectl.kubernetes.io/last-applied-configuration`)
+//     .textContent(this.value)
+//     .ok(i18n.MSG_CONFIG_DIALOG_CLOSE_ACTION);
+//   this.mdDialog_.show(dialog);
+// }
+// }
