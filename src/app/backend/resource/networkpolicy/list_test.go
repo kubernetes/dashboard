@@ -101,6 +101,13 @@ func TestGetNetworkPolicyList(t *testing.T){
       continue
     }
 
+    for i, verb := range c.expectedActions {
+      if actions[i].GetVerb() != verb {
+        t.Errorf("Unexpected action: %+v, expected %s",
+          actions[i], verb)
+      }
+    }
+
     if !reflect.DeepEqual(actual, c.expected) {
       t.Errorf("GetNetworkPolicyList(client) == got\n%#v, expected\n %#v", actual, c.expected)
     }
