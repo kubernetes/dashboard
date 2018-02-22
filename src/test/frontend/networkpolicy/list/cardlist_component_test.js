@@ -28,10 +28,10 @@ describe('Network Policy Card List controller', () => {
     angular.mock.inject(($componentController, $rootScope, kdNamespaceService) => {
       /** @type {!NamespaceService} */
       data = kdNamespaceService;
-    /** @type {!NetworkPolicyCardListController} */
-    ctrl = $componentController(
-      'kdNetworkPolicyCardList', {$scope: $rootScope, kdNamespaceService_: data}, {});
-    });
+      /** @type {!NetworkPolicyCardListController} */
+      ctrl = $componentController(
+          'kdNetworkPolicyCardList', {$scope: $rootScope, kdNamespaceService_: data}, {});
+      });
   });
 
   it('should instantiate the controller properly', () => {

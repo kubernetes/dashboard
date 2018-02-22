@@ -30,7 +30,7 @@ func TestGetNetworkPolicy(t *testing.T)  {
   protocol:= core.ProtocolUDP
   cases := []struct {
     networkPolicy *networkpolicy.NetworkPolicy
-    expected NetworkPolicy
+    expected *NetworkPolicy
   }{
     {
       networkPolicy: &networkpolicy.NetworkPolicy{
@@ -54,7 +54,7 @@ func TestGetNetworkPolicy(t *testing.T)  {
           },
         },
       },
-      expected: NetworkPolicy{
+      expected: &NetworkPolicy{
         ObjectMeta: api.ObjectMeta{
           Name:   "networkpolicy",
           Namespace: "kube",
