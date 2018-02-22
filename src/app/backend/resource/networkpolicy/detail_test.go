@@ -19,7 +19,6 @@ import (
   "testing"
 
   "github.com/kubernetes/dashboard/src/app/backend/api"
-  "github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
   "github.com/kubernetes/dashboard/src/app/backend/resource/common"
   core "k8s.io/api/core/v1"
   networkpolicy "k8s.io/api/networking/v1"
