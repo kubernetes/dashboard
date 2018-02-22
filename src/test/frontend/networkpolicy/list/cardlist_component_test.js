@@ -17,18 +17,29 @@ import networkPolicyModule from 'networkpolicy/module';
 describe('Network Policy Card List controller', () => {
   /** @type {!NetworkPolicyCardListController} */
   let ctrl;
+  /**
+   * @type {!NamespaceService}
+   */
+  let data;
 
   beforeEach(() => {
     angular.mock.module(networkPolicyModule.name);
 
-    angular.mock.inject(($componentController) => {
-      /** @type {!NetworkPolicyCardListController} */
-      ctrl = $componentController('kdNetworkPolicyCardList', {});
+    angular.mock.inject(($componentController, $rootScope, kdNamespaceService) => {
+      /** @type {!NamespaceService} */
+      data = kdNamespaceService;
+    /** @type {!NetworkPolicyCardListController} */
+    ctrl = $componentController(
+      'kdNetworkPolicyCardList', {$scope: $rootScope, kdNamespaceService_: data}, {});
     });
   });
 
   it('should instantiate the controller properly', () => {
     expect(ctrl).not.toBeUndefined();
+  });
+
+  it('should return the value from Namespace service', () => {
+    expect(ctrl.areMultipleNamespacesSelected()).toBe(data.areMultipleNamespacesSelected());
   });
 
   it('should return correct select id', () => {

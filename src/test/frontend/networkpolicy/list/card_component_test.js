@@ -34,6 +34,14 @@ describe('Network Policy card', () => {
     });
   });
 
+  it('should instantiate the controller properly', () => {
+    expect(ctrl).not.toBeUndefined();
+  });
+
+  it('should return the value from Namespace service', () => {
+    expect(ctrl.areMultipleNamespacesSelected()).toBe(data.areMultipleNamespacesSelected());
+  });
+
   it('should get details href', () => {
     ctrl.networkPolicy = {
       objectMeta: {
