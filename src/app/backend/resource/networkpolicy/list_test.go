@@ -113,5 +113,3 @@ func TestGetNetworkPolicyList(t *testing.T){
     }
   }
 }
-
-

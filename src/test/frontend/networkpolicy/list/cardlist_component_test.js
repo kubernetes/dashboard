@@ -31,7 +31,7 @@ describe('Network Policy Card List controller', () => {
       /** @type {!NetworkPolicyCardListController} */
       ctrl = $componentController(
           'kdNetworkPolicyCardList', {$scope: $rootScope, kdNamespaceService_: data}, {});
-      });
+    });
   });
 
   it('should instantiate the controller properly', () => {
