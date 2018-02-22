@@ -84,7 +84,10 @@ limitations under the License.
 
       <ng-container [matColumnDef]="getDisplayColumns()[7]">
         <mat-header-cell *matHeaderCellDef>Storage Class</mat-header-cell>
-        <mat-cell *matCellDef="let pv">{{pv.storageClass}}</mat-cell>
+        <mat-cell *matCellDef="let pv">
+          <div *ngIf="pv.storageClass">{{pv.storageClass}}</div>
+          <div *ngIf="!pv.storageClass">-</div>
+        </mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getDisplayColumns()[8]">

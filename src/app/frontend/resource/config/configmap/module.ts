@@ -21,7 +21,7 @@ import {SharedModule} from '../../../shared.module';
 
 import {ConfigMapDetailComponent} from './detail/component';
 import {configMapDetailState} from './detail/state';
-import {ConfigMapListComponent} from './list/component';
+import {ConfigMapList} from './list/component';
 import {configMapListState} from './list/state';
 import {configMapState} from './state';
 
@@ -32,6 +32,6 @@ import {configMapState} from './state';
     ComponentsModule,
     UIRouterModule.forChild({states: [configMapState, configMapListState, configMapDetailState]}),
   ],
-  declarations: [ConfigMapListComponent, ConfigMapDetailComponent],
+  declarations: [ConfigMapList, ConfigMapDetailComponent],
 })
 export class ConfigMapModule {}

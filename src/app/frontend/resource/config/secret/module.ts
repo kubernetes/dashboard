@@ -19,7 +19,7 @@ import {ComponentsModule} from '../../../common/components/module';
 import {ResourceModule} from '../../../common/services/resource/module';
 import {SharedModule} from '../../../shared.module';
 
-import {SecretListComponent} from './list/component';
+import {SecretList} from './list/component';
 import {secretListState} from './list/state';
 import {secretState} from './state';
 
@@ -30,6 +30,6 @@ import {secretState} from './state';
     ComponentsModule,
     UIRouterModule.forChild({states: [secretState, secretListState]}),
   ],
-  declarations: [SecretListComponent],
+  declarations: [SecretList],
 })
 export class SecretModule {}

@@ -16,12 +16,12 @@ import {Ng2StateDeclaration} from '@uirouter/angular';
 
 import {configState} from '../../state';
 import {stateName, stateUrl} from '../state';
-import {ConfigMapListComponent} from './component';
+import {ConfigMapList} from './component';
 
 export const configMapListState: Ng2StateDeclaration = {
   name: `${stateName}.list`,
   url: stateUrl,
-  component: ConfigMapListComponent,
+  component: ConfigMapList,
   data: {
     kdBreadcrumbs: {
       label: 'Config Maps',

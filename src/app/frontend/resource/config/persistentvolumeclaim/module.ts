@@ -19,7 +19,7 @@ import {ComponentsModule} from '../../../common/components/module';
 import {ResourceModule} from '../../../common/services/resource/module';
 import {SharedModule} from '../../../shared.module';
 
-import {PersistentVolumeClaimListComponent} from './list/component';
+import {PersistentVolumeClaimList} from './list/component';
 import {persistentVolumeClaimListState} from './list/state';
 import {persistentVolumeClaimState} from './state';
 
@@ -30,6 +30,6 @@ import {persistentVolumeClaimState} from './state';
     ComponentsModule,
     UIRouterModule.forChild({states: [persistentVolumeClaimState, persistentVolumeClaimListState]}),
   ],
-  declarations: [PersistentVolumeClaimListComponent],
+  declarations: [PersistentVolumeClaimList],
 })
 export class PersistentVolumeClaimModule {}
