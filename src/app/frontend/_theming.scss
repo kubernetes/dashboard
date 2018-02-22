@@ -115,6 +115,10 @@
     background: $border;
   }
 
+  .kd-border {
+    border: 1px solid $border;
+  }
+
   // Component-level styles
 
   .kd-primary-toolbar {

@@ -14,8 +14,8 @@
 
 @import '../../../variables';
 
-.kd-text-input {
-  border: 1px solid $border;
+.kd-ace {
   height: 50 * $baseline-grid;
-  margin-bottom: 3 * $baseline-grid;
+  overflow: auto;
+  width: 100%;
 }

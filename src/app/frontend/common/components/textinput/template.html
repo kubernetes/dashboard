@@ -14,7 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div ui-ace="{{ $ctrl.getEditorConfig() }}"
-     class="kd-text-input"
-     ng-model="$ctrl.inputData">
-</div>
+<!-- TODO(maciaszczykm): Both YAML and JSON modes can be used after fixing issue with
+missing worker-json.js file. It does partially work (syntax highlighting) but there is
+an error in the console. Files are imported in .angular-cli.json file. -->
+
+<div ace-editor
+     [(text)]="text"
+     [options]="options"
+     [readOnly]="readOnly"
+     [autoUpdateContent]="true"
+     mode="yaml"
+     class="kd-ace kd-border"></div>

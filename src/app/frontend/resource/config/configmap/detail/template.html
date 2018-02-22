@@ -26,7 +26,10 @@ limitations under the License.
          [expandable]="true">
   <div title>Data</div>
   <div content>
-    <ng-container *ngIf="configMap.data"><code>{{configMap.data | json}}</code></ng-container>
-    <ng-container *ngIf="!configMap.data">There is no data to display.</ng-container>
+    <kd-text-input *ngIf="configMap.data"
+                   [text]="configMap.data"
+                   [readOnly]="true"
+                   [useJsonFormat]="true"></kd-text-input>
+    <span *ngIf="!configMap.data">There is no data to display.</span>
   </div>
 </kd-card>

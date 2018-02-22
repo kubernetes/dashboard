@@ -48,6 +48,7 @@ import {LoadingSpinner} from './resourcelist/spinner/component';
 import {StatefulSetListComponent} from './resourcelist/statefulset/component';
 import {StorageClassListComponent} from './resourcelist/storageclass/component';
 import {ListZeroState} from './resourcelist/zerostate/component';
+import {TextInputComponent} from './textinput/component';
 import {ZeroState} from './zerostate/component';
 
 @NgModule({
@@ -88,6 +89,7 @@ import {ZeroState} from './zerostate/component';
     ExternalEndpointComponent,
     InternalEndpointComponent,
     LastAppliedConfigDialog,
+    TextInputComponent,
   ],
   exports: [
     AllocationChartComponent,
@@ -121,6 +123,7 @@ import {ZeroState} from './zerostate/component';
     ServiceListComponent,
     ExternalEndpointComponent,
     InternalEndpointComponent,
+    TextInputComponent,
   ],
   entryComponents: [
     LastAppliedConfigDialog,
