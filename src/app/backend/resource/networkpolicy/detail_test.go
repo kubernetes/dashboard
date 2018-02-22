@@ -82,7 +82,7 @@ func TestGetNetworkPolicy(t *testing.T)  {
 
   for _, c := range cases {
     fakeClient := fake.NewSimpleClientset(c.networkPolicy)
-    actual, _ :=GetNetworkPolicy(fakeClient, common.NewNamespaceQuery(nil), dataselect.NoDataSelect)
+    actual, _ :=GetNetworkPolicy(fakeClient, common.NewNamespaceQuery(nil), "networkpolicy")
 
     if !reflect.DeepEqual(actual, c.expected) {
       t.Errorf("GetNetworkPolicy(%#v) == \ngot %#v, \nexpected %#v", c.networkPolicy, actual, c.expected)
