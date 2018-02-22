@@ -25,8 +25,8 @@ limitations under the License.
       </ng-container>
 
       <ng-container *ngSwitchCase="'kubectl.kubernetes.io/last-applied-configuration'">
-        <span>{{key}}</span>
-        <!-- TODO -->
+        <a href
+           (click)="openLastAppliedConfigDialog(map[key])">{{key}}</a>
       </ng-container>
 
       <ng-container *ngSwitchDefault>

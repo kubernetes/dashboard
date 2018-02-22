@@ -13,7 +13,10 @@
 // limitations under the License.
 
 import {Component, Input, OnInit} from '@angular/core';
+import {MatDialog, MatDialogConfig} from '@angular/material';
 import {StringMap} from '@api/backendapi';
+
+import {LastAppliedConfigDialog} from './lastappliedconfigdialog/dialog';
 
 /**
  * Regular expression for URL validation created by @dperini.
@@ -37,6 +40,8 @@ export class ChipsComponent implements OnInit {
   @Input() minChipsVisible = 2;
   keys: string[];
   isShowingAll = false;
+
+  constructor(private readonly dialog_: MatDialog) {}
 
   ngOnInit(): void {
     if (this.map === undefined) {
@@ -65,18 +70,12 @@ export class ChipsComponent implements OnInit {
   isHref(value: string): boolean {
     return URL_REGEXP.test(value.trim());
   }
-}
 
-// <a href
-// ng-click="$ctrl.openDetails()">
-//   kubectl.kubernetes.io/last-applied-configuration
-//   </a>
-//
-//   openDetails() {
-//   let dialog = this.mdDialog_.alert()
-//     .title(`kubectl.kubernetes.io/last-applied-configuration`)
-//     .textContent(this.value)
-//     .ok(i18n.MSG_CONFIG_DIALOG_CLOSE_ACTION);
-//   this.mdDialog_.show(dialog);
-// }
-// }
+  openLastAppliedConfigDialog(value: string): void {
+    const dialogConfig: MatDialogConfig = {
+      width: '630px',
+      data: value,
+    };
+    this.dialog_.open(LastAppliedConfigDialog, dialogConfig);
+  }
+}
