@@ -19,11 +19,13 @@ import (
   "testing"
 
   "github.com/kubernetes/dashboard/src/app/backend/api"
+  core "k8s.io/api/core/v1"
   networkpolicy "k8s.io/api/networking/v1"
   metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 func TestToNetworkPolicy(t *testing.T)  {
+  protocol:= core.ProtocolUDP
   cases := []struct {
     networkPolicy *networkpolicy.NetworkPolicy
     expected NetworkPolicy
@@ -38,6 +40,50 @@ func TestToNetworkPolicy(t *testing.T)  {
         ObjectMeta: metaV1.ObjectMeta{Name: "networkPolicy"}},
       expected: NetworkPolicy{
         ObjectMeta: api.ObjectMeta{Name: "networkPolicy"},
+        TypeMeta: api.TypeMeta{Kind: api.ResourceKindNetworkPolicy},
+      },
+    }, {
+      networkPolicy: &networkpolicy.NetworkPolicy{
+        ObjectMeta: metaV1.ObjectMeta{
+          Name:   "networkpolicy",
+          Namespace: "kube",
+          Labels: map[string]string{},
+        },
+        Spec: networkpolicy.NetworkPolicySpec{
+          PodSelector:  metaV1.LabelSelector{
+            MatchLabels: map[string]string{"matchKey":"value",},
+          },
+          Ingress: []networkpolicy.NetworkPolicyIngressRule{
+            {
+              Ports: []networkpolicy.NetworkPolicyPort{
+                {
+                  Protocol: &protocol,
+                },
+              },
+            },
+          },
+        },
+      },
+      expected: NetworkPolicy{
+        ObjectMeta: api.ObjectMeta{
+          Name:   "networkpolicy",
+          Namespace: "kube",
+          Labels: map[string]string{},
+        },
+        Spec: NetworkPolicySpec{
+          PodSelector: metaV1.LabelSelector{
+            MatchLabels: map[string]string{"matchKey":"value",},
+          },
+          Ingress: []NetworkPolicyIngressRule{
+            {
+              Ports: []NetworkPolicyPort{
+                {
+                  Protocol: &protocol,
+                },
+              },
+            },
+          },
+        },
         TypeMeta: api.TypeMeta{Kind: api.ResourceKindNetworkPolicy},
       },
     },
