@@ -32,6 +32,10 @@ export class ServiceListComponent extends ResourceListWithStatuses<ServiceList, 
     super('node', state);
     this.id = ListIdentifiers.service;
     this.groupId = ListGroupIdentifiers.discovery;
+
+    // Register status icon handlers
+    this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState.bind(this));
+    this.registerBinding(this.icon.timelapse, 'kd-muted', this.isInPendingState.bind(this));
   }
 
   getResourceObservable(params?: HttpParams): Observable<ServiceList> {
@@ -42,7 +46,20 @@ export class ServiceListComponent extends ResourceListWithStatuses<ServiceList, 
     return serviceList.services;
   }
 
+  isInPendingState(resource: Service): boolean {
+    return !resource.clusterIP ||
+        (resource.type === 'LoadBalancer' && resource.externalEndpoints.length === 0);
+  }
+
+  /**
+   * Service is in success state if cluster IP is defined and service type is LoadBalancer and
+   * external endpoints exist.
+   */
+  isInSuccessState(resource: Service): boolean {
+    return !this.isInPendingState(resource);
+  }
+
   getDisplayColumns(): string[] {
-    return ['statusicon', 'name', 'labels', 'age'];
+    return ['statusicon', 'name', 'labels', 'clusterip', 'internalendp', 'externalendp', 'age'];
   }
 }

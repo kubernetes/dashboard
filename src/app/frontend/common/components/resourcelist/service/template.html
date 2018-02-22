@@ -29,33 +29,61 @@ limitations under the License.
 
     <mat-table [dataSource]="getData()"
                matSort
-               [matSortActive]="getDisplayColumns()[2]"
+               [matSortActive]="getDisplayColumns()[6]"
                matSortDisableClear
                matSortDirection="asc">
       <ng-container [matColumnDef]="getDisplayColumns()[0]">
-        <mat-header-cell *matHeaderCellDef
-                         mat-sort-header
-                         disableClear="true">Name</mat-header-cell>
-        <mat-cell *matCellDef="let cm">
-          <a [href]="getDetailsHref(cm.objectMeta.name, cm.objectMeta.namespace)">
-            {{cm.objectMeta.name}}
-          </a>
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let service">
+          <mat-icon [ngClass]="getStatus(service).iconClass">
+            {{getStatus(service).iconName}}
+          </mat-icon>
         </mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getDisplayColumns()[1]">
-        <mat-header-cell *matHeaderCellDef>Labels</mat-header-cell>
-        <mat-cell *matCellDef="let cm">
-          <kd-chips [map]="cm.objectMeta.labels"></kd-chips>
+        <mat-header-cell *matHeaderCellDef
+                         mat-sort-header
+                         disableClear="true">Name</mat-header-cell>
+        <mat-cell *matCellDef="let service">
+          <a [href]="getDetailsHref(service.objectMeta.name, service.objectMeta.namespace)">
+            {{service.objectMeta.name}}
+          </a>
         </mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getDisplayColumns()[2]">
+        <mat-header-cell *matHeaderCellDef>Labels</mat-header-cell>
+        <mat-cell *matCellDef="let service">
+          <kd-chips [map]="service.objectMeta.labels"></kd-chips>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getDisplayColumns()[3]">
+        <mat-header-cell *matHeaderCellDef>Cluster IP</mat-header-cell>
+        <mat-cell *matCellDef="let service">{{service.clusterIP}}</mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getDisplayColumns()[4]">
+        <mat-header-cell *matHeaderCellDef>Internal Endpoints</mat-header-cell>
+        <mat-cell *matCellDef="let service">
+          <kd-internal-endpoint [endpoints]="[service.internalEndpoint]"></kd-internal-endpoint>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getDisplayColumns()[5]">
+        <mat-header-cell *matHeaderCellDef>External Endpoints</mat-header-cell>
+        <mat-cell *matCellDef="let service">
+          <kd-external-endpoint [endpoints]="service.externalEndpoints"></kd-external-endpoint>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getDisplayColumns()[6]">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true">Age</mat-header-cell>
-        <mat-cell *matCellDef="let cm">
-          {{cm.objectMeta.creationTimestamp | kdRelativeTime}}
+        <mat-cell *matCellDef="let service">
+          {{service.objectMeta.creationTimestamp | kdRelativeTime}}
         </mat-cell>
       </ng-container>
 

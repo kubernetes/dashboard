@@ -15,13 +15,13 @@
 import {NgModule} from '@angular/core';
 
 import {SharedModule} from '../../shared.module';
-
 import {ActionbarComponent} from './actionbar/component';
 import {AllocationChartComponent} from './allocationchart/component';
 import {BreadcrumbsComponent} from './breadcrumbs/component';
 import {CardComponent} from './card/component';
 import {ChipsComponent} from './chips/component';
 import {ExternalEndpointComponent} from './endpoint/external/component';
+import {InternalEndpointComponent} from './endpoint/internal/component';
 import {ObjectMetaComponent} from './objectmeta/component';
 import {PropertyComponent} from './property/component';
 import {ProxyComponent} from './proxy/component';
@@ -84,6 +84,7 @@ import {ZeroState} from './zerostate/component';
     IngressListComponent,
     ServiceListComponent,
     ExternalEndpointComponent,
+    InternalEndpointComponent,
   ],
   exports: [
     AllocationChartComponent,
@@ -116,6 +117,7 @@ import {ZeroState} from './zerostate/component';
     IngressListComponent,
     ServiceListComponent,
     ExternalEndpointComponent,
+    InternalEndpointComponent,
   ],
 })
 export class ComponentsModule {}

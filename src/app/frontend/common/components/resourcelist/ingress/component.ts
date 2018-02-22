@@ -39,11 +39,6 @@ export class IngressListComponent extends ResourceListBase<IngressList, Ingress>
   }
 
   map(ingressList: IngressList): Ingress[] {
-    ingressList.items[0].endpoints = [{
-      host: 'floreks-host',
-      nodeName: 'floreks',
-      port: '1234',
-    } as Endpoint];
     return ingressList.items;
   }
 

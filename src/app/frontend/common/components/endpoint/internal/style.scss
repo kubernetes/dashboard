@@ -13,8 +13,7 @@
 // limitations under the License.
 
 @import '../../../../variables';
-@import '../../../../mixins';
 
-.kd-endpoint-icon {
-  @include kd-icon-size($body-font-size-base);
+.kd-internal-endpoint {
+  padding: (.25 * $baseline-grid) 0;
 }

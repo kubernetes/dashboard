@@ -67,7 +67,6 @@ export class ChipsComponent implements OnInit {
   }
 }
 
-
 // <a href
 // ng-click="$ctrl.openDetails()">
 //   kubectl.kubernetes.io/last-applied-configuration

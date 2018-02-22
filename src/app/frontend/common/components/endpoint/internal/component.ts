@@ -12,15 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {Component, Input} from '@angular/core';
+import {Endpoint} from '@api/backendapi';
+
 /**
- * Returns directive definition object for the component that displays the service
- * endpoint (type {backendApi.Endpoint}) which is accessible only from the inside of the cluster
- * @return {!angular.Component}
+ * Component definition object for the component that displays the endpoints which are accessible
+ * only from the inside of the cluster.
  */
-export const internalEndpointComponent = {
-  templateUrl: 'common/components/endpoint/internal/template.html',
-  bindings: {
-    /** {backendApi.Endpoint} */
-    'endpoint': '<',
-  },
-};
+@Component(
+    {selector: 'kd-internal-endpoint', templateUrl: './template.html', styleUrls: ['./style.scss']})
+export class InternalEndpointComponent { @Input() endpoints: Endpoint[]; }

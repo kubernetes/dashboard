@@ -25,16 +25,14 @@ limitations under the License.
       <div>
         <a href="http://{{endpoint.host}}:{{port.port}}"
            target="_blank">
-          <kd-chips [map]="[endpoint.host + ':' + port.port]"></kd-chips>
-          &nbsp;
+          {{endpoint.host}}:{{port.port}}
           <mat-icon class="kd-endpoint-icon">open_in_new</mat-icon>
         </a>
       </div>
       <div *ngIf="!port.port">
         <a href="http://{{endpoint.host}}:{{port.nodePort}}"
            target="_blank">
-          <kd-chips [map]="[endpoint.host + ':' + port.nodePort]"></kd-chips>
-          &nbsp;
+          {{endpoint.host}}:{{port.nodePort}}
           <mat-icon class="kd-endpoint-icon">open_in_new</mat-icon>
         </a>
       </div>
@@ -42,8 +40,7 @@ limitations under the License.
     <div *ngIf="!endpoint.ports.length">
       <a href="http://{{endpoint.host}}"
          target="_blank">
-        <kd-chips [map]="[endpoint.host]"></kd-chips>
-        &nbsp;
+        {{endpoint.host}}
         <mat-icon class="kd-endpoint-icon">open_in_new</mat-icon>
       </a>
     </div>

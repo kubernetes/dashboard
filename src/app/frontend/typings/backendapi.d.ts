@@ -176,12 +176,30 @@ export interface Deployment extends Resource {
   initContainerImages: string[];
 }
 
-export interface Endpoint extends Resource {
+export interface EndpointResourceList extends ResourceList { endpoints: EndpointResource[]; }
+
+export interface EndpointResource extends Resource {
   host: string;
-  ports: Array<{port: number, protocol: string}>;
   nodeName: string;
+  ready: boolean;
+  ports: EndpointResourcePort[];
+}
+
+export interface EndpointResourcePort {
+  name: string;
   port: number;
-  ready: string;
+  protocol: string;
+}
+
+export interface Port {
+  port: number;
+  protocol: string;
+  nodePort: number;
+}
+
+export interface Endpoint {
+  host: string;
+  ports: Port[];
 }
 
 export interface Event extends Resource {
