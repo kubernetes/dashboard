@@ -12,29 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../../variables';
+import {NgModule} from '@angular/core';
+import {UIRouterModule} from '@uirouter/angular';
 
-.kd-zerostate-message {
-  padding: 2 * $baseline-grid;
-  text-align: center;
-}
+import {ComponentsModule} from '../common/components/module';
+import {SharedModule} from '../shared.module';
 
-.kd-zerostate-icon {
-  color: $primary;
-  font-size: $body-font-size-base;
-  vertical-align: middle;
-}
+import {CreateComponent} from './component';
+import {createState} from './state';
 
-.kd-zerostate-title {
-  color: $muted;
-  font-size: $headline-font-size-base;
-  font-weight: $regular-font-weight;
-  margin-bottom: $baseline-grid / 2;
-}
-
-.kd-zerostate-text {
-  color: $delicate;
-  font-size: $body-font-size-base;
-  font-weight: $regular-font-weight;
-  word-break: break-all;
-}
+@NgModule({
+  imports: [
+    SharedModule,
+    ComponentsModule,
+    UIRouterModule.forChild({states: [createState]}),
+  ],
+  declarations: [CreateComponent],
+})
+export class CreateModule {}

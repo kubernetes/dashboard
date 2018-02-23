@@ -12,8 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** Name of the state. Can be used in, e.g., $state.go method. */
-export const stateName = 'deploy';
+import {Ng2StateDeclaration} from '@uirouter/angular';
 
-/** Absolute URL of the state. */
-export const stateUrl = '/deploy';
+import {chromeState} from '../chrome/state';
+import {CreateComponent} from './component';
+
+export const createFutureState: Ng2StateDeclaration = {
+  name: 'create.**',
+  url: '/create',
+  loadChildren: './create/module#CreateModule'
+};
+
+export const createState: Ng2StateDeclaration = {
+  parent: chromeState.name,
+  name: 'create',
+  url: '/create',
+  views: {
+    '$default': {
+      component: CreateComponent,
+    },
+  },
+  data: {
+    kdBreadcrumbs: {
+      label: 'Resource creation',
+    }
+  },
+};

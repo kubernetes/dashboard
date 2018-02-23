@@ -21,6 +21,7 @@ import {aboutFutureState} from './about/state';
 import {ChromeModule} from './chrome/module';
 import {chromeState} from './chrome/state';
 import {CoreModule} from './core.module';
+import {createFutureState} from './create/state';
 import {ErrorModule} from './error/module';
 import {RootComponent} from './index.component';
 import {configureRouter} from './index.router.config';
@@ -94,6 +95,7 @@ import {settingsFutureState} from './settings/state';
         secretFutureState,
         // Others
         aboutFutureState,
+        createFutureState,
         settingsFutureState,
         searchFutureState,
         overviewFutureState,

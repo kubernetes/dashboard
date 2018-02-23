@@ -12,10 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../variables';
+import {Component} from '@angular/core';
 
-.kd-overview-section {
-  color: $muted;
-  font-size: $subhead-font-size-base-lg;
-  padding: 3 * $baseline-grid 0 0 4.5 * $baseline-grid;
-}
+@Component({
+  selector: 'kd-create',
+  templateUrl: './template.html',
+  styleUrls: ['./style.scss'],
+})
+export class CreateComponent {}
