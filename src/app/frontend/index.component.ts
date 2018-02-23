@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {OverlayContainer} from '@angular/cdk/overlay';
 import {Component, OnInit} from '@angular/core';
 
 import {SettingsService} from './common/services/global/settings';
@@ -24,26 +25,43 @@ enum Themes {
 
 @Component({selector: 'kd-root', template: '<ui-view [ngClass]="getTheme()"></ui-view>'})
 export class RootComponent implements OnInit {
-  isLightThemeEnabled: boolean;
+  private isLightThemeEnabled_: boolean;
+
   constructor(
-      private readonly themeService_: ThemeService, private readonly settings_: SettingsService) {
-    this.isLightThemeEnabled = this.themeService_.isLightThemeEnabled();
+      private readonly themeService_: ThemeService, private readonly settings_: SettingsService,
+      private readonly overlayContainer_: OverlayContainer) {
+    this.isLightThemeEnabled_ = this.themeService_.isLightThemeEnabled();
   }
 
   ngOnInit(): void {
-    this.themeService_.subscribe(this.onThemeChange.bind(this));
+    this.themeService_.subscribe(this.onThemeChange_.bind(this));
 
     const localSettings = this.settings_.getLocalSettings();
     if (localSettings && localSettings.isThemeDark) {
       this.themeService_.switchTheme(!localSettings.isThemeDark);
+      this.isLightThemeEnabled_ = !localSettings.isThemeDark;
     }
+
+    this.applyOverlayContainerTheme_();
   }
 
-  onThemeChange(isLightThemeEnabled: boolean): void {
-    this.isLightThemeEnabled = isLightThemeEnabled;
+  private applyOverlayContainerTheme_(): void {
+    const classToRemove = this.getTheme(!this.isLightThemeEnabled_);
+    const classToAdd = this.getTheme(this.isLightThemeEnabled_);
+    this.overlayContainer_.getContainerElement().classList.remove(classToRemove);
+    this.overlayContainer_.getContainerElement().classList.add(classToAdd);
   }
 
-  getTheme(): string {
-    return this.isLightThemeEnabled ? Themes.Light : Themes.Dark;
+  private onThemeChange_(isLightThemeEnabled: boolean): void {
+    this.isLightThemeEnabled_ = isLightThemeEnabled;
+    this.applyOverlayContainerTheme_();
+  }
+
+  getTheme(isLightThemeEnabled?: boolean): string {
+    if (isLightThemeEnabled === undefined) {
+      isLightThemeEnabled = this.isLightThemeEnabled_;
+    }
+
+    return isLightThemeEnabled ? Themes.Light : Themes.Dark;
   }
 }

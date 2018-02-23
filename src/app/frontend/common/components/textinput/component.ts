@@ -28,6 +28,11 @@ enum EditorTheme {
   dark = 'idle_fingers',
 }
 
+enum EditorMode {
+  json = 'json',
+  yaml = 'yaml',
+}
+
 @Component({
   selector: 'kd-text-input',
   templateUrl: './template.html',
@@ -40,7 +45,7 @@ export class TextInputComponent implements OnInit {
   @Input() border = true;
 
   // Default editor settings
-  mode = 'yaml';
+  mode = EditorMode.yaml;
   theme: string;
   // All possible options can be found at:
   // https://github.com/ajaxorg/ace/wiki/Configuring-Ace
@@ -55,7 +60,7 @@ export class TextInputComponent implements OnInit {
   constructor(private readonly themeService_: ThemeService) {}
 
   ngOnInit(): void {
-    this.mode = this.useJsonFormat ? 'json' : 'yaml';
+    this.mode = this.useJsonFormat ? EditorMode.json : EditorMode.yaml;
     if (this.useJsonFormat) {
       this.formatAsJson_();
     }
