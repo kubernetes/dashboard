@@ -12,22 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Controller for the node list view.
- *
- * @final
- */
-export class NodeListController {
-  /**
-   * @param {!backendApi.NodeList} nodeList
-   * @param {!angular.Resource} kdNodeListResource
-   * @ngInject
-   */
-  constructor(nodeList, kdNodeListResource) {
-    /** @export {!backendApi.NodeList} */
-    this.nodeList = nodeList;
-
-    /** @export {!angular.Resource} */
-    this.nodeListResource = kdNodeListResource;
-  }
-}
+@import '../variables';
+@import '../mixins';

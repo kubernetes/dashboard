@@ -12,16 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 
+import {StateService} from '@uirouter/core';
 import {AssetsService} from '../common/services/global/assets';
 import {overviewState} from '../overview/state';
 
-@Component({selector: 'kd-chrome', templateUrl: './template.html', styleUrls: ['./style.scss']})
-export class ChromeComponent implements OnInit {
+@Component({
+  selector: 'kd-chrome',
+  templateUrl: './template.html',
+  styleUrls: ['./style.scss'],
+})
+export class ChromeComponent {
   loading = false;
 
-  constructor(public assets: AssetsService) {}
+  constructor(public assets: AssetsService, private readonly state_: StateService) {}
 
   getOverviewStateName(): string {
     return overviewState.name;
@@ -39,7 +44,7 @@ export class ChromeComponent implements OnInit {
     return `<b>System is going to be shut down in 5 min...</b>`;
   }
 
-  create(): void {}
-
-  ngOnInit(): void {}
+  goToCreateState(): void {
+    this.state_.go('create');
+  }
 }

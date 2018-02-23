@@ -12,5 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** Name of the state. Can be used in, e.g., $state.go method. */
-export const stateName = 'namespacedetail';
+import {NgModule} from '@angular/core';
+import {UIRouterModule} from '@uirouter/angular';
+
+import {ComponentsModule} from '../common/components/module';
+import {SharedModule} from '../shared.module';
+
+import {CreateComponent} from './component';
+import {createState} from './state';
+
+@NgModule({
+  imports: [
+    SharedModule,
+    ComponentsModule,
+    UIRouterModule.forChild({states: [createState]}),
+  ],
+  declarations: [CreateComponent],
+})
+export class CreateModule {}

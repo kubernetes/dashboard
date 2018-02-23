@@ -12,29 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../../variables';
+import {Component} from '@angular/core';
 
-.kd-zerostate-message {
-  padding: 2 * $baseline-grid;
-  text-align: center;
-}
-
-.kd-zerostate-icon {
-  color: $primary;
-  font-size: $body-font-size-base;
-  vertical-align: middle;
-}
-
-.kd-zerostate-title {
-  color: $muted;
-  font-size: $headline-font-size-base;
-  font-weight: $regular-font-weight;
-  margin-bottom: $baseline-grid / 2;
-}
-
-.kd-zerostate-text {
-  color: $delicate;
-  font-size: $body-font-size-base;
-  font-weight: $regular-font-weight;
-  word-break: break-all;
-}
+@Component({
+  selector: 'kd-create',
+  templateUrl: './template.html',
+  styleUrls: ['./style.scss'],
+})
+export class CreateComponent {}
