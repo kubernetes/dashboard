@@ -31,12 +31,12 @@ export class RootComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.themeService_.subscribe(this.onThemeChange.bind(this));
+
     const localSettings = this.settings_.getLocalSettings();
     if (localSettings && localSettings.isThemeDark) {
-      this.onThemeChange(!localSettings.isThemeDark);
+      this.themeService_.switchTheme(!localSettings.isThemeDark);
     }
-
-    this.themeService_.subscribe(this.onThemeChange.bind(this));
   }
 
   onThemeChange(isLightThemeEnabled: boolean): void {

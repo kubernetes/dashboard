@@ -12,7 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// Ace-editor related imports
+import 'brace';
+import 'brace/mode/json';
+import 'brace/mode/yaml';
+import 'brace/theme/idle_fingers';
+import 'brace/theme/textmate';
+
 import {Component, Input, OnInit} from '@angular/core';
+
+import {ThemeService} from '../../services/global/theme';
+
+enum EditorTheme {
+  light = 'textmate',
+  dark = 'idle_fingers',
+}
 
 @Component({
   selector: 'kd-text-input',
@@ -23,24 +37,30 @@ export class TextInputComponent implements OnInit {
   @Input() text = '';
   @Input() readOnly = false;
   @Input() useJsonFormat = false;
+  @Input() border = true;
 
+  // Default editor settings
+  mode = 'yaml';
+  theme: string;
   // All possible options can be found at:
   // https://github.com/ajaxorg/ace/wiki/Configuring-Ace
   options = {
     highlightActiveLine: false,
     tabSize: 2,
     wrap: true,
+    fontSize: 14,
+    fontFamily: `'Roboto Mono Regular', monospace`,
   };
 
+  constructor(private readonly themeService_: ThemeService) {}
+
   ngOnInit(): void {
+    this.mode = this.useJsonFormat ? 'json' : 'yaml';
     if (this.useJsonFormat) {
       this.formatAsJson_();
     }
 
-    // TODO Adjust theme on theme change. Unsubscribe on destroy.
-    // this.theme_.subscribe((isLightThemeEnabled) => {
-    //   this.theme = isLightThemeEnabled ? Themes.light : Themes.dark;
-    // });
+    this.theme = this.themeService_.isLightThemeEnabled() ? EditorTheme.light : EditorTheme.dark;
   }
 
   /**

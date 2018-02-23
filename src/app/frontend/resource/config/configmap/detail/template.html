@@ -23,13 +23,15 @@ limitations under the License.
 </kd-card>
 
 <kd-card [initialized]="isInitialized"
-         [expandable]="true">
+         [expandable]="true"
+         role="table">
   <div title>Data</div>
   <div content>
     <kd-text-input *ngIf="configMap.data"
                    [text]="configMap.data"
                    [readOnly]="true"
-                   [useJsonFormat]="true"></kd-text-input>
+                   [useJsonFormat]="true"
+                   [border]="false"></kd-text-input>
     <span *ngIf="!configMap.data">There is no data to display.</span>
   </div>
 </kd-card>

@@ -31,7 +31,7 @@ export class SettingsService {
     autoRefreshTimeInterval: 5,
   };
   private readonly localSettingsCookie_ = 'localSettings';
-  private localSetttings_: LocalSettings = {
+  private localSettings_: LocalSettings = {
     isThemeDark: false,
   };
   private isInitialized_ = false;
@@ -42,6 +42,7 @@ export class SettingsService {
 
   init(): void {
     this.loadGlobalSettings();
+    this.loadLocalSettings();
   }
 
   isInitialized(): boolean {
@@ -86,22 +87,25 @@ export class SettingsService {
     return this.globalSettings_.autoRefreshTimeInterval;
   }
 
-  getLocalSettings(): LocalSettings {
+  loadLocalSettings(): void {
     const cookieValue = this.cookies_.get(this.localSettingsCookie_);
     if (cookieValue && cookieValue.length > 0) {
-      this.localSetttings_ = JSON.parse(cookieValue);
+      this.localSettings_ = JSON.parse(cookieValue);
     }
-    return this.localSetttings_;
+  }
+
+  getLocalSettings(): LocalSettings {
+    return this.localSettings_;
   }
 
   saveLocalSettings(localSettings: LocalSettings): LocalSettings {
     this.cookies_.set(this.localSettingsCookie_, JSON.stringify(localSettings));
-    this.localSetttings_ = localSettings;
+    this.localSettings_ = localSettings;
     this.applyLocalSettings();
-    return this.localSetttings_;
+    return this.localSettings_;
   }
 
   applyLocalSettings(): void {
-    this.theme_.switchTheme(this.localSetttings_.isThemeDark);
+    this.theme_.switchTheme(!this.localSettings_.isThemeDark);
   }
 }
