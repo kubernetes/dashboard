@@ -190,3 +190,11 @@ code {
 .kd-on-top {
   z-index: 100;
 }
+
+.kd-clickable {
+  cursor: pointer;
+}
+
+.kd-no-bottom-border {
+  border-bottom: 0 !important;
+}

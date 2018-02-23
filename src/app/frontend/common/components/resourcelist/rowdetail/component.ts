@@ -13,6 +13,11 @@
 // limitations under the License.
 
 import {Component} from '@angular/core';
+import {Event} from '@api/backendapi';
 
-@Component({selector: 'kd-zero-state', templateUrl: './template.html', styleUrls: ['./style.scss']})
-export class ZeroStateComponent {}
+@Component({
+  selector: 'kd-row-detail',
+  templateUrl: 'template.html',
+  styleUrls: ['style.scss'],
+})
+export class RowDetailComponent { events: Event[] = []; }

@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import {HttpParams} from '@angular/common/http';
-import {Component, Input} from '@angular/core';
-import {DaemonSet, DaemonSetList} from '@api/backendapi';
+import {Component, ComponentFactoryResolver, Input} from '@angular/core';
+import {DaemonSet, DaemonSetList, Event, Pod} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 import {ResourceListWithStatuses} from '../../../resources/list';
@@ -30,8 +30,9 @@ export class DaemonSetListComponent extends ResourceListWithStatuses<DaemonSetLi
   @Input() endpoint = EndpointManager.resource(Resource.daemonSet, true).list();
 
   constructor(
-      state: StateService, private readonly daemonSet_: NamespacedResourceService<DaemonSetList>) {
-    super('pod', state);
+      state: StateService, private readonly daemonSet_: NamespacedResourceService<DaemonSetList>,
+      resolver: ComponentFactoryResolver) {
+    super('pod', state, resolver);
     this.id = ListIdentifiers.daemonSet;
     this.groupId = ListGroupIdentifiers.workloads;
 
@@ -59,6 +60,14 @@ export class DaemonSetListComponent extends ResourceListWithStatuses<DaemonSetLi
 
   isInSuccessState(resource: DaemonSet): boolean {
     return resource.pods.warnings.length === 0 && resource.pods.pending === 0;
+  }
+
+  hasErrors(daemonSet: DaemonSet): boolean {
+    return daemonSet.pods.warnings.length > 0;
+  }
+
+  getEvents(daemonSet: DaemonSet): Event[] {
+    return daemonSet.pods.warnings;
   }
 
   getDisplayColumns(): string[] {

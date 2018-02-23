@@ -41,14 +41,15 @@ import {PersistentVolumeClaimListComponent} from './resourcelist/persistentvolum
 import {PodListComponent} from './resourcelist/pod/component';
 import {ReplicaSetListComponent} from './resourcelist/replicaset/component';
 import {ReplicationControllerListComponent} from './resourcelist/replicationcontroller/component';
+import {RowDetailComponent} from './resourcelist/rowdetail/component';
 import {SecretListComponent} from './resourcelist/secret/component';
 import {ServiceListComponent} from './resourcelist/service/component';
 import {LoadingSpinner} from './resourcelist/spinner/component';
 import {StatefulSetListComponent} from './resourcelist/statefulset/component';
 import {StorageClassListComponent} from './resourcelist/storageclass/component';
-import {ListZeroState} from './resourcelist/zerostate/component';
+import {ListZeroStateComponent} from './resourcelist/zerostate/component';
 import {TextInputComponent} from './textinput/component';
-import {ZeroState} from './zerostate/component';
+import {ZeroStateComponent} from './zerostate/component';
 
 @NgModule({
   imports: [
@@ -70,8 +71,8 @@ import {ZeroState} from './zerostate/component';
     ReplicaSetListComponent,
     NamespaceListComponent,
     PersistentVolumeListComponent,
-    ListZeroState,
-    ZeroState,
+    ListZeroStateComponent,
+    ZeroStateComponent,
     ClusterRoleListComponent,
     StorageClassListComponent,
     CronJobListComponent,
@@ -89,6 +90,7 @@ import {ZeroState} from './zerostate/component';
     InternalEndpointComponent,
     LastAppliedConfigDialog,
     TextInputComponent,
+    RowDetailComponent,
   ],
   exports: [
     AllocationChartComponent,
@@ -106,7 +108,7 @@ import {ZeroState} from './zerostate/component';
     ReplicaSetListComponent,
     NamespaceListComponent,
     PersistentVolumeListComponent,
-    ZeroState,
+    ZeroStateComponent,
     ClusterRoleListComponent,
     StorageClassListComponent,
     CronJobListComponent,
@@ -126,6 +128,7 @@ import {ZeroState} from './zerostate/component';
   ],
   entryComponents: [
     LastAppliedConfigDialog,
+    RowDetailComponent,
   ]
 })
 export class ComponentsModule {}

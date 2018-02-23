@@ -14,18 +14,19 @@
 
 import {DataSource} from '@angular/cdk/collections';
 import {HttpParams} from '@angular/common/http';
-import {EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {ComponentFactoryResolver, EventEmitter, Input, OnDestroy, OnInit, Output, QueryList, ViewChild, ViewChildren, ViewContainerRef} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {Resource, ResourceList} from '@api/backendapi';
+import {Event as KdEvent, Resource, ResourceList} from '@api/backendapi';
 import {OnListChangeEvent} from '@api/frontendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 import {merge} from 'rxjs/observable/merge';
-import {delay, startWith, switchMap} from 'rxjs/operators';
+import {startWith, switchMap} from 'rxjs/operators';
 import {Subscription} from 'rxjs/Subscription';
 
 import {searchState} from '../../search/state';
 import {CardListFilterComponent} from '../components/resourcelist/filter/component';
+import {RowDetailComponent} from '../components/resourcelist/rowdetail/component';
 import {NamespacedResourceStateParams, ResourceStateParams, SEARCH_QUERY_STATE_PARAM} from '../params/params';
 import {GlobalServicesModule} from '../services/global/module';
 import {SettingsService} from '../services/global/settings';
@@ -243,6 +244,17 @@ export abstract class ResourceListWithStatuses<T extends ResourceList, R extends
     iconName: 'help',
     iconClass: {'': true},
   };
+  @ViewChildren('matrow', {read: ViewContainerRef})
+  private readonly containers_: QueryList<ViewContainerRef>;
+  expandedRow: number;
+
+  constructor(
+      detailStateName: string, state: StateService,
+      private readonly resolver_?: ComponentFactoryResolver) {
+    super(detailStateName, state);
+
+    this.onChange.subscribe(this.clearExpandedRows_.bind(this));
+  }
 
   protected registerBinding(
       iconName: IconName, iconClass: string, callbackFunction: StatusCheckCallback<R>): void {
@@ -276,6 +288,45 @@ export abstract class ResourceListWithStatuses<T extends ResourceList, R extends
       iconName: stateBinding.icon.name,
       iconClass: {[stateBinding.icon.cssClass]: true},
     };
+  }
+
+  private clearExpandedRows_(): void {
+    const containers = this.containers_.toArray();
+    for (let i = 0; i < containers.length; i++) {
+      containers[i].clear();
+      this.expandedRow = null;
+    }
+  }
+
+  expand(index: number, resource: R): void {
+    if (this.hasErrors(resource)) {
+      if (this.expandedRow != null) {
+        this.containers_.toArray()[this.expandedRow].clear();
+      }
+
+      if (this.expandedRow === index) {
+        this.expandedRow = null;
+        return;
+      }
+
+      const container = this.containers_.toArray()[index];
+      const factory = this.resolver_.resolveComponentFactory(RowDetailComponent);
+      const component = container.createComponent(factory);
+
+      component.instance.events = this.getEvents(resource);
+      this.expandedRow = index;
+    }
+  }
+
+  noPropagate(event: Event): void {
+    event.stopPropagation();
+  }
+
+  protected hasErrors(_resource: R): boolean {
+    return false;
+  }
+  protected getEvents(_resource: R): KdEvent[] {
+    return [];
   }
 }
 
