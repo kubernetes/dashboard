@@ -14,13 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-card [initialized]="isInitialized"
-         [expandable]="true">
-  <div title>Metadata</div>
-  <div content>
-    <kd-object-meta [objectMeta]="configMap.objectMeta"></kd-object-meta>
-  </div>
-</kd-card>
+<kd-object-meta [initialized]="isInitialized"
+                [objectMeta]="configMap.objectMeta"></kd-object-meta>
 
 <kd-card [initialized]="isInitialized"
          [expandable]="true"
@@ -32,6 +27,7 @@ limitations under the License.
                    [readOnly]="true"
                    [useJsonFormat]="true"
                    [border]="false"></kd-text-input>
-    <span *ngIf="!configMap.data">There is no data to display.</span>
+    <div *ngIf="!configMap.data"
+         class="kd-card-padding">There is no data to display.</div>
   </div>
 </kd-card>
