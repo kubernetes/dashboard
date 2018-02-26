@@ -15,6 +15,7 @@
 import {HttpParams} from '@angular/common/http';
 import {Component, ComponentFactoryResolver, Input} from '@angular/core';
 import {Event, Pod, PodList} from '@api/backendapi';
+import {ActionColumn} from '@api/frontendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 
@@ -63,6 +64,13 @@ export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
 
   getDisplayColumns(): string[] {
     return ['statusicon', 'name', 'labels', 'node', 'status', 'restarts', 'age'];
+  }
+
+  getActionColumns(): ActionColumn[] {
+    return [
+      {name: 'action-logs', icon: 'subject'},
+      {name: 'action-more', icon: 'more_vert'},
+    ];
   }
 
   hasErrors(pod: Pod): boolean {

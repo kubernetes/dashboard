@@ -43,3 +43,8 @@ export interface OnListChangeEvent {
   items: number;
   filtered: boolean;
 }
+
+export interface ActionColumn {
+  name: string;
+  icon: string;
+}

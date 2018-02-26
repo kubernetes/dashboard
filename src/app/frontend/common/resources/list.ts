@@ -14,11 +14,10 @@
 
 import {DataSource} from '@angular/cdk/collections';
 import {HttpParams} from '@angular/common/http';
-import {Element} from '@angular/compiler';
 import {ComponentFactoryResolver, EventEmitter, Input, OnDestroy, OnInit, Output, QueryList, ViewChild, ViewChildren, ViewContainerRef} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {Event as KdEvent, Resource, ResourceList} from '@api/backendapi';
-import {OnListChangeEvent} from '@api/frontendapi';
+import {ActionColumn, OnListChangeEvent} from '@api/frontendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 import {merge} from 'rxjs/observable/merge';
@@ -231,6 +230,16 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
     });
   }
 
+  getColumns(): string[] {
+    const displayColumns = this.getDisplayColumns();
+    const actionColumns = this.getActionColumns().map(col => col.name);
+
+    return displayColumns.concat(...actionColumns);
+  }
+
+  protected getActionColumns(): ActionColumn[] {
+    return [];
+  }
   abstract map(value: T): R[];
   abstract getResourceObservable(params?: HttpParams): Observable<T>;
   abstract getDisplayColumns(): string[];
