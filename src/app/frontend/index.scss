@@ -60,7 +60,7 @@ code {
 }
 
 .mat-card {
-  margin: (2.5 * $baseline-grid) (2.5 * $baseline-grid) 0;
+  margin: 2.5 * $baseline-grid;
 
   .mat-card-title {
     margin-bottom: $baseline-grid;
@@ -129,6 +129,15 @@ code {
 // Custom classes used across application //
 ////////////////////////////////////////////
 
+.kd-minimized-card {
+  margin: 0 (2.5 * $baseline-grid);
+  outline: none;
+
+  &.mat-card {
+    border-radius: 0;
+  }
+}
+
 .kd-inline-property {
   display: inline-flex;
   margin-right: 3 * $baseline-grid;
@@ -137,7 +146,7 @@ code {
 .kd-card-group-header {
   font-family: $font-family-sans;
   font-size: $title-font-size-base;
-  margin: (3 * $baseline-grid) 0 (2 * $baseline-grid) (5 * $baseline-grid);
+  margin: (3 * $baseline-grid) 0 (2.5 * $baseline-grid) (5 * $baseline-grid);
 }
 
 .kd-card-top-radius {
