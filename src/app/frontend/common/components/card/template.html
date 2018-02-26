@@ -22,6 +22,13 @@ limitations under the License.
       <ng-content select="[title]"></ng-content>
     </div>
 
+    <div *ngIf="!expanded"
+         class="kd-card-description kd-muted"
+         fxLayoutAlign=" center"
+         fxFlex="80">
+      <ng-content select="[description]"></ng-content>
+    </div>
+
     <div *ngIf="expanded"
          class="kd-card-actions kd-muted">
       <ng-content select="[actions]"></ng-content>
@@ -35,7 +42,7 @@ limitations under the License.
     </button>
   </mat-card-title>
 
-  <ng-container *ngIf="expanded">
+  <div [hidden]="!expanded">
     <mat-divider class="kd-on-top"></mat-divider>
 
     <mat-card-content class="kd-card-content"
@@ -54,6 +61,6 @@ limitations under the License.
         <ng-content select="[footer]"></ng-content>
       </div>
     </mat-card-footer>
-  </ng-container>
+  </div>
 
 </mat-card>

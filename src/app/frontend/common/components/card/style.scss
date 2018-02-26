@@ -58,6 +58,10 @@
   padding: $baseline-grid (2 * $baseline-grid);
 }
 
+.kd-card-description {
+  font-size: $subhead-font-size-base-lg;
+}
+
 .kd-card-footer {
   font-size: $footer-font-size-base;
   padding: 0 (2 * $baseline-grid) $baseline-grid;
