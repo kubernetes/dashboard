@@ -21,16 +21,21 @@ limitations under the License.
          fxFlex>
       <ng-content select="[title]"></ng-content>
     </div>
+
+    <div *ngIf="expanded"
+         class="kd-card-actions kd-muted">
+      <ng-content select="[actions]"></ng-content>
+    </div>
+
     <button class="kd-card-toggle kd-muted"
             mat-icon-button
-            *ngIf="expandable"
             (click)="expanded = !expanded">
       <mat-icon *ngIf="expanded">arrow_drop_up</mat-icon>
       <mat-icon *ngIf="!expanded">arrow_drop_down</mat-icon>
     </button>
   </mat-card-title>
 
-  <ng-container *ngIf="isExpanded()">
+  <ng-container *ngIf="expanded">
     <mat-divider class="kd-on-top"></mat-divider>
 
     <mat-card-content class="kd-card-content"
