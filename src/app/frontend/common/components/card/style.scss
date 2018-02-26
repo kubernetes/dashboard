@@ -19,6 +19,10 @@
   .mat-card {
     min-width: 100 * $baseline-grid;
     padding: 0;
+
+    &:hover .kd-card-actions {
+      display: block;
+    }
   }
 
   .mat-card-title {
@@ -29,6 +33,11 @@
     display: inline;
     margin: 0;
   }
+}
+
+.kd-card-actions {
+  display: none;
+  padding: $baseline-grid (2 * $baseline-grid);
 }
 
 .kd-card-toggle {
@@ -46,10 +55,6 @@
 
 .kd-card-title {
   font-size: $title-font-size-base;
-  padding: $baseline-grid (2 * $baseline-grid);
-}
-
-.kd-card-actions {
   padding: $baseline-grid (2 * $baseline-grid);
 }
 
