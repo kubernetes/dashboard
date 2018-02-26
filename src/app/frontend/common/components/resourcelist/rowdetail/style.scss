@@ -15,5 +15,11 @@
 @import '../../../../variables';
 
 .kd-row-detail {
-  padding: $baseline-grid (7.5 * $baseline-grid);
+  padding: $baseline-grid (2 * $baseline-grid) 0 (7.5 * $baseline-grid);
+}
+
+:host {
+  div:last-of-type {
+    padding-bottom: $baseline-grid;
+  }
 }

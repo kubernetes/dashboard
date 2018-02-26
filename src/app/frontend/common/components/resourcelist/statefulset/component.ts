@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import {HttpParams} from '@angular/common/http';
-import {Component, Input} from '@angular/core';
-import {StatefulSet, StatefulSetList} from '@api/backendapi';
+import {Component, ComponentFactoryResolver, Input} from '@angular/core';
+import {Event, Pod, StatefulSet, StatefulSetList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 import {ResourceListWithStatuses} from '../../../resources/list';
@@ -32,8 +32,9 @@ export class StatefulSetListComponent extends
 
   constructor(
       state: StateService,
-      private readonly statefulSet_: NamespacedResourceService<StatefulSetList>) {
-    super('pod', state);
+      private readonly statefulSet_: NamespacedResourceService<StatefulSetList>,
+      resolver: ComponentFactoryResolver) {
+    super('pod', state, resolver);
     this.id = ListIdentifiers.statefulSet;
     this.groupId = ListGroupIdentifiers.workloads;
 
@@ -65,5 +66,13 @@ export class StatefulSetListComponent extends
 
   getDisplayColumns(): string[] {
     return ['statusicon', 'name', 'labels', 'pods', 'age', 'images'];
+  }
+
+  hasErrors(statefulSet: StatefulSet): boolean {
+    return statefulSet.pods.warnings.length > 0;
+  }
+
+  getEvents(statefulSet: StatefulSet): Event[] {
+    return statefulSet.pods.warnings;
   }
 }
