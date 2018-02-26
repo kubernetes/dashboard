@@ -14,6 +14,7 @@
 
 import {DataSource} from '@angular/cdk/collections';
 import {HttpParams} from '@angular/common/http';
+import {Element} from '@angular/compiler';
 import {ComponentFactoryResolver, EventEmitter, Input, OnDestroy, OnInit, Output, QueryList, ViewChild, ViewChildren, ViewContainerRef} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {Event as KdEvent, Resource, ResourceList} from '@api/backendapi';
@@ -246,7 +247,8 @@ export abstract class ResourceListWithStatuses<T extends ResourceList, R extends
   };
   @ViewChildren('matrow', {read: ViewContainerRef})
   private readonly containers_: QueryList<ViewContainerRef>;
-  expandedRow: number;
+  expandedRow: number = undefined;
+  hoveredRow: number = undefined;
 
   constructor(
       detailStateName: string, state: StateService,
@@ -294,18 +296,18 @@ export abstract class ResourceListWithStatuses<T extends ResourceList, R extends
     const containers = this.containers_.toArray();
     for (let i = 0; i < containers.length; i++) {
       containers[i].clear();
-      this.expandedRow = null;
+      this.expandedRow = undefined;
     }
   }
 
   expand(index: number, resource: R): void {
     if (this.hasErrors(resource)) {
-      if (this.expandedRow != null) {
+      if (this.expandedRow !== undefined) {
         this.containers_.toArray()[this.expandedRow].clear();
       }
 
       if (this.expandedRow === index) {
-        this.expandedRow = null;
+        this.expandedRow = undefined;
         return;
       }
 
@@ -322,9 +324,30 @@ export abstract class ResourceListWithStatuses<T extends ResourceList, R extends
     event.stopPropagation();
   }
 
+  onRowOver(rowIdx: number): void {
+    this.hoveredRow = rowIdx;
+  }
+
+  onRowLeave(): void {
+    this.hoveredRow = undefined;
+  }
+
+  isRowExpanded(index: number): boolean {
+    return this.expandedRow === index;
+  }
+
+  isRowHovered(index: number): boolean {
+    return this.hoveredRow === index;
+  }
+
+  showHoverIcon(index: number, resource: R): boolean {
+    return this.isRowHovered(index) && this.hasErrors(resource) && !this.isRowExpanded(index);
+  }
+
   protected hasErrors(_resource: R): boolean {
     return false;
   }
+
   protected getEvents(_resource: R): KdEvent[] {
     return [];
   }

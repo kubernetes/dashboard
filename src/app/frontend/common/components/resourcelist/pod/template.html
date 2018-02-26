@@ -34,9 +34,15 @@ limitations under the License.
                matSortDirection="asc">
       <ng-container [matColumnDef]="getDisplayColumns()[0]">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let pod">
+        <mat-cell *matCellDef="let pod; let index=index">
           <mat-icon [ngClass]="getStatus(pod).iconClass">
-            {{getStatus(pod).iconName}}
+            <ng-container *ngIf="showHoverIcon(index, pod); else showStatus">
+              remove_red_eye
+            </ng-container>
+
+            <ng-template #showStatus>
+              {{getStatus(pod).iconName}}
+            </ng-template>
           </mat-icon>
         </mat-cell>
       </ng-container>
@@ -92,11 +98,11 @@ limitations under the License.
 
       <mat-header-row *matHeaderRowDef="getDisplayColumns()"></mat-header-row>
       <mat-row #matrow
-               [ngClass]="{'kd-table-row-error-hover kd-clickable': hasErrors(row),
-               'kd-table-row-error kd-no-bottom-border': expandedRow === index}"
-               mat-ripple
-               *matRowDef="let row; columns: getDisplayColumns(); let index=index"
-               (click)="expand(index, row)"></mat-row>
+               (mouseover)="onRowOver(index)"
+               (mouseleave)="onRowLeave()"
+               (click)="expand(index, row)"
+               [ngClass]="{'kd-no-bottom-border': isRowExpanded(index), 'kd-clickable': hasErrors(row)}"
+               *matRowDef="let row; columns: getDisplayColumns(); let index=index"></mat-row>
     </mat-table>
 
     <mat-paginator [length]="totalItems"
