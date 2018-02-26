@@ -41,7 +41,8 @@ export class CardListFilterComponent implements OnInit {
     return !this.hidden_;
   }
 
-  switchSearchVisibility(): void {
+  switchSearchVisibility(event: Event): void {
+    event.stopPropagation();
     this.hidden_ = !this.hidden_;
 
     if (!this.hidden_) {
@@ -57,8 +58,8 @@ export class CardListFilterComponent implements OnInit {
     }, 150);
   }
 
-  clearInput(): void {
-    this.switchSearchVisibility();
+  clearInput(event: Event): void {
+    this.switchSearchVisibility(event);
     // Do not call backend if it is not needed
     if (this.query.length > 0) {
       this.query = '';

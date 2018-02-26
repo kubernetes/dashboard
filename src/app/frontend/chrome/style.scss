@@ -91,6 +91,12 @@
 .kd-scroll-container {
   overflow-x: auto;
 
+  ::before {
+    content: '';
+    display: block;
+    margin-bottom: 2.5 * $baseline-grid;
+  }
+
   ::after {
     content: '';
     display: block;
