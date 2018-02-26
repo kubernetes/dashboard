@@ -162,14 +162,4 @@
       border-bottom: 1px solid $border;
     }
   }
-
-  .kd-table-row-error {
-    background: transparentize($error, .97);
-  }
-
-  .kd-table-row-error-hover {
-    &:hover {
-      background: transparentize($error, .97);
-    }
-  }
 }
