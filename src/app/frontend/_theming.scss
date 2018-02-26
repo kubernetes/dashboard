@@ -126,6 +126,10 @@
 
   // Component-level styles
 
+  .kd-minimized-card-header:hover {
+    background: $border;
+  }
+
   .kd-primary-toolbar {
     background-color: lighten($background, 5%);
   }
