@@ -17,8 +17,9 @@ limitations under the License.
 <kd-card role="table"
          [hidden]="isHidden()">
   <div title
-       fxLayout="row">
-    Cron Jobs
+       fxLayout="row">Cron Jobs</div>
+  <div description><span class="kd-muted-light">Items:&nbsp;</span>{{totalItems}}</div>
+  <div actions>
     <kd-card-list-filter></kd-card-list-filter>
   </div>
 

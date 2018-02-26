@@ -33,6 +33,7 @@
   $warning: mat-color($warn-palette);
   $error: mat-color($warn-palette, darker);
   $muted: mat-color($foreground-palette, secondary-text);
+  $muted-light: mat-color($foreground-palette, disabled);
   $border: mat-color($foreground-palette, divider);
   $chart-green: mat-color($warn-palette, 50);
   $chart-blue: mat-color($warn-palette, 200);
@@ -93,6 +94,10 @@
 
   .kd-muted {
     color: $muted;
+  }
+
+  .kd-muted-light {
+    color: $muted-light;
   }
 
   .kd-chart-green {

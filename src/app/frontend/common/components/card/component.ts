@@ -26,9 +26,5 @@ export class CardComponent {
   @Input() withTitle = true;
   @Input() expandable = false;
   @Input() titleClasses = '';
-  expanded = true;
-
-  isExpanded(): boolean {
-    return !this.expandable || this.expanded;
-  }
+  @Input() expanded = true;
 }

@@ -129,6 +129,11 @@ code {
 // Custom classes used across application //
 ////////////////////////////////////////////
 
+.kd-inline-property {
+  display: inline-flex;
+  margin-right: 3 * $baseline-grid;
+}
+
 .kd-card-group-header {
   font-family: $font-family-sans;
   font-size: $title-font-size-base;
@@ -150,6 +155,10 @@ code {
 
 .kd-h3 {
   font-size: 16px;
+}
+
+.kd-card-padding {
+  padding: 2.5 * $baseline-grid;
 }
 
 .kd-no-margin {

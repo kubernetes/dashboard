@@ -20,6 +20,8 @@ import {ObjectMeta} from '@api/backendapi';
   templateUrl: './template.html',
 })
 export class ObjectMetaComponent {
+  @Input() initialized = false;
+
   private objectMeta_: ObjectMeta;
   get objectMeta(): ObjectMeta {
     return this.objectMeta_;
