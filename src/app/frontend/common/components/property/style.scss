@@ -26,4 +26,5 @@
 .kd-property-value {
   font-size: $title-font-size-base;
   margin-bottom: $baseline-grid;
+  word-break: break-all;
 }

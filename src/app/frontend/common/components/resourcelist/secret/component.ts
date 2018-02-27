@@ -18,6 +18,7 @@ import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 import {Secret, SecretList} from 'typings/backendapi';
 
+import {secretDetailState} from '../../../../resource/config/secret/detail/state';
 import {ResourceListBase} from '../../../resources/list';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
@@ -29,7 +30,7 @@ export class SecretListComponent extends ResourceListBase<SecretList, Secret> {
 
   constructor(
       state: StateService, private readonly secret_: NamespacedResourceService<SecretList>) {
-    super('node', state);
+    super(secretDetailState.name, state);
     this.id = ListIdentifiers.secret;
     this.groupId = ListGroupIdentifiers.config;
   }

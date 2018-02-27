@@ -12,20 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * @final
- */
-export class SecretListController {
-  /**
-   * @param {!backendApi.SecretList} secretList
-   * @param {!angular.Resource} kdSecretListResource
-   * @ngInject
-   */
-  constructor(secretList, kdSecretListResource) {
-    /** @export {!backendApi.SecretList} */
-    this.secretList = secretList;
+@import '../../../variables';
+@import '../../../mixins';
 
-    /** @export {!angular.Resource} */
-    this.secretListResource = kdSecretListResource;
-  }
+.kd-hidden-property-key {
+  outline: none;
+}
+
+.kd-hidden-property-icon {
+  @include kd-icon-size($caption-font-size-base);
+
+  margin-left: $baseline-grid / 2;
 }

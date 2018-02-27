@@ -129,6 +129,15 @@ code {
 // Custom classes used across application //
 ////////////////////////////////////////////
 
+.kd-code-block {
+  border-radius: $baseline-grid / 4;
+  display: block;
+  font-family: $font-family-monospace;
+  font-size: $body-font-size-base;
+  padding: $baseline-grid * 2;
+  white-space: pre-wrap;
+}
+
 .kd-minimized-card {
   margin: 0 (2.5 * $baseline-grid);
   outline: none;

@@ -19,6 +19,8 @@ import {ComponentsModule} from '../../../common/components/module';
 import {ResourceModule} from '../../../common/services/resource/module';
 import {SharedModule} from '../../../shared.module';
 
+import {SecretDetailComponent} from './detail/component';
+import {secretDetailState} from './detail/state';
 import {SecretList} from './list/component';
 import {secretListState} from './list/state';
 import {secretState} from './state';
@@ -28,8 +30,8 @@ import {secretState} from './state';
     SharedModule,
     ResourceModule,
     ComponentsModule,
-    UIRouterModule.forChild({states: [secretState, secretListState]}),
+    UIRouterModule.forChild({states: [secretState, secretListState, secretDetailState]}),
   ],
-  declarations: [SecretList],
+  declarations: [SecretList, SecretDetailComponent],
 })
 export class SecretModule {}

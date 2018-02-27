@@ -126,6 +126,10 @@
 
   // Component-level styles
 
+  .kd-code-block {
+    background-color: $border;
+  }
+
   .kd-minimized-card-header:hover {
     background: $border;
   }

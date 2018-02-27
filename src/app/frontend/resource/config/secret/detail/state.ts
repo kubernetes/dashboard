@@ -12,14 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../variables';
+import {Ng2StateDeclaration} from '@uirouter/angular';
 
-.kd-secret-detail-row {
-  &.kd-info-card-entry {
-    padding: 0;
-  }
+import {addNamespacedResourceStateParamsToUrl} from '../../../../common/params/params';
+import {stateName, stateUrl} from '../state';
 
-  .kd-info-card-entry-content {
-    padding-top: 1.125 * $baseline-grid;
-  }
-}
+import {SecretDetailComponent} from './component';
+
+export const secretDetailState: Ng2StateDeclaration = {
+  name: `${stateName}.detail`,
+  url: addNamespacedResourceStateParamsToUrl(stateUrl),
+  component: SecretDetailComponent,
+  data: {
+    kdBreadcrumbs: {
+      label: 'resourceName',
+      parent: 'secret.list',
+    },
+  },
+};

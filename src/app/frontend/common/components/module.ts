@@ -15,6 +15,7 @@
 import {NgModule} from '@angular/core';
 
 import {SharedModule} from '../../shared.module';
+
 import {ActionbarComponent} from './actionbar/component';
 import {AllocationChartComponent} from './allocationchart/component';
 import {BreadcrumbsComponent} from './breadcrumbs/component';
@@ -23,6 +24,7 @@ import {ChipsComponent} from './chips/component';
 import {LastAppliedConfigDialog} from './chips/lastappliedconfigdialog/dialog';
 import {ExternalEndpointComponent} from './endpoint/external/component';
 import {InternalEndpointComponent} from './endpoint/internal/component';
+import {HiddenPropertyComponent} from './hiddenproperty/component';
 import {ObjectMetaComponent} from './objectmeta/component';
 import {PropertyComponent} from './property/component';
 import {ProxyComponent} from './proxy/component';
@@ -91,6 +93,7 @@ import {ZeroStateComponent} from './zerostate/component';
     LastAppliedConfigDialog,
     TextInputComponent,
     RowDetailComponent,
+    HiddenPropertyComponent,
   ],
   exports: [
     AllocationChartComponent,
@@ -125,6 +128,7 @@ import {ZeroStateComponent} from './zerostate/component';
     ExternalEndpointComponent,
     InternalEndpointComponent,
     TextInputComponent,
+    HiddenPropertyComponent,
   ],
   entryComponents: [
     LastAppliedConfigDialog,
