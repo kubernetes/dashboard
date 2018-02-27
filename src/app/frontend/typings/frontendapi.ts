@@ -12,7 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {GlobalSettings, K8sError} from '@api/backendapi';
+import {Type} from '@angular/core';
+import {GlobalSettings, K8sError, ObjectMeta, TypeMeta} from '@api/backendapi';
 
 export interface BreadcrumbConfig {
   label?: string;
@@ -44,7 +45,12 @@ export interface OnListChangeEvent {
   filtered: boolean;
 }
 
-export interface ActionColumn {
+export interface ActionColumnDef<T extends ActionColumn> {
   name: string;
-  icon: string;
+  component: Type<T>;
+}
+
+export interface ActionColumn {
+  setTypeMeta(typeMeta: TypeMeta): void;
+  setObjectMeta(objectMeta: ObjectMeta): void;
 }

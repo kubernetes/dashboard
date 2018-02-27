@@ -14,10 +14,10 @@
 
 import {DataSource} from '@angular/cdk/collections';
 import {HttpParams} from '@angular/common/http';
-import {ComponentFactoryResolver, EventEmitter, Input, OnDestroy, OnInit, Output, QueryList, ViewChild, ViewChildren, ViewContainerRef} from '@angular/core';
+import {ComponentFactoryResolver, EventEmitter, Input, OnDestroy, OnInit, Output, QueryList, Type, ViewChild, ViewChildren, ViewContainerRef} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {Event as KdEvent, Resource, ResourceList} from '@api/backendapi';
-import {ActionColumn, OnListChangeEvent} from '@api/frontendapi';
+import {ActionColumn, ActionColumnDef, OnListChangeEvent} from '@api/frontendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 import {merge} from 'rxjs/observable/merge';
@@ -25,27 +25,29 @@ import {startWith, switchMap} from 'rxjs/operators';
 import {Subscription} from 'rxjs/Subscription';
 
 import {searchState} from '../../search/state';
-import {CardListFilterComponent} from '../components/resourcelist/filter/component';
-import {RowDetailComponent} from '../components/resourcelist/rowdetail/component';
+import {CardListFilterComponent} from '../components/list/filter/component';
+import {RowDetailComponent} from '../components/list/rowdetail/component';
 import {NamespacedResourceStateParams, ResourceStateParams, SEARCH_QUERY_STATE_PARAM} from '../params/params';
 import {GlobalServicesModule} from '../services/global/module';
 import {SettingsService} from '../services/global/settings';
 
 // TODO: NEEDS DOCUMENTATION!!!
-export abstract class ResourceListBase<T extends ResourceList, R> implements OnInit, OnDestroy {
+export abstract class ResourceListBase<T extends ResourceList, R extends Resource> implements
+    OnInit, OnDestroy {
   // Base properties
   private readonly data_ = new MatTableDataSource<R>();
   private dataSubscription_: Subscription;
   private readonly settingsService_: SettingsService;
+  private readonly actionColumns_: Array<ActionColumnDef<ActionColumn>> = [];
   @Output('onchange') onChange: EventEmitter<OnListChangeEvent> = new EventEmitter();
   @Input() id: string;
   @Input() groupId: string;
   @Input() hideable = false;
 
   // Data select properties
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(CardListFilterComponent) filter: CardListFilterComponent;
+  @ViewChild(MatSort) private readonly matSort_: MatSort;
+  @ViewChild(MatPaginator) private readonly matPaginator_: MatPaginator;
+  @ViewChild(CardListFilterComponent) private readonly cardFilter_: CardListFilterComponent;
   isLoading = false;
   totalItems = 0;
 
@@ -62,22 +64,22 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
       throw Error('ID is a required attribute of list component.');
     }
 
-    if (this.sort === undefined) {
+    if (this.matSort_ === undefined) {
       throw Error('MatSort has to be defined on a table.');
     }
 
-    if (this.paginator === undefined) {
+    if (this.matPaginator_ === undefined) {
       throw Error('MatPaginator has to be defined on a table.');
     }
 
-    if (this.filter === undefined) {
+    if (this.cardFilter_ === undefined) {
       throw Error('CardListFilter has to be defined on a table.');
     }
 
     let loadingTimeout: NodeJS.Timer;
-    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+    this.matSort_.sortChange.subscribe(() => this.matPaginator_.pageIndex = 0);
     this.dataSubscription_ =
-        merge(this.sort.sortChange, this.paginator.page, this.filter.filterEvent)
+        merge(this.matSort_.sortChange, this.matPaginator_.page, this.cardFilter_.filterEvent)
             .pipe(startWith({}), switchMap<T, T>(() => {
                     let params = this.sort_();
                     params = this.paginate_(params);
@@ -125,6 +127,21 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
     return this.hideable && !this.filtered_() && this.showZeroState();
   }
 
+  getColumns(): string[] {
+    const displayColumns = this.getDisplayColumns();
+    const actionColumns = this.actionColumns_.map(col => col.name);
+
+    return displayColumns.concat(...actionColumns);
+  }
+
+  getActionColumns(): Array<ActionColumnDef<ActionColumn>> {
+    return this.actionColumns_;
+  }
+
+  protected registerActionColumn<C extends ActionColumn>(name: string, component: Type<C>): void {
+    this.actionColumns_.push({name: `action-${name}`, component} as ActionColumnDef<ActionColumn>);
+  }
+
   private sort_(params?: HttpParams): HttpParams {
     let result = new HttpParams();
     if (params) {
@@ -141,7 +158,7 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
     }
 
     return result.set('itemsPerPage', `${this.itemsPerPage}`)
-        .set('page', `${this.paginator.pageIndex + 1}`);
+        .set('page', `${this.matPaginator_.pageIndex + 1}`);
   }
 
   /**
@@ -154,7 +171,7 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
     }
 
     // TODO: support filtering by different columns
-    const filterByQuery = this.filter.query ? `name,${this.filter.query}` : '';
+    const filterByQuery = this.cardFilter_.query ? `name,${this.cardFilter_.query}` : '';
     if (filterByQuery) {
       return result.set('filterBy', filterByQuery);
     }
@@ -197,12 +214,12 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
     let ascending = true;
     let active = 'age';
 
-    if (this.sort.direction) {
-      ascending = this.sort.direction === 'asc';
+    if (this.matSort_.direction) {
+      ascending = this.matSort_.direction === 'asc';
     }
 
-    if (this.sort.active) {
-      active = this.sort.active;
+    if (this.matSort_.active) {
+      active = this.matSort_.active;
     }
 
     if (active === 'age') {
@@ -230,16 +247,6 @@ export abstract class ResourceListBase<T extends ResourceList, R> implements OnI
     });
   }
 
-  getColumns(): string[] {
-    const displayColumns = this.getDisplayColumns();
-    const actionColumns = this.getActionColumns().map(col => col.name);
-
-    return displayColumns.concat(...actionColumns);
-  }
-
-  protected getActionColumns(): ActionColumn[] {
-    return [];
-  }
   abstract map(value: T): R[];
   abstract getResourceObservable(params?: HttpParams): Observable<T>;
   abstract getDisplayColumns(): string[];
@@ -327,10 +334,6 @@ export abstract class ResourceListWithStatuses<T extends ResourceList, R extends
       component.instance.events = this.getEvents(resource);
       this.expandedRow = index;
     }
-  }
-
-  noPropagate(event: Event): void {
-    event.stopPropagation();
   }
 
   onRowOver(rowIdx: number): void {

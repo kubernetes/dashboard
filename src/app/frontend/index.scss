@@ -130,6 +130,10 @@ code {
   min-height: 5 * $baseline-grid !important;
 }
 
+.mat-paginator-container {
+  padding-right: 3 * $baseline-grid !important;
+}
+
 ////////////////////////////////////////////
 // Custom classes used across application //
 ////////////////////////////////////////////

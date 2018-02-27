@@ -46,7 +46,7 @@
 
 .kd-card-toggle {
   cursor: pointer;
-  margin-right: $baseline-grid;
+  margin-right: (3 * $baseline-grid);
   outline: none;
 }
 
@@ -61,7 +61,7 @@
 
 .kd-card-title {
   font-size: $title-font-size-base;
-  padding: $baseline-grid (2 * $baseline-grid);
+  padding: $baseline-grid 0 $baseline-grid (2 * $baseline-grid);
 }
 
 .kd-card-description {

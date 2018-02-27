@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Component} from '@angular/core';
-import {Event} from '@api/backendapi';
+import {Event} from 'typings/backendapi';
 
 @Component({
   selector: 'kd-row-detail',
