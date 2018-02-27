@@ -48,6 +48,7 @@ limitations under the License.
   <mat-chip *ngIf="isAnythingHidden()"
             (click)="toggleView()"
             color="primary"
+            class="kd-clickable"
             [selected]="true">
     <span *ngIf="isShowingAll">Show less</span>
     <span *ngIf="!isShowingAll">Show all</span>

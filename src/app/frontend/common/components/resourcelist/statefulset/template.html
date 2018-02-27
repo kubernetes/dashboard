@@ -53,7 +53,7 @@ limitations under the License.
                          mat-sort-header
                          disableClear="true">Name</mat-header-cell>
         <mat-cell *matCellDef="let replicaSet">
-          <a (click)="noPropagate($event)"
+          <a (click)="$event.stopPropagation()"
              [href]="getDetailsHref(replicaSet.objectMeta.name)">
           {{replicaSet.objectMeta.name}}
           </a>

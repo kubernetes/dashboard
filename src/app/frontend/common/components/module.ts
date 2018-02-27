@@ -24,6 +24,13 @@ import {ChipsComponent} from './chips/component';
 import {LastAppliedConfigDialog} from './chips/lastappliedconfigdialog/dialog';
 import {ExternalEndpointComponent} from './endpoint/external/component';
 import {InternalEndpointComponent} from './endpoint/internal/component';
+import {ColumnComponent} from './list/column/component';
+import {LogsButtonComponent} from './list/column/logsbutton/component';
+import {MenuComponent} from './list/column/menu/component';
+import {CardListFilterComponent} from './list/filter/component';
+import {RowDetailComponent} from './list/rowdetail/component';
+import {LoadingSpinner} from './list/spinner/component';
+import {ListZeroStateComponent} from './list/zerostate/component';
 import {HiddenPropertyComponent} from './hiddenproperty/component';
 import {ObjectMetaComponent} from './objectmeta/component';
 import {PropertyComponent} from './property/component';
@@ -33,7 +40,6 @@ import {ConfigMapListComponent} from './resourcelist/configmap/component';
 import {CronJobListComponent} from './resourcelist/cronjob/component';
 import {DaemonSetListComponent} from './resourcelist/daemonset/component';
 import {DeploymentListComponent} from './resourcelist/deployment/component';
-import {CardListFilterComponent} from './resourcelist/filter/component';
 import {IngressListComponent} from './resourcelist/ingress/component';
 import {JobListComponent} from './resourcelist/job/component';
 import {NamespaceListComponent} from './resourcelist/namespace/component';
@@ -43,13 +49,10 @@ import {PersistentVolumeClaimListComponent} from './resourcelist/persistentvolum
 import {PodListComponent} from './resourcelist/pod/component';
 import {ReplicaSetListComponent} from './resourcelist/replicaset/component';
 import {ReplicationControllerListComponent} from './resourcelist/replicationcontroller/component';
-import {RowDetailComponent} from './resourcelist/rowdetail/component';
 import {SecretListComponent} from './resourcelist/secret/component';
 import {ServiceListComponent} from './resourcelist/service/component';
-import {LoadingSpinner} from './resourcelist/spinner/component';
 import {StatefulSetListComponent} from './resourcelist/statefulset/component';
 import {StorageClassListComponent} from './resourcelist/storageclass/component';
-import {ListZeroStateComponent} from './resourcelist/zerostate/component';
 import {TextInputComponent} from './textinput/component';
 import {ZeroStateComponent} from './zerostate/component';
 
@@ -93,6 +96,9 @@ import {ZeroStateComponent} from './zerostate/component';
     LastAppliedConfigDialog,
     TextInputComponent,
     RowDetailComponent,
+    ColumnComponent,
+    LogsButtonComponent,
+    MenuComponent,
     HiddenPropertyComponent,
   ],
   exports: [
@@ -133,6 +139,8 @@ import {ZeroStateComponent} from './zerostate/component';
   entryComponents: [
     LastAppliedConfigDialog,
     RowDetailComponent,
+    LogsButtonComponent,
+    MenuComponent,
   ]
 })
 export class ComponentsModule {}

@@ -53,7 +53,7 @@ limitations under the License.
                          mat-sort-header
                          disableClear="true">Name</mat-header-cell>
         <mat-cell *matCellDef="let pod">
-          <a (click)="noPropagate($event)"
+          <a (click)="$event.stopPropagation()"
              [href]="getDetailsHref(pod.objectMeta.name, pod.objectMeta.namespace)">
       {{pod.objectMeta.name}}
       </a>
@@ -97,13 +97,22 @@ limitations under the License.
         </mat-cell>
       </ng-container>
 
-      <mat-header-row *matHeaderRowDef="getDisplayColumns()"></mat-header-row>
+      <ng-container *ngFor="let col of getActionColumns()"
+                    [matColumnDef]="col.name">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let pod">
+          <kd-dynamic-cell [component]="col.component"
+                           [resource]="pod"></kd-dynamic-cell>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="getColumns()"></mat-header-row>
       <mat-row #matrow
                (mouseover)="onRowOver(index)"
                (mouseleave)="onRowLeave()"
                (click)="expand(index, row)"
                [ngClass]="{'kd-no-bottom-border': isRowExpanded(index), 'kd-clickable': hasErrors(row)}"
-               *matRowDef="let row; columns: getDisplayColumns(); let index=index"></mat-row>
+               *matRowDef="let row; columns: getColumns(); let index=index"></mat-row>
     </mat-table>
 
     <mat-paginator [length]="totalItems"

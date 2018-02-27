@@ -22,6 +22,8 @@ import {podDetailState} from '../../../../resource/workloads/pod/detail/state';
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
+import {LogsButtonComponent} from '../../list/column/logsbutton/component';
+import {MenuComponent} from '../../list/column/menu/component';
 import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
 
 @Component({selector: 'kd-pod-list', templateUrl: './template.html'})
@@ -39,6 +41,10 @@ export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
     this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);
     this.registerBinding(this.icon.timelapse, 'kd-muted', this.isInPendingState);
     this.registerBinding(this.icon.error, 'kd-error', this.isInErrorState);
+
+    // Register action columns.
+    this.registerActionColumn<LogsButtonComponent>('logs', LogsButtonComponent);
+    this.registerActionColumn<MenuComponent>('menu', MenuComponent);
   }
 
   getResourceObservable(params?: HttpParams): Observable<PodList> {

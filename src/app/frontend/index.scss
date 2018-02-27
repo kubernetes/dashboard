@@ -115,6 +115,11 @@ code {
   flex-grow: 2 !important;
 }
 
+[class^='mat-column-action'],
+[class*='mat-column-action'] {
+  flex: 0 0 ($baseline-grid * 5) !important;
+}
+
 .mat-sort-header-arrow {
   align-self: center;
 }
@@ -123,6 +128,10 @@ code {
 .mat-paginator-range-actions {
   font-size: $body-font-size-base;
   min-height: 5 * $baseline-grid !important;
+}
+
+.mat-paginator-container {
+  padding-right: 3 * $baseline-grid !important;
 }
 
 ////////////////////////////////////////////
@@ -223,7 +232,7 @@ code {
 }
 
 .kd-clickable {
-  cursor: pointer;
+  cursor: pointer !important;
 }
 
 .kd-no-bottom-border {
