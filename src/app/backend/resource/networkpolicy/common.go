@@ -20,33 +20,25 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	networkpolicy "k8s.io/api/networking/v1"
 	"encoding/json"
-	"log"
 )
 
 func toNetworkPolicy(networkpolicy *networkpolicy.NetworkPolicy) NetworkPolicy {
 	//deepcopy
-	log.Println("marshl networkpolicy ",networkpolicy)
 	byte,err:=json.Marshal(networkpolicy.Spec)
-	log.Println("marshl networkpolicy spec",string(byte))
 	var result NetworkPolicy
 	if(err !=nil){
 		return result
 	}
-	var umarshalresult NetworkPolicySpec
-
-	err=json.Unmarshal(byte,&umarshalresult)
-	if(err!=nil){
-		log.Println(err)
-	}
-	log.Println("unmarshl networkpolicy spec ",umarshalresult)
-
+	var unMarshalPolicy NetworkPolicySpec
+  err=json.Unmarshal(byte,&unMarshalPolicy)
+  if(err!=nil){
+    return result
+  }
 	result=NetworkPolicy{
-		ObjectMeta:  api.NewObjectMeta(networkpolicy.ObjectMeta),
-		TypeMeta:     api.NewTypeMeta(api.ResourceKindNetworkPolicy),
-		Spec:        umarshalresult,
+		ObjectMeta: api.NewObjectMeta(networkpolicy.ObjectMeta),
+		TypeMeta:   api.NewTypeMeta(api.ResourceKindNetworkPolicy),
+		Spec:       unMarshalPolicy,
 	}
-
-	log.Println("unmarshl networkpolicy result ",result)
 	return result
 }
 
