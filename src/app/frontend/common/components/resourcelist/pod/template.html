@@ -62,8 +62,8 @@ limitations under the License.
 
       <ng-container [matColumnDef]="getDisplayColumns()[2]">
         <mat-header-cell *matHeaderCellDef>Labels</mat-header-cell>
-        <mat-cell *matCellDef="let replicaSet">
-          <kd-chips [map]="replicaSet.objectMeta.labels"></kd-chips>
+        <mat-cell *matCellDef="let pod">
+          <kd-chips [map]="pod.objectMeta.labels"></kd-chips>
         </mat-cell>
       </ng-container>
 

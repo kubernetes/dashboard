@@ -31,6 +31,7 @@ export enum ListIdentifiers {
   secret = 'secretList',
   replicationController = 'replicationControllerList',
   statefulSet = 'statefulSetList',
+  event = 'event',
 }
 
 export enum ListGroupIdentifiers {
@@ -38,4 +39,5 @@ export enum ListGroupIdentifiers {
   workloads = 'workloadsGroup',
   discovery = 'discoveryGroup',
   config = 'configGroup',
+  none = 'none',
 }

@@ -33,6 +33,7 @@ export enum Resource {
   secret = 'secret',
   ingress = 'ingress',
   service = 'service',
+  event = 'event',
 }
 
 class ResourceEndpoint {

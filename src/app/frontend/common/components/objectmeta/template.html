@@ -19,17 +19,17 @@ limitations under the License.
   <div description>
     <div class="kd-inline-property">
       <span class="kd-muted-light">Name:&nbsp;</span>
-      <span>{{objectMeta.name}}</span>
+      <span>{{objectMeta?.name}}</span>
     </div>
     <div class="kd-inline-property"
-         *ngIf="objectMeta.namespace">
+         *ngIf="objectMeta?.namespace">
       <span class="kd-muted-light">Namespace:&nbsp;</span>
-      <span>{{objectMeta.namespace}}</span>
+      <span>{{objectMeta?.namespace}}</span>
     </div>
     <div class="kd-inline-property"
-         *ngIf="objectMeta.creationTimestamp">
+         *ngIf="objectMeta?.creationTimestamp">
       <span class="kd-muted-light">Age:&nbsp;</span>
-      <span>{{objectMeta.creationTimestamp | kdRelativeTime}}</span>
+      <span>{{objectMeta?.creationTimestamp | kdRelativeTime}}</span>
     </div>
   </div>
   <div content>
@@ -37,37 +37,37 @@ limitations under the License.
          fxLayoutWrap>
       <kd-property>
         <div key>Name</div>
-        <div value>{{objectMeta.name}}</div>
+        <div value>{{objectMeta?.name}}</div>
       </kd-property>
-      <kd-property *ngIf="objectMeta.namespace">
+      <kd-property *ngIf="objectMeta?.namespace">
         <div key>Namespace</div>
-        <div value>{{objectMeta.namespace}}</div>
+        <div value>{{objectMeta?.namespace}}</div>
       </kd-property>
       <kd-property>
         <div key>Creation time</div>
-        <div value>{{objectMeta.creationTimestamp | date : "MMM d, y H:mm:ss" : "UTC"}}</div>
+        <div value>{{objectMeta?.creationTimestamp | date : "MMM d, y H:mm:ss" : "UTC"}}</div>
       </kd-property>
       <kd-property>
         <div key>Age</div>
-        <div value>{{objectMeta.creationTimestamp | kdRelativeTime}}</div>
+        <div value>{{objectMeta?.creationTimestamp | kdRelativeTime}}</div>
       </kd-property>
-      <kd-property *ngIf="objectMeta.uid">
+      <kd-property *ngIf="objectMeta?.uid">
         <div key>UID</div>
-        <div value>{{objectMeta.uid}}</div>
+        <div value>{{objectMeta?.uid}}</div>
       </kd-property>
-      <kd-property *ngIf="objectMeta.labels"
+      <kd-property *ngIf="objectMeta?.labels"
                    fxFlex="100">
         <div key>Labels</div>
         <div value>
-          <kd-chips [map]="objectMeta.labels"
+          <kd-chips [map]="objectMeta?.labels"
                     minChipsVisible="4"></kd-chips>
         </div>
       </kd-property>
-      <kd-property *ngIf="objectMeta.annotations"
+      <kd-property *ngIf="objectMeta?.annotations"
                    fxFlex="100">
         <div key>Annotations</div>
         <div value>
-          <kd-chips [map]="objectMeta.annotations"
+          <kd-chips [map]="objectMeta?.annotations"
                     minChipsVisible="4"></kd-chips>
         </div>
       </kd-property>

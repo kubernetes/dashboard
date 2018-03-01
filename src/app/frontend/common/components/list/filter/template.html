@@ -23,6 +23,7 @@ limitations under the License.
     <input #filterInput
            *ngIf="isSearchVisible()"
            (keyup)="keyUpEvent.next($event.target.value)"
+           (click)="$event.stopPropagation()"
            name="search"
            placeholder="Filter"
            class="kd-search-input">

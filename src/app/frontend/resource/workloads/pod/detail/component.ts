@@ -29,6 +29,7 @@ export class PodDetailComponent implements OnInit, OnDestroy {
   private podName_: string;
   pod: PodDetail;
   isInitialized = false;
+  eventListEndpoint: string;
 
   constructor(
       private readonly pod_: NamespacedResourceService<PodDetail>,
@@ -36,6 +37,8 @@ export class PodDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.podName_ = this.state_.params.resourceName;
+    this.eventListEndpoint =
+        EndpointManager.resource(Resource.pod, true).child(this.podName_, Resource.event);
     this.podSubscription_ =
         this.pod_.get(EndpointManager.resource(Resource.pod, true).detail(), this.podName_)
             .startWith({})

@@ -32,6 +32,7 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
   node: NodeDetail;
   isInitialized = false;
   podListEndpoint: string;
+  eventListEndpoint: string;
 
   constructor(
       private readonly node_: ResourceService<NodeDetail>, private readonly state_: StateService) {}
@@ -40,6 +41,8 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
     this.nodeName_ = this.state_.params.resourceName;
     this.podListEndpoint =
         EndpointManager.resource(Resource.node).child(this.nodeName_, Resource.pod);
+    this.eventListEndpoint =
+        EndpointManager.resource(Resource.node, false).child(this.nodeName_, Resource.event);
     this.nodeSubscription_ =
         this.node_.get(EndpointManager.resource(Resource.node).detail(), this.nodeName_)
             .subscribe((d: NodeDetail) => {

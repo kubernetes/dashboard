@@ -19,7 +19,7 @@ import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {Event as KdEvent, Resource, ResourceList} from '@api/backendapi';
 import {ActionColumn, ActionColumnDef, OnListChangeEvent} from '@api/frontendapi';
 import {StateService} from '@uirouter/core';
-import {Observable} from 'rxjs/Observable';
+import {Observable, ObservableInput} from 'rxjs/Observable';
 import {merge} from 'rxjs/observable/merge';
 import {startWith, switchMap} from 'rxjs/operators';
 import {Subscription} from 'rxjs/Subscription';
@@ -64,32 +64,26 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
       throw Error('ID is a required attribute of list component.');
     }
 
-    if (this.matSort_ === undefined) {
-      throw Error('MatSort has to be defined on a table.');
-    }
-
     if (this.matPaginator_ === undefined) {
       throw Error('MatPaginator has to be defined on a table.');
     }
 
-    if (this.cardFilter_ === undefined) {
-      throw Error('CardListFilter has to be defined on a table.');
-    }
+    // if (this.matSort_ === undefined) {
+    //   throw Error('MatSort has to be defined on a table.');
+    // }
+    //
+    // if (this.cardFilter_ === undefined) {
+    //   throw Error('CardListFilter has to be defined on a table.');
+    // }
 
     let loadingTimeout: NodeJS.Timer;
-    this.matSort_.sortChange.subscribe(() => this.matPaginator_.pageIndex = 0);
     this.dataSubscription_ =
-        merge(this.matSort_.sortChange, this.matPaginator_.page, this.cardFilter_.filterEvent)
-            .pipe(startWith({}), switchMap<T, T>(() => {
-                    let params = this.sort_();
-                    params = this.paginate_(params);
-                    params = this.filter_(params);
-                    params = this.search_(params);
-
+        this.getObservableWithDataSelect_()
+            .pipe(startWith({}), switchMap(() => {
                     loadingTimeout = setTimeout(() => {
                       this.isLoading = true;
                     }, 100);
-                    return this.getResourceObservable(params);
+                    return this.getResourceObservable(this.getDataSelectParams_());
                   }))
             .subscribe((data: T) => {
               this.totalItems = data.listMeta.totalItems;
@@ -140,6 +134,36 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
 
   protected registerActionColumn<C extends ActionColumn>(name: string, component: Type<C>): void {
     this.actionColumns_.push({name: `action-${name}`, component} as ActionColumnDef<ActionColumn>);
+  }
+
+  private getObservableWithDataSelect_<E>(): Observable<E> {
+    const obsInput = [this.matPaginator_.page] as Array<ObservableInput<E>>;
+
+    if (this.matSort_) {
+      this.matSort_.sortChange.subscribe(() => this.matPaginator_.pageIndex = 0);
+      obsInput.push(this.matSort_.sortChange);
+    }
+
+    if (this.cardFilter_) {
+      this.cardFilter_.filterEvent.subscribe(() => this.matPaginator_.pageIndex = 0);
+      obsInput.push(this.cardFilter_.filterEvent);
+    }
+
+    return merge(...obsInput);
+  }
+
+  private getDataSelectParams_(): HttpParams {
+    let params = this.paginate_();
+
+    if (this.matSort_) {
+      params = this.sort_(params);
+    }
+
+    if (this.cardFilter_) {
+      params = this.filter_(params);
+    }
+
+    return this.search_(params);
   }
 
   private sort_(params?: HttpParams): HttpParams {
@@ -239,12 +263,18 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
   }
 
   private onListChange_(): void {
-    this.onChange.emit({
+    const emitValue = {
       id: this.id,
       groupId: this.groupId,
       items: this.totalItems,
-      filtered: this.filtered_(),
-    });
+      filtered: false,
+    };
+
+    if (this.cardFilter_) {
+      emitValue.filtered = this.filtered_();
+    }
+
+    this.onChange.emit(emitValue);
   }
 
   abstract map(value: T): R[];
@@ -375,6 +405,8 @@ enum IconName {
   timelapse = 'timelapse',
   checkCircle = 'check_circle',
   help = 'help',
+  warning = 'warning',
+  none = '',
 }
 
 class Icon {
