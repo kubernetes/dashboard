@@ -17,7 +17,9 @@ import {Component, Input} from '@angular/core';
 import {ReplicationController, ReplicationControllerList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
+
 import {ResourceListWithStatuses} from '../../../resources/list';
+import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
@@ -32,9 +34,9 @@ export class ReplicationControllerListComponent extends
 
   constructor(
       state: StateService,
-      private readonly replicationController_:
-          NamespacedResourceService<ReplicationControllerList>) {
-    super('pod', state);
+      private readonly replicationController_: NamespacedResourceService<ReplicationControllerList>,
+      notifications: NotificationsService) {
+    super('pod', state, notifications);
     this.id = ListIdentifiers.replicationController;
     this.groupId = ListGroupIdentifiers.workloads;
 

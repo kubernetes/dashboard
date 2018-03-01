@@ -19,6 +19,7 @@ import {Observable} from 'rxjs/Observable';
 import {Endpoint, Ingress, IngressList} from 'typings/backendapi';
 
 import {ResourceListBase} from '../../../resources/list';
+import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
@@ -28,8 +29,9 @@ export class IngressListComponent extends ResourceListBase<IngressList, Ingress>
   @Input() endpoint = EndpointManager.resource(Resource.ingress, true).list();
 
   constructor(
-      state: StateService, private readonly ingress_: NamespacedResourceService<IngressList>) {
-    super('node', state);
+      state: StateService, private readonly ingress_: NamespacedResourceService<IngressList>,
+      notifications: NotificationsService) {
+    super('node', state, notifications);
     this.id = ListIdentifiers.ingress;
     this.groupId = ListGroupIdentifiers.discovery;
   }

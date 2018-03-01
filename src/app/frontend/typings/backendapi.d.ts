@@ -24,7 +24,10 @@ export interface ObjectMeta {
   uid: string;
 }
 
-export interface ResourceList { listMeta: ListMeta; }
+export interface ResourceList {
+  listMeta: ListMeta;
+  errors: K8sError[];
+}
 
 export interface Resource {
   objectMeta: ObjectMeta;
@@ -34,32 +37,23 @@ export interface Resource {
 export interface TypeMeta { kind: string; }
 
 // List types
-export interface ClusterRoleList extends ResourceList {
-  items: ClusterRole[];
-  errors: K8sError[];
-}
+export interface ClusterRoleList extends ResourceList { items: ClusterRole[]; }
 
-export interface ConfigMapList extends ResourceList {
-  items: ConfigMap[];
-  errors: K8sError[];
-}
+export interface ConfigMapList extends ResourceList { items: ConfigMap[]; }
 
 export interface CronJobList extends ResourceList {
   items: CronJob[];
   status: Status;
-  errors: K8sError[];
 }
 
 export interface DaemonSetList extends ResourceList {
   daemonSets: DaemonSet[];
   status: Status;
-  errors: K8sError[];
 }
 
 export interface DeploymentList extends ResourceList {
   deployments: Deployment[];
   status: Status;
-  errors: K8sError[];
 }
 
 export interface EndpointList extends ResourceList { endpoints: Endpoint[]; }
@@ -70,36 +64,20 @@ export interface HorizontalPodAutoscalerList extends ResourceList {
   horizontalpodautoscalers: HorizontalPodAutoscaler[];
 }
 
-export interface IngressList extends ResourceList {
-  items: Ingress[];
-  errors: K8sError[];
-}
+export interface IngressList extends ResourceList { items: Ingress[]; }
 
 export interface JobList extends ResourceList {
   jobs: Job[];
   status: Status;
-  errors: K8sError[];
 }
 
-export interface NamespaceList extends ResourceList {
-  namespaces: Namespace[];
-  errors: K8sError[];
-}
+export interface NamespaceList extends ResourceList { namespaces: Namespace[]; }
 
-export interface NodeList extends ResourceList {
-  nodes: Node[];
-  errors: K8sError[];
-}
+export interface NodeList extends ResourceList { nodes: Node[]; }
 
-export interface PersistentVolumeClaimList extends ResourceList {
-  items: PersistentVolumeClaim[];
-  errors: K8sError[];
-}
+export interface PersistentVolumeClaimList extends ResourceList { items: PersistentVolumeClaim[]; }
 
-export interface PersistentVolumeList extends ResourceList {
-  items: PersistentVolume[];
-  errors: K8sError[];
-}
+export interface PersistentVolumeList extends ResourceList { items: PersistentVolume[]; }
 
 export interface PodContainerList { containers: string[]; }
 
@@ -108,43 +86,30 @@ export interface PodList extends ResourceList {
   status: Status;
   podInfo: PodInfo;
   cumulativeMetrics: Metric[]|null;
-  errors: K8sError[];
 }
 
 export interface ReplicaSetList extends ResourceList {
   replicaSets: ReplicaSet[];
   status: Status;
-  errors: K8sError[];
 }
 
 export interface ReplicationControllerList extends ResourceList {
   replicationControllers: ReplicationController[];
   status: Status;
-  errors: K8sError[];
 }
 
 export interface ResourceQuotaDetailList extends ResourceList { items: ResourceQuotaDetail[]; }
 
-export interface SecretList extends ResourceList {
-  secrets: Secret[];
-  errors: K8sError[];
-}
+export interface SecretList extends ResourceList { secrets: Secret[]; }
 
-export interface ServiceList extends ResourceList {
-  services: Service[];
-  errors: K8sError[];
-}
+export interface ServiceList extends ResourceList { services: Service[]; }
 
 export interface StatefulSetList extends ResourceList {
   statefulSets: StatefulSet[];
   status: Status;
-  errors: K8sError[];
 }
 
-export interface StorageClassList extends ResourceList {
-  storageClasses: StorageClass[];
-  errors: K8sError[];
-}
+export interface StorageClassList extends ResourceList { storageClasses: StorageClass[]; }
 
 // Simple detail types
 export interface ClusterRole extends Resource {}
@@ -589,7 +554,9 @@ export interface ErrStatus {
   reason: string;
 }
 
-export interface K8sError { errStatus: ErrStatus; }
+/* tslint:disable */
+export interface K8sError { ErrStatus: ErrStatus; }
+/* tslint:enable */
 
 export interface Condition {
   type: string;

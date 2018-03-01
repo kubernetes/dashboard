@@ -15,10 +15,12 @@
 import {ErrStatus, K8sError as K8SApiError} from '@api/backendapi';
 import {KdError as KdApiError, KnownErrors} from '@api/frontendapi';
 
+/* tslint:disable */
 /**
  * Error returned as a part of backend api calls. All server errors should be in this format.
  */
-export class K8SError implements K8SApiError { errStatus: ErrStatus; }
+export class K8SError implements K8SApiError { ErrStatus: ErrStatus; }
+/* tslint:enable */
 
 /**
  * Frontend specific errors or errors transformed based on server response.

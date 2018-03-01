@@ -12,26 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
+import {Component} from '@angular/core';
 
-import {ComponentsModule} from '../common/components/module';
-import {SharedModule} from '../shared.module';
+import {NotificationsService} from '../../common/services/global/notifications';
 
-import {ChromeComponent} from './component';
-import {NavModule} from './nav/module';
-import {NotificationsComponent} from './notifications/component';
-import {SearchComponent} from './search/component';
+@Component(
+    {selector: 'kd-notifications', templateUrl: './template.html', styleUrls: ['./style.scss']})
+export class NotificationsComponent {
+  open = false;
 
-@NgModule({
-  declarations: [
-    ChromeComponent,
-    SearchComponent,
-    NotificationsComponent,
-  ],
-  imports: [
-    SharedModule,
-    ComponentsModule,
-    NavModule,
-  ]
-})
-export class ChromeModule {}
+  constructor(public notifications: NotificationsService) {}
+}

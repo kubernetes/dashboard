@@ -19,6 +19,7 @@ import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 
 import {ResourceListWithStatuses} from '../../../resources/list';
+import {NotificationsService} from '../../../services/global/notifications';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
 
@@ -30,8 +31,9 @@ export class EventListComponent extends ResourceListWithStatuses<EventList, Even
   @Input() endpoint: string;
 
   constructor(
-      state: StateService, private readonly eventList: NamespacedResourceService<EventList>) {
-    super('', state);
+      state: StateService, private readonly eventList: NamespacedResourceService<EventList>,
+      notifications: NotificationsService) {
+    super('', state, notifications);
     this.id = ListIdentifiers.event;
     this.groupId = ListGroupIdentifiers.none;
 

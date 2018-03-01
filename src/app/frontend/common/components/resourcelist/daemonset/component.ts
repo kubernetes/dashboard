@@ -17,7 +17,9 @@ import {Component, ComponentFactoryResolver, Input} from '@angular/core';
 import {DaemonSet, DaemonSetList, Event, Pod} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
+
 import {ResourceListWithStatuses} from '../../../resources/list';
+import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
@@ -31,8 +33,8 @@ export class DaemonSetListComponent extends ResourceListWithStatuses<DaemonSetLi
 
   constructor(
       state: StateService, private readonly daemonSet_: NamespacedResourceService<DaemonSetList>,
-      resolver: ComponentFactoryResolver) {
-    super('pod', state, resolver);
+      resolver: ComponentFactoryResolver, notifications: NotificationsService) {
+    super('pod', state, notifications, resolver);
     this.id = ListIdentifiers.daemonSet;
     this.groupId = ListGroupIdentifiers.workloads;
 

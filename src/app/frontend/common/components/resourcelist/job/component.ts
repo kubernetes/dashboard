@@ -17,7 +17,9 @@ import {Component, Input} from '@angular/core';
 import {Job, JobList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
+
 import {ResourceListWithStatuses} from '../../../resources/list';
+import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
@@ -29,8 +31,10 @@ import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
 export class JobListComponent extends ResourceListWithStatuses<JobList, Job> {
   @Input() endpoint = EndpointManager.resource(Resource.job, true).list();
 
-  constructor(state: StateService, private readonly job_: NamespacedResourceService<JobList>) {
-    super('pod', state);
+  constructor(
+      state: StateService, private readonly job_: NamespacedResourceService<JobList>,
+      notifications: NotificationsService) {
+    super('pod', state, notifications);
     this.id = ListIdentifiers.job;
     this.groupId = ListGroupIdentifiers.workloads;
 

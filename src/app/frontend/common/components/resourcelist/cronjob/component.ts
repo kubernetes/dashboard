@@ -17,7 +17,9 @@ import {Component, Input} from '@angular/core';
 import {CronJob, CronJobList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
+
 import {ResourceListWithStatuses} from '../../../resources/list';
+import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
@@ -29,8 +31,9 @@ import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
 export class CronJobListComponent extends ResourceListWithStatuses<CronJobList, CronJob> {
   @Input() endpoint = EndpointManager.resource(Resource.cronJob, true).list();
   constructor(
-      state: StateService, private readonly cronJob_: NamespacedResourceService<CronJobList>) {
-    super('pod', state);
+      state: StateService, private readonly cronJob_: NamespacedResourceService<CronJobList>,
+      notifications: NotificationsService) {
+    super('pod', state, notifications);
     this.id = ListIdentifiers.cronJob;
     this.groupId = ListGroupIdentifiers.workloads;
 

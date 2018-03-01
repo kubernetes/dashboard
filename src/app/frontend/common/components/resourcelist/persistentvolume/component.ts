@@ -19,6 +19,7 @@ import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 
 import {ResourceListWithStatuses} from '../../../resources/list';
+import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {ResourceService} from '../../../services/resource/resource';
 import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
@@ -31,8 +32,10 @@ export class PersistentVolumeListComponent extends
     ResourceListWithStatuses<PersistentVolumeList, PersistentVolume> {
   @Input() endpoint = EndpointManager.resource(Resource.persistentVolume).list();
 
-  constructor(state: StateService, private readonly pv_: ResourceService<PersistentVolumeList>) {
-    super('node', state);
+  constructor(
+      state: StateService, private readonly pv_: ResourceService<PersistentVolumeList>,
+      notifications: NotificationsService) {
+    super('node', state, notifications);
     this.id = ListIdentifiers.persistentVolume;
     this.groupId = ListGroupIdentifiers.cluster;
 

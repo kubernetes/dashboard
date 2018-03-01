@@ -17,7 +17,9 @@ import {Component, Input} from '@angular/core';
 import {Deployment, DeploymentList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
+
 import {ResourceListWithStatuses} from '../../../resources/list';
+import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
@@ -30,9 +32,9 @@ export class DeploymentListComponent extends ResourceListWithStatuses<Deployment
   @Input() endpoint = EndpointManager.resource(Resource.deployment, true).list();
 
   constructor(
-      state: StateService,
-      private readonly deployment_: NamespacedResourceService<DeploymentList>) {
-    super('pod', state);
+      state: StateService, private readonly deployment_: NamespacedResourceService<DeploymentList>,
+      notifications: NotificationsService) {
+    super('pod', state, notifications);
     this.id = ListIdentifiers.deployment;
     this.groupId = ListGroupIdentifiers.workloads;
 

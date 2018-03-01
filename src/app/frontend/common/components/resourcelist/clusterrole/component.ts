@@ -19,6 +19,7 @@ import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 
 import {ResourceListBase} from '../../../resources/list';
+import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {ResourceService} from '../../../services/resource/resource';
 import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
@@ -31,8 +32,9 @@ export class ClusterRoleListComponent extends ResourceListBase<ClusterRoleList, 
   @Input() endpoint = EndpointManager.resource(Resource.clusterRole).list();
 
   constructor(
-      state: StateService, private readonly clusterRole_: ResourceService<ClusterRoleList>) {
-    super('node', state);
+      state: StateService, private readonly clusterRole_: ResourceService<ClusterRoleList>,
+      notifications: NotificationsService) {
+    super('node', state, notifications);
     this.id = ListIdentifiers.clusterRole;
     this.groupId = ListGroupIdentifiers.cluster;
   }

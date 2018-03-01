@@ -13,9 +13,10 @@
 // limitations under the License.
 
 import {Component} from '@angular/core';
-
 import {StateService} from '@uirouter/core';
+
 import {AssetsService} from '../common/services/global/assets';
+import {NotificationsService} from '../common/services/global/notifications';
 import {overviewState} from '../overview/state';
 
 @Component({

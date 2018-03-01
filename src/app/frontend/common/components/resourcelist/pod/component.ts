@@ -20,6 +20,7 @@ import {Observable} from 'rxjs/Observable';
 
 import {podDetailState} from '../../../../resource/workloads/pod/detail/state';
 import {ResourceListWithStatuses} from '../../../resources/list';
+import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {LogsButtonComponent} from '../../list/column/logsbutton/component';
@@ -32,8 +33,8 @@ export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
 
   constructor(
       state: StateService, private readonly podList: NamespacedResourceService<PodList>,
-      resolver: ComponentFactoryResolver) {
-    super(podDetailState.name, state, resolver);
+      resolver: ComponentFactoryResolver, notifications: NotificationsService) {
+    super(podDetailState.name, state, notifications, resolver);
     this.id = ListIdentifiers.pod;
     this.groupId = ListGroupIdentifiers.workloads;
 

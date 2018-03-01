@@ -35,7 +35,7 @@ limitations under the License.
       <kd-search class="kd-search-bar"
                  fxFlex>
       </kd-search>
-      <div>
+      <div fxLayout="row">
         <button mat-button
                 (click)="goToCreateState()"
                 i18n-matTooltip
@@ -44,6 +44,8 @@ limitations under the License.
           <mat-icon class="kd-global-action-icon">add</mat-icon>
           <span>Create</span>
         </button>
+        <!-- TODO seperator -->
+        <kd-notifications></kd-notifications>
         <!--<kd-control-panel></kd-control-panel>-->
       </div>
     </div>

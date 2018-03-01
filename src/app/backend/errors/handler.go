@@ -31,6 +31,10 @@ var NonCriticalErrors = []int32{http.StatusForbidden, http.StatusUnauthorized}
 // allows to distinguish critical errors from non-critical ones. It is needed to handle them in a different way.
 func HandleError(err error) ([]error, error) {
 	nonCriticalErrors := make([]error, 0)
+
+	// TODO REMOVE!
+	nonCriticalErrors = append(nonCriticalErrors, errors.NewGone("test"))
+
 	return AppendError(err, nonCriticalErrors)
 }
 

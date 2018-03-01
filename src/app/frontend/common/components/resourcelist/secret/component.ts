@@ -20,6 +20,7 @@ import {Secret, SecretList} from 'typings/backendapi';
 
 import {secretDetailState} from '../../../../resource/config/secret/detail/state';
 import {ResourceListBase} from '../../../resources/list';
+import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
@@ -29,8 +30,9 @@ export class SecretListComponent extends ResourceListBase<SecretList, Secret> {
   @Input() endpoint = EndpointManager.resource(Resource.secret, true).list();
 
   constructor(
-      state: StateService, private readonly secret_: NamespacedResourceService<SecretList>) {
-    super(secretDetailState.name, state);
+      state: StateService, private readonly secret_: NamespacedResourceService<SecretList>,
+      notifications: NotificationsService) {
+    super(secretDetailState.name, state, notifications);
     this.id = ListIdentifiers.secret;
     this.groupId = ListGroupIdentifiers.config;
   }

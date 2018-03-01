@@ -12,26 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
+@import '../../variables';
+@import '../../mixins';
 
-import {ComponentsModule} from '../common/components/module';
-import {SharedModule} from '../shared.module';
+$drawer-size: $baseline-grid * 50;
+$drawer-z-index: 1000;
+$drawer-border-radius: $baseline-grid / 4;
 
-import {ChromeComponent} from './component';
-import {NavModule} from './nav/module';
-import {NotificationsComponent} from './notifications/component';
-import {SearchComponent} from './search/component';
+.kd-notifications-container {
+  position: relative;
+}
 
-@NgModule({
-  declarations: [
-    ChromeComponent,
-    SearchComponent,
-    NotificationsComponent,
-  ],
-  imports: [
-    SharedModule,
-    ComponentsModule,
-    NavModule,
-  ]
-})
-export class ChromeModule {}
+.kd-notifications-icon {
+  @include kd-icon-size;
+}
+
+.kd-notifications-content {
+  border-radius: $baseline-grid / 2;
+  height: $drawer-size;
+  left: -$drawer-size + 5 * $baseline-grid;
+  overflow: scroll;
+  position: absolute;
+  top: 7 * $baseline-grid;
+  width: $drawer-size;
+  z-index: $drawer-z-index;
+}

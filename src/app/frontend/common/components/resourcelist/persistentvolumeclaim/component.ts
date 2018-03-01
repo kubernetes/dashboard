@@ -19,6 +19,7 @@ import {Observable} from 'rxjs/Observable';
 import {PersistentVolumeClaim, PersistentVolumeClaimList} from 'typings/backendapi';
 
 import {ResourceListWithStatuses} from '../../../resources/list';
+import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
@@ -33,9 +34,9 @@ export class PersistentVolumeClaimListComponent extends
 
   constructor(
       state: StateService,
-      private readonly persistentVolumeClaim_:
-          NamespacedResourceService<PersistentVolumeClaimList>) {
-    super('node', state);
+      private readonly persistentVolumeClaim_: NamespacedResourceService<PersistentVolumeClaimList>,
+      notifications: NotificationsService) {
+    super('node', state, notifications);
     this.id = ListIdentifiers.persistentVolumeClaim;
     this.groupId = ListGroupIdentifiers.config;
 

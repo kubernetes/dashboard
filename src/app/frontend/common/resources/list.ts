@@ -29,6 +29,7 @@ import {CardListFilterComponent} from '../components/list/filter/component';
 import {RowDetailComponent} from '../components/list/rowdetail/component';
 import {NamespacedResourceStateParams, ResourceStateParams, SEARCH_QUERY_STATE_PARAM} from '../params/params';
 import {GlobalServicesModule} from '../services/global/module';
+import {NotificationsService} from '../services/global/notifications';
 import {SettingsService} from '../services/global/settings';
 
 // TODO: NEEDS DOCUMENTATION!!!
@@ -55,7 +56,9 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
     return this.settingsService_.getItemsPerPage();
   }
 
-  constructor(private readonly detailStateName_: string, private readonly state_: StateService) {
+  constructor(
+      private readonly detailStateName_: string, private readonly state_: StateService,
+      private readonly notifications_: NotificationsService) {
     this.settingsService_ = GlobalServicesModule.injector.get(SettingsService);
   }
 
@@ -86,6 +89,7 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
                     return this.getResourceObservable(this.getDataSelectParams_());
                   }))
             .subscribe((data: T) => {
+              this.notifications_.addErrorNotifications(data.errors);
               this.totalItems = data.listMeta.totalItems;
               this.isLoading = false;
               this.data_.data = this.map(data);
@@ -185,9 +189,6 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
         .set('page', `${this.matPaginator_.pageIndex + 1}`);
   }
 
-  /**
-   * Handles local filtering and search.
-   */
   private filter_(params?: HttpParams): HttpParams {
     let result = new HttpParams();
     if (params) {
@@ -209,8 +210,6 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
       result = params;
     }
 
-    // TODO Ensure it works with namespaces.
-    // TODO Rework to put only one call to backend? Or is it better like this (no additional endp.)?
     let filterByQuery = result.get('filterBy') || '';
     if (this.state_.current.name === searchState.name) {
       const query = this.state_.params[SEARCH_QUERY_STATE_PARAM];
@@ -297,9 +296,12 @@ export abstract class ResourceListWithStatuses<T extends ResourceList, R extends
   hoveredRow: number = undefined;
 
   constructor(
-      detailStateName: string, state: StateService,
-      private readonly resolver_?: ComponentFactoryResolver) {
-    super(detailStateName, state);
+      detailStateName: string,
+      state: StateService,
+      private readonly notifications: NotificationsService,
+      private readonly resolver_?: ComponentFactoryResolver,
+  ) {
+    super(detailStateName, state, notifications);
 
     this.onChange.subscribe(this.clearExpandedRows_.bind(this));
   }

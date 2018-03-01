@@ -32,7 +32,7 @@ export class ErrorComponent implements OnInit {
 
   getErrorStatus(): string {
     if (this.error_ instanceof K8SError) {
-      return (this.error_ as K8SError).errStatus.status;
+      return (this.error_ as K8SError).ErrStatus.status;
     }
 
     if (this.error_ instanceof KdError) {
@@ -45,7 +45,7 @@ export class ErrorComponent implements OnInit {
 
   getErrorData(): string {
     if (this.error_ instanceof K8SError) {
-      return (this.error_ as K8SError).errStatus.message;
+      return (this.error_ as K8SError).ErrStatus.message;
     }
 
     if (this.error_ instanceof KdError) {

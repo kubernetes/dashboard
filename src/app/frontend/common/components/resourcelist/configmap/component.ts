@@ -20,6 +20,7 @@ import {ConfigMap, ConfigMapList} from 'typings/backendapi';
 
 import {configMapDetailState} from '../../../../resource/config/configmap/detail/state';
 import {ResourceListBase} from '../../../resources/list';
+import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
@@ -29,8 +30,9 @@ export class ConfigMapListComponent extends ResourceListBase<ConfigMapList, Conf
   @Input() endpoint = EndpointManager.resource(Resource.configMap, true).list();
 
   constructor(
-      state: StateService, private readonly configMap_: NamespacedResourceService<ConfigMapList>) {
-    super(configMapDetailState.name, state);
+      state: StateService, private readonly configMap_: NamespacedResourceService<ConfigMapList>,
+      notifications: NotificationsService) {
+    super(configMapDetailState.name, state, notifications);
     this.id = ListIdentifiers.configMap;
     this.groupId = ListGroupIdentifiers.config;
   }

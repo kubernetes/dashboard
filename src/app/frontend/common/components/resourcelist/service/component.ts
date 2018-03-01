@@ -19,6 +19,7 @@ import {Observable} from 'rxjs/Observable';
 import {Service, ServiceList} from 'typings/backendapi';
 
 import {ResourceListWithStatuses} from '../../../resources/list';
+import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
@@ -28,8 +29,9 @@ export class ServiceListComponent extends ResourceListWithStatuses<ServiceList, 
   @Input() endpoint = EndpointManager.resource(Resource.service, true).list();
 
   constructor(
-      state: StateService, private readonly service_: NamespacedResourceService<ServiceList>) {
-    super('node', state);
+      state: StateService, private readonly service_: NamespacedResourceService<ServiceList>,
+      notifications: NotificationsService) {
+    super('node', state, notifications);
     this.id = ListIdentifiers.service;
     this.groupId = ListGroupIdentifiers.discovery;
 

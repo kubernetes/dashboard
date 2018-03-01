@@ -20,6 +20,7 @@ import {Observable} from 'rxjs/Observable';
 
 import {nodeDetailState} from '../../../../resource/cluster/node/detail/state';
 import {ResourceListWithStatuses} from '../../../resources/list';
+import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {ResourceService} from '../../../services/resource/resource';
 import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
@@ -31,8 +32,10 @@ import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
 export class NodeListComponent extends ResourceListWithStatuses<NodeList, Node> {
   @Input() endpoint = EndpointManager.resource(Resource.node).list();
 
-  constructor(state: StateService, private readonly node_: ResourceService<NodeList>) {
-    super(nodeDetailState.name, state);
+  constructor(
+      state: StateService, private readonly node_: ResourceService<NodeList>,
+      notifications: NotificationsService) {
+    super(nodeDetailState.name, state, notifications);
     this.id = ListIdentifiers.node;
     this.groupId = ListGroupIdentifiers.cluster;
 
