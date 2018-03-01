@@ -22,6 +22,7 @@ import {BreadcrumbsComponent} from './breadcrumbs/component';
 import {CardComponent} from './card/component';
 import {ChipsComponent} from './chips/component';
 import {LastAppliedConfigDialog} from './chips/lastappliedconfigdialog/dialog';
+import {ContainerCardComponent} from './container/component';
 import {ExternalEndpointComponent} from './endpoint/external/component';
 import {InternalEndpointComponent} from './endpoint/internal/component';
 import {HiddenPropertyComponent} from './hiddenproperty/component';
@@ -102,6 +103,7 @@ import {ZeroStateComponent} from './zerostate/component';
     MenuComponent,
     HiddenPropertyComponent,
     EventListComponent,
+    ContainerCardComponent,
   ],
   exports: [
     AllocationChartComponent,
@@ -138,6 +140,7 @@ import {ZeroStateComponent} from './zerostate/component';
     TextInputComponent,
     HiddenPropertyComponent,
     EventListComponent,
+    ContainerCardComponent,
   ],
   entryComponents: [
     LastAppliedConfigDialog,
