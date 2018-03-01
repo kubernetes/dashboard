@@ -79,7 +79,7 @@
     "browserify": "~15.0.0",
     "clang-format": "1.1.0",
     "del": "~3.0.0",
-    "eslint-plugin-angular": "~3.1.1",
+    "eslint-plugin-angular": "~3.3.0",
     "file-exists": "5.0.1",
     "google-closure-compiler": "~20171203.0.0",
     "google-closure-library": "~20171203.0.0",
