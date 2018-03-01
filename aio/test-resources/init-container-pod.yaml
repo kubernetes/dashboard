@@ -18,18 +18,18 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: init-container
-  annotations:
-    pod.beta.kubernetes.io/init-containers: '[
-        {
-            "name": "install",
-            "image": "alpine:3.4",
-            "command": ["/bin/sh", "-c", "while true; do sleep 300; done"]
-        }
-    ]'
+  name: myapp-pod
+  labels:
+    app: myapp
 spec:
   containers:
-    - name: alpine
-      image: alpine:3.4
-      command: ["/bin/sh", "-c", "echo Succeeded"]
-  restartPolicy: Never
+  - name: myapp-container
+    image: busybox
+    command: ['sh', '-c', 'echo The app is running! && sleep 3600']
+  initContainers:
+  - name: init-myservice
+    image: busybox
+    command: ['sh', '-c', 'until nslookup myservice; do echo waiting for myservice; sleep 2; done;']
+  - name: init-mydb
+    image: busybox
+    command: ['sh', '-c', 'until nslookup mydb; do echo waiting for mydb; sleep 2; done;']

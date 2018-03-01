@@ -18,3 +18,16 @@ limitations under the License.
                 [objectMeta]="pod.objectMeta"></kd-object-meta>
 
 <kd-event-list [endpoint]="eventListEndpoint"></kd-event-list>
+
+<div class="kd-card-group-header kd-muted">Containers</div>
+<kd-container-card *ngFor="let container of pod?.containers"
+                   [container]="container"
+                   [namespace]="pod.objectMeta.namespace"
+                   [initialized]="isInitialized"></kd-container-card>
+
+<div *ngIf="pod?.initContainers?.length"
+     class="kd-card-group-header kd-muted">Init containers</div>
+<kd-container-card *ngFor="let container of pod?.initContainers"
+                   [container]="container"
+                   [namespace]="pod.objectMeta.namespace"
+                   [initialized]="isInitialized"></kd-container-card>

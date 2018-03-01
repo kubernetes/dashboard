@@ -15,13 +15,8 @@
 @import '../../../variables';
 @import '../../../mixins';
 
-.kd-hidden-property-key {
-  outline: none;
-}
-
-.kd-hidden-property-icon {
+.kd-env-variable-icon {
   @include kd-icon-size($caption-font-size-base);
 
-  align-self: baseline;
   margin-left: $baseline-grid / 2;
 }
