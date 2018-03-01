@@ -522,13 +522,13 @@
   <translation id="5295755962056443196" key="MSG_LOGIN_LOGIN_7" desc="(no description provided)">请选择您已配置用来访问集群的 kubeconfig 文件，请浏览&lt;a href='https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/'&gt;配置对多个集群的访问&lt;/a&gt;一节，了解更多关于如何配置和使用 kubeconfig 文件的信息</translation>
   <translation id="7931742467615349833" key="MSG_LOGIN_TOKEN_0" desc="\'Token\' field label shown on login page for token auth">输入令牌</translation>
   <translation id="1813585001229142426" key="MSG_LOGIN_UNAUTHORIZED_ERROR" desc="Text shown when unauthorized user tries to log in.">验证失败，请重试</translation>
-  <translation id="6905890758241326832" key="MSG_LOGS_DOWNLOAD_DIALOG_0" desc="Log file download dialog title.">Downloading log file</translation>
-  <translation id="7920142392085872110" key="MSG_LOGS_DOWNLOAD_DIALOG_1" desc="Log file download dialog info.">Please wait until download has finished.</translation>
-  <translation id="3238335709642538928" key="MSG_LOGS_DOWNLOAD_DIALOG_2" desc="Log file download dialog download status info.">Downloaded: </translation>
-  <translation id="2306078941708704664" key="MSG_LOGS_DOWNLOAD_DIALOG_3" desc="Log file download dialog \'Save\' button.">Save</translation>
-  <translation id="6309042137906110314" key="MSG_LOGS_DOWNLOAD_DIALOG_4" desc="Log file download dialog \'Abort\' button.">Abort</translation>
-  <translation id="2500363004551972927" key="MSG_LOGS_DOWNLOAD_DIALOG_5" desc="Error title displayed on log file download dialog.">Forbidden (403)</translation>
-  <translation id="8509185303237588116" key="MSG_LOGS_DOWNLOAD_DIALOG_6" desc="Log file download dialog \'Close\' button.">Close</translation>
+  <translation id="6905890758241326832" key="MSG_LOGS_DOWNLOAD_DIALOG_0" desc="Log file download dialog title.">下载日志文件</translation>
+  <translation id="7920142392085872110" key="MSG_LOGS_DOWNLOAD_DIALOG_1" desc="Log file download dialog info.">请等待下载完成</translation>
+  <translation id="3238335709642538928" key="MSG_LOGS_DOWNLOAD_DIALOG_2" desc="Log file download dialog download status info.">已下载：</translation>
+  <translation id="2306078941708704664" key="MSG_LOGS_DOWNLOAD_DIALOG_3" desc="Log file download dialog \'Save\' button.">保存</translation>
+  <translation id="6309042137906110314" key="MSG_LOGS_DOWNLOAD_DIALOG_4" desc="Log file download dialog \'Abort\' button.">放弃</translation>
+  <translation id="2500363004551972927" key="MSG_LOGS_DOWNLOAD_DIALOG_5" desc="Error title displayed on log file download dialog.">禁止访问 (403)</translation>
+  <translation id="8509185303237588116" key="MSG_LOGS_DOWNLOAD_DIALOG_6" desc="Log file download dialog \'Close\' button.">关闭</translation>
   <translation id="4722922095699681308" key="MSG_LOGS_LOGS_0" desc="Title prefix for logs card.">容器日志</translation>
   <translation id="6855662924451585032" key="MSG_LOGS_LOGS_1" desc="Title part for logs card.">位于</translation>
   <translation id="6427964323602885868" key="MSG_LOGS_LOGS_10" desc="Tooltip for button that switches to showing the previous logs.">显示更早日志</translation>
