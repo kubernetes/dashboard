@@ -15,13 +15,15 @@
 @import '../../variables';
 @import '../../mixins';
 
-$counter-size: $baseline-grid * 2.5;
+$counter-size: $baseline-grid * 2;
 $drawer-size: $baseline-grid * 50;
 $drawer-z-index: 1000;
 $drawer-border-radius: $baseline-grid / 4;
 
 .kd-notifications-container {
+  max-width: $baseline-grid * 5;
   position: relative;
+  width: $baseline-grid * 5;
 }
 
 .kd-notifications-button {

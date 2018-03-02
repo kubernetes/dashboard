@@ -17,5 +17,7 @@
 @mixin kd-icon-size($size: 3 * $baseline-grid) {
   font-size: $size;
   height: $size;
+  max-height: $size;
+  max-width: $size;
   width: $size;
 }
