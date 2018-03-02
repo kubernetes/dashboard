@@ -24,7 +24,13 @@ export class CardComponent {
   @Input() role: string;
   @Input() withFooter = false;
   @Input() withTitle = true;
-  @Input() expandable = false;
+  @Input() expandable = true;
   @Input() titleClasses = '';
   @Input() expanded = true;
+
+  expand(): void {
+    if (this.expandable) {
+      this.expanded = !this.expanded;
+    }
+  }
 }

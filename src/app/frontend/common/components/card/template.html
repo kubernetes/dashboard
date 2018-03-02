@@ -16,9 +16,8 @@ limitations under the License.
 
 <mat-card [ngClass]="{'kd-minimized-card': !expanded}">
   <mat-card-title *ngIf="withTitle"
-                  (click)="expanded = !expanded"
-                  [ngClass]="{'kd-minimized-card-header': !expanded}"
-                  class="kd-card-header"
+                  (click)="expand()"
+                  [ngClass]="{'kd-minimized-card-header': !expanded, 'kd-card-header': expandable}"
                   fxLayoutAlign=" center">
     <div class="kd-card-title"
          [ngClass]="[titleClasses]"
@@ -33,14 +32,15 @@ limitations under the License.
       <ng-content select="[description]"></ng-content>
     </div>
 
-    <div *ngIf="expanded"
+    <div *ngIf="expanded && expandable"
          class="kd-card-actions kd-muted">
       <ng-content select="[actions]"></ng-content>
     </div>
 
     <mat-icon class="kd-card-toggle kd-muted"
               i18n-matTooltip
-              matTooltip="Minimize card">
+              matTooltip="Minimize card"
+              *ngIf="expandable">
       <ng-container *ngIf="expanded">arrow_drop_up</ng-container>
       <ng-container *ngIf="!expanded">arrow_drop_down</ng-container>
     </mat-icon>
