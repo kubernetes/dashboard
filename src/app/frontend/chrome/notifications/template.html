@@ -18,6 +18,8 @@ limitations under the License.
   <button mat-icon-button
           color="primary"
           class="kd-notifications-button"
+          i18n-matTooltip
+          matTooltip="Open notifications panel"
           (click)="open = !open">
       <mat-icon class="kd-notifications-icon">notifications</mat-icon>
       <div *ngIf="notifications.getNotificationsCount() > 0"

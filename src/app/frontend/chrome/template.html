@@ -36,15 +36,14 @@ limitations under the License.
                  fxFlex>
       </kd-search>
       <div fxLayout="row">
-        <button mat-button
-                (click)="goToCreateState()"
+        <button mat-icon-button
+                color="primary"
+                class="kd-primary-button"
                 i18n-matTooltip
                 matTooltip="Create any Kubernetes resource"
-                class="kd-actionbar-button kd-primary-button">
+                (click)="goToCreateState()">
           <mat-icon class="kd-global-action-icon">add</mat-icon>
-          <span>Create</span>
         </button>
-        <!-- TODO seperator -->
         <kd-notifications></kd-notifications>
         <!--<kd-control-panel></kd-control-panel>-->
       </div>
