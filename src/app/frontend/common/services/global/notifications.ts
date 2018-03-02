@@ -32,12 +32,14 @@ export class NotificationsService {
   private notifications_: Notification[] = [];
 
   addErrorNotifications(errors: K8sError[]): void {
-    errors.forEach(error => {
-      this.notifications_.push({
-        message: `${error.ErrStatus.message}`,
-        severity: NotificationSeverity.error,
+    if (errors) {
+      errors.forEach(error => {
+        this.notifications_.push({
+          message: `${error.ErrStatus.message}`,
+          severity: NotificationSeverity.error,
+        });
       });
-    });
+    }
   }
 
   getNotifications(): Notification[] {
