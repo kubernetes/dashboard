@@ -29,6 +29,7 @@
   $primary: mat-color($primary-palette);
   $accent: mat-color($accent-palette);
   $background: mat-color($background-palette, background);
+  $card-background: mat-color($background-palette, card);
   $success: mat-color($warn-palette, lighter);
   $warning: mat-color($warn-palette);
   $error: mat-color($warn-palette, darker);
@@ -130,6 +131,10 @@
   }
 
   // Component-level styles
+
+  .kd-notifications-content {
+    background-color: $card-background;
+  }
 
   .kd-code-block {
     background-color: $border;

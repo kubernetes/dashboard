@@ -21,10 +21,10 @@ enum NotificationSeverity {
   error = 'error',
 }
 
-// TODO(maciaszczykm): Customize it. READ/UNDREAD?
 interface Notification {
   severity: NotificationSeverity;
   message: string;
+  read: boolean;
 }
 
 @Injectable()
@@ -37,6 +37,7 @@ export class NotificationsService {
         this.notifications_.push({
           message: `${error.ErrStatus.message}`,
           severity: NotificationSeverity.error,
+          read: false,
         });
       });
     }
@@ -46,11 +47,25 @@ export class NotificationsService {
     return this.notifications_;
   }
 
-  getNotificationsCount(): number {
-    return this.notifications_.length;
+  getUnreadCount(): number {
+    return this.notifications_
+        .map((notification) => {
+          return notification.read ? Number(0) : Number(1);
+        })
+        .reduce(
+            ((previousValue, currentValue) => {
+              return previousValue + currentValue;
+            }),
+            0);
   }
 
-  clean(): void {
+  markAllAsRead(): void {
+    this.notifications_.forEach((notification) => {
+      notification.read = true;
+    });
+  }
+
+  clear(): void {
     this.notifications_ = [];
   }
 }

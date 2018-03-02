@@ -20,11 +20,11 @@ limitations under the License.
           class="kd-notifications-button"
           i18n-matTooltip
           matTooltip="Open notifications panel"
-          (click)="open = !open">
+          (click)="open = !open; notifications.markAllAsRead()">
       <mat-icon class="kd-notifications-icon">notifications</mat-icon>
-      <div *ngIf="notifications.getNotificationsCount() > 0"
+      <div *ngIf="notifications.getUnreadCount() > 0"
         class="kd-notifications-counter kd-white kd-bg-error">
-        {{notifications.getNotificationsCount()}}
+        {{notifications.getUnreadCount()}}
       </div>
     </button>
 
