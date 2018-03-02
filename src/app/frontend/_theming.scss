@@ -37,6 +37,7 @@
   $border: mat-color($foreground-palette, divider);
   $chart-green: mat-color($warn-palette, 50);
   $chart-blue: mat-color($warn-palette, 200);
+  $white: #fff;
 
   // Global style overrides.
 
@@ -122,6 +123,10 @@
 
   .kd-border {
     border: 1px solid $border;
+  }
+
+  .kd-white {
+    color: $white;
   }
 
   // Component-level styles

@@ -17,11 +17,14 @@ limitations under the License.
 <div class="kd-notifications-container">
   <button mat-icon-button
           color="primary"
+          class="kd-notifications-button"
           (click)="open = !open">
       <mat-icon class="kd-notifications-icon">notifications</mat-icon>
+      <div *ngIf="notifications.getNotificationsCount() > 0"
+        class="kd-notifications-counter kd-white kd-bg-error">
+        {{notifications.getNotificationsCount()}}
+      </div>
     </button>
-
-  <span>{{notifications.getNotificationsCount()}}</span>
 
   <div class="kd-notifications-content"
        *ngIf="open">

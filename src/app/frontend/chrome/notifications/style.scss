@@ -15,6 +15,7 @@
 @import '../../variables';
 @import '../../mixins';
 
+$counter-size: $baseline-grid * 2.5;
 $drawer-size: $baseline-grid * 50;
 $drawer-z-index: 1000;
 $drawer-border-radius: $baseline-grid / 4;
@@ -23,8 +24,23 @@ $drawer-border-radius: $baseline-grid / 4;
   position: relative;
 }
 
+.kd-notifications-button {
+  position: relative;
+}
+
 .kd-notifications-icon {
   @include kd-icon-size;
+}
+
+.kd-notifications-counter {
+  border-radius: $counter-size;
+  font-size: $counter-size * .6;
+  height: $counter-size;
+  left: $baseline-grid * 3;
+  line-height: $counter-size;
+  position: absolute;
+  top: $baseline-grid * 2;
+  width: $counter-size;
 }
 
 .kd-notifications-content {
