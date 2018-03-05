@@ -150,6 +150,10 @@ code {
   white-space: pre-wrap;
 }
 
+.kd-code-block-font {
+  font-size: $body-font-size-base;
+}
+
 .kd-minimized-card {
   margin: 0 (2.5 * $baseline-grid);
   outline: none;
@@ -240,4 +244,9 @@ code {
 
 .kd-no-bottom-border {
   border-bottom: 0 !important;
+}
+
+// This is a workaround to remove whitespace from code block element.
+.kd-no-whitespace {
+  font-size: 0;
 }
