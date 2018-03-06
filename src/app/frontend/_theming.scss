@@ -141,6 +141,10 @@
     box-shadow: $box-shadow;
   }
 
+  .kd-notification-unread {
+    background-color: darken($background, 2.5%);
+  }
+
   .kd-code-block {
     background-color: $border;
   }
@@ -171,7 +175,7 @@
   }
 
   .kd-search-input {
-    background: mat-color($background-palette, card);
+    background: $card-background;
     border-bottom-color: $border;
     color: mat-color($foreground-palette, text);
   }

@@ -25,25 +25,34 @@ limitations under the License.
       <div *ngIf="getUnreadCount() > 0"
         class="kd-notifications-counter kd-white kd-bg-error">{{getUnreadCount()}}</div>
     </button>
-
   <div class="kd-notifications-panel"
        fxLayout="column"
        *ngIf="isOpen">
     <div class="kd-notifications-content">
       <div *ngFor="let notification of notifications | kdReverseOrder; let last = last"
-           fxLayout="column">
-        <div fxLayout="row">
-          <mat-icon>{{notification.icon}}</mat-icon>
-          <span class="kd-notification"
-                [ngClass]="{'kd-notification-unread': !notification.read}">
-          {{notification.message}}
-          </span>
+           fxLayout="column"
+           [ngClass]="{'kd-notification-unread': !notification.read}">
+        <div fxLayout="row"
+             fxLayoutAlign=" center"
+             [ngClass]="notification.cssClass">
+          <mat-icon class="kd-notification-icon">{{notification.icon}}</mat-icon>
+          <div fxLayout="column">
+            <span class="kd-notification">{{notification.message}}</span>
+            <span class="kd-notification-timestamp kd-muted">
+            {{notification.timestamp | kdRelativeTime}} ago
+            </span>
+          </div>
         </div>
-        <mat-divider *ngIf="!last"></mat-divider>
+        <mat-divider *ngIf="!last || !notification.read"></mat-divider>
       </div>
+      <div *ngIf="notifications.length === 0"
+           class="kd-notifications-zero-state kd-muted"
+           fxLayoutAlign="center center"
+           fxFlex>There are no notifications</div>
     </div>
-    <mat-divider></mat-divider>
-    <div class="kd-notifications-controls">
+    <mat-divider *ngIf="notifications.length > 0"></mat-divider>
+    <div class="kd-notifications-controls"
+         *ngIf="notifications.length > 0">
       <span class="kd-primary kd-clickable"
             (click)="clear()">Remove all notifications</span>
     </div>

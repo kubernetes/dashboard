@@ -19,11 +19,13 @@ export class Notification {
   message: string;
   icon: string;
   cssClass: string;
+  timestamp: Date;
   read = false;
 
   constructor(message: string, severity: NotificationSeverity) {
     this.message = message;
     this.icon = severity;
+    this.timestamp = new Date();
 
     switch (severity) {
       case NotificationSeverity.info:
