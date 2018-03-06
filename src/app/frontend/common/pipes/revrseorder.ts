@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
+import {Pipe} from '@angular/core';
 
-import {CoreFormatter} from './coreformatter';
-import {MemoryFormatter} from './memoryformatter';
-import {RelativeTimeFormatter} from './relativetime';
-import {ReverseOrderFormatter} from './revrseorder';
-
-@NgModule({
-  declarations: [MemoryFormatter, CoreFormatter, RelativeTimeFormatter, ReverseOrderFormatter],
-  exports: [MemoryFormatter, CoreFormatter, RelativeTimeFormatter, ReverseOrderFormatter],
-})
-export class PipesModule {}
+/**
+ * Reverses order of elements in an array.
+ */
+@Pipe({name: 'kdReverseOrder'})
+export class ReverseOrderFormatter {
+  transform(value: Array<{}>): Array<{}> {
+    return value.slice().reverse();
+  }
+}

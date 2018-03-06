@@ -20,18 +20,32 @@ limitations under the License.
           class="kd-notifications-button"
           i18n-matTooltip
           matTooltip="Open notifications panel"
-          (click)="open = !open; notifications.markAllAsRead()">
+          (click)="isOpen = !isOpen">
       <mat-icon class="kd-notifications-icon">notifications</mat-icon>
-      <div *ngIf="notifications.getUnreadCount() > 0"
-        class="kd-notifications-counter kd-white kd-bg-error">
-        {{notifications.getUnreadCount()}}
-      </div>
+      <div *ngIf="getUnreadCount() > 0"
+        class="kd-notifications-counter kd-white kd-bg-error">{{getUnreadCount()}}</div>
     </button>
 
-  <div class="kd-notifications-content"
-       *ngIf="open">
-    <div class="kd-code-block">
-      {{ notifications.getNotifications() | json}}
+  <div class="kd-notifications-panel"
+       fxLayout="column"
+       *ngIf="isOpen">
+    <div class="kd-notifications-content">
+      <div *ngFor="let notification of notifications | kdReverseOrder; let last = last"
+           fxLayout="column">
+        <div fxLayout="row">
+          <mat-icon>{{notification.icon}}</mat-icon>
+          <span class="kd-notification"
+                [ngClass]="{'kd-notification-unread': !notification.read}">
+          {{notification.message}}
+          </span>
+        </div>
+        <mat-divider *ngIf="!last"></mat-divider>
+      </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="kd-notifications-controls">
+      <span class="kd-primary kd-clickable"
+            (click)="clear()">Remove all notifications</span>
     </div>
   </div>
 </div>

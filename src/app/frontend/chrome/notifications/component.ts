@@ -12,14 +12,44 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {TransitionService} from '@uirouter/core';
 
-import {NotificationsService} from '../../common/services/global/notifications';
+import {Notification, NotificationsService} from '../../common/services/global/notifications';
 
 @Component(
     {selector: 'kd-notifications', templateUrl: './template.html', styleUrls: ['./style.scss']})
-export class NotificationsComponent {
-  open = false;
+export class NotificationsComponent implements OnInit {
+  isOpen = false;
+  notifications: Notification[] = [];
 
-  constructor(public notifications: NotificationsService) {}
+  constructor(
+      private readonly notifications_: NotificationsService,
+      private readonly transition_: TransitionService) {}
+
+  ngOnInit(): void {
+    this.load_();
+
+    this.transition_.onSuccess({}, () => {
+      this.load_();
+    });
+
+    this.transition_.onExit({}, () => {
+      this.isOpen = false;
+      this.notifications_.markAllAsRead();
+    });
+  }
+
+  load_(): void {
+    this.notifications = this.notifications_.getNotifications();
+  }
+
+  getUnreadCount(): number {
+    return this.notifications_.getUnreadCount();
+  }
+
+  clear(): void {
+    this.notifications_.clear();
+    this.load_();
+  }
 }

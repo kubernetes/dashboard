@@ -15,16 +15,36 @@
 import {Injectable} from '@angular/core';
 import {K8sError} from '@api/backendapi';
 
+export class Notification {
+  message: string;
+  icon: string;
+  cssClass: string;
+  read = false;
+
+  constructor(message: string, severity: NotificationSeverity) {
+    this.message = message;
+    this.icon = severity;
+
+    switch (severity) {
+      case NotificationSeverity.info:
+        this.cssClass = 'kd-success';
+        break;
+      case NotificationSeverity.warning:
+        this.cssClass = 'kd-warning';
+        break;
+      case NotificationSeverity.error:
+        this.cssClass = 'kd-error';
+        break;
+      default:
+        this.cssClass = '';
+    }
+  }
+}
+
 enum NotificationSeverity {
   info = 'info',
   warning = 'warning',
   error = 'error',
-}
-
-interface Notification {
-  severity: NotificationSeverity;
-  message: string;
-  read: boolean;
 }
 
 @Injectable()
@@ -34,11 +54,8 @@ export class NotificationsService {
   addErrorNotifications(errors: K8sError[]): void {
     if (errors) {
       errors.forEach(error => {
-        this.notifications_.push({
-          message: `${error.ErrStatus.message}`,
-          severity: NotificationSeverity.error,
-          read: false,
-        });
+        this.notifications_.push(
+            new Notification(`${error.ErrStatus.message}`, NotificationSeverity.error));
       });
     }
   }
