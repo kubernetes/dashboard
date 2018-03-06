@@ -17,8 +17,7 @@ import {Component, Input} from '@angular/core';
 import {Node, NodeList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
-
-import {nodeDetailState} from '../../../../resource/cluster/node/detail/state';
+import {nodeState} from '../../../../resource/cluster/node/state';
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
@@ -35,7 +34,7 @@ export class NodeListComponent extends ResourceListWithStatuses<NodeList, Node> 
   constructor(
       state: StateService, private readonly node_: ResourceService<NodeList>,
       notifications: NotificationsService) {
-    super(nodeDetailState.name, state, notifications);
+    super(nodeState.name, state, notifications);
     this.id = ListIdentifiers.node;
     this.groupId = ListGroupIdentifiers.cluster;
 

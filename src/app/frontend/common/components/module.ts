@@ -35,6 +35,7 @@ import {RowDetailComponent} from './list/rowdetail/component';
 import {LoadingSpinner} from './list/spinner/component';
 import {ListZeroStateComponent} from './list/zerostate/component';
 import {ObjectMetaComponent} from './objectmeta/component';
+import {PodStatusCardComponent} from './podstatus/component';
 import {PropertyComponent} from './property/component';
 import {ProxyComponent} from './proxy/component';
 import {ClusterRoleListComponent} from './resourcelist/clusterrole/component';
@@ -107,6 +108,7 @@ import {ZeroStateComponent} from './zerostate/component';
     ContainerCardComponent,
     ConditionListComponent,
     CreatorCardComponent,
+    PodStatusCardComponent,
   ],
   exports: [
     AllocationChartComponent,
@@ -146,6 +148,7 @@ import {ZeroStateComponent} from './zerostate/component';
     ContainerCardComponent,
     ConditionListComponent,
     CreatorCardComponent,
+    PodStatusCardComponent,
   ],
   entryComponents: [
     LastAppliedConfigDialog,

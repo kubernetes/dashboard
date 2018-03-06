@@ -17,8 +17,7 @@ import {Component, ComponentFactoryResolver, Input} from '@angular/core';
 import {Event, Pod, PodList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
-
-import {podDetailState} from '../../../../resource/workloads/pod/detail/state';
+import {podState} from '../../../../resource/workloads/pod/state';
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
@@ -34,7 +33,7 @@ export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
   constructor(
       state: StateService, private readonly podList: NamespacedResourceService<PodList>,
       resolver: ComponentFactoryResolver, notifications: NotificationsService) {
-    super(podDetailState.name, state, notifications, resolver);
+    super(podState.name, state, notifications, resolver);
     this.id = ListIdentifiers.pod;
     this.groupId = ListGroupIdentifiers.workloads;
 

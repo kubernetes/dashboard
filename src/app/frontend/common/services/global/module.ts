@@ -22,13 +22,15 @@ import {ConfigService} from './config';
 import {CsrfTokenService} from './csrftoken';
 import {NotificationsService} from './notifications';
 import {SettingsService} from './settings';
+import {KdStateService} from './state';
 import {ThemeService} from './theme';
 import {TitleService} from './title';
 
 @NgModule({
   providers: [
     AuthorizerService, AssetsService, BreadcrumbsService, SettingsService, ConfigService,
-    TitleService, AuthService, CsrfTokenService, NotificationsService, ThemeService, {
+    TitleService, AuthService, CsrfTokenService, NotificationsService, ThemeService, KdStateService,
+    {
       provide: APP_INITIALIZER,
       useFactory: init,
       deps: [SettingsService, ConfigService],

@@ -31,7 +31,7 @@ export class ServiceListComponent extends ResourceListWithStatuses<ServiceList, 
   constructor(
       state: StateService, private readonly service_: NamespacedResourceService<ServiceList>,
       notifications: NotificationsService) {
-    super('node', state, notifications);
+    super('', state, notifications);
     this.id = ListIdentifiers.service;
     this.groupId = ListGroupIdentifiers.discovery;
 

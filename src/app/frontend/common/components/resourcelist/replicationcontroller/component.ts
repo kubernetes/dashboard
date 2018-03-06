@@ -36,7 +36,7 @@ export class ReplicationControllerListComponent extends
       state: StateService,
       private readonly replicationController_: NamespacedResourceService<ReplicationControllerList>,
       notifications: NotificationsService) {
-    super('pod', state, notifications);
+    super('', state, notifications);
     this.id = ListIdentifiers.replicationController;
     this.groupId = ListGroupIdentifiers.workloads;
 

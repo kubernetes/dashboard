@@ -34,7 +34,7 @@ export class JobListComponent extends ResourceListWithStatuses<JobList, Job> {
   constructor(
       state: StateService, private readonly job_: NamespacedResourceService<JobList>,
       notifications: NotificationsService) {
-    super('pod', state, notifications);
+    super('', state, notifications);
     this.id = ListIdentifiers.job;
     this.groupId = ListGroupIdentifiers.workloads;
 

@@ -12,23 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Input} from '@angular/core';
-import {ResourceOwner} from '@api/backendapi';
-import {KdStateService} from '../../services/global/state';
+export class KdStateService {
+  href(stateName: string, resourceName?: string, namespace?: string): string {
+    resourceName = resourceName || '';
+    namespace = namespace || '';
 
-@Component({
-  selector: 'kd-creator-card',
-  templateUrl: './template.html',
-})
-export class CreatorCardComponent {
-  @Input() creator: ResourceOwner;
-  @Input() initialized: boolean;
+    if (namespace && resourceName === undefined) {
+      throw new Error('Namespace can not be defined without resourceName.');
+    }
 
-  constructor(private readonly kdState_: KdStateService) {}
+    let href = `#/${stateName}`;
+    href = namespace ? `${href}/${namespace}` : href;
+    href = resourceName ? `${href}/${resourceName}` : href;
 
-  getHref(): string {
-    return this.kdState_.href(
-        this.creator.typeMeta.kind, this.creator.objectMeta.name,
-        this.creator.objectMeta.namespace);
+    // TODO get namespace from service
+    return `${href}?namespace=${namespace}`;
   }
 }

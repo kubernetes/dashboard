@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {EnvVar, PodDetail} from '@api/backendapi';
+import {EnvVar, PodDetail, ReplicaSetDetail} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Subscription} from 'rxjs/Subscription';
 import {KdStateService} from '../../../../common/services/global/state';
@@ -23,38 +23,39 @@ import {NamespacedResourceService} from '../../../../common/services/resource/re
 import {nodeState} from '../../../cluster/node/state';
 
 @Component({
-  selector: 'kd-pod-detail',
+  selector: 'kd-replica-set-detail',
   templateUrl: './template.html',
 })
-export class PodDetailComponent implements OnInit, OnDestroy {
-  private podSubscription_: Subscription;
-  private podName_: string;
-  pod: PodDetail;
+export class ReplicaSetDetailComponent implements OnInit, OnDestroy {
+  private replicaSetSubscription_: Subscription;
+  private name_: string;
+  replicaSet: ReplicaSetDetail;
   isInitialized = false;
   eventListEndpoint: string;
+  podListEndpoint: string;
 
   constructor(
-      private readonly pod_: NamespacedResourceService<PodDetail>,
-      private readonly state_: StateService, private readonly kdState_: KdStateService) {}
+      private readonly replicaSet_: NamespacedResourceService<ReplicaSetDetail>,
+      private readonly state_: StateService) {}
 
   ngOnInit(): void {
-    this.podName_ = this.state_.params.resourceName;
+    this.name_ = this.state_.params.resourceName;
     this.eventListEndpoint =
-        EndpointManager.resource(Resource.pod, true).child(this.podName_, Resource.event);
-    this.podSubscription_ =
-        this.pod_.get(EndpointManager.resource(Resource.pod, true).detail(), this.podName_)
+        EndpointManager.resource(Resource.replicaSet, true).child(this.name_, Resource.event);
+    this.podListEndpoint =
+        EndpointManager.resource(Resource.replicaSet, true).child(this.name_, Resource.pod);
+
+    this.replicaSetSubscription_ =
+        this.replicaSet_
+            .get(EndpointManager.resource(Resource.replicaSet, true).detail(), this.name_)
             .startWith({})
-            .subscribe((d: PodDetail) => {
-              this.pod = d;
+            .subscribe((d: ReplicaSetDetail) => {
+              this.replicaSet = d;
               this.isInitialized = true;
             });
   }
 
   ngOnDestroy(): void {
-    this.podSubscription_.unsubscribe();
-  }
-
-  getNodeHref(name: string): string {
-    return this.kdState_.href(nodeState.name, name);
+    this.replicaSetSubscription_.unsubscribe();
   }
 }

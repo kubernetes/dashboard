@@ -33,7 +33,7 @@ export class CronJobListComponent extends ResourceListWithStatuses<CronJobList, 
   constructor(
       state: StateService, private readonly cronJob_: NamespacedResourceService<CronJobList>,
       notifications: NotificationsService) {
-    super('pod', state, notifications);
+    super('', state, notifications);
     this.id = ListIdentifiers.cronJob;
     this.groupId = ListGroupIdentifiers.workloads;
 

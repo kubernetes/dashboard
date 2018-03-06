@@ -34,7 +34,7 @@ export class StorageClassListComponent extends ResourceListBase<StorageClassList
   constructor(
       state: StateService, private readonly sc_: ResourceService<StorageClassList>,
       notifications: NotificationsService) {
-    super('node', state, notifications);
+    super('', state, notifications);
     this.id = ListIdentifiers.storageClass;
     this.groupId = ListGroupIdentifiers.cluster;
   }

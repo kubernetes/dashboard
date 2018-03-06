@@ -36,7 +36,7 @@ export class StatefulSetListComponent extends
       state: StateService,
       private readonly statefulSet_: NamespacedResourceService<StatefulSetList>,
       resolver: ComponentFactoryResolver, notifications: NotificationsService) {
-    super('pod', state, notifications, resolver);
+    super('', state, notifications, resolver);
     this.id = ListIdentifiers.statefulSet;
     this.groupId = ListGroupIdentifiers.workloads;
 

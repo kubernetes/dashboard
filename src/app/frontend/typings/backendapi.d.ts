@@ -41,6 +41,8 @@ export interface ResourceOwner extends Resource {
   initContainerImages: string[];
 }
 
+export interface LabelSelector { matchLabels: StringMap; }
+
 export interface TypeMeta { kind: string; }
 
 // List types
@@ -274,6 +276,7 @@ export interface StorageClass extends Resource {
 export interface ReplicaSetDetail {
   objectMeta: ObjectMeta;
   typeMeta: TypeMeta;
+  selector: LabelSelector;
   podInfo: PodInfo;
   podList: PodList;
   containerImages: string[];

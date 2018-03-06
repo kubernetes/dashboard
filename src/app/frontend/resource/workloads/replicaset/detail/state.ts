@@ -12,23 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Input} from '@angular/core';
-import {ResourceOwner} from '@api/backendapi';
-import {KdStateService} from '../../services/global/state';
+import {Ng2StateDeclaration} from '@uirouter/angular';
 
-@Component({
-  selector: 'kd-creator-card',
-  templateUrl: './template.html',
-})
-export class CreatorCardComponent {
-  @Input() creator: ResourceOwner;
-  @Input() initialized: boolean;
+import {addNamespacedResourceStateParamsToUrl} from '../../../../common/params/params';
+import {stateName, stateUrl} from '../state';
 
-  constructor(private readonly kdState_: KdStateService) {}
+import {ReplicaSetDetailComponent} from './component';
 
-  getHref(): string {
-    return this.kdState_.href(
-        this.creator.typeMeta.kind, this.creator.objectMeta.name,
-        this.creator.objectMeta.namespace);
-  }
-}
+export const replicaSetDetailState: Ng2StateDeclaration = {
+  name: `${stateName}.detail`,
+  url: addNamespacedResourceStateParamsToUrl(stateUrl),
+  component: ReplicaSetDetailComponent,
+  data: {
+    kdBreadcrumbs: {
+      label: 'resourceName',
+      parent: 'replicaset.list',
+    },
+  },
+};

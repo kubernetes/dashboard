@@ -34,7 +34,7 @@ export class DeploymentListComponent extends ResourceListWithStatuses<Deployment
   constructor(
       state: StateService, private readonly deployment_: NamespacedResourceService<DeploymentList>,
       notifications: NotificationsService) {
-    super('pod', state, notifications);
+    super('', state, notifications);
     this.id = ListIdentifiers.deployment;
     this.groupId = ListGroupIdentifiers.workloads;
 

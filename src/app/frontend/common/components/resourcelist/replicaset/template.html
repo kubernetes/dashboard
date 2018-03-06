@@ -47,7 +47,7 @@ limitations under the License.
                          mat-sort-header
                          disableClear="true">Name</mat-header-cell>
         <mat-cell *matCellDef="let replicaSet">
-          <a [href]="getDetailsHref(replicaSet.objectMeta.name)">
+          <a [href]="getDetailsHref(replicaSet.objectMeta.name, replicaSet.objectMeta.namespace)">
           {{replicaSet.objectMeta.name}}
           </a>
         </mat-cell>

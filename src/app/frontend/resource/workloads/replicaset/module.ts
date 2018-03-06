@@ -19,6 +19,8 @@ import {ResourceModule} from '../../../common/services/resource/module';
 import {REPLICA_SET_ENDPOINT, RESOURCE_ENDPOINT_DI_TOKEN} from '../../../index.config';
 
 import {SharedModule} from '../../../shared.module';
+import {ReplicaSetDetailComponent} from './detail/component';
+import {replicaSetDetailState} from './detail/state';
 import {ReplicaSetList} from './list/component';
 import {replicaSetListState} from './list/state';
 import {replicaSetState} from './state';
@@ -28,9 +30,10 @@ import {replicaSetState} from './state';
     SharedModule,
     ComponentsModule,
     ResourceModule,
-    UIRouterModule.forChild({states: [replicaSetState, replicaSetListState]}),
+    UIRouterModule.forChild(
+        {states: [replicaSetState, replicaSetListState, replicaSetDetailState]}),
   ],
   providers: [{provide: RESOURCE_ENDPOINT_DI_TOKEN, useValue: REPLICA_SET_ENDPOINT}],
-  declarations: [ReplicaSetList],
+  declarations: [ReplicaSetList, ReplicaSetDetailComponent],
 })
 export class ReplicaSetModule {}

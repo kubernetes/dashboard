@@ -31,6 +31,7 @@ import {NamespacedResourceStateParams, ResourceStateParams, SEARCH_QUERY_STATE_P
 import {GlobalServicesModule} from '../services/global/module';
 import {NotificationsService} from '../services/global/notifications';
 import {SettingsService} from '../services/global/settings';
+import {KdStateService} from '../services/global/state';
 
 // TODO: NEEDS DOCUMENTATION!!!
 export abstract class ResourceListBase<T extends ResourceList, R extends Resource> implements
@@ -39,6 +40,7 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
   private readonly data_ = new MatTableDataSource<R>();
   private dataSubscription_: Subscription;
   private readonly settingsService_: SettingsService;
+  private readonly kdState_: KdStateService;
   private readonly actionColumns_: Array<ActionColumnDef<ActionColumn>> = [];
   @Output('onchange') onChange: EventEmitter<OnListChangeEvent> = new EventEmitter();
   @Input() id: string;
@@ -57,9 +59,10 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
   }
 
   constructor(
-      private readonly detailStateName_: string, private readonly state_: StateService,
+      private readonly stateName_: string, private readonly state_: StateService,
       private readonly notifications_: NotificationsService) {
     this.settingsService_ = GlobalServicesModule.injector.get(SettingsService);
+    this.kdState_ = GlobalServicesModule.injector.get(KdStateService);
   }
 
   ngOnInit(): void {
@@ -97,12 +100,7 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
   }
 
   getDetailsHref(resourceName: string, namespace?: string): string {
-    let stateParams = new ResourceStateParams(resourceName);
-    if (namespace) {
-      stateParams = new NamespacedResourceStateParams(namespace, resourceName);
-    }
-
-    return this.state_.href(this.detailStateName_, stateParams);
+    return this.stateName_ ? this.kdState_.href(this.stateName_, resourceName, namespace) : '';
   }
 
   getData(): DataSource<R> {
@@ -288,12 +286,12 @@ export abstract class ResourceListWithStatuses<T extends ResourceList, R extends
   hoveredRow: number = undefined;
 
   constructor(
-      detailStateName: string,
+      stateName: string,
       state: StateService,
       private readonly notifications: NotificationsService,
       private readonly resolver_?: ComponentFactoryResolver,
   ) {
-    super(detailStateName, state, notifications);
+    super(stateName, state, notifications);
 
     this.onChange.subscribe(this.clearExpandedRows_.bind(this));
   }

@@ -34,7 +34,7 @@ export class ClusterRoleListComponent extends ResourceListBase<ClusterRoleList, 
   constructor(
       state: StateService, private readonly clusterRole_: ResourceService<ClusterRoleList>,
       notifications: NotificationsService) {
-    super('node', state, notifications);
+    super('', state, notifications);
     this.id = ListIdentifiers.clusterRole;
     this.groupId = ListGroupIdentifiers.cluster;
   }

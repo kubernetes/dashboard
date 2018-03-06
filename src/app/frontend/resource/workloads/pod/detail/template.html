@@ -41,7 +41,7 @@ limitations under the License.
     <kd-property *ngIf="pod?.nodeName">
       <div key>Node</div>
       <a value
-         [href]="'#/node/' + pod.nodeName">{{pod.nodeName}}</a>
+         [href]="getNodeHref(pod.nodeName)">{{pod.nodeName}}</a>
     </kd-property>
 
     <kd-property *ngIf="pod?.podPhase">
@@ -69,7 +69,7 @@ limitations under the License.
 <kd-condition-list [conditions]="pod?.conditions"
                    [initialized]="isInitialized"></kd-condition-list>
 
-<kd-creator-card *ngIf="pod?.controller.typeMeta.kind"
+<kd-creator-card *ngIf="pod?.controller?.typeMeta?.kind"
                  [creator]="pod?.controller"
                  [initialized]="isInitialized"></kd-creator-card>
 
