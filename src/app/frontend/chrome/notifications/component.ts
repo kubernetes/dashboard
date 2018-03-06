@@ -36,6 +36,7 @@ export class NotificationsComponent implements OnInit {
 
     this.transition_.onExit({}, () => {
       this.isOpen = false;
+      this.notifications_.markAllAsRead();
     });
   }
 
