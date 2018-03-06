@@ -15,14 +15,15 @@
 import {NgModule} from '@angular/core';
 
 import {SharedModule} from '../../shared.module';
-
 import {ActionbarComponent} from './actionbar/component';
 import {AllocationChartComponent} from './allocationchart/component';
 import {BreadcrumbsComponent} from './breadcrumbs/component';
 import {CardComponent} from './card/component';
 import {ChipsComponent} from './chips/component';
 import {LastAppliedConfigDialog} from './chips/lastappliedconfigdialog/dialog';
+import {ConditionListComponent} from './condition/component';
 import {ContainerCardComponent} from './container/component';
+import {CreatorCardComponent} from './creator/component';
 import {ExternalEndpointComponent} from './endpoint/external/component';
 import {InternalEndpointComponent} from './endpoint/internal/component';
 import {HiddenPropertyComponent} from './hiddenproperty/component';
@@ -104,6 +105,8 @@ import {ZeroStateComponent} from './zerostate/component';
     HiddenPropertyComponent,
     EventListComponent,
     ContainerCardComponent,
+    ConditionListComponent,
+    CreatorCardComponent,
   ],
   exports: [
     AllocationChartComponent,
@@ -141,6 +144,8 @@ import {ZeroStateComponent} from './zerostate/component';
     HiddenPropertyComponent,
     EventListComponent,
     ContainerCardComponent,
+    ConditionListComponent,
+    CreatorCardComponent,
   ],
   entryComponents: [
     LastAppliedConfigDialog,

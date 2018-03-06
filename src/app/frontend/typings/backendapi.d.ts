@@ -27,11 +27,18 @@ export interface ObjectMeta {
 export interface ResourceList {
   listMeta: ListMeta;
   errors: K8sError[];
+  items: Resource[];
 }
 
 export interface Resource {
   objectMeta: ObjectMeta;
   typeMeta: TypeMeta;
+}
+
+export interface ResourceOwner extends Resource {
+  pods: PodInfo;
+  containerImages: string[];
+  initContainerImages: string[];
 }
 
 export interface TypeMeta { kind: string; }
@@ -433,8 +440,12 @@ export interface PodDetail {
   podIP: string;
   nodeName: string;
   restartCount: number;
+  qosClass: string;
   metrics: PodMetrics;
   conditions: Condition[];
+  controller: Resource;
+  eventList: EventList;
+  persistentVolumeClaimList: PersistentVolumeClaimList;
   errors: K8sError[];
 }
 

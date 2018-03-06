@@ -32,6 +32,7 @@ export enum ListIdentifiers {
   replicationController = 'replicationControllerList',
   statefulSet = 'statefulSetList',
   event = 'event',
+  resource = 'resource',
 }
 
 export enum ListGroupIdentifiers {
