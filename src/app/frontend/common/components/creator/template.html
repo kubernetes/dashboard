@@ -41,6 +41,7 @@ limitations under the License.
        fxLayoutWrap>
     <kd-property>
       <div key>Name</div>
+      <!-- TODO: move to method and use service to handle link creation -->
       <a value
          [href]="'#/' + creator?.typeMeta.kind + '/' + creator?.objectMeta.namespace + '/' + creator?.objectMeta.name">
         {{creator?.objectMeta.name}}
@@ -50,13 +51,6 @@ limitations under the License.
     <kd-property>
       <div key>Kind</div>
       <div value>{{creator?.typeMeta.kind}}</div>
-    </kd-property>
-
-    <kd-property *ngIf="creator?.objectMeta?.labels">
-      <div key>Labels</div>
-      <div value>
-        <kd-chips [map]="creator.objectMeta.labels"></kd-chips>
-      </div>
     </kd-property>
 
     <kd-property>
@@ -69,7 +63,16 @@ limitations under the License.
       <div value>{{creator?.objectMeta.creationTimestamp | kdRelativeTime}}</div>
     </kd-property>
 
-    <kd-property *ngIf="creator?.containerImages">
+    <kd-property *ngIf="creator?.objectMeta?.labels"
+                 fxFlex="100">
+      <div key>Labels</div>
+      <div value>
+        <kd-chips [map]="creator.objectMeta.labels"></kd-chips>
+      </div>
+    </kd-property>
+
+    <kd-property *ngIf="creator?.containerImages"
+                 fxFlex="100">
       <div key>Images</div>
       <div value>
         <kd-chips [map]="creator.containerImages"></kd-chips>

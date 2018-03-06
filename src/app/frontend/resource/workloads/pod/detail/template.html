@@ -69,7 +69,8 @@ limitations under the License.
 <kd-condition-list [conditions]="pod?.conditions"
                    [initialized]="isInitialized"></kd-condition-list>
 
-<kd-creator-card [creator]="pod?.controller"
+<kd-creator-card *ngIf="pod?.controller.typeMeta.kind"
+                 [creator]="pod?.controller"
                  [initialized]="isInitialized"></kd-creator-card>
 
 <kd-event-list [endpoint]="eventListEndpoint"></kd-event-list>
