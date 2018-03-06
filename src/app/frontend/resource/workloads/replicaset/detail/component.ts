@@ -33,6 +33,7 @@ export class ReplicaSetDetailComponent implements OnInit, OnDestroy {
   isInitialized = false;
   eventListEndpoint: string;
   podListEndpoint: string;
+  serviceListEndpoint: string;
 
   constructor(
       private readonly replicaSet_: NamespacedResourceService<ReplicaSetDetail>,
@@ -44,6 +45,8 @@ export class ReplicaSetDetailComponent implements OnInit, OnDestroy {
         EndpointManager.resource(Resource.replicaSet, true).child(this.name_, Resource.event);
     this.podListEndpoint =
         EndpointManager.resource(Resource.replicaSet, true).child(this.name_, Resource.pod);
+    this.serviceListEndpoint =
+        EndpointManager.resource(Resource.replicaSet, true).child(this.name_, Resource.service);
 
     this.replicaSetSubscription_ =
         this.replicaSet_

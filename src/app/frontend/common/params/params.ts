@@ -22,12 +22,12 @@ import {StateParams} from '@uirouter/core';
 export const NAMESPACE_STATE_PARAM = 'namespace';
 
 /**
- * Paramterer name of the search query.
+ * Parameter name of the search query.
  */
 export const SEARCH_QUERY_STATE_PARAM = 'q';
 
-export class ChromeStateParams extends StateParams {
-  constructor(public namespace: string) {
+export class KdStateParams extends StateParams {
+  constructor(public resourceNamespace: string) {
     super();
   }
 }
@@ -38,9 +38,9 @@ export class ResourceStateParams extends StateParams {
   }
 }
 
-export class NamespacedResourceStateParams extends ChromeStateParams {
-  constructor(namespace: string, public resourceName: string) {
-    super(namespace);
+export class NamespacedResourceStateParams extends KdStateParams {
+  constructor(resourceNamespace: string, public resourceName: string) {
+    super(resourceNamespace);
   }
 }
 
@@ -50,9 +50,9 @@ export class SearchStateParams extends StateParams {
   }
 }
 
-export class ErrorStateParams extends ChromeStateParams {
-  constructor(public error: KdError|K8sError, namespace: string) {
-    super(namespace);
+export class ErrorStateParams extends KdStateParams {
+  constructor(public error: KdError|K8sError, resourceNamespace: string) {
+    super(resourceNamespace);
   }
 }
 
@@ -61,5 +61,5 @@ export function addResourceStateParamsToUrl(url: string): string {
 }
 
 export function addNamespacedResourceStateParamsToUrl(url: string): string {
-  return `${url}/:namespace/:resourceName`;
+  return `${url}/:resourceNamespace/:resourceName`;
 }

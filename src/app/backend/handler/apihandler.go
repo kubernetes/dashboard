@@ -198,6 +198,10 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			To(apiHandler.handleGetReplicaSetPods).
 			Writes(pod.PodList{}))
 	apiV1Ws.Route(
+		apiV1Ws.GET("/replicaset/{namespace}/{replicaSet}/service").
+			To(apiHandler.handleGetReplicaSetServices).
+			Writes(pod.PodList{}))
+	apiV1Ws.Route(
 		apiV1Ws.GET("/replicaset/{namespace}/{replicaSet}/event").
 			To(apiHandler.handleGetReplicaSetEvents).
 			Writes(common.EventList{}))

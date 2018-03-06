@@ -12,9 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
 import {StateService} from '@uirouter/core';
 
-export abstract class ResourceBase<T> {
-  constructor(protected readonly http_: HttpClient) {}
+@Injectable()
+export class NamespaceService {
+  private readonly defaultNamespace_ = 'default';
+
+  constructor(private readonly state_: StateService) {}
+
+  current(): string {
+    return this.state_.params.namespace || this.defaultNamespace_;
+  }
 }

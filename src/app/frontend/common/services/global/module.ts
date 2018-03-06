@@ -20,6 +20,7 @@ import {AuthorizerService} from './authorizer';
 import {BreadcrumbsService} from './breadcrumbs';
 import {ConfigService} from './config';
 import {CsrfTokenService} from './csrftoken';
+import {NamespaceService} from './namespace';
 import {NotificationsService} from './notifications';
 import {SettingsService} from './settings';
 import {KdStateService} from './state';
@@ -30,7 +31,7 @@ import {TitleService} from './title';
   providers: [
     AuthorizerService, AssetsService, BreadcrumbsService, SettingsService, ConfigService,
     TitleService, AuthService, CsrfTokenService, NotificationsService, ThemeService, KdStateService,
-    {
+    NamespaceService, {
       provide: APP_INITIALIZER,
       useFactory: init,
       deps: [SettingsService, ConfigService],

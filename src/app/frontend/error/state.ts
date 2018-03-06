@@ -33,7 +33,7 @@ export const errorState: Ng2StateDeclaration = {
     },
   },
   params: {
-    namespace: null,
+    resourceNamespace: null,
     error: null,
   } as ErrorStateParams,
 };
