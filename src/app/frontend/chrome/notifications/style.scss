@@ -19,6 +19,7 @@ $counter-size: $baseline-grid * 2;
 $drawer-size: $baseline-grid * 50;
 $drawer-z-index: 1000;
 $drawer-border-radius: $baseline-grid / 4;
+$drawer-controls-size: $baseline-grid * 4;
 
 .kd-notifications-container {
   max-width: $baseline-grid * 5;
@@ -45,13 +46,38 @@ $drawer-border-radius: $baseline-grid / 4;
   width: $counter-size;
 }
 
-.kd-notifications-content {
+.kd-notifications-panel {
   border-radius: $baseline-grid / 2;
   height: $drawer-size;
   left: -$drawer-size + 5 * $baseline-grid;
-  overflow: scroll;
   position: absolute;
   top: 7 * $baseline-grid;
   width: $drawer-size;
   z-index: $drawer-z-index;
+}
+
+.kd-notifications-content {
+  height: $drawer-size - $drawer-controls-size;
+  overflow: scroll;
+  width: $drawer-size;
+}
+
+.kd-notification {
+  font-family: $font-family-monospace;
+  font-size: $body-font-size-base;
+  font-weight: $regular-font-weight;
+  padding: $baseline-grid;
+}
+
+.kd-notification-unread {
+  font-weight: $bold-font-weight;
+}
+
+.kd-notifications-controls {
+  font-size: $body-font-size-base;
+  font-weight: $regular-font-weight;
+  height: $drawer-controls-size;
+  line-height: $drawer-controls-size;
+  padding-left: $baseline-grid;
+  width: $drawer-size;
 }
