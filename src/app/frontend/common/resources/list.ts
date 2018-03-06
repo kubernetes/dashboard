@@ -71,14 +71,6 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
       throw Error('MatPaginator has to be defined on a table.');
     }
 
-    // if (this.matSort_ === undefined) {
-    //   throw Error('MatSort has to be defined on a table.');
-    // }
-    //
-    // if (this.cardFilter_ === undefined) {
-    //   throw Error('CardListFilter has to be defined on a table.');
-    // }
-
     let loadingTimeout: NodeJS.Timer;
     this.dataSubscription_ =
         this.getObservableWithDataSelect_()

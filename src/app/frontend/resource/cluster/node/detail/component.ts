@@ -28,7 +28,6 @@ import {ResourceService} from '../../../../common/services/resource/resource';
 export class NodeDetailComponent implements OnInit, OnDestroy {
   private nodeSubscription_: Subscription;
   private nodeName_: string;
-  conditionsData = new MatTableDataSource<Condition>();
   node: NodeDetail;
   isInitialized = false;
   podListEndpoint: string;
@@ -47,7 +46,6 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
         this.node_.get(EndpointManager.resource(Resource.node).detail(), this.nodeName_)
             .subscribe((d: NodeDetail) => {
               this.node = d;
-              this.conditionsData.data = d.conditions;
               this.isInitialized = true;
             });
   }
@@ -65,9 +63,5 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
       return taint.value ? `${taint.key}=${taint.value}:${taint.effect}` :
                            `${taint.key}=${taint.effect}`;
     });
-  }
-
-  getConditionsColumns(): string[] {
-    return ['type', 'status', 'lastProbeTime', 'lastTransitionTime', 'reason', 'message'];
   }
 }
