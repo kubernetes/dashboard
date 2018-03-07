@@ -21,12 +21,14 @@ import {ChromeComponent} from './component';
 import {NavModule} from './nav/module';
 import {NotificationsComponent} from './notifications/component';
 import {SearchComponent} from './search/component';
+import {UserPanelComponent} from './userpanel/component';
 
 @NgModule({
   declarations: [
     ChromeComponent,
     SearchComponent,
     NotificationsComponent,
+    UserPanelComponent,
   ],
   imports: [
     SharedModule,
