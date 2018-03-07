@@ -15,72 +15,66 @@
 package networkpolicy
 
 import (
-	"log"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/errors"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	networking "k8s.io/api/networking/v1"
-	"k8s.io/client-go/kubernetes"
+  metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+  "github.com/kubernetes/dashboard/src/app/backend/api"
+  "github.com/kubernetes/dashboard/src/app/backend/errors"
+  "github.com/kubernetes/dashboard/src/app/backend/resource/common"
+  "github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+  networking "k8s.io/api/networking/v1"
+  "k8s.io/client-go/kubernetes"
 )
 
-// NetworkPolicyList is a representation of a kubernetes StorageClass object.
+// NetworkPolicyList is a representation of a kubernetes NetWorkPolicy object.
 type NetworkPolicyList struct {
-	ListMeta       api.ListMeta   `json:"listMeta"`
-	NetworkPolicy []NetworkPolicy `json:"networkPolicy"`
+  ListMeta      api.ListMeta    `json:"listMeta"`
+  NetworkPolicy []NetworkPolicy `json:"networkPolicy"`
 
-	// List of non-critical errors, that occurred during resource retrieval.
-	Errors []error `json:"errors"`
+  // List of non-critical errors, that occurred during resource retrieval.
+  Errors []error `json:"errors"`
 }
 
-
 // GetNetworkPolicyList returns a list of all network policy in the cluster.
-func GetNetworkPolicyList(client kubernetes.Interface,nsQuery *common.NamespaceQuery, dsQuery *dataselect.DataSelectQuery) (
-	*NetworkPolicyList, error) {
-	log.Print("Getting list of networkPolicy list in the cluster")
+func GetNetworkPolicyList(client kubernetes.Interface, nsQuery *common.NamespaceQuery, dsQuery *dataselect.DataSelectQuery) (
+  *NetworkPolicyList, error) {
+  channels := &common.ResourceChannels{
+    NetworkPolicyList: common.GetNetworkPolicyListChannel(client, nsQuery, 1),
+  }
 
-	channels := &common.ResourceChannels{
-		NetworkPolicyList: common.GetNetworkPolicyListChannel(client,nsQuery, 1),
-	}
-
-	return GetNetworkPolicyListFromChannels(channels,nsQuery, dsQuery)
+  return GetNetworkPolicyListFromChannels(channels, nsQuery, dsQuery)
 }
 
 // GetNetworkPolicyListFromChannels returns a list of all networkpolicy class objects in the cluster.
-func GetNetworkPolicyListFromChannels(channels *common.ResourceChannels,nsQuery *common.NamespaceQuery,
-	dsQuery *dataselect.DataSelectQuery) (*NetworkPolicyList, error) {
-	networkPolicyList := <-channels.NetworkPolicyList.List
-	err := <-channels.NetworkPolicyList.Error
-	nonCriticalErrors, criticalError := errors.HandleError(err)
-	if criticalError != nil {
-		return nil, criticalError
-	}
-	log.Println("networkPolicyList list page=",networkPolicyList)
-	return toNetworkPolicyList(networkPolicyList.Items, nonCriticalErrors, dsQuery), nil
+func GetNetworkPolicyListFromChannels(channels *common.ResourceChannels, nsQuery *common.NamespaceQuery,
+  dsQuery *dataselect.DataSelectQuery) (*NetworkPolicyList, error) {
+  networkPolicyList := <-channels.NetworkPolicyList.List
+  err := <-channels.NetworkPolicyList.Error
+  nonCriticalErrors, criticalError := errors.HandleError(err)
+  if criticalError != nil {
+    return nil, criticalError
+  }
+  return toNetworkPolicyList(networkPolicyList.Items, nonCriticalErrors, dsQuery), nil
 }
 
-func toNetworkPolicyList(networkPolicys [] networking.NetworkPolicy,nonCriticalErrors []error,
-	dsQuery *dataselect.DataSelectQuery) *NetworkPolicyList{
-	networkPolicyList :=&NetworkPolicyList{
-		NetworkPolicy:make([]NetworkPolicy,0),
-		ListMeta:       api.ListMeta{TotalItems: len(networkPolicys)},
-		Errors:         nonCriticalErrors,
-	}
+func toNetworkPolicyList(networkPolicys [] networking.NetworkPolicy, nonCriticalErrors []error,
+  dsQuery *dataselect.DataSelectQuery) *NetworkPolicyList {
+  networkPolicyList := &NetworkPolicyList{
+    NetworkPolicy: make([]NetworkPolicy, 0),
+    ListMeta:      api.ListMeta{TotalItems: len(networkPolicys)},
+    Errors:        nonCriticalErrors,
+  }
 
-	networkPolicyCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(networkPolicys), dsQuery)
-	networkPolicys = fromCells(networkPolicyCells)
-	networkPolicyList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
+  networkPolicyCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(networkPolicys), dsQuery)
+  networkPolicys = fromCells(networkPolicyCells)
+  networkPolicyList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
-	for _, networkPolicy := range networkPolicys {
-		networkPolicyList.NetworkPolicy = append(networkPolicyList.NetworkPolicy, toNetworkPolicy(&networkPolicy))
-	}
+  for _, networkPolicy := range networkPolicys {
+    networkPolicyList.NetworkPolicy = append(networkPolicyList.NetworkPolicy, toNetworkPolicy(&networkPolicy))
+  }
 
-	return networkPolicyList
+  return networkPolicyList
 }
 
-
-func DeleteNetworkPolicy(client kubernetes.Interface,nsQuery *common.NamespaceQuery, name string)  error {
-	err:=client.NetworkingV1().NetworkPolicies(nsQuery.ToRequestParam()).Delete(name,&metav1.DeleteOptions{})
-	return err
+func DeleteNetworkPolicy(client kubernetes.Interface, nsQuery *common.NamespaceQuery, name string) error {
+  err := client.NetworkingV1().NetworkPolicies(nsQuery.ToRequestParam()).Delete(name, &metav1.DeleteOptions{})
+  return err
 }

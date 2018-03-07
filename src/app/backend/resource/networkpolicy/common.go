@@ -15,71 +15,60 @@
 package networkpolicy
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/api"
-	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	networkpolicy "k8s.io/api/networking/v1"
-	"encoding/json"
+  "github.com/kubernetes/dashboard/src/app/backend/api"
+  "github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+  networkpolicy "k8s.io/api/networking/v1"
+  "encoding/json"
 )
 
 func toNetworkPolicy(networkpolicy *networkpolicy.NetworkPolicy) NetworkPolicy {
-	//deepcopy
-	byte,err:=json.Marshal(networkpolicy.Spec)
-	var result NetworkPolicy
-	if(err !=nil){
-		return result
-	}
-	var unMarshalPolicy NetworkPolicySpec
-  err=json.Unmarshal(byte,&unMarshalPolicy)
-  if(err!=nil){
+  //deepcopy
+  byte, err := json.Marshal(networkpolicy.Spec)
+  var result NetworkPolicy
+  if (err != nil) {
     return result
   }
-	result=NetworkPolicy{
-		ObjectMeta: api.NewObjectMeta(networkpolicy.ObjectMeta),
-		TypeMeta:   api.NewTypeMeta(api.ResourceKindNetworkPolicy),
-		Spec:       unMarshalPolicy,
-	}
-	return result
+  var unMarshalPolicy NetworkPolicySpec
+  err = json.Unmarshal(byte, &unMarshalPolicy)
+  if (err != nil) {
+    return result
+  }
+  result = NetworkPolicy{
+    ObjectMeta: api.NewObjectMeta(networkpolicy.ObjectMeta),
+    TypeMeta:   api.NewTypeMeta(api.ResourceKindNetworkPolicy),
+    Spec:       unMarshalPolicy,
+  }
+  return result
 }
 
 type NetworkPolicyCell networkpolicy.NetworkPolicy
 
 func (self NetworkPolicyCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
-	switch name {
-	case dataselect.NameProperty:
-		return dataselect.StdComparableString(self.ObjectMeta.Name)
-	case dataselect.CreationTimestampProperty:
-		return dataselect.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
-	case dataselect.NamespaceProperty:
-		return dataselect.StdComparableString(self.ObjectMeta.Namespace)
-	default:
-		// if name is not supported then just return a constant dummy value, sort will have no effect.
-		return nil
-	}
-}
-
-func (self NetworkPolicyCell) GetResourceSelector() *metricapi.ResourceSelector {
-	return &metricapi.ResourceSelector{
-		Namespace:    self.ObjectMeta.Namespace,
-		ResourceType: api.ResourceKindNetworkPolicy,
-		ResourceName: self.ObjectMeta.Name,
-		UID:          self.ObjectMeta.UID,
-	}
+  switch name {
+  case dataselect.NameProperty:
+    return dataselect.StdComparableString(self.ObjectMeta.Name)
+  case dataselect.CreationTimestampProperty:
+    return dataselect.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
+  case dataselect.NamespaceProperty:
+    return dataselect.StdComparableString(self.ObjectMeta.Namespace)
+  default:
+    // if name is not supported then just return a constant dummy value, sort will have no effect.
+    return nil
+  }
 }
 
 func toCells(std [] networkpolicy.NetworkPolicy) []dataselect.DataCell {
-	cells := make([]dataselect.DataCell, len(std))
-	for i := range std {
-		cells[i] = NetworkPolicyCell(std[i])
-	}
-	return cells
+  cells := make([]dataselect.DataCell, len(std))
+  for i := range std {
+    cells[i] = NetworkPolicyCell(std[i])
+  }
+  return cells
 }
 
 func fromCells(cells []dataselect.DataCell) []networkpolicy.NetworkPolicy {
-	std := make([]networkpolicy.NetworkPolicy, len(cells))
-	for i := range std {
-		std[i] = networkpolicy.NetworkPolicy(cells[i].(NetworkPolicyCell))
-	}
-	return std
+  std := make([]networkpolicy.NetworkPolicy, len(cells))
+  for i := range std {
+    std[i] = networkpolicy.NetworkPolicy(cells[i].(NetworkPolicyCell))
+  }
+  return std
 }
-

@@ -20,84 +20,64 @@ import (
   "github.com/kubernetes/dashboard/src/app/backend/api"
   "github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
   "github.com/kubernetes/dashboard/src/app/backend/resource/common"
-  core "k8s.io/api/core/v1"
   networking "k8s.io/api/networking/v1"
   metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
   "k8s.io/client-go/kubernetes/fake"
 )
 
-func TestGetNetworkPolicyList(t *testing.T){
-  protocol:= core.ProtocolTCP
-  cases :=[]struct {
+func TestGetNetworkPolicyList(t *testing.T) {
+  cases := []struct {
     networkPolicyList *networking.NetworkPolicyList
-    expectedActions  []string
+    expectedActions   []string
     expected          *NetworkPolicyList
   }{
-      {
-        networkPolicyList:&networking.NetworkPolicyList{
-          Items:  []networking.NetworkPolicy{
-            {
-              ObjectMeta: metaV1.ObjectMeta{
-              Name:   "networkpolicy",
+    {
+      networkPolicyList: &networking.NetworkPolicyList{
+        Items: []networking.NetworkPolicy{
+          {
+            ObjectMeta: metaV1.ObjectMeta{
+              Name:      "networkpolicy",
               Namespace: "default",
-              Labels: map[string]string{},
+              Labels:    map[string]string{},
             },
-              Spec: networking.NetworkPolicySpec{
-                PodSelector:  metaV1.LabelSelector{
-                  MatchLabels: map[string]string{"matchKey":"value",},
-                },
-                Ingress: []networking.NetworkPolicyIngressRule{
-                  {
-                    Ports: []networking.NetworkPolicyPort{
-                      {
-                        Protocol: &protocol,
-                      },
-                    },
-                  },
-                },
+            Spec: networking.NetworkPolicySpec{
+              PodSelector: metaV1.LabelSelector{
+                MatchLabels: map[string]string{"matchKey": "value",},
               },
             },
           },
         },
-        expectedActions: []string{"list"},
-        expected: &NetworkPolicyList{
-          ListMeta: api.ListMeta{TotalItems: 1},
-          NetworkPolicy: []NetworkPolicy{
-            {
-              ObjectMeta: api.ObjectMeta{
-                Name:   "networkpolicy",
-                Namespace: "default",
-                Labels: map[string]string{},
-              },
-              Spec: NetworkPolicySpec{
-                PodSelector: metaV1.LabelSelector{
-                  MatchLabels: map[string]string{"matchKey":"value",},
-                },
-                Ingress: []NetworkPolicyIngressRule{
-                  {
-                    Ports: []NetworkPolicyPort{
-                      {
-                        Protocol: &protocol,
-                      },
-                    },
-                  },
-                },
-              },
-              TypeMeta: api.TypeMeta{Kind: api.ResourceKindNetworkPolicy},
+      },
+      expectedActions: []string{"list"},
+      expected: &NetworkPolicyList{
+        ListMeta: api.ListMeta{TotalItems: 1},
+        NetworkPolicy: []NetworkPolicy{
+          {
+            ObjectMeta: api.ObjectMeta{
+              Name:      "networkpolicy",
+              Namespace: "default",
+              Labels:    map[string]string{},
             },
+            Spec: NetworkPolicySpec{
+              PodSelector: metaV1.LabelSelector{
+                MatchLabels: map[string]string{"matchKey": "value",},
+              },
+            },
+            TypeMeta: api.TypeMeta{Kind: api.ResourceKindNetworkPolicy},
           },
-          Errors: []error{},
+        },
+        Errors: []error{},
       },
     },
   }
 
-  for _,c := range cases {
+  for _, c := range cases {
     fakeClient := fake.NewSimpleClientset(c.networkPolicyList)
-    actual, _ :=GetNetworkPolicyList(fakeClient, common.NewNamespaceQuery(nil), dataselect.NoDataSelect)
+    actual, _ := GetNetworkPolicyList(fakeClient, common.NewNamespaceQuery(nil), dataselect.NoDataSelect)
     actions := fakeClient.Actions()
     if len(actions) != len(c.expectedActions) {
       t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
-      len(c.expectedActions), len(actions))
+        len(c.expectedActions), len(actions))
       continue
     }
 
