@@ -17,17 +17,17 @@ limitations under the License.
 <div class="kd-notifications-container">
   <button mat-icon-button
           color="primary"
-          class="kd-notifications-button"
+          class="kd-global-action kd-notifications-button"
           i18n-matTooltip
-          matTooltip="Open notifications panel"
-          (click)="isOpen = !isOpen">
+          [matTooltip]="isOpen() ? 'Close notifications panel' : 'Open notifications panel'"
+          (click)="toggle()">
       <mat-icon class="kd-notifications-icon">notifications</mat-icon>
       <div *ngIf="getUnreadCount() > 0"
         class="kd-notifications-counter kd-white kd-bg-error">{{getUnreadCount()}}</div>
     </button>
   <div class="kd-notifications-panel"
        fxLayout="column"
-       *ngIf="isOpen">
+       *ngIf="isOpen()">
     <div class="kd-notifications-content">
       <div *ngFor="let notification of notifications | kdReverseOrder; let last = last"
            fxLayout="column"
@@ -50,10 +50,9 @@ limitations under the License.
            fxLayoutAlign="center center"
            fxFlex>There are no notifications</div>
     </div>
-    <mat-divider *ngIf="notifications.length > 0"></mat-divider>
-    <div class="kd-notifications-controls"
+    <div class="kd-notifications-controls kd-bg-primary kd-white"
          *ngIf="notifications.length > 0">
-      <span class="kd-primary kd-clickable"
+      <span class="kd-clickable kd-accent"
             (click)="clear()">Remove all notifications</span>
     </div>
   </div>

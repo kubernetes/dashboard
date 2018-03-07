@@ -52,8 +52,8 @@
   }
 }
 
-.kd-global-action-icon {
-  margin: .6 * $baseline-grid 0 $baseline-grid 0;
+.kd-global-action-margin {
+  margin: 0 (.75 * $baseline-grid);
 }
 
 .kd-second-toolbar {

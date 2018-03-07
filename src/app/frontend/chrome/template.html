@@ -38,14 +38,14 @@ limitations under the License.
       <div fxLayout="row">
         <button mat-icon-button
                 color="primary"
-                class="kd-primary-button"
+                class="kd-primary-button kd-global-action-margin"
                 i18n-matTooltip
                 matTooltip="Create any Kubernetes resource"
                 (click)="goToCreateState()">
-          <mat-icon class="kd-global-action-icon">add</mat-icon>
+          <mat-icon>add</mat-icon>
         </button>
-        <kd-notifications></kd-notifications>
-        <!--<kd-control-panel></kd-control-panel>-->
+        <kd-notifications class="kd-global-action-margin"></kd-notifications>
+        <kd-user-panel class="kd-global-action-margin"></kd-user-panel>
       </div>
     </div>
   </mat-toolbar>
