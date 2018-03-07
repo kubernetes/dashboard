@@ -17,10 +17,13 @@ import {TransitionService} from '@uirouter/core';
 
 import {Notification, NotificationsService} from '../../common/services/global/notifications';
 
-@Component(
-    {selector: 'kd-notifications', templateUrl: './template.html', styleUrls: ['./style.scss']})
+@Component({
+  selector: 'kd-notifications',
+  templateUrl: './template.html',
+  styleUrls: ['./style.scss'],
+})
 export class NotificationsComponent implements OnInit {
-  isOpen = false;
+  isOpen_ = false;
   notifications: Notification[] = [];
 
   constructor(
@@ -28,15 +31,8 @@ export class NotificationsComponent implements OnInit {
       private readonly transition_: TransitionService) {}
 
   ngOnInit(): void {
-    this.load_();
-
-    this.transition_.onSuccess({}, () => {
-      this.load_();
-    });
-
     this.transition_.onExit({}, () => {
-      this.isOpen = false;
-      this.notifications_.markAllAsRead();
+      this.close_();
     });
   }
 
@@ -44,12 +40,30 @@ export class NotificationsComponent implements OnInit {
     this.notifications = this.notifications_.getNotifications();
   }
 
-  getUnreadCount(): number {
-    return this.notifications_.getUnreadCount();
+  open_(): void {
+    this.load_();
+    this.isOpen_ = true;
+  }
+
+  close_(): void {
+    this.notifications_.markAllAsRead();
+    this.isOpen_ = false;
+  }
+
+  isOpen(): boolean {
+    return this.isOpen_;
+  }
+
+  toggle(): void {
+    this.isOpen() ? this.close_() : this.open_();
   }
 
   clear(): void {
     this.notifications_.clear();
     this.load_();
+  }
+
+  getUnreadCount(): number {
+    return this.notifications_.getUnreadCount();
   }
 }
