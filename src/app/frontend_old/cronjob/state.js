@@ -12,8 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** Name of the state. */
-export const stateName = 'cronjob';
-
-/** Absolute URL of the state. */
-export const stateUrl = '/cronjob';
+/** Name of the state. Can be used in, e.g., $state.go method. */
+export const stateName = 'cronjobdetail';
