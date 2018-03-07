@@ -15,56 +15,56 @@
 package networkpolicy
 
 import (
-  "reflect"
-  "testing"
+	"reflect"
+	"testing"
 
-  "github.com/kubernetes/dashboard/src/app/backend/api"
-  "github.com/kubernetes/dashboard/src/app/backend/resource/common"
-  networkpolicy "k8s.io/api/networking/v1"
-  metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-  "k8s.io/client-go/kubernetes/fake"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	networkpolicy "k8s.io/api/networking/v1"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/client-go/kubernetes/fake"
 )
 
 func TestGetNetworkPolicy(t *testing.T) {
-  cases := []struct {
-    networkPolicy *networkpolicy.NetworkPolicy
-    expected      *NetworkPolicy
-  }{
-    {
-      networkPolicy: &networkpolicy.NetworkPolicy{
-        ObjectMeta: metaV1.ObjectMeta{
-          Name:      "networkpolicy",
-          Namespace: "kube",
-          Labels:    map[string]string{},
-        },
-        Spec: networkpolicy.NetworkPolicySpec{
-          PodSelector: metaV1.LabelSelector{
-            MatchLabels: map[string]string{"matchKey": "value",},
-          },
-        },
-      },
-      expected: &NetworkPolicy{
-        ObjectMeta: api.ObjectMeta{
-          Name:      "networkpolicy",
-          Namespace: "kube",
-          Labels:    map[string]string{},
-        },
-        Spec: NetworkPolicySpec{
-          PodSelector: metaV1.LabelSelector{
-            MatchLabels: map[string]string{"matchKey": "value",},
-          },
-        },
-        TypeMeta: api.TypeMeta{Kind: api.ResourceKindNetworkPolicy},
-      },
-    },
-  }
+	cases := []struct {
+		networkPolicy *networkpolicy.NetworkPolicy
+		expected      *NetworkPolicy
+	}{
+		{
+			networkPolicy: &networkpolicy.NetworkPolicy{
+				ObjectMeta: metaV1.ObjectMeta{
+					Name:      "networkpolicy",
+					Namespace: "kube",
+					Labels:    map[string]string{},
+				},
+				Spec: networkpolicy.NetworkPolicySpec{
+					PodSelector: metaV1.LabelSelector{
+						MatchLabels: map[string]string{"matchKey": "value"},
+					},
+				},
+			},
+			expected: &NetworkPolicy{
+				ObjectMeta: api.ObjectMeta{
+					Name:      "networkpolicy",
+					Namespace: "kube",
+					Labels:    map[string]string{},
+				},
+				Spec: NetworkPolicySpec{
+					PodSelector: metaV1.LabelSelector{
+						MatchLabels: map[string]string{"matchKey": "value"},
+					},
+				},
+				TypeMeta: api.TypeMeta{Kind: api.ResourceKindNetworkPolicy},
+			},
+		},
+	}
 
-  for _, c := range cases {
-    fakeClient := fake.NewSimpleClientset(c.networkPolicy)
-    actual, _ := GetNetworkPolicy(fakeClient, common.NewNamespaceQuery(nil), "networkpolicy")
+	for _, c := range cases {
+		fakeClient := fake.NewSimpleClientset(c.networkPolicy)
+		actual, _ := GetNetworkPolicy(fakeClient, common.NewNamespaceQuery(nil), "networkpolicy")
 
-    if !reflect.DeepEqual(actual, c.expected) {
-      t.Errorf("GetNetworkPolicy(%#v) == \ngot %#v, \nexpected %#v", c.networkPolicy, actual, c.expected)
-    }
-  }
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("GetNetworkPolicy(%#v) == \ngot %#v, \nexpected %#v", c.networkPolicy, actual, c.expected)
+		}
+	}
 }

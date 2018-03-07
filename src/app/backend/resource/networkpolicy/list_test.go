@@ -15,81 +15,81 @@
 package networkpolicy
 
 import (
-  "reflect"
-  "testing"
-  "github.com/kubernetes/dashboard/src/app/backend/api"
-  "github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-  "github.com/kubernetes/dashboard/src/app/backend/resource/common"
-  networking "k8s.io/api/networking/v1"
-  metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-  "k8s.io/client-go/kubernetes/fake"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	networking "k8s.io/api/networking/v1"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/client-go/kubernetes/fake"
+	"reflect"
+	"testing"
 )
 
 func TestGetNetworkPolicyList(t *testing.T) {
-  cases := []struct {
-    networkPolicyList *networking.NetworkPolicyList
-    expectedActions   []string
-    expected          *NetworkPolicyList
-  }{
-    {
-      networkPolicyList: &networking.NetworkPolicyList{
-        Items: []networking.NetworkPolicy{
-          {
-            ObjectMeta: metaV1.ObjectMeta{
-              Name:      "networkpolicy",
-              Namespace: "default",
-              Labels:    map[string]string{},
-            },
-            Spec: networking.NetworkPolicySpec{
-              PodSelector: metaV1.LabelSelector{
-                MatchLabels: map[string]string{"matchKey": "value",},
-              },
-            },
-          },
-        },
-      },
-      expectedActions: []string{"list"},
-      expected: &NetworkPolicyList{
-        ListMeta: api.ListMeta{TotalItems: 1},
-        NetworkPolicy: []NetworkPolicy{
-          {
-            ObjectMeta: api.ObjectMeta{
-              Name:      "networkpolicy",
-              Namespace: "default",
-              Labels:    map[string]string{},
-            },
-            Spec: NetworkPolicySpec{
-              PodSelector: metaV1.LabelSelector{
-                MatchLabels: map[string]string{"matchKey": "value",},
-              },
-            },
-            TypeMeta: api.TypeMeta{Kind: api.ResourceKindNetworkPolicy},
-          },
-        },
-        Errors: []error{},
-      },
-    },
-  }
+	cases := []struct {
+		networkPolicyList *networking.NetworkPolicyList
+		expectedActions   []string
+		expected          *NetworkPolicyList
+	}{
+		{
+			networkPolicyList: &networking.NetworkPolicyList{
+				Items: []networking.NetworkPolicy{
+					{
+						ObjectMeta: metaV1.ObjectMeta{
+							Name:      "networkpolicy",
+							Namespace: "default",
+							Labels:    map[string]string{},
+						},
+						Spec: networking.NetworkPolicySpec{
+							PodSelector: metaV1.LabelSelector{
+								MatchLabels: map[string]string{"matchKey": "value"},
+							},
+						},
+					},
+				},
+			},
+			expectedActions: []string{"list"},
+			expected: &NetworkPolicyList{
+				ListMeta: api.ListMeta{TotalItems: 1},
+				NetworkPolicy: []NetworkPolicy{
+					{
+						ObjectMeta: api.ObjectMeta{
+							Name:      "networkpolicy",
+							Namespace: "default",
+							Labels:    map[string]string{},
+						},
+						Spec: NetworkPolicySpec{
+							PodSelector: metaV1.LabelSelector{
+								MatchLabels: map[string]string{"matchKey": "value"},
+							},
+						},
+						TypeMeta: api.TypeMeta{Kind: api.ResourceKindNetworkPolicy},
+					},
+				},
+				Errors: []error{},
+			},
+		},
+	}
 
-  for _, c := range cases {
-    fakeClient := fake.NewSimpleClientset(c.networkPolicyList)
-    actual, _ := GetNetworkPolicyList(fakeClient, common.NewNamespaceQuery(nil), dataselect.NoDataSelect)
-    actions := fakeClient.Actions()
-    if len(actions) != len(c.expectedActions) {
-      t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
-        len(c.expectedActions), len(actions))
-      continue
-    }
+	for _, c := range cases {
+		fakeClient := fake.NewSimpleClientset(c.networkPolicyList)
+		actual, _ := GetNetworkPolicyList(fakeClient, common.NewNamespaceQuery(nil), dataselect.NoDataSelect)
+		actions := fakeClient.Actions()
+		if len(actions) != len(c.expectedActions) {
+			t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
+				len(c.expectedActions), len(actions))
+			continue
+		}
 
-    for i, verb := range c.expectedActions {
-      if actions[i].GetVerb() != verb {
-        t.Errorf("Unexpected action: %+v, expected %s",
-          actions[i], verb)
-      }
-    }
+		for i, verb := range c.expectedActions {
+			if actions[i].GetVerb() != verb {
+				t.Errorf("Unexpected action: %+v, expected %s",
+					actions[i], verb)
+			}
+		}
 
-    if !reflect.DeepEqual(actual, c.expected) {
-      t.Errorf("GetNetworkPolicyList(client) == got\n%#v, expected\n %#v", actual, c.expected)
-    }
-  }
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("GetNetworkPolicyList(client) == got\n%#v, expected\n %#v", actual, c.expected)
+		}
+	}
 }

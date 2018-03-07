@@ -15,66 +15,66 @@
 package networkpolicy
 
 import (
-  "reflect"
-  "testing"
+	"reflect"
+	"testing"
 
-  "github.com/kubernetes/dashboard/src/app/backend/api"
-  networkpolicy "k8s.io/api/networking/v1"
-  metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	networkpolicy "k8s.io/api/networking/v1"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 func TestToNetworkPolicy(t *testing.T) {
-  cases := []struct {
-    networkPolicy *networkpolicy.NetworkPolicy
-    expected      NetworkPolicy
-  }{
-    {
-      networkPolicy: &networkpolicy.NetworkPolicy{},
-      expected: NetworkPolicy{
-        TypeMeta: api.TypeMeta{Kind: api.ResourceKindNetworkPolicy},
-      },
-    }, {
-      networkPolicy: &networkpolicy.NetworkPolicy{
-        ObjectMeta: metaV1.ObjectMeta{Name: "networkPolicy"}},
-      expected: NetworkPolicy{
-        ObjectMeta: api.ObjectMeta{Name: "networkPolicy"},
-        TypeMeta:   api.TypeMeta{Kind: api.ResourceKindNetworkPolicy},
-      },
-    }, {
-      networkPolicy: &networkpolicy.NetworkPolicy{
-        ObjectMeta: metaV1.ObjectMeta{
-          Name:      "networkpolicy",
-          Namespace: "kube",
-          Labels:    map[string]string{},
-        },
-        Spec: networkpolicy.NetworkPolicySpec{
-          PodSelector: metaV1.LabelSelector{
-            MatchLabels: map[string]string{"matchKey": "value",},
-          },
-        },
-      },
-      expected: NetworkPolicy{
-        ObjectMeta: api.ObjectMeta{
-          Name:      "networkpolicy",
-          Namespace: "kube",
-          Labels:    map[string]string{},
-        },
-        Spec: NetworkPolicySpec{
-          PodSelector: metaV1.LabelSelector{
-            MatchLabels: map[string]string{"matchKey": "value",},
-          },
-        },
-        TypeMeta: api.TypeMeta{Kind: api.ResourceKindNetworkPolicy},
-      },
-    },
-  }
+	cases := []struct {
+		networkPolicy *networkpolicy.NetworkPolicy
+		expected      NetworkPolicy
+	}{
+		{
+			networkPolicy: &networkpolicy.NetworkPolicy{},
+			expected: NetworkPolicy{
+				TypeMeta: api.TypeMeta{Kind: api.ResourceKindNetworkPolicy},
+			},
+		}, {
+			networkPolicy: &networkpolicy.NetworkPolicy{
+				ObjectMeta: metaV1.ObjectMeta{Name: "networkPolicy"}},
+			expected: NetworkPolicy{
+				ObjectMeta: api.ObjectMeta{Name: "networkPolicy"},
+				TypeMeta:   api.TypeMeta{Kind: api.ResourceKindNetworkPolicy},
+			},
+		}, {
+			networkPolicy: &networkpolicy.NetworkPolicy{
+				ObjectMeta: metaV1.ObjectMeta{
+					Name:      "networkpolicy",
+					Namespace: "kube",
+					Labels:    map[string]string{},
+				},
+				Spec: networkpolicy.NetworkPolicySpec{
+					PodSelector: metaV1.LabelSelector{
+						MatchLabels: map[string]string{"matchKey": "value"},
+					},
+				},
+			},
+			expected: NetworkPolicy{
+				ObjectMeta: api.ObjectMeta{
+					Name:      "networkpolicy",
+					Namespace: "kube",
+					Labels:    map[string]string{},
+				},
+				Spec: NetworkPolicySpec{
+					PodSelector: metaV1.LabelSelector{
+						MatchLabels: map[string]string{"matchKey": "value"},
+					},
+				},
+				TypeMeta: api.TypeMeta{Kind: api.ResourceKindNetworkPolicy},
+			},
+		},
+	}
 
-  for _, c := range cases {
-    actual := toNetworkPolicy(c.networkPolicy)
+	for _, c := range cases {
+		actual := toNetworkPolicy(c.networkPolicy)
 
-    if !reflect.DeepEqual(actual, c.expected) {
-      t.Errorf("toNetworkPolicy(%#v) == \ngot %#v, \nexpected %#v", c.networkPolicy, actual, c.expected)
-    }
-  }
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("toNetworkPolicy(%#v) == \ngot %#v, \nexpected %#v", c.networkPolicy, actual, c.expected)
+		}
+	}
 
 }
