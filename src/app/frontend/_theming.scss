@@ -185,4 +185,18 @@
       border-bottom: 1px solid $border;
     }
   }
+
+  .kd-namespace-select-input-container {
+    .mat-form-field-underline {
+      background-color: $border;
+    }
+
+    .mat-select-arrow {
+      color: $muted-light;
+    }
+  }
+
+  .kd-namespace-select-input-border {
+    border-bottom: 1px solid $border !important;
+  }
 }

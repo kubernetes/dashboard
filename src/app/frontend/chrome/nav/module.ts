@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
+import {ComponentsModule} from '../../common/components/module';
 
 import {NavServiceModule} from '../../common/services/nav/module';
 import {SharedModule} from '../../shared.module';
@@ -24,6 +25,6 @@ import {NavItemComponent} from './item/component';
 @NgModule({
   declarations: [NavComponent, NavItemComponent, HamburgerComponent],
   exports: [NavComponent, NavItemComponent, HamburgerComponent],
-  imports: [SharedModule, NavServiceModule]
+  imports: [SharedModule, ComponentsModule, NavServiceModule]
 })
 export class NavModule {}

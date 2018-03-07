@@ -34,6 +34,7 @@ import {CardListFilterComponent} from './list/filter/component';
 import {RowDetailComponent} from './list/rowdetail/component';
 import {LoadingSpinner} from './list/spinner/component';
 import {ListZeroStateComponent} from './list/zerostate/component';
+import {NamespaceSelectorComponent} from './namespace/component';
 import {ObjectMetaComponent} from './objectmeta/component';
 import {PodStatusCardComponent} from './podstatus/component';
 import {PropertyComponent} from './property/component';
@@ -109,6 +110,7 @@ import {ZeroStateComponent} from './zerostate/component';
     ConditionListComponent,
     CreatorCardComponent,
     PodStatusCardComponent,
+    NamespaceSelectorComponent,
   ],
   exports: [
     AllocationChartComponent,
@@ -149,6 +151,7 @@ import {ZeroStateComponent} from './zerostate/component';
     ConditionListComponent,
     CreatorCardComponent,
     PodStatusCardComponent,
+    NamespaceSelectorComponent,
   ],
   entryComponents: [
     LastAppliedConfigDialog,

@@ -17,11 +17,34 @@ import {StateService} from '@uirouter/core';
 
 @Injectable()
 export class NamespaceService {
+  /**
+   * Default namespace.
+   */
   private readonly defaultNamespace_ = 'default';
+  /**
+   * Internal key for empty selection. To differentiate empty string from nulls.
+   */
+  private readonly allNamespacesKey_ = '_all';
+  /**
+   * Regular expression for namespace validation.
+   */
+  private readonly namespaceRegex = /^([a-z0-9]([-a-z0-9]*[a-z0-9])?|_all)$/;
 
   constructor(private readonly state_: StateService) {}
 
   current(): string {
     return this.state_.params.namespace || this.defaultNamespace_;
+  }
+
+  getAllNamespacesKey(): string {
+    return this.allNamespacesKey_;
+  }
+
+  getDefaultNamespace(): string {
+    return this.defaultNamespace_;
+  }
+
+  isNamespaceValid(namespace: string): boolean {
+    return this.namespaceRegex.test(namespace);
   }
 }
