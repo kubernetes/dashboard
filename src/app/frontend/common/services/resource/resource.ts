@@ -40,7 +40,12 @@ export class NamespacedResourceService<T> extends ResourceBase<T> {
   }
 
   private getNamespace_(): string {
-    return this.state_.params.resourceNamespace || this.namespaceService_.current();
+    if (this.state_.params.resourceNamespace) {
+      return this.state_.params.resourceNamespace;
+    }
+
+    const currentNamespace = this.namespaceService_.current();
+    return this.namespaceService_.isMultiNamespace(currentNamespace) ? '' : currentNamespace;
   }
 
   get(endpoint: string, name?: string, params?: HttpParams): Observable<T> {

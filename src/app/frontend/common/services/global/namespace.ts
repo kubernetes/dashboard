@@ -48,4 +48,8 @@ export class NamespaceService {
   isNamespaceValid(namespace: string): boolean {
     return this.namespaceRegex.test(namespace);
   }
+
+  isMultiNamespace(namespace: string): boolean {
+    return namespace === this.allNamespacesKey_;
+  }
 }

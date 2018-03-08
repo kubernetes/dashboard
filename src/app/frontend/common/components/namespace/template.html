@@ -35,8 +35,8 @@ limitations under the License.
         {{namespace}}
       </mat-option>
     </mat-optgroup>
-    <mat-option style="display: none"
-                [value]="selectedNamespace">{{selectedNamespace}}</mat-option>
+    <mat-option class="kd-hidden"
+                [value]="selectedNamespace">{{formatNamespaceName(selectedNamespace)}}</mat-option>
   </mat-select>
 </mat-form-field>
 -->

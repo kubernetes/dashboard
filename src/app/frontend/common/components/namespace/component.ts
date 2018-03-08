@@ -59,29 +59,33 @@ export class NamespaceSelectorComponent implements OnInit {
   }
 
   onNamespaceToggle(opened: boolean): void {
-    if (!opened) {
+    if (opened) {
+      this.focusNamespaceInput_();
+    } else {
       this.changeNamespace_(this.selectedNamespace);
     }
   }
 
+  formatNamespaceName(namespace: string): string {
+    if (this.namespaceService_.isMultiNamespace(namespace)) {
+      return 'All namespaces';
+    }
+
+    return namespace;
+  }
+
   /**
-   * When namespace is changed perform basic validation (check existence etc.). At the end check if
-   * redirect to list view should happen.
+   * When state is loaded and namespaces are fetched perform basic validation.
    */
   private onNamespaceLoaded_(): void {
     let newNamespace = this.namespaceService_.getDefaultNamespace();
     const targetNamespace = this.selectedNamespace;
 
-    if (
-        targetNamespace &&  // If target namespace is not empty and
-        ((this.namespacesInitialized_ &&
-          this.namespaces.indexOf(targetNamespace) >=
-              0) ||                                    // it exists on the list of namespaces, or
-         targetNamespace === this.allNamespacesKey ||  // all namespaces are selected, or
+    if (targetNamespace &&
+        ((this.namespacesInitialized_ && this.namespaces.indexOf(targetNamespace) >= 0) ||
+         targetNamespace === this.allNamespacesKey ||
          (!this.namespacesInitialized_ &&
-          this.namespaceService_.isNamespaceValid(
-              targetNamespace)))  // namespace name is a valid string
-    ) {
+          this.namespaceService_.isNamespaceValid(targetNamespace)))) {
       newNamespace = targetNamespace;
     }
 
@@ -91,7 +95,6 @@ export class NamespaceSelectorComponent implements OnInit {
   }
 
   private loadNamespacesIfNeeded_(): void {
-    this.focusNamespaceInput_();
     if (!this.namespacesInitialized_) {
       this.namespace_.get(EndpointManager.resource(Resource.namespace).list())
           .subscribe(
