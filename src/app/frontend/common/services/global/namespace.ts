@@ -14,6 +14,7 @@
 
 import {Injectable} from '@angular/core';
 import {StateService} from '@uirouter/core';
+import {NAMESPACE_STATE_PARAM} from '../../params/params';
 
 @Injectable()
 export class NamespaceService {
@@ -33,7 +34,7 @@ export class NamespaceService {
   constructor(private readonly state_: StateService) {}
 
   current(): string {
-    return this.state_.params.namespace || this.defaultNamespace_;
+    return this.state_.params[NAMESPACE_STATE_PARAM] || this.defaultNamespace_;
   }
 
   getAllNamespacesKey(): string {

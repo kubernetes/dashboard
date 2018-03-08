@@ -12,11 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {NamespaceService} from './namespace';
 
 @Injectable()
 export class KdStateService {
+  onBefore = new EventEmitter<boolean>();
+  onSuccess = new EventEmitter<boolean>();
+
   constructor(private readonly namespaceService_: NamespaceService) {}
 
   href(stateName: string, resourceName?: string, namespace?: string): string {
@@ -31,7 +34,6 @@ export class KdStateService {
     href = namespace ? `${href}/${namespace}` : href;
     href = resourceName ? `${href}/${resourceName}` : href;
 
-    // TODO get namespace from service
     return `${href}?namespace=${this.namespaceService_.current()}`;
   }
 }

@@ -14,9 +14,13 @@
 
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {MatSelect} from '@angular/material';
+import {NamespaceList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
+
 import {NAMESPACE_STATE_PARAM} from '../../params/params';
 import {NamespaceService} from '../../services/global/namespace';
+import {EndpointManager, Resource} from '../../services/resource/endpoint';
+import {ResourceService} from '../../services/resource/resource';
 
 @Component({
   selector: 'kd-namespace-selector',
@@ -24,9 +28,9 @@ import {NamespaceService} from '../../services/global/namespace';
   styleUrls: ['style.scss'],
 })
 export class NamespaceSelectorComponent implements OnInit {
-  private readonly namespacesInitialized_ = false;
+  private namespacesInitialized_ = false;
 
-  namespaces: string[] = ['default'];
+  namespaces: string[] = [];
   selectNamespaceInput = '';
   allNamespacesKey: string;
   selectedNamespace: string;
@@ -35,46 +39,76 @@ export class NamespaceSelectorComponent implements OnInit {
   @ViewChild('namespaceInput') private readonly namespaceInputEl_: ElementRef;
 
   constructor(
-      private readonly state_: StateService, private readonly namespaceService_: NamespaceService) {
-  }
-  // private readonly namespace_: ResourceService<NamespaceList>,) {}
+      private readonly state_: StateService, private readonly namespaceService_: NamespaceService,
+      private readonly namespace_: ResourceService<NamespaceList>) {}
 
   ngOnInit(): void {
     this.allNamespacesKey = this.namespaceService_.getAllNamespacesKey();
     this.selectedNamespace = this.namespaceService_.current();
     this.select_.value = this.selectedNamespace;
+
+    this.loadNamespacesIfNeeded_();
   }
 
   selectNamespace(): void {
     if (this.selectNamespaceInput.length > 0) {
       this.selectedNamespace = this.selectNamespaceInput;
       this.select_.close();
-      this.changeNamespace_();
+      this.changeNamespace_(this.selectedNamespace);
     }
   }
 
   onNamespaceToggle(opened: boolean): void {
-    if (opened) {
-      this.loadNamespacesIfNeeded_();
-    } else {
-      this.changeNamespace_();
+    if (!opened) {
+      this.changeNamespace_(this.selectedNamespace);
+    }
+  }
+
+  /**
+   * When namespace is changed perform basic validation (check existence etc.). At the end check if
+   * redirect to list view should happen.
+   */
+  private onNamespaceLoaded_(): void {
+    let newNamespace = this.namespaceService_.getDefaultNamespace();
+    const targetNamespace = this.selectedNamespace;
+
+    if (
+        targetNamespace &&  // If target namespace is not empty and
+        ((this.namespacesInitialized_ &&
+          this.namespaces.indexOf(targetNamespace) >=
+              0) ||                                    // it exists on the list of namespaces, or
+         targetNamespace === this.allNamespacesKey ||  // all namespaces are selected, or
+         (!this.namespacesInitialized_ &&
+          this.namespaceService_.isNamespaceValid(
+              targetNamespace)))  // namespace name is a valid string
+    ) {
+      newNamespace = targetNamespace;
+    }
+
+    if (newNamespace !== this.selectedNamespace) {
+      this.changeNamespace_(newNamespace);
     }
   }
 
   private loadNamespacesIfNeeded_(): void {
     this.focusNamespaceInput_();
     if (!this.namespacesInitialized_) {
-      // this.namespace_.get(EndpointManager.resource(Resource.namespace).list()).subscribe(
-      //   namespaceList => {
-      //     this.namespaces = namespaceList.namespaces.map(n => n.objectMeta.name);
-      //     this.namespacesInitialized_ = true;
-      //   });
+      this.namespace_.get(EndpointManager.resource(Resource.namespace).list())
+          .subscribe(
+              namespaceList => {
+                this.namespaces = namespaceList.namespaces.map(n => n.objectMeta.name);
+                this.namespacesInitialized_ = true;
+              },
+              undefined,
+              () => {
+                this.onNamespaceLoaded_();
+              });
     }
   }
 
-  private changeNamespace_(): void {
+  private changeNamespace_(namespace: string): void {
     this.clearNamespaceInput_();
-    this.state_.go('.', {[NAMESPACE_STATE_PARAM]: this.selectedNamespace});
+    this.state_.go('.', {[NAMESPACE_STATE_PARAM]: namespace});
   }
 
   private clearNamespaceInput_(): void {

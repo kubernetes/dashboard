@@ -15,6 +15,8 @@
 import {NgModule} from '@angular/core';
 
 import {SharedModule} from '../../shared.module';
+import {ResourceModule} from '../services/resource/module';
+
 import {ActionbarComponent} from './actionbar/component';
 import {AllocationChartComponent} from './allocationchart/component';
 import {BreadcrumbsComponent} from './breadcrumbs/component';
@@ -64,6 +66,7 @@ import {ZeroStateComponent} from './zerostate/component';
 @NgModule({
   imports: [
     SharedModule,
+    ResourceModule,
   ],
   declarations: [
     AllocationChartComponent,

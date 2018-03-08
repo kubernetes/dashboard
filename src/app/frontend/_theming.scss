@@ -196,6 +196,16 @@
     }
   }
 
+  .mat-active,
+  .mat-selected {
+    color: $primary !important;
+  }
+
+  .kd-namespace-select-input {
+    background: $card-background;
+    color: mat-color($foreground-palette, text);
+  }
+
   .kd-namespace-select-input-border {
     border-bottom: 1px solid $border !important;
   }
