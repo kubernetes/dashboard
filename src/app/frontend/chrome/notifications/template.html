@@ -17,11 +17,11 @@ limitations under the License.
 <div class="kd-notifications-container">
   <button mat-icon-button
           color="primary"
-          class="kd-global-action kd-notifications-button kd-primary-toolbar-icon"
+          class="kd-global-action kd-notifications-button"
           i18n-matTooltip
           [matTooltip]="isOpen() ? 'Close notifications panel' : 'Open notifications panel'"
           (click)="toggle()">
-      <mat-icon class="kd-notifications-icon">notifications</mat-icon>
+      <mat-icon class="kd-notifications-icon kd-primary-toolbar-icon">notifications</mat-icon>
       <div *ngIf="getUnreadCount() > 0"
         class="kd-notifications-counter kd-white kd-bg-error">{{getUnreadCount()}}</div>
     </button>
