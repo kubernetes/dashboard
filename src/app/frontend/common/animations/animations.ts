@@ -17,21 +17,36 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 const DEFAULT_TRANSITION_TIME = '500ms ease-in-out';
 
 export class Animations {
-  static easeOut =
-      trigger('easeOut', [transition('* => void', [
-                style({opacity: 1}), animate(DEFAULT_TRANSITION_TIME, style({opacity: 0}))
-              ])]);
+  static easeOut = trigger('easeOut', [
+    transition(
+        '* => void',
+        [
+          style({opacity: 1}),
+          animate(DEFAULT_TRANSITION_TIME, style({opacity: 0})),
+        ]),
+  ]);
 
   static easeInOut = trigger('easeInOut', [
     transition(
-        'void => *', [style({opacity: 0}), animate(DEFAULT_TRANSITION_TIME, style({opacity: 1}))]),
-    transition('* => void', [animate(DEFAULT_TRANSITION_TIME, style({opacity: 0}))])
+        'void => *',
+        [
+          style({opacity: 0}),
+          animate(DEFAULT_TRANSITION_TIME, style({opacity: 1})),
+        ]),
+    transition(
+        '* => void',
+        [
+          animate(DEFAULT_TRANSITION_TIME, style({opacity: 0})),
+        ])
   ]);
 
   static shrinkOut = trigger('shrinkOut', [
     state('in', style({height: '*'})),
     transition(
         '* => void',
-        [style({height: '*'}), animate(DEFAULT_TRANSITION_TIME, style({height: 0}))])
+        [
+          style({height: '*'}),
+          animate(DEFAULT_TRANSITION_TIME, style({height: 0})),
+        ])
   ]);
 }
