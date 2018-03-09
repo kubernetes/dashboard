@@ -17,10 +17,9 @@ import {NgModule} from '@angular/core';
 import {CoreFormatter} from './coreformatter';
 import {MemoryFormatter} from './memoryformatter';
 import {RelativeTimeFormatter} from './relativetime';
-import {ReverseOrderFormatter} from './revrseorder';
 
 @NgModule({
-  declarations: [MemoryFormatter, CoreFormatter, RelativeTimeFormatter, ReverseOrderFormatter],
-  exports: [MemoryFormatter, CoreFormatter, RelativeTimeFormatter, ReverseOrderFormatter],
+  declarations: [MemoryFormatter, CoreFormatter, RelativeTimeFormatter],
+  exports: [MemoryFormatter, CoreFormatter, RelativeTimeFormatter],
 })
 export class PipesModule {}

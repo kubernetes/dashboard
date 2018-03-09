@@ -58,6 +58,10 @@ export class NotificationsComponent implements OnInit {
     this.isOpen() ? this.close_() : this.open_();
   }
 
+  remove(index: number): void {
+    this.notifications_.remove(index);
+  }
+
   clear(): void {
     this.notifications_.clear();
     this.load_();

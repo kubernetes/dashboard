@@ -24,7 +24,7 @@ export class Notification {
 
   constructor(message: string, severity: NotificationSeverity) {
     this.message = message;
-    this.icon = severity;
+    this.icon = severity.toString();
     this.timestamp = new Date();
 
     switch (severity) {
@@ -43,7 +43,7 @@ export class Notification {
   }
 }
 
-enum NotificationSeverity {
+export enum NotificationSeverity {
   info = 'info',
   warning = 'warning',
   error = 'error',
@@ -53,13 +53,12 @@ enum NotificationSeverity {
 export class NotificationsService {
   private notifications_: Notification[] = [];
 
-  addErrorNotifications(errors: K8sError[]): void {
-    if (errors) {
-      errors.forEach(error => {
-        this.notifications_.push(
-            new Notification(`${error.ErrStatus.message}`, NotificationSeverity.error));
-      });
-    }
+  push(message: string, severity: NotificationSeverity): void {
+    this.notifications_ = [new Notification(message, severity), ...this.notifications_];
+  }
+
+  remove(index: number): void {
+    this.notifications_.splice(index, 1);
   }
 
   getNotifications(): Notification[] {

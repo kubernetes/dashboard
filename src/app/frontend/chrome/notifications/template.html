@@ -29,19 +29,26 @@ limitations under the License.
        fxLayout="column"
        *ngIf="isOpen()">
     <div class="kd-notifications-content">
-      <div *ngFor="let notification of notifications | kdReverseOrder; let last = last"
+      <div *ngFor="let notification of notifications; let last = last; let index = index"
            fxLayout="column"
            [ngClass]="{'kd-notification-unread': !notification.read}">
         <div fxLayout="row"
              fxLayoutAlign=" center"
+             class="kd-notification-container"
              [ngClass]="notification.cssClass">
           <mat-icon class="kd-notification-icon">{{notification.icon}}</mat-icon>
-          <div fxLayout="column">
+          <div fxLayout="column"
+               fxFlex>
             <span class="kd-notification">{{notification.message}}</span>
             <span class="kd-notification-timestamp kd-muted">
             {{notification.timestamp | kdRelativeTime}} ago
             </span>
           </div>
+          <button (click)="remove(index)"
+                  mat-icon-button
+                  class="kd-notification-remove-button kd-muted">
+            <mat-icon>close</mat-icon>
+          </button>
         </div>
         <mat-divider *ngIf="!last || !notification.read"></mat-divider>
       </div>

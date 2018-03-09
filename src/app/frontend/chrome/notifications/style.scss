@@ -52,7 +52,7 @@ $drawer-controls-size: $baseline-grid * 4;
   left: -$drawer-size + 5 * $baseline-grid;
   overflow: hidden;
   position: absolute;
-  top: 7 * $baseline-grid;
+  top: 6 * $baseline-grid;
   width: $drawer-size;
   z-index: $drawer-z-index;
 }
@@ -66,6 +66,16 @@ $drawer-controls-size: $baseline-grid * 4;
 .kd-notifications-zero-state {
   font-size: $title-font-size-base;
   font-weight: $regular-font-weight;
+}
+
+.kd-notification-container:hover {
+  .kd-notification-remove-button {
+    display: block;
+  }
+}
+
+.kd-notification-remove-button {
+  display: none;
 }
 
 .kd-notification-icon {
