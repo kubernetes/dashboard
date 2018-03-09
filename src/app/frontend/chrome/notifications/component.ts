@@ -15,12 +15,14 @@
 import {Component, OnInit} from '@angular/core';
 import {TransitionService} from '@uirouter/core';
 
+import {Animations} from '../../common/animations/animations';
 import {Notification, NotificationsService} from '../../common/services/global/notifications';
 
 @Component({
   selector: 'kd-notifications',
   templateUrl: './template.html',
   styleUrls: ['./style.scss'],
+  animations: [Animations.easeOut],
 })
 export class NotificationsComponent implements OnInit {
   isOpen_ = false;

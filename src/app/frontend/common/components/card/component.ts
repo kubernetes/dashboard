@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import {Component, Input} from '@angular/core';
+import {Animations} from '../../animations/animations';
 
 @Component({
   selector: 'kd-card',
