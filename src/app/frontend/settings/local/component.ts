@@ -12,11 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {LocalSettings} from '@api/backendapi';
+import {SettingsService} from '../../common/services/global/settings';
 
-@Component({
-  selector: 'kd-settings',
-  template: '<kd-global-settings></kd-global-settings>' +
-      '<kd-local-settings></kd-local-settings>',
-})
-export class SettingsComponent {}
+@Component({selector: 'kd-local-settings', templateUrl: './template.html'})
+export class LocalSettingsComponent implements OnInit {
+  settings: LocalSettings = {} as LocalSettings;
+
+  constructor(private readonly settings_: SettingsService) {}
+
+  ngOnInit(): void {
+    this.settings = this.settings_.getLocalSettings();
+  }
+
+  onThemeChange(): void {
+    this.settings_.handleThemeChange(this.settings.isThemeDark);
+  }
+}

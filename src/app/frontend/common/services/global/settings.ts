@@ -98,14 +98,13 @@ export class SettingsService {
     return this.localSettings_;
   }
 
-  saveLocalSettings(localSettings: LocalSettings): LocalSettings {
-    this.cookies_.set(this.localSettingsCookie_, JSON.stringify(localSettings));
-    this.localSettings_ = localSettings;
-    this.applyLocalSettings();
-    return this.localSettings_;
+  handleThemeChange(isThemeDark: boolean): void {
+    this.localSettings_.isThemeDark = isThemeDark;
+    this.updateLocalSettingsCookie_();
+    this.theme_.switchTheme(!this.localSettings_.isThemeDark);
   }
 
-  applyLocalSettings(): void {
-    this.theme_.switchTheme(!this.localSettings_.isThemeDark);
+  updateLocalSettingsCookie_(): void {
+    this.cookies_.set(this.localSettingsCookie_, JSON.stringify(this.localSettings_));
   }
 }

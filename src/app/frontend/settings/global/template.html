@@ -24,12 +24,12 @@ limitations under the License.
       <code>kube-system</code> namespace, so all of them are applied for every instance of the app.
     </p>
     <br>
-    <form #globalForm="ngForm"
-          (ngSubmit)="saveGlobalSettings(globalForm)">
+    <form #form="ngForm"
+          (ngSubmit)="saveGlobalSettings(form)">
       <kd-settings-entry key="Cluster name"
                          desc="Cluster name appears in the browser window title if it is set">
         <mat-form-field fxFlex>
-          <input [(ngModel)]="global.clusterName"
+          <input [(ngModel)]="settings.clusterName"
                  name="clusterName"
                  placeholder="Cluster name"
                  type="text"
@@ -39,7 +39,7 @@ limitations under the License.
       <kd-settings-entry key="Items per page"
                          desc="Max number of items that can be displayed on each list page">
         <div fxFlex>
-          <mat-slider [(ngModel)]="global.itemsPerPage"
+          <mat-slider [(ngModel)]="settings.itemsPerPage"
                       name="itemsPerPage"
                       color="primary"
                       min="5"
@@ -49,14 +49,14 @@ limitations under the License.
           </mat-slider>
           <div class="kd-slider-value kd-muted"
                fxFlexAlign=" center">
-            {{global.itemsPerPage}}
+            {{settings.itemsPerPage}}
           </div>
         </div>
       </kd-settings-entry>
       <kd-settings-entry key="Auto-refresh time interval"
                          desc="Number of seconds between every auto-refresh of logs">
         <div fxFlex>
-          <mat-slider [(ngModel)]="global.autoRefreshTimeInterval"
+          <mat-slider [(ngModel)]="settings.autoRefreshTimeInterval"
                       name="autoRefreshTimeInterval"
                       color="primary"
                       min="1"
@@ -66,12 +66,12 @@ limitations under the License.
           </mat-slider>
           <span class="kd-slider-value kd-muted"
                 fxFlexAlign=" center">
-          {{global.autoRefreshTimeInterval}}
+          {{settings.autoRefreshTimeInterval}}
           </span>
         </div>
       </kd-settings-entry>
       <br><br>
-      <button [disabled]="globalForm.pristine"
+      <button [disabled]="form.pristine"
               type="submit"
               color="primary"
               mat-raised-button
@@ -79,45 +79,7 @@ limitations under the License.
         Save
       </button>
       <button type="button"
-              (click)="loadGlobalSettings(globalForm)"
-              color="primary"
-              mat-raised-button
-              i18n>
-        Reload
-      </button>
-    </form>
-  </div>
-</kd-card>
-
-<kd-card [expandable]="true">
-  <div title
-       i18n>Local settings</div>
-  <div content>
-    <p i18n>
-      Local settings are stored in the browser cookies, so they are not synchronized between multiple devices.
-    </p>
-    <br>
-    <form #localForm="ngForm"
-          (ngSubmit)="saveLocalSettings(localForm)">
-      <kd-settings-entry key="Dark theme"
-                         desc="Use dark theme in the whole app">
-        <div fxFlex>
-          <mat-slide-toggle color="primary"
-                            name="isThemeDark"
-                            [(ngModel)]="local.isThemeDark">
-          </mat-slide-toggle>
-        </div>
-      </kd-settings-entry>
-      <br><br>
-      <button [disabled]="localForm.pristine"
-              type="submit"
-              color="primary"
-              mat-raised-button
-              i18n>
-        Save
-      </button>
-      <button type="button"
-              (click)="loadLocalSettings(localForm)"
+              (click)="loadGlobalSettings(form)"
               color="primary"
               mat-raised-button
               i18n>
