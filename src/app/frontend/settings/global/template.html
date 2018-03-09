@@ -25,7 +25,7 @@ limitations under the License.
     </p>
     <br>
     <form #form="ngForm"
-          (ngSubmit)="saveGlobalSettings(form)">
+          (ngSubmit)="save(form)">
       <kd-settings-entry key="Cluster name"
                          desc="Cluster name appears in the browser window title if it is set">
         <mat-form-field fxFlex>
@@ -79,7 +79,7 @@ limitations under the License.
         Save
       </button>
       <button type="button"
-              (click)="loadGlobalSettings(form)"
+              (click)="load(form)"
               color="primary"
               mat-raised-button
               i18n>

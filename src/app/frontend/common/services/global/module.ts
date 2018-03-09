@@ -20,21 +20,22 @@ import {AuthorizerService} from './authorizer';
 import {BreadcrumbsService} from './breadcrumbs';
 import {ConfigService} from './config';
 import {CsrfTokenService} from './csrftoken';
+import {GlobalSettingsService} from './globalsettings';
+import {LocalSettingsService} from './localsettings';
 import {NamespaceService} from './namespace';
 import {NotificationsService} from './notifications';
-import {SettingsService} from './settings';
 import {KdStateService} from './state';
 import {ThemeService} from './theme';
 import {TitleService} from './title';
 
 @NgModule({
   providers: [
-    AuthorizerService, AssetsService, BreadcrumbsService, SettingsService, ConfigService,
-    TitleService, AuthService, CsrfTokenService, NotificationsService, ThemeService, KdStateService,
-    NamespaceService, {
+    AuthorizerService, AssetsService, BreadcrumbsService, LocalSettingsService,
+    GlobalSettingsService, ConfigService, TitleService, AuthService, CsrfTokenService,
+    NotificationsService, ThemeService, KdStateService, NamespaceService, {
       provide: APP_INITIALIZER,
       useFactory: init,
-      deps: [SettingsService, ConfigService],
+      deps: [GlobalSettingsService, LocalSettingsService, ConfigService],
       multi: true,
     }
   ],
@@ -46,9 +47,12 @@ export class GlobalServicesModule {
   }
 }
 
-export function init(settings: SettingsService, config: ConfigService): Function {
+export function init(
+    globalSettings: GlobalSettingsService, localSettings: LocalSettingsService,
+    config: ConfigService): Function {
   return () => {
-    settings.init();
+    globalSettings.init();
+    localSettings.init();
     config.init();
   };
 }

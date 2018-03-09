@@ -23,33 +23,27 @@ import {AuthorizerService} from './authorizer';
 import {ThemeService} from './theme';
 
 @Injectable()
-export class SettingsService {
+export class GlobalSettingsService {
   private readonly globalSettingsEndpoint_ = 'api/v1/settings/global';
   private globalSettings_: GlobalSettings = {
     itemsPerPage: 10,
     clusterName: '',
     autoRefreshTimeInterval: 5,
   };
-  private readonly localSettingsCookie_ = 'localSettings';
-  private localSettings_: LocalSettings = {
-    isThemeDark: false,
-  };
   private isInitialized_ = false;
 
-  constructor(
-      private readonly http_: HttpClient, private readonly authorizer_: AuthorizerService,
-      private readonly theme_: ThemeService, private readonly cookies_: CookieService) {}
+  constructor(private readonly http_: HttpClient, private readonly authorizer_: AuthorizerService) {
+  }
 
   init(): void {
-    this.loadGlobalSettings();
-    this.loadLocalSettings();
+    this.load();
   }
 
   isInitialized(): boolean {
     return this.isInitialized_;
   }
 
-  loadGlobalSettings(onLoad?: onSettingsLoadCallback, onFail?: onSettingsFailCallback): void {
+  load(onLoad?: onSettingsLoadCallback, onFail?: onSettingsFailCallback): void {
     this.authorizer_.proxyGET<GlobalSettings>(this.globalSettingsEndpoint_)
         .toPromise()
         .then(
@@ -64,7 +58,7 @@ export class SettingsService {
             });
   }
 
-  saveGlobalSettings(globalSettings: GlobalSettings): Observable<GlobalSettings> {
+  save(globalSettings: GlobalSettings): Observable<GlobalSettings> {
     const httpOptions = {
       method: 'PUT',
       headers: new HttpHeaders({
@@ -85,26 +79,5 @@ export class SettingsService {
 
   getAutoRefreshTimeInterval(): number {
     return this.globalSettings_.autoRefreshTimeInterval;
-  }
-
-  loadLocalSettings(): void {
-    const cookieValue = this.cookies_.get(this.localSettingsCookie_);
-    if (cookieValue && cookieValue.length > 0) {
-      this.localSettings_ = JSON.parse(cookieValue);
-    }
-  }
-
-  getLocalSettings(): LocalSettings {
-    return this.localSettings_;
-  }
-
-  handleThemeChange(isThemeDark: boolean): void {
-    this.localSettings_.isThemeDark = isThemeDark;
-    this.updateLocalSettingsCookie_();
-    this.theme_.switchTheme(!this.localSettings_.isThemeDark);
-  }
-
-  updateLocalSettingsCookie_(): void {
-    this.cookies_.set(this.localSettingsCookie_, JSON.stringify(this.localSettings_));
   }
 }
