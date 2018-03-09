@@ -23,7 +23,8 @@ limitations under the License.
           (click)="toggle()">
       <mat-icon class="kd-notifications-icon kd-primary-toolbar-icon">notifications</mat-icon>
       <div *ngIf="getUnreadCount() > 0"
-        class="kd-notifications-counter kd-white kd-bg-error">{{getUnreadCount()}}</div>
+           @easeOut
+           class="kd-notifications-counter kd-white kd-bg-error">{{getUnreadCount()}}</div>
     </button>
   <div class="kd-notifications-panel"
        fxLayout="column"
