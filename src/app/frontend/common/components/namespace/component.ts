@@ -12,23 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {MatSelect} from '@angular/material';
+import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {MatDialog, MatSelect} from '@angular/material';
 import {NamespaceList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
+import {Subscription} from 'rxjs/Subscription';
+import {overviewState} from '../../../overview/state';
 
 import {NAMESPACE_STATE_PARAM} from '../../params/params';
 import {NamespaceService} from '../../services/global/namespace';
+import {KdStateService} from '../../services/global/state';
 import {EndpointManager, Resource} from '../../services/resource/endpoint';
 import {ResourceService} from '../../services/resource/resource';
+import {NamespaceChangeDialog} from './changedialog/dialog';
 
 @Component({
   selector: 'kd-namespace-selector',
   templateUrl: './template.html',
   styleUrls: ['style.scss'],
 })
-export class NamespaceSelectorComponent implements OnInit {
+export class NamespaceSelectorComponent implements OnInit, OnDestroy, AfterViewInit {
   private namespacesInitialized_ = false;
+  private onSuccessStateChangeSubscription_: Subscription;
 
   namespaces: string[] = [];
   selectNamespaceInput = '';
@@ -40,14 +45,34 @@ export class NamespaceSelectorComponent implements OnInit {
 
   constructor(
       private readonly state_: StateService, private readonly namespaceService_: NamespaceService,
-      private readonly namespace_: ResourceService<NamespaceList>) {}
+      private readonly namespace_: ResourceService<NamespaceList>,
+      private readonly dialog_: MatDialog, private readonly kdState_: KdStateService) {}
 
   ngOnInit(): void {
     this.allNamespacesKey = this.namespaceService_.getAllNamespacesKey();
     this.selectedNamespace = this.namespaceService_.current();
     this.select_.value = this.selectedNamespace;
-
     this.loadNamespacesIfNeeded_();
+  }
+
+  ngAfterViewInit(): void {
+    this.onSuccessStateChangeSubscription_ = this.kdState_.onSuccess.subscribe(() => {
+      if (this.shouldShowNamespaceChangeDialog()) {
+        this.handleNamespaceChangeDialog_();
+      }
+    });
+
+    // Avoid angular error 'ExpressionChangedAfterItHasBeenCheckedError'.
+    // Related issues: https://github.com/angular/angular/issues/17572
+    setTimeout(() => {
+      if (this.shouldShowNamespaceChangeDialog()) {
+        this.handleNamespaceChangeDialog_();
+      }
+    }, 0);
+  }
+
+  ngOnDestroy(): void {
+    this.onSuccessStateChangeSubscription_.unsubscribe();
   }
 
   selectNamespace(): void {
@@ -109,13 +134,43 @@ export class NamespaceSelectorComponent implements OnInit {
     }
   }
 
+  private handleNamespaceChangeDialog_(): void {
+    const resourceNamespace = this.state_.params.resourceNamespace;
+    this.dialog_
+        .open(NamespaceChangeDialog, {
+          data: {namespace: this.state_.params.namespace, newNamespace: resourceNamespace},
+        })
+        .afterClosed()
+        .subscribe(confirmed => {
+          if (confirmed) {
+            this.state_.go('.', {[NAMESPACE_STATE_PARAM]: resourceNamespace});
+          } else {
+            this.selectedNamespace = this.state_.params.namespace;
+            this.state_.go(overviewState.name, {[NAMESPACE_STATE_PARAM]: this.selectedNamespace});
+          }
+        });
+  }
+
   private changeNamespace_(namespace: string): void {
     this.clearNamespaceInput_();
+
+    if (this.shouldShowNamespaceChangeDialog()) {
+      this.handleNamespaceChangeDialog_();
+      return;
+    }
+
     this.state_.go('.', {[NAMESPACE_STATE_PARAM]: namespace});
   }
 
   private clearNamespaceInput_(): void {
     this.selectNamespaceInput = '';
+  }
+
+  private shouldShowNamespaceChangeDialog(): boolean {
+    const resourceNamespace = this.state_.params.resourceNamespace;
+    const namespace = this.state_.params.namespace;
+    return namespace !== this.allNamespacesKey && resourceNamespace !== undefined &&
+        resourceNamespace !== namespace;
   }
 
   /**
