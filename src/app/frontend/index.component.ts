@@ -15,7 +15,7 @@
 import {OverlayContainer} from '@angular/cdk/overlay';
 import {Component, OnInit} from '@angular/core';
 
-import {SettingsService} from './common/services/global/settings';
+import {LocalSettingsService} from './common/services/global/localsettings';
 import {ThemeService} from './common/services/global/theme';
 
 enum Themes {
@@ -28,7 +28,8 @@ export class RootComponent implements OnInit {
   private isLightThemeEnabled_: boolean;
 
   constructor(
-      private readonly themeService_: ThemeService, private readonly settings_: SettingsService,
+      private readonly themeService_: ThemeService,
+      private readonly settings_: LocalSettingsService,
       private readonly overlayContainer_: OverlayContainer) {
     this.isLightThemeEnabled_ = this.themeService_.isLightThemeEnabled();
   }
@@ -36,7 +37,7 @@ export class RootComponent implements OnInit {
   ngOnInit(): void {
     this.themeService_.subscribe(this.onThemeChange_.bind(this));
 
-    const localSettings = this.settings_.getLocalSettings();
+    const localSettings = this.settings_.get();
     if (localSettings && localSettings.isThemeDark) {
       this.themeService_.switchTheme(!localSettings.isThemeDark);
       this.isLightThemeEnabled_ = !localSettings.isThemeDark;

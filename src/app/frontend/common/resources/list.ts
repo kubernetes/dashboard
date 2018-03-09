@@ -28,9 +28,9 @@ import {searchState} from '../../search/state';
 import {CardListFilterComponent} from '../components/list/filter/component';
 import {RowDetailComponent} from '../components/list/rowdetail/component';
 import {NamespacedResourceStateParams, ResourceStateParams, SEARCH_QUERY_STATE_PARAM} from '../params/params';
+import {GlobalSettingsService} from '../services/global/globalsettings';
 import {GlobalServicesModule} from '../services/global/module';
 import {Notification, NotificationSeverity, NotificationsService} from '../services/global/notifications';
-import {SettingsService} from '../services/global/settings';
 import {KdStateService} from '../services/global/state';
 
 // TODO: NEEDS DOCUMENTATION!!!
@@ -39,7 +39,7 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
   // Base properties
   private readonly data_ = new MatTableDataSource<R>();
   private dataSubscription_: Subscription;
-  private readonly settingsService_: SettingsService;
+  private readonly settingsService_: GlobalSettingsService;
   private readonly kdState_: KdStateService;
   private readonly actionColumns_: Array<ActionColumnDef<ActionColumn>> = [];
   @Output('onchange') onChange: EventEmitter<OnListChangeEvent> = new EventEmitter();
@@ -61,7 +61,7 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
   constructor(
       private readonly stateName_: string, private readonly state_: StateService,
       private readonly notifications_: NotificationsService) {
-    this.settingsService_ = GlobalServicesModule.injector.get(SettingsService);
+    this.settingsService_ = GlobalServicesModule.injector.get(GlobalSettingsService);
     this.kdState_ = GlobalServicesModule.injector.get(KdStateService);
   }
 

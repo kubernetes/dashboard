@@ -17,7 +17,7 @@ import {Title} from '@angular/platform-browser';
 import {Transition} from '@uirouter/angular';
 
 import {BreadcrumbsService} from './breadcrumbs';
-import {SettingsService} from './settings';
+import {GlobalSettingsService} from './globalsettings';
 
 @Injectable()
 export class TitleService {
@@ -25,7 +25,7 @@ export class TitleService {
   stateName = '';
 
   constructor(
-      private readonly title_: Title, private readonly settings_: SettingsService,
+      private readonly title_: Title, private readonly settings_: GlobalSettingsService,
       private readonly breadcrumbs_: BreadcrumbsService) {}
 
   update(transition?: Transition): void {
@@ -33,7 +33,7 @@ export class TitleService {
       this.stateName = this.breadcrumbs_.getDisplayName(transition.targetState().$state());
     }
 
-    this.settings_.loadGlobalSettings(
+    this.settings_.load(
         () => {
           this.clusterName = this.settings_.getClusterName();
           this.apply_();

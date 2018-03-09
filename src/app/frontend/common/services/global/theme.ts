@@ -14,7 +14,6 @@
 
 import {EventEmitter, Injectable} from '@angular/core';
 import {ThemeSwitchCallback} from '@api/frontendapi';
-import {SettingsService} from './settings';
 
 @Injectable()
 export class ThemeService {
