@@ -24,8 +24,8 @@ import {ThemeService} from './theme';
 
 @Injectable()
 export class GlobalSettingsService {
-  private readonly globalSettingsEndpoint_ = 'api/v1/settings/global';
-  private globalSettings_: GlobalSettings = {
+  private readonly endpoint_ = 'api/v1/settings/global';
+  private settings_: GlobalSettings = {
     itemsPerPage: 10,
     clusterName: '',
     autoRefreshTimeInterval: 5,
@@ -44,11 +44,11 @@ export class GlobalSettingsService {
   }
 
   load(onLoad?: onSettingsLoadCallback, onFail?: onSettingsFailCallback): void {
-    this.authorizer_.proxyGET<GlobalSettings>(this.globalSettingsEndpoint_)
+    this.authorizer_.proxyGET<GlobalSettings>(this.endpoint_)
         .toPromise()
         .then(
             (settings) => {
-              this.globalSettings_ = settings;
+              this.settings_ = settings;
               this.isInitialized_ = true;
               if (onLoad) onLoad(settings);
             },
@@ -58,26 +58,25 @@ export class GlobalSettingsService {
             });
   }
 
-  save(globalSettings: GlobalSettings): Observable<GlobalSettings> {
+  save(settings: GlobalSettings): Observable<GlobalSettings> {
     const httpOptions = {
       method: 'PUT',
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       }),
     };
-    return this.http_.put<GlobalSettings>(
-        this.globalSettingsEndpoint_, globalSettings, httpOptions);
+    return this.http_.put<GlobalSettings>(this.endpoint_, settings, httpOptions);
   }
 
   getClusterName(): string {
-    return this.globalSettings_.clusterName;
+    return this.settings_.clusterName;
   }
 
   getItemsPerPage(): number {
-    return this.globalSettings_.itemsPerPage;
+    return this.settings_.itemsPerPage;
   }
 
   getAutoRefreshTimeInterval(): number {
-    return this.globalSettings_.autoRefreshTimeInterval;
+    return this.settings_.autoRefreshTimeInterval;
   }
 }
