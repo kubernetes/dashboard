@@ -55,8 +55,8 @@ limitations under the License.
         <mat-cell *matCellDef="let pod">
           <a (click)="$event.stopPropagation()"
              [href]="getDetailsHref(pod.objectMeta.name, pod.objectMeta.namespace)">
-      {{pod.objectMeta.name}}
-      </a>
+            {{pod.objectMeta.name}}
+          </a>
         </mat-cell>
       </ng-container>
 

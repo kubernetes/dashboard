@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import {HttpParams} from '@angular/common/http';
-import {Component, Input} from '@angular/core';
-import {Deployment, DeploymentList} from '@api/backendapi';
+import {Component, ComponentFactoryResolver, Input} from '@angular/core';
+import {Deployment, DeploymentList, Event, Pod} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 
@@ -33,8 +33,8 @@ export class DeploymentListComponent extends ResourceListWithStatuses<Deployment
 
   constructor(
       state: StateService, private readonly deployment_: NamespacedResourceService<DeploymentList>,
-      notifications: NotificationsService) {
-    super('', state, notifications);
+      notifications: NotificationsService, resolver: ComponentFactoryResolver) {
+    super('', state, notifications, resolver);
     this.id = ListIdentifiers.deployment;
     this.groupId = ListGroupIdentifiers.workloads;
 
@@ -66,5 +66,13 @@ export class DeploymentListComponent extends ResourceListWithStatuses<Deployment
 
   getDisplayColumns(): string[] {
     return ['statusicon', 'name', 'labels', 'pods', 'age', 'images'];
+  }
+
+  hasErrors(deployment: Deployment): boolean {
+    return deployment.pods.warnings.length > 0;
+  }
+
+  getEvents(deployment: Deployment): Event[] {
+    return deployment.pods.warnings;
   }
 }
