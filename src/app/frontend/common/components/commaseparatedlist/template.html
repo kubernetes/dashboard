@@ -14,8 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-object-meta [initialized]="isInitialized"
-                [objectMeta]="clusterRole?.objectMeta"></kd-object-meta>
-
-<kd-policy-rule-list [rules]="clusterRole.rules"
-                     [initialized]="isInitialized"></kd-policy-rule-list>
+<!-- TODO Change it to pipe? -->
+<span *ngFor="let item of items; let last=last">
+  {{ appendItem(item, last) }}
+</span>
