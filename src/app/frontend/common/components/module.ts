@@ -23,6 +23,7 @@ import {BreadcrumbsComponent} from './breadcrumbs/component';
 import {CardComponent} from './card/component';
 import {ChipsComponent} from './chips/component';
 import {LastAppliedConfigDialog} from './chips/lastappliedconfigdialog/dialog';
+import {CommaSeparatedListComponent} from './commaseparatedlist/component';
 import {ConditionListComponent} from './condition/component';
 import {ContainerCardComponent} from './container/component';
 import {CreatorCardComponent} from './creator/component';
@@ -40,6 +41,7 @@ import {NamespaceChangeDialog} from './namespace/changedialog/dialog';
 import {NamespaceSelectorComponent} from './namespace/component';
 import {ObjectMetaComponent} from './objectmeta/component';
 import {PodStatusCardComponent} from './podstatus/component';
+import {PolicyRuleListComponent} from './policyrule/component';
 import {PropertyComponent} from './property/component';
 import {ProxyComponent} from './proxy/component';
 import {ClusterRoleListComponent} from './resourcelist/clusterrole/component';
@@ -116,6 +118,8 @@ import {ZeroStateComponent} from './zerostate/component';
     PodStatusCardComponent,
     NamespaceSelectorComponent,
     NamespaceChangeDialog,
+    PolicyRuleListComponent,
+    CommaSeparatedListComponent,
   ],
   exports: [
     AllocationChartComponent,
@@ -157,6 +161,8 @@ import {ZeroStateComponent} from './zerostate/component';
     CreatorCardComponent,
     PodStatusCardComponent,
     NamespaceSelectorComponent,
+    PolicyRuleListComponent,
+    CommaSeparatedListComponent,
   ],
   entryComponents: [
     LastAppliedConfigDialog,

@@ -18,6 +18,7 @@ import {ClusterRole, ClusterRoleList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 
+import {clusterRoleState} from '../../../../resource/cluster/clusterrole/state';
 import {ResourceListBase} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
@@ -34,7 +35,7 @@ export class ClusterRoleListComponent extends ResourceListBase<ClusterRoleList, 
   constructor(
       state: StateService, private readonly clusterRole_: ResourceService<ClusterRoleList>,
       notifications: NotificationsService) {
-    super('', state, notifications);
+    super(clusterRoleState.name, state, notifications);
     this.id = ListIdentifiers.clusterRole;
     this.groupId = ListGroupIdentifiers.cluster;
   }

@@ -22,7 +22,6 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	rbac "k8s.io/api/rbac/v1"
-	"k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 )
 
@@ -60,10 +59,10 @@ func GetClusterRoleListFromChannels(channels *common.ResourceChannels, dsQuery *
 	return result, nil
 }
 
-func toClusterRole(meta v1.ObjectMeta, kind api.ResourceKind) ClusterRole {
+func toClusterRole(role rbac.ClusterRole) ClusterRole {
 	return ClusterRole{
-		ObjectMeta: api.NewObjectMeta(meta),
-		TypeMeta:   api.NewTypeMeta(kind),
+		ObjectMeta: api.NewObjectMeta(role.ObjectMeta),
+		TypeMeta:   api.NewTypeMeta(api.ResourceKindRbacClusterRole),
 	}
 }
 
@@ -77,7 +76,7 @@ func toClusterRoleLists(clusterRoles []rbac.ClusterRole, nonCriticalErrors []err
 
 	items := make([]ClusterRole, 0)
 	for _, item := range clusterRoles {
-		items = append(items, toClusterRole(item.ObjectMeta, api.ResourceKindRbacClusterRole))
+		items = append(items, toClusterRole(item))
 	}
 
 	roleCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(items), dsQuery)

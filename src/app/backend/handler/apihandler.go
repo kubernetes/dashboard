@@ -495,6 +495,10 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 		apiV1Ws.GET("/clusterrole").
 			To(apiHandler.handleGetClusterRoleList).
 			Writes(clusterrole.ClusterRoleList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/clusterrole/{name}").
+			To(apiHandler.handleGetClusterRoleDetail).
+			Writes(clusterrole.ClusterRoleDetail{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/persistentvolume").
@@ -567,6 +571,22 @@ func (apiHandler *APIHandler) handleGetClusterRoleList(request *restful.Request,
 
 	dataSelect := parseDataSelectPathParameter(request)
 	result, err := clusterrole.GetClusterRoleList(k8sClient, dataSelect)
+	if err != nil {
+		kdErrors.HandleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetClusterRoleDetail(request *restful.Request, response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		kdErrors.HandleInternalError(response, err)
+		return
+	}
+
+	name := request.PathParameter("name")
+	result, err := clusterrole.GetClusterRoleDetail(k8sClient, name)
 	if err != nil {
 		kdErrors.HandleInternalError(response, err)
 		return
