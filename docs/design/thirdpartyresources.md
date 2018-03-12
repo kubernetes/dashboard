@@ -7,7 +7,7 @@ This design document is a proposal for supporting Third Party Resources in Dashb
 [Third Party
 Resources](https://kubernetes.io/docs/user-guide/thirdpartyresources/) are a
 special type of resource that allow end users to extend Kubernetes by adding
-new object types each with it's own URL endpoint in the API. Third Party
+new object types each with its own URL endpoint in the API. Third Party
 Resources are often used in conjunction with custom controllers to provide
 extra functionality.
 
