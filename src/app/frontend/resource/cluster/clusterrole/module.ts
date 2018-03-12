@@ -19,6 +19,8 @@ import {ComponentsModule} from '../../../common/components/module';
 import {ResourceModule} from '../../../common/services/resource/module';
 import {SharedModule} from '../../../shared.module';
 
+import {ClusterRoleDetailComponent} from './detail/component';
+import {clusterRoleDetailState} from './detail/state';
 import {ClusterRoleListComponent} from './list/component';
 import {clusterRoleListState} from './list/state';
 import {clusterRoleState} from './state';
@@ -28,8 +30,14 @@ import {clusterRoleState} from './state';
     SharedModule,
     ResourceModule,
     ComponentsModule,
-    UIRouterModule.forChild({states: [clusterRoleState, clusterRoleListState]}),
+    UIRouterModule.forChild({
+      states: [
+        clusterRoleState,
+        clusterRoleListState,
+        clusterRoleDetailState,
+      ]
+    }),
   ],
-  declarations: [ClusterRoleListComponent],
+  declarations: [ClusterRoleListComponent, ClusterRoleDetailComponent],
 })
 export class ClusterRoleModule {}

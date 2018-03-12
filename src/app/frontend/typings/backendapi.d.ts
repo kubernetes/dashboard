@@ -359,6 +359,13 @@ export interface NamespaceDetail {
   errors: K8sError[];
 }
 
+export interface ClusterRoleDetail {
+  objectMeta: ObjectMeta;
+  typeMeta: TypeMeta;
+  errors: K8sError[];
+  // TODO Rules []rbac.PolicyRule `json:"rules"`
+}
+
 export interface SecretDetail {
   objectMeta: ObjectMeta;
   typeMeta: TypeMeta;
