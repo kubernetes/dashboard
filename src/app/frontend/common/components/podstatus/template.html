@@ -26,6 +26,12 @@ limitations under the License.
     </div>
 
     <div class="kd-inline-property"
+         *ngIf="podInfo.succeeded > 0">
+      <span class="kd-muted-light">Succeeded:&nbsp;</span>
+      <span>{{podInfo.succeeded}}</span>
+    </div>
+
+    <div class="kd-inline-property"
          *ngIf="podInfo.pending > 0">
       <span class="kd-muted-light">Pending:&nbsp;</span>
       <span>{{podInfo.pending}}</span>
@@ -50,6 +56,11 @@ limitations under the License.
     <kd-property *ngIf="podInfo.running > 0">
       <div key>Running</div>
       <div value>{{podInfo.running}}</div>
+    </kd-property>
+
+    <kd-property *ngIf="podInfo.succeeded > 0">
+      <div key>Succeeded</div>
+      <div value>{{podInfo.succeeded}}</div>
     </kd-property>
 
     <kd-property *ngIf="podInfo.pending > 0">

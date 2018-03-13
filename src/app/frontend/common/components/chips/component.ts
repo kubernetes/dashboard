@@ -86,8 +86,8 @@ export class ChipsComponent implements OnInit {
     const dialogConfig: MatDialogConfig<Chip> = {
       width: '630px',
       data: {
-        key: key,
-        value: value,
+        key,
+        value,
       }
     };
     this.dialog_.open(ChipDialog, dialogConfig);
