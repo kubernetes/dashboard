@@ -12,14 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {browser, by, element} from 'protractor';
-
-export class AppPage {
-  navigateTo(): Promise<{}> {
-    return browser.get('/');
-  }
-
-  getParagraphText(): Promise<string> {
-    return element(by.css('app-root h1')).getText();
-  }
-}
+export class AppPage {}
