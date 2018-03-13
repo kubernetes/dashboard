@@ -7,7 +7,6 @@
     "types": ["node"]
   },
   "exclude": [
-    "../src/app/frontend/index_test.ts",
     "../src/app/frontend/**/*.spec.ts"
   ],
   "include": [
