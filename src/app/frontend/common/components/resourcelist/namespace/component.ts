@@ -18,6 +18,7 @@ import {Namespace, NamespaceList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 
+import {namespaceState} from '../../../../resource/cluster/namespace/state';
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
@@ -34,7 +35,7 @@ export class NamespaceListComponent extends ResourceListWithStatuses<NamespaceLi
   constructor(
       state: StateService, private readonly namespace_: ResourceService<NamespaceList>,
       notifications: NotificationsService) {
-    super('', state, notifications);
+    super(namespaceState.name, state, notifications);
     this.id = ListIdentifiers.namespace;
     this.groupId = ListGroupIdentifiers.cluster;
 

@@ -21,8 +21,8 @@ import {ActionbarComponent} from './actionbar/component';
 import {AllocationChartComponent} from './allocationchart/component';
 import {BreadcrumbsComponent} from './breadcrumbs/component';
 import {CardComponent} from './card/component';
+import {ChipDialog} from './chips/chipdialog/dialog';
 import {ChipsComponent} from './chips/component';
-import {LastAppliedConfigDialog} from './chips/lastappliedconfigdialog/dialog';
 import {CommaSeparatedListComponent} from './commaseparatedlist/component';
 import {ConditionListComponent} from './condition/component';
 import {ContainerCardComponent} from './container/component';
@@ -104,7 +104,7 @@ import {ZeroStateComponent} from './zerostate/component';
     ServiceListComponent,
     ExternalEndpointComponent,
     InternalEndpointComponent,
-    LastAppliedConfigDialog,
+    ChipDialog,
     TextInputComponent,
     RowDetailComponent,
     ColumnComponent,
@@ -165,7 +165,7 @@ import {ZeroStateComponent} from './zerostate/component';
     CommaSeparatedListComponent,
   ],
   entryComponents: [
-    LastAppliedConfigDialog,
+    ChipDialog,
     RowDetailComponent,
     LogsButtonComponent,
     MenuComponent,

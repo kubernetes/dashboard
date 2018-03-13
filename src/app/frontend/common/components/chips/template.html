@@ -16,20 +16,14 @@ limitations under the License.
 
 <mat-chip-list>
   <ng-container *ngFor="let key of keys; let i = index">
-    <mat-chip *ngIf="isVisible(i)"
-              [ngSwitch]="key">
+    <mat-chip *ngIf="isVisible(i)">
 
-      <ng-container *ngSwitchCase="'kubernetes.io/created-by'">
-        <span>{{key}}</span>
-        <!-- TODO -->
-      </ng-container>
-
-      <ng-container *ngSwitchCase="'kubectl.kubernetes.io/last-applied-configuration'">
+      <ng-container *ngIf="isTooLong(map[key])">
         <a href
-           (click)="openLastAppliedConfigDialog(map[key])">{{key}}</a>
+           (click)="openChipDialog(key, map[key])">{{key}}</a>
       </ng-container>
 
-      <ng-container *ngSwitchDefault>
+      <ng-container *ngIf="!isTooLong(map[key])">
         <span>
           {{key}}<ng-container *ngIf="map[key]">:&nbsp;</ng-container>
           <ng-container *ngIf="map[key]">

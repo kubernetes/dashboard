@@ -14,4 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-namespace-list></kd-namespace-list>
+<h2 mat-dialog-title><code>{{data.key}}</code></h2>
+<mat-dialog-content>
+  <kd-text-input [text]="data.value"
+                 [readOnly]="true"
+                 [useJsonFormat]="true"></kd-text-input>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button
+          color="primary"
+          [mat-dialog-close]="true">Close</button>
+</mat-dialog-actions>
