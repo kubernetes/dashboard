@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import {HttpParams} from '@angular/common/http';
-import {Component, Input} from '@angular/core';
-import {ReplicaSet, ReplicaSetList} from '@api/backendapi';
+import {Component, ComponentFactoryResolver, Input} from '@angular/core';
+import {Event, Job, ReplicaSet, ReplicaSetList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 import {replicaSetState} from '../../../../resource/workloads/replicaset/state';
@@ -34,8 +34,8 @@ export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSet
 
   constructor(
       state: StateService, private readonly replicaSet_: NamespacedResourceService<ReplicaSetList>,
-      notifications: NotificationsService) {
-    super(replicaSetState.name, state, notifications);
+      notifications: NotificationsService, resolver: ComponentFactoryResolver) {
+    super(replicaSetState.name, state, notifications, resolver);
     this.id = ListIdentifiers.replicaSet;
     this.groupId = ListGroupIdentifiers.workloads;
 
@@ -67,5 +67,13 @@ export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSet
 
   getDisplayColumns(): string[] {
     return ['statusicon', 'name', 'labels', 'pods', 'age', 'images'];
+  }
+
+  hasErrors(replicaSet: ReplicaSet): boolean {
+    return replicaSet.pods.warnings.length > 0;
+  }
+
+  getEvents(replicaSet: ReplicaSet): Event[] {
+    return replicaSet.pods.warnings;
   }
 }

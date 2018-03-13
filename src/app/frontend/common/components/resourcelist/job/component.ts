@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import {HttpParams} from '@angular/common/http';
-import {Component, Input} from '@angular/core';
-import {Job, JobList} from '@api/backendapi';
+import {Component, ComponentFactoryResolver, Input} from '@angular/core';
+import {Deployment, Event, Job, JobList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 
@@ -33,8 +33,8 @@ export class JobListComponent extends ResourceListWithStatuses<JobList, Job> {
 
   constructor(
       state: StateService, private readonly job_: NamespacedResourceService<JobList>,
-      notifications: NotificationsService) {
-    super('', state, notifications);
+      notifications: NotificationsService, resolver: ComponentFactoryResolver) {
+    super('', state, notifications, resolver);
     this.id = ListIdentifiers.job;
     this.groupId = ListGroupIdentifiers.workloads;
 
@@ -66,5 +66,13 @@ export class JobListComponent extends ResourceListWithStatuses<JobList, Job> {
 
   getDisplayColumns(): string[] {
     return ['statusicon', 'name', 'labels', 'pods', 'age', 'images'];
+  }
+
+  hasErrors(job: Job): boolean {
+    return job.pods.warnings.length > 0;
+  }
+
+  getEvents(job: Job): Event[] {
+    return job.pods.warnings;
   }
 }

@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import {HttpParams} from '@angular/common/http';
-import {Component, Input} from '@angular/core';
-import {ReplicationController, ReplicationControllerList} from '@api/backendapi';
+import {Component, ComponentFactoryResolver, Input} from '@angular/core';
+import {Event, ReplicaSet, ReplicationController, ReplicationControllerList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 
@@ -35,8 +35,8 @@ export class ReplicationControllerListComponent extends
   constructor(
       state: StateService,
       private readonly replicationController_: NamespacedResourceService<ReplicationControllerList>,
-      notifications: NotificationsService) {
-    super('', state, notifications);
+      notifications: NotificationsService, resolver: ComponentFactoryResolver) {
+    super('', state, notifications, resolver);
     this.id = ListIdentifiers.replicationController;
     this.groupId = ListGroupIdentifiers.workloads;
 
@@ -68,5 +68,13 @@ export class ReplicationControllerListComponent extends
 
   getDisplayColumns(): string[] {
     return ['statusicon', 'name', 'labels', 'pods', 'age', 'images'];
+  }
+
+  hasErrors(rc: ReplicationController): boolean {
+    return rc.pods.warnings.length > 0;
+  }
+
+  getEvents(rc: ReplicationController): Event[] {
+    return rc.pods.warnings;
   }
 }

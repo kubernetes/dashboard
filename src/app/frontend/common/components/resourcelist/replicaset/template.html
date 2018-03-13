@@ -35,9 +35,15 @@ limitations under the License.
                matSortDirection="asc">
       <ng-container [matColumnDef]="getDisplayColumns()[0]">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let replicaSet">
+        <mat-cell *matCellDef="let replicaSet; let index=index">
           <mat-icon [ngClass]="getStatus(replicaSet).iconClass">
-            {{getStatus(replicaSet).iconName}}
+            <ng-container *ngIf="showHoverIcon(index, replicaSet); else showStatus">
+              remove_red_eye
+            </ng-container>
+
+            <ng-template #showStatus>
+              {{getStatus(replicaSet).iconName}}
+            </ng-template>
           </mat-icon>
         </mat-cell>
       </ng-container>
@@ -47,7 +53,8 @@ limitations under the License.
                          mat-sort-header
                          disableClear="true">Name</mat-header-cell>
         <mat-cell *matCellDef="let replicaSet">
-          <a [href]="getDetailsHref(replicaSet.objectMeta.name, replicaSet.objectMeta.namespace)">
+          <a (click)="$event.stopPropagation()"
+             [href]="getDetailsHref(replicaSet.objectMeta.name, replicaSet.objectMeta.namespace)">
           {{replicaSet.objectMeta.name}}
           </a>
         </mat-cell>
@@ -82,7 +89,12 @@ limitations under the License.
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="getDisplayColumns()"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: getDisplayColumns();"></mat-row>
+      <mat-row #matrow
+               (mouseover)="onRowOver(index)"
+               (mouseleave)="onRowLeave()"
+               (click)="expand(index, row)"
+               [ngClass]="{'kd-no-bottom-border': isRowExpanded(index), 'kd-clickable': hasErrors(row)}"
+               *matRowDef="let row; columns: getDisplayColumns(); let index=index"></mat-row>
     </mat-table>
 
     <mat-paginator [length]="totalItems"
