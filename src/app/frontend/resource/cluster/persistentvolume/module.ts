@@ -19,6 +19,8 @@ import {ComponentsModule} from '../../../common/components/module';
 import {ResourceModule} from '../../../common/services/resource/module';
 import {SharedModule} from '../../../shared.module';
 
+import {PersistentVolumeDetailComponent} from './detail/component';
+import {persistentVolumeDetailState} from './detail/state';
 import {PersistentVolumeListComponent} from './list/component';
 import {persistentVolumeListState} from './list/state';
 import {persistentVolumeState} from './state';
@@ -28,8 +30,14 @@ import {persistentVolumeState} from './state';
     SharedModule,
     ResourceModule,
     ComponentsModule,
-    UIRouterModule.forChild({states: [persistentVolumeState, persistentVolumeListState]}),
+    UIRouterModule.forChild({
+      states: [
+        persistentVolumeState,
+        persistentVolumeListState,
+        persistentVolumeDetailState,
+      ]
+    }),
   ],
-  declarations: [PersistentVolumeListComponent],
+  declarations: [PersistentVolumeListComponent, PersistentVolumeDetailComponent],
 })
 export class PersistentVolumeModule {}

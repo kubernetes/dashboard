@@ -15,17 +15,27 @@ limitations under the License.
 -->
 
 <kd-object-meta [initialized]="isInitialized"
-                [objectMeta]="namespace?.objectMeta"></kd-object-meta>
+                [objectMeta]="storageClass?.objectMeta"></kd-object-meta>
 
 <kd-card [initialized]="isInitialized">
-  <div title>Namespace information</div>
+  <div title>Storage Class information</div>
   <div content
        *ngIf="isInitialized"
        fxLayout="row"
        fxLayoutWrap>
-    <kd-property *ngIf="namespace?.phase">
-      <div key>Phase</div>
-      <div value>{{namespace?.phase}}</div>
+    <kd-property *ngIf="storageClass?.provisioner"
+                 fxFlex="100">
+      <div key>Provisioner</div>
+      <div value>{{storageClass?.provisioner}}</div>
+    </kd-property>
+    <kd-property *ngFor="let parameter of getParameterNames()">
+      <div key
+           fxLayout>
+        {{parameter}}
+        <mat-icon matTooltip="Parameter"
+                  class="kd-storage-class-parameter-icon">tune</mat-icon>
+      </div>
+      <div value>{{storageClass?.parameters[parameter]}}</div>
     </kd-property>
   </div>
 </kd-card>
