@@ -20,19 +20,12 @@ limitations under the License.
 <kd-card [initialized]="isInitialized">
   <div title>Daemon Set information</div>
 
-  <div description>
-    <div class="kd-inline-property"
-         *ngIf="daemonSet?.podInfo">
-      <span class="kd-muted-light">Pods:&nbsp;</span>
-      <span>{{daemonSet.podInfo.running}} / {{daemonSet.podInfo.desired}}</span>
-    </div>
-  </div>
-
   <div content
        *ngIf="isInitialized"
        fxLayout="row"
        fxLayoutWrap>
-    <kd-property *ngIf="daemonSet?.labelSelector">
+    <kd-property *ngIf="daemonSet?.labelSelector"
+                 fxFlex="100">
       <div key>Selector</div>
       <div value>
         <kd-chips [map]="daemonSet.labelSelector.matchLabels"></kd-chips>

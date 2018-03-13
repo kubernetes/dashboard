@@ -47,7 +47,7 @@ limitations under the License.
                          mat-sort-header
                          disableClear="true">Name</mat-header-cell>
         <mat-cell *matCellDef="let cronJob">
-          <a [href]="getDetailsHref(cronJob.objectMeta.name)">
+          <a [href]="getDetailsHref(cronJob.objectMeta.name, cronJob.objectMeta.namespace)">
           {{cronJob.objectMeta.name}}
           </a>
         </mat-cell>

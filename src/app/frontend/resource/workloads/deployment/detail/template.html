@@ -44,13 +44,6 @@ limitations under the License.
        *ngIf="isInitialized"
        fxLayout="row"
        fxLayoutWrap>
-    <kd-property *ngIf="deployment?.selector">
-      <div key>Selector</div>
-      <div value>
-        <kd-chips [map]="deployment.selector"></kd-chips>
-      </div>
-    </kd-property>
-
     <kd-property *ngIf="deployment?.strategy">
       <div key>Strategy</div>
       <div value>{{deployment.strategy}}</div>
@@ -64,6 +57,14 @@ limitations under the License.
     <kd-property *ngIf="deployment?.revisionHistoryLimit !== null">
       <div key>Revision history limit</div>
       <div value>{{deployment.revisionHistoryLimit}}</div>
+    </kd-property>
+
+    <kd-property *ngIf="deployment?.selector"
+                 fxFlex="100">
+      <div key>Selector</div>
+      <div value>
+        <kd-chips [map]="deployment.selector"></kd-chips>
+      </div>
     </kd-property>
   </div>
 </kd-card>
