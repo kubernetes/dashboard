@@ -16,6 +16,7 @@ import {UIRouter} from '@uirouter/angular';
 import {HookMatchCriteria, HookMatchCriterion} from '@uirouter/core';
 
 import {AuthService} from './common/services/global/authentication';
+import {KdStateService} from './common/services/global/state';
 import {TitleService} from './common/services/global/title';
 import {CONFIG} from './index.config';
 
@@ -56,5 +57,16 @@ export function configureRouter(router: UIRouter): void {
   transitionService.onBefore(requiresAuthCriteria, (transition) => {
     const authService = transition.injector().get(AuthService);
     return authService.refreshToken();
+  });
+
+  // Register custom state service to hook state transitions
+  transitionService.onBefore({}, (transition) => {
+    const kdStateService = transition.injector().get(KdStateService);
+    kdStateService.onBefore.emit(true);
+  });
+
+  transitionService.onSuccess({}, (transition) => {
+    const kdStateService = transition.injector().get(KdStateService);
+    kdStateService.onSuccess.emit(true);
   });
 }

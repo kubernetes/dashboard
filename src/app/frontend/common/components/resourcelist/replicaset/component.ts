@@ -17,6 +17,7 @@ import {Component, Input} from '@angular/core';
 import {ReplicaSet, ReplicaSetList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
+import {replicaSetState} from '../../../../resource/workloads/replicaset/state';
 
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
@@ -34,7 +35,7 @@ export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSet
   constructor(
       state: StateService, private readonly replicaSet_: NamespacedResourceService<ReplicaSetList>,
       notifications: NotificationsService) {
-    super('pod', state, notifications);
+    super(replicaSetState.name, state, notifications);
     this.id = ListIdentifiers.replicaSet;
     this.groupId = ListGroupIdentifiers.workloads;
 

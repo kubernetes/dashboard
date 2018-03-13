@@ -16,10 +16,5 @@ import {HttpClient} from '@angular/common/http';
 import {StateService} from '@uirouter/core';
 
 export abstract class ResourceBase<T> {
-  constructor(protected readonly http_: HttpClient, private readonly state_: StateService) {}
-
-  getNamespace(): string {
-    // TODO get from service
-    return this.state_.params.namespace;
-  }
+  constructor(protected readonly http_: HttpClient) {}
 }

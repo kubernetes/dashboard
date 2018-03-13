@@ -16,9 +16,11 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {EnvVar, PodDetail} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Subscription} from 'rxjs/Subscription';
+import {KdStateService} from '../../../../common/services/global/state';
 
 import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
 import {NamespacedResourceService} from '../../../../common/services/resource/resource';
+import {nodeState} from '../../../cluster/node/state';
 
 @Component({
   selector: 'kd-pod-detail',
@@ -33,7 +35,7 @@ export class PodDetailComponent implements OnInit, OnDestroy {
 
   constructor(
       private readonly pod_: NamespacedResourceService<PodDetail>,
-      private readonly state_: StateService) {}
+      private readonly state_: StateService, private readonly kdState_: KdStateService) {}
 
   ngOnInit(): void {
     this.podName_ = this.state_.params.resourceName;
@@ -50,5 +52,9 @@ export class PodDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.podSubscription_.unsubscribe();
+  }
+
+  getNodeHref(name: string): string {
+    return this.kdState_.href(nodeState.name, name);
   }
 }

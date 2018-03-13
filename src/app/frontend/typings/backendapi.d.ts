@@ -13,6 +13,8 @@
 // limitations under the License.
 
 // Shared resource types
+export interface TypeMeta { kind: string; }
+
 export interface ListMeta { totalItems: number; }
 
 export interface ObjectMeta {
@@ -24,8 +26,15 @@ export interface ObjectMeta {
   uid: string;
 }
 
+export interface ResourceDetail {
+  objectMeta: ObjectMeta;
+  typeMeta: TypeMeta;
+  errors: K8sError[];
+}
+
 export interface ResourceList {
   listMeta: ListMeta;
+  items: Resource[];
   errors: K8sError[];
 }
 
@@ -34,7 +43,13 @@ export interface Resource {
   typeMeta: TypeMeta;
 }
 
-export interface TypeMeta { kind: string; }
+export interface ResourceOwner extends Resource {
+  pods: PodInfo;
+  containerImages: string[];
+  initContainerImages: string[];
+}
+
+export interface LabelSelector { matchLabels: StringMap; }
 
 // List types
 export interface ClusterRoleList extends ResourceList { items: ClusterRole[]; }
@@ -264,27 +279,21 @@ export interface StorageClass extends Resource {
 
 // Detail types
 
-export interface ReplicaSetDetail {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
+export interface ReplicaSetDetail extends ResourceDetail {
+  selector: LabelSelector;
   podInfo: PodInfo;
   podList: PodList;
   containerImages: string[];
   initContainerImages: string[];
   eventList: EventList;
-  errors: K8sError[];
 }
 
-export interface ResourceQuotaDetail {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
+export interface ResourceQuotaDetail extends ResourceDetail {
   scopes: string[];
   statusList: {[key: string]: ResourceQuotaStatus};
 }
 
-export interface DeploymentDetail {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
+export interface DeploymentDetail extends ResourceDetail {
   selector: Label[];
   statusInfo: DeploymentInfo;
   strategy: string;
@@ -294,12 +303,9 @@ export interface DeploymentDetail {
   oldReplicaSetList: ReplicaSetList;
   newReplicaSet: ReplicaSet;
   events: EventList;
-  errors: K8sError[];
 }
 
-export interface ReplicationControllerDetail {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
+export interface ReplicationControllerDetail extends ResourceDetail {
   labelSelector: StringMap;
   containerImages: string[];
   initContainerImages: string[];
@@ -308,12 +314,9 @@ export interface ReplicationControllerDetail {
   serviceList: ServiceList;
   eventList: EventList;
   hasMetrics: boolean;
-  errors: K8sError[];
 }
 
-export interface ServiceDetail {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
+export interface ServiceDetail extends ResourceDetail {
   internalEndpoint: Endpoint;
   externalEndpoints: Endpoint[];
   endpointList: Endpoint[];
@@ -322,12 +325,9 @@ export interface ServiceDetail {
   clusterIP: string;
   podList: PodList;
   sessionAffinity: string;
-  errors: K8sError[];
 }
 
-export interface DaemonSetDetail {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
+export interface DaemonSetDetail extends ResourceDetail {
   labelSelector: StringMap;
   containerImages: string[];
   initContainerImages: string[];
@@ -336,33 +336,33 @@ export interface DaemonSetDetail {
   serviceList: ServiceList;
   hasMetrics: boolean;
   eventList: EventList;
-  errors: K8sError[];
 }
 
-export interface NamespaceDetail {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
+export interface NamespaceDetail extends ResourceDetail {
   phase: string;
   eventList: EventList;
   resourceLimits: LimitRange[];
   resourceQuotaList: ResourceQuotaDetailList;
-  errors: K8sError[];
 }
 
-export interface SecretDetail {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
+export interface PolicyRule {
+  verbs: string[];
+  apiGroups: string[];
+  resources: string[];
+  resourceNames: string[];
+  nonResourceURLs: string[];
+}
+
+export interface ClusterRoleDetail extends ResourceDetail { rules: PolicyRule[]; }
+
+export interface SecretDetail extends ResourceDetail {
   type: string;
   data: StringMap;
 }
 
-export interface IngressDetail {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-}
+export interface IngressDetail extends ResourceDetail {}
 
-export interface PersistentVolumeClaimDetail extends Resource {
-  typeMeta: TypeMeta;
+export interface PersistentVolumeClaimDetail extends ResourceDetail {
   status: string;
   volume: string;
   capacity: string;
@@ -370,15 +370,9 @@ export interface PersistentVolumeClaimDetail extends Resource {
   accessModes: string[];
 }
 
-export interface ConfigMapDetail {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
-  data: StringMap;
-}
+export interface ConfigMapDetail extends ResourceDetail { data: StringMap; }
 
-export interface JobDetail {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
+export interface JobDetail extends ResourceDetail {
   podInfo: PodInfo;
   podList: PodList;
   containerImages: string[];
@@ -388,9 +382,7 @@ export interface JobDetail {
   completions: number;
 }
 
-export interface CronJobDetail {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
+export interface CronJobDetail extends ResourceDetail {
   schedule: string;
   suspend: boolean;
   active: number;
@@ -401,20 +393,15 @@ export interface CronJobDetail {
   events: EventList;
 }
 
-export interface StatefulSetDetail {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
+export interface StatefulSetDetail extends ResourceDetail {
   podInfo: PodInfo;
   podList: PodList;
   containerImages: string[];
   initContainerImages: string[];
   eventList: EventList;
-  errors: K8sError[];
 }
 
-export interface PersistentVolumeDetail {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
+export interface PersistentVolumeDetail extends ResourceDetail {
   status: string;
   claim: string;
   reclaimPolicy: string;
@@ -424,23 +411,22 @@ export interface PersistentVolumeDetail {
   persistentVolumeSource: PersistentVolumeSource;
 }
 
-export interface PodDetail {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
+export interface PodDetail extends ResourceDetail {
   initContainers: Container[];
   containers: Container[];
   podPhase: string;
   podIP: string;
   nodeName: string;
   restartCount: number;
+  qosClass: string;
   metrics: PodMetrics;
   conditions: Condition[];
-  errors: K8sError[];
+  controller: Resource;
+  eventList: EventList;
+  persistentVolumeClaimList: PersistentVolumeClaimList;
 }
 
-export interface NodeDetail {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
+export interface NodeDetail extends ResourceDetail {
   phase: string;
   podCIDR: string;
   providerID: string;
@@ -454,12 +440,9 @@ export interface NodeDetail {
   conditions: Condition[];
   podList: PodList;
   eventList: EventList;
-  errors: K8sError[];
 }
 
-export interface HorizontalPodAutoscalerDetail {
-  objectMeta: ObjectMeta;
-  typeMeta: TypeMeta;
+export interface HorizontalPodAutoscalerDetail extends ResourceDetail {
   scaleTargetRef: ScaleTargetRef;
   minReplicas: number;
   maxReplicas: number;

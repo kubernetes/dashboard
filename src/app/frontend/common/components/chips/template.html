@@ -30,20 +30,21 @@ limitations under the License.
       </ng-container>
 
       <ng-container *ngSwitchDefault>
-        <span>{{key}}</span>
-        <ng-container *ngIf="map[key]">
-          <ng-container *ngIf="isHref(map[key])">
-            <span>:&nbsp;</span>
-            <a [href]="map[key]"
-               target="_blank">
-              {{map[key]}}
-            </a>
-          </ng-container>
-          <span *ngIf="!isHref(map[key])">:&nbsp;{{map[key]}}</span>
-        </ng-container>
+        <span>
+          {{key}}:&nbsp;
+          <ng-container *ngIf="map[key]">
+            <ng-container *ngIf="isHref(map[key])">
+              <a [href]="map[key]"
+                 target="_blank">
+                {{map[key]}}
+              </a>
+            </ng-container>
+            <span *ngIf="!isHref(map[key])">{{map[key]}}</span>
       </ng-container>
+      </span>
+  </ng-container>
 
-    </mat-chip>
+  </mat-chip>
   </ng-container>
   <mat-chip *ngIf="isAnythingHidden()"
             (click)="toggleView()"

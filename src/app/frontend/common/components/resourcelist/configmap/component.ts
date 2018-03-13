@@ -17,8 +17,7 @@ import {Component, Input} from '@angular/core';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 import {ConfigMap, ConfigMapList} from 'typings/backendapi';
-
-import {configMapDetailState} from '../../../../resource/config/configmap/detail/state';
+import {configMapState} from '../../../../resource/config/configmap/state';
 import {ResourceListBase} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
@@ -32,7 +31,7 @@ export class ConfigMapListComponent extends ResourceListBase<ConfigMapList, Conf
   constructor(
       state: StateService, private readonly configMap_: NamespacedResourceService<ConfigMapList>,
       notifications: NotificationsService) {
-    super(configMapDetailState.name, state, notifications);
+    super(configMapState.name, state, notifications);
     this.id = ListIdentifiers.configMap;
     this.groupId = ListGroupIdentifiers.config;
   }

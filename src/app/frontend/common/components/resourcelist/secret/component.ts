@@ -17,8 +17,7 @@ import {Component, Input} from '@angular/core';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 import {Secret, SecretList} from 'typings/backendapi';
-
-import {secretDetailState} from '../../../../resource/config/secret/detail/state';
+import {secretState} from '../../../../resource/config/secret/state';
 import {ResourceListBase} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
@@ -32,7 +31,7 @@ export class SecretListComponent extends ResourceListBase<SecretList, Secret> {
   constructor(
       state: StateService, private readonly secret_: NamespacedResourceService<SecretList>,
       notifications: NotificationsService) {
-    super(secretDetailState.name, state, notifications);
+    super(secretState.name, state, notifications);
     this.id = ListIdentifiers.secret;
     this.groupId = ListGroupIdentifiers.config;
   }

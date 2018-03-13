@@ -34,7 +34,7 @@ export class NamespaceListComponent extends ResourceListWithStatuses<NamespaceLi
   constructor(
       state: StateService, private readonly namespace_: ResourceService<NamespaceList>,
       notifications: NotificationsService) {
-    super('node', state, notifications);
+    super('', state, notifications);
     this.id = ListIdentifiers.namespace;
     this.groupId = ListGroupIdentifiers.cluster;
 

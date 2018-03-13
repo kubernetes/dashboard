@@ -36,7 +36,7 @@ export class PersistentVolumeClaimListComponent extends
       state: StateService,
       private readonly persistentVolumeClaim_: NamespacedResourceService<PersistentVolumeClaimList>,
       notifications: NotificationsService) {
-    super('node', state, notifications);
+    super('', state, notifications);
     this.id = ListIdentifiers.persistentVolumeClaim;
     this.groupId = ListGroupIdentifiers.config;
 

@@ -15,6 +15,7 @@
 import {NgModule} from '@angular/core';
 
 import {SharedModule} from '../../shared.module';
+import {ResourceModule} from '../services/resource/module';
 
 import {ActionbarComponent} from './actionbar/component';
 import {AllocationChartComponent} from './allocationchart/component';
@@ -22,7 +23,10 @@ import {BreadcrumbsComponent} from './breadcrumbs/component';
 import {CardComponent} from './card/component';
 import {ChipsComponent} from './chips/component';
 import {LastAppliedConfigDialog} from './chips/lastappliedconfigdialog/dialog';
+import {CommaSeparatedListComponent} from './commaseparatedlist/component';
+import {ConditionListComponent} from './condition/component';
 import {ContainerCardComponent} from './container/component';
+import {CreatorCardComponent} from './creator/component';
 import {ExternalEndpointComponent} from './endpoint/external/component';
 import {InternalEndpointComponent} from './endpoint/internal/component';
 import {HiddenPropertyComponent} from './hiddenproperty/component';
@@ -33,7 +37,11 @@ import {CardListFilterComponent} from './list/filter/component';
 import {RowDetailComponent} from './list/rowdetail/component';
 import {LoadingSpinner} from './list/spinner/component';
 import {ListZeroStateComponent} from './list/zerostate/component';
+import {NamespaceChangeDialog} from './namespace/changedialog/dialog';
+import {NamespaceSelectorComponent} from './namespace/component';
 import {ObjectMetaComponent} from './objectmeta/component';
+import {PodStatusCardComponent} from './podstatus/component';
+import {PolicyRuleListComponent} from './policyrule/component';
 import {PropertyComponent} from './property/component';
 import {ProxyComponent} from './proxy/component';
 import {ClusterRoleListComponent} from './resourcelist/clusterrole/component';
@@ -61,6 +69,7 @@ import {ZeroStateComponent} from './zerostate/component';
 @NgModule({
   imports: [
     SharedModule,
+    ResourceModule,
   ],
   declarations: [
     AllocationChartComponent,
@@ -104,6 +113,13 @@ import {ZeroStateComponent} from './zerostate/component';
     HiddenPropertyComponent,
     EventListComponent,
     ContainerCardComponent,
+    ConditionListComponent,
+    CreatorCardComponent,
+    PodStatusCardComponent,
+    NamespaceSelectorComponent,
+    NamespaceChangeDialog,
+    PolicyRuleListComponent,
+    CommaSeparatedListComponent,
   ],
   exports: [
     AllocationChartComponent,
@@ -141,12 +157,19 @@ import {ZeroStateComponent} from './zerostate/component';
     HiddenPropertyComponent,
     EventListComponent,
     ContainerCardComponent,
+    ConditionListComponent,
+    CreatorCardComponent,
+    PodStatusCardComponent,
+    NamespaceSelectorComponent,
+    PolicyRuleListComponent,
+    CommaSeparatedListComponent,
   ],
   entryComponents: [
     LastAppliedConfigDialog,
     RowDetailComponent,
     LogsButtonComponent,
     MenuComponent,
+    NamespaceChangeDialog,
   ]
 })
 export class ComponentsModule {}

@@ -16,9 +16,10 @@ import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {FormsModule} from '@angular/forms';
-import {MAT_TOOLTIP_DEFAULT_OPTIONS, MatButtonModule, MatCardModule, MatChipsModule, MatDialogModule, MatDividerModule, MatFormFieldModule, MatGridListModule, MatIconModule, MatInputModule, MatMenuModule, MatPaginatorModule, MatProgressSpinnerModule, MatRadioModule, MatSidenavModule, MatSliderModule, MatSlideToggleModule, MatSortModule, MatTableModule, MatTabsModule, MatToolbarModule, MatTooltipModule} from '@angular/material';
+import {MAT_TOOLTIP_DEFAULT_OPTIONS, MatButtonModule, MatCardModule, MatChipsModule, MatDialogModule, MatDividerModule, MatFormFieldModule, MatGridListModule, MatIconModule, MatInputModule, MatMenuModule, MatPaginatorModule, MatProgressSpinnerModule, MatRadioModule, MatSelectModule, MatSidenavModule, MatSliderModule, MatSlideToggleModule, MatSortModule, MatTableModule, MatTabsModule, MatToolbarModule, MatTooltipModule} from '@angular/material';
 import {UIRouterModule} from '@uirouter/angular';
 import {AceEditorModule} from 'ng2-ace-editor';
+import {FilterPipeModule} from 'ngx-filter-pipe';
 
 import {PipesModule} from './common/pipes/module';
 import {KD_TOOLTIP_DEFAULT_OPTIONS} from './index.config';
@@ -50,11 +51,13 @@ const SHARED_DEPENDENCIES = [
   MatPaginatorModule,
   MatTabsModule,
   MatMenuModule,
+  MatSelectModule,
 
   // Other 3rd party modules
   FlexLayoutModule,
   UIRouterModule,
   AceEditorModule,
+  FilterPipeModule,
 
   // Custom application modules
   PipesModule,

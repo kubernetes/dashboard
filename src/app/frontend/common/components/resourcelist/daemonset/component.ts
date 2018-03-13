@@ -34,7 +34,7 @@ export class DaemonSetListComponent extends ResourceListWithStatuses<DaemonSetLi
   constructor(
       state: StateService, private readonly daemonSet_: NamespacedResourceService<DaemonSetList>,
       resolver: ComponentFactoryResolver, notifications: NotificationsService) {
-    super('pod', state, notifications, resolver);
+    super('', state, notifications, resolver);
     this.id = ListIdentifiers.daemonSet;
     this.groupId = ListGroupIdentifiers.workloads;
 

@@ -38,6 +38,10 @@
   $border: mat-color($foreground-palette, divider);
   $chart-green: mat-color($warn-palette, 50);
   $chart-blue: mat-color($warn-palette, 200);
+  $box-shadow-1: rgba(0, 0, 0, .2);
+  $box-shadow-2: rgba(0, 0, 0, .14);
+  $box-shadow-3: rgba(0, 0, 0, .12);
+  $box-shadow: 0 3px 1px -2px $box-shadow-1, 0 2px 2px 0 $box-shadow-2, 0 1px 5px 0 $box-shadow-3;
   $white: #fff;
 
   // Global style overrides.
@@ -132,8 +136,13 @@
 
   // Component-level styles
 
-  .kd-notifications-content {
+  .kd-notifications-panel {
     background-color: $card-background;
+    box-shadow: $box-shadow;
+  }
+
+  .kd-notification-unread {
+    background-color: darken($background, 2.5%);
   }
 
   .kd-code-block {
@@ -166,7 +175,7 @@
   }
 
   .kd-search-input {
-    background: mat-color($background-palette, card);
+    background: $card-background;
     border-bottom-color: $border;
     color: mat-color($foreground-palette, text);
   }
@@ -175,5 +184,29 @@
     &:not(:last-child) {
       border-bottom: 1px solid $border;
     }
+  }
+
+  .kd-namespace-select-input-container {
+    .mat-form-field-underline {
+      background-color: $border;
+    }
+
+    .mat-select-arrow {
+      color: $muted-light;
+    }
+  }
+
+  .mat-active,
+  .mat-selected {
+    color: $primary !important;
+  }
+
+  .kd-namespace-select-input {
+    background: $card-background;
+    color: mat-color($foreground-palette, text);
+  }
+
+  .kd-namespace-select-input-border {
+    border-bottom: 1px solid $border !important;
   }
 }

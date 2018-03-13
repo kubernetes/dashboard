@@ -95,7 +95,8 @@ $kd-dark-theme: mat-dark-theme($kd-dark-theme-primary, $kd-dark-theme-accent, $k
   @include angular-material-theme($kd-dark-theme);
   @include kd-theme($kd-dark-theme);
 
-  .kd-toolbar-logo-text {
+  .kd-toolbar-logo-text,
+  .kd-primary-toolbar-icon {
     filter: brightness(100);
   }
 }

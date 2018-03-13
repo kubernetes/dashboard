@@ -12,14 +12,64 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {TransitionService} from '@uirouter/core';
 
-import {NotificationsService} from '../../common/services/global/notifications';
+import {Animations} from '../../common/animations/animations';
+import {Notification, NotificationsService} from '../../common/services/global/notifications';
 
-@Component(
-    {selector: 'kd-notifications', templateUrl: './template.html', styleUrls: ['./style.scss']})
-export class NotificationsComponent {
-  open = false;
+@Component({
+  selector: 'kd-notifications',
+  templateUrl: './template.html',
+  styleUrls: ['./style.scss'],
+  animations: [Animations.easeOut],
+})
+export class NotificationsComponent implements OnInit {
+  isOpen_ = false;
+  notifications: Notification[] = [];
 
-  constructor(public notifications: NotificationsService) {}
+  constructor(
+      private readonly notifications_: NotificationsService,
+      private readonly transition_: TransitionService) {}
+
+  ngOnInit(): void {
+    this.transition_.onExit({}, () => {
+      this.close_();
+    });
+  }
+
+  load_(): void {
+    this.notifications = this.notifications_.getNotifications();
+  }
+
+  open_(): void {
+    this.load_();
+    this.isOpen_ = true;
+  }
+
+  close_(): void {
+    this.notifications_.markAllAsRead();
+    this.isOpen_ = false;
+  }
+
+  isOpen(): boolean {
+    return this.isOpen_;
+  }
+
+  toggle(): void {
+    this.isOpen() ? this.close_() : this.open_();
+  }
+
+  remove(index: number): void {
+    this.notifications_.remove(index);
+  }
+
+  clear(): void {
+    this.notifications_.clear();
+    this.load_();
+  }
+
+  getUnreadCount(): number {
+    return this.notifications_.getUnreadCount();
+  }
 }

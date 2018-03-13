@@ -12,33 +12,78 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as chromeStateName} from '../chrome/state';
+import {actionbarViewName, stateName as chromeStateName} from '../../chrome/state';
+import {breadcrumbsConfig} from '../../common/components/breadcrumbs/service';
+import {appendDetailParamsToUrl} from '../../common/resource/resourcedetail';
+import {stateName as cronJobList} from '../../cronjob/list/state';
 
-import {stateName as detailState} from './detail/state';
-import {config as detailConfig} from './detail/stateconfig';
-import {stateName as listState} from './list/state';
-import {config as listConfig} from './list/stateconfig';
-import {stateName} from './state';
+import {stateName as parentState, stateUrl} from '../state';
+import {ActionBarController} from './actionbar_controller';
+import {CronJobDetailController} from './controller';
 
 /**
- * Configures states for the Cron Job resource.
- *
- * @param {!ui.router.$stateProvider} $stateProvider
+ * @type {!ui.router.StateConfig}
+ */
+export const config = {
+  url: appendDetailParamsToUrl(stateUrl),
+  parent: parentState,
+  resolve: {
+    'cronJobDetailResource': getCronJobDetailResource,
+    'cronJobDetail': getCronJobDetail,
+  },
+  data: {
+    [breadcrumbsConfig]: {
+      'label': '{{$stateParams.objectName}}',
+      'parent': cronJobList,
+    },
+  },
+  views: {
+    '': {
+      controller: CronJobDetailController,
+      controllerAs: 'ctrl',
+      templateUrl: 'cronjob/detail/detail.html',
+    },
+    [`${actionbarViewName}@${chromeStateName}`]: {
+      templateUrl: 'cronjob/detail/actionbar.html',
+      controller: ActionBarController,
+      controllerAs: '$ctrl',
+    },
+  },
+};
+
+/**
+ * @param {!./../../common/resource/resourcedetail.StateParams} $stateParams
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
  * @ngInject
  */
-export default function stateConfig($stateProvider) {
-  $stateProvider.state(stateName, config)
-      .state(listState, listConfig)
-      .state(detailState, detailConfig);
+export function getCronJobDetailResource($resource, $stateParams) {
+  return $resource(`api/v1/cronjob/${$stateParams.objectNamespace}/${$stateParams.objectName}`);
 }
 
 /**
- * Config state object for the Cron Job abstract state.
- *
- * @type {!ui.router.StateConfig}
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
  */
-const config = {
-  abstract: true,
-  parent: chromeStateName,
-  template: '<ui-view/>',
-};
+export function activeJobsResource($resource) {
+  return $resource('api/v1/cronjob/:namespace/:name/job');
+}
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+export function eventsResource($resource) {
+  return $resource('api/v1/cronjob/:namespace/:name/event');
+}
+
+/**
+ * @param {!angular.Resource} cronJobDetailResource
+ * @return {!angular.$q.Promise}
+ * @ngInject
+ */
+export function getCronJobDetail(cronJobDetailResource) {
+  return cronJobDetailResource.get().$promise;
+}

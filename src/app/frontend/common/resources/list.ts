@@ -16,7 +16,7 @@ import {DataSource} from '@angular/cdk/collections';
 import {HttpParams} from '@angular/common/http';
 import {ComponentFactoryResolver, EventEmitter, Input, OnDestroy, OnInit, Output, QueryList, Type, ViewChild, ViewChildren, ViewContainerRef} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {Event as KdEvent, Resource, ResourceList} from '@api/backendapi';
+import {Event as KdEvent, K8sError, Resource, ResourceList} from '@api/backendapi';
 import {ActionColumn, ActionColumnDef, OnListChangeEvent} from '@api/frontendapi';
 import {StateService} from '@uirouter/core';
 import {Observable, ObservableInput} from 'rxjs/Observable';
@@ -28,9 +28,10 @@ import {searchState} from '../../search/state';
 import {CardListFilterComponent} from '../components/list/filter/component';
 import {RowDetailComponent} from '../components/list/rowdetail/component';
 import {NamespacedResourceStateParams, ResourceStateParams, SEARCH_QUERY_STATE_PARAM} from '../params/params';
+import {GlobalSettingsService} from '../services/global/globalsettings';
 import {GlobalServicesModule} from '../services/global/module';
-import {NotificationsService} from '../services/global/notifications';
-import {SettingsService} from '../services/global/settings';
+import {Notification, NotificationSeverity, NotificationsService} from '../services/global/notifications';
+import {KdStateService} from '../services/global/state';
 
 // TODO: NEEDS DOCUMENTATION!!!
 export abstract class ResourceListBase<T extends ResourceList, R extends Resource> implements
@@ -38,7 +39,8 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
   // Base properties
   private readonly data_ = new MatTableDataSource<R>();
   private dataSubscription_: Subscription;
-  private readonly settingsService_: SettingsService;
+  private readonly settingsService_: GlobalSettingsService;
+  private readonly kdState_: KdStateService;
   private readonly actionColumns_: Array<ActionColumnDef<ActionColumn>> = [];
   @Output('onchange') onChange: EventEmitter<OnListChangeEvent> = new EventEmitter();
   @Input() id: string;
@@ -57,9 +59,10 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
   }
 
   constructor(
-      private readonly detailStateName_: string, private readonly state_: StateService,
+      private readonly stateName_: string, private readonly state_: StateService,
       private readonly notifications_: NotificationsService) {
-    this.settingsService_ = GlobalServicesModule.injector.get(SettingsService);
+    this.settingsService_ = GlobalServicesModule.injector.get(GlobalSettingsService);
+    this.kdState_ = GlobalServicesModule.injector.get(KdStateService);
   }
 
   ngOnInit(): void {
@@ -71,14 +74,6 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
       throw Error('MatPaginator has to be defined on a table.');
     }
 
-    // if (this.matSort_ === undefined) {
-    //   throw Error('MatSort has to be defined on a table.');
-    // }
-    //
-    // if (this.cardFilter_ === undefined) {
-    //   throw Error('CardListFilter has to be defined on a table.');
-    // }
-
     let loadingTimeout: NodeJS.Timer;
     this.dataSubscription_ =
         this.getObservableWithDataSelect_()
@@ -89,7 +84,7 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
                     return this.getResourceObservable(this.getDataSelectParams_());
                   }))
             .subscribe((data: T) => {
-              this.notifications_.addErrorNotifications(data.errors);
+              this.pushErrorNotifications(data.errors);
               this.totalItems = data.listMeta.totalItems;
               this.isLoading = false;
               this.data_.data = this.map(data);
@@ -104,13 +99,16 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
     }
   }
 
-  getDetailsHref(resourceName: string, namespace?: string): string {
-    let stateParams = new ResourceStateParams(resourceName);
-    if (namespace) {
-      stateParams = new NamespacedResourceStateParams(namespace, resourceName);
+  pushErrorNotifications(errors: K8sError[]): void {
+    if (errors) {
+      errors.forEach(error => {
+        this.notifications_.push(`${error.ErrStatus.message}`, NotificationSeverity.error);
+      });
     }
+  }
 
-    return this.state_.href(this.detailStateName_, stateParams);
+  getDetailsHref(resourceName: string, namespace?: string): string {
+    return this.stateName_ ? this.kdState_.href(this.stateName_, resourceName, namespace) : '';
   }
 
   getData(): DataSource<R> {
@@ -296,12 +294,12 @@ export abstract class ResourceListWithStatuses<T extends ResourceList, R extends
   hoveredRow: number = undefined;
 
   constructor(
-      detailStateName: string,
+      stateName: string,
       state: StateService,
       private readonly notifications: NotificationsService,
       private readonly resolver_?: ComponentFactoryResolver,
   ) {
-    super(detailStateName, state, notifications);
+    super(stateName, state, notifications);
 
     this.onChange.subscribe(this.clearExpandedRows_.bind(this));
   }

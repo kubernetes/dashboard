@@ -20,7 +20,9 @@ import {SharedModule} from '../shared.module';
 
 import {SettingsComponent} from './component';
 import {SettingsEntryComponent} from './entry/component';
-import {SaveAnywayDialog} from './saveanywaysdialog/dialog';
+import {GlobalSettingsComponent} from './global/component';
+import {SaveAnywayDialog} from './global/saveanywaysdialog/dialog';
+import {LocalSettingsComponent} from './local/component';
 import {settingsState} from './state';
 
 @NgModule({
@@ -30,6 +32,8 @@ import {settingsState} from './state';
     UIRouterModule.forChild({states: [settingsState]}),
   ],
   declarations: [
+    GlobalSettingsComponent,
+    LocalSettingsComponent,
     SettingsComponent,
     SettingsEntryComponent,
     SaveAnywayDialog,

@@ -35,7 +35,7 @@ export class PersistentVolumeListComponent extends
   constructor(
       state: StateService, private readonly pv_: ResourceService<PersistentVolumeList>,
       notifications: NotificationsService) {
-    super('node', state, notifications);
+    super('', state, notifications);
     this.id = ListIdentifiers.persistentVolume;
     this.groupId = ListGroupIdentifiers.cluster;
 

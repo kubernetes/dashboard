@@ -15,32 +15,50 @@
 import {Injectable} from '@angular/core';
 import {K8sError} from '@api/backendapi';
 
-enum NotificationSeverity {
+export class Notification {
+  message: string;
+  icon: string;
+  cssClass: string;
+  timestamp: Date;
+  read = false;
+
+  constructor(message: string, severity: NotificationSeverity) {
+    this.message = message;
+    this.icon = severity.toString();
+    this.timestamp = new Date();
+
+    switch (severity) {
+      case NotificationSeverity.info:
+        this.cssClass = 'kd-success';
+        break;
+      case NotificationSeverity.warning:
+        this.cssClass = 'kd-warning';
+        break;
+      case NotificationSeverity.error:
+        this.cssClass = 'kd-error';
+        break;
+      default:
+        this.cssClass = '';
+    }
+  }
+}
+
+export enum NotificationSeverity {
   info = 'info',
   warning = 'warning',
   error = 'error',
-}
-
-interface Notification {
-  severity: NotificationSeverity;
-  message: string;
-  read: boolean;
 }
 
 @Injectable()
 export class NotificationsService {
   private notifications_: Notification[] = [];
 
-  addErrorNotifications(errors: K8sError[]): void {
-    if (errors) {
-      errors.forEach(error => {
-        this.notifications_.push({
-          message: `${error.ErrStatus.message}`,
-          severity: NotificationSeverity.error,
-          read: false,
-        });
-      });
-    }
+  push(message: string, severity: NotificationSeverity): void {
+    this.notifications_ = [new Notification(message, severity), ...this.notifications_];
+  }
+
+  remove(index: number): void {
+    this.notifications_.splice(index, 1);
   }
 
   getNotifications(): Notification[] {
