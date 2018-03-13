@@ -13,10 +13,23 @@
 // limitations under the License.
 
 import {Component, Input} from '@angular/core';
+import {StateService} from '@uirouter/core';
 
 @Component({
   selector: 'kd-nav-item',
   templateUrl: 'template.html',
   styleUrls: ['style.scss'],
 })
-export class NavItemComponent { @Input() state: string; }
+export class NavItemComponent {
+  @Input() state: string;
+
+  constructor(private readonly stateService_: StateService) {}
+
+  isActive(): boolean {
+    // List states of specific resources are always in format <stateName>.list or <stateName>.detail
+    const partials = this.state.split('.');
+    const baseState = partials[0];
+
+    return baseState === this.stateService_.current.name.split('.')[0];
+  }
+}
