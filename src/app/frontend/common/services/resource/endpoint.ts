@@ -21,6 +21,7 @@ export enum Resource {
   deployment = 'deployment',
   pod = 'pod',
   replicaSet = 'replicaset',
+  oldReplicaSet = 'oldreplicaset',
   replicationController = 'replicationcontroller',
   statefulSet = 'statefulset',
   node = 'node',

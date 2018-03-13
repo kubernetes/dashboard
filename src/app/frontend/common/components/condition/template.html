@@ -27,7 +27,8 @@ limitations under the License.
   </div>
 
   <div content>
-    <mat-table [dataSource]="getDataSource()">
+    <mat-table [dataSource]="getDataSource()"
+               class="kd-table-no-footer">
       <ng-container [matColumnDef]="getConditionsColumns()[0]">
         <mat-header-cell *matHeaderCellDef>Type</mat-header-cell>
         <mat-cell *matCellDef="let condition">

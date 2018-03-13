@@ -30,6 +30,7 @@ import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
   templateUrl: './template.html',
 })
 export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSetList, ReplicaSet> {
+  @Input() title: string;
   @Input() endpoint = EndpointManager.resource(Resource.replicaSet, true).list();
 
   constructor(

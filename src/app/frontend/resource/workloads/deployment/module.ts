@@ -16,8 +16,9 @@ import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
 import {ComponentsModule} from '../../../common/components/module';
 import {ResourceModule} from '../../../common/services/resource/module';
-
 import {SharedModule} from '../../../shared.module';
+import {DeploymentDetailComponent} from './detail/component';
+import {deploymentDetailState} from './detail/state';
 import {DeploymentList} from './list/component';
 import {deploymentListState} from './list/state';
 import {deploymentState} from './state';
@@ -27,8 +28,9 @@ import {deploymentState} from './state';
     SharedModule,
     ComponentsModule,
     ResourceModule,
-    UIRouterModule.forChild({states: [deploymentState, deploymentListState]}),
+    UIRouterModule.forChild(
+        {states: [deploymentState, deploymentListState, deploymentDetailState]}),
   ],
-  declarations: [DeploymentList],
+  declarations: [DeploymentList, DeploymentDetailComponent],
 })
 export class DeploymentModule {}

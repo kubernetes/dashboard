@@ -17,7 +17,10 @@ limitations under the License.
 <kd-card role="table"
          [hidden]="isHidden()">
   <div title
-       fxLayout="row">Replica Sets</div>
+       fxLayout="row">
+    <ng-container *ngIf="title;else defaultTitle">{{title}}</ng-container>
+    <ng-template #defaultTitle>Replica Sets</ng-template>
+  </div>
   <div description><span class="kd-muted-light">Items:&nbsp;</span>{{totalItems}}</div>
   <div actions>
     <kd-card-list-filter></kd-card-list-filter>

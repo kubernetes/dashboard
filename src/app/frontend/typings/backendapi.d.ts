@@ -296,6 +296,7 @@ export interface ResourceQuotaDetail extends ResourceDetail {
 export interface DeploymentDetail extends ResourceDetail {
   selector: Label[];
   statusInfo: DeploymentInfo;
+  conditions: Condition[];
   strategy: string;
   minReadySeconds: number;
   revisionHistoryLimit?: number;

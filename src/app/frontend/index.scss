@@ -254,3 +254,9 @@ code {
 .kd-hidden {
   display: none !important;
 }
+
+.kd-table-no-footer {
+  .mat-row:last-of-type {
+    border-bottom: 0;
+  }
+}
