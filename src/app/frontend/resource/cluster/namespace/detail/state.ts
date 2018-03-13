@@ -12,10 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component} from '@angular/core';
+import {Ng2StateDeclaration} from '@uirouter/angular';
 
-@Component({
-  selector: 'kd-namespace-list-view',
-  template: '<kd-namespace-list></kd-namespace-list>',
-})
-export class NamespaceListComponent {}
+import {addResourceStateParamsToUrl} from '../../../../common/params/params';
+import {stateName, stateUrl} from '../state';
+
+import {NamespaceDetailComponent} from './component';
+
+export const namespaceDetailState: Ng2StateDeclaration = {
+  name: `${stateName}.detail`,
+  url: addResourceStateParamsToUrl(stateUrl),
+  component: NamespaceDetailComponent,
+  data: {
+    kdBreadcrumbs: {
+      label: 'resourceName',
+      parent: 'namespace.list',
+    },
+  },
+};

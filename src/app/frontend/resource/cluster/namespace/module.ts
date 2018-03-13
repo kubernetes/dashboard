@@ -19,6 +19,8 @@ import {ComponentsModule} from '../../../common/components/module';
 import {ResourceModule} from '../../../common/services/resource/module';
 import {SharedModule} from '../../../shared.module';
 
+import {NamespaceDetailComponent} from './detail/component';
+import {namespaceDetailState} from './detail/state';
 import {NamespaceListComponent} from './list/component';
 import {namespaceListState} from './list/state';
 import {namespaceState} from './state';
@@ -28,8 +30,14 @@ import {namespaceState} from './state';
     SharedModule,
     ComponentsModule,
     ResourceModule,
-    UIRouterModule.forChild({states: [namespaceState, namespaceListState]}),
+    UIRouterModule.forChild({
+      states: [
+        namespaceState,
+        namespaceListState,
+        namespaceDetailState,
+      ]
+    }),
   ],
-  declarations: [NamespaceListComponent],
+  declarations: [NamespaceListComponent, NamespaceDetailComponent],
 })
 export class NamespaceModule {}
