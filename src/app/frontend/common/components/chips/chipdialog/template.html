@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<h2 mat-dialog-title><code>kubectl.kubernetes.io/last-applied-configuration</code></h2>
+<h2 mat-dialog-title><code>{{data.key}}</code></h2>
 <mat-dialog-content>
-  <kd-text-input [text]="data"
+  <kd-text-input [text]="data.value"
                  [readOnly]="true"
                  [useJsonFormat]="true"></kd-text-input>
 </mat-dialog-content>

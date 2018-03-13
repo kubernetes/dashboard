@@ -14,19 +14,17 @@
 
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {Chip} from '../component';
 
 @Component({
-  selector: 'kd-chips-last-applied-config-diaog',
+  selector: 'kd-chip-dialog',
   templateUrl: 'template.html',
 })
-export class LastAppliedConfigDialog {
+export class ChipDialog {
   constructor(
-      public dialogRef: MatDialogRef<LastAppliedConfigDialog>,
-      @Inject(MAT_DIALOG_DATA) public data: string) {}
+      public dialogRef: MatDialogRef<ChipDialog>, @Inject(MAT_DIALOG_DATA) public data: Chip) {}
 
   onNoClick(): void {
     this.dialogRef.close();
   }
-
-  // TODO Use editor to display YAML/JSON (Ace?).
 }

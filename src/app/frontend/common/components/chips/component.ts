@@ -16,7 +16,12 @@ import {Component, Input, OnInit} from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material';
 import {StringMap} from '@api/backendapi';
 
-import {LastAppliedConfigDialog} from './lastappliedconfigdialog/dialog';
+import {ChipDialog} from './chipdialog/dialog';
+
+export interface Chip {
+  key: string;
+  value: string;
+}
 
 /**
  * Regular expression for URL validation created by @dperini.
@@ -30,6 +35,8 @@ const URL_REGEXP = new RegExp(
         '[a-z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]' +
         '+)*(?:\\.(?:[a-z\\u00a1-\\uffff]{2,}))\\.?)(?::\\d{2,5})?(?:[/?#]\\S*)?$',
     'i');
+
+const MAX_CHIP_VALUE_LENGHT = 63;
 
 @Component({
   selector: 'kd-chips',
@@ -67,15 +74,22 @@ export class ChipsComponent implements OnInit {
     this.isShowingAll = !this.isShowingAll;
   }
 
+  isTooLong(value: string): boolean {
+    return value !== undefined && value.length > MAX_CHIP_VALUE_LENGHT;
+  }
+
   isHref(value: string): boolean {
     return URL_REGEXP.test(value.trim());
   }
 
-  openLastAppliedConfigDialog(value: string): void {
-    const dialogConfig: MatDialogConfig = {
+  openChipDialog(key: string, value: string): void {
+    const dialogConfig: MatDialogConfig<Chip> = {
       width: '630px',
-      data: value,
+      data: {
+        key: key,
+        value: value,
+      }
     };
-    this.dialog_.open(LastAppliedConfigDialog, dialogConfig);
+    this.dialog_.open(ChipDialog, dialogConfig);
   }
 }
