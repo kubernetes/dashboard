@@ -18,6 +18,7 @@ import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 import {PersistentVolumeClaim, PersistentVolumeClaimList} from 'typings/backendapi';
 
+import {persistentVolumeClaimState} from '../../../../resource/config/persistentvolumeclaim/state';
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
@@ -36,7 +37,7 @@ export class PersistentVolumeClaimListComponent extends
       state: StateService,
       private readonly persistentVolumeClaim_: NamespacedResourceService<PersistentVolumeClaimList>,
       notifications: NotificationsService) {
-    super('', state, notifications);
+    super(persistentVolumeClaimState.name, state, notifications);
     this.id = ListIdentifiers.persistentVolumeClaim;
     this.groupId = ListGroupIdentifiers.config;
 
