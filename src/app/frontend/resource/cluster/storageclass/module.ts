@@ -19,6 +19,8 @@ import {ComponentsModule} from '../../../common/components/module';
 import {ResourceModule} from '../../../common/services/resource/module';
 import {SharedModule} from '../../../shared.module';
 
+import {StorageClassDetailComponent} from './detail/component';
+import {storageClassDetailState} from './detail/state';
 import {StorageClassListComponent} from './list/component';
 import {storageClassListState} from './list/state';
 import {storageClassState} from './state';
@@ -28,8 +30,14 @@ import {storageClassState} from './state';
     SharedModule,
     ResourceModule,
     ComponentsModule,
-    UIRouterModule.forChild({states: [storageClassState, storageClassListState]}),
+    UIRouterModule.forChild({
+      states: [
+        storageClassState,
+        storageClassListState,
+        storageClassDetailState,
+      ]
+    }),
   ],
-  declarations: [StorageClassListComponent],
+  declarations: [StorageClassListComponent, StorageClassDetailComponent],
 })
 export class StorageClassModule {}

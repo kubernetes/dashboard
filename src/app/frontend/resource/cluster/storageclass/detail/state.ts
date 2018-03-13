@@ -12,5 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** Name of the state. Can be used in, e.g., $state.go method. */
-export const stateName = 'storageclassdetail';
+import {Ng2StateDeclaration} from '@uirouter/angular';
+
+import {addResourceStateParamsToUrl} from '../../../../common/params/params';
+import {stateName, stateUrl} from '../state';
+
+import {StorageClassDetailComponent} from './component';
+
+export const storageClassDetailState: Ng2StateDeclaration = {
+  name: `${stateName}.detail`,
+  url: addResourceStateParamsToUrl(stateUrl),
+  component: StorageClassDetailComponent,
+  data: {
+    kdBreadcrumbs: {
+      label: 'resourceName',
+      parent: 'storageclass.list',
+    },
+  },
+};

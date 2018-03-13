@@ -18,6 +18,7 @@ import {StorageClass, StorageClassList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 
+import {storageClassState} from '../../../../resource/cluster/storageclass/state';
 import {ResourceListBase} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
@@ -34,7 +35,7 @@ export class StorageClassListComponent extends ResourceListBase<StorageClassList
   constructor(
       state: StateService, private readonly sc_: ResourceService<StorageClassList>,
       notifications: NotificationsService) {
-    super('', state, notifications);
+    super(storageClassState.name, state, notifications);
     this.id = ListIdentifiers.storageClass;
     this.groupId = ListGroupIdentifiers.cluster;
   }

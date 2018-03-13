@@ -12,16 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * @final
- */
-export class ActionBarController {
-  /**
-   * @param {!backendApi.StorageClass} storageClass
-   * @ngInject
-   */
-  constructor(storageClass) {
-    /** @export {!backendApi.StorageClass} */
-    this.details = storageClass;
-  }
+@import '../../../../variables';
+@import '../../../../mixins';
+
+.kd-storage-class-parameter-icon {
+  @include kd-icon-size($caption-font-size-base);
+
+  margin-left: $baseline-grid / 2;
 }

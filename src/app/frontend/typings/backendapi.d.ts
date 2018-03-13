@@ -371,6 +371,8 @@ export interface PersistentVolumeClaimDetail extends ResourceDetail {
   accessModes: string[];
 }
 
+export interface StorageClassDetail extends ResourceDetail { parameters: StringMap; }
+
 export interface ConfigMapDetail extends ResourceDetail { data: StringMap; }
 
 export interface JobDetail extends ResourceDetail {

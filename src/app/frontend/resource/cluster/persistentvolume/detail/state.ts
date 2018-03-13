@@ -12,15 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Definition object for the component that displays Storage Class info.
- *
- * @return {!angular.Component}
- */
-export const storageClassInfoComponent = {
-  templateUrl: 'storageclass/detail/info.html',
-  bindings: {
-    /** {!backendApi.StorageClass} */
-    'storageClass': '=',
+import {Ng2StateDeclaration} from '@uirouter/angular';
+
+import {addResourceStateParamsToUrl} from '../../../../common/params/params';
+import {stateName, stateUrl} from '../state';
+
+import {PersistentVolumeDetailComponent} from './component';
+
+export const persistentVolumeDetailState: Ng2StateDeclaration = {
+  name: `${stateName}.detail`,
+  url: addResourceStateParamsToUrl(stateUrl),
+  component: PersistentVolumeDetailComponent,
+  data: {
+    kdBreadcrumbs: {
+      label: 'resourceName',
+      parent: 'persistentvolume.list',
+    },
   },
 };
