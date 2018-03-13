@@ -18,6 +18,8 @@ import {ComponentsModule} from '../../../common/components/module';
 import {ResourceModule} from '../../../common/services/resource/module';
 
 import {SharedModule} from '../../../shared.module';
+import {CronJobDetailComponent} from './detail/component';
+import {cronJobDetailState} from './detail/state';
 import {CronJobList} from './list/component';
 import {cronJobListState} from './list/state';
 import {cronJobState} from './state';
@@ -27,8 +29,8 @@ import {cronJobState} from './state';
     SharedModule,
     ComponentsModule,
     ResourceModule,
-    UIRouterModule.forChild({states: [cronJobState, cronJobListState]}),
+    UIRouterModule.forChild({states: [cronJobState, cronJobListState, cronJobDetailState]}),
   ],
-  declarations: [CronJobList],
+  declarations: [CronJobList, CronJobDetailComponent],
 })
 export class CronJobModule {}
