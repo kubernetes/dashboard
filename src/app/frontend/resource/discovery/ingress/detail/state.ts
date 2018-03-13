@@ -12,20 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import DeployFromFilePageObject from './deployfromfile_po';
+import {Ng2StateDeclaration} from '@uirouter/angular';
 
-describe('Deploy from file view', () => {
-  /** @type {!DeployFromFilePageObject} */
-  let page;
+import {addNamespacedResourceStateParamsToUrl} from '../../../../common/params/params';
+import {stateName, stateUrl} from '../state';
 
-  beforeEach(() => {
-    page = new DeployFromFilePageObject();
+import {IngressDetailComponent} from './component';
 
-    browser.get('#!/deploy');
-    page.deployFromFileTab.click();
-  });
-
-  it('should have upload button disabled when no file is selected', () => {
-    expect(page.deployButton.getAttribute('disabled')).toContain('true');
-  });
-});
+export const ingressDetailState: Ng2StateDeclaration = {
+  name: `${stateName}.detail`,
+  url: addNamespacedResourceStateParamsToUrl(stateUrl),
+  component: IngressDetailComponent,
+  data: {
+    kdBreadcrumbs: {
+      label: 'resourceName',
+      parent: 'ingress.list',
+    },
+  },
+};

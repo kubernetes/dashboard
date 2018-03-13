@@ -14,10 +14,13 @@
 
 import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
+
 import {ComponentsModule} from '../../../common/components/module';
 import {ResourceModule} from '../../../common/services/resource/module';
-
 import {SharedModule} from '../../../shared.module';
+
+import {ServiceDetailComponent} from './detail/component';
+import {serviceDetailState} from './detail/state';
 import {ServiceList} from './list/component';
 import {serviceListState} from './list/state';
 import {serviceState} from './state';
@@ -27,8 +30,14 @@ import {serviceState} from './state';
     SharedModule,
     ComponentsModule,
     ResourceModule,
-    UIRouterModule.forChild({states: [serviceState, serviceListState]}),
+    UIRouterModule.forChild({
+      states: [
+        serviceState,
+        serviceListState,
+        serviceDetailState,
+      ]
+    }),
   ],
-  declarations: [ServiceList],
+  declarations: [ServiceList, ServiceDetailComponent],
 })
 export class ServiceModule {}

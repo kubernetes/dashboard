@@ -12,19 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {StorageClassListController} from 'storageclass/list/controller';
-import storageClassModule from 'storageclass/module';
+import {Ng2StateDeclaration} from '@uirouter/angular';
 
-describe('Storage Class list controller', () => {
-  beforeEach(() => {
-    angular.mock.module(storageClassModule.name);
-  });
+import {addNamespacedResourceStateParamsToUrl} from '../../../../common/params/params';
+import {stateName, stateUrl} from '../state';
 
-  it('should initialize storage class controller', angular.mock.inject(($controller) => {
-    let ctrls = {};
-    /** @type {!StorageClassListController} */
-    let ctrl = $controller(StorageClassListController, {storageClassList: {storageClasses: ctrls}});
+import {PersistentVolumeClaimDetailComponent} from './component';
 
-    expect(ctrl.storageClassList.storageClasses).toBe(ctrls);
-  }));
-});
+export const persistentVolumeClaimDetailState: Ng2StateDeclaration = {
+  name: `${stateName}.detail`,
+  url: addNamespacedResourceStateParamsToUrl(stateUrl),
+  component: PersistentVolumeClaimDetailComponent,
+  data: {
+    kdBreadcrumbs: {
+      label: 'resourceName',
+      parent: 'persistentvolumeclaim.list',
+    },
+  },
+};

@@ -18,6 +18,7 @@ import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 import {Endpoint, Ingress, IngressList} from 'typings/backendapi';
 
+import {ingressState} from '../../../../resource/discovery/ingress/state';
 import {ResourceListBase} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
@@ -31,7 +32,7 @@ export class IngressListComponent extends ResourceListBase<IngressList, Ingress>
   constructor(
       state: StateService, private readonly ingress_: NamespacedResourceService<IngressList>,
       notifications: NotificationsService) {
-    super('', state, notifications);
+    super(ingressState.name, state, notifications);
     this.id = ListIdentifiers.ingress;
     this.groupId = ListGroupIdentifiers.discovery;
   }

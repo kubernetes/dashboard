@@ -18,6 +18,7 @@ import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 import {Service, ServiceList} from 'typings/backendapi';
 
+import {serviceState} from '../../../../resource/discovery/service/state';
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
@@ -31,7 +32,7 @@ export class ServiceListComponent extends ResourceListWithStatuses<ServiceList, 
   constructor(
       state: StateService, private readonly service_: NamespacedResourceService<ServiceList>,
       notifications: NotificationsService) {
-    super('', state, notifications);
+    super(serviceState.name, state, notifications);
     this.id = ListIdentifiers.service;
     this.groupId = ListGroupIdentifiers.discovery;
 

@@ -12,21 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import storageClassModule from 'storageclass/module';
+import {Ng2StateDeclaration} from '@uirouter/angular';
 
-describe('Storage Class Info controller', () => {
-  /** @type {!StorageClassInfoController} */
-  let ctrl;
+import {addNamespacedResourceStateParamsToUrl} from '../../../../common/params/params';
+import {stateName, stateUrl} from '../state';
 
-  beforeEach(() => {
-    angular.mock.module(storageClassModule.name);
+import {ServiceDetailComponent} from './component';
 
-    angular.mock.inject(($componentController, $rootScope) => {
-      ctrl = $componentController('kdStorageClassInfo', {$scope: $rootScope}, {storageClass: {}});
-    });
-  });
-
-  it('should initialize the ctrl', () => {
-    expect(ctrl.storageClass).not.toBeUndefined();
-  });
-});
+export const serviceDetailState: Ng2StateDeclaration = {
+  name: `${stateName}.detail`,
+  url: addNamespacedResourceStateParamsToUrl(stateUrl),
+  component: ServiceDetailComponent,
+  data: {
+    kdBreadcrumbs: {
+      label: 'resourceName',
+      parent: 'service.list',
+    },
+  },
+};
