@@ -169,7 +169,7 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy, AfterViewI
   private shouldShowNamespaceChangeDialog(): boolean {
     const resourceNamespace = this.state_.params.resourceNamespace;
     const namespace = this.state_.params.namespace;
-    return namespace !== this.allNamespacesKey && resourceNamespace !== undefined &&
+    return namespace !== this.allNamespacesKey && resourceNamespace &&
         resourceNamespace !== namespace;
   }
 
