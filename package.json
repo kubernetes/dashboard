@@ -82,13 +82,13 @@
     "roboto-fontface": "^0.8.0",
     "rxjs": "^5.5.6",
     "web-animations-js": "^2.3.1",
-    "zone.js": "^0.8.19"
+    "zone.js": "^0.8.20"
   },
   "devDependencies": {
     "@angular/cli": "1.6.8",
     "@angular/compiler-cli": "5.2.5",
     "@angular/language-service": "5.2.5",
-    "@types/jasmine": "^2.8.3",
+    "@types/jasmine": "^2.8.6",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^8.5.8",
     "babel": "^6.23.0",
@@ -106,7 +106,7 @@
     "gulp-license-check": "^1.2.1",
     "gulp-util": "^3.0.8",
     "husky": "^0.14.3",
-    "jasmine-core": "~2.8.0",
+    "jasmine-core": "~2.9.1",
     "jasmine-spec-reporter": "~4.2.1",
     "js-beautify": "^1.7.5",
     "karma": "~2.0.0",

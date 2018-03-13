@@ -18,5 +18,6 @@
 .kd-storage-class-parameter-icon {
   @include kd-icon-size($caption-font-size-base);
 
+  align-self: center;
   margin-left: $baseline-grid / 2;
 }
