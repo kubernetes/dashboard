@@ -16,8 +16,9 @@ import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
 import {ComponentsModule} from '../../../common/components/module';
 import {ResourceModule} from '../../../common/services/resource/module';
-
 import {SharedModule} from '../../../shared.module';
+import {DaemonSetDetailComponent} from './detail/component';
+import {daemonSetDetailState} from './detail/state';
 import {DaemonSetList} from './list/component';
 import {daemonSetListState} from './list/state';
 import {daemonSetState} from './state';
@@ -27,8 +28,8 @@ import {daemonSetState} from './state';
     SharedModule,
     ComponentsModule,
     ResourceModule,
-    UIRouterModule.forChild({states: [daemonSetState, daemonSetListState]}),
+    UIRouterModule.forChild({states: [daemonSetState, daemonSetListState, daemonSetDetailState]}),
   ],
-  declarations: [DaemonSetList],
+  declarations: [DaemonSetList, DaemonSetDetailComponent],
 })
 export class DaemonSetModule {}
