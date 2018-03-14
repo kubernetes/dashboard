@@ -57,6 +57,7 @@ func createDeployment(name, namespace, podTemplateName string, replicas int32, p
 		},
 		Status: apps.DeploymentStatus{
 			Replicas: replicas, UpdatedReplicas: 2, AvailableReplicas: 3, UnavailableReplicas: 1,
+			Conditions: []apps.DeploymentCondition{},
 		},
 	}
 }
@@ -127,6 +128,7 @@ func TestGetDeploymentDetail(t *testing.T) {
 					Available:   3,
 					Unavailable: 1,
 				},
+				Conditions:      []common.Condition{},
 				Strategy:        "RollingUpdate",
 				MinReadySeconds: 5,
 				RollingUpdateStrategy: &RollingUpdateStrategy{

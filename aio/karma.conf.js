@@ -21,7 +21,7 @@ module.exports = function(config) {
   let configuration = {
     basePath: path.join(__dirname, '..'),
 
-    logLevel: config.LOG_DEBUG,
+    logLevel: config.LOG_INFO,
 
     browserConsoleLogOptions: {terminal: true, level: ''},
 
