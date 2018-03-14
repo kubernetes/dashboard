@@ -79,11 +79,20 @@ function copy::frontend {
 }
 
 function copy::supported-locales {
-  say "\nCopying locales file to backend dist dir"
+  say "\nCopying locales file to backend dist dirs"
   architectures=($(ls ${DIST_DIR}))
   for arch in "${architectures[@]}"; do
     OUT_DIR=${DIST_DIR}/${arch}
     cp ${I18N_DIR}/locale_conf.json ${OUT_DIR}
+  done
+}
+
+function copy::dockerfile {
+  say "\nCopying Dockerfile to backend dist dirs"
+  architectures=($(ls ${DIST_DIR}))
+  for arch in "${architectures[@]}"; do
+    OUT_DIR=${DIST_DIR}/${arch}
+    cp ${AIO_DIR}/Dockerfile ${OUT_DIR}
   done
 }
 
@@ -125,6 +134,7 @@ fi
 build::frontend
 copy::frontend
 copy::supported-locales
+copy::dockerfile
 
 END=$(date +%s.%N)
 TOOK=$(echo "$END - $START" | bc)
