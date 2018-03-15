@@ -15,7 +15,7 @@ Permissions are managed using the following Kubernetes Resources:
 * RoleBinding
 * ClusterRoleBinding
 
-None of these are reflected in the current version of Dashboard UI. There should a simplified, 
+None of these are reflected in the current version of Dashboard UI. There should be a simplified, 
 more user-friendly way to manage a cluster's access control by abstracting these raw concepts.
 
 
