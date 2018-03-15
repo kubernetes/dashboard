@@ -16,7 +16,6 @@ import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
 import {ComponentsModule} from '../../../common/components/module';
 import {ResourceModule} from '../../../common/services/resource/module';
-import {REPLICA_SET_ENDPOINT, RESOURCE_ENDPOINT_DI_TOKEN} from '../../../index.config';
 
 import {SharedModule} from '../../../shared.module';
 import {ReplicaSetDetailComponent} from './detail/component';
@@ -33,7 +32,6 @@ import {replicaSetState} from './state';
     UIRouterModule.forChild(
         {states: [replicaSetState, replicaSetListState, replicaSetDetailState]}),
   ],
-  providers: [{provide: RESOURCE_ENDPOINT_DI_TOKEN, useValue: REPLICA_SET_ENDPOINT}],
   declarations: [ReplicaSetList, ReplicaSetDetailComponent],
 })
 export class ReplicaSetModule {}

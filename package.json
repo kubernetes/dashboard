@@ -85,7 +85,7 @@
     "zone.js": "^0.8.20"
   },
   "devDependencies": {
-    "@angular/cli": "1.6.8",
+    "@angular/cli": "1.7.0",
     "@angular/compiler-cli": "5.2.5",
     "@angular/language-service": "5.2.5",
     "@types/jasmine": "^2.8.6",
@@ -131,7 +131,7 @@
     "through2": "^2.0.3",
     "ts-node": "~4.1.0",
     "tslint": "~5.9.1",
-    "typescript": "~2.4.2"
+    "typescript": "~2.5.3"
   },
   "engines": {
     "node": ">=8.0.0",
