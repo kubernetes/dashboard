@@ -39,12 +39,15 @@ export class StatefulSetDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.statefulSetName_ = this.state_.params.resourceName;
-    this.podListEndpoint =
-        EndpointManager.resource(Resource.statefulSet, true).child(this.statefulSetName_, Resource.pod);
-    this.eventListEndpoint =
-        EndpointManager.resource(Resource.statefulSet, true).child(this.statefulSetName_, Resource.event);
+    this.podListEndpoint = EndpointManager.resource(Resource.statefulSet, true)
+                               .child(this.statefulSetName_, Resource.pod);
+    this.eventListEndpoint = EndpointManager.resource(Resource.statefulSet, true)
+                                 .child(this.statefulSetName_, Resource.event);
     this.statefulSetSubscription_ =
-        this.seatefulSet_.get(EndpointManager.resource(Resource.statefulSet, true).detail(), this.statefulSetName_)
+        this.seatefulSet_
+            .get(
+                EndpointManager.resource(Resource.statefulSet, true).detail(),
+                this.statefulSetName_)
             .startWith({})
             .subscribe((d: StatefulSetDetail) => {
               this.statefulSet = d;
