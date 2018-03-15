@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-const baseHref = '/api/v1';
+const baseHref = 'api/v1';
 
 export enum Resource {
   job = 'job',
