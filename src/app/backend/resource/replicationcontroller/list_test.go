@@ -175,6 +175,7 @@ func TestToReplicationControllerList(t *testing.T) {
 						ObjectMeta: api.ObjectMeta{
 							Name:      "my-app-1",
 							Namespace: "namespace-1",
+							UID:       "uid-1",
 						},
 						TypeMeta:        api.TypeMeta{Kind: api.ResourceKindReplicationController},
 						ContainerImages: []string{"my-container-image-1"},
@@ -190,6 +191,7 @@ func TestToReplicationControllerList(t *testing.T) {
 						ObjectMeta: api.ObjectMeta{
 							Name:      "my-app-2",
 							Namespace: "namespace-2",
+							UID:       "uid-2",
 						},
 						TypeMeta:        api.TypeMeta{Kind: api.ResourceKindReplicationController},
 						ContainerImages: []string{"my-container-image-2"},

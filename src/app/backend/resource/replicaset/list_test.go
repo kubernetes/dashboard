@@ -138,6 +138,7 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 					ObjectMeta: api.ObjectMeta{
 						Name:              "rs-name",
 						Namespace:         "rs-namespace",
+						UID:               "uid",
 						Labels:            map[string]string{"key": "value"},
 						CreationTimestamp: metaV1.Unix(111, 222),
 					},

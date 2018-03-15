@@ -55,6 +55,7 @@ func TestGetServicePods(t *testing.T) {
 					{
 						ObjectMeta: api.ObjectMeta{
 							Name:      "pod-1",
+							UID:       "test-uid",
 							Namespace: "ns-1"},
 						TypeMeta:  api.TypeMeta{Kind: api.ResourceKindPod},
 						PodStatus: pod.PodStatus{Status: string(v1.PodPending)},

@@ -28,7 +28,7 @@ import conf from './conf';
  * Creates head Docker image for the application for current architecture.
  * The image is tagged with the image name configuration constant.
  */
-gulp.task('docker-image:head', ['docker-file'], function() {
+gulp.task('docker-image:head', function() {
   return buildDockerImage([[conf.deploy.headImageName, conf.paths.dist]]);
 });
 
@@ -36,7 +36,7 @@ gulp.task('docker-image:head', ['docker-file'], function() {
  * Creates head Docker image for the application for all architectures.
  * The image is tagged with the image name configuration constant.
  */
-gulp.task('docker-image:head:cross', ['docker-file:cross'], function() {
+gulp.task('docker-image:head:cross', function() {
   return buildDockerImage(lodash.zip(conf.deploy.headImageNames, conf.paths.distCross));
 });
 
