@@ -29,9 +29,11 @@ export class PolicyRuleListComponent implements OnInit {
     setTimeout(() => {
       // Filter out empty api groups.
       this.rules.forEach(rule => {
-        rule.apiGroups = rule.apiGroups.filter(group => {
-          return group.length > 0;
-        });
+        if (rule.apiGroups) {
+          rule.apiGroups = rule.apiGroups.filter(group => {
+            return group.length > 0;
+          });
+        }
       });
     }, 0);
   }

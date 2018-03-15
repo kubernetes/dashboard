@@ -68,10 +68,10 @@ limitations under the License.
       <ng-container [matColumnDef]="getRuleColumns()[4]">
         <mat-header-cell *matHeaderCellDef>API Groups</mat-header-cell>
         <mat-cell *matCellDef="let rule">
-          <ng-container *ngIf="rule.apiGroups.length > 0">
+          <ng-container *ngIf="rule.apiGroups && rule.apiGroups.length > 0">
             <kd-comma-separated-list [items]="rule.apiGroups"></kd-comma-separated-list>
           </ng-container>
-          <ng-container *ngIf="rule.apiGroups.length === 0">-</ng-container>
+          <ng-container *ngIf="!rule.apiGroups || rule.apiGroups.length === 0">-</ng-container>
         </mat-cell>
       </ng-container>
       <mat-header-row *matHeaderRowDef="getRuleColumns()"></mat-header-row>

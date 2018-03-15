@@ -38,7 +38,18 @@ limitations under the License.
        *ngIf="isInitialized"
        fxLayout="row"
        fxLayoutWrap>
-    <kd-property *ngIf="job?.containerImages">
+    <kd-property *ngIf="job?.completions">
+      <div key>Completions</div>
+      <div value>{{job.completions}}</div>
+    </kd-property>
+
+    <kd-property *ngIf="job?.parallelism">
+      <div key>Parallelism</div>
+      <div value>{{job.parallelism}}</div>
+    </kd-property>
+
+    <kd-property *ngIf="job?.containerImages"
+                 fxFlex="100">
       <div key>Images</div>
       <div value>
         <kd-chips [map]="job.containerImages"></kd-chips>
@@ -50,16 +61,6 @@ limitations under the License.
       <div value>
         <kd-chips [map]="job.initContainerImages"></kd-chips>
       </div>
-    </kd-property>
-
-    <kd-property *ngIf="job?.completions">
-      <div key>Completions</div>
-      <div value>{{job.completions}}</div>
-    </kd-property>
-
-    <kd-property *ngIf="job?.parallelism">
-      <div key>Parallelism</div>
-      <div value>{{job.parallelism}}</div>
     </kd-property>
   </div>
 </kd-card>
