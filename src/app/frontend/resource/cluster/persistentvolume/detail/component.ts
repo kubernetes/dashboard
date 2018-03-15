@@ -13,7 +13,8 @@
 // limitations under the License.
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {PersistentVolumeDetail} from '@api/backendapi';
+import {MatTableDataSource} from '@angular/material';
+import {CapacityItem, PersistentVolumeDetail, PolicyRule} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Subscription} from 'rxjs/Subscription';
 
@@ -49,5 +50,24 @@ export class PersistentVolumeDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.persistentVolumeSubscription_.unsubscribe();
+  }
+
+  getCapacityColumns(): string[] {
+    return ['resourceName', 'quantity'];
+  }
+
+  getCapacityDataSource(): MatTableDataSource<CapacityItem> {
+    const data: CapacityItem[] = [];
+
+    if (this.isInitialized) {
+      for (const rName of Array.from<string>(Object.keys(this.persistentVolume.capacity))) {
+        data.push({resourceName: rName, quantity: this.persistentVolume.capacity[rName]});
+      }
+    }
+
+    const tableData = new MatTableDataSource<CapacityItem>();
+    tableData.data = data;
+
+    return tableData;
   }
 }

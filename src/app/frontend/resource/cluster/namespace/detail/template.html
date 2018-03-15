@@ -24,8 +24,10 @@ limitations under the License.
        fxLayout="row"
        fxLayoutWrap>
     <kd-property *ngIf="namespace?.phase">
-      <div key>Phase</div>
+      <div key>Status</div>
       <div value>{{namespace?.phase}}</div>
     </kd-property>
   </div>
 </kd-card>
+
+<kd-event-list [endpoint]="eventListEndpoint"></kd-event-list>

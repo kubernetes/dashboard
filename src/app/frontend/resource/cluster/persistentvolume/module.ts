@@ -20,6 +20,7 @@ import {ResourceModule} from '../../../common/services/resource/module';
 import {SharedModule} from '../../../shared.module';
 
 import {PersistentVolumeDetailComponent} from './detail/component';
+import {PersistentVolumeSourceComponent} from './detail/source/component';
 import {persistentVolumeDetailState} from './detail/state';
 import {PersistentVolumeListComponent} from './list/component';
 import {persistentVolumeListState} from './list/state';
@@ -38,6 +39,8 @@ import {persistentVolumeState} from './state';
       ]
     }),
   ],
-  declarations: [PersistentVolumeListComponent, PersistentVolumeDetailComponent],
+  declarations: [
+    PersistentVolumeListComponent, PersistentVolumeDetailComponent, PersistentVolumeSourceComponent
+  ],
 })
 export class PersistentVolumeModule {}

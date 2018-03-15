@@ -51,6 +51,11 @@ export interface ResourceOwner extends Resource {
 
 export interface LabelSelector { matchLabels: StringMap; }
 
+export interface CapacityItem {
+  resourceName: string;
+  quantity: string;
+}
+
 // List types
 export interface ClusterRoleList extends ResourceList { items: ClusterRole[]; }
 
@@ -411,6 +416,8 @@ export interface PersistentVolumeDetail extends ResourceDetail {
   accessModes: string[];
   capacity: StringMap;
   message: string;
+  storageClass: string;
+  reason: string;
   persistentVolumeSource: PersistentVolumeSource;
 }
 

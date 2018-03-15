@@ -29,6 +29,7 @@ export class NamespaceDetailComponent implements OnInit, OnDestroy {
   private namespaceName_: string;
   namespace: NamespaceDetail;
   isInitialized = false;
+  eventListEndpoint: string;
 
   constructor(
       private readonly namespace_: ResourceService<NamespaceDetail>,
@@ -36,6 +37,9 @@ export class NamespaceDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.namespaceName_ = this.state_.params.resourceName;
+    this.eventListEndpoint = EndpointManager.resource(Resource.namespace, false)
+                                 .child(this.namespaceName_, Resource.event);
+
     this.namespaceSubscription_ =
         this.namespace_
             .get(EndpointManager.resource(Resource.namespace).detail(), this.namespaceName_)

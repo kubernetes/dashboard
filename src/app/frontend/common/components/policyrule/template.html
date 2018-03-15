@@ -27,26 +27,9 @@ limitations under the License.
   </div>
 
   <div content>
-    <mat-table [dataSource]="getDataSource()">
+    <mat-table [dataSource]="getDataSource()"
+               class="kd-table-no-footer">
       <ng-container [matColumnDef]="getRuleColumns()[0]">
-        <mat-header-cell *matHeaderCellDef>Verbs</mat-header-cell>
-        <mat-cell *matCellDef="let rule">
-          <ng-container *ngIf="rule.verbs">
-            <kd-comma-separated-list [items]="rule.verbs"></kd-comma-separated-list>
-          </ng-container>
-          <ng-container *ngIf="!rule.verbs">-</ng-container>
-        </mat-cell>
-      </ng-container>
-      <ng-container [matColumnDef]="getRuleColumns()[1]">
-        <mat-header-cell *matHeaderCellDef>API Groups</mat-header-cell>
-        <mat-cell *matCellDef="let rule">
-          <ng-container *ngIf="rule.apiGroups">
-            <kd-comma-separated-list [items]="rule.apiGroups"></kd-comma-separated-list>
-          </ng-container>
-          <ng-container *ngIf="!rule.apiGroups">-</ng-container>
-        </mat-cell>
-      </ng-container>
-      <ng-container [matColumnDef]="getRuleColumns()[2]">
         <mat-header-cell *matHeaderCellDef>Resources</mat-header-cell>
         <mat-cell *matCellDef="let rule">
           <ng-container *ngIf="rule.resources">
@@ -55,7 +38,16 @@ limitations under the License.
           <ng-container *ngIf="!rule.resources">-</ng-container>
         </mat-cell>
       </ng-container>
-      <ng-container [matColumnDef]="getRuleColumns()[3]">
+      <ng-container [matColumnDef]="getRuleColumns()[1]">
+        <mat-header-cell *matHeaderCellDef>Non-resource URL</mat-header-cell>
+        <mat-cell *matCellDef="let rule">
+          <ng-container *ngIf="rule.nonResourceURLs">
+            <kd-comma-separated-list [items]="rule.nonResourceURLs"></kd-comma-separated-list>
+          </ng-container>
+          <ng-container *ngIf="!rule.nonResourceURLs">-</ng-container>
+        </mat-cell>
+      </ng-container>
+      <ng-container [matColumnDef]="getRuleColumns()[2]">
         <mat-header-cell *matHeaderCellDef>Resource Names</mat-header-cell>
         <mat-cell *matCellDef="let rule">
           <ng-container *ngIf="rule.resourceNames">
@@ -64,13 +56,22 @@ limitations under the License.
           <ng-container *ngIf="!rule.resourceNames">-</ng-container>
         </mat-cell>
       </ng-container>
-      <ng-container [matColumnDef]="getRuleColumns()[4]">
-        <mat-header-cell *matHeaderCellDef>Non-resource URL</mat-header-cell>
+      <ng-container [matColumnDef]="getRuleColumns()[3]">
+        <mat-header-cell *matHeaderCellDef>Verbs</mat-header-cell>
         <mat-cell *matCellDef="let rule">
-          <ng-container *ngIf="rule.nonResourceURLs">
-            <kd-comma-separated-list [items]="rule.nonResourceURLs"></kd-comma-separated-list>
+          <ng-container *ngIf="rule.verbs">
+            <kd-comma-separated-list [items]="rule.verbs"></kd-comma-separated-list>
           </ng-container>
-          <ng-container *ngIf="!rule.nonResourceURLs">-</ng-container>
+          <ng-container *ngIf="!rule.verbs">-</ng-container>
+        </mat-cell>
+      </ng-container>
+      <ng-container [matColumnDef]="getRuleColumns()[4]">
+        <mat-header-cell *matHeaderCellDef>API Groups</mat-header-cell>
+        <mat-cell *matCellDef="let rule">
+          <ng-container *ngIf="rule.apiGroups.length > 0">
+            <kd-comma-separated-list [items]="rule.apiGroups"></kd-comma-separated-list>
+          </ng-container>
+          <ng-container *ngIf="rule.apiGroups.length === 0">-</ng-container>
         </mat-cell>
       </ng-container>
       <mat-header-row *matHeaderRowDef="getRuleColumns()"></mat-header-row>
