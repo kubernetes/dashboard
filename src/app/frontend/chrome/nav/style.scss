@@ -22,17 +22,12 @@
   overflow-y: auto;
   padding-top: $baseline-grid;
   white-space: nowrap;
-  width: $nav-width;
 
-  &.md-closed {
-    // Remove "!important" when https://github.com/angular/material/issues/9425 is fixed
-    &.md-locked-open-add-active {
-      min-width: $nav-width !important;
-      width: $nav-width !important;
-    }
+  .mat-divider {
+    margin: $baseline-grid $baseline-grid (2 * $baseline-grid) 0;
   }
 
-  // Next rule is to only show the scrollbar on hover, but always enable scrolling.
+  // Only show the scrollbar on hover, but always enable scrolling.
   &:not(:hover) {
     &::-webkit-scrollbar-thumb {
       background-color: transparent;
@@ -63,11 +58,4 @@
 
 .kd-nav-item {
   margin-left: 3 * $baseline-grid;
-}
-
-.kd-nav-group-divider {
-  border-top: 1px solid $border;
-  margin-bottom: 2 * $baseline-grid;
-  margin-right: 1 * $baseline-grid;
-  margin-top: $baseline-grid;
 }

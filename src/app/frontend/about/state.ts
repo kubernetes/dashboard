@@ -14,13 +14,32 @@
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
-import {stateName as chromeState} from '../chrome/state';
+import {chromeState} from '../chrome/state';
 
+import {ActionbarComponent} from './actionbar/component';
 import {AboutComponent} from './component';
 
+export const aboutFutureState: Ng2StateDeclaration = {
+  name: 'about.**',
+  url: '/about',
+  loadChildren: './about/module#AboutModule'
+};
+
 export const aboutState: Ng2StateDeclaration = {
-  parent: chromeState,
+  parent: chromeState.name,
   name: 'about',
   url: '/about',
-  component: AboutComponent,
+  data: {
+    kdBreadcrumbs: {
+      label: 'About',
+    }
+  },
+  views: {
+    '$default': {
+      component: AboutComponent,
+    },
+    'actionbar': {
+      component: ActionbarComponent,
+    }
+  },
 };

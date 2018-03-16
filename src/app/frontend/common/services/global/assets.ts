@@ -18,28 +18,28 @@ import {DomSanitizer} from '@angular/platform-browser';
 
 @Injectable()
 export class AssetsService {
-  private readonly assetsPath = 'assets/images';
-  private readonly appLogoSvg = 'kubernetes-logo.svg';
-  private readonly appLogoTextSvg = 'kubernetes-logo-text.svg';
-  private readonly appLogoIcon = 'kd-logo';
-  private readonly appLogoTextIcon = 'kd-logo-text';
+  private readonly assetsPath_ = 'assets/images';
+  private readonly appLogoSvg_ = 'kubernetes-logo.svg';
+  private readonly appLogoTextSvg_ = 'kubernetes-logo-text.svg';
+  private readonly appLogoIcon_ = 'kd-logo';
+  private readonly appLogoTextIcon_ = 'kd-logo-text';
 
   constructor(
-      @Inject(MatIconRegistry) iconRegistry: MatIconRegistry,
-      @Inject(DomSanitizer) sanitizer: DomSanitizer) {
-    iconRegistry.addSvgIcon(
-        this.appLogoIcon,
-        sanitizer.bypassSecurityTrustResourceUrl(`${this.assetsPath}/${this.appLogoSvg}`));
-    iconRegistry.addSvgIcon(
-        this.appLogoTextIcon,
-        sanitizer.bypassSecurityTrustResourceUrl(`${this.assetsPath}/${this.appLogoTextSvg}`));
+      @Inject(MatIconRegistry) private readonly iconRegistry_: MatIconRegistry,
+      @Inject(DomSanitizer) private readonly sanitizer_: DomSanitizer) {
+    iconRegistry_.addSvgIcon(
+        this.appLogoIcon_,
+        sanitizer_.bypassSecurityTrustResourceUrl(`${this.assetsPath_}/${this.appLogoSvg_}`));
+    iconRegistry_.addSvgIcon(
+        this.appLogoTextIcon_,
+        sanitizer_.bypassSecurityTrustResourceUrl(`${this.assetsPath_}/${this.appLogoTextSvg_}`));
   }
 
-  getAppLogo() {
-    return this.appLogoIcon;
+  getAppLogo(): string {
+    return this.appLogoIcon_;
   }
 
-  getAppLogoText() {
-    return this.appLogoTextIcon;
+  getAppLogoText(): string {
+    return this.appLogoTextIcon_;
   }
 }

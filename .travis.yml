@@ -44,9 +44,9 @@ jobs:
     - stage: deploy
       script:
         - docker login -u $DOCKER_USER -p $DOCKER_PASS
-        - npm run docker-push:head:cross
+        - npm run docker:push:head:cross
 
 stages:
   - test
   - name: deploy
-    if: branch = master AND type not (pull_request)
+    if: branch = master AND type != pull_request

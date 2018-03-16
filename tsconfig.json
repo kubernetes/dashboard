@@ -5,20 +5,27 @@
   },
   "compileOnSave": false,
   "compilerOptions": {
+    "baseUrl": "src/app/frontend",
+    "paths": {
+      "@api/*": ["typings/*"]
+    },
     "outDir": ".tmp/out-tsc",
-    "target": "es6",
-    "module": "es2015",
+    "target": "esnext",
+    "module": "es6",
     "moduleResolution": "node",
     "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "noImplicitReturns": true,
+    "noUnusedParameters": true,
     "noImplicitAny": true,
     "lib": [
       "es2017",
       "dom"
     ],
     "typeRoots": [
-      "./node_modules/@types"
+      "./node_modules/@types",
+      "./src/app/frontend/typings"
     ]
   }
 }

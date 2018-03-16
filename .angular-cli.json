@@ -13,7 +13,7 @@
       "index": "index.html",
       "main": "index.ts",
       "polyfills": "polyfills.ts",
-      "test": "index_test.ts",
+      "test": "index.spec.ts",
       "tsconfig": "../../../aio/tsconfig.app.json",
       "testTsconfig": "../../../aio/tsconfig.spec.json",
       "prefix": "kd",

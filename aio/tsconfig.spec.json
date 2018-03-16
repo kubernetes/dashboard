@@ -11,10 +11,11 @@
     ]
   },
   "files": [
-    "../src/app/frontend/index_test.ts"
+    "../src/app/frontend/index.spec.ts"
   ],
   "include": [
     "../src/app/frontend/**/*.spec.ts",
     "../src/app/frontend/**/*.d.ts"
-  ]
+  ],
+  "lib": ["es2017", "dom"]
 }

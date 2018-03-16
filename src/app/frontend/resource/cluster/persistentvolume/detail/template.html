@@ -1,0 +1,99 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-object-meta [initialized]="isInitialized"
+                [objectMeta]="persistentVolume?.objectMeta"></kd-object-meta>
+
+<kd-card [initialized]="isInitialized">
+  <div title>Persistent Volume information</div>
+
+  <div content
+       *ngIf="isInitialized"
+       fxLayout="row"
+       fxLayoutWrap>
+    <kd-property *ngIf="persistentVolume?.status">
+      <div key>Status</div>
+      <div value>{{persistentVolume.status}}</div>
+    </kd-property>
+
+    <kd-property *ngIf="persistentVolume?.claim">
+      <div key>Claim</div>
+      <div value>{{persistentVolume.claim}}</div>
+    </kd-property>
+
+    <kd-property *ngIf="persistentVolume?.reclaimPolicy">
+      <div key>Reclaim policy</div>
+      <div value>{{persistentVolume.reclaimPolicy}}</div>
+    </kd-property>
+
+    <kd-property *ngIf="persistentVolume?.storageClass">
+      <div key>Storage class</div>
+      <div value>
+        <kd-chips [map]="persistentVolume.storageClass"></kd-chips>
+      </div>
+    </kd-property>
+
+    <kd-property *ngIf="persistentVolume?.reason">
+      <div key>Reason</div>
+      <div value>{{persistentVolume.reason}}</div>
+    </kd-property>
+
+    <kd-property *ngIf="persistentVolume?.message">
+      <div key>Message</div>
+      <div value>{{persistentVolume.message}}</div>
+    </kd-property>
+
+    <kd-property *ngIf="persistentVolume?.accessModes"
+                 fxFlex="100">
+      <div key>Access modes</div>
+      <div value>
+        <kd-chips [map]="persistentVolume.accessModes"></kd-chips>
+      </div>
+    </kd-property>
+  </div>
+</kd-card>
+
+<kd-persistent-volume-source [source]="persistentVolume?.persistentVolumeSource"
+                             [initialized]="isInitialized"></kd-persistent-volume-source>
+
+<kd-card [initialized]="isInitialized"
+         role="table">
+  <div title>Capacity</div>
+
+  <div content>
+    <mat-table [dataSource]="getCapacityDataSource()"
+               class="kd-table-no-footer">
+      <ng-container [matColumnDef]="getCapacityColumns()[0]">
+        <mat-header-cell *matHeaderCellDef>Resource name</mat-header-cell>
+        <mat-cell *matCellDef="let capacity">
+          <ng-container *ngIf="capacity.resourceName">{{capacity.resourceName}}</ng-container>
+          <ng-container *ngIf="!capacity.resourceName">-</ng-container>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getCapacityColumns()[1]">
+        <mat-header-cell *matHeaderCellDef>Quantity</mat-header-cell>
+        <mat-cell *matCellDef="let capacity">
+          <ng-container *ngIf="capacity.quantity">{{capacity.quantity}}</ng-container>
+          <ng-container *ngIf="!capacity.quantity">-</ng-container>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="getCapacityColumns()"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: getCapacityColumns();"></mat-row>
+    </mat-table>
+  </div>
+</kd-card>

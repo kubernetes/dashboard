@@ -18,10 +18,21 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: secret-env
+  namespace: default
 type: Opaque
 data:
   username: YWRtaW4=
   password: MWYyZDFlMmU2N2Rm
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmap-env
+  namespace: default
+data:
+  test: somevalue
 
 ---
 
@@ -72,4 +83,9 @@ spec:
             secretKeyRef:
               name: secret-env
               key: username
+        - name: MY_CM_VALUE
+          valueFrom:
+            configMapKeyRef:
+              name: configmap-env
+              key: test
   restartPolicy: Never

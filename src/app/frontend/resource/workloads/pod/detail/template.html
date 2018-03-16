@@ -1,0 +1,90 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-object-meta [initialized]="isInitialized"
+                [objectMeta]="pod?.objectMeta"></kd-object-meta>
+
+<kd-card [initialized]="isInitialized">
+  <div title>Pod information</div>
+
+  <div description>
+    <div class="kd-inline-property"
+         *ngIf="pod?.podPhase">
+      <span class="kd-muted-light">Status:&nbsp;</span>
+      <span>{{pod.podPhase}}</span>
+    </div>
+
+    <div class="kd-inline-property"
+         *ngIf="pod?.podIP">
+      <span class="kd-muted-light">IP:&nbsp;</span>
+      <span>{{pod.podIP}}</span>
+    </div>
+  </div>
+
+  <div content
+       *ngIf="isInitialized"
+       fxLayout="row"
+       fxLayoutWrap>
+    <kd-property *ngIf="pod?.nodeName">
+      <div key>Node</div>
+      <a value
+         [href]="getNodeHref(pod.nodeName)">{{pod.nodeName}}</a>
+    </kd-property>
+
+    <kd-property *ngIf="pod?.podPhase">
+      <div key>Status</div>
+      <div value>{{pod?.podPhase}}</div>
+    </kd-property>
+
+    <kd-property *ngIf="pod?.podIP">
+      <div key>IP</div>
+      <div value>{{pod.podIP}}</div>
+    </kd-property>
+
+    <kd-property *ngIf="pod?.qosClass">
+      <div key>QoS Class</div>
+      <div value>{{pod.qosClass}}</div>
+    </kd-property>
+
+    <kd-property *ngIf="pod?.restartCount !== undefined">
+      <div key>Restarts</div>
+      <div value>{{pod.restartCount}}</div>
+    </kd-property>
+  </div>
+</kd-card>
+
+<kd-condition-list [conditions]="pod?.conditions"
+                   [initialized]="isInitialized"></kd-condition-list>
+
+<kd-creator-card *ngIf="pod?.controller?.typeMeta?.kind"
+                 [creator]="pod?.controller"
+                 [initialized]="isInitialized"></kd-creator-card>
+
+<kd-event-list [endpoint]="eventListEndpoint"></kd-event-list>
+
+<div *ngIf="pod?.containers?.length"
+     class="kd-card-group-header kd-muted">Containers</div>
+<kd-container-card *ngFor="let container of pod?.containers"
+                   [container]="container"
+                   [namespace]="pod.objectMeta.namespace"
+                   [initialized]="isInitialized"></kd-container-card>
+
+<div *ngIf="pod?.initContainers?.length"
+     class="kd-card-group-header kd-muted">Init containers</div>
+<kd-container-card *ngFor="let container of pod?.initContainers"
+                   [container]="container"
+                   [namespace]="pod.objectMeta.namespace"
+                   [initialized]="isInitialized"></kd-container-card>

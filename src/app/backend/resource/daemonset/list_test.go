@@ -329,6 +329,7 @@ func TestToDaemonSetList(t *testing.T) {
 						ObjectMeta: api.ObjectMeta{
 							Name:      "my-app-1",
 							Namespace: "namespace-1",
+							UID:       "uid-1",
 						},
 						TypeMeta:            api.TypeMeta{Kind: api.ResourceKindDaemonSet},
 						ContainerImages:     []string{"my-container-image-1"},

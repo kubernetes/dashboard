@@ -1,0 +1,67 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<div class="kd-notifications-container">
+  <button mat-icon-button
+          color="primary"
+          class="kd-global-action kd-notifications-button"
+          i18n-matTooltip
+          [matTooltip]="isOpen() ? 'Close notifications panel' : 'Open notifications panel'"
+          (click)="toggle()">
+      <mat-icon class="kd-notifications-icon kd-primary-toolbar-icon">notifications</mat-icon>
+      <div *ngIf="getUnreadCount() > 0"
+           @easeOut
+           class="kd-notifications-counter kd-white kd-bg-error">{{getUnreadCount()}}</div>
+    </button>
+  <div class="kd-notifications-panel"
+       fxLayout="column"
+       *ngIf="isOpen()">
+    <div class="kd-notifications-content">
+      <div *ngFor="let notification of notifications; let last = last; let index = index"
+           fxLayout="column"
+           [ngClass]="{'kd-notification-unread': !notification.read}">
+        <div fxLayout="row"
+             fxLayoutAlign=" center"
+             class="kd-notification-container"
+             [ngClass]="notification.cssClass">
+          <mat-icon class="kd-notification-icon">{{notification.icon}}</mat-icon>
+          <div fxLayout="column"
+               fxFlex>
+            <span class="kd-notification">{{notification.message}}</span>
+            <span class="kd-notification-timestamp kd-muted">
+            {{notification.timestamp | kdRelativeTime}} ago
+            </span>
+          </div>
+          <button (click)="remove(index)"
+                  mat-icon-button
+                  class="kd-notification-remove-button kd-muted">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+        <mat-divider *ngIf="!last || !notification.read"></mat-divider>
+      </div>
+      <div *ngIf="notifications.length === 0"
+           class="kd-notifications-zero-state kd-muted"
+           fxLayoutAlign="center center"
+           fxFlex>There are no notifications</div>
+    </div>
+    <div class="kd-notifications-controls kd-bg-primary kd-white"
+         *ngIf="notifications.length > 0">
+      <span class="kd-clickable kd-accent"
+            (click)="clear()">Remove all notifications</span>
+    </div>
+  </div>
+</div>

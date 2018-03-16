@@ -26,20 +26,11 @@
   line-height: 5.5 * $baseline-grid;
   margin: 0;
   max-height: 5.5 * $baseline-grid;
-  padding: 0 0 0 (1.5 * $baseline-grid);
+  padding: 0 (2 * $baseline-grid) 0 (1.5 * $baseline-grid);
   text-align: left;
   text-transform: none;
   white-space: nowrap;
   width: 100%;
-
-  &:visited {
-    color: inherit;
-  }
-
-  &.kd-nav-item-active {
-    background-color: $background-1;
-    color: $primary;
-  }
 }
 
 :host-context(.kd-nav-item) {

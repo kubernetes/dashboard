@@ -1,0 +1,72 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<div class="kd-namespace-select-title kd-muted">Namespace</div>
+<mat-form-field class="kd-namespace-select-input-container">
+  <mat-select (openedChange)="onNamespaceToggle($event)"
+              [(ngModel)]="selectedNamespace">
+    <div [ngClass]="{'kd-namespace-select-input-border': namespaces.length > 0}">
+      <input #namespaceInput
+             placeholder="Select namespace..."
+             [(ngModel)]="selectNamespaceInput"
+             name="selectNamespaceInput"
+             class="kd-namespace-select-input"
+             (keydown)="$event.keyCode === 13 ? selectNamespace() : null">
+    </div>
+    <mat-option *ngIf="namespaces.length"
+                [value]="allNamespacesKey">All namespaces</mat-option>
+    <mat-optgroup label="NAMESPACES"
+                  *ngIf="(namespaces | filterBy: selectNamespaceInput).length">
+      <mat-option *ngFor="let namespace of namespaces | filterBy: selectNamespaceInput"
+                  [value]="namespace">
+        {{namespace}}
+      </mat-option>
+    </mat-optgroup>
+    <mat-option class="kd-hidden"
+                [value]="selectedNamespace">{{formatNamespaceName(selectedNamespace)}}</mat-option>
+  </mat-select>
+</mat-form-field>
+-->
+<!--<mat-form-field class="kd-namespace-select-input-container">
+<mat-select ng-model="$ctrl.selectedNamespace"
+            md-on-open="$ctrl.loadNamespacesIfNeeded()"
+            md-on-close="$ctrl.changeNamespace()"
+            class="kd-namespace-select"
+            aria-label="[[Selector for namespaces|Text describing what namespace selector is]]"
+            md-container-class="kd-namespace-select-container"
+            md-selected-text="$ctrl.formatNamespace()">
+  <md-select-header class="kd-namespace-select-input-header"
+                    ng-class="{'kd-namespace-select-input-header-border': $ctrl.namespaces.length}">
+    <md-input-container md-no-float>
+      <input placeholder="[[Select namespace...|]]"
+             ng-model="$ctrl.namespaceInput"
+             class="kd-namespace-select-input"
+             ng-keyup="$event.keyCode == 13 ? $ctrl.selectNamespace() : null">
+    </md-input-container>
+  </md-select-header>
+  <md-option ng-value="::$ctrl.ALL_NAMESPACES"
+             ng-if="$ctrl.namespaces.length">
+    [[All namespaces|Text for dropdown item that indicates that no namespace was selected.]]
+  </md-option>
+<md-optgroup ng-if="$ctrl.namespaces.length">
+  <label>[[Namespaces|Label atop a list of namespaces]]</label>
+<md-option ng-value="namespace"
+           ng-repeat="namespace in $ctrl.namespaces | filter:$ctrl.namespaceInput">
+
+</md-option>
+</md-optgroup>
+</mat-select>
+</mat-form-field>-->

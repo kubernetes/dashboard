@@ -54,7 +54,7 @@ const version = {
   /**
    * Current release version of the project.
    */
-  release: 'v1.8.2',
+  release: 'v2.0.0-alpha0',
   /**
    * Version name of the head release of the project.
    */
@@ -80,17 +80,6 @@ export default {
    * Configuration for container registry to push images to.
    */
   containerRegistry: containerRegistry,
-
-  /**
-   * Constants used by our build system.
-   */
-  build: {
-    /**
-     * Variables used to differentiate between production and development build.
-     */
-    production: 'production',
-    test: 'test',
-  },
 
   /**
    * Backend application constants.

@@ -24,7 +24,7 @@ import (
 	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
-	client "k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/kubernetes"
 )
 
 // EmptyEventList is a empty list of events.
@@ -36,7 +36,7 @@ var EmptyEventList = &common.EventList{
 }
 
 // GetEvents gets events associated to resource with given name.
-func GetEvents(client client.Interface, namespace, resourceName string) ([]v1.Event, error) {
+func GetEvents(client kubernetes.Interface, namespace, resourceName string) ([]v1.Event, error) {
 	fieldSelector, err := fields.ParseSelector("involvedObject.name" + "=" + resourceName)
 
 	if err != nil {
@@ -63,7 +63,7 @@ func GetEvents(client client.Interface, namespace, resourceName string) ([]v1.Ev
 }
 
 // GetPodsEvents gets events targeting given list of pods.
-func GetPodsEvents(client client.Interface, namespace string, pods []v1.Pod) (
+func GetPodsEvents(client kubernetes.Interface, namespace string, pods []v1.Pod) (
 	[]v1.Event, error) {
 
 	nsQuery := common.NewSameNamespaceQuery(namespace)
@@ -86,7 +86,7 @@ func GetPodsEvents(client client.Interface, namespace string, pods []v1.Pod) (
 }
 
 // GetPodEvents gets pods events associated to pod name and namespace
-func GetPodEvents(client client.Interface, namespace, podName string) ([]v1.Event, error) {
+func GetPodEvents(client kubernetes.Interface, namespace, podName string) ([]v1.Event, error) {
 
 	channels := &common.ResourceChannels{
 		PodList: common.GetPodListChannel(client,
@@ -117,7 +117,7 @@ func GetPodEvents(client client.Interface, namespace, podName string) ([]v1.Even
 }
 
 // GetNodeEvents gets events associated to node with given name.
-func GetNodeEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery, nodeName string) (*common.EventList, error) {
+func GetNodeEvents(client kubernetes.Interface, dsQuery *dataselect.DataSelectQuery, nodeName string) (*common.EventList, error) {
 	eventList := common.EventList{
 		Events: make([]common.Event, 0),
 	}
@@ -142,7 +142,7 @@ func GetNodeEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery,
 }
 
 // GetNamespaceEvents gets events associated to a namespace with given name.
-func GetNamespaceEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery, namespace string) (common.EventList, error) {
+func GetNamespaceEvents(client kubernetes.Interface, dsQuery *dataselect.DataSelectQuery, namespace string) (common.EventList, error) {
 	events, _ := client.CoreV1().Events(namespace).List(api.ListEverything)
 	return CreateEventList(FillEventsType(events.Items), dsQuery), nil
 }
@@ -183,7 +183,7 @@ func ToEvent(event v1.Event) common.Event {
 }
 
 // GetResourceEvents gets events associated to specified resource.
-func GetResourceEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery, namespace, name string) (
+func GetResourceEvents(client kubernetes.Interface, dsQuery *dataselect.DataSelectQuery, namespace, name string) (
 	*common.EventList, error) {
 	resourceEvents, err := GetEvents(client, namespace, name)
 	if err != nil {

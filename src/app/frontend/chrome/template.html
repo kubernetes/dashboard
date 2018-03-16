@@ -17,12 +17,12 @@ limitations under the License.
 <div fxLayout="column"
      fxFill
      fxFlexFill>
-  <mat-toolbar class="kd-toolbar">
+  <mat-toolbar class="kd-toolbar kd-primary-toolbar">
     <div class="kd-toolbar-tools"
          fxLayout="row"
          fxFlex="auto">
       <div class="kd-logo-bar">
-        <a [href]="getOverviewStateName()"
+        <a uiSref="{{getOverviewStateName()}}"
            class="kd-toolbar-logo-link">
           <mat-icon [svgIcon]="assets.getAppLogo()"
                     class="kd-toolbar-logo">
@@ -32,61 +32,58 @@ limitations under the License.
           </mat-icon>
         </a>
       </div>
-      <!--<kd-search class="kd-search-bar"></kd-search>-->
-      <div>
-        <button mat-button
-                (click)="create()"
+      <kd-search class="kd-search-bar"
+                 fxFlex>
+      </kd-search>
+      <div fxLayout="row">
+        <button mat-icon-button
+                color="primary"
+                class="kd-global-action-margin"
                 i18n-matTooltip
-                matTooltip="Create an application or any Kubernetes resource"
-                class="kd-actionbar-button">
-          <mat-icon class="kd-global-action-icon">add</mat-icon>
-          <span>Create</span>
+                matTooltip="Create any Kubernetes resource"
+                (click)="goToCreateState()">
+          <mat-icon class="kd-primary-toolbar-icon">add</mat-icon>
         </button>
-        <!--<kd-control-panel></kd-control-panel>-->
+        <kd-notifications class="kd-global-action-margin"></kd-notifications>
+        <kd-user-panel class="kd-global-action-margin"></kd-user-panel>
       </div>
     </div>
   </mat-toolbar>
 
-  <mat-toolbar class="kd-second-toolbar">
-    <div class="kd-toolbar-tools">
-      <!--<kd-nav-hamburger flex="none"></kd-nav-hamburger>-->
-      <!--<kd-breadcrumbs class="kd-actionbar-breadcrumbs"-->
-      <!--limit="3"-->
-      <!--flex="auto"-->
-      <!--layout="row"></kd-breadcrumbs>-->
-      <!--<div flex="auto"-->
-      <!--ui-view="toolbar"></div>-->
-      <!--<kd-actionbar></kd-actionbar>-->
+  <mat-toolbar class="kd-second-toolbar kd-bg-primary">
+    <div class="kd-toolbar-tools"
+         fxFlex>
+      <kd-nav-hamburger fxFlex="none"></kd-nav-hamburger>
+      <kd-breadcrumbs class="kd-actionbar-breadcrumbs"></kd-breadcrumbs>
+      <kd-actionbar fxFlex="end"></kd-actionbar>
     </div>
   </mat-toolbar>
 
+  <!-- TODO export to component -->
   <mat-toolbar class="kd-system-banner"
-               ng-class="$ctrl.getSystemBannerClass()"
+               [ngClass]="getSystemBannerClass()"
                *ngIf="isSystemBannerVisible()"
-               ng-bind-html="$ctrl.getSystemBannerMessage()">
+               [innerHTML]="getSystemBannerMessage()">
   </mat-toolbar>
 
-  <div fxFlex="auto"
+  <div fxFlex
        fxLayout="row"
-       class="kd-app-entire-content">
-    <kd-nav flex="none"></kd-nav>
-    <div fxFlex="auto"
-         class="kd-main-content-box">
-      <div [ngSwitch]="loading"
-           class="kd-content-div-filled kd-main-content-div">
-        <div *ngSwitchCase="true"
-             class="kd-spinner">
-          <mat-spinner *ngIf="showLoadingSpinner"
-                       mode="indeterminate"
-                       [diameter]="48">
-          </mat-spinner>
-        </div>
-        <div *ngSwitchCase="false"
-             class="kd-app-content">
-          <ui-view class="md-body-1"
-                   ng-class="{'kd-content-div-filled': $ctrl.isFillContentView()}">
-          </ui-view>
-        </div>
+       class="kd-chrome-container kd-bg-background">
+    <kd-nav></kd-nav>
+    <div [ngSwitch]="loading"
+         fxLayoutAlign="center"
+         fxFlex
+         class="kd-scroll-container">
+      <div *ngSwitchCase="true"
+           fxFlexAlign="center">
+        <mat-spinner mode="indeterminate"
+                     [diameter]="48">
+        </mat-spinner>
+      </div>
+      <div *ngSwitchCase="false"
+           fxFlex
+           class="kd-scroll-container">
+        <ui-view></ui-view>
       </div>
     </div>
   </div>

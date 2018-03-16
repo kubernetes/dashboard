@@ -14,9 +14,21 @@
 
 import {Component, Inject} from '@angular/core';
 import {AssetsService} from '../common/services/global/assets';
+import {ConfigService} from '../common/services/global/config';
 
 @Component({selector: 'kd-about', templateUrl: './template.html', styleUrls: ['./style.scss']})
 export class AboutComponent {
-  latestCopyrightYear = '2018';
-  constructor(@Inject(AssetsService) public assets: AssetsService) {}
+  latestCopyrightYear: number;
+  gitCommit: string;
+  appVersion: string;
+
+  constructor(@Inject(AssetsService) public assets: AssetsService, config: ConfigService) {
+    this.appVersion = config.getAppVersion();
+    this.gitCommit = config.getGitCommit();
+    this.latestCopyrightYear = new Date().getFullYear();
+  }
+
+  getCommitLink(): string {
+    return `https://github.com/kubernetes/dashboard/commit/${this.gitCommit}`;
+  }
 }

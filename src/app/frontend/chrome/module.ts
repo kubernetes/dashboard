@@ -13,29 +13,27 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
-import {MatIconRegistry} from '@angular/material';
-import {UIRouterModule} from '@uirouter/angular';
 
-import {SharedModule} from '../shared_module';
+import {ComponentsModule} from '../common/components/module';
+import {SharedModule} from '../shared.module';
 
 import {ChromeComponent} from './component';
 import {NavModule} from './nav/module';
-import {chromeState} from './state';
+import {NotificationsComponent} from './notifications/component';
+import {SearchComponent} from './search/component';
+import {UserPanelComponent} from './userpanel/component';
 
 @NgModule({
-  declarations: [ChromeComponent],
+  declarations: [
+    ChromeComponent,
+    SearchComponent,
+    NotificationsComponent,
+    UserPanelComponent,
+  ],
   imports: [
     SharedModule,
-    UIRouterModule.forRoot({
-      states: [chromeState],
-      useHash: true,
-      otherwise: {state: 'about'},
-    }),
-    // Application modules
+    ComponentsModule,
     NavModule,
-  ],
-  providers: [
-    MatIconRegistry,
-  ],
+  ]
 })
 export class ChromeModule {}

@@ -12,10 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import 'variables';
+@import './variables';
 
 @mixin kd-icon-size($size: 3 * $baseline-grid) {
   font-size: $size;
   height: $size;
+  max-height: $size;
+  max-width: $size;
   width: $size;
 }

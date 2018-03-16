@@ -12,14 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import './dark';
+@import './light';
 @import './variables';
 @import './mixins';
-@import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
-// TODO: Remove that once component is created
-@import './common/components/actionbar/actionbar';
-
-// Globally applied/used styles should be defined in this file
+/////////////////////////////////
+// Overrides of default styles //
+/////////////////////////////////
 
 html,
 body {
@@ -28,20 +29,180 @@ body {
 }
 
 a {
-  color: $primary;
-  text-decoration: inherit;
+  text-decoration: none;
+}
+
+button {
+  &:not(:last-child) {
+    margin-right: $baseline-grid;
+  }
+}
+
+code {
+  font-family: $font-family-monospace;
+  padding: .25 * $baseline-grid;
+}
+
+* {
+  &::-webkit-scrollbar {
+    background: transparent;
+    height: $baseline-grid;
+    width: $baseline-grid;
+  }
+}
+
+//////////////////////////////////////////
+// Overrides of Angular Material styles //
+//////////////////////////////////////////
+
+.mat-progress-spinner {
+  margin: 0 auto;
+}
+
+.mat-card {
+  margin: 2.5 * $baseline-grid;
+
+  .mat-card-title {
+    margin-bottom: $baseline-grid;
+  }
+
+  .mat-card-content {
+    padding-top: 2 * $baseline-grid;
+  }
+}
+
+.mat-chip {
+  box-shadow: none !important;
+  margin: $baseline-grid $baseline-grid 0 0 !important;
+  transition: none !important;
+
+  &:last-child {
+    margin-bottom: $baseline-grid !important;
+  }
+}
+
+.mat-header-row,
+.mat-row {
+  min-height: (5 * $baseline-grid) !important;
+  padding: 0 (2 * $baseline-grid) !important;
+}
+
+.mat-header-cell {
+  font-size: $body-font-size-base;
+  padding: 0 ($baseline-grid / 2);
+
+  &:first-child,
+  &:last-child {
+    padding: 0;
+  }
+}
+
+.mat-cell {
+  margin: (.5 * $baseline-grid) 0 !important;
+
+  &:not(:first-child) {
+    &:not(:last-child) {
+      padding: 0 ($baseline-grid / 2);
+    }
+  }
+}
+
+.mat-column-statusicon {
+  flex: 0 0 ($baseline-grid * 5) !important;
+}
+
+.mat-column-labels,
+.mat-column-images,
+.mat-column-name,
+.mat-column-message {
+  flex-grow: 2 !important;
+}
+
+[class^='mat-column-action'],
+[class*='mat-column-action'] {
+  flex: 0 0 ($baseline-grid * 5) !important;
+}
+
+.mat-sort-header-arrow {
+  align-self: center;
+}
+
+.mat-paginator-container,
+.mat-paginator-range-actions {
+  font-size: $body-font-size-base;
+  min-height: 5 * $baseline-grid !important;
+}
+
+.mat-paginator-container {
+  padding-right: 3 * $baseline-grid !important;
 }
 
 ////////////////////////////////////////////
 // Custom classes used across application //
 ////////////////////////////////////////////
 
+.kd-code-block {
+  border-radius: $baseline-grid / 4;
+  display: block;
+  font-family: $font-family-monospace;
+  font-size: $body-font-size-base;
+  padding: $baseline-grid * 2;
+  white-space: pre-wrap;
+}
+
+.kd-code-block-font {
+  font-size: $body-font-size-base;
+}
+
+.kd-minimized-card {
+  margin: 0 (2.5 * $baseline-grid);
+  outline: none;
+
+  &.mat-card {
+    border-radius: 0;
+  }
+}
+
+.kd-inline-property {
+  display: inline-flex;
+  margin-right: 3 * $baseline-grid;
+}
+
+.kd-card-group-header {
+  font-family: $font-family-sans;
+  font-size: $title-font-size-base;
+  margin: (3 * $baseline-grid) 0 (2.5 * $baseline-grid) (4.5 * $baseline-grid);
+}
+
+.kd-card-top-radius {
+  border-top-left-radius: .25 * $baseline-grid;
+  border-top-right-radius: .25 * $baseline-grid;
+}
+
+.kd-bold {
+  font-weight: $bold-font-weight;
+}
+
+.kd-h1 {
+  font-size: 24px;
+}
+
+.kd-h3 {
+  font-size: 16px;
+}
+
+.kd-card-padding {
+  padding: 2.5 * $baseline-grid;
+}
+
 .kd-no-margin {
   margin: 0;
 }
 
-.kd-card-footer {
-  padding: 0 3 * $baseline-grid 3 * $baseline-grid;
+.kd-slider-value {
+  font-size: $subhead-font-size-base-lg;
+  text-align: right;
+  width: 2 * $baseline-grid;
 }
 
 .kd-comma-separated-item {
@@ -61,55 +222,41 @@ a {
   word-wrap: break-word;
 }
 
-// Style taken(mostly) from angular material md-chip style.
-.kd-chips {
-  background-color: $body;
-  border-radius: $baseline-grid;
-  display: inline-block;
-  margin: $chip-margin;
-  max-width: 100%;
-  vertical-align: bottom;
+.kd-loading-shade {
+  align-items: center;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 1;
 }
 
-.kd-chip {
-  display: inline;
-  float: left;
-  max-width: 99%;
-  overflow: hidden;
-  padding: ($baseline-grid / 4) $baseline-grid;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.kd-on-top {
+  z-index: 100;
 }
 
-.kd-chips-switch {
-  color: $primary;
-  cursor: pointer;
-  margin-left: -$baseline-grid / 2;
-  outline: none;
-  padding: ($baseline-grid / 4) $baseline-grid;
+.kd-clickable {
+  cursor: pointer !important;
 }
 
-///////////////////////////////
-// Overridden default styles //
-///////////////////////////////
-
-.mat-button {
-  text-transform: uppercase;
+.kd-no-bottom-border {
+  border-bottom: 0 !important;
 }
 
-.mat-card {
-  margin: (2.5 * $baseline-grid) (2.5 * $baseline-grid) 0;
+// This is a workaround to remove whitespace from code block element.
+.kd-no-whitespace {
+  font-size: 0;
 }
 
-// Style scrollbars on Webkit-based browsers (e.g., Chrome or Safari).
-* {
-  &::-webkit-scrollbar {
-    background: transparent;
-    height: $baseline-grid;
-    width: $baseline-grid;
-  }
+.kd-hidden {
+  display: none !important;
+}
 
-  &::-webkit-scrollbar-thumb {
-    background-color: $delicate;
+.kd-table-no-footer {
+  .mat-row:last-of-type {
+    border-bottom: 0;
   }
 }

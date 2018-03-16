@@ -12,7 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {StateService} from '@uirouter/core';
 
 @Component({
   selector: 'kd-nav-item',
@@ -20,11 +21,15 @@ import {Component} from '@angular/core';
   styleUrls: ['style.scss'],
 })
 export class NavItemComponent {
-  getHref() {
-    return 'test';
-  }
+  @Input() state: string;
 
-  isActive() {
-    return false;
+  constructor(private readonly stateService_: StateService) {}
+
+  isActive(): boolean {
+    // List states of specific resources are always in format <stateName>.list or <stateName>.detail
+    const partials = this.state.split('.');
+    const baseState = partials[0];
+
+    return baseState === this.stateService_.current.name.split('.')[0];
   }
 }

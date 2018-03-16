@@ -1,0 +1,245 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-object-meta [initialized]="isInitialized"
+                [objectMeta]="deployment?.objectMeta"></kd-object-meta>
+
+<kd-card [initialized]="isInitialized">
+  <div title>Deployment information</div>
+
+  <div description>
+    <div class="kd-inline-property"
+         *ngIf="deployment?.strategy">
+      <span class="kd-muted-light">Strategy:&nbsp;</span>
+      <span>{{deployment.strategy}}</span>
+    </div>
+
+    <div class="kd-inline-property"
+         *ngIf="deployment?.minReadySeconds !== null">
+      <span class="kd-muted-light">Min ready seconds:&nbsp;</span>
+      <span>{{deployment.minReadySeconds}}</span>
+    </div>
+
+    <div class="kd-inline-property"
+         *ngIf="deployment?.revisionHistoryLimit !== null">
+      <span class="kd-muted-light">Revision history limit:&nbsp;</span>
+      <span>{{deployment.revisionHistoryLimit}}</span>
+    </div>
+  </div>
+
+  <div content
+       *ngIf="isInitialized"
+       fxLayout="row"
+       fxLayoutWrap>
+    <kd-property *ngIf="deployment?.strategy">
+      <div key>Strategy</div>
+      <div value>{{deployment.strategy}}</div>
+    </kd-property>
+
+    <kd-property *ngIf="deployment?.minReadySeconds !== null">
+      <div key>Min ready seconds</div>
+      <div value>{{deployment.minReadySeconds}}</div>
+    </kd-property>
+
+    <kd-property *ngIf="deployment?.revisionHistoryLimit !== null">
+      <div key>Revision history limit</div>
+      <div value>{{deployment.revisionHistoryLimit}}</div>
+    </kd-property>
+
+    <kd-property *ngIf="deployment?.selector"
+                 fxFlex="100">
+      <div key>Selector</div>
+      <div value>
+        <kd-chips [map]="deployment.selector"></kd-chips>
+      </div>
+    </kd-property>
+  </div>
+</kd-card>
+
+<kd-card [initialized]="isInitialized">
+  <div title>Rolling update strategy</div>
+
+  <div description>
+    <div class="kd-inline-property"
+         *ngIf="deployment?.rollingUpdateStrategy?.maxSurge > 0">
+      <span class="kd-muted-light">Max surge:&nbsp;</span>
+      <span>{{deployment.rollingUpdateStrategy.maxSurge}}</span>
+    </div>
+
+    <div class="kd-inline-property"
+         *ngIf="deployment?.rollingUpdateStrategy?.maxUnavailable > 0">
+      <span class="kd-muted-light">Max unavailable:&nbsp;</span>
+      <span>{{deployment.rollingUpdateStrategy.maxUnavailable}}</span>
+    </div>
+  </div>
+
+  <div content
+       *ngIf="isInitialized"
+       fxLayout="row"
+       fxLayoutWrap>
+    <kd-property *ngIf="deployment?.rollingUpdateStrategy?.maxSurge !== null">
+      <div key>Max surge</div>
+      <div value>{{deployment.rollingUpdateStrategy.maxSurge}}</div>
+    </kd-property>
+
+    <kd-property *ngIf="deployment?.rollingUpdateStrategy?.maxUnavailable !== null">
+      <div key>Max unavailable</div>
+      <div value>{{deployment.rollingUpdateStrategy.maxUnavailable}}</div>
+    </kd-property>
+  </div>
+</kd-card>
+
+<kd-card [initialized]="isInitialized">
+  <div title>Pods status</div>
+
+  <div description>
+    <div class="kd-inline-property"
+         *ngIf="deployment?.statusInfo?.updated > 0">
+      <span class="kd-muted-light">Updated:&nbsp;</span>
+      <span>{{deployment.statusInfo.updated}}</span>
+    </div>
+
+    <div class="kd-inline-property"
+         *ngIf="deployment?.statusInfo?.replicas > 0">
+      <span class="kd-muted-light">Total:&nbsp;</span>
+      <span>{{deployment.statusInfo.replicas}}</span>
+    </div>
+
+    <div class="kd-inline-property"
+         *ngIf="deployment?.statusInfo?.available > 0">
+      <span class="kd-muted-light">Available:&nbsp;</span>
+      <span>{{deployment.statusInfo.available}}</span>
+    </div>
+
+    <div class="kd-inline-property"
+         *ngIf="deployment?.statusInfo?.unavailable > 0">
+      <span class="kd-muted-light">Unavailable:&nbsp;</span>
+      <span>{{deployment.statusInfo.unavailable}}</span>
+    </div>
+  </div>
+
+  <div content
+       *ngIf="isInitialized"
+       fxLayout="row"
+       fxLayoutWrap>
+    <kd-property *ngIf="deployment?.statusInfo?.updated > 0">
+      <div key>Updated</div>
+      <div value>{{deployment.statusInfo.updated}}</div>
+    </kd-property>
+
+    <kd-property *ngIf="deployment?.statusInfo?.replicas > 0">
+      <div key>Total</div>
+      <div value>{{deployment.statusInfo.replicas}}</div>
+    </kd-property>
+
+    <kd-property *ngIf="deployment?.statusInfo?.available > 0">
+      <div key>Available</div>
+      <div value>{{deployment.statusInfo.available}}</div>
+    </kd-property>
+
+    <kd-property *ngIf="deployment?.statusInfo?.unavailable > 0">
+      <div key>Unavailable</div>
+      <div value>{{deployment.statusInfo.unavailable}}</div>
+    </kd-property>
+  </div>
+</kd-card>
+
+<kd-condition-list [conditions]="deployment?.conditions"
+                   [initialized]="isInitialized"></kd-condition-list>
+
+<kd-card *ngIf="deployment?.newReplicaSet"
+         [initialized]="isInitialized">
+  <div title>New Replica Set</div>
+
+  <div description>
+    <div class="kd-inline-property"
+         *ngIf="deployment?.newReplicaSet?.objectMeta.name">
+      <span class="kd-muted-light">Name:&nbsp;</span>
+      <span>{{deployment.newReplicaSet.objectMeta.name}}</span>
+    </div>
+
+    <div class="kd-inline-property"
+         *ngIf="deployment?.newReplicaSet?.objectMeta.namespace">
+      <span class="kd-muted-light">Namespace:&nbsp;</span>
+      <span>{{deployment.newReplicaSet.objectMeta.namespace}}</span>
+    </div>
+
+    <div class="kd-inline-property"
+         *ngIf="deployment?.newReplicaSet?.objectMeta.creationTimestamp">
+      <span class="kd-muted-light">Age:&nbsp;</span>
+      <span>{{deployment.newReplicaSet.objectMeta.creationTimestamp | kdRelativeTime}}</span>
+    </div>
+
+    <div class="kd-inline-property"
+         *ngIf="deployment?.newReplicaSet?.pods">
+      <span class="kd-muted-light">Pods:&nbsp;</span>
+      <span>{{deployment.newReplicaSet.pods.running}} / {{deployment.newReplicaSet.pods.desired}}</span>
+    </div>
+  </div>
+
+  <div content
+       *ngIf="isInitialized"
+       fxLayout="row"
+       fxLayoutWrap>
+    <kd-property *ngIf="deployment?.newReplicaSet?.objectMeta.name">
+      <div key>Name</div>
+      <a value
+         [href]="getNewReplicaSetHref()">{{deployment.newReplicaSet.objectMeta.name}}</a>
+    </kd-property>
+
+    <kd-property *ngIf="deployment?.newReplicaSet?.objectMeta.namespace">
+      <div key>Namespace</div>
+      <div value>{{deployment.newReplicaSet.objectMeta.namespace}}</div>
+    </kd-property>
+
+    <kd-property *ngIf="deployment?.newReplicaSet?.objectMeta.creationTimestamp">
+      <div key>Age</div>
+      <div value>{{deployment.newReplicaSet.objectMeta.creationTimestamp | kdRelativeTime}}</div>
+    </kd-property>
+
+    <kd-property *ngIf="deployment?.newReplicaSet?.pods">
+      <div key>Pods</div>
+      <div value>{{deployment.newReplicaSet.pods.running}} / {{deployment.newReplicaSet.pods.desired}}</div>
+    </kd-property>
+
+    <kd-property *ngIf="deployment?.newReplicaSet?.objectMeta?.labels"
+                 fxFlex="100">
+      <div key>Labels</div>
+      <div value>
+        <kd-chips [map]="deployment.newReplicaSet.objectMeta.labels"></kd-chips>
+      </div>
+    </kd-property>
+
+    <kd-property *ngIf="deployment?.newReplicaSet?.containerImages">
+      <div key>Images</div>
+      <div value>
+        <kd-chips [map]="deployment.newReplicaSet.containerImages"></kd-chips>
+      </div>
+    </kd-property>
+
+    <kd-property *ngIf="deployment?.newReplicaSet?.initContainerImages">
+      <div key>Init images</div>
+      <div value>
+        <kd-chips [map]="deployment.newReplicaSet.initContainerImages"></kd-chips>
+      </div>
+    </kd-property>
+  </div>
+</kd-card>
+
+<kd-replica-set-list [endpoint]="oldReplicaSetsEndpoint"
+                     title="Old Replica Sets"></kd-replica-set-list>
+
+<kd-event-list [endpoint]="eventListEndpoint"></kd-event-list>

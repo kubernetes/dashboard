@@ -23,8 +23,6 @@
 }
 
 .kd-toolbar {
-  background-color: $content-background;
-  color: $primary;
   height: 6 * $baseline-grid;
   min-height: 6 * $baseline-grid;
   padding-left: 1.75 * $baseline-grid;
@@ -38,7 +36,6 @@
 }
 
 .kd-logo-bar {
-  flex: 1;
   height: 4 * $baseline-grid;
 }
 
@@ -55,29 +52,22 @@
   }
 }
 
-.kd-search-bar {
-  flex: 2;
-}
-
-.kd-global-action-icon {
-  color: $primary;
-  margin: .6 * $baseline-grid 0 $baseline-grid 0;
+.kd-global-action-margin {
+  margin: 0 (.75 * $baseline-grid);
 }
 
 .kd-second-toolbar {
-  background: $primary;
   box-shadow: $whiteframe-shadow-1dp;
   height: 7 * $baseline-grid;
   min-height: 7 * $baseline-grid;
+  padding-left: .5 * $baseline-grid;
   // Move entire second toolbar above content to avoid elements overlap with
   // shadow (there was problem with it on IE).
   z-index: 1;
 }
 
 .kd-system-banner {
-  background-color: $running-resource-color;
   box-shadow: $whiteframe-shadow-1dp;
-  color: $foreground-1;
   display: inline;
   font-size: $body-font-size-base;
   height: 6 * $baseline-grid;
@@ -86,74 +76,30 @@
   overflow: hidden;
   padding: 0 (3 * $baseline-grid);
   white-space: nowrap;
+  // Move entire system banner above content to avoid elements overlap with
+  // shadow (there was problem with it on IE).
+  z-index: 2;
 }
 
-.kd-system-banner-error {
-  background-color: $error-color;
-}
-
-.kd-system-banner-warning {
-  background-color: $warning;
-}
-
-.kd-app-entire-content {
-  background-color: $body;
-  max-height: 100%;
-}
-
-.kd-app-content {
-  background-color: $body;
-  height: 100%;
-  max-height: 100%;
+.kd-chrome-container {
   // Set overflow property to disable margin-collapse, which in turn
   // prevents scrollbar from being always visible.
   overflow-x: hidden;
   position: relative;
+}
 
-  > .md-body-1 {
-    &:not(.kd-content-div-filled) {
-      padding-bottom: 4 * $baseline-grid;
-    }
+.kd-scroll-container {
+  overflow-x: auto;
+
+  ::before {
+    content: '';
+    display: block;
+    margin-bottom: 2.5 * $baseline-grid;
   }
-}
 
-.kd-content-div-filled {
-  height: 100%;
-}
-
-.kd-main-content-div {
-  height: 100%;
-  width: 100%;
-}
-
-.kd-main-content-box {
-  background-color: transparent;
-  display: flex;
-  overflow-y: auto;
-}
-
-.kd-spinner {
-  align-content: center;
-  align-items: center;
-  display: flex;
-  flex: 1;
-  height: 100%;
-  justify-content: center;
-  padding-top: 2.5 * $baseline-grid;
-
-  > md-progress-circular {
-    margin: 0 auto;
+  ::after {
+    content: '';
+    display: block;
+    padding-bottom: 2 * $baseline-grid;
   }
-}
-
-.kd-success {
-  color: $success-color;
-}
-
-.kd-error {
-  color: $error-color;
-}
-
-.kd-warning {
-  color: $warning;
 }

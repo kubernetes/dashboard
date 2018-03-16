@@ -1,0 +1,105 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-card role="table"
+         [hidden]="isHidden()">
+  <div title
+       fxLayout="row">Services</div>
+  <div description><span class="kd-muted-light">Items:&nbsp;</span>{{totalItems}}</div>
+  <div actions>
+    <kd-card-list-filter></kd-card-list-filter>
+  </div>
+
+  <div content
+       [hidden]="showZeroState()">
+    <div kdLoadingSpinner
+         [isLoading]="isLoading"></div>
+
+    <mat-table [dataSource]="getData()"
+               matSort
+               [matSortActive]="getDisplayColumns()[6]"
+               matSortDisableClear
+               matSortDirection="asc">
+      <ng-container [matColumnDef]="getDisplayColumns()[0]">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let service">
+          <mat-icon [ngClass]="getStatus(service).iconClass">
+            {{getStatus(service).iconName}}
+          </mat-icon>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getDisplayColumns()[1]">
+        <mat-header-cell *matHeaderCellDef
+                         mat-sort-header
+                         disableClear="true">Name</mat-header-cell>
+        <mat-cell *matCellDef="let service">
+          <a [href]="getDetailsHref(service.objectMeta.name, service.objectMeta.namespace)">
+            {{service.objectMeta.name}}
+          </a>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getDisplayColumns()[2]">
+        <mat-header-cell *matHeaderCellDef>Labels</mat-header-cell>
+        <mat-cell *matCellDef="let service">
+          <kd-chips [map]="service.objectMeta.labels"></kd-chips>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getDisplayColumns()[3]">
+        <mat-header-cell *matHeaderCellDef>Cluster IP</mat-header-cell>
+        <mat-cell *matCellDef="let service">{{service.clusterIP}}</mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getDisplayColumns()[4]">
+        <mat-header-cell *matHeaderCellDef>Internal Endpoints</mat-header-cell>
+        <mat-cell *matCellDef="let service">
+          <kd-internal-endpoint [endpoints]="[service.internalEndpoint]"></kd-internal-endpoint>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getDisplayColumns()[5]">
+        <mat-header-cell *matHeaderCellDef>External Endpoints</mat-header-cell>
+        <mat-cell *matCellDef="let service">
+          <kd-external-endpoint [endpoints]="service.externalEndpoints"></kd-external-endpoint>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getDisplayColumns()[6]">
+        <mat-header-cell *matHeaderCellDef
+                         mat-sort-header
+                         disableClear="true">Age</mat-header-cell>
+        <mat-cell *matCellDef="let service">
+          {{service.objectMeta.creationTimestamp | kdRelativeTime}}
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="getDisplayColumns()"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: getDisplayColumns();"></mat-row>
+    </mat-table>
+
+    <mat-paginator [length]="totalItems"
+                   [pageSize]="itemsPerPage"
+                   [hidePageSize]="true"
+                   [showFirstLastButtons]="true"></mat-paginator>
+  </div>
+
+  <div content
+       [hidden]="!showZeroState()">
+    <kd-list-zero-state></kd-list-zero-state>
+  </div>
+</kd-card>

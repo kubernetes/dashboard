@@ -28,9 +28,8 @@ import (
 	kdErrors "github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/integration"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/cluster"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/clusterrole"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/config"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/configmap"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/container"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/controller"
@@ -38,7 +37,6 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/deployment"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/discovery"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/endpoint"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
@@ -47,21 +45,17 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/logs"
 	ns "github.com/kubernetes/dashboard/src/app/backend/resource/namespace"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/node"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/overview"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolume"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolumeclaim"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/rbacrolebindings"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/rbacroles"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/secret"
 	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/statefulset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/storageclass"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/workload"
 	"github.com/kubernetes/dashboard/src/app/backend/scaling"
-	"github.com/kubernetes/dashboard/src/app/backend/search"
 	"github.com/kubernetes/dashboard/src/app/backend/settings"
 	"github.com/kubernetes/dashboard/src/app/backend/systembanner"
 	"github.com/kubernetes/dashboard/src/app/backend/validation"
@@ -188,38 +182,6 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			Writes(resourceService.ServiceList{}))
 
 	apiV1Ws.Route(
-		apiV1Ws.GET("/workload").
-			To(apiHandler.handleGetWorkloads).
-			Writes(workload.Workloads{}))
-	apiV1Ws.Route(
-		apiV1Ws.GET("/workload/{namespace}").
-			To(apiHandler.handleGetWorkloads).
-			Writes(workload.Workloads{}))
-
-	apiV1Ws.Route(
-		apiV1Ws.GET("/cluster").
-			To(apiHandler.handleGetCluster).
-			Writes(cluster.Cluster{}))
-
-	apiV1Ws.Route(
-		apiV1Ws.GET("/discovery").
-			To(apiHandler.handleGetDiscovery).
-			Writes(discovery.Discovery{}))
-	apiV1Ws.Route(
-		apiV1Ws.GET("/discovery/{namespace}").
-			To(apiHandler.handleGetDiscovery).
-			Writes(discovery.Discovery{}))
-
-	apiV1Ws.Route(
-		apiV1Ws.GET("/config").
-			To(apiHandler.handleGetConfig).
-			Writes(config.Config{}))
-	apiV1Ws.Route(
-		apiV1Ws.GET("/config/{namespace}").
-			To(apiHandler.handleGetConfig).
-			Writes(config.Config{}))
-
-	apiV1Ws.Route(
 		apiV1Ws.GET("/replicaset").
 			To(apiHandler.handleGetReplicaSets).
 			Writes(replicaset.ReplicaSetList{}))
@@ -234,6 +196,10 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 	apiV1Ws.Route(
 		apiV1Ws.GET("/replicaset/{namespace}/{replicaSet}/pod").
 			To(apiHandler.handleGetReplicaSetPods).
+			Writes(pod.PodList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/replicaset/{namespace}/{replicaSet}/service").
+			To(apiHandler.handleGetReplicaSetServices).
 			Writes(pod.PodList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/replicaset/{namespace}/{replicaSet}/event").
@@ -517,10 +483,6 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			To(apiHandler.handlePutResource))
 
 	apiV1Ws.Route(
-		apiV1Ws.GET("/rbac/role").
-			To(apiHandler.handleGetRbacRoleList).
-			Writes(rbacroles.RbacRoleList{}))
-	apiV1Ws.Route(
 		apiV1Ws.GET("/rbac/rolebinding").
 			To(apiHandler.handleGetRbacRoleBindingList).
 			Writes(rbacrolebindings.RbacRoleBindingList{}))
@@ -528,6 +490,15 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 		apiV1Ws.GET("/rbac/status").
 			To(apiHandler.handleRbacStatus).
 			Writes(validation.RbacStatus{}))
+
+	apiV1Ws.Route(
+		apiV1Ws.GET("/clusterrole").
+			To(apiHandler.handleGetClusterRoleList).
+			Writes(clusterrole.ClusterRoleList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/clusterrole/{name}").
+			To(apiHandler.handleGetClusterRoleDetail).
+			Writes(clusterrole.ClusterRoleDetail{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/persistentvolume").
@@ -570,15 +541,6 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			Writes(persistentvolume.PersistentVolumeList{}))
 
 	apiV1Ws.Route(
-		apiV1Ws.GET("/search").
-			To(apiHandler.handleSearch).
-			Writes(search.SearchResult{}))
-	apiV1Ws.Route(
-		apiV1Ws.GET("/search/{namespace}").
-			To(apiHandler.handleSearch).
-			Writes(search.SearchResult{}))
-
-	apiV1Ws.Route(
 		apiV1Ws.GET("/log/source/{namespace}/{resourceName}/{resourceType}").
 			To(apiHandler.handleLogSource).
 			Writes(controller.LogSources{}))
@@ -596,21 +558,11 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			To(apiHandler.handleLogFile).
 			Writes(logs.LogDetails{}))
 
-	apiV1Ws.Route(
-		apiV1Ws.GET("/overview/").
-			To(apiHandler.handleOverview).
-			Writes(overview.Overview{}))
-
-	apiV1Ws.Route(
-		apiV1Ws.GET("/overview/{namespace}").
-			To(apiHandler.handleOverview).
-			Writes(overview.Overview{}))
-
 	return wsContainer, nil
 }
 
 // TODO: Handle case in which RBAC feature is not enabled in API server. Currently returns 404 resource not found
-func (apiHandler *APIHandler) handleGetRbacRoleList(request *restful.Request, response *restful.Response) {
+func (apiHandler *APIHandler) handleGetClusterRoleList(request *restful.Request, response *restful.Response) {
 	k8sClient, err := apiHandler.cManager.Client(request)
 	if err != nil {
 		kdErrors.HandleInternalError(response, err)
@@ -618,7 +570,23 @@ func (apiHandler *APIHandler) handleGetRbacRoleList(request *restful.Request, re
 	}
 
 	dataSelect := parseDataSelectPathParameter(request)
-	result, err := rbacroles.GetRbacRoleList(k8sClient, dataSelect)
+	result, err := clusterrole.GetClusterRoleList(k8sClient, dataSelect)
+	if err != nil {
+		kdErrors.HandleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetClusterRoleDetail(request *restful.Request, response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		kdErrors.HandleInternalError(response, err)
+		return
+	}
+
+	name := request.PathParameter("name")
+	result, err := clusterrole.GetClusterRoleDetail(k8sClient, name)
 	if err != nil {
 		kdErrors.HandleInternalError(response, err)
 		return
@@ -861,23 +829,6 @@ func (apiHandler *APIHandler) handleGetNodeList(request *restful.Request, respon
 	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
-func (apiHandler *APIHandler) handleGetCluster(request *restful.Request, response *restful.Response) {
-	k8sClient, err := apiHandler.cManager.Client(request)
-	if err != nil {
-		kdErrors.HandleInternalError(response, err)
-		return
-	}
-
-	dataSelect := parseDataSelectPathParameter(request)
-	dataSelect.MetricQuery = dataselect.NoMetrics
-	result, err := cluster.GetCluster(k8sClient, dataSelect, apiHandler.iManager.Metric().Client())
-	if err != nil {
-		kdErrors.HandleInternalError(response, err)
-		return
-	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
-}
-
 func (apiHandler *APIHandler) handleGetNodeDetail(request *restful.Request, response *restful.Response) {
 	k8sClient, err := apiHandler.cManager.Client(request)
 	if err != nil {
@@ -1080,95 +1031,6 @@ func (apiHandler *APIHandler) handleGetReplicationControllerList(request *restfu
 	dataSelect := parseDataSelectPathParameter(request)
 	dataSelect.MetricQuery = dataselect.StandardMetrics
 	result, err := replicationcontroller.GetReplicationControllerList(k8sClient, namespace, dataSelect, apiHandler.iManager.Metric().Client())
-	if err != nil {
-		kdErrors.HandleInternalError(response, err)
-		return
-	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
-}
-
-func (apiHandler *APIHandler) handleGetWorkloads(request *restful.Request, response *restful.Response) {
-	k8sClient, err := apiHandler.cManager.Client(request)
-	if err != nil {
-		kdErrors.HandleInternalError(response, err)
-		return
-	}
-
-	namespace := parseNamespacePathParameter(request)
-	dataSelect := parseDataSelectPathParameter(request)
-	dataSelect.MetricQuery = dataselect.NoMetrics
-	result, err := workload.GetWorkloads(k8sClient, apiHandler.iManager.Metric().Client(), namespace, dataSelect)
-	if err != nil {
-		kdErrors.HandleInternalError(response, err)
-		return
-	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
-}
-
-func (apiHandler *APIHandler) handleOverview(request *restful.Request, response *restful.Response) {
-	k8sClient, err := apiHandler.cManager.Client(request)
-	if err != nil {
-		kdErrors.HandleInternalError(response, err)
-		return
-	}
-
-	namespace := parseNamespacePathParameter(request)
-	dataSelect := parseDataSelectPathParameter(request)
-	dataSelect.FilterQuery = dataselect.NoFilter
-	dataSelect.MetricQuery = dataselect.NoMetrics
-	result, err := overview.GetOverview(k8sClient, apiHandler.iManager.Metric().Client(), namespace, dataSelect)
-	if err != nil {
-		kdErrors.HandleInternalError(response, err)
-		return
-	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
-}
-
-func (apiHandler *APIHandler) handleSearch(request *restful.Request, response *restful.Response) {
-	k8sClient, err := apiHandler.cManager.Client(request)
-	if err != nil {
-		kdErrors.HandleInternalError(response, err)
-		return
-	}
-
-	namespace := parseNamespacePathParameter(request)
-	dataSelect := parseDataSelectPathParameter(request)
-	dataSelect.MetricQuery = dataselect.NoMetrics
-	result, err := search.Search(k8sClient, apiHandler.iManager.Metric().Client(), namespace, dataSelect)
-	if err != nil {
-		kdErrors.HandleInternalError(response, err)
-		return
-	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
-}
-
-func (apiHandler *APIHandler) handleGetDiscovery(request *restful.Request, response *restful.Response) {
-	k8sClient, err := apiHandler.cManager.Client(request)
-	if err != nil {
-		kdErrors.HandleInternalError(response, err)
-		return
-	}
-
-	namespace := parseNamespacePathParameter(request)
-	dsQuery := parseDataSelectPathParameter(request)
-	result, err := discovery.GetDiscovery(k8sClient, namespace, dsQuery)
-	if err != nil {
-		kdErrors.HandleInternalError(response, err)
-		return
-	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
-}
-
-func (apiHandler *APIHandler) handleGetConfig(request *restful.Request, response *restful.Response) {
-	k8sClient, err := apiHandler.cManager.Client(request)
-	if err != nil {
-		kdErrors.HandleInternalError(response, err)
-		return
-	}
-
-	namespace := parseNamespacePathParameter(request)
-	dsQuery := parseDataSelectPathParameter(request)
-	result, err := config.GetConfig(k8sClient, namespace, dsQuery)
 	if err != nil {
 		kdErrors.HandleInternalError(response, err)
 		return

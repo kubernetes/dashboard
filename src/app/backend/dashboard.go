@@ -132,8 +132,7 @@ func main() {
 	// TODO(bryk): Disable directory listing.
 	http.Handle("/", handler.MakeGzipHandler(handler.CreateLocaleHandler()))
 	http.Handle("/api/", apiHandler)
-	// TODO(maciaszczykm): Move to /appConfig.json as it was discussed in #640.
-	http.Handle("/api/appConfig.json", handler.AppHandler(handler.ConfigHandler))
+	http.Handle("/config", handler.AppHandler(handler.ConfigHandler))
 	http.Handle("/api/sockjs/", handler.CreateAttachHandler("/api/sockjs"))
 	http.Handle("/metrics", prometheus.Handler())
 

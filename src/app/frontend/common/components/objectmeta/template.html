@@ -1,0 +1,76 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-card [initialized]="initialized">
+  <div title>Metadata</div>
+  <div description>
+    <div class="kd-inline-property">
+      <span class="kd-muted-light">Name:&nbsp;</span>
+      <span>{{objectMeta?.name}}</span>
+    </div>
+    <div class="kd-inline-property"
+         *ngIf="objectMeta?.namespace">
+      <span class="kd-muted-light">Namespace:&nbsp;</span>
+      <span>{{objectMeta?.namespace}}</span>
+    </div>
+    <div class="kd-inline-property"
+         *ngIf="objectMeta?.creationTimestamp">
+      <span class="kd-muted-light">Age:&nbsp;</span>
+      <span>{{objectMeta?.creationTimestamp | kdRelativeTime}}</span>
+    </div>
+  </div>
+  <div content>
+    <div fxLayout="row"
+         fxLayoutWrap>
+      <kd-property>
+        <div key>Name</div>
+        <div value>{{objectMeta?.name}}</div>
+      </kd-property>
+      <kd-property *ngIf="objectMeta?.namespace">
+        <div key>Namespace</div>
+        <div value>{{objectMeta?.namespace}}</div>
+      </kd-property>
+      <kd-property>
+        <div key>Creation time</div>
+        <div value>{{objectMeta?.creationTimestamp | date : "MMM d, y H:mm:ss" : "UTC"}}</div>
+      </kd-property>
+      <kd-property>
+        <div key>Age</div>
+        <div value>{{objectMeta?.creationTimestamp | kdRelativeTime}}</div>
+      </kd-property>
+      <kd-property *ngIf="objectMeta?.uid">
+        <div key>UID</div>
+        <div value>{{objectMeta?.uid}}</div>
+      </kd-property>
+      <kd-property *ngIf="objectMeta?.labels"
+                   fxFlex="100">
+        <div key>Labels</div>
+        <div value>
+          <kd-chips [map]="objectMeta?.labels"
+                    minChipsVisible="4"></kd-chips>
+        </div>
+      </kd-property>
+      <kd-property *ngIf="objectMeta?.annotations"
+                   fxFlex="100">
+        <div key>Annotations</div>
+        <div value>
+          <kd-chips [map]="objectMeta?.annotations"
+                    minChipsVisible="4"></kd-chips>
+        </div>
+      </kd-property>
+    </div>
+  </div>
+</kd-card>

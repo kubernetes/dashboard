@@ -13,21 +13,18 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
-import {MatButtonModule, MatSidenavModule} from '@angular/material';
-import {BrowserModule} from '@angular/platform-browser';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ComponentsModule} from '../../common/components/module';
+
+import {NavServiceModule} from '../../common/services/nav/module';
+import {SharedModule} from '../../shared.module';
 
 import {NavComponent} from './component';
+import {HamburgerComponent} from './hamburger/component';
 import {NavItemComponent} from './item/component';
 
 @NgModule({
-  declarations: [NavComponent, NavItemComponent],
-  exports: [NavComponent, NavItemComponent],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    MatSidenavModule,
-    MatButtonModule,
-  ]
+  declarations: [NavComponent, NavItemComponent, HamburgerComponent],
+  exports: [NavComponent, NavItemComponent, HamburgerComponent],
+  imports: [SharedModule, ComponentsModule, NavServiceModule]
 })
 export class NavModule {}

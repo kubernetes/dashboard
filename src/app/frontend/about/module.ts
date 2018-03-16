@@ -15,16 +15,19 @@
 import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
 
-import {SharedModule} from '../shared_module';
+import {ComponentsModule} from '../common/components/module';
+import {SharedModule} from '../shared.module';
 
+import {ActionbarComponent} from './actionbar/component';
 import {AboutComponent} from './component';
 import {aboutState} from './state';
 
 @NgModule({
   imports: [
     SharedModule,
+    ComponentsModule,
     UIRouterModule.forChild({states: [aboutState]}),
   ],
-  declarations: [AboutComponent],
+  declarations: [AboutComponent, ActionbarComponent],
 })
 export class AboutModule {}

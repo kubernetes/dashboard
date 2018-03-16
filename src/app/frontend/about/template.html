@@ -14,36 +14,30 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<mat-card class="kd-about-card">
-  <mat-card-title>About</mat-card-title>
-  <mat-card-content>
+<kd-card [withFooter]="true">
+  <div title>About</div>
+
+  <div content
+       fxLayout="row">
     <mat-icon class="kd-about-logo-icon"
               [svgIcon]="assets.getAppLogo()"></mat-icon>
-    <div class="kd-about-logo-text">
-      <div class="mat-h1 kd-no-margin">Dashboard</div>
-      <div class="mat-h3 kd-no-margin">General-purpose web UI for Kubernetes clusters</div>
+    <div fxFlexAlign="center">
+      <div class="kd-h1">
+        <span>Dashboard</span>
+        <span *ngIf="appVersion">{{appVersion}}</span>
+      </div>
+      <div class="kd-h3">General-purpose web UI for Kubernetes clusters</div>
     </div>
-    <div>App version:</div>
-    <div>Git commit:</div>
-  </mat-card-content>
-  <mat-card-footer class="mat-small kd-card-footer">
+  </div>
+
+  <div class="kd-muted"
+       footer>
+    <div *ngIf="gitCommit">Built from <a [href]="getCommitLink()">{{gitCommit}}</a> commit.</div>
     <div>Copyright 2015 - {{latestCopyrightYear}} The Kubernetes Authors.</div>
     <div>
       Kubernetes Dashboard is made possible by the Dashboard
       <a href="https://github.com/kubernetes/dashboard/graphs/contributors">community</a> as an
       <a href="https://github.com/kubernetes/dashboard">open source project</a>.
     </div>
-  </mat-card-footer>
-</mat-card>
-
-<!--
-    <kd-info-card-entry title="[[Dashboard Version|Label 'Dashboard Version' for the about page.]]"
-                        ng-if="::$ctrl.dashboardVersion">
-    {{$ctrl.dashboardVersion}}
-    </kd-info-card-entry>
-
-    <kd-info-card-entry title="[[Git Commit|Label 'Git Commit' for the about page.]]"
-                        ng-if="::$ctrl.gitCommit">
-    {{$ctrl.gitCommit}}
-    </kd-info-card-entry>
--->
+  </div>
+</kd-card>

@@ -1,0 +1,125 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-card role="table"
+         [hidden]="isHidden()">
+  <div title
+       fxLayout="row">Persistent Volumes</div>
+  <div description><span class="kd-muted-light">Items:&nbsp;</span>{{totalItems}}</div>
+  <div actions>
+    <kd-card-list-filter></kd-card-list-filter>
+  </div>
+
+  <div content
+       [hidden]="showZeroState()">
+    <div kdLoadingSpinner
+         [isLoading]="isLoading"></div>
+
+    <mat-table [dataSource]="getData()"
+               matSort
+               [matSortActive]="getDisplayColumns()[9]"
+               matSortDisableClear
+               matSortDirection="asc">
+      <ng-container [matColumnDef]="getDisplayColumns()[0]">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let pv">
+          <mat-icon [ngClass]="getStatus(pv).iconClass">{{getStatus(pv).iconName}}</mat-icon>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getDisplayColumns()[1]">
+        <mat-header-cell *matHeaderCellDef
+                         mat-sort-header
+                         disableClear="true">Name</mat-header-cell>
+        <mat-cell *matCellDef="let pv">
+          <a [href]="getDetailsHref(pv.objectMeta.name)">{{pv.objectMeta.name}}</a>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getDisplayColumns()[2]">
+        <mat-header-cell *matHeaderCellDef>Capacity</mat-header-cell>
+        <mat-cell *matCellDef="let pv">
+          <kd-chips [map]="pv.capacity"></kd-chips>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getDisplayColumns()[3]">
+        <mat-header-cell *matHeaderCellDef>Access Modes</mat-header-cell>
+        <mat-cell *matCellDef="let pv">
+          <kd-chips [map]="pv.accessModes"></kd-chips>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getDisplayColumns()[4]">
+        <mat-header-cell *matHeaderCellDef>Reclaim Policy</mat-header-cell>
+        <mat-cell *matCellDef="let pv">{{pv.reclaimPolicy}}</mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getDisplayColumns()[5]">
+        <mat-header-cell *matHeaderCellDef
+                         mat-sort-header
+                         disableClear="true">Status</mat-header-cell>
+        <mat-cell *matCellDef="let pv">{{pv.status}}</mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getDisplayColumns()[6]">
+        <mat-header-cell *matHeaderCellDef>Claim</mat-header-cell>
+        <mat-cell *matCellDef="let pv">
+          <ng-container *ngIf="pv.claim">{{pv.claim}}</ng-container>
+          <ng-container *ngIf="!pv.claim">-</ng-container>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getDisplayColumns()[7]">
+        <mat-header-cell *matHeaderCellDef>Storage Class</mat-header-cell>
+        <mat-cell *matCellDef="let pv">
+          <div *ngIf="pv.storageClass">{{pv.storageClass}}</div>
+          <div *ngIf="!pv.storageClass">-</div>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getDisplayColumns()[8]">
+        <mat-header-cell *matHeaderCellDef>Reason</mat-header-cell>
+        <mat-cell *matCellDef="let pv">
+          <ng-container *ngIf="pv.reason">{{pv.reason}}</ng-container>
+          <ng-container *ngIf="!pv.reason">-</ng-container>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getDisplayColumns()[9]">
+        <mat-header-cell *matHeaderCellDef
+                         mat-sort-header
+                         disableClear="true">Age</mat-header-cell>
+        <mat-cell *matCellDef="let pv">
+          {{pv.objectMeta.creationTimestamp |kdRelativeTime}}
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="getDisplayColumns()"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: getDisplayColumns();"></mat-row>
+    </mat-table>
+
+    <mat-paginator [length]="totalItems"
+                   [pageSize]="itemsPerPage"
+                   [hidePageSize]="true"
+                   [showFirstLastButtons]="true"></mat-paginator>
+  </div>
+
+  <div content
+       [hidden]="!showZeroState()">
+    <kd-list-zero-state></kd-list-zero-state>
+  </div>
+</kd-card>

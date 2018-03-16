@@ -12,10 +12,47 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
+import {APP_INITIALIZER, Injector, NgModule} from '@angular/core';
+
 import {AssetsService} from './assets';
+import {AuthService} from './authentication';
+import {AuthorizerService} from './authorizer';
+import {BreadcrumbsService} from './breadcrumbs';
+import {ConfigService} from './config';
+import {CsrfTokenService} from './csrftoken';
+import {GlobalSettingsService} from './globalsettings';
+import {LocalSettingsService} from './localsettings';
+import {NamespaceService} from './namespace';
+import {NotificationsService} from './notifications';
+import {KdStateService} from './state';
+import {ThemeService} from './theme';
+import {TitleService} from './title';
 
 @NgModule({
-  providers: [AssetsService],
+  providers: [
+    AuthorizerService, AssetsService, BreadcrumbsService, LocalSettingsService,
+    GlobalSettingsService, ConfigService, TitleService, AuthService, CsrfTokenService,
+    NotificationsService, ThemeService, KdStateService, NamespaceService, {
+      provide: APP_INITIALIZER,
+      useFactory: init,
+      deps: [GlobalSettingsService, LocalSettingsService, ConfigService],
+      multi: true,
+    }
+  ],
 })
-export class GlobalServicesModule {}
+export class GlobalServicesModule {
+  static injector: Injector;
+  constructor(injector: Injector) {
+    GlobalServicesModule.injector = injector;
+  }
+}
+
+export function init(
+    globalSettings: GlobalSettingsService, localSettings: LocalSettingsService,
+    config: ConfigService): Function {
+  return () => {
+    globalSettings.init();
+    localSettings.init();
+    config.init();
+  };
+}
