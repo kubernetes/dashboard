@@ -29,7 +29,8 @@ import {statefulSetState} from './state';
     SharedModule,
     ComponentsModule,
     ResourceModule,
-    UIRouterModule.forChild({states: [statefulSetState, statefulSetListState, statefulSetDetailState]}),
+    UIRouterModule.forChild(
+        {states: [statefulSetState, statefulSetListState, statefulSetDetailState]}),
   ],
   declarations: [StatefulSetList, StatefulSetDetailComponent],
 })
