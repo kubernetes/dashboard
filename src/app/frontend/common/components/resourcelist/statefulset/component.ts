@@ -17,7 +17,7 @@ import {Component, ComponentFactoryResolver, Input} from '@angular/core';
 import {Event, Pod, StatefulSet, StatefulSetList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
-
+import {statefulSetState} from '../../../../resource/workloads/statefulset/state';
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
@@ -36,7 +36,7 @@ export class StatefulSetListComponent extends
       state: StateService,
       private readonly statefulSet_: NamespacedResourceService<StatefulSetList>,
       resolver: ComponentFactoryResolver, notifications: NotificationsService) {
-    super('', state, notifications, resolver);
+    super(statefulSetState.name, state, notifications, resolver);
     this.id = ListIdentifiers.statefulSet;
     this.groupId = ListGroupIdentifiers.workloads;
 
