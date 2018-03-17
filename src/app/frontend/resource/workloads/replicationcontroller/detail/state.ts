@@ -13,18 +13,20 @@
 // limitations under the License.
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
-import {workloadsState} from '../../state';
-import {stateName, stateUrl} from '../state';
-import {ReplicationControllerList} from './component';
 
-export const replicationControllerListState: Ng2StateDeclaration = {
-  name: `${stateName}.list`,
-  url: stateUrl,
-  component: ReplicationControllerList,
+import {addNamespacedResourceStateParamsToUrl} from '../../../../common/params/params';
+import {stateName, stateUrl} from '../state';
+
+import {ReplicationControllerDetailComponent} from './component';
+
+export const replicationControllerDetailState: Ng2StateDeclaration = {
+  name: `${stateName}.detail`,
+  url: addNamespacedResourceStateParamsToUrl(stateUrl),
+  component: ReplicationControllerDetailComponent,
   data: {
     kdBreadcrumbs: {
-      label: 'Replication Controllers',
-      parent: workloadsState.name,
+      label: 'resourceName',
+      parent: 'replicationcontroller.list',
     },
   },
 };

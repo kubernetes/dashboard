@@ -17,6 +17,7 @@ import {Component, ComponentFactoryResolver, Input} from '@angular/core';
 import {Event, ReplicaSet, ReplicationController, ReplicationControllerList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
+import {replicationControllerState} from '../../../../resource/workloads/replicationcontroller/state';
 
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
@@ -36,7 +37,7 @@ export class ReplicationControllerListComponent extends
       state: StateService,
       private readonly replicationController_: NamespacedResourceService<ReplicationControllerList>,
       notifications: NotificationsService, resolver: ComponentFactoryResolver) {
-    super('', state, notifications, resolver);
+    super(replicationControllerState.name, state, notifications, resolver);
     this.id = ListIdentifiers.replicationController;
     this.groupId = ListGroupIdentifiers.workloads;
 

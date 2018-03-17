@@ -1,0 +1,65 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-object-meta [initialized]="isInitialized"
+                [objectMeta]="replicationController?.objectMeta"></kd-object-meta>
+
+<kd-card [initialized]="isInitialized">
+  <div title>Replication Controller information</div>
+
+  <div description>
+    <div class="kd-inline-property"
+         *ngIf="replicationController?.podInfo">
+      <span class="kd-muted-light">Pods:&nbsp;</span>
+      <span>{{replicationController.podInfo.running}} / {{replicationController.podInfo.desired}}</span>
+    </div>
+  </div>
+
+  <div content
+       *ngIf="isInitialized"
+       fxLayout="row"
+       fxLayoutWrap>
+    <kd-property *ngIf="replicationController?.labelSelector">
+      <div key>Label Selector</div>
+      <div value>
+        <kd-chips [map]="replicationController.labelSelector"></kd-chips>
+      </div>
+    </kd-property>
+
+    <kd-property *ngIf="replicationController?.containerImages">
+      <div key>Images</div>
+      <div value>
+        <kd-chips [map]="replicationController.containerImages"></kd-chips>
+      </div>
+    </kd-property>
+
+    <kd-property *ngIf="replicationController?.initContainerImages">
+      <div key>Init images</div>
+      <div value>
+        <kd-chips [map]="replicationController.initContainerImages"></kd-chips>
+      </div>
+    </kd-property>
+  </div>
+</kd-card>
+
+<kd-pod-status-card [podInfo]="replicationController?.podInfo"
+                    [initialized]="isInitialized"></kd-pod-status-card>
+
+<kd-pod-list [endpoint]="podListEndpoint"></kd-pod-list>
+
+<kd-service-list [endpoint]="serviceListEndpoint"></kd-service-list>
+
+<kd-event-list [endpoint]="eventListEndpoint"></kd-event-list>
