@@ -63,7 +63,7 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy, AfterViewI
     });
 
     // Avoid angular error 'ExpressionChangedAfterItHasBeenCheckedError'.
-    // Related issues: https://github.com/angular/angular/issues/17572
+    // Related issue: https://github.com/angular/angular/issues/17572
     setTimeout(() => {
       if (this.shouldShowNamespaceChangeDialog()) {
         this.handleNamespaceChangeDialog_();
