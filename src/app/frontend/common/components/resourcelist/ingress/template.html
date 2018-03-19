@@ -30,10 +30,10 @@ limitations under the License.
 
     <mat-table [dataSource]="getData()"
                matSort
-               [matSortActive]="getDisplayColumns()[2]"
+               matSortActive="age"
                matSortDisableClear
                matSortDirection="asc">
-      <ng-container [matColumnDef]="getDisplayColumns()[0]">
+      <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true">Name</mat-header-cell>
@@ -44,21 +44,27 @@ limitations under the License.
         </mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayColumns()[1]">
+      <ng-container *ngIf="shouldShowColumn('namespace')"
+                    matColumnDef="namespace">
+        <mat-header-cell *matHeaderCellDef>Namespace</mat-header-cell>
+        <mat-cell *matCellDef="let ingress">{{ingress.objectMeta.namespace}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="labels">
         <mat-header-cell *matHeaderCellDef>Labels</mat-header-cell>
         <mat-cell *matCellDef="let ingress">
           <kd-chips [map]="ingress.objectMeta.labels"></kd-chips>
         </mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayColumns()[2]">
+      <ng-container matColumnDef="endpoints">
         <mat-header-cell *matHeaderCellDef>Endpoints</mat-header-cell>
         <mat-cell *matCellDef="let ingress">
           <kd-external-endpoint [endpoints]="ingress.endpoints"></kd-external-endpoint>
         </mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayColumns()[3]">
+      <ng-container matColumnDef="age">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true">Age</mat-header-cell>
@@ -67,8 +73,8 @@ limitations under the License.
         </mat-cell>
       </ng-container>
 
-      <mat-header-row *matHeaderRowDef="getDisplayColumns()"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: getDisplayColumns();"></mat-row>
+      <mat-header-row *matHeaderRowDef="getColumns()"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: getColumns();"></mat-row>
     </mat-table>
 
     <mat-paginator [length]="totalItems"

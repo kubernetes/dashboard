@@ -30,10 +30,10 @@ limitations under the License.
 
     <mat-table [dataSource]="getData()"
                matSort
-               [matSortActive]="getDisplayColumns()[4]"
+               matSortActive="age"
                matSortDisableClear
                matSortDirection="asc">
-      <ng-container [matColumnDef]="getDisplayColumns()[0]">
+      <ng-container matColumnDef="statusicon">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let rc; let index=index">
           <mat-icon [ngClass]="getStatus(rc).iconClass">
@@ -48,7 +48,7 @@ limitations under the License.
         </mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayColumns()[1]">
+      <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true">Name</mat-header-cell>
@@ -60,41 +60,47 @@ limitations under the License.
         </mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayColumns()[2]">
+      <ng-container *ngIf="shouldShowColumn('namespace')"
+                    matColumnDef="namespace">
+        <mat-header-cell *matHeaderCellDef>Namespace</mat-header-cell>
+        <mat-cell *matCellDef="let rc">{{rc.objectMeta.namespace}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="labels">
         <mat-header-cell *matHeaderCellDef>Labels</mat-header-cell>
         <mat-cell *matCellDef="let rc">
           <kd-chips [map]="rc.objectMeta.labels"></kd-chips>
         </mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayColumns()[3]">
+      <ng-container matColumnDef="pods">
         <mat-header-cell *matHeaderCellDef>Pods</mat-header-cell>
         <mat-cell *matCellDef="let rc">
           {{rc.pods.running}} / {{rc.pods.desired}}
         </mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayColumns()[4]">
+      <ng-container matColumnDef="age">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true">Age</mat-header-cell>
         <mat-cell *matCellDef="let rc">{{rc.objectMeta.creationTimestamp | kdRelativeTime}}</mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayColumns()[5]">
+      <ng-container matColumnDef="images">
         <mat-header-cell *matHeaderCellDef>Images</mat-header-cell>
         <mat-cell *matCellDef="let rc">
           <kd-chips [map]="rc.containerImages"></kd-chips>
         </mat-cell>
       </ng-container>
 
-      <mat-header-row *matHeaderRowDef="getDisplayColumns()"></mat-header-row>
+      <mat-header-row *matHeaderRowDef="getColumns()"></mat-header-row>
       <mat-row #matrow
                (mouseover)="onRowOver(index)"
                (mouseleave)="onRowLeave()"
                (click)="expand(index, row)"
                [ngClass]="{'kd-no-bottom-border': isRowExpanded(index), 'kd-clickable': hasErrors(row)}"
-               *matRowDef="let row; columns: getDisplayColumns(); let index=index"></mat-row>
+               *matRowDef="let row; columns: getColumns(); let index=index"></mat-row>
     </mat-table>
 
     <mat-paginator [length]="totalItems"

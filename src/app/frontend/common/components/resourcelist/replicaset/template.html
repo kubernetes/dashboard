@@ -33,7 +33,7 @@ limitations under the License.
 
     <mat-table [dataSource]="getData()"
                matSort
-               [matSortActive]="getDisplayColumns()[4]"
+               matSortActive="age"
                matSortDisableClear
                matSortDirection="asc">
       <ng-container matColumnDef="statusicon">
@@ -66,7 +66,7 @@ limitations under the License.
       <ng-container *ngIf="shouldShowColumn('namespace')"
                     matColumnDef="namespace">
         <mat-header-cell *matHeaderCellDef>Namespace</mat-header-cell>
-        <mat-cell *matCellDef="let pod">{{pod.objectMeta.namespace}}</mat-cell>
+        <mat-cell *matCellDef="let replicaSet">{{replicaSet.objectMeta.namespace}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="labels">

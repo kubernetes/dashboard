@@ -19,6 +19,7 @@ import {Observable} from 'rxjs/Observable';
 import {Secret, SecretList} from 'typings/backendapi';
 import {secretState} from '../../../../resource/config/secret/state';
 import {ResourceListBase} from '../../../resources/list';
+import {NamespaceService} from '../../../services/global/namespace';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
@@ -30,10 +31,13 @@ export class SecretListComponent extends ResourceListBase<SecretList, Secret> {
 
   constructor(
       state: StateService, private readonly secret_: NamespacedResourceService<SecretList>,
-      notifications: NotificationsService) {
+      notifications: NotificationsService, private readonly namespaceService_: NamespaceService) {
     super(secretState.name, state, notifications);
     this.id = ListIdentifiers.secret;
     this.groupId = ListGroupIdentifiers.config;
+
+    // Register dynamic columns.
+    this.registerDynamicColumn('namespace', 'name', this.shouldShowNamespaceColumn_.bind(this));
   }
 
   getResourceObservable(params?: HttpParams): Observable<SecretList> {
@@ -46,5 +50,9 @@ export class SecretListComponent extends ResourceListBase<SecretList, Secret> {
 
   getDisplayColumns(): string[] {
     return ['name', 'labels', 'type', 'age'];
+  }
+
+  private shouldShowNamespaceColumn_(): boolean {
+    return this.namespaceService_.areMultipleNamespacesSelected();
   }
 }

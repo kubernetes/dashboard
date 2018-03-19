@@ -72,7 +72,7 @@ export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
     return resource.podStatus.status === 'Succeeded' || resource.podStatus.status === 'Running';
   }
 
-  getDisplayColumns(): string[] {
+  protected getDisplayColumns(): string[] {
     return ['statusicon', 'name', 'labels', 'node', 'status', 'restarts', 'age'];
   }
 

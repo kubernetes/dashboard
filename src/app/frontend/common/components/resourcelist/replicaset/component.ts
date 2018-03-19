@@ -71,7 +71,7 @@ export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSet
     return resource.pods.warnings.length === 0 && resource.pods.pending === 0;
   }
 
-  getDisplayColumns(): string[] {
+  protected getDisplayColumns(): string[] {
     return ['statusicon', 'name', 'labels', 'pods', 'age', 'images'];
   }
 
