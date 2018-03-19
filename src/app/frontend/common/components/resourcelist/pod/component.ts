@@ -19,6 +19,7 @@ import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 import {podState} from '../../../../resource/workloads/pod/state';
 import {ResourceListWithStatuses} from '../../../resources/list';
+import {NamespaceService} from '../../../services/global/namespace';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
@@ -32,7 +33,8 @@ export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
 
   constructor(
       state: StateService, private readonly podList: NamespacedResourceService<PodList>,
-      resolver: ComponentFactoryResolver, notifications: NotificationsService) {
+      resolver: ComponentFactoryResolver, notifications: NotificationsService,
+      private readonly namespaceService_: NamespaceService) {
     super(podState.name, state, notifications, resolver);
     this.id = ListIdentifiers.pod;
     this.groupId = ListGroupIdentifiers.workloads;
@@ -45,6 +47,9 @@ export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
     // Register action columns.
     this.registerActionColumn<LogsButtonComponent>('logs', LogsButtonComponent);
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
+
+    // Register dynamic columns.
+    this.registerDynamicColumn('namespace', 'name', this.shouldShowNamespaceColumn_.bind(this));
   }
 
   getResourceObservable(params?: HttpParams): Observable<PodList> {
@@ -67,8 +72,12 @@ export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
     return resource.podStatus.status === 'Succeeded' || resource.podStatus.status === 'Running';
   }
 
-  getDisplayColumns(): string[] {
+  protected getDisplayColumns(): string[] {
     return ['statusicon', 'name', 'labels', 'node', 'status', 'restarts', 'age'];
+  }
+
+  private shouldShowNamespaceColumn_(): boolean {
+    return this.namespaceService_.areMultipleNamespacesSelected();
   }
 
   hasErrors(pod: Pod): boolean {

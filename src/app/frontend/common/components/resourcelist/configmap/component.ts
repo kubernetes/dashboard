@@ -19,6 +19,7 @@ import {Observable} from 'rxjs/Observable';
 import {ConfigMap, ConfigMapList} from 'typings/backendapi';
 import {configMapState} from '../../../../resource/config/configmap/state';
 import {ResourceListBase} from '../../../resources/list';
+import {NamespaceService} from '../../../services/global/namespace';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
@@ -30,10 +31,13 @@ export class ConfigMapListComponent extends ResourceListBase<ConfigMapList, Conf
 
   constructor(
       state: StateService, private readonly configMap_: NamespacedResourceService<ConfigMapList>,
-      notifications: NotificationsService) {
+      notifications: NotificationsService, private readonly namespaceService_: NamespaceService) {
     super(configMapState.name, state, notifications);
     this.id = ListIdentifiers.configMap;
     this.groupId = ListGroupIdentifiers.config;
+
+    // Register dynamic columns.
+    this.registerDynamicColumn('namespace', 'name', this.shouldShowNamespaceColumn_.bind(this));
   }
 
   getResourceObservable(params?: HttpParams): Observable<ConfigMapList> {
@@ -46,5 +50,9 @@ export class ConfigMapListComponent extends ResourceListBase<ConfigMapList, Conf
 
   getDisplayColumns(): string[] {
     return ['name', 'labels', 'age'];
+  }
+
+  private shouldShowNamespaceColumn_(): boolean {
+    return this.namespaceService_.areMultipleNamespacesSelected();
   }
 }

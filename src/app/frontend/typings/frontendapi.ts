@@ -26,6 +26,7 @@ export class Breadcrumb {
 }
 
 export type ThemeSwitchCallback = (isLightThemeEnabled: boolean) => void;
+export type ColumnWhenCallback = () => boolean;
 
 export type onSettingsLoadCallback = (settings?: GlobalSettings) => void;
 export type onSettingsFailCallback = (err?: KdError|K8sError) => void;
@@ -48,6 +49,12 @@ export interface OnListChangeEvent {
 export interface ActionColumnDef<T extends ActionColumn> {
   name: string;
   component: Type<T>;
+}
+
+export interface ColumnWhenCondition {
+  col: string;
+  afterCol: string;
+  whenCallback: ColumnWhenCallback;
 }
 
 export interface ActionColumn {

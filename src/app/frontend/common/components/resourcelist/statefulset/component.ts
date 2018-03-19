@@ -19,6 +19,7 @@ import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 import {statefulSetState} from '../../../../resource/workloads/statefulset/state';
 import {ResourceListWithStatuses} from '../../../resources/list';
+import {NamespaceService} from '../../../services/global/namespace';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
@@ -35,7 +36,8 @@ export class StatefulSetListComponent extends
   constructor(
       state: StateService,
       private readonly statefulSet_: NamespacedResourceService<StatefulSetList>,
-      resolver: ComponentFactoryResolver, notifications: NotificationsService) {
+      resolver: ComponentFactoryResolver, notifications: NotificationsService,
+      private readonly namespaceService_: NamespaceService) {
     super(statefulSetState.name, state, notifications, resolver);
     this.id = ListIdentifiers.statefulSet;
     this.groupId = ListGroupIdentifiers.workloads;
@@ -44,6 +46,9 @@ export class StatefulSetListComponent extends
     this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);
     this.registerBinding(this.icon.timelapse, 'kd-muted', this.isInPendingState);
     this.registerBinding(this.icon.error, 'kd-error', this.isInErrorState);
+
+    // Register dynamic columns.
+    this.registerDynamicColumn('namespace', 'name', this.shouldShowNamespaceColumn_.bind(this));
   }
 
   getResourceObservable(params?: HttpParams): Observable<StatefulSetList> {
@@ -76,5 +81,9 @@ export class StatefulSetListComponent extends
 
   getEvents(statefulSet: StatefulSet): Event[] {
     return statefulSet.pods.warnings;
+  }
+
+  private shouldShowNamespaceColumn_(): boolean {
+    return this.namespaceService_.areMultipleNamespacesSelected();
   }
 }
