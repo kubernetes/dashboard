@@ -18,6 +18,8 @@ import {ComponentsModule} from '../../../common/components/module';
 import {ResourceModule} from '../../../common/services/resource/module';
 
 import {SharedModule} from '../../../shared.module';
+import {ReplicationControllerDetailComponent} from '../replicationcontroller/detail/component';
+import {replicationControllerDetailState} from '../replicationcontroller/detail/state';
 import {ReplicationControllerList} from './list/component';
 import {replicationControllerListState} from './list/state';
 import {replicationControllerState} from './state';
@@ -27,8 +29,12 @@ import {replicationControllerState} from './state';
     SharedModule,
     ComponentsModule,
     ResourceModule,
-    UIRouterModule.forChild({states: [replicationControllerState, replicationControllerListState]}),
+    UIRouterModule.forChild({
+      states: [
+        replicationControllerState, replicationControllerListState, replicationControllerDetailState
+      ]
+    }),
   ],
-  declarations: [ReplicationControllerList],
+  declarations: [ReplicationControllerList, ReplicationControllerDetailComponent],
 })
 export class ReplicationControllerModule {}
