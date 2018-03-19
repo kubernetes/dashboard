@@ -14,13 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div layout="row">
-  <kd-actionbar-edit-item resource-kind-name="{{$ctrl.resourceKindName}}"
-                          type-meta="$ctrl.typeMeta"
-                          object-meta="$ctrl.objectMeta">
-  </kd-actionbar-edit-item>
-  <kd-actionbar-delete-item resource-kind-name="{{$ctrl.resourceKindName}}"
-                            type-meta="$ctrl.typeMeta"
-                            object-meta="$ctrl.objectMeta">
-  </kd-actionbar-delete-item>
-</div>
+<kd-object-meta [initialized]="isInitialized"
+                [objectMeta]="namespace?.objectMeta"></kd-object-meta>
+
+<kd-card [initialized]="isInitialized">
+  <div title>Namespace information</div>
+  <div content
+       *ngIf="isInitialized"
+       fxLayout="row"
+       fxLayoutWrap>
+    <kd-property *ngIf="namespace?.phase">
+      <div key>Status</div>
+      <div value>{{namespace?.phase}}</div>
+    </kd-property>
+  </div>
+</kd-card>
+
+<kd-event-list [endpoint]="eventListEndpoint"></kd-event-list>

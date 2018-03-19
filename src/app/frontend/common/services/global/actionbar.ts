@@ -12,16 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Contains common buttons for detail pages.
- *
- * @type {!angular.Component}
- */
-export const actionbarDetailButtonsComponent = {
-  templateUrl: 'common/components/actionbar/actionbardetailbuttons.html',
-  bindings: {
-    'resourceKindName': '@',
-    'typeMeta': '<',
-    'objectMeta': '<',
-  },
-};
+import {EventEmitter, Injectable} from '@angular/core';
+import {ObjectMeta, TypeMeta} from '@api/backendapi';
+
+export class ResourceMeta {
+  kind: string;
+  objectMeta: ObjectMeta;
+  typeMeta: TypeMeta;
+
+  constructor(kind: string, objectMeta: ObjectMeta, typeMeta: TypeMeta) {
+    this.kind = kind;
+    this.objectMeta = objectMeta;
+    this.typeMeta = typeMeta;
+  }
+}
+
+@Injectable()
+export class ActionbarService { onInit = new EventEmitter<ResourceMeta>(); }

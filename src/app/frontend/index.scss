@@ -141,6 +141,10 @@ code {
 // Custom classes used across application //
 ////////////////////////////////////////////
 
+.kd-toolbar-action {
+  margin: 0 (.75 * $baseline-grid) !important;
+}
+
 .kd-code-block {
   border-radius: $baseline-grid / 4;
   display: block;

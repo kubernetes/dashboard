@@ -14,6 +14,7 @@
 
 import {APP_INITIALIZER, Injector, NgModule} from '@angular/core';
 
+import {ActionbarService} from './actionbar';
 import {AssetsService} from './assets';
 import {AuthService} from './authentication';
 import {AuthorizerService} from './authorizer';
@@ -32,7 +33,7 @@ import {TitleService} from './title';
   providers: [
     AuthorizerService, AssetsService, BreadcrumbsService, LocalSettingsService,
     GlobalSettingsService, ConfigService, TitleService, AuthService, CsrfTokenService,
-    NotificationsService, ThemeService, KdStateService, NamespaceService, {
+    NotificationsService, ThemeService, KdStateService, NamespaceService, ActionbarService, {
       provide: APP_INITIALIZER,
       useFactory: init,
       deps: [GlobalSettingsService, LocalSettingsService, ConfigService],

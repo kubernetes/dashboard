@@ -18,6 +18,9 @@ import {SharedModule} from '../../shared.module';
 import {ResourceModule} from '../services/resource/module';
 
 import {ActionbarComponent} from './actionbar/component';
+import {ActionbarDetailActionsComponent} from './actionbar/detailactions/component';
+import {ActionbarDetailDeleteComponent} from './actionbar/detailactions/delete/component';
+import {ActionbarDetailEditComponent} from './actionbar/detailactions/edit/component';
 import {AllocationChartComponent} from './allocationchart/component';
 import {BreadcrumbsComponent} from './breadcrumbs/component';
 import {CardComponent} from './card/component';
@@ -120,6 +123,9 @@ import {ZeroStateComponent} from './zerostate/component';
     NamespaceChangeDialog,
     PolicyRuleListComponent,
     CommaSeparatedListComponent,
+    ActionbarDetailActionsComponent,
+    ActionbarDetailDeleteComponent,
+    ActionbarDetailEditComponent,
   ],
   exports: [
     AllocationChartComponent,
@@ -163,6 +169,9 @@ import {ZeroStateComponent} from './zerostate/component';
     NamespaceSelectorComponent,
     PolicyRuleListComponent,
     CommaSeparatedListComponent,
+    ActionbarDetailActionsComponent,
+    ActionbarDetailDeleteComponent,
+    ActionbarDetailEditComponent,
   ],
   entryComponents: [
     ChipDialog,

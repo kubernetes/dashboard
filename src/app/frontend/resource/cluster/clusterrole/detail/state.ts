@@ -17,16 +17,24 @@ import {Ng2StateDeclaration} from '@uirouter/angular';
 import {addResourceStateParamsToUrl} from '../../../../common/params/params';
 import {stateName, stateUrl} from '../state';
 
+import {ActionbarComponent} from './actionbar/component';
 import {ClusterRoleDetailComponent} from './component';
 
 export const clusterRoleDetailState: Ng2StateDeclaration = {
   name: `${stateName}.detail`,
   url: addResourceStateParamsToUrl(stateUrl),
-  component: ClusterRoleDetailComponent,
   data: {
     kdBreadcrumbs: {
       label: 'resourceName',
       parent: 'clusterrole.list',
     },
+  },
+  views: {
+    '$default': {
+      component: ClusterRoleDetailComponent,
+    },
+    'actionbar@chrome': {
+      component: ActionbarComponent,
+    }
   },
 };
