@@ -36,21 +36,23 @@ export class ReplicationControllerDetailComponent implements OnInit, OnDestroy {
   serviceListEndpoint: string;
 
   constructor(
-      private readonly replicationController_: NamespacedResourceService<ReplicationControllerDetail>,
+      private readonly replicationController_:
+          NamespacedResourceService<ReplicationControllerDetail>,
       private readonly state_: StateService) {}
 
   ngOnInit(): void {
     this.name_ = this.state_.params.resourceName;
-    this.eventListEndpoint =
-        EndpointManager.resource(Resource.replicationController, true).child(this.name_, Resource.event);
-    this.podListEndpoint =
-        EndpointManager.resource(Resource.replicationController, true).child(this.name_, Resource.pod);
-    this.serviceListEndpoint =
-        EndpointManager.resource(Resource.replicationController, true).child(this.name_, Resource.service);
+    this.eventListEndpoint = EndpointManager.resource(Resource.replicationController, true)
+                                 .child(this.name_, Resource.event);
+    this.podListEndpoint = EndpointManager.resource(Resource.replicationController, true)
+                               .child(this.name_, Resource.pod);
+    this.serviceListEndpoint = EndpointManager.resource(Resource.replicationController, true)
+                                   .child(this.name_, Resource.service);
 
     this.replicationControllerSubscription_ =
         this.replicationController_
-            .get(EndpointManager.resource(Resource.replicationController, true).detail(), this.name_)
+            .get(
+                EndpointManager.resource(Resource.replicationController, true).detail(), this.name_)
             .startWith({})
             .subscribe((d: ReplicationControllerDetail) => {
               this.replicationController = d;

@@ -29,7 +29,11 @@ import {replicationControllerState} from './state';
     SharedModule,
     ComponentsModule,
     ResourceModule,
-    UIRouterModule.forChild({states: [replicationControllerState, replicationControllerListState, replicationControllerDetailState]}),
+    UIRouterModule.forChild({
+      states: [
+        replicationControllerState, replicationControllerListState, replicationControllerDetailState
+      ]
+    }),
   ],
   declarations: [ReplicationControllerList, ReplicationControllerDetailComponent],
 })
