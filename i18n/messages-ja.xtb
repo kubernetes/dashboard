@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE translationbundle><translationbundle lang="ja">
-  <translation id="961242340990264399" key="MSG_ABOUT_ABOUT_0" desc="This is a label for button displayed on about page used to open documentaion in browser">ドキュメント</translation>
+  <translation id="961242340990264399" key="MSG_ABOUT_ABOUT_0" desc="This is a label for button displayed on about page used to open documentation in browser">ドキュメント</translation>
   <translation id="5634646746226609179" key="MSG_ABOUT_ABOUT_1" desc="Label \'Dashboard Version\' for the about page.">Dashboard バージョン</translation>
   <translation id="4718120324314749596" key="MSG_ABOUT_ABOUT_2" desc="Label \'Git Commit\' for the about page.">Gitコミット</translation>
   <translation id="5788105450172886273" key="MSG_ABOUT_ABOUT_3" desc="This is a label for button displayed on about page used to send feedback to GitHub new issue.">フィードバックを送信</translation>
   <translation id="4249662097435421699" key="MSG_ABOUT_ABOUT_4" desc="This is the copyright statement displayed on the about page">Copyright 2015-{{ $ctrl.latestCopyrightYear}} The Kubernetes Authors.</translation>
   <translation id="4171916442768740608" key="MSG_ABOUT_ABOUT_5" desc="This is the creator reference on the footer of the about page"> Kubernetes Dashboard is made possible by the Dashboard &lt;a href="https://github.com/kubernetes/dashboard/graphs/contributors"&gt;community&lt;/a&gt; as an &lt;a href="https://github.com/kubernetes/dashboard"&gt;open source project&lt;/a&gt;. </translation>
-  <translation id="4426231252111230009" key="MSG_ABOUT_ABOUT_6" desc="Dashbord moto on the about page, just below the header">Kubernetes クラスターのための多目的ウェブUI</translation>
+  <translation id="4426231252111230009" key="MSG_ABOUT_ABOUT_6" desc="Dashboard moto on the about page, just below the header">Kubernetes クラスターのための多目的ウェブUI</translation>
   <translation id="6783150167357318030" key="MSG_ACTION_BAR_DELETE_TOOLTIP" desc="Generic &quot;Delete some resource&quot; tooltip text which appears over the delete icon on the global action bar.">
     <ph name="RESOURCE_NAME"> を削除</ph>
   </translation>
@@ -101,7 +101,7 @@
   <translation id="3386572067498503433" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_11" desc="Label when there is no data.">-</translation>
   <translation id="6464751813964841186" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_12" desc="Label when there is no data.">-</translation>
   <translation id="8142136741637546639" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_13" desc="Tooltip heartbeat column of pod conditions">Probed at </translation>
-  <translation id="6128317173209217017" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_14" desc="Tooltip transistion column of pod conditions">Probed at </translation>
+  <translation id="6128317173209217017" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_14" desc="Tooltip transition column of pod conditions">Probed at </translation>
   <translation id="3102698318305254308" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_2" desc="Label \'Status\' for the condition table header.">状態</translation>
   <translation id="3198492785716828854" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_3" desc="Label \'Last heartbeat time\' for the condition table header.">最終ハートビート時間</translation>
   <translation id="3828327508280797097" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_4" desc="Label \'Last transition time\' for the condition table header.">最終遷移時間</translation>
@@ -163,7 +163,7 @@
   <translation id="2060548261728726971" key="MSG_COMMON_SCALING_SCALERESOURCE_8" desc="Label for cancel button.">キャンセル</translation>
   <translation id="486192895688311189" key="MSG_COMMON_SCALING_SCALERESOURCE_9" desc="Action \'OK\' for the confirmation button on the &quot;update number of pods dialog&quot;.">OK</translation>
   <translation id="2290466353199139171" key="MSG_CONFIGMAP_DETAIL_ACTIONBAR_0" desc="Label \'Config Map\' which appears at the top of the\n      delete dialog, opened from a config map details page.">コンフィグマップ</translation>
-  <translation id="1345195277871602727" key="MSG_CONFIGMAP_DETAIL_DETAIL_0" desc="Header in a detail view of config map deta">データ</translation>
+  <translation id="1345195277871602727" key="MSG_CONFIGMAP_DETAIL_DETAIL_0" desc="Header in a detail view of config map data">データ</translation>
   <translation id="5478435235468315342" key="MSG_CONFIGMAP_DETAIL_DETAIL_1" desc="Zero state text on config map details view.">There is no data to display</translation>
   <translation id="5220920321462587761" key="MSG_CONFIGMAP_DETAIL_DETAIL_2" desc="Zero state text on config map details view.">You can edit config map to add data.</translation>
   <translation id="998665058731826460" key="MSG_CONFIGMAP_DETAIL_INFO_0" desc="Header in a detail view">詳細</translation>
