@@ -17,6 +17,40 @@ limitations under the License.
 <kd-object-meta [initialized]="isInitialized"
                 [objectMeta]="statefulSet?.objectMeta"></kd-object-meta>
 
+<kd-card [initialized]="isInitialized">
+  <div title>Stateful Set information</div>
+
+  <div content
+       *ngIf="isInitialized"
+       fxLayout="row"
+       fxLayoutWrap>
+    <kd-property *ngIf="statefulSet?.labelSelector"
+                 fxFlex="100">
+      <div key>Label Selector</div>
+      <div value>
+        <kd-chips [map]="statefulSet.labelSelector"></kd-chips>
+      </div>
+    </kd-property>
+
+    <kd-property *ngIf="statefulSet?.containerImages">
+      <div key>Images</div>
+      <div value>
+        <kd-chips [map]="statefulSet.containerImages"></kd-chips>
+      </div>
+    </kd-property>
+
+    <kd-property *ngIf="statefulSet?.initContainerImages">
+      <div key>Init images</div>
+      <div value>
+        <kd-chips [map]="statefulSet.initContainerImages"></kd-chips>
+      </div>
+    </kd-property>
+  </div>
+</kd-card>
+
+<kd-pod-status-card [podInfo]="statefulSet?.podInfo"
+                    [initialized]="isInitialized"></kd-pod-status-card>
+
 <kd-pod-list [endpoint]="podListEndpoint"></kd-pod-list>
 
 <kd-event-list [endpoint]="eventListEndpoint"></kd-event-list>

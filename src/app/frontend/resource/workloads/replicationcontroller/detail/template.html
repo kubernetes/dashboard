@@ -24,7 +24,8 @@ limitations under the License.
        *ngIf="isInitialized"
        fxLayout="row"
        fxLayoutWrap>
-    <kd-property *ngIf="replicationController?.labelSelector">
+    <kd-property *ngIf="replicationController?.labelSelector"
+                 fxFlex="100">
       <div key>Label Selector</div>
       <div value>
         <kd-chips [map]="replicationController.labelSelector"></kd-chips>

@@ -159,7 +159,11 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy, AfterViewI
       return;
     }
 
-    this.state_.go('.', {[NAMESPACE_STATE_PARAM]: namespace});
+    if (this.isOnDetailsView()) {
+      this.state_.go(overviewState.name, {[NAMESPACE_STATE_PARAM]: namespace});
+    } else {
+      this.state_.go('.', {[NAMESPACE_STATE_PARAM]: namespace});
+    }
   }
 
   private clearNamespaceInput_(): void {
@@ -171,6 +175,10 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy, AfterViewI
     const namespace = this.state_.params.namespace;
     return namespace !== this.allNamespacesKey && resourceNamespace &&
         resourceNamespace !== namespace;
+  }
+
+  private isOnDetailsView(): boolean {
+    return this.state_.params.resourceNamespace !== undefined;
   }
 
   /**
