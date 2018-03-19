@@ -18,6 +18,8 @@ import {ComponentsModule} from '../../../common/components/module';
 import {ResourceModule} from '../../../common/services/resource/module';
 
 import {SharedModule} from '../../../shared.module';
+import {StatefulSetDetailComponent} from './detail/component';
+import {statefulSetDetailState} from './detail/state';
 import {StatefulSetList} from './list/component';
 import {statefulSetListState} from './list/state';
 import {statefulSetState} from './state';
@@ -27,8 +29,9 @@ import {statefulSetState} from './state';
     SharedModule,
     ComponentsModule,
     ResourceModule,
-    UIRouterModule.forChild({states: [statefulSetState, statefulSetListState]}),
+    UIRouterModule.forChild(
+        {states: [statefulSetState, statefulSetListState, statefulSetDetailState]}),
   ],
-  declarations: [StatefulSetList],
+  declarations: [StatefulSetList, StatefulSetDetailComponent],
 })
 export class StatefulSetModule {}
