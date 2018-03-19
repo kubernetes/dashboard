@@ -25,8 +25,6 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/fields"
-	"k8s.io/apimachinery/pkg/labels"
 	k8sClient "k8s.io/client-go/kubernetes"
 )
 
@@ -75,20 +73,11 @@ func getRawReplicationControllerPods(client k8sClient.Interface, rcName, namespa
 func getReplicationControllerPodInfo(client k8sClient.Interface, rc *v1.ReplicationController,
 	namespace string) (*common.PodInfo, error) {
 
-	labelSelector := labels.SelectorFromSet(rc.Spec.Selector)
-	channels := &common.ResourceChannels{
-		PodList: common.GetPodListChannelWithOptions(client, common.NewSameNamespaceQuery(namespace),
-			metaV1.ListOptions{
-				LabelSelector: labelSelector.String(),
-				FieldSelector: fields.Everything().String(),
-			}, 1),
-	}
-
-	pods := <-channels.PodList.List
-	if err := <-channels.PodList.Error; err != nil {
+	pods, err := getRawReplicationControllerPods(client, rc.Name, namespace)
+	if err != nil {
 		return nil, err
 	}
 
-	podInfo := common.GetPodInfo(rc.Status.Replicas, rc.Spec.Replicas, pods.Items)
+	podInfo := common.GetPodInfo(rc.Status.Replicas, rc.Spec.Replicas, pods)
 	return &podInfo, nil
 }

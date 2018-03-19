@@ -20,14 +20,6 @@ limitations under the License.
 <kd-card [initialized]="isInitialized">
   <div title>Replication Controller information</div>
 
-  <div description>
-    <div class="kd-inline-property"
-         *ngIf="replicationController?.podInfo">
-      <span class="kd-muted-light">Pods:&nbsp;</span>
-      <span>{{replicationController.podInfo.running}} / {{replicationController.podInfo.desired}}</span>
-    </div>
-  </div>
-
   <div content
        *ngIf="isInitialized"
        fxLayout="row"
