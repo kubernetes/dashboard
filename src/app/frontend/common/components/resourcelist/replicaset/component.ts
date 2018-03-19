@@ -20,6 +20,7 @@ import {Observable} from 'rxjs/Observable';
 import {replicaSetState} from '../../../../resource/workloads/replicaset/state';
 
 import {ResourceListWithStatuses} from '../../../resources/list';
+import {NamespaceService} from '../../../services/global/namespace';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
@@ -35,7 +36,8 @@ export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSet
 
   constructor(
       state: StateService, private readonly replicaSet_: NamespacedResourceService<ReplicaSetList>,
-      notifications: NotificationsService, resolver: ComponentFactoryResolver) {
+      notifications: NotificationsService, resolver: ComponentFactoryResolver,
+      private readonly namespaceService_: NamespaceService) {
     super(replicaSetState.name, state, notifications, resolver);
     this.id = ListIdentifiers.replicaSet;
     this.groupId = ListGroupIdentifiers.workloads;
@@ -44,6 +46,9 @@ export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSet
     this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);
     this.registerBinding(this.icon.timelapse, 'kd-muted', this.isInPendingState);
     this.registerBinding(this.icon.error, 'kd-error', this.isInErrorState);
+
+    // Register dynamic columns.
+    this.registerDynamicColumn('namespace', 'name', this.shouldShowNamespaceColumn_.bind(this));
   }
 
   getResourceObservable(params?: HttpParams): Observable<ReplicaSetList> {
@@ -68,6 +73,10 @@ export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSet
 
   getDisplayColumns(): string[] {
     return ['statusicon', 'name', 'labels', 'pods', 'age', 'images'];
+  }
+
+  private shouldShowNamespaceColumn_(): boolean {
+    return this.namespaceService_.areMultipleNamespacesSelected();
   }
 
   hasErrors(replicaSet: ReplicaSet): boolean {

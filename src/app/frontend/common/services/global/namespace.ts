@@ -52,4 +52,8 @@ export class NamespaceService {
   isMultiNamespace(namespace: string): boolean {
     return namespace === this.allNamespacesKey_;
   }
+
+  areMultipleNamespacesSelected(): boolean {
+    return this.current() === this.allNamespacesKey_;
+  }
 }

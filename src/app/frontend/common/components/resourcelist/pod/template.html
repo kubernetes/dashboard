@@ -30,10 +30,10 @@ limitations under the License.
 
     <mat-table [dataSource]="getData()"
                matSort
-               [matSortActive]="getDisplayColumns()[6]"
+               matSortActive="age"
                matSortDisableClear
                matSortDirection="asc">
-      <ng-container [matColumnDef]="getDisplayColumns()[0]">
+      <ng-container matColumnDef="statusicon">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let pod; let index=index">
           <mat-icon [ngClass]="getStatus(pod).iconClass">
@@ -48,7 +48,7 @@ limitations under the License.
         </mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayColumns()[1]">
+      <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true">Name</mat-header-cell>
@@ -60,33 +60,39 @@ limitations under the License.
         </mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayColumns()[2]">
+      <ng-container *ngIf="shouldShowColumn('namespace')"
+                    matColumnDef="namespace">
+        <mat-header-cell *matHeaderCellDef>Namespace</mat-header-cell>
+        <mat-cell *matCellDef="let pod">{{pod.objectMeta.namespace}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="labels">
         <mat-header-cell *matHeaderCellDef>Labels</mat-header-cell>
         <mat-cell *matCellDef="let pod">
           <kd-chips [map]="pod.objectMeta.labels"></kd-chips>
         </mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayColumns()[3]">
+      <ng-container matColumnDef="node">
         <mat-header-cell *matHeaderCellDef>Node</mat-header-cell>
         <mat-cell *matCellDef="let pod">{{pod.nodeName}}</mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayColumns()[4]">
+      <ng-container matColumnDef="status">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true">Status</mat-header-cell>
         <mat-cell *matCellDef="let pod">{{getDisplayStatus(pod)}}</mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayColumns()[5]">
+      <ng-container matColumnDef="restarts">
         <mat-header-cell *matHeaderCellDef>Restarts</mat-header-cell>
         <mat-cell *matCellDef="let pod">
           {{pod.restartCount}}
         </mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayColumns()[6]">
+      <ng-container matColumnDef="age">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true">
