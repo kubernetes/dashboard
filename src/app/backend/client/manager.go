@@ -193,7 +193,7 @@ func (self *clientManager) VerberClient(req *restful.Request) (clientapi.Resourc
 	return NewResourceVerber(client.CoreV1().RESTClient(),
 		client.ExtensionsV1beta1().RESTClient(), client.AppsV1beta2().RESTClient(),
 		client.BatchV1().RESTClient(), client.BatchV1beta1().RESTClient(), client.AutoscalingV1().RESTClient(),
-		client.StorageV1().RESTClient()), nil
+		client.StorageV1().RESTClient(), client.RbacV1().RESTClient()), nil
 }
 
 // SetTokenManager sets the token manager that will be used for token decryption.

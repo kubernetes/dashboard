@@ -12,10 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {HttpClient} from '@angular/common/http';
 import {EventEmitter, Injectable} from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material';
 import {ObjectMeta, TypeMeta} from '@api/backendapi';
 
+import {AlertDialog, AlertDialogConfig} from '../../dialogs/alert/dialog';
 import {DeleteResourceDialog} from '../../dialogs/deleteresource/dialog';
 
 import {ResourceMeta} from './actionbar';
@@ -25,7 +27,7 @@ export class VerberService {
   onDelete = new EventEmitter<boolean>();
   odEdit = new EventEmitter<boolean>();
 
-  constructor(private readonly dialog_: MatDialog) {}
+  constructor(private readonly dialog_: MatDialog, private readonly http_: HttpClient) {}
 
   showDeleteDialog(displayName: string, typeMeta: TypeMeta, objectMeta: ObjectMeta): void {
     const dialogConfig: MatDialogConfig<ResourceMeta> = {
@@ -39,9 +41,25 @@ export class VerberService {
 
     this.dialog_.open(DeleteResourceDialog, dialogConfig).afterClosed().subscribe((doDelete) => {
       if (doDelete) {
-        const url = this.getRawResourceUrl(typeMeta, objectMeta);
-        // todo delete
-        this.onDelete.emit(true);
+        const url = this.getRawResourceUrl_(typeMeta, objectMeta);
+        this.http_.delete(url).subscribe(
+            () => {
+              this.onDelete.emit(true);
+            },
+            (err) => {
+              if (err) {
+                const alertDialogConfig: MatDialogConfig<AlertDialogConfig> = {
+                  width: '630px',
+                  data: {
+                    title: err.statusText || 'Internal server error',
+                    // TODO Add || this.localizerService_.localize(err.data).
+                    message: 'Could not delete the resource',
+                    confirmLabel: 'OK',
+                  }
+                };
+                this.dialog_.open(AlertDialog, alertDialogConfig);
+              }
+            });
       }
     });
   }
@@ -57,9 +75,22 @@ export class VerberService {
     };
 
     // todo
+    // editErrorCb(err) {
+    //   if (err) {
+    //     const dialogConfig: MatDialogConfig<AlertDialogConfig> = {
+    //       width: '630px',
+    //       data: {
+    //         title: err.statusText || 'Internal server error',
+    //         // TODO Add || this.localizerService_.localize(err.data).
+    //         message: 'Could not edit the resource',
+    //         confirmLabel: 'OK',
+    //       }
+    //     };
+    //   }
+    // }
   }
 
-  getRawResourceUrl(typeMeta: TypeMeta, objectMeta: ObjectMeta): string {
+  private getRawResourceUrl_(typeMeta: TypeMeta, objectMeta: ObjectMeta): string {
     let resourceUrl = `api/v1/_raw/${typeMeta.kind}`;
     if (objectMeta.namespace !== undefined) {
       resourceUrl += `/namespace/${objectMeta.namespace}`;
@@ -67,32 +98,4 @@ export class VerberService {
     resourceUrl += `/name/${objectMeta.name}`;
     return resourceUrl;
   }
-
-  // deleteErrorCb(err) {
-  //   if (err) {
-  //     const dialogConfig: MatDialogConfig<AlertDialogConfig> = {
-  //       width: '630px',
-  //       data: {
-  //         title: err.statusText || 'Internal server error',
-  //         // TODO Add || this.localizerService_.localize(err.data).
-  //         message: 'Could not delete the resource',
-  //         confirmLabel: 'OK',
-  //       }
-  //     };
-  //   }
-  // }
-  //
-  // editErrorCb(err) {
-  //   if (err) {
-  //     const dialogConfig: MatDialogConfig<AlertDialogConfig> = {
-  //       width: '630px',
-  //       data: {
-  //         title: err.statusText || 'Internal server error',
-  //         // TODO Add || this.localizerService_.localize(err.data).
-  //         message: 'Could not edit the resource',
-  //         confirmLabel: 'OK',
-  //       }
-  //     };
-  //   }
-  // }
 }

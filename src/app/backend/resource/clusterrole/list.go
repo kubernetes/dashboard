@@ -62,7 +62,7 @@ func GetClusterRoleListFromChannels(channels *common.ResourceChannels, dsQuery *
 func toClusterRole(role rbac.ClusterRole) ClusterRole {
 	return ClusterRole{
 		ObjectMeta: api.NewObjectMeta(role.ObjectMeta),
-		TypeMeta:   api.NewTypeMeta(api.ResourceKindRbacClusterRole),
+		TypeMeta:   api.NewTypeMeta(api.ResourceKindClusterRole),
 	}
 }
 
