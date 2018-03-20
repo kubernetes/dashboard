@@ -14,7 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-actionbar-detail-actions *ngIf="isInitialized"
-                             [objectMeta]="resourceMeta.objectMeta"
-                             [typeMeta]="resourceMeta.typeMeta"
-                             [displayName]="resourceMeta.displayName"></kd-actionbar-detail-actions>
+<h2 mat-dialog-title>{{data.title}}</h2>
+<mat-dialog-content class="kd-dialog-text">{{data.message}}</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button
+          color="primary"
+          [mat-dialog-close]="true">{{data.confirmLabel}}</button>
+</mat-dialog-actions>

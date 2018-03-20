@@ -28,12 +28,14 @@ import {NotificationsService} from './notifications';
 import {KdStateService} from './state';
 import {ThemeService} from './theme';
 import {TitleService} from './title';
+import {VerberService} from './verber';
 
 @NgModule({
   providers: [
     AuthorizerService, AssetsService, BreadcrumbsService, LocalSettingsService,
     GlobalSettingsService, ConfigService, TitleService, AuthService, CsrfTokenService,
-    NotificationsService, ThemeService, KdStateService, NamespaceService, ActionbarService, {
+    NotificationsService, ThemeService, KdStateService, NamespaceService, ActionbarService,
+    VerberService, {
       provide: APP_INITIALIZER,
       useFactory: init,
       deps: [GlobalSettingsService, LocalSettingsService, ConfigService],

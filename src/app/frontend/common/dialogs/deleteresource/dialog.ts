@@ -12,12 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component} from '@angular/core';
-import {MatDialogRef} from '@angular/material';
+import {Component, Inject} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {ResourceMeta} from '../../services/global/actionbar';
 
-@Component({selector: 'kd-settings-save-anyway-dialog', templateUrl: 'template.html'})
-export class SaveAnywayDialog {
-  constructor(public dialogRef: MatDialogRef<SaveAnywayDialog>) {}
+@Component({
+  selector: 'kd-delete-resource-dialog',
+  templateUrl: 'template.html',
+})
+export class DeleteResourceDialog {
+  constructor(
+      public dialogRef: MatDialogRef<DeleteResourceDialog>,
+      @Inject(MAT_DIALOG_DATA) public data: ResourceMeta) {}
 
   onNoClick(): void {
     this.dialogRef.close();

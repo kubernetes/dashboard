@@ -12,12 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component} from '@angular/core';
-import {MatDialogRef} from '@angular/material';
+import {Component, Inject} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 
-@Component({selector: 'kd-settings-save-anyway-dialog', templateUrl: 'template.html'})
-export class SaveAnywayDialog {
-  constructor(public dialogRef: MatDialogRef<SaveAnywayDialog>) {}
+export interface AlertDialogConfig {
+  title: string;
+  message: string;
+  confirmLabel: string;
+}
+
+@Component({
+  selector: 'kd-alert-dialog',
+  templateUrl: 'template.html',
+})
+export class AlertDialog {
+  constructor(
+      public dialogRef: MatDialogRef<AlertDialog>,
+      @Inject(MAT_DIALOG_DATA) public data: AlertDialogConfig) {}
 
   onNoClick(): void {
     this.dialogRef.close();

@@ -12,15 +12,37 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {ObjectMeta, TypeMeta} from '@api/backendapi';
+import {StateService} from '@uirouter/core';
+import {Subscription} from 'rxjs/Subscription';
+
+import {overviewState} from '../../../../../overview/state';
+import {VerberService} from '../../../../services/global/verber';
 
 @Component({
   selector: 'kd-actionbar-detail-delete',
   templateUrl: './template.html',
 })
-export class ActionbarDetailDeleteComponent {
+export class ActionbarDetailDeleteComponent implements OnInit, OnDestroy {
   @Input() objectMeta: ObjectMeta;
   @Input() typeMeta: TypeMeta;
-  @Input() resourceKind: string;
+  @Input() displayName: string;
+  verberSubscription_: Subscription;
+
+  constructor(private readonly verber_: VerberService, private readonly state_: StateService) {}
+
+  ngOnInit(): void {
+    this.verberSubscription_ = this.verber_.onDelete.subscribe(() => {
+      this.state_.go(overviewState.name);
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.verberSubscription_.unsubscribe();
+  }
+
+  onClick(): void {
+    this.verber_.showDeleteDialog(this.displayName, this.typeMeta, this.objectMeta);
+  }
 }

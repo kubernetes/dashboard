@@ -43,7 +43,7 @@ export class ClusterRoleDetailComponent implements OnInit, OnDestroy {
             .subscribe((d: ClusterRoleDetail) => {
               this.clusterRole = d;
               this.actionbar_.onInit.emit(
-                  new ResourceMeta(Resource.clusterRole, d.objectMeta, d.typeMeta));
+                  new ResourceMeta('Cluster Role', d.objectMeta, d.typeMeta));
               this.isInitialized = true;
             });
   }

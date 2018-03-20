@@ -16,12 +16,12 @@ import {EventEmitter, Injectable} from '@angular/core';
 import {ObjectMeta, TypeMeta} from '@api/backendapi';
 
 export class ResourceMeta {
-  kind: string;
+  displayName: string;
   objectMeta: ObjectMeta;
   typeMeta: TypeMeta;
 
-  constructor(kind: string, objectMeta: ObjectMeta, typeMeta: TypeMeta) {
-    this.kind = kind;
+  constructor(displayName: string, objectMeta: ObjectMeta, typeMeta: TypeMeta) {
+    this.displayName = displayName;
     this.objectMeta = objectMeta;
     this.typeMeta = typeMeta;
   }

@@ -22,5 +22,5 @@ import {ObjectMeta, TypeMeta} from '@api/backendapi';
 export class ActionbarDetailActionsComponent {
   @Input() objectMeta: ObjectMeta;
   @Input() typeMeta: TypeMeta;
-  @Input() resourceKind: string;
+  @Input() displayName: string;
 }

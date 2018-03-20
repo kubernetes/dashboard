@@ -15,6 +15,8 @@
 import {NgModule} from '@angular/core';
 
 import {SharedModule} from '../../shared.module';
+import {AlertDialog} from '../dialogs/alert/dialog';
+import {DeleteResourceDialog} from '../dialogs/deleteresource/dialog';
 import {ResourceModule} from '../services/resource/module';
 
 import {ActionbarComponent} from './actionbar/component';
@@ -126,6 +128,8 @@ import {ZeroStateComponent} from './zerostate/component';
     ActionbarDetailActionsComponent,
     ActionbarDetailDeleteComponent,
     ActionbarDetailEditComponent,
+    AlertDialog,
+    DeleteResourceDialog,
   ],
   exports: [
     AllocationChartComponent,
@@ -172,6 +176,8 @@ import {ZeroStateComponent} from './zerostate/component';
     ActionbarDetailActionsComponent,
     ActionbarDetailDeleteComponent,
     ActionbarDetailEditComponent,
+    AlertDialog,
+    DeleteResourceDialog,
   ],
   entryComponents: [
     ChipDialog,
@@ -179,6 +185,8 @@ import {ZeroStateComponent} from './zerostate/component';
     LogsButtonComponent,
     MenuComponent,
     NamespaceChangeDialog,
+    AlertDialog,
+    DeleteResourceDialog,
   ]
 })
 export class ComponentsModule {}
