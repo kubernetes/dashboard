@@ -14,11 +14,11 @@
 
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
+import {onLogin} from '@api/frontendapi';
 import {StateService, TransitionService} from '@uirouter/angular';
 import {TargetState, Transition} from '@uirouter/core';
 import {CookieService} from 'ngx-cookie-service';
 import {Observable} from 'rxjs/Observable';
-import {Subscription} from 'rxjs/Subscription';
 import {AuthResponse, CsrfToken, K8sError, LoginSpec, LoginStatus} from 'typings/backendapi';
 
 import {errorState} from '../../../error/state';
@@ -53,7 +53,7 @@ export class AuthService {
   }
 
   /** Sends a login request to the backend with filled in login spec structure. */
-  login(loginSpec: LoginSpec): Subscription {
+  login(loginSpec: LoginSpec, onLoginCb: onLogin): void {
     const loginObs =
         this.csrfTokenService_.getTokenForAction('login').switchMap<CsrfToken, AuthResponse>(
             csrfToken => {
@@ -62,12 +62,13 @@ export class AuthService {
                   {headers: new HttpHeaders().set(this.config_.csrfHeaderName, csrfToken.token)});
             });
 
-    return loginObs.subscribe(
+    loginObs.first().subscribe(
         authResponse => {
           if (authResponse.jweToken.length !== 0 && authResponse.errors.length === 0) {
             this.setTokenCookie_(authResponse.jweToken);
           }
-          return authResponse.errors;
+
+          onLoginCb(authResponse.errors);
         },
         err => {
           return Observable.throw(err);

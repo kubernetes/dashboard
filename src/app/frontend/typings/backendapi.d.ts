@@ -913,10 +913,9 @@ export interface TokenRefreshSpec { jweToken: string; }
 
 export interface LoginModesResponse { modes: string[]; }
 
-export interface SupportedAuthenticationModes {
-  // TODO TOKEN: AuthenticationMode;
-  // TODO BASIC: AuthenticationMode;
-}
+export type AuthenticationMode = string;
+
+export interface EnabledAuthenticationModes { modes: AuthenticationMode[]; }
 
 export interface SystemBanner {
   message: string;

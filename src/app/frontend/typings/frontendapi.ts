@@ -31,6 +31,8 @@ export type ColumnWhenCallback = () => boolean;
 export type onSettingsLoadCallback = (settings?: GlobalSettings) => void;
 export type onSettingsFailCallback = (err?: KdError|K8sError) => void;
 
+export type onLogin = (errors?: K8sError[]) => void;
+
 export interface KnownErrors { unauthorized: KdError; }
 
 export interface KdError {
@@ -60,4 +62,11 @@ export interface ColumnWhenCondition {
 export interface ActionColumn {
   setTypeMeta(typeMeta: TypeMeta): void;
   setObjectMeta(objectMeta: ObjectMeta): void;
+}
+
+export interface HTMLInputEvent extends Event { target: HTMLInputElement&EventTarget; }
+
+export interface KdFile {
+  name: string;
+  content: string;
 }
