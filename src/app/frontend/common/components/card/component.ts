@@ -26,12 +26,34 @@ export class CardComponent {
   @Input() withFooter = false;
   @Input() withTitle = true;
   @Input() expandable = true;
-  @Input() titleClasses = '';
+  @Input()
+  set titleClasses(val: string) {
+    this.classes_ = val.split(/\s+/);
+  }
   @Input() expanded = true;
+
+  private classes_: string[] = [];
 
   expand(): void {
     if (this.expandable) {
       this.expanded = !this.expanded;
     }
+  }
+
+  getTitleClasses(): {[clsName: string]: boolean} {
+    const ngCls = {} as {[clsName: string]: boolean};
+    if (!this.expanded) {
+      ngCls['kd-minimized-card-header'] = true;
+    }
+
+    if (this.expandable) {
+      ngCls['kd-card-header'] = true;
+    }
+
+    for (const cls of this.classes_) {
+      ngCls[cls] = true;
+    }
+
+    return ngCls;
   }
 }

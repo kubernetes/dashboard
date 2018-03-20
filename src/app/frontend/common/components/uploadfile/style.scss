@@ -12,31 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../variables';
+@import '../../../variables';
 
-.kd-login-container {
-  display: grid;
-  grid-template-columns: repeat(9, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-}
-
-.kd-login-card {
-  grid-column: 3 / 8;
-  grid-row: 2;
-}
-
-.kd-login-mode-description {
-  padding: $baseline-grid (3.5 * $baseline-grid) (2 * $baseline-grid);
-}
-
-.kd-login-input {
-  padding: 0 (3.5 * $baseline-grid);
-}
-
-.kd-login-button {
-  margin: (4 * $baseline-grid) $baseline-grid $baseline-grid 0;
-}
-
-:host {
-  height: 100vh;
+.kd-upload-button {
+  margin-left: 2 * $baseline-grid;
+  margin-top: .5 * $baseline-grid;
 }

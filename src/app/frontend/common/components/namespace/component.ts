@@ -21,6 +21,7 @@ import {overviewState} from '../../../overview/state';
 
 import {NAMESPACE_STATE_PARAM} from '../../params/params';
 import {NamespaceService} from '../../services/global/namespace';
+import {NotificationSeverity, NotificationsService} from '../../services/global/notifications';
 import {KdStateService} from '../../services/global/state';
 import {EndpointManager, Resource} from '../../services/resource/endpoint';
 import {ResourceService} from '../../services/resource/resource';
@@ -46,7 +47,8 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy, AfterViewI
   constructor(
       private readonly state_: StateService, private readonly namespaceService_: NamespaceService,
       private readonly namespace_: ResourceService<NamespaceList>,
-      private readonly dialog_: MatDialog, private readonly kdState_: KdStateService) {}
+      private readonly dialog_: MatDialog, private readonly kdState_: KdStateService,
+      private readonly notifications_: NotificationsService) {}
 
   ngOnInit(): void {
     this.allNamespacesKey = this.namespaceService_.getAllNamespacesKey();
@@ -125,7 +127,14 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy, AfterViewI
           .subscribe(
               namespaceList => {
                 this.namespaces = namespaceList.namespaces.map(n => n.objectMeta.name);
-                this.namespacesInitialized_ = true;
+
+                if (namespaceList.errors.length === 0) {
+                  this.namespacesInitialized_ = true;
+                } else {
+                  for (const err of namespaceList.errors) {
+                    this.notifications_.push(err.ErrStatus.message, NotificationSeverity.error);
+                  }
+                }
               },
               undefined,
               () => {

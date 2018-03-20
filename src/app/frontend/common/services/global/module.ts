@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {APP_INITIALIZER, Injector, NgModule} from '@angular/core';
 
 import {DialogsModule} from '../../dialogs/module';
@@ -24,6 +25,7 @@ import {BreadcrumbsService} from './breadcrumbs';
 import {ConfigService} from './config';
 import {CsrfTokenService} from './csrftoken';
 import {GlobalSettingsService} from './globalsettings';
+import {AuthInterceptor} from './interceptor';
 import {LocalSettingsService} from './localsettings';
 import {NamespaceService} from './namespace';
 import {NotificationsService} from './notifications';
@@ -44,6 +46,11 @@ import {VerberService} from './verber';
       provide: APP_INITIALIZER,
       useFactory: init,
       deps: [GlobalSettingsService, LocalSettingsService, ConfigService],
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
       multi: true,
     }
   ],

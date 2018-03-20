@@ -69,6 +69,7 @@ import {ServiceListComponent} from './resourcelist/service/component';
 import {StatefulSetListComponent} from './resourcelist/statefulset/component';
 import {StorageClassListComponent} from './resourcelist/storageclass/component';
 import {TextInputComponent} from './textinput/component';
+import {UploadFileComponent} from './uploadfile/component';
 import {ZeroStateComponent} from './zerostate/component';
 
 @NgModule({
@@ -128,6 +129,7 @@ import {ZeroStateComponent} from './zerostate/component';
     ActionbarDetailActionsComponent,
     ActionbarDetailDeleteComponent,
     ActionbarDetailEditComponent,
+    UploadFileComponent,
   ],
   exports: [
     AllocationChartComponent,
@@ -174,6 +176,7 @@ import {ZeroStateComponent} from './zerostate/component';
     ActionbarDetailActionsComponent,
     ActionbarDetailDeleteComponent,
     ActionbarDetailEditComponent,
+    UploadFileComponent,
   ],
   entryComponents: [
     ChipDialog,

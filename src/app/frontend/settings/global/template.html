@@ -15,7 +15,8 @@ limitations under the License.
 -->
 
 <kd-card [initialized]="isInitialized()"
-         [expandable]="true">
+         [expandable]="true"
+         *ngIf="!hasLoadError">
   <div title
        i18n>Global settings</div>
   <div content>

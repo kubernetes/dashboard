@@ -14,8 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<!--<kd-warnings warnings="$ctrl.errors"
-             class="kd-login-error"></kd-warnings>-->
 <div class="kd-login-container kd-bg-background"
      fxFlex>
   <kd-card titleClasses="kd-card-top-radius kd-bg-primary kd-accent"
@@ -27,18 +25,22 @@ limitations under the License.
             (ngSubmit)="login()">
         <mat-radio-group name="login"
                          [(ngModel)]="selectedAuthenticationMode">
-          <div *ngFor="let loginMode of getSupportedAuthenticationModes()">
-            <mat-radio-button [value]="loginMode"
+          <div *ngFor="let mode of getEnabledAuthenticationModes()">
+            <mat-radio-button [value]="mode"
                               color="primary">
-              {{loginMode}}
+              <ng-container [ngSwitch]="mode">
+                <ng-container *ngSwitchCase="loginModes.Kubeconfig">Kubeconfig</ng-container>
+                <ng-container *ngSwitchCase="loginModes.Basic">Basic</ng-container>
+                <ng-container *ngSwitchCase="loginModes.Token">Token</ng-container>
+              </ng-container>
             </mat-radio-button>
             <div class="kd-login-mode-description"
-                 [ngSwitch]="loginMode">
+                 [ngSwitch]="mode">
               <ng-container *ngSwitchCase="loginModes.Kubeconfig">
                 Please select the kubeconfig file that you have created to configure access to the cluster. To find out more about how to configure and use kubeconfig file, please refer to the <a href='https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/'>Configure Access to Multiple Clusters</a> section.
               </ng-container>
               <ng-container *ngSwitchCase="loginModes.Basic">
-                Basic login description.
+                Make sure that support for basic authentication is enabled in the cluster. To find out more about how to configure basic authentication, please refer to the <a href="https://kubernetes.io/docs/admin/authentication/">Authenticating</a> and <a href="https://kubernetes.io/docs/admin/authorization/abac/">ABAC Mode</a> sections.
               </ng-container>
               <ng-container *ngSwitchCase="loginModes.Token">
                 Every Service Account has a Secret with valid Bearer Token that can be used to log in to Dashboard. To find out more about how to configure and use Bearer Tokens, please refer to the <a href='https://kubernetes.io/docs/admin/authentication/'>Authentication</a> section.
@@ -51,9 +53,12 @@ limitations under the License.
           <mat-form-field *ngSwitchCase="loginModes.Token"
                           class="kd-login-input">
             <input matInput
-                   placeholder="Token"
+                   id="token"
+                   name="token"
+                   placeholder="Enter token"
                    type="password"
-                   required>
+                   required
+                   (change)="onChange($event)">
           </mat-form-field>
 
           <div *ngSwitchCase="loginModes.Basic"
@@ -64,7 +69,8 @@ limitations under the License.
                      name="username"
                      matInput
                      placeholder="Username"
-                     required>
+                     required
+                     (change)="onChange($event)">
             </mat-form-field>
 
             <mat-form-field fxFlex
@@ -74,13 +80,15 @@ limitations under the License.
                      matInput
                      placeholder="Password"
                      type="password"
-                     required>
+                     required
+                     (change)="onChange($event)">
             </mat-form-field>
           </div>
 
           <div *ngSwitchCase="loginModes.Kubeconfig"
                class="kd-login-input">
-            kubeconfig placeholder
+            <kd-upload-file label="Choose kubeconfig file"
+                            (onLoad)="onChange($event)"></kd-upload-file>
           </div>
         </ng-container>
 
@@ -94,6 +102,7 @@ limitations under the License.
           </button>
           <button mat-button
                   color="primary"
+                  type="button"
                   class="kd-login-button"
                   (click)="skip()">
             Skip
@@ -103,33 +112,3 @@ limitations under the License.
     </div>
   </kd-card>
 </div>
-<!--<kd-content-card class="kd-login-card">
-  <kd-title>
-    [[Kubernetes Dashboard|Title shown on login page on login card]]
-  </kd-title>
-  <kd-content>
-    <kd-login-options on-change="$ctrl.onOptionChange()">
-      <kd-token-login ng-if="$ctrl.isAuthenticationModeEnabled($ctrl.supportedAuthenticationModes.TOKEN)"
-                      title="[[Token|Token option label shown on login page]]"
-                      desc="[[Every Service Account has a Secret with valid Bearer Token that can be used to log in to Dashboard. To find out more about how to configure and use Bearer Tokens, please refer to the <a href='https://kubernetes.io/docs/admin/authentication/'>Authentication</a> section.|]]"
-
-                      on-update="$ctrl.onUpdate(loginSpec)"></kd-token-login>
-      <kd-basic-login ng-if="$ctrl.isAuthenticationModeEnabled($ctrl.supportedAuthenticationModes.BASIC)"
-                      title="[[Basic|Basic option label shown on login page]]"
-                      on-update="$ctrl.onUpdate(loginSpec)"></kd-basic-login>
-      <kd-kube-config-login title="[[Kubeconfig|Kubeconfig option label shown on login page]]"
-                            desc="[[Please select the kubeconfig file that you have created to configure access to the cluster. To find out more about how to configure and use kubeconfig file, please refer to the <a href='https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/'>Configure Access to Multiple Clusters</a> section.|]]"
-
-                            on-update="$ctrl.onUpdate(loginSpec)"></kd-kube-config-login>
-    </kd-login-options>
-
-    <md-button class="md-raised md-primary"
-               type="submit">
-      [[Sign in|Text shown on the sign in button on login page]]
-    </md-button>
-    <md-button class="md-primary"
-               ng-click="$ctrl.skip()">
-      [[Skip|Text shown on skip button on login page]]
-    </md-button>
-  </kd-content>
-</kd-content-card>-->
