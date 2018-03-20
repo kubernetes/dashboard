@@ -14,6 +14,11 @@
 
 import {Component, Input} from '@angular/core';
 import {ObjectMeta, TypeMeta} from '@api/backendapi';
+import {StateService} from '@uirouter/core';
+import {Subscription} from 'rxjs/Subscription';
+
+import {overviewState} from '../../../../../overview/state';
+import {VerberService} from '../../../../services/global/verber';
 
 @Component({
   selector: 'kd-actionbar-detail-edit',
@@ -23,4 +28,21 @@ export class ActionbarDetailEditComponent {
   @Input() objectMeta: ObjectMeta;
   @Input() typeMeta: TypeMeta;
   @Input() displayName: string;
+  verberSubscription_: Subscription;
+
+  constructor(private readonly verber_: VerberService, private readonly state_: StateService) {}
+
+  ngOnInit(): void {
+    this.verberSubscription_ = this.verber_.onEdit.subscribe(() => {
+      this.state_.reload().catch();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.verberSubscription_.unsubscribe();
+  }
+
+  onClick(): void {
+    this.verber_.showEditDialog(this.displayName, this.typeMeta, this.objectMeta);
+  }
 }

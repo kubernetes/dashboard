@@ -14,9 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<button mat-icon-button
-        color="accent"
-        class="kd-toolbar-action"
-        (click)="onClick()">
-  <mat-icon>edit</mat-icon>
-</button>
+<h2 mat-dialog-title>Edit a {{data.displayName}}</h2>
+<mat-dialog-content class="kd-dialog-text">
+  <kd-text-input [text]="rawJson"
+                 [useJsonFormat]="true"></kd-text-input>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button
+          color="primary"
+          [mat-dialog-close]="rawJson">Update</button>
+  <button mat-button
+          color="primary"
+          [mat-dialog-close]="false">Cancel</button>
+</mat-dialog-actions>

@@ -128,8 +128,6 @@ import {ZeroStateComponent} from './zerostate/component';
     ActionbarDetailActionsComponent,
     ActionbarDetailDeleteComponent,
     ActionbarDetailEditComponent,
-    AlertDialog,
-    DeleteResourceDialog,
   ],
   exports: [
     AllocationChartComponent,
@@ -176,8 +174,6 @@ import {ZeroStateComponent} from './zerostate/component';
     ActionbarDetailActionsComponent,
     ActionbarDetailDeleteComponent,
     ActionbarDetailEditComponent,
-    AlertDialog,
-    DeleteResourceDialog,
   ],
   entryComponents: [
     ChipDialog,
@@ -185,8 +181,6 @@ import {ZeroStateComponent} from './zerostate/component';
     LogsButtonComponent,
     MenuComponent,
     NamespaceChangeDialog,
-    AlertDialog,
-    DeleteResourceDialog,
   ]
 })
 export class ComponentsModule {}

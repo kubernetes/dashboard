@@ -19,29 +19,23 @@ import {ObjectMeta, TypeMeta} from '@api/backendapi';
 
 import {AlertDialog, AlertDialogConfig} from '../../dialogs/alert/dialog';
 import {DeleteResourceDialog} from '../../dialogs/deleteresource/dialog';
+import {EditResourceDialog} from '../../dialogs/editresource/dialog';
+import {RawResource} from '../../resources/rawresource';
 
 import {ResourceMeta} from './actionbar';
 
 @Injectable()
 export class VerberService {
   onDelete = new EventEmitter<boolean>();
-  odEdit = new EventEmitter<boolean>();
+  onEdit = new EventEmitter<boolean>();
 
   constructor(private readonly dialog_: MatDialog, private readonly http_: HttpClient) {}
 
   showDeleteDialog(displayName: string, typeMeta: TypeMeta, objectMeta: ObjectMeta): void {
-    const dialogConfig: MatDialogConfig<ResourceMeta> = {
-      width: '630px',
-      data: {
-        displayName,
-        typeMeta,
-        objectMeta,
-      }
-    };
-
+    const dialogConfig = this.getDialogConfig_(displayName, typeMeta, objectMeta);
     this.dialog_.open(DeleteResourceDialog, dialogConfig).afterClosed().subscribe((doDelete) => {
       if (doDelete) {
-        const url = this.getRawResourceUrl_(typeMeta, objectMeta);
+        const url = RawResource.getUrl(typeMeta, objectMeta);
         this.http_.delete(url).subscribe(
             () => {
               this.onDelete.emit(true);
@@ -65,14 +59,33 @@ export class VerberService {
   }
 
   showEditDialog(displayName: string, typeMeta: TypeMeta, objectMeta: ObjectMeta): void {
-    const dialogConfig: MatDialogConfig<ResourceMeta> = {
-      width: '630px',
-      data: {
-        displayName,
-        typeMeta,
-        objectMeta,
-      }
-    };
+    const dialogConfig = this.getDialogConfig_(displayName, typeMeta, objectMeta);
+    this.dialog_.open(EditResourceDialog, dialogConfig)
+        .afterClosed()
+        .subscribe(
+            (result) => {
+                // if (doDelete) {
+                //   const url = RawResource.getUrl(typeMeta, objectMeta);
+                //   this.http_.delete(url).subscribe(
+                //     () => {
+                //       this.onDelete.emit(true);
+                //     },
+                //     (err) => {
+                //       if (err) {
+                //         const alertDialogConfig: MatDialogConfig<AlertDialogConfig> = {
+                //           width: '630px',
+                //           data: {
+                //             title: err.statusText || 'Internal server error',
+                //             // TODO Add || this.localizerService_.localize(err.data).
+                //             message: 'Could not delete the resource',
+                //             confirmLabel: 'OK',
+                //           }
+                //         };
+                //         this.dialog_.open(AlertDialog, alertDialogConfig);
+                //       }
+                //     });
+                // }
+            });
 
     // todo
     // editErrorCb(err) {
@@ -90,12 +103,15 @@ export class VerberService {
     // }
   }
 
-  private getRawResourceUrl_(typeMeta: TypeMeta, objectMeta: ObjectMeta): string {
-    let resourceUrl = `api/v1/_raw/${typeMeta.kind}`;
-    if (objectMeta.namespace !== undefined) {
-      resourceUrl += `/namespace/${objectMeta.namespace}`;
-    }
-    resourceUrl += `/name/${objectMeta.name}`;
-    return resourceUrl;
+  getDialogConfig_(displayName: string, typeMeta: TypeMeta, objectMeta: ObjectMeta):
+      MatDialogConfig<ResourceMeta> {
+    return {
+      width: '630px',
+      data: {
+        displayName,
+        typeMeta,
+        objectMeta,
+      }
+    };
   }
 }
