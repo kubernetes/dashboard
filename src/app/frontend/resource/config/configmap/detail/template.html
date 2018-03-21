@@ -24,8 +24,8 @@ limitations under the License.
     <kd-text-input *ngIf="configMap.data"
                    [text]="configMap.data"
                    [readOnly]="true"
-                   [useJsonFormat]="true"
-                   [border]="false"></kd-text-input>
+                   [border]="false"
+                   mode="json"></kd-text-input>
     <div *ngIf="!configMap.data"
          class="kd-card-padding">There is no data to display.</div>
   </div>

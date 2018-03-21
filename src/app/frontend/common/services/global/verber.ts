@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {EventEmitter, Injectable} from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material';
 import {ObjectMeta, TypeMeta} from '@api/backendapi';
@@ -60,47 +60,33 @@ export class VerberService {
 
   showEditDialog(displayName: string, typeMeta: TypeMeta, objectMeta: ObjectMeta): void {
     const dialogConfig = this.getDialogConfig_(displayName, typeMeta, objectMeta);
-    this.dialog_.open(EditResourceDialog, dialogConfig)
-        .afterClosed()
-        .subscribe(
-            (result) => {
-                // if (doDelete) {
-                //   const url = RawResource.getUrl(typeMeta, objectMeta);
-                //   this.http_.delete(url).subscribe(
-                //     () => {
-                //       this.onDelete.emit(true);
-                //     },
-                //     (err) => {
-                //       if (err) {
-                //         const alertDialogConfig: MatDialogConfig<AlertDialogConfig> = {
-                //           width: '630px',
-                //           data: {
-                //             title: err.statusText || 'Internal server error',
-                //             // TODO Add || this.localizerService_.localize(err.data).
-                //             message: 'Could not delete the resource',
-                //             confirmLabel: 'OK',
-                //           }
-                //         };
-                //         this.dialog_.open(AlertDialog, alertDialogConfig);
-                //       }
-                //     });
-                // }
-            });
-
-    // todo
-    // editErrorCb(err) {
-    //   if (err) {
-    //     const dialogConfig: MatDialogConfig<AlertDialogConfig> = {
-    //       width: '630px',
-    //       data: {
-    //         title: err.statusText || 'Internal server error',
-    //         // TODO Add || this.localizerService_.localize(err.data).
-    //         message: 'Could not edit the resource',
-    //         confirmLabel: 'OK',
-    //       }
-    //     };
-    //   }
-    // }
+    this.dialog_.open(EditResourceDialog, dialogConfig).afterClosed().subscribe((result) => {
+      if (result) {
+        const url = RawResource.getUrl(typeMeta, objectMeta);
+        const headers = new HttpHeaders();
+        headers.set('Content-Type', 'application/json');
+        headers.set('Accept', 'application/json');
+        this.http_.put(url, JSON.parse(result), {headers})
+            .subscribe(
+                () => {
+                  this.onEdit.emit(true);
+                },
+                (err) => {
+                  if (err) {
+                    const alertDialogConfig: MatDialogConfig<AlertDialogConfig> = {
+                      width: '630px',
+                      data: {
+                        title: err.statusText || 'Internal server error',
+                        // TODO Add || this.localizerService_.localize(err.data).
+                        message: 'Could not edit the resource',
+                        confirmLabel: 'OK',
+                      }
+                    };
+                    this.dialog_.open(AlertDialog, alertDialogConfig);
+                  }
+                });
+      }
+    });
   }
 
   getDialogConfig_(displayName: string, typeMeta: TypeMeta, objectMeta: ObjectMeta):

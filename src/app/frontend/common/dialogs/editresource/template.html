@@ -17,7 +17,8 @@ limitations under the License.
 <h2 mat-dialog-title>Edit a {{data.displayName}}</h2>
 <mat-dialog-content class="kd-dialog-text">
   <kd-text-input [text]="rawJson"
-                 [useJsonFormat]="true"></kd-text-input>
+                 [prettify]="false"
+                 mode="json"></kd-text-input>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button

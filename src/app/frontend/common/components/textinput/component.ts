@@ -28,25 +28,19 @@ enum EditorTheme {
   dark = 'idle_fingers',
 }
 
-enum EditorMode {
-  json = 'json',
-  yaml = 'yaml',
-}
-
 @Component({
   selector: 'kd-text-input',
   templateUrl: './template.html',
   styleUrls: ['./style.scss'],
 })
 export class TextInputComponent implements OnInit {
-  @Input() text = '';
+  @Input() text: string|{};
   @Input() readOnly = false;
-  @Input() useJsonFormat = false;
+  @Input() mode = 'yaml';
+  @Input() prettify = true;
   @Input() border = true;
-
-  // Default editor settings
-  mode = EditorMode.yaml;
   theme: string;
+
   // All possible options can be found at:
   // https://github.com/ajaxorg/ace/wiki/Configuring-Ace
   options = {
@@ -60,22 +54,24 @@ export class TextInputComponent implements OnInit {
   constructor(private readonly themeService_: ThemeService) {}
 
   ngOnInit(): void {
-    this.mode = this.useJsonFormat ? EditorMode.json : EditorMode.yaml;
-    if (this.useJsonFormat) {
-      this.formatAsJson_();
-    }
-
     this.theme = this.themeService_.isLightThemeEnabled() ? EditorTheme.light : EditorTheme.dark;
+    if (this.prettify) {
+      this.prettify_();
+    }
   }
 
-  /**
-   * Ensure pretty print even no matter if string or object was is the input.
-   */
-  private formatAsJson_(): void {
-    if (typeof this.text === 'string') {
-      this.text = JSON.stringify(JSON.parse(this.text), null, '\t');
-    } else {
-      this.text = JSON.stringify(this.text, null, '\t');
+  private prettify_(): void {
+    switch (this.mode) {
+      case 'json':
+        if (typeof this.text === 'string') {
+          this.text = JSON.stringify(JSON.parse(this.text), null, '\t');
+        } else {
+          this.text = JSON.stringify(this.text, null, '\t');
+        }
+        break;
+      default:
+        // Do nothing when mode is not recognized.
+        break;
     }
   }
 }
