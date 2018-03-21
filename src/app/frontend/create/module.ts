@@ -19,6 +19,8 @@ import {ComponentsModule} from '../common/components/module';
 import {SharedModule} from '../shared.module';
 
 import {CreateComponent} from './component';
+import {CreateFromInputComponent} from './from/input/component';
+import {CreateService} from './service';
 import {createState} from './state';
 
 @NgModule({
@@ -27,6 +29,7 @@ import {createState} from './state';
     ComponentsModule,
     UIRouterModule.forChild({states: [createState]}),
   ],
-  declarations: [CreateComponent],
+  declarations: [CreateComponent, CreateFromInputComponent],
+  providers: [CreateService]
 })
 export class CreateModule {}
