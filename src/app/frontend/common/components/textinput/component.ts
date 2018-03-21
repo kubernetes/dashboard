@@ -19,7 +19,7 @@ import 'brace/mode/yaml';
 import 'brace/theme/idle_fingers';
 import 'brace/theme/textmate';
 
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 import {ThemeService} from '../../services/global/theme';
 
@@ -34,7 +34,8 @@ enum EditorTheme {
   styleUrls: ['./style.scss'],
 })
 export class TextInputComponent implements OnInit {
-  @Input() text: string|{};
+  @Output() textChange = new EventEmitter<string>();
+  @Input() text: string;
   @Input() readOnly = false;
   @Input() mode = 'yaml';
   @Input() prettify = true;
@@ -58,6 +59,11 @@ export class TextInputComponent implements OnInit {
     if (this.prettify) {
       this.prettify_();
     }
+  }
+
+  onTextChange(text: string): void {
+    this.text = text;
+    this.textChange.emit(this.text);
   }
 
   private prettify_(): void {
