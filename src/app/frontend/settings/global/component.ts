@@ -31,6 +31,7 @@ export class GlobalSettingsComponent implements OnInit {
   // Keep it in sync with ConcurrentSettingsChangeError constant from the backend.
   private readonly concurrentChangeErr_ = 'settings changed since last reload';
   settings: GlobalSettings = {} as GlobalSettings;
+  hasLoadError = false;
 
   constructor(
       private readonly settings_: GlobalSettingsService, private readonly dialog_: MatDialog,
@@ -58,8 +59,8 @@ export class GlobalSettingsComponent implements OnInit {
     this.settings.autoRefreshTimeInterval = this.settings_.getAutoRefreshTimeInterval();
   }
 
-  onLoadError(err: KdError|K8sError): void {
-    this.state_.go(errorState.name, new ErrorStateParams(err, ''));
+  onLoadError(_err: KdError|K8sError): void {
+    this.hasLoadError = true;
   }
 
   save(form: NgForm): void {

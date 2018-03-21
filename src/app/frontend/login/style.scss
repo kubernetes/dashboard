@@ -16,21 +16,21 @@
 
 .kd-login-container {
   display: grid;
-  grid-template-columns: repeat(10, 1fr);
+  grid-template-columns: repeat(9, 1fr);
   grid-template-rows: repeat(3, 1fr);
 }
 
 .kd-login-card {
-  grid-column: 3 / 9;
+  grid-column: 3 / 8;
   grid-row: 2;
 }
 
 .kd-login-mode-description {
-  padding: $baseline-grid 0 (2 * $baseline-grid) (3.5 * $baseline-grid);
+  padding: $baseline-grid (3.5 * $baseline-grid) (2 * $baseline-grid);
 }
 
 .kd-login-input {
-  padding: 0 $baseline-grid 0 (3.5 * $baseline-grid);
+  padding: 0 (3.5 * $baseline-grid);
 }
 
 .kd-login-button {

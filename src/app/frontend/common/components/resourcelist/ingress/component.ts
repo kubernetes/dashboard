@@ -20,6 +20,7 @@ import {Endpoint, Ingress, IngressList} from 'typings/backendapi';
 
 import {ingressState} from '../../../../resource/discovery/ingress/state';
 import {ResourceListBase} from '../../../resources/list';
+import {NamespaceService} from '../../../services/global/namespace';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
@@ -31,10 +32,13 @@ export class IngressListComponent extends ResourceListBase<IngressList, Ingress>
 
   constructor(
       state: StateService, private readonly ingress_: NamespacedResourceService<IngressList>,
-      notifications: NotificationsService) {
+      notifications: NotificationsService, private readonly namespaceService_: NamespaceService) {
     super(ingressState.name, state, notifications);
     this.id = ListIdentifiers.ingress;
     this.groupId = ListGroupIdentifiers.discovery;
+
+    // Register dynamic columns.
+    this.registerDynamicColumn('namespace', 'name', this.shouldShowNamespaceColumn_.bind(this));
   }
 
   getResourceObservable(params?: HttpParams): Observable<IngressList> {
@@ -47,5 +51,9 @@ export class IngressListComponent extends ResourceListBase<IngressList, Ingress>
 
   getDisplayColumns(): string[] {
     return ['name', 'labels', 'endpoints', 'age'];
+  }
+
+  private shouldShowNamespaceColumn_(): boolean {
+    return this.namespaceService_.areMultipleNamespacesSelected();
   }
 }

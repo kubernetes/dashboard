@@ -20,6 +20,7 @@ import {Service, ServiceList} from 'typings/backendapi';
 
 import {serviceState} from '../../../../resource/discovery/service/state';
 import {ResourceListWithStatuses} from '../../../resources/list';
+import {NamespaceService} from '../../../services/global/namespace';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
@@ -31,7 +32,7 @@ export class ServiceListComponent extends ResourceListWithStatuses<ServiceList, 
 
   constructor(
       state: StateService, private readonly service_: NamespacedResourceService<ServiceList>,
-      notifications: NotificationsService) {
+      notifications: NotificationsService, private readonly namespaceService_: NamespaceService) {
     super(serviceState.name, state, notifications);
     this.id = ListIdentifiers.service;
     this.groupId = ListGroupIdentifiers.discovery;
@@ -39,6 +40,9 @@ export class ServiceListComponent extends ResourceListWithStatuses<ServiceList, 
     // Register status icon handlers
     this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState.bind(this));
     this.registerBinding(this.icon.timelapse, 'kd-muted', this.isInPendingState.bind(this));
+
+    // Register dynamic columns.
+    this.registerDynamicColumn('namespace', 'name', this.shouldShowNamespaceColumn_.bind(this));
   }
 
   getResourceObservable(params?: HttpParams): Observable<ServiceList> {
@@ -64,5 +68,9 @@ export class ServiceListComponent extends ResourceListWithStatuses<ServiceList, 
 
   getDisplayColumns(): string[] {
     return ['statusicon', 'name', 'labels', 'clusterip', 'internalendp', 'externalendp', 'age'];
+  }
+
+  private shouldShowNamespaceColumn_(): boolean {
+    return this.namespaceService_.areMultipleNamespacesSelected();
   }
 }

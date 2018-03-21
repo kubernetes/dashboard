@@ -14,6 +14,7 @@
 
 import {Injectable} from '@angular/core';
 import {StateService} from '@uirouter/core';
+import {CONFIG} from '../../../index.config';
 import {NAMESPACE_STATE_PARAM} from '../../params/params';
 
 @Injectable()
@@ -21,7 +22,7 @@ export class NamespaceService {
   /**
    * Default namespace.
    */
-  private readonly defaultNamespace_ = 'default';
+  private readonly defaultNamespace_ = CONFIG.defaultNamespace;
   /**
    * Internal key for empty selection. To differentiate empty string from nulls.
    */
@@ -51,5 +52,9 @@ export class NamespaceService {
 
   isMultiNamespace(namespace: string): boolean {
     return namespace === this.allNamespacesKey_;
+  }
+
+  areMultipleNamespacesSelected(): boolean {
+    return this.current() === this.allNamespacesKey_;
   }
 }

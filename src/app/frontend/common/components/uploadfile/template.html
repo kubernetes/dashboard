@@ -1,0 +1,63 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<!--<div fxLayout="row"
+     fxLayoutAlign="space-between start">
+  <input matInput
+         id="fileinput"
+         type="file">
+  <div fxFlex>
+    <mat-input-container class="kd-upload-file-container">
+      <label>{{label}}</label>
+      <input matInput
+             id="textinput"
+             [(ngModel)]="fileName"
+             [readonly]="true"
+             required>
+    </mat-input-container>
+  </div>
+  <button mat-button
+          id="uploadButton"
+          color="primary"
+          class="kd-upload-button"
+          aria-label="attach_file">
+    <label class="kd-upload-label">
+      <mat-icon>more_horiz</mat-icon>
+    </label>
+  </button>
+</div>
+-->
+
+<div fxLayout="row"
+     fxLayoutAlign="space-between start">
+  <mat-input-container fxFlex>
+    <input matInput
+           [placeholder]="label"
+           [ngModel]="filename"
+           [readonly]="true"
+           (click)="fileInput.click()" />
+  </mat-input-container>
+  <button mat-button
+          color="primary"
+          (click)="fileInput.click()"
+          class="kd-upload-button">
+    <mat-icon>more_horiz</mat-icon>
+  </button>
+  <input hidden
+         type="file"
+         #fileInput
+         (change)="onChange($event)" />
+</div>

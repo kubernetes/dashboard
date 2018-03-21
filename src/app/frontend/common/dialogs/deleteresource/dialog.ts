@@ -12,16 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Contains common buttons for detail pages.
- *
- * @type {!angular.Component}
- */
-export const actionbarDetailButtonsComponent = {
-  templateUrl: 'common/components/actionbar/actionbardetailbuttons.html',
-  bindings: {
-    'resourceKindName': '@',
-    'typeMeta': '<',
-    'objectMeta': '<',
-  },
-};
+import {Component, Inject} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {ResourceMeta} from '../../services/global/actionbar';
+
+@Component({
+  selector: 'kd-delete-resource-dialog',
+  templateUrl: 'template.html',
+})
+export class DeleteResourceDialog {
+  constructor(
+      public dialogRef: MatDialogRef<DeleteResourceDialog>,
+      @Inject(MAT_DIALOG_DATA) public data: ResourceMeta) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}

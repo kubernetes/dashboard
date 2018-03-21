@@ -23,7 +23,7 @@ export const replicationControllerListState: Ng2StateDeclaration = {
   component: ReplicationControllerList,
   data: {
     kdBreadcrumbs: {
-      label: 'ReplicationControllers',
+      label: 'Replication Controllers',
       parent: workloadsState.name,
     },
   },

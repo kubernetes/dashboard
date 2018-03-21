@@ -26,9 +26,12 @@ export class Breadcrumb {
 }
 
 export type ThemeSwitchCallback = (isLightThemeEnabled: boolean) => void;
+export type ColumnWhenCallback = () => boolean;
 
 export type onSettingsLoadCallback = (settings?: GlobalSettings) => void;
 export type onSettingsFailCallback = (err?: KdError|K8sError) => void;
+
+export type onLogin = (errors?: K8sError[]) => void;
 
 export interface KnownErrors { unauthorized: KdError; }
 
@@ -50,7 +53,20 @@ export interface ActionColumnDef<T extends ActionColumn> {
   component: Type<T>;
 }
 
+export interface ColumnWhenCondition {
+  col: string;
+  afterCol: string;
+  whenCallback: ColumnWhenCallback;
+}
+
 export interface ActionColumn {
   setTypeMeta(typeMeta: TypeMeta): void;
   setObjectMeta(objectMeta: ObjectMeta): void;
+}
+
+export interface HTMLInputEvent extends Event { target: HTMLInputElement&EventTarget; }
+
+export interface KdFile {
+  name: string;
+  content: string;
 }

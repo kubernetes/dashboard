@@ -12,10 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../../../variables';
+import {Component, Inject} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 
-.kd-namespace-change-dialog-text {
-  font-family: $font-family-sans;
-  padding-bottom: .5 * $baseline-grid;
-  padding-top: 0;
+export interface AlertDialogConfig {
+  title: string;
+  message: string;
+  confirmLabel: string;
+}
+
+@Component({
+  selector: 'kd-alert-dialog',
+  templateUrl: 'template.html',
+})
+export class AlertDialog {
+  constructor(
+      public dialogRef: MatDialogRef<AlertDialog>,
+      @Inject(MAT_DIALOG_DATA) public data: AlertDialogConfig) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 }

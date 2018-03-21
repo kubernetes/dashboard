@@ -21,6 +21,7 @@ import {overviewState} from '../../../overview/state';
 
 import {NAMESPACE_STATE_PARAM} from '../../params/params';
 import {NamespaceService} from '../../services/global/namespace';
+import {NotificationSeverity, NotificationsService} from '../../services/global/notifications';
 import {KdStateService} from '../../services/global/state';
 import {EndpointManager, Resource} from '../../services/resource/endpoint';
 import {ResourceService} from '../../services/resource/resource';
@@ -46,7 +47,8 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy, AfterViewI
   constructor(
       private readonly state_: StateService, private readonly namespaceService_: NamespaceService,
       private readonly namespace_: ResourceService<NamespaceList>,
-      private readonly dialog_: MatDialog, private readonly kdState_: KdStateService) {}
+      private readonly dialog_: MatDialog, private readonly kdState_: KdStateService,
+      private readonly notifications_: NotificationsService) {}
 
   ngOnInit(): void {
     this.allNamespacesKey = this.namespaceService_.getAllNamespacesKey();
@@ -63,7 +65,7 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy, AfterViewI
     });
 
     // Avoid angular error 'ExpressionChangedAfterItHasBeenCheckedError'.
-    // Related issues: https://github.com/angular/angular/issues/17572
+    // Related issue: https://github.com/angular/angular/issues/17572
     setTimeout(() => {
       if (this.shouldShowNamespaceChangeDialog()) {
         this.handleNamespaceChangeDialog_();
@@ -125,7 +127,14 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy, AfterViewI
           .subscribe(
               namespaceList => {
                 this.namespaces = namespaceList.namespaces.map(n => n.objectMeta.name);
-                this.namespacesInitialized_ = true;
+
+                if (namespaceList.errors.length === 0) {
+                  this.namespacesInitialized_ = true;
+                } else {
+                  for (const err of namespaceList.errors) {
+                    this.notifications_.push(err.ErrStatus.message, NotificationSeverity.error);
+                  }
+                }
               },
               undefined,
               () => {
@@ -159,7 +168,11 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy, AfterViewI
       return;
     }
 
-    this.state_.go('.', {[NAMESPACE_STATE_PARAM]: namespace});
+    if (this.isOnDetailsView()) {
+      this.state_.go(overviewState.name, {[NAMESPACE_STATE_PARAM]: namespace});
+    } else {
+      this.state_.go('.', {[NAMESPACE_STATE_PARAM]: namespace});
+    }
   }
 
   private clearNamespaceInput_(): void {
@@ -171,6 +184,10 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy, AfterViewI
     const namespace = this.state_.params.namespace;
     return namespace !== this.allNamespacesKey && resourceNamespace &&
         resourceNamespace !== namespace;
+  }
+
+  private isOnDetailsView(): boolean {
+    return this.state_.params.resourceNamespace !== undefined;
   }
 
   /**

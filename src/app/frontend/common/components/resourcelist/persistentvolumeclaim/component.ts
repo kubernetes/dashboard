@@ -20,6 +20,7 @@ import {PersistentVolumeClaim, PersistentVolumeClaimList} from 'typings/backenda
 
 import {persistentVolumeClaimState} from '../../../../resource/config/persistentvolumeclaim/state';
 import {ResourceListWithStatuses} from '../../../resources/list';
+import {NamespaceService} from '../../../services/global/namespace';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
@@ -36,7 +37,7 @@ export class PersistentVolumeClaimListComponent extends
   constructor(
       state: StateService,
       private readonly persistentVolumeClaim_: NamespacedResourceService<PersistentVolumeClaimList>,
-      notifications: NotificationsService) {
+      notifications: NotificationsService, private readonly namespaceService_: NamespaceService) {
     super(persistentVolumeClaimState.name, state, notifications);
     this.id = ListIdentifiers.persistentVolumeClaim;
     this.groupId = ListGroupIdentifiers.config;
@@ -45,6 +46,9 @@ export class PersistentVolumeClaimListComponent extends
     this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInBoundState);
     this.registerBinding(this.icon.timelapse, 'kd-muted', this.isInPendingState);
     this.registerBinding(this.icon.error, 'kd-error', this.isInLostState);
+
+    // Register dynamic columns.
+    this.registerDynamicColumn('namespace', 'name', this.shouldShowNamespaceColumn_.bind(this));
   }
 
   isInBoundState(resource: PersistentVolumeClaim): boolean {
@@ -71,5 +75,9 @@ export class PersistentVolumeClaimListComponent extends
     return [
       'statusicon', 'name', 'labels', 'status', 'volume', 'capacity', 'accmodes', 'storagecl', 'age'
     ];
+  }
+
+  private shouldShowNamespaceColumn_(): boolean {
+    return this.namespaceService_.areMultipleNamespacesSelected();
   }
 }

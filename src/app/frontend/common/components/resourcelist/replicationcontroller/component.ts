@@ -17,8 +17,10 @@ import {Component, ComponentFactoryResolver, Input} from '@angular/core';
 import {Event, ReplicaSet, ReplicationController, ReplicationControllerList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
+import {replicationControllerState} from '../../../../resource/workloads/replicationcontroller/state';
 
 import {ResourceListWithStatuses} from '../../../resources/list';
+import {NamespaceService} from '../../../services/global/namespace';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
@@ -35,8 +37,9 @@ export class ReplicationControllerListComponent extends
   constructor(
       state: StateService,
       private readonly replicationController_: NamespacedResourceService<ReplicationControllerList>,
-      notifications: NotificationsService, resolver: ComponentFactoryResolver) {
-    super('', state, notifications, resolver);
+      notifications: NotificationsService, resolver: ComponentFactoryResolver,
+      private readonly namespaceService_: NamespaceService) {
+    super(replicationControllerState.name, state, notifications, resolver);
     this.id = ListIdentifiers.replicationController;
     this.groupId = ListGroupIdentifiers.workloads;
 
@@ -44,6 +47,9 @@ export class ReplicationControllerListComponent extends
     this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);
     this.registerBinding(this.icon.timelapse, 'kd-muted', this.isInPendingState);
     this.registerBinding(this.icon.error, 'kd-error', this.isInErrorState);
+
+    // Register dynamic columns.
+    this.registerDynamicColumn('namespace', 'name', this.shouldShowNamespaceColumn_.bind(this));
   }
 
   getResourceObservable(params?: HttpParams): Observable<ReplicationControllerList> {
@@ -66,8 +72,12 @@ export class ReplicationControllerListComponent extends
     return resource.pods.warnings.length === 0 && resource.pods.pending === 0;
   }
 
-  getDisplayColumns(): string[] {
+  protected getDisplayColumns(): string[] {
     return ['statusicon', 'name', 'labels', 'pods', 'age', 'images'];
+  }
+
+  private shouldShowNamespaceColumn_(): boolean {
+    return this.namespaceService_.areMultipleNamespacesSelected();
   }
 
   hasErrors(rc: ReplicationController): boolean {

@@ -15,9 +15,14 @@
 import {NgModule} from '@angular/core';
 
 import {SharedModule} from '../../shared.module';
+import {AlertDialog} from '../dialogs/alert/dialog';
+import {DeleteResourceDialog} from '../dialogs/deleteresource/dialog';
 import {ResourceModule} from '../services/resource/module';
 
 import {ActionbarComponent} from './actionbar/component';
+import {ActionbarDetailActionsComponent} from './actionbar/detailactions/component';
+import {ActionbarDetailDeleteComponent} from './actionbar/detailactions/delete/component';
+import {ActionbarDetailEditComponent} from './actionbar/detailactions/edit/component';
 import {AllocationChartComponent} from './allocationchart/component';
 import {BreadcrumbsComponent} from './breadcrumbs/component';
 import {CardComponent} from './card/component';
@@ -64,6 +69,7 @@ import {ServiceListComponent} from './resourcelist/service/component';
 import {StatefulSetListComponent} from './resourcelist/statefulset/component';
 import {StorageClassListComponent} from './resourcelist/storageclass/component';
 import {TextInputComponent} from './textinput/component';
+import {UploadFileComponent} from './uploadfile/component';
 import {ZeroStateComponent} from './zerostate/component';
 
 @NgModule({
@@ -120,6 +126,10 @@ import {ZeroStateComponent} from './zerostate/component';
     NamespaceChangeDialog,
     PolicyRuleListComponent,
     CommaSeparatedListComponent,
+    ActionbarDetailActionsComponent,
+    ActionbarDetailDeleteComponent,
+    ActionbarDetailEditComponent,
+    UploadFileComponent,
   ],
   exports: [
     AllocationChartComponent,
@@ -163,6 +173,10 @@ import {ZeroStateComponent} from './zerostate/component';
     NamespaceSelectorComponent,
     PolicyRuleListComponent,
     CommaSeparatedListComponent,
+    ActionbarDetailActionsComponent,
+    ActionbarDetailDeleteComponent,
+    ActionbarDetailEditComponent,
+    UploadFileComponent,
   ],
   entryComponents: [
     ChipDialog,

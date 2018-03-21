@@ -30,17 +30,17 @@ limitations under the License.
 
     <mat-table [dataSource]="getData()"
                matSort
-               [matSortActive]="getDisplayColumns()[8]"
+               matSortActive="age"
                matSortDisableClear
                matSortDirection="asc">
-      <ng-container [matColumnDef]="getDisplayColumns()[0]">
+      <ng-container matColumnDef="statusicon">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let pvc">
           <mat-icon [ngClass]="getStatus(pvc).iconClass">{{getStatus(pvc).iconName}}</mat-icon>
         </mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayColumns()[1]">
+      <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true">Name</mat-header-cell>
@@ -51,21 +51,27 @@ limitations under the License.
         </mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayColumns()[2]">
+      <ng-container *ngIf="shouldShowColumn('namespace')"
+                    matColumnDef="namespace">
+        <mat-header-cell *matHeaderCellDef>Namespace</mat-header-cell>
+        <mat-cell *matCellDef="let pvc">{{pvc.objectMeta.namespace}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="labels">
         <mat-header-cell *matHeaderCellDef>Labels</mat-header-cell>
         <mat-cell *matCellDef="let pvc">
           <kd-chips [map]="pvc.objectMeta.labels"></kd-chips>
         </mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayColumns()[3]">
+      <ng-container matColumnDef="status">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true">Status</mat-header-cell>
         <mat-cell *matCellDef="let pvc">{{pvc.status}}</mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayColumns()[4]">
+      <ng-container matColumnDef="volume">
         <mat-header-cell *matHeaderCellDef>Volume</mat-header-cell>
         <mat-cell *matCellDef="let pvc">
           <ng-container *ngIf="pvc.volume">{{pvc.volume}}</ng-container>
@@ -73,7 +79,7 @@ limitations under the License.
         </mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayColumns()[5]">
+      <ng-container matColumnDef="capacity">
         <mat-header-cell *matHeaderCellDef>Capacity</mat-header-cell>
         <mat-cell *matCellDef="let pvc">
           <ng-container *ngIf="pvc.capacity">{{pvc.capacity}}</ng-container>
@@ -81,14 +87,14 @@ limitations under the License.
         </mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayColumns()[6]">
+      <ng-container matColumnDef="accmodes">
         <mat-header-cell *matHeaderCellDef>Access Modes</mat-header-cell>
         <mat-cell *matCellDef="let pvc">
           <kd-chips [map]="pvc.accessModes"></kd-chips>
         </mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayColumns()[7]">
+      <ng-container matColumnDef="storagecl">
         <mat-header-cell *matHeaderCellDef>Storage Class</mat-header-cell>
         <mat-cell *matCellDef="let pvc">
           <ng-container *ngIf="pvc.storageClass">{{pvc.capacity}}</ng-container>
@@ -96,7 +102,7 @@ limitations under the License.
         </mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayColumns()[8]">
+      <ng-container matColumnDef="age">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true">Age</mat-header-cell>
@@ -105,8 +111,8 @@ limitations under the License.
         </mat-cell>
       </ng-container>
 
-      <mat-header-row *matHeaderRowDef="getDisplayColumns()"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: getDisplayColumns();"></mat-row>
+      <mat-header-row *matHeaderRowDef="getColumns()"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: getColumns();"></mat-row>
     </mat-table>
 
     <mat-paginator [length]="totalItems"

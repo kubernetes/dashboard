@@ -141,6 +141,16 @@ code {
 // Custom classes used across application //
 ////////////////////////////////////////////
 
+.kd-dialog-text {
+  font-family: $font-family-sans;
+  padding-bottom: .5 * $baseline-grid;
+  padding-top: 0;
+}
+
+.kd-toolbar-action {
+  margin: 0 (.75 * $baseline-grid) !important;
+}
+
 .kd-code-block {
   border-radius: $baseline-grid / 4;
   display: block;

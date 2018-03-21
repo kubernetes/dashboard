@@ -19,6 +19,7 @@ import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 import {deploymentState} from '../../../../resource/workloads/deployment/state';
 import {ResourceListWithStatuses} from '../../../resources/list';
+import {NamespaceService} from '../../../services/global/namespace';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
@@ -33,7 +34,8 @@ export class DeploymentListComponent extends ResourceListWithStatuses<Deployment
 
   constructor(
       state: StateService, private readonly deployment_: NamespacedResourceService<DeploymentList>,
-      notifications: NotificationsService, resolver: ComponentFactoryResolver) {
+      notifications: NotificationsService, resolver: ComponentFactoryResolver,
+      private readonly namespaceService_: NamespaceService) {
     super(deploymentState.name, state, notifications, resolver);
     this.id = ListIdentifiers.deployment;
     this.groupId = ListGroupIdentifiers.workloads;
@@ -42,6 +44,9 @@ export class DeploymentListComponent extends ResourceListWithStatuses<Deployment
     this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);
     this.registerBinding(this.icon.timelapse, 'kd-muted', this.isInPendingState);
     this.registerBinding(this.icon.error, 'kd-error', this.isInErrorState);
+
+    // Register dynamic columns.
+    this.registerDynamicColumn('namespace', 'name', this.shouldShowNamespaceColumn_.bind(this));
   }
 
   getResourceObservable(params?: HttpParams): Observable<DeploymentList> {
@@ -74,5 +79,9 @@ export class DeploymentListComponent extends ResourceListWithStatuses<Deployment
 
   getEvents(deployment: Deployment): Event[] {
     return deployment.pods.warnings;
+  }
+
+  private shouldShowNamespaceColumn_(): boolean {
+    return this.namespaceService_.areMultipleNamespacesSelected();
   }
 }
