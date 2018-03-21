@@ -142,6 +142,7 @@ spec:
       - name: kubernetes-dashboard-certs
         secret:
           secretName: kubernetes-dashboard-certs
+          defaultMode: 0600
       - name: tmp-volume
         emptyDir: {}
       serviceAccountName: kubernetes-dashboard-head
