@@ -18,6 +18,7 @@ import {CapacityItem, PersistentVolumeDetail, PolicyRule} from '@api/backendapi'
 import {StateService} from '@uirouter/core';
 import {Subscription} from 'rxjs/Subscription';
 
+import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
 import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
 import {ResourceService} from '../../../../common/services/resource/resource';
 
@@ -33,7 +34,7 @@ export class PersistentVolumeDetailComponent implements OnInit, OnDestroy {
 
   constructor(
       private readonly persistentVolume_: ResourceService<PersistentVolumeDetail>,
-      private readonly state_: StateService) {}
+      private readonly actionbar_: ActionbarService, private readonly state_: StateService) {}
 
   ngOnInit(): void {
     this.persistentVolumeName_ = this.state_.params.resourceName;
@@ -44,6 +45,8 @@ export class PersistentVolumeDetailComponent implements OnInit, OnDestroy {
                 this.persistentVolumeName_)
             .subscribe((d: PersistentVolumeDetail) => {
               this.persistentVolume = d;
+              this.actionbar_.onInit.emit(
+                  new ResourceMeta('Persistent Volume', d.objectMeta, d.typeMeta));
               this.isInitialized = true;
             });
   }

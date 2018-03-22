@@ -19,7 +19,6 @@ import {ComponentsModule} from '../../../common/components/module';
 import {ResourceModule} from '../../../common/services/resource/module';
 import {SharedModule} from '../../../shared.module';
 
-import {ActionbarComponent} from './detail/actionbar/component';
 import {ClusterRoleDetailComponent} from './detail/component';
 import {clusterRoleDetailState} from './detail/state';
 import {ClusterRoleListComponent} from './list/component';
@@ -42,7 +41,6 @@ import {clusterRoleState} from './state';
   declarations: [
     ClusterRoleListComponent,
     ClusterRoleDetailComponent,
-    ActionbarComponent,
   ],
 })
 export class ClusterRoleModule {}

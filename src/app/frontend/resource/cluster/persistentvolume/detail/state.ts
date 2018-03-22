@@ -14,6 +14,7 @@
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
+import {DefaultDetailsActionbar} from '../../../../common/components/actionbars/defaultdetail/component';
 import {addResourceStateParamsToUrl} from '../../../../common/params/params';
 import {stateName, stateUrl} from '../state';
 
@@ -22,11 +23,18 @@ import {PersistentVolumeDetailComponent} from './component';
 export const persistentVolumeDetailState: Ng2StateDeclaration = {
   name: `${stateName}.detail`,
   url: addResourceStateParamsToUrl(stateUrl),
-  component: PersistentVolumeDetailComponent,
   data: {
     kdBreadcrumbs: {
       label: 'resourceName',
       parent: 'persistentvolume.list',
     },
+  },
+  views: {
+    '$default': {
+      component: PersistentVolumeDetailComponent,
+    },
+    'actionbar@chrome': {
+      component: DefaultDetailsActionbar,
+    }
   },
 };

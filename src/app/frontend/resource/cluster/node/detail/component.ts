@@ -17,6 +17,8 @@ import {MatTableDataSource} from '@angular/material';
 import {Condition, NodeAddress, NodeDetail, NodeTaint} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Subscription} from 'rxjs/Subscription';
+
+import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
 import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
 import {ResourceService} from '../../../../common/services/resource/resource';
 

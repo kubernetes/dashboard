@@ -14,6 +14,7 @@
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
+import {DefaultDetailsActionbar} from '../../../../common/components/actionbars/defaultdetail/component';
 import {addResourceStateParamsToUrl} from '../../../../common/params/params';
 import {stateName, stateUrl} from '../state';
 
@@ -22,11 +23,18 @@ import {StorageClassDetailComponent} from './component';
 export const storageClassDetailState: Ng2StateDeclaration = {
   name: `${stateName}.detail`,
   url: addResourceStateParamsToUrl(stateUrl),
-  component: StorageClassDetailComponent,
   data: {
     kdBreadcrumbs: {
       label: 'resourceName',
       parent: 'storageclass.list',
     },
+  },
+  views: {
+    '$default': {
+      component: StorageClassDetailComponent,
+    },
+    'actionbar@chrome': {
+      component: DefaultDetailsActionbar,
+    }
   },
 };

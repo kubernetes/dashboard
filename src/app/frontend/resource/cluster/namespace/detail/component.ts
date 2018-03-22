@@ -17,6 +17,7 @@ import {NamespaceDetail} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Subscription} from 'rxjs/Subscription';
 
+import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
 import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
 import {ResourceService} from '../../../../common/services/resource/resource';
 
@@ -33,7 +34,7 @@ export class NamespaceDetailComponent implements OnInit, OnDestroy {
 
   constructor(
       private readonly namespace_: ResourceService<NamespaceDetail>,
-      private readonly state_: StateService) {}
+      private readonly actionbar_: ActionbarService, private readonly state_: StateService) {}
 
   ngOnInit(): void {
     this.namespaceName_ = this.state_.params.resourceName;
@@ -45,6 +46,7 @@ export class NamespaceDetailComponent implements OnInit, OnDestroy {
             .get(EndpointManager.resource(Resource.namespace).detail(), this.namespaceName_)
             .subscribe((d: NamespaceDetail) => {
               this.namespace = d;
+              this.actionbar_.onInit.emit(new ResourceMeta('Namespace', d.objectMeta, d.typeMeta));
               this.isInitialized = true;
             });
   }

@@ -14,10 +14,10 @@
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
+import {DefaultDetailsActionbar} from '../../../../common/components/actionbars/defaultdetail/component';
 import {addResourceStateParamsToUrl} from '../../../../common/params/params';
 import {stateName, stateUrl} from '../state';
 
-import {ActionbarComponent} from './actionbar/component';
 import {ClusterRoleDetailComponent} from './component';
 
 export const clusterRoleDetailState: Ng2StateDeclaration = {
@@ -34,7 +34,7 @@ export const clusterRoleDetailState: Ng2StateDeclaration = {
       component: ClusterRoleDetailComponent,
     },
     'actionbar@chrome': {
-      component: ActionbarComponent,
+      component: DefaultDetailsActionbar,
     }
   },
 };

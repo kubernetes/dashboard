@@ -17,6 +17,7 @@ import {StorageClassDetail, StringMap} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Subscription} from 'rxjs/Subscription';
 
+import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
 import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
 import {ResourceService} from '../../../../common/services/resource/resource';
 
@@ -33,7 +34,7 @@ export class StorageClassDetailComponent implements OnInit, OnDestroy {
 
   constructor(
       private readonly storageClass_: ResourceService<StorageClassDetail>,
-      private readonly state_: StateService) {}
+      private readonly actionbar_: ActionbarService, private readonly state_: StateService) {}
 
   ngOnInit(): void {
     this.storageClassName_ = this.state_.params.resourceName;
@@ -42,6 +43,8 @@ export class StorageClassDetailComponent implements OnInit, OnDestroy {
             .get(EndpointManager.resource(Resource.storageClass).detail(), this.storageClassName_)
             .subscribe((d: StorageClassDetail) => {
               this.storageClass = d;
+              this.actionbar_.onInit.emit(
+                  new ResourceMeta('Storage Class', d.objectMeta, d.typeMeta));
               this.isInitialized = true;
             });
   }
