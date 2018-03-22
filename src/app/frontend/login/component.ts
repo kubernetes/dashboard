@@ -17,8 +17,11 @@ import {Component, OnInit} from '@angular/core';
 import {AuthenticationMode, EnabledAuthenticationModes, LoginSpec} from '@api/backendapi';
 import {KdFile} from '@api/frontendapi';
 import {StateService} from '@uirouter/core';
+
 import {K8SError} from '../common/errors/errors';
+import {NAMESPACE_STATE_PARAM} from '../common/params/params';
 import {AuthService} from '../common/services/global/authentication';
+import {CONFIG} from '../index.config';
 import {overviewState} from '../overview/state';
 
 enum LoginModes {
@@ -68,13 +71,13 @@ export class LoginComponent implements OnInit {
         return;
       }
 
-      this.state_.go(overviewState.name);
+      this.state_.go(overviewState.name, {[NAMESPACE_STATE_PARAM]: CONFIG.defaultNamespace});
     });
   }
 
   skip(): void {
     this.authService_.skipLoginPage(true);
-    this.state_.go(overviewState.name);
+    this.state_.go(overviewState.name, {[NAMESPACE_STATE_PARAM]: CONFIG.defaultNamespace});
   }
 
   onChange(event: Event&KdFile): void {

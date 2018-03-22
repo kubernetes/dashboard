@@ -16,10 +16,12 @@ limitations under the License.
 
 <mat-menu #actions="matMenu">
   <div class="kd-auth-status kd-muted-light">
-    <ng-container [ngSwitch]="true">
-      <ng-container *ngSwitchCase="loginStatus.headerPresent">Logged in with auth header</ng-container>
-      <ng-container *ngSwitchCase="loginStatus.tokenPresent">Logged in with token</ng-container>
-      <ng-container *ngSwitchDefault>Default service account</ng-container>
+    <ng-container *ngIf="isLoginStatusInitialized">
+      <ng-container [ngSwitch]="true">
+        <ng-container *ngSwitchCase="loginStatus.headerPresent">Logged in with auth header</ng-container>
+        <ng-container *ngSwitchCase="loginStatus.tokenPresent">Logged in with token</ng-container>
+        <ng-container *ngSwitchDefault>Default service account</ng-container>
+      </ng-container>
     </ng-container>
   </div>
   <mat-divider></mat-divider>

@@ -15,6 +15,7 @@
 import {UIRouter} from '@uirouter/angular';
 import {HookMatchCriteria, HookMatchCriterion} from '@uirouter/core';
 
+import {NAMESPACE_STATE_PARAM} from './common/params/params';
 import {AuthService} from './common/services/global/authentication';
 import {KdStateService} from './common/services/global/state';
 import {TitleService} from './common/services/global/title';
@@ -39,8 +40,7 @@ export function configureRouter(router: UIRouter): void {
   transitionService.onSuccess({}, (transition) => {
     const namespaceParam = transition.params().namespace;
     if (namespaceParam === undefined && transition.to().name !== 'login') {
-      stateService.params.namespace = CONFIG.defaultNamespace;
-      stateService.reload();
+      stateService.go(transition.to().name, {[NAMESPACE_STATE_PARAM]: CONFIG.defaultNamespace});
     }
   });
 
