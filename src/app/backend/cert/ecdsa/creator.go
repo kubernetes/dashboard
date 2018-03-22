@@ -53,13 +53,15 @@ func (self *ecdsaCreator) GenerateCertificate(key interface{}) []byte {
 	ecdsaKey := self.getKey(key)
 	pod := self.getDashboardPod()
 
-	podDomainName := pod.Name + "." + pod.Namespace
-
 	template := x509.Certificate{
 		SerialNumber: self.generateSerialNumber(),
-		Subject:      pkix.Name{CommonName: podDomainName},
-		Issuer:       pkix.Name{CommonName: podDomainName},
-		DNSNames:     []string{podDomainName},
+	}
+
+	if len(pod.Name) > 0 && len(pod.Namespace) > 0 {
+		podDomainName := pod.Name + "." + pod.Namespace
+		template.Subject = pkix.Name{CommonName: podDomainName}
+		template.Issuer = pkix.Name{CommonName: podDomainName}
+		template.DNSNames = []string{podDomainName}
 	}
 
 	if len(pod.Status.PodIP) > 0 {

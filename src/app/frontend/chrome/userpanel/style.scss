@@ -18,3 +18,10 @@
 .kd-user-panel-icon {
   @include kd-icon-size;
 }
+
+.kd-auth-status {
+  font-family: $font-family-sans;
+  font-weight: $bold-font-weight;
+  padding: $baseline-grid (2 * $baseline-grid) (2 * $baseline-grid);
+  text-transform: uppercase;
+}

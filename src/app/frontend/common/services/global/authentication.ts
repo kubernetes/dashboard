@@ -152,10 +152,7 @@ export class AuthService {
   }
 
   getLoginStatus(): Observable<LoginStatus> {
-    const token = this.getTokenCookie_();
-    return this.http_.get<LoginStatus>(
-        'api/v1/login/status',
-        {headers: new HttpHeaders().set(this.config_.authTokenHeaderName, token)});
+    return this.http_.get<LoginStatus>('api/v1/login/status');
   }
 
   skipLoginPage(skip: boolean): void {
