@@ -25,3 +25,19 @@
   padding: $baseline-grid (2 * $baseline-grid) (2 * $baseline-grid);
   text-transform: uppercase;
 }
+
+.kd-cross-style {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.kd-cross-line-primary {
+  stroke-width: 2;
+}
+
+.kd-cross-outline {
+  stroke-width: 4;
+}

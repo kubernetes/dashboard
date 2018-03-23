@@ -16,6 +16,7 @@ package event
 
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"k8s.io/api/core/v1"
@@ -186,11 +187,13 @@ func ToEvent(event v1.Event) common.Event {
 func GetResourceEvents(client kubernetes.Interface, dsQuery *dataselect.DataSelectQuery, namespace, name string) (
 	*common.EventList, error) {
 	resourceEvents, err := GetEvents(client, namespace, name)
-	if err != nil {
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
 		return EmptyEventList, err
 	}
 
 	events := CreateEventList(resourceEvents, dsQuery)
+	events.Errors = nonCriticalErrors
 	return &events, nil
 }
 

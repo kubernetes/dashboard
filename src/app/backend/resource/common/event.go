@@ -25,6 +25,9 @@ type EventList struct {
 
 	// List of events from given namespace.
 	Events []Event `json:"events"`
+
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
 // Event is a single event representation.
