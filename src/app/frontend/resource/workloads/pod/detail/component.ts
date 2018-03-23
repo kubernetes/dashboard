@@ -16,8 +16,9 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {EnvVar, PodDetail} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Subscription} from 'rxjs/Subscription';
-import {KdStateService} from '../../../../common/services/global/state';
 
+import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
+import {KdStateService} from '../../../../common/services/global/state';
 import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
 import {NamespacedResourceService} from '../../../../common/services/resource/resource';
 import {nodeState} from '../../../cluster/node/state';
@@ -35,7 +36,8 @@ export class PodDetailComponent implements OnInit, OnDestroy {
 
   constructor(
       private readonly pod_: NamespacedResourceService<PodDetail>,
-      private readonly state_: StateService, private readonly kdState_: KdStateService) {}
+      private readonly actionbar_: ActionbarService, private readonly state_: StateService,
+      private readonly kdState_: KdStateService) {}
 
   ngOnInit(): void {
     this.podName_ = this.state_.params.resourceName;
@@ -46,6 +48,7 @@ export class PodDetailComponent implements OnInit, OnDestroy {
             .startWith({})
             .subscribe((d: PodDetail) => {
               this.pod = d;
+              this.actionbar_.onInit.emit(new ResourceMeta('Pod', d.objectMeta, d.typeMeta));
               this.isInitialized = true;
             });
   }

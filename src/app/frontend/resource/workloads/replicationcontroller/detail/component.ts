@@ -16,8 +16,9 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {EnvVar, PodDetail, ReplicationControllerDetail} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Subscription} from 'rxjs/Subscription';
-import {KdStateService} from '../../../../common/services/global/state';
 
+import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
+import {KdStateService} from '../../../../common/services/global/state';
 import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
 import {NamespacedResourceService} from '../../../../common/services/resource/resource';
 import {nodeState} from '../../../cluster/node/state';
@@ -38,7 +39,7 @@ export class ReplicationControllerDetailComponent implements OnInit, OnDestroy {
   constructor(
       private readonly replicationController_:
           NamespacedResourceService<ReplicationControllerDetail>,
-      private readonly state_: StateService) {}
+      private readonly actionbar_: ActionbarService, private readonly state_: StateService) {}
 
   ngOnInit(): void {
     this.name_ = this.state_.params.resourceName;
@@ -56,6 +57,8 @@ export class ReplicationControllerDetailComponent implements OnInit, OnDestroy {
             .startWith({})
             .subscribe((d: ReplicationControllerDetail) => {
               this.replicationController = d;
+              this.actionbar_.onInit.emit(
+                  new ResourceMeta('Replication Controller', d.objectMeta, d.typeMeta));
               this.isInitialized = true;
             });
   }

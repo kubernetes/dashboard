@@ -14,18 +14,27 @@
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
+import {DefaultDetailsActionbar} from '../../../../common/components/actionbars/defaultdetail/component';
 import {addNamespacedResourceStateParamsToUrl} from '../../../../common/params/params';
 import {stateName, stateUrl} from '../state';
+
 import {DeploymentDetailComponent} from './component';
 
 export const deploymentDetailState: Ng2StateDeclaration = {
   name: `${stateName}.detail`,
   url: addNamespacedResourceStateParamsToUrl(stateUrl),
-  component: DeploymentDetailComponent,
   data: {
     kdBreadcrumbs: {
       label: 'resourceName',
       parent: 'deployment.list',
     },
+  },
+  views: {
+    '$default': {
+      component: DeploymentDetailComponent,
+    },
+    'actionbar@chrome': {
+      component: DefaultDetailsActionbar,
+    }
   },
 };

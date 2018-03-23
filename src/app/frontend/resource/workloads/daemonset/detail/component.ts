@@ -17,6 +17,7 @@ import {DaemonSetDetail, EnvVar, PodDetail} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Subscription} from 'rxjs/Subscription';
 
+import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
 import {KdStateService} from '../../../../common/services/global/state';
 import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
 import {NamespacedResourceService} from '../../../../common/services/resource/resource';
@@ -37,7 +38,7 @@ export class DaemonSetDetailComponent implements OnInit, OnDestroy {
 
   constructor(
       private readonly daemonSet_: NamespacedResourceService<DaemonSetDetail>,
-      private readonly state_: StateService) {}
+      private readonly actionbar_: ActionbarService, private readonly state_: StateService) {}
 
   ngOnInit(): void {
     this.name_ = this.state_.params.resourceName;
@@ -53,6 +54,7 @@ export class DaemonSetDetailComponent implements OnInit, OnDestroy {
             .startWith({})
             .subscribe((d: DaemonSetDetail) => {
               this.daemonSet = d;
+              this.actionbar_.onInit.emit(new ResourceMeta('Daemon Set', d.objectMeta, d.typeMeta));
               this.isInitialized = true;
             });
   }

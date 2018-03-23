@@ -16,8 +16,9 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {StatefulSetDetail} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Subscription} from 'rxjs/Subscription';
-import {KdStateService} from '../../../../common/services/global/state';
 
+import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
+import {KdStateService} from '../../../../common/services/global/state';
 import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
 import {NamespacedResourceService} from '../../../../common/services/resource/resource';
 
@@ -35,7 +36,7 @@ export class StatefulSetDetailComponent implements OnInit, OnDestroy {
 
   constructor(
       private readonly seatefulSet_: NamespacedResourceService<StatefulSetDetail>,
-      private readonly state_: StateService, private readonly kdState_: KdStateService) {}
+      private readonly actionbar_: ActionbarService, private readonly state_: StateService) {}
 
   ngOnInit(): void {
     this.statefulSetName_ = this.state_.params.resourceName;
@@ -51,6 +52,8 @@ export class StatefulSetDetailComponent implements OnInit, OnDestroy {
             .startWith({})
             .subscribe((d: StatefulSetDetail) => {
               this.statefulSet = d;
+              this.actionbar_.onInit.emit(
+                  new ResourceMeta('Stateful Set', d.objectMeta, d.typeMeta));
               this.isInitialized = true;
             });
   }

@@ -13,18 +13,28 @@
 // limitations under the License.
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
+
+import {DefaultDetailsActionbar} from '../../../../common/components/actionbars/defaultdetail/component';
 import {addNamespacedResourceStateParamsToUrl} from '../../../../common/params/params';
 import {stateName, stateUrl} from '../state';
+
 import {CronJobDetailComponent} from './component';
 
 export const cronJobDetailState: Ng2StateDeclaration = {
   name: `${stateName}.detail`,
   url: addNamespacedResourceStateParamsToUrl(stateUrl),
-  component: CronJobDetailComponent,
   data: {
     kdBreadcrumbs: {
       label: 'resourceName',
       parent: 'cronjob.list',
     },
+  },
+  views: {
+    '$default': {
+      component: CronJobDetailComponent,
+    },
+    'actionbar@chrome': {
+      component: DefaultDetailsActionbar,
+    }
   },
 };

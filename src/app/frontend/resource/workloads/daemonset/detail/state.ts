@@ -13,18 +13,28 @@
 // limitations under the License.
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
+
+import {DefaultDetailsActionbar} from '../../../../common/components/actionbars/defaultdetail/component';
 import {addNamespacedResourceStateParamsToUrl} from '../../../../common/params/params';
 import {stateName, stateUrl} from '../state';
+
 import {DaemonSetDetailComponent} from './component';
 
 export const daemonSetDetailState: Ng2StateDeclaration = {
   name: `${stateName}.detail`,
   url: addNamespacedResourceStateParamsToUrl(stateUrl),
-  component: DaemonSetDetailComponent,
   data: {
     kdBreadcrumbs: {
       label: 'resourceName',
       parent: 'daemonset.list',
     },
+  },
+  views: {
+    '$default': {
+      component: DaemonSetDetailComponent,
+    },
+    'actionbar@chrome': {
+      component: DefaultDetailsActionbar,
+    }
   },
 };

@@ -16,6 +16,8 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {DeploymentDetail} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Subscription} from 'rxjs/Subscription';
+
+import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
 import {KdStateService} from '../../../../common/services/global/state';
 import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
 import {NamespacedResourceService} from '../../../../common/services/resource/resource';
@@ -34,7 +36,8 @@ export class DeploymentDetailComponent implements OnInit, OnDestroy {
 
   constructor(
       private readonly deployment_: NamespacedResourceService<DeploymentDetail>,
-      private readonly state_: StateService, private readonly kdState_: KdStateService) {}
+      private readonly state_: StateService, private readonly actionbar_: ActionbarService,
+      private readonly kdState_: KdStateService) {}
 
   ngOnInit(): void {
     this.deploymentName_ = this.state_.params.resourceName;
@@ -49,6 +52,7 @@ export class DeploymentDetailComponent implements OnInit, OnDestroy {
             .startWith({})
             .subscribe((d: DeploymentDetail) => {
               this.deployment = d;
+              this.actionbar_.onInit.emit(new ResourceMeta('Deployment', d.objectMeta, d.typeMeta));
               this.isInitialized = true;
             });
   }

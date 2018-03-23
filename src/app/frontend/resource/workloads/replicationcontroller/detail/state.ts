@@ -14,6 +14,7 @@
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
+import {DefaultDetailsActionbar} from '../../../../common/components/actionbars/defaultdetail/component';
 import {addNamespacedResourceStateParamsToUrl} from '../../../../common/params/params';
 import {stateName, stateUrl} from '../state';
 
@@ -22,11 +23,18 @@ import {ReplicationControllerDetailComponent} from './component';
 export const replicationControllerDetailState: Ng2StateDeclaration = {
   name: `${stateName}.detail`,
   url: addNamespacedResourceStateParamsToUrl(stateUrl),
-  component: ReplicationControllerDetailComponent,
   data: {
     kdBreadcrumbs: {
       label: 'resourceName',
       parent: 'replicationcontroller.list',
     },
+  },
+  views: {
+    '$default': {
+      component: ReplicationControllerDetailComponent,
+    },
+    'actionbar@chrome': {
+      component: DefaultDetailsActionbar,
+    }
   },
 };
