@@ -36,7 +36,8 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
   eventListEndpoint: string;
 
   constructor(
-      private readonly node_: ResourceService<NodeDetail>, private readonly state_: StateService) {}
+      private readonly node_: ResourceService<NodeDetail>,
+      private readonly actionbar_: ActionbarService, private readonly state_: StateService) {}
 
   ngOnInit(): void {
     this.nodeName_ = this.state_.params.resourceName;
@@ -48,6 +49,7 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
         this.node_.get(EndpointManager.resource(Resource.node).detail(), this.nodeName_)
             .subscribe((d: NodeDetail) => {
               this.node = d;
+              this.actionbar_.onInit.emit(new ResourceMeta('Node', d.objectMeta, d.typeMeta));
               this.isInitialized = true;
             });
   }

@@ -18,9 +18,21 @@ limitations under the License.
 <mat-dialog-content class="kd-dialog-text">
   <span>Are you sure you want to delete {{data.displayName}} <i>{{data.objectMeta.name}}</i></span>
   <span *ngIf="data.objectMeta.namespace">
-    &nbsp;in namespace <i>{{data.objectMeta.namespace}}</i>&nbsp;
+    &nbsp;in namespace <i>{{data.objectMeta.namespace}}</i>
   </span>
   <span>?</span>
+  <div class="kd-equivalent-block kd-muted kd-bg-card-dark"
+       fxLayoutAlign=" center">
+    <mat-icon>info</mat-icon>
+    <div>
+      <span>This action is equivalent to:</span>
+      <code>
+        <ng-container>kubectl delete </ng-container>
+        <ng-container *ngIf="data.objectMeta.namespace">-n {{data.objectMeta.namespace}}</ng-container>
+        <ng-container>{{data.typeMeta.kind}} {{data.objectMeta.name}}</ng-container>
+      </code>
+    </div>
+  </div>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button

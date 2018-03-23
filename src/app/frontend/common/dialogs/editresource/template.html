@@ -19,6 +19,14 @@ limitations under the License.
   <kd-text-input [(text)]="rawJson"
                  [prettify]="false"
                  mode="json"></kd-text-input>
+  <div class="kd-equivalent-block kd-muted kd-bg-card-dark"
+       fxLayoutAlign=" center">
+    <mat-icon>info</mat-icon>
+    <div>
+      <span>This action is equivalent to:</span>
+      <code>kubectl apply -f &lt;spec.yaml&gt;</code>
+    </div>
+  </div>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button

@@ -30,6 +30,7 @@
   $accent: mat-color($accent-palette);
   $background: mat-color($background-palette, background);
   $card-background: mat-color($background-palette, card);
+  $card-background-dark: darken($card-background, 5%);
   $success: mat-color($warn-palette, lighter);
   $warning: mat-color($warn-palette);
   $error: mat-color($warn-palette, darker);
@@ -51,7 +52,7 @@
   }
 
   code {
-    background-color: darken(mat-color($background-palette, card), 5%);
+    background-color: $card-background-dark;
   }
 
   * {
@@ -124,6 +125,10 @@
 
   .kd-loading-shade {
     background: $border;
+  }
+
+  .kd-bg-card-dark {
+    background-color: $card-background-dark;
   }
 
   .kd-border {

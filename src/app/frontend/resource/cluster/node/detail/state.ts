@@ -14,6 +14,7 @@
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
+import {DefaultDetailsActionbar} from '../../../../common/components/actionbars/defaultdetail/component';
 import {addResourceStateParamsToUrl} from '../../../../common/params/params';
 import {stateName, stateUrl} from '../state';
 
@@ -28,5 +29,13 @@ export const nodeDetailState: Ng2StateDeclaration = {
       label: 'resourceName',
       parent: 'node.list',
     },
+  },
+  views: {
+    '$default': {
+      component: NodeDetailComponent,
+    },
+    'actionbar@chrome': {
+      component: DefaultDetailsActionbar,
+    }
   },
 };
