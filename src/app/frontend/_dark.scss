@@ -95,8 +95,15 @@ $kd-dark-theme: mat-dark-theme($kd-dark-theme-primary, $kd-dark-theme-accent, $k
   @include angular-material-theme($kd-dark-theme);
   @include kd-theme($kd-dark-theme);
 
+  $accent-palette: map-get($kd-dark-theme, accent);
+  $accent: mat-color($accent-palette);
+
   .kd-toolbar-logo-text,
   .kd-primary-toolbar-icon {
     filter: brightness(100);
+  }
+
+  .kd-cross-line-primary {
+    stroke: $accent;
   }
 }

@@ -214,4 +214,12 @@
   .kd-namespace-select-input-border {
     border-bottom: 1px solid $border !important;
   }
+
+  .kd-cross-line-primary {
+    stroke: $primary;
+  }
+
+  .kd-cross-outline {
+    stroke: $background;
+  }
 }
