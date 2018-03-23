@@ -14,6 +14,7 @@
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
+import {DefaultDetailsActionbar} from '../../../../common/components/actionbars/defaultdetail/component';
 import {addNamespacedResourceStateParamsToUrl} from '../../../../common/params/params';
 import {stateName, stateUrl} from '../state';
 
@@ -22,11 +23,18 @@ import {SecretDetailComponent} from './component';
 export const secretDetailState: Ng2StateDeclaration = {
   name: `${stateName}.detail`,
   url: addNamespacedResourceStateParamsToUrl(stateUrl),
-  component: SecretDetailComponent,
   data: {
     kdBreadcrumbs: {
       label: 'resourceName',
       parent: 'secret.list',
     },
+  },
+  views: {
+    '$default': {
+      component: SecretDetailComponent,
+    },
+    'actionbar@chrome': {
+      component: DefaultDetailsActionbar,
+    }
   },
 };

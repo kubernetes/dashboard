@@ -17,6 +17,7 @@ import {ServiceDetail} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Subscription} from 'rxjs/Subscription';
 
+import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
 import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
 import {NamespacedResourceService} from '../../../../common/services/resource/resource';
 
@@ -32,7 +33,7 @@ export class ServiceDetailComponent implements OnInit, OnDestroy {
 
   constructor(
       private readonly service_: NamespacedResourceService<ServiceDetail>,
-      private readonly state_: StateService) {}
+      private readonly actionbar_: ActionbarService, private readonly state_: StateService) {}
 
   ngOnInit(): void {
     this.serviceName_ = this.state_.params.resourceName;
@@ -42,6 +43,7 @@ export class ServiceDetailComponent implements OnInit, OnDestroy {
             .startWith({})
             .subscribe((d: ServiceDetail) => {
               this.service = d;
+              this.actionbar_.onInit.emit(new ResourceMeta('Service', d.objectMeta, d.typeMeta));
               this.isInitialized = true;
             });
   }

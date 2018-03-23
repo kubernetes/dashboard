@@ -17,6 +17,7 @@ import {ConfigMapDetail} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Subscription} from 'rxjs/Subscription';
 
+import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
 import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
 import {NamespacedResourceService} from '../../../../common/services/resource/resource';
 
@@ -32,7 +33,7 @@ export class ConfigMapDetailComponent implements OnInit, OnDestroy {
 
   constructor(
       private readonly configMap_: NamespacedResourceService<ConfigMapDetail>,
-      private readonly state_: StateService) {}
+      private readonly actionbar_: ActionbarService, private readonly state_: StateService) {}
 
   ngOnInit(): void {
     this.configMapName_ = this.state_.params.resourceName;
@@ -42,6 +43,7 @@ export class ConfigMapDetailComponent implements OnInit, OnDestroy {
             .startWith({})
             .subscribe((d: ConfigMapDetail) => {
               this.configMap = d;
+              this.actionbar_.onInit.emit(new ResourceMeta('Config Map', d.objectMeta, d.typeMeta));
               this.isInitialized = true;
             });
   }

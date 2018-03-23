@@ -14,6 +14,7 @@
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
+import {DefaultDetailsActionbar} from '../../../../common/components/actionbars/defaultdetail/component';
 import {addNamespacedResourceStateParamsToUrl} from '../../../../common/params/params';
 import {stateName, stateUrl} from '../state';
 
@@ -22,11 +23,18 @@ import {IngressDetailComponent} from './component';
 export const ingressDetailState: Ng2StateDeclaration = {
   name: `${stateName}.detail`,
   url: addNamespacedResourceStateParamsToUrl(stateUrl),
-  component: IngressDetailComponent,
   data: {
     kdBreadcrumbs: {
       label: 'resourceName',
       parent: 'ingress.list',
     },
+  },
+  views: {
+    '$default': {
+      component: IngressDetailComponent,
+    },
+    'actionbar@chrome': {
+      component: DefaultDetailsActionbar,
+    }
   },
 };

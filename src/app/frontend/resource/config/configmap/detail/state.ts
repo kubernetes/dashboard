@@ -14,6 +14,7 @@
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
+import {DefaultDetailsActionbar} from '../../../../common/components/actionbars/defaultdetail/component';
 import {addNamespacedResourceStateParamsToUrl} from '../../../../common/params/params';
 import {stateName, stateUrl} from '../state';
 
@@ -22,11 +23,18 @@ import {ConfigMapDetailComponent} from './component';
 export const configMapDetailState: Ng2StateDeclaration = {
   name: `${stateName}.detail`,
   url: addNamespacedResourceStateParamsToUrl(stateUrl),
-  component: ConfigMapDetailComponent,
   data: {
     kdBreadcrumbs: {
       label: 'resourceName',
       parent: 'configmap.list',
     },
+  },
+  views: {
+    '$default': {
+      component: ConfigMapDetailComponent,
+    },
+    'actionbar@chrome': {
+      component: DefaultDetailsActionbar,
+    }
   },
 };
