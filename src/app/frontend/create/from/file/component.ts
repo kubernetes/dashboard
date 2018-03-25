@@ -12,27 +12,34 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {NgForm} from '@angular/forms';
+import {KdFile} from '@api/frontendapi';
 import {HistoryService} from '../../../common/services/global/history';
 import {NamespaceService} from '../../../common/services/global/namespace';
 import {overviewState} from '../../../overview/state';
 import {CreateService} from '../../service';
 
 @Component(
-    {selector: 'kd-create-from-input', templateUrl: './template.html', styleUrls: ['./style.scss']})
-export class CreateFromInputComponent {
-  inputData: string;
+    {selector: 'kd-create-from-file', templateUrl: './template.html', styleUrls: ['./style.scss']})
+export class CreateFromFileComponent {
+  @ViewChild(NgForm) private ngForm: NgForm;
+  file: KdFile;
 
   constructor(
       private readonly namespace_: NamespaceService, private readonly create_: CreateService,
       private readonly history_: HistoryService) {}
 
   isCreateDisabled(): boolean {
-    return !this.inputData || this.inputData.length === 0 || this.create_.isDeployDisabled();
+    return !this.file || this.file.content.length === 0 || this.create_.isDeployDisabled();
   }
 
   create(): void {
-    this.create_.createContent(this.inputData);
+    this.create_.createContent(this.file.content, true, this.file.name);
+  }
+
+  onFileLoad(file: KdFile): void {
+    this.file = file;
   }
 
   cancel(): void {

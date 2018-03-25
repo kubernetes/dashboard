@@ -19,6 +19,7 @@ import {ComponentsModule} from '../common/components/module';
 import {SharedModule} from '../shared.module';
 
 import {CreateComponent} from './component';
+import {CreateFromFileComponent} from './from/file/component';
 import {CreateFromInputComponent} from './from/input/component';
 import {CreateService} from './service';
 import {createState} from './state';
@@ -29,7 +30,7 @@ import {createState} from './state';
     ComponentsModule,
     UIRouterModule.forChild({states: [createState]}),
   ],
-  declarations: [CreateComponent, CreateFromInputComponent],
+  declarations: [CreateComponent, CreateFromInputComponent, CreateFromFileComponent],
   providers: [CreateService]
 })
 export class CreateModule {}
