@@ -23,7 +23,7 @@ import {CreateService} from '../../service';
 @Component(
     {selector: 'kd-create-from-file', templateUrl: './template.html', styleUrls: ['./style.scss']})
 export class CreateFromFileComponent {
-  @ViewChild(NgForm) private ngForm: NgForm;
+  @ViewChild(NgForm) private readonly ngForm: NgForm;
   file: KdFile;
 
   constructor(
