@@ -42,7 +42,7 @@ limitations under the License.
     <kd-property *ngIf="persistentVolume?.storageClass">
       <div key>Storage class</div>
       <div value>
-        <kd-chips [map]="persistentVolume.storageClass"></kd-chips>
+        <div value>{{persistentVolume.storageClass}}</div>
       </div>
     </kd-property>
 
