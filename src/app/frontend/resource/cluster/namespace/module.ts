@@ -19,6 +19,7 @@ import {ComponentsModule} from '../../../common/components/module';
 import {ResourceModule} from '../../../common/services/resource/module';
 import {SharedModule} from '../../../shared.module';
 
+import {ActionbarComponent} from './detail/actionbar/component';
 import {NamespaceDetailComponent} from './detail/component';
 import {namespaceDetailState} from './detail/state';
 import {NamespaceListComponent} from './list/component';
@@ -38,6 +39,6 @@ import {namespaceState} from './state';
       ]
     }),
   ],
-  declarations: [NamespaceListComponent, NamespaceDetailComponent],
+  declarations: [NamespaceListComponent, NamespaceDetailComponent, ActionbarComponent],
 })
 export class NamespaceModule {}

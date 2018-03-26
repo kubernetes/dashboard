@@ -14,9 +14,12 @@
 
 import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
+
 import {ComponentsModule} from '../../../common/components/module';
 import {ResourceModule} from '../../../common/services/resource/module';
 import {SharedModule} from '../../../shared.module';
+
+import {ActionbarComponent} from './detail/actionbar/component';
 import {DaemonSetDetailComponent} from './detail/component';
 import {daemonSetDetailState} from './detail/state';
 import {DaemonSetList} from './list/component';
@@ -30,6 +33,6 @@ import {daemonSetState} from './state';
     ResourceModule,
     UIRouterModule.forChild({states: [daemonSetState, daemonSetListState, daemonSetDetailState]}),
   ],
-  declarations: [DaemonSetList, DaemonSetDetailComponent],
+  declarations: [DaemonSetList, DaemonSetDetailComponent, ActionbarComponent],
 })
 export class DaemonSetModule {}

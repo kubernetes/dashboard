@@ -14,7 +14,7 @@
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
-import {DefaultDetailsActionbar} from '../../../../common/components/actionbars/defaultdetail/component';
+import {ScaleableResourceDetailActionbar} from '../../../../common/components/actionbars/scaleableresourcedetail/component';
 import {addNamespacedResourceStateParamsToUrl} from '../../../../common/params/params';
 import {stateName, stateUrl} from '../state';
 
@@ -34,7 +34,7 @@ export const replicationControllerDetailState: Ng2StateDeclaration = {
       component: ReplicationControllerDetailComponent,
     },
     'actionbar@chrome': {
-      component: DefaultDetailsActionbar,
+      component: ScaleableResourceDetailActionbar,
     }
   },
 };

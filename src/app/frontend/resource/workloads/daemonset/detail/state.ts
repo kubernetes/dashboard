@@ -14,10 +14,10 @@
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
-import {DefaultDetailsActionbar} from '../../../../common/components/actionbars/defaultdetail/component';
 import {addNamespacedResourceStateParamsToUrl} from '../../../../common/params/params';
 import {stateName, stateUrl} from '../state';
 
+import {ActionbarComponent} from './actionbar/component';
 import {DaemonSetDetailComponent} from './component';
 
 export const daemonSetDetailState: Ng2StateDeclaration = {
@@ -34,7 +34,7 @@ export const daemonSetDetailState: Ng2StateDeclaration = {
       component: DaemonSetDetailComponent,
     },
     'actionbar@chrome': {
-      component: DefaultDetailsActionbar,
+      component: ActionbarComponent,
     }
   },
 };

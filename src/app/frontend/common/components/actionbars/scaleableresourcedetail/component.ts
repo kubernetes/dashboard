@@ -13,24 +13,19 @@
 // limitations under the License.
 
 import {Component, OnInit} from '@angular/core';
-import {StateService} from '@uirouter/core';
 import {Subscription} from 'rxjs/Subscription';
-
-import {overviewState} from '../../../../overview/state';
-import {NAMESPACE_STATE_PARAM} from '../../../params/params';
 import {ActionbarService, ResourceMeta} from '../../../services/global/actionbar';
 
 @Component({
   selector: '',
   templateUrl: './template.html',
 })
-export class NamespaceDetailsActionbar implements OnInit {
+export class ScaleableResourceDetailActionbar implements OnInit {
   isInitialized = false;
   resourceMeta: ResourceMeta;
   resourceMetaSubscription_: Subscription;
 
-  constructor(
-      private readonly actionbar_: ActionbarService, private readonly state_: StateService) {}
+  constructor(private readonly actionbar_: ActionbarService) {}
 
   ngOnInit(): void {
     this.resourceMetaSubscription_ =
@@ -44,9 +39,11 @@ export class NamespaceDetailsActionbar implements OnInit {
     this.resourceMetaSubscription_.unsubscribe();
   }
 
-  onClick(): void {
-    this.state_.go(overviewState.name, {
-      [NAMESPACE_STATE_PARAM]: this.resourceMeta.objectMeta.name,
-    })
+  viewLogs(): void {
+    // TODO
+  }
+
+  scale(): void {
+    // TODO
   }
 }
