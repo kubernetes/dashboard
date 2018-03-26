@@ -51,7 +51,7 @@ export class SearchStateParams extends StateParams {
 }
 
 export class ErrorStateParams extends KdStateParams {
-  constructor(public error: KdError|K8sError, resourceNamespace: string) {
+  constructor(public error: KdError, resourceNamespace: string) {
     super(resourceNamespace);
   }
 }

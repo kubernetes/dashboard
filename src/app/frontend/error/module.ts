@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
+import {ErrorHandler, NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
 
 import {ComponentsModule} from '../common/components/module';
 import {NavServiceModule} from '../common/services/nav/module';
 import {SharedModule} from '../shared.module';
-
 import {ErrorComponent} from './component';
+import {GlobalErrorHandler} from './handler';
 import {errorState} from './state';
 
 @NgModule({
@@ -29,6 +29,7 @@ import {errorState} from './state';
     NavServiceModule,
     UIRouterModule.forChild({states: [errorState]}),
   ],
+  providers: [{provide: ErrorHandler, useClass: GlobalErrorHandler}],
   declarations: [ErrorComponent],
 })
 export class ErrorModule {}

@@ -28,13 +28,15 @@ export class PolicyRuleListComponent implements OnInit {
     // Timeout to make sure that input variables are available.
     setTimeout(() => {
       // Filter out empty api groups.
-      this.rules.forEach(rule => {
-        if (rule.apiGroups) {
-          rule.apiGroups = rule.apiGroups.filter(group => {
-            return group.length > 0;
-          });
-        }
-      });
+      if (this.rules) {
+        this.rules.forEach(rule => {
+          if (rule.apiGroups) {
+            rule.apiGroups = rule.apiGroups.filter(group => {
+              return group.length > 0;
+            });
+          }
+        });
+      }
     }, 0);
   }
 
