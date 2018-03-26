@@ -62,11 +62,11 @@ export function configureRouter(router: UIRouter): void {
   // Register custom state service to hook state transitions
   transitionService.onBefore({}, (transition) => {
     const kdStateService = transition.injector().get(KdStateService);
-    kdStateService.onBefore.emit(true);
+    kdStateService.onBefore.emit(transition);
   });
 
   transitionService.onSuccess({}, (transition) => {
     const kdStateService = transition.injector().get(KdStateService);
-    kdStateService.onSuccess.emit(true);
+    kdStateService.onSuccess.emit(transition);
   });
 }
