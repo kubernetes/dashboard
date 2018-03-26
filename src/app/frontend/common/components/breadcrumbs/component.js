@@ -145,7 +145,7 @@ class BreadcrumbsController {
 }
 
 /**
- * Returns breadcrumbs component. Should be used only withing actionbar component.
+ * Returns breadcrumbs component. Should be used only within actionbar component.
  *
  * In order to define custom label for the state add: `'kdBreadcrumbs':{'label':'myLabel'}`
  * to the state config. This label will be used instead of default state name when displaying
