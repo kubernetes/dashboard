@@ -15,7 +15,10 @@ limitations under the License.
 -->
 
 <mat-menu #actions="matMenu">
-  <button mat-menu-item>Placeholder</button>
+  <button mat-menu-item
+          (click)="onEdit()">Edit</button>
+  <button mat-menu-item
+          (click)="onDelete()">Delete</button>
 </mat-menu>
 
 <a mat-icon-button
