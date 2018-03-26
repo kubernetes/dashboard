@@ -15,13 +15,13 @@
 import {Component, OnInit} from '@angular/core';
 import {StateService} from '@uirouter/core';
 
-import {K8SError, KdError} from '../common/errors/errors';
+import {KdError} from '../common/errors/errors';
 import {ErrorStateParams} from '../common/params/params';
 import {NavService} from '../common/services/nav/service';
 
 @Component({selector: 'kd-error', templateUrl: './template.html', styleUrls: ['./style.scss']})
 export class ErrorComponent implements OnInit {
-  private error_: KdError|K8SError;
+  private error_: KdError;
   constructor(private readonly nav_: NavService, private readonly state_: StateService) {
     this.nav_.setVisibility(false);
   }
@@ -31,25 +31,16 @@ export class ErrorComponent implements OnInit {
   }
 
   getErrorStatus(): string {
-    if (this.error_ instanceof K8SError) {
-      return (this.error_ as K8SError).ErrStatus.status;
-    }
-
-    if (this.error_ instanceof KdError) {
-      const error = (this.error_ as KdError);
-      return `${error.status} (${error.code})`;
+    if (this.error_) {
+      return `${this.error_.status} (${this.error_.code})`;
     }
 
     return 'Unknown Error';
   }
 
   getErrorData(): string {
-    if (this.error_ instanceof K8SError) {
-      return (this.error_ as K8SError).ErrStatus.message;
-    }
-
-    if (this.error_ instanceof KdError) {
-      return (this.error_ as KdError).message;
+    if (this.error_) {
+      return this.error_.message;
     }
 
     return 'No error data available.';

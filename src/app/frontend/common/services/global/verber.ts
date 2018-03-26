@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {EventEmitter, Injectable} from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material';
 import {ObjectMeta, TypeMeta} from '@api/backendapi';
@@ -21,7 +21,6 @@ import {AlertDialog, AlertDialogConfig} from '../../dialogs/alert/dialog';
 import {DeleteResourceDialog} from '../../dialogs/deleteresource/dialog';
 import {EditResourceDialog} from '../../dialogs/editresource/dialog';
 import {RawResource} from '../../resources/rawresource';
-
 import {ResourceMeta} from './actionbar';
 
 @Injectable()
@@ -38,7 +37,7 @@ export class VerberService {
         const url = RawResource.getUrl(typeMeta, objectMeta);
         this.http_.delete(url).subscribe(() => {
           this.onDelete.emit(true);
-        }, this.handleErrorResponse_);
+        }, this.handleErrorResponse_.bind(this));
       }
     });
   }
@@ -50,7 +49,7 @@ export class VerberService {
         const url = RawResource.getUrl(typeMeta, objectMeta);
         this.http_.put(url, JSON.parse(result), {headers: this.getHttpHeaders_()}).subscribe(() => {
           this.onEdit.emit(true);
-        }, this.handleErrorResponse_);
+        }, this.handleErrorResponse_.bind(this));
       }
     });
   }
@@ -60,14 +59,14 @@ export class VerberService {
     return {width: '630px', data: {displayName, typeMeta, objectMeta}};
   }
 
-  handleErrorResponse_(err: Response): void {
+  handleErrorResponse_(err: HttpErrorResponse): void {
     if (err) {
       const alertDialogConfig: MatDialogConfig<AlertDialogConfig> = {
         width: '630px',
         data: {
-          title: err.statusText || 'Internal server error',
+          title: err.statusText === 'OK' ? 'Internal server error' : err.statusText,
           // TODO Add || this.localizerService_.localize(err.data).
-          message: 'Could not perform the operation',
+          message: err.error || 'Could not perform the resource.',
           confirmLabel: 'OK',
         }
       };
