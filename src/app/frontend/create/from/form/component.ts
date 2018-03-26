@@ -18,13 +18,13 @@ import {NamespaceService} from '../../../common/services/global/namespace';
 import {overviewState} from '../../../overview/state';
 import {CreateService} from '../../service';
 
+// TODO
 @Component(
     {selector: 'kd-create-from-form', templateUrl: './template.html', styleUrls: ['./style.scss']})
 export class CreateFromFormComponent {
   readonly namePattern = new RegExp('^[a-z]([-a-z0-9]*[a-z0-9])?$');
   readonly nameMaxLength = 24;
 
-  // Model
   name = '';
 
   constructor(

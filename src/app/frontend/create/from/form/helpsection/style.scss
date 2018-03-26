@@ -14,7 +14,7 @@
 
 @import "../../../../variables";
 
-// This rule is meant to align items only in the current layout (kd-help-section).
+// Align items only in the current layout (kd-help-section).
 .kd-help-section ::ng-deep > {
   * {
     flex: 1;
