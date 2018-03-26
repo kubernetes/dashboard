@@ -14,7 +14,7 @@
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
-import {DefaultDetailsActionbar} from '../../../../common/components/actionbars/defaultdetail/component';
+import {NamespaceDetailsActionbar} from '../../../../common/components/actionbars/namespacedetail/component';
 import {addResourceStateParamsToUrl} from '../../../../common/params/params';
 import {stateName, stateUrl} from '../state';
 
@@ -34,7 +34,7 @@ export const namespaceDetailState: Ng2StateDeclaration = {
       component: NamespaceDetailComponent,
     },
     'actionbar@chrome': {
-      component: DefaultDetailsActionbar,
+      component: NamespaceDetailsActionbar,
     }
   },
 };

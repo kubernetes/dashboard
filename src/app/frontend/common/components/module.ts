@@ -22,6 +22,7 @@ import {ActionbarDetailActionsComponent} from './actionbar/detailactions/compone
 import {ActionbarDetailDeleteComponent} from './actionbar/detailactions/delete/component';
 import {ActionbarDetailEditComponent} from './actionbar/detailactions/edit/component';
 import {DefaultDetailsActionbar} from './actionbars/defaultdetail/component';
+import {NamespaceDetailsActionbar} from './actionbars/namespacedetail/component';
 import {AllocationChartComponent} from './allocationchart/component';
 import {BreadcrumbsComponent} from './breadcrumbs/component';
 import {CardComponent} from './card/component';
@@ -130,6 +131,7 @@ import {ZeroStateComponent} from './zerostate/component';
     ActionbarDetailEditComponent,
     UploadFileComponent,
     DefaultDetailsActionbar,
+    NamespaceDetailsActionbar,
   ],
   exports: [
     AllocationChartComponent,
@@ -178,6 +180,7 @@ import {ZeroStateComponent} from './zerostate/component';
     ActionbarDetailEditComponent,
     UploadFileComponent,
     DefaultDetailsActionbar,
+    NamespaceDetailsActionbar,
   ],
   entryComponents: [
     ChipDialog,
