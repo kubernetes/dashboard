@@ -34,10 +34,9 @@ export class HistoryService {
   }
 
   /**
-   * Goes back to previous state or to the provided default if none set.
-   * @param {string} defaultState
+   * Goes back to previous state or to the provided defaultState if none set.
    */
-  back(defaultState?: string): TransitionPromise {
+  goBack(defaultState: string): TransitionPromise {
     let targetState = this.previousStateName || defaultState;
 
     // If previous state is same as current state then go to default state to avoid loop.
