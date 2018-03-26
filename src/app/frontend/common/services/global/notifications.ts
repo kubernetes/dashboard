@@ -57,6 +57,14 @@ export class NotificationsService {
     this.notifications_ = [new Notification(message, severity), ...this.notifications_];
   }
 
+  pushErrors(errors: K8sError[]): void {
+    if (errors) {
+      errors.forEach(error => {
+        this.push(error.ErrStatus.message, NotificationSeverity.error);
+      });
+    }
+  }
+
   remove(index: number): void {
     this.notifications_.splice(index, 1);
   }

@@ -18,6 +18,7 @@ import {StateService} from '@uirouter/core';
 import {Subscription} from 'rxjs/Subscription';
 
 import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
+import {NotificationsService} from '../../../../common/services/global/notifications';
 import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
 import {ResourceService} from '../../../../common/services/resource/resource';
 
@@ -34,7 +35,8 @@ export class StorageClassDetailComponent implements OnInit, OnDestroy {
 
   constructor(
       private readonly storageClass_: ResourceService<StorageClassDetail>,
-      private readonly actionbar_: ActionbarService, private readonly state_: StateService) {}
+      private readonly actionbar_: ActionbarService, private readonly state_: StateService,
+      private readonly notifications_: NotificationsService) {}
 
   ngOnInit(): void {
     this.storageClassName_ = this.state_.params.resourceName;
@@ -43,6 +45,7 @@ export class StorageClassDetailComponent implements OnInit, OnDestroy {
             .get(EndpointManager.resource(Resource.storageClass).detail(), this.storageClassName_)
             .subscribe((d: StorageClassDetail) => {
               this.storageClass = d;
+              this.notifications_.pushErrors(d.errors);
               this.actionbar_.onInit.emit(
                   new ResourceMeta('Storage Class', d.objectMeta, d.typeMeta));
               this.isInitialized = true;

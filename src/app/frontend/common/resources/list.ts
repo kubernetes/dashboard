@@ -87,7 +87,7 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
                     return this.getResourceObservable(this.getDataSelectParams_());
                   }))
             .subscribe((data: T) => {
-              this.pushErrorNotifications_(data.errors);
+              this.notifications_.pushErrors(data.errors);
               this.totalItems = data.listMeta.totalItems;
               this.isLoading = false;
               this.data_.data = this.map(data);
@@ -290,14 +290,6 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
     }
 
     this.onChange.emit(emitValue);
-  }
-
-  private pushErrorNotifications_(errors: K8sError[]): void {
-    if (errors) {
-      errors.forEach(error => {
-        this.notifications_.push(`${error.ErrStatus.message}`, NotificationSeverity.error);
-      });
-    }
   }
 
   protected abstract getDisplayColumns(): string[];

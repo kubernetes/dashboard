@@ -36,24 +36,9 @@ export class VerberService {
     this.dialog_.open(DeleteResourceDialog, dialogConfig).afterClosed().subscribe((doDelete) => {
       if (doDelete) {
         const url = RawResource.getUrl(typeMeta, objectMeta);
-        this.http_.delete(url).subscribe(
-            () => {
-              this.onDelete.emit(true);
-            },
-            (err) => {
-              if (err) {
-                const alertDialogConfig: MatDialogConfig<AlertDialogConfig> = {
-                  width: '630px',
-                  data: {
-                    title: err.statusText || 'Internal server error',
-                    // TODO Add || this.localizerService_.localize(err.data).
-                    message: 'Could not delete the resource',
-                    confirmLabel: 'OK',
-                  }
-                };
-                this.dialog_.open(AlertDialog, alertDialogConfig);
-              }
-            });
+        this.http_.delete(url).subscribe(() => {
+          this.onDelete.emit(true);
+        }, this.handleErrorResponse_);
       }
     });
   }
@@ -63,41 +48,37 @@ export class VerberService {
     this.dialog_.open(EditResourceDialog, dialogConfig).afterClosed().subscribe((result) => {
       if (result) {
         const url = RawResource.getUrl(typeMeta, objectMeta);
-        const headers = new HttpHeaders();
-        headers.set('Content-Type', 'application/json');
-        headers.set('Accept', 'application/json');
-        this.http_.put(url, JSON.parse(result), {headers})
-            .subscribe(
-                () => {
-                  this.onEdit.emit(true);
-                },
-                (err) => {
-                  if (err) {
-                    const alertDialogConfig: MatDialogConfig<AlertDialogConfig> = {
-                      width: '630px',
-                      data: {
-                        title: err.statusText || 'Internal server error',
-                        // TODO Add || this.localizerService_.localize(err.data).
-                        message: 'Could not edit the resource',
-                        confirmLabel: 'OK',
-                      }
-                    };
-                    this.dialog_.open(AlertDialog, alertDialogConfig);
-                  }
-                });
+        this.http_.put(url, JSON.parse(result), {headers: this.getHttpHeaders_()}).subscribe(() => {
+          this.onEdit.emit(true);
+        }, this.handleErrorResponse_);
       }
     });
   }
 
   getDialogConfig_(displayName: string, typeMeta: TypeMeta, objectMeta: ObjectMeta):
       MatDialogConfig<ResourceMeta> {
-    return {
-      width: '630px',
-      data: {
-        displayName,
-        typeMeta,
-        objectMeta,
-      }
-    };
+    return {width: '630px', data: {displayName, typeMeta, objectMeta}};
+  }
+
+  handleErrorResponse_(err: Response): void {
+    if (err) {
+      const alertDialogConfig: MatDialogConfig<AlertDialogConfig> = {
+        width: '630px',
+        data: {
+          title: err.statusText || 'Internal server error',
+          // TODO Add || this.localizerService_.localize(err.data).
+          message: 'Could not perform the operation',
+          confirmLabel: 'OK',
+        }
+      };
+      this.dialog_.open(AlertDialog, alertDialogConfig);
+    }
+  }
+
+  getHttpHeaders_(): HttpHeaders {
+    const headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json');
+    headers.set('Accept', 'application/json');
+    return headers;
   }
 }

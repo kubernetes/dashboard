@@ -19,6 +19,7 @@ import {StateService} from '@uirouter/core';
 import {Subscription} from 'rxjs/Subscription';
 
 import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
+import {NotificationsService} from '../../../../common/services/global/notifications';
 import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
 import {ResourceService} from '../../../../common/services/resource/resource';
 
@@ -37,7 +38,8 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
 
   constructor(
       private readonly node_: ResourceService<NodeDetail>,
-      private readonly actionbar_: ActionbarService, private readonly state_: StateService) {}
+      private readonly actionbar_: ActionbarService, private readonly state_: StateService,
+      private readonly notifications_: NotificationsService) {}
 
   ngOnInit(): void {
     this.nodeName_ = this.state_.params.resourceName;
@@ -49,6 +51,7 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
         this.node_.get(EndpointManager.resource(Resource.node).detail(), this.nodeName_)
             .subscribe((d: NodeDetail) => {
               this.node = d;
+              this.notifications_.pushErrors(d.errors);
               this.actionbar_.onInit.emit(new ResourceMeta('Node', d.objectMeta, d.typeMeta));
               this.isInitialized = true;
             });
