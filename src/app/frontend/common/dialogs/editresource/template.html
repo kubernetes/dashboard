@@ -16,22 +16,28 @@ limitations under the License.
 
 <h2 mat-dialog-title>Edit a resource</h2>
 <mat-dialog-content class="kd-dialog-text">
-  <kd-text-input [(text)]="rawJson"
+  <mat-button-toggle-group #group="matButtonToggleGroup">
+    <mat-button-toggle [value]="modes.YAML"
+                       [checked]="true">YAML</mat-button-toggle>
+    <mat-button-toggle [value]="modes.JSON">JSON</mat-button-toggle>
+  </mat-button-toggle-group>
+
+  <kd-text-input [(text)]="text"
                  [prettify]="false"
-                 mode="json"></kd-text-input>
+                 [mode]="getSelectedMode()"></kd-text-input>
   <div class="kd-equivalent-block kd-muted kd-bg-card-dark"
        fxLayoutAlign=" center">
     <mat-icon>info</mat-icon>
     <div>
       <span>This action is equivalent to:</span>
-      <code>kubectl apply -f &lt;spec.yaml&gt;</code>
+      <code>kubectl apply -f &lt;spec.json&gt;</code>
     </div>
   </div>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button
           color="primary"
-          [mat-dialog-close]="rawJson">Update</button>
+          [mat-dialog-close]="getJSON()">Update</button>
   <button mat-button
           color="primary"
           [mat-dialog-close]="false">Cancel</button>

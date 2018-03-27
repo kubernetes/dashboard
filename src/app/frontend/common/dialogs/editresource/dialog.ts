@@ -13,18 +13,28 @@
 // limitations under the License.
 
 import {HttpClient} from '@angular/common/http';
-import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {MAT_DIALOG_DATA, MatButtonToggleGroup, MatDialogRef} from '@angular/material';
+import {dump as toYaml, load as fromYaml} from 'js-yaml';
 
 import {RawResource} from '../../resources/rawresource';
 import {ResourceMeta} from '../../services/global/actionbar';
+
+enum EditorMode {
+  JSON = 'json',
+  YAML = 'yaml',
+}
 
 @Component({
   selector: 'kd-delete-resource-dialog',
   templateUrl: 'template.html',
 })
 export class EditResourceDialog implements OnInit {
-  rawJson = '';
+  private selectedMode_ = EditorMode.YAML;
+
+  @ViewChild('group') buttonToggleGroup: MatButtonToggleGroup;
+  text = '';
+  modes = EditorMode;
 
   constructor(
       public dialogRef: MatDialogRef<EditResourceDialog>,
@@ -33,11 +43,43 @@ export class EditResourceDialog implements OnInit {
   ngOnInit(): void {
     const url = RawResource.getUrl(this.data.typeMeta, this.data.objectMeta);
     this.http_.get(url).toPromise().then((response) => {
-      this.rawJson = JSON.stringify(response, null, '\t');
+      this.text = toYaml(response);
+    });
+
+    this.buttonToggleGroup.valueChange.subscribe((selectedMode: EditorMode) => {
+      this.selectedMode_ = selectedMode;
+
+      if (this.text) {
+        this.updateText();
+      }
     });
   }
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  getJSON(): string {
+    if (this.selectedMode_ === EditorMode.YAML) {
+      return this.toRawJSON(fromYaml(this.text));
+    }
+
+    return this.text;
+  }
+
+  getSelectedMode(): string {
+    return this.buttonToggleGroup.value;
+  }
+
+  private updateText(): void {
+    if (this.selectedMode_ === EditorMode.YAML) {
+      this.text = toYaml(JSON.parse(this.text));
+    } else {
+      this.text = this.toRawJSON(fromYaml(this.text));
+    }
+  }
+
+  private toRawJSON(object: {}): string {
+    return JSON.stringify(object, null, '\t');
   }
 }

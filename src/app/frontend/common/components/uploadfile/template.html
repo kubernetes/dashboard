@@ -14,42 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<!--<div fxLayout="row"
-     fxLayoutAlign="space-between start">
-  <input matInput
-         id="fileinput"
-         type="file">
-  <div fxFlex>
-    <mat-input-container class="kd-upload-file-container">
-      <label>{{label}}</label>
-      <input matInput
-             id="textinput"
-             [(ngModel)]="fileName"
-             [readonly]="true"
-             required>
-    </mat-input-container>
-  </div>
-  <button mat-button
-          id="uploadButton"
-          color="primary"
-          class="kd-upload-button"
-          aria-label="attach_file">
-    <label class="kd-upload-label">
-      <mat-icon>more_horiz</mat-icon>
-    </label>
-  </button>
-</div>
--->
-
 <div fxLayout="row"
      fxLayoutAlign="space-between start">
-  <!--mat-input-container fxFlex>
+  <mat-form-field fxFlex>
     <input matInput
+           title="fileInput"
            [placeholder]="label"
            [ngModel]="filename"
            [readonly]="true"
            (click)="fileInput.click()" />
-  </mat-input-container-->
+  </mat-form-field>
   <button mat-button
           color="primary"
           (click)="fileInput.click()"
