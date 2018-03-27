@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Injectable, transition} from '@angular/core';
-import {RawParams, StateService, Transition, TransitionPromise, TransitionService} from '@uirouter/core';
+import {Injectable} from '@angular/core';
+import {RawParams, StateService, Transition, TransitionPromise} from '@uirouter/core';
 import {KdStateService} from './state';
 
 @Injectable()
