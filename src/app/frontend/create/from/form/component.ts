@@ -35,11 +35,10 @@ export class CreateFromFormComponent {
     return this.create_.isDeployDisabled();
   }
 
-  create(): void {
-  }
+  create(): void {}
 
   cancel(): void {
-    this.history_.back(overviewState.name);
+    this.history_.goToPreviousState(overviewState.name);
   }
 
   areMultipleNamespacesSelected(): boolean {

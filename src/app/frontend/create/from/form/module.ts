@@ -12,23 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { CommonModule } from "@angular/common";
-import { NgModule } from "@angular/core";
-import { ComponentsModule } from "../../../common/components/module";
-import { SharedModule } from "../../../shared.module";
-import { CreateFromFormComponent } from "./component";
-import { HelpSectionComponent } from "./helpsection/component";
-import { UserHelpComponent } from "./helpsection/userhelp/component";
-import { UniqueNameValidator } from "./uniquename.validator";
+import {CommonModule} from '@angular/common';
+import {NgModule} from '@angular/core';
+import {ComponentsModule} from '../../../common/components/module';
+import {SharedModule} from '../../../shared.module';
+import {CreateFromFormComponent} from './component';
+import {HelpSectionComponent} from './helpsection/component';
+import {UserHelpComponent} from './helpsection/userhelp/component';
+import {UniqueNameValidator} from './uniquename.validator';
 
 // TODO
 @NgModule({
-  declarations: [
-    HelpSectionComponent,
-    UserHelpComponent,
-    CreateFromFormComponent,
-    UniqueNameValidator
-  ],
+  declarations:
+      [HelpSectionComponent, UserHelpComponent, CreateFromFormComponent, UniqueNameValidator],
   imports: [CommonModule, SharedModule, ComponentsModule],
   exports: [CreateFromFormComponent],
 })

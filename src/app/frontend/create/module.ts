@@ -20,7 +20,7 @@ import {SharedModule} from '../shared.module';
 
 import {CreateComponent} from './component';
 import {CreateFromFileComponent} from './from/file/component';
-import { CreateFromFormModule } from './from/form/module';
+import {CreateFromFormModule} from './from/form/module';
 import {CreateFromInputComponent} from './from/input/component';
 import {CreateService} from './service';
 import {createState} from './state';

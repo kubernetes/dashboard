@@ -34,7 +34,7 @@ limitations under the License.
       <mat-hint align="end">{{nameControl.value?.length}} / {{ nameMaxLength }}</mat-hint>
       <mat-error *ngIf="nameControl.errors?.uniqueName"
                  i18n>
-                 Deployment or service with this name already exists within namespace.
+        Deployment or service with this name already exists within namespace.
       </mat-error>
       <mat-error *ngIf="nameControl.errors?.required"
                  i18n>
