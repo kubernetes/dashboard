@@ -222,4 +222,12 @@
   .kd-cross-outline {
     stroke: $background;
   }
+
+  .mat-button-toggle-group {
+    border: 1px solid $border;
+  }
+
+  .mat-button-toggle-checked {
+    background-color: $card-background-dark;
+  }
 }

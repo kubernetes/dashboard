@@ -137,6 +137,11 @@ code {
   padding-right: 3 * $baseline-grid !important;
 }
 
+.mat-button-toggle-group {
+  border-bottom: 0 !important;
+  box-shadow: 0 !important;
+}
+
 ////////////////////////////////////////////
 // Custom classes used across application //
 ////////////////////////////////////////////
