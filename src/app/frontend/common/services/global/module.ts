@@ -25,6 +25,7 @@ import {BreadcrumbsService} from './breadcrumbs';
 import {ConfigService} from './config';
 import {CsrfTokenService} from './csrftoken';
 import {GlobalSettingsService} from './globalsettings';
+import {HistoryService} from './history';
 import {AuthInterceptor} from './interceptor';
 import {LocalSettingsService} from './localsettings';
 import {NamespaceService} from './namespace';
@@ -42,7 +43,7 @@ import {VerberService} from './verber';
     AuthorizerService, AssetsService, BreadcrumbsService, LocalSettingsService,
     GlobalSettingsService, ConfigService, TitleService, AuthService, CsrfTokenService,
     NotificationsService, ThemeService, KdStateService, NamespaceService, ActionbarService,
-    VerberService, {
+    VerberService, HistoryService, {
       provide: APP_INITIALIZER,
       useFactory: init,
       deps: [GlobalSettingsService, LocalSettingsService, ConfigService],
