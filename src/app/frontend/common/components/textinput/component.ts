@@ -79,5 +79,6 @@ export class TextInputComponent implements OnInit {
         // Do nothing when mode is not recognized.
         break;
     }
+    this.onTextChange(this.text);
   }
 }

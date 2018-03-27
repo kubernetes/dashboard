@@ -13,12 +13,13 @@
 // limitations under the License.
 
 import {EventEmitter, Injectable} from '@angular/core';
+import {Transition} from '@uirouter/core';
 import {NamespaceService} from './namespace';
 
 @Injectable()
 export class KdStateService {
-  onBefore = new EventEmitter<boolean>();
-  onSuccess = new EventEmitter<boolean>();
+  onBefore = new EventEmitter<Transition>();
+  onSuccess = new EventEmitter<Transition>();
 
   constructor(private readonly namespaceService_: NamespaceService) {}
 
