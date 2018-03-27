@@ -16,7 +16,7 @@ import {HttpParams} from '@angular/common/http';
 import {Component, Input} from '@angular/core';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
-import {Endpoint, Ingress, IngressList} from 'typings/backendapi';
+import {Ingress, IngressList} from 'typings/backendapi';
 
 import {ingressState} from '../../../../resource/discovery/ingress/state';
 import {ResourceListBase} from '../../../resources/list';

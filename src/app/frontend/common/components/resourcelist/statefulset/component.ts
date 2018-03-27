@@ -14,7 +14,7 @@
 
 import {HttpParams} from '@angular/common/http';
 import {Component, ComponentFactoryResolver, Input} from '@angular/core';
-import {Event, Pod, StatefulSet, StatefulSetList} from '@api/backendapi';
+import {Event, StatefulSet, StatefulSetList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 import {statefulSetState} from '../../../../resource/workloads/statefulset/state';

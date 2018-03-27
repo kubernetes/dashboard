@@ -16,7 +16,7 @@ import {DataSource} from '@angular/cdk/collections';
 import {HttpParams} from '@angular/common/http';
 import {ComponentFactoryResolver, EventEmitter, Input, OnDestroy, OnInit, Output, QueryList, Type, ViewChild, ViewChildren, ViewContainerRef} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {Event as KdEvent, K8sError, Resource, ResourceList} from '@api/backendapi';
+import {Event as KdEvent, Resource, ResourceList} from '@api/backendapi';
 import {ActionColumn, ActionColumnDef, ColumnWhenCallback, ColumnWhenCondition, OnListChangeEvent} from '@api/frontendapi';
 import {StateService} from '@uirouter/core';
 import {Observable, ObservableInput} from 'rxjs/Observable';

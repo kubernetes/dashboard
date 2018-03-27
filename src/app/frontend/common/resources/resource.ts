@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import {HttpClient} from '@angular/common/http';
-import {StateService} from '@uirouter/core';
 
 export abstract class ResourceBase<T> {
   constructor(protected readonly http_: HttpClient) {}

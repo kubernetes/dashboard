@@ -14,7 +14,7 @@
 
 import {HttpParams} from '@angular/common/http';
 import {Component, ComponentFactoryResolver, Input} from '@angular/core';
-import {DaemonSet, DaemonSetList, Event, Pod} from '@api/backendapi';
+import {DaemonSet, DaemonSetList, Event} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 import {daemonSetState} from '../../../../resource/workloads/daemonset/state';

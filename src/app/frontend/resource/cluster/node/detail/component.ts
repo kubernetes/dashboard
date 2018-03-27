@@ -13,8 +13,7 @@
 // limitations under the License.
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {MatTableDataSource} from '@angular/material';
-import {Condition, NodeAddress, NodeDetail, NodeTaint} from '@api/backendapi';
+import {NodeAddress, NodeDetail, NodeTaint} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Subscription} from 'rxjs/Subscription';
 

@@ -42,8 +42,7 @@ limitations under the License.
 
   <div content
        *ngIf="isInitialized"
-       fxLayout="row"
-       fxLayoutWrap>
+       fxLayout="row wrap">
     <kd-property *ngIf="deployment?.strategy">
       <div key>Strategy</div>
       <div value>{{deployment.strategy}}</div>
@@ -88,8 +87,7 @@ limitations under the License.
 
   <div content
        *ngIf="isInitialized"
-       fxLayout="row"
-       fxLayoutWrap>
+       fxLayout="row wrap">
     <kd-property *ngIf="deployment?.rollingUpdateStrategy?.maxSurge !== null">
       <div key>Max surge</div>
       <div value>{{deployment.rollingUpdateStrategy.maxSurge}}</div>
@@ -133,8 +131,7 @@ limitations under the License.
 
   <div content
        *ngIf="isInitialized"
-       fxLayout="row"
-       fxLayoutWrap>
+       fxLayout="row wrap">
     <kd-property *ngIf="deployment?.statusInfo?.updated > 0">
       <div key>Updated</div>
       <div value>{{deployment.statusInfo.updated}}</div>
@@ -192,8 +189,7 @@ limitations under the License.
 
   <div content
        *ngIf="isInitialized"
-       fxLayout="row"
-       fxLayoutWrap>
+       fxLayout="row wrap">
     <kd-property *ngIf="deployment?.newReplicaSet?.objectMeta.name">
       <div key>Name</div>
       <a value

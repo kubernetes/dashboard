@@ -14,7 +14,7 @@
 
 import {HttpParams} from '@angular/common/http';
 import {Component, ComponentFactoryResolver, Input} from '@angular/core';
-import {Event, Job, ReplicaSet, ReplicaSetList} from '@api/backendapi';
+import {Event, ReplicaSet, ReplicaSetList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 import {replicaSetState} from '../../../../resource/workloads/replicaset/state';

@@ -21,8 +21,7 @@ limitations under the License.
   <div title>Node information</div>
   <div content
        *ngIf="isInitialized"
-       fxLayout="row"
-       fxLayoutWrap>
+       fxLayout="row wrap">
     <kd-property *ngIf="node?.phase">
       <div key>Phase</div>
       <div value>{{node?.phase}}</div>
@@ -60,8 +59,7 @@ limitations under the License.
   <div title>System information</div>
   <div content
        *ngIf="isInitialized"
-       fxLayout="row"
-       fxLayoutWrap>
+       fxLayout="row wrap">
     <kd-property *ngIf="node?.nodeInfo.machineID">
       <div key>Machine ID</div>
       <div value>{{node?.nodeInfo.machineID}}</div>

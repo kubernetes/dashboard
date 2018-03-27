@@ -22,8 +22,7 @@ limitations under the License.
 
   <div content
        *ngIf="isInitialized"
-       fxLayout="row"
-       fxLayoutWrap>
+       fxLayout="row wrap">
     <kd-property *ngIf="persistentVolume?.status">
       <div key>Status</div>
       <div value>{{persistentVolume.status}}</div>

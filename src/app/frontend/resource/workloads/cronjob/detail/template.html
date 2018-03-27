@@ -42,8 +42,7 @@ limitations under the License.
 
   <div content
        *ngIf="isInitialized"
-       fxLayout="row"
-       fxLayoutWrap>
+       fxLayout="row wrap">
     <kd-property *ngIf="cronJob?.schedule">
       <div key>Schedule</div>
       <div value>{{cronJob.schedule}}</div>

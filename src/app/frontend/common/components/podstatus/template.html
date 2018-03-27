@@ -51,8 +51,7 @@ limitations under the License.
 
   <div content
        *ngIf="initialized"
-       fxLayout="row"
-       fxLayoutWrap>
+       fxLayout="row wrap">
     <kd-property *ngIf="podInfo.running > 0">
       <div key>Running</div>
       <div value>{{podInfo.running}}</div>

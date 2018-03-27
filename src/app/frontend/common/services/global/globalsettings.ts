@@ -14,13 +14,11 @@
 
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {GlobalSettings, LocalSettings} from '@api/backendapi';
+import {GlobalSettings} from '@api/backendapi';
 import {onSettingsFailCallback, onSettingsLoadCallback} from '@api/frontendapi';
-import {CookieService} from 'ngx-cookie-service';
 import {Observable} from 'rxjs/Observable';
 
 import {AuthorizerService} from './authorizer';
-import {ThemeService} from './theme';
 
 @Injectable()
 export class GlobalSettingsService {

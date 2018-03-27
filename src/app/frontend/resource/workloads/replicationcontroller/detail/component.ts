@@ -13,16 +13,14 @@
 // limitations under the License.
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {EnvVar, PodDetail, ReplicationControllerDetail} from '@api/backendapi';
+import {ReplicationControllerDetail} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Subscription} from 'rxjs/Subscription';
 
 import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
 import {NotificationsService} from '../../../../common/services/global/notifications';
-import {KdStateService} from '../../../../common/services/global/state';
 import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
 import {NamespacedResourceService} from '../../../../common/services/resource/resource';
-import {nodeState} from '../../../cluster/node/state';
 
 @Component({
   selector: 'kd-replication-controller-detail',

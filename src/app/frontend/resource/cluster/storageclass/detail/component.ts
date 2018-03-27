@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {StorageClassDetail, StringMap} from '@api/backendapi';
+import {StorageClassDetail} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Subscription} from 'rxjs/Subscription';
 
