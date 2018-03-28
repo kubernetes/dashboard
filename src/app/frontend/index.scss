@@ -73,12 +73,7 @@ code {
 
 .mat-chip {
   box-shadow: none !important;
-  margin: $baseline-grid $baseline-grid 0 0 !important;
   transition: none !important;
-
-  &:last-child {
-    margin-bottom: $baseline-grid !important;
-  }
 }
 
 .mat-header-row,
