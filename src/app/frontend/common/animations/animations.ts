@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {animate, state, style, transition, trigger} from '@angular/animations';
+import {animate, AUTO_STYLE, state, style, transition, trigger} from '@angular/animations';
 
 const DEFAULT_TRANSITION_TIME = '500ms ease-in-out';
 
@@ -40,13 +40,23 @@ export class Animations {
         ])
   ]);
 
-  static shrinkOut = trigger('shrinkOut', [
-    state('in', style({height: '*'})),
+  static expandInOut = trigger('expandInOut', [
+    state('true', style({height: '0', display: 'none'})),
+    state('false', style({
+            height: AUTO_STYLE,
+            display: AUTO_STYLE,
+          })),
     transition(
-        '* => void',
+        'false => true',
         [
-          style({height: '*'}),
-          animate(DEFAULT_TRANSITION_TIME, style({height: 0})),
-        ])
+          style({overflow: 'hidden'}),
+          animate('500ms ease-in', style({height: '0'})),
+        ]),
+    transition(
+        'true => false',
+        [
+          style({overflow: 'hidden'}),
+          animate('500ms ease-out', style({height: AUTO_STYLE})),
+        ]),
   ]);
 }

@@ -45,7 +45,7 @@ limitations under the License.
     </mat-icon>
   </mat-card-title>
 
-  <div *ngIf="expanded">
+  <div [@expandInOut]="!expanded">
     <mat-divider class="kd-on-top"></mat-divider>
 
     <mat-card-content class="kd-card-content"

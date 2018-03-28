@@ -19,6 +19,7 @@ import {Animations} from '../../animations/animations';
   selector: 'kd-card',
   templateUrl: './template.html',
   styleUrls: ['./style.scss'],
+  animations: [Animations.expandInOut],
 })
 export class CardComponent {
   @Input() initialized = true;
