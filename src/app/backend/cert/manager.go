@@ -40,7 +40,7 @@ func (self *Manager) GetCertificates() (tls.Certificate, error) {
 
 	key := self.creator.GenerateKey()
 	cert := self.creator.GenerateCertificate(key)
-	log.Println("Successfuly created certificates")
+	log.Println("Successfully created certificates")
 	keyPEM, certPEM, err := self.creator.KeyCertPEMBytes(key, cert)
 	if err != nil {
 		return tls.Certificate{}, err
