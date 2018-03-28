@@ -38,7 +38,7 @@ limitations under the License.
 
     <mat-icon class="kd-card-toggle kd-muted"
               i18n-matTooltip
-              matTooltip="Minimize card"
+              [matTooltip]="expanded ? 'Minimize card' : 'Expand card'"
               *ngIf="expandable">
       <ng-container *ngIf="expanded">arrow_drop_up</ng-container>
       <ng-container *ngIf="!expanded">arrow_drop_down</ng-container>
