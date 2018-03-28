@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, HostListener, OnInit} from '@angular/core';
 import {TransitionService} from '@uirouter/core';
 
 import {Animations} from '../../common/animations/animations';
@@ -30,12 +30,19 @@ export class NotificationsComponent implements OnInit {
 
   constructor(
       private readonly notifications_: NotificationsService,
-      private readonly transition_: TransitionService) {}
+      private readonly transition_: TransitionService, private readonly element_: ElementRef) {}
 
   ngOnInit(): void {
     this.transition_.onExit({}, () => {
       this.close_();
     });
+  }
+
+  @HostListener('document:click', ['$event'])
+  private onOutsideClick_(event: Event): void {
+    if (!this.element_.nativeElement.contains(event.target) && this.isOpen()) {
+      this.close_();
+    }
   }
 
   load_(): void {

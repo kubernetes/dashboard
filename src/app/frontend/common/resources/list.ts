@@ -325,23 +325,25 @@ export abstract class ResourceListWithStatuses<T extends ResourceList, R extends
   }
 
   expand(index: number, resource: R): void {
-    if (this.hasErrors(resource)) {
-      if (this.expandedRow !== undefined) {
-        this.containers_.toArray()[this.expandedRow].clear();
-      }
-
-      if (this.expandedRow === index) {
-        this.expandedRow = undefined;
-        return;
-      }
-
-      const container = this.containers_.toArray()[index];
-      const factory = this.resolver_.resolveComponentFactory(RowDetailComponent);
-      const component = container.createComponent(factory);
-
-      component.instance.events = this.getEvents(resource);
-      this.expandedRow = index;
+    if (!this.hasErrors(resource)) {
+      return;
     }
+
+    if (this.expandedRow !== undefined) {
+      this.containers_.toArray()[this.expandedRow].clear();
+    }
+
+    if (this.expandedRow === index) {
+      this.expandedRow = undefined;
+      return;
+    }
+
+    const container = this.containers_.toArray()[index];
+    const factory = this.resolver_.resolveComponentFactory(RowDetailComponent);
+    const component = container.createComponent(factory);
+
+    component.instance.events = this.getEvents(resource);
+    this.expandedRow = index;
   }
 
   getStatus(resource: R): StatusIcon {
