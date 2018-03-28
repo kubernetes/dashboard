@@ -150,6 +150,7 @@ func TestGetDeploymentDetail(t *testing.T) {
 				},
 				EventList: common.EventList{
 					Events: []common.Event{},
+					Errors: []error{},
 				},
 				HorizontalPodAutoscalerList: horizontalpodautoscaler.HorizontalPodAutoscalerList{
 					HorizontalPodAutoscalers: []horizontalpodautoscaler.HorizontalPodAutoscaler{},

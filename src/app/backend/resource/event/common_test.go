@@ -149,7 +149,9 @@ func TestGetResourceEvents(t *testing.T) {
 						Name: "ev-1", Namespace: "ns-1", Labels: labelSelector},
 					Message: "test-message",
 					Type:    v1.EventTypeNormal,
-				}}},
+				}},
+				Errors: []error{},
+			},
 		},
 	}
 

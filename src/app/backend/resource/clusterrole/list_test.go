@@ -44,7 +44,7 @@ func TestToRbacRoleLists(t *testing.T) {
 				ListMeta: api.ListMeta{TotalItems: 1},
 				Items: []ClusterRole{{
 					ObjectMeta: api.ObjectMeta{Name: "cluster-role", Namespace: ""},
-					TypeMeta:   api.TypeMeta{Kind: api.ResourceKindRbacClusterRole},
+					TypeMeta:   api.TypeMeta{Kind: api.ResourceKindClusterRole},
 				}},
 			},
 		},

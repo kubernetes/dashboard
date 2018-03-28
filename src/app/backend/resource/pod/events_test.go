@@ -59,7 +59,9 @@ func TestGetPodEvents(t *testing.T) {
 						Labels: map[string]string{"app": "test"}},
 					Message: "test-message",
 					Type:    v1.EventTypeNormal,
-				}}},
+				}},
+				Errors: []error{},
+			},
 		},
 	}
 
