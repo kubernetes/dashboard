@@ -20,6 +20,10 @@ import {debounceTime, map} from 'rxjs/operators';
 
 export const uniqueNameValidationKey = 'uniqueName';
 
+/**
+ * A validator directive which checks the underlining ngModel's given name is unique or not.
+ * If the name exists, error with name `uniqueName` will be added to errors.
+ */
 @Directive({
   selector: '[kdUniqueName][ngModel]',
   providers: [{

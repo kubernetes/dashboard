@@ -16,13 +16,13 @@ import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
 
 import {ComponentsModule} from '../common/components/module';
+import {CreateServiceModule} from '../common/services/create/module';
 import {SharedModule} from '../shared.module';
 
 import {CreateComponent} from './component';
 import {CreateFromFileComponent} from './from/file/component';
 import {CreateFromFormModule} from './from/form/module';
 import {CreateFromInputComponent} from './from/input/component';
-import {CreateService} from './service';
 import {createState} from './state';
 
 @NgModule({
@@ -30,9 +30,9 @@ import {createState} from './state';
     SharedModule,
     ComponentsModule,
     CreateFromFormModule,
+    CreateServiceModule,
     UIRouterModule.forChild({states: [createState]}),
   ],
   declarations: [CreateComponent, CreateFromInputComponent, CreateFromFileComponent],
-  providers: [CreateService]
 })
 export class CreateModule {}

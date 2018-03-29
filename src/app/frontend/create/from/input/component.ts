@@ -13,10 +13,11 @@
 // limitations under the License.
 
 import {Component, Input, OnInit} from '@angular/core';
+
+import {CreateService} from '../../../common/services/create/service';
 import {HistoryService} from '../../../common/services/global/history';
 import {NamespaceService} from '../../../common/services/global/namespace';
 import {overviewState} from '../../../overview/state';
-import {CreateService} from '../../service';
 
 @Component(
     {selector: 'kd-create-from-input', templateUrl: './template.html', styleUrls: ['./style.scss']})

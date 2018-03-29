@@ -15,10 +15,11 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {KdFile} from '@api/frontendapi';
+
+import {CreateService} from '../../../common/services/create/service';
 import {HistoryService} from '../../../common/services/global/history';
 import {NamespaceService} from '../../../common/services/global/namespace';
 import {overviewState} from '../../../overview/state';
-import {CreateService} from '../../service';
 
 @Component(
     {selector: 'kd-create-from-file', templateUrl: './template.html', styleUrls: ['./style.scss']})

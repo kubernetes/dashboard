@@ -15,13 +15,13 @@
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Inject, Injectable} from '@angular/core';
 import {MatDialog} from '@angular/material';
-import {AppDeploymentContentResponse, AppDeploymentContentSpec, AppDeploymentSpec} from '@api/backendapi';
+import {AppDeploymentContentResponse, AppDeploymentContentSpec} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
-import {AlertDialog, AlertDialogConfig} from '../common/dialogs/alert/dialog';
-import {CsrfTokenService} from '../common/services/global/csrftoken';
-import {NamespaceService} from '../common/services/global/namespace';
-import {Config, CONFIG_DI_TOKEN} from '../index.config';
-import {overviewState} from '../overview/state';
+import {Config, CONFIG_DI_TOKEN} from '../../../index.config';
+import {overviewState} from '../../../overview/state';
+import {AlertDialog, AlertDialogConfig} from '../../dialogs/alert/dialog';
+import {CsrfTokenService} from '../global/csrftoken';
+import {NamespaceService} from '../global/namespace';
 
 const i18n = {
   /** Text shown on failed deploy in error dialog. */
@@ -45,7 +45,7 @@ const i18n = {
 
 @Injectable()
 export class CreateService {
-  private isDeployInProgress = false;
+  private isDeployInProgress_ = false;
 
   constructor(
       private readonly http_: HttpClient,
@@ -66,7 +66,7 @@ export class CreateService {
 
     try {
       const {token} = await this.csrfToken_.getTokenForAction('appdeploymentfromfile').toPromise();
-      this.isDeployInProgress = true;
+      this.isDeployInProgress_ = true;
       response = await this.http_
                      .post<AppDeploymentContentResponse>(
                          'api/v1/appdeploymentfromfile', spec,
@@ -78,7 +78,7 @@ export class CreateService {
     } catch (err) {
       error = err;
     }
-    this.isDeployInProgress = false;
+    this.isDeployInProgress_ = false;
 
     if (error) {
       this.reportError(i18n.MSG_DEPLOY_DIALOG_ERROR, error.error);
@@ -91,7 +91,7 @@ export class CreateService {
   }
 
   isDeployDisabled(): boolean {
-    return this.isDeployInProgress;
+    return this.isDeployInProgress_;
   }
 
   private reportError(title: string, message: string): void {
