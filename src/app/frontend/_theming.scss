@@ -222,6 +222,7 @@
   .kd-cross-outline {
     stroke: $background;
   }
+
   .mat-button-toggle-group {
     border: 1px solid $border;
   }
@@ -229,6 +230,7 @@
   .mat-button-toggle-checked {
     background-color: $card-background-dark;
   }
+
   .kd-user-help {
     .material-icons {
       color: $primary;
@@ -240,6 +242,7 @@
 
     a {
       color: $primary;
+
       &:hover {
         color: mat-color($primary-palette, lighter);
       }
