@@ -77,7 +77,7 @@
     "browser-sync": "~2.23.0",
     "browser-sync-spa": "~1.0.3",
     "browserify": "~15.0.0",
-    "clang-format": "1.1.0",
+    "clang-format": "1.2.3",
     "del": "~3.0.0",
     "eslint-plugin-angular": "~3.1.1",
     "file-exists": "5.0.1",
