@@ -12,9 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../variables';
-@import '../mixins';
+@import '../../../variables';
 
-.kd-create-container {
-  padding: 0;
+.kd-create-from-input-info {
+  margin-bottom: $baseline-grid * 3;
+  padding: 0 (.5 * $baseline-grid);
+
+  .material-icons {
+    font-size: $body-font-size-base;
+  }
+}
+
+.kd-create-from-input-button {
+  margin-left: 0;
+}
+
+kd-text-input::ng-deep ace-editor {
+  margin-bottom: $baseline-grid * 3;
 }

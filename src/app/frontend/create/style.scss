@@ -17,4 +17,9 @@
 
 .kd-create-container {
   padding: 0;
+
+  ::ng-deep .mat-tab-body-content {
+    height: auto;
+    padding: 2.5 * $baseline-grid;
+  }
 }
