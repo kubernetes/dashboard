@@ -12,6 +12,8 @@ running in the cluster and troubleshoot them, as well as manage the cluster itse
 
 ![Dashboard UI workloads page](docs/dashboard-ui.png)
 
+**IMPORTANT:** Frontend side of the project is currently undergoing migration from [AngularJS](https://angularjs.org/) to the current version of [Angular](https://angular.io/). If you are willing to contribute or you would like to check out early version of the application check [this pull request](https://github.com/kubernetes/dashboard/pull/2727).
+
 ## Getting Started
 
 **IMPORTANT:** Since version 1.7 Dashboard uses more secure setup. It means, that by default it has minimal set of
