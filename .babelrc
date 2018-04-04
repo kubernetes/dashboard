@@ -16,7 +16,7 @@
       ]
     },
     "development": {
-      "presets": [["env", {"targets": {"node": 8}, "useBuiltIns": true}]],
+      "presets": [["env", {"targets": {"node": "current"}, "useBuiltIns": true}]],
     },
     "test": {
       "presets": ["env"],
