@@ -24,7 +24,7 @@
     "ace-builds": "^1.2.9",
     "angular-ui-ace": "^0.2.3",
     "angular-utils-pagination": "~0.11.1",
-    "ansi_up": "~2.0.2",
+    "ansi_up": "~3.0.0",
     "d3": "3.5.17",
     "hterm": "1.0.0",
     "material-design-icons": "~3.0.1",
