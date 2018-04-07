@@ -3,6 +3,7 @@
     {"file": "messages-en.xtb",    "key": "en"},
     {"file": "messages-zh-tw.xtb", "key": "zh-tw"},
     {"file": "messages-zh.xtb",    "key": "zh"},
-    {"file": "messages-ja.xtb",    "key": "ja"}
+    {"file": "messages-ja.xtb",    "key": "ja"},
+    {"file": "messages-ko.xtb",    "key": "ko"}
   ]
 }
