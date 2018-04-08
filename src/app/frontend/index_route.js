@@ -21,6 +21,6 @@ import {stateUrl as defaultStateUrl} from './overview/state';
  * @ngInject
  */
 export default function routeConfig($urlRouterProvider) {
-  // When no state is matched by an URL, redirect to default one.
+  // When no state is matched by a URL, redirect to default one.
   $urlRouterProvider.otherwise(defaultStateUrl);
 }
