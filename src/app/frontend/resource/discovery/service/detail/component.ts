@@ -31,6 +31,8 @@ export class ServiceDetailComponent implements OnInit, OnDestroy {
   private serviceName_: string;
   service: ServiceDetail;
   isInitialized = false;
+  podListEndpoint: string;
+  eventListEndpoint: string;
 
   constructor(
       private readonly service_: NamespacedResourceService<ServiceDetail>,
@@ -39,6 +41,10 @@ export class ServiceDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.serviceName_ = this.state_.params.resourceName;
+    this.podListEndpoint =
+        EndpointManager.resource(Resource.service, true).child(this.serviceName_, Resource.pod);
+    this.eventListEndpoint =
+        EndpointManager.resource(Resource.service, true).child(this.serviceName_, Resource.event);
     this.serviceSubscription_ =
         this.service_
             .get(EndpointManager.resource(Resource.service, true).detail(), this.serviceName_)

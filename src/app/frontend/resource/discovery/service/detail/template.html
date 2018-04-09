@@ -16,3 +16,10 @@ limitations under the License.
 
 <kd-object-meta [initialized]="isInitialized"
                 [objectMeta]="service.objectMeta"></kd-object-meta>
+
+<kd-endpoint-card-list [endpoints]="service?.endpointList?.endpoints"
+                       [initialized]="isInitialized"></kd-endpoint-card-list>
+
+<kd-pod-list [endpoint]="podListEndpoint"></kd-pod-list>
+
+<kd-event-list [endpoint]="eventListEndpoint"></kd-event-list>
