@@ -76,7 +76,7 @@
     "babelify": "~8.0.0",
     "browser-sync": "~2.23.0",
     "browser-sync-spa": "~1.0.3",
-    "browserify": "~15.0.0",
+    "browserify": "~16.2.0",
     "clang-format": "1.1.0",
     "del": "~3.0.0",
     "eslint-plugin-angular": "~3.1.1",
