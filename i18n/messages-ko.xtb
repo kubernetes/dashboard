@@ -1,39 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE translationbundle><translationbundle lang="ko">
   <translation id="3846688850575044887" key="MSG_ABOUT_ABOUT_0" desc="Global settings header.">About</translation>
-  <translation id="5634646746226609179" key="MSG_ABOUT_ABOUT_1" desc="Label \'Dashboard Version\' for the about page.">Dashboard Version</translation>
-  <translation id="4718120324314749596" key="MSG_ABOUT_ABOUT_2" desc="Label \'Git Commit\' for the about page.">Git Commit</translation>
-  <translation id="1212688278537853620" key="MSG_ABOUT_ABOUT_3" desc="Project description on about page.">General-purpose web UI for Kubernetes clusters</translation>
+  <translation id="5634646746226609179" key="MSG_ABOUT_ABOUT_1" desc="Label \'Dashboard Version\' for the about page.">대시보드 버전</translation>
+  <translation id="4718120324314749596" key="MSG_ABOUT_ABOUT_2" desc="Label \'Git Commit\' for the about page.">Git 커밋</translation>
+  <translation id="1212688278537853620" key="MSG_ABOUT_ABOUT_3" desc="Project description on about page.">쿠버네티스 클러스터를 위한 범용 웹 UI</translation>
   <translation id="4249662097435421699" key="MSG_ABOUT_ABOUT_4" desc="Copyright statement displayed on the about page.">Copyright 2015-{{ $ctrl.latestCopyrightYear}} The Kubernetes Authors.</translation>
   <translation id="908641021194885494" key="MSG_ABOUT_ABOUT_5" desc="Creator reference on the footer of the about page.">Kubernetes Dashboard is made possible by the Dashboard &lt;a href="https://github.com/kubernetes/dashboard/graphs/contributors"&gt;community&lt;/a&gt; as an &lt;a href="https://github.com/kubernetes/dashboard"&gt;open source project&lt;/a&gt;.</translation>
-  <translation id="2365002697773543715" key="MSG_ABOUT_ACTIONBAR_0" desc="Tooltip of button linking to documentation.">Read Kubernetes Dashboard documentation</translation>
-  <translation id="6381847044207707182" key="MSG_ABOUT_ACTIONBAR_1" desc="Label of button linking to documentation.">Documentation</translation>
-  <translation id="2035796754621111890" key="MSG_ABOUT_ACTIONBAR_2" desc="Tooltip of button linking to new issue on GitHub used to send feedback.">Create new issue on GitHub</translation>
-  <translation id="5625550638633956281" key="MSG_ABOUT_ACTIONBAR_3" desc="Label of button linking to new issue on GitHub used to send feedback.">Send feedback</translation>
-  <translation id="6783150167357318030" key="MSG_ACTION_BAR_DELETE_TOOLTIP" desc="Generic &quot;Delete some resource&quot; tooltip text which appears over the delete icon on the global action bar.">Delete <ph name="RESOURCE_NAME"/></translation>
-  <translation id="1421031463694814701" key="MSG_ACTION_BAR_EDIT_TOOLTIP" desc="Generic &quot;Edit some resource&quot; tooltip text which appears over the edit icon on the global action bar.">Edit <ph name="RESOURCE_NAME"/></translation>
-  <translation id="1024358167652076581" key="MSG_ALL_NAMESPACES" desc="Text for dropdown item that indicates that no namespace was selected">All namespaces</translation>
-  <translation id="2436932884134192170" key="MSG_AUTH_STATUS_HEADER" desc="Login status displayed when authorization header is used.">Logged in with auth header</translation>
-  <translation id="2593766780781854099" key="MSG_AUTH_STATUS_SKIPPED" desc="Login status displayed when default service account is used.">Default service account</translation>
-  <translation id="7811526624157700330" key="MSG_AUTH_STATUS_TOKEN" desc="Login status displayed when token is used.">Logged in with token</translation>
+  <translation id="2365002697773543715" key="MSG_ABOUT_ACTIONBAR_0" desc="Tooltip of button linking to documentation.">쿠버네티스 대시보드 문서 읽기</translation>
+  <translation id="6381847044207707182" key="MSG_ABOUT_ACTIONBAR_1" desc="Label of button linking to documentation.">문서</translation>
+  <translation id="2035796754621111890" key="MSG_ABOUT_ACTIONBAR_2" desc="Tooltip of button linking to new issue on GitHub used to send feedback.">GitHub에 새 이슈 만들기</translation>
+  <translation id="5625550638633956281" key="MSG_ABOUT_ACTIONBAR_3" desc="Label of button linking to new issue on GitHub used to send feedback.">피드백 보내기</translation>
+  <translation id="6783150167357318030" key="MSG_ACTION_BAR_DELETE_TOOLTIP" desc="Generic &quot;Delete some resource&quot; tooltip text which appears over the delete icon on the global action bar.">
+    <ph name="RESOURCE_NAME"> 삭제</ph>
+  </translation>
+  <translation id="1421031463694814701" key="MSG_ACTION_BAR_EDIT_TOOLTIP" desc="Generic &quot;Edit some resource&quot; tooltip text which appears over the edit icon on the global action bar.">
+    <ph name="RESOURCE_NAME"> 편집</ph>
+  </translation>
+  <translation id="1024358167652076581" key="MSG_ALL_NAMESPACES" desc="Text for dropdown item that indicates that no namespace was selected">모든 네임스페이스</translation>
+  <translation id="2436932884134192170" key="MSG_AUTH_STATUS_HEADER" desc="Login status displayed when authorization header is used.">인증 헤더로 로그인</translation>
+  <translation id="2593766780781854099" key="MSG_AUTH_STATUS_SKIPPED" desc="Login status displayed when default service account is used.">기본 서비스 어카운트</translation>
+  <translation id="7811526624157700330" key="MSG_AUTH_STATUS_TOKEN" desc="Login status displayed when token is used.">토큰으로 로그인</translation>
   <translation id="6614117428496734699" key="MSG_BREADCRUMBS_ABOUT_LABEL" desc="Label 'About' that appears as a breadcrumbs on the action bar.">About</translation>
-  <translation id="1153397682574555638" key="MSG_BREADCRUMBS_CLUSTER_LABEL" desc="Label 'Cluster' that appears as a breadcrumbs on the action bar.">Cluster</translation>
-  <translation id="5346529710805392125" key="MSG_BREADCRUMBS_CONFIG_AND_STORAGE_LABEL" desc="Label 'Config and storage' that appears as a breadcrumbs on the action bar.">Config and storage</translation>
+  <translation id="1153397682574555638" key="MSG_BREADCRUMBS_CLUSTER_LABEL" desc="Label 'Cluster' that appears as a breadcrumbs on the action bar.">클러스터</translation>
+  <translation id="5346529710805392125" key="MSG_BREADCRUMBS_CONFIG_AND_STORAGE_LABEL" desc="Label 'Config and storage' that appears as a breadcrumbs on the action bar.">설정 및 스토리지</translation>
   <translation id="3212328899649855136" key="MSG_BREADCRUMBS_CONFIG_MAPS_LABEL" desc="Label 'Config Maps' that appears as a breadcrumbs on the action bar.">Config Maps</translation>
   <translation id="700116227671235444" key="MSG_BREADCRUMBS_CRON_JOBS_LABEL" desc="Label 'Cron Jobs' that appears as a breadcrumbs on the action bar.">Cron Jobs</translation>
   <translation id="3217932097841975938" key="MSG_BREADCRUMBS_DAEMON_SETS_LABEL" desc="Label 'Daemon Sets' that appears as a breadcrumbs on the action bar.">Daemon Sets</translation>
   <translation id="1744394420157932960" key="MSG_BREADCRUMBS_DEPLOYMENTS_LABEL" desc="Label 'Deployments' that appears as a breadcrumbs on the action bar.">Deployments</translation>
-  <translation id="3070611681004399610" key="MSG_BREADCRUMBS_DEPLOY_APP_LABEL" desc="Breadcrumb label for the deploy view.">Resource creation</translation>
-  <translation id="8693076889249273053" key="MSG_BREADCRUMBS_DISCOVERY_AND_LOAD_BALANCING_LABEL" desc="Label 'Discovery and load balancing' that appears as a breadcrumbs on the action bar.">Discovery and load balancing</translation>
-  <translation id="2573868693589074300" key="MSG_BREADCRUMBS_ERROR_LABEL" desc="Label for error page for breadcrumbs on the action bar.">Error</translation>
+  <translation id="3070611681004399610" key="MSG_BREADCRUMBS_DEPLOY_APP_LABEL" desc="Breadcrumb label for the deploy view.">자원 생성</translation>
+  <translation id="8693076889249273053" key="MSG_BREADCRUMBS_DISCOVERY_AND_LOAD_BALANCING_LABEL" desc="Label 'Discovery and load balancing' that appears as a breadcrumbs on the action bar.">디스커버리 및 로드밸런싱</translation>
+  <translation id="2573868693589074300" key="MSG_BREADCRUMBS_ERROR_LABEL" desc="Label for error page for breadcrumbs on the action bar.">에러</translation>
   <translation id="2248903848244811172" key="MSG_BREADCRUMBS_HORIZONTAL_POD_AUTOSCALERS_LABEL" desc="Label 'Horizontal Pod Autoscalers' that appears as a breadcrumbs on the action bar.">Horizontal Pod Autoscalers</translation>
   <translation id="8885204956315323333" key="MSG_BREADCRUMBS_INGRESSS_LABEL" desc="Label 'Ingresses' that appears as a breadcrumbs on the action bar.">Ingresses</translation>
   <translation id="2024511088483477440" key="MSG_BREADCRUMBS_JOBS_LABEL" desc="Label 'Jobs' that appears as a breadcrumbs on the action bar.">Jobs</translation>
   <translation id="3285134270275399073" key="MSG_BREADCRUMBS_LOGIN_LABEL" desc="Label 'Sign in' that appears as a breadcrumbs on the action bar.">Sign in</translation>
-  <translation id="1050029015813261838" key="MSG_BREADCRUMBS_LOGS_LABEL" desc="Breadcrum label for the logs view.">Logs</translation>
-  <translation id="7538864180606148657" key="MSG_BREADCRUMBS_NAMESPACES_LABEL" desc="Label 'Namespaces' that appears as a breadcrumbs on the action bar.">Namespaces</translation>
-  <translation id="1946322401100894439" key="MSG_BREADCRUMBS_NODES_LABEL" desc="Label 'Nodes' that appears as a breadcrumbs on the action bar.">Nodes</translation>
-  <translation id="5901871651227680937" key="MSG_BREADCRUMBS_OVERVIEW_LABEL" desc="Label 'Overview' that appears as a breadcrumb on the action bar.">Overview</translation>
+  <translation id="1050029015813261838" key="MSG_BREADCRUMBS_LOGS_LABEL" desc="Breadcrum label for the logs view.">로그</translation>
+  <translation id="7538864180606148657" key="MSG_BREADCRUMBS_NAMESPACES_LABEL" desc="Label 'Namespaces' that appears as a breadcrumbs on the action bar.">네임스페이스</translation>
+  <translation id="1946322401100894439" key="MSG_BREADCRUMBS_NODES_LABEL" desc="Label 'Nodes' that appears as a breadcrumbs on the action bar.">노드</translation>
+  <translation id="5901871651227680937" key="MSG_BREADCRUMBS_OVERVIEW_LABEL" desc="Label 'Overview' that appears as a breadcrumb on the action bar.">개요</translation>
   <translation id="8962145809533946028" key="MSG_BREADCRUMBS_PERSISTENT_VOLUMES_LABEL" desc="Label 'Persistent Volumes' that appears as a breadcrumbs on the action bar.">Persistent Volumes</translation>
   <translation id="6751018699028607617" key="MSG_BREADCRUMBS_PERSISTENT_VOLUME_CLAIM_LABEL" desc="Label 'Persistent Volume Claims' that appears as a breadcrumbs on the action bar.">Persistent Volume Claims</translation>
   <translation id="64391241316684157" key="MSG_BREADCRUMBS_PODS_LABEL" desc="Label 'Pods' that appears as a breadcrumbs on the action bar.">Pods</translation>
@@ -42,248 +46,248 @@
   <translation id="5794147661362074597" key="MSG_BREADCRUMBS_ROLES_LABEL" desc="Label 'Roles' that appears as a breadcrumbs on the action bar.">Roles</translation>
   <translation id="2851304790534826779" key="MSG_BREADCRUMBS_SEARCH_LABEL" desc="Label 'Search' that appears as a breadcrumbs on the action bar.">Search for</translation>
   <translation id="391192137756114804" key="MSG_BREADCRUMBS_SECRETS_LABEL" desc="Label 'Secrets' that appears as a breadcrumbs on the action bar.">Secrets</translation>
-  <translation id="7289015346195603694" key="MSG_BREADCRUMBS_SETTINGS_LABEL" desc="Label 'Settings' that appears as a breadcrumbs on the action bar.">Settings</translation>
+  <translation id="7289015346195603694" key="MSG_BREADCRUMBS_SETTINGS_LABEL" desc="Label 'Settings' that appears as a breadcrumbs on the action bar.">설정</translation>
   <translation id="6064633767606789407" key="MSG_BREADCRUMBS_SHELL_LABEL" desc="Breadcrumb label for the shell view.">Shell</translation>
   <translation id="7318741060898365517" key="MSG_BREADCRUMBS_STATEFUL_SETS_LABEL" desc="Label 'Stateful Sets' that appears as a breadcrumbs on the action bar.">Stateful Sets</translation>
   <translation id="1427200251427963672" key="MSG_BREADCRUMBS_STORAGE_CLASSES_LABEL" desc="Label 'Storage Classes' that appears as a breadcrumbs on the action bar.">Storage Classes</translation>
-  <translation id="1656728804447365846" key="MSG_BREADCRUMBS_WORKLOADS_LABEL" desc="Label 'Workloads' that appears as a breadcrumbs on the action bar.">Workloads</translation>
-  <translation id="5441724995487814814" key="MSG_CHROME_CHROME_0" desc="Tooltip for global action bar create button tooltip.">Create an application or any Kubernetes resource</translation>
-  <translation id="152996649337797552" key="MSG_CHROME_CHROME_1" desc="Label for global action bar create button.">Create</translation>
-  <translation id="8711874778657823772" key="MSG_CHROME_CONTROLPANEL_CONTROLPANEL_0" desc="Tooltip for the control panel displayed in the right top corner.">Control panel</translation>
+  <translation id="1656728804447365846" key="MSG_BREADCRUMBS_WORKLOADS_LABEL" desc="Label 'Workloads' that appears as a breadcrumbs on the action bar.">워크로드</translation>
+  <translation id="5441724995487814814" key="MSG_CHROME_CHROME_0" desc="Tooltip for global action bar create button tooltip.">어플리케이션이나 쿠버네티스 자원 생성하기</translation>
+  <translation id="152996649337797552" key="MSG_CHROME_CHROME_1" desc="Label for global action bar create button.">생성</translation>
+  <translation id="8711874778657823772" key="MSG_CHROME_CONTROLPANEL_CONTROLPANEL_0" desc="Tooltip for the control panel displayed in the right top corner.">제어판</translation>
   <translation id="5588778838458035939" key="MSG_CHROME_CONTROLPANEL_CONTROLPANEL_1" desc="Sign out menu item.">Sign out</translation>
   <translation id="3494123731165126874" key="MSG_CHROME_CONTROLPANEL_CONTROLPANEL_2" desc="Sign in menu item.">Sign in</translation>
-  <translation id="5023828914132135944" key="MSG_CHROME_NAV_NAV_0" desc="Cluster group menu entry.">Cluster</translation>
-  <translation id="6343362656986122693" key="MSG_CHROME_NAV_NAV_1" desc="Namespaces menu entry.">Namespaces</translation>
+  <translation id="5023828914132135944" key="MSG_CHROME_NAV_NAV_0" desc="Cluster group menu entry.">클러스터</translation>
+  <translation id="6343362656986122693" key="MSG_CHROME_NAV_NAV_1" desc="Namespaces menu entry.">네임스페이스</translation>
   <translation id="716443703088219571" key="MSG_CHROME_NAV_NAV_10" desc="Pods menu entry.">Pods</translation>
   <translation id="5165405066720776929" key="MSG_CHROME_NAV_NAV_11" desc="Replica Sets entry.">Replica Sets</translation>
   <translation id="1368029980670062566" key="MSG_CHROME_NAV_NAV_12" desc="Replication Controllers menu entry.">Replication Controllers</translation>
   <translation id="727510939665067635" key="MSG_CHROME_NAV_NAV_13" desc="Stateful Sets menu entry.">Stateful Sets</translation>
-  <translation id="3750547428998043153" key="MSG_CHROME_NAV_NAV_14" desc="Discovery and Load Balancing group menu entry.">Discovery and Load Balancing</translation>
+  <translation id="3750547428998043153" key="MSG_CHROME_NAV_NAV_14" desc="Discovery and Load Balancing group menu entry.">디스커버리 및 로드밸런싱</translation>
   <translation id="5657472840568954752" key="MSG_CHROME_NAV_NAV_15" desc="Ingresses menu entry.">Ingresses</translation>
-  <translation id="6209183557961833624" key="MSG_CHROME_NAV_NAV_16" desc="Services menu entry.">Services</translation>
-  <translation id="6317635910843446189" key="MSG_CHROME_NAV_NAV_17" desc="All objects group menu entry.">Overview</translation>
+  <translation id="6209183557961833624" key="MSG_CHROME_NAV_NAV_16" desc="Services menu entry.">서비스</translation>
+  <translation id="6317635910843446189" key="MSG_CHROME_NAV_NAV_17" desc="All objects group menu entry.">개요</translation>
   <translation id="5112568842026217488" key="MSG_CHROME_NAV_NAV_18" desc="Config Maps menu entry.">Config Maps</translation>
   <translation id="8817168805652183378" key="MSG_CHROME_NAV_NAV_19" desc="Persistent Volume Claims menu entry.">Persistent Volume Claims</translation>
-  <translation id="1743316598408730775" key="MSG_CHROME_NAV_NAV_2" desc="Nodes menu entry.">Nodes</translation>
+  <translation id="1743316598408730775" key="MSG_CHROME_NAV_NAV_2" desc="Nodes menu entry.">노드</translation>
   <translation id="1040732924028857594" key="MSG_CHROME_NAV_NAV_20" desc="Secrets menu entry.">Secrets</translation>
   <translation id="8368599117962865229" key="MSG_CHROME_NAV_NAV_21" desc="About page menu entry.">About</translation>
   <translation id="7160486052155717528" key="MSG_CHROME_NAV_NAV_22" desc="Cron Jobs menu entry.">Cron Jobs</translation>
-  <translation id="5937278785382848812" key="MSG_CHROME_NAV_NAV_23" desc="Settings page menu entry.">Settings</translation>
+  <translation id="5937278785382848812" key="MSG_CHROME_NAV_NAV_23" desc="Settings page menu entry.">설정</translation>
   <translation id="4957526140740745953" key="MSG_CHROME_NAV_NAV_3" desc="Persistent Volumes menu entry.">Persistent Volumes</translation>
   <translation id="5886605472855359914" key="MSG_CHROME_NAV_NAV_4" desc="Config and Storage group menu entry.">Config and Storage</translation>
   <translation id="874273813471860738" key="MSG_CHROME_NAV_NAV_5" desc="Storage Classes menu entry.">Storage Classes</translation>
-  <translation id="4285258567654567328" key="MSG_CHROME_NAV_NAV_6" desc="Workloads group menu entry.">Workloads</translation>
+  <translation id="4285258567654567328" key="MSG_CHROME_NAV_NAV_6" desc="Workloads group menu entry.">워크로드</translation>
   <translation id="5016929559748268107" key="MSG_CHROME_NAV_NAV_7" desc="Daemon Sets menu entry.">Daemon Sets</translation>
   <translation id="3185730728792936775" key="MSG_CHROME_NAV_NAV_8" desc="Deployments menu entry.">Deployments</translation>
   <translation id="1017990697544914862" key="MSG_CHROME_NAV_NAV_9" desc="Jobs menu entry.">Jobs</translation>
   <translation id="373826984984498333" key="MSG_CHROME_NAV_ROLENAV_0" desc="Roles menu entry.">Roles</translation>
-  <translation id="4777782265247414366" key="MSG_CLUSTER_CLUSTER_0" desc="Title for graph card displaying CPU metric of one all resources.">CPU usage</translation>
-  <translation id="836326363584870134" key="MSG_CLUSTER_CLUSTER_1" desc="Title for graph card displaying memory metric of one all resources.">Memory usage</translation>
+  <translation id="4777782265247414366" key="MSG_CLUSTER_CLUSTER_0" desc="Title for graph card displaying CPU metric of one all resources.">CPU 사용량</translation>
+  <translation id="836326363584870134" key="MSG_CLUSTER_CLUSTER_1" desc="Title for graph card displaying memory metric of one all resources.">메모리 사용량</translation>
   <translation id="6503182982225697463" key="MSG_CLUSTER_CLUSTER_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by these resources. (Does not count pods double because it is mentioned both in the pod list and its controller is mentioned in e.g. a replica set.)</translation>
-  <translation id="6660248664655766122" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBARDELETEITEM_0" desc="Action \'Delete\', which is a button on the actionbar and is there for every resource type.">Delete</translation>
-  <translation id="8227118065394270046" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBAREDITITEM_0" desc="Action \'Edit\' for the edit button on the global action bar.">Edit</translation>
-  <translation id="4823508741067150667" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBARLOGS_0" desc="Tooltip for the \'logs\' button on the action bar.">View logs</translation>
-  <translation id="1841242100396658719" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBARLOGS_1" desc="Tooltip for the \'logs\' button on the action bar.">Logs</translation>
-  <translation id="8757730841434571562" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBARNAMESPACEOVERVIEW_0" desc="(no description provided)">Overview</translation>
-  <translation id="4582904353054937598" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBARNAMESPACEOVERVIEW_1" desc="(no description provided)">Go to namespace overview page</translation>
+  <translation id="6660248664655766122" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBARDELETEITEM_0" desc="Action \'Delete\', which is a button on the actionbar and is there for every resource type.">삭제</translation>
+  <translation id="8227118065394270046" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBAREDITITEM_0" desc="Action \'Edit\' for the edit button on the global action bar.">편집</translation>
+  <translation id="4823508741067150667" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBARLOGS_0" desc="Tooltip for the \'logs\' button on the action bar.">로그 보기</translation>
+  <translation id="1841242100396658719" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBARLOGS_1" desc="Tooltip for the \'logs\' button on the action bar.">로그</translation>
+  <translation id="8757730841434571562" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBARNAMESPACEOVERVIEW_0" desc="(no description provided)">개요</translation>
+  <translation id="4582904353054937598" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBARNAMESPACEOVERVIEW_1" desc="(no description provided)">네임스페이스 개요 페이지로 가기</translation>
   <translation id="4246093411879805828" key="MSG_COMMON_COMPONENTS_ACTIONBAR_SHELL_0" desc="Exec button tooltip located on pod detail page actionbar">Exec into Pod</translation>
   <translation id="1980816672340986356" key="MSG_COMMON_COMPONENTS_ACTIONBAR_SHELL_1" desc="Execute shell in the container">Exec</translation>
-  <translation id="346901508592085264" key="MSG_COMMON_COMPONENTS_ANNOTATIONS_ANNOTATIONS_0" desc="(no description provided)">show less</translation>
-  <translation id="4407992896795575882" key="MSG_COMMON_COMPONENTS_ANNOTATIONS_ANNOTATIONS_1" desc="(no description provided)">show all</translation>
-  <translation id="6113138181366048141" key="MSG_COMMON_COMPONENTS_CAPACITY_CAPACITY_0" desc="Persistent volume claim\'s capacity list.">Capacity</translation>
-  <translation id="5435782630213904388" key="MSG_COMMON_COMPONENTS_CAPACITY_CAPACITY_1" desc="Persistent volume claim\'s resource name displayed on capacity list.">Resource name</translation>
-  <translation id="2148969238321481833" key="MSG_COMMON_COMPONENTS_CAPACITY_CAPACITY_2" desc="Persistent volume claim\'s quantity displayed on capacity list.">Quantity</translation>
-  <translation id="7032367248367318089" key="MSG_COMMON_COMPONENTS_CAPACITY_CAPACITY_3" desc="Text for pods card list zerostate.">No capacity has been assigned to this resource.</translation>
-  <translation id="6456481460873145449" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_0" desc="Label \'Conditions\' for the conditions section.">Conditions</translation>
-  <translation id="8993677465322195935" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_1" desc="Label \'Type\' for the condition table header.">Type</translation>
+  <translation id="346901508592085264" key="MSG_COMMON_COMPONENTS_ANNOTATIONS_ANNOTATIONS_0" desc="(no description provided)">덜 보기</translation>
+  <translation id="4407992896795575882" key="MSG_COMMON_COMPONENTS_ANNOTATIONS_ANNOTATIONS_1" desc="(no description provided)">모두 보기</translation>
+  <translation id="6113138181366048141" key="MSG_COMMON_COMPONENTS_CAPACITY_CAPACITY_0" desc="Persistent volume claim\'s capacity list.">용량</translation>
+  <translation id="5435782630213904388" key="MSG_COMMON_COMPONENTS_CAPACITY_CAPACITY_1" desc="Persistent volume claim\'s resource name displayed on capacity list.">자원 이름</translation>
+  <translation id="2148969238321481833" key="MSG_COMMON_COMPONENTS_CAPACITY_CAPACITY_2" desc="Persistent volume claim\'s quantity displayed on capacity list.">수량</translation>
+  <translation id="7032367248367318089" key="MSG_COMMON_COMPONENTS_CAPACITY_CAPACITY_3" desc="Text for pods card list zerostate.">자원에 용량이 할당되지 않았습니다.</translation>
+  <translation id="6456481460873145449" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_0" desc="Label \'Conditions\' for the conditions section.">조건</translation>
+  <translation id="8993677465322195935" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_1" desc="Label \'Type\' for the condition table header.">타입</translation>
   <translation id="286975103376271553" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_10" desc="Label when there is no data.">-</translation>
   <translation id="3386572067498503433" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_11" desc="Label when there is no data.">-</translation>
   <translation id="6464751813964841186" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_12" desc="Label when there is no data.">-</translation>
   <translation id="8142136741637546639" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_13" desc="Tooltip heartbeat column of pod conditions">Probed at </translation>
   <translation id="6128317173209217017" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_14" desc="Tooltip transition column of pod conditions">Probed at </translation>
   <translation id="3102698318305254308" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_2" desc="Label \'Status\' for the condition table header.">Status</translation>
-  <translation id="3198492785716828854" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_3" desc="Label \'Last heartbeat time\' for the condition table header.">Last heartbeat time</translation>
-  <translation id="3828327508280797097" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_4" desc="Label \'Last transition time\' for the condition table header.">Last transition time</translation>
+  <translation id="3198492785716828854" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_3" desc="Label \'Last heartbeat time\' for the condition table header.">최근 heartbeat 시간</translation>
+  <translation id="3828327508280797097" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_4" desc="Label \'Last transition time\' for the condition table header.">최근 상태 전이 시간</translation>
   <translation id="5617747719771691362" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_5" desc="Label \'Reason\' for the condition table header.">Reason</translation>
-  <translation id="3635038721825489232" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_6" desc="Label \'Message\' for the condition table header.">Message</translation>
+  <translation id="3635038721825489232" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_6" desc="Label \'Message\' for the condition table header.">메시지</translation>
   <translation id="4637603666933267922" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_7" desc="Label when there is no data.">-</translation>
   <translation id="8716449963013807367" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_8" desc="Label when there is no data.">-</translation>
   <translation id="3496419655731709621" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_9" desc="Label when there is no data.">-</translation>
   <translation id="118124815134459686" key="MSG_COMMON_COMPONENTS_LABELS_LABELS_0" desc="(no description provided)">show less</translation>
   <translation id="6520484301957623418" key="MSG_COMMON_COMPONENTS_LABELS_LABELS_1" desc="(no description provided)">show all</translation>
-  <translation id="194613042127042077" key="MSG_COMMON_COMPONENTS_PODWARNINGS_PODWARNINGS_0" desc="Message shown below pod warnings on pod list">Show more</translation>
-  <translation id="6174601589723043241" key="MSG_COMMON_COMPONENTS_PODWARNINGS_PODWARNINGS_1" desc="Message shown below pod warnings on pod list">Show less</translation>
-  <translation id="7262450799096886396" key="MSG_COMMON_COMPONENTS_RESOURCECARD_LOGSBUTTON_0" desc="Label for logs tooltip.">Logs</translation>
-  <translation id="8077948432236649947" key="MSG_COMMON_COMPONENTS_RESOURCECARD_RESOURCECARDDELETEMENUITEM_0" desc="Action &quot;Delete&quot; (verb), which appears as a menu item on the cards for kubernetes resources.">Delete</translation>
-  <translation id="1786717544428328487" key="MSG_COMMON_COMPONENTS_RESOURCECARD_RESOURCECARDEDITMENUITEM_0" desc="Label for YAML edit menu item.">View/edit YAML</translation>
-  <translation id="6165720699884834015" key="MSG_COMMON_COMPONENTS_RESOURCECARD_RESOURCECARDMENU_0" desc="Tooltip &quot;Actions&quot;, which appears when you hover over the menu icon on any resource card.">Actions</translation>
-  <translation id="5816664742336097257" key="MSG_COMMON_COMPONENTS_RESOURCEDETAIL_INFOCARD_0" desc="(no description provided)">Name</translation>
-  <translation id="324296574289248020" key="MSG_COMMON_COMPONENTS_RESOURCEDETAIL_INFOCARD_1" desc="Label \'Namespace\' for a resource.">Namespace</translation>
-  <translation id="7353491667260402390" key="MSG_COMMON_COMPONENTS_RESOURCEDETAIL_INFOCARD_2" desc="Label \'Labels\' for a resource.">Labels</translation>
+  <translation id="194613042127042077" key="MSG_COMMON_COMPONENTS_PODWARNINGS_PODWARNINGS_0" desc="Message shown below pod warnings on pod list">더 보기</translation>
+  <translation id="6174601589723043241" key="MSG_COMMON_COMPONENTS_PODWARNINGS_PODWARNINGS_1" desc="Message shown below pod warnings on pod list">덜 보기</translation>
+  <translation id="7262450799096886396" key="MSG_COMMON_COMPONENTS_RESOURCECARD_LOGSBUTTON_0" desc="Label for logs tooltip.">로그</translation>
+  <translation id="8077948432236649947" key="MSG_COMMON_COMPONENTS_RESOURCECARD_RESOURCECARDDELETEMENUITEM_0" desc="Action &quot;Delete&quot; (verb), which appears as a menu item on the cards for kubernetes resources.">삭제</translation>
+  <translation id="1786717544428328487" key="MSG_COMMON_COMPONENTS_RESOURCECARD_RESOURCECARDEDITMENUITEM_0" desc="Label for YAML edit menu item.">YAML 보기/편집하기</translation>
+  <translation id="6165720699884834015" key="MSG_COMMON_COMPONENTS_RESOURCECARD_RESOURCECARDMENU_0" desc="Tooltip &quot;Actions&quot;, which appears when you hover over the menu icon on any resource card.">액션</translation>
+  <translation id="5816664742336097257" key="MSG_COMMON_COMPONENTS_RESOURCEDETAIL_INFOCARD_0" desc="(no description provided)">이름</translation>
+  <translation id="324296574289248020" key="MSG_COMMON_COMPONENTS_RESOURCEDETAIL_INFOCARD_1" desc="Label \'Namespace\' for a resource.">네임스페이스</translation>
+  <translation id="7353491667260402390" key="MSG_COMMON_COMPONENTS_RESOURCEDETAIL_INFOCARD_2" desc="Label \'Labels\' for a resource.">레이블</translation>
   <translation id="5872558793526944357" key="MSG_COMMON_COMPONENTS_RESOURCEDETAIL_INFOCARD_3" desc="Label \'Annotations\' for a resource.">Annotations</translation>
-  <translation id="7069230303117205966" key="MSG_COMMON_COMPONENTS_RESOURCEDETAIL_INFOCARD_4" desc="Label \'Creation Time\' for a resource.">Creation Time</translation>
-  <translation id="5724590208757461876" key="MSG_COMMON_COMPONENTS_SCALE_SCALE_0" desc="Action \'Scale\' on the drop down menu on resource list page.">Scale</translation>
-  <translation id="2699323907720130275" key="MSG_COMMON_COMPONENTS_SCALE_SCALE_1" desc="Tooltip for the \'scale\' button on the action bar on a resource details view.">Edit number of pods</translation>
-  <translation id="8982112402145698888" key="MSG_COMMON_COMPONENTS_SCALE_SCALE_2" desc="Tooltip for the \'Scale\' button on the action bar on a resource details view.">Scale</translation>
-  <translation id="8514425134682432381" key="MSG_COMMON_COMPONENTS_WARNINGS_WARNINGS_0" desc="Tooltip for warning dismissal button.">Dismiss</translation>
-  <translation id="7328790086203280450" key="MSG_COMMON_COMPONENTS_WARNINGS_WARNINGS_1" desc="Tooltip for all warning dismissal button.">Dismiss all</translation>
-  <translation id="6941584785589389821" key="MSG_COMMON_COMPONENTS_ZEROSTATE_ZEROSTATE_0" desc="Title text which appears on zero state view.">There is nothing to display here</translation>
+  <translation id="7069230303117205966" key="MSG_COMMON_COMPONENTS_RESOURCEDETAIL_INFOCARD_4" desc="Label \'Creation Time\' for a resource.">생성 시간</translation>
+  <translation id="5724590208757461876" key="MSG_COMMON_COMPONENTS_SCALE_SCALE_0" desc="Action \'Scale\' on the drop down menu on resource list page.">스케일</translation>
+  <translation id="2699323907720130275" key="MSG_COMMON_COMPONENTS_SCALE_SCALE_1" desc="Tooltip for the \'scale\' button on the action bar on a resource details view.">pod 수 바꾸기</translation>
+  <translation id="8982112402145698888" key="MSG_COMMON_COMPONENTS_SCALE_SCALE_2" desc="Tooltip for the \'Scale\' button on the action bar on a resource details view.">스케일</translation>
+  <translation id="8514425134682432381" key="MSG_COMMON_COMPONENTS_WARNINGS_WARNINGS_0" desc="Tooltip for warning dismissal button.">무시</translation>
+  <translation id="7328790086203280450" key="MSG_COMMON_COMPONENTS_WARNINGS_WARNINGS_1" desc="Tooltip for all warning dismissal button.">모두 무시</translation>
+  <translation id="6941584785589389821" key="MSG_COMMON_COMPONENTS_ZEROSTATE_ZEROSTATE_0" desc="Title text which appears on zero state view.">표시할 내용이 없습니다</translation>
   <translation id="8000678649572976545" key="MSG_COMMON_COMPONENTS_ZEROSTATE_ZEROSTATE_1" desc="Description for a zero state page.">You can &lt;a href="{{::$ctrl.getStateHref()}}"&gt;deploy a containerized app&lt;/a&gt;, select other namespace or &lt;a href="http://kubernetes.io/docs/user-guide/ui/" target="_blank"&gt;take the Dashboard Tour &lt;i class="material-icons kd-zerostate-icon"&gt;open_in_new&lt;/i&gt;&lt;/a&gt; to learn more.</translation>
-  <translation id="4149717000499670158" key="MSG_COMMON_NAMESPACE_DIALOG_0" desc="(no description provided)">Change namespace?</translation>
-  <translation id="1716771106236346382" key="MSG_COMMON_NAMESPACE_DIALOG_1" desc="(no description provided)">Selected resource is in a different namespace than currently selected.</translation>
-  <translation id="8393679939521140300" key="MSG_COMMON_NAMESPACE_DIALOG_2" desc="(no description provided)">Change namespace?</translation>
-  <translation id="5902174388191116331" key="MSG_COMMON_NAMESPACE_DIALOG_3" desc="(no description provided)">Yes</translation>
-  <translation id="7374326576991357026" key="MSG_COMMON_NAMESPACE_DIALOG_4" desc="(no description provided)">No</translation>
-  <translation id="7550995980277409495" key="MSG_COMMON_NAMESPACE_DIALOG_5" desc="(no description provided)">Do you want to change namespace from &lt;i&gt;{{ $ctrl.currentNamespace()}}&lt;/i&gt; to &lt;i&gt;{{::$ctrl.newNamespace}}&lt;/i&gt;?</translation>
-  <translation id="4492076728105331074" key="MSG_COMMON_NAMESPACE_NAMESPACESELECT_0" desc="Title for namespace select.">Namespace</translation>
-  <translation id="5174603006239796789" key="MSG_COMMON_NAMESPACE_NAMESPACESELECT_1" desc="Text describing what namespace selector is">Selector for namespaces</translation>
-  <translation id="7324783266461564175" key="MSG_COMMON_NAMESPACE_NAMESPACESELECT_2" desc="Text for dropdown item that indicates that no namespace was selected.">All namespaces</translation>
-  <translation id="5324906937580749197" key="MSG_COMMON_NAMESPACE_NAMESPACESELECT_3" desc="Label atop a list of namespaces">Namespaces</translation>
-  <translation id="1071151632434666377" key="MSG_COMMON_NAMESPACE_NAMESPACESELECT_4" desc="(no description provided)">Select namespace...</translation>
-  <translation id="395521352310086904" key="MSG_COMMON_RESOURCE_DELETERESOURCE_0" desc="Title for a delete resource dialog.">Delete a {{::$ctrl.resourceKindName}}</translation>
-  <translation id="1507210670835642034" key="MSG_COMMON_RESOURCE_DELETERESOURCE_1" desc="Title for a delete resource dialog.">Delete a {{::$ctrl.resourceKindName}}</translation>
-  <translation id="4882763297660106258" key="MSG_COMMON_RESOURCE_DELETERESOURCE_2" desc="Confirmation question, appears before any dashboard resource will be deleted.">Are you sure you want to delete {{::$ctrl.resourceKindName}} &lt;i&gt;{{::$ctrl.objectMeta.name}}&lt;/i&gt; in namespace &lt;i&gt;{{::$ctrl.objectMeta.namespace}}&lt;/i&gt;?</translation>
-  <translation id="4128050333493885311" key="MSG_COMMON_RESOURCE_DELETERESOURCE_3" desc="Label for cancel button.">Cancel</translation>
-  <translation id="896694419951320432" key="MSG_COMMON_RESOURCE_DELETERESOURCE_4" desc="Label for delete button.">Delete</translation>
-  <translation id="4968436708987569734" key="MSG_COMMON_RESOURCE_DELETERESOURCE_5" desc="Confirmation question, appears before any dashboard resource will be deleted. (unnamespaced resources)">Are you sure you want to delete {{::$ctrl.resourceKindName}} &lt;i&gt;{{::$ctrl.objectMeta.name}}&lt;/i&gt;?</translation>
-  <translation id="5788637878898196013" key="MSG_COMMON_RESOURCE_EDITRESOURCE_0" desc="Title for a delete resource dialog.">Edit a {{::$ctrl.resourceKindName}}</translation>
-  <translation id="6030718757273830989" key="MSG_COMMON_RESOURCE_EDITRESOURCE_1" desc="Title for a delete resource dialog.">Edit a {{::$ctrl.resourceKindName}}</translation>
-  <translation id="7280957759518658382" key="MSG_COMMON_RESOURCE_EDITRESOURCE_2" desc="Label for cancel button.">Cancel</translation>
-  <translation id="874103626505058314" key="MSG_COMMON_RESOURCE_EDITRESOURCE_3" desc="Label for update button.">Update</translation>
-  <translation id="2484996950399771862" key="MSG_COMMON_RESOURCE_EDITRESOURCE_4" desc="Label for copy button.">Copy</translation>
-  <translation id="4435278810119842088" key="MSG_COMMON_SCALING_SCALERESOURCE_0" desc="Title for a scaling resource dialog.">Scale a {{::$ctrl.resourceKindDisplayName}}</translation>
-  <translation id="6799841013413751791" key="MSG_COMMON_SCALING_SCALERESOURCE_1" desc="Title for a scaling resource dialog.">Scale a {{::$ctrl.resourceKindDisplayName}}</translation>
-  <translation id="3101929086031362285" key="MSG_COMMON_SCALING_SCALERESOURCE_2" desc="User help for the pod count update dialog (on the replication controllers detail page).">Resource {{::$ctrl.resourceName}} will be updated to reflect the desired count.</translation>
-  <translation id="3999312467829287271" key="MSG_COMMON_SCALING_SCALERESOURCE_3" desc="Label \'Desired number of pods\', which appears as a placeholder for the pods count input on the &quot;update pods count&quot; dialog (for a Deployment, ReplicaSet, Replication Controller resource).">Desired number of pods</translation>
-  <translation id="536413431729659126" key="MSG_COMMON_SCALING_SCALERESOURCE_4" desc="Label \'Desired degree parallelism for a Job\', which appears as a placeholder for the parallelism count input on the &quot;update parallelism count&quot; dialog (for a Job resource).">Desired degree of parallelism for Job</translation>
-  <translation id="937791798359212536" key="MSG_COMMON_SCALING_SCALERESOURCE_5" desc="This warning appears when the user does not specify a pods count on the &quot;update number of pods&quot; dialog (for a deployment).">Number of pods is required.</translation>
-  <translation id="2003054295342948819" key="MSG_COMMON_SCALING_SCALERESOURCE_6" desc="This warning appears when the specified pods count on the &quot;update number of pods&quot; dialog is not positive or non-integer.">Number of replicas must be equal to or greater than zero.</translation>
-  <translation id="294261030618218767" key="MSG_COMMON_SCALING_SCALERESOURCE_7" desc="This warning appears when the specified pods count (on the &quot;update number of pods&quot; dialog) is very high.">Setting high number of pods may cause performance issues of the cluster and Dashboard UI.</translation>
-  <translation id="2060548261728726971" key="MSG_COMMON_SCALING_SCALERESOURCE_8" desc="Label for cancel button.">Cancel</translation>
+  <translation id="4149717000499670158" key="MSG_COMMON_NAMESPACE_DIALOG_0" desc="(no description provided)">네임스페이스 변경?</translation>
+  <translation id="1716771106236346382" key="MSG_COMMON_NAMESPACE_DIALOG_1" desc="(no description provided)">선택한 자원은 다른 네임스페이스에 있습니다.</translation>
+  <translation id="8393679939521140300" key="MSG_COMMON_NAMESPACE_DIALOG_2" desc="(no description provided)">네임스페이스 변경?</translation>
+  <translation id="5902174388191116331" key="MSG_COMMON_NAMESPACE_DIALOG_3" desc="(no description provided)">예</translation>
+  <translation id="7374326576991357026" key="MSG_COMMON_NAMESPACE_DIALOG_4" desc="(no description provided)">아니요</translation>
+  <translation id="7550995980277409495" key="MSG_COMMON_NAMESPACE_DIALOG_5" desc="(no description provided)">네임스페이스를 &lt;i&gt;{{ $ctrl.currentNamespace()}}&lt;/i&gt;에서 &lt;i&gt;{{::$ctrl.newNamespace}}&lt;/i&gt;로 바꾸겠습니까?</translation>
+  <translation id="4492076728105331074" key="MSG_COMMON_NAMESPACE_NAMESPACESELECT_0" desc="Title for namespace select.">네임스페이스</translation>
+  <translation id="5174603006239796789" key="MSG_COMMON_NAMESPACE_NAMESPACESELECT_1" desc="Text describing what namespace selector is">네임스페이스 선택자</translation>
+  <translation id="7324783266461564175" key="MSG_COMMON_NAMESPACE_NAMESPACESELECT_2" desc="Text for dropdown item that indicates that no namespace was selected.">모든 네임스페이스</translation>
+  <translation id="5324906937580749197" key="MSG_COMMON_NAMESPACE_NAMESPACESELECT_3" desc="Label atop a list of namespaces">네임스페이스</translation>
+  <translation id="1071151632434666377" key="MSG_COMMON_NAMESPACE_NAMESPACESELECT_4" desc="(no description provided)">네임스페이스 선택...</translation>
+  <translation id="395521352310086904" key="MSG_COMMON_RESOURCE_DELETERESOURCE_0" desc="Title for a delete resource dialog.">{{::$ctrl.resourceKindName}} 삭제</translation>
+  <translation id="1507210670835642034" key="MSG_COMMON_RESOURCE_DELETERESOURCE_1" desc="Title for a delete resource dialog.">{{::$ctrl.resourceKindName}} 삭제</translation>
+  <translation id="4882763297660106258" key="MSG_COMMON_RESOURCE_DELETERESOURCE_2" desc="Confirmation question, appears before any dashboard resource will be deleted.">정말로 &lt;i&gt;{{::$ctrl.objectMeta.namespace}}&lt;/i&gt; 네임스페이스의 {{::$ctrl.resourceKindName}} &lt;i&gt;{{::$ctrl.objectMeta.name}}&lt;/i&gt;를 삭제하겠습니까?</translation>
+  <translation id="4128050333493885311" key="MSG_COMMON_RESOURCE_DELETERESOURCE_3" desc="Label for cancel button.">취소</translation>
+  <translation id="896694419951320432" key="MSG_COMMON_RESOURCE_DELETERESOURCE_4" desc="Label for delete button.">삭제</translation>
+  <translation id="4968436708987569734" key="MSG_COMMON_RESOURCE_DELETERESOURCE_5" desc="Confirmation question, appears before any dashboard resource will be deleted. (unnamespaced resources)">정말로 {{::$ctrl.resourceKindName}} &lt;i&gt;{{::$ctrl.objectMeta.name}}&lt;/i&gt;를 삭제하겠습니까?</translation>
+  <translation id="5788637878898196013" key="MSG_COMMON_RESOURCE_EDITRESOURCE_0" desc="Title for a delete resource dialog.">{{::$ctrl.resourceKindName}} 편집</translation>
+  <translation id="6030718757273830989" key="MSG_COMMON_RESOURCE_EDITRESOURCE_1" desc="Title for a delete resource dialog.">{{::$ctrl.resourceKindName}} 편집</translation>
+  <translation id="7280957759518658382" key="MSG_COMMON_RESOURCE_EDITRESOURCE_2" desc="Label for cancel button.">취소</translation>
+  <translation id="874103626505058314" key="MSG_COMMON_RESOURCE_EDITRESOURCE_3" desc="Label for update button.">업데이트</translation>
+  <translation id="2484996950399771862" key="MSG_COMMON_RESOURCE_EDITRESOURCE_4" desc="Label for copy button.">복사</translation>
+  <translation id="4435278810119842088" key="MSG_COMMON_SCALING_SCALERESOURCE_0" desc="Title for a scaling resource dialog.">{{::$ctrl.resourceKindDisplayName}} 스케일 변경</translation>
+  <translation id="6799841013413751791" key="MSG_COMMON_SCALING_SCALERESOURCE_1" desc="Title for a scaling resource dialog.">{{::$ctrl.resourceKindDisplayName}} 스케일 변경</translation>
+  <translation id="3101929086031362285" key="MSG_COMMON_SCALING_SCALERESOURCE_2" desc="User help for the pod count update dialog (on the replication controllers detail page).">자원 {{::$ctrl.resourceName}}이/가 기대한 수 만큼 업데이트 됩니다.</translation>
+  <translation id="3999312467829287271" key="MSG_COMMON_SCALING_SCALERESOURCE_3" desc="Label \'Desired number of pods\', which appears as a placeholder for the pods count input on the &quot;update pods count&quot; dialog (for a Deployment, ReplicaSet, Replication Controller resource).">기대하는 pod의 수</translation>
+  <translation id="536413431729659126" key="MSG_COMMON_SCALING_SCALERESOURCE_4" desc="Label \'Desired degree parallelism for a Job\', which appears as a placeholder for the parallelism count input on the &quot;update parallelism count&quot; dialog (for a Job resource).">기대하는 Job의 병렬화 정도</translation>
+  <translation id="937791798359212536" key="MSG_COMMON_SCALING_SCALERESOURCE_5" desc="This warning appears when the user does not specify a pods count on the &quot;update number of pods&quot; dialog (for a deployment).">Pod의 수가 필요합니다.</translation>
+  <translation id="2003054295342948819" key="MSG_COMMON_SCALING_SCALERESOURCE_6" desc="This warning appears when the specified pods count on the &quot;update number of pods&quot; dialog is not positive or non-integer.">복제의 수는 0 이상이어야 합니다.</translation>
+  <translation id="294261030618218767" key="MSG_COMMON_SCALING_SCALERESOURCE_7" desc="This warning appears when the specified pods count (on the &quot;update number of pods&quot; dialog) is very high.">Pod의 수가 많은 경우 클러스터 및 대시보드 UI의 성능 이슈를 야기할 수 있습니다.</translation>
+  <translation id="2060548261728726971" key="MSG_COMMON_SCALING_SCALERESOURCE_8" desc="Label for cancel button.">취소</translation>
   <translation id="486192895688311189" key="MSG_COMMON_SCALING_SCALERESOURCE_9" desc="Action \'OK\' for the confirmation button on the &quot;update number of pods dialog&quot;.">OK</translation>
   <translation id="2290466353199139171" key="MSG_CONFIGMAP_DETAIL_ACTIONBAR_0" desc="Label \'Config Map\' which appears at the top of the\n      delete dialog, opened from a config map details page.">Config Map</translation>
-  <translation id="1345195277871602727" key="MSG_CONFIGMAP_DETAIL_DETAIL_0" desc="Config map data header on details page">Data</translation>
-  <translation id="5478435235468315342" key="MSG_CONFIGMAP_DETAIL_DETAIL_1" desc="Zero state text on config map details view.">There is no data to display</translation>
+  <translation id="1345195277871602727" key="MSG_CONFIGMAP_DETAIL_DETAIL_0" desc="Config map data header on details page">데이터</translation>
+  <translation id="5478435235468315342" key="MSG_CONFIGMAP_DETAIL_DETAIL_1" desc="Zero state text on config map details view.">표시할 데이터가 없습니다.</translation>
   <translation id="5220920321462587761" key="MSG_CONFIGMAP_DETAIL_DETAIL_2" desc="Zero state text on config map details view.">You can edit config map to add data.</translation>
-  <translation id="998665058731826460" key="MSG_CONFIGMAP_DETAIL_INFO_0" desc="Header in a detail view">Details</translation>
+  <translation id="998665058731826460" key="MSG_CONFIGMAP_DETAIL_INFO_0" desc="Header in a detail view">상세</translation>
   <translation id="9090261468074115569" key="MSG_CONFIGMAP_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">Config Maps</translation>
-  <translation id="5434719528055235183" key="MSG_CONFIGMAP_LIST_CARDLIST_1" desc="Config map list header: name.">Name</translation>
-  <translation id="4172472290353802354" key="MSG_CONFIGMAP_LIST_CARDLIST_2" desc="Config map list header: namespace.">Namespace</translation>
-  <translation id="2010918488451009803" key="MSG_CONFIGMAP_LIST_CARDLIST_3" desc="Config map list header: labels.">Labels</translation>
+  <translation id="5434719528055235183" key="MSG_CONFIGMAP_LIST_CARDLIST_1" desc="Config map list header: name.">이름</translation>
+  <translation id="4172472290353802354" key="MSG_CONFIGMAP_LIST_CARDLIST_2" desc="Config map list header: namespace.">네임스페이스</translation>
+  <translation id="2010918488451009803" key="MSG_CONFIGMAP_LIST_CARDLIST_3" desc="Config map list header: labels.">레이블</translation>
   <translation id="5490277101487527964" key="MSG_CONFIGMAP_LIST_CARDLIST_4" desc="Config map list header: age.">Age</translation>
-  <translation id="5461266186409477738" key="MSG_CONFIGMAP_LIST_CARDLIST_5" desc="Text for config map card list zerostate.">There are no Config Maps to display.</translation>
+  <translation id="5461266186409477738" key="MSG_CONFIGMAP_LIST_CARDLIST_5" desc="Text for config map card list zerostate.">표시할 Config Map이 없습니다.</translation>
   <translation id="6220776078337852001" key="MSG_CONFIGMAP_LIST_CARD_0" desc="Label \'Config Map\' which will appear in the config map\n      delete dialog opened from a config map card on the list page.">Config Map</translation>
   <translation id="1762365164654423553" key="MSG_CONFIGMAP_LIST_CARD_1" desc="Label \'Config Map\' which will appear in the config map\n      delete dialog opened from a config map card on the list page.">Config Map</translation>
-  <translation id="71972858737246786" key="MSG_CONFIGMAP_LIST_CARD_2" desc="Tooltip for the age column">Created at</translation>
-  <translation id="8072030721088093841" key="MSG_CONFIG_DIALOG_CLOSE_ACTION" desc="Action &quot;Close&quot; on a dialog.">Close</translation>
-  <translation id="6508331633234837511" key="MSG_COPIED_TOAST" desc="Toast message appears when copied to clipboard.">Copied to clipboard</translation>
+  <translation id="71972858737246786" key="MSG_CONFIGMAP_LIST_CARD_2" desc="Tooltip for the age column">생성 시간</translation>
+  <translation id="8072030721088093841" key="MSG_CONFIG_DIALOG_CLOSE_ACTION" desc="Action &quot;Close&quot; on a dialog.">닫기</translation>
+  <translation id="6508331633234837511" key="MSG_COPIED_TOAST" desc="Toast message appears when copied to clipboard.">클립보드에 복사되었습니다.</translation>
   <translation id="6219798353623882069" key="MSG_CRONJOB_DETAIL_ACTIONBAR_0" desc="Cron Job\'s resource kind name.">Cron Job</translation>
   <translation id="5152871798838609000" key="MSG_CRONJOB_DETAIL_DETAIL_0" desc="Active Jobs card title, displayed on Cron Job details page.">Active Jobs</translation>
-  <translation id="2080014846980293516" key="MSG_CRONJOB_DETAIL_DETAIL_1" desc="(no description provided)">There are currently no Jobs managed by this Cron Job.</translation>
-  <translation id="2068898769567977603" key="MSG_CRONJOB_DETAIL_INFO_0" desc="Cron Job\'s details card header.">Details</translation>
-  <translation id="9026215886401416721" key="MSG_CRONJOB_DETAIL_INFO_1" desc="Cron Job\'s attribute label.">Schedule</translation>
+  <translation id="2080014846980293516" key="MSG_CRONJOB_DETAIL_DETAIL_1" desc="(no description provided)">현재 이 Cron Job으로 관리되는 Job이 없습니다.</translation>
+  <translation id="2068898769567977603" key="MSG_CRONJOB_DETAIL_INFO_0" desc="Cron Job\'s details card header.">상세</translation>
+  <translation id="9026215886401416721" key="MSG_CRONJOB_DETAIL_INFO_1" desc="Cron Job\'s attribute label.">스케줄</translation>
   <translation id="6247369684436975092" key="MSG_CRONJOB_DETAIL_INFO_2" desc="Cron Job\'s attribute label.">Active</translation>
   <translation id="3345931933714766109" key="MSG_CRONJOB_DETAIL_INFO_3" desc="Cron Job\'s attribute label.">Suspend</translation>
   <translation id="8174815810461065074" key="MSG_CRONJOB_DETAIL_INFO_4" desc="Cron Job\'s attribute label.">Last Schedule</translation>
   <translation id="1850912236893096243" key="MSG_CRONJOB_DETAIL_INFO_5" desc="Cron Job\'s attribute label.">Concurrency Policy</translation>
   <translation id="2737908966115951639" key="MSG_CRONJOB_DETAIL_INFO_6" desc="Cron Job\'s attribute label.">Starting Deadline Seconds</translation>
   <translation id="3821426589688229018" key="MSG_CRONJOB_LIST_CARDLIST_0" desc="Cron Jobs list header.">Cron Jobs</translation>
-  <translation id="5891958993570559525" key="MSG_CRONJOB_LIST_CARDLIST_1" desc="Zero state message.">There are no Cron Jobs to display.</translation>
+  <translation id="5891958993570559525" key="MSG_CRONJOB_LIST_CARDLIST_1" desc="Zero state message.">표시할 Cron Job이 없습니다.</translation>
   <translation id="5674725706448948404" key="MSG_CRONJOB_LIST_CARDLIST_10" desc="Label \'Age\' which appears as a column label in the table of cron jobs.">Age</translation>
-  <translation id="2879080485078402391" key="MSG_CRONJOB_LIST_CARDLIST_2" desc="Cron Jobs list header.">Name</translation>
-  <translation id="7320236786792138099" key="MSG_CRONJOB_LIST_CARDLIST_3" desc="Cron Jobs list header.">Kind</translation>
-  <translation id="8864113711854264188" key="MSG_CRONJOB_LIST_CARDLIST_4" desc="Cron Jobs list header.">Namespace</translation>
-  <translation id="6057333873357537375" key="MSG_CRONJOB_LIST_CARDLIST_5" desc="Cron Jobs list header.">Labels</translation>
-  <translation id="8409117265662310814" key="MSG_CRONJOB_LIST_CARDLIST_6" desc="Cron Jobs list header.">Schedule</translation>
+  <translation id="2879080485078402391" key="MSG_CRONJOB_LIST_CARDLIST_2" desc="Cron Jobs list header.">이름</translation>
+  <translation id="7320236786792138099" key="MSG_CRONJOB_LIST_CARDLIST_3" desc="Cron Jobs list header.">종류</translation>
+  <translation id="8864113711854264188" key="MSG_CRONJOB_LIST_CARDLIST_4" desc="Cron Jobs list header.">네임스페이스</translation>
+  <translation id="6057333873357537375" key="MSG_CRONJOB_LIST_CARDLIST_5" desc="Cron Jobs list header.">레이블</translation>
+  <translation id="8409117265662310814" key="MSG_CRONJOB_LIST_CARDLIST_6" desc="Cron Jobs list header.">스케줄</translation>
   <translation id="2135332067018668225" key="MSG_CRONJOB_LIST_CARDLIST_7" desc="Cron Jobs list header.">Suspend</translation>
   <translation id="5392615873573857545" key="MSG_CRONJOB_LIST_CARDLIST_8" desc="Cron Jobs list header.">Active</translation>
   <translation id="8104459615166495175" key="MSG_CRONJOB_LIST_CARDLIST_9" desc="Cron Jobs list header.">Last Schedule</translation>
-  <translation id="4693239518072180196" key="MSG_CRONJOB_LIST_CARD_0" desc="(no description provided)">Cron Job is suspended</translation>
+  <translation id="4693239518072180196" key="MSG_CRONJOB_LIST_CARD_0" desc="(no description provided)">Cron Job이 중단되었습니다.</translation>
   <translation id="153242948036531648" key="MSG_CRONJOB_LIST_CARD_1" desc="Column \'Cron Job\' that shows if the resource kind should be shown in a Cron Job List">Cron Job</translation>
   <translation id="9148866532975040477" key="MSG_CRONJOB_LIST_CARD_2" desc="(no description provided)">Cron Job</translation>
   <translation id="3608442559599521792" key="MSG_CRONJOB_LIST_CARD_3" desc="(no description provided)">Cron Job</translation>
-  <translation id="5779071478639736184" key="MSG_CRON_JOB_LIST_CREATED_AT_TOOLTIP" desc="Tooltip 'Created at [some date]' showing the exact creation time.">Created at <ph name="CREATION_DATE"/></translation>
-  <translation id="2823218791264820502" key="MSG_CURRENT_PODS_MSG" desc="Satisfies a way to make normal binding in angularjs to pass in google closure compiler.">Current status: <ph name="CURRENT_PODS"/> created</translation>
-  <translation id="3159284180115253445" key="MSG_DAEMONSET_DETAIL_DETAIL_0" desc="Title for graph card displaying CPU metric of one daemon set.">CPU usage</translation>
-  <translation id="3656189643804804472" key="MSG_DAEMONSET_DETAIL_DETAIL_1" desc="Title for graph card displaying memory metric of one daemon set.">Memory usage</translation>
-  <translation id="2830742900079405655" key="MSG_DAEMONSET_DETAIL_DETAIL_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by this daemon set.</translation>
-  <translation id="5813652713612060929" key="MSG_DAEMONSET_DETAIL_DETAIL_4" desc="Text for services card zerostate in daemon set details page.">There are currently no Services with the same label selector as this Daemon Set.</translation>
-  <translation id="2603922476358928027" key="MSG_DAEMONSET_DETAIL_DETAIL_6" desc="Text for pods card zerostate in daemon set details page.">There are currently no Pods scheduled on this Daemon Set.</translation>
-  <translation id="4390902408757290154" key="MSG_DAEMONSET_DETAIL_INFO_0" desc="Header in a detail view">Details</translation>
-  <translation id="6360476314472751831" key="MSG_DAEMONSET_DETAIL_INFO_10" desc="Label \'Pods status\' for the status of the pods in a daemon set, on the daemon set details page.">Pods status</translation>
+  <translation id="5779071478639736184" key="MSG_CRON_JOB_LIST_CREATED_AT_TOOLTIP" desc="Tooltip 'Created at [some date]' showing the exact creation time.">생성 시간<ph name="CREATION_DATE"/></translation>
+  <translation id="2823218791264820502" key="MSG_CURRENT_PODS_MSG" desc="Satisfies a way to make normal binding in angularjs to pass in google closure compiler.">현재 상태: <ph name="CURRENT_PODS">가 생성되었습니다</ph></translation>
+  <translation id="3159284180115253445" key="MSG_DAEMONSET_DETAIL_DETAIL_0" desc="Title for graph card displaying CPU metric of one daemon set.">CPU 사용량</translation>
+  <translation id="3656189643804804472" key="MSG_DAEMONSET_DETAIL_DETAIL_1" desc="Title for graph card displaying memory metric of one daemon set.">메모리 사용량</translation>
+  <translation id="2830742900079405655" key="MSG_DAEMONSET_DETAIL_DETAIL_2" desc="Help message detailing what is included in the memory usage">본 메모리 사용량에는 daemon set이 관리하는 pod의 캐시가 포함되어 있습니다.</translation>
+  <translation id="5813652713612060929" key="MSG_DAEMONSET_DETAIL_DETAIL_4" desc="Text for services card zerostate in daemon set details page.">현재 해당 daemon set과 레이블 선택자에 일치하는 서비스가 없습니다. </translation>
+  <translation id="2603922476358928027" key="MSG_DAEMONSET_DETAIL_DETAIL_6" desc="Text for pods card zerostate in daemon set details page.">현재 해당 daemon set에 스케줄된 pod가 없습니다.</translation>
+  <translation id="4390902408757290154" key="MSG_DAEMONSET_DETAIL_INFO_0" desc="Header in a detail view">상세</translation>
+  <translation id="6360476314472751831" key="MSG_DAEMONSET_DETAIL_INFO_10" desc="Label \'Pods status\' for the status of the pods in a daemon set, on the daemon set details page.">Pods 상태</translation>
   <translation id="3771546490015192323" key="MSG_DAEMONSET_DETAIL_INFO_11" desc="The message says how many pods are pending (daemon set details page).">{{::$ctrl.daemonSet.podInfo.pending}} pending</translation>
   <translation id="6989004320544423836" key="MSG_DAEMONSET_DETAIL_INFO_12" desc="The message says how many pods have failed (daemon set details page).">{{::$ctrl.daemonSet.podInfo.failed}} failed</translation>
   <translation id="7121920513850122580" key="MSG_DAEMONSET_DETAIL_INFO_13" desc="The message describes how many pods are running (daemon set details page).">{{::$ctrl.daemonSet.podInfo.running}} running</translation>
-  <translation id="5529663386929562771" key="MSG_DAEMONSET_DETAIL_INFO_4" desc="Label \'Images\' for the list of images used in a daemon set, on its details page.">Images</translation>
-  <translation id="8207927853231587262" key="MSG_DAEMONSET_DETAIL_INFO_5" desc="Subtitle \'Status\' for the right section with pod status information on the daemon set details page.">Status</translation>
+  <translation id="5529663386929562771" key="MSG_DAEMONSET_DETAIL_INFO_4" desc="Label \'Images\' for the list of images used in a daemon set, on its details page.">이미지</translation>
+  <translation id="8207927853231587262" key="MSG_DAEMONSET_DETAIL_INFO_5" desc="Subtitle \'Status\' for the right section with pod status information on the daemon set details page.">상태</translation>
   <translation id="3195556158142781226" key="MSG_DAEMONSET_DETAIL_INFO_6" desc="Label \'Pods\' for the pods in a daemon set on its details page.">Pods</translation>
-  <translation id="1832136994003570020" key="MSG_DAEMONSET_DETAIL_INFO_7" desc="The message describes how many pods were created (daemon set details page).">{{::$ctrl.daemonSet.podInfo.current}} created</translation>
-  <translation id="5651976668507530367" key="MSG_DAEMONSET_DETAIL_INFO_8" desc="The message describes how many pods are desired to run (daemon set details page).">{{::$ctrl.daemonSet.podInfo.desired}} desired</translation>
-  <translation id="5550367961828357134" key="MSG_DAEMONSET_DETAIL_INFO_9" desc="The message describes how many pods are running (daemon set details page).">{{::$ctrl.daemonSet.podInfo.running}} running</translation>
+  <translation id="1832136994003570020" key="MSG_DAEMONSET_DETAIL_INFO_7" desc="The message describes how many pods were created (daemon set details page).">{{::$ctrl.daemonSet.podInfo.current}}개 생성됨</translation>
+  <translation id="5651976668507530367" key="MSG_DAEMONSET_DETAIL_INFO_8" desc="The message describes how many pods are desired to run (daemon set details page).">{{::$ctrl.daemonSet.podInfo.desired}}개 기대됨</translation>
+  <translation id="5550367961828357134" key="MSG_DAEMONSET_DETAIL_INFO_9" desc="The message describes how many pods are running (daemon set details page).">{{::$ctrl.daemonSet.podInfo.running}}개 구동 중</translation>
   <translation id="5631725742223773299" key="MSG_DAEMONSET_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">Daemon Sets</translation>
-  <translation id="3304895041101053745" key="MSG_DAEMONSET_LIST_CARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of daemon sets (daemon set list view).">Name</translation>
-  <translation id="7715674186436282027" key="MSG_DAEMONSET_LIST_CARDLIST_2" desc="Column header \'Kind\' on Daemon Set lists">Kind</translation>
-  <translation id="1198220912632063457" key="MSG_DAEMONSET_LIST_CARDLIST_3" desc="Label \'Namespace\' which appears as a column label in the table of daemon sets (daemon set list view).">Namespace</translation>
-  <translation id="4316139792239592855" key="MSG_DAEMONSET_LIST_CARDLIST_4" desc="Label \'Labels\' which appears as a column label in the table of daemon sets (daemon set list view).">Labels</translation>
+  <translation id="3304895041101053745" key="MSG_DAEMONSET_LIST_CARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of daemon sets (daemon set list view).">이름</translation>
+  <translation id="7715674186436282027" key="MSG_DAEMONSET_LIST_CARDLIST_2" desc="Column header \'Kind\' on Daemon Set lists">종류</translation>
+  <translation id="1198220912632063457" key="MSG_DAEMONSET_LIST_CARDLIST_3" desc="Label \'Namespace\' which appears as a column label in the table of daemon sets (daemon set list view).">네임스페이스</translation>
+  <translation id="4316139792239592855" key="MSG_DAEMONSET_LIST_CARDLIST_4" desc="Label \'Labels\' which appears as a column label in the table of daemon sets (daemon set list view).">레이블</translation>
   <translation id="315233313099478215" key="MSG_DAEMONSET_LIST_CARDLIST_5" desc="Label \'Pods\' which appears as a column label in the table of daemon sets (daemon set list view).">Pods</translation>
   <translation id="5238998686445297660" key="MSG_DAEMONSET_LIST_CARDLIST_6" desc="Label \'Age\' which appears as a column label in the table of daemon sets (daemon set list view).">Age</translation>
-  <translation id="2598397233464322530" key="MSG_DAEMONSET_LIST_CARDLIST_7" desc="Label \'Images\' which appears as a column label in the table of daemon sets (daemon set list view).">Images</translation>
-  <translation id="4980932810318302398" key="MSG_DAEMONSET_LIST_CARDLIST_8" desc="Text for daemon set card list zerostate.">There are no Daemon Sets to display.</translation>
-  <translation id="6325130526007284501" key="MSG_DAEMONSET_LIST_CARD_0" desc="Tooltip for failed pod card icon.">One or more pods have errors.</translation>
-  <translation id="7994511127932765314" key="MSG_DAEMONSET_LIST_CARD_1" desc="Tooltip for pending pod card icon.">One or more pods are in pending state.</translation>
+  <translation id="2598397233464322530" key="MSG_DAEMONSET_LIST_CARDLIST_7" desc="Label \'Images\' which appears as a column label in the table of daemon sets (daemon set list view).">이미지</translation>
+  <translation id="4980932810318302398" key="MSG_DAEMONSET_LIST_CARDLIST_8" desc="Text for daemon set card list zerostate.">표시할 Daemon Set이 없습니다.</translation>
+  <translation id="6325130526007284501" key="MSG_DAEMONSET_LIST_CARD_0" desc="Tooltip for failed pod card icon.">하나 이상의 pod에 에러가 있습니다.</translation>
+  <translation id="7994511127932765314" key="MSG_DAEMONSET_LIST_CARD_1" desc="Tooltip for pending pod card icon.">하나 이상의 pod가 pending 상태입니다.</translation>
   <translation id="141161203909207679" key="MSG_DAEMONSET_LIST_CARD_2" desc="Column \'Daemon Set\' in a Daemon Set List">Daemon Set</translation>
   <translation id="422238456212619456" key="MSG_DAEMONSET_LIST_CARD_3" desc="Title \'Daemon Set\' which is used as a title for the delete/update\n   dialogs (that can be opened on the daemon set list view).">Daemon Set</translation>
   <translation id="583742092710968694" key="MSG_DAEMONSET_LIST_CARD_4" desc="Title \'Daemon Set\' which is used as a title for the delete/update\n   dialogs (that can be opened on the daemon set list view).">Daemon Set</translation>
-  <translation id="3801166155319773089" key="MSG_DAEMONSET_LIST_CARD_5" desc="Tooltip for the age column">Created at</translation>
-  <translation id="7320728056398668491" key="MSG_DAEMONSET_LIST_LIST_0" desc="Title for graph card displaying CPU metric of daemon sets.">CPU usage</translation>
-  <translation id="8788831308012182190" key="MSG_DAEMONSET_LIST_LIST_1" desc="Title for graph card displaying memory metric of daemon sets.">Memory usage</translation>
-  <translation id="2452514894533620787" key="MSG_DAEMONSET_LIST_LIST_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by these daemon sets.</translation>
+  <translation id="3801166155319773089" key="MSG_DAEMONSET_LIST_CARD_5" desc="Tooltip for the age column">생성 시간</translation>
+  <translation id="7320728056398668491" key="MSG_DAEMONSET_LIST_LIST_0" desc="Title for graph card displaying CPU metric of daemon sets.">CPU 사용량</translation>
+  <translation id="8788831308012182190" key="MSG_DAEMONSET_LIST_LIST_1" desc="Title for graph card displaying memory metric of daemon sets.">메모리 사용량</translation>
+  <translation id="2452514894533620787" key="MSG_DAEMONSET_LIST_LIST_2" desc="Help message detailing what is included in the memory usage">본 메모리 사용량에는 해당 daemon set이 관리하는 pod의 캐시가 포함되어 있습니다.</translation>
   <translation id="2800447277288989088" key="MSG_DASHBOARD_EXCLUSIVE_RESOURCE_ERROR" desc="Text shown on internal error page when user tries to access resource he does not have permissions to.">Trying to access/modify dashboard exclusive resource.</translation>
   <translation id="8731452969115857295" key="MSG_DEPLOYMENT_DETAIL_ACTIONBAR_0" desc="Label \'Deployment\' which will appear in the deployment scale dialog opened from the deployment details page.">Deployment</translation>
   <translation id="4537205375409268523" key="MSG_DEPLOYMENT_DETAIL_ACTIONBAR_1" desc="Label \'Deployment\' which will appear in the deployment dialog opened from the deployment details page.">Deployment</translation>
-  <translation id="916794903553842041" key="MSG_DEPLOYMENT_DETAIL_DETAIL_0" desc="Title for graph card displaying CPU metric of one deployment.">CPU usage</translation>
-  <translation id="8453931805104629005" key="MSG_DEPLOYMENT_DETAIL_DETAIL_1" desc="Title for graph card displaying memory metric of one deployment.">Memory usage</translation>
-  <translation id="620255252783687720" key="MSG_DEPLOYMENT_DETAIL_DETAIL_10" desc="Text for horizontal pod autoscalers card zerostate in replica set details page.">There are currently no Horizontal Pod Autoscalers targeting this Deployment.</translation>
-  <translation id="7206451673196119468" key="MSG_DEPLOYMENT_DETAIL_DETAIL_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by this deployment.</translation>
-  <translation id="4293182903162394917" key="MSG_DEPLOYMENT_DETAIL_DETAIL_3" desc="Title \'New Replica Set\' for the newly created replica set view, on the deployment details page.">New Replica Set</translation>
-  <translation id="5406429395386793842" key="MSG_DEPLOYMENT_DETAIL_DETAIL_5" desc="Text for new replica sets card zero-state in deployment details page.">There are currently no new Replica Sets on this Deployment.</translation>
-  <translation id="1547411698211271610" key="MSG_DEPLOYMENT_DETAIL_DETAIL_6" desc="Title \'Old Replica Sets\' for the old replica sets view, on the deployment details page.">Old Replica Sets</translation>
-  <translation id="7774850522073185051" key="MSG_DEPLOYMENT_DETAIL_DETAIL_8" desc="Text for old replica sets card zero-state in deployment details page.">This Deployment does not have any old replica sets</translation>
-  <translation id="6611756545608338379" key="MSG_DEPLOYMENT_DETAIL_INFO_0" desc="Header in a detail view">Details</translation>
+  <translation id="916794903553842041" key="MSG_DEPLOYMENT_DETAIL_DETAIL_0" desc="Title for graph card displaying CPU metric of one deployment.">CPU 사용량</translation>
+  <translation id="8453931805104629005" key="MSG_DEPLOYMENT_DETAIL_DETAIL_1" desc="Title for graph card displaying memory metric of one deployment.">메모리 사용량</translation>
+  <translation id="620255252783687720" key="MSG_DEPLOYMENT_DETAIL_DETAIL_10" desc="Text for horizontal pod autoscalers card zerostate in replica set details page.">현재 이 Deployment에 관련된 Horizontal Pod Autoscalers가 없습니다.</translation>
+  <translation id="7206451673196119468" key="MSG_DEPLOYMENT_DETAIL_DETAIL_2" desc="Help message detailing what is included in the memory usage">본 메모리 사용량에는 해당 deployment가 관리하는 pod의 캐시가 포함되어 있습니다.</translation>
+  <translation id="4293182903162394917" key="MSG_DEPLOYMENT_DETAIL_DETAIL_3" desc="Title \'New Replica Set\' for the newly created replica set view, on the deployment details page.">새 Replica Set</translation>
+  <translation id="5406429395386793842" key="MSG_DEPLOYMENT_DETAIL_DETAIL_5" desc="Text for new replica sets card zero-state in deployment details page.">현재 Deployment에 새 Replica Set이 없습니다.</translation>
+  <translation id="1547411698211271610" key="MSG_DEPLOYMENT_DETAIL_DETAIL_6" desc="Title \'Old Replica Sets\' for the old replica sets view, on the deployment details page.">이전 Replica Set</translation>
+  <translation id="7774850522073185051" key="MSG_DEPLOYMENT_DETAIL_DETAIL_8" desc="Text for old replica sets card zero-state in deployment details page.">본 Deployment에는 이전 replica set이 없습니다.</translation>
+  <translation id="6611756545608338379" key="MSG_DEPLOYMENT_DETAIL_INFO_0" desc="Header in a detail view">상세</translation>
   <translation id="4052405407765242541" key="MSG_DEPLOYMENT_DETAIL_INFO_10" desc="The message says how many replicas can be created above the desired number of replicas in a deployment (deployment details page).">Max surge: {{ $ctrl.deployment.rollingUpdateStrategy.maxSurge}}</translation>
   <translation id="978278245821528339" key="MSG_DEPLOYMENT_DETAIL_INFO_11" desc="The message says how many replicas are allowed to be unavailable during an update in the deployment (deployment details page).">Max unavailable: {{ $ctrl.deployment.rollingUpdateStrategy.maxUnavailable}}</translation>
-  <translation id="1006526299552096694" key="MSG_DEPLOYMENT_DETAIL_INFO_12" desc="Label \'Status\' for the deployment\'s status information on the deployment details page.">Status</translation>
-  <translation id="4141792758328458887" key="MSG_DEPLOYMENT_DETAIL_INFO_13" desc="The message describes how many replicas were updated in the deployment (deployment details page).">{{ $ctrl.deployment.statusInfo.updated}} updated</translation>
-  <translation id="2896056679280503985" key="MSG_DEPLOYMENT_DETAIL_INFO_14" desc="The message describes how many replicas (in total) are in the deployment (deployment details page).">{{ $ctrl.deployment.statusInfo.replicas}} total</translation>
-  <translation id="1768519246344146437" key="MSG_DEPLOYMENT_DETAIL_INFO_15" desc="The message describes how many replicas are available in the deployment (deployment details page).">{{ $ctrl.deployment.statusInfo.available}} available</translation>
-  <translation id="3113137197415192324" key="MSG_DEPLOYMENT_DETAIL_INFO_16" desc="The message says how many replicas are unavailable in the deployment (deployment details page).">{{ $ctrl.deployment.statusInfo.unavailable}} unavailable</translation>
-  <translation id="4852965799360700062" key="MSG_DEPLOYMENT_DETAIL_INFO_4" desc="Label \'Selector\' for the deployment\'s labels list on the deployment details page.">Selector</translation>
+  <translation id="1006526299552096694" key="MSG_DEPLOYMENT_DETAIL_INFO_12" desc="Label \'Status\' for the deployment\'s status information on the deployment details page.">상태</translation>
+  <translation id="4141792758328458887" key="MSG_DEPLOYMENT_DETAIL_INFO_13" desc="The message describes how many replicas were updated in the deployment (deployment details page).">{{ $ctrl.deployment.statusInfo.updated}}개 업데이트됨</translation>
+  <translation id="2896056679280503985" key="MSG_DEPLOYMENT_DETAIL_INFO_14" desc="The message describes how many replicas (in total) are in the deployment (deployment details page).">총 {{ $ctrl.deployment.statusInfo.replicas}}개</translation>
+  <translation id="1768519246344146437" key="MSG_DEPLOYMENT_DETAIL_INFO_15" desc="The message describes how many replicas are available in the deployment (deployment details page).">{{ $ctrl.deployment.statusInfo.available}}개 가용</translation>
+  <translation id="3113137197415192324" key="MSG_DEPLOYMENT_DETAIL_INFO_16" desc="The message says how many replicas are unavailable in the deployment (deployment details page).">{{ $ctrl.deployment.statusInfo.unavailable}}개 불가용</translation>
+  <translation id="4852965799360700062" key="MSG_DEPLOYMENT_DETAIL_INFO_4" desc="Label \'Selector\' for the deployment\'s labels list on the deployment details page.">선택자</translation>
   <translation id="7842815268569286123" key="MSG_DEPLOYMENT_DETAIL_INFO_5" desc="Label \'Min Ready Seconds\' for the deployment on the deployment details page.">Strategy</translation>
   <translation id="120947107266620923" key="MSG_DEPLOYMENT_DETAIL_INFO_6" desc="Label \'Min Ready Seconds\' for the deployment on the deployment details page.">Min ready seconds</translation>
   <translation id="2320949909785930806" key="MSG_DEPLOYMENT_DETAIL_INFO_7" desc="Label \'Revision history limit\' for the deployment property on the deployment details page.">Revision history limit</translation>
   <translation id="4394284536277128064" key="MSG_DEPLOYMENT_DETAIL_INFO_8" desc="Label for the when revision history limit is not set.">Not set</translation>
-  <translation id="8285539345236486139" key="MSG_DEPLOYMENT_DETAIL_INFO_9" desc="Label \'Rolling Update Strategy\' for the deployment\'s rolling update strategy on the deployment details page.">Rolling update strategy</translation>
+  <translation id="8285539345236486139" key="MSG_DEPLOYMENT_DETAIL_INFO_9" desc="Label \'Rolling Update Strategy\' for the deployment\'s rolling update strategy on the deployment details page.">롤링 업데이트 전략</translation>
   <translation id="6649720579304216997" key="MSG_DEPLOYMENT_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">Deployments</translation>
-  <translation id="4397343821685483589" key="MSG_DEPLOYMENT_LIST_CARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of deployments (deployment list view).">Name</translation>
-  <translation id="6493674795356876555" key="MSG_DEPLOYMENT_LIST_CARDLIST_2" desc="Label \'Namespace\' which appears as a column label in the table of deployments (deployment list view).">Namespace</translation>
-  <translation id="4423617422088109346" key="MSG_DEPLOYMENT_LIST_CARDLIST_3" desc="Label \'Labels\' which appears as a column label in the table of deployments (deployment list view).">Labels</translation>
+  <translation id="4397343821685483589" key="MSG_DEPLOYMENT_LIST_CARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of deployments (deployment list view).">이름</translation>
+  <translation id="6493674795356876555" key="MSG_DEPLOYMENT_LIST_CARDLIST_2" desc="Label \'Namespace\' which appears as a column label in the table of deployments (deployment list view).">네임스페이스</translation>
+  <translation id="4423617422088109346" key="MSG_DEPLOYMENT_LIST_CARDLIST_3" desc="Label \'Labels\' which appears as a column label in the table of deployments (deployment list view).">레이블</translation>
   <translation id="7758788285438806394" key="MSG_DEPLOYMENT_LIST_CARDLIST_4" desc="Label \'Pods\' which appears as a column label in the table of deployments (deployment list view).">Pods</translation>
   <translation id="7541857931830669966" key="MSG_DEPLOYMENT_LIST_CARDLIST_5" desc="Label \'Age\' which appears as a column label in the table of deployments (deployment list view).">Age</translation>
-  <translation id="3825241451049418242" key="MSG_DEPLOYMENT_LIST_CARDLIST_6" desc="Label \'Images\' which appears as a column label in the table of deployments (deployment list view).">Images</translation>
-  <translation id="2954809258563901091" key="MSG_DEPLOYMENT_LIST_CARDLIST_7" desc="Text for deployment card list zerostate.">There are no Deployment to display.</translation>
-  <translation id="2943455083749849727" key="MSG_DEPLOYMENT_LIST_CARD_0" desc="Tooltip saying that some pods in a deployment have errors.">One or more pods have errors</translation>
-  <translation id="5603340787019545076" key="MSG_DEPLOYMENT_LIST_CARD_1" desc="Tooltip saying that some pods in a deployment are pending.">One or more pods are in pending state</translation>
+  <translation id="3825241451049418242" key="MSG_DEPLOYMENT_LIST_CARDLIST_6" desc="Label \'Images\' which appears as a column label in the table of deployments (deployment list view).">이미지</translation>
+  <translation id="2954809258563901091" key="MSG_DEPLOYMENT_LIST_CARDLIST_7" desc="Text for deployment card list zerostate.">표시할 Deployment가 없습니다.</translation>
+  <translation id="2943455083749849727" key="MSG_DEPLOYMENT_LIST_CARD_0" desc="Tooltip saying that some pods in a deployment have errors.">하나 이상의 pod에 에러가 있습니다.</translation>
+  <translation id="5603340787019545076" key="MSG_DEPLOYMENT_LIST_CARD_1" desc="Tooltip saying that some pods in a deployment are pending.">하나 이상의 pod가 pending 상태입니다.</translation>
   <translation id="5335487391687545375" key="MSG_DEPLOYMENT_LIST_CARD_2" desc="Label \'Deployment\' which will appear in the deployment delete dialog opened from a deployment card on the list page.">Deployment</translation>
   <translation id="6852681788305906786" key="MSG_DEPLOYMENT_LIST_CARD_3" desc="Tooltip for the age column">Created at</translation>
   <translation id="1062694263538589459" key="MSG_DEPLOYMENT_LIST_CARD_4" desc="Label \'Deployment\' which will appear in the deployment edit dialog opened from a deployment card on the list page.">Deployment</translation>
   <translation id="105228085458704561" key="MSG_DEPLOYMENT_LIST_CARD_5" desc="Label \'Deployment\' which will appear in the deployment scale dialog opened from a deployment card on the list page.">Deployment</translation>
-  <translation id="7895969081606283904" key="MSG_DEPLOYMENT_LIST_LIST_0" desc="Title for graph card displaying CPU metric of deployments.">CPU usage</translation>
-  <translation id="3670753449040819695" key="MSG_DEPLOYMENT_LIST_LIST_1" desc="Title for graph card displaying memory metric of deployments.">Memory usage</translation>
-  <translation id="5284074846571684536" key="MSG_DEPLOYMENT_LIST_LIST_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by these deployments.</translation>
-  <translation id="8097230988371724477" key="MSG_DEPLOY_ANYWAY_DIALOG_CANCEL" desc="Cancellation text for the dialog shown on deploy validation error.">No</translation>
-  <translation id="7984990840791623021" key="MSG_DEPLOY_ANYWAY_DIALOG_CONTENT" desc="Content for the dialog shown on deploy validation error.">Would you like to deploy anyway?</translation>
-  <translation id="4208506908994292909" key="MSG_DEPLOY_ANYWAY_DIALOG_OK" desc="Confirmation text for the dialog shown on deploy validation error.">Yes</translation>
-  <translation id="8002584284110338066" key="MSG_DEPLOY_ANYWAY_DIALOG_TITLE" desc="Title for the dialog shown on deploy validation error.">Validation error occurred</translation>
+  <translation id="7895969081606283904" key="MSG_DEPLOYMENT_LIST_LIST_0" desc="Title for graph card displaying CPU metric of deployments.">CPU 사용량</translation>
+  <translation id="3670753449040819695" key="MSG_DEPLOYMENT_LIST_LIST_1" desc="Title for graph card displaying memory metric of deployments.">메모리 사용량</translation>
+  <translation id="5284074846571684536" key="MSG_DEPLOYMENT_LIST_LIST_2" desc="Help message detailing what is included in the memory usage">본 메모리 사용량은 해당 deployment가 관리하는 pod내 캐시가 포함되어 있습니다.</translation>
+  <translation id="8097230988371724477" key="MSG_DEPLOY_ANYWAY_DIALOG_CANCEL" desc="Cancellation text for the dialog shown on deploy validation error.">아니요</translation>
+  <translation id="7984990840791623021" key="MSG_DEPLOY_ANYWAY_DIALOG_CONTENT" desc="Content for the dialog shown on deploy validation error.">그래도 배포하겠습니까?</translation>
+  <translation id="4208506908994292909" key="MSG_DEPLOY_ANYWAY_DIALOG_OK" desc="Confirmation text for the dialog shown on deploy validation error.">예</translation>
+  <translation id="8002584284110338066" key="MSG_DEPLOY_ANYWAY_DIALOG_TITLE" desc="Title for the dialog shown on deploy validation error.">유효성 에러 발생</translation>
   <translation id="5968637654166833831" key="MSG_DEPLOY_DEPLOYFROMFILE_DEPLOYFROMFILE_0" desc="User help for the file upload form on the deploy page.">Select YAML or JSON file specifying the resources to deploy to the namespace specified in the file.</translation>
   <translation id="59447854977935148" key="MSG_DEPLOY_DEPLOYFROMFILE_DEPLOYFROMFILE_1" desc="User help for the file upload form on the deploy page.">Select YAML or JSON file specifying the resources to deploy to the currently selected namespace.</translation>
   <translation id="7764059568291431321" key="MSG_DEPLOY_DEPLOYFROMFILE_DEPLOYFROMFILE_2" desc="Learn more link label nearby the file upload on the deploy page.">Learn more</translation>
@@ -408,7 +412,9 @@
   <translation id="6885083433056530489" key="MSG_DEPLOY_DIALOG_ERROR" desc="Text shown on failed deploy in error dialog.">Deploying file has failed</translation>
   <translation id="3201385994827441255" key="MSG_DEPLOY_EMPTY_NAMESPACE_ERROR" desc="Text shown on in error dialog when there is no namespace provided selected in both dashboard and yaml file.">Dashboard and your file do not specify any namespace to deploy a resource. Please select a specific namespace in dashboard or add one in yaml file.</translation>
   <translation id="9076157973282612479" key="MSG_DEPLOY_NAMESPACE_MISMATCH_ERROR" desc="Text shown on in error dialog when there is namespace mismatch between dashboard and yaml file.">Your file specifies a namespace that is inconsistent with the namespace currently selected in Dashboard. Either edit the namespace entry in your file or select a different namespace in Dashboard to deploy to (eg. 'All namespaces' or the correct namespace provided in the file).</translation>
-  <translation id="7869641598803414323" key="MSG_DESIRED_PODS_MSG" desc="Satisfies a way to make normal binding in angularjs to pass in google closure compiler."><ph name="DESIRED_PODS"/> desired.</translation>
+  <translation id="7869641598803414323" key="MSG_DESIRED_PODS_MSG" desc="Satisfies a way to make normal binding in angularjs to pass in google closure compiler.">
+    <ph name="DESIRED_PODS"> desired.</ph>
+  </translation>
   <translation id="4942061082776173364" key="MSG_ENCRYPTION_KEY_CHANGED" desc="Text shown when saved token could not be decrypted by backend.">Session expired. Please log in again.</translation>
   <translation id="778882191405410811" key="MSG_ENDPOINTS_WARNING_LABEL" desc="Label 'Warning' for the endpoint selection drop-down.">Warning</translation>
   <translation id="4983649641173165689" key="MSG_ENDPOINT_CARDLIST_0" desc="Label which appears above the list of such objects.">Endpoints</translation>
@@ -510,7 +516,7 @@
   <translation id="3055363125961915665" key="MSG_JOB_LIST_LIST_0" desc="Title for graph card displaying CPU metric of jobs.">CPU usage</translation>
   <translation id="5794425570699478727" key="MSG_JOB_LIST_LIST_1" desc="Title for graph card displaying memory metric of jobs.">Memory usage</translation>
   <translation id="6300164314930034252" key="MSG_JOB_LIST_LIST_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by these jobs.</translation>
-  <translation id="5485538583399563094" key="MSG_LESS_WARNINGS_LABEL" desc="Show less warnings button label.">Show <ph name="COUNT"/> less</translation>
+  <translation id="5485538583399563094" key="MSG_LESS_WARNINGS_LABEL" desc="Show less warnings button label.">Show <ph name="COUNT"> less</ph></translation>
   <translation id="6428808795341026405" key="MSG_LOGIN_BASIC_0" desc="\'Username\' field label shown on login page for basic auth">Username</translation>
   <translation id="2222883722971802152" key="MSG_LOGIN_BASIC_1" desc="\'Password\' field label shown on login page for basic auth">Password</translation>
   <translation id="5760322479083675615" key="MSG_LOGIN_KUBECONFIG_0" desc="A \'Choose kubeconfig file\' placeholder for an empty file input field on login page.">Choose kubeconfig file</translation>
@@ -545,7 +551,7 @@
   <translation id="1193096800305895006" key="MSG_LOGS_LOGS_9" desc="Tooltip for button that switches to showing the current logs.">Show current logs</translation>
   <translation id="3402202863027894322" key="MSG_LOGS_TRUNCATED_WARNING" desc="Error dialog indicating that parts of the log file is missing due to memory constraints.">The middle part of the log file cannot be loaded, because it is too big.</translation>
   <translation id="7594890250973129963" key="MSG_LOGS_ZEROSTATE_TEXT" desc="Text for logs card zerostate in logs page.">The selected container has not logged any messages yet.</translation>
-  <translation id="2533795620042066843" key="MSG_MORE_WARNINGS_LABEL" desc="Show more warnings button label.">Show <ph name="COUNT"/> more</translation>
+  <translation id="2533795620042066843" key="MSG_MORE_WARNINGS_LABEL" desc="Show more warnings button label.">Show <ph name="COUNT"> more</ph></translation>
   <translation id="8066049814492652432" key="MSG_NAMESPACE_DETAIL_INFO_0" desc="Header in a detail view">Details</translation>
   <translation id="6352041840775187168" key="MSG_NAMESPACE_DETAIL_INFO_1" desc="Label \'Status\' for the namespace namespace on the namespace details page.">Status</translation>
   <translation id="2794451768196559104" key="MSG_NAMESPACE_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">Namespaces</translation>
