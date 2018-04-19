@@ -82,7 +82,7 @@
     "eslint-plugin-angular": "~3.1.1",
     "file-exists": "5.0.1",
     "google-closure-compiler": "~20171203.0.0",
-    "google-closure-library": "~20171203.0.0",
+    "google-closure-library": "~20180402.0.0",
     "gulp": "~3.9.1",
     "gulp-autoprefixer": "~4.1.0",
     "gulp-browserify": "~0.5.1",
