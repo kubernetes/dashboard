@@ -26,17 +26,11 @@ import (
 func FilterDeploymentPodsByOwnerReference(deployment apps.Deployment, allRS []apps.ReplicaSet,
 	allPods []v1.Pod) []v1.Pod {
 	var matchingPods []v1.Pod
-
-	rsTemplate := v1.PodTemplateSpec{
-		ObjectMeta: deployment.Spec.Template.ObjectMeta,
-		Spec:       deployment.Spec.Template.Spec,
-	}
-
-	for _, rs := range allRS {
-		if EqualIgnoreHash(rs.Spec.Template, rsTemplate) {
-			matchingPods = FilterPodsByControllerRef(&rs, allPods)
-		}
-	}
+  for _, rs := range allRS {
+    if metav1.IsControlledBy(&rs, &deployment) {
+      matchingPods = append(matchingPods, FilterPodsByControllerRef(&rs, allPods)...)
+    }
+  }
 
 	return matchingPods
 }
