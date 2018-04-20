@@ -57,6 +57,7 @@ describe('Namespace select component ', () => {
 
     kdFutureStateService.params = {namespace: 'non-existing-namespace'};
     scope.$digest();
+
     expect(ctrl.selectedNamespace).toBe('non-existing-namespace');
 
     state.go('fakeState', new StateParams('non-existing-namespace2'));

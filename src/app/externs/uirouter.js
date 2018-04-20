@@ -48,6 +48,13 @@ kdUiRouter.$transitions.prototype.onStart = function(criteria, callback, options
  * @param {Function} callback
  * @param {Object=} options
  */
+kdUiRouter.$transitions.prototype.onEnter = function(criteria, callback, options) {};
+
+/**
+ * @param {Object} criteria
+ * @param {Function} callback
+ * @param {Object=} options
+ */
 kdUiRouter.$transitions.prototype.onBefore = function(criteria, callback, options) {};
 
 /**
