@@ -103,6 +103,7 @@ type ResourceKind string
 
 // List of all resource kinds supported by the UI.
 const (
+	ResourceKindApplication             = "application"
 	ResourceKindConfigMap               = "configmap"
 	ResourceKindDaemonSet               = "daemonset"
 	ResourceKindDeployment              = "deployment"
@@ -145,6 +146,7 @@ const (
 	ClientTypeBetaBatchClient   = "betabatchclient"
 	ClientTypeAutoscalingClient = "autoscalingclient"
 	ClientTypeStorageClient     = "storageclient"
+	ClientTypeSigAppsClient     = "sigappsclient"
 )
 
 // Mapping from resource kind to K8s apiserver API path. This is mostly pluralization, because
@@ -180,6 +182,7 @@ var KindToAPIMapping = map[string]struct {
 	ResourceKindStatefulSet:             {"statefulsets", ClientTypeAppsClient, true},
 	ResourceKindStorageClass:            {"storageclasses", ClientTypeStorageClient, false},
 	ResourceKindEndpoint:                {"endpoints", ClientTypeDefault, true},
+	ResourceKindApplication:             {"applications", ClientTypeSigAppsClient, true},
 }
 
 // IsSelectorMatching returns true when an object with the given selector targets the same

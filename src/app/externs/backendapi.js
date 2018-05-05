@@ -646,6 +646,25 @@ backendApi.FlockerVolumeSource;
  * @typedef {{
  *   objectMeta: !backendApi.ObjectMeta,
  *   typeMeta: !backendApi.TypeMeta,
+ *   applicationStatus: !Object,
+ * }}
+ */
+backendApi.Application;
+
+/**
+ * @typedef {{
+ *   applications: !Array<!backendApi.Application>,
+ *   listMeta: !backendApi.ListMeta,
+ *   status: !backendApi.Status,
+ *   errors: !Array<!backendApi.Error>
+ * }}
+ */
+backendApi.ApplicationList;
+
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
  *   pods: !backendApi.PodInfo,
  *   containerImages: !Array<string>,
  *   initContainerImages: !Array<string>

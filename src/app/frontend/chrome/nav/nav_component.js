@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import {stateName as aboutState} from '../../about/state';
+import {stateName as applicationState} from '../../application/list/state';
 import {stateName as clusterState} from '../../cluster/state';
 import {stateName as configState} from '../../config/state';
 import {stateName as configMapState} from '../../configmap/list/state';
@@ -56,6 +57,7 @@ export class NavController {
       'workload': workloadState,
       'cluster': clusterState,
       'pod': podState,
+      'application': applicationState,
       'deployment': deploymentState,
       'replicaSet': replicaSetState,
       'replicationController': replicationControllerState,

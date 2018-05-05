@@ -16,6 +16,7 @@ package api
 
 import (
 	restful "github.com/emicklei/go-restful"
+	applicationAlphaClient "github.com/kubernetes-sigs/application/pkg/client/clientset/versioned"
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 	"k8s.io/api/authorization/v1"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -29,6 +30,8 @@ import (
 // kubernetes apiserver on demand.
 type ClientManager interface {
 	Client(req *restful.Request) (kubernetes.Interface, error)
+	// Application client is not yet shipped with client-go. Will be removed in a future release.
+	SigApplicationClient(req *restful.Request) (applicationAlphaClient.Interface, error)
 	InsecureClient() kubernetes.Interface
 	CanI(req *restful.Request, ssar *v1.SelfSubjectAccessReview) bool
 	Config(req *restful.Request) (*rest.Config, error)

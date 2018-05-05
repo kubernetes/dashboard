@@ -20,6 +20,7 @@ import (
 	"strconv"
 	"strings"
 
+  "github.com/kubernetes/dashboard/src/app/backend/resource/application"
 	restful "github.com/emicklei/go-restful"
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/auth"
@@ -288,7 +289,16 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 	apiV1Ws.Route(
 		apiV1Ws.GET("/deployment/{namespace}/{deployment}/oldreplicaset").
 			To(apiHandler.handleGetDeploymentOldReplicaSets).
-			Writes(replicaset.ReplicaSetList{}))
+      Writes(replicaset.ReplicaSetList{}))
+  
+  apiV1Ws.Route(
+    apiV1Ws.GET("/application").
+      To(apiHandler.handleGetApplications).
+      Writes(application.ApplicationList{}))
+  apiV1Ws.Route(
+    apiV1Ws.GET("/application/{namespace}").
+      To(apiHandler.handleGetApplications).
+      Writes(application.ApplicationList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.PUT("/scale/{kind}/{namespace}/{name}/").
@@ -594,7 +604,7 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 	apiV1Ws.Route(
 		apiV1Ws.GET("/log/file/{namespace}/{pod}/{container}").
 			To(apiHandler.handleLogFile).
-			Writes(logs.LogDetails{}))
+      Writes(logs.LogDetails{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/overview/").
@@ -1394,6 +1404,24 @@ func (apiHandler *APIHandler) handleGetDeploymentOldReplicaSets(request *restful
 	}
 	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
+
+func (apiHandler *APIHandler) handleGetApplications(request *restful.Request, response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.SigApplicationClient(request)
+	if err != nil {
+		kdErrors.HandleInternalError(response, err)
+		return
+	}
+
+	namespace := parseNamespacePathParameter(request)
+	dataSelect := parseDataSelectPathParameter(request)
+	result, err := application.GetApplicationList(k8sClient, namespace, dataSelect)
+	if err != nil {
+		kdErrors.HandleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
 
 func (apiHandler *APIHandler) handleGetPods(request *restful.Request, response *restful.Response) {
 	k8sClient, err := apiHandler.cManager.Client(request)

@@ -15,6 +15,8 @@
 package common
 
 import (
+	application "github.com/kubernetes-sigs/application/pkg/apis/app/v1alpha1"
+	applicationAlphaClient "github.com/kubernetes-sigs/application/pkg/client/clientset/versioned"
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	apps "k8s.io/api/apps/v1beta2"
 	autoscaling "k8s.io/api/autoscaling/v1"
@@ -904,6 +906,40 @@ func GetStorageClassListChannel(client client.Interface, numReads int) StorageCl
 
 	go func() {
 		list, err := client.StorageV1().StorageClasses().List(api.ListEverything)
+		for i := 0; i < numReads; i++ {
+			channel.List <- list
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
+// ApplicationListChannel is a list and error channels to applications.
+type ApplicationListChannel struct {
+	List  chan *application.ApplicationList
+	Error chan error
+}
+
+// GetApplicationListChannel returns a pair of channels to a Application list and errors
+// that both must be read numReads times.
+func GetApplicationListChannel(client applicationAlphaClient.Interface,
+	nsQuery *NamespaceQuery, numReads int) ApplicationListChannel {
+
+	channel := ApplicationListChannel{
+		List:  make(chan *application.ApplicationList, numReads),
+		Error: make(chan error, numReads),
+	}
+
+	go func() {
+		list, err := client.AppV1alpha1().Applications(nsQuery.ToRequestParam()).List(api.ListEverything)
+		var filteredItems []application.Application
+		for _, item := range list.Items {
+			if nsQuery.Matches(item.ObjectMeta.Namespace) {
+				filteredItems = append(filteredItems, item)
+			}
+		}
+		list.Items = filteredItems
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err

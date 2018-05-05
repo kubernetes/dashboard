@@ -21,6 +21,7 @@ import (
 	"strings"
 
 	restful "github.com/emicklei/go-restful"
+	applicationAlphaClient "github.com/kubernetes-sigs/application/pkg/client/clientset/versioned"
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
 	"k8s.io/api/authorization/v1"
@@ -90,6 +91,22 @@ func (self *clientManager) Client(req *restful.Request) (kubernetes.Interface, e
 // to service account used by dashboard or kubeconfig file if it was passed during dashboard init.
 func (self *clientManager) InsecureClient() kubernetes.Interface {
 	return self.insecureClient
+}
+
+// Client returns kubernetes client that is created based on authentication information extracted
+// from request. If request is nil then authentication will be skipped.
+func (self *clientManager) SigApplicationClient(req *restful.Request) (applicationAlphaClient.Interface, error) {
+	cfg, err := self.Config(req)
+	if err != nil {
+		return nil, err
+	}
+
+	client, err := applicationAlphaClient.NewForConfig(cfg)
+	if err != nil {
+		return nil, err
+	}
+
+	return client, nil
 }
 
 // CanI returns true when user is allowed to access data provided within SelfSubjectAccessReview, false otherwise.
@@ -188,10 +205,15 @@ func (self *clientManager) VerberClient(req *restful.Request) (clientapi.Resourc
 		return nil, err
 	}
 
+	sigAppsClient, err := self.SigApplicationClient(req)
+	if err != nil {
+		return nil, err
+	}
+
 	return NewResourceVerber(client.CoreV1().RESTClient(),
 		client.ExtensionsV1beta1().RESTClient(), client.AppsV1beta2().RESTClient(),
 		client.BatchV1().RESTClient(), client.BatchV1beta1().RESTClient(), client.AutoscalingV1().RESTClient(),
-		client.StorageV1().RESTClient()), nil
+		sigAppsClient.AppV1alpha1().RESTClient(), client.StorageV1().RESTClient()), nil
 }
 
 // SetTokenManager sets the token manager that will be used for token decryption.
