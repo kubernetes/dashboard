@@ -13,7 +13,7 @@
     "@uirouter/core": "~5.0.11",
     "@uirouter/angularjs": "~1.0.10",
     "angular-animate": "~1.6.6",
-    "angular-aria": "~1.6.6",
+    "angular-aria": "~1.7.0",
     "angular-clipboard": "~1.6.2",
     "angular-cookies": "~1.6.6",
     "angular-file-saver": "^1.1.3",
