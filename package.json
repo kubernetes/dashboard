@@ -9,7 +9,7 @@
   "license": "Apache-2.0",
   "//-2-//": "Do not change ordering of 'dependencies' section. It is important to keep it this way.",
   "dependencies": {
-    "angular": "~1.6.6",
+    "angular": "~1.7.0",
     "@uirouter/core": "~5.0.11",
     "@uirouter/angularjs": "~1.0.10",
     "angular-animate": "~1.6.6",
