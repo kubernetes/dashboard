@@ -13,10 +13,7 @@
 // limitations under the License.
 
 import {StateParams} from '../../common/resource/resourcedetail';
-// TODO:
-// import {stateName} from '../../application/detail/state';
-
-const stateName = 'applicationdetail';
+import {stateName} from '../../application/detail/state';
 
 /**
  * Controller for the application card.

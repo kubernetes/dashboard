@@ -1,0 +1,77 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-info-card>
+  <kd-info-card-header>[[Details|Header in a detail view]]</kd-info-card-header>
+  <kd-info-card-section>
+    <kd-object-meta-info-card object-meta="::$ctrl.application.objectMeta">
+    </kd-object-meta-info-card>
+    <kd-info-card-entry title="[[Selector|Label 'Selector' for the application's labels list on the application details page.]]">
+      <kd-labels labels="::$ctrl.application.selector"></kd-labels>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[Type|Type 'Type' for the application's Type on the application details page.]]">
+      {{ ::$ctrl.application.type }}
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[Assembly Phase|Assembly Phase 'Assembly Phase' for the application's Assembly Phase on the application details page.]]">
+      {{ ::$ctrl.application.assemblyPhase || '-' }}
+    </kd-info-card-entry>
+  </kd-info-card-section>
+</kd-info-card>
+
+<kd-info-card>
+  <kd-info-card-header>[[Spec|Spec 'Spec' for the application's on the application details page.]]</kd-info-card-header>
+  <kd-info-card-section>
+    <kd-info-card-entry ng-if="::$ctrl.application.keywords"
+                        title="[[Keywords|Keywords 'Keywords' for the application's keywords list on the application details page.]]">
+      {{ ::$ctrl.application.keywords.join(', ') }}
+    </kd-info-card-entry>
+    <kd-info-card-entry ng-if="::$ctrl.application.owners.length"
+                        title="[[Owners|Owners 'Owners' for the application's owners on the application details page.]]">
+      <div ng-repeat="owner in ::$ctrl.application.owners">{{ owner }}</div>
+    </kd-info-card-entry>
+    <kd-info-card-entry ng-if="::$ctrl.application.maintainers.length"
+                        title="[[Maintainers|Maintainers 'Maintainers' for the application's maintainers on the application details page.]]">
+      <div ng-repeat="maintainer in ::$ctrl.application.maintainers">{{ ::maintainer.name }} {{ ::maintainer.email }}</div>
+    </kd-info-card-entry>
+    <kd-info-card-entry ng-if="::$ctrl.application.notes"
+                        title="[[Notes|Notes 'Notes' for the application's notes on the application details page.]]">
+      {{ ::$ctrl.application.notes }}
+    </kd-info-card-entry>
+    <kd-info-card-entry ng-if="::$ctrl.application.description"
+                        title="[[Description|Description 'Description' for the application's description on the application details page.]]">
+      {{ ::$ctrl.application.description }}
+    </kd-info-card-entry>
+    <kd-info-card-entry ng-if="::$ctrl.application.links"
+                        title="[[Links|Links 'Links' for the application's links on the application details page.]]">
+      <div ng-repeat="link in ::$ctrl.application.links">
+        <a target="_blank"
+           href="{{ ::link.url }}">
+          {{ ::link.description }}
+          <md-icon class="kd-application-link-icon">open_in_new</md-icon>
+        </a>
+      </div>
+    </kd-info-card-entry>
+  </kd-info-card-section>
+</kd-info-card>
+
+<kd-info-card ng-if="::$ctrl.application.info.length">
+  <kd-info-card-header>[[Application Info|Application Info 'Spec' for the application's on the application details page.]]</kd-info-card-header>
+  <kd-info-card-section ng-repeat="infoItem in ::$ctrl.application.info">
+    <kd-info-card-entry title="{{ ::infoItem.name }}">
+      {{ ::infoItem.value }}
+    </kd-info-card-entry>
+  </kd-info-card-section>
+</kd-info-card>

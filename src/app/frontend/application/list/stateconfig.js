@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import {breadcrumbsConfig} from '../../common/components/breadcrumbs/service';
-import {stateName as workloadsStateName} from '../../workloads/state';
 
 import {stateName as parentState, stateUrl} from '../state';
 import {ApplicationListController} from './controller';
@@ -23,7 +22,7 @@ import {ApplicationListController} from './controller';
  */
 const i18n = {
   /** @type {string} @desc Label 'Applications' that appears as a breadcrumbs on the action bar. */
-  MSG_BREADCRUMBS_DEPLOYMENTS_LABEL: goog.getMsg('Applications'),
+  MSG_BREADCRUMBS_APPLICATIONS_LABEL: goog.getMsg('Applications'),
 };
 
 /**
@@ -39,8 +38,7 @@ export const config = {
   },
   data: {
     [breadcrumbsConfig]: {
-      'label': i18n.MSG_BREADCRUMBS_DEPLOYMENTS_LABEL,
-      'parent': workloadsStateName,
+      'label': i18n.MSG_BREADCRUMBS_APPLICATIONS_LABEL,
     },
   },
   views: {
