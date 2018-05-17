@@ -302,7 +302,11 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 	apiV1Ws.Route(
 		apiV1Ws.GET("/application/{namespace}/{application}").
 		To(apiHandler.handleGetApplicationDetail).
-		Writes(application.ApplicationDetail{}))
+    Writes(application.ApplicationDetail{}))
+	apiV1Ws.Route(
+    apiV1Ws.GET("/application/{namespace}/{application}/{group}/{kind}").
+    To(apiHandler.handleGetApplicationComponents).
+    Writes(application.ApplicationGenericComponentList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.PUT("/scale/{kind}/{namespace}/{name}/").
@@ -1442,6 +1446,26 @@ func (apiHandler *APIHandler) handleGetApplicationDetail(request *restful.Reques
 	}
 
 	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetApplicationComponents(request *restful.Request, response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.SigApplicationClient(request)
+	if err != nil {
+		kdErrors.HandleInternalError(response, err)
+		return
+  }
+  
+  namespace := request.PathParameter("namespace")
+  name := request.PathParameter("application")
+  kind := request.PathParameter("kind")
+	group := request.PathParameter("group")
+	result, err := application.GetApplication(k8sClient, namespace, name)
+	if err != nil {
+		kdErrors.HandleInternalError(response, err)
+		return
+	}
+
+  response.WriteHeaderAndEntity(http.StatusOK, nil)
 }
 
 func (apiHandler *APIHandler) handleGetPods(request *restful.Request, response *restful.Response) {

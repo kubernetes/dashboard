@@ -20,6 +20,8 @@ import (
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 	"k8s.io/api/authorization/v1"
 	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/runtime/schema"
+	"k8s.io/client-go/dynamic"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
@@ -30,6 +32,7 @@ import (
 // kubernetes apiserver on demand.
 type ClientManager interface {
 	Client(req *restful.Request) (kubernetes.Interface, error)
+	DynamicClient(req *restful.Request, groupVersion *schema.GroupVersion) (*dynamic.Client, error)
 	// Application client is not yet shipped with client-go. Will be removed in a future release.
 	SigApplicationClient(req *restful.Request) (applicationAlphaClient.Interface, error)
 	InsecureClient() kubernetes.Interface

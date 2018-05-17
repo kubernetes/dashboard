@@ -25,6 +25,8 @@ import (
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
 	"k8s.io/api/authorization/v1"
+	"k8s.io/apimachinery/pkg/runtime/schema"
+	"k8s.io/client-go/dynamic"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
@@ -93,8 +95,8 @@ func (self *clientManager) InsecureClient() kubernetes.Interface {
 	return self.insecureClient
 }
 
-// Client returns kubernetes client that is created based on authentication information extracted
-// from request. If request is nil then authentication will be skipped.
+// SigApplicationClient lets the dashboard get access to the sig-application resources
+// Will be removed in the future.
 func (self *clientManager) SigApplicationClient(req *restful.Request) (applicationAlphaClient.Interface, error) {
 	cfg, err := self.Config(req)
 	if err != nil {
@@ -102,6 +104,27 @@ func (self *clientManager) SigApplicationClient(req *restful.Request) (applicati
 	}
 
 	client, err := applicationAlphaClient.NewForConfig(cfg)
+	if err != nil {
+		return nil, err
+	}
+
+	return client, nil
+}
+
+func (self *clientManager) DynamicClient(req *restful.Request, groupVersion *schema.GroupVersion) (*dynamic.Client, error) {
+	cfg, err := self.Config(req)
+	if err != nil {
+		return nil, err
+	}
+	cfg.GroupVersion = groupVersion
+
+	if groupVersion.String() == "v1" {
+		cfg.APIPath = "/api"
+	} else {
+		cfg.APIPath = "/apis"
+	}
+
+	client, err := dynamic.NewClient(cfg)
 	if err != nil {
 		return nil, err
 	}
