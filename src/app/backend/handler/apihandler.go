@@ -290,7 +290,7 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 		apiV1Ws.GET("/deployment/{namespace}/{deployment}/oldreplicaset").
 			To(apiHandler.handleGetDeploymentOldReplicaSets).
       Writes(replicaset.ReplicaSetList{}))
-  
+
 	apiV1Ws.Route(
 		apiV1Ws.GET("/application").
 		To(apiHandler.handleGetApplications).
@@ -1449,23 +1449,26 @@ func (apiHandler *APIHandler) handleGetApplicationDetail(request *restful.Reques
 }
 
 func (apiHandler *APIHandler) handleGetApplicationComponents(request *restful.Request, response *restful.Response) {
-	k8sClient, err := apiHandler.cManager.SigApplicationClient(request)
+  k8sClient, err := apiHandler.cManager.SigApplicationClient(request)
+  dynamicClientFn := apiHandler.cManager.PartialDynamicClient(request)
 	if err != nil {
 		kdErrors.HandleInternalError(response, err)
 		return
   }
-  
+
   namespace := request.PathParameter("namespace")
   name := request.PathParameter("application")
   kind := request.PathParameter("kind")
-	group := request.PathParameter("group")
-	result, err := application.GetApplication(k8sClient, namespace, name)
+  group := request.PathParameter("group")
+  dataSelect := parseDataSelectPathParameter(request)
+  result, err := application.GetGenericApplicationResources(k8sClient, dynamicClientFn, dataSelect, namespace, name, group, kind)
+
 	if err != nil {
 		kdErrors.HandleInternalError(response, err)
 		return
 	}
 
-  response.WriteHeaderAndEntity(http.StatusOK, nil)
+  response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetPods(request *restful.Request, response *restful.Response) {

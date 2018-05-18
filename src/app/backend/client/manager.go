@@ -132,6 +132,12 @@ func (self *clientManager) DynamicClient(req *restful.Request, groupVersion *sch
 	return client, nil
 }
 
+func (self *clientManager) PartialDynamicClient(req *restful.Request) clientapi.DynamicClientFn {
+	return func(groupVersion *schema.GroupVersion) (*dynamic.Client, error) {
+		return self.DynamicClient(req, groupVersion)
+	}
+}
+
 // CanI returns true when user is allowed to access data provided within SelfSubjectAccessReview, false otherwise.
 func (self *clientManager) CanI(req *restful.Request, ssar *v1.SelfSubjectAccessReview) bool {
 	// In case user is not authenticated (uses skip option) do not allow access.

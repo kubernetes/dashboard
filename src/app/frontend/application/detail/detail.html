@@ -18,67 +18,15 @@ limitations under the License.
 
 <kd-application-info application="::ctrl.applicationDetail"></kd-application-info>
 
-
 <div class="kd-application-section">
   [[Components|Components label shown on application detail page]]
 </div>
 
-<kd-content-card>
+<kd-content-card  ng-repeat="groupKind in ::ctrl.applicationDetail.componentGroupKinds">
   <kd-content>
-    <kd-resource-card-list>
-      <kd-resource-card-list-header>
-        <kd-resource-card-list-title>
-          Deployments
-        </kd-resource-card-list-title>
-      </kd-resource-card-list-header>
-    </kd-resource-card-list>
-  </kd-content>
-</kd-content-card>
-
-<kd-content-card>
-  <kd-content>
-    <kd-resource-card-list>
-      <kd-resource-card-list-header>
-        <kd-resource-card-list-title>
-          Services
-        </kd-resource-card-list-title>
-      </kd-resource-card-list-header>
-    </kd-resource-card-list>
-  </kd-content>
-</kd-content-card>
-
-<kd-content-card>
-  <kd-content>
-    <kd-resource-card-list>
-      <kd-resource-card-list-header>
-        <kd-resource-card-list-title>
-          Stateful Sets
-        </kd-resource-card-list-title>
-      </kd-resource-card-list-header>
-    </kd-resource-card-list>
-  </kd-content>
-</kd-content-card>
-
-<kd-content-card>
-  <kd-content>
-    <kd-resource-card-list>
-      <kd-resource-card-list-header>
-        <kd-resource-card-list-title>
-          Some Group: CustomKind1
-        </kd-resource-card-list-title>
-      </kd-resource-card-list-header>
-    </kd-resource-card-list>
-  </kd-content>
-</kd-content-card>
-
-<kd-content-card>
-  <kd-content>
-    <kd-resource-card-list>
-      <kd-resource-card-list-header>
-        <kd-resource-card-list-title>
-          Some Group: CustomKind2
-        </kd-resource-card-list-title>
-      </kd-resource-card-list-header>
-    </kd-resource-card-list>
+    <kd-application-generic-resource-card-list application-name="::ctrl.applicationDetail.objectMeta.name"
+                                               kind-name="groupKind.kind"
+                                               group-name="groupKind.group">
+    </kd-application-generic-resource-card-list>
   </kd-content>
 </kd-content-card>

@@ -17,51 +17,53 @@ limitations under the License.
 <kd-resource-card-list selectable="false"
                        with-statuses="false"
                        select-id="{{::$ctrl.getSelectId()}}"
-                       list="$ctrl.applicationList"
-                       list-resource="::$ctrl.applicationListResource">
+                       list="$ctrl.applicationGenericResourceList"
+                       list-resource="::$ctrl.applicationGenericResourceListResource">
   <kd-resource-card-list-header>
     <kd-resource-card-list-title>
-      [[Applications|Label which appears above the list of such objects.]]
+      {{ ::$ctrl.groupName }}.{{ ::$ctrl.kindName }}
     </kd-resource-card-list-title>
     <kd-resource-card-list-filter></kd-resource-card-list-filter>
   </kd-resource-card-list-header>
 
-  <kd-zero-state ng-if="!$ctrl.applicationList.listMeta.totalItems">
-    <kd-zero-state-text ng-transclude="zerostate">
-      [[There are no Application to display.|Text for application card list zerostate.]]
+  <kd-zero-state ng-if="!$ctrl.applicationGenericResourceList.listMeta.totalItems">
+    <kd-zero-state-text>
+      [[There are no related resources for this group.kind to display.|Text for applicationGenericResource card list zerostate.]]
     </kd-zero-state-text>
   </kd-zero-state>
-  <kd-resource-card-header-columns ng-show="$ctrl.applicationList.listMeta.totalItems">
+  <kd-resource-card-header-columns ng-show="$ctrl.applicationGenericResourceList.listMeta.totalItems">
     <kd-resource-card-header-column size="small"
                                     grow="2"
                                     sortable="true"
                                     sort-id="$root.SortableProperties.NAME">
-      [[Name|Label 'Name' which appears as a column label in the table of applications (application list view).]]
+      [[Name|Label 'Name' which appears as a column label in the table of applicationGenericResources (applicationGenericResource
+      list view).]]
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small"
                                     grow="2"
                                     ng-if="$ctrl.areMultipleNamespacesSelected()">
-      [[Namespace|Label 'Namespace' which appears as a column label in the table of applications (application list view).]]
+      [[Namespace|Label 'Namespace' which appears as a column label in the table of applicationGenericResources (applicationGenericResource
+      list view).]]
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small"
                                     grow="2">
-      [[Labels|Label 'Labels' which appears as a column label in the table of applications (application list view).]]
+      [[Labels|Label 'Labels' which appears as a column label in the table of applicationGenericResources (applicationGenericResource
+      list view).]]
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small"
                                     grow="1"
                                     sortable="true"
                                     sort-id="$root.SortableProperties.AGE">
-      [[Age|Label 'Age' which appears as a column label in the table of applications (application list view).]]
-    </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small"
-                                    grow="nogrow">
+      [[Age|Label 'Age' which appears as a column label in the table of applicationGenericResources (applicationGenericResource
+      list view).]]
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
-  <kd-application-card dir-paginate="application in $ctrl.applicationList.applications | itemsPerPage: default"
-                       application="application"
-                       pagination-id="{{::$ctrl.getSelectId()}}"
-                       total-items="$ctrl.applicationList.listMeta.totalItems">
-  </kd-application-card>
+  <kd-application-generic-resource-card dir-paginate="resource in $ctrl.applicationGenericResourceList.resources | itemsPerPage: default"
+
+                                        resource="resource"
+                                        pagination-id="{{::$ctrl.getSelectId()}}"
+                                        total-items="$ctrl.applicationGenericResourceList.listMeta.totalItems">
+  </kd-application-generic-resource-card>
 
   <kd-resource-card-list-footer>
     <kd-resource-card-list-pagination></kd-resource-card-list-pagination>

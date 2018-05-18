@@ -6,9 +6,13 @@ import (
 
 	applicationAlphaClient "github.com/kubernetes-sigs/application/pkg/client/clientset/versioned"
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	clientApi "github.com/kubernetes/dashboard/src/app/backend/client/api"
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
+	"k8s.io/apimachinery/pkg/fields"
+	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/client-go/dynamic"
 )
@@ -19,22 +23,37 @@ type ResourceList struct {
 	Errors    []error         `json:"errors"`
 }
 
-type ResourceTypeMeta struct {
-	Name       string `json:"-"`
-	Kind       string `json:"kind"`
-	ApiVersion string `json:"apiVersion"`
-}
-
 type ResourceMeta struct {
-	ObjectMeta api.ObjectMeta   `json:"objectMeta"`
-	TypeMeta   ResourceTypeMeta `json:"typeMeta"`
-	Scope      string           `json:"scope"`
+	ObjectMeta api.ObjectMeta `json:"objectMeta"`
+	TypeMeta   api.TypeMeta   `json:"typeMeta"`
 }
 
-type DynamicClientForApplicationFn func(version string) *dynamic.Client
+type ResourceMetaList []*ResourceMeta
 
-func GetGenericApplicationResourceList(client applicationAlphaClient.Interface, dyClientFn DynamicClientForApplicationFn, namespace string,
-	applicationName string, groupName string, kind string) (*metav1.Object, error) {
+func (r *ResourceMeta) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
+	switch name {
+	case dataselect.NameProperty:
+		return dataselect.StdComparableString(r.ObjectMeta.Name)
+	case dataselect.CreationTimestampProperty:
+		return dataselect.StdComparableTime(r.ObjectMeta.CreationTimestamp.Time)
+	case dataselect.NamespaceProperty:
+		return dataselect.StdComparableString(r.ObjectMeta.Namespace)
+	default:
+		return nil
+	}
+}
+
+func (rl ResourceMetaList) Len() int {
+	return len(rl)
+}
+
+func (rl ResourceMetaList) Swap(i, j int) {
+	rl[i], rl[j] = rl[j], rl[i]
+}
+
+func GetGenericApplicationResources(client applicationAlphaClient.Interface,
+	dyClientFn clientApi.DynamicClientFn, dsQuery *dataselect.DataSelectQuery, namespace string,
+	applicationName string, groupName string, kind string) (*ResourceList, error) {
 	log.Printf("Getting resource list of %s application in %s namespace", applicationName, namespace)
 
 	groupKind := metav1.GroupKind{Group: groupName, Kind: kind}
@@ -43,24 +62,46 @@ func GetGenericApplicationResourceList(client applicationAlphaClient.Interface, 
 	if err != nil {
 		return nil, err
 	}
-
-	// TODO: Get application first (we need the selector)
-
 	nonCriticalErrors, criticalError := errors.HandleError(err)
 
-	dynamicClient := dyClientFn(apiResource.Version)
-	resourceList, err := GetResourceListByAPIResource(dynamicClient, namespace, apiResource)
+	application, err := GetApplicationDetail(client, namespace, applicationName)
+	if err != nil {
+		return nil, err
+	}
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+
+	groupVersion := schema.GroupVersion{Group: apiResource.Group, Version: apiResource.Version}
+	dynamicClient, err := dyClientFn(&groupVersion)
 
 	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
 	if criticalError != nil {
 		return nil, criticalError
 	}
 
-	return resourceList, nil
+	labelSelector := labels.SelectorFromSet(application.Selector)
+
+	listOptions := metav1.ListOptions{
+		LabelSelector: labelSelector.String(),
+		FieldSelector: fields.Everything().String(),
+	}
+
+	resourceList, err := GetResourceListByAPIResource(dynamicClient, namespace, apiResource, &listOptions)
+
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
+	}
+
+	result := ResourceList{}
+	rCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toGenericResourceCells(resourceList), dsQuery)
+	result.ListMeta.TotalItems = filteredTotal
+	result.Resources = fromGenericResourceCells(rCells)
+
+	return &result, nil
 }
 
-func GetResourceListByAPIResource(client *dynamic.Client, namespace string, resource *metav1.APIResource) ([]*ResourceMeta, error) {
-	resourceList, err := client.Resource(resource, namespace).List(metav1.ListOptions{})
+func GetResourceListByAPIResource(client *dynamic.Client, namespace string, resource *metav1.APIResource, listOptions *metav1.ListOptions) ([]*ResourceMeta, error) {
+	resourceList, err := client.Resource(resource, namespace).List(*listOptions)
 	if err != nil {
 		return nil, err
 	}
@@ -69,6 +110,7 @@ func GetResourceListByAPIResource(client *dynamic.Client, namespace string, reso
 
 	result := []*ResourceMeta{}
 	for _, item := range rl.Items {
+		resourceKind := api.ResourceKind(strings.ToLower(item.GetKind()))
 		resourceMeta := ResourceMeta{
 			ObjectMeta: api.ObjectMeta{
 				Name:              item.GetName(),
@@ -77,15 +119,27 @@ func GetResourceListByAPIResource(client *dynamic.Client, namespace string, reso
 				Annotations:       item.GetAnnotations(),
 				CreationTimestamp: item.GetCreationTimestamp(),
 			},
-			TypeMeta: ResourceTypeMeta{
-				Name:       resource.Name,
-				Kind:       item.GetKind(),
-				ApiVersion: item.GetAPIVersion(),
-			},
+			TypeMeta: api.NewTypeMeta(resourceKind),
 		}
 		result = append(result, &resourceMeta)
 	}
 	return result, nil
+}
+
+func toGenericResourceCells(std []*ResourceMeta) []dataselect.DataCell {
+	cells := make([]dataselect.DataCell, len(std))
+	for i := range std {
+		cells[i] = std[i]
+	}
+	return cells
+}
+
+func fromGenericResourceCells(cells []dataselect.DataCell) []*ResourceMeta {
+	std := make([]*ResourceMeta, len(cells))
+	for i := range std {
+		std[i] = cells[i].(*ResourceMeta)
+	}
+	return std
 }
 
 func getAPIResourceFromGroupKind(client applicationAlphaClient.Interface, groupKind metav1.GroupKind) (*metav1.APIResource, error) {

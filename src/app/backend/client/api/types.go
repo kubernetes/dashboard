@@ -33,6 +33,7 @@ import (
 type ClientManager interface {
 	Client(req *restful.Request) (kubernetes.Interface, error)
 	DynamicClient(req *restful.Request, groupVersion *schema.GroupVersion) (*dynamic.Client, error)
+	PartialDynamicClient(req *restful.Request) DynamicClientFn
 	// Application client is not yet shipped with client-go. Will be removed in a future release.
 	SigApplicationClient(req *restful.Request) (applicationAlphaClient.Interface, error)
 	InsecureClient() kubernetes.Interface
@@ -57,3 +58,5 @@ type ResourceVerber interface {
 type CanIResponse struct {
 	Allowed bool `json:"allowed"`
 }
+
+type DynamicClientFn func(groupVersion *schema.GroupVersion) (*dynamic.Client, error)

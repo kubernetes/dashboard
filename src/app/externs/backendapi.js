@@ -665,6 +665,45 @@ backendApi.ApplicationList;
  * @typedef {{
  *   objectMeta: !backendApi.ObjectMeta,
  *   typeMeta: !backendApi.TypeMeta,
+ *   selector: !Array<backendApi.Label>,
+ *   assemblyPhase: ?string,
+ *   componentGroupKinds: ?Array<Object<string, string>>,
+ *   description: ?string,
+ *   info: ?Array<Object<string, string>>,
+ *   keywords: ?Array<string>,
+ *   links: ?Array<Object<string, string>>,
+ *   maintainers: ?Array<Object<string, string>>,
+ *   notes: ?string,
+ *   owners: ?Array<Object<string, string>>,
+ *   type: ?string,
+ *   version: ?string,
+ *   events: !backendApi.EventList,
+ *   errors: !Array<!backendApi.Error>
+ * }}
+ */
+backendApi.ApplicationDetail;
+
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta
+ * }}
+ */
+backendApi.ApplicationGenericResource;
+
+/**
+ * @typedef {{
+ *   resources: !Array<!backendApi.ApplicationGenericResource>,
+ *   listMeta: !backendApi.ListMeta,
+ *   errors: !Array<!backendApi.Error>
+ * }}
+ */
+backendApi.ApplicationGenericResourceList;
+
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
  *   pods: !backendApi.PodInfo,
  *   containerImages: !Array<string>,
  *   initContainerImages: !Array<string>

@@ -19,6 +19,8 @@ import namespaceModule from '../common/namespace/module';
 
 import {applicationCardComponent} from './list/card_component';
 import {applicationCardListComponent} from './list/cardlist_component';
+import {applicationGenericResourceCardComponent} from './genericresourcelist/card_component';
+import {ApplicationGenericResourceCardListComponent} from './genericresourcelist/cardlist_component';
 import {applicationListResource} from './list/stateconfig';
 import {applicationInfoComponent} from './detail/info_component';
 import stateConfig from './stateconfig';
@@ -42,4 +44,6 @@ export default angular
     .component('kdApplicationCard', applicationCardComponent)
     .component('kdApplicationCardList', applicationCardListComponent)
     .component('kdApplicationInfo', applicationInfoComponent)
+    .component('kdApplicationGenericResourceCard', applicationGenericResourceCardComponent)
+    .component('kdApplicationGenericResourceCardList', ApplicationGenericResourceCardListComponent)
     .factory('kdApplicationListResource', applicationListResource);
