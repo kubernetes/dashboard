@@ -33,7 +33,7 @@
   <translation id="2248903848244811172" key="MSG_BREADCRUMBS_HORIZONTAL_POD_AUTOSCALERS_LABEL" desc="Label 'Horizontal Pod Autoscalers' that appears as a breadcrumbs on the action bar.">호리젠털 팟 오토스케일러</translation>
   <translation id="8885204956315323333" key="MSG_BREADCRUMBS_INGRESSS_LABEL" desc="Label 'Ingresses' that appears as a breadcrumbs on the action bar.">인그레스</translation>
   <translation id="2024511088483477440" key="MSG_BREADCRUMBS_JOBS_LABEL" desc="Label 'Jobs' that appears as a breadcrumbs on the action bar.">잡</translation>
-  <translation id="3285134270275399073" key="MSG_BREADCRUMBS_LOGIN_LABEL" desc="Label 'Sign in' that appears as a breadcrumbs on the action bar.">로그 인</translation>
+  <translation id="3285134270275399073" key="MSG_BREADCRUMBS_LOGIN_LABEL" desc="Label 'Sign in' that appears as a breadcrumbs on the action bar.">로그인</translation>
   <translation id="1050029015813261838" key="MSG_BREADCRUMBS_LOGS_LABEL" desc="Breadcrum label for the logs view.">로그</translation>
   <translation id="7538864180606148657" key="MSG_BREADCRUMBS_NAMESPACES_LABEL" desc="Label 'Namespaces' that appears as a breadcrumbs on the action bar.">네임스페이스</translation>
   <translation id="1946322401100894439" key="MSG_BREADCRUMBS_NODES_LABEL" desc="Label 'Nodes' that appears as a breadcrumbs on the action bar.">노드</translation>
@@ -54,8 +54,8 @@
   <translation id="5441724995487814814" key="MSG_CHROME_CHROME_0" desc="Tooltip for global action bar create button tooltip.">어플리케이션이나 쿠버네티스 자원 생성하기</translation>
   <translation id="152996649337797552" key="MSG_CHROME_CHROME_1" desc="Label for global action bar create button.">생성</translation>
   <translation id="8711874778657823772" key="MSG_CHROME_CONTROLPANEL_CONTROLPANEL_0" desc="Tooltip for the control panel displayed in the right top corner.">제어판</translation>
-  <translation id="5588778838458035939" key="MSG_CHROME_CONTROLPANEL_CONTROLPANEL_1" desc="Sign out menu item.">로그 아웃</translation>
-  <translation id="3494123731165126874" key="MSG_CHROME_CONTROLPANEL_CONTROLPANEL_2" desc="Sign in menu item.">로그 인</translation>
+  <translation id="5588778838458035939" key="MSG_CHROME_CONTROLPANEL_CONTROLPANEL_1" desc="Sign out menu item.">로그아웃</translation>
+  <translation id="3494123731165126874" key="MSG_CHROME_CONTROLPANEL_CONTROLPANEL_2" desc="Sign in menu item.">로그인</translation>
   <translation id="5023828914132135944" key="MSG_CHROME_NAV_NAV_0" desc="Cluster group menu entry.">클러스터</translation>
   <translation id="6343362656986122693" key="MSG_CHROME_NAV_NAV_1" desc="Namespaces menu entry.">네임스페이스</translation>
   <translation id="716443703088219571" key="MSG_CHROME_NAV_NAV_10" desc="Pods menu entry.">팟</translation>
@@ -174,7 +174,7 @@
   <translation id="5434719528055235183" key="MSG_CONFIGMAP_LIST_CARDLIST_1" desc="Config map list header: name.">이름</translation>
   <translation id="4172472290353802354" key="MSG_CONFIGMAP_LIST_CARDLIST_2" desc="Config map list header: namespace.">네임스페이스</translation>
   <translation id="2010918488451009803" key="MSG_CONFIGMAP_LIST_CARDLIST_3" desc="Config map list header: labels.">레이블</translation>
-  <translation id="5490277101487527964" key="MSG_CONFIGMAP_LIST_CARDLIST_4" desc="Config map list header: age.">나이</translation>
+  <translation id="5490277101487527964" key="MSG_CONFIGMAP_LIST_CARDLIST_4" desc="Config map list header: age.">기간</translation>
   <translation id="5461266186409477738" key="MSG_CONFIGMAP_LIST_CARDLIST_5" desc="Text for config map card list zerostate.">표시할 컨피그 맵이 없습니다.</translation>
   <translation id="6220776078337852001" key="MSG_CONFIGMAP_LIST_CARD_0" desc="Label \'Config Map\' which will appear in the config map\n      delete dialog opened from a config map card on the list page.">컨피그 맵</translation>
   <translation id="1762365164654423553" key="MSG_CONFIGMAP_LIST_CARD_1" desc="Label \'Config Map\' which will appear in the config map\n      delete dialog opened from a config map card on the list page.">컨피그 맵</translation>
@@ -193,7 +193,7 @@
   <translation id="2737908966115951639" key="MSG_CRONJOB_DETAIL_INFO_6" desc="Cron Job\'s attribute label.">Starting Deadline Seconds</translation>
   <translation id="3821426589688229018" key="MSG_CRONJOB_LIST_CARDLIST_0" desc="Cron Jobs list header.">크론 잡</translation>
   <translation id="5891958993570559525" key="MSG_CRONJOB_LIST_CARDLIST_1" desc="Zero state message.">표시할 크론 잡이 없습니다.</translation>
-  <translation id="5674725706448948404" key="MSG_CRONJOB_LIST_CARDLIST_10" desc="Label \'Age\' which appears as a column label in the table of cron jobs.">나이</translation>
+  <translation id="5674725706448948404" key="MSG_CRONJOB_LIST_CARDLIST_10" desc="Label \'Age\' which appears as a column label in the table of cron jobs.">기간</translation>
   <translation id="2879080485078402391" key="MSG_CRONJOB_LIST_CARDLIST_2" desc="Cron Jobs list header.">이름</translation>
   <translation id="7320236786792138099" key="MSG_CRONJOB_LIST_CARDLIST_3" desc="Cron Jobs list header.">종류</translation>
   <translation id="8864113711854264188" key="MSG_CRONJOB_LIST_CARDLIST_4" desc="Cron Jobs list header.">네임스페이스</translation>
@@ -230,7 +230,7 @@
   <translation id="1198220912632063457" key="MSG_DAEMONSET_LIST_CARDLIST_3" desc="Label \'Namespace\' which appears as a column label in the table of daemon sets (daemon set list view).">네임스페이스</translation>
   <translation id="4316139792239592855" key="MSG_DAEMONSET_LIST_CARDLIST_4" desc="Label \'Labels\' which appears as a column label in the table of daemon sets (daemon set list view).">레이블</translation>
   <translation id="315233313099478215" key="MSG_DAEMONSET_LIST_CARDLIST_5" desc="Label \'Pods\' which appears as a column label in the table of daemon sets (daemon set list view).">팟</translation>
-  <translation id="5238998686445297660" key="MSG_DAEMONSET_LIST_CARDLIST_6" desc="Label \'Age\' which appears as a column label in the table of daemon sets (daemon set list view).">나이</translation>
+  <translation id="5238998686445297660" key="MSG_DAEMONSET_LIST_CARDLIST_6" desc="Label \'Age\' which appears as a column label in the table of daemon sets (daemon set list view).">기간</translation>
   <translation id="2598397233464322530" key="MSG_DAEMONSET_LIST_CARDLIST_7" desc="Label \'Images\' which appears as a column label in the table of daemon sets (daemon set list view).">이미지</translation>
   <translation id="4980932810318302398" key="MSG_DAEMONSET_LIST_CARDLIST_8" desc="Text for daemon set card list zerostate.">표시할 데몬 셋이 없습니다.</translation>
   <translation id="6325130526007284501" key="MSG_DAEMONSET_LIST_CARD_0" desc="Tooltip for failed pod card icon.">하나 이상의 팟에 에러가 있습니다.</translation>
@@ -272,7 +272,7 @@
   <translation id="6493674795356876555" key="MSG_DEPLOYMENT_LIST_CARDLIST_2" desc="Label \'Namespace\' which appears as a column label in the table of deployments (deployment list view).">네임스페이스</translation>
   <translation id="4423617422088109346" key="MSG_DEPLOYMENT_LIST_CARDLIST_3" desc="Label \'Labels\' which appears as a column label in the table of deployments (deployment list view).">레이블</translation>
   <translation id="7758788285438806394" key="MSG_DEPLOYMENT_LIST_CARDLIST_4" desc="Label \'Pods\' which appears as a column label in the table of deployments (deployment list view).">팟</translation>
-  <translation id="7541857931830669966" key="MSG_DEPLOYMENT_LIST_CARDLIST_5" desc="Label \'Age\' which appears as a column label in the table of deployments (deployment list view).">나이</translation>
+  <translation id="7541857931830669966" key="MSG_DEPLOYMENT_LIST_CARDLIST_5" desc="Label \'Age\' which appears as a column label in the table of deployments (deployment list view).">기간</translation>
   <translation id="3825241451049418242" key="MSG_DEPLOYMENT_LIST_CARDLIST_6" desc="Label \'Images\' which appears as a column label in the table of deployments (deployment list view).">이미지</translation>
   <translation id="2954809258563901091" key="MSG_DEPLOYMENT_LIST_CARDLIST_7" desc="Text for deployment card list zerostate.">표시할 디플로이먼트가 없습니다.</translation>
   <translation id="2943455083749849727" key="MSG_DEPLOYMENT_LIST_CARD_0" desc="Tooltip saying that some pods in a deployment have errors.">하나 이상의 팟에 에러가 있습니다.</translation>
@@ -415,7 +415,7 @@
   <translation id="7869641598803414323" key="MSG_DESIRED_PODS_MSG" desc="Satisfies a way to make normal binding in angularjs to pass in google closure compiler.">
     <ph name="DESIRED_PODS">개 팟을 의도함.</ph>
   </translation>
-  <translation id="4942061082776173364" key="MSG_ENCRYPTION_KEY_CHANGED" desc="Text shown when saved token could not be decrypted by backend.">세션이 만료되었습니다. 다시 로그 인 하세요.</translation>
+  <translation id="4942061082776173364" key="MSG_ENCRYPTION_KEY_CHANGED" desc="Text shown when saved token could not be decrypted by backend.">세션이 만료되었습니다. 다시 로그인하세요.</translation>
   <translation id="778882191405410811" key="MSG_ENDPOINTS_WARNING_LABEL" desc="Label 'Warning' for the endpoint selection drop-down.">경고</translation>
   <translation id="4983649641173165689" key="MSG_ENDPOINT_CARDLIST_0" desc="Label which appears above the list of such objects.">엔드포인트</translation>
   <translation id="4158586803314397594" key="MSG_ENDPOINT_CARDLIST_1" desc="(no description provided)">현재 서비스에서 선택된 엔드포인트가 없습니다.</translation>
@@ -466,7 +466,7 @@
   <translation id="1138380808295885535" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARDLIST_5" desc="Label \'Current CPU Utilization\' which appears as a column label in the table of horizontal pod autoscalers (horizontal pod autoscaler list view).">현재 CPU 사용량</translation>
   <translation id="2631385607889091074" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARDLIST_6" desc="Label \'Min Replicas\' which appears as a column label in the table of horizontal pod autoscalers (horizontal pod autoscaler list view).">최소 복제 수</translation>
   <translation id="8088373128320107261" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARDLIST_7" desc="Label \'Max Replicas\' which appears as a column label in the table of horizontal pod autoscalers (horizontal pod autoscaler list view).">최대 복제 수</translation>
-  <translation id="4787729230562636049" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARDLIST_8" desc="Label \'Age\' which appears as a column label in the table of horizontal pod autoscalers (horizontal pod autoscaler list view).">나이</translation>
+  <translation id="4787729230562636049" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARDLIST_8" desc="Label \'Age\' which appears as a column label in the table of horizontal pod autoscalers (horizontal pod autoscaler list view).">기간</translation>
   <translation id="1108386405397731039" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARDLIST_9" desc="Text for horizontal pod autoscaler card list zerostate.">표시할 호리젠털 팟 오토스케일러가 없습니다.</translation>
   <translation id="7169021054679689074" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARD_0" desc="Show the target CPU utilization percentage of a the pods of the targetted resource of a HPA">{{::$ctrl.horizontalPodAutoscaler.targetCPUUtilizationPercentage}}%</translation>
   <translation id="2749124983305767530" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARD_1" desc="Show the current CPU utilization percentage of a the pods of the targetted resource of a HPA">{{::$ctrl.horizontalPodAutoscaler.currentCPUUtilizationPercentage}}%</translation>
@@ -480,7 +480,7 @@
   <translation id="4939251984111923775" key="MSG_INGRESS_LIST_CARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of ingresses (ingress list view).">이름</translation>
   <translation id="2888039058521136770" key="MSG_INGRESS_LIST_CARDLIST_2" desc="Label \'Namespace\' which appears as a column label in the table of ingresses (ingress list view).">네임스페이스</translation>
   <translation id="6177082876544143675" key="MSG_INGRESS_LIST_CARDLIST_3" desc="Label \'endpoints\' which appears as a column label in the table of ingresses (ingress list view).">엔드포인트</translation>
-  <translation id="5470067088066957568" key="MSG_INGRESS_LIST_CARDLIST_4" desc="Label \'Age\' which appears as a column label in the table of ingresses (ingress list view).">나이</translation>
+  <translation id="5470067088066957568" key="MSG_INGRESS_LIST_CARDLIST_4" desc="Label \'Age\' which appears as a column label in the table of ingresses (ingress list view).">기간</translation>
   <translation id="6006534028215971090" key="MSG_INGRESS_LIST_CARDLIST_5" desc="Text for ingress card list zerostate.">표시할 인그레스가 없습니다.</translation>
   <translation id="1712691448072304833" key="MSG_INGRESS_LIST_CARD_0" desc="Tooltip for the age column">생성 시간</translation>
   <translation id="3490469769225638472" key="MSG_JOB_DETAIL_ACTIONBAR_0" desc="Label \'Job\' which appears at the top of the dialog, opened from a job details page.">잡</translation>
@@ -505,7 +505,7 @@
   <translation id="8590813179543551101" key="MSG_JOB_LIST_CARDLIST_3" desc="Label \'Namespace\' which appears as a column label in the table of replication controllers (Job list view).">네임스페이스</translation>
   <translation id="7500297282568394709" key="MSG_JOB_LIST_CARDLIST_4" desc="Label \'Labels\' which appears as a column label in the table of replication controllers (Job list view).">레이블</translation>
   <translation id="8618481285106862901" key="MSG_JOB_LIST_CARDLIST_5" desc="Label \'Pods\' which appears as a column label in the table of replication controllers (Job list view).">팟</translation>
-  <translation id="2422035758692427914" key="MSG_JOB_LIST_CARDLIST_6" desc="Label \'Age\' which appears as a column label in the table of replication controllers (Job list view).">나이</translation>
+  <translation id="2422035758692427914" key="MSG_JOB_LIST_CARDLIST_6" desc="Label \'Age\' which appears as a column label in the table of replication controllers (Job list view).">기간</translation>
   <translation id="8162859503142023792" key="MSG_JOB_LIST_CARDLIST_7" desc="Label \'Images\' which appears as a column label in the table of replication controllers (Job list view).">이미지</translation>
   <translation id="3716747253637312807" key="MSG_JOB_LIST_CARDLIST_8" desc="Text for job card list zerostate.">표시할 잡이 없습니다.</translation>
   <translation id="122753681203495181" key="MSG_JOB_LIST_CARD_0" desc="Column \'Job\' that shows if the resource kind should be shown in a Job List">잡</translation>
@@ -526,7 +526,7 @@
   <translation id="1503565493122422406" key="MSG_LOGIN_LOGIN_1" desc="Kubeconfig option label shown on login page">Kubeconfig</translation>
   <translation id="8732662932191668041" key="MSG_LOGIN_LOGIN_2" desc="(no description provided)">Every Service Account has a Secret with valid Bearer Token that can be used to log in to Dashboard. To find out more about how to configure and use Bearer Tokens, please refer to the &lt;a href='https://kubernetes.io/docs/admin/authentication/'&gt;Authentication&lt;/a&gt; section.</translation>
   <translation id="9041317912268999764" key="MSG_LOGIN_LOGIN_3" desc="Token option label shown on login page">Token</translation>
-  <translation id="5728098885822861128" key="MSG_LOGIN_LOGIN_4" desc="Text shown on the sign in button on login page">로그 인</translation>
+  <translation id="5728098885822861128" key="MSG_LOGIN_LOGIN_4" desc="Text shown on the sign in button on login page">로그인</translation>
   <translation id="3587575593965850303" key="MSG_LOGIN_LOGIN_5" desc="Text shown on skip button on login page">Skip</translation>
   <translation id="374834757787325940" key="MSG_LOGIN_LOGIN_6" desc="Basic option label shown on login page">Basic</translation>
   <translation id="5295755962056443196" key="MSG_LOGIN_LOGIN_7" desc="(no description provided)">Please select the kubeconfig file that you have created to configure access to the cluster. To find out more about how to configure and use kubeconfig file, please refer to the &lt;a href='https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/'&gt;Configure Access to Multiple Clusters&lt;/a&gt; section.</translation>
@@ -562,7 +562,7 @@
   <translation id="5403498579453928243" key="MSG_NAMESPACE_LIST_CARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of namespaces (namespace list view).">이름</translation>
   <translation id="1576456781675309581" key="MSG_NAMESPACE_LIST_CARDLIST_2" desc="Label \'Labels\' which appears as a column label in the table of namespaces (namespace list view).">레이블</translation>
   <translation id="3598200911441557553" key="MSG_NAMESPACE_LIST_CARDLIST_3" desc="Label \'Status\' which appears as a column label in the table of namespaces (namespace list view).">상태</translation>
-  <translation id="2325476578537884124" key="MSG_NAMESPACE_LIST_CARDLIST_4" desc="Label \'Age\' which appears as a column label in the table of namespaces (namespace list view).">나이</translation>
+  <translation id="2325476578537884124" key="MSG_NAMESPACE_LIST_CARDLIST_4" desc="Label \'Age\' which appears as a column label in the table of namespaces (namespace list view).">기간</translation>
   <translation id="2075541801746082922" key="MSG_NAMESPACE_LIST_CARDLIST_5" desc="Text for namespace card list zerostate.">표시할 네임스페이스가 없습니다.</translation>
   <translation id="8540536206538470983" key="MSG_NAMESPACE_LIST_CARD_0" desc="Tooltip for the age column">생성 시간</translation>
   <translation id="5143266087600531180" key="MSG_NAMESPACE_SELECT_ARIA_LABEL" desc="Text describing what namespace selector is">네임스페이스를 위한 셀렉터</translation>
@@ -601,7 +601,7 @@
   <translation id="4079495084138822779" key="MSG_NODE_LIST_CARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of nodes (node list view).">이름</translation>
   <translation id="666977111261221823" key="MSG_NODE_LIST_CARDLIST_2" desc="Label \'Labels\' which appears as a column label in the table of nodes (node list view).">레이블</translation>
   <translation id="5568169056290988879" key="MSG_NODE_LIST_CARDLIST_3" desc="Label \'Ready\' which appears as a column label in the table of nodes (node list view).">Ready</translation>
-  <translation id="7563356541739732697" key="MSG_NODE_LIST_CARDLIST_4" desc="Label \'Age\' which appears as a column label in the table of nodes (node list view).">나이</translation>
+  <translation id="7563356541739732697" key="MSG_NODE_LIST_CARDLIST_4" desc="Label \'Age\' which appears as a column label in the table of nodes (node list view).">기간</translation>
   <translation id="2936243005887118324" key="MSG_NODE_LIST_CARDLIST_5" desc="Text for node card list zerostate.">표시할 노드가 없습니다.</translation>
   <translation id="122468837221390322" key="MSG_NODE_LIST_CARDLIST_6" desc="Label \'CPU requests (cores)\' which appears as a column label in the table of nodes (node list view).">CPU 요청량 (cores)</translation>
   <translation id="3265578351261846339" key="MSG_NODE_LIST_CARDLIST_7" desc="Label \'CPU limits (cores)\' which appears as a column label in the table of nodes (node list view).">CPU 상한 (cores)</translation>
@@ -638,7 +638,7 @@
   <translation id="1258689958046107203" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARDLIST_2" desc="Label \'Namespace\' which appears as a column label in the table of persistent volume claims (persistent volume claim list view).">네임스페이스</translation>
   <translation id="1790149424209494199" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARDLIST_3" desc="Label \'Volume\' which appears as a column label in the table of persistent volume claims (persistent volume claim list view).">볼륨</translation>
   <translation id="6848550680164349416" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARDLIST_4" desc="Label \'Status\' which appears as a column label in the table of persistent volume claims (persistent volume claim list view).">상태</translation>
-  <translation id="5458993660911534244" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARDLIST_5" desc="Label \'Age\' which appears as a column label in the table of persistent volume claims (persistent volume claim list view).">나이</translation>
+  <translation id="5458993660911534244" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARDLIST_5" desc="Label \'Age\' which appears as a column label in the table of persistent volume claims (persistent volume claim list view).">기간</translation>
   <translation id="5623491181214143081" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARDLIST_6" desc="Text for persistent volume claim card list zerostate.">표시할 퍼시스턴트 볼륨 클레임이 없습니다.</translation>
   <translation id="2711600512301130906" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARDLIST_7" desc="Label \'Capacity\' which appears as a column label in the table of persistent volume claims (persistent volume claim list view).">용량</translation>
   <translation id="3165687067342260212" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARDLIST_8" desc="Label \'AccessModes\' which appears as a column label in the table of persistent volume claims (persistent volume claim list view).">Access Modes</translation>
@@ -711,7 +711,7 @@
   <translation id="384445450481051056" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_5" desc="Persistent volume list header: status.">상태</translation>
   <translation id="6387315119675278668" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_6" desc="Persistent volume list header: claim.">클레임</translation>
   <translation id="1737383119058892029" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_7" desc="Persistent volume list header: reason.">Reason</translation>
-  <translation id="6418120519158013412" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_8" desc="Persistent volume list header: age.">나이</translation>
+  <translation id="6418120519158013412" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_8" desc="Persistent volume list header: age.">기간</translation>
   <translation id="6613585718528767524" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_9" desc="Text for persistent volume card list zerostate.">표시할 퍼시스턴트 볼륨이 없습니다.</translation>
   <translation id="4551076669296579967" key="MSG_PERSISTENTVOLUME_LIST_CARD_0" desc="Label \'Persistent Volume\' which will appear in the persistent volume delete dialog opened from a persistentvolume card on the list page.">퍼시스턴트 볼륨</translation>
   <translation id="5346027648850257503" key="MSG_PERSISTENTVOLUME_LIST_CARD_1" desc="Tooltip for the age column">생성 시간</translation>
@@ -732,7 +732,7 @@
   <translation id="859169969272492339" key="MSG_POD_DETAIL_CREATORINFO_3" desc="Label \'Namespace\' which appears as a column label in the creator card.">네임스페이스</translation>
   <translation id="5639894053861673852" key="MSG_POD_DETAIL_CREATORINFO_4" desc="Label \'Labels\' which appears as a column label in the creator card.">레이블</translation>
   <translation id="1299427439266004356" key="MSG_POD_DETAIL_CREATORINFO_5" desc="Label \'Pods\' which appears as a column label in the creator card.">팟</translation>
-  <translation id="2344179924431390658" key="MSG_POD_DETAIL_CREATORINFO_6" desc="Label \'Age\' which appears as a column label in the creator card.">나이</translation>
+  <translation id="2344179924431390658" key="MSG_POD_DETAIL_CREATORINFO_6" desc="Label \'Age\' which appears as a column label in the creator card.">기간</translation>
   <translation id="347463114068534057" key="MSG_POD_DETAIL_CREATORINFO_7" desc="Label \'Images\' which appears as a column label in the creator card.">이미지</translation>
   <translation id="2652259329893477150" key="MSG_POD_DETAIL_CREATORINFO_9" desc="Text for pod creator zero state in pod details page.">팟의 생성자가 없습니다.</translation>
   <translation id="7254693136643899288" key="MSG_POD_DETAIL_DETAIL_0" desc="Title for graph card displaying CPU metric of one pod.">CPU 사용량</translation>
@@ -750,7 +750,7 @@
   <translation id="7443881172620941594" key="MSG_POD_LIST_CARDLIST_2" desc="Title of a column">네임스페이스</translation>
   <translation id="6983001768279857619" key="MSG_POD_LIST_CARDLIST_3" desc="Title of a pod status column">상태</translation>
   <translation id="9188256196176968844" key="MSG_POD_LIST_CARDLIST_4" desc="Title of a restarts column for a pod">재시작</translation>
-  <translation id="6713259838973606526" key="MSG_POD_LIST_CARDLIST_5" desc="Title of a column for the age of a pod">나이</translation>
+  <translation id="6713259838973606526" key="MSG_POD_LIST_CARDLIST_5" desc="Title of a column for the age of a pod">기간</translation>
   <translation id="2353613362278824556" key="MSG_POD_LIST_CARDLIST_6" desc="Title of a column">CPU (cores)</translation>
   <translation id="6472029030033782169" key="MSG_POD_LIST_CARDLIST_7" desc="Title of a column">메모리 (bytes)</translation>
   <translation id="8463106700747317382" key="MSG_POD_LIST_CARDLIST_8" desc="Text for pods card list zerostate.">표시할 팟이 없습니다.</translation>
@@ -794,7 +794,7 @@
   <translation id="5504242566546487357" key="MSG_REPLICASET_LIST_CARDLIST_3" desc="Label \'Namespace\' which appears as a column label in the table of replication controllers (RC list view).">네임스페이스</translation>
   <translation id="8675343797885354425" key="MSG_REPLICASET_LIST_CARDLIST_4" desc="Label \'Labels\' which appears as a column label in the table of replica sets (replica set list view).">레이블</translation>
   <translation id="2654175592807957242" key="MSG_REPLICASET_LIST_CARDLIST_5" desc="Label \'Pods\' which appears as a column label in the table of replica sets (replica set list view).">팟</translation>
-  <translation id="5432873809831530051" key="MSG_REPLICASET_LIST_CARDLIST_6" desc="Label \'Age\' which appears as a column label in the table of replica sets (replica set list view).">나이</translation>
+  <translation id="5432873809831530051" key="MSG_REPLICASET_LIST_CARDLIST_6" desc="Label \'Age\' which appears as a column label in the table of replica sets (replica set list view).">기간</translation>
   <translation id="7205864905890564062" key="MSG_REPLICASET_LIST_CARDLIST_7" desc="Label \'Images\' which appears as a column label in the table of replica sets (replica set list view).">이미지</translation>
   <translation id="7039160728674777775" key="MSG_REPLICASET_LIST_CARDLIST_8" desc="Text for replica set card list zerostate.">표시할 레플리카 셋이 없습니다.</translation>
   <translation id="1049026925963989324" key="MSG_REPLICASET_LIST_CARD_0" desc="Tooltip saying that some pods in a replica set have errors.">하나 이상의 팟에 에러가 있습니다</translation>
@@ -833,7 +833,7 @@
   <translation id="2769002056868132125" key="MSG_REPLICATIONCONTROLLER_LIST_CARDLIST_3" desc="Label \'Namespace\' which appears as a column label in the table of replication controllers (RC list view).">네임스페이스</translation>
   <translation id="5486561933775656760" key="MSG_REPLICATIONCONTROLLER_LIST_CARDLIST_4" desc="Label \'Labels\' which appears as a column label in the table of replication controllers (RC list view).">레이블</translation>
   <translation id="4938088632137667978" key="MSG_REPLICATIONCONTROLLER_LIST_CARDLIST_5" desc="Label \'Pods\' which appears as a column label in the table of replication controllers (RC list view).">팟</translation>
-  <translation id="3957484052069652608" key="MSG_REPLICATIONCONTROLLER_LIST_CARDLIST_6" desc="Label \'Age\' which appears as a column label in the table of replication controllers (RC list view).">나이</translation>
+  <translation id="3957484052069652608" key="MSG_REPLICATIONCONTROLLER_LIST_CARDLIST_6" desc="Label \'Age\' which appears as a column label in the table of replication controllers (RC list view).">기간</translation>
   <translation id="6698419478883321763" key="MSG_REPLICATIONCONTROLLER_LIST_CARDLIST_7" desc="Label \'Images\' which appears as a column label in the table of replication controllers (RC list view).">이미지</translation>
   <translation id="3909279990084178026" key="MSG_REPLICATIONCONTROLLER_LIST_CARDLIST_8" desc="Text for replication controller card list zerostate.">표시할 레플리케이션 컨트롤러가 없습니다.</translation>
   <translation id="8726722862459943357" key="MSG_REPLICATIONCONTROLLER_LIST_CARDMENU_0" desc="Label \'Replication Controller\' which will appear in the replication Controller scale dialog opened from a replication controller card on the list page.">레플리케이션 컨트롤러</translation>
@@ -869,7 +869,7 @@
   <translation id="4180591456756847095" key="MSG_ROLE_LIST_CARDLIST_1" desc="Role list header: name.">이름</translation>
   <translation id="7494857132807181920" key="MSG_ROLE_LIST_CARDLIST_2" desc="Role list header: role type.">롤 타입</translation>
   <translation id="3561280019877192219" key="MSG_ROLE_LIST_CARDLIST_3" desc="Role list header: namespace.">네임스페이스</translation>
-  <translation id="3197213955933923965" key="MSG_ROLE_LIST_CARDLIST_4" desc="Label \'Age\' which appears as a column label in the table of ingresses (ingress list view).">나이</translation>
+  <translation id="3197213955933923965" key="MSG_ROLE_LIST_CARDLIST_4" desc="Label \'Age\' which appears as a column label in the table of ingresses (ingress list view).">기간</translation>
   <translation id="8108259204772140609" key="MSG_ROLE_LIST_CARDLIST_5" desc="Text for role card list zerostate.">표시할 롤이 없습니다.</translation>
   <translation id="8635837657218180021" key="MSG_ROLE_LIST_CARD_0" desc="Tooltip for the age column">생성 시간</translation>
   <translation id="6072176334759614767" key="MSG_SECRET_DETAIL_ACTIONBAR_0" desc="Label \'Secret\' which appears at the top of the delete dialog, opened from a secret details page.">시크릿</translation>
@@ -882,7 +882,7 @@
   <translation id="482275567627182819" key="MSG_SECRET_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">시크릿</translation>
   <translation id="2133941155168166972" key="MSG_SECRET_LIST_CARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of secrets (secret list view).">이름</translation>
   <translation id="7478420130341878455" key="MSG_SECRET_LIST_CARDLIST_2" desc="Label \'Namespace\' which appears as a column label in the table of secrets (secret list view).">네임스페이스</translation>
-  <translation id="4493598488188566434" key="MSG_SECRET_LIST_CARDLIST_3" desc="Label \'Age\' which appears as a column label in the table of secrets (secret list view).">나이</translation>
+  <translation id="4493598488188566434" key="MSG_SECRET_LIST_CARDLIST_3" desc="Label \'Age\' which appears as a column label in the table of secrets (secret list view).">기간</translation>
   <translation id="5636111591527461304" key="MSG_SECRET_LIST_CARDLIST_4" desc="Text for secret card list zerostate.">표시할 시크릿이 없습니다.</translation>
   <translation id="2424849052809753229" key="MSG_SECRET_LIST_CARDLIST_5" desc="Label \'Type\' which appears as a column label in the table of secrets (secret list view).">타입</translation>
   <translation id="3633911909434472281" key="MSG_SECRET_LIST_CARD_0" desc="Tooltip for the age column">생성 시간</translation>
@@ -905,7 +905,7 @@
   <translation id="6401528393336695678" key="MSG_SERVICE_LIST_CARDLIST_4" desc="Label \'Cluster IP\' which appears as a column label in the table of services (service list view).">클러스터 IP</translation>
   <translation id="5768650563576253785" key="MSG_SERVICE_LIST_CARDLIST_5" desc="Label \'Internal endpoints\' which appears as a column label in the table of services (service list view).">내부 엔드포인트</translation>
   <translation id="8610616614395595684" key="MSG_SERVICE_LIST_CARDLIST_6" desc="Label \'External endpoints\' which appears as a column label in the table of services (service list view).">외부 엔드포인트</translation>
-  <translation id="9019769847701593849" key="MSG_SERVICE_LIST_CARDLIST_7" desc="Label \'Age\' which appears as a column label in the table of ingresses (ingress list view).">나이</translation>
+  <translation id="9019769847701593849" key="MSG_SERVICE_LIST_CARDLIST_7" desc="Label \'Age\' which appears as a column label in the table of ingresses (ingress list view).">기간</translation>
   <translation id="7871952624539430064" key="MSG_SERVICE_LIST_CARDLIST_8" desc="Text for service card list zerostate.">표시할 서비스가 없습니다.</translation>
   <translation id="3019719082217228018" key="MSG_SERVICE_LIST_CARD_0" desc="tooltip for pending service card icon">이 서비스는 pending 상태입니다</translation>
   <translation id="1499203949044274957" key="MSG_SERVICE_LIST_CARD_1" desc="Tooltip for the age column">생성 시간</translation>
@@ -947,7 +947,7 @@
   <translation id="1489012022186096853" key="MSG_STATEFULSET_LIST_CARDLIST_3" desc="Stateful set list header: namespace.">네임스페이스</translation>
   <translation id="8078172220093810587" key="MSG_STATEFULSET_LIST_CARDLIST_4" desc="Stateful set list header: labels.">레이블</translation>
   <translation id="6154663102883314004" key="MSG_STATEFULSET_LIST_CARDLIST_5" desc="Stateful set list header: pods.">팟</translation>
-  <translation id="2017309324677252198" key="MSG_STATEFULSET_LIST_CARDLIST_6" desc="Stateful set list header: age.">나이</translation>
+  <translation id="2017309324677252198" key="MSG_STATEFULSET_LIST_CARDLIST_6" desc="Stateful set list header: age.">기간</translation>
   <translation id="6924436875491034923" key="MSG_STATEFULSET_LIST_CARDLIST_7" desc="Stateful set list header: images.">이미지</translation>
   <translation id="8940586773655259683" key="MSG_STATEFULSET_LIST_CARDLIST_8" desc="Text for stateful set card list zerostate.">표시할 스테이트풀 셋이 없습니다.</translation>
   <translation id="8013469692840013975" key="MSG_STATEFULSET_LIST_CARD_0" desc="Tooltip text which appears on error icon hover.">하나 이상의 팟에 에러가 있습니다.</translation>
@@ -970,7 +970,7 @@
   <translation id="7270752644289752116" key="MSG_STORAGECLASS_LIST_CARDLIST_2" desc="Storage class list header: labels.">레이블</translation>
   <translation id="1137741577335174033" key="MSG_STORAGECLASS_LIST_CARDLIST_3" desc="Storage class list header: provisioner.">Provisioner</translation>
   <translation id="4317180536835761343" key="MSG_STORAGECLASS_LIST_CARDLIST_4" desc="Storage class list header: parameters.">파라미터</translation>
-  <translation id="1567288620608447744" key="MSG_STORAGECLASS_LIST_CARDLIST_5" desc="Storage class list header: age.">나이</translation>
+  <translation id="1567288620608447744" key="MSG_STORAGECLASS_LIST_CARDLIST_5" desc="Storage class list header: age.">기간</translation>
   <translation id="544730200378378586" key="MSG_STORAGECLASS_LIST_CARDLIST_6" desc="Text for storage class card list zerostate.">표시할 스토리지 클래스가 없습니다.</translation>
   <translation id="8108461949496336520" key="MSG_STORAGECLASS_LIST_CARD_0" desc="Label \'Storage Class\' which will appear in the storage class delete dialog opened from a storageclass card on the list page.">스토리지 클래스</translation>
   <translation id="3154139817057931405" key="MSG_STORAGECLASS_LIST_CARD_1" desc="Label \'Storage Class\' which will appear in the storage class delete dialog opened from a storageclass card on the list page.">스토리지 클래스</translation>
