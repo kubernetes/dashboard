@@ -170,8 +170,8 @@ func handleTerminalSession(session sockjs.Session) {
 	}
 
 	terminalSession.sockJSSession = session
-	terminalSession.bound <- nil
 	terminalSessions[msg.SessionID] = terminalSession
+	terminalSession.bound <- nil
 }
 
 // CreateAttachHandler is called from main for /api/sockjs
