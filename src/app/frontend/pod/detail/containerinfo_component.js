@@ -120,7 +120,7 @@ class ContainerInfoController {
    */
   getFieldRefValue(env) {
     if (env.valueFrom && env.valueFrom.fieldRef.apiVersion && env.valueFrom.fieldRef.fieldPath) {
-      return `(${env.valueFrom.fieldRef.apiVersion} : ${env.valueFrom.fieldRef.fieldPath})`;
+      return `(${env.valueFrom.fieldRef.apiVersion}:${env.valueFrom.fieldRef.fieldPath})`;
     }
     return env.value;
   }
