@@ -21,9 +21,9 @@ export interface ObjectMeta {
   name: string;
   namespace: string;
   labels: StringMap;
-  annotations: StringMap;
+  annotations?: StringMap;
   creationTimestamp: string;
-  uid: string;
+  uid?: string;
 }
 
 export interface ResourceDetail {
@@ -34,7 +34,7 @@ export interface ResourceDetail {
 
 export interface ResourceList {
   listMeta: ListMeta;
-  items: Resource[];
+  items?: Resource[];
   errors: K8sError[];
 }
 
@@ -104,7 +104,7 @@ export interface PodContainerList { containers: string[]; }
 export interface PodList extends ResourceList {
   pods: Pod[];
   status: Status;
-  podInfo: PodInfo;
+  podInfo?: PodInfo;
   cumulativeMetrics: Metric[]|null;
 }
 
@@ -179,7 +179,7 @@ export interface EndpointResourcePort {
 export interface Port {
   port: number;
   protocol: string;
-  nodePort: number;
+  nodePort?: number;
 }
 
 export interface Endpoint {
@@ -236,9 +236,9 @@ export interface PersistentVolumeClaim extends Resource {
 
 export interface Pod extends Resource {
   podStatus: PodStatus;
-  podIP: string;
+  podIP?: string;
   restartCount: number;
-  qosClass: string;
+  qosClass?: string;
   metrics: PodMetrics;
   warnings: Event[];
   nodeName: string;
@@ -295,7 +295,7 @@ export interface ReplicaSetDetail extends ResourceDetail {
 
 export interface ResourceQuotaDetail extends ResourceDetail {
   scopes: string[];
-  statusList: {[key: string]: ResourceQuotaStatus};
+  statusList: { [key: string]: ResourceQuotaStatus };
 }
 
 export interface DeploymentDetail extends ResourceDetail {
@@ -366,7 +366,7 @@ export interface SecretDetail extends ResourceDetail {
   data: StringMap;
 }
 
-export interface IngressDetail extends ResourceDetail {}
+export interface IngressDetail extends ResourceDetail { }
 
 export interface PersistentVolumeClaimDetail extends ResourceDetail {
   status: string;
@@ -562,6 +562,8 @@ export interface Condition {
 
 export interface ContainerStateWaiting { reason: string; }
 
+export interface ContainerStateRunning { startedAt: string; }
+
 export interface ContainerStateTerminated {
   reason: string;
   signal: number;
@@ -569,8 +571,9 @@ export interface ContainerStateTerminated {
 }
 
 export interface ContainerState {
-  waiting: ContainerStateWaiting;
-  terminated: ContainerStateTerminated;
+  waiting?: ContainerStateWaiting;
+  terminated?: ContainerStateTerminated;
+  running?: ContainerStateRunning;
 }
 
 export interface ResourceQuotaStatus {

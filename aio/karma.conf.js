@@ -20,6 +20,10 @@ let path = require('path');
 module.exports = function(config) {
   let configuration = {
     basePath: path.join(__dirname, '..'),
+    files: [
+      // Include a Material theme in the test suite.
+      { pattern: './node_modules/@angular/material/prebuilt-themes/indigo-pink.css', included: true, watched: true }
+    ],
 
     logLevel: config.LOG_INFO,
 
