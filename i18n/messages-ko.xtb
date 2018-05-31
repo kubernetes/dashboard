@@ -126,7 +126,7 @@
   <translation id="7353491667260402390" key="MSG_COMMON_COMPONENTS_RESOURCEDETAIL_INFOCARD_2" desc="Label \'Labels\' for a resource.">레이블</translation>
   <translation id="5872558793526944357" key="MSG_COMMON_COMPONENTS_RESOURCEDETAIL_INFOCARD_3" desc="Label \'Annotations\' for a resource.">어노테이션</translation>
   <translation id="7069230303117205966" key="MSG_COMMON_COMPONENTS_RESOURCEDETAIL_INFOCARD_4" desc="Label \'Creation Time\' for a resource.">생성 시간</translation>
-  <translation id="5724590208757461876" key="MSG_COMMON_COMPONENTS_SCALE_SCALE_0" desc="Action \'Scale\' on the drop down menu on resource list page.">스케일</translation>
+  <translation id="5724590208757461876" key="MSG_COMMON_COMPONENTS_SCALE_SCALE_0" desc="Action \'Scale\' on the dropdown menu on resource list page.">스케일</translation>
   <translation id="2699323907720130275" key="MSG_COMMON_COMPONENTS_SCALE_SCALE_1" desc="Tooltip for the \'scale\' button on the action bar on a resource details view.">팟 수 바꾸기</translation>
   <translation id="8982112402145698888" key="MSG_COMMON_COMPONENTS_SCALE_SCALE_2" desc="Tooltip for the \'Scale\' button on the action bar on a resource details view.">스케일</translation>
   <translation id="8514425134682432381" key="MSG_COMMON_COMPONENTS_WARNINGS_WARNINGS_0" desc="Tooltip for warning dismissal button.">무시</translation>
@@ -416,7 +416,7 @@
     <ph name="DESIRED_PODS">개 팟을 의도함.</ph>
   </translation>
   <translation id="4942061082776173364" key="MSG_ENCRYPTION_KEY_CHANGED" desc="Text shown when saved token could not be decrypted by backend.">세션이 만료되었습니다. 다시 로그인하세요.</translation>
-  <translation id="778882191405410811" key="MSG_ENDPOINTS_WARNING_LABEL" desc="Label 'Warning' for the endpoint selection drop-down.">경고</translation>
+  <translation id="778882191405410811" key="MSG_ENDPOINTS_WARNING_LABEL" desc="Label 'Warning' for the endpoint selection dropdown.">경고</translation>
   <translation id="4983649641173165689" key="MSG_ENDPOINT_CARDLIST_0" desc="Label which appears above the list of such objects.">엔드포인트</translation>
   <translation id="4158586803314397594" key="MSG_ENDPOINT_CARDLIST_1" desc="(no description provided)">현재 서비스에서 선택된 엔드포인트가 없습니다.</translation>
   <translation id="2771036553361600987" key="MSG_ENDPOINT_CARDLIST_2" desc="Label \'Source\' for the endpoint source column of the endpoints table (endpoints list page).">호스트</translation>
@@ -434,7 +434,7 @@
   <translation id="2318056046996927961" key="MSG_EVENTS_CARDLIST_5" desc="Label \'First seen\' for the respective column of the events table (events list page).">최초 발생</translation>
   <translation id="8546806166673222480" key="MSG_EVENTS_CARDLIST_6" desc="Label \'Last seen\' for the respective column of the events table (events list page).">최근 발생</translation>
   <translation id="8384910280515978185" key="MSG_EVENTS_CARDLIST_8" desc="User help on the events page when no events are to be displayed.">모든 이벤트가 만료되었을 수 있습니다.</translation>
-  <translation id="4919061456654775514" key="MSG_EVENTS_WARNING_LABEL" desc="Label 'Warning' for the event selection drop-down.">Warning</translation>
+  <translation id="4919061456654775514" key="MSG_EVENTS_WARNING_LABEL" desc="Label 'Warning' for the event selection dropdown.">Warning</translation>
   <translation id="6870755296074399906" key="MSG_FORBIDDEN_ERROR" desc="Text shown on internal error page when user is forbidden to access some page.">이 페이지에 접근하기 위해 필요한 권한이 없습니다.</translation>
   <translation id="360219762714344048" key="MSG_FORBIDDEN_RESOURCE_ERROR" desc="Error message shown when user does not have access to given resource.">이 자원에 접근하기 위해 필요한 권한이 없습니다.</translation>
   <translation id="2570930006862369513" key="MSG_FORBIDDEN_TITLE_ERROR" desc="Title shown on internal error page when user is forbidden to access some page.">Forbidden</translation>
