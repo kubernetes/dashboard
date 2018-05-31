@@ -65,10 +65,10 @@
 //                 { provide: KdStateService, useClass: MockKdStateService },
 //                 NotificationsService
 
-//                 // 
+//                 //
 //                 // { provide: ActionbarService, useValue: {} },
-//                 // 
-//                 // 
+//                 //
+//                 //
 //                 // { provide: NotificationsService, useValue: {} }
 //             ]
 //         }).overrideComponent(CreatorCardComponent, {
@@ -87,14 +87,13 @@
 //         notifications_ = TestBed.get(NotificationsService);
 //     });
 
-
 //     //   beforeEach(() => {
 //     //     TestBed.configureTestingModule({
 //     //       declarations: [
 //     //         PodDetailComponent
 //     //       ],
 //     //       providers: [
-//     //           //PodDetailComponent, 
+//     //           //PodDetailComponent,
 //     //           { provide: NamespacedResourceService, useValue: {} },
 //     //           { provide: ActionbarService, useValue: {} },
 //     //           { provide: StateService, useValue: {} },
@@ -109,14 +108,11 @@
 //     //       ]
 //     //     }).compileComponents();
 
-
 //     // // pod = {
 //     //         //     init
 //     //         // }
 
 //     //   });
-
-
 
 //     it('should create the app', async(() => {
 //         // comp = TestBed.get(PodDetailComponent);

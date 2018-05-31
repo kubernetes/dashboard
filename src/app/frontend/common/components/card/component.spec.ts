@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { TestBed, ComponentFixture, async } from '@angular/core/testing';
-import { CardComponent } from './component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { CardComponent } from './component';
 
+import { Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 import { By } from "@angular/platform-browser";
-import { DebugElement, CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
 
-import { MatIconModule, MatCardModule, MatDividerModule, MatTooltipModule, MatTooltip } from '@angular/material';
+import { MatCardModule, MatDividerModule, MatIconModule, MatTooltip, MatTooltipModule } from '@angular/material';
 
 @Component({
     selector: 'test',
@@ -35,7 +35,7 @@ import { MatIconModule, MatCardModule, MatDividerModule, MatTooltipModule, MatTo
 
 })
 class TestComponent {
-    title = 'default title'
+    title = 'default title';
     isExpanded = true;
     isExpandable = true;
 }
@@ -62,11 +62,11 @@ fdescribe('CardComponent', () => {
     });
 
     it("shows the title div when withTitle==true", () => {
-        component.title = 'Title: expanded true'
+        component.title = 'Title: expanded true';
         component.isExpanded = true;
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            let card = fixture.debugElement.query(By.css('mat-card-title'));
+            const card = fixture.debugElement.query(By.css('mat-card-title'));
             expect(card).toBeTruthy();
             const content = card.query(By.css('div[content]'));
             expect(content).toBeFalsy();
@@ -76,14 +76,13 @@ fdescribe('CardComponent', () => {
         });
     });
 
-
     it("hides the title div when withTitle==false", () => {
         const title = 'Title: expanded false';
 
         component.title = title;
         component.isExpanded = false;
         fixture.detectChanges();
-        let card = fixture.debugElement.query(By.css('mat-card-title'));
+        const card = fixture.debugElement.query(By.css('mat-card-title'));
         expect(card).toBeTruthy();
         const content = card.query(By.css('div[content]'));
         expect(content).toBeFalsy();
@@ -93,4 +92,3 @@ fdescribe('CardComponent', () => {
     });
 
 });
-

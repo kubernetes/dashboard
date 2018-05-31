@@ -12,29 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { TestBed, ComponentFixture, async } from '@angular/core/testing';
-import { ServiceDetailComponent } from './component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ServiceDetailComponent } from './component';
 
+import { Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 import { By } from "@angular/platform-browser";
-import { DebugElement, CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
 
-import { MatIconModule, MatCardModule, MatDividerModule, MatTooltipModule, MatTooltip, MatDialogModule, MatChipsModule } from '@angular/material';
-import { ObjectMeta, AppConfig, ServiceDetail } from '@api/backendapi';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { MatCardModule, MatChipsModule, MatDialogModule, MatDividerModule, MatIconModule, MatTooltip, MatTooltipModule } from '@angular/material';
+import { AppConfig, ObjectMeta, ServiceDetail } from '@api/backendapi';
+import { UIRouterModule } from '@uirouter/angular';
+import { StateService, UIRouter } from '@uirouter/core';
+import { CardComponent } from 'common/components/card/component';
 import { ChipsComponent } from 'common/components/chips/component';
 import { ObjectMetaComponent } from 'common/components/objectmeta/component';
-import { CardComponent } from 'common/components/card/component';
 import { PropertyComponent } from 'common/components/property/component';
-import { ConfigService } from 'common/services/global/config';
-import { PipesModule } from 'common/pipes/module';
-import { NamespacedResourceService } from 'common/services/resource/resource';
-import { StateService, UIRouter } from '@uirouter/core';
-import { UIRouterModule } from '@uirouter/angular';
 import { PodListComponent } from 'common/components/resourcelist/pod/component';
+import { PipesModule } from 'common/pipes/module';
+import { ConfigService } from 'common/services/global/config';
+import { NamespacedResourceService } from 'common/services/resource/resource';
 
-let miniName = "my-mini-service";
-let maxiName = "my-maxi-service";
+const miniName = "my-mini-service";
+const maxiName = "my-maxi-service";
 
 @Component({
     selector: 'test',
@@ -148,9 +148,8 @@ class MaxiTestComponent {
         },
         sessionAffinity: "affinity1",
         errors: []
-    }
+    };
 }
-
 
 fdescribe('ServiceDetailComponent', () => {
 
@@ -173,30 +172,26 @@ fdescribe('ServiceDetailComponent', () => {
 
     beforeEach(() => {
         configService.init();
-        let configRequest = httpMock.expectOne('config');
-        let config: AppConfig = { serverTime: new Date().getTime() };
+        const configRequest = httpMock.expectOne('config');
+        const config: AppConfig = { serverTime: new Date().getTime() };
         configRequest.flush(config);
 
         // httpMock.verify();
     });
 
-
     fit("shows a maxi service", () => {
-        let fixture = TestBed.createComponent(MaxiTestComponent);
-        let component = fixture.componentInstance;
-
+        const fixture = TestBed.createComponent(MaxiTestComponent);
+        const component = fixture.componentInstance;
 
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            let debugElement = fixture.debugElement.query(By.css('kd-property.object-meta-name div.kd-property-value div'));
+            const debugElement = fixture.debugElement.query(By.css('kd-property.object-meta-name div.kd-property-value div'));
             expect(debugElement).toBeTruthy();
 
-            let htmlElement = debugElement.nativeElement;
+            const htmlElement = debugElement.nativeElement;
             expect(htmlElement.innerHTML).toBe(maxiName);
 
         });
     });
 
-
 });
-

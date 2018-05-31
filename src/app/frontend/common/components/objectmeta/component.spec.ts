@@ -12,31 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { TestBed, ComponentFixture, async } from '@angular/core/testing';
-import { ObjectMetaComponent } from './component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ObjectMetaComponent } from './component';
 
+import { Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 import { By } from "@angular/platform-browser";
-import { DebugElement, CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
 
-import { MatIconModule, MatCardModule, MatDividerModule, MatTooltipModule, MatTooltip, MatDialogModule, MatChipsModule } from '@angular/material';
-import { ObjectMeta, AppConfig } from '@api/backendapi';
-import { PipesModule } from '../../pipes/module';
-import { ConfigService } from '../../services/global/config';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { MatCardModule, MatChipsModule, MatDialogModule, MatDividerModule, MatIconModule, MatTooltip, MatTooltipModule } from '@angular/material';
+import { AppConfig, ObjectMeta } from '@api/backendapi';
+import { ChipsComponent } from 'common/components/chips/component';
+import { PipesModule } from '../../pipes/module';
+import { RelativeTimeFormatter } from '../../pipes/relativetime';
+import { ConfigService } from '../../services/global/config';
 import { CardComponent } from '../card/component';
 import { PropertyComponent } from '../property/component';
-import { ChipsComponent } from 'common/components/chips/component';
-import { RelativeTimeFormatter } from '../../pipes/relativetime';
 
-let miniName = "my-mini-meta-name";
+const miniName = "my-mini-meta-name";
 
 @Component({
     selector: 'test',
     templateUrl: './template.html'
     // template: `
     // <kd-object-meta [initialized]="initialized"
-    //             [objectMeta]="objectMeta"></kd-object-meta>   
+    //             [objectMeta]="objectMeta"></kd-object-meta>
     // `
 })
 class TestComponent {
@@ -51,7 +51,7 @@ class TestComponent {
             "version": "v1.8.1"
         },
         creationTimestamp: "2018-05-18T22:27:42Z"
-    }
+    };
 }
 
 fdescribe('ObjectMetaComponent', () => {
@@ -79,8 +79,8 @@ fdescribe('ObjectMetaComponent', () => {
         configService.init();
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;
-        let configRequest = httpMock.expectOne('config');
-        let config: AppConfig = { serverTime: new Date().getTime() };
+        const configRequest = httpMock.expectOne('config');
+        const config: AppConfig = { serverTime: new Date().getTime() };
         configRequest.flush(config);
 
         // httpMock.verify();
@@ -99,8 +99,4 @@ fdescribe('ObjectMetaComponent', () => {
         });
     });
 
-
-
-
 });
-

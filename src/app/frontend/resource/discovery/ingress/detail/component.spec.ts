@@ -12,25 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { TestBed, ComponentFixture, async } from '@angular/core/testing';
-import { IngressDetailComponent } from './component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { IngressDetailComponent } from './component';
 
+import { Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 import { By } from "@angular/platform-browser";
-import { DebugElement, CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
 
-import { MatIconModule, MatCardModule, MatDividerModule, MatTooltipModule, MatTooltip, MatDialogModule, MatChipsModule } from '@angular/material';
-import { ObjectMeta, AppConfig, IngressDetail } from '@api/backendapi';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { MatCardModule, MatChipsModule, MatDialogModule, MatDividerModule, MatIconModule, MatTooltip, MatTooltipModule } from '@angular/material';
+import { AppConfig, IngressDetail, ObjectMeta } from '@api/backendapi';
+import { CardComponent } from 'common/components/card/component';
 import { ChipsComponent } from 'common/components/chips/component';
 import { ObjectMetaComponent } from 'common/components/objectmeta/component';
-import { CardComponent } from 'common/components/card/component';
 import { PropertyComponent } from 'common/components/property/component';
-import { ConfigService } from 'common/services/global/config';
 import { PipesModule } from 'common/pipes/module';
+import { ConfigService } from 'common/services/global/config';
 
-let miniName = "my-mini-ingress";
-let maxiName = "my-maxi-ingress";
+const miniName = "my-mini-ingress";
+const maxiName = "my-maxi-ingress";
 
 @Component({
     selector: 'test',
@@ -50,7 +50,7 @@ class MiniTestComponent {
             kind: "Ingress"
         },
         errors: []
-    }
+    };
 }
 
 @Component({
@@ -75,7 +75,7 @@ class MaxiTestComponent {
             kind: "Ingress"
         },
         errors: []
-    }
+    };
 }
 
 fdescribe('IngressDetailComponent', () => {
@@ -99,45 +99,41 @@ fdescribe('IngressDetailComponent', () => {
 
     beforeEach(() => {
         configService.init();
-        let configRequest = httpMock.expectOne('config');
-        let config: AppConfig = { serverTime: new Date().getTime() };
+        const configRequest = httpMock.expectOne('config');
+        const config: AppConfig = { serverTime: new Date().getTime() };
         configRequest.flush(config);
 
         // httpMock.verify();
     });
 
     it("shows a mini ingress", () => {
-        let fixture = TestBed.createComponent(MiniTestComponent);
-        let component = fixture.componentInstance;
-
+        const fixture = TestBed.createComponent(MiniTestComponent);
+        const component = fixture.componentInstance;
 
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            let debugElement = fixture.debugElement.query(By.css('kd-property.object-meta-name div.kd-property-value div'));
+            const debugElement = fixture.debugElement.query(By.css('kd-property.object-meta-name div.kd-property-value div'));
             expect(debugElement).toBeTruthy();
 
-            let htmlElement = debugElement.nativeElement;
+            const htmlElement = debugElement.nativeElement;
             expect(htmlElement.innerHTML).toBe(miniName);
 
         });
     });
 
     it("shows a maxi ingress", () => {
-        let fixture = TestBed.createComponent(MaxiTestComponent);
-        let component = fixture.componentInstance;
-
+        const fixture = TestBed.createComponent(MaxiTestComponent);
+        const component = fixture.componentInstance;
 
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            let debugElement = fixture.debugElement.query(By.css('kd-property.object-meta-name div.kd-property-value div'));
+            const debugElement = fixture.debugElement.query(By.css('kd-property.object-meta-name div.kd-property-value div'));
             expect(debugElement).toBeTruthy();
 
-            let htmlElement = debugElement.nativeElement;
+            const htmlElement = debugElement.nativeElement;
             expect(htmlElement.innerHTML).toBe(maxiName);
 
         });
     });
 
-
 });
-
