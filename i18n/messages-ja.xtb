@@ -69,7 +69,7 @@
   <translation id="1040732924028857594" key="MSG_CHROME_NAV_NAV_20" desc="Secrets menu entry.">シークレット</translation>
   <translation id="8368599117962865229" key="MSG_CHROME_NAV_NAV_21" desc="About page menu entry.">バージョン情報</translation>
   <translation id="7160486052155717528" key="MSG_CHROME_NAV_NAV_22" desc="Cron Jobs menu entry.">Cron ジョブ</translation>
-  <translation id="5937278785382848812" key="MSG_CHROME_NAV_NAV_23" desc="Settings page menu entry.">Settings</translation>
+  <translation id="5937278785382848812" key="MSG_CHROME_NAV_NAV_23" desc="Settings page menu entry.">設定</translation>
   <translation id="4957526140740745953" key="MSG_CHROME_NAV_NAV_3" desc="Persistent Volumes menu item in the nav.">永続ボリューム</translation>
   <translation id="5886605472855359914" key="MSG_CHROME_NAV_NAV_4" desc="Config and Storage group menu entry.">コンフィグとストレージ</translation>
   <translation id="874273813471860738" key="MSG_CHROME_NAV_NAV_5" desc="Storage Classes menu entry.">ストレージクラス</translation>
@@ -338,9 +338,9 @@
   <translation id="2577152365707949188" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_DEPLOYFROMSETTINGS_21" desc="Learn more link on deploy from settings page.">詳細</translation>
   <translation id="1490621507680042958" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_DEPLOYFROMSETTINGS_22" desc="Description label on deploy from settings page.">Description</translation>
   <translation id="8866029091944568370" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_DEPLOYFROMSETTINGS_23" desc="User help for description on deploy from settings page.">この Description はデプロイメントへのアノテーションとして追加され、アプリケーションの詳細に表示されます。</translation>
-  <translation id="2751761393764963045" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_DEPLOYFROMSETTINGS_24" desc="Labels subheader on deploy from settings page.">Labels</translation>
-  <translation id="7208221598343484351" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_DEPLOYFROMSETTINGS_25" desc="Label key label on deploy from settings page.">Key</translation>
-  <translation id="3985363219779755988" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_DEPLOYFROMSETTINGS_26" desc="Label value label on deploy from settings page.">Value</translation>
+  <translation id="2751761393764963045" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_DEPLOYFROMSETTINGS_24" desc="Labels subheader on deploy from settings page.">ラベル</translation>
+  <translation id="7208221598343484351" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_DEPLOYFROMSETTINGS_25" desc="Label key label on deploy from settings page.">キー</translation>
+  <translation id="3985363219779755988" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_DEPLOYFROMSETTINGS_26" desc="Label value label on deploy from settings page.">値</translation>
   <translation id="7678568954810612662" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_DEPLOYFROMSETTINGS_27" desc="User help for the labels section on the deploy from settings page.">指定したラベルは作成されたデプロイメント、サービス（存在する場合は）、ポッドに適用されます。一般的なラベルには、リリース、環境、層、パーティション、トラックなどが含まれます。</translation>
   <translation id="7873234715181447353" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_DEPLOYFROMSETTINGS_28" desc="Learn more link on deploy from settings page.">詳細</translation>
   <translation id="3202589057142310031" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_DEPLOYFROMSETTINGS_29" desc="Namespace label on the deploy from settings page.">ネームスペース</translation>
@@ -390,7 +390,7 @@
   <translation id="263038526347988238" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_ENVIRONMENTVARIABLES_ENVIRONMENTVARIABLES_1" desc="Label &quot;Name&quot; which appears as a placeholder for the input of an environment variable name on the deploy page.">変数名</translation>
   <translation id="1280129093791383817" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_ENVIRONMENTVARIABLES_ENVIRONMENTVARIABLES_2" desc="Label &quot;Value&quot; which appears as a placeholder for the input of an environment variable value on the deploy page.">変数名は有効な C identifier である必要があります。</translation>
   <translation id="3807095727736000152" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_ENVIRONMENTVARIABLES_ENVIRONMENTVARIABLES_3" desc="Label &quot;Value&quot; which appears as a placeholder for the input of an environment variable value on the deploy page.">値</translation>
-  <translation id="6592757977953549157" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_PORTMAPPINGS_PORTMAPPINGS_0" desc="Label \'Service\' above the service type selection box on the deploy page.">Service</translation>
+  <translation id="6592757977953549157" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_PORTMAPPINGS_PORTMAPPINGS_0" desc="Label \'Service\' above the service type selection box on the deploy page.">サービス</translation>
   <translation id="6892392939314096373" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_PORTMAPPINGS_PORTMAPPINGS_1" desc="Label \'Port\', which serves as a placeholder for the port input field in the port mappings section on the deploy page.">ポート</translation>
   <translation id="4902290159501351669" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_PORTMAPPINGS_PORTMAPPINGS_10" desc="Label \'Protocol\' above the protocol selection box in the port mappings section, on the deploy page.">プロトコル</translation>
   <translation id="9170817003129613039" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_PORTMAPPINGS_PORTMAPPINGS_11" desc="This warning appears when the user does not specify a protocol for an existing port mapping (in the port mappings section, on the deploy page).">プロトコルは必須項目です。</translation>
@@ -610,7 +610,7 @@
   <translation id="6625981490964311612" key="MSG_OVERVIEW_OVERVIEW_0" desc="Title for graph card displaying CPU metric of one all resources.">CPU 使用量</translation>
   <translation id="3564212625628389301" key="MSG_OVERVIEW_OVERVIEW_1" desc="Title for graph card displaying memory metric of one all resources.">Memory 使用量</translation>
   <translation id="6700629949579250334" key="MSG_OVERVIEW_OVERVIEW_2" desc="Help message detailing what is included in the memory usage">メモリー使用量は、これらのリソースに管理されたポッドのキャッシュも含みます。(ポッドリストとコントローラ(例: レプリカセットのコントローラ)の両方に記載されているため、ポッドは2回カウントしません。)</translation>
-  <translation id="7503683900815306780" key="MSG_OVERVIEW_OVERVIEW_3" desc="Label \'Resource Statuses\' for the resource status section on overview page.">Workloads Statuses</translation>
+  <translation id="7503683900815306780" key="MSG_OVERVIEW_OVERVIEW_3" desc="Label \'Resource Statuses\' for the resource status section on overview page.">ワークロードのステータス</translation>
   <translation id="2149940084105763115" key="MSG_OVERVIEW_OVERVIEW_4" desc="Section label shown on overview page">ワークロード</translation>
   <translation id="6829010508760396591" key="MSG_OVERVIEW_OVERVIEW_5" desc="Section label shown on overview page">検出と負荷分散</translation>
   <translation id="6003330897809466396" key="MSG_OVERVIEW_OVERVIEW_6" desc="Section label shown on overview page">設定と保存</translation>
