@@ -288,7 +288,7 @@
   <translation id="5968637654166833831" key="MSG_DEPLOY_DEPLOYFROMFILE_DEPLOYFROMFILE_0" desc="User help for the file upload form on the deploy page.">現在選択されている名前空間にデプロイするリソースを指定した YAML または JSON コンテンツを選択します。</translation>
   <translation id="59447854977935148" key="MSG_DEPLOY_DEPLOYFROMFILE_DEPLOYFROMFILE_1" desc="User help for the file upload form on the deploy page.">現在選択されている名前空間にデプロイするリソースを指定した YAML または JSON コンテンツを選択します。</translation>
   <translation id="7764059568291431321" key="MSG_DEPLOY_DEPLOYFROMFILE_DEPLOYFROMFILE_2" desc="Learn more link label nearby the file upload on the deploy page.">詳細</translation>
-  <translation id="1055725871949404093" key="MSG_DEPLOY_DEPLOYFROMFILE_DEPLOYFROMFILE_3" desc="Choose YAML or JSON file label from deploy from file view.">YAML or JSON ファイルを選択してください。</translation>
+  <translation id="1055725871949404093" key="MSG_DEPLOY_DEPLOYFROMFILE_DEPLOYFROMFILE_3" desc="Choose YAML or JSON file label from deploy from file view.">YAML or JSON ファイルを選択</translation>
   <translation id="4059828042595999120" key="MSG_DEPLOY_DEPLOYFROMFILE_DEPLOYFROMFILE_4" desc="Upload button label from deploy from file view.">アップロード</translation>
   <translation id="6518602879876852870" key="MSG_DEPLOY_DEPLOYFROMFILE_DEPLOYFROMFILE_5" desc="Cancel button label from deploy from file view.">キャンセル</translation>
   <translation id="87526913598313543" key="MSG_DEPLOY_DEPLOYFROMINPUT_DEPLOYFROMINPUT_0" desc="User help for the input upload form on the deploy page.">現在選択されている名前空間にデプロイするリソースを指定した YAML または JSON コンテンツを選択します。</translation>
@@ -296,7 +296,7 @@
   <translation id="2674557906525179372" key="MSG_DEPLOY_DEPLOYFROMINPUT_DEPLOYFROMINPUT_2" desc="Learn more link label nearby the file upload on the deploy page.">詳細</translation>
   <translation id="3170923771269436213" key="MSG_DEPLOY_DEPLOYFROMINPUT_DEPLOYFROMINPUT_3" desc="Upload button label from deploy from file view.">アップロード</translation>
   <translation id="1182267962823080155" key="MSG_DEPLOY_DEPLOYFROMINPUT_DEPLOYFROMINPUT_4" desc="Cancel button label from deploy from file view.">キャンセル</translation>
-  <translation id="8408842802402121945" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_CREATENAMESPACE_CREATENAMESPACE_0" desc="Create namespace dialog title. The message appears at the top of the dialog box.">新しいネームスペースを作成する。</translation>
+  <translation id="8408842802402121945" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_CREATENAMESPACE_CREATENAMESPACE_0" desc="Create namespace dialog title. The message appears at the top of the dialog box.">新しいネームスペースを作成</translation>
   <translation id="326534459133347294" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_CREATENAMESPACE_CREATENAMESPACE_1" desc="Create namespace dialog subtitle. Appears right below the title.">クラスタに新しいネームスペースが追加されます。</translation>
   <translation id="3624821883565761425" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_CREATENAMESPACE_CREATENAMESPACE_2" desc="Label \'Namespace name\', which appears as a placeholder in an empty input field in the create namespace dialog.">ネームスペース名</translation>
   <translation id="1842858705757129045" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_CREATENAMESPACE_CREATENAMESPACE_3" desc="The text appears when the namespace name does not match the expected pattern.">名前は英数字でハイフンを含むことが可能です。</translation>
@@ -306,7 +306,7 @@
   <translation id="6264820713832966557" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_CREATENAMESPACE_CREATENAMESPACE_7" desc="The text is used as a \'Learn more\' link text in the namespace creation dialog">詳細</translation>
   <translation id="7921810473368552784" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_CREATENAMESPACE_CREATENAMESPACE_8" desc="The text is put on the \'Create\' button in the namespace creation dialog.">作成</translation>
   <translation id="1301307266329140634" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_CREATENAMESPACE_CREATENAMESPACE_9" desc="The text is put on the \'Cancel\' button in the namespace creation dialog.">キャンセル</translation>
-  <translation id="8005924565915931584" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_CREATESECRET_CREATESECRET_0" desc="Create image pull secret dialog title. The message appears at the top of the dialog box.">新しい image pull シークレットを作成します</translation>
+  <translation id="8005924565915931584" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_CREATESECRET_CREATESECRET_0" desc="Create image pull secret dialog title. The message appears at the top of the dialog box.">新しい image pull シークレットを作成</translation>
   <translation id="2952740322496897763" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_CREATESECRET_CREATESECRET_1" desc="Create image pull secret dialog subtitle. Appears right below the title.">新しいシークレットがクラスタに追加されます</translation>
   <translation id="5613310058394554954" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_CREATESECRET_CREATESECRET_10" desc="The text appears when the image pull secret data is not Base64 encoded.">データは Base64 でエンコードされている必要があります。</translation>
   <translation id="6041492545618309249" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_CREATESECRET_CREATESECRET_11" desc="User help text for the input of the &quot;Image Pull Secret&quot; data.">シークレットを保持するデータを指定します。値は .dockercfg ファイルを Base64 でエンコードした内容です。</translation>
@@ -320,15 +320,15 @@
   <translation id="3235676167774148407" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_CREATESECRET_CREATESECRET_6" desc="User help text for the create image pull secret dialog. Directly after this text a specific namespace is specified.">指定した名前でシークレットがクラスタのこのネームスペースに追加されます。</translation>
   <translation id="6126492418725062948" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_CREATESECRET_CREATESECRET_7" desc="The text is used as a \'Learn more\' link text in the image pull secret creation dialog.">詳細</translation>
   <translation id="8747154672843907917" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_CREATESECRET_CREATESECRET_8" desc="Label \'Image pull secret data\', which appears as a placeholder in an empty input field in the image pull secret creation dialog.">Image pull シークレットのデータ</translation>
-  <translation id="5831351543898338028" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_CREATESECRET_CREATESECRET_9" desc="Warning which tells the user that the image pull secret data is required.">データは必須項目です</translation>
+  <translation id="5831351543898338028" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_CREATESECRET_CREATESECRET_9" desc="Warning which tells the user that the image pull secret data is required.">データは必須項目です。</translation>
   <translation id="3322255957425233391" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_DEPLOYFROMSETTINGS_0" desc="Label \'App name\', which appears as a placeholder in an empty input field on the deploy from settings page.">アプリ名</translation>
   <translation id="9166090440389010586" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_DEPLOYFROMSETTINGS_1" desc="Appears to tell the user that app name input on the deploy from settings page is required.">アプリケーション名は必須です</translation>
   <translation id="4925944378719477204" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_DEPLOYFROMSETTINGS_10" desc="User help for container image on deploy from settings page.">レジストリ上のパブリックイメージ、または Docker Hub や Google Container Registry でホストされているプライベートイメージの URL を入力します</translation>
   <translation id="6178039510254082489" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_DEPLOYFROMSETTINGS_11" desc="Learn more link on deploy from settings page.">詳細</translation>
   <translation id="5437271114376684706" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_DEPLOYFROMSETTINGS_12" desc="Number of pods label on the deploy from settings page.">ポッド数</translation>
   <translation id="3719876438516450686" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_DEPLOYFROMSETTINGS_13" desc="Number of pods is required warning on deploy from settings page.">ポッド数は必須項目です</translation>
-  <translation id="625821889101036276" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_DEPLOYFROMSETTINGS_14" desc="Number of pods must be a positive integer warning on deploy from settings page.">ポッド数は正の整数値である必要があります。</translation>
-  <translation id="9202027506347663059" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_DEPLOYFROMSETTINGS_15" desc="Number of pods must be at least 1 warning on deploy from settings page.">ポッド数は最低 1 以上である必要があります。</translation>
+  <translation id="625821889101036276" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_DEPLOYFROMSETTINGS_14" desc="Number of pods must be a positive integer warning on deploy from settings page.">ポッド数は正の整数値である必要があります</translation>
+  <translation id="9202027506347663059" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_DEPLOYFROMSETTINGS_15" desc="Number of pods must be at least 1 warning on deploy from settings page.">ポッド数は最低 1 以上である必要があります</translation>
   <translation id="5341430644909021351" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_DEPLOYFROMSETTINGS_16" desc="High number of pods warning on deploy from settings page.">ポッド数を多く設定すると、クラスタおよびダッシュボードUIのパフォーマンスに影響を与える可能性があります。</translation>
   <translation id="5361584952555058156" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_DEPLOYFROMSETTINGS_17" desc="User help for number of pods on deploy from settings page.">デプロイメントが作成され、必要な数のポッドがクラスター内に保持されます。</translation>
   <translation id="6044474239362836485" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_DEPLOYFROMSETTINGS_18" desc="Learn more link on deploy from settings page.">詳細</translation>
@@ -518,7 +518,7 @@
   <translation id="5485538583399563094" key="MSG_LESS_WARNINGS_LABEL" desc="Show less warnings button label.">Show <ph name="COUNT"> less</ph></translation>
   <translation id="6428808795341026405" key="MSG_LOGIN_BASIC_0" desc="\'Username\' field label shown on login page for basic auth">ユーザ名</translation>
   <translation id="2222883722971802152" key="MSG_LOGIN_BASIC_1" desc="\'Password\' field label shown on login page for basic auth">パスワード</translation>
-  <translation id="5760322479083675615" key="MSG_LOGIN_KUBECONFIG_0" desc="A \'Choose kubeconfig file\' placeholder for an empty file input field on login page.">kubeconfig ファイルを選択してください</translation>
+  <translation id="5760322479083675615" key="MSG_LOGIN_KUBECONFIG_0" desc="A \'Choose kubeconfig file\' placeholder for an empty file input field on login page.">kubeconfig ファイルを選択</translation>
   <translation id="1409623546562132476" key="MSG_LOGIN_LOGIN_0" desc="Title shown on login page on login card">Kubernetes Dashboard</translation>
   <translation id="1503565493122422406" key="MSG_LOGIN_LOGIN_1" desc="Kubeconfig option label shown on login page">Kubeconfig</translation>
   <translation id="8732662932191668041" key="MSG_LOGIN_LOGIN_2" desc="(no description provided)">すべてのサービスアカウントは有効な Bearer トークンを含むシークレットがあり、これを使用してダッシュボードにログインすることが可能です。Bearer トークンの設定方法と使用方法の詳細については &lt;a href='https://kubernetes.io/docs/admin/authentication/'&gt;Authentication&lt;/a&gt; を確認してください。</translation>
@@ -546,7 +546,7 @@
   <translation id="7432843701863632053" key="MSG_LOGS_LOGS_5" desc="Label atop a list of Init Containers">Init Containers</translation>
   <translation id="2297835557948059978" key="MSG_LOGS_LOGS_6" desc="(no description provided)">自動更新の切り替え (every {{ctrl.refreshInterval / 1000}} seconds)</translation>
   <translation id="7542681487528728469" key="MSG_LOGS_LOGS_7" desc="Tooltip for button that toggles between light &amp; dark background in log viewer.">色の反転</translation>
-  <translation id="3561952584674269373" key="MSG_LOGS_LOGS_8" desc="Tooltip for button that toggles between a larger and smaller font option in the log viewer.">フォントサイズの</translation>
+  <translation id="3561952584674269373" key="MSG_LOGS_LOGS_8" desc="Tooltip for button that toggles between a larger and smaller font option in the log viewer.">フォントサイズの切り替え</translation>
   <translation id="1193096800305895006" key="MSG_LOGS_LOGS_9" desc="Tooltip for button that switches to showing the current logs.">現在のログを表示</translation>
   <translation id="3402202863027894322" key="MSG_LOGS_TRUNCATED_WARNING" desc="Error dialog indicating that parts of the log file is missing due to memory constraints.">大きすぎるため、ログファイルの中間部分は読み込めません。</translation>
   <translation id="7594890250973129963" key="MSG_LOGS_ZEROSTATE_TEXT" desc="Text for logs card zerostate in logs page.">選択されたコンテナにはログにメッセージが記録されていません。</translation>
@@ -686,7 +686,7 @@
   <translation id="6420301831828714554" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_37" desc="Persistent volume source info cinder section read only entry.">読み取り専用</translation>
   <translation id="147942501041597135" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_38" desc="Persistent volume source info FC title.">FC</translation>
   <translation id="3477305325473430932" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_39" desc="Persistent volume source info FC section target WWNs entry.">ターゲット WWNs</translation>
-  <translation id="5593004702745409068" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_4" desc="Persistent volume source info GCE persistent disk section PD name entry.">PD 名</translation>
+  <translation id="5593004702745409068" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_4" desc="Persistent volume source info GCE persistent disk section PD name entry.">永続ディスク名</translation>
   <translation id="5770021054145618993" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_40" desc="Persistent volume source info FC section target FS type entry.">FS 種別</translation>
   <translation id="6989685862216675322" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_41" desc="Persistent volume source info FC section lun entry.">Lun</translation>
   <translation id="6455200962901000045" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_42" desc="Persistent volume source info FC section read only entry.">読み取り専用</translation>
