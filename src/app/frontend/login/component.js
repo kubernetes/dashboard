@@ -64,6 +64,8 @@ class LoginController {
     this.errorService_ = kdErrorService;
     /** @private {!angular.$q.Promise} */
     this.skipButtonEnabledResource_ = kdSkipButtonEnabled;
+    /** @private {boolean} */
+    this.skipButtonEnabled_;
   }
 
   /** @export */
