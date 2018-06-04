@@ -174,3 +174,17 @@ func TestAuthManager_AuthenticationModes(t *testing.T) {
 		}
 	}
 }
+
+func TestAuthManager_AuthenticationSkippable(t *testing.T) {
+	cManager := &fakeClientManager{}
+	tManager := &fakeTokenManager{}
+	cModes   := authApi.AuthenticationModes{}
+
+	for _, flag := range []bool{true,false} {
+		authManager := NewAuthManager(cManager, tManager, cModes, flag)
+		got := authManager.AuthenticationSkippable()
+		if (got != flag) {
+			t.Errorf("Expected %v, but got %v.", flag, got)
+		}
+	}
+}
