@@ -195,7 +195,10 @@ func initAuthManager(clientManager clientapi.ClientManager) authApi.AuthManager 
 		authModes.Add(authApi.Token)
 	}
 
-	return auth.NewAuthManager(clientManager, tokenManager, authModes)
+	// UI logic dictates this should be the inverse of the cli option
+	authenticationSkippable := !args.Holder.GetDisableSkipButton()
+
+	return auth.NewAuthManager(clientManager, tokenManager, authModes, authenticationSkippable)
 }
 
 func initArgHolder() {

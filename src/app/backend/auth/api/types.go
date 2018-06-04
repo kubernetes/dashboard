@@ -138,3 +138,9 @@ type TokenRefreshSpec struct {
 type LoginModesResponse struct {
 	Modes []AuthenticationMode `json:"modes"`
 }
+
+// LoginSkippableResponse contains a flag that tells the UI not to display the Skip button.
+// Note that this only hides the button, it doesn't disable unauthenticated access.
+type LoginSkippableResponse struct {
+	Skippable bool `json:"skippable"`
+}
