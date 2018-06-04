@@ -139,7 +139,7 @@ func TestAuthManager_Login(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		authManager := NewAuthManager(c.cManager, c.tManager, authApi.AuthenticationModes{authApi.Token: true})
+		authManager := NewAuthManager(c.cManager, c.tManager, authApi.AuthenticationModes{authApi.Token: true}, true)
 		response, err := authManager.Login(c.spec)
 
 		if !areErrorsEqual(err, c.expectedErr) {
@@ -166,7 +166,7 @@ func TestAuthManager_AuthenticationModes(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		authManager := NewAuthManager(cManager, tManager, c.modes)
+		authManager := NewAuthManager(cManager, tManager, c.modes, true)
 		got := authManager.AuthenticationModes()
 
 		if !reflect.DeepEqual(got, c.expected) {
