@@ -1547,6 +1547,13 @@ backendApi.SupportedAuthenticationModes;
 
 /**
  * @typedef {{
+ *    skippable: boolean,
+ * }}
+ */
+backendApi.LoginSkippableResponse;
+
+/**
+ * @typedef {{
  *  running: number,
  *  failed: number,
  *  pending: number,
