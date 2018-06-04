@@ -36,6 +36,7 @@ class LoginController {
    * @param {!ui.router.$state} $state
    * @param {!angular.$q.Promise} kdAuthenticationModesResource
    * @param {!../common/errorhandling/service.ErrorService} kdErrorService
+   * @param {!angular.$q.Promise} kdSkipButtonEnabled
    * @ngInject
    */
   constructor(
