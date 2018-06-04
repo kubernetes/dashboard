@@ -38,7 +38,9 @@ class LoginController {
    * @param {!../common/errorhandling/service.ErrorService} kdErrorService
    * @ngInject
    */
-  constructor(kdNavService, kdAuthService, $state, kdAuthenticationModesResource, kdErrorService, kdSkipButtonEnabled) {
+  constructor(
+      kdNavService, kdAuthService, $state, kdAuthenticationModesResource, kdErrorService,
+      kdSkipButtonEnabled) {
     /** @private {!./../chrome/nav/nav_service.NavService} */
     this.kdNavService_ = kdNavService;
     /** @private {!./../common/auth/service.AuthService} */
