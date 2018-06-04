@@ -77,6 +77,8 @@ type AuthManager interface {
 	Refresh(string) (string, error)
 	// AuthenticationModes returns array of auth modes supported by dashboard.
 	AuthenticationModes() []AuthenticationMode
+	// AuthenticationSkippable tells if the Skip button should be enabled or not
+	AuthenticationSkippable() bool
 }
 
 // TokenManager is responsible for generating and decrypting tokens used for authorization. Authorization is handled
