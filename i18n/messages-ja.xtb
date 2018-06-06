@@ -291,7 +291,7 @@
   <translation id="1055725871949404093" key="MSG_DEPLOY_DEPLOYFROMFILE_DEPLOYFROMFILE_3" desc="Choose YAML or JSON file label from deploy from file view.">YAML or JSON ファイルを選択</translation>
   <translation id="4059828042595999120" key="MSG_DEPLOY_DEPLOYFROMFILE_DEPLOYFROMFILE_4" desc="Upload button label from deploy from file view.">アップロード</translation>
   <translation id="6518602879876852870" key="MSG_DEPLOY_DEPLOYFROMFILE_DEPLOYFROMFILE_5" desc="Cancel button label from deploy from file view.">キャンセル</translation>
-  <translation id="87526913598313543" key="MSG_DEPLOY_DEPLOYFROMINPUT_DEPLOYFROMINPUT_0" desc="User help for the input upload form on the deploy page.">現在選択されているネームスペースにデプロイするリソースを指定した YAML または JSON コンテンツを選択します。</translation>
+  <translation id="87526913598313543" key="MSG_DEPLOY_DEPLOYFROMINPUT_DEPLOYFROMINPUT_0" desc="User help for the input upload form on the deploy page.">現在選択されているネームスペースにデプロイするリソースを指定した YAML または JSON コンテンツを入力します。</translation>
   <translation id="1852996086218095230" key="MSG_DEPLOY_DEPLOYFROMINPUT_DEPLOYFROMINPUT_1" desc="User help for the input upload form on the deploy page.">現在選択されているネームスペースにデプロイするリソースを指定した YAML または JSON コンテンツを入力します。</translation>
   <translation id="2674557906525179372" key="MSG_DEPLOY_DEPLOYFROMINPUT_DEPLOYFROMINPUT_2" desc="Learn more link label nearby the file upload on the deploy page.">詳細</translation>
   <translation id="3170923771269436213" key="MSG_DEPLOY_DEPLOYFROMINPUT_DEPLOYFROMINPUT_3" desc="Upload button label from deploy from file view.">アップロード</translation>
