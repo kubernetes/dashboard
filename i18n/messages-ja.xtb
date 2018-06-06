@@ -86,7 +86,7 @@
   <translation id="4823508741067150667" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBARLOGS_0" desc="Tooltip for the \'logs\' button on the action bar.">ログを表示</translation>
   <translation id="1841242100396658719" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBARLOGS_1" desc="Tooltip for the \'logs\' button on the action bar.">ログ</translation>
   <translation id="8757730841434571562" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBARNAMESPACEOVERVIEW_0" desc="(no description provided)">概要</translation>
-  <translation id="4582904353054937598" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBARNAMESPACEOVERVIEW_1" desc="(no description provided)">名前空間の概要ページに移動</translation>
+  <translation id="4582904353054937598" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBARNAMESPACEOVERVIEW_1" desc="(no description provided)">ネームスペースの概要ページに移動</translation>
   <translation id="4246093411879805828" key="MSG_COMMON_COMPONENTS_ACTIONBAR_SHELL_0" desc="Exec button tooltip located on pod detail page actionbar">Exec into Pod</translation>
   <translation id="1980816672340986356" key="MSG_COMMON_COMPONENTS_ACTIONBAR_SHELL_1" desc="Execute shell in the container">Exec</translation>
   <translation id="346901508592085264" key="MSG_COMMON_COMPONENTS_ANNOTATIONS_ANNOTATIONS_0" desc="(no description provided)">表示を省略</translation>
@@ -131,7 +131,7 @@
   <translation id="6941584785589389821" key="MSG_COMMON_COMPONENTS_ZEROSTATE_ZEROSTATE_0" desc="(no description provided)">表示するものがありません</translation>
   <translation id="8000678649572976545" key="MSG_COMMON_COMPONENTS_ZEROSTATE_ZEROSTATE_1" desc="Description for a zero state page.">&lt;a href="{{::$ctrl.getStateHref()}}"&gt;コンテナアプリを配備&lt;/a&gt;、他のネームスペースを選択、もっと知るために&lt;a href="http://kubernetes.io/docs/user-guide/ui/" target="_blank"&gt;ダッシュボードツアーに出る&lt;i class="material-icons kd-zerostate-icon"&gt;open_in_new&lt;/i&gt;&lt;/a&gt; が可能です。</translation>
   <translation id="4149717000499670158" key="MSG_COMMON_NAMESPACE_DIALOG_0" desc="(no description provided)">ネームスペースを変更しますか？</translation>
-  <translation id="1716771106236346382" key="MSG_COMMON_NAMESPACE_DIALOG_1" desc="(no description provided)">選択したリソースは現在選択されている名前空間とは異なる名前空間に存在します。</translation>
+  <translation id="1716771106236346382" key="MSG_COMMON_NAMESPACE_DIALOG_1" desc="(no description provided)">選択したリソースは現在選択されているネームスペースとは異なるネームスペースに存在します。</translation>
   <translation id="8393679939521140300" key="MSG_COMMON_NAMESPACE_DIALOG_2" desc="(no description provided)">ネームスペースを変更しますか？</translation>
   <translation id="5902174388191116331" key="MSG_COMMON_NAMESPACE_DIALOG_3" desc="(no description provided)">はい</translation>
   <translation id="7374326576991357026" key="MSG_COMMON_NAMESPACE_DIALOG_4" desc="(no description provided)">いいえ</translation>
@@ -140,7 +140,7 @@
   <translation id="5174603006239796789" key="MSG_COMMON_NAMESPACE_NAMESPACESELECT_1" desc="Text describing what namespace selector is">ネームスペースセレクター</translation>
   <translation id="7324783266461564175" key="MSG_COMMON_NAMESPACE_NAMESPACESELECT_2" desc="Text for dropdown item that indicates that no namespace was selected.">すべてのネームスペース</translation>
   <translation id="5324906937580749197" key="MSG_COMMON_NAMESPACE_NAMESPACESELECT_3" desc="Label atop a list of namespaces">ネームスペース</translation>
-  <translation id="1071151632434666377" key="MSG_COMMON_NAMESPACE_NAMESPACESELECT_4" desc="(no description provided)">名前空間の選択...</translation>
+  <translation id="1071151632434666377" key="MSG_COMMON_NAMESPACE_NAMESPACESELECT_4" desc="(no description provided)">ネームスペースの選択...</translation>
   <translation id="395521352310086904" key="MSG_COMMON_RESOURCE_DELETERESOURCE_0" desc="Title for a delete resource dialog.">{{::$ctrl.resourceKindName}} を削除</translation>
   <translation id="1507210670835642034" key="MSG_COMMON_RESOURCE_DELETERESOURCE_1" desc="Title for a delete resource dialog.">{{::$ctrl.resourceKindName}} を削除</translation>
   <translation id="4882763297660106258" key="MSG_COMMON_RESOURCE_DELETERESOURCE_2" desc="Confirmation question, appears before any dashboard resource will be deleted.">本当にネームスペース &lt;i&gt;{{::$ctrl.objectMeta.namespace}}&lt;/i&gt; 内の {{::$ctrl.resourceKindName}} &lt;i&gt;{{::$ctrl.objectMeta.name}}&lt;/i&gt; を削除しますか？</translation>
@@ -285,14 +285,14 @@
   <translation id="7984990840791623021" key="MSG_DEPLOY_ANYWAY_DIALOG_CONTENT" desc="Content for the dialog shown on deploy validation error.">それでもデプロイしますか？</translation>
   <translation id="4208506908994292909" key="MSG_DEPLOY_ANYWAY_DIALOG_OK" desc="Confirmation text for the dialog shown on deploy validation error.">はい</translation>
   <translation id="8002584284110338066" key="MSG_DEPLOY_ANYWAY_DIALOG_TITLE" desc="Title for the dialog shown on deploy validation error.">検証エラーが発生しました</translation>
-  <translation id="5968637654166833831" key="MSG_DEPLOY_DEPLOYFROMFILE_DEPLOYFROMFILE_0" desc="User help for the file upload form on the deploy page.">現在選択されている名前空間にデプロイするリソースを指定した YAML または JSON コンテンツを選択します。</translation>
-  <translation id="59447854977935148" key="MSG_DEPLOY_DEPLOYFROMFILE_DEPLOYFROMFILE_1" desc="User help for the file upload form on the deploy page.">現在選択されている名前空間にデプロイするリソースを指定した YAML または JSON コンテンツを選択します。</translation>
+  <translation id="5968637654166833831" key="MSG_DEPLOY_DEPLOYFROMFILE_DEPLOYFROMFILE_0" desc="User help for the file upload form on the deploy page.">現在選択されているネームスペースにデプロイするリソースを指定した YAML または JSON コンテンツを選択します。</translation>
+  <translation id="59447854977935148" key="MSG_DEPLOY_DEPLOYFROMFILE_DEPLOYFROMFILE_1" desc="User help for the file upload form on the deploy page.">現在選択されているネームスペースにデプロイするリソースを指定した YAML または JSON コンテンツを選択します。</translation>
   <translation id="7764059568291431321" key="MSG_DEPLOY_DEPLOYFROMFILE_DEPLOYFROMFILE_2" desc="Learn more link label nearby the file upload on the deploy page.">詳細</translation>
   <translation id="1055725871949404093" key="MSG_DEPLOY_DEPLOYFROMFILE_DEPLOYFROMFILE_3" desc="Choose YAML or JSON file label from deploy from file view.">YAML or JSON ファイルを選択</translation>
   <translation id="4059828042595999120" key="MSG_DEPLOY_DEPLOYFROMFILE_DEPLOYFROMFILE_4" desc="Upload button label from deploy from file view.">アップロード</translation>
   <translation id="6518602879876852870" key="MSG_DEPLOY_DEPLOYFROMFILE_DEPLOYFROMFILE_5" desc="Cancel button label from deploy from file view.">キャンセル</translation>
-  <translation id="87526913598313543" key="MSG_DEPLOY_DEPLOYFROMINPUT_DEPLOYFROMINPUT_0" desc="User help for the input upload form on the deploy page.">現在選択されている名前空間にデプロイするリソースを指定した YAML または JSON コンテンツを選択します。</translation>
-  <translation id="1852996086218095230" key="MSG_DEPLOY_DEPLOYFROMINPUT_DEPLOYFROMINPUT_1" desc="User help for the input upload form on the deploy page.">現在選択されている名前空間にデプロイするリソースを指定した YAML または JSON コンテンツを入力します。</translation>
+  <translation id="87526913598313543" key="MSG_DEPLOY_DEPLOYFROMINPUT_DEPLOYFROMINPUT_0" desc="User help for the input upload form on the deploy page.">現在選択されているネームスペースにデプロイするリソースを指定した YAML または JSON コンテンツを選択します。</translation>
+  <translation id="1852996086218095230" key="MSG_DEPLOY_DEPLOYFROMINPUT_DEPLOYFROMINPUT_1" desc="User help for the input upload form on the deploy page.">現在選択されているネームスペースにデプロイするリソースを指定した YAML または JSON コンテンツを入力します。</translation>
   <translation id="2674557906525179372" key="MSG_DEPLOY_DEPLOYFROMINPUT_DEPLOYFROMINPUT_2" desc="Learn more link label nearby the file upload on the deploy page.">詳細</translation>
   <translation id="3170923771269436213" key="MSG_DEPLOY_DEPLOYFROMINPUT_DEPLOYFROMINPUT_3" desc="Upload button label from deploy from file view.">アップロード</translation>
   <translation id="1182267962823080155" key="MSG_DEPLOY_DEPLOYFROMINPUT_DEPLOYFROMINPUT_4" desc="Cancel button label from deploy from file view.">キャンセル</translation>
@@ -346,7 +346,7 @@
   <translation id="3202589057142310031" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_DEPLOYFROMSETTINGS_29" desc="Namespace label on the deploy from settings page.">ネームスペース</translation>
   <translation id="6287295536760186773" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_DEPLOYFROMSETTINGS_3" desc="Appears when the app name input on the deploy from settings page does not match the expected pattern.">アプリケーション名は小文字で始まり、小文字、数字、及び単語間の '-' のみを含むことが可能です。</translation>
   <translation id="4934647949293838043" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_DEPLOYFROMSETTINGS_30" desc="Create new namespace label on deploy from settings page.">新しいネームスペースを作成する...</translation>
-  <translation id="3201254330436640498" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_DEPLOYFROMSETTINGS_31" desc="User help for the namespace selection on the deploy from settings page.">名前空間を使用すると論理的に名前のついたグループにリソースを分割することができます。</translation>
+  <translation id="3201254330436640498" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_DEPLOYFROMSETTINGS_31" desc="User help for the namespace selection on the deploy from settings page.">ネームスペースを使用すると論理的に名前のついたグループにリソースを分割することができます。</translation>
   <translation id="834167000335015513" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_DEPLOYFROMSETTINGS_32" desc="Learn more link on deploy from settings page.">詳細</translation>
   <translation id="7251991933244179058" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_DEPLOYFROMSETTINGS_33" desc="Image pull secret label on deploy from settings page.">Image Pull シークレット</translation>
   <translation id="9208569430240427400" key="MSG_DEPLOY_DEPLOYFROMSETTINGS_DEPLOYFROMSETTINGS_34" desc="Create new secret label on deploy from settings page.">新しいシークレットを作成する...</translation>
