@@ -20,7 +20,7 @@
     "angular-material": "~1.1.5",
     "angular-messages": "~1.6.6",
     "angular-resource": "~1.6.6",
-    "angular-sanitize": "~1.6.6",
+    "angular-sanitize": "~1.7.1",
     "ace-builds": "^1.2.9",
     "angular-ui-ace": "^0.2.3",
     "angular-utils-pagination": "~0.11.1",
