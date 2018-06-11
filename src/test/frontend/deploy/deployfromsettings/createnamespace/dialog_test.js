@@ -37,7 +37,7 @@ describe('Create-Namespace dialog', () => {
     // given one existing namespace
     ctrl.namespaces = ['my-namespace'];
 
-    // when entering the same name agian
+    // when entering the same name again
     ctrl.namespace = 'my-namespace';
 
     // then button is disabled
