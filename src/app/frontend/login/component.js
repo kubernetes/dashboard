@@ -36,9 +36,12 @@ class LoginController {
    * @param {!ui.router.$state} $state
    * @param {!angular.$q.Promise} kdAuthenticationModesResource
    * @param {!../common/errorhandling/service.ErrorService} kdErrorService
+   * @param {!angular.$q.Promise} kdSkipButtonEnabled
    * @ngInject
    */
-  constructor(kdNavService, kdAuthService, $state, kdAuthenticationModesResource, kdErrorService) {
+  constructor(
+      kdNavService, kdAuthService, $state, kdAuthenticationModesResource, kdErrorService,
+      kdSkipButtonEnabled) {
     /** @private {!./../chrome/nav/nav_service.NavService} */
     this.kdNavService_ = kdNavService;
     /** @private {!./../common/auth/service.AuthService} */
@@ -62,6 +65,10 @@ class LoginController {
     this.supportedAuthenticationModes = Modes;
     /** @private {!../common/errorhandling/service.ErrorService} */
     this.errorService_ = kdErrorService;
+    /** @private {!angular.$q.Promise} */
+    this.skipButtonEnabledResource_ = kdSkipButtonEnabled;
+    /** @private {boolean} */
+    this.skipButtonEnabled_;
   }
 
   /** @export */
@@ -81,6 +88,9 @@ class LoginController {
     this.authenticationModesResource_.then((authModes) => {
       this.enabledAuthenticationModes_ = authModes.modes;
     });
+    this.skipButtonEnabledResource_.then((skippable) => {
+      this.skipButtonEnabled_ = skippable.skippable;
+    });
   }
 
   /**
@@ -98,6 +108,13 @@ class LoginController {
     }
 
     return enabled;
+  }
+
+  /**
+   * @export
+   */
+  isSkipButtonEnabled() {
+    return this.skipButtonEnabled_;
   }
 
   /**

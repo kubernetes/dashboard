@@ -21,6 +21,7 @@ import {kubeConfigLoginComponent} from './kubeconfig_component';
 import {loginOptionsComponent} from './options_component';
 import stateConfig from './stateconfig';
 import {authenticationModesResource} from './stateconfig';
+import {skippableResource} from './stateconfig';
 import {tokenLoginComponent} from './token_component';
 
 /**
@@ -42,4 +43,5 @@ export default angular
     .component('kdTokenLogin', tokenLoginComponent)
     .component('kdKubeConfigLogin', kubeConfigLoginComponent)
     .factory('kdAuthenticationModesResource', authenticationModesResource)
+    .factory('kdSkipButtonEnabled', skippableResource)
     .config(stateConfig);
