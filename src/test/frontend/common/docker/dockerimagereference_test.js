@@ -87,7 +87,7 @@ describe('DokcerImageReference', () => {
      });
 
   it('should return part of the string after `:` delimiter when containerImage is not empty' +
-         'and containe two `/` delimiters',
+         'and contain two `/` delimiters',
      () => {
        // given
        let reference = 'private.registry:5000/namespace/test:1';
