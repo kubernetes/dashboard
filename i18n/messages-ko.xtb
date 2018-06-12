@@ -30,7 +30,7 @@
   <translation id="3070611681004399610" key="MSG_BREADCRUMBS_DEPLOY_APP_LABEL" desc="Breadcrumb label for the deploy view.">자원 생성</translation>
   <translation id="8693076889249273053" key="MSG_BREADCRUMBS_DISCOVERY_AND_LOAD_BALANCING_LABEL" desc="Label 'Discovery and load balancing' that appears as a breadcrumbs on the action bar.">디스커버리 및 로드 밸런싱</translation>
   <translation id="2573868693589074300" key="MSG_BREADCRUMBS_ERROR_LABEL" desc="Label for error page for breadcrumbs on the action bar.">에러</translation>
-  <translation id="2248903848244811172" key="MSG_BREADCRUMBS_HORIZONTAL_POD_AUTOSCALERS_LABEL" desc="Label 'Horizontal Pod Autoscalers' that appears as a breadcrumbs on the action bar.">호리젠털 팟 오토스케일러</translation>
+  <translation id="2248903848244811172" key="MSG_BREADCRUMBS_HORIZONTAL_POD_AUTOSCALERS_LABEL" desc="Label 'Horizontal Pod Autoscalers' that appears as a breadcrumbs on the action bar.">Horizontal Pod Autoscalers</translation>
   <translation id="8885204956315323333" key="MSG_BREADCRUMBS_INGRESSS_LABEL" desc="Label 'Ingresses' that appears as a breadcrumbs on the action bar.">인그레스</translation>
   <translation id="2024511088483477440" key="MSG_BREADCRUMBS_JOBS_LABEL" desc="Label 'Jobs' that appears as a breadcrumbs on the action bar.">잡</translation>
   <translation id="3285134270275399073" key="MSG_BREADCRUMBS_LOGIN_LABEL" desc="Label 'Sign in' that appears as a breadcrumbs on the action bar.">로그인</translation>
@@ -247,7 +247,7 @@
   <translation id="4537205375409268523" key="MSG_DEPLOYMENT_DETAIL_ACTIONBAR_1" desc="Label \'Deployment\' which will appear in the deployment dialog opened from the deployment details page.">디플로이먼트</translation>
   <translation id="916794903553842041" key="MSG_DEPLOYMENT_DETAIL_DETAIL_0" desc="Title for graph card displaying CPU metric of one deployment.">CPU 사용량</translation>
   <translation id="8453931805104629005" key="MSG_DEPLOYMENT_DETAIL_DETAIL_1" desc="Title for graph card displaying memory metric of one deployment.">메모리 사용량</translation>
-  <translation id="620255252783687720" key="MSG_DEPLOYMENT_DETAIL_DETAIL_10" desc="Text for horizontal pod autoscalers card zerostate in replica set details page.">현재 이 디플로이먼트에 관련된 호리젠털 팟 오토스케일러가 없습니다.</translation>
+  <translation id="620255252783687720" key="MSG_DEPLOYMENT_DETAIL_DETAIL_10" desc="Text for horizontal pod autoscalers card zerostate in replica set details page.">현재 이 디플로이먼트에 관련된 Horizontal Pod Autoscalers가 없습니다.</translation>
   <translation id="7206451673196119468" key="MSG_DEPLOYMENT_DETAIL_DETAIL_2" desc="Help message detailing what is included in the memory usage">본 메모리 사용량에는 해당 디플로이먼트가 관리하는 팟의 캐시가 포함되어 있습니다.</translation>
   <translation id="4293182903162394917" key="MSG_DEPLOYMENT_DETAIL_DETAIL_3" desc="Title \'New Replica Set\' for the newly created replica set view, on the deployment details page.">새 레플리카 셋</translation>
   <translation id="5406429395386793842" key="MSG_DEPLOYMENT_DETAIL_DETAIL_5" desc="Text for new replica sets card zero-state in deployment details page.">현재 디플로이먼트에 새 레플리카 셋이 없습니다.</translation>
@@ -445,7 +445,7 @@
   <translation id="2029236165141474072" key="MSG_GRAPH_MEMORY_AXIS_LABEL" desc="Name of Y axis showing memory usage.">메모리 (bytes)</translation>
   <translation id="6525531670828842343" key="MSG_GRAPH_MEMORY_USAGE_LEGEND_LABEL" desc="Name of the memory usage metric as displayed in the legend.">메모리 사용량</translation>
   <translation id="185015236199417198" key="MSG_GRAPH_TIME_AXIS_LABEL" desc="Name of time axis.">Time</translation>
-  <translation id="3116131023784654870" key="MSG_HORIZONTALPODAUTOSCALER_DETAIL_ACTIONBAR_0" desc="Label \'Horizontal Pod Autoscaler\' which appears at the top of the delete dialog, opened from a horizontal pod autoscaler details page.">호리젠털 팟 오토스케일러</translation>
+  <translation id="3116131023784654870" key="MSG_HORIZONTALPODAUTOSCALER_DETAIL_ACTIONBAR_0" desc="Label \'Horizontal Pod Autoscaler\' which appears at the top of the delete dialog, opened from a horizontal pod autoscaler details page.">Horizontal Pod Autoscaler</translation>
   <translation id="4234217286162701029" key="MSG_HORIZONTALPODAUTOSCALER_DETAIL_INFO_0" desc="Horizontal pod autoscaler info details section name.">상세</translation>
   <translation id="8852238167226878780" key="MSG_HORIZONTALPODAUTOSCALER_DETAIL_INFO_1" desc="Horizontal pod autoscaler info details section target entry.">목표</translation>
   <translation id="3801305643617716507" key="MSG_HORIZONTALPODAUTOSCALER_DETAIL_INFO_10" desc="Show the current CPU utilization percentage of a the pods of the targeted resource of a HPA">{{::$ctrl.horizontalPodAutoscaler.currentCPUUtilizationPercentage}}%</translation>
@@ -458,7 +458,7 @@
   <translation id="3808910683344466681" key="MSG_HORIZONTALPODAUTOSCALER_DETAIL_INFO_7" desc="Horizontal pod autoscaler info status section currentReplicas entry.">현재 복제 수</translation>
   <translation id="564448650580373807" key="MSG_HORIZONTALPODAUTOSCALER_DETAIL_INFO_8" desc="Horizontal pod autoscaler info status section desiredReplicas entry.">의도된 복제 수</translation>
   <translation id="3389156809898904124" key="MSG_HORIZONTALPODAUTOSCALER_DETAIL_INFO_9" desc="Horizontal pod autoscaler info status section currentCPUUtilizationPercentage entry.">현재 CPU 사용량</translation>
-  <translation id="2401546852640381854" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">호리젠털 팟 오토스케일러</translation>
+  <translation id="2401546852640381854" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">Horizontal Pod Autoscalers</translation>
   <translation id="6229449628982316627" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of horizontal pod autoscalers (horizontal pod autoscaler list view).">이름</translation>
   <translation id="2615165549137360373" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARDLIST_2" desc="Label \'Namespace\' which appears as a column label in the table of horizontal pod autoscalers (horizontal pod autoscaler list view).">네임스페이스</translation>
   <translation id="2649209286132146798" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARDLIST_3" desc="Column header \'Target\' on Horizontal Pod Autoscaler lists">목표</translation>
@@ -467,11 +467,11 @@
   <translation id="2631385607889091074" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARDLIST_6" desc="Label \'Min Replicas\' which appears as a column label in the table of horizontal pod autoscalers (horizontal pod autoscaler list view).">최소 복제 수</translation>
   <translation id="8088373128320107261" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARDLIST_7" desc="Label \'Max Replicas\' which appears as a column label in the table of horizontal pod autoscalers (horizontal pod autoscaler list view).">최대 복제 수</translation>
   <translation id="4787729230562636049" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARDLIST_8" desc="Label \'Age\' which appears as a column label in the table of horizontal pod autoscalers (horizontal pod autoscaler list view).">기간</translation>
-  <translation id="1108386405397731039" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARDLIST_9" desc="Text for horizontal pod autoscaler card list zerostate.">표시할 호리젠털 팟 오토스케일러가 없습니다.</translation>
+  <translation id="1108386405397731039" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARDLIST_9" desc="Text for horizontal pod autoscaler card list zerostate.">표시할 Horizontal Pod Autoscalers가 없습니다.</translation>
   <translation id="7169021054679689074" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARD_0" desc="Show the target CPU utilization percentage of a the pods of the targeted resource of a HPA">{{::$ctrl.horizontalPodAutoscaler.targetCPUUtilizationPercentage}}%</translation>
   <translation id="2749124983305767530" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARD_1" desc="Show the current CPU utilization percentage of a the pods of the targeted resource of a HPA">{{::$ctrl.horizontalPodAutoscaler.currentCPUUtilizationPercentage}}%</translation>
-  <translation id="8805456014928287136" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARD_2" desc="Title \'Horizontal Pod Autoscaler\' which is used as a title for the delete/update\n   dialogs (that can be opened on the horizontal pod autoscaler list view).">호리젠털 팟 오토스케일러</translation>
-  <translation id="8880232300868913858" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARD_3" desc="Title \'Horizontal Pod Autoscaler\' which is used as a title for the delete/update\n   dialogs (that can be opened on the horizontal pod autoscaler list view).">호리젠털 팟 오토스케일러</translation>
+  <translation id="8805456014928287136" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARD_2" desc="Title \'Horizontal Pod Autoscaler\' which is used as a title for the delete/update\n   dialogs (that can be opened on the horizontal pod autoscaler list view).">Horizontal Pod Autoscaler</translation>
+  <translation id="8880232300868913858" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARD_3" desc="Title \'Horizontal Pod Autoscaler\' which is used as a title for the delete/update\n   dialogs (that can be opened on the horizontal pod autoscaler list view).">Horizontal Pod Autoscaler</translation>
   <translation id="7834793853862950724" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARD_4" desc="Tooltip for the age column">생성 시간</translation>
   <translation id="6040027076420887056" key="MSG_HORIZONTAL_POD_AUTOSCALER_DETAIL_LAST_SCALED_TOOLTIP" desc="Tooltip 'Last scaled at [some date]' showing the exact time of the last time the horizontal pod autoscaler was scaled.">최근 스케일한 시간 <ph name="SCALE_DATE"/></translation>
   <translation id="8095485922114238358" key="MSG_INGRESS_DETAIL_ACTIONBAR_0" desc="Label \'Ingress\' which appears at the top of the delete dialog, opened from an ingress details page.">인그레스</translation>
@@ -775,7 +775,7 @@
   <translation id="8906155885743398611" key="MSG_REPLICASET_DETAIL_DETAIL_2" desc="Help message detailing what is included in the memory usage">메모리 사용량에는 레플리카 셋이 관리하는 팟의 캐시가 포함됩니다.</translation>
   <translation id="4572191373237361392" key="MSG_REPLICASET_DETAIL_DETAIL_4" desc="Text for pods card zerostate in replica set details page.">현재 본 레플리카 셋이 관리하는 팟이 없습니다</translation>
   <translation id="4073087810541869774" key="MSG_REPLICASET_DETAIL_DETAIL_6" desc="Text for services card zerostate in replica set details page.">현재 본 레플리카 셋과 같은 레이블 셀렉터를 가진 서비스가 없습니다.</translation>
-  <translation id="866751517478629490" key="MSG_REPLICASET_DETAIL_DETAIL_8" desc="Text for horizontal pod autoscalers card zerostate in replica set details page.">현재 본 레플리카 셋을 대상으로 하는 호리젠털 팟 오토스케일러가 없습니다.</translation>
+  <translation id="866751517478629490" key="MSG_REPLICASET_DETAIL_DETAIL_8" desc="Text for horizontal pod autoscalers card zerostate in replica set details page.">현재 본 레플리카 셋을 대상으로 하는 Horizontal Pod Autoscalers가 없습니다.</translation>
   <translation id="55301176526383580" key="MSG_REPLICASET_DETAIL_INFO_0" desc="Header in a detail view">상세</translation>
   <translation id="4263408774070199925" key="MSG_REPLICASET_DETAIL_INFO_1" desc="Label \'selector\' for replica sets.">셀렉터</translation>
   <translation id="3760168929569923839" key="MSG_REPLICASET_DETAIL_INFO_10" desc="The message says how many pods have failed (replica set details page).">{{::$ctrl.replicaSet.podInfo.failed}}개 Failed</translation>
@@ -814,7 +814,7 @@
   <translation id="811005294829243195" key="MSG_REPLICATIONCONTROLLER_DETAIL_DETAIL_2" desc="Help message detailing what is included in the memory usage">메모리 사용량에는 레플리케이션 컨트롤러이 관리하는 팟의 캐시가 포함됩니다.</translation>
   <translation id="5205445021979184107" key="MSG_REPLICATIONCONTROLLER_DETAIL_DETAIL_4" desc="Text for services card zerostate in replication controller details page.">현재 본 레플리케이션 컨트롤러와 같은 레이블 셀렉터를 가진 서비스가 없습니다.</translation>
   <translation id="3131127524918345503" key="MSG_REPLICATIONCONTROLLER_DETAIL_DETAIL_6" desc="Text for pods card zerostate in replication controller details page.">현재 본 레플리케이션 컨트롤러가 관리하는 팟이 없습니다.</translation>
-  <translation id="6774788258232499089" key="MSG_REPLICATIONCONTROLLER_DETAIL_DETAIL_8" desc="Text for horizontal pod autoscalers card zerostate in replica set details page.">현재 본 레플리케이션 컨트롤러를 대상으로하는 호리젠털 팟 오토스케일러가 없습니다.</translation>
+  <translation id="6774788258232499089" key="MSG_REPLICATIONCONTROLLER_DETAIL_DETAIL_8" desc="Text for horizontal pod autoscalers card zerostate in replica set details page.">현재 본 레플리케이션 컨트롤러를 대상으로하는 Horizontal Pod Autoscalers가 없습니다.</translation>
   <translation id="226817742496907856" key="MSG_REPLICATIONCONTROLLER_DETAIL_INFO_0" desc="Header in a detail view">상세</translation>
   <translation id="2966352401153803656" key="MSG_REPLICATIONCONTROLLER_DETAIL_INFO_1" desc="Label \'Selector\' for the replication controller\'s selector on the replication controller details page.">셀렉터</translation>
   <translation id="4612002136140637630" key="MSG_REPLICATIONCONTROLLER_DETAIL_INFO_10" desc="The message says how many pods have failed (replication controller details page).">{{::$ctrl.replicationController.podInfo.failed}}개 Failed</translation>

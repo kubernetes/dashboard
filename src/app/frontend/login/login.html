@@ -45,7 +45,8 @@ limitations under the License.
         [[Sign in|Text shown on the sign in button on login page]]
       </md-button>
       <md-button class="md-primary"
-                 ng-click="$ctrl.skip()">
+                 ng-click="$ctrl.skip()"
+                 ng-if="$ctrl.isSkipButtonEnabled()">
         [[Skip|Text shown on skip button on login page]]
       </md-button>
     </kd-content>
