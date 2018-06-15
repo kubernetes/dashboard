@@ -37,6 +37,7 @@ import {sparklineComponent} from './sparkline/component';
 import {textInputComponent} from './textinput/component';
 import {toggleHiddenTextComponent} from './togglehiddentext/component';
 import uploadFileDirective from './uploadfile/directive';
+import {userLinksComponent} from './userlinks/component';
 import {warningsComponent} from './warnings/component';
 import warnThresholdDirective from './warnthreshold/directive';
 import {zeroStateComponent} from './zerostate/component';
@@ -74,6 +75,7 @@ export default angular
     .component('kdWarnings', warningsComponent)
     .component('kdConditionList', conditionListComponent)
     .component('kdScaleButton', scaleButtonComponent)
+    .component('kdUserLinks', userLinksComponent)
     .component('kdPodWarnings', podWarningsComponent)
     .component('kdCapacity', capacityComponent)
     .directive('kdWarnThreshold', warnThresholdDirective)

@@ -19,6 +19,7 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/userlinks"
 	"k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
@@ -67,6 +68,8 @@ func TestGetPersistentVolumeDetail(t *testing.T) {
 						Path: "my-path",
 					},
 				},
+				Errors:    []error{},
+				UserLinks: []userlinks.UserLink{},
 			},
 		},
 	}
