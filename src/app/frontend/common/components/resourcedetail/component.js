@@ -12,12 +12,34 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {stateName as AppDetailState} from '../../../application/detail/state';
+import {StateParams} from '../../resource/resourcedetail';
+
+class InfoCardController {
+  /**
+   * @param {!ui.router.$state} $state
+   * @ngInject
+   */
+  constructor($state) {
+    /** @private {!ui.router.$state} */
+    this.state_ = $state;
+  }
+
+  /**
+   * @return {string}
+   * @export
+   */
+  getApplicationDetailHref() {
+    return this.state_.href(
+        AppDetailState, new StateParams(this.objectMeta.namespace, this.applicationName));
+  }
+}
+
 /**
  * @type {!angular.Component}
  */
 export const infoCardComponent = {
   templateUrl: 'common/components/resourcedetail/infocard.html',
-  bindings: {
-    'objectMeta': '<',
-  },
+  controller: InfoCardController,
+  bindings: {'objectMeta': '<', 'applicationName': '@'},
 };

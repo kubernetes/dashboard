@@ -15,6 +15,7 @@
 package job
 
 import (
+	applicationAlphaClient "github.com/kubernetes-sigs/application/pkg/client/clientset/versioned"
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
@@ -54,13 +55,15 @@ type JobDetail struct {
 	// Completions specifies the desired number of successfully finished pods the job should be run with.
 	Completions *int32 `json:"completions"`
 
+	ApplicationName string `json:"applicationName"`
+
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
 }
 
 // GetJobDetail gets job details.
-func GetJobDetail(client k8sClient.Interface, metricClient metricapi.MetricClient, namespace, name string) (
-	*JobDetail, error) {
+func GetJobDetail(client k8sClient.Interface, metricClient metricapi.MetricClient, namespace, name string,
+	clientSig applicationAlphaClient.Interface) (*JobDetail, error) {
 
 	jobData, err := client.BatchV1().Jobs(namespace).Get(name, metaV1.GetOptions{})
 	if err != nil {
@@ -85,12 +88,18 @@ func GetJobDetail(client k8sClient.Interface, metricClient metricapi.MetricClien
 		return nil, criticalError
 	}
 
-	job := toJobDetail(jobData, *eventList, *podList, *podInfo, nonCriticalErrors)
+	app, err := common.GetApplicationForResourceDetail(namespace, clientSig, jobData.Labels, api.ResourceKindStatefulSet)
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
+	}
+
+	job := toJobDetail(jobData, *eventList, *podList, *podInfo, app.ObjectMeta.Name, nonCriticalErrors)
 	return &job, nil
 }
 
 func toJobDetail(job *batch.Job, eventList common.EventList, podList pod.PodList, podInfo common.PodInfo,
-	nonCriticalErrors []error) JobDetail {
+	applicationName string, nonCriticalErrors []error) JobDetail {
 	return JobDetail{
 		ObjectMeta:          api.NewObjectMeta(job.ObjectMeta),
 		TypeMeta:            api.NewTypeMeta(api.ResourceKindJob),
@@ -101,6 +110,7 @@ func toJobDetail(job *batch.Job, eventList common.EventList, podList pod.PodList
 		EventList:           eventList,
 		Parallelism:         job.Spec.Parallelism,
 		Completions:         job.Spec.Completions,
+		ApplicationName:     applicationName,
 		Errors:              nonCriticalErrors,
 	}
 }

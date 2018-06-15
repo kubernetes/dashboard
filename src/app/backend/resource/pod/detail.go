@@ -21,6 +21,7 @@ import (
 	"math"
 	"strconv"
 
+	applicationAlphaClient "github.com/kubernetes-sigs/application/pkg/client/clientset/versioned"
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	errorHandler "github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
@@ -51,6 +52,7 @@ type PodDetail struct {
 	Conditions                []common.Condition                              `json:"conditions"`
 	EventList                 common.EventList                                `json:"eventList"`
 	PersistentvolumeclaimList persistentvolumeclaim.PersistentVolumeClaimList `json:"persistentVolumeClaimList"`
+	ApplicationName           string                                          `json:"applicationName"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
@@ -89,7 +91,8 @@ type EnvVar struct {
 }
 
 // GetPodDetail returns the details of a named Pod from a particular namespace.
-func GetPodDetail(client kubernetes.Interface, metricClient metricapi.MetricClient, namespace, name string) (
+func GetPodDetail(client kubernetes.Interface, metricClient metricapi.MetricClient, namespace, name string,
+	clientSig applicationAlphaClient.Interface) (
 	*PodDetail, error) {
 	log.Printf("Getting details of %s pod in %s namespace", name, namespace)
 
@@ -140,8 +143,14 @@ func GetPodDetail(client kubernetes.Interface, metricClient metricapi.MetricClie
 		return nil, criticalError
 	}
 
+	app, err := common.GetApplicationForResourceDetail(namespace, clientSig, pod.Labels, api.ResourceKindStatefulSet)
+	nonCriticalErrors, criticalError = errorHandler.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
+	}
+
 	podDetail := toPodDetail(pod, metrics, configMapList, secretList, controller,
-		eventList, persistentVolumeClaimList, nonCriticalErrors)
+		eventList, persistentVolumeClaimList, app.ObjectMeta.Name, nonCriticalErrors)
 	return &podDetail, nil
 }
 
@@ -207,7 +216,8 @@ func extractContainerInfo(containerList []v1.Container, pod *v1.Pod, configMaps 
 
 func toPodDetail(pod *v1.Pod, metrics []metricapi.Metric, configMaps *v1.ConfigMapList, secrets *v1.SecretList,
 	controller controller.ResourceOwner, events *common.EventList,
-	persistentVolumeClaimList *persistentvolumeclaim.PersistentVolumeClaimList, nonCriticalErrors []error) PodDetail {
+	persistentVolumeClaimList *persistentvolumeclaim.PersistentVolumeClaimList, applicationName string,
+	nonCriticalErrors []error) PodDetail {
 	return PodDetail{
 		ObjectMeta:                api.NewObjectMeta(pod.ObjectMeta),
 		TypeMeta:                  api.NewTypeMeta(api.ResourceKindPod),
@@ -223,7 +233,8 @@ func toPodDetail(pod *v1.Pod, metrics []metricapi.Metric, configMaps *v1.ConfigM
 		Conditions:                getPodConditions(*pod),
 		EventList:                 *events,
 		PersistentvolumeclaimList: *persistentVolumeClaimList,
-		Errors: nonCriticalErrors,
+		ApplicationName:           applicationName,
+		Errors:                    nonCriticalErrors,
 	}
 }
 

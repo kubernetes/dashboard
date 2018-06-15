@@ -17,7 +17,7 @@ limitations under the License.
 <kd-info-card>
   <kd-info-card-header>[[Details|Header in a detail view]]</kd-info-card-header>
   <kd-info-card-section>
-    <kd-object-meta-info-card object-meta="::$ctrl.statefulSet.objectMeta">
+    <kd-object-meta-info-card object-meta="::$ctrl.statefulSet.objectMeta" application-name="{{$ctrl.statefulSet.applicationName}}">
     </kd-object-meta-info-card>
     <kd-info-card-entry title="[[Images|Stateful set info details section images entry.]]">
       <div ng-repeat="image in $ctrl.statefulSet.containerImages track by $index">

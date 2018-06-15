@@ -17,7 +17,7 @@ limitations under the License.
 <kd-info-card>
   <kd-info-card-header>[[Details|Header in a detail view]]</kd-info-card-header>
   <kd-info-card-section>
-    <kd-object-meta-info-card object-meta="::$ctrl.service.objectMeta">
+    <kd-object-meta-info-card object-meta="::$ctrl.service.objectMeta" application-name="{{$ctrl.service.applicationName}}">
     </kd-object-meta-info-card>
     <kd-info-card-entry title="[[Label selector|Label 'Label selector' for the service's label selector in the details part (left) of the service details view.]]">
       <div ng-if="::$ctrl.service.selector">

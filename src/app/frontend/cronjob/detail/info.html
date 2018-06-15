@@ -17,7 +17,7 @@ limitations under the License.
 <kd-info-card>
   <kd-info-card-header>[[Details|Cron Job's details card header.]]</kd-info-card-header>
   <kd-info-card-section>
-    <kd-object-meta-info-card object-meta="::$ctrl.cronJob.objectMeta">
+    <kd-object-meta-info-card object-meta="::$ctrl.cronJob.objectMeta" application-name="{{$ctrl.cronJob.applicationName}}">
     </kd-object-meta-info-card>
     <kd-info-card-entry title="[[Schedule|Cron Job's attribute label.]]">
       <span>{{::$ctrl.cronJob.schedule}}</span>

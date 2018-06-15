@@ -17,6 +17,7 @@ package daemonset
 import (
 	"log"
 
+	applicationAlphaClient "github.com/kubernetes-sigs/application/pkg/client/clientset/versioned"
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
@@ -59,13 +60,15 @@ type DaemonSetDetail struct {
 	// List of events related to this daemon set
 	EventList common.EventList `json:"eventList"`
 
+	ApplicationName string `json:"applicationName"`
+
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
 }
 
 // Returns detailed information about the given daemon set in the given namespace.
 func GetDaemonSetDetail(client k8sClient.Interface, metricClient metricapi.MetricClient,
-	namespace, name string) (*DaemonSetDetail, error) {
+	namespace, name string, clientSig applicationAlphaClient.Interface) (*DaemonSetDetail, error) {
 
 	log.Printf("Getting details of %s daemon set in %s namespace", name, namespace)
 	daemonSet, err := client.AppsV1beta2().DaemonSets(namespace).Get(name, metaV1.GetOptions{})
@@ -97,15 +100,22 @@ func GetDaemonSetDetail(client k8sClient.Interface, metricClient metricapi.Metri
 		return nil, criticalError
 	}
 
+	app, err := common.GetApplicationForResourceDetail(namespace, clientSig, daemonSet.Labels, api.ResourceKindStatefulSet)
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
+	}
+
 	daemonSetDetail := &DaemonSetDetail{
-		ObjectMeta:    api.NewObjectMeta(daemonSet.ObjectMeta),
-		TypeMeta:      api.NewTypeMeta(api.ResourceKindDaemonSet),
-		LabelSelector: daemonSet.Spec.Selector,
-		PodInfo:       *podInfo,
-		PodList:       *podList,
-		ServiceList:   *serviceList,
-		EventList:     *eventList,
-		Errors:        nonCriticalErrors,
+		ObjectMeta:      api.NewObjectMeta(daemonSet.ObjectMeta),
+		TypeMeta:        api.NewTypeMeta(api.ResourceKindDaemonSet),
+		LabelSelector:   daemonSet.Spec.Selector,
+		PodInfo:         *podInfo,
+		PodList:         *podList,
+		ServiceList:     *serviceList,
+		EventList:       *eventList,
+		ApplicationName: app.ObjectMeta.Name,
+		Errors:          nonCriticalErrors,
 	}
 
 	for _, container := range daemonSet.Spec.Template.Spec.Containers {

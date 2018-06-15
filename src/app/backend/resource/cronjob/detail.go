@@ -15,6 +15,8 @@
 package cronjob
 
 import (
+	applicationAlphaClient "github.com/kubernetes-sigs/application/pkg/client/clientset/versioned"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
@@ -32,6 +34,7 @@ type CronJobDetail struct {
 	ActiveJobs              job.JobList      `json:"activeJobs"`
 	InactiveJobs            job.JobList      `json:"inactiveJobs"`
 	Events                  common.EventList `json:"events"`
+	ApplicationName         string           `json:"applicationName"`
 
 	// Extends list item structure.
 	CronJob `json:",inline"`
@@ -42,7 +45,7 @@ type CronJobDetail struct {
 
 // GetCronJobDetail gets Cron Job details.
 func GetCronJobDetail(client k8sClient.Interface, dsQuery *dataselect.DataSelectQuery,
-	metricClient metricapi.MetricClient, namespace, name string) (*CronJobDetail, error) {
+	metricClient metricapi.MetricClient, namespace, name string, clientSig applicationAlphaClient.Interface) (*CronJobDetail, error) {
 
 	rawObject, err := client.BatchV1beta1().CronJobs(namespace).Get(name, metaV1.GetOptions{})
 	if err != nil {
@@ -63,12 +66,19 @@ func GetCronJobDetail(client k8sClient.Interface, dsQuery *dataselect.DataSelect
 		return nil, criticalError
 	}
 
-	cj := toCronJobDetail(rawObject, *activeJobs, *inactiveJobs, *events, nonCriticalErrors)
+	app, err := common.GetApplicationForResourceDetail(namespace, clientSig, rawObject.Labels, api.ResourceKindStatefulSet)
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
+	}
+
+	cj := toCronJobDetail(rawObject, *activeJobs, *inactiveJobs, *events,
+		app.ObjectMeta.Name, nonCriticalErrors)
 	return &cj, nil
 }
 
 func toCronJobDetail(cj *batch2.CronJob, activeJobs job.JobList, inactiveJobs job.JobList, events common.EventList,
-	nonCriticalErrors []error) CronJobDetail {
+	applicationName string, nonCriticalErrors []error) CronJobDetail {
 	return CronJobDetail{
 		CronJob:                 toCronJob(cj),
 		ConcurrencyPolicy:       string(cj.Spec.ConcurrencyPolicy),
@@ -76,6 +86,7 @@ func toCronJobDetail(cj *batch2.CronJob, activeJobs job.JobList, inactiveJobs jo
 		ActiveJobs:              activeJobs,
 		InactiveJobs:            inactiveJobs,
 		Events:                  events,
+		ApplicationName:         applicationName,
 		Errors:                  nonCriticalErrors,
 	}
 }

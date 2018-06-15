@@ -17,6 +17,7 @@ package replicaset
 import (
 	"log"
 
+	applicationAlphaClient "github.com/kubernetes-sigs/application/pkg/client/clientset/versioned"
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
@@ -62,13 +63,15 @@ type ReplicaSetDetail struct {
 	// List of Horizontal Pod Autoscalers targeting this Replica Set.
 	HorizontalPodAutoscalerList hpa.HorizontalPodAutoscalerList `json:"horizontalPodAutoscalerList"`
 
+	ApplicationName string `json:"applicationName"`
+
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
 }
 
 // GetReplicaSetDetail gets replica set details.
 func GetReplicaSetDetail(client k8sClient.Interface, metricClient metricapi.MetricClient,
-	namespace, name string) (*ReplicaSetDetail, error) {
+	namespace, name string, clientSig applicationAlphaClient.Interface) (*ReplicaSetDetail, error) {
 	log.Printf("Getting details of %s service in %s namespace", name, namespace)
 
 	rs, err := client.AppsV1beta2().ReplicaSets(namespace).Get(name, metaV1.GetOptions{})
@@ -106,13 +109,19 @@ func GetReplicaSetDetail(client k8sClient.Interface, metricClient metricapi.Metr
 		return nil, criticalError
 	}
 
-	rsDetail := toReplicaSetDetail(rs, *eventList, *podList, *podInfo, *serviceList, *hpas, nonCriticalErrors)
+	app, err := common.GetApplicationForResourceDetail(namespace, clientSig, rs.Labels, api.ResourceKindStatefulSet)
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
+	}
+
+	rsDetail := toReplicaSetDetail(rs, *eventList, *podList, *podInfo, *serviceList, *hpas, app.ObjectMeta.Name, nonCriticalErrors)
 	return &rsDetail, nil
 }
 
 func toReplicaSetDetail(replicaSet *apps.ReplicaSet, eventList common.EventList, podList pod.PodList,
 	podInfo common.PodInfo, serviceList resourceService.ServiceList,
-	hpas hpa.HorizontalPodAutoscalerList, nonCriticalErrors []error) ReplicaSetDetail {
+	hpas hpa.HorizontalPodAutoscalerList, applicationName string, nonCriticalErrors []error) ReplicaSetDetail {
 
 	return ReplicaSetDetail{
 		ObjectMeta:                  api.NewObjectMeta(replicaSet.ObjectMeta),
@@ -125,6 +134,7 @@ func toReplicaSetDetail(replicaSet *apps.ReplicaSet, eventList common.EventList,
 		ServiceList:                 serviceList,
 		EventList:                   eventList,
 		HorizontalPodAutoscalerList: hpas,
-		Errors: nonCriticalErrors,
+		ApplicationName:             applicationName,
+		Errors:                      nonCriticalErrors,
 	}
 }

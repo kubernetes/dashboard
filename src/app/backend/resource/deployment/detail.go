@@ -17,6 +17,7 @@ package deployment
 import (
 	"log"
 
+	applicationAlphaClient "github.com/kubernetes-sigs/application/pkg/client/clientset/versioned"
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
@@ -92,13 +93,15 @@ type DeploymentDetail struct {
 	// List of Horizontal Pod AutoScalers targeting this Deployment
 	HorizontalPodAutoscalerList hpa.HorizontalPodAutoscalerList `json:"horizontalPodAutoscalerList"`
 
+	ApplicationName string `json:"applicationName"`
+
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
 }
 
 // GetDeploymentDetail returns model object of deployment and error, if any.
 func GetDeploymentDetail(client client.Interface, metricClient metricapi.MetricClient, namespace string,
-	deploymentName string) (*DeploymentDetail, error) {
+	deploymentName string, clientSig applicationAlphaClient.Interface) (*DeploymentDetail, error) {
 
 	log.Printf("Getting details of %s deployment in %s namespace", deploymentName, namespace)
 
@@ -168,6 +171,12 @@ func GetDeploymentDetail(client client.Interface, metricClient metricapi.MetricC
 		return nil, criticalError
 	}
 
+	app, err := common.GetApplicationForResourceDetail(namespace, clientSig, deployment.Labels, api.ResourceKindStatefulSet)
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
+	}
+
 	var newReplicaSet replicaset.ReplicaSet
 	if newRs != nil {
 		matchingPods := common.FilterPodsByControllerRef(newRs, rawPods.Items)
@@ -205,7 +214,8 @@ func GetDeploymentDetail(client client.Interface, metricClient metricapi.MetricC
 		RevisionHistoryLimit:        deployment.Spec.RevisionHistoryLimit,
 		EventList:                   *eventList,
 		HorizontalPodAutoscalerList: *hpas,
-		Errors: nonCriticalErrors,
+		ApplicationName:             app.ObjectMeta.Name,
+		Errors:                      nonCriticalErrors,
 	}, nil
 
 }

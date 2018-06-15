@@ -17,7 +17,7 @@ limitations under the License.
 <kd-info-card>
   <kd-info-card-header>[[Details|Header in a detail view]]</kd-info-card-header>
   <kd-info-card-section>
-    <kd-object-meta-info-card object-meta="::$ctrl.daemonSet.objectMeta">
+    <kd-object-meta-info-card object-meta="::$ctrl.daemonSet.objectMeta" application-name="{{$ctrl.daemonSet.applicationName}}">
     </kd-object-meta-info-card>
     <kd-info-card-entry title="[[Images|Label 'Images' for the list of images used in a daemon set, on its details page.]]">
       <div ng-repeat="image in $ctrl.daemonSet.containerImages track by $index">

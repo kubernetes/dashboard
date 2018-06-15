@@ -38,7 +38,7 @@ func ToService(service *v1.Service) Service {
 
 // ToServiceDetail returns api service object based on kubernetes service object
 func ToServiceDetail(service *v1.Service, events common.EventList, pods pod.PodList, endpointList endpoint.EndpointList,
-	nonCriticalErrors []error) ServiceDetail {
+	applicationName string, nonCriticalErrors []error) ServiceDetail {
 	return ServiceDetail{
 		ObjectMeta:        api.NewObjectMeta(service.ObjectMeta),
 		TypeMeta:          api.NewTypeMeta(api.ResourceKindService),
@@ -51,6 +51,7 @@ func ToServiceDetail(service *v1.Service, events common.EventList, pods pod.PodL
 		EventList:         events,
 		PodList:           pods,
 		SessionAffinity:   service.Spec.SessionAffinity,
+		ApplicationName:   applicationName,
 		Errors:            nonCriticalErrors,
 	}
 }

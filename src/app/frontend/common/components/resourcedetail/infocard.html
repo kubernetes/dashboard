@@ -36,3 +36,10 @@ limitations under the License.
 <kd-info-card-entry title="[[Creation Time|Label 'Creation Time' for a resource.]]">
   {{::$ctrl.objectMeta.creationTimestamp | date}}
 </kd-info-card-entry>
+
+<kd-info-card-entry ng-if="::$ctrl.applicationName"
+                    title="[[Application|Label 'Application' for a resource.]]">
+  <a ng-href="{{::$ctrl.getApplicationDetailHref()}}">
+    {{::$ctrl.applicationName}}
+  </a>
+</kd-info-card-entry>

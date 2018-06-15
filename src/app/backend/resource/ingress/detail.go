@@ -17,7 +17,9 @@ package ingress
 import (
 	"log"
 
+	applicationAlphaClient "github.com/kubernetes-sigs/application/pkg/client/clientset/versioned"
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	extensions "k8s.io/api/extensions/v1beta1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
@@ -36,12 +38,14 @@ type IngressDetail struct {
 	// Status is the current state of the Ingress.
 	Status extensions.IngressStatus `json:"status"`
 
+	ApplicationName string `json:"applicationName"`
+
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
 }
 
 // GetIngressDetail returns returns detailed information about an ingress
-func GetIngressDetail(client client.Interface, namespace, name string) (*IngressDetail, error) {
+func GetIngressDetail(client client.Interface, namespace, name string, clientSig applicationAlphaClient.Interface) (*IngressDetail, error) {
 	log.Printf("Getting details of %s ingress in %s namespace", name, namespace)
 
 	rawIngress, err := client.Extensions().Ingresses(namespace).Get(name, metaV1.GetOptions{})
@@ -50,14 +54,20 @@ func GetIngressDetail(client client.Interface, namespace, name string) (*Ingress
 		return nil, err
 	}
 
-	return getIngressDetail(rawIngress), nil
+	app, err := common.GetApplicationForResourceDetail(namespace, clientSig, rawIngress.Labels, api.ResourceKindStatefulSet)
+	if err != nil {
+		return nil, err
+	}
+
+	return getIngressDetail(rawIngress, app.ObjectMeta.Name), nil
 }
 
-func getIngressDetail(rawIngress *extensions.Ingress) *IngressDetail {
+func getIngressDetail(rawIngress *extensions.Ingress, applicationName string) *IngressDetail {
 	return &IngressDetail{
-		ObjectMeta: api.NewObjectMeta(rawIngress.ObjectMeta),
-		TypeMeta:   api.NewTypeMeta(api.ResourceKindIngress),
-		Spec:       rawIngress.Spec,
-		Status:     rawIngress.Status,
+		ObjectMeta:      api.NewObjectMeta(rawIngress.ObjectMeta),
+		TypeMeta:        api.NewTypeMeta(api.ResourceKindIngress),
+		Spec:            rawIngress.Spec,
+		Status:          rawIngress.Status,
+		ApplicationName: applicationName,
 	}
 }

@@ -17,7 +17,7 @@ limitations under the License.
 <kd-info-card>
   <kd-info-card-header>[[Details|Header in a detail view]]</kd-info-card-header>
   <kd-info-card-section>
-    <kd-object-meta-info-card object-meta="::$ctrl.deployment.objectMeta">
+    <kd-object-meta-info-card object-meta="::$ctrl.deployment.objectMeta" application-name="{{$ctrl.deployment.applicationName}}">
     </kd-object-meta-info-card>
     <kd-info-card-entry title="[[Selector|Label 'Selector' for the deployment's labels list on the deployment details page.]]">
       <kd-labels labels="::$ctrl.deployment.selector"></kd-labels>

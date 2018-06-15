@@ -17,7 +17,7 @@ limitations under the License.
 <kd-info-card>
   <kd-info-card-header>[[Details|Header in a detail view]]</kd-info-card-header>
   <kd-info-card-section>
-    <kd-object-meta-info-card object-meta="::$ctrl.replicaSet.objectMeta">
+    <kd-object-meta-info-card object-meta="::$ctrl.replicaSet.objectMeta" application-name="{{$ctrl.replicaSet.applicationName}}">
     </kd-object-meta-info-card>
     <kd-info-card-entry title="[[Selector|Label 'selector' for replica sets.]]">
       <kd-labels labels="::$ctrl.replicaSet.selector.matchLabels"></kd-labels>

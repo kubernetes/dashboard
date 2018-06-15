@@ -17,6 +17,7 @@ package statefulset
 import (
 	"log"
 
+	applicationAlphaClient "github.com/kubernetes-sigs/application/pkg/client/clientset/versioned"
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
@@ -39,6 +40,7 @@ type StatefulSetDetail struct {
 	ContainerImages     []string         `json:"containerImages"`
 	InitContainerImages []string         `json:"initContainerImages"`
 	EventList           common.EventList `json:"eventList"`
+	ApplicationName     string           `json:"applicationName"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
@@ -46,7 +48,7 @@ type StatefulSetDetail struct {
 
 // GetStatefulSetDetail gets Stateful Set details.
 func GetStatefulSetDetail(client kubernetes.Interface, metricClient metricapi.MetricClient, namespace,
-	name string) (*StatefulSetDetail, error) {
+	name string, clientSig applicationAlphaClient.Interface) (*StatefulSetDetail, error) {
 	log.Printf("Getting details of %s statefulset in %s namespace", name, namespace)
 
 	ss, err := client.AppsV1beta2().StatefulSets(namespace).Get(name, metaV1.GetOptions{})
@@ -72,12 +74,18 @@ func GetStatefulSetDetail(client kubernetes.Interface, metricClient metricapi.Me
 		return nil, criticalError
 	}
 
-	ssDetail := getStatefulSetDetail(ss, *events, *podList, *podInfo, nonCriticalErrors)
+	app, err := common.GetApplicationForResourceDetail(namespace, clientSig, ss.Labels, api.ResourceKindStatefulSet)
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
+	}
+
+	ssDetail := getStatefulSetDetail(ss, *events, *podList, *podInfo, app.ObjectMeta.Name, nonCriticalErrors)
 	return &ssDetail, nil
 }
 
 func getStatefulSetDetail(statefulSet *apps.StatefulSet, eventList common.EventList, podList pod.PodList,
-	podInfo common.PodInfo, nonCriticalErrors []error) StatefulSetDetail {
+	podInfo common.PodInfo, applicationName string, nonCriticalErrors []error) StatefulSetDetail {
 	return StatefulSetDetail{
 		ObjectMeta:          api.NewObjectMeta(statefulSet.ObjectMeta),
 		TypeMeta:            api.NewTypeMeta(api.ResourceKindStatefulSet),
@@ -86,6 +94,7 @@ func getStatefulSetDetail(statefulSet *apps.StatefulSet, eventList common.EventL
 		PodInfo:             podInfo,
 		PodList:             podList,
 		EventList:           eventList,
+		ApplicationName:     applicationName,
 		Errors:              nonCriticalErrors,
 	}
 }

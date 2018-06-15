@@ -17,6 +17,7 @@ package replicationcontroller
 import (
 	"log"
 
+	applicationAlphaClient "github.com/kubernetes-sigs/application/pkg/client/clientset/versioned"
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
@@ -63,6 +64,8 @@ type ReplicationControllerDetail struct {
 	// List of Horizontal Pod AutoScalers targeting this Replication Controller.
 	HorizontalPodAutoscalerList hpa.HorizontalPodAutoscalerList `json:"horizontalPodAutoscalerList"`
 
+	ApplicationName string `json:"applicationName"`
+
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
 }
@@ -76,7 +79,7 @@ type ReplicationControllerSpec struct {
 // GetReplicationControllerDetail returns detailed information about the given replication controller
 // in the given namespace.
 func GetReplicationControllerDetail(client k8sClient.Interface, metricClient metricapi.MetricClient,
-	namespace, name string) (*ReplicationControllerDetail, error) {
+	namespace, name string, clientSig applicationAlphaClient.Interface) (*ReplicationControllerDetail, error) {
 	log.Printf("Getting details of %s replication controller in %s namespace", name, namespace)
 
 	replicationController, err := client.CoreV1().ReplicationControllers(namespace).Get(name, metaV1.GetOptions{})
@@ -115,8 +118,14 @@ func GetReplicationControllerDetail(client k8sClient.Interface, metricClient met
 		return nil, criticalError
 	}
 
+	app, err := common.GetApplicationForResourceDetail(namespace, clientSig, replicationController.Labels, api.ResourceKindStatefulSet)
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
+	}
+
 	replicationControllerDetail := toReplicationControllerDetail(replicationController, *podInfo,
-		*podList, *eventList, *serviceList, *hpas, nonCriticalErrors)
+		*podList, *eventList, *serviceList, *hpas, app.ObjectMeta.Name, nonCriticalErrors)
 	return &replicationControllerDetail, nil
 }
 
@@ -145,7 +154,7 @@ func UpdateReplicasCount(client k8sClient.Interface, namespace, name string, spe
 
 func toReplicationControllerDetail(replicationController *v1.ReplicationController, podInfo common.PodInfo,
 	podList pod.PodList, eventList common.EventList, serviceList resourceService.ServiceList,
-	hpas hpa.HorizontalPodAutoscalerList, nonCriticalErrors []error) ReplicationControllerDetail {
+	hpas hpa.HorizontalPodAutoscalerList, applicationName string, nonCriticalErrors []error) ReplicationControllerDetail {
 
 	return ReplicationControllerDetail{
 		ObjectMeta:                  api.NewObjectMeta(replicationController.ObjectMeta),
@@ -158,6 +167,7 @@ func toReplicationControllerDetail(replicationController *v1.ReplicationControll
 		HorizontalPodAutoscalerList: hpas,
 		ContainerImages:             common.GetContainerImages(&replicationController.Spec.Template.Spec),
 		InitContainerImages:         common.GetInitContainerImages(&replicationController.Spec.Template.Spec),
+		ApplicationName:             applicationName,
 		Errors:                      nonCriticalErrors,
 	}
 }

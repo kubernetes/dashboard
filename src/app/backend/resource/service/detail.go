@@ -17,6 +17,7 @@ package service
 import (
 	"log"
 
+	applicationAlphaClient "github.com/kubernetes-sigs/application/pkg/client/clientset/versioned"
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
@@ -64,13 +65,15 @@ type ServiceDetail struct {
 	// Show the value of the SessionAffinity of the Service.
 	SessionAffinity v1.ServiceAffinity `json:"sessionAffinity"`
 
+	ApplicationName string `json:"applicationName"`
+
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
 }
 
 // GetServiceDetail gets service details.
 func GetServiceDetail(client k8sClient.Interface, metricClient metricapi.MetricClient, namespace, name string,
-	dsQuery *dataselect.DataSelectQuery) (*ServiceDetail, error) {
+	dsQuery *dataselect.DataSelectQuery, clientSig applicationAlphaClient.Interface) (*ServiceDetail, error) {
 
 	log.Printf("Getting details of %s service in %s namespace", name, namespace)
 	serviceData, err := client.CoreV1().Services(namespace).Get(name, metaV1.GetOptions{})
@@ -96,6 +99,12 @@ func GetServiceDetail(client k8sClient.Interface, metricClient metricapi.MetricC
 		return nil, criticalError
 	}
 
-	service := ToServiceDetail(serviceData, *eventList, *podList, *endpointList, nonCriticalErrors)
+	app, err := common.GetApplicationForResourceDetail(namespace, clientSig, serviceData.Labels, api.ResourceKindStatefulSet)
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
+	}
+
+	service := ToServiceDetail(serviceData, *eventList, *podList, *endpointList, app.ObjectMeta.Name, nonCriticalErrors)
 	return &service, nil
 }
