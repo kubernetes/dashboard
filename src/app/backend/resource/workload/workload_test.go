@@ -159,6 +159,9 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 					Warnings: []common.Event{},
 					Desired:  &replicas,
 				},
+				JobStatus: job.JobStatus{
+					Status: job.JobStatusRunning,
+				},
 			}},
 			[]cronjob.CronJob{{
 				ObjectMeta: api.ObjectMeta{
