@@ -17,6 +17,12 @@ limitations under the License.
 <kd-resource-card object-meta="$ctrl.job.objectMeta"
                   type-meta="$ctrl.job.typeMeta">
   <kd-resource-card-status layout="row">
+    <md-icon class="material-icons kd-error" ng-if="::$ctrl.isFailed()">
+      error
+      <md-tooltip md-delay="500" md-autohide>
+        {{::$ctrl.job.jobStatus.message}}
+      </md-tooltip>
+    </md-icon>
     <md-icon class="material-icons md-warn"
              ng-if="::$ctrl.hasWarnings()">
       error
