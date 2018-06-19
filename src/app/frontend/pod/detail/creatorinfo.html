@@ -113,7 +113,7 @@ limitations under the License.
           </kd-resource-card-column>
           <kd-resource-card-column>
             <span class="kd-replicase-card-pods-stat">
-        {{::$ctrl.creator.pods.running}} / {{::$ctrl.creator.pods.desired}}
+        {{::$ctrl.creator.pods.running}} <span ng-if="$ctrl.creator.pods.desired != null">/ {{::$ctrl.creator.pods.desired}}</span>
       </span>
           </kd-resource-card-column>
           <kd-resource-card-column>
