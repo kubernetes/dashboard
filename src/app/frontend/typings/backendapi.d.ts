@@ -220,7 +220,11 @@ export interface Port {
 
 export interface Endpoint {
   host: string;
+  nodeName: string;
   ports: Port[];
+  ready: boolean;
+  typeMeta: TypeMeta;
+  objectMeta: ObjectMeta;
 }
 
 export interface Event extends Resource {
@@ -369,7 +373,7 @@ export interface ReplicationControllerDetail extends ResourceDetail {
 export interface ServiceDetail extends ResourceDetail {
   internalEndpoint: Endpoint;
   externalEndpoints: Endpoint[];
-  endpointList: Endpoint[];
+  endpointList: EndpointList;
   selector: StringMap;
   type: string;
   clusterIP: string;
