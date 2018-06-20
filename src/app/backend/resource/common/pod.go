@@ -58,8 +58,6 @@ func FilterPodsForJob(job batch.Job, pods []v1.Pod) []v1.Pod {
 	return result
 }
 
-
-
 // GetContainerImages returns container image strings from the given pod spec.
 func GetContainerImages(podTemplate *v1.PodSpec) []string {
 	var containerImages []string
@@ -147,7 +145,6 @@ func GetNonduplicateInitContainerNames(podList []v1.Pod) []string{
   }
   return initContainerNames
 }
-
 
 //noStringInSlice checks if string in array
 func noStringInSlice(str string, array []string) bool {
