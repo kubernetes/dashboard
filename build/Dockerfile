@@ -41,5 +41,4 @@ WORKDIR /dashboard
 COPY ./ ./
 
 # Install dependencies. This will take a while.
-RUN npm install -g npm@latest gulp
 RUN npm install --unsafe-perm
