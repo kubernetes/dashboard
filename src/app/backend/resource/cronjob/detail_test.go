@@ -65,6 +65,11 @@ func TestGetJobDetail(t *testing.T) {
 					CumulativeMetrics: make([]metricapi.Metric, 0),
 					Errors:            make([]error, 0),
 				},
+				InactiveJobs: job.JobList{
+					Jobs:              make([]job.Job, 0),
+					CumulativeMetrics: make([]metricapi.Metric, 0),
+					Errors:            make([]error, 0),
+				},
 				Events: *event.EmptyEventList,
 				Errors: []error{},
 			},
