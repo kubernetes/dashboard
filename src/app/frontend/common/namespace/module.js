@@ -42,22 +42,25 @@ export default angular
  */
 function ensureNamespaceParamPresent($location, $transitions, $state) {
   /**
-   * Helper function which replaces namespace URL search param when the given namespace is
-   * undefined.
-   * @param {string|undefined} namespace
-   * @returns {boolean}
+   * Helper function which redirect namespace param when the given namespace
+   * in the transition is undefined.
+   * @returns {boolean|angular.$q.Promise}
    */
-  function replaceUrlIfNeeded(namespace) {
-    if (namespace === undefined && !!$state.transition &&
-        $state.transition.to().name !== loginState) {
-      $location.search(namespaceParam, DEFAULT_NAMESPACE);
-      $location.replace();
-      return false;
+  function changeNamespaceParamIfNeeded() {
+    const transition = $state.transition;
+
+    if (!transition) {
+      return true;
+    }
+
+    const namespace = transition.params()[namespaceParam];
+    if (namespace === undefined && transition.to().name !== loginState) {
+      return $state.target(transition.to(), {[namespaceParam]: DEFAULT_NAMESPACE});
     }
     return true;
   }
 
   $transitions.onEnter({}, () => {
-    return replaceUrlIfNeeded($location.search()[namespaceParam]);
+    return changeNamespaceParamIfNeeded();
   });
 }
