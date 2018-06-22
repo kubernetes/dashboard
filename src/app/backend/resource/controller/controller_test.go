@@ -50,11 +50,7 @@ func TestGetPodNames(t *testing.T) {
 }
 
 func TestNewResourceController(t *testing.T) {
-  ctrl, err := NewResourceController(
-    meta.OwnerReference {
-      Kind: api.ResourceKindPod,
-      Name: "test-name",
-  }, "default", fake.NewSimpleClientset(&v1.Pod{
+  pod := v1.Pod{
     TypeMeta: meta.TypeMeta{
       Kind: "pod",
       APIVersion:"v1",
@@ -62,7 +58,15 @@ func TestNewResourceController(t *testing.T) {
     ObjectMeta: meta.ObjectMeta{
       Name: "test-name",
       Namespace: "default",
-    }}))
+    }}
+  cli := fake.NewSimpleClientset(&pod)
+
+  ctrl, err := NewResourceController(
+    meta.OwnerReference {
+      Kind: api.ResourceKindPod,
+      Name: "test-name",
+  }, "default", cli)
+
   if err != nil {
     t.Fatal("Returned Error finding pod")
   }
@@ -73,6 +77,14 @@ func TestNewResourceController(t *testing.T) {
   if podCtrl.Name != "test-name" {
     t.Fatal("Returned invalid pod name")
   }
+  NewResourceController(
+    meta.OwnerReference {
+      Kind: api.ResourceKindPod,
+      Name: "test-name",
+    }, "default", fake.NewSimpleClientset())
+  podCtrl.Get([]v1.Pod{pod}, []v1.Event{})
+  podCtrl.UID()
+  podCtrl.GetLogSources([]v1.Pod{pod})
 }
 
 func newPod(name string) v1.Pod {
