@@ -42,7 +42,7 @@ export class DeleteResourceController {
     /** @export */
     this.resourceKindName = resourceKindName;
   }
-  
+
   /**
    * @export
    */

@@ -18,21 +18,17 @@
  */
 export class ResourceCardSuspendMenuItemController {
   /**
-   * @param {!./../../resource/verber_service.VerberService} kdResourceVerberService
    * @param {!ui.router.$state} $state
    * @param {!angular.$log} $log
    * @param {!angular.$resource} $resource
    * @ngInject
    */
-  constructor(kdResourceVerberService, $state, $log, $resource) {
+  constructor($state, $log, $resource) {
     /**
      * Initialized from require just before $onInit is called.
      * @export {!./resourcecard_component.ResourceCardController}
      */
     this.resourceCardCtrl;
-
-    /** @private {!./../../resource/verber_service.VerberService} */
-    this.kdResourceVerberService_ = kdResourceVerberService;
 
     /** @private {!ui.router.$state}} */
     this.state_ = $state;
@@ -43,51 +39,53 @@ export class ResourceCardSuspendMenuItemController {
     /** @private {!angular.$resource} */
     this.resource_ = $resource;
 
+    /** @export {!backendApi.CronJob} */
+    this.cron;
   }
 
   /**
    * @export
    */
-  disable(){
+  disable() {
     return this.disablePromised()
-      .update(this.successdisable_.bind(this), this.error_.bind(this))
-      .$promise;
+        .update(this.successdisable_.bind(this), this.error_.bind(this))
+        .$promise;
   }
 
-  enable(){
+  enable() {
     return this.enablePromised()
-      .update(this.successenable_.bind(this), this.error_.bind(this))
-      .$promise;
+        .update(this.successenable_.bind(this), this.error_.bind(this))
+        .$promise;
   }
 
   disablePromised() {
     return this.resource_(
-      `api/v1/suspend/${this.cron.objectMeta.namespace}/${this.cron.objectMeta.name}/`,
-      {'suspend': "true"}, {
-        update: {
-          // redefine update action defaults
-          method: 'PUT',
-          transformRequest: function (headers) {
-            headers = angular.extend({}, headers, {'Content-Type': 'application/json'});
-            return angular.toJson(headers);
+        `api/v1/suspend/${this.cron.objectMeta.namespace}/${this.cron.objectMeta.name}/`,
+        {'suspend': 'true'}, {
+          update: {
+            // redefine update action defaults
+            method: 'PUT',
+            transformRequest: function(headers) {
+              headers = angular.extend({}, headers, {'Content-Type': 'application/json'});
+              return angular.toJson(headers);
+            },
           },
-        },
-      });
+        });
   }
 
   enablePromised() {
     return this.resource_(
-      `api/v1/suspend/${this.cron.objectMeta.namespace}/${this.cron.objectMeta.name}/`,
-      {'suspend': "false"}, {
-        update: {
-          // redefine update action defaults
-          method: 'PUT',
-          transformRequest: function (headers) {
-            headers = angular.extend({}, headers, {'Content-Type': 'application/json'});
-            return angular.toJson(headers);
+        `api/v1/suspend/${this.cron.objectMeta.namespace}/${this.cron.objectMeta.name}/`,
+        {'suspend': 'false'}, {
+          update: {
+            // redefine update action defaults
+            method: 'PUT',
+            transformRequest: function(headers) {
+              headers = angular.extend({}, headers, {'Content-Type': 'application/json'});
+              return angular.toJson(headers);
+            },
           },
-        },
-      });
+        });
   }
 
   /**
@@ -111,21 +109,17 @@ export class ResourceCardSuspendMenuItemController {
   error_(err) {
     this.log_.error(err);
   }
-
 }
 
 /**
  * @type {!angular.Component}
  */
 export const resourceCardSuspendMenuItemComponent = {
-templateUrl: 'common/components/resourcecard/resourcecardsuspendmenuitem.html',
-bindings: {
-    'resource': '<',
-    'cron': '<'
-},
-bindToController: true,
-require: {
+  templateUrl: 'common/components/resourcecard/resourcecardsuspendmenuitem.html',
+  bindings: {'resource': '<', 'cron': '<'},
+  bindToController: true,
+  require: {
     'resourceCardCtrl': '^kdResourceCard',
-},
-controller: ResourceCardSuspendMenuItemController,
+  },
+  controller: ResourceCardSuspendMenuItemController,
 };

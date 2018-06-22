@@ -20,7 +20,6 @@ import {resourceCardColumnComponent} from './resourcecardcolumn_component';
 import {resourceCardColumnsComponent} from './resourcecardcolumns_component';
 import {resourceCardDeleteMenuItemComponent} from './resourcecarddeletemenuitem_component';
 import {resourceCardEditMenuItemComponent} from './resourcecardeditmenuitem_component';
-import {resourceCardSuspendMenuItemComponent} from './resourcecardsuspendmenuitem_component';
 import {resourceCardFooterComponent} from './resourcecardfooter_component';
 import {resourceCardHeaderColumnComponent} from './resourcecardheadercolumn_component';
 import {resourceCardHeaderColumnsComponent} from './resourcecardheadercolumns_component';
@@ -31,6 +30,7 @@ import {resourceCardListHeaderComponent} from './resourcecardlistheader_componen
 import {resourceCardListPaginationComponent} from './resourcecardlistpagination_component';
 import {resourceCardMenuComponent} from './resourcecardmenu_component';
 import {resourceCardTriggerMenuItemComponent} from './resourcecardtriggermenuitem_component';
+import {resourceCardSuspendMenuItemComponent} from './resourcecardsuspendmenuitem_component';
 
 /**
  * Module containing common components for resource cards. A resource card should be used
