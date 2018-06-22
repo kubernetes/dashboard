@@ -196,6 +196,28 @@ func TestGetInitContainerNames(t *testing.T) {
 	}
 }
 
+func TestGetNonduplicateInitContainerNames(t *testing.T) {
+  expected :=[]string{"initContainer1", "initContainer2", "initContainer3"}
+  pods := []api.Pod{api.Pod{}, api.Pod{}}
+
+  pods[0] = api.Pod{
+      Spec: api.PodSpec{
+        InitContainers: []api.Container{{Name: "initContainer1"}, {Name: "initContainer2"}},
+      },
+    }
+
+   pods[1] = api.Pod{
+      Spec: api.PodSpec{
+        InitContainers: []api.Container{{Name: "initContainer2"}, {Name: "initContainer3"}},
+      },
+    }
+  actual := GetNonduplicateInitContainerNames(pods)
+    if !reflect.DeepEqual(actual, expected) {
+      t.Errorf("GetNonduplicateInitContainerNames() == %+v, expected %+v",
+        actual, expected)
+    }
+}
+
 func TestFilterPodsForJob(t *testing.T) {
 	cases := []struct {
 		job      batch.Job
