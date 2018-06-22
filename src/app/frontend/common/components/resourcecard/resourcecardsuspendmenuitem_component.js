@@ -88,16 +88,12 @@ export class ResourceCardSuspendMenuItemController {
         });
   }
 
-  /**
-   * @param {!backendApi.ReplicaCounts} updatedSpec
-   * @private
-   */
-  successdisable_(updatedSpec) {
+  successdisable_() {
     this.log_.info(`Successfully updated cronjob suspension to true`);
     this.state_.reload();
   }
 
-  successenable_(updatedSpec) {
+  successenable_() {
     this.log_.info(`Successfully updated cronjob suspension to false`);
     this.state_.reload();
   }
