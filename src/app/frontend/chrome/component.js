@@ -33,16 +33,14 @@ export class ChromeController {
    */
   constructor($state, $timeout, $transitions, $resource, $sce) {
     /**
-     * By default this is true to show loading spinner for the first page.
      * @export {boolean}
      */
-    this.showLoadingSpinner = true;
+    this.showLoadingSpinner = false;
 
     /**
-     * By default this is true to show loading for the first page.
      * @export {boolean}
      */
-    this.loading = true;
+    this.loading = false;
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;
