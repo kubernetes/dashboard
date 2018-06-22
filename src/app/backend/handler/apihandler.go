@@ -61,6 +61,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/storageclass"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/workload"
 	"github.com/kubernetes/dashboard/src/app/backend/scaling"
+  "github.com/kubernetes/dashboard/src/app/backend/suspend"
 	"github.com/kubernetes/dashboard/src/app/backend/search"
 	"github.com/kubernetes/dashboard/src/app/backend/settings"
 	"github.com/kubernetes/dashboard/src/app/backend/systembanner"
@@ -298,6 +299,11 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 		apiV1Ws.GET("/scale/{kind}/{namespace}/{name}").
 			To(apiHandler.handleGetReplicaCount).
 			Writes(scaling.ReplicaCounts{}))
+
+  apiV1Ws.Route(
+    apiV1Ws.PUT("/suspend/{namespace}/{name}/").
+      To(apiHandler.handleSuspendResource).
+      Writes(suspend.SuspendStatus{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/daemonset").
@@ -971,6 +977,25 @@ func (apiHandler *APIHandler) handleScaleResource(request *restful.Request, resp
 		return
 	}
 	response.WriteHeaderAndEntity(http.StatusOK, replicaCountSpec)
+}
+
+func (apiHandler *APIHandler) handleSuspendResource(request *restful.Request, response *restful.Response) {
+  k8sClient, err := apiHandler.cManager.Client(request)
+  if err!=nil {
+    kdErrors.HandleInternalError(response, err)
+    return
+  }
+
+  namespace := request.PathParameter("namespace")
+  //kind := request.PathParameter("kind")
+  name := request.PathParameter("name")
+  suspended := request.QueryParameter("suspend")
+  cronJobSpec, err := suspend.SuspendCronJob(k8sClient, namespace, name, suspended)
+  if err != nil {
+    kdErrors.HandleInternalError(response, err)
+    return
+  }
+  response.WriteHeaderAndEntity(http.StatusOK, cronJobSpec)
 }
 
 func (apiHandler *APIHandler) handleGetReplicaCount(request *restful.Request, response *restful.Response) {

@@ -80,6 +80,13 @@ limitations under the License.
         </kd-resource-card-trigger-menu-item>
         <kd-resource-card-delete-menu-item resource-kind-name="[[Cron Job|]]">
         </kd-resource-card-delete-menu-item>
+        <kd-resource-card-suspend-menu-item
+          resource-kind-name="[[Cron Job|]]"
+          resource-name="$ctrl.cronJob.objectMeta.name"
+          namespace="$ctrl.cronJob.objectMeta.namespace"
+          resource="$ctrl.cronJob"
+          cron="$ctrl.cronJob">
+        </kd-resource-card-suspend-menu-item>
         <kd-resource-card-edit-menu-item resource-kind-name="[[Cron Job|]]">
         </kd-resource-card-edit-menu-item>
       </kd-resource-card-menu>
