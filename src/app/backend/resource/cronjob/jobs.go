@@ -22,7 +22,6 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/job"
 	batch "k8s.io/api/batch/v1"
-	"k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/types"
 	client "k8s.io/client-go/kubernetes"
@@ -72,23 +71,76 @@ func GetCronJobJobs(client client.Interface, metricClient metricapi.MetricClient
 		return emptyJobList, criticalError
 	}
 
-	jobs.Items = filterJobsByOwnerReferences(cronJob.Status.Active, jobs.Items)
+	jobs.Items = filterJobsByOwnerUID(cronJob.UID, jobs.Items)
+	jobs.Items = filterJobsByState(true, jobs.Items)
 
 	return job.ToJobList(jobs.Items, pods.Items, events.Items, nonCriticalErrors, dsQuery, metricClient), nil
 }
 
-func filterJobsByOwnerReferences(refs []v1.ObjectReference, jobs []batch.Job) (matchingJobs []batch.Job) {
-	m := make(map[types.UID]batch.Job, 0)
-	for _, j := range jobs {
-		m[j.UID] = j // Map job to their UIDs to enable quick access.
+// GetCronJobJobs returns list of jobs owned by cron job.
+func GetCronJobCompletedJobs(client client.Interface, metricClient metricapi.MetricClient,
+	dsQuery *dataselect.DataSelectQuery, namespace, name string) (*job.JobList, error) {
+	var err error
+
+	cronJob, err := client.BatchV1beta1().CronJobs(namespace).Get(name, metaV1.GetOptions{})
+	if err != nil {
+		return emptyJobList, err
 	}
 
-	for _, ref := range refs {
-		matchedJob, hasMatch := m[ref.UID]
-		if hasMatch {
-			matchingJobs = append(matchingJobs, matchedJob)
+	channels := &common.ResourceChannels{
+		JobList:   common.GetJobListChannel(client, common.NewSameNamespaceQuery(namespace), 1),
+		PodList:   common.GetPodListChannel(client, common.NewSameNamespaceQuery(namespace), 1),
+		EventList: common.GetEventListChannel(client, common.NewSameNamespaceQuery(namespace), 1),
+	}
+
+	jobs := <-channels.JobList.List
+	err = <-channels.JobList.Error
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return emptyJobList, nil
+	}
+
+	pods := <-channels.PodList.List
+	err = <-channels.PodList.Error
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return emptyJobList, criticalError
+	}
+
+	events := <-channels.EventList.List
+	err = <-channels.EventList.Error
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return emptyJobList, criticalError
+	}
+
+	jobs.Items = filterJobsByOwnerUID(cronJob.UID, jobs.Items)
+	jobs.Items = filterJobsByState(false, jobs.Items)
+
+	return job.ToJobList(jobs.Items, pods.Items, events.Items, nonCriticalErrors, dsQuery, metricClient), nil
+}
+
+func filterJobsByOwnerUID(UID types.UID, jobs []batch.Job) (matchingJobs []batch.Job) {
+	for _, j := range jobs {
+		for _, i := range j.OwnerReferences {
+			if i.UID == UID {
+				matchingJobs = append(matchingJobs, j)
+				break
+			}
 		}
 	}
+	return
+}
 
+func filterJobsByState(active bool, jobs []batch.Job) (matchingJobs []batch.Job) {
+	for _, j := range jobs {
+		if active && j.Status.Active > 0 {
+			matchingJobs = append(matchingJobs, j)
+		} else if !active && j.Status.Active == 0 {
+			matchingJobs = append(matchingJobs, j)
+		} else {
+			//sup
+		}
+	}
 	return
 }
