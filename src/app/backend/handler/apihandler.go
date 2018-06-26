@@ -2122,7 +2122,6 @@ func (apiHandler *APIHandler) handleTriggerCronJob(request *restful.Request, res
   response.WriteHeader(http.StatusOK)
 }
 
-
 func (apiHandler *APIHandler) handleGetStorageClassList(request *restful.Request, response *restful.Response) {
 	k8sClient, err := apiHandler.cManager.Client(request)
 	if err != nil {

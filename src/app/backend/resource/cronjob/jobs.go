@@ -183,3 +183,41 @@ func filterJobsByState(active bool, jobs []batch.Job) (matchingJobs []batch.Job)
 	}
 	return
 }
+
+// TriggerCronJob manually triggers a cron job and creates a new job.
+func TriggerCronJob(client client.Interface,
+  namespace, name string) error {
+
+  cronJob, err := client.BatchV1beta1().CronJobs(namespace).Get(name, metaV1.GetOptions{})
+
+  if err != nil {
+    return err
+  }
+
+  annotations := make(map[string]string)
+  annotations["cronjob.kubernetes.io/instantiate"] = "manual"
+
+  labels := make(map[string]string)
+  for k, v := range cronJob.Spec.JobTemplate.Labels {
+    labels[k] = v
+  }
+
+  jobToCreate := &batch.Job{
+    ObjectMeta: metaV1.ObjectMeta{
+      // job name cannot exceed DNS1053LabelMaxLength (52 characters)
+      Name:        cronJob.Name + "-manual-" + rand.String(3),
+      Namespace:   namespace,
+      Annotations: annotations,
+      Labels:      labels,
+    },
+    Spec: cronJob.Spec.JobTemplate.Spec,
+  }
+
+  _, err = client.BatchV1().Jobs(namespace).Create(jobToCreate)
+
+  if err != nil {
+    return err
+  }
+
+  return nil
+}

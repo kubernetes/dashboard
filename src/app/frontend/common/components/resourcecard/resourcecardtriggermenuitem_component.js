@@ -48,23 +48,23 @@ export class ResourceCardTriggerMenuItemController {
    */
   trigger() {
     return this.getResource()
-      .update(this.onTriggerSuccess_.bind(this), this.onTriggerError_.bind(this))
-      .$promise;
+        .update(this.onTriggerSuccess_.bind(this), this.onTriggerError_.bind(this))
+        .$promise;
   }
 
   getResource() {
     return this.resource_(
-      `api/v1/cronjob/${this.cron.objectMeta.namespace}/${this.cron.objectMeta.name}/trigger`,
-      {}, {
-        update: {
-          // redefine update action defaults
-          method: 'PUT',
-          transformRequest: function(headers) {
-            headers = angular.extend({}, headers, {'Content-Type': 'application/json'});
-            return angular.toJson(headers);
+        `api/v1/cronjob/${this.cron.objectMeta.namespace}/${this.cron.objectMeta.name}/trigger`, {},
+        {
+          update: {
+            // redefine update action defaults
+            method: 'PUT',
+            transformRequest: function(headers) {
+              headers = angular.extend({}, headers, {'Content-Type': 'application/json'});
+              return angular.toJson(headers);
+            },
           },
-        },
-      });
+        });
   }
 
   onTriggerSuccess_() {
