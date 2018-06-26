@@ -117,6 +117,7 @@
   <translation id="8077948432236649947" key="MSG_COMMON_COMPONENTS_RESOURCECARD_RESOURCECARDDELETEMENUITEM_0" desc="Action &quot;Delete&quot; (verb), which appears as a menu item on the cards for kubernetes resources.">Delete</translation>
   <translation id="1786717544428328487" key="MSG_COMMON_COMPONENTS_RESOURCECARD_RESOURCECARDEDITMENUITEM_0" desc="Label for YAML edit menu item.">View/edit YAML</translation>
   <translation id="6165720699884834015" key="MSG_COMMON_COMPONENTS_RESOURCECARD_RESOURCECARDMENU_0" desc="Tooltip &quot;Actions&quot;, which appears when you hover over the menu icon on any resource card.">Actions</translation>
+  <translation id="8964257036125638862" key="MSG_COMMON_COMPONENTS_RESOURCECARD_RESOURCECARDTRIGGERMENUITEM_0" desc="Action &quot;Trigger&quot; (verb), which appears as a menu item on the cards for cron jobs.">Trigger</translation>
   <translation id="5816664742336097257" key="MSG_COMMON_COMPONENTS_RESOURCEDETAIL_INFOCARD_0" desc="Label \'Name\' for a resource.">Name</translation>
   <translation id="324296574289248020" key="MSG_COMMON_COMPONENTS_RESOURCEDETAIL_INFOCARD_1" desc="Label \'Namespace\' for a resource.">Namespace</translation>
   <translation id="7353491667260402390" key="MSG_COMMON_COMPONENTS_RESOURCEDETAIL_INFOCARD_2" desc="Label \'Labels\' for a resource.">Labels</translation>

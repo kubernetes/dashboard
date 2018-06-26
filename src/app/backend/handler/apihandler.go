@@ -379,7 +379,7 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			To(apiHandler.handleGetCronJobEvents).
 			Writes(common.EventList{}))
   apiV1Ws.Route(
-    apiV1Ws.GET("/cronjob/{namespace}/{name}/trigger").
+    apiV1Ws.PUT("/cronjob/{namespace}/{name}/trigger").
       To(apiHandler.handleTriggerCronJob))
 
 	apiV1Ws.Route(

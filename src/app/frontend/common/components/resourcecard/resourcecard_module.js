@@ -29,6 +29,7 @@ import {resourceCardListFooterComponent} from './resourcecardlistfooter_componen
 import {resourceCardListHeaderComponent} from './resourcecardlistheader_component';
 import {resourceCardListPaginationComponent} from './resourcecardlistpagination_component';
 import {resourceCardMenuComponent} from './resourcecardmenu_component';
+import {resourceCardTriggerMenuItemComponent} from './resourcecardtriggermenuitem_component';
 
 /**
  * Module containing common components for resource cards. A resource card should be used
@@ -53,6 +54,7 @@ export default angular
     .component('kdResourceCardMenu', resourceCardMenuComponent)
     .component('kdResourceCardDeleteMenuItem', resourceCardDeleteMenuItemComponent)
     .component('kdResourceCardEditMenuItem', resourceCardEditMenuItemComponent)
+    .component('kdResourceCardTriggerMenuItem', resourceCardTriggerMenuItemComponent)
     .component('kdResourceCardColumn', resourceCardColumnComponent)
     .component('kdResourceCardColumns', resourceCardColumnsComponent)
     .component('kdResourceCardHeaderColumn', resourceCardHeaderColumnComponent)
