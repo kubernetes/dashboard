@@ -21,6 +21,10 @@
   white-space: nowrap;
 }
 
+.kd-info-card-entry-title {
+  flex: 0 0 160px;
+}
+
 .kd-info-card-entry-content {
   font-weight: $regular-font-weight;
   margin-left: $baseline-grid / 2;
