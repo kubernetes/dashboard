@@ -48,13 +48,13 @@ export class ResourceCardSuspendMenuItemController {
    */
   disable() {
     return this.disablePromised()
-        .update(this.successdisable_.bind(this), this.error_.bind(this))
+        .update(this.successDisable_.bind(this), this.error_.bind(this))
         .$promise;
   }
 
   enable() {
     return this.enablePromised()
-        .update(this.successenable_.bind(this), this.error_.bind(this))
+        .update(this.successEnable_.bind(this), this.error_.bind(this))
         .$promise;
   }
 
@@ -88,12 +88,12 @@ export class ResourceCardSuspendMenuItemController {
         });
   }
 
-  successdisable_() {
+  successDisable_() {
     this.log_.info(`Successfully updated cronjob suspension to true`);
     this.state_.reload();
   }
 
-  successenable_() {
+  successEnable_() {
     this.log_.info(`Successfully updated cronjob suspension to false`);
     this.state_.reload();
   }

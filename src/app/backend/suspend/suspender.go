@@ -15,35 +15,35 @@
 package suspend
 
 import (
-  client "k8s.io/client-go/kubernetes"
-  meta "k8s.io/apimachinery/pkg/apis/meta/v1"
-  "errors"
+	"errors"
+	meta "k8s.io/apimachinery/pkg/apis/meta/v1"
+	client "k8s.io/client-go/kubernetes"
 )
 
 type SuspendStatus struct {
-  Suspend bool `json:"suspend"`
+	Suspend bool `json:"suspend"`
 }
 
-func SuspendCronJob (client client.Interface, namespace, name, suspend string) (cj *SuspendStatus, err error) {
-  cj = new(SuspendStatus)
-  cron, err := client.BatchV1beta1().CronJobs(namespace).Get(name, meta.GetOptions{})
-  if err != nil {
-    return nil, err
-  }
+func SuspendCronJob(client client.Interface, namespace, name, suspend string) (cj *SuspendStatus, err error) {
+	cj = new(SuspendStatus)
+	cron, err := client.BatchV1beta1().CronJobs(namespace).Get(name, meta.GetOptions{})
+	if err != nil {
+		return nil, err
+	}
 
-  if suspend == "true" {
-  *cron.Spec.Suspend = true
-  } else if suspend == "false"{
-  *cron.Spec.Suspend = false
-  } else{
-  return nil, errors.New("Suspend value must be true or false")
-  }
-  cj.Suspend = *cron.Spec.Suspend
+	if suspend == "true" {
+		*cron.Spec.Suspend = true
+	} else if suspend == "false" {
+		*cron.Spec.Suspend = false
+	} else {
+		return nil, errors.New("Suspend value must be true or false")
+	}
+	cj.Suspend = *cron.Spec.Suspend
 
-  cron, err = client.BatchV1beta1().CronJobs(namespace).Update(cron)
-  if err != nil {
-    return nil, err
-  }
+	cron, err = client.BatchV1beta1().CronJobs(namespace).Update(cron)
+	if err != nil {
+		return nil, err
+	}
 
-  return cj, nil
+	return cj, nil
 }
