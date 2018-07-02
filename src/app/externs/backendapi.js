@@ -653,29 +653,11 @@ backendApi.Application;
 
 /**
  * @typedef {{
- *   applications: !Array<!backendApi.Application>,
- *   listMeta: !backendApi.ListMeta,
- *   status: !backendApi.Status,
- *   errors: !Array<!backendApi.Error>
- * }}
- */
-backendApi.ApplicationList;
-
-/**
- * @typedef {{
  *   objectMeta: !backendApi.ObjectMeta,
  *   typeMeta: !backendApi.TypeMeta,
  *   selector: !Array<backendApi.Label>,
  *   componentGroupKinds: ?Array<Object<string, string>>,
- *   description: ?string,
- *   info: ?Array<Object<string, string>>,
- *   keywords: ?Array<string>,
- *   links: ?Array<Object<string, string>>,
- *   maintainers: ?Array<Object<string, string>>,
- *   notes: ?string,
- *   owners: ?Array<Object<string, string>>,
- *   type: ?string,
- *   version: ?string,
+ *   descriptor: ?Object,
  *   events: !backendApi.EventList,
  *   errors: !Array<!backendApi.Error>
  * }}

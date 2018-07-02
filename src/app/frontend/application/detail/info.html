@@ -22,38 +22,43 @@ limitations under the License.
     <kd-info-card-entry title="[[Selector|Label 'Selector' for the application's labels list on the application details page.]]">
       <kd-labels labels="::$ctrl.application.selector"></kd-labels>
     </kd-info-card-entry>
-    <kd-info-card-entry title="[[Type|Type 'Type' for the application's Type on the application details page.]]">
-      {{ ::$ctrl.application.type }}
-    </kd-info-card-entry>
   </kd-info-card-section>
 </kd-info-card>
 
 <kd-info-card>
-  <kd-info-card-header>[[Spec|Spec 'Spec' for the application's on the application details page.]]</kd-info-card-header>
+  <kd-info-card-header>[[Descriptor|Descriptor 'Descriptor' for the application's on the application details page.]]</kd-info-card-header>
   <kd-info-card-section>
-    <kd-info-card-entry ng-if="::$ctrl.application.keywords"
+    <kd-info-card-entry ng-if="::$ctrl.application.descriptor.type"
+                        title="[[Type|Type 'Type' for the application's Type on the application details page.]]">
+      {{ ::$ctrl.application.descriptor.type || '-' }}
+      </kd-info-card-entry>
+    <kd-info-card-entry ng-if="::$ctrl.application.descriptor.version"
+                        title="[[Version|Version 'Version' for the application's Version on the application details page.]]">
+      {{ ::$ctrl.application.descriptor.version || '-' }}
+    </kd-info-card-entry>
+    <kd-info-card-entry ng-if="::$ctrl.application.descriptor.keywords"
                         title="[[Keywords|Keywords 'Keywords' for the application's keywords list on the application details page.]]">
-      {{ ::$ctrl.application.keywords.join(', ') }}
+      {{ ::$ctrl.application.descriptor.keywords.join(', ') }}
     </kd-info-card-entry>
-    <kd-info-card-entry ng-if="::$ctrl.application.owners.length"
+    <kd-info-card-entry ng-if="::$ctrl.application.descriptor.owners.length"
                         title="[[Owners|Owners 'Owners' for the application's owners on the application details page.]]">
-      <div ng-repeat="owner in ::$ctrl.application.owners">{{ owner }}</div>
+      <div ng-repeat="owner in ::$ctrl.application.descriptor.owners">{{ owner }}</div>
     </kd-info-card-entry>
-    <kd-info-card-entry ng-if="::$ctrl.application.maintainers.length"
+    <kd-info-card-entry ng-if="::$ctrl.application.descriptor.maintainers.length"
                         title="[[Maintainers|Maintainers 'Maintainers' for the application's maintainers on the application details page.]]">
-      <div ng-repeat="maintainer in ::$ctrl.application.maintainers">{{ ::maintainer.name }} {{ ::maintainer.email }}</div>
+      <div ng-repeat="maintainer in ::$ctrl.application.descriptor.maintainers">{{ ::maintainer.name }} {{ ::maintainer.email }}</div>
     </kd-info-card-entry>
-    <kd-info-card-entry ng-if="::$ctrl.application.notes"
+    <kd-info-card-entry ng-if="::$ctrl.application.descriptor.notes"
                         title="[[Notes|Notes 'Notes' for the application's notes on the application details page.]]">
-      <pre>{{ ::$ctrl.application.notes }}</pre>
+      <pre class="kd-pre-block">{{ ::$ctrl.application.descriptor.notes }}</pre>
     </kd-info-card-entry>
-    <kd-info-card-entry ng-if="::$ctrl.application.description"
+    <kd-info-card-entry ng-if="::$ctrl.application.descriptor.description"
                         title="[[Description|Description 'Description' for the application's description on the application details page.]]">
-      <pre>{{ ::$ctrl.application.description }}</pre>
+      <pre class="kd-pre-block">{{ ::$ctrl.application.descriptor.description }}</pre>
     </kd-info-card-entry>
-    <kd-info-card-entry ng-if="::$ctrl.application.links"
+    <kd-info-card-entry ng-if="::$ctrl.application.descriptor.links"
                         title="[[Links|Links 'Links' for the application's links on the application details page.]]">
-      <div ng-repeat="link in ::$ctrl.application.links">
+      <div ng-repeat="link in ::$ctrl.application.descriptor.links">
         <a target="_blank"
            href="{{ ::link.url }}">
           {{ ::link.description }}

@@ -26,16 +26,9 @@ type ApplicationDetail struct {
 	Selector map[string]string `json:"selector"`
 
 	// Specs of the application.
-	Keywords            []string                    `json:"keywords"`
-	Notes               string                      `json:"notes"`
-	Owners              []string                    `json:"owners"`
-	Maintainers         []applicationApi.Maintainer `json:"maintainers"`
-	Type                string                      `json:"type"`
-	Version             string                      `json:"version"`
-	Description         string                      `json:"description"`
-	Links               []applicationApi.Link       `json:"links"`
-	Info                []applicationApi.InfoItem   `json:"info"`
-	ComponentGroupKinds []metav1.GroupKind          `json:"componentGroupKinds"`
+	Descriptor          applicationApi.Descriptor `json:"descriptor"`
+	Info                []applicationApi.InfoItem `json:"info"`
+	ComponentGroupKinds []metav1.GroupKind        `json:"componentGroupKinds"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
@@ -57,15 +50,8 @@ func GetApplicationDetail(client applicationAlphaClient.Interface, namespace str
 	return &ApplicationDetail{
 		ObjectMeta:          api.NewObjectMeta(application.ObjectMeta),
 		TypeMeta:            api.NewTypeMeta(api.ResourceKindApplication),
+		Descriptor:          application.Spec.Descriptor,
 		Selector:            application.Spec.Selector.MatchLabels,
-		Maintainers:         application.Spec.Descriptor.Maintainers,
-		Keywords:            application.Spec.Descriptor.Keywords,
-		Notes:               application.Spec.Descriptor.Notes,
-		Owners:              application.Spec.Descriptor.Owners,
-		Type:                application.Spec.Descriptor.Type,
-		Version:             application.Spec.Descriptor.Version,
-		Description:         application.Spec.Descriptor.Description,
-		Links:               application.Spec.Descriptor.Links,
 		Info:                application.Spec.Info,
 		ComponentGroupKinds: application.Spec.ComponentGroupKinds,
 		Errors:              nonCriticalErrors,
