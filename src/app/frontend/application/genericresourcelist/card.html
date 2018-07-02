@@ -19,8 +19,10 @@ limitations under the License.
   <kd-resource-card-columns>
     <kd-resource-card-column>
       <div>
-        <kd-middle-ellipsis display-string="{{$ctrl.resource.objectMeta.name}}">
-        </kd-middle-ellipsis>
+        <kd-resource-link
+          name="{{$ctrl.resource.objectMeta.name}}"
+          namespace="{{$ctrl.resource.objectMeta.namespace}}"
+          kind="{{$ctrl.resource.typeMeta.kind}}"></kd-resource-link>
       </div>
     </kd-resource-card-column>
     <kd-resource-card-column ng-if="$ctrl.areMultipleNamespacesSelected()">

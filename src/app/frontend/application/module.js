@@ -17,12 +17,13 @@ import componentsModule from '../common/components/module';
 import filtersModule from '../common/filters/module';
 import namespaceModule from '../common/namespace/module';
 
-import {applicationCardComponent} from './list/card_component';
-import {applicationCardListComponent} from './list/cardlist_component';
+import {applicationInfoComponent} from './detail/info_component';
 import {applicationGenericResourceCardComponent} from './genericresourcelist/card_component';
 import {ApplicationGenericResourceCardListComponent} from './genericresourcelist/cardlist_component';
+import {ResourceLinkComponent} from './genericresourcelist/resourcelink_component';
+import {applicationCardComponent} from './list/card_component';
+import {applicationCardListComponent} from './list/cardlist_component';
 import {applicationListResource} from './list/stateconfig';
-import {applicationInfoComponent} from './detail/info_component';
 import stateConfig from './stateconfig';
 
 /**
@@ -46,4 +47,5 @@ export default angular
     .component('kdApplicationInfo', applicationInfoComponent)
     .component('kdApplicationGenericResourceCard', applicationGenericResourceCardComponent)
     .component('kdApplicationGenericResourceCardList', ApplicationGenericResourceCardListComponent)
+    .component('kdResourceLink', ResourceLinkComponent)
     .factory('kdApplicationListResource', applicationListResource);
