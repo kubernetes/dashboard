@@ -775,7 +775,8 @@ backendApi.EnvVar;
 /**
  * @typedef {{
  *   configMapKeyRef: backendApi.ConfigMapKeyRef,
- *   secretKeyRef: backendApi.SecretKeyRef
+ *   secretKeyRef: backendApi.SecretKeyRef,
+ *   fieldRef: backendApi.fieldRef
  * }}
  */
 backendApi.EnvVarSource;
@@ -795,6 +796,14 @@ backendApi.ConfigMapKeyRef;
  * }}
  */
 backendApi.SecretKeyRef;
+
+/**
+ * @typedef {{
+ *   apiVersion: string,
+ *   fieldPath: string,
+ * }}
+ */
+backendApi.fieldRef;
 
 /**
  * @typedef {{
