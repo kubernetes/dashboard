@@ -17,21 +17,14 @@ limitations under the License.
 package v1alpha1
 
 import (
+	core "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-// ApplicationSpec defines the specification for an Application.
-type ApplicationSpec struct {
+// Descriptor defines the Metadata and informations about the Application.
+type Descriptor struct {
 	// Type is the type of the application (e.g. WordPress, MySQL, Cassandra).
 	Type string `json:"type,omitempty"`
-
-	// ComponentGroupKinds is a list of Kinds for Application's components (e.g. Deployments, Pods, Services, CRDs). It
-	// can be used in conjunction with the Application's Selector to list or watch the Applications components.
-	ComponentGroupKinds []metav1.GroupKind `json:"componentKinds,omitempty"`
-
-	// Selector is a label query over kinds that created by the application. It must match the component objects' labels.
-	// More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors
-	Selector *metav1.LabelSelector `json:"selector,omitempty"`
 
 	// Version is an optional version indicator for the Application.
 	Version string `json:"version,omitempty"`
@@ -50,14 +43,28 @@ type ApplicationSpec struct {
 	// Keywords is an optional list of key words associated with the application (e.g. MySQL, RDBMS, database).
 	Keywords []string `json:"keywords,omitempty"`
 
-	// Info contains human readable key,value pairs for the Application.
-	Info []InfoItem `json:"info,omitempty"`
-
 	// Links are a list of descriptive URLs intended to be used to surface additional documentation, dashboards, etc.
 	Links []Link `json:"links,omitempty"`
 
 	// Notes contain a human readable snippets intended as a quick start for the users of the Application.
 	Notes string `json:"notes,omitempty"`
+}
+
+// ApplicationSpec defines the specification for an Application.
+type ApplicationSpec struct {
+	// ComponentGroupKinds is a list of Kinds for Application's components (e.g. Deployments, Pods, Services, CRDs). It
+	// can be used in conjunction with the Application's Selector to list or watch the Applications components.
+	ComponentGroupKinds []metav1.GroupKind `json:"componentKinds,omitempty"`
+
+	// Descriptor regroups information and metadata about an application.
+	Descriptor Descriptor `json:"descriptor,omitempty"`
+
+	// Selector is a label query over kinds that created by the application. It must match the component objects' labels.
+	// More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors
+	Selector *metav1.LabelSelector `json:"selector,omitempty"`
+
+	// Info contains human readable key,value pairs for the Application.
+	Info []InfoItem `json:"info,omitempty"`
 
 	// AssemblyPhase represents the current phase of the application's assembly.
 	// An empty value is equivalent to "Succeeded".
@@ -98,8 +105,84 @@ type InfoItem struct {
 	// Name is a human readable title for this piece of information.
 	Name string `json:"name,omitempty"`
 
+	// Type of the value for this InfoItem.
+	Type InfoItemType `json:"type,omitempty"`
+
 	// Value is human readable content.
 	Value string `json:"value,omitempty"`
+
+	// ValueFrom defines a reference to derive the value from another source.
+	ValueFrom *InfoItemSource `json:"valueFrom,omitempty"`
+}
+
+type InfoItemType string
+
+const (
+	ValueInfoItemType     InfoItemType = "Value"
+	ReferenceInfoItemType InfoItemType = "Reference"
+)
+
+// InfoItemSource represents a source for the value of an InfoItem.
+type InfoItemSource struct {
+	// Type of source.
+	Type InfoItemSourceType `json:"type,omitempty"`
+
+	// Selects a key of a Secret.
+	SecretKeyRef *SecretKeySelector `json:"secretKeyRef,omitempty"`
+
+	// Selects a key of a ConfigMap.
+	ConfigMapKeyRef *ConfigMapKeySelector `json:"configMapKeyRef,omitempty"`
+
+	// Select a Service.
+	ServiceRef *ServiceSelector `json:"serviceRef,omitempty"`
+
+	// Select an Ingress.
+	IngressRef *IngressSelector `json:"ingressRef,omitempty"`
+}
+
+type InfoItemSourceType string
+
+const (
+	SecretKeyRefInfoItemSourceType    InfoItemSourceType = "SecretKeyRef"
+	ConfigMapKeyRefInfoItemSourceType InfoItemSourceType = "ConfigMapKeyRef"
+	ServiceRefInfoItemSourceType      InfoItemSourceType = "ServiceRef"
+	IngressRefInfoItemSourceType      InfoItemSourceType = "IngressRef"
+)
+
+// ConfigMapKeySelector selects a key from a ConfigMap.
+type ConfigMapKeySelector struct {
+	// The ConfigMap to select from.
+	core.ObjectReference `json:",inline"`
+	// The key to select.
+	Key string `json:"key,omitempty"`
+}
+
+// SecretKeySelector selects a key from a Secret.
+type SecretKeySelector struct {
+	// The Secret to select from.
+	core.ObjectReference `json:",inline"`
+	// The key to select.
+	Key string `json:"key,omitempty"`
+}
+
+// ServiceSelector selects a Service.
+type ServiceSelector struct {
+	// The Service to select from.
+	core.ObjectReference `json:",inline"`
+	// The optional port to select.
+	Port *int32 `json:"port,omitempty"`
+	// The optional HTTP path.
+	Path string `json:"path,omitempty"`
+}
+
+// IngressSelector selects an Ingress.
+type IngressSelector struct {
+	// The Ingress to select from.
+	core.ObjectReference `json:",inline"`
+	// The optional host to select.
+	Host string `json:"host,omitempty"`
+	// The optional HTTP path.
+	Path string `json:"path,omitempty"`
 }
 
 type ApplicationAssemblyPhase string
@@ -109,7 +192,7 @@ const (
 	// have been deployed yet.
 	Pending ApplicationAssemblyPhase = "Pending"
 	// Used to indicate that all of application's components
-	// have alraedy been deployed.
+	// have already been deployed.
 	Succeeded = "Succeeded"
 	// Used to indicate that deployment of application's components
 	// failed. Some components might be present, but deployment of

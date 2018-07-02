@@ -162,7 +162,7 @@
     "pkg/client/clientset/versioned/scheme",
     "pkg/client/clientset/versioned/typed/app/v1alpha1"
   ]
-  revision = "6bbc7bdb37e3b2e5429572f1bb8b070a1aa018c6"
+  revision = "857d92713506b22a8be73dee01f5ba18a11e636c"
 
 [[projects]]
   name = "github.com/mailru/easyjson"
