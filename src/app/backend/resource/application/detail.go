@@ -26,17 +26,16 @@ type ApplicationDetail struct {
 	Selector map[string]string `json:"selector"`
 
 	// Specs of the application.
-	Keywords            []string                                `json:"keywords"`
-	Notes               string                                  `json:"notes"`
-	Owners              []string                                `json:"owners"`
-	Maintainers         []applicationApi.Maintainer             `json:"maintainers"`
-	Type                string                                  `json:"type"`
-	Version             string                                  `json:"version"`
-	AssemblyPhase       applicationApi.ApplicationAssemblyPhase `json:"assemblyPhase"`
-	Description         string                                  `json:"description"`
-	Links               []applicationApi.Link                   `json:"links"`
-	Info                []applicationApi.InfoItem               `json:"info"`
-	ComponentGroupKinds []metav1.GroupKind                      `json:"componentGroupKinds"`
+	Keywords            []string                    `json:"keywords"`
+	Notes               string                      `json:"notes"`
+	Owners              []string                    `json:"owners"`
+	Maintainers         []applicationApi.Maintainer `json:"maintainers"`
+	Type                string                      `json:"type"`
+	Version             string                      `json:"version"`
+	Description         string                      `json:"description"`
+	Links               []applicationApi.Link       `json:"links"`
+	Info                []applicationApi.InfoItem   `json:"info"`
+	ComponentGroupKinds []metav1.GroupKind          `json:"componentGroupKinds"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
@@ -68,7 +67,6 @@ func GetApplicationDetail(client applicationAlphaClient.Interface, namespace str
 		Description:         application.Spec.Descriptor.Description,
 		Links:               application.Spec.Descriptor.Links,
 		Info:                application.Spec.Info,
-		AssemblyPhase:       application.Spec.AssemblyPhase,
 		ComponentGroupKinds: application.Spec.ComponentGroupKinds,
 		Errors:              nonCriticalErrors,
 	}, nil

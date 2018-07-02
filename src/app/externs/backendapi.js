@@ -666,7 +666,6 @@ backendApi.ApplicationList;
  *   objectMeta: !backendApi.ObjectMeta,
  *   typeMeta: !backendApi.TypeMeta,
  *   selector: !Array<backendApi.Label>,
- *   assemblyPhase: ?string,
  *   componentGroupKinds: ?Array<Object<string, string>>,
  *   description: ?string,
  *   info: ?Array<Object<string, string>>,

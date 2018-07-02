@@ -25,9 +25,6 @@ limitations under the License.
     <kd-info-card-entry title="[[Type|Type 'Type' for the application's Type on the application details page.]]">
       {{ ::$ctrl.application.type }}
     </kd-info-card-entry>
-    <kd-info-card-entry title="[[Assembly Phase|Assembly Phase 'Assembly Phase' for the application's Assembly Phase on the application details page.]]">
-      {{ ::$ctrl.application.assemblyPhase || '-' }}
-    </kd-info-card-entry>
   </kd-info-card-section>
 </kd-info-card>
 
@@ -48,11 +45,11 @@ limitations under the License.
     </kd-info-card-entry>
     <kd-info-card-entry ng-if="::$ctrl.application.notes"
                         title="[[Notes|Notes 'Notes' for the application's notes on the application details page.]]">
-      {{ ::$ctrl.application.notes }}
+      <pre>{{ ::$ctrl.application.notes }}</pre>
     </kd-info-card-entry>
     <kd-info-card-entry ng-if="::$ctrl.application.description"
                         title="[[Description|Description 'Description' for the application's description on the application details page.]]">
-      {{ ::$ctrl.application.description }}
+      <pre>{{ ::$ctrl.application.description }}</pre>
     </kd-info-card-entry>
     <kd-info-card-entry ng-if="::$ctrl.application.links"
                         title="[[Links|Links 'Links' for the application's links on the application details page.]]">
