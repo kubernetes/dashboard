@@ -66,7 +66,8 @@ export function applicationListResource($resource) {
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveApplicationList(kdApplicationListResource, $stateParams, kdDataSelectService) {
+export function resolveApplicationList(
+    kdApplicationListResource, $stateParams, kdDataSelectService) {
   let query = kdDataSelectService.getDefaultResourceQuery($stateParams.namespace);
   return kdApplicationListResource.get(query).$promise;
 }
