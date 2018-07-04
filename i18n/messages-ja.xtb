@@ -17,10 +17,40 @@
     <ph name="RESOURCE_NAME"> を編集</ph>
   </translation>
   <translation id="1024358167652076581" key="MSG_ALL_NAMESPACES" desc="Text for dropdown item that indicates that no namespace was selected">すべてのネームスペース</translation>
+  <translation id="3285138823208331633" key="MSG_APPLICATION_DETAIL_ACTIONBAR_0" desc="Label \'Application\' which will appear in the application dialog opened from the application details page.">Application</translation>
+  <translation id="7894840453126179086" key="MSG_APPLICATION_DETAIL_DETAIL_0" desc="Components label shown on application detail page">Components</translation>
+  <translation id="1972511262434366489" key="MSG_APPLICATION_DETAIL_INFO_0" desc="Header in a detail view">Details</translation>
+  <translation id="3695468131138001026" key="MSG_APPLICATION_DETAIL_INFO_1" desc="Label \'Selector\' for the application\'s labels list on the application details page.">Selector</translation>
+  <translation id="8060550942647773638" key="MSG_APPLICATION_DETAIL_INFO_10" desc="Links \'Links\' for the application\'s links on the application details page.">Links</translation>
+  <translation id="5255365525291225139" key="MSG_APPLICATION_DETAIL_INFO_11" desc="Application Info \'Spec\' for the application\'s on the application details page.">Application Info</translation>
+  <translation id="7281124102677823499" key="MSG_APPLICATION_DETAIL_INFO_2" desc="Descriptor \'Descriptor\' for the application\'s on the application details page.">Descriptor</translation>
+  <translation id="3036561311482753715" key="MSG_APPLICATION_DETAIL_INFO_3" desc="Type \'Type\' for the application\'s Type on the application details page.">Type</translation>
+  <translation id="5070764594712491097" key="MSG_APPLICATION_DETAIL_INFO_4" desc="Version \'Version\' for the application\'s Version on the application details page.">Version</translation>
+  <translation id="5345403629683954791" key="MSG_APPLICATION_DETAIL_INFO_5" desc="Keywords \'Keywords\' for the application\'s keywords list on the application details page.">Keywords</translation>
+  <translation id="8328641827800505819" key="MSG_APPLICATION_DETAIL_INFO_6" desc="Owners \'Owners\' for the application\'s owners on the application details page.">Owners</translation>
+  <translation id="5734588277589735180" key="MSG_APPLICATION_DETAIL_INFO_7" desc="Maintainers \'Maintainers\' for the application\'s maintainers on the application details page.">Maintainers</translation>
+  <translation id="7064380409840476641" key="MSG_APPLICATION_DETAIL_INFO_8" desc="Notes \'Notes\' for the application\'s notes on the application details page.">Notes</translation>
+  <translation id="4920681678402618386" key="MSG_APPLICATION_DETAIL_INFO_9" desc="Description \'Description\' for the application\'s description on the application details page.">Description</translation>
+  <translation id="2048182361599024669" key="MSG_APPLICATION_GENERICRESOURCELIST_CARDLIST_0" desc="Text for applicationGenericResource card list zerostate.">There are no related resources for this group.kind to display.</translation>
+  <translation id="6866681500639362592" key="MSG_APPLICATION_GENERICRESOURCELIST_CARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of applicationGenericResources (applicationGenericResource list view).">Name</translation>
+  <translation id="4536211187783121878" key="MSG_APPLICATION_GENERICRESOURCELIST_CARDLIST_2" desc="Label \'Namespace\' which appears as a column label in the table of applicationGenericResources (applicationGenericResource list view).">Namespace</translation>
+  <translation id="5199037183321619317" key="MSG_APPLICATION_GENERICRESOURCELIST_CARDLIST_3" desc="Label \'Labels\' which appears as a column label in the table of applicationGenericResources (applicationGenericResource list view).">Labels</translation>
+  <translation id="955081787429920709" key="MSG_APPLICATION_GENERICRESOURCELIST_CARDLIST_4" desc="Label \'Age\' which appears as a column label in the table of applicationGenericResources (applicationGenericResource list view).">Age</translation>
+  <translation id="3684492564550125235" key="MSG_APPLICATION_GENERICRESOURCELIST_CARD_0" desc="Tooltip for the age column">Created at</translation>
+  <translation id="846986874480885877" key="MSG_APPLICATION_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">Applications</translation>
+  <translation id="7180165591807495801" key="MSG_APPLICATION_LIST_CARDLIST_1" desc="Text for application card list zerostate.">There are no Application to display.</translation>
+  <translation id="854000312289208148" key="MSG_APPLICATION_LIST_CARDLIST_2" desc="Label \'Name\' which appears as a column label in the table of applications (application list view).">Name</translation>
+  <translation id="5546074038344353866" key="MSG_APPLICATION_LIST_CARDLIST_3" desc="Label \'Namespace\' which appears as a column label in the table of applications (application list view).">Namespace</translation>
+  <translation id="8719723783521448215" key="MSG_APPLICATION_LIST_CARDLIST_4" desc="Label \'Labels\' which appears as a column label in the table of applications (application list view).">Labels</translation>
+  <translation id="3058599993413033517" key="MSG_APPLICATION_LIST_CARDLIST_5" desc="Label \'Age\' which appears as a column label in the table of applications (application list view).">Age</translation>
+  <translation id="7918092867914573003" key="MSG_APPLICATION_LIST_CARD_0" desc="Tooltip for the age column">Created at</translation>
+  <translation id="6916384786619122774" key="MSG_APPLICATION_LIST_CARD_1" desc="Label \'Application\' which will appear in the application delete dialog opened from a application card on the list page.">Application</translation>
+  <translation id="4163953242171082029" key="MSG_APPLICATION_LIST_CARD_2" desc="Label \'Application\' which will appear in the application edit dialog opened from a application card on the list page.">Application</translation>
   <translation id="2436932884134192170" key="MSG_AUTH_STATUS_HEADER" desc="Login status displayed when authorization header is used.">auth header でログイン</translation>
   <translation id="2593766780781854099" key="MSG_AUTH_STATUS_SKIPPED" desc="Login status displayed when default service account is used.">デフォルトのサービスアカウント</translation>
   <translation id="7811526624157700330" key="MSG_AUTH_STATUS_TOKEN" desc="Login status displayed when token is used.">トークンでログイン</translation>
   <translation id="6614117428496734699" key="MSG_BREADCRUMBS_ABOUT_LABEL" desc="Label 'About' that appears as a breadcrumbs on the action bar.">バージョン情報</translation>
+  <translation id="6728618247735458320" key="MSG_BREADCRUMBS_APPLICATIONS_LABEL" desc="Label 'Applications' that appears as a breadcrumbs on the action bar.">Applications</translation>
   <translation id="1153397682574555638" key="MSG_BREADCRUMBS_CLUSTER_LABEL" desc="Label 'Cluster' that appears as a breadcrumbs on the action bar.">クラスター</translation>
   <translation id="5346529710805392125" key="MSG_BREADCRUMBS_CONFIG_AND_STORAGE_LABEL" desc="Label 'Config and storage' that appears as a breadcrumbs on the action bar.">コンフィグとストレージ</translation>
   <translation id="3212328899649855136" key="MSG_BREADCRUMBS_CONFIG_MAPS_LABEL" desc="Label 'Config Maps' that appears as a breadcrumbs on the action bar.">コンフィグマップ</translation>
@@ -73,6 +103,7 @@
   <translation id="8368599117962865229" key="MSG_CHROME_NAV_NAV_21" desc="About page menu entry.">バージョン情報</translation>
   <translation id="7160486052155717528" key="MSG_CHROME_NAV_NAV_22" desc="Cron Jobs menu entry.">Cron ジョブ</translation>
   <translation id="5937278785382848812" key="MSG_CHROME_NAV_NAV_23" desc="Settings page menu entry.">設定</translation>
+  <translation id="4444695242339426737" key="MSG_CHROME_NAV_NAV_24" desc="Applications menu entry.">Applications</translation>
   <translation id="4957526140740745953" key="MSG_CHROME_NAV_NAV_3" desc="Persistent Volumes menu item in the nav.">永続ボリューム</translation>
   <translation id="5886605472855359914" key="MSG_CHROME_NAV_NAV_4" desc="Config and Storage group menu entry.">コンフィグとストレージ</translation>
   <translation id="874273813471860738" key="MSG_CHROME_NAV_NAV_5" desc="Storage Classes menu entry.">ストレージクラス</translation>
@@ -126,6 +157,7 @@
   <translation id="7353491667260402390" key="MSG_COMMON_COMPONENTS_RESOURCEDETAIL_INFOCARD_2" desc="Label \'Labels\' for a resource.">ラベル</translation>
   <translation id="5872558793526944357" key="MSG_COMMON_COMPONENTS_RESOURCEDETAIL_INFOCARD_3" desc="Label \'Annotations\' for a resource.">注釈</translation>
   <translation id="7069230303117205966" key="MSG_COMMON_COMPONENTS_RESOURCEDETAIL_INFOCARD_4" desc="Label \'Creation Time\' for a resource.">作成時間</translation>
+  <translation id="7592164933763992744" key="MSG_COMMON_COMPONENTS_RESOURCEDETAIL_INFOCARD_5" desc="Label \'Application\' for a resource.">Application</translation>
   <translation id="5724590208757461876" key="MSG_COMMON_COMPONENTS_SCALE_SCALE_0" desc="Action \'Scale\' on the drop down menu on resource list page.">Scale</translation>
   <translation id="2699323907720130275" key="MSG_COMMON_COMPONENTS_SCALE_SCALE_1" desc="Tooltip for the \'scale\' button on the action bar on a resource details view.">ポッド数を編集</translation>
   <translation id="8982112402145698888" key="MSG_COMMON_COMPONENTS_SCALE_SCALE_2" desc="Tooltip for the \'Scale\' button on the action bar on a resource details view.">Scale</translation>
@@ -184,6 +216,8 @@
   <translation id="6219798353623882069" key="MSG_CRONJOB_DETAIL_ACTIONBAR_0" desc="Cron Job\'s resource kind name.">Cron ジョブ</translation>
   <translation id="5152871798838609000" key="MSG_CRONJOB_DETAIL_DETAIL_0" desc="Active Jobs card title, displayed on Cron Job details page.">アクティブなジョブ</translation>
   <translation id="2080014846980293516" key="MSG_CRONJOB_DETAIL_DETAIL_1" desc="(no description provided)">現在この Cron ジョブ によって管理されているジョブはありません。</translation>
+  <translation id="4910697302285925429" key="MSG_CRONJOB_DETAIL_DETAIL_2" desc="Inactive Jobs card title, displayed on Cron Job details page.">Inactive Jobs</translation>
+  <translation id="5132781400764099616" key="MSG_CRONJOB_DETAIL_DETAIL_3" desc="(no description provided)">There are currently no inactive Jobs managed by this Cron Job.</translation>
   <translation id="2068898769567977603" key="MSG_CRONJOB_DETAIL_INFO_0" desc="Cron Job\'s details card header.">詳細</translation>
   <translation id="9026215886401416721" key="MSG_CRONJOB_DETAIL_INFO_1" desc="Cron Job\'s attribute label.">スケジュール</translation>
   <translation id="6247369684436975092" key="MSG_CRONJOB_DETAIL_INFO_2" desc="Cron Job\'s attribute label.">アクティブ</translation>

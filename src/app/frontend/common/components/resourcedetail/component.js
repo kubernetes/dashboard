@@ -21,6 +21,12 @@ class InfoCardController {
    * @ngInject
    */
   constructor($state) {
+    /** @export {!backendApi.ObjectMeta} */
+    this.objectMeta;
+
+    /**  @export {!string} */
+    this.applicationName;
+
     /** @private {!ui.router.$state} */
     this.state_ = $state;
   }

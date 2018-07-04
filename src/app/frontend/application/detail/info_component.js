@@ -26,10 +26,6 @@ export default class ApplicationInfoController {
      */
     this.application;
   }
-
-  get descriptor() {
-    return this.application.descriptor;
-  }
 }
 
 /**
