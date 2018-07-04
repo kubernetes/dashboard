@@ -42,9 +42,6 @@ export class LogsController {
     /** @private {!angular.$sce} */
     this.sce_ = $sce;
 
-    /** @private {!HTMLDocument} */
-    this.document_ = $document[0];
-
     /** @private {!angular.$resource} */
     this.resource_ = $resource;
 
