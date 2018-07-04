@@ -41,6 +41,7 @@ describe('Logs controller', () => {
       {timestamp: '1', content: 'a'},
       {timestamp: '2', content: 'b'},
       {timestamp: '3', content: 'c'},
+      {timestamp: '4', content: 'Foo & <bar>'},
     ],
     info: {podName: 'test-pod', containerName: 'container-name', fromDate: '1', toDate: '3'},
     selection: {
@@ -97,7 +98,12 @@ describe('Logs controller', () => {
 
   it('should display logs', () => {
     ctrl.$onInit();
-    expect(ctrl.logsSet.length).toEqual(3);
+    expect(ctrl.logsSet.length).toEqual(4);
+  });
+
+  it('should HTML encode logs', () => {
+    ctrl.$onInit();
+    expect(ctrl.logsSet[3].toString()).toEqual('Foo &amp; &lt;bar&gt;');
   });
 
   it('should not contain timestamp by default', () => {

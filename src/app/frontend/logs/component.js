@@ -258,29 +258,15 @@ export class LogsController {
    * @private
    */
   formatLine_(line) {
-    // remove html and add colors
-    // We know that trustAsHtml is safe here because escapedLine is escaped to
-    // not contain any HTML markup, and formattedLine is the result of passing
-    // ecapedLine to ansi_to_html, which is known to only add span tags.
-    let escapedContent =
-        this.sce_.trustAsHtml(new AnsiUp().ansi_to_html(this.escapeHtml_(line.content)));
+    // Escape html and add colors
+    // We know that trustAsHtml is safe here because line.content is escaped to
+    // not contain any HTML markup in ansi_to_html, which also replaces ANSI terminal
+    // escape codes with span tags.
+    let escapedContent = this.sce_.trustAsHtml(new AnsiUp().ansi_to_html(line.content));
 
     // add timestamp if needed
     let showTimestamp = this.logsService.getShowTimestamp();
     return showTimestamp ? `${line.timestamp} ${escapedContent}` : escapedContent;
-  }
-
-  /**
-   * Escapes an HTML string (e.g. converts "<foo>bar&baz</foo>" to
-   * "&lt;foo&gt;bar&amp;baz&lt;/foo&gt;") by bouncing it through a text node.
-   * @param {string} html
-   * @return {string}
-   * @private
-   */
-  escapeHtml_(html) {
-    let div = this.document_.createElement('div');
-    div.appendChild(this.document_.createTextNode(html));
-    return div.innerHTML;
   }
 
   /**
