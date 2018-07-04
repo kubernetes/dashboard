@@ -122,7 +122,7 @@ describe('Logs controller', () => {
   it('should load newer logs on loadNewer call', () => {
     ctrl.$onInit();
     ctrl.loadNewer();
-    expect(ctrl.logsSet.length).toEqual(3);
+    expect(ctrl.logsSet.length).toEqual(4);
     httpBackend
         .expectGET(
             'api/v1/log/namespace11/test-pod/container-name?logFilePosition=beginning&offsetFrom=25&offsetTo=125&previous=false&referenceLineNum=11&referenceTimestamp=X')
@@ -135,7 +135,7 @@ describe('Logs controller', () => {
   it('should load older logs on loadOlder call', () => {
     ctrl.$onInit();
     ctrl.loadOlder();
-    expect(ctrl.logsSet.length).toEqual(3);
+    expect(ctrl.logsSet.length).toEqual(4);
     httpBackend
         .expectGET(
             'api/v1/log/namespace11/test-pod/container-name?logFilePosition=beginning&offsetFrom=-78&offsetTo=22&previous=false&referenceLineNum=11&referenceTimestamp=X')
@@ -148,7 +148,7 @@ describe('Logs controller', () => {
   it('should load newest logs on loadNewest call', () => {
     ctrl.$onInit();
     ctrl.loadNewest();
-    expect(ctrl.logsSet.length).toEqual(3);
+    expect(ctrl.logsSet.length).toEqual(4);
     httpBackend
         .expectGET(
             'api/v1/log/namespace11/test-pod/container-name?logFilePosition=end&offsetFrom=2000000000&offsetTo=2000000100&previous=false&referenceLineNum=0&referenceTimestamp=newest')
@@ -162,7 +162,7 @@ describe('Logs controller', () => {
   it('should load oldest logs on loadOldest call', () => {
     ctrl.$onInit();
     ctrl.loadOldest();
-    expect(ctrl.logsSet.length).toEqual(3);
+    expect(ctrl.logsSet.length).toEqual(4);
     httpBackend
         .expectGET(
             'api/v1/log/namespace11/test-pod/container-name?logFilePosition=beginning&offsetFrom=-2000000100&offsetTo=-2000000000&previous=false&referenceLineNum=0&referenceTimestamp=oldest')
