@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE translationbundle><translationbundle lang="en">
-  <translation id="961242340990264399" key="MSG_ABOUT_ABOUT_0" desc="This is a label for button displayed on about page used to open documentaion in browser">Documentation</translation>
+  <translation id="3846688850575044887" key="MSG_ABOUT_ABOUT_0" desc="Global settings header.">About</translation>
   <translation id="5634646746226609179" key="MSG_ABOUT_ABOUT_1" desc="Label \'Dashboard Version\' for the about page.">Dashboard Version</translation>
   <translation id="4718120324314749596" key="MSG_ABOUT_ABOUT_2" desc="Label \'Git Commit\' for the about page.">Git Commit</translation>
-  <translation id="5788105450172886273" key="MSG_ABOUT_ABOUT_3" desc="This is a label for button displayed on about page used to send feedback to GitHub new issue.">Send feedback</translation>
+  <translation id="1212688278537853620" key="MSG_ABOUT_ABOUT_3" desc="Project description on about page.">General-purpose web UI for Kubernetes clusters</translation>
   <translation id="4249662097435421699" key="MSG_ABOUT_ABOUT_4" desc="This is the copyright statement displayed on the about page">Copyright 2015-{{ $ctrl.latestCopyrightYear}} The Kubernetes Authors.</translation>
-  <translation id="4171916442768740608" key="MSG_ABOUT_ABOUT_5" desc="This is the creator reference on the footer of the about page"> Kubernetes Dashboard is made possible by the Dashboard &lt;a href="https://github.com/kubernetes/dashboard/graphs/contributors"&gt;community&lt;/a&gt; as an &lt;a href="https://github.com/kubernetes/dashboard"&gt;open source project&lt;/a&gt;. </translation>
-  <translation id="4426231252111230009" key="MSG_ABOUT_ABOUT_6" desc="Dashbord moto on the about page, just below the header">General-Purpose Web UI for Kubernetes Clusters</translation>
+  <translation id="908641021194885494" key="MSG_ABOUT_ABOUT_5" desc="Creator reference on the footer of the about page.">Kubernetes Dashboard is made possible by the Dashboard &lt;a href="https://github.com/kubernetes/dashboard/graphs/contributors"&gt;community&lt;/a&gt; as an &lt;a href="https://github.com/kubernetes/dashboard"&gt;open source project&lt;/a&gt;.</translation>
+  <translation id="2365002697773543715" key="MSG_ABOUT_ACTIONBAR_0" desc="Tooltip of button linking to documentation.">Read Kubernetes Dashboard documentation</translation>
+  <translation id="6381847044207707182" key="MSG_ABOUT_ACTIONBAR_1" desc="Label of button linking to documentation.">Documentation</translation>
+  <translation id="2035796754621111890" key="MSG_ABOUT_ACTIONBAR_2" desc="Tooltip of button linking to new issue on GitHub used to send feedback.">Create new issue on GitHub</translation>
+  <translation id="5625550638633956281" key="MSG_ABOUT_ACTIONBAR_3" desc="Label of button linking to new issue on GitHub used to send feedback.">Send feedback</translation>
   <translation id="6783150167357318030" key="MSG_ACTION_BAR_DELETE_TOOLTIP" desc="Generic &quot;Delete some resource&quot; tooltip text which appears over the delete icon on the global action bar.">Delete <ph name="RESOURCE_NAME"/></translation>
   <translation id="1421031463694814701" key="MSG_ACTION_BAR_EDIT_TOOLTIP" desc="Generic &quot;Edit some resource&quot; tooltip text which appears over the edit icon on the global action bar.">Edit <ph name="RESOURCE_NAME"/></translation>
   <translation id="1024358167652076581" key="MSG_ALL_NAMESPACES" desc="Text for dropdown item that indicates that no namespace was selected">All namespaces</translation>
@@ -119,7 +122,7 @@
   <translation id="7353491667260402390" key="MSG_COMMON_COMPONENTS_RESOURCEDETAIL_INFOCARD_2" desc="Label \'Labels\' for a resource.">Labels</translation>
   <translation id="5872558793526944357" key="MSG_COMMON_COMPONENTS_RESOURCEDETAIL_INFOCARD_3" desc="Label \'Annotations\' for a resource.">Annotations</translation>
   <translation id="7069230303117205966" key="MSG_COMMON_COMPONENTS_RESOURCEDETAIL_INFOCARD_4" desc="Label \'Creation Time\' for a resource.">Creation Time</translation>
-  <translation id="5724590208757461876" key="MSG_COMMON_COMPONENTS_SCALE_SCALE_0" desc="Action \'Scale\' on the drop down menu on resource list page.">Scale</translation>
+  <translation id="5724590208757461876" key="MSG_COMMON_COMPONENTS_SCALE_SCALE_0" desc="Action \'Scale\' on the dropdown menu on resource list page.">Scale</translation>
   <translation id="2699323907720130275" key="MSG_COMMON_COMPONENTS_SCALE_SCALE_1" desc="Tooltip for the \'scale\' button on the action bar on a resource details view.">Edit number of pods</translation>
   <translation id="8982112402145698888" key="MSG_COMMON_COMPONENTS_SCALE_SCALE_2" desc="Tooltip for the \'Scale\' button on the action bar on a resource details view.">Scale</translation>
   <translation id="8514425134682432381" key="MSG_COMMON_COMPONENTS_WARNINGS_WARNINGS_0" desc="Tooltip for warning dismissal button.">Dismiss</translation>
@@ -409,7 +412,7 @@
     <ph name="DESIRED_PODS"> desired.</ph>
   </translation>
   <translation id="4942061082776173364" key="MSG_ENCRYPTION_KEY_CHANGED" desc="Text shown when saved token could not be decrypted by backend.">Session expired. Please log in again.</translation>
-  <translation id="778882191405410811" key="MSG_ENDPOINTS_WARNING_LABEL" desc="Label 'Warning' for the endpoint selection drop-down.">Warning</translation>
+  <translation id="778882191405410811" key="MSG_ENDPOINTS_WARNING_LABEL" desc="Label 'Warning' for the endpoint selection dropdown.">Warning</translation>
   <translation id="4983649641173165689" key="MSG_ENDPOINT_CARDLIST_0" desc="Label which appears above the list of such objects.">Endpoints</translation>
   <translation id="4158586803314397594" key="MSG_ENDPOINT_CARDLIST_1" desc="(no description provided)">There are currently no Endpoints selected by this Service.</translation>
   <translation id="2771036553361600987" key="MSG_ENDPOINT_CARDLIST_2" desc="Label \'Source\' for the endpoint source column of the endpoints table (endpoints list page).">Host</translation>
@@ -427,7 +430,7 @@
   <translation id="2318056046996927961" key="MSG_EVENTS_CARDLIST_5" desc="Label \'First seen\' for the respective column of the events table (events list page).">First seen</translation>
   <translation id="8546806166673222480" key="MSG_EVENTS_CARDLIST_6" desc="Label \'Last seen\' for the respective column of the events table (events list page).">Last seen</translation>
   <translation id="8384910280515978185" key="MSG_EVENTS_CARDLIST_8" desc="User help on the events page when no events are to be displayed.">It is possible that all events have expired.</translation>
-  <translation id="4919061456654775514" key="MSG_EVENTS_WARNING_LABEL" desc="Label 'Warning' for the event selection drop-down.">Warning</translation>
+  <translation id="4919061456654775514" key="MSG_EVENTS_WARNING_LABEL" desc="Label 'Warning' for the event selection dropdown.">Warning</translation>
   <translation id="6870755296074399906" key="MSG_FORBIDDEN_ERROR" desc="Text shown on internal error page when user is forbidden to access some page.">You do not have required permissions to access this page.</translation>
   <translation id="360219762714344048" key="MSG_FORBIDDEN_RESOURCE_ERROR" desc="Error message shown when user does not have access to given resource.">You do not have required permissions to access this resource.</translation>
   <translation id="2570930006862369513" key="MSG_FORBIDDEN_TITLE_ERROR" desc="Title shown on internal error page when user is forbidden to access some page.">Forbidden</translation>
@@ -441,12 +444,12 @@
   <translation id="3116131023784654870" key="MSG_HORIZONTALPODAUTOSCALER_DETAIL_ACTIONBAR_0" desc="Label \'Horizontal Pod Autoscaler\' which appears at the top of the delete dialog, opened from a horizontal pod autoscaler details page.">Horizontal Pod Autoscaler</translation>
   <translation id="4234217286162701029" key="MSG_HORIZONTALPODAUTOSCALER_DETAIL_INFO_0" desc="Horizontal pod autoscaler info details section name.">Details</translation>
   <translation id="8852238167226878780" key="MSG_HORIZONTALPODAUTOSCALER_DETAIL_INFO_1" desc="Horizontal pod autoscaler info details section target entry.">Target</translation>
-  <translation id="3801305643617716507" key="MSG_HORIZONTALPODAUTOSCALER_DETAIL_INFO_10" desc="Show the current CPU utilization percentage of a the pods of the targetted resource of a HPA">{{::$ctrl.horizontalPodAutoscaler.currentCPUUtilizationPercentage}}%</translation>
+  <translation id="3801305643617716507" key="MSG_HORIZONTALPODAUTOSCALER_DETAIL_INFO_10" desc="Show the current CPU utilization percentage of a the pods of the targeted resource of a HPA">{{::$ctrl.horizontalPodAutoscaler.currentCPUUtilizationPercentage}}%</translation>
   <translation id="497992149326036535" key="MSG_HORIZONTALPODAUTOSCALER_DETAIL_INFO_11" desc="Horizontal pod autoscaler info status section lastScaleTime entry.">Last Scaled</translation>
   <translation id="8730855784576965122" key="MSG_HORIZONTALPODAUTOSCALER_DETAIL_INFO_2" desc="Horizontal pod autoscaler info details section minReplicas entry.">Min Replicas</translation>
   <translation id="3022079345770588418" key="MSG_HORIZONTALPODAUTOSCALER_DETAIL_INFO_3" desc="Horizontal pod autoscaler info details section maxReplicas entry.">Max Replicas</translation>
   <translation id="4199855790520636602" key="MSG_HORIZONTALPODAUTOSCALER_DETAIL_INFO_4" desc="Horizontal pod autoscaler info details section targetCPUUtilizationPercentage entry.">Target CPU Utilization</translation>
-  <translation id="8718543337819526846" key="MSG_HORIZONTALPODAUTOSCALER_DETAIL_INFO_5" desc="Show the target CPU utilization percentage of a the pods of the targetted resource of a HPA">{{::$ctrl.horizontalPodAutoscaler.targetCPUUtilizationPercentage}}%</translation>
+  <translation id="8718543337819526846" key="MSG_HORIZONTALPODAUTOSCALER_DETAIL_INFO_5" desc="Show the target CPU utilization percentage of a the pods of the targeted resource of a HPA">{{::$ctrl.horizontalPodAutoscaler.targetCPUUtilizationPercentage}}%</translation>
   <translation id="8954426675014032405" key="MSG_HORIZONTALPODAUTOSCALER_DETAIL_INFO_6" desc="Horizontal pod autoscaler info status section">Status</translation>
   <translation id="3808910683344466681" key="MSG_HORIZONTALPODAUTOSCALER_DETAIL_INFO_7" desc="Horizontal pod autoscaler info status section currentReplicas entry.">Current Replicas</translation>
   <translation id="564448650580373807" key="MSG_HORIZONTALPODAUTOSCALER_DETAIL_INFO_8" desc="Horizontal pod autoscaler info status section desiredReplicas entry.">Desired Replicas</translation>
@@ -461,8 +464,8 @@
   <translation id="8088373128320107261" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARDLIST_7" desc="Label \'Max Replicas\' which appears as a column label in the table of horizontal pod autoscalers (horizontal pod autoscaler list view).">Max Replicas</translation>
   <translation id="4787729230562636049" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARDLIST_8" desc="Label \'Age\' which appears as a column label in the table of horizontal pod autoscalers (horizontal pod autoscaler list view).">Age</translation>
   <translation id="1108386405397731039" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARDLIST_9" desc="Text for horizontal pod autoscaler card list zerostate.">There are no Horizontal Pod Autoscalers to display.</translation>
-  <translation id="7169021054679689074" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARD_0" desc="Show the target CPU utilization percentage of a the pods of the targetted resource of a HPA">{{::$ctrl.horizontalPodAutoscaler.targetCPUUtilizationPercentage}}%</translation>
-  <translation id="2749124983305767530" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARD_1" desc="Show the current CPU utilization percentage of a the pods of the targetted resource of a HPA">{{::$ctrl.horizontalPodAutoscaler.currentCPUUtilizationPercentage}}%</translation>
+  <translation id="7169021054679689074" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARD_0" desc="Show the target CPU utilization percentage of a the pods of the targeted resource of a HPA">{{::$ctrl.horizontalPodAutoscaler.targetCPUUtilizationPercentage}}%</translation>
+  <translation id="2749124983305767530" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARD_1" desc="Show the current CPU utilization percentage of a the pods of the targeted resource of a HPA">{{::$ctrl.horizontalPodAutoscaler.currentCPUUtilizationPercentage}}%</translation>
   <translation id="8805456014928287136" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARD_2" desc="Title \'Horizontal Pod Autoscaler\' which is used as a title for the delete/update\n   dialogs (that can be opened on the horizontal pod autoscaler list view).">Horizontal Pod Autoscaler</translation>
   <translation id="8880232300868913858" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARD_3" desc="Title \'Horizontal Pod Autoscaler\' which is used as a title for the delete/update\n   dialogs (that can be opened on the horizontal pod autoscaler list view).">Horizontal Pod Autoscaler</translation>
   <translation id="7834793853862950724" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARD_4" desc="Tooltip for the age column">Created at</translation>

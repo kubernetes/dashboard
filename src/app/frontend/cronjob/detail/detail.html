@@ -30,5 +30,17 @@ limitations under the License.
   </kd-content>
 </kd-content-card>
 
+<kd-content-card>
+  <kd-content>
+    <kd-job-card-list job-list="ctrl.cronJobDetail.inactiveJobs"
+                      job-list-resource="ctrl.jobListResource">
+      <kd-header>[[Inactive Jobs|Inactive Jobs card title, displayed on Cron Job details page.]]</kd-header>
+      <kd-empty-list-text>
+        [[There are currently no inactive Jobs managed by this Cron Job.|]]
+      </kd-empty-list-text>
+    </kd-job-card-list>
+  </kd-content>
+</kd-content-card>
+
 <kd-event-card-list event-list="::ctrl.cronJobDetail.events"
                     event-list-resource="::ctrl.eventsResource"></kd-event-card-list>

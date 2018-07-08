@@ -45,7 +45,7 @@ limitations under the License.
                ng-if="!$ctrl.isSecret(env)">{{::env.value}}</pre>
           </span>
           <span ng-if="::!$ctrl.isHref(env)">
-                {{::env.name}}:&nbsp;<span class="kd-env-value">{{::env.value}}</span>
+                {{::env.name}}:&nbsp;<span class="kd-env-value">{{::$ctrl.getFieldRefValue(env)}}</span>
           </span>
         </div>
       </div>

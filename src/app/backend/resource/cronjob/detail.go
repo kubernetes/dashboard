@@ -30,6 +30,7 @@ type CronJobDetail struct {
 	ConcurrencyPolicy       string           `json:"concurrencyPolicy"`
 	StartingDeadLineSeconds *int64           `json:"startingDeadlineSeconds"`
 	ActiveJobs              job.JobList      `json:"activeJobs"`
+	InactiveJobs            job.JobList      `json:"inactiveJobs"`
 	Events                  common.EventList `json:"events"`
 
 	// Extends list item structure.
@@ -54,23 +55,26 @@ func GetCronJobDetail(client k8sClient.Interface, dsQuery *dataselect.DataSelect
 		return nil, criticalError
 	}
 
+	inactiveJobs, err := GetCronJobCompletedJobs(client, metricClient, dsQuery, namespace, name)
+
 	events, err := GetCronJobEvents(client, dsQuery, namespace, name)
 	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
 	if criticalError != nil {
 		return nil, criticalError
 	}
 
-	cj := toCronJobDetail(rawObject, *activeJobs, *events, nonCriticalErrors)
+	cj := toCronJobDetail(rawObject, *activeJobs, *inactiveJobs, *events, nonCriticalErrors)
 	return &cj, nil
 }
 
-func toCronJobDetail(cj *batch2.CronJob, activeJobs job.JobList, events common.EventList,
+func toCronJobDetail(cj *batch2.CronJob, activeJobs job.JobList, inactiveJobs job.JobList, events common.EventList,
 	nonCriticalErrors []error) CronJobDetail {
 	return CronJobDetail{
 		CronJob:                 toCronJob(cj),
 		ConcurrencyPolicy:       string(cj.Spec.ConcurrencyPolicy),
 		StartingDeadLineSeconds: cj.Spec.StartingDeadlineSeconds,
 		ActiveJobs:              activeJobs,
+		InactiveJobs:            inactiveJobs,
 		Events:                  events,
 		Errors:                  nonCriticalErrors,
 	}

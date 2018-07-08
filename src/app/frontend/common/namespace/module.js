@@ -35,28 +35,32 @@ export default angular
 
 /**
  * Ensures that namespaceParam is present in the URL.
- * @param {!angular.Scope} $rootScope
  * @param {!angular.$location} $location
  * @param {!kdUiRouter.$transitions} $transitions
  * @param {!kdUiRouter.$state} $state
  * @ngInject
  */
-function ensureNamespaceParamPresent($rootScope, $location, $transitions, $state) {
+function ensureNamespaceParamPresent($location, $transitions, $state) {
   /**
-   * Helper function which replaces namespace URL search param when the given namespace is
-   * undefined.
-   * @param {string|undefined} namespace
+   * Helper function which redirect namespace param when the given namespace
+   * in the transition is undefined.
+   * @returns {boolean|angular.$q.Promise}
    */
-  function replaceUrlIfNeeded(namespace) {
-    if (namespace === undefined && !!$state.transition &&
-        $state.transition.to().name !== loginState) {
-      $location.search(namespaceParam, DEFAULT_NAMESPACE);
-      $location.replace();
+  function changeNamespaceParamIfNeeded() {
+    const transition = $state.transition;
+
+    if (!transition) {
+      return true;
     }
+
+    const namespace = transition.params()[namespaceParam];
+    if (namespace === undefined && transition.to().name !== loginState) {
+      return $state.target(transition.to(), {[namespaceParam]: DEFAULT_NAMESPACE});
+    }
+    return true;
   }
 
-  $rootScope.$watch(() => $location.search()[namespaceParam], replaceUrlIfNeeded);
-  $transitions.onSuccess({}, () => {
-    replaceUrlIfNeeded($location.search()[namespaceParam]);
+  $transitions.onEnter({}, () => {
+    return changeNamespaceParamIfNeeded();
   });
 }

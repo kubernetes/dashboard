@@ -7,7 +7,7 @@ This design document is a proposal for supporting Third Party Resources in Dashb
 [Third Party
 Resources](https://kubernetes.io/docs/user-guide/thirdpartyresources/) are a
 special type of resource that allow end users to extend Kubernetes by adding
-new object types each with it's own URL endpoint in the API. Third Party
+new object types each with its own URL endpoint in the API. Third Party
 Resources are often used in conjunction with custom controllers to provide
 extra functionality.
 
@@ -30,14 +30,14 @@ server.
 ![](mockups/24-01-2017-thirdpartyresources/workloads.png)
 
 Clicking on a menu item brings up the Third Party Resource's detail page where
-the details of the ThirdPartyResource itself is displayed and objects created
-using that ThirdPartyResource are listed below.
+the details of the Third Party Resource itself is displayed and objects created
+using that Third Party Resource are listed below.
 
 ![](mockups/24-01-2017-thirdpartyresources/detail.png)
 
 Objects created as a Third Party Resource can contain arbitrary JSON data. It
 is difficult to display the data in an intuitive way that captures the intended
-use of the resource. It is proposed that the arbitrary JSON data be shown in an
+use of the resource. It is proposed that the arbitrary JSON data be shown in a
 structured tree format using the library currently used for the edit dialog. It
 has been proposed to replace this library in the edit dialog however (#1221).
 

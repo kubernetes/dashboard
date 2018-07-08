@@ -115,6 +115,18 @@ class ContainerInfoController {
 
   /**
    * @param {!backendApi.EnvVar} env
+   * @return {string}
+   * @export
+   */
+  getFieldRefValue(env) {
+    if (env.valueFrom && env.valueFrom.fieldRef.apiVersion && env.valueFrom.fieldRef.fieldPath) {
+      return `(${env.valueFrom.fieldRef.apiVersion}:${env.valueFrom.fieldRef.fieldPath})`;
+    }
+    return env.value;
+  }
+
+  /**
+   * @param {!backendApi.EnvVar} env
    * @return {boolean}
    * @export
    */

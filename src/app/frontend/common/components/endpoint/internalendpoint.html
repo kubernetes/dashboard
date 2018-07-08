@@ -20,7 +20,7 @@ limitations under the License.
       <kd-middle-ellipsis display-string="{{::$ctrl.endpoint.host}}:{{::port.port}} {{::port.protocol}}">
       </kd-middle-ellipsis>
     </div>
-    <div>
+    <div ng-if="port.nodePort != 0">
       <kd-middle-ellipsis display-string="{{::$ctrl.endpoint.host}}:{{::port.nodePort}} {{::port.protocol}}">
       </kd-middle-ellipsis>
     </div>

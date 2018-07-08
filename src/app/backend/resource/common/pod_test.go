@@ -196,6 +196,94 @@ func TestGetInitContainerNames(t *testing.T) {
 	}
 }
 
+func TestGetNonduplicateContainerImages(t *testing.T) {
+  expected :=[]string{"Container1", "Container2", "Container3"}
+  pods := make([]api.Pod, 2, 2)
+
+  pods[0] = api.Pod{
+    Spec: api.PodSpec{
+      Containers: []api.Container{{Image: "Container1"}, {Image: "Container2"}},
+    },
+  }
+
+  pods[1] = api.Pod{
+    Spec: api.PodSpec{
+      Containers: []api.Container{{Image: "Container2"}, {Image: "Container3"}},
+    },
+  }
+  actual := GetNonduplicateContainerImages(pods)
+  if !reflect.DeepEqual(actual, expected) {
+    t.Errorf("GetNonduplicateContainerImages() == %+v, expected %+v",
+      actual, expected)
+  }
+}
+
+func TestGetNonduplicateInitContainerImages(t *testing.T) {
+  expected :=[]string{"initContainer1", "initContainer2", "initContainer3"}
+  pods := make([]api.Pod, 2, 2)
+
+  pods[0] = api.Pod{
+    Spec: api.PodSpec{
+      InitContainers: []api.Container{{Image: "initContainer1"}, {Image: "initContainer2"}},
+    },
+  }
+
+  pods[1] = api.Pod{
+    Spec: api.PodSpec{
+      InitContainers: []api.Container{{Image: "initContainer2"}, {Image: "initContainer3"}},
+    },
+  }
+  actual := GetNonduplicateInitContainerImages(pods)
+  if !reflect.DeepEqual(actual, expected) {
+    t.Errorf("GetNonduplicateInitContainerImages() == %+v, expected %+v",
+      actual, expected)
+  }
+}
+
+func TestGetNonduplicateContainerNames(t *testing.T) {
+  expected :=[]string{"Container1", "Container2", "Container3"}
+  pods := make([]api.Pod, 2, 2)
+
+  pods[0] = api.Pod{
+    Spec: api.PodSpec{
+      Containers: []api.Container{{Name: "Container1"}, {Name: "Container2"}},
+    },
+  }
+
+  pods[1] = api.Pod{
+    Spec: api.PodSpec{
+      Containers: []api.Container{{Name: "Container2"}, {Name: "Container3"}},
+    },
+  }
+  actual := GetNonduplicateContainerNames(pods)
+  if !reflect.DeepEqual(actual, expected) {
+    t.Errorf("GetNonduplicateContainerNames() == %+v, expected %+v",
+      actual, expected)
+  }
+}
+
+func TestGetNonduplicateInitContainerNames(t *testing.T) {
+  expected :=[]string{"initContainer1", "initContainer2", "initContainer3"}
+  pods := make([]api.Pod, 2, 2)
+
+  pods[0] = api.Pod{
+      Spec: api.PodSpec{
+        InitContainers: []api.Container{{Name: "initContainer1"}, {Name: "initContainer2"}},
+      },
+    }
+
+   pods[1] = api.Pod{
+      Spec: api.PodSpec{
+        InitContainers: []api.Container{{Name: "initContainer2"}, {Name: "initContainer3"}},
+      },
+    }
+  actual := GetNonduplicateInitContainerNames(pods)
+    if !reflect.DeepEqual(actual, expected) {
+      t.Errorf("GetNonduplicateInitContainerNames() == %+v, expected %+v",
+        actual, expected)
+    }
+}
+
 func TestFilterPodsForJob(t *testing.T) {
 	cases := []struct {
 		job      batch.Job

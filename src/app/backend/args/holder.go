@@ -47,6 +47,8 @@ type holder struct {
 	autoGenerateCertificates  bool
 	enableInsecureLogin       bool
 	disableSettingsAuthorizer bool
+
+	disableSkipButton         bool
 }
 
 // GetInsecurePort 'insecure-port' argument of Dashboard binary.
@@ -145,4 +147,9 @@ func (self *holder) GetEnableInsecureLogin() bool {
 // GetDisableSettingsAuthorizer 'disable-settings-authorizer' argument of Dashboard binary.
 func (self *holder) GetDisableSettingsAuthorizer() bool {
 	return self.disableSettingsAuthorizer
+}
+
+// GetDisableSettingsAuthorizer 'disable-settings-authorizer' argument of Dashboard binary.
+func (self *holder) GetDisableSkipButton() bool {
+	return self.disableSkipButton
 }
