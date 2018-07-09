@@ -64,7 +64,16 @@ class JobCardController {
    * @export
    */
   hasWarnings() {
-    return this.job.pods.warnings.length > 0;
+    return this.job.pods.warnings.length > 0 && !this.isFailed();
+  }
+
+  /**
+   * Checks if job status is failed.
+   * @return {boolean}
+   * @export
+   */
+  isFailed() {
+    return this.job.jobStatus.status === 'Failed';
   }
 
   /**
@@ -82,7 +91,7 @@ class JobCardController {
    * @export
    */
   isSuccess() {
-    return !this.isPending() && !this.hasWarnings();
+    return !this.isPending() && !this.hasWarnings() && !this.isFailed();
   }
 }
 

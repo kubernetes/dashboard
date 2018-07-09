@@ -314,12 +314,21 @@ backendApi.ReplicaSetList;
 
 /**
  * @typedef {{
+ *   status: !string,
+ *   message: string
+ * }}
+ */
+backendApi.JobStatus;
+
+/**
+ * @typedef {{
  *   objectMeta: !backendApi.ObjectMeta,
  *   typeMeta: !backendApi.TypeMeta,
  *   pods: !backendApi.PodInfo,
  *   containerImages: !Array<string>,
  *   initContainerImages: !Array<string>,
- *   parallelism: number
+ *   parallelism: number,
+ *   jobStatus: !backendApi.JobStatus
  * }}
  */
 backendApi.Job;

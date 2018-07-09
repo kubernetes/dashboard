@@ -61,6 +61,9 @@ describe('Job card', () => {
           },
         ],
       },
+      jobStatus: {
+        status: 'Running',
+      },
     };
 
     // then
@@ -72,6 +75,9 @@ describe('Job card', () => {
     ctrl.job = {
       pods: {
         warnings: [],
+      },
+      jobStatus: {
+        status: 'Completed',
       },
     };
 
@@ -87,6 +93,9 @@ describe('Job card', () => {
          pods: {
            warnings: [],
            pending: 1,
+         },
+         jobStatus: {
+           status: 'Running',
          },
        };
 
@@ -106,6 +115,9 @@ describe('Job card', () => {
           },
         ],
       },
+      jobStatus: {
+        status: 'Running',
+      },
     };
 
     // then
@@ -120,6 +132,9 @@ describe('Job card', () => {
       pods: {
         warnings: [],
         pending: 0,
+      },
+      jobStatus: {
+        status: 'Running',
       },
     };
 
