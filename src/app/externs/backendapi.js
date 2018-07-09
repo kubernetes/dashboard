@@ -1585,3 +1585,36 @@ backendApi.SystemBanner;
  * }}
  */
 backendApi.CanIResponse;
+
+/**
+ * @typedef {{
+ *    matchLabels:  !Object<string, string>,
+ *    matchExpressions:string
+ *  }}
+ */
+backendApi.podSelector;
+/**
+ * @typedef {{
+ *    podSelector:  !backendApi.podSelector,
+ *    policyTypes:  !Array<string>
+ *   }}
+ */
+backendApi.NetworkPolicySpec;
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
+ *   spec:  !backendApi.NetworkPolicySpec
+ *   }}
+ */
+backendApi.NetworkPolicy;
+
+/**
+ * @typedef {{
+ *   listMeta: !backendApi.ListMeta,
+ *   networkPolicy:!Array<!backendApi.NetworkPolicy>,
+ *   errors: !Array<!backendApi.Error>
+ *  }}
+ */
+
+backendApi.NetworkPolicyList;

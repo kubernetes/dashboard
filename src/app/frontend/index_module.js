@@ -41,6 +41,7 @@ import loginModule from './login/module';
 import logsModule from './logs/module';
 import namespaceModule from './namespace/module';
 import nodeModule from './node/module';
+import netWorkPolicyModule from './networkpolicy/module';
 import overviewModule from './overview/module';
 import persistentVolumeModule from './persistentvolume/module';
 import persistentVolumeClaimModule from './persistentvolumeclaim/module';
@@ -110,6 +111,7 @@ export default angular
           storageClassModule.name,
           roleModule.name,
           scalingModule.name,
+          netWorkPolicyModule.name,
         ])
     .config(indexConfig)
     .config(routeConfig)
