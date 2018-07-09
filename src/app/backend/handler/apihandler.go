@@ -46,6 +46,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/job"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/logs"
 	ns "github.com/kubernetes/dashboard/src/app/backend/resource/namespace"
+  "github.com/kubernetes/dashboard/src/app/backend/resource/networkpolicy"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/node"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/overview"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolume"
@@ -606,7 +607,26 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			To(apiHandler.handleOverview).
 			Writes(overview.Overview{}))
 
-	return wsContainer, nil
+  apiV1Ws.Route(
+    apiV1Ws.GET("/networkpolicy/{namespace}").
+      To(apiHandler.handleGetNetworkPolicyList).
+      Writes(networkpolicy.NetworkPolicyList{}))
+  apiV1Ws.Route(
+    apiV1Ws.GET("/networkpolicy").
+      To(apiHandler.handleGetNetworkPolicyList).
+      Writes(networkpolicy.NetworkPolicyList{}))
+
+  apiV1Ws.Route(
+    apiV1Ws.GET("/networkpolicy/{namespace}/{networkpolicy}").
+      To(apiHandler.handleGetNetworkPolicy).
+      Writes(networkpolicy.NetworkPolicy{}))
+
+  apiV1Ws.Route(
+    apiV1Ws.DELETE("/networkpolicy/{namespace}/{networkpolicy}").
+      To(apiHandler.deleteNetworkPolicy).
+      Param(apiV1Ws.PathParameter("networkpolicy", "the NetworkPolicy name to be deleted")))
+
+  return wsContainer, nil
 }
 
 // TODO: Handle case in which RBAC feature is not enabled in API server. Currently returns 404 resource not found
@@ -2327,4 +2347,54 @@ func parseDataSelectPathParameter(request *restful.Request) *dataselect.DataSele
 	filterQuery := parseFilterPathParameter(request)
 	metricQuery := parseMetricPathParameter(request)
 	return dataselect.NewDataSelectQuery(paginationQuery, sortQuery, filterQuery, metricQuery)
+}
+
+func (apiHandler *APIHandler) handleGetNetworkPolicyList(request *restful.Request, response *restful.Response) {
+  k8sClient, err := apiHandler.cManager.Client(request)
+  if err != nil {
+    kdErrors.HandleInternalError(response, err)
+    return
+  }
+  dataSelect := parseDataSelectPathParameter(request)
+  namespace := parseNamespacePathParameter(request)
+  result, err := networkpolicy.GetNetworkPolicyList(k8sClient,namespace,dataSelect)
+  if err != nil {
+    kdErrors.HandleInternalError(response, err)
+    return
+  }
+  response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetNetworkPolicy(request *restful.Request, response *restful.Response) {
+  k8sClient, err := apiHandler.cManager.Client(request)
+  if err != nil {
+    kdErrors.HandleInternalError(response, err)
+    return
+  }
+
+  name := request.PathParameter("networkpolicy")
+  namespace := parseNamespacePathParameter(request)
+  result, err :=networkpolicy.GetNetworkPolicy(k8sClient,namespace,name)
+  if err != nil {
+    kdErrors.HandleInternalError(response, err)
+    return
+  }
+  response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) deleteNetworkPolicy(request *restful.Request, response *restful.Response) {
+  k8sClient, err := apiHandler.cManager.Client(request)
+  if err != nil {
+    kdErrors.HandleInternalError(response, err)
+    return
+  }
+
+  name := request.PathParameter("networkpolicy")
+  namespace := parseNamespacePathParameter(request)
+  err = networkpolicy.DeleteNetworkPolicy(k8sClient,namespace,name)
+  if err != nil {
+    kdErrors.HandleInternalError(response, err)
+    return
+  }
+  response.WriteHeader(http.StatusOK)
 }
