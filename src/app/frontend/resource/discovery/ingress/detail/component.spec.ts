@@ -33,107 +33,103 @@ const miniName = "my-mini-ingress";
 const maxiName = "my-maxi-ingress";
 
 @Component({
-    selector: 'test',
-    templateUrl: './template.html'
+  selector: 'test',
+  templateUrl: './template.html'
 })
 class MiniTestComponent {
-    isInitialized = true;
-    ingress: IngressDetail = {
-        objectMeta: {
-            name: miniName,
-            namespace: "my-namespace",
-            "labels": {
-            },
-            creationTimestamp: "2018-05-18T22:27:42Z"
-        },
-        typeMeta: {
-            kind: "Ingress"
-        },
-        errors: []
-    };
+  isInitialized = true;
+  ingress: IngressDetail = {
+    objectMeta: {
+      name: miniName,
+      namespace: "my-namespace",
+      "labels": {
+      },
+      creationTimestamp: "2018-05-18T22:27:42Z"
+    },
+    typeMeta: {
+      kind: "Ingress"
+    },
+    errors: []
+  };
 }
 
 @Component({
-    selector: 'test',
-    templateUrl: './template.html'
+  selector: 'test',
+  templateUrl: './template.html'
 })
 class MaxiTestComponent {
-    isInitialized = true;
-    ingress: IngressDetail = {
-        objectMeta: {
-            name: maxiName,
-            namespace: "my-namespace",
-            "labels": {
-                "addonmanager.kubernetes.io/mode": "Reconcile",
-                "app": "kubernetes-dashboard",
-                "pod-template-hash": "1054779233",
-                "version": "v1.8.1"
-            },
-            creationTimestamp: "2018-05-18T22:27:42Z"
-        },
-        typeMeta: {
-            kind: "Ingress"
-        },
-        errors: []
-    };
+  isInitialized = true;
+  ingress: IngressDetail = {
+    objectMeta: {
+      name: maxiName,
+      namespace: "my-namespace",
+      "labels": {
+        "addonmanager.kubernetes.io/mode": "Reconcile",
+        "app": "kubernetes-dashboard",
+        "pod-template-hash": "1054779233",
+        "version": "v1.8.1"
+      },
+      creationTimestamp: "2018-05-18T22:27:42Z"
+    },
+    typeMeta: {
+      kind: "Ingress"
+    },
+    errors: []
+  };
 }
 
-fdescribe('IngressDetailComponent', () => {
+describe('IngressDetailComponent', () => {
 
-    let httpMock: HttpTestingController;
-    let configService: ConfigService;
+  let httpMock: HttpTestingController;
+  let configService: ConfigService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [ObjectMetaComponent, MaxiTestComponent, MiniTestComponent, CardComponent, PropertyComponent, ChipsComponent, IngressDetailComponent
-            ],
-            imports: [
-                MatIconModule, MatCardModule, MatDividerModule, MatTooltipModule, MatDialogModule, MatChipsModule, NoopAnimationsModule, PipesModule, HttpClientTestingModule, MatIconModule
-            ],
-            providers: [ConfigService],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
-        }).compileComponents();
-        httpMock = TestBed.get(HttpTestingController);
-        configService = TestBed.get(ConfigService);
-    }));
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ObjectMetaComponent, MaxiTestComponent, MiniTestComponent, CardComponent, PropertyComponent, ChipsComponent, IngressDetailComponent
+      ],
+      imports: [
+        MatIconModule, MatCardModule, MatDividerModule, MatTooltipModule, MatDialogModule, MatChipsModule, NoopAnimationsModule, PipesModule, HttpClientTestingModule, MatIconModule
+      ],
+      providers: [ConfigService],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    }).compileComponents();
+    httpMock = TestBed.get(HttpTestingController);
+    configService = TestBed.get(ConfigService);
+  }));
 
-    beforeEach(() => {
-        configService.init();
-        const configRequest = httpMock.expectOne('config');
-        const config: AppConfig = { serverTime: new Date().getTime() };
-        configRequest.flush(config);
+  beforeEach(() => {
+    configService.init();
+    const configRequest = httpMock.expectOne('config');
+    const config: AppConfig = { serverTime: new Date().getTime() };
+    configRequest.flush(config);
 
-        // httpMock.verify();
-    });
+    // httpMock.verify();
+  });
 
-    it("shows a mini ingress", () => {
-        const fixture = TestBed.createComponent(MiniTestComponent);
-        const component = fixture.componentInstance;
+  it("shows a mini ingress", () => {
+    const fixture = TestBed.createComponent(MiniTestComponent);
+    const component = fixture.componentInstance;
 
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            const debugElement = fixture.debugElement.query(By.css('kd-property.object-meta-name div.kd-property-value div'));
-            expect(debugElement).toBeTruthy();
+    fixture.detectChanges();
+    const debugElement = fixture.debugElement.query(By.css('kd-property.object-meta-name div.kd-property-value div'));
+    expect(debugElement).toBeTruthy();
 
-            const htmlElement = debugElement.nativeElement;
-            expect(htmlElement.innerHTML).toBe(miniName);
+    const htmlElement = debugElement.nativeElement;
+    expect(htmlElement.innerHTML).toBe(miniName);
 
-        });
-    });
+  });
 
-    it("shows a maxi ingress", () => {
-        const fixture = TestBed.createComponent(MaxiTestComponent);
-        const component = fixture.componentInstance;
+  it("shows a maxi ingress", () => {
+    const fixture = TestBed.createComponent(MaxiTestComponent);
+    const component = fixture.componentInstance;
 
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            const debugElement = fixture.debugElement.query(By.css('kd-property.object-meta-name div.kd-property-value div'));
-            expect(debugElement).toBeTruthy();
+    fixture.detectChanges();
+    const debugElement = fixture.debugElement.query(By.css('kd-property.object-meta-name div.kd-property-value div'));
+    expect(debugElement).toBeTruthy();
 
-            const htmlElement = debugElement.nativeElement;
-            expect(htmlElement.innerHTML).toBe(maxiName);
+    const htmlElement = debugElement.nativeElement;
+    expect(htmlElement.innerHTML).toBe(maxiName);
 
-        });
-    });
+  });
 
 });

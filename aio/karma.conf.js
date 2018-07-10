@@ -29,10 +29,10 @@ module.exports = function(config) {
 
     browserConsoleLogOptions: {terminal: true, level: ''},
 
-    frameworks: ['jasmine', '@angular/cli'],
+    frameworks: ['jasmine', '@angular-devkit/build-angular'],
 
     plugins: [
-      require('@angular/cli/plugins/karma'),
+      require('@angular-devkit/build-angular/plugins/karma'),
       require('karma-chrome-launcher'),
       require('karma-firefox-launcher'),
       require('karma-jasmine'),
@@ -46,7 +46,7 @@ module.exports = function(config) {
 
     coverageIstanbulReporter: {
       dir: path.join(__dirname, '..', 'coverage'),
-      reports: ['html', 'lcovonly'],
+      dir: require('path').join(__dirname, 'coverage'), reports: ['html', 'lcovonly'],
       'report-config': {
         html: {subdir: 'html'},
       },

@@ -22,8 +22,8 @@ import { By } from "@angular/platform-browser";
 import { MatCardModule, MatDividerModule, MatIconModule, MatTooltip, MatTooltipModule } from '@angular/material';
 
 @Component({
-    selector: 'test',
-    template: `
+  selector: 'test',
+  template: `
        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
        <kd-card [expanded]="isExpanded" [expandable]="isExpandable" role="table">
             <div title>{{ title }}</div>
@@ -35,60 +35,61 @@ import { MatCardModule, MatDividerModule, MatIconModule, MatTooltip, MatTooltipM
 
 })
 class TestComponent {
-    title = 'default title';
-    isExpanded = true;
-    isExpandable = true;
+  title = "my-card-default-title";
+  isExpanded = true;
+  isExpandable = true;
 }
 
-fdescribe('CardComponent', () => {
+describe('CardComponent', () => {
 
-    let component: TestComponent;
-    let fixture: ComponentFixture<TestComponent>;
+  let component: TestComponent;
+  let fixture: ComponentFixture<TestComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [CardComponent, TestComponent
-            ],
-            imports: [
-                MatIconModule, MatCardModule, MatDividerModule, MatTooltipModule, NoopAnimationsModule
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
-        }).compileComponents();
-    }));
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [CardComponent, TestComponent
+      ],
+      imports: [
+        MatIconModule, MatCardModule, MatDividerModule, MatTooltipModule, NoopAnimationsModule
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    }).compileComponents();
+  }));
 
-    beforeEach(() => {
-        fixture = TestBed.createComponent(TestComponent);
-        component = fixture.componentInstance;
-    });
+  beforeEach(() => {
+    fixture = TestBed.createComponent(TestComponent);
+    component = fixture.componentInstance;
+  });
 
-    it("shows the title div when withTitle==true", () => {
-        component.title = 'Title: expanded true';
-        component.isExpanded = true;
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            const card = fixture.debugElement.query(By.css('mat-card-title'));
-            expect(card).toBeTruthy();
-            const content = card.query(By.css('div[content]'));
-            expect(content).toBeFalsy();
+  it("shows the title div when withTitle==true", () => {
+    const title = 'my-card-default-expanded';
 
-            // htmlElement = debugElement.nativeElement;
-            // console.log(htmlElement.innerHTML)
-        });
-    });
+    component.title = title;
 
-    it("hides the title div when withTitle==false", () => {
-        const title = 'Title: expanded false';
+    component.isExpanded = true;
+    fixture.detectChanges();
+    const card = fixture.debugElement.query(By.css('mat-card-title'));
+    expect(card).toBeTruthy();
+    const content = card.query(By.css('div[content]'));
+    expect(content).toBeFalsy();
+    const titleNative = card.query(By.css('div[title] ')).nativeElement;
+    expect(titleNative.innerHTML).toBe(title);
 
-        component.title = title;
-        component.isExpanded = false;
-        fixture.detectChanges();
-        const card = fixture.debugElement.query(By.css('mat-card-title'));
-        expect(card).toBeTruthy();
-        const content = card.query(By.css('div[content]'));
-        expect(content).toBeFalsy();
-        const titleNative = card.query(By.css('div[title] ')).nativeElement;
-        expect(titleNative.innerHTML).toBe(title);
+  });
 
-    });
+  it("hides the title div when withTitle==false", () => {
+    const title = 'my-card-default-not-expanded';
+
+    component.title = title;
+    component.isExpanded = false;
+    fixture.detectChanges();
+    const card = fixture.debugElement.query(By.css('mat-card-title'));
+    expect(card).toBeTruthy();
+    const content = card.query(By.css('div[content]'));
+    expect(content).toBeFalsy();
+    const titleNative = card.query(By.css('div[title] ')).nativeElement;
+    expect(titleNative.innerHTML).toBe(title);
+
+  });
 
 });

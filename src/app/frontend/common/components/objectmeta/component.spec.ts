@@ -32,71 +32,66 @@ import { PropertyComponent } from '../property/component';
 const miniName = "my-mini-meta-name";
 
 @Component({
-    selector: 'test',
-    templateUrl: './template.html'
-    // template: `
-    // <kd-object-meta [initialized]="initialized"
-    //             [objectMeta]="objectMeta"></kd-object-meta>
-    // `
+  selector: 'test',
+  templateUrl: './template.html'
 })
 class TestComponent {
-    initialized = true;
-    objectMeta: ObjectMeta = {
-        name: miniName,
-        namespace: "my-namespace",
-        "labels": {
-            "addonmanager.kubernetes.io/mode": "Reconcile",
-            "app": "kubernetes-dashboard",
-            "pod-template-hash": "1054779233",
-            "version": "v1.8.1"
-        },
-        creationTimestamp: "2018-05-18T22:27:42Z"
-    };
+  initialized = true;
+  objectMeta: ObjectMeta = {
+    name: miniName,
+    namespace: "my-namespace",
+    "labels": {
+      "addonmanager.kubernetes.io/mode": "Reconcile",
+      "app": "kubernetes-dashboard",
+      "pod-template-hash": "1054779233",
+      "version": "v1.8.1"
+    },
+    creationTimestamp: "2018-05-18T22:27:42Z"
+  };
 }
 
-fdescribe('ObjectMetaComponent', () => {
+describe('ObjectMetaComponent', () => {
 
-    let component: TestComponent;
-    let fixture: ComponentFixture<TestComponent>;
-    let httpMock: HttpTestingController;
-    let configService: ConfigService;
+  let component: TestComponent;
+  let fixture: ComponentFixture<TestComponent>;
+  let httpMock: HttpTestingController;
+  let configService: ConfigService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [ObjectMetaComponent, TestComponent, CardComponent, PropertyComponent, ChipsComponent
-            ],
-            imports: [
-                MatIconModule, MatCardModule, MatDividerModule, MatTooltipModule, MatDialogModule, MatChipsModule, NoopAnimationsModule, PipesModule, HttpClientTestingModule, MatIconModule
-            ],
-            providers: [ConfigService],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
-        }).compileComponents();
-        httpMock = TestBed.get(HttpTestingController);
-        configService = TestBed.get(ConfigService);
-    }));
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ObjectMetaComponent, TestComponent, CardComponent, PropertyComponent, ChipsComponent
+      ],
+      imports: [
+        MatIconModule, MatCardModule, MatDividerModule, MatTooltipModule, MatDialogModule, MatChipsModule, NoopAnimationsModule, PipesModule, HttpClientTestingModule, MatIconModule
+      ],
+      providers: [ConfigService],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    }).compileComponents();
+    httpMock = TestBed.get(HttpTestingController);
+    configService = TestBed.get(ConfigService);
+  }));
 
-    beforeEach(() => {
-        configService.init();
-        fixture = TestBed.createComponent(TestComponent);
-        component = fixture.componentInstance;
-        const configRequest = httpMock.expectOne('config');
-        const config: AppConfig = { serverTime: new Date().getTime() };
-        configRequest.flush(config);
+  beforeEach(() => {
+    configService.init();
+    fixture = TestBed.createComponent(TestComponent);
+    component = fixture.componentInstance;
+    const configRequest = httpMock.expectOne('config');
+    const config: AppConfig = { serverTime: new Date().getTime() };
+    configRequest.flush(config);
 
-        // httpMock.verify();
-    });
+    // httpMock.verify();
+  });
 
-    fit("shows a simple meta", () => {
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            // let card = fixture.debugElement.query(By.css('mat-card-title'));
-            // expect(card).toBeTruthy();
-            // const content = card.query(By.css('div[content]'));
-            // expect(content).toBeFalsy();
+  it("shows a simple meta", () => {
+    fixture.detectChanges();
 
-            // htmlElement = debugElement.nativeElement;
-            // console.log(htmlElement.innerHTML)
-        });
-    });
+    const card = fixture.debugElement.query(By.css('mat-card-title'));
+    expect(card).toBeTruthy();
+
+    const metaName = fixture.debugElement.query(By.css('kd-property.object-meta-name div.kd-property-value'));
+    expect(metaName).toBeTruthy();
+    expect(metaName.nativeElement.textContent === miniName);
+
+  });
 
 });

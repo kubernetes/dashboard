@@ -12,31 +12,33 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {CanIResponse} from '@api/backendapi';
-import {Observable} from 'rxjs/Observable';
-import {KNOWN_ERRORS} from '../../errors/errors';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { CanIResponse } from '@api/backendapi';
+import { Observable } from 'rxjs/Observable';
+import { KNOWN_ERRORS } from '../../errors/errors';
+
+import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class AuthorizerService {
   authorizationSubUrl_ = '/cani';
 
-  constructor(private readonly http_: HttpClient) {}
+  constructor(private readonly http_: HttpClient) { }
 
   proxyGET<T>(url: string): Observable<T> {
     return this.http_.get<CanIResponse>(`${url}${this.authorizationSubUrl_}`)
-        .switchMap<CanIResponse, T>(response => {
-          if (!response.allowed) {
-            // TODO localize
-            return Observable.throw(KNOWN_ERRORS.unauthorized);
-          }
+      .switchMap<CanIResponse, T>(response => {
+        if (!response.allowed) {
+          // TODO localize
+          return Observable.throw(KNOWN_ERRORS.unauthorized);
+        }
 
-          return this.http_.get<T>(url);
-        })
-        .catch(e => {
-          return Observable.throw(e);
-        });
+        return this.http_.get<T>(url);
+      })
+      .catch(e => {
+        return Observable.throw(e);
+      });
   }
 
   // getAccessForbiddenError() {
