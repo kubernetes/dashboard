@@ -15,12 +15,45 @@
 package cronjob_test
 
 import (
-  "testing"
-  "github.com/kubernetes/dashboard/src/app/backend/resource/cronjob"
-  batch "k8s.io/api/batch/v1beta1"
-  metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-  "k8s.io/client-go/kubernetes/fake"
+"testing"
+"github.com/kubernetes/dashboard/src/app/backend/resource/cronjob"
+batch "k8s.io/api/batch/v1beta1"
+metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+"k8s.io/client-go/kubernetes/fake"
+"k8s.io/apimachinery/pkg/api/errors"
+"strings"
 )
+
+
+func TestTriggerCronJobWithInvalidName(t *testing.T) {
+  client := fake.NewSimpleClientset()
+
+  err := cronjob.TriggerCronJob(client, namespace, "invalidName")
+  if !errors.IsNotFound(err) {
+    t.Error("TriggerCronJob should return error when invalid name is passed")
+  }
+}
+
+//create a job from a cronjob which has a 52 character name (max length)
+func TestTriggerCronJobWithLongName(t *testing.T) {
+  longName := strings.Repeat("test", 13)
+
+  cron := batch.CronJob{
+    ObjectMeta: metaV1.ObjectMeta{
+      Name:      longName,
+      Namespace: namespace,
+      Labels:    labels,
+    }, TypeMeta: metaV1.TypeMeta{
+      Kind:       "CronJob",
+      APIVersion: "v1",
+    }}
+
+  client := fake.NewSimpleClientset(&cron)
+  err := cronjob.TriggerCronJob(client, namespace, longName)
+  if err != nil {
+    t.Error(err)
+  }
+}
 
 func TestTriggerCronJob(t *testing.T) {
   cron := batch.CronJob{
@@ -34,6 +67,18 @@ func TestTriggerCronJob(t *testing.T) {
     }}
 
   client := fake.NewSimpleClientset(&cron)
-  cronjob.TriggerCronJob(client, namespace, name)
-  cronjob.TriggerCronJob(client, name, namespace)
+
+  err := cronjob.TriggerCronJob(client, namespace, name)
+  if err != nil {
+    t.Error(err)
+  }
+
+  //check if client has the newly triggered job
+  list, err := client.BatchV1().Jobs(namespace).List(metaV1.ListOptions{})
+  if err != nil {
+    t.Error(err)
+  }
+  if len(list.Items) != 1 {
+    t.Error(err)
+  }
 }
