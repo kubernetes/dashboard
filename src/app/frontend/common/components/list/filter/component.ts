@@ -17,7 +17,6 @@ import "rxjs/add/operator/debounceTime";
 import "rxjs/add/operator/distinctUntilChanged";
 import { Subject } from 'rxjs/Subject';
 
-
 @Component({
   selector: 'kd-card-list-filter',
   templateUrl: './template.html',

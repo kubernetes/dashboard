@@ -18,8 +18,6 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { environment } from './environments/environment';
 import { RootModule } from './index.module';
 
-import 'rxjs/add/operator/startsWith';
-
 if (environment.production) {
   enableProdMode();
 }
