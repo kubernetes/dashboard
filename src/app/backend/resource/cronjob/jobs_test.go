@@ -56,15 +56,24 @@ func TestTriggerCronJobWithLongName(t *testing.T) {
 }
 
 func TestTriggerCronJob(t *testing.T) {
+
   cron := batch.CronJob{
     ObjectMeta: metaV1.ObjectMeta{
       Name:      name,
       Namespace: namespace,
-      Labels:    labels,
     }, TypeMeta: metaV1.TypeMeta{
       Kind:       "CronJob",
       APIVersion: "v1",
-    }}
+    }, Spec: batch.CronJobSpec{
+      Schedule: "* * * * *",
+      JobTemplate: batch.JobTemplateSpec{
+        ObjectMeta: metaV1.ObjectMeta{
+          Namespace: namespace,
+          Labels:    labels,
+        },
+      },
+    },
+  }
 
   client := fake.NewSimpleClientset(&cron)
 
