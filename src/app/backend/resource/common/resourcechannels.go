@@ -26,6 +26,7 @@ import (
 	storage "k8s.io/api/storage/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
+	networkpolicy "k8s.io/api/networking/v1"
 )
 
 // ResourceChannels struct holds channels to resource lists. Each list channel is paired with
@@ -117,6 +118,9 @@ type ResourceChannels struct {
 
 	// List and error channels to ClusterRoleBindings
 	ClusterRoleBindingList ClusterRoleBindingListChannel
+
+	// List and error channels to NetworkPolicy
+	NetworkPolicyList NetworkPolicyListChannel
 }
 
 // ServiceListChannel is a list and error channels to Services.
@@ -904,6 +908,30 @@ func GetStorageClassListChannel(client client.Interface, numReads int) StorageCl
 
 	go func() {
 		list, err := client.StorageV1().StorageClasses().List(api.ListEverything)
+		for i := 0; i < numReads; i++ {
+			channel.List <- list
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
+type NetworkPolicyListChannel struct{
+	List chan *networkpolicy.NetworkPolicyList
+	Error chan error
+
+}
+
+
+func GetNetworkPolicyListChannel(client client.Interface,nsQuery *NamespaceQuery, numReads int) NetworkPolicyListChannel{
+	channel :=NetworkPolicyListChannel{
+		List: make(chan *networkpolicy.NetworkPolicyList,numReads),
+		Error: make(chan error, numReads),
+	}
+
+	go func(){
+		list, err :=client.NetworkingV1().NetworkPolicies(nsQuery.ToRequestParam()).List(api.ListEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
