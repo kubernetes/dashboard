@@ -139,10 +139,17 @@ func TriggerCronJob(client client.Interface,
     labels[k] = v
   }
 
+  //job name cannot exceed DNS1053LabelMaxLength (52 characters)
+  var newJobName string
+  if (len(cronJob.Name) < 42) {
+    newJobName = cronJob.Name + "-manual-" + rand.String(3)
+  } else {
+    newJobName = cronJob.Name[0:41] + "-manual-" + rand.String(3)
+  }
+
   jobToCreate := &batch.Job{
     ObjectMeta: metaV1.ObjectMeta{
-      // job name cannot exceed DNS1053LabelMaxLength (52 characters)
-      Name:        cronJob.Name + "-manual-" + rand.String(3),
+      Name:        newJobName,
       Namespace:   namespace,
       Annotations: annotations,
       Labels:      labels,
