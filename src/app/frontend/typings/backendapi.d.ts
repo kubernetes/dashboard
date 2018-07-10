@@ -295,7 +295,7 @@ export interface ReplicaSetDetail extends ResourceDetail {
 
 export interface ResourceQuotaDetail extends ResourceDetail {
   scopes: string[];
-  statusList: { [key: string]: ResourceQuotaStatus };
+  statusList: {[key: string]: ResourceQuotaStatus};
 }
 
 export interface DeploymentDetail extends ResourceDetail {
@@ -366,7 +366,7 @@ export interface SecretDetail extends ResourceDetail {
   data: StringMap;
 }
 
-export interface IngressDetail extends ResourceDetail { }
+export interface IngressDetail extends ResourceDetail {}
 
 export interface PersistentVolumeClaimDetail extends ResourceDetail {
   status: string;

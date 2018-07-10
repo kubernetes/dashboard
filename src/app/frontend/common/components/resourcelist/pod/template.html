@@ -14,18 +14,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-card role="table" [hidden]="isHidden()">
-  <div title fxLayout="row">Pods</div>
+<kd-card role="table"
+         [hidden]="isHidden()">
+  <div title
+       fxLayout="row">Pods</div>
   <div description>
     <span class="kd-muted-light">Items:&nbsp;</span>{{totalItems}}</div>
   <div actions>
     <kd-card-list-filter></kd-card-list-filter>
   </div>
 
-  <div content [hidden]="showZeroState()">
-    <div kdLoadingSpinner [isLoading]="isLoading"></div>
+  <div content
+       [hidden]="showZeroState()">
+    <div kdLoadingSpinner
+         [isLoading]="isLoading"></div>
 
-    <mat-table [dataSource]="getData()" matSort matSortActive="age" matSortDisableClear matSortDirection="asc">
+    <mat-table [dataSource]="getData()"
+               matSort
+               matSortActive="age"
+               matSortDisableClear
+               matSortDirection="asc">
       <ng-container matColumnDef="statusicon">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let pod; let index=index">
@@ -42,15 +50,19 @@ limitations under the License.
       </ng-container>
 
       <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">Name</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         mat-sort-header
+                         disableClear="true">Name</mat-header-cell>
         <mat-cell *matCellDef="let pod">
-          <a (click)="$event.stopPropagation()" [href]="getDetailsHref(pod.objectMeta.name, pod.objectMeta.namespace)">
+          <a (click)="$event.stopPropagation()"
+             [href]="getDetailsHref(pod.objectMeta.name, pod.objectMeta.namespace)">
             {{pod.objectMeta.name}}
           </a>
         </mat-cell>
       </ng-container>
 
-      <ng-container *ngIf="shouldShowColumn('namespace')" matColumnDef="namespace">
+      <ng-container *ngIf="shouldShowColumn('namespace')"
+                    matColumnDef="namespace">
         <mat-header-cell *matHeaderCellDef>Namespace</mat-header-cell>
         <mat-cell *matCellDef="let pod">{{pod.objectMeta.namespace}}</mat-cell>
       </ng-container>
@@ -68,7 +80,9 @@ limitations under the License.
       </ng-container>
 
       <ng-container matColumnDef="status">
-        <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">Status</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         mat-sort-header
+                         disableClear="true">Status</mat-header-cell>
         <mat-cell *matCellDef="let pod">{{getDisplayStatus(pod)}}</mat-cell>
       </ng-container>
 
@@ -80,7 +94,9 @@ limitations under the License.
       </ng-container>
 
       <ng-container matColumnDef="age">
-        <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">
+        <mat-header-cell *matHeaderCellDef
+                         mat-sort-header
+                         disableClear="true">
           Age
         </mat-header-cell>
         <mat-cell *matCellDef="let pod">
@@ -88,22 +104,32 @@ limitations under the License.
         </mat-cell>
       </ng-container>
 
-      <ng-container *ngFor="let col of getActionColumns()" [matColumnDef]="col.name">
+      <ng-container *ngFor="let col of getActionColumns()"
+                    [matColumnDef]="col.name">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let pod">
-          <kd-dynamic-cell [component]="col.component" [resource]="pod"></kd-dynamic-cell>
+          <kd-dynamic-cell [component]="col.component"
+                           [resource]="pod"></kd-dynamic-cell>
         </mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="getColumns()"></mat-header-row>
-      <mat-row #matrow (mouseover)="onRowOver(index)" (mouseleave)="onRowLeave()" (click)="expand(index, row)"
-        [ngClass]="{'kd-no-bottom-border': isRowExpanded(index), 'kd-clickable': hasErrors(row)}" *matRowDef="let row; columns: getColumns(); let index=index"></mat-row>
+      <mat-row #matrow
+               (mouseover)="onRowOver(index)"
+               (mouseleave)="onRowLeave()"
+               (click)="expand(index, row)"
+               [ngClass]="{'kd-no-bottom-border': isRowExpanded(index), 'kd-clickable': hasErrors(row)}"
+               *matRowDef="let row; columns: getColumns(); let index=index"></mat-row>
     </mat-table>
 
-    <mat-paginator [length]="totalItems" [pageSize]="itemsPerPage" [hidePageSize]="true" [showFirstLastButtons]="true"></mat-paginator>
+    <mat-paginator [length]="totalItems"
+                   [pageSize]="itemsPerPage"
+                   [hidePageSize]="true"
+                   [showFirstLastButtons]="true"></mat-paginator>
   </div>
 
-  <div content [hidden]="!showZeroState()">
+  <div content
+       [hidden]="!showZeroState()">
     <kd-list-zero-state></kd-list-zero-state>
   </div>
 </kd-card>

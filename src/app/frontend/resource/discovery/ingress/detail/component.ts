@@ -12,17 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { IngressDetail } from '@api/backendapi';
-import { StateService } from '@uirouter/core';
-import { Subscription } from 'rxjs/Subscription';
-
-import { ActionbarService, ResourceMeta } from '../../../../common/services/global/actionbar';
-import { NotificationsService } from '../../../../common/services/global/notifications';
-import { EndpointManager, Resource } from '../../../../common/services/resource/endpoint';
-import { NamespacedResourceService } from '../../../../common/services/resource/resource';
-
 import 'rxjs/add/operator/startWith';
+
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {IngressDetail} from '@api/backendapi';
+import {StateService} from '@uirouter/core';
+import {Subscription} from 'rxjs/Subscription';
+
+import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
+import {NotificationsService} from '../../../../common/services/global/notifications';
+import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
+import {NamespacedResourceService} from '../../../../common/services/resource/resource';
 
 @Component({
   selector: 'kd-ingress-detail',
@@ -35,22 +35,22 @@ export class IngressDetailComponent implements OnInit, OnDestroy {
   isInitialized = false;
 
   constructor(
-    private readonly ingress_: NamespacedResourceService<IngressDetail>,
-    private readonly actionbar_: ActionbarService, private readonly state_: StateService,
-    private readonly notifications_: NotificationsService) { }
+      private readonly ingress_: NamespacedResourceService<IngressDetail>,
+      private readonly actionbar_: ActionbarService, private readonly state_: StateService,
+      private readonly notifications_: NotificationsService) {}
 
   ngOnInit(): void {
     this.ingressName_ = this.state_.params.resourceName;
     this.ingressSubscription_ =
-      this.ingress_
-        .get(EndpointManager.resource(Resource.ingress, true).detail(), this.ingressName_)
-        .startWith({})
-        .subscribe((d: IngressDetail) => {
-          this.ingress = d;
-          this.notifications_.pushErrors(d.errors);
-          this.actionbar_.onInit.emit(new ResourceMeta('Ingress', d.objectMeta, d.typeMeta));
-          this.isInitialized = true;
-        });
+        this.ingress_
+            .get(EndpointManager.resource(Resource.ingress, true).detail(), this.ingressName_)
+            .startWith({})
+            .subscribe((d: IngressDetail) => {
+              this.ingress = d;
+              this.notifications_.pushErrors(d.errors);
+              this.actionbar_.onInit.emit(new ResourceMeta('Ingress', d.objectMeta, d.typeMeta));
+              this.isInitialized = true;
+            });
   }
 
   ngOnDestroy(): void {

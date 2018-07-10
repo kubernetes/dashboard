@@ -22,7 +22,11 @@ module.exports = function(config) {
     basePath: path.join(__dirname, '..'),
     files: [
       // Include a Material theme in the test suite.
-      { pattern: './node_modules/@angular/material/prebuilt-themes/indigo-pink.css', included: true, watched: true }
+      {
+        pattern: './node_modules/@angular/material/prebuilt-themes/indigo-pink.css',
+        included: true,
+        watched: true
+      }
     ],
 
     logLevel: config.LOG_INFO,
@@ -46,7 +50,8 @@ module.exports = function(config) {
 
     coverageIstanbulReporter: {
       dir: path.join(__dirname, '..', 'coverage'),
-      dir: require('path').join(__dirname, 'coverage'), reports: ['html', 'lcovonly'],
+      dir: require('path').join(__dirname, 'coverage'),
+      reports: ['html', 'lcovonly'],
       'report-config': {
         html: {subdir: 'html'},
       },

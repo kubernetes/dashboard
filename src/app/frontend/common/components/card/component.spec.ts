@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { CardComponent } from './component';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement} from '@angular/core';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {MatCardModule, MatDividerModule, MatIconModule, MatTooltip, MatTooltipModule} from '@angular/material';
+import {By} from '@angular/platform-browser';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
-import { Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
-import { By } from "@angular/platform-browser";
-
-import { MatCardModule, MatDividerModule, MatIconModule, MatTooltip, MatTooltipModule } from '@angular/material';
+import {CardComponent} from './component';
 
 @Component({
   selector: 'test',
@@ -35,25 +34,25 @@ import { MatCardModule, MatDividerModule, MatIconModule, MatTooltip, MatTooltipM
 
 })
 class TestComponent {
-  title = "my-card-default-title";
+  title = 'my-card-default-title';
   isExpanded = true;
   isExpandable = true;
 }
 
 describe('CardComponent', () => {
-
   let component: TestComponent;
   let fixture: ComponentFixture<TestComponent>;
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [CardComponent, TestComponent
-      ],
-      imports: [
-        MatIconModule, MatCardModule, MatDividerModule, MatTooltipModule, NoopAnimationsModule
-      ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    }).compileComponents();
+    TestBed
+        .configureTestingModule({
+          declarations: [CardComponent, TestComponent],
+          imports: [
+            MatIconModule, MatCardModule, MatDividerModule, MatTooltipModule, NoopAnimationsModule
+          ],
+          schemas: [CUSTOM_ELEMENTS_SCHEMA]
+        })
+        .compileComponents();
   }));
 
   beforeEach(() => {
@@ -61,7 +60,7 @@ describe('CardComponent', () => {
     component = fixture.componentInstance;
   });
 
-  it("shows the title div when withTitle==true", () => {
+  it('shows the title div when withTitle==true', () => {
     const title = 'my-card-default-expanded';
 
     component.title = title;
@@ -74,10 +73,9 @@ describe('CardComponent', () => {
     expect(content).toBeFalsy();
     const titleNative = card.query(By.css('div[title] ')).nativeElement;
     expect(titleNative.innerHTML).toBe(title);
-
   });
 
-  it("hides the title div when withTitle==false", () => {
+  it('hides the title div when withTitle==false', () => {
     const title = 'my-card-default-not-expanded';
 
     component.title = title;
@@ -89,7 +87,5 @@ describe('CardComponent', () => {
     expect(content).toBeFalsy();
     const titleNative = card.query(By.css('div[title] ')).nativeElement;
     expect(titleNative.innerHTML).toBe(title);
-
   });
-
 });
