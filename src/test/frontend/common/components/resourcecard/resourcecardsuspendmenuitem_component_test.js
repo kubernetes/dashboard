@@ -21,7 +21,7 @@ describe('Suspend resource menu item', () => {
   let scope;
   let kdSuspendService;
   beforeEach(() => {
-    angular.mock.module(resourceCardModule.name)
+    angular.mock.module(resourceCardModule.name);
     angular.mock.inject(($rootScope, $componentController, $q, _kdSuspendService_) => {
       kdSuspendService = _kdSuspendService_;
       scope = $rootScope;
