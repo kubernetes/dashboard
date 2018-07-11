@@ -19,6 +19,7 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	networkpolicy "k8s.io/api/networking/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
@@ -76,6 +77,46 @@ func TestToNetworkPolicy(t *testing.T) {
 
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("toNetworkPolicy(%#v) == \ngot %#v, \nexpected %#v", c.networkPolicy, actual, c.expected)
+		}
+	}
+
+}
+
+func TestGetProperty(t *testing.T) {
+	cases := []struct {
+		networkPolicyCell *NetworkPolicyCell
+		expected          NetworkPolicyCell
+	}{
+		{
+			networkPolicyCell: &NetworkPolicyCell{
+				ObjectMeta: metaV1.ObjectMeta{
+					Name:      "networkpolicy",
+					Namespace: "kube",
+				},
+			},
+			expected: NetworkPolicyCell{
+				ObjectMeta: metaV1.ObjectMeta{
+					Name:      "networkpolicy",
+					Namespace: "kube",
+				},
+			},
+		},
+	}
+
+	for _, c := range cases {
+		actual := c.networkPolicyCell.GetProperty(dataselect.NameProperty)
+		if actual != dataselect.StdComparableString(c.expected.Name) {
+			t.Error("GetProperty name property error")
+		}
+
+		actual = c.networkPolicyCell.GetProperty(dataselect.NamespaceProperty)
+		if actual != dataselect.StdComparableString(c.expected.Namespace) {
+			t.Error("GetProperty namespace property error")
+		}
+
+		actual = c.networkPolicyCell.GetProperty(dataselect.StatusProperty)
+		if actual != nil {
+			t.Error("GetProperty error")
 		}
 	}
 
