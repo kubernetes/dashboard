@@ -38,12 +38,13 @@ func TestGetNetworkPolicyList(t *testing.T) {
 						ObjectMeta: metaV1.ObjectMeta{
 							Name:      "networkpolicy",
 							Namespace: "default",
-							Labels:    map[string]string{},
+							Labels:    map[string]string{"app": "prometheus", "role": "backend"},
 						},
 						Spec: networking.NetworkPolicySpec{
 							PodSelector: metaV1.LabelSelector{
 								MatchLabels: map[string]string{"matchKey": "value"},
 							},
+							PolicyTypes: []networking.PolicyType{networking.PolicyTypeEgress, networking.PolicyTypeIngress},
 						},
 					},
 				},
@@ -56,12 +57,13 @@ func TestGetNetworkPolicyList(t *testing.T) {
 						ObjectMeta: api.ObjectMeta{
 							Name:      "networkpolicy",
 							Namespace: "default",
-							Labels:    map[string]string{},
+							Labels:    map[string]string{"app": "prometheus", "role": "backend"},
 						},
 						Spec: NetworkPolicySpec{
 							PodSelector: metaV1.LabelSelector{
 								MatchLabels: map[string]string{"matchKey": "value"},
 							},
+							PolicyTypes: []PolicyType{PolicyTypeEgress, PolicyTypeIngress},
 						},
 						TypeMeta: api.TypeMeta{Kind: api.ResourceKindNetworkPolicy},
 					},
@@ -73,7 +75,7 @@ func TestGetNetworkPolicyList(t *testing.T) {
 
 	for _, c := range cases {
 		fakeClient := fake.NewSimpleClientset(c.networkPolicyList)
-		actual, _ := GetNetworkPolicyList(fakeClient, common.NewNamespaceQuery(nil), dataselect.NoDataSelect)
+		actual, _ := GetNetworkPolicyList(fakeClient, common.NewNamespaceQuery([]string{"default"}), dataselect.NoDataSelect)
 		actions := fakeClient.Actions()
 		if len(actions) != len(c.expectedActions) {
 			t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,

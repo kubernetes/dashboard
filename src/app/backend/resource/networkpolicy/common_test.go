@@ -45,24 +45,26 @@ func TestToNetworkPolicy(t *testing.T) {
 				ObjectMeta: metaV1.ObjectMeta{
 					Name:      "networkpolicy",
 					Namespace: "kube",
-					Labels:    map[string]string{},
+					Labels:    map[string]string{"app": "prometheus"},
 				},
 				Spec: networkpolicy.NetworkPolicySpec{
 					PodSelector: metaV1.LabelSelector{
 						MatchLabels: map[string]string{"matchKey": "value"},
 					},
+					PolicyTypes: []networkpolicy.PolicyType{networkpolicy.PolicyTypeEgress, networkpolicy.PolicyTypeIngress},
 				},
 			},
 			expected: NetworkPolicy{
 				ObjectMeta: api.ObjectMeta{
 					Name:      "networkpolicy",
 					Namespace: "kube",
-					Labels:    map[string]string{},
+					Labels:    map[string]string{"app": "prometheus"},
 				},
 				Spec: NetworkPolicySpec{
 					PodSelector: metaV1.LabelSelector{
 						MatchLabels: map[string]string{"matchKey": "value"},
 					},
+					PolicyTypes: []PolicyType{PolicyTypeEgress, PolicyTypeIngress},
 				},
 				TypeMeta: api.TypeMeta{Kind: api.ResourceKindNetworkPolicy},
 			},

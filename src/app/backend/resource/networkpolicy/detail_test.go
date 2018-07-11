@@ -35,24 +35,26 @@ func TestGetNetworkPolicy(t *testing.T) {
 				ObjectMeta: metaV1.ObjectMeta{
 					Name:      "networkpolicy",
 					Namespace: "kube",
-					Labels:    map[string]string{},
+					Labels:    map[string]string{"app": "prometheus"},
 				},
 				Spec: networkpolicy.NetworkPolicySpec{
 					PodSelector: metaV1.LabelSelector{
 						MatchLabels: map[string]string{"matchKey": "value"},
 					},
+					PolicyTypes: []networkpolicy.PolicyType{networkpolicy.PolicyTypeEgress, networkpolicy.PolicyTypeIngress},
 				},
 			},
 			expected: &NetworkPolicy{
 				ObjectMeta: api.ObjectMeta{
 					Name:      "networkpolicy",
 					Namespace: "kube",
-					Labels:    map[string]string{},
+					Labels:    map[string]string{"app": "prometheus"},
 				},
 				Spec: NetworkPolicySpec{
 					PodSelector: metaV1.LabelSelector{
 						MatchLabels: map[string]string{"matchKey": "value"},
 					},
+					PolicyTypes: []PolicyType{PolicyTypeEgress, PolicyTypeIngress},
 				},
 				TypeMeta: api.TypeMeta{Kind: api.ResourceKindNetworkPolicy},
 			},
@@ -61,10 +63,16 @@ func TestGetNetworkPolicy(t *testing.T) {
 
 	for _, c := range cases {
 		fakeClient := fake.NewSimpleClientset(c.networkPolicy)
-		actual, _ := GetNetworkPolicy(fakeClient, common.NewNamespaceQuery(nil), "networkpolicy")
+		actual, _ := GetNetworkPolicy(fakeClient, common.NewNamespaceQuery([]string{"kube"}), "networkpolicy")
 
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("GetNetworkPolicy(%#v) == \ngot %#v, \nexpected %#v", c.networkPolicy, actual, c.expected)
+		}
+
+		fakeResult, _ := GetNetworkPolicy(fakeClient, common.NewNamespaceQuery([]string{"default"}), "networkpolicy")
+
+		if fakeResult != nil {
+			t.Error("GetNetworkPolicy result error")
 		}
 	}
 }
