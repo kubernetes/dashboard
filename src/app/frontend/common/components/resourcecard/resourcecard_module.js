@@ -16,6 +16,7 @@ import resourceModule from '../../resource/module';
 
 import {logsButtonComponent} from './logsbutton_component';
 import {resourceCardComponent} from './resourcecard_component';
+import {SuspendService} from './resourcecard_service';
 import {resourceCardColumnComponent} from './resourcecardcolumn_component';
 import {resourceCardColumnsComponent} from './resourcecardcolumns_component';
 import {resourceCardDeleteMenuItemComponent} from './resourcecarddeletemenuitem_component';
@@ -45,6 +46,7 @@ export default angular
           'angularUtils.directives.dirPagination',
           resourceModule.name,
         ])
+    .service('kdSuspendService', SuspendService)
     .component('kdLogsButton', logsButtonComponent)
     .component('kdResourceCard', resourceCardComponent)
     .component('kdResourceCardList', resourceCardListComponent)

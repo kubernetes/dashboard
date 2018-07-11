@@ -21,89 +21,32 @@ export class ResourceCardSuspendMenuItemController {
    * @param {!ui.router.$state} $state
    * @param {!angular.$log} $log
    * @param {!angular.$resource} $resource
+   * @param {!./resourcecard_service.SuspendService} kdSuspendService
    * @ngInject
    */
-  constructor($state, $log, $resource) {
+  constructor($state, $log, $resource, kdSuspendService) {
     /**
      * Initialized from require just before $onInit is called.
      * @export {!./resourcecard_component.ResourceCardController}
      */
     this.resourceCardCtrl;
 
-    /** @private {!ui.router.$state}} */
-    this.state_ = $state;
-
-    /** @private {!angular.$log} */
-    this.log_ = $log;
-
-    /** @private {!angular.$resource} */
-    this.resource_ = $resource;
-
     /** @export {!backendApi.CronJob} */
     this.cron;
+
+    /** @private {!./resourcecard_service.SuspendService} */
+    this.suspendService_ = kdSuspendService;
   }
 
   /**
    * @export
    */
   disable() {
-    return this.disablePromised()
-        .update(this.successDisable_.bind(this), this.error_.bind(this))
-        .$promise;
+    return this.suspendService_.disable(this.cron);
   }
 
   enable() {
-    return this.enablePromised()
-        .update(this.successEnable_.bind(this), this.error_.bind(this))
-        .$promise;
-  }
-
-  disablePromised() {
-    return this.resource_(
-        `api/v1/suspend/${this.cron.objectMeta.namespace}/${this.cron.objectMeta.name}/`,
-        {'suspend': 'true'}, {
-          update: {
-            // redefine update action defaults
-            method: 'PUT',
-            transformRequest: function(headers) {
-              headers = angular.extend({}, headers, {'Content-Type': 'application/json'});
-              return angular.toJson(headers);
-            },
-          },
-        });
-  }
-
-  enablePromised() {
-    return this.resource_(
-        `api/v1/suspend/${this.cron.objectMeta.namespace}/${this.cron.objectMeta.name}/`,
-        {'suspend': 'false'}, {
-          update: {
-            // redefine update action defaults
-            method: 'PUT',
-            transformRequest: function(headers) {
-              headers = angular.extend({}, headers, {'Content-Type': 'application/json'});
-              return angular.toJson(headers);
-            },
-          },
-        });
-  }
-
-  successDisable_() {
-    this.log_.info(`Successfully updated cronjob suspension to true`);
-    this.state_.reload();
-  }
-
-  successEnable_() {
-    this.log_.info(`Successfully updated cronjob suspension to false`);
-    this.state_.reload();
-  }
-
-  /**
-   * @param {!angular.$http.Response} err
-   * @private
-   */
-  error_(err) {
-    this.log_.error(err);
+    return this.suspendService_.enable(this.cron);
   }
 }
 
