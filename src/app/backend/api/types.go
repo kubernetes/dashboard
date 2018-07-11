@@ -129,7 +129,7 @@ const (
 	ResourceKindRbacRoleBinding         = "rolebinding"
 	ResourceKindRbacClusterRoleBinding  = "clusterrolebinding"
 	ResourceKindEndpoint                = "endpoint"
-  ResourceKindNetworkPolicy           = "networkpolicy"
+	ResourceKindNetworkPolicy           = "networkpolicy"
 )
 
 // ClientType represents type of client that is used to perform generic operations on resources.
@@ -139,14 +139,14 @@ type ClientType string
 
 // List of client types supported by the UI.
 const (
-	ClientTypeDefault           = "restclient"
-	ClientTypeExtensionClient   = "extensionclient"
-	ClientTypeAppsClient        = "appsclient"
-	ClientTypeBatchClient       = "batchclient"
-	ClientTypeBetaBatchClient   = "betabatchclient"
-	ClientTypeAutoscalingClient = "autoscalingclient"
-	ClientTypeStorageClient     = "storageclient"
-  ClientTypeNetworkPolicyClient = "networkpolicyclient"
+	ClientTypeDefault             = "restclient"
+	ClientTypeExtensionClient     = "extensionclient"
+	ClientTypeAppsClient          = "appsclient"
+	ClientTypeBatchClient         = "batchclient"
+	ClientTypeBetaBatchClient     = "betabatchclient"
+	ClientTypeAutoscalingClient   = "autoscalingclient"
+	ClientTypeStorageClient       = "storageclient"
+	ClientTypeNetworkPolicyClient = "networkpolicyclient"
 )
 
 // Mapping from resource kind to K8s apiserver API path. This is mostly pluralization, because
@@ -182,7 +182,7 @@ var KindToAPIMapping = map[string]struct {
 	ResourceKindStatefulSet:             {"statefulsets", ClientTypeAppsClient, true},
 	ResourceKindStorageClass:            {"storageclasses", ClientTypeStorageClient, false},
 	ResourceKindEndpoint:                {"endpoints", ClientTypeDefault, true},
-  ResourceKindNetworkPolicy:           {"networkpolicies", ClientTypeNetworkPolicyClient, true},
+	ResourceKindNetworkPolicy:           {"networkpolicies", ClientTypeNetworkPolicyClient, true},
 }
 
 // IsSelectorMatching returns true when an object with the given selector targets the same
