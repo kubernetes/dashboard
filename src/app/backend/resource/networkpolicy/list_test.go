@@ -95,3 +95,34 @@ func TestGetNetworkPolicyList(t *testing.T) {
 		}
 	}
 }
+
+func TestDeleteNetworkPolicy(t *testing.T) {
+	cases := []struct {
+		networkPolicy *networking.NetworkPolicy
+	}{
+		{
+			networkPolicy: &networking.NetworkPolicy{
+				ObjectMeta: metaV1.ObjectMeta{
+					Name:      "networkpolicy",
+					Namespace: "kube",
+					Labels:    map[string]string{"app": "prometheus"},
+				},
+				Spec: networking.NetworkPolicySpec{
+					PodSelector: metaV1.LabelSelector{
+						MatchLabels: map[string]string{"matchKey": "value"},
+					},
+					PolicyTypes: []networking.PolicyType{networking.PolicyTypeEgress, networking.PolicyTypeIngress},
+				},
+			},
+		},
+	}
+
+	for _, c := range cases {
+		fakeClient := fake.NewSimpleClientset(c.networkPolicy)
+		result := DeleteNetworkPolicy(fakeClient, common.NewNamespaceQuery([]string{"kube"}), "networkpolicy")
+
+		if result != nil {
+			t.Error("DeleteNetworkPolicy error")
+		}
+	}
+}
