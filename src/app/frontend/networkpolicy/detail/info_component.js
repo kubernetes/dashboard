@@ -38,6 +38,6 @@ export const networkPolicyInfoComponent = {
   templateUrl: 'networkpolicy/detail/info.html',
   bindings: {
     /** {!backendApi.NetworkPolicy} */
-    'networkPolicy': '=',
+    'networkPolicy': '<',
   },
 };
