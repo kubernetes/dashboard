@@ -18,13 +18,10 @@
  */
 export class ResourceCardSuspendMenuItemController {
   /**
-   * @param {!ui.router.$state} $state
-   * @param {!angular.$log} $log
-   * @param {!angular.$resource} $resource
    * @param {!./resourcecard_service.SuspendService} kdSuspendService
    * @ngInject
    */
-  constructor($state, $log, $resource, kdSuspendService) {
+  constructor(kdSuspendService) {
     /**
      * Initialized from require just before $onInit is called.
      * @export {!./resourcecard_component.ResourceCardController}
@@ -55,7 +52,7 @@ export class ResourceCardSuspendMenuItemController {
  */
 export const resourceCardSuspendMenuItemComponent = {
   templateUrl: 'common/components/resourcecard/resourcecardsuspendmenuitem.html',
-  bindings: {'resource': '<', 'cron': '<'},
+  bindings: {'cron': '<'},
   bindToController: true,
   require: {
     'resourceCardCtrl': '^kdResourceCard',

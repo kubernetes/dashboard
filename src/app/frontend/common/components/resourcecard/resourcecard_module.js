@@ -30,8 +30,9 @@ import {resourceCardListFooterComponent} from './resourcecardlistfooter_componen
 import {resourceCardListHeaderComponent} from './resourcecardlistheader_component';
 import {resourceCardListPaginationComponent} from './resourcecardlistpagination_component';
 import {resourceCardMenuComponent} from './resourcecardmenu_component';
-import {resourceCardTriggerMenuItemComponent} from './resourcecardtriggermenuitem_component';
 import {resourceCardSuspendMenuItemComponent} from './resourcecardsuspendmenuitem_component';
+import {resourceCardTriggerMenuItemComponent} from './resourcecardtriggermenuitem_component';
+
 
 /**
  * Module containing common components for resource cards. A resource card should be used
