@@ -12,6 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'rxjs/add/operator/first';
+import 'rxjs/add/operator/switchMap';
+
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {onLogin} from '@api/frontendapi';
@@ -24,6 +27,7 @@ import {AuthResponse, CsrfToken, K8sError, LoginSpec, LoginStatus} from 'typings
 import {errorState} from '../../../error/state';
 import {CONFIG} from '../../../index.config';
 import {overviewState} from '../../../overview/state';
+
 import {CsrfTokenService} from './csrftoken';
 
 @Injectable()

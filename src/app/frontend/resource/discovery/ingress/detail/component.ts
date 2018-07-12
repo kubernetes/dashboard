@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'rxjs/add/operator/startWith';
+
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {IngressDetail} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
