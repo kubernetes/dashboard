@@ -72,7 +72,7 @@ describe('DokcerImageReference', () => {
     expect(result).toEqual('1');
   });
 
-  it('should return empty string when containerImage is not empty and does not containe `:`' +
+  it('should return empty string when containerImage is not empty and does not contain `:`' +
          ' delimiter after `/` delimiter',
      () => {
        // given
@@ -86,7 +86,7 @@ describe('DokcerImageReference', () => {
      });
 
   it('should return part of the string after `:` delimiter when containerImage is not empty' +
-         'and containe two `/` delimiters',
+         'and contain two `/` delimiters',
      () => {
        // given
        let reference = 'private.registry:5000/namespace/test:1';
@@ -99,7 +99,7 @@ describe('DokcerImageReference', () => {
      });
 
   it('should return part of the string after last `:` delimiter when containerImage is not empty' +
-         ' and containe two `:` delimiters',
+         ' and contain two `:` delimiters',
      () => {
        // given
        let reference = 'private.registry:5000/test:image:1';
@@ -146,7 +146,7 @@ describe('DokcerImageReference', () => {
        expect(result).toEqual('');
      });
 
-  it('should retrun empty when containerImage is `::`', () => {
+  it('should return empty when containerImage is `::`', () => {
     // given
     let reference = '::';
 
@@ -157,7 +157,7 @@ describe('DokcerImageReference', () => {
     expect(result).toEqual('');
   });
 
-  it('should retrun empty when containerImage is not empty and ends with `:` delimiter', () => {
+  it('should return empty when containerImage is not empty and ends with `:` delimiter', () => {
     // given
     let reference = 'test:';
 
@@ -168,7 +168,7 @@ describe('DokcerImageReference', () => {
     expect(result).toEqual('');
   });
 
-  it('should retrun empty when containerImage is not empty and ends with `/` delimiter', () => {
+  it('should return empty when containerImage is not empty and ends with `/` delimiter', () => {
     // given
     let reference = 'test/';
 

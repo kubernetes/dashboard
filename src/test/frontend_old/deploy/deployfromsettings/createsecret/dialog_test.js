@@ -42,7 +42,7 @@ describe('Create-Secret dialog', () => {
     expect('my-secret32.com'.match(rule)).toBeDefined();
   });
 
-  it('should validate inproper secret names as incorrect', () => {
+  it('should validate improper secret names as incorrect', () => {
     // given the k8s rule for secret names
     let rule = ctrl.secretNamePattern;
 

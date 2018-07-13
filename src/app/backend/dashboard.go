@@ -66,6 +66,7 @@ var (
 	argMetricClientCheckPeriod   = pflag.Int("metric-client-check-period", 30, "Time in seconds that defines how often configured metric client health check should be run. Default: 30 seconds.")
 	argAutoGenerateCertificates  = pflag.Bool("auto-generate-certificates", false, "When set to true, Dashboard will automatically generate certificates used to serve HTTPS. Default: false.")
 	argEnableInsecureLogin       = pflag.Bool("enable-insecure-login", false, "When enabled, Dashboard login view will also be shown when Dashboard is not served over HTTPS. Default: false.")
+	argDisableSkip               = pflag.Bool("disable-skip", false, "When enabled, the skip button on the login page will not be shown. Default: false.")
 	argSystemBanner              = pflag.String("system-banner", "", "When non-empty displays message to Dashboard users. Accepts simple HTML tags. Default: ''.")
 	argSystemBannerSeverity      = pflag.String("system-banner-severity", "INFO", "Severity of system banner. Should be one of 'INFO|WARNING|ERROR'. Default: 'INFO'.")
 	argDisableSettingsAuthorizer = pflag.Bool("disable-settings-authorizer", false, "When enabled, Dashboard settings page will not require user to be logged in and authorized to access settings page.")
@@ -193,7 +194,10 @@ func initAuthManager(clientManager clientapi.ClientManager) authApi.AuthManager 
 		authModes.Add(authApi.Token)
 	}
 
-	return auth.NewAuthManager(clientManager, tokenManager, authModes)
+	// UI logic dictates this should be the inverse of the cli option
+	authenticationSkippable := !args.Holder.GetDisableSkipButton()
+
+	return auth.NewAuthManager(clientManager, tokenManager, authModes, authenticationSkippable)
 }
 
 func initArgHolder() {
@@ -216,6 +220,7 @@ func initArgHolder() {
 	builder.SetAutoGenerateCertificates(*argAutoGenerateCertificates)
 	builder.SetEnableInsecureLogin(*argEnableInsecureLogin)
 	builder.SetDisableSettingsAuthorizer(*argDisableSettingsAuthorizer)
+	builder.SetDisableSkipButton(*argDisableSkip)
 }
 
 /**
@@ -225,7 +230,7 @@ func initArgHolder() {
 func handleFatalInitError(err error) {
 	log.Fatalf("Error while initializing connection to Kubernetes apiserver. "+
 		"This most likely means that the cluster is misconfigured (e.g., it has "+
-		"invalid apiserver certificates or service accounts configuration) or the "+
+		"invalid apiserver certificates or service account's configuration) or the "+
 		"--apiserver-host param points to a server that does not exist. Reason: %s\n"+
 		"Refer to our FAQ and wiki pages for more information: "+
 		"https://github.com/kubernetes/dashboard/wiki/FAQ", err)

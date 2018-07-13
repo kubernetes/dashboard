@@ -43,6 +43,24 @@ type JobList struct {
 	Errors []error `json:"errors"`
 }
 
+type JobStatusType string
+
+const (
+	// JobRunning means the job is still running.
+	JobStatusRunning JobStatusType = "Running"
+	// JobComplete means the job has completed its execution.
+	JobStatusComplete JobStatusType = "Complete"
+	// JobFailed means the job has failed its execution.
+	JobStatusFailed JobStatusType = "Failed"
+)
+
+type JobStatus struct {
+	// Short, machine understandable job status code.
+	Status JobStatusType `json:"status"`
+	// A human-readable description of the status of related job.
+	Message string `json:"message"`
+}
+
 // Job is a presentation layer view of Kubernetes Job resource. This means it is Job plus additional
 // augmented data we can get from other sources
 type Job struct {
@@ -60,6 +78,9 @@ type Job struct {
 
 	// number of parallel jobs defined.
 	Parallelism *int32 `json:"parallelism"`
+
+	// JobStatus contains inferred job status based on job conditions
+	JobStatus JobStatus `json:"jobStatus"`
 }
 
 // GetJobList returns a list of all Jobs in the cluster.
@@ -140,12 +161,24 @@ func ToJobList(jobs []batch.Job, pods []v1.Pod, events []v1.Event, nonCriticalEr
 }
 
 func toJob(job *batch.Job, podInfo *common.PodInfo) Job {
+	jobStatus := JobStatus{Status: JobStatusRunning}
+	for _, condition := range job.Status.Conditions {
+		if condition.Type == batch.JobComplete && condition.Status == v1.ConditionTrue {
+			jobStatus.Status = JobStatusComplete
+			break
+		} else if condition.Type == batch.JobFailed && condition.Status == v1.ConditionTrue {
+			jobStatus.Status = JobStatusFailed
+			jobStatus.Message = condition.Message
+			break
+		}
+	}
 	return Job{
 		ObjectMeta:          api.NewObjectMeta(job.ObjectMeta),
 		TypeMeta:            api.NewTypeMeta(api.ResourceKindJob),
 		ContainerImages:     common.GetContainerImages(&job.Spec.Template.Spec),
 		InitContainerImages: common.GetInitContainerImages(&job.Spec.Template.Spec),
 		Pods:                *podInfo,
+		JobStatus:           jobStatus,
 		Parallelism:         job.Spec.Parallelism,
 	}
 }

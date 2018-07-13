@@ -36,7 +36,7 @@ describe('Create-Namespace dialog', () => {
     // given one existing namespace
     ctrl.namespaces = ['my-namespace'];
 
-    // when entering the same name agian
+    // when entering the same name again
     ctrl.namespace = 'my-namespace';
 
     // then button is disabled
@@ -71,7 +71,7 @@ describe('Create-Namespace dialog', () => {
     expect('my-namspace-with-numbers-234'.match(rule)).toBeDefined();
   });
 
-  it('should validate inproper names as incorrect', () => {
+  it('should validate improper names as incorrect', () => {
     // given the k8s rule for namespace names
     let rule = ctrl.namespacePattern;
 

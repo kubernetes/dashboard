@@ -177,7 +177,7 @@ export class GraphController {
        */
       let startChartUpdatePeriod = function(updatePeriod, timeBetweenUpdates) {
         if (isUpdatingFunctionRunning) {
-          // Don't start another updater oif updating funciton is already running
+          // Don't start another updater oif updating function is already running
           // just the prolong running time of currently running function to required value.
           updateUntil = new Date().valueOf() + updatePeriod;
           return;

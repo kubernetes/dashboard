@@ -112,6 +112,10 @@ func TestGetJobListFromChannels(t *testing.T) {
 						},
 						Status: batch.JobStatus{
 							Active: 7,
+							Conditions: []batch.JobCondition{{
+								Type:   batch.JobFailed,
+								Status: v1.ConditionTrue,
+							}},
 						},
 					},
 				},
@@ -166,6 +170,9 @@ func TestGetJobListFromChannels(t *testing.T) {
 						Failed:   2,
 						Warnings: []common.Event{},
 					},
+					JobStatus: JobStatus{
+						Status: JobStatusRunning,
+					},
 				}, {
 					ObjectMeta: api.ObjectMeta{
 						Name:              "rs-name",
@@ -180,6 +187,9 @@ func TestGetJobListFromChannels(t *testing.T) {
 						Desired:  &completions,
 						Failed:   2,
 						Warnings: []common.Event{},
+					},
+					JobStatus: JobStatus{
+						Status: JobStatusFailed,
 					},
 				}},
 				Errors: []error{},

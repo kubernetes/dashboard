@@ -3,15 +3,15 @@
 
 [[constraint]]
   name = "k8s.io/api"
-  version = "kubernetes-1.8.0"
+  branch = "release-1.9"
 
 [[constraint]]
   name = "k8s.io/apimachinery"
-  version = "kubernetes-1.8.0"
+  branch = "release-1.9"
 
 [[constraint]]
   name = "k8s.io/client-go"
-  version = "v5.0.0"
+  branch = "release-6.0"
 
 [[constraint]]
   name = "k8s.io/heapster"
@@ -25,7 +25,7 @@
   name = "github.com/docker/distribution"
   version = "2.6.2"
 
-[[constraint]]
+[[override]]
   name = "github.com/golang/glog"
   branch = "master"
 
@@ -52,3 +52,7 @@
 [[override]]
   name = "github.com/emicklei/go-restful"
   version = "1.0.0"
+
+[[constraint]]
+  name = "github.com/kubernetes-sigs/application"
+  branch = "master"

@@ -82,6 +82,17 @@ export default {
   containerRegistry: containerRegistry,
 
   /**
+   * Constants used by our build system.
+   */
+  build: {
+    /**
+     * Variables used to differentiate between production and development build.
+     */
+    production: 'production',
+    test: 'test',
+  },
+
+  /**
    * Backend application constants.
    */
   backend: {
