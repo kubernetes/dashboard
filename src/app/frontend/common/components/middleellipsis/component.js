@@ -1,4 +1,4 @@
-// Copyright 2017 The Kubernetes Authors.
+// Copyright 2017 The Kubernetes Dashboard Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,28 +13,35 @@
 // limitations under the License.
 
 /**
+ * Controller for tooltips used for words that are too long for angular UI.
  * @final
  */
-class MiddleEllipsisController {
+export default class MiddleEllipsisController {
   /**
    * Constructs middle ellipsis controller.
    * @ngInject
+   * @param {!angular.JQLite} $element
    */
-  constructor() {
-    /** @export {string} Initialized from the scope. */
-    this.displayString;
+  constructor($element) {
+    /** @private {!angular.JQLite} */
+    this.element_ = $element;
+  }
+
+  /**
+   * Checks if text length is equal to surrounding container.
+   * @returns {boolean}
+   * @export
+   */
+  isTruncated() {
+    let cOfsWidth = this.element_[0].querySelector('.kd-middleellipsis-displayStr').offsetWidth;
+    return cOfsWidth > this.element_[0].offsetWidth;
   }
 }
-
 /**
  * Middle ellipsis component definition.
- *
  * @type {!angular.Component}
  */
 export const middleEllipsisComponent = {
-  bindings: {
-    'displayString': '@',
-  },
   controller: MiddleEllipsisController,
   controllerAs: 'ellipsisCtrl',
   templateUrl: 'common/components/middleellipsis/middleellipsis.html',
