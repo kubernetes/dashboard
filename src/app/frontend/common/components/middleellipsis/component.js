@@ -25,6 +25,9 @@ export default class MiddleEllipsisController {
   constructor($element) {
     /** @private {!angular.JQLite} */
     this.element_ = $element;
+
+    /** @export {string} Initialized from the scope. */
+    this.displayString;
   }
 
   /**
@@ -42,6 +45,9 @@ export default class MiddleEllipsisController {
  * @type {!angular.Component}
  */
 export const middleEllipsisComponent = {
+  bindings: {
+    'displayString': '@',
+  },
   controller: MiddleEllipsisController,
   controllerAs: 'ellipsisCtrl',
   templateUrl: 'common/components/middleellipsis/middleellipsis.html',
