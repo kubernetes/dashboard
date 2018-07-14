@@ -39,7 +39,7 @@ func TestGetJobDetail(t *testing.T) {
 		{
 			namespace,
 			name,
-			[]string{"get", "get", "list", "list", "list", "list"},
+			[]string{"get", "get", "list", "list", "list", "get", "list", "list", "list", "list"},
 			&batch.CronJob{
 				ObjectMeta: metav1.ObjectMeta{
 					Name:      name,
@@ -61,6 +61,11 @@ func TestGetJobDetail(t *testing.T) {
 					Suspend:  &suspend,
 				},
 				ActiveJobs: job.JobList{
+					Jobs:              make([]job.Job, 0),
+					CumulativeMetrics: make([]metricapi.Metric, 0),
+					Errors:            make([]error, 0),
+				},
+				InactiveJobs: job.JobList{
 					Jobs:              make([]job.Job, 0),
 					CumulativeMetrics: make([]metricapi.Metric, 0),
 					Errors:            make([]error, 0),

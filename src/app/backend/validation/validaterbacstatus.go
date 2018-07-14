@@ -25,11 +25,11 @@ import (
 
 // RBACStatus describes status of RBAC in the cluster.
 type RbacStatus struct {
-	// True when RBACs are enabled in the cluster.
+	// True when RBAC is enabled in the cluster.
 	Enabled bool `json:"enabled"`
 }
 
-// ValidateRBACStatus validates if RBACs are enabled in the cluster.
+// ValidateRBACStatus validates if RBAC is enabled in the cluster.
 // Supported version of RBAC api is: 'rbac.authorization.k8s.io/v1beta1'
 func ValidateRbacStatus(client kubernetes.Interface) (*RbacStatus, error) {
 	groupList, err := client.Discovery().ServerGroups()

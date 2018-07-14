@@ -33,6 +33,8 @@ describe('Login component', () => {
   let authModesResource;
   /** @type {!angular.$q.Deferred} */
   let deferred;
+  /** @type {!angular.$q.Promise} */
+  let skipButtonEnabledResource;
 
   beforeEach(() => {
     angular.mock.module(errorModule.name);
@@ -43,6 +45,7 @@ describe('Login component', () => {
       q = $q;
       deferred = q.defer();
       authModesResource = deferred.promise;
+      skipButtonEnabledResource = deferred.promise;
       state = $state;
       authService = kdAuthService;
       scope = $rootScope;
@@ -50,6 +53,7 @@ describe('Login component', () => {
         $state: $state,
         kdAuthService: authService,
         kdAuthenticationModesResource: authModesResource,
+        kdSkipButtonEnabled: skipButtonEnabledResource,
       });
     });
   });

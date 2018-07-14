@@ -58,3 +58,12 @@ const config = {
 export function authenticationModesResource($resource) {
   return $resource('api/v1/login/modes').get().$promise;
 }
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.$q.Promise}
+ * @ngInject
+ */
+export function skippableResource($resource) {
+  return $resource('api/v1/login/skippable').get().$promise;
+}

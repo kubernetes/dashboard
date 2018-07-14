@@ -35,4 +35,9 @@ describe('Container info component', () => {
     let cmkr = {name: 'foo', key: 'bar'};
     expect(ctrl.getEnvConfigMapHref(cmkr)).toBe('#!/configmap/foo-namespace/foo');
   });
+
+  it('must show values from the spec', () => {
+    let spec = {valueFrom: {fieldRef: {apiVersion: 'v1', fieldPath: 'spec.nodeName'}}};
+    expect(ctrl.getFieldRefValue(spec)).toBe('(v1:spec.nodeName)');
+  });
 });

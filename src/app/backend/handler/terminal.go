@@ -170,8 +170,8 @@ func handleTerminalSession(session sockjs.Session) {
 	}
 
 	terminalSession.sockJSSession = session
-	terminalSession.bound <- nil
 	terminalSessions[msg.SessionID] = terminalSession
+	terminalSession.bound <- nil
 }
 
 // CreateAttachHandler is called from main for /api/sockjs
@@ -254,7 +254,7 @@ func WaitForTerminal(k8sClient kubernetes.Interface, cfg *rest.Config, request *
 		close(terminalSessions[sessionId].bound)
 
 		var err error
-		validShells := []string{"bash", "sh"}
+		validShells := []string{"bash", "sh", "powershell", "cmd"}
 
 		if isValidShell(validShells, shell) {
 			cmd := []string{shell}

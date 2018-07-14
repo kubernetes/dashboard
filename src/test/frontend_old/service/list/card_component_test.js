@@ -124,7 +124,7 @@ describe('Service card controller', () => {
        expect(ctrl.isSuccess()).toBeTruthy();
      });
 
-  it('should return the service clusterIP when teh clusterIP is set', () => {
+  it('should return the service clusterIP when the clusterIP is set', () => {
     // given
     ctrl.service = {
       clusterIP: '10.67.252.103',
@@ -134,7 +134,7 @@ describe('Service card controller', () => {
     expect(ctrl.getServiceClusterIP()).toBe('10.67.252.103');
   });
 
-  it('should return the service clusterIP when teh clusterIP is set', () => {
+  it('should return the service clusterIP when the clusterIP is set', () => {
     // given
     ctrl.service = {
       clusterIP: null,
