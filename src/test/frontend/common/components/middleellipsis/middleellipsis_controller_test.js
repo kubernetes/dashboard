@@ -23,7 +23,8 @@ describe('Middle ellipsis controller', () => {
     angular.mock.module(componentsModule.name);
 
     angular.mock.inject(($componentController) => {
-      element = angular.element('<div style="width: 1px;"><span class="kd-middleellipsis-displayStr">slfjdligjlfijfijhfih</span> </div>');
+      element = angular.element(
+          '<div style="width: 1px;"><span class="kd-middleellipsis-displayStr">Hello World!</span> </div>');
       document.body.appendChild(element[0]);
       ctrl = $componentController('kdMiddleEllipsis', {$element: element});
     });
