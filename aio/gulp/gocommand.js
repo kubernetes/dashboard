@@ -97,7 +97,7 @@ function checkGoVersion() {
       function(error, stdout) {
         let match = /go version devel/.exec(stdout.toString());
         if (match && match.length > 0) {
-          // If running a development version of Go we asume the version to be
+          // If running a development version of Go we assume the version to be
           // good enough, if compilation gives weird errors the developer also
           // should know what is going on, since he uses a development version
           // of Go :)

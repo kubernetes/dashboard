@@ -1,0 +1,83 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-info-card>
+  <kd-info-card-header ng-transclude="header">
+    [[Containers|Subtitle at the top of the container details.]]
+  </kd-info-card-header>
+  <kd-info-card-section ng-repeat="container in ::$ctrl.containers"
+                        name="{{::container.name}}">
+    <kd-info-card-entry title="[[Image|Label for container image.]]">
+      {{::container.image}}
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[Environment variables|Label for container environment variables.]]">
+      <div ng-if="::container.env.length">
+        <div ng-repeat="env in ::container.env"
+             layout="row">
+          <span ng-if="::$ctrl.isHref(env)"
+                class="kd-env-href-wrapper">
+                {{::env.name}}&nbsp;(<a ng-href="{{::$ctrl.getRefObjectHref(env)}}">{{::$ctrl.getRefObjectName(env)}}</a>):&nbsp;
+                <span ng-if="::$ctrl.isSecret(env)">
+                    <md-button ng-if="!$ctrl.isSecretVisible" ng-click="::$ctrl.showSecret()" class="md-icon-button kd-env-secret-button">
+                        <i class="material-icons kd-env-secret-icon">visibility</i>
+                        <md-tooltip md-delay="500"
+                                    md-autohide>
+                          [[Show secret value|Tooltip on container env variables taken from secret]]
+                        </md-tooltip>
+                    </md-button>
+                    <span ng-if="$ctrl.isSecretVisible && env.value" class="kd-env-value">{{::$ctrl.formatSecretValue(env.value)}}</span>
+          <span ng-if="$ctrl.isSecretVisible && !env.value">-</span>
+          </span>
+          <pre class="kd-env-config-map-value"
+               ng-if="!$ctrl.isSecret(env)">{{::env.value}}</pre>
+          </span>
+          <span ng-if="::!$ctrl.isHref(env)">
+                {{::env.name}}:&nbsp;<span class="kd-env-value">{{::$ctrl.getFieldRefValue(env)}}</span>
+          </span>
+        </div>
+      </div>
+      <div ng-if="::!container.env.length">
+        [[-|Label when there is no container environment variables.]]
+      </div>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[Commands|Label for container commands.]]">
+      <div ng-if="::container.commands.length">
+        <div ng-repeat="(key, value) in ::container.commands"
+             layout="row">
+          <kd-middle-ellipsis display-string="{{::value}}"
+                              flex="shrink">
+            <kd-middle-ellipsis>
+        </div>
+      </div>
+      <div ng-if="::!container.commands.length">
+        [[-|Label when there is no container commands.]]
+      </div>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[Args|Label for container args.]]">
+      <div ng-if="::container.args.length">
+        <div ng-repeat="(key, value) in ::container.args"
+             layout="row">
+          <kd-middle-ellipsis display-string="{{::value}}"
+                              flex="shrink">
+            <kd-middle-ellipsis>
+        </div>
+      </div>
+      <div ng-if="::!container.args.length">
+        [[-|Label when there is no container arguments.]]
+      </div>
+    </kd-info-card-entry>
+  </kd-info-card-section>
+</kd-info-card>

@@ -99,7 +99,7 @@ export class LogsController {
     /** @export {!kdUiRouter.$transition$} */
     this.$transition$;
 
-    /** @export {number} Refresh interval in miliseconds. */
+    /** @export {number} Refresh interval in milliseconds. */
     this.refreshInterval = 5000;
 
     /** @private {!angular.$q.Promise|null} */

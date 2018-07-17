@@ -84,11 +84,11 @@ If the '/bin/sh' command is not present, the terminal will detect this and drop 
 
 ![](mockups/24-01-2017-troubleshooting/no-shell.png).
 
-The Kubernetes API for running commands requires the executed command to be in list format. The pseudo-terminal will take the commands as the user types them and perform simple shell escaping to break the full command into it's arguments.
+The Kubernetes API for running commands requires the executed command to be in list format. The pseudo-terminal will take the commands as the user types them and perform simple shell escaping to break the full command into its arguments.
  
 * The shell will split the full command into command + arguments by delimiting by space.
 * ... however. use of quotes will be respected. e.g. /mycommand \-test "foo bar" will be split into "/mycommand", "-test", "foo bar"
-* If the user types a command and hits enter without closing a quote, the terminal will do it's best to allow multi-line input. This will make the terminal easier to use and allow simple shell commands to be copied and pasted.
+* If the user types a command and hits enter without closing a quote, the terminal will do its best to allow multi-line input. This will make the terminal easier to use and allow simple shell commands to be copied and pasted.
 
 #### Similar Features in Other UIs
 
