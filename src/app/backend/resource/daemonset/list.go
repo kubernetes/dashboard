@@ -116,10 +116,10 @@ func toDaemonSetList(daemonSets []apps.DaemonSet, pods []v1.Pod, events []v1.Eve
 	daemonSets = FromCells(dsCells)
 	daemonSetList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
-	for _, daemonSet := range daemonSets {
+	for i, daemonSet := range daemonSets {
 		matchingPods := common.FilterPodsByControllerRef(&daemonSet, pods)
 		podInfo := common.GetPodInfo(daemonSet.Status.CurrentNumberScheduled,
-			&daemonSet.Status.DesiredNumberScheduled, matchingPods)
+			&daemonSets[i].Status.DesiredNumberScheduled, matchingPods)
 		podInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)
 
 		daemonSetList.DaemonSets = append(daemonSetList.DaemonSets, DaemonSet{

@@ -173,6 +173,8 @@ func TestToDaemonSetList(t *testing.T) {
 	events := []v1.Event{}
 	controller := true
 	var desired int32 = 1
+	var desire2 int32 = 2
+	var desire3 int32 = 3
 	validPodMeta := metaV1.ObjectMeta{
 		Namespace: "namespace-1",
 		OwnerReferences: []metaV1.OwnerReference{
@@ -228,7 +230,7 @@ func TestToDaemonSetList(t *testing.T) {
 						},
 					},
 					Status: apps.DaemonSetStatus{
-						DesiredNumberScheduled: desired,
+						DesiredNumberScheduled: desire3,
 					},
 				},
 				{
@@ -247,6 +249,24 @@ func TestToDaemonSetList(t *testing.T) {
 					},
 					Status: apps.DaemonSetStatus{
 						DesiredNumberScheduled: desired,
+					},
+				},
+				{
+					ObjectMeta: metaV1.ObjectMeta{
+						Name:      "my-app-3",
+						Namespace: "namespace-3",
+					},
+					Spec: apps.DaemonSetSpec{
+						Selector: &metaV1.LabelSelector{
+							MatchLabels: map[string]string{"app": "my-name-3", "ver": "3"},
+						},
+						Template: v1.PodTemplateSpec{
+							Spec: v1.PodSpec{Containers: []v1.Container{{Image: "my-container-image-3"}},
+								InitContainers: []v1.Container{{Image: "my-init-container-image-3"}}},
+						},
+					},
+					Status: apps.DaemonSetStatus{
+						DesiredNumberScheduled: desire2,
 					},
 				},
 			},
@@ -322,7 +342,7 @@ func TestToDaemonSetList(t *testing.T) {
 			},
 			},
 			&DaemonSetList{
-				ListMeta:          api.ListMeta{TotalItems: 2},
+				ListMeta:          api.ListMeta{TotalItems: 3},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
 				DaemonSets: []DaemonSet{
 					{
@@ -335,7 +355,7 @@ func TestToDaemonSetList(t *testing.T) {
 						ContainerImages:     []string{"my-container-image-1"},
 						InitContainerImages: []string{"my-init-container-image-1"},
 						Pods: common.PodInfo{
-							Desired:   &desired,
+							Desired:   &desire3,
 							Failed:    2,
 							Pending:   1,
 							Running:   1,
@@ -352,6 +372,18 @@ func TestToDaemonSetList(t *testing.T) {
 						InitContainerImages: []string{"my-init-container-image-2"},
 						Pods: common.PodInfo{
 							Desired:  &desired,
+							Warnings: []common.Event{},
+						},
+					}, {
+						ObjectMeta: api.ObjectMeta{
+							Name:      "my-app-3",
+							Namespace: "namespace-3",
+						},
+						TypeMeta:            api.TypeMeta{Kind: api.ResourceKindDaemonSet},
+						ContainerImages:     []string{"my-container-image-3"},
+						InitContainerImages: []string{"my-init-container-image-3"},
+						Pods: common.PodInfo{
+							Desired:  &desire2,
 							Warnings: []common.Event{},
 						},
 					},

@@ -343,6 +343,9 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 		apiV1Ws.GET("/cronjob/{namespace}/{name}/event").
 			To(apiHandler.handleGetCronJobEvents).
 			Writes(common.EventList{}))
+  apiV1Ws.Route(
+    apiV1Ws.PUT("/cronjob/{namespace}/{name}/trigger").
+      To(apiHandler.handleTriggerCronJob))
 
 	apiV1Ws.Route(
 		apiV1Ws.POST("/namespace").
@@ -1935,6 +1938,23 @@ func (apiHandler *APIHandler) handleGetCronJobEvents(request *restful.Request, r
 		return
 	}
 	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleTriggerCronJob(request *restful.Request, response *restful.Response) {
+  k8sClient, err := apiHandler.cManager.Client(request)
+  if err != nil {
+    kdErrors.HandleInternalError(response, err)
+    return
+  }
+
+  namespace := request.PathParameter("namespace")
+  name := request.PathParameter("name")
+  err = cronjob.TriggerCronJob(k8sClient, namespace, name)
+  if err != nil {
+    kdErrors.HandleInternalError(response, err)
+    return
+  }
+  response.WriteHeader(http.StatusOK)
 }
 
 func (apiHandler *APIHandler) handleGetStorageClassList(request *restful.Request, response *restful.Response) {
