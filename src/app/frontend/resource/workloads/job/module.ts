@@ -32,4 +32,5 @@ import {jobState} from './state';
   ],
   declarations: [JobList, JobDetailComponent],
 })
-export class JobModule {}
+export class JobModule {
+}

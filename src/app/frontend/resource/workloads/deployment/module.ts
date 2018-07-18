@@ -36,4 +36,5 @@ import {deploymentState} from './state';
   ],
   declarations: [DeploymentList, DeploymentDetailComponent, ActionbarComponent],
 })
-export class DeploymentModule {}
+export class DeploymentModule {
+}

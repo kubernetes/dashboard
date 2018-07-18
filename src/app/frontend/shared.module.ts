@@ -74,4 +74,5 @@ const SHARED_DEPENDENCIES = [
     },
   ],
 })
-export class SharedModule {}
+export class SharedModule {
+}

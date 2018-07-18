@@ -36,4 +36,5 @@ import {UserPanelComponent} from './userpanel/component';
     NavModule,
   ]
 })
-export class ChromeModule {}
+export class ChromeModule {
+}

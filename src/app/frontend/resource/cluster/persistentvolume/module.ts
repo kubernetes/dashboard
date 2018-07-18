@@ -43,4 +43,5 @@ import {persistentVolumeState} from './state';
     PersistentVolumeListComponent, PersistentVolumeDetailComponent, PersistentVolumeSourceComponent
   ],
 })
-export class PersistentVolumeModule {}
+export class PersistentVolumeModule {
+}

@@ -35,4 +35,5 @@ import {daemonSetState} from './state';
   ],
   declarations: [DaemonSetList, DaemonSetDetailComponent, ActionbarComponent],
 })
-export class DaemonSetModule {}
+export class DaemonSetModule {
+}

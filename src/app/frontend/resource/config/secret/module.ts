@@ -34,4 +34,5 @@ import {secretState} from './state';
   ],
   declarations: [SecretList, SecretDetailComponent],
 })
-export class SecretModule {}
+export class SecretModule {
+}

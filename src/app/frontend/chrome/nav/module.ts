@@ -27,4 +27,5 @@ import {NavItemComponent} from './item/component';
   exports: [NavComponent, NavItemComponent, HamburgerComponent],
   imports: [SharedModule, ComponentsModule, NavServiceModule]
 })
-export class NavModule {}
+export class NavModule {
+}

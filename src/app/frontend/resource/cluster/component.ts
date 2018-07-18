@@ -19,4 +19,5 @@ import {GroupedResourceList} from '../../common/resources/groupedlist';
   selector: 'kd-cluster',
   templateUrl: './template.html',
 })
-export class ClusterComponent extends GroupedResourceList {}
+export class ClusterComponent extends GroupedResourceList {
+}

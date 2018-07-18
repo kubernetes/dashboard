@@ -33,4 +33,5 @@ import {cronJobState} from './state';
   ],
   declarations: [CronJobList, CronJobDetailComponent],
 })
-export class CronJobModule {}
+export class CronJobModule {
+}
