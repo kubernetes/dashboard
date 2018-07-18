@@ -1,5 +1,5 @@
 # Contributing Guidelines
-The Kubernetes Dashboard Project is a web-based UI for Kubernetes clusters. It allows users to manage the cluster as well as application running in the cluster. All the contribution is done via GitHub. Please also read the contributors guide:
+The Kubernetes Dashboard Project is a web-based UI for Kubernetes clusters. It allows users to manage the cluster as well as applications running in the cluster. All the contribution is done via GitHub. Please also read the contributors guide:
 https://github.com/kubernetes/community/blob/master/contributors/guide/README.md
 
 ### Sign the CLA
