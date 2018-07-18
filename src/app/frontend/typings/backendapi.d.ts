@@ -572,6 +572,12 @@ export interface AppDeploymentContentSpec {
   validate: boolean;
 }
 
+export interface AppDeploymentContentResponse {
+  error: string;
+  contet: string;
+  name: string;
+}
+
 export interface AppDeploymentSpec {
   containerImage: string;
   containerCommand?: string;
