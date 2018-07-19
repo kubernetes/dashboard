@@ -181,6 +181,8 @@
   <translation id="6219798353623882069" key="MSG_CRONJOB_DETAIL_ACTIONBAR_0" desc="Cron Job\'s resource kind name.">Cron Job</translation>
   <translation id="5152871798838609000" key="MSG_CRONJOB_DETAIL_DETAIL_0" desc="Active Jobs card title, displayed on Cron Job details page.">Active Jobs</translation>
   <translation id="2080014846980293516" key="MSG_CRONJOB_DETAIL_DETAIL_1" desc="(no description provided)">There are currently no Jobs managed by this Cron Job.</translation>
+  <translation id="4910697302285925429" key="MSG_CRONJOB_DETAIL_DETAIL_2" desc="Inactive Jobs card title, displayed on Cron Job details page.">Inactive Jobs</translation>
+  <translation id="5132781400764099616" key="MSG_CRONJOB_DETAIL_DETAIL_3" desc="(no description provided)">There are currently no inactive Jobs managed by this Cron Job.</translation>
   <translation id="2068898769567977603" key="MSG_CRONJOB_DETAIL_INFO_0" desc="Cron Job\'s details card header.">Details</translation>
   <translation id="9026215886401416721" key="MSG_CRONJOB_DETAIL_INFO_1" desc="Cron Job\'s attribute label.">Schedule</translation>
   <translation id="6247369684436975092" key="MSG_CRONJOB_DETAIL_INFO_2" desc="Cron Job\'s attribute label.">Active</translation>
