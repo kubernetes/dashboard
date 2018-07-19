@@ -28,4 +28,5 @@ import {UniqueNameValidator} from './uniquename.validator';
   imports: [CommonModule, SharedModule, ComponentsModule],
   exports: [CreateFromFormComponent],
 })
-export class CreateFromFormModule {}
+export class CreateFromFormModule {
+}
