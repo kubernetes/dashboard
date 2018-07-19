@@ -3,74 +3,75 @@ package main
 import (
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/emicklei/go-restful"
-	restfulspec "github.com/emicklei/go-restful-openapi"
-	"github.com/go-openapi/spec"
+	"github.com/emicklei/go-restful/swagger"
 )
 
-// UserResource is the REST layer to the User domain
+// This example show a complete (GET,PUT,POST,DELETE) conventional example of
+// a REST Resource including documentation to be served by e.g. a Swagger UI
+// It is recommended to create a Resource struct (UserResource) that can encapsulate
+// an object that provide domain access (a DAO)
+// It has a Register method including the complete Route mapping to methods together
+// with all the appropriate documentation
+//
+// POST http://localhost:8080/users
+// <User><Id>1</Id><Name>Melissa Raspberry</Name></User>
+//
+// GET http://localhost:8080/users/1
+//
+// PUT http://localhost:8080/users/1
+// <User><Id>1</Id><Name>Melissa</Name></User>
+//
+// DELETE http://localhost:8080/users/1
+//
+
+type User struct {
+	Id, Name string
+}
+
 type UserResource struct {
 	// normally one would use DAO (data access object)
 	users map[string]User
 }
 
-// WebService creates a new service that can handle REST requests for User resources.
-func (u UserResource) WebService() *restful.WebService {
+func (u UserResource) Register(container *restful.Container) {
 	ws := new(restful.WebService)
 	ws.
 		Path("/users").
+		Doc("Manage Users").
 		Consumes(restful.MIME_XML, restful.MIME_JSON).
 		Produces(restful.MIME_JSON, restful.MIME_XML) // you can specify this per route as well
-
-	tags := []string{"users"}
-
-	ws.Route(ws.GET("/").To(u.findAllUsers).
-		// docs
-		Doc("get all users").
-		Metadata(restfulspec.KeyOpenAPITags, tags).
-		Writes([]User{}).
-		Returns(200, "OK", []User{}))
 
 	ws.Route(ws.GET("/{user-id}").To(u.findUser).
 		// docs
 		Doc("get a user").
-		Param(ws.PathParameter("user-id", "identifier of the user").DataType("integer").DefaultValue("1")).
-		Metadata(restfulspec.KeyOpenAPITags, tags).
-		Writes(User{}). // on the response
-		Returns(200, "OK", User{}).
-		Returns(404, "Not Found", nil))
+		Operation("findUser").
+		Param(ws.PathParameter("user-id", "identifier of the user").DataType("string")).
+		Writes(User{})) // on the response
 
 	ws.Route(ws.PUT("/{user-id}").To(u.updateUser).
 		// docs
 		Doc("update a user").
+		Operation("updateUser").
 		Param(ws.PathParameter("user-id", "identifier of the user").DataType("string")).
-		Metadata(restfulspec.KeyOpenAPITags, tags).
+		ReturnsError(409, "duplicate user-id", nil).
 		Reads(User{})) // from the request
 
-	ws.Route(ws.PUT("").To(u.createUser).
+	ws.Route(ws.POST("").To(u.createUser).
 		// docs
 		Doc("create a user").
-		Metadata(restfulspec.KeyOpenAPITags, tags).
+		Operation("createUser").
 		Reads(User{})) // from the request
 
 	ws.Route(ws.DELETE("/{user-id}").To(u.removeUser).
 		// docs
 		Doc("delete a user").
-		Metadata(restfulspec.KeyOpenAPITags, tags).
+		Operation("removeUser").
 		Param(ws.PathParameter("user-id", "identifier of the user").DataType("string")))
 
-	return ws
-}
-
-// GET http://localhost:8080/users
-//
-func (u UserResource) findAllUsers(request *restful.Request, response *restful.Response) {
-	list := []User{}
-	for _, each := range u.users {
-		list = append(list, each)
-	}
-	response.WriteEntity(list)
+	container.Add(ws)
 }
 
 // GET http://localhost:8080/users/1
@@ -78,11 +79,28 @@ func (u UserResource) findAllUsers(request *restful.Request, response *restful.R
 func (u UserResource) findUser(request *restful.Request, response *restful.Response) {
 	id := request.PathParameter("user-id")
 	usr := u.users[id]
-	if len(usr.ID) == 0 {
-		response.WriteErrorString(http.StatusNotFound, "User could not be found.")
-	} else {
-		response.WriteEntity(usr)
+	if len(usr.Id) == 0 {
+		response.AddHeader("Content-Type", "text/plain")
+		response.WriteErrorString(http.StatusNotFound, "404: User could not be found.")
+		return
 	}
+	response.WriteEntity(usr)
+}
+
+// POST http://localhost:8080/users
+// <User><Name>Melissa</Name></User>
+//
+func (u *UserResource) createUser(request *restful.Request, response *restful.Response) {
+	usr := new(User)
+	err := request.ReadEntity(usr)
+	if err != nil {
+		response.AddHeader("Content-Type", "text/plain")
+		response.WriteErrorString(http.StatusInternalServerError, err.Error())
+		return
+	}
+	usr.Id = strconv.Itoa(len(u.users) + 1) // simple id generation
+	u.users[usr.Id] = *usr
+	response.WriteHeaderAndEntity(http.StatusCreated, usr)
 }
 
 // PUT http://localhost:8080/users/1
@@ -91,26 +109,13 @@ func (u UserResource) findUser(request *restful.Request, response *restful.Respo
 func (u *UserResource) updateUser(request *restful.Request, response *restful.Response) {
 	usr := new(User)
 	err := request.ReadEntity(&usr)
-	if err == nil {
-		u.users[usr.ID] = *usr
-		response.WriteEntity(usr)
-	} else {
-		response.WriteError(http.StatusInternalServerError, err)
+	if err != nil {
+		response.AddHeader("Content-Type", "text/plain")
+		response.WriteErrorString(http.StatusInternalServerError, err.Error())
+		return
 	}
-}
-
-// PUT http://localhost:8080/users/1
-// <User><Id>1</Id><Name>Melissa</Name></User>
-//
-func (u *UserResource) createUser(request *restful.Request, response *restful.Response) {
-	usr := User{ID: request.PathParameter("user-id")}
-	err := request.ReadEntity(&usr)
-	if err == nil {
-		u.users[usr.ID] = usr
-		response.WriteHeaderAndEntity(http.StatusCreated, usr)
-	} else {
-		response.WriteError(http.StatusInternalServerError, err)
-	}
+	u.users[usr.Id] = *usr
+	response.WriteEntity(usr)
 }
 
 // DELETE http://localhost:8080/users/1
@@ -121,49 +126,27 @@ func (u *UserResource) removeUser(request *restful.Request, response *restful.Re
 }
 
 func main() {
-	u := UserResource{map[string]User{}}
-	restful.DefaultContainer.Add(u.WebService())
+	// to see what happens in the package, uncomment the following
+	//restful.TraceLogger(log.New(os.Stdout, "[restful] ", log.LstdFlags|log.Lshortfile))
 
-	config := restfulspec.Config{
-		WebServices: restful.RegisteredWebServices(), // you control what services are visible
-		APIPath:     "/apidocs.json",
-		PostBuildSwaggerObjectHandler: enrichSwaggerObject}
-	restful.DefaultContainer.Add(restfulspec.NewOpenAPIService(config))
+	wsContainer := restful.NewContainer()
+	u := UserResource{map[string]User{}}
+	u.Register(wsContainer)
 
 	// Optionally, you can install the Swagger Service which provides a nice Web UI on your REST API
 	// You need to download the Swagger HTML5 assets and change the FilePath location in the config below.
-	// Open http://localhost:8080/apidocs/?url=http://localhost:8080/apidocs.json
-	http.Handle("/apidocs/", http.StripPrefix("/apidocs/", http.FileServer(http.Dir("/Users/emicklei/Projects/swagger-ui/dist"))))
+	// Open http://localhost:8080/apidocs and enter http://localhost:8080/apidocs.json in the api input field.
+	config := swagger.Config{
+		WebServices:    wsContainer.RegisteredWebServices(), // you control what services are visible
+		WebServicesUrl: "http://localhost:8080",
+		ApiPath:        "/apidocs.json",
+
+		// Optionally, specifiy where the UI is located
+		SwaggerPath:     "/apidocs/",
+		SwaggerFilePath: "/Users/emicklei/xProjects/swagger-ui/dist"}
+	swagger.RegisterSwaggerService(config, wsContainer)
 
 	log.Printf("start listening on localhost:8080")
-	log.Fatal(http.ListenAndServe(":8080", nil))
-}
-
-func enrichSwaggerObject(swo *spec.Swagger) {
-	swo.Info = &spec.Info{
-		InfoProps: spec.InfoProps{
-			Title:       "UserService",
-			Description: "Resource for managing Users",
-			Contact: &spec.ContactInfo{
-				Name:  "john",
-				Email: "john@doe.rp",
-				URL:   "http://johndoe.org",
-			},
-			License: &spec.License{
-				Name: "MIT",
-				URL:  "http://mit.org",
-			},
-			Version: "1.0.0",
-		},
-	}
-	swo.Tags = []spec.Tag{spec.Tag{TagProps: spec.TagProps{
-		Name:        "users",
-		Description: "Managing users"}}}
-}
-
-// User is just a sample type
-type User struct {
-	ID   string `json:"id" description:"identifier of the user"`
-	Name string `json:"name" description:"name of the user" default:"john"`
-	Age  int    `json:"age" description:"age of the user" default:"21"`
+	server := &http.Server{Addr: ":8080", Handler: wsContainer}
+	log.Fatal(server.ListenAndServe())
 }

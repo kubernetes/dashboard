@@ -30,8 +30,8 @@
     ".",
     "log"
   ]
-  revision = "3eb9738c1697594ea6e71a7156a9bb32ed216cf0"
-  version = "v2.8.0"
+  revision = "777bb3f19bcafe2575ffb2a3e46af92509ae9594"
+  version = "v1.2"
 
 [[projects]]
   name = "github.com/ghodss/yaml"
@@ -100,12 +100,6 @@
   packages = ["."]
   revision = "6ed27152e0428abfde127acb33b08b03a1e67cac"
   version = "1.0.2"
-
-[[projects]]
-  branch = "master"
-  name = "github.com/kubernetes-sigs/application"
-  packages = ["pkg"]
-  revision = "a6624839614f32dac1cd264804f3e87fb930b52a"
 
 [[projects]]
   name = "github.com/matttproud/golang_protobuf_extensions"
@@ -405,6 +399,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "63bfb56577de09aac23bf33213972af060c4ca8720a58c2426f9697ae792d6d4"
+  inputs-digest = "5fdf56d32140360c8bb4ed89c0642b74dff974324939ddad8107864433dacb19"
   solver-name = "gps-cdcl"
   solver-version = 1

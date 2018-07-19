@@ -23,7 +23,7 @@ func main() {
 	ws.Route(ws.GET("/hello").To(hello))
 	restful.Add(ws)
 	go func() {
-		log.Fatal(http.ListenAndServe(":8080", nil))
+		http.ListenAndServe(":8080", nil)
 	}()
 
 	container2 := restful.NewContainer()

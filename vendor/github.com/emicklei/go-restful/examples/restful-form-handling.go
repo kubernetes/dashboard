@@ -5,7 +5,6 @@ import (
 	"github.com/emicklei/go-restful"
 	"github.com/gorilla/schema"
 	"io"
-	"log"
 	"net/http"
 )
 
@@ -28,7 +27,7 @@ func main() {
 	ws.Route(ws.POST("/profiles").Consumes("application/x-www-form-urlencoded").To(postAdddress))
 	ws.Route(ws.GET("/profiles").To(addresssForm))
 	restful.Add(ws)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	http.ListenAndServe(":8080", nil)
 }
 
 func postAdddress(req *restful.Request, resp *restful.Response) {

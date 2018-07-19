@@ -48,10 +48,14 @@
   name = "gopkg.in/igm/sockjs-go.v2"
   branch = "v2"
 
-[[override]]
-  name = "github.com/emicklei/go-restful"
-  version="v2.7.0"
-
 [[constraint]]
   name = "github.com/kubernetes-sigs/application"
   branch = "master"
+
+[[constraint]]
+  name = "github.com/emicklei/go-restful"
+  version = "1.0.0"
+
+[[override]]
+  name = "github.com/square/go-jose"
+  version = "2.1.3"

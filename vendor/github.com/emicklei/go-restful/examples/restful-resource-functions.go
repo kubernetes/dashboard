@@ -59,5 +59,5 @@ func (p ProductResource) Register() {
 
 func main() {
 	ProductResource{}.Register()
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	http.ListenAndServe(":8080", nil)
 }

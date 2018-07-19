@@ -21,7 +21,7 @@ func TraceLogger(logger log.StdLogger) {
 	EnableTracing(logger != nil)
 }
 
-// SetLogger exposes the setter for the global logger on the top-level package
+// expose the setter for the global logger on the top-level package
 func SetLogger(customLogger log.StdLogger) {
 	log.SetLogger(customLogger)
 }

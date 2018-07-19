@@ -1,13 +1,12 @@
 package main
 
 import (
-	. "github.com/emicklei/go-restful"
 	"io"
-	"log"
 	"net/http"
+	. "github.com/emicklei/go-restful"
 )
 
-// This example shows how to create a Route matching the "tail" of a path.
+// This example shows how to a Route that matches the "tail" of a path.
 // Requires the use of a CurlyRouter and the star "*" path parameter pattern.
 //
 // GET http://localhost:8080/basepath/some/other/location/test.xml
@@ -19,7 +18,7 @@ func main() {
 	Add(ws)
 
 	println("[go-restful] serve path tails from http://localhost:8080/basepath")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	http.ListenAndServe(":8080", nil)
 }
 
 func staticFromPathParam(req *Request, resp *Response) {

@@ -3,7 +3,6 @@ package main
 import (
 	"github.com/emicklei/go-restful"
 	"io"
-	"log"
 	"net/http"
 )
 
@@ -16,13 +15,14 @@ func main() {
 	ws := new(restful.WebService)
 	ws.Route(ws.GET("/secret").Filter(basicAuthenticate).To(secret))
 	restful.Add(ws)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	http.ListenAndServe(":8080", nil)
 }
 
 func basicAuthenticate(req *restful.Request, resp *restful.Response, chain *restful.FilterChain) {
+	encoded := req.Request.Header.Get("Authorization")
 	// usr/pwd = admin/admin
-	u, p, ok := req.Request.BasicAuth()
-	if !ok || u != "admin" || p != "admin" {
+	// real code does some decoding
+	if len(encoded) == 0 || "Basic YWRtaW46YWRtaW4=" != encoded {
 		resp.AddHeader("WWW-Authenticate", "Basic realm=Protected Area")
 		resp.WriteErrorString(401, "401: Not Authorized")
 		return

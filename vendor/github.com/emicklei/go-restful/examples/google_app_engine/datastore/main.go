@@ -1,14 +1,13 @@
 package main
 
 import (
+	"github.com/emicklei/go-restful"
+	"github.com/emicklei/go-restful/swagger"
+	"google.golang.com/appengine"
+	"google.golang.com/appengine/datastore"
+	"google.golang.com/appengine/user"
 	"net/http"
 	"time"
-
-	"github.com/emicklei/go-restful"
-	"github.com/emicklei/go-restful-swagger12"
-	"google.golang.org/appengine"
-	"google.golang.org/appengine/datastore"
-	"google.golang.org/appengine/user"
 )
 
 // This example demonstrates a reasonably complete suite of RESTful operations backed
@@ -54,7 +53,7 @@ func init() {
 		WebServicesUrl: gaeUrl(),
 		ApiPath:        "/apidocs.json",
 
-		// Optionally, specify where the UI is located
+		// Optionally, specifiy where the UI is located
 		SwaggerPath: "/apidocs/",
 
 		// GAE support static content which is configured in your app.yaml.
