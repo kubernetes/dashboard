@@ -34,28 +34,31 @@ limitations under the License.
   </div>
   <div content>
     <div fxLayout="row wrap">
-      <kd-property>
+      <kd-property [ngClass]="'object-meta-name'">
         <div key>Name</div>
         <div value>{{objectMeta?.name}}</div>
       </kd-property>
-      <kd-property *ngIf="objectMeta?.namespace">
+      <kd-property *ngIf="objectMeta?.namespace"
+                   [ngClass]="'object-meta-namespace'">
         <div key>Namespace</div>
         <div value>{{objectMeta?.namespace}}</div>
       </kd-property>
-      <kd-property>
+      <kd-property [ngClass]="'object-meta-creation'">
         <div key>Creation time</div>
         <div value>{{objectMeta?.creationTimestamp | date : "MMM d, y H:mm:ss" : "UTC"}}</div>
       </kd-property>
-      <kd-property>
+      <kd-property [ngClass]="'object-meta-age'">
         <div key>Age</div>
         <div value>{{objectMeta?.creationTimestamp | kdRelativeTime}}</div>
       </kd-property>
-      <kd-property *ngIf="objectMeta?.uid">
+      <kd-property *ngIf="objectMeta?.uid"
+                   [ngClass]="'object-meta-uid'">
         <div key>UID</div>
         <div value>{{objectMeta?.uid}}</div>
       </kd-property>
       <kd-property *ngIf="objectMeta?.labels"
-                   fxFlex="100">
+                   fxFlex="100"
+                   [ngClass]="'object-meta-labels'">
         <div key>Labels</div>
         <div value>
           <kd-chips [map]="objectMeta?.labels"
@@ -63,7 +66,8 @@ limitations under the License.
         </div>
       </kd-property>
       <kd-property *ngIf="objectMeta?.annotations"
-                   fxFlex="100">
+                   fxFlex="100"
+                   [ngClass]="'object-meta-annotations'">
         <div key>Annotations</div>
         <div value>
           <kd-chips [map]="objectMeta?.annotations"

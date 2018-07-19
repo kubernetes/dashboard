@@ -12,6 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
+
 import {Component, ElementRef, EventEmitter, OnInit, ViewChild} from '@angular/core';
 import {Subject} from 'rxjs/Subject';
 
