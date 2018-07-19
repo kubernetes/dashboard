@@ -25,7 +25,7 @@ type UserList struct {
 
 func main() {
 	restful.Add(NewUserService())
-	log.Printf("start listening on localhost:8080")
+	log.Print("start listening on localhost:8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
@@ -56,6 +56,6 @@ func encodingFilter(req *restful.Request, resp *restful.Response, chain *restful
 // GET http://localhost:8080/users/42
 //
 func findUser(request *restful.Request, response *restful.Response) {
-	log.Printf("findUser")
+	log.Print("findUser")
 	response.WriteEntity(User{"42", "Gandalf"})
 }

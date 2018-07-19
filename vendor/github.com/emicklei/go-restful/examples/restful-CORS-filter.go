@@ -54,6 +54,7 @@ func main() {
 	cors := restful.CrossOriginResourceSharing{
 		ExposeHeaders:  []string{"X-My-Header"},
 		AllowedHeaders: []string{"Content-Type", "Accept"},
+		AllowedMethods: []string{"GET", "POST"},
 		CookiesAllowed: false,
 		Container:      wsContainer}
 	wsContainer.Filter(cors.Filter)
@@ -61,7 +62,7 @@ func main() {
 	// Add container filter to respond to OPTIONS
 	wsContainer.Filter(wsContainer.OPTIONSFilter)
 
-	log.Printf("start listening on localhost:8080")
+	log.Print("start listening on localhost:8080")
 	server := &http.Server{Addr: ":8080", Handler: wsContainer}
 	log.Fatal(server.ListenAndServe())
 }

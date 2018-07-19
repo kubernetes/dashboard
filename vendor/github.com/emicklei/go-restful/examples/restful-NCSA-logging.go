@@ -46,7 +46,7 @@ func main() {
 	ws.Filter(NCSACommonLogFormatLogger())
 	ws.Route(ws.GET("/ping").To(hello))
 	restful.Add(ws)
-	http.ListenAndServe(":8080", nil)
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
 func hello(req *restful.Request, resp *restful.Response) {

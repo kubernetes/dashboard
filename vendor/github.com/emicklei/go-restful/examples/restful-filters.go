@@ -18,7 +18,7 @@ type UserList struct {
 // This example show how to create and use the three different Filters (Container,WebService and Route)
 // When applied to the restful.DefaultContainer, we refer to them as a global filter.
 //
-// GET  http://locahost:8080/users/42
+// GET  http://localhost:8080/users/42
 // and see the logging per filter (try repeating this request)
 
 func main() {
@@ -26,7 +26,7 @@ func main() {
 	restful.Filter(globalLogging)
 
 	restful.Add(NewUserService())
-	log.Printf("start listening on localhost:8080")
+	log.Print("start listening on localhost:8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
@@ -102,13 +102,13 @@ func (c *CountFilter) routeCounter(req *restful.Request, resp *restful.Response,
 // GET http://localhost:8080/users
 //
 func getAllUsers(request *restful.Request, response *restful.Response) {
-	log.Printf("getAllUsers")
-	response.WriteEntity(UserList{[]User{User{"42", "Gandalf"}, User{"3.14", "Pi"}}})
+	log.Print("getAllUsers")
+	response.WriteEntity(UserList{[]User{{"42", "Gandalf"}, {"3.14", "Pi"}}})
 }
 
 // GET http://localhost:8080/users/42
 //
 func findUser(request *restful.Request, response *restful.Response) {
-	log.Printf("findUser")
+	log.Print("findUser")
 	response.WriteEntity(User{"42", "Gandalf"})
 }

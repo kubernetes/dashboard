@@ -17,7 +17,7 @@ func main() {
 	ws.Route(ws.GET("/").To(home))
 	restful.Add(ws)
 	print("open browser on http://localhost:8080/\n")
-	http.ListenAndServe(":8080", nil)
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
 type Message struct {
