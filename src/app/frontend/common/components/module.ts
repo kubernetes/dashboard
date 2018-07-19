@@ -190,4 +190,5 @@ import {ZeroStateComponent} from './zerostate/component';
     NamespaceChangeDialog,
   ]
 })
-export class ComponentsModule {}
+export class ComponentsModule {
+}

@@ -48,7 +48,7 @@ type holder struct {
 	enableInsecureLogin       bool
 	disableSettingsAuthorizer bool
 
-	disableSkipButton         bool
+	disableSkipButton bool
 }
 
 // GetInsecurePort 'insecure-port' argument of Dashboard binary.

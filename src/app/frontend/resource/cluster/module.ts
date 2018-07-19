@@ -30,4 +30,5 @@ import {clusterState} from './state';
   ],
   declarations: [ClusterComponent],
 })
-export class ClusterModule {}
+export class ClusterModule {
+}

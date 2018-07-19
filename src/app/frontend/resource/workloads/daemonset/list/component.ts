@@ -18,4 +18,5 @@ import {Component} from '@angular/core';
   selector: 'kd-daemon-set-list-state',
   template: '<kd-daemon-set-list></kd-daemon-set-list>',
 })
-export class DaemonSetList {}
+export class DaemonSetList {
+}

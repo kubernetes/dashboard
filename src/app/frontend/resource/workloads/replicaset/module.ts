@@ -34,4 +34,5 @@ import {replicaSetState} from './state';
   ],
   declarations: [ReplicaSetList, ReplicaSetDetailComponent],
 })
-export class ReplicaSetModule {}
+export class ReplicaSetModule {
+}

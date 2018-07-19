@@ -71,12 +71,12 @@ func NewResourceController(ref meta.OwnerReference, namespace string, client cli
 			return nil, err
 		}
 		return JobController(*job), nil
-  case api.ResourceKindPod:
-    pod, err := client.CoreV1().Pods(namespace).Get(ref.Name, meta.GetOptions{})
-    if err != nil {
-      return nil, err
-    }
-    return PodController(*pod), nil
+	case api.ResourceKindPod:
+		pod, err := client.CoreV1().Pods(namespace).Get(ref.Name, meta.GetOptions{})
+		if err != nil {
+			return nil, err
+		}
+		return PodController(*pod), nil
 	case api.ResourceKindReplicaSet:
 		rs, err := client.AppsV1beta2().ReplicaSets(namespace).Get(ref.Name, meta.GetOptions{})
 		if err != nil {
@@ -143,33 +143,33 @@ func (self JobController) GetLogSources(allPods []v1.Pod) LogSources {
 type PodController v1.Pod
 
 // Get is an implementation of Get method from ResourceController interface.
-func (self PodController) Get(allPods []v1.Pod, allEvents[]v1.Event) ResourceOwner {
-  matchingPods := common.FilterPodsByControllerRef(&self, allPods)
-  podInfo := common.GetPodInfo(int32(len(matchingPods)), nil, matchingPods) // Pods should not desire any Pods
-  podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
+func (self PodController) Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOwner {
+	matchingPods := common.FilterPodsByControllerRef(&self, allPods)
+	podInfo := common.GetPodInfo(int32(len(matchingPods)), nil, matchingPods) // Pods should not desire any Pods
+	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
-  return ResourceOwner{
-    TypeMeta:            api.NewTypeMeta(api.ResourceKindPod),
-    ObjectMeta:          api.NewObjectMeta(self.ObjectMeta),
-    Pods:                podInfo,
-    ContainerImages:     common.GetNonduplicateContainerImages(matchingPods),
-    InitContainerImages: common.GetNonduplicateInitContainerImages(matchingPods),
-  }
+	return ResourceOwner{
+		TypeMeta:            api.NewTypeMeta(api.ResourceKindPod),
+		ObjectMeta:          api.NewObjectMeta(self.ObjectMeta),
+		Pods:                podInfo,
+		ContainerImages:     common.GetNonduplicateContainerImages(matchingPods),
+		InitContainerImages: common.GetNonduplicateInitContainerImages(matchingPods),
+	}
 }
 
 // UID is an implementation of UID method from ResourceController interface.
 func (self PodController) UID() types.UID {
-  return v1.Pod(self).UID
+	return v1.Pod(self).UID
 }
 
 // GetLogSources is an implementation of the GetLogSources method from ResourceController interface.
 func (self PodController) GetLogSources(allPods []v1.Pod) LogSources {
-  controlledPods := common.FilterPodsByControllerRef(&self, allPods)
-  return LogSources{
-    PodNames:           getPodNames(controlledPods),
-    ContainerNames:     common.GetNonduplicateContainerNames(controlledPods),
-    InitContainerNames: common.GetNonduplicateInitContainerNames(controlledPods),
-  }
+	controlledPods := common.FilterPodsByControllerRef(&self, allPods)
+	return LogSources{
+		PodNames:           getPodNames(controlledPods),
+		ContainerNames:     common.GetNonduplicateContainerNames(controlledPods),
+		InitContainerNames: common.GetNonduplicateInitContainerNames(controlledPods),
+	}
 }
 
 // ReplicaSetController is an alias-type for Kubernetes API Replica Set type. It allows to provide

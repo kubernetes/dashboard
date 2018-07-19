@@ -30,4 +30,5 @@ import {overviewState} from './state';
   ],
   declarations: [OverviewComponent],
 })
-export class OverviewModule {}
+export class OverviewModule {
+}
