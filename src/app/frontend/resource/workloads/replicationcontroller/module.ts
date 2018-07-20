@@ -37,5 +37,4 @@ import {replicationControllerState} from './state';
   ],
   declarations: [ReplicationControllerList, ReplicationControllerDetailComponent],
 })
-export class ReplicationControllerModule {
-}
+export class ReplicationControllerModule {}

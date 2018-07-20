@@ -28,6 +28,4 @@ export class ResourceMeta {
 }
 
 @Injectable()
-export class ActionbarService {
-  onInit = new EventEmitter<ResourceMeta>();
-}
+export class ActionbarService { onInit = new EventEmitter<ResourceMeta>(); }

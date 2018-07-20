@@ -33,5 +33,4 @@ import {podState} from './state';
   ],
   declarations: [PodList, PodDetailComponent],
 })
-export class PodModule {
-}
+export class PodModule {}

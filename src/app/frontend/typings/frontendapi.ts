@@ -33,9 +33,7 @@ export type onSettingsFailCallback = (err?: KdError|K8sError) => void;
 
 export type onLogin = (errors?: K8sError[]) => void;
 
-export interface KnownErrors {
-  unauthorized: KdError;
-}
+export interface KnownErrors { unauthorized: KdError; }
 
 export interface KdError {
   status: string;
@@ -66,9 +64,7 @@ export interface ActionColumn {
   setObjectMeta(objectMeta: ObjectMeta): void;
 }
 
-export interface HTMLInputEvent extends Event {
-  target: HTMLInputElement&EventTarget;
-}
+export interface HTMLInputEvent extends Event { target: HTMLInputElement&EventTarget; }
 
 export interface KdFile {
   name: string;

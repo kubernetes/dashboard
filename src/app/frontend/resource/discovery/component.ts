@@ -19,5 +19,4 @@ import {GroupedResourceList} from '../../common/resources/groupedlist';
   selector: 'kd-discovery',
   templateUrl: './template.html',
 })
-export class DiscoveryComponent extends GroupedResourceList {
-}
+export class DiscoveryComponent extends GroupedResourceList {}

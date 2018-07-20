@@ -20,6 +20,4 @@ import {Event} from 'typings/backendapi';
   templateUrl: 'template.html',
   styleUrls: ['style.scss'],
 })
-export class RowDetailComponent {
-  events: Event[] = [];
-}
+export class RowDetailComponent { events: Event[] = []; }

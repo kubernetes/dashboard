@@ -22,5 +22,4 @@ import {RelativeTimeFormatter} from './relativetime';
   declarations: [MemoryFormatter, CoreFormatter, RelativeTimeFormatter],
   exports: [MemoryFormatter, CoreFormatter, RelativeTimeFormatter],
 })
-export class PipesModule {
-}
+export class PipesModule {}

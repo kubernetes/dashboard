@@ -40,5 +40,4 @@ import {serviceState} from './state';
   ],
   declarations: [ServiceList, ServiceDetailComponent],
 })
-export class ServiceModule {
-}
+export class ServiceModule {}

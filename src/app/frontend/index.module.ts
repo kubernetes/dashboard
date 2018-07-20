@@ -109,5 +109,4 @@ import {settingsFutureState} from './settings/state';
   declarations: [RootComponent],
   bootstrap: [RootComponent]
 })
-export class RootModule {
-}
+export class RootModule {}

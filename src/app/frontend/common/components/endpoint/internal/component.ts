@@ -21,6 +21,4 @@ import {Endpoint} from '@api/backendapi';
  */
 @Component(
     {selector: 'kd-internal-endpoint', templateUrl: './template.html', styleUrls: ['./style.scss']})
-export class InternalEndpointComponent {
-  @Input() endpoints: Endpoint[];
-}
+export class InternalEndpointComponent { @Input() endpoints: Endpoint[]; }

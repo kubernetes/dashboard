@@ -29,5 +29,4 @@ import {createState} from './state';
   ],
   declarations: [CreateComponent],
 })
-export class CreateModule {
-}
+export class CreateModule {}
