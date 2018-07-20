@@ -15,21 +15,19 @@
 import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
 
-import {ComponentsModule} from '../../../common/components/module';
-import {SharedModule} from '../../../shared.module';
-import {ActionbarComponent} from './detail/actionbar/component';
-import {PodDetailComponent} from './detail/component';
-import {podDetailState} from './detail/state';
-import {PodList} from './list/component';
-import {podListState} from './list/state';
-import {podState} from './state';
+import {ComponentsModule} from '../common/components/module';
+import {SharedModule} from '../shared.module';
+
+import {ShellComponent} from './component';
+import {shellState} from './state';
 
 @NgModule({
   imports: [
     SharedModule,
     ComponentsModule,
-    UIRouterModule.forChild({states: [podState, podListState, podDetailState]}),
+    UIRouterModule.forChild({states: [shellState]}),
   ],
-  declarations: [PodList, PodDetailComponent, ActionbarComponent],
+  declarations: [ShellComponent],
 })
-export class PodModule {}
+export class ShellModule {
+}

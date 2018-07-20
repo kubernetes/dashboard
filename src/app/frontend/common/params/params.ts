@@ -57,6 +57,12 @@ export class LogsStateParams extends StateParams {
   }
 }
 
+export class ExecStateParams extends NamespacedResourceStateParams {
+  constructor(resourceNamespace: string, resourceName: string, public containerName = '') {
+    super(resourceNamespace, resourceName);
+  }
+}
+
 export class ErrorStateParams extends KdStateParams {
   constructor(public error: KdError, resourceNamespace: string) {
     super(resourceNamespace);

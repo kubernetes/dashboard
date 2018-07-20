@@ -54,6 +54,7 @@ import {workloadsFutureState} from './resource/workloads/state';
 import {statefulSetFutureState} from './resource/workloads/statefulset/state';
 import {searchFutureState} from './search/state';
 import {settingsFutureState} from './settings/state';
+import {shellFutureState} from './shell/state';
 
 @NgModule({
   imports: [
@@ -103,6 +104,7 @@ import {settingsFutureState} from './settings/state';
         searchFutureState,
         overviewFutureState,
         logsState,
+        shellFutureState,
       ],
       useHash: true,
       otherwise: {state: overviewState.name},
