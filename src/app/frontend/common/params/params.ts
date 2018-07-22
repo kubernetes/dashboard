@@ -50,6 +50,13 @@ export class SearchStateParams extends StateParams {
   }
 }
 
+export class LogsStateParams extends StateParams {
+  constructor(
+      public resourceNamespace: string, public podName: string, public resourceType: string) {
+    super();
+  }
+}
+
 export class ErrorStateParams extends KdStateParams {
   constructor(public error: KdError, resourceNamespace: string) {
     super(resourceNamespace);
@@ -62,4 +69,8 @@ export function addResourceStateParamsToUrl(url: string): string {
 
 export function addNamespacedResourceStateParamsToUrl(url: string): string {
   return `${url}/:resourceNamespace/:resourceName`;
+}
+
+export function addLogsStateParamsToUrl(url: string): string {
+  return `${url}/:resourceNamespace/:podName/:resourceType`;
 }

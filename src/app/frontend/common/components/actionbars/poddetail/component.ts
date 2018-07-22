@@ -13,14 +13,15 @@
 // limitations under the License.
 
 import {Component, OnInit} from '@angular/core';
-import {Subscription} from 'rxjs/Subscription';
+import {ObjectMeta, TypeMeta} from '@api/backendapi';
+import {Subscription} from 'rxjs';
 import {ActionbarService, ResourceMeta} from '../../../services/global/actionbar';
 
 @Component({
   selector: '',
   templateUrl: './template.html',
 })
-export class ScaleableResourceDetailActionbar implements OnInit {
+export class PodDetailsActionbar implements OnInit {
   isInitialized = false;
   resourceMeta: ResourceMeta;
   resourceMetaSubscription_: Subscription;
@@ -37,9 +38,5 @@ export class ScaleableResourceDetailActionbar implements OnInit {
 
   ngOnDestroy(): void {
     this.resourceMetaSubscription_.unsubscribe();
-  }
-
-  scale(): void {
-    // TODO
   }
 }

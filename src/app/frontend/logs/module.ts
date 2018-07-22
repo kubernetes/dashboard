@@ -13,15 +13,21 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
+import {UIRouterModule} from '@uirouter/angular';
 
-import {CoreFormatter} from './coreformatter';
-import {MemoryFormatter} from './memoryformatter';
-import {RelativeTimeFormatter} from './relativetime';
-import {SafeHtmlFormatter} from './safehtml';
+import {ComponentsModule} from '../common/components/module';
+import {SharedModule} from '../shared.module';
+
+import {LogsComponent} from './component';
+import {logsState} from './state';
 
 @NgModule({
-  declarations: [MemoryFormatter, CoreFormatter, RelativeTimeFormatter, SafeHtmlFormatter],
-  exports: [MemoryFormatter, CoreFormatter, RelativeTimeFormatter, SafeHtmlFormatter],
+  imports: [
+    SharedModule,
+    ComponentsModule,
+    UIRouterModule.forChild({states: [logsState]}),
+  ],
+  declarations: [LogsComponent],
 })
-export class PipesModule {
+export class LogsModule {
 }

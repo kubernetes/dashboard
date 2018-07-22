@@ -1,0 +1,137 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<div class="kd-logs-container">
+  <kd-card [expandable]="false">
+    <div title>
+      Logs from
+      <mat-form-field>
+        <mat-select [(ngModel)]="container"
+                    class="kd-logs-toolbar-select"
+                    (selectionChange)="loadNewest()">
+          <mat-optgroup label="Containers">
+            <mat-option *ngFor="let item of logSources?.containerNames"
+                        [value]="item">
+              {{item}}
+            </mat-option>
+          </mat-optgroup>
+          <mat-optgroup label="Init Containers">
+            <mat-option *ngFor="let item of logSources?.initContainerNames"
+                        [value]="item">
+              {{item}}
+            </mat-option>
+          </mat-optgroup>
+        </mat-select>
+      </mat-form-field>
+      in
+      <mat-form-field class="kd-form-field">
+        <mat-select [(ngModel)]="pod"
+                    class="kd-logs-toolbar-select"
+                    (selectionChange)="loadNewest()">
+          <mat-option *ngFor="let item of logSources?.podNames"
+                      [value]="item">
+            {{item}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div class="kd-logs-style-buttons">
+        <button mat-icon-button
+                matTooltip="Invert colors"
+                (click)="onTextColorChange()">
+          <mat-icon [ngClass]="{'kd-logs-color-icon-invert': logService?.getInverted(), 'kd-logs-color-icon': !logService?.getInverted()}">format_color_text</mat-icon>
+        </button>
+        <button mat-icon-button
+                matTooltip="Toggle font size"
+                (click)="onFontSizeChange()">
+          <mat-icon [ngClass]="{'kd-logs-size-icon-compact': logService.getCompact(),
+          'kd-logs-size-icon': !logService.getCompact()}">text_fields</mat-icon>
+        </button>
+        <button mat-icon-button
+                (click)="onShowTimestamp()">
+          <mat-icon>{{logService.getShowTimestamp() ? 'timer' : 'timer_off'}}</mat-icon>
+        </button>
+        <button mat-icon-button
+                matTooltip="Toggle auto-refresh (every {{refreshInterval / 1000}} seconds)"
+                (click)="toggleLogFollow()">
+          <mat-icon>
+            refresh
+            <svg class="kd-cross-style"
+                *ngIf="!logService.getFollowing()"
+                width="32px"
+                height="32px"
+                viewBox="0 0 32 32">
+              <line class="kd-cross-line-white" x1="9" x2="27" y1="9" y2="27"/>
+              <line class="kd-cross-line-black" x1="9" x2="27" y1="10" y2="28"/>
+            </svg>
+          </mat-icon>
+        </button>
+        <button mat-icon-button
+                matTooltip="{{logService?.getPrevious() ? 'Show current logs' : 'Show previous logs'}}"
+                (click)="onPreviousChange()">
+          <mat-icon>{{logService?.getPrevious() ? 'exposure_neg_1' : 'exposure_zero'}}</mat-icon>
+        </button>
+        <button mat-icon-button
+                matTooltip="Download logs"
+                (click)="downloadLog()">
+          <mat-icon>file_download</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div content
+         class="kd-log-view">
+      <div kdLoadingSpinner
+           [isLoading]="isLoading"></div>
+      <div class="kd-log-view-container"
+           [ngClass]="{'kd-logs-text-color-invert': logService?.getInverted(), 'kd-logs-text-color': !logService?.getInverted()}">
+        <div class="kd-virtual-repeat-sizer"></div>
+        <div *ngFor="let item of logsSet"
+             class="kd-logs-element"
+             [ngClass]="{'kd-logs-element-compact': logService.getCompact(), 'kd-logs-element': !logService.getCompact()}">
+          <span class="kd-log-line"
+                [innerHTML]="item | kdSafeHtml"></span>
+        </div>
+      </div>
+
+      <div fxLayout="row"
+           class="kd-muted">
+        <span class="kd-logs-info"
+              *ngIf="logsSet?.length > 1">
+          Logs from {{podLogs?.info.fromDate | date : "short"}} to {{podLogs?.info.toDate | date : "short"}} UTC
+        </span>
+        <span fxFlex></span>
+        <div class="kd-list-pagination-buttons">
+          <button mat-icon-button
+                  (click)="loadOldest()">
+          <mat-icon>first_page</mat-icon>
+        </button>
+          <button mat-icon-button
+                  (click)="loadOlder()">
+          <mat-icon>chevron_left</mat-icon>
+        </button>
+          <button mat-icon-button
+                  (click)="loadNewer()">
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+          <button mat-icon-button
+                  (click)="loadNewest()">
+          <mat-icon>last_page</mat-icon>
+        </button>
+        </div>
+      </div>
+    </div>
+  </kd-card>
+</div>

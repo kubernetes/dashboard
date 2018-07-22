@@ -38,8 +38,4 @@ export class ActionbarComponent implements OnInit {
   ngOnDestroy(): void {
     this.resourceMetaSubscription_.unsubscribe();
   }
-
-  viewLogs(): void {
-    // TODO
-  }
 }
