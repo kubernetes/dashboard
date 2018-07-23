@@ -409,6 +409,10 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			To(apiHandler.handleGetServiceDetail).
 			Writes(resourceService.ServiceDetail{}))
 	apiV1Ws.Route(
+		apiV1Ws.GET("/service/{namespace}/{service}/event").
+			To(apiHandler.handleGetServiceEvent).
+			Writes(common.EventList{}))
+	apiV1Ws.Route(
 		apiV1Ws.GET("/service/{namespace}/{service}/pod").
 			To(apiHandler.handleGetServicePods).
 			Writes(pod.PodList{}))
@@ -728,6 +732,25 @@ func (apiHandler *APIHandler) handleGetServiceDetail(request *restful.Request, r
 	dataSelect := parseDataSelectPathParameter(request)
 	dataSelect.MetricQuery = dataselect.StandardMetrics
 	result, err := resourceService.GetServiceDetail(k8sClient, apiHandler.iManager.Metric().Client(), namespace, name, dataSelect)
+	if err != nil {
+		kdErrors.HandleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetServiceEvent(request *restful.Request, response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		kdErrors.HandleInternalError(response, err)
+		return
+	}
+
+	namespace := request.PathParameter("namespace")
+	name := request.PathParameter("service")
+	dataSelect := parseDataSelectPathParameter(request)
+	dataSelect.MetricQuery = dataselect.StandardMetrics
+	result, err := resourceService.GetServiceEvents(k8sClient, dataSelect, namespace, name)
 	if err != nil {
 		kdErrors.HandleInternalError(response, err)
 		return

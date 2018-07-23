@@ -23,6 +23,7 @@ import {ServiceDetailComponent} from './component';
 export const serviceDetailState: Ng2StateDeclaration = {
   name: `${stateName}.detail`,
   url: addNamespacedResourceStateParamsToUrl(stateUrl),
+  component: ServiceDetailComponent,
   data: {
     kdBreadcrumbs: {
       label: 'resourceName',

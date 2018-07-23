@@ -31,6 +31,7 @@ import {CommaSeparatedListComponent} from './commaseparatedlist/component';
 import {ConditionListComponent} from './condition/component';
 import {ContainerCardComponent} from './container/component';
 import {CreatorCardComponent} from './creator/component';
+import {EndpointListComponent} from './endpoint/cardlist/component';
 import {ExternalEndpointComponent} from './endpoint/external/component';
 import {InternalEndpointComponent} from './endpoint/internal/component';
 import {HiddenPropertyComponent} from './hiddenproperty/component';
@@ -106,6 +107,7 @@ import {ZeroStateComponent} from './zerostate/component';
     PersistentVolumeClaimListComponent,
     IngressListComponent,
     ServiceListComponent,
+    EndpointListComponent,
     ExternalEndpointComponent,
     InternalEndpointComponent,
     ChipDialog,
@@ -161,6 +163,7 @@ import {ZeroStateComponent} from './zerostate/component';
     PersistentVolumeClaimListComponent,
     IngressListComponent,
     ServiceListComponent,
+    EndpointListComponent,
     ExternalEndpointComponent,
     InternalEndpointComponent,
     TextInputComponent,
