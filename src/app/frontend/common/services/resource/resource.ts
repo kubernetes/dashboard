@@ -29,6 +29,13 @@ export class ResourceService<T> extends ResourceBase<T> {
 
     return this.http_.get<T>(endpoint, {params});
   }
+
+  /**
+   * We need to provide HttpClient here since the base is not annotated with @Injectable
+   */
+  constructor(http: HttpClient) {
+    super(http);
+  }
 }
 
 @Injectable()
