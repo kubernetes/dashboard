@@ -15,7 +15,6 @@
 import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
 import {ComponentsModule} from '../../../common/components/module';
-import {ResourceModule} from '../../../common/services/resource/module';
 
 import {SharedModule} from '../../../shared.module';
 import {CronJobDetailComponent} from './detail/component';
@@ -28,7 +27,6 @@ import {cronJobState} from './state';
   imports: [
     SharedModule,
     ComponentsModule,
-    ResourceModule,
     UIRouterModule.forChild({states: [cronJobState, cronJobListState, cronJobDetailState]}),
   ],
   declarations: [CronJobList, CronJobDetailComponent],

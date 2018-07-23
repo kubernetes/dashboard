@@ -16,7 +16,6 @@ import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
 
 import {ComponentsModule} from '../../../common/components/module';
-import {ResourceModule} from '../../../common/services/resource/module';
 import {SharedModule} from '../../../shared.module';
 
 import {NodeDetailComponent} from './detail/component';
@@ -29,7 +28,6 @@ import {nodeState} from './state';
   imports: [
     SharedModule,
     ComponentsModule,
-    ResourceModule,
     UIRouterModule.forChild({states: [nodeState, nodeListState, nodeDetailState]}),
   ],
   declarations: [NodeListComponent, NodeDetailComponent],

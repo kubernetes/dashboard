@@ -15,8 +15,6 @@
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {APP_INITIALIZER, Injector, NgModule} from '@angular/core';
 
-import {DialogsModule} from '../../dialogs/module';
-
 import {ActionbarService} from './actionbar';
 import {AssetsService} from './assets';
 import {AuthService} from './authentication';
@@ -36,9 +34,6 @@ import {TitleService} from './title';
 import {VerberService} from './verber';
 
 @NgModule({
-  imports: [
-    DialogsModule,
-  ],
   providers: [
     AuthorizerService, AssetsService, BreadcrumbsService, LocalSettingsService,
     GlobalSettingsService, ConfigService, TitleService, AuthService, CsrfTokenService,

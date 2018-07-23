@@ -9,7 +9,7 @@
   "scripts": {
     "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
     "start:https": "concurrently \"npm run start:backend:https\" \"npm run start:frontend:https\"",
-    "start:frontend": "ng serve --aot --proxy-config aio/proxy.conf.json --host=0.0.0.0",
+    "start:frontend": "ng serve --proxy-config aio/proxy.conf.json --host=0.0.0.0",
     "start:frontend:https": "ng serve --aot --proxy-config aio/https-proxy.conf.json --ssl --host=0.0.0.0",
     "start:backend": "gulp serve --kubeconfig $npm_package_config_kubeconfig",
     "start:backend:https": "gulp serve --kubeconfig $npm_package_config_kubeconfig --autoGenerateCerts true --defaultCertDir $npm_package_config_kubeconfig_dir",
