@@ -47,18 +47,21 @@ https://github.com/kubernetes/dashboard/wiki/Integrations) guide.
 
 ## Documentation
 
-Dashboard documentation can be found on [Wiki](https://github.com/kubernetes/dashboard/wiki) pages, it includes:
+(content in progress)
 
-* Common: Entry-level overview
+## Additional Links
 
-* User Guide: [Installation](https://github.com/kubernetes/dashboard/wiki/Installation), [Accessing Dashboard](
-https://github.com/kubernetes/dashboard/wiki/Accessing-dashboard) and more for users
+* [**Advanced Topics and Tutorials**](https://github.com/kubernetes/dashboard/blob/master/docs/README.md)
+* [**Contributing**](https://github.com/kubernetes/dashboard/blob/master/CONTRIBUTING.md)
+* [**Development Guide**](https://github.com/kubernetes/dashboard/wiki/Getting-started)
 
-* Developer Guide: [Getting Started](https://github.com/kubernetes/dashboard/wiki/Getting-started), [Dependency
-Management](https://github.com/kubernetes/dashboard/wiki/Dependency-management) and more for anyone interested in
-contributing
+## Community
+
+* [**#sig-ui on Kubernetes Slack**](https://kubernetes.slack.com)
+* [**kubernetes-sig-ui mailing list** ](https://groups.google.com/forum/#!forum/kubernetes-sig-ui)
+* [**GitHub issues**](https://github.com/kubernetes/dashboard/issues)
+* [**community info**](https://github.com/kubernetes/community/tree/master/sig-ui)
 
 ## License
 
-The work done has been licensed under Apache License 2.0. The license file can be found [here](LICENSE). You can find
-out more about the license at [www.apache.org/licenses/LICENSE-2.0](//www.apache.org/licenses/LICENSE-2.0).
+[Apache License 2.0](https://github.com/kubernetes/dashboard/blob/master/LICENSE)
