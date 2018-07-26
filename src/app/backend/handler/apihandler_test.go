@@ -103,25 +103,38 @@ func TestMapUrlToResource(t *testing.T) {
 }
 
 func TestFormatRequestLog(t *testing.T) {
-	req, err := http.NewRequest("PUT", "/api/v1/pod", bytes.NewReader([]byte("{}")))
-	if err != nil {
-		t.Error("Cannot mockup request")
-	}
 	cases := []struct {
-		request  *restful.Request
+		method   string
+		uri      string
+		content  *bytes.Reader
 		expected string
 	}{
 		{
-			&restful.Request{
-				Request: req,
-			},
+			"PUT",
+			"/api/v1/pod",
+			bytes.NewReader([]byte("{}")),
 			"Incoming HTTP/1.1 PUT /api/v1/pod request",
 		},
+		{
+			"POST",
+			"/api/v1/login",
+			bytes.NewReader([]byte("{}")),
+			"Incoming HTTP/1.1 POST /api/v1/login request from : { contents hidden }",
+		},
 	}
+
 	for _, c := range cases {
-		actual := formatRequestLog(c.request)
+		req, err := http.NewRequest(c.method, c.uri, c.content)
+		if err != nil {
+			t.Error("Cannot mockup request")
+		}
+
+		var restfulRequest restful.Request
+		restfulRequest.Request = req
+
+		actual := formatRequestLog(&restfulRequest)
 		if !strings.Contains(actual, c.expected) {
-			t.Errorf("formatRequestLog(%#v) returns %#v, expected to contain %#v", c.request, actual, c.expected)
+			t.Errorf("formatRequestLog(%#v) returns %#v, expected to contain %#v", req, actual, c.expected)
 		}
 	}
 }
