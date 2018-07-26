@@ -27,8 +27,7 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/s
 ### Alternative setup
 
 This setup is not fully secure. Certificates are not used and Dashboard is exposed only over HTTP. In this setup access
-control can be ensured only by using [Authorization Header](
-https://github.com/kubernetes/dashboard/wiki/Access-control#authorization-header) feature. 
+control can be ensured only by using [Authorization Header](Access-control.md#authorization-header) feature. 
 
 To deploy Dashboard execute
 following command:
