@@ -67,12 +67,23 @@ func formatRequestLog(request *restful.Request) string {
 	}
 
 	content := "{}"
+
 	entity := make(map[string]interface{})
 	request.ReadEntity(&entity)
 	if len(entity) > 0 {
 		bytes, err := json.MarshalIndent(entity, "", "  ")
 		if err == nil {
 			content = string(bytes)
+		}
+	}
+
+	// Great now let's filter out any content from sensitive URLs
+	var sensitive_urls [2]string
+	sensitive_urls[0] = "/api/v1/login"
+	sensitive_urls[1] = "/api/v1/csrftoken/login"
+	for _, a := range sensitive_urls {
+		if a == uri {
+			content = "{ contents hidden }"
 		}
 	}
 
