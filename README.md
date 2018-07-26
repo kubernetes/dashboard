@@ -51,9 +51,9 @@ https://github.com/kubernetes/dashboard/wiki/Integrations) guide.
 
 ## Additional Links
 
-* [**Advanced Topics and Tutorials**](https://github.com/kubernetes/dashboard/blob/master/docs/README.md)
-* [**Contributing**](https://github.com/kubernetes/dashboard/blob/master/CONTRIBUTING.md)
-* [**Development Guide**](https://github.com/kubernetes/dashboard/wiki/Getting-started)
+* [**Advanced Topics and Tutorials**](docs/README.md)
+* [**Contributing**](CONTRIBUTING.md)
+* [**Development Guide**](docs/contributors/Getting-started)
 
 ## Community
 
