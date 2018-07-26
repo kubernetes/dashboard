@@ -4,7 +4,7 @@ This document describes shortly how to get certificates, that can be used to ena
    1. [Public trusted CA](#public-trusted-certificate-authority).
    1. [Self-signed certificate](#self-signed-certificate).
 1. Pass them to Dashboard.
-   1. In case you are following [Recommended Setup](https://github.com/kubernetes/dashboard/wiki/Installation#recommended-setup) to deploy Dashboard just generate certificates and follow it.
+   1. In case you are following [Recommended Setup](Installation.md#recommended-setup) to deploy Dashboard just generate certificates and follow it.
    1. In any other case you need to alter Dashboard's YAML deploy file and pass `--tls-key-file` and `--tls-cert-file` flags to Dashboard. More information about how to mount them into the pods can be found [here](https://kubernetes.io/docs/concepts/storage/volumes/).
 
 ## Public trusted Certificate Authority

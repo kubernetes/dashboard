@@ -1,4 +1,4 @@
-**IMPORTANT:** HTTPS endpoints are only available if you used [Recommended Setup](https://github.com/kubernetes/dashboard/wiki/Installation#recommended-setup), followed [Getting Started](https://github.com/kubernetes/dashboard/blob/master/README.md#getting-started) guide to deploy Dashboard or manually provided `--tls-key-file` and `--tls-cert-file` flags. In case you did not and you access Dashboard over HTTP, then Dashboard can be accessed the same way as [older versions](https://github.com/kubernetes/dashboard/wiki/Accessing-Dashboard---1.6.X-and-below).
+**IMPORTANT:** HTTPS endpoints are only available if you used [Recommended Setup](Installation.md#recommended-setup), followed [Getting Started](https://github.com/kubernetes/dashboard/blob/master/README.md#getting-started) guide to deploy Dashboard or manually provided `--tls-key-file` and `--tls-cert-file` flags.
 
 **NOTE**: Dashboard should not be exposed publicly over HTTP. For domains accessed over HTTP it will not be possible to sign in. Nothing will happen after clicking Sign in button on login page.
 

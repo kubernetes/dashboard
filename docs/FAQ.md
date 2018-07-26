@@ -16,7 +16,7 @@ This happens from time to time. Init container used to create self-signed certs 
 
 ### I cannot see any graphs in Dashboard, how to enable them?
 
-Make sure, that Heapster is up and running and Dashboard was able to connect with it. First you have to verify Heapster state with Dashboard or `kubectl` command. Then you should check Dashboard logs and look for `metric` and `Heapster` keywords. You can find more informations about Dashboard's Integrations [here](https://github.com/kubernetes/dashboard/wiki/Integrations).
+Make sure, that Heapster is up and running and Dashboard was able to connect with it. First you have to verify Heapster state with Dashboard or `kubectl` command. Then you should check Dashboard logs and look for `metric` and `Heapster` keywords. You can find more informations about Dashboard's Integrations [here](Integrations.md).
 
 ### During development I receive a lot of strange errors in the browser's console. What may be wrong?
 
@@ -61,7 +61,7 @@ If this does not help then this means there is a problem with your cluster or yo
 You can quickly check if accessing
 `http://localhost:8001/api/v1/proxy/namespaces/kube-system/services/kubernetes-dashboard/` instead of `http://localhost:8001/api/v1/namespaces/kube-system/services/kubernetes-dashboard/proxy` will work for you.
 
-Other way of checking if your issue is related to Dashboard is to expose and access it using **NodePort** method described in our [Accessing Dashboard](https://github.com/kubernetes/dashboard/wiki/Accessing-dashboard) guide. This will allow you to access Dashboard directly without any proxy involved. 
+Other way of checking if your issue is related to Dashboard is to expose and access it using **NodePort** method described in our [Accessing Dashboard](Accessing-dashboard.md) guide. This will allow you to access Dashboard directly without any proxy involved. 
 
 If any of described methods will work then this means it is **not** a Dashboard issue and you should seek for help on [core](https://github.com/kubernetes/kubernetes) repository or better yet read [Kubernetes Documentation](https://kubernetes.io/docs/tasks/) first to understand how it works.
 
@@ -79,4 +79,4 @@ There is a [known issue](https://github.com/kubernetes/kubernetes/issues/52729) 
 #### I'm accessing Dashboard over HTTPS
 The reason why `/ui` redirect does not work for HTTPS is that it hasn't yet been updated in the core repository. You can track https://github.com/kubernetes/kubernetes/pull/53046#discussion_r145338754 to find out when it will be merged. Probably it won't be available until K8S `1.8.3`+.
 
-Correct links that can be used to access Dashboard are in our documentation. Check [Accessing Dashboard](https://github.com/kubernetes/dashboard/wiki/Accessing-dashboard) to find out more.
+Correct links that can be used to access Dashboard are in our documentation. Check [Accessing Dashboard](Accessing-dashboard.md) to find out more.
