@@ -42,7 +42,7 @@ To make Dashboard use authorization header you simply need to pass `Authorizatio
 
 To quickly test it check out [Requestly](https://chrome.google.com/webstore/detail/requestly-redirect-url-mo/mdnleldcmiljblolnjhpnblkcekpdkpa) browser plugin that allows to manually modify request headers.
 
-**IMPORTANT**: Authorization header will not work if Dashboard is accessed through API server proxy. Both `kubectl proxy` and `API Server` way of accessing Dashboard described in [Accessing Dashboard](https://github.com/kubernetes/dashboard/wiki/Accessing-dashboard) guide will not work. It is due to the fact that once request reaches API server all additional headers are dropped. You can track proposal that was supposed to make it work [here](https://github.com/kubernetes/kubernetes/pull/29714).
+**IMPORTANT**: Authorization header will not work if Dashboard is accessed through API server proxy. Both `kubectl proxy` and `API Server` way of accessing Dashboard described in [Accessing Dashboard](Accessing-Dashboard.md) guide will not work. It is due to the fact that once request reaches API server all additional headers are dropped. You can track proposal that was supposed to make it work [here](https://github.com/kubernetes/kubernetes/pull/29714).
 
 ### Bearer Token
 
