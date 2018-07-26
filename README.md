@@ -17,8 +17,7 @@ running in the cluster and troubleshoot them, as well as manage the cluster itse
 ## Getting Started
 
 **IMPORTANT:** Since version 1.7 Dashboard uses more secure setup. It means, that by default it has minimal set of
-privileges and can only be accessed over HTTPS. It is recommended to read [Access Control](
-https://github.com/kubernetes/dashboard/wiki/Access-control) guide before performing any further steps.
+privileges and can only be accessed over HTTPS. It is recommended to read [Access Control](docs/Access-control.md) guide before performing any further steps.
 
 To deploy Dashboard, execute following command:
 
@@ -37,13 +36,12 @@ Now access Dashboard at:
 [`http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/`](
 http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/).
 
-To find out how to create sample user and log in follow [Creating sample user](https://github.com/kubernetes/dashboard/wiki/Creating-sample-user) guide.
+To find out how to create sample user and log in follow [Creating sample user](docs/Creating-sample-user.md) guide.
 
 **NOTE:**
 * The shortcut `http://localhost:8001/ui` is deprecated. Use the full proxy URL shown above.
 * [Heapster](https://github.com/kubernetes/heapster/) has to be running in the cluster for the metrics
-and graphs to be available. Read more about it in [Integrations](
-https://github.com/kubernetes/dashboard/wiki/Integrations) guide.
+and graphs to be available. Read more about it in [Integrations](docs/contributors/Integrations) guide.
 
 ## Documentation
 

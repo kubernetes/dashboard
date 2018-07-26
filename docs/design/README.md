@@ -3,7 +3,7 @@ This guide is for anyone interested in contributing design work themselves or co
 
 ## Resources:
 * Get in touch with Dan Romlein (@danielromlein) for general Dashboard UX questions or suggestions of tasks that need design work.
-* Follow the [Getting started guide](docs/contributors/Getting-started.md) to get the most recent version of Dashboard up and running.
+* Follow the [Getting started guide](../contributors/Getting-started.md) to get the most recent version of Dashboard up and running.
 * Dashboard is based on Google’s [Material](https://material.io/guidelines/) design system. Refer to their spec for guidance. 
 
 ## Process:
