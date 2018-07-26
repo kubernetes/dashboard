@@ -40,6 +40,6 @@
 
 * **Labels** ([contributors/Labels.md](contributors/Labels.md)): GitHub Issue labels explanation
 
-* **Design guide** ([design/README.md](design/README.md)): For anyone interested in contributing in a design capacity (less technical).
+* **Design guide** ([design](design)): For anyone interested in contributing in a design capacity (less technical).
 
-* **Testing Resources** ([testing/README.md](testing/README.md)): Sample resources used during tests.
+* **Testing Resources** ([testing](testing)): Sample resources used during tests.
