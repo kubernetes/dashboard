@@ -16,6 +16,6 @@ Additionally, check the list of rules and tips, that we are using:
 
 An overview of the features provided by the dashboard can be found [here](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard)
 
-If you're looking for ideas on what to contribute, in addition to taking a look at issues with the `help-wanted` tag, you may also want to view the [Dashboard roadmap](https://github.com/kubernetes/dashboard/wiki/Roadmap)..
+If you're looking for ideas on what to contribute, in addition to taking a look at issues with the `help-wanted` tag.
 
 If you have any further questions, feel free to ask in `#sig-ui` on the [Kubernetes' Slack](https://kubernetes.slack.com).
