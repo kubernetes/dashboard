@@ -15,6 +15,7 @@
 package handler
 
 import (
+	"encoding/json"
 	"net/http"
 	"testing"
 
@@ -23,6 +24,7 @@ import (
 	"strings"
 
 	restful "github.com/emicklei/go-restful"
+	"github.com/kubernetes/dashboard/src/app/backend/args"
 	"github.com/kubernetes/dashboard/src/app/backend/auth"
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 	"github.com/kubernetes/dashboard/src/app/backend/auth/jwe"
@@ -103,25 +105,69 @@ func TestMapUrlToResource(t *testing.T) {
 }
 
 func TestFormatRequestLog(t *testing.T) {
-	req, err := http.NewRequest("PUT", "/api/v1/pod", bytes.NewReader([]byte("{}")))
-	if err != nil {
-		t.Error("Cannot mockup request")
-	}
 	cases := []struct {
-		request  *restful.Request
-		expected string
+		method      string
+		uri         string
+		content     map[string]string
+		expected    string
+		apiLogLevel string
 	}{
 		{
-			&restful.Request{
-				Request: req,
-			},
+			"PUT",
+			"/api/v1/pod",
+			map[string]string{},
 			"Incoming HTTP/1.1 PUT /api/v1/pod request",
+			"DEFAULT",
+		},
+		{
+			"PUT",
+			"/api/v1/pod",
+			map[string]string{},
+			"",
+			"NONE",
+		},
+		{
+			"POST",
+			"/api/v1/login",
+			map[string]string{"password": "abc123"},
+			"Incoming HTTP/1.1 POST /api/v1/login request from : { contents hidden }",
+			"DEFAULT",
+		},
+		{
+			"POST",
+			"/api/v1/login",
+			map[string]string{},
+			"",
+			"NONE",
+		},
+		{
+			"POST",
+			"/api/v1/login",
+			map[string]string{"password": "abc123"},
+			"Incoming HTTP/1.1 POST /api/v1/login request from : {\n  \"password\": \"abc123\"\n}",
+			"DEBUG",
 		},
 	}
+
 	for _, c := range cases {
-		actual := formatRequestLog(c.request)
+		jsonValue, _ := json.Marshal(c.content)
+
+		req, err := http.NewRequest(c.method, c.uri, bytes.NewReader(jsonValue))
+		req.Header.Set("Content-Type", "application/json")
+
+		if err != nil {
+			t.Error("Cannot mockup request")
+		}
+
+		builder := args.GetHolderBuilder()
+		builder.SetAPILogLevel(c.apiLogLevel)
+
+		var restfulRequest restful.Request
+		restfulRequest.Request = req
+
+		actual := formatRequestLog(&restfulRequest)
 		if !strings.Contains(actual, c.expected) {
-			t.Errorf("formatRequestLog(%#v) returns %#v, expected to contain %#v", c.request, actual, c.expected)
+			t.Errorf("formatRequestLog(%#v) returns %#v, expected to contain %#v", req, actual, c.expected)
 		}
 	}
 }

@@ -24,6 +24,7 @@ import (
 	"time"
 
 	restful "github.com/emicklei/go-restful"
+	"github.com/kubernetes/dashboard/src/app/backend/args"
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
 	kdErrors "github.com/kubernetes/dashboard/src/app/backend/errors"
@@ -54,9 +55,15 @@ func restrictedResourcesFilter(request *restful.Request, response *restful.Respo
 // web-service filter function used for request and response logging.
 func requestAndResponseLogger(request *restful.Request, response *restful.Response,
 	chain *restful.FilterChain) {
-	log.Printf(formatRequestLog(request))
+	if args.Holder.GetAPILogLevel() != "NONE" {
+		log.Printf(formatRequestLog(request))
+	}
+
 	chain.ProcessFilter(request, response)
-	log.Printf(formatResponseLog(response, request))
+
+	if args.Holder.GetAPILogLevel() != "NONE" {
+		log.Printf(formatResponseLog(response, request))
+	}
 }
 
 // formatRequestLog formats request log string.
@@ -73,6 +80,19 @@ func formatRequestLog(request *restful.Request) string {
 		bytes, err := json.MarshalIndent(entity, "", "  ")
 		if err == nil {
 			content = string(bytes)
+		}
+	}
+
+	// Is DEBUG level logging enabled?
+	if args.Holder.GetAPILogLevel() != "DEBUG" {
+		// Great now let's filter out any content from sensitive URLs
+		var sensitive_urls [2]string
+		sensitive_urls[0] = "/api/v1/login"
+		sensitive_urls[1] = "/api/v1/csrftoken/login"
+		for _, a := range sensitive_urls {
+			if a == uri {
+				content = "{ contents hidden }"
+			}
 		}
 	}
 
