@@ -107,7 +107,8 @@ func (self *kubeConfigAuthenticator) getCurrentUserInfo(config kubeConfig) (user
 // Returns auth info structure based on provided user info or error in case not enough data has been provided.
 func (self *kubeConfigAuthenticator) getAuthInfo(info userInfo) (api.AuthInfo, error) {
 	if len(info.Token) == 0 && (len(info.Password) == 0 || len(info.Username) == 0) {
-		return api.AuthInfo{}, errors.New("Not enough data to create auth info structure.")
+		return api.AuthInfo{}, errors.New("Client certificate is not a valid authentication method for the dashboard.")
+    
 	}
 
 	result := api.AuthInfo{}
