@@ -12,24 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
-import {UIRouterModule} from '@uirouter/angular';
-
 import {ComponentsModule} from '../../../common/components/module';
 import {SharedModule} from '../../../shared.module';
+import {CreateFromFormComponent} from './component';
+import {HelpSectionComponent} from './helpsection/component';
+import {UserHelpComponent} from './helpsection/userhelp/component';
+import {UniqueNameValidator} from './uniquename.validator';
 
-import {NodeDetailComponent} from './detail/component';
-import {nodeDetailState} from './detail/state';
-import {NodeListComponent} from './list/component';
-import {nodeListState} from './list/state';
-import {nodeState} from './state';
-
+// TODO
 @NgModule({
-  imports: [
-    SharedModule,
-    ComponentsModule,
-    UIRouterModule.forChild({states: [nodeState, nodeListState, nodeDetailState]}),
-  ],
-  declarations: [NodeListComponent, NodeDetailComponent],
+  declarations:
+      [HelpSectionComponent, UserHelpComponent, CreateFromFormComponent, UniqueNameValidator],
+  imports: [CommonModule, SharedModule, ComponentsModule],
+  exports: [CreateFromFormComponent],
 })
-export class NodeModule {}
+export class CreateFromFormModule {
+}

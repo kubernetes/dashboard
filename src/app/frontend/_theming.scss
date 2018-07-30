@@ -230,4 +230,22 @@
   .mat-button-toggle-checked {
     background-color: $card-background-dark;
   }
+
+  .kd-user-help {
+    .material-icons {
+      color: $primary;
+    }
+
+    * {
+      color: $muted;
+    }
+
+    a {
+      color: $primary;
+
+      &:hover {
+        color: mat-color($primary-palette, lighter);
+      }
+    }
+  }
 }

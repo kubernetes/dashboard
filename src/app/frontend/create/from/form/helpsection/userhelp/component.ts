@@ -12,9 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../variables';
-@import '../mixins';
+import {Component, OnInit} from '@angular/core';
 
-.kd-create-container {
-  padding: 0;
+@Component({selector: 'kd-user-help', templateUrl: './template.html', styleUrls: ['./style.scss']})
+export class UserHelpComponent {
 }

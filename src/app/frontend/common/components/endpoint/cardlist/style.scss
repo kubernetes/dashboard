@@ -12,14 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../variables';
-@import '../mixins';
+@import '../../../../variables';
 
-.kd-create-container {
-  padding: 0;
-
-  ::ng-deep .mat-tab-body-content {
-    height: auto;
-    padding: 2.5 * $baseline-grid;
-  }
+.ports-item-line-height {
+  line-height: 2.5 * $baseline-grid;
 }
