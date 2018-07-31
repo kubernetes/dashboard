@@ -83,17 +83,10 @@ func formatRequestLog(request *restful.Request) string {
 		}
 	}
 
-	// Is DEBUG level logging enabled?
-	if args.Holder.GetAPILogLevel() != "DEBUG" {
-		// Great now let's filter out any content from sensitive URLs
-		var sensitive_urls [2]string
-		sensitive_urls[0] = "/api/v1/login"
-		sensitive_urls[1] = "/api/v1/csrftoken/login"
-		for _, a := range sensitive_urls {
-			if a == uri {
-				content = "{ contents hidden }"
-			}
-		}
+	// Is DEBUG level logging enabled? Yes?
+	// Great now let's filter out any content from sensitive URLs
+	if args.Holder.GetAPILogLevel() != "DEBUG" && checkSensitiveURL(&uri) {
+		content = "{ contents hidden }"
 	}
 
 	return fmt.Sprintf(RequestLogString, time.Now().Format(time.RFC3339), request.Request.Proto,
@@ -104,6 +97,16 @@ func formatRequestLog(request *restful.Request) string {
 func formatResponseLog(response *restful.Response, request *restful.Request) string {
 	return fmt.Sprintf(ResponseLogString, time.Now().Format(time.RFC3339),
 		request.Request.RemoteAddr, response.StatusCode())
+}
+
+// checkSensitiveUrl checks if a string matches against a sensitive URL
+// true if sensitive. false if not.
+func checkSensitiveURL(url *string) bool {
+	var sensitiveUrls = make(map[string]bool)
+	sensitiveUrls["/api/v1/login"] = true
+	sensitiveUrls["/api/v1/csrftoken/login"] = true
+
+	return sensitiveUrls[*url]
 }
 
 func metricsFilter(req *restful.Request, resp *restful.Response,
