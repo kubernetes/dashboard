@@ -102,11 +102,16 @@ func formatResponseLog(response *restful.Response, request *restful.Request) str
 // checkSensitiveUrl checks if a string matches against a sensitive URL
 // true if sensitive. false if not.
 func checkSensitiveURL(url *string) bool {
-	var sensitiveUrls = make(map[string]bool)
-	sensitiveUrls["/api/v1/login"] = true
-	sensitiveUrls["/api/v1/csrftoken/login"] = true
+	var s struct{}
+	var sensitiveUrls = make(map[string]struct{})
+	sensitiveUrls["/api/v1/login"] = s
+	sensitiveUrls["/api/v1/csrftoken/login"] = s
 
-	return sensitiveUrls[*url]
+	if _, ok := sensitiveUrls[*url]; ok {
+		return true
+	}
+	return false
+
 }
 
 func metricsFilter(req *restful.Request, resp *restful.Response,
