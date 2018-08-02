@@ -23,16 +23,29 @@ import (
 )
 
 func TestNewSettingsManager(t *testing.T) {
-	sm := NewSettingsManager(nil)
 
-	if len(sm.settings) > 0 {
-		t.Error("new settings manager should have no settings set")
+	cases := []struct {
+		namespace, expectedNamespace string
+	}{
+		{"testns", "testns"},
+		{"", "kube-system"},
+	}
+	for _, c := range cases {
+		sm := NewSettingsManager(nil, c.namespace)
+
+		if len(sm.settings) > 0 {
+			t.Error("new settings manager should have no settings set")
+		}
+
+		if sm.namespace != c.expectedNamespace {
+			t.Fatalf("Expected namespace to be '%s' got '%s'.", c.expectedNamespace, sm.namespace)
+		}
 	}
 }
 
 func TestSettingsManager_GetGlobalSettings(t *testing.T) {
-	sm := NewSettingsManager(nil)
-	client := fake.NewSimpleClientset(api.GetDefaultSettingsConfigMap())
+	sm := NewSettingsManager(nil, "")
+	client := fake.NewSimpleClientset(api.GetDefaultSettingsConfigMap(sm.namespace))
 	gs := sm.GetGlobalSettings(client)
 
 	if !reflect.DeepEqual(api.GetDefaultSettings(), gs) {
@@ -41,8 +54,8 @@ func TestSettingsManager_GetGlobalSettings(t *testing.T) {
 }
 
 func TestSettingsManager_SaveGlobalSettings(t *testing.T) {
-	client := fake.NewSimpleClientset(api.GetDefaultSettingsConfigMap())
-	sm := NewSettingsManager(nil)
+	sm := NewSettingsManager(nil, "")
+	client := fake.NewSimpleClientset(api.GetDefaultSettingsConfigMap(sm.namespace))
 	defaults := api.GetDefaultSettings()
 	err := sm.SaveGlobalSettings(client, &defaults)
 

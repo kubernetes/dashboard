@@ -20,6 +20,7 @@ import (
 	"log"
 	"sync"
 
+	"github.com/kubernetes/dashboard/src/app/backend/args"
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 	syncApi "github.com/kubernetes/dashboard/src/app/backend/sync/api"
 	jose "gopkg.in/square/go-jose.v2"
@@ -53,6 +54,7 @@ type rsaKeyHolder struct {
 	key          *rsa.PrivateKey
 	synchronizer syncApi.Synchronizer
 	mux          sync.Mutex
+	namespace    string
 }
 
 // Encrypter implements key holder interface. See KeyHolder for more information.
@@ -136,7 +138,7 @@ func (self *rsaKeyHolder) getEncryptionKeyHolder() runtime.Object {
 	priv, pub := ExportRSAKeyOrDie(self.Key())
 	return &v1.Secret{
 		ObjectMeta: metaV1.ObjectMeta{
-			Namespace: authApi.EncryptionKeyHolderNamespace,
+			Namespace: args.Holder.GetNamespace(),
 			Name:      authApi.EncryptionKeyHolderName,
 		},
 

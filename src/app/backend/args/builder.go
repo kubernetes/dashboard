@@ -144,6 +144,12 @@ func (self *holderBuilder) SetEnableSkipLogin(enableSkipLogin bool) *holderBuild
 	return self
 }
 
+// SetNamespace 'namespace' argument of Dashboard binary.
+func (self *holderBuilder) SetNamespace(namespace string) *holderBuilder {
+	self.holder.namespace = namespace
+	return self
+}
+
 // GetHolderBuilder returns singleton instance of argument holder builder.
 func GetHolderBuilder() *holderBuilder {
 	return builder

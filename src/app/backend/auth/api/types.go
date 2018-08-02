@@ -22,8 +22,7 @@ import (
 
 const (
 	// Resource information that are used as encryption key storage. Can be accessible by multiple dashboard replicas.
-	EncryptionKeyHolderName      = "kubernetes-dashboard-key-holder"
-	EncryptionKeyHolderNamespace = "kube-system"
+	EncryptionKeyHolderName = "kubernetes-dashboard-key-holder"
 
 	// Resource information that are used as certificate storage for custom certificates used by the user.
 	CertificateHolderSecretName      = "kubernetes-dashboard-certs"
