@@ -38,5 +38,4 @@ import {ingressState} from './state';
   ],
   declarations: [IngressList, IngressDetailComponent],
 })
-export class IngressModule {
-}
+export class IngressModule {}

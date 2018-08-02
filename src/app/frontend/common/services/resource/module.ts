@@ -18,5 +18,4 @@ import {NamespacedResourceService, ResourceService} from './resource';
 @NgModule({
   providers: [ResourceService, NamespacedResourceService],
 })
-export class ResourceModule {
-}
+export class ResourceModule {}

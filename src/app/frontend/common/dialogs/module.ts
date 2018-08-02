@@ -42,5 +42,4 @@ import {EditResourceDialog} from './editresource/dialog';
     DeleteResourceDialog,
   ]
 })
-export class DialogsModule {
-}
+export class DialogsModule {}

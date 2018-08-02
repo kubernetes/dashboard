@@ -18,5 +18,4 @@ import {Component} from '@angular/core';
   selector: 'kd-node-list-state',
   template: '<kd-node-list></kd-node-list>',
 })
-export class NodeListComponent {
-}
+export class NodeListComponent {}

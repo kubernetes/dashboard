@@ -18,5 +18,4 @@ import {Component} from '@angular/core';
   selector: 'kd-persistent-volume-claim-list-state',
   template: '<kd-persistent-volume-claim-list></kd-persistent-volume-claim-list>',
 })
-export class PersistentVolumeClaimList {
-}
+export class PersistentVolumeClaimList {}

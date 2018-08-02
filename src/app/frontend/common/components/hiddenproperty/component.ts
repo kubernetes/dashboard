@@ -19,6 +19,4 @@ import {Component, Input} from '@angular/core';
   templateUrl: './template.html',
   styleUrls: ['./style.scss'],
 })
-export class HiddenPropertyComponent {
-  @Input() hidden = true;
-}
+export class HiddenPropertyComponent { @Input() hidden = true; }

@@ -19,9 +19,7 @@ import {KdError as KdApiError, KnownErrors} from '@api/frontendapi';
 /**
  * Error returned as a part of backend api calls. All server errors should be in this format.
  */
-export class K8SError implements K8SApiError {
-  ErrStatus: ErrStatus;
-}
+export class K8SError implements K8SApiError { ErrStatus: ErrStatus; }
 /* tslint:enable */
 
 /**

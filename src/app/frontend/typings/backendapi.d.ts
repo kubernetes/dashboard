@@ -13,21 +13,17 @@
 // limitations under the License.
 
 // Shared resource types
-export interface TypeMeta {
-  kind: string;
-}
+export interface TypeMeta { kind: string; }
 
-export interface ListMeta {
-  totalItems: number;
-}
+export interface ListMeta { totalItems: number; }
 
 export interface ObjectMeta {
   name: string;
   namespace: string;
   labels: StringMap;
-  annotations: StringMap;
+  annotations?: StringMap;
   creationTimestamp: string;
-  uid: string;
+  uid?: string;
 }
 
 export interface ResourceDetail {
@@ -38,7 +34,7 @@ export interface ResourceDetail {
 
 export interface ResourceList {
   listMeta: ListMeta;
-  items: Resource[];
+  items?: Resource[];
   errors: K8sError[];
 }
 
@@ -53,9 +49,7 @@ export interface ResourceOwner extends Resource {
   initContainerImages: string[];
 }
 
-export interface LabelSelector {
-  matchLabels: StringMap;
-}
+export interface LabelSelector { matchLabels: StringMap; }
 
 export interface CapacityItem {
   resourceName: string;
@@ -63,13 +57,9 @@ export interface CapacityItem {
 }
 
 // List types
-export interface ClusterRoleList extends ResourceList {
-  items: ClusterRole[];
-}
+export interface ClusterRoleList extends ResourceList { items: ClusterRole[]; }
 
-export interface ConfigMapList extends ResourceList {
-  items: ConfigMap[];
-}
+export interface ConfigMapList extends ResourceList { items: ConfigMap[]; }
 
 export interface CronJobList extends ResourceList {
   items: CronJob[];
@@ -86,51 +76,35 @@ export interface DeploymentList extends ResourceList {
   status: Status;
 }
 
-export interface EndpointList extends ResourceList {
-  endpoints: Endpoint[];
-}
+export interface EndpointList extends ResourceList { endpoints: Endpoint[]; }
 
-export interface EventList extends ResourceList {
-  events: Event[];
-}
+export interface EventList extends ResourceList { events: Event[]; }
 
 export interface HorizontalPodAutoscalerList extends ResourceList {
   horizontalpodautoscalers: HorizontalPodAutoscaler[];
 }
 
-export interface IngressList extends ResourceList {
-  items: Ingress[];
-}
+export interface IngressList extends ResourceList { items: Ingress[]; }
 
 export interface JobList extends ResourceList {
   jobs: Job[];
   status: Status;
 }
 
-export interface NamespaceList extends ResourceList {
-  namespaces: Namespace[];
-}
+export interface NamespaceList extends ResourceList { namespaces: Namespace[]; }
 
-export interface NodeList extends ResourceList {
-  nodes: Node[];
-}
+export interface NodeList extends ResourceList { nodes: Node[]; }
 
-export interface PersistentVolumeClaimList extends ResourceList {
-  items: PersistentVolumeClaim[];
-}
+export interface PersistentVolumeClaimList extends ResourceList { items: PersistentVolumeClaim[]; }
 
-export interface PersistentVolumeList extends ResourceList {
-  items: PersistentVolume[];
-}
+export interface PersistentVolumeList extends ResourceList { items: PersistentVolume[]; }
 
-export interface PodContainerList {
-  containers: string[];
-}
+export interface PodContainerList { containers: string[]; }
 
 export interface PodList extends ResourceList {
   pods: Pod[];
   status: Status;
-  podInfo: PodInfo;
+  podInfo?: PodInfo;
   cumulativeMetrics: Metric[]|null;
 }
 
@@ -144,26 +118,18 @@ export interface ReplicationControllerList extends ResourceList {
   status: Status;
 }
 
-export interface ResourceQuotaDetailList extends ResourceList {
-  items: ResourceQuotaDetail[];
-}
+export interface ResourceQuotaDetailList extends ResourceList { items: ResourceQuotaDetail[]; }
 
-export interface SecretList extends ResourceList {
-  secrets: Secret[];
-}
+export interface SecretList extends ResourceList { secrets: Secret[]; }
 
-export interface ServiceList extends ResourceList {
-  services: Service[];
-}
+export interface ServiceList extends ResourceList { services: Service[]; }
 
 export interface StatefulSetList extends ResourceList {
   statefulSets: StatefulSet[];
   status: Status;
 }
 
-export interface StorageClassList extends ResourceList {
-  storageClasses: StorageClass[];
-}
+export interface StorageClassList extends ResourceList { storageClasses: StorageClass[]; }
 
 // Simple detail types
 export interface ClusterRole extends Resource {}
@@ -195,9 +161,7 @@ export interface Deployment extends Resource {
   initContainerImages: string[];
 }
 
-export interface EndpointResourceList extends ResourceList {
-  endpoints: EndpointResource[];
-}
+export interface EndpointResourceList extends ResourceList { endpoints: EndpointResource[]; }
 
 export interface EndpointResource extends Resource {
   host: string;
@@ -215,7 +179,7 @@ export interface EndpointResourcePort {
 export interface Port {
   port: number;
   protocol: string;
-  nodePort: number;
+  nodePort?: number;
 }
 
 export interface Endpoint {
@@ -247,9 +211,7 @@ export interface HorizontalPodAutoscaler extends Resource {
   targetCPUUtilization?: number;
 }
 
-export interface Ingress extends Resource {
-  endpoints: Endpoint[];
-}
+export interface Ingress extends Resource { endpoints: Endpoint[]; }
 
 export interface Job extends Resource {
   pods: PodInfo;
@@ -258,13 +220,9 @@ export interface Job extends Resource {
   parallelism: number;
 }
 
-export interface Namespace extends Resource {
-  phase: string;
-}
+export interface Namespace extends Resource { phase: string; }
 
-export interface Node extends Resource {
-  ready: string;
-}
+export interface Node extends Resource { ready: string; }
 
 export interface PersistentVolume extends Resource {
   capacity: StringMap;
@@ -282,9 +240,9 @@ export interface PersistentVolumeClaim extends Resource {
 
 export interface Pod extends Resource {
   podStatus: PodStatus;
-  podIP: string;
+  podIP?: string;
   restartCount: number;
-  qosClass: string;
+  qosClass?: string;
   metrics: PodMetrics;
   warnings: Event[];
   nodeName: string;
@@ -307,9 +265,7 @@ export interface ReplicationController extends Resource {
   initContainerImages: string[];
 }
 
-export interface Secret extends Resource {
-  type: string;
-}
+export interface Secret extends Resource { type: string; }
 
 export interface Service extends Resource {
   internalEndpoint: Endpoint;
@@ -407,9 +363,7 @@ export interface PolicyRule {
   nonResourceURLs: string[];
 }
 
-export interface ClusterRoleDetail extends ResourceDetail {
-  rules: PolicyRule[];
-}
+export interface ClusterRoleDetail extends ResourceDetail { rules: PolicyRule[]; }
 
 export interface SecretDetail extends ResourceDetail {
   type: string;
@@ -426,13 +380,9 @@ export interface PersistentVolumeClaimDetail extends ResourceDetail {
   accessModes: string[];
 }
 
-export interface StorageClassDetail extends ResourceDetail {
-  parameters: StringMap;
-}
+export interface StorageClassDetail extends ResourceDetail { parameters: StringMap; }
 
-export interface ConfigMapDetail extends ResourceDetail {
-  data: StringMap;
-}
+export interface ConfigMapDetail extends ResourceDetail { data: StringMap; }
 
 export interface JobDetail extends ResourceDetail {
   podInfo: PodInfo;
@@ -518,9 +468,7 @@ export interface HorizontalPodAutoscalerDetail extends ResourceDetail {
 }
 
 // Validation types
-export interface AppNameValidity {
-  valid: boolean;
-}
+export interface AppNameValidity { valid: boolean; }
 
 export interface AppNameValiditySpec {
   name: string;
@@ -532,13 +480,9 @@ export interface ImageReferenceValidity {
   reason: string;
 }
 
-export interface ImageReferenceValiditySpec {
-  reference: string;
-}
+export interface ImageReferenceValiditySpec { reference: string; }
 
-export interface ProtocolValidity {
-  valid: boolean;
-}
+export interface ProtocolValidity { valid: boolean; }
 
 export interface ProtocolValiditySpec {
   protocol: string;
@@ -551,9 +495,7 @@ export interface AuthResponse {
   errors: K8sError[];
 }
 
-export interface CanIResponse {
-  allowed: boolean;
-}
+export interface CanIResponse { allowed: boolean; }
 
 export interface LoginSpec {
   username: string;
@@ -598,17 +540,11 @@ export interface AppDeploymentSpec {
   runAsPrivileged: boolean;
 }
 
-export interface CsrfToken {
-  token: string;
-}
+export interface CsrfToken { token: string; }
 
-export interface LocalSettings {
-  isThemeDark: boolean;
-}
+export interface LocalSettings { isThemeDark: boolean; }
 
-export interface AppConfig {
-  serverTime: number;
-}
+export interface AppConfig { serverTime: number; }
 
 interface StringMap {
   [key: string]: string;
@@ -622,9 +558,7 @@ export interface ErrStatus {
 }
 
 /* tslint:disable */
-export interface K8sError {
-  ErrStatus: ErrStatus;
-}
+export interface K8sError { ErrStatus: ErrStatus; }
 /* tslint:enable */
 
 export interface Condition {
@@ -636,9 +570,9 @@ export interface Condition {
   message: string;
 }
 
-export interface ContainerStateWaiting {
-  reason: string;
-}
+export interface ContainerStateWaiting { reason: string; }
+
+export interface ContainerStateRunning { startedAt: string; }
 
 export interface ContainerStateTerminated {
   reason: string;
@@ -647,8 +581,9 @@ export interface ContainerStateTerminated {
 }
 
 export interface ContainerState {
-  waiting: ContainerStateWaiting;
-  terminated: ContainerStateTerminated;
+  waiting?: ContainerStateWaiting;
+  terminated?: ContainerStateTerminated;
+  running?: ContainerStateRunning;
 }
 
 export interface ResourceQuotaStatus {
@@ -807,9 +742,7 @@ export interface AWSElasticBlockStorageVolumeSource {
   readOnly: boolean;
 }
 
-export interface HostPathVolumeSource {
-  path: string;
-}
+export interface HostPathVolumeSource { path: string; }
 
 export interface GlusterfsVolumeSource {
   endpoints: string;
@@ -834,9 +767,7 @@ export interface RBDVolumeSource {
   readOnly: boolean;
 }
 
-export interface LocalObjectReference {
-  name: string;
-}
+export interface LocalObjectReference { name: string; }
 
 /* tslint:disable */
 export interface ISCSIVolumeSource {
@@ -870,9 +801,7 @@ export interface FCVolumeSource {
   readOnly: boolean;
 }
 
-export interface FlockerVolumeSource {
-  datasetName: string;
-}
+export interface FlockerVolumeSource { datasetName: string; }
 
 export interface RollingUpdateStrategy {
   maxSurge: (number|string);
@@ -886,22 +815,16 @@ export interface DeploymentInfo {
   unavailable: number;
 }
 
-export interface ReplicationControllerSpec {
-  replicas: number;
-}
+export interface ReplicationControllerSpec { replicas: number; }
 
 export interface ReplicaCounts {
   desiredReplicas: number;
   actualReplicas: number;
 }
 
-export interface DeleteReplicationControllerSpec {
-  deleteServices: boolean;
-}
+export interface DeleteReplicationControllerSpec { deleteServices: boolean; }
 
-export interface NamespaceSpec {
-  name: string;
-}
+export interface NamespaceSpec { name: string; }
 
 export interface ReplicationControllerPodWithContainers {
   name: string;
@@ -910,9 +833,7 @@ export interface ReplicationControllerPodWithContainers {
   podContainers: PodContainer[];
 }
 
-export interface ReplicationControllerPods {
-  pods: ReplicationControllerPodWithContainers[];
-}
+export interface ReplicationControllerPods { pods: ReplicationControllerPodWithContainers[]; }
 
 export interface LogSources {
   podNames: string[];
@@ -952,9 +873,7 @@ export interface LogLineReference {
   lineNum: number;
 }
 
-export interface Protocols {
-  protocols: string[];
-}
+export interface Protocols { protocols: string[]; }
 
 export interface SecretSpec {
   name: string;
@@ -983,9 +902,7 @@ export interface GlobalSettings {
   autoRefreshTimeInterval: number;
 }
 
-export interface APIVersion {
-  name: string;
-}
+export interface APIVersion { name: string; }
 
 export interface LoginSpec {
   username: string;
@@ -1005,19 +922,13 @@ export interface LoginStatus {
   httpsMode: boolean;
 }
 
-export interface TokenRefreshSpec {
-  jweToken: string;
-}
+export interface TokenRefreshSpec { jweToken: string; }
 
-export interface LoginModesResponse {
-  modes: string[];
-}
+export interface LoginModesResponse { modes: string[]; }
 
 export type AuthenticationMode = string;
 
-export interface EnabledAuthenticationModes {
-  modes: AuthenticationMode[];
-}
+export interface EnabledAuthenticationModes { modes: AuthenticationMode[]; }
 
 export interface SystemBanner {
   message: string;

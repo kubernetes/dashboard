@@ -25,5 +25,4 @@ import {LoginComponent} from './component';
     ComponentsModule,
   ],
 })
-export class LoginModule {
-}
+export class LoginModule {}

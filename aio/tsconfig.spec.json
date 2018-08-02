@@ -11,7 +11,8 @@
     ]
   },
   "files": [
-    "../src/app/frontend/index.spec.ts"
+    "../src/app/frontend/index.spec.ts",
+    "../src/app/frontend/polyfills.ts"
   ],
   "include": [
     "../src/app/frontend/**/*.spec.ts",

@@ -12,10 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'rxjs/add/operator/catch';
+
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {CanIResponse} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
+
 import {KNOWN_ERRORS} from '../../errors/errors';
 
 @Injectable()

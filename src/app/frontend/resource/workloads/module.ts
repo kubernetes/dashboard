@@ -29,5 +29,4 @@ import {workloadsState} from './state';
   ],
   declarations: [WorkloadsComponent],
 })
-export class WorkloadsModule {
-}
+export class WorkloadsModule {}

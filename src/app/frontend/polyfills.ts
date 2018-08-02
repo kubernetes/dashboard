@@ -75,3 +75,5 @@ import 'zone.js/dist/zone';
  * RxJS is required to support additional Observable methods such as map or switchMap.
  */
 import 'rxjs/Rx';
+
+import 'core-js/es7/reflect'; // needed for unit testing

@@ -42,5 +42,4 @@ import {settingsState} from './state';
     SaveAnywayDialog,
   ],
 })
-export class SettingsModule {
-}
+export class SettingsModule {}

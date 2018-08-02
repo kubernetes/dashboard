@@ -38,5 +38,4 @@ import {storageClassState} from './state';
   ],
   declarations: [StorageClassListComponent, StorageClassDetailComponent],
 })
-export class StorageClassModule {
-}
+export class StorageClassModule {}

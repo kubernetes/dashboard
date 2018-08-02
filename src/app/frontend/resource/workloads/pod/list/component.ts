@@ -18,5 +18,4 @@ import {Component} from '@angular/core';
   selector: 'kd-pod-list-state',
   template: '<kd-pod-list></kd-pod-list>',
 })
-export class PodList {
-}
+export class PodList {}

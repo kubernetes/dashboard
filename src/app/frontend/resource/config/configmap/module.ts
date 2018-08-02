@@ -32,5 +32,4 @@ import {configMapState} from './state';
   ],
   declarations: [ConfigMapList, ConfigMapDetailComponent],
 })
-export class ConfigMapModule {
-}
+export class ConfigMapModule {}
