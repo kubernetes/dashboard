@@ -61,6 +61,10 @@ function getBackendArgs(mode) {
     args.push(`--default-cert-dir=${conf.backend.defaultCertDir}`);
   }
 
+  if (conf.backend.apiLogLevel.length > 0) {
+    args.push(`--api-log-level=${conf.backend.apiLogLevel}`);
+  }
+
   if (mode === conf.build.production) {
     args.push(`--insecure-port=${conf.frontend.serverPort}`);
   }

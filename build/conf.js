@@ -138,6 +138,11 @@ export default {
      */
     envKubeconfig: process.env.KUBE_DASHBOARD_KUBECONFIG,
     /**
+     * Env variable for API request log level. If blank, the
+     * dashboard defaults to INFO, publishing sanitized logs to STDOUT
+     */
+    apiLogLevel: gulpUtil.env.apiLogLevel !== undefined ? gulpUtil.env.apiLogLevel : '',
+    /**
      * Address for the Heapster API server. If blank, the dashboard
      * will attempt to connect to Heapster via a service proxy.
      */
