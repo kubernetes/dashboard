@@ -124,3 +124,14 @@ func HandleInternalError(response *restful.Response, err error) {
 	response.AddHeader("Content-Type", "text/plain")
 	response.WriteErrorString(statusCode, err.Error()+"\n")
 }
+
+// Handle HTTP Errors more accurately based on the localized consts
+func HandleHTTPError(err error) int {
+	if err == nil {
+		return http.StatusInternalServerError
+	}
+	if err.Error() == MSG_TOKEN_EXPIRED_ERROR || err.Error() == MSG_LOGIN_UNAUTHORIZED_ERROR || err.Error() == MSG_ENCRYPTION_KEY_CHANGED {
+		return http.StatusUnauthorized
+	}
+	return http.StatusInternalServerError
+}
