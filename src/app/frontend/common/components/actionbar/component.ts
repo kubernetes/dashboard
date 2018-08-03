@@ -18,5 +18,4 @@ import {Component} from '@angular/core';
   selector: 'kd-actionbar',
   templateUrl: './template.html',
 })
-export class ActionbarComponent {
-}
+export class ActionbarComponent {}

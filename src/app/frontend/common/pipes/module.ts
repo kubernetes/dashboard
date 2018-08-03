@@ -23,5 +23,4 @@ import {SafeHtmlFormatter} from './safehtml';
   declarations: [MemoryFormatter, CoreFormatter, RelativeTimeFormatter, SafeHtmlFormatter],
   exports: [MemoryFormatter, CoreFormatter, RelativeTimeFormatter, SafeHtmlFormatter],
 })
-export class PipesModule {
-}
+export class PipesModule {}

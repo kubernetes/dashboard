@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {HttpClientModule} from '@angular/common/http';
 import {NgModule, NgModuleFactoryLoader, SystemJsNgModuleLoader} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -58,6 +59,7 @@ import {settingsFutureState} from './settings/state';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     CoreModule,
     ChromeModule,
     LoginModule,
@@ -111,5 +113,4 @@ import {settingsFutureState} from './settings/state';
   declarations: [RootComponent],
   bootstrap: [RootComponent]
 })
-export class RootModule {
-}
+export class RootModule {}

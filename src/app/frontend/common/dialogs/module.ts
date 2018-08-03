@@ -16,7 +16,6 @@ import {NgModule} from '@angular/core';
 
 import {SharedModule} from '../../shared.module';
 import {ComponentsModule} from '../components/module';
-import {ResourceModule} from '../services/resource/module';
 
 import {AlertDialog} from './alert/dialog';
 import {DeleteResourceDialog} from './deleteresource/dialog';
@@ -26,7 +25,6 @@ import {EditResourceDialog} from './editresource/dialog';
 @NgModule({
   imports: [
     SharedModule,
-    ResourceModule,
     ComponentsModule,
   ],
   declarations: [
@@ -48,5 +46,4 @@ import {EditResourceDialog} from './editresource/dialog';
     LogsDownloadDialog,
   ]
 })
-export class DialogsModule {
-}
+export class DialogsModule {}

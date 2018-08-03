@@ -5,7 +5,7 @@ sudo: required
 dist: trusty
 group: edge
 language: node_js
-node_js: 8.6.0
+node_js: 8.11.3
 
 cache:
   directories:

@@ -30,5 +30,4 @@ import {aboutState} from './state';
   ],
   declarations: [AboutComponent, ActionbarComponent],
 })
-export class AboutModule {
-}
+export class AboutModule {}

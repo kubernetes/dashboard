@@ -16,7 +16,6 @@ import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
 
 import {ComponentsModule} from '../../common/components/module';
-import {ResourceModule} from '../../common/services/resource/module';
 import {SharedModule} from '../../shared.module';
 
 import {ConfigComponent} from './component';
@@ -26,10 +25,8 @@ import {configState} from './state';
   imports: [
     SharedModule,
     ComponentsModule,
-    ResourceModule,
     UIRouterModule.forChild({states: [configState]}),
   ],
   declarations: [ConfigComponent],
 })
-export class ConfigModule {
-}
+export class ConfigModule {}

@@ -32,5 +32,4 @@ import {errorState} from './state';
   providers: [{provide: ErrorHandler, useClass: GlobalErrorHandler}],
   declarations: [ErrorComponent],
 })
-export class ErrorModule {
-}
+export class ErrorModule {}

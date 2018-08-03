@@ -54,7 +54,7 @@
 // import 'classlist.js';  // Run `npm install --save classlist.js`.
 
 /** IE10 and IE11 requires the following for the Reflect API. */
-// import 'core-js/es6/reflect';
+import 'core-js/es7/reflect';
 
 import 'hammerjs';
 
@@ -75,3 +75,5 @@ import 'zone.js/dist/zone';
  * RxJS is required to support additional Observable methods such as map or switchMap.
  */
 import 'rxjs/Rx';
+
+import 'core-js/es7/reflect'; // needed for unit testing

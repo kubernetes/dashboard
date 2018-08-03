@@ -16,7 +16,6 @@ import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
 
 import {ComponentsModule} from '../../../common/components/module';
-import {ResourceModule} from '../../../common/services/resource/module';
 import {SharedModule} from '../../../shared.module';
 import {PodDetailComponent} from './detail/component';
 import {podDetailState} from './detail/state';
@@ -28,10 +27,8 @@ import {podState} from './state';
   imports: [
     SharedModule,
     ComponentsModule,
-    ResourceModule,
     UIRouterModule.forChild({states: [podState, podListState, podDetailState]}),
   ],
   declarations: [PodList, PodDetailComponent],
 })
-export class PodModule {
-}
+export class PodModule {}

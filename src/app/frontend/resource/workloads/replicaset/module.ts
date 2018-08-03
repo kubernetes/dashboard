@@ -15,7 +15,6 @@
 import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
 import {ComponentsModule} from '../../../common/components/module';
-import {ResourceModule} from '../../../common/services/resource/module';
 
 import {SharedModule} from '../../../shared.module';
 import {ReplicaSetDetailComponent} from './detail/component';
@@ -28,11 +27,9 @@ import {replicaSetState} from './state';
   imports: [
     SharedModule,
     ComponentsModule,
-    ResourceModule,
     UIRouterModule.forChild(
         {states: [replicaSetState, replicaSetListState, replicaSetDetailState]}),
   ],
   declarations: [ReplicaSetList, ReplicaSetDetailComponent],
 })
-export class ReplicaSetModule {
-}
+export class ReplicaSetModule {}

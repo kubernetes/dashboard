@@ -16,7 +16,6 @@ import {NgModule} from '@angular/core';
 import {UIRouterModule} from '@uirouter/angular';
 
 import {ComponentsModule} from '../../../common/components/module';
-import {ResourceModule} from '../../../common/services/resource/module';
 import {SharedModule} from '../../../shared.module';
 
 import {SecretDetailComponent} from './detail/component';
@@ -28,11 +27,9 @@ import {secretState} from './state';
 @NgModule({
   imports: [
     SharedModule,
-    ResourceModule,
     ComponentsModule,
     UIRouterModule.forChild({states: [secretState, secretListState, secretDetailState]}),
   ],
   declarations: [SecretList, SecretDetailComponent],
 })
-export class SecretModule {
-}
+export class SecretModule {}
