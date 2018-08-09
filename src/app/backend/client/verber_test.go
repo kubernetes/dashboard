@@ -52,19 +52,19 @@ func (c *FakeRESTClient) Delete() *restclient.Request {
 		return c.response, c.err
 	}), "DELETE", nil, "/api/v1", restclient.ContentConfig{}, restclient.Serializers{
 		Encoder: codec,
-	}, nil, nil)
+	}, nil, nil, 0)
 }
 
 func (c *FakeRESTClient) Put() *restclient.Request {
 	return restclient.NewRequest(clientFunc(func(req *http.Request) (*http.Response, error) {
 		return c.response, c.err
-	}), "PUT", nil, "/api/v1", restclient.ContentConfig{}, restclient.Serializers{}, nil, nil)
+	}), "PUT", nil, "/api/v1", restclient.ContentConfig{}, restclient.Serializers{}, nil, nil, 0)
 }
 
 func (c *FakeRESTClient) Get() *restclient.Request {
 	return restclient.NewRequest(clientFunc(func(req *http.Request) (*http.Response, error) {
 		return c.response, c.err
-	}), "GET", nil, "/api/v1", restclient.ContentConfig{}, restclient.Serializers{}, nil, nil)
+	}), "GET", nil, "/api/v1", restclient.ContentConfig{}, restclient.Serializers{}, nil, nil, 0)
 }
 
 func TestDeleteShouldPropagateErrorsAndChoseClient(t *testing.T) {

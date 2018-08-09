@@ -16,7 +16,7 @@ limitations under the License.
 package inject
 
 import (
-	appv1alpha1 "github.com/kubernetes-sigs/application/pkg/apis/app/v1alpha1"
+	appv1beta1 "github.com/kubernetes-sigs/application/pkg/apis/app/v1beta1"
 	rscheme "github.com/kubernetes-sigs/application/pkg/client/clientset/versioned/scheme"
 	"github.com/kubernetes-sigs/application/pkg/controller/application"
 	"github.com/kubernetes-sigs/application/pkg/inject/args"
@@ -33,7 +33,7 @@ func init() {
 	Inject = append(Inject, func(arguments args.InjectArgs) error {
 		Injector.ControllerManager = arguments.ControllerManager
 
-		if err := arguments.ControllerManager.AddInformerProvider(&appv1alpha1.Application{}, arguments.Informers.App().V1alpha1().Applications()); err != nil {
+		if err := arguments.ControllerManager.AddInformerProvider(&appv1beta1.Application{}, arguments.Informers.App().V1beta1().Applications()); err != nil {
 			return err
 		}
 
@@ -48,7 +48,7 @@ func init() {
 	})
 
 	// Inject CRDs
-	Injector.CRDs = append(Injector.CRDs, &appv1alpha1.ApplicationCRD)
+	Injector.CRDs = append(Injector.CRDs, &appv1beta1.ApplicationCRD)
 	// Inject PolicyRules
 	Injector.PolicyRules = append(Injector.PolicyRules, rbacv1.PolicyRule{
 		APIGroups: []string{"app.k8s.io"},
@@ -58,7 +58,7 @@ func init() {
 	// Inject GroupVersions
 	Injector.GroupVersions = append(Injector.GroupVersions, schema.GroupVersion{
 		Group:   "app.k8s.io",
-		Version: "v1alpha1",
+		Version: "v1beta1",
 	})
 	Injector.RunFns = append(Injector.RunFns, func(arguments run.RunArguments) error {
 		Injector.ControllerManager.RunInformersAndControllers(arguments)
