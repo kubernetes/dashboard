@@ -12,15 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
+import {Pipe} from '@angular/core';
+import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 
-import {CoreFormatter} from './coreformatter';
-import {MemoryFormatter} from './memoryformatter';
-import {RelativeTimeFormatter} from './relativetime';
-import {SafeHtmlFormatter} from './safehtml';
+/**
+ * Formats the given value as raw HTML to display to the user.
+ */
+@Pipe({name: 'kdSafeHtml'})
+export class SafeHtmlFormatter {
+  constructor(private readonly sanitizer: DomSanitizer) {}
 
-@NgModule({
-  declarations: [MemoryFormatter, CoreFormatter, RelativeTimeFormatter, SafeHtmlFormatter],
-  exports: [MemoryFormatter, CoreFormatter, RelativeTimeFormatter, SafeHtmlFormatter],
-})
-export class PipesModule {}
+  transform(value: string): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(value.replace(' ', '&nbsp;'));
+  }
+}

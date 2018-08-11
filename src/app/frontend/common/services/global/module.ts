@@ -26,6 +26,7 @@ import {GlobalSettingsService} from './globalsettings';
 import {HistoryService} from './history';
 import {AuthInterceptor} from './interceptor';
 import {LocalSettingsService} from './localsettings';
+import {LogService} from './logs';
 import {NamespaceService} from './namespace';
 import {NotificationsService} from './notifications';
 import {KdStateService} from './state';
@@ -38,7 +39,7 @@ import {VerberService} from './verber';
     AuthorizerService, AssetsService, BreadcrumbsService, LocalSettingsService,
     GlobalSettingsService, ConfigService, TitleService, AuthService, CsrfTokenService,
     NotificationsService, ThemeService, KdStateService, NamespaceService, ActionbarService,
-    VerberService, HistoryService, {
+    VerberService, HistoryService, LogService, {
       provide: APP_INITIALIZER,
       useFactory: init,
       deps: [GlobalSettingsService, LocalSettingsService, ConfigService],

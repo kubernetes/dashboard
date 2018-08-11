@@ -13,37 +13,20 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
+import {UIRouterModule} from '@uirouter/angular';
 
-import {SharedModule} from '../../shared.module';
-import {ComponentsModule} from '../components/module';
+import {ComponentsModule} from '../common/components/module';
+import {SharedModule} from '../shared.module';
 
-import {AlertDialog} from './alert/dialog';
-import {DeleteResourceDialog} from './deleteresource/dialog';
-import {LogsDownloadDialog} from './download/dialog';
-import {EditResourceDialog} from './editresource/dialog';
+import {LogsComponent} from './component';
+import {logsState} from './state';
 
 @NgModule({
   imports: [
     SharedModule,
     ComponentsModule,
+    UIRouterModule.forChild({states: [logsState]}),
   ],
-  declarations: [
-    AlertDialog,
-    EditResourceDialog,
-    DeleteResourceDialog,
-    LogsDownloadDialog,
-  ],
-  exports: [
-    AlertDialog,
-    EditResourceDialog,
-    DeleteResourceDialog,
-    LogsDownloadDialog,
-  ],
-  entryComponents: [
-    AlertDialog,
-    EditResourceDialog,
-    DeleteResourceDialog,
-    LogsDownloadDialog,
-  ]
+  declarations: [LogsComponent],
 })
-export class DialogsModule {}
+export class LogsModule {}

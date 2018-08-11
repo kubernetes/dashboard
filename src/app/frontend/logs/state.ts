@@ -14,27 +14,28 @@
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
-import {PodDetailsActionbar} from '../../../../common/components/actionbars/poddetail/component';
-import {addNamespacedResourceStateParamsToUrl} from '../../../../common/params/params';
-import {stateName, stateUrl} from '../state';
+import {chromeState} from '../chrome/state';
+import {addLogsStateParamsToUrl} from '../common/params/params';
+import {LogsComponent} from './component';
 
-import {PodDetailComponent} from './component';
+export const logsFutureState: Ng2StateDeclaration = {
+  name: 'logs.**',
+  url: '/logs',
+  loadChildren: './logs/module#LogsModule'
+};
 
-export const podDetailState: Ng2StateDeclaration = {
-  name: `${stateName}.detail`,
-  url: addNamespacedResourceStateParamsToUrl(stateUrl),
+export const logsState: Ng2StateDeclaration = {
+  parent: chromeState.name,
+  name: 'log',
+  url: addLogsStateParamsToUrl('/log'),
   data: {
     kdBreadcrumbs: {
-      label: 'resourceName',
-      parent: 'pod.list',
-    },
+      label: 'Logs',
+    }
   },
   views: {
     '$default': {
-      component: PodDetailComponent,
-    },
-    'actionbar@chrome': {
-      component: PodDetailsActionbar,
+      component: LogsComponent,
     }
   },
 };

@@ -14,12 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div fxLayout="row">
-  <kd-actionbar-detail-logs *ngIf="isInitialized"
-                            [resourceMeta]="resourceMeta"></kd-actionbar-detail-logs>
-
-  <kd-actionbar-detail-actions *ngIf="isInitialized"
-                               [objectMeta]="resourceMeta.objectMeta"
-                               [typeMeta]="resourceMeta.typeMeta"
-                               [displayName]="resourceMeta.displayName"></kd-actionbar-detail-actions>
-</div>
+<button mat-icon-button
+        color="accent"
+        class="kd-toolbar-action"
+        matTooltip="View logs"
+        (click)="onClick()">
+  <mat-icon>subject</mat-icon>
+</button>

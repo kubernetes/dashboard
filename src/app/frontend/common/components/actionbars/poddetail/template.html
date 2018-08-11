@@ -18,16 +18,12 @@ limitations under the License.
   <kd-actionbar-detail-logs *ngIf="isInitialized"
                             [resourceMeta]="resourceMeta"></kd-actionbar-detail-logs>
 
-  <button mat-icon-button
-          color="accent"
-          class="kd-toolbar-action"
-          matTooltip="Scale resource"
-          (click)="scale()">
-    <mat-icon>linear_scale</mat-icon>
-  </button>
-
-  <kd-actionbar-detail-actions *ngIf="isInitialized"
-                               [objectMeta]="resourceMeta.objectMeta"
-                               [typeMeta]="resourceMeta.typeMeta"
-                               [displayName]="resourceMeta.displayName"></kd-actionbar-detail-actions>
+  <kd-actionbar-detail-edit *ngIf="isInitialized"
+                            [objectMeta]="resourceMeta?.objectMeta"
+                            [typeMeta]="resourceMeta?.typeMeta"
+                            [displayName]="resourceMeta?.displayName"></kd-actionbar-detail-edit>
+  <kd-actionbar-detail-delete *ngIf="isInitialized"
+                              [objectMeta]="resourceMeta?.objectMeta"
+                              [typeMeta]="resourceMeta?.typeMeta"
+                              [displayName]="resourceMeta?.displayName"></kd-actionbar-detail-delete>
 </div>

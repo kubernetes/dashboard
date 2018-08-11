@@ -20,7 +20,9 @@ import {ActionbarComponent} from './actionbar/component';
 import {ActionbarDetailActionsComponent} from './actionbar/detailactions/component';
 import {ActionbarDetailDeleteComponent} from './actionbar/detailactions/delete/component';
 import {ActionbarDetailEditComponent} from './actionbar/detailactions/edit/component';
+import {ActionbarDetailLogsComponent} from './actionbar/detailactions/logs/component';
 import {DefaultDetailsActionbar} from './actionbars/defaultdetail/component';
+import {PodDetailsActionbar} from './actionbars/poddetail/component';
 import {ScaleableResourceDetailActionbar} from './actionbars/scaleableresourcedetail/component';
 import {AllocationChartComponent} from './allocationchart/component';
 import {BreadcrumbsComponent} from './breadcrumbs/component';
@@ -129,8 +131,10 @@ import {ZeroStateComponent} from './zerostate/component';
     ActionbarDetailActionsComponent,
     ActionbarDetailDeleteComponent,
     ActionbarDetailEditComponent,
+    ActionbarDetailLogsComponent,
     UploadFileComponent,
     DefaultDetailsActionbar,
+    PodDetailsActionbar,
     ScaleableResourceDetailActionbar,
   ],
   exports: [
@@ -179,8 +183,10 @@ import {ZeroStateComponent} from './zerostate/component';
     ActionbarDetailActionsComponent,
     ActionbarDetailDeleteComponent,
     ActionbarDetailEditComponent,
+    ActionbarDetailLogsComponent,
     UploadFileComponent,
     DefaultDetailsActionbar,
+    PodDetailsActionbar,
     ScaleableResourceDetailActionbar,
   ],
   entryComponents: [
