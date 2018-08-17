@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {By} from "@angular/platform-browser";
+import {By} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {AppConfig} from "@api/backendapi";
+import {AppConfig} from '@api/backendapi';
 import {SharedModule} from 'shared.module';
 import {CardComponent} from '../common/components/card/component';
 import {AssetsService} from '../common/services/global/assets';
@@ -37,11 +37,12 @@ describe('AboutComponent', () => {
 
   beforeEach(async(() => {
     TestBed
-      .configureTestingModule({
-        imports: [SharedModule, HttpClientTestingModule, BrowserAnimationsModule],
-        declarations: [AboutComponent, CardComponent],
-        providers: [AssetsService, ConfigService],
-      }).compileComponents();
+        .configureTestingModule({
+          imports: [SharedModule, HttpClientTestingModule, BrowserAnimationsModule],
+          declarations: [AboutComponent, CardComponent],
+          providers: [AssetsService, ConfigService],
+        })
+        .compileComponents();
     httpMock = TestBed.get(HttpTestingController);
     configService = TestBed.get(ConfigService);
   }));
@@ -66,24 +67,24 @@ describe('AboutComponent', () => {
   }));
 
   it('should create github link', async(() => {
-    fixture.detectChanges();
-    const url = component.getCommitLink();
-    expect(url.indexOf('https://github.com') === 0).toBeTruthy();
-    expect(url.indexOf(commit) > 0).toBeTruthy();
-  }));
+       fixture.detectChanges();
+       const url = component.getCommitLink();
+       expect(url.indexOf('https://github.com') === 0).toBeTruthy();
+       expect(url.indexOf(commit) > 0).toBeTruthy();
+     }));
 
   it('should print app version', async(() => {
-    fixture.detectChanges();
-    expect(element.textContent).toContain(`${version}`);
-  }));
+       fixture.detectChanges();
+       expect(element.textContent).toContain(`${version}`);
+     }));
 
   it('should print git commit', async(() => {
-    fixture.detectChanges();
-    expect(element.textContent).toContain(commit);
-  }));
+       fixture.detectChanges();
+       expect(element.textContent).toContain(commit);
+     }));
 
   it('should print current year', async(() => {
-    fixture.detectChanges();
-    expect(element.textContent).toContain(`2015 - ${copyrightYear}`);
-  }));
+       fixture.detectChanges();
+       expect(element.textContent).toContain(`2015 - ${copyrightYear}`);
+     }));
 });
