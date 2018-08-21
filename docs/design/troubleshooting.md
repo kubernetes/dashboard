@@ -15,7 +15,7 @@ The Kubernetes command line interface has several features for inspecting applic
 Troubleshooting and debugging have consistently been a top priority from a user's point of view. See:
 
 - [Kubernetes UI Survey Nov 2016](https://github.com/kubernetes/dashboard/blob/master/docs/images/kubecon-dashboard-survey-infographic-nov2017.png)
-- [Kubernetes UI Survey Nov 2017](http://blog.kubernetes.io/2017/01/kubernetes-ux-survey-infographic.html)
+- [Kubernetes UI Survey Nov 2017](https://kubernetes.io/blog/2017/01/kubernetes-ux-survey-infographic/)
 
 ## Problem Statement
 
