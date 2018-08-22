@@ -74,7 +74,7 @@ function run-ineffassign {
 # Execute script.
 ensure-go-dev-tools
 run-gofmt
-#run-go-vet
+run-go-vet
 run-gocyclo
 #run-golint TODO(maciaszczykm): Enable after fixing errors.
 run-misspell
