@@ -18,11 +18,11 @@ export interface TypeMeta { kind: string; }
 export interface ListMeta { totalItems: number; }
 
 export interface ObjectMeta {
-  name: string;
-  namespace: string;
-  labels: StringMap;
+  name?: string;
+  namespace?: string;
+  labels?: StringMap;
   annotations?: StringMap;
-  creationTimestamp: string;
+  creationTimestamp?: string;
   uid?: string;
 }
 
@@ -35,7 +35,7 @@ export interface ResourceDetail {
 export interface ResourceList {
   listMeta: ListMeta;
   items?: Resource[];
-  errors: K8sError[];
+  errors?: K8sError[];
 }
 
 export interface Resource {
@@ -178,17 +178,18 @@ export interface EndpointResourcePort {
 
 export interface Port {
   port: number;
+  name: string;
   protocol: string;
   nodePort?: number;
 }
 
 export interface Endpoint {
   host: string;
-  nodeName: string;
+  nodeName?: string;
   ports: Port[];
-  ready: boolean;
-  typeMeta: TypeMeta;
-  objectMeta: ObjectMeta;
+  ready?: boolean;
+  typeMeta?: TypeMeta;
+  objectMeta?: ObjectMeta;
 }
 
 export interface Event extends Resource {

@@ -13,19 +13,16 @@
 // limitations under the License.
 
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import {Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement} from '@angular/core';
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {MatCardModule, MatChipsModule, MatDialogModule, MatDividerModule, MatIconModule, MatTooltip, MatTooltipModule} from '@angular/material';
+import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {async, TestBed} from '@angular/core/testing';
+import {MatCardModule, MatChipsModule, MatDialogModule, MatDividerModule, MatIconModule, MatTooltipModule} from '@angular/material';
 import {By} from '@angular/platform-browser';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {AppConfig, ObjectMeta, ServiceDetail} from '@api/backendapi';
-import {UIRouterModule} from '@uirouter/angular';
-import {StateService, UIRouter} from '@uirouter/core';
+import {AppConfig, ServiceDetail} from '@api/backendapi';
 import {CardComponent} from 'common/components/card/component';
 import {ChipsComponent} from 'common/components/chips/component';
 import {ObjectMetaComponent} from 'common/components/objectmeta/component';
 import {PropertyComponent} from 'common/components/property/component';
-import {PodListComponent} from 'common/components/resourcelist/pod/component';
 import {PipesModule} from 'common/pipes/module';
 import {ConfigService} from 'common/services/global/config';
 import {NamespacedResourceService} from 'common/services/resource/resource';
@@ -46,9 +43,19 @@ class MaxiTestComponent {
       creationTimestamp: '2018-05-18T22:27:42Z'
     },
     typeMeta: {kind: 'Service'},
-    internalEndpoint: {host: 'hostname', ports: []},
+    internalEndpoint: {host: 'hostname', ports: [{name: 'broker', port: 9092, protocol: 'TCP'}]},
     externalEndpoints: [],
-    endpointList: [],
+    endpointList: {
+      listMeta: {totalItems: 1},
+      endpoints: [{
+        objectMeta: {creationTimestamp: null},
+        host: '172.17.0.5',
+        nodeName: 'minikube',
+        ports: [{name: 'broker', port: 9092, protocol: 'TCP'}],
+        ready: false,
+        typeMeta: {kind: 'endpoint'}
+      }]
+    },
     selector: {},
     type: 'LoadBalancer',
     clusterIP: '10.10.10.10',
@@ -141,14 +148,11 @@ describe('ServiceDetailComponent', () => {
     const component = fixture.componentInstance;
 
     fixture.detectChanges();
-    // fixture.whenStable().then(() => {
     const debugElement = fixture.debugElement.query(
         By.css('kd-property.object-meta-name div.kd-property-value div'));
     expect(debugElement).toBeTruthy();
 
     const htmlElement = debugElement.nativeElement;
     expect(htmlElement.innerHTML).toBe(maxiName);
-
-    // });
   });
 });
