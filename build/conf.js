@@ -64,6 +64,10 @@ const version = {
    * Version name of the head release of the project.
    */
   head: 'head',
+  /**
+   * Year of last source change of the project
+   */
+  year: '2018',
 };
 
 /**
