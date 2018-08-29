@@ -40,14 +40,14 @@ limitations under the License.
       <ng-container [matColumnDef]="getEndpointsColumns()[1]">
         <mat-header-cell *matHeaderCellDef>Ports (Name, Port, Protocol)</mat-header-cell>
         <mat-cell *matCellDef="let endpoint">
-          <ng-container *ngIf="endpoint.ports">
+          <ng-container *ngIf="endpoint?.ports">
             <div *ngFor="let port of endpoint.ports"
                  class="ports-item-line-height">
               <span *ngIf="port.name">{{port.name}},{{port.port}},{{port.protocol}}</span>
               <span *ngIf="!port.name">&lt;unset&gt;,{{port.port}},{{port.protocol}}</span>
             </div>
           </ng-container>
-          <ng-container *ngIf="!endpoint.ports">-</ng-container>
+          <ng-container *ngIf="!endpoint?.ports">-</ng-container>
         </mat-cell>
       </ng-container>
       <ng-container [matColumnDef]="getEndpointsColumns()[2]">
