@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {MatSnackBar} from '@angular/material';
 import {PodContainerList, ShellFrame, SJSCloseEvent, SJSMessageEvent, TerminalResponse} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {debounce} from 'lodash';
@@ -50,7 +51,8 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
       private readonly podContainer_: NamespacedResourceService<PodContainerList>,
       private readonly terminal_: NamespacedResourceService<TerminalResponse>,
-      private readonly state_: StateService, private readonly cdr_: ChangeDetectorRef) {}
+      private readonly state_: StateService, private readonly matSnackBar_: MatSnackBar,
+      private readonly cdr_: ChangeDetectorRef) {}
 
   onPodContainerChange(podContainer: string): void {
     this.containerName = podContainer;
@@ -174,7 +176,7 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     if (frame.Op === 'toast') {
-      // TODO: handle toast messages
+      this.matSnackBar_.open(frame.Data, null, {duration: 3000});
     }
 
     this.incommingMessage$.next(frame);
@@ -194,6 +196,7 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
     this.connected = false;
     this.connecting = false;
     this.connectionClosed = true;
+    this.matSnackBar_.open(_evt.reason, null, {duration: 3000});
 
     this.cdr_.markForCheck();
   }

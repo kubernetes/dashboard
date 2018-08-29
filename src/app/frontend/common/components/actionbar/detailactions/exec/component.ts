@@ -12,21 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {UIRouterModule} from '@uirouter/angular';
+import {Component, Input} from '@angular/core';
+import {ObjectMeta} from '@api/backendapi';
+import {KdStateService} from '../../../../services/global/state';
 
-import {ComponentsModule} from '../common/components/module';
-import {SharedModule} from '../shared.module';
-
-import {ShellComponent} from './component';
-import {shellState} from './state';
-
-@NgModule({
-  imports: [
-    SharedModule,
-    ComponentsModule,
-    UIRouterModule.forChild({states: [shellState]}),
-  ],
-  declarations: [ShellComponent],
+@Component({
+  selector: 'kd-actionbar-detail-exec',
+  templateUrl: './template.html',
 })
-export class ShellModule {}
+export class ActionbarDetailExecComponent {
+  @Input() objectMeta: ObjectMeta;
+
+  constructor(private readonly kdState_: KdStateService) {}
+
+  onClick(): void {
+    const shellLink = this.kdState_.href('shell', this.objectMeta.name, this.objectMeta.namespace);
+    window.open(shellLink);
+  }
+}

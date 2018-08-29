@@ -949,9 +949,7 @@ export interface PersistentVolumeSource {
   flocker: FlockerVolumeSource;
 }
 
-export interface TerminalResponse {
-  id: string;
-}
+export interface TerminalResponse { id: string; }
 
 export interface ShellFrame {
   Op: string;
@@ -982,6 +980,4 @@ export interface SJSCloseEvent extends SockJSSimpleEvent {
   wasClean: boolean;
 }
 
-export interface SJSMessageEvent extends SockJSSimpleEvent {
-  data: string;
-}
+export interface SJSMessageEvent extends SockJSSimpleEvent { data: string; }

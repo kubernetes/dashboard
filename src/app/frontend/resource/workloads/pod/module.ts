@@ -17,7 +17,6 @@ import {UIRouterModule} from '@uirouter/angular';
 
 import {ComponentsModule} from '../../../common/components/module';
 import {SharedModule} from '../../../shared.module';
-import {ActionbarComponent} from './detail/actionbar/component';
 import {PodDetailComponent} from './detail/component';
 import {podDetailState} from './detail/state';
 import {PodList} from './list/component';
@@ -30,6 +29,6 @@ import {podState} from './state';
     ComponentsModule,
     UIRouterModule.forChild({states: [podState, podListState, podDetailState]}),
   ],
-  declarations: [PodList, PodDetailComponent, ActionbarComponent],
+  declarations: [PodList, PodDetailComponent],
 })
 export class PodModule {}
