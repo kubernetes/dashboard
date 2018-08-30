@@ -242,7 +242,7 @@ function patchBuildInformation() {
                   patterns: [
                     {match: 'BUILD_GIT_COMMIT', replacement: commit},
                     {match: 'BUILD_DASHBOARD_VERSION', replacement: conf.deploy.version.release},
-                    {match: 'BUILD_YEAR', replacement: new Date().getFullYear()},
+                    {match: 'BUILD_YEAR', replacement: conf.deploy.version.year},
                   ],
                 }));
 }
