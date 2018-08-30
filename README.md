@@ -31,8 +31,7 @@ $ kubectl proxy
 ```
 Now access Dashboard at:
 
-[`http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/`](
-http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/).
+[`http://localhost:8001/api/v1/namespaces/kube-system/services/kubernetes-dashboard/proxy`](http://localhost:8001/api/v1/namespaces/kube-system/services/kubernetes-dashboard/proxy).
 
 ## Create An Authentication Token (RBAC)
 To find out how to create sample user and log in follow [Creating sample user](https://github.com/kubernetes/dashboard/wiki/Creating-sample-user) guide.
