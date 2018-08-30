@@ -35,6 +35,8 @@ export enum Resource {
   ingress = 'ingress',
   service = 'service',
   event = 'event',
+  container = 'container',
+  shell = 'shell',
 }
 
 class ResourceEndpoint {

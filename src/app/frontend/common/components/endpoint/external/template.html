@@ -21,7 +21,7 @@ limitations under the License.
 -->
 <div>
   <div *ngFor="let endpoint of endpoints">
-    <div *ngFor="let port of endpoint.ports">
+    <div *ngFor="let port of endpoint?.ports">
       <div>
         <a href="http://{{endpoint.host}}:{{port.port}}"
            target="_blank">
@@ -37,7 +37,7 @@ limitations under the License.
         </a>
       </div>
     </div>
-    <div *ngIf="!endpoint.ports.length">
+    <div *ngIf="!endpoint.ports?.length">
       <a href="http://{{endpoint.host}}"
          target="_blank">
         {{endpoint.host}}

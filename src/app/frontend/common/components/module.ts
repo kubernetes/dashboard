@@ -20,6 +20,7 @@ import {ActionbarComponent} from './actionbar/component';
 import {ActionbarDetailActionsComponent} from './actionbar/detailactions/component';
 import {ActionbarDetailDeleteComponent} from './actionbar/detailactions/delete/component';
 import {ActionbarDetailEditComponent} from './actionbar/detailactions/edit/component';
+import {ActionbarDetailExecComponent} from './actionbar/detailactions/exec/component';
 import {ActionbarDetailLogsComponent} from './actionbar/detailactions/logs/component';
 import {DefaultDetailsActionbar} from './actionbars/defaultdetail/component';
 import {PodDetailsActionbar} from './actionbars/poddetail/component';
@@ -132,6 +133,7 @@ import {ZeroStateComponent} from './zerostate/component';
     ActionbarDetailDeleteComponent,
     ActionbarDetailEditComponent,
     ActionbarDetailLogsComponent,
+    ActionbarDetailExecComponent,
     UploadFileComponent,
     DefaultDetailsActionbar,
     PodDetailsActionbar,
@@ -184,6 +186,7 @@ import {ZeroStateComponent} from './zerostate/component';
     ActionbarDetailDeleteComponent,
     ActionbarDetailEditComponent,
     ActionbarDetailLogsComponent,
+    ActionbarDetailExecComponent,
     UploadFileComponent,
     DefaultDetailsActionbar,
     PodDetailsActionbar,

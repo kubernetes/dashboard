@@ -26,9 +26,10 @@
             "styles": [
               "node_modules/material-design-icons/iconfont/material-icons.css",
               "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
+              "node_modules/xterm/dist/xterm.css",
               "src/app/frontend/index.scss"
             ],
-            "scripts": []
+            "scripts": ["node_modules/sockjs-client/dist/sockjs.min.js"]
           },
           "configurations": {
             "production": {

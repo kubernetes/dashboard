@@ -85,7 +85,9 @@
     "roboto-fontface": "^0.9.0",
     "rxjs": "6.2.1",
     "rxjs-compat": "6.2.1",
+    "sockjs-client": "^1.1.5",
     "web-animations-js": "^2.3.1",
+    "xterm": "^3.5.1",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
@@ -95,6 +97,7 @@
     "@types/jasmine": "^2.8.6",
     "@types/jasminewd2": "~2.0.3",
     "@types/js-yaml": "^3.11.0",
+    "@types/lodash": "^4.14.113",
     "@types/node": "^9.6.0",
     "babel": "^6.23.0",
     "babel-preset-env": "^1.6.1",
