@@ -539,6 +539,8 @@ export interface AppDeploymentSpec {
   memoryRequirement?: string;
   cpuRequirement?: number;
   runAsPrivileged: boolean;
+  imagePullSecret: string;
+  variables: EnvironmentVariable[];
 }
 
 export interface CsrfToken { token: string; }

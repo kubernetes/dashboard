@@ -15,10 +15,12 @@
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Inject, Injectable} from '@angular/core';
 import {MatDialog} from '@angular/material';
-import {AppDeploymentContentResponse, AppDeploymentContentSpec} from '@api/backendapi';
+import {AppDeploymentContentResponse, AppDeploymentContentSpec, AppDeploymentSpec} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
+import {NAMESPACE_STATE_PARAM} from '../../../common/params/params';
 import {Config, CONFIG_DI_TOKEN} from '../../../index.config';
 import {overviewState} from '../../../overview/state';
+
 import {AlertDialog, AlertDialogConfig} from '../../dialogs/alert/dialog';
 import {CsrfTokenService} from '../global/csrftoken';
 import {NamespaceService} from '../global/namespace';
@@ -85,6 +87,33 @@ export class CreateService {
       throw error;
     } else {
       this.stateService_.go(overviewState.name);
+    }
+
+    return response;
+  }
+
+  async deploy(spec: AppDeploymentSpec): Promise<AppDeploymentContentResponse> {
+    let response: AppDeploymentContentResponse;
+    let error: HttpErrorResponse;
+
+    try {
+      const {token} = await this.csrfToken_.getTokenForAction('appdeployment').toPromise();
+      this.isDeployInProgress_ = true;
+      response =
+          await this.http_
+              .post<AppDeploymentContentResponse>(
+                  'api/v1/appdeployment', spec, {headers: {[this.CONFIG.csrfHeaderName]: token}})
+              .toPromise();
+    } catch (err) {
+      error = err;
+    }
+    this.isDeployInProgress_ = false;
+
+    if (error) {
+      this.reportError(i18n.MSG_DEPLOY_DIALOG_ERROR, error.error);
+      throw error;
+    } else {
+      this.stateService_.go(overviewState.name, {[NAMESPACE_STATE_PARAM]: spec.namespace});
     }
 
     return response;
