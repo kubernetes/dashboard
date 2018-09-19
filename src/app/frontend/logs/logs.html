@@ -74,6 +74,10 @@ limitations under the License.
       <md-button class="kd-logs-toolbar-button"
                  ng-click="ctrl.onShowTimestamp()">
         <md-icon class="kd-logs-icon">{{ctrl.logsService.getShowTimestamp() ? 'timer' : 'timer_off'}}</md-icon>
+        <md-tooltip md-delay="500"
+                    md-autohide>
+          [[Toggle times|Tooltip for button that toggles times option in the log viewer.]]
+        </md-tooltip>
       </md-button>
       <md-button class="kd-logs-toolbar-button"
                  ng-click="ctrl.toggleLogFollow()">
