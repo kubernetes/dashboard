@@ -39,7 +39,7 @@ type SecretDetail struct {
 	Type v1.SecretType `json:"type"`
 }
 
-// GetSecretDetail returns returns detailed information about a secret
+// GetSecretDetail returns detailed information about a secret
 func GetSecretDetail(client kubernetes.Interface, namespace, name string) (*SecretDetail, error) {
 	log.Printf("Getting details of %s secret in %s namespace\n", name, namespace)
 

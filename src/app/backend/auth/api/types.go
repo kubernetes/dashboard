@@ -84,7 +84,7 @@ type AuthManager interface {
 // TokenManager is responsible for generating and decrypting tokens used for authorization. Authorization is handled
 // by K8S apiserver. Token contains AuthInfo structure used to create K8S api client.
 type TokenManager interface {
-	// Generate secure token based on AuthInfo structure and save it it tokens' payload.
+	// Generate secure token based on AuthInfo structure and save it tokens' payload.
 	Generate(api.AuthInfo) (string, error)
 	// Decrypt generated token and return AuthInfo structure that will be used for K8S api client creation.
 	Decrypt(string) (*api.AuthInfo, error)
