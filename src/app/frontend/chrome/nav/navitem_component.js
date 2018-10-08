@@ -44,7 +44,7 @@ export class NavItemController {
   }
 
   /**
-   * Returns reference link for menu entries. By default default href for state will be returned, it
+   * Returns reference link for menu entries. By default href for state will be returned, it
    * can be overwritten by passing 'href' to the component.
    *
    * @return {string}

@@ -25,7 +25,7 @@ class PodWarningsController {
 
   /** @export */
   $onInit() {
-    // If not set set default limit to 4
+    // If not set default limit to 4
     this.limit_ = this.limit_ || 4;
   }
 
