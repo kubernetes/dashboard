@@ -36,9 +36,9 @@ func TestExtractFieldPathAsString(t *testing.T) {
 		expectedMessageFragment string
 	}{
 		{
-			name:      "not an API object",
-			fieldPath: "metadata.name",
-			obj:       "",
+			name:                    "not an API object",
+			fieldPath:               "metadata.name",
+			obj:                     "",
 			expectedMessageFragment: "expected struct",
 		},
 		{

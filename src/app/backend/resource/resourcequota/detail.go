@@ -16,7 +16,6 @@ package resourcequota
 
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"k8s.io/api/core/v1"
 )
 
 // ResourceStatus provides the status of the resource defined by a resource quota.

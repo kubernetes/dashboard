@@ -74,7 +74,7 @@ func TestGetReplicaSetDetail(t *testing.T) {
 				EventList: common.EventList{Events: []common.Event{}},
 				HorizontalPodAutoscalerList: horizontalpodautoscaler.HorizontalPodAutoscalerList{
 					HorizontalPodAutoscalers: []horizontalpodautoscaler.HorizontalPodAutoscaler{},
-					Errors: []error{},
+					Errors:                   []error{},
 				},
 				Errors: []error{},
 			},

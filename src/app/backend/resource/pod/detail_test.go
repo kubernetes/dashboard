@@ -54,7 +54,7 @@ func TestGetPodDetail(t *testing.T) {
 				EventList:                 common.EventList{Events: []common.Event{}},
 				Metrics:                   []metricapi.Metric{},
 				PersistentvolumeclaimList: persistentvolumeclaim.PersistentVolumeClaimList{},
-				Errors: []error{},
+				Errors:                    []error{},
 			},
 		},
 	}

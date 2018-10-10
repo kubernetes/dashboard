@@ -19,7 +19,6 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	autoscaling "k8s.io/api/autoscaling/v1"
-	"k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
 )
 

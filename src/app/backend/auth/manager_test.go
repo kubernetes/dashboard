@@ -25,7 +25,6 @@ import (
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
-	"k8s.io/api/authorization/v1"
 	k8sErrors "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
@@ -178,12 +177,12 @@ func TestAuthManager_AuthenticationModes(t *testing.T) {
 func TestAuthManager_AuthenticationSkippable(t *testing.T) {
 	cManager := &fakeClientManager{}
 	tManager := &fakeTokenManager{}
-	cModes   := authApi.AuthenticationModes{}
+	cModes := authApi.AuthenticationModes{}
 
-	for _, flag := range []bool{true,false} {
+	for _, flag := range []bool{true, false} {
 		authManager := NewAuthManager(cManager, tManager, cModes, flag)
 		got := authManager.AuthenticationSkippable()
-		if (got != flag) {
+		if got != flag {
 			t.Errorf("Expected %v, but got %v.", flag, got)
 		}
 	}

@@ -106,7 +106,7 @@ func checkSensitiveURL(url *string) bool {
 	var sensitiveUrls = make(map[string]struct{})
 	sensitiveUrls["/api/v1/login"] = s
 	sensitiveUrls["/api/v1/csrftoken/login"] = s
-  sensitiveUrls["/api/v1/token/refresh"] = s
+	sensitiveUrls["/api/v1/token/refresh"] = s
 
 	if _, ok := sensitiveUrls[*url]; ok {
 		return true

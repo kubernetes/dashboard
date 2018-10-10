@@ -205,7 +205,7 @@ func GetDeploymentDetail(client client.Interface, metricClient metricapi.MetricC
 		RevisionHistoryLimit:        deployment.Spec.RevisionHistoryLimit,
 		EventList:                   *eventList,
 		HorizontalPodAutoscalerList: *hpas,
-		Errors: nonCriticalErrors,
+		Errors:                      nonCriticalErrors,
 	}, nil
 
 }
