@@ -129,7 +129,7 @@
   <translation id="8514425134682432381" key="MSG_COMMON_COMPONENTS_WARNINGS_WARNINGS_0" desc="Tooltip for warning dismissal button.">忽略</translation>
   <translation id="7328790086203280450" key="MSG_COMMON_COMPONENTS_WARNINGS_WARNINGS_1" desc="Tooltip for all warning dismissal button.">忽略所有</translation>
   <translation id="6941584785589389821" key="MSG_COMMON_COMPONENTS_ZEROSTATE_ZEROSTATE_0" desc="Title text which appears on zero state view.">无内容显示</translation>
-  <translation id="8000678649572976545" key="MSG_COMMON_COMPONENTS_ZEROSTATE_ZEROSTATE_1" desc="Description for a zero state page.">现在就&lt;a href="{{::$ctrl.getStateHref()}}"&gt;部署容器应用&lt;/a&gt;、查看其它命名空间，或&lt;a href="http://kubernetes.io/docs/user-guide/ui/" target="_blank"&gt;浏览仪表板概览&lt;i class="material-icons kd-zerostate-icon"&gt;open_in_new&lt;/i&gt;&lt;/a&gt;来了解更多</translation>
+  <translation id="8000678649572976545" key="MSG_COMMON_COMPONENTS_ZEROSTATE_ZEROSTATE_1" desc="Description for a zero state page.">现在就&lt;a href="{{::$ctrl.getStateHref()}}"&gt;部署容器应用&lt;/a&gt;、查看其它命名空间，或&lt;a href="https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/" target="_blank"&gt;浏览仪表板概览&lt;i class="material-icons kd-zerostate-icon"&gt;open_in_new&lt;/i&gt;&lt;/a&gt;来了解更多</translation>
   <translation id="4149717000499670158" key="MSG_COMMON_NAMESPACE_DIALOG_0" desc="(no description provided)">更改命名空间？</translation>
   <translation id="1716771106236346382" key="MSG_COMMON_NAMESPACE_DIALOG_1" desc="(no description provided)">所选资源在另一个命名空间中</translation>
   <translation id="8393679939521140300" key="MSG_COMMON_NAMESPACE_DIALOG_2" desc="(no description provided)">更改命名空间？</translation>
