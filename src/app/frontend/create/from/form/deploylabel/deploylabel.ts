@@ -12,37 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../../../variables';
+/**
+ * Represents label object used in deploy form view.
+ */
+export class DeployLabel {
+  editable: boolean;
+  key: string;
+  value: string;
 
-// Align items only in the current layout (kd-help-section).
-.kd-help-section ::ng-deep > {
-  * {
-    flex: 1;
-    flex-basis: auto;
-    margin: $baseline-grid 0;
-    width: 100%;
+  constructor(key = '', value = '', editable = true) {
+    this.editable = editable;
 
-    &:last-child {
-      padding-left: 4 * $baseline-grid;
-    }
+    this.key = key;
 
-    &:first-child {
-      max-width: 48.5%;
-    }
-  }
-}
-
-@media (max-width: 959px) {
-  .kd-help-section ::ng-deep > {
-    * {
-      &:first-child { max-width: 100%; }
-    }
-  }
-}
-
-.kd-help-section {
-  & kd-port-mappings {
-    margin-bottom: 0;
-    margin-top: 0;
+    this.value = value;
   }
 }

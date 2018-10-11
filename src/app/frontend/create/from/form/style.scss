@@ -14,19 +14,27 @@
 
 @import '../../../variables';
 
-.kd-create-from-input-info {
-  margin-bottom: $baseline-grid * 3;
-  padding: 0 (.5 * $baseline-grid);
+.kd-block {
+  display: block;
+}
 
-  .material-icons {
-    font-size: $body-font-size-base;
+.kd-deploy-input-row {
+  margin-bottom: $baseline-grid;
+  margin-top: $baseline-grid;
+}
+
+$bar-height: .5px;
+
+::ng-deep mat-progress-bar {
+  &.kd-deploy-form-progress {
+    clear: left;
+    height: $bar-height;
+    margin-bottom: -$bar-height;
+    overflow: hidden;
+    top: 10 * $bar-height;
+
+    &:not(.kd-deploy-form-progress-show) {
+      visibility: hidden;
+    }
   }
-}
-
-.kd-create-from-input-button {
-  margin-left: 0;
-}
-
-kd-text-input::ng-deep ace-editor {
-  margin-bottom: $baseline-grid * 3;
 }
