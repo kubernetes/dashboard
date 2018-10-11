@@ -19,7 +19,7 @@ before_install:
   - ln -s $TRAVIS_BUILD_DIR/vendor $TRAVIS_BUILD_DIR/.tmp/src/github.com/kubernetes/dashboard/src/app/backend/vendor
 
 before_script:
-  - eval "$(gimme stable)"
+  - eval "$(gimme 1.11.1)"
   - docker --version
 
 jobs:
