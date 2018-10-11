@@ -77,7 +77,7 @@ func TestGetReplicaSetDetail(t *testing.T) {
 				},
 				HorizontalPodAutoscalerList: horizontalpodautoscaler.HorizontalPodAutoscalerList{
 					HorizontalPodAutoscalers: []horizontalpodautoscaler.HorizontalPodAutoscaler{},
-					Errors: []error{},
+					Errors:                   []error{},
 				},
 				Errors: []error{},
 			},
