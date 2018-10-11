@@ -13,22 +13,35 @@
 // limitations under the License.
 
 /**
+ * Controller for tooltips used for words that are too long for angular UI.
  * @final
  */
-class MiddleEllipsisController {
+export default class MiddleEllipsisController {
   /**
    * Constructs middle ellipsis controller.
    * @ngInject
+   * @param {!angular.JQLite} $element
    */
-  constructor() {
+  constructor($element) {
+    /** @private {!angular.JQLite} */
+    this.element_ = $element;
+
     /** @export {string} Initialized from the scope. */
     this.displayString;
   }
-}
 
+  /**
+   * Checks if text length is equal to surrounding container.
+   * @returns {boolean}
+   * @export
+   */
+  isTruncated() {
+    let cOfsWidth = this.element_[0].querySelector('.kd-middleellipsis-displayStr').offsetWidth;
+    return cOfsWidth > this.element_[0].offsetWidth;
+  }
+}
 /**
  * Middle ellipsis component definition.
- *
  * @type {!angular.Component}
  */
 export const middleEllipsisComponent = {

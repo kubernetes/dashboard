@@ -139,6 +139,7 @@ function serveDevelopmentMode() {
  * development artifacts.
  */
 gulp.task('serve', ['spawn-backend', 'watch'], serveDevelopmentMode);
+gulp.task('serve:no-backend', ['watch'], serveDevelopmentMode);
 
 /**
  * Serves the application in development mode.

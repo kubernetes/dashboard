@@ -15,20 +15,31 @@
 import componentsModule from 'common/components/module';
 
 describe('Middle ellipsis controller', () => {
-  /**
-   * @type {!MiddleEllipsisController}
-   */
+  /** @type {!MiddleEllipsisController} */
   let ctrl;
-
+  let element;
+  /** @type {!angular.JQLite} */
   beforeEach(() => {
     angular.mock.module(componentsModule.name);
 
-    angular.mock.inject(($componentController, $rootScope) => {
-      ctrl = $componentController('kdMiddleEllipsis', {$scope: $rootScope});
+    angular.mock.inject(($componentController) => {
+      element = angular.element(
+          '<div style="width: 1px;"><span class="kd-middleellipsis-displayStr">Hello World!</span> </div>');
+      document.body.appendChild(element[0]);
+      ctrl = $componentController('kdMiddleEllipsis', {$element: element});
     });
   });
 
   it('should initialize controller', () => {
     expect(ctrl).not.toBeNull();
+  });
+
+  it('checks if isTruncated logic works', () => {
+    expect(ctrl.isTruncated()).toBeTruthy();
+  });
+
+
+  afterEach(() => {
+    document.body.removeChild(element[0]);
   });
 });
