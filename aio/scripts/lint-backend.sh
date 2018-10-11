@@ -22,11 +22,11 @@ ROOT_DIR="$(cd $(dirname "${BASH_SOURCE}")/../.. && pwd -P)"
 
 function ensure-go-dev-tools {
   say "\nMaking sure that all required Go development tools are available"
-  go get golang.org/x/tools/cmd/goimports
-  go get github.com/fzipp/gocyclo
-  go get github.com/golang/lint/golint
-  go get github.com/gordonklaus/ineffassign
-  go get github.com/client9/misspell/cmd/misspell
+  go get -u golang.org/x/tools/cmd/goimports
+  go get -u github.com/fzipp/gocyclo
+  go get -u golang.org/x/lint/golint
+  go get -u github.com/gordonklaus/ineffassign
+  go get -u github.com/client9/misspell/cmd/misspell
   export PATH=$PATH:$GOPATH/bin
   echo "OK!"
 }

@@ -223,7 +223,7 @@ func toPodDetail(pod *v1.Pod, metrics []metricapi.Metric, configMaps *v1.ConfigM
 		Conditions:                getPodConditions(*pod),
 		EventList:                 *events,
 		PersistentvolumeclaimList: *persistentVolumeClaimList,
-		Errors: nonCriticalErrors,
+		Errors:                    nonCriticalErrors,
 	}
 }
 

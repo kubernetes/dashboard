@@ -57,7 +57,7 @@ func TestGetPodDetail(t *testing.T) {
 				},
 				Metrics:                   []metricapi.Metric{},
 				PersistentvolumeclaimList: persistentvolumeclaim.PersistentVolumeClaimList{},
-				Errors: []error{},
+				Errors:                    []error{},
 			},
 		},
 	}
