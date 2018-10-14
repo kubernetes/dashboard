@@ -119,7 +119,7 @@ export class ShellController {
   onConnectionOpen(terminalResponse) {
     this.conn.send(JSON.stringify({'Op': 'bind', 'SessionID': terminalResponse.id}));
 
-    // Send at at least one resize event after attach so pty has the initial size
+    // Send at least one resize event after attach so pty has the initial size
     this.onTerminalResize(this.term.screenSize.width, this.term.screenSize.height);
 
     this.io.onVTKeystroke = this.onTerminalVTKeystroke.bind(this);
