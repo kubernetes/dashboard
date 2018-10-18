@@ -14,8 +14,8 @@
 
 import {Component, Input} from '@angular/core';
 import {ObjectMeta} from '@api/backendapi';
+import {StateService} from '@uirouter/core';
 import {KdStateService} from '../../../../services/global/state';
-import {StateService} from "@uirouter/core";
 
 @Component({
   selector: 'kd-actionbar-detail-exec',

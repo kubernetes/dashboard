@@ -16,9 +16,8 @@ package metric
 
 import (
 	"errors"
-	"testing"
-
 	"reflect"
+	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	integrationapi "github.com/kubernetes/dashboard/src/app/backend/integration/api"

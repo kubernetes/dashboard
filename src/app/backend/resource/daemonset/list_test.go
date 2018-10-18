@@ -15,10 +15,9 @@
 package daemonset
 
 import (
+	"errors"
 	"reflect"
 	"testing"
-
-	"errors"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"

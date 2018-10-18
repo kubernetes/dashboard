@@ -15,12 +15,11 @@
 package handler
 
 import (
-	"net/http"
-	"testing"
-
 	"bytes"
+	"net/http"
 	"reflect"
 	"strings"
+	"testing"
 
 	restful "github.com/emicklei/go-restful"
 	"github.com/kubernetes/dashboard/src/app/backend/auth"

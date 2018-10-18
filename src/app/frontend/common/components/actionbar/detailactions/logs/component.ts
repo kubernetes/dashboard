@@ -29,8 +29,10 @@ export class ActionbarDetailLogsComponent {
   constructor(private readonly state_: StateService) {}
 
   getHref(): string {
-    return this.state_.href(logsState.name, new LogsStateParams(
-      this.resourceMeta.objectMeta.namespace, this.resourceMeta.objectMeta.name,
-      this.resourceMeta.typeMeta.kind));
+    return this.state_.href(
+        logsState.name,
+        new LogsStateParams(
+            this.resourceMeta.objectMeta.namespace, this.resourceMeta.objectMeta.name,
+            this.resourceMeta.typeMeta.kind));
   }
 }
