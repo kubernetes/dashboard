@@ -51,7 +51,7 @@ export class ChipsComponent implements OnInit {
   constructor(private readonly dialog_: MatDialog) {}
 
   ngOnInit(): void {
-    if (this.map === undefined) {
+    if (!this.map) {
       this.map = [];
     }
 
