@@ -15,6 +15,7 @@
 import {Component, Input} from '@angular/core';
 import {ObjectMeta} from '@api/backendapi';
 import {KdStateService} from '../../../../services/global/state';
+import {StateService} from "@uirouter/core";
 
 @Component({
   selector: 'kd-actionbar-detail-exec',
@@ -25,8 +26,7 @@ export class ActionbarDetailExecComponent {
 
   constructor(private readonly kdState_: KdStateService) {}
 
-  onClick(): void {
-    const shellLink = this.kdState_.href('shell', this.objectMeta.name, this.objectMeta.namespace);
-    window.open(shellLink);
+  getHref(): string {
+    return this.kdState_.href('shell', this.objectMeta.name, this.objectMeta.namespace);
   }
 }

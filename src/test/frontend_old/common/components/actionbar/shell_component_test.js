@@ -19,8 +19,6 @@ describe('Actionbar shell button component', () => {
   let ctrl;
   /** @type {ui.router.$state} */
   let state;
-  /** @type {angular.$window} */
-  let window;
 
   beforeEach(() => {
     angular.mock.module(componentsModule.name);
@@ -30,7 +28,6 @@ describe('Actionbar shell button component', () => {
       window = $window;
       ctrl = $componentController('kdActionbarShellButton', {
         $state: state,
-        $window: window,
       });
     });
   });
@@ -38,13 +35,11 @@ describe('Actionbar shell button component', () => {
   it('should open shell page', () => {
     // given
     spyOn(state, 'href').and.callThrough();
-    spyOn(window, 'open');
 
     // when
     ctrl.openShell();
 
     // then
     expect(state.href).toHaveBeenCalled();
-    expect(window.open).toHaveBeenCalled();
   });
 });

@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<button mat-icon-button
-        color="accent"
-        class="kd-toolbar-action"
-        matTooltip="View logs"
-        (click)="onClick()">
+<a mat-icon-button
+   color="accent"
+   class="kd-toolbar-action"
+   matTooltip="View logs"
+   [href]="getHref()">
   <mat-icon>subject</mat-icon>
-</button>
+</a>
