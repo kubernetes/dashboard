@@ -30,10 +30,9 @@ import {RowDetailComponent} from '../components/list/rowdetail/component';
 import {SEARCH_QUERY_STATE_PARAM} from '../params/params';
 import {GlobalSettingsService} from '../services/global/globalsettings';
 import {GlobalServicesModule} from '../services/global/module';
-import {NotificationSeverity, NotificationsService} from '../services/global/notifications';
+import {NotificationsService} from '../services/global/notifications';
 import {KdStateService} from '../services/global/state';
 
-// TODO: NEEDS DOCUMENTATION!!!
 export abstract class ResourceListBase<T extends ResourceList, R extends Resource> implements
     OnInit, OnDestroy {
   // Base properties
@@ -211,7 +210,6 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
       result = params;
     }
 
-    // TODO: support filtering by different columns
     const filterByQuery = this.cardFilter_.query ? `name,${this.cardFilter_.query}` : '';
     if (filterByQuery) {
       return result.set('filterBy', filterByQuery);
