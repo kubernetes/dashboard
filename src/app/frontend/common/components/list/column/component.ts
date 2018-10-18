@@ -36,7 +36,6 @@ export class ColumnComponent<T extends ActionColumn> implements OnChanges {
 
     const factory = this.resolver_.resolveComponentFactory(this.component);
     this.componentRef_ = this.target.createComponent(factory);
-
     this.componentRef_.instance.setObjectMeta(this.resource.objectMeta);
     this.componentRef_.instance.setTypeMeta(this.resource.typeMeta);
   }

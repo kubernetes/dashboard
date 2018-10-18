@@ -16,8 +16,7 @@ limitations under the License.
 
 <a mat-icon-button
    class="kd-muted"
-   [uiSref]="getLogsHref()"
-   target="_blank"
+   [href]="getLogsHref()"
    (click)="$event.stopPropagation()">
-  <mat-icon matTooltip="Logs">subject</mat-icon>
+  <mat-icon matTooltip="View logs">subject</mat-icon>
 </a>

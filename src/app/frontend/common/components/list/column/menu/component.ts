@@ -27,6 +27,11 @@ export class MenuComponent implements ActionColumn, OnDestroy {
   @Input() objectMeta: ObjectMeta;
   @Input() typeMeta: TypeMeta;
 
+  private onEditSubscription_: Subscription;
+  private onDeleteSubscription_: Subscription;
+
+  constructor(private readonly verber_: VerberService, private readonly state_: StateService) {}
+
   setObjectMeta(objectMeta: ObjectMeta): void {
     this.objectMeta = objectMeta;
   }
@@ -35,11 +40,6 @@ export class MenuComponent implements ActionColumn, OnDestroy {
     this.typeMeta = typeMeta;
   }
 
-  private onEditSubscription_: Subscription;
-  private onDeleteSubscription_: Subscription;
-
-  constructor(private readonly verber_: VerberService, private readonly state_: StateService) {}
-
   ngOnDestroy(): void {
     if (this.onEditSubscription_) this.onEditSubscription_.unsubscribe();
     if (this.onDeleteSubscription_) this.onDeleteSubscription_.unsubscribe();
@@ -47,13 +47,11 @@ export class MenuComponent implements ActionColumn, OnDestroy {
 
   onEdit(): void {
     this.onEditSubscription_ = this.verber_.onEdit.subscribe(this.onSuccess_.bind(this));
-    // TODO think how to pass proper display name.
     this.verber_.showEditDialog(this.typeMeta.kind, this.typeMeta, this.objectMeta);
   }
 
   onDelete(): void {
     this.onDeleteSubscription_ = this.verber_.onDelete.subscribe(this.onSuccess_.bind(this));
-    // TODO think how to pass proper display name.
     this.verber_.showDeleteDialog(this.typeMeta.kind, this.typeMeta, this.objectMeta);
   }
 
