@@ -27,7 +27,7 @@ const powerSuffixes = ['', 'Ki', 'Mi', 'Gi', 'Ti', 'Pi'];
 export default function memoryFilter(numberFilter) {
   /**
    * Formats memory in bytes to a binary prefix format, e.g., 789,21 MiB.
-   * @param {number} value Value to be formatted.
+   * @param {number} value to be formatted.
    * @return {string}
    */
   let formatMemory = function(value) {
