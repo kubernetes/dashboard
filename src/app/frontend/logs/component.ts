@@ -13,14 +13,14 @@
 // limitations under the License.
 
 import {HttpParams} from '@angular/common/http';
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
+import {MatDialog} from '@angular/material';
 import {LogDetails, LogLine, LogSelection, LogSources} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {GlobalSettingsService} from 'common/services/global/globalsettings';
 import {LogService} from 'common/services/global/logs';
 import {NotificationSeverity, NotificationsService} from 'common/services/global/notifications';
 import {Observable, Subscription} from 'rxjs';
-import {MatDialog} from '../../../../node_modules/@angular/material';
 import {LogsDownloadDialog} from '../common/dialogs/download/dialog';
 
 const logsPerView = 100;
@@ -222,7 +222,7 @@ export class LogsComponent implements OnDestroy {
       this.intervalSubscription.unsubscribe();
     } else {
       const intervalObservable = Observable.interval(this.refreshInterval);
-      this.intervalSubscription = intervalObservable.subscribe(_ => this.loadNewest());
+      this.intervalSubscription = intervalObservable.subscribe(() => this.loadNewest());
     }
   }
 

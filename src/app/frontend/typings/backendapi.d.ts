@@ -511,7 +511,6 @@ export interface LoginStatus {
   httpsMode: boolean;
 }
 
-// Other types | TODO: sort these types alphabetically
 export interface AppDeploymentContentSpec {
   name: string;
   namespace: string;

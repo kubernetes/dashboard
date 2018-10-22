@@ -18,7 +18,6 @@ import (
 	"errors"
 	"reflect"
 	"testing"
-
 	"time"
 
 	restful "github.com/emicklei/go-restful"

@@ -28,12 +28,11 @@ export class ActionbarDetailLogsComponent {
 
   constructor(private readonly state_: StateService) {}
 
-  onClick(): void {
-    const link = this.state_.href(
+  getHref(): string {
+    return this.state_.href(
         logsState.name,
         new LogsStateParams(
             this.resourceMeta.objectMeta.namespace, this.resourceMeta.objectMeta.name,
             this.resourceMeta.typeMeta.kind));
-    window.open(link);
   }
 }

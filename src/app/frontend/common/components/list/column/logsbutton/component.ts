@@ -16,6 +16,8 @@ import {Component, Input} from '@angular/core';
 import {ObjectMeta, TypeMeta} from '@api/backendapi';
 import {ActionColumn} from '@api/frontendapi';
 import {StateService} from '@uirouter/core';
+import {logsState} from '../../../../../logs/state';
+import {LogsStateParams} from '../../../../params/params';
 
 @Component({
   selector: 'kd-logs-button',
@@ -36,10 +38,8 @@ export class LogsButtonComponent implements ActionColumn {
   }
 
   getLogsHref(): string {
-    return '';
-    // return this.state_.href(
-    //   'logs', // TODO: correct state
-    //   new LogsStateParams(
-    //     this.objectMeta.namespace, this.objectMeta.name, this.typeMeta.kind));
+    return this._state.href(
+        logsState.name,
+        new LogsStateParams(this.objectMeta.namespace, this.objectMeta.name, this.typeMeta.kind));
   }
 }

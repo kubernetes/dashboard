@@ -22,13 +22,15 @@ limitations under the License.
         <mat-select [(ngModel)]="container"
                     class="kd-logs-toolbar-select"
                     (selectionChange)="loadNewest()">
-          <mat-optgroup label="Containers">
+          <mat-optgroup label="Containers"
+                        *ngIf="logSources?.containerNames?.length > 0">
             <mat-option *ngFor="let item of logSources?.containerNames"
                         [value]="item">
               {{item}}
             </mat-option>
           </mat-optgroup>
-          <mat-optgroup label="Init Containers">
+          <mat-optgroup label="Init Containers"
+                        *ngIf="logSources?.initContainerNames?.length > 0">
             <mat-option *ngFor="let item of logSources?.initContainerNames"
                         [value]="item">
               {{item}}

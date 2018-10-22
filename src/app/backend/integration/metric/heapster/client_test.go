@@ -16,6 +16,7 @@ package heapster
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
 	"reflect"
@@ -24,8 +25,6 @@ import (
 	"sync/atomic"
 	"testing"
 	"time"
-
-	"errors"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/client"

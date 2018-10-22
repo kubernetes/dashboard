@@ -15,22 +15,29 @@ limitations under the License.
 -->
 
 <h2 *ngIf="!hasForbiddenError()"
-    mat-dialog-title>Downloading log file</h2>
+    mat-dialog-title
+    i18n>
+  Download logs file
+</h2>
 <mat-dialog-content class="kd-dialog-text">
   <ng-container *ngIf="!hasForbiddenError()">
-    <div>Please wait until download has finished.</div>
-    <div>
-      Downloaded:{{loaded | kdMemory}}
-    </div>
+    <div>Size: {{loaded | kdMemory}} B</div>
     <mat-progress-bar class="kd-download-progress-bar"
                       [mode]="getDownloadMode()"
                       value="100"></mat-progress-bar>
+    <div *ngIf="!finished"
+         i18n>
+      Preparing file to download...
+    </div>
+    <div *ngIf="finished"
+         i18n>
+      File is ready to download!
+    </div>
   </ng-container>
-
   <ng-container *ngIf="hasForbiddenError()">
     <div class="kd-download-info">
-      <h3>Forbidden (403)</h3>
-      You do not have required permissions to access this resource.
+      <h3 i18n>Forbidden (403)</h3>
+      <span i18n>You do not have required permissions to access this resource.</span>
     </div>
   </ng-container>
 </mat-dialog-content>
@@ -38,6 +45,7 @@ limitations under the License.
   <ng-container *ngIf="!hasForbiddenError()">
     <button mat-button
             color="primary"
+            [disabled]="!finished"
             (click)="save()">Save</button>
     <button mat-button
             color="primary"

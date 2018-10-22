@@ -15,9 +15,8 @@
 package integration
 
 import (
-	"testing"
-
 	"errors"
+	"testing"
 
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 	"github.com/kubernetes/dashboard/src/app/backend/auth/jwe"
