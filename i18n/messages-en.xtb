@@ -927,15 +927,15 @@
   <translation id="8863896898922148088" key="MSG_STATEFULSET_DETAIL_DETAIL_4" desc="Text for pods card zerostate in stateful set details page.">There are currently no Pods managed by this Stateful Set.</translation>
   <translation id="3348024993164925047" key="MSG_STATEFULSET_DETAIL_INFO_0" desc="Header in a detail view">Details</translation>
   <translation id="3442372861347610857" key="MSG_STATEFULSET_DETAIL_INFO_1" desc="Stateful set info details section images entry.">Images</translation>
-  <translation id="638418405338120294" key="MSG_STATEFULSET_DETAIL_INFO_10" desc="The message says that that many pods are running (stateful set details page).">{{ $ctrl.statefulSet.podInfo.running}} running</translation>
+  <translation id="638418405338120294" key="MSG_STATEFULSET_DETAIL_INFO_10" desc="The message says that many pods are running (stateful set details page).">{{ $ctrl.statefulSet.podInfo.running}} running</translation>
   <translation id="6022511979639323705" key="MSG_STATEFULSET_DETAIL_INFO_2" desc="Stateful set info status section name.">Status</translation>
   <translation id="4333163254678014871" key="MSG_STATEFULSET_DETAIL_INFO_3" desc="Stateful set info status section pods entry.">Pods</translation>
-  <translation id="2225505653570116356" key="MSG_STATEFULSET_DETAIL_INFO_4" desc="The message says that that many pods were created (stateful set details page).">{{ $ctrl.statefulSet.podInfo.current}} created</translation>
-  <translation id="1716379563650440954" key="MSG_STATEFULSET_DETAIL_INFO_5" desc="The message says that that many pods are desired to run (stateful set details page).">{{ $ctrl.statefulSet.podInfo.desired}} desired</translation>
-  <translation id="7816002201100319166" key="MSG_STATEFULSET_DETAIL_INFO_6" desc="The message says that that many pods are running (stateful set details page).">{{ $ctrl.statefulSet.podInfo.running}} running</translation>
+  <translation id="2225505653570116356" key="MSG_STATEFULSET_DETAIL_INFO_4" desc="The message says that many pods were created (stateful set details page).">{{ $ctrl.statefulSet.podInfo.current}} created</translation>
+  <translation id="1716379563650440954" key="MSG_STATEFULSET_DETAIL_INFO_5" desc="The message says that many pods are desired to run (stateful set details page).">{{ $ctrl.statefulSet.podInfo.desired}} desired</translation>
+  <translation id="7816002201100319166" key="MSG_STATEFULSET_DETAIL_INFO_6" desc="The message says that many pods are running (stateful set details page).">{{ $ctrl.statefulSet.podInfo.running}} running</translation>
   <translation id="5917392867555318609" key="MSG_STATEFULSET_DETAIL_INFO_7" desc="Stateful set info status section pods status entry.">Pods status</translation>
-  <translation id="4705118863872693508" key="MSG_STATEFULSET_DETAIL_INFO_8" desc="The message says that that many pods are pending (stateful set details page).">{{ $ctrl.statefulSet.podInfo.pending}} pending</translation>
-  <translation id="3990693047066216292" key="MSG_STATEFULSET_DETAIL_INFO_9" desc="The message says that that many pods have failed (stateful set details page).">{{ $ctrl.statefulSet.podInfo.failed}} failed</translation>
+  <translation id="4705118863872693508" key="MSG_STATEFULSET_DETAIL_INFO_8" desc="The message says that many pods are pending (stateful set details page).">{{ $ctrl.statefulSet.podInfo.pending}} pending</translation>
+  <translation id="3990693047066216292" key="MSG_STATEFULSET_DETAIL_INFO_9" desc="The message says that many pods have failed (stateful set details page).">{{ $ctrl.statefulSet.podInfo.failed}} failed</translation>
   <translation id="5793511256137993991" key="MSG_STATEFULSET_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">Stateful Sets</translation>
   <translation id="1171712742904097783" key="MSG_STATEFULSET_LIST_CARDLIST_1" desc="Stateful set list header: name.">Name</translation>
   <translation id="3541355470656139746" key="MSG_STATEFULSET_LIST_CARDLIST_2" desc="Column header \'Kind\' of a Stateful Set List">Kind</translation>
