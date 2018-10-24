@@ -39,10 +39,19 @@ type userEntry struct {
 	User userInfo `yaml:"user"`
 }
 
+type authProviderConfig struct {
+	AccessToken string `yaml:"access-token"`
+}
+
+type authProviderInfo struct {
+	Config authProviderConfig `yaml:"config"`
+}
+
 type userInfo struct {
-	Token    string `yaml:"token"`
-	Username string `yaml:"username"`
-	Password string `yaml:"password"`
+	AuthProvider authProviderInfo `yaml:"auth-provider"`
+	Token        string           `yaml:"token"`
+	Username     string           `yaml:"username"`
+	Password     string           `yaml:"password"`
 }
 
 type kubeConfig struct {
@@ -106,6 +115,11 @@ func (self *kubeConfigAuthenticator) getCurrentUserInfo(config kubeConfig) (user
 
 // Returns auth info structure based on provided user info or error in case not enough data has been provided.
 func (self *kubeConfigAuthenticator) getAuthInfo(info userInfo) (api.AuthInfo, error) {
+	// If "token" is empty for the current "user" entry, fallback to the value of "auth-provider.config.access-token".
+	if len(info.Token) == 0 {
+		info.Token = info.AuthProvider.Config.AccessToken
+	}
+
 	if len(info.Token) == 0 && (len(info.Password) == 0 || len(info.Username) == 0) {
 		return api.AuthInfo{}, errors.New("Not enough data to create auth info structure.")
 	}
