@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# A manifest that creates a pod that uses a non-existant scheduler and thus never gets scheduled to a node, staying in Pending state.
+# A manifest that creates a pod that uses a non-existent scheduler and thus never gets scheduled to a node, staying in Pending state.
 
 apiVersion: v1
 kind: Pod
