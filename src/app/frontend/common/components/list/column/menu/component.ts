@@ -20,7 +20,7 @@ import {Subscription} from 'rxjs/Subscription';
 import {VerberService} from '../../../../services/global/verber';
 
 @Component({
-  selector: 'kd-logs-button',
+  selector: 'kd-resource-context-menu',
   templateUrl: './template.html',
 })
 export class MenuComponent implements ActionColumn, OnDestroy {

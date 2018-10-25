@@ -13,28 +13,27 @@
 // limitations under the License.
 
 import {Component} from '@angular/core';
+import {VersionInfo} from '@api/frontendapi';
 import {ConfigService} from '../../common/services/global/config';
 
 @Component({selector: '', templateUrl: './template.html'})
 export class ActionbarComponent {
-  gitCommit: string;
-  appVersion: string;
+  versionInfo: VersionInfo;
 
   constructor(config: ConfigService) {
-    this.appVersion = config.getAppVersion();
-    this.gitCommit = config.getGitCommit();
+    this.versionInfo = config.getVersionInfo();
   }
 
   getFeedbackLink(): string {
     const body = `##### Environment\n<!-- Describe your setup. Versions of Node.js, Go etc. are ` +
         `needed only from developers. -->\n\n\`\`\`\nInstallation method:\nKubernetes version:\n` +
-        `Dashboard version: ${this.appVersion}\nGit commit: ${this.gitCommit}\nOperating system:` +
-        `\nNode.js version ('node --version' output):\nGo version ('go version' output):\n\`\`\`` +
-        `\n\n##### Steps to reproduce\n<!-- Describe all steps needed to reproduce the issue. It` +
-        ` is a good place to use numbered list. -->\n\n##### Observed result\n<!-- Describe ` +
-        `observed result as precisely as possible. -->\n\n##### Expected result\n<!-- Describe ` +
-        `expected result as precisely as possible. -->\n\n##### Comments\n<!-- If you have any ` +
-        `comments or more details, put them here. -->`;
+        `Dashboard version: ${this.versionInfo.semverString}\nOperating system:\nNode.js version` +
+        `('node --version' output):\nGo version ('go version' output):\n\`\`\`\n\n##### Steps to` +
+        `reproduce\n<!-- Describe all steps needed to reproduce the issue. It is a good place to` +
+        `use numbered list. -->\n\n##### Observed result\n<!-- Describe observed result as ` +
+        `precisely as possible. -->\n\n##### Expected result\n<!-- Describe expected result as ` +
+        `precisely as possible. -->\n\n##### Comments\n<!-- If you have any comments or more ` +
+        `details, put them here. -->`;
     return `https://github.com/kubernetes/dashboard/issues/new?body=${encodeURIComponent(body)}`;
   }
 }

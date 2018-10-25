@@ -70,3 +70,25 @@ export interface KdFile {
   name: string;
   content: string;
 }
+
+export interface VersionInfo {
+  dirty: boolean;
+  raw: string;
+  hash: string;
+  distance: number;
+  tag: string;
+  semver: SemverInfo;
+  suffix: string;
+  semverString: string;
+  packageVersion: string;
+}
+
+export interface SemverInfo {
+  raw: string;
+  major: number;
+  minor: number;
+  patch: number;
+  prerelease: string[];
+  build: string[];
+  version: string;
+}

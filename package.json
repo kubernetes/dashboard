@@ -9,8 +9,8 @@
   "scripts": {
     "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
     "start:https": "concurrently \"npm run start:backend:https\" \"npm run start:frontend:https\"",
-    "start:frontend": "ng serve --aot --progress=false --proxy-config aio/proxy.conf.json --host=0.0.0.0",
-    "start:frontend:https": "ng serve --progress=false --aot --proxy-config aio/https-proxy.conf.json --ssl --host=0.0.0.0",
+    "start:frontend": "npm run postversion && ng serve --aot --progress=false --proxy-config aio/proxy.conf.json --host=0.0.0.0",
+    "start:frontend:https": "node aio/scripts/version.js && ng serve --progress=false --aot --proxy-config aio/https-proxy.conf.json --ssl --host=0.0.0.0",
     "start:backend": "gulp serve --kubeconfig $npm_package_config_kubeconfig",
     "start:backend:https": "gulp serve --kubeconfig $npm_package_config_kubeconfig --autoGenerateCerts true --defaultCertDir $npm_package_config_kubeconfig_dir",
     "start:prod": "npm run build && ./$npm_package_config_dashboard_binary_path --kubeconfig $npm_package_config_kubeconfig",
@@ -48,7 +48,8 @@
     "format:headers": "gulp update-license-headers",
     "format:frontend": "./aio/scripts/format.sh --code --styles --html",
     "format:backend": "goimports -w src/app/backend",
-    "postinstall": "webdriver-manager update && go get golang.org/x/tools/cmd/goimports",
+    "postversion": "node aio/scripts/version.js",
+    "postinstall": "node aio/scripts/version.js && webdriver-manager update && go get golang.org/x/tools/cmd/goimports",
     "precommit": "npm run check:static",
     "clean": "rm -rf .go_workspace .tmp coverage dist npm-debug.log"
   },
@@ -91,6 +92,7 @@
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
+    "@angular-devkit/build-angular": "~0.6.6",
     "@angular/cli": "6.0.7",
     "@angular/compiler-cli": "6.0.7",
     "@angular/language-service": "6.0.7",
@@ -106,6 +108,7 @@
     "codelyzer": "~4.2.1",
     "concurrently": "~3.5.1",
     "del": "^3.0.0",
+    "git-describe": "^4.0.3",
     "glob-run": "^0.1.6",
     "google-closure-compiler": "^20180204.0.0",
     "gulp": "^3.9.1",
@@ -130,7 +133,6 @@
     "protractor": "~5.3.0",
     "q": "latest",
     "raw-loader": "^0.5.1",
-    "replace": "^0.3.0",
     "sass-lint": "^1.12.1",
     "sass-loader": "^6.0.7",
     "scssfmt": "1.0.4",
@@ -139,8 +141,7 @@
     "through2": "^2.0.3",
     "ts-node": "~5.0.1",
     "tslint": "~5.9.1",
-    "typescript": "2.7.2",
-    "@angular-devkit/build-angular": "~0.6.6"
+    "typescript": "2.7.2"
   },
   "engines": {
     "node": ">=8.0.0",

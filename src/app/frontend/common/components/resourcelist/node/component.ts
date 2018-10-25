@@ -22,6 +22,7 @@ import {ResourceListWithStatuses} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {ResourceService} from '../../../services/resource/resource';
+import {MenuComponent} from '../../list/column/menu/component';
 import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
 
 @Component({
@@ -37,6 +38,9 @@ export class NodeListComponent extends ResourceListWithStatuses<NodeList, Node> 
     super(nodeState.name, state, notifications);
     this.id = ListIdentifiers.node;
     this.groupId = ListGroupIdentifiers.cluster;
+
+    // Register action columns.
+    this.registerActionColumn<MenuComponent>('menu', MenuComponent);
 
     // Register status icon handlers
     this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);

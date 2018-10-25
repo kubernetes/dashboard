@@ -5,7 +5,6 @@
 Installation method:
 Kubernetes version:
 Dashboard version:
-Git commit:
 Operating system:
 Node.js version ('node --version' output):
 Go version ('go version' output):

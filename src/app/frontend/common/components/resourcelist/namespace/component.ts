@@ -23,6 +23,7 @@ import {ResourceListWithStatuses} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {ResourceService} from '../../../services/resource/resource';
+import {MenuComponent} from '../../list/column/menu/component';
 import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
 
 @Component({
@@ -42,6 +43,9 @@ export class NamespaceListComponent extends ResourceListWithStatuses<NamespaceLi
     // Register status icon handlers
     this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);
     this.registerBinding(this.icon.error, 'kd-error', this.isInErrorState);
+
+    // Register action columns.
+    this.registerActionColumn<MenuComponent>('menu', MenuComponent);
   }
 
   getResourceObservable(params?: HttpParams): Observable<NamespaceList> {
@@ -61,6 +65,6 @@ export class NamespaceListComponent extends ResourceListWithStatuses<NamespaceLi
   }
 
   getDisplayColumns(): string[] {
-    return ['statusicon', 'name', 'phase', 'age'];
+    return ['statusicon', 'name', 'labels', 'phase', 'age'];
   }
 }

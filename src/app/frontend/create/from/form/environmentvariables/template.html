@@ -15,7 +15,7 @@ limitations under the License.
 -->
 
 <div fxLayout="column">
-  <div>Environment variables</div>
+  <div class="kd-margin-bottom">Environment variables</div>
   <ng-container [formGroup]="form">
     <ng-container formArrayName="variables">
       <div *ngFor="let variable of variables.controls; let i = index;"

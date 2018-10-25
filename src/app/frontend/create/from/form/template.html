@@ -157,7 +157,7 @@ limitations under the License.
 
     <kd-help-section>
       <div fxLayout="column">
-        <div>Labels</div>
+        <div class="kd-margin-bottom">Labels</div>
         <kd-deploy-label [labelArr]="labelArr"
                          formControlName="labels"></kd-deploy-label>
       </div>
@@ -337,15 +337,6 @@ limitations under the License.
 
 </form>
 
-<div>
-  <button mat-button
-          color="primary"
-          (click)="switchMoreOptions()"
-          [hidden]="!isMoreOptionsEnabled()">
-    {{isMoreOptionsEnabled() ? 'Hide advanced options' : 'Show advanced options'}}
-  </button>
-</div>
-
 <button type="button"
         [disabled]="isCreateDisabled()"
         color="primary"
@@ -361,4 +352,11 @@ limitations under the License.
         mat-button
         i18n>
   Cancel
+</button>
+
+<button mat-button
+        color="primary"
+        (click)="switchMoreOptions()"
+        [hidden]="!isMoreOptionsEnabled()">
+  {{isMoreOptionsEnabled() ? 'Hide advanced options' : 'Show advanced options'}}
 </button>

@@ -54,16 +54,32 @@ limitations under the License.
       </ng-container>
 
       <ng-container [matColumnDef]="getDisplayColumns()[2]">
+        <mat-header-cell *matHeaderCellDef>Labels</mat-header-cell>
+        <mat-cell *matCellDef="let namespace">
+          <kd-chips [map]="namespace.objectMeta.labels"></kd-chips>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getDisplayColumns()[3]">
         <mat-header-cell *matHeaderCellDef>Phase</mat-header-cell>
         <mat-cell *matCellDef="let namespace">{{namespace.phase}}</mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayColumns()[3]">
+      <ng-container [matColumnDef]="getDisplayColumns()[4]">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true">Age</mat-header-cell>
         <mat-cell *matCellDef="let namespace">
           {{namespace.objectMeta.creationTimestamp |kdRelativeTime}}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container *ngFor="let col of getActionColumns()"
+                    [matColumnDef]="col.name">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let namespace">
+          <kd-dynamic-cell [component]="col.component"
+                           [resource]="namespace"></kd-dynamic-cell>
         </mat-cell>
       </ng-container>
 
