@@ -49,7 +49,7 @@
     "format:frontend": "./aio/scripts/format.sh --code --styles --html",
     "format:backend": "goimports -w src/app/backend",
     "postversion": "node aio/scripts/version.js",
-    "postinstall": "webdriver-manager update && go get golang.org/x/tools/cmd/goimports",
+    "postinstall": "node aio/scripts/version.js && webdriver-manager update && go get golang.org/x/tools/cmd/goimports",
     "precommit": "npm run check:static",
     "clean": "rm -rf .go_workspace .tmp coverage dist npm-debug.log"
   },
