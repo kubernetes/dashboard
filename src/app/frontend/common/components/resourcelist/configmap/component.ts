@@ -23,6 +23,7 @@ import {NamespaceService} from '../../../services/global/namespace';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
+import {MenuComponent} from '../../list/column/menu/component';
 import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
 
 @Component({selector: 'kd-config-map-list', templateUrl: './template.html'})
@@ -35,6 +36,9 @@ export class ConfigMapListComponent extends ResourceListBase<ConfigMapList, Conf
     super(configMapState.name, state, notifications);
     this.id = ListIdentifiers.configMap;
     this.groupId = ListGroupIdentifiers.config;
+
+    // Register action columns.
+    this.registerActionColumn<MenuComponent>('menu', MenuComponent);
 
     // Register dynamic columns.
     this.registerDynamicColumn('namespace', 'name', this.shouldShowNamespaceColumn_.bind(this));

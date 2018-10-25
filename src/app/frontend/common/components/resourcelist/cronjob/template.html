@@ -94,6 +94,15 @@ limitations under the License.
         </mat-cell>
       </ng-container>
 
+      <ng-container *ngFor="let col of getActionColumns()"
+                    [matColumnDef]="col.name">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let cj">
+          <kd-dynamic-cell [component]="col.component"
+                           [resource]="cj"></kd-dynamic-cell>
+        </mat-cell>
+      </ng-container>
+
       <ng-container matColumnDef="age">
         <mat-header-cell *matHeaderCellDef>Age</mat-header-cell>
         <mat-cell *matCellDef="let cronJob">{{cronJob.objectMeta.creationTimestamp | kdRelativeTime}}</mat-cell>

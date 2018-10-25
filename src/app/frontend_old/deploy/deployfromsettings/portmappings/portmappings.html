@@ -1,0 +1,107 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<md-input-container class="md-block kd-deploy-input-row ">
+  <label>[[Service|Label 'Service' above the service type selection box on the deploy page.]]</label>
+  <md-select ng-model="$ctrl.serviceType"
+             ng-change="$ctrl.changeServiceType()"
+             required>
+    <md-option ng-repeat="serviceType in $ctrl.serviceTypes"
+               ng-value="serviceType"
+               class="md-block">
+      {{serviceType.label}}
+    </md-option>
+  </md-select>
+</md-input-container>
+<div ng-repeat="portMapping in $ctrl.portMappings">
+  <ng-form name="portMappingForm"
+           layout="row">
+    <md-input-container flex="50">
+      <label>[[Port|Label 'Port', which serves as a placeholder for the port input field in the port mappings section on the deploy page.]]</label>
+      <input ng-model="portMapping.port"
+             ng-change="$ctrl.checkPortMapping(portMappingForm, $index)"
+             type="number"
+             min="1"
+             max="65535"
+             name="port"
+             ng-required="$ctrl.isFirst($index)">
+      <ng-messages for="portMappingForm.port.$error"
+                   role="alert">
+        <ng-message when="number">
+          [[Port must be an integer.|This warning appears when the user specifies a non-integer port number in the port mappings section on the deploy page.]]
+        </ng-message>
+        <ng-message when="min">
+          [[Port must be greater than 0.|This warning appears when the user specifies a negative port number in the port mappings section on the deploy page.]]
+        </ng-message>
+        <ng-message when="max">
+          [[Port must be less than 65536.|This warning appears when a typed in port number exceeds the maximum allowed value (in the port mappings section on the deploy page).]]
+        </ng-message>
+        <ng-message when="required">
+          [[Port cannot be empty.|This warning appears when the user specifies an empty port.]]
+        </ng-message>
+      </ng-messages>
+    </md-input-container>
+    <div flex="5"></div>
+    <md-input-container flex="50">
+      <label>[[Target port|Label 'Target port', which serves as a placeholder for the target port input field in the port mappings section on the deploy page.]]</label>
+      <input ng-model="portMapping.targetPort"
+             ng-change="$ctrl.checkPortMapping(portMappingForm, $index)"
+             type="number"
+             min="1"
+             max="65535"
+             name="targetPort"
+             ng-required="$ctrl.isFirst($index)">
+      <ng-messages for="portMappingForm.targetPort.$error"
+                   role="alert">
+        <ng-message when="number">[[Target port must be an integer.|This warning appears when the user specifies a non-integer target port number in the port mappings section on the deploy page.]]</ng-message>
+        <ng-message when="min">[[Target port must be greater than 0.|This warning appears when the user specifies a negative target port number in the port mappings section on the deploy page.]]</ng-message>
+        <ng-message when="max">[Target port must be less than 65536.|This warning appears when a typed in target port number exceeds the maximum allowed value (in the port mappings section on the deploy page).]]</ng-message>
+        <ng-message when="required">[[Target port cannot be empty.|This warning appears when the user specifies an empty target port.]]</ng-message>
+      </ng-messages>
+    </md-input-container>
+    <div flex="5"></div>
+    <md-input-container flex="none">
+      <label>[[Protocol|Label 'Protocol' above the protocol selection box in the port mappings section, on the deploy page.]]</label>
+      <md-select ng-model="portMapping.protocol"
+                 name="protocol"
+                 is-external="$ctrl.isExternal"
+                 required
+                 kd-valid-protocol>
+        <md-option ng-repeat="protocol in $ctrl.protocols"
+                   ng-value="protocol">
+          {{protocol}}
+        </md-option>
+      </md-select>
+      <md-progress-linear class="kd-deploy-form-progress"
+                          md-mode="indeterminate"
+                          ng-show="portMappingForm.protocol.$pending">
+      </md-progress-linear>
+      <ng-messages for="portMappingForm.protocol.$error"
+                   role="alert"
+                   multiple>
+        <ng-message when="required">[[Protocol is required.|This warning appears when the user does not specify a protocol for an existing port mapping (in the port mappings section, on the deploy page).]]</ng-message>
+        <ng-message when="validProtocol">[[Invalid protocol.|This warning appears when the user specifies an invalid protocol for a port mapping (in the port mappings section, on the deploy page).]]</ng-message>
+    </md-input-container>
+    <div flex="10">
+      <md-button type="button"
+                 ng-if="$ctrl.isRemovable($index)"
+                 ng-click="$ctrl.remove($index)"
+                 class="material-icons md-icon-button">
+        delete
+      </md-button>
+    </div>
+  </ng-form>
+</div>

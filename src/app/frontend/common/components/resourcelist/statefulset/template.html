@@ -35,14 +35,14 @@ limitations under the License.
                matSortDirection="asc">
       <ng-container matColumnDef="statusicon">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let replicaSet; let index=index">
-          <mat-icon [ngClass]="getStatus(replicaSet).iconClass">
-            <ng-container *ngIf="showHoverIcon(index, replicaSet); else showStatus">
+        <mat-cell *matCellDef="let ss; let index=index">
+          <mat-icon [ngClass]="getStatus(ss).iconClass">
+            <ng-container *ngIf="showHoverIcon(index, ss); else showStatus">
               remove_red_eye
             </ng-container>
 
             <ng-template #showStatus>
-              {{getStatus(replicaSet).iconName}}
+              {{getStatus(ss).iconName}}
             </ng-template>
           </mat-icon>
         </mat-cell>
@@ -52,10 +52,10 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true">Name</mat-header-cell>
-        <mat-cell *matCellDef="let replicaSet">
+        <mat-cell *matCellDef="let ss">
           <a (click)="$event.stopPropagation()"
-             [href]="getDetailsHref(replicaSet.objectMeta.name, replicaSet.objectMeta.namespace)">
-          {{replicaSet.objectMeta.name}}
+             [href]="getDetailsHref(ss.objectMeta.name, ss.objectMeta.namespace)">
+          {{ss.objectMeta.name}}
           </a>
         </mat-cell>
       </ng-container>
@@ -63,20 +63,20 @@ limitations under the License.
       <ng-container *ngIf="shouldShowColumn('namespace')"
                     matColumnDef="namespace">
         <mat-header-cell *matHeaderCellDef>Namespace</mat-header-cell>
-        <mat-cell *matCellDef="let replicaSet">{{replicaSet.objectMeta.namespace}}</mat-cell>
+        <mat-cell *matCellDef="let ss">{{ss.objectMeta.namespace}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="labels">
         <mat-header-cell *matHeaderCellDef>Labels</mat-header-cell>
-        <mat-cell *matCellDef="let replicaSet">
-          <kd-chips [map]="replicaSet.objectMeta.labels"></kd-chips>
+        <mat-cell *matCellDef="let ss">
+          <kd-chips [map]="ss.objectMeta.labels"></kd-chips>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="pods">
         <mat-header-cell *matHeaderCellDef>Pods</mat-header-cell>
-        <mat-cell *matCellDef="let replicaSet">
-          {{replicaSet.pods.running}} / {{replicaSet.pods.desired}}
+        <mat-cell *matCellDef="let ss">
+          {{ss.pods.running}} / {{ss.pods.desired}}
         </mat-cell>
       </ng-container>
 
@@ -84,13 +84,22 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true">Age</mat-header-cell>
-        <mat-cell *matCellDef="let replicaSet">{{replicaSet.objectMeta.creationTimestamp | kdRelativeTime}}</mat-cell>
+        <mat-cell *matCellDef="let ss">{{ss.objectMeta.creationTimestamp | kdRelativeTime}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="images">
         <mat-header-cell *matHeaderCellDef>Images</mat-header-cell>
-        <mat-cell *matCellDef="let replicaSet">
-          <kd-chips [map]="replicaSet.containerImages"></kd-chips>
+        <mat-cell *matCellDef="let ss">
+          <kd-chips [map]="ss.containerImages"></kd-chips>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container *ngFor="let col of getActionColumns()"
+                    [matColumnDef]="col.name">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let ss">
+          <kd-dynamic-cell [component]="col.component"
+                           [resource]="ss"></kd-dynamic-cell>
         </mat-cell>
       </ng-container>
 

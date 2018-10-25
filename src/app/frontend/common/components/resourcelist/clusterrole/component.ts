@@ -23,6 +23,7 @@ import {ResourceListBase} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {ResourceService} from '../../../services/resource/resource';
+import {MenuComponent} from '../../list/column/menu/component';
 import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
 
 @Component({
@@ -38,6 +39,9 @@ export class ClusterRoleListComponent extends ResourceListBase<ClusterRoleList, 
     super(clusterRoleState.name, state, notifications);
     this.id = ListIdentifiers.clusterRole;
     this.groupId = ListGroupIdentifiers.cluster;
+
+    // Register action columns.
+    this.registerActionColumn<MenuComponent>('menu', MenuComponent);
   }
 
   getResourceObservable(params?: HttpParams): Observable<ClusterRoleList> {
