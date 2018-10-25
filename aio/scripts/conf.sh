@@ -28,7 +28,6 @@ COVERAGE_DIR="${ROOT_DIR}/coverage"
 
 # Paths.
 GO_COVERAGE_FILE="${ROOT_DIR}/coverage/coverage.go.txt"
-ENV_PROD_FILE="${FRONTEND_SRC}/environments/environment.prod.ts"
 
 # Binaries.
 NG_BIN="${ROOT_DIR}/node_modules/.bin/ng"
@@ -37,11 +36,9 @@ CLANG_FORMAT_BIN="${ROOT_DIR}/node_modules/.bin/clang-format"
 SCSSFMT_BIN="${ROOT_DIR}/node_modules/.bin/scssfmt"
 BEAUTIFY_BIN="${ROOT_DIR}/node_modules/.bin/js-beautify"
 GLOB_RUN_BIN="${ROOT_DIR}/node_modules/.bin/glob-run"
-REPLACE_BIN="${ROOT_DIR}/node_modules/.bin/replace"
 
 # Global constants.
 ARCH=$(uname | awk '{print tolower($0)}')
-APP_VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g')
 
 # Local cluster configuration (check start-cluster.sh script for more details).
 HEAPSTER_VERSION="v1.4.0"

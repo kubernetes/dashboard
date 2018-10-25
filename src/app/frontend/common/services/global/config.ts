@@ -15,9 +15,9 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {AppConfig} from '@api/backendapi';
+import {VersionInfo} from '@api/frontendapi';
 import {Observable} from 'rxjs/Observable';
-
-import {environment} from '../../../environments/environment.prod';
+import {version} from '../../../environments/version';
 
 @Injectable()
 export class ConfigService {
@@ -48,11 +48,7 @@ export class ConfigService {
     }
   }
 
-  getAppVersion(): undefined|string {
-    return environment.version.startsWith('%') ? undefined : environment.version;
-  }
-
-  getGitCommit(): undefined|string {
-    return environment.gitCommit.startsWith('%') ? undefined : environment.gitCommit;
+  getVersionInfo(): VersionInfo {
+    return version;
   }
 }

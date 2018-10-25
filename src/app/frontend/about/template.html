@@ -23,8 +23,7 @@ limitations under the License.
               [svgIcon]="assets.getAppLogo()"></mat-icon>
     <div fxFlexAlign="center">
       <div class="kd-h1">
-        <span>Dashboard</span>
-        <span *ngIf="appVersion">&nbsp;{{appVersion}}</span>
+        <span>Dashboard v{{versionInfo.semverString}}</span>
       </div>
       <div class="kd-h3">General-purpose web UI for Kubernetes clusters</div>
     </div>
@@ -32,7 +31,6 @@ limitations under the License.
 
   <div class="kd-muted"
        footer>
-    <div *ngIf="gitCommit">Built from <a [href]="getCommitLink()">{{gitCommit}}</a> commit.</div>
     <div>Copyright 2015 - {{latestCopyrightYear}} The Kubernetes Authors.</div>
     <div>
       Kubernetes Dashboard is made possible by the Dashboard
