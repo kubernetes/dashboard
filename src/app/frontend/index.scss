@@ -230,6 +230,10 @@ code {
   margin: 0;
 }
 
+.kd-margin-bottom {
+  margin-bottom: $baseline-grid;
+}
+
 .kd-slider-value {
   font-size: $subhead-font-size-base-lg;
   text-align: right;
