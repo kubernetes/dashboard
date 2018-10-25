@@ -17,6 +17,33 @@ limitations under the License.
 <kd-object-meta [initialized]="isInitialized"
                 [objectMeta]="service.objectMeta"></kd-object-meta>
 
+<kd-card [initialized]="isInitialized">
+  <div title>Service information</div>
+  <div content
+       *ngIf="isInitialized"
+       fxLayout="row wrap">
+    <kd-property *ngIf="service?.type">
+      <div key>Type</div>
+      <div value>{{service?.type}}</div>
+    </kd-property>
+    <kd-property *ngIf="service?.clusterIP">
+      <div key>Cluster IP</div>
+      <div value>{{service?.clusterIP}}</div>
+    </kd-property>
+    <kd-property *ngIf="service?.sessionAffinity">
+      <div key>Session Affinity</div>
+      <div value>{{service?.sessionAffinity}}</div>
+    </kd-property>
+    <kd-property *ngIf="service?.selector"
+                 fxFlex="100">
+      <div key>Selector</div>
+      <div value>
+        <kd-chips [map]="service?.selector"></kd-chips>
+      </div>
+    </kd-property>
+  </div>
+</kd-card>
+
 <kd-endpoint-card-list [endpoints]="service?.endpointList?.endpoints"
                        [initialized]="isInitialized"></kd-endpoint-card-list>
 
