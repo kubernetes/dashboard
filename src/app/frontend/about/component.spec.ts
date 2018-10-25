@@ -31,8 +31,6 @@ describe('AboutComponent', () => {
   let element: HTMLElement;
 
   // set the predefined values
-  const commit = 'AA7A6A1ADC218BBC09FEDB653C9A9432F7EF9903';
-  const version = '88';
   const copyrightYear = 2018;
 
   beforeEach(async(() => {
@@ -58,30 +56,11 @@ describe('AboutComponent', () => {
     configRequest.flush(config);
 
     // set the fixed values
-    component.appVersion = version;
-    component.gitCommit = commit;
     component.latestCopyrightYear = copyrightYear;
 
     // grab the HTML element
     element = fixture.debugElement.query(By.css('kd-card')).nativeElement;
   }));
-
-  it('should create github link', async(() => {
-       fixture.detectChanges();
-       const url = component.getCommitLink();
-       expect(url.indexOf('https://github.com') === 0).toBeTruthy();
-       expect(url.indexOf(commit) > 0).toBeTruthy();
-     }));
-
-  it('should print app version', async(() => {
-       fixture.detectChanges();
-       expect(element.textContent).toContain(`${version}`);
-     }));
-
-  it('should print git commit', async(() => {
-       fixture.detectChanges();
-       expect(element.textContent).toContain(commit);
-     }));
 
   it('should print current year', async(() => {
        fixture.detectChanges();
