@@ -17,10 +17,10 @@
 import {VersionInfo} from '@api/frontendapi';
 
 export const version: VersionInfo = {
-  'dirty': true,
-  'raw': 'v1.8.3-122-g9a751add6-dirty',
-  'hash': 'g9a751add6',
-  'distance': 122,
+  'dirty': false,
+  'raw': 'v1.8.3-124-g2a3458b86',
+  'hash': 'g2a3458b86',
+  'distance': 124,
   'tag': 'v1.8.3',
   'semver': {
     'raw': 'v1.8.3',
@@ -31,7 +31,7 @@ export const version: VersionInfo = {
     'build': [],
     'version': '1.8.3'
   },
-  'suffix': '122-g9a751add6-dirty',
-  'semverString': '1.8.3+122.g9a751add6',
+  'suffix': '124-g2a3458b86',
+  'semverString': '1.8.3+124.g2a3458b86',
   'packageVersion': '2.0.0-alpha0'
 };

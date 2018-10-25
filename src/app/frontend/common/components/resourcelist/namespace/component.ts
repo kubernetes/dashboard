@@ -61,6 +61,6 @@ export class NamespaceListComponent extends ResourceListWithStatuses<NamespaceLi
   }
 
   getDisplayColumns(): string[] {
-    return ['statusicon', 'name', 'phase', 'age'];
+    return ['statusicon', 'name', 'labels', 'phase', 'age'];
   }
 }
