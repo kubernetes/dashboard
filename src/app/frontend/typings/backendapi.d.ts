@@ -227,6 +227,7 @@ export interface Node extends Resource { ready: string; }
 
 export interface PersistentVolume extends Resource {
   capacity: StringMap;
+  storageClass: string;
   accessModes: string[];
   reclaimPolicy: string;
   status: string;
