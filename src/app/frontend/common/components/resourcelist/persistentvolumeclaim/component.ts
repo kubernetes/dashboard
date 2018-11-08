@@ -18,6 +18,7 @@ import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 import {PersistentVolumeClaim, PersistentVolumeClaimList} from 'typings/backendapi';
 
+import {persistentVolumeState} from '../../../../resource/cluster/persistentvolume/state';
 import {persistentVolumeClaimState} from '../../../../resource/config/persistentvolumeclaim/state';
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {NamespaceService} from '../../../services/global/namespace';
@@ -26,7 +27,6 @@ import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
 import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
-import {persistentVolumeState} from "../../../../resource/cluster/persistentvolume/state";
 
 @Component({
   selector: 'kd-persistent-volume-claim-list',

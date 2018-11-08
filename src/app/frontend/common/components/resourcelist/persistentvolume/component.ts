@@ -19,13 +19,13 @@ import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 
 import {persistentVolumeState} from '../../../../resource/cluster/persistentvolume/state';
+import {persistentVolumeClaimState} from '../../../../resource/config/persistentvolumeclaim/state';
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {ResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
 import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
-import {persistentVolumeClaimState} from "../../../../resource/config/persistentvolumeclaim/state";
 
 @Component({
   selector: 'kd-persistent-volume-list',
@@ -74,7 +74,7 @@ export class PersistentVolumeListComponent extends
   getClaimHref(claimReference: string): string {
     let href = '';
 
-    const splittedRef = claimReference.split("/");
+    const splittedRef = claimReference.split('/');
     if (splittedRef.length === 2) {
       href = this.kdState_.href(persistentVolumeClaimState.name, splittedRef[1], splittedRef[0]);
     }

@@ -19,7 +19,9 @@ limitations under the License.
 
 <kd-card [initialized]="isInitialized">
   <div title>Persistent Volume Claim information</div>
-  <div content *ngIf="isInitialized" fxLayout="row wrap">
+  <div content
+       *ngIf="isInitialized"
+       fxLayout="row wrap">
     <kd-property *ngIf="persistentVolumeClaim?.status">
       <div key>Status</div>
       <div value>{{persistentVolumeClaim.status}}</div>
