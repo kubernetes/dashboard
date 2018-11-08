@@ -78,7 +78,9 @@ limitations under the License.
       <ng-container [matColumnDef]="getDisplayColumns()[6]">
         <mat-header-cell *matHeaderCellDef>Claim</mat-header-cell>
         <mat-cell *matCellDef="let pv">
-          <ng-container *ngIf="pv.claim">{{pv.claim}}</ng-container>
+          <ng-container *ngIf="pv.claim">
+            <a [href]="getClaimHref(pv.claim)">{{pv.claim}}</a>
+          </ng-container>
           <ng-container *ngIf="!pv.claim">-</ng-container>
         </mat-cell>
       </ng-container>
