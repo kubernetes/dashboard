@@ -15,17 +15,17 @@ limitations under the License.
 -->
 
 <kd-card [expandable]="false"
-         [initialized]="isInitialized"
          class="kd-shell-content-card">
   <div title
        class="kd-shell-content-card-title">
     Shell in
-    <mat-select class="kd-shell-toolbar-select"
+    <mat-select *ngIf="containers?.length > 0"
+                class="kd-shell-toolbar-select"
                 (ngModelChange)="onPodContainerChange($event)"
-                [ngModel]="containerName">
-      <mat-option *ngFor="let _podContainer of podContainers$ | async"
-                  [value]="_podContainer">
-        {{ _podContainer | async }}
+                [(ngModel)]="selectedContainer">
+      <mat-option *ngFor="let item of containers"
+                  [value]="item">
+        {{ item }}
       </mat-option>
     </mat-select>
     in {{ podName }}

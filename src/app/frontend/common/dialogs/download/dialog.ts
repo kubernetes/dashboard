@@ -56,6 +56,7 @@ export class LogsDownloadDialog implements OnDestroy {
                     this.loaded = event.loaded;
                   } else if (event instanceof HttpResponse) {
                     this.finished = true;
+                    // @ts-ignore
                     this.result = new Blob([event.body], {type: 'text/plan'});
                   }
                 },
