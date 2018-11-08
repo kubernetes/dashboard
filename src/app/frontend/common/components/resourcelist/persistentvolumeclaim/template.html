@@ -82,8 +82,8 @@ limitations under the License.
       <ng-container matColumnDef="capacity">
         <mat-header-cell *matHeaderCellDef>Capacity</mat-header-cell>
         <mat-cell *matCellDef="let pvc">
-          <ng-container *ngIf="pvc.capacity">{{pvc.capacity}}</ng-container>
-          <ng-container *ngIf="!pvc.capacity">-</ng-container>
+          <ng-container *ngIf="pvc?.capacity?.storage">{{pvc.capacity.storage}}</ng-container>
+          <ng-container *ngIf="!pvc?.capacity?.storage">-</ng-container>
         </mat-cell>
       </ng-container>
 
@@ -97,8 +97,8 @@ limitations under the License.
       <ng-container matColumnDef="storagecl">
         <mat-header-cell *matHeaderCellDef>Storage Class</mat-header-cell>
         <mat-cell *matCellDef="let pvc">
-          <ng-container *ngIf="pvc.storageClass">{{pvc.capacity}}</ng-container>
-          <ng-container *ngIf="!pvc.storageClass">-</ng-container>
+          <ng-container *ngIf="pvc?.storageClass">{{pvc.storageClass}}</ng-container>
+          <ng-container *ngIf="!pvc?.storageClass">-</ng-container>
         </mat-cell>
       </ng-container>
 
