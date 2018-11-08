@@ -26,6 +26,7 @@ import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
 import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
+import {persistentVolumeState} from "../../../../resource/cluster/persistentvolume/state";
 
 @Component({
   selector: 'kd-persistent-volume-claim-list',
@@ -79,6 +80,10 @@ export class PersistentVolumeClaimListComponent extends
     return [
       'statusicon', 'name', 'labels', 'status', 'volume', 'capacity', 'accmodes', 'storagecl', 'age'
     ];
+  }
+
+  getVolumeHref(persistentVolumeName: string): string {
+    return this.kdState_.href(persistentVolumeState.name, persistentVolumeName);
   }
 
   private shouldShowNamespaceColumn_(): boolean {
