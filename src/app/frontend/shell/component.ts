@@ -38,8 +38,8 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
   connectionClosed: boolean;
   selectedContainer: string;
   containers: string[];
-  private subscriptions: Subscription[] = [];
 
+  private readonly subscriptions: Subscription[] = [];
   private readonly keyEvent$ = new ReplaySubject<KeyboardEvent>(2);
   private conn: WebSocket;
   private readonly connSubject = new ReplaySubject<ShellFrame>(100);
@@ -117,7 +117,7 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     if (this.subscriptions.length > 0) {
-      for (let sub of this.subscriptions) {
+      for (const sub of this.subscriptions) {
         sub.unsubscribe();
       }
     }
