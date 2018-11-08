@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-object-meta [initialized]="isInitialized" 
+<kd-object-meta [initialized]="isInitialized"
                 [objectMeta]="persistentVolumeClaim?.objectMeta"></kd-object-meta>
 
 <kd-card [initialized]="isInitialized">
@@ -25,16 +25,22 @@ limitations under the License.
       <div value>{{persistentVolumeClaim.status}}</div>
     </kd-property>
     <kd-property *ngIf="persistentVolumeClaim?.storageClass">
-        <div key>Storage Class</div>
-        <div value>{{persistentVolumeClaim.storageClass}}</div>
+      <div key>Storage Class</div>
+      <div value>{{persistentVolumeClaim.storageClass}}</div>
     </kd-property>
-    <kd-property *ngIf="persistentVolumeClaim?.capacity?.storage">
-        <div key>Capacity</div>
-        <div value>{{persistentVolumeClaim.capacity.storage}}</div>
+    <kd-property *ngIf="persistentVolumeClaim?.capacity"
+                 fxFlex="100">
+      <div key>Capacity</div>
+      <div value>
+        <kd-chips [map]="persistentVolumeClaim.capacity"></kd-chips>
+      </div>
     </kd-property>
-    <kd-property *ngIf="persistentVolumeClaim?.capacity?.storage">
-        <div key>Access Modes</div>
-        <div value><kd-chips [map]="persistentVolumeClaim.accessModes"></kd-chips></div>
+    <kd-property *ngIf="persistentVolumeClaim?.accessModes"
+                 fxFlex="100">
+      <div key>Access Modes</div>
+      <div value>
+        <kd-chips [map]="persistentVolumeClaim.accessModes"></kd-chips>
+      </div>
     </kd-property>
   </div>
 </kd-card>
