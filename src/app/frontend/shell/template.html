@@ -15,6 +15,7 @@ limitations under the License.
 -->
 
 <kd-card [expandable]="false"
+         [initialized]="isInitialized"
          class="kd-shell-content-card">
   <div title
        class="kd-shell-content-card-title">
@@ -24,12 +25,11 @@ limitations under the License.
                 [ngModel]="containerName">
       <mat-option *ngFor="let _podContainer of podContainers$ | async"
                   [value]="_podContainer">
-        {{ _podContainer }}
+        {{ _podContainer | async }}
       </mat-option>
     </mat-select>
     in {{ podName }}
   </div>
-
 
   <div #anchor
        content

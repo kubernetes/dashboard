@@ -36,9 +36,9 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
   podName: string;
   containerName: string;
   podContainers$: Observable<string[]>;
-
   connecting: boolean;
   connectionClosed: boolean;
+  isInitialized = false;
 
   private readonly keyEvent$ = new ReplaySubject<KeyboardEvent>(2);
   private conn: WebSocket;
@@ -151,6 +151,8 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
     this.conn.onclose = this.onConnectionClose.bind(this);
 
     this.cdr_.markForCheck();
+
+    this.isInitialized = true;
   }
 
   private onConnectionOpen(sessionId: string): void {
