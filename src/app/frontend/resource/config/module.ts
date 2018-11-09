@@ -29,4 +29,5 @@ import {configState} from './state';
   ],
   declarations: [ConfigComponent],
 })
-export class ConfigModule {}
+export class ConfigModule {
+}

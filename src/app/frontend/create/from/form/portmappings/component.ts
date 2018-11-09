@@ -80,8 +80,7 @@ export class PortMappingsComponent implements OnInit, ControlValueAccessor {
   /**
    * Initialized from the scope.
    */
-  @Input()
-  protocols: string[];
+  @Input() protocols: string[];
 
   /**
    * Available service types
@@ -96,11 +95,9 @@ export class PortMappingsComponent implements OnInit, ControlValueAccessor {
   /**
    * Binding to outer scope.
    */
-  @Input()
-  isExternal: boolean;
+  @Input() isExternal: boolean;
 
-  @Output()
-  changeExternal: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() changeExternal: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   portMappingForm: FormGroup;
 
@@ -161,12 +158,10 @@ export class PortMappingsComponent implements OnInit, ControlValueAccessor {
   private newEmptyPortMapping(defaultProtocol: string): FormGroup {
     return this.fb_.group({
       port: [
-        '',
-        Validators.compose([FormValidators.isInteger, Validators.min(1), Validators.max(65535)])
+        '', Validators.compose([FormValidators.isInteger, Validators.min(1), Validators.max(65535)])
       ],
       targetPort: [
-        '',
-        Validators.compose([FormValidators.isInteger, Validators.min(1), Validators.max(65535)])
+        '', Validators.compose([FormValidators.isInteger, Validators.min(1), Validators.max(65535)])
       ],
       protocol: [defaultProtocol]
     });

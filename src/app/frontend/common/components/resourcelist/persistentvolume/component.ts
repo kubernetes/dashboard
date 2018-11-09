@@ -19,6 +19,7 @@ import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 
 import {persistentVolumeState} from '../../../../resource/cluster/persistentvolume/state';
+import {persistentVolumeClaimState} from '../../../../resource/config/persistentvolumeclaim/state';
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
@@ -68,6 +69,17 @@ export class PersistentVolumeListComponent extends
 
   isInSuccessState(resource: PersistentVolume): boolean {
     return resource.status === 'Available' || resource.status === 'Bound';
+  }
+
+  getClaimHref(claimReference: string): string {
+    let href = '';
+
+    const splittedRef = claimReference.split('/');
+    if (splittedRef.length === 2) {
+      href = this.kdState_.href(persistentVolumeClaimState.name, splittedRef[1], splittedRef[0]);
+    }
+
+    return href;
   }
 
   getDisplayColumns(): string[] {

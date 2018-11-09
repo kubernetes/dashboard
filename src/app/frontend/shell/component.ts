@@ -17,13 +17,13 @@ import {MatSnackBar} from '@angular/material';
 import {PodContainerList, ShellFrame, SJSCloseEvent, SJSMessageEvent, TerminalResponse} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {debounce} from 'lodash';
-import {Observable, ReplaySubject, Subject, Subscription} from 'rxjs';
-import {filter, first, map, share, startWith, tap} from 'rxjs/operators';
+import {ReplaySubject, Subject, Subscription} from 'rxjs';
 import {Terminal} from 'xterm';
 import {fit} from 'xterm/lib/addons/fit/fit';
 import {ExecStateParams} from '../common/params/params';
 import {EndpointManager, Resource} from '../common/services/resource/endpoint';
 import {NamespacedResourceService} from '../common/services/resource/resource';
+
 // tslint:disable-next-line:no-any
 declare let SockJS: any;
 
@@ -34,28 +34,27 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
 
   namespace: string;
   podName: string;
-  containerName: string;
-  podContainers$: Observable<string[]>;
-
   connecting: boolean;
   connectionClosed: boolean;
+  selectedContainer: string;
+  containers: string[];
 
+  private readonly subscriptions: Subscription[] = [];
   private readonly keyEvent$ = new ReplaySubject<KeyboardEvent>(2);
   private conn: WebSocket;
   private readonly connSubject = new ReplaySubject<ShellFrame>(100);
-  private connSub: Subscription;
   private connected = false;
   private debouncedFit: Function;
   private readonly incommingMessage$ = new Subject<ShellFrame>();
 
   constructor(
-      private readonly podContainer_: NamespacedResourceService<PodContainerList>,
+      private readonly containers_: NamespacedResourceService<PodContainerList>,
       private readonly terminal_: NamespacedResourceService<TerminalResponse>,
       private readonly state_: StateService, private readonly matSnackBar_: MatSnackBar,
       private readonly cdr_: ChangeDetectorRef) {}
 
   onPodContainerChange(podContainer: string): void {
-    this.containerName = podContainer;
+    this.selectedContainer = podContainer;
     this.state_.go(
         '.', new ExecStateParams(this.namespace, this.podName, podContainer), {reload: true});
   }
@@ -64,22 +63,19 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
     const {resourceNamespace, resourceName, containerName} = this.state_.params;
     this.namespace = resourceNamespace;
     this.podName = resourceName;
-    this.containerName = containerName;
+    this.selectedContainer = containerName;
 
     const containersEndpoint =
         EndpointManager.resource(Resource.pod, true).child(resourceName, Resource.container);
 
-    this.podContainers$ =
-        this.podContainer_.get(containersEndpoint)
-            .pipe(
-                startWith({containers: []}), map(({containers}) => containers), share(),
-                filter(containers => containers && containers.length > 0), first(),
-                tap(containers => {
-                  if (!this.containerName) {
-                    this.containerName = containers[0];
-                  }
-                  this.setupConnection();
-                }));
+    this.containers_.get(containersEndpoint).subscribe((containerList) => {
+      this.containers = containerList.containers;
+      if (this.containers.length > 0) {
+        this.selectedContainer = this.containers[0];
+      }
+
+      this.setupConnection();
+    });
   }
 
   ngAfterViewInit(): void {
@@ -98,9 +94,9 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
     this.debouncedFit();
     window.addEventListener('resize', () => this.debouncedFit());
 
-    this.connSub = this.connSubject.subscribe(frame => {
+    this.subscriptions.push(this.connSubject.subscribe(frame => {
       this.handleConnectionMessage(frame);
-    });
+    }));
 
     this.term.on('data', this.onTerminalSendString.bind(this));
     this.term.on('resize', this.onTerminalResize.bind(this));
@@ -120,8 +116,10 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
       this.connSubject.complete();
     }
 
-    if (this.connSub) {
-      this.connSub.unsubscribe();
+    if (this.subscriptions.length > 0) {
+      for (const sub of this.subscriptions) {
+        sub.unsubscribe();
+      }
     }
 
     if (this.term) {
@@ -132,7 +130,7 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private async setupConnection(): Promise<void> {
-    if (!(this.containerName && this.podName && this.namespace && !this.connecting)) {
+    if (!(this.selectedContainer && this.podName && this.namespace && !this.connecting)) {
       return;
     }
 
@@ -141,7 +139,7 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
 
     const terminalSessionUrl =
         EndpointManager.resource(Resource.pod, true).child(this.podName, Resource.shell) + '/' +
-        this.containerName;
+        this.selectedContainer;
 
     const {id} = await this.terminal_.get(terminalSessionUrl).toPromise();
 

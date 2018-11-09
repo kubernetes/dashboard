@@ -41,4 +41,5 @@ import {clusterRoleState} from './state';
     ClusterRoleDetailComponent,
   ],
 })
-export class ClusterRoleModule {}
+export class ClusterRoleModule {
+}

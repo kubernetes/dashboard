@@ -58,7 +58,7 @@ limitations under the License.
         <mat-cell *matCellDef="let replicaSet">
           <a (click)="$event.stopPropagation()"
              [href]="getDetailsHref(replicaSet.objectMeta.name, replicaSet.objectMeta.namespace)">
-          {{replicaSet.objectMeta.name}}
+            {{replicaSet.objectMeta.name}}
           </a>
         </mat-cell>
       </ng-container>

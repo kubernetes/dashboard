@@ -18,6 +18,7 @@ import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 import {PersistentVolumeClaim, PersistentVolumeClaimList} from 'typings/backendapi';
 
+import {persistentVolumeState} from '../../../../resource/cluster/persistentvolume/state';
 import {persistentVolumeClaimState} from '../../../../resource/config/persistentvolumeclaim/state';
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {NamespaceService} from '../../../services/global/namespace';
@@ -79,6 +80,10 @@ export class PersistentVolumeClaimListComponent extends
     return [
       'statusicon', 'name', 'labels', 'status', 'volume', 'capacity', 'accmodes', 'storagecl', 'age'
     ];
+  }
+
+  getVolumeHref(persistentVolumeName: string): string {
+    return this.kdState_.href(persistentVolumeState.name, persistentVolumeName);
   }
 
   private shouldShowNamespaceColumn_(): boolean {

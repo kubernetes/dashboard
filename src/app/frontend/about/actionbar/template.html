@@ -14,24 +14,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<a href="https://github.com/kubernetes/dashboard/wiki"
-   target="_blank">
-  <button mat-button
-          color="accent"
-          i18n-matTooltip
-          matTooltip="Read Kubernetes Dashboard documentation">
-    <mat-icon>description</mat-icon>
-    <span>Documentation</span>
-  </button>
-</a>
+<div fxLayout="row">
+  <a href="https://github.com/kubernetes/dashboard/wiki"
+     target="_blank">
+    <button mat-icon-button
+            color="accent"
+            class="kd-toolbar-action"
+            i18n-matTooltip
+            matTooltip="Read documentation">
+      <mat-icon>description</mat-icon>
+    </button>
+  </a>
 
-<a [href]="getFeedbackLink()"
-   target="_blank">
-  <button mat-button
-          color="accent"
-          i18n-matTooltip
-          matTooltip="Create new issue on GitHub">
-    <mat-icon>description</mat-icon>
-    <span>Feedback</span>
-  </button>
-</a>
+  <a [href]="getFeedbackLink()"
+     target="_blank">
+    <button mat-icon-button
+            color="accent"
+            class="kd-toolbar-action"
+            i18n-matTooltip
+            matTooltip="Report an issue">
+      <mat-icon>feedback</mat-icon>
+    </button>
+  </a>
+</div>

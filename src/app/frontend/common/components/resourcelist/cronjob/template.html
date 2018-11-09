@@ -48,7 +48,7 @@ limitations under the License.
                          disableClear="true">Name</mat-header-cell>
         <mat-cell *matCellDef="let cronJob">
           <a [href]="getDetailsHref(cronJob.objectMeta.name, cronJob.objectMeta.namespace)">
-          {{cronJob.objectMeta.name}}
+            {{cronJob.objectMeta.name}}
           </a>
         </mat-cell>
       </ng-container>

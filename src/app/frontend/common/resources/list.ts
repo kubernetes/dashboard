@@ -40,8 +40,8 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
   private readonly data_ = new MatTableDataSource<R>();
   private dataSubscription_: Subscription;
   private readonly dynamicColumns_: ColumnWhenCondition[] = [];
-  private readonly kdState_: KdStateService;
-  private readonly settingsService_: GlobalSettingsService;
+  protected readonly kdState_: KdStateService;
+  protected readonly settingsService_: GlobalSettingsService;
 
   isLoading = false;
   totalItems = 0;

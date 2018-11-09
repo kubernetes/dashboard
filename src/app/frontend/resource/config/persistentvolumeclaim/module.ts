@@ -38,4 +38,5 @@ import {persistentVolumeClaimState} from './state';
   ],
   declarations: [PersistentVolumeClaimList, PersistentVolumeClaimDetailComponent],
 })
-export class PersistentVolumeClaimModule {}
+export class PersistentVolumeClaimModule {
+}

@@ -61,7 +61,7 @@ limitations under the License.
                fxLayout>
             <a [href]="getEnvConfigMapHref(env.valueFrom.configMapKeyRef)"
                (click)="$event.stopPropagation()">
-            {{env.name}}
+              {{env.name}}
             </a>
             <mat-icon matTooltip="Environment variable"
                       class="kd-env-variable-icon">public</mat-icon>

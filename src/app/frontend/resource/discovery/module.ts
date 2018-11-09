@@ -29,4 +29,5 @@ import {discoveryState} from './state';
   ],
   declarations: [DiscoveryComponent],
 })
-export class DiscoveryModule {}
+export class DiscoveryModule {
+}

@@ -25,13 +25,15 @@ export const kdErrors = {
 
 export const kdLocalizedErrors = {
   /**
-   * @export {kdError} @desc Text shown on in error dialog when there is namespace mismatch between dashboard and yaml file.
+   * @export {kdError} @desc Text shown on in error dialog when there is namespace mismatch between
+   * dashboard and yaml file.
    */
   MSG_DEPLOY_NAMESPACE_MISMATCH_ERROR: goog.getMsg(
       'Your file specifies a namespace that is inconsistent with the namespace currently selected in Dashboard. Either edit the namespace entry in your file or select a different namespace in Dashboard to deploy to (eg. \'All namespaces\' or the correct namespace provided in the file).'),
 
   /**
-     @export {kdError} @desc Text shown on in error dialog when there is no namespace provided selected in both dashboard and yaml file.
+     @export {kdError} @desc Text shown on in error dialog when there is no namespace provided
+     selected in both dashboard and yaml file.
    */
   MSG_DEPLOY_EMPTY_NAMESPACE_ERROR: goog.getMsg(
       'Dashboard and your file do not specify any namespace to deploy a resource. Please select a specific namespace in dashboard or add one in yaml file.'),
@@ -43,18 +45,21 @@ export const kdLocalizedErrors = {
   MSG_ENCRYPTION_KEY_CHANGED: goog.getMsg('Session expired. Please log in again.'),
 
   /**
-     @export {kdError} @desc Text shown on internal error page when user tries to access resource he does not have permissions to.
+     @export {kdError} @desc Text shown on internal error page when user tries to access resource he
+     does not have permissions to.
    */
   MSG_DASHBOARD_EXCLUSIVE_RESOURCE_ERROR:
       goog.getMsg('Trying to access/modify dashboard exclusive resource.'),
 
   /**
-     @export {kdError} @desc Text shown when saved token could not be decrypted by backend or it has expired.
+     @export {kdError} @desc Text shown when saved token could not be decrypted by backend or it has
+     expired.
    */
   MSG_TOKEN_EXPIRED_ERROR: goog.getMsg('Session expired. Please log in again.'),
 
   /**
-   * @export {kdError} @desc Text shown on internal error page when user is forbidden to access some page.
+   * @export {kdError} @desc Text shown on internal error page when user is forbidden to access some
+   * page.
    */
   MSG_FORBIDDEN_ERROR: goog.getMsg('You do not have required permissions to access this page.'),
 
@@ -65,7 +70,8 @@ export const kdLocalizedErrors = {
       goog.getMsg('You do not have required permissions to access this resource.'),
 
   /**
-   * @export {kdError} @desc Title shown on internal error page when user is forbidden to access some page.
+   * @export {kdError} @desc Title shown on internal error page when user is forbidden to access
+   * some page.
    */
   MSG_FORBIDDEN_TITLE_ERROR: goog.getMsg('Forbidden'),
 };

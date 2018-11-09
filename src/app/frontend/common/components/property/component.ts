@@ -19,4 +19,5 @@ import {Component} from '@angular/core';
   templateUrl: './template.html',
   styleUrls: ['./style.scss'],
 })
-export class PropertyComponent {}
+export class PropertyComponent {
+}

@@ -20,7 +20,9 @@ import {AlertDialog, AlertDialogConfig} from '../../../../common/dialogs/alert/d
 import {CsrfTokenService} from '../../../../common/services/global/csrftoken';
 import {CONFIG} from '../../../../index.config';
 
-export interface CreateNamespaceDialogMeta { namespaces: string[]; }
+export interface CreateNamespaceDialogMeta {
+  namespaces: string[];
+}
 
 /**
  * Displays new namespace creation dialog.

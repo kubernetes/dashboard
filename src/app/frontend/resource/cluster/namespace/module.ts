@@ -39,4 +39,5 @@ import {namespaceState} from './state';
   ],
   declarations: [NamespaceListComponent, NamespaceDetailComponent, ActionbarComponent],
 })
-export class NamespaceModule {}
+export class NamespaceModule {
+}

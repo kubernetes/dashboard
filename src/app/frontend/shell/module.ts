@@ -29,4 +29,5 @@ import {shellState} from './state';
   ],
   declarations: [ShellComponent],
 })
-export class ShellModule {}
+export class ShellModule {
+}

@@ -333,7 +333,8 @@ const i18n = {
   /** @export {string} @desc Text for logs card zerostate in logs page. */
   MSG_LOGS_ZEROSTATE_TEXT: goog.getMsg('The selected container has not logged any messages yet.'),
   /**
-   @export {string} @desc Error dialog indicating that parts of the log file is missing due to memory constraints.
+   @export {string} @desc Error dialog indicating that parts of the log file is missing due to
+   memory constraints.
    */
   MSG_LOGS_TRUNCATED_WARNING:
       goog.getMsg('The middle part of the log file cannot be loaded, because it is too big.'),

@@ -27,7 +27,7 @@ limitations under the License.
                    placeholder="Namespace name"
                    name="namespace"
                    formControlName="namespace"
-                   required/>
+                   required />
             <mat-hint align="end">{{namespace.value.length}} / {{namespaceMaxLength}}</mat-hint>
             <mat-error *ngIf="namespace.errors?.required"
                        i18n>
@@ -48,9 +48,9 @@ limitations under the License.
                target="_blank"
                tabindex="-1"
                i18n>
-                Learn more
-                <i class="material-icons">open_in_new</i>
-              </a>
+              Learn more
+              <i class="material-icons">open_in_new</i>
+            </a>
           </kd-user-help>
         </kd-help-section>
       </form>
