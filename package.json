@@ -50,8 +50,12 @@
     "format:backend": "goimports -w src/app/backend",
     "postversion": "node aio/scripts/version.js",
     "postinstall": "node aio/scripts/version.js && webdriver-manager update && go get golang.org/x/tools/cmd/goimports",
-    "precommit": "npm run check:static",
     "clean": "rm -rf .go_workspace .tmp coverage dist npm-debug.log"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run check:static"
+    }
   },
   "dependencies": {
     "@angular/animations": "7.0.3",
