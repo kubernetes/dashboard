@@ -21,11 +21,11 @@ limitations under the License.
           i18n-matTooltip
           [matTooltip]="isOpen() ? 'Close notifications panel' : 'Open notifications panel'"
           (click)="toggle()">
-      <mat-icon class="kd-notifications-icon kd-primary-toolbar-icon">notifications</mat-icon>
-      <div *ngIf="getUnreadCount() > 0"
-           @easeOut
-           class="kd-notifications-counter kd-white kd-bg-error">{{getUnreadCount()}}</div>
-    </button>
+    <mat-icon class="kd-notifications-icon kd-primary-toolbar-icon">notifications</mat-icon>
+    <div *ngIf="getUnreadCount() > 0"
+         @easeOut
+         class="kd-notifications-counter kd-white kd-bg-error">{{getUnreadCount()}}</div>
+  </button>
   <div class="kd-notifications-panel"
        fxLayout="column"
        *ngIf="isOpen()">
@@ -42,7 +42,7 @@ limitations under the License.
                fxFlex>
             <span class="kd-notification">{{notification.message}}</span>
             <span class="kd-notification-timestamp kd-muted">
-            {{notification.timestamp | kdRelativeTime}} ago
+              {{notification.timestamp | kdRelativeTime}} ago
             </span>
           </div>
           <button (click)="remove(index)"

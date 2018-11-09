@@ -21,4 +21,5 @@ import {GroupedResourceList} from '../../common/resources/groupedlist';
   selector: 'kd-workloads',
   templateUrl: './template.html',
 })
-export class WorkloadsComponent extends GroupedResourceList {}
+export class WorkloadsComponent extends GroupedResourceList {
+}

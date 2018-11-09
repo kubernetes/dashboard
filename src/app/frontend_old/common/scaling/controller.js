@@ -71,7 +71,8 @@ export default class ScaleResourceDialogController {
    */
   getCurrentPods() {
     /**
-     * @type {string} @desc Satisfies a way to make normal binding in angularjs to pass in google closure compiler.
+     * @type {string} @desc Satisfies a way to make normal binding in angularjs to pass in google
+     *     closure compiler.
      */
     let MSG_CURRENT_PODS_MSG =
         goog.getMsg('Current status: {$currentPods} created', {'currentPods': this.currentPods});
@@ -85,7 +86,8 @@ export default class ScaleResourceDialogController {
    */
   getDesiredPods() {
     /**
-     * @type {string} @desc Satisfies a way to make normal binding in angularjs to pass in google closure compiler.
+     * @type {string} @desc Satisfies a way to make normal binding in angularjs to pass in google
+     *     closure compiler.
      */
     let MSG_DESIRED_PODS_MSG =
         goog.getMsg(' {$desiredPods} desired.', {'desiredPods': this.desiredPods});

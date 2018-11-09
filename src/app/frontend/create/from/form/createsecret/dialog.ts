@@ -20,7 +20,9 @@ import {AlertDialog, AlertDialogConfig} from '../../../../common/dialogs/alert/d
 import {CsrfTokenService} from '../../../../common/services/global/csrftoken';
 import {CONFIG} from '../../../../index.config';
 
-export interface CreateSecretDialogMeta { namespace: string; }
+export interface CreateSecretDialogMeta {
+  namespace: string;
+}
 
 @Component({
   selector: 'kd-create-secret-dialog',

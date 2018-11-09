@@ -26,11 +26,9 @@ export const uniqueNameValidationKey = 'uniqueName';
  */
 @Directive({
   selector: '[kdUniqueName]',
-  providers: [{
-    provide: NG_ASYNC_VALIDATORS,
-    useExisting: forwardRef(() => UniqueNameValidator),
-    multi: true
-  }]
+  providers: [
+    {provide: NG_ASYNC_VALIDATORS, useExisting: forwardRef(() => UniqueNameValidator), multi: true}
+  ]
 })
 export class UniqueNameValidator implements AsyncValidator {
   @Input() namespace: string;

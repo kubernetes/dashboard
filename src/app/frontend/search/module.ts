@@ -31,4 +31,5 @@ import {searchState} from './state';
     SearchComponent,
   ],
 })
-export class SearchModule {}
+export class SearchModule {
+}

@@ -55,7 +55,7 @@ limitations under the License.
         <mat-cell *matCellDef="let rc">
           <a (click)="$event.stopPropagation()"
              [href]="getDetailsHref(rc.objectMeta.name, rc.objectMeta.namespace)">
-          {{rc.objectMeta.name}}
+            {{rc.objectMeta.name}}
           </a>
         </mat-cell>
       </ng-container>

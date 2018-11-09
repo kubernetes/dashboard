@@ -32,4 +32,5 @@ import {statefulSetState} from './state';
   ],
   declarations: [StatefulSetList, StatefulSetDetailComponent],
 })
-export class StatefulSetModule {}
+export class StatefulSetModule {
+}

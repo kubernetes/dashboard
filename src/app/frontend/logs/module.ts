@@ -29,4 +29,5 @@ import {logsState} from './state';
   ],
   declarations: [LogsComponent],
 })
-export class LogsModule {}
+export class LogsModule {
+}

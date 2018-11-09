@@ -25,7 +25,8 @@ limitations under the License.
 
       <ng-container *ngIf="!isTooLong(map[key])">
         <span>
-          {{key}}<ng-container *ngIf="map[key]">:&nbsp;</ng-container>
+          {{key}}
+          <ng-container *ngIf="map[key]">:&nbsp;</ng-container>
           <ng-container *ngIf="map[key]">
             <ng-container *ngIf="isHref(map[key])">
               <a [href]="map[key]"

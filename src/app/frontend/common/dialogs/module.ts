@@ -46,4 +46,5 @@ import {EditResourceDialog} from './editresource/dialog';
     LogsDownloadDialog,
   ]
 })
-export class DialogsModule {}
+export class DialogsModule {
+}

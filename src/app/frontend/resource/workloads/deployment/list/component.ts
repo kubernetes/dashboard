@@ -18,4 +18,5 @@ import {Component} from '@angular/core';
   selector: 'kd-deployment-list-state',
   template: '<kd-deployment-list></kd-deployment-list>',
 })
-export class DeploymentList {}
+export class DeploymentList {
+}

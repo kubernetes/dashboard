@@ -71,12 +71,20 @@ limitations under the License.
           <mat-icon>
             refresh
             <svg class="kd-cross-style"
-                *ngIf="!logService.getFollowing()"
-                width="32px"
-                height="32px"
-                viewBox="0 0 32 32">
-              <line class="kd-cross-line-white" x1="9" x2="27" y1="9" y2="27"/>
-              <line class="kd-cross-line-black" x1="9" x2="27" y1="10" y2="28"/>
+                 *ngIf="!logService.getFollowing()"
+                 width="32px"
+                 height="32px"
+                 viewBox="0 0 32 32">
+              <line class="kd-cross-line-white"
+                    x1="9"
+                    x2="27"
+                    y1="9"
+                    y2="27" />
+              <line class="kd-cross-line-black"
+                    x1="9"
+                    x2="27"
+                    y1="10"
+                    y2="28" />
             </svg>
           </mat-icon>
         </button>
@@ -118,20 +126,20 @@ limitations under the License.
         <div class="kd-list-pagination-buttons">
           <button mat-icon-button
                   (click)="loadOldest()">
-          <mat-icon>first_page</mat-icon>
-        </button>
+            <mat-icon>first_page</mat-icon>
+          </button>
           <button mat-icon-button
                   (click)="loadOlder()">
-          <mat-icon>chevron_left</mat-icon>
-        </button>
+            <mat-icon>chevron_left</mat-icon>
+          </button>
           <button mat-icon-button
                   (click)="loadNewer()">
-          <mat-icon>chevron_right</mat-icon>
-        </button>
+            <mat-icon>chevron_right</mat-icon>
+          </button>
           <button mat-icon-button
                   (click)="loadNewest()">
-          <mat-icon>last_page</mat-icon>
-        </button>
+            <mat-icon>last_page</mat-icon>
+          </button>
         </div>
       </div>
     </div>
