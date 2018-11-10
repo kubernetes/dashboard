@@ -66,7 +66,7 @@ func GetInternalEndpoint(serviceName, namespace string, ports []api.ServicePort)
 	}
 }
 
-// Returns external endpoint name for the given service properties.
+// getExternalEndpoint returns external endpoint name for the given service properties.
 func getExternalEndpoint(ingress api.LoadBalancerIngress, ports []api.ServicePort) Endpoint {
 	var host string
 	if ingress.Hostname != "" {
