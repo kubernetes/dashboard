@@ -378,9 +378,9 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 		apiV1Ws.GET("/cronjob/{namespace}/{name}/event").
 			To(apiHandler.handleGetCronJobEvents).
 			Writes(common.EventList{}))
-  apiV1Ws.Route(
-    apiV1Ws.PUT("/cronjob/{namespace}/{name}/trigger").
-      To(apiHandler.handleTriggerCronJob))
+	apiV1Ws.Route(
+		apiV1Ws.PUT("/cronjob/{namespace}/{name}/trigger").
+			To(apiHandler.handleTriggerCronJob))
 
 	apiV1Ws.Route(
 		apiV1Ws.POST("/namespace").
@@ -1316,11 +1316,11 @@ func (apiHandler *APIHandler) handleExecShell(request *restful.Request, response
 		return
 	}
 
-	terminalSessions[sessionId] = TerminalSession{
+	terminalSessions.Set(sessionId, TerminalSession{
 		id:       sessionId,
 		bound:    make(chan error),
 		sizeChan: make(chan remotecommand.TerminalSize),
-	}
+	})
 	go WaitForTerminal(k8sClient, cfg, request, sessionId)
 	response.WriteHeaderAndEntity(http.StatusOK, TerminalResponse{Id: sessionId})
 }
@@ -2106,20 +2106,20 @@ func (apiHandler *APIHandler) handleGetCronJobEvents(request *restful.Request, r
 }
 
 func (apiHandler *APIHandler) handleTriggerCronJob(request *restful.Request, response *restful.Response) {
-  k8sClient, err := apiHandler.cManager.Client(request)
-  if err != nil {
-    kdErrors.HandleInternalError(response, err)
-    return
-  }
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		kdErrors.HandleInternalError(response, err)
+		return
+	}
 
-  namespace := request.PathParameter("namespace")
-  name := request.PathParameter("name")
-  err = cronjob.TriggerCronJob(k8sClient, namespace, name)
-  if err != nil {
-    kdErrors.HandleInternalError(response, err)
-    return
-  }
-  response.WriteHeader(http.StatusOK)
+	namespace := request.PathParameter("namespace")
+	name := request.PathParameter("name")
+	err = cronjob.TriggerCronJob(k8sClient, namespace, name)
+	if err != nil {
+		kdErrors.HandleInternalError(response, err)
+		return
+	}
+	response.WriteHeader(http.StatusOK)
 }
 
 func (apiHandler *APIHandler) handleGetStorageClassList(request *restful.Request, response *restful.Response) {
