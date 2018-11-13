@@ -138,7 +138,10 @@ module.exports = function(config) {
     // Limit concurrency to not exhaust saucelabs resources for the CI user.
     configuration.concurrency = 1;
   } else {
-    configuration.browsers = ['Chrome'];
+    configuration.browsers = ['ChromeHeadlessNoSandbox'];
+    configuration.customLaunchers = {
+      ChromeHeadlessNoSandbox: {base: 'ChromeHeadless', flags: ['--no-sandbox']},
+    };
   }
 
   // Convert all JS code written ES2017 with modules to ES5 bundles that browsers can digest.
