@@ -35,7 +35,12 @@ RUN curl -sL https://deb.nodesource.com/setup_9.x | bash - \
 ENV CHROME_BIN=/usr/bin/chromium
 
 # Download a statically linked docker client, so the container is able to build images on the host.
-RUN curl -sSL https://get.docker.com/builds/Linux/x86_64/docker-1.9.1 > /usr/bin/docker && \
+RUN curl -sSL https://download.docker.com/linux/static/stable/x86_64/docker-18.06.1-ce.tgz > /tmp/docker.tgz && \
+	cd /tmp/ && \
+	tar xzvf docker.tgz && \
+	rm docker.tgz && \
+	mv /tmp/docker/docker /usr/bin/docker && \
+	rm -rf /tmp/docker/ && \
     chmod +x /usr/bin/docker
 
 # Current directory is always /dashboard.
