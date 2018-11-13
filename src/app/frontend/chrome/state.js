@@ -14,7 +14,7 @@
 
 /**
  * Name of the namespace state. This state should be used as a parent state for all root states.
- * It provides gobal namespace option for all URLs.
+ * It provides global namespace option for all URLs.
  */
 export const stateName = 'chrome';
 
