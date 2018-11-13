@@ -17,7 +17,7 @@
 # http://docs.travis-ci.com/user/customizing-the-build/
 
 sudo: required
-dist: trusty
+dist: xenial
 group: edge
 
 # Use Node.js as primary language because Gulp is the build system used in the project.
