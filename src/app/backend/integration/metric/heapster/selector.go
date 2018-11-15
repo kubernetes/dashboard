@@ -63,10 +63,9 @@ func getHeapsterSelector(selector metricapi.ResourceSelector,
 		}
 		return newHeapsterSelectorFromNativeResource(api.ResourceKindPod,
 			selector.Namespace, podListToNameList(myPods), podListToUIDList(myPods))
-	} else {
-		// currently can only convert derived resource to pods. You can change it by implementing other methods
-		return heapsterSelector{}, fmt.Errorf(`Internal Error: Requested summing resources not supported. Requested "%s"`, summingResource)
 	}
+	// currently can only convert derived resource to pods. You can change it by implementing other methods
+	return heapsterSelector{}, fmt.Errorf(`Internal Error: Requested summing resources not supported. Requested "%s"`, summingResource)
 }
 
 // getMyPodsFromCache returns a full list of pods that belong to this resource.

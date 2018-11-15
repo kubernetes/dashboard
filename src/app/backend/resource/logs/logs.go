@@ -213,9 +213,8 @@ func (self LogLines) getLineIndex(logLineId *LogLineId) int {
 	}
 	if 0 <= offset && offset < linesMatched {
 		return matchingStartedAt + offset
-	} else {
-		return LINE_INDEX_NOT_FOUND
 	}
+	return LINE_INDEX_NOT_FOUND
 }
 
 // CreateLogLineId returns ID of the line with provided lineIndex.

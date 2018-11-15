@@ -27,9 +27,8 @@ func (rMap rangeMap) getRange(resource api.ResourceName) *LimitRangeItem {
 	if !ok {
 		rMap[resource] = &LimitRangeItem{}
 		return rMap[resource]
-	} else {
-		return r
 	}
+	return r
 }
 
 // LimitRange provides resource limit range values
