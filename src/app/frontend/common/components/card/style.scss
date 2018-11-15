@@ -57,6 +57,7 @@
 
 .kd-card-title {
   font-size: $title-font-size-base;
+  font-weight: $regular-font-weight;
   margin-right: $baseline-grid;
   padding: $baseline-grid 0 $baseline-grid (2 * $baseline-grid);
 }
