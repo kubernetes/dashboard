@@ -52,6 +52,7 @@ import {PodStatusCardComponent} from './podstatus/component';
 import {PolicyRuleListComponent} from './policyrule/component';
 import {PropertyComponent} from './property/component';
 import {ProxyComponent} from './proxy/component';
+import {ResourceQuotaListComponent} from "./quotas/component";
 import {ClusterRoleListComponent} from './resourcelist/clusterrole/component';
 import {ConfigMapListComponent} from './resourcelist/configmap/component';
 import {CronJobListComponent} from './resourcelist/cronjob/component';
@@ -129,6 +130,7 @@ import {ZeroStateComponent} from './zerostate/component';
     NamespaceChangeDialog,
     PolicyRuleListComponent,
     CommaSeparatedListComponent,
+    ResourceQuotaListComponent,
     ActionbarDetailActionsComponent,
     ActionbarDetailDeleteComponent,
     ActionbarDetailEditComponent,
@@ -167,6 +169,7 @@ import {ZeroStateComponent} from './zerostate/component';
     ConfigMapListComponent,
     SecretListComponent,
     PersistentVolumeClaimListComponent,
+    ResourceQuotaListComponent,
     IngressListComponent,
     ServiceListComponent,
     EndpointListComponent,
