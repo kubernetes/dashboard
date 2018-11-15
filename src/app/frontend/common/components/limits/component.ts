@@ -12,23 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {EditResourceController} from './editresource_controller';
+import {Component, Input} from '@angular/core';
+import {MatTableDataSource} from '@angular/material';
+import {LimitRange} from 'typings/backendapi';
 
-/**
- * @param {!md.$dialog} mdDialog
- * @param {string} resourceKindName
- * @param {string} resourceUrl
- * @return {!angular.$q.Promise}
- */
-export default function showEditDialog(mdDialog, resourceKindName, resourceUrl) {
-  return mdDialog.show({
-    controller: EditResourceController,
-    controllerAs: '$ctrl',
-    clickOutsideToClose: true,
-    templateUrl: 'common/resource/editresource.html',
-    locals: {
-      'resourceUrl': resourceUrl,
-      'resourceKindName': resourceKindName,
-    },
-  });
+@Component({
+  selector: 'kd-resource-limit-list',
+  templateUrl: './template.html',
+})
+export class ResourceLimitListComponent {
+  @Input() initialized: boolean;
+  @Input() limits: LimitRange[];
+
+  getColumnIds(): string[] {
+    return ['name', 'type', 'default', 'request'];
+  }
+
+  getDataSource(): MatTableDataSource<LimitRange> {
+    const tableData = new MatTableDataSource<LimitRange>();
+    tableData.data = this.limits;
+    return tableData;
+  }
 }

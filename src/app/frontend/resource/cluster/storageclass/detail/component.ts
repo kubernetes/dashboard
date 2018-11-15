@@ -31,6 +31,7 @@ export class StorageClassDetailComponent implements OnInit, OnDestroy {
   private storageClassSubscription_: Subscription;
   private storageClassName_: string;
   storageClass: StorageClassDetail;
+  pvListEndpoint: string;
   isInitialized = false;
 
   constructor(
@@ -40,6 +41,8 @@ export class StorageClassDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.storageClassName_ = this.state_.params.resourceName;
+    this.pvListEndpoint = EndpointManager.resource(Resource.storageClass, false)
+                              .child(this.storageClassName_, Resource.persistentVolume);
     this.storageClassSubscription_ =
         this.storageClass_
             .get(EndpointManager.resource(Resource.storageClass).detail(), this.storageClassName_)
@@ -57,6 +60,6 @@ export class StorageClassDetailComponent implements OnInit, OnDestroy {
   }
 
   getParameterNames(): string[] {
-    return Object.keys(this.storageClass.parameters);
+    return !!this.storageClass.parameters ? Object.keys(this.storageClass.parameters) : [];
   }
 }

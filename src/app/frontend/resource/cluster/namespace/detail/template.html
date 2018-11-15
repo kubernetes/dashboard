@@ -29,4 +29,10 @@ limitations under the License.
   </div>
 </kd-card>
 
+<kd-resource-quota-list [quotas]="namespace?.resourceQuotaList?.items"
+                        [initialized]="isInitialized"></kd-resource-quota-list>
+
+<kd-resource-limit-list [limits]="namespace?.resourceLimits"
+                        [initialized]="isInitialized"></kd-resource-limit-list>
+
 <kd-event-list [endpoint]="eventListEndpoint"></kd-event-list>
