@@ -20,13 +20,14 @@ limitations under the License.
 
   <div description>
     <div class="kd-inline-property"
-         *ngIf="quotas?.listMeta?.totalItems">
+         *ngIf="quotas?.length">
       <span class="kd-muted-light">Items:&nbsp;</span>
       <span>{{quotas.length}}</span>
     </div>
   </div>
 
-  <div content>
+  <div content
+       [hidden]="!quotas?.length">
     <mat-table [dataSource]="getDataSource()"
                class="kd-table-no-footer">
       <ng-container [matColumnDef]="getQuotaColumns()[0]">
@@ -53,5 +54,10 @@ limitations under the License.
       <mat-header-row *matHeaderRowDef="getQuotaColumns()"></mat-header-row>
       <mat-row *matRowDef="let row; columns: getQuotaColumns();"></mat-row>
     </mat-table>
+  </div>
+
+  <div content
+       [hidden]="quotas?.length">
+    <kd-list-zero-state></kd-list-zero-state>
   </div>
 </kd-card>

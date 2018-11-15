@@ -41,8 +41,8 @@ export class StorageClassDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.storageClassName_ = this.state_.params.resourceName;
-    this.pvListEndpoint =
-      EndpointManager.resource(Resource.storageClass, false).child(this.storageClassName_, Resource.persistentVolume);
+    this.pvListEndpoint = EndpointManager.resource(Resource.storageClass, false)
+                              .child(this.storageClassName_, Resource.persistentVolume);
     this.storageClassSubscription_ =
         this.storageClass_
             .get(EndpointManager.resource(Resource.storageClass).detail(), this.storageClassName_)

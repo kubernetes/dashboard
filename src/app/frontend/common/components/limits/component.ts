@@ -14,23 +14,23 @@
 
 import {Component, Input} from '@angular/core';
 import {MatTableDataSource} from '@angular/material';
-import {ResourceQuotaDetail} from 'typings/backendapi';
+import {LimitRange} from 'typings/backendapi';
 
 @Component({
-  selector: 'kd-resource-quota-list',
+  selector: 'kd-resource-limit-list',
   templateUrl: './template.html',
 })
-export class ResourceQuotaListComponent {
+export class ResourceLimitListComponent {
   @Input() initialized: boolean;
-  @Input() quotas: ResourceQuotaDetail[];
+  @Input() limits: LimitRange[];
 
-  getQuotaColumns(): string[] {
-    return ['name', 'age', 'status'];
+  getColumnIds(): string[] {
+    return ['name', 'type', 'default', 'request'];
   }
 
-  getDataSource(): MatTableDataSource<ResourceQuotaDetail> {
-    const tableData = new MatTableDataSource<ResourceQuotaDetail>();
-    tableData.data = this.quotas;
+  getDataSource(): MatTableDataSource<LimitRange> {
+    const tableData = new MatTableDataSource<LimitRange>();
+    tableData.data = this.limits;
     return tableData;
   }
 }

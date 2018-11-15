@@ -38,6 +38,7 @@ import {EndpointListComponent} from './endpoint/cardlist/component';
 import {ExternalEndpointComponent} from './endpoint/external/component';
 import {InternalEndpointComponent} from './endpoint/internal/component';
 import {HiddenPropertyComponent} from './hiddenproperty/component';
+import {ResourceLimitListComponent} from './limits/component';
 import {ColumnComponent} from './list/column/component';
 import {LogsButtonComponent} from './list/column/logsbutton/component';
 import {MenuComponent} from './list/column/menu/component';
@@ -52,7 +53,7 @@ import {PodStatusCardComponent} from './podstatus/component';
 import {PolicyRuleListComponent} from './policyrule/component';
 import {PropertyComponent} from './property/component';
 import {ProxyComponent} from './proxy/component';
-import {ResourceQuotaListComponent} from "./quotas/component";
+import {ResourceQuotaListComponent} from './quotas/component';
 import {ClusterRoleListComponent} from './resourcelist/clusterrole/component';
 import {ConfigMapListComponent} from './resourcelist/configmap/component';
 import {CronJobListComponent} from './resourcelist/cronjob/component';
@@ -131,6 +132,7 @@ import {ZeroStateComponent} from './zerostate/component';
     PolicyRuleListComponent,
     CommaSeparatedListComponent,
     ResourceQuotaListComponent,
+    ResourceLimitListComponent,
     ActionbarDetailActionsComponent,
     ActionbarDetailDeleteComponent,
     ActionbarDetailEditComponent,
@@ -170,6 +172,7 @@ import {ZeroStateComponent} from './zerostate/component';
     SecretListComponent,
     PersistentVolumeClaimListComponent,
     ResourceQuotaListComponent,
+    ResourceLimitListComponent,
     IngressListComponent,
     ServiceListComponent,
     EndpointListComponent,
