@@ -85,6 +85,10 @@ $drawer-controls-size: $baseline-grid * 4;
 .kd-notification {
   font-family: $font-family-monospace;
   font-size: $body-font-size-base;
+  line-height: $body-font-size-base;
+  margin: $baseline-grid 0;
+  white-space: normal;
+  width: $baseline-grid * 40;
 }
 
 .kd-notification-timestamp {
