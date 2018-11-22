@@ -41,6 +41,7 @@ type holder struct {
 	kubeConfigFile       string
 	systemBanner         string
 	systemBannerSeverity string
+	apiLogLevel          string
 
 	authenticationMode []string
 
@@ -127,6 +128,11 @@ func (self *holder) GetSystemBanner() string {
 // GetSystemBannerSeverity 'system-banner-severity' argument of Dashboard binary.
 func (self *holder) GetSystemBannerSeverity() string {
 	return self.systemBannerSeverity
+}
+
+// LogLevel 'api-log-level' argument of Dashboard binary.
+func (self *holder) GetAPILogLevel() string {
+	return self.apiLogLevel
 }
 
 // GetAuthenticationMode 'authentication-mode' argument of Dashboard binary.

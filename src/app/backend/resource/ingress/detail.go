@@ -40,7 +40,7 @@ type IngressDetail struct {
 	Errors []error `json:"errors"`
 }
 
-// GetIngressDetail returns returns detailed information about an ingress
+// GetIngressDetail returns detailed information about an ingress
 func GetIngressDetail(client client.Interface, namespace, name string) (*IngressDetail, error) {
 	log.Printf("Getting details of %s ingress in %s namespace", name, namespace)
 

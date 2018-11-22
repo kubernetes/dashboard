@@ -105,6 +105,11 @@ func (sm *SettingsManager) SaveGlobalSettings(client kubernetes.Interface, s *ap
 		return errors.New(api.ConcurrentSettingsChangeError)
 	}
 
+	// Data can be nil if the configMap exists but does not have any data
+	if cm.Data == nil {
+		cm.Data = make(map[string]string)
+	}
+
 	cm.Data[api.GlobalSettingsKey] = s.Marshal()
 	_, err := client.CoreV1().ConfigMaps(api.SettingsConfigMapNamespace).Update(cm)
 	return err

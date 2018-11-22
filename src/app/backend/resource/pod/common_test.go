@@ -200,7 +200,7 @@ func TestToPodContainerStates(t *testing.T) {
 	}
 }
 
-// TestToPod tests the the ToPod function in basic scenarios.
+// TestToPod tests the ToPod function in basic scenarios.
 func TestToPod(t *testing.T) {
 	cases := []struct {
 		pod      *v1.Pod

@@ -66,9 +66,9 @@ describe('Create-Namespace dialog', () => {
     let rule = ctrl.namespacePattern;
 
     // then the following names should be accepted
-    expect('mynamspace'.match(rule)).toBeDefined();
-    expect('my-namspace-with-dashes'.match(rule)).toBeDefined();
-    expect('my-namspace-with-numbers-234'.match(rule)).toBeDefined();
+    expect('mynamespace'.match(rule)).toBeDefined();
+    expect('my-namespace-with-dashes'.match(rule)).toBeDefined();
+    expect('my-namespace-with-numbers-234'.match(rule)).toBeDefined();
   });
 
   it('should validate improper names as incorrect', () => {
@@ -76,11 +76,11 @@ describe('Create-Namespace dialog', () => {
     let rule = ctrl.namespacePattern;
 
     // then the following names should be rejected
-    expect('mynamspace-with-illegal-chars-§$'.match(rule)).toBeNull();
-    expect('-mynamspace-with-dash-prefix'.match(rule)).toBeNull();
-    expect('mynamspace-with-dash-suffix-'.match(rule)).toBeNull();
-    expect('mynamspace-with-german-umlaut-ÖÄ'.match(rule)).toBeNull();
-    expect('my namspace with spaces'.match(rule)).toBeNull();
+    expect('mynamespace-with-illegal-chars-§$'.match(rule)).toBeNull();
+    expect('-mynamespace-with-dash-prefix'.match(rule)).toBeNull();
+    expect('mynamespace-with-dash-suffix-'.match(rule)).toBeNull();
+    expect('mynamespace-with-german-umlaut-ÖÄ'.match(rule)).toBeNull();
+    expect('my namespace with spaces'.match(rule)).toBeNull();
     expect('  '.match(rule)).toBeNull();
   });
 

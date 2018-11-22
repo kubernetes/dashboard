@@ -2,7 +2,7 @@
 # Read more at: http://docs.travis-ci.com/user/customizing-the-build/
 
 sudo: required
-dist: trusty
+dist: xenial
 group: edge
 language: node_js
 node_js: 8.11.3

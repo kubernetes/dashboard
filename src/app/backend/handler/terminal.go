@@ -32,6 +32,8 @@ import (
 	"k8s.io/client-go/tools/remotecommand"
 )
 
+const END_OF_TRANSMISSION = "\u0004"
+
 // PtyHandler is what remotecommand expects from a pty
 type PtyHandler interface {
 	io.Reader
@@ -75,7 +77,8 @@ func (t TerminalSession) Next() *remotecommand.TerminalSize {
 func (t TerminalSession) Read(p []byte) (int, error) {
 	m, err := t.sockJSSession.Recv()
 	if err != nil {
-		return 0, err
+		// Send terminated signal to process to avoid resource leak
+		return copy(p, END_OF_TRANSMISSION), err
 	}
 
 	var msg TerminalMessage
