@@ -20,7 +20,7 @@ import {ActionbarService, ResourceMeta} from '../../../services/global/actionbar
   selector: '',
   templateUrl: './template.html',
 })
-export class ScaleableResourceDetailActionbar implements OnInit {
+export class LogsScaleDefaultActionbar implements OnInit {
   isInitialized = false;
   resourceMeta: ResourceMeta;
   resourceMetaSubscription_: Subscription;
@@ -37,9 +37,5 @@ export class ScaleableResourceDetailActionbar implements OnInit {
 
   ngOnDestroy(): void {
     this.resourceMetaSubscription_.unsubscribe();
-  }
-
-  scale(): void {
-    // TODO
   }
 }

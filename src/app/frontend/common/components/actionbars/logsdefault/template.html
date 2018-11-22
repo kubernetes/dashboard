@@ -15,18 +15,11 @@ limitations under the License.
 -->
 
 <div fxLayout="row">
-  <kd-actionbar-detail-exec *ngIf="isInitialized"
-                            [objectMeta]="resourceMeta?.objectMeta"></kd-actionbar-detail-exec>
-
   <kd-actionbar-detail-logs *ngIf="isInitialized"
                             [resourceMeta]="resourceMeta"></kd-actionbar-detail-logs>
 
-  <kd-actionbar-detail-edit *ngIf="isInitialized"
-                            [objectMeta]="resourceMeta?.objectMeta"
-                            [typeMeta]="resourceMeta?.typeMeta"
-                            [displayName]="resourceMeta?.displayName"></kd-actionbar-detail-edit>
-  <kd-actionbar-detail-delete *ngIf="isInitialized"
-                              [objectMeta]="resourceMeta?.objectMeta"
-                              [typeMeta]="resourceMeta?.typeMeta"
-                              [displayName]="resourceMeta?.displayName"></kd-actionbar-detail-delete>
+  <kd-actionbar-detail-actions *ngIf="isInitialized"
+                               [objectMeta]="resourceMeta.objectMeta"
+                               [typeMeta]="resourceMeta.typeMeta"
+                               [displayName]="resourceMeta.displayName"></kd-actionbar-detail-actions>
 </div>

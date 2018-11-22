@@ -14,10 +14,10 @@
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
+import {ScaleDefaultActionbar} from '../../../../common/components/actionbars/scaledefault/component';
 import {addNamespacedResourceStateParamsToUrl} from '../../../../common/params/params';
 import {stateName, stateUrl} from '../state';
 
-import {ActionbarComponent} from './actionbar/component';
 import {DeploymentDetailComponent} from './component';
 
 export const deploymentDetailState: Ng2StateDeclaration = {
@@ -34,7 +34,7 @@ export const deploymentDetailState: Ng2StateDeclaration = {
       component: DeploymentDetailComponent,
     },
     'actionbar@chrome': {
-      component: ActionbarComponent,
+      component: ScaleDefaultActionbar,
     }
   },
 };

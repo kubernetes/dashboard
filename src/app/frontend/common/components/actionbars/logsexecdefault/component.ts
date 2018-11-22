@@ -14,13 +14,13 @@
 
 import {Component, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs/Subscription';
-import {ActionbarService, ResourceMeta} from '../../../../../common/services/global/actionbar';
+import {ActionbarService, ResourceMeta} from '../../../services/global/actionbar';
 
 @Component({
   selector: '',
   templateUrl: './template.html',
 })
-export class ActionbarComponent implements OnInit {
+export class LogsExecDefaultActionbar implements OnInit {
   isInitialized = false;
   resourceMeta: ResourceMeta;
   resourceMetaSubscription_: Subscription;
@@ -37,9 +37,5 @@ export class ActionbarComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.resourceMetaSubscription_.unsubscribe();
-  }
-
-  scale(): void {
-    // TODO
   }
 }

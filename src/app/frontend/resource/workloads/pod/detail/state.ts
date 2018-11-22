@@ -14,7 +14,7 @@
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
-import {PodDetailsActionbar} from '../../../../common/components/actionbars/poddetail/component';
+import {LogsExecDefaultActionbar} from '../../../../common/components/actionbars/logsexecdefault/component';
 import {addNamespacedResourceStateParamsToUrl} from '../../../../common/params/params';
 import {stateName, stateUrl} from '../state';
 
@@ -34,7 +34,7 @@ export const podDetailState: Ng2StateDeclaration = {
       component: PodDetailComponent,
     },
     'actionbar@chrome': {
-      component: PodDetailsActionbar,
+      component: LogsExecDefaultActionbar,
     }
   },
 };

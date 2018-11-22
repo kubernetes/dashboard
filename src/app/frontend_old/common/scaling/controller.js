@@ -19,53 +19,6 @@
  */
 export default class ScaleResourceDialogController {
   /**
-   * @param {!md.$dialog} $mdDialog
-   * @param {!angular.$log} $log
-   * @param {!ui.router.$state} $state
-   * @param {!angular.$resource} $resource
-   * @param {string} namespace
-   * @param {string} resourceName
-   * @param {number} currentPods
-   * @param {number} desiredPods
-   * @param {string} resourceKindName
-   * @param {string} resourceKindDisplayName
-   * @ngInject
-   */
-  constructor(
-      $mdDialog, $log, $state, $resource, namespace, currentPods, desiredPods, resourceName,
-      resourceKindName, resourceKindDisplayName) {
-    /** @export {number} */
-    this.currentPods = currentPods;
-
-    /** @export {number} */
-    this.desiredPods = desiredPods;
-
-    /** @private {string} */
-    this.namespace_ = namespace;
-
-    /** @private {!md.$dialog} */
-    this.mdDialog_ = $mdDialog;
-
-    /** @private {!angular.$log} */
-    this.log_ = $log;
-
-    /** @private {!ui.router.$state} */
-    this.state_ = $state;
-
-    /** @private {!angular.$resource} */
-    this.resource_ = $resource;
-
-    /** @export {string} */
-    this.resourceKindName = resourceKindName;
-
-    /** @export {string} */
-    this.resourceKindDisplayName = resourceKindDisplayName;
-
-    /** @export {string} */
-    this.resourceName = resourceName;
-  }
-
-  /**
    * @export
    * @return {string}
    */
@@ -142,33 +95,5 @@ export default class ScaleResourceDialogController {
     }
     resourceUrl += `/name/${objectMeta.name}`;
     return resourceUrl;
-  }
-
-
-  /**
-   *  Cancels the update for resource scaling dialog.
-   *  @export
-   */
-  cancel() {
-    this.mdDialog_.cancel();
-  }
-
-  /**
-   * @param {!backendApi.ReplicaCounts} updatedSpec
-   * @private
-   */
-  onUpdateReplicasSuccess_(updatedSpec) {
-    this.log_.info(`Successfully updated replicas number to ${updatedSpec.desiredReplicas}`);
-    this.mdDialog_.hide();
-    this.state_.reload();
-  }
-
-  /**
-   * @param {!angular.$http.Response} err
-   * @private
-   */
-  onUpdateReplicasError_(err) {
-    this.log_.error(err);
-    this.mdDialog_.hide();
   }
 }

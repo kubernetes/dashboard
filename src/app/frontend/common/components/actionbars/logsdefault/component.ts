@@ -13,14 +13,14 @@
 // limitations under the License.
 
 import {Component, OnInit} from '@angular/core';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import {ActionbarService, ResourceMeta} from '../../../services/global/actionbar';
 
 @Component({
   selector: '',
   templateUrl: './template.html',
 })
-export class DefaultDetailsActionbar implements OnInit {
+export class LogsDefaultActionbar implements OnInit {
   isInitialized = false;
   resourceMeta: ResourceMeta;
   resourceMetaSubscription_: Subscription;

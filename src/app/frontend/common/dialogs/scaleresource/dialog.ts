@@ -12,15 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ScaleService} from './service';
+import {Component, Inject, OnInit} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {ResourceMeta} from '../../services/global/actionbar';
 
-/**
- * Angular module containing application configuration.
- */
-export default angular
-    .module(
-        'kubernetesDashboard.scaling',
-        [
-          'ngMaterial',
-        ])
-    .service('kdScaleService', ScaleService);
+@Component({
+  selector: 'kd-delete-resource-dialog',
+  templateUrl: 'template.html',
+})
+export class ScaleResourceDialog implements OnInit {
+  replicas = 0;
+
+  constructor(
+      public dialogRef: MatDialogRef<ScaleResourceDialog>,
+      @Inject(MAT_DIALOG_DATA) public data: ResourceMeta) {}
+
+  ngOnInit(): void {
+    // TODO Update replicas count.
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}

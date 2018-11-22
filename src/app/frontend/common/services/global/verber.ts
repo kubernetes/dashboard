@@ -20,6 +20,7 @@ import {ObjectMeta, TypeMeta} from '@api/backendapi';
 import {AlertDialog, AlertDialogConfig} from '../../dialogs/alert/dialog';
 import {DeleteResourceDialog} from '../../dialogs/deleteresource/dialog';
 import {EditResourceDialog} from '../../dialogs/editresource/dialog';
+import {ScaleResourceDialog} from '../../dialogs/scaleresource/dialog';
 import {RawResource} from '../../resources/rawresource';
 import {ResourceMeta} from './actionbar';
 
@@ -50,6 +51,20 @@ export class VerberService {
         this.http_.put(url, JSON.parse(result), {headers: this.getHttpHeaders_()}).subscribe(() => {
           this.onEdit.emit(true);
         }, this.handleErrorResponse_.bind(this));
+      }
+    });
+  }
+
+  showScaleDialog(displayName: string, typeMeta: TypeMeta, objectMeta: ObjectMeta): void {
+    const dialogConfig = this.getDialogConfig_(displayName, typeMeta, objectMeta);
+    this.dialog_.open(ScaleResourceDialog, dialogConfig).afterClosed().subscribe((result) => {
+      if (result) {
+        // TODO scale
+        // const url = RawResource.getUrl(typeMeta, objectMeta);
+        // this.http_.put(url, JSON.parse(result), {headers: this.getHttpHeaders_()}).subscribe(()
+        // => {
+        //   this.onEdit.emit(true);
+        // }, this.handleErrorResponse_.bind(this));
       }
     });
   }

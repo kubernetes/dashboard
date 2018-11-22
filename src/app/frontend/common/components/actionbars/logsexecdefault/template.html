@@ -15,13 +15,11 @@ limitations under the License.
 -->
 
 <div fxLayout="row">
-  <button mat-icon-button
-          color="accent"
-          class="kd-toolbar-action"
-          matTooltip="Scale resource"
-          (click)="scale()">
-    <mat-icon>linear_scale</mat-icon>
-  </button>
+  <kd-actionbar-detail-logs *ngIf="isInitialized"
+                            [resourceMeta]="resourceMeta"></kd-actionbar-detail-logs>
+
+  <kd-actionbar-detail-exec *ngIf="isInitialized"
+                            [objectMeta]="resourceMeta?.objectMeta"></kd-actionbar-detail-exec>
 
   <kd-actionbar-detail-actions *ngIf="isInitialized"
                                [objectMeta]="resourceMeta.objectMeta"
