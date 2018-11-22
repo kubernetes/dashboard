@@ -48,7 +48,7 @@ matrix:
       - SAUCE_USERNAME=k8s-dashboard-ci
 
 before_script:
-  - eval "$(gimme 1.8.3)"
+  - eval "$(gimme 1.10.3)"
   - docker --version
 
 script:
