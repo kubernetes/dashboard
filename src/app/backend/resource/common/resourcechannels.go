@@ -534,7 +534,7 @@ func GetJobListChannel(client client.Interface,
 		list, err := client.BatchV1().Jobs(nsQuery.ToRequestParam()).List(api.ListEverything)
 		var filteredItems []batch.Job
 		for _, item := range list.Items {
-			if nsQuery.Matches(item.ObjectMeta.Namespace) {
+			if nsQuery.Matches(item.ObjectMeta.Namespace) && len(item.GetOwnerReferences()) == 0 {
 				filteredItems = append(filteredItems, item)
 			}
 		}
