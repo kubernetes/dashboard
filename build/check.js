@@ -110,6 +110,34 @@ gulp.task('check-javascript-format', function() {
 });
 
 /**
+ * Checks whether the project's Go files are formatted by goimorts.
+ */
+gulp.task('check-go-format', function(doneFn) {
+  function execDoneFn(stdout, stderr) {
+    if (stdout instanceof Error) {
+      console.log(stderr);
+      doneFn(stdout);
+    } else {
+      if (stdout.length) {
+        console.log(stdout);
+        doneFn(Error(
+            'The above files have unformatted codes. ' +
+            'Check the format using `goimport -d src/app/backend` and ' +
+            'run `gulp check`.'));
+      } else {
+        doneFn();
+      }
+    }
+  }
+  goimportsCommand(
+      [
+        '-l',
+        path.relative(conf.paths.base, conf.paths.backendSrc),
+      ],
+      execDoneFn);
+});
+
+/**
  * Formats all project files. Includes JS, HTML and Go files.
  */
 gulp.task('format', ['format-javascript', 'format-html', 'format-go']);
@@ -141,6 +169,9 @@ gulp.task('format-html', function() {
 
 /**
  * Formats all project's Go files using goimports tool.
+ * NOTE(shu-mutou):
+ *   'goimports -w src/app/backend' removes necessary import lines sometimes.
+ *   Please check the changed source again before use.
  */
 gulp.task('format-go', function(doneFn) {
   goimportsCommand(

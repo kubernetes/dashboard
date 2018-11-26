@@ -64,8 +64,8 @@ export default function goCommand(args, doneFn, envOverride) {
 export function goimportsCommand(args, doneFn, envOverride) {
   checkPrerequisites()
       .then(() => spawnGoimportsProcess(args, envOverride))
-      .then(doneFn)
-      .fail((error) => doneFn(error));
+      .then((stdout) => doneFn(stdout))
+      .fail((error, stderr) => doneFn(error, stderr));
 }
 
 /**
@@ -171,24 +171,38 @@ function checkGovendor() {
  * @param {string} processName - Process name to spawn.
  * @param {!Array<string>} args - Arguments of the go command.
  * @param {!Object<string, string>=} [envOverride] optional environment variables overrides map.
+ * @param {string} stdio - Standard I/O option to spawn.
  * @return {Q.Promise} A promise object.
  */
-function spawnProcess(processName, args, envOverride) {
+function spawnProcess(processName, args, envOverride, stdio) {
+  let stdout = '';
+  let stderr = '';
   let deferred = q.defer();
   let envLocal = lodash.merge(env, envOverride);
+  stdio = stdio ? stdio : 'inherit';
   let goTask = child.spawn(processName, args, {
     env: envLocal,
-    stdio: 'inherit',
+    stdio: stdio,
   });
   // Call Gulp callback on task exit. This has to be done to make Gulp dependency management
   // work.
   goTask.on('exit', function(code) {
     if (code !== 0) {
-      deferred.reject(Error(`Go command error, code: ${code}`));
+      deferred.reject(Error(`Go command error, code: ${code}`), stderr);
       return;
     }
-    deferred.resolve();
+    deferred.resolve(stdout);
   });
+
+  if (stdio === 'pipe') {
+    goTask.stdout.on('data', function(data) {
+      stdout = stdout.concat(data);
+    });
+    goTask.stderr.on('data', function(data) {
+      stderr = stderr.concat(data);
+    });
+  }
+
   return deferred.promise;
 }
 
@@ -213,5 +227,5 @@ function spawnGoProcess(args, envOverride) {
  * @return {Q.Promise} A promise object.
  */
 function spawnGoimportsProcess(args, envOverride) {
-  return spawnProcess('goimports', args, envOverride);
+  return spawnProcess('goimports', args, envOverride, 'pipe');
 }
