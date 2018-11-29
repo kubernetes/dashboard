@@ -12,58 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * @final
- */
-export default class SparklineController {
-  /**
-   * Constructs sparkline controller.
-   * @ngInject
-   */
-  constructor() {
-    /**
-     * An array of {backendAPI.MetricResult} objects. The timestamp
-     * values of each object must be unique, and value must be greater
-     * than or equal to zero.
-     * @export {!Array<!backendApi.MetricResult>} Initialized from the scope.
-     */
-    this.timeseries;
-  }
+import {Component, Input} from '@angular/core';
+import {MetricResult} from '@api/backendapi';
 
-  /**
-   * Formats the underlying series suitable for display as an SVG polygon.
-   * @return {string}
-   * @export
-   */
-  polygonPoints() {
+@Component({
+  selector: 'kd-sparkline',
+  templateUrl: './template.html',
+  styleUrls: ['style.scss'],
+})
+export class SparklineComponent {
+  @Input() timeseries: MetricResult[];
+
+  getPolygonPoints(): string {
     const series = this.timeseries.map(({timestamp, value}) => [Date.parse(timestamp), value]);
     const sorted = series.slice().sort((a, b) => a[0] - b[0]);
-    /** @type {number} */
     const xShift = Math.min(...sorted.map((pt) => pt[0]));
     const shifted = sorted.map(([x, y]) => [x - xShift, y]);
-    /** @type {number} */
     const xScale = Math.max(...shifted.map((pt) => pt[0])) || 1;
-    /** @type {number} */
     const yScale = Math.max(...shifted.map((pt) => pt[1])) || 1;
     const scaled = shifted.map(([x, y]) => [x / xScale, y / yScale]);
 
     // Invert Y because SVG Y=0 is at the top, and we want low values
-    // of Y to be closer to the bottom of the graphic
-    return scaled.map(([x, y]) => `${x},${(1 - y)}`).join(' ');
+    // of Y to be closer to the bottom of the graphic.
+    const map = scaled.map(([x, y]) => `${x},${(1 - y)}`).join(' ');
+    return `0,1 ${map} 1,1`;
   }
 }
-
-/**
- * Sparkline component definition.
- *
- * @type {!angular.Component}
- */
-export const sparklineComponent = {
-  bindings: {
-    'timeseries': '<',
-  },
-  controller: SparklineController,
-  controllerAs: 'sparklineCtrl',
-  templateUrl: 'common/components/sparkline/sparkline.html',
-  templateNamespace: 'svg',
-};

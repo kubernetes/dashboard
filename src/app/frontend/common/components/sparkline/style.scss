@@ -15,20 +15,8 @@
 @import '../../../variables';
 
 .kd-sparkline {
-  background-color: $body;
-  height: 2.5 * $baseline-grid;
+  height: 4 * $baseline-grid;
   vertical-align: -$baseline-grid / 2; // 20% below baseline, to flow with text
-  width: 8 * $baseline-grid;
+  width: 15 * $baseline-grid;
 }
 
-.kd-sparkline-series {
-  fill: $chart-1;
-}
-
-.kd-sparkline-cpu-series {
-  fill: $chart-1;
-}
-
-.kd-sparkline-memory-series {
-  fill: $chart-2;
-}
