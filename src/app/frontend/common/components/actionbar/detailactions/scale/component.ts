@@ -32,7 +32,7 @@ export class ActionbarDetailScaleComponent {
   constructor(private readonly verber_: VerberService, private readonly state_: StateService) {}
 
   ngOnInit(): void {
-    this.verberSubscription_ = this.verber_.onEdit.subscribe(() => {
+    this.verberSubscription_ = this.verber_.onScale.subscribe(() => {
       this.state_.reload().catch();
     });
   }

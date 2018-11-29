@@ -28,6 +28,7 @@ import {ResourceMeta} from './actionbar';
 export class VerberService {
   onDelete = new EventEmitter<boolean>();
   onEdit = new EventEmitter<boolean>();
+  onScale = new EventEmitter<boolean>();
 
   constructor(private readonly dialog_: MatDialog, private readonly http_: HttpClient) {}
 
@@ -58,13 +59,15 @@ export class VerberService {
   showScaleDialog(displayName: string, typeMeta: TypeMeta, objectMeta: ObjectMeta): void {
     const dialogConfig = this.getDialogConfig_(displayName, typeMeta, objectMeta);
     this.dialog_.open(ScaleResourceDialog, dialogConfig).afterClosed().subscribe((result) => {
-      if (result) {
-        // TODO scale
-        // const url = RawResource.getUrl(typeMeta, objectMeta);
-        // this.http_.put(url, JSON.parse(result), {headers: this.getHttpHeaders_()}).subscribe(()
-        // => {
-        //   this.onEdit.emit(true);
-        // }, this.handleErrorResponse_.bind(this));
+      if (Number.isInteger(result)) {
+        const url = `api/v1/scale/${typeMeta.kind}/${objectMeta.namespace}/${objectMeta.name}/`;
+        this.http_.put(url, result, {
+          params: {
+            'scaleBy': result,
+          }
+        }).subscribe(() => {
+          this.onScale.emit(true);
+        }, this.handleErrorResponse_.bind(this));
       }
     });
   }
