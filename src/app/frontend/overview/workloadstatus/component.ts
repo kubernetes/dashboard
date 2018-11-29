@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Input} from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'kd-workload-statuses',
   templateUrl: './template.html',
 })
-export class AllocationChartComponent {
-  @Input() ratio: any;
+export class WorkloadStatusComponent {
+  // @Input() ratio: any;
   colors: string[] = ['#00c752', '#f00', '#ffad20', '#006028'];
 
   // /** @export {Array<Object>} */
