@@ -12,8 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {HttpClient} from '@angular/common/http';
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {ReplicaCounts} from '@api/backendapi';
+
 import {ResourceMeta} from '../../services/global/actionbar';
 
 @Component({
@@ -21,14 +24,20 @@ import {ResourceMeta} from '../../services/global/actionbar';
   templateUrl: 'template.html',
 })
 export class ScaleResourceDialog implements OnInit {
-  replicas = 0;
+  actual = 0;
+  desired = 0;
 
   constructor(
       public dialogRef: MatDialogRef<ScaleResourceDialog>,
-      @Inject(MAT_DIALOG_DATA) public data: ResourceMeta) {}
+      @Inject(MAT_DIALOG_DATA) public data: ResourceMeta, private readonly http_: HttpClient) {}
 
   ngOnInit(): void {
-    // TODO Update replicas count.
+    const url = `api/v1/scale/${this.data.typeMeta.kind}/${this.data.objectMeta.namespace}/${
+        this.data.objectMeta.name}/`;
+    this.http_.get<ReplicaCounts>(url).toPromise().then((rc) => {
+      this.actual = rc.actualReplicas;
+      this.desired = rc.desiredReplicas;
+    });
   }
 
   onNoClick(): void {

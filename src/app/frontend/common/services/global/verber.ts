@@ -61,13 +61,15 @@ export class VerberService {
     this.dialog_.open(ScaleResourceDialog, dialogConfig).afterClosed().subscribe((result) => {
       if (Number.isInteger(result)) {
         const url = `api/v1/scale/${typeMeta.kind}/${objectMeta.namespace}/${objectMeta.name}/`;
-        this.http_.put(url, result, {
-          params: {
-            'scaleBy': result,
-          }
-        }).subscribe(() => {
-          this.onScale.emit(true);
-        }, this.handleErrorResponse_.bind(this));
+        this.http_
+            .put(url, result, {
+              params: {
+                'scaleBy': result,
+              }
+            })
+            .subscribe(() => {
+              this.onScale.emit(true);
+            }, this.handleErrorResponse_.bind(this));
       }
     });
   }
