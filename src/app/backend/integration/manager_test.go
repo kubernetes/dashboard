@@ -81,10 +81,12 @@ func TestIntegrationManager_GetState(t *testing.T) {
 		}
 
 		// Time is irrelevant so we don't need to check it
-		if c.expectedErr == nil && (!areErrorsEqual(state.Error, c.expected.Error) ||
-			state.Connected != c.expected.Connected) {
+		if c.expectedErr == nil && (!areErrorsEqual(state.Error, c.expected.Error)) {
 			t.Errorf("Test Case: %s. Expected state to be: %v, but got %v.",
-				c.info, c.expected, state)
+				c.info, c.expected.Error, state.Error)
+		} else if state.Connected != c.expected.Connected {
+			t.Errorf("Test Case: %s. Could not connect to API server.",
+				c.info)
 		}
 	}
 }
