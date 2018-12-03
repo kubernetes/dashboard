@@ -60,7 +60,7 @@ This section shows concepts used as templates for all views.
 
 View which does not deal with a resource or a resource list, e.g., landing
 page which shows an overview of a cluster. The page consists of, potentially
-dismissable, blocks that display data.
+dismissible, blocks that display data.
 ![Landing page](mockups/23-03-2016-scale-and-navigation/landing-page.png)
 
 Category view which shows lists of resources. In this mockup it is
