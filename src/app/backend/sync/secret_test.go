@@ -19,7 +19,7 @@ import (
 	"time"
 
 	syncApi "github.com/kubernetes/dashboard/src/app/backend/sync/api"
-	"k8s.io/api/core/v1"
+	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/util/wait"

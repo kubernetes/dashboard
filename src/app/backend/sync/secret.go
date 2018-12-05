@@ -24,7 +24,7 @@ import (
 
 	syncApi "github.com/kubernetes/dashboard/src/app/backend/sync/api"
 	"github.com/kubernetes/dashboard/src/app/backend/sync/poll"
-	"k8s.io/api/core/v1"
+	v1 "k8s.io/api/core/v1"
 	k8sErrors "k8s.io/apimachinery/pkg/api/errors"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
