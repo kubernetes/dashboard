@@ -20,25 +20,8 @@ source "${ROOT_DIR}/aio/scripts/conf.sh"
 # Define variables.
 CHECK=false
 CHECK_FAILED=0
-FORMAT_CODE=false
 FORMAT_STYLES=false
 FORMAT_HTML=false
-
-function format::code {
-  find ${AIO_DIR} ${SRC_DIR} ${ROOT_DIR}/gulpfile.babel.js -type f \( -iname \*.ts -o -iname \*.js \) | \
-       xargs ${CLANG_FORMAT_BIN} -i
-}
-
-function format::code::check {
-  find ${AIO_DIR} ${SRC_DIR} ${ROOT_DIR}/gulpfile.babel.js -type f \( -iname \*.ts -o -iname \*.js \) | \
-       xargs ${CLANG_FORMAT_BIN} -output-replacements-xml | grep "<replacement " > /dev/null
-
-  if [ $? -ne 1 ] ; then
-    return 1
-  fi
-
-  return 0
-}
 
 function format::styles {
   ${SCSSFMT_BIN} -r "${FRONTEND_SRC}/**/*.scss"
@@ -102,10 +85,6 @@ function parse::args {
       CHECK=true
       shift
       ;;
-      -c|--code)
-      FORMAT_CODE=true
-      shift
-      ;;
       -s|--styles)
       FORMAT_STYLES=true
       shift
@@ -123,16 +102,6 @@ function parse::args {
 parse::args "$@"
 
 if [ "${CHECK}" = true ] ; then
-  if [ "${FORMAT_CODE}" = true ] ; then
-    format::code::check
-    CHECK_FAILED=$?
-    if [ "${CHECK_FAILED}" -gt 0 ]; then
-      saye "Code is not properly formatted. Please run 'npm run format:frontend'.";
-      exit 1
-    fi
-    say "Code is properly formatted!"
-  fi
-
   if [ "${FORMAT_STYLES}" = true ] ; then
     format::styles::check
     CHECK_FAILED=$?
@@ -154,10 +123,6 @@ if [ "${CHECK}" = true ] ; then
   fi
 
   exit 0
-fi
-
-if [ "${FORMAT_CODE}" = true ] ; then
-  format::code
 fi
 
 if [ "${FORMAT_STYLES}" = true ] ; then
