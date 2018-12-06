@@ -84,16 +84,17 @@ export class LoginComponent implements OnInit {
     switch (this.selectedAuthenticationMode) {
       case (LoginModes.Kubeconfig):
         this.onFileLoad_(event as KdFile);
-        return;
+        break;
       case (LoginModes.Token):
         this.token_ = (event.target as HTMLInputElement).value;
-        return;
+        break;
       case (LoginModes.Basic):
         if ((event.target as HTMLInputElement).id === 'username') {
           this.username_ = (event.target as HTMLInputElement).value;
         } else {
           this.password_ = (event.target as HTMLInputElement).value;
         }
+        break;
       default:
     }
   }
