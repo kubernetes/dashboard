@@ -52,8 +52,14 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run check"
+      "pre-commit": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "src/**/*.ts": [
+      "gts fix",
+      "git add"
+    ]
   },
   "dependencies": {
     "@angular/animations": "7.0.3",
@@ -113,12 +119,13 @@
     "git-describe": "^4.0.3",
     "glob-run": "^0.1.6",
     "google-closure-compiler": "^20181028.0.1",
+    "gts": "^0.9.0",
     "gulp": "^3.9.1",
     "gulp-filter": "^5.1.0",
     "gulp-header-license": "^1.0.9",
     "gulp-license-check": "^1.2.1",
     "gulp-util": "^3.0.8",
-    "husky": "^1.1.3",
+    "husky": "^1.2.0",
     "jasmine-core": "~3.3.0",
     "jasmine-spec-reporter": "~4.2.1",
     "js-beautify": "^1.8.8",
@@ -129,6 +136,7 @@
     "karma-firefox-launcher": "^1.1.0",
     "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^1.4.0",
+    "lint-staged": "^8.1.0",
     "lite-server": "2.4.0",
     "lodash": "^4.17.11",
     "node-sass": "^4.10.0",
@@ -143,8 +151,7 @@
     "through2": "^3.0.0",
     "ts-node": "~5.0.1",
     "tslint": "~5.11.0",
-    "typescript": "3.1.6",
-    "gts": "^0.9.0"
+    "typescript": "3.1.6"
   },
   "engines": {
     "node": ">=8.0.0",
