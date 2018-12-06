@@ -27,6 +27,9 @@ fi
 
 # Run checks.
 ${GOLINT_BIN} run ../... \
+  --no-config \
+  --issues-exit-code=0 \
+  --deadline=30m \
   --disable-all \
   --enable=govet \
   --enable=gocyclo \
