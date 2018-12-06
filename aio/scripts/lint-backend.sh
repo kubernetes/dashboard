@@ -26,7 +26,7 @@ if [ ! -f ${GOLINT_BIN} ]; then
 fi
 
 # Run checks.
-${GOLINT_BIN} run ./... \
+${GOLINT_BIN} run ../... \
   --disable-all \
   --enable=govet \
   --enable=gocyclo \
