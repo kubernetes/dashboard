@@ -18,7 +18,6 @@ import {StateDeclaration, StateObject, StateService} from '@uirouter/core';
 import {searchState} from '../../../search/state';
 import {SEARCH_QUERY_STATE_PARAM} from '../../params/params';
 
-/** Breadcrumbs config string used on state config. **/
 const breadcrumbsConfig = 'kdBreadcrumbs';
 
 @Injectable()

@@ -32,29 +32,27 @@
     "test:coverage": "npm run test:frontend:coverage && npm run test:backend:coverage",
     "test:e2e": "ng e2e",
     "cluster": "./aio/scripts/start-cluster.sh",
-    "check": "npm run check:static && npm run test && npm run test:e2e",
-    "check:static": "npm run check:license && npm run lint && npm run check:format",
+    "check": "concurrently \"npm run check:backend\" \"npm run check:frontend\" \"npm run check:license\"",
+    "check:backend": "./aio/scripts/lint-backend.sh",
+    "check:frontend": "concurrently \"npm run check:frontend:ts\" \"npm run check:frontend:scss\" \"npm run check:frontend:html\"",
+    "check:frontend:ts": "gts check",
+    "check:frontend:scss": "./aio/scripts/format.sh --styles --check && ./node_modules/sass-lint/bin/sass-lint.js -c .sass-lint.yml 'src/app/frontend/**/*.scss' -v -q",
+    "check:frontend:html": "./aio/scripts/format.sh --html --check",
     "check:license": "gulp check-license-headers",
-    "check:format": "concurrently \"npm run check:format:code\" \"npm run check:format:styles\" \"npm run check:format:html\"",
-    "check:format:code": "./aio/scripts/format.sh --code --check",
-    "check:format:styles": "./aio/scripts/format.sh --styles --check",
-    "check:format:html": "./aio/scripts/format.sh --html --check",
-    "lint": "npm run lint:frontend && npm run lint:backend",
-    "lint:frontend": "npm run lint:frontend:code && npm run lint:frontend:styles",
-    "lint:frontend:code": "tslint -c tslint.json --project . -t codeFrame --fix",
-    "lint:frontend:styles": "./node_modules/sass-lint/bin/sass-lint.js -c .sass-lint.yml 'src/app/frontend/**/*.scss' -v -q",
-    "lint:backend": "./aio/scripts/lint-backend.sh",
-    "format": "npm run format:headers && concurrently \"npm run format:frontend\" \"npm run format:backend\"",
-    "format:headers": "gulp update-license-headers",
-    "format:frontend": "./aio/scripts/format.sh --code --styles --html",
-    "format:backend": "goimports -w src/app/backend",
+    "fix": "concurrently \"npm run fix:backend\" \"npm run fix:frontend\" \"npm run fix:license\"",
+    "fix:backend": "goimports -w src/app/backend",
+    "fix:frontend": "concurrently \"npm run fix:frontend:ts\" \"npm run fix:frontend:scss\" \"npm run fix:frontend:html\"",
+    "fix:frontend:ts": "gts fix",
+    "fix:frontend:scss": "./aio/scripts/format.sh --styles",
+    "fix:frontend:html": "./aio/scripts/format.sh --html",
+    "fix:license": "gulp update-license-headers",
+    "clean": "rm -rf .go_workspace .tmp coverage dist npm-debug.log",
     "postversion": "node aio/scripts/version.js",
-    "postinstall": "node aio/scripts/version.js && webdriver-manager update && go get golang.org/x/tools/cmd/goimports",
-    "clean": "rm -rf .go_workspace .tmp coverage dist npm-debug.log"
+    "postinstall": "node aio/scripts/version.js && webdriver-manager update && go get golang.org/x/tools/cmd/goimports"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run check:static"
+      "pre-commit": "npm run check"
     }
   },
   "dependencies": {
@@ -145,7 +143,8 @@
     "through2": "^3.0.0",
     "ts-node": "~5.0.1",
     "tslint": "~5.11.0",
-    "typescript": "3.1.6"
+    "typescript": "3.1.6",
+    "gts": "^0.9.0"
   },
   "engines": {
     "node": ">=8.0.0",

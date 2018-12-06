@@ -1,4 +1,5 @@
 {
+  "extends": "./node_modules/gts/tsconfig-google.json",
   "angularCompilerOptions": {
     "annotationsAs": "static fields",
     "annotateForClosureCompiler": true
