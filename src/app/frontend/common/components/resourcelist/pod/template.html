@@ -93,6 +93,24 @@ limitations under the License.
         </mat-cell>
       </ng-container>
 
+      <ng-container matColumnDef="cpu">
+        <mat-header-cell *matHeaderCellDef>CPU Usage</mat-header-cell>
+        <mat-cell *matCellDef="let pod">
+          <kd-sparkline *ngIf="pod.metrics?.cpuUsageHistory"
+                        [timeseries]="pod.metrics.cpuUsageHistory"></kd-sparkline>
+          <span *ngIf="!pod.metrics?.cpuUsageHistory">-</span>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="mem">
+        <mat-header-cell *matHeaderCellDef>Memory Usage</mat-header-cell>
+        <mat-cell *matCellDef="let pod">
+          <kd-sparkline *ngIf="pod.metrics?.memoryUsageHistory"
+                        [timeseries]="pod.metrics.memoryUsageHistory"></kd-sparkline>
+          <span *ngIf="!pod.metrics?.memoryUsageHistory">-</span>
+        </mat-cell>
+      </ng-container>
+
       <ng-container matColumnDef="age">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header

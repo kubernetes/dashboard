@@ -19,6 +19,7 @@ import {ComponentsModule} from '../common/components/module';
 import {SharedModule} from '../shared.module';
 import {OverviewComponent} from './component';
 import {overviewState} from './state';
+import {WorkloadStatusComponent} from './workloadstatus/component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,7 @@ import {overviewState} from './state';
     ComponentsModule,
     UIRouterModule.forChild({states: [overviewState]}),
   ],
-  declarations: [OverviewComponent],
+  declarations: [OverviewComponent, WorkloadStatusComponent],
 })
 export class OverviewModule {
 }

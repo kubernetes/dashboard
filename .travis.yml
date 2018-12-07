@@ -2,7 +2,7 @@
 # Read more at: http://docs.travis-ci.com/user/customizing-the-build/
 
 sudo: required
-dist: trusty
+dist: xenial
 group: edge
 language: node_js
 node_js: 8.11.3
@@ -19,13 +19,13 @@ before_install:
   - ln -s $TRAVIS_BUILD_DIR/vendor $TRAVIS_BUILD_DIR/.tmp/src/github.com/kubernetes/dashboard/src/app/backend/vendor
 
 before_script:
-  - eval "$(gimme 1.11.1)"
+  - eval "$(gimme 1.11.2)"
   - docker --version
 
 jobs:
   include:
     - stage: test
-      script: npm run check:static
+      script: npm run check
     - script: npm run test:coverage
       after_success:
         - bash <(curl -s https://codecov.io/bash)

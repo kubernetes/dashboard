@@ -25,12 +25,14 @@ import (
 
 	restful "github.com/emicklei/go-restful"
 	"gopkg.in/igm/sockjs-go.v2/sockjs"
-	"k8s.io/api/core/v1"
+	v1 "k8s.io/api/core/v1"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/kubernetes/scheme"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/remotecommand"
 )
+
+const END_OF_TRANSMISSION = "\u0004"
 
 // PtyHandler is what remotecommand expects from a pty
 type PtyHandler interface {
@@ -75,7 +77,8 @@ func (t TerminalSession) Next() *remotecommand.TerminalSize {
 func (t TerminalSession) Read(p []byte) (int, error) {
 	m, err := t.sockJSSession.Recv()
 	if err != nil {
-		return 0, err
+		// Send terminated signal to process to avoid resource leak
+		return copy(p, END_OF_TRANSMISSION), err
 	}
 
 	var msg TerminalMessage

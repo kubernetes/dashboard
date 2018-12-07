@@ -20,62 +20,18 @@ set -e
 ROOT_DIR="$(cd $(dirname "${BASH_SOURCE}")/../.. && pwd -P)"
 . "${ROOT_DIR}/aio/scripts/conf.sh"
 
-function ensure-go-dev-tools {
-  say "\nMaking sure that all required Go development tools are available"
-  go get -u golang.org/x/tools/cmd/goimports
-  go get -u github.com/fzipp/gocyclo
-  go get -u golang.org/x/lint/golint
-  go get -u github.com/gordonklaus/ineffassign
-  go get -u github.com/client9/misspell/cmd/misspell
-  export PATH=$PATH:$GOPATH/bin
-  echo "OK!"
-}
+# Make sure that all required tools are available.
+if [ ! -f ${GOLINT_BIN} ]; then
+    curl -sfL ${GOLINT_URL} | sh -s -- -b ${CACHE_DIR} v1.12.3
+fi
 
-function run-gofmt {
-  say "\nRunning gofmt check"
-  UNFORMATTED_FILES=$(gofmt -s -l ${BACKEND_SRC_DIR})
-  if [[ -n "${UNFORMATTED_FILES}" ]]; then
-    say -e "Unformatted files:\n${UNFORMATTED_FILES}";
-    exit 1;
-  fi;
-  echo "OK!"
-}
-
-function run-go-vet {
-  say "\nRunning go vet check"
-  go vet github.com/kubernetes/dashboard/src/app/backend/...
-  echo "OK!"
-}
-
-function run-gocyclo {
-  say "\nRunning gocyclo check"
-  gocyclo -over 15 ${BACKEND_SRC_DIR}
-  echo "OK!"
-}
-
-function run-golint {
-  say "\nRunning golint check"
-  golint -set_exit_status github.com/kubernetes/dashboard/src/app/backend/...
-  echo "OK!"
-}
-
-function run-misspell {
-  say "\nRunning misspell check"
-  misspell -error ${BACKEND_SRC_DIR}
-  echo "OK!"
-}
-
-function run-ineffassign {
-  say "\nRunning ineffassign check"
-  ineffassign ${BACKEND_SRC_DIR}
-  echo "OK!"
-}
-
-# Execute script.
-ensure-go-dev-tools
-run-gofmt
-run-go-vet
-run-gocyclo
-#run-golint TODO(maciaszczykm): Enable after fixing errors.
-run-misspell
-run-ineffassign
+# Run checks.
+${GOLINT_BIN} run ../... \
+  --no-config \
+  --issues-exit-code=0 \
+  --deadline=30m \
+  --disable-all \
+  --enable=govet \
+  --enable=gocyclo \
+  --enable=misspell \
+  --enable=ineffassign

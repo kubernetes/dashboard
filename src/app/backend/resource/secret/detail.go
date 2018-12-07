@@ -18,7 +18,7 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"k8s.io/api/core/v1"
+	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 )
@@ -39,7 +39,7 @@ type SecretDetail struct {
 	Type v1.SecretType `json:"type"`
 }
 
-// GetSecretDetail returns returns detailed information about a secret
+// GetSecretDetail returns detailed information about a secret
 func GetSecretDetail(client kubernetes.Interface, namespace, name string) (*SecretDetail, error) {
 	log.Printf("Getting details of %s secret in %s namespace\n", name, namespace)
 

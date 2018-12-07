@@ -1,67 +1,8 @@
 {
-  "rules": {
-    "array-type": [true, "array-simple"],
-    "arrow-return-shorthand": true,
-    "ban": [true,
-      {"name": "parseInt", "message": "tsstyle#type-coercion"},
-      {"name": "parseFloat", "message": "tsstyle#type-coercion"},
-      {"name": "Array", "message": "tsstyle#array-constructor"}
-    ],
-    "ban-types": [true,
-      ["Object", "Use {} instead."],
-      ["String", "Use 'string' instead."],
-      ["Number", "Use 'number' instead."],
-      ["Boolean", "Use 'boolean' instead."]
-    ],
-    "class-name": true,
-    "comment-format": [true, "check-space"],
-    "curly": [true, "ignore-same-line"],
-    "eofline": true,
-    "forin": true,
-    "interface-name": [true, "never-prefix"],
-    "jsdoc-format": false,
-    "label-position": true,
-    "member-access": [true, "no-public"],
-    "new-parens": true,
-    "no-angle-bracket-type-assertion": true,
-    "no-any": true,
-    "no-arg": true,
-    "no-conditional-assignment": true,
-    "no-consecutive-blank-lines": true,
-    "no-console": true,
-    "no-construct": true,
-    "no-debugger": true,
-    "no-default-export": true,
-    "no-duplicate-variable": true,
-    "no-inferrable-types": true,
-    "no-namespace": [true, "allow-declarations"],
-    "no-reference": true,
-    "no-string-throw": true,
-    "no-trailing-whitespace": true,
-    "no-unused-expression": true,
-    "no-unsafe-finally": true,
-    "no-var-keyword": true,
-    "object-literal-shorthand": true,
-    "ordered-imports": true,
-    "only-arrow-functions": [true, "allow-declarations", "allow-named-functions"],
-    "prefer-const": true,
-    "prefer-readonly": true,
-    "radix": true,
-    "semicolon": [true, "always"],
-    "switch-default": true,
-    "triple-equals": [true, "allow-null-check"],
-    "use-isnan": true,
-    "variable-name": [
-      true,
-      "check-format",
-      "ban-keywords",
-      "allow-leading-underscore",
-      "allow-trailing-underscore"
-    ],
-    "typedef": [
-      true,
-      "call-signature",
-      "property-declaration"
+  "extends": "gts/tslint.json",
+  "cliOptions": {
+    "exclude": [
+      "src/app/frontend/environments/version.ts"
     ]
   }
 }

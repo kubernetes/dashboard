@@ -19,7 +19,7 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"k8s.io/api/core/v1"
+	v1 "k8s.io/api/core/v1"
 	meta "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
 )

@@ -1,21 +1,26 @@
-Want to contribute? Great! First, read this page.
+# Contributing Guidelines
+All the contributions are done via GitHub. Please also read the Kubernetes contributors guide:
 
-### Before you contribute
-Before we can use your code, you must sign the
-[Cloud Native Computing Foundation Contributor License Agreement](https://github.com/kubernetes/community/blob/master/CLA.md)
-(CLA). The CLA is necessary mainly because you own the
-copyright to your changes, even after your contribution becomes part of our
-codebase, so we need your permission to use and distribute your code. We also
-need to be sure of various other things—for instance, that you'll tell us if you
-know that your code infringes on other people's patents. You don't have to sign
-the CLA until after you've submitted your code for review and a member has
-approved it, but you must do it before we can put your code into our codebase.
-Before you start working on a larger contribution, you should get in touch with
-us first through the issue tracker with your idea so that we can help out and
-possibly guide you. Coordinating up front makes it much easier to avoid
-frustration later on.
+https://github.com/kubernetes/community/blob/master/contributors/guide/README.md
 
-### Code reviews
-All submissions, including submissions by project members, require review. We
-use [pull requests](https://help.github.com/articles/about-pull-requests/) for this purpose.
+### Get familiar
+To learn more about the project, please read through the following documents:
 
+- https://github.com/kubernetes/dashboard/wiki
+- https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/
+
+### Sign the CLA
+Kubernetes projects require that you sign a Contributor License Agreement before we can accept your pull requests. Please see following document for more info:
+
+https://github.com/kubernetes/community/blob/master/CLA.md
+
+### Create a patch
+
+1. Submit an issue by describing your proposed change to the repo in question.
+2. The repo owners will respond to your issue rapidly.
+3. Fork the repo make your changes and test it.
+4. Submit a pull request.
+
+### Get through review process
+
+All submissions, including submissions by project members, require review. We use GitHub pull requests for this purpose.

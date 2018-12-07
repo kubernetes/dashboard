@@ -69,6 +69,7 @@ var (
 	argDisableSkip               = pflag.Bool("disable-skip", false, "When enabled, the skip button on the login page will not be shown. Default: false.")
 	argSystemBanner              = pflag.String("system-banner", "", "When non-empty displays message to Dashboard users. Accepts simple HTML tags. Default: ''.")
 	argSystemBannerSeverity      = pflag.String("system-banner-severity", "INFO", "Severity of system banner. Should be one of 'INFO|WARNING|ERROR'. Default: 'INFO'.")
+	argAPILogLevel               = pflag.String("api-log-level", "INFO", "Level of API request logging. Should be one of 'INFO|NONE|DEBUG'. Default: 'INFO'.")
 	argDisableSettingsAuthorizer = pflag.Bool("disable-settings-authorizer", false, "When enabled, Dashboard settings page will not require user to be logged in and authorized to access settings page.")
 )
 
@@ -216,6 +217,7 @@ func initArgHolder() {
 	builder.SetKubeConfigFile(*argKubeConfigFile)
 	builder.SetSystemBanner(*argSystemBanner)
 	builder.SetSystemBannerSeverity(*argSystemBannerSeverity)
+	builder.SetAPILogLevel(*argAPILogLevel)
 	builder.SetAuthenticationMode(*argAuthenticationMode)
 	builder.SetAutoGenerateCertificates(*argAutoGenerateCertificates)
 	builder.SetEnableInsecureLogin(*argEnableInsecureLogin)

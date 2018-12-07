@@ -21,7 +21,7 @@ import (
 
 	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
 	"github.com/kubernetes/dashboard/src/app/backend/settings/api"
-	"k8s.io/api/core/v1"
+	v1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 )
@@ -103,6 +103,11 @@ func (sm *SettingsManager) SaveGlobalSettings(client kubernetes.Interface, s *ap
 	cm, isDiff := sm.load(client)
 	if isDiff {
 		return errors.New(api.ConcurrentSettingsChangeError)
+	}
+
+	// Data can be nil if the configMap exists but does not have any data
+	if cm.Data == nil {
+		cm.Data = make(map[string]string)
 	}
 
 	cm.Data[api.GlobalSettingsKey] = s.Marshal()

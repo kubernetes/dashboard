@@ -21,6 +21,7 @@ import {AlertDialog} from './alert/dialog';
 import {DeleteResourceDialog} from './deleteresource/dialog';
 import {LogsDownloadDialog} from './download/dialog';
 import {EditResourceDialog} from './editresource/dialog';
+import {ScaleResourceDialog} from './scaleresource/dialog';
 
 @NgModule({
   imports: [
@@ -32,18 +33,21 @@ import {EditResourceDialog} from './editresource/dialog';
     EditResourceDialog,
     DeleteResourceDialog,
     LogsDownloadDialog,
+    ScaleResourceDialog,
   ],
   exports: [
     AlertDialog,
     EditResourceDialog,
     DeleteResourceDialog,
     LogsDownloadDialog,
+    ScaleResourceDialog,
   ],
   entryComponents: [
     AlertDialog,
     EditResourceDialog,
     DeleteResourceDialog,
     LogsDownloadDialog,
+    ScaleResourceDialog,
   ]
 })
 export class DialogsModule {

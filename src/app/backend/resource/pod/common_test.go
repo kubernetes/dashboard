@@ -20,7 +20,7 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"k8s.io/api/core/v1"
+	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -200,7 +200,7 @@ func TestToPodContainerStates(t *testing.T) {
 	}
 }
 
-// TestToPod tests the the ToPod function in basic scenarios.
+// TestToPod tests the ToPod function in basic scenarios.
 func TestToPod(t *testing.T) {
 	cases := []struct {
 		pod      *v1.Pod

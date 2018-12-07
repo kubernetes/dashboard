@@ -108,6 +108,12 @@ func (self *holderBuilder) SetSystemBannerSeverity(systemBannerSeverity string) 
 	return self
 }
 
+// SetLogLevel 'api-log-level' argument of Dashboard binary.
+func (self *holderBuilder) SetAPILogLevel(apiLogLevel string) *holderBuilder {
+	self.holder.apiLogLevel = apiLogLevel
+	return self
+}
+
 // SetAuthenticationMode 'authentication-mode' argument of Dashboard binary.
 func (self *holderBuilder) SetAuthenticationMode(authMode []string) *holderBuilder {
 	self.holder.authenticationMode = authMode

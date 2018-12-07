@@ -1,4 +1,5 @@
 {
+  "extends": "./node_modules/gts/tsconfig-google.json",
   "angularCompilerOptions": {
     "annotationsAs": "static fields",
     "annotateForClosureCompiler": true
@@ -14,6 +15,7 @@
     "module": "es6",
     "moduleResolution": "node",
     "sourceMap": true,
+    "strict": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "noImplicitReturns": true,

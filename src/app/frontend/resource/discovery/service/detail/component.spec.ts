@@ -103,8 +103,9 @@ class MaxiTestComponent {
       status: {failed: 2, pending: 1, running: 3, succeeded: 5},
       cumulativeMetrics: [],
       listMeta: {totalItems: 1},
-      errors:
-          [{ErrStatus: {message: 'error message', code: 10, status: 'Ready', reason: 'the reason'}}]
+      errors: [{
+        ErrStatus: {message: 'error message', code: 10, status: 'Ready', reason: 'the reason'}
+      }]
     },
     sessionAffinity: 'affinity1',
     errors: []

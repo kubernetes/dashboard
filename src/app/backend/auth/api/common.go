@@ -34,9 +34,20 @@ func ToAuthenticationModes(modes []string) AuthenticationModes {
 	return result
 }
 
+// List of protected resources that should be filtered out from dashboard UI.
+var protectedResources = []ProtectedResource{
+	{EncryptionKeyHolderName, EncryptionKeyHolderNamespace},
+	{CertificateHolderSecretName, CertificateHolderSecretNamespace},
+}
+
 // ShouldRejectRequest returns true if url contains name and namespace of resource that should be filtered out from
 // dashboard.
 func ShouldRejectRequest(url string) bool {
-	// For now we have only one resource that should be checked
-	return strings.Contains(url, EncryptionKeyHolderName) && strings.Contains(url, EncryptionKeyHolderNamespace)
+	for _, protectedResource := range protectedResources {
+		if strings.Contains(url, protectedResource.ResourceName) && strings.Contains(url, protectedResource.ResourceNamespace) {
+			return true
+		}
+	}
+
+	return false
 }

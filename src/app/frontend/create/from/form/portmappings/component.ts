@@ -14,7 +14,7 @@
 
 import {HttpClient} from '@angular/common/http';
 import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
-import {AbstractControl, ControlValueAccessor, FormArray, FormBuilder, FormControl, FormGroup, NG_ASYNC_VALIDATORS, NG_VALIDATORS, NG_VALUE_ACCESSOR, Validators} from '@angular/forms';
+import {AbstractControl, ControlValueAccessor, FormArray, FormBuilder, FormControl, FormGroup, NG_ASYNC_VALIDATORS, NG_VALUE_ACCESSOR, Validators} from '@angular/forms';
 import {PortMapping} from '@api/backendapi';
 import {Observable} from 'rxjs';
 import {first, map, startWith} from 'rxjs/operators';
@@ -22,20 +22,8 @@ import {FormValidators} from '../validator/validators';
 import {validateProtocol} from '../validator/validprotocol.validator';
 
 const i18n = {
-  /**
-   @export {string} @desc Label 'None', which appears as an option in the service type
-   selection box on the deploy page.
- */
   MSG_PORT_MAPPINGS_SERVICE_TYPE_NONE_LABEL: 'None',
-  /**
-   @export {string} @desc Label 'Internal', which appears as an option in the service type
-   selection box on the deploy page.
- */
   MSG_PORT_MAPPINGS_SERVICE_TYPE_INTERNAL_LABEL: 'Internal',
-  /**
-   @export {string} @desc Label 'External', which appears as an option in the service type
-   selection box on the deploy page.
- */
   MSG_PORT_MAPPINGS_SERVICE_TYPE_EXTERNAL_LABEL: 'External',
 };
 
@@ -77,28 +65,11 @@ const EXT_SERVICE: ServiceType = {
   ],
 })
 export class PortMappingsComponent implements OnInit, ControlValueAccessor {
-  /**
-   * Initialized from the scope.
-   */
   @Input() protocols: string[];
-
-  /**
-   * Available service types
-   */
-  serviceTypes: ServiceType[];
-
-  /**
-   * Selected service type. Binding to outer scope.
-   */
-  // serviceType: ServiceType;
-
-  /**
-   * Binding to outer scope.
-   */
   @Input() isExternal: boolean;
-
   @Output() changeExternal: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+  serviceTypes: ServiceType[];
   portMappingForm: FormGroup;
 
   constructor(private readonly fb_: FormBuilder, private readonly http_: HttpClient) {}
@@ -158,10 +129,12 @@ export class PortMappingsComponent implements OnInit, ControlValueAccessor {
   private newEmptyPortMapping(defaultProtocol: string): FormGroup {
     return this.fb_.group({
       port: [
-        '', Validators.compose([FormValidators.isInteger, Validators.min(1), Validators.max(65535)])
+        '',
+        Validators.compose([FormValidators.isInteger, Validators.min(1), Validators.max(65535)])
       ],
       targetPort: [
-        '', Validators.compose([FormValidators.isInteger, Validators.min(1), Validators.max(65535)])
+        '',
+        Validators.compose([FormValidators.isInteger, Validators.min(1), Validators.max(65535)])
       ],
       protocol: [defaultProtocol]
     });

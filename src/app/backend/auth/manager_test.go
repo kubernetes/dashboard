@@ -24,7 +24,7 @@ import (
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
-	"k8s.io/api/authorization/v1"
+	v1 "k8s.io/api/authorization/v1"
 	k8sErrors "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"

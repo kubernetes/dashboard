@@ -18,7 +18,6 @@ import {UIRouterModule} from '@uirouter/angular';
 import {ComponentsModule} from '../../../common/components/module';
 import {SharedModule} from '../../../shared.module';
 
-import {ActionbarComponent} from './detail/actionbar/component';
 import {DeploymentDetailComponent} from './detail/component';
 import {deploymentDetailState} from './detail/state';
 import {DeploymentList} from './list/component';
@@ -32,7 +31,7 @@ import {deploymentState} from './state';
     UIRouterModule.forChild(
         {states: [deploymentState, deploymentListState, deploymentDetailState]}),
   ],
-  declarations: [DeploymentList, DeploymentDetailComponent, ActionbarComponent],
+  declarations: [DeploymentList, DeploymentDetailComponent],
 })
 export class DeploymentModule {
 }

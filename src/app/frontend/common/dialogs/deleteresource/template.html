@@ -28,7 +28,7 @@ limitations under the License.
       <span>This action is equivalent to:</span>
       <code>
         <ng-container>kubectl delete </ng-container>
-        <ng-container *ngIf="data.objectMeta.namespace">-n {{data.objectMeta.namespace}}</ng-container>
+        <ng-container *ngIf="data.objectMeta.namespace">-n {{data.objectMeta.namespace}} </ng-container>
         <ng-container>{{data.typeMeta.kind}} {{data.objectMeta.name}}</ng-container>
       </code>
     </div>

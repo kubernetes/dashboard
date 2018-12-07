@@ -8,10 +8,10 @@ import (
     "github.com/kubernetes-sigs/kubebuilder/pkg/controller"
     "github.com/kubernetes-sigs/kubebuilder/pkg/controller/types"
 
-    appv1alpha1client "github.com/kubernetes-sigs/application/pkg/client/clientset/versioned/typed/app/v1alpha1"
-    appv1alpha1lister "github.com/kubernetes-sigs/application/pkg/client/listers/app/v1alpha1"
-    appv1alpha1 "github.com/kubernetes-sigs/application/pkg/apis/app/v1alpha1"
-    appv1alpha1informer "github.com/kubernetes-sigs/application/pkg/client/informers/externalversions/app/v1alpha1"
+    appv1beta1client "github.com/kubernetes-sigs/application/pkg/client/clientset/versioned/typed/app/v1beta1"
+    appv1beta1lister "github.com/kubernetes-sigs/application/pkg/client/listers/app/v1beta1"
+    appv1beta1 "github.com/kubernetes-sigs/application/pkg/apis/app/v1beta1"
+    appv1beta1informer "github.com/kubernetes-sigs/application/pkg/client/informers/externalversions/app/v1beta1"
     "github.com/kubernetes-sigs/application/pkg/inject/args"
 )
 
@@ -25,11 +25,11 @@ func (bc *ApplicationController) Reconcile(k types.ReconcileKey) error {
     return nil
 }
 
-// +controller:group=app,version=v1alpha1,kind=Application,resource=applications
+// +controller:group=app,version=v1beta1,kind=Application,resource=applications
 type ApplicationController struct {
     // INSERT ADDITIONAL FIELDS HERE
-    applicationLister appv1alpha1lister.ApplicationLister
-    applicationclient appv1alpha1client.AppV1alpha1Interface
+    applicationLister appv1beta1lister.ApplicationLister
+    applicationclient appv1beta1client.AppV1beta1Interface
 }
 
 // ProvideController provides a controller that will be run at startup.  Kubebuilder will use codegeneration
@@ -37,8 +37,8 @@ type ApplicationController struct {
 func ProvideController(arguments args.InjectArgs) (*controller.GenericController, error) {
     // INSERT INITIALIZATIONS FOR ADDITIONAL FIELDS HERE
     bc := &ApplicationController{
-        applicationLister: arguments.ControllerManager.GetInformerProvider(&appv1alpha1.Application{}).(appv1alpha1informer.ApplicationInformer).Lister(),
-        applicationclient: arguments.Clientset.AppV1alpha1(),
+        applicationLister: arguments.ControllerManager.GetInformerProvider(&appv1beta1.Application{}).(appv1beta1informer.ApplicationInformer).Lister(),
+        applicationclient: arguments.Clientset.AppV1beta1(),
     }
 
     // Create a new controller that will call ApplicationController.Reconcile on changes to Applications
@@ -47,7 +47,7 @@ func ProvideController(arguments args.InjectArgs) (*controller.GenericController
         Reconcile: bc.Reconcile,
         InformerRegistry: arguments.ControllerManager,
     }
-    if err := gc.Watch(&appv1alpha1.Application{}); err != nil {
+    if err := gc.Watch(&appv1beta1.Application{}); err != nil {
         return gc, err
     }
 

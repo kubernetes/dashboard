@@ -25,7 +25,7 @@ import (
 	"k8s.io/apimachinery/pkg/util/json"
 	"k8s.io/apimachinery/pkg/util/yaml"
 
-	applicationsv1alpha1 "github.com/kubernetes-sigs/application/pkg/apis/app/v1alpha1"
+	applicationsv1beta1 "github.com/kubernetes-sigs/application/pkg/apis/app/v1beta1"
 	appcs "github.com/kubernetes-sigs/application/pkg/client/clientset/versioned"
 )
 
@@ -35,18 +35,18 @@ func CreateApplication(kubeClient appcs.Interface, ns string, relativePath strin
 		return err
 	}
 
-	_, err = kubeClient.AppV1alpha1().Applications(ns).Get(app.Name, metav1.GetOptions{})
+	_, err = kubeClient.AppV1beta1().Applications(ns).Get(app.Name, metav1.GetOptions{})
 
 	if err == nil {
 		// Application already exists -> Update
-		_, err = kubeClient.AppV1alpha1().Applications(ns).Update(app)
+		_, err = kubeClient.AppV1beta1().Applications(ns).Update(app)
 		if err != nil {
 			return err
 		}
 
 	} else {
 		// Application doesn't exist -> Create
-		_, err = kubeClient.AppV1alpha1().Applications(ns).Create(app)
+		_, err = kubeClient.AppV1beta1().Applications(ns).Create(app)
 		if err != nil {
 			return err
 		}
@@ -61,18 +61,18 @@ func DeleteApplication(kubeClient appcs.Interface, ns string, relativePath strin
 		return err
 	}
 
-	if err := kubeClient.AppV1alpha1().Applications(ns).Delete(app.Name, &metav1.DeleteOptions{}); err != nil {
+	if err := kubeClient.AppV1beta1().Applications(ns).Delete(app.Name, &metav1.DeleteOptions{}); err != nil {
 		return err
 	}
 
 	return nil
 }
 
-func parseApplicationYaml(relativePath string) (*applicationsv1alpha1.Application, error) {
+func parseApplicationYaml(relativePath string) (*applicationsv1beta1.Application, error) {
 	var manifest *os.File
 	var err error
 
-	var app applicationsv1alpha1.Application
+	var app applicationsv1beta1.Application
 	if manifest, err = PathToOSFile(relativePath); err != nil {
 		return nil, err
 	}

@@ -14,7 +14,7 @@
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
-import {DefaultDetailsActionbar} from '../../../../common/components/actionbars/defaultdetail/component';
+import {DefaultActionbar} from '../../../../common/components/actionbars/default/component';
 import {addNamespacedResourceStateParamsToUrl} from '../../../../common/params/params';
 import {stateName, stateUrl} from '../state';
 
@@ -34,7 +34,7 @@ export const configMapDetailState: Ng2StateDeclaration = {
       component: ConfigMapDetailComponent,
     },
     'actionbar@chrome': {
-      component: DefaultDetailsActionbar,
+      component: DefaultActionbar,
     }
   },
 };
