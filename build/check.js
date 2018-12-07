@@ -62,7 +62,9 @@ function getLicenseFileFilter(...ext) {
  *
  * This task should be used prior to publishing a change.
  **/
-gulp.task('check', ['check-license-headers', 'lint', 'test', 'integration-test:prod']);
+gulp.task(
+    'check',
+    ['set-enable-skip-button', 'check-license-headers', 'lint', 'test', 'integration-test:prod']);
 
 /**
  * Checks the code quality (frontend + backend tests) of Dashboard. In addition lints the code and

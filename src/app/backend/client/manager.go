@@ -17,20 +17,21 @@ package client
 import (
 	"crypto/rand"
 	"errors"
-	"github.com/kubernetes/dashboard/src/app/backend/args"
 	"log"
 	"strings"
 
-	restful "github.com/emicklei/go-restful"
-	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
-	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
-	kdErrors "github.com/kubernetes/dashboard/src/app/backend/errors"
+	"github.com/emicklei/go-restful"
 	"k8s.io/api/authorization/v1"
 	errorsK8s "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/client-go/tools/clientcmd/api"
+
+	"github.com/kubernetes/dashboard/src/app/backend/args"
+	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
+	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
+	kdErrors "github.com/kubernetes/dashboard/src/app/backend/errors"
 )
 
 // Dashboard UI default values for client configs.

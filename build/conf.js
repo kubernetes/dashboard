@@ -183,6 +183,12 @@ export default {
     systemBannerSeverity: gulpUtil.env.systemBannerSeverity !== undefined ?
         gulpUtil.env.systemBannerSeverity :
         '',
+    /**
+     * Allows to override disable skip button option on the backend.
+     */
+    disableSkipButton: gulpUtil.env.disableSkipButton !== undefined ?
+        gulpUtil.env.disableSkipButton :
+        true,
   },
 
   /**

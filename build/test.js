@@ -24,7 +24,6 @@ import conf from './conf';
 import goCommand from './gocommand';
 import {browserSyncInstance} from './serve';
 
-
 /**
  * @param {boolean} singleRun
  * @param {function(?Error=)} doneFn
@@ -141,3 +140,10 @@ gulp.task('integration-test:prod', ['serve:prod', 'webdriver-update'], runProtra
  * Downloads and updates webdriver. Required to keep it up to date.
  */
 gulp.task('webdriver-update', gulpProtractor.webdriver_update);
+
+/**
+ * Enables skip button to allow integration tests to pass.
+ */
+gulp.task('set-enable-skip-button', function() {
+  conf.backend.disableSkipButton = false;
+});
