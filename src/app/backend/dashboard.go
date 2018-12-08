@@ -223,7 +223,7 @@ func initArgHolder() {
 	builder.SetAutoGenerateCertificates(*argAutoGenerateCertificates)
 	builder.SetEnableInsecureLogin(*argEnableInsecureLogin)
 	builder.SetDisableSettingsAuthorizer(*argDisableSettingsAuthorizer)
-	builder.SetDisableSkipButton(*argEnableSkip)
+	builder.SetEnableSkipLogin(*argEnableSkip)
 }
 
 /**
