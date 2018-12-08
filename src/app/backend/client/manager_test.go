@@ -19,6 +19,8 @@ import (
 	"testing"
 
 	restful "github.com/emicklei/go-restful"
+
+  "github.com/kubernetes/dashboard/src/app/backend/args"
 )
 
 func TestNewClientManager(t *testing.T) {
@@ -39,6 +41,7 @@ func TestNewClientManager(t *testing.T) {
 }
 
 func TestClient(t *testing.T) {
+  args.GetHolderBuilder().SetEnableSkipLogin(true)
 	cases := []struct {
 		request *restful.Request
 	}{
@@ -73,6 +76,7 @@ func TestCSRFKey(t *testing.T) {
 }
 
 func TestConfig(t *testing.T) {
+  args.GetHolderBuilder().SetEnableSkipLogin(true)
 	cases := []struct {
 		request  *restful.Request
 		expected string
@@ -116,6 +120,7 @@ func TestConfig(t *testing.T) {
 }
 
 func TestClientCmdConfig(t *testing.T) {
+  args.GetHolderBuilder().SetEnableSkipLogin(true)
 	cases := []struct {
 		request  *restful.Request
 		expected string
