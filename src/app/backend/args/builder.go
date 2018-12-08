@@ -140,7 +140,7 @@ func (self *holderBuilder) SetDisableSettingsAuthorizer(enableSettingsAuthorizer
 
 // SetDisableSkipButton 'disable-skip' argument of Dashboard binary.
 func (self *holderBuilder) SetDisableSkipButton(disableSkipButton bool) *holderBuilder {
-	self.holder.disableSkipButton = disableSkipButton
+	self.holder.enableSkipLogin = disableSkipButton
 	return self
 }
 

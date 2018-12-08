@@ -79,8 +79,8 @@ function getBackendArgs(mode) {
     args.push(`--apiserver-host=${conf.backend.envApiServerHost || conf.backend.apiServerHost}`);
   }
 
-  if (!conf.backend.disableSkipButton) {
-    args.push(`--disable-skip=${conf.backend.disableSkipButton}`);
+  if (conf.backend.enableSkipButton) {
+    args.push(`--enable-skip-login=${conf.backend.enableSkipButton}`);
   }
 
   return args;

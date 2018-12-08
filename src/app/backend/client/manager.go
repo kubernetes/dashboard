@@ -283,7 +283,7 @@ func (self *clientManager) extractAuthInfo(req *restful.Request) (*api.AuthInfo,
 		return self.tokenManager.Decrypt(jweToken)
 	}
 
-	if args.Holder.GetDisableSkipButton() {
+	if !args.Holder.GetEnableSkipLogin() {
 		return nil, errorsK8s.NewUnauthorized(kdErrors.MSG_LOGIN_UNAUTHORIZED_ERROR)
 	}
 

@@ -25,7 +25,7 @@ import conf from './conf';
  * Builds Dashboard and ensures that integration tests against Kubernetes are successful.
  * The cluster is expected to be up and running as a prerequisite.
  **/
-gulp.task('check:ci', ['set-enable-skip-button', 'check-license-headers', 'integration-test:prod']);
+gulp.task('check:ci', ['check-license-headers', 'integration-test:prod']);
 
 /**
  * Execute gulp-codecov task and uploads generated coverage report to http://codecov.io.

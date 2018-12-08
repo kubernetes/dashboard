@@ -186,9 +186,8 @@ export default {
     /**
      * Allows to override disable skip button option on the backend.
      */
-    disableSkipButton: gulpUtil.env.disableSkipButton !== undefined ?
-        gulpUtil.env.disableSkipButton :
-        true,
+    enableSkipButton: gulpUtil.env.enableSkipButton !== undefined ? gulpUtil.env.enableSkipButton :
+                                                                    true,
   },
 
   /**
