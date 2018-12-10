@@ -15,6 +15,7 @@
 package client
 
 import (
+	"crypto/tls"
 	"net/http"
 	"testing"
 
@@ -52,7 +53,6 @@ func TestClient(t *testing.T) {
 				},
 			},
 		},
-		{nil},
 	}
 
 	for _, c := range cases {
@@ -76,7 +76,6 @@ func TestCSRFKey(t *testing.T) {
 }
 
 func TestConfig(t *testing.T) {
-  args.GetHolderBuilder().SetEnableSkipLogin(true)
 	cases := []struct {
 		request  *restful.Request
 		expected string
@@ -84,22 +83,14 @@ func TestConfig(t *testing.T) {
 		{
 			&restful.Request{
 				Request: &http.Request{
-					Header: http.Header(map[string][]string{}),
-				},
-			},
-			"",
-		},
-		{
-			&restful.Request{
-				Request: &http.Request{
 					Header: http.Header(map[string][]string{
 						"Authorization": {"Bearer test-token"},
 					}),
+					TLS: &tls.ConnectionState{},
 				},
 			},
 			"test-token",
 		},
-		{nil, ""},
 	}
 
 	for _, c := range cases {
@@ -128,22 +119,14 @@ func TestClientCmdConfig(t *testing.T) {
 		{
 			&restful.Request{
 				Request: &http.Request{
-					Header: http.Header(map[string][]string{}),
-				},
-			},
-			"",
-		},
-		{
-			&restful.Request{
-				Request: &http.Request{
 					Header: http.Header(map[string][]string{
 						"Authorization": {"Bearer test-token"},
 					}),
+					TLS: &tls.ConnectionState{},
 				},
 			},
 			"test-token",
 		},
-		{nil, ""},
 	}
 
 	for _, c := range cases {
@@ -176,7 +159,7 @@ func TestClientCmdConfig(t *testing.T) {
 
 func TestVerberClient(t *testing.T) {
 	manager := NewClientManager("", "http://localhost:8080")
-	_, err := manager.VerberClient(nil)
+	_, err := manager.VerberClient(&restful.Request{Request: &http.Request{TLS: &tls.ConnectionState{}}})
 
 	if err != nil {
 		t.Fatalf("VerberClient(): Expected verber client to be created but got error: %s",
