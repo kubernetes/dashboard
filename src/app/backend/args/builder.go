@@ -19,7 +19,7 @@ import "net"
 var builder = &holderBuilder{holder: Holder}
 
 // Used to build argument holder structure. It is private to make sure that only 1 instance can be created
-// that modifies singletone instance of argument holder.
+// that modifies singleton instance of argument holder.
 type holderBuilder struct {
 	holder *holder
 }
@@ -144,7 +144,7 @@ func (self *holderBuilder) SetDisableSkipButton(disableSkipButton bool) *holderB
 	return self
 }
 
-// GetHolderBuilder returns singletone instance of argument holder builder.
+// GetHolderBuilder returns singleton instance of argument holder builder.
 func GetHolderBuilder() *holderBuilder {
 	return builder
 }
