@@ -280,7 +280,8 @@ func (self *clientManager) extractAuthInfo(req *restful.Request) (*api.AuthInfo,
 		return self.tokenManager.Decrypt(jweToken)
 	}
 
-	return nil, errorsK8s.NewUnauthorized(kdErrors.MSG_LOGIN_UNAUTHORIZED_ERROR)}
+	return nil, errorsK8s.NewUnauthorized(kdErrors.MSG_LOGIN_UNAUTHORIZED_ERROR)
+}
 
 func (self *clientManager) extractTokenFromHeader(authHeader string) string {
 	if strings.HasPrefix(authHeader, "Bearer ") {
@@ -303,7 +304,7 @@ func (self *clientManager) isSecureModeEnabled(req *restful.Request) bool {
 }
 
 func (self *clientManager) secureClient(req *restful.Request) (kubernetes.Interface, error) {
-	cfg, err := self.Config(req)
+	cfg, err := self.secureConfig(req)
 	if err != nil {
 		return nil, err
 	}
