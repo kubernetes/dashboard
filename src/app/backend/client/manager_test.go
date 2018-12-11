@@ -16,12 +16,14 @@ package client
 
 import (
 	"crypto/tls"
+	"errors"
 	"net/http"
 	"testing"
 
 	restful "github.com/emicklei/go-restful"
 
-  "github.com/kubernetes/dashboard/src/app/backend/args"
+	"github.com/kubernetes/dashboard/src/app/backend/args"
+	kdErrors "github.com/kubernetes/dashboard/src/app/backend/errors"
 )
 
 func TestNewClientManager(t *testing.T) {
@@ -42,7 +44,6 @@ func TestNewClientManager(t *testing.T) {
 }
 
 func TestClient(t *testing.T) {
-  args.GetHolderBuilder().SetEnableSkipLogin(true)
 	cases := []struct {
 		request *restful.Request
 	}{
@@ -62,6 +63,57 @@ func TestClient(t *testing.T) {
 		if err != nil {
 			t.Fatalf("Client(%v): Expected client to be created but error was thrown:"+
 				" %s", c.request, err.Error())
+		}
+	}
+}
+
+func TestSecureClient(t *testing.T) {
+	cases := []struct {
+		request       *restful.Request
+		expectedError bool
+		err           error
+	}{
+		{
+			request: &restful.Request{
+				Request: &http.Request{
+					Header: http.Header(map[string][]string{}),
+					TLS:    &tls.ConnectionState{},
+				},
+			},
+			expectedError: true,
+			err:           errors.New(kdErrors.MSG_LOGIN_UNAUTHORIZED_ERROR),
+		},
+		{
+			request: &restful.Request{
+				Request: &http.Request{
+					Header: http.Header(map[string][]string{"Authorization": {"Bearer asd"}}),
+					TLS:    &tls.ConnectionState{},
+				},
+			},
+			expectedError: false,
+			err: nil,
+		},
+	}
+
+	for _, c := range cases {
+		manager := NewClientManager("", "http://localhost:8080")
+		_, err := manager.Client(c.request)
+
+		if err == nil && !c.expectedError {
+			continue
+		}
+
+		if !c.expectedError && err != nil {
+			t.Fatalf("Client(%v): Expected client to be created but error was thrown:"+
+				" %s", c.request, err.Error())
+		}
+
+		if c.expectedError && err == nil {
+			t.Fatalf("Expected error %v but got nil", c.err)
+		}
+
+		if c.err.Error() != err.Error() {
+			t.Fatalf("Expected error %v but got %v", c.err, err)
 		}
 	}
 }
@@ -111,7 +163,7 @@ func TestConfig(t *testing.T) {
 }
 
 func TestClientCmdConfig(t *testing.T) {
-  args.GetHolderBuilder().SetEnableSkipLogin(true)
+	args.GetHolderBuilder().SetEnableSkipLogin(true)
 	cases := []struct {
 		request  *restful.Request
 		expected string
