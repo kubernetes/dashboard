@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import chromeModule from '../chrome/module';
-import {isError, kdErrors} from '../common/errorhandling/errors';
+import {isError, kdErrors} from '../errorhandling/errors';
 import {stateName as loginState, StateParams as LoginStateParams} from '../login/state';
 
 import {stateName, StateParams} from './state';

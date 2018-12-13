@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import chromeModule from '../chrome/module';
-import componentsModule from '../common/components/module';
+import componentsModule from '../components/module';
 import filtersModule from '../common/filters/module';
 import namespaceModule from '../common/namespace/module';
 import eventsModule from '../events/module';

@@ -219,5 +219,5 @@ export const graphComponent = {
     'metrics': '<',
   },
   controller: GraphController,
-  templateUrl: 'common/components/graph/graph.html',
+  templateUrl: 'graph.html',
 };

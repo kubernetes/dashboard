@@ -14,13 +14,13 @@
 
 /**
  * Returns directive definition object for the component that displays the service
- * endpoint (type {backendApi.Endpoint}) which is accessible from the outside of the cluster
+ * endpoint (type {backendApi.Endpoint}) which is accessible only from the inside of the cluster
  * @return {!angular.Component}
  */
-export const externalEndpointComponent = {
-  templateUrl: 'common/components/endpoint/externalendpoint.html',
+export const internalEndpointComponent = {
+  templateUrl: 'internalendpoint.html',
   bindings: {
-    /** {!Array<!backendApi.Endpoint>} */
-    'endpoints': '<',
+    /** {backendApi.Endpoint} */
+    'endpoint': '<',
   },
 };
