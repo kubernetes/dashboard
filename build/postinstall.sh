@@ -27,7 +27,7 @@ cd ${DIR}
 
 # Govendor is required by the project. Install it in the .tools directory.
 GOPATH=`pwd`/.tools/go go get github.com/kardianos/govendor
-# XtbGeneator is required by the project. Clone it into .tools.
+# XtbGenerator is required by the project. Clone it into .tools.
 if ! [ -a "./.tools/xtbgenerator/bin/XtbGenerator.jar" ]
 then
   (cd ./.tools/; git clone https://github.com/kuzmisin/xtbgenerator; cd xtbgenerator; git checkout d6a6c9ed0833f461508351a80bc36854bc5509b2)
