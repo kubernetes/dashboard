@@ -18,6 +18,7 @@ import 'brace/mode/json';
 import 'brace/mode/yaml';
 import 'brace/theme/idle_fingers';
 import 'brace/theme/textmate';
+import 'brace/worker/json';
 
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 

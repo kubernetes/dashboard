@@ -15,15 +15,32 @@
 import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorHandler, Injectable} from '@angular/core';
 import {StateService} from '@uirouter/core';
+import {YAMLException} from 'js-yaml';
+
 import {KdError} from '../common/errors/errors';
 import {ErrorStateParams} from '../common/params/params';
+
 import {errorState} from './state';
 
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
   constructor(private readonly state_: StateService) {}
 
-  handleError(error: HttpErrorResponse): void {
+  handleError(error: HttpErrorResponse|YAMLException): void {
+    if (error instanceof HttpErrorResponse) {
+      this.handleHTTPError_(error);
+      return;
+    }
+
+    if (error instanceof YAMLException) {
+      // TODO think what to do with this error. For now let's just silence it.
+      return;
+    }
+
+    throw error;
+  }
+
+  private handleHTTPError_(error: HttpErrorResponse): void {
     if (error.status === 403) {
       this.state_.go(errorState.name, {
         resourceNamespace: null,
@@ -33,9 +50,6 @@ export class GlobalErrorHandler implements ErrorHandler {
           message: error.error,
         } as KdError,
       } as ErrorStateParams);
-      return;
     }
-
-    throw error;
   }
 }
