@@ -33,3 +33,9 @@ import 'rxjs/Rx';
 
 // Needed for unit testing.
 import 'core-js/es7/reflect';
+
+/* tslint:disable */
+// Global variable is required by some 3rd party libraries such as 'ace-ui'.
+// It was removed in Angular 6.X, more info can be found here:
+// https://github.com/angular/angular-cli/issues/9827#issuecomment-369578814
+(window as any).global = window;
