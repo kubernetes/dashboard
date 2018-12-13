@@ -12,37 +12,63 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Component, OnInit} from '@angular/core';
 import {StateService} from '@uirouter/core';
 
 import {AssetsService} from '../common/services/global/assets';
 import {NotificationsService} from '../common/services/global/notifications';
 import {overviewState} from '../overview/state';
 
+class SystemBanner {
+  message: string;
+  severity: string;
+}
+
 @Component({
   selector: 'kd-chrome',
   templateUrl: './template.html',
   styleUrls: ['./style.scss'],
 })
-export class ChromeComponent {
+export class ChromeComponent implements OnInit {
+  private static readonly systemBannerEndpoint = 'api/v1/systembanner';
+  private systemBanner_: SystemBanner;
   loading = false;
 
-  constructor(public assets: AssetsService, private readonly state_: StateService) {}
+  constructor(
+      public assets: AssetsService, private readonly http_: HttpClient,
+      private readonly state_: StateService) {}
+
+  ngOnInit(): void {
+    this.http_.get<SystemBanner>(ChromeComponent.systemBannerEndpoint).toPromise().then((sb) => {
+      this.systemBanner_ = sb;
+    });
+  }
 
   getOverviewStateName(): string {
     return overviewState.name;
   }
 
   isSystemBannerVisible(): boolean {
-    return false;
+    return this.systemBanner_ && this.systemBanner_.message.length > 0;
   }
 
   getSystemBannerClass(): string {
-    return 'kd-bg-warning';
+    const severity = this.systemBanner_ && this.systemBanner_.severity ?
+        this.systemBanner_.severity.toLowerCase() :
+        '';
+    switch (severity) {
+      case 'warning':
+        return 'kd-bg-warning-light';
+      case 'error':
+        return 'kd-bg-error-light';
+      default:
+        return 'kd-bg-success-light';
+    }
   }
 
   getSystemBannerMessage(): string {
-    return `<b>System is going to be shut down in 5 min...</b>`;
+    return this.systemBanner_ ? this.systemBanner_.message : '';
   }
 
   goToCreateState(): void {

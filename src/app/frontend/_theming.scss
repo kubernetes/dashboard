@@ -83,6 +83,10 @@
     background-color: $success;
   }
 
+  .kd-bg-success-light {
+    background-color: lighten($success, 60%);
+  }
+
   .kd-warning {
     color: $warning;
   }
@@ -91,12 +95,20 @@
     background-color: $warning;
   }
 
+  .kd-bg-warning-light {
+    background-color: lighten($warning, 20%);
+  }
+
   .kd-error {
     color: $error;
   }
 
   .kd-bg-error {
     background-color: $error;
+  }
+
+  .kd-bg-error-light {
+    background-color: lighten($error, 33%);
   }
 
   .kd-muted {
