@@ -298,9 +298,12 @@ func (self *clientManager) isLoginEnabled(req *restful.Request) bool {
 // Secure mode means that every request to Dashboard has to be authenticated and privileges
 // of Dashboard SA can not be used.
 func (self *clientManager) isSecureModeEnabled(req *restful.Request) bool {
+	if self.isLoginEnabled(req) && !args.Holder.GetEnableSkipLogin() {
+		return true
+	}
+
 	authInfo, _ := self.extractAuthInfo(req)
-	return (self.isLoginEnabled(req) && !args.Holder.GetEnableSkipLogin()) ||
-		(self.isLoginEnabled(req) && args.Holder.GetEnableSkipLogin() && authInfo != nil)
+	return self.isLoginEnabled(req) && args.Holder.GetEnableSkipLogin() && authInfo != nil
 }
 
 func (self *clientManager) secureClient(req *restful.Request) (kubernetes.Interface, error) {
