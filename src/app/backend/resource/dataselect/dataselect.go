@@ -116,7 +116,7 @@ func (self *DataSelector) Filter() *DataSelector {
 			}
 			if !v.Contains(filterBy.Value) {
 				matches = false
-				continue
+				break
 			}
 		}
 		if matches {
