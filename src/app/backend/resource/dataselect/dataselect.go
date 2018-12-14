@@ -110,11 +110,7 @@ func (self *DataSelector) Filter() *DataSelector {
 		matches := true
 		for _, filterBy := range self.DataSelectQuery.FilterQuery.FilterByList {
 			v := c.GetProperty(filterBy.Property)
-			if v == nil {
-				matches = false
-				continue
-			}
-			if !v.Contains(filterBy.Value) {
+			if v == nil || !v.Contains(filterBy.Value) {
 				matches = false
 				break
 			}
