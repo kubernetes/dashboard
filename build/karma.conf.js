@@ -128,7 +128,7 @@ module.exports = function(config) {
       sl_firefox: {base: 'SauceLabs', browserName: 'firefox'},
       sl_ie: {base: 'SauceLabs', browserName: 'internet explorer'},
       // Chrome must be last to compute coverage correctly.
-      sl_chrome: {base: 'SauceLabs', browserName: 'chrome'},
+      sl_chrome: {base: 'SauceLabs', browserName: 'chrome', platform: 'Windows 10', version: '70'},
     };
     configuration.browsers = Object.keys(configuration.customLaunchers);
 

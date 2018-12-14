@@ -20,14 +20,18 @@ import (
 	"log"
 	"strings"
 
-	restful "github.com/emicklei/go-restful"
-	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
-	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
+	"github.com/emicklei/go-restful"
 	"k8s.io/api/authorization/v1"
+	errorsK8s "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/client-go/tools/clientcmd/api"
+
+	"github.com/kubernetes/dashboard/src/app/backend/args"
+	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
+	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
+	kdErrors "github.com/kubernetes/dashboard/src/app/backend/errors"
 )
 
 // Dashboard UI default values for client configs.
@@ -68,28 +72,53 @@ type clientManager struct {
 	// Kubernetes client created without providing auth info. It uses permissions granted to
 	// service account used by dashboard or kubeconfig file if it was passed during dashboard init.
 	insecureClient kubernetes.Interface
+	// Kubernetes client config created without providing auth info. It uses permissions granted
+	// to service account used by dashboard or kubeconfig file if it was passed during dashboard
+	// init.
+	insecureConfig *rest.Config
 }
 
-// Client returns kubernetes client that is created based on authentication information extracted
-// from request. If request is nil then authentication will be skipped.
+// Client returns a kubernetes client. In case dashboard login is enabled and option to skip
+// login page is disabled only secure client will be returned, otherwise insecure client will be
+// used.
 func (self *clientManager) Client(req *restful.Request) (kubernetes.Interface, error) {
-	cfg, err := self.Config(req)
-	if err != nil {
-		return nil, err
+	if req == nil {
+		return nil, errors.New("Request can not be nil!")
 	}
 
-	client, err := kubernetes.NewForConfig(cfg)
-	if err != nil {
-		return nil, err
+	if self.isSecureModeEnabled(req) {
+		return self.secureClient(req)
 	}
 
-	return client, nil
+	return self.InsecureClient(), nil
 }
 
-// InsecureClient returns kubernetes client that was created without providing auth info. It uses permissions granted
-// to service account used by dashboard or kubeconfig file if it was passed during dashboard init.
+// Config returns a rest config. In case dashboard login is enabled and option to skip
+// login page is disabled only secure config will be returned, otherwise insecure config will be
+// used.
+func (self *clientManager) Config(req *restful.Request) (*rest.Config, error) {
+	if req == nil {
+		return nil, errors.New("Request can not be nil!")
+	}
+
+	if self.isSecureModeEnabled(req) {
+		return self.secureConfig(req)
+	}
+
+	return self.InsecureConfig(), nil
+}
+
+// InsecureClient returns kubernetes client that was created without providing auth info. It uses
+// permissions granted to service account used by dashboard or kubeconfig file if it was passed
+// during dashboard init.
 func (self *clientManager) InsecureClient() kubernetes.Interface {
 	return self.insecureClient
+}
+
+// InsecureConfig returns kubernetes client config that used privileges of dashboard service account
+// or kubeconfig file if it was passed during dashboard init.
+func (self *clientManager) InsecureConfig() *rest.Config {
+	return self.insecureConfig
 }
 
 // CanI returns true when user is allowed to access data provided within SelfSubjectAccessReview, false otherwise.
@@ -114,23 +143,6 @@ func (self *clientManager) CanI(req *restful.Request, ssar *v1.SelfSubjectAccess
 	return response.Status.Allowed
 }
 
-// Config creates rest Config based on authentication information extracted from request.
-// Currently request header is only checked for existence of 'Authentication: BearerToken'
-func (self *clientManager) Config(req *restful.Request) (*rest.Config, error) {
-	cmdConfig, err := self.ClientCmdConfig(req)
-	if err != nil {
-		return nil, err
-	}
-
-	cfg, err := cmdConfig.ClientConfig()
-	if err != nil {
-		return nil, err
-	}
-
-	self.initConfig(cfg)
-	return cfg, nil
-}
-
 // ClientCmdConfig creates ClientCmd Config based on authentication information extracted from request.
 // Currently request header is only checked for existence of 'Authentication: BearerToken'
 func (self *clientManager) ClientCmdConfig(req *restful.Request) (clientcmd.ClientConfig, error) {
@@ -142,12 +154,6 @@ func (self *clientManager) ClientCmdConfig(req *restful.Request) (clientcmd.Clie
 	cfg, err := self.buildConfigFromFlags(self.apiserverHost, self.kubeConfigPath)
 	if err != nil {
 		return nil, err
-	}
-
-	// Use auth data provided in cfg if extracted auth info is nil
-	if authInfo == nil {
-		defaultAuthInfo := self.buildAuthInfoFromConfig(cfg)
-		authInfo = &defaultAuthInfo
 	}
 
 	return self.buildCmdConfig(authInfo, cfg), nil
@@ -259,13 +265,8 @@ func (self *clientManager) buildCmdConfig(authInfo *api.AuthInfo, cfg *rest.Conf
 	)
 }
 
-// Extracts authorization information from request header
+// Extracts authorization information from the request header
 func (self *clientManager) extractAuthInfo(req *restful.Request) (*api.AuthInfo, error) {
-	if req == nil {
-		log.Print("No request provided. Skipping authorization")
-		return nil, nil
-	}
-
 	authHeader := req.HeaderParameter("Authorization")
 	jweToken := req.HeaderParameter(JWETokenHeader)
 
@@ -279,7 +280,7 @@ func (self *clientManager) extractAuthInfo(req *restful.Request) (*api.AuthInfo,
 		return self.tokenManager.Decrypt(jweToken)
 	}
 
-	return nil, nil
+	return nil, errorsK8s.NewUnauthorized(kdErrors.MSG_LOGIN_UNAUTHORIZED_ERROR)
 }
 
 func (self *clientManager) extractTokenFromHeader(authHeader string) string {
@@ -288,6 +289,50 @@ func (self *clientManager) extractTokenFromHeader(authHeader string) string {
 	}
 
 	return ""
+}
+
+func (self *clientManager) isLoginEnabled(req *restful.Request) bool {
+	return req.Request.TLS != nil || args.Holder.GetEnableInsecureLogin()
+}
+
+// Secure mode means that every request to Dashboard has to be authenticated and privileges
+// of Dashboard SA can not be used.
+func (self *clientManager) isSecureModeEnabled(req *restful.Request) bool {
+	if self.isLoginEnabled(req) && !args.Holder.GetEnableSkipLogin() {
+		return true
+	}
+
+	authInfo, _ := self.extractAuthInfo(req)
+	return self.isLoginEnabled(req) && args.Holder.GetEnableSkipLogin() && authInfo != nil
+}
+
+func (self *clientManager) secureClient(req *restful.Request) (kubernetes.Interface, error) {
+	cfg, err := self.secureConfig(req)
+	if err != nil {
+		return nil, err
+	}
+
+	client, err := kubernetes.NewForConfig(cfg)
+	if err != nil {
+		return nil, err
+	}
+
+	return client, nil
+}
+
+func (self *clientManager) secureConfig(req *restful.Request) (*rest.Config, error) {
+	cmdConfig, err := self.ClientCmdConfig(req)
+	if err != nil {
+		return nil, err
+	}
+
+	cfg, err := cmdConfig.ClientConfig()
+	if err != nil {
+		return nil, err
+	}
+
+	self.initConfig(cfg)
+	return cfg, nil
 }
 
 // Initializes client manager
@@ -330,12 +375,32 @@ func (self *clientManager) initCSRFKey() {
 }
 
 func (self *clientManager) initInsecureClient() {
-	insecureClient, err := self.Client(nil)
+	self.initInsecureConfig()
+	client, err := kubernetes.NewForConfig(self.insecureConfig)
 	if err != nil {
 		panic(err)
 	}
 
-	self.insecureClient = insecureClient
+	self.insecureClient = client
+}
+
+func (self *clientManager) initInsecureConfig() {
+	cfg, err := self.buildConfigFromFlags(self.apiserverHost, self.kubeConfigPath)
+	if err != nil {
+		panic(err)
+	}
+
+	defaultAuthInfo := self.buildAuthInfoFromConfig(cfg)
+	authInfo := &defaultAuthInfo
+
+	cmdConfig := self.buildCmdConfig(authInfo, cfg)
+	cfg, err = cmdConfig.ClientConfig()
+	if err != nil {
+		panic(err)
+	}
+
+	self.initConfig(cfg)
+	self.insecureConfig = cfg
 }
 
 // Generates random csrf key

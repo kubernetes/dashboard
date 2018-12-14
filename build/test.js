@@ -24,7 +24,6 @@ import conf from './conf';
 import goCommand from './gocommand';
 import {browserSyncInstance} from './serve';
 
-
 /**
  * @param {boolean} singleRun
  * @param {function(?Error=)} doneFn
