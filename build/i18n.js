@@ -275,7 +275,7 @@ export function processI18nMessages(file, minifiedHtml) {
   i18nMessages.forEach((message) => {
     message.varName = message.varName || createMessageVarName();
     // Replace i18n messages with english messages for testing and MSG_ vars invocations
-    // for compiler passses.
+    // for compiler passes.
     content = content.replace(message.original, `' + ${message.varName} + '`);
     pureHtmlContent = pureHtmlContent.replace(message.original, message.text);
 
