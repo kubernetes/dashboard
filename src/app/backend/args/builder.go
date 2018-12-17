@@ -144,7 +144,7 @@ func (self *holderBuilder) SetEnableSkipLogin(enableSkipLogin bool) *holderBuild
 	return self
 }
 
-// GetHolderBuilder returns singletone instance of argument holder builder.
+// GetHolderBuilder returns singleton instance of argument holder builder.
 func GetHolderBuilder() *holderBuilder {
 	return builder
 }
