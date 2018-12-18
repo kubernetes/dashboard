@@ -25,7 +25,7 @@ import (
 	"k8s.io/client-go/kubernetes"
 )
 
-// Discovery structure contains all resource lists grouped into the servicesAndDiscovery category.
+// Discovery structure contains all resource lists grouped into the Discovery category.
 type Discovery struct {
 	ServiceList service.ServiceList `json:"serviceList"`
 	IngressList ingress.IngressList `json:"ingressList"`
@@ -34,7 +34,7 @@ type Discovery struct {
 	Errors []error `json:"errors"`
 }
 
-// GetDiscovery returns a list of all servicesAndDiscovery resources in the cluster.
+// GetDiscovery returns a list of all Discovery resources in the cluster.
 func GetDiscovery(client kubernetes.Interface, nsQuery *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery) (*Discovery, error) {
 
@@ -47,7 +47,7 @@ func GetDiscovery(client kubernetes.Interface, nsQuery *common.NamespaceQuery,
 	return GetDiscoveryFromChannels(channels, dsQuery)
 }
 
-// GetDiscoveryFromChannels returns a list of all servicesAndDiscovery in the cluster, from the
+// GetDiscoveryFromChannels returns a list of all Discovery resources in the cluster, from the
 // channel sources.
 func GetDiscoveryFromChannels(channels *common.ResourceChannels,
 	dsQuery *dataselect.DataSelectQuery) (*Discovery, error) {
