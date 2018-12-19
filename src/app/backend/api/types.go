@@ -145,6 +145,7 @@ const (
 	ClientTypeBetaBatchClient   = "betabatchclient"
 	ClientTypeAutoscalingClient = "autoscalingclient"
 	ClientTypeStorageClient     = "storageclient"
+	ClientTypeRbacClient        = "rbacclient"
 )
 
 // Mapping from resource kind to K8s apiserver API path. This is mostly pluralization, because
@@ -180,6 +181,10 @@ var KindToAPIMapping = map[string]struct {
 	ResourceKindStatefulSet:             {"statefulsets", ClientTypeAppsClient, true},
 	ResourceKindStorageClass:            {"storageclasses", ClientTypeStorageClient, false},
 	ResourceKindEndpoint:                {"endpoints", ClientTypeDefault, true},
+	ResourceKindRbacRole:                {"roles", ClientTypeRbacClient, true},
+	ResourceKindRbacClusterRole:         {"clusterroles", ClientTypeRbacClient, false},
+	ResourceKindRbacRoleBinding:         {"rolebindings", ClientTypeRbacClient, true},
+	ResourceKindRbacClusterRoleBinding:  {"clusterrolebindings", ClientTypeRbacClient, false},
 }
 
 // IsSelectorMatching returns true when an object with the given selector targets the same
