@@ -47,8 +47,8 @@ type RbacRoleBinding struct {
 func GetRbacRoleBindingList(client kubernetes.Interface, dsQuery *dataselect.DataSelectQuery) (*RbacRoleBindingList, error) {
 	log.Print("Getting list rbac role bindings")
 	channels := &common.ResourceChannels{
-	  RoleBindingList: common.GetRoleBindingListChannel(client,1 ),
-	  ClusterRoleBindingList: common.GetClusterRoleBindingListChannel(client,1),
+		RoleBindingList:        common.GetRoleBindingListChannel(client, 1),
+		ClusterRoleBindingList: common.GetClusterRoleBindingListChannel(client, 1),
 	}
 
 	return GetRbacRoleBindingListFromChannels(channels, dsQuery)
@@ -75,6 +75,10 @@ func GetRbacRoleBindingListFromChannels(channels *common.ResourceChannels, dsQue
 
 // SimplifyRbacRoleBindingLists merges a list of RoleBindings with a list of ClusterRoleBindings to create a simpler, unified list
 func SimplifyRbacRoleBindingLists(roleBindings []rbac.RoleBinding, clusterRoleBindings []rbac.ClusterRoleBinding, dsQuery *dataselect.DataSelectQuery) *RbacRoleBindingList {
+
+	result := &RbacRoleBindingList{
+		ListMeta: api.ListMeta{TotalItems: len(roleBindings) + len(clusterRoleBindings)},
+	}
 	items := make([]RbacRoleBinding, 0)
 
 	for _, item := range roleBindings {
@@ -100,10 +104,8 @@ func SimplifyRbacRoleBindingLists(roleBindings []rbac.RoleBinding, clusterRoleBi
 				Subjects:   item.Subjects,
 			})
 	}
-	selectedItems := fromCells(dataselect.GenericDataSelect(toCells(items), dsQuery))
-	result := &RbacRoleBindingList{
-		Items:    selectedItems,
-		ListMeta: api.ListMeta{TotalItems: len(roleBindings) + len(clusterRoleBindings)},
-	}
+	roleBindingCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(items), dsQuery)
+	result.ListMeta = api.ListMeta{TotalItems: filteredTotal}
+	result.Items = fromCells(roleBindingCells)
 	return result
 }
