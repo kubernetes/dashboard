@@ -18,6 +18,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	autoscaling "k8s.io/api/autoscaling/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
 )
@@ -43,7 +44,7 @@ type HorizontalPodAutoscaler struct {
 	TargetCPUUtilizationPercentage  *int32         `json:"targetCPUUtilizationPercentage"`
 }
 
-func GetHorizontalPodAutoscalerList(client k8sClient.Interface, nsQuery *common.NamespaceQuery) (*HorizontalPodAutoscalerList, error) {
+func GetHorizontalPodAutoscalerList(client k8sClient.Interface, nsQuery *common.NamespaceQuery, dsQuery *dataselect.DataSelectQuery) (*HorizontalPodAutoscalerList, error) {
 	channel := common.GetHorizontalPodAutoscalerListChannel(client, nsQuery, 1)
 	hpaList := <-channel.List
 	err := <-channel.Error
@@ -53,7 +54,7 @@ func GetHorizontalPodAutoscalerList(client k8sClient.Interface, nsQuery *common.
 		return nil, criticalError
 	}
 
-	return toHorizontalPodAutoscalerList(hpaList.Items, nonCriticalErrors), nil
+	return toHorizontalPodAutoscalerList(hpaList.Items, nonCriticalErrors, dsQuery), nil
 }
 
 func GetHorizontalPodAutoscalerListForResource(client k8sClient.Interface, namespace, kind, name string) (*HorizontalPodAutoscalerList, error) {
@@ -74,15 +75,19 @@ func GetHorizontalPodAutoscalerListForResource(client k8sClient.Interface, names
 		}
 	}
 
-	return toHorizontalPodAutoscalerList(filteredHpaList, nonCriticalErrors), nil
+	return toHorizontalPodAutoscalerList(filteredHpaList, nonCriticalErrors, dataselect.DefaultDataSelect), nil
 }
 
-func toHorizontalPodAutoscalerList(hpas []autoscaling.HorizontalPodAutoscaler, nonCriticalErrors []error) *HorizontalPodAutoscalerList {
+func toHorizontalPodAutoscalerList(hpas []autoscaling.HorizontalPodAutoscaler, nonCriticalErrors []error, dsQuery *dataselect.DataSelectQuery) *HorizontalPodAutoscalerList {
 	hpaList := &HorizontalPodAutoscalerList{
 		HorizontalPodAutoscalers: make([]HorizontalPodAutoscaler, 0),
 		ListMeta:                 api.ListMeta{TotalItems: len(hpas)},
 		Errors:                   nonCriticalErrors,
 	}
+
+	hpaCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(hpas), dsQuery)
+	hpas = fromCells(hpaCells)
+	hpaList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
 	for _, hpa := range hpas {
 		horizontalPodAutoscaler := toHorizontalPodAutoScaler(&hpa)
