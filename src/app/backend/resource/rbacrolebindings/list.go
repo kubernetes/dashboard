@@ -47,8 +47,8 @@ type RbacRoleBinding struct {
 func GetRbacRoleBindingList(client kubernetes.Interface, dsQuery *dataselect.DataSelectQuery) (*RbacRoleBindingList, error) {
 	log.Print("Getting list rbac role bindings")
 	channels := &common.ResourceChannels{
-		RoleList:        common.GetRoleListChannel(client, 1),
-		ClusterRoleList: common.GetClusterRoleListChannel(client, 1),
+	  RoleBindingList: common.GetRoleBindingListChannel(client,1 ),
+	  ClusterRoleBindingList: common.GetClusterRoleBindingListChannel(client,1),
 	}
 
 	return GetRbacRoleBindingListFromChannels(channels, dsQuery)
