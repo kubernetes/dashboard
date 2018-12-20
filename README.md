@@ -11,8 +11,6 @@ Kubernetes Dashboard is a general purpose, web-based UI for Kubernetes clusters.
 
 ![Dashboard UI workloads page](docs/dashboard-ui.png)
 
-**IMPORTANT:** Frontend side of the project is currently undergoing migration from [AngularJS](https://angularjs.org/) to the current version of [Angular](https://angular.io/). If you are willing to contribute or you would like to check out early version of the application check [this pull request](https://github.com/kubernetes/dashboard/pull/3152).
-
 ## Getting Started
 
 **IMPORTANT:** Read the [Access Control](
@@ -21,7 +19,7 @@ https://github.com/kubernetes/dashboard/wiki/Access-control) guide before perfor
 To deploy Dashboard, execute following command:
 
 ```sh
-$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/aio/deploy/recommended/kubernetes-dashboard.yaml
 ```
 
 To access Dashboard from your local workstation you must create a secure channel to your Kubernetes cluster. Run the following command:
@@ -59,8 +57,8 @@ contributing
 
 * [**#sig-ui on Kubernetes Slack**](https://kubernetes.slack.com)
 * [**kubernetes-sig-ui mailing list** ](https://groups.google.com/forum/#!forum/kubernetes-sig-ui)
-* [**GitHub issues**](https://github.com/kubernetes/dashboard/issues)
-* [**community info**](https://github.com/kubernetes/community/tree/master/sig-ui)
+* [**Issue tracker**](https://github.com/kubernetes/dashboard/issues)
+* [**Community info**](https://github.com/kubernetes/community/tree/master/sig-ui)
 
 ## License
 
