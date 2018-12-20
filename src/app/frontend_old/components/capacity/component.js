@@ -16,5 +16,5 @@ export const capacityComponent = {
   bindings: {
     'capacity': '<',
   },
-  templateUrl: 'common/components/capacity/capacity.html',
+  templateUrl: 'capacity.html',
 };

@@ -79,5 +79,5 @@ export const graphCardComponent = {
     'graphInfo': '@',
     'selectedMetricNames': '<',
   },
-  templateUrl: 'common/components/graph/graphcard.html',
+  templateUrl: 'graphcard.html',
 };

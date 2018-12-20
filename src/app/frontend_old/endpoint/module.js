@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import componentsModule from '../common/components/module';
+import componentsModule from '../components/module';
 import filtersModule from '../common/filters/module';
 
 

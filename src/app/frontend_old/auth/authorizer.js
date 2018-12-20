@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName, StateParams} from '../../error/state';
+import {stateName, StateParams} from '../error/state';
 import {kdLocalizedErrors} from '../errorhandling/errors';
 
 /** @final */

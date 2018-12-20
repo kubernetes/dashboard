@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {authRequired, stateName as chromeStateName} from '../chrome/state';
-import {breadcrumbsConfig} from '../common/components/breadcrumbs/service';
+import {breadcrumbsConfig} from '../components/breadcrumbs/service';
 
 import {InternalErrorController} from './controller';
 import {stateName, StateParams} from './state';

@@ -13,21 +13,14 @@
 // limitations under the License.
 
 /**
- * Controller for the replication controller list view.
- *
- * @final
+ * Returns directive definition object for the component that displays the service
+ * endpoint (type {backendApi.Endpoint}) which is accessible from the outside of the cluster
+ * @return {!angular.Component}
  */
-export class ReplicationControllerListController {
-  /**
-   * @param {!backendApi.ReplicationControllerList} replicationControllerList
-   * @param {!angular.Resource} kdRCListResource
-   * @ngInject
-   */
-  constructor(replicationControllerList, kdRCListResource) {
-    /** @export {!backendApi.ReplicationControllerList} */
-    this.replicationControllerList = replicationControllerList;
-
-    /** @export {!angular.Resource} */
-    this.rcListResource = kdRCListResource;
-  }
-}
+export const externalEndpointComponent = {
+  templateUrl: 'externalendpoint.html',
+  bindings: {
+    /** {!Array<!backendApi.Endpoint>} */
+    'endpoints': '<',
+  },
+};
