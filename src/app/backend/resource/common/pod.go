@@ -46,12 +46,21 @@ func FilterPodsByControllerRef(owner metav1.Object, allPods []v1.Pod) []v1.Pod {
 	return matchingPods
 }
 
+// FilterPodsForJob returns a list of pods that matches to a job controller's selector
 func FilterPodsForJob(job batch.Job, pods []v1.Pod) []v1.Pod {
 	result := make([]v1.Pod, 0)
 	for _, pod := range pods {
-		if pod.Namespace == job.Namespace && pod.Labels["controller-uid"] ==
-			job.Spec.Selector.MatchLabels["controller-uid"] {
-			result = append(result, pod)
+		if pod.Namespace == job.Namespace {
+			selectorMatch := true
+			for key, value := range job.Spec.Selector.MatchLabels {
+				if pod.Labels[key] != value {
+					selectorMatch = false
+					break
+				}
+			}
+			if selectorMatch {
+				result = append(result, pod)
+			}
 		}
 	}
 
