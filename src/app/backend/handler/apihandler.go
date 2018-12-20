@@ -1174,11 +1174,11 @@ func (apiHandler *APIHandler) handleExecShell(request *restful.Request, response
 		return
 	}
 
-	terminalSessions[sessionId] = TerminalSession{
+	terminalSessions.Set(sessionId, TerminalSession{
 		id:       sessionId,
 		bound:    make(chan error),
 		sizeChan: make(chan remotecommand.TerminalSize),
-	}
+	})
 	go WaitForTerminal(k8sClient, cfg, request, sessionId)
 	response.WriteHeaderAndEntity(http.StatusOK, TerminalResponse{Id: sessionId})
 }
@@ -1790,7 +1790,8 @@ func (apiHandler *APIHandler) handleGetHorizontalPodAutoscalerList(request *rest
 	}
 
 	namespace := parseNamespacePathParameter(request)
-	result, err := horizontalpodautoscaler.GetHorizontalPodAutoscalerList(k8sClient, namespace)
+	dataSelect := parseDataSelectPathParameter(request)
+	result, err := horizontalpodautoscaler.GetHorizontalPodAutoscalerList(k8sClient, namespace, dataSelect)
 	if err != nil {
 		kdErrors.HandleInternalError(response, err)
 		return

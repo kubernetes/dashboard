@@ -19,7 +19,7 @@ import "net"
 var builder = &holderBuilder{holder: Holder}
 
 // Used to build argument holder structure. It is private to make sure that only 1 instance can be created
-// that modifies singletone instance of argument holder.
+// that modifies singleton instance of argument holder.
 type holderBuilder struct {
 	holder *holder
 }
@@ -132,15 +132,15 @@ func (self *holderBuilder) SetEnableInsecureLogin(enableInsecureLogin bool) *hol
 	return self
 }
 
-// SetDisableSettingsAuthorizer 'enable-settings-authorizer' argument of Dashboard binary.
-func (self *holderBuilder) SetDisableSettingsAuthorizer(enableSettingsAuthorizer bool) *holderBuilder {
-	self.holder.disableSettingsAuthorizer = enableSettingsAuthorizer
+// SetDisableSettingsAuthorizer 'disable-settings-authorizer' argument of Dashboard binary.
+func (self *holderBuilder) SetDisableSettingsAuthorizer(disableSettingsAuthorizer bool) *holderBuilder {
+	self.holder.disableSettingsAuthorizer = disableSettingsAuthorizer
 	return self
 }
 
-// SetDisableSkipButton 'disable-skip' argument of Dashboard binary.
-func (self *holderBuilder) SetDisableSkipButton(disableSkipButton bool) *holderBuilder {
-	self.holder.disableSkipButton = disableSkipButton
+// SetEnableSkipLogin 'enable-skip-login' argument of Dashboard binary.
+func (self *holderBuilder) SetEnableSkipLogin(enableSkipLogin bool) *holderBuilder {
+	self.holder.enableSkipLogin = enableSkipLogin
 	return self
 }
 

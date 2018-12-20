@@ -163,6 +163,11 @@ export default {
     systemBannerSeverity: gulpUtil.env.systemBannerSeverity !== undefined ?
         gulpUtil.env.systemBannerSeverity :
         '',
+    /**
+     * Allows to override enable skip login option on the backend.
+     */
+    enableSkipButton: gulpUtil.env.enableSkipButton !== undefined ? gulpUtil.env.enableSkipButton :
+                                                                    true,
   },
 
   /**
