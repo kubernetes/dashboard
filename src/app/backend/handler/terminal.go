@@ -84,7 +84,7 @@ func (t TerminalSession) Read(p []byte) (int, error) {
 
 	var msg TerminalMessage
 	if err := json.Unmarshal([]byte(m), &msg); err != nil {
-		return 0, err
+		return copy(p, END_OF_TRANSMISSION), err
 	}
 
 	switch msg.Op {
@@ -94,7 +94,7 @@ func (t TerminalSession) Read(p []byte) (int, error) {
 		t.sizeChan <- remotecommand.TerminalSize{msg.Cols, msg.Rows}
 		return 0, nil
 	default:
-		return 0, fmt.Errorf("unknown message type '%s'", msg.Op)
+		return copy(p, END_OF_TRANSMISSION), fmt.Errorf("unknown message type '%s'", msg.Op)
 	}
 }
 
