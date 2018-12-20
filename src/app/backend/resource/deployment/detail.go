@@ -67,6 +67,9 @@ type DeploymentDetail struct {
 	// Status information on the deployment
 	StatusInfo `json:"statusInfo"`
 
+	// Conditions describe the state of a deployment at a certain point.
+	Conditions []common.Condition `json:"conditions"`
+
 	// The deployment strategy to use to replace existing pods with new ones.
 	// Valid options: Recreate, RollingUpdate
 	Strategy apps.DeploymentStrategyType `json:"strategy"`
@@ -197,6 +200,7 @@ func GetDeploymentDetail(client client.Interface, metricClient metricapi.MetricC
 		PodList:                     *podList,
 		Selector:                    deployment.Spec.Selector.MatchLabels,
 		StatusInfo:                  GetStatusInfo(&deployment.Status),
+		Conditions:                  getConditions(deployment.Status.Conditions),
 		Strategy:                    deployment.Spec.Strategy.Type,
 		MinReadySeconds:             deployment.Spec.MinReadySeconds,
 		RollingUpdateStrategy:       rollingUpdateStrategy,
@@ -205,7 +209,7 @@ func GetDeploymentDetail(client client.Interface, metricClient metricapi.MetricC
 		RevisionHistoryLimit:        deployment.Spec.RevisionHistoryLimit,
 		EventList:                   *eventList,
 		HorizontalPodAutoscalerList: *hpas,
-		Errors: nonCriticalErrors,
+		Errors:                      nonCriticalErrors,
 	}, nil
 
 }

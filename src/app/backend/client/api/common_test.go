@@ -19,7 +19,7 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/client/api"
-	"k8s.io/api/authorization/v1"
+	v1 "k8s.io/api/authorization/v1"
 )
 
 func TestToSelfSubjectAccessReview(t *testing.T) {

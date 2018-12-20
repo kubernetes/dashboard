@@ -125,6 +125,6 @@ func toReplicaSetDetail(replicaSet *apps.ReplicaSet, eventList common.EventList,
 		ServiceList:                 serviceList,
 		EventList:                   eventList,
 		HorizontalPodAutoscalerList: hpas,
-		Errors: nonCriticalErrors,
+		Errors:                      nonCriticalErrors,
 	}
 }

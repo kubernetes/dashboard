@@ -22,7 +22,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	apps "k8s.io/api/apps/v1beta2"
-	"k8s.io/api/core/v1"
+	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
 )
@@ -94,11 +94,11 @@ func TestToEventList(t *testing.T) {
 				Events: []common.Event{
 					{
 						ObjectMeta: api.ObjectMeta{Name: "event-1"},
-						TypeMeta:   api.TypeMeta{api.ResourceKindEvent},
+						TypeMeta:   api.TypeMeta{Kind: api.ResourceKindEvent},
 					},
 					{
 						ObjectMeta: api.ObjectMeta{Name: "event-2"},
-						TypeMeta:   api.TypeMeta{api.ResourceKindEvent},
+						TypeMeta:   api.TypeMeta{Kind: api.ResourceKindEvent},
 					},
 				},
 			},
@@ -149,7 +149,9 @@ func TestGetResourceEvents(t *testing.T) {
 						Name: "ev-1", Namespace: "ns-1", Labels: labelSelector},
 					Message: "test-message",
 					Type:    v1.EventTypeNormal,
-				}}},
+				}},
+				Errors: []error{},
+			},
 		},
 	}
 

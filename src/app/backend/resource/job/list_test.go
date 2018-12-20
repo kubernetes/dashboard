@@ -24,7 +24,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	batch "k8s.io/api/batch/v1"
-	"k8s.io/api/core/v1"
+	v1 "k8s.io/api/core/v1"
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
@@ -160,6 +160,7 @@ func TestGetJobListFromChannels(t *testing.T) {
 					ObjectMeta: api.ObjectMeta{
 						Name:              "rs-name",
 						Namespace:         "rs-namespace",
+						UID:               "uid",
 						Labels:            map[string]string{"key": "value"},
 						CreationTimestamp: metaV1.Unix(111, 222),
 					},
@@ -177,6 +178,7 @@ func TestGetJobListFromChannels(t *testing.T) {
 					ObjectMeta: api.ObjectMeta{
 						Name:              "rs-name",
 						Namespace:         "rs-namespace",
+						UID:               "uid",
 						Labels:            map[string]string{"key": "value"},
 						CreationTimestamp: metaV1.Unix(111, 222),
 					},

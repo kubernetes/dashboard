@@ -23,7 +23,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
-	"k8s.io/api/core/v1"
+	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
 )
@@ -55,6 +55,7 @@ func TestGetServicePods(t *testing.T) {
 					{
 						ObjectMeta: api.ObjectMeta{
 							Name:      "pod-1",
+							UID:       "test-uid",
 							Namespace: "ns-1"},
 						TypeMeta:  api.TypeMeta{Kind: api.ResourceKindPod},
 						PodStatus: pod.PodStatus{Status: string(v1.PodPending)},

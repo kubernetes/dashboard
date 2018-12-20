@@ -25,7 +25,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/controller"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolumeclaim"
-	"k8s.io/api/core/v1"
+	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
 )
@@ -48,13 +48,16 @@ func TestGetPodDetail(t *testing.T) {
 					Namespace: "test-namespace",
 					Labels:    map[string]string{"app": "test"},
 				},
-				Controller:                controller.ResourceOwner{},
-				Containers:                []Container{},
-				InitContainers:            []Container{},
-				EventList:                 common.EventList{Events: []common.Event{}},
+				Controller:     controller.ResourceOwner{},
+				Containers:     []Container{},
+				InitContainers: []Container{},
+				EventList: common.EventList{
+					Events: []common.Event{},
+					Errors: []error{},
+				},
 				Metrics:                   []metricapi.Metric{},
 				PersistentvolumeclaimList: persistentvolumeclaim.PersistentVolumeClaimList{},
-				Errors: []error{},
+				Errors:                    []error{},
 			},
 		},
 	}
@@ -159,13 +162,13 @@ func TestEvalEnvFrom(t *testing.T) {
 				Name:  "echoserver",
 				Image: "k8s.gcr.io/echoserver",
 				EnvFrom: []v1.EnvFromSource{
-					v1.EnvFromSource{
+					{
 						SecretRef: &v1.SecretEnvSource{
 							LocalObjectReference: v1.LocalObjectReference{
 								Name: "secret-env",
 							},
 						},
-					}, v1.EnvFromSource{
+					}, {
 						Prefix: "test_",
 						ConfigMapRef: &v1.ConfigMapEnvSource{
 							LocalObjectReference: v1.LocalObjectReference{

@@ -1,0 +1,33 @@
+{
+  "extends": "./node_modules/gts/tsconfig-google.json",
+  "angularCompilerOptions": {
+    "annotationsAs": "static fields",
+    "annotateForClosureCompiler": true
+  },
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "src/app/frontend",
+    "paths": {
+      "@api/*": ["typings/*"]
+    },
+    "outDir": ".tmp/out-tsc",
+    "target": "esnext",
+    "module": "es6",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "strict": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "noImplicitReturns": true,
+    "noUnusedParameters": true,
+    "noImplicitAny": true,
+    "lib": [
+      "es2017",
+      "dom"
+    ],
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/app/frontend/typings"
+    ]
+  }
+}

@@ -26,7 +26,7 @@ import (
 
 	restful "github.com/emicklei/go-restful"
 	"gopkg.in/igm/sockjs-go.v2/sockjs"
-	"k8s.io/api/core/v1"
+	v1 "k8s.io/api/core/v1"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/kubernetes/scheme"
 	"k8s.io/client-go/rest"
@@ -91,7 +91,7 @@ func (t TerminalSession) Read(p []byte) (int, error) {
 	case "stdin":
 		return copy(p, msg.Data), nil
 	case "resize":
-		t.sizeChan <- remotecommand.TerminalSize{msg.Cols, msg.Rows}
+		t.sizeChan <- remotecommand.TerminalSize{Width: msg.Cols, Height: msg.Rows}
 		return 0, nil
 	default:
 		return copy(p, END_OF_TRANSMISSION), fmt.Errorf("unknown message type '%s'", msg.Op)

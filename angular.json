@@ -1,0 +1,133 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "kubernetes-dashboard": {
+      "root": "",
+      "sourceRoot": "src",
+      "projectType": "application",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": ".tmp/frontend",
+            "index": "src/app/frontend/index.html",
+            "main": "src/app/frontend/index.ts",
+            "tsConfig": "src/app/frontend/../../../aio/tsconfig.app.json",
+            "polyfills": "src/app/frontend/polyfills.ts",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "src/app/frontend/assets",
+                "output": "/assets"
+              }
+            ],
+            "styles": [
+              "node_modules/material-design-icons/iconfont/material-icons.css",
+              "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
+              "node_modules/xterm/dist/xterm.css",
+              "src/app/frontend/index.scss"
+            ],
+            "scripts": ["node_modules/sockjs-client/dist/sockjs.min.js"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/app/frontend/environments/environment.ts",
+                  "with": "src/app/frontend/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "kubernetes-dashboard:build",
+            "port": 8080
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "kubernetes-dashboard:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "kubernetes-dashboard:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "src/app/frontend/index.spec.ts",
+            "karmaConfig": "aio/karma.conf.js",
+            "polyfills": "src/app/frontend/polyfills.ts",
+            "tsConfig": "src/app/frontend/../../../aio/tsconfig.spec.json",
+            "scripts": [],
+            "styles": [
+              "node_modules/material-design-icons/iconfont/material-icons.css",
+              "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
+              "src/app/frontend/index.scss"
+            ],
+            "assets": [
+              "src/app/frontend/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "src/tsconfig.json"
+            ],
+            "exclude": []
+          }
+        }
+      }
+    },
+    "kubernetes-dashboard-e2e": {
+      "root": "",
+      "sourceRoot": "",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "aio/protractor.conf.js",
+            "devServerTarget": "kubernetes-dashboard:serve"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [],
+            "exclude": []
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "kubernetes-dashboard",
+  "schematics": {
+    "@schematics/angular:component": {
+      "prefix": "kd",
+      "styleext": "scss"
+    },
+    "@schematics/angular:directive": {
+      "prefix": "kd"
+    }
+  }
+}

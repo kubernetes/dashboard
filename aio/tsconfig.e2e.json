@@ -1,0 +1,16 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../out-tsc/e2e",
+    "baseUrl": "../src/app/frontend",
+    "module": "commonjs",
+    "target": "es5",
+    "types": [
+      "jasmine",
+      "jasminewd2",
+      "node"
+    ]
+  },
+  "include": ["../src/test/e2e/**/*"],
+  "lib": ["es2017", "dom"]
+}

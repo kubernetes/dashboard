@@ -1,0 +1,42 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-object-meta [initialized]="isInitialized"
+                [objectMeta]="storageClass?.objectMeta"></kd-object-meta>
+
+<kd-card [initialized]="isInitialized">
+  <div title>Storage Class information</div>
+  <div content
+       *ngIf="isInitialized"
+       fxLayout="row wrap">
+    <kd-property *ngIf="storageClass?.provisioner"
+                 fxFlex="100">
+      <div key>Provisioner</div>
+      <div value>{{storageClass?.provisioner}}</div>
+    </kd-property>
+    <kd-property *ngFor="let parameter of getParameterNames()">
+      <div key
+           fxLayout>
+        {{parameter}}
+        <mat-icon matTooltip="Parameter"
+                  class="kd-storage-class-parameter-icon">tune</mat-icon>
+      </div>
+      <div value>{{storageClass?.parameters[parameter]}}</div>
+    </kd-property>
+  </div>
+</kd-card>
+
+<kd-persistent-volume-list [endpoint]="pvListEndpoint"></kd-persistent-volume-list>

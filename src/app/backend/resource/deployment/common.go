@@ -21,7 +21,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	apps "k8s.io/api/apps/v1beta2"
-	"k8s.io/api/core/v1"
+	v1 "k8s.io/api/core/v1"
 )
 
 // The code below allows to perform complex data section on Deployment
@@ -89,4 +89,21 @@ func getStatus(list *apps.DeploymentList, rs []apps.ReplicaSet, pods []v1.Pod, e
 	}
 
 	return info
+}
+
+func getConditions(deploymentConditions []apps.DeploymentCondition) []common.Condition {
+	conditions := make([]common.Condition, 0)
+
+	for _, condition := range deploymentConditions {
+		conditions = append(conditions, common.Condition{
+			Type:               string(condition.Type),
+			Status:             condition.Status,
+			Reason:             condition.Reason,
+			Message:            condition.Message,
+			LastTransitionTime: condition.LastTransitionTime,
+			LastProbeTime:      condition.LastUpdateTime,
+		})
+	}
+
+	return conditions
 }

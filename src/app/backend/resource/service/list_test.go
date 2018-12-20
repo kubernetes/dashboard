@@ -21,7 +21,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"k8s.io/api/core/v1"
+	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
 )
@@ -50,8 +50,9 @@ func TestGetServiceList(t *testing.T) {
 							Namespace: "ns-1",
 							Labels:    map[string]string{},
 						},
-						TypeMeta:         api.TypeMeta{Kind: api.ResourceKindService},
-						InternalEndpoint: common.Endpoint{Host: "svc-1.ns-1"},
+						TypeMeta:          api.TypeMeta{Kind: api.ResourceKindService},
+						InternalEndpoint:  common.Endpoint{Host: "svc-1.ns-1"},
+						ExternalEndpoints: []common.Endpoint{},
 					},
 				},
 				Errors: []error{},

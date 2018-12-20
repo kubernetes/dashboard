@@ -17,7 +17,7 @@ package deployment
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	apps "k8s.io/api/apps/v1beta2"
-	"k8s.io/api/core/v1"
+	v1 "k8s.io/api/core/v1"
 )
 
 // Methods below are taken from kubernetes repo:
