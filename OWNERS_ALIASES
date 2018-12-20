@@ -4,6 +4,7 @@ aliases:
     - danielromlein
     - floreks
     - maciaszczykm
+    - jeefy
   dashboard-maintainers:
     - konryd
     - ianlewis
@@ -18,6 +19,7 @@ aliases:
     - cheld
     - olekzabl
     - mhenc
+    - jeefy
   dashboard-admins:
     - bryk
     - floreks
