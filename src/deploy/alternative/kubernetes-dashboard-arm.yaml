@@ -77,7 +77,7 @@ subjects:
 # ------------------- Dashboard Deployment ------------------- #
 
 kind: Deployment
-apiVersion: apps/v1beta2
+apiVersion: apps/v1
 metadata:
   labels:
     k8s-app: kubernetes-dashboard
@@ -96,7 +96,7 @@ spec:
     spec:
       containers:
       - name: kubernetes-dashboard
-        image: k8s.gcr.io/kubernetes-dashboard-arm:v1.10.0
+        image: k8s.gcr.io/kubernetes-dashboard-arm:v1.10.1
         ports:
         - containerPort: 9090
           protocol: TCP
