@@ -19,7 +19,7 @@ https://github.com/kubernetes/dashboard/wiki/Access-control) guide before perfor
 To deploy Dashboard, execute following command:
 
 ```sh
-$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/aio/deploy/recommended/kubernetes-dashboard.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
 ```
 
 To access Dashboard from your local workstation you must create a secure channel to your Kubernetes cluster. Run the following command:
