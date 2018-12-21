@@ -70,6 +70,7 @@ rules:
   resources: ["services/proxy"]
   resourceNames: ["heapster", "http:heapster:", "https:heapster:"]
   verbs: ["get"]
+
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -108,7 +109,7 @@ spec:
     spec:
       containers:
       - name: kubernetes-dashboard
-        image: k8s.gcr.io/kubernetes-dashboard-amd64:v1.10.1
+        image: k8s.gcr.io/kubernetes-dashboard-arm:v1.10.1
         ports:
         - containerPort: 8443
           protocol: TCP
