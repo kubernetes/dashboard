@@ -43,7 +43,7 @@
     "fix:backend": "goimports -w src/app/backend",
     "fix:frontend": "concurrently \"npm run fix:frontend:ts\" \"npm run fix:frontend:scss\" \"npm run fix:frontend:html\"",
     "fix:frontend:ts": "gts fix",
-    "fix:frontend:scss": "./aio/scripts/format.sh --styles",
+    "fix:frontend:scss": "scssfmt -r 'src/**/*.scss'",
     "fix:frontend:html": "./aio/scripts/format.sh --html",
     "fix:license": "gulp update-license-headers",
     "clean": "rm -rf .go_workspace .tmp coverage dist npm-debug.log",
@@ -58,6 +58,10 @@
   "lint-staged": {
     "src/**/*.ts": [
       "gts fix",
+      "git add"
+    ],
+    "src/**/*.scss": [
+      "scssfmt",
       "git add"
     ]
   },
