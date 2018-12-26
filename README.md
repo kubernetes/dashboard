@@ -44,7 +44,7 @@ https://github.com/kubernetes/dashboard/wiki/Integrations) guide.
 
 ## Documentation
 
-Dashboard documentation can be found on [Wiki](https://github.com/kubernetes/dashboard/wiki) pages, it includes:
+Dashboard documentation can be found on [Wiki](https://github.com/kubernetes/dashboard/wiki) pages which contains:
 
 * Common: Entry-level overview
 * User Guide: [Installation](https://github.com/kubernetes/dashboard/wiki/Installation), [Accessing Dashboard](
