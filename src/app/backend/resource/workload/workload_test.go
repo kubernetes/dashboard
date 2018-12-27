@@ -212,7 +212,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 			JobList: job.JobList{
 				ListMeta:          api.ListMeta{TotalItems: len(c.jobs)},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
-				Status:            common.ResourceStatus{Succeeded: len(c.k8sJobs.Items)},
+				Status:            common.ResourceStatus{Running: len(c.k8sJobs.Items)},
 				Jobs:              c.jobs,
 				Errors:            []error{},
 			},

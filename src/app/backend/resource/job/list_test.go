@@ -126,7 +126,7 @@ func TestGetJobListFromChannels(t *testing.T) {
 					{
 						ObjectMeta: metaV1.ObjectMeta{
 							Namespace: "rs-namespace",
-							Labels:	   map[string]string{"foo": "bar"},
+							Labels:    map[string]string{"foo": "bar"},
 							OwnerReferences: []metaV1.OwnerReference{
 								{
 									Name:       "rs-name",
@@ -155,7 +155,7 @@ func TestGetJobListFromChannels(t *testing.T) {
 			&JobList{
 				ListMeta:          api.ListMeta{TotalItems: 2},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
-				Status:            common.ResourceStatus{Succeeded: 2},
+				Status:            common.ResourceStatus{Running: 1, Failed: 1},
 				Jobs: []Job{{
 					ObjectMeta: api.ObjectMeta{
 						Name:              "rs-name",
