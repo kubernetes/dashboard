@@ -53,12 +53,20 @@ https://github.com/kubernetes/dashboard/wiki/Accessing-dashboard) and more for u
 Management](https://github.com/kubernetes/dashboard/wiki/Dependency-management) and more for anyone interested in
 contributing
 
-## Community
+## Community, discussion, contribution, and support
+
+Learn how to engage with the Kubernetes community on the [community page](http://kubernetes.io/community/).
+
+You can reach the maintainers of this project at:
 
 * [**#sig-ui on Kubernetes Slack**](https://kubernetes.slack.com)
 * [**kubernetes-sig-ui mailing list** ](https://groups.google.com/forum/#!forum/kubernetes-sig-ui)
 * [**Issue tracker**](https://github.com/kubernetes/dashboard/issues)
-* [**Community info**](https://github.com/kubernetes/community/tree/master/sig-ui)
+* [**SIG info**](https://github.com/kubernetes/community/tree/master/sig-ui)
+
+### Code of conduct
+
+Participation in the Kubernetes community is governed by the [Kubernetes Code of Conduct](code-of-conduct.md).
 
 ## License
 
