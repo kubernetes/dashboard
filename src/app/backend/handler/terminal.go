@@ -139,14 +139,14 @@ type SessionMap struct {
 }
 
 // Get return a given terminalSession by sessionId
-func (sm SessionMap) Get(sessionId string) TerminalSession {
+func (sm *SessionMap) Get(sessionId string) TerminalSession {
 	sm.Lock.RLock()
 	defer sm.Lock.RUnlock()
 	return sm.Sessions[sessionId]
 }
 
 // Set store a TerminalSession to SessionMap
-func (sm SessionMap) Set(sessionId string, session TerminalSession) {
+func (sm *SessionMap) Set(sessionId string, session TerminalSession) {
 	sm.Lock.Lock()
 	defer sm.Lock.Unlock()
 	sm.Sessions[sessionId] = session
@@ -155,7 +155,7 @@ func (sm SessionMap) Set(sessionId string, session TerminalSession) {
 // Close shuts down the SockJS connection and sends the status code and reason to the client
 // Can happen if the process exits or if there is an error starting up the process
 // For now the status code is unused and reason is shown to the user (unless "")
-func (sm SessionMap) Close(sessionId string, status uint32, reason string) {
+func (sm *SessionMap) Close(sessionId string, status uint32, reason string) {
 	sm.Lock.Lock()
 	defer sm.Lock.Unlock()
 	sm.Sessions[sessionId].sockJSSession.Close(status, reason)
