@@ -15,11 +15,9 @@
 package jwe
 
 import (
+	"errors"
 	"reflect"
 	"testing"
-
-	"errors"
-
 	"time"
 
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"

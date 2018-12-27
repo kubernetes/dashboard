@@ -1,19 +1,5 @@
-# Copyright 2025 Google Inc. All Rights Reserved.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
-# Configuration file for sass linter.
-# Schema can be found at: https://github.com/sasstools/sass-lint/blob/develop/docs/sass-lint.yml
+# Configuration file for SASS lint.
+# Read more at: https://github.com/sasstools/sass-lint/blob/develop/docs/sass-lint.yml
 
 options:
   formatter: stylish
@@ -48,8 +34,10 @@ rules:
   no-qualifying-elements: 2
   no-trailing-zero: 2
   no-transition-all: 2
+
   # Disabled because the project includes external fonts.
   no-url-protocols: 0
+
   # Excluded Internet Explorer prefix (ms), because some of bug fixes require it.
   no-vendor-prefixes:
       - 2
@@ -59,9 +47,9 @@ rules:
   property-units: 2
 
   # Nesting
-  force-attribute-nesting: 2
-  force-element-nesting: 2
-  force-pseudo-nesting: 2
+  force-attribute-nesting: 3
+  force-element-nesting: 3
+  force-pseudo-nesting: 3
 
   # Name Formats
   class-name-format: 2
@@ -81,7 +69,7 @@ rules:
   hex-notation: 2
   indentation: 2
   leading-zero: 2
-  nesting-depth: 3
+  nesting-depth: 4
   property-sort-order: 2
   quotes: 2
   shorthand-values: 2

@@ -28,7 +28,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/controller"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolumeclaim"
-	"k8s.io/api/core/v1"
+	v1 "k8s.io/api/core/v1"
 	res "k8s.io/apimachinery/pkg/api/resource"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -223,7 +223,7 @@ func toPodDetail(pod *v1.Pod, metrics []metricapi.Metric, configMaps *v1.ConfigM
 		Conditions:                getPodConditions(*pod),
 		EventList:                 *events,
 		PersistentvolumeclaimList: *persistentVolumeClaimList,
-		Errors: nonCriticalErrors,
+		Errors:                    nonCriticalErrors,
 	}
 }
 

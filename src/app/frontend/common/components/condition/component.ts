@@ -1,0 +1,37 @@
+// Copyright 2017 The Kubernetes Authors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+import {Component, Input} from '@angular/core';
+import {MatTableDataSource} from '@angular/material';
+import {Condition} from 'typings/backendapi';
+
+@Component({
+  selector: 'kd-condition-list',
+  templateUrl: './template.html',
+})
+export class ConditionListComponent {
+  @Input() initialized: boolean;
+  @Input() conditions: Condition[];
+
+  getConditionsColumns(): string[] {
+    return ['type', 'status', 'lastProbeTime', 'lastTransitionTime', 'reason', 'message'];
+  }
+
+  getDataSource(): MatTableDataSource<Condition> {
+    const tableData = new MatTableDataSource<Condition>();
+    tableData.data = this.conditions;
+
+    return tableData;
+  }
+}

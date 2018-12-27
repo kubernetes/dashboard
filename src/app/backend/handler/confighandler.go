@@ -27,15 +27,15 @@ type AppHandler func(http.ResponseWriter, *http.Request) (int, error)
 
 // AppConfig is a global configuration of application.
 type AppConfig struct {
-	// ServerTime is current server time (milliseconds elapsed since 1 January 1970 00:00:00 UTC).
+	// ServerTime is current server time.
 	ServerTime int64 `json:"serverTime"`
 }
 
 const (
 	// ConfigTemplateName is a name of config template
-	ConfigTemplateName string = "appConfig"
+	ConfigTemplateName = "appConfig"
 	// ConfigTemplate is a template of a config
-	ConfigTemplate string = "var appConfig_DO_NOT_USE_DIRECTLY = {{.}}"
+	ConfigTemplate = "{{.}}"
 )
 
 // ServeHTTP serves HTTP endpoint with application configuration.
@@ -50,7 +50,6 @@ func getAppConfigJSON() string {
 	log.Println("Getting application global configuration")
 
 	config := &AppConfig{
-		// TODO(maciaszczykm): Get time from API server instead directly from backend.
 		ServerTime: time.Now().UTC().UnixNano() / 1e6,
 	}
 
@@ -61,7 +60,7 @@ func getAppConfigJSON() string {
 
 func ConfigHandler(w http.ResponseWriter, r *http.Request) (int, error) {
 	configTemplate, err := template.New(ConfigTemplateName).Parse(ConfigTemplate)
-	w.Header().Set("Content-Type", "application/javascript")
+	w.Header().Set("Content-Type", "application/json")
 	if err != nil {
 		return http.StatusInternalServerError, err
 	}

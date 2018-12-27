@@ -1,0 +1,101 @@
+// Copyright 2017 The Kubernetes Authors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+@import '../variables';
+
+%kd-toolbar-logo-placeholder {
+  height: 4 * $baseline-grid;
+  margin-right: $baseline-grid;
+  min-height: 4 * $baseline-grid;
+  min-width: 4 * $baseline-grid;
+  width: 4 * $baseline-grid;
+}
+
+.kd-toolbar {
+  height: 6 * $baseline-grid;
+  min-height: 6 * $baseline-grid;
+  padding-left: 1.75 * $baseline-grid;
+}
+
+.kd-toolbar-tools {
+  align-items: center;
+  height: 6 * $baseline-grid;
+  margin: auto;
+  padding-left: $baseline-grid;
+}
+
+.kd-logo-bar {
+  height: 4 * $baseline-grid;
+}
+
+.kd-toolbar-logo-link {
+  .kd-toolbar-logo {
+    @extend %kd-toolbar-logo-placeholder;
+  }
+
+  .kd-toolbar-logo-text {
+    @extend %kd-toolbar-logo-placeholder;
+
+    min-width: 14 * $baseline-grid;
+    width: 14 * $baseline-grid;
+  }
+}
+
+.kd-second-toolbar {
+  box-shadow: $whiteframe-shadow-1dp;
+  height: 7 * $baseline-grid;
+  min-height: 7 * $baseline-grid;
+  padding-left: .5 * $baseline-grid;
+  // Move entire second toolbar above content to avoid elements overlap with
+  // shadow (there was problem with it on IE).
+  z-index: 1;
+}
+
+.kd-system-banner {
+  box-shadow: $whiteframe-shadow-1dp;
+  display: inline;
+  font-size: $body-font-size-base;
+  height: 6 * $baseline-grid;
+  line-height: 6 * $baseline-grid;
+  min-height: 6 * $baseline-grid;
+  overflow: hidden;
+  padding: 0 (3 * $baseline-grid);
+  white-space: nowrap;
+  // Move entire system banner above content to avoid elements overlap with
+  // shadow (there was problem with it on IE).
+  z-index: 2;
+}
+
+.kd-chrome-container {
+  // Set overflow property to disable margin-collapse, which in turn
+  // prevents scrollbar from being always visible.
+  overflow-x: hidden;
+  position: relative;
+}
+
+.kd-scroll-container {
+  overflow-x: auto;
+
+  ::before {
+    content: '';
+    display: block;
+    margin-bottom: 2.5 * $baseline-grid;
+  }
+
+  ::after {
+    content: '';
+    display: block;
+    padding-bottom: 2 * $baseline-grid;
+  }
+}

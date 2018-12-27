@@ -1,0 +1,100 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-card role="table"
+         [hidden]="isHidden()">
+  <div title
+       fxLayout="row">Namespaces</div>
+  <div description><span class="kd-muted-light">Items:&nbsp;</span>{{totalItems}}</div>
+  <div actions>
+    <kd-card-list-filter></kd-card-list-filter>
+  </div>
+
+  <div content
+       [hidden]="showZeroState()">
+    <div kdLoadingSpinner
+         [isLoading]="isLoading"></div>
+
+    <mat-table [dataSource]="getData()"
+               matSort
+               [matSortActive]="getDisplayColumns()[3]"
+               matSortDisableClear
+               matSortDirection="asc">
+      <ng-container [matColumnDef]="getDisplayColumns()[0]">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let namespace">
+          <mat-icon [ngClass]="getStatus(namespace).iconClass">
+            {{getStatus(namespace).iconName}}
+          </mat-icon>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getDisplayColumns()[1]">
+        <mat-header-cell *matHeaderCellDef
+                         mat-sort-header
+                         disableClear="true">Name</mat-header-cell>
+        <mat-cell *matCellDef="let namespace">
+          <a [href]="getDetailsHref(namespace.objectMeta.name)">
+            {{namespace.objectMeta.name}}
+          </a>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getDisplayColumns()[2]">
+        <mat-header-cell *matHeaderCellDef>Labels</mat-header-cell>
+        <mat-cell *matCellDef="let namespace">
+          <kd-chips [map]="namespace.objectMeta.labels"></kd-chips>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getDisplayColumns()[3]">
+        <mat-header-cell *matHeaderCellDef>Phase</mat-header-cell>
+        <mat-cell *matCellDef="let namespace">{{namespace.phase}}</mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getDisplayColumns()[4]">
+        <mat-header-cell *matHeaderCellDef
+                         mat-sort-header
+                         disableClear="true">Age</mat-header-cell>
+        <mat-cell *matCellDef="let namespace">
+          {{namespace.objectMeta.creationTimestamp |kdRelativeTime}}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container *ngFor="let col of getActionColumns()"
+                    [matColumnDef]="col.name">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let namespace">
+          <kd-dynamic-cell [component]="col.component"
+                           [resource]="namespace"></kd-dynamic-cell>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="getDisplayColumns()"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: getDisplayColumns();"></mat-row>
+    </mat-table>
+
+    <mat-paginator [length]="totalItems"
+                   [pageSize]="itemsPerPage"
+                   [hidePageSize]="true"
+                   [showFirstLastButtons]="true"></mat-paginator>
+  </div>
+
+  <div content
+       [hidden]="!showZeroState()">
+    <kd-list-zero-state></kd-list-zero-state>
+  </div>
+</kd-card>

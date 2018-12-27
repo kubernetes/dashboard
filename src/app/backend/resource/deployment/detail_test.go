@@ -26,7 +26,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
 	apps "k8s.io/api/apps/v1beta2"
-	"k8s.io/api/core/v1"
+	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/intstr"
 	"k8s.io/client-go/kubernetes/fake"
@@ -57,6 +57,7 @@ func createDeployment(name, namespace, podTemplateName string, replicas int32, p
 		},
 		Status: apps.DeploymentStatus{
 			Replicas: replicas, UpdatedReplicas: 2, AvailableReplicas: 3, UnavailableReplicas: 1,
+			Conditions: []apps.DeploymentCondition{},
 		},
 	}
 }
@@ -127,6 +128,7 @@ func TestGetDeploymentDetail(t *testing.T) {
 					Available:   3,
 					Unavailable: 1,
 				},
+				Conditions:      []common.Condition{},
 				Strategy:        "RollingUpdate",
 				MinReadySeconds: 5,
 				RollingUpdateStrategy: &RollingUpdateStrategy{
@@ -148,10 +150,11 @@ func TestGetDeploymentDetail(t *testing.T) {
 				},
 				EventList: common.EventList{
 					Events: []common.Event{},
+					Errors: []error{},
 				},
 				HorizontalPodAutoscalerList: horizontalpodautoscaler.HorizontalPodAutoscalerList{
 					HorizontalPodAutoscalers: []horizontalpodautoscaler.HorizontalPodAutoscaler{},
-					Errors: []error{},
+					Errors:                   []error{},
 				},
 				Errors: []error{},
 			},

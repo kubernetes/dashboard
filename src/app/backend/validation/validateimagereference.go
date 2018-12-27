@@ -15,8 +15,6 @@
 package validation
 
 import (
-	"log"
-
 	"github.com/docker/distribution/reference"
 )
 
@@ -36,8 +34,6 @@ type ImageReferenceValidity struct {
 
 // ValidateImageReference validates image reference.
 func ValidateImageReference(spec *ImageReferenceValiditySpec) (*ImageReferenceValidity, error) {
-	log.Printf("Validating %s as an image reference", spec.Reference)
-
 	s := spec.Reference
 	_, err := reference.ParseNamed(s)
 	if err != nil {

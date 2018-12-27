@@ -26,7 +26,7 @@ import (
 
 	restful "github.com/emicklei/go-restful"
 	"gopkg.in/igm/sockjs-go.v2/sockjs"
-	"k8s.io/api/core/v1"
+	v1 "k8s.io/api/core/v1"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/kubernetes/scheme"
 	"k8s.io/client-go/rest"
@@ -84,17 +84,17 @@ func (t TerminalSession) Read(p []byte) (int, error) {
 
 	var msg TerminalMessage
 	if err := json.Unmarshal([]byte(m), &msg); err != nil {
-		return 0, err
+		return copy(p, END_OF_TRANSMISSION), err
 	}
 
 	switch msg.Op {
 	case "stdin":
 		return copy(p, msg.Data), nil
 	case "resize":
-		t.sizeChan <- remotecommand.TerminalSize{msg.Cols, msg.Rows}
+		t.sizeChan <- remotecommand.TerminalSize{Width: msg.Cols, Height: msg.Rows}
 		return 0, nil
 	default:
-		return 0, fmt.Errorf("unknown message type '%s'", msg.Op)
+		return copy(p, END_OF_TRANSMISSION), fmt.Errorf("unknown message type '%s'", msg.Op)
 	}
 }
 
@@ -139,14 +139,14 @@ type SessionMap struct {
 }
 
 // Get return a given terminalSession by sessionId
-func (sm SessionMap) Get(sessionId string) TerminalSession {
+func (sm *SessionMap) Get(sessionId string) TerminalSession {
 	sm.Lock.RLock()
 	defer sm.Lock.RUnlock()
 	return sm.Sessions[sessionId]
 }
 
 // Set store a TerminalSession to SessionMap
-func (sm SessionMap) Set(sessionId string, session TerminalSession) {
+func (sm *SessionMap) Set(sessionId string, session TerminalSession) {
 	sm.Lock.Lock()
 	defer sm.Lock.Unlock()
 	sm.Sessions[sessionId] = session
@@ -155,7 +155,7 @@ func (sm SessionMap) Set(sessionId string, session TerminalSession) {
 // Close shuts down the SockJS connection and sends the status code and reason to the client
 // Can happen if the process exits or if there is an error starting up the process
 // For now the status code is unused and reason is shown to the user (unless "")
-func (sm SessionMap) Close(sessionId string, status uint32, reason string) {
+func (sm *SessionMap) Close(sessionId string, status uint32, reason string) {
 	sm.Lock.Lock()
 	defer sm.Lock.Unlock()
 	sm.Sessions[sessionId].sockJSSession.Close(status, reason)

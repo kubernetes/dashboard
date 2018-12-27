@@ -31,7 +31,7 @@ type Endpoint struct {
 
 // GetExternalEndpoints returns endpoints that are externally reachable for a service.
 func GetExternalEndpoints(service *api.Service) []Endpoint {
-	var externalEndpoints []Endpoint
+	externalEndpoints := make([]Endpoint, 0)
 	if service.Spec.Type == api.ServiceTypeLoadBalancer {
 		for _, ingress := range service.Status.LoadBalancer.Ingress {
 			externalEndpoints = append(externalEndpoints, getExternalEndpoint(ingress, service.Spec.Ports))

@@ -56,6 +56,10 @@ func GetCronJobDetail(client k8sClient.Interface, dsQuery *dataselect.DataSelect
 	}
 
 	inactiveJobs, err := GetCronJobCompletedJobs(client, metricClient, dsQuery, namespace, name)
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
+	}
 
 	events, err := GetCronJobEvents(client, dsQuery, namespace, name)
 	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)

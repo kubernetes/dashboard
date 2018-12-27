@@ -43,9 +43,9 @@ func TestAggregateMetricPromises(t *testing.T) {
 			getMetricPromises([]metricapi.Metric{
 				{
 					DataPoints: []metricapi.DataPoint{
-						{0, 5},
-						{5, 10},
-						{10, 15},
+						{X: 0, Y: 5},
+						{X: 5, Y: 10},
+						{X: 10, Y: 15},
 					},
 					MetricName: "test-metric",
 					Label: metricapi.Label{
@@ -88,9 +88,9 @@ func TestAggregateMetricPromises(t *testing.T) {
 			getMetricPromises([]metricapi.Metric{
 				{
 					DataPoints: []metricapi.DataPoint{
-						{0, 5},
-						{5, 10},
-						{10, 15},
+						{X: 0, Y: 5},
+						{X: 5, Y: 10},
+						{X: 10, Y: 15},
 					},
 					MetricName: "test-metric",
 					Label: metricapi.Label{
@@ -99,9 +99,9 @@ func TestAggregateMetricPromises(t *testing.T) {
 				},
 				{
 					DataPoints: []metricapi.DataPoint{
-						{0, 5},
-						{5, 10},
-						{10, 15},
+						{X: 0, Y: 5},
+						{X: 5, Y: 10},
+						{X: 10, Y: 15},
 					},
 					MetricName: "test-metric",
 					Label: metricapi.Label{
@@ -115,9 +115,9 @@ func TestAggregateMetricPromises(t *testing.T) {
 			[]metricapi.Metric{
 				{
 					DataPoints: []metricapi.DataPoint{
-						{0, 10},
-						{5, 20},
-						{10, 30},
+						{X: 0, Y: 10},
+						{X: 5, Y: 20},
+						{X: 10, Y: 30},
 					},
 					MetricPoints: []metricapi.MetricPoint{},
 					MetricName:   "test-metric",
@@ -133,9 +133,9 @@ func TestAggregateMetricPromises(t *testing.T) {
 			getMetricPromises([]metricapi.Metric{
 				{
 					DataPoints: []metricapi.DataPoint{
-						{0, 5},
-						{5, 10},
-						{10, 15},
+						{X: 0, Y: 5},
+						{X: 5, Y: 10},
+						{X: 10, Y: 15},
 					},
 					MetricName: "test-metric",
 					Label: metricapi.Label{
@@ -144,9 +144,9 @@ func TestAggregateMetricPromises(t *testing.T) {
 				},
 				{
 					DataPoints: []metricapi.DataPoint{
-						{0, 5},
-						{5, 10},
-						{10, 15},
+						{X: 0, Y: 5},
+						{X: 5, Y: 10},
+						{X: 10, Y: 15},
 					},
 					MetricName: "test-metric",
 					Label: metricapi.Label{
@@ -160,9 +160,9 @@ func TestAggregateMetricPromises(t *testing.T) {
 			[]metricapi.Metric{
 				{
 					DataPoints: []metricapi.DataPoint{
-						{0, 10},
-						{5, 20},
-						{10, 30},
+						{X: 0, Y: 10},
+						{X: 5, Y: 20},
+						{X: 10, Y: 30},
 					},
 					MetricPoints: []metricapi.MetricPoint{},
 					MetricName:   "test-metric",
@@ -178,9 +178,9 @@ func TestAggregateMetricPromises(t *testing.T) {
 			getMetricPromises([]metricapi.Metric{
 				{
 					DataPoints: []metricapi.DataPoint{
-						{0, 5},
-						{5, 10},
-						{10, 15},
+						{X: 0, Y: 5},
+						{X: 5, Y: 10},
+						{X: 10, Y: 15},
 					},
 					MetricName: "test-metric",
 					Label: metricapi.Label{
@@ -189,9 +189,9 @@ func TestAggregateMetricPromises(t *testing.T) {
 				},
 				{
 					DataPoints: []metricapi.DataPoint{
-						{0, 10},
-						{5, 15},
-						{10, 20},
+						{X: 0, Y: 10},
+						{X: 5, Y: 15},
+						{X: 10, Y: 20},
 					},
 					MetricName: "test-metric",
 					Label: metricapi.Label{
@@ -205,9 +205,9 @@ func TestAggregateMetricPromises(t *testing.T) {
 			[]metricapi.Metric{
 				{
 					DataPoints: []metricapi.DataPoint{
-						{0, 5},
-						{5, 10},
-						{10, 15},
+						{X: 0, Y: 5},
+						{X: 5, Y: 10},
+						{X: 10, Y: 15},
 					},
 					MetricPoints: []metricapi.MetricPoint{},
 					MetricName:   "test-metric",
@@ -223,9 +223,9 @@ func TestAggregateMetricPromises(t *testing.T) {
 			getMetricPromises([]metricapi.Metric{
 				{
 					DataPoints: []metricapi.DataPoint{
-						{0, 5},
-						{5, 10},
-						{10, 15},
+						{X: 0, Y: 5},
+						{X: 5, Y: 10},
+						{X: 10, Y: 15},
 					},
 					MetricName: "test-metric",
 					Label: metricapi.Label{
@@ -234,9 +234,9 @@ func TestAggregateMetricPromises(t *testing.T) {
 				},
 				{
 					DataPoints: []metricapi.DataPoint{
-						{0, 10},
-						{5, 15},
-						{10, 20},
+						{X: 0, Y: 10},
+						{X: 5, Y: 15},
+						{X: 10, Y: 20},
 					},
 					MetricName: "test-metric",
 					Label: metricapi.Label{
@@ -250,9 +250,9 @@ func TestAggregateMetricPromises(t *testing.T) {
 			[]metricapi.Metric{
 				{
 					DataPoints: []metricapi.DataPoint{
-						{0, 10},
-						{5, 15},
-						{10, 20},
+						{X: 0, Y: 10},
+						{X: 5, Y: 15},
+						{X: 10, Y: 20},
 					},
 					MetricPoints: []metricapi.MetricPoint{},
 					MetricName:   "test-metric",

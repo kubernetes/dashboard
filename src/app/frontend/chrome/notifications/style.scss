@@ -1,0 +1,107 @@
+// Copyright 2017 The Kubernetes Authors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+@import '../../variables';
+@import '../../mixins';
+
+$counter-size: $baseline-grid * 2;
+$drawer-size: $baseline-grid * 50;
+$drawer-z-index: 1000;
+$drawer-border-radius: $baseline-grid / 4;
+$drawer-controls-size: $baseline-grid * 4;
+
+.kd-notifications-container {
+  max-width: $baseline-grid * 5;
+  position: relative;
+  width: $baseline-grid * 5;
+}
+
+.kd-notifications-button {
+  position: relative;
+}
+
+.kd-notifications-icon {
+  @include kd-icon-size;
+}
+
+.kd-notifications-counter {
+  border-radius: $counter-size;
+  font-size: $counter-size * .6;
+  height: $counter-size;
+  left: $baseline-grid * 3;
+  line-height: $counter-size;
+  position: absolute;
+  top: $baseline-grid * 2;
+  width: $counter-size;
+}
+
+.kd-notifications-panel {
+  border-radius: $baseline-grid / 2;
+  height: $drawer-size;
+  left: -$drawer-size + 5 * $baseline-grid;
+  overflow: hidden;
+  position: absolute;
+  top: 6 * $baseline-grid;
+  width: $drawer-size;
+  z-index: $drawer-z-index;
+}
+
+.kd-notifications-content {
+  height: $drawer-size - $drawer-controls-size;
+  overflow-y: auto;
+  width: $drawer-size;
+}
+
+.kd-notifications-zero-state {
+  font-size: $title-font-size-base;
+  font-weight: $regular-font-weight;
+}
+
+.kd-notification-container:hover {
+  .kd-notification-remove-button {
+    display: block;
+  }
+}
+
+.kd-notification-remove-button {
+  display: none;
+}
+
+.kd-notification-icon {
+  margin: $baseline-grid;
+}
+
+.kd-notification {
+  font-family: $font-family-monospace;
+  font-size: $body-font-size-base;
+  line-height: $body-font-size-base;
+  margin: $baseline-grid 0;
+  white-space: normal;
+  width: $baseline-grid * 40;
+}
+
+.kd-notification-timestamp {
+  font-size: $footer-font-size-base;
+  line-height: $footer-font-size-base;
+  margin-bottom: $baseline-grid;
+}
+
+.kd-notifications-controls {
+  font-size: $caption-font-size-base;
+  font-weight: $regular-font-weight;
+  height: $drawer-controls-size;
+  line-height: $drawer-controls-size;
+  padding-left: $baseline-grid;
+  width: $drawer-size - $baseline-grid;
+}

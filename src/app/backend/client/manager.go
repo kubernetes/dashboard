@@ -124,7 +124,8 @@ func (self *clientManager) InsecureConfig() *rest.Config {
 // CanI returns true when user is allowed to access data provided within SelfSubjectAccessReview, false otherwise.
 func (self *clientManager) CanI(req *restful.Request, ssar *v1.SelfSubjectAccessReview) bool {
 	// In case user is not authenticated (uses skip option) do not allow access.
-	if info, _ := self.extractAuthInfo(req); info == nil {
+	info, _ := self.extractAuthInfo(req)
+	if info == nil && len(args.Holder.GetCertFile()) > 0 && len(args.Holder.GetKeyFile()) > 0 {
 		return false
 	}
 
@@ -197,7 +198,7 @@ func (self *clientManager) VerberClient(req *restful.Request) (clientapi.Resourc
 	return NewResourceVerber(client.CoreV1().RESTClient(),
 		client.ExtensionsV1beta1().RESTClient(), client.AppsV1beta2().RESTClient(),
 		client.BatchV1().RESTClient(), client.BatchV1beta1().RESTClient(), client.AutoscalingV1().RESTClient(),
-		client.StorageV1().RESTClient()), nil
+		client.StorageV1().RESTClient(), client.RbacV1().RESTClient()), nil
 }
 
 // SetTokenManager sets the token manager that will be used for token decryption.

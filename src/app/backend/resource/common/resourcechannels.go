@@ -20,7 +20,7 @@ import (
 	autoscaling "k8s.io/api/autoscaling/v1"
 	batch "k8s.io/api/batch/v1"
 	batch2 "k8s.io/api/batch/v1beta1"
-	"k8s.io/api/core/v1"
+	v1 "k8s.io/api/core/v1"
 	extensions "k8s.io/api/extensions/v1beta1"
 	rbac "k8s.io/api/rbac/v1"
 	storage "k8s.io/api/storage/v1"

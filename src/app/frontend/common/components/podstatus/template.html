@@ -1,0 +1,81 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-card [initialized]="initialized"
+         *ngIf="podInfo !== undefined">
+  <div title>Pods status</div>
+
+  <div description>
+    <div class="kd-inline-property"
+         *ngIf="podInfo.running > 0">
+      <span class="kd-muted-light">Running:&nbsp;</span>
+      <span>{{podInfo.running}}</span>
+    </div>
+
+    <div class="kd-inline-property"
+         *ngIf="podInfo.succeeded > 0">
+      <span class="kd-muted-light">Succeeded:&nbsp;</span>
+      <span>{{podInfo.succeeded}}</span>
+    </div>
+
+    <div class="kd-inline-property"
+         *ngIf="podInfo.pending > 0">
+      <span class="kd-muted-light">Pending:&nbsp;</span>
+      <span>{{podInfo.pending}}</span>
+    </div>
+
+    <div class="kd-inline-property"
+         *ngIf="podInfo.failed > 0">
+      <span class="kd-muted-light">Failed:&nbsp;</span>
+      <span>{{podInfo.failed}}</span>
+    </div>
+
+    <div class="kd-inline-property">
+      <span class="kd-muted-light">Desired:&nbsp;</span>
+      <span>{{podInfo.desired}}</span>
+    </div>
+  </div>
+
+  <div content
+       *ngIf="initialized"
+       fxLayout="row wrap">
+    <kd-property *ngIf="podInfo.running > 0">
+      <div key>Running</div>
+      <div value>{{podInfo.running}}</div>
+    </kd-property>
+
+    <kd-property *ngIf="podInfo.succeeded > 0">
+      <div key>Succeeded</div>
+      <div value>{{podInfo.succeeded}}</div>
+    </kd-property>
+
+    <kd-property *ngIf="podInfo.pending > 0">
+      <div key>Pending</div>
+      <div value>{{podInfo.pending}}</div>
+    </kd-property>
+
+    <kd-property [ngClass]="{'kd-error': podInfo.failed > 0}"
+                 *ngIf="podInfo.failed > 0">
+      <div key>Failed</div>
+      <div value>{{podInfo.failed}}</div>
+    </kd-property>
+
+    <kd-property>
+      <div key>Desired</div>
+      <div value>{{podInfo.desired}}</div>
+    </kd-property>
+  </div>
+</kd-card>

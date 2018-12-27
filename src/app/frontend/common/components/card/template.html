@@ -1,0 +1,69 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<mat-card [ngClass]="{'kd-minimized-card': !expanded}">
+  <mat-card-title *ngIf="withTitle"
+                  (click)="expand()"
+                  [ngClass]="getTitleClasses()"
+                  fxLayoutAlign=" center">
+    <div class="kd-card-title"
+         fxFlex>
+      <ng-content select="[title]"></ng-content>
+    </div>
+
+    <div *ngIf="!expanded"
+         class="kd-card-description kd-muted"
+         fxLayoutAlign=" center"
+         fxFlex="80">
+      <ng-content select="[description]"></ng-content>
+    </div>
+
+    <div *ngIf="expanded && expandable"
+         class="kd-card-actions kd-muted">
+      <ng-content select="[actions]"></ng-content>
+    </div>
+
+    <mat-icon class="kd-card-toggle kd-muted"
+              i18n-matTooltip
+              [matTooltip]="expanded ? 'Minimize card' : 'Expand card'"
+              *ngIf="expandable">
+      <ng-container *ngIf="expanded">arrow_drop_up</ng-container>
+      <ng-container *ngIf="!expanded">arrow_drop_down</ng-container>
+    </mat-icon>
+  </mat-card-title>
+
+  <div [@expandInOut]="!expanded">
+    <mat-divider class="kd-on-top"></mat-divider>
+
+    <mat-card-content class="kd-card-content"
+                      [ngClass]="{'kd-card-content-table': role === 'table'}">
+      <div *ngIf="initialized; else loading">
+        <ng-content select="[content]"></ng-content>
+      </div>
+      <ng-template #loading>
+        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+      </ng-template>
+    </mat-card-content>
+
+    <mat-card-footer>
+      <div class="mat-small"
+           [ngClass]="{'kd-card-footer': withFooter}">
+        <ng-content select="[footer]"></ng-content>
+      </div>
+    </mat-card-footer>
+  </div>
+
+</mat-card>

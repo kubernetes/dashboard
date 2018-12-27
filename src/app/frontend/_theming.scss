@@ -1,0 +1,264 @@
+// Copyright 2017 The Kubernetes Authors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+@import '~@angular/material/theming';
+
+@mixin kd-theme($theme) {
+
+  // Palettes.
+
+  $primary-palette: map-get($theme, primary);
+  $accent-palette: map-get($theme, accent);
+  $warn-palette: map-get($theme, warn);
+  $foreground-palette: map-get($theme, foreground);
+  $background-palette: map-get($theme, background);
+
+  // Colors.
+
+  $primary: mat-color($primary-palette);
+  $accent: mat-color($accent-palette);
+  $background: mat-color($background-palette, background);
+  $card-background: mat-color($background-palette, card);
+  $card-background-dark: darken($card-background, 5%);
+  $success: mat-color($warn-palette, lighter);
+  $warning: mat-color($warn-palette);
+  $error: mat-color($warn-palette, darker);
+  $muted: mat-color($foreground-palette, secondary-text);
+  $muted-light: mat-color($foreground-palette, disabled);
+  $border: mat-color($foreground-palette, divider);
+  $chart-green: mat-color($warn-palette, 50);
+  $chart-blue: mat-color($warn-palette, 200);
+  $box-shadow-1: rgba(0, 0, 0, .2);
+  $box-shadow-2: rgba(0, 0, 0, .14);
+  $box-shadow-3: rgba(0, 0, 0, .12);
+  $box-shadow: 0 3px 1px -2px $box-shadow-1, 0 2px 2px 0 $box-shadow-2, 0 1px 5px 0 $box-shadow-3;
+  $white: #fff;
+
+  // Global style overrides.
+
+  a {
+    color: $primary;
+  }
+
+  code {
+    background-color: $card-background-dark;
+  }
+
+  * {
+    &::-webkit-scrollbar-thumb {
+      background-color: $border;
+    }
+  }
+
+  // Universal application styles.
+
+  .kd-primary {
+    color: $primary;
+  }
+
+  .kd-bg-primary {
+    background-color: $primary;
+  }
+
+  .kd-accent {
+    color: $accent;
+  }
+
+  .kd-success {
+    color: $success;
+  }
+
+  .kd-bg-success {
+    background-color: $success;
+  }
+
+  .kd-bg-success-light {
+    background-color: lighten($success, 60%);
+  }
+
+  .kd-warning {
+    color: $warning;
+  }
+
+  .kd-bg-warning {
+    background-color: $warning;
+  }
+
+  .kd-bg-warning-light {
+    background-color: lighten($warning, 20%);
+  }
+
+  .kd-error {
+    color: $error;
+  }
+
+  .kd-bg-error {
+    background-color: $error;
+  }
+
+  .kd-bg-error-light {
+    background-color: lighten($error, 33%);
+  }
+
+  .kd-muted {
+    color: $muted;
+  }
+
+  .kd-muted-light {
+    color: $muted-light;
+  }
+
+  .kd-chart-green {
+    color: $chart-green;
+  }
+
+  .kd-chart-blue {
+    color: $chart-blue;
+  }
+
+  .kd-primary-button {
+    color: mat-color($primary-palette, 50);
+  }
+
+  .kd-bg-background {
+    background-color: $background;
+  }
+
+  .kd-loading-shade {
+    background: $border;
+  }
+
+  .kd-bg-card-dark {
+    background-color: $card-background-dark;
+  }
+
+  .kd-border {
+    border: 1px solid $border;
+  }
+
+  .kd-white {
+    color: $white;
+  }
+
+  // Component-level styles
+
+  .kd-notifications-panel {
+    background-color: $card-background;
+    box-shadow: $box-shadow;
+  }
+
+  .kd-notification-unread {
+    background-color: darken($background, 2.5%);
+  }
+
+  .kd-code-block {
+    background-color: $border;
+  }
+
+  .kd-minimized-card-header:hover {
+    background: $border;
+  }
+
+  .kd-primary-toolbar {
+    background-color: lighten($background, 5%);
+  }
+
+  .kd-search {
+    background-color: darken($background, 5%);
+
+    input {
+      color: mat-color($foreground-palette, base);
+    }
+  }
+
+  .kd-nav-item-button {
+    color: mat-color($primary-palette, lighter);
+  }
+
+  .kd-nav-item-button-active {
+    background-color: mat-color($background-palette, selected-button);
+    color: $primary;
+  }
+
+  .kd-search-input {
+    background: $card-background;
+    border-bottom-color: $border;
+    color: mat-color($foreground-palette, text);
+  }
+
+  .kd-graph-legend-entry {
+    &:not(:last-child) {
+      border-bottom: 1px solid $border;
+    }
+  }
+
+  .kd-namespace-select-input-container {
+    .mat-form-field-underline {
+      background-color: $border;
+    }
+
+    .mat-select-arrow {
+      color: $muted-light;
+    }
+  }
+
+  .mat-active,
+  .mat-selected {
+    color: $primary !important;
+  }
+
+  .kd-namespace-select-input {
+    background: $card-background;
+    color: mat-color($foreground-palette, text);
+  }
+
+  .kd-namespace-select-input-border,
+  .kd-shell-toolbar-select {
+    border-bottom: 1px solid $border !important;
+  }
+
+  .kd-cross-line-primary {
+    stroke: $primary;
+  }
+
+  .kd-cross-outline {
+    stroke: $background;
+  }
+
+  .mat-button-toggle-group {
+    border: 1px solid $border;
+  }
+
+  .mat-button-toggle-checked {
+    background-color: $card-background-dark;
+  }
+
+  .kd-user-help {
+    .material-icons {
+      color: $primary;
+    }
+
+    * {
+      color: $muted;
+    }
+
+    a {
+      color: $primary;
+
+      &:hover {
+        color: mat-color($primary-palette, lighter);
+      }
+    }
+  }
+}
