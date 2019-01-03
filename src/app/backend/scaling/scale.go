@@ -55,7 +55,7 @@ func ScaleResource(client client.Interface, kind, namespace, name, count string)
 	} else if strings.ToLower(kind) == "statefulset" {
 		err = scaleStatefulSetResource(client, namespace, name, count, rc)
 	} else {
-		err = scaleGenericResource(client, kind, namespace, name, count, rc)
+		err = scaleGenericResource(client, kind, namespace, name, count)
 	}
 	if err != nil {
 		return nil, err
@@ -65,7 +65,7 @@ func ScaleResource(client client.Interface, kind, namespace, name, count string)
 }
 
 //ScaleGenericResource is used for Deployment, ReplicaSet, Replication Controller scaling.
-func scaleGenericResource(client client.Interface, kind, namespace, name, count string, rc *ReplicaCounts) error {
+func scaleGenericResource(client client.Interface, kind, namespace, name, count string) error {
 	result := &v1beta1.Scale{}
 	err := client.Discovery().RESTClient().Get().Namespace(namespace).Resource(kind+"s").Name(name).
 		SubResource("scale").VersionedParams(&metaV1.GetOptions{}, scheme.ParameterCodec).Do().Into(result)
@@ -109,7 +109,7 @@ func scaleJobResource(client client.Interface, namespace, name, count string, rc
 	return nil
 }
 
-// scaleStatefulSet is exclusively used for statefulsets
+// scaleStatefulSet is exclusively used for stateful sets.
 func scaleStatefulSetResource(client client.Interface, namespace, name, count string, rc *ReplicaCounts) error {
 	ss, err := client.AppsV1().StatefulSets(namespace).Get(name, metaV1.GetOptions{})
 	if err != nil {
