@@ -35,7 +35,7 @@ function createConfig() {
   };
 
   // Use custom browser configuration when running on Travis CI and master/tag is being build.
-  if (!!process.env.TRAVIS && (process.env.TRAVIS_BRANCH === 'master' || !!process.env.TRAVIS_TAG)) {
+  if (!!process.env.TRAVIS && process.env.TRAVIS_BRANCH === 'master') {
     let name = `Integration tests ${process.env.TRAVIS_REPO_SLUG}, build ` +
         `${process.env.TRAVIS_BUILD_NUMBER}, job ${process.env.TRAVIS_JOB_NUMBER}`;
     if (process.env.TRAVIS_PULL_REQUEST !== 'false') {

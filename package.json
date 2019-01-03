@@ -30,7 +30,7 @@
     "test:backend": "go test github.com/kubernetes/dashboard/src/app/backend/...",
     "test:backend:coverage": "./aio/scripts/coverage-backend.sh",
     "test:coverage": "npm run test:frontend:coverage && npm run test:backend:coverage",
-    "test:e2e": "ng e2e",
+    "test:e2e": "webdriver-manager && ng e2e",
     "cluster": "./aio/scripts/start-cluster.sh",
     "check": "concurrently \"npm run check:backend\" \"npm run check:frontend\" \"npm run check:license\"",
     "check:backend": "./aio/scripts/lint-backend.sh",
