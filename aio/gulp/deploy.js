@@ -28,7 +28,7 @@ import conf from './conf';
  * Creates head Docker image for the application for current architecture.
  * The image is tagged with the image name configuration constant.
  */
-gulp.task('docker-image:head', function() {
+gulp.task('docker-image:head', () => {
   return buildDockerImage([[conf.deploy.headImageName, conf.paths.dist]]);
 });
 
@@ -36,22 +36,36 @@ gulp.task('docker-image:head', function() {
  * Creates head Docker image for the application for all architectures.
  * The image is tagged with the image name configuration constant.
  */
-gulp.task('docker-image:head:cross', function() {
+gulp.task('docker-image:head:cross', () => {
   return buildDockerImage(lodash.zip(conf.deploy.headImageNames, conf.paths.distCross));
+});
+
+/**
+ * Processes the Docker file and places it in the dist folder for building.
+ */
+gulp.task('docker-file', () => {
+  return dockerFile(conf.paths.dist);
+});
+
+/**
+ * Processes the Docker file and places it in the dist folder for all architectures.
+ */
+gulp.task('docker-file:cross', () => {
+  return dockerFile(conf.paths.distCross);
 });
 
 /**
  * Creates release Docker image for the application for all architectures.
  * The image is tagged with the image name configuration constant.
  */
-gulp.task('docker-image:release:cross', ['docker-file:cross'], function() {
+gulp.task('docker-image:release:cross', gulp.series('docker-file:cross', () => {
   return buildDockerImage(lodash.zip(conf.deploy.releaseImageNames, conf.paths.distCross));
-});
+}));
 
 /**
  * Pushes cross compiled head images to Docker Hub.
  */
-gulp.task('push-to-docker:head:cross', ['docker-image:head:cross'], function() {
+gulp.task('push-to-docker:head:cross', gulp.series('docker-image:head:cross', () => {
   // If travis commit is available push all images and their copies tagged with commit SHA.
   if (process.env.TRAVIS_COMMIT) {
     let allImages = conf.deploy.headImageNames.concat([]);
@@ -84,21 +98,7 @@ gulp.task('push-to-docker:head:cross', ['docker-image:head:cross'], function() {
   } else {
     return pushToDocker(conf.deploy.headImageNames);
   }
-});
-
-/**
- * Processes the Docker file and places it in the dist folder for building.
- */
-gulp.task('docker-file', function() {
-  return dockerFile(conf.paths.dist);
-});
-
-/**
- * Processes the Docker file and places it in the dist folder for all architectures.
- */
-gulp.task('docker-file:cross', function() {
-  return dockerFile(conf.paths.distCross);
-});
+}));
 
 /**
  * @param {!Array<string>} args

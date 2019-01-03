@@ -25,10 +25,45 @@ import conf from './conf';
 import goCommand from './gocommand';
 
 /**
+ * Cleans packaged backend source to remove any leftovers from there.
+ */
+gulp.task('clean-packaged-backend-source', gulp.series(() => {
+  return del([conf.paths.backendTmpSrc]);
+}));
+
+/**
+ * Moves all backend source files (app and tests) to a temporary package directory where it can be
+ * applied go commands.
+ */
+gulp.task('package-backend-source', gulp.series('clean-packaged-backend-source', () => {
+  return gulp.src([path.join(conf.paths.backendSrc, '**/*')])
+    .pipe(gulp.dest(conf.paths.backendTmpSrc));
+}));
+
+/**
+ * Links vendor folder to the packaged backend source.
+ */
+gulp.task('link-vendor', gulp.series('package-backend-source', (doneFn) => {
+  fs.symlink(conf.paths.backendVendor, conf.paths.backendTmpSrcVendor, 'dir', (err) => {
+    if (err && err.code === 'EEXIST') {
+      // Skip errors if the link already exists.
+      doneFn();
+    } else {
+      doneFn(err);
+    }
+  });
+}));
+
+/**
+ * Packages backend code to be ready for tests and compilation.
+ */
+gulp.task('package-backend', gulp.parallel('package-backend-source', 'link-vendor'));
+
+/**
  * Compiles backend application in development mode and places the binary in the serve
  * directory.
  */
-gulp.task('backend', ['package-backend'], function(doneFn) {
+gulp.task('backend', gulp.series('package-backend', (doneFn) => {
   goCommand(
       [
         'build',
@@ -42,7 +77,7 @@ gulp.task('backend', ['package-backend'], function(doneFn) {
         conf.backend.mainPackageName,
       ],
       doneFn);
-});
+}));
 
 /**
  * Compiles backend application in production mode for the current architecture and places the
@@ -51,10 +86,10 @@ gulp.task('backend', ['package-backend'], function(doneFn) {
  * The production binary difference from development binary is only that it contains all
  * dependencies inside it and is targeted for a specific architecture.
  */
-gulp.task('backend:prod', ['package-backend'], function() {
+gulp.task('backend:prod', gulp.series('package-backend', () => {
   let outputBinaryPath = path.join(conf.paths.dist, conf.backend.binaryName);
   return backendProd([[outputBinaryPath, conf.arch.default]]);
-});
+}));
 
 /**
  * Compiles backend application in production mode for all architectures and places the
@@ -63,46 +98,11 @@ gulp.task('backend:prod', ['package-backend'], function() {
  * The production binary difference from development binary is only that it contains all
  * dependencies inside it and is targeted specific architecture.
  */
-gulp.task('backend:prod:cross', ['package-backend'], function() {
+gulp.task('backend:prod:cross', gulp.series('package-backend', () => {
   let outputBinaryPaths =
       conf.paths.distCross.map((dir) => path.join(dir, conf.backend.binaryName));
   return backendProd(lodash.zip(outputBinaryPaths, conf.arch.list));
-});
-
-/**
- * Packages backend code to be ready for tests and compilation.
- */
-gulp.task('package-backend', ['package-backend-source', 'link-vendor']);
-
-/**
- * Moves all backend source files (app and tests) to a temporary package directory where it can be
- * applied go commands.
- */
-gulp.task('package-backend-source', ['clean-packaged-backend-source'], function() {
-  return gulp.src([path.join(conf.paths.backendSrc, '**/*')])
-      .pipe(gulp.dest(conf.paths.backendTmpSrc));
-});
-
-/**
- * Cleans packaged backend source to remove any leftovers from there.
- */
-gulp.task('clean-packaged-backend-source', function() {
-  return del([conf.paths.backendTmpSrc]);
-});
-
-/**
- * Links vendor folder to the packaged backend source.
- */
-gulp.task('link-vendor', ['package-backend-source'], function(doneFn) {
-  fs.symlink(conf.paths.backendVendor, conf.paths.backendTmpSrcVendor, 'dir', (err) => {
-    if (err && err.code === 'EEXIST') {
-      // Skip errors if the link already exists.
-      doneFn();
-    } else {
-      doneFn(err);
-    }
-  });
-});
+}));
 
 /**
  * @param {!Array<!Array<string>>} outputBinaryPathsAndArchs array of
