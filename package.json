@@ -30,7 +30,7 @@
     "test:backend": "go test github.com/kubernetes/dashboard/src/app/backend/...",
     "test:backend:coverage": "./aio/scripts/coverage-backend.sh",
     "test:coverage": "npm run test:frontend:coverage && npm run test:backend:coverage",
-    "test:e2e": "webdriver-manager && ng e2e",
+    "test:e2e": "ng e2e",
     "cluster": "./aio/scripts/start-cluster.sh",
     "check": "concurrently \"npm run check:backend\" \"npm run check:frontend\" \"npm run check:license\"",
     "check:backend": "./aio/scripts/lint-backend.sh",
@@ -48,7 +48,7 @@
     "fix:license": "gulp update-license-headers",
     "clean": "rm -rf .go_workspace .tmp coverage dist npm-debug.log",
     "postversion": "node aio/scripts/version.js",
-    "postinstall": "node aio/scripts/version.js && webdriver-manager update && go get golang.org/x/tools/cmd/goimports"
+    "postinstall": "node aio/scripts/version.js && ./node_modules/protractor/bin/webdriver-manager update --gecko=false && go get golang.org/x/tools/cmd/goimports"
   },
   "husky": {
     "hooks": {
