@@ -10,10 +10,12 @@ const gitInfo = gitDescribeSync({
 });
 
 gitInfo.packageVersion = version;
-gitInfo.semver.loose = false;
-gitInfo.semver.options = {
-  includePrerelease: false,
+gitInfo.semver = {
   loose: false,
+  options: {
+    includePrerelease: false,
+    loose: false,
+  }
 };
 
 const file =
