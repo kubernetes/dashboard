@@ -6,13 +6,19 @@
 package htpasswd
 
 import (
+	"context"
+	"crypto/rand"
+	"encoding/base64"
 	"fmt"
 	"net/http"
 	"os"
+	"path/filepath"
 	"sync"
 	"time"
 
-	"github.com/docker/distribution/context"
+	"golang.org/x/crypto/bcrypt"
+
+	dcontext "github.com/docker/distribution/context"
 	"github.com/docker/distribution/registry/auth"
 )
 
@@ -32,16 +38,19 @@ func newAccessController(options map[string]interface{}) (auth.AccessController,
 		return nil, fmt.Errorf(`"realm" must be set for htpasswd access controller`)
 	}
 
-	path, present := options["path"]
-	if _, ok := path.(string); !present || !ok {
+	pathOpt, present := options["path"]
+	path, ok := pathOpt.(string)
+	if !present || !ok {
 		return nil, fmt.Errorf(`"path" must be set for htpasswd access controller`)
 	}
-
-	return &accessController{realm: realm.(string), path: path.(string)}, nil
+	if err := createHtpasswdFile(path); err != nil {
+		return nil, err
+	}
+	return &accessController{realm: realm.(string), path: path}, nil
 }
 
 func (ac *accessController) Authorized(ctx context.Context, accessRecords ...auth.Access) (context.Context, error) {
-	req, err := context.GetRequest(ctx)
+	req, err := dcontext.GetRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -83,7 +92,7 @@ func (ac *accessController) Authorized(ctx context.Context, accessRecords ...aut
 	ac.mu.Unlock()
 
 	if err := localHTPasswd.authenticateUser(username, password); err != nil {
-		context.GetLogger(ctx).Errorf("error authenticating user %q: %v", username, err)
+		dcontext.GetLogger(ctx).Errorf("error authenticating user %q: %v", username, err)
 		return nil, &challenge{
 			realm: ac.realm,
 			err:   auth.ErrAuthenticationFailure,
@@ -102,12 +111,48 @@ type challenge struct {
 var _ auth.Challenge = challenge{}
 
 // SetHeaders sets the basic challenge header on the response.
-func (ch challenge) SetHeaders(w http.ResponseWriter) {
+func (ch challenge) SetHeaders(r *http.Request, w http.ResponseWriter) {
 	w.Header().Set("WWW-Authenticate", fmt.Sprintf("Basic realm=%q", ch.realm))
 }
 
 func (ch challenge) Error() string {
 	return fmt.Sprintf("basic authentication challenge for realm %q: %s", ch.realm, ch.err)
+}
+
+// createHtpasswdFile creates and populates htpasswd file with a new user in case the file is missing
+func createHtpasswdFile(path string) error {
+	if f, err := os.Open(path); err == nil {
+		f.Close()
+		return nil
+	} else if !os.IsNotExist(err) {
+		return err
+	}
+
+	if err := os.MkdirAll(filepath.Dir(path), 0700); err != nil {
+		return err
+	}
+	f, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE, 0600)
+	if err != nil {
+		return fmt.Errorf("failed to open htpasswd path %s", err)
+	}
+	defer f.Close()
+	var secretBytes [32]byte
+	if _, err := rand.Read(secretBytes[:]); err != nil {
+		return err
+	}
+	pass := base64.RawURLEncoding.EncodeToString(secretBytes[:])
+	encryptedPass, err := bcrypt.GenerateFromPassword([]byte(pass), bcrypt.DefaultCost)
+	if err != nil {
+		return err
+	}
+	if _, err := f.Write([]byte(fmt.Sprintf("docker:%s", string(encryptedPass[:])))); err != nil {
+		return err
+	}
+	dcontext.GetLoggerWithFields(context.Background(), map[interface{}]interface{}{
+		"user":     "docker",
+		"password": pass,
+	}).Warnf("htpasswd is missing, provisioning with default user")
+	return nil
 }
 
 func init() {

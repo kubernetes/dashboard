@@ -43,51 +43,53 @@ func (this *PodAggregator) Process(batch *core.DataBatch) (*core.DataBatch, erro
 	newPods := make(map[string]*core.MetricSet)
 
 	for key, metricSet := range batch.MetricSets {
-		if metricSetType, found := metricSet.Labels[core.LabelMetricSetType.Key]; found && metricSetType == core.MetricSetTypePodContainer {
-			// Aggregating containers
-			podName, found := metricSet.Labels[core.LabelPodName.Key]
-			ns, found2 := metricSet.Labels[core.LabelNamespaceName.Key]
-			if found && found2 {
-				podKey := core.PodKey(ns, podName)
-				pod, found := batch.MetricSets[podKey]
-				if !found {
-					pod, found = newPods[podKey]
-					if !found {
-						glog.V(2).Infof("Pod not found adding %s", podKey)
-						pod = this.podMetricSet(metricSet.Labels)
-						newPods[podKey] = pod
-					}
-				}
+		if metricSetType, found := metricSet.Labels[core.LabelMetricSetType.Key]; !found || metricSetType != core.MetricSetTypePodContainer {
+			continue
+		}
 
-				for metricName, metricValue := range metricSet.MetricValues {
-					if _, found := this.skippedMetrics[metricName]; found {
-						continue
-					}
+		// Aggregating containers
+		podName, found := metricSet.Labels[core.LabelPodName.Key]
+		ns, found2 := metricSet.Labels[core.LabelNamespaceName.Key]
+		if !found || !found2 {
+			glog.Errorf("No namespace and/or pod info in container %s: %v", key, metricSet.Labels)
+			continue
+		}
 
-					aggregatedValue, found := pod.MetricValues[metricName]
-					if found {
-						if aggregatedValue.ValueType != metricValue.ValueType {
-							glog.Errorf("PodAggregator: inconsistent type in %s", metricName)
-							continue
-						}
+		podKey := core.PodKey(ns, podName)
+		pod, found := batch.MetricSets[podKey]
+		if !found {
+			pod, found = newPods[podKey]
+			if !found {
+				glog.V(2).Infof("Pod not found adding %s", podKey)
+				pod = this.podMetricSet(metricSet.Labels)
+				newPods[podKey] = pod
+			}
+		}
 
-						switch aggregatedValue.ValueType {
-						case core.ValueInt64:
-							aggregatedValue.IntValue += metricValue.IntValue
-						case core.ValueFloat:
-							aggregatedValue.FloatValue += metricValue.FloatValue
-						default:
-							return nil, fmt.Errorf("PodAggregator: type not supported in %s", metricName)
-						}
-					} else {
-						aggregatedValue = metricValue
-					}
-					pod.MetricValues[metricName] = aggregatedValue
-				}
-			} else {
-				glog.Errorf("No namespace and/or pod info in container %s: %v", key, metricSet.Labels)
+		for metricName, metricValue := range metricSet.MetricValues {
+			if _, found := this.skippedMetrics[metricName]; found {
 				continue
 			}
+
+			aggregatedValue, found := pod.MetricValues[metricName]
+			if found {
+				if aggregatedValue.ValueType != metricValue.ValueType {
+					glog.Errorf("PodAggregator: inconsistent type in %s", metricName)
+					continue
+				}
+
+				switch aggregatedValue.ValueType {
+				case core.ValueInt64:
+					aggregatedValue.IntValue += metricValue.IntValue
+				case core.ValueFloat:
+					aggregatedValue.FloatValue += metricValue.FloatValue
+				default:
+					return nil, fmt.Errorf("PodAggregator: type not supported in %s", metricName)
+				}
+			} else {
+				aggregatedValue = metricValue
+			}
+			pod.MetricValues[metricName] = aggregatedValue
 		}
 	}
 	for key, val := range newPods {

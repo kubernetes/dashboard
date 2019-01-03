@@ -130,6 +130,10 @@ type responseWriterDelegator struct {
 	wroteHeader     bool
 }
 
+func (r *responseWriterDelegator) CloseNotify() <-chan bool {
+	return r.ResponseWriter.(http.CloseNotifier).CloseNotify()
+}
+
 func (r *responseWriterDelegator) WriteHeader(code int) {
 	r.status = code
 	r.wroteHeader = true

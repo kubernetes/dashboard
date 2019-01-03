@@ -20,10 +20,12 @@ import (
 	"crypto/tls"
 	"errors"
 	"fmt"
+	"net"
 	"net/http"
 	"net/url"
 	"os"
 	"runtime"
+	"strconv"
 	"strings"
 	"time"
 
@@ -67,7 +69,11 @@ func main() {
 	logs.InitLogs()
 	defer logs.FlushLogs()
 
-	setLabelSeperator(opt)
+	labelCopier, err := util.NewLabelCopier(opt.LabelSeparator, opt.StoredLabels, opt.IgnoredLabels)
+	if err != nil {
+		glog.Fatalf("Failed to initialize label copier: %v", err)
+	}
+
 	setMaxProcs(opt)
 	glog.Infof(strings.Join(os.Args, " "))
 	glog.Infof("Heapster version %v", version.HeapsterVersion)
@@ -80,10 +86,10 @@ func main() {
 		glog.Fatalf("Failed to get kubernetes address: %v", err)
 	}
 	sourceManager := createSourceManagerOrDie(opt.Sources)
-	sinkManager, metricSink, historicalSource := createAndInitSinksOrDie(opt.Sinks, opt.HistoricalSource)
+	sinkManager, metricSink, historicalSource := createAndInitSinksOrDie(opt.Sinks, opt.HistoricalSource, opt.SinkExportDataTimeout, opt.DisableMetricSink)
 
 	podLister, nodeLister := getListersOrDie(kubernetesUrl)
-	dataProcessors := createDataProcessorsOrDie(kubernetesUrl, podLister)
+	dataProcessors := createDataProcessorsOrDie(kubernetesUrl, podLister, labelCopier)
 
 	man, err := manager.NewManager(sourceManager, dataProcessors, sinkManager,
 		opt.MetricResolution, manager.DefaultScrapeOffset, manager.DefaultMaxParallelism)
@@ -102,7 +108,7 @@ func main() {
 	handler := setupHandlers(metricSink, podLister, nodeLister, historicalSource, opt.DisableMetricExport)
 	healthz.InstallHandler(mux, healthzChecker(metricSink))
 
-	addr := fmt.Sprintf("%s:%d", opt.Ip, opt.Port)
+	addr := net.JoinHostPort(opt.Ip, strconv.Itoa(opt.Port))
 	glog.Infof("Starting heapster on port %d", opt.Port)
 
 	if len(opt.TLSCertFile) > 0 && len(opt.TLSKeyFile) > 0 {
@@ -183,10 +189,10 @@ func createSourceManagerOrDie(src flags.Uris) core.MetricsSource {
 	return sourceManager
 }
 
-func createAndInitSinksOrDie(sinkAddresses flags.Uris, historicalSource string) (core.DataSink, *metricsink.MetricSink, core.HistoricalSource) {
+func createAndInitSinksOrDie(sinkAddresses flags.Uris, historicalSource string, sinkExportDataTimeout time.Duration, disableMetricSink bool) (core.DataSink, *metricsink.MetricSink, core.HistoricalSource) {
 	sinksFactory := sinks.NewSinkFactory()
-	metricSink, sinkList, histSource := sinksFactory.BuildAll(sinkAddresses, historicalSource)
-	if metricSink == nil {
+	metricSink, sinkList, histSource := sinksFactory.BuildAll(sinkAddresses, historicalSource, disableMetricSink)
+	if metricSink == nil && !disableMetricSink {
 		glog.Fatal("Failed to create metric sink")
 	}
 	if histSource == nil && len(historicalSource) > 0 {
@@ -195,7 +201,7 @@ func createAndInitSinksOrDie(sinkAddresses flags.Uris, historicalSource string) 
 	for _, sink := range sinkList {
 		glog.Infof("Starting with %s", sink.Name())
 	}
-	sinkManager, err := sinks.NewDataSinkManager(sinkList, sinks.DefaultSinkExportDataTimeout, sinks.DefaultSinkStopTimeout)
+	sinkManager, err := sinks.NewDataSinkManager(sinkList, sinkExportDataTimeout, sinks.DefaultSinkStopTimeout)
 	if err != nil {
 		glog.Fatalf("Failed to create sink manager: %v", err)
 	}
@@ -224,13 +230,13 @@ func createKubeClientOrDie(kubernetesUrl *url.URL) *kube_client.Clientset {
 	return kube_client.NewForConfigOrDie(kubeConfig)
 }
 
-func createDataProcessorsOrDie(kubernetesUrl *url.URL, podLister v1listers.PodLister) []core.DataProcessor {
+func createDataProcessorsOrDie(kubernetesUrl *url.URL, podLister v1listers.PodLister, labelCopier *util.LabelCopier) []core.DataProcessor {
 	dataProcessors := []core.DataProcessor{
 		// Convert cumulative to rate
 		processors.NewRateCalculator(core.RateMetricsMapping),
 	}
 
-	podBasedEnricher, err := processors.NewPodBasedEnricher(podLister)
+	podBasedEnricher, err := processors.NewPodBasedEnricher(podLister, labelCopier)
 	if err != nil {
 		glog.Fatalf("Failed to create PodBasedEnricher: %v", err)
 	}
@@ -271,7 +277,7 @@ func createDataProcessorsOrDie(kubernetesUrl *url.URL, podLister v1listers.PodLi
 			MetricsToAggregate: metricsToAggregate,
 		})
 
-	nodeAutoscalingEnricher, err := processors.NewNodeAutoscalingEnricher(kubernetesUrl)
+	nodeAutoscalingEnricher, err := processors.NewNodeAutoscalingEnricher(kubernetesUrl, labelCopier)
 	if err != nil {
 		glog.Fatalf("Failed to create NodeAutoscalingEnricher: %v", err)
 	}
@@ -326,7 +332,7 @@ func getPodLister(kubeClient *kube_client.Clientset) (v1listers.PodLister, error
 
 func validateFlags(opt *options.HeapsterRunOptions) error {
 	if opt.MetricResolution < 5*time.Second {
-		return fmt.Errorf("metric resolution needs to be greater than 5 seconds - %d", opt.MetricResolution)
+		return fmt.Errorf("metric resolution should not be less than 5 seconds - %d", opt.MetricResolution)
 	}
 	if (len(opt.TLSCertFile) > 0 && len(opt.TLSKeyFile) == 0) || (len(opt.TLSCertFile) == 0 && len(opt.TLSKeyFile) > 0) {
 		return fmt.Errorf("both TLS certificate & key are required to enable TLS serving")
@@ -352,8 +358,4 @@ func setMaxProcs(opt *options.HeapsterRunOptions) {
 	if actualNumProcs != numProcs {
 		glog.Warningf("Specified max procs of %d but using %d", numProcs, actualNumProcs)
 	}
-}
-
-func setLabelSeperator(opt *options.HeapsterRunOptions) {
-	util.SetLabelSeperator(opt.LabelSeperator)
 }

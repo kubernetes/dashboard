@@ -11,20 +11,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// This package no longer handles safe yaml parsing. In order to
+// ensure correct yaml unmarshalling, use "yaml.UnmarshalStrict()".
+
 package config
 
-import (
-	"fmt"
-	"strings"
-)
+// Secret special type for storing secrets.
+type Secret string
 
-func checkOverflow(m map[string]interface{}, ctx string) error {
-	if len(m) > 0 {
-		var keys []string
-		for k := range m {
-			keys = append(keys, k)
-		}
-		return fmt.Errorf("unknown fields in %s: %s", ctx, strings.Join(keys, ", "))
+// MarshalYAML implements the yaml.Marshaler interface for Secrets.
+func (s Secret) MarshalYAML() (interface{}, error) {
+	if s != "" {
+		return "<secret>", nil
 	}
-	return nil
+	return nil, nil
+}
+
+//UnmarshalYAML implements the yaml.Unmarshaler interface for Secrets.
+func (s *Secret) UnmarshalYAML(unmarshal func(interface{}) error) error {
+	type plain Secret
+	return unmarshal((*plain)(s))
 }

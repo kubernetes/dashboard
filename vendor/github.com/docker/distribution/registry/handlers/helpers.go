@@ -1,11 +1,12 @@
 package handlers
 
 import (
+	"context"
 	"errors"
 	"io"
 	"net/http"
 
-	ctxu "github.com/docker/distribution/context"
+	dcontext "github.com/docker/distribution/context"
 )
 
 // closeResources closes all the provided resources after running the target
@@ -24,15 +25,9 @@ func closeResources(handler http.Handler, closers ...io.Closer) http.Handler {
 // upload, it avoids sending a 400 error to keep the logs cleaner.
 //
 // The copy will be limited to `limit` bytes, if limit is greater than zero.
-func copyFullPayload(responseWriter http.ResponseWriter, r *http.Request, destWriter io.Writer, limit int64, context ctxu.Context, action string) error {
+func copyFullPayload(ctx context.Context, responseWriter http.ResponseWriter, r *http.Request, destWriter io.Writer, limit int64, action string) error {
 	// Get a channel that tells us if the client disconnects
-	var clientClosed <-chan bool
-	if notifier, ok := responseWriter.(http.CloseNotifier); ok {
-		clientClosed = notifier.CloseNotify()
-	} else {
-		ctxu.GetLogger(context).Warnf("the ResponseWriter does not implement CloseNotifier (type: %T)", responseWriter)
-	}
-
+	clientClosed := r.Context().Done()
 	var body = r.Body
 	if limit > 0 {
 		body = http.MaxBytesReader(responseWriter, body, limit)
@@ -52,7 +47,7 @@ func copyFullPayload(responseWriter http.ResponseWriter, r *http.Request, destWr
 			// instead of showing 0 for the HTTP status.
 			responseWriter.WriteHeader(499)
 
-			ctxu.GetLoggerWithFields(context, map[interface{}]interface{}{
+			dcontext.GetLoggerWithFields(ctx, map[interface{}]interface{}{
 				"error":         err,
 				"copied":        copied,
 				"contentLength": r.ContentLength,
@@ -63,7 +58,7 @@ func copyFullPayload(responseWriter http.ResponseWriter, r *http.Request, destWr
 	}
 
 	if err != nil {
-		ctxu.GetLogger(context).Errorf("unknown error reading request payload: %v", err)
+		dcontext.GetLogger(ctx).Errorf("unknown error reading request payload: %v", err)
 		return err
 	}
 

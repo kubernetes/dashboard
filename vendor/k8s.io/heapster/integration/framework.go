@@ -31,6 +31,8 @@ import (
 	kclient "k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/pkg/api"
 	"k8s.io/client-go/pkg/api/v1"
+	_ "k8s.io/client-go/pkg/apis/rbac/install"
+	rbacv1beta1 "k8s.io/client-go/pkg/apis/rbac/v1beta1"
 	kclientcmd "k8s.io/client-go/tools/clientcmd"
 	kclientcmdapi "k8s.io/client-go/tools/clientcmd/api"
 )
@@ -45,11 +47,23 @@ type kubeFramework interface {
 	// Parses and Returns a service object contained in 'filePath'
 	ParseService(filePath string) (*v1.Service, error)
 
+	// Parses and Returns a RBAC object contained in 'filePath'
+	ParseRBAC(filePath string) (*rbacv1beta1.ClusterRoleBinding, error)
+
+	// Parses and Returns a ServiceAccount object contained in 'filePath'
+	ParseServiceAccount(filePath string) (*v1.ServiceAccount, error)
+
 	// Creates a kube service.
 	CreateService(ns string, service *v1.Service) (*v1.Service, error)
 
 	// Creates a namespace.
 	CreateNs(ns *v1.Namespace) (*v1.Namespace, error)
+
+	// Creates a RBAC.
+	CreateRBAC(crb *rbacv1beta1.ClusterRoleBinding) error
+
+	// Creates a ServiceAccount.
+	CreateServiceAccount(sa *v1.ServiceAccount) error
 
 	// Creates a kube replication controller.
 	CreateRC(ns string, rc *v1.ReplicationController) (*v1.ReplicationController, error)
@@ -369,6 +383,54 @@ func (self *realKubeFramework) ParseRC(filePath string) (*v1.ReplicationControll
 		return nil, fmt.Errorf("Failed to cast replicationController: %#v", obj)
 	}
 	return rc, nil
+}
+
+// Parses and Returns a RBAC object contained in 'filePath'
+func (self *realKubeFramework) ParseRBAC(filePath string) (*rbacv1beta1.ClusterRoleBinding, error) {
+	obj, err := self.loadRBACObject(filePath)
+	if err != nil {
+		return nil, err
+	}
+	rbac, ok := obj.(*rbacv1beta1.ClusterRoleBinding)
+	if !ok {
+		return nil, fmt.Errorf("Failed to cast clusterrolebinding: %v", obj)
+	}
+	return rbac, nil
+}
+
+func (self *realKubeFramework) loadRBACObject(filePath string) (runtime.Object, error) {
+	data, err := ioutil.ReadFile(filePath)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read object: %v", err)
+	}
+	obj, _, err := api.Codecs.UniversalDecoder(rbacv1beta1.SchemeGroupVersion).Decode(data, nil, nil)
+	return obj, err
+}
+
+// CreateRBAC creates the RBAC object
+func (self *realKubeFramework) CreateRBAC(rbac *rbacv1beta1.ClusterRoleBinding) error {
+	_, err := self.kubeClient.RbacV1beta1().ClusterRoleBindings().Create(rbac)
+	return err
+}
+
+// Parses and Returns a ServiceAccount object contained in 'filePath'
+func (self *realKubeFramework) ParseServiceAccount(filePath string) (*v1.ServiceAccount, error) {
+	obj, err := self.loadObject(filePath)
+	if err != nil {
+		return nil, err
+	}
+
+	sa, ok := obj.(*v1.ServiceAccount)
+	if !ok {
+		return nil, fmt.Errorf("Failed to cast serviceaccount: %v", obj)
+	}
+	return sa, nil
+}
+
+// CreateServiceAccount creates the ServiceAccount object
+func (self *realKubeFramework) CreateServiceAccount(sa *v1.ServiceAccount) error {
+	_, err := self.kubeClient.CoreV1().ServiceAccounts(sa.Namespace).Create(sa)
+	return err
 }
 
 func (self *realKubeFramework) ParseService(filePath string) (*v1.Service, error) {

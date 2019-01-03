@@ -15,6 +15,7 @@
 package core
 
 import (
+	"fmt"
 	"time"
 
 	cadvisor "github.com/google/cadvisor/info/v1"
@@ -54,7 +55,9 @@ var RateMetrics = []Metric{
 	MetricNetworkRxRate,
 	MetricNetworkRxErrorsRate,
 	MetricNetworkTxRate,
-	MetricNetworkTxErrorsRate}
+	MetricNetworkTxErrorsRate,
+	MetricDiskIOReadRate,
+	MetricDiskIOWriteRate}
 
 var RateMetricsMapping = map[string]Metric{
 	MetricCpuUsage.MetricDescriptor.Name:              MetricCpuUsageRate,
@@ -63,14 +66,23 @@ var RateMetricsMapping = map[string]Metric{
 	MetricNetworkRx.MetricDescriptor.Name:             MetricNetworkRxRate,
 	MetricNetworkRxErrors.MetricDescriptor.Name:       MetricNetworkRxErrorsRate,
 	MetricNetworkTx.MetricDescriptor.Name:             MetricNetworkTxRate,
-	MetricNetworkTxErrors.MetricDescriptor.Name:       MetricNetworkTxErrorsRate}
+	MetricNetworkTxErrors.MetricDescriptor.Name:       MetricNetworkTxErrorsRate,
+	MetricDiskIORead.MetricDescriptor.Name:            MetricDiskIOReadRate,
+	MetricDiskIOWrite.MetricDescriptor.Name:           MetricDiskIOWriteRate}
 
 var LabeledMetrics = []Metric{
+	MetricDiskIORead,
+	MetricDiskIOReadRate,
+	MetricDiskIOWrite,
+	MetricDiskIOWriteRate,
 	MetricFilesystemUsage,
 	MetricFilesystemLimit,
 	MetricFilesystemAvailable,
 	MetricFilesystemInodes,
 	MetricFilesystemInodesFree,
+	MetricAcceleratorMemoryTotal,
+	MetricAcceleratorMemoryUsed,
+	MetricAcceleratorDutyCycle,
 }
 
 var NodeAutoscalingMetrics = []Metric{
@@ -176,6 +188,16 @@ var MetricUptime = Metric{
 			ValueType:  ValueInt64,
 			MetricType: MetricCumulative,
 			IntValue:   time.Since(spec.CreationTime).Nanoseconds() / time.Millisecond.Nanoseconds()}
+	},
+}
+
+var MetricRestartCount = Metric{
+	MetricDescriptor: MetricDescriptor{
+		Name:        "restart_count",
+		Description: "Number of container restarts",
+		Type:        MetricCumulative,
+		ValueType:   ValueInt64,
+		Units:       UnitsCount,
 	},
 }
 
@@ -324,10 +346,15 @@ var MetricNetworkRx = Metric{
 		return spec.HasNetwork
 	},
 	GetValue: func(spec *cadvisor.ContainerSpec, stat *cadvisor.ContainerStats) MetricValue {
+		var rxBytes uint64 = 0
+		for _, interfaceStat := range stat.Network.Interfaces {
+			rxBytes += interfaceStat.RxBytes
+		}
 		return MetricValue{
 			ValueType:  ValueInt64,
 			MetricType: MetricCumulative,
-			IntValue:   int64(stat.Network.RxBytes)}
+			IntValue:   int64(rxBytes),
+		}
 	},
 }
 
@@ -343,10 +370,15 @@ var MetricNetworkRxErrors = Metric{
 		return spec.HasNetwork
 	},
 	GetValue: func(spec *cadvisor.ContainerSpec, stat *cadvisor.ContainerStats) MetricValue {
+		var rxErrors uint64 = 0
+		for _, interfaceStat := range stat.Network.Interfaces {
+			rxErrors += interfaceStat.RxErrors
+		}
 		return MetricValue{
 			ValueType:  ValueInt64,
 			MetricType: MetricCumulative,
-			IntValue:   int64(stat.Network.RxErrors)}
+			IntValue:   int64(rxErrors),
+		}
 	},
 }
 
@@ -362,10 +394,15 @@ var MetricNetworkTx = Metric{
 		return spec.HasNetwork
 	},
 	GetValue: func(spec *cadvisor.ContainerSpec, stat *cadvisor.ContainerStats) MetricValue {
+		var txBytes uint64 = 0
+		for _, interfaceStat := range stat.Network.Interfaces {
+			txBytes += interfaceStat.TxBytes
+		}
 		return MetricValue{
 			ValueType:  ValueInt64,
 			MetricType: MetricCumulative,
-			IntValue:   int64(stat.Network.TxBytes)}
+			IntValue:   int64(txBytes),
+		}
 	},
 }
 
@@ -381,10 +418,15 @@ var MetricNetworkTxErrors = Metric{
 		return spec.HasNetwork
 	},
 	GetValue: func(spec *cadvisor.ContainerSpec, stat *cadvisor.ContainerStats) MetricValue {
+		var txErrors uint64 = 0
+		for _, interfaceStat := range stat.Network.Interfaces {
+			txErrors += interfaceStat.TxErrors
+		}
 		return MetricValue{
 			ValueType:  ValueInt64,
 			MetricType: MetricCumulative,
-			IntValue:   int64(stat.Network.TxErrors)}
+			IntValue:   int64(txErrors),
+		}
 	},
 }
 
@@ -591,7 +633,7 @@ var MetricFilesystemUsage = Metric{
 		Units:       UnitsBytes,
 		Labels:      metricLabels,
 	},
-	HasLabeledMetric: func(spec *cadvisor.ContainerSpec) bool {
+	HasLabeledMetric: func(spec *cadvisor.ContainerSpec, stat *cadvisor.ContainerStats) bool {
 		return spec.HasFilesystem
 	},
 	GetLabeledMetric: func(spec *cadvisor.ContainerSpec, stat *cadvisor.ContainerStats) []LabeledMetric {
@@ -622,7 +664,7 @@ var MetricFilesystemLimit = Metric{
 		Units:       UnitsBytes,
 		Labels:      metricLabels,
 	},
-	HasLabeledMetric: func(spec *cadvisor.ContainerSpec) bool {
+	HasLabeledMetric: func(spec *cadvisor.ContainerSpec, stat *cadvisor.ContainerStats) bool {
 		return spec.HasFilesystem
 	},
 	GetLabeledMetric: func(spec *cadvisor.ContainerSpec, stat *cadvisor.ContainerStats) []LabeledMetric {
@@ -653,6 +695,26 @@ var MetricFilesystemAvailable = Metric{
 		Units:       UnitsBytes,
 		Labels:      metricLabels,
 	},
+	HasLabeledMetric: func(spec *cadvisor.ContainerSpec, stat *cadvisor.ContainerStats) bool {
+		return spec.HasFilesystem
+	},
+	GetLabeledMetric: func(spec *cadvisor.ContainerSpec, stat *cadvisor.ContainerStats) []LabeledMetric {
+		result := make([]LabeledMetric, 0, len(stat.Filesystem))
+		for _, fs := range stat.Filesystem {
+			result = append(result, LabeledMetric{
+				Name: "filesystem/available",
+				Labels: map[string]string{
+					LabelResourceID.Key: fs.Device,
+				},
+				MetricValue: MetricValue{
+					ValueType:  ValueInt64,
+					MetricType: MetricGauge,
+					IntValue:   int64(fs.Available),
+				},
+			})
+		}
+		return result
+	},
 }
 
 var MetricFilesystemInodes = Metric{
@@ -664,7 +726,7 @@ var MetricFilesystemInodes = Metric{
 		Units:       UnitsBytes,
 		Labels:      metricLabels,
 	},
-	HasLabeledMetric: func(spec *cadvisor.ContainerSpec) bool {
+	HasLabeledMetric: func(spec *cadvisor.ContainerSpec, stat *cadvisor.ContainerStats) bool {
 		return spec.HasFilesystem
 	},
 	GetLabeledMetric: func(spec *cadvisor.ContainerSpec, stat *cadvisor.ContainerStats) []LabeledMetric {
@@ -697,7 +759,7 @@ var MetricFilesystemInodesFree = Metric{
 		Units:       UnitsBytes,
 		Labels:      metricLabels,
 	},
-	HasLabeledMetric: func(spec *cadvisor.ContainerSpec) bool {
+	HasLabeledMetric: func(spec *cadvisor.ContainerSpec, stat *cadvisor.ContainerStats) bool {
 		return spec.HasFilesystem
 	},
 	GetLabeledMetric: func(spec *cadvisor.ContainerSpec, stat *cadvisor.ContainerStats) []LabeledMetric {
@@ -718,6 +780,221 @@ var MetricFilesystemInodesFree = Metric{
 			}
 		}
 		return result
+	},
+}
+
+var MetricAcceleratorMemoryTotal = Metric{
+	MetricDescriptor: MetricDescriptor{
+		Name:        "accelerator/memory_total",
+		Description: "Total accelerator memory (in bytes)",
+		Labels:      acceleratorLabels,
+		Type:        MetricGauge,
+		ValueType:   ValueInt64,
+		Units:       UnitsBytes,
+	},
+	HasLabeledMetric: func(spec *cadvisor.ContainerSpec, stat *cadvisor.ContainerStats) bool {
+		if len(stat.Accelerators) == 0 {
+			return false
+		}
+
+		return true
+	},
+	GetLabeledMetric: func(spec *cadvisor.ContainerSpec, stat *cadvisor.ContainerStats) []LabeledMetric {
+		result := make([]LabeledMetric, 0, len(stat.Accelerators))
+		for _, ac := range stat.Accelerators {
+			result = append(result, LabeledMetric{
+				Name: "accelerator/memory_total",
+				Labels: map[string]string{
+					LabelAcceleratorMake.Key:  ac.Make,
+					LabelAcceleratorModel.Key: ac.Model,
+					LabelAcceleratorID.Key:    ac.ID,
+				},
+				MetricValue: MetricValue{
+					ValueType:  ValueInt64,
+					MetricType: MetricGauge,
+					IntValue:   int64(ac.MemoryTotal),
+				},
+			})
+		}
+		return result
+	},
+}
+
+var MetricAcceleratorMemoryUsed = Metric{
+	MetricDescriptor: MetricDescriptor{
+		Name:        "accelerator/memory_used",
+		Description: "Total accelerator memory allocated (in bytes)",
+		Labels:      acceleratorLabels,
+		Type:        MetricGauge,
+		ValueType:   ValueInt64,
+		Units:       UnitsBytes,
+	},
+	HasLabeledMetric: func(spec *cadvisor.ContainerSpec, stat *cadvisor.ContainerStats) bool {
+		if len(stat.Accelerators) == 0 {
+			return false
+		}
+
+		return true
+	},
+	GetLabeledMetric: func(spec *cadvisor.ContainerSpec, stat *cadvisor.ContainerStats) []LabeledMetric {
+		result := make([]LabeledMetric, 0, len(stat.Accelerators))
+		for _, ac := range stat.Accelerators {
+			result = append(result, LabeledMetric{
+				Name: "accelerator/memory_used",
+				Labels: map[string]string{
+					LabelAcceleratorMake.Key:  ac.Make,
+					LabelAcceleratorModel.Key: ac.Model,
+					LabelAcceleratorID.Key:    ac.ID,
+				},
+				MetricValue: MetricValue{
+					ValueType:  ValueInt64,
+					MetricType: MetricGauge,
+					IntValue:   int64(ac.MemoryUsed),
+				},
+			})
+		}
+		return result
+	},
+}
+
+var MetricAcceleratorDutyCycle = Metric{
+	MetricDescriptor: MetricDescriptor{
+		Name:        "accelerator/duty_cycle",
+		Description: "Percent of time over the past sample period (10s) during which the accelerator was actively processing",
+		Labels:      acceleratorLabels,
+		Type:        MetricGauge,
+		ValueType:   ValueInt64,
+		Units:       UnitsCount,
+	},
+	HasLabeledMetric: func(spec *cadvisor.ContainerSpec, stat *cadvisor.ContainerStats) bool {
+		if len(stat.Accelerators) == 0 {
+			return false
+		}
+
+		return true
+	},
+	GetLabeledMetric: func(spec *cadvisor.ContainerSpec, stat *cadvisor.ContainerStats) []LabeledMetric {
+		result := make([]LabeledMetric, 0, len(stat.Accelerators))
+		for _, ac := range stat.Accelerators {
+			result = append(result, LabeledMetric{
+				Name: "accelerator/duty_cycle",
+				Labels: map[string]string{
+					LabelAcceleratorMake.Key:  ac.Make,
+					LabelAcceleratorModel.Key: ac.Model,
+					LabelAcceleratorID.Key:    ac.ID,
+				},
+				MetricValue: MetricValue{
+					ValueType:  ValueInt64,
+					MetricType: MetricGauge,
+					IntValue:   int64(ac.DutyCycle),
+				},
+			})
+		}
+		return result
+	},
+}
+
+var MetricDiskIORead = Metric{
+	MetricDescriptor: MetricDescriptor{
+		Name:        "disk/io_read_bytes",
+		Description: "Cumulative number of bytes read over disk",
+		Type:        MetricCumulative,
+		ValueType:   ValueInt64,
+		Units:       UnitsBytes,
+		Labels:      metricLabels,
+	},
+	HasLabeledMetric: func(spec *cadvisor.ContainerSpec, stat *cadvisor.ContainerStats) bool {
+		return spec.HasDiskIo
+	},
+	GetLabeledMetric: func(spec *cadvisor.ContainerSpec, stat *cadvisor.ContainerStats) []LabeledMetric {
+		result := make([]LabeledMetric, 0, len(stat.DiskIo.IoServiceBytes))
+		for _, ioServiceBytesPerPartition := range stat.DiskIo.IoServiceBytes {
+			resourceIDKey := ioServiceBytesPerPartition.Device
+			if resourceIDKey == "" {
+				resourceIDKey = fmt.Sprintf("%d:%d", ioServiceBytesPerPartition.Major, ioServiceBytesPerPartition.Minor)
+			}
+
+			var value uint64
+			if v, exists := ioServiceBytesPerPartition.Stats["Read"]; exists {
+				value = v
+			}
+
+			result = append(result, LabeledMetric{
+				Name: "disk/io_read_bytes",
+				Labels: map[string]string{
+					LabelResourceID.Key: resourceIDKey,
+				},
+				MetricValue: MetricValue{
+					ValueType:  ValueInt64,
+					MetricType: MetricGauge,
+					IntValue:   int64(value),
+				},
+			})
+		}
+		return result
+	},
+}
+
+var MetricDiskIOWrite = Metric{
+	MetricDescriptor: MetricDescriptor{
+		Name:        "disk/io_write_bytes",
+		Description: "Cumulative number of bytes write over disk",
+		Type:        MetricCumulative,
+		ValueType:   ValueInt64,
+		Units:       UnitsBytes,
+		Labels:      metricLabels,
+	},
+	HasLabeledMetric: func(spec *cadvisor.ContainerSpec, stat *cadvisor.ContainerStats) bool {
+		return spec.HasDiskIo
+	},
+	GetLabeledMetric: func(spec *cadvisor.ContainerSpec, stat *cadvisor.ContainerStats) []LabeledMetric {
+		result := make([]LabeledMetric, 0, len(stat.DiskIo.IoServiceBytes))
+		for _, ioServiceBytesPerPartition := range stat.DiskIo.IoServiceBytes {
+			resourceIDKey := ioServiceBytesPerPartition.Device
+			if resourceIDKey == "" {
+				resourceIDKey = fmt.Sprintf("%d:%d", ioServiceBytesPerPartition.Major, ioServiceBytesPerPartition.Minor)
+			}
+
+			var value uint64
+			if v, exists := ioServiceBytesPerPartition.Stats["Write"]; exists {
+				value = v
+			}
+
+			result = append(result, LabeledMetric{
+				Name: "disk/io_write_bytes",
+				Labels: map[string]string{
+					LabelResourceID.Key: resourceIDKey,
+				},
+				MetricValue: MetricValue{
+					ValueType:  ValueInt64,
+					MetricType: MetricGauge,
+					IntValue:   int64(value),
+				},
+			})
+		}
+		return result
+	},
+}
+
+var MetricDiskIOReadRate = Metric{
+	MetricDescriptor: MetricDescriptor{
+		Name:        "disk/io_read_bytes_rate",
+		Description: "Rate of bytes read over disk in bytes per second",
+		Type:        MetricGauge,
+		ValueType:   ValueFloat,
+		Units:       UnitsCount,
+		Labels:      metricLabels,
+	},
+}
+
+var MetricDiskIOWriteRate = Metric{
+	MetricDescriptor: MetricDescriptor{
+		Name:        "disk/io_write_bytes_rate",
+		Description: "Rate of bytes written over disk in bytes per second",
+		Type:        MetricGauge,
+		ValueType:   ValueFloat,
+		Units:       UnitsCount,
+		Labels:      metricLabels,
 	},
 }
 
@@ -757,7 +1034,7 @@ type Metric struct {
 	GetValue func(*cadvisor.ContainerSpec, *cadvisor.ContainerStats) MetricValue
 
 	// Returns whether this metric is present.
-	HasLabeledMetric func(*cadvisor.ContainerSpec) bool
+	HasLabeledMetric func(*cadvisor.ContainerSpec, *cadvisor.ContainerStats) bool
 
 	// Returns a slice of internal point objects that contain metric values and associated labels.
 	GetLabeledMetric func(*cadvisor.ContainerSpec, *cadvisor.ContainerStats) []LabeledMetric

@@ -28,7 +28,7 @@ import (
 // size may be at most 1<<16 bytes (64 KiB).
 func DeriveECDHES(alg string, apuData, apvData []byte, priv *ecdsa.PrivateKey, pub *ecdsa.PublicKey, size int) []byte {
 	if size > 1<<16 {
-		panic("ECDH-ES output size too large, must be less than 1<<16")
+		panic("ECDH-ES output size too large, must be less than or equal to 1<<16")
 	}
 
 	// algId, partyUInfo, partyVInfo inputs must be prefixed with the length

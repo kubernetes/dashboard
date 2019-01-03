@@ -123,12 +123,12 @@ func validateFlags() error {
 	var minFrequency = 5 * time.Second
 
 	if *argFrequency < minFrequency {
-		return fmt.Errorf("frequency needs to be greater than %s, supplied %s", minFrequency,
+		return fmt.Errorf("frequency needs to be no less than %s, supplied %s", minFrequency,
 			*argFrequency)
 	}
 
 	if *argFrequency > api.MaxEventsScrapeDelay {
-		return fmt.Errorf("frequency needs to be smaller than %s, supplied %s",
+		return fmt.Errorf("frequency needs to be no greater than %s, supplied %s",
 			api.MaxEventsScrapeDelay, *argFrequency)
 	}
 

@@ -48,7 +48,7 @@ func (f FilterType) From(s string) FilterType {
 type hawkularSink struct {
 	client  *metrics.Client
 	models  map[string]*metrics.MetricDefinition // Model definitions
-	regLock sync.Mutex
+	regLock sync.RWMutex
 	reg     map[string]*metrics.MetricDefinition // Real definitions
 
 	uri *url.URL
@@ -59,7 +59,8 @@ type hawkularSink struct {
 	modifiers      []metrics.Modifier
 	filters        []Filter
 
-	batchSize int
+	disablePreCaching bool
+	batchSize         int
 }
 
 func heapsterTypeToHawkularType(t core.MetricType) metrics.MetricType {

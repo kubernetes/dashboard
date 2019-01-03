@@ -29,6 +29,3 @@ func (codec *timeAsInt64Codec) Encode(ptr unsafe.Pointer, stream *jsoniter.Strea
 	ts := *((*time.Time)(ptr))
 	stream.WriteInt64(ts.UnixNano() / codec.precision.Nanoseconds())
 }
-func (codec *timeAsInt64Codec) EncodeInterface(val interface{}, stream *jsoniter.Stream) {
-	jsoniter.WriteToStream(val, stream, codec)
-}

@@ -8,11 +8,12 @@
 package silly
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 	"strings"
 
-	"github.com/docker/distribution/context"
+	dcontext "github.com/docker/distribution/context"
 	"github.com/docker/distribution/registry/auth"
 )
 
@@ -43,7 +44,7 @@ func newAccessController(options map[string]interface{}) (auth.AccessController,
 // Authorized simply checks for the existence of the authorization header,
 // responding with a bearer challenge if it doesn't exist.
 func (ac *accessController) Authorized(ctx context.Context, accessRecords ...auth.Access) (context.Context, error) {
-	req, err := context.GetRequest(ctx)
+	req, err := dcontext.GetRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -65,7 +66,11 @@ func (ac *accessController) Authorized(ctx context.Context, accessRecords ...aut
 		return nil, &challenge
 	}
 
-	return auth.WithUser(ctx, auth.UserInfo{Name: "silly"}), nil
+	ctx = auth.WithUser(ctx, auth.UserInfo{Name: "silly"})
+	ctx = dcontext.WithLogger(ctx, dcontext.GetLogger(ctx, auth.UserNameKey, auth.UserKey))
+
+	return ctx, nil
+
 }
 
 type challenge struct {
@@ -77,7 +82,7 @@ type challenge struct {
 var _ auth.Challenge = challenge{}
 
 // SetHeaders sets a simple bearer challenge on the response.
-func (ch challenge) SetHeaders(w http.ResponseWriter) {
+func (ch challenge) SetHeaders(r *http.Request, w http.ResponseWriter) {
 	header := fmt.Sprintf("Bearer realm=%q,service=%q", ch.realm, ch.service)
 
 	if ch.scope != "" {

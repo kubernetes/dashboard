@@ -44,13 +44,14 @@ func main() {
 	vanity.ForEachFile(files, vanity.TurnOnSizerAll)
 	vanity.ForEachFile(files, vanity.TurnOnUnmarshalerAll)
 
-	vanity.ForEachFile(files, vanity.TurnOffGoEnumPrefixAll)
 	vanity.ForEachFile(files, vanity.TurnOffGoEnumStringerAll)
 	vanity.ForEachFile(files, vanity.TurnOnEnumStringerAll)
 
 	vanity.ForEachFile(files, vanity.TurnOnEqualAll)
 	vanity.ForEachFile(files, vanity.TurnOnGoStringAll)
 	vanity.ForEachFile(files, vanity.TurnOffGoStringerAll)
+
+	vanity.ForEachFile(files, vanity.TurnOnMessageNameAll)
 
 	for _, file := range files {
 		if strings.HasSuffix(file.GetName(), "struct.proto") {

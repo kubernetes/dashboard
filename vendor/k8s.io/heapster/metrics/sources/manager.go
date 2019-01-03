@@ -75,7 +75,7 @@ func (this *sourceManager) Name() string {
 	return "source_manager"
 }
 
-func (this *sourceManager) ScrapeMetrics(start, end time.Time) *DataBatch {
+func (this *sourceManager) ScrapeMetrics(start, end time.Time) (*DataBatch, error) {
 	glog.V(1).Infof("Scraping metrics start: %s, end: %s", start, end)
 	sources := this.metricsSourceProvider.GetMetricsSources()
 
@@ -96,7 +96,12 @@ func (this *sourceManager) ScrapeMetrics(start, end time.Time) *DataBatch {
 			time.Sleep(time.Duration(rand.Intn(delayMs)) * time.Millisecond)
 
 			glog.V(2).Infof("Querying source: %s", source)
-			metrics := scrape(source, start, end)
+			metrics, err := scrape(source, start, end)
+			if err != nil {
+				glog.Errorf("Error in scraping containers from %s: %v", source.Name(), err)
+				return
+			}
+
 			now := time.Now()
 			if !now.Before(timeoutTime) {
 				glog.Warningf("Failed to get %s response in time", source)
@@ -153,10 +158,10 @@ responseloop:
 	for i, value := range latencies {
 		glog.V(1).Infof("   scrape  bucket %d: %d", i, value)
 	}
-	return &response
+	return &response, nil
 }
 
-func scrape(s MetricsSource, start, end time.Time) *DataBatch {
+func scrape(s MetricsSource, start, end time.Time) (*DataBatch, error) {
 	sourceName := s.Name()
 	startTime := time.Now()
 	defer lastScrapeTimestamp.

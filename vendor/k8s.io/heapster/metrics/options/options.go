@@ -33,21 +33,25 @@ type HeapsterRunOptions struct {
 	// Only to be used to for testing
 	DisableAuthForTesting bool
 
-	MetricResolution    time.Duration
-	EnableAPIServer     bool
-	Port                int
-	Ip                  string
-	MaxProcs            int
-	TLSCertFile         string
-	TLSKeyFile          string
-	TLSClientCAFile     string
-	AllowedUsers        string
-	Sources             flags.Uris
-	Sinks               flags.Uris
-	HistoricalSource    string
-	Version             bool
-	LabelSeperator      string
-	DisableMetricExport bool
+	MetricResolution      time.Duration
+	EnableAPIServer       bool
+	Port                  int
+	Ip                    string
+	MaxProcs              int
+	TLSCertFile           string
+	TLSKeyFile            string
+	TLSClientCAFile       string
+	AllowedUsers          string
+	Sources               flags.Uris
+	Sinks                 flags.Uris
+	HistoricalSource      string
+	Version               bool
+	LabelSeparator        string
+	IgnoredLabels         []string
+	StoredLabels          []string
+	DisableMetricExport   bool
+	SinkExportDataTimeout time.Duration
+	DisableMetricSink     bool
 }
 
 func NewHeapsterRunOptions() *HeapsterRunOptions {
@@ -82,6 +86,10 @@ func (h *HeapsterRunOptions) AddFlags(fs *pflag.FlagSet) {
 	fs.StringVar(&h.AllowedUsers, "allowed_users", "", "comma-separated list of allowed users")
 	fs.StringVar(&h.HistoricalSource, "historical_source", "", "which source type to use for the historical API (should be exactly the same as one of the sink URIs), or empty to disable the historical API")
 	fs.BoolVar(&h.Version, "version", false, "print version info and exit")
-	fs.StringVar(&h.LabelSeperator, "label_seperator", ",", "seperator used for joining labels")
+	fs.StringVar(&h.LabelSeparator, "label_separator", ",", "separator used for joining labels")
+	fs.StringSliceVar(&h.IgnoredLabels, "ignore_label", []string{}, "ignore this label when joining labels")
+	fs.StringSliceVar(&h.StoredLabels, "store_label", []string{}, "store this label separately from joined labels with the same name (name) or with different name (newName=name)")
 	fs.BoolVar(&h.DisableMetricExport, "disable_export", false, "Disable exporting metrics in api/v1/metric-export")
+	fs.DurationVar(&h.SinkExportDataTimeout, "sink_export_data_timeout", 20*time.Second, "Timeout for exporting data to a sink")
+	fs.BoolVar(&h.DisableMetricSink, "disable_metric_sink", false, "Disable metric sink")
 }

@@ -22,20 +22,26 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"net"
 	"net/http"
 	"net/url"
+	"strconv"
 	"time"
 
 	"github.com/golang/glog"
 	cadvisor "github.com/google/cadvisor/info/v1"
 	kubelet_client "k8s.io/heapster/metrics/sources/kubelet/util"
-	"k8s.io/kubernetes/pkg/kubelet/api/v1alpha1/stats"
+	stats "k8s.io/kubernetes/pkg/kubelet/apis/stats/v1alpha1"
 )
 
 type Host struct {
-	IP       string
+	IP       net.IP
 	Port     int
 	Resource string
+}
+
+func (h Host) String() string {
+	return net.JoinHostPort(h.IP.String(), strconv.Itoa(h.Port))
 }
 
 type KubeletClient struct {
@@ -124,29 +130,35 @@ type statsRequest struct {
 	Subcontainers bool `json:"subcontainers,omitempty"`
 }
 
-// Get stats for all non-Kubernetes containers.
-func (self *KubeletClient) GetAllRawContainers(host Host, start, end time.Time) ([]cadvisor.ContainerInfo, error) {
-	scheme := "http"
+func (self *KubeletClient) getScheme() string {
 	if self.config != nil && self.config.EnableHttps {
-		scheme = "https"
+		return "https"
+	} else {
+		return "http"
+	}
+}
+
+func (self *KubeletClient) getUrl(host Host, path string) string {
+	url := url.URL{
+		Scheme: self.getScheme(),
+		Host:   host.String(),
+		Path:   path,
 	}
 
-	url := fmt.Sprintf("%s://%s:%d/stats/container/", scheme, host.IP, host.Port)
+	return url.String()
+}
+
+// Get stats for all non-Kubernetes containers.
+func (self *KubeletClient) GetAllRawContainers(host Host, start, end time.Time) ([]cadvisor.ContainerInfo, error) {
+	url := self.getUrl(host, "/stats/container/")
 
 	return self.getAllContainers(url, start, end)
 }
 
 func (self *KubeletClient) GetSummary(host Host) (*stats.Summary, error) {
-	url := url.URL{
-		Scheme: "http",
-		Host:   fmt.Sprintf("%s:%d", host.IP, host.Port),
-		Path:   "/stats/summary/",
-	}
-	if self.config != nil && self.config.EnableHttps {
-		url.Scheme = "https"
-	}
+	url := self.getUrl(host, "/stats/summary/")
 
-	req, err := http.NewRequest("GET", url.String(), nil)
+	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
 	}

@@ -78,14 +78,14 @@ func (this *DummyMetricsSource) Name() string {
 	return "dummy"
 }
 
-func (this *DummyMetricsSource) ScrapeMetrics(start, end time.Time) *core.DataBatch {
+func (this *DummyMetricsSource) ScrapeMetrics(start, end time.Time) (*core.DataBatch, error) {
 	time.Sleep(this.latency)
 	return &core.DataBatch{
 		Timestamp: end,
 		MetricSets: map[string]*core.MetricSet{
 			this.metricSet.Labels["name"]: &this.metricSet,
 		},
-	}
+	}, nil
 }
 
 func newDummyMetricSet(name string) core.MetricSet {

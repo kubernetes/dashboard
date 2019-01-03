@@ -1,12 +1,14 @@
 package notifications
 
 import (
+	"context"
 	"net/http"
 
 	"github.com/docker/distribution"
-	"github.com/docker/distribution/context"
-	"github.com/docker/distribution/digest"
+
+	dcontext "github.com/docker/distribution/context"
 	"github.com/docker/distribution/reference"
+	"github.com/opencontainers/go-digest"
 )
 
 // ManifestListener describes a set of methods for listening to events related to manifests.
@@ -24,10 +26,17 @@ type BlobListener interface {
 	BlobDeleted(repo reference.Named, desc digest.Digest) error
 }
 
+// RepoListener provides repository methods that respond to repository lifecycle
+type RepoListener interface {
+	TagDeleted(repo reference.Named, tag string) error
+	RepoDeleted(repo reference.Named) error
+}
+
 // Listener combines all repository events into a single interface.
 type Listener interface {
 	ManifestListener
 	BlobListener
+	RepoListener
 }
 
 type repositoryListener struct {
@@ -35,12 +44,28 @@ type repositoryListener struct {
 	listener Listener
 }
 
+type removerListener struct {
+	distribution.RepositoryRemover
+	listener Listener
+}
+
 // Listen dispatches events on the repository to the listener.
-func Listen(repo distribution.Repository, listener Listener) distribution.Repository {
+func Listen(repo distribution.Repository, remover distribution.RepositoryRemover, listener Listener) (distribution.Repository, distribution.RepositoryRemover) {
 	return &repositoryListener{
-		Repository: repo,
-		listener:   listener,
+			Repository: repo,
+			listener:   listener,
+		}, &removerListener{
+			RepositoryRemover: remover,
+			listener:          listener,
+		}
+}
+
+func (nl *removerListener) Remove(ctx context.Context, name reference.Named) error {
+	err := nl.RepositoryRemover.Remove(ctx, name)
+	if err != nil {
+		return err
 	}
+	return nl.listener.RepoDeleted(name)
 }
 
 func (rl *repositoryListener) Manifests(ctx context.Context, options ...distribution.ManifestServiceOption) (distribution.ManifestService, error) {
@@ -70,7 +95,7 @@ func (msl *manifestServiceListener) Delete(ctx context.Context, dgst digest.Dige
 	err := msl.ManifestService.Delete(ctx, dgst)
 	if err == nil {
 		if err := msl.parent.listener.ManifestDeleted(msl.parent.Repository.Named(), dgst); err != nil {
-			context.GetLogger(ctx).Errorf("error dispatching manifest delete to listener: %v", err)
+			dcontext.GetLogger(ctx).Errorf("error dispatching manifest delete to listener: %v", err)
 		}
 	}
 
@@ -81,7 +106,7 @@ func (msl *manifestServiceListener) Get(ctx context.Context, dgst digest.Digest,
 	sm, err := msl.ManifestService.Get(ctx, dgst, options...)
 	if err == nil {
 		if err := msl.parent.listener.ManifestPulled(msl.parent.Repository.Named(), sm, options...); err != nil {
-			context.GetLogger(ctx).Errorf("error dispatching manifest pull to listener: %v", err)
+			dcontext.GetLogger(ctx).Errorf("error dispatching manifest pull to listener: %v", err)
 		}
 	}
 
@@ -93,7 +118,7 @@ func (msl *manifestServiceListener) Put(ctx context.Context, sm distribution.Man
 
 	if err == nil {
 		if err := msl.parent.listener.ManifestPushed(msl.parent.Repository.Named(), sm, options...); err != nil {
-			context.GetLogger(ctx).Errorf("error dispatching manifest push to listener: %v", err)
+			dcontext.GetLogger(ctx).Errorf("error dispatching manifest push to listener: %v", err)
 		}
 	}
 
@@ -111,10 +136,10 @@ func (bsl *blobServiceListener) Get(ctx context.Context, dgst digest.Digest) ([]
 	p, err := bsl.BlobStore.Get(ctx, dgst)
 	if err == nil {
 		if desc, err := bsl.Stat(ctx, dgst); err != nil {
-			context.GetLogger(ctx).Errorf("error resolving descriptor in ServeBlob listener: %v", err)
+			dcontext.GetLogger(ctx).Errorf("error resolving descriptor in ServeBlob listener: %v", err)
 		} else {
 			if err := bsl.parent.listener.BlobPulled(bsl.parent.Repository.Named(), desc); err != nil {
-				context.GetLogger(ctx).Errorf("error dispatching layer pull to listener: %v", err)
+				dcontext.GetLogger(ctx).Errorf("error dispatching layer pull to listener: %v", err)
 			}
 		}
 	}
@@ -126,10 +151,10 @@ func (bsl *blobServiceListener) Open(ctx context.Context, dgst digest.Digest) (d
 	rc, err := bsl.BlobStore.Open(ctx, dgst)
 	if err == nil {
 		if desc, err := bsl.Stat(ctx, dgst); err != nil {
-			context.GetLogger(ctx).Errorf("error resolving descriptor in ServeBlob listener: %v", err)
+			dcontext.GetLogger(ctx).Errorf("error resolving descriptor in ServeBlob listener: %v", err)
 		} else {
 			if err := bsl.parent.listener.BlobPulled(bsl.parent.Repository.Named(), desc); err != nil {
-				context.GetLogger(ctx).Errorf("error dispatching layer pull to listener: %v", err)
+				dcontext.GetLogger(ctx).Errorf("error dispatching layer pull to listener: %v", err)
 			}
 		}
 	}
@@ -141,10 +166,10 @@ func (bsl *blobServiceListener) ServeBlob(ctx context.Context, w http.ResponseWr
 	err := bsl.BlobStore.ServeBlob(ctx, w, r, dgst)
 	if err == nil {
 		if desc, err := bsl.Stat(ctx, dgst); err != nil {
-			context.GetLogger(ctx).Errorf("error resolving descriptor in ServeBlob listener: %v", err)
+			dcontext.GetLogger(ctx).Errorf("error resolving descriptor in ServeBlob listener: %v", err)
 		} else {
 			if err := bsl.parent.listener.BlobPulled(bsl.parent.Repository.Named(), desc); err != nil {
-				context.GetLogger(ctx).Errorf("error dispatching layer pull to listener: %v", err)
+				dcontext.GetLogger(ctx).Errorf("error dispatching layer pull to listener: %v", err)
 			}
 		}
 	}
@@ -156,7 +181,7 @@ func (bsl *blobServiceListener) Put(ctx context.Context, mediaType string, p []b
 	desc, err := bsl.BlobStore.Put(ctx, mediaType, p)
 	if err == nil {
 		if err := bsl.parent.listener.BlobPushed(bsl.parent.Repository.Named(), desc); err != nil {
-			context.GetLogger(ctx).Errorf("error dispatching layer push to listener: %v", err)
+			dcontext.GetLogger(ctx).Errorf("error dispatching layer push to listener: %v", err)
 		}
 	}
 
@@ -168,7 +193,7 @@ func (bsl *blobServiceListener) Create(ctx context.Context, options ...distribut
 	switch err := err.(type) {
 	case distribution.ErrBlobMounted:
 		if err := bsl.parent.listener.BlobMounted(bsl.parent.Repository.Named(), err.Descriptor, err.From); err != nil {
-			context.GetLogger(ctx).Errorf("error dispatching blob mount to listener: %v", err)
+			dcontext.GetLogger(ctx).Errorf("error dispatching blob mount to listener: %v", err)
 		}
 		return nil, err
 	}
@@ -179,7 +204,7 @@ func (bsl *blobServiceListener) Delete(ctx context.Context, dgst digest.Digest) 
 	err := bsl.BlobStore.Delete(ctx, dgst)
 	if err == nil {
 		if err := bsl.parent.listener.BlobDeleted(bsl.parent.Repository.Named(), dgst); err != nil {
-			context.GetLogger(ctx).Errorf("error dispatching layer delete to listener: %v", err)
+			dcontext.GetLogger(ctx).Errorf("error dispatching layer delete to listener: %v", err)
 		}
 	}
 
@@ -207,9 +232,32 @@ func (bwl *blobWriterListener) Commit(ctx context.Context, desc distribution.Des
 	committed, err := bwl.BlobWriter.Commit(ctx, desc)
 	if err == nil {
 		if err := bwl.parent.parent.listener.BlobPushed(bwl.parent.parent.Repository.Named(), committed); err != nil {
-			context.GetLogger(ctx).Errorf("error dispatching blob push to listener: %v", err)
+			dcontext.GetLogger(ctx).Errorf("error dispatching blob push to listener: %v", err)
 		}
 	}
 
 	return committed, err
+}
+
+type tagServiceListener struct {
+	distribution.TagService
+	parent *repositoryListener
+}
+
+func (rl *repositoryListener) Tags(ctx context.Context) distribution.TagService {
+	return &tagServiceListener{
+		TagService: rl.Repository.Tags(ctx),
+		parent:     rl,
+	}
+}
+
+func (tagSL *tagServiceListener) Untag(ctx context.Context, tag string) error {
+	if err := tagSL.TagService.Untag(ctx, tag); err != nil {
+		return err
+	}
+	if err := tagSL.parent.listener.TagDeleted(tagSL.parent.Repository.Named(), tag); err != nil {
+		dcontext.GetLogger(ctx).Errorf("error dispatching tag deleted to listener: %v", err)
+		return err
+	}
+	return nil
 }

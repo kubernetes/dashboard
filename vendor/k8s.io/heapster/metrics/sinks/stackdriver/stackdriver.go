@@ -15,21 +15,25 @@
 package stackdriver
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"math/rand"
 	"net/url"
-	"reflect"
 	"strconv"
+	"strings"
 	"time"
 
 	gce "cloud.google.com/go/compute/metadata"
+	sd_api "cloud.google.com/go/monitoring/apiv3"
 	"github.com/golang/glog"
+	google_proto "github.com/golang/protobuf/ptypes/timestamp"
 	"github.com/prometheus/client_golang/prometheus"
-	"golang.org/x/oauth2"
-	"golang.org/x/oauth2/google"
-	"google.golang.org/api/googleapi"
-	sd_api "google.golang.org/api/monitoring/v3"
+	"google.golang.org/genproto/googleapis/api/metric"
+	"google.golang.org/genproto/googleapis/api/monitoredres"
+	monitoringpb "google.golang.org/genproto/googleapis/monitoring/v3"
+	grpc_codes "google.golang.org/grpc/codes"
+	grpc_status "google.golang.org/grpc/status"
 	gce_util "k8s.io/heapster/common/gce"
 	"k8s.io/heapster/metrics/core"
 )
@@ -37,91 +41,30 @@ import (
 const (
 	maxTimeseriesPerRequest = 200
 	// 2 seconds on SD side, 1 extra for networking overhead
-	sdRequestLatencySec           = 3
-	httpResponseCodeUnknown       = -100
-	httpResponseCodeClientTimeout = -1
+	sdRequestLatencySec = 3
 )
 
 type StackdriverSink struct {
 	project               string
-	cluster               string
-	zone                  string
-	stackdriverClient     *sd_api.Service
+	clusterName           string
+	clusterLocation       string
+	heapsterZone          string
+	stackdriverClient     *sd_api.MetricClient
 	minInterval           time.Duration
 	lastExportTime        time.Time
 	batchExportTimeoutSec int
 	initialDelaySec       int
+	useOldResourceModel   bool
+	useNewResourceModel   bool
 }
 
 type metricMetadata struct {
-	MetricKind string
-	ValueType  string
+	MetricKind metric.MetricDescriptor_MetricKind
+	ValueType  metric.MetricDescriptor_ValueType
 	Name       string
 }
 
 var (
-	// Known metrics metadata
-
-	cpuReservedCoresMD = &metricMetadata{
-		MetricKind: "GAUGE",
-		ValueType:  "DOUBLE",
-		Name:       "container.googleapis.com/container/cpu/reserved_cores",
-	}
-
-	cpuUsageTimeMD = &metricMetadata{
-		MetricKind: "CUMULATIVE",
-		ValueType:  "DOUBLE",
-		Name:       "container.googleapis.com/container/cpu/usage_time",
-	}
-
-	uptimeMD = &metricMetadata{
-		MetricKind: "CUMULATIVE",
-		ValueType:  "DOUBLE",
-		Name:       "container.googleapis.com/container/uptime",
-	}
-
-	networkRxMD = &metricMetadata{
-		MetricKind: "CUMULATIVE",
-		ValueType:  "INT64",
-		Name:       "container.googleapis.com/container/network/received_bytes_count",
-	}
-
-	networkTxMD = &metricMetadata{
-		MetricKind: "CUMULATIVE",
-		ValueType:  "INT64",
-		Name:       "container.googleapis.com/container/network/sent_bytes_count",
-	}
-
-	memoryLimitMD = &metricMetadata{
-		MetricKind: "GAUGE",
-		ValueType:  "INT64",
-		Name:       "container.googleapis.com/container/memory/bytes_total",
-	}
-
-	memoryBytesUsedMD = &metricMetadata{
-		MetricKind: "GAUGE",
-		ValueType:  "INT64",
-		Name:       "container.googleapis.com/container/memory/bytes_used",
-	}
-
-	memoryPageFaultsMD = &metricMetadata{
-		MetricKind: "CUMULATIVE",
-		ValueType:  "INT64",
-		Name:       "container.googleapis.com/container/memory/page_fault_count",
-	}
-
-	diskBytesUsedMD = &metricMetadata{
-		MetricKind: "GAUGE",
-		ValueType:  "INT64",
-		Name:       "container.googleapis.com/container/disk/bytes_used",
-	}
-
-	diskBytesTotalMD = &metricMetadata{
-		MetricKind: "GAUGE",
-		ValueType:  "INT64",
-		Name:       "container.googleapis.com/container/disk/bytes_total",
-	}
-
 	// Sink performance metrics
 
 	requestsSent = prometheus.NewCounterVec(
@@ -161,15 +104,23 @@ func (sink *StackdriverSink) Stop() {
 }
 
 func (sink *StackdriverSink) processMetrics(metricValues map[string]core.MetricValue,
-	timestamp time.Time, labels map[string]string, createTime time.Time) []*sd_api.TimeSeries {
-	timeseries := make([]*sd_api.TimeSeries, 0)
-	for name, value := range metricValues {
-		ts := sink.TranslateMetric(timestamp, labels, name, value, createTime)
-		if ts != nil {
-			timeseries = append(timeseries, ts)
+	timestamp time.Time, labels map[string]string, collectionStartTime time.Time, entityCreateTime time.Time) []*monitoringpb.TimeSeries {
+	var timeSeries []*monitoringpb.TimeSeries
+	if sink.useOldResourceModel {
+		for name, value := range metricValues {
+			if ts := sink.LegacyTranslateMetric(timestamp, labels, name, value, collectionStartTime); ts != nil {
+				timeSeries = append(timeSeries, ts)
+			}
 		}
 	}
-	return timeseries
+	if sink.useNewResourceModel {
+		for name, value := range metricValues {
+			if ts := sink.TranslateMetric(timestamp, labels, name, value, collectionStartTime, entityCreateTime); ts != nil {
+				timeSeries = append(timeSeries, ts)
+			}
+		}
+	}
+	return timeSeries
 }
 
 func (sink *StackdriverSink) ExportData(dataBatch *core.DataBatch) {
@@ -180,8 +131,8 @@ func (sink *StackdriverSink) ExportData(dataBatch *core.DataBatch) {
 	}
 	sink.lastExportTime = dataBatch.Timestamp
 
-	requests := []*sd_api.CreateTimeSeriesRequest{}
-	req := getReq()
+	requests := []*monitoringpb.CreateTimeSeriesRequest{}
+	req := getReq(sink.project)
 	for key, metricSet := range dataBatch.MetricSets {
 		switch metricSet.Labels["type"] {
 		case core.MetricSetTypeNode, core.MetricSetTypePod, core.MetricSetTypePodContainer, core.MetricSetTypeSystemContainer:
@@ -189,39 +140,55 @@ func (sink *StackdriverSink) ExportData(dataBatch *core.DataBatch) {
 			continue
 		}
 
-		if metricSet.CreateTime.IsZero() {
-			glog.V(2).Infof("Skipping incorrect metric set %s because create time is zero", key)
+		if metricSet.CollectionStartTime.IsZero() {
+			glog.V(2).Infof("Skipping incorrect metric set %s because collection start time is zero", key)
 			continue
 		}
 
-		if metricSet.Labels["type"] == core.MetricSetTypeNode {
+		// Hack used with legacy resource type "gke_container". It is used to represent three
+		// Kubernetes resources: container, pod or node. For pods container name is empty, for nodes it
+		// is set to artificial value "machine". Otherwise it stores actual container name.
+		// With new resource types, container_name is ignored for resources other than "k8s_container"
+		if sink.useOldResourceModel && metricSet.Labels["type"] == core.MetricSetTypeNode {
 			metricSet.Labels[core.LabelContainerName.Key] = "machine"
 		}
 
-		computedMetrics := sink.preprocessMemoryMetrics(metricSet)
+		derivedMetrics := sink.computeDerivedMetrics(metricSet)
 
-		computedTimeseries := sink.processMetrics(computedMetrics.MetricValues, dataBatch.Timestamp, metricSet.Labels, metricSet.CreateTime)
-		timeseries := sink.processMetrics(metricSet.MetricValues, dataBatch.Timestamp, metricSet.Labels, metricSet.CreateTime)
+		derivedTimeseries := sink.processMetrics(derivedMetrics.MetricValues, dataBatch.Timestamp, metricSet.Labels, metricSet.CollectionStartTime, metricSet.EntityCreateTime)
+		timeseries := sink.processMetrics(metricSet.MetricValues, dataBatch.Timestamp, metricSet.Labels, metricSet.CollectionStartTime, metricSet.EntityCreateTime)
 
-		timeseries = append(timeseries, computedTimeseries...)
+		timeseries = append(timeseries, derivedTimeseries...)
 
 		for _, ts := range timeseries {
 			req.TimeSeries = append(req.TimeSeries, ts)
 			if len(req.TimeSeries) >= maxTimeseriesPerRequest {
 				requests = append(requests, req)
-				req = getReq()
+				req = getReq(sink.project)
 			}
 		}
 
 		for _, metric := range metricSet.LabeledMetrics {
-			point := sink.TranslateLabeledMetric(dataBatch.Timestamp, metricSet.Labels, metric, metricSet.CreateTime)
+			if sink.useOldResourceModel {
+				if point := sink.LegacyTranslateLabeledMetric(dataBatch.Timestamp, metricSet.Labels, metric, metricSet.CollectionStartTime); point != nil {
+					req.TimeSeries = append(req.TimeSeries, point)
+				}
 
-			if point != nil {
-				req.TimeSeries = append(req.TimeSeries, point)
+				if len(req.TimeSeries) >= maxTimeseriesPerRequest {
+					requests = append(requests, req)
+					req = getReq(sink.project)
+				}
 			}
-			if len(req.TimeSeries) >= maxTimeseriesPerRequest {
-				requests = append(requests, req)
-				req = getReq()
+			if sink.useNewResourceModel {
+				point := sink.TranslateLabeledMetric(dataBatch.Timestamp, metricSet.Labels, metric, metricSet.CollectionStartTime)
+				if point != nil {
+					req.TimeSeries = append(req.TimeSeries, point)
+				}
+
+				if len(req.TimeSeries) >= maxTimeseriesPerRequest {
+					requests = append(requests, req)
+					req = getReq(sink.project)
+				}
 			}
 		}
 	}
@@ -233,11 +200,11 @@ func (sink *StackdriverSink) ExportData(dataBatch *core.DataBatch) {
 	go sink.sendRequests(requests)
 }
 
-func (sink *StackdriverSink) sendRequests(requests []*sd_api.CreateTimeSeriesRequest) {
+func (sink *StackdriverSink) sendRequests(requests []*monitoringpb.CreateTimeSeriesRequest) {
 	// Each worker can handle at least batchExportTimeout/sdRequestLatencySec requests within the specified period.
 	// 5 extra workers just in case.
 	workers := 5 + len(requests)/(sink.batchExportTimeoutSec/sdRequestLatencySec)
-	requestQueue := make(chan *sd_api.CreateTimeSeriesRequest)
+	requestQueue := make(chan *monitoringpb.CreateTimeSeriesRequest)
 	completedQueue := make(chan bool)
 
 	// Launch Go routines responsible for sending requests
@@ -259,9 +226,9 @@ forloop:
 			// TODO(piosz): consider cancelling requests in flight
 			// Report dropped requests in metrics.
 			for _, req := range requests[i:] {
-				requestsSent.WithLabelValues(strconv.Itoa(httpResponseCodeClientTimeout)).Inc()
+				requestsSent.WithLabelValues(grpc_codes.DeadlineExceeded.String()).Inc()
 				timeseriesSent.
-					WithLabelValues(strconv.Itoa(httpResponseCodeClientTimeout)).
+					WithLabelValues(grpc_codes.DeadlineExceeded.String()).
 					Add(float64(len(req.TimeSeries)))
 			}
 			break forloop
@@ -287,23 +254,17 @@ forloop:
 	}
 }
 
-func (sink *StackdriverSink) requestSender(reqQueue chan *sd_api.CreateTimeSeriesRequest, completedQueue chan bool) {
+func (sink *StackdriverSink) requestSender(reqQueue chan *monitoringpb.CreateTimeSeriesRequest, completedQueue chan bool) {
 	defer func() {
 		completedQueue <- true
 	}()
 	time.Sleep(time.Duration(rand.Intn(1000*sink.initialDelaySec)) * time.Millisecond)
-	for {
-		select {
-		case req, active := <-reqQueue:
-			if !active {
-				return
-			}
-			sink.sendOneRequest(req)
-		}
+	for req := range reqQueue {
+		sink.sendOneRequest(req)
 	}
 }
 
-func marshalRequestAndLog(printer func([]byte), req *sd_api.CreateTimeSeriesRequest) {
+func marshalRequestAndLog(printer func([]byte), req *monitoringpb.CreateTimeSeriesRequest) {
 	reqJson, errJson := json.Marshal(req)
 	if errJson != nil {
 		glog.Errorf("Couldn't marshal Stackdriver request %v", errJson)
@@ -312,11 +273,11 @@ func marshalRequestAndLog(printer func([]byte), req *sd_api.CreateTimeSeriesRequ
 	}
 }
 
-func (sink *StackdriverSink) sendOneRequest(req *sd_api.CreateTimeSeriesRequest) {
+func (sink *StackdriverSink) sendOneRequest(req *monitoringpb.CreateTimeSeriesRequest) {
 	startTime := time.Now()
-	empty, err := sink.stackdriverClient.Projects.TimeSeries.Create(fullProjectName(sink.project), req).Do()
+	err := sink.stackdriverClient.CreateTimeSeries(context.Background(), req)
 
-	var responseCode int
+	var responseCode grpc_codes.Code
 	if err != nil {
 		glog.Warningf("Error while sending request to Stackdriver %v", err)
 		// Convert request to json and log it, but only if logging level is equal to 2 or more.
@@ -325,11 +286,10 @@ func (sink *StackdriverSink) sendOneRequest(req *sd_api.CreateTimeSeriesRequest)
 				glog.V(2).Infof("The request was: %s", reqJson)
 			}, req)
 		}
-		switch reflect.Indirect(reflect.ValueOf(err)).Type() {
-		case reflect.Indirect(reflect.ValueOf(&googleapi.Error{})).Type():
-			responseCode = err.(*googleapi.Error).Code
-		default:
-			responseCode = httpResponseCodeUnknown
+		if status, ok := grpc_status.FromError(err); ok {
+			responseCode = status.Code()
+		} else {
+			responseCode = grpc_codes.Unknown
 		}
 	} else {
 		// Convert request to json and log it, but only if logging level is equal to 10 or more.
@@ -338,15 +298,14 @@ func (sink *StackdriverSink) sendOneRequest(req *sd_api.CreateTimeSeriesRequest)
 				glog.V(10).Infof("Stackdriver request sent: %s", reqJson)
 			}, req)
 		}
-		responseCode = empty.ServerResponse.HTTPStatusCode
+		responseCode = grpc_codes.OK
 	}
 
-	requestsSent.WithLabelValues(strconv.Itoa(responseCode)).Inc()
+	requestsSent.WithLabelValues(responseCode.String()).Inc()
 	timeseriesSent.
-		WithLabelValues(strconv.Itoa(responseCode)).
+		WithLabelValues(responseCode.String()).
 		Add(float64(len(req.TimeSeries)))
 	requestLatency.Observe(time.Since(startTime).Seconds() / time.Millisecond.Seconds())
-
 }
 
 func CreateStackdriverSink(uri *url.URL) (core.DataSink, error) {
@@ -359,9 +318,20 @@ func CreateStackdriverSink(uri *url.URL) (core.DataSink, error) {
 
 	opts := uri.Query()
 
+	useOldResourceModel := true
+	if err := parseBoolFlag(opts, "use_old_resources", &useOldResourceModel); err != nil {
+		return nil, err
+	}
+	useNewResourceModel := false
+	if err := parseBoolFlag(opts, "use_new_resources", &useNewResourceModel); err != nil {
+		return nil, err
+	}
+
 	cluster_name := ""
 	if len(opts["cluster_name"]) >= 1 {
 		cluster_name = opts["cluster_name"][0]
+	} else {
+		glog.Warning("Cluster name required but not provided, using empty cluster name.")
 	}
 
 	minInterval := time.Nanosecond
@@ -398,27 +368,36 @@ func CreateStackdriverSink(uri *url.URL) (core.DataSink, error) {
 		return nil, err
 	}
 
-	// Detect zone
-	zone, err := gce.Zone()
+	// Detect zone for old resource model
+	heapsterZone, err := gce.Zone()
 	if err != nil {
 		return nil, err
 	}
 
-	// Create Google Cloud Monitoring service
-	client := oauth2.NewClient(oauth2.NoContext, google.ComputeTokenSource(""))
-	stackdriverClient, err := sd_api.New(client)
+	clusterLocation := heapsterZone
+	if len(opts["cluster_location"]) >= 1 {
+		clusterLocation = opts["cluster_location"][0]
+	} else if useNewResourceModel {
+		glog.Warning("Cluster location required with new resource model but not provided. Falling back to the zone where Heapster runs.")
+	}
+
+	// Create Metric Client
+	stackdriverClient, err := sd_api.NewMetricClient(context.Background())
 	if err != nil {
 		return nil, err
 	}
 
 	sink := &StackdriverSink{
 		project:               projectId,
-		cluster:               cluster_name,
-		zone:                  zone,
+		clusterName:           cluster_name,
+		clusterLocation:       clusterLocation,
+		heapsterZone:          heapsterZone,
 		stackdriverClient:     stackdriverClient,
 		minInterval:           minInterval,
 		batchExportTimeoutSec: batchExportTimeoutSec,
 		initialDelaySec:       initialDelaySec,
+		useOldResourceModel:   useOldResourceModel,
+		useNewResourceModel:   useNewResourceModel,
 	}
 
 	// Register sink metrics
@@ -431,124 +410,312 @@ func CreateStackdriverSink(uri *url.URL) (core.DataSink, error) {
 	return sink, nil
 }
 
-func (sink *StackdriverSink) preprocessMemoryMetrics(metricSet *core.MetricSet) *core.MetricSet {
-	usage := metricSet.MetricValues[core.MetricMemoryUsage.MetricDescriptor.Name].IntValue
-	workingSet := metricSet.MetricValues[core.MetricMemoryWorkingSet.MetricDescriptor.Name].IntValue
-	bytesUsed := core.MetricValue{
-		IntValue: usage - workingSet,
+func parseBoolFlag(opts map[string][]string, name string, targetValue *bool) error {
+	if len(opts[name]) >= 1 {
+		var err error
+		*targetValue, err = strconv.ParseBool(opts[name][0])
+		if err != nil {
+			return fmt.Errorf("%s = %s is not correct boolean value", name, opts[name][0])
+		}
+	}
+	return nil
+}
+
+func (sink *StackdriverSink) computeDerivedMetrics(metricSet *core.MetricSet) *core.MetricSet {
+	newMetricSet := &core.MetricSet{MetricValues: map[string]core.MetricValue{}}
+	usage, usageOK := metricSet.MetricValues[core.MetricMemoryUsage.MetricDescriptor.Name]
+	workingSet, workingSetOK := metricSet.MetricValues[core.MetricMemoryWorkingSet.MetricDescriptor.Name]
+
+	if usageOK && workingSetOK {
+		newMetricSet.MetricValues["memory/bytes_used"] = core.MetricValue{
+			IntValue: usage.IntValue - workingSet.IntValue,
+		}
 	}
 
-	newMetricSet := &core.MetricSet{
-		MetricValues: map[string]core.MetricValue{},
+	memoryFaults, memoryFaultsOK := metricSet.MetricValues[core.MetricMemoryPageFaults.MetricDescriptor.Name]
+	majorMemoryFaults, majorMemoryFaultsOK := metricSet.MetricValues[core.MetricMemoryMajorPageFaults.MetricDescriptor.Name]
+	if memoryFaultsOK && majorMemoryFaultsOK {
+		newMetricSet.MetricValues["memory/minor_page_faults"] = core.MetricValue{
+			IntValue: memoryFaults.IntValue - majorMemoryFaults.IntValue,
+		}
 	}
-
-	newMetricSet.MetricValues["memory/bytes_used"] = bytesUsed
-
-	memoryFaults := metricSet.MetricValues[core.MetricMemoryPageFaults.MetricDescriptor.Name].IntValue
-	majorMemoryFaults := metricSet.MetricValues[core.MetricMemoryMajorPageFaults.MetricDescriptor.Name].IntValue
-
-	minorMemoryFaults := core.MetricValue{
-		IntValue: memoryFaults - majorMemoryFaults,
-	}
-	newMetricSet.MetricValues["memory/minor_page_faults"] = minorMemoryFaults
 
 	return newMetricSet
 }
 
-func (sink *StackdriverSink) TranslateLabeledMetric(timestamp time.Time, labels map[string]string, metric core.LabeledMetric, createTime time.Time) *sd_api.TimeSeries {
-	resourceLabels := sink.getResourceLabels(labels)
+func (sink *StackdriverSink) LegacyTranslateLabeledMetric(timestamp time.Time, labels map[string]string, metric core.LabeledMetric, collectionStartTime time.Time) *monitoringpb.TimeSeries {
+	resourceLabels := sink.legacyGetResourceLabels(labels)
 	switch metric.Name {
 	case core.MetricFilesystemUsage.MetricDescriptor.Name:
-		point := sink.intPoint(timestamp, timestamp, metric.MetricValue.IntValue)
-		ts := createTimeSeries(resourceLabels, diskBytesUsedMD, point)
+		point := sink.intPoint(timestamp, timestamp, metric.IntValue)
+		ts := legacyCreateTimeSeries(resourceLabels, legacyDiskBytesUsedMD, point)
 		ts.Metric.Labels = map[string]string{
 			"device_name": metric.Labels[core.LabelResourceID.Key],
 		}
 		return ts
 	case core.MetricFilesystemLimit.MetricDescriptor.Name:
-		point := sink.intPoint(timestamp, timestamp, metric.MetricValue.IntValue)
-		ts := createTimeSeries(resourceLabels, diskBytesTotalMD, point)
+		point := sink.intPoint(timestamp, timestamp, metric.IntValue)
+		ts := legacyCreateTimeSeries(resourceLabels, legacyDiskBytesTotalMD, point)
 		ts.Metric.Labels = map[string]string{
 			"device_name": metric.Labels[core.LabelResourceID.Key],
 		}
 		return ts
-	default:
-		return nil
+	case core.MetricAcceleratorMemoryTotal.MetricDescriptor.Name:
+		point := sink.intPoint(timestamp, timestamp, metric.IntValue)
+		ts := legacyCreateTimeSeries(resourceLabels, legacyAcceleratorMemoryTotalMD, point)
+		ts.Metric.Labels = map[string]string{
+			core.LabelAcceleratorMake.Key:  metric.Labels[core.LabelAcceleratorMake.Key],
+			core.LabelAcceleratorModel.Key: metric.Labels[core.LabelAcceleratorModel.Key],
+			core.LabelAcceleratorID.Key:    metric.Labels[core.LabelAcceleratorID.Key],
+		}
+		return ts
+	case core.MetricAcceleratorMemoryUsed.MetricDescriptor.Name:
+		point := sink.intPoint(timestamp, timestamp, metric.IntValue)
+		ts := legacyCreateTimeSeries(resourceLabels, legacyAcceleratorMemoryUsedMD, point)
+		ts.Metric.Labels = map[string]string{
+			core.LabelAcceleratorMake.Key:  metric.Labels[core.LabelAcceleratorMake.Key],
+			core.LabelAcceleratorModel.Key: metric.Labels[core.LabelAcceleratorModel.Key],
+			core.LabelAcceleratorID.Key:    metric.Labels[core.LabelAcceleratorID.Key],
+		}
+		return ts
+	case core.MetricAcceleratorDutyCycle.MetricDescriptor.Name:
+		point := sink.intPoint(timestamp, timestamp, metric.IntValue)
+		ts := legacyCreateTimeSeries(resourceLabels, legacyAcceleratorDutyCycleMD, point)
+		ts.Metric.Labels = map[string]string{
+			core.LabelAcceleratorMake.Key:  metric.Labels[core.LabelAcceleratorMake.Key],
+			core.LabelAcceleratorModel.Key: metric.Labels[core.LabelAcceleratorModel.Key],
+			core.LabelAcceleratorID.Key:    metric.Labels[core.LabelAcceleratorID.Key],
+		}
+		return ts
 	}
+	return nil
 }
 
-func (sink *StackdriverSink) TranslateMetric(timestamp time.Time, labels map[string]string, name string, value core.MetricValue, createTime time.Time) *sd_api.TimeSeries {
-	resourceLabels := sink.getResourceLabels(labels)
-	if !createTime.Before(timestamp) {
-		glog.V(4).Infof("Error translating metric %v for pod %v: batch timestamp %v earlier than pod create time %v", name, labels["pod_name"], timestamp, createTime)
+func (sink *StackdriverSink) LegacyTranslateMetric(timestamp time.Time, labels map[string]string, name string, value core.MetricValue, collectionStartTime time.Time) *monitoringpb.TimeSeries {
+	resourceLabels := sink.legacyGetResourceLabels(labels)
+	if !collectionStartTime.Before(timestamp) {
+		glog.V(4).Infof("Error translating metric %v for pod %v: batch timestamp %v earlier than pod create time %v", name, labels["pod_name"], timestamp, collectionStartTime)
 		return nil
 	}
 	switch name {
 	case core.MetricUptime.MetricDescriptor.Name:
 		doubleValue := float64(value.IntValue) / float64(time.Second/time.Millisecond)
-		point := sink.doublePoint(timestamp, createTime, doubleValue)
-		return createTimeSeries(resourceLabels, uptimeMD, point)
+		point := sink.doublePoint(timestamp, collectionStartTime, doubleValue)
+		return legacyCreateTimeSeries(resourceLabels, legacyUptimeMD, point)
 	case core.MetricCpuLimit.MetricDescriptor.Name:
 		// converting from millicores to cores
 		point := sink.doublePoint(timestamp, timestamp, float64(value.IntValue)/1000)
-		return createTimeSeries(resourceLabels, cpuReservedCoresMD, point)
+		return legacyCreateTimeSeries(resourceLabels, legacyCPUReservedCoresMD, point)
 	case core.MetricCpuUsage.MetricDescriptor.Name:
-		point := sink.doublePoint(timestamp, createTime, float64(value.IntValue)/float64(time.Second/time.Nanosecond))
-		return createTimeSeries(resourceLabels, cpuUsageTimeMD, point)
+		point := sink.doublePoint(timestamp, collectionStartTime, float64(value.IntValue)/float64(time.Second/time.Nanosecond))
+		return legacyCreateTimeSeries(resourceLabels, legacyCPUUsageTimeMD, point)
 	case core.MetricNetworkRx.MetricDescriptor.Name:
-		point := sink.intPoint(timestamp, createTime, value.IntValue)
-		return createTimeSeries(resourceLabels, networkRxMD, point)
+		point := sink.intPoint(timestamp, collectionStartTime, value.IntValue)
+		return legacyCreateTimeSeries(resourceLabels, legacyNetworkRxMD, point)
 	case core.MetricNetworkTx.MetricDescriptor.Name:
-		point := sink.intPoint(timestamp, createTime, value.IntValue)
-		return createTimeSeries(resourceLabels, networkTxMD, point)
+		point := sink.intPoint(timestamp, collectionStartTime, value.IntValue)
+		return legacyCreateTimeSeries(resourceLabels, legacyNetworkTxMD, point)
 	case core.MetricMemoryLimit.MetricDescriptor.Name:
 		// omit nodes, using memory/node_allocatable instead
 		if labels["type"] == core.MetricSetTypeNode {
 			return nil
 		}
 		point := sink.intPoint(timestamp, timestamp, value.IntValue)
-		return createTimeSeries(resourceLabels, memoryLimitMD, point)
+		return legacyCreateTimeSeries(resourceLabels, legacyMemoryLimitMD, point)
 	case core.MetricNodeMemoryAllocatable.MetricDescriptor.Name:
 		point := sink.intPoint(timestamp, timestamp, value.IntValue)
-		return createTimeSeries(resourceLabels, memoryLimitMD, point)
+		return legacyCreateTimeSeries(resourceLabels, legacyMemoryLimitMD, point)
 	case core.MetricMemoryMajorPageFaults.MetricDescriptor.Name:
-		point := sink.intPoint(timestamp, createTime, value.IntValue)
-		ts := createTimeSeries(resourceLabels, memoryPageFaultsMD, point)
+		point := sink.intPoint(timestamp, collectionStartTime, value.IntValue)
+		ts := legacyCreateTimeSeries(resourceLabels, legacyMemoryPageFaultsMD, point)
 		ts.Metric.Labels = map[string]string{
 			"fault_type": "major",
 		}
 		return ts
 	case "memory/bytes_used":
 		point := sink.intPoint(timestamp, timestamp, value.IntValue)
-		ts := createTimeSeries(resourceLabels, memoryBytesUsedMD, point)
+		ts := legacyCreateTimeSeries(resourceLabels, legacyMemoryBytesUsedMD, point)
 		ts.Metric.Labels = map[string]string{
 			"memory_type": "evictable",
 		}
 		return ts
 	case core.MetricMemoryWorkingSet.MetricDescriptor.Name:
 		point := sink.intPoint(timestamp, timestamp, value.IntValue)
-		ts := createTimeSeries(resourceLabels, memoryBytesUsedMD, point)
+		ts := legacyCreateTimeSeries(resourceLabels, legacyMemoryBytesUsedMD, point)
 		ts.Metric.Labels = map[string]string{
 			"memory_type": "non-evictable",
 		}
 		return ts
 	case "memory/minor_page_faults":
-		point := sink.intPoint(timestamp, createTime, value.IntValue)
-		ts := createTimeSeries(resourceLabels, memoryPageFaultsMD, point)
+		point := sink.intPoint(timestamp, collectionStartTime, value.IntValue)
+		ts := legacyCreateTimeSeries(resourceLabels, legacyMemoryPageFaultsMD, point)
 		ts.Metric.Labels = map[string]string{
 			"fault_type": "minor",
 		}
 		return ts
-	default:
-		return nil
 	}
+	return nil
 }
 
-func (sink *StackdriverSink) getResourceLabels(labels map[string]string) map[string]string {
+func (sink *StackdriverSink) TranslateLabeledMetric(timestamp time.Time, labels map[string]string, metric core.LabeledMetric, collectionStartTime time.Time) *monitoringpb.TimeSeries {
+	switch labels["type"] {
+	case core.MetricSetTypePod:
+		podLabels := sink.getPodResourceLabels(labels)
+		switch metric.Name {
+		case core.MetricFilesystemUsage.MetricDescriptor.Name:
+			point := sink.intPoint(timestamp, timestamp, metric.MetricValue.IntValue)
+			ts := createTimeSeries("k8s_pod", podLabels, volumeUsedBytesMD, point)
+			ts.Metric.Labels = map[string]string{
+				core.LabelVolumeName.Key: strings.TrimPrefix(metric.Labels[core.LabelResourceID.Key], "Volume:"),
+			}
+			return ts
+		case core.MetricFilesystemLimit.MetricDescriptor.Name:
+			point := sink.intPoint(timestamp, timestamp, metric.MetricValue.IntValue)
+			ts := createTimeSeries("k8s_pod", podLabels, volumeTotalBytesMD, point)
+			ts.Metric.Labels = map[string]string{
+				core.LabelVolumeName.Key: strings.TrimPrefix(metric.Labels[core.LabelResourceID.Key], "Volume:"),
+			}
+			return ts
+		}
+	}
+	return nil
+}
+
+func (sink *StackdriverSink) TranslateMetric(timestamp time.Time, labels map[string]string, name string, value core.MetricValue, collectionStartTime time.Time, entityCreateTime time.Time) *monitoringpb.TimeSeries {
+	if !collectionStartTime.Before(timestamp) {
+		glog.V(4).Infof("Error translating metric %v for pod %v: batch timestamp %v earlier than pod create time %v", name, labels["pod_name"], timestamp, collectionStartTime)
+		return nil
+	}
+	switch labels["type"] {
+	case core.MetricSetTypePodContainer:
+		containerLabels := sink.getContainerResourceLabels(labels)
+		switch name {
+		case core.MetricUptime.MetricDescriptor.Name:
+			doubleValue := float64(value.IntValue) / float64(time.Second/time.Millisecond)
+			point := sink.doublePoint(timestamp, timestamp, doubleValue)
+			return createTimeSeries("k8s_container", containerLabels, containerUptimeMD, point)
+		case core.MetricCpuLimit.MetricDescriptor.Name:
+			point := sink.doublePoint(timestamp, timestamp, float64(value.IntValue)/1000)
+			return createTimeSeries("k8s_container", containerLabels, cpuLimitCoresMD, point)
+		case core.MetricCpuRequest.MetricDescriptor.Name:
+			point := sink.doublePoint(timestamp, timestamp, float64(value.IntValue)/1000)
+			return createTimeSeries("k8s_container", containerLabels, cpuRequestedCoresMD, point)
+		case core.MetricCpuUsage.MetricDescriptor.Name:
+			point := sink.doublePoint(timestamp, collectionStartTime, float64(value.IntValue)/float64(time.Second/time.Nanosecond))
+			return createTimeSeries("k8s_container", containerLabels, cpuContainerCoreUsageTimeMD, point)
+		case core.MetricMemoryLimit.MetricDescriptor.Name:
+			point := sink.intPoint(timestamp, timestamp, value.IntValue)
+			return createTimeSeries("k8s_container", containerLabels, memoryLimitBytesMD, point)
+		case "memory/bytes_used":
+			point := sink.intPoint(timestamp, timestamp, value.IntValue)
+			ts := createTimeSeries("k8s_container", containerLabels, memoryContainerUsedBytesMD, point)
+			ts.Metric.Labels = map[string]string{
+				"memory_type": "evictable",
+			}
+			return ts
+		case core.MetricMemoryWorkingSet.MetricDescriptor.Name:
+			point := sink.intPoint(timestamp, timestamp, value.IntValue)
+			ts := createTimeSeries("k8s_container", containerLabels, memoryContainerUsedBytesMD, point)
+			ts.Metric.Labels = map[string]string{
+				"memory_type": "non-evictable",
+			}
+			return ts
+		case core.MetricMemoryRequest.MetricDescriptor.Name:
+			point := sink.intPoint(timestamp, timestamp, value.IntValue)
+			return createTimeSeries("k8s_container", containerLabels, memoryRequestedBytesMD, point)
+		case core.MetricRestartCount.MetricDescriptor.Name:
+			if entityCreateTime.IsZero() {
+				glog.V(2).Infof("Skipping restart_count metric for container %s because entity create time is zero", core.PodContainerKey(containerLabels["namespace_name"], containerLabels["pod_name"], containerLabels["container_name"]))
+				return nil
+			}
+			point := sink.intPoint(timestamp, entityCreateTime, value.IntValue)
+			return createTimeSeries("k8s_container", containerLabels, restartCountMD, point)
+		}
+	case core.MetricSetTypePod:
+		podLabels := sink.getPodResourceLabels(labels)
+		switch name {
+		case core.MetricNetworkRx.MetricDescriptor.Name:
+			point := sink.intPoint(timestamp, collectionStartTime, value.IntValue)
+			return createTimeSeries("k8s_pod", podLabels, networkPodReceivedBytesMD, point)
+		case core.MetricNetworkTx.MetricDescriptor.Name:
+			point := sink.intPoint(timestamp, collectionStartTime, value.IntValue)
+			return createTimeSeries("k8s_pod", podLabels, networkPodSentBytesMD, point)
+		}
+	case core.MetricSetTypeNode:
+		nodeLabels := sink.getNodeResourceLabels(labels)
+		switch name {
+		case core.MetricNodeCpuCapacity.MetricDescriptor.Name:
+			point := sink.doublePoint(timestamp, timestamp, float64(value.FloatValue)/1000)
+			return createTimeSeries("k8s_node", nodeLabels, cpuTotalCoresMD, point)
+		case core.MetricNodeCpuAllocatable.MetricDescriptor.Name:
+			point := sink.doublePoint(timestamp, timestamp, float64(value.FloatValue)/1000)
+			return createTimeSeries("k8s_node", nodeLabels, cpuAllocatableCoresMD, point)
+		case core.MetricCpuUsage.MetricDescriptor.Name:
+			point := sink.doublePoint(timestamp, collectionStartTime, float64(value.IntValue)/float64(time.Second/time.Nanosecond))
+			return createTimeSeries("k8s_node", nodeLabels, cpuNodeCoreUsageTimeMD, point)
+		case core.MetricNodeMemoryCapacity.MetricDescriptor.Name:
+			point := sink.intPoint(timestamp, timestamp, int64(value.FloatValue))
+			return createTimeSeries("k8s_node", nodeLabels, memoryTotalBytesMD, point)
+		case core.MetricNodeMemoryAllocatable.MetricDescriptor.Name:
+			point := sink.intPoint(timestamp, timestamp, int64(value.FloatValue))
+			return createTimeSeries("k8s_node", nodeLabels, memoryAllocatableBytesMD, point)
+		case "memory/bytes_used":
+			point := sink.intPoint(timestamp, timestamp, value.IntValue)
+			ts := createTimeSeries("k8s_node", nodeLabels, memoryNodeUsedBytesMD, point)
+			ts.Metric.Labels = map[string]string{
+				"memory_type": "evictable",
+			}
+			return ts
+		case core.MetricMemoryWorkingSet.MetricDescriptor.Name:
+			point := sink.intPoint(timestamp, timestamp, value.IntValue)
+			ts := createTimeSeries("k8s_node", nodeLabels, memoryNodeUsedBytesMD, point)
+			ts.Metric.Labels = map[string]string{
+				"memory_type": "non-evictable",
+			}
+			return ts
+		case core.MetricNetworkRx.MetricDescriptor.Name:
+			point := sink.intPoint(timestamp, collectionStartTime, value.IntValue)
+			return createTimeSeries("k8s_node", nodeLabels, networkNodeReceivedBytesMD, point)
+		case core.MetricNetworkTx.MetricDescriptor.Name:
+			point := sink.intPoint(timestamp, collectionStartTime, value.IntValue)
+			return createTimeSeries("k8s_node", nodeLabels, networkNodeSentBytesMD, point)
+		}
+	case core.MetricSetTypeSystemContainer:
+		nodeLabels := sink.getNodeResourceLabels(labels)
+		switch name {
+		case "memory/bytes_used":
+			point := sink.intPoint(timestamp, timestamp, value.IntValue)
+			ts := createTimeSeries("k8s_node", nodeLabels, memoryNodeDaemonUsedBytesMD, point)
+			ts.Metric.Labels = map[string]string{
+				"component":   labels[core.LabelContainerName.Key],
+				"memory_type": "evictable",
+			}
+			return ts
+		case core.MetricMemoryWorkingSet.MetricDescriptor.Name:
+			point := sink.intPoint(timestamp, timestamp, value.IntValue)
+			ts := createTimeSeries("k8s_node", nodeLabels, memoryNodeDaemonUsedBytesMD, point)
+			ts.Metric.Labels = map[string]string{
+				"component":   labels[core.LabelContainerName.Key],
+				"memory_type": "non-evictable",
+			}
+			return ts
+		case core.MetricCpuUsage.MetricDescriptor.Name:
+			point := sink.doublePoint(timestamp, collectionStartTime, float64(value.IntValue)/float64(time.Second/time.Nanosecond))
+			ts := createTimeSeries("k8s_node", nodeLabels, cpuNodeDaemonCoreUsageTimeMD, point)
+			ts.Metric.Labels = map[string]string{
+				"component": labels[core.LabelContainerName.Key],
+			}
+			return ts
+		}
+	}
+	return nil
+}
+
+func (sink *StackdriverSink) legacyGetResourceLabels(labels map[string]string) map[string]string {
 	return map[string]string{
 		"project_id":     sink.project,
-		"cluster_name":   sink.cluster,
-		"zone":           sink.zone,
+		"cluster_name":   sink.clusterName,
+		"zone":           sink.heapsterZone,
 		"instance_id":    labels[core.LabelHostID.Key],
 		"namespace_id":   labels[core.LabelPodNamespaceUID.Key],
 		"pod_id":         labels[core.LabelPodId.Key],
@@ -556,44 +723,80 @@ func (sink *StackdriverSink) getResourceLabels(labels map[string]string) map[str
 	}
 }
 
-func createTimeSeries(resourceLabels map[string]string, metadata *metricMetadata, point *sd_api.Point) *sd_api.TimeSeries {
-	return &sd_api.TimeSeries{
-		Metric: &sd_api.Metric{
+func (sink *StackdriverSink) getContainerResourceLabels(labels map[string]string) map[string]string {
+	return map[string]string{
+		"project_id":     sink.project,
+		"location":       sink.clusterLocation,
+		"cluster_name":   sink.clusterName,
+		"namespace_name": labels[core.LabelNamespaceName.Key],
+		"pod_name":       labels[core.LabelPodName.Key],
+		"container_name": labels[core.LabelContainerName.Key],
+	}
+}
+
+func (sink *StackdriverSink) getPodResourceLabels(labels map[string]string) map[string]string {
+	return map[string]string{
+		"project_id":     sink.project,
+		"location":       sink.clusterLocation,
+		"cluster_name":   sink.clusterName,
+		"namespace_name": labels[core.LabelNamespaceName.Key],
+		"pod_name":       labels[core.LabelPodName.Key],
+	}
+}
+
+func (sink *StackdriverSink) getNodeResourceLabels(labels map[string]string) map[string]string {
+	return map[string]string{
+		"project_id":   sink.project,
+		"location":     sink.clusterLocation,
+		"cluster_name": sink.clusterName,
+		"node_name":    labels[core.LabelNodename.Key],
+	}
+}
+
+func legacyCreateTimeSeries(resourceLabels map[string]string, metadata *metricMetadata, point *monitoringpb.Point) *monitoringpb.TimeSeries {
+	return createTimeSeries("gke_container", resourceLabels, metadata, point)
+}
+
+func createTimeSeries(resource string, resourceLabels map[string]string, metadata *metricMetadata, point *monitoringpb.Point) *monitoringpb.TimeSeries {
+	return &monitoringpb.TimeSeries{
+		Metric: &metric.Metric{
 			Type: metadata.Name,
 		},
 		MetricKind: metadata.MetricKind,
 		ValueType:  metadata.ValueType,
-		Resource: &sd_api.MonitoredResource{
+		Resource: &monitoredres.MonitoredResource{
 			Labels: resourceLabels,
-			Type:   "gke_container",
+			Type:   resource,
 		},
-		Points: []*sd_api.Point{point},
+		Points: []*monitoringpb.Point{point},
 	}
 }
 
-func (sink *StackdriverSink) doublePoint(endTime time.Time, startTime time.Time, value float64) *sd_api.Point {
-	return &sd_api.Point{
-		Interval: &sd_api.TimeInterval{
-			EndTime:   endTime.Format(time.RFC3339),
-			StartTime: startTime.Format(time.RFC3339),
+func (sink *StackdriverSink) doublePoint(endTime time.Time, startTime time.Time, value float64) *monitoringpb.Point {
+	return &monitoringpb.Point{
+		Interval: &monitoringpb.TimeInterval{
+			EndTime:   &google_proto.Timestamp{Seconds: endTime.Unix(), Nanos: int32(endTime.Nanosecond())},
+			StartTime: &google_proto.Timestamp{Seconds: startTime.Unix(), Nanos: int32(startTime.Nanosecond())},
 		},
-		Value: &sd_api.TypedValue{
-			DoubleValue:     value,
-			ForceSendFields: []string{"DoubleValue"},
+		Value: &monitoringpb.TypedValue{
+			Value: &monitoringpb.TypedValue_DoubleValue{
+				DoubleValue: value,
+			},
 		},
 	}
 
 }
 
-func (sink *StackdriverSink) intPoint(endTime time.Time, startTime time.Time, value int64) *sd_api.Point {
-	return &sd_api.Point{
-		Interval: &sd_api.TimeInterval{
-			EndTime:   endTime.Format(time.RFC3339),
-			StartTime: startTime.Format(time.RFC3339),
+func (sink *StackdriverSink) intPoint(endTime time.Time, startTime time.Time, value int64) *monitoringpb.Point {
+	return &monitoringpb.Point{
+		Interval: &monitoringpb.TimeInterval{
+			EndTime:   &google_proto.Timestamp{Seconds: endTime.Unix(), Nanos: int32(endTime.Nanosecond())},
+			StartTime: &google_proto.Timestamp{Seconds: startTime.Unix(), Nanos: int32(startTime.Nanosecond())},
 		},
-		Value: &sd_api.TypedValue{
-			Int64Value:      value,
-			ForceSendFields: []string{"Int64Value"},
+		Value: &monitoringpb.TypedValue{
+			Value: &monitoringpb.TypedValue_Int64Value{
+				Int64Value: value,
+			},
 		},
 	}
 }
@@ -602,6 +805,9 @@ func fullProjectName(name string) string {
 	return fmt.Sprintf("projects/%s", name)
 }
 
-func getReq() *sd_api.CreateTimeSeriesRequest {
-	return &sd_api.CreateTimeSeriesRequest{TimeSeries: make([]*sd_api.TimeSeries, 0)}
+func getReq(project string) *monitoringpb.CreateTimeSeriesRequest {
+	return &monitoringpb.CreateTimeSeriesRequest{
+		TimeSeries: nil,
+		Name:       fullProjectName(project),
+	}
 }

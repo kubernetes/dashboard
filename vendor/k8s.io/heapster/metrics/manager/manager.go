@@ -125,7 +125,12 @@ func (rm *realManager) housekeep(start, end time.Time) {
 	go func(rm *realManager) {
 		// should always give back the semaphore
 		defer func() { rm.housekeepSemaphoreChan <- struct{}{} }()
-		data := rm.source.ScrapeMetrics(start, end)
+		data, err := rm.source.ScrapeMetrics(start, end)
+
+		if err != nil {
+			glog.Errorf("Error in scraping metrics for %s: %v", rm.source.Name(), err)
+			return
+		}
 
 		for _, p := range rm.processors {
 			newData, err := process(p, data)
@@ -139,7 +144,6 @@ func (rm *realManager) housekeep(start, end time.Time) {
 
 		// Export data to sinks
 		rm.sink.ExportData(data)
-
 	}(rm)
 }
 

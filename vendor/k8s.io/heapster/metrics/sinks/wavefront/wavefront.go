@@ -78,8 +78,8 @@ func (wfSink *wavefrontSink) sendPoint(metricName string, metricValStr string, t
 func tagsToString(tags map[string]string) string {
 	tagStr := ""
 	for k, v := range tags {
-		//if k != "hostname" {
-		if excludeTag(k) == false {
+		// ignore tags with empty values as well so the data point doesn't fail validation
+		if excludeTag(k) == false && len(v) > 0 {
 			tagStr += k + "=\"" + v + "\" "
 		}
 	}

@@ -1,7 +1,8 @@
 package testdriver
 
 import (
-	"github.com/docker/distribution/context"
+	"context"
+
 	storagedriver "github.com/docker/distribution/registry/storage/driver"
 	"github.com/docker/distribution/registry/storage/driver/factory"
 	"github.com/docker/distribution/registry/storage/driver/inmemory"

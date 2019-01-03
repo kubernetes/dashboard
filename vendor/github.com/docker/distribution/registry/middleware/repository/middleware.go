@@ -1,10 +1,10 @@
 package middleware
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/docker/distribution"
-	"github.com/docker/distribution/context"
 )
 
 // InitFunc is the type of a RepositoryMiddleware factory function and is

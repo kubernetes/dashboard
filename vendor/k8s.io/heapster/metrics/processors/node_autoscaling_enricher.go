@@ -28,8 +28,9 @@ import (
 )
 
 type NodeAutoscalingEnricher struct {
-	nodeLister v1listers.NodeLister
-	reflector  *cache.Reflector
+	nodeLister  v1listers.NodeLister
+	reflector   *cache.Reflector
+	labelCopier *util.LabelCopier
 }
 
 func (this *NodeAutoscalingEnricher) Name() string {
@@ -43,7 +44,7 @@ func (this *NodeAutoscalingEnricher) Process(batch *core.DataBatch) (*core.DataB
 	}
 	for _, node := range nodes {
 		if metricSet, found := batch.MetricSets[core.NodeKey(node.Name)]; found {
-			metricSet.Labels[core.LabelLabels.Key] = util.LabelsToString(node.Labels)
+			this.labelCopier.Copy(node.Labels, metricSet.Labels)
 			capacityCpu, _ := node.Status.Capacity[kube_api.ResourceCPU]
 			capacityMem, _ := node.Status.Capacity[kube_api.ResourceMemory]
 			allocatableCpu, _ := node.Status.Allocatable[kube_api.ResourceCPU]
@@ -55,18 +56,18 @@ func (this *NodeAutoscalingEnricher) Process(batch *core.DataBatch) (*core.DataB
 			memUsed := getInt(metricSet, &core.MetricMemoryUsage)
 
 			if allocatableCpu.MilliValue() != 0 {
-				setFloat(metricSet, &core.MetricNodeCpuUtilization, float32(cpuUsed)/float32(allocatableCpu.MilliValue()))
-				setFloat(metricSet, &core.MetricNodeCpuReservation, float32(cpuRequested)/float32(allocatableCpu.MilliValue()))
+				setFloat(metricSet, &core.MetricNodeCpuUtilization, float64(cpuUsed)/float64(allocatableCpu.MilliValue()))
+				setFloat(metricSet, &core.MetricNodeCpuReservation, float64(cpuRequested)/float64(allocatableCpu.MilliValue()))
 			}
-			setFloat(metricSet, &core.MetricNodeCpuCapacity, float32(capacityCpu.MilliValue()))
-			setFloat(metricSet, &core.MetricNodeCpuAllocatable, float32(allocatableCpu.MilliValue()))
+			setFloat(metricSet, &core.MetricNodeCpuCapacity, float64(capacityCpu.MilliValue()))
+			setFloat(metricSet, &core.MetricNodeCpuAllocatable, float64(allocatableCpu.MilliValue()))
 
 			if allocatableMem.Value() != 0 {
-				setFloat(metricSet, &core.MetricNodeMemoryUtilization, float32(memUsed)/float32(allocatableMem.Value()))
-				setFloat(metricSet, &core.MetricNodeMemoryReservation, float32(memRequested)/float32(allocatableMem.Value()))
+				setFloat(metricSet, &core.MetricNodeMemoryUtilization, float64(memUsed)/float64(allocatableMem.Value()))
+				setFloat(metricSet, &core.MetricNodeMemoryReservation, float64(memRequested)/float64(allocatableMem.Value()))
 			}
-			setFloat(metricSet, &core.MetricNodeMemoryCapacity, float32(capacityMem.Value()))
-			setFloat(metricSet, &core.MetricNodeMemoryAllocatable, float32(allocatableMem.Value()))
+			setFloat(metricSet, &core.MetricNodeMemoryCapacity, float64(capacityMem.Value()))
+			setFloat(metricSet, &core.MetricNodeMemoryAllocatable, float64(allocatableMem.Value()))
 		}
 	}
 	return batch, nil
@@ -79,7 +80,7 @@ func getInt(metricSet *core.MetricSet, metric *core.Metric) int64 {
 	return 0
 }
 
-func setFloat(metricSet *core.MetricSet, metric *core.Metric, value float32) {
+func setFloat(metricSet *core.MetricSet, metric *core.Metric, value float64) {
 	metricSet.MetricValues[metric.MetricDescriptor.Name] = core.MetricValue{
 		MetricType: core.MetricGauge,
 		ValueType:  core.ValueFloat,
@@ -87,7 +88,7 @@ func setFloat(metricSet *core.MetricSet, metric *core.Metric, value float32) {
 	}
 }
 
-func NewNodeAutoscalingEnricher(url *url.URL) (*NodeAutoscalingEnricher, error) {
+func NewNodeAutoscalingEnricher(url *url.URL, labelCopier *util.LabelCopier) (*NodeAutoscalingEnricher, error) {
 	kubeConfig, err := kube_config.GetKubeClientConfig(url)
 	if err != nil {
 		return nil, err
@@ -98,7 +99,8 @@ func NewNodeAutoscalingEnricher(url *url.URL) (*NodeAutoscalingEnricher, error) 
 	nodeLister, reflector, _ := util.GetNodeLister(kubeClient)
 
 	return &NodeAutoscalingEnricher{
-		nodeLister: nodeLister,
-		reflector:  reflector,
+		nodeLister:  nodeLister,
+		reflector:   reflector,
+		labelCopier: labelCopier,
 	}, nil
 }

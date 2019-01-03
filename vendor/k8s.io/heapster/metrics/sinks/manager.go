@@ -24,8 +24,7 @@ import (
 )
 
 const (
-	DefaultSinkExportDataTimeout = 20 * time.Second
-	DefaultSinkStopTimeout       = 60 * time.Second
+	DefaultSinkStopTimeout = 60 * time.Second
 )
 
 var (

@@ -1,13 +1,13 @@
 package cachecheck
 
 import (
+	"context"
 	"reflect"
 	"testing"
 
 	"github.com/docker/distribution"
-	"github.com/docker/distribution/context"
-	"github.com/docker/distribution/digest"
 	"github.com/docker/distribution/registry/storage/cache"
+	"github.com/opencontainers/go-digest"
 )
 
 // CheckBlobDescriptorCache takes a cache implementation through a common set
@@ -26,12 +26,12 @@ func checkBlobDescriptorCacheEmptyRepository(ctx context.Context, t *testing.T, 
 		t.Fatalf("expected unknown blob error with empty store: %v", err)
 	}
 
-	cache, err := provider.RepositoryScoped("")
+	_, err := provider.RepositoryScoped("")
 	if err == nil {
 		t.Fatalf("expected an error when asking for invalid repo")
 	}
 
-	cache, err = provider.RepositoryScoped("foo/bar")
+	cache, err := provider.RepositoryScoped("foo/bar")
 	if err != nil {
 		t.Fatalf("unexpected error getting repository: %v", err)
 	}

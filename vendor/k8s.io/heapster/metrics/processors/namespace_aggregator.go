@@ -30,26 +30,31 @@ func (this *NamespaceAggregator) Name() string {
 func (this *NamespaceAggregator) Process(batch *core.DataBatch) (*core.DataBatch, error) {
 	namespaces := make(map[string]*core.MetricSet)
 	for key, metricSet := range batch.MetricSets {
-		if metricSetType, found := metricSet.Labels[core.LabelMetricSetType.Key]; found && metricSetType == core.MetricSetTypePod {
-			// Aggregating pods
-			if namespaceName, found := metricSet.Labels[core.LabelNamespaceName.Key]; found {
-				namespaceKey := core.NamespaceKey(namespaceName)
-				namespace, found := namespaces[namespaceKey]
-				if !found {
-					if nsFromBatch, found := batch.MetricSets[namespaceKey]; found {
-						namespace = nsFromBatch
-					} else {
-						namespace = namespaceMetricSet(namespaceName, metricSet.Labels[core.LabelPodNamespaceUID.Key])
-						namespaces[namespaceKey] = namespace
-					}
-				}
-				if err := aggregate(metricSet, namespace, this.MetricsToAggregate); err != nil {
-					return nil, err
-				}
+		if metricSetType, found := metricSet.Labels[core.LabelMetricSetType.Key]; !found || metricSetType != core.MetricSetTypePod {
+			continue
+		}
+
+		namespaceName, found := metricSet.Labels[core.LabelNamespaceName.Key]
+		if !found {
+			glog.Errorf("No namespace info in pod %s: %v", key, metricSet.Labels)
+			continue
+		}
+
+		namespaceKey := core.NamespaceKey(namespaceName)
+		namespace, found := namespaces[namespaceKey]
+		if !found {
+			if nsFromBatch, found := batch.MetricSets[namespaceKey]; found {
+				namespace = nsFromBatch
 			} else {
-				glog.Errorf("No namespace info in pod %s: %v", key, metricSet.Labels)
+				namespace = namespaceMetricSet(namespaceName, metricSet.Labels[core.LabelPodNamespaceUID.Key])
+				namespaces[namespaceKey] = namespace
 			}
 		}
+
+		if err := aggregate(metricSet, namespace, this.MetricsToAggregate); err != nil {
+			return nil, err
+		}
+
 	}
 	for key, val := range namespaces {
 		batch.MetricSets[key] = val

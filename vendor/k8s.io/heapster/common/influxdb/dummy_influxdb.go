@@ -56,9 +56,10 @@ func (client *FakeInfluxDBClient) Ping() (time.Duration, string, error) {
 var Client = NewFakeInfluxDBClient()
 
 var Config = InfluxdbConfig{
-	User:     "root",
-	Password: "root",
-	Host:     "localhost:8086",
-	DbName:   "k8s",
-	Secure:   false,
+	User:        "root",
+	Password:    "root",
+	Host:        "localhost:8086",
+	DbName:      "k8s",
+	Secure:      false,
+	Concurrency: 1,
 }

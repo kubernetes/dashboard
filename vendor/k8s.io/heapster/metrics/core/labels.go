@@ -85,6 +85,26 @@ var (
 		Key:         "resource_type",
 		Description: "Resource types for nodes specific for GCE.",
 	}
+	LabelNodeSchedulable = LabelDescriptor{
+		Key:         "schedulable",
+		Description: "Node schedulable status.",
+	}
+	LabelVolumeName = LabelDescriptor{
+		Key:         "volume_name",
+		Description: "The name of the volume.",
+	}
+	LabelAcceleratorMake = LabelDescriptor{
+		Key:         "make",
+		Description: "Make of the accelerator (nvidia, amd, google etc.)",
+	}
+	LabelAcceleratorModel = LabelDescriptor{
+		Key:         "model",
+		Description: "Model of the accelerator (tesla-p100, tesla-k80 etc.)",
+	}
+	LabelAcceleratorID = LabelDescriptor{
+		Key:         "accelerator_id",
+		Description: "ID of the accelerator",
+	}
 )
 
 type LabelDescriptor struct {
@@ -119,6 +139,12 @@ var metricLabels = []LabelDescriptor{
 
 var customMetricLabels = []LabelDescriptor{
 	LabelCustomMetricName,
+}
+
+var acceleratorLabels = []LabelDescriptor{
+	LabelAcceleratorMake,
+	LabelAcceleratorModel,
+	LabelAcceleratorID,
 }
 
 // Labels exported to GCM. The number of labels that can be exported to GCM is limited by 10.

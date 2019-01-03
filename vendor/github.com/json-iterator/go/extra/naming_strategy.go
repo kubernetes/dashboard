@@ -2,6 +2,7 @@ package extra
 
 import (
 	"github.com/json-iterator/go"
+	"strings"
 	"unicode"
 )
 
@@ -17,8 +18,18 @@ type namingStrategyExtension struct {
 
 func (extension *namingStrategyExtension) UpdateStructDescriptor(structDescriptor *jsoniter.StructDescriptor) {
 	for _, binding := range structDescriptor.Fields {
-		binding.ToNames = []string{extension.translate(binding.Field.Name)}
-		binding.FromNames = []string{extension.translate(binding.Field.Name)}
+		tag, hastag := binding.Field.Tag().Lookup("json")
+		if hastag {
+			tagParts := strings.Split(tag, ",")
+			if tagParts[0] == "-" {
+				continue // hidden field
+			}
+			if tagParts[0] != "" {
+				continue // field explicitly named
+			}
+		}
+		binding.ToNames = []string{extension.translate(binding.Field.Name())}
+		binding.FromNames = []string{extension.translate(binding.Field.Name())}
 	}
 }
 

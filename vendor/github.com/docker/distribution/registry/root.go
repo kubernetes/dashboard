@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/docker/distribution/context"
+	dcontext "github.com/docker/distribution/context"
 	"github.com/docker/distribution/registry/storage"
 	"github.com/docker/distribution/registry/storage/driver/factory"
 	"github.com/docker/distribution/version"
@@ -18,6 +18,7 @@ func init() {
 	RootCmd.AddCommand(ServeCmd)
 	RootCmd.AddCommand(GCCmd)
 	GCCmd.Flags().BoolVarP(&dryRun, "dry-run", "d", false, "do everything except remove the blobs")
+	GCCmd.Flags().BoolVarP(&removeUntagged, "delete-untagged", "m", false, "delete manifests that are not currently referenced via tag")
 	RootCmd.Flags().BoolVarP(&showVersion, "version", "v", false, "show the version and exit")
 }
 
@@ -36,6 +37,7 @@ var RootCmd = &cobra.Command{
 }
 
 var dryRun bool
+var removeUntagged bool
 
 // GCCmd is the cobra command that corresponds to the garbage-collect subcommand
 var GCCmd = &cobra.Command{
@@ -56,7 +58,7 @@ var GCCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
-		ctx := context.Background()
+		ctx := dcontext.Background()
 		ctx, err = configureLogging(ctx, config)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "unable to configure logging with config: %s", err)
@@ -75,7 +77,10 @@ var GCCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
-		err = storage.MarkAndSweep(ctx, driver, registry, dryRun)
+		err = storage.MarkAndSweep(ctx, driver, registry, storage.GCOpts{
+			DryRun:         dryRun,
+			RemoveUntagged: removeUntagged,
+		})
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "failed to garbage collect: %v", err)
 			os.Exit(1)

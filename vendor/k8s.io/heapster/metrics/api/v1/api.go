@@ -250,12 +250,12 @@ func (a *Api) processMetricsRequest(shortStorage []*core.DataBatch) []*types.Tim
 		}
 		for metricName, metricVal := range ms.MetricValues {
 			if _, ok := a.gkeMetrics[metricName]; ok {
-				processPoint(ts, newestBatch, metricName, &metricVal, nil, ms.CreateTime)
+				processPoint(ts, newestBatch, metricName, &metricVal, nil, ms.CollectionStartTime)
 			}
 		}
 		for _, metric := range ms.LabeledMetrics {
 			if _, ok := a.gkeMetrics[metric.Name]; ok {
-				processPoint(ts, newestBatch, metric.Name, &metric.MetricValue, metric.Labels, ms.CreateTime)
+				processPoint(ts, newestBatch, metric.Name, &metric.MetricValue, metric.Labels, ms.CollectionStartTime)
 			}
 		}
 	}

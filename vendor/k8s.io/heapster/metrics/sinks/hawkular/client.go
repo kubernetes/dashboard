@@ -17,6 +17,7 @@ package hawkular
 import (
 	"fmt"
 	"math"
+	"reflect"
 	"regexp"
 	"strings"
 	"sync"
@@ -45,13 +46,14 @@ func (h *hawkularSink) updateDefinitions(mt metrics.MetricType) error {
 		// If no descriptorTag is found, this metric does not belong to Heapster
 		if mk, found := p.Tags[descriptorTag]; found {
 			if model, f := h.models[mk]; f && !h.recent(p, model) {
-				if err := h.client.UpdateTags(mt, p.Id, p.Tags, h.modifiers...); err != nil {
+				if err := h.client.UpdateTags(mt, p.ID, p.Tags, h.modifiers...); err != nil {
 					return err
 				}
 			}
-			h.reg[p.Id] = p
+			h.reg[p.ID] = p
 		}
 	}
+
 	return nil
 }
 
@@ -86,7 +88,7 @@ func (h *hawkularSink) descriptorToDefinition(md *core.MetricDescriptor) metrics
 	tags[descriptorTag] = md.Name
 
 	hmd := metrics.MetricDefinition{
-		Id:   md.Name,
+		ID:   md.Name,
 		Tags: tags,
 		Type: heapsterTypeToHawkularType(md.Type),
 	}
@@ -148,69 +150,79 @@ func (h *hawkularSink) nodeName(ms *core.MetricSet) string {
 	return ms.Labels[core.LabelNodename.Key]
 }
 
-func (h *hawkularSink) registerLabeledIfNecessary(ms *core.MetricSet, metric core.LabeledMetric, m ...metrics.Modifier) error {
-	key := h.idName(ms, metric.Name)
+func (h *hawkularSink) createDefinitionFromModel(ms *core.MetricSet, metric core.LabeledMetric) (*metrics.MetricDefinition, error) {
+	if md, f := h.models[metric.Name]; f {
+		// Copy the original map
+		mdd := *md
+		tags := make(map[string]string)
+		for k, v := range mdd.Tags {
+			tags[k] = v
+		}
+		mdd.Tags = tags
 
-	if resourceID, found := metric.Labels[core.LabelResourceID.Key]; found {
-		key = h.idName(ms, metric.Name+separator+resourceID)
-	}
-
-	h.regLock.Lock()
-	defer h.regLock.Unlock()
-
-	// If found, check it matches the current stored definition (could be old info from
-	// the stored metrics cache for example)
-	if _, found := h.reg[key]; !found {
-		// Register the metric descriptor here..
-		if md, f := h.models[metric.Name]; f {
-			// Copy the original map
-			mdd := *md
-			tags := make(map[string]string)
-			for k, v := range mdd.Tags {
-				tags[k] = v
-			}
-			mdd.Tags = tags
-
-			// Set tag values
-			for k, v := range ms.Labels {
-				mdd.Tags[k] = v
-				if k == core.LabelLabels.Key {
-					labels := strings.Split(v, ",")
-					for _, label := range labels {
-						labelKeyValue := strings.Split(label, ":")
-						if len(labelKeyValue) != 2 {
-							glog.V(4).Infof("Could not split the label %v into its key and value pair. This label will not be added as a tag in Hawkular Metrics.", label)
-						} else {
-							mdd.Tags[h.labelTagPrefix+labelKeyValue[0]] = labelKeyValue[1]
-						}
+		// Set tag values
+		for k, v := range ms.Labels {
+			mdd.Tags[k] = v
+			if k == core.LabelLabels.Key {
+				labels := strings.Split(v, ",")
+				for _, label := range labels {
+					labelKeyValue := strings.Split(label, ":")
+					if len(labelKeyValue) != 2 {
+						glog.V(4).Infof("Could not split the label %v into its key and value pair. This label will not be added as a tag in Hawkular Metrics.", label)
+					} else {
+						mdd.Tags[h.labelTagPrefix+labelKeyValue[0]] = labelKeyValue[1]
 					}
 				}
 			}
-
-			// Set the labeled values
-			for k, v := range metric.Labels {
-				mdd.Tags[k] = v
-			}
-
-			mdd.Tags[groupTag] = h.groupName(ms, metric.Name)
-			mdd.Tags[descriptorTag] = metric.Name
-
-			m = append(m, h.modifiers...)
-
-			// Create metric, use updateTags instead of Create because we know it is unique
-			if err := h.client.UpdateTags(heapsterTypeToHawkularType(metric.MetricType), key, mdd.Tags, m...); err != nil {
-				// Log error and don't add this key to the lookup table
-				glog.Errorf("Could not update tags: %s", err)
-				return err
-			}
-
-			// Add to the lookup table
-			h.reg[key] = &mdd
-		} else {
-			return fmt.Errorf("Could not find definition model with name %s", metric.Name)
 		}
+
+		// Set the labeled values
+		for k, v := range metric.Labels {
+			mdd.Tags[k] = v
+		}
+
+		mdd.Tags[groupTag] = h.groupName(ms, metric.Name)
+		mdd.Tags[descriptorTag] = metric.Name
+
+		return &mdd, nil
 	}
-	// TODO Compare the definition tags and update if necessary? Quite expensive operation..
+	return nil, fmt.Errorf("Could not find definition model with name %s", metric.Name)
+}
+
+func (h *hawkularSink) registerLabeledIfNecessary(ms *core.MetricSet, metric core.LabeledMetric, m ...metrics.Modifier) error {
+
+	var key string
+	if resourceID, found := metric.Labels[core.LabelResourceID.Key]; found {
+		key = h.idName(ms, metric.Name+separator+resourceID)
+	} else {
+		key = h.idName(ms, metric.Name)
+	}
+
+	mdd, err := h.createDefinitionFromModel(ms, metric)
+	if err != nil {
+		return err
+	}
+
+	h.regLock.RLock()
+	if _, found := h.reg[key]; !found || !reflect.DeepEqual(mdd.Tags, h.reg[key].Tags) {
+		// I'm going to release the lock to allow concurrent processing, even if that
+		// can cause dual updates (highly unlikely). The UpdateTags is idempotent in any case.
+		h.regLock.RUnlock()
+		m = append(m, h.modifiers...)
+
+		// Create metric, use updateTags instead of Create because we don't care about uniqueness
+		if err := h.client.UpdateTags(heapsterTypeToHawkularType(metric.MetricType), key, mdd.Tags, m...); err != nil {
+			// Log error and don't add this key to the lookup table
+			glog.Errorf("Could not update tags: %s", err)
+			return err
+		}
+
+		h.regLock.Lock()
+		h.reg[key] = mdd
+		h.regLock.Unlock()
+	} else {
+		h.regLock.RUnlock()
+	}
 
 	return nil
 }
@@ -275,11 +287,11 @@ func (h *hawkularSink) pointToLabeledMetricHeader(ms *core.MetricSet, metric cor
 
 	m := metrics.Datapoint{
 		Value:     value,
-		Timestamp: metrics.UnixMilli(timestamp),
+		Timestamp: timestamp,
 	}
 
 	mh := &metrics.MetricHeader{
-		Id:   name,
+		ID:   name,
 		Data: []metrics.Datapoint{m},
 		Type: heapsterTypeToHawkularType(metric.MetricType),
 	}

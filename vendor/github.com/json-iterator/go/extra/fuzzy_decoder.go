@@ -9,6 +9,7 @@ import (
 	"unsafe"
 
 	"github.com/json-iterator/go"
+	"github.com/modern-go/reflect2"
 )
 
 const maxUint = ^uint(0)
@@ -148,7 +149,7 @@ type tolerateEmptyArrayExtension struct {
 	jsoniter.DummyExtension
 }
 
-func (extension *tolerateEmptyArrayExtension) DecorateDecoder(typ reflect.Type, decoder jsoniter.ValDecoder) jsoniter.ValDecoder {
+func (extension *tolerateEmptyArrayExtension) DecorateDecoder(typ reflect2.Type, decoder jsoniter.ValDecoder) jsoniter.ValDecoder {
 	if typ.Kind() == reflect.Struct || typ.Kind() == reflect.Map {
 		return &tolerateEmptyArrayDecoder{decoder}
 	}
@@ -182,6 +183,9 @@ func (decoder *fuzzyStringDecoder) Decode(ptr unsafe.Pointer, iter *jsoniter.Ite
 		*((*string)(ptr)) = string(number)
 	case jsoniter.StringValue:
 		*((*string)(ptr)) = iter.ReadString()
+	case jsoniter.NilValue:
+		iter.Skip()
+		*((*string)(ptr)) = ""
 	default:
 		iter.ReportError("fuzzyStringDecoder", "not number or string")
 	}
@@ -207,8 +211,14 @@ func (decoder *fuzzyIntegerDecoder) Decode(ptr unsafe.Pointer, iter *jsoniter.It
 		} else {
 			str = "0"
 		}
+	case jsoniter.NilValue:
+		iter.Skip()
+		str = "0"
 	default:
 		iter.ReportError("fuzzyIntegerDecoder", "not number or string")
+	}
+	if len(str) == 0 {
+		str = "0"
 	}
 	newIter := iter.Pool().BorrowIterator([]byte(str))
 	defer iter.Pool().ReturnIterator(newIter)
@@ -243,6 +253,9 @@ func (decoder *fuzzyFloat32Decoder) Decode(ptr unsafe.Pointer, iter *jsoniter.It
 		} else {
 			*((*float32)(ptr)) = 0
 		}
+	case jsoniter.NilValue:
+		iter.Skip()
+		*((*float32)(ptr)) = 0
 	default:
 		iter.ReportError("fuzzyFloat32Decoder", "not number or string")
 	}
@@ -272,7 +285,10 @@ func (decoder *fuzzyFloat64Decoder) Decode(ptr unsafe.Pointer, iter *jsoniter.It
 		} else {
 			*((*float64)(ptr)) = 0
 		}
+	case jsoniter.NilValue:
+		iter.Skip()
+		*((*float64)(ptr)) = 0
 	default:
-		iter.ReportError("fuzzyFloat32Decoder", "not number or string")
+		iter.ReportError("fuzzyFloat64Decoder", "not number or string")
 	}
 }

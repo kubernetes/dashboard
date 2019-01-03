@@ -1,5 +1,5 @@
 /*
-Copyright 2018 The Kubernetes Authors.
+Copyright The Kubernetes Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -46,10 +46,6 @@ func (c *FakeExtensionsV1beta1) PodSecurityPolicies() v1beta1.PodSecurityPolicyI
 
 func (c *FakeExtensionsV1beta1) ReplicaSets(namespace string) v1beta1.ReplicaSetInterface {
 	return &FakeReplicaSets{c, namespace}
-}
-
-func (c *FakeExtensionsV1beta1) Scales(namespace string) v1beta1.ScaleInterface {
-	return &FakeScales{c, namespace}
 }
 
 // RESTClient returns a RESTClient that is used to communicate

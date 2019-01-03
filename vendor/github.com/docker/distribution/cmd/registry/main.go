@@ -16,7 +16,6 @@ import (
 	_ "github.com/docker/distribution/registry/storage/driver/middleware/redirect"
 	_ "github.com/docker/distribution/registry/storage/driver/oss"
 	_ "github.com/docker/distribution/registry/storage/driver/s3-aws"
-	_ "github.com/docker/distribution/registry/storage/driver/s3-goamz"
 	_ "github.com/docker/distribution/registry/storage/driver/swift"
 )
 

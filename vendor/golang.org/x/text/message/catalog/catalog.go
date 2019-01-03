@@ -46,12 +46,12 @@
 // The most common one is plural form, but others exist.
 //
 // Selection messages are provided in packages that provide support for a
-// specific linguistic feature. The following snippet uses plural.Select:
+// specific linguistic feature. The following snippet uses plural.Selectf:
 //
 //   catalog.Set(language.English, "You are %d minute(s) late.",
-//       plural.Select(1,
-//           "one", "You are 1 minute late.",
-//           "other", "You are %d minutes late."))
+//       plural.Selectf(1, "",
+//           plural.One, "You are 1 minute late.",
+//           plural.Other, "You are %d minutes late."))
 //
 // In this example, a message is stored in the Catalog where one of two messages
 // is selected based on the first argument, a number. The first message is
@@ -74,14 +74,14 @@
 //
 //   catalog.Set(language.English, "You are %d minute(s) late.",
 //       catalog.Var("minutes",
-//           plural.Select(1, "one", "minute", "other", "minutes")),
+//           plural.Selectf(1, "", plural.One, "minute", plural.Other, "minutes")),
 //       catalog.String("You are %[1]d ${minutes} late."))
 //
 // Var is defined to return the variable name if the message does not yield a
 // match. This allows us to further simplify this snippet to
 //
 //   catalog.Set(language.English, "You are %d minute(s) late.",
-//       catalog.Var("minutes", plural.Select(1, "one", "minute")),
+//       catalog.Var("minutes", plural.Selectf(1, "", plural.One, "minute")),
 //       catalog.String("You are %d ${minutes} late."))
 //
 // Overall this is still only a minor improvement, but things can get a lot more
@@ -91,20 +91,20 @@
 //   // argument 1: list of hosts, argument 2: list of guests
 //   catalog.Set(language.English, "%[1]v invite(s) %[2]v to their party.",
 //     catalog.Var("their",
-//         plural.Select(1,
-//             "one", gender.Select(1, "female", "her", "other", "his"))),
-//     catalog.Var("invites", plural.Select(1, "one", "invite"))
+//         plural.Selectf(1, ""
+//             plural.One, gender.Select(1, "female", "her", "other", "his"))),
+//     catalog.Var("invites", plural.Selectf(1, "", plural.One, "invite"))
 //     catalog.String("%[1]v ${invites} %[2]v to ${their} party.")),
 //
 // Without variable substitution, this would have to be written as
 //
 //   // argument 1: list of hosts, argument 2: list of guests
 //   catalog.Set(language.English, "%[1]v invite(s) %[2]v to their party.",
-//     plural.Select(1,
-//         "one", gender.Select(1,
+//     plural.Selectf(1, "",
+//         plural.One, gender.Select(1,
 //             "female", "%[1]v invites %[2]v to her party."
 //             "other", "%[1]v invites %[2]v to his party."),
-//         "other", "%[1]v invites %[2]v to their party.")
+//         plural.Other, "%[1]v invites %[2]v to their party.")
 //
 // Not necessarily shorter, but using variables there is less duplication and
 // the messages are more maintenance friendly. Moreover, languages may have up
@@ -119,9 +119,10 @@
 //
 // Where the following macros were defined separately.
 //
-//   catalog.SetMacro(language.English, "invites", plural.Select(1, "one", "invite"))
-//   catalog.SetMacro(language.English, "their", plural.Select(1,
-//      "one", gender.Select(1, "female", "her", "other", "his"))),
+//   catalog.SetMacro(language.English, "invites", plural.Selectf(1, "",
+//      plural.One, "invite"))
+//   catalog.SetMacro(language.English, "their", plural.Selectf(1, "",
+//      plural.One, gender.Select(1, "female", "her", "other", "his"))),
 //
 // Placeholders use parentheses and the arguments to invoke a macro.
 //
@@ -156,22 +157,126 @@ import (
 	"errors"
 	"fmt"
 
+	"golang.org/x/text/internal"
+
 	"golang.org/x/text/internal/catmsg"
 	"golang.org/x/text/language"
 )
 
-// A Catalog holds translations for messages for supported languages.
-type Catalog struct {
+// A Catalog allows lookup of translated messages.
+type Catalog interface {
+	// Languages returns all languages for which the Catalog contains variants.
+	Languages() []language.Tag
+
+	// Matcher returns a Matcher for languages from this Catalog.
+	Matcher() language.Matcher
+
+	// A Context is used for evaluating Messages.
+	Context(tag language.Tag, r catmsg.Renderer) *Context
+
+	// This method also makes Catalog a private interface.
+	lookup(tag language.Tag, key string) (data string, ok bool)
+}
+
+// NewFromMap creates a Catalog from the given map. If a Dictionary is
+// underspecified the entry is retrieved from a parent language.
+func NewFromMap(dictionaries map[string]Dictionary, opts ...Option) (Catalog, error) {
+	options := options{}
+	for _, o := range opts {
+		o(&options)
+	}
+	c := &catalog{
+		dicts: map[language.Tag]Dictionary{},
+	}
+	_, hasFallback := dictionaries[options.fallback.String()]
+	if hasFallback {
+		// TODO: Should it be okay to not have a fallback language?
+		// Catalog generators could enforce there is always a fallback.
+		c.langs = append(c.langs, options.fallback)
+	}
+	for lang, dict := range dictionaries {
+		tag, err := language.Parse(lang)
+		if err != nil {
+			return nil, fmt.Errorf("catalog: invalid language tag %q", lang)
+		}
+		if _, ok := c.dicts[tag]; ok {
+			return nil, fmt.Errorf("catalog: duplicate entry for tag %q after normalization", tag)
+		}
+		c.dicts[tag] = dict
+		if !hasFallback || tag != options.fallback {
+			c.langs = append(c.langs, tag)
+		}
+	}
+	if hasFallback {
+		internal.SortTags(c.langs[1:])
+	} else {
+		internal.SortTags(c.langs)
+	}
+	c.matcher = language.NewMatcher(c.langs)
+	return c, nil
+}
+
+// A Dictionary is a source of translations for a single language.
+type Dictionary interface {
+	// Lookup returns a message compiled with catmsg.Compile for the given key.
+	// It returns false for ok if such a message could not be found.
+	Lookup(key string) (data string, ok bool)
+}
+
+type catalog struct {
+	langs   []language.Tag
+	dicts   map[language.Tag]Dictionary
+	macros  store
+	matcher language.Matcher
+}
+
+func (c *catalog) Languages() []language.Tag { return c.langs }
+func (c *catalog) Matcher() language.Matcher { return c.matcher }
+
+func (c *catalog) lookup(tag language.Tag, key string) (data string, ok bool) {
+	for ; ; tag = tag.Parent() {
+		if dict, ok := c.dicts[tag]; ok {
+			if data, ok := dict.Lookup(key); ok {
+				return data, true
+			}
+		}
+		if tag == language.Und {
+			break
+		}
+	}
+	return "", false
+}
+
+// Context returns a Context for formatting messages.
+// Only one Message may be formatted per context at any given time.
+func (c *catalog) Context(tag language.Tag, r catmsg.Renderer) *Context {
+	return &Context{
+		cat: c,
+		tag: tag,
+		dec: catmsg.NewDecoder(tag, r, &dict{&c.macros, tag}),
+	}
+}
+
+// A Builder allows building a Catalog programmatically.
+type Builder struct {
 	options
+	matcher language.Matcher
 
 	index  store
 	macros store
 }
 
-type options struct{}
+type options struct {
+	fallback language.Tag
+}
 
 // An Option configures Catalog behavior.
 type Option func(*options)
+
+// Fallback specifies the default fallback language. The default is Und.
+func Fallback(tag language.Tag) Option {
+	return func(o *options) { o.fallback = tag }
+}
 
 // TODO:
 // // Catalogs specifies one or more sources for a Catalog.
@@ -186,22 +291,17 @@ type Option func(*options)
 //
 // func Dict(tag language.Tag, d ...Dictionary) Option
 
-// New returns a new Catalog.
-func New(opts ...Option) *Catalog {
-	c := &Catalog{}
+// NewBuilder returns an empty mutable Catalog.
+func NewBuilder(opts ...Option) *Builder {
+	c := &Builder{}
 	for _, o := range opts {
 		o(&c.options)
 	}
 	return c
 }
 
-// Languages returns all languages for which the Catalog contains variants.
-func (c *Catalog) Languages() []language.Tag {
-	return c.index.languages()
-}
-
 // SetString is shorthand for Set(tag, key, String(msg)).
-func (c *Catalog) SetString(tag language.Tag, key string, msg string) error {
+func (c *Builder) SetString(tag language.Tag, key string, msg string) error {
 	return c.set(tag, key, &c.index, String(msg))
 }
 
@@ -209,25 +309,19 @@ func (c *Catalog) SetString(tag language.Tag, key string, msg string) error {
 //
 // When evaluation this message, the first Message in the sequence to msgs to
 // evaluate to a string will be the message returned.
-func (c *Catalog) Set(tag language.Tag, key string, msg ...Message) error {
+func (c *Builder) Set(tag language.Tag, key string, msg ...Message) error {
 	return c.set(tag, key, &c.index, msg...)
 }
 
 // SetMacro defines a Message that may be substituted in another message.
 // The arguments to a macro Message are passed as arguments in the
 // placeholder the form "${foo(arg1, arg2)}".
-func (c *Catalog) SetMacro(tag language.Tag, name string, msg ...Message) error {
+func (c *Builder) SetMacro(tag language.Tag, name string, msg ...Message) error {
 	return c.set(tag, name, &c.macros, msg...)
 }
 
 // ErrNotFound indicates there was no message for the given key.
 var ErrNotFound = errors.New("catalog: message not found")
-
-// A Message holds a collection of translations for the same phrase that may
-// vary based on the values of substitution arguments.
-type Message interface {
-	catmsg.Message
-}
 
 // String specifies a plain message string. It can be used as fallback if no
 // other strings match or as a simple standalone message.
@@ -247,44 +341,28 @@ func Var(name string, msg ...Message) Message {
 	return &catmsg.Var{Name: name, Message: firstInSequence(msg)}
 }
 
-// firstInSequence is a message type that prints the first message in the
-// sequence that resolves to a match for the given substitution arguments.
-type firstInSequence []Message
-
-func (s firstInSequence) Compile(e *catmsg.Encoder) error {
-	e.EncodeMessageType(catmsg.First)
-	err := catmsg.ErrIncomplete
-	for i, m := range s {
-		if err == nil {
-			return fmt.Errorf("catalog: message argument %d is complete and blocks subsequent messages", i-1)
-		}
-		err = e.EncodeMessage(m)
-	}
-	return err
-}
-
 // Context returns a Context for formatting messages.
 // Only one Message may be formatted per context at any given time.
-func (c *Catalog) Context(tag language.Tag, r catmsg.Renderer) *Context {
+func (b *Builder) Context(tag language.Tag, r catmsg.Renderer) *Context {
 	return &Context{
-		cat: c,
+		cat: b,
 		tag: tag,
-		dec: catmsg.NewDecoder(tag, r, &dict{&c.macros, tag}),
+		dec: catmsg.NewDecoder(tag, r, &dict{&b.macros, tag}),
 	}
 }
 
 // A Context is used for evaluating Messages.
 // Only one Message may be formatted per context at any given time.
 type Context struct {
-	cat *Catalog
-	tag language.Tag
+	cat Catalog
+	tag language.Tag // TODO: use compact index.
 	dec *catmsg.Decoder
 }
 
 // Execute looks up and executes the message with the given key.
 // It returns ErrNotFound if no message could be found in the index.
 func (c *Context) Execute(key string) error {
-	data, ok := c.cat.index.lookup(c.tag, key)
+	data, ok := c.cat.lookup(c.tag, key)
 	if !ok {
 		return ErrNotFound
 	}

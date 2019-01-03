@@ -58,12 +58,14 @@ func (h *hawkularSink) Register(mds []core.MetricDescriptor) error {
 		h.models[md.Name] = &hmd
 	}
 
-	// Fetch currently known metrics from Hawkular-Metrics and cache them
-	types := []metrics.MetricType{metrics.Gauge, metrics.Counter}
-	for _, t := range types {
-		err := h.updateDefinitions(t)
-		if err != nil {
-			return err
+	if !h.disablePreCaching {
+		// Fetch currently known metrics from Hawkular-Metrics and cache them
+		types := []metrics.MetricType{metrics.Gauge, metrics.Counter}
+		for _, t := range types {
+			err := h.updateDefinitions(t)
+			if err != nil {
+				return err
+			}
 		}
 	}
 
@@ -94,12 +96,15 @@ func (h *hawkularSink) ExportData(db *core.DataBatch) {
 
 		for _, ms := range db.MetricSets {
 
-			// // Transform ms.MetricValues to LabeledMetrics first
-			lms := metricValueToLabeledMetric(ms.MetricValues)
-			ms.LabeledMetrics = append(ms.LabeledMetrics, lms...)
+			// Transform ms.MetricValues to LabeledMetrics first
+			mvlms := metricValueToLabeledMetric(ms.MetricValues)
+			lms := make([]core.LabeledMetric, 0, len(mvlms)+len(ms.LabeledMetrics))
+
+			lms = append(lms, mvlms...)
+			lms = append(lms, ms.LabeledMetrics...)
 
 		Store:
-			for _, labeledMetric := range ms.LabeledMetrics {
+			for _, labeledMetric := range lms {
 
 				for _, filter := range h.filters {
 					if !filter(ms, labeledMetric.Name) {
@@ -319,6 +324,14 @@ func (h *hawkularSink) init() error {
 			return fmt.Errorf("Supplied batchSize value of %s is invalid", v[0])
 		}
 		h.batchSize = bs
+	}
+
+	if v, found := opts["disablePreCache"]; found {
+		dpc, err := strconv.ParseBool(v[0])
+		if err != nil {
+			return fmt.Errorf("disablePreCache parameter value %s is invalid", v[0])
+		}
+		h.disablePreCaching = dpc
 	}
 
 	c, err := metrics.NewHawkularClient(p)

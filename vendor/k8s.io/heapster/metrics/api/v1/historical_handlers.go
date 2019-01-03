@@ -832,7 +832,7 @@ func exportTimestampedAggregationValue(values []core.TimestampedAggregationValue
 // (or is zero, since many things in go use time.Time{} as an empty value) --
 // different sinks have different defaults, and certain sinks have issues if an actual
 // time of zero (i.e. the epoch) is used (because that would be too many data points
-// to consider in certain cases).  Require applications to pass an explicit end time
+// to consider in certain cases).  Require applications to pass an explicit start time
 // that they can deal with.
 func getStartEndTimeHistorical(request *restful.Request) (time.Time, time.Time, error) {
 	start, end, err := getStartEndTime(request)

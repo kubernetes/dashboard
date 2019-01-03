@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"context"
 	cryptorand "crypto/rand"
 	"expvar"
 	"fmt"
@@ -14,12 +15,12 @@ import (
 	"strings"
 	"time"
 
-	log "github.com/Sirupsen/logrus"
 	"github.com/docker/distribution"
 	"github.com/docker/distribution/configuration"
-	ctxu "github.com/docker/distribution/context"
+	dcontext "github.com/docker/distribution/context"
 	"github.com/docker/distribution/health"
 	"github.com/docker/distribution/health/checks"
+	prometheus "github.com/docker/distribution/metrics"
 	"github.com/docker/distribution/notifications"
 	"github.com/docker/distribution/reference"
 	"github.com/docker/distribution/registry/api/errcode"
@@ -35,10 +36,11 @@ import (
 	"github.com/docker/distribution/registry/storage/driver/factory"
 	storagemiddleware "github.com/docker/distribution/registry/storage/driver/middleware"
 	"github.com/docker/distribution/version"
+	"github.com/docker/go-metrics"
 	"github.com/docker/libtrust"
 	"github.com/garyburd/redigo/redis"
 	"github.com/gorilla/mux"
-	"golang.org/x/net/context"
+	"github.com/sirupsen/logrus"
 )
 
 // randomSecretSize is the number of random bytes to generate if no secret
@@ -56,10 +58,11 @@ type App struct {
 
 	Config *configuration.Configuration
 
-	router           *mux.Router                 // main application router, configured with dispatchers
-	driver           storagedriver.StorageDriver // driver maintains the app global storage driver instance.
-	registry         distribution.Namespace      // registry is the primary registry backend for the app instance.
-	accessController auth.AccessController       // main access controller for application
+	router           *mux.Router                    // main application router, configured with dispatchers
+	driver           storagedriver.StorageDriver    // driver maintains the app global storage driver instance.
+	registry         distribution.Namespace         // registry is the primary registry backend for the app instance.
+	repoRemover      distribution.RepositoryRemover // repoRemover provides ability to delete repos
+	accessController auth.AccessController          // main access controller for application
 
 	// httpHost is a parsed representation of the http.host parameter from
 	// the configuration. Only the Scheme and Host fields are used.
@@ -100,7 +103,7 @@ func NewApp(ctx context.Context, config *configuration.Configuration) *App {
 	app.register(v2.RouteNameBase, func(ctx *Context, r *http.Request) http.Handler {
 		return http.HandlerFunc(apiBase)
 	})
-	app.register(v2.RouteNameManifest, imageManifestDispatcher)
+	app.register(v2.RouteNameManifest, manifestDispatcher)
 	app.register(v2.RouteNameCatalog, catalogDispatcher)
 	app.register(v2.RouteNameTags, tagsDispatcher)
 	app.register(v2.RouteNameBlob, blobDispatcher)
@@ -145,7 +148,7 @@ func NewApp(ctx context.Context, config *configuration.Configuration) *App {
 		}
 	}
 
-	startUploadPurger(app, app.driver, ctxu.GetLogger(app), purgeConfig)
+	startUploadPurger(app, app.driver, dcontext.GetLogger(app), purgeConfig)
 
 	app.driver, err = applyStorageMiddleware(app.driver, config.Middleware["storage"])
 	if err != nil {
@@ -173,6 +176,10 @@ func NewApp(ctx context.Context, config *configuration.Configuration) *App {
 	}
 
 	options = append(options, storage.Schema1SigningKey(app.trustKey))
+
+	if config.Compatibility.Schema1.Enabled {
+		options = append(options, storage.EnableSchema1)
+	}
 
 	if config.HTTP.Host != "" {
 		u, err := url.Parse(config.HTTP.Host)
@@ -208,9 +215,13 @@ func NewApp(ctx context.Context, config *configuration.Configuration) *App {
 		}
 	}
 	if redirectDisabled {
-		ctxu.GetLogger(app).Infof("backend redirection disabled")
+		dcontext.GetLogger(app).Infof("backend redirection disabled")
 	} else {
 		options = append(options, storage.EnableRedirect)
+	}
+
+	if !config.Validation.Enabled {
+		config.Validation.Enabled = !config.Validation.Disabled
 	}
 
 	// configure validation
@@ -265,7 +276,7 @@ func NewApp(ctx context.Context, config *configuration.Configuration) *App {
 			if err != nil {
 				panic("could not create registry: " + err.Error())
 			}
-			ctxu.GetLogger(app).Infof("using redis blob descriptor cache")
+			dcontext.GetLogger(app).Infof("using redis blob descriptor cache")
 		case "inmemory":
 			cacheProvider := memorycache.NewInMemoryBlobDescriptorCacheProvider()
 			localOptions := append(options, storage.BlobDescriptorCacheProvider(cacheProvider))
@@ -273,10 +284,10 @@ func NewApp(ctx context.Context, config *configuration.Configuration) *App {
 			if err != nil {
 				panic("could not create registry: " + err.Error())
 			}
-			ctxu.GetLogger(app).Infof("using inmemory blob descriptor cache")
+			dcontext.GetLogger(app).Infof("using inmemory blob descriptor cache")
 		default:
 			if v != "" {
-				ctxu.GetLogger(app).Warnf("unknown cache type %q, caching disabled", config.Storage["cache"])
+				dcontext.GetLogger(app).Warnf("unknown cache type %q, caching disabled", config.Storage["cache"])
 			}
 		}
 	}
@@ -296,13 +307,13 @@ func NewApp(ctx context.Context, config *configuration.Configuration) *App {
 
 	authType := config.Auth.Type()
 
-	if authType != "" {
+	if authType != "" && !strings.EqualFold(authType, "none") {
 		accessController, err := auth.GetAccessController(config.Auth.Type(), config.Auth.Parameters())
 		if err != nil {
 			panic(fmt.Sprintf("unable to configure authorization (%s): %v", authType, err))
 		}
 		app.accessController = accessController
-		ctxu.GetLogger(app).Debugf("configured %q access controller", authType)
+		dcontext.GetLogger(app).Debugf("configured %q access controller", authType)
 	}
 
 	// configure as a pull through cache
@@ -312,7 +323,12 @@ func NewApp(ctx context.Context, config *configuration.Configuration) *App {
 			panic(err.Error())
 		}
 		app.isCache = true
-		ctxu.GetLogger(app).Info("Registry configured as a proxy cache to ", config.Proxy.RemoteURL)
+		dcontext.GetLogger(app).Info("Registry configured as a proxy cache to ", config.Proxy.RemoteURL)
+	}
+	var ok bool
+	app.repoRemover, ok = app.registry.(distribution.RepositoryRemover)
+	if !ok {
+		dcontext.GetLogger(app).Warnf("Registry does not implement RempositoryRemover. Will not be able to delete repos and tags")
 	}
 
 	return app
@@ -342,7 +358,10 @@ func (app *App) RegisterHealthChecks(healthRegistries ...*health.Registry) {
 
 		storageDriverCheck := func() error {
 			_, err := app.driver.Stat(app, "/") // "/" should always exist
-			return err                          // any error will be treated as failure
+			if _, ok := err.(storagedriver.PathNotFoundError); ok {
+				err = nil // pass this through, backend is responding, but this path doesn't exist.
+			}
+			return err
 		}
 
 		if app.Config.Health.StorageDriver.Threshold != 0 {
@@ -357,7 +376,7 @@ func (app *App) RegisterHealthChecks(healthRegistries ...*health.Registry) {
 		if interval == 0 {
 			interval = defaultCheckInterval
 		}
-		ctxu.GetLogger(app).Infof("configuring file health check path=%s, interval=%d", fileChecker.File, interval/time.Second)
+		dcontext.GetLogger(app).Infof("configuring file health check path=%s, interval=%d", fileChecker.File, interval/time.Second)
 		healthRegistry.Register(fileChecker.File, health.PeriodicChecker(checks.FileChecker(fileChecker.File), interval))
 	}
 
@@ -375,10 +394,10 @@ func (app *App) RegisterHealthChecks(healthRegistries ...*health.Registry) {
 		checker := checks.HTTPChecker(httpChecker.URI, statusCode, httpChecker.Timeout, httpChecker.Headers)
 
 		if httpChecker.Threshold != 0 {
-			ctxu.GetLogger(app).Infof("configuring HTTP health check uri=%s, interval=%d, threshold=%d", httpChecker.URI, interval/time.Second, httpChecker.Threshold)
+			dcontext.GetLogger(app).Infof("configuring HTTP health check uri=%s, interval=%d, threshold=%d", httpChecker.URI, interval/time.Second, httpChecker.Threshold)
 			healthRegistry.Register(httpChecker.URI, health.PeriodicThresholdChecker(checker, interval, httpChecker.Threshold))
 		} else {
-			ctxu.GetLogger(app).Infof("configuring HTTP health check uri=%s, interval=%d", httpChecker.URI, interval/time.Second)
+			dcontext.GetLogger(app).Infof("configuring HTTP health check uri=%s, interval=%d", httpChecker.URI, interval/time.Second)
 			healthRegistry.Register(httpChecker.URI, health.PeriodicChecker(checker, interval))
 		}
 	}
@@ -392,10 +411,10 @@ func (app *App) RegisterHealthChecks(healthRegistries ...*health.Registry) {
 		checker := checks.TCPChecker(tcpChecker.Addr, tcpChecker.Timeout)
 
 		if tcpChecker.Threshold != 0 {
-			ctxu.GetLogger(app).Infof("configuring TCP health check addr=%s, interval=%d, threshold=%d", tcpChecker.Addr, interval/time.Second, tcpChecker.Threshold)
+			dcontext.GetLogger(app).Infof("configuring TCP health check addr=%s, interval=%d, threshold=%d", tcpChecker.Addr, interval/time.Second, tcpChecker.Threshold)
 			healthRegistry.Register(tcpChecker.Addr, health.PeriodicThresholdChecker(checker, interval, tcpChecker.Threshold))
 		} else {
-			ctxu.GetLogger(app).Infof("configuring TCP health check addr=%s, interval=%d", tcpChecker.Addr, interval/time.Second)
+			dcontext.GetLogger(app).Infof("configuring TCP health check addr=%s, interval=%d", tcpChecker.Addr, interval/time.Second)
 			healthRegistry.Register(tcpChecker.Addr, health.PeriodicChecker(checker, interval))
 		}
 	}
@@ -405,6 +424,15 @@ func (app *App) RegisterHealthChecks(healthRegistries ...*health.Registry) {
 // passed through the application filters and context will be constructed at
 // request time.
 func (app *App) register(routeName string, dispatch dispatchFunc) {
+	handler := app.dispatcher(dispatch)
+
+	// Chain the handler with prometheus instrumented handler
+	if app.Config.HTTP.Debug.Prometheus.Enabled {
+		namespace := metrics.NewNamespace(prometheus.NamespacePrefix, "http", nil)
+		httpMetrics := namespace.NewDefaultHttpMetrics(strings.Replace(routeName, "-", "_", -1))
+		metrics.Register(namespace)
+		handler = metrics.InstrumentHandler(httpMetrics, handler)
+	}
 
 	// TODO(stevvooe): This odd dispatcher/route registration is by-product of
 	// some limitations in the gorilla/mux router. We are using it to keep
@@ -412,7 +440,7 @@ func (app *App) register(routeName string, dispatch dispatchFunc) {
 	// replace it with manual routing and structure-based dispatch for better
 	// control over the request execution.
 
-	app.router.GetRoute(routeName).Handler(app.dispatcher(dispatch))
+	app.router.GetRoute(routeName).Handler(handler)
 }
 
 // configureEvents prepares the event sink for action.
@@ -421,17 +449,18 @@ func (app *App) configureEvents(configuration *configuration.Configuration) {
 	var sinks []notifications.Sink
 	for _, endpoint := range configuration.Notifications.Endpoints {
 		if endpoint.Disabled {
-			ctxu.GetLogger(app).Infof("endpoint %s disabled, skipping", endpoint.Name)
+			dcontext.GetLogger(app).Infof("endpoint %s disabled, skipping", endpoint.Name)
 			continue
 		}
 
-		ctxu.GetLogger(app).Infof("configuring endpoint %v (%v), timeout=%s, headers=%v", endpoint.Name, endpoint.URL, endpoint.Timeout, endpoint.Headers)
+		dcontext.GetLogger(app).Infof("configuring endpoint %v (%v), timeout=%s, headers=%v", endpoint.Name, endpoint.URL, endpoint.Timeout, endpoint.Headers)
 		endpoint := notifications.NewEndpoint(endpoint.Name, endpoint.URL, notifications.EndpointConfig{
 			Timeout:           endpoint.Timeout,
 			Threshold:         endpoint.Threshold,
 			Backoff:           endpoint.Backoff,
 			Headers:           endpoint.Headers,
 			IgnoredMediaTypes: endpoint.IgnoredMediaTypes,
+			Ignore:            endpoint.Ignore,
 		})
 
 		sinks = append(sinks, endpoint)
@@ -457,7 +486,7 @@ func (app *App) configureEvents(configuration *configuration.Configuration) {
 
 	app.events.source = notifications.SourceRecord{
 		Addr:       hostname,
-		InstanceID: ctxu.GetStringValue(app, "instance.id"),
+		InstanceID: dcontext.GetStringValue(app, "instance.id"),
 	}
 }
 
@@ -465,7 +494,7 @@ type redisStartAtKey struct{}
 
 func (app *App) configureRedis(configuration *configuration.Configuration) {
 	if configuration.Redis.Addr == "" {
-		ctxu.GetLogger(app).Infof("redis not configured")
+		dcontext.GetLogger(app).Infof("redis not configured")
 		return
 	}
 
@@ -475,8 +504,8 @@ func (app *App) configureRedis(configuration *configuration.Configuration) {
 			ctx := context.WithValue(app, redisStartAtKey{}, time.Now())
 
 			done := func(err error) {
-				logger := ctxu.GetLoggerWithField(ctx, "redis.connect.duration",
-					ctxu.Since(ctx, redisStartAtKey{}))
+				logger := dcontext.GetLoggerWithField(ctx, "redis.connect.duration",
+					dcontext.Since(ctx, redisStartAtKey{}))
 				if err != nil {
 					logger.Errorf("redis: error connecting: %v", err)
 				} else {
@@ -490,7 +519,7 @@ func (app *App) configureRedis(configuration *configuration.Configuration) {
 				configuration.Redis.ReadTimeout,
 				configuration.Redis.WriteTimeout)
 			if err != nil {
-				ctxu.GetLogger(app).Errorf("error connecting to redis instance %s: %v",
+				dcontext.GetLogger(app).Errorf("error connecting to redis instance %s: %v",
 					configuration.Redis.Addr, err)
 				done(err)
 				return nil, err
@@ -526,7 +555,7 @@ func (app *App) configureRedis(configuration *configuration.Configuration) {
 			_, err := c.Do("PING")
 			return err
 		},
-		Wait: false, // if a connection is not avialable, proceed without cache.
+		Wait: false, // if a connection is not available, proceed without cache.
 	}
 
 	app.redis = pool
@@ -547,7 +576,7 @@ func (app *App) configureRedis(configuration *configuration.Configuration) {
 
 // configureLogHook prepares logging hook parameters.
 func (app *App) configureLogHook(configuration *configuration.Configuration) {
-	entry, ok := ctxu.GetLogger(app).(*log.Entry)
+	entry, ok := dcontext.GetLogger(app).(*logrus.Entry)
 	if !ok {
 		// somehow, we are not using logrus
 		return
@@ -585,31 +614,26 @@ func (app *App) configureSecret(configuration *configuration.Configuration) {
 			panic(fmt.Sprintf("could not generate random bytes for HTTP secret: %v", err))
 		}
 		configuration.HTTP.Secret = string(secretBytes[:])
-		ctxu.GetLogger(app).Warn("No HTTP secret provided - generated random secret. This may cause problems with uploads if multiple registries are behind a load-balancer. To provide a shared secret, fill in http.secret in the configuration file or set the REGISTRY_HTTP_SECRET environment variable.")
+		dcontext.GetLogger(app).Warn("No HTTP secret provided - generated random secret. This may cause problems with uploads if multiple registries are behind a load-balancer. To provide a shared secret, fill in http.secret in the configuration file or set the REGISTRY_HTTP_SECRET environment variable.")
 	}
 }
 
 func (app *App) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close() // ensure that request body is always closed.
 
-	// Instantiate an http context here so we can track the error codes
-	// returned by the request router.
-	ctx := defaultContextManager.context(app, w, r)
+	// Prepare the context with our own little decorations.
+	ctx := r.Context()
+	ctx = dcontext.WithRequest(ctx, r)
+	ctx, w = dcontext.WithResponseWriter(ctx, w)
+	ctx = dcontext.WithLogger(ctx, dcontext.GetRequestLogger(ctx))
+	r = r.WithContext(ctx)
 
 	defer func() {
 		status, ok := ctx.Value("http.response.status").(int)
 		if ok && status >= 200 && status <= 399 {
-			ctxu.GetResponseLogger(ctx).Infof("response completed")
+			dcontext.GetResponseLogger(r.Context()).Infof("response completed")
 		}
 	}()
-	defer defaultContextManager.release(ctx)
-
-	// NOTE(stevvooe): Total hack to get instrumented responsewriter from context.
-	var err error
-	w, err = ctxu.GetResponseWriter(ctx)
-	if err != nil {
-		ctxu.GetLogger(ctx).Warnf("response writer not found in context")
-	}
 
 	// Set a header with the Docker Distribution API Version for all responses.
 	w.Header().Add("Docker-Distribution-API-Version", "registry/2.0")
@@ -638,30 +662,33 @@ func (app *App) dispatcher(dispatch dispatchFunc) http.Handler {
 		context := app.context(w, r)
 
 		if err := app.authorized(w, r, context); err != nil {
-			ctxu.GetLogger(context).Warnf("error authorizing context: %v", err)
+			dcontext.GetLogger(context).Warnf("error authorizing context: %v", err)
 			return
 		}
 
 		// Add username to request logging
-		context.Context = ctxu.WithLogger(context.Context, ctxu.GetLogger(context.Context, auth.UserNameKey))
+		context.Context = dcontext.WithLogger(context.Context, dcontext.GetLogger(context.Context, auth.UserNameKey))
+
+		// sync up context on the request.
+		r = r.WithContext(context)
 
 		if app.nameRequired(r) {
-			nameRef, err := reference.ParseNamed(getName(context))
+			nameRef, err := reference.WithName(getName(context))
 			if err != nil {
-				ctxu.GetLogger(context).Errorf("error parsing reference from context: %v", err)
+				dcontext.GetLogger(context).Errorf("error parsing reference from context: %v", err)
 				context.Errors = append(context.Errors, distribution.ErrRepositoryNameInvalid{
 					Name:   getName(context),
 					Reason: err,
 				})
 				if err := errcode.ServeJSON(w, context.Errors); err != nil {
-					ctxu.GetLogger(context).Errorf("error serving error json: %v (from %v)", err, context.Errors)
+					dcontext.GetLogger(context).Errorf("error serving error json: %v (from %v)", err, context.Errors)
 				}
 				return
 			}
 			repository, err := app.registry.Repository(context, nameRef)
 
 			if err != nil {
-				ctxu.GetLogger(context).Errorf("error resolving repository: %v", err)
+				dcontext.GetLogger(context).Errorf("error resolving repository: %v", err)
 
 				switch err := err.(type) {
 				case distribution.ErrRepositoryUnknown:
@@ -673,23 +700,24 @@ func (app *App) dispatcher(dispatch dispatchFunc) http.Handler {
 				}
 
 				if err := errcode.ServeJSON(w, context.Errors); err != nil {
-					ctxu.GetLogger(context).Errorf("error serving error json: %v (from %v)", err, context.Errors)
+					dcontext.GetLogger(context).Errorf("error serving error json: %v (from %v)", err, context.Errors)
 				}
 				return
 			}
 
 			// assign and decorate the authorized repository with an event bridge.
-			context.Repository = notifications.Listen(
+			context.Repository, context.RepositoryRemover = notifications.Listen(
 				repository,
+				context.App.repoRemover,
 				app.eventBridge(context, r))
 
 			context.Repository, err = applyRepoMiddleware(app, context.Repository, app.Config.Middleware["repository"])
 			if err != nil {
-				ctxu.GetLogger(context).Errorf("error initializing repository middleware: %v", err)
+				dcontext.GetLogger(context).Errorf("error initializing repository middleware: %v", err)
 				context.Errors = append(context.Errors, errcode.ErrorCodeUnknown.WithDetail(err))
 
 				if err := errcode.ServeJSON(w, context.Errors); err != nil {
-					ctxu.GetLogger(context).Errorf("error serving error json: %v (from %v)", err, context.Errors)
+					dcontext.GetLogger(context).Errorf("error serving error json: %v (from %v)", err, context.Errors)
 				}
 				return
 			}
@@ -701,7 +729,7 @@ func (app *App) dispatcher(dispatch dispatchFunc) http.Handler {
 		// for layer upload).
 		if context.Errors.Len() > 0 {
 			if err := errcode.ServeJSON(w, context.Errors); err != nil {
-				ctxu.GetLogger(context).Errorf("error serving error json: %v (from %v)", err, context.Errors)
+				dcontext.GetLogger(context).Errorf("error serving error json: %v (from %v)", err, context.Errors)
 			}
 
 			app.logError(context, context.Errors)
@@ -721,40 +749,40 @@ type errDetailKey struct{}
 
 func (errDetailKey) String() string { return "err.detail" }
 
-func (app *App) logError(context context.Context, errors errcode.Errors) {
+func (app *App) logError(ctx context.Context, errors errcode.Errors) {
 	for _, e1 := range errors {
-		var c ctxu.Context
+		var c context.Context
 
 		switch e1.(type) {
 		case errcode.Error:
 			e, _ := e1.(errcode.Error)
-			c = ctxu.WithValue(context, errCodeKey{}, e.Code)
-			c = ctxu.WithValue(c, errMessageKey{}, e.Code.Message())
-			c = ctxu.WithValue(c, errDetailKey{}, e.Detail)
+			c = context.WithValue(ctx, errCodeKey{}, e.Code)
+			c = context.WithValue(c, errMessageKey{}, e.Message)
+			c = context.WithValue(c, errDetailKey{}, e.Detail)
 		case errcode.ErrorCode:
 			e, _ := e1.(errcode.ErrorCode)
-			c = ctxu.WithValue(context, errCodeKey{}, e)
-			c = ctxu.WithValue(c, errMessageKey{}, e.Message())
+			c = context.WithValue(ctx, errCodeKey{}, e)
+			c = context.WithValue(c, errMessageKey{}, e.Message())
 		default:
 			// just normal go 'error'
-			c = ctxu.WithValue(context, errCodeKey{}, errcode.ErrorCodeUnknown)
-			c = ctxu.WithValue(c, errMessageKey{}, e1.Error())
+			c = context.WithValue(ctx, errCodeKey{}, errcode.ErrorCodeUnknown)
+			c = context.WithValue(c, errMessageKey{}, e1.Error())
 		}
 
-		c = ctxu.WithLogger(c, ctxu.GetLogger(c,
+		c = dcontext.WithLogger(c, dcontext.GetLogger(c,
 			errCodeKey{},
 			errMessageKey{},
 			errDetailKey{}))
-		ctxu.GetResponseLogger(c).Errorf("response completed with error")
+		dcontext.GetResponseLogger(c).Errorf("response completed with error")
 	}
 }
 
 // context constructs the context object for the application. This only be
 // called once per request.
 func (app *App) context(w http.ResponseWriter, r *http.Request) *Context {
-	ctx := defaultContextManager.context(app, w, r)
-	ctx = ctxu.WithVars(ctx, r)
-	ctx = ctxu.WithLogger(ctx, ctxu.GetLogger(ctx,
+	ctx := r.Context()
+	ctx = dcontext.WithVars(ctx, r)
+	ctx = dcontext.WithLogger(ctx, dcontext.GetLogger(ctx,
 		"vars.name",
 		"vars.reference",
 		"vars.digest",
@@ -781,7 +809,7 @@ func (app *App) context(w http.ResponseWriter, r *http.Request) *Context {
 // repository. If it succeeds, the context may access the requested
 // repository. An error will be returned if access is not available.
 func (app *App) authorized(w http.ResponseWriter, r *http.Request, context *Context) error {
-	ctxu.GetLogger(context).Debug("authorizing request")
+	dcontext.GetLogger(context).Debug("authorizing request")
 	repo := getName(context)
 
 	if app.accessController == nil {
@@ -807,7 +835,7 @@ func (app *App) authorized(w http.ResponseWriter, r *http.Request, context *Cont
 			// that mistake elsewhere in the code, allowing any operation to
 			// proceed.
 			if err := errcode.ServeJSON(w, errcode.ErrorCodeUnauthorized); err != nil {
-				ctxu.GetLogger(context).Errorf("error serving error json: %v (from %v)", err, context.Errors)
+				dcontext.GetLogger(context).Errorf("error serving error json: %v (from %v)", err, context.Errors)
 			}
 			return fmt.Errorf("forbidden: no repository name")
 		}
@@ -819,23 +847,24 @@ func (app *App) authorized(w http.ResponseWriter, r *http.Request, context *Cont
 		switch err := err.(type) {
 		case auth.Challenge:
 			// Add the appropriate WWW-Auth header
-			err.SetHeaders(w)
+			err.SetHeaders(r, w)
 
 			if err := errcode.ServeJSON(w, errcode.ErrorCodeUnauthorized.WithDetail(accessRecords)); err != nil {
-				ctxu.GetLogger(context).Errorf("error serving error json: %v (from %v)", err, context.Errors)
+				dcontext.GetLogger(context).Errorf("error serving error json: %v (from %v)", err, context.Errors)
 			}
 		default:
 			// This condition is a potential security problem either in
 			// the configuration or whatever is backing the access
 			// controller. Just return a bad request with no information
 			// to avoid exposure. The request should not proceed.
-			ctxu.GetLogger(context).Errorf("error checking authorization: %v", err)
+			dcontext.GetLogger(context).Errorf("error checking authorization: %v", err)
 			w.WriteHeader(http.StatusBadRequest)
 		}
 
 		return err
 	}
 
+	dcontext.GetLogger(ctx).Info("authorized request")
 	// TODO(stevvooe): This pattern needs to be cleaned up a bit. One context
 	// should be replaced by another, rather than replacing the context on a
 	// mutable object.
@@ -849,16 +878,19 @@ func (app *App) eventBridge(ctx *Context, r *http.Request) notifications.Listene
 	actor := notifications.ActorRecord{
 		Name: getUserName(ctx, r),
 	}
-	request := notifications.NewRequestRecord(ctxu.GetRequestID(ctx), r)
+	request := notifications.NewRequestRecord(dcontext.GetRequestID(ctx), r)
 
-	return notifications.NewBridge(ctx.urlBuilder, app.events.source, actor, request, app.events.sink)
+	return notifications.NewBridge(ctx.urlBuilder, app.events.source, actor, request, app.events.sink, app.Config.Notifications.EventConfig.IncludeReferences)
 }
 
 // nameRequired returns true if the route requires a name.
 func (app *App) nameRequired(r *http.Request) bool {
 	route := mux.CurrentRoute(r)
+	if route == nil {
+		return true
+	}
 	routeName := route.GetName()
-	return route == nil || (routeName != v2.RouteNameBase && routeName != v2.RouteNameCatalog)
+	return routeName != v2.RouteNameBase && routeName != v2.RouteNameCatalog
 }
 
 // apiBase implements a simple yes-man for doing overall checks against the
@@ -897,12 +929,10 @@ func appendAccessRecords(records []auth.Access, method string, repo string) []au
 				Action:   "push",
 			})
 	case "DELETE":
-		// DELETE access requires full admin rights, which is represented
-		// as "*". This may not be ideal.
 		records = append(records,
 			auth.Access{
 				Resource: resource,
-				Action:   "*",
+				Action:   "delete",
 			})
 	}
 	return records
@@ -967,7 +997,7 @@ func applyStorageMiddleware(driver storagedriver.StorageDriver, middlewares []co
 
 // uploadPurgeDefaultConfig provides a default configuration for upload
 // purging to be used in the absence of configuration in the
-// confifuration file
+// configuration file
 func uploadPurgeDefaultConfig() map[interface{}]interface{} {
 	config := map[interface{}]interface{}{}
 	config["enabled"] = true
@@ -983,7 +1013,7 @@ func badPurgeUploadConfig(reason string) {
 
 // startUploadPurger schedules a goroutine which will periodically
 // check upload directories for old files and delete them
-func startUploadPurger(ctx context.Context, storageDriver storagedriver.StorageDriver, log ctxu.Logger, config map[interface{}]interface{}) {
+func startUploadPurger(ctx context.Context, storageDriver storagedriver.StorageDriver, log dcontext.Logger, config map[interface{}]interface{}) {
 	if config["enabled"] == false {
 		return
 	}

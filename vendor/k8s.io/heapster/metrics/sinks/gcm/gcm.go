@@ -23,7 +23,6 @@ import (
 	gce_util "k8s.io/heapster/common/gce"
 	"k8s.io/heapster/metrics/core"
 
-	gce "cloud.google.com/go/compute/metadata"
 	"github.com/golang/glog"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
@@ -69,7 +68,7 @@ func fullMetricType(name string) string {
 	return fmt.Sprintf("%s/%s/%s", customApiPrefix, metricDomain, name)
 }
 
-func createTimeSeries(timestamp time.Time, labels map[string]string, metric string, val core.MetricValue, createTime time.Time) *gcm.TimeSeries {
+func createTimeSeries(timestamp time.Time, labels map[string]string, metric string, val core.MetricValue, collectionStartTime time.Time) *gcm.TimeSeries {
 	point := &gcm.Point{
 		Interval: &gcm.TimeInterval{
 			StartTime: timestamp.Format(time.RFC3339),
@@ -82,12 +81,12 @@ func createTimeSeries(timestamp time.Time, labels map[string]string, metric stri
 
 	switch val.ValueType {
 	case core.ValueInt64:
-		point.Value.Int64Value = val.IntValue
+		point.Value.Int64Value = &val.IntValue
 		point.Value.ForceSendFields = []string{"Int64Value"}
 		valueType = "INT64"
 	case core.ValueFloat:
 		v := float64(val.FloatValue)
-		point.Value.DoubleValue = v
+		point.Value.DoubleValue = &v
 		point.Value.ForceSendFields = []string{"DoubleValue"}
 		valueType = "DOUBLE"
 	default:
@@ -96,7 +95,7 @@ func createTimeSeries(timestamp time.Time, labels map[string]string, metric stri
 	}
 	// For cumulative metric use the provided start time.
 	if val.MetricType == core.MetricCumulative {
-		point.Interval.StartTime = createTime.Format(time.RFC3339)
+		point.Interval.StartTime = collectionStartTime.Format(time.RFC3339)
 	}
 
 	return &gcm.TimeSeries{
@@ -109,7 +108,7 @@ func createTimeSeries(timestamp time.Time, labels map[string]string, metric stri
 	}
 }
 
-func (sink *gcmSink) getTimeSeries(timestamp time.Time, labels map[string]string, metric string, val core.MetricValue, createTime time.Time) *gcm.TimeSeries {
+func (sink *gcmSink) getTimeSeries(timestamp time.Time, labels map[string]string, metric string, val core.MetricValue, collectionStartTime time.Time) *gcm.TimeSeries {
 	finalLabels := make(map[string]string)
 	if core.IsNodeAutoscalingMetric(metric) {
 		// All and autoscaling. Do not populate for other filters.
@@ -134,10 +133,10 @@ func (sink *gcmSink) getTimeSeries(timestamp time.Time, labels map[string]string
 		}
 	}
 
-	return createTimeSeries(timestamp, finalLabels, metric, val, createTime)
+	return createTimeSeries(timestamp, finalLabels, metric, val, collectionStartTime)
 }
 
-func (sink *gcmSink) getTimeSeriesForLabeledMetrics(timestamp time.Time, labels map[string]string, metric core.LabeledMetric, createTime time.Time) *gcm.TimeSeries {
+func (sink *gcmSink) getTimeSeriesForLabeledMetrics(timestamp time.Time, labels map[string]string, metric core.LabeledMetric, collectionStartTime time.Time) *gcm.TimeSeries {
 	// Only all. There are no autoscaling labeled metrics.
 	if sink.metricFilter != metricsAll {
 		return nil
@@ -156,7 +155,7 @@ func (sink *gcmSink) getTimeSeriesForLabeledMetrics(timestamp time.Time, labels 
 		}
 	}
 
-	return createTimeSeries(timestamp, finalLabels, metric.Name, metric.MetricValue, createTime)
+	return createTimeSeries(timestamp, finalLabels, metric.Name, metric.MetricValue, collectionStartTime)
 }
 
 func fullProjectName(name string) string {
@@ -181,7 +180,7 @@ func (sink *gcmSink) ExportData(dataBatch *core.DataBatch) {
 	req := getReq()
 	for _, metricSet := range dataBatch.MetricSets {
 		for metric, val := range metricSet.MetricValues {
-			point := sink.getTimeSeries(dataBatch.Timestamp, metricSet.Labels, metric, val, metricSet.CreateTime)
+			point := sink.getTimeSeries(dataBatch.Timestamp, metricSet.Labels, metric, val, metricSet.CollectionStartTime)
 			if point != nil {
 				req.TimeSeries = append(req.TimeSeries, point)
 			}
@@ -191,7 +190,7 @@ func (sink *gcmSink) ExportData(dataBatch *core.DataBatch) {
 			}
 		}
 		for _, metric := range metricSet.LabeledMetrics {
-			point := sink.getTimeSeriesForLabeledMetrics(dataBatch.Timestamp, metricSet.Labels, metric, metricSet.CreateTime)
+			point := sink.getTimeSeriesForLabeledMetrics(dataBatch.Timestamp, metricSet.Labels, metric, metricSet.CollectionStartTime)
 			if point != nil {
 				req.TimeSeries = append(req.TimeSeries, point)
 			}
@@ -324,21 +323,21 @@ func CreateGCMSink(uri *url.URL) (core.DataSink, error) {
 		return nil, fmt.Errorf("invalid metrics parameter: %s", metrics)
 	}
 
-	if err := gce_util.EnsureOnGCE(); err != nil {
-		return nil, err
-	}
-
-	// Detect project ID
-	projectId, err := gce.ProjectID()
+	client, err := google.DefaultClient(oauth2.NoContext, gcm.MonitoringScope)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("error creating oauth2 client: %v", err)
 	}
 
 	// Create Google Cloud Monitoring service.
-	client := oauth2.NewClient(oauth2.NoContext, google.ComputeTokenSource(""))
 	gcmService, err := gcm.New(client)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("error creating GCM service: %v", err)
+	}
+
+	// Get the GCP Project ID.
+	projectId, err := gce_util.GetProjectId()
+	if err != nil {
+		return nil, fmt.Errorf("error getting GCP project ID: %v", err)
 	}
 
 	sink := &gcmSink{

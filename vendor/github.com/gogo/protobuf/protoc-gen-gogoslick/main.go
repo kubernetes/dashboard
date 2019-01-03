@@ -44,6 +44,8 @@ func main() {
 
 	vanity.ForEachFieldInFilesExcludingExtensions(vanity.OnlyProto2(files), vanity.TurnOffNullableForNativeTypesWithoutDefaultsOnly)
 	vanity.ForEachFile(files, vanity.TurnOffGoUnrecognizedAll)
+	vanity.ForEachFile(files, vanity.TurnOffGoUnkeyedAll)
+	vanity.ForEachFile(files, vanity.TurnOffGoSizecacheAll)
 
 	vanity.ForEachFile(files, vanity.TurnOffGoEnumPrefixAll)
 	vanity.ForEachFile(files, vanity.TurnOffGoEnumStringerAll)

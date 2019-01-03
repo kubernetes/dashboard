@@ -33,6 +33,10 @@ type influxdbSink struct {
 	sync.RWMutex
 	c        influxdb_common.InfluxdbConfig
 	dbExists bool
+
+	// wg and conChan will work together to limit concurrent influxDB sink goroutines.
+	wg      sync.WaitGroup
+	conChan chan struct{}
 }
 
 var influxdbBlacklistLabels = map[string]struct{}{
@@ -65,6 +69,11 @@ func (sink *influxdbSink) ExportData(dataBatch *core.DataBatch) {
 	dataPoints := make([]influxdb.Point, 0, 0)
 	for _, metricSet := range dataBatch.MetricSets {
 		for metricName, metricValue := range metricSet.MetricValues {
+			if sink.c.DisableCounterMetrics {
+				if _, exists := core.RateMetricsMapping[metricName]; exists {
+					continue
+				}
+			}
 
 			var value interface{}
 			if core.ValueInt64 == metricValue.ValueType {
@@ -107,12 +116,17 @@ func (sink *influxdbSink) ExportData(dataBatch *core.DataBatch) {
 
 			dataPoints = append(dataPoints, point)
 			if len(dataPoints) >= maxSendBatchSize {
-				sink.sendData(dataPoints)
+				sink.concurrentSendData(dataPoints)
 				dataPoints = make([]influxdb.Point, 0, 0)
 			}
 		}
 
 		for _, labeledMetric := range metricSet.LabeledMetrics {
+			if sink.c.DisableCounterMetrics {
+				if _, exists := core.RateMetricsMapping[labeledMetric.Name]; exists {
+					continue
+				}
+			}
 
 			var value interface{}
 			if core.ValueInt64 == labeledMetric.ValueType {
@@ -145,8 +159,10 @@ func (sink *influxdbSink) ExportData(dataBatch *core.DataBatch) {
 			}
 
 			for key, value := range metricSet.Labels {
-				if value != "" {
-					point.Tags[key] = value
+				if _, exists := influxdbBlacklistLabels[key]; !exists {
+					if value != "" {
+						point.Tags[key] = value
+					}
 				}
 			}
 			for key, value := range labeledMetric.Labels {
@@ -160,17 +176,34 @@ func (sink *influxdbSink) ExportData(dataBatch *core.DataBatch) {
 
 			dataPoints = append(dataPoints, point)
 			if len(dataPoints) >= maxSendBatchSize {
-				sink.sendData(dataPoints)
+				sink.concurrentSendData(dataPoints)
 				dataPoints = make([]influxdb.Point, 0, 0)
 			}
 		}
 	}
 	if len(dataPoints) >= 0 {
-		sink.sendData(dataPoints)
+		sink.concurrentSendData(dataPoints)
 	}
+
+	sink.wg.Wait()
+}
+
+func (sink *influxdbSink) concurrentSendData(dataPoints []influxdb.Point) {
+	sink.wg.Add(1)
+	// use the channel to block until there's less than the maximum number of concurrent requests running
+	sink.conChan <- struct{}{}
+	go func(dataPoints []influxdb.Point) {
+		sink.sendData(dataPoints)
+	}(dataPoints)
 }
 
 func (sink *influxdbSink) sendData(dataPoints []influxdb.Point) {
+	defer func() {
+		// empty an item from the channel so the next waiting request can run
+		<-sink.conChan
+		sink.wg.Done()
+	}()
+
 	if err := sink.createDatabase(); err != nil {
 		glog.Errorf("Failed to create influxdb: %v", err)
 		return
@@ -264,8 +297,9 @@ func new(c influxdb_common.InfluxdbConfig) core.DataSink {
 		glog.Errorf("issues while creating an InfluxDB sink: %v, will retry on use", err)
 	}
 	return &influxdbSink{
-		client: client, // can be nil
-		c:      c,
+		client:  client, // can be nil
+		c:       c,
+		conChan: make(chan struct{}, c.Concurrency),
 	}
 }
 

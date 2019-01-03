@@ -117,7 +117,7 @@ func main() {
 		writeOutput(*outFile, []byte(msg))
 	case "verify":
 		verificationKey, err := LoadPublicKey(keyBytes)
-		exitOnError(err, "unable to read private key")
+		exitOnError(err, "unable to read public key")
 
 		obj, err := jose.ParseSigned(string(readInput(*inFile)))
 		exitOnError(err, "unable to parse message")

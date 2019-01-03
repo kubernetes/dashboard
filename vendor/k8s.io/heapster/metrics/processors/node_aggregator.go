@@ -30,25 +30,27 @@ func (this *NodeAggregator) Name() string {
 
 func (this *NodeAggregator) Process(batch *core.DataBatch) (*core.DataBatch, error) {
 	for key, metricSet := range batch.MetricSets {
-		if metricSetType, found := metricSet.Labels[core.LabelMetricSetType.Key]; found && metricSetType == core.MetricSetTypePod {
-			// Aggregating pods
-			nodeName, found := metricSet.Labels[core.LabelNodename.Key]
-			if nodeName == "" {
-				glog.V(8).Infof("Skipping pod %s: no node info", key)
-				continue
-			}
-			if found {
-				nodeKey := core.NodeKey(nodeName)
-				node, found := batch.MetricSets[nodeKey]
-				if !found {
-					glog.V(1).Infof("No metric for node %s, cannot perform node level aggregation.", nodeKey)
-				} else if err := aggregate(metricSet, node, this.MetricsToAggregate); err != nil {
-					return nil, err
-				}
-			} else {
-				glog.Errorf("No node info in pod %s: %v", key, metricSet.Labels)
-			}
+		if metricSetType, found := metricSet.Labels[core.LabelMetricSetType.Key]; !found || metricSetType != core.MetricSetTypePod {
+			continue
 		}
+		// Aggregating pods
+		nodeName, found := metricSet.Labels[core.LabelNodename.Key]
+		if nodeName == "" {
+			glog.V(8).Infof("Skipping pod %s: no node info", key)
+			continue
+		}
+		if !found {
+			glog.Errorf("No node info in pod %s: %v", key, metricSet.Labels)
+			continue
+		}
+		nodeKey := core.NodeKey(nodeName)
+		node, found := batch.MetricSets[nodeKey]
+		if !found {
+			glog.V(1).Infof("No metric for node %s, cannot perform node level aggregation.", nodeKey)
+		} else if err := aggregate(metricSet, node, this.MetricsToAggregate); err != nil {
+			return nil, err
+		}
+
 	}
 	return batch, nil
 }

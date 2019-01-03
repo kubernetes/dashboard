@@ -40,6 +40,7 @@ const (
 const (
 	TimeSeriesTopic = "timeseriestopic"
 	EventsTopic     = "eventstopic"
+	compression     = "compression"
 )
 
 type KafkaClient interface {
@@ -79,7 +80,7 @@ func (sink *kafkaSink) Stop() {
 }
 
 // setupProducer returns a producer of kafka server
-func setupProducer(sinkBrokerHosts []string, topic string, brokerConf kafka.BrokerConf) (kafka.DistributingProducer, error) {
+func setupProducer(sinkBrokerHosts []string, topic string, brokerConf kafka.BrokerConf, compression proto.Compression) (kafka.DistributingProducer, error) {
 	glog.V(3).Infof("attempting to setup kafka sink")
 	broker, err := kafka.Dial(sinkBrokerHosts, brokerConf)
 	if err != nil {
@@ -90,6 +91,7 @@ func setupProducer(sinkBrokerHosts []string, topic string, brokerConf kafka.Brok
 	//create kafka producer
 	conf := kafka.NewProducerConf()
 	conf.RequiredAcks = proto.RequiredAcksLocal
+	conf.Compression = compression
 	producer := broker.Producer(conf)
 
 	// create RoundRobinProducer with the default producer.
@@ -121,14 +123,34 @@ func getTopic(opts map[string][]string, topicType string) (string, error) {
 	return topic, nil
 }
 
+func getCompression(opts map[string][]string) (proto.Compression, error) {
+	if len(opts[compression]) == 0 {
+		return proto.CompressionNone, nil
+	}
+	comp := opts[compression][0]
+	switch comp {
+	case "none":
+		return proto.CompressionNone, nil
+	case "gzip":
+		return proto.CompressionGzip, nil
+	default:
+		return proto.CompressionNone, fmt.Errorf("Compression '%s' is illegal. Use none or gzip", comp)
+	}
+}
+
 func NewKafkaClient(uri *url.URL, topicType string) (KafkaClient, error) {
 	opts, err := url.ParseQuery(uri.RawQuery)
 	if err != nil {
-		return nil, fmt.Errorf("failed to parser url's query string: %s", err)
+		return nil, fmt.Errorf("failed to parse url's query string: %s", err)
 	}
 	glog.V(3).Infof("kafka sink option: %v", opts)
 
 	topic, err := getTopic(opts, topicType)
+	if err != nil {
+		return nil, err
+	}
+
+	compression, err := getCompression(opts)
 	if err != nil {
 		return nil, err
 	}
@@ -148,9 +170,10 @@ func NewKafkaClient(uri *url.URL, topicType string) (KafkaClient, error) {
 	brokerConf.LeaderRetryLimit = brokerLeaderRetryLimit
 	brokerConf.LeaderRetryWait = brokerLeaderRetryWait
 	brokerConf.AllowTopicCreation = brokerAllowTopicCreation
+	brokerConf.Logger = &GologAdapterLogger{}
 
 	// set up producer of kafka server.
-	sinkProducer, err := setupProducer(kafkaBrokers, topic, brokerConf)
+	sinkProducer, err := setupProducer(kafkaBrokers, topic, brokerConf, compression)
 	if err != nil {
 		return nil, fmt.Errorf("Failed to setup Producer: - %v", err)
 	}

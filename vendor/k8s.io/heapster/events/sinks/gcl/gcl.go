@@ -23,11 +23,10 @@ import (
 	gce_util "k8s.io/heapster/common/gce"
 	"k8s.io/heapster/events/core"
 
-	gce "cloud.google.com/go/compute/metadata"
 	"github.com/golang/glog"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
-	gcl "google.golang.org/api/logging/v2beta1"
+	gcl "google.golang.org/api/logging/v2"
 )
 
 const (
@@ -80,21 +79,21 @@ func (sink *gclSink) Stop() {
 }
 
 func CreateGCLSink(uri *url.URL) (core.EventSink, error) {
-	if err := gce_util.EnsureOnGCE(); err != nil {
-		return nil, err
-	}
-
-	// Detect project ID
-	projectId, err := gce.ProjectID()
+	client, err := google.DefaultClient(oauth2.NoContext, gcl.LoggingWriteScope)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("error creating oauth2 client: %v", err)
 	}
 
 	// Create Google Cloud Logging service.
-	client := oauth2.NewClient(oauth2.NoContext, google.ComputeTokenSource(""))
 	gclService, err := gcl.New(client)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("error creating GCL service: %v", err)
+	}
+
+	// Detect project ID
+	projectId, err := gce_util.GetProjectId()
+	if err != nil {
+		return nil, fmt.Errorf("error getting GCP project ID: %v", err)
 	}
 
 	sink := &gclSink{project: projectId, gclService: gclService}

@@ -135,7 +135,7 @@ func main() {
 	dashboardDir := envParams["dashboard_location"]
 	files, err := ioutil.ReadDir(dashboardDir)
 	if err != nil {
-		fmt.Printf("Failed to read the the directory the json files should be in. Exiting... Error: %v\n", err)
+		fmt.Printf("Failed to read the directory the json files should be in. Exiting... Error: %v\n", err)
 		os.Exit(1)
 	}
 	for _, file := range files {

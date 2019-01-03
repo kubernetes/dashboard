@@ -212,7 +212,7 @@ func podMetricsInNamespaceList(a *Api, request *restful.Request, response *restf
 		if m := a.getPodMetrics(pod); m != nil {
 			res.Items = append(res.Items, *m)
 		} else {
-			glog.Infof("No metrics for pod %s/%s", pod.Namespace, pod.Name)
+			glog.V(2).Infof("No metrics for pod %s/%s", pod.Namespace, pod.Name)
 		}
 	}
 	response.WriteEntity(&res)
@@ -261,7 +261,7 @@ func (a *Api) getPodMetrics(pod *kube_v1.Pod) *v1alpha1.PodMetrics {
 	for _, c := range pod.Spec.Containers {
 		ms, found := batch.MetricSets[core.PodContainerKey(pod.Namespace, pod.Name, c.Name)]
 		if !found {
-			glog.Infof("No metrics for container %s in pod %s/%s", c.Name, pod.Namespace, pod.Name)
+			glog.V(2).Infof("No metrics for container %s in pod %s/%s", c.Name, pod.Namespace, pod.Name)
 			return nil
 		}
 

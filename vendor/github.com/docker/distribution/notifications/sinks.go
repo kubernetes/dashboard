@@ -6,7 +6,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/Sirupsen/logrus"
+	"github.com/sirupsen/logrus"
 )
 
 // NOTE(stevvooe): This file contains definitions for several utility sinks.
@@ -151,7 +151,7 @@ func (eq *eventQueue) Write(events ...Event) error {
 	return nil
 }
 
-// Close shutsdown the event queue, flushing
+// Close shuts down the event queue, flushing
 func (eq *eventQueue) Close() error {
 	eq.mu.Lock()
 	defer eq.mu.Unlock()
@@ -210,14 +210,15 @@ func (eq *eventQueue) next() []Event {
 	return block
 }
 
-// ignoredMediaTypesSink discards events with ignored target media types and
+// ignoredSink discards events with ignored target media types and actions.
 // passes the rest along.
-type ignoredMediaTypesSink struct {
+type ignoredSink struct {
 	Sink
-	ignored map[string]bool
+	ignoreMediaTypes map[string]bool
+	ignoreActions    map[string]bool
 }
 
-func newIgnoredMediaTypesSink(sink Sink, ignored []string) Sink {
+func newIgnoredSink(sink Sink, ignored []string, ignoreActions []string) Sink {
 	if len(ignored) == 0 {
 		return sink
 	}
@@ -227,25 +228,41 @@ func newIgnoredMediaTypesSink(sink Sink, ignored []string) Sink {
 		ignoredMap[mediaType] = true
 	}
 
-	return &ignoredMediaTypesSink{
-		Sink:    sink,
-		ignored: ignoredMap,
+	ignoredActionsMap := make(map[string]bool)
+	for _, action := range ignoreActions {
+		ignoredActionsMap[action] = true
+	}
+
+	return &ignoredSink{
+		Sink:             sink,
+		ignoreMediaTypes: ignoredMap,
+		ignoreActions:    ignoredActionsMap,
 	}
 }
 
 // Write discards events with ignored target media types and passes the rest
 // along.
-func (imts *ignoredMediaTypesSink) Write(events ...Event) error {
+func (imts *ignoredSink) Write(events ...Event) error {
 	var kept []Event
 	for _, e := range events {
-		if !imts.ignored[e.Target.MediaType] {
+		if !imts.ignoreMediaTypes[e.Target.MediaType] {
 			kept = append(kept, e)
 		}
 	}
 	if len(kept) == 0 {
 		return nil
 	}
-	return imts.Sink.Write(kept...)
+
+	var results []Event
+	for _, e := range kept {
+		if !imts.ignoreActions[e.Action] {
+			results = append(results, e)
+		}
+	}
+	if len(results) == 0 {
+		return nil
+	}
+	return imts.Sink.Write(results...)
 }
 
 // retryingSink retries the write until success or an ErrSinkClosed is

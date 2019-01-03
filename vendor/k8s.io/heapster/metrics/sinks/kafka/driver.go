@@ -36,6 +36,10 @@ type kafkaSink struct {
 	sync.RWMutex
 }
 
+func (sink *kafkaSink) Name() string {
+	return "kafka"
+}
+
 func (sink *kafkaSink) ExportData(dataBatch *core.DataBatch) {
 	sink.Lock()
 	defer sink.Unlock()

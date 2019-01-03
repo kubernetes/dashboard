@@ -19,10 +19,27 @@ package main
 import (
 	"crypto/x509"
 	"encoding/pem"
+	"errors"
 	"fmt"
+	"gopkg.in/square/go-jose.v2"
 )
 
-// LoadPublicKey loads a public key from PEM/DER-encoded data.
+func LoadJSONWebKey(json []byte, pub bool) (*jose.JSONWebKey, error) {
+	var jwk jose.JSONWebKey
+	err := jwk.UnmarshalJSON(json)
+	if err != nil {
+		return nil, err
+	}
+	if !jwk.Valid() {
+		return nil, errors.New("invalid JWK key")
+	}
+	if jwk.IsPublic() != pub {
+		return nil, errors.New("priv/pub JWK key mismatch")
+	}
+	return &jwk, nil
+}
+
+// LoadPublicKey loads a public key from PEM/DER/JWK-encoded data.
 func LoadPublicKey(data []byte) (interface{}, error) {
 	input := data
 
@@ -42,10 +59,15 @@ func LoadPublicKey(data []byte) (interface{}, error) {
 		return cert.PublicKey, nil
 	}
 
-	return nil, fmt.Errorf("square/go-jose: parse error, got '%s' and '%s'", err0, err1)
+	jwk, err2 := LoadJSONWebKey(data, true)
+	if err2 == nil {
+		return jwk, nil
+	}
+
+	return nil, fmt.Errorf("square/go-jose: parse error, got '%s', '%s' and '%s'", err0, err1, err2)
 }
 
-// LoadPrivateKey loads a private key from PEM/DER-encoded data.
+// LoadPrivateKey loads a private key from PEM/DER/JWK-encoded data.
 func LoadPrivateKey(data []byte) (interface{}, error) {
 	input := data
 
@@ -70,5 +92,10 @@ func LoadPrivateKey(data []byte) (interface{}, error) {
 		return priv, nil
 	}
 
-	return nil, fmt.Errorf("square/go-jose: parse error, got '%s', '%s' and '%s'", err0, err1, err2)
+	jwk, err3 := LoadJSONWebKey(input, false)
+	if err3 == nil {
+		return jwk, nil
+	}
+
+	return nil, fmt.Errorf("square/go-jose: parse error, got '%s', '%s', '%s' and '%s'", err0, err1, err2, err3)
 }

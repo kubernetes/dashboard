@@ -46,28 +46,33 @@ func (this *NamespaceBasedEnricher) Process(batch *core.DataBatch) (*core.DataBa
 
 // Adds UID to all namespaced elements.
 func (this *NamespaceBasedEnricher) addNamespaceInfo(metricSet *core.MetricSet) {
-	if metricSetType, found := metricSet.Labels[core.LabelMetricSetType.Key]; found &&
-		(metricSetType == core.MetricSetTypePodContainer ||
-			metricSetType == core.MetricSetTypePod ||
-			metricSetType == core.MetricSetTypeNamespace) {
+	metricSetType, found := metricSet.Labels[core.LabelMetricSetType.Key]
+	if !found {
+		return
+	}
+	if metricSetType != core.MetricSetTypePodContainer &&
+		metricSetType != core.MetricSetTypePod &&
+		metricSetType != core.MetricSetTypeNamespace {
+		return
+	}
 
-		if namespaceName, found := metricSet.Labels[core.LabelNamespaceName.Key]; found {
-			nsObj, exists, err := this.store.GetByKey(namespaceName)
-			if exists && err == nil {
-				namespace, ok := nsObj.(*kube_api.Namespace)
-				if ok {
-					metricSet.Labels[core.LabelPodNamespaceUID.Key] = string(namespace.UID)
-				} else {
-					glog.Errorf("Wrong namespace store content")
-				}
-			} else {
-				if err != nil {
-					glog.Warningf("Failed to get namespace %s: %v", namespaceName, err)
-				} else if !exists {
-					glog.Warningf("Namespace doesn't exist: %s", namespaceName)
-				}
-			}
+	namespaceName, found := metricSet.Labels[core.LabelNamespaceName.Key]
+	if !found {
+		return
+	}
+
+	nsObj, exists, err := this.store.GetByKey(namespaceName)
+	if exists && err == nil {
+		namespace, ok := nsObj.(*kube_api.Namespace)
+		if ok {
+			metricSet.Labels[core.LabelPodNamespaceUID.Key] = string(namespace.UID)
+		} else {
+			glog.Errorf("Wrong namespace store content")
 		}
+	} else if err != nil {
+		glog.Warningf("Failed to get namespace %s: %v", namespaceName, err)
+	} else if !exists {
+		glog.Warningf("Namespace doesn't exist: %s", namespaceName)
 	}
 }
 

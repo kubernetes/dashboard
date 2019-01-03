@@ -36,7 +36,7 @@ func (mail *mailer) sendMail(subject, message string) error {
 		auth,
 		mail.From,
 		mail.To,
-		[]byte(msg),
+		msg,
 	)
 	if err != nil {
 		return err

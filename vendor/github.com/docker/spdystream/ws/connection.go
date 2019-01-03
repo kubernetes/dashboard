@@ -1,10 +1,11 @@
 package ws
 
 import (
-	"github.com/gorilla/websocket"
+	"fmt"
 	"io"
-	"log"
 	"time"
+
+	"github.com/gorilla/websocket"
 )
 
 // Wrap an HTTP2 connection over WebSockets and
@@ -19,7 +20,7 @@ func NewConnection(w *websocket.Conn) *Conn {
 	return &Conn{Conn: w}
 }
 
-func (c Conn) Write(b []byte) (int, error) {
+func (c *Conn) Write(b []byte) (int, error) {
 	err := c.WriteMessage(websocket.BinaryMessage, b)
 	if err != nil {
 		return 0, err
@@ -27,29 +28,44 @@ func (c Conn) Write(b []byte) (int, error) {
 	return len(b), nil
 }
 
-func (c Conn) Read(b []byte) (int, error) {
+func (c *Conn) Read(b []byte) (int, error) {
 	if c.reader == nil {
-		t, r, err := c.NextReader()
-		if err != nil {
+		if err := c.nextReader(); err != nil {
 			return 0, err
 		}
-		if t != websocket.BinaryMessage {
-			log.Printf("ws: ignored non-binary message in stream")
-			return 0, nil
-		}
-		c.reader = r
 	}
-	n, err := c.reader.Read(b)
-	if err != nil {
-		if err == io.EOF {
-			c.reader = nil
+
+	for {
+		n, err := c.reader.Read(b)
+		if err != nil {
+			if err != io.EOF {
+				return n, err
+			}
+
+			// get next reader if there is no data in the current one
+			if err := c.nextReader(); err != nil {
+				return 0, err
+			}
+			continue
 		}
-		return n, err
+		return n, nil
 	}
-	return n, nil
 }
 
-func (c Conn) SetDeadline(t time.Time) error {
+func (c *Conn) nextReader() error {
+	t, r, err := c.NextReader()
+	if err != nil {
+		return err
+	}
+
+	if t != websocket.BinaryMessage {
+		return fmt.Errorf("ws: non-binary message in stream")
+	}
+	c.reader = r
+	return nil
+}
+
+func (c *Conn) SetDeadline(t time.Time) error {
 	if err := c.Conn.SetReadDeadline(t); err != nil {
 		return err
 	}
@@ -59,7 +75,7 @@ func (c Conn) SetDeadline(t time.Time) error {
 	return nil
 }
 
-func (c Conn) Close() error {
+func (c *Conn) Close() error {
 	err := c.Conn.Close()
 	return err
 }

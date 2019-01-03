@@ -18,6 +18,8 @@ package jose
 
 import (
 	"crypto/elliptic"
+	"crypto/x509"
+	"encoding/base64"
 	"errors"
 	"fmt"
 
@@ -56,6 +58,11 @@ var (
 	// an RSA private key with more than two primes.
 	ErrUnsupportedKeyType = errors.New("square/go-jose: unsupported key type/format")
 
+	// ErrInvalidKeySize indicates that the given key is not the correct size
+	// for the selected algorithm. This can occur, for example, when trying to
+	// encrypt with AES-256 but passing only a 128-bit key as input.
+	ErrInvalidKeySize = errors.New("square/go-jose: invalid key size for algorithm")
+
 	// ErrNotSupported serialization of object is not supported. This occurs when
 	// trying to compact-serialize an object which can't be represented in
 	// compact form.
@@ -68,6 +75,7 @@ var (
 
 // Key management algorithms
 const (
+	ED25519            = KeyAlgorithm("ED25519")
 	RSA1_5             = KeyAlgorithm("RSA1_5")             // RSA-PKCS1v1.5
 	RSA_OAEP           = KeyAlgorithm("RSA-OAEP")           // RSA-OAEP-SHA1
 	RSA_OAEP_256       = KeyAlgorithm("RSA-OAEP-256")       // RSA-OAEP-SHA256
@@ -89,6 +97,7 @@ const (
 
 // Signature algorithms
 const (
+	EdDSA = SignatureAlgorithm("EdDSA")
 	HS256 = SignatureAlgorithm("HS256") // HMAC using SHA-256
 	HS384 = SignatureAlgorithm("HS384") // HMAC using SHA-384
 	HS512 = SignatureAlgorithm("HS512") // HMAC using SHA-512
@@ -139,10 +148,15 @@ const (
 	headerEPK = "epk" // *JSONWebKey
 	headerIV  = "iv"  // *byteBuffer
 	headerTag = "tag" // *byteBuffer
+	headerX5c = "x5c" // []*x509.Certificate
 
 	headerJWK   = "jwk"   // *JSONWebKey
 	headerKeyID = "kid"   // string
 	headerNonce = "nonce" // string
+
+	headerP2C = "p2c" // *byteBuffer (int)
+	headerP2S = "p2s" // *byteBuffer ([]byte)
+
 )
 
 // rawHeader represents the JOSE header for JWE/JWS objects (used for parsing).
@@ -160,9 +174,32 @@ type Header struct {
 	Algorithm  string
 	Nonce      string
 
-	// Any headers not recognised above get unmarshaled from JSON in a generic
-	// manner and placed in this map.
+	// Unverified certificate chain parsed from x5c header.
+	certificates []*x509.Certificate
+
+	// Any headers not recognised above get unmarshaled
+	// from JSON in a generic manner and placed in this map.
 	ExtraHeaders map[HeaderKey]interface{}
+}
+
+// Certificates verifies & returns the certificate chain present
+// in the x5c header field of a message, if one was present. Returns
+// an error if there was no x5c header present or the chain could
+// not be validated with the given verify options.
+func (h Header) Certificates(opts x509.VerifyOptions) ([][]*x509.Certificate, error) {
+	if len(h.certificates) == 0 {
+		return nil, errors.New("square/go-jose: no x5c header present in message")
+	}
+
+	leaf := h.certificates[0]
+	if opts.Intermediates == nil {
+		opts.Intermediates = x509.NewCertPool()
+		for _, intermediate := range h.certificates[1:] {
+			opts.Intermediates.AddCert(intermediate)
+		}
+	}
+
+	return leaf.Verify(opts)
 }
 
 func (parsed rawHeader) set(k HeaderKey, v interface{}) error {
@@ -178,7 +215,7 @@ func (parsed rawHeader) set(k HeaderKey, v interface{}) error {
 // getString gets a string from the raw JSON, defaulting to "".
 func (parsed rawHeader) getString(k HeaderKey) string {
 	v, ok := parsed[k]
-	if !ok {
+	if !ok || v == nil {
 		return ""
 	}
 	var s string
@@ -292,9 +329,32 @@ func (parsed rawHeader) getCritical() ([]string, error) {
 	return q, nil
 }
 
+// getS2C extracts parsed "p2c" from the raw JSON.
+func (parsed rawHeader) getP2C() (int, error) {
+	v := parsed[headerP2C]
+	if v == nil {
+		return 0, nil
+	}
+
+	var p2c int
+	err := json.Unmarshal(*v, &p2c)
+	if err != nil {
+		return 0, err
+	}
+	return p2c, nil
+}
+
+// getS2S extracts parsed "p2s" from the raw JSON.
+func (parsed rawHeader) getP2S() (*byteBuffer, error) {
+	return parsed.getByteBuffer(headerP2S)
+}
+
 // sanitized produces a cleaned-up header object from the raw JSON.
 func (parsed rawHeader) sanitized() (h Header, err error) {
 	for k, v := range parsed {
+		if v == nil {
+			continue
+		}
 		switch k {
 		case headerJWK:
 			var jwk *JSONWebKey
@@ -328,6 +388,18 @@ func (parsed rawHeader) sanitized() (h Header, err error) {
 				return
 			}
 			h.Nonce = s
+		case headerX5c:
+			c := []string{}
+			err = json.Unmarshal(*v, &c)
+			if err != nil {
+				err = fmt.Errorf("failed to unmarshal x5c header: %v: %#v", err, string(*v))
+				return
+			}
+			h.certificates, err = parseCertificateChain(c)
+			if err != nil {
+				err = fmt.Errorf("failed to unmarshal x5c header: %v: %#v", err, string(*v))
+				return
+			}
 		default:
 			if h.ExtraHeaders == nil {
 				h.ExtraHeaders = map[HeaderKey]interface{}{}
@@ -342,6 +414,21 @@ func (parsed rawHeader) sanitized() (h Header, err error) {
 		}
 	}
 	return
+}
+
+func parseCertificateChain(chain []string) ([]*x509.Certificate, error) {
+	out := make([]*x509.Certificate, len(chain))
+	for i, cert := range chain {
+		raw, err := base64.StdEncoding.DecodeString(cert)
+		if err != nil {
+			return nil, err
+		}
+		out[i], err = x509.ParseCertificate(raw)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return out, nil
 }
 
 func (dst rawHeader) isSet(k HeaderKey) bool {
