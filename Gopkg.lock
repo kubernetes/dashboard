@@ -265,7 +265,7 @@
     "ssh/terminal",
   ]
   pruneopts = "UT"
-  revision = "8d7daa0c54b357f3071e11eaef7efc4e19a417e2"
+  revision = "ff983b9c42bc9fbf91556e191cc8efb585c16908"
 
 [[projects]]
   branch = "master"
@@ -487,11 +487,12 @@
   version = "kubernetes-1.13.0"
 
 [[projects]]
-  digest = "1:4f4ddfb74018bc2f4b3d63d0275860bea4fffa3360ab992c8fb1d0e201abd8ac"
+  digest = "1:c4aecf0043dc5f06678761c12664a102947e6ee6a2a9aecfab58442eee7c6587"
   name = "k8s.io/client-go"
   packages = [
     "deprecated-dynamic",
     "discovery",
+    "discovery/cached",
     "discovery/fake",
     "dynamic",
     "kubernetes",
@@ -568,6 +569,15 @@
     "plugin/pkg/client/auth/exec",
     "rest",
     "rest/watch",
+    "restmapper",
+    "scale",
+    "scale/scheme",
+    "scale/scheme/appsint",
+    "scale/scheme/appsv1beta1",
+    "scale/scheme/appsv1beta2",
+    "scale/scheme/autoscalingv1",
+    "scale/scheme/extensionsint",
+    "scale/scheme/extensionsv1beta1",
     "testing",
     "tools/auth",
     "tools/clientcmd",
@@ -669,11 +679,16 @@
     "k8s.io/apimachinery/pkg/watch",
     "k8s.io/client-go/deprecated-dynamic",
     "k8s.io/client-go/discovery",
+    "k8s.io/client-go/discovery/cached",
     "k8s.io/client-go/discovery/fake",
+    "k8s.io/client-go/dynamic",
     "k8s.io/client-go/kubernetes",
     "k8s.io/client-go/kubernetes/fake",
     "k8s.io/client-go/kubernetes/scheme",
     "k8s.io/client-go/rest",
+    "k8s.io/client-go/restmapper",
+    "k8s.io/client-go/scale",
+    "k8s.io/client-go/scale/scheme/appsv1beta2",
     "k8s.io/client-go/testing",
     "k8s.io/client-go/tools/clientcmd",
     "k8s.io/client-go/tools/clientcmd/api",
