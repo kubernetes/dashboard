@@ -3,9 +3,12 @@
 
 sudo: required
 dist: xenial
-group: edge
 language: node_js
-node_js: 8.11.3
+node_js: 11.6.0
+
+git:
+  depth: 250
+  quiet: true
 
 cache:
   directories:
@@ -19,7 +22,7 @@ before_install:
   - ln -s $TRAVIS_BUILD_DIR/vendor $TRAVIS_BUILD_DIR/.tmp/src/github.com/kubernetes/dashboard/src/app/backend/vendor
 
 before_script:
-  - eval "$(gimme 1.11.2)"
+  - eval "$(gimme 1.11.4)"
   - docker --version
 
 jobs:
@@ -28,18 +31,14 @@ jobs:
       script: npm run check
     - script: npm run test:coverage
       after_success:
+        - rm -rf $TRAVIS_BUILD_DIR/.tmp
         - bash <(curl -s https://codecov.io/bash)
     - addons:
-        # Run tests that require a browser on SauceLabs CI provider.
-        # Read more at: https://saucelabs.com
         sauce_connect: true
-        jwt:
-          secure: NfCHCQULhYH0JUobRTBGF4QuQxMoj0Zs9iH71oSgI+eW7ClpNDp0cEF8h+IelTdPGQY7T9Kz4tyrZkUeXD5Mi/jjZT0YnjxSS8Ip6rRRxPDCWEmxbhOrZTEBXYfa4vqCY7rLnor8g579WOZ+RyoiotPC8tlc955nEgBk1jDxyAgXoUy0SdA/05r6A2IqKfs95u+yq0nsYqYJBj/3onx2SQv94eMQ7qq9GMhsAWMoNzLsBfU8AkZLsJ2w/W2p9tQURNk1hgCEewMwe6E6+G3XMAnDoIXBHkRAU335FBUE+f2kZ5Gl3GKE8pvWJaUWLePzfBvlmzCi4GW6lPlrRE5m+3wiiSzcbEAJnWOVPBrD/6mogYaJ5RijKzWk5o91eV8lU/lttp0hpH7PdWj1CEZk7EmyKO7ZF7ScALOZgs/dGyGgWcAvA0zwCDzdxXIitq9Eegc0xU+bB9jyJgi4dV9H1T1prwtS/TdhBU6sXKEjFVIgPUQa/TqBgaSs634kqRueH3bNfSD8Nf655AFeSgwdGiW0pBDm/WESftFWBMW3eV+KYtBFmGU/b3g+eEmd04j+lIOkK6EzU1QetUCKhpeMc5509So/+k4XghPHldWYzRldpY0kbp32VnAY8egsDdAHxgPrs2mTIDD1W//D/XJI9J072/z47GN4Af5zryz/3Nc=
       script:
         - npm run cluster
         - npm run test:e2e
       env:
-        - SAUCE_USERNAME=k8s-dashboard-ci
         - KUBE_DASHBOARD_KUBECONFIG=$HOME/.kube/config
     - stage: deploy
       script:

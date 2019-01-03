@@ -34,8 +34,8 @@ function createConfig() {
     }
   };
 
-  // Use custom browser configuration when running on Travis CI.
-  if (!!process.env.TRAVIS) {
+  // Use custom browser configuration when running on Travis CI and master/tag is being build.
+  if (!!process.env.TRAVIS && !process.env.TRAVIS_PULL_REQUEST) {
     let name = `Integration tests ${process.env.TRAVIS_REPO_SLUG}, build ` +
         `${process.env.TRAVIS_BUILD_NUMBER}, job ${process.env.TRAVIS_JOB_NUMBER}`;
     if (process.env.TRAVIS_PULL_REQUEST !== 'false') {
@@ -45,26 +45,21 @@ function createConfig() {
 
     config.sauceUser = process.env.SAUCE_USERNAME;
     config.sauceKey = process.env.SAUCE_ACCESS_KEY;
-    config.multiCapabilities = [
-      {
-        'browserName': 'chrome',
-        'chromeOptions': {'args': ['--headless', '--disable-gpu', '--window-size=800,600']},
-        'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-        'name': name,
-      },
-      {
-        'browserName': 'firefox',
-        'moz:firefoxOptions': {'args': ['--headless']},
-        'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-        'name': name,
-      },
-    ];
+    config.capabilities =  {
+      'browserName': 'chrome',
+      'chromeOptions': {'args': ['--headless', '--disable-gpu', '--window-size=800,600']},
+      'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
+      'name': name,
+    };
 
     // Limit concurrency to not exhaust saucelabs resources for the CI user.
     config.maxSessions = 1;
 
   } else {
-    config.capabilities = {'browserName': 'chrome'};
+    config.capabilities = {
+      'browserName': 'chrome',
+      'chromeOptions': {'args': ['--headless', '--disable-gpu', '--window-size=800,600']},
+    };
   }
 
   return config;

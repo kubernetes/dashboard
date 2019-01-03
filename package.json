@@ -48,7 +48,7 @@
     "fix:license": "gulp update-license-headers",
     "clean": "rm -rf .go_workspace .tmp coverage dist npm-debug.log",
     "postversion": "node aio/scripts/version.js",
-    "postinstall": "node aio/scripts/version.js && webdriver-manager update && go get golang.org/x/tools/cmd/goimports"
+    "postinstall": "node aio/scripts/version.js && ./node_modules/protractor/bin/webdriver-manager update --gecko=false && go get golang.org/x/tools/cmd/goimports"
   },
   "husky": {
     "hooks": {
