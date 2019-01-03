@@ -487,11 +487,11 @@
   version = "kubernetes-1.13.0"
 
 [[projects]]
-  digest = "1:3ee5d61daf2593c7c5ff597befd1be2c3d1dd3676496b0c8ebfcd6990211c13c"
+  digest = "1:4f4ddfb74018bc2f4b3d63d0275860bea4fffa3360ab992c8fb1d0e201abd8ac"
   name = "k8s.io/client-go"
   packages = [
+    "deprecated-dynamic",
     "discovery",
-    "discovery/cached",
     "discovery/fake",
     "dynamic",
     "kubernetes",
@@ -568,14 +568,6 @@
     "plugin/pkg/client/auth/exec",
     "rest",
     "rest/watch",
-    "scale",
-    "scale/scheme",
-    "scale/scheme/appsint",
-    "scale/scheme/appsv1beta1",
-    "scale/scheme/appsv1beta2",
-    "scale/scheme/autoscalingv1",
-    "scale/scheme/extensionsint",
-    "scale/scheme/extensionsv1beta1",
     "testing",
     "tools/auth",
     "tools/clientcmd",
@@ -675,15 +667,13 @@
     "k8s.io/apimachinery/pkg/util/wait",
     "k8s.io/apimachinery/pkg/util/yaml",
     "k8s.io/apimachinery/pkg/watch",
+    "k8s.io/client-go/deprecated-dynamic",
     "k8s.io/client-go/discovery",
-    "k8s.io/client-go/discovery/cached",
     "k8s.io/client-go/discovery/fake",
-    "k8s.io/client-go/dynamic",
     "k8s.io/client-go/kubernetes",
     "k8s.io/client-go/kubernetes/fake",
     "k8s.io/client-go/kubernetes/scheme",
     "k8s.io/client-go/rest",
-    "k8s.io/client-go/scale",
     "k8s.io/client-go/testing",
     "k8s.io/client-go/tools/clientcmd",
     "k8s.io/client-go/tools/clientcmd/api",

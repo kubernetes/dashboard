@@ -17,6 +17,7 @@ package pod
 import (
 	"encoding/base64"
 	"fmt"
+	"k8s.io/apimachinery/pkg/runtime/schema"
 	"log"
 	"math"
 	"strconv"
@@ -313,8 +314,13 @@ func evalValueFrom(src *v1.EnvVarSource, container *v1.Container, pod *v1.Pod,
 		}
 		return valueFrom
 	case src.FieldRef != nil:
-		internalFieldPath, _, err := runtime.NewScheme().ConvertFieldLabel(src.FieldRef.APIVersion,
-			"Pod", src.FieldRef.FieldPath, "")
+		gv, err := schema.ParseGroupVersion(src.FieldRef.APIVersion)
+		if err != nil {
+			log.Println(err)
+			return ""
+		}
+		gvk := gv.WithKind("Pod")
+		internalFieldPath, _, err := runtime.NewScheme().ConvertFieldLabel(gvk, src.FieldRef.FieldPath, "")
 		if err != nil {
 			log.Println(err)
 			return ""

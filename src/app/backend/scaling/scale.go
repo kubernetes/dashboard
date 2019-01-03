@@ -18,8 +18,10 @@ import (
 	"strconv"
 	"strings"
 
+	"k8s.io/api/extensions/v1beta1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/kubernetes/scheme"
 )
 
 // ReplicaCounts provide the desired and actual number of replicas.
@@ -29,16 +31,18 @@ type ReplicaCounts struct {
 }
 
 // GetScaleSpec returns a populated ReplicaCounts object with desired and actual number of replicas.
-func GetScaleSpec(client client.Interface, kind, namespace, name string) (rc *ReplicaCounts, err error) {
-	rc = new(ReplicaCounts)
-	s, err := client.ExtensionsV1beta1().Scales(namespace).Get(kind, name)
+func GetScaleSpec(client client.Interface, kind, namespace, name string) (*ReplicaCounts, error) {
+	result := &v1beta1.Scale{}
+	err := client.Discovery().RESTClient().Get().Namespace(namespace).Resource(kind+"s").Name(name).
+		SubResource("scale").VersionedParams(&metaV1.GetOptions{}, scheme.ParameterCodec).Do().Into(result)
 	if err != nil {
 		return nil, err
 	}
-	rc.DesiredReplicas = s.Spec.Replicas
-	rc.ActualReplicas = s.Status.Replicas
 
-	return
+	return &ReplicaCounts{
+		ActualReplicas:  result.Status.Replicas,
+		DesiredReplicas: result.Spec.Replicas,
+	}, nil
 }
 
 // ScaleResource scales the provided resource using the client scale method in the case of Deployment,
@@ -62,23 +66,23 @@ func ScaleResource(client client.Interface, kind, namespace, name, count string)
 
 //ScaleGenericResource is used for Deployment, ReplicaSet, Replication Controller scaling.
 func scaleGenericResource(client client.Interface, kind, namespace, name, count string, rc *ReplicaCounts) error {
-	s, err := client.ExtensionsV1beta1().Scales(namespace).Get(kind, name)
+	result := &v1beta1.Scale{}
+	err := client.Discovery().RESTClient().Get().Namespace(namespace).Resource(kind+"s").Name(name).
+		SubResource("scale").VersionedParams(&metaV1.GetOptions{}, scheme.ParameterCodec).Do().Into(result)
 	if err != nil {
 		return err
 	}
+
 	c, err := strconv.Atoi(count)
 	if err != nil {
 		return err
 	}
-	s.Spec.Replicas = int32(c)
-	s, err = client.ExtensionsV1beta1().Scales(namespace).Update(kind, s)
-	if err != nil {
-		return err
-	}
-	rc.DesiredReplicas = s.Spec.Replicas
-	rc.ActualReplicas = s.Status.Replicas
 
-	return nil
+	// Update replicas count.
+	result.Spec.Replicas = int32(c)
+
+	return client.Discovery().RESTClient().Put().Namespace(namespace).Resource(kind + "s").Name(name).
+		SubResource("scale").Body(result).Do().Into(result)
 }
 
 // scaleJobResource is exclusively used for jobs as it does not increase/decrease pods but jobs parallelism attribute.
@@ -107,7 +111,7 @@ func scaleJobResource(client client.Interface, namespace, name, count string, rc
 
 // scaleStatefulSet is exclusively used for statefulsets
 func scaleStatefulSetResource(client client.Interface, namespace, name, count string, rc *ReplicaCounts) error {
-	ss, err := client.AppsV1beta1().StatefulSets(namespace).Get(name, metaV1.GetOptions{})
+	ss, err := client.AppsV1().StatefulSets(namespace).Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return err
 	}
@@ -118,7 +122,7 @@ func scaleStatefulSetResource(client client.Interface, namespace, name, count st
 	}
 
 	*ss.Spec.Replicas = int32(c)
-	ss, err = client.AppsV1beta1().StatefulSets(namespace).Update(ss)
+	ss, err = client.AppsV1().StatefulSets(namespace).Update(ss)
 	if err != nil {
 		return err
 	}
