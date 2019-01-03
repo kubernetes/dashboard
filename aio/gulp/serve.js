@@ -62,40 +62,19 @@ function getBackendArgs() {
 }
 
 /**
- * Serves the application in development mode. Watches for changes in the source files to rebuild
- * development artifacts.
- */
-gulp.task('serve', ['spawn-backend', 'watch']);
-
-/**
- * Spawns new backend application process and finishes the task immediately. Previously spawned
- * backend process is killed beforehand, if any. The frontend pages are served by BrowserSync.
- */
-gulp.task('spawn-backend', ['backend', 'kill-backend', 'locales-for-backend:dev'], function() {
-  runningBackendProcess = child.spawn(
-      path.join(conf.paths.serve, conf.backend.binaryName), getBackendArgs(),
-      {stdio: 'inherit', cwd: conf.paths.serve});
-
-  runningBackendProcess.on('exit', function() {
-    // Mark that there is no backend process running anymore.
-    runningBackendProcess = null;
-  });
-});
-
-/**
  * Copies the locales configuration to the serve directory.
  * In development, this configuration plays no significant role and serves as a stub.
  */
-gulp.task('locales-for-backend:dev', function() {
+gulp.task('locales-for-backend:dev', () => {
   return gulp.src(path.join(conf.paths.base, 'i18n', '*.json')).pipe(gulp.dest(conf.paths.serve));
 });
 
 /**
  * Kills running backend process (if any).
  */
-gulp.task('kill-backend', function(doneFn) {
+gulp.task('kill-backend', (doneFn) => {
   if (runningBackendProcess) {
-    runningBackendProcess.on('exit', function() {
+    runningBackendProcess.on('exit', () => {
       // Mark that there is no backend process running anymore.
       runningBackendProcess = null;
       // Finish the task only when the backend is actually killed.
@@ -110,6 +89,27 @@ gulp.task('kill-backend', function(doneFn) {
 /**
  * Watches for changes in source files and runs Gulp tasks to rebuild them.
  */
-gulp.task('watch', function() {
-  gulp.watch(path.join(conf.paths.backendSrc, '**/*.go'), ['spawn-backend']);
+gulp.task('watch', () => {
+  gulp.watch(path.join(conf.paths.backendSrc, '**/*.go'), gulp.parallel('spawn-backend'));
 });
+
+/**
+ * Spawns new backend application process and finishes the task immediately. Previously spawned
+ * backend process is killed beforehand, if any. The frontend pages are served by BrowserSync.
+ */
+gulp.task('spawn-backend', gulp.series(gulp.parallel('backend', 'kill-backend', 'locales-for-backend:dev'), () => {
+  runningBackendProcess = child.spawn(
+    path.join(conf.paths.serve, conf.backend.binaryName), getBackendArgs(),
+    {stdio: 'inherit', cwd: conf.paths.serve});
+
+  runningBackendProcess.on('exit', () => {
+    // Mark that there is no backend process running anymore.
+    runningBackendProcess = null;
+  });
+}));
+
+/**
+ * Serves the application in development mode. Watches for changes in the source files to rebuild
+ * development artifacts.
+ */
+gulp.task('serve', gulp.parallel('spawn-backend', 'watch'));
