@@ -160,14 +160,6 @@ func TestDetermineLocale(t *testing.T) {
 				SupportedLocales: languageMake([]string{"en", "zh-tw", "zh-hk", "zh", "ar-dz"}),
 			},
 			true,
-			"zh-cn",
-			filepath.Join(assetsDir, "zh"),
-		},
-		{
-			&LocaleHandler{
-				SupportedLocales: languageMake([]string{"en", "zh-tw", "zh-hk", "zh", "ar-dz"}),
-			},
-			true,
 			"ar",
 			filepath.Join(assetsDir, "en"),
 		},
