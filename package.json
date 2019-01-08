@@ -149,7 +149,7 @@
     "raw-loader": "1.0.0",
     "sass-lint": "1.12.1",
     "sass-loader": "7.1.0",
-    "scssfmt": "1.0.4",
+    "scssfmt": "1.0.7",
     "semver": "5.4.1",
     "source-map-explorer": "1.6.0",
     "through2": "3.0.0",
