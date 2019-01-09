@@ -31,7 +31,7 @@ describe('AboutComponent', () => {
   let element: HTMLElement;
 
   // set the predefined values
-  const copyrightYear = 2018;
+  const copyrightYear = 2019;
 
   beforeEach(async(() => {
     TestBed
