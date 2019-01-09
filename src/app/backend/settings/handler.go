@@ -52,7 +52,7 @@ func (self *SettingsHandler) handleSettingsGlobalCanI(request *restful.Request, 
 	}
 
 	canI := self.manager.clientManager.CanI(request, clientapi.ToSelfSubjectAccessReview(
-		api.SettingsConfigMapNamespace,
+		self.manager.namespace,
 		api.SettingsConfigMapName,
 		api.ConfigMapKindName,
 		verb,

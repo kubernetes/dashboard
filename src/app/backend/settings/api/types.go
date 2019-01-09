@@ -85,11 +85,11 @@ func GetDefaultSettings() Settings {
 }
 
 // GetDefaultSettingsConfigMap returns config map with default settings.
-func GetDefaultSettingsConfigMap() *corev1.ConfigMap {
+func GetDefaultSettingsConfigMap(namespace string) *corev1.ConfigMap {
 	return &corev1.ConfigMap{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      SettingsConfigMapName,
-			Namespace: SettingsConfigMapNamespace,
+			Namespace: namespace,
 		},
 		TypeMeta: metav1.TypeMeta{
 			Kind:       ConfigMapKindName,

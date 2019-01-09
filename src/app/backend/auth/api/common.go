@@ -14,7 +14,11 @@
 
 package api
 
-import "strings"
+import (
+	"strings"
+
+	"github.com/kubernetes/dashboard/src/app/backend/args"
+)
 
 // ToAuthenticationModes transforms array of authentication mode strings to valid AuthenticationModes type.
 func ToAuthenticationModes(modes []string) AuthenticationModes {
@@ -36,7 +40,7 @@ func ToAuthenticationModes(modes []string) AuthenticationModes {
 
 // List of protected resources that should be filtered out from dashboard UI.
 var protectedResources = []ProtectedResource{
-	{EncryptionKeyHolderName, EncryptionKeyHolderNamespace},
+	{EncryptionKeyHolderName, args.Holder.GetNamespace()},
 	{CertificateHolderSecretName, CertificateHolderSecretNamespace},
 }
 
