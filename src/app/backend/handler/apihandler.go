@@ -902,12 +902,6 @@ func (apiHandler *APIHandler) handleDeploy(request *restful.Request, response *r
 }
 
 func (apiHandler *APIHandler) handleScaleResource(request *restful.Request, response *restful.Response) {
-	k8sClient, err := apiHandler.cManager.Client(request)
-	if err != nil {
-		kdErrors.HandleInternalError(response, err)
-		return
-	}
-
 	cfg, err := apiHandler.cManager.Config(request)
 	if err != nil {
 		kdErrors.HandleInternalError(response, err)
@@ -918,7 +912,7 @@ func (apiHandler *APIHandler) handleScaleResource(request *restful.Request, resp
 	kind := request.PathParameter("kind")
 	name := request.PathParameter("name")
 	count := request.QueryParameter("scaleBy")
-	replicaCountSpec, err := scaling.ScaleResource(k8sClient, cfg, kind, namespace, name, count)
+	replicaCountSpec, err := scaling.ScaleResource(cfg, kind, namespace, name, count)
 	if err != nil {
 		kdErrors.HandleInternalError(response, err)
 		return
