@@ -20,8 +20,8 @@ import (
 	"log"
 	"strings"
 
-	"github.com/emicklei/go-restful"
-	"k8s.io/api/authorization/v1"
+	restful "github.com/emicklei/go-restful"
+	v1 "k8s.io/api/authorization/v1"
 	errorsK8s "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"

@@ -26,9 +26,6 @@ const (
 	// SettingsConfigMapName contains a name of config map, that stores settings.
 	SettingsConfigMapName = "kubernetes-dashboard-settings"
 
-	// SettingsConfigMapNamespace contains a namespace of config map, that stores settings.
-	SettingsConfigMapNamespace = "kube-system"
-
 	// ConfigMapKindName is a name of config map kind.
 	ConfigMapKindName = "ConfigMap"
 

@@ -91,7 +91,7 @@ func TestSecureClient(t *testing.T) {
 				},
 			},
 			expectedError: false,
-			err: nil,
+			err:           nil,
 		},
 	}
 

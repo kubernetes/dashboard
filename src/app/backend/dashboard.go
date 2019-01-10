@@ -25,6 +25,9 @@ import (
 	"os"
 	"time"
 
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/spf13/pflag"
+
 	"github.com/kubernetes/dashboard/src/app/backend/args"
 	"github.com/kubernetes/dashboard/src/app/backend/auth"
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
@@ -39,8 +42,6 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/settings"
 	"github.com/kubernetes/dashboard/src/app/backend/sync"
 	"github.com/kubernetes/dashboard/src/app/backend/systembanner"
-	"github.com/prometheus/client_golang/prometheus"
-	"github.com/spf13/pflag"
 )
 
 var (
@@ -71,8 +72,7 @@ var (
 	argSystemBannerSeverity      = pflag.String("system-banner-severity", "INFO", "Severity of system banner. Should be one of 'INFO|WARNING|ERROR'. Default: 'INFO'.")
 	argAPILogLevel               = pflag.String("api-log-level", "INFO", "Level of API request logging. Should be one of 'INFO|NONE|DEBUG'. Default: 'INFO'.")
 	argDisableSettingsAuthorizer = pflag.Bool("disable-settings-authorizer", false, "When enabled, Dashboard settings page will not require user to be logged in and authorized to access settings page.")
-	defNamespace                 = getEnv("POD_NAMESPACE", "kube-system")
-	argNamespace                 = pflag.String("namespace", defNamespace, "When non-default namespace is used, create encryption key in the specified namespace. Default: 'kube-system'.")
+	argNamespace                 = pflag.String("namespace", getEnv("POD_NAMESPACE", "kube-system"), "When non-default namespace is used, create encryption key in the specified namespace. Default: 'kube-system'.")
 )
 
 func main() {
@@ -108,7 +108,7 @@ func main() {
 	authManager := initAuthManager(clientManager)
 
 	// Init settings manager
-	settingsManager := settings.NewSettingsManager(clientManager, args.Holder.GetNamespace())
+	settingsManager := settings.NewSettingsManager(clientManager)
 
 	// Init system banner manager
 	systemBannerManager := systembanner.NewSystemBannerManager(args.Holder.GetSystemBanner(),

@@ -54,7 +54,6 @@ type rsaKeyHolder struct {
 	key          *rsa.PrivateKey
 	synchronizer syncApi.Synchronizer
 	mux          sync.Mutex
-	namespace    string
 }
 
 // Encrypter implements key holder interface. See KeyHolder for more information.

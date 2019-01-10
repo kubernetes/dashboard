@@ -63,10 +63,6 @@ func (self *fakeClientManager) CSRFKey() string {
 	return ""
 }
 
-func (self *fakeClientManager) GetNamespace() string {
-	return ""
-}
-
 func (self *fakeClientManager) HasAccess(authInfo api.AuthInfo) error {
 	return self.HasAccessError
 }

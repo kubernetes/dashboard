@@ -49,7 +49,7 @@ func TestShouldRejectRequest(t *testing.T) {
 		{"#!/secret/test/test-secret?namespace=test", false},
 		{"#!/secret/kube-system/test-secret", false},
 		{"#!/secret/kube-system/kubernetes-dashboard-key-holder", true},
-		{"#!/secret/test/kubernetes-dashboard-certs", false},
+		{"#!/secret/test/kubernetes-dashboard-certs", true},
 		{"#!/secret/kube-system/kubernetes-dashboard-certs", true},
 	}
 
