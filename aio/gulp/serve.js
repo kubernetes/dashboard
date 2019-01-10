@@ -34,7 +34,7 @@ let runningBackendProcess = null;
  */
 function getBackendArgs() {
   let args = [
-    `--heapster-host=${conf.backend.heapsterServerHost}`,
+    `--sidecar-host=${conf.backend.sidecarServerHost}`,
     `--tls-cert-file=${conf.backend.tlsCert}`,
     `--tls-key-file=${conf.backend.tlsKey}`,
     `--auto-generate-certificates=${conf.backend.autoGenerateCerts}`,
