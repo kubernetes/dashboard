@@ -15,19 +15,15 @@
 package scaling
 
 import (
-	"strconv"
-	"strings"
-
-	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/discovery"
 	"k8s.io/client-go/discovery/cached"
 	"k8s.io/client-go/dynamic"
-	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/kubernetes/scheme"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/restmapper"
 	"k8s.io/client-go/scale"
 	"k8s.io/client-go/scale/scheme/appsv1beta2"
+	"strconv"
 )
 
 // ReplicaCounts provide the desired and actual number of replicas.
@@ -57,40 +53,7 @@ func GetScaleSpec(cfg *rest.Config, kind, namespace, name string) (*ReplicaCount
 // ScaleResource scales the provided resource using the client scale method in the case of Deployment,
 // ReplicaSet, Replication Controller. In the case of a job we are using the jobs resource update
 // method since the client scale method does not provide one for the job.
-func ScaleResource(client kubernetes.Interface, cfg *rest.Config, kind, namespace, name, count string) (*ReplicaCounts, error) {
-	if strings.ToLower(kind) == "job" {
-		return scaleJobResource(client, namespace, name, count)
-	} else {
-		return scaleGenericResource(cfg, kind, namespace, name, count)
-	}
-}
-
-// scaleJobResource is exclusively used for jobs as it does not increase/decrease pods but jobs parallelism attribute.
-func scaleJobResource(client kubernetes.Interface, namespace, name, count string) (*ReplicaCounts, error) {
-	j, err := client.BatchV1().Jobs(namespace).Get(name, metaV1.GetOptions{})
-	if err != nil {
-		return nil, err
-	}
-
-	c, err := strconv.Atoi(count)
-	if err != nil {
-		return nil, err
-	}
-
-	*j.Spec.Parallelism = int32(c)
-
-	j, err = client.BatchV1().Jobs(namespace).Update(j)
-	if err != nil {
-		return nil, err
-	}
-
-	return &ReplicaCounts{
-		ActualReplicas:  *j.Spec.Parallelism,
-		DesiredReplicas: *j.Spec.Parallelism,
-	}, nil
-}
-
-func scaleGenericResource(cfg *rest.Config, kind, namespace, name, count string) (*ReplicaCounts, error) {
+func ScaleResource(cfg *rest.Config, kind, namespace, name, count string) (*ReplicaCounts, error) {
 	sc, err := getScaleGetter(cfg)
 	if err != nil {
 		return nil, err
