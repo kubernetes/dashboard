@@ -17,10 +17,11 @@ package pod
 import (
 	"encoding/base64"
 	"fmt"
-	"k8s.io/apimachinery/pkg/runtime/schema"
 	"log"
 	"math"
 	"strconv"
+
+	"k8s.io/apimachinery/pkg/runtime/schema"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	errorHandler "github.com/kubernetes/dashboard/src/app/backend/errors"

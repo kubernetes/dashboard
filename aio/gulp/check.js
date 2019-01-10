@@ -87,7 +87,7 @@ function licenseConfig(licenseFilePath) {
 /**
  * Updates license headers in all source files based on templates stored in 'license' directory.
  */
-gulp.task('update-license-headers', () => {
+gulp.task('update-license-headers', (doneFn) => {
   const commonFilter = filter(getLicenseFileFilter('ts', 'go', 'scss'), {restore: true});
   const htmlFilter = filter(getLicenseFileFilter('html'), {restore: true});
   const matchRate = 0.9;
@@ -102,4 +102,6 @@ gulp.task('update-license-headers', () => {
       .pipe(license(fs.readFileSync('aio/templates/header_html.txt', 'utf8'), {}, matchRate))
       .pipe(htmlFilter.restore)
       .pipe(gulp.dest(conf.paths.base));
+
+  doneFn();
 });
