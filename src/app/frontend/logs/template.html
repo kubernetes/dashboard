@@ -16,8 +16,10 @@ limitations under the License.
 
 <div class="kd-logs-container">
   <kd-card [expandable]="false">
-    <div title>
-      Logs from
+    <div title
+         [fxLayout]="'row'"
+         [fxFlex]="100">
+      <span class="kd-logs-header-text">Logs from</span>
       <mat-form-field>
         <mat-select [(ngModel)]="container"
                     class="kd-logs-toolbar-select"
@@ -38,7 +40,7 @@ limitations under the License.
           </mat-optgroup>
         </mat-select>
       </mat-form-field>
-      in
+      <span class="kd-logs-header-text">in</span>
       <mat-form-field class="kd-form-field">
         <mat-select [(ngModel)]="pod"
                     class="kd-logs-toolbar-select"
