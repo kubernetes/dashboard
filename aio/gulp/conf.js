@@ -116,7 +116,7 @@ export default {
     /**
      * Address for the Kubernetes API server.
      */
-    apiServerHost: 'http://localhost:8001',
+    apiServerHost: 'http://localhost:8080',
     /**
      * Env variable with path to kubeconfig file.
      */
