@@ -81,7 +81,7 @@ func main() {
 
 	pflag.CommandLine.AddGoFlagSet(flag.CommandLine)
 	pflag.Parse()
-	flag.CommandLine.Parse(make([]string, 0)) // Init for glog calls in kubernetes packages
+	_ = flag.CommandLine.Parse(make([]string, 0)) // Init for glog calls in kubernetes packages
 
 	// Initializes dashboard arguments holder so we can read them in other packages
 	initArgHolder()

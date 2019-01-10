@@ -228,7 +228,7 @@ func (self *clientManager) buildConfigFromFlags(apiserverHost, kubeConfigPath st
 		return self.inClusterConfig, nil
 	}
 
-	return nil, errors.New("Could not create client config. Check logs for more information")
+	return nil, errors.New("could not create client config")
 }
 
 // Based on rest config creates auth info structure.

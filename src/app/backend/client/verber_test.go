@@ -20,7 +20,7 @@ import (
 	"reflect"
 	"testing"
 
-	testapi "k8s.io/apimachinery/pkg/api/testing"
+	"k8s.io/apimachinery/pkg/api/apitesting"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
@@ -47,7 +47,7 @@ func (c *FakeRESTClient) Delete() *restclient.Request {
 	scheme.AddKnownTypes(groupVersion, &metaV1.DeleteOptions{})
 
 	factory := runtimeserializer.NewCodecFactory(scheme)
-	codec := testapi.TestCodec(factory, metaV1.SchemeGroupVersion)
+	codec := apitesting.TestCodec(factory, metaV1.SchemeGroupVersion)
 	return restclient.NewRequest(clientFunc(func(req *http.Request) (*http.Response, error) {
 		return c.response, c.err
 	}), "DELETE", nil, "/api/v1", restclient.ContentConfig{}, restclient.Serializers{

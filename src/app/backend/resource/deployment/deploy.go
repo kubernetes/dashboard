@@ -30,8 +30,8 @@ import (
 	"k8s.io/apimachinery/pkg/util/intstr"
 	"k8s.io/apimachinery/pkg/util/rand"
 	"k8s.io/apimachinery/pkg/util/yaml"
+	dynamicclient "k8s.io/client-go/deprecated-dynamic"
 	"k8s.io/client-go/discovery"
-	dynamicclient "k8s.io/client-go/dynamic"
 	client "k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 )

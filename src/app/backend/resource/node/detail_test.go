@@ -39,7 +39,6 @@ func TestGetNodeDetail(t *testing.T) {
 			&v1.Node{
 				ObjectMeta: metaV1.ObjectMeta{Name: "test-node"},
 				Spec: v1.NodeSpec{
-					ExternalID:    "127.0.0.1",
 					PodCIDR:       "127.0.0.1",
 					ProviderID:    "ID-1",
 					Unschedulable: true,

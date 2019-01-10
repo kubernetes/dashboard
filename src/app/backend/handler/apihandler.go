@@ -908,11 +908,17 @@ func (apiHandler *APIHandler) handleScaleResource(request *restful.Request, resp
 		return
 	}
 
+	cfg, err := apiHandler.cManager.Config(request)
+	if err != nil {
+		kdErrors.HandleInternalError(response, err)
+		return
+	}
+
 	namespace := request.PathParameter("namespace")
 	kind := request.PathParameter("kind")
 	name := request.PathParameter("name")
 	count := request.QueryParameter("scaleBy")
-	replicaCountSpec, err := scaling.ScaleResource(k8sClient, kind, namespace, name, count)
+	replicaCountSpec, err := scaling.ScaleResource(k8sClient, cfg, kind, namespace, name, count)
 	if err != nil {
 		kdErrors.HandleInternalError(response, err)
 		return
@@ -921,7 +927,7 @@ func (apiHandler *APIHandler) handleScaleResource(request *restful.Request, resp
 }
 
 func (apiHandler *APIHandler) handleGetReplicaCount(request *restful.Request, response *restful.Response) {
-	k8sClient, err := apiHandler.cManager.Client(request)
+	cfg, err := apiHandler.cManager.Config(request)
 	if err != nil {
 		kdErrors.HandleInternalError(response, err)
 		return
@@ -930,7 +936,7 @@ func (apiHandler *APIHandler) handleGetReplicaCount(request *restful.Request, re
 	namespace := request.PathParameter("namespace")
 	kind := request.PathParameter("kind")
 	name := request.PathParameter("name")
-	scaleSpec, err := scaling.GetScaleSpec(k8sClient, kind, namespace, name)
+	scaleSpec, err := scaling.GetScaleSpec(cfg, kind, namespace, name)
 	if err != nil {
 		kdErrors.HandleInternalError(response, err)
 		return
