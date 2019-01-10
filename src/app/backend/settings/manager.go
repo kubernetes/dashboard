@@ -31,19 +31,24 @@ type SettingsManager struct {
 	settings      map[string]api.Settings
 	rawSettings   map[string]string
 	clientManager clientapi.ClientManager
+	namespace     string
 }
 
 // NewSettingsManager creates new settings manager.
-func NewSettingsManager(clientManager clientapi.ClientManager) SettingsManager {
+func NewSettingsManager(clientManager clientapi.ClientManager, namespace string) SettingsManager {
+	if namespace == "" {
+		namespace = api.SettingsConfigMapNamespace
+	}
 	return SettingsManager{
 		settings:      make(map[string]api.Settings),
 		clientManager: clientManager,
+		namespace:     namespace,
 	}
 }
 
 // load config map data into settings manager and return true if new settings are different.
 func (sm *SettingsManager) load(client kubernetes.Interface) (configMap *v1.ConfigMap, isDifferent bool) {
-	configMap, err := client.CoreV1().ConfigMaps(api.SettingsConfigMapNamespace).
+	configMap, err := client.CoreV1().ConfigMaps(sm.namespace).
 		Get(api.SettingsConfigMapName, metav1.GetOptions{})
 	if err != nil {
 		log.Printf("Cannot find settings config map: %s", err.Error())
@@ -72,8 +77,8 @@ func (sm *SettingsManager) load(client kubernetes.Interface) (configMap *v1.Conf
 
 // restoreConfigMap restores settings config map using default global settings.
 func (sm *SettingsManager) restoreConfigMap(client kubernetes.Interface) {
-	restoredConfigMap, err := client.CoreV1().ConfigMaps(api.SettingsConfigMapNamespace).
-		Create(api.GetDefaultSettingsConfigMap())
+	restoredConfigMap, err := client.CoreV1().ConfigMaps(sm.namespace).
+		Create(api.GetDefaultSettingsConfigMap(sm.namespace))
 	if err != nil {
 		log.Printf("Cannot restore settings config map: %s", err.Error())
 	} else {
@@ -111,6 +116,6 @@ func (sm *SettingsManager) SaveGlobalSettings(client kubernetes.Interface, s *ap
 	}
 
 	cm.Data[api.GlobalSettingsKey] = s.Marshal()
-	_, err := client.CoreV1().ConfigMaps(api.SettingsConfigMapNamespace).Update(cm)
+	_, err := client.CoreV1().ConfigMaps(sm.namespace).Update(cm)
 	return err
 }
