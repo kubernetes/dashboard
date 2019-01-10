@@ -11,7 +11,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import './dark';
 @import './light';
@@ -74,7 +73,19 @@ code {
 .mat-chip {
   box-shadow: none !important;
   font-weight: $regular-font-weight;
+  height: fit-content !important;
   transition: none !important;
+  word-break: break-all !important;
+}
+
+.mat-standard-chip {
+  &:hover::after {
+    opacity: 0 !important;
+  }
+
+  &:focus::after {
+    opacity: 0 !important;
+  }
 }
 
 .mat-header-row,
