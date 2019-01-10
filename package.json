@@ -81,7 +81,7 @@
     "@types/file-saver": "2.0.0",
     "@types/nvd3": "1.8.39",
     "@uirouter/angular": "2.0.2",
-    "@uirouter/core": "5.0.21",
+    "@uirouter/core": "5.0.22",
     "@uirouter/rx": "0.5.0",
     "ace-builds": "1.4.1",
     "core-js": "2.5.7",
