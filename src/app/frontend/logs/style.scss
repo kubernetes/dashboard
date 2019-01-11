@@ -21,6 +21,11 @@ $logs-color-white: #fff;
 $emphasis: #000;
 $content-background: #fff;
 
+.kd-logs-header-text {
+  line-height: $baseline-grid * 5.25;
+  white-space: nowrap;
+}
+
 .kd-logs-container {
   box-sizing: border-box;
   height: 100%;
@@ -90,6 +95,7 @@ $content-background: #fff;
 
 .kd-logs-style-buttons {
   float: right;
+  white-space: nowrap;
 }
 
 .kd-cross-line-black {
@@ -173,6 +179,5 @@ $content-background: #fff;
 
 :host ::ng-deep .mat-select-value {
   max-width: 100%;
-  min-width: 160px;
   width: inherit;
 }
