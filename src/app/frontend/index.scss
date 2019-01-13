@@ -74,7 +74,19 @@ code {
 .mat-chip {
   box-shadow: none !important;
   font-weight: $regular-font-weight;
+  height: fit-content !important;
   transition: none !important;
+  word-break: break-all !important;
+}
+
+.mat-standard-chip {
+  &:hover::after {
+    opacity: 0 !important;
+  }
+
+  &:focus::after {
+    opacity: 0 !important;
+  }
 }
 
 .mat-header-row,
