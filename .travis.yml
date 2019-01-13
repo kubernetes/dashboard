@@ -48,12 +48,12 @@ jobs:
         - npm run test:e2e
       env:
         - KUBE_DASHBOARD_KUBECONFIG=$HOME/.kube/config
-    - stage: deploy
+    - stage: push_to_docker
       script:
         - docker login -u $DOCKER_USER -p $DOCKER_PASS
         - npm run docker:push:head:cross
 
 stages:
   - test
-  - name: deploy
+  - name: push_to_docker
     if: branch = master AND type != pull_request

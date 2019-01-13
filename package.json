@@ -23,6 +23,7 @@
     "docker:build:head": "npm run build && gulp docker-image:head",
     "docker:build:head:cross": "npm run build:cross && gulp docker-image:head:cross",
     "docker:push:head:cross": "npm run docker:build:head:cross && gulp push-to-docker:head:cross",
+    "docker:push:release:cross": "npm run docker:build:release:cross && gulp push-to-gcr:head:cross",
     "test": "npm run test:frontend && npm run test:backend && npm run test:e2e",
     "test:frontend": "ng test --karma-config ./aio/karma.conf.js --watch=false",
     "test:frontend:coverage": "ng test --karma-config ./aio/karma.conf.js --watch=false --code-coverage",
