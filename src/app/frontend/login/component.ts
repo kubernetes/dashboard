@@ -75,11 +75,6 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  skip(): void {
-    this.authService_.skipLoginPage(true);
-    this.state_.go(overviewState.name, {[NAMESPACE_STATE_PARAM]: CONFIG.defaultNamespace});
-  }
-
   onChange(event: Event&KdFile): void {
     switch (this.selectedAuthenticationMode) {
       case (LoginModes.Kubeconfig):
