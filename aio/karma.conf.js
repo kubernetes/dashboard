@@ -90,5 +90,21 @@ module.exports = function(config) {
     };
   }
 
+  // Use custom browser configuration when running on container.
+  if (!!process.env.K8S_DASHBOARD_CONTAINER) {
+    configuration.browsers = ['ChromeHeadless'];
+    configuration.customLaunchers = {
+      ChromeHeadless: {
+        base: 'Chrome',
+        flags: [
+          '--disable-gpu',
+          '--headless',
+          '--no-sandbox',
+          '--remote-debugging-port=9222',
+        ],
+      },
+    };
+  }
+
   config.set(configuration);
 };
