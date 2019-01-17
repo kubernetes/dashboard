@@ -15,13 +15,12 @@
 package client
 
 import (
-	"crypto/rand"
 	"errors"
 	"log"
 	"strings"
 
-	restful "github.com/emicklei/go-restful"
-	v1 "k8s.io/api/authorization/v1"
+	"github.com/emicklei/go-restful"
+	"k8s.io/api/authorization/v1"
 	errorsK8s "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
@@ -31,6 +30,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/args"
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
+	"github.com/kubernetes/dashboard/src/app/backend/client/csrf"
 	kdErrors "github.com/kubernetes/dashboard/src/app/backend/errors"
 )
 
@@ -225,23 +225,10 @@ func (self *clientManager) buildConfigFromFlags(apiserverHost, kubeConfigPath st
 	}
 
 	if self.isRunningInCluster() {
-		return self.inClusterConfig, nil
+		return rest.InClusterConfig()
 	}
 
 	return nil, errors.New("could not create client config")
-}
-
-// Based on rest config creates auth info structure.
-func (self *clientManager) buildAuthInfoFromConfig(cfg *rest.Config) api.AuthInfo {
-	return api.AuthInfo{
-		Token:                 cfg.BearerToken,
-		ClientCertificate:     cfg.CertFile,
-		ClientKey:             cfg.KeyFile,
-		ClientCertificateData: cfg.CertData,
-		ClientKeyData:         cfg.KeyData,
-		Username:              cfg.Username,
-		Password:              cfg.Password,
-	}
 }
 
 // Based on auth info and rest config creates client cmd config.
@@ -339,8 +326,8 @@ func (self *clientManager) secureConfig(req *restful.Request) (*rest.Config, err
 // Initializes client manager
 func (self *clientManager) init() {
 	self.initInClusterConfig()
-	self.initCSRFKey()
 	self.initInsecureClient()
+	self.initCSRFKey()
 }
 
 // Initializes in-cluster config if apiserverHost and kubeConfigPath were not provided.
@@ -366,13 +353,13 @@ func (self *clientManager) initCSRFKey() {
 	if self.inClusterConfig == nil {
 		// Most likely running for a dev, so no replica issues, just generate a random key
 		log.Println("Using random key for csrf signing")
-		self.generateCSRFKey()
+		self.csrfKey = clientapi.GenerateCSRFKey()
 		return
 	}
 
 	// We run in a cluster, so we should use a signing key that is the same for potential replications
-	log.Println("Using service account token for csrf signing")
-	self.csrfKey = self.inClusterConfig.BearerToken
+	log.Println("Using secret token for csrf signing")
+	self.csrfKey = csrf.NewCsrfTokenManager(self.insecureClient).Token()
 }
 
 func (self *clientManager) initInsecureClient() {
@@ -391,28 +378,8 @@ func (self *clientManager) initInsecureConfig() {
 		panic(err)
 	}
 
-	defaultAuthInfo := self.buildAuthInfoFromConfig(cfg)
-	authInfo := &defaultAuthInfo
-
-	cmdConfig := self.buildCmdConfig(authInfo, cfg)
-	cfg, err = cmdConfig.ClientConfig()
-	if err != nil {
-		panic(err)
-	}
-
 	self.initConfig(cfg)
 	self.insecureConfig = cfg
-}
-
-// Generates random csrf key
-func (self *clientManager) generateCSRFKey() {
-	bytes := make([]byte, 256)
-	_, err := rand.Read(bytes)
-	if err != nil {
-		panic("Fatal error. Could not generate csrf key")
-	}
-
-	self.csrfKey = string(bytes)
 }
 
 // Returns true if in-cluster config is used

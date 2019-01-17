@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# ------------------- Dashboard Secret ------------------- #
+# ------------------- Dashboard Secrets ------------------- #
 
 apiVersion: v1
 kind: Secret
@@ -22,6 +22,19 @@ metadata:
   name: kubernetes-dashboard-certs
   namespace: kube-system
 type: Opaque
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  labels:
+    k8s-app: kubernetes-dashboard
+  name: kubernetes-dashboard-csrf
+  namespace: kube-system
+type: Opaque
+stringData:
+  csrf: ""
 
 ---
 # ------------------- Dashboard Service Account ------------------- #
