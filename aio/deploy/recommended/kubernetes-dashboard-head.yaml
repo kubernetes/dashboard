@@ -109,7 +109,7 @@ metadata:
   name: kubernetes-dashboard-head
   namespace: kube-system
 spec:
-  replicas: 3
+  replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
@@ -121,7 +121,7 @@ spec:
     spec:
       containers:
       - name: kubernetes-dashboard-head
-        image: floreks/kubernetes-dashboard-amd64:latest
+        image: kubernetesdashboarddev/kubernetes-dashboard-amd64:head
         # Image is tagged and updated with :head, so always pull it.
         imagePullPolicy: Always
         ports:

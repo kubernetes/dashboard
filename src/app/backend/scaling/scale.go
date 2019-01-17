@@ -15,6 +15,8 @@
 package scaling
 
 import (
+	"strconv"
+
 	"k8s.io/client-go/discovery"
 	"k8s.io/client-go/discovery/cached"
 	"k8s.io/client-go/dynamic"
@@ -23,7 +25,6 @@ import (
 	"k8s.io/client-go/restmapper"
 	"k8s.io/client-go/scale"
 	"k8s.io/client-go/scale/scheme/appsv1beta2"
-	"strconv"
 )
 
 // ReplicaCounts provide the desired and actual number of replicas.
