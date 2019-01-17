@@ -29,7 +29,7 @@ const (
 	// Resource information that are used as csrf token storage. Can be accessible by multiple dashboard replicas.
 	CsrfTokenSecretName = "kubernetes-dashboard-csrf"
 
-	// Name of the string data var that holds the csrf token inside the secret.
+	// Name of the data var that holds the csrf token inside the secret.
 	CsrfTokenSecretData = "csrf"
 )
 
@@ -60,6 +60,8 @@ type CanIResponse struct {
 	Allowed bool `json:"allowed"`
 }
 
+// CsrfTokenManager is responsible for generating, reading and updating token stored in a secret.
 type CsrfTokenManager interface {
+	// Token returns current csrf token used for csrf signing.
 	Token() string
 }

@@ -24,6 +24,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/client/api"
 )
 
+// Implements CsrfTokenManager interface.
 type csrfTokenManager struct {
 	token  string
 	client kubernetes.Interface
@@ -53,10 +54,12 @@ func (self *csrfTokenManager) init() {
 	self.token = token
 }
 
+// Token implements CsrfTokenManager interface.
 func (self *csrfTokenManager) Token() string {
 	return self.token
 }
 
+// NewCsrfTokenManager creates and initializes new instace of csrf token manager.
 func NewCsrfTokenManager(client kubernetes.Interface) api.CsrfTokenManager {
 	manager := &csrfTokenManager{client: client}
 	manager.init()

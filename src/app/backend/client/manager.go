@@ -225,7 +225,7 @@ func (self *clientManager) buildConfigFromFlags(apiserverHost, kubeConfigPath st
 	}
 
 	if self.isRunningInCluster() {
-		return rest.InClusterConfig()
+		return self.inClusterConfig, nil
 	}
 
 	return nil, errors.New("could not create client config")
