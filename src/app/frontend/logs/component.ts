@@ -14,7 +14,7 @@
 
 import {HttpParams} from '@angular/common/http';
 import {Component, OnDestroy} from '@angular/core';
-import {MatDialog, MatOptionSelectionChange, MatSelectChange} from '@angular/material';
+import {MatDialog} from '@angular/material';
 import {LogDetails, LogLine, LogSelection, LogSources} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {GlobalSettingsService} from 'common/services/global/globalsettings';
