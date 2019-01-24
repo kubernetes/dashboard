@@ -39,7 +39,7 @@ func GenerateCSRFKey() string {
 	bytes := make([]byte, 256)
 	_, err := rand.Read(bytes)
 	if err != nil {
-		panic("Fatal error. Could not generate csrf key")
+		panic("could not generate csrf key")
 	}
 
 	return string(bytes)

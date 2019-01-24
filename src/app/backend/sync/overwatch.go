@@ -88,7 +88,7 @@ func (self *overwatch) monitorRestartEvents() {
 		select {
 		case name := <-self.restartSignal:
 			if self.restartCount[name] > MaxRestartCount {
-				panic(fmt.Sprintf("Synchronizer %s restart limit execeeded. Restarting pod.", name))
+				panic(fmt.Sprintf("synchronizer %s restart limit execeeded. Restarting pod.", name))
 			}
 
 			log.Printf("Restarting synchronizer: %s.", name)
