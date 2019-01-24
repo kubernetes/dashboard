@@ -15,7 +15,7 @@
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
 import {chromeState} from '../chrome/state';
-import {addLogsStateParamsToUrl} from '../common/params/params';
+import {addLogsStateParamsToUrl, LOGS_CONTAINER_STATE_PARAM} from '../common/params/params';
 import {LogsComponent} from './component';
 
 export const logsFutureState: Ng2StateDeclaration = {
@@ -27,7 +27,7 @@ export const logsFutureState: Ng2StateDeclaration = {
 export const logsState: Ng2StateDeclaration = {
   parent: chromeState.name,
   name: 'log',
-  url: addLogsStateParamsToUrl('/log'),
+  url: addLogsStateParamsToUrl('/log') + `?${LOGS_CONTAINER_STATE_PARAM}`,
   data: {
     kdBreadcrumbs: {
       label: 'Logs',
