@@ -31,8 +31,8 @@ function download-minikube {
 
 function ensure-kubeconfig {
   say "\nMaking sure that kubeconfig file exists and will be used by Dashboard"
-  mkdir -p $HOME/.kube
-  touch $HOME/.kube/config
+  mkdir -p ${HOME}/.kube
+  touch ${HOME}/.kube/config
 }
 
 function configure-minikube {
@@ -59,7 +59,7 @@ function start-ci-heapster {
   for i in {1..150}
   do
     HEAPSTER_STATUS=$(curl -sb -H "Accept: application/json" "127.0.0.1:${HEAPSTER_PORT}/healthz")
-    if [ "$HEAPSTER_STATUS" == "ok" ]; then
+    if [ "${HEAPSTER_STATUS}" == "ok" ]; then
       break
     fi
     sleep 2
