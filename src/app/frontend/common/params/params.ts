@@ -51,7 +51,7 @@ export class SearchStateParams extends StateParams {
 
 export class LogsStateParams extends StateParams {
   constructor(
-      public resourceNamespace: string, public podName: string, public resourceType: string) {
+      public resourceNamespace: string, public resourceName: string, public resourceType: string) {
     super();
   }
 }
@@ -77,5 +77,5 @@ export function addNamespacedResourceStateParamsToUrl(url: string): string {
 }
 
 export function addLogsStateParamsToUrl(url: string): string {
-  return `${url}/:resourceNamespace/:podName/:resourceType`;
+  return `${url}/:resourceNamespace/:resourceName/:resourceType`;
 }

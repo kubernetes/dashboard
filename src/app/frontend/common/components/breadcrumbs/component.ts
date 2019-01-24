@@ -104,7 +104,7 @@ export class BreadcrumbsComponent implements OnInit {
     const breadcrumb = new Breadcrumb();
 
     breadcrumb.label = this.breadcrumbs_.getDisplayName(state);
-    breadcrumb.stateLink = this.state_.href(state.name, null);
+    breadcrumb.stateLink = this.state_.href(state.name, this.state_.params);
 
     return breadcrumb;
   }
