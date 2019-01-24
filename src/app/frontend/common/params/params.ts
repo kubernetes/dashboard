@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {K8sError} from '@api/backendapi';
 import {KdError} from '@api/frontendapi';
 import {StateParams} from '@uirouter/core';
 
