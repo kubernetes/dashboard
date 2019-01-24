@@ -67,7 +67,7 @@ export class LogsComponent implements OnDestroy {
 
     const namespace = this.state_.params.resourceNamespace;
     const resourceType = this.state_.params.resourceType;
-    let podName = this.state_.params.podName;
+    let podName = this.state_.params.resourceName;
 
     this.sourceSubscription =
         logService.getResource(`source/${namespace}/${podName}/${resourceType}`)

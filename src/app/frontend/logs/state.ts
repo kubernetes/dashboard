@@ -31,6 +31,7 @@ export const logsState: Ng2StateDeclaration = {
   data: {
     kdBreadcrumbs: {
       label: 'Logs',
+      parent: 'pod.detail',
     }
   },
   views: {
