@@ -20,7 +20,7 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
-	"k8s.io/api/core/v1"
+	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -111,7 +111,7 @@ func TestGetHeapsterSelector(t *testing.T) {
 	}
 	for _, testCase := range testCases {
 		sel, err := getHeapsterSelector(testCase.ResourceSelector,
-			&metricapi.CachedResources{cachedPodList})
+			&metricapi.CachedResources{Pods: cachedPodList})
 		if err != nil {
 			t.Errorf("Test Case: %s. Failed to get HeapsterSelector. - %s", testCase.Info, err)
 			return

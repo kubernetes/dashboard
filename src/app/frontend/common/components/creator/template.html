@@ -1,0 +1,80 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-card [initialized]="initialized">
+  <div description>
+    <div class="kd-inline-property"
+         *ngIf="creator?.objectMeta.name">
+      <span class="kd-muted-light">Name:&nbsp;</span>
+      <span>{{creator.objectMeta.name}}</span>
+    </div>
+
+    <div class="kd-inline-property"
+         *ngIf="creator?.typeMeta.kind">
+      <span class="kd-muted-light">Kind:&nbsp;</span>
+      <span>{{creator.typeMeta.kind}}</span>
+    </div>
+
+    <div class="kd-inline-property"
+         *ngIf="creator?.objectMeta.creationTimestamp">
+      <span class="kd-muted-light">Age:&nbsp;</span>
+      <span>{{creator?.objectMeta.creationTimestamp | kdRelativeTime}}</span>
+    </div>
+  </div>
+  <div title>Controlled by</div>
+  <div content
+       fxFlex
+       fxLayout="row wrap">
+    <kd-property>
+      <div key>Name</div>
+      <a value
+         [href]="getHref()">
+        {{creator?.objectMeta.name}}
+      </a>
+    </kd-property>
+
+    <kd-property>
+      <div key>Kind</div>
+      <div value>{{creator?.typeMeta.kind}}</div>
+    </kd-property>
+
+    <kd-property>
+      <div key>Pods</div>
+      <div value>{{creator?.pods.running}} / {{creator?.pods.desired}}</div>
+    </kd-property>
+
+    <kd-property>
+      <div key>Age</div>
+      <div value>{{creator?.objectMeta.creationTimestamp | kdRelativeTime}}</div>
+    </kd-property>
+
+    <kd-property *ngIf="creator?.objectMeta?.labels"
+                 fxFlex="100">
+      <div key>Labels</div>
+      <div value>
+        <kd-chips [map]="creator.objectMeta.labels"></kd-chips>
+      </div>
+    </kd-property>
+
+    <kd-property *ngIf="creator?.containerImages"
+                 fxFlex="100">
+      <div key>Images</div>
+      <div value>
+        <kd-chips [map]="creator.containerImages"></kd-chips>
+      </div>
+    </kd-property>
+  </div>
+</kd-card>

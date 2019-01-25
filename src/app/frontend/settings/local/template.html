@@ -1,0 +1,35 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-card [expandable]="true">
+  <div title
+       i18n>Local settings</div>
+  <div content>
+    <p i18n>
+      Local settings are stored in the browser cookies, so they are not synchronized between multiple devices. Changes are applied automatically on every change.
+    </p>
+    <br>
+    <kd-settings-entry key="Dark theme"
+                       desc="Use dark theme in the whole app">
+      <div fxFlex>
+        <mat-slide-toggle color="primary"
+                          name="isThemeDark"
+                          [(ngModel)]="settings.isThemeDark"
+                          (change)="onThemeChange()"></mat-slide-toggle>
+      </div>
+    </kd-settings-entry>
+  </div>
+</kd-card>

@@ -20,6 +20,7 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	autoscaling "k8s.io/api/autoscaling/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
@@ -133,7 +134,7 @@ func TestGetHorizontalPodAutoscalerList(t *testing.T) {
 			&HorizontalPodAutoscalerList{
 				ListMeta:                 api.ListMeta{TotalItems: 4},
 				HorizontalPodAutoscalers: ourHpaList,
-				Errors: []error{},
+				Errors:                   []error{},
 			},
 		},
 	}
@@ -141,7 +142,7 @@ func TestGetHorizontalPodAutoscalerList(t *testing.T) {
 	for _, c := range cases {
 		fakeClient := fake.NewSimpleClientset(c.hpaList)
 
-		actual, _ := GetHorizontalPodAutoscalerList(fakeClient, &common.NamespaceQuery{})
+		actual, _ := GetHorizontalPodAutoscalerList(fakeClient, &common.NamespaceQuery{}, dataselect.DefaultDataSelect)
 
 		actions := fakeClient.Actions()
 		if len(actions) != len(c.expectedActions) {
@@ -181,7 +182,7 @@ func TestGetHorizontalPodAutoscalerListForResource(t *testing.T) {
 			&HorizontalPodAutoscalerList{
 				ListMeta:                 api.ListMeta{TotalItems: 1},
 				HorizontalPodAutoscalers: []HorizontalPodAutoscaler{ourHpaList[0]},
-				Errors: []error{},
+				Errors:                   []error{},
 			},
 		}, {
 			"test-kind2", "test-name2",
@@ -192,7 +193,7 @@ func TestGetHorizontalPodAutoscalerListForResource(t *testing.T) {
 			&HorizontalPodAutoscalerList{
 				ListMeta:                 api.ListMeta{TotalItems: 2},
 				HorizontalPodAutoscalers: []HorizontalPodAutoscaler{ourHpaList[1], ourHpaList[2]},
-				Errors: []error{},
+				Errors:                   []error{},
 			},
 		}, {
 			"test-kind2", "test-name3",
@@ -203,7 +204,7 @@ func TestGetHorizontalPodAutoscalerListForResource(t *testing.T) {
 			&HorizontalPodAutoscalerList{
 				ListMeta:                 api.ListMeta{TotalItems: 1},
 				HorizontalPodAutoscalers: []HorizontalPodAutoscaler{ourHpaList[3]},
-				Errors: []error{},
+				Errors:                   []error{},
 			},
 		}, {
 			"test-kind1", "test-name2",
@@ -214,7 +215,7 @@ func TestGetHorizontalPodAutoscalerListForResource(t *testing.T) {
 			&HorizontalPodAutoscalerList{
 				ListMeta:                 api.ListMeta{TotalItems: 0},
 				HorizontalPodAutoscalers: []HorizontalPodAutoscaler{},
-				Errors: []error{},
+				Errors:                   []error{},
 			},
 		},
 	}

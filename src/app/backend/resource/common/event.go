@@ -16,7 +16,7 @@ package common
 
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"k8s.io/apimachinery/pkg/apis/meta/v1"
+	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 // EventList is an events response structure.
@@ -25,6 +25,9 @@ type EventList struct {
 
 	// List of events from given namespace.
 	Events []Event `json:"events"`
+
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
 // Event is a single event representation.

@@ -22,7 +22,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/endpoint"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
-	"k8s.io/api/core/v1"
+	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -40,7 +40,8 @@ func TestToServiceDetail(t *testing.T) {
 			podList:      pod.PodList{},
 			endpointList: endpoint.EndpointList{},
 			expected: ServiceDetail{
-				TypeMeta: api.TypeMeta{Kind: api.ResourceKindService},
+				TypeMeta:          api.TypeMeta{Kind: api.ResourceKindService},
+				ExternalEndpoints: []common.Endpoint{},
 			},
 		}, {
 			service: &v1.Service{
@@ -52,8 +53,9 @@ func TestToServiceDetail(t *testing.T) {
 					Name:      "test-service",
 					Namespace: "test-namespace",
 				},
-				TypeMeta:         api.TypeMeta{Kind: api.ResourceKindService},
-				InternalEndpoint: common.Endpoint{Host: "test-service.test-namespace"},
+				TypeMeta:          api.TypeMeta{Kind: api.ResourceKindService},
+				InternalEndpoint:  common.Endpoint{Host: "test-service.test-namespace"},
+				ExternalEndpoints: []common.Endpoint{},
 			},
 		},
 	}
@@ -75,7 +77,8 @@ func TestToService(t *testing.T) {
 	}{
 		{
 			service: &v1.Service{}, expected: Service{
-				TypeMeta: api.TypeMeta{Kind: api.ResourceKindService},
+				TypeMeta:          api.TypeMeta{Kind: api.ResourceKindService},
+				ExternalEndpoints: []common.Endpoint{},
 			},
 		}, {
 			service: &v1.Service{
@@ -87,8 +90,9 @@ func TestToService(t *testing.T) {
 					Name:      "test-service",
 					Namespace: "test-namespace",
 				},
-				TypeMeta:         api.TypeMeta{Kind: api.ResourceKindService},
-				InternalEndpoint: common.Endpoint{Host: "test-service.test-namespace"},
+				TypeMeta:          api.TypeMeta{Kind: api.ResourceKindService},
+				InternalEndpoint:  common.Endpoint{Host: "test-service.test-namespace"},
+				ExternalEndpoints: []common.Endpoint{},
 			},
 		},
 	}

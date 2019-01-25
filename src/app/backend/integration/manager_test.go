@@ -15,9 +15,8 @@
 package integration
 
 import (
-	"testing"
-
 	"errors"
+	"testing"
 
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 	"github.com/kubernetes/dashboard/src/app/backend/auth/jwe"
@@ -85,7 +84,7 @@ func TestIntegrationManager_GetState(t *testing.T) {
 		if c.expectedErr == nil && (!areErrorsEqual(state.Error, c.expected.Error)) {
 			t.Errorf("Test Case: %s. Expected state to be: %v, but got %v.",
 				c.info, c.expected.Error, state.Error)
-		} else if (state.Connected != c.expected.Connected) {
+		} else if state.Connected != c.expected.Connected {
 			t.Errorf("Test Case: %s. Could not connect to API server.",
 				c.info)
 		}

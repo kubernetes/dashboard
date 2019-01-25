@@ -18,14 +18,13 @@ import (
 	"errors"
 	"reflect"
 	"testing"
-
 	"time"
 
 	restful "github.com/emicklei/go-restful"
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
-	"k8s.io/api/authorization/v1"
+	v1 "k8s.io/api/authorization/v1"
 	k8sErrors "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
@@ -70,7 +69,7 @@ func (self *fakeClientManager) HasAccess(authInfo api.AuthInfo) error {
 
 func (self *fakeClientManager) VerberClient(req *restful.Request) (clientapi.ResourceVerber, error) {
 	return client.NewResourceVerber(nil, nil, nil, nil, nil,
-		nil, nil), nil
+		nil, nil, nil), nil
 }
 
 func (self *fakeClientManager) CanI(req *restful.Request, ssar *v1.SelfSubjectAccessReview) bool {
@@ -178,12 +177,12 @@ func TestAuthManager_AuthenticationModes(t *testing.T) {
 func TestAuthManager_AuthenticationSkippable(t *testing.T) {
 	cManager := &fakeClientManager{}
 	tManager := &fakeTokenManager{}
-	cModes   := authApi.AuthenticationModes{}
+	cModes := authApi.AuthenticationModes{}
 
-	for _, flag := range []bool{true,false} {
+	for _, flag := range []bool{true, false} {
 		authManager := NewAuthManager(cManager, tManager, cModes, flag)
 		got := authManager.AuthenticationSkippable()
-		if (got != flag) {
+		if got != flag {
 			t.Errorf("Expected %v, but got %v.", flag, got)
 		}
 	}

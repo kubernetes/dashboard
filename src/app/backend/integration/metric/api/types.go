@@ -15,13 +15,12 @@
 package api
 
 import (
-	"time"
-
 	"fmt"
+	"time"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	integrationapi "github.com/kubernetes/dashboard/src/app/backend/integration/api"
-	"k8s.io/api/core/v1"
+	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/types"
 )
 

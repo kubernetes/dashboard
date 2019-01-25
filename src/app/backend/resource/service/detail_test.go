@@ -24,7 +24,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/endpoint"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
-	"k8s.io/api/core/v1"
+	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
 )
@@ -48,8 +48,9 @@ func TestGetServiceDetail(t *testing.T) {
 					Namespace: "ns-1",
 					Labels:    map[string]string{},
 				},
-				TypeMeta:         api.TypeMeta{Kind: api.ResourceKindService},
-				InternalEndpoint: common.Endpoint{Host: "svc-1.ns-1"},
+				TypeMeta:          api.TypeMeta{Kind: api.ResourceKindService},
+				InternalEndpoint:  common.Endpoint{Host: "svc-1.ns-1"},
+				ExternalEndpoints: []common.Endpoint{},
 				PodList: pod.PodList{
 					Pods:              []pod.Pod{},
 					CumulativeMetrics: make([]metricapi.Metric, 0),
@@ -80,9 +81,10 @@ func TestGetServiceDetail(t *testing.T) {
 					Name:      "svc-2",
 					Namespace: "ns-2",
 				},
-				Selector:         map[string]string{"app": "app2"},
-				TypeMeta:         api.TypeMeta{Kind: api.ResourceKindService},
-				InternalEndpoint: common.Endpoint{Host: "svc-2.ns-2"},
+				Selector:          map[string]string{"app": "app2"},
+				TypeMeta:          api.TypeMeta{Kind: api.ResourceKindService},
+				InternalEndpoint:  common.Endpoint{Host: "svc-2.ns-2"},
+				ExternalEndpoints: []common.Endpoint{},
 				PodList: pod.PodList{
 					Pods:              []pod.Pod{},
 					CumulativeMetrics: make([]metricapi.Metric, 0),

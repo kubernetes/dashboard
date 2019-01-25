@@ -15,17 +15,16 @@
 package daemonset
 
 import (
+	"errors"
 	"reflect"
 	"testing"
-
-	"errors"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	apps "k8s.io/api/apps/v1beta2"
-	"k8s.io/api/core/v1"
+	v1 "k8s.io/api/core/v1"
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
@@ -349,6 +348,7 @@ func TestToDaemonSetList(t *testing.T) {
 						ObjectMeta: api.ObjectMeta{
 							Name:      "my-app-1",
 							Namespace: "namespace-1",
+							UID:       "uid-1",
 						},
 						TypeMeta:            api.TypeMeta{Kind: api.ResourceKindDaemonSet},
 						ContainerImages:     []string{"my-container-image-1"},

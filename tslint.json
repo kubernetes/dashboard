@@ -1,0 +1,8 @@
+{
+  "extends": "gts/tslint.json",
+  "cliOptions": {
+    "exclude": [
+      "src/app/frontend/environments/version.ts"
+    ]
+  }
+}

@@ -1,0 +1,91 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-card [initialized]="isInitialized()"
+         [expandable]="true"
+         *ngIf="!hasLoadError">
+  <div title
+       i18n>Global settings</div>
+  <div content>
+    <p i18n>
+      Global settings are stored in <code>kubernetes-dashboard-settings</code> config map inside
+      <code>kube-system</code> namespace, so all of them are applied for every instance of the app.
+    </p>
+    <br>
+    <form #form="ngForm"
+          (ngSubmit)="save(form)">
+      <kd-settings-entry key="Cluster name"
+                         desc="Cluster name appears in the browser window title if it is set">
+        <mat-form-field fxFlex>
+          <input [(ngModel)]="settings.clusterName"
+                 name="clusterName"
+                 placeholder="Cluster name"
+                 type="text"
+                 matInput>
+        </mat-form-field>
+      </kd-settings-entry>
+      <kd-settings-entry key="Items per page"
+                         desc="Max number of items that can be displayed on each list page">
+        <div fxFlex>
+          <mat-slider [(ngModel)]="settings.itemsPerPage"
+                      name="itemsPerPage"
+                      color="primary"
+                      min="5"
+                      max="50"
+                      step="5"
+                      fxFlex>
+          </mat-slider>
+          <div class="kd-slider-value kd-muted"
+               fxFlexAlign=" center">
+            {{settings.itemsPerPage}}
+          </div>
+        </div>
+      </kd-settings-entry>
+      <kd-settings-entry key="Auto-refresh time interval"
+                         desc="Number of seconds between every auto-refresh of logs">
+        <div fxFlex>
+          <mat-slider [(ngModel)]="settings.autoRefreshTimeInterval"
+                      name="autoRefreshTimeInterval"
+                      color="primary"
+                      min="1"
+                      max="10"
+                      step="1"
+                      fxFlex>
+          </mat-slider>
+          <span class="kd-slider-value kd-muted"
+                fxFlexAlign=" center">
+            {{settings.autoRefreshTimeInterval}}
+          </span>
+        </div>
+      </kd-settings-entry>
+      <br><br>
+      <button [disabled]="form.pristine"
+              type="submit"
+              color="primary"
+              mat-raised-button
+              i18n>
+        Save
+      </button>
+      <button type="button"
+              (click)="load(form)"
+              color="primary"
+              mat-raised-button
+              i18n>
+        Reload
+      </button>
+    </form>
+  </div>
+</kd-card>

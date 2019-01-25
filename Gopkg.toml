@@ -1,4 +1,5 @@
-# Refer to https://github.com/golang/dep/blob/master/docs/Gopkg.toml.md for detailed Gopkg.toml documentation.
+# Go dependency manager manifest.
+# Read more at: https://github.com/golang/dep/blob/master/docs/Gopkg.toml.md
 
 [prune]
   go-tests = true

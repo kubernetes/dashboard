@@ -1,0 +1,71 @@
+// Copyright 2017 The Kubernetes Authors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+@import '../variables';
+
+@mixin flex-full-height {
+  display: flex;
+  flex: 1;
+  flex-flow: column;
+}
+
+$shell-background-color: #000;
+
+:host {
+  display: block;
+  height: calc(100% - 56px);
+  width: 100%;
+}
+
+.kd-shell-content-card {
+  box-sizing: border-box;
+  display: block;
+  height: 100%;
+  width: 100%;
+
+  .kd-shell-content-card-title {
+    display: inline;
+  }
+
+  // Some hacks are required to make the terminal takes full page
+  ::ng-deep mat-card {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+
+    > mat-card-title + div {
+      @include flex-full-height;
+    }
+
+    mat-card-content {
+      @include flex-full-height;
+      background: $shell-background-color;
+      padding: 0;
+
+      > div,
+      .xterm-anchor {
+        @include flex-full-height;
+      }
+    }
+  }
+}
+
+.kd-shell-toolbar-select {
+  width: 180px;
+
+  .md-select-value {
+    font-size: $title-font-size-base;
+    min-width: 20 * $baseline-grid;
+  }
+}

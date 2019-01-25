@@ -1,0 +1,109 @@
+// Copyright 2017 The Kubernetes Authors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+@import '~@angular/material/theming';
+@import './theming';
+
+$kd-dark-palette-primary: (
+  50: #fff, // Primary toolbar buttons.
+  100: #fff,
+  200: #d47f16,
+  300: #9575cd,
+  400: #7e57c2,
+  500: #d47f16,
+  600: #5e35b1,
+  700: #d47f16,
+  800: #4527a0,
+  900: #311b92,
+  A100: #b388ff,
+  A200: #7c4dff,
+  A400: #651fff,
+  A700: #6200ea,
+  contrast: (
+    50: $black-87-opacity,
+    100: $black-87-opacity,
+    200: $black-87-opacity,
+    300: #fff,
+    400: #fff,
+    500: $white-87-opacity,
+    600: $white-87-opacity,
+    700: $white-87-opacity,
+    800: $white-87-opacity,
+    900: $white-87-opacity,
+    A100: $black-87-opacity,
+    A200: #fff,
+    A400: $white-87-opacity,
+    A700: $white-87-opacity,
+  )
+);
+
+$kd-dark-palette-warn: (
+  50: #00c752, // Chart green.
+  100: #008000,
+  200: #326de6, // Chart blue.
+  300: #0d47a1,
+  400: #ff0,
+  500: #ffad20,
+  600: #ff5722,
+  700: #ff481b,
+  800: #f51200,
+  900: #f00,
+  A100: #ffd180,
+  A200: #ffab40,
+  A400: #ff9100,
+  A700: #ff6d00,
+  contrast: (
+    50: $black-87-opacity,
+    100: $black-87-opacity,
+    200: $black-87-opacity,
+    300: $black-87-opacity,
+    400: $black-87-opacity,
+    500: $black-87-opacity,
+    600: $black-87-opacity,
+    700: $black-87-opacity,
+    800: #fff,
+    900: #fff,
+    A100: $black-87-opacity,
+    A200: $black-87-opacity,
+    A400: $black-87-opacity,
+    A700: #000,
+  )
+);
+
+// sass-lint:disable function-name-format
+$kd-dark-palette-accent: map_merge($mat-blue, (500: #fff));
+// sass-lint:enable function-name-format
+
+$kd-dark-theme-primary: mat-palette($kd-dark-palette-primary);
+$kd-dark-theme-accent: mat-palette($kd-dark-palette-accent);
+$kd-dark-theme-warn: mat-palette($kd-dark-palette-warn);
+
+$kd-dark-theme: mat-dark-theme($kd-dark-theme-primary, $kd-dark-theme-accent, $kd-dark-theme-warn);
+
+.kd-dark-theme {
+  @include angular-material-theme($kd-dark-theme);
+  @include kd-theme($kd-dark-theme);
+
+  $accent-palette: map-get($kd-dark-theme, accent);
+  $accent: mat-color($accent-palette);
+
+  .kd-toolbar-logo-text,
+  .kd-primary-toolbar-icon {
+    filter: brightness(100);
+  }
+
+  .kd-cross-line-primary {
+    stroke: $accent;
+  }
+}

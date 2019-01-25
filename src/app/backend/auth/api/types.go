@@ -38,10 +38,10 @@ type AuthenticationModes map[AuthenticationMode]bool
 
 // ProtectedResource represents basic information about resource that should be filtered out from Dashboard UI.
 type ProtectedResource struct {
-  // ResourceName is a name of the protected resource.
-	ResourceName       string
+	// ResourceName is a name of the protected resource.
+	ResourceName string
 	// ResourceNamespace is a namespace of the protected resource. Should be empty if resource is non-namespaced.
-	ResourceNamespace  string
+	ResourceNamespace string
 }
 
 // IsEnabled returns true if given auth mode is supported, false otherwise.

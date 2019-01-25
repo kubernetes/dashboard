@@ -1,0 +1,91 @@
+# Copyright 2017 Google Inc. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# A manifest that creates a container with environment variables.
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: secret-env
+  namespace: default
+type: Opaque
+data:
+  username: YWRtaW4=
+  password: MWYyZDFlMmU2N2Rm
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmap-env
+  namespace: default
+data:
+  test: somevalue
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: env-variables
+spec:
+  containers:
+    - name: test-container
+      image: k8s.gcr.io/busybox
+      command: [ "sh", "-c"]
+      args:
+      - while true; do
+          echo -en '\n';
+          printenv MY_POD_NAME;
+          printenv MY_MEM_REQUEST MY_MEM_LIMIT;
+          printenv MY_CONST_VALUE;
+          printenv MY_SECRET_VALUE;
+          sleep 10;
+        done;
+      resources:
+        requests:
+          memory: "32Mi"
+          cpu: "125m"
+        limits:
+          memory: "64Mi"
+          cpu: "250m"
+      env:
+        - name: MY_POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: MY_MEM_REQUEST
+          valueFrom:
+            resourceFieldRef:
+              containerName: test-container
+              resource: requests.memory
+        - name: MY_MEM_LIMIT
+          valueFrom:
+            resourceFieldRef:
+              containerName: test-container
+              resource: limits.memory
+        - name: MY_CONST_VALUE
+          value: "test-const-value"
+        - name: MY_SECRET_VALUE
+          valueFrom:
+            secretKeyRef:
+              name: secret-env
+              key: username
+        - name: MY_CM_VALUE
+          valueFrom:
+            configMapKeyRef:
+              name: configmap-env
+              key: test
+  restartPolicy: Never

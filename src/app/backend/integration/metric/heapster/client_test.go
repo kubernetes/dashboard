@@ -16,6 +16,7 @@ package heapster
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
 	"reflect"
@@ -24,8 +25,6 @@ import (
 	"sync/atomic"
 	"testing"
 	"time"
-
-	"errors"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
@@ -154,7 +153,7 @@ func NewRawDPs(dps []int64, startTime int) []heapster.MetricPoint {
 func newDps(dps []int64, startTime int) metricapi.DataPoints {
 	newDps := metricapi.DataPoints{}
 	for i := 0; i < len(dps) && startTime+i < 10; i++ {
-		newDps = append(newDps, metricapi.DataPoint{TimeTemplateValue + int64(60*(i+startTime)), dps[i]})
+		newDps = append(newDps, metricapi.DataPoint{X: TimeTemplateValue + int64(60*(i+startTime)), Y: dps[i]})
 	}
 	return newDps
 }

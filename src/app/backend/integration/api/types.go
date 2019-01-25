@@ -14,7 +14,7 @@
 
 package api
 
-import "k8s.io/apimachinery/pkg/apis/meta/v1"
+import v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 // IntegrationID is a unique identification string that every integrated app has to provide.
 // All ids are kept in this file to minimize the risk of creating conflicts.

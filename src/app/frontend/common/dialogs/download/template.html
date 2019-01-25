@@ -1,0 +1,62 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<h2 *ngIf="!hasForbiddenError()"
+    mat-dialog-title
+    i18n>
+  Download logs file
+</h2>
+<mat-dialog-content class="kd-dialog-text">
+  <ng-container *ngIf="!hasForbiddenError()">
+    <div>Size: {{loaded | kdMemory}} B</div>
+    <mat-progress-bar class="kd-download-progress-bar"
+                      [mode]="getDownloadMode()"
+                      value="100"></mat-progress-bar>
+    <div *ngIf="!finished"
+         i18n>
+      Preparing file to download...
+    </div>
+    <div *ngIf="finished"
+         i18n>
+      File is ready to download!
+    </div>
+  </ng-container>
+  <ng-container *ngIf="hasForbiddenError()">
+    <div class="kd-download-info">
+      <h3 i18n>Forbidden (403)</h3>
+      <span i18n>You do not have required permissions to access this resource.</span>
+    </div>
+  </ng-container>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <ng-container *ngIf="!hasForbiddenError()">
+    <button mat-button
+            color="primary"
+            [disabled]="!finished"
+            (click)="save()">Save</button>
+    <button mat-button
+            color="primary"
+            (click)="abort()">Abort</button>
+  </ng-container>
+
+  <ng-container *ngIf="hasForbiddenError()">
+    <div class="kd-download-error-button">
+      <button mat-button
+              color="primary"
+              (click)="abort()">Close</button>
+    </div>
+  </ng-container>
+</mat-dialog-actions>
