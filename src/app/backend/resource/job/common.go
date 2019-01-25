@@ -81,10 +81,10 @@ func getStatus(list *batch.JobList, pods []v1.Pod) common.ResourceStatus {
 			info.Failed++
 		} else if jobStatus.Status == JobStatusComplete {
 			info.Succeeded++
-		} else if podInfo.Pending > 0 {
-			info.Pending++
-		} else {
+		} else if podInfo.Running > 0 {
 			info.Running++
+		} else {
+			info.Pending++
 		}
 	}
 
