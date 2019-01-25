@@ -126,7 +126,7 @@ func TestGetJobListFromChannels(t *testing.T) {
 					{
 						ObjectMeta: metaV1.ObjectMeta{
 							Namespace: "rs-namespace",
-							Labels:    map[string]string{"foo": "bar"},
+							Labels:	   map[string]string{"foo": "bar"},
 							OwnerReferences: []metaV1.OwnerReference{
 								{
 									Name:       "rs-name-failed-pod",
@@ -140,7 +140,7 @@ func TestGetJobListFromChannels(t *testing.T) {
 					{
 						ObjectMeta: metaV1.ObjectMeta{
 							Namespace: "rs-namespace",
-							Labels:    map[string]string{"foo": "bar"},
+							Labels:	   map[string]string{"foo": "bar"},
 							OwnerReferences: []metaV1.OwnerReference{
 								{
 									Name:       "rs-name-running-pod",
@@ -181,6 +181,7 @@ func TestGetJobListFromChannels(t *testing.T) {
 					TypeMeta: api.TypeMeta{Kind: api.ResourceKindJob},
 					Pods: common.PodInfo{
 						Current:  7,
+						Running:  1,
 						Desired:  &completions,
 						Failed:   1,
 						Warnings: []common.Event{},
@@ -199,6 +200,7 @@ func TestGetJobListFromChannels(t *testing.T) {
 					TypeMeta: api.TypeMeta{Kind: api.ResourceKindJob},
 					Pods: common.PodInfo{
 						Current:  7,
+						Running:  1,
 						Desired:  &completions,
 						Failed:   1,
 						Warnings: []common.Event{},
