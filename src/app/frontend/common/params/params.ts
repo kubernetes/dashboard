@@ -25,6 +25,11 @@ export const NAMESPACE_STATE_PARAM = 'namespace';
  */
 export const SEARCH_QUERY_STATE_PARAM = 'q';
 
+/**
+ * Parameter name of the logs container name.
+ */
+export const LOGS_CONTAINER_STATE_PARAM = 'container';
+
 export class KdStateParams extends StateParams {
   constructor(public resourceNamespace: string) {
     super();

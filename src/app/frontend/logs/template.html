@@ -23,7 +23,7 @@ limitations under the License.
       <mat-form-field>
         <mat-select [(ngModel)]="container"
                     class="kd-logs-toolbar-select"
-                    (selectionChange)="loadNewest()">
+                    (selectionChange)="onContainerChange()">
           <mat-optgroup label="Containers"
                         *ngIf="logSources?.containerNames?.length > 0">
             <mat-option *ngFor="let item of logSources?.containerNames"

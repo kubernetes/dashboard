@@ -67,22 +67,25 @@ export class LogsComponent implements OnDestroy {
 
     const namespace = this.state_.params.resourceNamespace;
     const resourceType = this.state_.params.resourceType;
-    let podName = this.state_.params.resourceName;
+    const resourceName = this.state_.params.resourceName;
+    const containerName = this.state_.params.container;
 
     this.sourceSubscription =
-        logService.getResource(`source/${namespace}/${podName}/${resourceType}`)
+        logService.getResource(`source/${namespace}/${resourceName}/${resourceType}`)
             .subscribe((data: LogSources) => {
               this.logSources = data;
-              if (resourceType !== 'Pod') {
-                podName = data.podNames[0];
-              }
-              this.logsSubscription = logService.getResource(`${namespace}/${podName}`)
-                                          .subscribe((data: LogDetails) => {
-                                            this.updateUiModel(data);
-                                            this.pod = data.info.podName;
-                                            this.container = data.info.containerName;
-                                            this.isLoading = false;
-                                          });
+              this.pod = data.podNames[0];  // Pick first pod (cannot use resource name as it may
+                                            // not be a pod).
+              this.container = containerName ? containerName :
+                                               data.containerNames[0];  // Pick from URL or first.
+              this.appendContainerParam();
+
+              this.logsSubscription =
+                  this.logService.getResource(`${namespace}/${this.pod}/${this.container}`)
+                      .subscribe((data: LogDetails) => {
+                        this.updateUiModel(data);
+                        this.isLoading = false;
+                      });
             });
   }
 
@@ -122,6 +125,15 @@ export class LogsComponent implements OnDestroy {
     // add timestamp if needed
     const showTimestamp = this.logService.getShowTimestamp();
     return showTimestamp ? `${line.timestamp}  ${line.content}` : line.content;
+  }
+
+  appendContainerParam() {
+    this.state_.go('.', {container: this.container}, {notify: false});
+  }
+
+  onContainerChange() {
+    this.appendContainerParam();
+    this.loadNewest();
   }
 
   /**
