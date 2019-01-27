@@ -45,9 +45,8 @@ ARCH=$(uname | awk '{print tolower($0)}')
 # Local cluster configuration (check start-cluster.sh script for more details).
 HEAPSTER_VERSION="v1.5.4"
 HEAPSTER_PORT=8082
-MINIKUBE_VERSION=v0.32.0
-MINIKUBE_K8S_VERSION=v1.12.4
-MINIKUBE_BIN=${CACHE_DIR}/minikube-${MINIKUBE_VERSION}
+KIND_VERSION="0.1.0"
+KIND_BIN=${CACHE_DIR}/kind-${KIND_VERSION}
 
 # Setup logger.
 ERROR_STYLE=`tput setaf 1`

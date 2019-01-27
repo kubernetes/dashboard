@@ -22,31 +22,24 @@ function ensure-cache {
   mkdir -p ${CACHE_DIR}
 }
 
-function download-minikube {
-  say "\nDownloading minikube ${MINIKUBE_VERSION} if it is not cached"
-  wget -nc -O ${MINIKUBE_BIN} https://storage.googleapis.com/minikube/releases/${MINIKUBE_VERSION}/minikube-${ARCH}-amd64
-  chmod +x ${MINIKUBE_BIN}
-  ${MINIKUBE_BIN} version
+function download-kind {
+  KIND_URL="https://github.com/kubernetes-sigs/kind/releases/download/${KIND_VERSION}/kind-${ARCH}-amd64"
+  say "\nDownloading kind ${KIND_URL} if it is not cached"
+  wget -nc -O ${KIND_BIN} ${KIND_URL}
+  chmod +x ${KIND_BIN}
+  ${KIND_BIN} version
 }
 
 function ensure-kubeconfig {
   say "\nMaking sure that kubeconfig file exists and will be used by Dashboard"
   mkdir -p ${HOME}/.kube
   touch ${HOME}/.kube/config
-}
 
-function configure-minikube {
-  say "\nConfiguring minikube"
-  export MINIKUBE_HOME=${HOME}
-  sudo -E ${MINIKUBE_BIN} config set WantUpdateNotification false
-  sudo -E ${MINIKUBE_BIN} config set WantReportErrorPrompt false
-  sudo -E ${MINIKUBE_BIN} config set WantKubectlDownloadMsg false
-}
-
-function start-ci-minikube {
-  say "\nStarting continous integration cluster"
-  export CHANGE_MINIKUBE_NONE_USER=true
-  sudo -E ${MINIKUBE_BIN} start --vm-driver=none --kubernetes-version=${MINIKUBE_K8S_VERSION}
+  # Let's back up the kubeconfig so we don't totally blow it away
+  # I learned from personal experience. It made me sad. :(
+  mv ${HOME}/.kube/config ${HOME}/.kube/config-unkind 
+  
+  cat $(${KIND_BIN} get kubeconfig-path --name="k8s-cluster-ci") > $HOME/.kube/config
 }
 
 function start-ci-heapster {
@@ -67,24 +60,16 @@ function start-ci-heapster {
   say "\nHeapster is up and running"
 }
 
-function start-local-minikube {
-  say "\nStarting local cluster"
-  sudo -E ${MINIKUBE_BIN} start --kubernetes-version=${MINIKUBE_K8S_VERSION}
-}
-
-function start-minikube {
+function start-kind {
+  ${KIND_BIN} create cluster --name="k8s-cluster-ci"
+  ensure-kubeconfig
   if [ "${CI}" = true ] ; then
-    start-ci-minikube
     start-ci-heapster
-  else
-    start-local-minikube
   fi
   say "\nKubernetes cluster is ready to use"
 }
 
 # Execute script.
 ensure-cache
-download-minikube
-ensure-kubeconfig
-configure-minikube
-start-minikube
+download-kind
+start-kind
