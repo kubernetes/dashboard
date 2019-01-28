@@ -17,7 +17,21 @@ import {ObjectMeta, TypeMeta} from '@api/backendapi';
 import {ActionColumn} from '@api/frontendapi';
 import {StateService} from '@uirouter/core';
 import {Subscription} from 'rxjs/Subscription';
+
+import {logsState} from '../../../../../logs/state';
+import {LogsStateParams} from '../../../../params/params';
+import {KdStateService} from '../../../../services/global/state';
 import {VerberService} from '../../../../services/global/verber';
+import {Resource} from '../../../../services/resource/endpoint';
+
+const loggableResources: string[] = [
+  Resource.daemonSet, Resource.job, Resource.pod, Resource.replicaSet,
+  Resource.replicationController, Resource.statefulSet
+];
+
+const scalableResources: string[] = [
+  Resource.deployment, Resource.replicaSet, Resource.replicationController, Resource.statefulSet
+];
 
 @Component({
   selector: 'kd-resource-context-menu',
@@ -27,10 +41,13 @@ export class MenuComponent implements ActionColumn, OnDestroy {
   @Input() objectMeta: ObjectMeta;
   @Input() typeMeta: TypeMeta;
 
+  private onScaleSubscription_: Subscription;
   private onEditSubscription_: Subscription;
   private onDeleteSubscription_: Subscription;
 
-  constructor(private readonly verber_: VerberService, private readonly state_: StateService) {}
+  constructor(
+      private readonly verber_: VerberService, private readonly state_: StateService,
+      private readonly kdState_: KdStateService) {}
 
   setObjectMeta(objectMeta: ObjectMeta): void {
     this.objectMeta = objectMeta;
@@ -41,8 +58,30 @@ export class MenuComponent implements ActionColumn, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    if (this.onScaleSubscription_) this.onScaleSubscription_.unsubscribe();
     if (this.onEditSubscription_) this.onEditSubscription_.unsubscribe();
     if (this.onDeleteSubscription_) this.onDeleteSubscription_.unsubscribe();
+  }
+
+  showOption(optionName: string): boolean {
+    return (optionName === 'logs' && loggableResources.includes(this.typeMeta.kind)) ||
+        (optionName === 'scale' && scalableResources.includes(this.typeMeta.kind)) ||
+        (optionName === 'exec' && this.typeMeta.kind === Resource.pod);
+  }
+
+  getLogsHref(): string {
+    return this.state_.href(
+        logsState.name,
+        new LogsStateParams(this.objectMeta.namespace, this.objectMeta.name, this.typeMeta.kind));
+  }
+
+  getExecHref(): string {
+    return this.kdState_.href('shell', this.objectMeta.name, this.objectMeta.namespace);
+  }
+
+  onScale() {
+    this.onScaleSubscription_ = this.verber_.onScale.subscribe(this.onSuccess_.bind(this));
+    this.verber_.showScaleDialog(this.typeMeta.kind, this.typeMeta, this.objectMeta);
   }
 
   onEdit(): void {
