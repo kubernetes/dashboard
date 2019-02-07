@@ -45,7 +45,6 @@ export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
     this.registerBinding(this.icon.error, 'kd-error', this.isInErrorState);
 
     // Register action columns.
-    this.registerActionColumn<LogsButtonComponent>('logs', LogsButtonComponent);
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
 
     // Register dynamic columns.

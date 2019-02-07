@@ -15,19 +15,17 @@
 import {Component, Input} from '@angular/core';
 import {ObjectMeta, TypeMeta} from '@api/backendapi';
 import {ActionColumn} from '@api/frontendapi';
-import {StateService} from '@uirouter/core';
-import {logsState} from '../../../../../logs/state';
-import {LogsStateParams} from '../../../../params/params';
+import {KdStateService} from '../../../../services/global/state';
 
 @Component({
-  selector: 'kd-logs-button',
+  selector: 'kd-exec-button',
   templateUrl: './template.html',
 })
-export class LogsButtonComponent implements ActionColumn {
+export class ExecButtonComponent implements ActionColumn {
   @Input() objectMeta: ObjectMeta;
   @Input() typeMeta: TypeMeta;
 
-  constructor(private readonly _state: StateService) {}
+  constructor(private readonly kdState_: KdStateService) {}
 
   setObjectMeta(objectMeta: ObjectMeta): void {
     this.objectMeta = objectMeta;
@@ -38,8 +36,6 @@ export class LogsButtonComponent implements ActionColumn {
   }
 
   getHref(): string {
-    return this._state.href(
-        logsState.name,
-        new LogsStateParams(this.objectMeta.namespace, this.objectMeta.name, this.typeMeta.kind));
+    return this.kdState_.href('shell', this.objectMeta.name, this.objectMeta.namespace);
   }
 }

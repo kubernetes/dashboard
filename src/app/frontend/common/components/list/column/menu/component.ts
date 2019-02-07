@@ -16,7 +16,7 @@ import {Component, Input, OnDestroy} from '@angular/core';
 import {ObjectMeta, TypeMeta} from '@api/backendapi';
 import {ActionColumn} from '@api/frontendapi';
 import {StateService} from '@uirouter/core';
-import {Subscription} from 'rxjs/Subscription';
+import {first} from 'rxjs/operators';
 
 import {logsState} from '../../../../../logs/state';
 import {LogsStateParams} from '../../../../params/params';
@@ -33,6 +33,8 @@ const scalableResources: string[] = [
   Resource.deployment, Resource.replicaSet, Resource.replicationController, Resource.statefulSet
 ];
 
+const executableResources: string[] = [Resource.pod];
+
 @Component({
   selector: 'kd-resource-context-menu',
   templateUrl: './template.html',
@@ -40,10 +42,6 @@ const scalableResources: string[] = [
 export class MenuComponent implements ActionColumn, OnDestroy {
   @Input() objectMeta: ObjectMeta;
   @Input() typeMeta: TypeMeta;
-
-  private onScaleSubscription_: Subscription;
-  private onEditSubscription_: Subscription;
-  private onDeleteSubscription_: Subscription;
 
   constructor(
       private readonly verber_: VerberService, private readonly state_: StateService,
@@ -57,16 +55,8 @@ export class MenuComponent implements ActionColumn, OnDestroy {
     this.typeMeta = typeMeta;
   }
 
-  ngOnDestroy(): void {
-    if (this.onScaleSubscription_) this.onScaleSubscription_.unsubscribe();
-    if (this.onEditSubscription_) this.onEditSubscription_.unsubscribe();
-    if (this.onDeleteSubscription_) this.onDeleteSubscription_.unsubscribe();
-  }
-
-  showOption(optionName: string): boolean {
-    return (optionName === 'logs' && loggableResources.includes(this.typeMeta.kind)) ||
-        (optionName === 'scale' && scalableResources.includes(this.typeMeta.kind)) ||
-        (optionName === 'exec' && this.typeMeta.kind === Resource.pod);
+  isLogsEnabled(): boolean {
+    return loggableResources.includes(this.typeMeta.kind);
   }
 
   getLogsHref(): string {
@@ -75,26 +65,30 @@ export class MenuComponent implements ActionColumn, OnDestroy {
         new LogsStateParams(this.objectMeta.namespace, this.objectMeta.name, this.typeMeta.kind));
   }
 
+  isExecEnabled(): boolean {
+    return executableResources.includes(this.typeMeta.kind);
+  }
+
   getExecHref(): string {
     return this.kdState_.href('shell', this.objectMeta.name, this.objectMeta.namespace);
   }
 
+  isScaleEnabled(): boolean {
+    return scalableResources.includes(this.typeMeta.kind);
+  }
+
   onScale() {
-    this.onScaleSubscription_ = this.verber_.onScale.subscribe(this.onSuccess_.bind(this));
+    this.verber_.onScale.pipe(first()).subscribe(() => this.state_.reload());
     this.verber_.showScaleDialog(this.typeMeta.kind, this.typeMeta, this.objectMeta);
   }
 
   onEdit(): void {
-    this.onEditSubscription_ = this.verber_.onEdit.subscribe(this.onSuccess_.bind(this));
+    this.verber_.onEdit.pipe(first()).subscribe(() => this.state_.reload());
     this.verber_.showEditDialog(this.typeMeta.kind, this.typeMeta, this.objectMeta);
   }
 
   onDelete(): void {
-    this.onDeleteSubscription_ = this.verber_.onDelete.subscribe(this.onSuccess_.bind(this));
+    this.verber_.onDelete.pipe(first()).subscribe(() => this.state_.reload());
     this.verber_.showDeleteDialog(this.typeMeta.kind, this.typeMeta, this.objectMeta);
-  }
-
-  private onSuccess_(): void {
-    this.state_.reload();
   }
 }

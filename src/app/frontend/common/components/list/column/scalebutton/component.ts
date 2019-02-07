@@ -16,18 +16,19 @@ import {Component, Input} from '@angular/core';
 import {ObjectMeta, TypeMeta} from '@api/backendapi';
 import {ActionColumn} from '@api/frontendapi';
 import {StateService} from '@uirouter/core';
-import {logsState} from '../../../../../logs/state';
-import {LogsStateParams} from '../../../../params/params';
+import {first} from 'rxjs/operators';
+
+import {VerberService} from '../../../../services/global/verber';
 
 @Component({
-  selector: 'kd-logs-button',
+  selector: 'kd-scale-button',
   templateUrl: './template.html',
 })
-export class LogsButtonComponent implements ActionColumn {
+export class ScaleButtonComponent implements ActionColumn {
   @Input() objectMeta: ObjectMeta;
   @Input() typeMeta: TypeMeta;
 
-  constructor(private readonly _state: StateService) {}
+  constructor(private readonly verber_: VerberService, private readonly _state: StateService) {}
 
   setObjectMeta(objectMeta: ObjectMeta): void {
     this.objectMeta = objectMeta;
@@ -37,9 +38,9 @@ export class LogsButtonComponent implements ActionColumn {
     this.typeMeta = typeMeta;
   }
 
-  getHref(): string {
-    return this._state.href(
-        logsState.name,
-        new LogsStateParams(this.objectMeta.namespace, this.objectMeta.name, this.typeMeta.kind));
+  perform(event: Event): void {
+    event.stopPropagation();
+    this.verber_.onScale.pipe(first()).subscribe(() => this._state.reload());
+    this.verber_.showScaleDialog(this.typeMeta.kind, this.typeMeta, this.objectMeta);
   }
 }
