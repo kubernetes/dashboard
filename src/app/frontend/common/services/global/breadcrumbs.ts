@@ -19,6 +19,7 @@ import {searchState} from '../../../search/state';
 import {SEARCH_QUERY_STATE_PARAM} from '../../params/params';
 
 const breadcrumbsConfig = 'kdBreadcrumbs';
+export const logsParentStatePlaceholder = '___logsParentState___';
 
 @Injectable()
 export class BreadcrumbsService {
@@ -28,7 +29,9 @@ export class BreadcrumbsService {
     const conf = this.getBreadcrumbConfig(state);
     let result = null;
     if (conf && conf.parent) {
-      if (typeof conf.parent === 'string') {
+      if (conf.parent === logsParentStatePlaceholder) {
+        result = this.state_.get(`${this.state_.params.resourceType}.detail`);
+      } else if (typeof conf.parent === 'string') {
         result = this.state_.get(conf.parent);
       } else {
         result = conf.parent;
