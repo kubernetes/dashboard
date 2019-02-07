@@ -15,6 +15,15 @@ limitations under the License.
 -->
 
 <mat-menu #actions="matMenu">
+  <a mat-menu-item
+     *ngIf="showOption('logs')"
+     [href]="getLogsHref()">Logs</a>
+  <a mat-menu-item
+     *ngIf="showOption('exec')"
+     [href]="getExecHref()">Exec</a>
+  <button mat-menu-item
+          *ngIf="showOption('scale')"
+          (click)="onScale()">Scale</button>
   <button mat-menu-item
           (click)="onEdit()">Edit</button>
   <button mat-menu-item
