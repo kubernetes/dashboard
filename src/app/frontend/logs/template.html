@@ -104,11 +104,11 @@ limitations under the License.
     </div>
 
     <div content
-         class="kd-log-view">
+         class="kd-log-view"
+         [ngClass]="{'kd-logs-text-color-invert': logService?.getInverted(), 'kd-logs-text-color': !logService?.getInverted()}">
       <div kdLoadingSpinner
            [isLoading]="isLoading"></div>
-      <div class="kd-log-view-container"
-           [ngClass]="{'kd-logs-text-color-invert': logService?.getInverted(), 'kd-logs-text-color': !logService?.getInverted()}">
+      <div class="kd-log-view-container">
         <div class="kd-virtual-repeat-sizer"></div>
         <div *ngFor="let item of logsSet"
              class="kd-logs-element"

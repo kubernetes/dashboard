@@ -40,6 +40,10 @@ $content-background: #fff;
 .kd-logs-text-color-invert {
   background-color: $logs-color-black;
   color: $logs-color-white;
+
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.5);
+  }
 }
 
 .kd-logs-text-color {
@@ -149,6 +153,7 @@ $content-background: #fff;
   position: absolute;
   right: 0;
   top: 57px;
+  background-color: inherit;
 }
 
 .kd-virtual-repeat-sizer {
