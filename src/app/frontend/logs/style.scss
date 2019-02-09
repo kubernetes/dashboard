@@ -21,6 +21,8 @@ $logs-color-white: #fff;
 $emphasis: #000;
 $content-background: #fff;
 
+$scrollbar-color-light: rgba(255, 255, 255, .5);
+
 .kd-logs-header-text {
   line-height: $baseline-grid * 5.25;
   white-space: nowrap;
@@ -42,7 +44,7 @@ $content-background: #fff;
   color: $logs-color-white;
 
   ::-webkit-scrollbar-thumb {
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: $scrollbar-color-light;
   }
 }
 
@@ -144,6 +146,7 @@ $content-background: #fff;
 
 .kd-log-view-container {
   -webkit-overflow-scrolling: touch;
+  background-color: inherit;
   bottom: 50px;
   box-sizing: border-box;
   left: 0;
@@ -153,7 +156,6 @@ $content-background: #fff;
   position: absolute;
   right: 0;
   top: 57px;
-  background-color: inherit;
 }
 
 .kd-virtual-repeat-sizer {
