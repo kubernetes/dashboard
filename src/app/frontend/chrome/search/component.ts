@@ -21,14 +21,16 @@ import {searchState} from '../../search/state';
 
 @Component({selector: 'kd-search', templateUrl: './template.html', styleUrls: ['./style.scss']})
 export class SearchComponent implements OnInit {
-  query = '';
+  query: string;
 
   constructor(
-      private readonly state_: StateService, private readonly transition_: TransitionService) {}
+      private readonly state_: StateService, private readonly transition_: TransitionService) {
+    this.query = state_.transition.params('to').q;
+  }
 
   ngOnInit(): void {
     this.transition_.onStart({}, () => {
-      this.query = '';
+      this.query = this.state_.transition.params('to').q;
     });
   }
 
