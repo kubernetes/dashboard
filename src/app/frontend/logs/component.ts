@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {HttpParams} from '@angular/common/http';
-import {Component, OnDestroy} from '@angular/core';
+import {Component, ElementRef, OnDestroy, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {LogDetails, LogLine, LogSelection, LogSources} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
@@ -42,6 +42,7 @@ const i18n = {
 
 @Component({selector: 'kd-logs', templateUrl: './template.html', styleUrls: ['./style.scss']})
 export class LogsComponent implements OnDestroy {
+  @ViewChild('logViewContainer') logViewContainer_: ElementRef;
   podLogs: LogDetails;
   logsSet: string[];
   logSources: LogSources;
@@ -112,6 +113,10 @@ export class LogsComponent implements OnDestroy {
     if (podLogs.info.truncated) {
       this.notifications_.push(i18n.MSG_LOGS_TRUNCATED_WARNING, NotificationSeverity.error);
     }
+
+    const {nativeElement} = this.logViewContainer_;
+    console.log(nativeElement.scrollTop, nativeElement.scrollHeight);
+    nativeElement.scrollTo({top: nativeElement.scrollHeight, left: 0, behavior: 'smooth'});
   }
 
   formatAllLogs(logs: LogLine[]): string[] {
@@ -218,11 +223,21 @@ export class LogsComponent implements OnDestroy {
     this.loadNewest();
   }
 
+  onLogsScroll(e: UIEvent): boolean {
+    // console.log(e.target);
+    return true;
+  }
+
   /**
    * Toggles log follow mechanism.
    */
-  toggleLogFollow(): void {
-    this.logService.setFollowing();
+  toggleLogFollow(): void {}
+
+  /**
+   * Toggles log auto refresh mechanism.
+   */
+  toggleLogAutoRefresh(): void {
+    this.logService.setAutoRefresh();
     this.toggleIntervalFunction();
   }
 

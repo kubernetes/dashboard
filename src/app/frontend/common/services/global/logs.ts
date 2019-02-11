@@ -22,7 +22,8 @@ export class LogService {
   inverted_ = true;
   compact_ = false;
   showTimestamp_ = false;
-  following_ = false;
+  following_ = true;
+  autoRefresh_ = false;
 
   constructor(private readonly http_: HttpClient) {}
 
@@ -36,6 +37,14 @@ export class LogService {
 
   getFollowing(): boolean {
     return this.following_;
+  }
+
+  setAutoRefresh(): void {
+    this.autoRefresh_ = !this.autoRefresh_;
+  }
+
+  getAutoRefresh(): boolean {
+    return this.autoRefresh_;
   }
 
   setPrevious(): void {
