@@ -22,7 +22,7 @@ export class LogService {
   inverted_ = true;
   compact_ = false;
   showTimestamp_ = false;
-  following_ = true;
+  following_ = false;
 
   constructor(private readonly http_: HttpClient) {}
 
