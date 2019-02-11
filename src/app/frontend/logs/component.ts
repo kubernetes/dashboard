@@ -114,11 +114,13 @@ export class LogsComponent implements OnDestroy {
       this.notifications_.push(i18n.MSG_LOGS_TRUNCATED_WARNING, NotificationSeverity.error);
     }
 
-    // Pauses very slightly for the view to refresh.
-    setTimeout(() => {
-      const {nativeElement} = this.logViewContainer_;
-      nativeElement.scrollTo({top: nativeElement.scrollHeight, left: 0, behavior: 'smooth'});
-    });
+    const {nativeElement} = this.logViewContainer_;
+    if (nativeElement && this.isScrolledBottom()) {
+      // Pauses very slightly for the view to refresh.
+      setTimeout(() => {
+        nativeElement.scrollTo({top: nativeElement.scrollHeight, left: 0, behavior: 'smooth'});
+      });
+    }
   }
 
   formatAllLogs(logs: LogLine[]): string[] {
@@ -228,13 +230,8 @@ export class LogsComponent implements OnDestroy {
   /**
    * Toggles log follow mechanism.
    */
-  toggleLogFollow(): void {}
-
-  /**
-   * Toggles log auto refresh mechanism.
-   */
-  toggleLogAutoRefresh(): void {
-    this.logService.setAutoRefresh();
+  toggleLogFollow(): void {
+    this.logService.setFollowing();
     this.toggleIntervalFunction();
   }
 
@@ -253,5 +250,17 @@ export class LogsComponent implements OnDestroy {
   downloadLog(): void {
     const dialogData = {data: {pod: this.pod, container: this.container}};
     this.dialog_.open(LogsDownloadDialog, dialogData);
+  }
+
+  /**
+   * Checks if the current logs scroll position is at the bottom.
+   */
+  isScrolledBottom(): boolean {
+    const {nativeElement} = this.logViewContainer_;
+    const currentScroll = nativeElement.scrollTop || nativeElement.scrollTop;
+    const totalHeight = nativeElement.offsetHeight;
+    const clientHeight = nativeElement.clientHeight;
+    console.log(totalHeight, currentScroll, clientHeight);
+    return totalHeight <= currentScroll + clientHeight;
   }
 }
