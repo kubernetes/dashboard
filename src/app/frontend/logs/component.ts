@@ -257,10 +257,6 @@ export class LogsComponent implements OnDestroy {
    */
   isScrolledBottom(): boolean {
     const {nativeElement} = this.logViewContainer_;
-    const currentScroll = nativeElement.scrollTop || nativeElement.scrollTop;
-    const totalHeight = nativeElement.offsetHeight;
-    const clientHeight = nativeElement.clientHeight;
-    console.log(totalHeight, currentScroll, clientHeight);
-    return totalHeight <= currentScroll + clientHeight;
+    return nativeElement.scrollHeight <= nativeElement.scrollTop + nativeElement.clientHeight;
   }
 }
