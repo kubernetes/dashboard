@@ -116,7 +116,6 @@ limitations under the License.
            [isLoading]="isLoading"></div>
       <div class="kd-log-view-container"
            #logViewContainer
-           (scroll)="onLogsScroll($event)"
            [ngClass]="{'kd-logs-text-color-invert': logService?.getInverted(), 'kd-logs-text-color': !logService?.getInverted()}">
         <div class="kd-virtual-repeat-sizer"></div>
         <div *ngFor="let item of logsSet"

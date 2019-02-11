@@ -114,9 +114,11 @@ export class LogsComponent implements OnDestroy {
       this.notifications_.push(i18n.MSG_LOGS_TRUNCATED_WARNING, NotificationSeverity.error);
     }
 
-    const {nativeElement} = this.logViewContainer_;
-    console.log(nativeElement.scrollTop, nativeElement.scrollHeight);
-    nativeElement.scrollTo({top: nativeElement.scrollHeight, left: 0, behavior: 'smooth'});
+    // Pauses very slightly for the view to refresh.
+    setTimeout(() => {
+      const {nativeElement} = this.logViewContainer_;
+      nativeElement.scrollTo({top: nativeElement.scrollHeight, left: 0, behavior: 'smooth'});
+    });
   }
 
   formatAllLogs(logs: LogLine[]): string[] {
@@ -221,11 +223,6 @@ export class LogsComponent implements OnDestroy {
   onPreviousChange(): void {
     this.logService.setPrevious();
     this.loadNewest();
-  }
-
-  onLogsScroll(e: UIEvent): boolean {
-    // console.log(e.target);
-    return true;
   }
 
   /**
