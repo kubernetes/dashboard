@@ -121,7 +121,7 @@
     "codelyzer": "4.5.0",
     "concurrently": "4.1.0",
     "del": "3.0.0",
-    "git-describe": "4.0.3",
+    "git-describe": "4.0.4",
     "glob-run": "0.1.6",
     "gts": "0.9.0",
     "gulp": "4.0.0",
