@@ -22,6 +22,9 @@ limitations under the License.
      *ngIf="isExecEnabled()"
      [href]="getExecHref()">Exec</a>
   <button mat-menu-item
+          *ngIf="isTriggerEnabled()"
+          (click)="onTrigger()">Trigger</button>
+  <button mat-menu-item
           *ngIf="isScaleEnabled()"
           (click)="onScale()">Scale</button>
   <button mat-menu-item

@@ -35,6 +35,8 @@ const scalableResources: string[] = [
 
 const executableResources: string[] = [Resource.pod];
 
+const triggerableResources: string[] = [Resource.cronJob];
+
 @Component({
   selector: 'kd-resource-context-menu',
   templateUrl: './template.html',
@@ -73,11 +75,19 @@ export class MenuComponent implements ActionColumn {
     return this.kdState_.href('shell', this.objectMeta.name, this.objectMeta.namespace);
   }
 
+  isTriggerEnabled(): boolean {
+    return triggerableResources.includes(this.typeMeta.kind);
+  }
+
+  onTrigger(): void {
+    this.verber_.showTriggerDialog(this.typeMeta.kind, this.typeMeta, this.objectMeta);
+  }
+
   isScaleEnabled(): boolean {
     return scalableResources.includes(this.typeMeta.kind);
   }
 
-  onScale() {
+  onScale(): void {
     this.verber_.onScale.pipe(first()).subscribe(() => this.state_.reload());
     this.verber_.showScaleDialog(this.typeMeta.kind, this.typeMeta, this.objectMeta);
   }

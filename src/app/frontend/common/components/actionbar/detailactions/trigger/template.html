@@ -14,9 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<a mat-icon-button
-   class="kd-muted"
-   [href]="getHref()"
-   (click)="$event.stopPropagation()">
-  <mat-icon matTooltip="Logs">subject</mat-icon>
-</a>
+<button mat-icon-button
+        color="accent"
+        class="kd-toolbar-action"
+        matTooltip="Trigger resource"
+        (click)="onClick()">
+  <mat-icon>play_arrow</mat-icon>
+</button>

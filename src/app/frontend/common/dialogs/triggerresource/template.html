@@ -14,8 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<a mat-icon-button
-   class="kd-muted"
-   (click)="perform($event)">
-  <mat-icon matTooltip="Edit">edit</mat-icon>
-</a>
+<h2 mat-dialog-title>Trigger a {{data.displayName}}</h2>
+<mat-dialog-content class="kd-dialog-text">{{data.displayName}} {{data.objectMeta.name}} will be triggered.</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button
+          color="primary"
+          [mat-dialog-close]="true">
+    Trigger
+  </button>
+  <button mat-button
+          color="primary"
+          [mat-dialog-close]="false">
+    Cancel
+  </button>
+</mat-dialog-actions>
