@@ -64,6 +64,7 @@ limitations under the License.
           'kd-logs-size-icon': !logService.getCompact()}">text_fields</mat-icon>
         </button>
         <button mat-icon-button
+                matTooltip="Show timestamps"
                 (click)="onShowTimestamp()">
           <mat-icon>{{logService.getShowTimestamp() ? 'timer' : 'timer_off'}}</mat-icon>
         </button>
