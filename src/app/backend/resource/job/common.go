@@ -19,7 +19,6 @@ import (
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	batch "k8s.io/api/batch/v1"
 	v1 "k8s.io/api/core/v1"
 )
@@ -67,7 +66,7 @@ func FromCells(cells []dataselect.DataCell) []batch.Job {
 	return std
 }
 
-func getStatus(list *batch.JobList, pods []v1.Pod, events []v1.Event) common.ResourceStatus {
+func getStatus(list *batch.JobList, pods []v1.Pod) common.ResourceStatus {
 	info := common.ResourceStatus{}
 	if list == nil {
 		return info
@@ -76,16 +75,16 @@ func getStatus(list *batch.JobList, pods []v1.Pod, events []v1.Event) common.Res
 	for _, job := range list.Items {
 		matchingPods := common.FilterPodsForJob(job, pods)
 		podInfo := common.GetPodInfo(job.Status.Active, job.Spec.Completions, matchingPods)
-		warnings := event.GetPodsEventWarnings(events, matchingPods)
+		jobStatus := getJobStatus(&job)
 
-		if len(warnings) > 0 {
+		if jobStatus.Status == JobStatusFailed {
 			info.Failed++
-		} else if podInfo.Pending > 0 {
-			info.Pending++
+		} else if jobStatus.Status == JobStatusComplete {
+			info.Succeeded++
 		} else if podInfo.Running > 0 {
 			info.Running++
 		} else {
-			info.Succeeded++
+			info.Pending++
 		}
 	}
 
