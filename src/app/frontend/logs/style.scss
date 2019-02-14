@@ -21,6 +21,8 @@ $logs-color-white: #fff;
 $emphasis: #000;
 $content-background: #fff;
 
+$scrollbar-color-light: rgba(255, 255, 255, .5);
+
 .kd-logs-header-text {
   line-height: $baseline-grid * 5.25;
   white-space: nowrap;
@@ -40,6 +42,10 @@ $content-background: #fff;
 .kd-logs-text-color-invert {
   background-color: $logs-color-black;
   color: $logs-color-white;
+
+  ::-webkit-scrollbar-thumb {
+    background-color: $scrollbar-color-light;
+  }
 }
 
 .kd-logs-text-color {
@@ -140,6 +146,7 @@ $content-background: #fff;
 
 .kd-log-view-container {
   -webkit-overflow-scrolling: touch;
+  background-color: inherit;
   bottom: 50px;
   box-sizing: border-box;
   left: 0;
