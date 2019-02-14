@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Input, OnDestroy} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {ObjectMeta, TypeMeta} from '@api/backendapi';
 import {ActionColumn} from '@api/frontendapi';
 import {StateService} from '@uirouter/core';
@@ -39,7 +39,7 @@ const executableResources: string[] = [Resource.pod];
   selector: 'kd-resource-context-menu',
   templateUrl: './template.html',
 })
-export class MenuComponent implements ActionColumn, OnDestroy {
+export class MenuComponent implements ActionColumn {
   @Input() objectMeta: ObjectMeta;
   @Input() typeMeta: TypeMeta;
 
