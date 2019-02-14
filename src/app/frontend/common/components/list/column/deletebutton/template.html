@@ -16,7 +16,6 @@ limitations under the License.
 
 <a mat-icon-button
    class="kd-muted"
-   [href]="getHref()"
-   (click)="$event.stopPropagation()">
-  <mat-icon matTooltip="Logs">subject</mat-icon>
+   (click)="perform($event)">
+  <mat-icon matTooltip="Delete">delete</mat-icon>
 </a>
