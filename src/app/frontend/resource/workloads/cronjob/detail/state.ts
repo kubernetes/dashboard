@@ -14,7 +14,7 @@
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
-import {DefaultActionbar} from '../../../../common/components/actionbars/default/component';
+import {TriggerDefaultActionbar} from '../../../../common/components/actionbars/triggerdefault/component';
 import {addNamespacedResourceStateParamsToUrl} from '../../../../common/params/params';
 import {stateName, stateUrl} from '../state';
 
@@ -34,7 +34,7 @@ export const cronJobDetailState: Ng2StateDeclaration = {
       component: CronJobDetailComponent,
     },
     'actionbar@chrome': {
-      component: DefaultActionbar,
+      component: TriggerDefaultActionbar,
     }
   },
 };

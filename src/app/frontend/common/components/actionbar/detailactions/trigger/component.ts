@@ -14,32 +14,34 @@
 
 import {Component, Input} from '@angular/core';
 import {ObjectMeta, TypeMeta} from '@api/backendapi';
-import {ActionColumn} from '@api/frontendapi';
 import {StateService} from '@uirouter/core';
-import {logsState} from '../../../../../logs/state';
-import {LogsStateParams} from '../../../../params/params';
+import {Subscription} from 'rxjs/Subscription';
+
+import {VerberService} from '../../../../services/global/verber';
 
 @Component({
-  selector: 'kd-logs-button',
+  selector: 'kd-actionbar-detail-trigger',
   templateUrl: './template.html',
 })
-export class LogsButtonComponent implements ActionColumn {
+export class ActionbarDetailTriggerComponent {
   @Input() objectMeta: ObjectMeta;
   @Input() typeMeta: TypeMeta;
+  @Input() displayName: string;
+  verberSubscription_: Subscription;
 
-  constructor(private readonly _state: StateService) {}
+  constructor(private readonly verber_: VerberService, private readonly state_: StateService) {}
 
-  setObjectMeta(objectMeta: ObjectMeta): void {
-    this.objectMeta = objectMeta;
+  ngOnInit(): void {
+    this.verberSubscription_ = this.verber_.onTrigger.subscribe(() => {
+      this.state_.reload().catch();
+    });
   }
 
-  setTypeMeta(typeMeta: TypeMeta): void {
-    this.typeMeta = typeMeta;
+  ngOnDestroy(): void {
+    this.verberSubscription_.unsubscribe();
   }
 
-  getHref(): string {
-    return this._state.href(
-        logsState.name,
-        new LogsStateParams(this.objectMeta.namespace, this.objectMeta.name, this.typeMeta.kind));
+  onClick(): void {
+    this.verber_.showTriggerDialog(this.displayName, this.typeMeta, this.objectMeta);
   }
 }
