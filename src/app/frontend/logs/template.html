@@ -117,10 +117,10 @@ limitations under the License.
       <div class="kd-log-view-container"
            #logViewContainer
            (scroll)="onLogsScroll()"
-           [ngClass]="{'kd-logs-text-color-invert': logService?.getInverted(), 'kd-logs-text-color': !logService?.getInverted()}">
         <div class="kd-virtual-repeat-sizer"></div>
         <div *ngFor="let item of logsSet"
              class="kd-logs-element"
+             [ngClass]="{'kd-logs-element-compact': logService.getCompact(), 'kd-logs-element': !logService.getCompact()}">
           <span class="kd-log-line"
                 [innerHTML]="item | kdSafeHtml"></span>
         </div>
