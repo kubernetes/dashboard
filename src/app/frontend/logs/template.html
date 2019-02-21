@@ -116,7 +116,7 @@ limitations under the License.
            [isLoading]="isLoading"></div>
       <div class="kd-log-view-container"
            #logViewContainer
-           (scroll)="onLogsScroll()"
+           (scroll)="onLogsScroll()">
         <div class="kd-virtual-repeat-sizer"></div>
         <div *ngFor="let item of logsSet"
              class="kd-logs-element"
