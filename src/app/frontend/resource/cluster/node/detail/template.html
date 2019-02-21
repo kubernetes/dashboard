@@ -110,8 +110,8 @@ limitations under the License.
     <div class="kd-allocated-resources">
       <div class="kd-graph-container"
            fxFlex>
-        <kd-allocation-chart [innerPercent]="node?.allocatedResources.cpuRequestsFraction"
-                             [outerPercent]="node?.allocatedResources.cpuLimitsFraction"
+        <kd-allocation-chart [outerPercent]="node?.allocatedResources.cpuRequestsFraction"
+                             [innerPercent]="node?.allocatedResources.cpuLimitsFraction"
                              id="cpu">
         </kd-allocation-chart>
         <div class="kd-graph-legend">
