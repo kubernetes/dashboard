@@ -38,7 +38,7 @@ var emptyJobList = &job.JobList{
 
 // GetCronJobJobs returns list of jobs owned by cron job.
 func GetCronJobJobs(client client.Interface, metricClient metricapi.MetricClient,
-	dsQuery *dataselect.DataSelectQuery, namespace, name string) (*job.JobList, error) {
+	dsQuery *dataselect.DataSelectQuery, namespace, name string, active bool) (*job.JobList, error) {
 
 	cronJob, err := client.BatchV1beta1().CronJobs(namespace).Get(name, metaV1.GetOptions{})
 	if err != nil {
@@ -73,50 +73,7 @@ func GetCronJobJobs(client client.Interface, metricClient metricapi.MetricClient
 	}
 
 	jobs.Items = filterJobsByOwnerUID(cronJob.UID, jobs.Items)
-	jobs.Items = filterJobsByState(true, jobs.Items)
-
-	return job.ToJobList(jobs.Items, pods.Items, events.Items, nonCriticalErrors, dsQuery, metricClient), nil
-}
-
-// GetCronJobJobs returns list of jobs owned by cron job.
-func GetCronJobCompletedJobs(client client.Interface, metricClient metricapi.MetricClient,
-	dsQuery *dataselect.DataSelectQuery, namespace, name string) (*job.JobList, error) {
-	var err error
-
-	cronJob, err := client.BatchV1beta1().CronJobs(namespace).Get(name, metaV1.GetOptions{})
-	if err != nil {
-		return emptyJobList, err
-	}
-
-	channels := &common.ResourceChannels{
-		JobList:   common.GetJobListChannel(client, common.NewSameNamespaceQuery(namespace), 1),
-		PodList:   common.GetPodListChannel(client, common.NewSameNamespaceQuery(namespace), 1),
-		EventList: common.GetEventListChannel(client, common.NewSameNamespaceQuery(namespace), 1),
-	}
-
-	jobs := <-channels.JobList.List
-	err = <-channels.JobList.Error
-	nonCriticalErrors, criticalError := errors.HandleError(err)
-	if criticalError != nil {
-		return emptyJobList, nil
-	}
-
-	pods := <-channels.PodList.List
-	err = <-channels.PodList.Error
-	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
-	if criticalError != nil {
-		return emptyJobList, criticalError
-	}
-
-	events := <-channels.EventList.List
-	err = <-channels.EventList.Error
-	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
-	if criticalError != nil {
-		return emptyJobList, criticalError
-	}
-
-	jobs.Items = filterJobsByOwnerUID(cronJob.UID, jobs.Items)
-	jobs.Items = filterJobsByState(false, jobs.Items)
+	jobs.Items = filterJobsByState(active, jobs.Items)
 
 	return job.ToJobList(jobs.Items, pods.Items, events.Items, nonCriticalErrors, dsQuery, metricClient), nil
 }

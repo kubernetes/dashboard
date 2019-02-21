@@ -15,18 +15,15 @@
 package cronjob_test
 
 import (
-	"reflect"
-	"testing"
+  "reflect"
+  "testing"
 
-	"github.com/kubernetes/dashboard/src/app/backend/api"
-	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/cronjob"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/job"
-	batch "k8s.io/api/batch/v1beta1"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/client-go/kubernetes/fake"
+  "github.com/kubernetes/dashboard/src/app/backend/api"
+  "github.com/kubernetes/dashboard/src/app/backend/resource/cronjob"
+  "github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+  batch "k8s.io/api/batch/v1beta1"
+  metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+  "k8s.io/client-go/kubernetes/fake"
 )
 
 func TestGetJobDetail(t *testing.T) {
@@ -39,7 +36,7 @@ func TestGetJobDetail(t *testing.T) {
 		{
 			namespace,
 			name,
-			[]string{"get", "get", "list", "list", "list", "get", "list", "list", "list", "list"},
+			[]string{"get"},
 			&batch.CronJob{
 				ObjectMeta: metav1.ObjectMeta{
 					Name:      name,
@@ -60,18 +57,6 @@ func TestGetJobDetail(t *testing.T) {
 					TypeMeta: api.TypeMeta{Kind: api.ResourceKindCronJob},
 					Suspend:  &suspend,
 				},
-				ActiveJobs: job.JobList{
-					Jobs:              make([]job.Job, 0),
-					CumulativeMetrics: make([]metricapi.Metric, 0),
-					Errors:            make([]error, 0),
-				},
-				InactiveJobs: job.JobList{
-					Jobs:              make([]job.Job, 0),
-					CumulativeMetrics: make([]metricapi.Metric, 0),
-					Errors:            make([]error, 0),
-				},
-				Events: *event.EmptyEventList,
-				Errors: []error{},
 			},
 		},
 	}
@@ -79,7 +64,7 @@ func TestGetJobDetail(t *testing.T) {
 	for _, c := range cases {
 		fakeClient := fake.NewSimpleClientset(c.raw)
 		dataselect.DefaultDataSelectWithMetrics.MetricQuery = dataselect.NoMetrics
-		actual, _ := cronjob.GetCronJobDetail(fakeClient, dataselect.DefaultDataSelect, nil, c.namespace, c.name)
+		actual, _ := cronjob.GetCronJobDetail(fakeClient, c.namespace, c.name)
 
 		actions := fakeClient.Actions()
 		if len(actions) != len(c.expectedActions) {
