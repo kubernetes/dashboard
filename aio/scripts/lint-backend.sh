@@ -25,13 +25,18 @@ if [ ! -f ${GOLINT_BIN} ]; then
     curl -sfL ${GOLINT_URL} | sh -s -- -b ${CACHE_DIR} v1.12.3
 fi
 
+# Need to check source files under GOPATH
+if [ ${TRAVIS} ]; then
+    cd ${GOPATH}/src/github.com/kubernetes/dashboard/src/app/backend/
+fi
+
 # Run checks.
 ${GOLINT_BIN} run ./... \
   --no-config \
-  --issues-exit-code=0 \
   --deadline=30m \
   --disable-all \
   --enable=govet \
   --enable=gocyclo \
   --enable=misspell \
-  --enable=ineffassign
+  --enable=ineffassign \
+  --enable=goimports
