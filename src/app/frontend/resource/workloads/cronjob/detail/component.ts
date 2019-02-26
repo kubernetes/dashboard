@@ -33,6 +33,7 @@ export class CronJobDetailComponent implements OnInit, OnDestroy {
   isInitialized = false;
   eventListEndpoint: string;
   activeJobsEndpoint: string;
+  inactiveJobsEndpoint: string;
 
   constructor(
       private readonly cronJob_: NamespacedResourceService<CronJobDetail>,
@@ -45,6 +46,7 @@ export class CronJobDetailComponent implements OnInit, OnDestroy {
         EndpointManager.resource(Resource.cronJob, true).child(this.cronJobName_, Resource.event);
     this.activeJobsEndpoint =
         EndpointManager.resource(Resource.cronJob, true).child(this.cronJobName_, Resource.job);
+    this.inactiveJobsEndpoint = this.activeJobsEndpoint + `?active=false`;
 
     this.cronJobSubscription_ =
         this.cronJob_
