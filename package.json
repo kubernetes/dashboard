@@ -84,7 +84,7 @@
     "@uirouter/angular": "2.0.3",
     "@uirouter/core": "5.0.22",
     "@uirouter/rx": "0.5.0",
-    "ace-builds": "1.4.1",
+    "ace-builds": "1.4.3",
     "core-js": "2.6.5",
     "d3": "3.5.17",
     "file-saver": "2.0.1",
