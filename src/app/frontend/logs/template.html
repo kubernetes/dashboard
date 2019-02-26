@@ -70,11 +70,11 @@ limitations under the License.
         </button>
         <button mat-icon-button
                 matTooltip="Toggle auto-refresh (every {{refreshInterval / 1000}} seconds)"
-                (click)="toggleLogFollow()">
+                (click)="toggleLogAutoRefresh()">
           <mat-icon>
             refresh
             <svg class="kd-cross-style"
-                 *ngIf="!logService.getFollowing()"
+                 *ngIf="!logService.getAutoRefresh()"
                  width="32px"
                  height="32px"
                  viewBox="0 0 32 32">
@@ -90,6 +90,11 @@ limitations under the License.
                     y2="28" />
             </svg>
           </mat-icon>
+        </button>
+        <button mat-icon-button
+                [matTooltip]="logService.getFollowing() ? 'Following logs' : 'Follow logs'"
+                (click)="toggleLogFollow()">
+          <mat-icon>{{logService.getFollowing() ? 'flash_on' : 'flash_off'}}</mat-icon>
         </button>
         <button mat-icon-button
                 matTooltip="{{logService?.getPrevious() ? 'Show current logs' : 'Show previous logs'}}"
@@ -109,7 +114,9 @@ limitations under the License.
          [ngClass]="{'kd-logs-text-color-invert': logService?.getInverted(), 'kd-logs-text-color': !logService?.getInverted()}">
       <div kdLoadingSpinner
            [isLoading]="isLoading"></div>
-      <div class="kd-log-view-container">
+      <div class="kd-log-view-container"
+           #logViewContainer
+           (scroll)="onLogsScroll()">
         <div class="kd-virtual-repeat-sizer"></div>
         <div *ngFor="let item of logsSet"
              class="kd-logs-element"
