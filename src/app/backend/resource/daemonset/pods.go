@@ -23,7 +23,6 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
-	apps "k8s.io/api/apps/v1beta2"
 	api "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
@@ -67,18 +66,4 @@ func getRawDaemonSetPods(client k8sClient.Interface, daemonSetName, namespace st
 
 	matchingPods := common.FilterPodsByControllerRef(daemonSet, podList.Items)
 	return matchingPods, nil
-}
-
-// Returns simple info about pods(running, desired, failing, etc.) related to given daemon set.
-func getDaemonSetPodInfo(client k8sClient.Interface, daemonSet *apps.DaemonSet) (
-	*common.PodInfo, error) {
-
-	pods, err := getRawDaemonSetPods(client, daemonSet.Name, daemonSet.Namespace)
-	if err != nil {
-		return nil, err
-	}
-
-	podInfo := common.GetPodInfo(daemonSet.Status.CurrentNumberScheduled,
-		&daemonSet.Status.DesiredNumberScheduled, pods)
-	return &podInfo, nil
 }

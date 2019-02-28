@@ -184,7 +184,7 @@ export interface CronJob extends Resource {
 }
 
 export interface DaemonSet extends Resource {
-  pods: PodInfo;
+  podInfo: PodInfo;
   containerImages: string[];
   initContainerImages: string[];
 }
@@ -388,10 +388,6 @@ export interface DaemonSetDetail extends ResourceDetail {
   containerImages: string[];
   initContainerImages: string[];
   podInfo: PodInfo;
-  podList: PodList;
-  serviceList: ServiceList;
-  hasMetrics: boolean;
-  eventList: EventList;
 }
 
 export interface NamespaceDetail extends ResourceDetail {
@@ -453,8 +449,6 @@ export interface CronJobDetail extends ResourceDetail {
   lastSchedule: string;
   concurrencyPolicy: string;
   startingDeadlineSeconds: number;
-  activeJobs: JobList;
-  events: EventList;
 }
 
 export interface StatefulSetDetail extends ResourceDetail {
