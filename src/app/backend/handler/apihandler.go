@@ -1298,7 +1298,7 @@ func (apiHandler *APIHandler) handleGetReplicationControllerDetail(request *rest
 
 	namespace := request.PathParameter("namespace")
 	name := request.PathParameter("replicationController")
-	result, err := replicationcontroller.GetReplicationControllerDetail(k8sClient, apiHandler.iManager.Metric().Client(), namespace, name)
+	result, err := replicationcontroller.GetReplicationControllerDetail(k8sClient, namespace, name)
 	if err != nil {
 		kdErrors.HandleInternalError(response, err)
 		return

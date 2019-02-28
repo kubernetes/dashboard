@@ -304,7 +304,7 @@ export interface ReplicaSet extends Resource {
 }
 
 export interface ReplicationController extends Resource {
-  pods: PodInfo;
+  podInfo: PodInfo;
   containerImages: string[];
   initContainerImages: string[];
 }
