@@ -28,9 +28,9 @@ export class BreadcrumbsService {
     let result = null;
     if (conf && conf.parent) {
       if (conf.parent === logsParentStatePlaceholder) {
-        result = this.state_.get(`${this.state_.params.resourceType}.detail`);
+        // result = this.state_.get(`${this.state_.params.resourceType}.detail`);
       } else if (typeof conf.parent === 'string') {
-        result = this.state_.get(conf.parent);
+        // result = this.state_.get(conf.parent);
       } else {
         result = conf.parent;
       }

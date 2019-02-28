@@ -23,13 +23,13 @@ import {ActionbarDetailEditComponent} from './actionbar/detailactions/edit/compo
 import {ActionbarDetailExecComponent} from './actionbar/detailactions/exec/component';
 import {ActionbarDetailLogsComponent} from './actionbar/detailactions/logs/component';
 import {ActionbarDetailScaleComponent} from './actionbar/detailactions/scale/component';
-import {ActionbarDetailTriggerComponent} from "./actionbar/detailactions/trigger/component";
+import {ActionbarDetailTriggerComponent} from './actionbar/detailactions/trigger/component';
 import {DefaultActionbar} from './actionbars/default/component';
 import {LogsDefaultActionbar} from './actionbars/logsdefault/component';
 import {LogsExecDefaultActionbar} from './actionbars/logsexecdefault/component';
 import {LogsScaleDefaultActionbar} from './actionbars/logsscaledefault/component';
 import {ScaleDefaultActionbar} from './actionbars/scaledefault/component';
-import {TriggerDefaultActionbar} from "./actionbars/triggerdefault/component";
+import {TriggerDefaultActionbar} from './actionbars/triggerdefault/component';
 import {AllocationChartComponent} from './allocationchart/component';
 import {BreadcrumbsComponent} from './breadcrumbs/component';
 import {CardComponent} from './card/component';
@@ -128,7 +128,6 @@ const components = [
   LogsScaleDefaultActionbar,
   LogsExecDefaultActionbar,
   LogsDefaultActionbar,
-  LogsButtonComponent,
 
   MenuComponent,
 

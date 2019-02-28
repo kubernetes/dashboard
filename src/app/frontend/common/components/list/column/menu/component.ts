@@ -16,7 +16,8 @@ import {Component, Input} from '@angular/core';
 import {Router} from '@angular/router';
 import {ObjectMeta, TypeMeta} from '@api/backendapi';
 import {ActionColumn} from '@api/frontendapi';
-import {KdStateService} from "../../../../services/global/state";
+import {first} from 'rxjs/operators';
+import {KdStateService} from '../../../../services/global/state';
 import {VerberService} from '../../../../services/global/verber';
 import {Resource} from '../../../../services/resource/endpoint';
 
@@ -41,8 +42,9 @@ export class MenuComponent implements ActionColumn {
   @Input() objectMeta: ObjectMeta;
   @Input() typeMeta: TypeMeta;
 
-  constructor(private readonly verber_: VerberService, private readonly router_: Router,
-              private readonly kdState_: KdStateService) {}
+  constructor(
+      private readonly verber_: VerberService, private readonly router_: Router,
+      private readonly kdState_: KdStateService) {}
 
   setObjectMeta(objectMeta: ObjectMeta): void {
     this.objectMeta = objectMeta;
@@ -60,7 +62,8 @@ export class MenuComponent implements ActionColumn {
     return '';
     // return this.state_.href(
     //     logsState.name,
-    //     new LogsStateParams(this.objectMeta.namespace, this.objectMeta.name, this.typeMeta.kind));
+    //     new LogsStateParams(this.objectMeta.namespace, this.objectMeta.name,
+    //     this.typeMeta.kind));
   }
 
   isExecEnabled(): boolean {
@@ -84,21 +87,17 @@ export class MenuComponent implements ActionColumn {
   }
 
   onScale(): void {
-    this.verber_.onScale.pipe(first()).subscribe(() => this.state_.reload());
+    this.verber_.onScale.pipe(first()).subscribe(() => this.router_.navigate([]));
     this.verber_.showScaleDialog(this.typeMeta.kind, this.typeMeta, this.objectMeta);
   }
 
   onEdit(): void {
-    this.verber_.onEdit.pipe(first()).subscribe(() => this.state_.reload());
+    this.verber_.onEdit.pipe(first()).subscribe(() => this.router_.navigate([]));
     this.verber_.showEditDialog(this.typeMeta.kind, this.typeMeta, this.objectMeta);
   }
 
   onDelete(): void {
-    this.verber_.onDelete.pipe(first()).subscribe(() => this.state_.reload());
+    this.verber_.onDelete.pipe(first()).subscribe(() => this.router_.navigate([]));
     this.verber_.showDeleteDialog(this.typeMeta.kind, this.typeMeta, this.objectMeta);
-  }
-
-  private onSuccess_(): void {
-    this.router_.navigate(['.']);
   }
 }
