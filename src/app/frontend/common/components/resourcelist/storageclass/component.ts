@@ -14,8 +14,8 @@
 
 import {HttpParams} from '@angular/common/http';
 import {Component, Input} from '@angular/core';
+import {Router} from '@angular/router';
 import {StorageClass, StorageClassList} from '@api/backendapi';
-import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 
 import {storageClassState} from '../../../../resource/cluster/storageclass/state';
@@ -34,9 +34,9 @@ export class StorageClassListComponent extends ResourceListBase<StorageClassList
   @Input() endpoint = EndpointManager.resource(Resource.storageClass).list();
 
   constructor(
-      state: StateService, private readonly sc_: ResourceService<StorageClassList>,
+      private readonly sc_: ResourceService<StorageClassList>,
       notifications: NotificationsService) {
-    super(storageClassState.name, state, notifications);
+    super(storageClassState.name, notifications);
     this.id = ListIdentifiers.storageClass;
     this.groupId = ListGroupIdentifiers.cluster;
 

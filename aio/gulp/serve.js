@@ -58,9 +58,11 @@ function getBackendArgs() {
     args.push(`--apiserver-host=${conf.backend.apiServerHost}`);
   }
 
-  if (conf.backend.enableSkipButton) {
+  if (!conf.backend.enableSkipButton) {
     args.push(`--enable-skip-login=${conf.backend.enableSkipButton}`);
   }
+
+  // args.push(`--token-ttl=600`);
 
   return args;
 }
@@ -94,7 +96,7 @@ gulp.task('kill-backend', (doneFn) => {
  * Watches for changes in source files and runs Gulp tasks to rebuild them.
  */
 gulp.task('watch', () => {
-  gulp.watch(path.join(conf.paths.backendSrc, '**/*.go'), gulp.parallel('spawn-backend'));
+  gulp.watch(path.join(conf.paths.backendSrc, '**/*.go'), gulp.parallel('spawn-backend', 'watch'));
 });
 
 /**

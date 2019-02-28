@@ -14,8 +14,8 @@
 
 import {HttpParams} from '@angular/common/http';
 import {Component, Input} from '@angular/core';
+import {Router} from '@angular/router';
 import {Node, NodeList} from '@api/backendapi';
-import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 import {nodeState} from '../../../../resource/cluster/node/state';
 import {ResourceListWithStatuses} from '../../../resources/list';
@@ -33,9 +33,8 @@ export class NodeListComponent extends ResourceListWithStatuses<NodeList, Node> 
   @Input() endpoint = EndpointManager.resource(Resource.node).list();
 
   constructor(
-      state: StateService, private readonly node_: ResourceService<NodeList>,
-      notifications: NotificationsService) {
-    super(nodeState.name, state, notifications);
+      private readonly node_: ResourceService<NodeList>, notifications: NotificationsService) {
+    super(nodeState.name, notifications);
     this.id = ListIdentifiers.node;
     this.groupId = ListGroupIdentifiers.cluster;
 

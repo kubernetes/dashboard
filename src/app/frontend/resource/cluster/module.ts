@@ -18,13 +18,14 @@ import {UIRouterModule} from '@uirouter/angular';
 import {ComponentsModule} from '../../common/components/module';
 import {SharedModule} from '../../shared.module';
 import {ClusterComponent} from './component';
+import {ClusterRoutingModule} from './routing';
 import {clusterState} from './state';
 
 @NgModule({
   imports: [
     SharedModule,
     ComponentsModule,
-    UIRouterModule.forChild({states: [clusterState]}),
+    ClusterRoutingModule,
   ],
   declarations: [ClusterComponent],
 })

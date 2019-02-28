@@ -14,6 +14,7 @@
 
 import {HttpClient} from '@angular/common/http';
 import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 import {StateService} from '@uirouter/core';
 
 import {AssetsService} from '../common/services/global/assets';
@@ -37,7 +38,7 @@ export class ChromeComponent implements OnInit {
 
   constructor(
       public assets: AssetsService, private readonly http_: HttpClient,
-      private readonly state_: StateService) {}
+      private readonly router_: Router) {}
 
   ngOnInit(): void {
     this.http_.get<SystemBanner>(ChromeComponent.systemBannerEndpoint).toPromise().then((sb) => {
@@ -72,6 +73,6 @@ export class ChromeComponent implements OnInit {
   }
 
   goToCreateState(): void {
-    this.state_.go('create');
+    this.router_.navigate(['create']);
   }
 }

@@ -15,7 +15,7 @@
 package cronjob_test
 
 import (
-	"errors"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 )
 
 var (
@@ -24,5 +24,5 @@ var (
 	suspend      = false
 	labels       = map[string]string{"app": "test-app"}
 	eventMessage = "test-message"
-	customError  = errors.New("test-error")
+	customError  = errors.NewInvalid("test-error")
 )

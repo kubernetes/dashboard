@@ -14,8 +14,8 @@
 
 import {HttpParams} from '@angular/common/http';
 import {Component, Input} from '@angular/core';
+import {Router} from '@angular/router';
 import {ClusterRole, ClusterRoleList} from '@api/backendapi';
-import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 
 import {clusterRoleState} from '../../../../resource/cluster/clusterrole/state';
@@ -34,9 +34,9 @@ export class ClusterRoleListComponent extends ResourceListBase<ClusterRoleList, 
   @Input() endpoint = EndpointManager.resource(Resource.clusterRole).list();
 
   constructor(
-      state: StateService, private readonly clusterRole_: ResourceService<ClusterRoleList>,
+      private readonly clusterRole_: ResourceService<ClusterRoleList>,
       notifications: NotificationsService) {
-    super(clusterRoleState.name, state, notifications);
+    super(clusterRoleState.name, notifications);
     this.id = ListIdentifiers.clusterRole;
     this.groupId = ListGroupIdentifiers.cluster;
 

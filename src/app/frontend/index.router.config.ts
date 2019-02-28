@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HookMatchCriteria, HookMatchCriterion, UIRouter} from '@uirouter/core/lib';
+import {HookMatchCriteria, HookMatchCriterion, UIRouter} from '@uirouter/core';
 
 import {NAMESPACE_STATE_PARAM} from './common/params/params';
 import {AuthService} from './common/services/global/authentication';
@@ -26,19 +26,24 @@ export function configureRouter(router: UIRouter): void {
 
   // Register default error handler for state transition errors.
   stateService.defaultErrorHandler((err) => {
+    console.log('Go to error');
     stateService.go('error', {error: err});
   });
 
   // Register transition hook to adjust window title.
   // It cannot be registered "on before" because state params are not available then.
   transitionService.onSuccess({}, (transition) => {
+    console.log('onSuccess title update');
     const titleService = transition.injector().get(TitleService);
     titleService.update(transition);
   });
 
-  transitionService.onSuccess({}, (transition) => {
+  transitionService.onBefore({}, (transition) => {
+    console.log('onBefore namespace adder');
     const namespaceParam = transition.params().namespace;
-    if (namespaceParam === undefined && transition.to().name !== 'login') {
+    if (namespaceParam === undefined && transition.to().name !== 'login' &&
+        transition.to().name !== 'error') {
+      console.log(`Go to ${transition.to().name} and have fun!`);
       stateService.go(transition.to().name, {[NAMESPACE_STATE_PARAM]: CONFIG.defaultNamespace});
     }
   });
@@ -49,13 +54,15 @@ export function configureRouter(router: UIRouter): void {
   } as HookMatchCriteria;
 
   transitionService.onBefore(requiresAuthCriteria, (transition) => {
+    console.log('OnBefore redirectToLogin');
     const authService = transition.injector().get(AuthService);
     return authService.redirectToLogin(transition);
   }, {priority: 10});
 
   transitionService.onBefore(requiresAuthCriteria, (transition) => {
+    console.log('OnBefore refresthToken');
     const authService = transition.injector().get(AuthService);
-    return authService.refreshToken();
+    authService.refreshToken();
   });
 
   // Register custom state service to hook state transitions

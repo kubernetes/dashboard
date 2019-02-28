@@ -14,7 +14,7 @@
 
 import {HttpParams} from '@angular/common/http';
 import {Component, Input} from '@angular/core';
-import {StateService} from '@uirouter/core';
+import {Router} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import {Ingress, IngressList} from 'typings/backendapi';
 
@@ -32,9 +32,9 @@ export class IngressListComponent extends ResourceListBase<IngressList, Ingress>
   @Input() endpoint = EndpointManager.resource(Resource.ingress, true).list();
 
   constructor(
-      state: StateService, private readonly ingress_: NamespacedResourceService<IngressList>,
-      notifications: NotificationsService, private readonly namespaceService_: NamespaceService) {
-    super(ingressState.name, state, notifications);
+      private readonly ingress_: NamespacedResourceService<IngressList>,
+      notifications: NotificationsService) {
+    super(ingressState.name, notifications);
     this.id = ListIdentifiers.ingress;
     this.groupId = ListGroupIdentifiers.discovery;
 

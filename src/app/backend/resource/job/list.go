@@ -28,7 +28,7 @@ import (
 	client "k8s.io/client-go/kubernetes"
 )
 
-// JobList contains a list of Jobs in the cluster.
+// JobListComponent contains a list of Jobs in the cluster.
 type JobList struct {
 	ListMeta          api.ListMeta       `json:"listMeta"`
 	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`

@@ -26,7 +26,7 @@ import (
 	kubernetes "k8s.io/client-go/kubernetes"
 )
 
-// ConfigMapList contains a list of Config Maps in the cluster.
+// ConfigMapListComponent contains a list of Config Maps in the cluster.
 type ConfigMapList struct {
 	ListMeta api.ListMeta `json:"listMeta"`
 

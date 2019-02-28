@@ -18,8 +18,9 @@ import (
 	"net/http"
 
 	restful "github.com/emicklei/go-restful"
+
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
-	kdErrors "github.com/kubernetes/dashboard/src/app/backend/errors"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/validation"
 )
 
@@ -59,14 +60,14 @@ func (self AuthHandler) handleLogin(request *restful.Request, response *restful.
 	loginSpec := new(authApi.LoginSpec)
 	if err := request.ReadEntity(loginSpec); err != nil {
 		response.AddHeader("Content-Type", "text/plain")
-		response.WriteErrorString(kdErrors.HandleHTTPError(err), err.Error()+"\n")
+		response.WriteErrorString(errors.HandleHTTPError(err), err.Error()+"\n")
 		return
 	}
 
 	loginResponse, err := self.manager.Login(loginSpec)
 	if err != nil {
 		response.AddHeader("Content-Type", "text/plain")
-		response.WriteErrorString(kdErrors.HandleHTTPError(err), err.Error()+"\n")
+		response.WriteErrorString(errors.HandleHTTPError(err), err.Error()+"\n")
 		return
 	}
 
@@ -81,14 +82,14 @@ func (self *AuthHandler) handleJWETokenRefresh(request *restful.Request, respons
 	tokenRefreshSpec := new(authApi.TokenRefreshSpec)
 	if err := request.ReadEntity(tokenRefreshSpec); err != nil {
 		response.AddHeader("Content-Type", "text/plain")
-		response.WriteErrorString(kdErrors.HandleHTTPError(err), err.Error()+"\n")
+		response.WriteErrorString(errors.HandleHTTPError(err), err.Error()+"\n")
 		return
 	}
 
 	refreshedJWEToken, err := self.manager.Refresh(tokenRefreshSpec.JWEToken)
 	if err != nil {
 		response.AddHeader("Content-Type", "text/plain")
-		response.WriteErrorString(kdErrors.HandleHTTPError(err), err.Error()+"\n")
+		response.WriteErrorString(errors.HandleHTTPError(err), err.Error()+"\n")
 		return
 	}
 

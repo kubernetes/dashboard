@@ -17,10 +17,12 @@ import 'rxjs/add/operator/switchMap';
 
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
+import {Router} from '@angular/router';
 import {onLogin} from '@api/frontendapi';
-import {StateService, TargetState, Transition, TransitionService} from '@uirouter/core';
+import {TargetState, Transition} from '@uirouter/core';
 import {CookieService} from 'ngx-cookie-service';
 import {Observable} from 'rxjs/Observable';
+import {first, switchMap} from 'rxjs/operators';
 import {AuthResponse, CsrfToken, K8sError, LoginSpec, LoginStatus} from 'typings/backendapi';
 
 import {errorState} from '../../../error/state';
@@ -28,15 +30,22 @@ import {CONFIG} from '../../../index.config';
 import {overviewState} from '../../../overview/state';
 
 import {CsrfTokenService} from './csrftoken';
+import {KdStateService} from './state';
 
 @Injectable()
 export class AuthService {
   private readonly config_ = CONFIG;
 
   constructor(
-      private readonly cookies_: CookieService, private readonly transitions_: TransitionService,
-      private readonly state_: StateService, private readonly http_: HttpClient,
-      private readonly csrfTokenService_: CsrfTokenService) {}
+      private readonly cookies_: CookieService, private readonly router_: Router,
+      private readonly http_: HttpClient, private readonly csrfTokenService_: CsrfTokenService,
+      private readonly stateService_: KdStateService) {
+    this.init_();
+  }
+
+  private init_() {
+    this.stateService_.onBefore.subscribe(() => this.refreshToken());
+  }
 
   private setTokenCookie_(token: string): void {
     // This will only work for HTTPS connection
@@ -50,22 +59,21 @@ export class AuthService {
     return this.cookies_.get(this.config_.authTokenCookieName) || '';
   }
 
-  private removeAuthCookies_(): void {
+  removeAuthCookies_(): void {
     this.cookies_.delete(this.config_.authTokenCookieName);
     this.cookies_.delete(this.config_.skipLoginPageCookieName);
   }
 
   /** Sends a login request to the backend with filled in login spec structure. */
   login(loginSpec: LoginSpec, onLoginCb: onLogin): void {
-    const loginObs =
-        this.csrfTokenService_.getTokenForAction('login').switchMap<CsrfToken, AuthResponse>(
-            csrfToken => {
-              return this.http_.post<AuthResponse>(
-                  'api/v1/login', loginSpec,
-                  {headers: new HttpHeaders().set(this.config_.csrfHeaderName, csrfToken.token)});
-            });
+    const loginObs = this.csrfTokenService_.getTokenForAction('login').pipe(
+        switchMap<CsrfToken, AuthResponse>(csrfToken => {
+          return this.http_.post<AuthResponse>(
+              'api/v1/login', loginSpec,
+              {headers: new HttpHeaders().set(this.config_.csrfHeaderName, csrfToken.token)});
+        }));
 
-    loginObs.first().subscribe(
+    loginObs.pipe(first()).subscribe(
         authResponse => {
           if (authResponse.jweToken.length !== 0 && authResponse.errors.length === 0) {
             this.setTokenCookie_(authResponse.jweToken);
@@ -74,13 +82,13 @@ export class AuthService {
           onLoginCb(authResponse.errors);
         },
         err => {
-          return Observable.throw(err);
+          return Observable.throwError(err);
         });
   }
 
   logout(): void {
     this.removeAuthCookies_();
-    this.state_.go('login');
+    this.router_.navigate(['login']);
   }
 
   /**
@@ -92,22 +100,28 @@ export class AuthService {
   redirectToLogin(transition: Transition): Promise<boolean|TargetState> {
     const state = transition.router.stateService;
     return this.getLoginStatus().toPromise().then<boolean|TargetState>(loginStatus => {
+      console.log('======== Status =======');
+      console.log(loginStatus);
+      console.log('=======================');
       if (transition.to().name === 'login' &&
           // Do not allow entering login page if already authenticated or authentication is
           // disabled.
           (this.isAuthenticated(loginStatus) || !this.isAuthenticationEnabled(loginStatus))) {
-        return state.target(overviewState.name, null, {location: true, reload: true});
+        console.log('No to login');
+        return state.target(overviewState.name, null, {location: 'replace', reload: true});
       }
 
       // In following cases user should not be redirected and reach his target state:
       if (transition.to().name === 'login' || transition.to().name === errorState.name ||
           !this.isLoginPageEnabled() || !this.isAuthenticationEnabled(loginStatus) ||
           this.isAuthenticated(loginStatus)) {
+        console.log('Go wherver you want');
         return true;
       }
 
       // In other cases redirect user to login state.
-      return state.target('login', null, {location: true, reload: true});
+      console.log('Stop! Log in!');
+      return state.target('login', null, {location: 'replace', reload: true});
     });
   }
 
@@ -119,13 +133,12 @@ export class AuthService {
     const token = this.getTokenCookie_();
     if (token.length === 0) return Promise.resolve(true);
 
-    const tokenRefreshObs =
-        this.csrfTokenService_.getTokenForAction('token').switchMap<CsrfToken, AuthResponse>(
-            csrfToken => {
-              return this.http_.post<AuthResponse>(
-                  'api/v1/token/refresh', {jweToken: token},
-                  {headers: new HttpHeaders().set(this.config_.csrfHeaderName, csrfToken.token)});
-            });
+    const tokenRefreshObs = this.csrfTokenService_.getTokenForAction('token').pipe(
+        switchMap<CsrfToken, AuthResponse>(csrfToken => {
+          return this.http_.post<AuthResponse>(
+              'api/v1/token/refresh', {jweToken: token},
+              {headers: new HttpHeaders().set(this.config_.csrfHeaderName, csrfToken.token)});
+        }));
 
     return tokenRefreshObs.toPromise().then<string|K8sError[]>(
         authResponse => {

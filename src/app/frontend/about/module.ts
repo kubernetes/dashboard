@@ -13,20 +13,19 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
-import {UIRouterModule} from '@uirouter/angular';
 
 import {ComponentsModule} from '../common/components/module';
 import {SharedModule} from '../shared.module';
 
 import {ActionbarComponent} from './actionbar/component';
 import {AboutComponent} from './component';
-import {aboutState} from './state';
+import {AboutRoutingModule} from './routing';
 
 @NgModule({
   imports: [
     SharedModule,
     ComponentsModule,
-    UIRouterModule.forChild({states: [aboutState]}),
+    AboutRoutingModule,
   ],
   declarations: [AboutComponent, ActionbarComponent],
 })

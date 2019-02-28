@@ -14,6 +14,7 @@
 
 import {HttpParams} from '@angular/common/http';
 import {Component, Input} from '@angular/core';
+import {Router} from '@angular/router';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 import {Secret, SecretList} from 'typings/backendapi';
@@ -31,9 +32,9 @@ export class SecretListComponent extends ResourceListBase<SecretList, Secret> {
   @Input() endpoint = EndpointManager.resource(Resource.secret, true).list();
 
   constructor(
-      state: StateService, private readonly secret_: NamespacedResourceService<SecretList>,
-      notifications: NotificationsService, private readonly namespaceService_: NamespaceService) {
-    super(secretState.name, state, notifications);
+      private readonly secret_: NamespacedResourceService<SecretList>,
+      notifications: NotificationsService) {
+    super(secretState.name, notifications);
     this.id = ListIdentifiers.secret;
     this.groupId = ListGroupIdentifiers.config;
 

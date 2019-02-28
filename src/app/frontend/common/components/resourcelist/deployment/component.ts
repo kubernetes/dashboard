@@ -14,8 +14,8 @@
 
 import {HttpParams} from '@angular/common/http';
 import {Component, ComponentFactoryResolver, Input} from '@angular/core';
+import {Router} from '@angular/router';
 import {Deployment, DeploymentList, Event} from '@api/backendapi';
-import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 import {deploymentState} from '../../../../resource/workloads/deployment/state';
 import {ResourceListWithStatuses} from '../../../resources/list';
@@ -34,10 +34,9 @@ export class DeploymentListComponent extends ResourceListWithStatuses<Deployment
   @Input() endpoint = EndpointManager.resource(Resource.deployment, true).list();
 
   constructor(
-      state: StateService, private readonly deployment_: NamespacedResourceService<DeploymentList>,
-      notifications: NotificationsService, resolver: ComponentFactoryResolver,
-      private readonly namespaceService_: NamespaceService) {
-    super(deploymentState.name, state, notifications, resolver);
+      private readonly deployment_: NamespacedResourceService<DeploymentList>,
+      notifications: NotificationsService, resolver: ComponentFactoryResolver) {
+    super(deploymentState.name, notifications, resolver);
     this.id = ListIdentifiers.deployment;
     this.groupId = ListGroupIdentifiers.workloads;
 

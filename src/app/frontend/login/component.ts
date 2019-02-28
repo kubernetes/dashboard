@@ -14,14 +14,12 @@
 
 import {HttpClient} from '@angular/common/http';
 import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 import {AuthenticationMode, EnabledAuthenticationModes, LoginSkippableResponse, LoginSpec} from '@api/backendapi';
 import {KdFile} from '@api/frontendapi';
-import {StateService} from '@uirouter/core';
 
 import {K8SError} from '../common/errors/errors';
-import {NAMESPACE_STATE_PARAM} from '../common/params/params';
 import {AuthService} from '../common/services/global/authentication';
-import {CONFIG} from '../index.config';
 import {overviewState} from '../overview/state';
 
 enum LoginModes {
@@ -45,7 +43,7 @@ export class LoginComponent implements OnInit {
   private password_: string;
 
   constructor(
-      private readonly authService_: AuthService, private readonly state_: StateService,
+      private readonly authService_: AuthService, private readonly state_: Router,
       private readonly httpClient: HttpClient) {}
 
   ngOnInit(): void {
@@ -77,13 +75,13 @@ export class LoginComponent implements OnInit {
         return;
       }
 
-      this.state_.go(overviewState.name, {[NAMESPACE_STATE_PARAM]: CONFIG.defaultNamespace});
+      this.state_.navigate([overviewState.name]);
     });
   }
 
   skip(): void {
     this.authService_.skipLoginPage(true);
-    this.state_.go(overviewState.name, {[NAMESPACE_STATE_PARAM]: CONFIG.defaultNamespace});
+    this.state_.navigate([overviewState.name]);
   }
 
   isSkipButtonEnabled(): boolean {

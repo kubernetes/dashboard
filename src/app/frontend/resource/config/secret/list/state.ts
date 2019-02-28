@@ -16,12 +16,12 @@ import {Ng2StateDeclaration} from '@uirouter/angular';
 
 import {configState} from '../../state';
 import {stateName, stateUrl} from '../state';
-import {SecretList} from './component';
+import {SecretListComponent} from './component';
 
 export const secretListState: Ng2StateDeclaration = {
   name: `${stateName}.list`,
   url: stateUrl,
-  component: SecretList,
+  component: SecretListComponent,
   data: {
     kdBreadcrumbs: {
       label: 'Secrets',

@@ -30,12 +30,12 @@ export class NotificationsComponent implements OnInit {
 
   constructor(
       private readonly notifications_: NotificationsService,
-      private readonly transition_: TransitionService, private readonly element_: ElementRef) {}
+      private readonly element_: ElementRef) {}
 
   ngOnInit(): void {
-    this.transition_.onExit({}, () => {
-      this.close_();
-    });
+    // this.transition_.onExit({}, () => {
+    //   this.close_();
+    // });
   }
 
   @HostListener('document:click', ['$event'])

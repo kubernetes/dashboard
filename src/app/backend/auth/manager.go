@@ -15,12 +15,11 @@
 package auth
 
 import (
-	"errors"
+	"k8s.io/client-go/tools/clientcmd/api"
 
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
-	kdErrors "github.com/kubernetes/dashboard/src/app/backend/errors"
-	"k8s.io/client-go/tools/clientcmd/api"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 )
 
 // Implements AuthManager interface
@@ -44,7 +43,7 @@ func (self authManager) Login(spec *authApi.LoginSpec) (*authApi.AuthResponse, e
 	}
 
 	err = self.healthCheck(authInfo)
-	nonCriticalErrors, criticalError := kdErrors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.HandleError(err)
 	if criticalError != nil || len(nonCriticalErrors) > 0 {
 		return &authApi.AuthResponse{Errors: nonCriticalErrors}, criticalError
 	}
@@ -73,7 +72,7 @@ func (self authManager) AuthenticationSkippable() bool {
 // Returns authenticator based on provided LoginSpec.
 func (self authManager) getAuthenticator(spec *authApi.LoginSpec) (authApi.Authenticator, error) {
 	if len(self.authenticationModes) == 0 {
-		return nil, errors.New("All authentication options disabled. Check --authentication-modes argument for more information.")
+		return nil, errors.NewInvalid("All authentication options disabled. Check --authentication-modes argument for more information.")
 	}
 
 	switch {
@@ -85,7 +84,7 @@ func (self authManager) getAuthenticator(spec *authApi.LoginSpec) (authApi.Authe
 		return NewKubeConfigAuthenticator(spec, self.authenticationModes), nil
 	}
 
-	return nil, errors.New("Not enough data to create authenticator.")
+	return nil, errors.NewInvalid("Not enough data to create authenticator.")
 }
 
 // Checks if user data extracted from provided AuthInfo structure is valid and user is correctly authenticated

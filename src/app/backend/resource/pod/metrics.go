@@ -15,14 +15,15 @@
 package pod
 
 import (
-	"errors"
 	"log"
 
-	"github.com/kubernetes/dashboard/src/app/backend/api"
-	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/types"
+
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // MetricsByPod is a metrics map by pod name.
@@ -88,13 +89,13 @@ func getPodUIDFromMetric(metric metricapi.Metric) (types.UID, error) {
 	// Check is metric label contains required resource UID
 	uidList, exists := metric.Label[api.ResourceKindPod]
 	if !exists {
-		return "", errors.New("Metric label not set.")
+		return "", errors.NewInvalid("Metric label not set.")
 	}
 
 	// Check if metric maps to single resource. Multiple uids means that data was aggregated
 	// from multiple resources. We should have metrics per resource here.
 	if len(uidList) != 1 {
-		return "", errors.New("Found multiple UIDs. Metric should contain data for single resource only.")
+		return "", errors.NewInvalid("Found multiple UIDs. Metric should contain data for single resource only.")
 	}
 
 	return types.UID(uidList[0]), nil

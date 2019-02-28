@@ -13,20 +13,28 @@
 // limitations under the License.
 
 import {HttpErrorResponse} from '@angular/common/http';
-import {ErrorHandler, Injectable} from '@angular/core';
-import {StateService} from '@uirouter/core';
+import {ErrorHandler, Injectable, Injector} from '@angular/core';
+import {Router} from '@angular/router';
 import {YAMLException} from 'js-yaml';
 
-import {KdError} from '../common/errors/errors';
+import {ApiErrors, KdError} from '../common/errors/errors';
 import {ErrorStateParams} from '../common/params/params';
+import {AuthService} from '../common/services/global/authentication';
 
 import {errorState} from './state';
 
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
-  constructor(private readonly state_: StateService) {}
+  private authService_: AuthService;
+
+  constructor(private readonly router_: Router, private readonly injector_: Injector) {
+    this.authService_ = injector_.get(AuthService);
+  }
 
   handleError(error: HttpErrorResponse|YAMLException): void {
+    console.log('========= Error =========');
+    console.log(error);
+    console.log('========= Error  end =========');
     if (error instanceof HttpErrorResponse) {
       this.handleHTTPError_(error);
       return;
@@ -41,15 +49,41 @@ export class GlobalErrorHandler implements ErrorHandler {
   }
 
   private handleHTTPError_(error: HttpErrorResponse): void {
-    if (error.status === 403) {
-      this.state_.go(errorState.name, {
-        resourceNamespace: null,
-        error: {
-          code: error.status,
-          status: 'Unauthorized',
-          message: error.error,
-        } as KdError,
-      } as ErrorStateParams);
+    if (KdError.isError(error, ApiErrors.tokenExpired, ApiErrors.encryptionKeyChanged)) {
+      return;
     }
+
+    this.router_.navigate([errorState.name], {
+      queryParams: {
+        resourceNamespace: null,
+        error: this.toKdError(error),
+      } as ErrorStateParams
+    });
+  }
+
+  private toKdError(error: HttpErrorResponse): KdError {
+    const result = {} as KdError;
+    let status: string;
+
+    result.code = error.status;
+    result.message = error.error;
+
+    // This should be localized eventually
+    switch (error.status) {
+      case 401:
+        status = 'Unauthorized';
+        break;
+      case 403:
+        status = 'Forbidden';
+        break;
+      case 500:
+        status = 'Internal error';
+        break;
+      default:
+        status = 'Unknown error';
+    }
+
+    result.status = status;
+    return result;
   }
 }

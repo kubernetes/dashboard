@@ -14,8 +14,8 @@
 
 import {HttpParams} from '@angular/common/http';
 import {Component, ComponentFactoryResolver, Input} from '@angular/core';
+import {Router} from '@angular/router';
 import {Event, Pod, PodList} from '@api/backendapi';
-import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 import {podState} from '../../../../resource/workloads/pod/state';
 import {ResourceListWithStatuses} from '../../../resources/list';
@@ -31,10 +31,9 @@ export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
   @Input() endpoint = EndpointManager.resource(Resource.pod, true).list();
 
   constructor(
-      state: StateService, private readonly podList: NamespacedResourceService<PodList>,
-      resolver: ComponentFactoryResolver, notifications: NotificationsService,
-      private readonly namespaceService_: NamespaceService) {
-    super(podState.name, state, notifications, resolver);
+      private readonly podList: NamespacedResourceService<PodList>,
+      resolver: ComponentFactoryResolver, notifications: NotificationsService) {
+    super(podState.name, notifications, resolver);
     this.id = ListIdentifiers.pod;
     this.groupId = ListGroupIdentifiers.workloads;
 

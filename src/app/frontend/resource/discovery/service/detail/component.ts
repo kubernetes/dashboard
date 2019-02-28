@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, ActivatedRouteSnapshot} from '@angular/router';
 import {ServiceDetail} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Subscription} from 'rxjs/Subscription';
@@ -36,11 +37,12 @@ export class ServiceDetailComponent implements OnInit, OnDestroy {
 
   constructor(
       private readonly service_: NamespacedResourceService<ServiceDetail>,
-      private readonly actionbar_: ActionbarService, private readonly state_: StateService,
+      private readonly actionbar_: ActionbarService,
+      private readonly activatedRoute_: ActivatedRoute,
       private readonly notifications_: NotificationsService) {}
 
   ngOnInit(): void {
-    this.serviceName_ = this.state_.params.resourceName;
+    this.serviceName_ = this.activatedRoute_.snapshot.params.resourceName;
     this.podListEndpoint =
         EndpointManager.resource(Resource.service, true).child(this.serviceName_, Resource.pod);
     this.eventListEndpoint =

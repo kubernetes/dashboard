@@ -28,7 +28,7 @@ import (
 	client "k8s.io/client-go/kubernetes"
 )
 
-// DeploymentList contains a list of Deployments in the cluster.
+// DeploymentListComponent contains a list of Deployments in the cluster.
 type DeploymentList struct {
 	ListMeta          api.ListMeta       `json:"listMeta"`
 	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`

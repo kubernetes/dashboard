@@ -12,13 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {HttpErrorResponse} from '@angular/common/http';
 import {ErrStatus, K8sError as K8SApiError} from '@api/backendapi';
-import {KdError as KdApiError, KnownErrors} from '@api/frontendapi';
+import {KdError as KdApiError} from '@api/frontendapi';
 
-/* tslint:disable */
+export enum ApiErrors {
+  tokenExpired = 'MSG_TOKEN_EXPIRED_ERROR',
+  encryptionKeyChanged = 'MSG_ENCRYPTION_KEY_CHANGED'
+}
+
 /**
  * Error returned as a part of backend api calls. All server errors should be in this format.
  */
+/* tslint:disable */
 export class K8SError implements K8SApiError {
   ErrStatus: ErrStatus;
 }
@@ -29,8 +35,21 @@ export class K8SError implements K8SApiError {
  */
 export class KdError implements KdApiError {
   constructor(public status: string, public code: number, public message: string) {}
+
+  static isError(error: HttpErrorResponse, ...apiErrors: string[]): boolean {
+    for (const apiErr of apiErrors) {
+      if (apiErr === (error.error as string).trim()) {
+        return true;
+      }
+    }
+
+    return false;
+  }
 }
 
-export const KNOWN_ERRORS: KnownErrors = {
+// TODO Localize errors
+export const ERRORS = {
   unauthorized: new KdError('Unauthorized', 401, 'Not allowed.'),
+  forbidden: new KdError('Forbidden', 403, 'Access denied.'),
+  tokenExpired: new KdError('Unauthorized', 401, 'Token expired.')
 };

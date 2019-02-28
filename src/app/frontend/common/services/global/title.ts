@@ -14,6 +14,7 @@
 
 import {Injectable} from '@angular/core';
 import {Title} from '@angular/platform-browser';
+import {ActivatedRoute} from '@angular/router';
 import {Transition} from '@uirouter/angular';
 
 import {BreadcrumbsService} from './breadcrumbs';
@@ -28,9 +29,9 @@ export class TitleService {
       private readonly title_: Title, private readonly settings_: GlobalSettingsService,
       private readonly breadcrumbs_: BreadcrumbsService) {}
 
-  update(transition?: Transition): void {
-    if (transition) {
-      this.stateName = this.breadcrumbs_.getDisplayName(transition.targetState().$state());
+  update(snapshot?: ActivatedRoute): void {
+    if (snapshot) {
+      this.stateName = this.breadcrumbs_.getDisplayName(snapshot.snapshot);
     }
 
     this.settings_.load(

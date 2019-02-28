@@ -17,12 +17,8 @@ import {NgForm} from '@angular/forms';
 import {MatDialog} from '@angular/material';
 import {GlobalSettings, K8sError} from '@api/backendapi';
 import {KdError} from '@api/frontendapi';
-import {StateService} from '@uirouter/core';
-
-import {ErrorStateParams} from '../../common/params/params';
 import {GlobalSettingsService} from '../../common/services/global/globalsettings';
 import {TitleService} from '../../common/services/global/title';
-import {errorState} from '../../error/state';
 
 import {SaveAnywayDialog} from './saveanywaysdialog/dialog';
 
@@ -35,7 +31,7 @@ export class GlobalSettingsComponent implements OnInit {
 
   constructor(
       private readonly settings_: GlobalSettingsService, private readonly dialog_: MatDialog,
-      private readonly state_: StateService, private readonly title_: TitleService) {}
+      private readonly title_: TitleService) {}
 
   ngOnInit(): void {
     this.load();

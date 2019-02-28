@@ -22,7 +22,7 @@ limitations under the License.
          fxLayout="row"
          fxFlex="auto">
       <div class="kd-logo-bar">
-        <a uiSref="{{getOverviewStateName()}}"
+        <a [href]="getOverviewStateName()"
            class="kd-toolbar-logo-link">
           <mat-icon [svgIcon]="assets.getAppLogo()"
                     class="kd-toolbar-logo">
@@ -82,7 +82,7 @@ limitations under the License.
       <div *ngSwitchCase="false"
            fxFlex
            class="kd-scroll-container">
-        <ui-view></ui-view>
+        <router-outlet></router-outlet>
       </div>
     </div>
   </div>

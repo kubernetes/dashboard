@@ -15,12 +15,12 @@
 import {Ng2StateDeclaration} from '@uirouter/angular';
 import {workloadsState} from '../../state';
 import {stateName, stateUrl} from '../state';
-import {StatefulSetList} from './component';
+import {StatefulSetListComponent} from './component';
 
 export const statefulSetListState: Ng2StateDeclaration = {
   name: `${stateName}.list`,
   url: stateUrl,
-  component: StatefulSetList,
+  component: StatefulSetListComponent,
   data: {
     kdBreadcrumbs: {
       label: 'Stateful Sets',

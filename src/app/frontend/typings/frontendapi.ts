@@ -33,10 +33,6 @@ export type onSettingsFailCallback = (err?: KdError|K8sError) => void;
 
 export type onLogin = (errors?: K8sError[]) => void;
 
-export interface KnownErrors {
-  unauthorized: KdError;
-}
-
 export interface KdError {
   status: string;
   code: number;

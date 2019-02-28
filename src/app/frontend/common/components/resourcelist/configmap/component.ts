@@ -14,7 +14,7 @@
 
 import {HttpParams} from '@angular/common/http';
 import {Component, Input} from '@angular/core';
-import {StateService} from '@uirouter/core';
+import {Router} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import {ConfigMap, ConfigMapList} from 'typings/backendapi';
 import {configMapState} from '../../../../resource/config/configmap/state';
@@ -31,9 +31,9 @@ export class ConfigMapListComponent extends ResourceListBase<ConfigMapList, Conf
   @Input() endpoint = EndpointManager.resource(Resource.configMap, true).list();
 
   constructor(
-      state: StateService, private readonly configMap_: NamespacedResourceService<ConfigMapList>,
-      notifications: NotificationsService, private readonly namespaceService_: NamespaceService) {
-    super(configMapState.name, state, notifications);
+      private readonly configMap_: NamespacedResourceService<ConfigMapList>,
+      notifications: NotificationsService) {
+    super(configMapState.name, notifications);
     this.id = ListIdentifiers.configMap;
     this.groupId = ListGroupIdentifiers.config;
 

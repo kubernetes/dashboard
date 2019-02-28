@@ -14,7 +14,7 @@
 
 import {HttpParams} from '@angular/common/http';
 import {Component, Input} from '@angular/core';
-import {StateService} from '@uirouter/core';
+import {Router} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import {Service, ServiceList} from 'typings/backendapi';
 
@@ -32,9 +32,9 @@ export class ServiceListComponent extends ResourceListWithStatuses<ServiceList, 
   @Input() endpoint = EndpointManager.resource(Resource.service, true).list();
 
   constructor(
-      state: StateService, private readonly service_: NamespacedResourceService<ServiceList>,
-      notifications: NotificationsService, private readonly namespaceService_: NamespaceService) {
-    super(serviceState.name, state, notifications);
+      private readonly service_: NamespacedResourceService<ServiceList>,
+      notifications: NotificationsService) {
+    super(serviceState.name, notifications);
     this.id = ListIdentifiers.service;
     this.groupId = ListGroupIdentifiers.discovery;
 

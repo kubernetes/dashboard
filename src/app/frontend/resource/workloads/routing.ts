@@ -12,19 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Ng2StateDeclaration} from '@uirouter/angular';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {WorkloadsComponent} from './component';
 
-import {LoginComponent} from './component';
+const routes: Routes = [{
+  path: '',
+  component: WorkloadsComponent,
+}];
 
-/**
- * One of the root application views. It is the only view that does not have to be a child
- * of chrome view.
- */
-export const loginState: Ng2StateDeclaration = {
-  name: 'login',
-  url: '/login',
-  component: LoginComponent,
-  data: {
-    requiresAuth: true,
-  },
-};
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
+})
+export class WorkloadsRoutingModule {
+}

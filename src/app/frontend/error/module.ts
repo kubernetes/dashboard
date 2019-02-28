@@ -13,21 +13,20 @@
 // limitations under the License.
 
 import {ErrorHandler, NgModule} from '@angular/core';
-import {UIRouterModule} from '@uirouter/angular';
 
 import {ComponentsModule} from '../common/components/module';
 import {NavServiceModule} from '../common/services/nav/module';
 import {SharedModule} from '../shared.module';
 import {ErrorComponent} from './component';
 import {GlobalErrorHandler} from './handler';
-import {errorState} from './state';
+import {ErrorRoutingModule} from './routing';
 
 @NgModule({
   imports: [
     SharedModule,
     ComponentsModule,
     NavServiceModule,
-    UIRouterModule.forChild({states: [errorState]}),
+    ErrorRoutingModule,
   ],
   providers: [{provide: ErrorHandler, useClass: GlobalErrorHandler}],
   declarations: [ErrorComponent],

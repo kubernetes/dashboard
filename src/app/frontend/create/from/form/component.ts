@@ -13,11 +13,11 @@
 // limitations under the License.
 
 import {HttpClient} from '@angular/common/http';
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatDialog} from '@angular/material';
+import {ActivatedRoute} from '@angular/router';
 import {AppDeploymentSpec, EnvironmentVariable, Namespace, NamespaceList, PortMapping, Protocols, SecretList} from '@api/backendapi';
-import {StateService} from '@uirouter/core';
 
 import {CreateService} from '../../../common/services/create/service';
 import {HistoryService} from '../../../common/services/global/history';
@@ -50,7 +50,7 @@ export class CreateFromFormComponent implements OnInit {
   constructor(
       private readonly namespace_: NamespaceService, private readonly create_: CreateService,
       private readonly history_: HistoryService, private readonly http_: HttpClient,
-      private readonly state_: StateService, private readonly fb_: FormBuilder,
+      private readonly route_: ActivatedRoute, private readonly fb_: FormBuilder,
       private readonly dialog_: MatDialog) {}
 
   ngOnInit(): void {
@@ -59,7 +59,7 @@ export class CreateFromFormComponent implements OnInit {
       containerImage: ['', Validators.required],
       replicas: [1, Validators.compose([Validators.required, FormValidators.isInteger])],
       description: [''],
-      namespace: [this.state_.params.namespace || '', Validators.required],
+      namespace: [this.route_.snapshot.params.namespace || '', Validators.required],
       imagePullSecret: [''],
       cpuRequirement: ['', Validators.compose([Validators.min(0), FormValidators.isInteger])],
       memoryRequirement: ['', Validators.compose([Validators.min(0), FormValidators.isInteger])],
@@ -84,7 +84,7 @@ export class CreateFromFormComponent implements OnInit {
       this.namespaces = result.namespaces.map((namespace: Namespace) => namespace.objectMeta.name);
       this.namespace.patchValue(
           !this.namespace_.areMultipleNamespacesSelected() ?
-              this.state_.params.namespace || this.namespaces[0] :
+              this.route_.snapshot.params.namespace || this.namespaces[0] :
               this.namespaces[0]);
     });
     this.http_.get('api/v1/appdeployment/protocols')

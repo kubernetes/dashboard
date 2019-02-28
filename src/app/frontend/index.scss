@@ -158,6 +158,10 @@ code {
   box-shadow: none !important;
 }
 
+router-outlet::after {
+  padding: 0 !important;
+}
+
 ////////////////////////////////////////////
 // Custom classes used across application //
 ////////////////////////////////////////////

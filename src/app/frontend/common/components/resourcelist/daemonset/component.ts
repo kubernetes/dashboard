@@ -14,8 +14,8 @@
 
 import {HttpParams} from '@angular/common/http';
 import {Component, ComponentFactoryResolver, Input} from '@angular/core';
+import {Router} from '@angular/router';
 import {DaemonSet, DaemonSetList, Event} from '@api/backendapi';
-import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 import {daemonSetState} from '../../../../resource/workloads/daemonset/state';
 
@@ -35,10 +35,9 @@ export class DaemonSetListComponent extends ResourceListWithStatuses<DaemonSetLi
   @Input() endpoint = EndpointManager.resource(Resource.daemonSet, true).list();
 
   constructor(
-      state: StateService, private readonly daemonSet_: NamespacedResourceService<DaemonSetList>,
-      resolver: ComponentFactoryResolver, notifications: NotificationsService,
-      private readonly namespaceService_: NamespaceService) {
-    super(daemonSetState.name, state, notifications, resolver);
+      private readonly daemonSet_: NamespacedResourceService<DaemonSetList>,
+      resolver: ComponentFactoryResolver, notifications: NotificationsService) {
+    super(daemonSetState.name, notifications, resolver);
     this.id = ListIdentifiers.daemonSet;
     this.groupId = ListGroupIdentifiers.workloads;
 

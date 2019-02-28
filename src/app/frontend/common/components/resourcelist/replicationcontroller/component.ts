@@ -14,8 +14,8 @@
 
 import {HttpParams} from '@angular/common/http';
 import {Component, ComponentFactoryResolver, Input} from '@angular/core';
+import {Router} from '@angular/router';
 import {Event, ReplicationController, ReplicationControllerList} from '@api/backendapi';
-import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 import {replicationControllerState} from '../../../../resource/workloads/replicationcontroller/state';
 
@@ -36,11 +36,9 @@ export class ReplicationControllerListComponent extends
   @Input() endpoint = EndpointManager.resource(Resource.replicationController, true).list();
 
   constructor(
-      state: StateService,
       private readonly replicationController_: NamespacedResourceService<ReplicationControllerList>,
-      notifications: NotificationsService, resolver: ComponentFactoryResolver,
-      private readonly namespaceService_: NamespaceService) {
-    super(replicationControllerState.name, state, notifications, resolver);
+      notifications: NotificationsService, resolver: ComponentFactoryResolver) {
+    super(replicationControllerState.name, notifications, resolver);
     this.id = ListIdentifiers.replicationController;
     this.groupId = ListGroupIdentifiers.workloads;
 

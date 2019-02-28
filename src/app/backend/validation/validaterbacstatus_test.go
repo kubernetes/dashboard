@@ -15,7 +15,6 @@
 package validation
 
 import (
-	"errors"
 	"reflect"
 	"testing"
 
@@ -24,6 +23,8 @@ import (
 	fakediscovery "k8s.io/client-go/discovery/fake"
 	"k8s.io/client-go/kubernetes/fake"
 	test "k8s.io/client-go/testing"
+
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 )
 
 func areErrorsEqual(err1, err2 error) bool {
@@ -64,10 +65,10 @@ func TestValidateRbacStatus(t *testing.T) {
 		{
 			"should throw an error when can't get api versions from server",
 			func() (*metav1.APIGroupList, error) {
-				return nil, errors.New("test-error")
+				return nil, errors.NewInvalid("test-error")
 			},
 			nil,
-			errors.New("Couldn't get available api versions from server: test-error"),
+			errors.NewInvalid("Couldn't get available api versions from server: test-error"),
 		},
 		{
 			"should disable rbacs when supported api version not enabled on the server",

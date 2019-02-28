@@ -28,7 +28,7 @@ import (
 	"k8s.io/client-go/kubernetes"
 )
 
-// StatefulSetList contains a list of Stateful Sets in the cluster.
+// StatefulSetListComponent contains a list of Stateful Sets in the cluster.
 type StatefulSetList struct {
 	ListMeta api.ListMeta `json:"listMeta"`
 

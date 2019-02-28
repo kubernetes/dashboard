@@ -16,12 +16,12 @@ import {Ng2StateDeclaration} from '@uirouter/angular';
 
 import {configState} from '../../state';
 import {stateName, stateUrl} from '../state';
-import {PersistentVolumeClaimList} from './component';
+import {PersistentVolumeClaimListComponent} from './component';
 
 export const persistentVolumeClaimListState: Ng2StateDeclaration = {
   name: `${stateName}.list`,
   url: stateUrl,
-  component: PersistentVolumeClaimList,
+  component: PersistentVolumeClaimListComponent,
   data: {
     kdBreadcrumbs: {
       label: 'Persistent Volume Claims',

@@ -14,8 +14,8 @@
 
 import {HttpParams} from '@angular/common/http';
 import {Component, Input, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 import {Event, EventList} from '@api/backendapi';
-import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 
 import {ResourceListWithStatuses} from '../../../resources/list';
@@ -31,9 +31,9 @@ export class EventListComponent extends ResourceListWithStatuses<EventList, Even
   @Input() endpoint: string;
 
   constructor(
-      state: StateService, private readonly eventList: NamespacedResourceService<EventList>,
+      private readonly eventList: NamespacedResourceService<EventList>,
       notifications: NotificationsService) {
-    super('', state, notifications);
+    super('', notifications);
     this.id = ListIdentifiers.event;
     this.groupId = ListGroupIdentifiers.none;
 

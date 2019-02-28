@@ -14,8 +14,8 @@
 
 import {HttpParams} from '@angular/common/http';
 import {Component, Input} from '@angular/core';
+import {Router} from '@angular/router';
 import {PersistentVolume, PersistentVolumeList} from '@api/backendapi';
-import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 
 import {persistentVolumeState} from '../../../../resource/cluster/persistentvolume/state';
@@ -36,9 +36,9 @@ export class PersistentVolumeListComponent extends
   @Input() endpoint = EndpointManager.resource(Resource.persistentVolume).list();
 
   constructor(
-      state: StateService, private readonly pv_: ResourceService<PersistentVolumeList>,
+      private readonly pv_: ResourceService<PersistentVolumeList>,
       notifications: NotificationsService) {
-    super(persistentVolumeState.name, state, notifications);
+    super(persistentVolumeState.name, notifications);
     this.id = ListIdentifiers.persistentVolume;
     this.groupId = ListGroupIdentifiers.cluster;
 

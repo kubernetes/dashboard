@@ -13,14 +13,10 @@
 // limitations under the License.
 
 import {Component, Input} from '@angular/core';
+import {Router} from '@angular/router';
 import {ObjectMeta, TypeMeta} from '@api/backendapi';
 import {ActionColumn} from '@api/frontendapi';
-import {StateService} from '@uirouter/core';
-import {first} from 'rxjs/operators';
-
-import {logsState} from '../../../../../logs/state';
-import {LogsStateParams} from '../../../../params/params';
-import {KdStateService} from '../../../../services/global/state';
+import {KdStateService} from "../../../../services/global/state";
 import {VerberService} from '../../../../services/global/verber';
 import {Resource} from '../../../../services/resource/endpoint';
 
@@ -45,9 +41,8 @@ export class MenuComponent implements ActionColumn {
   @Input() objectMeta: ObjectMeta;
   @Input() typeMeta: TypeMeta;
 
-  constructor(
-      private readonly verber_: VerberService, private readonly state_: StateService,
-      private readonly kdState_: KdStateService) {}
+  constructor(private readonly verber_: VerberService, private readonly router_: Router,
+              private readonly kdState_: KdStateService) {}
 
   setObjectMeta(objectMeta: ObjectMeta): void {
     this.objectMeta = objectMeta;
@@ -62,9 +57,10 @@ export class MenuComponent implements ActionColumn {
   }
 
   getLogsHref(): string {
-    return this.state_.href(
-        logsState.name,
-        new LogsStateParams(this.objectMeta.namespace, this.objectMeta.name, this.typeMeta.kind));
+    return '';
+    // return this.state_.href(
+    //     logsState.name,
+    //     new LogsStateParams(this.objectMeta.namespace, this.objectMeta.name, this.typeMeta.kind));
   }
 
   isExecEnabled(): boolean {
@@ -100,5 +96,9 @@ export class MenuComponent implements ActionColumn {
   onDelete(): void {
     this.verber_.onDelete.pipe(first()).subscribe(() => this.state_.reload());
     this.verber_.showDeleteDialog(this.typeMeta.kind, this.typeMeta, this.objectMeta);
+  }
+
+  private onSuccess_(): void {
+    this.router_.navigate(['.']);
   }
 }

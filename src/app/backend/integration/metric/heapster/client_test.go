@@ -16,7 +16,6 @@ package heapster
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
 	"log"
 	"reflect"
@@ -26,14 +25,16 @@ import (
 	"testing"
 	"time"
 
-	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/client"
-	integrationapi "github.com/kubernetes/dashboard/src/app/backend/integration/api"
-	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	heapster "k8s.io/heapster/metrics/api/v1/types"
+
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
+	integrationapi "github.com/kubernetes/dashboard/src/app/backend/integration/api"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 )
 
 func areErrorsEqual(err1, err2 error) bool {
@@ -468,7 +469,7 @@ func TestCreateHeapsterClient(t *testing.T) {
 			"invalid-url-!!23*%.",
 			nil,
 			nil,
-			errors.New("parse http://invalid-url-!!23*%.: invalid URL escape \"%.\""),
+			errors.NewInvalid("parse http://invalid-url-!!23*%.: invalid URL escape \"%.\""),
 		},
 	}
 

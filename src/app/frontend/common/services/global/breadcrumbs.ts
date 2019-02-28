@@ -13,19 +13,17 @@
 // limitations under the License.
 
 import {Injectable} from '@angular/core';
+import {ActivatedRoute, ActivatedRouteSnapshot, Router} from '@angular/router';
 import {BreadcrumbConfig} from '@api/frontendapi';
-import {StateDeclaration, StateObject, StateService} from '@uirouter/core';
-import {searchState} from '../../../search/state';
-import {SEARCH_QUERY_STATE_PARAM} from '../../params/params';
 
 const breadcrumbsConfig = 'kdBreadcrumbs';
 export const logsParentStatePlaceholder = '___logsParentState___';
 
 @Injectable()
 export class BreadcrumbsService {
-  constructor(private readonly state_: StateService) {}
+  constructor(private readonly router_: Router) {}
 
-  getParentState(state: StateObject|StateDeclaration): StateObject|StateDeclaration {
+  getParentState(state: ActivatedRouteSnapshot): ActivatedRoute {
     const conf = this.getBreadcrumbConfig(state);
     let result = null;
     if (conf && conf.parent) {
@@ -41,27 +39,30 @@ export class BreadcrumbsService {
     return result;
   }
 
-  getBreadcrumbConfig(state: StateObject|StateDeclaration): BreadcrumbConfig {
+  getBreadcrumbConfig(state: ActivatedRouteSnapshot): BreadcrumbConfig {
     return state.data ? state.data[breadcrumbsConfig] : state.data;
   }
 
-  getDisplayName(state: StateObject|StateDeclaration): string {
-    const conf = this.getBreadcrumbConfig(state);
-    const stateParams = this.state_.params;
-
-    // When conf is undefined and label is undefined or empty then fallback to state name.
-    if (!conf || !conf.label) {
-      return state.name;
+  getDisplayName(state: ActivatedRouteSnapshot): string {
+    if (state) {
     }
-
-    // When state search is active use specific logic to display custom breadcrumb.
-    if (state.name === searchState.name) {
-      const query = stateParams[SEARCH_QUERY_STATE_PARAM];
-      return `Search for "${query}"`;
-    }
-
-    // If there is a state parameter with with name equal to conf.label then return its value,
-    // otherwise just return label. It allows to "interpolate" resource names into breadcrumbs.
-    return stateParams && stateParams[conf.label] ? stateParams[conf.label] : conf.label;
+    return '';
+    // const conf = this.getBreadcrumbConfig(state);
+    // const stateParams = this.router_.routerState.root.params;
+    //
+    // // When conf is undefined and label is undefined or empty then fallback to state name.
+    // if (!conf || !conf.label) {
+    //   return state.url[0].path;
+    // }
+    //
+    // // When state search is active use specific logic to display custom breadcrumb.
+    // if (state.url[0].path === searchState.name) {
+    //   const query = stateParams[SEARCH_QUERY_STATE_PARAM];
+    //   return `Search for "${query}"`;
+    // }
+    //
+    // // If there is a state parameter with with name equal to conf.label then return its value,
+    // // otherwise just return label. It allows to "interpolate" resource names into breadcrumbs.
+    // return stateParams && stateParams[conf.label] ? stateParams[conf.label] : conf.label;
   }
 }

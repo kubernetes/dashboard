@@ -15,16 +15,16 @@
 package jwe
 
 import (
-	"errors"
 	"reflect"
 	"testing"
 	"time"
 
-	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
-	kdErrors "github.com/kubernetes/dashboard/src/app/backend/errors"
-	"github.com/kubernetes/dashboard/src/app/backend/sync"
 	"k8s.io/client-go/kubernetes/fake"
 	"k8s.io/client-go/tools/clientcmd/api"
+
+	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
+	"github.com/kubernetes/dashboard/src/app/backend/sync"
 )
 
 func getTokenManager() authApi.TokenManager {
@@ -118,14 +118,14 @@ func TestJweTokenManager_Refresh(t *testing.T) {
 			authInfo:    api.AuthInfo{},
 			shouldSleep: false,
 			expected:    false,
-			expectedErr: errors.New("Can not refresh token. No token provided."),
+			expectedErr: errors.NewInvalid("Can not refresh token. No token provided."),
 		},
 		{
 			info:        "Should return error when token has expired",
 			authInfo:    api.AuthInfo{Token: "test-token"},
 			shouldSleep: true,
 			expected:    false,
-			expectedErr: errors.New(kdErrors.MSG_TOKEN_EXPIRED_ERROR),
+			expectedErr: errors.NewTokenExpired(errors.MsgTokenExpiredError),
 		},
 	}
 

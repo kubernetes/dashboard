@@ -21,17 +21,14 @@ import {SharedModule} from '../../../shared.module';
 import {ActionbarComponent} from './detail/actionbar/component';
 import {DaemonSetDetailComponent} from './detail/component';
 import {daemonSetDetailState} from './detail/state';
-import {DaemonSetList} from './list/component';
+import {DaemonSetListComponent} from './list/component';
 import {daemonSetListState} from './list/state';
+import {DaemonSetRoutingModule} from './routing';
 import {daemonSetState} from './state';
 
 @NgModule({
-  imports: [
-    SharedModule,
-    ComponentsModule,
-    UIRouterModule.forChild({states: [daemonSetState, daemonSetListState, daemonSetDetailState]}),
-  ],
-  declarations: [DaemonSetList, DaemonSetDetailComponent, ActionbarComponent],
+  imports: [SharedModule, ComponentsModule, DaemonSetRoutingModule],
+  declarations: [DaemonSetListComponent, DaemonSetDetailComponent, ActionbarComponent],
 })
 export class DaemonSetModule {
 }

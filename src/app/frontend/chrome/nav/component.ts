@@ -40,7 +40,6 @@ import {replicaSetListState} from '../../resource/workloads/replicaset/list/stat
 import {replicationControllerListState} from '../../resource/workloads/replicationcontroller/list/state';
 import {workloadsState} from '../../resource/workloads/state';
 import {statefulSetListState} from '../../resource/workloads/statefulset/list/state';
-import {settingsState} from '../../settings/state';
 
 @Component({
   selector: 'kd-nav',
@@ -78,7 +77,7 @@ export class NavComponent implements AfterContentInit, OnInit {
     persistentVolumeClaim: persistentVolumeClaimListState.name,
     secret: secretListState.name,
 
-    settings: settingsState.name,
+    // settings: settingsState.name,
     about: aboutState.name,
   };
 

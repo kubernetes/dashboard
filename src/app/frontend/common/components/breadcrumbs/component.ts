@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import {Component, Input, OnInit} from '@angular/core';
+import {ActivatedRoute, ActivatedRouteSnapshot, Router} from '@angular/router';
 import {Breadcrumb} from '@api/frontendapi';
 import {StateDeclaration, StateObject, StateService, TransitionService} from '@uirouter/core';
 import {BreadcrumbsService} from '../../services/global/breadcrumbs';
@@ -63,33 +64,32 @@ import {BreadcrumbsService} from '../../services/global/breadcrumbs';
 export class BreadcrumbsComponent implements OnInit {
   @Input() limit: number;
   breadcrumbs: Breadcrumb[];
-  constructor(
-      private readonly state_: StateService, private readonly transition_: TransitionService,
-      private readonly breadcrumbs_: BreadcrumbsService) {}
+  constructor(private readonly router_: Router, private readonly breadcrumbs_: BreadcrumbsService) {
+  }
 
   ngOnInit(): void {
     this.initBreadcrumbs_();
-    this.transition_.onSuccess({}, () => {
-      this.initBreadcrumbs_();
-    });
+    // this.transition_.onSuccess({}, () => {
+    //   this.initBreadcrumbs_();
+    // });
   }
 
   /** Initializes breadcrumbs array by traversing states parents until none is found. */
   initBreadcrumbs_(): void {
-    let state: StateObject|StateDeclaration = this.state_.$current;
-    const breadcrumbs: Breadcrumb[] = [];
-
-    while (state && state.name && this.canAddBreadcrumb_(breadcrumbs)) {
-      const breadcrumb = this.getBreadcrumb_(state);
-
-      if (breadcrumb.label) {
-        breadcrumbs.push(breadcrumb);
-      }
-
-      state = this.breadcrumbs_.getParentState(state);
-    }
-
-    this.breadcrumbs = breadcrumbs.reverse();
+    // let state: ActivatedRouteSnapshot = this.router_.routerState.root.snapshot;
+    // const breadcrumbs: Breadcrumb[] = [];
+    //
+    // while (state && state.url && this.canAddBreadcrumb_(breadcrumbs)) {
+    //   const breadcrumb = this.getBreadcrumb_(state);
+    //
+    //   if (breadcrumb.label) {
+    //     breadcrumbs.push(breadcrumb);
+    //   }
+    //
+    //   state = this.breadcrumbs_.getParentState(state).snapshot;
+    // }
+    //
+    // this.breadcrumbs = breadcrumbs.reverse();
   }
 
   /**
@@ -100,11 +100,13 @@ export class BreadcrumbsComponent implements OnInit {
     return this.limit === undefined || this.limit > breadcrumbs.length;
   }
 
-  private getBreadcrumb_(state: StateObject|StateDeclaration): Breadcrumb {
+  private getBreadcrumb_(state: ActivatedRouteSnapshot): Breadcrumb {
     const breadcrumb = new Breadcrumb();
 
-    breadcrumb.label = this.breadcrumbs_.getDisplayName(state);
-    breadcrumb.stateLink = this.state_.href(state.name, this.state_.params);
+    if (state) {
+    }
+    // breadcrumb.label = this.breadcrumbs_.getDisplayName(state);
+    // breadcrumb.stateLink = this.router_.href(state.name, this.router_.params);
 
     return breadcrumb;
   }

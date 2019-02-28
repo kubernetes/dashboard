@@ -15,13 +15,11 @@
 package client
 
 import (
-	"errors"
 	"log"
 	"strings"
 
 	restful "github.com/emicklei/go-restful"
 	v1 "k8s.io/api/authorization/v1"
-	errorsK8s "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
@@ -31,7 +29,7 @@ import (
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
 	"github.com/kubernetes/dashboard/src/app/backend/client/csrf"
-	kdErrors "github.com/kubernetes/dashboard/src/app/backend/errors"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 )
 
 // Dashboard UI default values for client configs.
@@ -83,7 +81,7 @@ type clientManager struct {
 // used.
 func (self *clientManager) Client(req *restful.Request) (kubernetes.Interface, error) {
 	if req == nil {
-		return nil, errors.New("Request can not be nil!")
+		return nil, errors.NewBadRequest("request can not be nil")
 	}
 
 	if self.isSecureModeEnabled(req) {
@@ -98,7 +96,7 @@ func (self *clientManager) Client(req *restful.Request) (kubernetes.Interface, e
 // used.
 func (self *clientManager) Config(req *restful.Request) (*rest.Config, error) {
 	if req == nil {
-		return nil, errors.New("Request can not be nil!")
+		return nil, errors.NewBadRequest("request can not be nil")
 	}
 
 	if self.isSecureModeEnabled(req) {
@@ -228,7 +226,7 @@ func (self *clientManager) buildConfigFromFlags(apiserverHost, kubeConfigPath st
 		return self.inClusterConfig, nil
 	}
 
-	return nil, errors.New("could not create client config")
+	return nil, errors.NewInvalid("could not create client config")
 }
 
 // Based on auth info and rest config creates client cmd config.
@@ -268,7 +266,15 @@ func (self *clientManager) extractAuthInfo(req *restful.Request) (*api.AuthInfo,
 		return self.tokenManager.Decrypt(jweToken)
 	}
 
-	return nil, errorsK8s.NewUnauthorized(kdErrors.MSG_LOGIN_UNAUTHORIZED_ERROR)
+	return nil, errors.NewUnauthorized(errors.MsgLoginUnauthorizedError)
+}
+
+// Checks if request headers contain any auth information without parsing.
+func (self *clientManager) containsAuthInfo(req *restful.Request) bool {
+	authHeader := req.HeaderParameter("Authorization")
+	jweToken := req.HeaderParameter(JWETokenHeader)
+
+	return len(authHeader) > 0 || len(jweToken) > 0
 }
 
 func (self *clientManager) extractTokenFromHeader(authHeader string) string {
@@ -290,8 +296,7 @@ func (self *clientManager) isSecureModeEnabled(req *restful.Request) bool {
 		return true
 	}
 
-	authInfo, _ := self.extractAuthInfo(req)
-	return self.isLoginEnabled(req) && args.Holder.GetEnableSkipLogin() && authInfo != nil
+	return self.isLoginEnabled(req) && args.Holder.GetEnableSkipLogin() && self.containsAuthInfo(req)
 }
 
 func (self *clientManager) secureClient(req *restful.Request) (kubernetes.Interface, error) {

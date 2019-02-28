@@ -14,6 +14,7 @@
 
 import {HttpParams} from '@angular/common/http';
 import {Component, Input} from '@angular/core';
+import {Router} from '@angular/router';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 import {PersistentVolumeClaim, PersistentVolumeClaimList} from 'typings/backendapi';
@@ -37,10 +38,9 @@ export class PersistentVolumeClaimListComponent extends
   @Input() endpoint = EndpointManager.resource(Resource.persistentVolumeClaim, true).list();
 
   constructor(
-      state: StateService,
       private readonly persistentVolumeClaim_: NamespacedResourceService<PersistentVolumeClaimList>,
-      notifications: NotificationsService, private readonly namespaceService_: NamespaceService) {
-    super(persistentVolumeClaimState.name, state, notifications);
+      notifications: NotificationsService) {
+    super(persistentVolumeClaimState.name, notifications);
     this.id = ListIdentifiers.persistentVolumeClaim;
     this.groupId = ListGroupIdentifiers.config;
 

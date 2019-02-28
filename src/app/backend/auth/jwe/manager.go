@@ -15,14 +15,14 @@
 package jwe
 
 import (
-	"errors"
 	"time"
 
-	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
-	kdErrors "github.com/kubernetes/dashboard/src/app/backend/errors"
 	jose "gopkg.in/square/go-jose.v2"
 	"k8s.io/apimachinery/pkg/util/json"
 	"k8s.io/client-go/tools/clientcmd/api"
+
+	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 )
 
 // Implements TokenManager interface
@@ -90,7 +90,7 @@ func (self *jweTokenManager) Decrypt(jweToken string) (*api.AuthInfo, error) {
 // Refresh implements token manager interface. See TokenManager for more information.
 func (self *jweTokenManager) Refresh(jweToken string) (string, error) {
 	if len(jweToken) == 0 {
-		return "", errors.New("Can not refresh token. No token provided.")
+		return "", errors.NewInvalid("Can not refresh token. No token provided.")
 	}
 
 	jweTokenObject, err := self.validate(jweToken)
@@ -106,7 +106,7 @@ func (self *jweTokenManager) Refresh(jweToken string) (string, error) {
 	authInfo := new(api.AuthInfo)
 	err = json.Unmarshal(decrypted, authInfo)
 	if err != nil {
-		return "", errors.New("Token refresh error. Could not unmarshal token payload.")
+		return "", errors.NewInvalid("Token refresh error. Could not unmarshal token payload.")
 	}
 
 	return self.Generate(*authInfo)
@@ -136,11 +136,11 @@ func (self *jweTokenManager) validate(jweToken string) (*jose.JSONWebEncryption,
 		aad := AdditionalAuthData{}
 		err = json.Unmarshal(jwe.GetAuthData(), &aad)
 		if err != nil {
-			return nil, errors.New("Token validation error. Could not unmarshal AAD.")
+			return nil, errors.NewInvalid("Token validation error. Could not unmarshal AAD.")
 		}
 
 		if self.isExpired(aad[IAT], aad[EXP]) {
-			return nil, errors.New(kdErrors.MSG_TOKEN_EXPIRED_ERROR)
+			return nil, errors.NewTokenExpired(errors.MsgTokenExpiredError)
 		}
 	}
 

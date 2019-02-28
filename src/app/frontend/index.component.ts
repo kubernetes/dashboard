@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {OverlayContainer} from '@angular/cdk/overlay';
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit} from '@angular/core';
 
 import {LocalSettingsService} from './common/services/global/localsettings';
 import {ThemeService} from './common/services/global/theme';
@@ -23,14 +23,15 @@ enum Themes {
   Dark = 'kd-dark-theme'
 }
 
-@Component({selector: 'kd-root', template: '<ui-view [ngClass]="getTheme()"></ui-view>'})
+@Component({selector: 'kd-root', template: '<router-outlet></router-outlet>'})
 export class RootComponent implements OnInit {
   private isLightThemeEnabled_: boolean;
 
   constructor(
       private readonly themeService_: ThemeService,
       private readonly settings_: LocalSettingsService,
-      private readonly overlayContainer_: OverlayContainer) {
+      private readonly overlayContainer_: OverlayContainer,
+      private readonly kdRootRef: ElementRef) {
     this.isLightThemeEnabled_ = this.themeService_.isLightThemeEnabled();
   }
 
@@ -51,6 +52,9 @@ export class RootComponent implements OnInit {
     const classToAdd = this.getTheme(this.isLightThemeEnabled_);
     this.overlayContainer_.getContainerElement().classList.remove(classToRemove);
     this.overlayContainer_.getContainerElement().classList.add(classToAdd);
+
+    this.kdRootRef.nativeElement.classList.add(classToAdd);
+    this.kdRootRef.nativeElement.classList.remove(classToRemove);
   }
 
   private onThemeChange_(isLightThemeEnabled: boolean): void {

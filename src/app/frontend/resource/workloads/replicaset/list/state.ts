@@ -15,12 +15,12 @@
 import {Ng2StateDeclaration} from '@uirouter/angular';
 import {workloadsState} from '../../state';
 import {stateName, stateUrl} from '../state';
-import {ReplicaSetList} from './component';
+import {ReplicaSetListComponent} from './component';
 
 export const replicaSetListState: Ng2StateDeclaration = {
   name: `${stateName}.list`,
   url: stateUrl,
-  component: ReplicaSetList,
+  component: ReplicaSetListComponent,
   data: {
     kdBreadcrumbs: {
       label: 'Replica Sets',

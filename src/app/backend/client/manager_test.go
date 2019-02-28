@@ -16,14 +16,12 @@ package client
 
 import (
 	"crypto/tls"
-	"errors"
 	"net/http"
 	"testing"
 
 	restful "github.com/emicklei/go-restful"
-
 	"github.com/kubernetes/dashboard/src/app/backend/args"
-	kdErrors "github.com/kubernetes/dashboard/src/app/backend/errors"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 )
 
 func TestNewClientManager(t *testing.T) {
@@ -81,7 +79,7 @@ func TestSecureClient(t *testing.T) {
 				},
 			},
 			expectedError: true,
-			err:           errors.New(kdErrors.MSG_LOGIN_UNAUTHORIZED_ERROR),
+			err:           errors.NewUnauthorized(errors.MsgLoginUnauthorizedError),
 		},
 		{
 			request: &restful.Request{

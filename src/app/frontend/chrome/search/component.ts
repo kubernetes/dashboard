@@ -14,7 +14,7 @@
 
 import {Component, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {StateService, TransitionService} from '@uirouter/core';
+import {Router} from "@angular/router";
 
 import {SearchStateParams} from '../../common/params/params';
 import {searchState} from '../../search/state';
@@ -23,20 +23,19 @@ import {searchState} from '../../search/state';
 export class SearchComponent implements OnInit {
   query: string;
 
-  constructor(
-      private readonly state_: StateService, private readonly transition_: TransitionService) {
-    this.query = state_.transition.params('to').q;
+  constructor(private readonly router_: Router) {
+    // this.query = state_.transition.params('to').q;
   }
 
   ngOnInit(): void {
-    this.transition_.onStart({}, () => {
-      this.query = this.state_.transition.params('to').q;
-    });
+    // this.transition_.onStart({}, () => {
+    //   this.query = this.state_.transition.params('to').q;
+    // });
   }
 
   submit(form: NgForm): void {
     if (form.valid) {
-      this.state_.go(searchState.name, new SearchStateParams(this.query));
+      this.router_.navigate([searchState.name], {queryParams: new SearchStateParams(this.query)});
     }
   }
 }

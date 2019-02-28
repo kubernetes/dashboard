@@ -14,7 +14,6 @@
 
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 
 import {ResourceBase} from '../../resources/resource';
@@ -40,17 +39,11 @@ export class ResourceService<T> extends ResourceBase<T> {
 
 @Injectable()
 export class NamespacedResourceService<T> extends ResourceBase<T> {
-  constructor(
-      http: HttpClient, private readonly state_: StateService,
-      private readonly namespaceService_: NamespaceService) {
+  constructor(http: HttpClient, private readonly namespaceService_: NamespaceService) {
     super(http);
   }
 
   private getNamespace_(): string {
-    if (this.state_.params.resourceNamespace) {
-      return this.state_.params.resourceNamespace;
-    }
-
     const currentNamespace = this.namespaceService_.current();
     return this.namespaceService_.isMultiNamespace(currentNamespace) ? '' : currentNamespace;
   }

@@ -25,7 +25,7 @@ import (
 	"k8s.io/client-go/kubernetes"
 )
 
-// PersistentVolumeClaimList contains a list of Persistent Volume Claims in the cluster.
+// PersistentVolumeClaimListComponent contains a list of Persistent Volume Claims in the cluster.
 type PersistentVolumeClaimList struct {
 	ListMeta api.ListMeta `json:"listMeta"`
 

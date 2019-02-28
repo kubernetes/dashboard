@@ -102,7 +102,7 @@ type NodeDetail struct {
 	// Container images of the node.
 	ContainerImages []string `json:"containerImages"`
 
-	// PodList contains information about pods belonging to this node.
+	// PodListComponent contains information about pods belonging to this node.
 	PodList pod.PodList `json:"podList"`
 
 	// Events is list of events associated to the node.

@@ -13,19 +13,18 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
-import {UIRouterModule} from '@uirouter/angular';
 
 import {ComponentsModule} from '../common/components/module';
 import {SharedModule} from '../shared.module';
 import {OverviewComponent} from './component';
-import {overviewState} from './state';
+import {OverviewRoutingModule} from './routing';
 import {WorkloadStatusComponent} from './workloadstatus/component';
 
 @NgModule({
   imports: [
     SharedModule,
     ComponentsModule,
-    UIRouterModule.forChild({states: [overviewState]}),
+    OverviewRoutingModule,
   ],
   declarations: [OverviewComponent, WorkloadStatusComponent],
 })
