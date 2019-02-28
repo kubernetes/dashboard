@@ -322,7 +322,7 @@ export interface Service extends Resource {
 }
 
 export interface StatefulSet extends Resource {
-  pods: PodInfo;
+  podInfo: PodInfo;
   containerImages: string[];
   initContainerImages: string[];
 }
