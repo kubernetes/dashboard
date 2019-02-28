@@ -46,7 +46,7 @@ type PodDetail struct {
 	NodeName                  string                                          `json:"nodeName"`
 	RestartCount              int32                                           `json:"restartCount"`
 	QOSClass                  string                                          `json:"qosClass"`
-	Controller                controller.ResourceOwner                        `json:"controller"`
+	Controller                *controller.ResourceOwner                       `json:"controller,omitempty"`
 	Containers                []Container                                     `json:"containers"`
 	InitContainers            []Container                                     `json:"initContainers"`
 	Metrics                   []metricapi.Metric                              `json:"metrics"`
@@ -147,18 +147,16 @@ func GetPodDetail(client kubernetes.Interface, metricClient metricapi.MetricClie
 	return &podDetail, nil
 }
 
-func getPodController(client kubernetes.Interface, nsQuery *common.NamespaceQuery, pod *v1.Pod) (
-	ctrl controller.ResourceOwner, err error) {
-
+func getPodController(client kubernetes.Interface, nsQuery *common.NamespaceQuery, pod *v1.Pod) (*controller.ResourceOwner, error) {
 	channels := &common.ResourceChannels{
 		PodList:   common.GetPodListChannel(client, nsQuery, 1),
 		EventList: common.GetEventListChannel(client, nsQuery, 1),
 	}
 
 	pods := <-channels.PodList.List
-	err = <-channels.PodList.Error
+	err := <-channels.PodList.Error
 	if err != nil {
-		return
+		return nil, err
 	}
 
 	events := <-channels.EventList.List
@@ -166,6 +164,7 @@ func getPodController(client kubernetes.Interface, nsQuery *common.NamespaceQuer
 		events = &v1.EventList{}
 	}
 
+	var ctrl controller.ResourceOwner
 	ownerRef := metaV1.GetControllerOf(pod)
 	if ownerRef != nil {
 		var rc controller.ResourceController
@@ -175,7 +174,7 @@ func getPodController(client kubernetes.Interface, nsQuery *common.NamespaceQuer
 		}
 	}
 
-	return
+	return &ctrl, nil
 }
 
 func extractContainerInfo(containerList []v1.Container, pod *v1.Pod, configMaps *v1.ConfigMapList, secrets *v1.SecretList) []Container {
@@ -208,7 +207,7 @@ func extractContainerInfo(containerList []v1.Container, pod *v1.Pod, configMaps 
 }
 
 func toPodDetail(pod *v1.Pod, metrics []metricapi.Metric, configMaps *v1.ConfigMapList, secrets *v1.SecretList,
-	controller controller.ResourceOwner, events *common.EventList,
+	controller *controller.ResourceOwner, events *common.EventList,
 	persistentVolumeClaimList *persistentvolumeclaim.PersistentVolumeClaimList, nonCriticalErrors []error) PodDetail {
 	return PodDetail{
 		ObjectMeta:                api.NewObjectMeta(pod.ObjectMeta),
