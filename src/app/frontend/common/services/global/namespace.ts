@@ -13,8 +13,9 @@
 // limitations under the License.
 
 import {EventEmitter, Injectable} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {CONFIG} from '../../../index.config';
+import {NAMESPACE_STATE_PARAM} from '../../params/params';
 
 @Injectable()
 export class NamespaceService {
@@ -33,13 +34,32 @@ export class NamespaceService {
    */
   private currentNamespace_ = '';
 
+  /**
+   * Active route allows to watch for the query param changes and update namespace.
+   */
   private activeRoute_: ActivatedRoute;
 
-  constructor() {}
+  constructor(private readonly router_: Router) {}
+
+  setDefaultQueryParams_() {
+    this.router_.navigate([this.activeRoute_.snapshot.url], {
+      queryParams: {[NAMESPACE_STATE_PARAM]: CONFIG.defaultNamespace},
+      queryParamsHandling: 'merge',
+    });
+  }
 
   setActiveRoute(activeRoute: ActivatedRoute) {
     this.activeRoute_ = activeRoute;
     this.activeRoute_.queryParams.subscribe(params => {
+      if (!params.namespace) {
+        this.setDefaultQueryParams_();
+        return;
+      }
+
+      if (this.currentNamespace_ === params.namespace) {
+        return;
+      }
+
       this.currentNamespace_ = params.namespace;
       this.onNamespaceChangeEvent.emit(this.currentNamespace_);
     });
