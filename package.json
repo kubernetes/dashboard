@@ -41,7 +41,7 @@
     "check:frontend:html": "./aio/scripts/format.sh --html --check",
     "check:license": "gulp check-license-headers",
     "fix": "concurrently \"npm run fix:backend\" \"npm run fix:frontend\" \"npm run fix:license\"",
-    "fix:backend": "goimports -w src/app/backend",
+    "fix:backend": "golangci-lint run -c .golangci.yml --fix src/app/backend/...",
     "fix:frontend": "concurrently \"npm run fix:frontend:ts\" \"npm run fix:frontend:scss\" \"npm run fix:frontend:html\"",
     "fix:frontend:ts": "gts fix",
     "fix:frontend:scss": "scssfmt -r 'src/**/*.scss'",
@@ -49,7 +49,7 @@
     "fix:license": "gulp update-license-headers",
     "clean": "rm -rf .go_workspace .tmp coverage dist npm-debug.log",
     "postversion": "node aio/scripts/version.js",
-    "postinstall": "node aio/scripts/version.js && ./node_modules/protractor/bin/webdriver-manager update --gecko=false && go get golang.org/x/tools/cmd/goimports"
+    "postinstall": "node aio/scripts/version.js && ./node_modules/protractor/bin/webdriver-manager update --gecko=false"
   },
   "husky": {
     "hooks": {
@@ -63,6 +63,10 @@
     ],
     "src/**/*.scss": [
       "scssfmt",
+      "git add"
+    ],
+    "src/**/*.go": [
+      "golangci-lint run -c .golangci.yml --fix",
       "git add"
     ]
   },
