@@ -40,7 +40,7 @@ func GetDaemonSetDetail(client k8sClient.Interface, metricClient metricapi.Metri
 	namespace, name string) (*DaemonSetDetail, error) {
 
 	log.Printf("Getting details of %s daemon set in %s namespace", name, namespace)
-	daemonSet, err := client.AppsV1beta2().DaemonSets(namespace).Get(name, metaV1.GetOptions{})
+	daemonSet, err := client.AppsV1().DaemonSets(namespace).Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}

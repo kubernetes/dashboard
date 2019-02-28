@@ -22,10 +22,8 @@ import (
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
-	apps "k8s.io/api/apps/v1beta2"
+	apps "k8s.io/api/apps/v1"
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/intstr"
@@ -135,27 +133,6 @@ func TestGetDeploymentDetail(t *testing.T) {
 					MaxSurge:       &maxSurge,
 					MaxUnavailable: &maxUnavailable,
 				},
-				OldReplicaSetList: replicaset.ReplicaSetList{
-					ReplicaSets:       []replicaset.ReplicaSet{},
-					CumulativeMetrics: make([]metricapi.Metric, 0),
-					Errors:            []error{},
-				},
-				NewReplicaSet: replicaset.ReplicaSet{
-					ObjectMeta: api.NewObjectMeta(newReplicaSet.ObjectMeta),
-					TypeMeta:   api.NewTypeMeta(api.ResourceKindReplicaSet),
-					Pods: common.PodInfo{
-						Warnings: []common.Event{},
-						Desired:  &replicas,
-					},
-				},
-				EventList: common.EventList{
-					Events: []common.Event{},
-					Errors: []error{},
-				},
-				HorizontalPodAutoscalerList: horizontalpodautoscaler.HorizontalPodAutoscalerList{
-					HorizontalPodAutoscalers: []horizontalpodautoscaler.HorizontalPodAutoscaler{},
-					Errors:                   []error{},
-				},
 				Errors: []error{},
 			},
 		},
@@ -164,7 +141,7 @@ func TestGetDeploymentDetail(t *testing.T) {
 	for _, c := range cases {
 		fakeClient := fake.NewSimpleClientset(c.deployment, replicaSetList, podList, eventList)
 		dataselect.DefaultDataSelectWithMetrics.MetricQuery = dataselect.NoMetrics
-		actual, _ := GetDeploymentDetail(fakeClient, nil, c.namespace, c.name)
+		actual, _ := GetDeploymentDetail(fakeClient, c.namespace, c.name)
 
 		actions := fakeClient.Actions()
 		if len(actions) != len(c.expectedActions) {

@@ -50,7 +50,7 @@ func GetDaemonSetPods(client k8sClient.Interface, metricClient metricapi.MetricC
 
 // Returns array of api pods targeting daemon set with given name.
 func getRawDaemonSetPods(client k8sClient.Interface, daemonSetName, namespace string) ([]api.Pod, error) {
-	daemonSet, err := client.AppsV1beta2().DaemonSets(namespace).Get(daemonSetName, metaV1.GetOptions{})
+	daemonSet, err := client.AppsV1().DaemonSets(namespace).Get(daemonSetName, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}

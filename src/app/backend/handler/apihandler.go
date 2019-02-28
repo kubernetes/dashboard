@@ -1210,7 +1210,7 @@ func (apiHandler *APIHandler) handleGetDeploymentDetail(request *restful.Request
 
 	namespace := request.PathParameter("namespace")
 	name := request.PathParameter("deployment")
-	result, err := deployment.GetDeploymentDetail(k8sClient, apiHandler.iManager.Metric().Client(), namespace, name)
+	result, err := deployment.GetDeploymentDetail(k8sClient, namespace, name)
 	if err != nil {
 		kdErrors.HandleInternalError(response, err)
 		return
