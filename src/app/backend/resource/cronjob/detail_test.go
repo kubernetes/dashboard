@@ -15,15 +15,15 @@
 package cronjob_test
 
 import (
-  "reflect"
-  "testing"
+	"reflect"
+	"testing"
 
-  "github.com/kubernetes/dashboard/src/app/backend/api"
-  "github.com/kubernetes/dashboard/src/app/backend/resource/cronjob"
-  "github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-  batch "k8s.io/api/batch/v1beta1"
-  metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-  "k8s.io/client-go/kubernetes/fake"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/cronjob"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	batch "k8s.io/api/batch/v1beta1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/client-go/kubernetes/fake"
 )
 
 func TestGetJobDetail(t *testing.T) {

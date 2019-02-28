@@ -1936,12 +1936,12 @@ func (apiHandler *APIHandler) handleGetCronJobJobs(request *restful.Request, res
 
 	namespace := request.PathParameter("namespace")
 	name := request.PathParameter("name")
-  active := true
-  if request.QueryParameter("active") == "false" {
-    active = false
-  }
+	active := true
+	if request.QueryParameter("active") == "false" {
+		active = false
+	}
 
-  dataSelect := parseDataSelectPathParameter(request)
+	dataSelect := parseDataSelectPathParameter(request)
 	result, err := cronjob.GetCronJobJobs(k8sClient, apiHandler.iManager.Metric().Client(), dataSelect, namespace, name, active)
 	if err != nil {
 		kdErrors.HandleInternalError(response, err)
