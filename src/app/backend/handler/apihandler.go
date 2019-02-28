@@ -729,9 +729,7 @@ func (apiHandler *APIHandler) handleGetServiceDetail(request *restful.Request, r
 
 	namespace := request.PathParameter("namespace")
 	name := request.PathParameter("service")
-	dataSelect := parseDataSelectPathParameter(request)
-	dataSelect.MetricQuery = dataselect.StandardMetrics
-	result, err := resourceService.GetServiceDetail(k8sClient, apiHandler.iManager.Metric().Client(), namespace, name, dataSelect)
+	result, err := resourceService.GetServiceDetail(k8sClient, namespace, name)
 	if err != nil {
 		kdErrors.HandleInternalError(response, err)
 		return
