@@ -45,6 +45,7 @@ export const shellState: Ng2StateDeclaration = {
   data: {
     kdBreadcrumbs: {
       label: 'Shell',
+      parent: 'pod.detail',
     }
   },
 };

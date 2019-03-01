@@ -14,7 +14,7 @@
 
 import {Ng2StateDeclaration} from '@uirouter/angular';
 
-import {LogsScaleDefaultActionbar} from '../../../../common/components/actionbars/logsscaledefault/component';
+import {LogsDefaultActionbar} from '../../../../common/components/actionbars/logsdefault/component';
 import {addNamespacedResourceStateParamsToUrl} from '../../../../common/params/params';
 import {stateName, stateUrl} from '../state';
 
@@ -34,7 +34,7 @@ export const jobDetailState: Ng2StateDeclaration = {
       component: JobDetailComponent,
     },
     'actionbar@chrome': {
-      component: LogsScaleDefaultActionbar,
+      component: LogsDefaultActionbar,
     }
   },
 };

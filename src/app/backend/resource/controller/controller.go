@@ -101,7 +101,7 @@ func NewResourceController(ref meta.OwnerReference, namespace string, client cli
 		}
 		return StatefulSetController(*ss), nil
 	default:
-		return nil, fmt.Errorf("Unknown reference kind %s", ref.Kind)
+		return nil, fmt.Errorf("unknown reference kind: %s", ref.Kind)
 	}
 }
 

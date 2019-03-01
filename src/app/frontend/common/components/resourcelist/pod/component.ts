@@ -23,7 +23,6 @@ import {NamespaceService} from '../../../services/global/namespace';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
-import {LogsButtonComponent} from '../../list/column/logsbutton/component';
 import {MenuComponent} from '../../list/column/menu/component';
 import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
 
@@ -45,7 +44,6 @@ export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
     this.registerBinding(this.icon.error, 'kd-error', this.isInErrorState);
 
     // Register action columns.
-    this.registerActionColumn<LogsButtonComponent>('logs', LogsButtonComponent);
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
 
     // Register dynamic columns.

@@ -130,5 +130,5 @@ copy::supported-locales
 copy::dockerfile
 
 END=$(date +%s.%N)
-TOOK=$(echo "$END - $START" | bc)
+TOOK=$(echo "${END} - ${START}" | bc)
 say "\nBuild finished successfully after ${TOOK}s"

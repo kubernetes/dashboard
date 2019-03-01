@@ -22,14 +22,15 @@ import (
 	"sync"
 	"time"
 
-	syncApi "github.com/kubernetes/dashboard/src/app/backend/sync/api"
-	"github.com/kubernetes/dashboard/src/app/backend/sync/poll"
 	v1 "k8s.io/api/core/v1"
 	k8sErrors "k8s.io/apimachinery/pkg/api/errors"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/watch"
 	"k8s.io/client-go/kubernetes"
+
+	syncApi "github.com/kubernetes/dashboard/src/app/backend/sync/api"
+	"github.com/kubernetes/dashboard/src/app/backend/sync/poll"
 )
 
 // Time interval between which secret should be resynchronized.

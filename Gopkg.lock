@@ -487,10 +487,9 @@
   version = "kubernetes-1.13.0"
 
 [[projects]]
-  digest = "1:c4aecf0043dc5f06678761c12664a102947e6ee6a2a9aecfab58442eee7c6587"
+  digest = "1:68cab5462572e54a3ab23e24ba0c7aa403c6546432772ac9563a92554dd2f8f5"
   name = "k8s.io/client-go"
   packages = [
-    "deprecated-dynamic",
     "discovery",
     "discovery/cached",
     "discovery/fake",
@@ -677,7 +676,6 @@
     "k8s.io/apimachinery/pkg/util/wait",
     "k8s.io/apimachinery/pkg/util/yaml",
     "k8s.io/apimachinery/pkg/watch",
-    "k8s.io/client-go/deprecated-dynamic",
     "k8s.io/client-go/discovery",
     "k8s.io/client-go/discovery/cached",
     "k8s.io/client-go/discovery/fake",

@@ -902,12 +902,6 @@ func (apiHandler *APIHandler) handleDeploy(request *restful.Request, response *r
 }
 
 func (apiHandler *APIHandler) handleScaleResource(request *restful.Request, response *restful.Response) {
-	k8sClient, err := apiHandler.cManager.Client(request)
-	if err != nil {
-		kdErrors.HandleInternalError(response, err)
-		return
-	}
-
 	cfg, err := apiHandler.cManager.Config(request)
 	if err != nil {
 		kdErrors.HandleInternalError(response, err)
@@ -918,7 +912,7 @@ func (apiHandler *APIHandler) handleScaleResource(request *restful.Request, resp
 	kind := request.PathParameter("kind")
 	name := request.PathParameter("name")
 	count := request.QueryParameter("scaleBy")
-	replicaCountSpec, err := scaling.ScaleResource(k8sClient, cfg, kind, namespace, name, count)
+	replicaCountSpec, err := scaling.ScaleResource(cfg, kind, namespace, name, count)
 	if err != nil {
 		kdErrors.HandleInternalError(response, err)
 		return
@@ -1925,8 +1919,7 @@ func (apiHandler *APIHandler) handleGetCronJobDetail(request *restful.Request, r
 	name := request.PathParameter("name")
 	dataSelect := parseDataSelectPathParameter(request)
 	dataSelect.MetricQuery = dataselect.StandardMetrics
-	result, err := cronjob.GetCronJobDetail(k8sClient, dataSelect, apiHandler.iManager.Metric().Client(), namespace,
-		name)
+	result, err := cronjob.GetCronJobDetail(k8sClient, namespace, name)
 	if err != nil {
 		kdErrors.HandleInternalError(response, err)
 		return
@@ -1943,8 +1936,13 @@ func (apiHandler *APIHandler) handleGetCronJobJobs(request *restful.Request, res
 
 	namespace := request.PathParameter("namespace")
 	name := request.PathParameter("name")
+	active := true
+	if request.QueryParameter("active") == "false" {
+		active = false
+	}
+
 	dataSelect := parseDataSelectPathParameter(request)
-	result, err := cronjob.GetCronJobJobs(k8sClient, apiHandler.iManager.Metric().Client(), dataSelect, namespace, name)
+	result, err := cronjob.GetCronJobJobs(k8sClient, apiHandler.iManager.Metric().Client(), dataSelect, namespace, name, active)
 	if err != nil {
 		kdErrors.HandleInternalError(response, err)
 		return

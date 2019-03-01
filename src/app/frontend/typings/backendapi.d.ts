@@ -1013,18 +1013,14 @@ export interface LoginStatus {
   httpsMode: boolean;
 }
 
-export interface TokenRefreshSpec {
-  jweToken: string;
-}
-
-export interface LoginModesResponse {
-  modes: string[];
-}
-
 export type AuthenticationMode = string;
 
 export interface EnabledAuthenticationModes {
   modes: AuthenticationMode[];
+}
+
+export interface LoginSkippableResponse {
+  skippable: boolean;
 }
 
 export interface SystemBanner {
@@ -1051,7 +1047,7 @@ export interface TerminalResponse {
 
 export interface ShellFrame {
   Op: string;
-  Data?: any;
+  Data?: string;
   SessionID?: string;
   Rows?: number;
   Cols?: number;

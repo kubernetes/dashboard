@@ -16,15 +16,15 @@ limitations under the License.
 
 <mat-chip-list>
   <ng-container *ngFor="let key of keys; let i = index">
-    <mat-chip *ngIf="isVisible(i)">
-
+    <mat-chip *ngIf="isVisible(i)"
+              [disableRipple]="true">
       <ng-container *ngIf="isTooLong(map[key])">
-        <a href
+        <a class="kd-clickable"
            (click)="openChipDialog(key, map[key])">{{key}}</a>
       </ng-container>
 
       <ng-container *ngIf="!isTooLong(map[key])">
-        <span>
+        <ng-container>
           {{key}}
           <ng-container *ngIf="map[key]">:&nbsp;</ng-container>
           <ng-container *ngIf="map[key]">
@@ -36,7 +36,7 @@ limitations under the License.
             </ng-container>
             <ng-container *ngIf="!isHref(map[key])">{{map[key]}}</ng-container>
           </ng-container>
-        </span>
+        </ng-container>
       </ng-container>
 
     </mat-chip>
@@ -45,9 +45,10 @@ limitations under the License.
             (click)="toggleView()"
             color="primary"
             class="kd-clickable"
-            [selected]="true">
-    <span *ngIf="isShowingAll">Show less</span>
-    <span *ngIf="!isShowingAll">Show all</span>
+            [selected]="true"
+            [disableRipple]="true">
+    <ng-container *ngIf="isShowingAll">Show less</ng-container>
+    <ng-container *ngIf="!isShowingAll">Show all</ng-container>
   </mat-chip>
-  <span *ngIf="keys.length === 0">-</span>
+  <ng-container *ngIf="keys.length === 0">-</ng-container>
 </mat-chip-list>

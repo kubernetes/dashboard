@@ -21,7 +21,6 @@ import {Observable} from 'rxjs/Observable';
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
 import {NamespacedResourceService} from '../../../services/resource/resource';
-import {MenuComponent} from '../../list/column/menu/component';
 import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
 
 const EVENT_TYPE_WARNING = 'Warning';
@@ -41,9 +40,6 @@ export class EventListComponent extends ResourceListWithStatuses<EventList, Even
     // Register status icon handler
     this.registerBinding(this.icon.warning, 'kd-warning', this.isWarning);
     this.registerBinding(this.icon.none, '', this.isNormal.bind(this));
-
-    // Register action columns.
-    this.registerActionColumn<MenuComponent>('menu', MenuComponent);
   }
 
   ngOnInit(): void {

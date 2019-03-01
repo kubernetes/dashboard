@@ -14,7 +14,11 @@
 
 package api
 
-import v1 "k8s.io/api/authorization/v1"
+import (
+	"crypto/rand"
+
+	v1 "k8s.io/api/authorization/v1"
+)
 
 // ToSelfSubjectAccessReview creates kubernetes API object based on provided data.
 func ToSelfSubjectAccessReview(namespace, name, resource, verb string) *v1.SelfSubjectAccessReview {
@@ -28,4 +32,15 @@ func ToSelfSubjectAccessReview(namespace, name, resource, verb string) *v1.SelfS
 			},
 		},
 	}
+}
+
+// GenerateCSRFKey generates random csrf key
+func GenerateCSRFKey() string {
+	bytes := make([]byte, 256)
+	_, err := rand.Read(bytes)
+	if err != nil {
+		panic("could not generate csrf key")
+	}
+
+	return string(bytes)
 }

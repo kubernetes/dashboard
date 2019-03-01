@@ -123,7 +123,7 @@ func GetJobListFromChannels(channels *common.ResourceChannels, dsQuery *datasele
 	}
 
 	jobList := ToJobList(jobs.Items, pods.Items, events.Items, nonCriticalErrors, dsQuery, metricClient)
-	jobList.Status = getStatus(jobs, pods.Items, events.Items)
+	jobList.Status = getStatus(jobs, pods.Items)
 	return jobList, nil
 }
 
@@ -161,6 +161,18 @@ func ToJobList(jobs []batch.Job, pods []v1.Pod, events []v1.Event, nonCriticalEr
 }
 
 func toJob(job *batch.Job, podInfo *common.PodInfo) Job {
+	return Job{
+		ObjectMeta:          api.NewObjectMeta(job.ObjectMeta),
+		TypeMeta:            api.NewTypeMeta(api.ResourceKindJob),
+		ContainerImages:     common.GetContainerImages(&job.Spec.Template.Spec),
+		InitContainerImages: common.GetInitContainerImages(&job.Spec.Template.Spec),
+		Pods:                *podInfo,
+		JobStatus:           getJobStatus(job),
+		Parallelism:         job.Spec.Parallelism,
+	}
+}
+
+func getJobStatus(job *batch.Job) JobStatus {
 	jobStatus := JobStatus{Status: JobStatusRunning}
 	for _, condition := range job.Status.Conditions {
 		if condition.Type == batch.JobComplete && condition.Status == v1.ConditionTrue {
@@ -172,13 +184,5 @@ func toJob(job *batch.Job, podInfo *common.PodInfo) Job {
 			break
 		}
 	}
-	return Job{
-		ObjectMeta:          api.NewObjectMeta(job.ObjectMeta),
-		TypeMeta:            api.NewTypeMeta(api.ResourceKindJob),
-		ContainerImages:     common.GetContainerImages(&job.Spec.Template.Spec),
-		InitContainerImages: common.GetInitContainerImages(&job.Spec.Template.Spec),
-		Pods:                *podInfo,
-		JobStatus:           jobStatus,
-		Parallelism:         job.Spec.Parallelism,
-	}
+	return jobStatus
 }
