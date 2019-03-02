@@ -18,6 +18,7 @@ import {SharedModule} from '../../shared.module';
 import {ComponentsModule} from '../components/module';
 
 import {AlertDialog} from './alert/dialog';
+import {ConfirmDialog} from './confirmbox/dialog';
 import {DeleteResourceDialog} from './deleteresource/dialog';
 import {LogsDownloadDialog} from './download/dialog';
 import {EditResourceDialog} from './editresource/dialog';
@@ -31,6 +32,7 @@ import {TriggerResourceDialog} from './triggerresource/dialog';
   ],
   declarations: [
     AlertDialog,
+    ConfirmDialog,
     EditResourceDialog,
     DeleteResourceDialog,
     LogsDownloadDialog,
@@ -39,6 +41,7 @@ import {TriggerResourceDialog} from './triggerresource/dialog';
   ],
   exports: [
     AlertDialog,
+    ConfirmDialog,
     EditResourceDialog,
     DeleteResourceDialog,
     LogsDownloadDialog,
@@ -47,6 +50,7 @@ import {TriggerResourceDialog} from './triggerresource/dialog';
   ],
   entryComponents: [
     AlertDialog,
+    ConfirmDialog,
     EditResourceDialog,
     DeleteResourceDialog,
     LogsDownloadDialog,

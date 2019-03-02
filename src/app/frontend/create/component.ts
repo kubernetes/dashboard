@@ -12,7 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component} from '@angular/core';
+import {Component, Inject, Input, OnDestroy, OnInit} from '@angular/core';
+import {equals, StateDeclaration, StateService, TransitionService} from '@uirouter/core';
+
+import {DialogService} from '../common/services/global/confirmbox';
+
 
 @Component({
   selector: 'kd-create',
@@ -20,4 +24,19 @@ import {Component} from '@angular/core';
   styleUrls: ['./style.scss'],
 })
 export class CreateComponent {
+  canExit: boolean;
+
+  constructor(
+      public $state: StateService, public dialogService: DialogService,
+      public transitionService: TransitionService) {}
+
+  uiCanExit() {
+    if (!localStorage.getItem('editting')) {
+      return true;
+    }
+
+    const message = 'You have unsaved changes to this contact.';
+    const question = 'Navigate away and lose changes?';
+    return this.dialogService.confirm(message, question);
+  }
 }

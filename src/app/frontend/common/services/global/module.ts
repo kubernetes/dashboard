@@ -21,6 +21,7 @@ import {AuthService} from './authentication';
 import {AuthorizerService} from './authorizer';
 import {BreadcrumbsService} from './breadcrumbs';
 import {ConfigService} from './config';
+import {DialogService} from './confirmbox';
 import {CsrfTokenService} from './csrftoken';
 import {GlobalSettingsService} from './globalsettings';
 import {HistoryService} from './history';
@@ -36,10 +37,25 @@ import {VerberService} from './verber';
 
 @NgModule({
   providers: [
-    AuthorizerService, AssetsService, BreadcrumbsService, LocalSettingsService,
-    GlobalSettingsService, ConfigService, TitleService, AuthService, CsrfTokenService,
-    NotificationsService, ThemeService, KdStateService, NamespaceService, ActionbarService,
-    VerberService, HistoryService, LogService, {
+    AuthorizerService,
+    AssetsService,
+    BreadcrumbsService,
+    LocalSettingsService,
+    GlobalSettingsService,
+    ConfigService,
+    TitleService,
+    AuthService,
+    CsrfTokenService,
+    NotificationsService,
+    ThemeService,
+    KdStateService,
+    NamespaceService,
+    ActionbarService,
+    VerberService,
+    HistoryService,
+    LogService,
+    DialogService,
+    {
       provide: APP_INITIALIZER,
       useFactory: init,
       deps: [GlobalSettingsService, LocalSettingsService, ConfigService],

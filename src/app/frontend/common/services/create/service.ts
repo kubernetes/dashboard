@@ -25,6 +25,7 @@ import {AlertDialog, AlertDialogConfig} from '../../dialogs/alert/dialog';
 import {CsrfTokenService} from '../global/csrftoken';
 import {NamespaceService} from '../global/namespace';
 
+
 const i18n = {
   /** Text shown on failed deploy in error dialog. */
   MSG_DEPLOY_DIALOG_ERROR: 'Deploying file has failed',
@@ -127,4 +128,8 @@ export class CreateService {
     const configData: AlertDialogConfig = {title, message, confirmLabel: 'OK'};
     this.matDialog_.open(AlertDialog, {data: configData});
   }
+
+  // confirmExit() {
+  //   return this.matDialog_.open(ConfirmDialog, {data:  {}});
+  // }
 }

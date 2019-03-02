@@ -12,9 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HookMatchCriteria, HookMatchCriterion, UIRouter} from '@uirouter/core/lib';
+import {any, HookMatchCriteria, HookMatchCriterion, UIRouter} from '@uirouter/core/lib';
 
 import {NAMESPACE_STATE_PARAM} from './common/params/params';
+import {CreateService} from './common/services/create/service';
 import {AuthService} from './common/services/global/authentication';
 import {KdStateService} from './common/services/global/state';
 import {TitleService} from './common/services/global/title';
@@ -63,6 +64,23 @@ export function configureRouter(router: UIRouter): void {
     const kdStateService = transition.injector().get(KdStateService);
     kdStateService.onBefore.emit(transition);
   });
+
+
+  // transitionService.onBefore({}, async (transition) => {
+  //   if(localStorage.getItem('editting')) {
+  //     console.log('I even git here');
+  //     const dialog = await transition.injector().get(CreateService);
+  //     console.log('I passes here ========================re');
+  //     await dialog.confirmExit().afterClosed().subscribe((result: any) => {
+  //       console.log(`Dialog result: ================ ${result}`); // Pizza!
+  //     });
+  //     return false;
+  //   } else {
+  //     return true;
+  //   }
+  //   return true;
+  // });
+
 
   transitionService.onSuccess({}, (transition) => {
     const kdStateService = transition.injector().get(KdStateService);
