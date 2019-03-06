@@ -23,11 +23,11 @@ import {AlertDialog, AlertDialogConfig} from 'common/dialogs/alert/dialog';
   styleUrls: ['style.scss'],
 })
 export class UploadFileComponent {
-  constructor(private readonly matDialog_: MatDialog) {}
-
   @Input() label: string;
   @Output() onLoad = new EventEmitter<KdFile>();
   filename: string;
+
+  constructor(private readonly matDialog_: MatDialog) {}
 
   onChange(event: HTMLInputEvent): void {
     if (event.target.files.length > 0) {
@@ -48,9 +48,7 @@ export class UploadFileComponent {
     };
 
     if (file instanceof ArrayBuffer) {
-      this.reportError(
-          'File Format Error',
-          'Argument of type string | ArrayBuffer is not assignable to parameter of type string');
+      this.reportError('File Format Error', 'Specified file has the wrong format');
     } else {
       reader.readAsText(file);
     }
