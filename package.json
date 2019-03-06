@@ -116,7 +116,7 @@
     "@types/jasmine": "3.3.9",
     "@types/jasminewd2": "2.0.6",
     "@types/js-yaml": "3.11.2",
-    "@types/lodash": "4.14.121",
+    "@types/lodash": "4.14.122",
     "@types/node": "11.10.5",
     "babel": "6.23.0",
     "babel-preset-env": "1.7.0",
