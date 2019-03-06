@@ -13,7 +13,9 @@
 // limitations under the License.
 
 import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {MatDialog} from '@angular/material';
 import {HTMLInputEvent, KdFile} from '@api/frontendapi';
+import {AlertDialog, AlertDialogConfig} from 'common/dialogs/alert/dialog';
 
 @Component({
   selector: 'kd-upload-file',
@@ -21,6 +23,8 @@ import {HTMLInputEvent, KdFile} from '@api/frontendapi';
   styleUrls: ['style.scss'],
 })
 export class UploadFileComponent {
+  constructor(private readonly matDialog_: MatDialog) {}
+
   @Input() label: string;
   @Output() onLoad = new EventEmitter<KdFile>();
   filename: string;
@@ -31,7 +35,6 @@ export class UploadFileComponent {
     }
   }
 
-  // TODO handle error somehow
   readFile(file: File): void {
     this.filename = file.name;
 
@@ -44,6 +47,17 @@ export class UploadFileComponent {
       } as KdFile);
     };
 
-    reader.readAsText(file);
+    if (file instanceof ArrayBuffer) {
+      this.reportError(
+          'File Format Error',
+          'Argument of type string | ArrayBuffer is not assignable to parameter of type string');
+    } else {
+      reader.readAsText(file);
+    }
+  }
+
+  private reportError(title: string, message: string): void {
+    const configData: AlertDialogConfig = {title, message, confirmLabel: 'OK'};
+    this.matDialog_.open(AlertDialog, {data: configData});
   }
 }
