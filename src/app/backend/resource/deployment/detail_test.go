@@ -74,7 +74,7 @@ func createReplicaSet(name, namespace string, replicas int32, labelSelector map[
 func TestGetDeploymentDetail(t *testing.T) {
 	podList := &v1.PodList{}
 	eventList := &v1.EventList{}
-	var desired int32 = 0
+	var desired int32 = 4
 	var replicas int32 = 4
 
 	deployment := createDeployment("dp-1", "ns-1", "pod-1", replicas,

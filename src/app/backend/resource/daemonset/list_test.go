@@ -393,8 +393,7 @@ func TestToDaemonSetList(t *testing.T) {
 	for _, c := range cases {
 		actual := toDaemonSetList(c.daemonSets, c.pods, events, nil, dataselect.NoDataSelect, nil)
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("toDaemonSetList(%#v, %#v, %#v) == \n%#v\nexpected \n%#v\n",
-				c.daemonSets, c.services, events, actual, c.expected)
+			t.Errorf("toDaemonSetList(%#v, %#v, %#v) == \n%#v\nexpected \n%#v\n", c.daemonSets, c.services, events, actual, c.expected)
 		}
 	}
 }
