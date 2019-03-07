@@ -63,23 +63,23 @@ export class DaemonSetListComponent extends ResourceListWithStatuses<DaemonSetLi
   }
 
   isInErrorState(resource: DaemonSet): boolean {
-    return resource.pods.warnings.length > 0;
+    return resource.podInfo.warnings.length > 0;
   }
 
   isInPendingState(resource: DaemonSet): boolean {
-    return resource.pods.warnings.length === 0 && resource.pods.pending > 0;
+    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending > 0;
   }
 
   isInSuccessState(resource: DaemonSet): boolean {
-    return resource.pods.warnings.length === 0 && resource.pods.pending === 0;
+    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending === 0;
   }
 
   hasErrors(daemonSet: DaemonSet): boolean {
-    return daemonSet.pods.warnings.length > 0;
+    return daemonSet.podInfo.warnings.length > 0;
   }
 
   getEvents(daemonSet: DaemonSet): Event[] {
-    return daemonSet.pods.warnings;
+    return daemonSet.podInfo.warnings;
   }
 
   getDisplayColumns(): string[] {

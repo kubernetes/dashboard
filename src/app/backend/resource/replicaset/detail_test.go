@@ -19,13 +19,12 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
-	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/service"
-	apps "k8s.io/api/apps/v1beta2"
+	apps "k8s.io/api/apps/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
 )
@@ -40,7 +39,7 @@ func TestGetReplicaSetDetail(t *testing.T) {
 	}{
 		{
 			"ns-1", "rs-1",
-			[]string{"get", "list", "get", "list", "list", "list", "get", "list", "list"},
+			[]string{"get", "list", "list"},
 			&apps.ReplicaSet{
 				ObjectMeta: metaV1.ObjectMeta{Name: "rs-1", Namespace: "ns-1",
 					Labels: map[string]string{"app": "test"}},
@@ -52,28 +51,17 @@ func TestGetReplicaSetDetail(t *testing.T) {
 				},
 			},
 			&ReplicaSetDetail{
-				ObjectMeta: api.ObjectMeta{Name: "rs-1", Namespace: "ns-1",
-					Labels: map[string]string{"app": "test"}},
-				TypeMeta: api.TypeMeta{Kind: api.ResourceKindReplicaSet},
-				PodInfo: common.PodInfo{
-					Warnings: []common.Event{},
-					Desired:  &replicas,
-				},
-				PodList: pod.PodList{
-					Pods:              []pod.Pod{},
-					CumulativeMetrics: make([]metricapi.Metric, 0),
-					Errors:            []error{},
+				ReplicaSet: ReplicaSet{
+					ObjectMeta: api.ObjectMeta{Name: "rs-1", Namespace: "ns-1",
+						Labels: map[string]string{"app": "test"}},
+					TypeMeta: api.TypeMeta{Kind: api.ResourceKindReplicaSet},
+					Pods: common.PodInfo{
+						Warnings: []common.Event{},
+						Desired:  &replicas,
+					},
 				},
 				Selector: &metaV1.LabelSelector{
 					MatchLabels: map[string]string{"app": "test"},
-				},
-				ServiceList: service.ServiceList{
-					Services: []service.Service{},
-					Errors:   []error{},
-				},
-				EventList: common.EventList{
-					Events: []common.Event{},
-					Errors: []error{},
 				},
 				HorizontalPodAutoscalerList: horizontalpodautoscaler.HorizontalPodAutoscalerList{
 					HorizontalPodAutoscalers: []horizontalpodautoscaler.HorizontalPodAutoscaler{},
@@ -129,8 +117,10 @@ func TestToReplicaSetDetail(t *testing.T) {
 			service.ServiceList{},
 			horizontalpodautoscaler.HorizontalPodAutoscalerList{},
 			ReplicaSetDetail{
-				TypeMeta: api.TypeMeta{Kind: api.ResourceKindReplicaSet},
-				Errors:   []error{},
+				ReplicaSet: ReplicaSet{
+					TypeMeta: api.TypeMeta{Kind: api.ResourceKindReplicaSet},
+				},
+				Errors: []error{},
 			},
 		}, {
 			&apps.ReplicaSet{ObjectMeta: metaV1.ObjectMeta{Name: "replica-set"}},
@@ -144,18 +134,9 @@ func TestToReplicaSetDetail(t *testing.T) {
 				}},
 			},
 			ReplicaSetDetail{
-				ObjectMeta: api.ObjectMeta{Name: "replica-set"},
-				TypeMeta:   api.TypeMeta{Kind: api.ResourceKindReplicaSet},
-				EventList:  common.EventList{Events: []common.Event{{Message: "event-msg"}}},
-				PodList: pod.PodList{
-					Pods: []pod.Pod{{
-						ObjectMeta: api.ObjectMeta{Name: "pod-1"},
-					}},
-				},
-				ServiceList: service.ServiceList{
-					Services: []service.Service{{
-						ObjectMeta: api.ObjectMeta{Name: "service-1"},
-					}},
+				ReplicaSet: ReplicaSet{
+					ObjectMeta: api.ObjectMeta{Name: "replica-set"},
+					TypeMeta:   api.TypeMeta{Kind: api.ResourceKindReplicaSet},
 				},
 				HorizontalPodAutoscalerList: horizontalpodautoscaler.HorizontalPodAutoscalerList{
 					HorizontalPodAutoscalers: []horizontalpodautoscaler.HorizontalPodAutoscaler{{
@@ -168,7 +149,7 @@ func TestToReplicaSetDetail(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		actual := toReplicaSetDetail(c.replicaSet, c.eventList, c.podList, c.podInfo, c.serviceList, c.hpaList, []error{})
+		actual := toReplicaSetDetail(c.replicaSet, c.podInfo, c.hpaList, []error{})
 
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("toReplicaSetDetail(%#v, %#v, %#v, %#v, %#v) == \ngot %#v, \nexpected %#v",

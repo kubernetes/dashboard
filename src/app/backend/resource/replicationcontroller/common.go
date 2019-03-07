@@ -27,22 +27,6 @@ import (
 	client "k8s.io/client-go/kubernetes"
 )
 
-// ReplicationController (aka. Replication Controller) plus zero or more Kubernetes services that
-// target the Replication Controller.
-type ReplicationController struct {
-	ObjectMeta api.ObjectMeta `json:"objectMeta"`
-	TypeMeta   api.TypeMeta   `json:"typeMeta"`
-
-	// Aggregate information about pods belonging to this Replication Controller.
-	Pods common.PodInfo `json:"pods"`
-
-	// Container images of the Replication Controller.
-	ContainerImages []string `json:"containerImages"`
-
-	// Init Container images of the Replication Controller.
-	InitContainerImages []string `json:"initContainerImages"`
-}
-
 // Transforms simple selector map to labels.Selector object that can be used when querying for
 // object.
 func toLabelSelector(selector map[string]string) (labels.Selector, error) {

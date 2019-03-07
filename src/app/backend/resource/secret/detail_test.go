@@ -19,6 +19,7 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
@@ -36,11 +37,13 @@ func TestGetSecretDetail(t *testing.T) {
 				},
 			},
 			&SecretDetail{
-				TypeMeta: api.TypeMeta{
-					Kind: "secret",
-				},
-				ObjectMeta: api.ObjectMeta{
-					Name: "foo",
+				Secret: Secret{
+					TypeMeta: api.TypeMeta{
+						Kind: "secret",
+					},
+					ObjectMeta: api.ObjectMeta{
+						Name: "foo",
+					},
 				},
 				Data: map[string][]byte{"app": {0, 1, 2, 3}},
 			},

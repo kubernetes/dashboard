@@ -19,7 +19,6 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
@@ -37,14 +36,16 @@ func TestGetNamespaceDetail(t *testing.T) {
 				},
 			},
 			&NamespaceDetail{
-				TypeMeta:   api.TypeMeta{Kind: "namespace"},
-				ObjectMeta: api.ObjectMeta{Name: "foo"},
-				Phase:      v1.NamespaceActive,
+				Namespace: Namespace{
+					TypeMeta:   api.TypeMeta{Kind: "namespace"},
+					ObjectMeta: api.ObjectMeta{Name: "foo"},
+					Phase:      v1.NamespaceActive,
+				},
 			},
 		},
 	}
 	for _, c := range cases {
-		actual := toNamespaceDetail(c.namespace, common.EventList{}, nil, nil, nil)
+		actual := toNamespaceDetail(c.namespace, nil, nil, nil)
 		if !reflect.DeepEqual(&actual, c.expected) {
 			t.Errorf("toNamespaceDetail(%#v) == \n%#v\nexpected \n%#v\n",
 				c.namespace, actual, c.expected)

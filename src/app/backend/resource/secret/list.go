@@ -23,7 +23,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	kubernetes "k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/kubernetes"
 )
 
 // SecretSpec is a common interface for the specification of different secrets.
@@ -95,20 +95,6 @@ func GetSecretList(client kubernetes.Interface, namespace *common.NamespaceQuery
 	return toSecretList(secretList.Items, nonCriticalErrors, dsQuery), nil
 }
 
-// GetSecretListFromChannels returns a list of all Secrets in the cluster reading required resource list once from the channels.
-func GetSecretListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery) (*SecretList, error) {
-	secretList := <-channels.SecretList.List
-	err := <-channels.SecretList.Error
-
-	nonCriticalErrors, criticalError := errors.HandleError(err)
-	if criticalError != nil {
-		return nil, criticalError
-	}
-
-	return toSecretList(secretList.Items, nonCriticalErrors, dsQuery), nil
-
-}
-
 // CreateSecret creates a single secret using the cluster API client
 func CreateSecret(client kubernetes.Interface, spec SecretSpec) (*Secret, error) {
 	namespace := spec.GetNamespace()
@@ -121,11 +107,12 @@ func CreateSecret(client kubernetes.Interface, spec SecretSpec) (*Secret, error)
 		Data: spec.GetData(),
 	}
 	_, err := client.CoreV1().Secrets(namespace).Create(secret)
-	return toSecret(secret), err
+	result := toSecret(secret)
+	return &result, err
 }
 
-func toSecret(secret *v1.Secret) *Secret {
-	return &Secret{
+func toSecret(secret *v1.Secret) Secret {
+	return Secret{
 		ObjectMeta: api.NewObjectMeta(secret.ObjectMeta),
 		TypeMeta:   api.NewTypeMeta(api.ResourceKindSecret),
 		Type:       secret.Type,
@@ -144,7 +131,7 @@ func toSecretList(secrets []v1.Secret, nonCriticalErrors []error, dsQuery *datas
 	newSecretList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
 	for _, secret := range secrets {
-		newSecretList.Secrets = append(newSecretList.Secrets, *toSecret(&secret))
+		newSecretList.Secrets = append(newSecretList.Secrets, toSecret(&secret))
 	}
 
 	return newSecretList

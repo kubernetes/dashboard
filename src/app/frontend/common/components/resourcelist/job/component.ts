@@ -64,15 +64,15 @@ export class JobListComponent extends ResourceListWithStatuses<JobList, Job> {
   }
 
   isInErrorState(resource: Job): boolean {
-    return resource.pods.warnings.length > 0;
+    return resource.podInfo.warnings.length > 0;
   }
 
   isInPendingState(resource: Job): boolean {
-    return resource.pods.warnings.length === 0 && resource.pods.pending > 0;
+    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending > 0;
   }
 
   isInSuccessState(resource: Job): boolean {
-    return resource.pods.warnings.length === 0 && resource.pods.pending === 0;
+    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending === 0;
   }
 
   getDisplayColumns(): string[] {
@@ -80,11 +80,11 @@ export class JobListComponent extends ResourceListWithStatuses<JobList, Job> {
   }
 
   hasErrors(job: Job): boolean {
-    return job.pods.warnings.length > 0;
+    return job.podInfo.warnings.length > 0;
   }
 
   getEvents(job: Job): Event[] {
-    return job.pods.warnings;
+    return job.podInfo.warnings;
   }
 
   private shouldShowNamespaceColumn_(): boolean {

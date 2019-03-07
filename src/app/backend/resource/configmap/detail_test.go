@@ -33,9 +33,11 @@ func TestGetConfigMapDetail(t *testing.T) {
 				Data: map[string]string{"app": "my-name"}, ObjectMeta: metaV1.ObjectMeta{Name: "foo"},
 			},
 			&ConfigMapDetail{
-				TypeMeta:   api.TypeMeta{Kind: "configmap"},
-				ObjectMeta: api.ObjectMeta{Name: "foo"},
-				Data:       map[string]string{"app": "my-name"},
+				ConfigMap: ConfigMap{
+					TypeMeta:   api.TypeMeta{Kind: "configmap"},
+					ObjectMeta: api.ObjectMeta{Name: "foo"},
+				},
+				Data: map[string]string{"app": "my-name"},
 			},
 		},
 	}

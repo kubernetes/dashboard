@@ -17,30 +17,19 @@ package horizontalpodautoscaler
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/src/app/backend/api"
 	autoscaling "k8s.io/api/autoscaling/v1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
 )
 
 // HorizontalPodAutoscalerDetail provides the presentation layer view of Kubernetes Horizontal Pod Autoscaler resource.
-// close mapping of the autoscaling.HorizontalPodAutoscaler type with part of the *Spec and *Detail childs
 type HorizontalPodAutoscalerDetail struct {
-	ObjectMeta api.ObjectMeta `json:"objectMeta"`
-	TypeMeta   api.TypeMeta   `json:"typeMeta"`
+	// Extends list item structure.
+	HorizontalPodAutoscaler `json:",inline"`
 
-	ScaleTargetRef ScaleTargetRef `json:"scaleTargetRef"`
-
-	MinReplicas *int32 `json:"minReplicas"`
-	MaxReplicas int32  `json:"maxReplicas"`
-
-	CurrentCPUUtilizationPercentage *int32 `json:"currentCPUUtilizationPercentage"`
-	TargetCPUUtilizationPercentage  *int32 `json:"targetCPUUtilizationPercentage"`
-
-	CurrentReplicas int32 `json:"currentReplicas"`
-	DesiredReplicas int32 `json:"desiredReplicas"`
-
-	LastScaleTime *v1.Time `json:"lastScaleTime"`
+	CurrentReplicas int32    `json:"currentReplicas"`
+	DesiredReplicas int32    `json:"desiredReplicas"`
+	LastScaleTime   *v1.Time `json:"lastScaleTime"`
 }
 
 // GetHorizontalPodAutoscalerDetail returns detailed information about a horizontal pod autoscaler
@@ -48,7 +37,6 @@ func GetHorizontalPodAutoscalerDetail(client client.Interface, namespace string,
 	log.Printf("Getting details of %s horizontal pod autoscaler", name)
 
 	rawHorizontalPodAutoscaler, err := client.AutoscalingV1().HorizontalPodAutoscalers(namespace).Get(name, v1.GetOptions{})
-
 	if err != nil {
 		return nil, err
 	}
@@ -56,25 +44,11 @@ func GetHorizontalPodAutoscalerDetail(client client.Interface, namespace string,
 	return getHorizontalPodAutoscalerDetail(rawHorizontalPodAutoscaler), nil
 }
 
-func getHorizontalPodAutoscalerDetail(horizontalPodAutoscaler *autoscaling.HorizontalPodAutoscaler) *HorizontalPodAutoscalerDetail {
-
+func getHorizontalPodAutoscalerDetail(hpa *autoscaling.HorizontalPodAutoscaler) *HorizontalPodAutoscalerDetail {
 	return &HorizontalPodAutoscalerDetail{
-		ObjectMeta: api.NewObjectMeta(horizontalPodAutoscaler.ObjectMeta),
-		TypeMeta:   api.NewTypeMeta(api.ResourceKindHorizontalPodAutoscaler),
-
-		ScaleTargetRef: ScaleTargetRef{
-			Kind: horizontalPodAutoscaler.Spec.ScaleTargetRef.Kind,
-			Name: horizontalPodAutoscaler.Spec.ScaleTargetRef.Name,
-		},
-
-		MinReplicas:                     horizontalPodAutoscaler.Spec.MinReplicas,
-		MaxReplicas:                     horizontalPodAutoscaler.Spec.MaxReplicas,
-		CurrentCPUUtilizationPercentage: horizontalPodAutoscaler.Status.CurrentCPUUtilizationPercentage,
-		TargetCPUUtilizationPercentage:  horizontalPodAutoscaler.Spec.TargetCPUUtilizationPercentage,
-
-		CurrentReplicas: horizontalPodAutoscaler.Status.CurrentReplicas,
-		DesiredReplicas: horizontalPodAutoscaler.Status.DesiredReplicas,
-
-		LastScaleTime: horizontalPodAutoscaler.Status.LastScaleTime,
+		HorizontalPodAutoscaler: toHorizontalPodAutoScaler(hpa),
+		CurrentReplicas:         hpa.Status.CurrentReplicas,
+		DesiredReplicas:         hpa.Status.DesiredReplicas,
+		LastScaleTime:           hpa.Status.LastScaleTime,
 	}
 }

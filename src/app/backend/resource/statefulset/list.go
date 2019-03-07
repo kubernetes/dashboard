@@ -23,7 +23,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
-	apps "k8s.io/api/apps/v1beta2"
+	apps "k8s.io/api/apps/v1"
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/client-go/kubernetes"
 )
@@ -32,32 +32,21 @@ import (
 type StatefulSetList struct {
 	ListMeta api.ListMeta `json:"listMeta"`
 
-	// Basic information about resources status on the list.
-	Status common.ResourceStatus `json:"status"`
-
-	// Unordered list of Pet Sets.
-	StatefulSets      []StatefulSet      `json:"statefulSets"`
-	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`
+	Status            common.ResourceStatus `json:"status"`
+	StatefulSets      []StatefulSet         `json:"statefulSets"`
+	CumulativeMetrics []metricapi.Metric    `json:"cumulativeMetrics"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
 }
 
-// StatefulSet is a presentation layer view of Kubernetes Stateful Set resource. This means it is
-// Stateful Set plus additional augmented data we can get from other sources (like services that
-// target the same pods).
+// StatefulSet is a presentation layer view of Kubernetes Stateful Set resource.
 type StatefulSet struct {
-	ObjectMeta api.ObjectMeta `json:"objectMeta"`
-	TypeMeta   api.TypeMeta   `json:"typeMeta"`
-
-	// Aggregate information about pods belonging to this Pet Set.
-	Pods common.PodInfo `json:"pods"`
-
-	// Container images of the Stateful Set.
-	ContainerImages []string `json:"containerImages"`
-
-	// Init container images of the Stateful Set.
-	InitContainerImages []string `json:"initContainerImages"`
+	ObjectMeta          api.ObjectMeta `json:"objectMeta"`
+	TypeMeta            api.TypeMeta   `json:"typeMeta"`
+	Pods                common.PodInfo `json:"podInfo"`
+	ContainerImages     []string       `json:"containerImages"`
+	InitContainerImages []string       `json:"initContainerImages"`
 }
 
 // GetStatefulSetList returns a list of all Stateful Sets in the cluster.

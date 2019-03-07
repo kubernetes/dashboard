@@ -51,13 +51,15 @@ func TestGetHorizontalPodAutoscalerDetail(t *testing.T) {
 				},
 			},
 			&HorizontalPodAutoscalerDetail{
-				ObjectMeta: api.ObjectMeta{Name: "test-name", Namespace: "test-ns"},
-				TypeMeta:   api.TypeMeta{Kind: api.ResourceKindHorizontalPodAutoscaler},
-				ScaleTargetRef: ScaleTargetRef{
-					Kind: "test-kind",
-					Name: "test-name2",
+				HorizontalPodAutoscaler: HorizontalPodAutoscaler{
+					ObjectMeta: api.ObjectMeta{Name: "test-name", Namespace: "test-ns"},
+					TypeMeta:   api.TypeMeta{Kind: api.ResourceKindHorizontalPodAutoscaler},
+					ScaleTargetRef: ScaleTargetRef{
+						Kind: "test-kind",
+						Name: "test-name2",
+					},
+					MaxReplicas: 3,
 				},
-				MaxReplicas:     3,
 				CurrentReplicas: 1,
 				DesiredReplicas: 2,
 			},

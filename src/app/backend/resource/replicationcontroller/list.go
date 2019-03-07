@@ -42,6 +42,22 @@ type ReplicationControllerList struct {
 	Errors []error `json:"errors"`
 }
 
+// ReplicationController (aka. Replication Controller) plus zero or more Kubernetes services that
+// target the Replication Controller.
+type ReplicationController struct {
+	ObjectMeta api.ObjectMeta `json:"objectMeta"`
+	TypeMeta   api.TypeMeta   `json:"typeMeta"`
+
+	// Aggregate information about pods belonging to this Replication Controller.
+	Pods common.PodInfo `json:"podInfo"`
+
+	// Container images of the Replication Controller.
+	ContainerImages []string `json:"containerImages"`
+
+	// Init Container images of the Replication Controller.
+	InitContainerImages []string `json:"initContainerImages"`
+}
+
 // GetReplicationControllerList returns a list of all Replication Controllers in the cluster.
 func GetReplicationControllerList(client client.Interface, nsQuery *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) (*ReplicationControllerList, error) {

@@ -23,7 +23,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
-	apps "k8s.io/api/apps/v1beta2"
+	apps "k8s.io/api/apps/v1"
 	v1 "k8s.io/api/core/v1"
 	client "k8s.io/client-go/kubernetes"
 )
@@ -132,18 +132,7 @@ func toDeploymentList(deployments []apps.Deployment, pods []v1.Pod, events []v1.
 	deploymentList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
 	for _, deployment := range deployments {
-		matchingPods := common.FilterDeploymentPodsByOwnerReference(deployment, rs, pods)
-		podInfo := common.GetPodInfo(deployment.Status.Replicas, deployment.Spec.Replicas, matchingPods)
-		podInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)
-
-		deploymentList.Deployments = append(deploymentList.Deployments,
-			Deployment{
-				ObjectMeta:          api.NewObjectMeta(deployment.ObjectMeta),
-				TypeMeta:            api.NewTypeMeta(api.ResourceKindDeployment),
-				ContainerImages:     common.GetContainerImages(&deployment.Spec.Template.Spec),
-				InitContainerImages: common.GetInitContainerImages(&deployment.Spec.Template.Spec),
-				Pods:                podInfo,
-			})
+		deploymentList.Deployments = append(deploymentList.Deployments, toDeployment(&deployment, rs, pods, events))
 	}
 
 	cumulativeMetrics, err := metricPromises.GetMetrics()
@@ -153,4 +142,18 @@ func toDeploymentList(deployments []apps.Deployment, pods []v1.Pod, events []v1.
 	}
 
 	return deploymentList
+}
+
+func toDeployment(deployment *apps.Deployment, rs []apps.ReplicaSet, pods []v1.Pod, events []v1.Event) Deployment {
+	matchingPods := common.FilterDeploymentPodsByOwnerReference(*deployment, rs, pods)
+	podInfo := common.GetPodInfo(deployment.Status.Replicas, deployment.Spec.Replicas, matchingPods)
+	podInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)
+
+	return Deployment{
+		ObjectMeta:          api.NewObjectMeta(deployment.ObjectMeta),
+		TypeMeta:            api.NewTypeMeta(api.ResourceKindDeployment),
+		Pods:                podInfo,
+		ContainerImages:     common.GetContainerImages(&deployment.Spec.Template.Spec),
+		InitContainerImages: common.GetInitContainerImages(&deployment.Spec.Template.Spec),
+	}
 }

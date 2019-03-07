@@ -76,7 +76,7 @@ limitations under the License.
       <ng-container matColumnDef="pods">
         <mat-header-cell *matHeaderCellDef>Pods</mat-header-cell>
         <mat-cell *matCellDef="let daemonSet">
-          {{daemonSet.pods.running}} / {{daemonSet.pods.desired}}
+          {{daemonSet.podInfo.running}} / {{daemonSet.podInfo.desired}}
         </mat-cell>
       </ng-container>
 

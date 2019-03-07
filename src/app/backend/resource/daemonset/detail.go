@@ -17,14 +17,8 @@ package daemonset
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	ds "github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
-	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
@@ -32,32 +26,10 @@ import (
 
 // DaemonSeDetail represents detailed information about a Daemon Set.
 type DaemonSetDetail struct {
-	ObjectMeta api.ObjectMeta `json:"objectMeta"`
-	TypeMeta   api.TypeMeta   `json:"typeMeta"`
+	// Extends list item structure.
+	DaemonSet `json:",inline"`
 
-	// Label selector of the Daemon Set.
 	LabelSelector *v1.LabelSelector `json:"labelSelector,omitempty"`
-
-	// Container image list of the pod template specified by this Daemon Set.
-	ContainerImages []string `json:"containerImages"`
-
-	// Init Container image list of the pod template specified by this Daemon Set.
-	InitContainerImages []string `json:"initContainerImages"`
-
-	// Aggregate information about pods of this daemon set.
-	PodInfo common.PodInfo `json:"podInfo"`
-
-	// Detailed information about Pods belonging to this Daemon Set.
-	PodList pod.PodList `json:"podList"`
-
-	// Detailed information about service related to Daemon Set.
-	ServiceList resourceService.ServiceList `json:"serviceList"`
-
-	// True when the data contains at least one pod with metrics information, false otherwise.
-	HasMetrics bool `json:"hasMetrics"`
-
-	// List of events related to this daemon set
-	EventList common.EventList `json:"eventList"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
@@ -68,53 +40,29 @@ func GetDaemonSetDetail(client k8sClient.Interface, metricClient metricapi.Metri
 	namespace, name string) (*DaemonSetDetail, error) {
 
 	log.Printf("Getting details of %s daemon set in %s namespace", name, namespace)
-	daemonSet, err := client.AppsV1beta2().DaemonSets(namespace).Get(name, metaV1.GetOptions{})
+	daemonSet, err := client.AppsV1().DaemonSets(namespace).Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
 
-	podList, err := GetDaemonSetPods(client, metricClient, ds.DefaultDataSelectWithMetrics, name, namespace)
-	nonCriticalErrors, criticalError := errors.HandleError(err)
-	if criticalError != nil {
-		return nil, criticalError
+	channels := &common.ResourceChannels{
+		EventList: common.GetEventListChannel(client, common.NewSameNamespaceQuery(namespace), 1),
+		PodList:   common.GetPodListChannel(client, common.NewSameNamespaceQuery(namespace), 1),
 	}
 
-	podInfo, err := getDaemonSetPodInfo(client, daemonSet)
-	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
-	if criticalError != nil {
-		return nil, criticalError
+	eventList := <-channels.EventList.List
+	if err := <-channels.EventList.Error; err != nil {
+		return nil, err
 	}
 
-	serviceList, err := GetDaemonSetServices(client, ds.DefaultDataSelect, namespace, name)
-	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
-	if criticalError != nil {
-		return nil, criticalError
+	podList := <-channels.PodList.List
+	if err := <-channels.PodList.Error; err != nil {
+		return nil, err
 	}
 
-	eventList, err := event.GetResourceEvents(client, ds.DefaultDataSelect, daemonSet.Namespace, daemonSet.Name)
-	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
-	if criticalError != nil {
-		return nil, criticalError
-	}
-
-	daemonSetDetail := &DaemonSetDetail{
-		ObjectMeta:    api.NewObjectMeta(daemonSet.ObjectMeta),
-		TypeMeta:      api.NewTypeMeta(api.ResourceKindDaemonSet),
+	return &DaemonSetDetail{
+		DaemonSet:     toDaemonSet(*daemonSet, podList.Items, eventList.Items),
 		LabelSelector: daemonSet.Spec.Selector,
-		PodInfo:       *podInfo,
-		PodList:       *podList,
-		ServiceList:   *serviceList,
-		EventList:     *eventList,
-		Errors:        nonCriticalErrors,
-	}
-
-	for _, container := range daemonSet.Spec.Template.Spec.Containers {
-		daemonSetDetail.ContainerImages = append(daemonSetDetail.ContainerImages, container.Image)
-	}
-
-	for _, initContainer := range daemonSet.Spec.Template.Spec.InitContainers {
-		daemonSetDetail.InitContainerImages = append(daemonSetDetail.InitContainerImages, initContainer.Image)
-	}
-
-	return daemonSetDetail, nil
+		Errors:        []error{},
+	}, nil
 }

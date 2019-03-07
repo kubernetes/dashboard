@@ -17,7 +17,6 @@ package persistentvolume
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/src/app/backend/api"
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
@@ -25,17 +24,11 @@ import (
 
 // PersistentVolumeDetail provides the presentation layer view of Kubernetes Persistent Volume resource.
 type PersistentVolumeDetail struct {
-	ObjectMeta             api.ObjectMeta                   `json:"objectMeta"`
-	TypeMeta               api.TypeMeta                     `json:"typeMeta"`
-	Status                 v1.PersistentVolumePhase         `json:"status"`
-	Claim                  string                           `json:"claim"`
-	ReclaimPolicy          v1.PersistentVolumeReclaimPolicy `json:"reclaimPolicy"`
-	AccessModes            []v1.PersistentVolumeAccessMode  `json:"accessModes"`
-	StorageClass           string                           `json:"storageClass"`
-	Capacity               v1.ResourceList                  `json:"capacity"`
-	Message                string                           `json:"message"`
-	PersistentVolumeSource v1.PersistentVolumeSource        `json:"persistentVolumeSource"`
-	Reason                 string                           `json:"reason"`
+	// Extends list item structure.
+	PersistentVolume `json:",inline"`
+
+	Message                string                    `json:"message"`
+	PersistentVolumeSource v1.PersistentVolumeSource `json:"persistentVolumeSource"`
 }
 
 // GetPersistentVolumeDetail returns detailed information about a persistent volume
@@ -47,21 +40,13 @@ func GetPersistentVolumeDetail(client client.Interface, name string) (*Persisten
 		return nil, err
 	}
 
-	return getPersistentVolumeDetail(rawPersistentVolume), nil
+	return getPersistentVolumeDetail(*rawPersistentVolume), nil
 }
 
-func getPersistentVolumeDetail(persistentVolume *v1.PersistentVolume) *PersistentVolumeDetail {
+func getPersistentVolumeDetail(pv v1.PersistentVolume) *PersistentVolumeDetail {
 	return &PersistentVolumeDetail{
-		ObjectMeta:             api.NewObjectMeta(persistentVolume.ObjectMeta),
-		TypeMeta:               api.NewTypeMeta(api.ResourceKindPersistentVolume),
-		Status:                 persistentVolume.Status.Phase,
-		Claim:                  getPersistentVolumeClaim(persistentVolume),
-		ReclaimPolicy:          persistentVolume.Spec.PersistentVolumeReclaimPolicy,
-		AccessModes:            persistentVolume.Spec.AccessModes,
-		StorageClass:           persistentVolume.Spec.StorageClassName,
-		Capacity:               persistentVolume.Spec.Capacity,
-		Message:                persistentVolume.Status.Message,
-		PersistentVolumeSource: persistentVolume.Spec.PersistentVolumeSource,
-		Reason:                 persistentVolume.Status.Reason,
+		PersistentVolume:       toPersistentVolume(pv),
+		Message:                pv.Status.Message,
+		PersistentVolumeSource: pv.Spec.PersistentVolumeSource,
 	}
 }

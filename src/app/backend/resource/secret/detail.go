@@ -17,7 +17,6 @@ package secret
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/src/app/backend/api"
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
@@ -26,17 +25,14 @@ import (
 // SecretDetail API resource provides mechanisms to inject containers with configuration data while keeping
 // containers agnostic of Kubernetes
 type SecretDetail struct {
-	ObjectMeta api.ObjectMeta `json:"objectMeta"`
-	TypeMeta   api.TypeMeta   `json:"typeMeta"`
+	// Extends list item structure.
+	Secret `json:",inline"`
 
 	// Data contains the secret data.  Each key must be a valid DNS_SUBDOMAIN
 	// or leading dot followed by valid DNS_SUBDOMAIN.
 	// The serialized form of the secret data is a base64 encoded string,
 	// representing the arbitrary (possibly non-string) data value here.
 	Data map[string][]byte `json:"data"`
-
-	// Used to facilitate programmatic handling of secret data.
-	Type v1.SecretType `json:"type"`
 }
 
 // GetSecretDetail returns detailed information about a secret
@@ -53,9 +49,7 @@ func GetSecretDetail(client kubernetes.Interface, namespace, name string) (*Secr
 
 func getSecretDetail(rawSecret *v1.Secret) *SecretDetail {
 	return &SecretDetail{
-		ObjectMeta: api.NewObjectMeta(rawSecret.ObjectMeta),
-		TypeMeta:   api.NewTypeMeta(api.ResourceKindSecret),
-		Data:       rawSecret.Data,
-		Type:       rawSecret.Type,
+		Secret: toSecret(rawSecret),
+		Data:   rawSecret.Data,
 	}
 }

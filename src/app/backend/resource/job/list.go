@@ -68,7 +68,7 @@ type Job struct {
 	TypeMeta   api.TypeMeta   `json:"typeMeta"`
 
 	// Aggregate information about pods belonging to this Job.
-	Pods common.PodInfo `json:"pods"`
+	Pods common.PodInfo `json:"podInfo"`
 
 	// Container images of the Job.
 	ContainerImages []string `json:"containerImages"`

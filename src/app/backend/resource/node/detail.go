@@ -78,14 +78,11 @@ type NodeAllocatedResources struct {
 // NodeDetail is a presentation layer view of Kubernetes Node resource. This means it is Node plus
 // additional augmented data we can get from other sources.
 type NodeDetail struct {
-	ObjectMeta api.ObjectMeta `json:"objectMeta"`
-	TypeMeta   api.TypeMeta   `json:"typeMeta"`
+	// Extends list item structure.
+	Node `json:",inline"`
 
 	// NodePhase is the current lifecycle phase of the node.
 	Phase v1.NodePhase `json:"phase"`
-
-	// Resources allocated by node.
-	AllocatedResources NodeAllocatedResources `json:"allocatedResources"`
 
 	// PodCIDR represents the pod IP range assigned to the node.
 	PodCIDR string `json:"podCIDR"`
@@ -325,23 +322,24 @@ func getNodePods(client k8sClient.Interface, node v1.Node) (*v1.PodList, error) 
 
 func toNodeDetail(node v1.Node, pods *pod.PodList, eventList *common.EventList,
 	allocatedResources NodeAllocatedResources, metrics []metricapi.Metric, nonCriticalErrors []error) NodeDetail {
-
 	return NodeDetail{
-		ObjectMeta:         api.NewObjectMeta(node.ObjectMeta),
-		TypeMeta:           api.NewTypeMeta(api.ResourceKindNode),
-		Phase:              node.Status.Phase,
-		ProviderID:         node.Spec.ProviderID,
-		PodCIDR:            node.Spec.PodCIDR,
-		Unschedulable:      node.Spec.Unschedulable,
-		NodeInfo:           node.Status.NodeInfo,
-		Conditions:         getNodeConditions(node),
-		ContainerImages:    getContainerImages(node),
-		PodList:            *pods,
-		EventList:          *eventList,
-		AllocatedResources: allocatedResources,
-		Metrics:            metrics,
-		Taints:             node.Spec.Taints,
-		Addresses:          node.Status.Addresses,
-		Errors:             nonCriticalErrors,
+		Node: Node{
+			ObjectMeta:         api.NewObjectMeta(node.ObjectMeta),
+			TypeMeta:           api.NewTypeMeta(api.ResourceKindNode),
+			AllocatedResources: allocatedResources,
+		},
+		Phase:           node.Status.Phase,
+		ProviderID:      node.Spec.ProviderID,
+		PodCIDR:         node.Spec.PodCIDR,
+		Unschedulable:   node.Spec.Unschedulable,
+		NodeInfo:        node.Status.NodeInfo,
+		Conditions:      getNodeConditions(node),
+		ContainerImages: getContainerImages(node),
+		PodList:         *pods,
+		EventList:       *eventList,
+		Metrics:         metrics,
+		Taints:          node.Spec.Taints,
+		Addresses:       node.Status.Addresses,
+		Errors:          nonCriticalErrors,
 	}
 }

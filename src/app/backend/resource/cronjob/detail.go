@@ -22,11 +22,11 @@ import (
 
 // CronJobDetail contains Cron Job details.
 type CronJobDetail struct {
-	ConcurrencyPolicy       string `json:"concurrencyPolicy"`
-	StartingDeadLineSeconds *int64 `json:"startingDeadlineSeconds"`
-
 	// Extends list item structure.
 	CronJob `json:",inline"`
+
+	ConcurrencyPolicy       string `json:"concurrencyPolicy"`
+	StartingDeadLineSeconds *int64 `json:"startingDeadlineSeconds"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`

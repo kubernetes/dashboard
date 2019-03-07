@@ -19,9 +19,6 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/limitrange"
 	rq "github.com/kubernetes/dashboard/src/app/backend/resource/resourcequota"
 	v1 "k8s.io/api/core/v1"
@@ -32,14 +29,8 @@ import (
 // NamespaceDetail is a presentation layer view of Kubernetes Namespace resource. This means it is Namespace plus
 // additional augmented data we can get from other sources.
 type NamespaceDetail struct {
-	ObjectMeta api.ObjectMeta `json:"objectMeta"`
-	TypeMeta   api.TypeMeta   `json:"typeMeta"`
-
-	// Phase is the current lifecycle phase of the namespace.
-	Phase v1.NamespacePhase `json:"phase"`
-
-	// Events is list of events associated to the namespace.
-	EventList common.EventList `json:"eventList"`
+	// Extends list item structure.
+	Namespace `json:",inline"`
 
 	// ResourceQuotaList is list of resource quotas associated to the namespace
 	ResourceQuotaList *rq.ResourceQuotaDetailList `json:"resourceQuotaList"`
@@ -60,14 +51,8 @@ func GetNamespaceDetail(client k8sClient.Interface, name string) (*NamespaceDeta
 		return nil, err
 	}
 
-	events, err := event.GetNamespaceEvents(client, dataselect.DefaultDataSelect, namespace.Name)
-	nonCriticalErrors, criticalError := errors.HandleError(err)
-	if criticalError != nil {
-		return nil, criticalError
-	}
-
 	resourceQuotaList, err := getResourceQuotas(client, *namespace)
-	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	nonCriticalErrors, criticalError := errors.HandleError(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -78,18 +63,15 @@ func GetNamespaceDetail(client k8sClient.Interface, name string) (*NamespaceDeta
 		return nil, criticalError
 	}
 
-	namespaceDetails := toNamespaceDetail(*namespace, events, resourceQuotaList, resourceLimits, nonCriticalErrors)
+	namespaceDetails := toNamespaceDetail(*namespace, resourceQuotaList, resourceLimits, nonCriticalErrors)
 	return &namespaceDetails, nil
 }
 
-func toNamespaceDetail(namespace v1.Namespace, events common.EventList, resourceQuotaList *rq.ResourceQuotaDetailList,
+func toNamespaceDetail(namespace v1.Namespace, resourceQuotaList *rq.ResourceQuotaDetailList,
 	resourceLimits []limitrange.LimitRangeItem, nonCriticalErrors []error) NamespaceDetail {
 
 	return NamespaceDetail{
-		ObjectMeta:        api.NewObjectMeta(namespace.ObjectMeta),
-		TypeMeta:          api.NewTypeMeta(api.ResourceKindNamespace),
-		Phase:             namespace.Status.Phase,
-		EventList:         events,
+		Namespace:         toNamespace(namespace),
 		ResourceQuotaList: resourceQuotaList,
 		ResourceLimits:    resourceLimits,
 		Errors:            nonCriticalErrors,

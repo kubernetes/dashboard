@@ -20,7 +20,6 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	v1 "k8s.io/api/core/v1"
 	client "k8s.io/client-go/kubernetes"
@@ -43,21 +42,6 @@ type Node struct {
 	TypeMeta           api.TypeMeta           `json:"typeMeta"`
 	Ready              v1.ConditionStatus     `json:"ready"`
 	AllocatedResources NodeAllocatedResources `json:"allocatedResources"`
-}
-
-// GetNodeListFromChannels returns a list of all Nodes in the cluster.
-func GetNodeListFromChannels(client client.Interface, channels *common.ResourceChannels,
-	dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) (*NodeList, error) {
-
-	nodes := <-channels.NodeList.List
-	err := <-channels.NodeList.Error
-
-	nonCriticalErrors, criticalError := errors.HandleError(err)
-	if criticalError != nil {
-		return nil, criticalError
-	}
-
-	return toNodeList(client, nodes.Items, nonCriticalErrors, dsQuery, metricClient), nil
 }
 
 // GetNodeList returns a list of all Nodes in the cluster.

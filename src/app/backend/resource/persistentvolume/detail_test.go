@@ -19,6 +19,7 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
@@ -54,14 +55,16 @@ func TestGetPersistentVolumeDetail(t *testing.T) {
 				},
 			},
 			&PersistentVolumeDetail{
-				TypeMeta:      api.TypeMeta{Kind: "persistentvolume"},
-				ObjectMeta:    api.ObjectMeta{Name: "foo"},
-				Status:        v1.VolumePending,
-				ReclaimPolicy: v1.PersistentVolumeReclaimRecycle,
-				AccessModes:   []v1.PersistentVolumeAccessMode{v1.ReadWriteOnce},
-				Capacity:      nil,
-				Claim:         "default/myclaim-name",
-				Message:       "my-message",
+				PersistentVolume: PersistentVolume{
+					TypeMeta:      api.TypeMeta{Kind: "persistentvolume"},
+					ObjectMeta:    api.ObjectMeta{Name: "foo"},
+					Status:        v1.VolumePending,
+					ReclaimPolicy: v1.PersistentVolumeReclaimRecycle,
+					AccessModes:   []v1.PersistentVolumeAccessMode{v1.ReadWriteOnce},
+					Capacity:      nil,
+					Claim:         "default/myclaim-name",
+				},
+				Message: "my-message",
 				PersistentVolumeSource: v1.PersistentVolumeSource{
 					HostPath: &v1.HostPathVolumeSource{
 						Path: "my-path",
