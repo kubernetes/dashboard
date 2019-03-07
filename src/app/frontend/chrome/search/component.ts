@@ -14,7 +14,7 @@
 
 import {Component, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
 
 import {SearchStateParams} from '../../common/params/params';
 import {searchState} from '../../search/state';
