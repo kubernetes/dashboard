@@ -19,12 +19,10 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
-	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	apps "k8s.io/api/apps/v1"
-	v1 "k8s.io/api/core/v1"
+	"k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/intstr"
 	"k8s.io/client-go/kubernetes/fake"
@@ -105,19 +103,16 @@ func TestGetDeploymentDetail(t *testing.T) {
 	}{
 		{
 			"ns-1", "dp-1",
-			[]string{"get", "list", "list", "get", "list", "list", "list", "list", "list", "get", "list", "list", "list", "list"},
+			[]string{"get", "list", "list", "list"},
 			deployment,
 			&DeploymentDetail{
-				ObjectMeta: api.ObjectMeta{
-					Name:      "dp-1",
-					Namespace: "ns-1",
-					Labels:    map[string]string{"foo": "bar"},
-				},
-				TypeMeta: api.TypeMeta{Kind: api.ResourceKindDeployment},
-				PodList: pod.PodList{
-					Pods:              []pod.Pod{},
-					CumulativeMetrics: make([]metricapi.Metric, 0),
-					Errors:            []error{},
+				Deployment: Deployment{
+					ObjectMeta: api.ObjectMeta{
+						Name:      "dp-1",
+						Namespace: "ns-1",
+						Labels:    map[string]string{"foo": "bar"},
+					},
+					TypeMeta: api.TypeMeta{Kind: api.ResourceKindDeployment},
 				},
 				Selector: map[string]string{"foo": "bar"},
 				StatusInfo: StatusInfo{

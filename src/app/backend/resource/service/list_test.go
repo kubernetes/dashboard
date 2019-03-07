@@ -100,8 +100,10 @@ func TestToServiceDetail(t *testing.T) {
 			podList:      pod.PodList{},
 			endpointList: endpoint.EndpointList{},
 			expected: ServiceDetail{
-				TypeMeta:          api.TypeMeta{Kind: api.ResourceKindService},
-				ExternalEndpoints: []common.Endpoint{},
+				Service: Service{
+					TypeMeta:          api.TypeMeta{Kind: api.ResourceKindService},
+					ExternalEndpoints: []common.Endpoint{},
+				},
 			},
 		}, {
 			service: &v1.Service{
@@ -109,19 +111,21 @@ func TestToServiceDetail(t *testing.T) {
 					Name: "test-service", Namespace: "test-namespace",
 				}},
 			expected: ServiceDetail{
-				ObjectMeta: api.ObjectMeta{
-					Name:      "test-service",
-					Namespace: "test-namespace",
+				Service: Service{
+					ObjectMeta: api.ObjectMeta{
+						Name:      "test-service",
+						Namespace: "test-namespace",
+					},
+					TypeMeta:          api.TypeMeta{Kind: api.ResourceKindService},
+					InternalEndpoint:  common.Endpoint{Host: "test-service.test-namespace"},
+					ExternalEndpoints: []common.Endpoint{},
 				},
-				TypeMeta:          api.TypeMeta{Kind: api.ResourceKindService},
-				InternalEndpoint:  common.Endpoint{Host: "test-service.test-namespace"},
-				ExternalEndpoints: []common.Endpoint{},
 			},
 		},
 	}
 
 	for _, c := range cases {
-		actual := ToServiceDetail(c.service, c.eventList, c.podList, c.endpointList, nil)
+		actual := toServiceDetail(c.service, c.endpointList, nil)
 
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("ToServiceDetail(%#v) == \ngot %#v, \nexpected %#v", c.service, actual,
@@ -158,7 +162,7 @@ func TestToService(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		actual := ToService(c.service)
+		actual := toService(c.service)
 
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("ToService(%#v) == \ngot %#v, \nexpected %#v", c.service, actual,
