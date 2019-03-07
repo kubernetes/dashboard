@@ -61,7 +61,7 @@ func GetDaemonSetDetail(client k8sClient.Interface, metricClient metricapi.Metri
 	}
 
 	return &DaemonSetDetail{
-		DaemonSet:     toDaemonSet(daemonSet, podList.Items, eventList.Items),
+		DaemonSet:     toDaemonSet(*daemonSet, podList.Items, eventList.Items),
 		LabelSelector: daemonSet.Spec.Selector,
 		Errors:        []error{},
 	}, nil

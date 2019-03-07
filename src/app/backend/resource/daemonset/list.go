@@ -109,7 +109,7 @@ func toDaemonSetList(daemonSets []apps.DaemonSet, pods []v1.Pod, events []v1.Eve
 	daemonSetList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
 	for _, daemonSet := range daemonSets {
-		daemonSetList.DaemonSets = append(daemonSetList.DaemonSets, toDaemonSet(&daemonSet, pods, events))
+		daemonSetList.DaemonSets = append(daemonSetList.DaemonSets, toDaemonSet(daemonSet, pods, events))
 	}
 
 	cumulativeMetrics, err := metricPromises.GetMetrics()
@@ -121,10 +121,9 @@ func toDaemonSetList(daemonSets []apps.DaemonSet, pods []v1.Pod, events []v1.Eve
 	return daemonSetList
 }
 
-func toDaemonSet(daemonSet *apps.DaemonSet, pods []v1.Pod, events []v1.Event) DaemonSet {
-	matchingPods := common.FilterPodsByControllerRef(daemonSet, pods)
-	podInfo := common.GetPodInfo(daemonSet.Status.CurrentNumberScheduled,
-		&daemonSet.Status.DesiredNumberScheduled, matchingPods)
+func toDaemonSet(daemonSet apps.DaemonSet, pods []v1.Pod, events []v1.Event) DaemonSet {
+	matchingPods := common.FilterPodsByControllerRef(&daemonSet, pods)
+	podInfo := common.GetPodInfo(daemonSet.Status.CurrentNumberScheduled, &daemonSet.Status.DesiredNumberScheduled, matchingPods)
 	podInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)
 
 	return DaemonSet{
