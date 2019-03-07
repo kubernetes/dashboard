@@ -16,7 +16,7 @@ package service
 
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"k8s.io/api/core/v1"
+	v1 "k8s.io/api/core/v1"
 )
 
 // The code below allows to perform complex data section on []api.Service

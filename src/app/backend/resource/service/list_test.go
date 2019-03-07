@@ -15,10 +15,11 @@
 package service
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/resource/endpoint"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"reflect"
 	"testing"
+
+	"github.com/kubernetes/dashboard/src/app/backend/resource/endpoint"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
