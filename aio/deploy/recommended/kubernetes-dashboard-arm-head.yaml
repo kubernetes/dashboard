@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# ------------------- Dashboard Secret ------------------- #
+# ------------------- Dashboard Secrets ------------------- #
 
 apiVersion: v1
 kind: Secret
@@ -22,6 +22,19 @@ metadata:
   name: kubernetes-dashboard-certs
   namespace: kube-system
 type: Opaque
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  labels:
+    k8s-app: kubernetes-dashboard-head
+  name: kubernetes-dashboard-csrf
+  namespace: kube-system
+type: Opaque
+data:
+  csrf: ""
 
 ---
 # ------------------- Dashboard Service Account ------------------- #
@@ -54,7 +67,7 @@ rules:
   # Allow Dashboard to get, update and delete Dashboard exclusive secrets.
 - apiGroups: [""]
   resources: ["secrets"]
-  resourceNames: ["kubernetes-dashboard-key-holder", "kubernetes-dashboard-certs"]
+  resourceNames: ["kubernetes-dashboard-key-holder", "kubernetes-dashboard-certs", "kubernetes-dashboard-csrf"]
   verbs: ["get", "update", "delete"]
   # Allow Dashboard to get and update 'kubernetes-dashboard-settings' config map.
 - apiGroups: [""]

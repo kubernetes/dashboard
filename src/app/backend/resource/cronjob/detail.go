@@ -15,11 +15,6 @@
 package cronjob
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/errors"
-	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/job"
 	batch2 "k8s.io/api/batch/v1beta1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
@@ -27,11 +22,8 @@ import (
 
 // CronJobDetail contains Cron Job details.
 type CronJobDetail struct {
-	ConcurrencyPolicy       string           `json:"concurrencyPolicy"`
-	StartingDeadLineSeconds *int64           `json:"startingDeadlineSeconds"`
-	ActiveJobs              job.JobList      `json:"activeJobs"`
-	InactiveJobs            job.JobList      `json:"inactiveJobs"`
-	Events                  common.EventList `json:"events"`
+	ConcurrencyPolicy       string `json:"concurrencyPolicy"`
+	StartingDeadLineSeconds *int64 `json:"startingDeadlineSeconds"`
 
 	// Extends list item structure.
 	CronJob `json:",inline"`
@@ -41,45 +33,21 @@ type CronJobDetail struct {
 }
 
 // GetCronJobDetail gets Cron Job details.
-func GetCronJobDetail(client k8sClient.Interface, dsQuery *dataselect.DataSelectQuery,
-	metricClient metricapi.MetricClient, namespace, name string) (*CronJobDetail, error) {
+func GetCronJobDetail(client k8sClient.Interface, namespace, name string) (*CronJobDetail, error) {
 
 	rawObject, err := client.BatchV1beta1().CronJobs(namespace).Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
 
-	activeJobs, err := GetCronJobJobs(client, metricClient, dsQuery, namespace, name)
-	nonCriticalErrors, criticalError := errors.HandleError(err)
-	if criticalError != nil {
-		return nil, criticalError
-	}
-
-	inactiveJobs, err := GetCronJobCompletedJobs(client, metricClient, dsQuery, namespace, name)
-	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
-	if criticalError != nil {
-		return nil, criticalError
-	}
-
-	events, err := GetCronJobEvents(client, dsQuery, namespace, name)
-	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
-	if criticalError != nil {
-		return nil, criticalError
-	}
-
-	cj := toCronJobDetail(rawObject, *activeJobs, *inactiveJobs, *events, nonCriticalErrors)
+	cj := toCronJobDetail(rawObject)
 	return &cj, nil
 }
 
-func toCronJobDetail(cj *batch2.CronJob, activeJobs job.JobList, inactiveJobs job.JobList, events common.EventList,
-	nonCriticalErrors []error) CronJobDetail {
+func toCronJobDetail(cj *batch2.CronJob) CronJobDetail {
 	return CronJobDetail{
 		CronJob:                 toCronJob(cj),
 		ConcurrencyPolicy:       string(cj.Spec.ConcurrencyPolicy),
 		StartingDeadLineSeconds: cj.Spec.StartingDeadlineSeconds,
-		ActiveJobs:              activeJobs,
-		InactiveJobs:            inactiveJobs,
-		Events:                  events,
-		Errors:                  nonCriticalErrors,
 	}
 }

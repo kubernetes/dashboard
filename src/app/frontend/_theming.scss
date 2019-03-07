@@ -59,6 +59,15 @@
     &::-webkit-scrollbar-thumb {
       background-color: $border;
     }
+
+    // Only show the scrollbar on hover, but always enable scrolling.
+    .kd-nav {
+      & > *:not(:hover) {
+        &::-webkit-scrollbar-thumb {
+          background-color: transparent !important;
+        }
+      }
+    }
   }
 
   // Universal application styles.
@@ -260,5 +269,9 @@
         color: mat-color($primary-palette, lighter);
       }
     }
+  }
+
+  .mat-drawer-side {
+    border-right: 0;
   }
 }

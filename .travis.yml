@@ -33,13 +33,7 @@ jobs:
       after_success:
         - rm -rf $TRAVIS_BUILD_DIR/.tmp
         - bash <(curl -s https://codecov.io/bash)
-    - addons:
-        sauce_connect: true
-      script:
-        - npm run cluster
-        - npm run test:e2e
-      env:
-        - KUBE_DASHBOARD_KUBECONFIG=$HOME/.kube/config
+    - script: npm run cluster:start && npm run test:e2e
     - stage: deploy
       script:
         - docker login -u $DOCKER_USER -p $DOCKER_PASS

@@ -104,6 +104,7 @@ limitations under the License.
                   color="primary"
                   type="button"
                   class="kd-login-button"
+                  *ngIf="isSkipButtonEnabled()"
                   (click)="skip()">
             Skip
           </button>

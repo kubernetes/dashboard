@@ -23,11 +23,13 @@ import {ActionbarDetailEditComponent} from './actionbar/detailactions/edit/compo
 import {ActionbarDetailExecComponent} from './actionbar/detailactions/exec/component';
 import {ActionbarDetailLogsComponent} from './actionbar/detailactions/logs/component';
 import {ActionbarDetailScaleComponent} from './actionbar/detailactions/scale/component';
+import {ActionbarDetailTriggerComponent} from './actionbar/detailactions/trigger/component';
 import {DefaultActionbar} from './actionbars/default/component';
 import {LogsDefaultActionbar} from './actionbars/logsdefault/component';
 import {LogsExecDefaultActionbar} from './actionbars/logsexecdefault/component';
 import {LogsScaleDefaultActionbar} from './actionbars/logsscaledefault/component';
 import {ScaleDefaultActionbar} from './actionbars/scaledefault/component';
+import {TriggerDefaultActionbar} from './actionbars/triggerdefault/component';
 import {AllocationChartComponent} from './allocationchart/component';
 import {BreadcrumbsComponent} from './breadcrumbs/component';
 import {CardComponent} from './card/component';
@@ -43,7 +45,6 @@ import {InternalEndpointComponent} from './endpoint/internal/component';
 import {HiddenPropertyComponent} from './hiddenproperty/component';
 import {ResourceLimitListComponent} from './limits/component';
 import {ColumnComponent} from './list/column/component';
-import {LogsButtonComponent} from './list/column/logsbutton/component';
 import {MenuComponent} from './list/column/menu/component';
 import {CardListFilterComponent} from './list/filter/component';
 import {RowDetailComponent} from './list/rowdetail/component';
@@ -123,7 +124,6 @@ import {ZeroStateComponent} from './zerostate/component';
     TextInputComponent,
     RowDetailComponent,
     ColumnComponent,
-    LogsButtonComponent,
     MenuComponent,
     HiddenPropertyComponent,
     EventListComponent,
@@ -150,6 +150,8 @@ import {ZeroStateComponent} from './zerostate/component';
     LogsScaleDefaultActionbar,
     LogsExecDefaultActionbar,
     SparklineComponent,
+    ActionbarDetailTriggerComponent,
+    TriggerDefaultActionbar,
   ],
   exports: [
     AllocationChartComponent,
@@ -202,6 +204,7 @@ import {ZeroStateComponent} from './zerostate/component';
     ActionbarDetailScaleComponent,
     ActionbarDetailLogsComponent,
     ActionbarDetailExecComponent,
+    TriggerDefaultActionbar,
     UploadFileComponent,
     DefaultActionbar,
     LogsDefaultActionbar,
@@ -209,11 +212,11 @@ import {ZeroStateComponent} from './zerostate/component';
     LogsScaleDefaultActionbar,
     LogsExecDefaultActionbar,
     SparklineComponent,
+    ActionbarDetailTriggerComponent,
   ],
   entryComponents: [
     ChipDialog,
     RowDetailComponent,
-    LogsButtonComponent,
     MenuComponent,
     NamespaceChangeDialog,
   ]

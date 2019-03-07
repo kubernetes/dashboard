@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {HttpParams} from '@angular/common/http';
-import {Component, OnDestroy} from '@angular/core';
+import {Component, ElementRef, OnDestroy, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {LogDetails, LogLine, LogSelection, LogSources} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
@@ -40,8 +40,11 @@ const i18n = {
       'The middle part of the log file cannot be loaded, because it is too big.'
 };
 
+type ScrollPosition = 'TOP'|'BOTTOM';
+
 @Component({selector: 'kd-logs', templateUrl: './template.html', styleUrls: ['./style.scss']})
 export class LogsComponent implements OnDestroy {
+  @ViewChild('logViewContainer') logViewContainer_: ElementRef;
   podLogs: LogDetails;
   logsSet: string[];
   logSources: LogSources;
@@ -67,22 +70,25 @@ export class LogsComponent implements OnDestroy {
 
     const namespace = this.state_.params.resourceNamespace;
     const resourceType = this.state_.params.resourceType;
-    let podName = this.state_.params.podName;
+    const resourceName = this.state_.params.resourceName;
+    const containerName = this.state_.params.container;
 
     this.sourceSubscription =
-        logService.getResource(`source/${namespace}/${podName}/${resourceType}`)
+        logService.getResource(`source/${namespace}/${resourceName}/${resourceType}`)
             .subscribe((data: LogSources) => {
               this.logSources = data;
-              if (resourceType !== 'Pod') {
-                podName = data.podNames[0];
-              }
-              this.logsSubscription = logService.getResource(`${namespace}/${podName}`)
-                                          .subscribe((data: LogDetails) => {
-                                            this.updateUiModel(data);
-                                            this.pod = data.info.podName;
-                                            this.container = data.info.containerName;
-                                            this.isLoading = false;
-                                          });
+              this.pod = data.podNames[0];  // Pick first pod (cannot use resource name as it may
+                                            // not be a pod).
+              this.container = containerName ? containerName :
+                                               data.containerNames[0];  // Pick from URL or first.
+              this.appendContainerParam();
+
+              this.logsSubscription =
+                  this.logService.getResource(`${namespace}/${this.pod}/${this.container}`)
+                      .subscribe((data: LogDetails) => {
+                        this.updateUiModel(data);
+                        this.isLoading = false;
+                      });
             });
   }
 
@@ -109,6 +115,13 @@ export class LogsComponent implements OnDestroy {
     if (podLogs.info.truncated) {
       this.notifications_.push(i18n.MSG_LOGS_TRUNCATED_WARNING, NotificationSeverity.error);
     }
+
+    if (this.logService.getFollowing()) {
+      // Pauses very slightly for the view to refresh.
+      setTimeout(() => {
+        this.scrollToBottom();
+      });
+    }
   }
 
   formatAllLogs(logs: LogLine[]): string[] {
@@ -122,6 +135,15 @@ export class LogsComponent implements OnDestroy {
     // add timestamp if needed
     const showTimestamp = this.logService.getShowTimestamp();
     return showTimestamp ? `${line.timestamp}  ${line.content}` : line.content;
+  }
+
+  appendContainerParam() {
+    this.state_.go('.', {container: this.container}, {notify: false});
+  }
+
+  onContainerChange() {
+    this.appendContainerParam();
+    this.loadNewest();
   }
 
   /**
@@ -145,7 +167,8 @@ export class LogsComponent implements OnDestroy {
     this.loadView(
         this.currentSelection.logFilePosition, this.currentSelection.referencePoint.timestamp,
         this.currentSelection.referencePoint.lineNum,
-        this.currentSelection.offsetFrom - logsPerView, this.currentSelection.offsetFrom);
+        this.currentSelection.offsetFrom - logsPerView, this.currentSelection.offsetFrom,
+        this.scrollToBottom.bind(this));
   }
 
   /**
@@ -155,7 +178,7 @@ export class LogsComponent implements OnDestroy {
     this.loadView(
         this.currentSelection.logFilePosition, this.currentSelection.referencePoint.timestamp,
         this.currentSelection.referencePoint.lineNum, this.currentSelection.offsetTo,
-        this.currentSelection.offsetTo + logsPerView);
+        this.currentSelection.offsetTo + logsPerView, this.scrollToTop.bind(this));
   }
 
   /**
@@ -168,7 +191,7 @@ export class LogsComponent implements OnDestroy {
    */
   loadView(
       logFilePosition: string, referenceTimestamp: string, referenceLinenum: number,
-      offsetFrom: number, offsetTo: number): void {
+      offsetFrom: number, offsetTo: number, onLoad?: Function): void {
     const namespace = this.state_.params.resourceNamespace;
     const params = new HttpParams()
                        .set('logFilePosition', logFilePosition)
@@ -181,6 +204,9 @@ export class LogsComponent implements OnDestroy {
         this.logService.getResource(`${namespace}/${this.pod}/${this.container}`, params)
             .subscribe((podLogs: LogDetails) => {
               this.updateUiModel(podLogs);
+              if (onLoad) {
+                onLoad();
+              }
             });
   }
 
@@ -207,11 +233,18 @@ export class LogsComponent implements OnDestroy {
   }
 
   /**
+   * Toggles log auto-refresh mechanism.
+   */
+  toggleLogAutoRefresh(): void {
+    this.logService.setAutoRefresh();
+    this.toggleIntervalFunction();
+  }
+
+  /**
    * Toggles log follow mechanism.
    */
   toggleLogFollow(): void {
-    this.logService.setFollowing();
-    this.toggleIntervalFunction();
+    this.logService.toggleFollowing();
   }
 
   /**
@@ -229,5 +262,55 @@ export class LogsComponent implements OnDestroy {
   downloadLog(): void {
     const dialogData = {data: {pod: this.pod, container: this.container}};
     this.dialog_.open(LogsDownloadDialog, dialogData);
+  }
+
+  /**
+   * Listens for scroll events to set log following state.
+   */
+  onLogsScroll(): void {
+    this.logService.setFollowing(this.isScrolledBottom());
+  }
+
+  /**
+   * Checks if the current logs scroll position is at the bottom.
+   */
+  isScrolledBottom(): boolean {
+    const {nativeElement} = this.logViewContainer_;
+    return nativeElement.scrollHeight <= nativeElement.scrollTop + nativeElement.clientHeight;
+  }
+
+  /**
+   * Scrolls log view to the bottom of the page.
+   */
+  scrollToBottom(): void {
+    this.scrollTo('BOTTOM');
+  }
+
+  /**
+   * Scrolls log view to the top of the page.
+   */
+  scrollToTop(): void {
+    this.scrollTo('TOP');
+  }
+
+  scrollTo(position: ScrollPosition): void {
+    const {nativeElement} = this.logViewContainer_;
+    if (!nativeElement) {
+      return;
+    }
+
+    let top;
+    switch (position) {
+      case 'TOP':
+        top = 0;
+        break;
+      case 'BOTTOM':
+        top = nativeElement.scrollHeight;
+        break;
+      default:
+        return;
+    }
+
+    nativeElement.scrollTo({top, left: 0, behavior: 'smooth'});
   }
 }

@@ -30,7 +30,7 @@ enum EditorMode {
   templateUrl: 'template.html',
 })
 export class EditResourceDialog implements OnInit {
-  private selectedMode_ = EditorMode.YAML;
+  selectedMode = EditorMode.YAML;
 
   @ViewChild('group') buttonToggleGroup: MatButtonToggleGroup;
   text = '';
@@ -47,7 +47,7 @@ export class EditResourceDialog implements OnInit {
     });
 
     this.buttonToggleGroup.valueChange.subscribe((selectedMode: EditorMode) => {
-      this.selectedMode_ = selectedMode;
+      this.selectedMode = selectedMode;
 
       if (this.text) {
         this.updateText();
@@ -60,7 +60,7 @@ export class EditResourceDialog implements OnInit {
   }
 
   getJSON(): string {
-    if (this.selectedMode_ === EditorMode.YAML) {
+    if (this.selectedMode === EditorMode.YAML) {
       return this.toRawJSON(fromYaml(this.text));
     }
 
@@ -72,7 +72,7 @@ export class EditResourceDialog implements OnInit {
   }
 
   private updateText(): void {
-    if (this.selectedMode_ === EditorMode.YAML) {
+    if (this.selectedMode === EditorMode.YAML) {
       this.text = toYaml(JSON.parse(this.text));
     } else {
       this.text = this.toRawJSON(fromYaml(this.text));

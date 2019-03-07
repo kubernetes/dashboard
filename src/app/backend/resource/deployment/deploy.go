@@ -30,8 +30,8 @@ import (
 	"k8s.io/apimachinery/pkg/util/intstr"
 	"k8s.io/apimachinery/pkg/util/rand"
 	"k8s.io/apimachinery/pkg/util/yaml"
-	dynamicclient "k8s.io/client-go/deprecated-dynamic"
 	"k8s.io/client-go/discovery"
+	"k8s.io/client-go/dynamic"
 	client "k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 )
@@ -327,8 +327,6 @@ func DeployAppFromFile(cfg *rest.Config, spec *AppDeploymentFromFileSpec) (bool,
 			gv = schema.GroupVersion{Version: version}
 		}
 
-		groupVersionKind := schema.GroupVersionKind{Group: gv.Group, Version: gv.Version, Kind: kind}
-
 		discoveryClient, err := discovery.NewDiscoveryClientForConfig(cfg)
 		if err != nil {
 			return false, err
@@ -350,18 +348,17 @@ func DeployAppFromFile(cfg *rest.Config, spec *AppDeploymentFromFileSpec) (bool,
 			return false, fmt.Errorf("Unknown resource kind: %s", kind)
 		}
 
-		dynamicClientPool := dynamicclient.NewDynamicClientPool(cfg)
-
-		dynamicClient, err := dynamicClientPool.ClientForGroupVersionKind(groupVersionKind)
-
+		dynamicClient, err := dynamic.NewForConfig(cfg)
 		if err != nil {
 			return false, err
 		}
 
+		groupVersionResource := schema.GroupVersionResource{Group: gv.Group, Version: gv.Version, Resource: resource.Name}
+
 		if strings.Compare(spec.Namespace, "_all") == 0 {
-			_, err = dynamicClient.Resource(resource, data.GetNamespace()).Create(&data)
+			_, err = dynamicClient.Resource(groupVersionResource).Namespace(data.GetNamespace()).Create(&data, metaV1.CreateOptions{})
 		} else {
-			_, err = dynamicClient.Resource(resource, spec.Namespace).Create(&data)
+			_, err = dynamicClient.Resource(groupVersionResource).Namespace(spec.Namespace).Create(&data, metaV1.CreateOptions{})
 		}
 
 		if err != nil {

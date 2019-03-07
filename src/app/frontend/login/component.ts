@@ -14,7 +14,7 @@
 
 import {HttpClient} from '@angular/common/http';
 import {Component, OnInit} from '@angular/core';
-import {AuthenticationMode, EnabledAuthenticationModes, LoginSpec} from '@api/backendapi';
+import {AuthenticationMode, EnabledAuthenticationModes, LoginSkippableResponse, LoginSpec} from '@api/backendapi';
 import {KdFile} from '@api/frontendapi';
 import {StateService} from '@uirouter/core';
 
@@ -38,6 +38,7 @@ export class LoginComponent implements OnInit {
   errors: K8SError[];
 
   private enabledAuthenticationModes_: AuthenticationMode[] = [];
+  private isLoginSkippable_ = false;
   private kubeconfig_: string;
   private token_: string;
   private username_: string;
@@ -51,6 +52,11 @@ export class LoginComponent implements OnInit {
     this.httpClient.get<EnabledAuthenticationModes>('api/v1/login/modes')
         .subscribe((enabledModes: EnabledAuthenticationModes) => {
           this.enabledAuthenticationModes_ = enabledModes.modes;
+        });
+
+    this.httpClient.get<LoginSkippableResponse>('api/v1/login/skippable')
+        .subscribe((loginSkippableResponse: LoginSkippableResponse) => {
+          this.isLoginSkippable_ = loginSkippableResponse.skippable;
         });
   }
 
@@ -78,6 +84,10 @@ export class LoginComponent implements OnInit {
   skip(): void {
     this.authService_.skipLoginPage(true);
     this.state_.go(overviewState.name, {[NAMESPACE_STATE_PARAM]: CONFIG.defaultNamespace});
+  }
+
+  isSkipButtonEnabled(): boolean {
+    return this.isLoginSkippable_;
   }
 
   onChange(event: Event&KdFile): void {

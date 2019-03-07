@@ -22,6 +22,7 @@ import {DeleteResourceDialog} from './deleteresource/dialog';
 import {LogsDownloadDialog} from './download/dialog';
 import {EditResourceDialog} from './editresource/dialog';
 import {ScaleResourceDialog} from './scaleresource/dialog';
+import {TriggerResourceDialog} from './triggerresource/dialog';
 
 @NgModule({
   imports: [
@@ -34,6 +35,7 @@ import {ScaleResourceDialog} from './scaleresource/dialog';
     DeleteResourceDialog,
     LogsDownloadDialog,
     ScaleResourceDialog,
+    TriggerResourceDialog,
   ],
   exports: [
     AlertDialog,
@@ -41,6 +43,7 @@ import {ScaleResourceDialog} from './scaleresource/dialog';
     DeleteResourceDialog,
     LogsDownloadDialog,
     ScaleResourceDialog,
+    TriggerResourceDialog,
   ],
   entryComponents: [
     AlertDialog,
@@ -48,6 +51,7 @@ import {ScaleResourceDialog} from './scaleresource/dialog';
     DeleteResourceDialog,
     LogsDownloadDialog,
     ScaleResourceDialog,
+    TriggerResourceDialog,
   ]
 })
 export class DialogsModule {

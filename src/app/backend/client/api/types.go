@@ -25,6 +25,14 @@ import (
 	"k8s.io/client-go/tools/clientcmd/api"
 )
 
+const (
+	// Resource information that are used as csrf token storage. Can be accessible by multiple dashboard replicas.
+	CsrfTokenSecretName = "kubernetes-dashboard-csrf"
+
+	// Name of the data var that holds the csrf token inside the secret.
+	CsrfTokenSecretData = "csrf"
+)
+
 // ClientManager is responsible for initializing and creating clients to communicate with
 // kubernetes apiserver on demand.
 type ClientManager interface {
@@ -50,4 +58,10 @@ type ResourceVerber interface {
 // CanIResponse is used to as response to check whether or not user is allowed to access given endpoint.
 type CanIResponse struct {
 	Allowed bool `json:"allowed"`
+}
+
+// CsrfTokenManager is responsible for generating, reading and updating token stored in a secret.
+type CsrfTokenManager interface {
+	// Token returns current csrf token used for csrf signing.
+	Token() string
 }
