@@ -82,7 +82,7 @@ func TestGetJobDetail(t *testing.T) {
 		fakeClient := fake.NewSimpleClientset(c.job)
 
 		dataselect.DefaultDataSelectWithMetrics.MetricQuery = dataselect.NoMetrics
-		actual, _ := GetJobDetail(fakeClient, nil, c.namespace, c.name)
+		actual, _ := GetJobDetail(fakeClient, c.namespace, c.name)
 
 		actions := fakeClient.Actions()
 		if len(actions) != len(c.expectedActions) {

@@ -253,7 +253,7 @@ export interface Ingress extends Resource {
 }
 
 export interface Job extends Resource {
-  pods: PodInfo;
+  podInfo: PodInfo;
   containerImages: string[];
   initContainerImages: string[];
   parallelism: number;
