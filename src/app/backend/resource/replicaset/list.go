@@ -43,6 +43,32 @@ type ReplicaSetList struct {
 	Errors []error `json:"errors"`
 }
 
+// ReplicaSet is a presentation layer view of Kubernetes Replica Set resource.
+type ReplicaSet struct {
+	ObjectMeta api.ObjectMeta `json:"objectMeta"`
+	TypeMeta   api.TypeMeta   `json:"typeMeta"`
+
+	// Aggregate information about pods belonging to this Replica Set.
+	Pods common.PodInfo `json:"podInfo"`
+
+	// Container images of the Replica Set.
+	ContainerImages []string `json:"containerImages"`
+
+	// Init Container images of the Replica Set.
+	InitContainerImages []string `json:"initContainerImages"`
+}
+
+// ToReplicaSet converts replica set api object to replica set model object.
+func ToReplicaSet(replicaSet *apps.ReplicaSet, podInfo *common.PodInfo) ReplicaSet {
+	return ReplicaSet{
+		ObjectMeta:          api.NewObjectMeta(replicaSet.ObjectMeta),
+		TypeMeta:            api.NewTypeMeta(api.ResourceKindReplicaSet),
+		ContainerImages:     common.GetContainerImages(&replicaSet.Spec.Template.Spec),
+		InitContainerImages: common.GetInitContainerImages(&replicaSet.Spec.Template.Spec),
+		Pods:                *podInfo,
+	}
+}
+
 // GetReplicaSetList returns a list of all Replica Sets in the cluster.
 func GetReplicaSetList(client client.Interface, nsQuery *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) (*ReplicaSetList, error) {

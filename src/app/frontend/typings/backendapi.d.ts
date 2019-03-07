@@ -298,7 +298,7 @@ export interface PodContainer {
 }
 
 export interface ReplicaSet extends Resource {
-  pods: PodInfo;
+  podInfo: PodInfo;
   containerImages: string[];
   initContainerImages: string[];
 }
