@@ -87,7 +87,7 @@ func toIngressList(ingresses []extensions.Ingress, nonCriticalErrors []error, ds
 	newIngressList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
 	for _, ingress := range ingresses {
-		newIngressList.Items = append(newIngressList.Items, *toIngress(&ingress))
+		newIngressList.Items = append(newIngressList.Items, toIngress(&ingress))
 	}
 
 	return newIngressList
