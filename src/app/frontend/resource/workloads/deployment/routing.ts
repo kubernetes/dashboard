@@ -19,7 +19,7 @@ import {DeploymentListComponent} from './list/component';
 
 const routes: Routes = [
   {path: '', component: DeploymentListComponent},
-  {path: ':resourceName', component: DeploymentDetailComponent},
+  {path: ':resourceNamespace/:resourceName', component: DeploymentDetailComponent},
 ];
 
 @NgModule({

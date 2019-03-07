@@ -31,7 +31,7 @@ import {routes} from './index.routing';
     ChromeModule,
     RouterModule.forRoot(
         routes,
-        {enableTracing: false, onSameUrlNavigation: 'reload'},
+        {enableTracing: false},
         ),
   ],
   declarations: [RootComponent],

@@ -28,7 +28,7 @@ import {ResourceService} from '../../../../common/services/resource/resource';
 })
 export class ClusterRoleDetailComponent implements OnInit, OnDestroy {
   private clusterRoleSubscription_: Subscription;
-  private clusterRoleName_: string;
+  private readonly endpoint_ = EndpointManager.resource(Resource.clusterRole);
   clusterRole: ClusterRoleDetail;
   isInitialized = false;
 
@@ -39,17 +39,16 @@ export class ClusterRoleDetailComponent implements OnInit, OnDestroy {
       private readonly notifications_: NotificationsService) {}
 
   ngOnInit(): void {
-    this.clusterRoleName_ = this.activatedRoute_.snapshot.params.resourceName;
-    this.clusterRoleSubscription_ =
-        this.clusterRole_
-            .get(EndpointManager.resource(Resource.clusterRole).detail(), this.clusterRoleName_)
-            .subscribe((d: ClusterRoleDetail) => {
-              this.clusterRole = d;
-              this.notifications_.pushErrors(d.errors);
-              this.actionbar_.onInit.emit(
-                  new ResourceMeta('Cluster Role', d.objectMeta, d.typeMeta));
-              this.isInitialized = true;
-            });
+    const resourceName = this.activatedRoute_.snapshot.params.resourceName;
+
+    this.clusterRoleSubscription_ = this.clusterRole_.get(this.endpoint_.detail(), resourceName)
+                                        .subscribe((d: ClusterRoleDetail) => {
+                                          this.clusterRole = d;
+                                          this.notifications_.pushErrors(d.errors);
+                                          this.actionbar_.onInit.emit(new ResourceMeta(
+                                              'Cluster Role', d.objectMeta, d.typeMeta));
+                                          this.isInitialized = true;
+                                        });
   }
 
   ngOnDestroy(): void {

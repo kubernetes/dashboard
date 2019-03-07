@@ -45,7 +45,7 @@ export class ConfigMapListComponent extends ResourceListBase<ConfigMapList, Conf
   }
 
   getResourceObservable(params?: HttpParams): Observable<ConfigMapList> {
-    return this.configMap_.get(this.endpoint, undefined, params);
+    return this.configMap_.get(this.endpoint, undefined, undefined, params);
   }
 
   map(configMapList: ConfigMapList): ConfigMap[] {

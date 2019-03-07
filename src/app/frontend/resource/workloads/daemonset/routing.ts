@@ -19,7 +19,7 @@ import {DaemonSetListComponent} from './list/component';
 
 const routes: Routes = [
   {path: '', component: DaemonSetListComponent},
-  {path: ':resourceName', component: DaemonSetDetailComponent},
+  {path: ':resourceNamespace/:resourceName', component: DaemonSetDetailComponent},
 ];
 
 @NgModule({

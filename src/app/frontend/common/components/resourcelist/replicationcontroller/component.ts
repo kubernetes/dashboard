@@ -55,7 +55,7 @@ export class ReplicationControllerListComponent extends
   }
 
   getResourceObservable(params?: HttpParams): Observable<ReplicationControllerList> {
-    return this.replicationController_.get(this.endpoint, undefined, params);
+    return this.replicationController_.get(this.endpoint, undefined, undefined, params);
   }
 
   map(rcList: ReplicationControllerList): ReplicationController[] {

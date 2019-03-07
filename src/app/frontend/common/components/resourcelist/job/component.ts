@@ -55,7 +55,7 @@ export class JobListComponent extends ResourceListWithStatuses<JobList, Job> {
   }
 
   getResourceObservable(params?: HttpParams): Observable<JobList> {
-    return this.job_.get(this.endpoint, undefined, params);
+    return this.job_.get(this.endpoint, undefined, undefined, params);
   }
 
   map(jobList: JobList): Job[] {

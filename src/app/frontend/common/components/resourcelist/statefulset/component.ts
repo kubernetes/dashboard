@@ -54,7 +54,7 @@ export class StatefulSetListComponent extends
   }
 
   getResourceObservable(params?: HttpParams): Observable<StatefulSetList> {
-    return this.statefulSet_.get(this.endpoint, undefined, params);
+    return this.statefulSet_.get(this.endpoint, undefined, undefined, params);
   }
 
   map(statefulSetList: StatefulSetList): StatefulSet[] {

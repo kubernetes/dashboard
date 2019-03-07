@@ -19,7 +19,7 @@ import {StatefulSetListComponent} from './list/component';
 
 const routes: Routes = [
   {path: '', component: StatefulSetListComponent},
-  {path: ':resourceName', component: StatefulSetDetailComponent},
+  {path: ':resourceNamespace/:resourceName', component: StatefulSetDetailComponent},
 ];
 
 @NgModule({

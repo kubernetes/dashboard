@@ -50,7 +50,7 @@ export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
   }
 
   getResourceObservable(params?: HttpParams): Observable<PodList> {
-    return this.podList.get(this.endpoint, undefined, params);
+    return this.podList.get(this.endpoint, undefined, undefined, params);
   }
 
   map(podList: PodList): Pod[] {

@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import {NamespaceDetail} from '@api/backendapi';
-import {StateService} from '@uirouter/core';
 import {Subscription} from 'rxjs/Subscription';
 
 import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
@@ -28,24 +28,24 @@ import {ResourceService} from '../../../../common/services/resource/resource';
 })
 export class NamespaceDetailComponent implements OnInit, OnDestroy {
   private namespaceSubscription_: Subscription;
-  private namespaceName_: string;
+  private readonly endpoint_ = EndpointManager.resource(Resource.namespace);
   namespace: NamespaceDetail;
   isInitialized = false;
   eventListEndpoint: string;
 
   constructor(
       private readonly namespace_: ResourceService<NamespaceDetail>,
-      private readonly actionbar_: ActionbarService, private readonly state_: StateService,
+      private readonly actionbar_: ActionbarService,
+      private readonly activatedRoute_: ActivatedRoute,
       private readonly notifications_: NotificationsService) {}
 
   ngOnInit(): void {
-    this.namespaceName_ = this.state_.params.resourceName;
-    this.eventListEndpoint = EndpointManager.resource(Resource.namespace, false)
-                                 .child(this.namespaceName_, Resource.event);
+    const resourceName = this.activatedRoute_.snapshot.params.resourceName;
+
+    this.eventListEndpoint = this.endpoint_.child(resourceName, Resource.event);
 
     this.namespaceSubscription_ =
-        this.namespace_
-            .get(EndpointManager.resource(Resource.namespace).detail(), this.namespaceName_)
+        this.namespace_.get(this.endpoint_.detail(), resourceName)
             .subscribe((d: NamespaceDetail) => {
               this.namespace = d;
               this.notifications_.pushErrors(d.errors);

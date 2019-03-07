@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import {PodDetail} from '@api/backendapi';
-import {StateService} from '@uirouter/core';
 import {Subscription} from 'rxjs/Subscription';
 
 import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
@@ -30,23 +30,25 @@ import {nodeState} from '../../../cluster/node/state';
 })
 export class PodDetailComponent implements OnInit, OnDestroy {
   private podSubscription_: Subscription;
-  private podName_: string;
+  private readonly endpoint_ = EndpointManager.resource(Resource.pod, true);
   pod: PodDetail;
   isInitialized = false;
   eventListEndpoint: string;
 
   constructor(
       private readonly pod_: NamespacedResourceService<PodDetail>,
-      private readonly actionbar_: ActionbarService, private readonly state_: StateService,
-      private readonly kdState_: KdStateService,
+      private readonly actionbar_: ActionbarService,
+      private readonly activatedRoute_: ActivatedRoute, private readonly kdState_: KdStateService,
       private readonly notifications_: NotificationsService) {}
 
   ngOnInit(): void {
-    this.podName_ = this.state_.params.resourceName;
-    this.eventListEndpoint =
-        EndpointManager.resource(Resource.pod, true).child(this.podName_, Resource.event);
+    const resourceName = this.activatedRoute_.snapshot.params.resourceName;
+    const resourceNamespace = this.activatedRoute_.snapshot.params.resourceNamespace;
+
+    this.eventListEndpoint = this.endpoint_.child(resourceName, Resource.event, resourceNamespace);
+
     this.podSubscription_ =
-        this.pod_.get(EndpointManager.resource(Resource.pod, true).detail(), this.podName_)
+        this.pod_.get(this.endpoint_.detail(), resourceName, resourceNamespace)
             .startWith({})
             .subscribe((d: PodDetail) => {
               this.pod = d;

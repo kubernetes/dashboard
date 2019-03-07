@@ -69,7 +69,7 @@ export class PersistentVolumeClaimListComponent extends
   }
 
   getResourceObservable(params?: HttpParams): Observable<PersistentVolumeClaimList> {
-    return this.persistentVolumeClaim_.get(this.endpoint, undefined, params);
+    return this.persistentVolumeClaim_.get(this.endpoint, undefined, undefined, params);
   }
 
   map(persistentVolumeClaimList: PersistentVolumeClaimList): PersistentVolumeClaim[] {

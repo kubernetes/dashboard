@@ -19,7 +19,7 @@ import {PersistentVolumeClaimListComponent} from './list/component';
 
 const routes: Routes = [
   {path: '', component: PersistentVolumeClaimListComponent},
-  {path: ':resourceName', component: PersistentVolumeClaimDetailComponent},
+  {path: ':resourceNamespace/:resourceName', component: PersistentVolumeClaimDetailComponent},
 ];
 
 @NgModule({

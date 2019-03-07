@@ -19,7 +19,7 @@ import {PodListComponent} from './list/component';
 
 const routes: Routes = [
   {path: '', component: PodListComponent},
-  {path: ':resourceName', component: PodDetailComponent},
+  {path: ':resourceNamespace/:resourceName', component: PodDetailComponent},
 ];
 
 @NgModule({

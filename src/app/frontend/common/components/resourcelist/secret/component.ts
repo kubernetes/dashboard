@@ -46,7 +46,7 @@ export class SecretListComponent extends ResourceListBase<SecretList, Secret> {
   }
 
   getResourceObservable(params?: HttpParams): Observable<SecretList> {
-    return this.secret_.get(this.endpoint, undefined, params);
+    return this.secret_.get(this.endpoint, undefined, undefined, params);
   }
 
   map(secretList: SecretList): Secret[] {

@@ -54,7 +54,7 @@ export class DaemonSetListComponent extends ResourceListWithStatuses<DaemonSetLi
   }
 
   getResourceObservable(params?: HttpParams): Observable<DaemonSetList> {
-    return this.daemonSet_.get(this.endpoint, undefined, params);
+    return this.daemonSet_.get(this.endpoint, undefined, undefined, params);
   }
 
   map(daemonSetList: DaemonSetList): DaemonSet[] {

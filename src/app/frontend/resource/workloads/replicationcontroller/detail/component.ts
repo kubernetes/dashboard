@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import {ReplicationControllerDetail} from '@api/backendapi';
-import {StateService} from '@uirouter/core';
 import {Subscription} from 'rxjs/Subscription';
 
 import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
@@ -28,7 +28,7 @@ import {NamespacedResourceService} from '../../../../common/services/resource/re
 })
 export class ReplicationControllerDetailComponent implements OnInit, OnDestroy {
   private replicationControllerSubscription_: Subscription;
-  private name_: string;
+  private readonly endpoint_ = EndpointManager.resource(Resource.replicationController, true);
   replicationController: ReplicationControllerDetail;
   isInitialized = false;
   eventListEndpoint: string;
@@ -38,22 +38,21 @@ export class ReplicationControllerDetailComponent implements OnInit, OnDestroy {
   constructor(
       private readonly replicationController_:
           NamespacedResourceService<ReplicationControllerDetail>,
-      private readonly actionbar_: ActionbarService, private readonly state_: StateService,
+      private readonly actionbar_: ActionbarService,
+      private readonly activatedRoute_: ActivatedRoute,
       private readonly notifications_: NotificationsService) {}
 
   ngOnInit(): void {
-    this.name_ = this.state_.params.resourceName;
-    this.eventListEndpoint = EndpointManager.resource(Resource.replicationController, true)
-                                 .child(this.name_, Resource.event);
-    this.podListEndpoint = EndpointManager.resource(Resource.replicationController, true)
-                               .child(this.name_, Resource.pod);
-    this.serviceListEndpoint = EndpointManager.resource(Resource.replicationController, true)
-                                   .child(this.name_, Resource.service);
+    const resourceName = this.activatedRoute_.snapshot.params.resourceName;
+    const resourceNamespace = this.activatedRoute_.snapshot.params.resourceNamespace;
+
+    this.eventListEndpoint = this.endpoint_.child(resourceName, Resource.event, resourceNamespace);
+    this.podListEndpoint = this.endpoint_.child(resourceName, Resource.pod, resourceNamespace);
+    this.serviceListEndpoint =
+        this.endpoint_.child(resourceName, Resource.service, resourceNamespace);
 
     this.replicationControllerSubscription_ =
-        this.replicationController_
-            .get(
-                EndpointManager.resource(Resource.replicationController, true).detail(), this.name_)
+        this.replicationController_.get(this.endpoint_.detail(), resourceName, resourceNamespace)
             .startWith({})
             .subscribe((d: ReplicationControllerDetail) => {
               this.replicationController = d;

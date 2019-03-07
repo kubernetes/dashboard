@@ -19,7 +19,7 @@ import {JobListComponent} from './list/component';
 
 const routes: Routes = [
   {path: '', component: JobListComponent},
-  {path: ':resourceName', component: JobDetailComponent},
+  {path: ':resourceNamespace/:resourceName', component: JobDetailComponent},
 ];
 
 @NgModule({

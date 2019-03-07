@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import {StorageClassDetail} from '@api/backendapi';
-import {StateService} from '@uirouter/core';
 import {Subscription} from 'rxjs/Subscription';
 
 import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
@@ -29,30 +29,30 @@ import {ResourceService} from '../../../../common/services/resource/resource';
 })
 export class StorageClassDetailComponent implements OnInit, OnDestroy {
   private storageClassSubscription_: Subscription;
-  private storageClassName_: string;
+  private readonly endpoint_ = EndpointManager.resource(Resource.storageClass);
   storageClass: StorageClassDetail;
   pvListEndpoint: string;
   isInitialized = false;
 
   constructor(
       private readonly storageClass_: ResourceService<StorageClassDetail>,
-      private readonly actionbar_: ActionbarService, private readonly state_: StateService,
+      private readonly actionbar_: ActionbarService,
+      private readonly activatedRoute_: ActivatedRoute,
       private readonly notifications_: NotificationsService) {}
 
   ngOnInit(): void {
-    this.storageClassName_ = this.state_.params.resourceName;
-    this.pvListEndpoint = EndpointManager.resource(Resource.storageClass, false)
-                              .child(this.storageClassName_, Resource.persistentVolume);
-    this.storageClassSubscription_ =
-        this.storageClass_
-            .get(EndpointManager.resource(Resource.storageClass).detail(), this.storageClassName_)
-            .subscribe((d: StorageClassDetail) => {
-              this.storageClass = d;
-              this.notifications_.pushErrors(d.errors);
-              this.actionbar_.onInit.emit(
-                  new ResourceMeta('Storage Class', d.objectMeta, d.typeMeta));
-              this.isInitialized = true;
-            });
+    const resourceName = this.activatedRoute_.snapshot.params.resourceName;
+
+    this.pvListEndpoint = this.endpoint_.child(resourceName, Resource.persistentVolume);
+
+    this.storageClassSubscription_ = this.storageClass_.get(this.endpoint_.detail(), resourceName)
+                                         .subscribe((d: StorageClassDetail) => {
+                                           this.storageClass = d;
+                                           this.notifications_.pushErrors(d.errors);
+                                           this.actionbar_.onInit.emit(new ResourceMeta(
+                                               'Storage Class', d.objectMeta, d.typeMeta));
+                                           this.isInitialized = true;
+                                         });
   }
 
   ngOnDestroy(): void {

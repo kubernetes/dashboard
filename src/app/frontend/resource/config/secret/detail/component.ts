@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import {SecretDetail} from '@api/backendapi';
-import {StateService} from '@uirouter/core';
 import {Subscription} from 'rxjs/Subscription';
 
 import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
@@ -28,19 +28,22 @@ import {NamespacedResourceService} from '../../../../common/services/resource/re
 })
 export class SecretDetailComponent implements OnInit, OnDestroy {
   private secretSubscription_: Subscription;
-  private secretName_: string;
+  private readonly endpoint_ = EndpointManager.resource(Resource.secret, true);
   secret: SecretDetail;
   isInitialized = false;
 
   constructor(
       private readonly secret_: NamespacedResourceService<SecretDetail>,
-      private readonly actionbar_: ActionbarService, private readonly state_: StateService,
+      private readonly actionbar_: ActionbarService,
+      private readonly activatedRoute_: ActivatedRoute,
       private readonly notifications_: NotificationsService) {}
 
   ngOnInit(): void {
-    this.secretName_ = this.state_.params.resourceName;
+    const resourceName = this.activatedRoute_.snapshot.params.resourceName;
+    const resourceNamespace = this.activatedRoute_.snapshot.params.resourceNamespace;
+
     this.secretSubscription_ =
-        this.secret_.get(EndpointManager.resource(Resource.secret, true).detail(), this.secretName_)
+        this.secret_.get(this.endpoint_.detail(), resourceName, resourceNamespace)
             .startWith({})
             .subscribe((d: SecretDetail) => {
               this.secret = d;

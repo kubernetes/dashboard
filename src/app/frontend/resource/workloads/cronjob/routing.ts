@@ -19,7 +19,7 @@ import {CronJobListComponent} from './list/component';
 
 const routes: Routes = [
   {path: '', component: CronJobListComponent},
-  {path: ':resourceName', component: CronJobDetailComponent},
+  {path: ':resourceNamespace/:resourceName', component: CronJobDetailComponent},
 ];
 
 @NgModule({

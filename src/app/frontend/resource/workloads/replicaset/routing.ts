@@ -19,7 +19,7 @@ import {ReplicaSetListComponent} from './list/component';
 
 const routes: Routes = [
   {path: '', component: ReplicaSetListComponent},
-  {path: ':resourceName', component: ReplicaSetDetailComponent},
+  {path: ':resourceNamespace/:resourceName', component: ReplicaSetDetailComponent},
 ];
 
 @NgModule({

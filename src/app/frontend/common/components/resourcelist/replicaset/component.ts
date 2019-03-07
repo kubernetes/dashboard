@@ -14,7 +14,7 @@
 
 import {HttpParams} from '@angular/common/http';
 import {Component, ComponentFactoryResolver, Input} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Event, ReplicaSet, ReplicaSetList} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
 import {replicaSetState} from '../../../../resource/workloads/replicaset/state';
@@ -37,7 +37,8 @@ export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSet
 
   constructor(
       private readonly replicaSet_: NamespacedResourceService<ReplicaSetList>,
-      notifications: NotificationsService, resolver: ComponentFactoryResolver) {
+      private readonly activatedRoute_: ActivatedRoute, notifications: NotificationsService,
+      resolver: ComponentFactoryResolver) {
     super(replicaSetState.name, notifications, resolver);
     this.id = ListIdentifiers.replicaSet;
     this.groupId = ListGroupIdentifiers.workloads;
@@ -55,7 +56,7 @@ export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSet
   }
 
   getResourceObservable(params?: HttpParams): Observable<ReplicaSetList> {
-    return this.replicaSet_.get(this.endpoint, undefined, params);
+    return this.replicaSet_.get(this.endpoint, undefined, undefined, params);
   }
 
   map(rsList: ReplicaSetList): ReplicaSet[] {

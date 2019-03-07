@@ -175,13 +175,22 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy, AfterViewI
       return;
     }
 
-    if (this.isOnDetailsView()) {
+    if (this.isOnDetailsView_()) {
       this.router_.navigate(
           [overviewState.name], {queryParams: {[NAMESPACE_STATE_PARAM]: namespace}});
     } else {
       this.router_.navigate(
-          [this.activatedRoute_.snapshot.url], {queryParams: {[NAMESPACE_STATE_PARAM]: namespace}});
+          [this.getRawUrl(this.router_.url)],
+          {queryParams: {[NAMESPACE_STATE_PARAM]: namespace}, queryParamsHandling: 'merge'});
     }
+  }
+
+  private getRawUrl(url: string) {
+    if (!url) {
+      return '';
+    }
+
+    return url.split('?')[0];
   }
 
   private clearNamespaceInput_(): void {
@@ -195,9 +204,8 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy, AfterViewI
         resourceNamespace !== namespace;
   }
 
-  private isOnDetailsView(): boolean {
-    return false;
-    // return this.router_.params.resourceNamespace !== undefined;
+  private isOnDetailsView_(): boolean {
+    return this.activatedRoute_.snapshot.params.resourceNamespace !== undefined;
   }
 
   /**

@@ -19,7 +19,7 @@ import {SecretListComponent} from './list/component';
 
 const routes: Routes = [
   {path: '', component: SecretListComponent},
-  {path: ':resourceName', component: SecretDetailComponent},
+  {path: ':resourceNamespace/:resourceName', component: SecretDetailComponent},
 ];
 
 @NgModule({

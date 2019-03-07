@@ -59,7 +59,7 @@ export class EventListComponent extends ResourceListWithStatuses<EventList, Even
   }
 
   getResourceObservable(params?: HttpParams): Observable<EventList> {
-    return this.eventList.get(this.endpoint, undefined, params);
+    return this.eventList.get(this.endpoint, undefined, undefined, params);
   }
 
   map(eventList: EventList): Event[] {

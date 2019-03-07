@@ -30,9 +30,14 @@ export class NamespaceService {
    */
   private readonly namespaceRegex = /^([a-z0-9]([-a-z0-9]*[a-z0-9])?|_all)$/;
   /**
-   * Hold the currently selected namespace
+   * Holds the currently selected namespace.
    */
   private currentNamespace_ = '';
+
+  /**
+   * Holds namespace of currently selected resource or empty if not on details view.
+   */
+  private resourceNamespace_ = '';
 
   /**
    * Active route allows to watch for the query param changes and update namespace.
@@ -87,5 +92,9 @@ export class NamespaceService {
 
   areMultipleNamespacesSelected(): boolean {
     return this.current() === this.allNamespacesKey_;
+  }
+
+  getResourceNamespace(): string {
+    return this.resourceNamespace_;
   }
 }

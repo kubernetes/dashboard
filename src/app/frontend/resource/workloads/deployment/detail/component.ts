@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import {DeploymentDetail} from '@api/backendapi';
-import {StateService} from '@uirouter/core';
 import {Subscription} from 'rxjs/Subscription';
 
 import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
@@ -29,7 +29,7 @@ import {NamespacedResourceService} from '../../../../common/services/resource/re
 })
 export class DeploymentDetailComponent implements OnInit, OnDestroy {
   private deploymentSubscription_: Subscription;
-  private deploymentName_: string;
+  private readonly endpoint_ = EndpointManager.resource(Resource.deployment, true);
   deployment: DeploymentDetail;
   isInitialized = false;
   eventListEndpoint: string;
@@ -37,20 +37,20 @@ export class DeploymentDetailComponent implements OnInit, OnDestroy {
 
   constructor(
       private readonly deployment_: NamespacedResourceService<DeploymentDetail>,
-      private readonly state_: StateService, private readonly actionbar_: ActionbarService,
-      private readonly kdState_: KdStateService,
+      private readonly activatedRoute_: ActivatedRoute,
+      private readonly actionbar_: ActionbarService, private readonly kdState_: KdStateService,
       private readonly notifications_: NotificationsService) {}
 
   ngOnInit(): void {
-    this.deploymentName_ = this.state_.params.resourceName;
-    this.eventListEndpoint = EndpointManager.resource(Resource.deployment, true)
-                                 .child(this.deploymentName_, Resource.event);
-    this.oldReplicaSetsEndpoint = EndpointManager.resource(Resource.deployment, true)
-                                      .child(this.deploymentName_, Resource.oldReplicaSet);
+    const resourceName = this.activatedRoute_.snapshot.params.resourceName;
+    const resourceNamespace = this.activatedRoute_.snapshot.params.resourceNamespace;
+
+    this.eventListEndpoint = this.endpoint_.child(resourceName, Resource.event, resourceNamespace);
+    this.oldReplicaSetsEndpoint =
+        this.endpoint_.child(resourceName, Resource.oldReplicaSet, resourceNamespace);
 
     this.deploymentSubscription_ =
-        this.deployment_
-            .get(EndpointManager.resource(Resource.deployment, true).detail(), this.deploymentName_)
+        this.deployment_.get(this.endpoint_.detail(), resourceName, resourceNamespace)
             .startWith({})
             .subscribe((d: DeploymentDetail) => {
               this.deployment = d;

@@ -53,7 +53,7 @@ export class DeploymentListComponent extends ResourceListWithStatuses<Deployment
   }
 
   getResourceObservable(params?: HttpParams): Observable<DeploymentList> {
-    return this.deployment_.get(this.endpoint, undefined, params);
+    return this.deployment_.get(this.endpoint, undefined, undefined, params);
   }
 
   map(deploymentList: DeploymentList): Deployment[] {

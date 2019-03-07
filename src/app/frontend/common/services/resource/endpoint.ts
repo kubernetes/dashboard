@@ -50,9 +50,13 @@ class ResourceEndpoint {
     return `${baseHref}/${this.resource_}${this.namespaced_ ? '/:namespace' : ''}/:name`;
   }
 
-  child(resourceName: string, relatedResource: Resource): string {
-    return `${baseHref}/${this.resource_}${this.namespaced_ ? '/:namespace' : ''}/${resourceName}/${
-        relatedResource}`;
+  child(resourceName: string, relatedResource: Resource, resourceNamespace?: string): string {
+    if (!resourceNamespace) {
+      resourceNamespace = '/:namespace';
+    }
+
+    return `${baseHref}/${this.resource_}${this.namespaced_ ? `/${resourceNamespace}` : ''}/${
+        resourceName}/${relatedResource}`;
   }
 }
 

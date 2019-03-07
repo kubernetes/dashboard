@@ -50,7 +50,7 @@ export class ServiceListComponent extends ResourceListWithStatuses<ServiceList, 
   }
 
   getResourceObservable(params?: HttpParams): Observable<ServiceList> {
-    return this.service_.get(this.endpoint, undefined, params);
+    return this.service_.get(this.endpoint, undefined, undefined, params);
   }
 
   map(serviceList: ServiceList): Service[] {

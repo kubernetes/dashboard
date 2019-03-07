@@ -46,7 +46,7 @@ export class IngressListComponent extends ResourceListBase<IngressList, Ingress>
   }
 
   getResourceObservable(params?: HttpParams): Observable<IngressList> {
-    return this.ingress_.get(this.endpoint, undefined, params);
+    return this.ingress_.get(this.endpoint, undefined, undefined, params);
   }
 
   map(ingressList: IngressList): Ingress[] {

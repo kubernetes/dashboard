@@ -20,7 +20,7 @@ const routes: Routes = [
   {path: '', redirectTo: '/overview', pathMatch: 'full'}, {
     path: '',
     component: ChromeComponent,
-    runGuardsAndResolvers: 'always',
+    // runGuardsAndResolvers: 'always',
     children: [
       {path: 'cluster', loadChildren: 'resource/cluster/module#ClusterModule'},
       {path: 'clusterrole', loadChildren: 'resource/cluster/clusterrole/module#ClusterRoleModule'},

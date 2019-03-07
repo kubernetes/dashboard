@@ -47,7 +47,8 @@ limitations under the License.
                          mat-sort-header
                          disableClear="true">Name</mat-header-cell>
         <mat-cell *matCellDef="let namespace">
-          <a [href]="getDetailsHref(namespace.objectMeta.name)">
+          <a [routerLink]="getDetailsHref(namespace.objectMeta.name)"
+             queryParamsHandling="preserve">
             {{namespace.objectMeta.name}}
           </a>
         </mat-cell>

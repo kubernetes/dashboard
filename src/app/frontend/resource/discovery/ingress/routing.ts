@@ -19,7 +19,7 @@ import {IngressListComponent} from './list/component';
 
 const routes: Routes = [
   {path: '', component: IngressListComponent},
-  {path: ':resourceName', component: IngressDetailComponent},
+  {path: ':resourceNamespace/:resourceName', component: IngressDetailComponent},
 ];
 
 @NgModule({

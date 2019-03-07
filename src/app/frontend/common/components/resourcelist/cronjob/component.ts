@@ -51,7 +51,7 @@ export class CronJobListComponent extends ResourceListWithStatuses<CronJobList, 
   }
 
   getResourceObservable(params?: HttpParams): Observable<CronJobList> {
-    return this.cronJob_.get(this.endpoint, undefined, params);
+    return this.cronJob_.get(this.endpoint, undefined, undefined, params);
   }
 
   map(cronJobList: CronJobList): CronJob[] {

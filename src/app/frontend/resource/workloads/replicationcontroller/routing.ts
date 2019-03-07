@@ -19,7 +19,7 @@ import {ReplicationControllerListComponent} from './list/component';
 
 const routes: Routes = [
   {path: '', component: ReplicationControllerListComponent},
-  {path: ':resourceName', component: ReplicationControllerDetailComponent},
+  {path: ':resourceNamespace/:resourceName', component: ReplicationControllerDetailComponent},
 ];
 
 @NgModule({

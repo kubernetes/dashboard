@@ -19,7 +19,7 @@ import {ConfigMapListComponent} from './list/component';
 
 const routes: Routes = [
   {path: '', component: ConfigMapListComponent},
-  {path: ':resourceName', component: ConfigMapDetailComponent},
+  {path: ':resourceNamespace/:resourceName', component: ConfigMapDetailComponent},
 ];
 
 @NgModule({

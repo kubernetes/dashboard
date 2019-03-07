@@ -45,7 +45,8 @@ limitations under the License.
                          mat-sort-header
                          disableClear="true">Name</mat-header-cell>
         <mat-cell *matCellDef="let pv">
-          <a [href]="getDetailsHref(pv.objectMeta.name)">{{pv.objectMeta.name}}</a>
+          <a [routerLink]="getDetailsHref(pv.objectMeta.name)"
+             queryParamsHandling="preserve">{{pv.objectMeta.name}}</a>
         </mat-cell>
       </ng-container>
 
