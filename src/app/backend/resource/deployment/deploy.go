@@ -345,7 +345,7 @@ func DeployAppFromFile(cfg *rest.Config, spec *AppDeploymentFromFileSpec) (bool,
 			}
 		}
 		if resource == nil {
-			return false, fmt.Errorf("Unknown resource kind: %s", kind)
+			return false, fmt.Errorf("unknown resource kind: %s", kind)
 		}
 
 		dynamicClient, err := dynamic.NewForConfig(cfg)

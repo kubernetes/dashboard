@@ -32,7 +32,6 @@ var FailedReasonPartials = []string{"failed", "err", "exceeded", "invalid", "unh
 	"mismatch", "insufficient", "conflict", "outof", "nil", "backoff"}
 
 // GetPodsEventWarnings returns warning pod events by filtering out events targeting only given pods
-// TODO(floreks) : Import and use Set instead of custom function to get rid of duplicates
 func GetPodsEventWarnings(events []api.Event, pods []api.Pod) []common.Event {
 	result := make([]common.Event, 0)
 
