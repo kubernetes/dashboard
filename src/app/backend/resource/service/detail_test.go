@@ -38,7 +38,7 @@ func TestGetServiceDetail(t *testing.T) {
 				Name: "svc-1", Namespace: "ns-1", Labels: map[string]string{},
 			}},
 			namespace: "ns-1", name: "svc-1",
-			expectedActions: []string{"get", "list", "get", "list"},
+			expectedActions: []string{"get", "list"},
 			expected: &ServiceDetail{
 				Service: Service{
 					ObjectMeta: api.ObjectMeta{
@@ -67,7 +67,7 @@ func TestGetServiceDetail(t *testing.T) {
 				},
 			},
 			namespace: "ns-2", name: "svc-2",
-			expectedActions: []string{"get", "list", "get", "list", "list", "list"},
+			expectedActions: []string{"get", "list"},
 			expected: &ServiceDetail{
 				Service: Service{
 					ObjectMeta: api.ObjectMeta{

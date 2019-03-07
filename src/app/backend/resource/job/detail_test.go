@@ -28,7 +28,7 @@ import (
 )
 
 func createJob(name, namespace string, jobCompletions int32, labelSelector map[string]string) *batch.Job {
-	var parallelism int32
+	var parallelism int32 = 0
 	return &batch.Job{
 		ObjectMeta: metaV1.ObjectMeta{
 			Name: name, Namespace: namespace, Labels: labelSelector,
@@ -65,6 +65,10 @@ func TestGetJobDetail(t *testing.T) {
 						Desired:  &jobCompletions,
 					},
 					Parallelism: &jobCompletions,
+					JobStatus: JobStatus{
+						Status:  "Running",
+						Message: "",
+					},
 				},
 				Completions: &parallelism,
 				Errors:      []error{},
@@ -74,14 +78,12 @@ func TestGetJobDetail(t *testing.T) {
 
 	for _, c := range cases {
 		fakeClient := fake.NewSimpleClientset(c.job)
-
 		dataselect.DefaultDataSelectWithMetrics.MetricQuery = dataselect.NoMetrics
 		actual, _ := GetJobDetail(fakeClient, c.namespace, c.name)
 
 		actions := fakeClient.Actions()
 		if len(actions) != len(c.expectedActions) {
-			t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
-				len(c.expectedActions), len(actions))
+			t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions, len(c.expectedActions), len(actions))
 			continue
 		}
 
@@ -93,8 +95,7 @@ func TestGetJobDetail(t *testing.T) {
 		}
 
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("GetEvents(client,heapsterClient,%#v, %#v) == \ngot: %#v, \nexpected %#v",
-				c.namespace, c.name, actual, c.expected)
+			t.Errorf("TestGetJobDetail() == \ngot: %#v, \nexpected %#v", actual, c.expected)
 		}
 	}
 }

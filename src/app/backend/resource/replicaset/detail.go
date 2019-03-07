@@ -33,9 +33,6 @@ type ReplicaSetDetail struct {
 	// Extends list item structure.
 	ReplicaSet `json:",inline"`
 
-	// Aggregate information about pods belonging to this Replica Set.
-	PodInfo common.PodInfo `json:"podInfo"`
-
 	// Selector of this replica set.
 	Selector *metaV1.LabelSelector `json:"selector"`
 
@@ -72,13 +69,10 @@ func GetReplicaSetDetail(client k8sClient.Interface, metricClient metricapi.Metr
 	return &rsDetail, nil
 }
 
-func toReplicaSetDetail(replicaSet *apps.ReplicaSet, podInfo common.PodInfo,
-	hpas hpa.HorizontalPodAutoscalerList, nonCriticalErrors []error) ReplicaSetDetail {
-
+func toReplicaSetDetail(rs *apps.ReplicaSet, podInfo common.PodInfo, hpas hpa.HorizontalPodAutoscalerList, nonCriticalErrors []error) ReplicaSetDetail {
 	return ReplicaSetDetail{
-		ReplicaSet:                  ToReplicaSet(replicaSet, &podInfo),
-		Selector:                    replicaSet.Spec.Selector,
-		PodInfo:                     podInfo,
+		ReplicaSet:                  ToReplicaSet(rs, &podInfo),
+		Selector:                    rs.Spec.Selector,
 		HorizontalPodAutoscalerList: hpas,
 		Errors:                      nonCriticalErrors,
 	}

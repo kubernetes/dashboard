@@ -22,7 +22,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	apps "k8s.io/api/apps/v1"
-	v1 "k8s.io/api/core/v1"
+	"k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/intstr"
 	"k8s.io/client-go/kubernetes/fake"
@@ -74,15 +74,14 @@ func createReplicaSet(name, namespace string, replicas int32, labelSelector map[
 func TestGetDeploymentDetail(t *testing.T) {
 	podList := &v1.PodList{}
 	eventList := &v1.EventList{}
+	var desired int32 = 0
 	var replicas int32 = 4
 
 	deployment := createDeployment("dp-1", "ns-1", "pod-1", replicas,
 		map[string]string{"track": "beta"}, map[string]string{"foo": "bar"})
 
 	podTemplateSpec := GetNewReplicaSetTemplate(deployment)
-
-	newReplicaSet := createReplicaSet("rs-1", "ns-1", replicas, map[string]string{"foo": "bar"},
-		podTemplateSpec)
+	newReplicaSet := createReplicaSet("rs-1", "ns-1", replicas, map[string]string{"foo": "bar"}, podTemplateSpec)
 
 	replicaSetList := &apps.ReplicaSetList{
 		Items: []apps.ReplicaSet{
@@ -113,6 +112,14 @@ func TestGetDeploymentDetail(t *testing.T) {
 						Labels:    map[string]string{"foo": "bar"},
 					},
 					TypeMeta: api.TypeMeta{Kind: api.ResourceKindDeployment},
+					Pods: common.PodInfo{
+						Desired:  &desired,
+						Current:  4,
+						Running:  0,
+						Failed:   0,
+						Pending:  0,
+						Warnings: []common.Event{},
+					},
 				},
 				Selector: map[string]string{"foo": "bar"},
 				StatusInfo: StatusInfo{
