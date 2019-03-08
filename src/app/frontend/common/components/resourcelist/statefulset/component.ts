@@ -17,6 +17,7 @@ import {Component, ComponentFactoryResolver, Input} from '@angular/core';
 import {Event, StatefulSet, StatefulSetList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
+
 import {statefulSetState} from '../../../../resource/workloads/statefulset/state';
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {NamespaceService} from '../../../services/global/namespace';
@@ -24,6 +25,7 @@ import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
+import {StatusBarColor, StatusBarItem} from '../../statusratiobar/component';
 import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
 
 @Component({
@@ -61,6 +63,27 @@ export class StatefulSetListComponent extends
 
   map(statefulSetList: StatefulSetList): StatefulSet[] {
     return statefulSetList.statefulSets;
+  }
+
+  get resourceRatios(): StatusBarItem[] {
+    const status = this.resourceList_.status;
+    return [
+      {
+        key: `Running: ${status.running}`,
+        color: StatusBarColor.Running,
+        value: status.running / this.totalItems * 100,
+      },
+      {
+        key: `Failed: ${status.failed}`,
+        color: StatusBarColor.Failed,
+        value: status.failed / this.totalItems * 100,
+      },
+      {
+        key: `Pending: ${status.pending}`,
+        color: StatusBarColor.Pending,
+        value: status.pending / this.totalItems * 100,
+      }
+    ];
   }
 
   isInErrorState(resource: StatefulSet): boolean {

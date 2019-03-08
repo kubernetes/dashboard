@@ -14,8 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-card role="status">
-  <div title
-       fxLayout="row">Workloads Statuses
+<div class="kd-status-ratio-bar">
+  <div *ngFor="let item of data; trackBy: trackByFn"
+       [matTooltip]="item.key"
+       matTooltipShowDelay="0"
+       class="ratio-bar-item"
+       [ngStyle]="{'background-color': item.color, 'width': item.value}">
   </div>
-</kd-card>
+</div>

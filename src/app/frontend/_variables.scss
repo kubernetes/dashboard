@@ -26,6 +26,7 @@ $caption-font-size-base: rem(1.2) !default;
 $toolbar-height-size-base: rem(6.4) !default;
 $toolbar-height-size-base-sm: rem(4.8) !default;
 $footer-font-size-base: rem(1) !default;
+$tooltip-font-size: rem(1.3) !default;
 
 $font-family-monospace: 'Roboto Mono Regular', monospace;
 $font-family-medium-monospace: 'Roboto Mono Medium', monospace;
@@ -45,3 +46,5 @@ $baseline-grid: 8px;
 $nav-width: 30 * $baseline-grid;
 $logo-width: 8 * $baseline-grid;
 $logo-height: 8 * $baseline-grid;
+
+$white: rgb(255, 255, 255);

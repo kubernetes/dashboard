@@ -42,6 +42,7 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
   private readonly dynamicColumns_: ColumnWhenCondition[] = [];
   protected readonly kdState_: KdStateService;
   protected readonly settingsService_: GlobalSettingsService;
+  protected resourceList_: T;
 
   isLoading = false;
   totalItems = 0;
@@ -86,6 +87,7 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
                     return this.getResourceObservable(this.getDataSelectParams_());
                   }))
             .subscribe((data: T) => {
+              this.resourceList_ = data;
               this.notifications_.pushErrors(data.errors);
               this.totalItems = data.listMeta.totalItems;
               this.isLoading = false;

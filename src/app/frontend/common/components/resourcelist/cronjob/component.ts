@@ -17,6 +17,7 @@ import {Component, Input} from '@angular/core';
 import {CronJob, CronJobList} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
+
 import {cronJobState} from '../../../../resource/workloads/cronjob/state';
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {NamespaceService} from '../../../services/global/namespace';
@@ -24,6 +25,7 @@ import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
+import {StatusBarColor, StatusBarItem} from '../../statusratiobar/component';
 import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
 
 @Component({
@@ -56,6 +58,22 @@ export class CronJobListComponent extends ResourceListWithStatuses<CronJobList, 
 
   map(cronJobList: CronJobList): CronJob[] {
     return cronJobList.items;
+  }
+
+  get resourceRatios(): StatusBarItem[] {
+    const status = this.resourceList_.status;
+    return [
+      {
+        key: `Running: ${status.running}`,
+        color: StatusBarColor.Running,
+        value: status.running / this.totalItems * 100,
+      },
+      {
+        key: `Suspended: ${status.failed}`,
+        color: StatusBarColor.Suspended,
+        value: status.failed / this.totalItems * 100,
+      }
+    ];
   }
 
   isInErrorState(resource: CronJob): boolean {

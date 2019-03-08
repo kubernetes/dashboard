@@ -1,0 +1,25 @@
+@import '../../../variables';
+
+.kd-status-ratio-bar {
+  background-color: $white;
+  border-radius: rem(.4);
+  display: flex;
+  height: rem(.8);
+  margin: rem(.4);
+  overflow: hidden;
+}
+
+.ratio-bar-item {
+  color: $white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-right: rem(.4);
+  text-align: center;
+  transition: width .6s ease;
+  white-space: nowrap;
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
