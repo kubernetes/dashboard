@@ -201,6 +201,17 @@ export default {
         `${containerRegistry.release}/${imageNameBase}-${arch.default}:${version.release}`,
 
     /**
+     * Manifest name for the head release
+     */
+    headManifestName: `${containerRegistry.head}/${imageNameBase}:${version.head}`,
+
+    /**
+     * Manifest name for the versioned release
+     */
+    releaseManifestName:
+        `${containerRegistry.release}/${imageNameBase}:${version.release}`,
+
+    /**
      * Image name for the head release for all supported architecture.
      */
     headImageNames: arch.list.map(
