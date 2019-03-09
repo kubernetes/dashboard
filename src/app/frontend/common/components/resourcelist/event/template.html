@@ -62,14 +62,20 @@ limitations under the License.
 
       <ng-container [matColumnDef]="getDisplayColumns()[5]">
         <mat-header-cell *matHeaderCellDef>First Seen</mat-header-cell>
-        <mat-cell *matCellDef="let event">
+        <mat-cell *matCellDef="let event"
+          matTooltip="{{event.firstSeen | date:'medium'}}"
+          [matTooltipPosition]="top"
+        >
           {{event.firstSeen | date}}
         </mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getDisplayColumns()[6]">
         <mat-header-cell *matHeaderCellDef>Last Seen</mat-header-cell>
-        <mat-cell *matCellDef="let event">
+        <mat-cell *matCellDef="let event"
+          matTooltip="{{event.lastSeen | date:'medium'}}"
+          [matTooltipPosition]="top"
+        >
           {{event.lastSeen | date}}
         </mat-cell>
       </ng-container>
