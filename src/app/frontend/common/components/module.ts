@@ -39,6 +39,7 @@ import {CommaSeparatedListComponent} from './commaseparatedlist/component';
 import {ConditionListComponent} from './condition/component';
 import {ContainerCardComponent} from './container/component';
 import {CreatorCardComponent} from './creator/component';
+import {DocsReferenceComponent} from './docsreference/component';
 import {EndpointListComponent} from './endpoint/cardlist/component';
 import {ExternalEndpointComponent} from './endpoint/external/component';
 import {InternalEndpointComponent} from './endpoint/internal/component';
@@ -94,6 +95,7 @@ import {ZeroStateComponent} from './zerostate/component';
     PropertyComponent,
     ObjectMetaComponent,
     ChipsComponent,
+    DocsReferenceComponent,
     LoadingSpinner,
     CardListFilterComponent,
     ProxyComponent,
@@ -172,6 +174,7 @@ import {ZeroStateComponent} from './zerostate/component';
     ZeroStateComponent,
     ClusterRoleListComponent,
     StorageClassListComponent,
+    DocsReferenceComponent,
     CronJobListComponent,
     DaemonSetListComponent,
     DeploymentListComponent,
