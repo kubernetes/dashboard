@@ -64,8 +64,7 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef>First Seen</mat-header-cell>
         <mat-cell *matCellDef="let event"
           matTooltip="{{event.firstSeen | date:'medium'}}"
-          [matTooltipPosition]="top"
-        >
+          matTooltipPosition="above">
           {{event.firstSeen | date}}
         </mat-cell>
       </ng-container>
@@ -74,8 +73,7 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef>Last Seen</mat-header-cell>
         <mat-cell *matCellDef="let event"
           matTooltip="{{event.lastSeen | date:'medium'}}"
-          [matTooltipPosition]="top"
-        >
+          matTooltipPosition="above">
           {{event.lastSeen | date}}
         </mat-cell>
       </ng-container>
