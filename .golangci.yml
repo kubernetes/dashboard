@@ -13,3 +13,4 @@ linters:
     - govet
     - ineffassign
     - misspell
+    - structcheck
