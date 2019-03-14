@@ -34,12 +34,11 @@ export class ClusterRoleDetailComponent implements OnInit, OnDestroy {
 
   constructor(
       private readonly clusterRole_: ResourceService<ClusterRoleDetail>,
-      private readonly actionbar_: ActionbarService,
-      private readonly activatedRoute_: ActivatedRoute,
+      private readonly actionbar_: ActionbarService, private readonly route_: ActivatedRoute,
       private readonly notifications_: NotificationsService) {}
 
   ngOnInit(): void {
-    const resourceName = this.activatedRoute_.snapshot.params.resourceName;
+    const resourceName = this.route_.snapshot.params.resourceName;
 
     this.clusterRoleSubscription_ = this.clusterRole_.get(this.endpoint_.detail(), resourceName)
                                         .subscribe((d: ClusterRoleDetail) => {

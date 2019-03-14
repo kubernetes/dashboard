@@ -39,35 +39,10 @@ export class NamespaceService {
    */
   private resourceNamespace_ = '';
 
-  /**
-   * Active route allows to watch for the query param changes and update namespace.
-   */
-  private activeRoute_: ActivatedRoute;
+  constructor() {}
 
-  constructor(private readonly router_: Router) {}
-
-  setDefaultQueryParams_() {
-    this.router_.navigate([this.activeRoute_.snapshot.url], {
-      queryParams: {[NAMESPACE_STATE_PARAM]: CONFIG.defaultNamespace},
-      queryParamsHandling: 'merge',
-    });
-  }
-
-  setActiveRoute(activeRoute: ActivatedRoute) {
-    this.activeRoute_ = activeRoute;
-    this.activeRoute_.queryParams.subscribe(params => {
-      if (!params.namespace) {
-        this.setDefaultQueryParams_();
-        return;
-      }
-
-      if (this.currentNamespace_ === params.namespace) {
-        return;
-      }
-
-      this.currentNamespace_ = params.namespace;
-      this.onNamespaceChangeEvent.emit(this.currentNamespace_);
-    });
+  setCurrent(namespace: string) {
+    this.currentNamespace_ = namespace;
   }
 
   current(): string {

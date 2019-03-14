@@ -37,11 +37,12 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
   private readonly data_ = new MatTableDataSource<R>();
   private listUpdates_ = new Subject();
   private unsubscribe_ = new Subject();
+  private loaded_ = false;
   private readonly dynamicColumns_: ColumnWhenCondition[] = [];
   protected readonly kdState_: KdStateService;
   protected readonly settingsService_: GlobalSettingsService;
-  protected readonly namespaceService_: NamespaceService;
 
+  protected readonly namespaceService_: NamespaceService;
   isLoading = false;
   totalItems = 0;
 
@@ -80,23 +81,24 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
       this.listUpdates_.next();
     });
 
-    let loadingTimeout: NodeJS.Timer;
     this.getObservableWithDataSelect_()
         .pipe(takeUntil(this.unsubscribe_))
         .pipe(startWith({}))
         .pipe(switchMap(() => {
-          loadingTimeout = setTimeout(() => {
-            this.isLoading = true;
+          setTimeout(() => {
+            if (!this.loaded_) {
+              this.isLoading = true;
+            }
           }, 100);
           return this.getResourceObservable(this.getDataSelectParams_());
         }))
         .subscribe((data: T) => {
           this.notifications_.pushErrors(data.errors);
           this.totalItems = data.listMeta.totalItems;
-          this.isLoading = false;
           this.data_.data = this.map(data);
-          clearTimeout(loadingTimeout);
           this.onListChange_(data);
+          this.isLoading = false;
+          this.loaded_ = true;
         });
   }
 
