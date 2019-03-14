@@ -15,6 +15,7 @@
 import {NgModule} from '@angular/core';
 
 import {ComponentsModule} from '../common/components/module';
+import {GuardsModule} from '../common/services/guard/module';
 import {SharedModule} from '../shared.module';
 
 import {ChromeComponent} from './component';
@@ -30,6 +31,7 @@ import {UserPanelComponent} from './userpanel/component';
     ComponentsModule,
     NavModule,
     ChromeRoutingModule,
+    GuardsModule,
   ],
   declarations: [
     ChromeComponent,

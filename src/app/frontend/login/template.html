@@ -16,6 +16,14 @@ limitations under the License.
 
 <div class="kd-login-container kd-bg-background"
      fxFlex>
+  <!-- TODO style errors. This is just for debugging-->
+  <kd-card *ngFor="let error of errors"
+           titleClasses="kd-card-top-radius kd-bg-primary kd-accent"
+           style="grid-column: 3/8; padding-top: 24px"
+           [expandable]="false"
+           [withTitle]="false">
+    <div content style="color: orangered">{{error.ErrStatus.code}} {{error.ErrStatus.message}}</div>
+  </kd-card>
   <kd-card titleClasses="kd-card-top-radius kd-bg-primary kd-accent"
            class="kd-login-card"
            [expandable]="false">

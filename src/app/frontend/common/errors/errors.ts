@@ -47,6 +47,32 @@ export class KdError implements KdApiError {
   }
 }
 
+export function AsKdError(error: HttpErrorResponse): KdError {
+  const result = {} as KdError;
+  let status: string;
+
+  result.code = error.status;
+  result.message = error.error;
+
+  // This should be localized eventually
+  switch (error.status) {
+    case 401:
+      status = 'Unauthorized';
+      break;
+    case 403:
+      status = 'Forbidden';
+      break;
+    case 500:
+      status = 'Internal error';
+      break;
+    default:
+      status = 'Unknown error';
+  }
+
+  result.status = status;
+  return result;
+}
+
 // TODO Localize errors
 export const ERRORS = {
   unauthorized: new KdError('Unauthorized', 401, 'Not allowed.'),

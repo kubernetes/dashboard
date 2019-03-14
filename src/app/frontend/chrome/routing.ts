@@ -14,13 +14,14 @@
 
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+import {AuthGuard} from '../common/services/guard/authguard';
 import {ChromeComponent} from './component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/overview', pathMatch: 'full'}, {
     path: '',
     component: ChromeComponent,
-    // runGuardsAndResolvers: 'always',
+    canActivate: [AuthGuard],
     children: [
       {path: 'cluster', loadChildren: 'resource/cluster/module#ClusterModule'},
       {path: 'clusterrole', loadChildren: 'resource/cluster/clusterrole/module#ClusterRoleModule'},

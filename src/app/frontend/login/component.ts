@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthenticationMode, EnabledAuthenticationModes, LoginSkippableResponse, LoginSpec} from '@api/backendapi';
 import {KdFile} from '@api/frontendapi';
 
-import {K8SError} from '../common/errors/errors';
+import {AsKdError, K8SError} from '../common/errors/errors';
 import {AuthService} from '../common/services/global/authentication';
 import {overviewState} from '../overview/state';
 
@@ -69,14 +69,26 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    this.authService_.login(this.getLoginSpec_(), (errors: K8SError[]) => {
-      if (errors.length > 0) {
-        this.errors = errors;
-        return;
-      }
+    this.authService_.login(this.getLoginSpec_())
+        .subscribe(
+            (errors: K8SError[]) => {
+              if (errors.length > 0) {
+                this.errors = errors;
+                return;
+              }
 
-      this.state_.navigate([overviewState.name]);
-    });
+              this.state_.navigate([overviewState.name]);
+            },
+            (err: HttpErrorResponse) => {
+              const kdError = AsKdError(err);
+              this.errors = [{
+                ErrStatus: {
+                  status: kdError.status,
+                  message: kdError.message,
+                  code: kdError.code,
+                }
+              } as K8SError];
+            });
   }
 
   skip(): void {

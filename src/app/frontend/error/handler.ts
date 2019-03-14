@@ -13,23 +13,18 @@
 // limitations under the License.
 
 import {HttpErrorResponse} from '@angular/common/http';
-import {ErrorHandler, Injectable, Injector} from '@angular/core';
+import {ErrorHandler, Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {YAMLException} from 'js-yaml';
 
-import {ApiErrors, KdError} from '../common/errors/errors';
+import {ApiErrors, AsKdError, KdError} from '../common/errors/errors';
 import {ErrorStateParams} from '../common/params/params';
-import {AuthService} from '../common/services/global/authentication';
 
 import {errorState} from './state';
 
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
-  private authService_: AuthService;
-
-  constructor(private readonly router_: Router, private readonly injector_: Injector) {
-    this.authService_ = injector_.get(AuthService);
-  }
+  constructor(private readonly router_: Router) {}
 
   handleError(error: HttpErrorResponse|YAMLException): void {
     console.log('========= Error =========');
@@ -56,34 +51,8 @@ export class GlobalErrorHandler implements ErrorHandler {
     this.router_.navigate([errorState.name], {
       queryParams: {
         resourceNamespace: null,
-        error: this.toKdError(error),
+        error: AsKdError(error),
       } as ErrorStateParams
     });
-  }
-
-  private toKdError(error: HttpErrorResponse): KdError {
-    const result = {} as KdError;
-    let status: string;
-
-    result.code = error.status;
-    result.message = error.error;
-
-    // This should be localized eventually
-    switch (error.status) {
-      case 401:
-        status = 'Unauthorized';
-        break;
-      case 403:
-        status = 'Forbidden';
-        break;
-      case 500:
-        status = 'Internal error';
-        break;
-      default:
-        status = 'Unknown error';
-    }
-
-    result.status = status;
-    return result;
   }
 }
