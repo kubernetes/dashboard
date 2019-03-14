@@ -17,7 +17,7 @@ import {MatDialog, MatSelect} from '@angular/material';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NamespaceList} from '@api/backendapi';
 import {Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
+import {startWith, switchMap, takeUntil} from 'rxjs/operators';
 import {CONFIG} from '../../../index.config';
 import {overviewState} from '../../../overview/state';
 
@@ -35,8 +35,9 @@ import {NamespaceChangeDialog} from './changedialog/dialog';
   styleUrls: ['style.scss'],
 })
 export class NamespaceSelectorComponent implements OnInit, OnDestroy {
-  private namespacesInitialized_ = false;
+  private namespaceUpdate_ = new Subject();
   private unsubscribe_ = new Subject();
+  private readonly endpoint_ = EndpointManager.resource(Resource.namespace);
 
   namespaces: string[] = [];
   selectNamespaceInput = '';
@@ -78,7 +79,7 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
     this.allNamespacesKey = this.namespaceService_.getAllNamespacesKey();
     this.selectedNamespace = this.namespaceService_.current();
     this.select_.value = this.selectedNamespace;
-    this.loadNamespacesIfNeeded_();
+    this.loadNamespaces_();
   }
 
   ngOnDestroy(): void {
@@ -96,6 +97,7 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
 
   onNamespaceToggle(opened: boolean): void {
     if (opened) {
+      this.namespaceUpdate_.next();
       this.focusNamespaceInput_();
     } else {
       this.changeNamespace_(this.selectedNamespace);
@@ -118,10 +120,9 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
     const targetNamespace = this.selectedNamespace;
 
     if (targetNamespace &&
-        ((this.namespacesInitialized_ && this.namespaces.indexOf(targetNamespace) >= 0) ||
+        (this.namespaces.indexOf(targetNamespace) >= 0 ||
          targetNamespace === this.allNamespacesKey ||
-         (!this.namespacesInitialized_ &&
-          this.namespaceService_.isNamespaceValid(targetNamespace)))) {
+         this.namespaceService_.isNamespaceValid(targetNamespace))) {
       newNamespace = targetNamespace;
     }
 
@@ -130,26 +131,24 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
     }
   }
 
-  private loadNamespacesIfNeeded_(): void {
-    if (!this.namespacesInitialized_) {
-      this.namespace_.get(EndpointManager.resource(Resource.namespace).list())
-          .subscribe(
-              namespaceList => {
-                this.namespaces = namespaceList.namespaces.map(n => n.objectMeta.name);
+  private loadNamespaces_(): void {
+    this.namespaceUpdate_.pipe(takeUntil(this.unsubscribe_))
+        .pipe(startWith({}))
+        .pipe(switchMap(() => this.namespace_.get(this.endpoint_.list())))
+        .subscribe(
+            namespaceList => {
+              this.namespaces = namespaceList.namespaces.map(n => n.objectMeta.name);
 
-                if (namespaceList.errors.length === 0) {
-                  this.namespacesInitialized_ = true;
-                } else {
-                  for (const err of namespaceList.errors) {
-                    this.notifications_.push(err.ErrStatus.message, NotificationSeverity.error);
-                  }
+              if (namespaceList.errors.length > 0) {
+                for (const err of namespaceList.errors) {
+                  this.notifications_.push(err.ErrStatus.message, NotificationSeverity.error);
                 }
-              },
-              undefined,
-              () => {
-                this.onNamespaceLoaded_();
-              });
-    }
+              }
+            },
+            undefined,
+            () => {
+              this.onNamespaceLoaded_();
+            });
   }
 
   private handleNamespaceChangeDialog_(): void {
