@@ -27,7 +27,6 @@ import {NotificationSeverity, NotificationsService} from '../../services/global/
 import {KdStateService} from '../../services/global/state';
 import {EndpointManager, Resource} from '../../services/resource/endpoint';
 import {ResourceService} from '../../services/resource/resource';
-import {NamespaceChangeDialog} from './changedialog/dialog';
 
 @Component({
   selector: 'kd-namespace-selector',
@@ -70,11 +69,12 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
       this.namespaceService_.onNamespaceChangeEvent.emit(namespace);
     });
 
-    this.kdState_.onSuccess.pipe(takeUntil(this.unsubscribe_)).subscribe(() => {
-      if (this.shouldShowNamespaceChangeDialog()) {
-        this.handleNamespaceChangeDialog_();
-      }
-    });
+    // TODO reeneable once fixed
+    // this.kdState_.onSuccess.pipe(takeUntil(this.unsubscribe_)).subscribe(() => {
+    //   if (this.shouldShowNamespaceChangeDialog()) {
+    //     this.handleNamespaceChangeDialog_();
+    //   }
+    // });
 
     this.allNamespacesKey = this.namespaceService_.getAllNamespacesKey();
     this.selectedNamespace = this.namespaceService_.current();
@@ -151,34 +151,34 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
             });
   }
 
-  private handleNamespaceChangeDialog_(): void {
-    const resourceNamespace = this.route_.snapshot.params.resourceNamespace;
-    this.dialog_
-        .open(NamespaceChangeDialog, {
-          data: {namespace: this.namespaceService_.current(), newNamespace: resourceNamespace},
-        })
-        .afterClosed()
-        .subscribe(confirmed => {
-          if (confirmed) {
-            this.router_.navigate(
-                [this.route_.snapshot.url],
-                {queryParams: {[NAMESPACE_STATE_PARAM]: resourceNamespace}});
-          } else {
-            this.selectedNamespace = this.namespaceService_.current();
-            this.router_.navigate(
-                [overviewState.name],
-                {queryParams: {[NAMESPACE_STATE_PARAM]: this.selectedNamespace}});
-          }
-        });
-  }
+  // private handleNamespaceChangeDialog_(): void {
+  //   const resourceNamespace = this.route_.snapshot.params.resourceNamespace;
+  //   this.dialog_
+  //       .open(NamespaceChangeDialog, {
+  //         data: {namespace: this.namespaceService_.current(), newNamespace: resourceNamespace},
+  //       })
+  //       .afterClosed()
+  //       .subscribe(confirmed => {
+  //         if (confirmed) {
+  //           this.router_.navigate(
+  //               [this.route_.snapshot.url],
+  //               {queryParams: {[NAMESPACE_STATE_PARAM]: resourceNamespace}});
+  //         } else {
+  //           this.selectedNamespace = this.namespaceService_.current();
+  //           this.router_.navigate(
+  //               [overviewState.name],
+  //               {queryParams: {[NAMESPACE_STATE_PARAM]: this.selectedNamespace}});
+  //         }
+  //       });
+  // }
 
   private changeNamespace_(namespace: string): void {
     this.clearNamespaceInput_();
 
-    if (this.shouldShowNamespaceChangeDialog()) {
-      this.handleNamespaceChangeDialog_();
-      return;
-    }
+    // if (this.shouldShowNamespaceChangeDialog()) {
+    //   this.handleNamespaceChangeDialog_();
+    //   return;
+    // }
 
     if (this.isOnDetailsView_()) {
       this.router_.navigate(
@@ -202,14 +202,14 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
     this.selectNamespaceInput = '';
   }
 
-  private shouldShowNamespaceChangeDialog(): boolean {
-    const resourceNamespace = this.route_.snapshot.params.resourceNamespace;
-    const namespace = this.namespaceService_.current();
-
-    return namespace !== this.allNamespacesKey && resourceNamespace &&
-        resourceNamespace !== namespace;
-  }
-
+  // private shouldShowNamespaceChangeDialog(): boolean {
+  //   const resourceNamespace = this.namespaceService_.getResourceNamespace();
+  //   const namespace = this.namespaceService_.current();
+  //
+  //   return namespace !== this.allNamespacesKey && resourceNamespace &&
+  //       resourceNamespace !== namespace;
+  // }
+  //
   private isOnDetailsView_(): boolean {
     return this.route_.snapshot.params.resourceNamespace !== undefined;
   }

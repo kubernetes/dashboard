@@ -18,6 +18,7 @@ import {PodDetail} from '@api/backendapi';
 import {Subscription} from 'rxjs/Subscription';
 
 import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
+import {NamespaceService} from '../../../../common/services/global/namespace';
 import {NotificationsService} from '../../../../common/services/global/notifications';
 import {KdStateService} from '../../../../common/services/global/state';
 import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
@@ -39,7 +40,8 @@ export class PodDetailComponent implements OnInit, OnDestroy {
       private readonly pod_: NamespacedResourceService<PodDetail>,
       private readonly actionbar_: ActionbarService,
       private readonly activatedRoute_: ActivatedRoute, private readonly kdState_: KdStateService,
-      private readonly notifications_: NotificationsService) {}
+      private readonly notifications_: NotificationsService,
+      private readonly namespace_: NamespaceService) {}
 
   ngOnInit(): void {
     const resourceName = this.activatedRoute_.snapshot.params.resourceName;

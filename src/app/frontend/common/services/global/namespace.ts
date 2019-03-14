@@ -72,4 +72,8 @@ export class NamespaceService {
   getResourceNamespace(): string {
     return this.resourceNamespace_;
   }
+
+  setResourceNamespace(namespace: string) {
+    this.resourceNamespace_ = namespace;
+  }
 }
