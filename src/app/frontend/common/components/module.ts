@@ -64,6 +64,7 @@ import {CronJobListComponent} from './resourcelist/cronjob/component';
 import {DaemonSetListComponent} from './resourcelist/daemonset/component';
 import {DeploymentListComponent} from './resourcelist/deployment/component';
 import {EventListComponent} from './resourcelist/event/component';
+import {HorizontalPodAutoscalerListComponent} from './resourcelist/horizontalpodautoscaler/component';
 import {IngressListComponent} from './resourcelist/ingress/component';
 import {JobListComponent} from './resourcelist/job/component';
 import {NamespaceListComponent} from './resourcelist/namespace/component';
@@ -152,6 +153,7 @@ import {ZeroStateComponent} from './zerostate/component';
     SparklineComponent,
     ActionbarDetailTriggerComponent,
     TriggerDefaultActionbar,
+    HorizontalPodAutoscalerListComponent,
   ],
   exports: [
     AllocationChartComponent,
@@ -213,6 +215,7 @@ import {ZeroStateComponent} from './zerostate/component';
     LogsExecDefaultActionbar,
     SparklineComponent,
     ActionbarDetailTriggerComponent,
+    HorizontalPodAutoscalerListComponent,
   ],
   entryComponents: [
     ChipDialog,

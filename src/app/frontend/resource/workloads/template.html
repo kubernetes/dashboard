@@ -31,6 +31,7 @@ limitations under the License.
                                   [hideable]="true"></kd-replication-controller-list>
   <kd-stateful-set-list (onchange)="onListUpdate($event)"
                         [hideable]="true"></kd-stateful-set-list>
+  <kd-horizontal-pod-autoscaler-list></kd-horizontal-pod-autoscaler-list>
 </div>
 
 <kd-zero-state [hidden]="!shouldShowZeroState()"></kd-zero-state>

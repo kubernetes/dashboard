@@ -33,6 +33,7 @@ export enum ListIdentifiers {
   statefulSet = 'statefulSetList',
   event = 'event',
   resource = 'resource',
+  horizontalPodAutoScaler = 'horizontalPodAutoScalerList',
 }
 
 export enum ListGroupIdentifiers {
