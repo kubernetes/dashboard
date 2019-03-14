@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Component, Input, OnInit} from '@angular/core';
-import {ActivatedRoute, ActivatedRouteSnapshot, Router} from '@angular/router';
+import {ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Router} from '@angular/router';
 import {Breadcrumb} from '@api/frontendapi';
 import {StateDeclaration, StateObject, StateService, TransitionService} from '@uirouter/core';
 import {BreadcrumbsService} from '../../services/global/breadcrumbs';
@@ -111,3 +111,19 @@ export class BreadcrumbsComponent implements OnInit {
     return breadcrumb;
   }
 }
+
+// breadcrumbs = this._router.events
+//   .filter(event => event instanceof NavigationEnd)
+//   .distinctUntilChanged()
+//   .map(() => this._buildBreadCrumb(this._activatedRoute.root));
+//
+// constructor(private readonly _router: Router, private readonly _activatedRoute: ActivatedRoute)
+// {}
+//
+// _buildBreadCrumb(route: ActivatedRoute, url: string = '', breadcrumbs: Breadcrumb[] = []):
+// Breadcrumb[] {
+//   const label = route.routeConfig && route.routeConfig.data ? route.routeConfig.data[
+//   'breadcrumb' ] : 'Home'; const nextUrl = `${url}${route.routeConfig ? route.routeConfig.path :
+//   ''}/`; breadcrumbs.push({label: label, stateLink: nextUrl}); return route.firstChild ?
+//   this._buildBreadCrumb(route.firstChild, nextUrl, breadcrumbs) : breadcrumbs;
+// }
