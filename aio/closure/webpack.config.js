@@ -69,6 +69,7 @@ module.exports = {
     'styles': [
       '../node_modules/material-design-icons/iconfont/material-icons.css',
       '../node_modules/roboto-fontface/css/roboto/roboto-fontface.css',
+      '../node_modules/nvd3/build/nv.d3.css',
       '../src/app/frontend/styles.scss'
     ],
   },
@@ -93,6 +94,8 @@ module.exports = {
               process.cwd(), '../node_modules/material-design-icons/iconfont/material-icons.css'),
           path.join(
               process.cwd(), '../node_modules/roboto-fontface/css/roboto/roboto-fontface.css'),
+          path.join(
+              process.cwd(), '../node_modules/nvd3/build/nv.d3.css'),
           path.join(process.cwd(), '../src/app/frontend/styles.scss')
         ],
         'test': /\.css$/,
@@ -110,6 +113,8 @@ module.exports = {
               process.cwd(), '../node_modules/material-design-icons/iconfont/material-icons.css'),
           path.join(
               process.cwd(), '../node_modules/roboto-fontface/css/roboto/roboto-fontface.css'),
+          path.join(
+              process.cwd(), '../node_modules/nvd3/build/nv.d3.css'),
           path.join(process.cwd(), '../src/app/frontend/styles.scss')
         ],
         'test': /\.css$/,
@@ -127,6 +132,8 @@ module.exports = {
               process.cwd(), '../node_modules/material-design-icons/iconfont/material-icons.css'),
           path.join(
               process.cwd(), '../node_modules/roboto-fontface/css/roboto/roboto-fontface.css'),
+          path.join(
+              process.cwd(), '../node_modules/nvd3/build/nv.d3.css'),
           path.join(process.cwd(), '../src/app/frontend/styles.scss')
         ],
         'test': /\.scss$|\.sass$/,
@@ -148,6 +155,8 @@ module.exports = {
               process.cwd(), '../node_modules/material-design-icons/iconfont/material-icons.css'),
           path.join(
               process.cwd(), '../node_modules/roboto-fontface/css/roboto/roboto-fontface.css'),
+          path.join(
+              process.cwd(), '../node_modules/nvd3/build/nv.d3.css'),
           path.join(process.cwd(), '../src/app/frontend/styles.scss')
         ],
         'test': /\.scss$|\.sass$/,

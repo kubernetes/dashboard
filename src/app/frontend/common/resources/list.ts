@@ -91,7 +91,7 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
               this.isLoading = false;
               this.data_.data = this.map(data);
               clearTimeout(loadingTimeout);
-              this.onListChange_();
+              this.onListChange_(data);
             });
   }
 
@@ -275,12 +275,13 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
     }
   }
 
-  private onListChange_(): void {
+  private onListChange_(data: T): void {
     const emitValue = {
       id: this.id,
       groupId: this.groupId,
       items: this.totalItems,
       filtered: false,
+      resourceList: data
     };
 
     if (this.cardFilter_) {

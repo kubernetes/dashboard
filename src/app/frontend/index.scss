@@ -312,3 +312,8 @@ code {
     border-bottom: 0;
   }
 }
+
+// Override Arial font type
+.nvtooltip {
+  font-family: Roboto, sans-serif;
+}
