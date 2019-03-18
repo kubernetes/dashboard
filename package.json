@@ -152,7 +152,7 @@
     "node-sass": "4.10.0",
     "protractor": "5.4.1",
     "q": "1.5.1",
-    "raw-loader": "1.0.0",
+    "raw-loader": "2.0.0",
     "sass-lint": "1.12.1",
     "sass-loader": "7.1.0",
     "scssfmt": "1.0.7",
