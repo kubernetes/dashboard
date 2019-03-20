@@ -35,7 +35,7 @@
     "cluster:start": "./aio/scripts/start-cluster.sh",
     "cluster:stop": "./aio/scripts/stop-cluster.sh",
     "check": "concurrently \"npm run check:backend\" \"npm run check:frontend\" \"npm run check:license\"",
-    "check:backend": "./aio/scripts/lint-backend.sh",
+    "check:backend": "golangci-lint run -c .golangci.yml src/app/backend/...",
     "check:frontend": "concurrently \"npm run check:frontend:ts\" \"npm run check:frontend:scss\" \"npm run check:frontend:html\"",
     "check:frontend:ts": "gts check",
     "check:frontend:scss": "./aio/scripts/format.sh --styles --check && ./node_modules/sass-lint/bin/sass-lint.js -c .sass-lint.yml 'src/app/frontend/**/*.scss' -v -q",
@@ -50,7 +50,7 @@
     "fix:license": "gulp update-license-headers",
     "clean": "rm -rf .go_workspace .tmp coverage dist npm-debug.log",
     "postversion": "node aio/scripts/version.js",
-    "postinstall": "node aio/scripts/version.js && ./node_modules/protractor/bin/webdriver-manager update --gecko=false"
+    "postinstall": "node aio/scripts/version.js && ./node_modules/protractor/bin/webdriver-manager update --gecko=false && go get -u github.com/golangci/golangci-lint/cmd/golangci-lint"
   },
   "husky": {
     "hooks": {
