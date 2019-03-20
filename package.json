@@ -65,6 +65,10 @@
     "src/**/*.scss": [
       "scssfmt",
       "git add"
+    ],
+    "src/**/*.go": [
+      "golangci-lint run -c .golangci.yml --fix src/app/backend/...",
+      "git add"
     ]
   },
   "dependencies": {
