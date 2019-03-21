@@ -138,7 +138,7 @@ export class LogsComponent implements OnDestroy {
   }
 
   appendContainerParam() {
-    this.state_.go('.', {container: this.container}, {notify: false});
+    this.state_.go('.', {container: this.container}, {notify: false, location: 'replace'});
   }
 
   onContainerChange() {
