@@ -45,17 +45,19 @@ func TestGetPersistentVolumeClaimDetail(t *testing.T) {
 				},
 			},
 			&PersistentVolumeClaimDetail{
-				ObjectMeta:  api.ObjectMeta{Name: "foo", Namespace: "bar"},
-				TypeMeta:    api.TypeMeta{Kind: "persistentvolumeclaim"},
-				Status:      v1.ClaimPending,
-				Volume:      "volume",
-				Capacity:    nil,
-				AccessModes: []v1.PersistentVolumeAccessMode{v1.ReadWriteOnce},
+				PersistentVolumeClaim: PersistentVolumeClaim{
+					ObjectMeta:  api.ObjectMeta{Name: "foo", Namespace: "bar"},
+					TypeMeta:    api.TypeMeta{Kind: "persistentvolumeclaim"},
+					Status:      string(v1.ClaimPending),
+					Volume:      "volume",
+					Capacity:    nil,
+					AccessModes: []v1.PersistentVolumeAccessMode{v1.ReadWriteOnce},
+				},
 			},
 		},
 	}
 	for _, c := range cases {
-		actual := getPersistentVolumeClaimDetail(c.persistentVolumeClaims)
+		actual := getPersistentVolumeClaimDetail(*c.persistentVolumeClaims)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("getPersistentVolumeClaimDetail(%#v) == \n%#v\nexpected \n%#v\n",
 				c.persistentVolumeClaims, actual, c.expected)

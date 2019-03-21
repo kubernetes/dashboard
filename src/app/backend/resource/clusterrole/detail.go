@@ -22,10 +22,10 @@ import (
 
 // ClusterRoleDetail contains Cron Job details.
 type ClusterRoleDetail struct {
-	Rules []rbac.PolicyRule `json:"rules"`
-
 	// Extends list item structure.
 	ClusterRole `json:",inline"`
+
+	Rules []rbac.PolicyRule `json:"rules"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`

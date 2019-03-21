@@ -64,15 +64,15 @@ export class StatefulSetListComponent extends
   }
 
   isInErrorState(resource: StatefulSet): boolean {
-    return resource.pods.warnings.length > 0;
+    return resource.podInfo.warnings.length > 0;
   }
 
   isInPendingState(resource: StatefulSet): boolean {
-    return resource.pods.warnings.length === 0 && resource.pods.pending > 0;
+    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending > 0;
   }
 
   isInSuccessState(resource: StatefulSet): boolean {
-    return resource.pods.warnings.length === 0 && resource.pods.pending === 0;
+    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending === 0;
   }
 
   getDisplayColumns(): string[] {
@@ -80,11 +80,11 @@ export class StatefulSetListComponent extends
   }
 
   hasErrors(statefulSet: StatefulSet): boolean {
-    return statefulSet.pods.warnings.length > 0;
+    return statefulSet.podInfo.warnings.length > 0;
   }
 
   getEvents(statefulSet: StatefulSet): Event[] {
-    return statefulSet.pods.warnings;
+    return statefulSet.podInfo.warnings;
   }
 
   private shouldShowNamespaceColumn_(): boolean {

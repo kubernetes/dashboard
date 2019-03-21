@@ -79,7 +79,7 @@ limitations under the License.
       <ng-container matColumnDef="pods">
         <mat-header-cell *matHeaderCellDef>Pods</mat-header-cell>
         <mat-cell *matCellDef="let replicaSet">
-          {{replicaSet.pods.running}} / {{replicaSet.pods.desired}}
+          {{replicaSet.podInfo.running}} / {{replicaSet.podInfo.desired}}
         </mat-cell>
       </ng-container>
 

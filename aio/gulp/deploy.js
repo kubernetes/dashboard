@@ -93,12 +93,19 @@ gulp.task('push-to-docker:head:cross', gulp.series('docker-image:head:cross', ()
     });
 
     return Promise.all(spawnPromises).then(() => {
-      return pushToDocker(allImages);
+      return pushToDocker(allImages, conf.deploy.headManifestName);
     });
   } else {
-    return pushToDocker(conf.deploy.headImageNames);
+    return pushToDocker(conf.deploy.headImageNames, conf.deploy.headManifestName);
   }
 }));
+
+/**
+ * Pushes cross-compiled release images to GCR.
+ */
+gulp.task('push-to-gcr:release:cross', gulp.series('docker-image:release:cross'), () => {
+  return pushToGcr(conf.deploy.releaseImageNames);
+});
 
 /**
  * @param {!Array<string>} args
@@ -152,7 +159,7 @@ function buildDockerImage(imageNamesAndDirs) {
  * @param {!Array<string>} imageNames
  * @return {!Promise}
  */
-function pushToDocker(imageNames) {
+function pushToDocker(imageNames, manifest) {
   let spawnPromises = imageNames.map((imageName) => {
     return new Promise((resolve, reject) => {
       spawnDockerProcess(
@@ -170,7 +177,105 @@ function pushToDocker(imageNames) {
     });
   });
 
-  return Promise.all(spawnPromises);
+  // Create a new set of promises for annotating the manifest
+  return Promise.all(spawnPromises).then(function() {
+    return new Promise((resolve, reject) => {
+      spawnDockerProcess(
+          [
+            'manifest',
+            'create',
+            '--amend',
+            manifest,
+          ].concat(imageNames),
+          (err) => {
+            if (err) {
+              reject(err);
+            } else {
+              // Once all annotations have been made, push the manifest
+              let manifestPromises = imageNames.map((imageName) => {
+                return new Promise((resolveManifests, rejectManifests) => {
+                  spawnDockerProcess(
+                      [
+                        'manifest',
+                        'annotate',
+                        manifest,
+                        imageName,
+                        '--os',
+                        'linux',
+                        '--arch',
+                        imageName.split('-')[imageName.split('-').length - 1].split(':')[0],
+                      ],
+                      (err) => {
+                        if (err) {
+                          rejectManifests(err);
+                        } else {
+                          resolveManifests();
+                        }
+                      });
+                });
+              });
+              // Once all annotations have been made, push the manifest
+              Promise.all(manifestPromises).then(function() {
+                spawnDockerProcess(
+                    [
+                      'manifest',
+                      'push',
+                      manifest,
+                    ],
+                    (err) => {
+                      if (err) {
+                        reject(err);
+                      } else {
+                        resolve();
+                      }
+                    });
+              });
+            }
+          });
+    });
+  });
+}
+
+/**
+ * @param {!Array<string>} args
+ * @param {function(?Error=)} doneFn
+ */
+function spawnGCloudProcess(args, doneFn) {
+  let gcloudTask = child.spawn('gcloud', args, {stdio: 'inherit'});
+
+  // Call Gulp callback on task exit. This has to be done to make Gulp dependency management
+  // work.
+  gcloudTask.on('exit', function(code) {
+    if (code === 0) {
+      doneFn();
+    } else {
+      doneFn(new Error(`GCloud command error, code: ${code}`));
+    }
+  });
+}
+
+/**
+ * @param {!Array<string>} imageNames
+ * @return {!Promise}
+ */
+function pushToGcr(imageNames) {
+  return new Promise((resolve, reject) => {
+    spawnGCloudProcess(
+        [
+          'auth',
+          'configure-docker',
+          '--quiet',
+        ],
+        (err) => {
+          if (err) {
+            reject(err);
+          } else {
+            pushToDocker(imageNames, conf.deploy.releaseManifestName).then(function() {
+              resolve();
+            });
+          }
+        });
+  });
 }
 
 /**

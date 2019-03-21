@@ -25,13 +25,21 @@ import (
 	"k8s.io/client-go/kubernetes"
 )
 
-// StorageClassList holds a list of storage class objects in the cluster.
+// StorageClassList holds a list of Storage Class objects in the cluster.
 type StorageClassList struct {
 	ListMeta       api.ListMeta   `json:"listMeta"`
 	StorageClasses []StorageClass `json:"storageClasses"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
+}
+
+// StorageClass is a representation of a Kubernetes Storage Class object.
+type StorageClass struct {
+	ObjectMeta  api.ObjectMeta    `json:"objectMeta"`
+	TypeMeta    api.TypeMeta      `json:"typeMeta"`
+	Provisioner string            `json:"provisioner"`
+	Parameters  map[string]string `json:"parameters"`
 }
 
 // GetStorageClassList returns a list of all storage class objects in the cluster.
@@ -77,4 +85,13 @@ func toStorageClassList(storageClasses []storage.StorageClass, nonCriticalErrors
 	}
 
 	return storageClassList
+}
+
+func toStorageClass(storageClass *storage.StorageClass) StorageClass {
+	return StorageClass{
+		ObjectMeta:  api.NewObjectMeta(storageClass.ObjectMeta),
+		TypeMeta:    api.NewTypeMeta(api.ResourceKindStorageClass),
+		Provisioner: storageClass.Provisioner,
+		Parameters:  storageClass.Parameters,
+	}
 }

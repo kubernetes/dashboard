@@ -18,6 +18,9 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/kubernetes/dashboard/src/app/backend/resource/endpoint"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
+
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
@@ -80,6 +83,91 @@ func TestGetServiceList(t *testing.T) {
 
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("GetServiceList(client) == got\n%#v, expected\n %#v", actual, c.expected)
+		}
+	}
+}
+
+func TestToServiceDetail(t *testing.T) {
+	cases := []struct {
+		service      *v1.Service
+		eventList    common.EventList
+		podList      pod.PodList
+		endpointList endpoint.EndpointList
+		expected     ServiceDetail
+	}{
+		{
+			service:      &v1.Service{},
+			eventList:    common.EventList{},
+			podList:      pod.PodList{},
+			endpointList: endpoint.EndpointList{},
+			expected: ServiceDetail{
+				Service: Service{
+					TypeMeta:          api.TypeMeta{Kind: api.ResourceKindService},
+					ExternalEndpoints: []common.Endpoint{},
+				},
+			},
+		}, {
+			service: &v1.Service{
+				ObjectMeta: metaV1.ObjectMeta{
+					Name: "test-service", Namespace: "test-namespace",
+				}},
+			expected: ServiceDetail{
+				Service: Service{
+					ObjectMeta: api.ObjectMeta{
+						Name:      "test-service",
+						Namespace: "test-namespace",
+					},
+					TypeMeta:          api.TypeMeta{Kind: api.ResourceKindService},
+					InternalEndpoint:  common.Endpoint{Host: "test-service.test-namespace"},
+					ExternalEndpoints: []common.Endpoint{},
+				},
+			},
+		},
+	}
+
+	for _, c := range cases {
+		actual := toServiceDetail(c.service, c.endpointList, nil)
+
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("ToServiceDetail(%#v) == \ngot %#v, \nexpected %#v", c.service, actual,
+				c.expected)
+		}
+	}
+}
+
+func TestToService(t *testing.T) {
+	cases := []struct {
+		service  *v1.Service
+		expected Service
+	}{
+		{
+			service: &v1.Service{}, expected: Service{
+				TypeMeta:          api.TypeMeta{Kind: api.ResourceKindService},
+				ExternalEndpoints: []common.Endpoint{},
+			},
+		}, {
+			service: &v1.Service{
+				ObjectMeta: metaV1.ObjectMeta{
+					Name: "test-service", Namespace: "test-namespace",
+				}},
+			expected: Service{
+				ObjectMeta: api.ObjectMeta{
+					Name:      "test-service",
+					Namespace: "test-namespace",
+				},
+				TypeMeta:          api.TypeMeta{Kind: api.ResourceKindService},
+				InternalEndpoint:  common.Endpoint{Host: "test-service.test-namespace"},
+				ExternalEndpoints: []common.Endpoint{},
+			},
+		},
+	}
+
+	for _, c := range cases {
+		actual := toService(c.service)
+
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("ToService(%#v) == \ngot %#v, \nexpected %#v", c.service, actual,
+				c.expected)
 		}
 	}
 }

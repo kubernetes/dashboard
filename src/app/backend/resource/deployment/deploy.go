@@ -21,7 +21,7 @@ import (
 	"strings"
 
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
-	apps "k8s.io/api/apps/v1beta2"
+	apps "k8s.io/api/apps/v1"
 	api "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/resource"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -222,7 +222,7 @@ func DeployApp(spec *AppDeploymentSpec, client client.Interface) error {
 			},
 		},
 	}
-	_, err := client.AppsV1beta2().Deployments(spec.Namespace).Create(deployment)
+	_, err := client.AppsV1().Deployments(spec.Namespace).Create(deployment)
 
 	if err != nil {
 		// TODO(bryk): Roll back created resources in case of error.
@@ -345,7 +345,7 @@ func DeployAppFromFile(cfg *rest.Config, spec *AppDeploymentFromFileSpec) (bool,
 			}
 		}
 		if resource == nil {
-			return false, fmt.Errorf("Unknown resource kind: %s", kind)
+			return false, fmt.Errorf("unknown resource kind: %s", kind)
 		}
 
 		dynamicClient, err := dynamic.NewForConfig(cfg)

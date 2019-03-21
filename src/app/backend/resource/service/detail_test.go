@@ -19,11 +19,8 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
-	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/endpoint"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
@@ -41,22 +38,17 @@ func TestGetServiceDetail(t *testing.T) {
 				Name: "svc-1", Namespace: "ns-1", Labels: map[string]string{},
 			}},
 			namespace: "ns-1", name: "svc-1",
-			expectedActions: []string{"get", "list", "get", "list"},
+			expectedActions: []string{"get", "list"},
 			expected: &ServiceDetail{
-				ObjectMeta: api.ObjectMeta{
-					Name:      "svc-1",
-					Namespace: "ns-1",
-					Labels:    map[string]string{},
-				},
-				TypeMeta:          api.TypeMeta{Kind: api.ResourceKindService},
-				InternalEndpoint:  common.Endpoint{Host: "svc-1.ns-1"},
-				ExternalEndpoints: []common.Endpoint{},
-				PodList: pod.PodList{
-					Pods:              []pod.Pod{},
-					CumulativeMetrics: make([]metricapi.Metric, 0),
-				},
-				EventList: common.EventList{
-					Events: []common.Event{},
+				Service: Service{
+					ObjectMeta: api.ObjectMeta{
+						Name:      "svc-1",
+						Namespace: "ns-1",
+						Labels:    map[string]string{},
+					},
+					TypeMeta:          api.TypeMeta{Kind: api.ResourceKindService},
+					InternalEndpoint:  common.Endpoint{Host: "svc-1.ns-1"},
+					ExternalEndpoints: []common.Endpoint{},
 				},
 				EndpointList: endpoint.EndpointList{
 					Endpoints: []endpoint.Endpoint{},
@@ -75,24 +67,19 @@ func TestGetServiceDetail(t *testing.T) {
 				},
 			},
 			namespace: "ns-2", name: "svc-2",
-			expectedActions: []string{"get", "list", "get", "list", "list", "list"},
+			expectedActions: []string{"get", "list"},
 			expected: &ServiceDetail{
-				ObjectMeta: api.ObjectMeta{
-					Name:      "svc-2",
-					Namespace: "ns-2",
+				Service: Service{
+					ObjectMeta: api.ObjectMeta{
+						Name:      "svc-2",
+						Namespace: "ns-2",
+					},
+					Selector:          map[string]string{"app": "app2"},
+					TypeMeta:          api.TypeMeta{Kind: api.ResourceKindService},
+					InternalEndpoint:  common.Endpoint{Host: "svc-2.ns-2"},
+					ExternalEndpoints: []common.Endpoint{},
 				},
-				Selector:          map[string]string{"app": "app2"},
-				TypeMeta:          api.TypeMeta{Kind: api.ResourceKindService},
-				InternalEndpoint:  common.Endpoint{Host: "svc-2.ns-2"},
-				ExternalEndpoints: []common.Endpoint{},
-				PodList: pod.PodList{
-					Pods:              []pod.Pod{},
-					CumulativeMetrics: make([]metricapi.Metric, 0),
-					Errors:            []error{},
-				},
-				EventList: common.EventList{
-					Events: []common.Event{},
-				},
+
 				EndpointList: endpoint.EndpointList{
 					Endpoints: []endpoint.Endpoint{},
 				},
@@ -103,7 +90,7 @@ func TestGetServiceDetail(t *testing.T) {
 
 	for _, c := range cases {
 		fakeClient := fake.NewSimpleClientset(c.service)
-		actual, _ := GetServiceDetail(fakeClient, nil, c.namespace, c.name, dataselect.NoDataSelect)
+		actual, _ := GetServiceDetail(fakeClient, c.namespace, c.name)
 		actions := fakeClient.Actions()
 
 		if len(actions) != len(c.expectedActions) {

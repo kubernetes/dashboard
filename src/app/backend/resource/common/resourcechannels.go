@@ -16,7 +16,7 @@ package common
 
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
-	apps "k8s.io/api/apps/v1beta2"
+	apps "k8s.io/api/apps/v1"
 	autoscaling "k8s.io/api/autoscaling/v1"
 	batch "k8s.io/api/batch/v1"
 	batch2 "k8s.io/api/batch/v1beta1"
@@ -425,7 +425,7 @@ func GetDeploymentListChannel(client client.Interface,
 	}
 
 	go func() {
-		list, err := client.AppsV1beta2().Deployments(nsQuery.ToRequestParam()).
+		list, err := client.AppsV1().Deployments(nsQuery.ToRequestParam()).
 			List(api.ListEverything)
 		var filteredItems []apps.Deployment
 		for _, item := range list.Items {
@@ -466,7 +466,7 @@ func GetReplicaSetListChannelWithOptions(client client.Interface, nsQuery *Names
 	}
 
 	go func() {
-		list, err := client.AppsV1beta2().ReplicaSets(nsQuery.ToRequestParam()).
+		list, err := client.AppsV1().ReplicaSets(nsQuery.ToRequestParam()).
 			List(options)
 		var filteredItems []apps.ReplicaSet
 		for _, item := range list.Items {
@@ -499,7 +499,7 @@ func GetDaemonSetListChannel(client client.Interface, nsQuery *NamespaceQuery, n
 	}
 
 	go func() {
-		list, err := client.AppsV1beta2().DaemonSets(nsQuery.ToRequestParam()).List(api.ListEverything)
+		list, err := client.AppsV1().DaemonSets(nsQuery.ToRequestParam()).List(api.ListEverything)
 		var filteredItems []apps.DaemonSet
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
@@ -595,7 +595,7 @@ func GetStatefulSetListChannel(client client.Interface,
 	}
 
 	go func() {
-		statefulSets, err := client.AppsV1beta2().StatefulSets(nsQuery.ToRequestParam()).List(api.ListEverything)
+		statefulSets, err := client.AppsV1().StatefulSets(nsQuery.ToRequestParam()).List(api.ListEverything)
 		var filteredItems []apps.StatefulSet
 		for _, item := range statefulSets.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {

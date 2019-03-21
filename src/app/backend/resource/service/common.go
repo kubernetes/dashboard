@@ -15,64 +15,9 @@
 package service
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/endpoint"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	v1 "k8s.io/api/core/v1"
 )
-
-// ToService returns api service object based on kubernetes service object
-func ToService(service *v1.Service) Service {
-	return Service{
-		ObjectMeta:        api.NewObjectMeta(service.ObjectMeta),
-		TypeMeta:          api.NewTypeMeta(api.ResourceKindService),
-		InternalEndpoint:  common.GetInternalEndpoint(service.Name, service.Namespace, service.Spec.Ports),
-		ExternalEndpoints: common.GetExternalEndpoints(service),
-		Selector:          service.Spec.Selector,
-		ClusterIP:         service.Spec.ClusterIP,
-		Type:              service.Spec.Type,
-	}
-}
-
-// ToServiceDetail returns api service object based on kubernetes service object
-func ToServiceDetail(service *v1.Service, events common.EventList, pods pod.PodList, endpointList endpoint.EndpointList,
-	nonCriticalErrors []error) ServiceDetail {
-	return ServiceDetail{
-		ObjectMeta:        api.NewObjectMeta(service.ObjectMeta),
-		TypeMeta:          api.NewTypeMeta(api.ResourceKindService),
-		InternalEndpoint:  common.GetInternalEndpoint(service.Name, service.Namespace, service.Spec.Ports),
-		ExternalEndpoints: common.GetExternalEndpoints(service),
-		EndpointList:      endpointList,
-		Selector:          service.Spec.Selector,
-		ClusterIP:         service.Spec.ClusterIP,
-		Type:              service.Spec.Type,
-		EventList:         events,
-		PodList:           pods,
-		SessionAffinity:   service.Spec.SessionAffinity,
-		Errors:            nonCriticalErrors,
-	}
-}
-
-// CreateServiceList returns paginated service list based on given service array and pagination query.
-func CreateServiceList(services []v1.Service, nonCriticalErrors []error, dsQuery *dataselect.DataSelectQuery) *ServiceList {
-	serviceList := &ServiceList{
-		Services: make([]Service, 0),
-		ListMeta: api.ListMeta{TotalItems: len(services)},
-		Errors:   nonCriticalErrors,
-	}
-
-	serviceCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(services), dsQuery)
-	services = fromCells(serviceCells)
-	serviceList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
-
-	for _, service := range services {
-		serviceList.Services = append(serviceList.Services, ToService(&service))
-	}
-
-	return serviceList
-}
 
 // The code below allows to perform complex data section on []api.Service
 

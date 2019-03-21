@@ -17,7 +17,6 @@ package configmap
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/src/app/backend/api"
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
@@ -26,8 +25,8 @@ import (
 // ConfigMapDetail API resource provides mechanisms to inject containers with configuration data while keeping
 // containers agnostic of Kubernetes
 type ConfigMapDetail struct {
-	ObjectMeta api.ObjectMeta `json:"objectMeta"`
-	TypeMeta   api.TypeMeta   `json:"typeMeta"`
+	// Extends list item structure.
+	ConfigMap `json:",inline"`
 
 	// Data contains the configuration data.
 	// Each key must be a valid DNS_SUBDOMAIN with an optional leading dot.
@@ -49,8 +48,7 @@ func GetConfigMapDetail(client kubernetes.Interface, namespace, name string) (*C
 
 func getConfigMapDetail(rawConfigMap *v1.ConfigMap) *ConfigMapDetail {
 	return &ConfigMapDetail{
-		ObjectMeta: api.NewObjectMeta(rawConfigMap.ObjectMeta),
-		TypeMeta:   api.NewTypeMeta(api.ResourceKindConfigMap),
-		Data:       rawConfigMap.Data,
+		ConfigMap: toConfigMap(rawConfigMap.ObjectMeta),
+		Data:      rawConfigMap.Data,
 	}
 }

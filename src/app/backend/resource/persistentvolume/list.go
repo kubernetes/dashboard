@@ -85,19 +85,22 @@ func toPersistentVolumeList(persistentVolumes []v1.PersistentVolume, nonCritical
 	result.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
 	for _, item := range persistentVolumes {
-		result.Items = append(result.Items,
-			PersistentVolume{
-				ObjectMeta:    api.NewObjectMeta(item.ObjectMeta),
-				TypeMeta:      api.NewTypeMeta(api.ResourceKindPersistentVolume),
-				Capacity:      item.Spec.Capacity,
-				AccessModes:   item.Spec.AccessModes,
-				ReclaimPolicy: item.Spec.PersistentVolumeReclaimPolicy,
-				StorageClass:  item.Spec.StorageClassName,
-				Status:        item.Status.Phase,
-				Claim:         getPersistentVolumeClaim(&item),
-				Reason:        item.Status.Reason,
-			})
+		result.Items = append(result.Items, toPersistentVolume(item))
 	}
 
 	return result
+}
+
+func toPersistentVolume(pv v1.PersistentVolume) PersistentVolume {
+	return PersistentVolume{
+		ObjectMeta:    api.NewObjectMeta(pv.ObjectMeta),
+		TypeMeta:      api.NewTypeMeta(api.ResourceKindPersistentVolume),
+		Capacity:      pv.Spec.Capacity,
+		AccessModes:   pv.Spec.AccessModes,
+		ReclaimPolicy: pv.Spec.PersistentVolumeReclaimPolicy,
+		StorageClass:  pv.Spec.StorageClassName,
+		Status:        pv.Status.Phase,
+		Claim:         getPersistentVolumeClaim(&pv),
+		Reason:        pv.Status.Reason,
+	}
 }

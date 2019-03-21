@@ -20,37 +20,9 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
-	apps "k8s.io/api/apps/v1beta2"
+	apps "k8s.io/api/apps/v1"
 	v1 "k8s.io/api/core/v1"
 )
-
-// ReplicaSet is a presentation layer view of Kubernetes Replica Set resource. This means
-// it is Replica Set plus additional augmented data we can get from other sources
-// (like services that target the same pods).
-type ReplicaSet struct {
-	ObjectMeta api.ObjectMeta `json:"objectMeta"`
-	TypeMeta   api.TypeMeta   `json:"typeMeta"`
-
-	// Aggregate information about pods belonging to this Replica Set.
-	Pods common.PodInfo `json:"pods"`
-
-	// Container images of the Replica Set.
-	ContainerImages []string `json:"containerImages"`
-
-	// Init Container images of the Replica Set.
-	InitContainerImages []string `json:"initContainerImages"`
-}
-
-// ToReplicaSet converts replica set api object to replica set model object.
-func ToReplicaSet(replicaSet *apps.ReplicaSet, podInfo *common.PodInfo) ReplicaSet {
-	return ReplicaSet{
-		ObjectMeta:          api.NewObjectMeta(replicaSet.ObjectMeta),
-		TypeMeta:            api.NewTypeMeta(api.ResourceKindReplicaSet),
-		ContainerImages:     common.GetContainerImages(&replicaSet.Spec.Template.Spec),
-		InitContainerImages: common.GetInitContainerImages(&replicaSet.Spec.Template.Spec),
-		Pods:                *podInfo,
-	}
-}
 
 // The code below allows to perform complex data section on Replica Set
 

@@ -64,15 +64,15 @@ export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSet
   }
 
   isInErrorState(resource: ReplicaSet): boolean {
-    return resource.pods.warnings.length > 0;
+    return resource.podInfo.warnings.length > 0;
   }
 
   isInPendingState(resource: ReplicaSet): boolean {
-    return resource.pods.warnings.length === 0 && resource.pods.pending > 0;
+    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending > 0;
   }
 
   isInSuccessState(resource: ReplicaSet): boolean {
-    return resource.pods.warnings.length === 0 && resource.pods.pending === 0;
+    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending === 0;
   }
 
   protected getDisplayColumns(): string[] {
@@ -84,10 +84,10 @@ export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSet
   }
 
   hasErrors(replicaSet: ReplicaSet): boolean {
-    return replicaSet.pods.warnings.length > 0;
+    return replicaSet.podInfo.warnings.length > 0;
   }
 
   getEvents(replicaSet: ReplicaSet): Event[] {
-    return replicaSet.pods.warnings;
+    return replicaSet.podInfo.warnings;
   }
 }

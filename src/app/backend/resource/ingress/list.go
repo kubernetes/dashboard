@@ -56,19 +56,6 @@ func GetIngressList(client client.Interface, namespace *common.NamespaceQuery,
 	return toIngressList(ingressList.Items, nonCriticalErrors, dsQuery), nil
 }
 
-// GetIngressListFromChannels - return all ingresses in the given namespace.
-func GetIngressListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery) (*IngressList, error) {
-	ingress := <-channels.IngressList.List
-	err := <-channels.IngressList.Error
-
-	nonCriticalErrors, criticalError := errors.HandleError(err)
-	if criticalError != nil {
-		return nil, criticalError
-	}
-
-	return toIngressList(ingress.Items, nonCriticalErrors, dsQuery), nil
-}
-
 func getEndpoints(ingress *extensions.Ingress) []common.Endpoint {
 	endpoints := make([]common.Endpoint, 0)
 	if len(ingress.Status.LoadBalancer.Ingress) > 0 {
@@ -80,13 +67,12 @@ func getEndpoints(ingress *extensions.Ingress) []common.Endpoint {
 	return endpoints
 }
 
-func toIngress(ingress *extensions.Ingress) *Ingress {
-	modelIngress := &Ingress{
+func toIngress(ingress *extensions.Ingress) Ingress {
+	return Ingress{
 		ObjectMeta: api.NewObjectMeta(ingress.ObjectMeta),
 		TypeMeta:   api.NewTypeMeta(api.ResourceKindIngress),
 		Endpoints:  getEndpoints(ingress),
 	}
-	return modelIngress
 }
 
 func toIngressList(ingresses []extensions.Ingress, nonCriticalErrors []error, dsQuery *dataselect.DataSelectQuery) *IngressList {
@@ -101,7 +87,7 @@ func toIngressList(ingresses []extensions.Ingress, nonCriticalErrors []error, ds
 	newIngressList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
 	for _, ingress := range ingresses {
-		newIngressList.Items = append(newIngressList.Items, *toIngress(&ingress))
+		newIngressList.Items = append(newIngressList.Items, toIngress(&ingress))
 	}
 
 	return newIngressList

@@ -23,7 +23,7 @@ import (
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	apps "k8s.io/api/apps/v1beta2"
+	apps "k8s.io/api/apps/v1"
 	v1 "k8s.io/api/core/v1"
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -393,8 +393,7 @@ func TestToDaemonSetList(t *testing.T) {
 	for _, c := range cases {
 		actual := toDaemonSetList(c.daemonSets, c.pods, events, nil, dataselect.NoDataSelect, nil)
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("toDaemonSetList(%#v, %#v, %#v) == \n%#v\nexpected \n%#v\n",
-				c.daemonSets, c.services, events, actual, c.expected)
+			t.Errorf("toDaemonSetList(%#v, %#v, %#v) == \n%#v\nexpected \n%#v\n", c.daemonSets, c.services, events, actual, c.expected)
 		}
 	}
 }

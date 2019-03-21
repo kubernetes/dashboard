@@ -84,3 +84,34 @@ func GetServiceListFromChannels(channels *common.ResourceChannels,
 
 	return CreateServiceList(services.Items, nonCriticalErrors, dsQuery), nil
 }
+
+func toService(service *v1.Service) Service {
+	return Service{
+		ObjectMeta:        api.NewObjectMeta(service.ObjectMeta),
+		TypeMeta:          api.NewTypeMeta(api.ResourceKindService),
+		InternalEndpoint:  common.GetInternalEndpoint(service.Name, service.Namespace, service.Spec.Ports),
+		ExternalEndpoints: common.GetExternalEndpoints(service),
+		Selector:          service.Spec.Selector,
+		ClusterIP:         service.Spec.ClusterIP,
+		Type:              service.Spec.Type,
+	}
+}
+
+// CreateServiceList returns paginated service list based on given service array and pagination query.
+func CreateServiceList(services []v1.Service, nonCriticalErrors []error, dsQuery *dataselect.DataSelectQuery) *ServiceList {
+	serviceList := &ServiceList{
+		Services: make([]Service, 0),
+		ListMeta: api.ListMeta{TotalItems: len(services)},
+		Errors:   nonCriticalErrors,
+	}
+
+	serviceCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(services), dsQuery)
+	services = fromCells(serviceCells)
+	serviceList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
+
+	for _, service := range services {
+		serviceList.Services = append(serviceList.Services, toService(&service))
+	}
+
+	return serviceList
+}

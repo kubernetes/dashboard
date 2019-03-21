@@ -65,15 +65,15 @@ export class ReplicationControllerListComponent extends
   }
 
   isInErrorState(resource: ReplicationController): boolean {
-    return resource.pods.warnings.length > 0;
+    return resource.podInfo.warnings.length > 0;
   }
 
   isInPendingState(resource: ReplicationController): boolean {
-    return resource.pods.warnings.length === 0 && resource.pods.pending > 0;
+    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending > 0;
   }
 
   isInSuccessState(resource: ReplicationController): boolean {
-    return resource.pods.warnings.length === 0 && resource.pods.pending === 0;
+    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending === 0;
   }
 
   protected getDisplayColumns(): string[] {
@@ -85,10 +85,10 @@ export class ReplicationControllerListComponent extends
   }
 
   hasErrors(rc: ReplicationController): boolean {
-    return rc.pods.warnings.length > 0;
+    return rc.podInfo.warnings.length > 0;
   }
 
   getEvents(rc: ReplicationController): Event[] {
-    return rc.pods.warnings;
+    return rc.podInfo.warnings;
   }
 }

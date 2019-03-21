@@ -21,7 +21,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
-	apps "k8s.io/api/apps/v1beta2"
+	apps "k8s.io/api/apps/v1"
 	batch "k8s.io/api/batch/v1"
 	v1 "k8s.io/api/core/v1"
 	meta "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -77,7 +77,7 @@ func NewResourceController(ref meta.OwnerReference, namespace string, client cli
 		}
 		return PodController(*pod), nil
 	case api.ResourceKindReplicaSet:
-		rs, err := client.AppsV1beta2().ReplicaSets(namespace).Get(ref.Name, meta.GetOptions{})
+		rs, err := client.AppsV1().ReplicaSets(namespace).Get(ref.Name, meta.GetOptions{})
 		if err != nil {
 			return nil, err
 		}
@@ -89,13 +89,13 @@ func NewResourceController(ref meta.OwnerReference, namespace string, client cli
 		}
 		return ReplicationControllerController(*rc), nil
 	case api.ResourceKindDaemonSet:
-		ds, err := client.AppsV1beta2().DaemonSets(namespace).Get(ref.Name, meta.GetOptions{})
+		ds, err := client.AppsV1().DaemonSets(namespace).Get(ref.Name, meta.GetOptions{})
 		if err != nil {
 			return nil, err
 		}
 		return DaemonSetController(*ds), nil
 	case api.ResourceKindStatefulSet:
-		ss, err := client.AppsV1beta2().StatefulSets(namespace).Get(ref.Name, meta.GetOptions{})
+		ss, err := client.AppsV1().StatefulSets(namespace).Get(ref.Name, meta.GetOptions{})
 		if err != nil {
 			return nil, err
 		}

@@ -42,7 +42,7 @@ func ValidateAppName(spec *AppNameValiditySpec, client client.Interface) (*AppNa
 	isValidDeployment := false
 	isValidService := false
 
-	_, err := client.AppsV1beta2().Deployments(spec.Namespace).Get(spec.Name, metaV1.GetOptions{})
+	_, err := client.AppsV1().Deployments(spec.Namespace).Get(spec.Name, metaV1.GetOptions{})
 	if err != nil {
 		if kdErrors.IsNotFoundError(err) || kdErrors.IsForbiddenError(err) {
 			isValidDeployment = true
