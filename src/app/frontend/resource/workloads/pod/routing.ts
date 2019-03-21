@@ -18,8 +18,21 @@ import {PodDetailComponent} from './detail/component';
 import {PodListComponent} from './list/component';
 
 const routes: Routes = [
-  {path: '', component: PodListComponent},
-  {path: ':resourceNamespace/:resourceName', component: PodDetailComponent},
+  {
+    path: '',
+    component: PodListComponent,
+    data: {
+      label: 'Pods',
+    },
+  },
+  {
+    path: ':resourceNamespace/:resourceName',
+    component: PodDetailComponent,
+    data: {
+      label: 'resourceName',
+      useLabelAsParam: true,
+    },
+  },
 ];
 
 @NgModule({

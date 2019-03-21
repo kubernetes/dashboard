@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Router} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {Breadcrumb} from '@api/frontendapi';
 import {BreadcrumbsService} from '../../services/global/breadcrumbs';
 
@@ -23,7 +23,7 @@ import {BreadcrumbsService} from '../../services/global/breadcrumbs';
   styleUrls: ['./style.scss'],
 })
 export class BreadcrumbsComponent implements OnInit {
-  breadcrumbs: Breadcrumb[] = [];
+  breadcrumbs: Breadcrumb[];
 
   constructor(
       private readonly _router: Router, private readonly _activatedRoute: ActivatedRoute,
@@ -45,20 +45,15 @@ export class BreadcrumbsComponent implements OnInit {
     this.breadcrumbs = [];
 
     const currentRoute = this._getCurrentRoute();
+    this.breadcrumbs.push(this._toBreadcrumb(currentRoute));
 
     // TODO
-    this.breadcrumbs.push({
-      label: currentRoute.routeConfig.component.name,
-      stateLink: '',
-    });
 
     // const label = route.routeConfig && route.routeConfig.data ? route.routeConfig.data[
     //   'breadcrumb' ] : 'Home'; const nextUrl = `${url}${route.routeConfig ?
     //   route.routeConfig.path :
     //   ''}/`; breadcrumbs.push({label: label, stateLink: nextUrl}); return route.firstChild ?
     //   this._buildBreadCrumb(route.firstChild, nextUrl, breadcrumbs) : breadcrumbs;
-
-
 
     // _buildBreadCrumb(route: ActivatedRoute, url: string = '', breadcrumbs: Breadcrumb[] = []):
     // Breadcrumb[] {
@@ -69,11 +64,6 @@ export class BreadcrumbsComponent implements OnInit {
     //   this._buildBreadCrumb(route.firstChild, nextUrl, breadcrumbs) : breadcrumbs;
     // }
 
-
-
-    // let state: ActivatedRouteSnapshot = this.router_.routerState.root.snapshot;
-    // const breadcrumbs: Breadcrumb[] = [];
-    //
     // while (state && state.url && this.canAddBreadcrumb_(breadcrumbs)) {
     //   const breadcrumb = this.getBreadcrumb_(state);
     //
@@ -95,13 +85,25 @@ export class BreadcrumbsComponent implements OnInit {
     return route;
   }
 
-  private getBreadcrumb_(state: ActivatedRouteSnapshot): Breadcrumb {
+  private _toBreadcrumb(route: ActivatedRoute): Breadcrumb {
     const breadcrumb = new Breadcrumb();
 
-    if (state) {
+    if (route.routeConfig && route.routeConfig.data && route.routeConfig.data.label) {
+      if (route.routeConfig.data.useLabelAsParam) {
+        // If useLabelAsParam is true, then use label to search for params and display the name.
+        // It will be used to display resource names in the detail routes.
+        breadcrumb.label = route.snapshot.params[route.routeConfig.data.label];
+      } else {
+        breadcrumb.label = route.routeConfig.data.label;
+      }
+    } else if (route.routeConfig) {
+      breadcrumb.label = route.routeConfig.component.name;
+    } else {
+      breadcrumb.label = 'Unknown';
     }
-    // breadcrumb.label = this.breadcrumbs_.getDisplayName(state);
-    // breadcrumb.stateLink = this.router_.href(state.name, this.router_.params);
+
+    // TODO: Add link.
+    // TODO: Add data to all structures.
 
     return breadcrumb;
   }

@@ -19,6 +19,9 @@ import {WorkloadsComponent} from './component';
 const routes: Routes = [{
   path: '',
   component: WorkloadsComponent,
+  data: {
+    label: 'Workloads',
+  },
 }];
 
 @NgModule({
