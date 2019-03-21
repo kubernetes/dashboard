@@ -15,9 +15,7 @@
 import {Injectable} from '@angular/core';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute} from '@angular/router';
-import {Transition} from '@uirouter/angular';
 
-import {BreadcrumbsService} from './breadcrumbs';
 import {GlobalSettingsService} from './globalsettings';
 
 @Injectable()
@@ -25,13 +23,11 @@ export class TitleService {
   clusterName = '';
   stateName = '';
 
-  constructor(
-      private readonly title_: Title, private readonly settings_: GlobalSettingsService,
-      private readonly breadcrumbs_: BreadcrumbsService) {}
+  constructor(private readonly title_: Title, private readonly settings_: GlobalSettingsService) {}
 
   update(snapshot?: ActivatedRoute): void {
-    if (snapshot) {
-      this.stateName = this.breadcrumbs_.getDisplayName(snapshot.snapshot);
+    if (snapshot && snapshot.routeConfig && snapshot.routeConfig.data) {
+      this.stateName = snapshot.routeConfig.data.label;
     }
 
     this.settings_.load(

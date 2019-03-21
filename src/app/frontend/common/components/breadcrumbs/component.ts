@@ -15,7 +15,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {Breadcrumb} from '@api/frontendapi';
-import {BreadcrumbsService} from '../../services/global/breadcrumbs';
 
 @Component({
   selector: 'kd-breadcrumbs',
@@ -25,9 +24,7 @@ import {BreadcrumbsService} from '../../services/global/breadcrumbs';
 export class BreadcrumbsComponent implements OnInit {
   breadcrumbs: Breadcrumb[];
 
-  constructor(
-      private readonly _router: Router, private readonly _activatedRoute: ActivatedRoute,
-      private readonly _breadcrumbs: BreadcrumbsService) {}
+  constructor(private readonly _router: Router, private readonly _activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
     this._registerNavigationHook();
@@ -44,37 +41,15 @@ export class BreadcrumbsComponent implements OnInit {
   private _initBreadcrumbs(): void {
     this.breadcrumbs = [];
 
-    const currentRoute = this._getCurrentRoute();
-    this.breadcrumbs.push(this._toBreadcrumb(currentRoute));
+    let route = this._getCurrentRoute();
+    while (route) {
+      this.breadcrumbs.push(this._toBreadcrumb(route));
 
-    // TODO
+      console.log(route);
+      route = route.parent;
+    }
 
-    // const label = route.routeConfig && route.routeConfig.data ? route.routeConfig.data[
-    //   'breadcrumb' ] : 'Home'; const nextUrl = `${url}${route.routeConfig ?
-    //   route.routeConfig.path :
-    //   ''}/`; breadcrumbs.push({label: label, stateLink: nextUrl}); return route.firstChild ?
-    //   this._buildBreadCrumb(route.firstChild, nextUrl, breadcrumbs) : breadcrumbs;
-
-    // _buildBreadCrumb(route: ActivatedRoute, url: string = '', breadcrumbs: Breadcrumb[] = []):
-    // Breadcrumb[] {
-    //   const label = route.routeConfig && route.routeConfig.data ? route.routeConfig.data[
-    //   'breadcrumb' ] : 'Home'; const nextUrl = `${url}${route.routeConfig ?
-    //   route.routeConfig.path :
-    //   ''}/`; breadcrumbs.push({label: label, stateLink: nextUrl}); return route.firstChild ?
-    //   this._buildBreadCrumb(route.firstChild, nextUrl, breadcrumbs) : breadcrumbs;
-    // }
-
-    // while (state && state.url && this.canAddBreadcrumb_(breadcrumbs)) {
-    //   const breadcrumb = this.getBreadcrumb_(state);
-    //
-    //   if (breadcrumb.label) {
-    //     breadcrumbs.push(breadcrumb);
-    //   }
-    //
-    //   state = this.breadcrumbs_.getParentState(state).snapshot;
-    // }
-    //
-    // this.breadcrumbs = breadcrumbs.reverse();
+    this.breadcrumbs.reverse();
   }
 
   private _getCurrentRoute(): ActivatedRoute {
@@ -85,26 +60,34 @@ export class BreadcrumbsComponent implements OnInit {
     return route;
   }
 
+  // TODO:
+  //  - Add data to all structures.
+  //  - Fill stateLink field.
   private _toBreadcrumb(route: ActivatedRoute): Breadcrumb {
-    const breadcrumb = new Breadcrumb();
+    return {
+      label: this._getBreadcrumbLabel(route),
+      stateLink: '',
+    } as Breadcrumb;
+  }
 
+  // TODO: When state search is active use specific logic to display custom breadcrumb:
+  //  if (state.url[0].path === searchState.name) {
+  //    const query = stateParams[SEARCH_QUERY_STATE_PARAM];
+  //    return `Search for "${query}"`;
+  //  }
+  private _getBreadcrumbLabel(route: ActivatedRoute) {
     if (route.routeConfig && route.routeConfig.data && route.routeConfig.data.label) {
       if (route.routeConfig.data.useLabelAsParam) {
         // If useLabelAsParam is true, then use label to search for params and display the name.
         // It will be used to display resource names in the detail routes.
-        breadcrumb.label = route.snapshot.params[route.routeConfig.data.label];
+        return route.snapshot.params[route.routeConfig.data.label];
       } else {
-        breadcrumb.label = route.routeConfig.data.label;
+        return route.routeConfig.data.label;
       }
-    } else if (route.routeConfig) {
-      breadcrumb.label = route.routeConfig.component.name;
+    } else if (route.routeConfig && route.routeConfig.component) {
+      return route.routeConfig.component.name;
     } else {
-      breadcrumb.label = 'Unknown';
+      return 'Unknown';
     }
-
-    // TODO: Add link.
-    // TODO: Add data to all structures.
-
-    return breadcrumb;
   }
 }
