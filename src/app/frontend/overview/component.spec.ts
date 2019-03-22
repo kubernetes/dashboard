@@ -115,7 +115,7 @@ describe('OverviewComponent', () => {
   });
 
   it('should update resourcesRatio on pod identifier', () => {
-    // This checks the ResourceRatioModes.Completable
+    // This checks the ResourceRatioModes.Completable path
     const instance = testHostFixture.componentInstance;
 
     instance.updateResourcesRatio({
@@ -135,8 +135,8 @@ describe('OverviewComponent', () => {
     expect(instance.showWorkloadStatuses()).toEqual(true);
   });
 
-  it('should update resourcesRatio on cron job(suspendable) identifier', () => {
-    // This checks the ResourceRatioModes.Suspendable
+  it('should update resourcesRatio on cron job identifier', () => {
+    // This checks the ResourceRatioModes.Suspendable path
     const instance = testHostFixture.componentInstance;
 
     instance.updateResourcesRatio({
