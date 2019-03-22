@@ -122,10 +122,6 @@ func main() {
 	// Init integrations
 	integrationManager := integration.NewIntegrationManager(clientManager)
 
-	fmt.Println("Hi dude")
-	fmt.Println(args.Holder.GetSidecarHost())
-	fmt.Println(args.Holder.GetHeapsterHost())
-
 	if args.Holder.GetMetricsProvider() == "sidecar" {
 		integrationManager.Metric().ConfigureSidecar(args.Holder.GetSidecarHost()).
 			EnableWithRetry(integrationapi.SidecarIntegrationID, time.Duration(args.Holder.GetMetricClientCheckPeriod()))
