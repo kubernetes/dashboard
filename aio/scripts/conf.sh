@@ -36,8 +36,6 @@ CLANG_FORMAT_BIN="${ROOT_DIR}/node_modules/.bin/clang-format"
 SCSSFMT_BIN="${ROOT_DIR}/node_modules/.bin/scssfmt"
 BEAUTIFY_BIN="${ROOT_DIR}/node_modules/.bin/js-beautify"
 GLOB_RUN_BIN="${ROOT_DIR}/node_modules/.bin/glob-run"
-GOLINT_URL="https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh"
-GOLINT_BIN="${CACHE_DIR}/golangci-lint"
 
 # Global constants.
 ARCH=$(uname | awk '{print tolower($0)}')

@@ -16,13 +16,18 @@ cache:
     - node_modules
 
 before_install:
-  - export GOPATH=$TRAVIS_BUILD_DIR/.tmp
+  - export PATH=$PATH:$GOPATH/bin
+  - eval "$(gimme 1.11.4)"
+  - cd $HOME
+  - mkdir -p $GOPATH/src/github.com/
+  - mv $HOME/build/kubernetes $GOPATH/src/github.com/
+  - export TRAVIS_BUILD_DIR=$GOPATH/src/github.com/kubernetes/dashboard
+  - cd $TRAVIS_BUILD_DIR
   - mkdir -p $TRAVIS_BUILD_DIR/.tmp/src/github.com/kubernetes/dashboard/src/app
   - cp -r $TRAVIS_BUILD_DIR/src/app/backend $TRAVIS_BUILD_DIR/.tmp/src/github.com/kubernetes/dashboard/src/app
   - ln -s $TRAVIS_BUILD_DIR/vendor $TRAVIS_BUILD_DIR/.tmp/src/github.com/kubernetes/dashboard/src/app/backend/vendor
 
 before_script:
-  - eval "$(gimme 1.11.4)"
   - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
   - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) edge"
   - sudo apt-get update
