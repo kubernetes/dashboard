@@ -75,7 +75,6 @@ const (
 type APIHandler struct {
 	iManager integration.IntegrationManager
 	cManager clientapi.ClientManager
-	sManager settings.SettingsManager
 }
 
 // TerminalResponse is sent by handleExecShell. The Id is a random session id that binds the original REST request and the SockJS connection.
