@@ -60,7 +60,6 @@ var _NumRequests = GlobalCounter(0)
 type FakeSidecar struct {
 	PodData
 	NodeData
-	numRequests int
 }
 
 type FakeRequest struct {
