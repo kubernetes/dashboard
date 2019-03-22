@@ -111,7 +111,7 @@ func TestGetSidecarSelector(t *testing.T) {
 	}
 	for _, testCase := range testCases {
 		sel, err := getSidecarSelector(testCase.ResourceSelector,
-			&metricapi.CachedResources{cachedPodList})
+			&metricapi.CachedResources{Pods: cachedPodList})
 		if err != nil {
 			t.Errorf("Test Case: %s. Failed to get SidecarSelector. - %s", testCase.Info, err)
 			return
