@@ -357,6 +357,7 @@ export interface DeploymentDetail extends ResourceDetail {
   revisionHistoryLimit?: number;
   rollingUpdateStrategy?: RollingUpdateStrategy;
   oldReplicaSetList: ReplicaSetList;
+  horizontalpodautoscalers: HorizontalPodAutoscalerList[];
   newReplicaSet: ReplicaSet;
   events: EventList;
 }

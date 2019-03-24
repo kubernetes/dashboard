@@ -37,6 +37,7 @@ export enum Resource {
   event = 'event',
   container = 'container',
   shell = 'shell',
+  horizontalpodautoscaler = 'horizontalpodautoscaler',
 }
 
 class ResourceEndpoint {

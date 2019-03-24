@@ -43,6 +43,7 @@ import {EndpointListComponent} from './endpoint/cardlist/component';
 import {ExternalEndpointComponent} from './endpoint/external/component';
 import {InternalEndpointComponent} from './endpoint/internal/component';
 import {HiddenPropertyComponent} from './hiddenproperty/component';
+import {HorizontalPodAutoscalerListComponent} from './horizontalpodautoscalers/component';
 import {ResourceLimitListComponent} from './limits/component';
 import {ColumnComponent} from './list/column/component';
 import {MenuComponent} from './list/column/menu/component';
@@ -129,6 +130,7 @@ import {ZeroStateComponent} from './zerostate/component';
     EventListComponent,
     ContainerCardComponent,
     ConditionListComponent,
+    HorizontalPodAutoscalerListComponent,
     CreatorCardComponent,
     PodStatusCardComponent,
     NamespaceSelectorComponent,
@@ -193,6 +195,7 @@ import {ZeroStateComponent} from './zerostate/component';
     EventListComponent,
     ContainerCardComponent,
     ConditionListComponent,
+    HorizontalPodAutoscalerListComponent,
     CreatorCardComponent,
     PodStatusCardComponent,
     NamespaceSelectorComponent,
