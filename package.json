@@ -69,7 +69,7 @@
   },
   "dependencies": {
     "@angular/animations": "7.1.4",
-    "@angular/cdk": "7.3.5",
+    "@angular/cdk": "7.3.6",
     "@angular/common": "7.1.4",
     "@angular/compiler": "7.1.4",
     "@angular/core": "7.1.4",
