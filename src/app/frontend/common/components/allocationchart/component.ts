@@ -62,12 +62,8 @@ export class AllocationChartComponent implements OnInit {
     const chart = nv.models.pieChart()
                       .showLegend(false)
                       .showLabels(true)
-                      .x((d) => {
-                        return d.value;
-                      })
-                      .y((d) => {
-                        return d.value;
-                      })
+                      .x(d => d.key)
+                      .y(d => d.value)
                       .donut(true)
                       .donutRatio(ratio)
                       .color(colors)
@@ -78,7 +74,16 @@ export class AllocationChartComponent implements OnInit {
                       .labelType(labelFunc);
 
     chart.tooltip.enabled(this.enableTooltips);
-    chart.tooltip.contentGenerator((obj) => {
+    chart.tooltip.contentGenerator(obj => {
+      /**
+       * This is required because the RatioItem.key is of the form `label: count` and the
+       * RatioItem.value stores the percentage. This splits the key to extract label and
+       * the count.
+       */
+      if (obj.data.key.includes(':')) {
+        const values = obj.data.key.split(':');
+        return `<h3>${values[0]}</h3><p>${values[1]}</p>`;
+      }
       return obj.data.key;
     });
 

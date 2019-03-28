@@ -14,132 +14,124 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<!--<div fxLayout="row wrap">-->
-<!--<div class="kd-graph-container"-->
-<!--ng-if="::$ctrl.resourcesRatio.cronJobRatio.length">-->
-<!--<div layout="column"-->
-<!--layout-align="center center">-->
-<!--<kd-allocated-resources-chart color-palette="::$ctrl.colorPalette"-->
-<!--data="::$ctrl.resourcesRatio.cronJobRatio"-->
-<!--ratio="0"-->
-<!--enable-tooltips="true"-->
-<!--size="140">-->
-<!--</kd-allocated-resources-chart>-->
-<!--<div class="kd-graph-title">-->
-<!--[[Cron Jobs|Label 'Cron Jobs' for the resource status chart on overview page.]]-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
+<kd-card>
+  <div title
+       fxLayout="row">Workload Status</div>
 
-<!--<div class="kd-graph-container"-->
-<!--ng-if="::$ctrl.resourcesRatio.daemonSetRatio.length">-->
-<!--<div layout="column"-->
-<!--layout-align="center center">-->
-<!--<kd-allocated-resources-chart color-palette="::$ctrl.colorPalette"-->
-<!--data="::$ctrl.resourcesRatio.daemonSetRatio"-->
-<!--ratio="0"-->
-<!--enable-tooltips="true"-->
-<!--size="140">-->
-<!--</kd-allocated-resources-chart>-->
-<!--<div class="kd-graph-title">-->
-<!--[[Daemon Sets|Label 'Daemon Sets' for the resource status chart on overview page.]]-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
+  <div content
+       fxLayout="row wrap">
 
-<!--<div class="kd-graph-container"-->
-<!--ng-if="::$ctrl.resourcesRatio.deploymentRatio.length">-->
-<!--<div layout="column"-->
-<!--layout-align="center center">-->
-<!--<kd-allocated-resources-chart color-palette="::$ctrl.colorPalette"-->
-<!--data="::$ctrl.resourcesRatio.deploymentRatio"-->
-<!--ratio="0"-->
-<!--enable-tooltips="true"-->
-<!--size="140">-->
-<!--</kd-allocated-resources-chart>-->
-<!--<div class="kd-graph-title">-->
-<!--[[Deployments|Label 'Deployments' for the resource status chart on overview page.]]-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
+    <div class="kd-graph-container"
+         *ngIf="resourcesRatio.cronJobRatio.length">
+      <div fxLayout="column"
+           fxLayoutAlign="center center">
+        <kd-allocation-chart id="cronJobs"
+                             [colorPalette]="colors"
+                             [data]="resourcesRatio.cronJobRatio"
+                             [ratio]="0"
+                             [enableTooltips]="true"
+                             [size]="140"></kd-allocation-chart>
+      </div>
+      <div class="kd-graph-title">Cron Jobs</div>
+    </div>
 
-<!--<div class="kd-graph-container"-->
-<!--ng-if="::$ctrl.resourcesRatio.jobRatio.length">-->
-<!--<div layout="column"-->
-<!--layout-align="center center">-->
-<!--<kd-allocated-resources-chart color-palette="::$ctrl.colorPalette"-->
-<!--data="::$ctrl.resourcesRatio.jobRatio"-->
-<!--ratio="0"-->
-<!--enable-tooltips="true"-->
-<!--size="140">-->
-<!--</kd-allocated-resources-chart>-->
-<!--<div class="kd-graph-title">-->
-<!--[[Jobs|Label 'Jobs' for the resource status chart on overview page.]]-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
+    <div class="kd-graph-container"
+         *ngIf="resourcesRatio.daemonSetRatio.length">
+      <div fxLayout="column"
+           fxLayoutAlign="center center">
+        <kd-allocation-chart id="daemonSets"
+                             [colorPalette]="colors"
+                             [data]="resourcesRatio.daemonSetRatio"
+                             [ratio]="0"
+                             [enableTooltips]="true"
+                             [size]="140"></kd-allocation-chart>
+      </div>
+      <div class="kd-graph-title">Daemon Sets</div>
+    </div>
 
-<!--<div class="kd-graph-container"-->
-<!--ng-if="::$ctrl.resourcesRatio.podRatio.length">-->
-<!--<div layout="column"-->
-<!--layout-align="center center">-->
-<!--<kd-allocated-resources-chart color-palette="::$ctrl.colorPalette"-->
-<!--data="::$ctrl.resourcesRatio.podRatio"-->
-<!--ratio="0"-->
-<!--enable-tooltips="true"-->
-<!--size="140">-->
-<!--</kd-allocated-resources-chart>-->
-<!--<div class="kd-graph-title">-->
-<!--[[Pods|Label 'Pods' for the resource status chart on overview page.]]-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
+    <div class="kd-graph-container"
+         *ngIf="resourcesRatio.deploymentRatio.length">
+      <div fxLayout="column"
+           fxLayoutAlign="center center">
+        <kd-allocation-chart id="deployments"
+                             [colorPalette]="colors"
+                             [data]="resourcesRatio.deploymentRatio"
+                             [ratio]="0"
+                             [enableTooltips]="true"
+                             [size]="140"></kd-allocation-chart>
+      </div>
+      <div class="kd-graph-title">Deployments</div>
+    </div>
 
-<!--<div class="kd-graph-container"-->
-<!--ng-if="::$ctrl.resourcesRatio.replicaSetRatio.length">-->
-<!--<div layout="column"-->
-<!--layout-align="center center">-->
-<!--<kd-allocated-resources-chart color-palette="::$ctrl.colorPalette"-->
-<!--data="::$ctrl.resourcesRatio.replicaSetRatio"-->
-<!--ratio="0"-->
-<!--enable-tooltips="true"-->
-<!--size="140">-->
-<!--</kd-allocated-resources-chart>-->
-<!--<div class="kd-graph-title">-->
-<!--[[Replica Sets|Label 'Replica Sets' for the resource status chart on overview page.]]-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
+    <div class="kd-graph-container"
+         *ngIf="resourcesRatio.jobRatio.length">
+      <div fxLayout="column"
+           fxLayoutAlign="center center">
+        <kd-allocation-chart id="jobs"
+                             [colorPalette]="colors"
+                             [data]="resourcesRatio.jobRatio"
+                             [ratio]="0"
+                             [enableTooltips]="true"
+                             [size]="140"></kd-allocation-chart>
+      </div>
+      <div class="kd-graph-title">Jobs</div>
+    </div>
 
-<!--<div class="kd-graph-container"-->
-<!--ng-if="::$ctrl.resourcesRatio.rcRatio.length">-->
-<!--<div layout="column"-->
-<!--layout-align="center center">-->
-<!--<kd-allocated-resources-chart color-palette="::$ctrl.colorPalette"-->
-<!--data="::$ctrl.resourcesRatio.rcRatio"-->
-<!--ratio="0"-->
-<!--enable-tooltips="true"-->
-<!--size="140">-->
-<!--</kd-allocated-resources-chart>-->
-<!--<div class="kd-graph-title">-->
-<!--[[Replication Controllers|Label 'RCs' for the resource status chart on overview page.]]-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
+    <div class="kd-graph-container"
+         *ngIf="resourcesRatio.podRatio.length">
+      <div fxLayout="column"
+           fxLayoutAlign="center center">
+        <kd-allocation-chart id="pods"
+                             [colorPalette]="colors"
+                             [data]="resourcesRatio.podRatio"
+                             [ratio]="0"
+                             [enableTooltips]="true"
+                             [size]="140"></kd-allocation-chart>
+      </div>
+      <div class="kd-graph-title">Pods</div>
+    </div>
 
-<!--<div class="kd-graph-container"-->
-<!--ng-if="::$ctrl.resourcesRatio.statefulSetRatio.length">-->
-<!--<div layout="column"-->
-<!--layout-align="center center">-->
-<!--<kd-allocated-resources-chart color-palette="::$ctrl.colorPalette"-->
-<!--data="::$ctrl.resourcesRatio.statefulSetRatio"-->
-<!--ratio="0"-->
-<!--enable-tooltips="true"-->
-<!--size="140">-->
-<!--</kd-allocated-resources-chart>-->
-<!--<div class="kd-graph-title">-->
-<!--[[Stateful Sets|Label 'Stateful Sets' for the resource status chart on overview page.]]-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
+    <div class="kd-graph-container"
+         *ngIf="resourcesRatio.replicaSetRatio.length">
+      <div fxLayout="column"
+           fxLayoutAlign="center center">
+        <kd-allocation-chart id="replicaSets"
+                             [colorPalette]="colors"
+                             [data]="resourcesRatio.replicaSetRatio"
+                             [ratio]="0"
+                             [enableTooltips]="true"
+                             [size]="140"></kd-allocation-chart>
+      </div>
+      <div class="kd-graph-title">Replica Sets</div>
+    </div>
+
+    <div class="kd-graph-container"
+         *ngIf="resourcesRatio.replicationControllerRatio.length">
+      <div fxLayout="column"
+           fxLayoutAlign="center center">
+        <kd-allocation-chart id="replicationControllers"
+                             [colorPalette]="colors"
+                             [data]="resourcesRatio.replicationControllerRatio"
+                             [ratio]="0"
+                             [enableTooltips]="true"
+                             [size]="140"></kd-allocation-chart>
+      </div>
+      <div class="kd-graph-title">Replication Controllers</div>
+    </div>
+
+    <div class="kd-graph-container"
+         *ngIf="resourcesRatio.statefulSetRatio.length">
+      <div fxLayout="column"
+           fxLayoutAlign="center center">
+        <kd-allocation-chart id="statefulSets"
+                             [colorPalette]="colors"
+                             [data]="resourcesRatio.statefulSetRatio"
+                             [ratio]="0"
+                             [enableTooltips]="true"
+                             [size]="140"></kd-allocation-chart>
+      </div>
+      <div class="kd-graph-title">Stateful Sets</div>
+
+    </div>
+  </div>
+</kd-card>

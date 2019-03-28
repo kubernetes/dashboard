@@ -18,24 +18,25 @@ limitations under the License.
   <div class="kd-card-group-header kd-muted"
        [hidden]="!hasWorkloads()">Workloads</div>
 
-
-
   <div>
-    <kd-cron-job-list (onchange)="onListUpdate($event)"
+    <kd-workload-statuses *ngIf="showWorkloadStatuses()"
+                          [resourcesRatio]="resourcesRatio"></kd-workload-statuses>
+
+    <kd-cron-job-list (onchange)="onListUpdate($event); updateResourcesRatio($event)"
                       [hideable]="true"></kd-cron-job-list>
-    <kd-daemon-set-list (onchange)="onListUpdate($event)"
+    <kd-daemon-set-list (onchange)="onListUpdate($event); updateResourcesRatio($event)"
                         [hideable]="true"></kd-daemon-set-list>
-    <kd-deployment-list (onchange)="onListUpdate($event)"
+    <kd-deployment-list (onchange)="onListUpdate($event); updateResourcesRatio($event)"
                         [hideable]="true"></kd-deployment-list>
-    <kd-job-list (onchange)="onListUpdate($event)"
+    <kd-job-list (onchange)="onListUpdate($event); updateResourcesRatio($event)"
                  [hideable]="true"></kd-job-list>
-    <kd-pod-list (onchange)="onListUpdate($event)"
+    <kd-pod-list (onchange)="onListUpdate($event); updateResourcesRatio($event)"
                  [hideable]="true"></kd-pod-list>
-    <kd-replica-set-list (onchange)="onListUpdate($event)"
+    <kd-replica-set-list (onchange)="onListUpdate($event); updateResourcesRatio($event)"
                          [hideable]="true"></kd-replica-set-list>
-    <kd-replication-controller-list (onchange)="onListUpdate($event)"
+    <kd-replication-controller-list (onchange)="onListUpdate($event); updateResourcesRatio($event)"
                                     [hideable]="true"></kd-replication-controller-list>
-    <kd-stateful-set-list (onchange)="onListUpdate($event)"
+    <kd-stateful-set-list (onchange)="onListUpdate($event); updateResourcesRatio($event)"
                           [hideable]="true"></kd-stateful-set-list>
   </div>
 
