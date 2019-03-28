@@ -20,7 +20,7 @@ limitations under the License.
        [ngSwitch]="last"
        [ngClass]="{'kd-inline-breadcrumb': !last}">
     <a *ngSwitchCase="false"
-       [href]="breadcrumb.stateLink"
+       [routerLink]="breadcrumb.stateLink"
        class="kd-faded-breadcrumb">
       {{breadcrumb.label}}
     </a>

@@ -13,30 +13,33 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import {Route, RouterModule} from '@angular/router';
+
+import {WORKLOADS_ROUTE} from '../routing';
+
 import {PodDetailComponent} from './detail/component';
 import {PodListComponent} from './list/component';
 
-const routes: Routes = [
-  {
-    path: '',
-    component: PodListComponent,
-    data: {
-      label: 'Pods',
-    },
+const POD_LIST_ROUTE: Route = {
+  path: '',
+  component: PodListComponent,
+  data: {
+    breadcrumb: 'Pods',
+    parent: WORKLOADS_ROUTE,
   },
-  {
-    path: ':resourceNamespace/:resourceName',
-    component: PodDetailComponent,
-    data: {
-      label: 'resourceName',
-      useLabelAsParam: true,
-    },
+};
+
+const POD_DETAIL_ROUTE: Route = {
+  path: ':resourceNamespace/:resourceName',
+  component: PodDetailComponent,
+  data: {
+    breadcrumb: '{{ resourceName }}',
+    parent: POD_LIST_ROUTE,
   },
-];
+};
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild([POD_LIST_ROUTE, POD_DETAIL_ROUTE])],
   exports: [RouterModule],
 })
 export class PodRoutingModule {

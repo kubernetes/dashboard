@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Route, Router} from '@angular/router';
 import {Breadcrumb} from '@api/frontendapi';
 
 @Component({
@@ -39,14 +39,33 @@ export class BreadcrumbsComponent implements OnInit {
   }
 
   private _initBreadcrumbs(): void {
-    this.breadcrumbs = [];
+    const currentRoute = this._getCurrentRoute();
+    const url = '';
 
-    let route = this._getCurrentRoute();
-    while (route) {
-      this.breadcrumbs.push(this._toBreadcrumb(route));
+    this.breadcrumbs = [{
+      label: this._getBreadcrumbLabel(currentRoute),
+      stateLink: url,
+    }];
 
-      console.log(route);
-      route = route.parent;
+    if (currentRoute && currentRoute.routeConfig && currentRoute.routeConfig.data &&
+        currentRoute.routeConfig.data.parent) {
+      let route: Route = currentRoute.routeConfig.data.parent;
+      while (route) {
+        // TODO: url = `/${route.snapshot.url.map(segment => segment.path).join("/")}${url}`;
+
+        this.breadcrumbs.push({
+          label: this._getRouteBreadcrumb(route),
+          stateLink: url,
+        });
+
+        // Explore the route tree to the root route (parent references have to be defined by us on
+        // each route).
+        if (route && route.data && route.data.parent) {
+          route = route.data.parent;
+        } else {
+          break;
+        }
+      }
     }
 
     this.breadcrumbs.reverse();
@@ -60,34 +79,28 @@ export class BreadcrumbsComponent implements OnInit {
     return route;
   }
 
-  // TODO:
-  //  - Add data to all structures.
-  //  - Fill stateLink field.
-  private _toBreadcrumb(route: ActivatedRoute): Breadcrumb {
-    return {
-      label: this._getBreadcrumbLabel(route),
-      stateLink: '',
-    } as Breadcrumb;
-  }
-
+  // TODO: Add data to all structures.
   // TODO: When state search is active use specific logic to display custom breadcrumb:
   //  if (state.url[0].path === searchState.name) {
   //    const query = stateParams[SEARCH_QUERY_STATE_PARAM];
   //    return `Search for "${query}"`;
   //  }
   private _getBreadcrumbLabel(route: ActivatedRoute) {
-    if (route.routeConfig && route.routeConfig.data && route.routeConfig.data.label) {
-      if (route.routeConfig.data.useLabelAsParam) {
-        // If useLabelAsParam is true, then use label to search for params and display the name.
-        // It will be used to display resource names in the detail routes.
-        return route.snapshot.params[route.routeConfig.data.label];
-      } else {
-        return route.routeConfig.data.label;
+    if (route.routeConfig && route.routeConfig.data && route.routeConfig.data.breadcrumb) {
+      let breadcrumb = route.routeConfig.data.breadcrumb as string;
+      if (breadcrumb.startsWith('{{') && breadcrumb.endsWith('}}')) {
+        breadcrumb = breadcrumb.slice(2, breadcrumb.length - 2).trim();
+        breadcrumb = route.snapshot.params[breadcrumb];
       }
+      return breadcrumb;
     } else if (route.routeConfig && route.routeConfig.component) {
       return route.routeConfig.component.name;
     } else {
       return 'Unknown';
     }
+  }
+
+  private _getRouteBreadcrumb(route: Route): string {
+    return route.data && route.data.breadcrumb;
   }
 }

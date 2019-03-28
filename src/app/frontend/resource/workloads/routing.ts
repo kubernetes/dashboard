@@ -13,19 +13,19 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import {Route, RouterModule} from '@angular/router';
 import {WorkloadsComponent} from './component';
 
-const routes: Routes = [{
+export const WORKLOADS_ROUTE: Route = {
   path: '',
   component: WorkloadsComponent,
   data: {
-    label: 'Workloads',
+    breadcrumb: 'Workloads',
   },
-}];
+};
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild([WORKLOADS_ROUTE])],
   exports: [RouterModule],
 })
 export class WorkloadsRoutingModule {
