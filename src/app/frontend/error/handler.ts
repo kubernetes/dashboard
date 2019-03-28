@@ -13,23 +13,23 @@
 // limitations under the License.
 
 import {HttpErrorResponse} from '@angular/common/http';
-import {ErrorHandler, Injectable} from '@angular/core';
+import {ErrorHandler, Injectable, Injector, NgZone} from '@angular/core';
 import {Router} from '@angular/router';
 import {YAMLException} from 'js-yaml';
 
 import {ApiErrors, AsKdError, KdError} from '../common/errors/errors';
-import {ErrorStateParams} from '../common/params/params';
 
 import {errorState} from './state';
 
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
-  constructor(private readonly router_: Router) {}
+  constructor(private readonly injector_: Injector, private readonly ngZone_: NgZone) {}
+
+  private get router_(): Router {
+    return this.injector_.get(Router);
+  }
 
   handleError(error: HttpErrorResponse|YAMLException): void {
-    console.log('========= Error =========');
-    console.log(error);
-    console.log('========= Error  end =========');
     if (error instanceof HttpErrorResponse) {
       this.handleHTTPError_(error);
       return;
@@ -44,15 +44,13 @@ export class GlobalErrorHandler implements ErrorHandler {
   }
 
   private handleHTTPError_(error: HttpErrorResponse): void {
-    if (KdError.isError(error, ApiErrors.tokenExpired, ApiErrors.encryptionKeyChanged)) {
-      return;
-    }
+    this.ngZone_.run(() => {
+      if (KdError.isError(error, ApiErrors.tokenExpired, ApiErrors.encryptionKeyChanged)) {
+        this.router_.navigate(['login'], {state: {error: AsKdError(error)}});
+        return;
+      }
 
-    this.router_.navigate([errorState.name], {
-      queryParams: {
-        resourceNamespace: null,
-        error: AsKdError(error),
-      } as ErrorStateParams
+      this.router_.navigate([errorState.name], {state: {error: AsKdError(error)}});
     });
   }
 }

@@ -84,7 +84,7 @@
     "@angular/material": "7.3.7",
     "@angular/platform-browser": "7.1.4",
     "@angular/platform-browser-dynamic": "7.1.4",
-    "@angular/router": "7.1.4",
+    "@angular/router": "7.2.0",
     "@types/file-saver": "2.0.0",
     "@types/nvd3": "1.8.39",
     "@uirouter/angular": "3.0.0",

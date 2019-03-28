@@ -19,6 +19,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
 import {ChromeModule} from './chrome/module';
 import {CoreModule} from './core.module';
+import {ErrorModule} from './error/module';
 import {RootComponent} from './index.component';
 import {routes} from './index.routing';
 
@@ -27,6 +28,7 @@ import {routes} from './index.routing';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    ErrorModule,
     CoreModule,
     ChromeModule,
     RouterModule.forRoot(

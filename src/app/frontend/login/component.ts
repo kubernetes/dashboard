@@ -13,10 +13,10 @@
 // limitations under the License.
 
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {Component, NgZone, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationMode, EnabledAuthenticationModes, LoginSkippableResponse, LoginSpec} from '@api/backendapi';
-import {KdFile} from '@api/frontendapi';
+import {KdError, KdFile} from '@api/frontendapi';
 
 import {AsKdError, K8SError} from '../common/errors/errors';
 import {AuthService} from '../common/services/global/authentication';
@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
   loginModes = LoginModes;
   selectedAuthenticationMode = LoginModes.Kubeconfig;
   // TODO handle errors
-  errors: K8SError[];
+  errors: KdError[] = [];
 
   private enabledAuthenticationModes_: AuthenticationMode[] = [];
   private isLoginSkippable_ = false;
@@ -44,7 +44,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
       private readonly authService_: AuthService, private readonly state_: Router,
-      private readonly httpClient: HttpClient) {}
+      private readonly httpClient: HttpClient, private readonly ngZone_: NgZone,
+      private readonly route_: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.httpClient.get<EnabledAuthenticationModes>('api/v1/login/modes')
@@ -56,6 +57,11 @@ export class LoginComponent implements OnInit {
         .subscribe((loginSkippableResponse: LoginSkippableResponse) => {
           this.isLoginSkippable_ = loginSkippableResponse.skippable;
         });
+
+    const state = this.route_.paramMap.pipe(() => window.history.state);
+    if (state.error) {
+      this.errors = [state.error];
+    }
   }
 
   getEnabledAuthenticationModes(): AuthenticationMode[] {
@@ -73,21 +79,21 @@ export class LoginComponent implements OnInit {
         .subscribe(
             (errors: K8SError[]) => {
               if (errors.length > 0) {
-                this.errors = errors;
+                this.errors = errors.map((error) => error.ErrStatus);
                 return;
               }
 
-              this.state_.navigate([overviewState.name]);
+              this.ngZone_.run(() => {
+                this.state_.navigate([overviewState.name]);
+              });
             },
             (err: HttpErrorResponse) => {
               const kdError = AsKdError(err);
               this.errors = [{
-                ErrStatus: {
-                  status: kdError.status,
-                  message: kdError.message,
-                  code: kdError.code,
-                }
-              } as K8SError];
+                status: kdError.status,
+                message: kdError.message,
+                code: kdError.code,
+              }];
             });
   }
 

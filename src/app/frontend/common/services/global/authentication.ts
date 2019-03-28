@@ -121,7 +121,7 @@ export class AuthService {
    * Sends a token refresh request to the backend. In case user is not logged in with token nothing
    * will happen.
    */
-  refreshToken() {
+  refreshToken(): void {
     const token = this.getTokenCookie_();
     if (token.length === 0) return;
 
@@ -132,18 +132,14 @@ export class AuthService {
               {headers: new HttpHeaders().set(this.config_.csrfHeaderName, csrfToken.token)});
         }))
         .pipe(first())
-        .subscribe(
-            (authResponse: AuthResponse) => {
-              if (authResponse.jweToken.length !== 0 && authResponse.errors.length === 0) {
-                this.setTokenCookie_(authResponse.jweToken);
-                return authResponse.jweToken;
-              }
+        .subscribe((authResponse: AuthResponse) => {
+          if (authResponse.jweToken.length !== 0 && authResponse.errors.length === 0) {
+            this.setTokenCookie_(authResponse.jweToken);
+            return authResponse.jweToken;
+          }
 
-              return authResponse.errors;
-            },
-            err => {
-              return Observable.throwError(err);
-            });
+          return authResponse.errors;
+        });
   }
 
   /** Checks if user is authenticated. */
