@@ -181,9 +181,9 @@ limitations under the License.
     </div>
 
     <div class="kd-inline-property"
-         *ngIf="deployment?.newReplicaSet?.pods">
+         *ngIf="deployment?.newReplicaSet?.podInfo">
       <span class="kd-muted-light">Pods:&nbsp;</span>
-      <span>{{deployment.newReplicaSet.pods.running}} / {{deployment.newReplicaSet.pods.desired}}</span>
+      <span>{{deployment.newReplicaSet.podInfo.running}} / {{deployment.newReplicaSet.podInfo.desired}}</span>
     </div>
   </div>
 
@@ -206,9 +206,9 @@ limitations under the License.
       <div value>{{deployment.newReplicaSet.objectMeta.creationTimestamp | kdRelativeTime}}</div>
     </kd-property>
 
-    <kd-property *ngIf="deployment?.newReplicaSet?.pods">
+    <kd-property *ngIf="deployment?.newReplicaSet?.podInfo">
       <div key>Pods</div>
-      <div value>{{deployment.newReplicaSet.pods.running}} / {{deployment.newReplicaSet.pods.desired}}</div>
+      <div value>{{deployment.newReplicaSet.podInfo.running}} / {{deployment.newReplicaSet.podInfo.desired}}</div>
     </kd-property>
 
     <kd-property *ngIf="deployment?.newReplicaSet?.objectMeta?.labels"

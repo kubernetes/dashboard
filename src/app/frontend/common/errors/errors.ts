@@ -37,6 +37,11 @@ export class KdError implements KdApiError {
   constructor(public status: string, public code: number, public message: string) {}
 
   static isError(error: HttpErrorResponse, ...apiErrors: string[]): boolean {
+    // API errors will set 'error' as a string.
+    if (typeof error.error === 'object') {
+      return false;
+    }
+
     for (const apiErr of apiErrors) {
       if (apiErr === (error.error as string).trim()) {
         return true;
@@ -51,8 +56,12 @@ export function AsKdError(error: HttpErrorResponse): KdError {
   const result = {} as KdError;
   let status: string;
 
+  result.message = error.message;
   result.code = error.status;
-  result.message = error.error;
+
+  if (typeof error.error !== 'object') {
+    result.message = error.error;
+  }
 
   // This should be localized eventually
   switch (error.status) {

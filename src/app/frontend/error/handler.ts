@@ -15,11 +15,10 @@
 import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorHandler, Injectable, Injector, NgZone} from '@angular/core';
 import {Router} from '@angular/router';
+import {StateError} from '@api/frontendapi';
 import {YAMLException} from 'js-yaml';
 
 import {ApiErrors, AsKdError, KdError} from '../common/errors/errors';
-
-import {errorState} from './state';
 
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
@@ -46,11 +45,13 @@ export class GlobalErrorHandler implements ErrorHandler {
   private handleHTTPError_(error: HttpErrorResponse): void {
     this.ngZone_.run(() => {
       if (KdError.isError(error, ApiErrors.tokenExpired, ApiErrors.encryptionKeyChanged)) {
-        this.router_.navigate(['login'], {state: {error: AsKdError(error)}});
+        this.router_.navigate(['login'], {state: {error: AsKdError(error)} as StateError});
         return;
       }
 
-      this.router_.navigate(['error'], {state: {error: AsKdError(error)}});
+      if (!this.router_.routerState.snapshot.url.includes('error')) {
+        this.router_.navigate(['error'], {state: {error: AsKdError(error)} as StateError});
+      }
     });
   }
 }

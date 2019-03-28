@@ -96,9 +96,9 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
           this.notifications_.pushErrors(data.errors);
           this.totalItems = data.listMeta.totalItems;
           this.data_.data = this.map(data);
-          this.onListChange_(data);
           this.isLoading = false;
           this.loaded_ = true;
+          this.onListChange_(data);
         });
   }
 

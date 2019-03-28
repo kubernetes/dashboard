@@ -16,7 +16,9 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Component, NgZone, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationMode, EnabledAuthenticationModes, LoginSkippableResponse, LoginSpec} from '@api/backendapi';
-import {KdError, KdFile} from '@api/frontendapi';
+import {KdError, KdFile, StateError} from '@api/frontendapi';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 import {AsKdError, K8SError} from '../common/errors/errors';
 import {AuthService} from '../common/services/global/authentication';
@@ -58,10 +60,11 @@ export class LoginComponent implements OnInit {
           this.isLoginSkippable_ = loginSkippableResponse.skippable;
         });
 
-    // const state = this.route_.paramMap.pipe(() => window.history.state);
-    // if (state.error) {
-    //   this.errors = [state.error];
-    // }
+    this.route_.paramMap.pipe(map(() => window.history.state)).subscribe((state: StateError) => {
+      if (state.error) {
+        this.errors = [state.error];
+      }
+    });
   }
 
   getEnabledAuthenticationModes(): AuthenticationMode[] {

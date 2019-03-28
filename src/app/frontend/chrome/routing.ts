@@ -15,6 +15,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {AuthGuard} from '../common/services/guard/authguard';
+import {ErrorComponent} from '../error/component';
 import {ChromeComponent} from './component';
 
 const routes: Routes = [
@@ -23,7 +24,7 @@ const routes: Routes = [
     component: ChromeComponent,
     canActivate: [AuthGuard],
     children: [
-      {path: 'error', loadChildren: 'error/module#ErrorModule'},
+      {path: 'error', component: ErrorComponent},
       {path: 'cluster', loadChildren: 'resource/cluster/module#ClusterModule'},
       {path: 'clusterrole', loadChildren: 'resource/cluster/clusterrole/module#ClusterRoleModule'},
       {path: 'namespace', loadChildren: 'resource/cluster/namespace/module#NamespaceModule'},

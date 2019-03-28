@@ -116,3 +116,7 @@ export interface ResourcesRatio {
   replicationControllerRatio: RatioItem[];
   statefulSetRatio: RatioItem[];
 }
+
+export interface StateError {
+  error: KdError;
+}
