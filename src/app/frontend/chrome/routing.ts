@@ -23,6 +23,7 @@ const routes: Routes = [
     component: ChromeComponent,
     canActivate: [AuthGuard],
     children: [
+      {path: 'error', loadChildren: 'error/module#ErrorModule'},
       {path: 'cluster', loadChildren: 'resource/cluster/module#ClusterModule'},
       {path: 'clusterrole', loadChildren: 'resource/cluster/clusterrole/module#ClusterRoleModule'},
       {path: 'namespace', loadChildren: 'resource/cluster/namespace/module#NamespaceModule'},

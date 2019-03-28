@@ -50,7 +50,7 @@ export class GlobalErrorHandler implements ErrorHandler {
         return;
       }
 
-      this.router_.navigate([errorState.name], {state: {error: AsKdError(error)}});
+      this.router_.navigate(['error'], {state: {error: AsKdError(error)}});
     });
   }
 }

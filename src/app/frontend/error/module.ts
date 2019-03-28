@@ -28,7 +28,6 @@ import {ErrorRoutingModule} from './routing';
     NavServiceModule,
     ErrorRoutingModule,
   ],
-  providers: [{provide: ErrorHandler, useClass: GlobalErrorHandler}],
   declarations: [ErrorComponent],
 })
 export class ErrorModule {

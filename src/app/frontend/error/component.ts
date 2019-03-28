@@ -21,7 +21,7 @@ import {NavService} from '../common/services/nav/service';
 export class ErrorComponent implements OnInit {
   private error_: KdError;
   constructor(private readonly nav_: NavService) {
-    // this.nav_.setVisibility(false);
+    this.nav_.setVisibility(false);
   }
 
   ngOnInit(): void {

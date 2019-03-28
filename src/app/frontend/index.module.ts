@@ -13,13 +13,13 @@
 // limitations under the License.
 
 import {HttpClientModule} from '@angular/common/http';
-import {NgModule} from '@angular/core';
+import {ErrorHandler, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
 import {ChromeModule} from './chrome/module';
 import {CoreModule} from './core.module';
-import {ErrorModule} from './error/module';
+import {GlobalErrorHandler} from './error/handler';
 import {RootComponent} from './index.component';
 import {routes} from './index.routing';
 
@@ -28,7 +28,6 @@ import {routes} from './index.routing';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    ErrorModule,
     CoreModule,
     ChromeModule,
     RouterModule.forRoot(
@@ -36,6 +35,7 @@ import {routes} from './index.routing';
         {enableTracing: false},
         ),
   ],
+  providers: [{provide: ErrorHandler, useClass: GlobalErrorHandler}],
   declarations: [RootComponent],
   bootstrap: [RootComponent]
 })

@@ -38,7 +38,7 @@ import {UserPanelComponent} from './userpanel/component';
     SearchComponent,
     NotificationsComponent,
     UserPanelComponent,
-  ]
+  ],
 })
 export class ChromeModule {
 }

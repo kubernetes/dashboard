@@ -62,7 +62,7 @@ function getBackendArgs() {
     args.push(`--enable-skip-login=${conf.backend.enableSkipButton}`);
   }
 
-  args.push(`--token-ttl=10`);
+  // args.push(`--token-ttl=10`);
 
   return args;
 }
