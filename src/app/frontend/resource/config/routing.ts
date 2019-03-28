@@ -13,16 +13,19 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import {Route, RouterModule} from '@angular/router';
 import {ConfigComponent} from './component';
 
-const routes: Routes = [{
+export const CONFIG_ROUTE: Route = {
   path: '',
   component: ConfigComponent,
-}];
+  data: {
+    breadcrumb: 'Config and Storage',
+  },
+};
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild([CONFIG_ROUTE])],
   exports: [RouterModule],
 })
 export class ConfigRoutingModule {

@@ -13,16 +13,19 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import {Route, RouterModule} from '@angular/router';
 import {ClusterComponent} from './component';
 
-const routes: Routes = [{
+export const CLUSTER_ROUTE: Route = {
   path: '',
   component: ClusterComponent,
-}];
+  data: {
+    breadcrumb: 'Cluster',
+  },
+};
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild([CLUSTER_ROUTE])],
   exports: [RouterModule],
 })
 export class ClusterRoutingModule {

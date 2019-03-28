@@ -58,10 +58,10 @@ export class LoginComponent implements OnInit {
           this.isLoginSkippable_ = loginSkippableResponse.skippable;
         });
 
-    const state = this.route_.paramMap.pipe(() => window.history.state);
-    if (state.error) {
-      this.errors = [state.error];
-    }
+    // const state = this.route_.paramMap.pipe(() => window.history.state);
+    // if (state.error) {
+    //   this.errors = [state.error];
+    // }
   }
 
   getEnabledAuthenticationModes(): AuthenticationMode[] {

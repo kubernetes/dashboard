@@ -13,16 +13,19 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import {Route, RouterModule} from '@angular/router';
 import {DiscoveryComponent} from './component';
 
-const routes: Routes = [{
+export const DISCOVERY_ROUTE: Route = {
   path: '',
   component: DiscoveryComponent,
-}];
+  data: {
+    breadcrumb: 'Discovery and Load Balancing',
+  },
+};
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild([DISCOVERY_ROUTE])],
   exports: [RouterModule],
 })
 export class DiscoveryRoutingModule {

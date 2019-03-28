@@ -13,16 +13,19 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import {Route, RouterModule} from '@angular/router';
 import {OverviewComponent} from './component';
 
-const routes: Routes = [{
+export const OVERVIEW_ROUTE: Route = {
   path: '',
   component: OverviewComponent,
-}];
+  data: {
+    breadcrumb: 'Overview',
+  },
+};
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild([OVERVIEW_ROUTE])],
   exports: [RouterModule],
 })
 export class OverviewRoutingModule {
