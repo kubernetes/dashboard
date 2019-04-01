@@ -152,7 +152,7 @@
     "sass-lint": "1.12.1",
     "sass-loader": "7.1.0",
     "scssfmt": "1.0.7",
-    "semver": "5.4.1",
+    "semver": "6.0.0",
     "source-map-explorer": "1.8.0",
     "through2": "3.0.1",
     "ts-node": "8.0.3",
