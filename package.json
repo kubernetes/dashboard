@@ -65,6 +65,10 @@
     "src/**/*.scss": [
       "scssfmt",
       "git add"
+    ],
+    "src/**/*.go": [
+      "golangci-lint run -c .golangci.yml --fix src/app/backend/...",
+      "git add"
     ]
   },
   "dependencies": {
@@ -107,7 +111,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "0.13.8",
-    "@angular/cli": "7.3.7",
+    "@angular/cli": "7.3.8",
     "@angular/compiler-cli": "7.1.4",
     "@angular/language-service": "7.1.4",
     "@types/jasmine": "3.3.11",
@@ -121,7 +125,7 @@
     "clang-format": "1.2.4",
     "codelyzer": "4.5.0",
     "concurrently": "4.1.0",
-    "del": "4.0.0",
+    "del": "4.1.0",
     "git-describe": "4.0.4",
     "glob-run": "0.1.6",
     "gts": "0.9.0",
@@ -131,7 +135,7 @@
     "gulp-license-check": "1.2.1",
     "gulp-util": "3.0.8",
     "husky": "1.2.0",
-    "jasmine-core": "3.3.0",
+    "jasmine-core": "3.4.0",
     "jasmine-spec-reporter": "4.2.1",
     "js-beautify": "1.9.1",
     "karma": "4.0.1",
