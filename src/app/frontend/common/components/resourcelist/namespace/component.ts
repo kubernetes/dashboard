@@ -14,11 +14,9 @@
 
 import {HttpParams} from '@angular/common/http';
 import {Component, Input} from '@angular/core';
-import {Router} from '@angular/router';
 import {Namespace, NamespaceList} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
 
-import {namespaceState} from '../../../../resource/cluster/namespace/state';
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
@@ -36,7 +34,7 @@ export class NamespaceListComponent extends ResourceListWithStatuses<NamespaceLi
   constructor(
       private readonly namespace_: ResourceService<NamespaceList>,
       notifications: NotificationsService) {
-    super(namespaceState.name, notifications);
+    super('namespace', notifications);
     this.id = ListIdentifiers.namespace;
     this.groupId = ListGroupIdentifiers.cluster;
 

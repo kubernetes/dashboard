@@ -17,7 +17,6 @@ import {NgForm} from '@angular/forms';
 import {Router} from '@angular/router';
 
 import {SearchStateParams} from '../../common/params/params';
-import {searchState} from '../../search/state';
 
 @Component({selector: 'kd-search', templateUrl: './template.html', styleUrls: ['./style.scss']})
 export class SearchComponent implements OnInit {
@@ -35,7 +34,7 @@ export class SearchComponent implements OnInit {
 
   submit(form: NgForm): void {
     if (form.valid) {
-      this.router_.navigate([searchState.name], {queryParams: new SearchStateParams(this.query)});
+      this.router_.navigate(['/search'], {queryParams: new SearchStateParams(this.query)});
     }
   }
 }

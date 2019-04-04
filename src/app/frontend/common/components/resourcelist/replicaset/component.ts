@@ -17,10 +17,8 @@ import {Component, ComponentFactoryResolver, Input} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Event, ReplicaSet, ReplicaSetList} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
-import {replicaSetState} from '../../../../resource/workloads/replicaset/state';
 
 import {ResourceListWithStatuses} from '../../../resources/list';
-import {NamespaceService} from '../../../services/global/namespace';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
@@ -39,7 +37,7 @@ export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSet
       private readonly replicaSet_: NamespacedResourceService<ReplicaSetList>,
       private readonly activatedRoute_: ActivatedRoute, notifications: NotificationsService,
       resolver: ComponentFactoryResolver) {
-    super(replicaSetState.name, notifications, resolver);
+    super('replicaset', notifications, resolver);
     this.id = ListIdentifiers.replicaSet;
     this.groupId = ListGroupIdentifiers.workloads;
 

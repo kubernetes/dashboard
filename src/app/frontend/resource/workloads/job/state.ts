@@ -19,12 +19,6 @@ import {ProxyComponent} from '../../../common/components/proxy/component';
 export const stateName = 'job';
 export const stateUrl = '/job';
 
-export const jobFutureState: Ng2StateDeclaration = {
-  name: `${stateName}.**`,
-  url: stateUrl,
-  loadChildren: './resource/workloads/job/module#JobModule',
-};
-
 export const jobState: Ng2StateDeclaration = {
   abstract: true,
   parent: chromeState.name,

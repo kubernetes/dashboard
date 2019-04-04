@@ -14,12 +14,9 @@
 
 import {HttpParams} from '@angular/common/http';
 import {Component, ComponentFactoryResolver, Input} from '@angular/core';
-import {Router} from '@angular/router';
 import {Event, StatefulSet, StatefulSetList} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
-import {statefulSetState} from '../../../../resource/workloads/statefulset/state';
 import {ResourceListWithStatuses} from '../../../resources/list';
-import {NamespaceService} from '../../../services/global/namespace';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
@@ -37,7 +34,7 @@ export class StatefulSetListComponent extends
   constructor(
       private readonly statefulSet_: NamespacedResourceService<StatefulSetList>,
       resolver: ComponentFactoryResolver, notifications: NotificationsService) {
-    super(statefulSetState.name, notifications, resolver);
+    super('statefulset', notifications, resolver);
     this.id = ListIdentifiers.statefulSet;
     this.groupId = ListGroupIdentifiers.workloads;
 
