@@ -16,17 +16,6 @@ import {Ng2StateDeclaration} from '@uirouter/angular';
 
 import {OverviewComponent} from './component';
 
-export const overviewFutureState: Ng2StateDeclaration = {
-  name: 'overview.**',
-  url: '/overview',
-  loadChildren: './overview/module#OverviewModule',
-  data: {
-    kdBreadcrumbs: {
-      label: 'Overview',
-    }
-  },
-};
-
 export const overviewState: Ng2StateDeclaration = {
   parent: 'chrome',
   name: 'overview',

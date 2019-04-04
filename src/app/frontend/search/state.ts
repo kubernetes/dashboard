@@ -19,12 +19,6 @@ import {SEARCH_QUERY_STATE_PARAM} from '../common/params/params';
 
 import {SearchComponent} from './component';
 
-export const searchFutureState: Ng2StateDeclaration = {
-  name: 'search.**',
-  url: '/search',
-  loadChildren: './search/module#SearchModule'
-};
-
 export const searchState: Ng2StateDeclaration = {
   parent: chromeState.name,
   name: 'search',

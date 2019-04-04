@@ -19,12 +19,6 @@ import {addLogsStateParamsToUrl, LOGS_CONTAINER_STATE_PARAM} from '../common/par
 
 import {LogsComponent} from './component';
 
-export const logsFutureState: Ng2StateDeclaration = {
-  name: 'logs.**',
-  url: '/logs',
-  loadChildren: './logs/module#LogsModule'
-};
-
 export const logsState: Ng2StateDeclaration = {
   parent: chromeState.name,
   name: 'log',
