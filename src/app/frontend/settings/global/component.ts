@@ -15,8 +15,7 @@
 import {Component, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {MatDialog} from '@angular/material';
-import {GlobalSettings, K8sError} from '@api/backendapi';
-import {KdError} from '@api/frontendapi';
+import {GlobalSettings} from '@api/backendapi';
 import {GlobalSettingsService} from '../../common/services/global/globalsettings';
 import {TitleService} from '../../common/services/global/title';
 
@@ -55,7 +54,7 @@ export class GlobalSettingsComponent implements OnInit {
     this.settings.autoRefreshTimeInterval = this.settings_.getAutoRefreshTimeInterval();
   }
 
-  onLoadError(_err: KdError|K8sError): void {
+  onLoadError(): void {
     this.hasLoadError = true;
   }
 

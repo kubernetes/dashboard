@@ -23,11 +23,11 @@ import {NavService} from '../common/services/nav/service';
 @Component({selector: 'kd-error', templateUrl: './template.html', styleUrls: ['./style.scss']})
 export class ErrorComponent implements OnInit {
   private error_: KdError;
-  constructor(private readonly nav_: NavService, private readonly route_: ActivatedRoute) {
-    this.nav_.setVisibility(false);
-  }
+  constructor(private readonly nav_: NavService, private readonly route_: ActivatedRoute) {}
 
   ngOnInit(): void {
+    this.nav_.setVisibility(false);
+
     this.route_.paramMap.pipe(map(() => window.history.state)).subscribe((state: StateError) => {
       if (state.error) {
         this.error_ = state.error;

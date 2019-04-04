@@ -29,14 +29,14 @@ export type ThemeSwitchCallback = (isLightThemeEnabled: boolean) => void;
 export type ColumnWhenCallback = () => boolean;
 
 export type onSettingsLoadCallback = (settings?: GlobalSettings) => void;
-export type onSettingsFailCallback = (err?: KdError|K8sError) => void;
-
-export type onLogin = (errors?: K8sError[]) => void;
+export type onSettingsFailCallback = (err?: KdError) => void;
 
 export interface KdError {
   status: string;
   code: number;
   message: string;
+
+  localize(): KdError;
 }
 
 export interface OnListChangeEvent {

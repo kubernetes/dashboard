@@ -17,7 +17,6 @@ import {Component, NgZone, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationMode, EnabledAuthenticationModes, LoginSkippableResponse, LoginSpec} from '@api/backendapi';
 import {KdError, KdFile, StateError} from '@api/frontendapi';
-import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 
 import {AsKdError, K8SError} from '../common/errors/errors';
@@ -34,7 +33,6 @@ enum LoginModes {
 export class LoginComponent implements OnInit {
   loginModes = LoginModes;
   selectedAuthenticationMode = LoginModes.Kubeconfig;
-  // TODO handle errors
   errors: KdError[] = [];
 
   private enabledAuthenticationModes_: AuthenticationMode[] = [];
@@ -82,21 +80,14 @@ export class LoginComponent implements OnInit {
         .subscribe(
             (errors: K8SError[]) => {
               if (errors.length > 0) {
-                this.errors = errors.map((error) => error.ErrStatus);
+                this.errors = errors.map((error) => error.toKdError());
                 return;
               }
 
-              this.ngZone_.run(() => {
-                this.state_.navigate([overviewState.name]);
-              });
+              this.ngZone_.run(() => this.state_.navigate([overviewState.name]));
             },
             (err: HttpErrorResponse) => {
-              const kdError = AsKdError(err);
-              this.errors = [{
-                status: kdError.status,
-                message: kdError.message,
-                code: kdError.code,
-              }];
+              this.errors = [AsKdError(err)];
             });
   }
 

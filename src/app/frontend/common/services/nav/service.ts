@@ -30,8 +30,4 @@ export class NavService {
   setNav(nav: MatDrawer): void {
     this.nav_ = nav;
   }
-
-  isVisible(): boolean {
-    return this.nav_.opened;
-  }
 }

@@ -16,10 +16,32 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {ErrStatus, K8sError as K8SApiError} from '@api/backendapi';
 import {KdError as KdApiError} from '@api/frontendapi';
 
-export enum ApiErrors {
+export enum ApiError {
   tokenExpired = 'MSG_TOKEN_EXPIRED_ERROR',
   encryptionKeyChanged = 'MSG_ENCRYPTION_KEY_CHANGED'
 }
+
+export enum ErrorStatus {
+  unauthorized = 'Unauthorized',
+  forbidden = 'Forbidden',
+  internal = 'Internal error',
+  unknown = 'Unknown error'
+}
+
+export enum ErrorCode {
+  unauthorized = 401,
+  forbidden = 403,
+  internal = 500,
+}
+
+const localizedErrors: {[key: string]: string} = {
+  MSG_TOKEN_EXPIRED_ERROR:
+      'You have been logged out because your token have expired or is invalid.',
+  MSG_ENCRYPTION_KEY_CHANGED:
+      'You have been logged out because your token have expired or is invalid.',
+  MSG_ACCESS_DENIED: 'Access denied.',
+  MSG_DASHBOARD_EXCLUSIVE_RESOURCE_ERROR: 'Trying to access/modify dashboard exclusive resource.',
+};
 
 /**
  * Error returned as a part of backend api calls. All server errors should be in this format.
@@ -27,6 +49,10 @@ export enum ApiErrors {
 /* tslint:disable */
 export class K8SError implements K8SApiError {
   ErrStatus: ErrStatus;
+
+  toKdError(): KdError {
+    return new KdError(this.ErrStatus.status, this.ErrStatus.code, this.ErrStatus.message)
+  }
 }
 /* tslint:enable */
 
@@ -50,6 +76,17 @@ export class KdError implements KdApiError {
 
     return false;
   }
+
+  localize(): KdError {
+    const result = this;
+
+    const localizedErr = localizedErrors[this.message.trim()];
+    if (localizedErr) {
+      this.message = localizedErr;
+    }
+
+    return result;
+  }
 }
 
 export function AsKdError(error: HttpErrorResponse): KdError {
@@ -63,28 +100,25 @@ export function AsKdError(error: HttpErrorResponse): KdError {
     result.message = error.error;
   }
 
-  // This should be localized eventually
   switch (error.status) {
-    case 401:
-      status = 'Unauthorized';
+    case ErrorCode.unauthorized:
+      status = ErrorStatus.unauthorized;
       break;
-    case 403:
-      status = 'Forbidden';
+    case ErrorCode.forbidden:
+      status = ErrorStatus.forbidden;
       break;
-    case 500:
-      status = 'Internal error';
+    case ErrorCode.internal:
+      status = ErrorStatus.internal;
       break;
     default:
-      status = 'Unknown error';
+      status = ErrorStatus.unknown;
   }
 
   result.status = status;
-  return result;
+  return new KdError(result.status, result.code, result.message).localize();
 }
 
-// TODO Localize errors
 export const ERRORS = {
-  unauthorized: new KdError('Unauthorized', 401, 'Not allowed.'),
-  forbidden: new KdError('Forbidden', 403, 'Access denied.'),
-  tokenExpired: new KdError('Unauthorized', 401, 'Token expired.')
+  forbidden:
+      new KdError(ErrorStatus.forbidden, ErrorCode.forbidden, localizedErrors.MSG_ACCESS_DENIED),
 };

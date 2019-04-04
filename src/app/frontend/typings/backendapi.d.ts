@@ -13,6 +13,8 @@
 // limitations under the License.
 
 // Shared resource types
+import {KdError} from '@api/frontendapi';
+
 export interface TypeMeta {
   kind: string;
 }
@@ -621,6 +623,8 @@ export interface ErrStatus {
 /* tslint:disable */
 export interface K8sError {
   ErrStatus: ErrStatus;
+
+  toKdError(): KdError;
 }
 /* tslint:enable */
 

@@ -58,11 +58,9 @@ function getBackendArgs() {
     args.push(`--apiserver-host=${conf.backend.apiServerHost}`);
   }
 
-  if (!conf.backend.enableSkipButton) {
+  if (conf.backend.enableSkipButton) {
     args.push(`--enable-skip-login=${conf.backend.enableSkipButton}`);
   }
-
-  // args.push(`--token-ttl=10`);
 
   return args;
 }

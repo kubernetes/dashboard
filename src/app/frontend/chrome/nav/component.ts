@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {AfterContentInit, Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatDrawer} from '@angular/material';
 
 import {NavService} from '../../common/services/nav/service';
@@ -22,16 +22,13 @@ import {NavService} from '../../common/services/nav/service';
   templateUrl: './template.html',
   styleUrls: ['./style.scss'],
 })
-export class NavComponent implements AfterContentInit, OnInit {
+export class NavComponent implements OnInit {
   @ViewChild(MatDrawer) private readonly nav_: MatDrawer;
 
   constructor(private readonly navService_: NavService) {}
 
   ngOnInit(): void {
     this.navService_.setNav(this.nav_);
-  }
-
-  ngAfterContentInit(): void {
-    this.nav_.open();
+    this.navService_.setVisibility(true);
   }
 }
