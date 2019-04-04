@@ -15,7 +15,7 @@
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
 
-import {DISCOVERY_ROUTE} from '../../discovery/routing';
+import {CLUSTER_ROUTE} from '../routing';
 
 import {ClusterRoleDetailComponent} from './detail/component';
 import {ClusterRoleListComponent} from './list/component';
@@ -25,12 +25,12 @@ const CLUSTERROLE_LIST_ROUTE: Route = {
   component: ClusterRoleListComponent,
   data: {
     breadcrumb: 'Cluster Roles',
-    parent: DISCOVERY_ROUTE,
+    parent: CLUSTER_ROUTE,
   },
 };
 
 const CLUSTERROLE_DETAIL_ROUTE: Route = {
-  path: ':resourceNamespace/:resourceName',
+  path: ':resourceName',
   component: ClusterRoleDetailComponent,
   data: {
     breadcrumb: '{{ resourceName }}',

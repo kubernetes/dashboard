@@ -15,7 +15,7 @@
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
 
-import {DISCOVERY_ROUTE} from '../../discovery/routing';
+import {CLUSTER_ROUTE} from '../routing';
 
 import {PersistentVolumeDetailComponent} from './detail/component';
 import {PersistentVolumeListComponent} from './list/component';
@@ -25,12 +25,12 @@ const PERSISTENTVOLUME_LIST_ROUTE: Route = {
   component: PersistentVolumeListComponent,
   data: {
     breadcrumb: 'Persistent Volumes',
-    parent: DISCOVERY_ROUTE,
+    parent: CLUSTER_ROUTE,
   },
 };
 
 const PERSISTENTVOLUME_DETAIL_ROUTE: Route = {
-  path: ':resourceNamespace/:resourceName',
+  path: ':resourceName',
   component: PersistentVolumeDetailComponent,
   data: {
     breadcrumb: '{{ resourceName }}',

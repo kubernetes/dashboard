@@ -30,7 +30,7 @@ const STORAGECLASS_LIST_ROUTE: Route = {
 };
 
 const STORAGECLASS_DETAIL_ROUTE: Route = {
-  path: ':resourceNamespace/:resourceName',
+  path: ':resourceName',
   component: StorageClassDetailComponent,
   data: {
     breadcrumb: '{{ resourceName }}',

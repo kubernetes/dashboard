@@ -15,7 +15,7 @@
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
 
-import {DISCOVERY_ROUTE} from '../../discovery/routing';
+import {CLUSTER_ROUTE} from '../routing';
 
 import {NamespaceDetailComponent} from './detail/component';
 import {NamespaceListComponent} from './list/component';
@@ -25,12 +25,12 @@ const NAMESPACE_LIST_ROUTE: Route = {
   component: NamespaceListComponent,
   data: {
     breadcrumb: 'Namespaces',
-    parent: DISCOVERY_ROUTE,
+    parent: CLUSTER_ROUTE,
   },
 };
 
 const NAMESPACE_DETAIL_ROUTE: Route = {
-  path: ':resourceNamespace/:resourceName',
+  path: ':resourceName',
   component: NamespaceDetailComponent,
   data: {
     breadcrumb: '{{ resourceName }}',

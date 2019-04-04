@@ -15,7 +15,7 @@
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
 
-import {DISCOVERY_ROUTE} from '../../discovery/routing';
+import {CONFIG_ROUTE} from '../routing';
 
 import {ConfigMapDetailComponent} from './detail/component';
 import {ConfigMapListComponent} from './list/component';
@@ -25,7 +25,7 @@ const CONFIGMAP_LIST_ROUTE: Route = {
   component: ConfigMapListComponent,
   data: {
     breadcrumb: 'Config Maps',
-    parent: DISCOVERY_ROUTE,
+    parent: CONFIG_ROUTE,
   },
 };
 

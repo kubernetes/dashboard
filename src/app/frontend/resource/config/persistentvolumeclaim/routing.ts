@@ -15,7 +15,7 @@
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
 
-import {DISCOVERY_ROUTE} from '../../discovery/routing';
+import {CONFIG_ROUTE} from '../routing';
 
 import {PersistentVolumeClaimDetailComponent} from './detail/component';
 import {PersistentVolumeClaimListComponent} from './list/component';
@@ -25,7 +25,7 @@ const PERSISTENTVOLUMECLAIM_LIST_ROUTE: Route = {
   component: PersistentVolumeClaimListComponent,
   data: {
     breadcrumb: 'Persistent Volume Claims',
-    parent: DISCOVERY_ROUTE,
+    parent: CONFIG_ROUTE,
   },
 };
 

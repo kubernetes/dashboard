@@ -15,7 +15,7 @@
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
 
-import {DISCOVERY_ROUTE} from '../../discovery/routing';
+import {CONFIG_ROUTE} from '../routing';
 
 import {SecretDetailComponent} from './detail/component';
 import {SecretListComponent} from './list/component';
@@ -25,7 +25,7 @@ const SECRET_LIST_ROUTE: Route = {
   component: SecretListComponent,
   data: {
     breadcrumb: 'Secrets',
-    parent: DISCOVERY_ROUTE,
+    parent: CONFIG_ROUTE,
   },
 };
 
