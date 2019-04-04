@@ -18,12 +18,6 @@ import {chromeState} from '../chrome/state';
 import {addNamespacedResourceStateParamsToUrl} from '../common/params/params';
 import {ShellComponent} from './component';
 
-export const shellFutureState: Ng2StateDeclaration = {
-  name: 'shell.**',
-  url: '/shell',
-  loadChildren: './shell/module#ShellModule'
-};
-
 export const shellUrl = addNamespacedResourceStateParamsToUrl('/shell');
 
 export const shellState: Ng2StateDeclaration = {

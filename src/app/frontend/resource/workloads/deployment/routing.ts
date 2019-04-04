@@ -13,17 +13,33 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import {Route, RouterModule} from '@angular/router';
+
+import {WORKLOADS_ROUTE} from '../routing';
+
 import {DeploymentDetailComponent} from './detail/component';
 import {DeploymentListComponent} from './list/component';
 
-const routes: Routes = [
-  {path: '', component: DeploymentListComponent},
-  {path: ':resourceNamespace/:resourceName', component: DeploymentDetailComponent},
-];
+const DEPLOYMENT_LIST_ROUTE: Route = {
+  path: '',
+  component: DeploymentListComponent,
+  data: {
+    breadcrumb: 'Deployments',
+    parent: WORKLOADS_ROUTE,
+  },
+};
+
+const DEPLOYMENT_DETAIL_ROUTE: Route = {
+  path: ':resourceNamespace/:resourceName',
+  component: DeploymentDetailComponent,
+  data: {
+    breadcrumb: '{{ resourceName }}',
+    parent: DEPLOYMENT_LIST_ROUTE,
+  },
+};
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild([DEPLOYMENT_LIST_ROUTE, DEPLOYMENT_DETAIL_ROUTE])],
   exports: [RouterModule],
 })
 export class DeploymentRoutingModule {

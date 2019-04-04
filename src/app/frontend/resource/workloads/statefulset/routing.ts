@@ -13,17 +13,33 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import {Route, RouterModule} from '@angular/router';
+
+import {WORKLOADS_ROUTE} from '../routing';
+
 import {StatefulSetDetailComponent} from './detail/component';
 import {StatefulSetListComponent} from './list/component';
 
-const routes: Routes = [
-  {path: '', component: StatefulSetListComponent},
-  {path: ':resourceNamespace/:resourceName', component: StatefulSetDetailComponent},
-];
+const REPLICASET_LIST_ROUTE: Route = {
+  path: '',
+  component: StatefulSetListComponent,
+  data: {
+    breadcrumb: 'Stateful Sets',
+    parent: WORKLOADS_ROUTE,
+  },
+};
+
+const REPLICASET_DETAIL_ROUTE: Route = {
+  path: ':resourceNamespace/:resourceName',
+  component: StatefulSetDetailComponent,
+  data: {
+    breadcrumb: '{{ resourceName }}',
+    parent: REPLICASET_LIST_ROUTE,
+  },
+};
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild([REPLICASET_LIST_ROUTE, REPLICASET_DETAIL_ROUTE])],
   exports: [RouterModule],
 })
 export class StatefulSetRoutingModule {

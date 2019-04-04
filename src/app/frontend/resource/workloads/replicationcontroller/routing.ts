@@ -13,17 +13,34 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import {Route, RouterModule} from '@angular/router';
+
+import {WORKLOADS_ROUTE} from '../routing';
+
 import {ReplicationControllerDetailComponent} from './detail/component';
 import {ReplicationControllerListComponent} from './list/component';
 
-const routes: Routes = [
-  {path: '', component: ReplicationControllerListComponent},
-  {path: ':resourceNamespace/:resourceName', component: ReplicationControllerDetailComponent},
-];
+const REPLICATIONCONTROLLER_LIST_ROUTE: Route = {
+  path: '',
+  component: ReplicationControllerListComponent,
+  data: {
+    breadcrumb: 'Replication Controllers',
+    parent: WORKLOADS_ROUTE,
+  },
+};
+
+const REPLICATIONCONTROLLER_DETAIL_ROUTE: Route = {
+  path: ':resourceNamespace/:resourceName',
+  component: ReplicationControllerDetailComponent,
+  data: {
+    breadcrumb: '{{ resourceName }}',
+    parent: REPLICATIONCONTROLLER_LIST_ROUTE,
+  },
+};
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild(
+      [REPLICATIONCONTROLLER_LIST_ROUTE, REPLICATIONCONTROLLER_DETAIL_ROUTE])],
   exports: [RouterModule],
 })
 export class ReplicationControllerRoutingModule {

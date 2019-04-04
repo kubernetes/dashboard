@@ -13,17 +13,33 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import {Route, RouterModule} from '@angular/router';
+
+import {WORKLOADS_ROUTE} from '../routing';
+
 import {JobDetailComponent} from './detail/component';
 import {JobListComponent} from './list/component';
 
-const routes: Routes = [
-  {path: '', component: JobListComponent},
-  {path: ':resourceNamespace/:resourceName', component: JobDetailComponent},
-];
+const JOB_LIST_ROUTE: Route = {
+  path: '',
+  component: JobListComponent,
+  data: {
+    breadcrumb: 'Jobs',
+    parent: WORKLOADS_ROUTE,
+  },
+};
+
+const JOB_DETAIL_ROUTE: Route = {
+  path: ':resourceNamespace/:resourceName',
+  component: JobDetailComponent,
+  data: {
+    breadcrumb: '{{ resourceName }}',
+    parent: JOB_LIST_ROUTE,
+  },
+};
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild([JOB_LIST_ROUTE, JOB_DETAIL_ROUTE])],
   exports: [RouterModule],
 })
 export class JobRoutingModule {

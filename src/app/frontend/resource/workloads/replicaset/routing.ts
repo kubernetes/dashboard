@@ -13,17 +13,33 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import {Route, RouterModule} from '@angular/router';
+
+import {WORKLOADS_ROUTE} from '../routing';
+
 import {ReplicaSetDetailComponent} from './detail/component';
 import {ReplicaSetListComponent} from './list/component';
 
-const routes: Routes = [
-  {path: '', component: ReplicaSetListComponent},
-  {path: ':resourceNamespace/:resourceName', component: ReplicaSetDetailComponent},
-];
+const REPLICASET_LIST_ROUTE: Route = {
+  path: '',
+  component: ReplicaSetListComponent,
+  data: {
+    breadcrumb: 'Replica Sets',
+    parent: WORKLOADS_ROUTE,
+  },
+};
+
+const REPLICASET_DETAIL_ROUTE: Route = {
+  path: ':resourceNamespace/:resourceName',
+  component: ReplicaSetDetailComponent,
+  data: {
+    breadcrumb: '{{ resourceName }}',
+    parent: REPLICASET_LIST_ROUTE,
+  },
+};
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild([REPLICASET_LIST_ROUTE, REPLICASET_DETAIL_ROUTE])],
   exports: [RouterModule],
 })
 export class ReplicaSetRoutingModule {

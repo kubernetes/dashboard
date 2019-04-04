@@ -13,17 +13,33 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import {Route, RouterModule} from '@angular/router';
+
+import {WORKLOADS_ROUTE} from '../routing';
+
 import {CronJobDetailComponent} from './detail/component';
 import {CronJobListComponent} from './list/component';
 
-const routes: Routes = [
-  {path: '', component: CronJobListComponent},
-  {path: ':resourceNamespace/:resourceName', component: CronJobDetailComponent},
-];
+const CRONJOB_LIST_ROUTE: Route = {
+  path: '',
+  component: CronJobListComponent,
+  data: {
+    breadcrumb: 'Cron Jobs',
+    parent: WORKLOADS_ROUTE,
+  },
+};
+
+const CRONJOB_DETAIL_ROUTE: Route = {
+  path: ':resourceNamespace/:resourceName',
+  component: CronJobDetailComponent,
+  data: {
+    breadcrumb: '{{ resourceName }}',
+    parent: CRONJOB_LIST_ROUTE,
+  },
+};
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild([CRONJOB_LIST_ROUTE, CRONJOB_DETAIL_ROUTE])],
   exports: [RouterModule],
 })
 export class CronJobRoutingModule {
