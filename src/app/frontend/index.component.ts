@@ -17,6 +17,7 @@ import {Component, ElementRef, OnInit} from '@angular/core';
 
 import {LocalSettingsService} from './common/services/global/localsettings';
 import {ThemeService} from './common/services/global/theme';
+import {TitleService} from './common/services/global/title';
 
 enum Themes {
   Light = 'kd-light-theme',
@@ -30,12 +31,13 @@ export class RootComponent implements OnInit {
   constructor(
       private readonly themeService_: ThemeService,
       private readonly settings_: LocalSettingsService,
-      private readonly overlayContainer_: OverlayContainer,
-      private readonly kdRootRef: ElementRef) {
+      private readonly overlayContainer_: OverlayContainer, private readonly kdRootRef: ElementRef,
+      private readonly titleService_: TitleService) {
     this.isLightThemeEnabled_ = this.themeService_.isLightThemeEnabled();
   }
 
   ngOnInit(): void {
+    this.titleService_.update();
     this.themeService_.subscribe(this.onThemeChange_.bind(this));
 
     const localSettings = this.settings_.get();
