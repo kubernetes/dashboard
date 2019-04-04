@@ -13,18 +13,14 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
-import {UIRouterModule} from '@uirouter/angular';
 
 import {ComponentsModule} from '../../../common/components/module';
 import {SharedModule} from '../../../shared.module';
 
 import {ActionbarComponent} from './detail/actionbar/component';
 import {DaemonSetDetailComponent} from './detail/component';
-import {daemonSetDetailState} from './detail/state';
 import {DaemonSetListComponent} from './list/component';
-import {daemonSetListState} from './list/state';
 import {DaemonSetRoutingModule} from './routing';
-import {daemonSetState} from './state';
 
 @NgModule({
   imports: [SharedModule, ComponentsModule, DaemonSetRoutingModule],
