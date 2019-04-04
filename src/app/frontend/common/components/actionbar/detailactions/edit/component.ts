@@ -17,7 +17,6 @@ import {ObjectMeta, TypeMeta} from '@api/backendapi';
 import {StateService} from '@uirouter/core';
 import {Subscription} from 'rxjs/Subscription';
 
-import {overviewState} from '../../../../../overview/state';
 import {VerberService} from '../../../../services/global/verber';
 
 @Component({

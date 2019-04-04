@@ -18,7 +18,6 @@ import {Subscription} from 'rxjs/Subscription';
 
 import {NAMESPACE_STATE_PARAM} from '../../../../../common/params/params';
 import {ActionbarService, ResourceMeta} from '../../../../../common/services/global/actionbar';
-import {overviewState} from '../../../../../overview/state';
 
 @Component({
   selector: '',
@@ -45,7 +44,7 @@ export class ActionbarComponent implements OnInit {
   }
 
   onClick(): void {
-    this.state_.go(overviewState.name, {
+    this.state_.go('overview', {
       [NAMESPACE_STATE_PARAM]: this.resourceMeta.objectMeta.name,
     });
   }

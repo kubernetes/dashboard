@@ -22,7 +22,6 @@ import {AppDeploymentSpec, EnvironmentVariable, Namespace, NamespaceList, PortMa
 import {CreateService} from '../../../common/services/create/service';
 import {HistoryService} from '../../../common/services/global/history';
 import {NamespaceService} from '../../../common/services/global/namespace';
-import {overviewState} from '../../../overview/state';
 
 import {CreateNamespaceDialog} from './createnamespace/dialog';
 import {CreateSecretDialog} from './createsecret/dialog';
@@ -166,7 +165,7 @@ export class CreateFromFormComponent implements OnInit {
   }
 
   cancel(): void {
-    this.history_.goToPreviousState(overviewState.name);
+    this.history_.goToPreviousState('overview');
   }
 
   areMultipleNamespacesSelected(): boolean {

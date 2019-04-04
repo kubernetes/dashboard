@@ -21,7 +21,6 @@ import {map} from 'rxjs/operators';
 
 import {AsKdError, K8SError} from '../common/errors/errors';
 import {AuthService} from '../common/services/global/authentication';
-import {overviewState} from '../overview/state';
 
 enum LoginModes {
   Kubeconfig = 'kubeconfig',
@@ -84,7 +83,9 @@ export class LoginComponent implements OnInit {
                 return;
               }
 
-              this.ngZone_.run(() => this.state_.navigate([overviewState.name]));
+              this.ngZone_.run(() => {
+                this.state_.navigate(['overview']);
+              });
             },
             (err: HttpErrorResponse) => {
               this.errors = [AsKdError(err)];
@@ -93,7 +94,7 @@ export class LoginComponent implements OnInit {
 
   skip(): void {
     this.authService_.skipLoginPage(true);
-    this.state_.navigate([overviewState.name]);
+    this.state_.navigate(['overview']);
   }
 
   isSkipButtonEnabled(): boolean {

@@ -19,7 +19,6 @@ import {NamespaceList} from '@api/backendapi';
 import {Subject} from 'rxjs';
 import {startWith, switchMap, takeUntil} from 'rxjs/operators';
 import {CONFIG} from '../../../index.config';
-import {overviewState} from '../../../overview/state';
 
 import {NAMESPACE_STATE_PARAM} from '../../params/params';
 import {NamespaceService} from '../../services/global/namespace';
@@ -181,8 +180,7 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
     // }
 
     if (this.isOnDetailsView_()) {
-      this.router_.navigate(
-          [overviewState.name], {queryParams: {[NAMESPACE_STATE_PARAM]: namespace}});
+      this.router_.navigate(['overview'], {queryParams: {[NAMESPACE_STATE_PARAM]: namespace}});
     } else {
       this.router_.navigate(
           [this.getRawUrl(this.router_.url)],

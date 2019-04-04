@@ -14,8 +14,6 @@
 
 import {Component, Input} from '@angular/core';
 import {ConfigMapKeyRef, Container, EnvVar, SecretKeyRef} from 'typings/backendapi';
-import {stateName as configMapState} from '../../../resource/config/configmap/state';
-import {stateName as secretState} from '../../../resource/config/secret/state';
 
 @Component({
   selector: 'kd-container-card',
@@ -41,12 +39,11 @@ export class ContainerCardComponent {
 
   // TODO: Implement a service that will be responsible for creating links to states
   getEnvConfigMapHref(configMapKeyRef: ConfigMapKeyRef): string {
-    return `#/${configMapState}/${this.namespace}/${configMapKeyRef.name}?namespace=${
-        this.namespace}`;
+    return `#/configmap/${this.namespace}/${configMapKeyRef.name}?namespace=${this.namespace}`;
   }
 
   getEnvSecretHref(secretKeyRef: SecretKeyRef): string {
-    return `#/${secretState}/${this.namespace}/${secretKeyRef.name}?namespace=${this.namespace}`;
+    return `#/secret/${this.namespace}/${secretKeyRef.name}?namespace=${this.namespace}`;
   }
 
   isHref(envVar: EnvVar): boolean {

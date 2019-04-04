@@ -15,11 +15,8 @@
 import {HttpClient} from '@angular/common/http';
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {StateService} from '@uirouter/core';
 
 import {AssetsService} from '../common/services/global/assets';
-import {NotificationsService} from '../common/services/global/notifications';
-import {overviewState} from '../overview/state';
 
 class SystemBanner {
   message: string;

@@ -17,11 +17,10 @@ import {Inject, Injectable} from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {Router} from '@angular/router';
 import {AppDeploymentContentResponse, AppDeploymentContentSpec, AppDeploymentSpec} from '@api/backendapi';
-import {NAMESPACE_STATE_PARAM} from '../../../common/params/params';
-import {Config, CONFIG_DI_TOKEN} from '../../../index.config';
-import {overviewState} from '../../../overview/state';
 
+import {Config, CONFIG_DI_TOKEN} from '../../../index.config';
 import {AlertDialog, AlertDialogConfig} from '../../dialogs/alert/dialog';
+import {NAMESPACE_STATE_PARAM} from '../../params/params';
 import {CsrfTokenService} from '../global/csrftoken';
 import {NamespaceService} from '../global/namespace';
 
@@ -86,7 +85,7 @@ export class CreateService {
       this.reportError(i18n.MSG_DEPLOY_DIALOG_ERROR, error.error);
       throw error;
     } else {
-      this.router_.navigate([overviewState.name]);
+      this.router_.navigate(['overview']);
     }
 
     return response;
@@ -113,8 +112,7 @@ export class CreateService {
       this.reportError(i18n.MSG_DEPLOY_DIALOG_ERROR, error.error);
       throw error;
     } else {
-      this.router_.navigate(
-          [overviewState.name], {queryParams: {[NAMESPACE_STATE_PARAM]: spec.namespace}});
+      this.router_.navigate(['overview'], {queryParams: {[NAMESPACE_STATE_PARAM]: spec.namespace}});
     }
 
     return response;
