@@ -14,13 +14,10 @@
 
 import {HttpParams} from '@angular/common/http';
 import {Component, Input} from '@angular/core';
-import {Router} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import {Service, ServiceList} from 'typings/backendapi';
 
-import {serviceState} from '../../../../resource/discovery/service/state';
 import {ResourceListWithStatuses} from '../../../resources/list';
-import {NamespaceService} from '../../../services/global/namespace';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
@@ -34,7 +31,7 @@ export class ServiceListComponent extends ResourceListWithStatuses<ServiceList, 
   constructor(
       private readonly service_: NamespacedResourceService<ServiceList>,
       notifications: NotificationsService) {
-    super(serviceState.name, notifications);
+    super('service', notifications);
     this.id = ListIdentifiers.service;
     this.groupId = ListGroupIdentifiers.discovery;
 

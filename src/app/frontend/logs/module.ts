@@ -13,19 +13,16 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
-import {UIRouterModule} from '@uirouter/angular';
 
 import {ComponentsModule} from '../common/components/module';
 import {SharedModule} from '../shared.module';
 
 import {LogsComponent} from './component';
-import {logsState} from './state';
 
 @NgModule({
   imports: [
     SharedModule,
     ComponentsModule,
-    UIRouterModule.forChild({states: [logsState]}),
   ],
   declarations: [LogsComponent],
 })

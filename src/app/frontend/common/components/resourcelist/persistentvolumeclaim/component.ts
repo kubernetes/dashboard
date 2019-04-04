@@ -14,15 +14,10 @@
 
 import {HttpParams} from '@angular/common/http';
 import {Component, Input} from '@angular/core';
-import {Router} from '@angular/router';
-import {StateService} from '@uirouter/core';
 import {Observable} from 'rxjs/Observable';
 import {PersistentVolumeClaim, PersistentVolumeClaimList} from 'typings/backendapi';
 
-import {persistentVolumeState} from '../../../../resource/cluster/persistentvolume/state';
-import {persistentVolumeClaimState} from '../../../../resource/config/persistentvolumeclaim/state';
 import {ResourceListWithStatuses} from '../../../resources/list';
-import {NamespaceService} from '../../../services/global/namespace';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
@@ -40,7 +35,7 @@ export class PersistentVolumeClaimListComponent extends
   constructor(
       private readonly persistentVolumeClaim_: NamespacedResourceService<PersistentVolumeClaimList>,
       notifications: NotificationsService) {
-    super(persistentVolumeClaimState.name, notifications);
+    super('persistentvolumeclaim', notifications);
     this.id = ListIdentifiers.persistentVolumeClaim;
     this.groupId = ListGroupIdentifiers.config;
 
@@ -83,7 +78,7 @@ export class PersistentVolumeClaimListComponent extends
   }
 
   getVolumeHref(persistentVolumeName: string): string {
-    return this.kdState_.href(persistentVolumeState.name, persistentVolumeName);
+    return this.kdState_.href('persistentvolume', persistentVolumeName);
   }
 
   private shouldShowNamespaceColumn_(): boolean {

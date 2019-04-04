@@ -14,12 +14,9 @@
 
 import {HttpParams} from '@angular/common/http';
 import {Component, Input} from '@angular/core';
-import {Router} from '@angular/router';
 import {CronJob, CronJobList} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
-import {cronJobState} from '../../../../resource/workloads/cronjob/state';
 import {ResourceListWithStatuses} from '../../../resources/list';
-import {NamespaceService} from '../../../services/global/namespace';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
@@ -35,7 +32,7 @@ export class CronJobListComponent extends ResourceListWithStatuses<CronJobList, 
   constructor(
       private readonly cronJob_: NamespacedResourceService<CronJobList>,
       notifications: NotificationsService) {
-    super(cronJobState.name, notifications);
+    super('cronjob', notifications);
     this.id = ListIdentifiers.cronJob;
     this.groupId = ListGroupIdentifiers.workloads;
 

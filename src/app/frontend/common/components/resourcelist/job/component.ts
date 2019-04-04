@@ -14,13 +14,10 @@
 
 import {HttpParams} from '@angular/common/http';
 import {Component, ComponentFactoryResolver, Input} from '@angular/core';
-import {Router} from '@angular/router';
 import {Event, Job, JobList} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
-import {jobState} from '../../../../resource/workloads/job/state';
 
 import {ResourceListWithStatuses} from '../../../resources/list';
-import {NamespaceService} from '../../../services/global/namespace';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
@@ -38,7 +35,7 @@ export class JobListComponent extends ResourceListWithStatuses<JobList, Job> {
   constructor(
       private readonly job_: NamespacedResourceService<JobList>,
       notifications: NotificationsService, resolver: ComponentFactoryResolver) {
-    super(jobState.name, notifications, resolver);
+    super('job', notifications, resolver);
     this.id = ListIdentifiers.job;
     this.groupId = ListGroupIdentifiers.workloads;
 

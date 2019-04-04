@@ -18,12 +18,10 @@ import {PodDetail} from '@api/backendapi';
 import {Subscription} from 'rxjs/Subscription';
 
 import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
-import {NamespaceService} from '../../../../common/services/global/namespace';
 import {NotificationsService} from '../../../../common/services/global/notifications';
 import {KdStateService} from '../../../../common/services/global/state';
 import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
 import {NamespacedResourceService} from '../../../../common/services/resource/resource';
-import {nodeState} from '../../../cluster/node/state';
 
 @Component({
   selector: 'kd-pod-detail',
@@ -40,8 +38,7 @@ export class PodDetailComponent implements OnInit, OnDestroy {
       private readonly pod_: NamespacedResourceService<PodDetail>,
       private readonly actionbar_: ActionbarService,
       private readonly activatedRoute_: ActivatedRoute, private readonly kdState_: KdStateService,
-      private readonly notifications_: NotificationsService,
-      private readonly namespace_: NamespaceService) {}
+      private readonly notifications_: NotificationsService) {}
 
   ngOnInit(): void {
     const resourceName = this.activatedRoute_.snapshot.params.resourceName;
@@ -65,6 +62,6 @@ export class PodDetailComponent implements OnInit, OnDestroy {
   }
 
   getNodeHref(name: string): string {
-    return this.kdState_.href(nodeState.name, name);
+    return this.kdState_.href('node', name);
   }
 }

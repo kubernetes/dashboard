@@ -13,13 +13,11 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
-import {UIRouterModule} from '@uirouter/angular';
 
 import {ComponentsModule} from '../../common/components/module';
 import {SharedModule} from '../../shared.module';
 import {ClusterComponent} from './component';
 import {ClusterRoutingModule} from './routing';
-import {clusterState} from './state';
 
 @NgModule({
   imports: [

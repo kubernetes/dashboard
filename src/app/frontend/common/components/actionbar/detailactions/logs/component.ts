@@ -15,7 +15,6 @@
 import {Component, Input} from '@angular/core';
 import {StateService} from '@uirouter/core';
 
-import {logsState} from '../../../../../logs/state';
 import {LogsStateParams} from '../../../../params/params';
 import {ResourceMeta} from '../../../../services/global/actionbar';
 
@@ -30,7 +29,7 @@ export class ActionbarDetailLogsComponent {
 
   getHref(): string {
     return this.state_.href(
-        logsState.name,
+        'log',
         new LogsStateParams(
             this.resourceMeta.objectMeta.namespace, this.resourceMeta.objectMeta.name,
             this.resourceMeta.typeMeta.kind));

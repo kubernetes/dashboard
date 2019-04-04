@@ -13,19 +13,16 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
-import {UIRouterModule} from '@uirouter/angular';
 
 import {ComponentsModule} from '../common/components/module';
 import {SharedModule} from '../shared.module';
 
 import {ShellComponent} from './component';
-import {shellState} from './state';
 
 @NgModule({
   imports: [
     SharedModule,
     ComponentsModule,
-    UIRouterModule.forChild({states: [shellState]}),
   ],
   declarations: [ShellComponent],
 })
