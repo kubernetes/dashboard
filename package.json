@@ -125,7 +125,7 @@
     "clang-format": "1.2.4",
     "codelyzer": "4.5.0",
     "concurrently": "4.1.0",
-    "del": "4.0.0",
+    "del": "4.1.0",
     "git-describe": "4.0.4",
     "glob-run": "0.1.6",
     "gts": "0.9.0",
