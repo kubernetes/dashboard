@@ -13,17 +13,33 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import {Route, RouterModule} from '@angular/router';
+
+import {DISCOVERY_ROUTE} from '../../discovery/routing';
+
 import {ConfigMapDetailComponent} from './detail/component';
 import {ConfigMapListComponent} from './list/component';
 
-const routes: Routes = [
-  {path: '', component: ConfigMapListComponent},
-  {path: ':resourceNamespace/:resourceName', component: ConfigMapDetailComponent},
-];
+const CONFIGMAP_LIST_ROUTE: Route = {
+  path: '',
+  component: ConfigMapListComponent,
+  data: {
+    breadcrumb: 'Config Maps',
+    parent: DISCOVERY_ROUTE,
+  },
+};
+
+const CONFIGMAP_DETAIL_ROUTE: Route = {
+  path: ':resourceNamespace/:resourceName',
+  component: ConfigMapDetailComponent,
+  data: {
+    breadcrumb: '{{ resourceName }}',
+    parent: CONFIGMAP_LIST_ROUTE,
+  },
+};
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild([CONFIGMAP_LIST_ROUTE, CONFIGMAP_DETAIL_ROUTE])],
   exports: [RouterModule],
 })
 export class ConfigMapRoutingModule {

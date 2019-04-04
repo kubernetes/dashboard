@@ -13,17 +13,33 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import {Route, RouterModule} from '@angular/router';
+
+import {DISCOVERY_ROUTE} from '../../discovery/routing';
+
 import {StorageClassDetailComponent} from './detail/component';
 import {StorageClassListComponent} from './list/component';
 
-const routes: Routes = [
-  {path: '', component: StorageClassListComponent},
-  {path: ':resourceName', component: StorageClassDetailComponent},
-];
+const STORAGECLASS_LIST_ROUTE: Route = {
+  path: '',
+  component: StorageClassListComponent,
+  data: {
+    breadcrumb: 'Persistent Volumes',
+    parent: DISCOVERY_ROUTE,
+  },
+};
+
+const STORAGECLASS_DETAIL_ROUTE: Route = {
+  path: ':resourceNamespace/:resourceName',
+  component: StorageClassDetailComponent,
+  data: {
+    breadcrumb: '{{ resourceName }}',
+    parent: STORAGECLASS_LIST_ROUTE,
+  },
+};
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild([STORAGECLASS_LIST_ROUTE, STORAGECLASS_DETAIL_ROUTE])],
   exports: [RouterModule],
 })
 export class StorageClassRoutingModule {

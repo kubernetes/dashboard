@@ -13,17 +13,33 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import {Route, RouterModule} from '@angular/router';
+
+import {DISCOVERY_ROUTE} from '../../discovery/routing';
+
 import {NodeDetailComponent} from './detail/component';
 import {NodeListComponent} from './list/component';
 
-const routes: Routes = [
-  {path: '', component: NodeListComponent},
-  {path: ':resourceName', component: NodeDetailComponent},
-];
+const NODE_LIST_ROUTE: Route = {
+  path: '',
+  component: NodeListComponent,
+  data: {
+    breadcrumb: 'Nodes',
+    parent: DISCOVERY_ROUTE,
+  },
+};
+
+const NODE_DETAIL_ROUTE: Route = {
+  path: ':resourceNamespace/:resourceName',
+  component: NodeDetailComponent,
+  data: {
+    breadcrumb: '{{ resourceName }}',
+    parent: NODE_LIST_ROUTE,
+  },
+};
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild([NODE_LIST_ROUTE, NODE_DETAIL_ROUTE])],
   exports: [RouterModule],
 })
 export class NodeRoutingModule {

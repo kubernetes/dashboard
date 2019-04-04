@@ -13,17 +13,33 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import {Route, RouterModule} from '@angular/router';
+
+import {DISCOVERY_ROUTE} from '../../discovery/routing';
+
 import {SecretDetailComponent} from './detail/component';
 import {SecretListComponent} from './list/component';
 
-const routes: Routes = [
-  {path: '', component: SecretListComponent},
-  {path: ':resourceNamespace/:resourceName', component: SecretDetailComponent},
-];
+const SECRET_LIST_ROUTE: Route = {
+  path: '',
+  component: SecretListComponent,
+  data: {
+    breadcrumb: 'Secrets',
+    parent: DISCOVERY_ROUTE,
+  },
+};
+
+const SECRET_DETAIL_ROUTE: Route = {
+  path: ':resourceNamespace/:resourceName',
+  component: SecretDetailComponent,
+  data: {
+    breadcrumb: '{{ resourceName }}',
+    parent: SECRET_LIST_ROUTE,
+  },
+};
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild([SECRET_LIST_ROUTE, SECRET_DETAIL_ROUTE])],
   exports: [RouterModule],
 })
 export class SecretRoutingModule {

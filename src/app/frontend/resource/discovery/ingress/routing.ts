@@ -13,17 +13,33 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import {Route, RouterModule} from '@angular/router';
+
+import {DISCOVERY_ROUTE} from '../routing';
+
 import {IngressDetailComponent} from './detail/component';
 import {IngressListComponent} from './list/component';
 
-const routes: Routes = [
-  {path: '', component: IngressListComponent},
-  {path: ':resourceNamespace/:resourceName', component: IngressDetailComponent},
-];
+const INGRESS_LIST_ROUTE: Route = {
+  path: '',
+  component: IngressListComponent,
+  data: {
+    breadcrumb: 'Ingresses',
+    parent: DISCOVERY_ROUTE,
+  },
+};
+
+const INGRESS_DETAIL_ROUTE: Route = {
+  path: ':resourceNamespace/:resourceName',
+  component: IngressDetailComponent,
+  data: {
+    breadcrumb: '{{ resourceName }}',
+    parent: INGRESS_LIST_ROUTE,
+  },
+};
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild([INGRESS_LIST_ROUTE, INGRESS_DETAIL_ROUTE])],
   exports: [RouterModule],
 })
 export class IngressRoutingModule {

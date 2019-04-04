@@ -13,17 +13,33 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import {Route, RouterModule} from '@angular/router';
+
+import {DISCOVERY_ROUTE} from '../../discovery/routing';
+
 import {ClusterRoleDetailComponent} from './detail/component';
 import {ClusterRoleListComponent} from './list/component';
 
-const routes: Routes = [
-  {path: '', component: ClusterRoleListComponent},
-  {path: ':resourceName', component: ClusterRoleDetailComponent},
-];
+const CLUSTERROLE_LIST_ROUTE: Route = {
+  path: '',
+  component: ClusterRoleListComponent,
+  data: {
+    breadcrumb: 'Cluster Roles',
+    parent: DISCOVERY_ROUTE,
+  },
+};
+
+const CLUSTERROLE_DETAIL_ROUTE: Route = {
+  path: ':resourceNamespace/:resourceName',
+  component: ClusterRoleDetailComponent,
+  data: {
+    breadcrumb: '{{ resourceName }}',
+    parent: CLUSTERROLE_LIST_ROUTE,
+  },
+};
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild([CLUSTERROLE_LIST_ROUTE, CLUSTERROLE_DETAIL_ROUTE])],
   exports: [RouterModule],
 })
 export class ClusterRoutingModule {

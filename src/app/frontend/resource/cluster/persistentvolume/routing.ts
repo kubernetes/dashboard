@@ -13,17 +13,33 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import {Route, RouterModule} from '@angular/router';
+
+import {DISCOVERY_ROUTE} from '../../discovery/routing';
+
 import {PersistentVolumeDetailComponent} from './detail/component';
 import {PersistentVolumeListComponent} from './list/component';
 
-const routes: Routes = [
-  {path: '', component: PersistentVolumeListComponent},
-  {path: ':resourceName', component: PersistentVolumeDetailComponent},
-];
+const PERSISTENTVOLUME_LIST_ROUTE: Route = {
+  path: '',
+  component: PersistentVolumeListComponent,
+  data: {
+    breadcrumb: 'Persistent Volumes',
+    parent: DISCOVERY_ROUTE,
+  },
+};
+
+const PERSISTENTVOLUME_DETAIL_ROUTE: Route = {
+  path: ':resourceNamespace/:resourceName',
+  component: PersistentVolumeDetailComponent,
+  data: {
+    breadcrumb: '{{ resourceName }}',
+    parent: PERSISTENTVOLUME_LIST_ROUTE,
+  },
+};
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild([PERSISTENTVOLUME_LIST_ROUTE, PERSISTENTVOLUME_DETAIL_ROUTE])],
   exports: [RouterModule],
 })
 export class PersistentVolumeRoutingModule {

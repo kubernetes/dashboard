@@ -13,17 +13,33 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import {Route, RouterModule} from '@angular/router';
+
+import {DISCOVERY_ROUTE} from '../../discovery/routing';
+
 import {NamespaceDetailComponent} from './detail/component';
 import {NamespaceListComponent} from './list/component';
 
-const routes: Routes = [
-  {path: '', component: NamespaceListComponent},
-  {path: ':resourceName', component: NamespaceDetailComponent},
-];
+const NAMESPACE_LIST_ROUTE: Route = {
+  path: '',
+  component: NamespaceListComponent,
+  data: {
+    breadcrumb: 'Namespaces',
+    parent: DISCOVERY_ROUTE,
+  },
+};
+
+const NAMESPACE_DETAIL_ROUTE: Route = {
+  path: ':resourceNamespace/:resourceName',
+  component: NamespaceDetailComponent,
+  data: {
+    breadcrumb: '{{ resourceName }}',
+    parent: NAMESPACE_LIST_ROUTE,
+  },
+};
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild([NAMESPACE_LIST_ROUTE, NAMESPACE_DETAIL_ROUTE])],
   exports: [RouterModule],
 })
 export class NamespaceRoutingModule {
