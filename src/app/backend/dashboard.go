@@ -108,7 +108,7 @@ func main() {
 	authManager := initAuthManager(clientManager)
 
 	// Init settings manager
-	settingsManager := settings.NewSettingsManager(clientManager)
+	settingsManager := settings.NewSettingsManager()
 
 	// Init system banner manager
 	systemBannerManager := systembanner.NewSystemBannerManager(args.Holder.GetSystemBanner(),

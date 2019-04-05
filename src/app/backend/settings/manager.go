@@ -20,7 +20,6 @@ import (
 	"reflect"
 
 	"github.com/kubernetes/dashboard/src/app/backend/args"
-	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
 	"github.com/kubernetes/dashboard/src/app/backend/settings/api"
 	v1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -29,16 +28,14 @@ import (
 
 // SettingsManager is a structure containing all settings manager members.
 type SettingsManager struct {
-	settings      map[string]api.Settings
-	rawSettings   map[string]string
-	clientManager clientapi.ClientManager
+	settings    map[string]api.Settings
+	rawSettings map[string]string
 }
 
 // NewSettingsManager creates new settings manager.
-func NewSettingsManager(clientManager clientapi.ClientManager) SettingsManager {
-	return SettingsManager{
-		settings:      make(map[string]api.Settings),
-		clientManager: clientManager,
+func NewSettingsManager() api.SettingsManager {
+	return &SettingsManager{
+		settings: make(map[string]api.Settings),
 	}
 }
 

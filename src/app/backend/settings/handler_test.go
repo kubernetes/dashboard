@@ -21,7 +21,7 @@ import (
 )
 
 func TestIntegrationHandler_Install(t *testing.T) {
-	iHandler := NewSettingsHandler(NewSettingsManager(nil))
+	iHandler := NewSettingsHandler(NewSettingsManager(), nil)
 	ws := new(restful.WebService)
 	iHandler.Install(ws)
 

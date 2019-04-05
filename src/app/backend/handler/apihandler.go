@@ -56,6 +56,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/storageclass"
 	"github.com/kubernetes/dashboard/src/app/backend/scaling"
 	"github.com/kubernetes/dashboard/src/app/backend/settings"
+	settingsApi "github.com/kubernetes/dashboard/src/app/backend/settings/api"
 	"github.com/kubernetes/dashboard/src/app/backend/systembanner"
 	"github.com/kubernetes/dashboard/src/app/backend/validation"
 	"golang.org/x/net/xsrftoken"
@@ -85,7 +86,7 @@ type TerminalResponse struct {
 
 // CreateHTTPAPIHandler creates a new HTTP handler that handles all requests to the API of the backend.
 func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clientapi.ClientManager,
-	authManager authApi.AuthManager, sManager settings.SettingsManager,
+	authManager authApi.AuthManager, sManager settingsApi.SettingsManager,
 	sbManager systembanner.SystemBannerManager) (
 
 	http.Handler, error) {
@@ -108,7 +109,7 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 	authHandler := auth.NewAuthHandler(authManager)
 	authHandler.Install(apiV1Ws)
 
-	settingsHandler := settings.NewSettingsHandler(sManager)
+	settingsHandler := settings.NewSettingsHandler(sManager, cManager)
 	settingsHandler.Install(apiV1Ws)
 
 	systemBannerHandler := systembanner.NewSystemBannerHandler(sbManager)
