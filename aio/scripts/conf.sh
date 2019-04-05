@@ -43,7 +43,7 @@ ARCH=$(uname | awk '{print tolower($0)}')
 # Local cluster configuration (check start-cluster.sh script for more details).
 HEAPSTER_VERSION="v1.5.4"
 HEAPSTER_PORT=8082
-KIND_VERSION="0.1.0"
+KIND_VERSION="0.2.1"
 KIND_BIN=${CACHE_DIR}/kind-${KIND_VERSION}
 
 # Setup logger.
