@@ -46,7 +46,6 @@ export class IngressDetailComponent implements OnInit, OnDestroy {
 
     this.ingressSubscription_ =
         this.ingress_.get(this.endpoint_.detail(), resourceName, resourceNamespace)
-            .startWith({})
             .subscribe((d: IngressDetail) => {
               this.ingress = d;
               this.notifications_.pushErrors(d.errors);

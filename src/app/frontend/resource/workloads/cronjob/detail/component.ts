@@ -51,7 +51,6 @@ export class CronJobDetailComponent implements OnInit, OnDestroy {
 
     this.cronJobSubscription_ =
         this.cronJob_.get(this.endpoint_.detail(), resourceName, resourceNamespace)
-            .startWith({})
             .subscribe((d: CronJobDetail) => {
               this.cronJob = d;
               this.notifications_.pushErrors(d.errors);

@@ -53,7 +53,6 @@ export class ReplicationControllerDetailComponent implements OnInit, OnDestroy {
 
     this.replicationControllerSubscription_ =
         this.replicationController_.get(this.endpoint_.detail(), resourceName, resourceNamespace)
-            .startWith({})
             .subscribe((d: ReplicationControllerDetail) => {
               this.replicationController = d;
               this.notifications_.pushErrors(d.errors);

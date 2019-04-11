@@ -49,7 +49,6 @@ export class StatefulSetDetailComponent implements OnInit, OnDestroy {
 
     this.statefulSetSubscription_ =
         this.statefulSet_.get(this.endpoint_.detail(), resourceName, resourceNamespace)
-            .startWith({})
             .subscribe((d: StatefulSetDetail) => {
               this.statefulSet = d;
               this.notifications_.pushErrors(d.errors);

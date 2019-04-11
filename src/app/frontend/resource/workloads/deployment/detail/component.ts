@@ -51,7 +51,6 @@ export class DeploymentDetailComponent implements OnInit, OnDestroy {
 
     this.deploymentSubscription_ =
         this.deployment_.get(this.endpoint_.detail(), resourceName, resourceNamespace)
-            .startWith({})
             .subscribe((d: DeploymentDetail) => {
               this.deployment = d;
               this.notifications_.pushErrors(d.errors);

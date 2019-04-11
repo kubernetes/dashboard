@@ -48,7 +48,6 @@ export class PodDetailComponent implements OnInit, OnDestroy {
 
     this.podSubscription_ =
         this.pod_.get(this.endpoint_.detail(), resourceName, resourceNamespace)
-            .startWith({})
             .subscribe((d: PodDetail) => {
               this.pod = d;
               this.notifications_.pushErrors(d.errors);

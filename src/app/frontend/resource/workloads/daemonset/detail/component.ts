@@ -52,7 +52,6 @@ export class DaemonSetDetailComponent implements OnInit, OnDestroy {
 
     this.daemonSetSubscription_ =
         this.daemonSet_.get(this.endpoint_.detail(), resourceName, resourceNamespace)
-            .startWith({})
             .subscribe((d: DaemonSetDetail) => {
               this.daemonSet = d;
               this.notifications_.pushErrors(d.errors);

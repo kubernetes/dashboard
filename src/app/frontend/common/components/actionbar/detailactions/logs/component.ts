@@ -13,9 +13,6 @@
 // limitations under the License.
 
 import {Component, Input} from '@angular/core';
-import {StateService} from '@uirouter/core';
-
-import {LogsStateParams} from '../../../../params/params';
 import {ResourceMeta} from '../../../../services/global/actionbar';
 
 @Component({
@@ -25,13 +22,14 @@ import {ResourceMeta} from '../../../../services/global/actionbar';
 export class ActionbarDetailLogsComponent {
   @Input() resourceMeta: ResourceMeta;
 
-  constructor(private readonly state_: StateService) {}
+  constructor() {}
 
   getHref(): string {
-    return this.state_.href(
-        'log',
-        new LogsStateParams(
-            this.resourceMeta.objectMeta.namespace, this.resourceMeta.objectMeta.name,
-            this.resourceMeta.typeMeta.kind));
+    return '';
+    // return this.state_.href(
+    //     'log',
+    //     new LogsStateParams(
+    //         this.resourceMeta.objectMeta.namespace, this.resourceMeta.objectMeta.name,
+    //         this.resourceMeta.typeMeta.kind));
   }
 }

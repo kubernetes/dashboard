@@ -44,7 +44,6 @@ export class SecretDetailComponent implements OnInit, OnDestroy {
 
     this.secretSubscription_ =
         this.secret_.get(this.endpoint_.detail(), resourceName, resourceNamespace)
-            .startWith({})
             .subscribe((d: SecretDetail) => {
               this.secret = d;
               this.notifications_.pushErrors(d.errors);

@@ -14,7 +14,6 @@
 
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {ObjectMeta, TypeMeta} from '@api/backendapi';
-import {StateService} from '@uirouter/core';
 import {Subscription} from 'rxjs/Subscription';
 
 import {VerberService} from '../../../../services/global/verber';
@@ -29,12 +28,13 @@ export class ActionbarDetailDeleteComponent implements OnInit, OnDestroy {
   @Input() displayName: string;
   verberSubscription_: Subscription;
 
-  constructor(private readonly verber_: VerberService, private readonly state_: StateService) {}
+  constructor(private readonly verber_: VerberService) {}
 
   ngOnInit(): void {
-    this.verberSubscription_ = this.verber_.onDelete.subscribe(() => {
-      this.state_.go('overview');
-    });
+    this.verberSubscription_ = this.verber_.onDelete.subscribe(
+        () => {
+            // this.state_.go('overview');
+        });
   }
 
   ngOnDestroy(): void {

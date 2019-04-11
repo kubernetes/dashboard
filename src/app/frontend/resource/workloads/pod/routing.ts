@@ -14,6 +14,7 @@
 
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
+import {LOGS_EXEC_DEFAULT_ACTIONBAR} from '../../../common/components/actionbars/routing';
 
 import {WORKLOADS_ROUTE} from '../routing';
 
@@ -39,7 +40,7 @@ const POD_DETAIL_ROUTE: Route = {
 };
 
 @NgModule({
-  imports: [RouterModule.forChild([POD_LIST_ROUTE, POD_DETAIL_ROUTE])],
+  imports: [RouterModule.forChild([POD_LIST_ROUTE, POD_DETAIL_ROUTE, LOGS_EXEC_DEFAULT_ACTIONBAR])],
   exports: [RouterModule],
 })
 export class PodRoutingModule {

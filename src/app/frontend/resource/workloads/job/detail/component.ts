@@ -49,7 +49,6 @@ export class JobDetailComponent implements OnInit, OnDestroy {
 
     this.jobSubscription_ =
         this.job_.get(this.endpoint_.detail(), resourceName, resourceNamespace)
-            .startWith({})
             .subscribe((d: JobDetail) => {
               this.job = d;
               this.notifications_.pushErrors(d.errors);

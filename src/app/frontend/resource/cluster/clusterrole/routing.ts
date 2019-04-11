@@ -14,6 +14,7 @@
 
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
+import {DEFAULT_ACTIONBAR} from '../../../common/components/actionbars/routing';
 
 import {CLUSTER_ROUTE} from '../routing';
 
@@ -39,7 +40,8 @@ const CLUSTERROLE_DETAIL_ROUTE: Route = {
 };
 
 @NgModule({
-  imports: [RouterModule.forChild([CLUSTERROLE_LIST_ROUTE, CLUSTERROLE_DETAIL_ROUTE])],
+  imports: [RouterModule.forChild(
+      [CLUSTERROLE_LIST_ROUTE, CLUSTERROLE_DETAIL_ROUTE, DEFAULT_ACTIONBAR])],
   exports: [RouterModule],
 })
 export class ClusterRoutingModule {

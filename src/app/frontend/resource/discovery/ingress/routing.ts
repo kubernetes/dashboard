@@ -14,6 +14,7 @@
 
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
+import {DEFAULT_ACTIONBAR} from '../../../common/components/actionbars/routing';
 
 import {DISCOVERY_ROUTE} from '../routing';
 
@@ -39,7 +40,7 @@ const INGRESS_DETAIL_ROUTE: Route = {
 };
 
 @NgModule({
-  imports: [RouterModule.forChild([INGRESS_LIST_ROUTE, INGRESS_DETAIL_ROUTE])],
+  imports: [RouterModule.forChild([INGRESS_LIST_ROUTE, INGRESS_DETAIL_ROUTE, DEFAULT_ACTIONBAR])],
   exports: [RouterModule],
 })
 export class IngressRoutingModule {

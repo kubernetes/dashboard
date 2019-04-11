@@ -44,7 +44,6 @@ export class ConfigMapDetailComponent implements OnInit, OnDestroy {
 
     this.configMapSubscription_ =
         this.configMap_.get(this.endpoint_.detail(), resourceName, resourceNamespace)
-            .startWith({})
             .subscribe((d: ConfigMapDetail) => {
               this.configMap = d;
               this.notifications_.pushErrors(d.errors);

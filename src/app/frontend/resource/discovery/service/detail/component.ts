@@ -49,7 +49,6 @@ export class ServiceDetailComponent implements OnInit, OnDestroy {
 
     this.serviceSubscription_ =
         this.service_.get(this.endpoint_.detail(), resourceName, resourceNamespace)
-            .startWith({})
             .subscribe((d: ServiceDetail) => {
               this.service = d;
               this.notifications_.pushErrors(d.errors);

@@ -45,7 +45,6 @@ export class PersistentVolumeClaimDetailComponent implements OnInit, OnDestroy {
 
     this.persistentVolumeClaimSubscription_ =
         this.persistentVolumeClaim_.get(this.endpoint_.detail(), resourceName, resourceNamespace)
-            .startWith({})
             .subscribe((d: PersistentVolumeClaimDetail) => {
               this.persistentVolumeClaim = d;
               this.notifications_.pushErrors(d.errors);

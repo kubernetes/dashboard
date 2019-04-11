@@ -52,7 +52,6 @@ export class ReplicaSetDetailComponent implements OnInit, OnDestroy {
 
     this.replicaSetSubscription_ =
         this.replicaSet_.get(this.endpoint_.detail(), resourceName, resourceNamespace)
-            .startWith({})
             .subscribe((d: ReplicaSetDetail) => {
               this.replicaSet = d;
               this.notifications_.pushErrors(d.errors);
