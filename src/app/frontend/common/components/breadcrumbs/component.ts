@@ -15,6 +15,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Route, Router} from '@angular/router';
 import {Breadcrumb} from '@api/frontendapi';
+import {POD_DETAIL_ROUTE} from '../../../resource/workloads/pod/routing';
+
+export const LOGS_PARENT_PLACEHOLDER = '___LOGS_PARENT_PLACEHOLDER___';
 
 @Component({
   selector: 'kd-breadcrumbs',
@@ -43,18 +46,24 @@ export class BreadcrumbsComponent implements OnInit {
     const url = '';
 
     this.breadcrumbs = [{
-      label: this._getBreadcrumbLabel(currentRoute),
+      label: this._getBreadcrumbLabel(currentRoute.routeConfig),
       stateLink: url,
     }];
 
+    let route: Route;
     if (currentRoute && currentRoute.routeConfig && currentRoute.routeConfig.data &&
         currentRoute.routeConfig.data.parent) {
-      let route: Route = currentRoute.routeConfig.data.parent;
+      if (currentRoute.routeConfig.data.parent === LOGS_PARENT_PLACEHOLDER) {
+        route = this._getLogsParent();
+      } else {
+        route = currentRoute.routeConfig.data.parent;
+      }
+
       while (route) {
         // TODO: url = `/${route.snapshot.url.map(segment => segment.path).join("/")}${url}`;
 
         this.breadcrumbs.push({
-          label: this._getRouteBreadcrumb(route),
+          label: this._getBreadcrumbLabel(route),
           stateLink: url,
         });
 
@@ -71,6 +80,10 @@ export class BreadcrumbsComponent implements OnInit {
     this.breadcrumbs.reverse();
   }
 
+  private _getLogsParent(): Route {
+    return POD_DETAIL_ROUTE;
+  }
+
   private _getCurrentRoute(): ActivatedRoute {
     let route = this._activatedRoute.root;
     while (route && route.firstChild) {
@@ -85,22 +98,18 @@ export class BreadcrumbsComponent implements OnInit {
   //    const query = stateParams[SEARCH_QUERY_STATE_PARAM];
   //    return `Search for "${query}"`;
   //  }
-  private _getBreadcrumbLabel(route: ActivatedRoute) {
-    if (route.routeConfig && route.routeConfig.data && route.routeConfig.data.breadcrumb) {
-      let breadcrumb = route.routeConfig.data.breadcrumb as string;
+  private _getBreadcrumbLabel(route: Route) {
+    if (route && route.data && route.data.breadcrumb) {
+      let breadcrumb = route.data.breadcrumb as string;
       if (breadcrumb.startsWith('{{') && breadcrumb.endsWith('}}')) {
         breadcrumb = breadcrumb.slice(2, breadcrumb.length - 2).trim();
-        breadcrumb = route.snapshot.params[breadcrumb];
+        breadcrumb = this._activatedRoute.snapshot.params[breadcrumb];
       }
       return breadcrumb;
-    } else if (route.routeConfig && route.routeConfig.component) {
-      return route.routeConfig.component.name;
+    } else if (route && route.component) {
+      return route.component.name;
     } else {
       return 'Unknown';
     }
-  }
-
-  private _getRouteBreadcrumb(route: Route): string {
-    return route.data && route.data.breadcrumb;
   }
 }

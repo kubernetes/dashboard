@@ -14,9 +14,10 @@
 
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
-import {LogsComponent} from './component';
 
-export const LOGS_PARENT_PLACEHOLDER = '___LOGS_PARENT_PLACEHOLDER___';
+import {LOGS_PARENT_PLACEHOLDER} from '../common/components/breadcrumbs/component';
+
+import {LogsComponent} from './component';
 
 export const LOGS_ROUTE: Route = {
   path: ':resourceNamespace/:resourceName/:resourceType',

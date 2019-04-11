@@ -30,7 +30,7 @@ const POD_LIST_ROUTE: Route = {
   },
 };
 
-const POD_DETAIL_ROUTE: Route = {
+export const POD_DETAIL_ROUTE: Route = {
   path: ':resourceNamespace/:resourceName',
   component: PodDetailComponent,
   data: {
