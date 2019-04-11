@@ -80,7 +80,8 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef>Claim</mat-header-cell>
         <mat-cell *matCellDef="let pv">
           <ng-container *ngIf="pv.claim">
-            <a [href]="getClaimHref(pv.claim)">{{pv.claim}}</a>
+            <a [routerLink]="getClaimHref(pv.claim)"
+               queryParamsHandling="preserve">{{pv.claim}}</a>
           </ng-container>
           <ng-container *ngIf="!pv.claim">-</ng-container>
         </mat-cell>

@@ -76,7 +76,8 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef>Volume</mat-header-cell>
         <mat-cell *matCellDef="let pvc">
           <ng-container *ngIf="pvc.volume">
-            <a [href]="getVolumeHref(pvc.volume)">{{pvc.volume}}</a>
+            <a [routerLink]="getVolumeHref(pvc.volume)"
+               queryParamsHandling="preserve">{{pvc.volume}}</a>
           </ng-container>
           <ng-container *ngIf="!pvc.volume">-</ng-container>
         </mat-cell>

@@ -29,7 +29,8 @@ limitations under the License.
           <ng-container *ngIf="map[key]">:&nbsp;</ng-container>
           <ng-container *ngIf="map[key]">
             <ng-container *ngIf="isHref(map[key])">
-              <a [href]="map[key]"
+              <a [routerLink]="map[key]"
+                 queryParamsHandling="preserve"
                  target="_blank">
                 {{map[key]}}
               </a>

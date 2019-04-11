@@ -24,7 +24,7 @@ const SERVICE_LIST_ROUTE: Route = {
   path: '',
   component: ServiceListComponent,
   data: {
-    breadcrumb: 'Servicees',
+    breadcrumb: 'Services',
     parent: DISCOVERY_ROUTE,
   },
 };

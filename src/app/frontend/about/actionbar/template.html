@@ -26,7 +26,8 @@ limitations under the License.
     </button>
   </a>
 
-  <a [href]="getFeedbackLink()"
+  <a [routerLink]="getFeedbackLink()"
+     queryParamsHandling="preserve"
      target="_blank">
     <button mat-icon-button
             color="accent"

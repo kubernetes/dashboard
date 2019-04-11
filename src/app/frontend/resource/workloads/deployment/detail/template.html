@@ -193,7 +193,8 @@ limitations under the License.
     <kd-property *ngIf="deployment?.newReplicaSet?.objectMeta.name">
       <div key>Name</div>
       <a value
-         [href]="getNewReplicaSetHref()">{{deployment.newReplicaSet.objectMeta.name}}</a>
+         [routerLink]="getNewReplicaSetHref()"
+         queryParamsHandling="preserve">{{deployment.newReplicaSet.objectMeta.name}}</a>
     </kd-property>
 
     <kd-property *ngIf="deployment?.newReplicaSet?.objectMeta.namespace">
