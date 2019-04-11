@@ -32,9 +32,11 @@ export class KdStateService {
     });
   }
 
-  href(stateName: string, resourceName?: string, namespace?: string): string {
+  href(stateName: string, resourceName?: string, namespace?: string, resourceType?: string):
+      string {
     resourceName = resourceName || '';
     namespace = namespace || '';
+    resourceType = resourceType || '';
 
     if (namespace && resourceName === undefined) {
       throw new Error('Namespace can not be defined without resourceName.');
@@ -43,6 +45,7 @@ export class KdStateService {
     let href = `/${stateName}`;
     href = namespace ? `${href}/${namespace}` : href;
     href = resourceName ? `${href}/${resourceName}` : href;
+    href = resourceType ? `${href}/${resourceType}` : href;
 
     return href;
   }

@@ -70,7 +70,8 @@ const routes: Routes = [
       {path: 'settings', loadChildren: 'settings/module#SettingsModule'},
       {path: 'about', loadChildren: 'about/module#AboutModule'},
 
-      {path: 'create', loadChildren: 'create/module#CreateModule'}
+      {path: 'create', loadChildren: 'create/module#CreateModule'},
+      {path: 'log', loadChildren: 'logs/module#LogsModule'}
     ]
   }
 ];

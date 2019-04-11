@@ -13,7 +13,9 @@
 // limitations under the License.
 
 import {Component, Input} from '@angular/core';
+
 import {ResourceMeta} from '../../../../services/global/actionbar';
+import {KdStateService} from '../../../../services/global/state';
 
 @Component({
   selector: 'kd-actionbar-detail-logs',
@@ -22,14 +24,11 @@ import {ResourceMeta} from '../../../../services/global/actionbar';
 export class ActionbarDetailLogsComponent {
   @Input() resourceMeta: ResourceMeta;
 
-  constructor() {}
+  constructor(private readonly kdState_: KdStateService) {}
 
   getHref(): string {
-    return '';
-    // return this.state_.href(
-    //     'log',
-    //     new LogsStateParams(
-    //         this.resourceMeta.objectMeta.namespace, this.resourceMeta.objectMeta.name,
-    //         this.resourceMeta.typeMeta.kind));
+    return this.kdState_.href(
+        'log', this.resourceMeta.objectMeta.name, this.resourceMeta.objectMeta.namespace,
+        this.resourceMeta.typeMeta.kind);
   }
 }

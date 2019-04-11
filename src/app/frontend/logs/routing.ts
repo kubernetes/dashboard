@@ -12,23 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
-
-import {ComponentsModule} from '../common/components/module';
-import {SharedModule} from '../shared.module';
-
+import {Route, RouterModule} from '@angular/router';
 import {LogsComponent} from './component';
-import {LogsRoutingModule} from './routing';
+
+export const LOGS_PARENT_PLACEHOLDER = '___LOGS_PARENT_PLACEHOLDER___';
+
+export const LOGS_ROUTE: Route = {
+  path: ':resourceNamespace/:resourceName/:resourceType',
+  component: LogsComponent,
+  data: {
+    breadcrumb: 'Logs',
+    parent: LOGS_PARENT_PLACEHOLDER,
+  },
+};
 
 @NgModule({
-  imports: [
-    CommonModule,
-    SharedModule,
-    ComponentsModule,
-    LogsRoutingModule,
-  ],
-  declarations: [LogsComponent],
+  imports: [RouterModule.forChild([LOGS_ROUTE])],
+  exports: [RouterModule],
 })
-export class LogsModule {
+export class LogsRoutingModule {
 }

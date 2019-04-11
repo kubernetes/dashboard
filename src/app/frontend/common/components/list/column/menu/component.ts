@@ -59,11 +59,8 @@ export class MenuComponent implements ActionColumn {
   }
 
   getLogsHref(): string {
-    return '';
-    // return this.state_.href(
-    //     logsState.name,
-    //     new LogsStateParams(this.objectMeta.namespace, this.objectMeta.name,
-    //     this.typeMeta.kind));
+    return this.kdState_.href(
+        'log', this.objectMeta.name, this.objectMeta.namespace, this.typeMeta.kind);
   }
 
   isExecEnabled(): boolean {
