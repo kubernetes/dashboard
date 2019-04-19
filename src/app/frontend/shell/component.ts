@@ -14,13 +14,13 @@
 
 import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
+import {ActivatedRoute} from '@angular/router';
 import {PodContainerList, ShellFrame, SJSCloseEvent, SJSMessageEvent, TerminalResponse} from '@api/backendapi';
-import {StateService} from '@uirouter/core';
 import {debounce} from 'lodash';
 import {ReplaySubject, Subject, Subscription} from 'rxjs';
 import {Terminal} from 'xterm';
 import {fit} from 'xterm/lib/addons/fit/fit';
-import {ExecStateParams} from '../common/params/params';
+
 import {EndpointManager, Resource} from '../common/services/resource/endpoint';
 import {NamespacedResourceService} from '../common/services/resource/resource';
 
@@ -50,23 +50,23 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
       private readonly containers_: NamespacedResourceService<PodContainerList>,
       private readonly terminal_: NamespacedResourceService<TerminalResponse>,
-      private readonly state_: StateService, private readonly matSnackBar_: MatSnackBar,
+      private readonly activatedRoute_: ActivatedRoute, private readonly matSnackBar_: MatSnackBar,
       private readonly cdr_: ChangeDetectorRef) {}
 
   onPodContainerChange(podContainer: string): void {
     this.selectedContainer = podContainer;
-    this.state_.go(
-        '.', new ExecStateParams(this.namespace, this.podName, podContainer), {reload: true});
+    // this.state_.go(
+    //     '.', new ExecStateParams(this.namespace, this.podName, podContainer), {reload: true});
+    //     TODO
   }
 
   ngOnInit(): void {
-    const {resourceNamespace, resourceName, containerName} = this.state_.params;
-    this.namespace = resourceNamespace;
-    this.podName = resourceName;
-    this.selectedContainer = containerName;
+    this.namespace = this.activatedRoute_.snapshot.params.resourceNamespace;
+    this.podName = this.activatedRoute_.snapshot.params.resourceName;
+    this.selectedContainer = this.activatedRoute_.snapshot.params.containerName;
 
     const containersEndpoint =
-        EndpointManager.resource(Resource.pod, true).child(resourceName, Resource.container);
+        EndpointManager.resource(Resource.pod, true).child(this.podName, Resource.container);
 
     this.containers_.get(containersEndpoint).subscribe((containerList) => {
       this.containers = containerList.containers;

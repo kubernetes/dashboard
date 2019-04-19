@@ -14,13 +14,12 @@
 
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
-import {RawParams} from '@uirouter/core';
 import {KdStateService} from './state';
 
 @Injectable()
 export class HistoryService {
   private previousStateName: string;
-  private previousStateParams: RawParams;
+  // private previousStateParams: RawParams; TODO
 
   constructor(private readonly router_: Router, private readonly kdState_: KdStateService) {
     this.init();
@@ -44,6 +43,6 @@ export class HistoryService {
     // if (this.state_.current.name === this.previousStateName) {
     //   targetState = defaultState;
     // }
-    return this.router_.navigate([defaultState], {queryParams: this.previousStateParams});
+    return this.router_.navigate([defaultState], {queryParams: undefined});  // TODO
   }
 }

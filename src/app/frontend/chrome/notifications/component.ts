@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import {Component, ElementRef, HostListener, OnInit} from '@angular/core';
-import {TransitionService} from '@uirouter/core';
 
 import {Animations} from '../../common/animations/animations';
 import {Notification, NotificationsService} from '../../common/services/global/notifications';
