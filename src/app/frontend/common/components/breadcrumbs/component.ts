@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, NavigationEnd, Route, Router} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Params, Route, Router} from '@angular/router';
 import {Breadcrumb} from '@api/frontendapi';
 import {POD_DETAIL_ROUTE} from '../../../resource/workloads/pod/routing';
 
@@ -46,7 +46,7 @@ export class BreadcrumbsComponent implements OnInit {
     const url = '';
 
     this.breadcrumbs = [{
-      label: this._getBreadcrumbLabel(currentRoute.routeConfig),
+      label: this._getBreadcrumbLabel(currentRoute.routeConfig, currentRoute.snapshot.params),
       stateLink: url,
     }];
 
@@ -63,7 +63,7 @@ export class BreadcrumbsComponent implements OnInit {
         // TODO: url = `/${route.snapshot.url.map(segment => segment.path).join("/")}${url}`;
 
         this.breadcrumbs.push({
-          label: this._getBreadcrumbLabel(route),
+          label: this._getBreadcrumbLabel(route, currentRoute.snapshot.params),
           stateLink: url,
         });
 
@@ -98,12 +98,12 @@ export class BreadcrumbsComponent implements OnInit {
   //    const query = stateParams[SEARCH_QUERY_STATE_PARAM];
   //    return `Search for "${query}"`;
   //  }
-  private _getBreadcrumbLabel(route: Route) {
+  private _getBreadcrumbLabel(route: Route, params: Params) {
     if (route && route.data && route.data.breadcrumb) {
       let breadcrumb = route.data.breadcrumb as string;
       if (breadcrumb.startsWith('{{') && breadcrumb.endsWith('}}')) {
         breadcrumb = breadcrumb.slice(2, breadcrumb.length - 2).trim();
-        breadcrumb = this._activatedRoute.snapshot.params[breadcrumb];
+        breadcrumb = params[breadcrumb];
       }
       return breadcrumb;
     } else if (route && route.component) {
