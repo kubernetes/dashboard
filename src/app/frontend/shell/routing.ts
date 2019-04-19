@@ -12,23 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
+import {Route, RouterModule} from '@angular/router';
 
-import {ComponentsModule} from '../common/components/module';
-import {SharedModule} from '../shared.module';
+import {LOGS_PARENT_PLACEHOLDER} from '../common/components/breadcrumbs/component';
 
 import {ShellComponent} from './component';
-import {ShellRoutingModule} from './routing';
+
+export const SHELL_ROUTE: Route = {
+  path: ':resourceNamespace/:resourceName/:containerName',
+  component: ShellComponent,
+  data: {
+    breadcrumb: 'Shell',
+    parent: LOGS_PARENT_PLACEHOLDER,
+  },
+};
 
 @NgModule({
-  imports: [
-    CommonModule,
-    SharedModule,
-    ComponentsModule,
-    ShellRoutingModule,
-  ],
-  declarations: [ShellComponent],
+  imports: [RouterModule.forChild([SHELL_ROUTE])],
+  exports: [RouterModule],
 })
-export class ShellModule {
+export class ShellRoutingModule {
 }
