@@ -43,7 +43,7 @@ export class BreadcrumbsComponent implements OnInit {
 
   private _initBreadcrumbs(): void {
     const currentRoute = this._getCurrentRoute();
-    const url = '';
+    let url = '';
 
     this.breadcrumbs = [{
       label: this._getBreadcrumbLabel(currentRoute.routeConfig, currentRoute.snapshot.params),
@@ -54,13 +54,13 @@ export class BreadcrumbsComponent implements OnInit {
     if (currentRoute && currentRoute.routeConfig && currentRoute.routeConfig.data &&
         currentRoute.routeConfig.data.parent) {
       if (currentRoute.routeConfig.data.parent === LOGS_PARENT_PLACEHOLDER) {
-        route = this._getLogsParent();
+        route = this._getLogsParent(currentRoute.snapshot.params);
       } else {
         route = currentRoute.routeConfig.data.parent;
       }
 
       while (route) {
-        // TODO: url = `/${route.snapshot.url.map(segment => segment.path).join("/")}${url}`;
+        url = `/${route.path}/${url}`;  // TODO
 
         this.breadcrumbs.push({
           label: this._getBreadcrumbLabel(route, currentRoute.snapshot.params),
@@ -80,8 +80,14 @@ export class BreadcrumbsComponent implements OnInit {
     this.breadcrumbs.reverse();
   }
 
-  private _getLogsParent(): Route {
-    return POD_DETAIL_ROUTE;
+  private _getLogsParent(params: Params): Route|undefined {
+    const resourceType = params['resourceType'];
+    switch (resourceType) {
+      case 'pod':
+        return POD_DETAIL_ROUTE;
+      default:
+        return undefined;
+    }
   }
 
   private _getCurrentRoute(): ActivatedRoute {
