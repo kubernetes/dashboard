@@ -13,7 +13,9 @@
 // limitations under the License.
 
 import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {MatDialog} from '@angular/material';
 import {HTMLInputEvent, KdFile} from '@api/frontendapi';
+import {AlertDialog, AlertDialogConfig} from 'common/dialogs/alert/dialog';
 
 @Component({
   selector: 'kd-upload-file',
@@ -25,13 +27,14 @@ export class UploadFileComponent {
   @Output() onLoad = new EventEmitter<KdFile>();
   filename: string;
 
+  constructor(private readonly matDialog_: MatDialog) {}
+
   onChange(event: HTMLInputEvent): void {
     if (event.target.files.length > 0) {
       this.readFile(event.target.files[0]);
     }
   }
 
-  // TODO handle error somehow
   readFile(file: File): void {
     this.filename = file.name;
 
@@ -44,6 +47,15 @@ export class UploadFileComponent {
       } as KdFile);
     };
 
-    reader.readAsText(file);
+    if (file instanceof ArrayBuffer) {
+      this.reportError('File Format Error', 'Specified file has the wrong format');
+    } else {
+      reader.readAsText(file);
+    }
+  }
+
+  private reportError(title: string, message: string): void {
+    const configData: AlertDialogConfig = {title, message, confirmLabel: 'OK'};
+    this.matDialog_.open(AlertDialog, {data: configData});
   }
 }

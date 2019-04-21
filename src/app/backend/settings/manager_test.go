@@ -23,7 +23,7 @@ import (
 )
 
 func TestNewSettingsManager(t *testing.T) {
-	sm := NewSettingsManager(nil)
+	sm := NewSettingsManager().(*SettingsManager)
 
 	if len(sm.settings) > 0 {
 		t.Error("new settings manager should have no settings set")
@@ -31,7 +31,7 @@ func TestNewSettingsManager(t *testing.T) {
 }
 
 func TestSettingsManager_GetGlobalSettings(t *testing.T) {
-	sm := NewSettingsManager(nil)
+	sm := NewSettingsManager()
 	client := fake.NewSimpleClientset(api.GetDefaultSettingsConfigMap(""))
 	gs := sm.GetGlobalSettings(client)
 
@@ -41,7 +41,7 @@ func TestSettingsManager_GetGlobalSettings(t *testing.T) {
 }
 
 func TestSettingsManager_SaveGlobalSettings(t *testing.T) {
-	sm := NewSettingsManager(nil)
+	sm := NewSettingsManager()
 	client := fake.NewSimpleClientset(api.GetDefaultSettingsConfigMap(""))
 	defaults := api.GetDefaultSettings()
 	err := sm.SaveGlobalSettings(client, &defaults)

@@ -12,44 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../../../variables';
-
-.kd-allocated-resources {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-}
+@import '../../variables';
 
 .kd-graph-container {
   flex: auto;
   text-align: center;
-}
-
-.kd-graph-legend {
-  padding-bottom: 2 * $baseline-grid;
-}
-
-.kd-graph-legend-title {
-  font-size: $subhead-font-size-base-lg;
-  padding-bottom: $baseline-grid;
-  text-align: center;
-}
-
-.kd-graph-legend-entry {
-  display: flex;
-  margin: 0 auto;
-  padding: $baseline-grid;
-  text-align: left;
-  width: 30 * $baseline-grid;
-}
-
-.kd-graph-legend-placeholder {
-  width: 2.75 * $baseline-grid;
-}
-
-.kd-graph-legend-value {
-  flex: 1 auto;
-  text-align: right;
 }
 
 .kd-graph-title {

@@ -13,14 +13,22 @@
 // limitations under the License.
 
 import {Component} from '@angular/core';
-import {ListGroupIdentifiers} from '../common/components/resourcelist/groupids';
+import {CronJobList, DaemonSetList, DeploymentList, JobList, PodList, ReplicaSetList, ReplicationControllerList, StatefulSetList} from '@api/backendapi';
+import {OnListChangeEvent, ResourcesRatio} from '@api/frontendapi';
+
+import {ListGroupIdentifiers, ListIdentifiers} from '../common/components/resourcelist/groupids';
 import {GroupedResourceList} from '../common/resources/groupedlist';
+
+import {Helper, ResourceRatioModes} from './helper';
+import {emptyResourcesRatio} from './workloadstatus/component';
 
 @Component({
   selector: 'kd-overview',
   templateUrl: './template.html',
 })
 export class OverviewComponent extends GroupedResourceList {
+  resourcesRatio: ResourcesRatio = emptyResourcesRatio;
+
   hasWorkloads(): boolean {
     return this.isGroupVisible(ListGroupIdentifiers.workloads);
   }
@@ -31,5 +39,65 @@ export class OverviewComponent extends GroupedResourceList {
 
   hasConfig(): boolean {
     return this.isGroupVisible(ListGroupIdentifiers.config);
+  }
+
+  updateResourcesRatio(event: OnListChangeEvent) {
+    switch (event.id) {
+      case ListIdentifiers.cronJob: {
+        const cronJobs = event.resourceList as CronJobList;
+        this.resourcesRatio.cronJobRatio = Helper.getResourceRatio(
+            cronJobs.status, cronJobs.listMeta.totalItems, ResourceRatioModes.Suspendable);
+        break;
+      }
+      case ListIdentifiers.daemonSet: {
+        const daemonSets = event.resourceList as DaemonSetList;
+        this.resourcesRatio.daemonSetRatio =
+            Helper.getResourceRatio(daemonSets.status, daemonSets.listMeta.totalItems);
+        break;
+      }
+      case ListIdentifiers.deployment: {
+        const deployments = event.resourceList as DeploymentList;
+        this.resourcesRatio.deploymentRatio =
+            Helper.getResourceRatio(deployments.status, deployments.listMeta.totalItems);
+        break;
+      }
+      case ListIdentifiers.job: {
+        const jobs = event.resourceList as JobList;
+        this.resourcesRatio.jobRatio = Helper.getResourceRatio(
+            jobs.status, jobs.listMeta.totalItems, ResourceRatioModes.Completable);
+        break;
+      }
+      case ListIdentifiers.pod: {
+        const pods = event.resourceList as PodList;
+        this.resourcesRatio.podRatio = Helper.getResourceRatio(
+            pods.status, pods.listMeta.totalItems, ResourceRatioModes.Completable);
+        break;
+      }
+      case ListIdentifiers.replicaSet: {
+        const replicaSets = event.resourceList as ReplicaSetList;
+        this.resourcesRatio.replicaSetRatio =
+            Helper.getResourceRatio(replicaSets.status, replicaSets.listMeta.totalItems);
+        break;
+      }
+      case ListIdentifiers.replicationController: {
+        const replicationControllers = event.resourceList as ReplicationControllerList;
+        this.resourcesRatio.replicationControllerRatio = Helper.getResourceRatio(
+            replicationControllers.status, replicationControllers.listMeta.totalItems);
+        break;
+      }
+      case ListIdentifiers.statefulSet: {
+        const statefulSets = event.resourceList as StatefulSetList;
+        this.resourcesRatio.statefulSetRatio =
+            Helper.getResourceRatio(statefulSets.status, statefulSets.listMeta.totalItems);
+        break;
+      }
+      default:
+        break;
+    }
+  }
+
+  showWorkloadStatuses(): boolean {
+    return Object.values(this.resourcesRatio)
+               .reduce((sum, ratioItems) => sum + ratioItems.length, 0) !== 0;
   }
 }

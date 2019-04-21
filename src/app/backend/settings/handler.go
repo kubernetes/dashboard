@@ -26,7 +26,8 @@ import (
 
 // SettingsHandler manages all endpoints related to settings management.
 type SettingsHandler struct {
-	manager SettingsManager
+	manager       api.SettingsManager
+	clientManager clientapi.ClientManager
 }
 
 // Install creates new endpoints for settings management.
@@ -51,7 +52,7 @@ func (self *SettingsHandler) handleSettingsGlobalCanI(request *restful.Request, 
 		verb = http.MethodGet
 	}
 
-	canI := self.manager.clientManager.CanI(request, clientapi.ToSelfSubjectAccessReview(
+	canI := self.clientManager.CanI(request, clientapi.ToSelfSubjectAccessReview(
 		args.Holder.GetNamespace(),
 		api.SettingsConfigMapName,
 		api.ConfigMapKindName,
@@ -66,7 +67,7 @@ func (self *SettingsHandler) handleSettingsGlobalCanI(request *restful.Request, 
 }
 
 func (self *SettingsHandler) handleSettingsGlobalGet(request *restful.Request, response *restful.Response) {
-	client, err := self.manager.clientManager.Client(request)
+	client, err := self.clientManager.Client(request)
 	if err != nil {
 		kdErrors.HandleInternalError(response, err)
 		return
@@ -83,7 +84,7 @@ func (self *SettingsHandler) handleSettingsGlobalSave(request *restful.Request, 
 		return
 	}
 
-	client, err := self.manager.clientManager.Client(request)
+	client, err := self.clientManager.Client(request)
 	if err != nil {
 		kdErrors.HandleInternalError(response, err)
 		return
@@ -97,6 +98,6 @@ func (self *SettingsHandler) handleSettingsGlobalSave(request *restful.Request, 
 }
 
 // NewSettingsHandler creates SettingsHandler.
-func NewSettingsHandler(manager SettingsManager) SettingsHandler {
-	return SettingsHandler{manager: manager}
+func NewSettingsHandler(manager api.SettingsManager, clientManager clientapi.ClientManager) SettingsHandler {
+	return SettingsHandler{manager: manager, clientManager: clientManager}
 }

@@ -43,9 +43,9 @@ const (
 // SettingsManager is used for user settings management.
 type SettingsManager interface {
 	// GetGlobalSettings gets current global settings from config map.
-	GetGlobalSettings(client kubernetes.Interface) (s *Settings)
+	GetGlobalSettings(client kubernetes.Interface) (s Settings)
 	// SaveGlobalSettings saves provided global settings in config map.
-	SaveGlobalSettings(client kubernetes.Interface, s *Settings)
+	SaveGlobalSettings(client kubernetes.Interface, s *Settings) error
 }
 
 // Settings is a single instance of settings without context.

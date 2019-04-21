@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Type} from '@angular/core';
-import {GlobalSettings, K8sError, ObjectMeta, TypeMeta} from '@api/backendapi';
+import {GlobalSettings, K8sError, ObjectMeta, ResourceList, TypeMeta} from '@api/backendapi';
 
 export interface BreadcrumbConfig {
   label?: string;
@@ -48,6 +48,7 @@ export interface OnListChangeEvent {
   groupId: string;
   items: number;
   filtered: boolean;
+  resourceList: ResourceList;
 }
 
 export interface ActionColumnDef<T extends ActionColumn> {
@@ -102,4 +103,20 @@ export interface SemverInfo {
 export interface SemverInfoOptions {
   loose: boolean;
   includePrerelease: boolean;
+}
+
+export interface RatioItem {
+  key: string;
+  value: number;
+}
+
+export interface ResourcesRatio {
+  cronJobRatio: RatioItem[];
+  daemonSetRatio: RatioItem[];
+  deploymentRatio: RatioItem[];
+  jobRatio: RatioItem[];
+  podRatio: RatioItem[];
+  replicaSetRatio: RatioItem[];
+  replicationControllerRatio: RatioItem[];
+  statefulSetRatio: RatioItem[];
 }
