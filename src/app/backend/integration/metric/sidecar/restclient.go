@@ -15,6 +15,7 @@
 package sidecar
 
 import (
+	"github.com/kubernetes/dashboard/src/app/backend/args"
 	"k8s.io/client-go/rest"
 )
 
@@ -43,9 +44,9 @@ type inClusterSidecarClient struct {
 // Get creates request to given path.
 func (c inClusterSidecarClient) Get(path string) RequestInterface {
 	return c.client.Get().
-		Namespace("kube-system").
+		Namespace(args.Holder.GetNamespace()).
 		Resource("services").
-		Name("sidecar").
+		Name("dashboard-metrics-scraper").
 		SubResource("proxy").
 		Suffix(path)
 }
@@ -54,9 +55,9 @@ func (c inClusterSidecarClient) Get(path string) RequestInterface {
 // Returns nil if connection to application can be established, error object otherwise.
 func (self inClusterSidecarClient) HealthCheck() error {
 	_, err := self.client.Get().
-		Namespace("kube-system").
+		Namespace(args.Holder.GetNamespace()).
 		Resource("services").
-		Name("sidecar").
+		Name("dashboard-metrics-scraper").
 		SubResource("proxy").
 		Suffix("/healthz").
 		DoRaw()

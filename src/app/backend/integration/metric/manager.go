@@ -43,7 +43,7 @@ type MetricManager interface {
 	List() []integrationapi.Integration
 	// ConfigureSidecar configures and adds sidecar to clients list.
 	ConfigureSidecar(host string) MetricManager
-	// ConfigureSidecar configures and adds sidecar to clients list.
+	// ConfigureHeapster configures and adds sidecar to clients list.
 	ConfigureHeapster(host string) MetricManager
 }
 

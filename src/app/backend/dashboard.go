@@ -122,13 +122,15 @@ func main() {
 	// Init integrations
 	integrationManager := integration.NewIntegrationManager(clientManager)
 
-	if args.Holder.GetMetricsProvider() == "sidecar" {
+	switch metricsProvider := args.Holder.GetMetricsProvider(); metricsProvider {
+	case "sidecar":
 		integrationManager.Metric().ConfigureSidecar(args.Holder.GetSidecarHost()).
 			EnableWithRetry(integrationapi.SidecarIntegrationID, time.Duration(args.Holder.GetMetricClientCheckPeriod()))
-	}
-	if args.Holder.GetMetricsProvider() == "heapster" {
+	case "heapster":
 		integrationManager.Metric().ConfigureHeapster(args.Holder.GetHeapsterHost()).
 			EnableWithRetry(integrationapi.HeapsterIntegrationID, time.Duration(args.Holder.GetMetricClientCheckPeriod()))
+	default:
+		log.Printf("Invalid or metrics provider selected: %s", metricsProvider)
 	}
 
 	apiHandler, err := handler.CreateHTTPAPIHandler(
