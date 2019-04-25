@@ -110,7 +110,7 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "0.13.8",
     "@angular/cli": "7.3.8",
-    "@angular/compiler-cli": "7.1.4",
+    "@angular/compiler-cli": "7.2.14",
     "@angular/language-service": "7.1.4",
     "@types/jasmine": "3.3.11",
     "@types/jasminewd2": "2.0.6",
@@ -156,6 +156,7 @@
     "scssfmt": "1.0.7",
     "semver": "6.0.0",
     "source-map-explorer": "1.8.0",
+    "tar": "4.4.8",
     "through2": "3.0.1",
     "ts-node": "8.1.0",
     "tslint": "5.12.0",
