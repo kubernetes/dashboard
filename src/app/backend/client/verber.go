@@ -19,6 +19,8 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
+
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	restclient "k8s.io/client-go/rest"
@@ -77,14 +79,14 @@ func NewResourceVerber(client, extensionsClient, appsClient,
 func (verber *resourceVerber) Delete(kind string, namespaceSet bool, namespace string, name string) error {
 	resourceSpec, ok := api.KindToAPIMapping[kind]
 	if !ok {
-		return fmt.Errorf("Unknown resource kind: %s", kind)
+		return errors.NewInvalid(fmt.Sprintf("Unknown resource kind: %s", kind))
 	}
 
 	if namespaceSet != resourceSpec.Namespaced {
 		if namespaceSet {
-			return fmt.Errorf("Set namespace for not-namespaced resource kind: %s", kind)
+			return errors.NewInvalid(fmt.Sprintf("Set namespace for not-namespaced resource kind: %s", kind))
 		} else {
-			return fmt.Errorf("Set no namespace for namespaced resource kind: %s", kind)
+			return errors.NewInvalid(fmt.Sprintf("Set no namespace for namespaced resource kind: %s", kind))
 		}
 	}
 
@@ -111,14 +113,14 @@ func (verber *resourceVerber) Put(kind string, namespaceSet bool, namespace stri
 
 	resourceSpec, ok := api.KindToAPIMapping[kind]
 	if !ok {
-		return fmt.Errorf("Unknown resource kind: %s", kind)
+		return errors.NewInvalid(fmt.Sprintf("Unknown resource kind: %s", kind))
 	}
 
 	if namespaceSet != resourceSpec.Namespaced {
 		if namespaceSet {
-			return fmt.Errorf("Set namespace for not-namespaced resource kind: %s", kind)
+			return errors.NewInvalid(fmt.Sprintf("Set namespace for not-namespaced resource kind: %s", kind))
 		} else {
-			return fmt.Errorf("Set no namespace for namespaced resource kind: %s", kind)
+			return errors.NewInvalid(fmt.Sprintf("Set no namespace for namespaced resource kind: %s", kind))
 		}
 	}
 
@@ -141,14 +143,14 @@ func (verber *resourceVerber) Put(kind string, namespaceSet bool, namespace stri
 func (verber *resourceVerber) Get(kind string, namespaceSet bool, namespace string, name string) (runtime.Object, error) {
 	resourceSpec, ok := api.KindToAPIMapping[kind]
 	if !ok {
-		return nil, fmt.Errorf("Unknown resource kind: %s", kind)
+		return nil, errors.NewInvalid(fmt.Sprintf("Unknown resource kind: %s", kind))
 	}
 
 	if namespaceSet != resourceSpec.Namespaced {
 		if namespaceSet {
-			return nil, fmt.Errorf("Set namespace for not-namespaced resource kind: %s", kind)
+			return nil, errors.NewInvalid(fmt.Sprintf("Set namespace for not-namespaced resource kind: %s", kind))
 		} else {
-			return nil, fmt.Errorf("Set no namespace for namespaced resource kind: %s", kind)
+			return nil, errors.NewInvalid(fmt.Sprintf("Set no namespace for namespaced resource kind: %s", kind))
 		}
 	}
 

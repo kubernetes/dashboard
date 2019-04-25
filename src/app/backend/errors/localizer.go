@@ -15,10 +15,9 @@
 package errors
 
 import (
-	"net/http"
 	"strings"
 
-	jose "gopkg.in/square/go-jose.v2"
+	"gopkg.in/square/go-jose.v2"
 )
 
 // Errors that can be used directly without localizing
@@ -58,7 +57,7 @@ func LocalizeError(err error) error {
 				return NewUnauthorized(errString)
 			}
 
-			return NewGenericResponse(http.StatusInternalServerError, errString)
+			return NewBadRequest(errString)
 		}
 	}
 

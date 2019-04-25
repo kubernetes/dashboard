@@ -15,7 +15,6 @@
 package errors_test
 
 import (
-	"reflect"
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
@@ -45,8 +44,13 @@ func TestLocalizeError(t *testing.T) {
 	}
 	for _, c := range cases {
 		actual := errors.LocalizeError(c.err)
-		if !reflect.DeepEqual(actual, c.expected) {
+		if !areErrorsEqual(actual, c.expected) {
 			t.Errorf("LocalizeError(%+v) == %+v, expected %+v", c.err, actual, c.expected)
 		}
 	}
+}
+
+func areErrorsEqual(err1, err2 error) bool {
+	return (err1 != nil && err2 != nil && err1.Error() == err2.Error()) ||
+		(err1 == nil && err2 == nil)
 }

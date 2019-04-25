@@ -18,6 +18,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {MatCardModule, MatChipsModule, MatDialogModule, MatDividerModule, MatIconModule, MatTooltipModule} from '@angular/material';
 import {By} from '@angular/platform-browser';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {RouterModule} from '@angular/router';
 import {AppConfig, ObjectMeta} from '@api/backendapi';
 import {ChipsComponent} from 'common/components/chips/component';
 
@@ -61,7 +62,7 @@ describe('ObjectMetaComponent', () => {
           imports: [
             MatIconModule, MatCardModule, MatDividerModule, MatTooltipModule, MatDialogModule,
             MatChipsModule, NoopAnimationsModule, PipesModule, HttpClientTestingModule,
-            MatIconModule
+            MatIconModule, RouterModule
           ],
           providers: [ConfigService],
           schemas: [CUSTOM_ELEMENTS_SCHEMA]
