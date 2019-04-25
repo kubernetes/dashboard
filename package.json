@@ -32,6 +32,7 @@
     "test:backend:coverage": "./aio/scripts/coverage-backend.sh",
     "test:coverage": "npm run test:frontend:coverage && npm run test:backend:coverage",
     "test:e2e": "ng e2e",
+    "pretest:e2e": "webdriver-manager update --standalone false --versions.chrome 2.45 --gecko false",
     "cluster:start": "./aio/scripts/start-cluster.sh",
     "cluster:stop": "./aio/scripts/stop-cluster.sh",
     "check": "concurrently \"npm run check:backend\" \"npm run check:frontend\" \"npm run check:license\"",
@@ -50,7 +51,7 @@
     "fix:license": "gulp update-license-headers",
     "clean": "rm -rf .go_workspace .tmp coverage dist npm-debug.log",
     "postversion": "node aio/scripts/version.js",
-    "postinstall": "node aio/scripts/version.js && ./node_modules/protractor/bin/webdriver-manager update --gecko=false && go get -u github.com/golangci/golangci-lint/cmd/golangci-lint"
+    "postinstall": "node aio/scripts/version.js && ./node_modules/protractor/bin/webdriver-manager update --gecko=false --versions.standalone=3.141.59 && go get -u github.com/golangci/golangci-lint/cmd/golangci-lint"
   },
   "husky": {
     "hooks": {

@@ -109,7 +109,8 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "aio/protractor.conf.js",
-            "devServerTarget": "kubernetes-dashboard:serve"
+            "devServerTarget": "kubernetes-dashboard:serve",
+            "webdriverUpdate": false
           }
         },
         "lint": {
