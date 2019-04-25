@@ -136,7 +136,7 @@ func main() {
 		certManager := cert.NewCertManager(certCreator, args.Holder.GetDefaultCertDir())
 		servingCert, err := certManager.GetCertificates()
 		if err != nil {
-			handleFatalInitError(err)
+			handleFatalInitServingCertError(err)
 		}
 		servingCerts = []tls.Certificate{servingCert}
 	} else if args.Holder.GetCertFile() != "" && args.Holder.GetKeyFile() != "" {
@@ -144,7 +144,7 @@ func main() {
 		keyFilePath := args.Holder.GetDefaultCertDir() + string(os.PathSeparator) + args.Holder.GetKeyFile()
 		servingCert, err := tls.LoadX509KeyPair(certFilePath, keyFilePath)
 		if err != nil {
-			handleFatalInitError(err)
+			handleFatalInitServingCertError(err)
 		}
 		servingCerts = []tls.Certificate{servingCert}
 	}
@@ -242,6 +242,13 @@ func handleFatalInitError(err error) {
 		"--apiserver-host param points to a server that does not exist. Reason: %s\n"+
 		"Refer to our FAQ and wiki pages for more information: "+
 		"https://github.com/kubernetes/dashboard/wiki/FAQ", err)
+}
+
+/**
+ * Handles fatal init errors encountered during service cert loading.
+ */
+func handleFatalInitServingCertError(err error) {
+	log.Fatalf("Error while loading dashboard server certificates. Reason: %s", err)
 }
 
 /**
