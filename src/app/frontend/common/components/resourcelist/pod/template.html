@@ -127,7 +127,8 @@ limitations under the License.
                          disableClear="true"
                          i18n>Age</mat-header-cell>
         <mat-cell *matCellDef="let pod">
-          {{pod.objectMeta.creationTimestamp | kdRelativeTime}}
+          <kd-date [date]="pod.objectMeta.creationTimestamp"
+                   relative></kd-date>
         </mat-cell>
       </ng-container>
 

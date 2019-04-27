@@ -91,7 +91,10 @@ limitations under the License.
                          mat-sort-header
                          disableClear="true"
                          i18n>Age</mat-header-cell>
-        <mat-cell *matCellDef="let rc">{{rc.objectMeta.creationTimestamp | kdRelativeTime}}</mat-cell>
+        <mat-cell *matCellDef="let rc">
+          <kd-date [date]="rc.objectMeta.creationTimestamp"
+                   relative></kd-date>
+        </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="images">

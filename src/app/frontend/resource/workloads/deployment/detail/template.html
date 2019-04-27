@@ -203,7 +203,8 @@ limitations under the License.
          *ngIf="deployment?.newReplicaSet?.objectMeta.creationTimestamp">
       <span class="kd-muted-light"
             i18n>Age:&nbsp;</span>
-      <span>{{deployment.newReplicaSet.objectMeta.creationTimestamp | kdRelativeTime}}</span>
+      <kd-date [date]="deployment.newReplicaSet.objectMeta.creationTimestamp"
+               relative></kd-date>
     </div>
 
     <div class="kd-inline-property"
@@ -231,9 +232,17 @@ limitations under the License.
     </kd-property>
 
     <kd-property *ngIf="deployment?.newReplicaSet?.objectMeta.creationTimestamp">
+<<<<<<< HEAD
       <div key
            i18n>Age</div>
       <div value>{{deployment.newReplicaSet.objectMeta.creationTimestamp | kdRelativeTime}}</div>
+=======
+      <div key>Age</div>
+      <div value>
+        <kd-date [date]="deployment.newReplicaSet.objectMeta.creationTimestamp"
+                 relative></kd-date>
+      </div>
+>>>>>>> Show tooltip timestamp on time hover across pages
     </kd-property>
 
     <kd-property *ngIf="deployment?.newReplicaSet?.pods">
