@@ -223,7 +223,7 @@ func (self sidecarClient) allInOneDownload(selector sidecarSelector, metricName 
 // unmarshalType performs sidecar GET request to the specifies path and transfers
 // the data to the interface provided.
 func (self sidecarClient) unmarshalType(path string, v interface{}) error {
-	rawData, err := self.client.Get("/api/v1/dashboard/" + path).DoRaw()
+	rawData, err := self.client.Get("/dashboard/" + path).DoRaw()
 	if err != nil {
 		return err
 	}
