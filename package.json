@@ -129,7 +129,7 @@
     "del": "4.1.1",
     "git-describe": "4.0.4",
     "glob-run": "0.1.6",
-    "gts": "0.9.0",
+    "gts": "1.0.0",
     "gulp": "4.0.1",
     "gulp-filter": "5.1.0",
     "gulp-header-license": "1.0.9",
