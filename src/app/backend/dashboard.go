@@ -131,6 +131,9 @@ func main() {
 			EnableWithRetry(integrationapi.HeapsterIntegrationID, time.Duration(args.Holder.GetMetricClientCheckPeriod()))
 	default:
 		log.Printf("Invalid or metrics provider selected: %s", metricsProvider)
+		log.Print("Defaulting to use the Sidecar provider.")
+		integrationManager.Metric().ConfigureSidecar(args.Holder.GetSidecarHost()).
+			EnableWithRetry(integrationapi.SidecarIntegrationID, time.Duration(args.Holder.GetMetricClientCheckPeriod()))
 	}
 
 	apiHandler, err := handler.CreateHTTPAPIHandler(
