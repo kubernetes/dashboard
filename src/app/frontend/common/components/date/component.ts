@@ -32,7 +32,7 @@ import {Component, Input} from '@angular/core';
  * <kd-date [date]="object.timestamp" relative format="short"></kd-date>
  *
  */
-@Component({selector: 'kd-date', templateUrl: './template.html'})
+@Component({selector: 'kd-date', templateUrl: './template.html', styleUrls: ['./style.scss']})
 export class DateComponent {
   @Input() date: string;
   @Input() format = 'medium';
