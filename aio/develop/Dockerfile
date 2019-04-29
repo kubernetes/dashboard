@@ -25,9 +25,11 @@ FROM golang
 # so there's no need to run it again.
 RUN curl -sL https://deb.nodesource.com/setup_9.x | bash - \
   && apt-get install -y --no-install-recommends \
+	openjdk-8-jre \
 	nodejs \
 	patch \
 	chromium \
+	bc \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& apt-get clean
 
@@ -48,8 +50,19 @@ ENV K8S_DASHBOARD_CONTAINER=TRUE
 
 # Download a statically linked docker client,
 # so the container is able to build images on the host.
-RUN curl -sSL https://get.docker.com/builds/Linux/x86_64/docker-1.9.1 > /usr/bin/docker && \
+RUN curl -sSL https://download.docker.com/linux/static/stable/x86_64/docker-18.06.1-ce.tgz > /tmp/docker.tgz && \
+	cd /tmp/ && \
+	tar xzvf docker.tgz && \
+	rm docker.tgz && \
+	mv /tmp/docker/docker /usr/bin/docker && \
+	rm -rf /tmp/docker/ && \
 	chmod +x /usr/bin/docker
+
+# Install golangci for ckecking or fixing go format.
+# `npm ci` installs golangci, but this installation is needed
+# for running `npm run check` singlely, like
+# `aio/develop/run-npm-on-container.sh run check`.
+RUN go get github.com/golangci/golangci-lint/cmd/golangci-lint
 
 # Install delve for debuging go files.
 RUN go get github.com/derekparker/delve/cmd/dlv
