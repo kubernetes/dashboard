@@ -284,7 +284,7 @@
       </trans-unit>
       <trans-unit id="7db62a1ccd31f1bb55e3532b0f58984a492296a8" datatype="html">
         <source>Create from input</source>
-        <target>Créer depuis la saisie</target>
+        <target>Créer en ligne</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/template.html</context>
           <context context-type="linenumber">20</context>
@@ -322,9 +322,9 @@
         <source>Name must be up to
           <x id="INTERPOLATION" equiv-text="{{namespaceMaxLength}}" />
           characters long.</source>
-        <target>Name must be up to
+        <target>Le nom ne doit pas dépasser 
           <x id="INTERPOLATION" equiv-text="{{namespaceMaxLength}}" />
-          characters long.</target>
+          caractères.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createnamespace/template.html</context>
           <context context-type="linenumber">37</context>
@@ -332,7 +332,7 @@
       </trans-unit>
       <trans-unit id="dc78608856578051c7a762480deeba311aee1c3e" datatype="html">
         <source>Name must be alphanumeric and may contain dashes.</source>
-        <target>Name must be alphanumeric and may contain dashes.</target>
+        <target>Le nom doit être alphanumérique et peut contenir des tirets.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createnamespace/template.html</context>
           <context context-type="linenumber">41</context>
@@ -340,7 +340,7 @@
       </trans-unit>
       <trans-unit id="aeea49e3b19a41258a76d31750f01f807cf9f399" datatype="html">
         <source>A namespace with the specified name will be added to the cluster.</source>
-        <target>A namespace with the specified name will be added to the cluster.</target>
+        <target>Un espace de nom ayant le nom spécifié sera ajouté au cluster.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createnamespace/template.html</context>
           <context context-type="linenumber">46</context>
@@ -351,7 +351,7 @@
           <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;" />
           open_in_new
           <x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;" /></source>
-        <target>Learn more
+        <target>En savoir plus
           <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;" />
           open_in_new
           <x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;" /></target>
@@ -372,9 +372,9 @@
         <source>Name must be up to
           <x id="INTERPOLATION" equiv-text="{{secretNameMaxLength}}" />
           characters long.</source>
-        <target>Name must be up to
+        <target>Le nom ne doit pas dépasser 
           <x id="INTERPOLATION" equiv-text="{{secretNameMaxLength}}" />
-          characters long.</target>
+          caractères.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
           <context context-type="linenumber">37</context>
@@ -382,7 +382,7 @@
       </trans-unit>
       <trans-unit id="dd878f1b75bd7baf03bc91714094e83ec4f513dd" datatype="html">
         <source>Name must follow the DNS domain name syntax (e.g. new.image-pull.secret).</source>
-        <target>Name must follow the DNS domain name syntax (e.g. new.image-pull.secret).</target>
+        <target>Le nom doit suivre la syntaxe d'un nom de domaine DNS (par ex. new.image-pull.secret).</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
           <context context-type="linenumber">41</context>
@@ -390,7 +390,7 @@
       </trans-unit>
       <trans-unit id="2244c094c4409a5d5bb05ae8a079db563b730d09" datatype="html">
         <source>A secret with the specified name will be added to the cluster in the namespace.</source>
-        <target>A secret with the specified name will be added to the cluster in the namespace.</target>
+        <target>Un secret ayant le nom spécifié sera ajouté au cluster dans l'espace de nom.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
           <context context-type="linenumber">46</context>
@@ -398,7 +398,7 @@
       </trans-unit>
       <trans-unit id="77751725f4a7cb970bd5508543690c9e7977ab0d" datatype="html">
         <source>Data is required.</source>
-        <target>Data is required.</target>
+        <target>Les données sont requises.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
           <context context-type="linenumber">66</context>
@@ -406,7 +406,7 @@
       </trans-unit>
       <trans-unit id="a5e1deb7b16c5c6ddd4115d73bcd82bbf238dd99" datatype="html">
         <source>Data must be Base64 encoded.</source>
-        <target>Data must be Base64 encoded.</target>
+        <target>Les données doivent être encodées en Base64.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
           <context context-type="linenumber">70</context>
@@ -414,7 +414,7 @@
       </trans-unit>
       <trans-unit id="f0ca722171e7547ce4fd039386dc5fc35359e186" datatype="html">
         <source>Specify the data for your secret to hold. The value is the Base64 encoded content of a .dockercfg file.</source>
-        <target>Specify the data for your secret to hold. The value is the Base64 encoded content of a .dockercfg file.</target>
+        <target>Spécifie les données que le secret va contenir. La valeur est le contenu encodé en Base64 du fichier .dockercfg.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
           <context context-type="linenumber">75</context>
@@ -422,7 +422,7 @@
       </trans-unit>
       <trans-unit id="d6f7150f368b44c7aaa4b2b07df3e0f988a5db02" datatype="html">
         <source>App name</source>
-        <target>App name</target>
+        <target>Nom de l'application</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">24</context>
@@ -430,7 +430,7 @@
       </trans-unit>
       <trans-unit id="fca7fec8e96c970928918d6df163d8108331e8b3" datatype="html">
         <source>Deployment or service with this name already exists within namespace.</source>
-        <target>Deployment or service with this name already exists within namespace.</target>
+        <target>Un déploiement ou un service ayant ce nom existe déjà dans l'espace de nom.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">36</context>
@@ -438,7 +438,7 @@
       </trans-unit>
       <trans-unit id="02b805b6ce2fd1695ab610995fba03adca1548c2" datatype="html">
         <source>Application name is required.</source>
-        <target>Application name is required.</target>
+        <target>Le nom de l'application est requis.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">40</context>
@@ -446,7 +446,7 @@
       </trans-unit>
       <trans-unit id="aea36993f0b05780ff41173cb0d5eaf5d6e886f9" datatype="html">
         <source>Application name must start with a lowercase letter and contain only lowercase letters, numbers, and &apos;-&apos; between words.</source>
-        <target>Application name must start with a lowercase letter and contain only lowercase letters, numbers, and &apos;-&apos; between words.</target>
+        <target>Le nom de l'application doit commencer avec une lettre minuscule et contenir uniquement des lettres minuscules, des nombres, et des &apos;-&apos; entre les mots.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">44</context>
@@ -488,7 +488,7 @@
       </trans-unit>
       <trans-unit id="472c76a113baadeb4096e77d20a21556b2aa1e35" datatype="html">
         <source>Container image</source>
-        <target>Container image</target>
+        <target>Image du conteneur</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">65</context>
@@ -496,7 +496,7 @@
       </trans-unit>
       <trans-unit id="b39030efbb74fc1fa94582d4fd1b7397a7372332" datatype="html">
         <source>Container image is required</source>
-        <target>Container image is required</target>
+        <target>L'image du conteneur est requise</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">70</context>
@@ -505,7 +505,7 @@
       <trans-unit id="0ded10277cd2e0b3f078dcea9b778670277b4dfa" datatype="html">
         <source>Container image is invalid:
           <x id="INTERPOLATION" equiv-text="{{containerImage.errors?.validImageReference}}" /></source>
-        <target>Container image is invalid:
+        <target>L'image du conteneur n'est pas valide :
           <x id="INTERPOLATION" equiv-text="{{containerImage.errors?.validImageReference}}" /></target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
@@ -514,7 +514,7 @@
       </trans-unit>
       <trans-unit id="43f286635565c58e36280035a459dc47dfd62868" datatype="html">
         <source>Enter the URL of a public image on any registry, or a private image hosted on Docker Hub or Google Container Registry.</source>
-        <target>Enter the URL of a public image on any registry, or a private image hosted on Docker Hub or Google Container Registry.</target>
+        <target>Saisissez l'URL d'une image publique d'un quelconque registre ou une image privée hébergée dans Docker Hub ou Google Container Registry.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">80</context>
@@ -522,7 +522,7 @@
       </trans-unit>
       <trans-unit id="f2e5a7cf7744abe0afff7d83650266934ecc9ccc" datatype="html">
         <source>Number of pods is required</source>
-        <target>Number of pods is required</target>
+        <target>Le nombre de pods est requis</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">101</context>
@@ -530,7 +530,7 @@
       </trans-unit>
       <trans-unit id="a94af3fc42af8831966e3f4fcc14b4a7bb78c2fb" datatype="html">
         <source>Number of pods must be a positive integer</source>
-        <target>Number of pods must be a positive integer</target>
+        <target>Le nombre de pods doit être un entier positif</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">105</context>
@@ -538,7 +538,7 @@
       </trans-unit>
       <trans-unit id="1b71dbca4d8c341a7a9be7f8ce266494a5ed3827" datatype="html">
         <source>A Deployment will be created to maintain the desired number of pods across your cluster.</source>
-        <target>A Deployment will be created to maintain the desired number of pods across your cluster.</target>
+        <target>Un déploiement sera créé pour maintenir le nombre désiré de pods dans votre cluster.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">114</context>
@@ -546,7 +546,7 @@
       </trans-unit>
       <trans-unit id="a74cbfda3903734c9bf30900be931163a187c721" datatype="html">
         <source>Optionally, an internal or external Service can be defined to map an incoming Port to a target Port seen by the container.</source>
-        <target>Optionally, an internal or external Service can be defined to map an incoming Port to a target Port seen by the container.</target>
+        <target>Éventuellement, un Service interne ou externe peut être défini pour mapper un port entrant à un port cible vu par le conteneur.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">134</context>
@@ -554,7 +554,7 @@
       </trans-unit>
       <trans-unit id="d636f169ef473dd93ad70dce8cab4f9766c7d305" datatype="html">
         <source>The specified labels will be applied to the created Deployment, Service (if any) and Pods. Common labels include release, environment, tier, partition and track.</source>
-        <target>The specified labels will be applied to the created Deployment, Service (if any) and Pods. Common labels include release, environment, tier, partition and track.</target>
+        <target>Les labels spécifiés seront appliqués au Déploiement, au Service (le cas échéant) et aux Pods créés. Des labels courants sont release, environment, tier, partition et track.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">165</context>
@@ -565,7 +565,7 @@
           <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;" />
           open_in_new
           <x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;" /></source>
-        <target>Learn more
+        <target>En savoir plus
           <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;" />
           open_in_new
           <x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;" /></target>
@@ -600,7 +600,7 @@
       </trans-unit>
       <trans-unit id="d3213693a72aff08814557c9d4ea66a1a8ebb5b7" datatype="html">
         <source>Namespaces let you partition resources into logically named groups.</source>
-        <target>Namespaces let you partition resources into logically named groups.</target>
+        <target>Les espaces de noms vous permettent de distribuer vos ressources dans des groupes logiques nommés.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">192</context>
@@ -608,7 +608,7 @@
       </trans-unit>
       <trans-unit id="141fd856fac50370a82a6082ef9e55f22014f32f" datatype="html">
         <source>The specified image could require a pull secret credential if it is private. You may choose an existing secret or create a new one.</source>
-        <target>The specified image could require a pull secret credential if it is private. You may choose an existing secret or create a new one.</target>
+        <target>L'image spécifiée peut nécessiter un pull secret si elle est privée. Vous pouvez choisir un secret existant ou en créer un nouveau.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">218</context>
@@ -616,7 +616,7 @@
       </trans-unit>
       <trans-unit id="31fedef1fc3d84d80cd88ca33aa79b2d3e7d7be7" datatype="html">
         <source>CPU requirement (cores)</source>
-        <target>CPU requirement (cores)</target>
+        <target>Exigence CPU (coeurs)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">234</context>
@@ -624,7 +624,7 @@
       </trans-unit>
       <trans-unit id="01673bc7d2279746d96d858ab84d3fb22d2d1256" datatype="html">
         <source>CPU requirement must be given as a positive number.</source>
-        <target>CPU requirement must be given as a positive number.</target>
+        <target>L'exigence CPU doit être un nombre positif.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">240</context>
@@ -632,7 +632,7 @@
       </trans-unit>
       <trans-unit id="031ce379dae834c273e6ca16f445ae9583526476" datatype="html">
         <source>CPU requirement must be given as a valid number.</source>
-        <target>CPU requirement must be given as a valid number.</target>
+        <target>L'exigence CPU doit être un nombre valide.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">244</context>
@@ -640,7 +640,7 @@
       </trans-unit>
       <trans-unit id="d36662c0168b3275eaae4d68c9c1a3dba0090f84" datatype="html">
         <source>Memory requirement (MiB)</source>
-        <target>Memory requirement (MiB)</target>
+        <target>Exigence mémoire (MiB)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">252</context>
@@ -648,7 +648,7 @@
       </trans-unit>
       <trans-unit id="63df5cc1021cfd6c762ea3c3f3be789f7ce88d34" datatype="html">
         <source>Memory requirement must be given as a positive number.</source>
-        <target>Memory requirement must be given as a positive number.</target>
+        <target>L'exigence mémoire doit être un nombre positif.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">258</context>
@@ -656,7 +656,7 @@
       </trans-unit>
       <trans-unit id="9c6ad20af1790f2dd15bb05067cde4fc7ac0fdbf" datatype="html">
         <source>Memory requirement must be given as a valid number.</source>
-        <target>Memory requirement must be given as a valid number.</target>
+        <target>L'exigence mémoire doit être un nombre valide.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">262</context>
@@ -664,7 +664,7 @@
       </trans-unit>
       <trans-unit id="e34bb7f0c94de7773e15d02b03df26f254a7142d" datatype="html">
         <source>You can specify minimum CPU and memory requirements for the container.</source>
-        <target>You can specify minimum CPU and memory requirements for the container.</target>
+        <target>Vous pouvez indiquer des exigences minimales pour le CPU et la mémoire pour le conteneur.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">268</context>
@@ -672,7 +672,7 @@
       </trans-unit>
       <trans-unit id="506587015effc48cbea3c5af7c94abf14ca76ea3" datatype="html">
         <source>Run command</source>
-        <target>Run command</target>
+        <target>Commande à exécuter</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">283</context>
@@ -680,7 +680,7 @@
       </trans-unit>
       <trans-unit id="f673c95db1b46263de2e28a17989d58b63b7033b" datatype="html">
         <source>Run command arguments</source>
-        <target>Run command arguments</target>
+        <target>Arguments de la commande à exécuter</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">289</context>
@@ -688,7 +688,7 @@
       </trans-unit>
       <trans-unit id="7f64de7337ceb8f09ec7db1778676b02f07a73df" datatype="html">
         <source>By default, your containers run the selected image&apos;s default entrypoint command. You can use the command options to override the default.</source>
-        <target>By default, your containers run the selected image&apos;s default entrypoint command. You can use the command options to override the default.</target>
+        <target>Par défaut, vos conteneurs exécutent la commande entrypoint par défaut de l'image. Vous pouvez utiliser les options pour outrepasser le comportement par défaut.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">295</context>
@@ -696,7 +696,7 @@
       </trans-unit>
       <trans-unit id="02d6959168cab2d5d4a1f513f7e74f1a9c718edf" datatype="html">
         <source>Processes in privileged containers are equivalent to processes running as root on the host.</source>
-        <target>Processes in privileged containers are equivalent to processes running as root on the host.</target>
+        <target>Les processus dans des conteneurs privilégiés sont équivalents à des processus s'exécutant en root sur l'hôte.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">312</context>
@@ -704,7 +704,7 @@
       </trans-unit>
       <trans-unit id="d2f13c0a4c3a1e77e3cb724cafab9a0480be0ff3" datatype="html">
         <source>Environment variables available for use in the container. Values can reference other variables using $(VAR_NAME) syntax.</source>
-        <target>Environment variables available for use in the container. Values can reference other variables using $(VAR_NAME) syntax.</target>
+        <target>Variables d'environnement disponibles dans le conteneur. Les valeurs peuvent référencer d'autres variables en utilisant la syntaxe $(NOM_VARIABLE).</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">326</context>
@@ -712,7 +712,7 @@
       </trans-unit>
       <trans-unit id="b95afbbd2ca9a4db0384a66e1acb8f3bc45f38c9" datatype="html">
         <source>Deploy</source>
-        <target>Deploy</target>
+        <target>Déployer</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">345</context>
@@ -720,7 +720,7 @@
       </trans-unit>
       <trans-unit id="a4cdce8c5a799a664dd8189ec13429fdca405a0c" datatype="html">
         <source>Cancel</source>
-        <target>Cancel</target>
+        <target>Annuler</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">353</context>
@@ -732,7 +732,7 @@
       </trans-unit>
       <trans-unit id="4f59d1501469234b7a31dd312901ef0e208cab35" datatype="html">
         <source>Enter YAML or JSON content specifying the resources to create to the namespace specified in the file.</source>
-        <target>Enter YAML or JSON content specifying the resources to create to the namespace specified in the file.</target>
+        <target>Entrez un contenu YAML ou JSON spécifiant les ressources à créer dans l'espace de nom spécifié dans le contenu.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/input/template.html</context>
           <context context-type="linenumber">19</context>
@@ -740,7 +740,7 @@
       </trans-unit>
       <trans-unit id="cf2efd74f454003c82eec766344171dc2f054e25" datatype="html">
         <source>Enter YAML or JSON content specifying the resources to create to the currently selected namespace.</source>
-        <target>Enter YAML or JSON content specifying the resources to create to the currently selected namespace.</target>
+        <target>Entrez un contenu YAML ou JSON spécifiant les ressources à créer dans l'espace de nom sélectionné.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/input/template.html</context>
           <context context-type="linenumber">23</context>
@@ -751,7 +751,7 @@
           <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;" />
           open_in_new
           <x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;" /></source>
-        <target>Learn more
+        <target>En savoir plus
           <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;" />
           open_in_new
           <x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;" /></target>
@@ -762,7 +762,7 @@
       </trans-unit>
       <trans-unit id="c449ced26e3963a5e5a689c1b5aa1678e6a1a18f" datatype="html">
         <source>Upload</source>
-        <target>Upload</target>
+        <target>Télécharger</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/input/template.html</context>
           <context context-type="linenumber">40</context>
@@ -770,7 +770,7 @@
       </trans-unit>
       <trans-unit id="e7f59a69b7d2001d3043c914ab81a80292989d86" datatype="html">
         <source>Select YAML or JSON file specifying the resources to deploy to the namespace specified in the file.</source>
-        <target>Select YAML or JSON file specifying the resources to deploy to the namespace specified in the file.</target>
+        <target>Sélectionnez un fichier YAML ou JSON spécifiant les ressources à déployer dans l'espace de nom spécifié dans le fichier.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/file/template.html</context>
           <context context-type="linenumber">19</context>
@@ -778,7 +778,7 @@
       </trans-unit>
       <trans-unit id="f11e0dc04198d1a19a73e7556bea1e919e23b196" datatype="html">
         <source>Select YAML or JSON file specifying the resources to deploy to the currently selected namespace.</source>
-        <target>Select YAML or JSON file specifying the resources to deploy to the currently selected namespace.</target>
+        <target>Sélectionnez un fichier YAML ou JSON file spécifiant les ressources à déployer dans l'espace de nom sélectionné.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/file/template.html</context>
           <context context-type="linenumber">23</context>
@@ -789,7 +789,7 @@
           <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;" />
           open_in_new
           <x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;" /></source>
-        <target>Learn more
+        <target>En savoir plus
           <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;" />
           open_in_new
           <x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;" /></target>
@@ -800,7 +800,7 @@
       </trans-unit>
       <trans-unit id="77a24ee813541ae0c14b9161fcb2a9c450971239" datatype="html">
         <source>Choose YAML or JSON file</source>
-        <target>Choose YAML or JSON file</target>
+        <target>Sélectionnez un fichier YAML ou JSON</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/file/template.html</context>
           <context context-type="linenumber">36</context>
@@ -808,7 +808,7 @@
       </trans-unit>
       <trans-unit id="f16c52133e0222bf82cd38396e1e0556c0409ff6" datatype="html">
         <source>Upload</source>
-        <target>Upload</target>
+        <target>Télécharger</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/file/template.html</context>
           <context context-type="linenumber">45</context>
@@ -816,7 +816,7 @@
       </trans-unit>
       <trans-unit id="e67bebb0291cbe76b190e83225878cdd3a8a6df6" datatype="html">
         <source>Cancel</source>
-        <target>Cancel</target>
+        <target>Annuler</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/file/template.html</context>
           <context context-type="linenumber">53</context>
@@ -824,7 +824,7 @@
       </trans-unit>
       <trans-unit id="4929426ddbc6a7c6bddddde497c5221ae1ecbec7" datatype="html">
         <source>Variable name must be a valid C identifier.</source>
-        <target>Variable name must be a valid C identifier.</target>
+        <target>Le nom de variable doit être un identifiant C valide.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/environmentvariables/template.html</context>
           <context context-type="linenumber">30</context>
@@ -832,7 +832,7 @@
       </trans-unit>
       <trans-unit id="fab0880a17fe5e3061ac64cccba212003ff38a7c" datatype="html">
         <source>Port must be an integer.</source>
-        <target>Port must be an integer.</target>
+        <target>Le port doit être un entier.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/portmappings/template.html</context>
           <context context-type="linenumber">50</context>
@@ -840,7 +840,7 @@
       </trans-unit>
       <trans-unit id="b47b6b1d47d0109ffb501c78491c03cd86c7cb02" datatype="html">
         <source>Port cannot be empty.</source>
-        <target>Port cannot be empty.</target>
+        <target>Le port ne peut pas être vide.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/portmappings/template.html</context>
           <context context-type="linenumber">54</context>
@@ -848,7 +848,7 @@
       </trans-unit>
       <trans-unit id="2713f44d4a8104a892d77937fd10f433c783bbee" datatype="html">
         <source>Port must be greater than 0.</source>
-        <target>Port must be greater than 0.</target>
+        <target>Le port doit être supérieur à 0.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/portmappings/template.html</context>
           <context context-type="linenumber">58</context>
@@ -856,7 +856,7 @@
       </trans-unit>
       <trans-unit id="bce288c44cea4ebe5f98e272dcd540f2538b7e2d" datatype="html">
         <source>Port must be less than 65536.</source>
-        <target>Port must be less than 65536.</target>
+        <target>Le port doit être inférieur à 65536.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/portmappings/template.html</context>
           <context context-type="linenumber">62</context>
@@ -864,7 +864,7 @@
       </trans-unit>
       <trans-unit id="ba4bd5bd74b5ca1d432c5758b0b2f9782dfb3f8e" datatype="html">
         <source>Target port must be an integer.</source>
-        <target>Target port must be an integer.</target>
+        <target>Le port cible doit être un entier.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/portmappings/template.html</context>
           <context context-type="linenumber">82</context>
@@ -872,7 +872,7 @@
       </trans-unit>
       <trans-unit id="e96318be7659d85afe6189b8984dd90c4fb45b08" datatype="html">
         <source>Target port cannot be empty.</source>
-        <target>Target port cannot be empty.</target>
+        <target>Le port cible ne peut pas être vide.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/portmappings/template.html</context>
           <context context-type="linenumber">86</context>
@@ -880,7 +880,7 @@
       </trans-unit>
       <trans-unit id="0335c10a2625488d1bdb9d64416557d084a25806" datatype="html">
         <source>Target port must be greater than 0.</source>
-        <target>Target port must be greater than 0.</target>
+        <target>Le port cible doit être supérieur à 0.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/portmappings/template.html</context>
           <context context-type="linenumber">90</context>
@@ -888,7 +888,7 @@
       </trans-unit>
       <trans-unit id="2fdd214de3db3734f51986e229a09b61536a7a18" datatype="html">
         <source>Target port must be less than 65536.</source>
-        <target>Target port must be less than 65536.</target>
+        <target>Le port cible doit être inférieur à 65536.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/portmappings/template.html</context>
           <context context-type="linenumber">94</context>
@@ -896,7 +896,7 @@
       </trans-unit>
       <trans-unit id="68db8c28436c026e7dc16c570d0180f1ec3532f4" datatype="html">
         <source>Protocol is required.</source>
-        <target>Protocol is required.</target>
+        <target>Le protocole est requis.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/portmappings/template.html</context>
           <context context-type="linenumber">118</context>
@@ -904,7 +904,7 @@
       </trans-unit>
       <trans-unit id="d42c370b2b6239604b3e0191554d188668cbe27c" datatype="html">
         <source>Invalid protocol.</source>
-        <target>Invalid protocol.</target>
+        <target>Protocole invalide.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/portmappings/template.html</context>
           <context context-type="linenumber">122</context>
@@ -914,7 +914,7 @@
         <source><x id="INTERPOLATION" equiv-text="{{label.get(&apos;key&apos;).value}}" />
           is not unique</source>
         <target><x id="INTERPOLATION" equiv-text="{{label.get(&apos;key&apos;).value}}" />
-          is not unique</target>
+          n'est pas unique</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/deploylabel/template.html</context>
           <context context-type="linenumber">31</context>
@@ -922,7 +922,7 @@
       </trans-unit>
       <trans-unit id="4737b998467bee46867d0bb338f42158fd1ce407" datatype="html">
         <source>Prefix is not a valid DNS subdomain prefix (eg. my-domain.com).</source>
-        <target>Prefix is not a valid DNS subdomain prefix (eg. my-domain.com).</target>
+        <target>Le préfixe n'est pas un préfixe de sous-domaine DNS valide (par ex. mon-domaine.com).</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/deploylabel/template.html</context>
           <context context-type="linenumber">35</context>
