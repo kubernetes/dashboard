@@ -117,40 +117,34 @@ limitations under the License.
 </div>
 
 <mat-menu #kdMenu="matMenu">
-  <mat-checkbox class="mat-menu-item"
-                color="primary"
-                [checked]="logService?.getInverted()"
-                (change)="onTextColorChange()">
-    Invert colors
-  </mat-checkbox>
-  <mat-checkbox class="mat-menu-item"
-                color="primary"
-                [checked]="logService.getCompact()"
-                (change)="onFontSizeChange()">
-    Small font size
-  </mat-checkbox>
-  <mat-checkbox class="mat-menu-item"
-                color="primary"
-                [checked]="logService.getShowTimestamp()"
-                (change)="onShowTimestamp()">
-    Show timestamps
-  </mat-checkbox>
-  <mat-checkbox class="mat-menu-item"
-                color="primary"
-                [checked]="logService.getAutoRefresh()"
-                (change)="toggleLogAutoRefresh()">
-    Auto-refresh (every {{refreshInterval / 1000}} s.)
-  </mat-checkbox>
-  <mat-checkbox class="mat-menu-item"
-                color="primary"
-                [checked]="logService.getFollowing()"
-                (change)="toggleLogFollow()">
-    Follow logs
-  </mat-checkbox>
-  <mat-checkbox class="mat-menu-item"
-                color="primary"
-                [checked]="logService.getPrevious()"
-                (change)="onPreviousChange()">
-    Show previous logs
-  </mat-checkbox>
+  <button mat-menu-item
+          (click)="onTextColorChange()">
+    <mat-icon>{{logService?.getInverted() ? 'check_box' : 'check_box_outline_blank'}}</mat-icon>
+    <span>Invert colors</span>
+  </button>
+  <button mat-menu-item
+            (click)="onFontSizeChange()">
+    <mat-icon>{{logService.getCompact() ? 'check_box' : 'check_box_outline_blank'}}</mat-icon>
+    <span>Small font size</span>
+  </button>
+  <button mat-menu-item
+          (click)="onShowTimestamp()">
+    <mat-icon>{{logService.getShowTimestamp() ? 'check_box' : 'check_box_outline_blank'}}</mat-icon>
+    <span>Show timestamps</span>
+  </button>
+  <button mat-menu-item
+          (click)="toggleLogAutoRefresh()">
+    <mat-icon>{{logService.getAutoRefresh() ? 'check_box' : 'check_box_outline_blank'}}</mat-icon>
+    <span>Auto-refresh (every {{refreshInterval / 1000}} s.)</span>
+  </button>
+  <button mat-menu-item
+          (click)="toggleLogFollow()">
+    <mat-icon>{{logService.getFollowing() ? 'check_box' : 'check_box_outline_blank'}}</mat-icon>
+    <span>Follow logs</span>
+  </button>
+  <button mat-menu-item
+          (click)="onPreviousChange()">
+    <mat-icon>{{logService.getPrevious() ? 'check_box' : 'check_box_outline_blank'}}</mat-icon>
+    <span>Show previous logs</span>
+  </button>
 </mat-menu>
