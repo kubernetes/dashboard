@@ -498,7 +498,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="41cb32a2fd6b8c46e9abfc29ad55e26bceb82b29" datatype="html">
-        <source>An &apos;app&apos; label with this value will be added to the Deployment and Service that get deployed.</source>        <target>An &apos;app&apos; label with this value will be added to the Deployment and Service that get deployed.</target>
+        <source>An &apos;app&apos; label with this value will be added to the Deployment and Service that get deployed.</source>
+        <target>Une étiquette &apos;app&apos; avec cette valeur sera ajoutée au déploiement et au service qui seront déployés.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">50</context>
@@ -509,7 +510,7 @@
         Learn more
         <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>
       </source>        <target>
-        Learn more
+        En savoir plus
         <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>
       </target>
         <context-group purpose="location">
