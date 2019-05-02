@@ -522,6 +522,94 @@
           <context context-type="linenumber">84</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="0991eecb18ad10fac275b126b2829200d00f3976" datatype="html">
+        <source>Pods status</source>
+        <target>Statut des pods</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="e0254f98685441d1c9b3906a6048e61b20d5b05a" datatype="html">
+        <source>Running: </source>
+        <target>En fonctionnement : </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="96f3f35319c3d11b3851f4ed9e31544452f69005" datatype="html">
+        <source>Succeeded: </source>
+        <target>Réussis : </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="f2c8a2942797110c229cee3ee830ae2c1b64901a" datatype="html">
+        <source>Pending: </source>
+        <target>En attente : </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="be286c9229bebbb3a9ef0e88d926116fc8bd57a3" datatype="html">
+        <source>Failed: </source>
+        <target>Échoués : </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3e2da9f7fec9facb5fe70a9afbce2257ae37cba3" datatype="html">
+        <source>Desired: </source>
+        <target>Désirés : </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8dd15f6c73c05a8b0bd7b6d416487ab6570b88c8" datatype="html">
+        <source>Running</source>
+        <target>En fonctionnement</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5be78978b1c8277fda3bc75d8c3c28a0913c8795" datatype="html">
+        <source>Succeeded</source>
+        <target>Réussis</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
+          <context context-type="linenumber">69</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="e6a27066251ca1e04c5be86ad758380856df2506" datatype="html">
+        <source>Pending</source>
+        <target>En attente</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
+          <context context-type="linenumber">75</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="64b582e0d8e3a28331a14d2a1017fa5d6ffb8d93" datatype="html">
+        <source>Failed</source>
+        <target>Échoués</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
+          <context context-type="linenumber">82</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="20cbe250e2fb0ec68ca81d06059fb5ec37c25002" datatype="html">
+        <source>Desired</source>
+        <target>Désirés</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
+          <context context-type="linenumber">88</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="d12515fa127fafff639075d37498207138a5d18a" datatype="html">
         <source>Namespace conflict</source>
         <target>Conflit d'espace de nom</target>
