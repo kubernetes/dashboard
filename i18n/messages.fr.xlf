@@ -90,6 +90,70 @@
           <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="986668e81481d0fd0934b4ef56b4236ccb298712" datatype="html">
+        <source>Conditions</source>
+        <target>Conditions</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/condition/template.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="c0adb9c346b1a2715886258558098dc32bd10c40" datatype="html">
+        <source>Items: </source>
+        <target>Éléments : </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/condition/template.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="f61c6867295f3b53d23557021f2f4e0aa1d0b8fc" datatype="html">
+        <source>Type</source>
+        <target>Type</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/condition/template.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="81b97b8ea996ad1e4f9fca8415021850214884b1" datatype="html">
+        <source>Status</source>
+        <target>Statut</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/condition/template.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ee26cd8de15171cdcee1f1082be733f86076ce27" datatype="html">
+        <source>Last probe time</source>
+        <target>Dernière sonde</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/condition/template.html</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6ca6dee0d8c0d8d9d9d497fd21006092f97bf6d3" datatype="html">
+        <source>Last transition time</source>
+        <target>Dernière transition</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/condition/template.html</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4ba250869daa372b54d24fafc0ea934769ee4076" datatype="html">
+        <source>Reason</source>
+        <target>Motif</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/condition/template.html</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ccac601bf473fa28c9ac46794f1cd40542f74347" datatype="html">
+        <source>Message</source>
+        <target>Message</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/condition/template.html</context>
+          <context context-type="linenumber">80</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="fdd9581a3e200dad80fb751572e7f416424f8844" datatype="html">
         <source>Delete resource</source>
         <target>Supprimer la ressource</target>
