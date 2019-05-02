@@ -17,9 +17,11 @@ limitations under the License.
 <kd-card role="table"
          [hidden]="isHidden()">
   <div title
-       fxLayout="row">Pods</div>
+       fxLayout="row"
+       i18n>Pods</div>
   <div description>
-    <span class="kd-muted-light">Items:&nbsp;</span>{{totalItems}}</div>
+    <span class="kd-muted-light"
+          i18n>Items:&nbsp;</span>{{totalItems}}</div>
   <div actions>
     <kd-card-list-filter></kd-card-list-filter>
   </div>
@@ -52,7 +54,8 @@ limitations under the License.
       <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
-                         disableClear="true">Name</mat-header-cell>
+                         disableClear="true"
+                         i18n>Name</mat-header-cell>
         <mat-cell *matCellDef="let pod">
           <a (click)="$event.stopPropagation()"
              [href]="getDetailsHref(pod.objectMeta.name, pod.objectMeta.namespace)">
@@ -63,38 +66,44 @@ limitations under the License.
 
       <ng-container *ngIf="shouldShowColumn('namespace')"
                     matColumnDef="namespace">
-        <mat-header-cell *matHeaderCellDef>Namespace</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Namespace</mat-header-cell>
         <mat-cell *matCellDef="let pod">{{pod.objectMeta.namespace}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="labels">
-        <mat-header-cell *matHeaderCellDef>Labels</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Labels</mat-header-cell>
         <mat-cell *matCellDef="let pod">
           <kd-chips [map]="pod.objectMeta.labels"></kd-chips>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="node">
-        <mat-header-cell *matHeaderCellDef>Node</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Node</mat-header-cell>
         <mat-cell *matCellDef="let pod">{{pod.nodeName}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="status">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
-                         disableClear="true">Status</mat-header-cell>
+                         disableClear="true"
+                         i18n>Status</mat-header-cell>
         <mat-cell *matCellDef="let pod">{{getDisplayStatus(pod)}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="restarts">
-        <mat-header-cell *matHeaderCellDef>Restarts</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Restarts</mat-header-cell>
         <mat-cell *matCellDef="let pod">
           {{pod.restartCount}}
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="cpu">
-        <mat-header-cell *matHeaderCellDef>CPU Usage</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>CPU Usage</mat-header-cell>
         <mat-cell *matCellDef="let pod">
           <kd-sparkline *ngIf="pod.metrics?.cpuUsageHistory"
                         [timeseries]="pod.metrics.cpuUsageHistory"></kd-sparkline>
@@ -103,7 +112,8 @@ limitations under the License.
       </ng-container>
 
       <ng-container matColumnDef="mem">
-        <mat-header-cell *matHeaderCellDef>Memory Usage</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Memory Usage</mat-header-cell>
         <mat-cell *matCellDef="let pod">
           <kd-sparkline *ngIf="pod.metrics?.memoryUsageHistory"
                         [timeseries]="pod.metrics.memoryUsageHistory"></kd-sparkline>
@@ -114,9 +124,8 @@ limitations under the License.
       <ng-container matColumnDef="age">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
-                         disableClear="true">
-          Age
-        </mat-header-cell>
+                         disableClear="true"
+                         i18n>Age</mat-header-cell>
         <mat-cell *matCellDef="let pod">
           {{pod.objectMeta.creationTimestamp | kdRelativeTime}}
         </mat-cell>

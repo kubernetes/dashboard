@@ -17,8 +17,10 @@ limitations under the License.
 <kd-card role="table"
          [hidden]="isHidden()">
   <div title
-       fxLayout="row">Services</div>
-  <div description><span class="kd-muted-light">Items:&nbsp;</span>{{totalItems}}</div>
+       fxLayout="row"
+       i18n>Services</div>
+  <div description><span class="kd-muted-light"
+          i18n>Items:&nbsp;</span>{{totalItems}}</div>
   <div actions>
     <kd-card-list-filter></kd-card-list-filter>
   </div>
@@ -45,7 +47,8 @@ limitations under the License.
       <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
-                         disableClear="true">Name</mat-header-cell>
+                         disableClear="true"
+                         i18n>Name</mat-header-cell>
         <mat-cell *matCellDef="let service">
           <a [href]="getDetailsHref(service.objectMeta.name, service.objectMeta.namespace)">
             {{service.objectMeta.name}}
@@ -55,31 +58,36 @@ limitations under the License.
 
       <ng-container *ngIf="shouldShowColumn('namespace')"
                     matColumnDef="namespace">
-        <mat-header-cell *matHeaderCellDef>Namespace</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Namespace</mat-header-cell>
         <mat-cell *matCellDef="let service">{{service.objectMeta.namespace}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="labels">
-        <mat-header-cell *matHeaderCellDef>Labels</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Labels</mat-header-cell>
         <mat-cell *matCellDef="let service">
           <kd-chips [map]="service.objectMeta.labels"></kd-chips>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="clusterip">
-        <mat-header-cell *matHeaderCellDef>Cluster IP</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Cluster IP</mat-header-cell>
         <mat-cell *matCellDef="let service">{{service.clusterIP}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="internalendp">
-        <mat-header-cell *matHeaderCellDef>Internal Endpoints</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Internal Endpoints</mat-header-cell>
         <mat-cell *matCellDef="let service">
           <kd-internal-endpoint [endpoints]="[service.internalEndpoint]"></kd-internal-endpoint>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="externalendp">
-        <mat-header-cell *matHeaderCellDef>External Endpoints</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>External Endpoints</mat-header-cell>
         <mat-cell *matCellDef="let service">
           <kd-external-endpoint [endpoints]="service.externalEndpoints"></kd-external-endpoint>
         </mat-cell>
@@ -88,7 +96,8 @@ limitations under the License.
       <ng-container matColumnDef="age">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
-                         disableClear="true">Age</mat-header-cell>
+                         disableClear="true"
+                         i18n>Age</mat-header-cell>
         <mat-cell *matCellDef="let service">
           {{service.objectMeta.creationTimestamp | kdRelativeTime}}
         </mat-cell>

@@ -17,8 +17,10 @@ limitations under the License.
 <kd-card role="table"
          [hidden]="isHidden()">
   <div title
-       fxLayout="row">Persistent Volume Claims</div>
-  <div description><span class="kd-muted-light">Items:&nbsp;</span>{{totalItems}}</div>
+       fxLayout="row"
+       i18n>Persistent Volume Claims</div>
+  <div description><span class="kd-muted-light"
+          i18n>Items:&nbsp;</span>{{totalItems}}</div>
   <div actions>
     <kd-card-list-filter></kd-card-list-filter>
   </div>
@@ -43,7 +45,8 @@ limitations under the License.
       <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
-                         disableClear="true">Name</mat-header-cell>
+                         disableClear="true"
+                         i18n>Name</mat-header-cell>
         <mat-cell *matCellDef="let pvc">
           <a [href]="getDetailsHref(pvc.objectMeta.name, pvc.objectMeta.namespace)">
             {{pvc.objectMeta.name}}
@@ -53,12 +56,14 @@ limitations under the License.
 
       <ng-container *ngIf="shouldShowColumn('namespace')"
                     matColumnDef="namespace">
-        <mat-header-cell *matHeaderCellDef>Namespace</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Namespace</mat-header-cell>
         <mat-cell *matCellDef="let pvc">{{pvc.objectMeta.namespace}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="labels">
-        <mat-header-cell *matHeaderCellDef>Labels</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Labels</mat-header-cell>
         <mat-cell *matCellDef="let pvc">
           <kd-chips [map]="pvc.objectMeta.labels"></kd-chips>
         </mat-cell>
@@ -67,12 +72,14 @@ limitations under the License.
       <ng-container matColumnDef="status">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
-                         disableClear="true">Status</mat-header-cell>
+                         disableClear="true"
+                         i18n>Status</mat-header-cell>
         <mat-cell *matCellDef="let pvc">{{pvc.status}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="volume">
-        <mat-header-cell *matHeaderCellDef>Volume</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Volume</mat-header-cell>
         <mat-cell *matCellDef="let pvc">
           <ng-container *ngIf="pvc.volume">
             <a [href]="getVolumeHref(pvc.volume)">{{pvc.volume}}</a>
@@ -82,7 +89,8 @@ limitations under the License.
       </ng-container>
 
       <ng-container matColumnDef="capacity">
-        <mat-header-cell *matHeaderCellDef>Capacity</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Capacity</mat-header-cell>
         <mat-cell *matCellDef="let pvc">
           <ng-container *ngIf="pvc?.capacity?.storage">{{pvc.capacity.storage}}</ng-container>
           <ng-container *ngIf="!pvc?.capacity?.storage">-</ng-container>
@@ -90,14 +98,16 @@ limitations under the License.
       </ng-container>
 
       <ng-container matColumnDef="accmodes">
-        <mat-header-cell *matHeaderCellDef>Access Modes</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Access Modes</mat-header-cell>
         <mat-cell *matCellDef="let pvc">
           <kd-chips [map]="pvc.accessModes"></kd-chips>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="storagecl">
-        <mat-header-cell *matHeaderCellDef>Storage Class</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Storage Class</mat-header-cell>
         <mat-cell *matCellDef="let pvc">
           <ng-container *ngIf="pvc?.storageClass">{{pvc.storageClass}}</ng-container>
           <ng-container *ngIf="!pvc?.storageClass">-</ng-container>
@@ -107,7 +117,8 @@ limitations under the License.
       <ng-container matColumnDef="age">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
-                         disableClear="true">Age</mat-header-cell>
+                         disableClear="true"
+                         i18n>Age</mat-header-cell>
         <mat-cell *matCellDef="let pvc">
           {{pvc.objectMeta.creationTimestamp | kdRelativeTime}}
         </mat-cell>

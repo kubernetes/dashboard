@@ -17,8 +17,10 @@ limitations under the License.
 <kd-card role="table"
          [hidden]="isHidden()">
   <div title
-       fxLayout="row">Replications Controllers</div>
-  <div description><span class="kd-muted-light">Items:&nbsp;</span>{{totalItems}}</div>
+       fxLayout="row"
+       i18n>Replications Controllers</div>
+  <div description><span class="kd-muted-light"
+          i18n>Items:&nbsp;</span>{{totalItems}}</div>
   <div actions>
     <kd-card-list-filter></kd-card-list-filter>
   </div>
@@ -51,7 +53,8 @@ limitations under the License.
       <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
-                         disableClear="true">Name</mat-header-cell>
+                         disableClear="true"
+                         i18n>Name</mat-header-cell>
         <mat-cell *matCellDef="let rc">
           <a (click)="$event.stopPropagation()"
              [href]="getDetailsHref(rc.objectMeta.name, rc.objectMeta.namespace)">
@@ -62,19 +65,22 @@ limitations under the License.
 
       <ng-container *ngIf="shouldShowColumn('namespace')"
                     matColumnDef="namespace">
-        <mat-header-cell *matHeaderCellDef>Namespace</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Namespace</mat-header-cell>
         <mat-cell *matCellDef="let rc">{{rc.objectMeta.namespace}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="labels">
-        <mat-header-cell *matHeaderCellDef>Labels</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Labels</mat-header-cell>
         <mat-cell *matCellDef="let rc">
           <kd-chips [map]="rc.objectMeta.labels"></kd-chips>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="pods">
-        <mat-header-cell *matHeaderCellDef>Pods</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Pods</mat-header-cell>
         <mat-cell *matCellDef="let rc">
           {{rc.podInfo.running}} / {{rc.podInfo.desired}}
         </mat-cell>
@@ -83,12 +89,14 @@ limitations under the License.
       <ng-container matColumnDef="age">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
-                         disableClear="true">Age</mat-header-cell>
+                         disableClear="true"
+                         i18n>Age</mat-header-cell>
         <mat-cell *matCellDef="let rc">{{rc.objectMeta.creationTimestamp | kdRelativeTime}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="images">
-        <mat-header-cell *matHeaderCellDef>Images</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Images</mat-header-cell>
         <mat-cell *matCellDef="let rc">
           <kd-chips [map]="rc.containerImages"></kd-chips>
         </mat-cell>
