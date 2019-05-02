@@ -298,11 +298,19 @@
         <source>Items: </source>
         <target>Éléments: </target>
         <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/limits/template.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/endpoint/cardlist/template.html</context>
           <context context-type="linenumber">26</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/condition/template.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/policyrule/template.html</context>
           <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
@@ -472,14 +480,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
           <context context-type="linenumber">29</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="9b6940648326778f67ea6e6fa0955d31f758b739" datatype="html">
-        <source>Age: </source>
-        <target>Âge: </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
-          <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="539781df73bc24037d8289707d258925c9e4f2d5" datatype="html">
@@ -680,6 +680,54 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/namespace/template.html</context>
           <context context-type="linenumber">34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2489eefea00931942b91f4a1ae109514b591e2e1" datatype="html">
+        <source>Rules</source>
+        <target>Règles</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/policyrule/template.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="452ef1b96854fe05618303ee601f8fed3b866c9f" datatype="html">
+        <source>Resources</source>
+        <target>Ressources</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/policyrule/template.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7531ac0f84b54f0bcefa85493d9b9a4695d0b9f4" datatype="html">
+        <source>Non-resource URL</source>
+        <target>URL non-ressource</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/policyrule/template.html</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="b44f9a54418bcbda336063edc010c98ded4f5817" datatype="html">
+        <source>Resource Names</source>
+        <target>Noms de ressource</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/policyrule/template.html</context>
+          <context context-type="linenumber">56</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accc38331fffe0055910477b45e525173d64c661" datatype="html">
+        <source>Verbs</source>
+        <target>Verbes</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/policyrule/template.html</context>
+          <context context-type="linenumber">66</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="bf6889e8e87bc743b25907eb4126bfbe2804e952" datatype="html">
+        <source>API Groups</source>
+        <target>Groupes d'API</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/policyrule/template.html</context>
+          <context context-type="linenumber">76</context>
         </context-group>
       </trans-unit>
       <trans-unit id="fdd9581a3e200dad80fb751572e7f416424f8844" datatype="html">
