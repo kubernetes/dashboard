@@ -57,6 +57,96 @@
           <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="f721a500a68c357e8f2a01e60510f6a01e4ba529" datatype="html">
+        <source>Metadata</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/objectmeta/template.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7473146d95b15814d45860e4f545c06798606faf" datatype="html">
+        <source>Name: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/objectmeta/template.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="b77c2f08649661de78074abf98641cb6b7d77e38" datatype="html">
+        <source>Namespace: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/objectmeta/template.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9b6940648326778f67ea6e6fa0955d31f758b739" datatype="html">
+        <source>Age: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/objectmeta/template.html</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="130fd872c78271a8f86b1ab16a76e823969c47d9" datatype="html">
+        <source>Namespace</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/objectmeta/template.html</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/namespace/template.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3bfe4f9e6a0d47732c965b79c953d17d60d64167" datatype="html">
+        <source>Creation time</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/objectmeta/template.html</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2e6be334a2152f179a557167f98ce4459ff9a2f9" datatype="html">
+        <source>Age</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/objectmeta/template.html</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
+          <context context-type="linenumber">68</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="016ff9645a730c7a1171f2df1858a8f74d8e9ec0" datatype="html">
+        <source>UID</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/objectmeta/template.html</context>
+          <context context-type="linenumber">65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2af7efecfae8d7fed3b07f718a623eca1ad8163f" datatype="html">
+        <source>Labels</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/objectmeta/template.html</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
+          <context context-type="linenumber">75</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3f7be0397ce094e29cd35e80d45684ca64b451d1" datatype="html">
+        <source>Annotations</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/objectmeta/template.html</context>
+          <context context-type="linenumber">82</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="f4e529ae5ffd73001d1ff4bbdeeb0a72e342e5c8" datatype="html">
         <source>Close</source>
         <context-group purpose="location">
@@ -332,25 +422,11 @@
           <context context-type="linenumber">80</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="7473146d95b15814d45860e4f545c06798606faf" datatype="html">
-        <source>Name: </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
-          <context context-type="linenumber">22</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="88db9c5672eb3d6dcd8e3b41617e98923b3b499a" datatype="html">
         <source>Kind: </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
           <context context-type="linenumber">29</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="9b6940648326778f67ea6e6fa0955d31f758b739" datatype="html">
-        <source>Age: </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
-          <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="539781df73bc24037d8289707d258925c9e4f2d5" datatype="html">
@@ -379,20 +455,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
           <context context-type="linenumber">62</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="2e6be334a2152f179a557167f98ce4459ff9a2f9" datatype="html">
-        <source>Age</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
-          <context context-type="linenumber">68</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="2af7efecfae8d7fed3b07f718a623eca1ad8163f" datatype="html">
-        <source>Labels</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
-          <context context-type="linenumber">75</context>
         </context-group>
       </trans-unit>
       <trans-unit id="b73f7f5060fb22a1e9ec462b1bb02493fa3ab866" datatype="html">
@@ -439,13 +501,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/namespace/changedialog/template.html</context>
           <context context-type="linenumber">37</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="130fd872c78271a8f86b1ab16a76e823969c47d9" datatype="html">
-        <source>Namespace</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/components/namespace/template.html</context>
-          <context context-type="linenumber">18</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7d545ebc0f8d8727d50c375b2065a447f1029e2b" datatype="html">
