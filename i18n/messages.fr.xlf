@@ -50,6 +50,14 @@
           <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="f093741843dbabf8c934f2d9c23abc0636dd93f3" datatype="html">
+        <source>{VAR_SELECT, select, 1 {Minimize card} other {Expand card} }</source>
+        <target>{VAR_SELECT, select, 1 {Réduire la carte} other {Étendre la carte} }</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/card/template.html</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="0b5c5a43ccd2f696d6e0ad2b745bcc9041d6e380" datatype="html">
         <source>Filter objects by name</source>
         <target>Filtrer les objets par nom</target>
