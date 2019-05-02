@@ -303,6 +303,13 @@
           <context context-type="linenumber">135</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="7e892ba15f2c6c17e83510e273b3e10fc32ea016" datatype="html">
+        <source>Search</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/search/template.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="d6231655ee237e2f78c1e7b8d1bae4f2744953d8" datatype="html">
         <source>{VAR_SELECT, select, 1 {Close notifications panel} other {Open notifications panel} }</source>
         <context-group purpose="location">
