@@ -314,6 +314,42 @@
           <context context-type="linenumber">135</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="d6231655ee237e2f78c1e7b8d1bae4f2744953d8" datatype="html">
+        <source>{VAR_SELECT, select, 1 {Close notifications panel} other {Open notifications panel} }</source>
+        <target>{VAR_SELECT, select, 1 {Fermer le panneau de notifications} other {Ouvrir le panneau de notifications} }</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/notifications/template.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9182096e26e0e298651e94cbd1b1ae8e9d7492dc" datatype="html">
+        <source>
+              <x id="INTERPOLATION" equiv-text="{{notification.timestamp | kdRelativeTime}}"/> ago
+            </source>
+        <target>
+              <x id="INTERPOLATION" equiv-text="{{notification.timestamp | kdRelativeTime}}"/> plus tôt
+            </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/notifications/template.html</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6f67a9eb93e586778483503a409317c509e41996" datatype="html">
+        <source>There are no notifications</source>
+        <target>Aucune notification</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/notifications/template.html</context>
+          <context context-type="linenumber">61</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5a734fba4c541116195d3657ab0b4baa1e1f688e" datatype="html">
+        <source>Remove all notifications</source>
+        <target>Supprimer toutes les notifications</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/notifications/template.html</context>
+          <context context-type="linenumber">67</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="7db62a1ccd31f1bb55e3532b0f58984a492296a8" datatype="html">
         <source>Create from input</source>
         <target>Créer en ligne</target>
