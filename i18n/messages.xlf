@@ -314,7 +314,7 @@
         <source>{VAR_SELECT, select, 1 {Close notifications panel} other {Open notifications panel} }</source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/notifications/template.html</context>
-          <context context-type="linenumber">18</context>
+          <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
       <trans-unit id="9182096e26e0e298651e94cbd1b1ae8e9d7492dc" datatype="html">
@@ -323,21 +323,58 @@
             </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/notifications/template.html</context>
-          <context context-type="linenumber">45</context>
+          <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6f67a9eb93e586778483503a409317c509e41996" datatype="html">
         <source>There are no notifications</source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/notifications/template.html</context>
-          <context context-type="linenumber">61</context>
+          <context context-type="linenumber">63</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5a734fba4c541116195d3657ab0b4baa1e1f688e" datatype="html">
         <source>Remove all notifications</source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/notifications/template.html</context>
-          <context context-type="linenumber">67</context>
+          <context context-type="linenumber">69</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7003098da97db80a0761fe9fdadb2f0349eb462c" datatype="html">
+        <source>Logged in with auth header</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/userpanel/template.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2026658d9603d4eea6cbf142234d657111385bbc" datatype="html">
+        <source>Logged in with token</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/userpanel/template.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="f88774e30855665c168f36b58fdac3fdffbbe24f" datatype="html">
+        <source>Default service account</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/userpanel/template.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="f798949a4cdc74591fbf665c178513e4219c0898" datatype="html">
+        <source>Sign in
+  </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/userpanel/template.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6426cc90184df1cdb238f45fce5220df8438ed62" datatype="html">
+        <source>Sign out
+  </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/userpanel/template.html</context>
+          <context context-type="linenumber">39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7db62a1ccd31f1bb55e3532b0f58984a492296a8" datatype="html">
