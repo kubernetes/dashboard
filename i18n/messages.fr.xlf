@@ -446,6 +446,38 @@
           <context context-type="linenumber">84</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="130fd872c78271a8f86b1ab16a76e823969c47d9" datatype="html">
+        <source>Namespace</source>
+        <target>Espace de nom</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/namespace/template.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7d545ebc0f8d8727d50c375b2065a447f1029e2b" datatype="html">
+        <source>Select namespace...</source>
+        <target>Sélectionnez un espace...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/namespace/template.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6570ee92c355ae47991f34101be43f3f4270fdf3" datatype="html">
+        <source>All namespaces</source>
+        <target>Tous les espaces de noms</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/namespace/template.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6fac407fa5aec6e3291cf87a7ed3252add8a7d28" datatype="html">
+        <source>NAMESPACES</source>
+        <target>ESPACES DE NOMS</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/namespace/template.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="fdd9581a3e200dad80fb751572e7f416424f8844" datatype="html">
         <source>Delete resource</source>
         <target>Supprimer la ressource</target>
