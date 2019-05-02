@@ -82,12 +82,68 @@
           <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="5ca707824ab93066c7d9b44e1b8bf216725c2c22" datatype="html">
+        <source>Filter</source>
+        <target>Filtrer</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/list/filter/template.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="0b5c5a43ccd2f696d6e0ad2b745bcc9041d6e380" datatype="html">
         <source>Filter objects by name</source>
         <target>Filtrer les objets par nom</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/list/filter/template.html</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="eb3d5aefff38a814b76da74371cbf02c0789a1ef" datatype="html">
+        <source>Logs</source>
+        <target>Logs</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/list/column/menu/template.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="148ca44d9d0161c729b0893444c41fa434c6e90f" datatype="html">
+        <source>Exec</source>
+        <target>Exécuter</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/list/column/menu/template.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4ef33b4d376762e82c74ca9fe1c976a376f9ee77" datatype="html">
+        <source>Trigger</source>
+        <target>Déclencher</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/list/column/menu/template.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="a062b45312698e8669cb644bff887f93778d334f" datatype="html">
+        <source>Scale</source>
+        <target>Mettre à l'échelle</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/list/column/menu/template.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="28f86ffd419b869711aa13f5e5ff54be6d70731c" datatype="html">
+        <source>Edit</source>
+        <target>Éditer</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/list/column/menu/template.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="826b25211922a1b46436589233cb6f1a163d89b7" datatype="html">
+        <source>Delete</source>
+        <target>Supprimer</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/list/column/menu/template.html</context>
+          <context context-type="linenumber">39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="fb386cf66a46a6c70cb0153daa343e9b24600d77" datatype="html">
@@ -436,6 +492,22 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/actionbar/detailactions/trigger/template.html</context>
           <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="222a0537c59f20178268925dc70fb661a20dbdb7" datatype="html">
+        <source>There is nothing to display here</source>
+        <target>Il n'y a rien à afficher ici</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/list/zerostate/template.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="b7c59f712c5e6628569d1aed53a624f883c11663" datatype="html">
+        <source>No resources found.</source>
+        <target>Aucune ressource trouvée.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/list/zerostate/template.html</context>
+          <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
       <trans-unit id="a44df39b2ce0f5d85e406c3aeec76ae898dbf9af" datatype="html">

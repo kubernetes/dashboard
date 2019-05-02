@@ -17,20 +17,26 @@ limitations under the License.
 <mat-menu #actions="matMenu">
   <a mat-menu-item
      *ngIf="isLogsEnabled()"
-     [href]="getLogsHref()">Logs</a>
+     [href]="getLogsHref()"
+     i18n>Logs</a>
   <a mat-menu-item
      *ngIf="isExecEnabled()"
-     [href]="getExecHref()">Exec</a>
+     [href]="getExecHref()"
+     i18n>Exec</a>
   <button mat-menu-item
           *ngIf="isTriggerEnabled()"
-          (click)="onTrigger()">Trigger</button>
+          (click)="onTrigger()"
+          i18n>Trigger</button>
   <button mat-menu-item
           *ngIf="isScaleEnabled()"
-          (click)="onScale()">Scale</button>
+          (click)="onScale()"
+          i18n>Scale</button>
   <button mat-menu-item
-          (click)="onEdit()">Edit</button>
+          (click)="onEdit()"
+          i18n>Edit</button>
   <button mat-menu-item
-          (click)="onDelete()">Delete</button>
+          (click)="onDelete()"
+          i18n>Delete</button>
 </mat-menu>
 
 <a mat-icon-button
