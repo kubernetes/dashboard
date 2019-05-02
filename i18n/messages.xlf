@@ -85,6 +85,63 @@
           <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="3c16399a88dd3765114804d3825cc346f995c685" datatype="html">
+        <source>Image: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/container/template.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="a5f9ba9bb9faa8284bcadb1cdbc6aaf969e9c4bb" datatype="html">
+        <source>Image</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/container/template.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="bec9c0614c0c31fb6917b7f465e27399090b050e" datatype="html">
+        <source>Environment variable</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/container/template.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/container/template.html</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/container/template.html</context>
+          <context context-type="linenumber">71</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="e41b42647be2b71c6929a3c7210c1f75d9cd522e" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{formatSecretValue(env.value).length}}"/> bytes</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/container/template.html</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="47a54c2463fd16e928ac0892a2050221978933df" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{env.value.length}}"/> bytes</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/container/template.html</context>
+          <context context-type="linenumber">78</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="e5f16b542e3154cb107f4adedef050543594ffd6" datatype="html">
+        <source>Commands</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/container/template.html</context>
+          <context context-type="linenumber">86</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5c12a82c6283b5e933cda0c15e7aa6b07f8c9713" datatype="html">
+        <source>Arguments</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/container/template.html</context>
+          <context context-type="linenumber">98</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="986668e81481d0fd0934b4ef56b4236ccb298712" datatype="html">
         <source>Conditions</source>
         <context-group purpose="location">
