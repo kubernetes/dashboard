@@ -930,7 +930,7 @@
       </trans-unit>
       <trans-unit id="2cf48a4788243a5493ff403a8fac4db6b9073303" datatype="html">
         <source>Label key name must be alphanumeric separated by &apos;-&apos;, &apos;_&apos; or &apos;.&apos;, optionally prefixed by a DNS subdomain and &apos;/&apos;.</source>
-        <target>Label key name must be alphanumeric separated by &apos;-&apos;, &apos;_&apos; or &apos;.&apos;, optionally prefixed by a DNS subdomain and &apos;/&apos;.</target>
+        <target>Le nom de la clé du label doit être alphanumérique séparé par &apos;-&apos;, &apos;_&apos; ou &apos;.&apos;, optionnellement préfixé par un sous-domaine DNS et &apos;/&apos;.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/deploylabel/template.html</context>
           <context context-type="linenumber">39</context>
@@ -938,7 +938,7 @@
       </trans-unit>
       <trans-unit id="582a028dd0ce5ae70905be0242f5df6cf1f4d23f" datatype="html">
         <source>Prefix should not exceed 253 characters.</source>
-        <target>Prefix should not exceed 253 characters.</target>
+        <target>Le préfixe ne doit pas excéder 253 caractères.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/deploylabel/template.html</context>
           <context context-type="linenumber">43</context>
@@ -946,7 +946,7 @@
       </trans-unit>
       <trans-unit id="f7cc544468f5139ba304be388d7e7720cf75cc3c" datatype="html">
         <source>Label Key name should not exceed 63 characters.</source>
-        <target>Label Key name should not exceed 63 characters.</target>
+        <target>Le nom de la clé du label ne doit pas excéder 63 caractères.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/deploylabel/template.html</context>
           <context context-type="linenumber">47</context>
@@ -954,7 +954,7 @@
       </trans-unit>
       <trans-unit id="f0f259da0f80c8a4cfb99e71ba6f6492efe816f2" datatype="html">
         <source>Label value must be alphanumeric separated by &apos;.&apos; , &apos;-&apos; or &apos;_&apos;.</source>
-        <target>Label value must be alphanumeric separated by &apos;.&apos; , &apos;-&apos; or &apos;_&apos;.</target>
+        <target>La valeur du label doit être alphanumérique séparé par &apos;.&apos; , &apos;-&apos; ou &apos;_&apos;.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/deploylabel/template.html</context>
           <context context-type="linenumber">63</context>
@@ -962,7 +962,7 @@
       </trans-unit>
       <trans-unit id="c7e8ada7c30de9d346a6e0c3a4bdf485ab582213" datatype="html">
         <source>Label Value must not exceed 253 characters.</source>
-        <target>Label Value must not exceed 253 characters.</target>
+        <target>La valeur du label ne doit pas excéder 253 caractères.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/deploylabel/template.html</context>
           <context context-type="linenumber">67</context>
@@ -970,7 +970,7 @@
       </trans-unit>
       <trans-unit id="6b13cf4001515430e636bceec206522ab955e2f1" datatype="html">
         <source>Global settings</source>
-        <target>Global settings</target>
+        <target>Paramètres généraux</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">21</context>
@@ -986,15 +986,15 @@
           kube-system
           <x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;" />
           namespace, so all of them are applied for every instance of the app.</source>
-        <target>Global settings are stored in
+        <target>Les paramètres généraux sont stockés dans la config map
           <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;" />
           kubernetes-dashboard-settings
           <x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;" />
-          config map inside
+          dans l'espace de nom
           <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;" />
           kube-system
-          <x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;" />
-          namespace, so all of them are applied for every instance of the app.</target>
+          <x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;" />, 
+          chacun d'eux étant ainsi appliqué à chaque instance de l'application.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">23</context>
@@ -1002,7 +1002,7 @@
       </trans-unit>
       <trans-unit id="f8b53b407af242e77dc3391947f23988f3451e64" datatype="html">
         <source>Save</source>
-        <target>Save</target>
+        <target>Enregistrer</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">79</context>
@@ -1010,7 +1010,7 @@
       </trans-unit>
       <trans-unit id="713f3afed85462e92402e8e3523c6dcdb362ce17" datatype="html">
         <source>Reload</source>
-        <target>Reload</target>
+        <target>Recharger</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">86</context>
@@ -1018,7 +1018,7 @@
       </trans-unit>
       <trans-unit id="d440068d2406e98fd156b9dcab7f0998e707a38b" datatype="html">
         <source>Local settings</source>
-        <target>Local settings</target>
+        <target>Paramètres locaux</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/local/template.html</context>
           <context context-type="linenumber">19</context>
@@ -1026,7 +1026,7 @@
       </trans-unit>
       <trans-unit id="f2ff730022575262d4e63002c34482e4455682c4" datatype="html">
         <source>Local settings are stored in the browser cookies, so they are not synchronized between multiple devices. Changes are applied automatically on every change.</source>
-        <target>Local settings are stored in the browser cookies, so they are not synchronized between multiple devices. Changes are applied automatically on every change.</target>
+        <target>Les paramètres locaux sont stockés dans les cookies du navigateur, et ne sont ainsi pas synchronisés entre plusieurs appareils. Les changements sont appliqués automatiquement à chaque changement.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/local/template.html</context>
           <context context-type="linenumber">21</context>
