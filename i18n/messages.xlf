@@ -85,15 +85,19 @@
           <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="35bc68bd793eed6ee0232bfa6c4d72bc8c07fe69" datatype="html">
-        <source>Endpoints</source>
+      <trans-unit id="fb386cf66a46a6c70cb0153daa343e9b24600d77" datatype="html">
+        <source>Resource Limits</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/components/endpoint/cardlist/template.html</context>
+          <context context-type="sourcefile">../src/app/frontend/common/components/limits/template.html</context>
           <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
       <trans-unit id="c0adb9c346b1a2715886258558098dc32bd10c40" datatype="html">
         <source>Items: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/limits/template.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/endpoint/cardlist/template.html</context>
           <context context-type="linenumber">26</context>
@@ -101,6 +105,41 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/condition/template.html</context>
           <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="b9d741bd913a31d659d2cef8a44f2fa0e334f972" datatype="html">
+        <source>Resource name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/limits/template.html</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="e4bc0a718dd945e7242e230772c371d963128d11" datatype="html">
+        <source>Resource type</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/limits/template.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ff7cee38a2259526c519f878e71b964f41db4348" datatype="html">
+        <source>Default</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/limits/template.html</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6da72a4cb98aa86a034afc7c4134910590838fc5" datatype="html">
+        <source>Default request</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/limits/template.html</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="35bc68bd793eed6ee0232bfa6c4d72bc8c07fe69" datatype="html">
+        <source>Endpoints</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/endpoint/cardlist/template.html</context>
+          <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
       <trans-unit id="fe22ca53e651df951dac25b67c17894b0980f767" datatype="html">

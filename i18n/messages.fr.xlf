@@ -90,6 +90,46 @@
           <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="fb386cf66a46a6c70cb0153daa343e9b24600d77" datatype="html">
+        <source>Resource Limits</source>
+        <target>Limites de ressources</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/limits/template.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="b9d741bd913a31d659d2cef8a44f2fa0e334f972" datatype="html">
+        <source>Resource name</source>
+        <target>Nom de la ressource</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/limits/template.html</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="e4bc0a718dd945e7242e230772c371d963128d11" datatype="html">
+        <source>Resource type</source>
+        <target>Type de la ressource</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/limits/template.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ff7cee38a2259526c519f878e71b964f41db4348" datatype="html">
+        <source>Default</source>
+        <target>Défaut</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/limits/template.html</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6da72a4cb98aa86a034afc7c4134910590838fc5" datatype="html">
+        <source>Default request</source>
+        <target>Requête par défaut</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/limits/template.html</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="35bc68bd793eed6ee0232bfa6c4d72bc8c07fe69" datatype="html">
         <source>Endpoints</source>
         <target>Terminaisons</target>
