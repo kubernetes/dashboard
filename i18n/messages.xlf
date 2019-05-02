@@ -402,6 +402,45 @@
           <context context-type="linenumber">84</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="d12515fa127fafff639075d37498207138a5d18a" datatype="html">
+        <source>Namespace conflict</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/namespace/changedialog/template.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4b67c2c2c5a4fd74fa2867ec0c0c45d7c5fd7f42" datatype="html">
+        <source>
+    Selected namespace is different than namespace of currently selected resource.
+  </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/namespace/changedialog/template.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7966f20bdbfc6d32429e1eaa61386e3e6eb0cb2d" datatype="html">
+        <source>
+    Do you want to stay on current page and change namespace from <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{namespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> to <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_1" equiv-text="{{newNamespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>?
+  </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/namespace/changedialog/template.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4f20f2d5a6882190892e58b85f6ccbedfa737952" datatype="html">
+        <source>Yes</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/namespace/changedialog/template.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3d3ae7deebc5949b0c1c78b9847886a94321d9fd" datatype="html">
+        <source>No</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/namespace/changedialog/template.html</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="130fd872c78271a8f86b1ab16a76e823969c47d9" datatype="html">
         <source>Namespace</source>
         <context-group purpose="location">
