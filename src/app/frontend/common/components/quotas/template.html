@@ -16,12 +16,14 @@ limitations under the License.
 
 <kd-card [initialized]="initialized"
          role="table">
-  <div title>Resource Quotas</div>
+  <div title
+       i18n>Resource Quotas</div>
 
   <div description>
     <div class="kd-inline-property"
          *ngIf="quotas?.length">
-      <span class="kd-muted-light">Items:&nbsp;</span>
+      <span class="kd-muted-light"
+            i18n>Items:&nbsp;</span>
       <span>{{quotas.length}}</span>
     </div>
   </div>
@@ -31,11 +33,13 @@ limitations under the License.
     <mat-table [dataSource]="getDataSource()"
                class="kd-table-no-footer">
       <ng-container [matColumnDef]="getQuotaColumns()[0]">
-        <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Name</mat-header-cell>
         <mat-cell *matCellDef="let quota">{{quota.objectMeta.name}}</mat-cell>
       </ng-container>
       <ng-container [matColumnDef]="getQuotaColumns()[1]">
-        <mat-header-cell *matHeaderCellDef>Age</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Age</mat-header-cell>
         <mat-cell *matCellDef="let quota">
           <ng-container *ngIf="quota.objectMeta.creationTimestamp">
             {{quota.objectMeta.creationTimestamp | kdRelativeTime}}
@@ -44,7 +48,8 @@ limitations under the License.
         </mat-cell>
       </ng-container>
       <ng-container [matColumnDef]="getQuotaColumns()[2]">
-        <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Status</mat-header-cell>
         <mat-cell *matCellDef="let quota">
           <!-- TODO To display it in a better way handle it like other resources and create status list on details page. -->
           <ng-container *ngIf="quota.statusList">{{quota.statusList | json}}</ng-container>
