@@ -47,8 +47,10 @@ limitations under the License.
             class="kd-clickable"
             [selected]="true"
             [disableRipple]="true">
-    <ng-container *ngIf="isShowingAll">Show less</ng-container>
-    <ng-container *ngIf="!isShowingAll">Show all</ng-container>
+    <ng-container *ngIf="isShowingAll"
+                  i18n>Show less</ng-container>
+    <ng-container *ngIf="!isShowingAll"
+                  i18n>Show all</ng-container>
   </mat-chip>
   <ng-container *ngIf="keys.length === 0">-</ng-container>
 </mat-chip-list>
