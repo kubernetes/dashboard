@@ -85,6 +85,59 @@
           <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="35bc68bd793eed6ee0232bfa6c4d72bc8c07fe69" datatype="html">
+        <source>Endpoints</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/endpoint/cardlist/template.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="c0adb9c346b1a2715886258558098dc32bd10c40" datatype="html">
+        <source>Items: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/endpoint/cardlist/template.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/condition/template.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="fe22ca53e651df951dac25b67c17894b0980f767" datatype="html">
+        <source>Host</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/endpoint/cardlist/template.html</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="02f397009ef997f78a6ea951356ea5deca2410c8" datatype="html">
+        <source>Ports (Name, Port, Protocol)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/endpoint/cardlist/template.html</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="bde51326b17040ceb19e455bb6a20a66227c55cb" datatype="html">
+        <source>unset</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/endpoint/cardlist/template.html</context>
+          <context context-type="linenumber">51</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="f738b840b92bf81637cc77a10cd2b2f2c6e09796" datatype="html">
+        <source>Node</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/endpoint/cardlist/template.html</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="0b0901877d837d3fda16ba161eb74368d1c75b7a" datatype="html">
+        <source>Ready</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/endpoint/cardlist/template.html</context>
+          <context context-type="linenumber">69</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="3c16399a88dd3765114804d3825cc346f995c685" datatype="html">
         <source>Image: </source>
         <context-group purpose="location">
@@ -149,13 +202,6 @@
           <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="c0adb9c346b1a2715886258558098dc32bd10c40" datatype="html">
-        <source>Items: </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/components/condition/template.html</context>
-          <context context-type="linenumber">26</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="f61c6867295f3b53d23557021f2f4e0aa1d0b8fc" datatype="html">
         <source>Type</source>
         <context-group purpose="location">
@@ -196,6 +242,76 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/condition/template.html</context>
           <context context-type="linenumber">80</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7473146d95b15814d45860e4f545c06798606faf" datatype="html">
+        <source>Name: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="88db9c5672eb3d6dcd8e3b41617e98923b3b499a" datatype="html">
+        <source>Kind: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9b6940648326778f67ea6e6fa0955d31f758b739" datatype="html">
+        <source>Age: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="539781df73bc24037d8289707d258925c9e4f2d5" datatype="html">
+        <source>Controlled by</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="cff1428d10d59d14e45edec3c735a27b5482db59" datatype="html">
+        <source>Name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1142d1e241e766713838ec7055c1b912ef9a0d7f" datatype="html">
+        <source>Kind</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
+          <context context-type="linenumber">56</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7357d53d819cc1f5dd329a4fff4c582461ee1317" datatype="html">
+        <source>Pods</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2e6be334a2152f179a557167f98ce4459ff9a2f9" datatype="html">
+        <source>Age</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
+          <context context-type="linenumber">68</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2af7efecfae8d7fed3b07f718a623eca1ad8163f" datatype="html">
+        <source>Labels</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
+          <context context-type="linenumber">75</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="b73f7f5060fb22a1e9ec462b1bb02493fa3ab866" datatype="html">
+        <source>Images</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
+          <context context-type="linenumber">84</context>
         </context-group>
       </trans-unit>
       <trans-unit id="fdd9581a3e200dad80fb751572e7f416424f8844" datatype="html">
