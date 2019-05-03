@@ -652,6 +652,50 @@
           <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="1baabee7b86d4d0935657f254c3b17b5fe4d1257" datatype="html">
+        <source>Logs from</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/logs/template.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="f5dc4402dbf1d5f8f98da57b6061d5f9be05ca5c" datatype="html">
+        <source>Containers</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/logs/template.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="c7b6cfe5410900faa386dd25760731fc8f8d68d7" datatype="html">
+        <source>Init Containers</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/logs/template.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="cb0f69bdd4dea41d7d45c74b6e07f98de8a2ab26" datatype="html">
+        <source>in</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/logs/template.html</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="bdf43b20b7101e83458a69a1e5e2008557feca1f" datatype="html">
+        <source>Download logs</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/logs/template.html</context>
+          <context context-type="linenumber">110</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="122c7fce44be1544d617270e10871acd92934225" datatype="html">
+        <source>
+          Logs from <x id="INTERPOLATION" equiv-text="{{podLogs?.info.fromDate | date : &quot;short&quot;}}"/> to <x id="INTERPOLATION_1" equiv-text="{{podLogs?.info.toDate | date : &quot;short&quot;}}"/> UTC
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/logs/template.html</context>
+          <context context-type="linenumber">138</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="eb3d5aefff38a814b76da74371cbf02c0789a1ef" datatype="html">
         <source>Logs</source>
         <context-group purpose="location">

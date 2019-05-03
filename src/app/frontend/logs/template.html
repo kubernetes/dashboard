@@ -19,12 +19,14 @@ limitations under the License.
     <div title
          [fxLayout]="'row'"
          [fxFlex]="100">
-      <span class="kd-logs-header-text">Logs from</span>
+      <span class="kd-logs-header-text"
+            i18n>Logs from</span>
       <mat-form-field>
         <mat-select [(ngModel)]="container"
                     class="kd-logs-toolbar-select"
                     (selectionChange)="onContainerChange()">
           <mat-optgroup label="Containers"
+                        i18n-label
                         *ngIf="logSources?.containerNames?.length > 0">
             <mat-option *ngFor="let item of logSources?.containerNames"
                         [value]="item">
@@ -32,6 +34,7 @@ limitations under the License.
             </mat-option>
           </mat-optgroup>
           <mat-optgroup label="Init Containers"
+                        i18n-label
                         *ngIf="logSources?.initContainerNames?.length > 0">
             <mat-option *ngFor="let item of logSources?.initContainerNames"
                         [value]="item">
@@ -40,7 +43,8 @@ limitations under the License.
           </mat-optgroup>
         </mat-select>
       </mat-form-field>
-      <span class="kd-logs-header-text">in</span>
+      <span class="kd-logs-header-text"
+            i18n>in</span>
       <mat-form-field class="kd-form-field">
         <mat-select [(ngModel)]="pod"
                     class="kd-logs-toolbar-select"
@@ -102,6 +106,7 @@ limitations under the License.
           <mat-icon>{{logService?.getPrevious() ? 'exposure_neg_1' : 'exposure_zero'}}</mat-icon>
         </button>
         <button mat-icon-button
+                i18n-matTooltip
                 matTooltip="Download logs"
                 (click)="downloadLog()">
           <mat-icon>file_download</mat-icon>
@@ -129,7 +134,8 @@ limitations under the License.
       <div fxLayout="row"
            class="kd-muted">
         <span class="kd-logs-info"
-              *ngIf="logsSet?.length > 1">
+              *ngIf="logsSet?.length > 1"
+              i18n>
           Logs from {{podLogs?.info.fromDate | date : "short"}} to {{podLogs?.info.toDate | date : "short"}} UTC
         </span>
         <span fxFlex></span>
