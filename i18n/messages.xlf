@@ -2,6 +2,54 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="en" datatype="plaintext" original="ng2.template">
     <body>
+      <trans-unit id="70cd6a0cff2699d1c553c292ae76f41bb3b8e0de" datatype="html">
+        <source>Edit a resource</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/dialogs/editresource/template.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="da742e22f3bdbac8878c1cc0f717f0e4b4456860" datatype="html">
+        <source>This action is equivalent to:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/dialogs/editresource/template.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/dialogs/deleteresource/template.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/dialogs/scaleresource/template.html</context>
+          <context context-type="linenumber">50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="047f50bc5b5d17b5bec0196355953e1a5c590ddb" datatype="html">
+        <source>Update</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/dialogs/editresource/template.html</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="d7b35c384aecd25a516200d6921836374613dfe7" datatype="html">
+        <source>Cancel</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/dialogs/editresource/template.html</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/dialogs/deleteresource/template.html</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/from/form/createnamespace/template.html</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
+          <context context-type="linenumber">100</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="8c839e142c68aa402fae1482e3099f883aeae446" datatype="html">
         <source>Delete a resource</source>
         <context-group purpose="location">
@@ -22,13 +70,6 @@
           <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="da742e22f3bdbac8878c1cc0f717f0e4b4456860" datatype="html">
-        <source>This action is equivalent to:</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/dialogs/deleteresource/template.html</context>
-          <context context-type="linenumber">31</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="826b25211922a1b46436589233cb6f1a163d89b7" datatype="html">
         <source>Delete</source>
         <context-group purpose="location">
@@ -38,21 +79,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/list/column/menu/template.html</context>
           <context context-type="linenumber">39</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="d7b35c384aecd25a516200d6921836374613dfe7" datatype="html">
-        <source>Cancel</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/dialogs/deleteresource/template.html</context>
-          <context context-type="linenumber">48</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/create/from/form/createnamespace/template.html</context>
-          <context context-type="linenumber">72</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
-          <context context-type="linenumber">100</context>
         </context-group>
       </trans-unit>
       <trans-unit id="db0cf322b4bfc4f0466c9826810e3800dc4687dd" datatype="html">
@@ -126,6 +152,85 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/chips/chipdialog/template.html</context>
           <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="a92a2623ec8f7344194693dfb1341c9a7687eaa2" datatype="html">
+        <source>Scale a resource</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/dialogs/scaleresource/template.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="e7a87ae3f6aa04cc3c95e5959096e152879fe856" datatype="html">
+        <source>
+    <x id="INTERPOLATION" equiv-text="{{data.displayName}}"/> <x id="INTERPOLATION_1" equiv-text="{{data.objectMeta.name}}"/> will be updated to reflect the desired replicas count.
+  </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/dialogs/scaleresource/template.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9592e13413a413e5416c650331c0d06f9670ae64" datatype="html">
+        <source>Desired replicas</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/dialogs/scaleresource/template.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="b8f2540427e55f0ca0f2567e1e7eb4e5da8711b1" datatype="html">
+        <source>Actual replicas</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/dialogs/scaleresource/template.html</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8bad5230cdda2f915bc80289f8d81675e97e8db9" datatype="html">
+        <source>
+    Scale
+  </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/dialogs/scaleresource/template.html</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="e67bebb0291cbe76b190e83225878cdd3a8a6df6" datatype="html">
+        <source>
+    Cancel
+  </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/dialogs/scaleresource/template.html</context>
+          <context context-type="linenumber">69</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/dialogs/triggerresource/template.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/from/file/template.html</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="0f5bc8e972fe992b070094b40e9105fdc30badee" datatype="html">
+        <source>Trigger a <x id="INTERPOLATION" equiv-text="{{data.displayName}}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/dialogs/triggerresource/template.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="93ad90307e8fc7a9a5b8d04d3dbe6e3a214ea542" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{data.displayName}}"/> <x id="INTERPOLATION_1" equiv-text="{{data.objectMeta.name}}"/> will be triggered.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/dialogs/triggerresource/template.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="f07e394db2e2b0e24164eba79d2140dfcbaa428c" datatype="html">
+        <source>
+    Trigger
+  </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/dialogs/triggerresource/template.html</context>
+          <context context-type="linenumber">25</context>
         </context-group>
       </trans-unit>
       <trans-unit id="01269ce8051398188d50367ead1831407e77d504" datatype="html">
@@ -2529,15 +2634,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/file/template.html</context>
           <context context-type="linenumber">45</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="e67bebb0291cbe76b190e83225878cdd3a8a6df6" datatype="html">
-        <source>
-    Cancel
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/create/from/file/template.html</context>
-          <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4703f18f9d5b6cd5c3c1f8a5d9677ee0ffb29c19" datatype="html">

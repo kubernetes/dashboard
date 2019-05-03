@@ -14,17 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<h2 mat-dialog-title>Trigger a {{data.displayName}}</h2>
-<mat-dialog-content class="kd-dialog-text">{{data.displayName}} {{data.objectMeta.name}} will be triggered.</mat-dialog-content>
+<h2 mat-dialog-title
+    i18n>Trigger a {{data.displayName}}</h2>
+<mat-dialog-content class="kd-dialog-text"
+                    i18n>{{data.displayName}} {{data.objectMeta.name}} will be triggered.</mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button
           color="primary"
-          [mat-dialog-close]="true">
+          [mat-dialog-close]="true"
+          i18n>
     Trigger
   </button>
   <button mat-button
           color="primary"
-          [mat-dialog-close]="false">
+          [mat-dialog-close]="false"
+          i18n>
     Cancel
   </button>
 </mat-dialog-actions>
