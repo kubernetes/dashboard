@@ -2194,6 +2194,137 @@
           <context context-type="linenumber">39</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="bef0c68b6a7d96b56a8879ecfb9de80a83c151a2" datatype="html">
+        <source>Kubernetes Dashboard</source>
+        <target>Kubernetes Dashboard</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="cf9072061094a1ad33866a311152c495c05890a0" datatype="html">
+        <source>Kubeconfig</source>
+        <target>Kubeconfig</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="380ab580741bec31346978e7cab8062d6970408d" datatype="html">
+        <source>Basic</source>
+        <target>Basic</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1edc1fc6cfbbb22353050ad6788508b3ed584f53" datatype="html">
+        <source>Token</source>
+        <target>Jeton</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="a55441e16a7aab838dcedbccf0a517b3ad41eac4" datatype="html">
+        <source>
+                Please select the kubeconfig file that you have created to configure access to the cluster. To find out more about how to configure and use kubeconfig file, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>Configure Access to Multiple Clusters<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> section.
+              </source>
+        <target>
+                Veuillez sélectionner le fichier kubeconfig que vous avez créé pour accéder au cluster.
+                Pour en savoir plus sur la façon de configurer et utiliser un fichier kubeconfig,
+                veuillez vous référer à la section <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>Configurer l'accès à plusieurs clusters<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>.
+              </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2071ed7df8c83bd144f74bc298a721261bea4c11" datatype="html">
+        <source>
+                Make sure that support for basic authentication is enabled in the cluster. To find out more about how to configure basic authentication, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>Authenticating<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> and <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a&gt;"/>ABAC Mode<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> sections.
+              </source>
+        <target>
+                Assurez-vous que le support pour l'authentification Basic est activéde pour le cluster.
+                Pour en savoir plus sur la façon de configurer l'authentification Basic,
+                veuillez vous référer aux sections <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>S'authentifier<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> et <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a&gt;"/>Mode ABAC<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>.
+              </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="0007b848b1737e066b8ba78e030ed5a62fbbdb04" datatype="html">
+        <source>
+                Every Service Account has a Secret with valid Bearer Token that can be used to log in to Dashboard. To find out more about how to configure and use Bearer Tokens, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>Authentication<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> section.
+              </source>
+        <target>
+                Chaque compte de service a un Secret associé avec un jeton porteur (Bearer Token) valide
+                qui peut être utilisé pour se connecter au Dashboard. 
+                Pour en savoir plus sur la façon de configurer et utiliser des jetons porteurs,
+                veuillez vous référer à la section <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>Authentification<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>.
+              </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="bb9463f1f9d12a58d7884a956a955e36369c5f9c" datatype="html">
+        <source>Enter token</source>
+        <target>Saisissez un jeton</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
+          <context context-type="linenumber">66</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="08c74dc9762957593b91f6eb5d65efdfc975bf48" datatype="html">
+        <source>Username</source>
+        <target>Nom d'utilisateur</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
+          <context context-type="linenumber">80</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="c32ef07f8803a223a83ed17024b38e8d82292407" datatype="html">
+        <source>Password</source>
+        <target>Mot de passe</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
+          <context context-type="linenumber">91</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6688d59ac99cdb1ad573ee4d2f9ab14ede43aab8" datatype="html">
+        <source>Choose kubeconfig file</source>
+        <target>Sélectionnez un fichier kubeconfig</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
+          <context context-type="linenumber">100</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6ad17443c5d0be7954254eb2455fe0b32ee2ff05" datatype="html">
+        <source>
+            Sign in
+          </source>
+        <target>
+            Connexion
+          </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
+          <context context-type="linenumber">112</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="89c689a203570b2848d633426d19bd73f51a34f8" datatype="html">
+        <source>
+            Skip
+          </source>
+        <target>
+            Passer
+          </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
+          <context context-type="linenumber">121</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="7db62a1ccd31f1bb55e3532b0f58984a492296a8" datatype="html">
         <source>Create from input</source>
         <target>Créer en ligne</target>

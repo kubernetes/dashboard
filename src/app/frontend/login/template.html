@@ -19,7 +19,8 @@ limitations under the License.
   <kd-card titleClasses="kd-card-top-radius kd-bg-primary kd-accent"
            class="kd-login-card"
            [expandable]="false">
-    <div title>Kubernetes Dashboard</div>
+    <div title
+         i18n>Kubernetes Dashboard</div>
     <div content>
       <form fxLayout="column"
             (ngSubmit)="login()">
@@ -29,20 +30,26 @@ limitations under the License.
             <mat-radio-button [value]="mode"
                               color="primary">
               <ng-container [ngSwitch]="mode">
-                <ng-container *ngSwitchCase="loginModes.Kubeconfig">Kubeconfig</ng-container>
-                <ng-container *ngSwitchCase="loginModes.Basic">Basic</ng-container>
-                <ng-container *ngSwitchCase="loginModes.Token">Token</ng-container>
+                <ng-container *ngSwitchCase="loginModes.Kubeconfig"
+                              i18n>Kubeconfig</ng-container>
+                <ng-container *ngSwitchCase="loginModes.Basic"
+                              i18n>Basic</ng-container>
+                <ng-container *ngSwitchCase="loginModes.Token"
+                              i18n>Token</ng-container>
               </ng-container>
             </mat-radio-button>
             <div class="kd-login-mode-description"
                  [ngSwitch]="mode">
-              <ng-container *ngSwitchCase="loginModes.Kubeconfig">
+              <ng-container *ngSwitchCase="loginModes.Kubeconfig"
+                            i18n>
                 Please select the kubeconfig file that you have created to configure access to the cluster. To find out more about how to configure and use kubeconfig file, please refer to the <a href='https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/'>Configure Access to Multiple Clusters</a> section.
               </ng-container>
-              <ng-container *ngSwitchCase="loginModes.Basic">
+              <ng-container *ngSwitchCase="loginModes.Basic"
+                            i18n>
                 Make sure that support for basic authentication is enabled in the cluster. To find out more about how to configure basic authentication, please refer to the <a href="https://kubernetes.io/docs/admin/authentication/">Authenticating</a> and <a href="https://kubernetes.io/docs/admin/authorization/abac/">ABAC Mode</a> sections.
               </ng-container>
-              <ng-container *ngSwitchCase="loginModes.Token">
+              <ng-container *ngSwitchCase="loginModes.Token"
+                            i18n>
                 Every Service Account has a Secret with valid Bearer Token that can be used to log in to Dashboard. To find out more about how to configure and use Bearer Tokens, please refer to the <a href='https://kubernetes.io/docs/admin/authentication/'>Authentication</a> section.
               </ng-container>
             </div>
@@ -55,6 +62,7 @@ limitations under the License.
             <input matInput
                    id="token"
                    name="token"
+                   i18n-placeholder
                    placeholder="Enter token"
                    type="password"
                    required
@@ -68,6 +76,7 @@ limitations under the License.
               <input id="username"
                      name="username"
                      matInput
+                     i18n-placeholder
                      placeholder="Username"
                      required
                      (change)="onChange($event)">
@@ -78,6 +87,7 @@ limitations under the License.
               <input id="password"
                      name="password"
                      matInput
+                     i18n-placeholder
                      placeholder="Password"
                      type="password"
                      required
@@ -88,6 +98,7 @@ limitations under the License.
           <div *ngSwitchCase="loginModes.Kubeconfig"
                class="kd-login-input">
             <kd-upload-file label="Choose kubeconfig file"
+                            i18n-label
                             (onLoad)="onChange($event)"></kd-upload-file>
           </div>
         </ng-container>
@@ -97,7 +108,8 @@ limitations under the License.
           <button mat-raised-button
                   color="primary"
                   type="submit"
-                  class="kd-login-button">
+                  class="kd-login-button"
+                  i18n>
             Sign in
           </button>
           <button mat-button
@@ -105,7 +117,8 @@ limitations under the License.
                   type="button"
                   class="kd-login-button"
                   *ngIf="isSkipButtonEnabled()"
-                  (click)="skip()">
+                  (click)="skip()"
+                  i18n>
             Skip
           </button>
         </div>
