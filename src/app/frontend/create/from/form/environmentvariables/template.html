@@ -15,7 +15,8 @@ limitations under the License.
 -->
 
 <div fxLayout="column">
-  <div class="kd-margin-bottom">Environment variables</div>
+  <div class="kd-margin-bottom"
+       i18n>Environment variables</div>
   <ng-container [formGroup]="form">
     <ng-container formArrayName="variables">
       <div *ngFor="let variable of variables.controls; let i = index;"
@@ -24,6 +25,7 @@ limitations under the License.
           <input matInput
                  name="name"
                  formControlName="name"
+                 i18n-placeholder
                  placeholder="Name"
                  (change)="addVariableIfNeeed(i)">
           <mat-error *ngIf="variable.get('name').errors?.pattern"
@@ -38,6 +40,7 @@ limitations under the License.
           <input matInput
                  name="value"
                  formControlName="value"
+                 i18n-placeholder
                  placeholder="Value">
         </mat-form-field>
 

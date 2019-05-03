@@ -179,6 +179,10 @@
           <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
           <context context-type="linenumber">47</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/from/form/environmentvariables/template.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="130fd872c78271a8f86b1ab16a76e823969c47d9" datatype="html">
         <source>Namespace</source>
@@ -1841,17 +1845,38 @@
           <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="d5bf8edfc35f18bb70804a15ad79a70417be988f" datatype="html">
+        <source>Create a new namespace</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/from/form/createnamespace/template.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="78ca56338570a3b8cf68425e381a4d523b8b5e68" datatype="html">
+        <source>The new namespace will be added to the cluster.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/from/form/createnamespace/template.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="c9150e5a71cb54a3cd81b6bc0c6cd15743204c57" datatype="html">
+        <source>Namespace name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/from/form/createnamespace/template.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="68ca4087863a70bd5c970f46489206f6195a3000" datatype="html">
         <source>
               Name is required.
             </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createnamespace/template.html</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="linenumber">35</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
       <trans-unit id="902ddf9f53eb9cdc16cfa80f5402a29970104fa2" datatype="html">
@@ -1860,7 +1885,7 @@
             </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createnamespace/template.html</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="dc78608856578051c7a762480deeba311aee1c3e" datatype="html">
@@ -1869,14 +1894,14 @@
             </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createnamespace/template.html</context>
-          <context context-type="linenumber">41</context>
+          <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
       <trans-unit id="aeea49e3b19a41258a76d31750f01f807cf9f399" datatype="html">
         <source>A namespace with the specified name will be added to the cluster.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createnamespace/template.html</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1776287add5575c03fdef42670d0ddc4ecd15f75" datatype="html">
@@ -1886,15 +1911,58 @@
             </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createnamespace/template.html</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">52</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">52</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">81</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="70a67e04629f6d412db0a12d51820b480788d795" datatype="html">
+        <source>Create</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/from/form/createnamespace/template.html</context>
+          <context context-type="linenumber">69</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
+          <context context-type="linenumber">97</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="d7b35c384aecd25a516200d6921836374613dfe7" datatype="html">
+        <source>Cancel</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/from/form/createnamespace/template.html</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
+          <context context-type="linenumber">100</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="e8e1511eda00436d2d4d34a43d45af8be2e60fb4" datatype="html">
+        <source>Create a new image pull secret</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="f4958332544037105533688bf41b27d252e5c607" datatype="html">
+        <source>The new secret will be added to the cluster</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="0d2ab5feae3bde82e357ae93420738e775a69f50" datatype="html">
+        <source>Secret name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
+          <context context-type="linenumber">29</context>
         </context-group>
       </trans-unit>
       <trans-unit id="fe1a06e37665195918e4c2317b108a74ed548f8c" datatype="html">
@@ -1903,7 +1971,7 @@
             </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="dd878f1b75bd7baf03bc91714094e83ec4f513dd" datatype="html">
@@ -1912,14 +1980,14 @@
             </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
-          <context context-type="linenumber">41</context>
+          <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2244c094c4409a5d5bb05ae8a079db563b730d09" datatype="html">
         <source>A secret with the specified name will be added to the cluster in the namespace.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="77751725f4a7cb970bd5508543690c9e7977ab0d" datatype="html">
@@ -1928,7 +1996,7 @@
             </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
-          <context context-type="linenumber">66</context>
+          <context context-type="linenumber">68</context>
         </context-group>
       </trans-unit>
       <trans-unit id="a5e1deb7b16c5c6ddd4115d73bcd82bbf238dd99" datatype="html">
@@ -1937,14 +2005,14 @@
             </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
-          <context context-type="linenumber">70</context>
+          <context context-type="linenumber">72</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f0ca722171e7547ce4fd039386dc5fc35359e186" datatype="html">
         <source>Specify the data for your secret to hold. The value is the Base64 encoded content of a .dockercfg file.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="linenumber">77</context>
         </context-group>
       </trans-unit>
       <trans-unit id="d6f7150f368b44c7aaa4b2b07df3e0f988a5db02" datatype="html">
@@ -2307,6 +2375,15 @@
           <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="e661f8ed8ea38e20018b90fabc40817391ead3f4" datatype="html">
+        <source>
+  <x id="ICU" equiv-text="{isMoreOptionsEnabled(), select, 1 {...} other {...}}"/>
+</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
+          <context context-type="linenumber">370</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="ca66e1e8242ccc7dcbf8f7b33343ddedfc51b688" datatype="html">
         <source>{VAR_SELECT, select, 1 {Hide advanced options} other {Show advanced options} }</source>
         <context-group purpose="location">
@@ -2403,13 +2480,41 @@
           <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="4703f18f9d5b6cd5c3c1f8a5d9677ee0ffb29c19" datatype="html">
+        <source>Environment variables</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/from/form/environmentvariables/template.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="4929426ddbc6a7c6bddddde497c5221ae1ecbec7" datatype="html">
         <source>
             Variable name must be a valid C identifier.
           </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/environmentvariables/template.html</context>
-          <context context-type="linenumber">30</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5049e204c14c648691ac775a64fb504467aeb549" datatype="html">
+        <source>Value</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/from/form/environmentvariables/template.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="d473e0f684a60db45d6f31e993f693f74290e056" datatype="html">
+        <source>Service</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/from/form/portmappings/template.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="cb2741a46e3560f6bc6dfd99d385e86b08b26d72" datatype="html">
+        <source>Port</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/from/form/portmappings/template.html</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="fab0880a17fe5e3061ac64cccba212003ff38a7c" datatype="html">
@@ -2418,7 +2523,7 @@
           </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/portmappings/template.html</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
       <trans-unit id="b47b6b1d47d0109ffb501c78491c03cd86c7cb02" datatype="html">
@@ -2427,7 +2532,7 @@
           </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/portmappings/template.html</context>
-          <context context-type="linenumber">54</context>
+          <context context-type="linenumber">56</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2713f44d4a8104a892d77937fd10f433c783bbee" datatype="html">
@@ -2436,7 +2541,7 @@
           </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/portmappings/template.html</context>
-          <context context-type="linenumber">58</context>
+          <context context-type="linenumber">60</context>
         </context-group>
       </trans-unit>
       <trans-unit id="bce288c44cea4ebe5f98e272dcd540f2538b7e2d" datatype="html">
@@ -2445,7 +2550,14 @@
           </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/portmappings/template.html</context>
-          <context context-type="linenumber">62</context>
+          <context context-type="linenumber">64</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="314a2281c4b9e8ae396805c46e26a6da172d59b9" datatype="html">
+        <source>Target port</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/from/form/portmappings/template.html</context>
+          <context context-type="linenumber">79</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ba4bd5bd74b5ca1d432c5758b0b2f9782dfb3f8e" datatype="html">
@@ -2454,7 +2566,7 @@
           </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/portmappings/template.html</context>
-          <context context-type="linenumber">82</context>
+          <context context-type="linenumber">85</context>
         </context-group>
       </trans-unit>
       <trans-unit id="e96318be7659d85afe6189b8984dd90c4fb45b08" datatype="html">
@@ -2463,7 +2575,7 @@
           </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/portmappings/template.html</context>
-          <context context-type="linenumber">86</context>
+          <context context-type="linenumber">89</context>
         </context-group>
       </trans-unit>
       <trans-unit id="0335c10a2625488d1bdb9d64416557d084a25806" datatype="html">
@@ -2472,7 +2584,7 @@
           </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/portmappings/template.html</context>
-          <context context-type="linenumber">90</context>
+          <context context-type="linenumber">93</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2fdd214de3db3734f51986e229a09b61536a7a18" datatype="html">
@@ -2481,7 +2593,14 @@
           </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/portmappings/template.html</context>
-          <context context-type="linenumber">94</context>
+          <context context-type="linenumber">97</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="acc04ca445d64958d843622f9ce95c0378198c24" datatype="html">
+        <source>Protocol</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/from/form/portmappings/template.html</context>
+          <context context-type="linenumber">110</context>
         </context-group>
       </trans-unit>
       <trans-unit id="68db8c28436c026e7dc16c570d0180f1ec3532f4" datatype="html">
@@ -2490,7 +2609,7 @@
           </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/portmappings/template.html</context>
-          <context context-type="linenumber">118</context>
+          <context context-type="linenumber">122</context>
         </context-group>
       </trans-unit>
       <trans-unit id="d42c370b2b6239604b3e0191554d188668cbe27c" datatype="html">
@@ -2499,7 +2618,14 @@
           </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/portmappings/template.html</context>
-          <context context-type="linenumber">122</context>
+          <context context-type="linenumber">126</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="a93d7bc0981c6bb60dd15032eeb2548f3133a008" datatype="html">
+        <source>key</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/from/form/deploylabel/template.html</context>
+          <context context-type="linenumber">30</context>
         </context-group>
       </trans-unit>
       <trans-unit id="438306a033d833e01c0d4b43ffb47acb5c9d4fdb" datatype="html">
@@ -2508,7 +2634,7 @@
         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/deploylabel/template.html</context>
-          <context context-type="linenumber">31</context>
+          <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4737b998467bee46867d0bb338f42158fd1ce407" datatype="html">
@@ -2517,7 +2643,7 @@
         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/deploylabel/template.html</context>
-          <context context-type="linenumber">35</context>
+          <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2cf48a4788243a5493ff403a8fac4db6b9073303" datatype="html">
@@ -2526,7 +2652,7 @@
         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/deploylabel/template.html</context>
-          <context context-type="linenumber">39</context>
+          <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="582a028dd0ce5ae70905be0242f5df6cf1f4d23f" datatype="html">
@@ -2535,7 +2661,7 @@
         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/deploylabel/template.html</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f7cc544468f5139ba304be388d7e7720cf75cc3c" datatype="html">
@@ -2544,7 +2670,14 @@
         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/deploylabel/template.html</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="eed41bb430cc4ef492f96e3abf4e2325a60b53b8" datatype="html">
+        <source>value</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/from/form/deploylabel/template.html</context>
+          <context context-type="linenumber">62</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f0f259da0f80c8a4cfb99e71ba6f6492efe816f2" datatype="html">
@@ -2553,7 +2686,7 @@
         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/deploylabel/template.html</context>
-          <context context-type="linenumber">63</context>
+          <context context-type="linenumber">65</context>
         </context-group>
       </trans-unit>
       <trans-unit id="c7e8ada7c30de9d346a6e0c3a4bdf485ab582213" datatype="html">
@@ -2562,7 +2695,7 @@
         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/deploylabel/template.html</context>
-          <context context-type="linenumber">67</context>
+          <context context-type="linenumber">69</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6b13cf4001515430e636bceec206522ab955e2f1" datatype="html">
