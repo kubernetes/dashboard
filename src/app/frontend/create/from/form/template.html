@@ -47,7 +47,7 @@ limitations under the License.
     </mat-form-field>
 
     <kd-user-help>
-      <span i18n>An 'app' label with this value will be added to the Deployment and Service that get deployed.</span>
+      <ng-container i18n>An 'app' label with this value will be added to the Deployment and Service that get deployed.</ng-container>
       <a href="http://kubernetes.io/docs/user-guide/labels/"
          target="_blank"
          tabindex="-1"
@@ -77,7 +77,7 @@ limitations under the License.
     </mat-form-field>
 
     <kd-user-help>
-      <span i18n>Enter the URL of a public image on any registry, or a private image hosted on Docker Hub or Google Container Registry.</span>
+      <ng-container i18n>Enter the URL of a public image on any registry, or a private image hosted on Docker Hub or Google Container Registry.</ng-container>
       <a href="http://kubernetes.io/docs/user-guide/images/"
          target="_blank"
          tabindex="-1"
@@ -113,7 +113,7 @@ limitations under the License.
       </mat-error>
     </mat-form-field>
     <kd-user-help>
-      <span i18n>A Deployment will be created to maintain the desired number of pods across your cluster.</span>
+      <ng-container i18n>A Deployment will be created to maintain the desired number of pods across your cluster.</ng-container>
       <a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment/"
          target="_blank"
          tabindex="-1"
@@ -133,7 +133,7 @@ limitations under the License.
       </kd-port-mappings>
     </div>
     <kd-user-help>
-      <span i18n>Optionally, an internal or external Service can be defined to map an incoming Port to a target Port seen by the container.</span>
+      <ng-container i18n>Optionally, an internal or external Service can be defined to map an incoming Port to a target Port seen by the container.</ng-container>
       <a href="http://kubernetes.io/docs/user-guide/services/"
          target="_blank"
          tabindex="-1"
@@ -166,7 +166,7 @@ limitations under the License.
                          formControlName="labels"></kd-deploy-label>
       </div>
       <kd-user-help>
-        <span i18n>The specified labels will be applied to the created Deployment, Service (if any) and Pods. Common labels include release, environment, tier, partition and track.</span>
+        <ng-container i18n>The specified labels will be applied to the created Deployment, Service (if any) and Pods. Common labels include release, environment, tier, partition and track.</ng-container>
         <a href="http://kubernetes.io/docs/user-guide/labels/"
            target="_blank"
            tabindex="-1"
@@ -195,7 +195,7 @@ limitations under the License.
         </mat-select>
       </mat-form-field>
       <kd-user-help>
-        <span i18n>Namespaces let you partition resources into logically named groups.</span>
+        <ng-container i18n>Namespaces let you partition resources into logically named groups.</ng-container>
         <a href="http://kubernetes.io/docs/admin/namespaces/"
            target="_blank"
            tabindex="-1"
@@ -223,7 +223,7 @@ limitations under the License.
         </mat-select>
       </mat-form-field>
       <kd-user-help>
-        <span i18n>The specified image could require a pull secret credential if it is private. You may choose an existing secret or create a new one.</span>
+        <ng-container i18n>The specified image could require a pull secret credential if it is private. You may choose an existing secret or create a new one.</ng-container>
         <a href="http://kubernetes.io/docs/user-guide/secrets/"
            target="_blank"
            tabindex="-1"
@@ -273,7 +273,7 @@ limitations under the License.
         </mat-form-field>
       </div>
       <kd-user-help>
-        <span i18n>You can specify minimum CPU and memory requirements for the container.</span>
+        <ng-container i18n>You can specify minimum CPU and memory requirements for the container.</ng-container>
         <a href="http://kubernetes.io/docs/admin/limitrange/"
            target="_blank"
            tabindex="-1"
@@ -300,7 +300,7 @@ limitations under the License.
         </mat-form-field>
       </div>
       <kd-user-help>
-        <span i18n>By default, your containers run the selected image's default entrypoint command. You can use the command options to override the default.</span>
+        <ng-container i18n>By default, your containers run the selected image's default entrypoint command. You can use the command options to override the default.</ng-container>
         <a href="http://kubernetes.io/docs/user-guide/containers/"
            target="_blank"
            tabindex="-1"
@@ -318,7 +318,7 @@ limitations under the License.
                       i18n>Run as privileged</mat-checkbox>
       </div>
       <kd-user-help>
-        <span i18n>Processes in privileged containers are equivalent to processes running as root on the host.</span>
+        <ng-container i18n>Processes in privileged containers are equivalent to processes running as root on the host.</ng-container>
         <a href="http://kubernetes.io/docs/user-guide/pods/#privileged-mode-for-pod-containers"
            target="_blank"
            tabindex="-1"
@@ -332,7 +332,7 @@ limitations under the License.
     <kd-help-section>
       <kd-environment-variables formControlName="variables"></kd-environment-variables>
       <kd-user-help>
-        <span i18n>Environment variables available for use in the container. Values can reference other variables using $(VAR_NAME) syntax.</span>
+        <ng-container i18n>Environment variables available for use in the container. Values can reference other variables using $(VAR_NAME) syntax.</ng-container>
         <a href="https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/"
            target="_blank"
            tabindex="-1"
