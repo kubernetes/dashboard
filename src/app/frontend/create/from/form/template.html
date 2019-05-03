@@ -94,6 +94,7 @@ limitations under the License.
              type="number"
              formControlName="replicas"
              placeholder="Number of pods"
+             i18n-placeholder
              min="1"
              kdWarnThreshold="100"
              required>
@@ -106,7 +107,8 @@ limitations under the License.
         Number of pods must be a positive integer
       </mat-error>
       <!-- <mat-error when="min">[[Number of pods must be at least 1|Number of pods must be at least 1 warning on deploy from settings page.]]</mat-error> -->
-      <mat-error *ngIf="replicas.errors?.warnThreshold">
+      <mat-error *ngIf="replicas.errors?.warnThreshold"
+                 i18n>
         Setting high number of pods may cause performance issues of the cluster and Dashboard UI.
       </mat-error>
     </mat-form-field>
@@ -148,16 +150,18 @@ limitations under the License.
       <mat-form-field>
         <textarea formControlName="description"
                   matInput
-                  placeholder="Description"></textarea>
+                  placeholder="Description"
+                  i18n-placeholder></textarea>
       </mat-form-field>
-      <kd-user-help>
+      <kd-user-help i18n>
         The description will be added as an annotation to the Deployment and displayed in the application's details.
       </kd-user-help>
     </kd-help-section>
 
     <kd-help-section>
       <div fxLayout="column">
-        <div class="kd-margin-bottom">Labels</div>
+        <div class="kd-margin-bottom"
+             i18n>Labels</div>
         <kd-deploy-label [labelArr]="labelArr"
                          formControlName="labels"></kd-deploy-label>
       </div>
@@ -178,12 +182,14 @@ limitations under the License.
         <mat-select formControlName="namespace"
                     (click)="resetImagePullSecret()"
                     placeholder="Namespace"
+                    i18n-placeholder
                     required>
           <mat-option *ngFor="let namespace of namespaces"
                       [value]="namespace">
             {{namespace}}
           </mat-option>
-          <mat-option (click)="handleNamespaceDialog()">
+          <mat-option (click)="handleNamespaceDialog()"
+                      i18n>
             Create a new namespace...
           </mat-option>
         </mat-select>
@@ -204,12 +210,14 @@ limitations under the License.
       <mat-form-field>
         <mat-select formControlName="imagePullSecret"
                     (click)="getSecrets()"
-                    placeholder="Image Pull Secret">
+                    placeholder="Image Pull Secret"
+                    i18n-placeholder>
           <mat-option *ngFor="let secret of secrets"
                       [value]="secret">
             {{secret}}
           </mat-option>
-          <mat-option (click)="handleCreateSecretDialog()">
+          <mat-option (click)="handleCreateSecretDialog()"
+                      i18n>
             Create a new secret...
           </mat-option>
         </mat-select>
@@ -306,7 +314,8 @@ limitations under the License.
     <kd-help-section>
       <div class="kd-block">
         <mat-checkbox color="primary"
-                      formControlName="runAsPrivileged">Run as privileged</mat-checkbox>
+                      formControlName="runAsPrivileged"
+                      i18n>Run as privileged</mat-checkbox>
       </div>
       <kd-user-help>
         <span i18n>Processes in privileged containers are equivalent to processes running as root on the host.</span>
@@ -357,6 +366,7 @@ limitations under the License.
 <button mat-button
         color="primary"
         (click)="switchMoreOptions()"
-        [hidden]="!isMoreOptionsEnabled()">
-  {{isMoreOptionsEnabled() ? 'Hide advanced options' : 'Show advanced options'}}
+        [hidden]="!isMoreOptionsEnabled()"
+        i18n>
+  {isMoreOptionsEnabled(), select, 1 {Hide advanced options} other {Show advanced options}}
 </button>

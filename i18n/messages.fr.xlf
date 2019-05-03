@@ -429,6 +429,10 @@
           <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
           <context context-type="linenumber">75</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
+          <context context-type="linenumber">164</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="3f7be0397ce094e29cd35e80d45684ca64b451d1" datatype="html">
         <source>Annotations</source>
@@ -2216,6 +2220,14 @@
           <context context-type="linenumber">80</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="84859895146eb819c224aa01e4464e28267aed98" datatype="html">
+        <source>Number of pods</source>
+        <target>Nombre de pods</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="f2e5a7cf7744abe0afff7d83650266934ecc9ccc" datatype="html">
         <source>Number of pods is required</source>
         <target>Le nombre de pods est requis</target>
@@ -2232,6 +2244,18 @@
           <context context-type="linenumber">105</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="291fd87d479c4781c7a4f55e09e6ed8e2d9e4ebb" datatype="html">
+        <source>
+        Setting high number of pods may cause performance issues of the cluster and Dashboard UI.
+      </source>
+        <target>
+          Définir un grand nombre de pods peut entaîner des problèmes de performance du cluster et de l'UI Dashboard.
+      </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
+          <context context-type="linenumber">111</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="1b71dbca4d8c341a7a9be7f8ce266494a5ed3827" datatype="html">
         <source>A Deployment will be created to maintain the desired number of pods across your cluster.</source>
         <target>Un déploiement sera créé pour maintenir le nombre désiré de pods dans votre cluster.</target>
@@ -2246,6 +2270,26 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">134</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="eec715de352a6b114713b30b640d319fa78207a0" datatype="html">
+        <source>Description</source>
+        <target>Description</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
+          <context context-type="linenumber">152</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="d6f98d37a4e39b48d6861e098d106eb3a213bfae" datatype="html">
+        <source>
+        The description will be added as an annotation to the Deployment and displayed in the application&apos;s details.
+      </source>
+        <target>
+          La description sera rajoutée comme annotation au déploiement et ajoutée dans les détails de l'application.
+      </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
+          <context context-type="linenumber">156</context>
         </context-group>
       </trans-unit>
       <trans-unit id="d636f169ef473dd93ad70dce8cab4f9766c7d305" datatype="html">
@@ -2267,31 +2311,43 @@
           <x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;" /></target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
-          <context context-type="linenumber">169</context>
+          <context context-type="linenumber">173</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
-          <context context-type="linenumber">196</context>
+          <context context-type="linenumber">202</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
-          <context context-type="linenumber">222</context>
+          <context context-type="linenumber">230</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
-          <context context-type="linenumber">272</context>
+          <context context-type="linenumber">280</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
-          <context context-type="linenumber">299</context>
+          <context context-type="linenumber">307</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
-          <context context-type="linenumber">316</context>
+          <context context-type="linenumber">325</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
-          <context context-type="linenumber">330</context>
+          <context context-type="linenumber">339</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="60c77bd79088557b6e4e099ed7fe077ad998c7cd" datatype="html">
+        <source>
+            Create a new namespace...
+          </source>
+        <target>
+            Créer un nouvel espace de nom...
+          </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
+          <context context-type="linenumber">192</context>
         </context-group>
       </trans-unit>
       <trans-unit id="d3213693a72aff08814557c9d4ea66a1a8ebb5b7" datatype="html">
@@ -2300,6 +2356,26 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">192</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9837a4e132ec773fb004737601db78f448ba2534" datatype="html">
+        <source>
+            Create a new secret...
+          </source>
+        <target>
+            Créer un nouveau secret...
+          </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
+          <context context-type="linenumber">220</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="f87cc4e8fdd870d5f0fe071889d30939f9d0cd37" datatype="html">
+        <source>Image Pull Secret</source>
+        <target>Pull Secret pour l'image</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
+          <context context-type="linenumber">210</context>
         </context-group>
       </trans-unit>
       <trans-unit id="141fd856fac50370a82a6082ef9e55f22014f32f" datatype="html">
@@ -2390,6 +2466,14 @@
           <context context-type="linenumber">295</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="c6da8aedaa5d3cd0687973b159947e1f22d05b42" datatype="html">
+        <source>Run as privileged</source>
+        <target>Exécuter en mode privilégié</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
+          <context context-type="linenumber">318</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="02d6959168cab2d5d4a1f513f7e74f1a9c718edf" datatype="html">
         <source>Processes in privileged containers are equivalent to processes running as root on the host.</source>
         <target>Les processus dans des conteneurs privilégiés sont équivalents à des processus s'exécutant en root sur l'hôte.</target>
@@ -2424,6 +2508,14 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/input/template.html</context>
           <context context-type="linenumber">48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ca66e1e8242ccc7dcbf8f7b33343ddedfc51b688" datatype="html">
+        <source>{VAR_SELECT, select, 1 {Hide advanced options} other {Show advanced options} }</source>
+        <target>{VAR_SELECT, select, 1 {Cacher les options avancées} other {Afficher les options avancées} }</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
+          <context context-type="linenumber">371</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4f59d1501469234b7a31dd312901ef0e208cab35" datatype="html">
