@@ -64,6 +64,13 @@
           <context context-type="linenumber">19</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="d984832653b92d083bf8ca529c4d99ab55a047ef" datatype="html">
+        <source>Size: <x id="INTERPOLATION" equiv-text="{{loaded | kdMemory}}"/> B</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/dialogs/download/template.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="f3e083d1d6d142b5f581e51f74b3b11a49612eb8" datatype="html">
         <source>
       Preparing file to download...
@@ -94,6 +101,31 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/dialogs/download/template.html</context>
           <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="52c9a103b812f258bcddc3d90a6e3f46871d25fe" datatype="html">
+        <source>Save</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/dialogs/download/template.html</context>
+          <context context-type="linenumber">50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="896458a165a1aede12e3b6ce0db7a9f0274b2f55" datatype="html">
+        <source>Abort</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/dialogs/download/template.html</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="f4e529ae5ffd73001d1ff4bbdeeb0a72e342e5c8" datatype="html">
+        <source>Close</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/dialogs/download/template.html</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/chips/chipdialog/template.html</context>
+          <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
       <trans-unit id="01269ce8051398188d50367ead1831407e77d504" datatype="html">
@@ -485,13 +517,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/objectmeta/template.html</context>
           <context context-type="linenumber">82</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="f4e529ae5ffd73001d1ff4bbdeeb0a72e342e5c8" datatype="html">
-        <source>Close</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/components/chips/chipdialog/template.html</context>
-          <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5403a767248e304199592271bba3366d2ca3f903" datatype="html">
