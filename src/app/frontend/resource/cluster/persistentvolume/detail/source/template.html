@@ -15,84 +15,99 @@ limitations under the License.
 -->
 
 <kd-card [initialized]="initialized">
-  <div title>Source</div>
+  <div title
+       i18n>Source</div>
 
   <div content
        *ngIf="initialized"
        fxLayout="row wrap">
     <ng-container *ngIf="source?.awsElasticBlockStore">
       <kd-property>
-        <div key>Type</div>
+        <div key
+             i18n>Type</div>
         <div value>EBS (AWS Elastic Block Store)</div>
       </kd-property>
 
       <kd-property *ngIf="source.awsElasticBlockStore.fsType">
-        <div key>Filesystem type</div>
+        <div key
+             i18n>Filesystem type</div>
         <div value>{{source.awsElasticBlockStore.fsType}}</div>
       </kd-property>
 
       <kd-property *ngIf="source.awsElasticBlockStore.partition !== undefined">
-        <div key>Partition</div>
+        <div key
+             i18n>Partition</div>
         <div value>{{source.awsElasticBlockStore.partition}}</div>
       </kd-property>
 
       <kd-property *ngIf="source.awsElasticBlockStore.readOnly !== undefined">
-        <div key>Read only</div>
+        <div key
+             i18n>Read only</div>
         <div value>{{source.awsElasticBlockStore.readOnly}}</div>
       </kd-property>
 
       <kd-property *ngIf="source.awsElasticBlockStore.volumeID">
-        <div key>Volume ID</div>
+        <div key
+             i18n>Volume ID</div>
         <div value>{{source.awsElasticBlockStore.volumeID}}</div>
       </kd-property>
     </ng-container>
 
     <ng-container *ngIf="source?.cinder">
       <kd-property>
-        <div key>Type</div>
+        <div key
+             i18n>Type</div>
         <div value>Cinder</div>
       </kd-property>
 
       <kd-property *ngIf="source.cinder.fsType">
-        <div key>Filesystem type</div>
+        <div key
+             i18n>Filesystem type</div>
         <div value>{{source.cinder.fsType}}</div>
       </kd-property>
 
       <kd-property *ngIf="source.cinder.readOnly !== undefined">
-        <div key>Read only</div>
+        <div key
+             i18n>Read only</div>
         <div value>{{source.cinder.readOnly}}</div>
       </kd-property>
 
       <kd-property *ngIf="source.cinder.volumeID">
-        <div key>Volume ID</div>
+        <div key
+             i18n>Volume ID</div>
         <div value>{{source.cinder.volumeID}}</div>
       </kd-property>
     </ng-container>
 
     <ng-container *ngIf="source?.fc">
       <kd-property>
-        <div key>Type</div>
+        <div key
+             i18n>Type</div>
         <div value>FC (Fibre Channel)</div>
       </kd-property>
 
       <kd-property *ngIf="source.fc.fsType">
-        <div key>Filesystem type</div>
+        <div key
+             i18n>Filesystem type</div>
         <div value>{{source.fc.fsType}}</div>
       </kd-property>
 
       <kd-property *ngIf="source.fc.readOnly !== undefined">
-        <div key>Read only</div>
+        <div key
+             i18n>Read only</div>
         <div value>{{source.fc.readOnly}}</div>
       </kd-property>
 
       <kd-property *ngIf="source.fc.lun">
-        <div key>Volume ID</div>
+        <div key
+             i18n>Volume ID</div>
         <div value>{{source.fc.volumeID}}</div>
       </kd-property>
 
       <kd-property *ngIf="source.fc.targetWWNs"
                    fxFlex="100">
-        <div key>Target World Wide Names</div>
+        <div key
+             i18n>Target World Wide Names</div>
         <div value>
           <kd-chips [map]="source.fc.targetWWNs"></kd-chips>
         </div>
@@ -101,38 +116,45 @@ limitations under the License.
 
     <ng-container *ngIf="source?.flocker">
       <kd-property>
-        <div key>Type</div>
+        <div key
+             i18n>Type</div>
         <div value>Flocker</div>
       </kd-property>
 
       <kd-property *ngIf="source.flocker.datasetName">
-        <div key>Dataset name</div>
+        <div key
+             i18n>Dataset name</div>
         <div value>{{source.flocker.datasetName}}</div>
       </kd-property>
     </ng-container>
 
     <ng-container *ngIf="source?.gcePersistentDisk">
       <kd-property>
-        <div key>Type</div>
+        <div key
+             i18n>Type</div>
         <div value>GCE Persistent Disk</div>
 
         <kd-property *ngIf="source.gcePersistentDisk.fsType">
-          <div key>Filesystem type</div>
+          <div key
+               i18n>Filesystem type</div>
           <div value>{{source.gcePersistentDisk.fsType}}</div>
         </kd-property>
 
         <kd-property *ngIf="source.gcePersistentDisk.partition !== undefined">
-          <div key>Partition</div>
+          <div key
+               i18n>Partition</div>
           <div value>{{source.gcePersistentDisk.partition}}</div>
         </kd-property>
 
         <kd-property *ngIf="source.gcePersistentDisk.readOnly !== undefined">
-          <div key>Read only</div>
+          <div key
+               i18n>Read only</div>
           <div value>{{source.gcePersistentDisk.readOnly}}</div>
         </kd-property>
 
         <kd-property *ngIf="source.gcePersistentDisk.pdName">
-          <div key>Persistent disk name</div>
+          <div key
+               i18n>Persistent disk name</div>
           <div value>{{source.gcePersistentDisk.pdName}}</div>
         </kd-property>
       </kd-property>
@@ -140,137 +162,162 @@ limitations under the License.
 
     <ng-container *ngIf="source?.glusterfs">
       <kd-property>
-        <div key>Type</div>
+        <div key
+             i18n>Type</div>
         <div value>GlusterFS</div>
       </kd-property>
 
       <kd-property *ngIf="source.glusterfs.endpoints">
-        <div key>Endpoints</div>
+        <div key
+             i18n>Endpoints</div>
         <div value>{{source.glusterfs.endpoints}}</div>
       </kd-property>
 
       <kd-property *ngIf="source.glusterfs.path">
-        <div key>Path</div>
+        <div key
+             i18n>Path</div>
         <div value>{{source.glusterfs.path}}</div>
       </kd-property>
 
       <kd-property *ngIf="source.glusterfs.readOnly !== undefined">
-        <div key>Read only</div>
+        <div key
+             i18n>Read only</div>
         <div value>{{source.glusterfs.readOnly}}</div>
       </kd-property>
     </ng-container>
 
     <ng-container *ngIf="source?.hostPath">
       <kd-property>
-        <div key>Type</div>
+        <div key
+             i18n>Type</div>
         <div value>Hostpath</div>
       </kd-property>
 
       <kd-property *ngIf="source.hostPath.path">
-        <div key>Path</div>
+        <div key
+             i18n>Path</div>
         <div value>{{source.hostPath.path}}</div>
       </kd-property>
     </ng-container>
 
     <ng-container *ngIf="source?.iscsi">
       <kd-property>
-        <div key>Type</div>
+        <div key
+             i18n>Type</div>
         <div value>iSCSI</div>
       </kd-property>
 
       <kd-property *ngIf="source.iscsi.fsType">
-        <div key>Filesystem type</div>
+        <div key
+             i18n>Filesystem type</div>
         <div value>{{source.iscsi.fsType}}</div>
       </kd-property>
 
       <kd-property *ngIf="source.iscsi.iqn">
-        <div key>iSCSI Qualified Name</div>
+        <div key
+             i18n>iSCSI Qualified Name</div>
         <div value>{{source.iscsi.iqn}}</div>
       </kd-property>
 
       <kd-property *ngIf="source.iscsi.readOnly !== undefined">
-        <div key>Read only</div>
+        <div key
+             i18n>Read only</div>
         <div value>{{source.iscsi.readOnly}}</div>
       </kd-property>
 
       <kd-property *ngIf="source.iscsi.lun !== undefined">
-        <div key>iSCSI target lun number</div>
+        <div key
+             i18n>iSCSI target lun number</div>
         <div value>{{source.iscsi.lun}}</div>
       </kd-property>
 
       <kd-property *ngIf="source.iscsi.targetPortal">
-        <div key>Target portal</div>
+        <div key
+             i18n>Target portal</div>
         <div value>{{source.iscsi.targetPortal}}</div>
       </kd-property>
     </ng-container>
 
     <ng-container *ngIf="source?.nfs">
       <kd-property>
-        <div key>Type</div>
+        <div key
+             i18n>Type</div>
         <div value>NFS</div>
       </kd-property>
 
       <kd-property *ngIf="source.nfs.server">
-        <div key>Server</div>
+        <div key
+             i18n>Server</div>
         <div value>{{source.nfs.server}}</div>
       </kd-property>
 
       <kd-property *ngIf="source.nfs.path">
-        <div key>Path</div>
+        <div key
+             i18n>Path</div>
         <div value>{{source.nfs.path}}</div>
       </kd-property>
 
       <kd-property *ngIf="source.nfs.readOnly !== undefined">
-        <div key>Read only</div>
+        <div key
+             i18n>Read only</div>
         <div value>{{source.nfs.readOnly}}</div>
       </kd-property>
     </ng-container>
 
     <ng-container *ngIf="source?.rbd">
       <kd-property>
-        <div key>Type</div>
+        <div key
+             i18n>Type</div>
         <div value>RBD</div>
       </kd-property>
 
       <kd-property *ngIf="source.rbd.fsType">
-        <div key>Filesystem type</div>
+        <div key
+             i18n>Filesystem type</div>
         <div value>{{source.rbd.fsType}}</div>
       </kd-property>
 
       <kd-property *ngIf="source.rbd.image">
-        <div key>Image</div>
+        <div key
+             i18n>Image</div>
         <div value>{{source.rbd.image}}</div>
       </kd-property>
 
       <kd-property *ngIf="source.rbd.keyring">
-        <div key>Keyring</div>
+        <div key
+             i18n>Keyring</div>
         <div value>{{source.rbd.keyring}}</div>
       </kd-property>
 
       <kd-property *ngIf="source.rbd.monitors">
-        <div key>Monitors</div>
+        <div key
+             i18n>Monitors</div>
         <div value>
           <kd-chips [map]="source.rbd.monitors"></kd-chips>
         </div>
       </kd-property>
 
       <kd-property *ngIf="source.rbd.pool">
-        <div key>Pool</div>
+        <div key
+             i18n>Pool</div>
         <div value>{{source.rbd.pool}}</div>
       </kd-property>
 
       <kd-property *ngIf="source.rbd.readOnly !== undefined">
-        <div key>Read only</div>
+        <div key
+             i18n>Read only</div>
         <div value>{{source.rbd.readOnly}}</div>
       </kd-property>
 
       <kd-property *ngIf="source.rbd.secretRef?.name">
-        <div key>Secret reference name</div>
+        <div key
+             i18n>Secret reference name</div>
         <div value>{{source.rbd.secretRef.name}}</div>
       </kd-property>
 
       <kd-property *ngIf="source.rbd.user">
-        <div key>User</div>
+        <div key
+             i18n>User</div>
         <div value>{{source.rbd.user}}</div>
       </kd-property>
     </ng-container>

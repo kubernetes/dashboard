@@ -18,13 +18,15 @@ limitations under the License.
                 [objectMeta]="storageClass?.objectMeta"></kd-object-meta>
 
 <kd-card [initialized]="isInitialized">
-  <div title>Storage Class information</div>
+  <div title
+       i18n>Storage Class information</div>
   <div content
        *ngIf="isInitialized"
        fxLayout="row wrap">
     <kd-property *ngIf="storageClass?.provisioner"
                  fxFlex="100">
-      <div key>Provisioner</div>
+      <div key
+           i18n>Provisioner</div>
       <div value>{{storageClass?.provisioner}}</div>
     </kd-property>
     <kd-property *ngFor="let parameter of getParameterNames()">

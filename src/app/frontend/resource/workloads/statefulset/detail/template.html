@@ -18,28 +18,32 @@ limitations under the License.
                 [objectMeta]="statefulSet?.objectMeta"></kd-object-meta>
 
 <kd-card [initialized]="isInitialized">
-  <div title>Stateful Set information</div>
+  <div title
+       i18n>Stateful Set information</div>
 
   <div content
        *ngIf="isInitialized"
        fxLayout="row wrap">
     <kd-property *ngIf="statefulSet?.labelSelector"
                  fxFlex="100">
-      <div key>Label Selector</div>
+      <div key
+           i18n>Label Selector</div>
       <div value>
         <kd-chips [map]="statefulSet.labelSelector"></kd-chips>
       </div>
     </kd-property>
 
     <kd-property *ngIf="statefulSet?.containerImages">
-      <div key>Images</div>
+      <div key
+           i18n>Images</div>
       <div value>
         <kd-chips [map]="statefulSet.containerImages"></kd-chips>
       </div>
     </kd-property>
 
     <kd-property *ngIf="statefulSet?.initContainerImages">
-      <div key>Init images</div>
+      <div key
+           i18n>Init images</div>
       <div value>
         <kd-chips [map]="statefulSet.initContainerImages"></kd-chips>
       </div>

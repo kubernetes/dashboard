@@ -19,7 +19,8 @@ limitations under the License.
 
 <kd-card [initialized]="isInitialized"
          role="table">
-  <div title>Data</div>
+  <div title
+       i18n>Data</div>
   <div content>
     <kd-text-input *ngIf="configMap.data"
                    [text]="configMap.data"
@@ -27,6 +28,7 @@ limitations under the License.
                    [border]="false"
                    mode="json"></kd-text-input>
     <div *ngIf="!configMap.data"
-         class="kd-card-padding">There is no data to display.</div>
+         class="kd-card-padding"
+         i18n>There is no data to display.</div>
   </div>
 </kd-card>
