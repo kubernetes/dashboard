@@ -405,6 +405,10 @@
           <context context-type="sourcefile">../src/app/frontend/overview/template.html</context>
           <context context-type="linenumber">20</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/search/template.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="3ca17e5da2745672786f9d80be73ef0b4929b7fc" datatype="html">
         <source>Discovery and Load Balancing</source>
@@ -412,6 +416,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/overview/template.html</context>
           <context context-type="linenumber">46</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/search/template.html</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="0349fe54380ff3444a3a881afb66c9158a299575" datatype="html">
@@ -421,6 +429,10 @@
           <context context-type="sourcefile">../src/app/frontend/overview/template.html</context>
           <context context-type="linenumber">56</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/search/template.html</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="01269ce8051398188d50367ead1831407e77d504" datatype="html">
         <source>Create new resource</source>
@@ -428,6 +440,14 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/template.html</context>
           <context context-type="linenumber">43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="f4d1dd59b039ad818d9da7e29a773e10e41d9821" datatype="html">
+        <source>Cluster</source>
+        <target>Cluster</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/search/template.html</context>
+          <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f093741843dbabf8c934f2d9c23abc0636dd93f3" datatype="html">
@@ -4069,6 +4089,14 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/replicaset/detail/template.html</context>
           <context context-type="linenumber">38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="57b93a9b84d8693e539fe22e43688f26cdfb1783" datatype="html">
+        <source>Old Replica Sets</source>
+        <target>Anciens Replica Sets</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
+          <context context-type="linenumber">274</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5e843ed7c012ba1e818e2bf1997667ff93bb7f9e" datatype="html">
