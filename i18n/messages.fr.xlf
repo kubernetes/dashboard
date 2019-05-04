@@ -149,6 +149,10 @@
           <context context-type="sourcefile">../src/app/frontend/common/dialogs/download/template.html</context>
           <context context-type="linenumber">50</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/settings/global/saveanywaysdialog/template.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="896458a165a1aede12e3b6ce0db7a9f0274b2f55" datatype="html">
         <source>Abort</source>
@@ -4515,6 +4519,30 @@
           <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="130d46e5699c410721dbdf43691f5c957b5955ef" datatype="html">
+        <source>Settings have changed since last reload</source>
+        <target>Les paramètres ont été modifiés depuis le dernier chargement</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/settings/global/saveanywaysdialog/template.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="02b9a3951b251f014027ab26bea1e26c282be22f" datatype="html">
+        <source>Do you want to save them anyways?</source>
+        <target>Voulez-vous tout de même les sauvegarder ?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/settings/global/saveanywaysdialog/template.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="c8d1785038d461ec66b5799db21864182b35900a" datatype="html">
+        <source>Refresh</source>
+        <target>Actualiser</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/settings/global/saveanywaysdialog/template.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="6b13cf4001515430e636bceec206522ab955e2f1" datatype="html">
         <source>Global settings</source>
         <target>Paramètres généraux</target>
@@ -4547,6 +4575,58 @@
           <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="2509fab3be38702830979ab6368f37c52bfb8f80" datatype="html">
+        <source>Cluster name</source>
+        <target>Nom du cluster</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="29631c82a2182a8417a9bcc96229e0f637e2bbba" datatype="html">
+        <source>Cluster name appears in the browser window title if it is set</source>
+        <target>Le nom du cluster apparaît dans la barre de titre du navigateur s'il est défini</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2045151788cbdda7512752e408da59a6b54a8ef0" datatype="html">
+        <source>Items per page</source>
+        <target>Éléments par page</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="00b22e584955d3a5548b16c52742a0f9bf029221" datatype="html">
+        <source>Max number of items that can be displayed on each list page</source>
+        <target>Nombre maximal d'éléments affichés dans chaque page de liste</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="06d8132c519a81e0f3b166f7dfba16ca3ef74377" datatype="html">
+        <source>Auto-refresh time interval</source>
+        <target>Intervalle de temps d'actualisation automatique</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="e706a64c4a721f5440ab2cbe1a0ea57e592ec2c1" datatype="html">
+        <source>Number of seconds between every auto-refresh of logs</source>
+        <target>Nombre de secondes entre chaque actualisation automatique des journaux</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
+          <context context-type="linenumber">64</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="f8b53b407af242e77dc3391947f23988f3451e64" datatype="html">
         <source>Save</source>
         <target>Enregistrer</target>
@@ -4577,6 +4657,22 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/local/template.html</context>
           <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7bfa30b6cd6b020c84efa4c554890bf49932de18" datatype="html">
+        <source>Dark theme</source>
+        <target>Thème sombre</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/settings/local/template.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="96f2b8de376e3dbfaae05e9de836f8a740c0b803" datatype="html">
+        <source>Use dark theme in the whole app</source>
+        <target>Utiliser le thème sombre dans la totalité de l'application</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/settings/local/template.html</context>
+          <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
     </body>

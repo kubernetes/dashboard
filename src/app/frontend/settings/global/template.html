@@ -28,17 +28,22 @@ limitations under the License.
     <form #form="ngForm"
           (ngSubmit)="save(form)">
       <kd-settings-entry key="Cluster name"
-                         desc="Cluster name appears in the browser window title if it is set">
+                         i18n-key
+                         desc="Cluster name appears in the browser window title if it is set"
+                         i18n-desc>
         <mat-form-field fxFlex>
           <input [(ngModel)]="settings.clusterName"
                  name="clusterName"
+                 i18n-placeholder
                  placeholder="Cluster name"
                  type="text"
                  matInput>
         </mat-form-field>
       </kd-settings-entry>
       <kd-settings-entry key="Items per page"
-                         desc="Max number of items that can be displayed on each list page">
+                         i18n-key
+                         desc="Max number of items that can be displayed on each list page"
+                         i18n-desc>
         <div fxFlex>
           <mat-slider [(ngModel)]="settings.itemsPerPage"
                       name="itemsPerPage"
@@ -55,7 +60,9 @@ limitations under the License.
         </div>
       </kd-settings-entry>
       <kd-settings-entry key="Auto-refresh time interval"
-                         desc="Number of seconds between every auto-refresh of logs">
+                         i18n-key
+                         desc="Number of seconds between every auto-refresh of logs"
+                         i18n-desc>
         <div fxFlex>
           <mat-slider [(ngModel)]="settings.autoRefreshTimeInterval"
                       name="autoRefreshTimeInterval"
