@@ -35,10 +35,20 @@ limitations under the License.
   <div>
     <kd-cron-job-list (onchange)="onListUpdate($event)"
                       [hideable]="true"></kd-cron-job-list>
+    <kd-daemon-set-list (onchange)="onListUpdate($event)"
+                        [hideable]="true"></kd-daemon-set-list>
+    <kd-deployment-list (onchange)="onListUpdate($event)"
+                        [hideable]="true"></kd-deployment-list>
+    <kd-job-list (onchange)="onListUpdate($event)"
+                 [hideable]="true"></kd-job-list>
     <kd-pod-list (onchange)="onListUpdate($event)"
                  [hideable]="true"></kd-pod-list>
     <kd-replica-set-list (onchange)="onListUpdate($event)"
                          [hideable]="true"></kd-replica-set-list>
+    <kd-replication-controller-list (onchange)="onListUpdate($event)"
+                                    [hideable]="true"></kd-replication-controller-list>
+    <kd-stateful-set-list (onchange)="onListUpdate($event)"
+                          [hideable]="true"></kd-stateful-set-list>
   </div>
 
   <div class="kd-card-group-header kd-muted"
