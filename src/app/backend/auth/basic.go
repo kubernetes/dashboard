@@ -26,10 +26,12 @@ type basicAuthenticator struct {
 }
 
 // GetAuthInfo implements Authenticator interface. See Authenticator for more information.
-func (self *basicAuthenticator) GetAuthInfo() (api.AuthInfo, error) {
-	return api.AuthInfo{
-		Username: self.username,
-		Password: self.password,
+func (self *basicAuthenticator) GetAuthInfos() (map[string]api.AuthInfo, error) {
+	return map[string]api.AuthInfo{
+		authApi.DefaultUserName: {
+			Username: self.username,
+			Password: self.password,
+		},
 	}, nil
 }
 

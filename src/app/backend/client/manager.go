@@ -16,7 +16,9 @@ package client
 
 import (
 	"context"
+	"encoding/base64"
 	"log"
+	"net/url"
 	"strings"
 
 	"github.com/emicklei/go-restful"
@@ -208,7 +210,24 @@ func (self *clientManager) ClientCmdConfig(req *restful.Request) (clientcmd.Clie
 		return nil, err
 	}
 
-	cfg, err := self.buildConfigFromFlags(self.apiserverHost, self.kubeConfigPath)
+	server := self.apiserverHost
+	cookie, err := req.Request.Cookie("server")
+	if err == nil && len(cookie.Value) > 0 {
+		sv, err := url.QueryUnescape(cookie.Value)
+		if err == nil {
+			server = sv
+		}
+	}
+	caData := ""
+	cookie, err = req.Request.Cookie("certificateAuthorityData")
+	if err == nil && len(cookie.Value) > 0 {
+		ca, err := url.QueryUnescape(cookie.Value)
+		if err == nil {
+			caData = ca
+		}
+	}
+
+	cfg, err := self.buildConfigFromFlags(server, caData, self.kubeConfigPath)
 	if err != nil {
 		return nil, err
 	}
@@ -223,8 +242,8 @@ func (self *clientManager) CSRFKey() string {
 
 // HasAccess configures K8S api client with provided auth info and executes a basic check against apiserver to see
 // if it is valid.
-func (self *clientManager) HasAccess(authInfo api.AuthInfo) error {
-	cfg, err := self.buildConfigFromFlags(self.apiserverHost, self.kubeConfigPath)
+func (self *clientManager) HasAccess(authInfo api.AuthInfo, server string, caData string) error {
+	cfg, err := self.buildConfigFromFlags(server, caData, self.kubeConfigPath)
 	if err != nil {
 		return err
 	}
@@ -295,12 +314,16 @@ func (self *clientManager) initConfig(cfg *rest.Config) {
 
 // Returns rest Config based on provided apiserverHost and kubeConfigPath flags. If both are
 // empty then in-cluster config will be used and if it is nil the error is returned.
-func (self *clientManager) buildConfigFromFlags(apiserverHost, kubeConfigPath string) (
+func (self *clientManager) buildConfigFromFlags(apiserverHost string, caData string, kubeConfigPath string) (
 	*rest.Config, error) {
 	if len(kubeConfigPath) > 0 || len(apiserverHost) > 0 {
+		decodedCAData := []byte{}
+		if len(caData) > 0 {
+			decodedCAData, _ = base64.StdEncoding.DecodeString(caData)
+		}
 		return clientcmd.NewNonInteractiveDeferredLoadingClientConfig(
 			&clientcmd.ClientConfigLoadingRules{ExplicitPath: kubeConfigPath},
-			&clientcmd.ConfigOverrides{ClusterInfo: api.Cluster{Server: apiserverHost}}).ClientConfig()
+			&clientcmd.ConfigOverrides{ClusterInfo: api.Cluster{Server: apiserverHost, CertificateAuthorityData: decodedCAData}}).ClientConfig()
 	}
 
 	if self.isRunningInCluster() {
@@ -525,7 +548,7 @@ func (self *clientManager) initInsecureClients() {
 }
 
 func (self *clientManager) initInsecureConfig() {
-	cfg, err := self.buildConfigFromFlags(self.apiserverHost, self.kubeConfigPath)
+	cfg, err := self.buildConfigFromFlags(self.apiserverHost, "", self.kubeConfigPath)
 	if err != nil {
 		panic(err)
 	}

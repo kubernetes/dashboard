@@ -16,6 +16,7 @@ package auth
 
 import (
 	"net/http"
+	"net/url"
 
 	"github.com/emicklei/go-restful"
 
@@ -64,6 +65,21 @@ func (self AuthHandler) handleLogin(request *restful.Request, response *restful.
 		return
 	}
 
+	cookie, err := request.Request.Cookie("server")
+	if err == nil && len(cookie.Value) > 0 {
+		server, err := url.QueryUnescape(cookie.Value)
+		if err == nil {
+			loginSpec.Server = server
+		}
+	}
+	cookie, err = request.Request.Cookie("certificateAuthorityData")
+	if err == nil && len(cookie.Value) > 0 {
+		ca, err := url.QueryUnescape(cookie.Value)
+		if err == nil {
+			loginSpec.CertificateAuthorityData = ca
+		}
+	}
+
 	loginResponse, err := self.manager.Login(loginSpec)
 	if err != nil {
 		response.AddHeader("Content-Type", "text/plain")
@@ -86,16 +102,20 @@ func (self *AuthHandler) handleJWETokenRefresh(request *restful.Request, respons
 		return
 	}
 
-	refreshedJWEToken, err := self.manager.Refresh(tokenRefreshSpec.JWEToken)
-	if err != nil {
-		response.AddHeader("Content-Type", "text/plain")
-		response.WriteErrorString(errors.HandleHTTPError(err), err.Error()+"\n")
-		return
+	refreshedJWETokens := map[string]string{}
+	for userName, token := range tokenRefreshSpec.JWETokens {
+		refreshedJWEToken, err := self.manager.Refresh(token)
+		if err != nil {
+			response.AddHeader("Content-Type", "text/plain")
+			response.WriteErrorString(errors.HandleHTTPError(err), err.Error()+"\n")
+			return
+		}
+		refreshedJWETokens[userName] = refreshedJWEToken
 	}
 
 	response.WriteHeaderAndEntity(http.StatusOK, &authApi.AuthResponse{
-		JWEToken: refreshedJWEToken,
-		Errors:   make([]error, 0),
+		JWETokens: refreshedJWETokens,
+		Errors:    make([]error, 0),
 	})
 }
 

@@ -15,9 +15,11 @@
 package metric
 
 import (
+	"net/http"
 	"reflect"
 	"testing"
 
+	restful "github.com/emicklei/go-restful"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	integrationapi "github.com/kubernetes/dashboard/src/app/backend/integration/api"
@@ -71,18 +73,35 @@ func TestNewMetricManager(t *testing.T) {
 
 func TestMetricManager_Client(t *testing.T) {
 	cases := []struct {
+		request  *restful.Request
 		client   api.MetricClient
 		expected api.MetricClient
 	}{
-		{&FakeMetricClient{healthOk: false}, nil},
-		{&FakeMetricClient{healthOk: true}, &FakeMetricClient{healthOk: true}},
+		{
+			&restful.Request{
+				Request: &http.Request{
+					Header: http.Header(map[string][]string{}),
+				},
+			},
+			&FakeMetricClient{healthOk: false},
+			nil,
+		},
+		{
+			&restful.Request{
+				Request: &http.Request{
+					Header: http.Header(map[string][]string{}),
+				},
+			},
+			&FakeMetricClient{healthOk: true},
+			&FakeMetricClient{healthOk: true},
+		},
 	}
 
 	for _, c := range cases {
 		metricManager := NewMetricManager(nil)
 		metricManager.AddClient(c.client)
 		metricManager.Enable(fakeMetricClientID)
-		client := metricManager.Client()
+		client := metricManager.Client(c.request)
 
 		if !reflect.DeepEqual(client, c.expected) {
 			t.Errorf("Failed to get active metric client. Expected: %v, but got %v.",

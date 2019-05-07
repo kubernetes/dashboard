@@ -75,35 +75,35 @@ func TestKubeConfigAuthenticator(t *testing.T) {
 		info        string
 		authModes   authApi.AuthenticationModes
 		params      map[string]string
-		expected    api.AuthInfo
+		expected    map[string]api.AuthInfo
 		expectedErr error
 	}{
 		{
 			`If "token" is empty for the current "user" entry, the value of "auth-provider.config.access-token" is picked up.`,
 			authModeToken,
 			map[string]string{"accessToken": "foo", "token": ""},
-			api.AuthInfo{Token: "foo"},
+			map[string]api.AuthInfo{"": api.AuthInfo{Token: "foo"}},
 			nil,
 		},
 		{
 			`If "token" is provided for the current "user" entry, that token is picked up instead.`,
 			authModeToken,
 			map[string]string{"accessToken": "foo", "token": "bar"},
-			api.AuthInfo{Token: "bar"},
+			map[string]api.AuthInfo{"": api.AuthInfo{Token: "bar"}},
 			nil,
 		},
 		{
 			`If the "basic" auth mode is enabled, "username" and "password" are picked up.`,
 			authModeBasic,
 			map[string]string{"username": "foo", "password": "bar"},
-			api.AuthInfo{Username: "foo", Password: "bar"},
+			map[string]api.AuthInfo{"": api.AuthInfo{Username: "foo", Password: "bar"}},
 			nil,
 		},
 		{
 			`If no value for "token", "username" or "password" is provided or can be inferred, an error is returned.`,
 			authModeBoth,
 			map[string]string{},
-			api.AuthInfo{},
+			map[string]api.AuthInfo{},
 			errors.NewInvalid("Not enough data to create auth info structure."),
 		},
 	}
@@ -115,7 +115,7 @@ func TestKubeConfigAuthenticator(t *testing.T) {
 		}
 
 		kubeConfigAuthenticator := NewKubeConfigAuthenticator(&authApi.LoginSpec{KubeConfig: kb.String()}, c.authModes)
-		response, err := kubeConfigAuthenticator.GetAuthInfo()
+		response, err := kubeConfigAuthenticator.GetAuthInfos()
 
 		if !areErrorsEqual(err, c.expectedErr) {
 			t.Errorf("Test Case: %s. Expected error to be: %v, but got %v.",

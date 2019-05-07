@@ -18,6 +18,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
 import {AngularPageVisibilityModule} from 'angular-page-visibility';
+import {NgxWebstorageModule} from 'ngx-webstorage';
 import {ChromeModule} from './chrome/module';
 import {CoreModule} from './core.module';
 import {GlobalErrorHandler} from './error/handler';
@@ -38,6 +39,7 @@ import {LoginModule} from './login/module';
       useHash: true,
       onSameUrlNavigation: 'reload',
     }),
+    NgxWebstorageModule.forRoot(),
   ],
   providers: [{provide: ErrorHandler, useClass: GlobalErrorHandler}],
   declarations: [RootComponent],

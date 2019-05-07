@@ -22,7 +22,7 @@ import {CookieService} from 'ngx-cookie-service';
 import {of} from 'rxjs';
 import {Observable} from 'rxjs/Observable';
 import {first, switchMap} from 'rxjs/operators';
-import {AuthResponse, CsrfToken, LoginSpec, LoginStatus} from 'typings/backendapi';
+import {AuthResponse, CsrfToken, LoginSpec, LoginStatus, StringMap} from 'typings/backendapi';
 
 import {CONFIG} from '../../../index.config';
 import {K8SError} from '../../errors/errors';
@@ -52,23 +52,43 @@ export class AuthService {
     });
   }
 
-  private setTokenCookie_(token: string): void {
+  private setTokenCookie_(cookieName: string, token: string): void {
     if (!this.isLoginEnabled()) {
       return;
     }
 
+    if (cookieName.length > 0) {
+      cookieName = '-' + cookieName;
+    }
+
     if (this.isCurrentProtocolSecure_()) {
-      this.cookies_.set(this._config.authTokenCookieName, token, null, null, null, true, 'Strict');
+      this.cookies_.set(`${this._config.authTokenCookieName}${cookieName}`, token, null, null, null, true, 'Strict');
       return;
     }
 
     if (this.isCurrentDomainSecure_()) {
-      this.cookies_.set(this._config.authTokenCookieName, token, null, null, location.hostname, false, 'Strict');
+      this.cookies_.set(
+        `${this._config.authTokenCookieName}${cookieName}`,
+        token,
+        null,
+        null,
+        location.hostname,
+        false,
+        'Strict',
+      );
     }
   }
 
-  private getTokenCookie_(): string {
-    return this.cookies_.get(this._config.authTokenCookieName) || '';
+  private getTokenCookies_(): StringMap {
+    const userNames = JSON.parse(this.cookies_.get(this._config.userNamesCookieName));
+    const jweTokens: StringMap = {};
+    for (let userName of userNames) {
+      if (userName.length > 0) {
+        userName = '-' + userName;
+      }
+      jweTokens[userName] = this.cookies_.get(`${this._config.authTokenCookieName}${userName}`) || '';
+    }
+    return jweTokens;
   }
 
   private isCurrentDomainSecure_(): boolean {
@@ -99,9 +119,22 @@ export class AuthService {
       )
       .pipe(
         switchMap((authResponse: AuthResponse) => {
-          if (authResponse.jweToken.length !== 0 && authResponse.errors.length === 0) {
-            this.setTokenCookie_(authResponse.jweToken);
+          const userNames: string[] = [];
+          if (authResponse.errors.length === 0) {
+            for (const userName of Object.keys(authResponse.jweTokens)) {
+              this.setTokenCookie_(userName, authResponse.jweTokens[userName]);
+              userNames.push(userName);
+            }
           }
+          this.cookies_.set(
+            this._config.userNamesCookieName,
+            JSON.stringify(userNames),
+            null,
+            null,
+            null,
+            false,
+            'Strict',
+          );
 
           return of(authResponse.errors);
         }),
@@ -118,8 +151,8 @@ export class AuthService {
    * with token nothing will happen.
    */
   refreshToken(): void {
-    const token = this.getTokenCookie_();
-    if (token.length === 0) return;
+    const tokens = this.getTokenCookies_();
+    if (Object.keys(tokens).length === 0) return;
 
     this.csrfTokenService_
       .getTokenForAction('token')
@@ -127,7 +160,7 @@ export class AuthService {
         switchMap(csrfToken => {
           return this.http_.post<AuthResponse>(
             'api/v1/token/refresh',
-            {jweToken: token},
+            {jweTokens: tokens},
             {
               headers: new HttpHeaders().set(this._config.csrfHeaderName, csrfToken.token),
             },
@@ -136,9 +169,11 @@ export class AuthService {
       )
       .pipe(first())
       .subscribe((authResponse: AuthResponse) => {
-        if (authResponse.jweToken.length !== 0 && authResponse.errors.length === 0) {
-          this.setTokenCookie_(authResponse.jweToken);
-          return authResponse.jweToken;
+        if (authResponse.errors.length === 0) {
+          for (const userName of Object.keys(authResponse.jweTokens)) {
+            this.setTokenCookie_(userName, authResponse.jweTokens[userName]);
+          }
+          return authResponse.jweTokens;
         }
 
         return authResponse.errors;

@@ -82,7 +82,7 @@ func (self *fakeClientManager) CSRFKey() string {
 	return ""
 }
 
-func (self *fakeClientManager) HasAccess(authInfo api.AuthInfo) error {
+func (self *fakeClientManager) HasAccess(authInfo api.AuthInfo, server string, caData string) error {
 	return self.HasAccessError
 }
 
@@ -143,7 +143,7 @@ func TestAuthManager_Login(t *testing.T) {
 			&authApi.LoginSpec{Token: "existing-token"},
 			&fakeClientManager{HasAccessError: nil},
 			&fakeTokenManager{GeneratedToken: "generated-token"},
-			&authApi.AuthResponse{JWEToken: "generated-token", Errors: make([]error, 0)},
+			&authApi.AuthResponse{JWETokens: map[string]string{"": "generated-token"}, Errors: make([]error, 0)},
 			nil,
 		}, {
 			"Should propagate error on unexpected error",

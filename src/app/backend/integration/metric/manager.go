@@ -17,7 +17,10 @@ package metric
 import (
 	"fmt"
 	"log"
+	"net/url"
 	"time"
+
+	"github.com/emicklei/go-restful"
 
 	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
 	integrationapi "github.com/kubernetes/dashboard/src/app/backend/integration/api"
@@ -32,7 +35,7 @@ type MetricManager interface {
 	// AddClient adds metric client to client list supported by this manager.
 	AddClient(metricapi.MetricClient) MetricManager
 	// Client returns active Metric client.
-	Client() metricapi.MetricClient
+	Client(*restful.Request) metricapi.MetricClient
 	// Enable is responsible for switching active client if given integration application id
 	// is found and related application is healthy (we can connect to it).
 	Enable(integrationapi.IntegrationID) error
@@ -64,7 +67,21 @@ func (self *metricManager) AddClient(client metricapi.MetricClient) MetricManage
 }
 
 // Client implements metric manager interface. See MetricManager for more information.
-func (self *metricManager) Client() metricapi.MetricClient {
+func (self *metricManager) Client(request *restful.Request) metricapi.MetricClient {
+	// Create client dynamically if `sidecarHost` is set in cookie.
+	cookie, err := request.Request.Cookie("sidecarHost")
+	if err == nil && len(cookie.Value) > 0 {
+		sidecarHost, err := url.QueryUnescape(cookie.Value)
+		if err == nil {
+			metricClient, err := sidecar.CreateSidecarClient(sidecarHost, nil)
+			if err == nil {
+				return metricClient
+			}
+		}
+		log.Printf("There was an error during sidecar client dynamic creation: %s", err.Error())
+		return nil
+	}
+
 	return self.active
 }
 

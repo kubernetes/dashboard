@@ -33,6 +33,7 @@ import {KdStateService} from './state';
 import {ThemeService} from './theme';
 import {TitleService} from './title';
 import {VerberService} from './verber';
+import {KubeconfigService} from './kubeconfig';
 import {PluginsConfigService} from './plugin';
 import {PluginLoaderService} from '../pluginloader/pluginloader.service';
 import {ClientPluginLoaderService} from '../pluginloader/clientloader.service';
@@ -55,6 +56,7 @@ import {PinnerService} from './pinner';
     NamespaceService,
     ActionbarService,
     VerberService,
+    KubeconfigService,
     PinnerService,
     HistoryService,
     LogService,

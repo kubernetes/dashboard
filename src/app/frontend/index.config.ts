@@ -24,6 +24,11 @@ export interface Config {
   authTokenHeaderName: string;
   defaultNamespace: string;
   authModeCookieName: string;
+  serverCookieName: string;
+  sidecarHostCookieName: string;
+  kubeconfigSessionStorageName: string;
+  userNamesCookieName: string;
+  certificateAuthorityDataCookieName: string;
 }
 
 export const CONFIG: Config = {
@@ -33,6 +38,11 @@ export const CONFIG: Config = {
   skipLoginPageCookieName: 'skipLoginPage',
   defaultNamespace: 'default',
   authModeCookieName: 'authMode',
+  certificateAuthorityDataCookieName: 'certificateAuthorityData',
+  serverCookieName: 'server',
+  sidecarHostCookieName: 'sidecarHost',
+  userNamesCookieName: 'userNames',
+  kubeconfigSessionStorageName: 'kubeconfig',
 };
 
 // Override default material tooltip values.

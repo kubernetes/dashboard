@@ -23,6 +23,7 @@ import {map} from 'rxjs/operators';
 import {Config, CONFIG_DI_TOKEN} from '../index.config';
 import {AsKdError, K8SError} from '../common/errors/errors';
 import {AuthService} from '../common/services/global/authentication';
+import {KubeconfigService} from '../common/services/global/kubeconfig';
 import {PluginsConfigService} from '../common/services/global/plugin';
 
 enum LoginModes {
@@ -43,7 +44,6 @@ export class LoginComponent implements OnInit {
 
   private enabledAuthenticationModes_: AuthenticationMode[] = [];
   private isLoginSkippable_ = false;
-  private kubeconfig_: string;
   private token_: string;
   private username_: string;
   private password_: string;
@@ -55,6 +55,7 @@ export class LoginComponent implements OnInit {
     private readonly http_: HttpClient,
     private readonly ngZone_: NgZone,
     private readonly route_: ActivatedRoute,
+    private readonly kubeconfigService_: KubeconfigService,
     private readonly pluginConfigService_: PluginsConfigService,
     @Inject(CONFIG_DI_TOKEN) private readonly CONFIG: Config,
   ) {}
@@ -84,6 +85,8 @@ export class LoginComponent implements OnInit {
         this.errors = [state.error];
       }
     });
+
+    this.kubeconfigService_.clearKubeconfig();
   }
 
   getEnabledAuthenticationModes(): AuthenticationMode[] {
@@ -133,6 +136,7 @@ export class LoginComponent implements OnInit {
   }
 
   onChange(event: Event & KdFile): void {
+    this.kubeconfigService_.clearKubeconfig();
     switch (this.selectedAuthenticationMode) {
       case LoginModes.Kubeconfig:
         this.onFileLoad_(event as KdFile);
@@ -152,13 +156,13 @@ export class LoginComponent implements OnInit {
   }
 
   private onFileLoad_(file: KdFile): void {
-    this.kubeconfig_ = file.content;
+    this.kubeconfigService_.setKubeconfig(file.content);
   }
 
   private getLoginSpec_(): LoginSpec {
     switch (this.selectedAuthenticationMode) {
       case LoginModes.Kubeconfig:
-        return {kubeConfig: this.kubeconfig_} as LoginSpec;
+        return {kubeconfig: this.kubeconfigService_.getConfigYaml()} as LoginSpec;
       case LoginModes.Token:
         return {token: this.token_} as LoginSpec;
       case LoginModes.Basic:

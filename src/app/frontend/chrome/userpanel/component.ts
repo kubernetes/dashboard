@@ -15,6 +15,7 @@
 import {Component, OnInit} from '@angular/core';
 import {LoginStatus} from '@api/backendapi';
 import {AuthService} from '../../common/services/global/authentication';
+import {KubeconfigService} from '../../common/services/global/kubeconfig';
 
 @Component({
   selector: 'kd-user-panel',
@@ -27,14 +28,18 @@ import {AuthService} from '../../common/services/global/authentication';
 export class UserPanelComponent implements OnInit {
   loginStatus: LoginStatus;
   isLoginStatusInitialized = false;
+  currentContext: string;
+  contexts: string[];
 
-  constructor(private readonly authService_: AuthService) {}
+  constructor(private readonly authService_: AuthService, private readonly kubeconfigService_: KubeconfigService) {}
 
   ngOnInit(): void {
     this.authService_.getLoginStatus().subscribe(status => {
       this.loginStatus = status;
       this.isLoginStatusInitialized = true;
     });
+    this.contexts = this.kubeconfigService_.getContexts();
+    this.currentContext = this.kubeconfigService_.getCurrentContext();
   }
 
   isAuthSkipped(): boolean {
@@ -47,6 +52,15 @@ export class UserPanelComponent implements OnInit {
 
   isAuthEnabled(): boolean {
     return this.loginStatus ? this.loginStatus.httpsMode : false;
+  }
+
+  isCurrentContext(context: string): boolean {
+    this.currentContext = this.kubeconfigService_.getCurrentContext();
+    return context === this.currentContext;
+  }
+
+  switchContext(context: string): void {
+    this.kubeconfigService_.switchContext(context);
   }
 
   logout(): void {

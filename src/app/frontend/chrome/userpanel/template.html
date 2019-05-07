@@ -30,6 +30,12 @@ limitations under the License.
 
     </ng-container>
   </div>
+  <mat-divider *ngIf="contexts && contexts.length"></mat-divider>
+  <button mat-menu-item
+          *ngFor="let context of contexts"
+          (click)="switchContext(context)"
+          [disabled]="isCurrentContext(context)">{{context}}
+  </button>
   <mat-divider *ngIf="!loginStatus?.headerPresent"></mat-divider>
   <button mat-menu-item
           *ngIf="isAuthSkipped()"
@@ -42,7 +48,6 @@ limitations under the License.
           i18n>Sign out
   </button>
 </mat-menu>
-
 <button mat-icon-button
         color="primary"
         [matMenuTriggerFor]="actions"

@@ -26,6 +26,9 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 LOCAL_UID=$(id -u)
 LOCAL_GID=$(id -g)
 
+# Set max http header size for NodeJS
+NODE_OPTIONS=${NODE_OPTIONS:-"--max-http-header-size=102400"}
+
 # K8S_DASHBOARD_NPM_CMD will be passed into container and will be used
 # by run-npm-command.sh on container. Then the shell sciprt will run `npm`
 # command with K8S_DASHBOAD_NPM_CMD.
@@ -88,6 +91,7 @@ docker run \
   -e K8S_DASHBOARD_DEBUG=${K8S_DASHBOARD_DEBUG} \
   -e LOCAL_UID="${LOCAL_UID}" \
   -e LOCAL_GID="${LOCAL_GID}" \
+  -e NODE_OPTIONS="${NODE_OPTIONS}" \
   -p ${K8S_DASHBOARD_PORT}:${K8S_DASHBOARD_PORT} \
   -p ${K8S_DASHBOARD_DEBUG_PORT}:${K8S_DASHBOARD_DEBUG_PORT} \
   ${DOCKER_RUN_OPTS} \

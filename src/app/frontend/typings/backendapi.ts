@@ -599,7 +599,7 @@ export interface ProtocolValiditySpec {
 
 // Auth related types
 export interface AuthResponse {
-  jweToken: string;
+  jweTokens: StringMap;
   errors: K8sError[];
 }
 
@@ -1164,3 +1164,37 @@ export interface Plugin extends Resource {
 export interface PluginList extends ResourceList {
   items?: Plugin[];
 }
+
+export interface Cluster {
+  name: string;
+  cluster: {
+    certificateAuthorityData: string;
+    server: string;
+    sidecarHost: string;
+  };
+}
+
+export interface User {
+  name: string;
+  user: {
+    token: string;
+  };
+}
+
+export interface Context {
+  name: string;
+  context: {
+    cluster: string;
+    user: string;
+    namespace: string;
+  };
+}
+
+export interface Kubeconfig {
+  clusters: Cluster[];
+  contexts: Context[];
+  currentContext: string;
+  users: User[];
+}
+
+export const DefaultUserName = '';

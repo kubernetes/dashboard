@@ -28,6 +28,7 @@ import {K8SError, KdError} from 'common/errors/errors';
 import {AuthService} from 'common/services/global/authentication';
 import {from, Observable, of} from 'rxjs';
 import {LoginComponent} from './component';
+import {KubeconfigService} from '../common/services/global/kubeconfig';
 import {PluginsConfigService} from '../common/services/global/plugin';
 import {PluginMetadata} from '@api/frontendapi';
 
@@ -76,6 +77,14 @@ class MockRouter {
   navigate(): void {}
 }
 
+class MockKubeconfigService {
+  setKubeconfig(): void {}
+  clearKubeconfig(): void {}
+  getCurrentToken(): string {
+    return '';
+  }
+}
+
 class MockPluginsConfigService {
   init(): void {}
   refreshConfig(): void {}
@@ -121,6 +130,10 @@ describe('LoginComponent', () => {
         {
           provide: Router,
           useClass: MockRouter,
+        },
+        {
+          provide: KubeconfigService,
+          useClass: MockKubeconfigService,
         },
         {
           provide: PluginsConfigService,

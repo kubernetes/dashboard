@@ -67,18 +67,18 @@ type kubeConfigAuthenticator struct {
 }
 
 // GetAuthInfo implements Authenticator interface. See Authenticator for more information.
-func (self *kubeConfigAuthenticator) GetAuthInfo() (api.AuthInfo, error) {
+func (self *kubeConfigAuthenticator) GetAuthInfos() (map[string]api.AuthInfo, error) {
 	kubeConfig, err := self.parseKubeConfig(self.fileContent)
 	if err != nil {
-		return api.AuthInfo{}, err
+		return map[string]api.AuthInfo{}, err
 	}
 
-	info, err := self.getCurrentUserInfo(*kubeConfig)
+	infos, err := self.getUserInfos(*kubeConfig)
 	if err != nil {
-		return api.AuthInfo{}, err
+		return map[string]api.AuthInfo{}, err
 	}
 
-	return self.getAuthInfo(info)
+	return self.getAuthInfos(infos)
 }
 
 // Parses kubeconfig file and returns kubeConfig object.
@@ -91,50 +91,63 @@ func (self *kubeConfigAuthenticator) parseKubeConfig(bytes []byte) (*kubeConfig,
 	return kubeConfig, nil
 }
 
-// Returns user info based on defined current context. In case it is not found error is returned.
-func (self *kubeConfigAuthenticator) getCurrentUserInfo(config kubeConfig) (userInfo, error) {
-	userName := ""
+// Returns user infos. User info for current context would be set at first. In case it is not found error is returned.
+func (self *kubeConfigAuthenticator) getUserInfos(config kubeConfig) (map[string]userInfo, error) {
+	currentUserName := ""
 	for _, context := range config.Contexts {
 		if context.Name == config.CurrentContext {
-			userName = context.Context.User
+			currentUserName = context.Context.User
 		}
 	}
 
-	if len(userName) == 0 {
-		return userInfo{}, errors.NewInvalid("Context matching current context not found. Check if your config file is valid.")
+	if len(currentUserName) == 0 {
+		return map[string]userInfo{}, errors.NewInvalid("Context matching current context not found. Check if your config file is valid.")
 	}
 
+	currentUser := false
+	userInfos := make(map[string]userInfo, len(config.Users))
 	for _, user := range config.Users {
-		if user.Name == userName {
-			return user.User, nil
+		userName := user.Name
+		if userName == currentUserName {
+			currentUser = true
+			userName = authApi.DefaultUserName
 		}
+		userInfos[userName] = user.User
 	}
 
-	return userInfo{}, errors.NewInvalid("User matching current context user not found. Check if your config file is valid.")
+	if !currentUser {
+		return map[string]userInfo{}, errors.NewInvalid("User matching current context user not found. Check if your config file is valid.")
+	}
+
+	return userInfos, nil
 }
 
 // Returns auth info structure based on provided user info or error in case not enough data has been provided.
-func (self *kubeConfigAuthenticator) getAuthInfo(info userInfo) (api.AuthInfo, error) {
-	// If "token" is empty for the current "user" entry, fallback to the value of "auth-provider.config.access-token".
-	if len(info.Token) == 0 {
-		info.Token = info.AuthProvider.Config.AccessToken
+func (self *kubeConfigAuthenticator) getAuthInfos(infos map[string]userInfo) (map[string]api.AuthInfo, error) {
+	results := map[string]api.AuthInfo{}
+	for userName, info := range infos {
+		// If "token" is empty for the current "user" entry, fallback to the value of "auth-provider.config.access-token".
+		if len(info.Token) == 0 {
+			info.Token = info.AuthProvider.Config.AccessToken
+		}
+
+		if len(info.Token) == 0 && (len(info.Password) == 0 || len(info.Username) == 0) {
+			return map[string]api.AuthInfo{}, errors.NewInvalid("Not enough data to create auth info structure.")
+		}
+
+		result := api.AuthInfo{}
+		if self.authModes.IsEnabled(authApi.Token) {
+			result.Token = info.Token
+		}
+
+		if self.authModes.IsEnabled(authApi.Basic) {
+			result.Username = info.Username
+			result.Password = info.Password
+		}
+		results[userName] = result
 	}
 
-	if len(info.Token) == 0 && (len(info.Password) == 0 || len(info.Username) == 0) {
-		return api.AuthInfo{}, errors.NewInvalid("Not enough data to create auth info structure.")
-	}
-
-	result := api.AuthInfo{}
-	if self.authModes.IsEnabled(authApi.Token) {
-		result.Token = info.Token
-	}
-
-	if self.authModes.IsEnabled(authApi.Basic) {
-		result.Username = info.Username
-		result.Password = info.Password
-	}
-
-	return result, nil
+	return results, nil
 }
 
 // NewBasicAuthenticator returns Authenticator based on LoginSpec.

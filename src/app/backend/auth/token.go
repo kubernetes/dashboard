@@ -25,9 +25,11 @@ type tokenAuthenticator struct {
 }
 
 // GetAuthInfo implements Authenticator interface. See Authenticator for more information.
-func (self tokenAuthenticator) GetAuthInfo() (api.AuthInfo, error) {
-	return api.AuthInfo{
-		Token: self.token,
+func (self tokenAuthenticator) GetAuthInfos() (map[string]api.AuthInfo, error) {
+	return map[string]api.AuthInfo{
+		authApi.DefaultUserName: {
+			Token: self.token,
+		},
 	}, nil
 }
 
