@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component} from '@angular/core';
-import {VersionInfo} from '@api/frontendapi';
-import {ConfigService} from '../../common/services/global/config';
+import { Component } from '@angular/core';
+import { VersionInfo } from '@api/frontendapi';
+import { ConfigService } from '../../common/services/global/config';
 
-@Component({selector: '', templateUrl: './template.html'})
+@Component({ selector: '', templateUrl: './template.html' })
 export class ActionbarComponent {
   versionInfo: VersionInfo;
 

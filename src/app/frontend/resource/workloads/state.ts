@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Ng2StateDeclaration} from '@uirouter/angular';
+import { Ng2StateDeclaration } from '@uirouter/angular';
 
-import {WorkloadsComponent} from './component';
+import { WorkloadsComponent } from './component';
 
 export const workloadsFutureState: Ng2StateDeclaration = {
   name: 'workloads.**',
@@ -23,7 +23,7 @@ export const workloadsFutureState: Ng2StateDeclaration = {
   data: {
     kdBreadcrumbs: {
       label: 'Workloads',
-    }
+    },
   },
 };
 
@@ -35,6 +35,6 @@ export const workloadsState: Ng2StateDeclaration = {
   data: {
     kdBreadcrumbs: {
       label: 'Workloads',
-    }
+    },
   },
 };

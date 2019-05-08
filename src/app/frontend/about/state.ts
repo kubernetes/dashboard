@@ -12,17 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Ng2StateDeclaration} from '@uirouter/angular';
+import { Ng2StateDeclaration } from '@uirouter/angular';
 
-import {chromeState} from '../chrome/state';
+import { chromeState } from '../chrome/state';
 
-import {ActionbarComponent} from './actionbar/component';
-import {AboutComponent} from './component';
+import { ActionbarComponent } from './actionbar/component';
+import { AboutComponent } from './component';
 
 export const aboutFutureState: Ng2StateDeclaration = {
   name: 'about.**',
   url: '/about',
-  loadChildren: './about/module#AboutModule'
+  loadChildren: './about/module#AboutModule',
 };
 
 export const aboutState: Ng2StateDeclaration = {
@@ -32,14 +32,14 @@ export const aboutState: Ng2StateDeclaration = {
   data: {
     kdBreadcrumbs: {
       label: 'About',
-    }
+    },
   },
   views: {
-    '$default': {
+    $default: {
       component: AboutComponent,
     },
-    'actionbar': {
+    actionbar: {
       component: ActionbarComponent,
-    }
+    },
   },
 };

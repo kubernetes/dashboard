@@ -12,25 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {UIRouterModule} from '@uirouter/angular';
+import { NgModule } from '@angular/core';
+import { UIRouterModule } from '@uirouter/angular';
 
-import {ComponentsModule} from '../../../common/components/module';
-import {SharedModule} from '../../../shared.module';
+import { ComponentsModule } from '../../../common/components/module';
+import { SharedModule } from '../../../shared.module';
 
-import {SecretDetailComponent} from './detail/component';
-import {secretDetailState} from './detail/state';
-import {SecretList} from './list/component';
-import {secretListState} from './list/state';
-import {secretState} from './state';
+import { SecretDetailComponent } from './detail/component';
+import { secretDetailState } from './detail/state';
+import { SecretList } from './list/component';
+import { secretListState } from './list/state';
+import { secretState } from './state';
 
 @NgModule({
   imports: [
     SharedModule,
     ComponentsModule,
-    UIRouterModule.forChild({states: [secretState, secretListState, secretDetailState]}),
+    UIRouterModule.forChild({
+      states: [secretState, secretListState, secretDetailState],
+    }),
   ],
   declarations: [SecretList, SecretDetailComponent],
 })
-export class SecretModule {
-}
+export class SecretModule {}

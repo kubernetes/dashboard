@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Ng2StateDeclaration} from '@uirouter/angular';
+import { Ng2StateDeclaration } from '@uirouter/angular';
 
-import {configState} from '../../state';
-import {stateName, stateUrl} from '../state';
-import {PersistentVolumeClaimList} from './component';
+import { configState } from '../../state';
+import { stateName, stateUrl } from '../state';
+import { PersistentVolumeClaimList } from './component';
 
 export const persistentVolumeClaimListState: Ng2StateDeclaration = {
   name: `${stateName}.list`,
@@ -26,6 +26,6 @@ export const persistentVolumeClaimListState: Ng2StateDeclaration = {
     kdBreadcrumbs: {
       label: 'Persistent Volume Claims',
       parent: configState.name,
-    }
+    },
   },
 };

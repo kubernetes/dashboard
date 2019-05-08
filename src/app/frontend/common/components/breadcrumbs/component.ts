@@ -12,10 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Input, OnInit} from '@angular/core';
-import {Breadcrumb} from '@api/frontendapi';
-import {StateDeclaration, StateObject, StateService, TransitionService} from '@uirouter/core';
-import {BreadcrumbsService} from '../../services/global/breadcrumbs';
+import { Component, Input, OnInit } from '@angular/core';
+import { Breadcrumb } from '@api/frontendapi';
+import {
+  StateDeclaration,
+  StateObject,
+  StateService,
+  TransitionService,
+} from '@uirouter/core';
+import { BreadcrumbsService } from '../../services/global/breadcrumbs';
 
 /**
  * Should be used only within actionbar component.
@@ -64,8 +69,10 @@ export class BreadcrumbsComponent implements OnInit {
   @Input() limit: number;
   breadcrumbs: Breadcrumb[];
   constructor(
-      private readonly state_: StateService, private readonly transition_: TransitionService,
-      private readonly breadcrumbs_: BreadcrumbsService) {}
+    private readonly state_: StateService,
+    private readonly transition_: TransitionService,
+    private readonly breadcrumbs_: BreadcrumbsService
+  ) {}
 
   ngOnInit(): void {
     this.initBreadcrumbs_();
@@ -76,7 +83,7 @@ export class BreadcrumbsComponent implements OnInit {
 
   /** Initializes breadcrumbs array by traversing states parents until none is found. */
   initBreadcrumbs_(): void {
-    let state: StateObject|StateDeclaration = this.state_.$current;
+    let state: StateObject | StateDeclaration = this.state_.$current;
     const breadcrumbs: Breadcrumb[] = [];
 
     while (state && state.name && this.canAddBreadcrumb_(breadcrumbs)) {
@@ -100,7 +107,7 @@ export class BreadcrumbsComponent implements OnInit {
     return this.limit === undefined || this.limit > breadcrumbs.length;
   }
 
-  private getBreadcrumb_(state: StateObject|StateDeclaration): Breadcrumb {
+  private getBreadcrumb_(state: StateObject | StateDeclaration): Breadcrumb {
     const breadcrumb = new Breadcrumb();
 
     breadcrumb.label = this.breadcrumbs_.getDisplayName(state);

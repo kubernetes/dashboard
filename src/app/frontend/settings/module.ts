@@ -12,24 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {UIRouterModule} from '@uirouter/angular';
+import { NgModule } from '@angular/core';
+import { UIRouterModule } from '@uirouter/angular';
 
-import {ComponentsModule} from '../common/components/module';
-import {SharedModule} from '../shared.module';
+import { ComponentsModule } from '../common/components/module';
+import { SharedModule } from '../shared.module';
 
-import {SettingsComponent} from './component';
-import {SettingsEntryComponent} from './entry/component';
-import {GlobalSettingsComponent} from './global/component';
-import {SaveAnywayDialog} from './global/saveanywaysdialog/dialog';
-import {LocalSettingsComponent} from './local/component';
-import {settingsState} from './state';
+import { SettingsComponent } from './component';
+import { SettingsEntryComponent } from './entry/component';
+import { GlobalSettingsComponent } from './global/component';
+import { SaveAnywayDialog } from './global/saveanywaysdialog/dialog';
+import { LocalSettingsComponent } from './local/component';
+import { settingsState } from './state';
 
 @NgModule({
   imports: [
     SharedModule,
     ComponentsModule,
-    UIRouterModule.forChild({states: [settingsState]}),
+    UIRouterModule.forChild({ states: [settingsState] }),
   ],
   declarations: [
     GlobalSettingsComponent,
@@ -38,9 +38,6 @@ import {settingsState} from './state';
     SettingsEntryComponent,
     SaveAnywayDialog,
   ],
-  entryComponents: [
-    SaveAnywayDialog,
-  ],
+  entryComponents: [SaveAnywayDialog],
 })
-export class SettingsModule {
-}
+export class SettingsModule {}

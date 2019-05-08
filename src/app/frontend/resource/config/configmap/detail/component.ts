@@ -12,15 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ConfigMapDetail} from '@api/backendapi';
-import {StateService} from '@uirouter/core';
-import {Subscription} from 'rxjs/Subscription';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ConfigMapDetail } from '@api/backendapi';
+import { StateService } from '@uirouter/core';
+import { Subscription } from 'rxjs/Subscription';
 
-import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
-import {NotificationsService} from '../../../../common/services/global/notifications';
-import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
-import {NamespacedResourceService} from '../../../../common/services/resource/resource';
+import {
+  ActionbarService,
+  ResourceMeta,
+} from '../../../../common/services/global/actionbar';
+import { NotificationsService } from '../../../../common/services/global/notifications';
+import {
+  EndpointManager,
+  Resource,
+} from '../../../../common/services/resource/endpoint';
+import { NamespacedResourceService } from '../../../../common/services/resource/resource';
 
 @Component({
   selector: 'kd-config-map-detail',
@@ -33,22 +39,28 @@ export class ConfigMapDetailComponent implements OnInit, OnDestroy {
   isInitialized = false;
 
   constructor(
-      private readonly configMap_: NamespacedResourceService<ConfigMapDetail>,
-      private readonly actionbar_: ActionbarService, private readonly state_: StateService,
-      private readonly notifications_: NotificationsService) {}
+    private readonly configMap_: NamespacedResourceService<ConfigMapDetail>,
+    private readonly actionbar_: ActionbarService,
+    private readonly state_: StateService,
+    private readonly notifications_: NotificationsService
+  ) {}
 
   ngOnInit(): void {
     this.configMapName_ = this.state_.params.resourceName;
-    this.configMapSubscription_ =
-        this.configMap_
-            .get(EndpointManager.resource(Resource.configMap, true).detail(), this.configMapName_)
-            .startWith({})
-            .subscribe((d: ConfigMapDetail) => {
-              this.configMap = d;
-              this.notifications_.pushErrors(d.errors);
-              this.actionbar_.onInit.emit(new ResourceMeta('Config Map', d.objectMeta, d.typeMeta));
-              this.isInitialized = true;
-            });
+    this.configMapSubscription_ = this.configMap_
+      .get(
+        EndpointManager.resource(Resource.configMap, true).detail(),
+        this.configMapName_
+      )
+      .startWith({})
+      .subscribe((d: ConfigMapDetail) => {
+        this.configMap = d;
+        this.notifications_.pushErrors(d.errors);
+        this.actionbar_.onInit.emit(
+          new ResourceMeta('Config Map', d.objectMeta, d.typeMeta)
+        );
+        this.isInitialized = true;
+      });
   }
 
   ngOnDestroy(): void {

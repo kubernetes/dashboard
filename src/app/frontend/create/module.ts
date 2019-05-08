@@ -12,18 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {UIRouterModule} from '@uirouter/angular';
+import { NgModule } from '@angular/core';
+import { UIRouterModule } from '@uirouter/angular';
 
-import {ComponentsModule} from '../common/components/module';
-import {CreateServiceModule} from '../common/services/create/module';
-import {SharedModule} from '../shared.module';
+import { ComponentsModule } from '../common/components/module';
+import { CreateServiceModule } from '../common/services/create/module';
+import { SharedModule } from '../shared.module';
 
-import {CreateComponent} from './component';
-import {CreateFromFileComponent} from './from/file/component';
-import {CreateFromFormModule} from './from/form/module';
-import {CreateFromInputComponent} from './from/input/component';
-import {createState} from './state';
+import { CreateComponent } from './component';
+import { CreateFromFileComponent } from './from/file/component';
+import { CreateFromFormModule } from './from/form/module';
+import { CreateFromInputComponent } from './from/input/component';
+import { createState } from './state';
 
 @NgModule({
   imports: [
@@ -31,9 +31,12 @@ import {createState} from './state';
     ComponentsModule,
     CreateFromFormModule,
     CreateServiceModule,
-    UIRouterModule.forChild({states: [createState]}),
+    UIRouterModule.forChild({ states: [createState] }),
   ],
-  declarations: [CreateComponent, CreateFromInputComponent, CreateFromFileComponent],
+  declarations: [
+    CreateComponent,
+    CreateFromInputComponent,
+    CreateFromFileComponent,
+  ],
 })
-export class CreateModule {
-}
+export class CreateModule {}

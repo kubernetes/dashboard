@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Ng2StateDeclaration} from '@uirouter/angular';
+import { Ng2StateDeclaration } from '@uirouter/angular';
 
-import {LogsScaleDefaultActionbar} from '../../../../common/components/actionbars/logsscaledefault/component';
-import {addNamespacedResourceStateParamsToUrl} from '../../../../common/params/params';
-import {stateName, stateUrl} from '../state';
+import { LogsScaleDefaultActionbar } from '../../../../common/components/actionbars/logsscaledefault/component';
+import { addNamespacedResourceStateParamsToUrl } from '../../../../common/params/params';
+import { stateName, stateUrl } from '../state';
 
-import {ReplicationControllerDetailComponent} from './component';
+import { ReplicationControllerDetailComponent } from './component';
 
 export const replicationControllerDetailState: Ng2StateDeclaration = {
   name: `${stateName}.detail`,
@@ -30,11 +30,11 @@ export const replicationControllerDetailState: Ng2StateDeclaration = {
     },
   },
   views: {
-    '$default': {
+    $default: {
       component: ReplicationControllerDetailComponent,
     },
     'actionbar@chrome': {
       component: LogsScaleDefaultActionbar,
-    }
+    },
   },
 };

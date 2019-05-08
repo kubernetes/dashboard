@@ -12,24 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {UIRouterModule} from '@uirouter/angular';
+import { NgModule } from '@angular/core';
+import { UIRouterModule } from '@uirouter/angular';
 
-import {ComponentsModule} from '../common/components/module';
-import {SharedModule} from '../shared.module';
+import { ComponentsModule } from '../common/components/module';
+import { SharedModule } from '../shared.module';
 
-import {SearchComponent} from './component';
-import {searchState} from './state';
+import { SearchComponent } from './component';
+import { searchState } from './state';
 
 @NgModule({
   imports: [
     SharedModule,
     ComponentsModule,
-    UIRouterModule.forChild({states: [searchState]}),
+    UIRouterModule.forChild({ states: [searchState] }),
   ],
-  declarations: [
-    SearchComponent,
-  ],
+  declarations: [SearchComponent],
 })
-export class SearchModule {
-}
+export class SearchModule {}

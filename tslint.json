@@ -4,5 +4,10 @@
     "exclude": [
       "src/app/frontend/environments/version.ts"
     ]
+  },
+  "rules": {
+    "ban-ts-ignore": false,
+    "deprecation": false,
+    "interface-over-type-literal": false
   }
 }

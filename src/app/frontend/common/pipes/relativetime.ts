@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Pipe} from '@angular/core';
-import {ConfigService} from '../services/global/config';
+import { Pipe } from '@angular/core';
+import { ConfigService } from '../services/global/config';
 
 const i18n = {
   MSG_TIME_UNIT_SECOND_LABEL: 'a second',
@@ -57,7 +57,7 @@ const timeConstants = {
   NOT_YET: i18n.MSG_TIME_NOT_YET_LABEL,
 };
 
-@Pipe({name: 'kdRelativeTime'})
+@Pipe({ name: 'kdRelativeTime' })
 export class RelativeTimeFormatter {
   constructor(private readonly config_: ConfigService) {}
 
@@ -70,15 +70,23 @@ export class RelativeTimeFormatter {
 
     // Current and given times in miliseconds.
     const currentTime = this.getCurrentTime_(serverTime);
-    const givenTime = (new Date(value)).getTime();
+    const givenTime = new Date(value).getTime();
 
     // Time differences between current time and given time in specific units.
     const diffInMilliseconds = currentTime - givenTime;
-    const diffInSeconds = Math.floor(diffInMilliseconds / unitConversions.MILLISECONDS_PER_SECOND);
-    const diffInMinutes = Math.floor(diffInSeconds / unitConversions.SECONDS_PER_MINUTE);
-    const diffInHours = Math.floor(diffInMinutes / unitConversions.MINUTES_PER_HOUR);
+    const diffInSeconds = Math.floor(
+      diffInMilliseconds / unitConversions.MILLISECONDS_PER_SECOND
+    );
+    const diffInMinutes = Math.floor(
+      diffInSeconds / unitConversions.SECONDS_PER_MINUTE
+    );
+    const diffInHours = Math.floor(
+      diffInMinutes / unitConversions.MINUTES_PER_HOUR
+    );
     const diffInDays = Math.floor(diffInHours / unitConversions.HOURS_PER_DAY);
-    const diffInMonths = Math.floor(diffInDays / unitConversions.DAYS_PER_MONTH);
+    const diffInMonths = Math.floor(
+      diffInDays / unitConversions.DAYS_PER_MONTH
+    );
     const diffInYears = Math.floor(diffInDays / unitConversions.DAYS_PER_YEAR);
 
     // Returns relative time value. Only biggest unit will be taken into consideration, so if time
@@ -110,13 +118,16 @@ export class RelativeTimeFormatter {
    * current client time will be used.
    */
   private getCurrentTime_(serverTime: Date): number {
-    return serverTime ? serverTime.getTime() : (new Date()).getTime();
+    return serverTime ? serverTime.getTime() : new Date().getTime();
   }
 
   /**
    * Formats relative time string. Sample results look following: 'a year', '2 days' or '14 hours'.
    */
-  private formatOutputTimeString_(timeValue: number, timeUnit: string[]): string {
+  private formatOutputTimeString_(
+    timeValue: number,
+    timeUnit: string[]
+  ): string {
     if (timeValue > 1 || timeValue === 0) {
       return `${timeValue} ${timeUnit[1]}`;
     } else {

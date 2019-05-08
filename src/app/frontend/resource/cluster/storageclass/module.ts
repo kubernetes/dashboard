@@ -12,17 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {UIRouterModule} from '@uirouter/angular';
+import { NgModule } from '@angular/core';
+import { UIRouterModule } from '@uirouter/angular';
 
-import {ComponentsModule} from '../../../common/components/module';
-import {SharedModule} from '../../../shared.module';
+import { ComponentsModule } from '../../../common/components/module';
+import { SharedModule } from '../../../shared.module';
 
-import {StorageClassDetailComponent} from './detail/component';
-import {storageClassDetailState} from './detail/state';
-import {StorageClassListComponent} from './list/component';
-import {storageClassListState} from './list/state';
-import {storageClassState} from './state';
+import { StorageClassDetailComponent } from './detail/component';
+import { storageClassDetailState } from './detail/state';
+import { StorageClassListComponent } from './list/component';
+import { storageClassListState } from './list/state';
+import { storageClassState } from './state';
 
 @NgModule({
   imports: [
@@ -33,10 +33,9 @@ import {storageClassState} from './state';
         storageClassState,
         storageClassListState,
         storageClassDetailState,
-      ]
+      ],
     }),
   ],
   declarations: [StorageClassListComponent, StorageClassDetailComponent],
 })
-export class StorageClassModule {
-}
+export class StorageClassModule {}

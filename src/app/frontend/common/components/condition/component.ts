@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Input} from '@angular/core';
-import {MatTableDataSource} from '@angular/material';
-import {Condition} from 'typings/backendapi';
+import { Component, Input } from '@angular/core';
+import { MatTableDataSource } from '@angular/material';
+import { Condition } from 'typings/backendapi';
 
 @Component({
   selector: 'kd-condition-list',
@@ -25,7 +25,14 @@ export class ConditionListComponent {
   @Input() conditions: Condition[];
 
   getConditionsColumns(): string[] {
-    return ['type', 'status', 'lastProbeTime', 'lastTransitionTime', 'reason', 'message'];
+    return [
+      'type',
+      'status',
+      'lastProbeTime',
+      'lastTransitionTime',
+      'reason',
+      'message',
+    ];
   }
 
   getDataSource(): MatTableDataSource<Condition> {

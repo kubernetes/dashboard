@@ -12,19 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnInit} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {StateService, TransitionService} from '@uirouter/core';
+import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { StateService, TransitionService } from '@uirouter/core';
 
-import {SearchStateParams} from '../../common/params/params';
-import {searchState} from '../../search/state';
+import { SearchStateParams } from '../../common/params/params';
+import { searchState } from '../../search/state';
 
-@Component({selector: 'kd-search', templateUrl: './template.html', styleUrls: ['./style.scss']})
+@Component({
+  selector: 'kd-search',
+  templateUrl: './template.html',
+  styleUrls: ['./style.scss'],
+})
 export class SearchComponent implements OnInit {
   query: string;
 
   constructor(
-      private readonly state_: StateService, private readonly transition_: TransitionService) {
+    private readonly state_: StateService,
+    private readonly transition_: TransitionService
+  ) {
     this.query = state_.transition.params('to').q;
   }
 

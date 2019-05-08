@@ -12,17 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Ng2StateDeclaration} from '@uirouter/angular';
+import { Ng2StateDeclaration } from '@uirouter/angular';
 
-import {chromeState} from '../chrome/state';
-import {SEARCH_QUERY_STATE_PARAM} from '../common/params/params';
+import { chromeState } from '../chrome/state';
+import { SEARCH_QUERY_STATE_PARAM } from '../common/params/params';
 
-import {SearchComponent} from './component';
+import { SearchComponent } from './component';
 
 export const searchFutureState: Ng2StateDeclaration = {
   name: 'search.**',
   url: '/search',
-  loadChildren: './search/module#SearchModule'
+  loadChildren: './search/module#SearchModule',
 };
 
 export const searchState: Ng2StateDeclaration = {
@@ -30,13 +30,13 @@ export const searchState: Ng2StateDeclaration = {
   name: 'search',
   url: `/search?${SEARCH_QUERY_STATE_PARAM}`,
   views: {
-    '$default': {
+    $default: {
       component: SearchComponent,
     },
   },
   data: {
     kdBreadcrumbs: {
       label: 'Search',
-    }
+    },
   },
 };

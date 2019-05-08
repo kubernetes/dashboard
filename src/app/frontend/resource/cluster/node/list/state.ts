@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Ng2StateDeclaration} from '@uirouter/angular';
-import {EndpointManager} from '../../../../common/services/resource/endpoint';
+import { Ng2StateDeclaration } from '@uirouter/angular';
+import { EndpointManager } from '../../../../common/services/resource/endpoint';
 
-import {clusterState} from '../../state';
-import {stateName, stateUrl} from '../state';
+import { clusterState } from '../../state';
+import { stateName, stateUrl } from '../state';
 
-import {NodeListComponent} from './component';
+import { NodeListComponent } from './component';
 
 export const nodeListState: Ng2StateDeclaration = {
   name: `${stateName}.list`,

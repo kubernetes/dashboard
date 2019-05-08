@@ -12,24 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {UIRouterModule} from '@uirouter/angular';
-import {ComponentsModule} from '../../../common/components/module';
+import { NgModule } from '@angular/core';
+import { UIRouterModule } from '@uirouter/angular';
+import { ComponentsModule } from '../../../common/components/module';
 
-import {SharedModule} from '../../../shared.module';
-import {CronJobDetailComponent} from './detail/component';
-import {cronJobDetailState} from './detail/state';
-import {CronJobList} from './list/component';
-import {cronJobListState} from './list/state';
-import {cronJobState} from './state';
+import { SharedModule } from '../../../shared.module';
+import { CronJobDetailComponent } from './detail/component';
+import { cronJobDetailState } from './detail/state';
+import { CronJobList } from './list/component';
+import { cronJobListState } from './list/state';
+import { cronJobState } from './state';
 
 @NgModule({
   imports: [
     SharedModule,
     ComponentsModule,
-    UIRouterModule.forChild({states: [cronJobState, cronJobListState, cronJobDetailState]}),
+    UIRouterModule.forChild({
+      states: [cronJobState, cronJobListState, cronJobDetailState],
+    }),
   ],
   declarations: [CronJobList, CronJobDetailComponent],
 })
-export class CronJobModule {
-}
+export class CronJobModule {}

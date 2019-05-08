@@ -12,28 +12,34 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HttpParams} from '@angular/common/http';
-import {Component, Input} from '@angular/core';
-import {StateService} from '@uirouter/core';
-import {Observable} from 'rxjs/Observable';
-import {Ingress, IngressList} from 'typings/backendapi';
+import { HttpParams } from '@angular/common/http';
+import { Component, Input } from '@angular/core';
+import { StateService } from '@uirouter/core';
+import { Observable } from 'rxjs/Observable';
+import { Ingress, IngressList } from 'typings/backendapi';
 
-import {ingressState} from '../../../../resource/discovery/ingress/state';
-import {ResourceListBase} from '../../../resources/list';
-import {NamespaceService} from '../../../services/global/namespace';
-import {NotificationsService} from '../../../services/global/notifications';
-import {EndpointManager, Resource} from '../../../services/resource/endpoint';
-import {NamespacedResourceService} from '../../../services/resource/resource';
-import {MenuComponent} from '../../list/column/menu/component';
-import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
+import { ingressState } from '../../../../resource/discovery/ingress/state';
+import { ResourceListBase } from '../../../resources/list';
+import { NamespaceService } from '../../../services/global/namespace';
+import { NotificationsService } from '../../../services/global/notifications';
+import { EndpointManager, Resource } from '../../../services/resource/endpoint';
+import { NamespacedResourceService } from '../../../services/resource/resource';
+import { MenuComponent } from '../../list/column/menu/component';
+import { ListGroupIdentifiers, ListIdentifiers } from '../groupids';
 
-@Component({selector: 'kd-ingress-list', templateUrl: './template.html'})
-export class IngressListComponent extends ResourceListBase<IngressList, Ingress> {
+@Component({ selector: 'kd-ingress-list', templateUrl: './template.html' })
+export class IngressListComponent extends ResourceListBase<
+  IngressList,
+  Ingress
+> {
   @Input() endpoint = EndpointManager.resource(Resource.ingress, true).list();
 
   constructor(
-      state: StateService, private readonly ingress_: NamespacedResourceService<IngressList>,
-      notifications: NotificationsService, private readonly namespaceService_: NamespaceService) {
+    state: StateService,
+    private readonly ingress_: NamespacedResourceService<IngressList>,
+    notifications: NotificationsService,
+    private readonly namespaceService_: NamespaceService
+  ) {
     super(ingressState.name, state, notifications);
     this.id = ListIdentifiers.ingress;
     this.groupId = ListGroupIdentifiers.discovery;
@@ -42,7 +48,11 @@ export class IngressListComponent extends ResourceListBase<IngressList, Ingress>
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
 
     // Register dynamic columns.
-    this.registerDynamicColumn('namespace', 'name', this.shouldShowNamespaceColumn_.bind(this));
+    this.registerDynamicColumn(
+      'namespace',
+      'name',
+      this.shouldShowNamespaceColumn_.bind(this)
+    );
   }
 
   getResourceObservable(params?: HttpParams): Observable<IngressList> {

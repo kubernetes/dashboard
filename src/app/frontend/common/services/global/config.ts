@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {AppConfig} from '@api/backendapi';
-import {VersionInfo} from '@api/frontendapi';
-import {Observable} from 'rxjs/Observable';
-import {version} from '../../../environments/version';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { AppConfig } from '@api/backendapi';
+import { VersionInfo } from '@api/frontendapi';
+import { Observable } from 'rxjs/Observable';
+import { version } from '../../../environments/version';
 
 @Injectable()
 export class ConfigService {
@@ -28,10 +28,10 @@ export class ConfigService {
   constructor(private readonly http: HttpClient) {}
 
   init(): void {
-    this.getAppConfig().subscribe((config) => {
+    this.getAppConfig().subscribe(config => {
       // Set init time when response from the backend will arrive.
       this.config_ = config;
-      this.initTime_ = (new Date()).getTime();
+      this.initTime_ = new Date().getTime();
     });
   }
 
@@ -41,7 +41,7 @@ export class ConfigService {
 
   getServerTime(): Date {
     if (this.config_.serverTime) {
-      const elapsed = (new Date()).getTime() - this.initTime_;
+      const elapsed = new Date().getTime() - this.initTime_;
       return new Date(this.config_.serverTime + elapsed);
     } else {
       return new Date();

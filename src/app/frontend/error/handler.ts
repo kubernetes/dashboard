@@ -12,21 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HttpErrorResponse} from '@angular/common/http';
-import {ErrorHandler, Injectable} from '@angular/core';
-import {StateService} from '@uirouter/core';
-import {YAMLException} from 'js-yaml';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorHandler, Injectable } from '@angular/core';
+import { StateService } from '@uirouter/core';
+import { YAMLException } from 'js-yaml';
 
-import {KdError} from '../common/errors/errors';
-import {ErrorStateParams} from '../common/params/params';
+import { KdError } from '../common/errors/errors';
+import { ErrorStateParams } from '../common/params/params';
 
-import {errorState} from './state';
+import { errorState } from './state';
 
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
   constructor(private readonly state_: StateService) {}
 
-  handleError(error: HttpErrorResponse|YAMLException): void {
+  handleError(error: HttpErrorResponse | YAMLException): void {
     if (error instanceof HttpErrorResponse) {
       this.handleHTTPError_(error);
       return;
