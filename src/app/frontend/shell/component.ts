@@ -157,7 +157,7 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     if (this.term) {
-      this.term.destroy();
+      this.term.dispose();
     }
 
     this.incommingMessage$.complete();

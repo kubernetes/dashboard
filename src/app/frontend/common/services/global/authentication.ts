@@ -25,6 +25,7 @@ import {
   TransitionService,
 } from '@uirouter/core';
 import { CookieService } from 'ngx-cookie-service';
+import { throwError } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
 import {
   AuthResponse,
@@ -113,7 +114,7 @@ export class AuthService {
         onLoginCb(authResponse.errors);
       },
       err => {
-        return Observable.throw(err);
+        return throwError(err);
       }
     );
   }
