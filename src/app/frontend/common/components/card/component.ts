@@ -32,6 +32,7 @@ export class CardComponent {
     this.classes_ = val.split(/\s+/);
   }
   @Input() expanded = true;
+  @Input() graphMode = false;
 
   private classes_: string[] = [];
 

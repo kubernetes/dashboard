@@ -18,6 +18,7 @@ import {
   DaemonSetList,
   DeploymentList,
   JobList,
+  Metric,
   PodList,
   ReplicaSetList,
   ReplicationControllerList,
@@ -37,9 +38,11 @@ import { emptyResourcesRatio } from './workloadstatus/component';
 @Component({
   selector: 'kd-overview',
   templateUrl: './template.html',
+  styleUrls: ['./style.scss'],
 })
 export class OverviewComponent extends GroupedResourceList {
   resourcesRatio: ResourcesRatio = emptyResourcesRatio;
+  cumulativeMetrics: Metric[] = [];
 
   hasWorkloads(): boolean {
     return this.isGroupVisible(ListGroupIdentifiers.workloads);
@@ -96,6 +99,7 @@ export class OverviewComponent extends GroupedResourceList {
           pods.listMeta.totalItems,
           ResourceRatioModes.Completable
         );
+        this.cumulativeMetrics = pods.cumulativeMetrics;
         break;
       }
       case ListIdentifiers.replicaSet: {
