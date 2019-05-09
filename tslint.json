@@ -1,6 +1,6 @@
 {
   "extends": "gts/tslint.json",
-  "cliOptions": {
+  "linterOptions": {
     "exclude": [
       "src/app/frontend/environments/version.ts"
     ]
