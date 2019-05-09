@@ -154,7 +154,7 @@
     "protractor": "5.4.1",
     "q": "1.5.1",
     "raw-loader": "1.0.0",
-    "sass-lint": "1.12.1",
+    "sass-lint": "1.13.1",
     "sass-loader": "7.1.0",
     "scssfmt": "1.0.7",
     "semver": "6.0.0",
