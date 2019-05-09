@@ -65,7 +65,7 @@ RUN curl -sSL https://download.docker.com/linux/static/stable/x86_64/docker-18.0
 RUN go get github.com/golangci/golangci-lint/cmd/golangci-lint
 
 # Install delve for debuging go files.
-RUN go get github.com/derekparker/delve/cmd/dlv
+RUN go get github.com/go-delve/delve/cmd/dlv
 
 # Volume for source code
 VOLUME ["/go/src/github.com/kubernetes/dashboard"]
