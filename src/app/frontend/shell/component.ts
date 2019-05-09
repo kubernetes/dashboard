@@ -102,7 +102,7 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.containers_.get(containersEndpoint).subscribe(containerList => {
       this.containers = containerList.containers;
-      if (this.containers.length > 0) {
+      if (this.containers.length > 0 && !this.selectedContainer) {
         this.selectedContainer = this.containers[0];
       }
 
