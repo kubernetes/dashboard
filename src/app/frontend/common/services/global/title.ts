@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Injectable} from '@angular/core';
-import {Title} from '@angular/platform-browser';
-import {Transition} from '@uirouter/angular';
+import { Injectable } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { Transition } from '@uirouter/angular';
 
-import {BreadcrumbsService} from './breadcrumbs';
-import {GlobalSettingsService} from './globalsettings';
+import { BreadcrumbsService } from './breadcrumbs';
+import { GlobalSettingsService } from './globalsettings';
 
 @Injectable()
 export class TitleService {
@@ -25,23 +25,28 @@ export class TitleService {
   stateName = '';
 
   constructor(
-      private readonly title_: Title, private readonly settings_: GlobalSettingsService,
-      private readonly breadcrumbs_: BreadcrumbsService) {}
+    private readonly title_: Title,
+    private readonly settings_: GlobalSettingsService,
+    private readonly breadcrumbs_: BreadcrumbsService
+  ) {}
 
   update(transition?: Transition): void {
     if (transition) {
-      this.stateName = this.breadcrumbs_.getDisplayName(transition.targetState().$state());
+      this.stateName = this.breadcrumbs_.getDisplayName(
+        transition.targetState().$state()
+      );
     }
 
     this.settings_.load(
-        () => {
-          this.clusterName = this.settings_.getClusterName();
-          this.apply_();
-        },
-        () => {
-          this.clusterName = '';
-          this.apply_();
-        });
+      () => {
+        this.clusterName = this.settings_.getClusterName();
+        this.apply_();
+      },
+      () => {
+        this.clusterName = '';
+        this.apply_();
+      }
+    );
   }
 
   private apply_(): void {

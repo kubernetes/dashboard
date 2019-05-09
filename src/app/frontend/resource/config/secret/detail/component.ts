@@ -12,15 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {SecretDetail} from '@api/backendapi';
-import {StateService} from '@uirouter/core';
-import {Subscription} from 'rxjs/Subscription';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { SecretDetail } from '@api/backendapi';
+import { StateService } from '@uirouter/core';
+import { Subscription } from 'rxjs/Subscription';
 
-import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
-import {NotificationsService} from '../../../../common/services/global/notifications';
-import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
-import {NamespacedResourceService} from '../../../../common/services/resource/resource';
+import {
+  ActionbarService,
+  ResourceMeta,
+} from '../../../../common/services/global/actionbar';
+import { NotificationsService } from '../../../../common/services/global/notifications';
+import {
+  EndpointManager,
+  Resource,
+} from '../../../../common/services/resource/endpoint';
+import { NamespacedResourceService } from '../../../../common/services/resource/resource';
 
 @Component({
   selector: 'kd-secret-detail',
@@ -33,21 +39,28 @@ export class SecretDetailComponent implements OnInit, OnDestroy {
   isInitialized = false;
 
   constructor(
-      private readonly secret_: NamespacedResourceService<SecretDetail>,
-      private readonly actionbar_: ActionbarService, private readonly state_: StateService,
-      private readonly notifications_: NotificationsService) {}
+    private readonly secret_: NamespacedResourceService<SecretDetail>,
+    private readonly actionbar_: ActionbarService,
+    private readonly state_: StateService,
+    private readonly notifications_: NotificationsService
+  ) {}
 
   ngOnInit(): void {
     this.secretName_ = this.state_.params.resourceName;
-    this.secretSubscription_ =
-        this.secret_.get(EndpointManager.resource(Resource.secret, true).detail(), this.secretName_)
-            .startWith({})
-            .subscribe((d: SecretDetail) => {
-              this.secret = d;
-              this.notifications_.pushErrors(d.errors);
-              this.actionbar_.onInit.emit(new ResourceMeta('Secret', d.objectMeta, d.typeMeta));
-              this.isInitialized = true;
-            });
+    this.secretSubscription_ = this.secret_
+      .get(
+        EndpointManager.resource(Resource.secret, true).detail(),
+        this.secretName_
+      )
+      .startWith({})
+      .subscribe((d: SecretDetail) => {
+        this.secret = d;
+        this.notifications_.pushErrors(d.errors);
+        this.actionbar_.onInit.emit(
+          new ResourceMeta('Secret', d.objectMeta, d.typeMeta)
+        );
+        this.isInitialized = true;
+      });
   }
 
   ngOnDestroy(): void {

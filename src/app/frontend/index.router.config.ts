@@ -12,59 +12,69 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HookMatchCriteria, HookMatchCriterion, UIRouter} from '@uirouter/core/lib';
+import {
+  HookMatchCriteria,
+  HookMatchCriterion,
+  UIRouter,
+} from '@uirouter/core/lib';
 
-import {NAMESPACE_STATE_PARAM} from './common/params/params';
-import {AuthService} from './common/services/global/authentication';
-import {KdStateService} from './common/services/global/state';
-import {TitleService} from './common/services/global/title';
-import {CONFIG} from './index.config';
+import { NAMESPACE_STATE_PARAM } from './common/params/params';
+import { AuthService } from './common/services/global/authentication';
+import { KdStateService } from './common/services/global/state';
+import { TitleService } from './common/services/global/title';
+import { CONFIG } from './index.config';
 
 export function configureRouter(router: UIRouter): void {
   const transitionService = router.transitionService;
   const stateService = router.stateService;
 
   // Register default error handler for state transition errors.
-  stateService.defaultErrorHandler((err) => {
-    stateService.go('error', {error: err});
+  stateService.defaultErrorHandler(err => {
+    stateService.go('error', { error: err });
   });
 
   // Register transition hook to adjust window title.
   // It cannot be registered "on before" because state params are not available then.
-  transitionService.onSuccess({}, (transition) => {
+  transitionService.onSuccess({}, transition => {
     const titleService = transition.injector().get(TitleService);
     titleService.update(transition);
   });
 
-  transitionService.onSuccess({}, (transition) => {
+  transitionService.onSuccess({}, transition => {
     const namespaceParam = transition.params().namespace;
     if (namespaceParam === undefined && transition.to().name !== 'login') {
-      stateService.go(transition.to().name, {[NAMESPACE_STATE_PARAM]: CONFIG.defaultNamespace});
+      stateService.go(transition.to().name, {
+        [NAMESPACE_STATE_PARAM]: CONFIG.defaultNamespace,
+      });
     }
   });
 
   // Register transition hooks for authentication.
   const requiresAuthCriteria = {
-    to: (state): HookMatchCriterion => state.data && state.data.requiresAuth
+    to: (state): HookMatchCriterion => state.data && state.data.requiresAuth,
   } as HookMatchCriteria;
 
-  transitionService.onBefore(requiresAuthCriteria, (transition) => {
-    const authService = transition.injector().get(AuthService);
-    return authService.redirectToLogin(transition);
-  }, {priority: 10});
+  transitionService.onBefore(
+    requiresAuthCriteria,
+    transition => {
+      const authService = transition.injector().get(AuthService);
+      return authService.redirectToLogin(transition);
+    },
+    { priority: 10 }
+  );
 
-  transitionService.onBefore(requiresAuthCriteria, (transition) => {
+  transitionService.onBefore(requiresAuthCriteria, transition => {
     const authService = transition.injector().get(AuthService);
     return authService.refreshToken();
   });
 
   // Register custom state service to hook state transitions
-  transitionService.onBefore({}, (transition) => {
+  transitionService.onBefore({}, transition => {
     const kdStateService = transition.injector().get(KdStateService);
     kdStateService.onBefore.emit(transition);
   });
 
-  transitionService.onSuccess({}, (transition) => {
+  transitionService.onSuccess({}, transition => {
     const kdStateService = transition.injector().get(KdStateService);
     kdStateService.onSuccess.emit(transition);
   });

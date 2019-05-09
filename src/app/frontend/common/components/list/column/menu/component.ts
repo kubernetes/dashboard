@@ -12,25 +12,32 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Input} from '@angular/core';
-import {ObjectMeta, TypeMeta} from '@api/backendapi';
-import {ActionColumn} from '@api/frontendapi';
-import {StateService} from '@uirouter/core';
-import {first} from 'rxjs/operators';
+import { Component, Input } from '@angular/core';
+import { ObjectMeta, TypeMeta } from '@api/backendapi';
+import { ActionColumn } from '@api/frontendapi';
+import { StateService } from '@uirouter/core';
+import { first } from 'rxjs/operators';
 
-import {logsState} from '../../../../../logs/state';
-import {LogsStateParams} from '../../../../params/params';
-import {KdStateService} from '../../../../services/global/state';
-import {VerberService} from '../../../../services/global/verber';
-import {Resource} from '../../../../services/resource/endpoint';
+import { logsState } from '../../../../../logs/state';
+import { LogsStateParams } from '../../../../params/params';
+import { KdStateService } from '../../../../services/global/state';
+import { VerberService } from '../../../../services/global/verber';
+import { Resource } from '../../../../services/resource/endpoint';
 
 const loggableResources: string[] = [
-  Resource.daemonSet, Resource.job, Resource.pod, Resource.replicaSet,
-  Resource.replicationController, Resource.statefulSet
+  Resource.daemonSet,
+  Resource.job,
+  Resource.pod,
+  Resource.replicaSet,
+  Resource.replicationController,
+  Resource.statefulSet,
 ];
 
 const scalableResources: string[] = [
-  Resource.deployment, Resource.replicaSet, Resource.replicationController, Resource.statefulSet
+  Resource.deployment,
+  Resource.replicaSet,
+  Resource.replicationController,
+  Resource.statefulSet,
 ];
 
 const executableResources: string[] = [Resource.pod];
@@ -46,8 +53,10 @@ export class MenuComponent implements ActionColumn {
   @Input() typeMeta: TypeMeta;
 
   constructor(
-      private readonly verber_: VerberService, private readonly state_: StateService,
-      private readonly kdState_: KdStateService) {}
+    private readonly verber_: VerberService,
+    private readonly state_: StateService,
+    private readonly kdState_: KdStateService
+  ) {}
 
   setObjectMeta(objectMeta: ObjectMeta): void {
     this.objectMeta = objectMeta;
@@ -63,8 +72,13 @@ export class MenuComponent implements ActionColumn {
 
   getLogsHref(): string {
     return this.state_.href(
-        logsState.name,
-        new LogsStateParams(this.objectMeta.namespace, this.objectMeta.name, this.typeMeta.kind));
+      logsState.name,
+      new LogsStateParams(
+        this.objectMeta.namespace,
+        this.objectMeta.name,
+        this.typeMeta.kind
+      )
+    );
   }
 
   isExecEnabled(): boolean {
@@ -72,7 +86,11 @@ export class MenuComponent implements ActionColumn {
   }
 
   getExecHref(): string {
-    return this.kdState_.href('shell', this.objectMeta.name, this.objectMeta.namespace);
+    return this.kdState_.href(
+      'shell',
+      this.objectMeta.name,
+      this.objectMeta.namespace
+    );
   }
 
   isTriggerEnabled(): boolean {
@@ -80,7 +98,11 @@ export class MenuComponent implements ActionColumn {
   }
 
   onTrigger(): void {
-    this.verber_.showTriggerDialog(this.typeMeta.kind, this.typeMeta, this.objectMeta);
+    this.verber_.showTriggerDialog(
+      this.typeMeta.kind,
+      this.typeMeta,
+      this.objectMeta
+    );
   }
 
   isScaleEnabled(): boolean {
@@ -89,16 +111,28 @@ export class MenuComponent implements ActionColumn {
 
   onScale(): void {
     this.verber_.onScale.pipe(first()).subscribe(() => this.state_.reload());
-    this.verber_.showScaleDialog(this.typeMeta.kind, this.typeMeta, this.objectMeta);
+    this.verber_.showScaleDialog(
+      this.typeMeta.kind,
+      this.typeMeta,
+      this.objectMeta
+    );
   }
 
   onEdit(): void {
     this.verber_.onEdit.pipe(first()).subscribe(() => this.state_.reload());
-    this.verber_.showEditDialog(this.typeMeta.kind, this.typeMeta, this.objectMeta);
+    this.verber_.showEditDialog(
+      this.typeMeta.kind,
+      this.typeMeta,
+      this.objectMeta
+    );
   }
 
   onDelete(): void {
     this.verber_.onDelete.pipe(first()).subscribe(() => this.state_.reload());
-    this.verber_.showDeleteDialog(this.typeMeta.kind, this.typeMeta, this.objectMeta);
+    this.verber_.showDeleteDialog(
+      this.typeMeta.kind,
+      this.typeMeta,
+      this.objectMeta
+    );
   }
 }

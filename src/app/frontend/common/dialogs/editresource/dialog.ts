@@ -12,13 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HttpClient} from '@angular/common/http';
-import {Component, Inject, OnInit, ViewChild} from '@angular/core';
-import {MAT_DIALOG_DATA, MatButtonToggleGroup, MatDialogRef} from '@angular/material';
-import {dump as toYaml, load as fromYaml} from 'js-yaml';
+import { HttpClient } from '@angular/common/http';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import {
+  MAT_DIALOG_DATA,
+  MatButtonToggleGroup,
+  MatDialogRef,
+} from '@angular/material';
+import { dump as toYaml, load as fromYaml } from 'js-yaml';
 
-import {RawResource} from '../../resources/rawresource';
-import {ResourceMeta} from '../../services/global/actionbar';
+import { RawResource } from '../../resources/rawresource';
+import { ResourceMeta } from '../../services/global/actionbar';
 
 enum EditorMode {
   JSON = 'json',
@@ -37,14 +41,19 @@ export class EditResourceDialog implements OnInit {
   modes = EditorMode;
 
   constructor(
-      public dialogRef: MatDialogRef<EditResourceDialog>,
-      @Inject(MAT_DIALOG_DATA) public data: ResourceMeta, private readonly http_: HttpClient) {}
+    public dialogRef: MatDialogRef<EditResourceDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: ResourceMeta,
+    private readonly http_: HttpClient
+  ) {}
 
   ngOnInit(): void {
     const url = RawResource.getUrl(this.data.typeMeta, this.data.objectMeta);
-    this.http_.get(url).toPromise().then((response) => {
-      this.text = toYaml(response);
-    });
+    this.http_
+      .get(url)
+      .toPromise()
+      .then(response => {
+        this.text = toYaml(response);
+      });
 
     this.buttonToggleGroup.valueChange.subscribe((selectedMode: EditorMode) => {
       this.selectedMode = selectedMode;

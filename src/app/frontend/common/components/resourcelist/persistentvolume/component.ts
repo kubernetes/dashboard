@@ -12,32 +12,38 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HttpParams} from '@angular/common/http';
-import {Component, Input} from '@angular/core';
-import {PersistentVolume, PersistentVolumeList} from '@api/backendapi';
-import {StateService} from '@uirouter/core';
-import {Observable} from 'rxjs/Observable';
+import { HttpParams } from '@angular/common/http';
+import { Component, Input } from '@angular/core';
+import { PersistentVolume, PersistentVolumeList } from '@api/backendapi';
+import { StateService } from '@uirouter/core';
+import { Observable } from 'rxjs/Observable';
 
-import {persistentVolumeState} from '../../../../resource/cluster/persistentvolume/state';
-import {persistentVolumeClaimState} from '../../../../resource/config/persistentvolumeclaim/state';
-import {ResourceListWithStatuses} from '../../../resources/list';
-import {NotificationsService} from '../../../services/global/notifications';
-import {EndpointManager, Resource} from '../../../services/resource/endpoint';
-import {ResourceService} from '../../../services/resource/resource';
-import {MenuComponent} from '../../list/column/menu/component';
-import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
+import { persistentVolumeState } from '../../../../resource/cluster/persistentvolume/state';
+import { persistentVolumeClaimState } from '../../../../resource/config/persistentvolumeclaim/state';
+import { ResourceListWithStatuses } from '../../../resources/list';
+import { NotificationsService } from '../../../services/global/notifications';
+import { EndpointManager, Resource } from '../../../services/resource/endpoint';
+import { ResourceService } from '../../../services/resource/resource';
+import { MenuComponent } from '../../list/column/menu/component';
+import { ListGroupIdentifiers, ListIdentifiers } from '../groupids';
 
 @Component({
   selector: 'kd-persistent-volume-list',
   templateUrl: './template.html',
 })
-export class PersistentVolumeListComponent extends
-    ResourceListWithStatuses<PersistentVolumeList, PersistentVolume> {
-  @Input() endpoint = EndpointManager.resource(Resource.persistentVolume).list();
+export class PersistentVolumeListComponent extends ResourceListWithStatuses<
+  PersistentVolumeList,
+  PersistentVolume
+> {
+  @Input() endpoint = EndpointManager.resource(
+    Resource.persistentVolume
+  ).list();
 
   constructor(
-      state: StateService, private readonly pv_: ResourceService<PersistentVolumeList>,
-      notifications: NotificationsService) {
+    state: StateService,
+    private readonly pv_: ResourceService<PersistentVolumeList>,
+    notifications: NotificationsService
+  ) {
     super(persistentVolumeState.name, state, notifications);
     this.id = ListIdentifiers.persistentVolume;
     this.groupId = ListGroupIdentifiers.cluster;
@@ -46,7 +52,11 @@ export class PersistentVolumeListComponent extends
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
 
     // Register status icon handlers
-    this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);
+    this.registerBinding(
+      this.icon.checkCircle,
+      'kd-success',
+      this.isInSuccessState
+    );
     this.registerBinding(this.icon.help, 'kd-muted', this.isInPendingState);
     this.registerBinding(this.icon.error, 'kd-error', this.isInErrorState);
   }
@@ -76,7 +86,11 @@ export class PersistentVolumeListComponent extends
 
     const splittedRef = claimReference.split('/');
     if (splittedRef.length === 2) {
-      href = this.kdState_.href(persistentVolumeClaimState.name, splittedRef[1], splittedRef[0]);
+      href = this.kdState_.href(
+        persistentVolumeClaimState.name,
+        splittedRef[1],
+        splittedRef[0]
+      );
     }
 
     return href;
@@ -84,8 +98,16 @@ export class PersistentVolumeListComponent extends
 
   getDisplayColumns(): string[] {
     return [
-      'statusicon', 'name', 'capacity', 'accmodes', 'reclaimpol', 'status', 'claim', 'storagecl',
-      'reason', 'age'
+      'statusicon',
+      'name',
+      'capacity',
+      'accmodes',
+      'reclaimpol',
+      'status',
+      'claim',
+      'storagecl',
+      'reason',
+      'age',
     ];
   }
 }

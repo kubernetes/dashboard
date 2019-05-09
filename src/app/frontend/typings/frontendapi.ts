@@ -12,8 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Type} from '@angular/core';
-import {GlobalSettings, K8sError, ObjectMeta, ResourceList, TypeMeta} from '@api/backendapi';
+import { Type } from '@angular/core';
+import {
+  GlobalSettings,
+  K8sError,
+  ObjectMeta,
+  ResourceList,
+  TypeMeta,
+} from '@api/backendapi';
 
 export interface BreadcrumbConfig {
   label?: string;
@@ -29,7 +35,7 @@ export type ThemeSwitchCallback = (isLightThemeEnabled: boolean) => void;
 export type ColumnWhenCallback = () => boolean;
 
 export type onSettingsLoadCallback = (settings?: GlobalSettings) => void;
-export type onSettingsFailCallback = (err?: KdError|K8sError) => void;
+export type onSettingsFailCallback = (err?: KdError | K8sError) => void;
 
 export type onLogin = (errors?: K8sError[]) => void;
 
@@ -68,7 +74,7 @@ export interface ActionColumn {
 }
 
 export interface HTMLInputEvent extends Event {
-  target: HTMLInputElement&EventTarget;
+  target: HTMLInputElement & EventTarget;
 }
 
 export interface KdFile {

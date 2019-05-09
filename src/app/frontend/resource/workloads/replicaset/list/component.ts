@@ -12,11 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'kd-replica-set-list-state',
   template: '<kd-replica-set-list></kd-replica-set-list>',
 })
-export class ReplicaSetList {
-}
+export class ReplicaSetList {}

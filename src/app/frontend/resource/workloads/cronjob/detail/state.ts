@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Ng2StateDeclaration} from '@uirouter/angular';
+import { Ng2StateDeclaration } from '@uirouter/angular';
 
-import {TriggerDefaultActionbar} from '../../../../common/components/actionbars/triggerdefault/component';
-import {addNamespacedResourceStateParamsToUrl} from '../../../../common/params/params';
-import {stateName, stateUrl} from '../state';
+import { TriggerDefaultActionbar } from '../../../../common/components/actionbars/triggerdefault/component';
+import { addNamespacedResourceStateParamsToUrl } from '../../../../common/params/params';
+import { stateName, stateUrl } from '../state';
 
-import {CronJobDetailComponent} from './component';
+import { CronJobDetailComponent } from './component';
 
 export const cronJobDetailState: Ng2StateDeclaration = {
   name: `${stateName}.detail`,
@@ -30,11 +30,11 @@ export const cronJobDetailState: Ng2StateDeclaration = {
     },
   },
   views: {
-    '$default': {
+    $default: {
       component: CronJobDetailComponent,
     },
     'actionbar@chrome': {
       component: TriggerDefaultActionbar,
-    }
+    },
   },
 };

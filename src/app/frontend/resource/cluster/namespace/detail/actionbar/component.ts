@@ -12,13 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnInit} from '@angular/core';
-import {StateService} from '@uirouter/core';
-import {Subscription} from 'rxjs/Subscription';
+import { Component, OnInit } from '@angular/core';
+import { StateService } from '@uirouter/core';
+import { Subscription } from 'rxjs/Subscription';
 
-import {NAMESPACE_STATE_PARAM} from '../../../../../common/params/params';
-import {ActionbarService, ResourceMeta} from '../../../../../common/services/global/actionbar';
-import {overviewState} from '../../../../../overview/state';
+import { NAMESPACE_STATE_PARAM } from '../../../../../common/params/params';
+import {
+  ActionbarService,
+  ResourceMeta,
+} from '../../../../../common/services/global/actionbar';
+import { overviewState } from '../../../../../overview/state';
 
 @Component({
   selector: '',
@@ -30,14 +33,17 @@ export class ActionbarComponent implements OnInit {
   resourceMetaSubscription_: Subscription;
 
   constructor(
-      private readonly actionbar_: ActionbarService, private readonly state_: StateService) {}
+    private readonly actionbar_: ActionbarService,
+    private readonly state_: StateService
+  ) {}
 
   ngOnInit(): void {
-    this.resourceMetaSubscription_ =
-        this.actionbar_.onInit.subscribe((resourceMeta: ResourceMeta) => {
-          this.resourceMeta = resourceMeta;
-          this.isInitialized = true;
-        });
+    this.resourceMetaSubscription_ = this.actionbar_.onInit.subscribe(
+      (resourceMeta: ResourceMeta) => {
+        this.resourceMeta = resourceMeta;
+        this.isInitialized = true;
+      }
+    );
   }
 
   ngOnDestroy(): void {

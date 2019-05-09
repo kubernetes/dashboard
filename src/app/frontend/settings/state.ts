@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Ng2StateDeclaration} from '@uirouter/angular';
+import { Ng2StateDeclaration } from '@uirouter/angular';
 
-import {chromeState} from '../chrome/state';
+import { chromeState } from '../chrome/state';
 
-import {SettingsComponent} from './component';
+import { SettingsComponent } from './component';
 
 export const settingsFutureState: Ng2StateDeclaration = {
   name: 'settings.**',
   url: '/settings',
-  loadChildren: './settings/module#SettingsModule'
+  loadChildren: './settings/module#SettingsModule',
 };
 
 export const settingsState: Ng2StateDeclaration = {
@@ -29,13 +29,13 @@ export const settingsState: Ng2StateDeclaration = {
   name: 'settings',
   url: '/settings',
   views: {
-    '$default': {
+    $default: {
       component: SettingsComponent,
     },
   },
   data: {
     kdBreadcrumbs: {
       label: 'Settings',
-    }
+    },
   },
 };

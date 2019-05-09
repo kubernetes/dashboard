@@ -12,22 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {UIRouterModule} from '@uirouter/angular';
+import { NgModule } from '@angular/core';
+import { UIRouterModule } from '@uirouter/angular';
 
-import {ComponentsModule} from '../../common/components/module';
-import {SharedModule} from '../../shared.module';
+import { ComponentsModule } from '../../common/components/module';
+import { SharedModule } from '../../shared.module';
 
-import {WorkloadsComponent} from './component';
-import {workloadsState} from './state';
+import { WorkloadsComponent } from './component';
+import { workloadsState } from './state';
 
 @NgModule({
   imports: [
     SharedModule,
     ComponentsModule,
-    UIRouterModule.forChild({states: [workloadsState]}),
+    UIRouterModule.forChild({ states: [workloadsState] }),
   ],
   declarations: [WorkloadsComponent],
 })
-export class WorkloadsModule {
-}
+export class WorkloadsModule {}

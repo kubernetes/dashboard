@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: '[kdLoadingSpinner]',
@@ -20,7 +20,7 @@ import {Component, Input, OnInit} from '@angular/core';
   host: {
     // kd-loading-share class is defined globally in index.scss file.
     '[class.kd-loading-shade]': 'isLoading',
-  }
+  },
 })
 export class LoadingSpinner implements OnInit {
   @Input() isLoading: boolean;

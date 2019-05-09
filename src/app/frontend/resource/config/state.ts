@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Ng2StateDeclaration} from '@uirouter/angular';
+import { Ng2StateDeclaration } from '@uirouter/angular';
 
-import {ConfigComponent} from './component';
+import { ConfigComponent } from './component';
 
 export const configFutureState: Ng2StateDeclaration = {
   name: 'config.**',
@@ -23,7 +23,7 @@ export const configFutureState: Ng2StateDeclaration = {
   data: {
     kdBreadcrumbs: {
       label: 'Config',
-    }
+    },
   },
 };
 
@@ -35,6 +35,6 @@ export const configState: Ng2StateDeclaration = {
   data: {
     kdBreadcrumbs: {
       label: 'Config and Storage',
-    }
+    },
   },
 };

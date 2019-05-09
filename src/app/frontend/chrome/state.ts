@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Ng2StateDeclaration} from '@uirouter/angular';
+import { Ng2StateDeclaration } from '@uirouter/angular';
 
-import {NAMESPACE_STATE_PARAM} from '../common/params/params';
+import { NAMESPACE_STATE_PARAM } from '../common/params/params';
 
-import {ChromeComponent} from './component';
+import { ChromeComponent } from './component';
 
 /**
  * One of the root application views. Every view should be a child of this view except for login
@@ -30,7 +30,7 @@ export const chromeState: Ng2StateDeclaration = {
     requiresAuth: true,
   },
   views: {
-    '$default': {
+    $default: {
       component: ChromeComponent,
     },
   },

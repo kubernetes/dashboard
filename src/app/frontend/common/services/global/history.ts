@@ -12,16 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Injectable} from '@angular/core';
-import {RawParams, StateService, Transition, TransitionPromise} from '@uirouter/core';
-import {KdStateService} from './state';
+import { Injectable } from '@angular/core';
+import {
+  RawParams,
+  StateService,
+  Transition,
+  TransitionPromise,
+} from '@uirouter/core';
+import { KdStateService } from './state';
 
 @Injectable()
 export class HistoryService {
   private previousStateName: string;
   private previousStateParams: RawParams;
 
-  constructor(private readonly state_: StateService, private readonly kdState_: KdStateService) {
+  constructor(
+    private readonly state_: StateService,
+    private readonly kdState_: KdStateService
+  ) {
     this.init();
   }
 

@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Ng2StateDeclaration} from '@uirouter/angular';
+import { Ng2StateDeclaration } from '@uirouter/angular';
 
-import {DefaultActionbar} from '../../../../common/components/actionbars/default/component';
-import {addNamespacedResourceStateParamsToUrl} from '../../../../common/params/params';
-import {stateName, stateUrl} from '../state';
+import { DefaultActionbar } from '../../../../common/components/actionbars/default/component';
+import { addNamespacedResourceStateParamsToUrl } from '../../../../common/params/params';
+import { stateName, stateUrl } from '../state';
 
-import {PersistentVolumeClaimDetailComponent} from './component';
+import { PersistentVolumeClaimDetailComponent } from './component';
 
 export const persistentVolumeClaimDetailState: Ng2StateDeclaration = {
   name: `${stateName}.detail`,
@@ -30,11 +30,11 @@ export const persistentVolumeClaimDetailState: Ng2StateDeclaration = {
     },
   },
   views: {
-    '$default': {
+    $default: {
       component: PersistentVolumeClaimDetailComponent,
     },
     'actionbar@chrome': {
       component: DefaultActionbar,
-    }
+    },
   },
 };

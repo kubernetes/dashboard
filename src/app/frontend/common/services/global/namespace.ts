@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Injectable} from '@angular/core';
-import {StateService} from '@uirouter/core';
-import {CONFIG} from '../../../index.config';
-import {NAMESPACE_STATE_PARAM} from '../../params/params';
+import { Injectable } from '@angular/core';
+import { StateService } from '@uirouter/core';
+import { CONFIG } from '../../../index.config';
+import { NAMESPACE_STATE_PARAM } from '../../params/params';
 
 @Injectable()
 export class NamespaceService {

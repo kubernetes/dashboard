@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Ng2StateDeclaration} from '@uirouter/angular';
+import { Ng2StateDeclaration } from '@uirouter/angular';
 
-import {LogsDefaultActionbar} from '../../../../common/components/actionbars/logsdefault/component';
-import {addNamespacedResourceStateParamsToUrl} from '../../../../common/params/params';
-import {stateName, stateUrl} from '../state';
+import { LogsDefaultActionbar } from '../../../../common/components/actionbars/logsdefault/component';
+import { addNamespacedResourceStateParamsToUrl } from '../../../../common/params/params';
+import { stateName, stateUrl } from '../state';
 
-import {JobDetailComponent} from './component';
+import { JobDetailComponent } from './component';
 
 export const jobDetailState: Ng2StateDeclaration = {
   name: `${stateName}.detail`,
@@ -30,11 +30,11 @@ export const jobDetailState: Ng2StateDeclaration = {
     },
   },
   views: {
-    '$default': {
+    $default: {
       component: JobDetailComponent,
     },
     'actionbar@chrome': {
       component: LogsDefaultActionbar,
-    }
+    },
   },
 };

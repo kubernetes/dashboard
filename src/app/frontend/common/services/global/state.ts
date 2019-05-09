@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {EventEmitter, Injectable} from '@angular/core';
-import {Transition} from '@uirouter/core';
-import {NamespaceService} from './namespace';
+import { EventEmitter, Injectable } from '@angular/core';
+import { Transition } from '@uirouter/core';
+import { NamespaceService } from './namespace';
 
 @Injectable()
 export class KdStateService {

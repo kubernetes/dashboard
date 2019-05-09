@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Ng2StateDeclaration} from '@uirouter/angular';
+import { Ng2StateDeclaration } from '@uirouter/angular';
 
-import {chromeState} from '../chrome/state';
-import {CreateComponent} from './component';
+import { chromeState } from '../chrome/state';
+import { CreateComponent } from './component';
 
 export const createFutureState: Ng2StateDeclaration = {
   name: 'create.**',
   url: '/create',
-  loadChildren: './create/module#CreateModule'
+  loadChildren: './create/module#CreateModule',
 };
 
 export const createState: Ng2StateDeclaration = {
@@ -28,13 +28,13 @@ export const createState: Ng2StateDeclaration = {
   name: 'create',
   url: '/create',
   views: {
-    '$default': {
+    $default: {
       component: CreateComponent,
     },
   },
   data: {
     kdBreadcrumbs: {
       label: 'Resource creation',
-    }
+    },
   },
 };

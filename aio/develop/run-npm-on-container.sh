@@ -27,6 +27,17 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # by run-npm-command.sh on container.
 export K8S_DASHBOARD_NPM_CMD=$*
 
+# kubeconfig for dashboard.
+# This will be mounted and certain npm command can modify it,
+# so this should not be set for original kubeconfig.
+# Set defult as kubeconfig made by `npm run cluster:start`.
+if [[ -n "${K8S_DASHBOARD_KUBECONFIG}" ]] ; then
+  K8S_OWN_CLUSTER=true
+else
+  touch ${DIR}/../../kind.kubeconfig
+  K8S_DASHBOARD_KUBECONFIG=$(pwd ${DIR}/../../)/kind.kubeconfig
+fi
+
 # Build and run container for dashboard
 DASHBOARD_IMAGE_NAME=${K8S_DASHBOARD_CONTAINER_NAME:-"k8s-dashboard-dev-image"}
 K8S_DASHBOARD_SRC=${K8S_DASHBOARD_SRC:-"${CD}"}
@@ -44,13 +55,17 @@ docker build -t ${DASHBOARD_IMAGE_NAME} -f ${DIR}/Dockerfile ${DIR}/../../
 # Run dashboard container for development and expose necessary ports automatically.
 echo "Run container for development"
 docker run \
-	-it \
-	--net=host \
-	--name=${K8S_DASHBOARD_CONTAINER_NAME} \
-	--cap-add=SYS_PTRACE \
-	-v /var/run/docker.sock:/var/run/docker.sock \
-	-v ${K8S_DASHBOARD_SRC}:${K8S_DASHBOARD_SRC_ON_CONTAINER} \
-	-v ${K8S_DASHBOARD_KUBECONFIG}:/root/.kube/config \
-	-e K8S_DASHBOARD_NPM_CMD="${K8S_DASHBOARD_NPM_CMD}" \
-	${DOCKER_RUN_OPTS} \
-	${DASHBOARD_IMAGE_NAME}
+  -it \
+  --name=${K8S_DASHBOARD_CONTAINER_NAME} \
+  --cap-add=SYS_PTRACE \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v ${K8S_DASHBOARD_SRC}:${K8S_DASHBOARD_SRC_ON_CONTAINER} \
+  -v ${K8S_DASHBOARD_KUBECONFIG}:/root/.kube/config \
+  -e K8S_DASHBOARD_NPM_CMD="${K8S_DASHBOARD_NPM_CMD}" \
+  -e K8S_OWN_CLUSTER=${K8S_OWN_CLUSTER} \
+  -p 8080:8080 \
+  -p 9090:9090 \
+  -p 2345:2345 \
+  ${DOCKER_RUN_OPTS} \
+  ${DASHBOARD_IMAGE_NAME} \
+  ${K8S_DASHBOARD_CMD}

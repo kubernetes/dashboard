@@ -12,26 +12,35 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement} from '@angular/core';
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {MatCardModule, MatDividerModule, MatIconModule, MatTooltip, MatTooltipModule} from '@angular/material';
-import {By} from '@angular/platform-browser';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  MatCardModule,
+  MatDividerModule,
+  MatIconModule,
+  MatTooltip,
+  MatTooltipModule,
+} from '@angular/material';
+import { By } from '@angular/platform-browser';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-import {CardComponent} from './component';
+import { CardComponent } from './component';
 
 @Component({
   selector: 'test',
   template: `
-       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-       <kd-card [expanded]="isExpanded" [expandable]="isExpandable" role="table">
-            <div title>{{ title }}</div>
-            <div description>Description: default</div>
-            <div actions>Actions: default</div>
-            <div content>Content: default</div>
-            <div footer>Footer: default</div>
-        </kd-card>`
-
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <kd-card [expanded]="isExpanded" [expandable]="isExpandable" role="table">
+      <div title>{{ title }}</div>
+      <div description>Description: default</div>
+      <div actions>Actions: default</div>
+      <div content>Content: default</div>
+      <div footer>Footer: default</div>
+    </kd-card>
+  `,
 })
 class TestComponent {
   title = 'my-card-default-title';
@@ -44,15 +53,17 @@ describe('CardComponent', () => {
   let fixture: ComponentFixture<TestComponent>;
 
   beforeEach(async(() => {
-    TestBed
-        .configureTestingModule({
-          declarations: [CardComponent, TestComponent],
-          imports: [
-            MatIconModule, MatCardModule, MatDividerModule, MatTooltipModule, NoopAnimationsModule
-          ],
-          schemas: [CUSTOM_ELEMENTS_SCHEMA]
-        })
-        .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [CardComponent, TestComponent],
+      imports: [
+        MatIconModule,
+        MatCardModule,
+        MatDividerModule,
+        MatTooltipModule,
+        NoopAnimationsModule,
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

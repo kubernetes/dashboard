@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Ng2StateDeclaration} from '@uirouter/angular';
+import { Ng2StateDeclaration } from '@uirouter/angular';
 
-import {ErrorStateParams} from '../common/params/params';
-import {ErrorComponent} from './component';
+import { ErrorStateParams } from '../common/params/params';
+import { ErrorComponent } from './component';
 
 export const errorState: Ng2StateDeclaration = {
   parent: 'chrome',
@@ -25,10 +25,10 @@ export const errorState: Ng2StateDeclaration = {
     requiresAuth: false,
     kdBreadcrumbs: {
       label: 'Error',
-    }
+    },
   },
   views: {
-    '$default': {
+    $default: {
       component: ErrorComponent,
     },
   },

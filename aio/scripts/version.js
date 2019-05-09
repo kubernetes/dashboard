@@ -39,8 +39,9 @@ writeFileSync(
 
 // clang-format off
 
-import {VersionInfo} from '@api/frontendapi';
+import { VersionInfo } from '@api/frontendapi';
 
+// prettier-ignore
 export const version: VersionInfo = ${JSON.stringify(gitInfo, null, 2).replace(/\"/g, '\'')};
 `,
     {encoding: 'utf-8'});

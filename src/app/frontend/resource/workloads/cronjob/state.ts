@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Ng2StateDeclaration} from '@uirouter/angular';
+import { Ng2StateDeclaration } from '@uirouter/angular';
 
-import {chromeState} from '../../../chrome/state';
-import {ProxyComponent} from '../../../common/components/proxy/component';
+import { chromeState } from '../../../chrome/state';
+import { ProxyComponent } from '../../../common/components/proxy/component';
 
 export const stateName = 'cronjob';
 export const stateUrl = '/cronjob';

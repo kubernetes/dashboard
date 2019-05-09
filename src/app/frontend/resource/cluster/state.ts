@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Ng2StateDeclaration} from '@uirouter/angular';
+import { Ng2StateDeclaration } from '@uirouter/angular';
 
-import {ClusterComponent} from './component';
+import { ClusterComponent } from './component';
 
 export const clusterFutureState: Ng2StateDeclaration = {
   name: 'cluster.**',
@@ -23,7 +23,7 @@ export const clusterFutureState: Ng2StateDeclaration = {
   data: {
     kdBreadcrumbs: {
       label: 'Cluster',
-    }
+    },
   },
 };
 
@@ -35,6 +35,6 @@ export const clusterState: Ng2StateDeclaration = {
   data: {
     kdBreadcrumbs: {
       label: 'Cluster',
-    }
+    },
   },
 };

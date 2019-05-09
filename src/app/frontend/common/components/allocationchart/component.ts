@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import * as d3 from 'd3';
-import {Selection} from 'd3';
+import { Selection } from 'd3';
 import * as nv from 'nvd3';
-import {Nvd3Element} from 'nvd3';
+import { Nvd3Element } from 'nvd3';
 
 interface PieChart {
   data: PieChartData;
@@ -51,27 +51,33 @@ export class AllocationChartComponent implements OnInit {
    * https://nvd3-community.github.io/nvd3/examples/documentation.html#pieChart
    */
   initPieChart_(
-      svg: Selection<{}>, data: PieChartData[], colors: string[], margin: number, ratio: number,
-      labelFunc: (d: {}, i: number, values: {}) => string | null): Nvd3Element {
+    svg: Selection<{}>,
+    data: PieChartData[],
+    colors: string[],
+    margin: number,
+    ratio: number,
+    labelFunc: (d: {}, i: number, values: {}) => string | null
+  ): Nvd3Element {
     const size = this.size || 280;
 
     if (!labelFunc) {
       labelFunc = this.formatLabel_;
     }
 
-    const chart = nv.models.pieChart()
-                      .showLegend(false)
-                      .showLabels(true)
-                      .x(d => d.key)
-                      .y(d => d.value)
-                      .donut(true)
-                      .donutRatio(ratio)
-                      .color(colors)
-                      .margin({top: margin, right: margin, bottom: margin, left: margin})
-                      .width(size)
-                      .height(size)
-                      .growOnHover(false)
-                      .labelType(labelFunc);
+    const chart = nv.models
+      .pieChart()
+      .showLegend(false)
+      .showLabels(true)
+      .x(d => d.key)
+      .y(d => d.value)
+      .donut(true)
+      .donutRatio(ratio)
+      .color(colors)
+      .margin({ top: margin, right: margin, bottom: margin, left: margin })
+      .width(size)
+      .height(size)
+      .growOnHover(false)
+      .labelType(labelFunc);
 
     chart.tooltip.enabled(this.enableTooltips);
     chart.tooltip.contentGenerator(obj => {
@@ -87,13 +93,14 @@ export class AllocationChartComponent implements OnInit {
       return obj.data.key;
     });
 
-    svg.attr('height', size)
-        .attr('width', size)
-        .append('g')
-        .datum(data)
-        .transition()
-        .duration(350)
-        .call(chart);
+    svg
+      .attr('height', size)
+      .attr('width', size)
+      .append('g')
+      .datum(data)
+      .transition()
+      .duration(350)
+      .call(chart);
 
     return chart;
   }
@@ -109,19 +116,36 @@ export class AllocationChartComponent implements OnInit {
         if (this.outerPercent !== undefined) {
           this.outerColor = this.outerColor ? this.outerColor : '#00c752';
           chart = this.initPieChart_(
-              svg, [{value: this.outerPercent}, {value: 100 - this.outerPercent}],
-              [this.outerColor, '#ddd'], 0, 0.67, this.displayOnlyAllocated_);
+            svg,
+            [{ value: this.outerPercent }, { value: 100 - this.outerPercent }],
+            [this.outerColor, '#ddd'],
+            0,
+            0.67,
+            this.displayOnlyAllocated_
+          );
         }
         if (this.innerPercent !== undefined) {
           this.innerColor = this.innerColor ? this.innerColor : '#326de6';
           chart = this.initPieChart_(
-              svg, [{value: this.innerPercent}, {value: 100 - this.innerPercent}],
-              [this.innerColor, '#ddd'], 39, 0.55, this.displayOnlyAllocated_);
+            svg,
+            [{ value: this.innerPercent }, { value: 100 - this.innerPercent }],
+            [this.innerColor, '#ddd'],
+            39,
+            0.55,
+            this.displayOnlyAllocated_
+          );
         }
         return chart;
       } else {
         // Initializes a pie chart with multiple entries in a single ring
-        return this.initPieChart_(svg, this.data, this.colorPalette, 0, this.ratio, null);
+        return this.initPieChart_(
+          svg,
+          this.data,
+          this.colorPalette,
+          0,
+          this.ratio,
+          null
+        );
       }
     });
   }

@@ -12,31 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {UIRouterModule} from '@uirouter/angular';
+import { NgModule } from '@angular/core';
+import { UIRouterModule } from '@uirouter/angular';
 
-import {ComponentsModule} from '../../../common/components/module';
-import {SharedModule} from '../../../shared.module';
+import { ComponentsModule } from '../../../common/components/module';
+import { SharedModule } from '../../../shared.module';
 
-import {ServiceDetailComponent} from './detail/component';
-import {serviceDetailState} from './detail/state';
-import {ServiceList} from './list/component';
-import {serviceListState} from './list/state';
-import {serviceState} from './state';
+import { ServiceDetailComponent } from './detail/component';
+import { serviceDetailState } from './detail/state';
+import { ServiceList } from './list/component';
+import { serviceListState } from './list/state';
+import { serviceState } from './state';
 
 @NgModule({
   imports: [
     SharedModule,
     ComponentsModule,
     UIRouterModule.forChild({
-      states: [
-        serviceState,
-        serviceListState,
-        serviceDetailState,
-      ]
+      states: [serviceState, serviceListState, serviceDetailState],
     }),
   ],
   declarations: [ServiceList, ServiceDetailComponent],
 })
-export class ServiceModule {
-}
+export class ServiceModule {}

@@ -12,23 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
 
-import {SharedModule} from '../../shared.module';
-import {ComponentsModule} from '../components/module';
+import { SharedModule } from '../../shared.module';
+import { ComponentsModule } from '../components/module';
 
-import {AlertDialog} from './alert/dialog';
-import {DeleteResourceDialog} from './deleteresource/dialog';
-import {LogsDownloadDialog} from './download/dialog';
-import {EditResourceDialog} from './editresource/dialog';
-import {ScaleResourceDialog} from './scaleresource/dialog';
-import {TriggerResourceDialog} from './triggerresource/dialog';
+import { AlertDialog } from './alert/dialog';
+import { DeleteResourceDialog } from './deleteresource/dialog';
+import { LogsDownloadDialog } from './download/dialog';
+import { EditResourceDialog } from './editresource/dialog';
+import { ScaleResourceDialog } from './scaleresource/dialog';
+import { TriggerResourceDialog } from './triggerresource/dialog';
 
 @NgModule({
-  imports: [
-    SharedModule,
-    ComponentsModule,
-  ],
+  imports: [SharedModule, ComponentsModule],
   declarations: [
     AlertDialog,
     EditResourceDialog,
@@ -52,7 +49,6 @@ import {TriggerResourceDialog} from './triggerresource/dialog';
     LogsDownloadDialog,
     ScaleResourceDialog,
     TriggerResourceDialog,
-  ]
+  ],
 })
-export class DialogsModule {
-}
+export class DialogsModule {}

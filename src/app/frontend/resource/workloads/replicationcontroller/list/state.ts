@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Ng2StateDeclaration} from '@uirouter/angular';
-import {workloadsState} from '../../state';
-import {stateName, stateUrl} from '../state';
-import {ReplicationControllerList} from './component';
+import { Ng2StateDeclaration } from '@uirouter/angular';
+import { workloadsState } from '../../state';
+import { stateName, stateUrl } from '../state';
+import { ReplicationControllerList } from './component';
 
 export const replicationControllerListState: Ng2StateDeclaration = {
   name: `${stateName}.list`,

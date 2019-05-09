@@ -12,22 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {UIRouterModule} from '@uirouter/angular';
+import { NgModule } from '@angular/core';
+import { UIRouterModule } from '@uirouter/angular';
 
-import {ComponentsModule} from '../common/components/module';
-import {SharedModule} from '../shared.module';
-import {OverviewComponent} from './component';
-import {overviewState} from './state';
-import {WorkloadStatusComponent} from './workloadstatus/component';
+import { ComponentsModule } from '../common/components/module';
+import { SharedModule } from '../shared.module';
+import { OverviewComponent } from './component';
+import { overviewState } from './state';
+import { WorkloadStatusComponent } from './workloadstatus/component';
 
 @NgModule({
   imports: [
     SharedModule,
     ComponentsModule,
-    UIRouterModule.forChild({states: [overviewState]}),
+    UIRouterModule.forChild({ states: [overviewState] }),
   ],
   declarations: [OverviewComponent, WorkloadStatusComponent],
 })
-export class OverviewModule {
-}
+export class OverviewModule {}

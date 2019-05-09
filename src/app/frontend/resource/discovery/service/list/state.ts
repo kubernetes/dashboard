@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Ng2StateDeclaration} from '@uirouter/angular';
+import { Ng2StateDeclaration } from '@uirouter/angular';
 
-import {discoveryState} from '../../state';
-import {stateName, stateUrl} from '../state';
-import {ServiceList} from './component';
+import { discoveryState } from '../../state';
+import { stateName, stateUrl } from '../state';
+import { ServiceList } from './component';
 
 export const serviceListState: Ng2StateDeclaration = {
   name: `${stateName}.list`,
@@ -26,6 +26,6 @@ export const serviceListState: Ng2StateDeclaration = {
     kdBreadcrumbs: {
       label: 'Services',
       parent: discoveryState.name,
-    }
+    },
   },
 };

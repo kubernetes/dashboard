@@ -12,80 +12,78 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
 
-import {SharedModule} from '../../shared.module';
+import { SharedModule } from '../../shared.module';
 
-import {ActionbarComponent} from './actionbar/component';
-import {ActionbarDetailActionsComponent} from './actionbar/detailactions/component';
-import {ActionbarDetailDeleteComponent} from './actionbar/detailactions/delete/component';
-import {ActionbarDetailEditComponent} from './actionbar/detailactions/edit/component';
-import {ActionbarDetailExecComponent} from './actionbar/detailactions/exec/component';
-import {ActionbarDetailLogsComponent} from './actionbar/detailactions/logs/component';
-import {ActionbarDetailScaleComponent} from './actionbar/detailactions/scale/component';
-import {ActionbarDetailTriggerComponent} from './actionbar/detailactions/trigger/component';
-import {DefaultActionbar} from './actionbars/default/component';
-import {LogsDefaultActionbar} from './actionbars/logsdefault/component';
-import {LogsExecDefaultActionbar} from './actionbars/logsexecdefault/component';
-import {LogsScaleDefaultActionbar} from './actionbars/logsscaledefault/component';
-import {ScaleDefaultActionbar} from './actionbars/scaledefault/component';
-import {TriggerDefaultActionbar} from './actionbars/triggerdefault/component';
-import {AllocationChartComponent} from './allocationchart/component';
-import {BreadcrumbsComponent} from './breadcrumbs/component';
-import {CardComponent} from './card/component';
-import {ChipDialog} from './chips/chipdialog/dialog';
-import {ChipsComponent} from './chips/component';
-import {CommaSeparatedListComponent} from './commaseparatedlist/component';
-import {ConditionListComponent} from './condition/component';
-import {ContainerCardComponent} from './container/component';
-import {CreatorCardComponent} from './creator/component';
-import {EndpointListComponent} from './endpoint/cardlist/component';
-import {ExternalEndpointComponent} from './endpoint/external/component';
-import {InternalEndpointComponent} from './endpoint/internal/component';
-import {HiddenPropertyComponent} from './hiddenproperty/component';
-import {ResourceLimitListComponent} from './limits/component';
-import {ColumnComponent} from './list/column/component';
-import {MenuComponent} from './list/column/menu/component';
-import {CardListFilterComponent} from './list/filter/component';
-import {RowDetailComponent} from './list/rowdetail/component';
-import {LoadingSpinner} from './list/spinner/component';
-import {ListZeroStateComponent} from './list/zerostate/component';
-import {NamespaceChangeDialog} from './namespace/changedialog/dialog';
-import {NamespaceSelectorComponent} from './namespace/component';
-import {ObjectMetaComponent} from './objectmeta/component';
-import {PodStatusCardComponent} from './podstatus/component';
-import {PolicyRuleListComponent} from './policyrule/component';
-import {PropertyComponent} from './property/component';
-import {ProxyComponent} from './proxy/component';
-import {ResourceQuotaListComponent} from './quotas/component';
-import {ClusterRoleListComponent} from './resourcelist/clusterrole/component';
-import {ConfigMapListComponent} from './resourcelist/configmap/component';
-import {CronJobListComponent} from './resourcelist/cronjob/component';
-import {DaemonSetListComponent} from './resourcelist/daemonset/component';
-import {DeploymentListComponent} from './resourcelist/deployment/component';
-import {EventListComponent} from './resourcelist/event/component';
-import {IngressListComponent} from './resourcelist/ingress/component';
-import {JobListComponent} from './resourcelist/job/component';
-import {NamespaceListComponent} from './resourcelist/namespace/component';
-import {NodeListComponent} from './resourcelist/node/component';
-import {PersistentVolumeListComponent} from './resourcelist/persistentvolume/component';
-import {PersistentVolumeClaimListComponent} from './resourcelist/persistentvolumeclaim/component';
-import {PodListComponent} from './resourcelist/pod/component';
-import {ReplicaSetListComponent} from './resourcelist/replicaset/component';
-import {ReplicationControllerListComponent} from './resourcelist/replicationcontroller/component';
-import {SecretListComponent} from './resourcelist/secret/component';
-import {ServiceListComponent} from './resourcelist/service/component';
-import {StatefulSetListComponent} from './resourcelist/statefulset/component';
-import {StorageClassListComponent} from './resourcelist/storageclass/component';
-import {SparklineComponent} from './sparkline/component';
-import {TextInputComponent} from './textinput/component';
-import {UploadFileComponent} from './uploadfile/component';
-import {ZeroStateComponent} from './zerostate/component';
+import { ActionbarComponent } from './actionbar/component';
+import { ActionbarDetailActionsComponent } from './actionbar/detailactions/component';
+import { ActionbarDetailDeleteComponent } from './actionbar/detailactions/delete/component';
+import { ActionbarDetailEditComponent } from './actionbar/detailactions/edit/component';
+import { ActionbarDetailExecComponent } from './actionbar/detailactions/exec/component';
+import { ActionbarDetailLogsComponent } from './actionbar/detailactions/logs/component';
+import { ActionbarDetailScaleComponent } from './actionbar/detailactions/scale/component';
+import { ActionbarDetailTriggerComponent } from './actionbar/detailactions/trigger/component';
+import { DefaultActionbar } from './actionbars/default/component';
+import { LogsDefaultActionbar } from './actionbars/logsdefault/component';
+import { LogsExecDefaultActionbar } from './actionbars/logsexecdefault/component';
+import { LogsScaleDefaultActionbar } from './actionbars/logsscaledefault/component';
+import { ScaleDefaultActionbar } from './actionbars/scaledefault/component';
+import { TriggerDefaultActionbar } from './actionbars/triggerdefault/component';
+import { AllocationChartComponent } from './allocationchart/component';
+import { BreadcrumbsComponent } from './breadcrumbs/component';
+import { CardComponent } from './card/component';
+import { ChipDialog } from './chips/chipdialog/dialog';
+import { ChipsComponent } from './chips/component';
+import { CommaSeparatedListComponent } from './commaseparatedlist/component';
+import { ConditionListComponent } from './condition/component';
+import { ContainerCardComponent } from './container/component';
+import { CreatorCardComponent } from './creator/component';
+import { EndpointListComponent } from './endpoint/cardlist/component';
+import { ExternalEndpointComponent } from './endpoint/external/component';
+import { InternalEndpointComponent } from './endpoint/internal/component';
+import { HiddenPropertyComponent } from './hiddenproperty/component';
+import { ResourceLimitListComponent } from './limits/component';
+import { ColumnComponent } from './list/column/component';
+import { MenuComponent } from './list/column/menu/component';
+import { CardListFilterComponent } from './list/filter/component';
+import { RowDetailComponent } from './list/rowdetail/component';
+import { LoadingSpinner } from './list/spinner/component';
+import { ListZeroStateComponent } from './list/zerostate/component';
+import { NamespaceChangeDialog } from './namespace/changedialog/dialog';
+import { NamespaceSelectorComponent } from './namespace/component';
+import { ObjectMetaComponent } from './objectmeta/component';
+import { PodStatusCardComponent } from './podstatus/component';
+import { PolicyRuleListComponent } from './policyrule/component';
+import { PropertyComponent } from './property/component';
+import { ProxyComponent } from './proxy/component';
+import { ResourceQuotaListComponent } from './quotas/component';
+import { ClusterRoleListComponent } from './resourcelist/clusterrole/component';
+import { ConfigMapListComponent } from './resourcelist/configmap/component';
+import { CronJobListComponent } from './resourcelist/cronjob/component';
+import { DaemonSetListComponent } from './resourcelist/daemonset/component';
+import { DeploymentListComponent } from './resourcelist/deployment/component';
+import { EventListComponent } from './resourcelist/event/component';
+import { IngressListComponent } from './resourcelist/ingress/component';
+import { JobListComponent } from './resourcelist/job/component';
+import { NamespaceListComponent } from './resourcelist/namespace/component';
+import { NodeListComponent } from './resourcelist/node/component';
+import { PersistentVolumeListComponent } from './resourcelist/persistentvolume/component';
+import { PersistentVolumeClaimListComponent } from './resourcelist/persistentvolumeclaim/component';
+import { PodListComponent } from './resourcelist/pod/component';
+import { ReplicaSetListComponent } from './resourcelist/replicaset/component';
+import { ReplicationControllerListComponent } from './resourcelist/replicationcontroller/component';
+import { SecretListComponent } from './resourcelist/secret/component';
+import { ServiceListComponent } from './resourcelist/service/component';
+import { StatefulSetListComponent } from './resourcelist/statefulset/component';
+import { StorageClassListComponent } from './resourcelist/storageclass/component';
+import { SparklineComponent } from './sparkline/component';
+import { TextInputComponent } from './textinput/component';
+import { UploadFileComponent } from './uploadfile/component';
+import { ZeroStateComponent } from './zerostate/component';
 
 @NgModule({
-  imports: [
-    SharedModule,
-  ],
+  imports: [SharedModule],
   declarations: [
     AllocationChartComponent,
     CardComponent,
@@ -219,7 +217,6 @@ import {ZeroStateComponent} from './zerostate/component';
     RowDetailComponent,
     MenuComponent,
     NamespaceChangeDialog,
-  ]
+  ],
 })
-export class ComponentsModule {
-}
+export class ComponentsModule {}

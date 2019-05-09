@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Ng2StateDeclaration} from '@uirouter/angular';
+import { Ng2StateDeclaration } from '@uirouter/angular';
 
-import {LoginComponent} from './component';
+import { LoginComponent } from './component';
 
 /**
  * One of the root application views. It is the only view that does not have to be a child

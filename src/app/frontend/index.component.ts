@@ -12,25 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {OverlayContainer} from '@angular/cdk/overlay';
-import {Component, OnInit} from '@angular/core';
+import { OverlayContainer } from '@angular/cdk/overlay';
+import { Component, OnInit } from '@angular/core';
 
-import {LocalSettingsService} from './common/services/global/localsettings';
-import {ThemeService} from './common/services/global/theme';
+import { LocalSettingsService } from './common/services/global/localsettings';
+import { ThemeService } from './common/services/global/theme';
 
 enum Themes {
   Light = 'kd-light-theme',
-  Dark = 'kd-dark-theme'
+  Dark = 'kd-dark-theme',
 }
 
-@Component({selector: 'kd-root', template: '<ui-view [ngClass]="getTheme()"></ui-view>'})
+@Component({
+  selector: 'kd-root',
+  template: '<ui-view [ngClass]="getTheme()"></ui-view>',
+})
 export class RootComponent implements OnInit {
   private isLightThemeEnabled_: boolean;
 
   constructor(
-      private readonly themeService_: ThemeService,
-      private readonly settings_: LocalSettingsService,
-      private readonly overlayContainer_: OverlayContainer) {
+    private readonly themeService_: ThemeService,
+    private readonly settings_: LocalSettingsService,
+    private readonly overlayContainer_: OverlayContainer
+  ) {
     this.isLightThemeEnabled_ = this.themeService_.isLightThemeEnabled();
   }
 
@@ -49,7 +53,9 @@ export class RootComponent implements OnInit {
   private applyOverlayContainerTheme_(): void {
     const classToRemove = this.getTheme(!this.isLightThemeEnabled_);
     const classToAdd = this.getTheme(this.isLightThemeEnabled_);
-    this.overlayContainer_.getContainerElement().classList.remove(classToRemove);
+    this.overlayContainer_
+      .getContainerElement()
+      .classList.remove(classToRemove);
     this.overlayContainer_.getContainerElement().classList.add(classToAdd);
   }
 

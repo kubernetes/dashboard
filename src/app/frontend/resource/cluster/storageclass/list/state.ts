@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Ng2StateDeclaration} from '@uirouter/angular';
+import { Ng2StateDeclaration } from '@uirouter/angular';
 
-import {clusterState} from '../../state';
-import {stateName, stateUrl} from '../state';
+import { clusterState } from '../../state';
+import { stateName, stateUrl } from '../state';
 
-import {StorageClassListComponent} from './component';
+import { StorageClassListComponent } from './component';
 
 export const storageClassListState: Ng2StateDeclaration = {
   name: `${stateName}.list`,

@@ -12,11 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'kd-stateful-set-state',
   template: '<kd-stateful-set-list></kd-stateful-set-list>',
 })
-export class StatefulSetList {
-}
+export class StatefulSetList {}

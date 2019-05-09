@@ -12,13 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HttpClient, HttpEventType, HttpRequest, HttpResponse} from '@angular/common/http';
-import {Component, Inject, OnDestroy} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {StateService} from '@uirouter/core';
+import {
+  HttpClient,
+  HttpEventType,
+  HttpRequest,
+  HttpResponse,
+} from '@angular/common/http';
+import { Component, Inject, OnDestroy } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { StateService } from '@uirouter/core';
 import * as FileSaver from 'file-saver';
-import {Subscription} from 'rxjs';
-import {LogService} from '../../services/global/logs';
+import { Subscription } from 'rxjs';
+import { LogService } from '../../services/global/logs';
 
 export interface LogsDownloadDialogMeta {
   pod: string;
@@ -38,31 +43,40 @@ export class LogsDownloadDialog implements OnDestroy {
   error: number;
 
   constructor(
-      public dialogRef: MatDialogRef<LogsDownloadDialog>,
-      @Inject(MAT_DIALOG_DATA) public data: LogsDownloadDialogMeta,
-      private readonly logService: LogService, private readonly state_: StateService,
-      private readonly http_: HttpClient) {
+    public dialogRef: MatDialogRef<LogsDownloadDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: LogsDownloadDialogMeta,
+    private readonly logService: LogService,
+    private readonly state_: StateService,
+    private readonly http_: HttpClient
+  ) {
     const namespace = this.state_.params.resourceNamespace;
-    const logUrl = `api/v1/log/file/${namespace}/${data.pod}/${data.container}?previous=${
-        this.logService.getPrevious()}`;
+    const logUrl = `api/v1/log/file/${namespace}/${data.pod}/${
+      data.container
+    }?previous=${this.logService.getPrevious()}`;
 
-    this.downloadSubscription =
-        this.http_
-            .request(
-                new HttpRequest('GET', logUrl, {}, {reportProgress: true, responseType: 'blob'}))
-            .subscribe(
-                event => {
-                  if (event.type === HttpEventType.DownloadProgress) {
-                    this.loaded = event.loaded;
-                  } else if (event instanceof HttpResponse) {
-                    this.finished = true;
-                    // @ts-ignore
-                    this.result = new Blob([event.body], {type: 'text/plan'});
-                  }
-                },
-                error => {
-                  this.error = error.status;
-                });
+    this.downloadSubscription = this.http_
+      .request(
+        new HttpRequest(
+          'GET',
+          logUrl,
+          {},
+          { reportProgress: true, responseType: 'blob' }
+        )
+      )
+      .subscribe(
+        event => {
+          if (event.type === HttpEventType.DownloadProgress) {
+            this.loaded = event.loaded;
+          } else if (event instanceof HttpResponse) {
+            this.finished = true;
+            // @ts-ignore
+            this.result = new Blob([event.body], { type: 'text/plan' });
+          }
+        },
+        error => {
+          this.error = error.status;
+        }
+      );
   }
 
   ngOnDestroy(): void {
@@ -77,7 +91,9 @@ export class LogsDownloadDialog implements OnDestroy {
 
   save(): void {
     FileSaver.saveAs(
-        this.result, this.logService.getLogFileName(this.data.pod, this.data.container));
+      this.result,
+      this.logService.getLogFileName(this.data.pod, this.data.container)
+    );
     this.dialogRef.close();
   }
 

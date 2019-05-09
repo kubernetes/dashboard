@@ -12,22 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {UIRouterModule} from '@uirouter/angular';
+import { NgModule } from '@angular/core';
+import { UIRouterModule } from '@uirouter/angular';
 
-import {ComponentsModule} from '../common/components/module';
-import {SharedModule} from '../shared.module';
+import { ComponentsModule } from '../common/components/module';
+import { SharedModule } from '../shared.module';
 
-import {ShellComponent} from './component';
-import {shellState} from './state';
+import { ShellComponent } from './component';
+import { shellState } from './state';
 
 @NgModule({
   imports: [
     SharedModule,
     ComponentsModule,
-    UIRouterModule.forChild({states: [shellState]}),
+    UIRouterModule.forChild({ states: [shellState] }),
   ],
   declarations: [ShellComponent],
 })
-export class ShellModule {
-}
+export class ShellModule {}

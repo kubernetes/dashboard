@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Ng2StateDeclaration} from '@uirouter/angular';
+import { Ng2StateDeclaration } from '@uirouter/angular';
 
-import {chromeState} from '../../../chrome/state';
-import {ProxyComponent} from '../../../common/components/proxy/component';
+import { chromeState } from '../../../chrome/state';
+import { ProxyComponent } from '../../../common/components/proxy/component';
 
 export const stateName = 'persistentvolume';
 export const stateUrl = '/persistentvolume';
@@ -23,7 +23,8 @@ export const stateUrl = '/persistentvolume';
 export const persistentVolumeFutureState: Ng2StateDeclaration = {
   name: `${stateName}.**`,
   url: stateUrl,
-  loadChildren: './resource/cluster/persistentvolume/module#PersistentVolumeModule',
+  loadChildren:
+    './resource/cluster/persistentvolume/module#PersistentVolumeModule',
 };
 
 export const persistentVolumeState: Ng2StateDeclaration = {

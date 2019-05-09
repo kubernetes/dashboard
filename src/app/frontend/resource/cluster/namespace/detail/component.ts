@@ -12,15 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {NamespaceDetail} from '@api/backendapi';
-import {StateService} from '@uirouter/core';
-import {Subscription} from 'rxjs/Subscription';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NamespaceDetail } from '@api/backendapi';
+import { StateService } from '@uirouter/core';
+import { Subscription } from 'rxjs/Subscription';
 
-import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
-import {NotificationsService} from '../../../../common/services/global/notifications';
-import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
-import {ResourceService} from '../../../../common/services/resource/resource';
+import {
+  ActionbarService,
+  ResourceMeta,
+} from '../../../../common/services/global/actionbar';
+import { NotificationsService } from '../../../../common/services/global/notifications';
+import {
+  EndpointManager,
+  Resource,
+} from '../../../../common/services/resource/endpoint';
+import { ResourceService } from '../../../../common/services/resource/resource';
 
 @Component({
   selector: 'kd-namespace-detail',
@@ -34,24 +40,32 @@ export class NamespaceDetailComponent implements OnInit, OnDestroy {
   eventListEndpoint: string;
 
   constructor(
-      private readonly namespace_: ResourceService<NamespaceDetail>,
-      private readonly actionbar_: ActionbarService, private readonly state_: StateService,
-      private readonly notifications_: NotificationsService) {}
+    private readonly namespace_: ResourceService<NamespaceDetail>,
+    private readonly actionbar_: ActionbarService,
+    private readonly state_: StateService,
+    private readonly notifications_: NotificationsService
+  ) {}
 
   ngOnInit(): void {
     this.namespaceName_ = this.state_.params.resourceName;
-    this.eventListEndpoint = EndpointManager.resource(Resource.namespace, false)
-                                 .child(this.namespaceName_, Resource.event);
+    this.eventListEndpoint = EndpointManager.resource(
+      Resource.namespace,
+      false
+    ).child(this.namespaceName_, Resource.event);
 
-    this.namespaceSubscription_ =
-        this.namespace_
-            .get(EndpointManager.resource(Resource.namespace).detail(), this.namespaceName_)
-            .subscribe((d: NamespaceDetail) => {
-              this.namespace = d;
-              this.notifications_.pushErrors(d.errors);
-              this.actionbar_.onInit.emit(new ResourceMeta('Namespace', d.objectMeta, d.typeMeta));
-              this.isInitialized = true;
-            });
+    this.namespaceSubscription_ = this.namespace_
+      .get(
+        EndpointManager.resource(Resource.namespace).detail(),
+        this.namespaceName_
+      )
+      .subscribe((d: NamespaceDetail) => {
+        this.namespace = d;
+        this.notifications_.pushErrors(d.errors);
+        this.actionbar_.onInit.emit(
+          new ResourceMeta('Namespace', d.objectMeta, d.typeMeta)
+        );
+        this.isInitialized = true;
+      });
   }
 
   ngOnDestroy(): void {
