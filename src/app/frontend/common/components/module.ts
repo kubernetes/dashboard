@@ -81,7 +81,7 @@ import { SparklineComponent } from './sparkline/component';
 import { TextInputComponent } from './textinput/component';
 import { UploadFileComponent } from './uploadfile/component';
 import { ZeroStateComponent } from './zerostate/component';
-import {DateComponent} from './date/component';
+import { DateComponent } from './date/component';
 
 @NgModule({
   imports: [SharedModule],

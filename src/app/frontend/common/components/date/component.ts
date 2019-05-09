@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Input} from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 /**
  * Display a date
@@ -32,7 +32,11 @@ import {Component, Input} from '@angular/core';
  * <kd-date [date]="object.timestamp" relative format="short"></kd-date>
  *
  */
-@Component({selector: 'kd-date', templateUrl: './template.html', styleUrls: ['./style.scss']})
+@Component({
+  selector: 'kd-date',
+  templateUrl: './template.html',
+  styleUrls: ['./style.scss'],
+})
 export class DateComponent {
   @Input() date: string;
   @Input() format = 'medium';
