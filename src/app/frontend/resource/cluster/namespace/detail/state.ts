@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Ng2StateDeclaration} from '@uirouter/angular';
+import { Ng2StateDeclaration } from '@uirouter/angular';
 
-import {addResourceStateParamsToUrl} from '../../../../common/params/params';
-import {stateName, stateUrl} from '../state';
+import { addResourceStateParamsToUrl } from '../../../../common/params/params';
+import { stateName, stateUrl } from '../state';
 
-import {ActionbarComponent} from './actionbar/component';
-import {NamespaceDetailComponent} from './component';
+import { ActionbarComponent } from './actionbar/component';
+import { NamespaceDetailComponent } from './component';
 
 export const namespaceDetailState: Ng2StateDeclaration = {
   name: `${stateName}.detail`,
@@ -30,11 +30,11 @@ export const namespaceDetailState: Ng2StateDeclaration = {
     },
   },
   views: {
-    '$default': {
+    $default: {
       component: NamespaceDetailComponent,
     },
     'actionbar@chrome': {
       component: ActionbarComponent,
-    }
+    },
   },
 };

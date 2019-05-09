@@ -12,11 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {CreateService} from './service';
+import { NgModule } from '@angular/core';
+import { CreateService } from './service';
 
 @NgModule({
   providers: [CreateService],
 })
-export class CreateServiceModule {
-}
+export class CreateServiceModule {}

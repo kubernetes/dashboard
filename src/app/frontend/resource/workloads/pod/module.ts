@@ -12,24 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {UIRouterModule} from '@uirouter/angular';
+import { NgModule } from '@angular/core';
+import { UIRouterModule } from '@uirouter/angular';
 
-import {ComponentsModule} from '../../../common/components/module';
-import {SharedModule} from '../../../shared.module';
-import {PodDetailComponent} from './detail/component';
-import {podDetailState} from './detail/state';
-import {PodList} from './list/component';
-import {podListState} from './list/state';
-import {podState} from './state';
+import { ComponentsModule } from '../../../common/components/module';
+import { SharedModule } from '../../../shared.module';
+import { PodDetailComponent } from './detail/component';
+import { podDetailState } from './detail/state';
+import { PodList } from './list/component';
+import { podListState } from './list/state';
+import { podState } from './state';
 
 @NgModule({
   imports: [
     SharedModule,
     ComponentsModule,
-    UIRouterModule.forChild({states: [podState, podListState, podDetailState]}),
+    UIRouterModule.forChild({
+      states: [podState, podListState, podDetailState],
+    }),
   ],
   declarations: [PodList, PodDetailComponent],
 })
-export class PodModule {
-}
+export class PodModule {}

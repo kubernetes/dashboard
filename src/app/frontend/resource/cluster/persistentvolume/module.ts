@@ -12,18 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {UIRouterModule} from '@uirouter/angular';
+import { NgModule } from '@angular/core';
+import { UIRouterModule } from '@uirouter/angular';
 
-import {ComponentsModule} from '../../../common/components/module';
-import {SharedModule} from '../../../shared.module';
+import { ComponentsModule } from '../../../common/components/module';
+import { SharedModule } from '../../../shared.module';
 
-import {PersistentVolumeDetailComponent} from './detail/component';
-import {PersistentVolumeSourceComponent} from './detail/source/component';
-import {persistentVolumeDetailState} from './detail/state';
-import {PersistentVolumeListComponent} from './list/component';
-import {persistentVolumeListState} from './list/state';
-import {persistentVolumeState} from './state';
+import { PersistentVolumeDetailComponent } from './detail/component';
+import { PersistentVolumeSourceComponent } from './detail/source/component';
+import { persistentVolumeDetailState } from './detail/state';
+import { PersistentVolumeListComponent } from './list/component';
+import { persistentVolumeListState } from './list/state';
+import { persistentVolumeState } from './state';
 
 @NgModule({
   imports: [
@@ -34,12 +34,13 @@ import {persistentVolumeState} from './state';
         persistentVolumeState,
         persistentVolumeListState,
         persistentVolumeDetailState,
-      ]
+      ],
     }),
   ],
   declarations: [
-    PersistentVolumeListComponent, PersistentVolumeDetailComponent, PersistentVolumeSourceComponent
+    PersistentVolumeListComponent,
+    PersistentVolumeDetailComponent,
+    PersistentVolumeSourceComponent,
   ],
 })
-export class PersistentVolumeModule {
-}
+export class PersistentVolumeModule {}

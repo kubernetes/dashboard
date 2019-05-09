@@ -12,17 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {PodDetail} from '@api/backendapi';
-import {StateService} from '@uirouter/core';
-import {Subscription} from 'rxjs/Subscription';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { PodDetail } from '@api/backendapi';
+import { StateService } from '@uirouter/core';
+import { Subscription } from 'rxjs/Subscription';
 
-import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
-import {NotificationsService} from '../../../../common/services/global/notifications';
-import {KdStateService} from '../../../../common/services/global/state';
-import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
-import {NamespacedResourceService} from '../../../../common/services/resource/resource';
-import {nodeState} from '../../../cluster/node/state';
+import {
+  ActionbarService,
+  ResourceMeta,
+} from '../../../../common/services/global/actionbar';
+import { NotificationsService } from '../../../../common/services/global/notifications';
+import { KdStateService } from '../../../../common/services/global/state';
+import {
+  EndpointManager,
+  Resource,
+} from '../../../../common/services/resource/endpoint';
+import { NamespacedResourceService } from '../../../../common/services/resource/resource';
+import { nodeState } from '../../../cluster/node/state';
 
 @Component({
   selector: 'kd-pod-detail',
@@ -36,24 +42,30 @@ export class PodDetailComponent implements OnInit, OnDestroy {
   eventListEndpoint: string;
 
   constructor(
-      private readonly pod_: NamespacedResourceService<PodDetail>,
-      private readonly actionbar_: ActionbarService, private readonly state_: StateService,
-      private readonly kdState_: KdStateService,
-      private readonly notifications_: NotificationsService) {}
+    private readonly pod_: NamespacedResourceService<PodDetail>,
+    private readonly actionbar_: ActionbarService,
+    private readonly state_: StateService,
+    private readonly kdState_: KdStateService,
+    private readonly notifications_: NotificationsService
+  ) {}
 
   ngOnInit(): void {
     this.podName_ = this.state_.params.resourceName;
-    this.eventListEndpoint =
-        EndpointManager.resource(Resource.pod, true).child(this.podName_, Resource.event);
-    this.podSubscription_ =
-        this.pod_.get(EndpointManager.resource(Resource.pod, true).detail(), this.podName_)
-            .startWith({})
-            .subscribe((d: PodDetail) => {
-              this.pod = d;
-              this.notifications_.pushErrors(d.errors);
-              this.actionbar_.onInit.emit(new ResourceMeta('Pod', d.objectMeta, d.typeMeta));
-              this.isInitialized = true;
-            });
+    this.eventListEndpoint = EndpointManager.resource(Resource.pod, true).child(
+      this.podName_,
+      Resource.event
+    );
+    this.podSubscription_ = this.pod_
+      .get(EndpointManager.resource(Resource.pod, true).detail(), this.podName_)
+      .startWith({})
+      .subscribe((d: PodDetail) => {
+        this.pod = d;
+        this.notifications_.pushErrors(d.errors);
+        this.actionbar_.onInit.emit(
+          new ResourceMeta('Pod', d.objectMeta, d.typeMeta)
+        );
+        this.isInitialized = true;
+      });
   }
 
   ngOnDestroy(): void {

@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Ng2StateDeclaration} from '@uirouter/angular';
+import { Ng2StateDeclaration } from '@uirouter/angular';
 
-import {configState} from '../../state';
-import {stateName, stateUrl} from '../state';
-import {SecretList} from './component';
+import { configState } from '../../state';
+import { stateName, stateUrl } from '../state';
+import { SecretList } from './component';
 
 export const secretListState: Ng2StateDeclaration = {
   name: `${stateName}.list`,
@@ -26,6 +26,6 @@ export const secretListState: Ng2StateDeclaration = {
     kdBreadcrumbs: {
       label: 'Secrets',
       parent: configState.name,
-    }
+    },
   },
 };

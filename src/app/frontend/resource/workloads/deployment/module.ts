@@ -12,26 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {UIRouterModule} from '@uirouter/angular';
+import { NgModule } from '@angular/core';
+import { UIRouterModule } from '@uirouter/angular';
 
-import {ComponentsModule} from '../../../common/components/module';
-import {SharedModule} from '../../../shared.module';
+import { ComponentsModule } from '../../../common/components/module';
+import { SharedModule } from '../../../shared.module';
 
-import {DeploymentDetailComponent} from './detail/component';
-import {deploymentDetailState} from './detail/state';
-import {DeploymentList} from './list/component';
-import {deploymentListState} from './list/state';
-import {deploymentState} from './state';
+import { DeploymentDetailComponent } from './detail/component';
+import { deploymentDetailState } from './detail/state';
+import { DeploymentList } from './list/component';
+import { deploymentListState } from './list/state';
+import { deploymentState } from './state';
 
 @NgModule({
   imports: [
     SharedModule,
     ComponentsModule,
-    UIRouterModule.forChild(
-        {states: [deploymentState, deploymentListState, deploymentDetailState]}),
+    UIRouterModule.forChild({
+      states: [deploymentState, deploymentListState, deploymentDetailState],
+    }),
   ],
   declarations: [DeploymentList, DeploymentDetailComponent],
 })
-export class DeploymentModule {
-}
+export class DeploymentModule {}

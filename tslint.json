@@ -1,8 +1,12 @@
 {
   "extends": "gts/tslint.json",
-  "cliOptions": {
+  "linterOptions": {
     "exclude": [
       "src/app/frontend/environments/version.ts"
     ]
+  },
+  "rules": {
+    "ban-ts-ignore": false,
+    "interface-over-type-literal": false
   }
 }

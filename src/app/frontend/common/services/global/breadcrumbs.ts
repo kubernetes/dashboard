@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Injectable} from '@angular/core';
-import {BreadcrumbConfig} from '@api/frontendapi';
-import {StateDeclaration, StateObject, StateService} from '@uirouter/core';
-import {searchState} from '../../../search/state';
-import {SEARCH_QUERY_STATE_PARAM} from '../../params/params';
+import { Injectable } from '@angular/core';
+import { BreadcrumbConfig } from '@api/frontendapi';
+import { StateDeclaration, StateObject, StateService } from '@uirouter/core';
+import { searchState } from '../../../search/state';
+import { SEARCH_QUERY_STATE_PARAM } from '../../params/params';
 
 const breadcrumbsConfig = 'kdBreadcrumbs';
 export const logsParentStatePlaceholder = '___logsParentState___';
@@ -25,7 +25,9 @@ export const logsParentStatePlaceholder = '___logsParentState___';
 export class BreadcrumbsService {
   constructor(private readonly state_: StateService) {}
 
-  getParentState(state: StateObject|StateDeclaration): StateObject|StateDeclaration {
+  getParentState(
+    state: StateObject | StateDeclaration
+  ): StateObject | StateDeclaration {
     const conf = this.getBreadcrumbConfig(state);
     let result = null;
     if (conf && conf.parent) {
@@ -41,11 +43,11 @@ export class BreadcrumbsService {
     return result;
   }
 
-  getBreadcrumbConfig(state: StateObject|StateDeclaration): BreadcrumbConfig {
+  getBreadcrumbConfig(state: StateObject | StateDeclaration): BreadcrumbConfig {
     return state.data ? state.data[breadcrumbsConfig] : state.data;
   }
 
-  getDisplayName(state: StateObject|StateDeclaration): string {
+  getDisplayName(state: StateObject | StateDeclaration): string {
     const conf = this.getBreadcrumbConfig(state);
     const stateParams = this.state_.params;
 
@@ -62,6 +64,8 @@ export class BreadcrumbsService {
 
     // If there is a state parameter with with name equal to conf.label then return its value,
     // otherwise just return label. It allows to "interpolate" resource names into breadcrumbs.
-    return stateParams && stateParams[conf.label] ? stateParams[conf.label] : conf.label;
+    return stateParams && stateParams[conf.label]
+      ? stateParams[conf.label]
+      : conf.label;
   }
 }

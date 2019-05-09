@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Ng2StateDeclaration} from '@uirouter/angular';
+import { Ng2StateDeclaration } from '@uirouter/angular';
 
-import {OverviewComponent} from './component';
+import { OverviewComponent } from './component';
 
 export const overviewFutureState: Ng2StateDeclaration = {
   name: 'overview.**',
@@ -23,7 +23,7 @@ export const overviewFutureState: Ng2StateDeclaration = {
   data: {
     kdBreadcrumbs: {
       label: 'Overview',
-    }
+    },
   },
 };
 
@@ -32,13 +32,13 @@ export const overviewState: Ng2StateDeclaration = {
   name: 'overview',
   url: '/overview',
   views: {
-    '$default': {
+    $default: {
       component: OverviewComponent,
     },
   },
   data: {
     kdBreadcrumbs: {
       label: 'Overview',
-    }
+    },
   },
 };

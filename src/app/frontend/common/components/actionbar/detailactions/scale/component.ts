@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Input} from '@angular/core';
-import {ObjectMeta, TypeMeta} from '@api/backendapi';
-import {StateService} from '@uirouter/core';
-import {Subscription} from 'rxjs/Subscription';
+import { Component, Input } from '@angular/core';
+import { ObjectMeta, TypeMeta } from '@api/backendapi';
+import { StateService } from '@uirouter/core';
+import { Subscription } from 'rxjs/Subscription';
 
-import {VerberService} from '../../../../services/global/verber';
+import { VerberService } from '../../../../services/global/verber';
 
 @Component({
   selector: 'kd-actionbar-detail-scale',
@@ -29,7 +29,10 @@ export class ActionbarDetailScaleComponent {
   @Input() displayName: string;
   verberSubscription_: Subscription;
 
-  constructor(private readonly verber_: VerberService, private readonly state_: StateService) {}
+  constructor(
+    private readonly verber_: VerberService,
+    private readonly state_: StateService
+  ) {}
 
   ngOnInit(): void {
     this.verberSubscription_ = this.verber_.onScale.subscribe(() => {
@@ -42,6 +45,10 @@ export class ActionbarDetailScaleComponent {
   }
 
   onClick(): void {
-    this.verber_.showScaleDialog(this.displayName, this.typeMeta, this.objectMeta);
+    this.verber_.showScaleDialog(
+      this.displayName,
+      this.typeMeta,
+      this.objectMeta
+    );
   }
 }

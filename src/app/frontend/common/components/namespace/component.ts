@@ -12,27 +12,38 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {MatDialog, MatSelect} from '@angular/material';
-import {NamespaceList} from '@api/backendapi';
-import {StateService} from '@uirouter/core';
-import {Subscription} from 'rxjs/Subscription';
-import {overviewState} from '../../../overview/state';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { MatDialog, MatSelect } from '@angular/material';
+import { NamespaceList } from '@api/backendapi';
+import { StateService } from '@uirouter/core';
+import { Subscription } from 'rxjs/Subscription';
+import { overviewState } from '../../../overview/state';
 
-import {NAMESPACE_STATE_PARAM} from '../../params/params';
-import {NamespaceService} from '../../services/global/namespace';
-import {NotificationSeverity, NotificationsService} from '../../services/global/notifications';
-import {KdStateService} from '../../services/global/state';
-import {EndpointManager, Resource} from '../../services/resource/endpoint';
-import {ResourceService} from '../../services/resource/resource';
-import {NamespaceChangeDialog} from './changedialog/dialog';
+import { NAMESPACE_STATE_PARAM } from '../../params/params';
+import { NamespaceService } from '../../services/global/namespace';
+import {
+  NotificationSeverity,
+  NotificationsService,
+} from '../../services/global/notifications';
+import { KdStateService } from '../../services/global/state';
+import { EndpointManager, Resource } from '../../services/resource/endpoint';
+import { ResourceService } from '../../services/resource/resource';
+import { NamespaceChangeDialog } from './changedialog/dialog';
 
 @Component({
   selector: 'kd-namespace-selector',
   templateUrl: './template.html',
   styleUrls: ['style.scss'],
 })
-export class NamespaceSelectorComponent implements OnInit, OnDestroy, AfterViewInit {
+export class NamespaceSelectorComponent
+  implements OnInit, OnDestroy, AfterViewInit {
   private namespacesInitialized_ = false;
   private onSuccessStateChangeSubscription_: Subscription;
 
@@ -45,10 +56,13 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy, AfterViewI
   @ViewChild('namespaceInput') private readonly namespaceInputEl_: ElementRef;
 
   constructor(
-      private readonly state_: StateService, private readonly namespaceService_: NamespaceService,
-      private readonly namespace_: ResourceService<NamespaceList>,
-      private readonly dialog_: MatDialog, private readonly kdState_: KdStateService,
-      private readonly notifications_: NotificationsService) {}
+    private readonly state_: StateService,
+    private readonly namespaceService_: NamespaceService,
+    private readonly namespace_: ResourceService<NamespaceList>,
+    private readonly dialog_: MatDialog,
+    private readonly kdState_: KdStateService,
+    private readonly notifications_: NotificationsService
+  ) {}
 
   ngOnInit(): void {
     this.allNamespacesKey = this.namespaceService_.getAllNamespacesKey();
@@ -58,11 +72,13 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy, AfterViewI
   }
 
   ngAfterViewInit(): void {
-    this.onSuccessStateChangeSubscription_ = this.kdState_.onSuccess.subscribe(() => {
-      if (this.shouldShowNamespaceChangeDialog()) {
-        this.handleNamespaceChangeDialog_();
+    this.onSuccessStateChangeSubscription_ = this.kdState_.onSuccess.subscribe(
+      () => {
+        if (this.shouldShowNamespaceChangeDialog()) {
+          this.handleNamespaceChangeDialog_();
+        }
       }
-    });
+    );
 
     // Avoid angular error 'ExpressionChangedAfterItHasBeenCheckedError'.
     // Related issue: https://github.com/angular/angular/issues/17572
@@ -108,11 +124,14 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy, AfterViewI
     let newNamespace = this.namespaceService_.getDefaultNamespace();
     const targetNamespace = this.selectedNamespace;
 
-    if (targetNamespace &&
-        ((this.namespacesInitialized_ && this.namespaces.indexOf(targetNamespace) >= 0) ||
-         targetNamespace === this.allNamespacesKey ||
-         (!this.namespacesInitialized_ &&
-          this.namespaceService_.isNamespaceValid(targetNamespace)))) {
+    if (
+      targetNamespace &&
+      ((this.namespacesInitialized_ &&
+        this.namespaces.indexOf(targetNamespace) >= 0) ||
+        targetNamespace === this.allNamespacesKey ||
+        (!this.namespacesInitialized_ &&
+          this.namespaceService_.isNamespaceValid(targetNamespace)))
+    ) {
       newNamespace = targetNamespace;
     }
 
@@ -123,41 +142,53 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy, AfterViewI
 
   private loadNamespacesIfNeeded_(): void {
     if (!this.namespacesInitialized_) {
-      this.namespace_.get(EndpointManager.resource(Resource.namespace).list())
-          .subscribe(
-              namespaceList => {
-                this.namespaces = namespaceList.namespaces.map(n => n.objectMeta.name);
+      this.namespace_
+        .get(EndpointManager.resource(Resource.namespace).list())
+        .subscribe(
+          namespaceList => {
+            this.namespaces = namespaceList.namespaces.map(
+              n => n.objectMeta.name
+            );
 
-                if (namespaceList.errors.length === 0) {
-                  this.namespacesInitialized_ = true;
-                } else {
-                  for (const err of namespaceList.errors) {
-                    this.notifications_.push(err.ErrStatus.message, NotificationSeverity.error);
-                  }
-                }
-              },
-              undefined,
-              () => {
-                this.onNamespaceLoaded_();
-              });
+            if (namespaceList.errors.length === 0) {
+              this.namespacesInitialized_ = true;
+            } else {
+              for (const err of namespaceList.errors) {
+                this.notifications_.push(
+                  err.ErrStatus.message,
+                  NotificationSeverity.error
+                );
+              }
+            }
+          },
+          undefined,
+          () => {
+            this.onNamespaceLoaded_();
+          }
+        );
     }
   }
 
   private handleNamespaceChangeDialog_(): void {
     const resourceNamespace = this.state_.params.resourceNamespace;
     this.dialog_
-        .open(NamespaceChangeDialog, {
-          data: {namespace: this.state_.params.namespace, newNamespace: resourceNamespace},
-        })
-        .afterClosed()
-        .subscribe(confirmed => {
-          if (confirmed) {
-            this.state_.go('.', {[NAMESPACE_STATE_PARAM]: resourceNamespace});
-          } else {
-            this.selectedNamespace = this.state_.params.namespace;
-            this.state_.go(overviewState.name, {[NAMESPACE_STATE_PARAM]: this.selectedNamespace});
-          }
-        });
+      .open(NamespaceChangeDialog, {
+        data: {
+          namespace: this.state_.params.namespace,
+          newNamespace: resourceNamespace,
+        },
+      })
+      .afterClosed()
+      .subscribe(confirmed => {
+        if (confirmed) {
+          this.state_.go('.', { [NAMESPACE_STATE_PARAM]: resourceNamespace });
+        } else {
+          this.selectedNamespace = this.state_.params.namespace;
+          this.state_.go(overviewState.name, {
+            [NAMESPACE_STATE_PARAM]: this.selectedNamespace,
+          });
+        }
+      });
   }
 
   private changeNamespace_(namespace: string): void {
@@ -169,9 +200,11 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy, AfterViewI
     }
 
     if (this.isOnDetailsView()) {
-      this.state_.go(overviewState.name, {[NAMESPACE_STATE_PARAM]: namespace});
+      this.state_.go(overviewState.name, {
+        [NAMESPACE_STATE_PARAM]: namespace,
+      });
     } else {
-      this.state_.go('.', {[NAMESPACE_STATE_PARAM]: namespace});
+      this.state_.go('.', { [NAMESPACE_STATE_PARAM]: namespace });
     }
   }
 
@@ -182,8 +215,11 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy, AfterViewI
   private shouldShowNamespaceChangeDialog(): boolean {
     const resourceNamespace = this.state_.params.resourceNamespace;
     const namespace = this.state_.params.namespace;
-    return namespace !== this.allNamespacesKey && resourceNamespace &&
-        resourceNamespace !== namespace;
+    return (
+      namespace !== this.allNamespacesKey &&
+      resourceNamespace &&
+      resourceNamespace !== namespace
+    );
   }
 
   private isOnDetailsView(): boolean {

@@ -12,31 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {UIRouterModule} from '@uirouter/angular';
+import { NgModule } from '@angular/core';
+import { UIRouterModule } from '@uirouter/angular';
 
-import {ComponentsModule} from '../../../common/components/module';
-import {SharedModule} from '../../../shared.module';
+import { ComponentsModule } from '../../../common/components/module';
+import { SharedModule } from '../../../shared.module';
 
-import {IngressDetailComponent} from './detail/component';
-import {ingressDetailState} from './detail/state';
-import {IngressList} from './list/component';
-import {ingressListState} from './list/state';
-import {ingressState} from './state';
+import { IngressDetailComponent } from './detail/component';
+import { ingressDetailState } from './detail/state';
+import { IngressList } from './list/component';
+import { ingressListState } from './list/state';
+import { ingressState } from './state';
 
 @NgModule({
   imports: [
     SharedModule,
     ComponentsModule,
     UIRouterModule.forChild({
-      states: [
-        ingressState,
-        ingressListState,
-        ingressDetailState,
-      ]
+      states: [ingressState, ingressListState, ingressDetailState],
     }),
   ],
   declarations: [IngressList, IngressDetailComponent],
 })
-export class IngressModule {
-}
+export class IngressModule {}

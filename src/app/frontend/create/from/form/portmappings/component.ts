@@ -12,14 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HttpClient} from '@angular/common/http';
-import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
-import {AbstractControl, ControlValueAccessor, FormArray, FormBuilder, FormControl, FormGroup, NG_ASYNC_VALIDATORS, NG_VALUE_ACCESSOR, Validators} from '@angular/forms';
-import {PortMapping} from '@api/backendapi';
-import {Observable} from 'rxjs';
-import {first, map, startWith} from 'rxjs/operators';
-import {FormValidators} from '../validator/validators';
-import {validateProtocol} from '../validator/validprotocol.validator';
+import { HttpClient } from '@angular/common/http';
+import {
+  Component,
+  EventEmitter,
+  forwardRef,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
+import {
+  AbstractControl,
+  ControlValueAccessor,
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  NG_ASYNC_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+  Validators,
+} from '@angular/forms';
+import { PortMapping } from '@api/backendapi';
+import { Observable } from 'rxjs';
+import { first, map, startWith } from 'rxjs/operators';
+import { FormValidators } from '../validator/validators';
+import { validateProtocol } from '../validator/validprotocol.validator';
 
 const i18n = {
   MSG_PORT_MAPPINGS_SERVICE_TYPE_NONE_LABEL: 'None',
@@ -34,17 +51,17 @@ interface ServiceType {
 
 const NO_SERVICE: ServiceType = {
   label: i18n.MSG_PORT_MAPPINGS_SERVICE_TYPE_NONE_LABEL,
-  external: false
+  external: false,
 };
 
 const INT_SERVICE: ServiceType = {
   label: i18n.MSG_PORT_MAPPINGS_SERVICE_TYPE_INTERNAL_LABEL,
-  external: false
+  external: false,
 };
 
 const EXT_SERVICE: ServiceType = {
   label: i18n.MSG_PORT_MAPPINGS_SERVICE_TYPE_EXTERNAL_LABEL,
-  external: true
+  external: true,
 };
 
 @Component({
@@ -61,7 +78,7 @@ const EXT_SERVICE: ServiceType = {
       provide: NG_ASYNC_VALIDATORS,
       useExisting: forwardRef(() => PortMappingsComponent),
       multi: true,
-    }
+    },
   ],
 })
 export class PortMappingsComponent implements OnInit, ControlValueAccessor {
@@ -72,13 +89,18 @@ export class PortMappingsComponent implements OnInit, ControlValueAccessor {
   serviceTypes: ServiceType[];
   portMappingForm: FormGroup;
 
-  constructor(private readonly fb_: FormBuilder, private readonly http_: HttpClient) {}
+  constructor(
+    private readonly fb_: FormBuilder,
+    private readonly http_: HttpClient
+  ) {}
 
   ngOnInit(): void {
     this.serviceTypes = [NO_SERVICE, INT_SERVICE, EXT_SERVICE];
 
-    this.portMappingForm =
-        this.fb_.group({serviceType: NO_SERVICE, portMappings: this.fb_.array([])});
+    this.portMappingForm = this.fb_.group({
+      serviceType: NO_SERVICE,
+      portMappings: this.fb_.array([]),
+    });
     this.serviceType.valueChanges.subscribe(() => {
       this.changeServiceType();
     });
@@ -87,12 +109,14 @@ export class PortMappingsComponent implements OnInit, ControlValueAccessor {
     });
   }
 
-  validate(_: FormControl): Observable<{[key: string]: boolean}|null> {
+  validate(_: FormControl): Observable<{ [key: string]: boolean } | null> {
     return this.portMappingForm.statusChanges.pipe(
-        startWith(this.portMappingForm.status), first(() => !this.portMappingForm.pending),
-        map(() => {
-          return this.portMappingForm.invalid ? {error: true} : null;
-        }));
+      startWith(this.portMappingForm.status),
+      first(() => !this.portMappingForm.pending),
+      map(() => {
+        return this.portMappingForm.invalid ? { error: true } : null;
+      })
+    );
   }
 
   changeServiceType(): void {
@@ -130,13 +154,21 @@ export class PortMappingsComponent implements OnInit, ControlValueAccessor {
     return this.fb_.group({
       port: [
         '',
-        Validators.compose([FormValidators.isInteger, Validators.min(1), Validators.max(65535)])
+        Validators.compose([
+          FormValidators.isInteger,
+          Validators.min(1),
+          Validators.max(65535),
+        ]),
       ],
       targetPort: [
         '',
-        Validators.compose([FormValidators.isInteger, Validators.min(1), Validators.max(65535)])
+        Validators.compose([
+          FormValidators.isInteger,
+          Validators.min(1),
+          Validators.max(65535),
+        ]),
       ],
-      protocol: [defaultProtocol]
+      protocol: [defaultProtocol],
     });
   }
 
@@ -152,7 +184,9 @@ export class PortMappingsComponent implements OnInit, ControlValueAccessor {
   }
 
   addProtocolIfNeeed(): void {
-    const lastPortMapping = this.portMappings.controls[this.portMappings.length - 1];
+    const lastPortMapping = this.portMappings.controls[
+      this.portMappings.length - 1
+    ];
     if (this.isPortMappingFilled(lastPortMapping)) {
       this.portMappings.push(this.newEmptyPortMapping(this.protocols[0]));
     }
@@ -162,7 +196,9 @@ export class PortMappingsComponent implements OnInit, ControlValueAccessor {
    * Returns true when the given port mapping is filled by the user, i.e., is not empty.
    */
   private isPortMappingFilled(portMapping: AbstractControl): boolean {
-    return !!portMapping.get('port').value && !!portMapping.get('targetPort').value;
+    return (
+      !!portMapping.get('port').value && !!portMapping.get('targetPort').value
+    );
   }
 
   /**
@@ -183,20 +219,23 @@ export class PortMappingsComponent implements OnInit, ControlValueAccessor {
     const isValidPort = filledOrEmpty || !!port;
     const isValidTargetPort = filledOrEmpty || !!targetPort;
 
-    portElem.setErrors(isValidPort ? null : {required: true});
-    targetPortElem.setErrors(isValidTargetPort ? null : {required: true});
+    portElem.setErrors(isValidPort ? null : { required: true });
+    targetPortElem.setErrors(isValidTargetPort ? null : { required: true });
     this.portMappingForm.updateValueAndValidity();
   }
 
   /**
    * Returns true when the given port mapping is filled or empty (both ports), false otherwise.
    */
-  private isPortMappingFilledOrEmpty(port: number, targetPort: number): boolean {
+  private isPortMappingFilledOrEmpty(
+    port: number,
+    targetPort: number
+  ): boolean {
     return !port === !targetPort;
   }
 
   isRemovable(index: number): boolean {
-    return index !== (this.portMappings.length - 1);
+    return index !== this.portMappings.length - 1;
   }
 
   remove(index: number): void {
@@ -208,14 +247,14 @@ export class PortMappingsComponent implements OnInit, ControlValueAccessor {
    * @param {number} index
    */
   isFirst(index: number): boolean {
-    return (index === 0);
+    return index === 0;
   }
 
-  propagateChange = (_: {portMappings: PortMapping[]}) => {};
+  propagateChange = (_: { portMappings: PortMapping[] }) => {};
 
   writeValue(): void {}
 
-  registerOnChange(fn: (_: {portMappings: PortMapping[]}) => void): void {
+  registerOnChange(fn: (_: { portMappings: PortMapping[] }) => void): void {
     this.propagateChange = fn;
   }
   registerOnTouched(): void {}

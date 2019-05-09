@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Ng2StateDeclaration} from '@uirouter/angular';
+import { Ng2StateDeclaration } from '@uirouter/angular';
 
-import {DiscoveryComponent} from './component';
+import { DiscoveryComponent } from './component';
 
 export const discoveryFutureState: Ng2StateDeclaration = {
   name: 'discovery.**',
@@ -23,7 +23,7 @@ export const discoveryFutureState: Ng2StateDeclaration = {
   data: {
     kdBreadcrumbs: {
       label: 'Discovery',
-    }
+    },
   },
 };
 
@@ -35,6 +35,6 @@ export const discoveryState: Ng2StateDeclaration = {
   data: {
     kdBreadcrumbs: {
       label: 'Discovery and Load Balancing',
-    }
+    },
   },
 };

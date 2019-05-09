@@ -12,25 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {UIRouterModule} from '@uirouter/angular';
-import {ComponentsModule} from '../../../common/components/module';
+import { NgModule } from '@angular/core';
+import { UIRouterModule } from '@uirouter/angular';
+import { ComponentsModule } from '../../../common/components/module';
 
-import {SharedModule} from '../../../shared.module';
-import {StatefulSetDetailComponent} from './detail/component';
-import {statefulSetDetailState} from './detail/state';
-import {StatefulSetList} from './list/component';
-import {statefulSetListState} from './list/state';
-import {statefulSetState} from './state';
+import { SharedModule } from '../../../shared.module';
+import { StatefulSetDetailComponent } from './detail/component';
+import { statefulSetDetailState } from './detail/state';
+import { StatefulSetList } from './list/component';
+import { statefulSetListState } from './list/state';
+import { statefulSetState } from './state';
 
 @NgModule({
   imports: [
     SharedModule,
     ComponentsModule,
-    UIRouterModule.forChild(
-        {states: [statefulSetState, statefulSetListState, statefulSetDetailState]}),
+    UIRouterModule.forChild({
+      states: [statefulSetState, statefulSetListState, statefulSetDetailState],
+    }),
   ],
   declarations: [StatefulSetList, StatefulSetDetailComponent],
 })
-export class StatefulSetModule {
-}
+export class StatefulSetModule {}

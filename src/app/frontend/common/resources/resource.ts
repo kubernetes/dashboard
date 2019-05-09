@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 // @ts-ignore
 export abstract class ResourceBase<T> {

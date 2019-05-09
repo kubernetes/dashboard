@@ -15,8 +15,14 @@
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 
-import {Component, ElementRef, EventEmitter, OnInit, ViewChild} from '@angular/core';
-import {Subject} from 'rxjs/Subject';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'kd-card-list-filter',
@@ -31,8 +37,10 @@ export class CardListFilterComponent implements OnInit {
   filterEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   ngOnInit(): void {
-    this.keyUpEvent.debounceTime(500).distinctUntilChanged().subscribe(
-        this.onFilterTriggered_.bind(this));
+    this.keyUpEvent
+      .debounceTime(500)
+      .distinctUntilChanged()
+      .subscribe(this.onFilterTriggered_.bind(this));
   }
 
   private onFilterTriggered_(newVal: string): void {

@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Ng2StateDeclaration} from '@uirouter/angular';
+import { Ng2StateDeclaration } from '@uirouter/angular';
 
-import {ScaleDefaultActionbar} from '../../../../common/components/actionbars/scaledefault/component';
-import {addNamespacedResourceStateParamsToUrl} from '../../../../common/params/params';
-import {stateName, stateUrl} from '../state';
+import { ScaleDefaultActionbar } from '../../../../common/components/actionbars/scaledefault/component';
+import { addNamespacedResourceStateParamsToUrl } from '../../../../common/params/params';
+import { stateName, stateUrl } from '../state';
 
-import {DeploymentDetailComponent} from './component';
+import { DeploymentDetailComponent } from './component';
 
 export const deploymentDetailState: Ng2StateDeclaration = {
   name: `${stateName}.detail`,
@@ -30,11 +30,11 @@ export const deploymentDetailState: Ng2StateDeclaration = {
     },
   },
   views: {
-    '$default': {
+    $default: {
       component: DeploymentDetailComponent,
     },
     'actionbar@chrome': {
       component: ScaleDefaultActionbar,
-    }
+    },
   },
 };

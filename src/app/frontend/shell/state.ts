@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Ng2StateDeclaration} from '@uirouter/angular';
+import { Ng2StateDeclaration } from '@uirouter/angular';
 
-import {chromeState} from '../chrome/state';
-import {addNamespacedResourceStateParamsToUrl} from '../common/params/params';
-import {ShellComponent} from './component';
+import { chromeState } from '../chrome/state';
+import { addNamespacedResourceStateParamsToUrl } from '../common/params/params';
+import { ShellComponent } from './component';
 
 export const shellFutureState: Ng2StateDeclaration = {
   name: 'shell.**',
   url: '/shell',
-  loadChildren: './shell/module#ShellModule'
+  loadChildren: './shell/module#ShellModule',
 };
 
 export const shellUrl = addNamespacedResourceStateParamsToUrl('/shell');
@@ -31,14 +31,14 @@ export const shellState: Ng2StateDeclaration = {
   name: 'shell',
   url: `${shellUrl}/:containerName`,
   params: {
-    'containerName': {
+    containerName: {
       value: null,
       squash: true,
       type: 'path',
     },
   },
   views: {
-    '$default': {
+    $default: {
       component: ShellComponent,
     },
   },
@@ -46,6 +46,6 @@ export const shellState: Ng2StateDeclaration = {
     kdBreadcrumbs: {
       label: 'Shell',
       parent: 'pod.detail',
-    }
+    },
   },
 };

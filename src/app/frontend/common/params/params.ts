@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {KdError} from '@api/frontendapi';
-import {StateParams} from '@uirouter/core';
+import { KdError } from '@api/frontendapi';
+import { StateParams } from '@uirouter/core';
 
 /**
  * Parameter name of the namespace selection param. Mostly for internal use.
@@ -56,13 +56,20 @@ export class SearchStateParams extends StateParams {
 
 export class LogsStateParams extends StateParams {
   constructor(
-      public resourceNamespace: string, public resourceName: string, public resourceType: string) {
+    public resourceNamespace: string,
+    public resourceName: string,
+    public resourceType: string
+  ) {
     super();
   }
 }
 
 export class ExecStateParams extends NamespacedResourceStateParams {
-  constructor(resourceNamespace: string, resourceName: string, public containerName = '') {
+  constructor(
+    resourceNamespace: string,
+    resourceName: string,
+    public containerName = ''
+  ) {
     super(resourceNamespace, resourceName);
   }
 }

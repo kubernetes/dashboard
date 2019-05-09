@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ErrStatus, K8sError as K8SApiError} from '@api/backendapi';
-import {KdError as KdApiError, KnownErrors} from '@api/frontendapi';
+import { ErrStatus, K8sError as K8SApiError } from '@api/backendapi';
+import { KdError as KdApiError, KnownErrors } from '@api/frontendapi';
 
 /* tslint:disable */
 /**
@@ -28,7 +28,11 @@ export class K8SError implements K8SApiError {
  * Frontend specific errors or errors transformed based on server response.
  */
 export class KdError implements KdApiError {
-  constructor(public status: string, public code: number, public message: string) {}
+  constructor(
+    public status: string,
+    public code: number,
+    public message: string
+  ) {}
 }
 
 export const KNOWN_ERRORS: KnownErrors = {

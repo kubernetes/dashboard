@@ -12,38 +12,49 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import {Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement} from '@angular/core';
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {MatCardModule, MatChipsModule, MatDialogModule, MatDividerModule, MatIconModule, MatTooltip, MatTooltipModule} from '@angular/material';
-import {By} from '@angular/platform-browser';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {AppConfig, ObjectMeta} from '@api/backendapi';
-import {ChipsComponent} from 'common/components/chips/component';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  MatCardModule,
+  MatChipsModule,
+  MatDialogModule,
+  MatDividerModule,
+  MatIconModule,
+  MatTooltip,
+  MatTooltipModule,
+} from '@angular/material';
+import { By } from '@angular/platform-browser';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { AppConfig, ObjectMeta } from '@api/backendapi';
+import { ChipsComponent } from 'common/components/chips/component';
 
-import {PipesModule} from '../../pipes/module';
-import {RelativeTimeFormatter} from '../../pipes/relativetime';
-import {ConfigService} from '../../services/global/config';
-import {CardComponent} from '../card/component';
-import {PropertyComponent} from '../property/component';
+import { PipesModule } from '../../pipes/module';
+import { RelativeTimeFormatter } from '../../pipes/relativetime';
+import { ConfigService } from '../../services/global/config';
+import { CardComponent } from '../card/component';
+import { PropertyComponent } from '../property/component';
 
-import {ObjectMetaComponent} from './component';
+import { ObjectMetaComponent } from './component';
 
 const miniName = 'my-mini-meta-name';
 
-@Component({selector: 'test', templateUrl: './template.html'})
+@Component({ selector: 'test', templateUrl: './template.html' })
 class TestComponent {
   initialized = true;
   objectMeta: ObjectMeta = {
     name: miniName,
     namespace: 'my-namespace',
-    'labels': {
+    labels: {
       'addonmanager.kubernetes.io/mode': 'Reconcile',
-      'app': 'kubernetes-dashboard',
+      app: 'kubernetes-dashboard',
       'pod-template-hash': '1054779233',
-      'version': 'v1.8.1'
+      version: 'v1.8.1',
     },
-    creationTimestamp: '2018-05-18T22:27:42Z'
+    creationTimestamp: '2018-05-18T22:27:42Z',
   };
 }
 
@@ -54,20 +65,29 @@ describe('ObjectMetaComponent', () => {
   let configService: ConfigService;
 
   beforeEach(async(() => {
-    TestBed
-        .configureTestingModule({
-          declarations: [
-            ObjectMetaComponent, TestComponent, CardComponent, PropertyComponent, ChipsComponent
-          ],
-          imports: [
-            MatIconModule, MatCardModule, MatDividerModule, MatTooltipModule, MatDialogModule,
-            MatChipsModule, NoopAnimationsModule, PipesModule, HttpClientTestingModule,
-            MatIconModule
-          ],
-          providers: [ConfigService],
-          schemas: [CUSTOM_ELEMENTS_SCHEMA]
-        })
-        .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [
+        ObjectMetaComponent,
+        TestComponent,
+        CardComponent,
+        PropertyComponent,
+        ChipsComponent,
+      ],
+      imports: [
+        MatIconModule,
+        MatCardModule,
+        MatDividerModule,
+        MatTooltipModule,
+        MatDialogModule,
+        MatChipsModule,
+        NoopAnimationsModule,
+        PipesModule,
+        HttpClientTestingModule,
+        MatIconModule,
+      ],
+      providers: [ConfigService],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    }).compileComponents();
     httpMock = TestBed.get(HttpTestingController);
     configService = TestBed.get(ConfigService);
   }));
@@ -77,7 +97,7 @@ describe('ObjectMetaComponent', () => {
     fixture = TestBed.createComponent(TestComponent);
     component = fixture.componentInstance;
     const configRequest = httpMock.expectOne('config');
-    const config: AppConfig = {serverTime: new Date().getTime()};
+    const config: AppConfig = { serverTime: new Date().getTime() };
     configRequest.flush(config);
 
     // httpMock.verify();
@@ -89,8 +109,9 @@ describe('ObjectMetaComponent', () => {
     const card = fixture.debugElement.query(By.css('mat-card-title'));
     expect(card).toBeTruthy();
 
-    const metaName =
-        fixture.debugElement.query(By.css('kd-property.object-meta-name div.kd-property-value'));
+    const metaName = fixture.debugElement.query(
+      By.css('kd-property.object-meta-name div.kd-property-value')
+    );
     expect(metaName).toBeTruthy();
     expect(metaName.nativeElement.textContent === miniName);
   });

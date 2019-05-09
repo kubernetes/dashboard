@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Ng2StateDeclaration} from '@uirouter/angular';
+import { Ng2StateDeclaration } from '@uirouter/angular';
 
-import {chromeState} from '../../../chrome/state';
-import {ProxyComponent} from '../../../common/components/proxy/component';
+import { chromeState } from '../../../chrome/state';
+import { ProxyComponent } from '../../../common/components/proxy/component';
 
 export const stateName = 'replicationcontroller';
 export const stateUrl = '/replicationcontroller';
@@ -23,7 +23,8 @@ export const stateUrl = '/replicationcontroller';
 export const replicationControllerFutureState: Ng2StateDeclaration = {
   name: `${stateName}.**`,
   url: stateUrl,
-  loadChildren: './resource/workloads/replicationcontroller/module#ReplicationControllerModule',
+  loadChildren:
+    './resource/workloads/replicationcontroller/module#ReplicationControllerModule',
 };
 
 export const replicationControllerState: Ng2StateDeclaration = {

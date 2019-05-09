@@ -12,22 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {UIRouterModule} from '@uirouter/angular';
+import { NgModule } from '@angular/core';
+import { UIRouterModule } from '@uirouter/angular';
 
-import {ComponentsModule} from '../../common/components/module';
-import {SharedModule} from '../../shared.module';
+import { ComponentsModule } from '../../common/components/module';
+import { SharedModule } from '../../shared.module';
 
-import {ConfigComponent} from './component';
-import {configState} from './state';
+import { ConfigComponent } from './component';
+import { configState } from './state';
 
 @NgModule({
   imports: [
     SharedModule,
     ComponentsModule,
-    UIRouterModule.forChild({states: [configState]}),
+    UIRouterModule.forChild({ states: [configState] }),
   ],
   declarations: [ConfigComponent],
 })
-export class ConfigModule {
-}
+export class ConfigModule {}

@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component} from '@angular/core';
-import {GroupedResourceList} from '../../common/resources/groupedlist';
+import { Component } from '@angular/core';
+import { GroupedResourceList } from '../../common/resources/groupedlist';
 
 @Component({
   selector: 'kd-discovery',
   templateUrl: './template.html',
 })
-export class DiscoveryComponent extends GroupedResourceList {
-}
+export class DiscoveryComponent extends GroupedResourceList {}

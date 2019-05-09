@@ -12,25 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {UIRouterModule} from '@uirouter/angular';
-import {ComponentsModule} from '../../../common/components/module';
+import { NgModule } from '@angular/core';
+import { UIRouterModule } from '@uirouter/angular';
+import { ComponentsModule } from '../../../common/components/module';
 
-import {SharedModule} from '../../../shared.module';
-import {ReplicaSetDetailComponent} from './detail/component';
-import {replicaSetDetailState} from './detail/state';
-import {ReplicaSetList} from './list/component';
-import {replicaSetListState} from './list/state';
-import {replicaSetState} from './state';
+import { SharedModule } from '../../../shared.module';
+import { ReplicaSetDetailComponent } from './detail/component';
+import { replicaSetDetailState } from './detail/state';
+import { ReplicaSetList } from './list/component';
+import { replicaSetListState } from './list/state';
+import { replicaSetState } from './state';
 
 @NgModule({
   imports: [
     SharedModule,
     ComponentsModule,
-    UIRouterModule.forChild(
-        {states: [replicaSetState, replicaSetListState, replicaSetDetailState]}),
+    UIRouterModule.forChild({
+      states: [replicaSetState, replicaSetListState, replicaSetDetailState],
+    }),
   ],
   declarations: [ReplicaSetList, ReplicaSetDetailComponent],
 })
-export class ReplicaSetModule {
-}
+export class ReplicaSetModule {}

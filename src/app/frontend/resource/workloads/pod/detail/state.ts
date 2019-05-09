@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Ng2StateDeclaration} from '@uirouter/angular';
+import { Ng2StateDeclaration } from '@uirouter/angular';
 
-import {LogsExecDefaultActionbar} from '../../../../common/components/actionbars/logsexecdefault/component';
-import {addNamespacedResourceStateParamsToUrl} from '../../../../common/params/params';
-import {stateName, stateUrl} from '../state';
+import { LogsExecDefaultActionbar } from '../../../../common/components/actionbars/logsexecdefault/component';
+import { addNamespacedResourceStateParamsToUrl } from '../../../../common/params/params';
+import { stateName, stateUrl } from '../state';
 
-import {PodDetailComponent} from './component';
+import { PodDetailComponent } from './component';
 
 export const podDetailState: Ng2StateDeclaration = {
   name: `${stateName}.detail`,
@@ -30,11 +30,11 @@ export const podDetailState: Ng2StateDeclaration = {
     },
   },
   views: {
-    '$default': {
+    $default: {
       component: PodDetailComponent,
     },
     'actionbar@chrome': {
       component: LogsExecDefaultActionbar,
-    }
+    },
   },
 };
