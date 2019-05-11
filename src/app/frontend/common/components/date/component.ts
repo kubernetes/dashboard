@@ -44,6 +44,6 @@ export class DateComponent {
   _relative: boolean;
   @Input('relative')
   set relative(v: boolean) {
-    this._relative = v !== undefined;
+    this._relative = v !== undefined && v !== false;
   }
 }
