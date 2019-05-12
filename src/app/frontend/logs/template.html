@@ -57,6 +57,7 @@ limitations under the License.
       </mat-form-field>
       <div class="kd-logs-style-buttons">
         <button mat-icon-button
+                i18n-matTooltip
                 matTooltip="Download logs"
                 (click)="downloadLog()">
           <mat-icon>file_download</mat-icon>
@@ -120,31 +121,31 @@ limitations under the License.
   <button mat-menu-item
           (click)="onTextColorChange()">
     <mat-icon>{{logService?.getInverted() ? 'check_box' : 'check_box_outline_blank'}}</mat-icon>
-    <span>Invert colors</span>
+    <span i18n>Invert colors</span>
   </button>
   <button mat-menu-item
           (click)="onFontSizeChange()">
     <mat-icon>{{logService.getCompact() ? 'check_box' : 'check_box_outline_blank'}}</mat-icon>
-    <span>Reduce font size</span>
+    <span i18n>Reduce font size</span>
   </button>
   <button mat-menu-item
           (click)="onShowTimestamp()">
     <mat-icon>{{logService.getShowTimestamp() ? 'check_box' : 'check_box_outline_blank'}}</mat-icon>
-    <span>Show timestamps</span>
+    <span i18n>Show timestamps</span>
   </button>
   <button mat-menu-item
           (click)="toggleLogAutoRefresh()">
     <mat-icon>{{logService.getAutoRefresh() ? 'check_box' : 'check_box_outline_blank'}}</mat-icon>
-    <span>Auto-refresh (every {{refreshInterval / 1000}} s.)</span>
+    <span i18n>Auto-refresh (every {{refreshInterval / 1000}} s.)</span>
   </button>
   <button mat-menu-item
           (click)="toggleLogFollow()">
     <mat-icon>{{logService.getFollowing() ? 'check_box' : 'check_box_outline_blank'}}</mat-icon>
-    <span>Follow logs</span>
+    <span i18n>Follow logs</span>
   </button>
   <button mat-menu-item
           (click)="onPreviousChange()">
     <mat-icon>{{logService.getPrevious() ? 'check_box' : 'check_box_outline_blank'}}</mat-icon>
-    <span>Show previous logs</span>
+    <span i18n>Show previous logs</span>
   </button>
 </mat-menu>

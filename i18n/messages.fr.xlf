@@ -966,6 +966,54 @@
           <context context-type="linenumber">137</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="fb31e77d231aa06eb2e8494b50596519bbeeb386" datatype="html">
+        <source>Invert colors</source>
+        <target>Inverser les couleurs</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/logs/template.html</context>
+          <context context-type="linenumber">124</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8902979878d0f294dfc6f5b95fd7788c3fa2dd49" datatype="html">
+        <source>Reduce font size</source>
+        <target>Réduire les caractères</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/logs/template.html</context>
+          <context context-type="linenumber">129</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="b5c4c520630525f705f7bddbeb2f0b0aec7a30d6" datatype="html">
+        <source>Show timestamps</source>
+        <target>Voir les horodatages</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/logs/template.html</context>
+          <context context-type="linenumber">134</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="deb6f7adf24853a40f57516d8512227e75ab5a2e" datatype="html">
+        <source>Auto-refresh (every <x id="INTERPOLATION" equiv-text="{{refreshInterval / 1000}}"/> s.)</source>
+        <target>Rafraîchir (toutes les <x id="INTERPOLATION" equiv-text="{{refreshInterval / 1000}}"/> s.)</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/logs/template.html</context>
+          <context context-type="linenumber">139</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6e73f7b06ce74fa29c8866cf5a82bfbeaf2452ed" datatype="html">
+        <source>Follow logs</source>
+        <target>Suivre les journaux</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/logs/template.html</context>
+          <context context-type="linenumber">144</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3de87d94cff5d685043f035ac20e6d4521f8edf2" datatype="html">
+        <source>Show previous logs</source>
+        <target>Voir les journaux précédents</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/logs/template.html</context>
+          <context context-type="linenumber">149</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="eb3d5aefff38a814b76da74371cbf02c0789a1ef" datatype="html">
         <source>Logs</source>
         <target>Journaux</target>
