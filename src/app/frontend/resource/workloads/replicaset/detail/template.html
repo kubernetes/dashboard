@@ -18,12 +18,14 @@ limitations under the License.
                 [objectMeta]="replicaSet?.objectMeta"></kd-object-meta>
 
 <kd-card [initialized]="isInitialized">
-  <div title>Replica Set information</div>
+  <div title
+       i18n>Replica Set information</div>
 
   <div description>
     <div class="kd-inline-property"
          *ngIf="replicaSet?.podInfo">
-      <span class="kd-muted-light">Pods:&nbsp;</span>
+      <span class="kd-muted-light"
+            i18n>Pods:&nbsp;</span>
       <span>{{replicaSet.podInfo.running}} / {{replicaSet.podInfo.desired}}</span>
     </div>
   </div>
@@ -32,21 +34,24 @@ limitations under the License.
        *ngIf="isInitialized"
        fxLayout="row wrap">
     <kd-property *ngIf="replicaSet?.selector">
-      <div key>Selector</div>
+      <div key
+           i18n>Selector</div>
       <div value>
         <kd-chips [map]="replicaSet.selector.matchLabels"></kd-chips>
       </div>
     </kd-property>
 
     <kd-property *ngIf="replicaSet?.containerImages">
-      <div key>Images</div>
+      <div key
+           i18n>Images</div>
       <div value>
         <kd-chips [map]="replicaSet.containerImages"></kd-chips>
       </div>
     </kd-property>
 
     <kd-property *ngIf="replicaSet?.initContainerImages">
-      <div key>Init images</div>
+      <div key
+           i18n>Init images</div>
       <div value>
         <kd-chips [map]="replicaSet.initContainerImages"></kd-chips>
       </div>

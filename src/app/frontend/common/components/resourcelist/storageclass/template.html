@@ -17,8 +17,10 @@ limitations under the License.
 <kd-card role="table"
          [hidden]="isHidden()">
   <div title
-       fxLayout="row">Storage Classes</div>
-  <div description><span class="kd-muted-light">Items:&nbsp;</span>{{totalItems}}</div>
+       fxLayout="row"
+       i18n>Storage Classes</div>
+  <div description><span class="kd-muted-light"
+          i18n>Items:&nbsp;</span>{{totalItems}}</div>
   <div actions>
     <kd-card-list-filter></kd-card-list-filter>
   </div>
@@ -37,19 +39,22 @@ limitations under the License.
       <ng-container [matColumnDef]="getDisplayColumns()[0]">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
-                         disableClear="true">Name</mat-header-cell>
+                         disableClear="true"
+                         i18n>Name</mat-header-cell>
         <mat-cell *matCellDef="let sc">
           <a [href]="getDetailsHref(sc.objectMeta.name)">{{sc.objectMeta.name}}</a>
         </mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getDisplayColumns()[1]">
-        <mat-header-cell *matHeaderCellDef>Provisioner</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Provisioner</mat-header-cell>
         <mat-cell *matCellDef="let sc">{{sc.provisioner}}</mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getDisplayColumns()[2]">
-        <mat-header-cell *matHeaderCellDef>Parameters</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Parameters</mat-header-cell>
         <mat-cell *matCellDef="let sc">
           <kd-chips [map]="sc.parameters"></kd-chips>
         </mat-cell>
@@ -58,7 +63,8 @@ limitations under the License.
       <ng-container [matColumnDef]="getDisplayColumns()[3]">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
-                         disableClear="true">Age</mat-header-cell>
+                         disableClear="true"
+                         i18n>Age</mat-header-cell>
         <mat-cell *matCellDef="let sc">
           {{sc.objectMeta.creationTimestamp | kdRelativeTime}}
         </mat-cell>

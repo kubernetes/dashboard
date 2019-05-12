@@ -15,13 +15,15 @@ limitations under the License.
 -->
 
 <kd-card [initialized]="initialized">
-  <div description><span class="kd-muted-light">Image:&nbsp;</span>{{container.image}}</div>
+  <div description><span class="kd-muted-light"
+          i18n>Image:&nbsp;</span>{{container.image}}</div>
   <div title>{{container.name}}</div>
   <div content
        fxFlex
        fxLayout="row wrap">
     <kd-property fxFlex="100">
-      <div key>Image</div>
+      <div key
+           i18n>Image</div>
       <div value>{{container.image}}</div>
     </kd-property>
 
@@ -32,6 +34,7 @@ limitations under the License.
                fxLayout>
             {{env.name}}
             <mat-icon matTooltip="Environment variable"
+                      i18n-matTooltip
                       class="kd-env-variable-icon">public</mat-icon>
           </div>
           <div value>{{env.value}}</div>
@@ -47,11 +50,13 @@ limitations under the License.
               {{env.name}}
             </a>
             <mat-icon matTooltip="Environment variable"
+                      i18n-matTooltip
                       class="kd-env-variable-icon">public</mat-icon>
           </div>
           <div whenVisible
                class="kd-code-block">{{formatSecretValue(env.value)}}</div>
-          <div whenHidden>{{formatSecretValue(env.value).length}} bytes</div>
+          <div whenHidden
+               i18n>{{formatSecretValue(env.value).length}} bytes</div>
         </kd-hidden-property>
       </ng-container>
 
@@ -64,18 +69,21 @@ limitations under the License.
               {{env.name}}
             </a>
             <mat-icon matTooltip="Environment variable"
+                      i18n-matTooltip
                       class="kd-env-variable-icon">public</mat-icon>
           </div>
           <div whenVisible
                class="kd-code-block">{{env.value}}</div>
-          <div whenHidden>{{env.value.length}} bytes</div>
+          <div whenHidden
+               i18n>{{env.value.length}} bytes</div>
         </kd-hidden-property>
       </ng-container>
     </div>
 
     <kd-property *ngIf="container?.commands?.length"
                  fxFlex="100">
-      <div key>Commands</div>
+      <div key
+           i18n>Commands</div>
       <div value>
         <div class="kd-code-block kd-no-whitespace">
           <div *ngFor="let command of container.commands"
@@ -86,7 +94,8 @@ limitations under the License.
 
     <kd-property *ngIf="container?.args?.length"
                  fxFlex="100">
-      <div key>Arguments</div>
+      <div key
+           i18n>Arguments</div>
       <div value>
         <div class="kd-code-block kd-no-whitespace">
           <div *ngFor="let arg of container.args"

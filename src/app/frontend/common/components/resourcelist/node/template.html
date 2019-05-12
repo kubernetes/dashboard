@@ -17,8 +17,10 @@ limitations under the License.
 <kd-card role="table"
          [hidden]="isHidden()">
   <div title
-       fxLayout="row">Nodes</div>
-  <div description><span class="kd-muted-light">Items:&nbsp;</span>{{totalItems}}</div>
+       fxLayout="row"
+       i18n>Nodes</div>
+  <div description><span class="kd-muted-light"
+          i18n>Items:&nbsp;</span>{{totalItems}}</div>
   <div actions>
     <kd-card-list-filter></kd-card-list-filter>
   </div>
@@ -45,7 +47,8 @@ limitations under the License.
       <ng-container [matColumnDef]="getDisplayColumns()[1]">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
-                         disableClear="true">Name</mat-header-cell>
+                         disableClear="true"
+                         i18n>Name</mat-header-cell>
         <mat-cell *matCellDef="let node">
           <a [href]="getDetailsHref(node.objectMeta.name)">
             {{node.objectMeta.name}}
@@ -54,40 +57,46 @@ limitations under the License.
       </ng-container>
 
       <ng-container [matColumnDef]="getDisplayColumns()[2]">
-        <mat-header-cell *matHeaderCellDef>Labels</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Labels</mat-header-cell>
         <mat-cell *matCellDef="let node">
           <kd-chips [map]="node.objectMeta.labels"></kd-chips>
         </mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getDisplayColumns()[3]">
-        <mat-header-cell *matHeaderCellDef>Ready</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Ready</mat-header-cell>
         <mat-cell *matCellDef="let node">{{node.ready}}</mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getDisplayColumns()[4]">
-        <mat-header-cell *matHeaderCellDef>CPU requests (cores)</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>CPU requests (cores)</mat-header-cell>
         <mat-cell *matCellDef="let node">
           {{node.allocatedResources.cpuRequests | kdCores}} ({{node.allocatedResources.cpuRequestsFraction | number:"1.2-2"}}%)
         </mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getDisplayColumns()[5]">
-        <mat-header-cell *matHeaderCellDef>CPU limits (cores)</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>CPU limits (cores)</mat-header-cell>
         <mat-cell *matCellDef="let node">
           {{node.allocatedResources.cpuLimits | kdCores}} ({{node.allocatedResources.cpuLimitsFraction | number:"1.2-2"}}%)
         </mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getDisplayColumns()[6]">
-        <mat-header-cell *matHeaderCellDef>Memory requestes (bytes)</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Memory requestes (bytes)</mat-header-cell>
         <mat-cell *matCellDef="let node">
           {{node.allocatedResources.memoryRequests | kdMemory}} ({{node.allocatedResources.memoryRequestsFraction | number:"1.2-2"}}%)
         </mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getDisplayColumns()[7]">
-        <mat-header-cell *matHeaderCellDef>Memory limits (bytes)</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Memory limits (bytes)</mat-header-cell>
         <mat-cell *matCellDef="let node">
           {{node.allocatedResources.memoryLimits | kdMemory}} ({{node.allocatedResources.memoryLimitsFraction | number:"1.2-2"}}%)
         </mat-cell>
@@ -96,7 +105,8 @@ limitations under the License.
       <ng-container [matColumnDef]="getDisplayColumns()[8]">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
-                         disableClear="true">Age</mat-header-cell>
+                         disableClear="true"
+                         i18n>Age</mat-header-cell>
         <mat-cell *matCellDef="let node">{{node.objectMeta.creationTimestamp | kdRelativeTime}}</mat-cell>
       </ng-container>
 

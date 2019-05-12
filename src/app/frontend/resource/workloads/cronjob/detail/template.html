@@ -18,24 +18,28 @@ limitations under the License.
                 [objectMeta]="cronJob?.objectMeta"></kd-object-meta>
 
 <kd-card [initialized]="isInitialized">
-  <div title>Cron Job information</div>
+  <div title
+       i18n>Cron Job information</div>
 
   <div description>
     <div class="kd-inline-property"
          *ngIf="cronJob?.schedule">
-      <span class="kd-muted-light">Schedule:&nbsp;</span>
+      <span class="kd-muted-light"
+            i18n>Schedule:&nbsp;</span>
       <span>{{cronJob.schedule}}</span>
     </div>
 
     <div class="kd-inline-property"
          *ngIf="cronJob?.active !== null">
-      <span class="kd-muted-light">Active Jobs:&nbsp;</span>
+      <span class="kd-muted-light"
+            i18n>Active Jobs:&nbsp;</span>
       <span>{{cronJob.active}}</span>
     </div>
 
     <div class="kd-inline-property"
          *ngIf="cronJob?.suspend !== null">
-      <span class="kd-muted-light">Suspend:&nbsp;</span>
+      <span class="kd-muted-light"
+            i18n>Suspend:&nbsp;</span>
       <span>{{cronJob.suspend}}</span>
     </div>
   </div>
@@ -44,41 +48,49 @@ limitations under the License.
        *ngIf="isInitialized"
        fxLayout="row wrap">
     <kd-property *ngIf="cronJob?.schedule">
-      <div key>Schedule</div>
+      <div key
+           i18n>Schedule</div>
       <div value>{{cronJob.schedule}}</div>
     </kd-property>
 
     <kd-property *ngIf="cronJob?.active !== null">
-      <div key>Active Jobs</div>
+      <div key
+           i18n>Active Jobs</div>
       <div value>{{cronJob.active}}</div>
     </kd-property>
 
     <kd-property *ngIf="cronJob?.suspend !== null">
-      <div key>Suspend</div>
+      <div key
+           i18n>Suspend</div>
       <div value>{{cronJob.suspend}}</div>
     </kd-property>
 
     <kd-property *ngIf="cronJob?.lastSchedule">
-      <div key>Last schedule</div>
+      <div key
+           i18n>Last schedule</div>
       <div value>{{cronJob.lastSchedule}}</div>
     </kd-property>
 
     <kd-property *ngIf="cronJob?.concurrencyPolicy">
-      <div key>Concurrency policy</div>
+      <div key
+           i18n>Concurrency policy</div>
       <div value>{{cronJob.concurrencyPolicy}}</div>
     </kd-property>
 
     <kd-property *ngIf="cronJob?.startingDeadlineSeconds !== null">
-      <div key>Starting deadline seconds</div>
+      <div key
+           i18n>Starting deadline seconds</div>
       <div value>{{cronJob.startingDeadlineSeconds}}</div>
     </kd-property>
   </div>
 </kd-card>
 
 <kd-job-list [endpoint]="activeJobsEndpoint"
+             i18n-title
              title="Active Jobs"></kd-job-list>
 
 <kd-job-list [endpoint]="inactiveJobsEndpoint"
+             i18n-title
              title="Inactive Jobs"></kd-job-list>
 
 <kd-event-list [endpoint]="eventListEndpoint"></kd-event-list>

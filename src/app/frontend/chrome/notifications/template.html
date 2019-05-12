@@ -15,11 +15,13 @@ limitations under the License.
 -->
 
 <div class="kd-notifications-container">
+  <span hidden
+        i18n
+        #translatedTooltip>{isOpen(), select, 1 {Close notifications panel} other {Open notifications panel}}</span>
   <button mat-icon-button
           color="primary"
           class="kd-global-action kd-notifications-button"
-          i18n-matTooltip
-          [matTooltip]="isOpen() ? 'Close notifications panel' : 'Open notifications panel'"
+          [matTooltip]="translatedTooltip.textContent"
           (click)="toggle()">
     <mat-icon class="kd-notifications-icon kd-primary-toolbar-icon">notifications</mat-icon>
     <div *ngIf="getUnreadCount() > 0"
@@ -41,7 +43,8 @@ limitations under the License.
           <div fxLayout="column"
                fxFlex>
             <span class="kd-notification">{{notification.message}}</span>
-            <span class="kd-notification-timestamp kd-muted">
+            <span class="kd-notification-timestamp kd-muted"
+                  i18n>
               {{notification.timestamp | kdRelativeTime}} ago
             </span>
           </div>
@@ -56,12 +59,14 @@ limitations under the License.
       <div *ngIf="notifications.length === 0"
            class="kd-notifications-zero-state kd-muted"
            fxLayoutAlign="center center"
-           fxFlex>There are no notifications</div>
+           fxFlex
+           i18n>There are no notifications</div>
     </div>
     <div class="kd-notifications-controls kd-bg-primary kd-white"
          *ngIf="notifications.length > 0">
       <span class="kd-clickable kd-accent"
-            (click)="clear()">Remove all notifications</span>
+            (click)="clear()"
+            i18n>Remove all notifications</span>
     </div>
   </div>
 </div>

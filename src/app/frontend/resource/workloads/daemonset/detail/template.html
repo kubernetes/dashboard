@@ -18,28 +18,32 @@ limitations under the License.
                 [objectMeta]="daemonSet?.objectMeta"></kd-object-meta>
 
 <kd-card [initialized]="isInitialized">
-  <div title>Daemon Set information</div>
+  <div title
+       i18n>Daemon Set information</div>
 
   <div content
        *ngIf="isInitialized"
        fxLayout="row wrap">
     <kd-property *ngIf="daemonSet?.labelSelector"
                  fxFlex="100">
-      <div key>Selector</div>
+      <div key
+           i18n>Selector</div>
       <div value>
         <kd-chips [map]="daemonSet.labelSelector.matchLabels"></kd-chips>
       </div>
     </kd-property>
 
     <kd-property *ngIf="daemonSet?.containerImages">
-      <div key>Images</div>
+      <div key
+           i18n>Images</div>
       <div value>
         <kd-chips [map]="daemonSet.containerImages"></kd-chips>
       </div>
     </kd-property>
 
     <kd-property *ngIf="daemonSet?.initContainerImages">
-      <div key>Init images</div>
+      <div key
+           i18n>Init images</div>
       <div value>
         <kd-chips [map]="daemonSet.initContainerImages"></kd-chips>
       </div>

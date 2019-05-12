@@ -15,7 +15,8 @@ limitations under the License.
 -->
 
 <kd-card [withFooter]="true">
-  <div title>About</div>
+  <div title
+       i18n>About</div>
 
   <div content
        fxLayout="row">
@@ -25,14 +26,15 @@ limitations under the License.
       <div class="kd-h1">
         <span>Dashboard v{{versionInfo.semverString}}</span>
       </div>
-      <div class="kd-h3">General-purpose web UI for Kubernetes clusters</div>
+      <div class="kd-h3"
+           i18n>General-purpose web UI for Kubernetes clusters</div>
     </div>
   </div>
 
   <div class="kd-muted"
        footer>
     <div>Copyright 2015 - {{latestCopyrightYear}} The Kubernetes Authors.</div>
-    <div>
+    <div i18n>
       Kubernetes Dashboard is made possible by the Dashboard
       <a href="https://github.com/kubernetes/dashboard/graphs/contributors">community</a> as an
       <a href="https://github.com/kubernetes/dashboard">open source project</a>.

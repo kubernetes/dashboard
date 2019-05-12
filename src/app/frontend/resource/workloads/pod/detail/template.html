@@ -18,18 +18,21 @@ limitations under the License.
                 [objectMeta]="pod?.objectMeta"></kd-object-meta>
 
 <kd-card [initialized]="isInitialized">
-  <div title>Pod information</div>
+  <div title
+       i18n>Pod information</div>
 
   <div description>
     <div class="kd-inline-property"
          *ngIf="pod?.podPhase">
-      <span class="kd-muted-light">Status:&nbsp;</span>
+      <span class="kd-muted-light"
+            i18n>Status:&nbsp;</span>
       <span>{{pod.podPhase}}</span>
     </div>
 
     <div class="kd-inline-property"
          *ngIf="pod?.podIP">
-      <span class="kd-muted-light">IP:&nbsp;</span>
+      <span class="kd-muted-light"
+            i18n>IP:&nbsp;</span>
       <span>{{pod.podIP}}</span>
     </div>
   </div>
@@ -38,28 +41,33 @@ limitations under the License.
        *ngIf="isInitialized"
        fxLayout="row wrap">
     <kd-property *ngIf="pod?.nodeName">
-      <div key>Node</div>
+      <div key
+           i18n>Node</div>
       <a value
          [href]="getNodeHref(pod.nodeName)">{{pod.nodeName}}</a>
     </kd-property>
 
     <kd-property *ngIf="pod?.podPhase">
-      <div key>Status</div>
+      <div key
+           i18n>Status</div>
       <div value>{{pod?.podPhase}}</div>
     </kd-property>
 
     <kd-property *ngIf="pod?.podIP">
-      <div key>IP</div>
+      <div key
+           i18n>IP</div>
       <div value>{{pod.podIP}}</div>
     </kd-property>
 
     <kd-property *ngIf="pod?.qosClass">
-      <div key>QoS Class</div>
+      <div key
+           i18n>QoS Class</div>
       <div value>{{pod.qosClass}}</div>
     </kd-property>
 
     <kd-property *ngIf="pod?.restartCount !== undefined">
-      <div key>Restarts</div>
+      <div key
+           i18n>Restarts</div>
       <div value>{{pod.restartCount}}</div>
     </kd-property>
   </div>
@@ -75,14 +83,16 @@ limitations under the License.
 <kd-event-list [endpoint]="eventListEndpoint"></kd-event-list>
 
 <div *ngIf="pod?.containers?.length"
-     class="kd-card-group-header kd-muted">Containers</div>
+     class="kd-card-group-header kd-muted"
+     i18n>Containers</div>
 <kd-container-card *ngFor="let container of pod?.containers"
                    [container]="container"
                    [namespace]="pod.objectMeta.namespace"
                    [initialized]="isInitialized"></kd-container-card>
 
 <div *ngIf="pod?.initContainers?.length"
-     class="kd-card-group-header kd-muted">Init containers</div>
+     class="kd-card-group-header kd-muted"
+     i18n>Init containers</div>
 <kd-container-card *ngFor="let container of pod?.initContainers"
                    [container]="container"
                    [namespace]="pod.objectMeta.namespace"

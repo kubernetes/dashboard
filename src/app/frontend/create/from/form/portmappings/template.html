@@ -21,6 +21,7 @@ limitations under the License.
                     style="width: 100%;">
       <mat-select namespace="serviceType"
                   formControlName="serviceType"
+                  i18n-placeholder
                   placeholder="Service"
                   required>
         <mat-option *ngFor="let serviceType of serviceTypes"
@@ -43,6 +44,7 @@ limitations under the License.
                  type="number"
                  name="port"
                  formControlName="port"
+                 i18n-placeholder
                  placeholder="Port"
                  (change)="checkPortMapping(i)"
                  [required]="isFirst(i)">
@@ -73,6 +75,7 @@ limitations under the License.
                  type="number"
                  name="targetPort"
                  formControlName="targetPort"
+                 i18n-placeholder
                  placeholder="Target port"
                  min="1"
                  max="65535"
@@ -103,6 +106,7 @@ limitations under the License.
                         fxFlex="20">
           <mat-select name="protocol"
                       formControlName="protocol"
+                      i18n-placeholder
                       placeholder="Protocol"
                       kdValidProtocol
                       [isExternal]="isExternal"

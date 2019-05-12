@@ -17,8 +17,10 @@ limitations under the License.
 <kd-card role="table"
          [hidden]="isHidden()">
   <div title
-       fxLayout="row">Namespaces</div>
-  <div description><span class="kd-muted-light">Items:&nbsp;</span>{{totalItems}}</div>
+       fxLayout="row"
+       i18n>Namespaces</div>
+  <div description><span class="kd-muted-light"
+          i18n>Items:&nbsp;</span>{{totalItems}}</div>
   <div actions>
     <kd-card-list-filter></kd-card-list-filter>
   </div>
@@ -45,7 +47,8 @@ limitations under the License.
       <ng-container [matColumnDef]="getDisplayColumns()[1]">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
-                         disableClear="true">Name</mat-header-cell>
+                         disableClear="true"
+                         i18n>Name</mat-header-cell>
         <mat-cell *matCellDef="let namespace">
           <a [href]="getDetailsHref(namespace.objectMeta.name)">
             {{namespace.objectMeta.name}}
@@ -54,21 +57,24 @@ limitations under the License.
       </ng-container>
 
       <ng-container [matColumnDef]="getDisplayColumns()[2]">
-        <mat-header-cell *matHeaderCellDef>Labels</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Labels</mat-header-cell>
         <mat-cell *matCellDef="let namespace">
           <kd-chips [map]="namespace.objectMeta.labels"></kd-chips>
         </mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getDisplayColumns()[3]">
-        <mat-header-cell *matHeaderCellDef>Phase</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Phase</mat-header-cell>
         <mat-cell *matCellDef="let namespace">{{namespace.phase}}</mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getDisplayColumns()[4]">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
-                         disableClear="true">Age</mat-header-cell>
+                         disableClear="true"
+                         i18n>Age</mat-header-cell>
         <mat-cell *matCellDef="let namespace">
           {{namespace.objectMeta.creationTimestamp |kdRelativeTime}}
         </mat-cell>
