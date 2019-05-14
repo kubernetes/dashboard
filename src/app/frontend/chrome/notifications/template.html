@@ -15,13 +15,10 @@ limitations under the License.
 -->
 
 <div class="kd-notifications-container">
-  <span hidden
-        i18n
-        #translatedTooltip>{isOpen(), select, 1 {Close notifications panel} other {Open notifications panel}}</span>
   <button mat-icon-button
           color="primary"
           class="kd-global-action kd-notifications-button"
-          [matTooltip]="translatedTooltip.textContent"
+          [matTooltip]="isOpen() ? 'Close notifications panel' : 'Open notifications panel'"
           (click)="toggle()">
     <mat-icon class="kd-notifications-icon kd-primary-toolbar-icon">notifications</mat-icon>
     <div *ngIf="getUnreadCount() > 0"

@@ -35,11 +35,8 @@ limitations under the License.
          class="kd-card-actions kd-muted">
       <ng-content select="[actions]"></ng-content>
     </div>
-    <span hidden
-          #translatedTooltip
-          i18n>{expanded, select, 1 {Minimize card} other {Expand card}}</span>
     <mat-icon class="kd-card-toggle kd-muted"
-              [matTooltip]="translatedTooltip.textContent"
+              [matTooltip]="expanded ? 'Minimize card' : 'Expand card'"
               *ngIf="expandable">
       <ng-container *ngIf="expanded">arrow_drop_up</ng-container>
       <ng-container *ngIf="!expanded">arrow_drop_down</ng-container>
