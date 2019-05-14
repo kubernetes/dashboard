@@ -150,6 +150,12 @@ func (self *holderBuilder) SetNamespace(namespace string) *holderBuilder {
 	return self
 }
 
+// SetLocaleConfig 'locale-config' argument of Dashboard binary.
+func (self *holderBuilder) SetLocaleConfig(localeConfig string) *holderBuilder {
+	self.holder.localeConfig = localeConfig
+	return self
+}
+
 // GetHolderBuilder returns singleton instance of argument holder builder.
 func GetHolderBuilder() *holderBuilder {
 	return builder
