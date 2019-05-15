@@ -13,7 +13,7 @@
     "start:frontend:https": "node aio/scripts/version.js && ng serve --progress=false --aot --proxy-config aio/https-proxy.conf.json --ssl --host=0.0.0.0",
     "start:backend": "gulp serve --kubeconfig $npm_package_config_kubeconfig",
     "start:backend:https": "gulp serve --kubeconfig $npm_package_config_kubeconfig --autoGenerateCerts true --defaultCertDir $npm_package_config_kubeconfig_dir",
-    "start:prod": "npm run build && (cd $(dirname ./$npm_package_config_dashboard_binary_path) && ./$(basename $npm_package_config_dashboard_binary_path) --kubeconfig $npm_package_config_kubeconfig)",
+    "start:prod": "npm run build && ./$npm_package_config_dashboard_binary_path --kubeconfig $npm_package_config_kubeconfig --locale-config $npm_package_config_dashboard_locale_config",
     "build": "./aio/scripts/build.sh",
     "build:cross": "./aio/scripts/build.sh -c",
     "build:frontend": "npm run clean && ng build --aot --prod --outputPath=$npm_package_config_frontend_build_dir",

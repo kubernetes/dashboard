@@ -73,6 +73,7 @@ var (
 	argAPILogLevel               = pflag.String("api-log-level", "INFO", "Level of API request logging. Should be one of 'INFO|NONE|DEBUG'. Default: 'INFO'.")
 	argDisableSettingsAuthorizer = pflag.Bool("disable-settings-authorizer", false, "When enabled, Dashboard settings page will not require user to be logged in and authorized to access settings page.")
 	argNamespace                 = pflag.String("namespace", getEnv("POD_NAMESPACE", "kube-system"), "When non-default namespace is used, create encryption key in the specified namespace. Default: 'kube-system'.")
+	localeConfig                 = pflag.String("locale-config", "./locale_conf.json", "File containing the configuration of locales")
 )
 
 func main() {
@@ -229,6 +230,7 @@ func initArgHolder() {
 	builder.SetDisableSettingsAuthorizer(*argDisableSettingsAuthorizer)
 	builder.SetEnableSkipLogin(*argEnableSkip)
 	builder.SetNamespace(*argNamespace)
+	builder.SetLocaleConfig(*localeConfig)
 }
 
 /**
