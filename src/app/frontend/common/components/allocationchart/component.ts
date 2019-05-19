@@ -13,16 +13,12 @@
 // limitations under the License.
 
 import { AfterViewInit, Component, Input } from '@angular/core';
-import { Selection, select } from 'd3';
 import { generate, ChartAPI } from 'c3';
 
-interface PieChart {
-  data: PieChartData;
-}
-
 interface PieChartData {
+  key?: string;
   value: number;
-  color: string;
+  color?: string;
 }
 
 @Component({
@@ -58,7 +54,7 @@ export class AllocationChartComponent implements AfterViewInit {
     }
 
     const colors: { [key: string]: string } = {};
-    data.map(x => (colors[x.value] = x.color));
+    data.forEach(x => (colors[x.key || x.value] = x.color));
 
     return generate({
       bindto: `#${this.id}`,
@@ -75,9 +71,12 @@ export class AllocationChartComponent implements AfterViewInit {
       transition: { duration: 350 },
       donut: {
         width: size * (1 - ratio),
+        label: {
+          format: labelFunc,
+        },
       },
       data: {
-        columns: data.map(x => [x.value, x.value]),
+        columns: data.map(x => [x.key || x.value, x.value]),
         type: 'donut',
         colors,
       },
@@ -122,19 +121,16 @@ export class AllocationChartComponent implements AfterViewInit {
   }
 
   /**
-   * Displays label only for allocated resources (with index equal to 0).
+   * Displays label only for allocated resources
    */
-  private displayOnlyAllocated_(d: PieChart, i: number): string {
-    if (i === 0) {
-      return `${Math.round(d.data.value)}%`;
-    }
-    return '';
+  private displayOnlyAllocated_(value: number): string {
+    return `${Math.round(value)}%`;
   }
 
   /**
    * Formats percentage label to display in fixed format.
    */
-  private formatLabel_(d: PieChart): string {
-    return `${Math.round(d.data.value)}%`;
+  private formatLabel_(value: number): string {
+    return `${Math.round(value)}%`;
   }
 }
