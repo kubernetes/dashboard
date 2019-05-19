@@ -14,6 +14,7 @@
 
 import { AfterViewInit, Component, Input } from '@angular/core';
 import { generate, ChartAPI } from 'c3';
+import { BaseType, select, Selection } from 'd3';
 
 interface PieChartData {
   key?: string;
@@ -32,23 +33,23 @@ export class AllocationChartComponent implements AfterViewInit {
   @Input() outerColor: string;
   @Input() innerPercent: number;
   @Input() innerColor: string;
-  @Input() ratio = 0.67;
+  @Input() ratio = 0.85;
   @Input() enableTooltips = false;
-  @Input() size: number;
+  @Input() size = 280;
   @Input() id: string;
+
+  allocated = new Set();
 
   ngAfterViewInit(): void {
     setTimeout(() => this.generateGraph_(), 0);
   }
 
   initPieChart_(
+    svg: Selection<BaseType, {}, HTMLElement, HTMLElement>,
     data: PieChartData[],
     padding: number,
-    ratio: number,
     labelFunc: (d: {}, i: number, values: {}) => string | null
   ): ChartAPI {
-    const size = this.size || 280;
-
     if (!labelFunc) {
       labelFunc = this.formatLabel_;
     }
@@ -58,16 +59,21 @@ export class AllocationChartComponent implements AfterViewInit {
 
     data.forEach((x, i) => {
       if (x.value > 0) {
-        colors[x.key || x.value] = x.color || this.colorPalette[i];
-        columns.push([x.key || x.value, x.value]);
+        const key = x.key || x.value;
+        colors[key] = x.color || this.colorPalette[i];
+        columns.push([key, x.value]);
+
+        if (i === 0) {
+          this.allocated.add(key);
+        }
       }
     });
 
     return generate({
-      bindto: `#${this.id}`,
+      bindto: svg,
       size: {
-        width: size,
-        height: size,
+        width: this.size,
+        height: this.size,
       },
       legend: {
         show: false,
@@ -77,7 +83,7 @@ export class AllocationChartComponent implements AfterViewInit {
       },
       transition: { duration: 350 },
       donut: {
-        width: size * (1 - ratio),
+        width: this.size * (1 - this.ratio),
         label: {
           format: labelFunc,
         },
@@ -95,43 +101,57 @@ export class AllocationChartComponent implements AfterViewInit {
    * Generates graph using provided requests and limits bindings.
    */
   generateGraph_(): void {
+    let svg = select(`#${this.id}`);
+
     if (!this.data) {
+      svg = svg
+        .append('svg')
+        .attr('width', this.size)
+        .attr('height', this.size);
+
       if (this.outerPercent !== undefined) {
         this.outerColor = this.outerColor ? this.outerColor : '#00c752';
         this.initPieChart_(
+          svg.append('g'),
           [
             { value: this.outerPercent, color: this.outerColor },
             { value: 100 - this.outerPercent, color: '#ddd' },
           ],
           0,
-          0.67,
-          this.displayOnlyAllocated_
+          this.displayOnlyAllocated_.bind(this)
         );
       }
 
       if (this.innerPercent !== undefined) {
         this.innerColor = this.innerColor ? this.innerColor : '#326de6';
         this.initPieChart_(
+          svg.append('g'),
           [
             { value: this.innerPercent, color: this.innerColor },
             { value: 100 - this.innerPercent, color: '#ddd' },
           ],
-          39,
-          0.55,
-          this.displayOnlyAllocated_
+          45,
+          this.displayOnlyAllocated_.bind(this)
         );
       }
     } else {
       // Initializes a pie chart with multiple entries in a single ring
-      this.initPieChart_(this.data, 0, this.ratio, null);
+      this.initPieChart_(svg, this.data, 0, null);
     }
   }
 
   /**
    * Displays label only for allocated resources
    */
-  private displayOnlyAllocated_(value: number): string {
-    return `${Math.round(value)}%`;
+  private displayOnlyAllocated_(
+    value: number,
+    _: number,
+    id: string | number
+  ): string {
+    if (this.allocated.has(id)) {
+      return `${Math.round(value)}%`;
+    }
+    return '';
   }
 
   /**
