@@ -50,7 +50,8 @@
     "fix:frontend:html": "./aio/scripts/format.sh --html",
     "fix:license": "gulp update-license-headers",
     "clean": "rm -rf .go_workspace .tmp coverage dist npm-debug.log",
-    "postversion": "node aio/scripts/version.js"
+    "postversion": "node aio/scripts/version.js",
+    "postinstall": "node aio/scripts/version.js && ./node_modules/protractor/bin/webdriver-manager update --gecko=false --versions.standalone=3.141.59 && go get -u github.com/golangci/golangci-lint/cmd/golangci-lint"
   },
   "husky": {
     "hooks": {
