@@ -54,7 +54,14 @@ export class AllocationChartComponent implements AfterViewInit {
     }
 
     const colors: { [key: string]: string } = {};
-    data.forEach(x => (colors[x.key || x.value] = x.color));
+    const columns: Array<Array<string | number>> = [];
+
+    data.forEach((x, i) => {
+      if (x.value > 0) {
+        colors[x.key || x.value] = x.color || this.colorPalette[i];
+        columns.push([x.key || x.value, x.value]);
+      }
+    });
 
     return generate({
       bindto: `#${this.id}`,
@@ -76,7 +83,7 @@ export class AllocationChartComponent implements AfterViewInit {
         },
       },
       data: {
-        columns: data.map(x => [x.key || x.value, x.value]),
+        columns,
         type: 'donut',
         colors,
       },
