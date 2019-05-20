@@ -98,7 +98,7 @@
     "js-yaml": "3.13.1",
     "material-design-icons": "3.0.1",
     "ng2-ace-editor": "0.3.9",
-    "ngx-cookie-service": "2.0.0",
+    "ngx-cookie-service": "2.2.0",
     "ngx-filter-pipe": "2.1.2",
     "normalize.css": "8.0.0",
     "nvd3": "1.8.6",
