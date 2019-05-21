@@ -22,6 +22,8 @@ interface PieChartData {
   color?: string;
 }
 
+type ChartType = 'pie' | 'donut';
+
 @Component({
   selector: 'kd-allocation-chart',
   templateUrl: './template.html',
@@ -33,7 +35,7 @@ export class AllocationChartComponent implements AfterViewInit {
   @Input() outerColor: string;
   @Input() innerPercent: number;
   @Input() innerColor: string;
-  @Input() ratio = 0.85;
+  @Input() type: ChartType = 'donut';
   @Input() enableTooltips = false;
   @Input() size = 280;
   @Input() id: string;
@@ -48,12 +50,9 @@ export class AllocationChartComponent implements AfterViewInit {
     svg: Selection<BaseType, {}, HTMLElement, HTMLElement>,
     data: PieChartData[],
     padding: number,
-    labelFunc: (d: {}, i: number, values: {}) => string | null
+    labelFunc: (d: {}, i: number, values: {}) => string | null = this
+      .formatLabel_
   ): ChartAPI {
-    if (!labelFunc) {
-      labelFunc = this.formatLabel_;
-    }
-
     const colors: { [key: string]: string } = {};
     const columns: Array<Array<string | number>> = [];
 
@@ -83,14 +82,13 @@ export class AllocationChartComponent implements AfterViewInit {
       },
       transition: { duration: 350 },
       donut: {
-        width: this.size * (1 - this.ratio),
         label: {
           format: labelFunc,
         },
       },
       data: {
         columns,
-        type: 'donut',
+        type: this.type,
         colors,
       },
       padding: { top: padding, right: padding, bottom: padding, left: padding },
@@ -136,7 +134,7 @@ export class AllocationChartComponent implements AfterViewInit {
       }
     } else {
       // Initializes a pie chart with multiple entries in a single ring
-      this.initPieChart_(svg, this.data, 0, null);
+      this.initPieChart_(svg, this.data, 0);
     }
   }
 
