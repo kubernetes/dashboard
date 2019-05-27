@@ -15,14 +15,17 @@
 package api
 
 import (
-	restful "github.com/emicklei/go-restful"
-	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
+	"github.com/emicklei/go-restful"
+	runtimeclient "sigs.k8s.io/controller-runtime/pkg/client"
+
 	v1 "k8s.io/api/authorization/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/client-go/tools/clientcmd/api"
+
+	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 )
 
 const (
@@ -37,6 +40,7 @@ const (
 // kubernetes apiserver on demand.
 type ClientManager interface {
 	Client(req *restful.Request) (kubernetes.Interface, error)
+	DynamicClient(req *restful.Request) (runtimeclient.Client, error)
 	InsecureClient() kubernetes.Interface
 	CanI(req *restful.Request, ssar *v1.SelfSubjectAccessReview) bool
 	Config(req *restful.Request) (*rest.Config, error)

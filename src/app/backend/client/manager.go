@@ -19,13 +19,14 @@ import (
 	"log"
 	"strings"
 
-	restful "github.com/emicklei/go-restful"
+	"github.com/emicklei/go-restful"
 	v1 "k8s.io/api/authorization/v1"
 	errorsK8s "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/client-go/tools/clientcmd/api"
+	runtimeclient "sigs.k8s.io/controller-runtime/pkg/client"
 
 	"github.com/kubernetes/dashboard/src/app/backend/args"
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
@@ -72,6 +73,9 @@ type clientManager struct {
 	// Kubernetes client created without providing auth info. It uses permissions granted to
 	// service account used by dashboard or kubeconfig file if it was passed during dashboard init.
 	insecureClient kubernetes.Interface
+	// Controller-runtime client created without providing auth info. It uses permissions granted to
+	// service account used by dashboard or kubeconfig file if it was passed during dashboard init.
+	insecureDynamicClient runtimeclient.Client
 	// Kubernetes client config created without providing auth info. It uses permissions granted
 	// to service account used by dashboard or kubeconfig file if it was passed during dashboard
 	// init.
@@ -91,6 +95,21 @@ func (self *clientManager) Client(req *restful.Request) (kubernetes.Interface, e
 	}
 
 	return self.InsecureClient(), nil
+}
+
+// Client returns a controller-runtime client. In case dashboard login is enabled and option to skip
+// login page is disabled only secure client will be returned, otherwise insecure client will be
+// used.
+func (self *clientManager) DynamicClient(req *restful.Request) (runtimeclient.Client, error) {
+	if req == nil {
+		return nil, errors.New("Request can not be nil!")
+	}
+
+	if self.isSecureModeEnabled(req) {
+		return self.secureDynamicClient(req)
+	}
+
+	return self.InsecureDynamicClient(), nil
 }
 
 // Config returns a rest config. In case dashboard login is enabled and option to skip
@@ -113,6 +132,13 @@ func (self *clientManager) Config(req *restful.Request) (*rest.Config, error) {
 // during dashboard init.
 func (self *clientManager) InsecureClient() kubernetes.Interface {
 	return self.insecureClient
+}
+
+// InsecureDynamicClient returns controller-runtime client that was created without providing auth info. It uses
+// permissions granted to service account used by dashboard or kubeconfig file if it was passed
+// during dashboard init.
+func (self *clientManager) InsecureDynamicClient() runtimeclient.Client {
+	return self.insecureDynamicClient
 }
 
 // InsecureConfig returns kubernetes client config that used privileges of dashboard service account
@@ -308,6 +334,20 @@ func (self *clientManager) secureClient(req *restful.Request) (kubernetes.Interf
 	return client, nil
 }
 
+func (self *clientManager) secureDynamicClient(req *restful.Request) (runtimeclient.Client, error) {
+	cfg, err := self.secureConfig(req)
+	if err != nil {
+		return nil, err
+	}
+
+	client, err := runtimeclient.New(cfg, runtimeclient.Options{})
+	if err != nil {
+		return nil, err
+	}
+
+	return client, nil
+}
+
 func (self *clientManager) secureConfig(req *restful.Request) (*rest.Config, error) {
 	cmdConfig, err := self.ClientCmdConfig(req)
 	if err != nil {
@@ -327,6 +367,7 @@ func (self *clientManager) secureConfig(req *restful.Request) (*rest.Config, err
 func (self *clientManager) init() {
 	self.initInClusterConfig()
 	self.initInsecureClient()
+	self.initInsecureDynamicClient()
 	self.initCSRFKey()
 }
 
@@ -370,6 +411,16 @@ func (self *clientManager) initInsecureClient() {
 	}
 
 	self.insecureClient = client
+}
+
+func (self *clientManager) initInsecureDynamicClient() {
+	self.initInsecureConfig()
+	client, err := runtimeclient.New(self.insecureConfig, runtimeclient.Options{})
+	if err != nil {
+		panic(err)
+	}
+
+	self.insecureDynamicClient = client
 }
 
 func (self *clientManager) initInsecureConfig() {

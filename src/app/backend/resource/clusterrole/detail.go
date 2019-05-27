@@ -15,9 +15,11 @@
 package clusterrole
 
 import (
+	"context"
+
 	rbac "k8s.io/api/rbac/v1"
-	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	k8sClient "k8s.io/client-go/kubernetes"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	ctrlruntimeclient "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
 // ClusterRoleDetail contains Cron Job details.
@@ -32,9 +34,9 @@ type ClusterRoleDetail struct {
 }
 
 // GetClusterRoleDetail gets Cluster Role details.
-func GetClusterRoleDetail(client k8sClient.Interface, name string) (*ClusterRoleDetail, error) {
-	rawObject, err := client.RbacV1().ClusterRoles().Get(name, metaV1.GetOptions{})
-	if err != nil {
+func GetClusterRoleDetail(client ctrlruntimeclient.Client, name string) (*ClusterRoleDetail, error) {
+	rawObject := &rbac.ClusterRole{}
+	if err := client.Get(context.TODO(), ctrlruntimeclient.ObjectKey{Namespace: metav1.NamespaceAll, Name: name}, rawObject); err != nil {
 		return nil, err
 	}
 

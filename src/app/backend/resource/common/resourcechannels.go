@@ -15,6 +15,8 @@
 package common
 
 import (
+	"context"
+
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	apps "k8s.io/api/apps/v1"
 	autoscaling "k8s.io/api/autoscaling/v1"
@@ -26,6 +28,7 @@ import (
 	storage "k8s.io/api/storage/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
+	ctrlruntimeclient "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
 // ResourceChannels struct holds channels to resource lists. Each list channel is paired with
@@ -713,14 +716,15 @@ type ClusterRoleListChannel struct {
 
 // GetClusterRoleListChannel returns a pair of channels to a ClusterRole list and errors that
 // both must be read numReads times.
-func GetClusterRoleListChannel(client client.Interface, numReads int) ClusterRoleListChannel {
+func GetClusterRoleListChannel(client ctrlruntimeclient.Client, numReads int) ClusterRoleListChannel {
 	channel := ClusterRoleListChannel{
 		List:  make(chan *rbac.ClusterRoleList, numReads),
 		Error: make(chan error, numReads),
 	}
 
 	go func() {
-		list, err := client.RbacV1().ClusterRoles().List(api.ListEverything)
+		list := &rbac.ClusterRoleList{}
+		err := client.List(context.TODO(), &ctrlruntimeclient.ListOptions{}, list)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err

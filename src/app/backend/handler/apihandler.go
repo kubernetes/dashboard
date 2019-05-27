@@ -560,14 +560,14 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 
 // TODO: Handle case in which RBAC feature is not enabled in API server. Currently returns 404 resource not found
 func (apiHandler *APIHandler) handleGetClusterRoleList(request *restful.Request, response *restful.Response) {
-	k8sClient, err := apiHandler.cManager.Client(request)
+	dynamicClient, err := apiHandler.cManager.DynamicClient(request)
 	if err != nil {
 		kdErrors.HandleInternalError(response, err)
 		return
 	}
 
 	dataSelect := parseDataSelectPathParameter(request)
-	result, err := clusterrole.GetClusterRoleList(k8sClient, dataSelect)
+	result, err := clusterrole.GetClusterRoleList(dynamicClient, dataSelect)
 	if err != nil {
 		kdErrors.HandleInternalError(response, err)
 		return
@@ -576,14 +576,14 @@ func (apiHandler *APIHandler) handleGetClusterRoleList(request *restful.Request,
 }
 
 func (apiHandler *APIHandler) handleGetClusterRoleDetail(request *restful.Request, response *restful.Response) {
-	k8sClient, err := apiHandler.cManager.Client(request)
+	dynamicClient, err := apiHandler.cManager.DynamicClient(request)
 	if err != nil {
 		kdErrors.HandleInternalError(response, err)
 		return
 	}
 
 	name := request.PathParameter("name")
-	result, err := clusterrole.GetClusterRoleDetail(k8sClient, name)
+	result, err := clusterrole.GetClusterRoleDetail(dynamicClient, name)
 	if err != nil {
 		kdErrors.HandleInternalError(response, err)
 		return

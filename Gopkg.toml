@@ -4,15 +4,15 @@
 
 [[constraint]]
   name = "k8s.io/api"
-  version="kubernetes-1.13.0"
+  version="kubernetes-1.13.1"
 
 [[constraint]]
   name = "k8s.io/apimachinery"
-  version="kubernetes-1.13.0"
+  version="kubernetes-1.13.1"
 
 [[constraint]]
   name = "k8s.io/client-go"
-  version="v10.0.0"
+  version="kubernetes-1.13.1"
 
 [[constraint]]
   name = "k8s.io/heapster"
@@ -53,3 +53,7 @@
 [[override]]
   name = "github.com/square/go-jose"
   version = "2.2.2"
+
+[[override]]
+  name = "sigs.k8s.io/controller-runtime"
+  version = "v0.1.10"
