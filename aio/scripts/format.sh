@@ -106,7 +106,7 @@ if [ "${CHECK}" = true ] ; then
     format::styles::check
     CHECK_FAILED=$?
     if [ "${CHECK_FAILED}" -gt 0 ]; then
-      saye "Styles are not properly formatted. Please run 'npm run format:frontend'.";
+      saye "Styles are not properly formatted. Please run 'npm run fix:frontend'.";
       exit 1
     fi
     say "Styles are properly formatted!"
@@ -116,7 +116,7 @@ if [ "${CHECK}" = true ] ; then
     format::html::check
     CHECK_FAILED=$?
     if [ "${CHECK_FAILED}" -gt 0 ]; then
-      saye "HTML code is not properly formatted. Please run 'npm run format:frontend'.";
+      saye "HTML code is not properly formatted. Please run 'npm run fix:frontend'.";
       exit 1
     fi
     say "HTML is properly formatted!"
