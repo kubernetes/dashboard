@@ -76,7 +76,8 @@ limitations under the License.
                          disableClear="true"
                          i18n>Age</mat-header-cell>
         <mat-cell *matCellDef="let ingress">
-          {{ingress.objectMeta.creationTimestamp | kdRelativeTime}}
+          <kd-date [date]="ingress.objectMeta.creationTimestamp"
+                   relative></kd-date>
         </mat-cell>
       </ng-container>
 

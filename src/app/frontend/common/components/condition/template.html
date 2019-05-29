@@ -51,20 +51,16 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          i18n>Last probe time</mat-header-cell>
         <mat-cell *matCellDef="let condition">
-          <ng-container *ngIf="condition.lastProbeTime">
-            {{condition.lastProbeTime| kdRelativeTime}}
-          </ng-container>
-          <ng-container *ngIf="!condition.lastProbeTime">-</ng-container>
+          <kd-date [date]="condition.lastProbeTime"
+                   relative></kd-date>
         </mat-cell>
       </ng-container>
       <ng-container [matColumnDef]="getConditionsColumns()[3]">
         <mat-header-cell *matHeaderCellDef
                          i18n>Last transition time</mat-header-cell>
         <mat-cell *matCellDef="let condition">
-          <ng-container *ngIf="condition.lastTransitionTime">
-            {{condition.lastTransitionTime| kdRelativeTime}}
-          </ng-container>
-          <ng-container *ngIf="!condition.lastTransitionTime">-</ng-container>
+          <kd-date [date]="condition.lastTransitionTime"
+                   relative></kd-date>
         </mat-cell>
       </ng-container>
       <ng-container [matColumnDef]="getConditionsColumns()[4]">

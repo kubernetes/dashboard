@@ -41,9 +41,9 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          i18n>Age</mat-header-cell>
         <mat-cell *matCellDef="let quota">
-          <ng-container *ngIf="quota.objectMeta.creationTimestamp">
-            {{quota.objectMeta.creationTimestamp | kdRelativeTime}}
-          </ng-container>
+          <kd-date *ngIf="quota.objectMeta.creationTimestamp"
+                   [date]="quota.objectMeta.creationTimestamp"
+                   relative></kd-date>
           <ng-container *ngIf="!quota.objectMeta.creationTimestamp">-</ng-container>
         </mat-cell>
       </ng-container>

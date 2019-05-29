@@ -34,7 +34,8 @@ limitations under the License.
          *ngIf="creator?.objectMeta.creationTimestamp">
       <span class="kd-muted-light"
             i18n>Age:&nbsp;</span>
-      <span>{{creator?.objectMeta.creationTimestamp | kdRelativeTime}}</span>
+      <kd-date [date]="creator?.objectMeta.creationTimestamp"
+               relative></kd-date>
     </div>
   </div>
   <div title
@@ -65,8 +66,12 @@ limitations under the License.
 
     <kd-property>
       <div key
-           i18n>Age</div>
-      <div value>{{creator?.objectMeta.creationTimestamp | kdRelativeTime}}</div>
+           i18n>Age
+      </div>
+      <div value>
+        <kd-date [date]="creator?.objectMeta.creationTimestamp"
+                 relative></kd-date>
+      </div>
     </kd-property>
 
     <kd-property *ngIf="creator?.objectMeta?.labels"

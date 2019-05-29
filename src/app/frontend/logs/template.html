@@ -136,7 +136,9 @@ limitations under the License.
         <span class="kd-logs-info"
               *ngIf="logsSet?.length > 1"
               i18n>
-          Logs from {{podLogs?.info.fromDate | date : "short"}} to {{podLogs?.info.toDate | date : "short"}} UTC
+          Logs from <kd-date [date]="podLogs?.info.fromDate"
+                   format="short"></kd-date> to <kd-date [date]="podLogs?.info.toDate"
+                   format="short"></kd-date> UTC
         </span>
         <span fxFlex></span>
         <div class="kd-list-pagination-buttons">

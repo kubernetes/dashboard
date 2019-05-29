@@ -98,8 +98,8 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          i18n>Last Schedule</mat-header-cell>
         <mat-cell *matCellDef="let cronJob">
-          <span>{{cronJob.lastSchedule | kdRelativeTime}}</span>
-          <span *ngIf="!cronJob.lastSchedule">-</span>
+          <kd-date [date]="cronJob.lastSchedule"
+                   relative></kd-date>
         </mat-cell>
       </ng-container>
 
@@ -115,7 +115,10 @@ limitations under the License.
       <ng-container matColumnDef="age">
         <mat-header-cell *matHeaderCellDef
                          i18n>Age</mat-header-cell>
-        <mat-cell *matCellDef="let cronJob">{{cronJob.objectMeta.creationTimestamp | kdRelativeTime}}</mat-cell>
+        <mat-cell *matCellDef="let cronJob">
+          <kd-date [date]="cronJob.objectMeta.creationTimestamp"
+                   relative></kd-date>
+        </mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="getColumns()"></mat-header-row>

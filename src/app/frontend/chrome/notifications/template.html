@@ -42,7 +42,8 @@ limitations under the License.
             <span class="kd-notification">{{notification.message}}</span>
             <span class="kd-notification-timestamp kd-muted"
                   i18n>
-              {{notification.timestamp | kdRelativeTime}} ago
+              <kd-date [date]="notification.timestamp"
+                       relative></kd-date> ago
             </span>
           </div>
           <button (click)="remove(index)"
