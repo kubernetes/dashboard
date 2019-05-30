@@ -52,7 +52,8 @@ type ScrollPosition = 'TOP' | 'BOTTOM';
   styleUrls: ['./style.scss'],
 })
 export class LogsComponent implements OnDestroy {
-  @ViewChild('logViewContainer') logViewContainer_: ElementRef;
+  @ViewChild('logViewContainer', { static: true })
+  logViewContainer_: ElementRef;
   podLogs: LogDetails;
   logsSet: string[];
   logSources: LogSources;

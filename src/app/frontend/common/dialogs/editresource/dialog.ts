@@ -36,7 +36,7 @@ enum EditorMode {
 export class EditResourceDialog implements OnInit {
   selectedMode = EditorMode.YAML;
 
-  @ViewChild('group') buttonToggleGroup: MatButtonToggleGroup;
+  @ViewChild('group', { static: true }) buttonToggleGroup: MatButtonToggleGroup;
   text = '';
   modes = EditorMode;
 

@@ -50,7 +50,7 @@ declare let SockJS: any;
   styleUrls: ['./styles.scss'],
 })
 export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild('anchor') anchorRef: ElementRef;
+  @ViewChild('anchor', { static: true }) anchorRef: ElementRef;
   term: Terminal;
 
   namespace: string;
