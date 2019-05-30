@@ -91,35 +91,30 @@ export class AuthService {
 
   /** Sends a login request to the backend with filled in login spec structure. */
   login(loginSpec: LoginSpec): Observable<K8SError[]> {
-    return (
-      this.csrfTokenService_
-        .getTokenForAction('login')
-        /* tslint:disable */
-        .pipe(
-          switchMap<CsrfToken, any>(
-            /* tslint:enable */
-            (csrfToken: CsrfToken) =>
-              this.http_.post<AuthResponse>('api/v1/login', loginSpec, {
-                headers: new HttpHeaders().set(
-                  this.config_.csrfHeaderName,
-                  csrfToken.token
-                ),
-              })
-          )
-        )
-        .pipe(
-          switchMap<AuthResponse, K8SError[]>((authResponse: AuthResponse) => {
-            if (
-              authResponse.jweToken.length !== 0 &&
-              authResponse.errors.length === 0
-            ) {
-              this.setTokenCookie_(authResponse.jweToken);
-            }
-
-            return of(authResponse.errors);
+    return this.csrfTokenService_
+      .getTokenForAction('login')
+      .pipe(
+        switchMap((csrfToken: CsrfToken) =>
+          this.http_.post<AuthResponse>('api/v1/login', loginSpec, {
+            headers: new HttpHeaders().set(
+              this.config_.csrfHeaderName,
+              csrfToken.token
+            ),
           })
         )
-    );
+      )
+      .pipe(
+        switchMap((authResponse: AuthResponse) => {
+          if (
+            authResponse.jweToken.length !== 0 &&
+            authResponse.errors.length === 0
+          ) {
+            this.setTokenCookie_(authResponse.jweToken);
+          }
+
+          return of(authResponse.errors);
+        })
+      );
   }
 
   logout(): void {
@@ -172,7 +167,7 @@ export class AuthService {
     this.csrfTokenService_
       .getTokenForAction('token')
       .pipe(
-        switchMap<CsrfToken, AuthResponse>(csrfToken => {
+        switchMap(csrfToken => {
           return this.http_.post<AuthResponse>(
             'api/v1/token/refresh',
             { jweToken: token },

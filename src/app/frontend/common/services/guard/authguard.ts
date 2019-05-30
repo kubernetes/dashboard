@@ -31,7 +31,7 @@ export class AuthGuard implements CanActivate {
       .getLoginStatus()
       .pipe(first())
       .pipe(
-        switchMap<LoginStatus, boolean>((loginStatus: LoginStatus) => {
+        switchMap((loginStatus: LoginStatus) => {
           if (!this.authService_.isAuthenticated(loginStatus)) {
             return this.router_.navigate(['login']);
           }
