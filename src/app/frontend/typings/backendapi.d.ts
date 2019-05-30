@@ -358,8 +358,6 @@ export interface DeploymentDetail extends ResourceDetail {
   minReadySeconds: number;
   revisionHistoryLimit?: number;
   rollingUpdateStrategy?: RollingUpdateStrategy;
-  oldReplicaSetList: ReplicaSetList;
-  newReplicaSet: ReplicaSet;
   events: EventList;
 }
 
@@ -428,6 +426,7 @@ export interface PersistentVolumeClaimDetail extends ResourceDetail {
 
 export interface StorageClassDetail extends ResourceDetail {
   parameters: StringMap;
+  provisioner: string;
 }
 
 export interface ConfigMapDetail extends ResourceDetail {

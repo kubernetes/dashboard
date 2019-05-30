@@ -66,6 +66,7 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
 
       this.namespaceService_.setCurrent(namespace);
       this.namespaceService_.onNamespaceChangeEvent.emit(namespace);
+      this.selectedNamespace = namespace;
     });
 
     // TODO reeneable once fixed

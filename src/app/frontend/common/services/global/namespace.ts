@@ -66,7 +66,7 @@ export class NamespaceService {
   }
 
   areMultipleNamespacesSelected(): boolean {
-    return this.current() === this.allNamespacesKey_;
+    return this.currentNamespace_ ? this.currentNamespace_ === this.allNamespacesKey_ : true;
   }
 
   getResourceNamespace(): string {

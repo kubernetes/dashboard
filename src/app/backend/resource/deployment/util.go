@@ -15,25 +15,26 @@
 package deployment
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	apps "k8s.io/api/apps/v1"
 	v1 "k8s.io/api/core/v1"
+
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 )
 
 // Methods below are taken from kubernetes repo:
 // https://github.com/kubernetes/kubernetes/blob/master/pkg/controller/deployment/util/deployment_util.go
 
 // FindNewReplicaSet returns the new RS this given deployment targets (the one with the same pod template).
-func FindNewReplicaSet(deployment *apps.Deployment, rsList []*apps.ReplicaSet) (*apps.ReplicaSet, error) {
+func FindNewReplicaSet(deployment *apps.Deployment, rsList []*apps.ReplicaSet) *apps.ReplicaSet {
 	newRSTemplate := GetNewReplicaSetTemplate(deployment)
 	for i := range rsList {
 		if common.EqualIgnoreHash(rsList[i].Spec.Template, newRSTemplate) {
 			// This is the new ReplicaSet.
-			return rsList[i], nil
+			return rsList[i]
 		}
 	}
 	// new ReplicaSet does not exist.
-	return nil, nil
+	return nil
 }
 
 // FindOldReplicaSets returns the old replica sets targeted by the given Deployment, with the given slice of RSes.
@@ -43,10 +44,7 @@ func FindOldReplicaSets(deployment *apps.Deployment, rsList []*apps.ReplicaSet) 
 	[]*apps.ReplicaSet, error) {
 	var requiredRSs []*apps.ReplicaSet
 	var allRSs []*apps.ReplicaSet
-	newRS, err := FindNewReplicaSet(deployment, rsList)
-	if err != nil {
-		return nil, nil, err
-	}
+	newRS := FindNewReplicaSet(deployment, rsList)
 	for _, rs := range rsList {
 		// Filter out new replica set
 		if newRS != nil && rs.UID == newRS.UID {

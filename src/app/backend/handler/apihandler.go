@@ -255,6 +255,10 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 		apiV1Ws.GET("/deployment/{namespace}/{deployment}/oldreplicaset").
 			To(apiHandler.handleGetDeploymentOldReplicaSets).
 			Writes(replicaset.ReplicaSetList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/deployment/{namespace}/{deployment}/newreplicaset").
+			To(apiHandler.handleGetDeploymentNewReplicaSet).
+			Writes(replicaset.ReplicaSet{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.PUT("/scale/{kind}/{namespace}/{name}/").
@@ -1248,6 +1252,25 @@ func (apiHandler *APIHandler) handleGetDeploymentOldReplicaSets(request *restful
 	dataSelect := parseDataSelectPathParameter(request)
 	dataSelect.MetricQuery = dataselect.StandardMetrics
 	result, err := deployment.GetDeploymentOldReplicaSets(k8sClient, dataSelect, namespace, name)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetDeploymentNewReplicaSet(request *restful.Request, response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	namespace := request.PathParameter("namespace")
+	name := request.PathParameter("deployment")
+	dataSelect := parseDataSelectPathParameter(request)
+	dataSelect.MetricQuery = dataselect.StandardMetrics
+	result, err := deployment.GetDeploymentNewReplicaSet(k8sClient, dataSelect, namespace, name)
 	if err != nil {
 		errors.HandleInternalError(response, err)
 		return

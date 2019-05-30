@@ -157,80 +157,80 @@ limitations under the License.
 <kd-condition-list [conditions]="deployment?.conditions"
                    [initialized]="isInitialized"></kd-condition-list>
 
-<kd-card *ngIf="deployment?.newReplicaSet"
+<kd-card *ngIf="newReplicaSet"
          [initialized]="isInitialized">
   <div title>New Replica Set</div>
 
   <div description>
     <div class="kd-inline-property"
-         *ngIf="deployment?.newReplicaSet?.objectMeta.name">
+         *ngIf="newReplicaSet?.objectMeta.name">
       <span class="kd-muted-light">Name:&nbsp;</span>
-      <span>{{deployment.newReplicaSet.objectMeta.name}}</span>
+      <span>{{newReplicaSet.objectMeta.name}}</span>
     </div>
 
     <div class="kd-inline-property"
-         *ngIf="deployment?.newReplicaSet?.objectMeta.namespace">
+         *ngIf="newReplicaSet?.objectMeta.namespace">
       <span class="kd-muted-light">Namespace:&nbsp;</span>
-      <span>{{deployment.newReplicaSet.objectMeta.namespace}}</span>
+      <span>{{newReplicaSet.objectMeta.namespace}}</span>
     </div>
 
     <div class="kd-inline-property"
-         *ngIf="deployment?.newReplicaSet?.objectMeta.creationTimestamp">
+         *ngIf="newReplicaSet?.objectMeta.creationTimestamp">
       <span class="kd-muted-light">Age:&nbsp;</span>
-      <span>{{deployment.newReplicaSet.objectMeta.creationTimestamp | kdRelativeTime}}</span>
+      <span>{{newReplicaSet.objectMeta.creationTimestamp | kdRelativeTime}}</span>
     </div>
 
     <div class="kd-inline-property"
-         *ngIf="deployment?.newReplicaSet?.podInfo">
+         *ngIf="newReplicaSet?.podInfo">
       <span class="kd-muted-light">Pods:&nbsp;</span>
-      <span>{{deployment.newReplicaSet.podInfo.running}} / {{deployment.newReplicaSet.podInfo.desired}}</span>
+      <span>{{newReplicaSet.podInfo.running}} / {{newReplicaSet.podInfo.desired}}</span>
     </div>
   </div>
 
   <div content
        *ngIf="isInitialized"
        fxLayout="row wrap">
-    <kd-property *ngIf="deployment?.newReplicaSet?.objectMeta.name">
+    <kd-property *ngIf="newReplicaSet?.objectMeta.name">
       <div key>Name</div>
       <a value
          [routerLink]="getNewReplicaSetHref()"
-         queryParamsHandling="preserve">{{deployment.newReplicaSet.objectMeta.name}}</a>
+         queryParamsHandling="preserve">{{newReplicaSet.objectMeta.name}}</a>
     </kd-property>
 
-    <kd-property *ngIf="deployment?.newReplicaSet?.objectMeta.namespace">
+    <kd-property *ngIf="newReplicaSet?.objectMeta.namespace">
       <div key>Namespace</div>
-      <div value>{{deployment.newReplicaSet.objectMeta.namespace}}</div>
+      <div value>{{newReplicaSet.objectMeta.namespace}}</div>
     </kd-property>
 
-    <kd-property *ngIf="deployment?.newReplicaSet?.objectMeta.creationTimestamp">
+    <kd-property *ngIf="newReplicaSet?.objectMeta.creationTimestamp">
       <div key>Age</div>
-      <div value>{{deployment.newReplicaSet.objectMeta.creationTimestamp | kdRelativeTime}}</div>
+      <div value>{{newReplicaSet.objectMeta.creationTimestamp | kdRelativeTime}}</div>
     </kd-property>
 
-    <kd-property *ngIf="deployment?.newReplicaSet?.podInfo">
+    <kd-property *ngIf="newReplicaSet?.podInfo">
       <div key>Pods</div>
-      <div value>{{deployment.newReplicaSet.podInfo.running}} / {{deployment.newReplicaSet.podInfo.desired}}</div>
+      <div value>{{newReplicaSet.podInfo.running}} / {{newReplicaSet.podInfo.desired}}</div>
     </kd-property>
 
-    <kd-property *ngIf="deployment?.newReplicaSet?.objectMeta?.labels"
+    <kd-property *ngIf="newReplicaSet?.objectMeta?.labels"
                  fxFlex="100">
       <div key>Labels</div>
       <div value>
-        <kd-chips [map]="deployment.newReplicaSet.objectMeta.labels"></kd-chips>
+        <kd-chips [map]="newReplicaSet.objectMeta.labels"></kd-chips>
       </div>
     </kd-property>
 
-    <kd-property *ngIf="deployment?.newReplicaSet?.containerImages">
+    <kd-property *ngIf="newReplicaSet?.containerImages">
       <div key>Images</div>
       <div value>
-        <kd-chips [map]="deployment.newReplicaSet.containerImages"></kd-chips>
+        <kd-chips [map]="newReplicaSet.containerImages"></kd-chips>
       </div>
     </kd-property>
 
-    <kd-property *ngIf="deployment?.newReplicaSet?.initContainerImages">
+    <kd-property *ngIf="newReplicaSet?.initContainerImages">
       <div key>Init images</div>
       <div value>
-        <kd-chips [map]="deployment.newReplicaSet.initContainerImages"></kd-chips>
+        <kd-chips [map]="newReplicaSet.initContainerImages"></kd-chips>
       </div>
     </kd-property>
   </div>
