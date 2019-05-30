@@ -62,6 +62,7 @@ import (
 	settingsApi "github.com/kubernetes/dashboard/src/app/backend/settings/api"
 	"github.com/kubernetes/dashboard/src/app/backend/systembanner"
 	"github.com/kubernetes/dashboard/src/app/backend/validation"
+	apiextensionsclient "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 )
 
 const (
@@ -526,6 +527,11 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 		apiV1Ws.GET("/persistentvolumeclaim/{namespace}/{name}").
 			To(apiHandler.handleGetPersistentVolumeClaimDetail).
 			Writes(persistentvolumeclaim.PersistentVolumeClaimDetail{}))
+
+	apiV1Ws.Route(
+		apiV1Ws.GET("/customresourcedefinition").
+			To(apiHandler.handleGetCustomResourceDefinitionList).
+			Writes())
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/storageclass").
@@ -2042,6 +2048,19 @@ func (apiHandler *APIHandler) handleGetPodPersistentVolumeClaims(request *restfu
 		return
 	}
 	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetCustomResourceDefinitionList(request *restful.Request, response *restful.Response) {
+	cfg, err := apiHandler.cManager.Config(request)
+	if err != nil {
+		kdErrors.HandleInternalError(response, err)
+		return
+	}
+
+	apiextensionsclientset, err := apiextensionsclient.NewFromConfig(cfg)
+	if err != nil {
+		kdErrors.HandleInternalError(response, err)
+	}
 }
 
 func (apiHandler *APIHandler) handleLogSource(request *restful.Request, response *restful.Response) {
