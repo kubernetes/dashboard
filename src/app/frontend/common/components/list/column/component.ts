@@ -32,7 +32,8 @@ import { Resource } from 'typings/backendapi';
 export class ColumnComponent<T extends ActionColumn> implements OnChanges {
   @Input() component: Type<T>;
   @Input() resource: Resource;
-  @ViewChild('target', { read: ViewContainerRef }) target: ViewContainerRef;
+  @ViewChild('target', { read: ViewContainerRef, static: true })
+  target: ViewContainerRef;
   private componentRef_: ComponentRef<T> = undefined;
 
   constructor(private readonly resolver_: ComponentFactoryResolver) {}

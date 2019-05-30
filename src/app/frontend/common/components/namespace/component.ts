@@ -52,8 +52,9 @@ export class NamespaceSelectorComponent
   allNamespacesKey: string;
   selectedNamespace: string;
 
-  @ViewChild(MatSelect) private readonly select_: MatSelect;
-  @ViewChild('namespaceInput') private readonly namespaceInputEl_: ElementRef;
+  @ViewChild(MatSelect, { static: true }) private readonly select_: MatSelect;
+  @ViewChild('namespaceInput', { static: true })
+  private readonly namespaceInputEl_: ElementRef;
 
   constructor(
     private readonly state_: StateService,

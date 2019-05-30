@@ -27,7 +27,7 @@ import { overviewState } from '../../../overview/state';
   styleUrls: ['./style.scss'],
 })
 export class CreateFromFileComponent {
-  @ViewChild(NgForm) private readonly ngForm: NgForm;
+  @ViewChild(NgForm, { static: true }) private readonly ngForm: NgForm;
   file: KdFile;
 
   constructor(

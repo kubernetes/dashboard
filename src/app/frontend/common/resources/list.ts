@@ -78,9 +78,10 @@ export abstract class ResourceListBase<
   @Input() id: string;
 
   // Data select properties
-  @ViewChild(MatSort) private readonly matSort_: MatSort;
-  @ViewChild(MatPaginator) private readonly matPaginator_: MatPaginator;
-  @ViewChild(CardListFilterComponent)
+  @ViewChild(MatSort, { static: true }) private readonly matSort_: MatSort;
+  @ViewChild(MatPaginator, { static: true })
+  private readonly matPaginator_: MatPaginator;
+  @ViewChild(CardListFilterComponent, { static: true })
   private readonly cardFilter_: CardListFilterComponent;
 
   constructor(

@@ -7,6 +7,7 @@
   },
   "rules": {
     "ban-ts-ignore": false,
-    "interface-over-type-literal": false
+    "interface-over-type-literal": false,
+    "deprecation": false
   }
 }

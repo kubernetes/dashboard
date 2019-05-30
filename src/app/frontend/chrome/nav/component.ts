@@ -48,7 +48,7 @@ import { settingsState } from '../../settings/state';
   styleUrls: ['./style.scss'],
 })
 export class NavComponent implements AfterContentInit, OnInit {
-  @ViewChild(MatDrawer) private readonly nav_: MatDrawer;
+  @ViewChild(MatDrawer, { static: true }) private readonly nav_: MatDrawer;
   states = {
     cluster: clusterState.name,
     namespace: namespaceListState.name,
