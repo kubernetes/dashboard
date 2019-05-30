@@ -31,21 +31,21 @@ declare let SockJS: any;
 export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('anchor') anchorRef: ElementRef;
   term: Terminal;
-
-  namespace: string;
   podName: string;
-  connecting: boolean;
-  connectionClosed: boolean;
   selectedContainer: string;
   containers: string[];
 
-  private readonly subscriptions: Subscription[] = [];
-  private readonly keyEvent$ = new ReplaySubject<KeyboardEvent>(2);
-  private conn: WebSocket;
-  private readonly connSubject = new ReplaySubject<ShellFrame>(100);
-  private connected = false;
-  private debouncedFit: Function;
-  private readonly incommingMessage$ = new Subject<ShellFrame>();
+  private namespace_: string;
+  private connecting_: boolean;
+  private connectionClosed_: boolean;
+  private conn_: WebSocket;
+  private connected_ = false;
+  private debouncedFit_: Function;
+  private readonly endpoint_ = EndpointManager.resource(Resource.pod, true);
+  private readonly subscriptions_: Subscription[] = [];
+  private readonly keyEvent$_ = new ReplaySubject<KeyboardEvent>(2);
+  private readonly connSubject_ = new ReplaySubject<ShellFrame>(100);
+  private readonly incommingMessage$_ = new Subject<ShellFrame>();
 
   constructor(
       private readonly containers_: NamespacedResourceService<PodContainerList>,
@@ -61,12 +61,12 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.namespace = this.activatedRoute_.snapshot.params.resourceNamespace;
+    this.namespace_ = this.activatedRoute_.snapshot.params.resourceNamespace;
     this.podName = this.activatedRoute_.snapshot.params.resourceName;
     this.selectedContainer = this.activatedRoute_.snapshot.params.containerName;
 
     const containersEndpoint =
-        EndpointManager.resource(Resource.pod, true).child(this.podName, Resource.container);
+        this.endpoint_.child(this.podName, Resource.container, this.namespace_);
 
     this.containers_.get(containersEndpoint).subscribe((containerList) => {
       this.containers = containerList.containers;
@@ -87,37 +87,37 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
     });
 
     this.term.open(this.anchorRef.nativeElement);
-    this.debouncedFit = debounce(() => {
+    this.debouncedFit_ = debounce(() => {
       fit(this.term);
       this.cdr_.markForCheck();
     }, 100);
-    this.debouncedFit();
-    window.addEventListener('resize', () => this.debouncedFit());
+    this.debouncedFit_();
+    window.addEventListener('resize', () => this.debouncedFit_());
 
-    this.subscriptions.push(this.connSubject.subscribe(frame => {
+    this.subscriptions_.push(this.connSubject_.subscribe(frame => {
       this.handleConnectionMessage(frame);
     }));
 
     this.term.on('data', this.onTerminalSendString.bind(this));
     this.term.on('resize', this.onTerminalResize.bind(this));
     this.term.on('key', (_, event) => {
-      this.keyEvent$.next(event);
+      this.keyEvent$_.next(event);
     });
 
     this.cdr_.markForCheck();
   }
 
   ngOnDestroy(): void {
-    if (this.conn && this.connected) {
-      this.conn.close();
+    if (this.conn_ && this.connected_) {
+      this.conn_.close();
     }
 
-    if (this.connSubject) {
-      this.connSubject.complete();
+    if (this.connSubject_) {
+      this.connSubject_.complete();
     }
 
-    if (this.subscriptions.length > 0) {
-      for (const sub of this.subscriptions) {
+    if (this.subscriptions_.length > 0) {
+      for (const sub of this.subscriptions_) {
         sub.unsubscribe();
       }
     }
@@ -126,45 +126,42 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
       this.term.destroy();
     }
 
-    this.incommingMessage$.complete();
+    this.incommingMessage$_.complete();
   }
 
   private async setupConnection(): Promise<void> {
-    if (!(this.selectedContainer && this.podName && this.namespace && !this.connecting)) {
+    if (!(this.selectedContainer && this.podName && this.namespace_ && !this.connecting_)) {
       return;
     }
 
-    this.connecting = true;
-    this.connectionClosed = false;
+    this.connecting_ = true;
+    this.connectionClosed_ = false;
 
-    const terminalSessionUrl =
-        EndpointManager.resource(Resource.pod, true).child(this.podName, Resource.shell) + '/' +
-        this.selectedContainer;
-
+    const terminalSessionUrl = this.endpoint_.child(this.podName, Resource.shell, this.namespace_) +
+        '/' + this.selectedContainer;
     const {id} = await this.terminal_.get(terminalSessionUrl).toPromise();
 
-    this.conn = new SockJS(`api/sockjs?${id}`);
-    this.conn.onopen = this.onConnectionOpen.bind(this, id);
-    this.conn.onmessage = this.onConnectionMessage.bind(this);
-    this.conn.onclose = this.onConnectionClose.bind(this);
+    this.conn_ = new SockJS(`/api/sockjs?${id}`);
+    this.conn_.onopen = this.onConnectionOpen.bind(this, id);
+    this.conn_.onmessage = this.onConnectionMessage.bind(this);
+    this.conn_.onclose = this.onConnectionClose.bind(this);
 
     this.cdr_.markForCheck();
   }
 
   private onConnectionOpen(sessionId: string): void {
     const startData = {Op: 'bind', SessionID: sessionId};
-    this.conn.send(JSON.stringify(startData));
-    this.connSubject.next(startData);
-    this.connected = true;
-    this.connecting = false;
-    this.connectionClosed = false;
+    this.conn_.send(JSON.stringify(startData));
+    this.connSubject_.next(startData);
+    this.connected_ = true;
+    this.connecting_ = false;
+    this.connectionClosed_ = false;
 
     // Make sure the terminal is with correct display size.
     this.onTerminalResize();
 
     // Focus on connection
     this.term.focus();
-
     this.cdr_.markForCheck();
   }
 
@@ -177,38 +174,38 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
       this.matSnackBar_.open(frame.Data, null, {duration: 3000});
     }
 
-    this.incommingMessage$.next(frame);
+    this.incommingMessage$_.next(frame);
     this.cdr_.markForCheck();
   }
 
   private onConnectionMessage(evt: SJSMessageEvent): void {
     const msg = JSON.parse(evt.data);
-    this.connSubject.next(msg);
+    this.connSubject_.next(msg);
   }
 
   private onConnectionClose(_evt?: SJSCloseEvent): void {
-    if (!this.connected) {
+    if (!this.connected_) {
       return;
     }
-    this.conn.close();
-    this.connected = false;
-    this.connecting = false;
-    this.connectionClosed = true;
+    this.conn_.close();
+    this.connected_ = false;
+    this.connecting_ = false;
+    this.connectionClosed_ = true;
     this.matSnackBar_.open(_evt.reason, null, {duration: 3000});
 
     this.cdr_.markForCheck();
   }
 
   private onTerminalSendString(str: string): void {
-    if (this.connected) {
-      this.conn.send(
+    if (this.connected_) {
+      this.conn_.send(
           JSON.stringify({Op: 'stdin', Data: str, Cols: this.term.cols, Rows: this.term.rows}));
     }
   }
 
   private onTerminalResize(): void {
-    if (this.connected) {
-      this.conn.send(JSON.stringify({Op: 'resize', Cols: this.term.cols, Rows: this.term.rows}));
+    if (this.connected_) {
+      this.conn_.send(JSON.stringify({Op: 'resize', Cols: this.term.cols, Rows: this.term.rows}));
     }
   }
 }

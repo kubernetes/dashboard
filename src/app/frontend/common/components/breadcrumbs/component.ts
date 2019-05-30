@@ -18,6 +18,7 @@ import {Breadcrumb} from '@api/frontendapi';
 import {POD_DETAIL_ROUTE} from '../../../resource/workloads/pod/routing';
 
 export const LOGS_PARENT_PLACEHOLDER = '___LOGS_PARENT_PLACEHOLDER___';
+export const EXEC_PARENT_PLACEHOLDER = '___EXEC_PARENT_PLACEHOLDER___';
 
 @Component({
   selector: 'kd-breadcrumbs',
@@ -55,6 +56,8 @@ export class BreadcrumbsComponent implements OnInit {
         currentRoute.routeConfig.data.parent) {
       if (currentRoute.routeConfig.data.parent === LOGS_PARENT_PLACEHOLDER) {
         route = this._getLogsParent(currentRoute.snapshot.params);
+      } else if (currentRoute.routeConfig.data.parent === EXEC_PARENT_PLACEHOLDER) {
+        route = POD_DETAIL_ROUTE;
       } else {
         route = currentRoute.routeConfig.data.parent;
       }
@@ -82,11 +85,10 @@ export class BreadcrumbsComponent implements OnInit {
 
   private _getLogsParent(params: Params): Route|undefined {
     const resourceType = params['resourceType'];
-    switch (resourceType) {
-      case 'pod':
-        return POD_DETAIL_ROUTE;
-      default:
-        return undefined;
+    if (resourceType === 'pod') {
+      return POD_DETAIL_ROUTE;
+    } else {
+      return undefined;
     }
   }
 
