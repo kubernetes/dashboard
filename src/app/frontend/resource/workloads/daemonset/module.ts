@@ -12,19 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
 
-import {ComponentsModule} from '../../../common/components/module';
-import {SharedModule} from '../../../shared.module';
+import { ComponentsModule } from '../../../common/components/module';
+import { SharedModule } from '../../../shared.module';
 
-import {ActionbarComponent} from './detail/actionbar/component';
-import {DaemonSetDetailComponent} from './detail/component';
-import {DaemonSetListComponent} from './list/component';
-import {DaemonSetRoutingModule} from './routing';
+import { ActionbarComponent } from './detail/actionbar/component';
+import { DaemonSetDetailComponent } from './detail/component';
+import { DaemonSetListComponent } from './list/component';
+import { DaemonSetRoutingModule } from './routing';
 
 @NgModule({
   imports: [SharedModule, ComponentsModule, DaemonSetRoutingModule],
-  declarations: [DaemonSetListComponent, DaemonSetDetailComponent, ActionbarComponent],
+  declarations: [
+    DaemonSetListComponent,
+    DaemonSetDetailComponent,
+    ActionbarComponent,
+  ],
 })
-export class DaemonSetModule {
-}
+export class DaemonSetModule {}

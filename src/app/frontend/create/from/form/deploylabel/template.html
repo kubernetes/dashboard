@@ -26,6 +26,7 @@ limitations under the License.
                formControlName="key"
                (keyup)="check(i)"
                [readonly]="!label.get('editable').value"
+               i18n-placeholder
                placeholder="key">
         <mat-error *ngIf="label.get('key').errors?.unique"
                    i18n>
@@ -57,6 +58,7 @@ limitations under the License.
                formControlName="value"
                (keyup)="check(i)"
                [readonly]="!label.get('editable').value"
+               i18n-placeholder
                placeholder="value">
         <mat-hint align="end">{{label.get('value').value?.length}} / 253</mat-hint>
         <mat-error *ngIf="label.get('value').errors?.kdValidLabelValuePattern"

@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HttpClientModule} from '@angular/common/http';
-import {ErrorHandler, NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {RouterModule} from '@angular/router';
-import {ChromeModule} from './chrome/module';
-import {CoreModule} from './core.module';
-import {GlobalErrorHandler} from './error/handler';
-import {RootComponent} from './index.component';
-import {routes} from './index.routing';
+import { HttpClientModule } from '@angular/common/http';
+import { ErrorHandler, NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
+import { ChromeModule } from './chrome/module';
+import { CoreModule } from './core.module';
+import { GlobalErrorHandler } from './error/handler';
+import { RootComponent } from './index.component';
+import { routes } from './index.routing';
 
 @NgModule({
   imports: [
@@ -30,14 +30,10 @@ import {routes} from './index.routing';
     HttpClientModule,
     CoreModule,
     ChromeModule,
-    RouterModule.forRoot(
-        routes,
-        {enableTracing: false},
-        ),
+    RouterModule.forRoot(routes, { enableTracing: false }),
   ],
-  providers: [{provide: ErrorHandler, useClass: GlobalErrorHandler}],
+  providers: [{ provide: ErrorHandler, useClass: GlobalErrorHandler }],
   declarations: [RootComponent],
-  bootstrap: [RootComponent]
+  bootstrap: [RootComponent],
 })
-export class RootModule {
-}
+export class RootModule {}

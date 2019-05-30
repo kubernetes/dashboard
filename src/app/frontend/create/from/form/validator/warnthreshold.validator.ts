@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Directive, forwardRef, Input} from '@angular/core';
-import {AbstractControl, NG_VALIDATORS, Validator} from '@angular/forms';
+import { Directive, forwardRef, Input } from '@angular/core';
+import { AbstractControl, NG_VALIDATORS, Validator } from '@angular/forms';
 
 /**
  * Description:
@@ -37,8 +37,12 @@ import {AbstractControl, NG_VALIDATORS, Validator} from '@angular/forms';
 @Directive({
   selector: '[kdWarnThreshold]',
   providers: [
-    {provide: NG_VALIDATORS, useExisting: forwardRef(() => WarnThresholdValidator), multi: true}
-  ]
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => WarnThresholdValidator),
+      multi: true,
+    },
+  ],
 })
 export class WarnThresholdValidator implements Validator {
   @Input() kdWarnThreshold: number;
@@ -46,10 +50,10 @@ export class WarnThresholdValidator implements Validator {
 
   constructor() {}
 
-  validate(control: AbstractControl): {[key: string]: object} {
+  validate(control: AbstractControl): { [key: string]: object } {
     if (this.shouldSetWarning(control.value)) {
       this.hasWarning = true;
-      return {warnThreshold: {value: '333'}};
+      return { warnThreshold: { value: '333' } };
     }
 
     if (this.shouldRemoveWarning(control.value)) {

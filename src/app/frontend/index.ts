@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {enableProdMode} from '@angular/core';
-import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
+import { enableProdMode } from '@angular/core';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-import {environment} from './environments/environment';
-import {RootModule} from './index.module';
+import { environment } from './environments/environment';
+import { RootModule } from './index.module';
 
 if (environment.production) {
   enableProdMode();

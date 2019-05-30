@@ -21,7 +21,7 @@ limitations under the License.
 </h2>
 <mat-dialog-content class="kd-dialog-text">
   <ng-container *ngIf="!hasForbiddenError()">
-    <div>Size: {{loaded | kdMemory}} B</div>
+    <div i18n>Size: {{loaded | kdMemory}} B</div>
     <mat-progress-bar class="kd-download-progress-bar"
                       [mode]="getDownloadMode()"
                       value="100"></mat-progress-bar>
@@ -46,17 +46,20 @@ limitations under the License.
     <button mat-button
             color="primary"
             [disabled]="!finished"
-            (click)="save()">Save</button>
+            (click)="save()"
+            i18n>Save</button>
     <button mat-button
             color="primary"
-            (click)="abort()">Abort</button>
+            (click)="abort()"
+            i18n>Abort</button>
   </ng-container>
 
   <ng-container *ngIf="hasForbiddenError()">
     <div class="kd-download-error-button">
       <button mat-button
               color="primary"
-              (click)="abort()">Close</button>
+              (click)="abort()"
+              i18n>Close</button>
     </div>
   </ng-container>
 </mat-dialog-actions>

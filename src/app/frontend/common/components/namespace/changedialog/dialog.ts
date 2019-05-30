@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Inject} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'kd-namespace-change-dialog',
@@ -24,8 +24,10 @@ export class NamespaceChangeDialog {
   newNamespace: string;
 
   constructor(
-      public dialogRef: MatDialogRef<NamespaceChangeDialog>,
-      @Inject(MAT_DIALOG_DATA) public data: {namespace: string, newNamespace: string}) {
+    public dialogRef: MatDialogRef<NamespaceChangeDialog>,
+    @Inject(MAT_DIALOG_DATA)
+    public data: { namespace: string; newNamespace: string }
+  ) {
     this.namespace = data.namespace;
     this.newNamespace = data.newNamespace;
   }

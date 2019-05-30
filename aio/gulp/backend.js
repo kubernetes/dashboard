@@ -72,6 +72,8 @@ gulp.task('backend', gulp.series('package-backend', (doneFn) => {
         // record version info into src/version/version.go
         '-ldflags',
         conf.recordVersionExpression,
+        // for debugging backend
+        '-gcflags="all=-N -l"',
         '-o',
         path.join(conf.paths.serve, conf.backend.binaryName),
         conf.backend.mainPackageName,

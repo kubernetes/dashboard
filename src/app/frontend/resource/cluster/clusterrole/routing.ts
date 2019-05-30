@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {Route, RouterModule} from '@angular/router';
-import {DEFAULT_ACTIONBAR} from '../../../common/components/actionbars/routing';
+import { NgModule } from '@angular/core';
+import { Route, RouterModule } from '@angular/router';
+import { DEFAULT_ACTIONBAR } from '../../../common/components/actionbars/routing';
 
-import {CLUSTER_ROUTE} from '../routing';
+import { CLUSTER_ROUTE } from '../routing';
 
-import {ClusterRoleDetailComponent} from './detail/component';
-import {ClusterRoleListComponent} from './list/component';
+import { ClusterRoleDetailComponent } from './detail/component';
+import { ClusterRoleListComponent } from './list/component';
 
 const CLUSTERROLE_LIST_ROUTE: Route = {
   path: '',
@@ -40,9 +40,13 @@ const CLUSTERROLE_DETAIL_ROUTE: Route = {
 };
 
 @NgModule({
-  imports: [RouterModule.forChild(
-      [CLUSTERROLE_LIST_ROUTE, CLUSTERROLE_DETAIL_ROUTE, DEFAULT_ACTIONBAR])],
+  imports: [
+    RouterModule.forChild([
+      CLUSTERROLE_LIST_ROUTE,
+      CLUSTERROLE_DETAIL_ROUTE,
+      DEFAULT_ACTIONBAR,
+    ]),
+  ],
   exports: [RouterModule],
 })
-export class ClusterRoutingModule {
-}
+export class ClusterRoutingModule {}

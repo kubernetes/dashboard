@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {Route, RouterModule} from '@angular/router';
-import {DEFAULT_ACTIONBAR} from '../../../common/components/actionbars/routing';
+import { NgModule } from '@angular/core';
+import { Route, RouterModule } from '@angular/router';
+import { DEFAULT_ACTIONBAR } from '../../../common/components/actionbars/routing';
 
-import {CONFIG_ROUTE} from '../routing';
+import { CONFIG_ROUTE } from '../routing';
 
-import {ConfigMapDetailComponent} from './detail/component';
-import {ConfigMapListComponent} from './list/component';
+import { ConfigMapDetailComponent } from './detail/component';
+import { ConfigMapListComponent } from './list/component';
 
 const CONFIGMAP_LIST_ROUTE: Route = {
   path: '',
@@ -40,9 +40,13 @@ const CONFIGMAP_DETAIL_ROUTE: Route = {
 };
 
 @NgModule({
-  imports:
-      [RouterModule.forChild([CONFIGMAP_LIST_ROUTE, CONFIGMAP_DETAIL_ROUTE, DEFAULT_ACTIONBAR])],
+  imports: [
+    RouterModule.forChild([
+      CONFIGMAP_LIST_ROUTE,
+      CONFIGMAP_DETAIL_ROUTE,
+      DEFAULT_ACTIONBAR,
+    ]),
+  ],
   exports: [RouterModule],
 })
-export class ConfigMapRoutingModule {
-}
+export class ConfigMapRoutingModule {}

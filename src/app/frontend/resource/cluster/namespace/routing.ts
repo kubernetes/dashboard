@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {Route, RouterModule} from '@angular/router';
-import {DEFAULT_ACTIONBAR} from '../../../common/components/actionbars/routing';
+import { NgModule } from '@angular/core';
+import { Route, RouterModule } from '@angular/router';
+import { DEFAULT_ACTIONBAR } from '../../../common/components/actionbars/routing';
 
-import {CLUSTER_ROUTE} from '../routing';
+import { CLUSTER_ROUTE } from '../routing';
 
-import {NamespaceDetailComponent} from './detail/component';
-import {NamespaceListComponent} from './list/component';
+import { NamespaceDetailComponent } from './detail/component';
+import { NamespaceListComponent } from './list/component';
 
 const NAMESPACE_LIST_ROUTE: Route = {
   path: '',
@@ -40,9 +40,13 @@ const NAMESPACE_DETAIL_ROUTE: Route = {
 };
 
 @NgModule({
-  imports:
-      [RouterModule.forChild([NAMESPACE_LIST_ROUTE, NAMESPACE_DETAIL_ROUTE, DEFAULT_ACTIONBAR])],
+  imports: [
+    RouterModule.forChild([
+      NAMESPACE_LIST_ROUTE,
+      NAMESPACE_DETAIL_ROUTE,
+      DEFAULT_ACTIONBAR,
+    ]),
+  ],
   exports: [RouterModule],
 })
-export class NamespaceRoutingModule {
-}
+export class NamespaceRoutingModule {}

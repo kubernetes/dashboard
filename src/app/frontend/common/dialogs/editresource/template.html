@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<h2 mat-dialog-title>Edit a resource</h2>
+<h2 mat-dialog-title
+    i18n>Edit a resource</h2>
 <mat-dialog-content class="kd-dialog-text">
   <mat-button-toggle-group #group="matButtonToggleGroup">
     <mat-button-toggle [value]="modes.YAML"
@@ -29,7 +30,7 @@ limitations under the License.
        fxLayoutAlign=" center">
     <mat-icon>info</mat-icon>
     <div>
-      <span>This action is equivalent to:</span>
+      <span i18n>This action is equivalent to:</span>
       <code>kubectl apply -f &lt;spec.{{selectedMode}}&gt;</code>
     </div>
   </div>
@@ -37,8 +38,10 @@ limitations under the License.
 <mat-dialog-actions>
   <button mat-button
           color="primary"
-          [mat-dialog-close]="getJSON()">Update</button>
+          [mat-dialog-close]="getJSON()"
+          i18n>Update</button>
   <button mat-button
           color="primary"
-          [mat-dialog-close]="false">Cancel</button>
+          [mat-dialog-close]="false"
+          i18n>Cancel</button>
 </mat-dialog-actions>

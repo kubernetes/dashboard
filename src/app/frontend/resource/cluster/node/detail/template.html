@@ -18,36 +18,43 @@ limitations under the License.
                 [objectMeta]="node?.objectMeta"></kd-object-meta>
 
 <kd-card [initialized]="isInitialized">
-  <div title>Node information</div>
+  <div title
+       i18n>Node information</div>
   <div content
        *ngIf="isInitialized"
        fxLayout="row wrap">
     <kd-property *ngIf="node?.phase">
-      <div key>Phase</div>
+      <div key
+           i18n>Phase</div>
       <div value>{{node?.phase}}</div>
     </kd-property>
     <kd-property *ngIf="node?.podCIDR">
-      <div key>Pod CIDR</div>
+      <div key
+           i18n>Pod CIDR</div>
       <div value>{{node?.podCIDR}}</div>
     </kd-property>
     <kd-property *ngIf="node?.providerID">
-      <div key>Provider ID</div>
+      <div key
+           i18n>Provider ID</div>
       <div value>{{node?.providerID}}</div>
     </kd-property>
     <kd-property *ngIf="node?.unschedulable">
-      <div key>Unschedulable</div>
+      <div key
+           i18n>Unschedulable</div>
       <div value>{{node?.unschedulable}}</div>
     </kd-property>
     <kd-property *ngIf="node?.addresses"
                  fxFlex="100">
-      <div key>Addresses</div>
+      <div key
+           i18n>Addresses</div>
       <div value>
         <kd-chips [map]="getAddresses()"></kd-chips>
       </div>
     </kd-property>
     <kd-property *ngIf="node?.taints"
                  fxFlex="100">
-      <div key>Taints</div>
+      <div key
+           i18n>Taints</div>
       <div value>
         <kd-chips [map]="getTaints()"></kd-chips>
       </div>
@@ -56,55 +63,67 @@ limitations under the License.
 </kd-card>
 
 <kd-card [initialized]="isInitialized">
-  <div title>System information</div>
+  <div title
+       i18n>System information</div>
   <div content
        *ngIf="isInitialized"
        fxLayout="row wrap">
     <kd-property *ngIf="node?.nodeInfo.machineID">
-      <div key>Machine ID</div>
+      <div key
+           i18n>Machine ID</div>
       <div value>{{node?.nodeInfo.machineID}}</div>
     </kd-property>
     <kd-property *ngIf="node?.nodeInfo.systemUUID">
-      <div key>System UUID</div>
+      <div key
+           i18n>System UUID</div>
       <div value>{{node?.nodeInfo.systemUUID}}</div>
     </kd-property>
     <kd-property *ngIf="node?.nodeInfo.bootID">
-      <div key>Boot ID</div>
+      <div key
+           i18n>Boot ID</div>
       <div value>{{node?.nodeInfo.bootID}}</div>
     </kd-property>
     <kd-property *ngIf="node?.nodeInfo.kernelVersion">
-      <div key>Kernel version</div>
+      <div key
+           i18n>Kernel version</div>
       <div value>{{node?.nodeInfo.kernelVersion}}</div>
     </kd-property>
     <kd-property *ngIf="node?.nodeInfo.osImage">
-      <div key>OS Image</div>
+      <div key
+           i18n>OS Image</div>
       <div value>{{node?.nodeInfo.osImage}}</div>
     </kd-property>
     <kd-property *ngIf="node?.nodeInfo.containerRuntimeVersion">
-      <div key>Container runtime version</div>
+      <div key
+           i18n>Container runtime version</div>
       <div value>{{node?.nodeInfo.containerRuntimeVersion}}</div>
     </kd-property>
     <kd-property *ngIf="node?.nodeInfo.kubeletVersion">
-      <div key>kubelet version</div>
+      <div key
+           i18n>kubelet version</div>
       <div value>{{node?.nodeInfo.kubeletVersion}}</div>
     </kd-property>
     <kd-property *ngIf="node?.nodeInfo.kubeProxyVersion">
-      <div key>kube-proxy version</div>
+      <div key
+           i18n>kube-proxy version</div>
       <div value>{{node?.nodeInfo.kubeProxyVersion}}</div>
     </kd-property>
     <kd-property *ngIf="node?.nodeInfo.operatingSystem">
-      <div key>Operating system</div>
+      <div key
+           i18n>Operating system</div>
       <div value>{{node?.nodeInfo.operatingSystem}}</div>
     </kd-property>
     <kd-property *ngIf="node?.nodeInfo.architecture">
-      <div key>Architecture</div>
+      <div key
+           i18n>Architecture</div>
       <div value>{{node?.nodeInfo.architecture}}</div>
     </kd-property>
   </div>
 </kd-card>
 
 <kd-card [initialized]="isInitialized">
-  <div title>Allocation</div>
+  <div title
+       i18n>Allocation</div>
   <div content
        *ngIf="isInitialized">
     <div class="kd-allocated-resources">
@@ -115,24 +134,25 @@ limitations under the License.
                              id="cpu">
         </kd-allocation-chart>
         <div class="kd-graph-legend">
-          <div class="kd-graph-legend-title">CPU allocation (cores)</div>
+          <div class="kd-graph-legend-title"
+               i18n>CPU allocation (cores)</div>
           <div class="kd-graph-legend-entry">
             <mat-icon class="kd-chart-green">stop</mat-icon>
-            <span>Requests</span>
+            <span i18n>Requests</span>
             <span class="kd-graph-legend-value">
               {{node?.allocatedResources.cpuRequests | kdCores}}
             </span>
           </div>
           <div class="kd-graph-legend-entry">
             <mat-icon class="kd-chart-blue">stop</mat-icon>
-            <span>Limits</span>
+            <span i18n>Limits</span>
             <span class="kd-graph-legend-value">
               {{node?.allocatedResources.cpuLimits | kdCores}}
             </span>
           </div>
           <div class="kd-graph-legend-entry">
             <div class="kd-graph-legend-placeholder"></div>
-            <span>Capacity</span>
+            <span i18n>Capacity</span>
             <span class="kd-graph-legend-value">
               {{node?.allocatedResources.cpuCapacity | kdCores}}
             </span>
@@ -146,24 +166,25 @@ limitations under the License.
                              id="memory">
         </kd-allocation-chart>
         <div class="kd-graph-legend">
-          <div class="kd-graph-legend-title">Memory allocation (bytes)</div>
+          <div class="kd-graph-legend-title"
+               i18n>Memory allocation (bytes)</div>
           <div class="kd-graph-legend-entry">
             <mat-icon class="kd-chart-green">stop</mat-icon>
-            <span>Requests</span>
+            <span i18n>Requests</span>
             <span class="kd-graph-legend-value">
               {{node?.allocatedResources.memoryRequests | kdMemory}}
             </span>
           </div>
           <div class="kd-graph-legend-entry">
             <mat-icon class="kd-chart-blue">stop</mat-icon>
-            <span>Limits</span>
+            <span i18n>Limits</span>
             <span class="kd-graph-legend-value">
               {{node?.allocatedResources.memoryLimits | kdMemory}}
             </span>
           </div>
           <div class="kd-graph-legend-entry">
             <div class="kd-graph-legend-placeholder"></div>
-            <span>Capacity</span>
+            <span i18n>Capacity</span>
             <span class="kd-graph-legend-value">
               {{node?.allocatedResources.memoryCapacity | kdMemory}}
             </span>
@@ -176,15 +197,16 @@ limitations under the License.
                              id="pods">
         </kd-allocation-chart>
         <div class="kd-graph-legend">
-          <div class="kd-graph-legend-title">Pods allocation</div>
+          <div class="kd-graph-legend-title"
+               i18n>Pods allocation</div>
           <div class="kd-graph-legend-entry">
             <mat-icon class="kd-chart-green">stop</mat-icon>
-            <span>Allocation</span>
+            <span i18n>Allocation</span>
             <span class="kd-graph-legend-value">{{node?.allocatedResources.allocatedPods}}</span>
           </div>
           <div class="kd-graph-legend-entry">
             <div class="kd-graph-legend-placeholder"></div>
-            <span>Capacity</span>
+            <span i18n>Capacity</span>
             <span class="kd-graph-legend-value">{{node?.allocatedResources.podCapacity}}</span>
           </div>
         </div>

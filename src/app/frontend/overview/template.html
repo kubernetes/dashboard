@@ -16,7 +16,8 @@ limitations under the License.
 
 <div [hidden]="shouldShowZeroState()">
   <div class="kd-card-group-header kd-muted"
-       [hidden]="!hasWorkloads()">Workloads</div>
+       [hidden]="!hasWorkloads()"
+       i18n>Workloads</div>
 
   <div>
     <kd-workload-statuses *ngIf="showWorkloadStatuses()"
@@ -41,7 +42,8 @@ limitations under the License.
   </div>
 
   <div class="kd-card-group-header kd-muted"
-       [hidden]="!hasDiscovery()">Discovery and Load Balancing</div>
+       [hidden]="!hasDiscovery()"
+       i18n>Discovery and Load Balancing</div>
   <div>
     <kd-ingress-list (onchange)="onListUpdate($event)"
                      [hideable]="true"></kd-ingress-list>
@@ -50,7 +52,8 @@ limitations under the License.
   </div>
 
   <div class="kd-card-group-header kd-muted"
-       [hidden]="!hasConfig()">Config and Storage</div>
+       [hidden]="!hasConfig()"
+       i18n>Config and Storage</div>
   <div>
     <kd-config-map-list (onchange)="onListUpdate($event)"
                         [hideable]="true"></kd-config-map-list>

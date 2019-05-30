@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {Route, RouterModule} from '@angular/router';
-import {DEFAULT_ACTIONBAR} from '../../../common/components/actionbars/routing';
+import { NgModule } from '@angular/core';
+import { Route, RouterModule } from '@angular/router';
+import { DEFAULT_ACTIONBAR } from '../../../common/components/actionbars/routing';
 
-import {CLUSTER_ROUTE} from '../routing';
+import { CLUSTER_ROUTE } from '../routing';
 
-import {PersistentVolumeDetailComponent} from './detail/component';
-import {PersistentVolumeListComponent} from './list/component';
+import { PersistentVolumeDetailComponent } from './detail/component';
+import { PersistentVolumeListComponent } from './list/component';
 
 const PERSISTENTVOLUME_LIST_ROUTE: Route = {
   path: '',
@@ -40,9 +40,13 @@ const PERSISTENTVOLUME_DETAIL_ROUTE: Route = {
 };
 
 @NgModule({
-  imports: [RouterModule.forChild(
-      [PERSISTENTVOLUME_LIST_ROUTE, PERSISTENTVOLUME_DETAIL_ROUTE, DEFAULT_ACTIONBAR])],
+  imports: [
+    RouterModule.forChild([
+      PERSISTENTVOLUME_LIST_ROUTE,
+      PERSISTENTVOLUME_DETAIL_ROUTE,
+      DEFAULT_ACTIONBAR,
+    ]),
+  ],
   exports: [RouterModule],
 })
-export class PersistentVolumeRoutingModule {
-}
+export class PersistentVolumeRoutingModule {}

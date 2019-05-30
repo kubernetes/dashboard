@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {Route, RouterModule} from '@angular/router';
-import {DEFAULT_ACTIONBAR} from '../../../common/components/actionbars/routing';
+import { NgModule } from '@angular/core';
+import { Route, RouterModule } from '@angular/router';
+import { DEFAULT_ACTIONBAR } from '../../../common/components/actionbars/routing';
 
-import {CONFIG_ROUTE} from '../routing';
+import { CONFIG_ROUTE } from '../routing';
 
-import {PersistentVolumeClaimDetailComponent} from './detail/component';
-import {PersistentVolumeClaimListComponent} from './list/component';
+import { PersistentVolumeClaimDetailComponent } from './detail/component';
+import { PersistentVolumeClaimListComponent } from './list/component';
 
 const PERSISTENTVOLUMECLAIM_LIST_ROUTE: Route = {
   path: '',
@@ -40,9 +40,13 @@ const PERSISTENTVOLUMECLAIM_DETAIL_ROUTE: Route = {
 };
 
 @NgModule({
-  imports: [RouterModule.forChild(
-      [PERSISTENTVOLUMECLAIM_LIST_ROUTE, PERSISTENTVOLUMECLAIM_DETAIL_ROUTE, DEFAULT_ACTIONBAR])],
+  imports: [
+    RouterModule.forChild([
+      PERSISTENTVOLUMECLAIM_LIST_ROUTE,
+      PERSISTENTVOLUMECLAIM_DETAIL_ROUTE,
+      DEFAULT_ACTIONBAR,
+    ]),
+  ],
   exports: [RouterModule],
 })
-export class PersistentVolumeClaimRoutingModule {
-}
+export class PersistentVolumeClaimRoutingModule {}

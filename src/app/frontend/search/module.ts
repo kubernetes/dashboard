@@ -12,21 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
 
-import {ComponentsModule} from '../common/components/module';
-import {SharedModule} from '../shared.module';
+import { ComponentsModule } from '../common/components/module';
+import { SharedModule } from '../shared.module';
 
-import {SearchComponent} from './component';
+import { SearchComponent } from './component';
 
 @NgModule({
-  imports: [
-    SharedModule,
-    ComponentsModule,
-  ],
-  declarations: [
-    SearchComponent,
-  ],
+  imports: [SharedModule, ComponentsModule],
+  declarations: [SearchComponent],
 })
-export class SearchModule {
-}
+export class SearchModule {}

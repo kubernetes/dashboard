@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Input} from '@angular/core';
-import {Animations} from '../../animations/animations';
+import { Component, Input } from '@angular/core';
+import { Animations } from '../../animations/animations';
 
 @Component({
   selector: 'kd-card',
@@ -41,8 +41,8 @@ export class CardComponent {
     }
   }
 
-  getTitleClasses(): {[clsName: string]: boolean} {
-    const ngCls = {} as {[clsName: string]: boolean};
+  getTitleClasses(): { [clsName: string]: boolean } {
+    const ngCls = {} as { [clsName: string]: boolean };
     if (!this.expanded) {
       ngCls['kd-minimized-card-header'] = true;
     }

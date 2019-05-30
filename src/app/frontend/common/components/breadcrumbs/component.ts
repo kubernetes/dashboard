@@ -12,10 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, NavigationEnd, Params, Route, Router} from '@angular/router';
-import {Breadcrumb} from '@api/frontendapi';
-import {POD_DETAIL_ROUTE} from '../../../resource/workloads/pod/routing';
+import { Component, OnInit } from '@angular/core';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  Params,
+  Route,
+  Router,
+} from '@angular/router';
+import { Breadcrumb } from '@api/frontendapi';
+import { POD_DETAIL_ROUTE } from '../../../resource/workloads/pod/routing';
 
 export const LOGS_PARENT_PLACEHOLDER = '___LOGS_PARENT_PLACEHOLDER___';
 
@@ -27,32 +33,45 @@ export const LOGS_PARENT_PLACEHOLDER = '___LOGS_PARENT_PLACEHOLDER___';
 export class BreadcrumbsComponent implements OnInit {
   breadcrumbs: Breadcrumb[];
 
-  constructor(private readonly _router: Router, private readonly _activatedRoute: ActivatedRoute) {}
+  constructor(
+    private readonly _router: Router,
+    private readonly _activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this._registerNavigationHook();
   }
 
   private _registerNavigationHook(): void {
-    this._router.events.filter(event => event instanceof NavigationEnd)
-        .distinctUntilChanged()
-        .subscribe(() => {
-          this._initBreadcrumbs();
-        });
+    this._router.events
+      .filter(event => event instanceof NavigationEnd)
+      .distinctUntilChanged()
+      .subscribe(() => {
+        this._initBreadcrumbs();
+      });
   }
 
   private _initBreadcrumbs(): void {
     const currentRoute = this._getCurrentRoute();
     let url = '';
 
-    this.breadcrumbs = [{
-      label: this._getBreadcrumbLabel(currentRoute.routeConfig, currentRoute.snapshot.params),
-      stateLink: url,
-    }];
+    this.breadcrumbs = [
+      {
+        label: this._getBreadcrumbLabel(
+          currentRoute.routeConfig,
+          currentRoute.snapshot.params
+        ),
+        stateLink: url,
+      },
+    ];
 
     let route: Route;
-    if (currentRoute && currentRoute.routeConfig && currentRoute.routeConfig.data &&
-        currentRoute.routeConfig.data.parent) {
+    if (
+      currentRoute &&
+      currentRoute.routeConfig &&
+      currentRoute.routeConfig.data &&
+      currentRoute.routeConfig.data.parent
+    ) {
       if (currentRoute.routeConfig.data.parent === LOGS_PARENT_PLACEHOLDER) {
         route = this._getLogsParent(currentRoute.snapshot.params);
       } else {
@@ -60,7 +79,7 @@ export class BreadcrumbsComponent implements OnInit {
       }
 
       while (route) {
-        url = `/${route.path}/${url}`;  // TODO
+        url = `/${route.path}/${url}`; // TODO
 
         this.breadcrumbs.push({
           label: this._getBreadcrumbLabel(route, currentRoute.snapshot.params),
@@ -80,7 +99,7 @@ export class BreadcrumbsComponent implements OnInit {
     this.breadcrumbs.reverse();
   }
 
-  private _getLogsParent(params: Params): Route|undefined {
+  private _getLogsParent(params: Params): Route | undefined {
     const resourceType = params['resourceType'];
     switch (resourceType) {
       case 'pod':

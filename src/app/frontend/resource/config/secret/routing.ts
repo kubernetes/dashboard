@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {Route, RouterModule} from '@angular/router';
-import {DEFAULT_ACTIONBAR} from '../../../common/components/actionbars/routing';
+import { NgModule } from '@angular/core';
+import { Route, RouterModule } from '@angular/router';
+import { DEFAULT_ACTIONBAR } from '../../../common/components/actionbars/routing';
 
-import {CONFIG_ROUTE} from '../routing';
+import { CONFIG_ROUTE } from '../routing';
 
-import {SecretDetailComponent} from './detail/component';
-import {SecretListComponent} from './list/component';
+import { SecretDetailComponent } from './detail/component';
+import { SecretListComponent } from './list/component';
 
 const SECRET_LIST_ROUTE: Route = {
   path: '',
@@ -40,8 +40,13 @@ const SECRET_DETAIL_ROUTE: Route = {
 };
 
 @NgModule({
-  imports: [RouterModule.forChild([SECRET_LIST_ROUTE, SECRET_DETAIL_ROUTE, DEFAULT_ACTIONBAR])],
+  imports: [
+    RouterModule.forChild([
+      SECRET_LIST_ROUTE,
+      SECRET_DETAIL_ROUTE,
+      DEFAULT_ACTIONBAR,
+    ]),
+  ],
   exports: [RouterModule],
 })
-export class SecretRoutingModule {
-}
+export class SecretRoutingModule {}

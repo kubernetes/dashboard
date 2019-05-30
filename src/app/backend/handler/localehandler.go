@@ -23,6 +23,7 @@ import (
 	"strings"
 
 	"github.com/golang/glog"
+	"github.com/kubernetes/dashboard/src/app/backend/args"
 	"golang.org/x/text/language"
 )
 
@@ -42,7 +43,7 @@ type LocaleHandler struct {
 
 // CreateLocaleHandler loads the localization configuration and constructs a LocaleHandler.
 func CreateLocaleHandler() *LocaleHandler {
-	locales, err := getSupportedLocales("./locale_conf.json")
+	locales, err := getSupportedLocales(args.Holder.GetLocaleConfig())
 	if err != nil {
 		glog.Warningf("Error when loading the localization configuration. Dashboard will not be localized. %s", err)
 		locales = []language.Tag{}

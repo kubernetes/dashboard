@@ -12,13 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {GlobalSettings} from '@api/backendapi';
-import {onSettingsFailCallback, onSettingsLoadCallback} from '@api/frontendapi';
-import {Observable} from 'rxjs/Observable';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { GlobalSettings } from '@api/backendapi';
+import {
+  onSettingsFailCallback,
+  onSettingsLoadCallback,
+} from '@api/frontendapi';
+import { Observable } from 'rxjs/Observable';
 
-import {AuthorizerService} from './authorizer';
+import { AuthorizerService } from './authorizer';
 
 @Injectable()
 export class GlobalSettingsService {
@@ -30,8 +33,10 @@ export class GlobalSettingsService {
   };
   private isInitialized_ = false;
 
-  constructor(private readonly http_: HttpClient, private readonly authorizer_: AuthorizerService) {
-  }
+  constructor(
+    private readonly http_: HttpClient,
+    private readonly authorizer_: AuthorizerService
+  ) {}
 
   init(): void {
     this.load();
@@ -42,18 +47,20 @@ export class GlobalSettingsService {
   }
 
   load(onLoad?: onSettingsLoadCallback, onFail?: onSettingsFailCallback): void {
-    this.authorizer_.proxyGET<GlobalSettings>(this.endpoint_)
-        .toPromise()
-        .then(
-            (settings) => {
-              this.settings_ = settings;
-              this.isInitialized_ = true;
-              if (onLoad) onLoad(settings);
-            },
-            (err) => {
-              this.isInitialized_ = false;
-              if (onFail) onFail(err);
-            });
+    this.authorizer_
+      .proxyGET<GlobalSettings>(this.endpoint_)
+      .toPromise()
+      .then(
+        settings => {
+          this.settings_ = settings;
+          this.isInitialized_ = true;
+          if (onLoad) onLoad(settings);
+        },
+        err => {
+          this.isInitialized_ = false;
+          if (onFail) onFail(err);
+        }
+      );
   }
 
   save(settings: GlobalSettings): Observable<GlobalSettings> {
@@ -63,7 +70,11 @@ export class GlobalSettingsService {
         'Content-Type': 'application/json',
       }),
     };
-    return this.http_.put<GlobalSettings>(this.endpoint_, settings, httpOptions);
+    return this.http_.put<GlobalSettings>(
+      this.endpoint_,
+      settings,
+      httpOptions
+    );
   }
 
   getClusterName(): string {

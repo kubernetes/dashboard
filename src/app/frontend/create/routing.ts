@@ -12,22 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {Route, RouterModule} from '@angular/router';
+import { NgModule } from '@angular/core';
+import { Route, RouterModule } from '@angular/router';
 
-import {CreateComponent} from './component';
+import { CreateComponent } from './component';
 
 const CREATE_ROUTE: Route = {
   path: '',
   component: CreateComponent,
   data: {
     breadcrumb: 'Create',
-  }
+  },
 };
 
 @NgModule({
   imports: [RouterModule.forChild([CREATE_ROUTE])],
   exports: [RouterModule],
 })
-export class CreateRoutingModule {
-}
+export class CreateRoutingModule {}

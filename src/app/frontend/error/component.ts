@@ -12,27 +12,36 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {StateError} from '@api/frontendapi';
-import {map} from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { StateError } from '@api/frontendapi';
+import { map } from 'rxjs/operators';
 
-import {KdError} from '../common/errors/errors';
-import {NavService} from '../common/services/nav/service';
+import { KdError } from '../common/errors/errors';
+import { NavService } from '../common/services/nav/service';
 
-@Component({selector: 'kd-error', templateUrl: './template.html', styleUrls: ['./style.scss']})
+@Component({
+  selector: 'kd-error',
+  templateUrl: './template.html',
+  styleUrls: ['./style.scss'],
+})
 export class ErrorComponent implements OnInit {
   private error_: KdError;
-  constructor(private readonly nav_: NavService, private readonly route_: ActivatedRoute) {}
+  constructor(
+    private readonly nav_: NavService,
+    private readonly route_: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.nav_.setVisibility(false);
 
-    this.route_.paramMap.pipe(map(() => window.history.state)).subscribe((state: StateError) => {
-      if (state.error) {
-        this.error_ = state.error;
-      }
-    });
+    this.route_.paramMap
+      .pipe(map(() => window.history.state))
+      .subscribe((state: StateError) => {
+        if (state.error) {
+          this.error_ = state.error;
+        }
+      });
   }
 
   getErrorStatus(): string {
