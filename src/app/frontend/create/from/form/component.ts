@@ -14,10 +14,10 @@
 
 import {HttpClient} from '@angular/common/http';
 import {Component, OnInit} from '@angular/core';
-import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators,} from '@angular/forms';
 import {MatDialog} from '@angular/material';
 import {ActivatedRoute} from '@angular/router';
-import {AppDeploymentSpec, EnvironmentVariable, Namespace, NamespaceList, PortMapping, Protocols, SecretList} from '@api/backendapi';
+import {AppDeploymentSpec, EnvironmentVariable, Namespace, NamespaceList, PortMapping, Protocols, SecretList,} from '@api/backendapi';
 
 import {CreateService} from '../../../common/services/create/service';
 import {HistoryService} from '../../../common/services/global/history';
@@ -32,8 +32,11 @@ import {FormValidators} from './validator/validators';
 // Label keys for predefined labels
 const APP_LABEL_KEY = 'k8s-app';
 
-@Component(
-    {selector: 'kd-create-from-form', templateUrl: './template.html', styleUrls: ['./style.scss']})
+@Component({
+  selector: 'kd-create-from-form',
+  templateUrl: './template.html',
+  styleUrls: ['./style.scss'],
+})
 export class CreateFromFormComponent implements OnInit {
   readonly nameMaxLength = 24;
 
@@ -54,22 +57,40 @@ export class CreateFromFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb_.group({
-      name: ['', Validators.compose([Validators.required, FormValidators.namePattern])],
+      name: [
+        '',
+        Validators.compose([Validators.required, FormValidators.namePattern]),
+      ],
       containerImage: ['', Validators.required],
-      replicas: [1, Validators.compose([Validators.required, FormValidators.isInteger])],
+      replicas: [
+        1,
+        Validators.compose([Validators.required, FormValidators.isInteger]),
+      ],
       description: [''],
-      namespace: [this.route_.snapshot.params.namespace || '', Validators.required],
+      namespace: [
+        this.route_.snapshot.params.namespace || '',
+        Validators.required,
+      ],
       imagePullSecret: [''],
-      cpuRequirement: ['', Validators.compose([Validators.min(0), FormValidators.isInteger])],
-      memoryRequirement: ['', Validators.compose([Validators.min(0), FormValidators.isInteger])],
+      cpuRequirement: [
+        '',
+        Validators.compose([Validators.min(0), FormValidators.isInteger]),
+      ],
+      memoryRequirement: [
+        '',
+        Validators.compose([Validators.min(0), FormValidators.isInteger]),
+      ],
       containerCommand: [''],
       containerCommandArgs: [''],
       runAsPrivileged: [false],
       portMappings: this.fb_.control([]),
       variables: this.fb_.control([]),
-      labels: this.fb_.control([])
+      labels: this.fb_.control([]),
     });
-    this.labelArr = [new DeployLabel(APP_LABEL_KEY, '', false), new DeployLabel()];
+    this.labelArr = [
+      new DeployLabel(APP_LABEL_KEY, '', false),
+      new DeployLabel(),
+    ];
     this.name.valueChanges.subscribe(v => {
       this.labelArr[0].value = v;
       this.labels.patchValue([{index: 0, value: v}]);
@@ -87,7 +108,7 @@ export class CreateFromFormComponent implements OnInit {
               this.namespaces[0]);
     });
     this.http_.get('api/v1/appdeployment/protocols')
-        .subscribe((protocols: Protocols) => this.protocols = protocols.protocols);
+        .subscribe((protocols: Protocols) => (this.protocols = protocols.protocols));
   }
 
   get name(): AbstractControl {
@@ -269,7 +290,7 @@ export class CreateFromFormComponent implements OnInit {
       memoryRequirement:
           this.isNumber(this.memoryRequirement.value) ? `${this.memoryRequirement.value}Mi` : null,
       labels: this.toBackendApiLabels(labels),
-      runAsPrivileged: this.runAsPrivileged.value
+      runAsPrivileged: this.runAsPrivileged.value,
     };
     this.create_.deploy(spec);
   }

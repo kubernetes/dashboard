@@ -14,7 +14,7 @@
 
 import {HttpParams} from '@angular/common/http';
 import {Component, ComponentFactoryResolver, Input} from '@angular/core';
-import {Event, ReplicationController, ReplicationControllerList} from '@api/backendapi';
+import {Event, ReplicationController, ReplicationControllerList,} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
 
 import {ResourceListWithStatuses} from '../../../resources/list';
@@ -64,11 +64,11 @@ export class ReplicationControllerListComponent extends
   }
 
   isInPendingState(resource: ReplicationController): boolean {
-    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending > 0;
+    return (resource.podInfo.warnings.length === 0 && resource.podInfo.pending > 0);
   }
 
   isInSuccessState(resource: ReplicationController): boolean {
-    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending === 0;
+    return (resource.podInfo.warnings.length === 0 && resource.podInfo.pending === 0);
   }
 
   protected getDisplayColumns(): string[] {

@@ -63,11 +63,21 @@ export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
   }
 
   isInSuccessState(resource: Pod): boolean {
-    return resource.podStatus.status === 'Succeeded' || resource.podStatus.status === 'Running';
+    return (resource.podStatus.status === 'Succeeded' || resource.podStatus.status === 'Running');
   }
 
   protected getDisplayColumns(): string[] {
-    return ['statusicon', 'name', 'labels', 'node', 'status', 'restarts', 'cpu', 'mem', 'age'];
+    return [
+      'statusicon',
+      'name',
+      'labels',
+      'node',
+      'status',
+      'restarts',
+      'cpu',
+      'mem',
+      'age',
+    ];
   }
 
   private shouldShowNamespaceColumn_(): boolean {

@@ -13,9 +13,7 @@
 // limitations under the License.
 
 import {EventEmitter, Injectable} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
 import {CONFIG} from '../../../index.config';
-import {NAMESPACE_STATE_PARAM} from '../../params/params';
 
 @Injectable()
 export class NamespaceService {

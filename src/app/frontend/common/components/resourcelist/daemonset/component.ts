@@ -63,11 +63,11 @@ export class DaemonSetListComponent extends ResourceListWithStatuses<DaemonSetLi
   }
 
   isInPendingState(resource: DaemonSet): boolean {
-    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending > 0;
+    return (resource.podInfo.warnings.length === 0 && resource.podInfo.pending > 0);
   }
 
   isInSuccessState(resource: DaemonSet): boolean {
-    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending === 0;
+    return (resource.podInfo.warnings.length === 0 && resource.podInfo.pending === 0);
   }
 
   hasErrors(daemonSet: DaemonSet): boolean {

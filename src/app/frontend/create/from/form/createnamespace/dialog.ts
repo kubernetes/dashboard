@@ -14,9 +14,9 @@
 
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Component, Inject, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormGroup, Validators,} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
-import {AlertDialog, AlertDialogConfig} from '../../../../common/dialogs/alert/dialog';
+import {AlertDialog, AlertDialogConfig,} from '../../../../common/dialogs/alert/dialog';
 import {CsrfTokenService} from '../../../../common/services/global/csrftoken';
 import {CONFIG} from '../../../../index.config';
 
@@ -54,10 +54,12 @@ export class CreateNamespaceDialog implements OnInit {
   ngOnInit(): void {
     this.form = this.fb_.group({
       namespace: [
-        '', Validators.compose([
-          Validators.maxLength(this.namespaceMaxLength), Validators.pattern(this.namespacePattern)
-        ])
-      ]
+        '',
+        Validators.compose([
+          Validators.maxLength(this.namespaceMaxLength),
+          Validators.pattern(this.namespacePattern),
+        ]),
+      ],
     });
   }
 
@@ -76,9 +78,9 @@ export class CreateNamespaceDialog implements OnInit {
     const tokenPromise = this.csrfToken_.getTokenForAction('namespace');
     tokenPromise.subscribe(csrfToken => {
       return this.http_
-          .post<{valid: boolean}>(
-              'api/v1/namespace', {...namespaceSpec},
-              {headers: new HttpHeaders().set(this.config_.csrfHeaderName, csrfToken.token)})
+          .post<{valid: boolean}>('api/v1/namespace', {...namespaceSpec}, {
+            headers: new HttpHeaders().set(this.config_.csrfHeaderName, csrfToken.token),
+          })
           .subscribe(
               () => {
                 // this.log_.info('Successfully created namespace:', savedConfig);
@@ -90,7 +92,7 @@ export class CreateNamespaceDialog implements OnInit {
                 const configData: AlertDialogConfig = {
                   title: 'Error creating namespace',
                   message: error.data,
-                  confirmLabel: 'OK'
+                  confirmLabel: 'OK',
                 };
                 this.matDialog_.open(AlertDialog, {data: configData});
               });

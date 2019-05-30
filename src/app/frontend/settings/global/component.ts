@@ -65,11 +65,11 @@ export class GlobalSettingsComponent implements OnInit {
               this.load(form);
               this.title_.update();
             },
-            (err) => {
+            err => {
               if (err && err.data.indexOf(this.concurrentChangeErr_) !== -1) {
                 this.dialog_.open(SaveAnywayDialog, {width: '420px'})
                     .afterClosed()
-                    .subscribe((result) => {
+                    .subscribe(result => {
                       if (result === true) {
                         // Backend was refreshed with the PUT request, so the second try will be
                         // successful unless yet another concurrent change will happen. In that case

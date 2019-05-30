@@ -40,8 +40,13 @@ const DAEMONSET_DETAIL_ROUTE: Route = {
 };
 
 @NgModule({
-  imports:
-      [RouterModule.forChild([DAEMONSET_LIST_ROUTE, DAEMONSET_DETAIL_ROUTE, DEFAULT_ACTIONBAR])],
+  imports: [
+    RouterModule.forChild([
+      DAEMONSET_LIST_ROUTE,
+      DAEMONSET_DETAIL_ROUTE,
+      DEFAULT_ACTIONBAR,
+    ]),
+  ],
   exports: [RouterModule],
 })
 export class DaemonSetRoutingModule {

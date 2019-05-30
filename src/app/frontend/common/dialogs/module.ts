@@ -25,10 +25,7 @@ import {ScaleResourceDialog} from './scaleresource/dialog';
 import {TriggerResourceDialog} from './triggerresource/dialog';
 
 @NgModule({
-  imports: [
-    SharedModule,
-    ComponentsModule,
-  ],
+  imports: [SharedModule, ComponentsModule],
   declarations: [
     AlertDialog,
     EditResourceDialog,
@@ -52,7 +49,7 @@ import {TriggerResourceDialog} from './triggerresource/dialog';
     LogsDownloadDialog,
     ScaleResourceDialog,
     TriggerResourceDialog,
-  ]
+  ],
 })
 export class DialogsModule {
 }

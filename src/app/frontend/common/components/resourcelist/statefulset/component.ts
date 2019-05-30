@@ -63,11 +63,11 @@ export class StatefulSetListComponent extends
   }
 
   isInPendingState(resource: StatefulSet): boolean {
-    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending > 0;
+    return (resource.podInfo.warnings.length === 0 && resource.podInfo.pending > 0);
   }
 
   isInSuccessState(resource: StatefulSet): boolean {
-    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending === 0;
+    return (resource.podInfo.warnings.length === 0 && resource.podInfo.pending === 0);
   }
 
   getDisplayColumns(): string[] {

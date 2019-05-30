@@ -15,7 +15,7 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {GlobalSettings} from '@api/backendapi';
-import {onSettingsFailCallback, onSettingsLoadCallback} from '@api/frontendapi';
+import {onSettingsFailCallback, onSettingsLoadCallback,} from '@api/frontendapi';
 import {Observable} from 'rxjs/Observable';
 
 import {AuthorizerService} from './authorizer';
@@ -45,12 +45,12 @@ export class GlobalSettingsService {
     this.authorizer_.proxyGET<GlobalSettings>(this.endpoint_)
         .toPromise()
         .then(
-            (settings) => {
+            settings => {
               this.settings_ = settings;
               this.isInitialized_ = true;
               if (onLoad) onLoad(settings);
             },
-            (err) => {
+            err => {
               this.isInitialized_ = false;
               if (onFail) onFail(err);
             });

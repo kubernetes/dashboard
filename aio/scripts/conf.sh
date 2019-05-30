@@ -54,3 +54,30 @@ RESET_STYLE=`tput sgr0`
 
 function say { echo -e "${INFO_STYLE}${BOLD_STYLE}$@${RESET_STYLE}"; }
 function saye { echo -e "${ERROR_STYLE}${BOLD_STYLE}$@${RESET_STYLE}"; }
+
+function ensure-cache {
+  say "\nMaking sure that ${CACHE_DIR} directory exists"
+  mkdir -p ${CACHE_DIR}
+}
+
+function download-kind {
+  KIND_URL="https://github.com/kubernetes-sigs/kind/releases/download/${KIND_VERSION}/kind-${ARCH}-amd64"
+  say "\nDownloading kind ${KIND_URL} if it is not cached"
+  wget -nc -O ${KIND_BIN} ${KIND_URL}
+  chmod +x ${KIND_BIN}
+  ${KIND_BIN} version
+}
+
+function ensure-kubeconfig {
+  say "\nMaking sure that kubeconfig file exists and will be used by Dashboard"
+  mkdir -p ${HOME}/.kube
+  touch ${HOME}/.kube/config
+
+  # Let's back up the kubeconfig so we don't totally blow it away
+  # I learned from personal experience. It made me sad. :(
+  # ${HOME}/.kube/config is mounted in container for development,
+  # so we can not `mv` or `rm` it.
+  cp ${HOME}/.kube/config ${HOME}/.kube/config-unkind
+
+  cat $(${KIND_BIN} get kubeconfig-path --name="k8s-cluster-ci") > $HOME/.kube/config
+}

@@ -22,7 +22,7 @@ import {AuthService} from '../../common/services/global/authentication';
   styleUrls: ['./style.scss'],
   host: {
     '[class.kd-hidden]': 'this.isAuthEnabled() === false',
-  }
+  },
 })
 export class UserPanelComponent implements OnInit {
   loginStatus: LoginStatus;
@@ -38,12 +38,13 @@ export class UserPanelComponent implements OnInit {
   }
 
   isAuthSkipped(): boolean {
-    return this.loginStatus && !this.authService_.isLoginPageEnabled() &&
-        !this.loginStatus.headerPresent;
+    return (
+        this.loginStatus && !this.authService_.isLoginPageEnabled() &&
+        !this.loginStatus.headerPresent);
   }
 
   isLoggedIn(): boolean {
-    return this.loginStatus && !this.loginStatus.headerPresent && this.loginStatus.tokenPresent;
+    return (this.loginStatus && !this.loginStatus.headerPresent && this.loginStatus.tokenPresent);
   }
 
   isAuthEnabled(): boolean {

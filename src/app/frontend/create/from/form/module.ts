@@ -31,10 +31,18 @@ import {WarnThresholdValidator} from './validator/warnthreshold.validator';
 
 @NgModule({
   declarations: [
-    HelpSectionComponent, UserHelpComponent, CreateFromFormComponent, CreateNamespaceDialog,
-    CreateSecretDialog, EnvironmentVariablesComponent, UniqueNameValidator,
-    ValidImageReferenceValidator, PortMappingsComponent, ProtocolValidator, DeployLabelComponent,
-    WarnThresholdValidator
+    HelpSectionComponent,
+    UserHelpComponent,
+    CreateFromFormComponent,
+    CreateNamespaceDialog,
+    CreateSecretDialog,
+    EnvironmentVariablesComponent,
+    UniqueNameValidator,
+    ValidImageReferenceValidator,
+    PortMappingsComponent,
+    ProtocolValidator,
+    DeployLabelComponent,
+    WarnThresholdValidator,
   ],
   imports: [CommonModule, SharedModule, ComponentsModule],
   exports: [CreateFromFormComponent],

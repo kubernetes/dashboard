@@ -81,8 +81,16 @@ export class PersistentVolumeListComponent extends
 
   getDisplayColumns(): string[] {
     return [
-      'statusicon', 'name', 'capacity', 'accmodes', 'reclaimpol', 'status', 'claim', 'storagecl',
-      'reason', 'age'
+      'statusicon',
+      'name',
+      'capacity',
+      'accmodes',
+      'reclaimpol',
+      'status',
+      'claim',
+      'storagecl',
+      'reason',
+      'age',
     ];
   }
 }

@@ -22,7 +22,10 @@ import {ReplicationControllerRoutingModule} from './routing';
 
 @NgModule({
   imports: [SharedModule, ComponentsModule, ReplicationControllerRoutingModule],
-  declarations: [ReplicationControllerListComponent, ReplicationControllerDetailComponent],
+  declarations: [
+    ReplicationControllerListComponent,
+    ReplicationControllerDetailComponent,
+  ],
 })
 export class ReplicationControllerModule {
 }

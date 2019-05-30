@@ -19,7 +19,7 @@ import {ActivatedRoute} from '@angular/router';
 import {LogDetails, LogLine, LogSelection, LogSources} from '@api/backendapi';
 import {GlobalSettingsService} from 'common/services/global/globalsettings';
 import {LogService} from 'common/services/global/logs';
-import {NotificationSeverity, NotificationsService} from 'common/services/global/notifications';
+import {NotificationSeverity, NotificationsService,} from 'common/services/global/notifications';
 import {Observable, Subscription} from 'rxjs';
 
 import {LogsDownloadDialog} from '../common/dialogs/download/dialog';
@@ -38,14 +38,18 @@ const newestTimestamp = 'newest';
 const i18n = {
   MSG_LOGS_ZEROSTATE_TEXT: 'The selected container has not logged any messages yet.',
   MSG_LOGS_TRUNCATED_WARNING:
-      'The middle part of the log file cannot be loaded, because it is too big.'
+      'The middle part of the log file cannot be loaded, because it is too big.',
 };
 
 type ScrollPosition = 'TOP'|'BOTTOM';
 
-@Component({selector: 'kd-logs', templateUrl: './template.html', styleUrls: ['./style.scss']})
+@Component({
+  selector: 'kd-logs',
+  templateUrl: './template.html',
+  styleUrls: ['./style.scss'],
+})
 export class LogsComponent implements OnDestroy {
-  @ViewChild('logViewContainer') logViewContainer_: ElementRef;
+  @ViewChild('logViewContainer', {static: true}) logViewContainer_: ElementRef;
   podLogs: LogDetails;
   logsSet: string[];
   logSources: LogSources;
@@ -79,7 +83,7 @@ export class LogsComponent implements OnDestroy {
             .subscribe((data: LogSources) => {
               this.logSources = data;
               this.pod = data.podNames[0];  // Pick first pod (cannot use resource name as it may
-                                            // not be a pod).
+              // not be a pod).
               this.container = containerName ? containerName :
                                                data.containerNames[0];  // Pick from URL or first.
               this.appendContainerParam();
@@ -129,7 +133,7 @@ export class LogsComponent implements OnDestroy {
     if (logs.length === 0) {
       logs = [{timestamp: '0', content: i18n.MSG_LOGS_ZEROSTATE_TEXT}];
     }
-    return logs.map((line) => this.formatLine(line));
+    return logs.map(line => this.formatLine(line));
   }
 
   formatLine(line: LogLine): string {
@@ -277,7 +281,7 @@ export class LogsComponent implements OnDestroy {
    */
   isScrolledBottom(): boolean {
     const {nativeElement} = this.logViewContainer_;
-    return nativeElement.scrollHeight <= nativeElement.scrollTop + nativeElement.clientHeight;
+    return (nativeElement.scrollHeight <= nativeElement.scrollTop + nativeElement.clientHeight);
   }
 
   /**

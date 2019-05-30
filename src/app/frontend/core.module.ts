@@ -22,7 +22,7 @@ import {CONFIG, CONFIG_DI_TOKEN} from './index.config';
 
 @NgModule({
   providers: [{provide: CONFIG_DI_TOKEN, useValue: CONFIG}, CookieService],
-  imports: [GlobalServicesModule, DialogsModule, ResourceModule]
+  imports: [GlobalServicesModule, DialogsModule, ResourceModule],
 })
 export class CoreModule {
   /* make sure CoreModule is imported only by one NgModule the RootModule */

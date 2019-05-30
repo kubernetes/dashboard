@@ -23,7 +23,7 @@ import {NavService} from '../../common/services/nav/service';
   styleUrls: ['./style.scss'],
 })
 export class NavComponent implements OnInit {
-  @ViewChild(MatDrawer) private readonly nav_: MatDrawer;
+  @ViewChild(MatDrawer, {static: true}) private readonly nav_: MatDrawer;
 
   constructor(private readonly navService_: NavService) {}
 

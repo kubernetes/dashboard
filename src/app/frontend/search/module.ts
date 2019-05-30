@@ -20,13 +20,8 @@ import {SharedModule} from '../shared.module';
 import {SearchComponent} from './component';
 
 @NgModule({
-  imports: [
-    SharedModule,
-    ComponentsModule,
-  ],
-  declarations: [
-    SearchComponent,
-  ],
+  imports: [SharedModule, ComponentsModule],
+  declarations: [SearchComponent],
 })
 export class SearchModule {
 }

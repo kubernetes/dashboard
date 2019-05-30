@@ -18,14 +18,14 @@ import {KdError as KdApiError} from '@api/frontendapi';
 
 export enum ApiError {
   tokenExpired = 'MSG_TOKEN_EXPIRED_ERROR',
-  encryptionKeyChanged = 'MSG_ENCRYPTION_KEY_CHANGED'
+  encryptionKeyChanged = 'MSG_ENCRYPTION_KEY_CHANGED',
 }
 
 export enum ErrorStatus {
   unauthorized = 'Unauthorized',
   forbidden = 'Forbidden',
   internal = 'Internal error',
-  unknown = 'Unknown error'
+  unknown = 'Unknown error',
 }
 
 export enum ErrorCode {
@@ -49,7 +49,7 @@ export class K8SError implements K8SApiError {
   ErrStatus: ErrStatus;
 
   toKdError(): KdError {
-    return new KdError(this.ErrStatus.status, this.ErrStatus.code, this.ErrStatus.message)
+    return new KdError(this.ErrStatus.status, this.ErrStatus.code, this.ErrStatus.message);
   }
 }
 /* tslint:enable */

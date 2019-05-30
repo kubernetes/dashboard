@@ -15,7 +15,7 @@
 import {HttpParams} from '@angular/common/http';
 import {Component, Input} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {PersistentVolumeClaim, PersistentVolumeClaimList} from 'typings/backendapi';
+import {PersistentVolumeClaim, PersistentVolumeClaimList,} from 'typings/backendapi';
 
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
@@ -73,7 +73,15 @@ export class PersistentVolumeClaimListComponent extends
 
   getDisplayColumns(): string[] {
     return [
-      'statusicon', 'name', 'labels', 'status', 'volume', 'capacity', 'accmodes', 'storagecl', 'age'
+      'statusicon',
+      'name',
+      'labels',
+      'status',
+      'volume',
+      'capacity',
+      'accmodes',
+      'storagecl',
+      'age',
     ];
   }
 

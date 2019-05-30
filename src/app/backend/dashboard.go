@@ -73,6 +73,7 @@ var (
 	argAPILogLevel               = pflag.String("api-log-level", "INFO", "Level of API request logging. Should be one of 'INFO|NONE|DEBUG'. Default: 'INFO'.")
 	argDisableSettingsAuthorizer = pflag.Bool("disable-settings-authorizer", false, "When enabled, Dashboard settings page will not require user to be logged in and authorized to access settings page.")
 	argNamespace                 = pflag.String("namespace", getEnv("POD_NAMESPACE", "kube-system"), "When non-default namespace is used, create encryption key in the specified namespace. Default: 'kube-system'.")
+	localeConfig                 = pflag.String("locale-config", "./locale_conf.json", "File containing the configuration of locales")
 )
 
 func main() {
@@ -136,7 +137,7 @@ func main() {
 		certManager := cert.NewCertManager(certCreator, args.Holder.GetDefaultCertDir())
 		servingCert, err := certManager.GetCertificates()
 		if err != nil {
-			handleFatalInitError(err)
+			handleFatalInitServingCertError(err)
 		}
 		servingCerts = []tls.Certificate{servingCert}
 	} else if args.Holder.GetCertFile() != "" && args.Holder.GetKeyFile() != "" {
@@ -144,7 +145,7 @@ func main() {
 		keyFilePath := args.Holder.GetDefaultCertDir() + string(os.PathSeparator) + args.Holder.GetKeyFile()
 		servingCert, err := tls.LoadX509KeyPair(certFilePath, keyFilePath)
 		if err != nil {
-			handleFatalInitError(err)
+			handleFatalInitServingCertError(err)
 		}
 		servingCerts = []tls.Certificate{servingCert}
 	}
@@ -229,6 +230,7 @@ func initArgHolder() {
 	builder.SetDisableSettingsAuthorizer(*argDisableSettingsAuthorizer)
 	builder.SetEnableSkipLogin(*argEnableSkip)
 	builder.SetNamespace(*argNamespace)
+	builder.SetLocaleConfig(*localeConfig)
 }
 
 /**
@@ -242,6 +244,13 @@ func handleFatalInitError(err error) {
 		"--apiserver-host param points to a server that does not exist. Reason: %s\n"+
 		"Refer to our FAQ and wiki pages for more information: "+
 		"https://github.com/kubernetes/dashboard/wiki/FAQ", err)
+}
+
+/**
+ * Handles fatal init errors encountered during service cert loading.
+ */
+func handleFatalInitServingCertError(err error) {
+	log.Fatalf("Error while loading dashboard server certificates. Reason: %s", err)
 }
 
 /**

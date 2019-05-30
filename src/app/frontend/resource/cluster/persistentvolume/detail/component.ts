@@ -18,9 +18,9 @@ import {ActivatedRoute} from '@angular/router';
 import {CapacityItem, PersistentVolumeDetail} from '@api/backendapi';
 import {Subscription} from 'rxjs/Subscription';
 
-import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
+import {ActionbarService, ResourceMeta,} from '../../../../common/services/global/actionbar';
 import {NotificationsService} from '../../../../common/services/global/notifications';
-import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
+import {EndpointManager, Resource,} from '../../../../common/services/resource/endpoint';
 import {ResourceService} from '../../../../common/services/resource/resource';
 
 @Component({
@@ -66,7 +66,10 @@ export class PersistentVolumeDetailComponent implements OnInit, OnDestroy {
 
     if (this.isInitialized) {
       for (const rName of Array.from<string>(Object.keys(this.persistentVolume.capacity))) {
-        data.push({resourceName: rName, quantity: this.persistentVolume.capacity[rName]});
+        data.push({
+          resourceName: rName,
+          quantity: this.persistentVolume.capacity[rName],
+        });
       }
     }
 

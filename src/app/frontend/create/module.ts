@@ -26,9 +26,17 @@ import {CreateRoutingModule} from './routing';
 
 @NgModule({
   imports: [
-    SharedModule, ComponentsModule, CreateFromFormModule, CreateServiceModule, CreateRoutingModule
+    SharedModule,
+    ComponentsModule,
+    CreateFromFormModule,
+    CreateServiceModule,
+    CreateRoutingModule,
   ],
-  declarations: [CreateComponent, CreateFromInputComponent, CreateFromFileComponent],
+  declarations: [
+    CreateComponent,
+    CreateFromInputComponent,
+    CreateFromFileComponent,
+  ],
 })
 export class CreateModule {
 }

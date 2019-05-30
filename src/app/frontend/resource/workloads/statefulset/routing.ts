@@ -40,8 +40,13 @@ const REPLICASET_DETAIL_ROUTE: Route = {
 };
 
 @NgModule({
-  imports:
-      [RouterModule.forChild([REPLICASET_LIST_ROUTE, REPLICASET_DETAIL_ROUTE, DEFAULT_ACTIONBAR])],
+  imports: [
+    RouterModule.forChild([
+      REPLICASET_LIST_ROUTE,
+      REPLICASET_DETAIL_ROUTE,
+      DEFAULT_ACTIONBAR,
+    ]),
+  ],
   exports: [RouterModule],
 })
 export class StatefulSetRoutingModule {

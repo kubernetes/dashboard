@@ -18,8 +18,11 @@ import {CreateService} from '../../../common/services/create/service';
 import {HistoryService} from '../../../common/services/global/history';
 import {NamespaceService} from '../../../common/services/global/namespace';
 
-@Component(
-    {selector: 'kd-create-from-input', templateUrl: './template.html', styleUrls: ['./style.scss']})
+@Component({
+  selector: 'kd-create-from-input',
+  templateUrl: './template.html',
+  styleUrls: ['./style.scss'],
+})
 export class CreateFromInputComponent {
   inputData: string;
 
@@ -28,7 +31,7 @@ export class CreateFromInputComponent {
       private readonly history_: HistoryService) {}
 
   isCreateDisabled(): boolean {
-    return !this.inputData || this.inputData.length === 0 || this.create_.isDeployDisabled();
+    return (!this.inputData || this.inputData.length === 0 || this.create_.isDeployDisabled());
   }
 
   create(): void {

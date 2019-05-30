@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, NavigationEnd, Params, Route, Router} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Params, Route, Router,} from '@angular/router';
 import {Breadcrumb} from '@api/frontendapi';
 import {POD_DETAIL_ROUTE} from '../../../resource/workloads/pod/routing';
 
@@ -46,10 +46,12 @@ export class BreadcrumbsComponent implements OnInit {
     const currentRoute = this._getCurrentRoute();
     let url = '';
 
-    this.breadcrumbs = [{
-      label: this._getBreadcrumbLabel(currentRoute.routeConfig, currentRoute.snapshot.params),
-      stateLink: url,
-    }];
+    this.breadcrumbs = [
+      {
+        label: this._getBreadcrumbLabel(currentRoute.routeConfig, currentRoute.snapshot.params),
+        stateLink: url,
+      },
+    ];
 
     let route: Route;
     if (currentRoute && currentRoute.routeConfig && currentRoute.routeConfig.data &&

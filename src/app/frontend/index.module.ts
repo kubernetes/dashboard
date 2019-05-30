@@ -30,14 +30,11 @@ import {routes} from './index.routing';
     HttpClientModule,
     CoreModule,
     ChromeModule,
-    RouterModule.forRoot(
-        routes,
-        {enableTracing: false},
-        ),
+    RouterModule.forRoot(routes, {enableTracing: false}),
   ],
   providers: [{provide: ErrorHandler, useClass: GlobalErrorHandler}],
   declarations: [RootComponent],
-  bootstrap: [RootComponent]
+  bootstrap: [RootComponent],
 })
 export class RootModule {
 }

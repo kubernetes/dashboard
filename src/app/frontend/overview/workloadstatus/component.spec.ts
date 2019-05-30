@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {HttpClientTestingModule, HttpTestingController,} from '@angular/common/http/testing';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import {MatCardModule, MatDividerModule, MatIconModule, MatTooltipModule} from '@angular/material';
+import {MatCardModule, MatDividerModule, MatIconModule, MatTooltipModule,} from '@angular/material';
 import {By} from '@angular/platform-browser';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {AppConfig} from '@api/backendapi';
@@ -31,23 +31,33 @@ import {WorkloadStatusComponent} from './component';
 const testResourcesRatio: ResourcesRatio = {
   cronJobRatio: [],
   daemonSetRatio: [
-    {key: 'Running: 1', value: 100}, {key: 'Failed: 0', value: 0}, {key: 'Pending: 0', value: 0}
+    {key: 'Running: 1', value: 100},
+    {key: 'Failed: 0', value: 0},
+    {key: 'Pending: 0', value: 0},
   ],
   deploymentRatio: [
-    {key: 'Running: 1', value: 50}, {key: 'Failed: 1', value: 50}, {key: 'Pending: 0', value: 0}
+    {key: 'Running: 1', value: 50},
+    {key: 'Failed: 1', value: 50},
+    {key: 'Pending: 0', value: 0},
   ],
   jobRatio: [],
   podRatio: [
-    {key: 'Running: 10', value: 83.33333333333334}, {key: 'Failed: 2', value: 16.666666666666664},
-    {key: 'Pending: 0', value: 0}, {key: 'Succeeded: 0', value: 0}
+    {key: 'Running: 10', value: 83.33333333333334},
+    {key: 'Failed: 2', value: 16.666666666666664},
+    {key: 'Pending: 0', value: 0},
+    {key: 'Succeeded: 0', value: 0},
   ],
   replicaSetRatio: [
-    {key: 'Running: 1', value: 50}, {key: 'Failed: 1', value: 50}, {key: 'Pending: 0', value: 0}
+    {key: 'Running: 1', value: 50},
+    {key: 'Failed: 1', value: 50},
+    {key: 'Pending: 0', value: 0},
   ],
   replicationControllerRatio: [
-    {key: 'Running: 2', value: 100}, {key: 'Failed: 0', value: 0}, {key: 'Pending: 0', value: 0}
+    {key: 'Running: 2', value: 100},
+    {key: 'Failed: 0', value: 0},
+    {key: 'Pending: 0', value: 0},
   ],
-  statefulSetRatio: []
+  statefulSetRatio: [],
 };
 
 describe('WorkloadStatusComponent', () => {
@@ -58,13 +68,22 @@ describe('WorkloadStatusComponent', () => {
   beforeEach(async(() => {
     TestBed
         .configureTestingModule({
-          declarations: [CardComponent, AllocationChartComponent, WorkloadStatusComponent],
+          declarations: [
+            CardComponent,
+            AllocationChartComponent,
+            WorkloadStatusComponent,
+          ],
           imports: [
-            MatIconModule, MatCardModule, MatDividerModule, MatTooltipModule, NoopAnimationsModule,
-            HttpClientTestingModule, FlexLayoutModule
+            MatIconModule,
+            MatCardModule,
+            MatDividerModule,
+            MatTooltipModule,
+            NoopAnimationsModule,
+            HttpClientTestingModule,
+            FlexLayoutModule,
           ],
           providers: [ConfigService],
-          schemas: [CUSTOM_ELEMENTS_SCHEMA]
+          schemas: [CUSTOM_ELEMENTS_SCHEMA],
         })
         .compileComponents();
     httpMock = TestBed.get(HttpTestingController);

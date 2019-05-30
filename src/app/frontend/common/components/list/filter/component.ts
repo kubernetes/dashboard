@@ -15,7 +15,7 @@
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 
-import {Component, ElementRef, EventEmitter, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, OnInit, ViewChild,} from '@angular/core';
 import {Subject} from 'rxjs/Subject';
 
 @Component({
@@ -24,7 +24,7 @@ import {Subject} from 'rxjs/Subject';
   styleUrls: ['style.scss'],
 })
 export class CardListFilterComponent implements OnInit {
-  @ViewChild('filterInput') private readonly filterInput_: ElementRef;
+  @ViewChild('filterInput', {static: true}) private readonly filterInput_: ElementRef;
   private hidden_ = true;
   keyUpEvent = new Subject<string>();
   query = '';

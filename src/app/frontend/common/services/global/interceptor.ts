@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest,} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {CookieService} from 'ngx-cookie-service';
 import {Observable} from 'rxjs/Observable';
@@ -29,7 +29,9 @@ export class AuthInterceptor implements HttpInterceptor {
     // Filter requests made to our backend starting with 'api/v1' and append request header
     // with token stored in a cookie.
     if (req.url.startsWith('api/v1') && authCookie.length) {
-      const authReq = req.clone({headers: req.headers.set(CONFIG.authTokenHeaderName, authCookie)});
+      const authReq = req.clone({
+        headers: req.headers.set(CONFIG.authTokenHeaderName, authCookie),
+      });
 
       return next.handle(authReq);
     }

@@ -17,7 +17,11 @@ import {VersionInfo} from '@api/frontendapi';
 import {AssetsService} from '../common/services/global/assets';
 import {ConfigService} from '../common/services/global/config';
 
-@Component({selector: 'kd-about', templateUrl: './template.html', styleUrls: ['./style.scss']})
+@Component({
+  selector: 'kd-about',
+  templateUrl: './template.html',
+  styleUrls: ['./style.scss'],
+})
 export class AboutComponent {
   latestCopyrightYear: number;
   versionInfo: VersionInfo;

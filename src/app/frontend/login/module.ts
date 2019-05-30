@@ -20,10 +20,7 @@ import {LoginComponent} from './component';
 
 @NgModule({
   declarations: [LoginComponent],
-  imports: [
-    SharedModule,
-    ComponentsModule,
-  ],
+  imports: [SharedModule, ComponentsModule],
 })
 export class LoginModule {
 }

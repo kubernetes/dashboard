@@ -19,62 +19,102 @@ import {ErrorComponent} from '../error/component';
 import {ChromeComponent} from './component';
 
 const routes: Routes = [
-  {path: '', redirectTo: '/overview', pathMatch: 'full'}, {
+  {path: '', redirectTo: '/overview', pathMatch: 'full'},
+  {
     path: '',
     component: ChromeComponent,
     canActivate: [AuthGuard],
     children: [
       {path: 'error', component: ErrorComponent},
-      {path: 'cluster', loadChildren: 'resource/cluster/module#ClusterModule'},
-      {path: 'clusterrole', loadChildren: 'resource/cluster/clusterrole/module#ClusterRoleModule'},
-      {path: 'namespace', loadChildren: 'resource/cluster/namespace/module#NamespaceModule'},
+      {
+        path: 'cluster',
+        loadChildren: 'resource/cluster/module#ClusterModule',
+      },
+      {
+        path: 'clusterrole',
+        loadChildren: 'resource/cluster/clusterrole/module#ClusterRoleModule',
+      },
+      {
+        path: 'namespace',
+        loadChildren: 'resource/cluster/namespace/module#NamespaceModule',
+      },
       {path: 'node', loadChildren: 'resource/cluster/node/module#NodeModule'},
       {
         path: 'persistentvolume',
-        loadChildren: 'resource/cluster/persistentvolume/module#PersistentVolumeModule'
+        loadChildren: 'resource/cluster/persistentvolume/module#PersistentVolumeModule',
       },
       {
         path: 'storageclass',
-        loadChildren: 'resource/cluster/storageclass/module#StorageClassModule'
+        loadChildren: 'resource/cluster/storageclass/module#StorageClassModule',
       },
 
       {path: 'overview', loadChildren: 'overview/module#OverviewModule'},
-      {path: 'workloads', loadChildren: 'resource/workloads/module#WorkloadsModule'},
-      {path: 'cronjob', loadChildren: 'resource/workloads/cronjob/module#CronJobModule'},
-      {path: 'daemonset', loadChildren: 'resource/workloads/daemonset/module#DaemonSetModule'},
-      {path: 'deployment', loadChildren: 'resource/workloads/deployment/module#DeploymentModule'},
+      {
+        path: 'workloads',
+        loadChildren: 'resource/workloads/module#WorkloadsModule',
+      },
+      {
+        path: 'cronjob',
+        loadChildren: 'resource/workloads/cronjob/module#CronJobModule',
+      },
+      {
+        path: 'daemonset',
+        loadChildren: 'resource/workloads/daemonset/module#DaemonSetModule',
+      },
+      {
+        path: 'deployment',
+        loadChildren: 'resource/workloads/deployment/module#DeploymentModule',
+      },
       {path: 'job', loadChildren: 'resource/workloads/job/module#JobModule'},
       {path: 'pod', loadChildren: 'resource/workloads/pod/module#PodModule'},
-      {path: 'replicaset', loadChildren: 'resource/workloads/replicaset/module#ReplicaSetModule'},
+      {
+        path: 'replicaset',
+        loadChildren: 'resource/workloads/replicaset/module#ReplicaSetModule',
+      },
       {
         path: 'replicationcontroller',
-        loadChildren: 'resource/workloads/replicationcontroller/module#ReplicationControllerModule'
+        loadChildren: 'resource/workloads/replicationcontroller/module#ReplicationControllerModule',
       },
       {
         path: 'statefulset',
-        loadChildren: 'resource/workloads/statefulset/module#StatefulSetModule'
+        loadChildren: 'resource/workloads/statefulset/module#StatefulSetModule',
       },
 
       {path: 'config', loadChildren: 'resource/config/module#ConfigModule'},
-      {path: 'configmap', loadChildren: 'resource/config/configmap/module#ConfigMapModule'},
+      {
+        path: 'configmap',
+        loadChildren: 'resource/config/configmap/module#ConfigMapModule',
+      },
       {
         path: 'persistentvolumeclaim',
-        loadChildren: 'resource/config/persistentvolumeclaim/module#PersistentVolumeClaimModule'
+        loadChildren: 'resource/config/persistentvolumeclaim/module#PersistentVolumeClaimModule',
       },
-      {path: 'secret', loadChildren: 'resource/config/secret/module#SecretModule'},
+      {
+        path: 'secret',
+        loadChildren: 'resource/config/secret/module#SecretModule',
+      },
 
-      {path: 'discovery', loadChildren: 'resource/discovery/module#DiscoveryModule'},
-      {path: 'ingress', loadChildren: 'resource/discovery/ingress/module#IngressModule'},
-      {path: 'service', loadChildren: 'resource/discovery/service/module#ServiceModule'},
+      {
+        path: 'discovery',
+        loadChildren: 'resource/discovery/module#DiscoveryModule',
+      },
+      {
+        path: 'ingress',
+        loadChildren: 'resource/discovery/ingress/module#IngressModule',
+      },
+      {
+        path: 'service',
+        loadChildren: 'resource/discovery/service/module#ServiceModule',
+      },
 
       {path: 'settings', loadChildren: 'settings/module#SettingsModule'},
       {path: 'about', loadChildren: 'about/module#AboutModule'},
 
       {path: 'create', loadChildren: 'create/module#CreateModule'},
       {path: 'log', loadChildren: 'logs/module#LogsModule'},
-      {path: 'shell', loadChildren: 'shell/module#ShellModule'}
-    ]
-  }
+      {path: 'shell', loadChildren: 'shell/module#ShellModule'},
+    ],
+  },
 ];
 
 @NgModule({

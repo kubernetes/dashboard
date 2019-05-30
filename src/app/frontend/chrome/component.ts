@@ -38,7 +38,7 @@ export class ChromeComponent implements OnInit {
       private readonly router_: Router) {}
 
   ngOnInit(): void {
-    this.http_.get<SystemBanner>(ChromeComponent.systemBannerEndpoint).toPromise().then((sb) => {
+    this.http_.get<SystemBanner>(ChromeComponent.systemBannerEndpoint).toPromise().then(sb => {
       this.systemBanner_ = sb;
     });
   }

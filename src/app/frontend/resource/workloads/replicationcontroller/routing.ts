@@ -40,8 +40,13 @@ const REPLICATIONCONTROLLER_DETAIL_ROUTE: Route = {
 };
 
 @NgModule({
-  imports: [RouterModule.forChild(
-      [REPLICATIONCONTROLLER_LIST_ROUTE, REPLICATIONCONTROLLER_DETAIL_ROUTE, DEFAULT_ACTIONBAR])],
+  imports: [
+    RouterModule.forChild([
+      REPLICATIONCONTROLLER_LIST_ROUTE,
+      REPLICATIONCONTROLLER_DETAIL_ROUTE,
+      DEFAULT_ACTIONBAR,
+    ]),
+  ],
   exports: [RouterModule],
 })
 export class ReplicationControllerRoutingModule {

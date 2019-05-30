@@ -14,7 +14,7 @@
 
 import {HttpClient} from '@angular/common/http';
 import {Directive, forwardRef, Input} from '@angular/core';
-import {AbstractControl, AsyncValidator, AsyncValidatorFn, NG_ASYNC_VALIDATORS} from '@angular/forms';
+import {AbstractControl, AsyncValidator, AsyncValidatorFn, NG_ASYNC_VALIDATORS,} from '@angular/forms';
 import {Observable} from 'rxjs/Observable';
 import {debounceTime, map} from 'rxjs/operators';
 
@@ -26,11 +26,13 @@ export const uniqueNameValidationKey = 'uniqueName';
  */
 @Directive({
   selector: '[kdUniqueName]',
-  providers: [{
-    provide: NG_ASYNC_VALIDATORS,
-    useExisting: forwardRef(() => UniqueNameValidator),
-    multi: true
-  }]
+  providers: [
+    {
+      provide: NG_ASYNC_VALIDATORS,
+      useExisting: forwardRef(() => UniqueNameValidator),
+      multi: true,
+    },
+  ],
 })
 export class UniqueNameValidator implements AsyncValidator {
   @Input() namespace: string;
@@ -49,8 +51,10 @@ export function validateUniqueName(http: HttpClient, namespace: string): AsyncVa
       return Observable.of(null);
     } else {
       return http
-          .post<{valid: boolean}>(
-              'api/v1/appdeployment/validate/name', {name: control.value, namespace})
+          .post<{valid: boolean}>('api/v1/appdeployment/validate/name', {
+            name: control.value,
+            namespace,
+          })
           .pipe(
               debounceTime(500),
               map(res => !res.valid ? {[uniqueNameValidationKey]: control.value} : null));

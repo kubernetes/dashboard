@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {HttpClientTestingModule, HttpTestingController,} from '@angular/common/http/testing';
 import {Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement} from '@angular/core';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {MatCardModule, MatChipsModule, MatDialogModule, MatDividerModule, MatIconModule, MatTooltip, MatTooltipModule} from '@angular/material';
+import {MatCardModule, MatChipsModule, MatDialogModule, MatDividerModule, MatIconModule, MatTooltip, MatTooltipModule,} from '@angular/material';
 import {By} from '@angular/platform-browser';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
@@ -39,11 +39,11 @@ class MiniTestComponent {
     objectMeta: {
       name: miniName,
       namespace: 'my-namespace',
-      'labels': {},
-      creationTimestamp: '2018-05-18T22:27:42Z'
+      labels: {},
+      creationTimestamp: '2018-05-18T22:27:42Z',
     },
     typeMeta: {kind: 'Ingress'},
-    errors: []
+    errors: [],
   };
 }
 
@@ -54,16 +54,16 @@ class MaxiTestComponent {
     objectMeta: {
       name: maxiName,
       namespace: 'my-namespace',
-      'labels': {
+      labels: {
         'addonmanager.kubernetes.io/mode': 'Reconcile',
-        'app': 'kubernetes-dashboard',
+        app: 'kubernetes-dashboard',
         'pod-template-hash': '1054779233',
-        'version': 'v1.8.1'
+        version: 'v1.8.1',
       },
-      creationTimestamp: '2018-05-18T22:27:42Z'
+      creationTimestamp: '2018-05-18T22:27:42Z',
     },
     typeMeta: {kind: 'Ingress'},
-    errors: []
+    errors: [],
   };
 }
 
@@ -75,16 +75,29 @@ describe('IngressDetailComponent', () => {
     TestBed
         .configureTestingModule({
           declarations: [
-            ObjectMetaComponent, MaxiTestComponent, MiniTestComponent, CardComponent,
-            PropertyComponent, ChipsComponent, IngressDetailComponent
+            ObjectMetaComponent,
+            MaxiTestComponent,
+            MiniTestComponent,
+            CardComponent,
+            PropertyComponent,
+            ChipsComponent,
+            IngressDetailComponent,
           ],
           imports: [
-            MatIconModule, MatCardModule, MatDividerModule, MatTooltipModule, MatDialogModule,
-            MatChipsModule, NoopAnimationsModule, PipesModule, HttpClientTestingModule,
-            MatIconModule, RouterModule
+            MatIconModule,
+            MatCardModule,
+            MatDividerModule,
+            MatTooltipModule,
+            MatDialogModule,
+            MatChipsModule,
+            NoopAnimationsModule,
+            PipesModule,
+            HttpClientTestingModule,
+            MatIconModule,
+            RouterModule,
           ],
           providers: [ConfigService],
-          schemas: [CUSTOM_ELEMENTS_SCHEMA]
+          schemas: [CUSTOM_ELEMENTS_SCHEMA],
         })
         .compileComponents();
     httpMock = TestBed.get(HttpTestingController);

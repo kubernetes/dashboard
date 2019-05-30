@@ -40,8 +40,13 @@ const PERSISTENTVOLUME_DETAIL_ROUTE: Route = {
 };
 
 @NgModule({
-  imports: [RouterModule.forChild(
-      [PERSISTENTVOLUME_LIST_ROUTE, PERSISTENTVOLUME_DETAIL_ROUTE, DEFAULT_ACTIONBAR])],
+  imports: [
+    RouterModule.forChild([
+      PERSISTENTVOLUME_LIST_ROUTE,
+      PERSISTENTVOLUME_DETAIL_ROUTE,
+      DEFAULT_ACTIONBAR,
+    ]),
+  ],
   exports: [RouterModule],
 })
 export class PersistentVolumeRoutingModule {

@@ -22,12 +22,19 @@ import {VerberService} from '../../../../services/global/verber';
 import {Resource} from '../../../../services/resource/endpoint';
 
 const loggableResources: string[] = [
-  Resource.daemonSet, Resource.job, Resource.pod, Resource.replicaSet,
-  Resource.replicationController, Resource.statefulSet
+  Resource.daemonSet,
+  Resource.job,
+  Resource.pod,
+  Resource.replicaSet,
+  Resource.replicationController,
+  Resource.statefulSet,
 ];
 
 const scalableResources: string[] = [
-  Resource.deployment, Resource.replicaSet, Resource.replicationController, Resource.statefulSet
+  Resource.deployment,
+  Resource.replicaSet,
+  Resource.replicationController,
+  Resource.statefulSet,
 ];
 
 const executableResources: string[] = [Resource.pod];

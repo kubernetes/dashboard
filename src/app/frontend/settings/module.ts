@@ -33,9 +33,7 @@ import {SettingsRoutingModule} from './routing';
     SettingsEntryComponent,
     SaveAnywayDialog,
   ],
-  entryComponents: [
-    SaveAnywayDialog,
-  ],
+  entryComponents: [SaveAnywayDialog],
 })
 export class SettingsModule {
 }

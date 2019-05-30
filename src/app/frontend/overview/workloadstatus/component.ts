@@ -23,11 +23,14 @@ export const emptyResourcesRatio: ResourcesRatio = {
   podRatio: [],
   replicaSetRatio: [],
   replicationControllerRatio: [],
-  statefulSetRatio: []
+  statefulSetRatio: [],
 };
 
-@Component(
-    {selector: 'kd-workload-statuses', templateUrl: './template.html', styleUrls: ['./style.scss']})
+@Component({
+  selector: 'kd-workload-statuses',
+  templateUrl: './template.html',
+  styleUrls: ['./style.scss'],
+})
 export class WorkloadStatusComponent {
   @Input() resourcesRatio: ResourcesRatio;
   colors: string[] = ['#00c752', '#f00', '#ffad20', '#006028'];

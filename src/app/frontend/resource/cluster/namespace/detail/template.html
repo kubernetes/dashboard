@@ -18,12 +18,14 @@ limitations under the License.
                 [objectMeta]="namespace?.objectMeta"></kd-object-meta>
 
 <kd-card [initialized]="isInitialized">
-  <div title>Namespace information</div>
+  <div title
+       i18n>Namespace information</div>
   <div content
        *ngIf="isInitialized"
        fxLayout="row wrap">
     <kd-property *ngIf="namespace?.phase">
-      <div key>Status</div>
+      <div key
+           i18n>Status</div>
       <div value>{{namespace?.phase}}</div>
     </kd-property>
   </div>

@@ -17,7 +17,7 @@ import {ListGroupIdentifiers} from '../components/resourcelist/groupids';
 
 export class GroupedResourceList {
   private readonly items_: {[id: string]: number} = {};
-  private readonly groupItems_: {[groupId: string]: {[id: string]: number}} = {
+  private readonly groupItems_: {[groupId: string]: {[id: string]: number};} = {
     [ListGroupIdentifiers.cluster]: {},
     [ListGroupIdentifiers.workloads]: {},
     [ListGroupIdentifiers.discovery]: {},
@@ -27,14 +27,14 @@ export class GroupedResourceList {
   shouldShowZeroState(): boolean {
     let totalItems = 0;
     const ids = Object.keys(this.items_);
-    ids.forEach(id => totalItems += this.items_[id]);
+    ids.forEach(id => (totalItems += this.items_[id]));
     return totalItems === 0 && ids.length > 0;
   }
 
   isGroupVisible(groupId: string): boolean {
     let totalItems = 0;
     const ids = Object.keys(this.groupItems_[groupId]);
-    ids.forEach(id => totalItems += this.groupItems_[groupId][id]);
+    ids.forEach(id => (totalItems += this.groupItems_[groupId][id]));
     return totalItems > 0;
   }
 

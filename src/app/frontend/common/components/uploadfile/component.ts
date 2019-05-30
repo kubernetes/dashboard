@@ -55,7 +55,11 @@ export class UploadFileComponent {
   }
 
   private reportError(title: string, message: string): void {
-    const configData: AlertDialogConfig = {title, message, confirmLabel: 'OK'};
+    const configData: AlertDialogConfig = {
+      title,
+      message,
+      confirmLabel: 'OK',
+    };
     this.matDialog_.open(AlertDialog, {data: configData});
   }
 }

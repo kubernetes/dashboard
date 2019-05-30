@@ -21,9 +21,20 @@ import {SafeHtmlFormatter} from './safehtml';
 import {TrimPipe} from './trim';
 
 @NgModule({
-  declarations:
-      [MemoryFormatter, CoreFormatter, RelativeTimeFormatter, SafeHtmlFormatter, TrimPipe],
-  exports: [MemoryFormatter, CoreFormatter, RelativeTimeFormatter, SafeHtmlFormatter, TrimPipe],
+  declarations: [
+    MemoryFormatter,
+    CoreFormatter,
+    RelativeTimeFormatter,
+    SafeHtmlFormatter,
+    TrimPipe,
+  ],
+  exports: [
+    MemoryFormatter,
+    CoreFormatter,
+    RelativeTimeFormatter,
+    SafeHtmlFormatter,
+    TrimPipe,
+  ],
 })
 export class PipesModule {
 }

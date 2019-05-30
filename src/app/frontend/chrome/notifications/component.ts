@@ -15,7 +15,7 @@
 import {Component, ElementRef, HostListener, OnInit} from '@angular/core';
 
 import {Animations} from '../../common/animations/animations';
-import {Notification, NotificationsService} from '../../common/services/global/notifications';
+import {Notification, NotificationsService,} from '../../common/services/global/notifications';
 
 @Component({
   selector: 'kd-notifications',

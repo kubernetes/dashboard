@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Type} from '@angular/core';
-import {GlobalSettings, K8sError, ObjectMeta, ResourceList, TypeMeta} from '@api/backendapi';
+import {GlobalSettings, K8sError, ObjectMeta, ResourceList, TypeMeta,} from '@api/backendapi';
 
 export interface BreadcrumbConfig {
   label?: string;

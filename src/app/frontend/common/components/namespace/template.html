@@ -14,12 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div class="kd-namespace-select-title kd-muted">Namespace</div>
+<div class="kd-namespace-select-title kd-muted"
+     i18n>Namespace</div>
 <mat-form-field class="kd-namespace-select-input-container">
   <mat-select (openedChange)="onNamespaceToggle($event)"
               [(ngModel)]="selectedNamespace">
     <div [ngClass]="{'kd-namespace-select-input-border': namespaces.length > 0}">
       <input #namespaceInput
+             i18n-placeholder
              placeholder="Select namespace..."
              [(ngModel)]="selectNamespaceInput"
              name="selectNamespaceInput"
@@ -27,8 +29,10 @@ limitations under the License.
              (keydown)="$event.keyCode === 13 ? selectNamespace() : null">
     </div>
     <mat-option *ngIf="namespaces.length"
-                [value]="allNamespacesKey">All namespaces</mat-option>
+                [value]="allNamespacesKey"
+                i18n>All namespaces</mat-option>
     <mat-optgroup label="NAMESPACES"
+                  i18n-label
                   *ngIf="(namespaces | filterBy: selectNamespaceInput).length">
       <mat-option *ngFor="let namespace of namespaces | filterBy: selectNamespaceInput"
                   [value]="namespace">

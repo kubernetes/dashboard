@@ -16,7 +16,7 @@ import {Component, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs/Subscription';
 
 import {NAMESPACE_STATE_PARAM} from '../../../../../common/params/params';
-import {ActionbarService, ResourceMeta} from '../../../../../common/services/global/actionbar';
+import {ActionbarService, ResourceMeta,} from '../../../../../common/services/global/actionbar';
 
 @Component({
   selector: '',

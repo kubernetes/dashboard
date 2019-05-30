@@ -22,7 +22,7 @@ import {CookieService} from 'ngx-cookie-service';
 import {of} from 'rxjs';
 import {Observable} from 'rxjs/Observable';
 import {catchError, first, switchMap} from 'rxjs/operators';
-import {AuthResponse, CsrfToken, LoginSpec, LoginStatus} from 'typings/backendapi';
+import {AuthResponse, CsrfToken, LoginSpec, LoginStatus,} from 'typings/backendapi';
 
 import {CONFIG} from '../../../index.config';
 import {K8SError} from '../../errors/errors';
@@ -65,11 +65,11 @@ export class AuthService {
   /** Sends a login request to the backend with filled in login spec structure. */
   login(loginSpec: LoginSpec): Observable<K8SError[]> {
     return this.csrfTokenService_.getTokenForAction('login')
-        .pipe(switchMap<CsrfToken, AuthResponse|string>(
-            (csrfToken: CsrfToken) => this.http_.post<AuthResponse>(
-                'api/v1/login', loginSpec,
-                {headers: new HttpHeaders().set(this.config_.csrfHeaderName, csrfToken.token)})))
-        .pipe(switchMap<AuthResponse, K8SError[]>((authResponse: AuthResponse) => {
+        .pipe(switchMap(
+            (csrfToken: CsrfToken) => this.http_.post<AuthResponse>('api/v1/login', loginSpec, {
+              headers: new HttpHeaders().set(this.config_.csrfHeaderName, csrfToken.token),
+            })))
+        .pipe(switchMap((authResponse: AuthResponse) => {
           if (authResponse.jweToken.length !== 0 && authResponse.errors.length === 0) {
             this.setTokenCookie_(authResponse.jweToken);
           }
@@ -126,10 +126,10 @@ export class AuthService {
     if (token.length === 0) return;
 
     this.csrfTokenService_.getTokenForAction('token')
-        .pipe(switchMap<CsrfToken, AuthResponse>(csrfToken => {
-          return this.http_.post<AuthResponse>(
-              'api/v1/token/refresh', {jweToken: token},
-              {headers: new HttpHeaders().set(this.config_.csrfHeaderName, csrfToken.token)});
+        .pipe(switchMap(csrfToken => {
+          return this.http_.post<AuthResponse>('api/v1/token/refresh', {jweToken: token}, {
+            headers: new HttpHeaders().set(this.config_.csrfHeaderName, csrfToken.token),
+          });
         }))
         .pipe(first())
         .subscribe((authResponse: AuthResponse) => {

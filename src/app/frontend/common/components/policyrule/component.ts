@@ -41,7 +41,13 @@ export class PolicyRuleListComponent implements OnInit {
   }
 
   getRuleColumns(): string[] {
-    return ['resources', 'nonResourceURLs', 'resourceNames', 'verbs', 'apiGroups'];
+    return [
+      'resources',
+      'nonResourceURLs',
+      'resourceNames',
+      'verbs',
+      'apiGroups',
+    ];
   }
 
   getDataSource(): MatTableDataSource<PolicyRule> {

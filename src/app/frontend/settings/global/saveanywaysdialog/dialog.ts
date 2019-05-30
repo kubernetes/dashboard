@@ -15,7 +15,10 @@
 import {Component} from '@angular/core';
 import {MatDialogRef} from '@angular/material';
 
-@Component({selector: 'kd-settings-save-anyway-dialog', templateUrl: 'template.html'})
+@Component({
+  selector: 'kd-settings-save-anyway-dialog',
+  templateUrl: 'template.html',
+})
 export class SaveAnywayDialog {
   constructor(public dialogRef: MatDialogRef<SaveAnywayDialog>) {}
 

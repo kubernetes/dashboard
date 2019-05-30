@@ -14,7 +14,7 @@
 
 import {HttpClient} from '@angular/common/http';
 import {Directive, forwardRef, Input} from '@angular/core';
-import {AbstractControl, AsyncValidator, AsyncValidatorFn, NG_ASYNC_VALIDATORS} from '@angular/forms';
+import {AbstractControl, AsyncValidator, AsyncValidatorFn, NG_ASYNC_VALIDATORS,} from '@angular/forms';
 import {Observable} from 'rxjs/Observable';
 import {debounceTime, map} from 'rxjs/operators';
 
@@ -27,8 +27,12 @@ export const validProtocolValidationKey = 'validProtocol';
 @Directive({
   selector: '[kdValidProtocol]',
   providers: [
-    {provide: NG_ASYNC_VALIDATORS, useExisting: forwardRef(() => ProtocolValidator), multi: true}
-  ]
+    {
+      provide: NG_ASYNC_VALIDATORS,
+      useExisting: forwardRef(() => ProtocolValidator),
+      multi: true,
+    },
+  ],
 })
 export class ProtocolValidator implements AsyncValidator {
   @Input() isExternal: boolean;
@@ -37,7 +41,7 @@ export class ProtocolValidator implements AsyncValidator {
 
   validate(control: AbstractControl): Observable<{[key: string]: boolean}|null> {
     return validateProtocol(this.http, this.isExternal)(control) as
-        Observable<{[key: string]: boolean}|null>;
+        Observable<{[key: string]: boolean;}|null>;
   }
 }
 
@@ -48,7 +52,10 @@ export function validateProtocol(http: HttpClient, isExternal: boolean): AsyncVa
     } else {
       const protocol = control.value;
       return http
-          .post<{valid: boolean}>('api/v1/appdeployment/validate/protocol', {protocol, isExternal})
+          .post<{valid: boolean}>('api/v1/appdeployment/validate/protocol', {
+            protocol,
+            isExternal,
+          })
           .first()
           .pipe(debounceTime(500), map(res => {
                   return !res.valid ? {[validProtocolValidationKey]: true} : null;

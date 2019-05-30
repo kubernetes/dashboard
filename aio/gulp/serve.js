@@ -102,9 +102,15 @@ gulp.task('watch', () => {
  * backend process is killed beforehand, if any. The frontend pages are served by BrowserSync.
  */
 gulp.task('spawn-backend', gulp.series(gulp.parallel('backend', 'kill-backend', 'locales-for-backend:dev'), () => {
-  runningBackendProcess = child.spawn(
-    path.join(conf.paths.serve, conf.backend.binaryName), getBackendArgs(),
-    {stdio: 'inherit', cwd: conf.paths.serve});
+  if (process.env.K8S_DASHBOARD_DEBUG) {
+    runningBackendProcess = child.spawn(
+      "dlv", ["exec", "--headless", "--listen=0.0.0.0:2345", "--api-version=2", "--", path.join(conf.paths.serve, conf.backend.binaryName)].concat(getBackendArgs()),
+      {stdio: 'inherit', cwd: conf.paths.serve});
+  } else {
+    runningBackendProcess = child.spawn(
+      path.join(conf.paths.serve, conf.backend.binaryName), getBackendArgs(),
+      {stdio: 'inherit', cwd: conf.paths.serve});
+  }
 
   runningBackendProcess.on('exit', () => {
     // Mark that there is no backend process running anymore.

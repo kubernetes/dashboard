@@ -13,10 +13,10 @@
 // limitations under the License.
 
 import {Component} from '@angular/core';
-import {CronJobList, DaemonSetList, DeploymentList, JobList, PodList, ReplicaSetList, ReplicationControllerList, StatefulSetList} from '@api/backendapi';
+import {CronJobList, DaemonSetList, DeploymentList, JobList, PodList, ReplicaSetList, ReplicationControllerList, StatefulSetList,} from '@api/backendapi';
 import {OnListChangeEvent, ResourcesRatio} from '@api/frontendapi';
 
-import {ListGroupIdentifiers, ListIdentifiers} from '../common/components/resourcelist/groupids';
+import {ListGroupIdentifiers, ListIdentifiers,} from '../common/components/resourcelist/groupids';
 import {GroupedResourceList} from '../common/resources/groupedlist';
 
 import {Helper, ResourceRatioModes} from './helper';
@@ -97,7 +97,8 @@ export class OverviewComponent extends GroupedResourceList {
   }
 
   showWorkloadStatuses(): boolean {
-    return Object.values(this.resourcesRatio)
-               .reduce((sum, ratioItems) => sum + ratioItems.length, 0) !== 0;
+    return (
+        Object.values(this.resourcesRatio)
+            .reduce((sum, ratioItems) => sum + ratioItems.length, 0) !== 0);
   }
 }

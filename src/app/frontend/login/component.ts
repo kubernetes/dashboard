@@ -15,7 +15,7 @@
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Component, NgZone, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {AuthenticationMode, EnabledAuthenticationModes, LoginSkippableResponse, LoginSpec} from '@api/backendapi';
+import {AuthenticationMode, EnabledAuthenticationModes, LoginSkippableResponse, LoginSpec,} from '@api/backendapi';
 import {KdError, KdFile, StateError} from '@api/frontendapi';
 import {map} from 'rxjs/operators';
 
@@ -28,7 +28,11 @@ enum LoginModes {
   Token = 'token',
 }
 
-@Component({selector: 'kd-login', templateUrl: './template.html', styleUrls: ['./style.scss']})
+@Component({
+  selector: 'kd-login',
+  templateUrl: './template.html',
+  styleUrls: ['./style.scss'],
+})
 export class LoginComponent implements OnInit {
   loginModes = LoginModes;
   selectedAuthenticationMode = LoginModes.Kubeconfig;
@@ -79,7 +83,7 @@ export class LoginComponent implements OnInit {
         .subscribe(
             (errors: K8SError[]) => {
               if (errors.length > 0) {
-                this.errors = errors.map((error) => error.toKdError());
+                this.errors = errors.map(error => error.toKdError());
                 return;
               }
 
@@ -103,13 +107,13 @@ export class LoginComponent implements OnInit {
 
   onChange(event: Event&KdFile): void {
     switch (this.selectedAuthenticationMode) {
-      case (LoginModes.Kubeconfig):
+      case LoginModes.Kubeconfig:
         this.onFileLoad_(event as KdFile);
         break;
-      case (LoginModes.Token):
+      case LoginModes.Token:
         this.token_ = (event.target as HTMLInputElement).value;
         break;
-      case (LoginModes.Basic):
+      case LoginModes.Basic:
         if ((event.target as HTMLInputElement).id === 'username') {
           this.username_ = (event.target as HTMLInputElement).value;
         } else {
@@ -126,12 +130,15 @@ export class LoginComponent implements OnInit {
 
   private getLoginSpec_(): LoginSpec {
     switch (this.selectedAuthenticationMode) {
-      case (LoginModes.Kubeconfig):
+      case LoginModes.Kubeconfig:
         return {kubeConfig: this.kubeconfig_} as LoginSpec;
-      case (LoginModes.Token):
+      case LoginModes.Token:
         return {token: this.token_} as LoginSpec;
-      case (LoginModes.Basic):
-        return {username: this.username_, password: this.password_} as LoginSpec;
+      case LoginModes.Basic:
+        return {
+          username: this.username_,
+          password: this.password_,
+        } as LoginSpec;
       default:
         return {} as LoginSpec;
     }

@@ -23,10 +23,7 @@ import {ClusterRoutingModule} from './routing';
 
 @NgModule({
   imports: [SharedModule, ComponentsModule, ClusterRoutingModule],
-  declarations: [
-    ClusterRoleListComponent,
-    ClusterRoleDetailComponent,
-  ],
+  declarations: [ClusterRoleListComponent, ClusterRoleDetailComponent],
 })
 export class ClusterRoleModule {
 }

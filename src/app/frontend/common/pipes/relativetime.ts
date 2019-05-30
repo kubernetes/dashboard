@@ -70,7 +70,7 @@ export class RelativeTimeFormatter {
 
     // Current and given times in miliseconds.
     const currentTime = this.getCurrentTime_(serverTime);
-    const givenTime = (new Date(value)).getTime();
+    const givenTime = new Date(value).getTime();
 
     // Time differences between current time and given time in specific units.
     const diffInMilliseconds = currentTime - givenTime;
@@ -110,7 +110,7 @@ export class RelativeTimeFormatter {
    * current client time will be used.
    */
   private getCurrentTime_(serverTime: Date): number {
-    return serverTime ? serverTime.getTime() : (new Date()).getTime();
+    return serverTime ? serverTime.getTime() : new Date().getTime();
   }
 
   /**

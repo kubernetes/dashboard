@@ -88,7 +88,7 @@ export class ChipsComponent implements OnInit {
       data: {
         key,
         value,
-      }
+      },
     };
     this.dialog_.open(ChipDialog, dialogConfig);
   }

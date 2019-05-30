@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, ComponentFactoryResolver, ComponentRef, Input, OnChanges, Type, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, ComponentFactoryResolver, ComponentRef, Input, OnChanges, Type, ViewChild, ViewContainerRef,} from '@angular/core';
 import {ActionColumn} from '@api/frontendapi';
 import {Resource} from 'typings/backendapi';
 
@@ -23,7 +23,7 @@ import {Resource} from 'typings/backendapi';
 export class ColumnComponent<T extends ActionColumn> implements OnChanges {
   @Input() component: Type<T>;
   @Input() resource: Resource;
-  @ViewChild('target', {read: ViewContainerRef}) target: ViewContainerRef;
+  @ViewChild('target', {read: ViewContainerRef, static: true}) target: ViewContainerRef;
   private componentRef_: ComponentRef<T> = undefined;
 
   constructor(private readonly resolver_: ComponentFactoryResolver) {}

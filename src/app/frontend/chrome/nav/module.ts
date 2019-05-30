@@ -25,7 +25,7 @@ import {NavItemComponent} from './item/component';
 @NgModule({
   declarations: [NavComponent, NavItemComponent, HamburgerComponent],
   exports: [NavComponent, NavItemComponent, HamburgerComponent],
-  imports: [SharedModule, ComponentsModule, NavServiceModule]
+  imports: [SharedModule, ComponentsModule, NavServiceModule],
 })
 export class NavModule {
 }

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild,} from '@angular/core';
 import {MatDialog, MatSelect} from '@angular/material';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NamespaceList} from '@api/backendapi';
@@ -22,7 +22,7 @@ import {CONFIG} from '../../../index.config';
 
 import {NAMESPACE_STATE_PARAM} from '../../params/params';
 import {NamespaceService} from '../../services/global/namespace';
-import {NotificationSeverity, NotificationsService} from '../../services/global/notifications';
+import {NotificationSeverity, NotificationsService,} from '../../services/global/notifications';
 import {KdStateService} from '../../services/global/state';
 import {EndpointManager, Resource} from '../../services/resource/endpoint';
 import {ResourceService} from '../../services/resource/resource';
@@ -42,8 +42,8 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
   allNamespacesKey: string;
   selectedNamespace: string;
 
-  @ViewChild(MatSelect) private readonly select_: MatSelect;
-  @ViewChild('namespaceInput') private readonly namespaceInputEl_: ElementRef;
+  @ViewChild(MatSelect, {static: true}) private readonly select_: MatSelect;
+  @ViewChild('namespaceInput', {static: true}) private readonly namespaceInputEl_: ElementRef;
 
   constructor(
       private readonly router_: Router, private readonly namespaceService_: NamespaceService,
@@ -181,11 +181,14 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
     // }
 
     if (this.isOnDetailsView_()) {
-      this.router_.navigate(['overview'], {queryParams: {[NAMESPACE_STATE_PARAM]: namespace}});
+      this.router_.navigate(['overview'], {
+        queryParams: {[NAMESPACE_STATE_PARAM]: namespace},
+      });
     } else {
-      this.router_.navigate(
-          [this.getRawUrl(this.router_.url)],
-          {queryParams: {[NAMESPACE_STATE_PARAM]: namespace}, queryParamsHandling: 'merge'});
+      this.router_.navigate([this.getRawUrl(this.router_.url)], {
+        queryParams: {[NAMESPACE_STATE_PARAM]: namespace},
+        queryParamsHandling: 'merge',
+      });
     }
   }
 

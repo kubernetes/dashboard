@@ -14,10 +14,10 @@
 
 import {DataSource} from '@angular/cdk/collections';
 import {HttpParams} from '@angular/common/http';
-import {ComponentFactoryResolver, EventEmitter, Input, OnDestroy, OnInit, Output, QueryList, Type, ViewChild, ViewChildren, ViewContainerRef} from '@angular/core';
+import {ComponentFactoryResolver, EventEmitter, Input, OnDestroy, OnInit, Output, QueryList, Type, ViewChild, ViewChildren, ViewContainerRef,} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {Event as KdEvent, Resource, ResourceList} from '@api/backendapi';
-import {ActionColumn, ActionColumnDef, ColumnWhenCallback, ColumnWhenCondition, OnListChangeEvent} from '@api/frontendapi';
+import {ActionColumn, ActionColumnDef, ColumnWhenCallback, ColumnWhenCondition, OnListChangeEvent,} from '@api/frontendapi';
 import {Subject} from 'rxjs';
 import {Observable, ObservableInput} from 'rxjs/Observable';
 import {merge} from 'rxjs/observable/merge';
@@ -57,9 +57,10 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
   @Input() id: string;
 
   // Data select properties
-  @ViewChild(MatSort) private readonly matSort_: MatSort;
-  @ViewChild(MatPaginator) private readonly matPaginator_: MatPaginator;
-  @ViewChild(CardListFilterComponent) private readonly cardFilter_: CardListFilterComponent;
+  @ViewChild(MatSort, {static: true}) private readonly matSort_: MatSort;
+  @ViewChild(MatPaginator, {static: true}) private readonly matPaginator_: MatPaginator;
+  @ViewChild(CardListFilterComponent, {static: true})
+  private readonly cardFilter_: CardListFilterComponent;
 
   protected constructor(
       private readonly stateName_: string, private readonly notifications_: NotificationsService) {
@@ -142,7 +143,7 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
   }
 
   shouldShowColumn(dynamicColName: string): boolean {
-    const col = this.dynamicColumns_.find((condition) => {
+    const col = this.dynamicColumns_.find(condition => {
       return condition.col === dynamicColName;
     });
     if (col !== undefined) {
@@ -153,24 +154,31 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
   }
 
   protected registerActionColumn<C extends ActionColumn>(name: string, component: Type<C>): void {
-    this.actionColumns_.push({name: `action-${name}`, component} as ActionColumnDef<ActionColumn>);
+    this.actionColumns_.push({
+      name: `action-${name}`,
+      component,
+    } as ActionColumnDef<ActionColumn>);
   }
 
   protected registerDynamicColumn(col: string, afterCol: string, whenCallback: ColumnWhenCallback):
       void {
-    this.dynamicColumns_.push({col, afterCol, whenCallback} as ColumnWhenCondition);
+    this.dynamicColumns_.push({
+      col,
+      afterCol,
+      whenCallback,
+    } as ColumnWhenCondition);
   }
 
   private getObservableWithDataSelect_<E>(): Observable<E> {
     const obsInput = [this.matPaginator_.page] as Array<ObservableInput<E>>;
 
     if (this.matSort_) {
-      this.matSort_.sortChange.subscribe(() => this.matPaginator_.pageIndex = 0);
+      this.matSort_.sortChange.subscribe(() => (this.matPaginator_.pageIndex = 0));
       obsInput.push(this.matSort_.sortChange);
     }
 
     if (this.cardFilter_) {
-      this.cardFilter_.filterEvent.subscribe(() => this.matPaginator_.pageIndex = 0);
+      this.cardFilter_.filterEvent.subscribe(() => (this.matPaginator_.pageIndex = 0));
       obsInput.push(this.cardFilter_.filterEvent);
     }
 
@@ -288,7 +296,7 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
       groupId: this.groupId,
       items: this.totalItems,
       filtered: false,
-      resourceList: data
+      resourceList: data,
     };
 
     if (this.cardFilter_) {
@@ -322,10 +330,8 @@ export abstract class ResourceListWithStatuses<T extends ResourceList, R extends
   hoveredRow: number = undefined;
 
   protected constructor(
-      stateName: string,
-      private readonly notifications: NotificationsService,
-      private readonly resolver_?: ComponentFactoryResolver,
-  ) {
+      stateName: string, private readonly notifications: NotificationsService,
+      private readonly resolver_?: ComponentFactoryResolver) {
     super(stateName, notifications);
 
     this.onChange.subscribe(this.clearExpandedRows_.bind(this));
@@ -391,7 +397,7 @@ export abstract class ResourceListWithStatuses<T extends ResourceList, R extends
   }
 
   showHoverIcon(index: number, resource: R): boolean {
-    return this.isRowHovered(index) && this.hasErrors(resource) && !this.isRowExpanded(index);
+    return (this.isRowHovered(index) && this.hasErrors(resource) && !this.isRowExpanded(index));
   }
 
   protected getEvents(_resource: R): KdEvent[] {
@@ -454,11 +460,11 @@ class Icon {
   hash(): number {
     const value = `${this.name}#${this.cssClass}`;
     return value.split('')
-        .map((str) => {
+        .map(str => {
           return str.charCodeAt(0);
         })
         .reduce((prev, curr) => {
-          return ((prev << 5) + prev) + curr;
+          return (prev << 5) + prev + curr;
         }, 5381);
   }
 }
@@ -466,6 +472,5 @@ class Icon {
 type StatusCheckCallback<T> = (resource: T) => boolean;
 
 type StateBinding<T> = {
-  icon: Icon,
-  callbackFunction: StatusCheckCallback<T>
+  icon: Icon; callbackFunction: StatusCheckCallback<T>;
 };

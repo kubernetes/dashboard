@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Component, forwardRef, Input} from '@angular/core';
-import {AbstractControl, ControlValueAccessor, FormArray, FormBuilder, FormControl, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, Validators} from '@angular/forms';
+import {AbstractControl, ControlValueAccessor, FormArray, FormBuilder, FormControl, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, Validators,} from '@angular/forms';
 import {FormValidators} from '../validator/validators';
 import {DeployLabel} from './deploylabel';
 
@@ -35,8 +35,8 @@ interface DeployLabelI {
       provide: NG_VALIDATORS,
       useExisting: forwardRef(() => DeployLabelComponent),
       multi: true,
-    }
-  ]
+    },
+  ],
 })
 export class DeployLabelComponent implements ControlValueAccessor {
   @Input() labelArr: DeployLabel[];
@@ -69,16 +69,22 @@ export class DeployLabelComponent implements ControlValueAccessor {
   private addNewLabel(key = '', value = '', editable = true): void {
     this.labels.push(this.fb_.group({
       key: [
-        {value: key, disabled: !editable}, Validators.compose([
-          FormValidators.labelKeyNameLength, FormValidators.labelKeyNamePattern,
-          FormValidators.labelKeyPrefixLength, FormValidators.labelKeyPrefixPattern
-        ])
+        {value: key, disabled: !editable},
+        Validators.compose([
+          FormValidators.labelKeyNameLength,
+          FormValidators.labelKeyNamePattern,
+          FormValidators.labelKeyPrefixLength,
+          FormValidators.labelKeyPrefixPattern,
+        ]),
       ],
       value: [
         {value, disabled: !editable},
-        Validators.compose([Validators.maxLength(253), FormValidators.labelValuePattern])
+        Validators.compose([
+          Validators.maxLength(253),
+          FormValidators.labelValuePattern,
+        ]),
       ],
-      editable
+      editable,
     }));
   }
 
@@ -166,7 +172,7 @@ export class DeployLabelComponent implements ControlValueAccessor {
    * Returns true if label key and value are not empty, false otherwise.
    */
   private isFilled(label: AbstractControl): boolean {
-    return label.get('key').value.length !== 0 && label.get('value').value.length !== 0;
+    return (label.get('key').value.length !== 0 && label.get('value').value.length !== 0);
   }
 
   propagateChange = (_: {labels: DeployLabel[]}) => {};

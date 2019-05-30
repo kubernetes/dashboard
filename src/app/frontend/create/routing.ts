@@ -22,7 +22,7 @@ const CREATE_ROUTE: Route = {
   component: CreateComponent,
   data: {
     breadcrumb: 'Create',
-  }
+  },
 };
 
 @NgModule({

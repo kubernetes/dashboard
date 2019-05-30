@@ -28,10 +28,10 @@ export class ConfigService {
   constructor(private readonly http: HttpClient) {}
 
   init(): void {
-    this.getAppConfig().subscribe((config) => {
+    this.getAppConfig().subscribe(config => {
       // Set init time when response from the backend will arrive.
       this.config_ = config;
-      this.initTime_ = (new Date()).getTime();
+      this.initTime_ = new Date().getTime();
     });
   }
 
@@ -41,7 +41,7 @@ export class ConfigService {
 
   getServerTime(): Date {
     if (this.config_.serverTime) {
-      const elapsed = (new Date()).getTime() - this.initTime_;
+      const elapsed = new Date().getTime() - this.initTime_;
       return new Date(this.config_.serverTime + elapsed);
     } else {
       return new Date();

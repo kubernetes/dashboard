@@ -14,7 +14,7 @@
 
 import {HttpClient} from '@angular/common/http';
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
-import {MAT_DIALOG_DATA, MatButtonToggleGroup, MatDialogRef} from '@angular/material';
+import {MAT_DIALOG_DATA, MatButtonToggleGroup, MatDialogRef,} from '@angular/material';
 import {dump as toYaml, load as fromYaml} from 'js-yaml';
 
 import {RawResource} from '../../resources/rawresource';
@@ -32,7 +32,7 @@ enum EditorMode {
 export class EditResourceDialog implements OnInit {
   selectedMode = EditorMode.YAML;
 
-  @ViewChild('group') buttonToggleGroup: MatButtonToggleGroup;
+  @ViewChild('group', {static: true}) buttonToggleGroup: MatButtonToggleGroup;
   text = '';
   modes = EditorMode;
 
@@ -42,7 +42,7 @@ export class EditResourceDialog implements OnInit {
 
   ngOnInit(): void {
     const url = RawResource.getUrl(this.data.typeMeta, this.data.objectMeta);
-    this.http_.get(url).toPromise().then((response) => {
+    this.http_.get(url).toPromise().then(response => {
       this.text = toYaml(response);
     });
 

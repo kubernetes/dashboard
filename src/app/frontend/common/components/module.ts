@@ -39,6 +39,7 @@ import {CommaSeparatedListComponent} from './commaseparatedlist/component';
 import {ConditionListComponent} from './condition/component';
 import {ContainerCardComponent} from './container/component';
 import {CreatorCardComponent} from './creator/component';
+import {DateComponent} from './date/component';
 import {EndpointListComponent} from './endpoint/cardlist/component';
 import {ExternalEndpointComponent} from './endpoint/external/component';
 import {InternalEndpointComponent} from './endpoint/internal/component';
@@ -109,6 +110,7 @@ const components = [
   CreatorCardComponent,
 
   DaemonSetListComponent,
+  DateComponent,
   DeploymentListComponent,
   DefaultActionbar,
 
@@ -176,7 +178,7 @@ const components = [
     RowDetailComponent,
     MenuComponent,
     NamespaceChangeDialog,
-  ]
+  ],
 })
 export class ComponentsModule {
 }

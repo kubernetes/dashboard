@@ -42,7 +42,7 @@ function build::frontend {
                     --prod \
                     --i18nFile=${I18N_DIR}/messages.${language}.xlf \
                     --i18nFormat=xlf \
-                    --locale=${language} --outputPath=${TMP_DIR}/frontend/${language}
+                    --i18nLocale=${language} --outputPath=${TMP_DIR}/frontend/${language}
   done
 }
 

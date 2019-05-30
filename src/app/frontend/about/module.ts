@@ -22,11 +22,7 @@ import {AboutComponent} from './component';
 import {AboutRoutingModule} from './routing';
 
 @NgModule({
-  imports: [
-    SharedModule,
-    ComponentsModule,
-    AboutRoutingModule,
-  ],
+  imports: [SharedModule, ComponentsModule, AboutRoutingModule],
   declarations: [AboutComponent, ActionbarComponent],
 })
 export class AboutModule {

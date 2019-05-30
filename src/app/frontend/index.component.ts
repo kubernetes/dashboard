@@ -21,7 +21,7 @@ import {TitleService} from './common/services/global/title';
 
 enum Themes {
   Light = 'kd-light-theme',
-  Dark = 'kd-dark-theme'
+  Dark = 'kd-dark-theme',
 }
 
 @Component({selector: 'kd-root', template: '<router-outlet></router-outlet>'})

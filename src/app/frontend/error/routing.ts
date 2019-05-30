@@ -22,7 +22,7 @@ const ERROR_ROUTE: Route = {
   component: ErrorComponent,
   data: {
     breadcrumb: 'Error',
-  }
+  },
 };
 
 @NgModule({

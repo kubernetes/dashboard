@@ -14,7 +14,7 @@
 
 import {Component, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs/Subscription';
-import {ActionbarService, ResourceMeta} from '../../../services/global/actionbar';
+import {ActionbarService, ResourceMeta,} from '../../../services/global/actionbar';
 
 @Component({
   selector: '',

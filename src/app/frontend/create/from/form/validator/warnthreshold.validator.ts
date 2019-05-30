@@ -37,8 +37,12 @@ import {AbstractControl, NG_VALIDATORS, Validator} from '@angular/forms';
 @Directive({
   selector: '[kdWarnThreshold]',
   providers: [
-    {provide: NG_VALIDATORS, useExisting: forwardRef(() => WarnThresholdValidator), multi: true}
-  ]
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => WarnThresholdValidator),
+      multi: true,
+    },
+  ],
 })
 export class WarnThresholdValidator implements Validator {
   @Input() kdWarnThreshold: number;

@@ -21,11 +21,7 @@ import {OverviewRoutingModule} from './routing';
 import {WorkloadStatusComponent} from './workloadstatus/component';
 
 @NgModule({
-  imports: [
-    SharedModule,
-    ComponentsModule,
-    OverviewRoutingModule,
-  ],
+  imports: [SharedModule, ComponentsModule, OverviewRoutingModule],
   declarations: [OverviewComponent, WorkloadStatusComponent],
 })
 export class OverviewModule {

@@ -35,9 +35,23 @@ import {VerberService} from './verber';
 
 @NgModule({
   providers: [
-    AuthorizerService, AssetsService, LocalSettingsService, GlobalSettingsService, ConfigService,
-    TitleService, AuthService, CsrfTokenService, NotificationsService, ThemeService, KdStateService,
-    NamespaceService, ActionbarService, VerberService, HistoryService, LogService, {
+    AuthorizerService,
+    AssetsService,
+    LocalSettingsService,
+    GlobalSettingsService,
+    ConfigService,
+    TitleService,
+    AuthService,
+    CsrfTokenService,
+    NotificationsService,
+    ThemeService,
+    KdStateService,
+    NamespaceService,
+    ActionbarService,
+    VerberService,
+    HistoryService,
+    LogService,
+    {
       provide: APP_INITIALIZER,
       useFactory: init,
       deps: [GlobalSettingsService, LocalSettingsService, ConfigService],
@@ -47,7 +61,7 @@ import {VerberService} from './verber';
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true,
-    }
+    },
   ],
 })
 export class GlobalServicesModule {

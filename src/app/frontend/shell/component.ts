@@ -12,24 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild,} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
 import {ActivatedRoute} from '@angular/router';
-import {PodContainerList, ShellFrame, SJSCloseEvent, SJSMessageEvent, TerminalResponse} from '@api/backendapi';
+import {PodContainerList, ShellFrame, SJSCloseEvent, SJSMessageEvent, TerminalResponse,} from '@api/backendapi';
 import {debounce} from 'lodash';
 import {ReplaySubject, Subject, Subscription} from 'rxjs';
 import {Terminal} from 'xterm';
 import {fit} from 'xterm/lib/addons/fit/fit';
 
-import {EndpointManager, Resource} from '../common/services/resource/endpoint';
+import {EndpointManager, Resource,} from '../common/services/resource/endpoint';
 import {NamespacedResourceService} from '../common/services/resource/resource';
 
 // tslint:disable-next-line:no-any
 declare let SockJS: any;
 
-@Component({selector: 'kd-shell', templateUrl: './template.html', styleUrls: ['./styles.scss']})
+@Component({
+  selector: 'kd-shell',
+  templateUrl: './template.html',
+  styleUrls: ['./styles.scss'],
+})
 export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild('anchor') anchorRef: ElementRef;
+  @ViewChild('anchor', {static: true}) anchorRef: ElementRef;
   term: Terminal;
   podName: string;
   selectedContainer: string;
@@ -68,9 +72,9 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
     const containersEndpoint =
         this.endpoint_.child(this.podName, Resource.container, this.namespace_);
 
-    this.containers_.get(containersEndpoint).subscribe((containerList) => {
+    this.containers_.get(containersEndpoint).subscribe(containerList => {
       this.containers = containerList.containers;
-      if (this.containers.length > 0) {
+      if (this.containers.length > 0 && !this.selectedContainer) {
         this.selectedContainer = this.containers[0];
       }
 
@@ -83,7 +87,7 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
       fontSize: 14,
       fontFamily: 'Consolas, "Courier New", monospace',
       bellStyle: 'sound',
-      cursorBlink: true
+      cursorBlink: true,
     });
 
     this.term.open(this.anchorRef.nativeElement);
@@ -123,7 +127,7 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     if (this.term) {
-      this.term.destroy();
+      this.term.dispose();
     }
 
     this.incommingMessage$_.complete();
