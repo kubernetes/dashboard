@@ -57,59 +57,14 @@ limitations under the License.
       </mat-form-field>
       <div class="kd-logs-style-buttons">
         <button mat-icon-button
-                matTooltip="Invert colors"
-                (click)="onTextColorChange()">
-          <mat-icon [ngClass]="{'kd-logs-color-icon-invert': logService?.getInverted(), 'kd-logs-color-icon': !logService?.getInverted()}">format_color_text</mat-icon>
-        </button>
-        <button mat-icon-button
-                matTooltip="Toggle font size"
-                (click)="onFontSizeChange()">
-          <mat-icon [ngClass]="{'kd-logs-size-icon-compact': logService.getCompact(),
-          'kd-logs-size-icon': !logService.getCompact()}">text_fields</mat-icon>
-        </button>
-        <button mat-icon-button
-                matTooltip="Show timestamps"
-                (click)="onShowTimestamp()">
-          <mat-icon>{{logService.getShowTimestamp() ? 'timer' : 'timer_off'}}</mat-icon>
-        </button>
-        <button mat-icon-button
-                matTooltip="Toggle auto-refresh (every {{refreshInterval / 1000}} seconds)"
-                (click)="toggleLogAutoRefresh()">
-          <mat-icon>
-            refresh
-            <svg class="kd-cross-style"
-                 *ngIf="!logService.getAutoRefresh()"
-                 width="32px"
-                 height="32px"
-                 viewBox="0 0 32 32">
-              <line class="kd-cross-line-white"
-                    x1="9"
-                    x2="27"
-                    y1="9"
-                    y2="27" />
-              <line class="kd-cross-line-black"
-                    x1="9"
-                    x2="27"
-                    y1="10"
-                    y2="28" />
-            </svg>
-          </mat-icon>
-        </button>
-        <button mat-icon-button
-                [matTooltip]="logService.getFollowing() ? 'Following logs' : 'Follow logs'"
-                (click)="toggleLogFollow()">
-          <mat-icon>{{logService.getFollowing() ? 'flash_on' : 'flash_off'}}</mat-icon>
-        </button>
-        <button mat-icon-button
-                matTooltip="{{logService?.getPrevious() ? 'Show current logs' : 'Show previous logs'}}"
-                (click)="onPreviousChange()">
-          <mat-icon>{{logService?.getPrevious() ? 'exposure_neg_1' : 'exposure_zero'}}</mat-icon>
-        </button>
-        <button mat-icon-button
                 i18n-matTooltip
                 matTooltip="Download logs"
                 (click)="downloadLog()">
           <mat-icon>file_download</mat-icon>
+        </button>
+        <button mat-icon-button
+                [matMenuTriggerFor]="kdMenu">
+          <mat-icon>more_vert</mat-icon>
         </button>
       </div>
     </div>
@@ -163,3 +118,36 @@ limitations under the License.
     </div>
   </kd-card>
 </div>
+
+<mat-menu #kdMenu="matMenu">
+  <button mat-menu-item
+          (click)="onTextColorChange()">
+    <mat-icon>{{logService?.getInverted() ? 'check_box' : 'check_box_outline_blank'}}</mat-icon>
+    <span i18n>Invert colors</span>
+  </button>
+  <button mat-menu-item
+          (click)="onFontSizeChange()">
+    <mat-icon>{{logService.getCompact() ? 'check_box' : 'check_box_outline_blank'}}</mat-icon>
+    <span i18n>Reduce font size</span>
+  </button>
+  <button mat-menu-item
+          (click)="onShowTimestamp()">
+    <mat-icon>{{logService.getShowTimestamp() ? 'check_box' : 'check_box_outline_blank'}}</mat-icon>
+    <span i18n>Show timestamps</span>
+  </button>
+  <button mat-menu-item
+          (click)="toggleLogAutoRefresh()">
+    <mat-icon>{{logService.getAutoRefresh() ? 'check_box' : 'check_box_outline_blank'}}</mat-icon>
+    <span i18n>Auto-refresh (every {{refreshInterval / 1000}} s.)</span>
+  </button>
+  <button mat-menu-item
+          (click)="toggleLogFollow()">
+    <mat-icon>{{logService.getFollowing() ? 'check_box' : 'check_box_outline_blank'}}</mat-icon>
+    <span i18n>Follow logs</span>
+  </button>
+  <button mat-menu-item
+          (click)="onPreviousChange()">
+    <mat-icon>{{logService.getPrevious() ? 'check_box' : 'check_box_outline_blank'}}</mat-icon>
+    <span i18n>Show previous logs</span>
+  </button>
+</mat-menu>
