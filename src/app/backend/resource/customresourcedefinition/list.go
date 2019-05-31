@@ -14,7 +14,14 @@
 
 package customresourcedefinition
 
-import "github.com/kubernetes/dashboard/src/app/backend/api"
+import (
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	apiextensions "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
+	apiextensionsclient "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
+)
 
 // CustomResourceDefinitionList contains a list of Custom Resource Definitions in the cluster.
 type CustomResourceDefinitionList struct {
@@ -30,4 +37,42 @@ type CustomResourceDefinitionList struct {
 type CustomResourceDefinition struct {
 	ObjectMeta api.ObjectMeta `json:"objectMeta"`
 	TypeMeta   api.TypeMeta   `json:"typeMeta"`
+}
+
+func GetCustomResourceDefinitionList(client apiextensionsclient.Interface, dsQuery *dataselect.DataSelectQuery) (*CustomResourceDefinitionList, error) {
+	channel := common.GetCustomResourceDefinitionChannel(client, 1)
+	crdList := <-channel.List
+	err := <-channel.Error
+
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
+	}
+
+	return toCustomResourceDefinitionList(crdList.Items, nonCriticalErrors, dsQuery), nil
+}
+
+func toCustomResourceDefinitionList(crds []apiextensions.CustomResourceDefinition, nonCriticalErrors []error, dsQuery *dataselect.DataSelectQuery) *CustomResourceDefinitionList {
+	crdList := &CustomResourceDefinitionList{
+		Items:    make([]CustomResourceDefinition, 0),
+		ListMeta: api.ListMeta{TotalItems: len(crds)},
+		Errors:   nonCriticalErrors,
+	}
+
+	crdCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(crds), dsQuery)
+	crds = fromCells(crdCells)
+	crdList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
+
+	for _, crd := range crds {
+		crdList.Items = append(crdList.Items, toCustomResourceDefinition(&crd))
+	}
+
+	return crdList
+}
+
+func toCustomResourceDefinition(crd *apiextensions.CustomResourceDefinition) CustomResourceDefinition {
+	return CustomResourceDefinition{
+		ObjectMeta: api.NewObjectMeta(crd.ObjectMeta),
+		TypeMeta:   api.NewTypeMeta(api.ResourceKindCustomResourceDefinition),
+	}
 }

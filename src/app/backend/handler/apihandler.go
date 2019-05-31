@@ -20,6 +20,8 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/kubernetes/dashboard/src/app/backend/resource/customresourcedefinition"
+
 	restful "github.com/emicklei/go-restful"
 	"golang.org/x/net/xsrftoken"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -531,7 +533,7 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 	apiV1Ws.Route(
 		apiV1Ws.GET("/customresourcedefinition").
 			To(apiHandler.handleGetCustomResourceDefinitionList).
-			Writes())
+			Writes(customresourcedefinition.CustomResourceDefinitionList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/storageclass").
@@ -2057,10 +2059,20 @@ func (apiHandler *APIHandler) handleGetCustomResourceDefinitionList(request *res
 		return
 	}
 
-	apiextensionsclientset, err := apiextensionsclient.NewFromConfig(cfg)
+	apiextensionsclientset, err := apiextensionsclient.NewForConfig(cfg)
 	if err != nil {
 		kdErrors.HandleInternalError(response, err)
+		return
 	}
+
+	dataSelect := parseDataSelectPathParameter(request)
+	result, err := customresourcedefinition.GetCustomResourceDefinitionList(apiextensionsclientset, dataSelect)
+	if err != nil {
+		kdErrors.HandleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleLogSource(request *restful.Request, response *restful.Response) {

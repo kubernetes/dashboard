@@ -14,10 +14,73 @@
 
 package customresourcedefinition
 
-import "testing"
+import (
+	"reflect"
+	"testing"
+
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	apiextensions "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
+	"k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset/fake"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+)
 
 func TestGetCustomResourceDefinition(t *testing.T) {
-	cases := []struct{
+	cases := []struct {
+		expectedActions []string
+		crdList         *apiextensions.CustomResourceDefinitionList
+		expected        *CustomResourceDefinitionList
+	}{
+		{
+			[]string{"list"},
+			&apiextensions.CustomResourceDefinitionList{
+				Items: []apiextensions.CustomResourceDefinition{
+					{
+						ObjectMeta: metaV1.ObjectMeta{Name: "foos.samplecontroller.k8s.io"},
+						Spec: apiextensions.CustomResourceDefinitionSpec{
+							Names: apiextensions.CustomResourceDefinitionNames{
+								Kind:   "Foo",
+								Plural: "foos",
+							},
+						},
+					},
+				},
+			},
+			&CustomResourceDefinitionList{
+				ListMeta: api.ListMeta{TotalItems: 1},
+				Items: []CustomResourceDefinition{
+					{
+						ObjectMeta: api.ObjectMeta{Name: "foos.samplecontroller.k8s.io"},
+						TypeMeta:   api.TypeMeta{Kind: api.ResourceKindCustomResourceDefinition},
+					},
+				},
+				Errors: []error{},
+			},
+		},
+	}
 
+	for _, c := range cases {
+		fakeClient := fake.NewSimpleClientset(c.crdList)
+
+		actual, _ := GetCustomResourceDefinitionList(fakeClient, dataselect.DefaultDataSelect)
+
+		actions := fakeClient.Actions()
+		if len(actions) != len(c.expectedActions) {
+			t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
+				len(c.expectedActions), len(actions))
+			continue
+		}
+
+		for i, verb := range c.expectedActions {
+			if actions[i].GetVerb() != verb {
+				t.Errorf("Unexpected action: %+v, expected %s",
+					actions[i], verb)
+			}
+		}
+
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("GetHorizontalPodAutoscalerList(client, nil) == \ngot: %#v, \nexpected %#v",
+				actual, c.expected)
+		}
 	}
 }
