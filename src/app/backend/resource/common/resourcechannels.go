@@ -25,7 +25,7 @@ import (
 	rbac "k8s.io/api/rbac/v1"
 	storage "k8s.io/api/storage/v1"
 	apiextensions "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
-	apiextensionsclient "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
+	apiextensionsclientset "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
 )
@@ -844,7 +844,7 @@ type CustomResourceDefinitionChannel struct {
 
 // GetCustomResourceDefinitionChannel returns a pair of channels to a CustomResourceDefinition list and errors
 // that both must be read numReads times.
-func GetCustomResourceDefinitionChannel(client apiextensionsclient.Interface, numReads int) CustomResourceDefinitionChannel {
+func GetCustomResourceDefinitionChannel(client apiextensionsclientset.Interface, numReads int) CustomResourceDefinitionChannel {
 	channel := CustomResourceDefinitionChannel{
 		List:  make(chan *apiextensions.CustomResourceDefinitionList, numReads),
 		Error: make(chan error, numReads),

@@ -2053,20 +2053,14 @@ func (apiHandler *APIHandler) handleGetPodPersistentVolumeClaims(request *restfu
 }
 
 func (apiHandler *APIHandler) handleGetCustomResourceDefinitionList(request *restful.Request, response *restful.Response) {
-	cfg, err := apiHandler.cManager.Config(request)
-	if err != nil {
-		kdErrors.HandleInternalError(response, err)
-		return
-	}
-
-	apiextensionsclientset, err := apiextensionsclient.NewForConfig(cfg)
+	apiextensionsclient, err := apiHandler.cManager.APIExtensionsClient(request)
 	if err != nil {
 		kdErrors.HandleInternalError(response, err)
 		return
 	}
 
 	dataSelect := parseDataSelectPathParameter(request)
-	result, err := customresourcedefinition.GetCustomResourceDefinitionList(apiextensionsclientset, dataSelect)
+	result, err := customresourcedefinition.GetCustomResourceDefinitionList(apiextensionsclient, dataSelect)
 	if err != nil {
 		kdErrors.HandleInternalError(response, err)
 		return

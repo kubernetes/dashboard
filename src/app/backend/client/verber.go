@@ -29,14 +29,15 @@ import (
 // resourceVerber is a struct responsible for doing common verb operations on resources, like
 // DELETE, PUT, UPDATE.
 type resourceVerber struct {
-	client            RESTClient
-	extensionsClient  RESTClient
-	appsClient        RESTClient
-	batchClient       RESTClient
-	betaBatchClient   RESTClient
-	autoscalingClient RESTClient
-	storageClient     RESTClient
-	rbacClient        RESTClient
+	client              RESTClient
+	extensionsClient    RESTClient
+	appsClient          RESTClient
+	batchClient         RESTClient
+	betaBatchClient     RESTClient
+	autoscalingClient   RESTClient
+	storageClient       RESTClient
+	rbacClient          RESTClient
+	apiExtensionsClient RESTClient
 }
 
 func (verber *resourceVerber) getRESTClientByType(clientType api.ClientType) RESTClient {
@@ -55,6 +56,8 @@ func (verber *resourceVerber) getRESTClientByType(clientType api.ClientType) RES
 		return verber.storageClient
 	case api.ClientTypeRbacClient:
 		return verber.rbacClient
+	case api.ClientTypeAPIExtensionsClient:
+		return verber.apiExtensionsClient
 	default:
 		return verber.client
 	}
@@ -70,9 +73,9 @@ type RESTClient interface {
 // NewResourceVerber creates a new resource verber that uses the given client for performing operations.
 func NewResourceVerber(client, extensionsClient, appsClient,
 	batchClient, betaBatchClient, autoscalingClient, storageClient,
-	rbacClient RESTClient) clientapi.ResourceVerber {
+	rbacClient, apiExtensionsClient RESTClient) clientapi.ResourceVerber {
 	return &resourceVerber{client, extensionsClient, appsClient,
-		batchClient, betaBatchClient, autoscalingClient, storageClient, rbacClient}
+		batchClient, betaBatchClient, autoscalingClient, storageClient, rbacClient, apiExtensionsClient}
 }
 
 // Delete deletes the resource of the given kind in the given namespace with the given name.

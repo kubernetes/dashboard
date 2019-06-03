@@ -20,7 +20,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	apiextensions "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
-	apiextensionsclient "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
+	apiextensionsclientset "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 )
 
 // CustomResourceDefinitionList contains a list of Custom Resource Definitions in the cluster.
@@ -39,7 +39,7 @@ type CustomResourceDefinition struct {
 	TypeMeta   api.TypeMeta   `json:"typeMeta"`
 }
 
-func GetCustomResourceDefinitionList(client apiextensionsclient.Interface, dsQuery *dataselect.DataSelectQuery) (*CustomResourceDefinitionList, error) {
+func GetCustomResourceDefinitionList(client apiextensionsclientset.Interface, dsQuery *dataselect.DataSelectQuery) (*CustomResourceDefinitionList, error) {
 	channel := common.GetCustomResourceDefinitionChannel(client, 1)
 	crdList := <-channel.List
 	err := <-channel.Error
