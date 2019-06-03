@@ -20,6 +20,8 @@ import (
 
 	restful "github.com/emicklei/go-restful"
 	v1 "k8s.io/api/authorization/v1"
+	apiextensionsclient "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
+	errorsK8s "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
@@ -297,6 +299,20 @@ func (self *clientManager) isSecureModeEnabled(req *restful.Request) bool {
 	}
 
 	return self.isLoginEnabled(req) && args.Holder.GetEnableSkipLogin() && self.containsAuthInfo(req)
+}
+
+func (self *clientManager) secureAPIExtensionsClient(req *restful.Request) (apiextensionsclient.Interface, error) {
+	cfg, err := self.secureConfig(req)
+	if err != nil {
+		return nil, err
+	}
+
+	client, err := apiextensionsclient.NewForConfig(cfg)
+	if err != nil {
+		return nil, err
+	}
+
+	return client, nil
 }
 
 func (self *clientManager) secureClient(req *restful.Request) (kubernetes.Interface, error) {
