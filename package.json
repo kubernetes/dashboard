@@ -165,7 +165,7 @@
     "ts-node": "8.1.1",
     "tslint": "5.16.0",
     "typescript": "3.4.5",
-    "webpack-dev-server": "3.5.0",
+    "webpack-dev-server": "3.5.1",
     "webdriver-manager": "12.1.4"
   },
   "engines": {
