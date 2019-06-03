@@ -217,9 +217,16 @@ func TestVerberClient(t *testing.T) {
 	}
 }
 
-func TestClientManager_InsecureClient(t *testing.T) {
+func TestClientManager_InsecureClients(t *testing.T) {
 	manager := NewClientManager("", "http://localhost:8080")
 	if manager.InsecureClient() == nil {
+		t.Fatalf("InsecureClient(): Expected insecure client not to be nil")
+	}
+}
+
+func TestClientManager_InsecureAPIExtensionsClient(t *testing.T) {
+	manager := NewClientManager("", "http://localhost:8080")
+	if manager.InsecureAPIExtensionsClient() == nil {
 		t.Fatalf("InsecureClient(): Expected insecure client not to be nil")
 	}
 }

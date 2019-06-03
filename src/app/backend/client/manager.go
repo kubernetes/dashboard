@@ -18,7 +18,7 @@ import (
 	"log"
 	"strings"
 
-	restful "github.com/emicklei/go-restful"
+	"github.com/emicklei/go-restful"
 	v1 "k8s.io/api/authorization/v1"
 	apiextensionsclientset "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	errorsK8s "k8s.io/apimachinery/pkg/api/errors"

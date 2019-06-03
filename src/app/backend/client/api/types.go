@@ -15,7 +15,7 @@
 package api
 
 import (
-	restful "github.com/emicklei/go-restful"
+	"github.com/emicklei/go-restful"
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 	v1 "k8s.io/api/authorization/v1"
 	apiextensionsclientset "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
