@@ -95,15 +95,13 @@ func GetCustomResourceObjectList(client apiextensionsclientset.Interface, namesp
 		return list, err
 	}
 
-	raw, err := restClient.Get().
+	err = restClient.Get().
 		Resource(customResourceDefinition.Spec.Names.Plural).
-		Namespace(namespace.ToRequestParam()).Do().Raw()
+		Namespace(namespace.ToRequestParam()).Do().Into(&list)
 	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
 	if criticalError != nil {
 		return list, criticalError
 	}
-	// Unmarshal raw data to JSON.
-	err = json.Unmarshal(raw, &list)
 
 	// Return only slice of data, pagination is done here.
 	crdObjectCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toObjectCells(list.Items), dsQuery)
