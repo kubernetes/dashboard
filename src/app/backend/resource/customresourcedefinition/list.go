@@ -34,11 +34,13 @@ type CustomResourceDefinitionList struct {
 	Errors []error `json:"errors"`
 }
 
+// CustomResourceDefinition represents a custom resource definition.
 type CustomResourceDefinition struct {
 	ObjectMeta api.ObjectMeta `json:"objectMeta"`
 	TypeMeta   api.TypeMeta   `json:"typeMeta"`
 }
 
+// GetCustomResourceDefinitionList returns all the custom resource definitions in the cluster.
 func GetCustomResourceDefinitionList(client apiextensionsclientset.Interface, dsQuery *dataselect.DataSelectQuery) (*CustomResourceDefinitionList, error) {
 	channel := common.GetCustomResourceDefinitionChannel(client, 1)
 	crdList := <-channel.List

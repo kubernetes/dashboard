@@ -536,6 +536,11 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			Writes(customresourcedefinition.CustomResourceDefinitionList{}))
 
 	apiV1Ws.Route(
+		apiV1Ws.GET("/customresourcedefinition/{namespace}/{customresourcedefinition}/object").
+			To(apiHandler.handleGetCustomResourceObjectList).
+			Writes(customresourcedefinition.CustomResourceObjectList{}))
+
+	apiV1Ws.Route(
 		apiV1Ws.GET("/storageclass").
 			To(apiHandler.handleGetStorageClassList).
 			Writes(storageclass.StorageClassList{}))
@@ -2061,6 +2066,31 @@ func (apiHandler *APIHandler) handleGetCustomResourceDefinitionList(request *res
 
 	dataSelect := parseDataSelectPathParameter(request)
 	result, err := customresourcedefinition.GetCustomResourceDefinitionList(apiextensionsclient, dataSelect)
+	if err != nil {
+		kdErrors.HandleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetCustomResourceObjectList(request *restful.Request, response *restful.Response) {
+	config, err := apiHandler.cManager.Config(request)
+	if err != nil {
+		kdErrors.HandleInternalError(response, err)
+		return
+	}
+
+	apiextensionsclient, err := apiHandler.cManager.APIExtensionsClient(request)
+	if err != nil {
+		kdErrors.HandleInternalError(response, err)
+		return
+	}
+
+	name := request.PathParameter("customresourcedefinition")
+	namespace := parseNamespacePathParameter(request)
+	dataSelect := parseDataSelectPathParameter(request)
+	result, err := customresourcedefinition.GetCustomResourceObjectList(apiextensionsclient, namespace, config, dataSelect, name)
 	if err != nil {
 		kdErrors.HandleInternalError(response, err)
 		return
