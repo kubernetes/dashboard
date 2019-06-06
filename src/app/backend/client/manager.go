@@ -21,7 +21,6 @@ import (
 	"github.com/emicklei/go-restful"
 	v1 "k8s.io/api/authorization/v1"
 	apiextensionsclientset "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
-	errorsK8s "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
@@ -101,7 +100,7 @@ func (self *clientManager) Client(req *restful.Request) (kubernetes.Interface, e
 // client will be used.
 func (self *clientManager) APIExtensionsClient(req *restful.Request) (apiextensionsclientset.Interface, error) {
 	if req == nil {
-		return nil, errors.New("Request can not be nil!")
+		return nil, errors.NewBadRequest("request can not be nil!")
 	}
 
 	if self.isSecureModeEnabled(req) {

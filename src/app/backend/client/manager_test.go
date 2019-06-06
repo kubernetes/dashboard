@@ -154,7 +154,7 @@ func TestSecureAPIExtensionsClient(t *testing.T) {
 				},
 			},
 			expectedError: true,
-			err:           errors.New(kdErrors.MSG_LOGIN_UNAUTHORIZED_ERROR),
+			err:           errors.NewUnauthorized(errors.MsgLoginUnauthorizedError),
 		},
 		{
 			request: &restful.Request{
