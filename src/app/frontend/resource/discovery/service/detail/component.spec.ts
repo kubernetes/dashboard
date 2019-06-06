@@ -28,7 +28,8 @@ import {
 } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { AppConfig, ServiceDetail } from '@api/backendapi';
+import { RouterModule } from '@angular/router';
+import { AppConfig, K8sError, ServiceDetail } from '@api/backendapi';
 import { CardComponent } from 'common/components/card/component';
 import { ChipsComponent } from 'common/components/chips/component';
 import { ObjectMetaComponent } from 'common/components/objectmeta/component';
@@ -39,7 +40,6 @@ import { NamespacedResourceService } from 'common/services/resource/resource';
 
 import { ServiceDetailComponent } from './component';
 
-const miniName = 'my-mini-service';
 const maxiName = 'my-maxi-service';
 
 @Component({ selector: 'test', templateUrl: './template.html' })
@@ -132,7 +132,7 @@ class MaxiTestComponent {
             status: 'Ready',
             reason: 'the reason',
           },
-        },
+        } as K8sError,
       ],
     },
     sessionAffinity: 'affinity1',
@@ -165,6 +165,7 @@ describe('ServiceDetailComponent', () => {
         PipesModule,
         HttpClientTestingModule,
         MatIconModule,
+        RouterModule,
       ],
       providers: [ConfigService, NamespacedResourceService],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],

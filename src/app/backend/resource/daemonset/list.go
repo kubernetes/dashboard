@@ -26,7 +26,7 @@ import (
 	"k8s.io/client-go/kubernetes"
 )
 
-// DaemonSetList contains a list of Daemon Sets in the cluster.
+// DaemonSetListComponent contains a list of Daemon Sets in the cluster.
 type DaemonSetList struct {
 	ListMeta          api.ListMeta          `json:"listMeta"`
 	DaemonSets        []DaemonSet           `json:"daemonSets"`

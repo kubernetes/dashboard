@@ -14,13 +14,10 @@
 
 import { HttpParams } from '@angular/common/http';
 import { Component, Input } from '@angular/core';
-import { StateService } from '@uirouter/core';
 import { Observable } from 'rxjs/Observable';
 import { Ingress, IngressList } from 'typings/backendapi';
 
-import { ingressState } from '../../../../resource/discovery/ingress/state';
 import { ResourceListBase } from '../../../resources/list';
-import { NamespaceService } from '../../../services/global/namespace';
 import { NotificationsService } from '../../../services/global/notifications';
 import { EndpointManager, Resource } from '../../../services/resource/endpoint';
 import { NamespacedResourceService } from '../../../services/resource/resource';
@@ -35,12 +32,10 @@ export class IngressListComponent extends ResourceListBase<
   @Input() endpoint = EndpointManager.resource(Resource.ingress, true).list();
 
   constructor(
-    state: StateService,
     private readonly ingress_: NamespacedResourceService<IngressList>,
-    notifications: NotificationsService,
-    private readonly namespaceService_: NamespaceService
+    notifications: NotificationsService
   ) {
-    super(ingressState.name, state, notifications);
+    super('ingress', notifications);
     this.id = ListIdentifiers.ingress;
     this.groupId = ListGroupIdentifiers.discovery;
 
@@ -56,7 +51,7 @@ export class IngressListComponent extends ResourceListBase<
   }
 
   getResourceObservable(params?: HttpParams): Observable<IngressList> {
-    return this.ingress_.get(this.endpoint, undefined, params);
+    return this.ingress_.get(this.endpoint, undefined, undefined, params);
   }
 
   map(ingressList: IngressList): Ingress[] {

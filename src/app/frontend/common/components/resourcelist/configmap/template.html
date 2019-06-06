@@ -41,7 +41,8 @@ limitations under the License.
                          disableClear="true"
                          i18n>Name</mat-header-cell>
         <mat-cell *matCellDef="let cm">
-          <a [href]="getDetailsHref(cm.objectMeta.name, cm.objectMeta.namespace)">
+          <a [routerLink]="getDetailsHref(cm.objectMeta.name, cm.objectMeta.namespace)"
+             queryParamsHandling="preserve">
             {{cm.objectMeta.name}}
           </a>
         </mat-cell>

@@ -13,6 +13,8 @@
 // limitations under the License.
 
 // Shared resource types
+import {KdError} from '@api/frontendapi';
+
 export interface TypeMeta {
   kind: string;
 }
@@ -356,8 +358,6 @@ export interface DeploymentDetail extends ResourceDetail {
   minReadySeconds: number;
   revisionHistoryLimit?: number;
   rollingUpdateStrategy?: RollingUpdateStrategy;
-  oldReplicaSetList: ReplicaSetList;
-  newReplicaSet: ReplicaSet;
   events: EventList;
 }
 
@@ -426,6 +426,7 @@ export interface PersistentVolumeClaimDetail extends ResourceDetail {
 
 export interface StorageClassDetail extends ResourceDetail {
   parameters: StringMap;
+  provisioner: string;
 }
 
 export interface ConfigMapDetail extends ResourceDetail {
@@ -621,6 +622,8 @@ export interface ErrStatus {
 /* tslint:disable */
 export interface K8sError {
   ErrStatus: ErrStatus;
+
+  toKdError(): KdError;
 }
 /* tslint:enable */
 

@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ConfigMapDetail } from '@api/backendapi';
-import { StateService } from '@uirouter/core';
 import { Subscription } from 'rxjs/Subscription';
 
 import {
@@ -34,25 +34,24 @@ import { NamespacedResourceService } from '../../../../common/services/resource/
 })
 export class ConfigMapDetailComponent implements OnInit, OnDestroy {
   private configMapSubscription_: Subscription;
-  private configMapName_: string;
+  private endpoint_ = EndpointManager.resource(Resource.configMap, true);
   configMap: ConfigMapDetail;
   isInitialized = false;
 
   constructor(
     private readonly configMap_: NamespacedResourceService<ConfigMapDetail>,
     private readonly actionbar_: ActionbarService,
-    private readonly state_: StateService,
+    private readonly activatedRoute_: ActivatedRoute,
     private readonly notifications_: NotificationsService
   ) {}
 
   ngOnInit(): void {
-    this.configMapName_ = this.state_.params.resourceName;
+    const resourceName = this.activatedRoute_.snapshot.params.resourceName;
+    const resourceNamespace = this.activatedRoute_.snapshot.params
+      .resourceNamespace;
+
     this.configMapSubscription_ = this.configMap_
-      .get(
-        EndpointManager.resource(Resource.configMap, true).detail(),
-        this.configMapName_
-      )
-      .startWith({})
+      .get(this.endpoint_.detail(), resourceName, resourceNamespace)
       .subscribe((d: ConfigMapDetail) => {
         this.configMap = d;
         this.notifications_.pushErrors(d.errors);

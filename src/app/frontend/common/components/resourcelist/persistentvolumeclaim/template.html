@@ -48,7 +48,8 @@ limitations under the License.
                          disableClear="true"
                          i18n>Name</mat-header-cell>
         <mat-cell *matCellDef="let pvc">
-          <a [href]="getDetailsHref(pvc.objectMeta.name, pvc.objectMeta.namespace)">
+          <a [routerLink]="getDetailsHref(pvc.objectMeta.name, pvc.objectMeta.namespace)"
+             queryParamsHandling="preserve">
             {{pvc.objectMeta.name}}
           </a>
         </mat-cell>
@@ -82,7 +83,8 @@ limitations under the License.
                          i18n>Volume</mat-header-cell>
         <mat-cell *matCellDef="let pvc">
           <ng-container *ngIf="pvc.volume">
-            <a [href]="getVolumeHref(pvc.volume)">{{pvc.volume}}</a>
+            <a [routerLink]="getVolumeHref(pvc.volume)"
+               queryParamsHandling="preserve">{{pvc.volume}}</a>
           </ng-container>
           <ng-container *ngIf="!pvc.volume">-</ng-container>
         </mat-cell>

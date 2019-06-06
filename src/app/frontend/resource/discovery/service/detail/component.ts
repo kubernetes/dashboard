@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ServiceDetail } from '@api/backendapi';
-import { StateService } from '@uirouter/core';
 import { Subscription } from 'rxjs/Subscription';
 
 import {
@@ -34,7 +34,7 @@ import { NamespacedResourceService } from '../../../../common/services/resource/
 })
 export class ServiceDetailComponent implements OnInit, OnDestroy {
   private serviceSubscription_: Subscription;
-  private serviceName_: string;
+  private readonly endpoint_ = EndpointManager.resource(Resource.service, true);
   service: ServiceDetail;
   isInitialized = false;
   podListEndpoint: string;
@@ -43,26 +43,28 @@ export class ServiceDetailComponent implements OnInit, OnDestroy {
   constructor(
     private readonly service_: NamespacedResourceService<ServiceDetail>,
     private readonly actionbar_: ActionbarService,
-    private readonly state_: StateService,
+    private readonly activatedRoute_: ActivatedRoute,
     private readonly notifications_: NotificationsService
   ) {}
 
   ngOnInit(): void {
-    this.serviceName_ = this.state_.params.resourceName;
-    this.podListEndpoint = EndpointManager.resource(
-      Resource.service,
-      true
-    ).child(this.serviceName_, Resource.pod);
-    this.eventListEndpoint = EndpointManager.resource(
-      Resource.service,
-      true
-    ).child(this.serviceName_, Resource.event);
+    const resourceName = this.activatedRoute_.snapshot.params.resourceName;
+    const resourceNamespace = this.activatedRoute_.snapshot.params
+      .resourceNamespace;
+
+    this.podListEndpoint = this.endpoint_.child(
+      resourceName,
+      Resource.pod,
+      resourceNamespace
+    );
+    this.eventListEndpoint = this.endpoint_.child(
+      resourceName,
+      Resource.event,
+      resourceNamespace
+    );
+
     this.serviceSubscription_ = this.service_
-      .get(
-        EndpointManager.resource(Resource.service, true).detail(),
-        this.serviceName_
-      )
-      .startWith({})
+      .get(this.endpoint_.detail(), resourceName, resourceNamespace)
       .subscribe((d: ServiceDetail) => {
         this.service = d;
         this.notifications_.pushErrors(d.errors);

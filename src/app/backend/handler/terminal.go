@@ -76,10 +76,6 @@ func (t TerminalSession) Next() *remotecommand.TerminalSize {
 	}
 }
 
-func (t TerminalSession) Close() {
-	close(t.doneChan)
-}
-
 // Read handles pty->process messages (stdin, resize)
 // Called in a loop from remotecommand as long as the process is running
 func (t TerminalSession) Read(p []byte) (int, error) {
@@ -165,8 +161,11 @@ func (sm *SessionMap) Set(sessionId string, session TerminalSession) {
 func (sm *SessionMap) Close(sessionId string, status uint32, reason string) {
 	sm.Lock.Lock()
 	defer sm.Lock.Unlock()
-	sm.Sessions[sessionId].Close()
-	sm.Sessions[sessionId].sockJSSession.Close(status, reason)
+	err := sm.Sessions[sessionId].sockJSSession.Close(status, reason)
+	if err != nil {
+		log.Println(err)
+	}
+
 	delete(sm.Sessions, sessionId)
 }
 

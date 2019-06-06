@@ -13,9 +13,10 @@
 // limitations under the License.
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { DeploymentDetail } from '@api/backendapi';
-import { StateService } from '@uirouter/core';
-import { Subscription } from 'rxjs/Subscription';
+import { ActivatedRoute } from '@angular/router';
+import { DeploymentDetail, ReplicaSet } from '@api/backendapi';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import {
   ActionbarService,
@@ -34,38 +35,51 @@ import { NamespacedResourceService } from '../../../../common/services/resource/
   templateUrl: './template.html',
 })
 export class DeploymentDetailComponent implements OnInit, OnDestroy {
-  private deploymentSubscription_: Subscription;
-  private deploymentName_: string;
+  private unsubscribe_ = new Subject();
+  private readonly endpoint_ = EndpointManager.resource(
+    Resource.deployment,
+    true
+  );
   deployment: DeploymentDetail;
+  newReplicaSet: ReplicaSet;
   isInitialized = false;
   eventListEndpoint: string;
   oldReplicaSetsEndpoint: string;
+  newReplicaSetEndpoint: string;
 
   constructor(
     private readonly deployment_: NamespacedResourceService<DeploymentDetail>,
-    private readonly state_: StateService,
+    private readonly replicaSet_: NamespacedResourceService<ReplicaSet>,
+    private readonly activatedRoute_: ActivatedRoute,
     private readonly actionbar_: ActionbarService,
     private readonly kdState_: KdStateService,
     private readonly notifications_: NotificationsService
   ) {}
 
   ngOnInit(): void {
-    this.deploymentName_ = this.state_.params.resourceName;
-    this.eventListEndpoint = EndpointManager.resource(
-      Resource.deployment,
-      true
-    ).child(this.deploymentName_, Resource.event);
-    this.oldReplicaSetsEndpoint = EndpointManager.resource(
-      Resource.deployment,
-      true
-    ).child(this.deploymentName_, Resource.oldReplicaSet);
+    const resourceName = this.activatedRoute_.snapshot.params.resourceName;
+    const resourceNamespace = this.activatedRoute_.snapshot.params
+      .resourceNamespace;
 
-    this.deploymentSubscription_ = this.deployment_
-      .get(
-        EndpointManager.resource(Resource.deployment, true).detail(),
-        this.deploymentName_
-      )
-      .startWith({})
+    this.eventListEndpoint = this.endpoint_.child(
+      resourceName,
+      Resource.event,
+      resourceNamespace
+    );
+    this.oldReplicaSetsEndpoint = this.endpoint_.child(
+      resourceName,
+      Resource.oldReplicaSet,
+      resourceNamespace
+    );
+    this.newReplicaSetEndpoint = this.endpoint_.child(
+      resourceName,
+      Resource.newReplicaSet,
+      resourceNamespace
+    );
+
+    this.deployment_
+      .get(this.endpoint_.detail(), resourceName, resourceNamespace)
+      .pipe(takeUntil(this.unsubscribe_))
       .subscribe((d: DeploymentDetail) => {
         this.deployment = d;
         this.notifications_.pushErrors(d.errors);
@@ -74,17 +88,25 @@ export class DeploymentDetailComponent implements OnInit, OnDestroy {
         );
         this.isInitialized = true;
       });
+
+    this.replicaSet_
+      .get(this.newReplicaSetEndpoint)
+      .pipe(takeUntil(this.unsubscribe_))
+      .subscribe((rs: ReplicaSet) => {
+        this.newReplicaSet = rs;
+      });
   }
 
   getNewReplicaSetHref(): string {
     return this.kdState_.href(
-      this.deployment.newReplicaSet.typeMeta.kind,
-      this.deployment.newReplicaSet.objectMeta.name,
-      this.deployment.newReplicaSet.objectMeta.namespace
+      this.newReplicaSet.typeMeta.kind,
+      this.newReplicaSet.objectMeta.name,
+      this.newReplicaSet.objectMeta.namespace
     );
   }
 
   ngOnDestroy(): void {
-    this.deploymentSubscription_.unsubscribe();
+    this.unsubscribe_.next();
+    this.unsubscribe_.unsubscribe();
   }
 }

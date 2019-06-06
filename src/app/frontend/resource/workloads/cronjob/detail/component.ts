@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { CronJobDetail } from '@api/backendapi';
-import { StateService } from '@uirouter/core';
 import { Subscription } from 'rxjs/Subscription';
 
 import {
@@ -34,7 +34,7 @@ import { NamespacedResourceService } from '../../../../common/services/resource/
 })
 export class CronJobDetailComponent implements OnInit, OnDestroy {
   private cronJobSubscription_: Subscription;
-  private cronJobName_: string;
+  private readonly endpoint_ = EndpointManager.resource(Resource.cronJob, true);
   cronJob: CronJobDetail;
   isInitialized = false;
   eventListEndpoint: string;
@@ -44,28 +44,29 @@ export class CronJobDetailComponent implements OnInit, OnDestroy {
   constructor(
     private readonly cronJob_: NamespacedResourceService<CronJobDetail>,
     private readonly actionbar_: ActionbarService,
-    private readonly state_: StateService,
+    private readonly activatedRoute_: ActivatedRoute,
     private readonly notifications_: NotificationsService
   ) {}
 
   ngOnInit(): void {
-    this.cronJobName_ = this.state_.params.resourceName;
-    this.eventListEndpoint = EndpointManager.resource(
-      Resource.cronJob,
-      true
-    ).child(this.cronJobName_, Resource.event);
-    this.activeJobsEndpoint = EndpointManager.resource(
-      Resource.cronJob,
-      true
-    ).child(this.cronJobName_, Resource.job);
+    const resourceName = this.activatedRoute_.snapshot.params.resourceName;
+    const resourceNamespace = this.activatedRoute_.snapshot.params
+      .resourceNamespace;
+
+    this.eventListEndpoint = this.endpoint_.child(
+      resourceName,
+      Resource.event,
+      resourceNamespace
+    );
+    this.activeJobsEndpoint = this.endpoint_.child(
+      resourceName,
+      Resource.job,
+      resourceNamespace
+    );
     this.inactiveJobsEndpoint = this.activeJobsEndpoint + `?active=false`;
 
     this.cronJobSubscription_ = this.cronJob_
-      .get(
-        EndpointManager.resource(Resource.cronJob, true).detail(),
-        this.cronJobName_
-      )
-      .startWith({})
+      .get(this.endpoint_.detail(), resourceName, resourceNamespace)
       .subscribe((d: CronJobDetail) => {
         this.cronJob = d;
         this.notifications_.pushErrors(d.errors);

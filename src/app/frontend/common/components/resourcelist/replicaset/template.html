@@ -60,7 +60,8 @@ limitations under the License.
                          i18n>Name</mat-header-cell>
         <mat-cell *matCellDef="let replicaSet">
           <a (click)="$event.stopPropagation()"
-             [href]="getDetailsHref(replicaSet.objectMeta.name, replicaSet.objectMeta.namespace)">
+             [routerLink]="getDetailsHref(replicaSet.objectMeta.name, replicaSet.objectMeta.namespace)"
+             queryParamsHandling="preserve">
             {{replicaSet.objectMeta.name}}
           </a>
         </mat-cell>
@@ -118,8 +119,7 @@ limitations under the License.
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="getColumns()"></mat-header-row>
-      <mat-row #matrow
-               (mouseover)="onRowOver(index)"
+      <mat-row (mouseover)="onRowOver(index)"
                (mouseleave)="onRowLeave()"
                (click)="expand(index, row)"
                [ngClass]="{'kd-no-bottom-border': isRowExpanded(index), 'kd-clickable': hasErrors(row)}"

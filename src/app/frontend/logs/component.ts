@@ -15,8 +15,8 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material';
+import { ActivatedRoute } from '@angular/router';
 import { LogDetails, LogLine, LogSelection, LogSources } from '@api/backendapi';
-import { StateService } from '@uirouter/core';
 import { GlobalSettingsService } from 'common/services/global/globalsettings';
 import { LogService } from 'common/services/global/logs';
 import {
@@ -24,6 +24,7 @@ import {
   NotificationsService,
 } from 'common/services/global/notifications';
 import { Observable, Subscription } from 'rxjs';
+
 import { LogsDownloadDialog } from '../common/dialogs/download/dialog';
 
 const logsPerView = 100;
@@ -71,7 +72,7 @@ export class LogsComponent implements OnDestroy {
 
   constructor(
     logService: LogService,
-    private readonly state_: StateService,
+    private readonly activatedRoute_: ActivatedRoute,
     private readonly settingsService_: GlobalSettingsService,
     private readonly dialog_: MatDialog,
     private readonly notifications_: NotificationsService
@@ -81,10 +82,10 @@ export class LogsComponent implements OnDestroy {
       this.settingsService_.getAutoRefreshTimeInterval() * 1000;
     this.isLoading = true;
 
-    const namespace = this.state_.params.resourceNamespace;
-    const resourceType = this.state_.params.resourceType;
-    const resourceName = this.state_.params.resourceName;
-    const containerName = this.state_.params.container;
+    const namespace = this.activatedRoute_.snapshot.params.resourceNamespace;
+    const resourceType = this.activatedRoute_.snapshot.params.resourceType;
+    const resourceName = this.activatedRoute_.snapshot.params.resourceName;
+    const containerName = this.activatedRoute_.snapshot.params.container;
 
     this.sourceSubscription = logService
       .getResource(`source/${namespace}/${resourceName}/${resourceType}`)
@@ -153,11 +154,7 @@ export class LogsComponent implements OnDestroy {
   }
 
   appendContainerParam() {
-    this.state_.go(
-      '.',
-      { container: this.container },
-      { notify: false, location: 'replace' }
-    );
+    // this.state_.go('.', {container: this.container}, {notify: false, location: 'replace'});
   }
 
   onContainerChange() {
@@ -235,7 +232,7 @@ export class LogsComponent implements OnDestroy {
     offsetTo: number,
     onLoad?: Function
   ): void {
-    const namespace = this.state_.params.resourceNamespace;
+    const namespace = this.activatedRoute_.snapshot.params.resourceNamespace;
     const params = new HttpParams()
       .set('logFilePosition', logFilePosition)
       .set('referenceTimestamp', referenceTimestamp)

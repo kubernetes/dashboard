@@ -15,9 +15,9 @@
 package auth
 
 import (
-	"errors"
-
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
+
 	yaml "gopkg.in/yaml.v2"
 	"k8s.io/client-go/tools/clientcmd/api"
 )
@@ -101,7 +101,7 @@ func (self *kubeConfigAuthenticator) getCurrentUserInfo(config kubeConfig) (user
 	}
 
 	if len(userName) == 0 {
-		return userInfo{}, errors.New("Context matching current context not found. Check if your config file is valid.")
+		return userInfo{}, errors.NewInvalid("Context matching current context not found. Check if your config file is valid.")
 	}
 
 	for _, user := range config.Users {
@@ -110,7 +110,7 @@ func (self *kubeConfigAuthenticator) getCurrentUserInfo(config kubeConfig) (user
 		}
 	}
 
-	return userInfo{}, errors.New("User matching current context user not found. Check if your config file is valid.")
+	return userInfo{}, errors.NewInvalid("User matching current context user not found. Check if your config file is valid.")
 }
 
 // Returns auth info structure based on provided user info or error in case not enough data has been provided.
@@ -121,7 +121,7 @@ func (self *kubeConfigAuthenticator) getAuthInfo(info userInfo) (api.AuthInfo, e
 	}
 
 	if len(info.Token) == 0 && (len(info.Password) == 0 || len(info.Username) == 0) {
-		return api.AuthInfo{}, errors.New("Not enough data to create auth info structure.")
+		return api.AuthInfo{}, errors.NewInvalid("Not enough data to create auth info structure.")
 	}
 
 	result := api.AuthInfo{}

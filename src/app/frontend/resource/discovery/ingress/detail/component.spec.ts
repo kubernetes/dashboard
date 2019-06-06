@@ -29,6 +29,7 @@ import {
 } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
 import { AppConfig, IngressDetail, ObjectMeta } from '@api/backendapi';
 import { CardComponent } from 'common/components/card/component';
 import { ChipsComponent } from 'common/components/chips/component';
@@ -103,6 +104,7 @@ describe('IngressDetailComponent', () => {
         PipesModule,
         HttpClientTestingModule,
         MatIconModule,
+        RouterModule,
       ],
       providers: [ConfigService],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],

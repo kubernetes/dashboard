@@ -14,7 +14,6 @@
 
 import { Component, Input } from '@angular/core';
 import { ObjectMeta, TypeMeta } from '@api/backendapi';
-import { StateService } from '@uirouter/core';
 import { Subscription } from 'rxjs/Subscription';
 
 import { VerberService } from '../../../../services/global/verber';
@@ -29,14 +28,11 @@ export class ActionbarDetailScaleComponent {
   @Input() displayName: string;
   verberSubscription_: Subscription;
 
-  constructor(
-    private readonly verber_: VerberService,
-    private readonly state_: StateService
-  ) {}
+  constructor(private readonly verber_: VerberService) {}
 
   ngOnInit(): void {
     this.verberSubscription_ = this.verber_.onScale.subscribe(() => {
-      this.state_.reload().catch();
+      // this.state_.reload().catch();
     });
   }
 

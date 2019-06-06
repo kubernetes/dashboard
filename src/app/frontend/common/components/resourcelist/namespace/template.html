@@ -50,7 +50,8 @@ limitations under the License.
                          disableClear="true"
                          i18n>Name</mat-header-cell>
         <mat-cell *matCellDef="let namespace">
-          <a [href]="getDetailsHref(namespace.objectMeta.name)">
+          <a [routerLink]="getDetailsHref(namespace.objectMeta.name)"
+             queryParamsHandling="preserve">
             {{namespace.objectMeta.name}}
           </a>
         </mat-cell>

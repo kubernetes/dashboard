@@ -13,10 +13,11 @@
 // limitations under the License.
 
 import { Component, OnInit } from '@angular/core';
-import { StateService } from '@uirouter/core';
+import { ActivatedRoute } from '@angular/router';
+import { StateError } from '@api/frontendapi';
+import { map } from 'rxjs/operators';
 
 import { KdError } from '../common/errors/errors';
-import { ErrorStateParams } from '../common/params/params';
 import { NavService } from '../common/services/nav/service';
 
 @Component({
@@ -28,13 +29,19 @@ export class ErrorComponent implements OnInit {
   private error_: KdError;
   constructor(
     private readonly nav_: NavService,
-    private readonly state_: StateService
-  ) {
-    this.nav_.setVisibility(false);
-  }
+    private readonly route_: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.error_ = (this.state_.params as ErrorStateParams).error;
+    this.nav_.setVisibility(false);
+
+    this.route_.paramMap
+      .pipe(map(() => window.history.state))
+      .subscribe((state: StateError) => {
+        if (state.error) {
+          this.error_ = state.error;
+        }
+      });
   }
 
   getErrorStatus(): string {

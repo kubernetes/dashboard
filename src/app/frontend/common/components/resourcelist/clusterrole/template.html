@@ -42,7 +42,8 @@ limitations under the License.
                          disableClear="true"
                          i18n>Name</mat-header-cell>
         <mat-cell *matCellDef="let role">
-          <a [href]="getDetailsHref(role.objectMeta.name)">{{role.objectMeta.name}}</a>
+          <a [routerLink]="getDetailsHref(role.objectMeta.name)"
+             queryParamsHandling="preserve">{{role.objectMeta.name}}</a>
         </mat-cell>
       </ng-container>
 

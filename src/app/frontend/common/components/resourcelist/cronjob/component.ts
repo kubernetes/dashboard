@@ -15,11 +15,8 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, Input } from '@angular/core';
 import { CronJob, CronJobList } from '@api/backendapi';
-import { StateService } from '@uirouter/core';
 import { Observable } from 'rxjs/Observable';
-import { cronJobState } from '../../../../resource/workloads/cronjob/state';
 import { ResourceListWithStatuses } from '../../../resources/list';
-import { NamespaceService } from '../../../services/global/namespace';
 import { NotificationsService } from '../../../services/global/notifications';
 import { EndpointManager, Resource } from '../../../services/resource/endpoint';
 import { NamespacedResourceService } from '../../../services/resource/resource';
@@ -36,12 +33,10 @@ export class CronJobListComponent extends ResourceListWithStatuses<
 > {
   @Input() endpoint = EndpointManager.resource(Resource.cronJob, true).list();
   constructor(
-    state: StateService,
     private readonly cronJob_: NamespacedResourceService<CronJobList>,
-    notifications: NotificationsService,
-    private readonly namespaceService_: NamespaceService
+    notifications: NotificationsService
   ) {
-    super(cronJobState.name, state, notifications);
+    super('cronjob', notifications);
     this.id = ListIdentifiers.cronJob;
     this.groupId = ListGroupIdentifiers.workloads;
 
@@ -65,7 +60,7 @@ export class CronJobListComponent extends ResourceListWithStatuses<
   }
 
   getResourceObservable(params?: HttpParams): Observable<CronJobList> {
-    return this.cronJob_.get(this.endpoint, undefined, params);
+    return this.cronJob_.get(this.endpoint, undefined, undefined, params);
   }
 
   map(cronJobList: CronJobList): CronJob[] {

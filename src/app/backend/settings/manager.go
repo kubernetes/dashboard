@@ -15,15 +15,16 @@
 package settings
 
 import (
-	"errors"
 	"log"
 	"reflect"
 
-	"github.com/kubernetes/dashboard/src/app/backend/args"
-	"github.com/kubernetes/dashboard/src/app/backend/settings/api"
 	v1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
+
+	"github.com/kubernetes/dashboard/src/app/backend/args"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
+	"github.com/kubernetes/dashboard/src/app/backend/settings/api"
 )
 
 // SettingsManager is a structure containing all settings manager members.
@@ -100,7 +101,7 @@ func (sm *SettingsManager) GetGlobalSettings(client kubernetes.Interface) api.Se
 func (sm *SettingsManager) SaveGlobalSettings(client kubernetes.Interface, s *api.Settings) error {
 	cm, isDiff := sm.load(client)
 	if isDiff {
-		return errors.New(api.ConcurrentSettingsChangeError)
+		return errors.NewInvalid(api.ConcurrentSettingsChangeError)
 	}
 
 	// Data can be nil if the configMap exists but does not have any data

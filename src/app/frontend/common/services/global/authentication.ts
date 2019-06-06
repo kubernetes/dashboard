@@ -17,29 +17,23 @@ import 'rxjs/add/operator/switchMap';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { onLogin } from '@api/frontendapi';
-import {
-  StateService,
-  TargetState,
-  Transition,
-  TransitionService,
-} from '@uirouter/core';
+import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { throwError } from 'rxjs';
+import { of } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
+import { catchError, first, switchMap } from 'rxjs/operators';
 import {
   AuthResponse,
   CsrfToken,
-  K8sError,
   LoginSpec,
   LoginStatus,
 } from 'typings/backendapi';
 
-import { errorState } from '../../../error/state';
 import { CONFIG } from '../../../index.config';
-import { overviewState } from '../../../overview/state';
+import { K8SError } from '../../errors/errors';
 
 import { CsrfTokenService } from './csrftoken';
+import { KdStateService } from './state';
 
 @Injectable()
 export class AuthService {
@@ -47,11 +41,17 @@ export class AuthService {
 
   constructor(
     private readonly cookies_: CookieService,
-    private readonly transitions_: TransitionService,
-    private readonly state_: StateService,
+    private readonly router_: Router,
     private readonly http_: HttpClient,
-    private readonly csrfTokenService_: CsrfTokenService
-  ) {}
+    private readonly csrfTokenService_: CsrfTokenService,
+    private readonly stateService_: KdStateService
+  ) {
+    this.init_();
+  }
+
+  private init_() {
+    this.stateService_.onBefore.subscribe(() => this.refreshToken());
+  }
 
   private setTokenCookie_(token: string): void {
     // This will only work for HTTPS connection
@@ -84,44 +84,42 @@ export class AuthService {
     return this.cookies_.get(this.config_.authTokenCookieName) || '';
   }
 
-  private removeAuthCookies_(): void {
+  removeAuthCookies_(): void {
     this.cookies_.delete(this.config_.authTokenCookieName);
     this.cookies_.delete(this.config_.skipLoginPageCookieName);
   }
 
   /** Sends a login request to the backend with filled in login spec structure. */
-  login(loginSpec: LoginSpec, onLoginCb: onLogin): void {
-    const loginObs = this.csrfTokenService_
+  login(loginSpec: LoginSpec): Observable<K8SError[]> {
+    return this.csrfTokenService_
       .getTokenForAction('login')
-      .switchMap<CsrfToken, AuthResponse>(csrfToken => {
-        return this.http_.post<AuthResponse>('api/v1/login', loginSpec, {
-          headers: new HttpHeaders().set(
-            this.config_.csrfHeaderName,
-            csrfToken.token
-          ),
-        });
-      });
+      .pipe(
+        switchMap((csrfToken: CsrfToken) =>
+          this.http_.post<AuthResponse>('api/v1/login', loginSpec, {
+            headers: new HttpHeaders().set(
+              this.config_.csrfHeaderName,
+              csrfToken.token
+            ),
+          })
+        )
+      )
+      .pipe(
+        switchMap((authResponse: AuthResponse) => {
+          if (
+            authResponse.jweToken.length !== 0 &&
+            authResponse.errors.length === 0
+          ) {
+            this.setTokenCookie_(authResponse.jweToken);
+          }
 
-    loginObs.first().subscribe(
-      authResponse => {
-        if (
-          authResponse.jweToken.length !== 0 &&
-          authResponse.errors.length === 0
-        ) {
-          this.setTokenCookie_(authResponse.jweToken);
-        }
-
-        onLoginCb(authResponse.errors);
-      },
-      err => {
-        return throwError(err);
-      }
-    );
+          return of(authResponse.errors);
+        })
+      );
   }
 
   logout(): void {
     this.removeAuthCookies_();
-    this.state_.go('login');
+    this.router_.navigate(['login']);
   }
 
   /**
@@ -130,65 +128,60 @@ export class AuthService {
    *  - authorization header has to be present in request to dashboard ('Authorization: Bearer
    * <token>')
    */
-  redirectToLogin(transition: Transition): Promise<boolean | TargetState> {
-    const state = transition.router.stateService;
-    return this.getLoginStatus()
-      .toPromise()
-      .then<boolean | TargetState>(loginStatus => {
-        if (
-          transition.to().name === 'login' &&
-          // Do not allow entering login page if already authenticated or authentication is
-          // disabled.
-          (this.isAuthenticated(loginStatus) ||
-            !this.isAuthenticationEnabled(loginStatus))
-        ) {
-          return state.target(overviewState.name, null, {
-            location: true,
-            reload: true,
-          });
-        }
-
-        // In following cases user should not be redirected and reach his target state:
-        if (
-          transition.to().name === 'login' ||
-          transition.to().name === errorState.name ||
-          !this.isLoginPageEnabled() ||
-          !this.isAuthenticationEnabled(loginStatus) ||
-          this.isAuthenticated(loginStatus)
-        ) {
-          return true;
-        }
-
-        // In other cases redirect user to login state.
-        return state.target('login', null, { location: true, reload: true });
-      });
-  }
+  // redirectToLogin(transition: Transition): Promise<boolean|TargetState> {
+  //   const state = transition.router.stateService;
+  //   return this.getLoginStatus().toPromise().then<boolean|TargetState>(loginStatus => {
+  //     console.log('======== Status =======');
+  //     console.log(loginStatus);
+  //     console.log('=======================');
+  //     if (transition.to().name === 'login' &&
+  //         // Do not allow entering login page if already authenticated or authentication is
+  //         // disabled.
+  //         (this.isAuthenticated(loginStatus) || !this.isAuthenticationEnabled(loginStatus))) {
+  //       console.log('No to login');
+  //       return state.target(overviewState.name, null, {location: 'replace', reload: true});
+  //     }
+  //
+  //     // In following cases user should not be redirected and reach his target state:
+  //     if (transition.to().name === 'login' || transition.to().name === errorState.name ||
+  //         !this.isLoginPageEnabled() || !this.isAuthenticationEnabled(loginStatus) ||
+  //         this.isAuthenticated(loginStatus)) {
+  //       console.log('Go wherver you want');
+  //       return true;
+  //     }
+  //
+  //     // In other cases redirect user to login state.
+  //     console.log('Stop! Log in!');
+  //     return state.target('login', null, {location: 'replace', reload: true});
+  //   });
+  // }
 
   /**
    * Sends a token refresh request to the backend. In case user is not logged in with token nothing
    * will happen.
    */
-  refreshToken(): Promise<string | K8sError[] | boolean> {
+  refreshToken(): void {
     const token = this.getTokenCookie_();
-    if (token.length === 0) return Promise.resolve(true);
+    if (token.length === 0) return;
 
-    const tokenRefreshObs = this.csrfTokenService_
+    this.csrfTokenService_
       .getTokenForAction('token')
-      .switchMap<CsrfToken, AuthResponse>(csrfToken => {
-        return this.http_.post<AuthResponse>(
-          'api/v1/token/refresh',
-          { jweToken: token },
-          {
-            headers: new HttpHeaders().set(
-              this.config_.csrfHeaderName,
-              csrfToken.token
-            ),
-          }
-        );
-      });
-
-    return tokenRefreshObs.toPromise().then<string | K8sError[]>(
-      authResponse => {
+      .pipe(
+        switchMap(csrfToken => {
+          return this.http_.post<AuthResponse>(
+            'api/v1/token/refresh',
+            { jweToken: token },
+            {
+              headers: new HttpHeaders().set(
+                this.config_.csrfHeaderName,
+                csrfToken.token
+              ),
+            }
+          );
+        })
+      )
+      .pipe(first())
+      .subscribe((authResponse: AuthResponse) => {
         if (
           authResponse.jweToken.length !== 0 &&
           authResponse.errors.length === 0
@@ -198,11 +191,7 @@ export class AuthService {
         }
 
         return authResponse.errors;
-      },
-      err => {
-        return err;
-      }
-    );
+      });
   }
 
   /** Checks if user is authenticated. */

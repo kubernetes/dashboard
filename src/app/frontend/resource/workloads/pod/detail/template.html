@@ -44,7 +44,8 @@ limitations under the License.
       <div key
            i18n>Node</div>
       <a value
-         [href]="getNodeHref(pod.nodeName)">{{pod.nodeName}}</a>
+         [routerLink]="getNodeHref(pod.nodeName)"
+         queryParamsHandling="preserve">{{pod.nodeName}}</a>
     </kd-property>
 
     <kd-property *ngIf="pod?.podPhase">

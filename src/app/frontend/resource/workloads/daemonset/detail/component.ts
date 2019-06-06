@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { DaemonSetDetail } from '@api/backendapi';
-import { StateService } from '@uirouter/core';
 import { Subscription } from 'rxjs/Subscription';
 
 import {
@@ -34,7 +34,10 @@ import { NamespacedResourceService } from '../../../../common/services/resource/
 })
 export class DaemonSetDetailComponent implements OnInit, OnDestroy {
   private daemonSetSubscription_: Subscription;
-  private name_: string;
+  private readonly endpoint_ = EndpointManager.resource(
+    Resource.daemonSet,
+    true
+  );
   daemonSet: DaemonSetDetail;
   isInitialized = false;
   eventListEndpoint: string;
@@ -44,31 +47,33 @@ export class DaemonSetDetailComponent implements OnInit, OnDestroy {
   constructor(
     private readonly daemonSet_: NamespacedResourceService<DaemonSetDetail>,
     private readonly actionbar_: ActionbarService,
-    private readonly state_: StateService,
+    private readonly activatedRoute_: ActivatedRoute,
     private readonly notifications_: NotificationsService
   ) {}
 
   ngOnInit(): void {
-    this.name_ = this.state_.params.resourceName;
-    this.eventListEndpoint = EndpointManager.resource(
-      Resource.daemonSet,
-      true
-    ).child(this.name_, Resource.event);
-    this.podListEndpoint = EndpointManager.resource(
-      Resource.daemonSet,
-      true
-    ).child(this.name_, Resource.pod);
-    this.serviceListEndpoint = EndpointManager.resource(
-      Resource.daemonSet,
-      true
-    ).child(this.name_, Resource.service);
+    const resourceName = this.activatedRoute_.snapshot.params.resourceName;
+    const resourceNamespace = this.activatedRoute_.snapshot.params
+      .resourceNamespace;
+
+    this.eventListEndpoint = this.endpoint_.child(
+      resourceName,
+      Resource.event,
+      resourceNamespace
+    );
+    this.podListEndpoint = this.endpoint_.child(
+      resourceName,
+      Resource.pod,
+      resourceNamespace
+    );
+    this.serviceListEndpoint = this.endpoint_.child(
+      resourceName,
+      Resource.service,
+      resourceNamespace
+    );
 
     this.daemonSetSubscription_ = this.daemonSet_
-      .get(
-        EndpointManager.resource(Resource.daemonSet, true).detail(),
-        this.name_
-      )
-      .startWith({})
+      .get(this.endpoint_.detail(), resourceName, resourceNamespace)
       .subscribe((d: DaemonSetDetail) => {
         this.daemonSet = d;
         this.notifications_.pushErrors(d.errors);

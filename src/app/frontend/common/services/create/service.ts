@@ -15,17 +15,16 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material';
+import { Router } from '@angular/router';
 import {
   AppDeploymentContentResponse,
   AppDeploymentContentSpec,
   AppDeploymentSpec,
 } from '@api/backendapi';
-import { StateService } from '@uirouter/core';
-import { NAMESPACE_STATE_PARAM } from '../../../common/params/params';
-import { Config, CONFIG_DI_TOKEN } from '../../../index.config';
-import { overviewState } from '../../../overview/state';
 
+import { Config, CONFIG_DI_TOKEN } from '../../../index.config';
 import { AlertDialog, AlertDialogConfig } from '../../dialogs/alert/dialog';
+import { NAMESPACE_STATE_PARAM } from '../../params/params';
 import { CsrfTokenService } from '../global/csrftoken';
 import { NamespaceService } from '../global/namespace';
 
@@ -58,7 +57,7 @@ export class CreateService {
     private readonly namespace_: NamespaceService,
     private readonly csrfToken_: CsrfTokenService,
     private readonly matDialog_: MatDialog,
-    private readonly stateService_: StateService,
+    private readonly router_: Router,
     @Inject(CONFIG_DI_TOKEN) private readonly CONFIG: Config
   ) {}
 
@@ -104,7 +103,7 @@ export class CreateService {
       this.reportError(i18n.MSG_DEPLOY_DIALOG_ERROR, error.error);
       throw error;
     } else {
-      this.stateService_.go(overviewState.name);
+      this.router_.navigate(['overview']);
     }
 
     return response;
@@ -133,8 +132,8 @@ export class CreateService {
       this.reportError(i18n.MSG_DEPLOY_DIALOG_ERROR, error.error);
       throw error;
     } else {
-      this.stateService_.go(overviewState.name, {
-        [NAMESPACE_STATE_PARAM]: spec.namespace,
+      this.router_.navigate(['overview'], {
+        queryParams: { [NAMESPACE_STATE_PARAM]: spec.namespace },
       });
     }
 

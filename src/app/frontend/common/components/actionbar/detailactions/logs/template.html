@@ -19,6 +19,7 @@ limitations under the License.
    class="kd-toolbar-action"
    i18n-matTooltip
    matTooltip="View logs"
-   [href]="getHref()">
+   [routerLink]="getHref()"
+   queryParamsHandling="preserve">
   <mat-icon>subject</mat-icon>
 </a>

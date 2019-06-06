@@ -60,7 +60,8 @@ limitations under the License.
                          i18n>Name</mat-header-cell>
         <mat-cell *matCellDef="let job">
           <a (click)="$event.stopPropagation()"
-             [href]="getDetailsHref(job.objectMeta.name, job.objectMeta.namespace)">
+             [routerLink]="getDetailsHref(job.objectMeta.name, job.objectMeta.namespace)"
+             queryParamsHandling="preserve">
             {{job.objectMeta.name}}
           </a>
         </mat-cell>

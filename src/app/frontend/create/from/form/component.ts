@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormArray,
@@ -22,6 +22,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDialog } from '@angular/material';
+import { ActivatedRoute } from '@angular/router';
 import {
   AppDeploymentSpec,
   EnvironmentVariable,
@@ -31,12 +32,10 @@ import {
   Protocols,
   SecretList,
 } from '@api/backendapi';
-import { StateService } from '@uirouter/core';
 
 import { CreateService } from '../../../common/services/create/service';
 import { HistoryService } from '../../../common/services/global/history';
 import { NamespaceService } from '../../../common/services/global/namespace';
-import { overviewState } from '../../../overview/state';
 
 import { CreateNamespaceDialog } from './createnamespace/dialog';
 import { CreateSecretDialog } from './createsecret/dialog';
@@ -69,7 +68,7 @@ export class CreateFromFormComponent implements OnInit {
     private readonly create_: CreateService,
     private readonly history_: HistoryService,
     private readonly http_: HttpClient,
-    private readonly state_: StateService,
+    private readonly route_: ActivatedRoute,
     private readonly fb_: FormBuilder,
     private readonly dialog_: MatDialog
   ) {}
@@ -86,7 +85,10 @@ export class CreateFromFormComponent implements OnInit {
         Validators.compose([Validators.required, FormValidators.isInteger]),
       ],
       description: [''],
-      namespace: [this.state_.params.namespace || '', Validators.required],
+      namespace: [
+        this.route_.snapshot.params.namespace || '',
+        Validators.required,
+      ],
       imagePullSecret: [''],
       cpuRequirement: [
         '',
@@ -122,7 +124,7 @@ export class CreateFromFormComponent implements OnInit {
       );
       this.namespace.patchValue(
         !this.namespace_.areMultipleNamespacesSelected()
-          ? this.state_.params.namespace || this.namespaces[0]
+          ? this.route_.snapshot.params.namespace || this.namespaces[0]
           : this.namespaces[0]
       );
     });
@@ -210,7 +212,7 @@ export class CreateFromFormComponent implements OnInit {
   }
 
   cancel(): void {
-    this.history_.goToPreviousState(overviewState.name);
+    this.history_.goToPreviousState('overview');
   }
 
   areMultipleNamespacesSelected(): boolean {

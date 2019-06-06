@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { NodeAddress, NodeDetail, NodeTaint } from '@api/backendapi';
-import { StateService } from '@uirouter/core';
 import { Subscription } from 'rxjs/Subscription';
 
 import {
@@ -35,7 +35,7 @@ import { ResourceService } from '../../../../common/services/resource/resource';
 })
 export class NodeDetailComponent implements OnInit, OnDestroy {
   private nodeSubscription_: Subscription;
-  private nodeName_: string;
+  private readonly endpoint_ = EndpointManager.resource(Resource.node);
   node: NodeDetail;
   isInitialized = false;
   podListEndpoint: string;
@@ -44,22 +44,18 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
   constructor(
     private readonly node_: ResourceService<NodeDetail>,
     private readonly actionbar_: ActionbarService,
-    private readonly state_: StateService,
+    private readonly activatedRoute_: ActivatedRoute,
     private readonly notifications_: NotificationsService
   ) {}
 
   ngOnInit(): void {
-    this.nodeName_ = this.state_.params.resourceName;
-    this.podListEndpoint = EndpointManager.resource(Resource.node).child(
-      this.nodeName_,
-      Resource.pod
-    );
-    this.eventListEndpoint = EndpointManager.resource(
-      Resource.node,
-      false
-    ).child(this.nodeName_, Resource.event);
+    const resourceName = this.activatedRoute_.snapshot.params.resourceName;
+
+    this.podListEndpoint = this.endpoint_.child(resourceName, Resource.pod);
+    this.eventListEndpoint = this.endpoint_.child(resourceName, Resource.event);
+
     this.nodeSubscription_ = this.node_
-      .get(EndpointManager.resource(Resource.node).detail(), this.nodeName_)
+      .get(this.endpoint_.detail(), resourceName)
       .subscribe((d: NodeDetail) => {
         this.node = d;
         this.notifications_.pushErrors(d.errors);

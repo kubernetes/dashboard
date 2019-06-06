@@ -57,7 +57,8 @@ limitations under the License.
                          i18n>Name</mat-header-cell>
         <mat-cell *matCellDef="let daemonSet">
           <a (click)="$event.stopPropagation()"
-             [href]="getDetailsHref(daemonSet.objectMeta.name, daemonSet.objectMeta.namespace)">
+             [routerLink]="getDetailsHref(daemonSet.objectMeta.name, daemonSet.objectMeta.namespace)"
+             queryParamsHandling="preserve">
             {{daemonSet.objectMeta.name}}
           </a>
         </mat-cell>

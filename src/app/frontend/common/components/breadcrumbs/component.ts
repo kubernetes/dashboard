@@ -12,107 +12,154 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Component, Input, OnInit } from '@angular/core';
-import { Breadcrumb } from '@api/frontendapi';
+import { Component, OnInit } from '@angular/core';
 import {
-  StateDeclaration,
-  StateObject,
-  StateService,
-  TransitionService,
-} from '@uirouter/core';
-import { BreadcrumbsService } from '../../services/global/breadcrumbs';
+  ActivatedRoute,
+  NavigationEnd,
+  Params,
+  Route,
+  Router,
+} from '@angular/router';
+import { Breadcrumb } from '@api/frontendapi';
+import { POD_DETAIL_ROUTE } from '../../../resource/workloads/pod/routing';
 
-/**
- * Should be used only within actionbar component.
- *
- * In order to define custom label for the state add: `'kdBreadcrumbs':{'label':'myLabel'}`
- * to the state config. This label will be used instead of default state name when displaying
- * breadcrumbs.
- *
- * In order to define custom parent for the state add: `'kdBreadcrumbs`:{'parent':'myParentState'}`
- * to the state config. Parent state will be looked up by this name if it's defined.
- *
- * Additionally labels can be interpolated. This applies only to the last state in the
- * breadcrumb chain, i.e. for given state chain `StateA > StateB > StateC`, only StateC can use
- * following convention: `'kdBreadcrumbs`:{'label':'paramX'}`. Note that 'paramX' has to be a part
- * of state params object to be correctly interpolated.
- *
- * Example state config:
- * $stateProvider.state(stateName, {
- *   url: '...',
- *   data: {
- *      'kdBreadcrumbs': {
- *        'label': 'paramX',
- *        'parent': 'parentState',
- *      },
- *   },
- *   views: {
- *     '': {
- *       controller: SomeCtrlA,
- *       controllerAs: 'ctrl',
- *       templateUrl: '...',
- *     },
- *     'actionbar': {
- *       controller: SomeCtrlB,
- *       controllerAs: 'ctrl',
- *       templateUrl: '...',
- *     },
- *   },
- * });
- */
+export const LOGS_PARENT_PLACEHOLDER = '___LOGS_PARENT_PLACEHOLDER___';
+export const EXEC_PARENT_PLACEHOLDER = '___EXEC_PARENT_PLACEHOLDER___';
+
 @Component({
   selector: 'kd-breadcrumbs',
   templateUrl: './template.html',
   styleUrls: ['./style.scss'],
 })
 export class BreadcrumbsComponent implements OnInit {
-  @Input() limit: number;
   breadcrumbs: Breadcrumb[];
+
   constructor(
-    private readonly state_: StateService,
-    private readonly transition_: TransitionService,
-    private readonly breadcrumbs_: BreadcrumbsService
+    private readonly _router: Router,
+    private readonly _activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.initBreadcrumbs_();
-    this.transition_.onSuccess({}, () => {
-      this.initBreadcrumbs_();
-    });
+    this._registerNavigationHook();
   }
 
-  /** Initializes breadcrumbs array by traversing states parents until none is found. */
-  initBreadcrumbs_(): void {
-    let state: StateObject | StateDeclaration = this.state_.$current;
-    const breadcrumbs: Breadcrumb[] = [];
+  private _registerNavigationHook(): void {
+    this._router.events
+      .filter(event => event instanceof NavigationEnd)
+      .distinctUntilChanged()
+      .subscribe(() => {
+        this._initBreadcrumbs();
+      });
+  }
 
-    while (state && state.name && this.canAddBreadcrumb_(breadcrumbs)) {
-      const breadcrumb = this.getBreadcrumb_(state);
+  private _initBreadcrumbs(): void {
+    const currentRoute = this._getCurrentRoute();
+    const url = this._router.url.includes('?')
+      ? this._router.url.split('?')[0]
+      : '';
+    let urlArray = url.split('/');
+    let routeParamsCount = currentRoute.routeConfig.path.split('/').length;
 
-      if (breadcrumb.label) {
-        breadcrumbs.push(breadcrumb);
+    this.breadcrumbs = [
+      {
+        label: this._getBreadcrumbLabel(
+          currentRoute.routeConfig,
+          currentRoute.snapshot.params
+        ),
+        stateLink: currentRoute.routeConfig.data.link
+          ? currentRoute.routeConfig.data.link
+          : urlArray,
+      },
+    ];
+
+    let route: Route;
+    if (
+      currentRoute &&
+      currentRoute.routeConfig &&
+      currentRoute.routeConfig.data &&
+      currentRoute.routeConfig.data.parent
+    ) {
+      if (currentRoute.routeConfig.data.parent === LOGS_PARENT_PLACEHOLDER) {
+        route = this._getLogsParent(currentRoute.snapshot.params);
+        urlArray = [
+          '',
+          urlArray[urlArray.length - 1],
+          urlArray[urlArray.length - 3],
+          urlArray[urlArray.length - 2],
+        ];
+        routeParamsCount = 0;
+      } else if (
+        currentRoute.routeConfig.data.parent === EXEC_PARENT_PLACEHOLDER
+      ) {
+        route = POD_DETAIL_ROUTE;
+        urlArray = [
+          '',
+          'pod',
+          urlArray[urlArray.length - 2],
+          urlArray[urlArray.length - 1],
+        ];
+        routeParamsCount = 0;
+      } else {
+        route = currentRoute.routeConfig.data.parent;
       }
 
-      state = this.breadcrumbs_.getParentState(state);
+      while (route) {
+        // Trim URL by number of path parameters defined on previous route.
+        urlArray = urlArray.slice(0, urlArray.length - routeParamsCount);
+        routeParamsCount = route.path.split('/').length;
+
+        this.breadcrumbs.push({
+          label: this._getBreadcrumbLabel(route, currentRoute.snapshot.params),
+          stateLink: route.data.link ? route.data.link : urlArray,
+        });
+
+        // Explore the route tree to the root route (parent references have to be defined by us on
+        // each route).
+        if (route && route.data && route.data.parent) {
+          route = route.data.parent;
+        } else {
+          break;
+        }
+      }
     }
 
-    this.breadcrumbs = breadcrumbs.reverse();
+    this.breadcrumbs.reverse();
   }
 
-  /**
-   * Returns true if limit is undefined or limit is defined and breadcrumbs count is smaller or
-   * equal to the limit.
-   */
-  private canAddBreadcrumb_(breadcrumbs: Breadcrumb[]): boolean {
-    return this.limit === undefined || this.limit > breadcrumbs.length;
+  private _getLogsParent(params: Params): Route | undefined {
+    const resourceType = params['resourceType'];
+    if (resourceType === 'pod') {
+      return POD_DETAIL_ROUTE;
+    } else {
+      return undefined;
+    }
   }
 
-  private getBreadcrumb_(state: StateObject | StateDeclaration): Breadcrumb {
-    const breadcrumb = new Breadcrumb();
+  private _getCurrentRoute(): ActivatedRoute {
+    let route = this._activatedRoute.root;
+    while (route && route.firstChild) {
+      route = route.firstChild;
+    }
+    return route;
+  }
 
-    breadcrumb.label = this.breadcrumbs_.getDisplayName(state);
-    breadcrumb.stateLink = this.state_.href(state.name, this.state_.params);
-
-    return breadcrumb;
+  // TODO: When state search is active use specific logic to display custom breadcrumb:
+  //  if (state.url[0].path === searchState.name) {
+  //    const query = stateParams[SEARCH_QUERY_STATE_PARAM];
+  //    return `Search for "${query}"`;
+  //  }
+  private _getBreadcrumbLabel(route: Route, params: Params) {
+    if (route && route.data && route.data.breadcrumb) {
+      let breadcrumb = route.data.breadcrumb as string;
+      if (breadcrumb.startsWith('{{') && breadcrumb.endsWith('}}')) {
+        breadcrumb = breadcrumb.slice(2, breadcrumb.length - 2).trim();
+        breadcrumb = params[breadcrumb];
+      }
+      return breadcrumb;
+    } else if (route && route.component) {
+      return route.component.name;
+    } else {
+      return 'Unknown';
+    }
   }
 }

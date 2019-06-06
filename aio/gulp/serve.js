@@ -94,7 +94,7 @@ gulp.task('kill-backend', (doneFn) => {
  * Watches for changes in source files and runs Gulp tasks to rebuild them.
  */
 gulp.task('watch', () => {
-  gulp.watch(path.join(conf.paths.backendSrc, '**/*.go'), gulp.parallel('spawn-backend'));
+  gulp.watch(path.join(conf.paths.backendSrc, '**/*.go'), gulp.parallel('spawn-backend', 'watch'));
 });
 
 /**

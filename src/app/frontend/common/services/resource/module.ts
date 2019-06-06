@@ -13,9 +13,11 @@
 // limitations under the License.
 
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { NamespacedResourceService, ResourceService } from './resource';
 
 @NgModule({
+  imports: [RouterModule],
   providers: [ResourceService, NamespacedResourceService],
 })
 export class ResourceModule {}

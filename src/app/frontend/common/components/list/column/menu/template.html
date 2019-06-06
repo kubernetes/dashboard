@@ -17,11 +17,13 @@ limitations under the License.
 <mat-menu #actions="matMenu">
   <a mat-menu-item
      *ngIf="isLogsEnabled()"
-     [href]="getLogsHref()"
+     [routerLink]="getLogsHref()"
+     queryParamsHandling="preserve"
      i18n>Logs</a>
   <a mat-menu-item
      *ngIf="isExecEnabled()"
-     [href]="getExecHref()"
+     [routerLink]="getExecHref()"
+     queryParamsHandling="preserve"
      i18n>Exec</a>
   <button mat-menu-item
           *ngIf="isTriggerEnabled()"

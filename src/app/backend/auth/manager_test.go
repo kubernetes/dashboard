@@ -15,17 +15,18 @@
 package auth
 
 import (
-	"errors"
 	"reflect"
 	"testing"
 	"time"
 
 	restful "github.com/emicklei/go-restful"
+
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
+
 	v1 "k8s.io/api/authorization/v1"
-	k8sErrors "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
@@ -96,7 +97,7 @@ func (self *fakeTokenManager) Decrypt(jweToken string) (*api.AuthInfo, error) {
 }
 
 func TestAuthManager_Login(t *testing.T) {
-	unauthorizedErr := k8sErrors.NewUnauthorized("Unauthorized")
+	unauthorizedErr := errors.NewUnauthorized("Unauthorized")
 
 	cases := []struct {
 		info        string
@@ -112,7 +113,7 @@ func TestAuthManager_Login(t *testing.T) {
 			&fakeClientManager{HasAccessError: nil},
 			&fakeTokenManager{},
 			nil,
-			errors.New("Not enough data to create authenticator."),
+			errors.NewInvalid("Not enough data to create authenticator."),
 		}, {
 			"Not recognized token should throw unauthorized error",
 			&authApi.LoginSpec{Token: "not-existing-token"},
@@ -130,10 +131,10 @@ func TestAuthManager_Login(t *testing.T) {
 		}, {
 			"Should propagate error on unexpected error",
 			&authApi.LoginSpec{Token: "test-token"},
-			&fakeClientManager{HasAccessError: errors.New("Unexpected error")},
+			&fakeClientManager{HasAccessError: errors.NewInvalid("Unexpected error")},
 			&fakeTokenManager{},
 			&authApi.AuthResponse{Errors: make([]error, 0)},
-			errors.New("Unexpected error"),
+			errors.NewInvalid("Unexpected error"),
 		},
 	}
 

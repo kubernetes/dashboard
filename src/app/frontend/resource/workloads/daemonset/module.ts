@@ -13,26 +13,21 @@
 // limitations under the License.
 
 import { NgModule } from '@angular/core';
-import { UIRouterModule } from '@uirouter/angular';
 
 import { ComponentsModule } from '../../../common/components/module';
 import { SharedModule } from '../../../shared.module';
 
 import { ActionbarComponent } from './detail/actionbar/component';
 import { DaemonSetDetailComponent } from './detail/component';
-import { daemonSetDetailState } from './detail/state';
-import { DaemonSetList } from './list/component';
-import { daemonSetListState } from './list/state';
-import { daemonSetState } from './state';
+import { DaemonSetListComponent } from './list/component';
+import { DaemonSetRoutingModule } from './routing';
 
 @NgModule({
-  imports: [
-    SharedModule,
-    ComponentsModule,
-    UIRouterModule.forChild({
-      states: [daemonSetState, daemonSetListState, daemonSetDetailState],
-    }),
+  imports: [SharedModule, ComponentsModule, DaemonSetRoutingModule],
+  declarations: [
+    DaemonSetListComponent,
+    DaemonSetDetailComponent,
+    ActionbarComponent,
   ],
-  declarations: [DaemonSetList, DaemonSetDetailComponent, ActionbarComponent],
 })
 export class DaemonSetModule {}

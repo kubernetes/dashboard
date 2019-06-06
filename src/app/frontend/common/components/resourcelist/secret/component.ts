@@ -14,12 +14,9 @@
 
 import { HttpParams } from '@angular/common/http';
 import { Component, Input } from '@angular/core';
-import { StateService } from '@uirouter/core';
 import { Observable } from 'rxjs/Observable';
 import { Secret, SecretList } from 'typings/backendapi';
-import { secretState } from '../../../../resource/config/secret/state';
 import { ResourceListBase } from '../../../resources/list';
-import { NamespaceService } from '../../../services/global/namespace';
 import { NotificationsService } from '../../../services/global/notifications';
 import { EndpointManager, Resource } from '../../../services/resource/endpoint';
 import { NamespacedResourceService } from '../../../services/resource/resource';
@@ -31,12 +28,10 @@ export class SecretListComponent extends ResourceListBase<SecretList, Secret> {
   @Input() endpoint = EndpointManager.resource(Resource.secret, true).list();
 
   constructor(
-    state: StateService,
     private readonly secret_: NamespacedResourceService<SecretList>,
-    notifications: NotificationsService,
-    private readonly namespaceService_: NamespaceService
+    notifications: NotificationsService
   ) {
-    super(secretState.name, state, notifications);
+    super('secret', notifications);
     this.id = ListIdentifiers.secret;
     this.groupId = ListGroupIdentifiers.config;
 
@@ -52,7 +47,7 @@ export class SecretListComponent extends ResourceListBase<SecretList, Secret> {
   }
 
   getResourceObservable(params?: HttpParams): Observable<SecretList> {
-    return this.secret_.get(this.endpoint, undefined, params);
+    return this.secret_.get(this.endpoint, undefined, undefined, params);
   }
 
   map(secretList: SecretList): Secret[] {

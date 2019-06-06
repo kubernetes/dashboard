@@ -13,25 +13,16 @@
 // limitations under the License.
 
 import { NgModule } from '@angular/core';
-import { UIRouterModule } from '@uirouter/angular';
 
 import { ComponentsModule } from '../../../common/components/module';
 import { SharedModule } from '../../../shared.module';
 
 import { ConfigMapDetailComponent } from './detail/component';
-import { configMapDetailState } from './detail/state';
-import { ConfigMapList } from './list/component';
-import { configMapListState } from './list/state';
-import { configMapState } from './state';
+import { ConfigMapListComponent } from './list/component';
+import { ConfigMapRoutingModule } from './routing';
 
 @NgModule({
-  imports: [
-    SharedModule,
-    ComponentsModule,
-    UIRouterModule.forChild({
-      states: [configMapState, configMapListState, configMapDetailState],
-    }),
-  ],
-  declarations: [ConfigMapList, ConfigMapDetailComponent],
+  imports: [SharedModule, ComponentsModule, ConfigMapRoutingModule],
+  declarations: [ConfigMapListComponent, ConfigMapDetailComponent],
 })
 export class ConfigMapModule {}

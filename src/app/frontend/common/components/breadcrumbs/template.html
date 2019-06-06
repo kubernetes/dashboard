@@ -17,15 +17,13 @@ limitations under the License.
 <div class="kd-breadcrumbs-container kd-accent"
      fxFlex="auto">
   <div *ngFor="let breadcrumb of breadcrumbs; let last = last"
-       [ngSwitch]="last"
        [ngClass]="{'kd-inline-breadcrumb': !last}">
-    <a *ngSwitchCase="false"
-       [href]="breadcrumb.stateLink"
-       class="kd-faded-breadcrumb">
+    <a [routerLink]="breadcrumb.stateLink"
+       queryParamsHandling="preserve"
+       [ngClass]="{'kd-faded-breadcrumb': !last}">
       {{breadcrumb.label}}
     </a>
-    <div *ngSwitchCase="true">{{breadcrumb.label}}</div>
-    <mat-icon *ngSwitchCase="false"
+    <mat-icon *ngIf="!last"
               class="kd-faded-breadcrumb kd-breadcrumb-divider">
       keyboard_arrow_right
     </mat-icon>

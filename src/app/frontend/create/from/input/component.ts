@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Component, Input, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { CreateService } from '../../../common/services/create/service';
 import { HistoryService } from '../../../common/services/global/history';
 import { NamespaceService } from '../../../common/services/global/namespace';
-import { overviewState } from '../../../overview/state';
 
 @Component({
   selector: 'kd-create-from-input',
@@ -46,7 +45,7 @@ export class CreateFromInputComponent {
   }
 
   cancel(): void {
-    this.history_.goToPreviousState(overviewState.name);
+    this.history_.goToPreviousState('overview');
   }
 
   areMultipleNamespacesSelected(): boolean {

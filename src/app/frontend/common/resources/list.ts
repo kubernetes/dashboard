@@ -28,6 +28,7 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { Router } from '@angular/router';
 import { Event as KdEvent, Resource, ResourceList } from '@api/backendapi';
 import {
   ActionColumn,
@@ -36,19 +37,18 @@ import {
   ColumnWhenCondition,
   OnListChangeEvent,
 } from '@api/frontendapi';
-import { StateService } from '@uirouter/core';
+import { Subject } from 'rxjs';
 import { Observable, ObservableInput } from 'rxjs/Observable';
 import { merge } from 'rxjs/observable/merge';
-import { startWith, switchMap } from 'rxjs/operators';
-import { Subscription } from 'rxjs/Subscription';
-
-import { searchState } from '../../search/state';
+import { startWith, switchMap, takeUntil } from 'rxjs/operators';
 import { CardListFilterComponent } from '../components/list/filter/component';
 import { RowDetailComponent } from '../components/list/rowdetail/component';
 import { SEARCH_QUERY_STATE_PARAM } from '../params/params';
 import { GlobalSettingsService } from '../services/global/globalsettings';
 import { GlobalServicesModule } from '../services/global/module';
+import { NamespaceService } from '../services/global/namespace';
 import { NotificationsService } from '../services/global/notifications';
+import { ParamsService } from '../services/global/params';
 import { KdStateService } from '../services/global/state';
 
 export abstract class ResourceListBase<
@@ -58,13 +58,19 @@ export abstract class ResourceListBase<
   // Base properties
   private readonly actionColumns_: Array<ActionColumnDef<ActionColumn>> = [];
   private readonly data_ = new MatTableDataSource<R>();
-  private dataSubscription_: Subscription;
+  private listUpdates_ = new Subject();
+  private unsubscribe_ = new Subject();
+  private loaded_ = false;
   private readonly dynamicColumns_: ColumnWhenCondition[] = [];
+  private paramsService_: ParamsService;
+  private router_: Router;
   protected readonly kdState_: KdStateService;
   protected readonly settingsService_: GlobalSettingsService;
 
+  protected readonly namespaceService_: NamespaceService;
   isLoading = false;
   totalItems = 0;
+
   get itemsPerPage(): number {
     return this.settingsService_.getItemsPerPage();
   }
@@ -84,15 +90,19 @@ export abstract class ResourceListBase<
   @ViewChild(CardListFilterComponent, { static: true })
   private readonly cardFilter_: CardListFilterComponent;
 
-  constructor(
+  protected constructor(
     private readonly stateName_: string,
-    private readonly state_: StateService,
     private readonly notifications_: NotificationsService
   ) {
     this.settingsService_ = GlobalServicesModule.injector.get(
       GlobalSettingsService
     );
     this.kdState_ = GlobalServicesModule.injector.get(KdStateService);
+    this.namespaceService_ = GlobalServicesModule.injector.get(
+      NamespaceService
+    );
+    this.paramsService_ = GlobalServicesModule.injector.get(ParamsService);
+    this.router_ = GlobalServicesModule.injector.get(Router);
   }
 
   ngOnInit(): void {
@@ -104,31 +114,38 @@ export abstract class ResourceListBase<
       throw Error('MatPaginator has to be defined on a table.');
     }
 
-    let loadingTimeout: NodeJS.Timer;
-    this.dataSubscription_ = this.getObservableWithDataSelect_()
+    this.namespaceService_.onNamespaceChangeEvent.subscribe(() => {
+      this.isLoading = true;
+      this.listUpdates_.next();
+    });
+
+    this.paramsService_.onParamChange.subscribe(() => {
+      this.isLoading = true;
+      this.listUpdates_.next();
+    });
+
+    this.getObservableWithDataSelect_()
+      .pipe(takeUntil(this.unsubscribe_))
+      .pipe(startWith({}))
       .pipe(
-        startWith({}),
         switchMap(() => {
-          loadingTimeout = setTimeout(() => {
-            this.isLoading = true;
-          }, 100);
+          this.isLoading = true;
           return this.getResourceObservable(this.getDataSelectParams_());
         })
       )
       .subscribe((data: T) => {
         this.notifications_.pushErrors(data.errors);
         this.totalItems = data.listMeta.totalItems;
-        this.isLoading = false;
         this.data_.data = this.map(data);
-        clearTimeout(loadingTimeout);
+        this.isLoading = false;
+        this.loaded_ = true;
         this.onListChange_(data);
       });
   }
 
   ngOnDestroy(): void {
-    if (this.dataSubscription_) {
-      this.dataSubscription_.unsubscribe();
-    }
+    this.unsubscribe_.next();
+    this.unsubscribe_.complete();
   }
 
   getDetailsHref(resourceName: string, namespace?: string): string {
@@ -217,7 +234,7 @@ export abstract class ResourceListBase<
       obsInput.push(this.cardFilter_.filterEvent);
     }
 
-    return merge(...obsInput);
+    return merge(...obsInput, this.listUpdates_ as Subject<E>);
   }
 
   private getDataSelectParams_(): HttpParams {
@@ -277,8 +294,8 @@ export abstract class ResourceListBase<
     }
 
     let filterByQuery = result.get('filterBy') || '';
-    if (this.state_.current.name === searchState.name) {
-      const query = this.state_.params[SEARCH_QUERY_STATE_PARAM];
+    if (this.router_.routerState.snapshot.url.startsWith('/search')) {
+      const query = this.paramsService_.getQueryParam(SEARCH_QUERY_STATE_PARAM);
       if (query) {
         if (filterByQuery) {
           filterByQuery += ',';
@@ -319,12 +336,7 @@ export abstract class ResourceListBase<
   }
 
   private mapToBackendValue_(sortByColumnName: string): string {
-    switch (sortByColumnName) {
-      case 'age':
-        return 'creationTimestamp';
-      default:
-        return sortByColumnName;
-    }
+    return sortByColumnName === 'age' ? 'creationTimestamp' : sortByColumnName;
   }
 
   private onListChange_(data: T): void {
@@ -344,7 +356,9 @@ export abstract class ResourceListBase<
   }
 
   protected abstract getDisplayColumns(): string[];
+
   abstract getResourceObservable(params?: HttpParams): Observable<T>;
+
   abstract map(value: T): R[];
 }
 
@@ -366,13 +380,12 @@ export abstract class ResourceListWithStatuses<
   expandedRow: number = undefined;
   hoveredRow: number = undefined;
 
-  constructor(
+  protected constructor(
     stateName: string,
-    state: StateService,
     private readonly notifications: NotificationsService,
     private readonly resolver_?: ComponentFactoryResolver
   ) {
-    super(stateName, state, notifications);
+    super(stateName, notifications);
 
     this.onChange.subscribe(this.clearExpandedRows_.bind(this));
   }

@@ -15,10 +15,10 @@
 package dataselect
 
 import (
-	"errors"
 	"log"
 	"sort"
 
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 )
 
@@ -129,12 +129,12 @@ func (self *DataSelector) getMetrics(metricClient metricapi.MetricClient) (
 	metricPromises := make([]metricapi.MetricPromises, 0)
 
 	if metricClient == nil {
-		return metricPromises, errors.New("No metric client provided. Skipping metrics.")
+		return metricPromises, errors.NewInternal("No metric client provided. Skipping metrics.")
 	}
 
 	metricNames := self.DataSelectQuery.MetricQuery.MetricNames
 	if metricNames == nil {
-		return metricPromises, errors.New("No metrics specified. Skipping metrics.")
+		return metricPromises, errors.NewInternal("No metrics specified. Skipping metrics.")
 	}
 
 	selectors := make([]metricapi.ResourceSelector, len(self.GenericDataList))

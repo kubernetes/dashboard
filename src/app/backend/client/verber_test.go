@@ -15,7 +15,6 @@
 package client
 
 import (
-	"errors"
 	"net/http"
 	"reflect"
 	"testing"
@@ -26,6 +25,8 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	runtimeserializer "k8s.io/apimachinery/pkg/runtime/serializer"
 	restclient "k8s.io/client-go/rest"
+
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 )
 
 type clientFunc func(req *http.Request) (*http.Response, error)
@@ -69,52 +70,52 @@ func (c *FakeRESTClient) Get() *restclient.Request {
 
 func TestDeleteShouldPropagateErrorsAndChoseClient(t *testing.T) {
 	verber := resourceVerber{
-		client:           &FakeRESTClient{err: errors.New("err")},
-		extensionsClient: &FakeRESTClient{err: errors.New("err from extensions")},
-		appsClient:       &FakeRESTClient{err: errors.New("err from apps")},
+		client:           &FakeRESTClient{err: errors.NewInvalid("err")},
+		extensionsClient: &FakeRESTClient{err: errors.NewInvalid("err from extensions")},
+		appsClient:       &FakeRESTClient{err: errors.NewInvalid("err from apps")},
 	}
 
 	err := verber.Delete("replicaset", true, "bar", "baz")
 
-	if !reflect.DeepEqual(err, errors.New("err from extensions")) {
+	if !reflect.DeepEqual(err, errors.NewInvalid("err from extensions")) {
 		t.Fatalf("Expected error on verber delete but got %#v", err.Error())
 	}
 
 	err = verber.Delete("service", true, "bar", "baz")
 
-	if !reflect.DeepEqual(err, errors.New("err")) {
+	if !reflect.DeepEqual(err, errors.NewInvalid("err")) {
 		t.Fatalf("Expected error on verber delete but got %#v", err)
 	}
 
 	err = verber.Delete("statefulset", true, "bar", "baz")
 
-	if !reflect.DeepEqual(err, errors.New("err from apps")) {
+	if !reflect.DeepEqual(err, errors.NewInvalid("err from apps")) {
 		t.Fatalf("Expected error on verber delete but got %#v", err)
 	}
 }
 
 func TestGetShouldPropagateErrorsAndChoseClient(t *testing.T) {
 	verber := resourceVerber{
-		client:           &FakeRESTClient{err: errors.New("err")},
-		extensionsClient: &FakeRESTClient{err: errors.New("err from extensions")},
-		appsClient:       &FakeRESTClient{err: errors.New("err from apps")},
+		client:           &FakeRESTClient{err: errors.NewInvalid("err")},
+		extensionsClient: &FakeRESTClient{err: errors.NewInvalid("err from extensions")},
+		appsClient:       &FakeRESTClient{err: errors.NewInvalid("err from apps")},
 	}
 
 	_, err := verber.Get("replicaset", true, "bar", "baz")
 
-	if !reflect.DeepEqual(err, errors.New("err from extensions")) {
+	if !reflect.DeepEqual(err, errors.NewInvalid("err from extensions")) {
 		t.Fatalf("Expected error on verber delete but got %#v", err)
 	}
 
 	_, err = verber.Get("service", true, "bar", "baz")
 
-	if !reflect.DeepEqual(err, errors.New("err")) {
+	if !reflect.DeepEqual(err, errors.NewInvalid("err")) {
 		t.Fatalf("Expected error on verber delete but got %#v", err)
 	}
 
 	_, err = verber.Get("statefulset", true, "bar", "baz")
 
-	if !reflect.DeepEqual(err, errors.New("err from apps")) {
+	if !reflect.DeepEqual(err, errors.NewInvalid("err from apps")) {
 		t.Fatalf("Expected error on verber delete but got %#v", err)
 	}
 }
@@ -124,7 +125,7 @@ func TestDeleteShouldThrowErrorOnUnknownResourceKind(t *testing.T) {
 
 	err := verber.Delete("foo", true, "bar", "baz")
 
-	if !reflect.DeepEqual(err, errors.New("Unknown resource kind: foo")) {
+	if !reflect.DeepEqual(err, errors.NewInvalid("Unknown resource kind: foo")) {
 		t.Fatalf("Expected error on verber delete but got %#v", err)
 	}
 }
@@ -134,7 +135,7 @@ func TestGetShouldThrowErrorOnUnknownResourceKind(t *testing.T) {
 
 	_, err := verber.Get("foo", true, "bar", "baz")
 
-	if !reflect.DeepEqual(err, errors.New("Unknown resource kind: foo")) {
+	if !reflect.DeepEqual(err, errors.NewInvalid("Unknown resource kind: foo")) {
 		t.Fatalf("Expected error on verber get but got %#v", err)
 	}
 }
@@ -144,7 +145,7 @@ func TestPutShouldThrowErrorOnUnknownResourceKind(t *testing.T) {
 
 	err := verber.Put("foo", false, "", "baz", nil)
 
-	if !reflect.DeepEqual(err, errors.New("Unknown resource kind: foo")) {
+	if !reflect.DeepEqual(err, errors.NewInvalid("Unknown resource kind: foo")) {
 		t.Fatalf("Expected error on verber put but got %#v", err)
 	}
 }
@@ -154,7 +155,7 @@ func TestGetShouldRespectNamespacednessOfResourceKind(t *testing.T) {
 
 	_, err := verber.Get("service", false, "", "baz")
 
-	if !reflect.DeepEqual(err, errors.New("Set no namespace for namespaced resource kind: service")) {
+	if !reflect.DeepEqual(err, errors.NewInvalid("Set no namespace for namespaced resource kind: service")) {
 		t.Fatalf("Expected error on verber get but got %#v", err)
 	}
 }
@@ -164,7 +165,7 @@ func TestPutShouldRespectNamespacednessOfResourceKind(t *testing.T) {
 
 	err := verber.Put("service", false, "", "baz", nil)
 
-	if !reflect.DeepEqual(err, errors.New("Set no namespace for namespaced resource kind: service")) {
+	if !reflect.DeepEqual(err, errors.NewInvalid("Set no namespace for namespaced resource kind: service")) {
 		t.Fatalf("Expected error on verber put but got %#v", err)
 	}
 }
@@ -174,7 +175,7 @@ func TestDeleteShouldRespectNamespacednessOfResourceKind(t *testing.T) {
 
 	err := verber.Delete("service", false, "", "baz")
 
-	if !reflect.DeepEqual(err, errors.New("Set no namespace for namespaced resource kind: service")) {
+	if !reflect.DeepEqual(err, errors.NewInvalid("Set no namespace for namespaced resource kind: service")) {
 		t.Fatalf("Expected error on verber delete but got %#v", err)
 	}
 }
@@ -184,7 +185,7 @@ func TestGetShouldRespectNotNamespacednessOfResourceKind(t *testing.T) {
 
 	_, err := verber.Get("namespace", true, "bar", "baz")
 
-	if !reflect.DeepEqual(err, errors.New("Set namespace for not-namespaced resource kind: namespace")) {
+	if !reflect.DeepEqual(err, errors.NewInvalid("Set namespace for not-namespaced resource kind: namespace")) {
 		t.Fatalf("Expected error on verber get but got %#v", err)
 	}
 }
@@ -194,7 +195,7 @@ func TestPutShouldRespectNotNamespacednessOfResourceKind(t *testing.T) {
 
 	err := verber.Put("namespace", true, "bar", "baz", nil)
 
-	if !reflect.DeepEqual(err, errors.New("Set namespace for not-namespaced resource kind: namespace")) {
+	if !reflect.DeepEqual(err, errors.NewInvalid("Set namespace for not-namespaced resource kind: namespace")) {
 		t.Fatalf("Expected error on verber put but got %#v", err)
 	}
 }
@@ -204,7 +205,7 @@ func TestDeleteShouldRespectNotNamespacednessOfResourceKind(t *testing.T) {
 
 	err := verber.Delete("namespace", true, "bar", "baz")
 
-	if !reflect.DeepEqual(err, errors.New("Set namespace for not-namespaced resource kind: namespace")) {
+	if !reflect.DeepEqual(err, errors.NewInvalid("Set namespace for not-namespaced resource kind: namespace")) {
 		t.Fatalf("Expected error on verber delete but got %#v", err)
 	}
 }

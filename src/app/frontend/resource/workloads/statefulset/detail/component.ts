@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { StatefulSetDetail } from '@api/backendapi';
-import { StateService } from '@uirouter/core';
 import { Subscription } from 'rxjs/Subscription';
 
 import {
@@ -22,7 +22,6 @@ import {
   ResourceMeta,
 } from '../../../../common/services/global/actionbar';
 import { NotificationsService } from '../../../../common/services/global/notifications';
-import { KdStateService } from '../../../../common/services/global/state';
 import {
   EndpointManager,
   Resource,
@@ -35,7 +34,10 @@ import { NamespacedResourceService } from '../../../../common/services/resource/
 })
 export class StatefulSetDetailComponent implements OnInit, OnDestroy {
   private statefulSetSubscription_: Subscription;
-  private statefulSetName_: string;
+  private readonly endpoint_ = EndpointManager.resource(
+    Resource.statefulSet,
+    true
+  );
   statefulSet: StatefulSetDetail;
   isInitialized = false;
   podListEndpoint: string;
@@ -44,26 +46,28 @@ export class StatefulSetDetailComponent implements OnInit, OnDestroy {
   constructor(
     private readonly statefulSet_: NamespacedResourceService<StatefulSetDetail>,
     private readonly actionbar_: ActionbarService,
-    private readonly state_: StateService,
+    private readonly activatedRoute_: ActivatedRoute,
     private readonly notifications_: NotificationsService
   ) {}
 
   ngOnInit(): void {
-    this.statefulSetName_ = this.state_.params.resourceName;
-    this.podListEndpoint = EndpointManager.resource(
-      Resource.statefulSet,
-      true
-    ).child(this.statefulSetName_, Resource.pod);
-    this.eventListEndpoint = EndpointManager.resource(
-      Resource.statefulSet,
-      true
-    ).child(this.statefulSetName_, Resource.event);
+    const resourceName = this.activatedRoute_.snapshot.params.resourceName;
+    const resourceNamespace = this.activatedRoute_.snapshot.params
+      .resourceNamespace;
+
+    this.podListEndpoint = this.endpoint_.child(
+      resourceName,
+      Resource.pod,
+      resourceNamespace
+    );
+    this.eventListEndpoint = this.endpoint_.child(
+      resourceName,
+      Resource.event,
+      resourceNamespace
+    );
+
     this.statefulSetSubscription_ = this.statefulSet_
-      .get(
-        EndpointManager.resource(Resource.statefulSet, true).detail(),
-        this.statefulSetName_
-      )
-      .startWith({})
+      .get(this.endpoint_.detail(), resourceName, resourceNamespace)
       .subscribe((d: StatefulSetDetail) => {
         this.statefulSet = d;
         this.notifications_.pushErrors(d.errors);

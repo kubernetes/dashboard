@@ -12,17 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Injectable } from '@angular/core';
-import { StateService } from '@uirouter/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { CONFIG } from '../../../index.config';
-import { NAMESPACE_STATE_PARAM } from '../../params/params';
 
 @Injectable()
 export class NamespaceService {
-  /**
-   * Default namespace.
-   */
-  private readonly defaultNamespace_ = CONFIG.defaultNamespace;
+  onNamespaceChangeEvent = new EventEmitter<string>();
+
   /**
    * Internal key for empty selection. To differentiate empty string from nulls.
    */
@@ -31,11 +27,24 @@ export class NamespaceService {
    * Regular expression for namespace validation.
    */
   private readonly namespaceRegex = /^([a-z0-9]([-a-z0-9]*[a-z0-9])?|_all)$/;
+  /**
+   * Holds the currently selected namespace.
+   */
+  private currentNamespace_ = '';
 
-  constructor(private readonly state_: StateService) {}
+  /**
+   * Holds namespace of currently selected resource or empty if not on details view.
+   */
+  private resourceNamespace_ = '';
+
+  constructor() {}
+
+  setCurrent(namespace: string) {
+    this.currentNamespace_ = namespace;
+  }
 
   current(): string {
-    return this.state_.params[NAMESPACE_STATE_PARAM] || this.defaultNamespace_;
+    return this.currentNamespace_ || CONFIG.defaultNamespace;
   }
 
   getAllNamespacesKey(): string {
@@ -43,7 +52,7 @@ export class NamespaceService {
   }
 
   getDefaultNamespace(): string {
-    return this.defaultNamespace_;
+    return CONFIG.defaultNamespace;
   }
 
   isNamespaceValid(namespace: string): boolean {
@@ -55,6 +64,16 @@ export class NamespaceService {
   }
 
   areMultipleNamespacesSelected(): boolean {
-    return this.current() === this.allNamespacesKey_;
+    return this.currentNamespace_
+      ? this.currentNamespace_ === this.allNamespacesKey_
+      : true;
+  }
+
+  getResourceNamespace(): string {
+    return this.resourceNamespace_;
+  }
+
+  setResourceNamespace(namespace: string) {
+    this.resourceNamespace_ = namespace;
   }
 }

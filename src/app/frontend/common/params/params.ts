@@ -12,9 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { KdError } from '@api/frontendapi';
-import { StateParams } from '@uirouter/core';
-
 /**
  * Parameter name of the namespace selection param. Mostly for internal use.
  */
@@ -29,65 +26,3 @@ export const SEARCH_QUERY_STATE_PARAM = 'q';
  * Parameter name of the logs container name.
  */
 export const LOGS_CONTAINER_STATE_PARAM = 'container';
-
-export class KdStateParams extends StateParams {
-  constructor(public resourceNamespace: string) {
-    super();
-  }
-}
-
-export class ResourceStateParams extends StateParams {
-  constructor(public resourceName: string) {
-    super();
-  }
-}
-
-export class NamespacedResourceStateParams extends KdStateParams {
-  constructor(resourceNamespace: string, public resourceName: string) {
-    super(resourceNamespace);
-  }
-}
-
-export class SearchStateParams extends StateParams {
-  constructor(public q: string) {
-    super();
-  }
-}
-
-export class LogsStateParams extends StateParams {
-  constructor(
-    public resourceNamespace: string,
-    public resourceName: string,
-    public resourceType: string
-  ) {
-    super();
-  }
-}
-
-export class ExecStateParams extends NamespacedResourceStateParams {
-  constructor(
-    resourceNamespace: string,
-    resourceName: string,
-    public containerName = ''
-  ) {
-    super(resourceNamespace, resourceName);
-  }
-}
-
-export class ErrorStateParams extends KdStateParams {
-  constructor(public error: KdError, resourceNamespace: string) {
-    super(resourceNamespace);
-  }
-}
-
-export function addResourceStateParamsToUrl(url: string): string {
-  return `${url}/:resourceName`;
-}
-
-export function addNamespacedResourceStateParamsToUrl(url: string): string {
-  return `${url}/:resourceNamespace/:resourceName`;
-}
-
-export function addLogsStateParamsToUrl(url: string): string {
-  return `${url}/:resourceNamespace/:resourceName/:resourceType`;
-}

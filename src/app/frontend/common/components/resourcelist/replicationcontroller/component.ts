@@ -19,12 +19,9 @@ import {
   ReplicationController,
   ReplicationControllerList,
 } from '@api/backendapi';
-import { StateService } from '@uirouter/core';
 import { Observable } from 'rxjs/Observable';
-import { replicationControllerState } from '../../../../resource/workloads/replicationcontroller/state';
 
 import { ResourceListWithStatuses } from '../../../resources/list';
-import { NamespaceService } from '../../../services/global/namespace';
 import { NotificationsService } from '../../../services/global/notifications';
 import { EndpointManager, Resource } from '../../../services/resource/endpoint';
 import { NamespacedResourceService } from '../../../services/resource/resource';
@@ -45,15 +42,13 @@ export class ReplicationControllerListComponent extends ResourceListWithStatuses
   ).list();
 
   constructor(
-    state: StateService,
     private readonly replicationController_: NamespacedResourceService<
       ReplicationControllerList
     >,
     notifications: NotificationsService,
-    resolver: ComponentFactoryResolver,
-    private readonly namespaceService_: NamespaceService
+    resolver: ComponentFactoryResolver
   ) {
-    super(replicationControllerState.name, state, notifications, resolver);
+    super('replicationcontroller', notifications, resolver);
     this.id = ListIdentifiers.replicationController;
     this.groupId = ListGroupIdentifiers.workloads;
 
@@ -84,7 +79,12 @@ export class ReplicationControllerListComponent extends ResourceListWithStatuses
   getResourceObservable(
     params?: HttpParams
   ): Observable<ReplicationControllerList> {
-    return this.replicationController_.get(this.endpoint, undefined, params);
+    return this.replicationController_.get(
+      this.endpoint,
+      undefined,
+      undefined,
+      params
+    );
   }
 
   map(rcList: ReplicationControllerList): ReplicationController[] {

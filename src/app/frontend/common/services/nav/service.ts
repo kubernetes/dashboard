@@ -12,8 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import { Injectable } from '@angular/core';
 import { MatDrawer } from '@angular/material';
 
+@Injectable({ providedIn: 'root' })
 export class NavService {
   private nav_: MatDrawer;
 
@@ -27,9 +29,5 @@ export class NavService {
 
   setNav(nav: MatDrawer): void {
     this.nav_ = nav;
-  }
-
-  isVisible(): boolean {
-    return this.nav_.opened;
   }
 }

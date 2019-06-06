@@ -13,30 +13,17 @@
 // limitations under the License.
 
 import { NgModule } from '@angular/core';
-import { UIRouterModule } from '@uirouter/angular';
 import { ComponentsModule } from '../../../common/components/module';
 
 import { SharedModule } from '../../../shared.module';
 import { ReplicationControllerDetailComponent } from '../replicationcontroller/detail/component';
-import { replicationControllerDetailState } from '../replicationcontroller/detail/state';
-import { ReplicationControllerList } from './list/component';
-import { replicationControllerListState } from './list/state';
-import { replicationControllerState } from './state';
+import { ReplicationControllerListComponent } from './list/component';
+import { ReplicationControllerRoutingModule } from './routing';
 
 @NgModule({
-  imports: [
-    SharedModule,
-    ComponentsModule,
-    UIRouterModule.forChild({
-      states: [
-        replicationControllerState,
-        replicationControllerListState,
-        replicationControllerDetailState,
-      ],
-    }),
-  ],
+  imports: [SharedModule, ComponentsModule, ReplicationControllerRoutingModule],
   declarations: [
-    ReplicationControllerList,
+    ReplicationControllerListComponent,
     ReplicationControllerDetailComponent,
   ],
 })

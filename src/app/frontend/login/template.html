@@ -16,6 +16,11 @@ limitations under the License.
 
 <div class="kd-login-container kd-bg-background"
      fxFlex>
+  <!-- TODO style errors. This is just for debugging-->
+  <mat-card *ngFor="let error of errors"
+            class="kd-error-container kd-bg-error kd-accent">
+    <div class="kd-error-text">{{error.status}} ({{error.code}}): {{error.message}}</div>
+  </mat-card>
   <kd-card titleClasses="kd-card-top-radius kd-bg-primary kd-accent"
            class="kd-login-card"
            [expandable]="false">

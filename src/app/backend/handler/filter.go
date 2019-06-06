@@ -16,7 +16,6 @@ package handler
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
 	"log"
 	"net/http"
@@ -24,13 +23,13 @@ import (
 	"time"
 
 	restful "github.com/emicklei/go-restful"
+	"golang.org/x/net/xsrftoken"
+	utilnet "k8s.io/apimachinery/pkg/util/net"
+
 	"github.com/kubernetes/dashboard/src/app/backend/args"
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
-	kdErrors "github.com/kubernetes/dashboard/src/app/backend/errors"
-	"golang.org/x/net/xsrftoken"
-	errorsK8s "k8s.io/apimachinery/pkg/api/errors"
-	utilnet "k8s.io/apimachinery/pkg/util/net"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 )
 
 // InstallFilters installs defined filter for given web service
@@ -48,7 +47,7 @@ func restrictedResourcesFilter(request *restful.Request, response *restful.Respo
 		return
 	}
 
-	err := errorsK8s.NewUnauthorized(kdErrors.MSG_DASHBOARD_EXCLUSIVE_RESOURCE_ERROR)
+	err := errors.NewUnauthorized(errors.MsgDashboardExclusiveResourceError)
 	response.WriteHeaderAndEntity(int(err.ErrStatus.Code), err.Error())
 }
 
@@ -140,7 +139,7 @@ func validateXSRFFilter(csrfKey string) restful.FilterFunction {
 		if resource == nil || (shouldDoCsrfValidation(req) &&
 			!xsrftoken.Valid(req.HeaderParameter("X-CSRF-TOKEN"), csrfKey, "none",
 				*resource)) {
-			err := errors.New("CSRF validation failed")
+			err := errors.NewInvalid("CSRF validation failed")
 			log.Print(err)
 			resp.AddHeader("Content-Type", "text/plain")
 			resp.WriteErrorString(http.StatusUnauthorized, err.Error()+"\n")

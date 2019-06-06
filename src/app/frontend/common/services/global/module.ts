@@ -19,7 +19,6 @@ import { ActionbarService } from './actionbar';
 import { AssetsService } from './assets';
 import { AuthService } from './authentication';
 import { AuthorizerService } from './authorizer';
-import { BreadcrumbsService } from './breadcrumbs';
 import { ConfigService } from './config';
 import { CsrfTokenService } from './csrftoken';
 import { GlobalSettingsService } from './globalsettings';
@@ -29,6 +28,7 @@ import { LocalSettingsService } from './localsettings';
 import { LogService } from './logs';
 import { NamespaceService } from './namespace';
 import { NotificationsService } from './notifications';
+import { ParamsService } from './params';
 import { KdStateService } from './state';
 import { ThemeService } from './theme';
 import { TitleService } from './title';
@@ -38,7 +38,6 @@ import { VerberService } from './verber';
   providers: [
     AuthorizerService,
     AssetsService,
-    BreadcrumbsService,
     LocalSettingsService,
     GlobalSettingsService,
     ConfigService,
@@ -53,6 +52,7 @@ import { VerberService } from './verber';
     VerberService,
     HistoryService,
     LogService,
+    ParamsService,
     {
       provide: APP_INITIALIZER,
       useFactory: init,

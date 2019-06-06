@@ -47,7 +47,8 @@ limitations under the License.
       <div key
            i18n>Name</div>
       <a value
-         [href]="getHref()">
+         [routerLink]="getHref()"
+         queryParamsHandling="preserve">
         {{creator?.objectMeta.name}}
       </a>
     </kd-property>

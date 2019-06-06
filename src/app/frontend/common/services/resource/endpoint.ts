@@ -22,6 +22,7 @@ export enum Resource {
   pod = 'pod',
   replicaSet = 'replicaset',
   oldReplicaSet = 'oldreplicaset',
+  newReplicaSet = 'newreplicaset',
   replicationController = 'replicationcontroller',
   statefulSet = 'statefulset',
   node = 'node',
@@ -57,9 +58,17 @@ class ResourceEndpoint {
     }/:name`;
   }
 
-  child(resourceName: string, relatedResource: Resource): string {
+  child(
+    resourceName: string,
+    relatedResource: Resource,
+    resourceNamespace?: string
+  ): string {
+    if (!resourceNamespace) {
+      resourceNamespace = '/:namespace';
+    }
+
     return `${baseHref}/${this.resource_}${
-      this.namespaced_ ? '/:namespace' : ''
+      this.namespaced_ ? `/${resourceNamespace}` : ''
     }/${resourceName}/${relatedResource}`;
   }
 }

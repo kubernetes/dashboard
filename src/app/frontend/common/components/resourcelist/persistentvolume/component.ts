@@ -15,11 +15,8 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, Input } from '@angular/core';
 import { PersistentVolume, PersistentVolumeList } from '@api/backendapi';
-import { StateService } from '@uirouter/core';
 import { Observable } from 'rxjs/Observable';
 
-import { persistentVolumeState } from '../../../../resource/cluster/persistentvolume/state';
-import { persistentVolumeClaimState } from '../../../../resource/config/persistentvolumeclaim/state';
 import { ResourceListWithStatuses } from '../../../resources/list';
 import { NotificationsService } from '../../../services/global/notifications';
 import { EndpointManager, Resource } from '../../../services/resource/endpoint';
@@ -40,11 +37,10 @@ export class PersistentVolumeListComponent extends ResourceListWithStatuses<
   ).list();
 
   constructor(
-    state: StateService,
     private readonly pv_: ResourceService<PersistentVolumeList>,
     notifications: NotificationsService
   ) {
-    super(persistentVolumeState.name, state, notifications);
+    super('persistentvolume', notifications);
     this.id = ListIdentifiers.persistentVolume;
     this.groupId = ListGroupIdentifiers.cluster;
 
@@ -87,7 +83,7 @@ export class PersistentVolumeListComponent extends ResourceListWithStatuses<
     const splittedRef = claimReference.split('/');
     if (splittedRef.length === 2) {
       href = this.kdState_.href(
-        persistentVolumeClaimState.name,
+        'persistentvolumeclaim',
         splittedRef[1],
         splittedRef[0]
       );

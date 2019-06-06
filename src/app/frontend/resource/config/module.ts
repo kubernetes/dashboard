@@ -13,20 +13,15 @@
 // limitations under the License.
 
 import { NgModule } from '@angular/core';
-import { UIRouterModule } from '@uirouter/angular';
 
 import { ComponentsModule } from '../../common/components/module';
 import { SharedModule } from '../../shared.module';
 
 import { ConfigComponent } from './component';
-import { configState } from './state';
+import { ConfigRoutingModule } from './routing';
 
 @NgModule({
-  imports: [
-    SharedModule,
-    ComponentsModule,
-    UIRouterModule.forChild({ states: [configState] }),
-  ],
+  imports: [SharedModule, ComponentsModule, ConfigRoutingModule],
   declarations: [ConfigComponent],
 })
 export class ConfigModule {}

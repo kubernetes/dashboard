@@ -50,7 +50,8 @@ limitations under the License.
                          disableClear="true"
                          i18n>Name</mat-header-cell>
         <mat-cell *matCellDef="let cronJob">
-          <a [href]="getDetailsHref(cronJob.objectMeta.name, cronJob.objectMeta.namespace)">
+          <a [routerLink]="getDetailsHref(cronJob.objectMeta.name, cronJob.objectMeta.namespace)"
+             queryParamsHandling="preserve">
             {{cronJob.objectMeta.name}}
           </a>
         </mat-cell>

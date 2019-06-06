@@ -18,4 +18,4 @@ import { Component } from '@angular/core';
   selector: 'kd-secret-list-state',
   template: '<kd-secret-list></kd-secret-list>',
 })
-export class SecretList {}
+export class SecretListComponent {}

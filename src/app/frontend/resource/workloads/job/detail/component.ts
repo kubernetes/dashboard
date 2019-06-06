@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { JobDetail } from '@api/backendapi';
-import { StateService } from '@uirouter/core';
 import { Subscription } from 'rxjs/Subscription';
 
 import {
@@ -34,7 +34,7 @@ import { NamespacedResourceService } from '../../../../common/services/resource/
 })
 export class JobDetailComponent implements OnInit, OnDestroy {
   private jobSubscription_: Subscription;
-  private jobName_: string;
+  private readonly endpoint_ = EndpointManager.resource(Resource.job, true);
   job: JobDetail;
   isInitialized = false;
   eventListEndpoint: string;
@@ -43,24 +43,28 @@ export class JobDetailComponent implements OnInit, OnDestroy {
   constructor(
     private readonly job_: NamespacedResourceService<JobDetail>,
     private readonly actionbar_: ActionbarService,
-    private readonly state_: StateService,
+    private readonly activatedRoute_: ActivatedRoute,
     private readonly notifications_: NotificationsService
   ) {}
 
   ngOnInit(): void {
-    this.jobName_ = this.state_.params.resourceName;
-    this.eventListEndpoint = EndpointManager.resource(Resource.job, true).child(
-      this.jobName_,
-      Resource.event
+    const resourceName = this.activatedRoute_.snapshot.params.resourceName;
+    const resourceNamespace = this.activatedRoute_.snapshot.params
+      .resourceNamespace;
+
+    this.eventListEndpoint = this.endpoint_.child(
+      resourceName,
+      Resource.event,
+      resourceNamespace
     );
-    this.podListEndpoint = EndpointManager.resource(Resource.job, true).child(
-      this.jobName_,
-      Resource.pod
+    this.podListEndpoint = this.endpoint_.child(
+      resourceName,
+      Resource.pod,
+      resourceNamespace
     );
 
     this.jobSubscription_ = this.job_
-      .get(EndpointManager.resource(Resource.job, true).detail(), this.jobName_)
-      .startWith({})
+      .get(this.endpoint_.detail(), resourceName, resourceNamespace)
       .subscribe((d: JobDetail) => {
         this.job = d;
         this.notifications_.pushErrors(d.errors);

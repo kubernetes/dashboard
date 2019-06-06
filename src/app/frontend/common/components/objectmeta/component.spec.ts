@@ -16,7 +16,7 @@ import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   MatCardModule,
@@ -24,16 +24,15 @@ import {
   MatDialogModule,
   MatDividerModule,
   MatIconModule,
-  MatTooltip,
   MatTooltipModule,
 } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
 import { AppConfig, ObjectMeta } from '@api/backendapi';
 import { ChipsComponent } from 'common/components/chips/component';
 
 import { PipesModule } from '../../pipes/module';
-import { RelativeTimeFormatter } from '../../pipes/relativetime';
 import { ConfigService } from '../../services/global/config';
 import { CardComponent } from '../card/component';
 import { PropertyComponent } from '../property/component';
@@ -84,6 +83,7 @@ describe('ObjectMetaComponent', () => {
         PipesModule,
         HttpClientTestingModule,
         MatIconModule,
+        RouterModule,
       ],
       providers: [ConfigService],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],

@@ -14,7 +14,6 @@
 
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { StateService } from '@uirouter/core';
 import { Observable } from 'rxjs/Observable';
 
 import { ResourceBase } from '../../resources/resource';
@@ -42,25 +41,30 @@ export class ResourceService<T> extends ResourceBase<T> {
 export class NamespacedResourceService<T> extends ResourceBase<T> {
   constructor(
     http: HttpClient,
-    private readonly state_: StateService,
     private readonly namespaceService_: NamespaceService
   ) {
     super(http);
   }
 
   private getNamespace_(): string {
-    if (this.state_.params.resourceNamespace) {
-      return this.state_.params.resourceNamespace;
-    }
-
     const currentNamespace = this.namespaceService_.current();
     return this.namespaceService_.isMultiNamespace(currentNamespace)
       ? ''
       : currentNamespace;
   }
 
-  get(endpoint: string, name?: string, params?: HttpParams): Observable<T> {
-    endpoint = endpoint.replace(':namespace', this.getNamespace_());
+  get(
+    endpoint: string,
+    name?: string,
+    namespace?: string,
+    params?: HttpParams
+  ): Observable<T> {
+    if (namespace) {
+      endpoint = endpoint.replace(':namespace', namespace);
+    } else {
+      endpoint = endpoint.replace(':namespace', this.getNamespace_());
+    }
+
     if (name) {
       endpoint = endpoint.replace(':name', name);
     }

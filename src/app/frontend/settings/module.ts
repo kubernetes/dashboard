@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import { NgModule } from '@angular/core';
-import { UIRouterModule } from '@uirouter/angular';
 
 import { ComponentsModule } from '../common/components/module';
 import { SharedModule } from '../shared.module';
@@ -23,14 +22,10 @@ import { SettingsEntryComponent } from './entry/component';
 import { GlobalSettingsComponent } from './global/component';
 import { SaveAnywayDialog } from './global/saveanywaysdialog/dialog';
 import { LocalSettingsComponent } from './local/component';
-import { settingsState } from './state';
+import { SettingsRoutingModule } from './routing';
 
 @NgModule({
-  imports: [
-    SharedModule,
-    ComponentsModule,
-    UIRouterModule.forChild({ states: [settingsState] }),
-  ],
+  imports: [SharedModule, ComponentsModule, SettingsRoutingModule],
   declarations: [
     GlobalSettingsComponent,
     LocalSettingsComponent,

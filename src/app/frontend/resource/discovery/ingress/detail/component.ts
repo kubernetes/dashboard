@@ -15,8 +15,8 @@
 import 'rxjs/add/operator/startWith';
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { IngressDetail } from '@api/backendapi';
-import { StateService } from '@uirouter/core';
 import { Subscription } from 'rxjs/Subscription';
 
 import {
@@ -36,25 +36,24 @@ import { NamespacedResourceService } from '../../../../common/services/resource/
 })
 export class IngressDetailComponent implements OnInit, OnDestroy {
   private ingressSubscription_: Subscription;
-  private ingressName_: string;
+  private readonly endpoint_ = EndpointManager.resource(Resource.ingress, true);
   ingress: IngressDetail;
   isInitialized = false;
 
   constructor(
     private readonly ingress_: NamespacedResourceService<IngressDetail>,
     private readonly actionbar_: ActionbarService,
-    private readonly state_: StateService,
+    private readonly activatedRoute_: ActivatedRoute,
     private readonly notifications_: NotificationsService
   ) {}
 
   ngOnInit(): void {
-    this.ingressName_ = this.state_.params.resourceName;
+    const resourceName = this.activatedRoute_.snapshot.params.resourceName;
+    const resourceNamespace = this.activatedRoute_.snapshot.params
+      .resourceNamespace;
+
     this.ingressSubscription_ = this.ingress_
-      .get(
-        EndpointManager.resource(Resource.ingress, true).detail(),
-        this.ingressName_
-      )
-      .startWith({})
+      .get(this.endpoint_.detail(), resourceName, resourceNamespace)
       .subscribe((d: IngressDetail) => {
         this.ingress = d;
         this.notifications_.pushErrors(d.errors);

@@ -45,7 +45,8 @@ limitations under the License.
         <kd-hidden-property>
           <div key
                fxLayout>
-            <a [href]="getEnvSecretHref(env.valueFrom.secretKeyRef)"
+            <a [routerLink]="getEnvSecretHref(env.valueFrom.secretKeyRef)"
+               queryParamsHandling="preserve"
                (click)="$event.stopPropagation()">
               {{env.name}}
             </a>
@@ -64,7 +65,8 @@ limitations under the License.
         <kd-hidden-property>
           <div key
                fxLayout>
-            <a [href]="getEnvConfigMapHref(env.valueFrom.configMapKeyRef)"
+            <a [routerLink]="getEnvConfigMapHref(env.valueFrom.configMapKeyRef)"
+               queryParamsHandling="preserve"
                (click)="$event.stopPropagation()">
               {{env.name}}
             </a>

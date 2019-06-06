@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { KdFile } from '@api/frontendapi';
 
 import { CreateService } from '../../../common/services/create/service';
 import { HistoryService } from '../../../common/services/global/history';
 import { NamespaceService } from '../../../common/services/global/namespace';
-import { overviewState } from '../../../overview/state';
 
 @Component({
   selector: 'kd-create-from-file',
@@ -53,7 +52,7 @@ export class CreateFromFileComponent {
   }
 
   cancel(): void {
-    this.history_.goToPreviousState(overviewState.name);
+    this.history_.goToPreviousState('overview');
   }
 
   areMultipleNamespacesSelected(): boolean {

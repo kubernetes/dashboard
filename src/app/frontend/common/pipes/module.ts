@@ -18,6 +18,7 @@ import { CoreFormatter } from './coreformatter';
 import { MemoryFormatter } from './memoryformatter';
 import { RelativeTimeFormatter } from './relativetime';
 import { SafeHtmlFormatter } from './safehtml';
+import { TrimPipe } from './trim';
 
 @NgModule({
   declarations: [
@@ -25,12 +26,14 @@ import { SafeHtmlFormatter } from './safehtml';
     CoreFormatter,
     RelativeTimeFormatter,
     SafeHtmlFormatter,
+    TrimPipe,
   ],
   exports: [
     MemoryFormatter,
     CoreFormatter,
     RelativeTimeFormatter,
     SafeHtmlFormatter,
+    TrimPipe,
   ],
 })
 export class PipesModule {}

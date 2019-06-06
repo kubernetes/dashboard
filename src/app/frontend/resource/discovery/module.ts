@@ -13,20 +13,15 @@
 // limitations under the License.
 
 import { NgModule } from '@angular/core';
-import { UIRouterModule } from '@uirouter/angular';
 
 import { ComponentsModule } from '../../common/components/module';
 import { SharedModule } from '../../shared.module';
 
 import { DiscoveryComponent } from './component';
-import { discoveryState } from './state';
+import { DiscoveryRoutingModule } from './routing';
 
 @NgModule({
-  imports: [
-    SharedModule,
-    ComponentsModule,
-    UIRouterModule.forChild({ states: [discoveryState] }),
-  ],
+  imports: [SharedModule, ComponentsModule, DiscoveryRoutingModule],
   declarations: [DiscoveryComponent],
 })
 export class DiscoveryModule {}

@@ -20,9 +20,10 @@ import {
 } from '@angular/common/http';
 import { Component, Inject, OnDestroy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { StateService } from '@uirouter/core';
+import { ActivatedRoute } from '@angular/router';
 import * as FileSaver from 'file-saver';
 import { Subscription } from 'rxjs';
+
 import { LogService } from '../../services/global/logs';
 
 export interface LogsDownloadDialogMeta {
@@ -46,10 +47,10 @@ export class LogsDownloadDialog implements OnDestroy {
     public dialogRef: MatDialogRef<LogsDownloadDialog>,
     @Inject(MAT_DIALOG_DATA) public data: LogsDownloadDialogMeta,
     private readonly logService: LogService,
-    private readonly state_: StateService,
+    private readonly activatedRoute_: ActivatedRoute,
     private readonly http_: HttpClient
   ) {
-    const namespace = this.state_.params.resourceNamespace;
+    const namespace = this.activatedRoute_.snapshot.params.resourceNamespace;
     const logUrl = `api/v1/log/file/${namespace}/${data.pod}/${
       data.container
     }?previous=${this.logService.getPrevious()}`;

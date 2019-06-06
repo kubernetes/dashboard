@@ -14,8 +14,8 @@
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
+import { ActivatedRoute } from '@angular/router';
 import { CapacityItem, PersistentVolumeDetail } from '@api/backendapi';
-import { StateService } from '@uirouter/core';
 import { Subscription } from 'rxjs/Subscription';
 
 import {
@@ -35,24 +35,24 @@ import { ResourceService } from '../../../../common/services/resource/resource';
 })
 export class PersistentVolumeDetailComponent implements OnInit, OnDestroy {
   private persistentVolumeSubscription_: Subscription;
-  private persistentVolumeName_: string;
+  private readonly endpoint_ = EndpointManager.resource(
+    Resource.persistentVolume
+  );
   persistentVolume: PersistentVolumeDetail;
   isInitialized = false;
 
   constructor(
     private readonly persistentVolume_: ResourceService<PersistentVolumeDetail>,
     private readonly actionbar_: ActionbarService,
-    private readonly state_: StateService,
+    private readonly activatedRoute_: ActivatedRoute,
     private readonly notifications_: NotificationsService
   ) {}
 
   ngOnInit(): void {
-    this.persistentVolumeName_ = this.state_.params.resourceName;
+    const resourceName = this.activatedRoute_.snapshot.params.resourceName;
+
     this.persistentVolumeSubscription_ = this.persistentVolume_
-      .get(
-        EndpointManager.resource(Resource.persistentVolume).detail(),
-        this.persistentVolumeName_
-      )
+      .get(this.endpoint_.detail(), resourceName)
       .subscribe((d: PersistentVolumeDetail) => {
         this.persistentVolume = d;
         this.notifications_.pushErrors(d.errors);

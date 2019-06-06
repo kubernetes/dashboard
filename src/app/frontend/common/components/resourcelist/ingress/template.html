@@ -41,7 +41,8 @@ limitations under the License.
                          disableClear="true"
                          i18n>Name</mat-header-cell>
         <mat-cell *matCellDef="let ingress">
-          <a [href]="getDetailsHref(ingress.objectMeta.name, ingress.objectMeta.namespace)">
+          <a [routerLink]="getDetailsHref(ingress.objectMeta.name, ingress.objectMeta.namespace)"
+             queryParamsHandling="preserve">
             {{ingress.objectMeta.name}}
           </a>
         </mat-cell>

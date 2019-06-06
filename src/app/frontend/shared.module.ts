@@ -45,7 +45,7 @@ import {
   MatToolbarModule,
   MatTooltipModule,
 } from '@angular/material';
-import { UIRouterModule } from '@uirouter/angular';
+import { RouterModule } from '@angular/router';
 import { AceEditorModule } from 'ng2-ace-editor';
 import { FilterPipeModule } from 'ngx-filter-pipe';
 
@@ -88,7 +88,7 @@ const SHARED_DEPENDENCIES = [
 
   // Other 3rd party modules
   FlexLayoutModule,
-  UIRouterModule,
+  RouterModule,
   AceEditorModule,
   FilterPipeModule,
 

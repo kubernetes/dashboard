@@ -15,12 +15,9 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, ComponentFactoryResolver, Input } from '@angular/core';
 import { DaemonSet, DaemonSetList, Event } from '@api/backendapi';
-import { StateService } from '@uirouter/core';
 import { Observable } from 'rxjs/Observable';
-import { daemonSetState } from '../../../../resource/workloads/daemonset/state';
 
 import { ResourceListWithStatuses } from '../../../resources/list';
-import { NamespaceService } from '../../../services/global/namespace';
 import { NotificationsService } from '../../../services/global/notifications';
 import { EndpointManager, Resource } from '../../../services/resource/endpoint';
 import { NamespacedResourceService } from '../../../services/resource/resource';
@@ -38,13 +35,11 @@ export class DaemonSetListComponent extends ResourceListWithStatuses<
   @Input() endpoint = EndpointManager.resource(Resource.daemonSet, true).list();
 
   constructor(
-    state: StateService,
     private readonly daemonSet_: NamespacedResourceService<DaemonSetList>,
     resolver: ComponentFactoryResolver,
-    notifications: NotificationsService,
-    private readonly namespaceService_: NamespaceService
+    notifications: NotificationsService
   ) {
-    super(daemonSetState.name, state, notifications, resolver);
+    super('daemonset', notifications, resolver);
     this.id = ListIdentifiers.daemonSet;
     this.groupId = ListGroupIdentifiers.workloads;
 
@@ -73,7 +68,7 @@ export class DaemonSetListComponent extends ResourceListWithStatuses<
   }
 
   getResourceObservable(params?: HttpParams): Observable<DaemonSetList> {
-    return this.daemonSet_.get(this.endpoint, undefined, params);
+    return this.daemonSet_.get(this.endpoint, undefined, undefined, params);
   }
 
   map(daemonSetList: DaemonSetList): DaemonSet[] {

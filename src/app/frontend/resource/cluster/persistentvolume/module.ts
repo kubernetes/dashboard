@@ -13,30 +13,17 @@
 // limitations under the License.
 
 import { NgModule } from '@angular/core';
-import { UIRouterModule } from '@uirouter/angular';
 
 import { ComponentsModule } from '../../../common/components/module';
 import { SharedModule } from '../../../shared.module';
 
 import { PersistentVolumeDetailComponent } from './detail/component';
 import { PersistentVolumeSourceComponent } from './detail/source/component';
-import { persistentVolumeDetailState } from './detail/state';
 import { PersistentVolumeListComponent } from './list/component';
-import { persistentVolumeListState } from './list/state';
-import { persistentVolumeState } from './state';
+import { PersistentVolumeRoutingModule } from './routing';
 
 @NgModule({
-  imports: [
-    SharedModule,
-    ComponentsModule,
-    UIRouterModule.forChild({
-      states: [
-        persistentVolumeState,
-        persistentVolumeListState,
-        persistentVolumeDetailState,
-      ],
-    }),
-  ],
+  imports: [SharedModule, ComponentsModule, PersistentVolumeRoutingModule],
   declarations: [
     PersistentVolumeListComponent,
     PersistentVolumeDetailComponent,

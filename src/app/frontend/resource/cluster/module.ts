@@ -13,19 +13,14 @@
 // limitations under the License.
 
 import { NgModule } from '@angular/core';
-import { UIRouterModule } from '@uirouter/angular';
 
 import { ComponentsModule } from '../../common/components/module';
 import { SharedModule } from '../../shared.module';
 import { ClusterComponent } from './component';
-import { clusterState } from './state';
+import { ClusterRoutingModule } from './routing';
 
 @NgModule({
-  imports: [
-    SharedModule,
-    ComponentsModule,
-    UIRouterModule.forChild({ states: [clusterState] }),
-  ],
+  imports: [SharedModule, ComponentsModule, ClusterRoutingModule],
   declarations: [ClusterComponent],
 })
 export class ClusterModule {}

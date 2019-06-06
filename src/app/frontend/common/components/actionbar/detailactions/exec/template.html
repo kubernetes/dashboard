@@ -19,6 +19,7 @@ limitations under the License.
    class="kd-toolbar-action"
    matTooltip="Exec into pod"
    i18n-matTooltip
-   [href]="getHref()">
+   [routerLink]="getHref()"
+   queryParamsHandling="preserve">
   <mat-icon>input</mat-icon>
 </a>

@@ -14,11 +14,9 @@
 
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { StateService } from '@uirouter/core';
+import { Router } from '@angular/router';
 
 import { AssetsService } from '../common/services/global/assets';
-import { NotificationsService } from '../common/services/global/notifications';
-import { overviewState } from '../overview/state';
 
 class SystemBanner {
   message: string;
@@ -38,7 +36,7 @@ export class ChromeComponent implements OnInit {
   constructor(
     public assets: AssetsService,
     private readonly http_: HttpClient,
-    private readonly state_: StateService
+    private readonly router_: Router
   ) {}
 
   ngOnInit(): void {
@@ -51,7 +49,7 @@ export class ChromeComponent implements OnInit {
   }
 
   getOverviewStateName(): string {
-    return overviewState.name;
+    return 'overview';
   }
 
   isSystemBannerVisible(): boolean {
@@ -78,6 +76,6 @@ export class ChromeComponent implements OnInit {
   }
 
   goToCreateState(): void {
-    this.state_.go('create');
+    this.router_.navigate(['create']);
   }
 }

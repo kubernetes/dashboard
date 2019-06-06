@@ -18,4 +18,4 @@ import { Component } from '@angular/core';
   selector: 'kd-config-map-list-state',
   template: '<kd-config-map-list></kd-config-map-list>',
 })
-export class ConfigMapList {}
+export class ConfigMapListComponent {}

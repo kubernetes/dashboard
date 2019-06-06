@@ -12,12 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package errors
+package errors_test
 
 import (
-	"errors"
 	"reflect"
 	"testing"
+
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 )
 
 func TestHandleHTTPError(t *testing.T) {
@@ -30,28 +31,28 @@ func TestHandleHTTPError(t *testing.T) {
 			500,
 		},
 		{
-			errors.New("some unknown error"),
+			errors.NewInvalid("some unknown error"),
 			500,
 		},
 		{
-			errors.New(MSG_DEPLOY_NAMESPACE_MISMATCH_ERROR),
+			errors.NewInvalid(errors.MsgDeployNamespaceMismatchError),
 			500,
 		},
 		{
-			errors.New(MSG_LOGIN_UNAUTHORIZED_ERROR),
+			errors.NewInvalid(errors.MsgLoginUnauthorizedError),
 			401,
 		},
 		{
-			errors.New(MSG_TOKEN_EXPIRED_ERROR),
+			errors.NewInvalid(errors.MsgTokenExpiredError),
 			401,
 		},
 		{
-			errors.New(MSG_ENCRYPTION_KEY_CHANGED),
+			errors.NewInvalid(errors.MsgEncryptionKeyChanged),
 			401,
 		},
 	}
 	for _, c := range cases {
-		actual := HandleHTTPError(c.err)
+		actual := errors.HandleHTTPError(c.err)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("HandleHTTPError(%+v) == %+v, expected %+v", c.err, actual, c.expected)
 		}

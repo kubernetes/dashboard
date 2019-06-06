@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { StorageClassDetail } from '@api/backendapi';
-import { StateService } from '@uirouter/core';
 import { Subscription } from 'rxjs/Subscription';
 
 import {
@@ -35,7 +35,7 @@ import { ResourceService } from '../../../../common/services/resource/resource';
 })
 export class StorageClassDetailComponent implements OnInit, OnDestroy {
   private storageClassSubscription_: Subscription;
-  private storageClassName_: string;
+  private readonly endpoint_ = EndpointManager.resource(Resource.storageClass);
   storageClass: StorageClassDetail;
   pvListEndpoint: string;
   isInitialized = false;
@@ -43,21 +43,20 @@ export class StorageClassDetailComponent implements OnInit, OnDestroy {
   constructor(
     private readonly storageClass_: ResourceService<StorageClassDetail>,
     private readonly actionbar_: ActionbarService,
-    private readonly state_: StateService,
+    private readonly activatedRoute_: ActivatedRoute,
     private readonly notifications_: NotificationsService
   ) {}
 
   ngOnInit(): void {
-    this.storageClassName_ = this.state_.params.resourceName;
-    this.pvListEndpoint = EndpointManager.resource(
-      Resource.storageClass,
-      false
-    ).child(this.storageClassName_, Resource.persistentVolume);
+    const resourceName = this.activatedRoute_.snapshot.params.resourceName;
+
+    this.pvListEndpoint = this.endpoint_.child(
+      resourceName,
+      Resource.persistentVolume
+    );
+
     this.storageClassSubscription_ = this.storageClass_
-      .get(
-        EndpointManager.resource(Resource.storageClass).detail(),
-        this.storageClassName_
-      )
+      .get(this.endpoint_.detail(), resourceName)
       .subscribe((d: StorageClassDetail) => {
         this.storageClass = d;
         this.notifications_.pushErrors(d.errors);

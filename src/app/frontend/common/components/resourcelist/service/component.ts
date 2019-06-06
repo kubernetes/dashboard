@@ -14,13 +14,10 @@
 
 import { HttpParams } from '@angular/common/http';
 import { Component, Input } from '@angular/core';
-import { StateService } from '@uirouter/core';
 import { Observable } from 'rxjs/Observable';
 import { Service, ServiceList } from 'typings/backendapi';
 
-import { serviceState } from '../../../../resource/discovery/service/state';
 import { ResourceListWithStatuses } from '../../../resources/list';
-import { NamespaceService } from '../../../services/global/namespace';
 import { NotificationsService } from '../../../services/global/notifications';
 import { EndpointManager, Resource } from '../../../services/resource/endpoint';
 import { NamespacedResourceService } from '../../../services/resource/resource';
@@ -35,12 +32,10 @@ export class ServiceListComponent extends ResourceListWithStatuses<
   @Input() endpoint = EndpointManager.resource(Resource.service, true).list();
 
   constructor(
-    state: StateService,
     private readonly service_: NamespacedResourceService<ServiceList>,
-    notifications: NotificationsService,
-    private readonly namespaceService_: NamespaceService
+    notifications: NotificationsService
   ) {
-    super(serviceState.name, state, notifications);
+    super('service', notifications);
     this.id = ListIdentifiers.service;
     this.groupId = ListGroupIdentifiers.discovery;
 
@@ -68,7 +63,7 @@ export class ServiceListComponent extends ResourceListWithStatuses<
   }
 
   getResourceObservable(params?: HttpParams): Observable<ServiceList> {
-    return this.service_.get(this.endpoint, undefined, params);
+    return this.service_.get(this.endpoint, undefined, undefined, params);
   }
 
   map(serviceList: ServiceList): Service[] {

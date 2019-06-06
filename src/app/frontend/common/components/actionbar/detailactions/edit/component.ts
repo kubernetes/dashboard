@@ -14,10 +14,8 @@
 
 import { Component, Input } from '@angular/core';
 import { ObjectMeta, TypeMeta } from '@api/backendapi';
-import { StateService } from '@uirouter/core';
 import { Subscription } from 'rxjs/Subscription';
 
-import { overviewState } from '../../../../../overview/state';
 import { VerberService } from '../../../../services/global/verber';
 
 @Component({
@@ -30,14 +28,11 @@ export class ActionbarDetailEditComponent {
   @Input() displayName: string;
   verberSubscription_: Subscription;
 
-  constructor(
-    private readonly verber_: VerberService,
-    private readonly state_: StateService
-  ) {}
+  constructor(private readonly verber_: VerberService) {}
 
   ngOnInit(): void {
     this.verberSubscription_ = this.verber_.onEdit.subscribe(() => {
-      this.state_.reload().catch();
+      // this.state_.reload().catch();
     });
   }
 

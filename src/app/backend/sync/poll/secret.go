@@ -17,12 +17,13 @@ package poll
 import (
 	"time"
 
-	kdErrors "github.com/kubernetes/dashboard/src/app/backend/errors"
-	syncapi "github.com/kubernetes/dashboard/src/app/backend/sync/api"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/wait"
 	"k8s.io/apimachinery/pkg/watch"
 	"k8s.io/client-go/kubernetes"
+
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
+	syncapi "github.com/kubernetes/dashboard/src/app/backend/sync/api"
 )
 
 // SecretPoller implements Poller interface. See Poller for more information.
@@ -62,7 +63,7 @@ func (self *SecretPoller) getSecretEvent() (event watch.Event) {
 	}
 
 	// In case it was never created we can still mark it as deleted and let secret be recreated.
-	if kdErrors.IsNotFoundError(err) {
+	if errors.IsNotFoundError(err) {
 		event.Type = watch.Deleted
 	}
 
