@@ -15,8 +15,6 @@
 package customresourcedefinition
 
 import (
-	"encoding/json"
-
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
@@ -26,6 +24,10 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/client-go/rest"
 )
+
+type CustomResourceObjectDetail struct {
+	CustomResourceObject `json:",inline"`
+}
 
 // CustomResourceObject represents a custom resource object.
 type CustomResourceObject struct {
@@ -79,8 +81,9 @@ func (in *CustomResourceObjectList) DeepCopy() *CustomResourceObjectList {
 	return out
 }
 
+// @todo - Use the resource channel here
 func GetCustomResourceObjectList(client apiextensionsclientset.Interface, namespace *common.NamespaceQuery, config *rest.Config, dsQuery *dataselect.DataSelectQuery, crdName string) (CustomResourceObjectList, error) {
-	list := CustomResourceObjectList{}
+	var list CustomResourceObjectList
 
 	customResourceDefinition, err := client.ApiextensionsV1beta1().
 		CustomResourceDefinitions().
@@ -91,13 +94,15 @@ func GetCustomResourceObjectList(client apiextensionsclientset.Interface, namesp
 	}
 
 	restClient, err := newRESTClient(config, getCustomResourceDefinitionGroupVersion(customResourceDefinition))
-	if err != nil {
-		return list, err
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return list, criticalError
 	}
 
 	err = restClient.Get().
+		Namespace(namespace.ToRequestParam()).
 		Resource(customResourceDefinition.Spec.Names.Plural).
-		Namespace(namespace.ToRequestParam()).Do().Into(&list)
+		Do().Into(&list)
 	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
 	if criticalError != nil {
 		return list, criticalError
@@ -109,5 +114,31 @@ func GetCustomResourceObjectList(client apiextensionsclientset.Interface, namesp
 	list.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 	list.Errors = nonCriticalErrors
 
-	return list, err
+	return list, nil
+}
+
+func GetCustomResourceObjectDetail(client apiextensionsclientset.Interface, namespace *common.NamespaceQuery, config *rest.Config, crdName string, name string) (CustomResourceObjectDetail, error) {
+	var detail CustomResourceObjectDetail
+
+	customResourceDefinition, err := client.ApiextensionsV1beta1().
+		CustomResourceDefinitions().
+		Get(crdName, metav1.GetOptions{})
+	if err != nil {
+		return detail, err
+	}
+
+	restClient, err := newRESTClient(config, getCustomResourceDefinitionGroupVersion(customResourceDefinition))
+	if err != nil {
+		return detail, err
+	}
+
+	err = restClient.Get().
+		Namespace(namespace.ToRequestParam()).
+		Resource(customResourceDefinition.Spec.Names.Plural).
+		Name(name).Do().Into(&detail)
+	if err != nil {
+		return detail, err
+	}
+
+	return detail, nil
 }
