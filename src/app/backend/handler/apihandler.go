@@ -64,7 +64,6 @@ import (
 	settingsApi "github.com/kubernetes/dashboard/src/app/backend/settings/api"
 	"github.com/kubernetes/dashboard/src/app/backend/systembanner"
 	"github.com/kubernetes/dashboard/src/app/backend/validation"
-	apiextensionsclient "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 )
 
 const (
@@ -2065,14 +2064,14 @@ func (apiHandler *APIHandler) handleGetPodPersistentVolumeClaims(request *restfu
 func (apiHandler *APIHandler) handleGetCustomResourceDefinitionList(request *restful.Request, response *restful.Response) {
 	apiextensionsclient, err := apiHandler.cManager.APIExtensionsClient(request)
 	if err != nil {
-		kdErrors.HandleInternalError(response, err)
+		errors.HandleInternalError(response, err)
 		return
 	}
 
 	dataSelect := parseDataSelectPathParameter(request)
 	result, err := customresourcedefinition.GetCustomResourceDefinitionList(apiextensionsclient, dataSelect)
 	if err != nil {
-		kdErrors.HandleInternalError(response, err)
+		errors.HandleInternalError(response, err)
 		return
 	}
 
@@ -2082,13 +2081,13 @@ func (apiHandler *APIHandler) handleGetCustomResourceDefinitionList(request *res
 func (apiHandler *APIHandler) handleGetCustomResourceObjectList(request *restful.Request, response *restful.Response) {
 	config, err := apiHandler.cManager.Config(request)
 	if err != nil {
-		kdErrors.HandleInternalError(response, err)
+		errors.HandleInternalError(response, err)
 		return
 	}
 
 	apiextensionsclient, err := apiHandler.cManager.APIExtensionsClient(request)
 	if err != nil {
-		kdErrors.HandleInternalError(response, err)
+		errors.HandleInternalError(response, err)
 		return
 	}
 
@@ -2097,7 +2096,7 @@ func (apiHandler *APIHandler) handleGetCustomResourceObjectList(request *restful
 	dataSelect := parseDataSelectPathParameter(request)
 	result, err := customresourcedefinition.GetCustomResourceObjectList(apiextensionsclient, namespace, config, dataSelect, crdName)
 	if err != nil {
-		kdErrors.HandleInternalError(response, err)
+		errors.HandleInternalError(response, err)
 		return
 	}
 
@@ -2107,13 +2106,13 @@ func (apiHandler *APIHandler) handleGetCustomResourceObjectList(request *restful
 func (apiHandler *APIHandler) handleGetCustomResourceObjectDetail(request *restful.Request, response *restful.Response) {
 	config, err := apiHandler.cManager.Config(request)
 	if err != nil {
-		kdErrors.HandleInternalError(response, err)
+		errors.HandleInternalError(response, err)
 		return
 	}
 
 	apiextensionsclient, err := apiHandler.cManager.APIExtensionsClient(request)
 	if err != nil {
-		kdErrors.HandleInternalError(response, err)
+		errors.HandleInternalError(response, err)
 		return
 	}
 
@@ -2122,7 +2121,7 @@ func (apiHandler *APIHandler) handleGetCustomResourceObjectDetail(request *restf
 	namespace := parseNamespacePathParameter(request)
 	result, err := customresourcedefinition.GetCustomResourceObjectDetail(apiextensionsclient, namespace, config, crdName, name)
 	if err != nil {
-		kdErrors.HandleInternalError(response, err)
+		errors.HandleInternalError(response, err)
 		return
 	}
 
