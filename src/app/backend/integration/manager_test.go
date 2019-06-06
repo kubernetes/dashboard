@@ -17,22 +17,10 @@ package integration
 import (
 	"testing"
 
-	"k8s.io/client-go/kubernetes/fake"
-
-	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
-	"github.com/kubernetes/dashboard/src/app/backend/auth/jwe"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/integration/api"
-	"github.com/kubernetes/dashboard/src/app/backend/sync"
 )
-
-func getTokenManager() authApi.TokenManager {
-	c := fake.NewSimpleClientset()
-	syncManager := sync.NewSynchronizerManager(c)
-	holder := jwe.NewRSAKeyHolder(syncManager.Secret("", ""))
-	return jwe.NewJWETokenManager(holder)
-}
 
 func areErrorsEqual(err1, err2 error) bool {
 	return (err1 != nil && err2 != nil && err1.Error() == err2.Error()) ||
