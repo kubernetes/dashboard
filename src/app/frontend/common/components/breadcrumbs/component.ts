@@ -79,10 +79,24 @@ export class BreadcrumbsComponent implements OnInit {
     ) {
       if (currentRoute.routeConfig.data.parent === LOGS_PARENT_PLACEHOLDER) {
         route = this._getLogsParent(currentRoute.snapshot.params);
+        urlArray = [
+          '',
+          urlArray[urlArray.length - 1],
+          urlArray[urlArray.length - 3],
+          urlArray[urlArray.length - 2],
+        ];
+        routeParamsCount = 0;
       } else if (
         currentRoute.routeConfig.data.parent === EXEC_PARENT_PLACEHOLDER
       ) {
         route = POD_DETAIL_ROUTE;
+        urlArray = [
+          '',
+          'pod',
+          urlArray[urlArray.length - 2],
+          urlArray[urlArray.length - 1],
+        ];
+        routeParamsCount = 0;
       } else {
         route = currentRoute.routeConfig.data.parent;
       }
