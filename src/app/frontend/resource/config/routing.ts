@@ -12,15 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {Route, RouterModule} from '@angular/router';
-import {ConfigComponent} from './component';
+import { NgModule } from '@angular/core';
+import { Route, RouterModule } from '@angular/router';
+import { ConfigComponent } from './component';
 
 export const CONFIG_ROUTE: Route = {
   path: '',
   component: ConfigComponent,
   data: {
     breadcrumb: 'Config and Storage',
+    link: ['', 'config'],
   },
 };
 
@@ -28,5 +29,4 @@ export const CONFIG_ROUTE: Route = {
   imports: [RouterModule.forChild([CONFIG_ROUTE])],
   exports: [RouterModule],
 })
-export class ConfigRoutingModule {
-}
+export class ConfigRoutingModule {}

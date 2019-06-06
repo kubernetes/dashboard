@@ -66,7 +66,9 @@ export class BreadcrumbsComponent implements OnInit {
           currentRoute.routeConfig,
           currentRoute.snapshot.params
         ),
-        stateLink: urlArray,
+        stateLink: currentRoute.routeConfig.data.link
+          ? currentRoute.routeConfig.data.link
+          : urlArray,
       },
     ];
 
@@ -106,12 +108,9 @@ export class BreadcrumbsComponent implements OnInit {
         urlArray = urlArray.slice(0, urlArray.length - routeParamsCount);
         routeParamsCount = route.path.split('/').length;
 
-        // TODO: Fix it for views like Workloads, Cluster etc. These views are not part of URL
-        //  and at the moment URL refers to / (overview page).
-
         this.breadcrumbs.push({
           label: this._getBreadcrumbLabel(route, currentRoute.snapshot.params),
-          stateLink: urlArray,
+          stateLink: route.data.link ? route.data.link : urlArray,
         });
 
         // Explore the route tree to the root route (parent references have to be defined by us on
