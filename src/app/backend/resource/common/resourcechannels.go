@@ -136,13 +136,6 @@ func GetServiceListChannel(client client.Interface, nsQuery *NamespaceQuery,
 	}
 	go func() {
 		list, err := client.CoreV1().Services(nsQuery.ToRequestParam()).List(api.ListEverything)
-		var filteredItems []v1.Service
-		for _, item := range list.Items {
-			if nsQuery.Matches(item.ObjectMeta.Namespace) {
-				filteredItems = append(filteredItems, item)
-			}
-		}
-		list.Items = filteredItems
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -169,13 +162,6 @@ func GetIngressListChannel(client client.Interface, nsQuery *NamespaceQuery,
 	}
 	go func() {
 		list, err := client.ExtensionsV1beta1().Ingresses(nsQuery.ToRequestParam()).List(api.ListEverything)
-		var filteredItems []extensions.Ingress
-		for _, item := range list.Items {
-			if nsQuery.Matches(item.ObjectMeta.Namespace) {
-				filteredItems = append(filteredItems, item)
-			}
-		}
-		list.Items = filteredItems
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -286,13 +272,6 @@ func GetEventListChannelWithOptions(client client.Interface,
 
 	go func() {
 		list, err := client.CoreV1().Events(nsQuery.ToRequestParam()).List(options)
-		var filteredItems []v1.Event
-		for _, item := range list.Items {
-			if nsQuery.Matches(item.ObjectMeta.Namespace) {
-				filteredItems = append(filteredItems, item)
-			}
-		}
-		list.Items = filteredItems
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -356,13 +335,6 @@ func GetPodListChannelWithOptions(client client.Interface, nsQuery *NamespaceQue
 
 	go func() {
 		list, err := client.CoreV1().Pods(nsQuery.ToRequestParam()).List(options)
-		var filteredItems []v1.Pod
-		for _, item := range list.Items {
-			if nsQuery.Matches(item.ObjectMeta.Namespace) {
-				filteredItems = append(filteredItems, item)
-			}
-		}
-		list.Items = filteredItems
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -392,13 +364,6 @@ func GetReplicationControllerListChannel(client client.Interface,
 	go func() {
 		list, err := client.CoreV1().ReplicationControllers(nsQuery.ToRequestParam()).
 			List(api.ListEverything)
-		var filteredItems []v1.ReplicationController
-		for _, item := range list.Items {
-			if nsQuery.Matches(item.ObjectMeta.Namespace) {
-				filteredItems = append(filteredItems, item)
-			}
-		}
-		list.Items = filteredItems
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -427,13 +392,6 @@ func GetDeploymentListChannel(client client.Interface,
 	go func() {
 		list, err := client.AppsV1().Deployments(nsQuery.ToRequestParam()).
 			List(api.ListEverything)
-		var filteredItems []apps.Deployment
-		for _, item := range list.Items {
-			if nsQuery.Matches(item.ObjectMeta.Namespace) {
-				filteredItems = append(filteredItems, item)
-			}
-		}
-		list.Items = filteredItems
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -468,13 +426,6 @@ func GetReplicaSetListChannelWithOptions(client client.Interface, nsQuery *Names
 	go func() {
 		list, err := client.AppsV1().ReplicaSets(nsQuery.ToRequestParam()).
 			List(options)
-		var filteredItems []apps.ReplicaSet
-		for _, item := range list.Items {
-			if nsQuery.Matches(item.ObjectMeta.Namespace) {
-				filteredItems = append(filteredItems, item)
-			}
-		}
-		list.Items = filteredItems
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -500,13 +451,6 @@ func GetDaemonSetListChannel(client client.Interface, nsQuery *NamespaceQuery, n
 
 	go func() {
 		list, err := client.AppsV1().DaemonSets(nsQuery.ToRequestParam()).List(api.ListEverything)
-		var filteredItems []apps.DaemonSet
-		for _, item := range list.Items {
-			if nsQuery.Matches(item.ObjectMeta.Namespace) {
-				filteredItems = append(filteredItems, item)
-			}
-		}
-		list.Items = filteredItems
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -532,13 +476,6 @@ func GetJobListChannel(client client.Interface,
 
 	go func() {
 		list, err := client.BatchV1().Jobs(nsQuery.ToRequestParam()).List(api.ListEverything)
-		var filteredItems []batch.Job
-		for _, item := range list.Items {
-			if nsQuery.Matches(item.ObjectMeta.Namespace) {
-				filteredItems = append(filteredItems, item)
-			}
-		}
-		list.Items = filteredItems
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -563,13 +500,6 @@ func GetCronJobListChannel(client client.Interface, nsQuery *NamespaceQuery, num
 
 	go func() {
 		list, err := client.BatchV1beta1().CronJobs(nsQuery.ToRequestParam()).List(api.ListEverything)
-		var filteredItems []batch2.CronJob
-		for _, item := range list.Items {
-			if nsQuery.Matches(item.ObjectMeta.Namespace) {
-				filteredItems = append(filteredItems, item)
-			}
-		}
-		list.Items = filteredItems
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -596,13 +526,6 @@ func GetStatefulSetListChannel(client client.Interface,
 
 	go func() {
 		statefulSets, err := client.AppsV1().StatefulSets(nsQuery.ToRequestParam()).List(api.ListEverything)
-		var filteredItems []apps.StatefulSet
-		for _, item := range statefulSets.Items {
-			if nsQuery.Matches(item.ObjectMeta.Namespace) {
-				filteredItems = append(filteredItems, item)
-			}
-		}
-		statefulSets.Items = filteredItems
 		for i := 0; i < numReads; i++ {
 			channel.List <- statefulSets
 			channel.Error <- err
@@ -630,13 +553,6 @@ func GetConfigMapListChannel(client client.Interface, nsQuery *NamespaceQuery,
 
 	go func() {
 		list, err := client.CoreV1().ConfigMaps(nsQuery.ToRequestParam()).List(api.ListEverything)
-		var filteredItems []v1.ConfigMap
-		for _, item := range list.Items {
-			if nsQuery.Matches(item.ObjectMeta.Namespace) {
-				filteredItems = append(filteredItems, item)
-			}
-		}
-		list.Items = filteredItems
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -664,13 +580,6 @@ func GetSecretListChannel(client client.Interface, nsQuery *NamespaceQuery,
 
 	go func() {
 		list, err := client.CoreV1().Secrets(nsQuery.ToRequestParam()).List(api.ListEverything)
-		var filteredItems []v1.Secret
-		for _, item := range list.Items {
-			if nsQuery.Matches(item.ObjectMeta.Namespace) {
-				filteredItems = append(filteredItems, item)
-			}
-		}
-		list.Items = filteredItems
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
