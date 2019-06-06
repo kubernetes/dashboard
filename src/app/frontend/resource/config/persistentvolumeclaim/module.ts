@@ -16,13 +16,13 @@ import { NgModule } from '@angular/core';
 
 import { ComponentsModule } from '../../../common/components/module';
 import { SharedModule } from '../../../shared.module';
-import { PersistentVolumeRoutingModule } from '../../cluster/persistentvolume/routing';
 
 import { PersistentVolumeClaimDetailComponent } from './detail/component';
 import { PersistentVolumeClaimListComponent } from './list/component';
+import { PersistentVolumeClaimRoutingModule } from './routing';
 
 @NgModule({
-  imports: [SharedModule, ComponentsModule, PersistentVolumeRoutingModule],
+  imports: [SharedModule, ComponentsModule, PersistentVolumeClaimRoutingModule],
   declarations: [
     PersistentVolumeClaimListComponent,
     PersistentVolumeClaimDetailComponent,
