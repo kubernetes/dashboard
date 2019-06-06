@@ -12,10 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, NavigationEnd, Params, Route, Router,} from '@angular/router';
-import {Breadcrumb} from '@api/frontendapi';
-import {POD_DETAIL_ROUTE} from '../../../resource/workloads/pod/routing';
+import { Component, OnInit } from '@angular/core';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  Params,
+  Route,
+  Router,
+} from '@angular/router';
+import { Breadcrumb } from '@api/frontendapi';
+import { POD_DETAIL_ROUTE } from '../../../resource/workloads/pod/routing';
 
 export const LOGS_PARENT_PLACEHOLDER = '___LOGS_PARENT_PLACEHOLDER___';
 export const EXEC_PARENT_PLACEHOLDER = '___EXEC_PARENT_PLACEHOLDER___';
@@ -28,48 +34,70 @@ export const EXEC_PARENT_PLACEHOLDER = '___EXEC_PARENT_PLACEHOLDER___';
 export class BreadcrumbsComponent implements OnInit {
   breadcrumbs: Breadcrumb[];
 
-  constructor(private readonly _router: Router, private readonly _activatedRoute: ActivatedRoute) {}
+  constructor(
+    private readonly _router: Router,
+    private readonly _activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this._registerNavigationHook();
   }
 
   private _registerNavigationHook(): void {
-    this._router.events.filter(event => event instanceof NavigationEnd)
-        .distinctUntilChanged()
-        .subscribe(() => {
-          this._initBreadcrumbs();
-        });
+    this._router.events
+      .filter(event => event instanceof NavigationEnd)
+      .distinctUntilChanged()
+      .subscribe(() => {
+        this._initBreadcrumbs();
+      });
   }
 
   private _initBreadcrumbs(): void {
     const currentRoute = this._getCurrentRoute();
-    let url = '';
+    const url = this._router.url.includes('?')
+      ? this._router.url.split('?')[0]
+      : '';
+    let urlArray = url.split('/');
+    let routeParamsCount = currentRoute.routeConfig.path.split('/').length;
 
     this.breadcrumbs = [
       {
-        label: this._getBreadcrumbLabel(currentRoute.routeConfig, currentRoute.snapshot.params),
-        stateLink: url,
+        label: this._getBreadcrumbLabel(
+          currentRoute.routeConfig,
+          currentRoute.snapshot.params
+        ),
+        stateLink: urlArray,
       },
     ];
 
     let route: Route;
-    if (currentRoute && currentRoute.routeConfig && currentRoute.routeConfig.data &&
-        currentRoute.routeConfig.data.parent) {
+    if (
+      currentRoute &&
+      currentRoute.routeConfig &&
+      currentRoute.routeConfig.data &&
+      currentRoute.routeConfig.data.parent
+    ) {
       if (currentRoute.routeConfig.data.parent === LOGS_PARENT_PLACEHOLDER) {
         route = this._getLogsParent(currentRoute.snapshot.params);
-      } else if (currentRoute.routeConfig.data.parent === EXEC_PARENT_PLACEHOLDER) {
+      } else if (
+        currentRoute.routeConfig.data.parent === EXEC_PARENT_PLACEHOLDER
+      ) {
         route = POD_DETAIL_ROUTE;
       } else {
         route = currentRoute.routeConfig.data.parent;
       }
 
       while (route) {
-        url = `/${route.path}/${url}`;  // TODO
+        // Trim URL by number of path parameters defined on previous route.
+        urlArray = urlArray.slice(0, urlArray.length - routeParamsCount);
+        routeParamsCount = route.path.split('/').length;
+
+        // TODO: Fix it for views like Workloads, Cluster etc. These views are not part of URL
+        //  and at the moment URL refers to / (overview page).
 
         this.breadcrumbs.push({
           label: this._getBreadcrumbLabel(route, currentRoute.snapshot.params),
-          stateLink: url,
+          stateLink: urlArray,
         });
 
         // Explore the route tree to the root route (parent references have to be defined by us on
@@ -85,7 +113,7 @@ export class BreadcrumbsComponent implements OnInit {
     this.breadcrumbs.reverse();
   }
 
-  private _getLogsParent(params: Params): Route|undefined {
+  private _getLogsParent(params: Params): Route | undefined {
     const resourceType = params['resourceType'];
     if (resourceType === 'pod') {
       return POD_DETAIL_ROUTE;
@@ -102,7 +130,6 @@ export class BreadcrumbsComponent implements OnInit {
     return route;
   }
 
-  // TODO: Add data to all structures.
   // TODO: When state search is active use specific logic to display custom breadcrumb:
   //  if (state.url[0].path === searchState.name) {
   //    const query = stateParams[SEARCH_QUERY_STATE_PARAM];
