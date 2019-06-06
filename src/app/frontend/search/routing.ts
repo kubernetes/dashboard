@@ -12,18 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Component, Input } from '@angular/core';
-import { Endpoint } from '@api/backendapi';
+import { NgModule } from '@angular/core';
+import { Route, RouterModule } from '@angular/router';
+import { SearchGuard } from '../common/services/guard/search';
+import { SearchComponent } from './component';
 
-/**
- * Component definition object for the component that displays the endpoints which are accessible
- * only from the inside of the cluster.
- */
-@Component({
-  selector: 'kd-internal-endpoint',
-  templateUrl: './template.html',
-  styleUrls: ['./style.scss'],
+export const SEARCH_ROUTE: Route = {
+  path: '',
+  component: SearchComponent,
+  canDeactivate: [SearchGuard],
+  data: {
+    breadcrumb: 'Search',
+  },
+};
+
+@NgModule({
+  imports: [RouterModule.forChild([SEARCH_ROUTE])],
+  exports: [RouterModule],
 })
-export class InternalEndpointComponent {
-  @Input() endpoints: Endpoint[];
-}
+export class SearchRoutingModule {}

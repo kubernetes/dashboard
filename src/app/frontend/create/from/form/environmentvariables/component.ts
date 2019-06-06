@@ -12,9 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, forwardRef} from '@angular/core';
-import {AbstractControl, ControlValueAccessor, FormArray, FormBuilder, FormControl, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, Validators,} from '@angular/forms';
-import {EnvironmentVariable} from '@api/backendapi';
+import { Component, forwardRef } from '@angular/core';
+import {
+  AbstractControl,
+  ControlValueAccessor,
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+  Validators,
+} from '@angular/forms';
+import { EnvironmentVariable } from '@api/backendapi';
 
 @Component({
   selector: 'kd-environment-variables',
@@ -48,8 +58,8 @@ export class EnvironmentVariablesComponent implements ControlValueAccessor {
     });
   }
 
-  validate(_: FormControl): {[key: string]: object} {
-    return this.form.valid ? null : {labelValid: {value: this.form.errors}};
+  validate(_: FormControl): { [key: string]: object } {
+    return this.form.valid ? null : { labelValid: { value: this.form.errors } };
   }
 
   get variables(): FormArray {
@@ -82,11 +92,13 @@ export class EnvironmentVariablesComponent implements ControlValueAccessor {
     this.variables.removeAt(index);
   }
 
-  propagateChange = (_: {variables: EnvironmentVariable[]}) => {};
+  propagateChange = (_: { variables: EnvironmentVariable[] }) => {};
 
   writeValue(): void {}
 
-  registerOnChange(fn: (_: {variables: EnvironmentVariable[]}) => void): void {
+  registerOnChange(
+    fn: (_: { variables: EnvironmentVariable[] }) => void
+  ): void {
     this.propagateChange = fn;
   }
   registerOnTouched(): void {}

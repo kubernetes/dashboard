@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Routes} from '@angular/router';
-import {LoginComponent} from './login/component';
+import { Routes } from '@angular/router';
+import { LoginComponent } from './login/component';
 
 export const routes: Routes = [
-  {path: 'login', component: LoginComponent},
-  {path: '', redirectTo: '/overview', pathMatch: 'full'},
-  {path: '**', redirectTo: '/overview'},
+  { path: 'login', component: LoginComponent },
+  { path: '', redirectTo: '/overview', pathMatch: 'full' },
+  { path: '**', redirectTo: '/overview' },
 ];

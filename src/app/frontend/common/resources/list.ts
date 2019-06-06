@@ -12,26 +12,49 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {DataSource} from '@angular/cdk/collections';
-import {HttpParams} from '@angular/common/http';
-import {ComponentFactoryResolver, EventEmitter, Input, OnDestroy, OnInit, Output, QueryList, Type, ViewChild, ViewChildren, ViewContainerRef,} from '@angular/core';
-import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {Event as KdEvent, Resource, ResourceList} from '@api/backendapi';
-import {ActionColumn, ActionColumnDef, ColumnWhenCallback, ColumnWhenCondition, OnListChangeEvent,} from '@api/frontendapi';
-import {Subject} from 'rxjs';
-import {Observable, ObservableInput} from 'rxjs/Observable';
-import {merge} from 'rxjs/observable/merge';
-import {startWith, switchMap, takeUntil} from 'rxjs/operators';
-import {CardListFilterComponent} from '../components/list/filter/component';
-import {RowDetailComponent} from '../components/list/rowdetail/component';
-import {GlobalSettingsService} from '../services/global/globalsettings';
-import {GlobalServicesModule} from '../services/global/module';
-import {NamespaceService} from '../services/global/namespace';
-import {NotificationsService} from '../services/global/notifications';
-import {KdStateService} from '../services/global/state';
+import { DataSource } from '@angular/cdk/collections';
+import { HttpParams } from '@angular/common/http';
+import {
+  ComponentFactoryResolver,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  QueryList,
+  Type,
+  ViewChild,
+  ViewChildren,
+  ViewContainerRef,
+} from '@angular/core';
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { Router } from '@angular/router';
+import { Event as KdEvent, Resource, ResourceList } from '@api/backendapi';
+import {
+  ActionColumn,
+  ActionColumnDef,
+  ColumnWhenCallback,
+  ColumnWhenCondition,
+  OnListChangeEvent,
+} from '@api/frontendapi';
+import { Subject } from 'rxjs';
+import { Observable, ObservableInput } from 'rxjs/Observable';
+import { merge } from 'rxjs/observable/merge';
+import { startWith, switchMap, takeUntil } from 'rxjs/operators';
+import { CardListFilterComponent } from '../components/list/filter/component';
+import { RowDetailComponent } from '../components/list/rowdetail/component';
+import { SEARCH_QUERY_STATE_PARAM } from '../params/params';
+import { GlobalSettingsService } from '../services/global/globalsettings';
+import { GlobalServicesModule } from '../services/global/module';
+import { NamespaceService } from '../services/global/namespace';
+import { NotificationsService } from '../services/global/notifications';
+import { ParamsService } from '../services/global/params';
+import { KdStateService } from '../services/global/state';
 
-export abstract class ResourceListBase<T extends ResourceList, R extends Resource> implements
-    OnInit, OnDestroy {
+export abstract class ResourceListBase<
+  T extends ResourceList,
+  R extends Resource
+> implements OnInit, OnDestroy {
   // Base properties
   private readonly actionColumns_: Array<ActionColumnDef<ActionColumn>> = [];
   private readonly data_ = new MatTableDataSource<R>();
@@ -39,6 +62,8 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
   private unsubscribe_ = new Subject();
   private loaded_ = false;
   private readonly dynamicColumns_: ColumnWhenCondition[] = [];
+  private paramsService_: ParamsService;
+  private router_: Router;
   protected readonly kdState_: KdStateService;
   protected readonly settingsService_: GlobalSettingsService;
 
@@ -50,23 +75,34 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
     return this.settingsService_.getItemsPerPage();
   }
 
-  @Output('onchange') onChange: EventEmitter<OnListChangeEvent> = new EventEmitter();
+  @Output('onchange') onChange: EventEmitter<
+    OnListChangeEvent
+  > = new EventEmitter();
 
   @Input() groupId: string;
   @Input() hideable = false;
   @Input() id: string;
 
   // Data select properties
-  @ViewChild(MatSort, {static: true}) private readonly matSort_: MatSort;
-  @ViewChild(MatPaginator, {static: true}) private readonly matPaginator_: MatPaginator;
-  @ViewChild(CardListFilterComponent, {static: true})
+  @ViewChild(MatSort, { static: true }) private readonly matSort_: MatSort;
+  @ViewChild(MatPaginator, { static: true })
+  private readonly matPaginator_: MatPaginator;
+  @ViewChild(CardListFilterComponent, { static: true })
   private readonly cardFilter_: CardListFilterComponent;
 
   protected constructor(
-      private readonly stateName_: string, private readonly notifications_: NotificationsService) {
-    this.settingsService_ = GlobalServicesModule.injector.get(GlobalSettingsService);
+    private readonly stateName_: string,
+    private readonly notifications_: NotificationsService
+  ) {
+    this.settingsService_ = GlobalServicesModule.injector.get(
+      GlobalSettingsService
+    );
     this.kdState_ = GlobalServicesModule.injector.get(KdStateService);
-    this.namespaceService_ = GlobalServicesModule.injector.get(NamespaceService);
+    this.namespaceService_ = GlobalServicesModule.injector.get(
+      NamespaceService
+    );
+    this.paramsService_ = GlobalServicesModule.injector.get(ParamsService);
+    this.router_ = GlobalServicesModule.injector.get(Router);
   }
 
   ngOnInit(): void {
@@ -79,28 +115,32 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
     }
 
     this.namespaceService_.onNamespaceChangeEvent.subscribe(() => {
+      this.isLoading = true;
+      this.listUpdates_.next();
+    });
+
+    this.paramsService_.onParamChange.subscribe(() => {
+      this.isLoading = true;
       this.listUpdates_.next();
     });
 
     this.getObservableWithDataSelect_()
-        .pipe(takeUntil(this.unsubscribe_))
-        .pipe(startWith({}))
-        .pipe(switchMap(() => {
-          setTimeout(() => {
-            if (!this.loaded_) {
-              this.isLoading = true;
-            }
-          }, 100);
+      .pipe(takeUntil(this.unsubscribe_))
+      .pipe(startWith({}))
+      .pipe(
+        switchMap(() => {
+          this.isLoading = true;
           return this.getResourceObservable(this.getDataSelectParams_());
-        }))
-        .subscribe((data: T) => {
-          this.notifications_.pushErrors(data.errors);
-          this.totalItems = data.listMeta.totalItems;
-          this.data_.data = this.map(data);
-          this.isLoading = false;
-          this.loaded_ = true;
-          this.onListChange_(data);
-        });
+        })
+      )
+      .subscribe((data: T) => {
+        this.notifications_.pushErrors(data.errors);
+        this.totalItems = data.listMeta.totalItems;
+        this.data_.data = this.map(data);
+        this.isLoading = false;
+        this.loaded_ = true;
+        this.onListChange_(data);
+      });
   }
 
   ngOnDestroy(): void {
@@ -109,7 +149,9 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
   }
 
   getDetailsHref(resourceName: string, namespace?: string): string {
-    return this.stateName_ ? this.kdState_.href(this.stateName_, resourceName, namespace) : '';
+    return this.stateName_
+      ? this.kdState_.href(this.stateName_, resourceName, namespace)
+      : '';
   }
 
   getData(): DataSource<R> {
@@ -153,15 +195,21 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
     return false;
   }
 
-  protected registerActionColumn<C extends ActionColumn>(name: string, component: Type<C>): void {
+  protected registerActionColumn<C extends ActionColumn>(
+    name: string,
+    component: Type<C>
+  ): void {
     this.actionColumns_.push({
       name: `action-${name}`,
       component,
     } as ActionColumnDef<ActionColumn>);
   }
 
-  protected registerDynamicColumn(col: string, afterCol: string, whenCallback: ColumnWhenCallback):
-      void {
+  protected registerDynamicColumn(
+    col: string,
+    afterCol: string,
+    whenCallback: ColumnWhenCallback
+  ): void {
     this.dynamicColumns_.push({
       col,
       afterCol,
@@ -173,12 +221,16 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
     const obsInput = [this.matPaginator_.page] as Array<ObservableInput<E>>;
 
     if (this.matSort_) {
-      this.matSort_.sortChange.subscribe(() => (this.matPaginator_.pageIndex = 0));
+      this.matSort_.sortChange.subscribe(
+        () => (this.matPaginator_.pageIndex = 0)
+      );
       obsInput.push(this.matSort_.sortChange);
     }
 
     if (this.cardFilter_) {
-      this.cardFilter_.filterEvent.subscribe(() => (this.matPaginator_.pageIndex = 0));
+      this.cardFilter_.filterEvent.subscribe(
+        () => (this.matPaginator_.pageIndex = 0)
+      );
       obsInput.push(this.cardFilter_.filterEvent);
     }
 
@@ -214,8 +266,9 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
       result = params;
     }
 
-    return result.set('itemsPerPage', `${this.itemsPerPage}`)
-        .set('page', `${this.matPaginator_.pageIndex + 1}`);
+    return result
+      .set('itemsPerPage', `${this.itemsPerPage}`)
+      .set('page', `${this.matPaginator_.pageIndex + 1}`);
   }
 
   private filter_(params?: HttpParams): HttpParams {
@@ -224,7 +277,9 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
       result = params;
     }
 
-    const filterByQuery = this.cardFilter_.query ? `name,${this.cardFilter_.query}` : '';
+    const filterByQuery = this.cardFilter_.query
+      ? `name,${this.cardFilter_.query}`
+      : '';
     if (filterByQuery) {
       return result.set('filterBy', filterByQuery);
     }
@@ -238,17 +293,16 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
       result = params;
     }
 
-    const filterByQuery = result.get('filterBy') || '';
-    // TODO: fix
-    // if (this.router_.current.name === searchState.name) {
-    //   const query = this.router_.params[SEARCH_QUERY_STATE_PARAM];
-    //   if (query) {
-    //     if (filterByQuery) {
-    //       filterByQuery += ',';
-    //     }
-    //     filterByQuery += `name,${query}`;
-    //   }
-    // }
+    let filterByQuery = result.get('filterBy') || '';
+    if (this.router_.routerState.snapshot.url.startsWith('/search')) {
+      const query = this.paramsService_.getQueryParam(SEARCH_QUERY_STATE_PARAM);
+      if (query) {
+        if (filterByQuery) {
+          filterByQuery += ',';
+        }
+        filterByQuery += `name,${query}`;
+      }
+    }
 
     if (filterByQuery) {
       return result.set('filterBy', filterByQuery);
@@ -282,12 +336,7 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
   }
 
   private mapToBackendValue_(sortByColumnName: string): string {
-    switch (sortByColumnName) {
-      case 'age':
-        return 'creationTimestamp';
-      default:
-        return sortByColumnName;
-    }
+    return sortByColumnName === 'age' ? 'creationTimestamp' : sortByColumnName;
   }
 
   private onListChange_(data: T): void {
@@ -313,15 +362,17 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
   abstract map(value: T): R[];
 }
 
-export abstract class ResourceListWithStatuses<T extends ResourceList, R extends Resource> extends
-    ResourceListBase<T, R> {
-  private readonly bindings_: {[hash: number]: StateBinding<R>} = {};
-  @ViewChildren('matrow', {read: ViewContainerRef})
+export abstract class ResourceListWithStatuses<
+  T extends ResourceList,
+  R extends Resource
+> extends ResourceListBase<T, R> {
+  private readonly bindings_: { [hash: number]: StateBinding<R> } = {};
+  @ViewChildren('matrow', { read: ViewContainerRef })
   private readonly containers_: QueryList<ViewContainerRef>;
   private lastHash_: number;
   private readonly unknownStatus: StatusIcon = {
     iconName: 'help',
-    iconClass: {'': true},
+    iconClass: { '': true },
   };
 
   protected icon = IconName;
@@ -330,8 +381,10 @@ export abstract class ResourceListWithStatuses<T extends ResourceList, R extends
   hoveredRow: number = undefined;
 
   protected constructor(
-      stateName: string, private readonly notifications: NotificationsService,
-      private readonly resolver_?: ComponentFactoryResolver) {
+    stateName: string,
+    private readonly notifications: NotificationsService,
+    private readonly resolver_?: ComponentFactoryResolver
+  ) {
     super(stateName, notifications);
 
     this.onChange.subscribe(this.clearExpandedRows_.bind(this));
@@ -369,7 +422,9 @@ export abstract class ResourceListWithStatuses<T extends ResourceList, R extends
 
     // map() is needed here to cast hash from string to number. Without it compiler will not
     // recognize stateBinding type.
-    for (const hash of Object.keys(this.bindings_).map((hash): number => Number(hash))) {
+    for (const hash of Object.keys(this.bindings_).map(
+      (hash): number => Number(hash)
+    )) {
       const stateBinding = this.bindings_[hash];
       if (stateBinding.callbackFunction(resource)) {
         this.lastHash_ = Number(hash);
@@ -397,7 +452,11 @@ export abstract class ResourceListWithStatuses<T extends ResourceList, R extends
   }
 
   showHoverIcon(index: number, resource: R): boolean {
-    return (this.isRowHovered(index) && this.hasErrors(resource) && !this.isRowExpanded(index));
+    return (
+      this.isRowHovered(index) &&
+      this.hasErrors(resource) &&
+      !this.isRowExpanded(index)
+    );
   }
 
   protected getEvents(_resource: R): KdEvent[] {
@@ -409,9 +468,12 @@ export abstract class ResourceListWithStatuses<T extends ResourceList, R extends
   }
 
   protected registerBinding(
-      iconName: IconName, iconClass: string, callbackFunction: StatusCheckCallback<R>): void {
+    iconName: IconName,
+    iconClass: string,
+    callbackFunction: StatusCheckCallback<R>
+  ): void {
     const icon = new Icon(String(iconName), iconClass);
-    this.bindings_[icon.hash()] = {icon, callbackFunction};
+    this.bindings_[icon.hash()] = { icon, callbackFunction };
   }
 
   private clearExpandedRows_(): void {
@@ -425,14 +487,14 @@ export abstract class ResourceListWithStatuses<T extends ResourceList, R extends
   private getStatusObject_(stateBinding: StateBinding<R>): StatusIcon {
     return {
       iconName: stateBinding.icon.name,
-      iconClass: {[stateBinding.icon.cssClass]: true},
+      iconClass: { [stateBinding.icon.cssClass]: true },
     };
   }
 }
 
 interface StatusIcon {
   iconName: string;
-  iconClass: {[className: string]: boolean};
+  iconClass: { [className: string]: boolean };
 }
 
 enum IconName {
@@ -459,18 +521,20 @@ class Icon {
    */
   hash(): number {
     const value = `${this.name}#${this.cssClass}`;
-    return value.split('')
-        .map(str => {
-          return str.charCodeAt(0);
-        })
-        .reduce((prev, curr) => {
-          return (prev << 5) + prev + curr;
-        }, 5381);
+    return value
+      .split('')
+      .map(str => {
+        return str.charCodeAt(0);
+      })
+      .reduce((prev, curr) => {
+        return (prev << 5) + prev + curr;
+      }, 5381);
   }
 }
 
 type StatusCheckCallback<T> = (resource: T) => boolean;
 
 type StateBinding<T> = {
-  icon: Icon; callbackFunction: StatusCheckCallback<T>;
+  icon: Icon;
+  callbackFunction: StatusCheckCallback<T>;
 };

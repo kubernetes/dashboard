@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Injectable} from '@angular/core';
-import {LocalSettings} from '@api/backendapi';
-import {CookieService} from 'ngx-cookie-service';
+import { Injectable } from '@angular/core';
+import { LocalSettings } from '@api/backendapi';
+import { CookieService } from 'ngx-cookie-service';
 
-import {ThemeService} from './theme';
+import { ThemeService } from './theme';
 
 @Injectable()
 export class LocalSettingsService {
@@ -25,7 +25,10 @@ export class LocalSettingsService {
     isThemeDark: false,
   };
 
-  constructor(private readonly theme_: ThemeService, private readonly cookies_: CookieService) {}
+  constructor(
+    private readonly theme_: ThemeService,
+    private readonly cookies_: CookieService
+  ) {}
 
   init(): void {
     const cookieValue = this.cookies_.get(this.cookieName_);

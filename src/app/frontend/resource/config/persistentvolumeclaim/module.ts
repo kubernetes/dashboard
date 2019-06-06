@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
 
-import {ComponentsModule} from '../../../common/components/module';
-import {SharedModule} from '../../../shared.module';
-import {PersistentVolumeRoutingModule} from '../../cluster/persistentvolume/routing';
+import { ComponentsModule } from '../../../common/components/module';
+import { SharedModule } from '../../../shared.module';
+import { PersistentVolumeRoutingModule } from '../../cluster/persistentvolume/routing';
 
-import {PersistentVolumeClaimDetailComponent} from './detail/component';
-import {PersistentVolumeClaimListComponent} from './list/component';
+import { PersistentVolumeClaimDetailComponent } from './detail/component';
+import { PersistentVolumeClaimListComponent } from './list/component';
 
 @NgModule({
   imports: [SharedModule, ComponentsModule, PersistentVolumeRoutingModule],
@@ -28,5 +28,4 @@ import {PersistentVolumeClaimListComponent} from './list/component';
     PersistentVolumeClaimDetailComponent,
   ],
 })
-export class PersistentVolumeClaimModule {
-}
+export class PersistentVolumeClaimModule {}

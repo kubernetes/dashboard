@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {CsrfToken} from '@api/backendapi';
-import {Observable} from 'rxjs/Observable';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { CsrfToken } from '@api/backendapi';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class CsrfTokenService {
