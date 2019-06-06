@@ -21,6 +21,7 @@ export const CLUSTER_ROUTE: Route = {
   component: ClusterComponent,
   data: {
     breadcrumb: 'Cluster',
+    link: ['', 'cluster'],
   },
 };
 

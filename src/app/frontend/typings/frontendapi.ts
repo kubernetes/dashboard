@@ -28,7 +28,7 @@ export interface BreadcrumbConfig {
 
 export class Breadcrumb {
   label: string;
-  stateLink: string;
+  stateLink: string[];
 }
 
 export type ThemeSwitchCallback = (isLightThemeEnabled: boolean) => void;

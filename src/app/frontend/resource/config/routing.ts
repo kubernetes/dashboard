@@ -21,6 +21,7 @@ export const CONFIG_ROUTE: Route = {
   component: ConfigComponent,
   data: {
     breadcrumb: 'Config and Storage',
+    link: ['', 'config'],
   },
 };
 

@@ -21,6 +21,7 @@ export const WORKLOADS_ROUTE: Route = {
   component: WorkloadsComponent,
   data: {
     breadcrumb: 'Workloads',
+    link: ['', 'workloads'],
   },
 };
 

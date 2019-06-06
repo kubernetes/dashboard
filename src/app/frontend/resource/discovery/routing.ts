@@ -21,6 +21,7 @@ export const DISCOVERY_ROUTE: Route = {
   component: DiscoveryComponent,
   data: {
     breadcrumb: 'Discovery and Load Balancing',
+    link: ['', 'discovery'],
   },
 };
 
