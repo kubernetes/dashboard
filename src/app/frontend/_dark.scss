@@ -107,6 +107,7 @@ $kd-dark-theme: mat-dark-theme($kd-dark-theme-primary, $kd-dark-theme-accent, $k
     stroke: $accent;
   }
 
+  // this removes the border of the graphs
   .c3-chart-arc path {
     stroke: none;
   }  
