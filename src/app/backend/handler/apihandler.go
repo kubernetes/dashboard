@@ -550,6 +550,11 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			Writes(customresourcedefinition.CustomResourceObjectDetail{}))
 
 	apiV1Ws.Route(
+		apiV1Ws.GET("/customresourcedefinition/{namespace}/{customresourcedefinition}/object/{name}/event").
+			To(apiHandler.handleGetCustomResourceObjectEvents).
+			Writes(common.EventList{}))
+
+	apiV1Ws.Route(
 		apiV1Ws.GET("/storageclass").
 			To(apiHandler.handleGetStorageClassList).
 			Writes(storageclass.StorageClassList{}))
@@ -2148,6 +2153,28 @@ func (apiHandler *APIHandler) handleGetCustomResourceObjectDetail(request *restf
 	crdName := request.PathParameter("customresourcedefinition")
 	namespace := parseNamespacePathParameter(request)
 	result, err := customresourcedefinition.GetCustomResourceObjectDetail(apiextensionsclient, namespace, config, crdName, name)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetCustomResourceObjectEvents(request *restful.Request, response *restful.Response) {
+	log.Println("Getting events related to a custom resource object in namespace")
+
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	namespace := request.PathParameter("namespace")
+	name := request.PathParameter("name")
+	dataSelect := parseDataSelectPathParameter(request)
+	dataSelect.MetricQuery = dataselect.StandardMetrics
+	result, err := customresourcedefinition.GetEventsForCustomResourceObject(k8sClient, dataSelect, namespace, name)
 	if err != nil {
 		errors.HandleInternalError(response, err)
 		return
