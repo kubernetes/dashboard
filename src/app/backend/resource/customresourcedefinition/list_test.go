@@ -42,6 +42,7 @@ func TestGetCustomResourceDefinition(t *testing.T) {
 								Kind:   "Foo",
 								Plural: "foos",
 							},
+							Version: "v1alpha1",
 						},
 					},
 				},
@@ -52,6 +53,7 @@ func TestGetCustomResourceDefinition(t *testing.T) {
 					{
 						ObjectMeta: api.ObjectMeta{Name: "foos.samplecontroller.k8s.io"},
 						TypeMeta:   api.TypeMeta{Kind: api.ResourceKindCustomResourceDefinition},
+						Version:    "v1alpha1",
 					},
 				},
 				Errors: []error{},
@@ -79,7 +81,7 @@ func TestGetCustomResourceDefinition(t *testing.T) {
 		}
 
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("GetHorizontalPodAutoscalerList(client, nil) == \ngot: %#v, \nexpected %#v",
+			t.Errorf("GetCustomResourceDefinitionList(client, nil) == \ngot: %#v, \nexpected %#v",
 				actual, c.expected)
 		}
 	}

@@ -30,11 +30,10 @@ type CustomResourceDefinitionDetail struct {
 
 // CustomResourceDefinition represents a custom resource definition.
 type CustomResourceDefinition struct {
-	ObjectMeta  api.ObjectMeta           `json:"objectMeta"`
-	TypeMeta    api.TypeMeta             `json:"typeMeta"`
-	Description string                   `json:"description"`
-	Version     string                   `json:"version"`
-	Objects     CustomResourceObjectList `json:"objects"`
+	ObjectMeta api.ObjectMeta           `json:"objectMeta"`
+	TypeMeta   api.TypeMeta             `json:"typeMeta"`
+	Version    string                   `json:"version"`
+	Objects    CustomResourceObjectList `json:"objects"`
 }
 
 // GetCustomResourceDefinitionDetail returns detailed information about a custom resource definition.
@@ -57,11 +56,10 @@ func GetCustomResourceDefinitionDetail(client apiextensionsclientset.Interface, 
 func toCustomResourceDefinitionDetail(customResourceDefinition *apiextensions.CustomResourceDefinition, objects CustomResourceObjectList) *CustomResourceDefinitionDetail {
 	return &CustomResourceDefinitionDetail{
 		CustomResourceDefinition{
-			ObjectMeta:  api.NewObjectMeta(customResourceDefinition.ObjectMeta),
-			TypeMeta:    api.NewTypeMeta(api.ResourceKindCustomResourceDefinition),
-			Description: customResourceDefinition.Name,
-			Version:     customResourceDefinition.Spec.Version,
-			Objects:     objects,
+			ObjectMeta: api.NewObjectMeta(customResourceDefinition.ObjectMeta),
+			TypeMeta:   api.NewTypeMeta(api.ResourceKindCustomResourceDefinition),
+			Version:    customResourceDefinition.Spec.Version,
+			Objects:    objects,
 		},
 	}
 }
