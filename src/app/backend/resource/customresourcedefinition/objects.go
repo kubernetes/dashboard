@@ -81,8 +81,9 @@ func (in *CustomResourceObjectList) DeepCopy() *CustomResourceObjectList {
 	return out
 }
 
-// @todo - Use the resource channel here
-func GetCustomResourceObjectList(client apiextensionsclientset.Interface, namespace *common.NamespaceQuery, config *rest.Config, dsQuery *dataselect.DataSelectQuery, crdName string) (CustomResourceObjectList, error) {
+// GetCustomResourceObjectList gets objects for a CR.
+func GetCustomResourceObjectList(client apiextensionsclientset.Interface, config *rest.Config, namespace *common.NamespaceQuery,
+	dsQuery *dataselect.DataSelectQuery, crdName string) (CustomResourceObjectList, error) {
 	var list CustomResourceObjectList
 
 	customResourceDefinition, err := client.ApiextensionsV1beta1().
@@ -117,6 +118,7 @@ func GetCustomResourceObjectList(client apiextensionsclientset.Interface, namesp
 	return list, nil
 }
 
+// GetCustomResourceObjectDetail returns details of a single object in a CR.
 func GetCustomResourceObjectDetail(client apiextensionsclientset.Interface, namespace *common.NamespaceQuery, config *rest.Config, crdName string, name string) (CustomResourceObjectDetail, error) {
 	var detail CustomResourceObjectDetail
 

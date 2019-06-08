@@ -535,6 +535,11 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			Writes(customresourcedefinition.CustomResourceDefinitionList{}))
 
 	apiV1Ws.Route(
+		apiV1Ws.GET("/customresourcedefinition/{customresourcedefinition}").
+			To(apiHandler.handleGetCustomResourceDefinitionDetail).
+			Writes(customresourcedefinition.CustomResourceDefinitionDetail{}))
+
+	apiV1Ws.Route(
 		apiV1Ws.GET("/customresourcedefinition/{namespace}/{customresourcedefinition}/object").
 			To(apiHandler.handleGetCustomResourceObjectList).
 			Writes(customresourcedefinition.CustomResourceObjectList{}))
@@ -2078,6 +2083,29 @@ func (apiHandler *APIHandler) handleGetCustomResourceDefinitionList(request *res
 	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
+func (apiHandler *APIHandler) handleGetCustomResourceDefinitionDetail(request *restful.Request, response *restful.Response) {
+	config, err := apiHandler.cManager.Config(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	apiextensionsclient, err := apiHandler.cManager.APIExtensionsClient(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	name := request.PathParameter("customresourcedefinition")
+	result, err := customresourcedefinition.GetCustomResourceDefinitionDetail(apiextensionsclient, config, name)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
 func (apiHandler *APIHandler) handleGetCustomResourceObjectList(request *restful.Request, response *restful.Response) {
 	config, err := apiHandler.cManager.Config(request)
 	if err != nil {
@@ -2094,7 +2122,7 @@ func (apiHandler *APIHandler) handleGetCustomResourceObjectList(request *restful
 	crdName := request.PathParameter("customresourcedefinition")
 	namespace := parseNamespacePathParameter(request)
 	dataSelect := parseDataSelectPathParameter(request)
-	result, err := customresourcedefinition.GetCustomResourceObjectList(apiextensionsclient, namespace, config, dataSelect, crdName)
+	result, err := customresourcedefinition.GetCustomResourceObjectList(apiextensionsclient, config, namespace, dataSelect, crdName)
 	if err != nil {
 		errors.HandleInternalError(response, err)
 		return
