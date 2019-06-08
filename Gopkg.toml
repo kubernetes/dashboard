@@ -48,7 +48,7 @@
 
 [[constraint]]
   name = "github.com/emicklei/go-restful"
-  version = "1.0.0"
+  version = "2.9.6"
 
 [[override]]
   name = "github.com/square/go-jose"
