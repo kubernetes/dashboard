@@ -8,7 +8,15 @@
   "compilerOptions": {
     "baseUrl": "src/app/frontend",
     "paths": {
-      "@api/*": ["typings/*"]
+      "@api/*": [
+        "typings/*"
+      ],
+      "plugin": [
+        "dist/plugin"
+      ],
+      "plugin/*": [
+        "dist/plugin/*"
+      ]
     },
     "outDir": ".tmp/out-tsc",
     "target": "esnext",

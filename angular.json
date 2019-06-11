@@ -121,6 +121,41 @@
           }
         }
       }
+    },
+    "plugin": {
+      "projectType": "library",
+      "root": "projects/plugin",
+      "sourceRoot": "projects/plugin/src",
+      "prefix": "k8s",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/plugin/tsconfig.lib.json",
+            "project": "projects/plugin/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/plugin/src/test.ts",
+            "tsConfig": "projects/plugin/tsconfig.spec.json",
+            "karmaConfig": "projects/plugin/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/plugin/tsconfig.lib.json",
+              "projects/plugin/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "kubernetes-dashboard",
