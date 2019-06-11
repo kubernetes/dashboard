@@ -4,10 +4,12 @@ const {resolve, relative} = require('path');
 const {writeFileSync} = require('fs-extra');
 
 const gitInfo = gitDescribeSync({
-  dirtyMark: false,
-  dirtySemver: false,
+  dirtyMark: true,
+  dirtySemver: true,
   longSemver: true,
 });
+
+console.log(gitInfo);
 
 gitInfo.packageVersion = version;
 Object.assign(gitInfo.semver, {

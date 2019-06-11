@@ -27,6 +27,7 @@ before_install:
   - mkdir -p $TRAVIS_BUILD_DIR/.tmp/src/github.com/kubernetes/dashboard/src/app
   - cp -r $TRAVIS_BUILD_DIR/src/app/backend $TRAVIS_BUILD_DIR/.tmp/src/github.com/kubernetes/dashboard/src/app
   - ln -s $TRAVIS_BUILD_DIR/vendor $TRAVIS_BUILD_DIR/.tmp/src/github.com/kubernetes/dashboard/src/app/backend/vendor
+  - git fetch --tags && git tag && git describe --tags --always --dirty
 
 before_script:
   - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
