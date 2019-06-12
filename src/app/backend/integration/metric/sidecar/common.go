@@ -74,15 +74,3 @@ func toUniqueSlice(strings []string) []string {
 
 	return result
 }
-
-func toMetricPoints(sidecarMetricPoint []metricapi.MetricPoint) []metricapi.MetricPoint {
-	metricPoints := make([]metricapi.MetricPoint, len(sidecarMetricPoint))
-	for i, sidecarMP := range sidecarMetricPoint {
-		metricPoints[i] = metricapi.MetricPoint{
-			Value:     sidecarMP.Value,
-			Timestamp: sidecarMP.Timestamp,
-		}
-	}
-
-	return metricPoints
-}
