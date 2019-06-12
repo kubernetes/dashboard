@@ -18,7 +18,7 @@ import (
 	"strconv"
 
 	"k8s.io/client-go/discovery"
-	"k8s.io/client-go/discovery/cached"
+	"k8s.io/client-go/discovery/cached/memory"
 	"k8s.io/client-go/dynamic"
 	"k8s.io/client-go/kubernetes/scheme"
 	"k8s.io/client-go/rest"
@@ -98,7 +98,7 @@ func getScaleGetter(cfg *rest.Config) (scale.ScalesGetter, error) {
 	}
 
 	resolver := scale.NewDiscoveryScaleKindResolver(discoveryClient)
-	dc := cached.NewMemCacheClient(discoveryClient)
+	dc := memory.NewMemCacheClient(discoveryClient)
 	drm := restmapper.NewDeferredDiscoveryRESTMapper(dc)
 
 	// Fixes "unable to get full preferred group-version-resource for <resource>: the cache has not been filled yet".
