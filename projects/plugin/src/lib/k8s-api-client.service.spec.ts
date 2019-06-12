@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { PluginService } from './plugin.service';
+import { K8sApiClientService } from './k8s-api-client.service';
 
-describe('PluginService', () => {
+describe('K8sApiClientService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: PluginService = TestBed.get(PluginService);
+    const service: K8sApiClientService = TestBed.get(K8sApiClientService);
     expect(service).toBeTruthy();
   });
 });
