@@ -12,25 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {UIRouterModule} from '@uirouter/angular';
+import { NgModule } from '@angular/core';
 
-import {ComponentsModule} from '../../../common/components/module';
-import {SharedModule} from '../../../shared.module';
+import { ComponentsModule } from '../../../common/components/module';
+import { SharedModule } from '../../../shared.module';
 
-import {NodeDetailComponent} from './detail/component';
-import {nodeDetailState} from './detail/state';
-import {NodeListComponent} from './list/component';
-import {nodeListState} from './list/state';
-import {nodeState} from './state';
+import { NodeDetailComponent } from './detail/component';
+import { NodeListComponent } from './list/component';
+import { NodeRoutingModule } from './routing';
 
 @NgModule({
-  imports: [
-    SharedModule,
-    ComponentsModule,
-    UIRouterModule.forChild({states: [nodeState, nodeListState, nodeDetailState]}),
-  ],
+  imports: [SharedModule, ComponentsModule, NodeRoutingModule],
   declarations: [NodeListComponent, NodeDetailComponent],
 })
-export class NodeModule {
-}
+export class NodeModule {}

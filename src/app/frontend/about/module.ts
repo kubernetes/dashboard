@@ -12,23 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {UIRouterModule} from '@uirouter/angular';
+import { NgModule } from '@angular/core';
 
-import {ComponentsModule} from '../common/components/module';
-import {SharedModule} from '../shared.module';
+import { ComponentsModule } from '../common/components/module';
+import { SharedModule } from '../shared.module';
 
-import {ActionbarComponent} from './actionbar/component';
-import {AboutComponent} from './component';
-import {aboutState} from './state';
+import { ActionbarComponent } from './actionbar/component';
+import { AboutComponent } from './component';
+import { AboutRoutingModule } from './routing';
 
 @NgModule({
-  imports: [
-    SharedModule,
-    ComponentsModule,
-    UIRouterModule.forChild({states: [aboutState]}),
-  ],
+  imports: [SharedModule, ComponentsModule, AboutRoutingModule],
   declarations: [AboutComponent, ActionbarComponent],
 })
-export class AboutModule {
-}
+export class AboutModule {}

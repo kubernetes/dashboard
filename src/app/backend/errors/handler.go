@@ -113,9 +113,16 @@ func IsNotFoundError(err error) bool {
 	return status.ErrStatus.Code == http.StatusNotFound
 }
 
+func IsTokenExpiredError(err error) bool {
+	if err == nil {
+		return false
+	}
+
+	return err.Error() == MsgTokenExpiredError
+}
+
 // HandleInternalError writes the given error to the response and sets appropriate HTTP status headers.
 func HandleInternalError(response *restful.Response, err error) {
-	log.Print(err)
 	statusCode := http.StatusInternalServerError
 	statusError, ok := err.(*errors.StatusError)
 	if ok && statusError.Status().Code > 0 {
@@ -130,7 +137,7 @@ func HandleHTTPError(err error) int {
 	if err == nil {
 		return http.StatusInternalServerError
 	}
-	if err.Error() == MSG_TOKEN_EXPIRED_ERROR || err.Error() == MSG_LOGIN_UNAUTHORIZED_ERROR || err.Error() == MSG_ENCRYPTION_KEY_CHANGED {
+	if err.Error() == MsgTokenExpiredError || err.Error() == MsgLoginUnauthorizedError || err.Error() == MsgEncryptionKeyChanged {
 		return http.StatusUnauthorized
 	}
 	return http.StatusInternalServerError

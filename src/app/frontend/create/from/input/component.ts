@@ -12,24 +12,32 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Input, OnInit} from '@angular/core';
+import { Component } from '@angular/core';
 
-import {CreateService} from '../../../common/services/create/service';
-import {HistoryService} from '../../../common/services/global/history';
-import {NamespaceService} from '../../../common/services/global/namespace';
-import {overviewState} from '../../../overview/state';
+import { CreateService } from '../../../common/services/create/service';
+import { HistoryService } from '../../../common/services/global/history';
+import { NamespaceService } from '../../../common/services/global/namespace';
 
-@Component(
-    {selector: 'kd-create-from-input', templateUrl: './template.html', styleUrls: ['./style.scss']})
+@Component({
+  selector: 'kd-create-from-input',
+  templateUrl: './template.html',
+  styleUrls: ['./style.scss'],
+})
 export class CreateFromInputComponent {
   inputData: string;
 
   constructor(
-      private readonly namespace_: NamespaceService, private readonly create_: CreateService,
-      private readonly history_: HistoryService) {}
+    private readonly namespace_: NamespaceService,
+    private readonly create_: CreateService,
+    private readonly history_: HistoryService
+  ) {}
 
   isCreateDisabled(): boolean {
-    return !this.inputData || this.inputData.length === 0 || this.create_.isDeployDisabled();
+    return (
+      !this.inputData ||
+      this.inputData.length === 0 ||
+      this.create_.isDeployDisabled()
+    );
   }
 
   create(): void {
@@ -37,7 +45,7 @@ export class CreateFromInputComponent {
   }
 
   cancel(): void {
-    this.history_.goToPreviousState(overviewState.name);
+    this.history_.goToPreviousState('overview');
   }
 
   areMultipleNamespacesSelected(): boolean {

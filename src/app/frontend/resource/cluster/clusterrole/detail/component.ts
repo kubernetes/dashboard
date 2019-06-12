@@ -12,15 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ClusterRoleDetail} from '@api/backendapi';
-import {StateService} from '@uirouter/core';
-import {Subscription} from 'rxjs/Subscription';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ClusterRoleDetail } from '@api/backendapi';
+import { Subscription } from 'rxjs/Subscription';
 
-import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
-import {NotificationSeverity, NotificationsService} from '../../../../common/services/global/notifications';
-import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
-import {ResourceService} from '../../../../common/services/resource/resource';
+import {
+  ActionbarService,
+  ResourceMeta,
+} from '../../../../common/services/global/actionbar';
+import { NotificationsService } from '../../../../common/services/global/notifications';
+import {
+  EndpointManager,
+  Resource,
+} from '../../../../common/services/resource/endpoint';
+import { ResourceService } from '../../../../common/services/resource/resource';
 
 @Component({
   selector: 'kd-cluster-role-detail',
@@ -28,27 +34,30 @@ import {ResourceService} from '../../../../common/services/resource/resource';
 })
 export class ClusterRoleDetailComponent implements OnInit, OnDestroy {
   private clusterRoleSubscription_: Subscription;
-  private clusterRoleName_: string;
+  private readonly endpoint_ = EndpointManager.resource(Resource.clusterRole);
   clusterRole: ClusterRoleDetail;
   isInitialized = false;
 
   constructor(
-      private readonly clusterRole_: ResourceService<ClusterRoleDetail>,
-      private readonly actionbar_: ActionbarService, private readonly state_: StateService,
-      private readonly notifications_: NotificationsService) {}
+    private readonly clusterRole_: ResourceService<ClusterRoleDetail>,
+    private readonly actionbar_: ActionbarService,
+    private readonly route_: ActivatedRoute,
+    private readonly notifications_: NotificationsService
+  ) {}
 
   ngOnInit(): void {
-    this.clusterRoleName_ = this.state_.params.resourceName;
-    this.clusterRoleSubscription_ =
-        this.clusterRole_
-            .get(EndpointManager.resource(Resource.clusterRole).detail(), this.clusterRoleName_)
-            .subscribe((d: ClusterRoleDetail) => {
-              this.clusterRole = d;
-              this.notifications_.pushErrors(d.errors);
-              this.actionbar_.onInit.emit(
-                  new ResourceMeta('Cluster Role', d.objectMeta, d.typeMeta));
-              this.isInitialized = true;
-            });
+    const resourceName = this.route_.snapshot.params.resourceName;
+
+    this.clusterRoleSubscription_ = this.clusterRole_
+      .get(this.endpoint_.detail(), resourceName)
+      .subscribe((d: ClusterRoleDetail) => {
+        this.clusterRole = d;
+        this.notifications_.pushErrors(d.errors);
+        this.actionbar_.onInit.emit(
+          new ResourceMeta('Cluster Role', d.objectMeta, d.typeMeta)
+        );
+        this.isInitialized = true;
+      });
   }
 
   ngOnDestroy(): void {

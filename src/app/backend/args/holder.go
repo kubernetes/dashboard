@@ -53,6 +53,8 @@ type holder struct {
 	disableSettingsAuthorizer bool
 
 	enableSkipLogin bool
+
+	localeConfig string
 }
 
 // GetInsecurePort 'insecure-port' argument of Dashboard binary.
@@ -176,4 +178,9 @@ func (self *holder) GetEnableSkipLogin() bool {
 // GetNamespace 'namespace' argument of Dashboard binary.
 func (self *holder) GetNamespace() string {
 	return self.namespace
+}
+
+// GetLocaleConfig 'locale-config' argument of Dashboard binary.
+func (self *holder) GetLocaleConfig() string {
+	return self.localeConfig
 }

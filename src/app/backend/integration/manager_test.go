@@ -15,23 +15,12 @@
 package integration
 
 import (
-	"errors"
 	"testing"
 
-	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
-	"github.com/kubernetes/dashboard/src/app/backend/auth/jwe"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/integration/api"
-	"github.com/kubernetes/dashboard/src/app/backend/sync"
-	"k8s.io/client-go/kubernetes/fake"
 )
-
-func getTokenManager() authApi.TokenManager {
-	c := fake.NewSimpleClientset()
-	syncManager := sync.NewSynchronizerManager(c)
-	holder := jwe.NewRSAKeyHolder(syncManager.Secret("", ""))
-	return jwe.NewJWETokenManager(holder)
-}
 
 func areErrorsEqual(err1, err2 error) bool {
 	return (err1 != nil && err2 != nil && err1.Error() == err2.Error()) ||
@@ -57,14 +46,14 @@ func TestIntegrationManager_GetState(t *testing.T) {
 			"Server provided and using in-cluster heapster",
 			"http://127.0.0.1:8080", "", &api.IntegrationState{
 				Connected: false,
-				Error:     errors.New("Get http://127.0.0.1:8080/api/v1/namespaces/kube-system/services/heapster/proxy/healthz: dial tcp 127.0.0.1:8080: connect: connection refused"),
+				Error:     errors.NewInvalid("Get http://127.0.0.1:8080/api/v1/namespaces/kube-system/services/heapster/proxy/healthz: dial tcp 127.0.0.1:8080: connect: connection refused"),
 			}, nil,
 		},
 		{
 			"Server provided and using external heapster",
 			"http://127.0.0.1:8080", "http://127.0.0.1:8081", &api.IntegrationState{
 				Connected: false,
-				Error:     errors.New("Get http://127.0.0.1:8081/healthz: dial tcp 127.0.0.1:8081: connect: connection refused"),
+				Error:     errors.NewInvalid("Get http://127.0.0.1:8081/healthz: dial tcp 127.0.0.1:8081: connect: connection refused"),
 			}, nil,
 		},
 	}

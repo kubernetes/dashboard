@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HttpClient, HttpParams} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {StateService} from '@uirouter/core';
-import {Observable} from 'rxjs/Observable';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
-import {ResourceBase} from '../../resources/resource';
-import {NamespaceService} from '../global/namespace';
+import { ResourceBase } from '../../resources/resource';
+import { NamespaceService } from '../global/namespace';
 
 @Injectable()
 export class ResourceService<T> extends ResourceBase<T> {
@@ -27,7 +26,7 @@ export class ResourceService<T> extends ResourceBase<T> {
       endpoint = endpoint.replace(':name', name);
     }
 
-    return this.http_.get<T>(endpoint, {params});
+    return this.http_.get<T>(endpoint, { params });
   }
 
   /**
@@ -41,25 +40,34 @@ export class ResourceService<T> extends ResourceBase<T> {
 @Injectable()
 export class NamespacedResourceService<T> extends ResourceBase<T> {
   constructor(
-      http: HttpClient, private readonly state_: StateService,
-      private readonly namespaceService_: NamespaceService) {
+    http: HttpClient,
+    private readonly namespaceService_: NamespaceService
+  ) {
     super(http);
   }
 
   private getNamespace_(): string {
-    if (this.state_.params.resourceNamespace) {
-      return this.state_.params.resourceNamespace;
-    }
-
     const currentNamespace = this.namespaceService_.current();
-    return this.namespaceService_.isMultiNamespace(currentNamespace) ? '' : currentNamespace;
+    return this.namespaceService_.isMultiNamespace(currentNamespace)
+      ? ''
+      : currentNamespace;
   }
 
-  get(endpoint: string, name?: string, params?: HttpParams): Observable<T> {
-    endpoint = endpoint.replace(':namespace', this.getNamespace_());
+  get(
+    endpoint: string,
+    name?: string,
+    namespace?: string,
+    params?: HttpParams
+  ): Observable<T> {
+    if (namespace) {
+      endpoint = endpoint.replace(':namespace', namespace);
+    } else {
+      endpoint = endpoint.replace(':namespace', this.getNamespace_());
+    }
+
     if (name) {
       endpoint = endpoint.replace(':name', name);
     }
-    return this.http_.get<T>(endpoint, {params});
+    return this.http_.get<T>(endpoint, { params });
   }
 }

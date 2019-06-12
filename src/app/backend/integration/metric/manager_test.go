@@ -15,11 +15,11 @@
 package metric
 
 import (
-	"errors"
 	"reflect"
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	integrationapi "github.com/kubernetes/dashboard/src/app/backend/integration/api"
 	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 )
@@ -39,7 +39,7 @@ func (self FakeMetricClient) HealthCheck() error {
 		return nil
 	}
 
-	return errors.New("test-error")
+	return errors.NewInvalid("test-error")
 }
 
 func (self FakeMetricClient) DownloadMetric(selectors []api.ResourceSelector, metricName string,
@@ -96,7 +96,7 @@ func TestMetricManager_Enable(t *testing.T) {
 		client   api.MetricClient
 		expected error
 	}{
-		{&FakeMetricClient{healthOk: false}, errors.New("Health check failed: test-error")},
+		{&FakeMetricClient{healthOk: false}, errors.NewInvalid("Health check failed: test-error")},
 		{&FakeMetricClient{healthOk: true}, nil},
 	}
 

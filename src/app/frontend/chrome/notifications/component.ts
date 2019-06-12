@@ -12,11 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, ElementRef, HostListener, OnInit} from '@angular/core';
-import {TransitionService} from '@uirouter/core';
+import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 
-import {Animations} from '../../common/animations/animations';
-import {Notification, NotificationsService} from '../../common/services/global/notifications';
+import { Animations } from '../../common/animations/animations';
+import {
+  Notification,
+  NotificationsService,
+} from '../../common/services/global/notifications';
 
 @Component({
   selector: 'kd-notifications',
@@ -29,13 +31,14 @@ export class NotificationsComponent implements OnInit {
   notifications: Notification[] = [];
 
   constructor(
-      private readonly notifications_: NotificationsService,
-      private readonly transition_: TransitionService, private readonly element_: ElementRef) {}
+    private readonly notifications_: NotificationsService,
+    private readonly element_: ElementRef
+  ) {}
 
   ngOnInit(): void {
-    this.transition_.onExit({}, () => {
-      this.close_();
-    });
+    // this.transition_.onExit({}, () => {
+    //   this.close_();
+    // });
   }
 
   @HostListener('document:click', ['$event'])

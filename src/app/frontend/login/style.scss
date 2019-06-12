@@ -37,6 +37,17 @@
   margin: (4 * $baseline-grid) $baseline-grid $baseline-grid 0;
 }
 
+.kd-error-container {
+  align-self: end;
+  grid-column: 3 / 8;
+  grid-row: 1;
+  justify-self: stretch;
+}
+
+.kd-error-text {
+  text-align: center;
+}
+
 :host {
   height: 100vh;
 }

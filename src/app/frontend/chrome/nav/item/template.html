@@ -16,7 +16,8 @@ limitations under the License.
 
 <a mat-button
    class="kd-nav-item-button"
-   uiSref="{{state}}"
-   [ngClass]="{'kd-nav-item-button-active': isActive()}">
+   [routerLink]="state"
+   queryParamsHandling="preserve"
+   [routerLinkActive]="['kd-nav-item-button-active']">
   <ng-content></ng-content>
 </a>

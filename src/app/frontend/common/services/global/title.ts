@@ -12,46 +12,40 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Injectable} from '@angular/core';
-import {Title} from '@angular/platform-browser';
-import {Transition} from '@uirouter/angular';
+import { Injectable } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
-import {BreadcrumbsService} from './breadcrumbs';
-import {GlobalSettingsService} from './globalsettings';
+import { GlobalSettingsService } from './globalsettings';
 
 @Injectable()
 export class TitleService {
   clusterName = '';
-  stateName = '';
 
   constructor(
-      private readonly title_: Title, private readonly settings_: GlobalSettingsService,
-      private readonly breadcrumbs_: BreadcrumbsService) {}
+    private readonly title_: Title,
+    private readonly settings_: GlobalSettingsService
+  ) {}
 
-  update(transition?: Transition): void {
-    if (transition) {
-      this.stateName = this.breadcrumbs_.getDisplayName(transition.targetState().$state());
-    }
-
+  update(): void {
     this.settings_.load(
-        () => {
-          this.clusterName = this.settings_.getClusterName();
-          this.apply_();
-        },
-        () => {
-          this.clusterName = '';
-          this.apply_();
-        });
+      () => {
+        this.clusterName = this.settings_.getClusterName();
+        this.apply_();
+      },
+      () => {
+        this.clusterName = '';
+        this.apply_();
+      }
+    );
   }
 
   private apply_(): void {
-    let title = '';
+    let title = 'Kubernetes Dashboard';
 
     if (this.clusterName && this.clusterName.length > 0) {
-      title += `${this.clusterName} - `;
+      title = `${this.clusterName} - ` + title;
     }
 
-    title += `${this.stateName} - Kubernetes Dashboard`;
     this.title_.setTitle(title);
   }
 }

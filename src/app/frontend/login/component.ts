@@ -12,17 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HttpClient} from '@angular/common/http';
-import {Component, OnInit} from '@angular/core';
-import {AuthenticationMode, EnabledAuthenticationModes, LoginSkippableResponse, LoginSpec} from '@api/backendapi';
-import {KdFile} from '@api/frontendapi';
-import {StateService} from '@uirouter/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Component, NgZone, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import {
+  AuthenticationMode,
+  EnabledAuthenticationModes,
+  LoginSkippableResponse,
+  LoginSpec,
+} from '@api/backendapi';
+import { KdError, KdFile, StateError } from '@api/frontendapi';
+import { map } from 'rxjs/operators';
 
-import {K8SError} from '../common/errors/errors';
-import {NAMESPACE_STATE_PARAM} from '../common/params/params';
-import {AuthService} from '../common/services/global/authentication';
-import {CONFIG} from '../index.config';
-import {overviewState} from '../overview/state';
+import { AsKdError, K8SError } from '../common/errors/errors';
+import { AuthService } from '../common/services/global/authentication';
 
 enum LoginModes {
   Kubeconfig = 'kubeconfig',
@@ -30,12 +33,15 @@ enum LoginModes {
   Token = 'token',
 }
 
-@Component({selector: 'kd-login', templateUrl: './template.html', styleUrls: ['./style.scss']})
+@Component({
+  selector: 'kd-login',
+  templateUrl: './template.html',
+  styleUrls: ['./style.scss'],
+})
 export class LoginComponent implements OnInit {
   loginModes = LoginModes;
   selectedAuthenticationMode = LoginModes.Kubeconfig;
-  // TODO handle errors
-  errors: K8SError[];
+  errors: KdError[] = [];
 
   private enabledAuthenticationModes_: AuthenticationMode[] = [];
   private isLoginSkippable_ = false;
@@ -45,24 +51,40 @@ export class LoginComponent implements OnInit {
   private password_: string;
 
   constructor(
-      private readonly authService_: AuthService, private readonly state_: StateService,
-      private readonly httpClient: HttpClient) {}
+    private readonly authService_: AuthService,
+    private readonly state_: Router,
+    private readonly httpClient: HttpClient,
+    private readonly ngZone_: NgZone,
+    private readonly route_: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.httpClient.get<EnabledAuthenticationModes>('api/v1/login/modes')
-        .subscribe((enabledModes: EnabledAuthenticationModes) => {
-          this.enabledAuthenticationModes_ = enabledModes.modes;
-        });
+    this.httpClient
+      .get<EnabledAuthenticationModes>('api/v1/login/modes')
+      .subscribe((enabledModes: EnabledAuthenticationModes) => {
+        this.enabledAuthenticationModes_ = enabledModes.modes;
+      });
 
-    this.httpClient.get<LoginSkippableResponse>('api/v1/login/skippable')
-        .subscribe((loginSkippableResponse: LoginSkippableResponse) => {
-          this.isLoginSkippable_ = loginSkippableResponse.skippable;
-        });
+    this.httpClient
+      .get<LoginSkippableResponse>('api/v1/login/skippable')
+      .subscribe((loginSkippableResponse: LoginSkippableResponse) => {
+        this.isLoginSkippable_ = loginSkippableResponse.skippable;
+      });
+
+    this.route_.paramMap
+      .pipe(map(() => window.history.state))
+      .subscribe((state: StateError) => {
+        if (state.error) {
+          this.errors = [state.error];
+        }
+      });
   }
 
   getEnabledAuthenticationModes(): AuthenticationMode[] {
-    if (this.enabledAuthenticationModes_.length > 0 &&
-        this.enabledAuthenticationModes_.indexOf(LoginModes.Kubeconfig) < 0) {
+    if (
+      this.enabledAuthenticationModes_.length > 0 &&
+      this.enabledAuthenticationModes_.indexOf(LoginModes.Kubeconfig) < 0
+    ) {
       // Push this option to the beginning of the list
       this.enabledAuthenticationModes_.splice(0, 0, LoginModes.Kubeconfig);
     }
@@ -71,34 +93,41 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    this.authService_.login(this.getLoginSpec_(), (errors: K8SError[]) => {
-      if (errors.length > 0) {
-        this.errors = errors;
-        return;
-      }
+    this.authService_.login(this.getLoginSpec_()).subscribe(
+      (errors: K8SError[]) => {
+        if (errors.length > 0) {
+          this.errors = errors.map(error => error.toKdError());
+          return;
+        }
 
-      this.state_.go(overviewState.name, {[NAMESPACE_STATE_PARAM]: CONFIG.defaultNamespace});
-    });
+        this.ngZone_.run(() => {
+          this.state_.navigate(['overview']);
+        });
+      },
+      (err: HttpErrorResponse) => {
+        this.errors = [AsKdError(err)];
+      }
+    );
   }
 
   skip(): void {
     this.authService_.skipLoginPage(true);
-    this.state_.go(overviewState.name, {[NAMESPACE_STATE_PARAM]: CONFIG.defaultNamespace});
+    this.state_.navigate(['overview']);
   }
 
   isSkipButtonEnabled(): boolean {
     return this.isLoginSkippable_;
   }
 
-  onChange(event: Event&KdFile): void {
+  onChange(event: Event & KdFile): void {
     switch (this.selectedAuthenticationMode) {
-      case (LoginModes.Kubeconfig):
+      case LoginModes.Kubeconfig:
         this.onFileLoad_(event as KdFile);
         break;
-      case (LoginModes.Token):
+      case LoginModes.Token:
         this.token_ = (event.target as HTMLInputElement).value;
         break;
-      case (LoginModes.Basic):
+      case LoginModes.Basic:
         if ((event.target as HTMLInputElement).id === 'username') {
           this.username_ = (event.target as HTMLInputElement).value;
         } else {
@@ -115,12 +144,15 @@ export class LoginComponent implements OnInit {
 
   private getLoginSpec_(): LoginSpec {
     switch (this.selectedAuthenticationMode) {
-      case (LoginModes.Kubeconfig):
-        return {kubeConfig: this.kubeconfig_} as LoginSpec;
-      case (LoginModes.Token):
-        return {token: this.token_} as LoginSpec;
-      case (LoginModes.Basic):
-        return {username: this.username_, password: this.password_} as LoginSpec;
+      case LoginModes.Kubeconfig:
+        return { kubeConfig: this.kubeconfig_ } as LoginSpec;
+      case LoginModes.Token:
+        return { token: this.token_ } as LoginSpec;
+      case LoginModes.Basic:
+        return {
+          username: this.username_,
+          password: this.password_,
+        } as LoginSpec;
       default:
         return {} as LoginSpec;
     }

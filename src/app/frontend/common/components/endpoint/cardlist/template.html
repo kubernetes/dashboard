@@ -16,12 +16,14 @@ limitations under the License.
 
 <kd-card [initialized]="initialized"
          role="table">
-  <div title>Endpoints</div>
+  <div title
+       i18n>Endpoints</div>
 
   <div description>
     <div class="kd-inline-property"
          *ngIf="endpoints?.length">
-      <span class="kd-muted-light">Items:&nbsp;</span>
+      <span class="kd-muted-light"
+            i18n>Items:&nbsp;</span>
       <span>{{endpoints.length}}</span>
     </div>
   </div>
@@ -31,27 +33,30 @@ limitations under the License.
     <mat-table [dataSource]="getDataSource()"
                class="kd-table-no-footer">
       <ng-container [matColumnDef]="getEndpointsColumns()[0]">
-        <mat-header-cell *matHeaderCellDef>Host</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Host</mat-header-cell>
         <mat-cell *matCellDef="let endpoint">
           <ng-container *ngIf="endpoint.host">{{endpoint.host}}</ng-container>
           <ng-container *ngIf="!endpoint.host">-</ng-container>
         </mat-cell>
       </ng-container>
       <ng-container [matColumnDef]="getEndpointsColumns()[1]">
-        <mat-header-cell *matHeaderCellDef>Ports (Name, Port, Protocol)</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Ports (Name, Port, Protocol)</mat-header-cell>
         <mat-cell *matCellDef="let endpoint">
           <ng-container *ngIf="endpoint?.ports">
             <div *ngFor="let port of endpoint.ports"
                  class="ports-item-line-height">
               <span *ngIf="port.name">{{port.name}},{{port.port}},{{port.protocol}}</span>
-              <span *ngIf="!port.name">&lt;unset&gt;,{{port.port}},{{port.protocol}}</span>
+              <span *ngIf="!port.name">&lt;<span i18n>unset</span>&gt;,{{port.port}},{{port.protocol}}</span>
             </div>
           </ng-container>
           <ng-container *ngIf="!endpoint?.ports">-</ng-container>
         </mat-cell>
       </ng-container>
       <ng-container [matColumnDef]="getEndpointsColumns()[2]">
-        <mat-header-cell *matHeaderCellDef>Node</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Node</mat-header-cell>
         <mat-cell *matCellDef="let endpoint">
           <ng-container *ngIf="endpoint.nodeName">
             {{endpoint.nodeName}}
@@ -60,7 +65,8 @@ limitations under the License.
         </mat-cell>
       </ng-container>
       <ng-container [matColumnDef]="getEndpointsColumns()[3]">
-        <mat-header-cell *matHeaderCellDef>Ready</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Ready</mat-header-cell>
         <mat-cell *matCellDef="let endpoint">
           <ng-container *ngIf="endpoint.ready">
             {{endpoint.ready}}

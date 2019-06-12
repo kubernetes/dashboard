@@ -12,11 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {NamespacedResourceService, ResourceService} from './resource';
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { NamespacedResourceService, ResourceService } from './resource';
 
 @NgModule({
+  imports: [RouterModule],
   providers: [ResourceService, NamespacedResourceService],
 })
-export class ResourceModule {
-}
+export class ResourceModule {}

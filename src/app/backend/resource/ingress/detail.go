@@ -42,7 +42,7 @@ type IngressDetail struct {
 func GetIngressDetail(client client.Interface, namespace, name string) (*IngressDetail, error) {
 	log.Printf("Getting details of %s ingress in %s namespace", name, namespace)
 
-	rawIngress, err := client.Extensions().Ingresses(namespace).Get(name, metaV1.GetOptions{})
+	rawIngress, err := client.ExtensionsV1beta1().Ingresses(namespace).Get(name, metaV1.GetOptions{})
 
 	if err != nil {
 		return nil, err

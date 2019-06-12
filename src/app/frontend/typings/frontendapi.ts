@@ -12,8 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Type} from '@angular/core';
-import {GlobalSettings, K8sError, ObjectMeta, ResourceList, TypeMeta} from '@api/backendapi';
+import { Type } from '@angular/core';
+import {
+  GlobalSettings,
+  K8sError,
+  ObjectMeta,
+  ResourceList,
+  TypeMeta,
+} from '@api/backendapi';
 
 export interface BreadcrumbConfig {
   label?: string;
@@ -22,25 +28,21 @@ export interface BreadcrumbConfig {
 
 export class Breadcrumb {
   label: string;
-  stateLink: string;
+  stateLink: string[];
 }
 
 export type ThemeSwitchCallback = (isLightThemeEnabled: boolean) => void;
 export type ColumnWhenCallback = () => boolean;
 
 export type onSettingsLoadCallback = (settings?: GlobalSettings) => void;
-export type onSettingsFailCallback = (err?: KdError|K8sError) => void;
-
-export type onLogin = (errors?: K8sError[]) => void;
-
-export interface KnownErrors {
-  unauthorized: KdError;
-}
+export type onSettingsFailCallback = (err?: KdError) => void;
 
 export interface KdError {
   status: string;
   code: number;
   message: string;
+
+  localize(): KdError;
 }
 
 export interface OnListChangeEvent {
@@ -68,7 +70,7 @@ export interface ActionColumn {
 }
 
 export interface HTMLInputEvent extends Event {
-  target: HTMLInputElement&EventTarget;
+  target: HTMLInputElement & EventTarget;
 }
 
 export interface KdFile {
@@ -119,4 +121,8 @@ export interface ResourcesRatio {
   replicaSetRatio: RatioItem[];
   replicationControllerRatio: RatioItem[];
   statefulSetRatio: RatioItem[];
+}
+
+export interface StateError {
+  error: KdError;
 }

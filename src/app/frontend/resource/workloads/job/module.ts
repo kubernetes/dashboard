@@ -12,23 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {UIRouterModule} from '@uirouter/angular';
-import {ComponentsModule} from '../../../common/components/module';
-import {SharedModule} from '../../../shared.module';
-import {JobDetailComponent} from './detail/component';
-import {jobDetailState} from './detail/state';
-import {JobList} from './list/component';
-import {jobListState} from './list/state';
-import {jobState} from './state';
+import { NgModule } from '@angular/core';
+import { ComponentsModule } from '../../../common/components/module';
+import { SharedModule } from '../../../shared.module';
+import { JobDetailComponent } from './detail/component';
+import { JobListComponent } from './list/component';
+import { JobRoutingModule } from './routing';
 
 @NgModule({
-  imports: [
-    SharedModule,
-    ComponentsModule,
-    UIRouterModule.forChild({states: [jobState, jobListState, jobDetailState]}),
-  ],
-  declarations: [JobList, JobDetailComponent],
+  imports: [SharedModule, ComponentsModule, JobRoutingModule],
+  declarations: [JobListComponent, JobDetailComponent],
 })
-export class JobModule {
-}
+export class JobModule {}

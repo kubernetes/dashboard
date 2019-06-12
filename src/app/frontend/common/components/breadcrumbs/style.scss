@@ -18,6 +18,10 @@
   display: flex;
   font-size: $subhead-font-size-base-lg;
   padding: (.25 * $baseline-grid) 0 0 $baseline-grid;
+
+  a {
+    color: inherit;
+  }
 }
 
 .kd-faded-breadcrumb {

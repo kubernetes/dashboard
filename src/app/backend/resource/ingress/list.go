@@ -32,7 +32,7 @@ type Ingress struct {
 	Endpoints []common.Endpoint `json:"endpoints"`
 }
 
-// IngressList - response structure for a queried ingress list.
+// IngressListComponent - response structure for a queried ingress list.
 type IngressList struct {
 	api.ListMeta `json:"listMeta"`
 
@@ -46,7 +46,7 @@ type IngressList struct {
 // GetIngressList returns all ingresses in the given namespace.
 func GetIngressList(client client.Interface, namespace *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery) (*IngressList, error) {
-	ingressList, err := client.Extensions().Ingresses(namespace.ToRequestParam()).List(api.ListEverything)
+	ingressList, err := client.ExtensionsV1beta1().Ingresses(namespace.ToRequestParam()).List(api.ListEverything)
 
 	nonCriticalErrors, criticalError := errors.HandleError(err)
 	if criticalError != nil {

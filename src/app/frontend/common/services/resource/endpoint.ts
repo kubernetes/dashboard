@@ -22,6 +22,7 @@ export enum Resource {
   pod = 'pod',
   replicaSet = 'replicaset',
   oldReplicaSet = 'oldreplicaset',
+  newReplicaSet = 'newreplicaset',
   replicationController = 'replicationcontroller',
   statefulSet = 'statefulset',
   node = 'node',
@@ -40,19 +41,35 @@ export enum Resource {
 }
 
 class ResourceEndpoint {
-  constructor(private readonly resource_: Resource, private readonly namespaced_ = false) {}
+  constructor(
+    private readonly resource_: Resource,
+    private readonly namespaced_ = false
+  ) {}
 
   list(): string {
-    return `${baseHref}/${this.resource_}${this.namespaced_ ? '/:namespace' : ''}`;
+    return `${baseHref}/${this.resource_}${
+      this.namespaced_ ? '/:namespace' : ''
+    }`;
   }
 
   detail(): string {
-    return `${baseHref}/${this.resource_}${this.namespaced_ ? '/:namespace' : ''}/:name`;
+    return `${baseHref}/${this.resource_}${
+      this.namespaced_ ? '/:namespace' : ''
+    }/:name`;
   }
 
-  child(resourceName: string, relatedResource: Resource): string {
-    return `${baseHref}/${this.resource_}${this.namespaced_ ? '/:namespace' : ''}/${resourceName}/${
-        relatedResource}`;
+  child(
+    resourceName: string,
+    relatedResource: Resource,
+    resourceNamespace?: string
+  ): string {
+    if (!resourceNamespace) {
+      resourceNamespace = '/:namespace';
+    }
+
+    return `${baseHref}/${this.resource_}${
+      this.namespaced_ ? `/${resourceNamespace}` : ''
+    }/${resourceName}/${relatedResource}`;
   }
 }
 

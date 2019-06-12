@@ -12,31 +12,33 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HttpParams} from '@angular/common/http';
-import {Component, Input} from '@angular/core';
-import {StorageClass, StorageClassList} from '@api/backendapi';
-import {StateService} from '@uirouter/core';
-import {Observable} from 'rxjs/Observable';
+import { HttpParams } from '@angular/common/http';
+import { Component, Input } from '@angular/core';
+import { StorageClass, StorageClassList } from '@api/backendapi';
+import { Observable } from 'rxjs/Observable';
 
-import {storageClassState} from '../../../../resource/cluster/storageclass/state';
-import {ResourceListBase} from '../../../resources/list';
-import {NotificationsService} from '../../../services/global/notifications';
-import {EndpointManager, Resource} from '../../../services/resource/endpoint';
-import {ResourceService} from '../../../services/resource/resource';
-import {MenuComponent} from '../../list/column/menu/component';
-import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
+import { ResourceListBase } from '../../../resources/list';
+import { NotificationsService } from '../../../services/global/notifications';
+import { EndpointManager, Resource } from '../../../services/resource/endpoint';
+import { ResourceService } from '../../../services/resource/resource';
+import { MenuComponent } from '../../list/column/menu/component';
+import { ListGroupIdentifiers, ListIdentifiers } from '../groupids';
 
 @Component({
   selector: 'kd-storage-class-list',
   templateUrl: './template.html',
 })
-export class StorageClassListComponent extends ResourceListBase<StorageClassList, StorageClass> {
+export class StorageClassListComponent extends ResourceListBase<
+  StorageClassList,
+  StorageClass
+> {
   @Input() endpoint = EndpointManager.resource(Resource.storageClass).list();
 
   constructor(
-      state: StateService, private readonly sc_: ResourceService<StorageClassList>,
-      notifications: NotificationsService) {
-    super(storageClassState.name, state, notifications);
+    private readonly sc_: ResourceService<StorageClassList>,
+    notifications: NotificationsService
+  ) {
+    super('storageclass', notifications);
     this.id = ListIdentifiers.storageClass;
     this.groupId = ListGroupIdentifiers.cluster;
 

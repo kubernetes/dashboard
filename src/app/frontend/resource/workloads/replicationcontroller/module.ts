@@ -12,28 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {UIRouterModule} from '@uirouter/angular';
-import {ComponentsModule} from '../../../common/components/module';
+import { NgModule } from '@angular/core';
+import { ComponentsModule } from '../../../common/components/module';
 
-import {SharedModule} from '../../../shared.module';
-import {ReplicationControllerDetailComponent} from '../replicationcontroller/detail/component';
-import {replicationControllerDetailState} from '../replicationcontroller/detail/state';
-import {ReplicationControllerList} from './list/component';
-import {replicationControllerListState} from './list/state';
-import {replicationControllerState} from './state';
+import { SharedModule } from '../../../shared.module';
+import { ReplicationControllerDetailComponent } from '../replicationcontroller/detail/component';
+import { ReplicationControllerListComponent } from './list/component';
+import { ReplicationControllerRoutingModule } from './routing';
 
 @NgModule({
-  imports: [
-    SharedModule,
-    ComponentsModule,
-    UIRouterModule.forChild({
-      states: [
-        replicationControllerState, replicationControllerListState, replicationControllerDetailState
-      ]
-    }),
+  imports: [SharedModule, ComponentsModule, ReplicationControllerRoutingModule],
+  declarations: [
+    ReplicationControllerListComponent,
+    ReplicationControllerDetailComponent,
   ],
-  declarations: [ReplicationControllerList, ReplicationControllerDetailComponent],
 })
-export class ReplicationControllerModule {
-}
+export class ReplicationControllerModule {}

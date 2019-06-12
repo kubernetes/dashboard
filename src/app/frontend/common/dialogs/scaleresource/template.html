@@ -14,15 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<h2 mat-dialog-title>Scale a resource</h2>
+<h2 mat-dialog-title
+    i18n>Scale a resource</h2>
 <mat-dialog-content class="kd-dialog-text">
-  <p>
+  <p i18n>
     {{data.displayName}} {{data.objectMeta.name}} will be updated to reflect the desired replicas count.
   </p>
   <mat-form-field class="kd-margin-right">
     <input [(ngModel)]="desired"
            name="desired"
            aria-label="Desired replicas"
+           i18n-placeholder
            placeholder="Desired replicas"
            type="number"
            min="0"
@@ -34,6 +36,7 @@ limitations under the License.
            [disabled]="true"
            name="actual"
            aria-label="Actual replicas"
+           i18n-placeholder
            placeholder="Actual replicas"
            type="number"
            min="0"
@@ -44,7 +47,7 @@ limitations under the License.
        fxLayoutAlign=" center">
     <mat-icon>info</mat-icon>
     <div>
-      <span>This action is equivalent to:</span>
+      <span i18n>This action is equivalent to:</span>
       <code>
         <ng-container>kubectl scale </ng-container>
         <ng-container *ngIf="data.objectMeta.namespace">-n {{data.objectMeta.namespace}} </ng-container>
@@ -56,12 +59,14 @@ limitations under the License.
 <mat-dialog-actions>
   <button mat-button
           color="primary"
-          [mat-dialog-close]="desired">
+          [mat-dialog-close]="desired"
+          i18n>
     Scale
   </button>
   <button mat-button
           color="primary"
-          [mat-dialog-close]="false">
+          [mat-dialog-close]="false"
+          i18n>
     Cancel
   </button>
 </mat-dialog-actions>

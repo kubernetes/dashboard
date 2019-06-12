@@ -12,31 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {UIRouterModule} from '@uirouter/angular';
+import { NgModule } from '@angular/core';
 
-import {ComponentsModule} from '../../../common/components/module';
-import {SharedModule} from '../../../shared.module';
+import { ComponentsModule } from '../../../common/components/module';
+import { SharedModule } from '../../../shared.module';
 
-import {PersistentVolumeClaimDetailComponent} from './detail/component';
-import {persistentVolumeClaimDetailState} from './detail/state';
-import {PersistentVolumeClaimList} from './list/component';
-import {persistentVolumeClaimListState} from './list/state';
-import {persistentVolumeClaimState} from './state';
+import { PersistentVolumeClaimDetailComponent } from './detail/component';
+import { PersistentVolumeClaimListComponent } from './list/component';
+import { PersistentVolumeClaimRoutingModule } from './routing';
 
 @NgModule({
-  imports: [
-    SharedModule,
-    ComponentsModule,
-    UIRouterModule.forChild({
-      states: [
-        persistentVolumeClaimState,
-        persistentVolumeClaimListState,
-        persistentVolumeClaimDetailState,
-      ]
-    }),
+  imports: [SharedModule, ComponentsModule, PersistentVolumeClaimRoutingModule],
+  declarations: [
+    PersistentVolumeClaimListComponent,
+    PersistentVolumeClaimDetailComponent,
   ],
-  declarations: [PersistentVolumeClaimList, PersistentVolumeClaimDetailComponent],
 })
-export class PersistentVolumeClaimModule {
-}
+export class PersistentVolumeClaimModule {}

@@ -48,6 +48,7 @@ type TerminalSession struct {
 	bound         chan error
 	sockJSSession sockjs.Session
 	sizeChan      chan remotecommand.TerminalSize
+	doneChan      chan struct{}
 }
 
 // TerminalMessage is the messaging protocol between ShellController and TerminalSession.
@@ -70,6 +71,8 @@ func (t TerminalSession) Next() *remotecommand.TerminalSize {
 	select {
 	case size := <-t.sizeChan:
 		return &size
+	case <-t.doneChan:
+		return nil
 	}
 }
 
@@ -158,7 +161,11 @@ func (sm *SessionMap) Set(sessionId string, session TerminalSession) {
 func (sm *SessionMap) Close(sessionId string, status uint32, reason string) {
 	sm.Lock.Lock()
 	defer sm.Lock.Unlock()
-	sm.Sessions[sessionId].sockJSSession.Close(status, reason)
+	err := sm.Sessions[sessionId].sockJSSession.Close(status, reason)
+	if err != nil {
+		log.Println(err)
+	}
+
 	delete(sm.Sessions, sessionId)
 }
 

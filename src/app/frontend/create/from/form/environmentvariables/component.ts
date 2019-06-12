@@ -12,9 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, forwardRef} from '@angular/core';
-import {AbstractControl, ControlValueAccessor, FormArray, FormBuilder, FormControl, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, Validators} from '@angular/forms';
-import {EnvironmentVariable} from '@api/backendapi';
+import { Component, forwardRef } from '@angular/core';
+import {
+  AbstractControl,
+  ControlValueAccessor,
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+  Validators,
+} from '@angular/forms';
+import { EnvironmentVariable } from '@api/backendapi';
 
 @Component({
   selector: 'kd-environment-variables',
@@ -29,7 +39,7 @@ import {EnvironmentVariable} from '@api/backendapi';
       provide: NG_VALIDATORS,
       useExisting: forwardRef(() => EnvironmentVariablesComponent),
       multi: true,
-    }
+    },
   ],
 })
 export class EnvironmentVariablesComponent implements ControlValueAccessor {
@@ -40,14 +50,16 @@ export class EnvironmentVariablesComponent implements ControlValueAccessor {
   constructor(private readonly fb_: FormBuilder) {}
 
   ngOnInit(): void {
-    this.form = this.fb_.group({variables: this.fb_.array([this.newVariable()])});
+    this.form = this.fb_.group({
+      variables: this.fb_.array([this.newVariable()]),
+    });
     this.form.valueChanges.subscribe(v => {
       this.propagateChange(v);
     });
   }
 
-  validate(_: FormControl): {[key: string]: object} {
-    return this.form.valid ? null : {labelValid: {value: this.form.errors}};
+  validate(_: FormControl): { [key: string]: object } {
+    return this.form.valid ? null : { labelValid: { value: this.form.errors } };
   }
 
   get variables(): FormArray {
@@ -66,22 +78,27 @@ export class EnvironmentVariablesComponent implements ControlValueAccessor {
   }
 
   private newVariable(): FormGroup {
-    return this.fb_.group({name: ['', Validators.pattern(this.namePattern)], value: ''});
+    return this.fb_.group({
+      name: ['', Validators.pattern(this.namePattern)],
+      value: '',
+    });
   }
 
   isRemovable(index: number): boolean {
-    return index !== (this.variables.length - 1);
+    return index !== this.variables.length - 1;
   }
 
   remove(index: number): void {
     this.variables.removeAt(index);
   }
 
-  propagateChange = (_: {variables: EnvironmentVariable[]}) => {};
+  propagateChange = (_: { variables: EnvironmentVariable[] }) => {};
 
   writeValue(): void {}
 
-  registerOnChange(fn: (_: {variables: EnvironmentVariable[]}) => void): void {
+  registerOnChange(
+    fn: (_: { variables: EnvironmentVariable[] }) => void
+  ): void {
     this.propagateChange = fn;
   }
   registerOnTouched(): void {}

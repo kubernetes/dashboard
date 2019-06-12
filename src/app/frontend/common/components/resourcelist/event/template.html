@@ -17,8 +17,10 @@ limitations under the License.
 <kd-card role="table"
          [hidden]="isHidden()">
   <div title
-       fxLayout="row">Events</div>
-  <div description><span class="kd-muted-light">Items:&nbsp;</span>{{totalItems}}</div>
+       fxLayout="row"
+       i18n>Events</div>
+  <div description><span class="kd-muted-light"
+          i18n>Items:&nbsp;</span>{{totalItems}}</div>
 
   <div content
        [hidden]="showZeroState()">
@@ -36,19 +38,22 @@ limitations under the License.
       </ng-container>
 
       <ng-container [matColumnDef]="getDisplayColumns()[1]">
-        <mat-header-cell *matHeaderCellDef>Message</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Message</mat-header-cell>
         <mat-cell *matCellDef="let event">{{event.message}}</mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getDisplayColumns()[2]">
-        <mat-header-cell *matHeaderCellDef>Source</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Source</mat-header-cell>
         <mat-cell *matCellDef="let event">
           {{event.sourceComponent}} {{event.sourceHost}}
         </mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getDisplayColumns()[3]">
-        <mat-header-cell *matHeaderCellDef>Sub-object</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Sub-object</mat-header-cell>
         <mat-cell *matCellDef="let event">
           <div *ngIf="event.object">{{event.object}}</div>
           <div *ngIf="!event.object">-</div>
@@ -56,19 +61,22 @@ limitations under the License.
       </ng-container>
 
       <ng-container [matColumnDef]="getDisplayColumns()[4]">
-        <mat-header-cell *matHeaderCellDef>Count</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Count</mat-header-cell>
         <mat-cell *matCellDef="let event">{{event.count}}</mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getDisplayColumns()[5]">
-        <mat-header-cell *matHeaderCellDef>First Seen</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>First Seen</mat-header-cell>
         <mat-cell *matCellDef="let event">
           {{event.firstSeen | date}}
         </mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getDisplayColumns()[6]">
-        <mat-header-cell *matHeaderCellDef>Last Seen</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Last Seen</mat-header-cell>
         <mat-cell *matCellDef="let event">
           {{event.lastSeen | date}}
         </mat-cell>

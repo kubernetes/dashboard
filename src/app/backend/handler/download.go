@@ -18,7 +18,8 @@ import (
 	"io"
 
 	restful "github.com/emicklei/go-restful"
-	kdErrors "github.com/kubernetes/dashboard/src/app/backend/errors"
+
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 )
 
 func handleDownload(response *restful.Response, result io.ReadCloser) {
@@ -26,7 +27,7 @@ func handleDownload(response *restful.Response, result io.ReadCloser) {
 	defer result.Close()
 	_, err := io.Copy(response, result)
 	if err != nil {
-		kdErrors.HandleInternalError(response, err)
+		errors.HandleInternalError(response, err)
 		return
 	}
 }

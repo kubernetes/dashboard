@@ -12,10 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Input} from '@angular/core';
-import {ConfigMapKeyRef, Container, EnvVar, SecretKeyRef} from 'typings/backendapi';
-import {stateName as configMapState} from '../../../resource/config/configmap/state';
-import {stateName as secretState} from '../../../resource/config/secret/state';
+import { Component, Input } from '@angular/core';
+import {
+  ConfigMapKeyRef,
+  Container,
+  EnvVar,
+  SecretKeyRef,
+} from 'typings/backendapi';
+import { KdStateService } from '../../services/global/state';
 
 @Component({
   selector: 'kd-container-card',
@@ -26,6 +30,8 @@ export class ContainerCardComponent {
   @Input() container: Container;
   @Input() namespace: string;
   @Input() initialized: boolean;
+
+  constructor(private readonly state_: KdStateService) {}
 
   isSecret(envVar: EnvVar): boolean {
     return !!envVar.valueFrom && !!envVar.valueFrom.secretKeyRef;
@@ -39,18 +45,11 @@ export class ContainerCardComponent {
     return atob(s);
   }
 
-  // TODO: Implement a service that will be responsible for creating links to states
   getEnvConfigMapHref(configMapKeyRef: ConfigMapKeyRef): string {
-    return `#/${configMapState}/${this.namespace}/${configMapKeyRef.name}?namespace=${
-        this.namespace}`;
+    return this.state_.href('configmap', configMapKeyRef.name, this.namespace);
   }
 
   getEnvSecretHref(secretKeyRef: SecretKeyRef): string {
-    return `#/${secretState}/${this.namespace}/${secretKeyRef.name}?namespace=${this.namespace}`;
-  }
-
-  isHref(envVar: EnvVar): boolean {
-    return !!envVar.valueFrom &&
-        (!!envVar.valueFrom.configMapKeyRef || !!envVar.valueFrom.secretKeyRef);
+    return this.state_.href('secret', secretKeyRef.name, this.namespace);
   }
 }

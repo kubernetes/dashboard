@@ -17,31 +17,6 @@
 ROOT_DIR="$(cd $(dirname "${BASH_SOURCE}")/../.. && pwd -P)"
 . "${ROOT_DIR}/aio/scripts/conf.sh"
 
-function ensure-cache {
-  say "\nMaking sure that ${CACHE_DIR} directory exists"
-  mkdir -p ${CACHE_DIR}
-}
-
-function download-kind {
-  KIND_URL="https://github.com/kubernetes-sigs/kind/releases/download/${KIND_VERSION}/kind-${ARCH}-amd64"
-  say "\nDownloading kind ${KIND_URL} if it is not cached"
-  wget -nc -O ${KIND_BIN} ${KIND_URL}
-  chmod +x ${KIND_BIN}
-  ${KIND_BIN} version
-}
-
-function ensure-kubeconfig {
-  say "\nMaking sure that kubeconfig file exists and will be used by Dashboard"
-  mkdir -p ${HOME}/.kube
-  touch ${HOME}/.kube/config
-
-  # Let's back up the kubeconfig so we don't totally blow it away
-  # I learned from personal experience. It made me sad. :(
-  mv ${HOME}/.kube/config ${HOME}/.kube/config-unkind 
-  
-  cat $(${KIND_BIN} get kubeconfig-path --name="k8s-cluster-ci") > $HOME/.kube/config
-}
-
 function start-ci-heapster {
   say "\nRunning heapster in standalone mode"
   docker run --net=host -d k8s.gcr.io/heapster-amd64:${HEAPSTER_VERSION} \

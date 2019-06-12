@@ -15,7 +15,6 @@
 package sync
 
 import (
-	"errors"
 	"fmt"
 	"log"
 	"reflect"
@@ -23,12 +22,12 @@ import (
 	"time"
 
 	v1 "k8s.io/api/core/v1"
-	k8sErrors "k8s.io/apimachinery/pkg/api/errors"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/watch"
 	"k8s.io/client-go/kubernetes"
 
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	syncApi "github.com/kubernetes/dashboard/src/app/backend/sync/api"
 	"github.com/kubernetes/dashboard/src/app/backend/sync/poll"
 )
@@ -194,14 +193,14 @@ func (self *secretSynchronizer) handleEvent(event watch.Event) error {
 	case watch.Added:
 		secret, ok := event.Object.(*v1.Secret)
 		if !ok {
-			return errors.New(fmt.Sprintf("Expected secret got %s", reflect.TypeOf(event.Object)))
+			return errors.NewInternal(fmt.Sprintf("Expected secret got %s", reflect.TypeOf(event.Object)))
 		}
 
 		self.update(*secret)
 	case watch.Modified:
 		secret, ok := event.Object.(*v1.Secret)
 		if !ok {
-			return errors.New(fmt.Sprintf("Expected secret got %s", reflect.TypeOf(event.Object)))
+			return errors.NewInternal(fmt.Sprintf("Expected secret got %s", reflect.TypeOf(event.Object)))
 		}
 
 		self.update(*secret)
@@ -210,7 +209,7 @@ func (self *secretSynchronizer) handleEvent(event watch.Event) error {
 		self.secret = nil
 		self.mux.Unlock()
 	case watch.Error:
-		return &k8sErrors.UnexpectedObjectError{Object: event.Object}
+		return errors.NewUnexpectedObject(event.Object)
 	}
 
 	return nil

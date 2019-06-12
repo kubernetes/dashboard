@@ -12,15 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {NodeAddress, NodeDetail, NodeTaint} from '@api/backendapi';
-import {StateService} from '@uirouter/core';
-import {Subscription} from 'rxjs/Subscription';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { NodeAddress, NodeDetail, NodeTaint } from '@api/backendapi';
+import { Subscription } from 'rxjs/Subscription';
 
-import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
-import {NotificationsService} from '../../../../common/services/global/notifications';
-import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
-import {ResourceService} from '../../../../common/services/resource/resource';
+import {
+  ActionbarService,
+  ResourceMeta,
+} from '../../../../common/services/global/actionbar';
+import { NotificationsService } from '../../../../common/services/global/notifications';
+import {
+  EndpointManager,
+  Resource,
+} from '../../../../common/services/resource/endpoint';
+import { ResourceService } from '../../../../common/services/resource/resource';
 
 @Component({
   selector: 'kd-node-detail',
@@ -29,31 +35,35 @@ import {ResourceService} from '../../../../common/services/resource/resource';
 })
 export class NodeDetailComponent implements OnInit, OnDestroy {
   private nodeSubscription_: Subscription;
-  private nodeName_: string;
+  private readonly endpoint_ = EndpointManager.resource(Resource.node);
   node: NodeDetail;
   isInitialized = false;
   podListEndpoint: string;
   eventListEndpoint: string;
 
   constructor(
-      private readonly node_: ResourceService<NodeDetail>,
-      private readonly actionbar_: ActionbarService, private readonly state_: StateService,
-      private readonly notifications_: NotificationsService) {}
+    private readonly node_: ResourceService<NodeDetail>,
+    private readonly actionbar_: ActionbarService,
+    private readonly activatedRoute_: ActivatedRoute,
+    private readonly notifications_: NotificationsService
+  ) {}
 
   ngOnInit(): void {
-    this.nodeName_ = this.state_.params.resourceName;
-    this.podListEndpoint =
-        EndpointManager.resource(Resource.node).child(this.nodeName_, Resource.pod);
-    this.eventListEndpoint =
-        EndpointManager.resource(Resource.node, false).child(this.nodeName_, Resource.event);
-    this.nodeSubscription_ =
-        this.node_.get(EndpointManager.resource(Resource.node).detail(), this.nodeName_)
-            .subscribe((d: NodeDetail) => {
-              this.node = d;
-              this.notifications_.pushErrors(d.errors);
-              this.actionbar_.onInit.emit(new ResourceMeta('Node', d.objectMeta, d.typeMeta));
-              this.isInitialized = true;
-            });
+    const resourceName = this.activatedRoute_.snapshot.params.resourceName;
+
+    this.podListEndpoint = this.endpoint_.child(resourceName, Resource.pod);
+    this.eventListEndpoint = this.endpoint_.child(resourceName, Resource.event);
+
+    this.nodeSubscription_ = this.node_
+      .get(this.endpoint_.detail(), resourceName)
+      .subscribe((d: NodeDetail) => {
+        this.node = d;
+        this.notifications_.pushErrors(d.errors);
+        this.actionbar_.onInit.emit(
+          new ResourceMeta('Node', d.objectMeta, d.typeMeta)
+        );
+        this.isInitialized = true;
+      });
   }
 
   ngOnDestroy(): void {
@@ -61,13 +71,16 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
   }
 
   getAddresses(): string[] {
-    return this.node.addresses.map((address: NodeAddress) => `${address.type}: ${address.address}`);
+    return this.node.addresses.map(
+      (address: NodeAddress) => `${address.type}: ${address.address}`
+    );
   }
 
   getTaints(): string[] {
     return this.node.taints.map((taint: NodeTaint) => {
-      return taint.value ? `${taint.key}=${taint.value}:${taint.effect}` :
-                           `${taint.key}=${taint.effect}`;
+      return taint.value
+        ? `${taint.key}=${taint.value}:${taint.effect}`
+        : `${taint.key}=${taint.effect}`;
     });
   }
 }

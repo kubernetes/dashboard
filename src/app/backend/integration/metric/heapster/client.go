@@ -16,19 +16,20 @@ package heapster
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
 	"log"
 	"strings"
 
-	"github.com/kubernetes/dashboard/src/app/backend/client"
-	integrationapi "github.com/kubernetes/dashboard/src/app/backend/integration/api"
-	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
-	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/common"
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	heapster "k8s.io/heapster/metrics/api/v1/types"
+
+	"github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
+	integrationapi "github.com/kubernetes/dashboard/src/app/backend/integration/api"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
+	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/common"
 )
 
 // Heapster client implements MetricClient and Integration interfaces.
@@ -41,7 +42,7 @@ type heapsterClient struct {
 // HealthCheck implements integration app interface. See Integration interface for more information.
 func (self heapsterClient) HealthCheck() error {
 	if self.client == nil {
-		return errors.New("Heapster not configured")
+		return errors.NewInvalid("Heapster not configured")
 	}
 
 	return self.client.HealthCheck()

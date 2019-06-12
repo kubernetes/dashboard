@@ -12,13 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Component, Inject, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
-import {AlertDialog, AlertDialogConfig} from '../../../../common/dialogs/alert/dialog';
-import {CsrfTokenService} from '../../../../common/services/global/csrftoken';
-import {CONFIG} from '../../../../index.config';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Component, Inject, OnInit } from '@angular/core';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
+import {
+  AlertDialog,
+  AlertDialogConfig,
+} from '../../../../common/dialogs/alert/dialog';
+import { CsrfTokenService } from '../../../../common/services/global/csrftoken';
+import { CONFIG } from '../../../../index.config';
 
 export interface CreateNamespaceDialogMeta {
   namespaces: string[];
@@ -46,18 +54,23 @@ export class CreateNamespaceDialog implements OnInit {
   namespacePattern: RegExp = new RegExp('^[a-z0-9]([-a-z0-9]*[a-z0-9])?$');
 
   constructor(
-      public dialogRef: MatDialogRef<CreateNamespaceDialog>,
-      @Inject(MAT_DIALOG_DATA) public data: CreateNamespaceDialogMeta,
-      private readonly http_: HttpClient, private readonly csrfToken_: CsrfTokenService,
-      private readonly matDialog_: MatDialog, private readonly fb_: FormBuilder) {}
+    public dialogRef: MatDialogRef<CreateNamespaceDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: CreateNamespaceDialogMeta,
+    private readonly http_: HttpClient,
+    private readonly csrfToken_: CsrfTokenService,
+    private readonly matDialog_: MatDialog,
+    private readonly fb_: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.form = this.fb_.group({
       namespace: [
-        '', Validators.compose([
-          Validators.maxLength(this.namespaceMaxLength), Validators.pattern(this.namespacePattern)
-        ])
-      ]
+        '',
+        Validators.compose([
+          Validators.maxLength(this.namespaceMaxLength),
+          Validators.pattern(this.namespacePattern),
+        ]),
+      ],
     });
   }
 
@@ -71,29 +84,37 @@ export class CreateNamespaceDialog implements OnInit {
   createNamespace(): void {
     if (!this.form.valid) return;
 
-    const namespaceSpec = {name: this.namespace.value};
+    const namespaceSpec = { name: this.namespace.value };
 
     const tokenPromise = this.csrfToken_.getTokenForAction('namespace');
     tokenPromise.subscribe(csrfToken => {
       return this.http_
-          .post<{valid: boolean}>(
-              'api/v1/namespace', {...namespaceSpec},
-              {headers: new HttpHeaders().set(this.config_.csrfHeaderName, csrfToken.token)})
-          .subscribe(
-              () => {
-                // this.log_.info('Successfully created namespace:', savedConfig);
-                this.dialogRef.close(this.namespace.value);
-              },
-              error => {
-                // this.log_.info('Error creating namespace:', err);
-                this.dialogRef.close();
-                const configData: AlertDialogConfig = {
-                  title: 'Error creating namespace',
-                  message: error.data,
-                  confirmLabel: 'OK'
-                };
-                this.matDialog_.open(AlertDialog, {data: configData});
-              });
+        .post<{ valid: boolean }>(
+          'api/v1/namespace',
+          { ...namespaceSpec },
+          {
+            headers: new HttpHeaders().set(
+              this.config_.csrfHeaderName,
+              csrfToken.token
+            ),
+          }
+        )
+        .subscribe(
+          () => {
+            // this.log_.info('Successfully created namespace:', savedConfig);
+            this.dialogRef.close(this.namespace.value);
+          },
+          error => {
+            // this.log_.info('Error creating namespace:', err);
+            this.dialogRef.close();
+            const configData: AlertDialogConfig = {
+              title: 'Error creating namespace',
+              message: error.data,
+              confirmLabel: 'OK',
+            };
+            this.matDialog_.open(AlertDialog, { data: configData });
+          }
+        );
     });
   }
 

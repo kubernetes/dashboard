@@ -14,16 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<h4 mat-dialog-title>Create a new image pull secret</h4>
+<h4 mat-dialog-title
+    i18n>Create a new image pull secret</h4>
 <mat-dialog-content class="kd-dialog-text">
   <ng-container>
-    <div>The new secret will be added to the cluster</div>
+    <div i18n>The new secret will be added to the cluster</div>
     <div>
       <form [formGroup]="form">
         <kd-help-section>
           <mat-form-field>
             <input matInput
                    type="text"
+                   i18n-placeholder
                    placeholder="Secret name"
                    name="secretName"
                    formControlName="secretName"
@@ -42,8 +44,8 @@ limitations under the License.
               Name must follow the DNS domain name syntax (e.g. new.image-pull.secret).
             </mat-error>
           </mat-form-field>
-          <kd-user-help i18n>
-            A secret with the specified name will be added to the cluster in the namespace.
+          <kd-user-help>
+            <span i18n>A secret with the specified name will be added to the cluster in the namespace.</span>
             <a href="http://kubernetes.io/docs/user-guide/secrets/"
                target="_blank"
                tabindex="-1"
@@ -71,8 +73,8 @@ limitations under the License.
               Data must be Base64 encoded.
             </mat-error>
           </mat-form-field>
-          <kd-user-help i18n>
-            Specify the data for your secret to hold. The value is the Base64 encoded content of a .dockercfg file.
+          <kd-user-help>
+            <ng-container i18n>Specify the data for your secret to hold. The value is the Base64 encoded content of a .dockercfg file.</ng-container>
             <a href="http://kubernetes.io/docs/user-guide/images/#specifying-imagepullsecrets-on-a-pod"
                target="_blank"
                tabindex="-1"
@@ -91,8 +93,10 @@ limitations under the License.
     <button mat-button
             type="submit"
             color="primary"
-            (click)="createSecret()">Create</button>
+            (click)="createSecret()"
+            i18n>Create</button>
     <button mat-button
-            (click)="cancel()">Cancel</button>
+            (click)="cancel()"
+            i18n>Cancel</button>
   </ng-container>
 </mat-dialog-actions>

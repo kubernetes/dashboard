@@ -18,28 +18,32 @@ limitations under the License.
                 [objectMeta]="replicationController?.objectMeta"></kd-object-meta>
 
 <kd-card [initialized]="isInitialized">
-  <div title>Replication Controller information</div>
+  <div title
+       i18n>Replication Controller information</div>
 
   <div content
        *ngIf="isInitialized"
        fxLayout="row wrap">
     <kd-property *ngIf="replicationController?.labelSelector"
                  fxFlex="100">
-      <div key>Label Selector</div>
+      <div key
+           i18n>Label Selector</div>
       <div value>
         <kd-chips [map]="replicationController.labelSelector"></kd-chips>
       </div>
     </kd-property>
 
     <kd-property *ngIf="replicationController?.containerImages">
-      <div key>Images</div>
+      <div key
+           i18n>Images</div>
       <div value>
         <kd-chips [map]="replicationController.containerImages"></kd-chips>
       </div>
     </kd-property>
 
     <kd-property *ngIf="replicationController?.initContainerImages">
-      <div key>Init images</div>
+      <div key
+           i18n>Init images</div>
       <div value>
         <kd-chips [map]="replicationController.initContainerImages"></kd-chips>
       </div>

@@ -18,9 +18,10 @@ import (
 	"net/http"
 
 	restful "github.com/emicklei/go-restful"
+
 	"github.com/kubernetes/dashboard/src/app/backend/args"
 	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
-	kdErrors "github.com/kubernetes/dashboard/src/app/backend/errors"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/settings/api"
 )
 
@@ -69,7 +70,7 @@ func (self *SettingsHandler) handleSettingsGlobalCanI(request *restful.Request, 
 func (self *SettingsHandler) handleSettingsGlobalGet(request *restful.Request, response *restful.Response) {
 	client, err := self.clientManager.Client(request)
 	if err != nil {
-		kdErrors.HandleInternalError(response, err)
+		errors.HandleInternalError(response, err)
 		return
 	}
 
@@ -80,18 +81,18 @@ func (self *SettingsHandler) handleSettingsGlobalGet(request *restful.Request, r
 func (self *SettingsHandler) handleSettingsGlobalSave(request *restful.Request, response *restful.Response) {
 	settings := new(api.Settings)
 	if err := request.ReadEntity(settings); err != nil {
-		kdErrors.HandleInternalError(response, err)
+		errors.HandleInternalError(response, err)
 		return
 	}
 
 	client, err := self.clientManager.Client(request)
 	if err != nil {
-		kdErrors.HandleInternalError(response, err)
+		errors.HandleInternalError(response, err)
 		return
 	}
 
 	if err := self.manager.SaveGlobalSettings(client, settings); err != nil {
-		kdErrors.HandleInternalError(response, err)
+		errors.HandleInternalError(response, err)
 		return
 	}
 	response.WriteHeaderAndEntity(http.StatusCreated, settings)

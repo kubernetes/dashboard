@@ -16,12 +16,14 @@ limitations under the License.
 
 <kd-card [initialized]="initialized"
          role="table">
-  <div title>Rules</div>
+  <div title
+       i18n>Rules</div>
 
   <div description>
     <div class="kd-inline-property"
          *ngIf="rules?.length">
-      <span class="kd-muted-light">Items:&nbsp;</span>
+      <span class="kd-muted-light"
+            i18n>Items:&nbsp;</span>
       <span>{{rules.length}}</span>
     </div>
   </div>
@@ -30,7 +32,8 @@ limitations under the License.
     <mat-table [dataSource]="getDataSource()"
                class="kd-table-no-footer">
       <ng-container [matColumnDef]="getRuleColumns()[0]">
-        <mat-header-cell *matHeaderCellDef>Resources</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Resources</mat-header-cell>
         <mat-cell *matCellDef="let rule">
           <ng-container *ngIf="rule.resources">
             <kd-comma-separated-list [items]="rule.resources"></kd-comma-separated-list>
@@ -39,7 +42,8 @@ limitations under the License.
         </mat-cell>
       </ng-container>
       <ng-container [matColumnDef]="getRuleColumns()[1]">
-        <mat-header-cell *matHeaderCellDef>Non-resource URL</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Non-resource URL</mat-header-cell>
         <mat-cell *matCellDef="let rule">
           <ng-container *ngIf="rule.nonResourceURLs">
             <kd-comma-separated-list [items]="rule.nonResourceURLs"></kd-comma-separated-list>
@@ -48,7 +52,8 @@ limitations under the License.
         </mat-cell>
       </ng-container>
       <ng-container [matColumnDef]="getRuleColumns()[2]">
-        <mat-header-cell *matHeaderCellDef>Resource Names</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Resource Names</mat-header-cell>
         <mat-cell *matCellDef="let rule">
           <ng-container *ngIf="rule.resourceNames">
             <kd-comma-separated-list [items]="rule.resourceNames"></kd-comma-separated-list>
@@ -57,7 +62,8 @@ limitations under the License.
         </mat-cell>
       </ng-container>
       <ng-container [matColumnDef]="getRuleColumns()[3]">
-        <mat-header-cell *matHeaderCellDef>Verbs</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Verbs</mat-header-cell>
         <mat-cell *matCellDef="let rule">
           <ng-container *ngIf="rule.verbs">
             <kd-comma-separated-list [items]="rule.verbs"></kd-comma-separated-list>
@@ -66,7 +72,8 @@ limitations under the License.
         </mat-cell>
       </ng-container>
       <ng-container [matColumnDef]="getRuleColumns()[4]">
-        <mat-header-cell *matHeaderCellDef>API Groups</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>API Groups</mat-header-cell>
         <mat-cell *matCellDef="let rule">
           <ng-container *ngIf="rule.apiGroups && rule.apiGroups.length > 0">
             <kd-comma-separated-list [items]="rule.apiGroups"></kd-comma-separated-list>

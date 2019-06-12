@@ -16,13 +16,14 @@ package auth
 
 import (
 	"bytes"
-	"errors"
 	"reflect"
 	"testing"
 	"text/template"
 
-	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 	"k8s.io/client-go/tools/clientcmd/api"
+
+	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 )
 
 const kubeconfigTemplate = `
@@ -103,7 +104,7 @@ func TestKubeConfigAuthenticator(t *testing.T) {
 			authModeBoth,
 			map[string]string{},
 			api.AuthInfo{},
-			errors.New("Not enough data to create auth info structure."),
+			errors.NewInvalid("Not enough data to create auth info structure."),
 		},
 	}
 	for _, c := range cases {

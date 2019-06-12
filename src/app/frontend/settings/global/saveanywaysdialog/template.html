@@ -14,13 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<h2 mat-dialog-title>Settings have changed since last reload</h2>
-<mat-dialog-content>Do you want to save them anyways?</mat-dialog-content>
+<h2 mat-dialog-title
+    i18n>Settings have changed since last reload</h2>
+<mat-dialog-content i18n>Do you want to save them anyways?</mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button
           color="primary"
-          [mat-dialog-close]="true">Save</button>
+          [mat-dialog-close]="true"
+          i18n>Save</button>
   <button mat-button
           color="primary"
-          [mat-dialog-close]="false">Refresh</button>
+          [mat-dialog-close]="false"
+          i18n>Refresh</button>
 </mat-dialog-actions>

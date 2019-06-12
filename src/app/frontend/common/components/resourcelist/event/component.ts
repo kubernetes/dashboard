@@ -12,28 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HttpParams} from '@angular/common/http';
-import {Component, Input, OnInit} from '@angular/core';
-import {Event, EventList} from '@api/backendapi';
-import {StateService} from '@uirouter/core';
-import {Observable} from 'rxjs/Observable';
+import { HttpParams } from '@angular/common/http';
+import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Event, EventList } from '@api/backendapi';
+import { Observable } from 'rxjs/Observable';
 
-import {ResourceListWithStatuses} from '../../../resources/list';
-import {NotificationsService} from '../../../services/global/notifications';
-import {NamespacedResourceService} from '../../../services/resource/resource';
-import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
+import { ResourceListWithStatuses } from '../../../resources/list';
+import { NotificationsService } from '../../../services/global/notifications';
+import { NamespacedResourceService } from '../../../services/resource/resource';
+import { ListGroupIdentifiers, ListIdentifiers } from '../groupids';
 
 const EVENT_TYPE_WARNING = 'Warning';
 
-@Component({selector: 'kd-event-list', templateUrl: './template.html'})
-export class EventListComponent extends ResourceListWithStatuses<EventList, Event> implements
-    OnInit {
+@Component({ selector: 'kd-event-list', templateUrl: './template.html' })
+export class EventListComponent
+  extends ResourceListWithStatuses<EventList, Event>
+  implements OnInit {
   @Input() endpoint: string;
 
   constructor(
-      state: StateService, private readonly eventList: NamespacedResourceService<EventList>,
-      notifications: NotificationsService) {
-    super('', state, notifications);
+    private readonly eventList: NamespacedResourceService<EventList>,
+    notifications: NotificationsService
+  ) {
+    super('', notifications);
     this.id = ListIdentifiers.event;
     this.groupId = ListGroupIdentifiers.none;
 
@@ -59,7 +61,7 @@ export class EventListComponent extends ResourceListWithStatuses<EventList, Even
   }
 
   getResourceObservable(params?: HttpParams): Observable<EventList> {
-    return this.eventList.get(this.endpoint, undefined, params);
+    return this.eventList.get(this.endpoint, undefined, undefined, params);
   }
 
   map(eventList: EventList): Event[] {
@@ -67,6 +69,14 @@ export class EventListComponent extends ResourceListWithStatuses<EventList, Even
   }
 
   getDisplayColumns(): string[] {
-    return ['statusicon', 'message', 'source', 'subobject', 'count', 'firstseen', 'lastseen'];
+    return [
+      'statusicon',
+      'message',
+      'source',
+      'subobject',
+      'count',
+      'firstseen',
+      'lastseen',
+    ];
   }
 }

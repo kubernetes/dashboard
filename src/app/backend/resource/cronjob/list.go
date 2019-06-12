@@ -27,7 +27,7 @@ import (
 	client "k8s.io/client-go/kubernetes"
 )
 
-// CronJobList contains a list of CronJobs in the cluster.
+// CronJobListComponent contains a list of CronJobs in the cluster.
 type CronJobList struct {
 	ListMeta          api.ListMeta       `json:"listMeta"`
 	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`

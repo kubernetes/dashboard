@@ -7,7 +7,7 @@ language: node_js
 node_js: 11.6.0
 
 git:
-  depth: 250
+  depth: 500
   quiet: true
 
 cache:
@@ -16,6 +16,7 @@ cache:
     - node_modules
 
 before_install:
+  - export NG_CLI_ANALYTICS=ci
   - export PATH=$PATH:$GOPATH/bin
   - eval "$(gimme 1.11.4)"
   - cd $HOME

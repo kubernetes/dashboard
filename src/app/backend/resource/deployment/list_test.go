@@ -15,18 +15,20 @@
 package deployment
 
 import (
-	"errors"
 	"reflect"
 	"testing"
+
+	apps "k8s.io/api/apps/v1"
+	v1 "k8s.io/api/core/v1"
+	k8serrors "k8s.io/apimachinery/pkg/api/errors"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	apps "k8s.io/api/apps/v1"
-	v1 "k8s.io/api/core/v1"
-	k8serrors "k8s.io/apimachinery/pkg/api/errors"
-	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 )
 
 func getReplicasPointer(replicas int32) *int32 {
@@ -55,10 +57,10 @@ func TestGetDeploymentListFromChannels(t *testing.T) {
 		},
 		{
 			apps.DeploymentList{},
-			errors.New("MyCustomError"),
+			errors.NewInvalid("MyCustomError"),
 			&v1.PodList{},
 			nil,
-			errors.New("MyCustomError"),
+			errors.NewInvalid("MyCustomError"),
 		},
 		{
 			apps.DeploymentList{},

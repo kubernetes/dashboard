@@ -23,21 +23,21 @@ limitations under the License.
            (click)="openChipDialog(key, map[key])">{{key}}</a>
       </ng-container>
 
+      <!-- beautify ignore:start -->
       <ng-container *ngIf="!isTooLong(map[key])">
-        <ng-container>
-          {{key}}
-          <ng-container *ngIf="map[key]">:&nbsp;</ng-container>
-          <ng-container *ngIf="map[key]">
-            <ng-container *ngIf="isHref(map[key])">
-              <a [href]="map[key]"
-                 target="_blank">
-                {{map[key]}}
-              </a>
-            </ng-container>
-            <ng-container *ngIf="!isHref(map[key])">{{map[key]}}</ng-container>
+        {{key}}<ng-container *ngIf="map[key]">:&nbsp;</ng-container>
+        <ng-container *ngIf="map[key]">
+          <ng-container *ngIf="isHref(map[key])">
+            <a [routerLink]="map[key]"
+               queryParamsHandling="preserve"
+               target="_blank">
+              {{map[key]}}
+            </a>
           </ng-container>
+          <ng-container *ngIf="!isHref(map[key])">{{map[key]}}</ng-container>
         </ng-container>
       </ng-container>
+      <!-- beautify ignore:end -->
 
     </mat-chip>
   </ng-container>
@@ -47,8 +47,10 @@ limitations under the License.
             class="kd-clickable"
             [selected]="true"
             [disableRipple]="true">
-    <ng-container *ngIf="isShowingAll">Show less</ng-container>
-    <ng-container *ngIf="!isShowingAll">Show all</ng-container>
+    <ng-container *ngIf="isShowingAll"
+                  i18n>Show less</ng-container>
+    <ng-container *ngIf="!isShowingAll"
+                  i18n>Show all</ng-container>
   </mat-chip>
   <ng-container *ngIf="keys.length === 0">-</ng-container>
 </mat-chip-list>

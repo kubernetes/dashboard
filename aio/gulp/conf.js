@@ -178,7 +178,7 @@ export default {
      * Allows to override enable skip login option on the backend.
      */
     enableSkipButton: gulpUtil.env.enableSkipButton !== undefined ? gulpUtil.env.enableSkipButton :
-                                                                    true,
+                                                                    false,
   },
 
   /**

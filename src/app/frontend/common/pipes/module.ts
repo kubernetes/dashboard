@@ -12,16 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
 
-import {CoreFormatter} from './coreformatter';
-import {MemoryFormatter} from './memoryformatter';
-import {RelativeTimeFormatter} from './relativetime';
-import {SafeHtmlFormatter} from './safehtml';
+import { CoreFormatter } from './coreformatter';
+import { MemoryFormatter } from './memoryformatter';
+import { RelativeTimeFormatter } from './relativetime';
+import { SafeHtmlFormatter } from './safehtml';
+import { TrimPipe } from './trim';
 
 @NgModule({
-  declarations: [MemoryFormatter, CoreFormatter, RelativeTimeFormatter, SafeHtmlFormatter],
-  exports: [MemoryFormatter, CoreFormatter, RelativeTimeFormatter, SafeHtmlFormatter],
+  declarations: [
+    MemoryFormatter,
+    CoreFormatter,
+    RelativeTimeFormatter,
+    SafeHtmlFormatter,
+    TrimPipe,
+  ],
+  exports: [
+    MemoryFormatter,
+    CoreFormatter,
+    RelativeTimeFormatter,
+    SafeHtmlFormatter,
+    TrimPipe,
+  ],
 })
-export class PipesModule {
-}
+export class PipesModule {}

@@ -12,37 +12,40 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Injectable} from '@angular/core';
-import {RawParams, StateService, Transition, TransitionPromise} from '@uirouter/core';
-import {KdStateService} from './state';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { KdStateService } from './state';
 
 @Injectable()
 export class HistoryService {
   private previousStateName: string;
-  private previousStateParams: RawParams;
+  // private previousStateParams: RawParams; TODO
 
-  constructor(private readonly state_: StateService, private readonly kdState_: KdStateService) {
+  constructor(
+    private readonly router_: Router,
+    private readonly kdState_: KdStateService
+  ) {
     this.init();
   }
 
   /** Initializes the service. Must be called before use. */
   init(): void {
-    this.kdState_.onSuccess.subscribe((transition: Transition) => {
-      this.previousStateName = transition.from().name || '';
-      this.previousStateParams = transition.params('from');
-    });
+    // this.kdState_.onSuccess.subscribe((transition: Transition) => {
+    //   this.previousStateName = transition.from().name || '';
+    //   this.previousStateParams = transition.params('from');
+    // });
   }
 
   /**
    * Goes back to previous state or to the provided defaultState if none set.
    */
-  goToPreviousState(defaultState: string): TransitionPromise {
-    let targetState = this.previousStateName || defaultState;
-
-    // If previous state is same as current state then go to default state to avoid loop.
-    if (this.state_.current.name === this.previousStateName) {
-      targetState = defaultState;
-    }
-    return this.state_.go(targetState, this.previousStateParams);
+  goToPreviousState(defaultState: string): Promise<boolean> {
+    // let targetState = this.previousStateName || defaultState;
+    //
+    // // If previous state is same as current state then go to default state to avoid loop.
+    // if (this.state_.current.name === this.previousStateName) {
+    //   targetState = defaultState;
+    // }
+    return this.router_.navigate([defaultState], { queryParams: undefined }); // TODO
   }
 }

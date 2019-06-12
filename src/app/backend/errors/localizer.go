@@ -15,21 +15,19 @@
 package errors
 
 import (
-	"errors"
 	"strings"
 
-	jose "gopkg.in/square/go-jose.v2"
-	k8sErrors "k8s.io/apimachinery/pkg/api/errors"
+	"gopkg.in/square/go-jose.v2"
 )
 
 // Errors that can be used directly without localizing
 const (
-	MSG_DEPLOY_NAMESPACE_MISMATCH_ERROR    = "MSG_DEPLOY_NAMESPACE_MISMATCH_ERROR"
-	MSG_DEPLOY_EMPTY_NAMESPACE_ERROR       = "MSG_DEPLOY_EMPTY_NAMESPACE_ERROR"
-	MSG_LOGIN_UNAUTHORIZED_ERROR           = "MSG_LOGIN_UNAUTHORIZED_ERROR"
-	MSG_ENCRYPTION_KEY_CHANGED             = "MSG_ENCRYPTION_KEY_CHANGED"
-	MSG_DASHBOARD_EXCLUSIVE_RESOURCE_ERROR = "MSG_DASHBOARD_EXCLUSIVE_RESOURCE_ERROR"
-	MSG_TOKEN_EXPIRED_ERROR                = "MSG_TOKEN_EXPIRED_ERROR"
+	MsgDeployNamespaceMismatchError    = "MSG_DEPLOY_NAMESPACE_MISMATCH_ERROR"
+	MsgDeployEmptyNamespaceError       = "MSG_DEPLOY_EMPTY_NAMESPACE_ERROR"
+	MsgLoginUnauthorizedError          = "MSG_LOGIN_UNAUTHORIZED_ERROR"
+	MsgEncryptionKeyChanged            = "MSG_ENCRYPTION_KEY_CHANGED"
+	MsgDashboardExclusiveResourceError = "MSG_DASHBOARD_EXCLUSIVE_RESOURCE_ERROR"
+	MsgTokenExpiredError               = "MSG_TOKEN_EXPIRED_ERROR"
 )
 
 // This file contains all errors that should be kept in sync with:
@@ -41,10 +39,10 @@ const (
 // 		   pattern MSG_<VIEW>_<CAUSE_OF_ERROR>_ERROR
 //		   <VIEW> - optional
 var partialsToErrorsMap = map[string]string{
-	"does not match the namespace":                               MSG_DEPLOY_NAMESPACE_MISMATCH_ERROR,
-	"empty namespace may not be set":                             MSG_DEPLOY_EMPTY_NAMESPACE_ERROR,
-	"the server has asked for the client to provide credentials": MSG_LOGIN_UNAUTHORIZED_ERROR,
-	jose.ErrCryptoFailure.Error():                                MSG_ENCRYPTION_KEY_CHANGED,
+	"does not match the namespace":                               MsgDeployNamespaceMismatchError,
+	"empty namespace may not be set":                             MsgDeployEmptyNamespaceError,
+	"the server has asked for the client to provide credentials": MsgLoginUnauthorizedError,
+	jose.ErrCryptoFailure.Error():                                MsgEncryptionKeyChanged,
 }
 
 // LocalizeError returns error code (string) that can be used by frontend to localize error message.
@@ -55,11 +53,11 @@ func LocalizeError(err error) error {
 
 	for partial, errString := range partialsToErrorsMap {
 		if strings.Contains(err.Error(), partial) {
-			if k8sErrors.IsUnauthorized(err) {
-				return k8sErrors.NewUnauthorized(errString)
+			if IsUnauthorized(err) {
+				return NewUnauthorized(errString)
 			}
 
-			return errors.New(errString)
+			return NewBadRequest(errString)
 		}
 	}
 

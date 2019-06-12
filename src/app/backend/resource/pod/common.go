@@ -46,27 +46,6 @@ func getPodStatus(pod v1.Pod, warnings []common.Event) PodStatus {
 	}
 }
 
-// getPodStatusInfo returns correct info about pod statuses. Should be used when correct pod statuses are required.
-func getPodStatusInfo(pods []v1.Pod, events []v1.Event) common.PodInfo {
-	podInfo := common.PodInfo{}
-
-	for _, pod := range pods {
-		warnings := event.GetPodsEventWarnings(events, []v1.Pod{pod})
-		switch getPodStatusPhase(pod, warnings) {
-		case v1.PodFailed:
-			podInfo.Failed++
-		case v1.PodSucceeded:
-			podInfo.Succeeded++
-		case v1.PodRunning:
-			podInfo.Running++
-		case v1.PodPending:
-			podInfo.Pending++
-		}
-	}
-
-	return podInfo
-}
-
 // getPodStatus returns one of three pod statuses (pending, success, failed)
 func getPodStatusPhase(pod v1.Pod, warnings []common.Event) v1.PodPhase {
 	// For terminated pods that failed
