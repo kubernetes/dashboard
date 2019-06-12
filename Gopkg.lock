@@ -40,15 +40,15 @@
   revision = "6480d4af844c189cf5dd913db24ddd339d3a4f85"
 
 [[projects]]
-  digest = "1:709361c9bbf84ebe804a0e162ec6d23b0ff47fa7633b9483231d7ec4ba514663"
+  digest = "1:b2754ad67d4ed5a0741d69396c6f5cbe1e426a8adc2e8e97e09a1ee5a4621653"
   name = "github.com/emicklei/go-restful"
   packages = [
     ".",
     "log",
   ]
   pruneopts = "UT"
-  revision = "777bb3f19bcafe2575ffb2a3e46af92509ae9594"
-  version = "v1.2"
+  revision = "6ac3b8eb89d325e5c750d77f344a6870464d03c3"
+  version = "v2.9.6"
 
 [[projects]]
   digest = "1:f1f2bd73c025d24c3b93abf6364bccb802cf2fdedaa44360804c67800e8fab8d"
@@ -646,7 +646,7 @@
     "gopkg.in/igm/sockjs-go.v2/sockjs",
     "gopkg.in/square/go-jose.v2",
     "gopkg.in/yaml.v2",
-    "k8s.io/api/apps/v1beta2",
+    "k8s.io/api/apps/v1",
     "k8s.io/api/authorization/v1",
     "k8s.io/api/authorization/v1beta1",
     "k8s.io/api/autoscaling/v1",
