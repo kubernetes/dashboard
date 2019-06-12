@@ -76,9 +76,9 @@ func fromCells(cells []dataselect.DataCell) []v1.Node {
 	return std
 }
 
-func getNodeConditions(pod v1.Node) []common.Condition {
+func getNodeConditions(node v1.Node) []common.Condition {
 	var conditions []common.Condition
-	for _, condition := range pod.Status.Conditions {
+	for _, condition := range node.Status.Conditions {
 		conditions = append(conditions, common.Condition{
 			Type:               string(condition.Type),
 			Status:             condition.Status,
