@@ -48,6 +48,9 @@ ENV PATH=${GOPATH}/bin:${PATH}
 # For testing, etc., to know if this environment is on container.
 ENV K8S_DASHBOARD_CONTAINER=TRUE
 
+# Suppress angular analytics dialog
+ENV NG_CLI_ANALYTICS=false
+
 # Download a statically linked docker client,
 # so the container is able to build images on the host.
 RUN curl -sSL https://download.docker.com/linux/static/stable/x86_64/docker-18.06.1-ce.tgz > /tmp/docker.tgz && \
