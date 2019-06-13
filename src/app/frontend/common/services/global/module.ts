@@ -12,27 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { APP_INITIALIZER, Injector, NgModule } from '@angular/core';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {APP_INITIALIZER, Injector, NgModule} from '@angular/core';
 
-import { ActionbarService } from './actionbar';
-import { AssetsService } from './assets';
-import { AuthService } from './authentication';
-import { AuthorizerService } from './authorizer';
-import { ConfigService } from './config';
-import { CsrfTokenService } from './csrftoken';
-import { GlobalSettingsService } from './globalsettings';
-import { HistoryService } from './history';
-import { AuthInterceptor } from './interceptor';
-import { LocalSettingsService } from './localsettings';
-import { LogService } from './logs';
-import { NamespaceService } from './namespace';
-import { NotificationsService } from './notifications';
-import { ParamsService } from './params';
-import { KdStateService } from './state';
-import { ThemeService } from './theme';
-import { TitleService } from './title';
-import { VerberService } from './verber';
+import {ActionbarService} from './actionbar';
+import {AssetsService} from './assets';
+import {AuthService} from './authentication';
+import {AuthorizerService} from './authorizer';
+import {ConfigService} from './config';
+import {CsrfTokenService} from './csrftoken';
+import {GlobalSettingsService} from './globalsettings';
+import {HistoryService} from './history';
+import {AuthInterceptor} from './interceptor';
+import {LocalSettingsService} from './localsettings';
+import {LogService} from './logs';
+import {NamespaceService} from './namespace';
+import {NotificationsService} from './notifications';
+import {ParamsService} from './params';
+import {KdStateService} from './state';
+import {ThemeService} from './theme';
+import {TitleService} from './title';
+import {VerberService} from './verber';
 
 @NgModule({
   providers: [
@@ -74,10 +74,8 @@ export class GlobalServicesModule {
 }
 
 export function init(
-  globalSettings: GlobalSettingsService,
-  localSettings: LocalSettingsService,
-  config: ConfigService
-): Function {
+    globalSettings: GlobalSettingsService, localSettings: LocalSettingsService,
+    config: ConfigService): Function {
   return () => {
     globalSettings.init();
     localSettings.init();

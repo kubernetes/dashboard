@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Component, Input } from '@angular/core';
+import {Component, Input} from '@angular/core';
 
-import { ResourceMeta } from '../../../../services/global/actionbar';
-import { KdStateService } from '../../../../services/global/state';
+import {ResourceMeta} from '../../../../services/global/actionbar';
+import {KdStateService} from '../../../../services/global/state';
 
 @Component({
   selector: 'kd-actionbar-detail-logs',
@@ -28,10 +28,7 @@ export class ActionbarDetailLogsComponent {
 
   getHref(): string {
     return this.kdState_.href(
-      'log',
-      this.resourceMeta.objectMeta.name,
-      this.resourceMeta.objectMeta.namespace,
-      this.resourceMeta.typeMeta.kind
-    );
+        'log', this.resourceMeta.objectMeta.name, this.resourceMeta.objectMeta.namespace,
+        this.resourceMeta.typeMeta.kind);
   }
 }

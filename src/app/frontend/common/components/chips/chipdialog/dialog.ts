@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { Chip } from '../component';
+import {Component, Inject} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {Chip} from '../component';
 
 @Component({
   selector: 'kd-chip-dialog',
@@ -22,9 +22,7 @@ import { Chip } from '../component';
 })
 export class ChipDialog {
   constructor(
-    public dialogRef: MatDialogRef<ChipDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: Chip
-  ) {}
+      public dialogRef: MatDialogRef<ChipDialog>, @Inject(MAT_DIALOG_DATA) public data: Chip) {}
 
   onNoClick(): void {
     this.dialogRef.close();

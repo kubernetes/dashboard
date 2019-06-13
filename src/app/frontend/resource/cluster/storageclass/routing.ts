@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { NgModule } from '@angular/core';
-import { Route, RouterModule } from '@angular/router';
-import { DEFAULT_ACTIONBAR } from '../../../common/components/actionbars/routing';
+import {NgModule} from '@angular/core';
+import {Route, RouterModule} from '@angular/router';
+import {DEFAULT_ACTIONBAR} from '../../../common/components/actionbars/routing';
 
-import { DISCOVERY_ROUTE } from '../../discovery/routing';
+import {DISCOVERY_ROUTE} from '../../discovery/routing';
 
-import { StorageClassDetailComponent } from './detail/component';
-import { StorageClassListComponent } from './list/component';
+import {StorageClassDetailComponent} from './detail/component';
+import {StorageClassListComponent} from './list/component';
 
 const STORAGECLASS_LIST_ROUTE: Route = {
   path: '',
@@ -49,4 +49,5 @@ const STORAGECLASS_DETAIL_ROUTE: Route = {
   ],
   exports: [RouterModule],
 })
-export class StorageClassRoutingModule {}
+export class StorageClassRoutingModule {
+}

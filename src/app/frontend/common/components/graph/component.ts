@@ -12,14 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Component, Input, AfterViewInit, OnInit } from '@angular/core';
-import { Metric } from '@api/backendapi';
-import { generate } from 'c3';
-import { select } from 'd3-selection';
-import { coresFilter, memoryFilter } from './helper';
-import { timeFormat } from 'd3';
+import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {Metric} from '@api/backendapi';
+import {generate} from 'c3';
+import {timeFormat} from 'd3';
+import {select} from 'd3-selection';
 
-@Component({ selector: 'kd-graph', templateUrl: './template.html' })
+import {coresFilter, memoryFilter} from './helper';
+
+@Component({selector: 'kd-graph', templateUrl: './template.html'})
 export class GraphComponent implements OnInit, AfterViewInit {
   @Input() metric: Metric;
   @Input() id: string;

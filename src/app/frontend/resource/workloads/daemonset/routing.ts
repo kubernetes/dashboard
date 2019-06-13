@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { NgModule } from '@angular/core';
-import { Route, RouterModule } from '@angular/router';
-import { DEFAULT_ACTIONBAR } from '../../../common/components/actionbars/routing';
+import {NgModule} from '@angular/core';
+import {Route, RouterModule} from '@angular/router';
+import {DEFAULT_ACTIONBAR} from '../../../common/components/actionbars/routing';
 
-import { WORKLOADS_ROUTE } from '../routing';
+import {WORKLOADS_ROUTE} from '../routing';
 
-import { DaemonSetDetailComponent } from './detail/component';
-import { DaemonSetListComponent } from './list/component';
+import {DaemonSetDetailComponent} from './detail/component';
+import {DaemonSetListComponent} from './list/component';
 
 const DAEMONSET_LIST_ROUTE: Route = {
   path: '',
@@ -49,4 +49,5 @@ const DAEMONSET_DETAIL_ROUTE: Route = {
   ],
   exports: [RouterModule],
 })
-export class DaemonSetRoutingModule {}
+export class DaemonSetRoutingModule {
+}

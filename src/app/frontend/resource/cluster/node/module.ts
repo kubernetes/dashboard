@@ -12,17 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 
-import { ComponentsModule } from '../../../common/components/module';
-import { SharedModule } from '../../../shared.module';
+import {ComponentsModule} from '../../../common/components/module';
+import {SharedModule} from '../../../shared.module';
 
-import { NodeDetailComponent } from './detail/component';
-import { NodeListComponent } from './list/component';
-import { NodeRoutingModule } from './routing';
+import {NodeDetailComponent} from './detail/component';
+import {NodeListComponent} from './list/component';
+import {NodeRoutingModule} from './routing';
 
 @NgModule({
   imports: [SharedModule, ComponentsModule, NodeRoutingModule],
   declarations: [NodeListComponent, NodeDetailComponent],
 })
-export class NodeModule {}
+export class NodeModule {
+}

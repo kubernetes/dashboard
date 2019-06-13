@@ -20,9 +20,9 @@ import 'brace/theme/idle_fingers';
 import 'brace/theme/textmate';
 import 'brace/worker/json';
 
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
-import { ThemeService } from '../../services/global/theme';
+import {ThemeService} from '../../services/global/theme';
 
 enum EditorTheme {
   light = 'textmate',
@@ -56,9 +56,7 @@ export class TextInputComponent implements OnInit {
   constructor(private readonly themeService_: ThemeService) {}
 
   ngOnInit(): void {
-    this.theme = this.themeService_.isLightThemeEnabled()
-      ? EditorTheme.light
-      : EditorTheme.dark;
+    this.theme = this.themeService_.isLightThemeEnabled() ? EditorTheme.light : EditorTheme.dark;
     if (this.prettify) {
       this.prettify_();
     }

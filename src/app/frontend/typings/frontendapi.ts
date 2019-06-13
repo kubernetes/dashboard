@@ -12,14 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Type } from '@angular/core';
-import {
-  GlobalSettings,
-  K8sError,
-  ObjectMeta,
-  ResourceList,
-  TypeMeta,
-} from '@api/backendapi';
+import {Type} from '@angular/core';
+import {GlobalSettings, K8sError, ObjectMeta, ResourceList, TypeMeta,} from '@api/backendapi';
 
 export interface BreadcrumbConfig {
   label?: string;
@@ -70,7 +64,7 @@ export interface ActionColumn {
 }
 
 export interface HTMLInputEvent extends Event {
-  target: HTMLInputElement & EventTarget;
+  target: HTMLInputElement&EventTarget;
 }
 
 export interface KdFile {

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Injectable } from '@angular/core';
-import { K8sError } from '@api/backendapi';
+import {Injectable} from '@angular/core';
+import {K8sError} from '@api/backendapi';
 
 export class Notification {
   message: string;
@@ -78,12 +78,12 @@ export class NotificationsService {
 
   getUnreadCount(): number {
     return this.notifications_
-      .map(notification => {
-        return notification.read ? Number(0) : Number(1);
-      })
-      .reduce((previousValue, currentValue) => {
-        return previousValue + currentValue;
-      }, 0);
+        .map(notification => {
+          return notification.read ? Number(0) : Number(1);
+        })
+        .reduce((previousValue, currentValue) => {
+          return previousValue + currentValue;
+        }, 0);
   }
 
   markAllAsRead(): void {

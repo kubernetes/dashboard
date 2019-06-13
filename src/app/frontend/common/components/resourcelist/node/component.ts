@@ -12,31 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { HttpParams } from '@angular/common/http';
-import { Component, Input } from '@angular/core';
-import { Node, NodeList } from '@api/backendapi';
-import { Observable } from 'rxjs/Observable';
-import { ResourceListWithStatuses } from '../../../resources/list';
-import { NotificationsService } from '../../../services/global/notifications';
-import { EndpointManager, Resource } from '../../../services/resource/endpoint';
-import { ResourceService } from '../../../services/resource/resource';
-import { MenuComponent } from '../../list/column/menu/component';
-import { ListGroupIdentifiers, ListIdentifiers } from '../groupids';
+import {HttpParams} from '@angular/common/http';
+import {Component, Input} from '@angular/core';
+import {Node, NodeList} from '@api/backendapi';
+import {Observable} from 'rxjs/Observable';
+import {ResourceListWithStatuses} from '../../../resources/list';
+import {NotificationsService} from '../../../services/global/notifications';
+import {EndpointManager, Resource} from '../../../services/resource/endpoint';
+import {ResourceService} from '../../../services/resource/resource';
+import {MenuComponent} from '../../list/column/menu/component';
+import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
 
 @Component({
   selector: 'kd-node-list',
   templateUrl: './template.html',
 })
-export class NodeListComponent extends ResourceListWithStatuses<
-  NodeList,
-  Node
-> {
+export class NodeListComponent extends ResourceListWithStatuses<NodeList, Node> {
   @Input() endpoint = EndpointManager.resource(Resource.node).list();
 
   constructor(
-    private readonly node_: ResourceService<NodeList>,
-    notifications: NotificationsService
-  ) {
+      private readonly node_: ResourceService<NodeList>, notifications: NotificationsService) {
     super('node', notifications);
     this.id = ListIdentifiers.node;
     this.groupId = ListGroupIdentifiers.cluster;
@@ -45,11 +40,7 @@ export class NodeListComponent extends ResourceListWithStatuses<
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
 
     // Register status icon handlers
-    this.registerBinding(
-      this.icon.checkCircle,
-      'kd-success',
-      this.isInSuccessState
-    );
+    this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);
     this.registerBinding(this.icon.help, 'kd-muted', this.isInUnknownState);
     this.registerBinding(this.icon.error, 'kd-error', this.isInErrorState);
   }

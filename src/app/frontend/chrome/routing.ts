@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from '../common/services/guard/auth';
-import { ChromeComponent } from './component';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {AuthGuard} from '../common/services/guard/auth';
+import {ChromeComponent} from './component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/overview', pathMatch: 'full' },
+  {path: '', redirectTo: '/overview', pathMatch: 'full'},
   {
     path: '',
     component: ChromeComponent,
@@ -48,8 +48,7 @@ const routes: Routes = [
       },
       {
         path: 'persistentvolume',
-        loadChildren:
-          'resource/cluster/persistentvolume/module#PersistentVolumeModule',
+        loadChildren: 'resource/cluster/persistentvolume/module#PersistentVolumeModule',
       },
       {
         path: 'storageclass',
@@ -93,8 +92,7 @@ const routes: Routes = [
       },
       {
         path: 'replicationcontroller',
-        loadChildren:
-          'resource/workloads/replicationcontroller/module#ReplicationControllerModule',
+        loadChildren: 'resource/workloads/replicationcontroller/module#ReplicationControllerModule',
       },
       {
         path: 'statefulset',
@@ -126,8 +124,7 @@ const routes: Routes = [
       },
       {
         path: 'persistentvolumeclaim',
-        loadChildren:
-          'resource/config/persistentvolumeclaim/module#PersistentVolumeClaimModule',
+        loadChildren: 'resource/config/persistentvolumeclaim/module#PersistentVolumeClaimModule',
       },
       {
         path: 'secret',
@@ -135,13 +132,13 @@ const routes: Routes = [
       },
 
       // Others
-      { path: 'settings', loadChildren: 'settings/module#SettingsModule' },
-      { path: 'about', loadChildren: 'about/module#AboutModule' },
+      {path: 'settings', loadChildren: 'settings/module#SettingsModule'},
+      {path: 'about', loadChildren: 'about/module#AboutModule'},
 
-      { path: 'create', loadChildren: 'create/module#CreateModule' },
-      { path: 'log', loadChildren: 'logs/module#LogsModule' },
-      { path: 'shell', loadChildren: 'shell/module#ShellModule' },
-      { path: 'search', loadChildren: 'search/module#SearchModule' },
+      {path: 'create', loadChildren: 'create/module#CreateModule'},
+      {path: 'log', loadChildren: 'logs/module#LogsModule'},
+      {path: 'shell', loadChildren: 'shell/module#ShellModule'},
+      {path: 'search', loadChildren: 'search/module#SearchModule'},
     ],
   },
 ];
@@ -150,4 +147,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ChromeRoutingModule {}
+export class ChromeRoutingModule {
+}

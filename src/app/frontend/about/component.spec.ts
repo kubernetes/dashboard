@@ -12,19 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-} from '@angular/common/http/testing';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AppConfig } from '@api/backendapi';
-import { SharedModule } from 'shared.module';
-import { CardComponent } from '../common/components/card/component';
-import { AssetsService } from '../common/services/global/assets';
-import { ConfigService } from '../common/services/global/config';
-import { AboutComponent } from './component';
+import {HttpClientTestingModule, HttpTestingController,} from '@angular/common/http/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {By} from '@angular/platform-browser';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {AppConfig} from '@api/backendapi';
+import {SharedModule} from 'shared.module';
+import {CardComponent} from '../common/components/card/component';
+import {AssetsService} from '../common/services/global/assets';
+import {ConfigService} from '../common/services/global/config';
+import {AboutComponent} from './component';
 
 describe('AboutComponent', () => {
   let component: AboutComponent;
@@ -37,11 +34,13 @@ describe('AboutComponent', () => {
   const copyrightYear = 2018;
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [SharedModule, HttpClientTestingModule, BrowserAnimationsModule],
-      declarations: [AboutComponent, CardComponent],
-      providers: [AssetsService, ConfigService],
-    }).compileComponents();
+    TestBed
+        .configureTestingModule({
+          imports: [SharedModule, HttpClientTestingModule, BrowserAnimationsModule],
+          declarations: [AboutComponent, CardComponent],
+          providers: [AssetsService, ConfigService],
+        })
+        .compileComponents();
     httpMock = TestBed.get(HttpTestingController);
     configService = TestBed.get(ConfigService);
   }));
@@ -53,7 +52,7 @@ describe('AboutComponent', () => {
     component = fixture.componentInstance;
 
     const configRequest = httpMock.expectOne('config');
-    const config: AppConfig = { serverTime: new Date().getTime() };
+    const config: AppConfig = {serverTime: new Date().getTime()};
     configRequest.flush(config);
 
     // set the fixed values
@@ -64,7 +63,7 @@ describe('AboutComponent', () => {
   }));
 
   it('should print current year', async(() => {
-    fixture.detectChanges();
-    expect(element.textContent).toContain(`2015 - ${copyrightYear}`);
-  }));
+       fixture.detectChanges();
+       expect(element.textContent).toContain(`2015 - ${copyrightYear}`);
+     }));
 });

@@ -12,21 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material';
-import { Router } from '@angular/router';
-import {
-  AppDeploymentContentResponse,
-  AppDeploymentContentSpec,
-  AppDeploymentSpec,
-} from '@api/backendapi';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {Inject, Injectable} from '@angular/core';
+import {MatDialog} from '@angular/material';
+import {Router} from '@angular/router';
+import {AppDeploymentContentResponse, AppDeploymentContentSpec, AppDeploymentSpec,} from '@api/backendapi';
 
-import { Config, CONFIG_DI_TOKEN } from '../../../index.config';
-import { AlertDialog, AlertDialogConfig } from '../../dialogs/alert/dialog';
-import { NAMESPACE_STATE_PARAM } from '../../params/params';
-import { CsrfTokenService } from '../global/csrftoken';
-import { NamespaceService } from '../global/namespace';
+import {Config, CONFIG_DI_TOKEN} from '../../../index.config';
+import {AlertDialog, AlertDialogConfig} from '../../dialogs/alert/dialog';
+import {NAMESPACE_STATE_PARAM} from '../../params/params';
+import {CsrfTokenService} from '../global/csrftoken';
+import {NamespaceService} from '../global/namespace';
 
 const i18n = {
   /** Text shown on failed deploy in error dialog. */
@@ -53,19 +49,12 @@ export class CreateService {
   private isDeployInProgress_ = false;
 
   constructor(
-    private readonly http_: HttpClient,
-    private readonly namespace_: NamespaceService,
-    private readonly csrfToken_: CsrfTokenService,
-    private readonly matDialog_: MatDialog,
-    private readonly router_: Router,
-    @Inject(CONFIG_DI_TOKEN) private readonly CONFIG: Config
-  ) {}
+      private readonly http_: HttpClient, private readonly namespace_: NamespaceService,
+      private readonly csrfToken_: CsrfTokenService, private readonly matDialog_: MatDialog,
+      private readonly router_: Router, @Inject(CONFIG_DI_TOKEN) private readonly CONFIG: Config) {}
 
-  async createContent(
-    content: string,
-    validate = true,
-    name = ''
-  ): Promise<AppDeploymentContentResponse> {
+  async createContent(content: string, validate = true, name = ''):
+      Promise<AppDeploymentContentResponse> {
     const spec: AppDeploymentContentSpec = {
       name,
       namespace: this.namespace_.current(),
@@ -77,22 +66,15 @@ export class CreateService {
     let error: HttpErrorResponse;
 
     try {
-      const { token } = await this.csrfToken_
-        .getTokenForAction('appdeploymentfromfile')
-        .toPromise();
+      const {token} = await this.csrfToken_.getTokenForAction('appdeploymentfromfile').toPromise();
       this.isDeployInProgress_ = true;
       response = await this.http_
-        .post<AppDeploymentContentResponse>(
-          'api/v1/appdeploymentfromfile',
-          spec,
-          { headers: { [this.CONFIG.csrfHeaderName]: token } }
-        )
-        .toPromise();
+                     .post<AppDeploymentContentResponse>(
+                         'api/v1/appdeploymentfromfile', spec,
+                         {headers: {[this.CONFIG.csrfHeaderName]: token}})
+                     .toPromise();
       if (response.error.length > 0) {
-        this.reportError(
-          i18n.MSG_DEPLOY_DIALOG_PARTIAL_COMPLETED,
-          response.error
-        );
+        this.reportError(i18n.MSG_DEPLOY_DIALOG_PARTIAL_COMPLETED, response.error);
       }
     } catch (err) {
       error = err;
@@ -114,15 +96,13 @@ export class CreateService {
     let error: HttpErrorResponse;
 
     try {
-      const { token } = await this.csrfToken_
-        .getTokenForAction('appdeployment')
-        .toPromise();
+      const {token} = await this.csrfToken_.getTokenForAction('appdeployment').toPromise();
       this.isDeployInProgress_ = true;
       response = await this.http_
-        .post<AppDeploymentContentResponse>('api/v1/appdeployment', spec, {
-          headers: { [this.CONFIG.csrfHeaderName]: token },
-        })
-        .toPromise();
+                     .post<AppDeploymentContentResponse>('api/v1/appdeployment', spec, {
+                       headers: {[this.CONFIG.csrfHeaderName]: token},
+                     })
+                     .toPromise();
     } catch (err) {
       error = err;
     }
@@ -133,7 +113,7 @@ export class CreateService {
       throw error;
     } else {
       this.router_.navigate(['overview'], {
-        queryParams: { [NAMESPACE_STATE_PARAM]: spec.namespace },
+        queryParams: {[NAMESPACE_STATE_PARAM]: spec.namespace},
       });
     }
 
@@ -150,6 +130,6 @@ export class CreateService {
       message,
       confirmLabel: 'OK',
     };
-    this.matDialog_.open(AlertDialog, { data: configData });
+    this.matDialog_.open(AlertDialog, {data: configData});
   }
 }

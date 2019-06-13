@@ -12,19 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { NgModule } from '@angular/core';
-import { ComponentsModule } from '../../common/components/module';
+import {NgModule} from '@angular/core';
+import {ComponentsModule} from '../../common/components/module';
 
-import { NavServiceModule } from '../../common/services/nav/module';
-import { SharedModule } from '../../shared.module';
+import {NavServiceModule} from '../../common/services/nav/module';
+import {SharedModule} from '../../shared.module';
 
-import { NavComponent } from './component';
-import { HamburgerComponent } from './hamburger/component';
-import { NavItemComponent } from './item/component';
+import {NavComponent} from './component';
+import {HamburgerComponent} from './hamburger/component';
+import {NavItemComponent} from './item/component';
 
 @NgModule({
   declarations: [NavComponent, NavItemComponent, HamburgerComponent],
   exports: [NavComponent, NavItemComponent, HamburgerComponent],
   imports: [SharedModule, ComponentsModule, NavServiceModule],
 })
-export class NavModule {}
+export class NavModule {
+}

@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
-import { CreateService } from '../../../common/services/create/service';
-import { HistoryService } from '../../../common/services/global/history';
-import { NamespaceService } from '../../../common/services/global/namespace';
+import {CreateService} from '../../../common/services/create/service';
+import {HistoryService} from '../../../common/services/global/history';
+import {NamespaceService} from '../../../common/services/global/namespace';
 
 @Component({
   selector: 'kd-create-from-input',
@@ -27,17 +27,11 @@ export class CreateFromInputComponent {
   inputData: string;
 
   constructor(
-    private readonly namespace_: NamespaceService,
-    private readonly create_: CreateService,
-    private readonly history_: HistoryService
-  ) {}
+      private readonly namespace_: NamespaceService, private readonly create_: CreateService,
+      private readonly history_: HistoryService) {}
 
   isCreateDisabled(): boolean {
-    return (
-      !this.inputData ||
-      this.inputData.length === 0 ||
-      this.create_.isDeployDisabled()
-    );
+    return (!this.inputData || this.inputData.length === 0 || this.create_.isDeployDisabled());
   }
 
   create(): void {

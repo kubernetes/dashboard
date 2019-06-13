@@ -87,6 +87,7 @@
     "@angular/router": "8.0.0",
     "@types/c3": "0.7.0",
     "@types/d3": "5.7.2",
+    "@types/d3-scale": "2.1.1",
     "@types/file-saver": "2.0.1",
     "ace-builds": "1.4.4",
     "c3": "0.7.0",
@@ -127,7 +128,7 @@
     "del": "4.1.1",
     "git-describe": "4.0.4",
     "glob-run": "0.1.6",
-    "gts": "1.0.0",
+    "gts": "0.9.0",
     "gulp": "4.0.2",
     "gulp-filter": "6.0.0",
     "gulp-header-license": "1.0.9",
@@ -167,7 +168,7 @@
     "webdriver-manager": "12.1.4"
   },
   "engines": {
-    "node": ">=10.0.0",
+    "node": ">=10.9.0",
     "npm": ">=6.0.0"
   }
 }

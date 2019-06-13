@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Pipe } from '@angular/core';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import {Pipe} from '@angular/core';
+import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 
 /**
  * Formats the given value as raw HTML to display to the user.
  */
-@Pipe({ name: 'kdSafeHtml' })
+@Pipe({name: 'kdSafeHtml'})
 export class SafeHtmlFormatter {
   constructor(private readonly sanitizer: DomSanitizer) {}
 

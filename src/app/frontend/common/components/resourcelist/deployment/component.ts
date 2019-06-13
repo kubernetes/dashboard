@@ -12,61 +12,41 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { HttpParams } from '@angular/common/http';
-import { Component, ComponentFactoryResolver, Input } from '@angular/core';
-import { Deployment, DeploymentList, Event } from '@api/backendapi';
-import { Observable } from 'rxjs/Observable';
-import { ResourceListWithStatuses } from '../../../resources/list';
-import { NotificationsService } from '../../../services/global/notifications';
-import { EndpointManager, Resource } from '../../../services/resource/endpoint';
-import { NamespacedResourceService } from '../../../services/resource/resource';
-import { MenuComponent } from '../../list/column/menu/component';
-import { ListGroupIdentifiers, ListIdentifiers } from '../groupids';
+import {HttpParams} from '@angular/common/http';
+import {Component, ComponentFactoryResolver, Input} from '@angular/core';
+import {Deployment, DeploymentList, Event} from '@api/backendapi';
+import {Observable} from 'rxjs/Observable';
+import {ResourceListWithStatuses} from '../../../resources/list';
+import {NotificationsService} from '../../../services/global/notifications';
+import {EndpointManager, Resource} from '../../../services/resource/endpoint';
+import {NamespacedResourceService} from '../../../services/resource/resource';
+import {MenuComponent} from '../../list/column/menu/component';
+import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
 
 @Component({
   selector: 'kd-deployment-list',
   templateUrl: './template.html',
 })
-export class DeploymentListComponent extends ResourceListWithStatuses<
-  DeploymentList,
-  Deployment
-> {
-  @Input() endpoint = EndpointManager.resource(
-    Resource.deployment,
-    true
-  ).list();
+export class DeploymentListComponent extends ResourceListWithStatuses<DeploymentList, Deployment> {
+  @Input() endpoint = EndpointManager.resource(Resource.deployment, true).list();
 
   constructor(
-    private readonly deployment_: NamespacedResourceService<DeploymentList>,
-    notifications: NotificationsService,
-    resolver: ComponentFactoryResolver
-  ) {
+      private readonly deployment_: NamespacedResourceService<DeploymentList>,
+      notifications: NotificationsService, resolver: ComponentFactoryResolver) {
     super('deployment', notifications, resolver);
     this.id = ListIdentifiers.deployment;
     this.groupId = ListGroupIdentifiers.workloads;
 
     // Register status icon handlers
-    this.registerBinding(
-      this.icon.checkCircle,
-      'kd-success',
-      this.isInSuccessState
-    );
-    this.registerBinding(
-      this.icon.timelapse,
-      'kd-muted',
-      this.isInPendingState
-    );
+    this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);
+    this.registerBinding(this.icon.timelapse, 'kd-muted', this.isInPendingState);
     this.registerBinding(this.icon.error, 'kd-error', this.isInErrorState);
 
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
 
     // Register dynamic columns.
-    this.registerDynamicColumn(
-      'namespace',
-      'name',
-      this.shouldShowNamespaceColumn_.bind(this)
-    );
+    this.registerDynamicColumn('namespace', 'name', this.shouldShowNamespaceColumn_.bind(this));
   }
 
   getResourceObservable(params?: HttpParams): Observable<DeploymentList> {

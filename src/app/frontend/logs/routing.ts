@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { NgModule } from '@angular/core';
-import { Route, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {Route, RouterModule} from '@angular/router';
 
-import { LOGS_PARENT_PLACEHOLDER } from '../common/components/breadcrumbs/component';
+import {LOGS_PARENT_PLACEHOLDER} from '../common/components/breadcrumbs/component';
 
-import { LogsComponent } from './component';
+import {LogsComponent} from './component';
 
 export const LOGS_ROUTE: Route = {
   path: ':resourceNamespace/:resourceName/:resourceType',
@@ -32,4 +32,5 @@ export const LOGS_ROUTE: Route = {
   imports: [RouterModule.forChild([LOGS_ROUTE])],
   exports: [RouterModule],
 })
-export class LogsRoutingModule {}
+export class LogsRoutingModule {
+}

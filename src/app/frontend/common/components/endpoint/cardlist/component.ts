@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Component, Input } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
-import { Endpoint } from '@api/backendapi';
+import {Component, Input} from '@angular/core';
+import {MatTableDataSource} from '@angular/material';
+import {Endpoint} from '@api/backendapi';
 
 @Component({
   selector: 'kd-endpoint-card-list',

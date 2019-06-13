@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import {HttpClient} from '@angular/common/http';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 
-import { AssetsService } from '../common/services/global/assets';
+import {AssetsService} from '../common/services/global/assets';
 
 class SystemBanner {
   message: string;
@@ -34,18 +34,13 @@ export class ChromeComponent implements OnInit {
   loading = false;
 
   constructor(
-    public assets: AssetsService,
-    private readonly http_: HttpClient,
-    private readonly router_: Router
-  ) {}
+      public assets: AssetsService, private readonly http_: HttpClient,
+      private readonly router_: Router) {}
 
   ngOnInit(): void {
-    this.http_
-      .get<SystemBanner>(ChromeComponent.systemBannerEndpoint)
-      .toPromise()
-      .then(sb => {
-        this.systemBanner_ = sb;
-      });
+    this.http_.get<SystemBanner>(ChromeComponent.systemBannerEndpoint).toPromise().then(sb => {
+      this.systemBanner_ = sb;
+    });
   }
 
   getOverviewStateName(): string {
@@ -57,10 +52,9 @@ export class ChromeComponent implements OnInit {
   }
 
   getSystemBannerClass(): string {
-    const severity =
-      this.systemBanner_ && this.systemBanner_.severity
-        ? this.systemBanner_.severity.toLowerCase()
-        : '';
+    const severity = this.systemBanner_ && this.systemBanner_.severity ?
+        this.systemBanner_.severity.toLowerCase() :
+        '';
     switch (severity) {
       case 'warning':
         return 'kd-bg-warning-light';

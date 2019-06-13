@@ -12,12 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { NgModule } from '@angular/core';
-import { AuthGuard } from './auth';
-import { LoginGuard } from './login';
-import { SearchGuard } from './search';
+import {NgModule} from '@angular/core';
+import {AuthGuard} from './auth';
+import {LoginGuard} from './login';
+import {SearchGuard} from './search';
 
 @NgModule({
   providers: [AuthGuard, SearchGuard, LoginGuard],
 })
-export class GuardsModule {}
+export class GuardsModule {
+}

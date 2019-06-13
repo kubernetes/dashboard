@@ -12,16 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { NgModule } from '@angular/core';
-import { ComponentsModule } from '../../../common/components/module';
+import {NgModule} from '@angular/core';
+import {ComponentsModule} from '../../../common/components/module';
 
-import { SharedModule } from '../../../shared.module';
-import { ReplicaSetDetailComponent } from './detail/component';
-import { ReplicaSetListComponent } from './list/component';
-import { ReplicaSetRoutingModule } from './routing';
+import {SharedModule} from '../../../shared.module';
+import {ReplicaSetDetailComponent} from './detail/component';
+import {ReplicaSetListComponent} from './list/component';
+import {ReplicaSetRoutingModule} from './routing';
 
 @NgModule({
   imports: [SharedModule, ComponentsModule, ReplicaSetRoutingModule],
   declarations: [ReplicaSetListComponent, ReplicaSetDetailComponent],
 })
-export class ReplicaSetModule {}
+export class ReplicaSetModule {
+}

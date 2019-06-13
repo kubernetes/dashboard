@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { NgModule } from '@angular/core';
-import { Route, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {Route, RouterModule} from '@angular/router';
 
-import { EXEC_PARENT_PLACEHOLDER } from '../common/components/breadcrumbs/component';
+import {EXEC_PARENT_PLACEHOLDER} from '../common/components/breadcrumbs/component';
 
-import { ShellComponent } from './component';
+import {ShellComponent} from './component';
 
 export const SHELL_ROUTE: Route = {
   path: ':resourceNamespace/:resourceName/:containerName',
@@ -41,4 +41,5 @@ export const SHELL_ROUTE_RAW: Route = {
   imports: [RouterModule.forChild([SHELL_ROUTE_RAW, SHELL_ROUTE])],
   exports: [RouterModule],
 })
-export class ShellRoutingModule {}
+export class ShellRoutingModule {
+}

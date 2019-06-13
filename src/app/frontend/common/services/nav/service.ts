@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Injectable } from '@angular/core';
-import { MatDrawer } from '@angular/material';
+import {Injectable} from '@angular/core';
+import {MatDrawer} from '@angular/material';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class NavService {
   private nav_: MatDrawer;
 

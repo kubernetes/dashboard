@@ -12,15 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { NgModule } from '@angular/core';
-import { ComponentsModule } from '../../../common/components/module';
-import { SharedModule } from '../../../shared.module';
-import { JobDetailComponent } from './detail/component';
-import { JobListComponent } from './list/component';
-import { JobRoutingModule } from './routing';
+import {NgModule} from '@angular/core';
+import {ComponentsModule} from '../../../common/components/module';
+import {SharedModule} from '../../../shared.module';
+import {JobDetailComponent} from './detail/component';
+import {JobListComponent} from './list/component';
+import {JobRoutingModule} from './routing';
 
 @NgModule({
   imports: [SharedModule, ComponentsModule, JobRoutingModule],
   declarations: [JobListComponent, JobDetailComponent],
 })
-export class JobModule {}
+export class JobModule {
+}

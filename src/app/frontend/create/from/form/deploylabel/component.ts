@@ -12,20 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Component, forwardRef, Input } from '@angular/core';
-import {
-  AbstractControl,
-  ControlValueAccessor,
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  NG_VALIDATORS,
-  NG_VALUE_ACCESSOR,
-  Validators,
-} from '@angular/forms';
-import { FormValidators } from '../validator/validators';
-import { DeployLabel } from './deploylabel';
+import {Component, forwardRef, Input} from '@angular/core';
+import {AbstractControl, ControlValueAccessor, FormArray, FormBuilder, FormControl, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, Validators,} from '@angular/forms';
+import {FormValidators} from '../validator/validators';
+import {DeployLabel} from './deploylabel';
 
 interface DeployLabelI {
   value: string;
@@ -56,23 +46,17 @@ export class DeployLabelComponent implements ControlValueAccessor {
   constructor(private readonly fb_: FormBuilder) {}
 
   ngOnInit(): void {
-    this.labelForm = this.fb_.group({ labels: this.fb_.array([]) });
+    this.labelForm = this.fb_.group({labels: this.fb_.array([])});
     this.labelForm.valueChanges.subscribe(v => {
       this.propagateChange(v);
     });
     for (let i = 0; i < this.labelArr.length; i++) {
-      this.addNewLabel(
-        this.labelArr[i].key,
-        this.labelArr[i].value,
-        this.labelArr[i].editable
-      );
+      this.addNewLabel(this.labelArr[i].key, this.labelArr[i].value, this.labelArr[i].editable);
     }
   }
 
-  validate(_: FormControl): { [key: string]: object } {
-    return this.labelForm.valid
-      ? null
-      : { labelValid: { value: this.labels.at(0).errors } };
+  validate(_: FormControl): {[key: string]: object} {
+    return this.labelForm.valid ? null : {labelValid: {value: this.labels.at(0).errors}};
   }
 
   get labels(): FormArray {
@@ -83,27 +67,25 @@ export class DeployLabelComponent implements ControlValueAccessor {
    * Adds row to labels list.
    */
   private addNewLabel(key = '', value = '', editable = true): void {
-    this.labels.push(
-      this.fb_.group({
-        key: [
-          { value: key, disabled: !editable },
-          Validators.compose([
-            FormValidators.labelKeyNameLength,
-            FormValidators.labelKeyNamePattern,
-            FormValidators.labelKeyPrefixLength,
-            FormValidators.labelKeyPrefixPattern,
-          ]),
-        ],
-        value: [
-          { value, disabled: !editable },
-          Validators.compose([
-            Validators.maxLength(253),
-            FormValidators.labelValuePattern,
-          ]),
-        ],
-        editable,
-      })
-    );
+    this.labels.push(this.fb_.group({
+      key: [
+        {value: key, disabled: !editable},
+        Validators.compose([
+          FormValidators.labelKeyNameLength,
+          FormValidators.labelKeyNamePattern,
+          FormValidators.labelKeyPrefixLength,
+          FormValidators.labelKeyPrefixPattern,
+        ]),
+      ],
+      value: [
+        {value, disabled: !editable},
+        Validators.compose([
+          Validators.maxLength(253),
+          FormValidators.labelValuePattern,
+        ]),
+      ],
+      editable,
+    }));
   }
 
   /**
@@ -130,11 +112,7 @@ export class DeployLabelComponent implements ControlValueAccessor {
     const lastKey = lastElement.get('key').value;
     const lastValue = lastElement.get('value').value;
 
-    return !!(
-      currentEditable &&
-      currentkey !== lastKey &&
-      currentValue !== lastValue
-    );
+    return !!(currentEditable && currentkey !== lastKey && currentValue !== lastValue);
   }
 
   /**
@@ -154,7 +132,7 @@ export class DeployLabelComponent implements ControlValueAccessor {
 
     const isUnique = !this.isKeyDuplicated(index);
 
-    elem.setErrors(isUnique ? null : { unique: true });
+    elem.setErrors(isUnique ? null : {unique: true});
     this.labelForm.updateValueAndValidity();
   }
 
@@ -194,21 +172,18 @@ export class DeployLabelComponent implements ControlValueAccessor {
    * Returns true if label key and value are not empty, false otherwise.
    */
   private isFilled(label: AbstractControl): boolean {
-    return (
-      label.get('key').value.length !== 0 &&
-      label.get('value').value.length !== 0
-    );
+    return (label.get('key').value.length !== 0 && label.get('value').value.length !== 0);
   }
 
-  propagateChange = (_: { labels: DeployLabel[] }) => {};
+  propagateChange = (_: {labels: DeployLabel[]}) => {};
 
   writeValue(labels: DeployLabelI[]): void {
     if (labels.length > 0) {
-      this.labels.at(labels[0].index).patchValue({ value: labels[0].value });
+      this.labels.at(labels[0].index).patchValue({value: labels[0].value});
     }
   }
 
-  registerOnChange(fn: (_: { labels: DeployLabel[] }) => void): void {
+  registerOnChange(fn: (_: {labels: DeployLabel[]}) => void): void {
     this.propagateChange = fn;
   }
   registerOnTouched(): void {}

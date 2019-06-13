@@ -12,31 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Injectable } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import {Injectable} from '@angular/core';
+import {Title} from '@angular/platform-browser';
 
-import { GlobalSettingsService } from './globalsettings';
+import {GlobalSettingsService} from './globalsettings';
 
 @Injectable()
 export class TitleService {
   clusterName = '';
 
-  constructor(
-    private readonly title_: Title,
-    private readonly settings_: GlobalSettingsService
-  ) {}
+  constructor(private readonly title_: Title, private readonly settings_: GlobalSettingsService) {}
 
   update(): void {
     this.settings_.load(
-      () => {
-        this.clusterName = this.settings_.getClusterName();
-        this.apply_();
-      },
-      () => {
-        this.clusterName = '';
-        this.apply_();
-      }
-    );
+        () => {
+          this.clusterName = this.settings_.getClusterName();
+          this.apply_();
+        },
+        () => {
+          this.clusterName = '';
+          this.apply_();
+        });
   }
 
   private apply_(): void {

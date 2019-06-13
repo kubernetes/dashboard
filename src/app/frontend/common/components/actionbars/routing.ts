@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { DefaultActionbar } from './default/component';
-import { LogsDefaultActionbar } from './logsdefault/component';
-import { LogsExecDefaultActionbar } from './logsexecdefault/component';
-import { LogsScaleDefaultActionbar } from './logsscaledefault/component';
-import { ScaleDefaultActionbar } from './scaledefault/component';
-import { TriggerDefaultActionbar } from './triggerdefault/component';
+import {DefaultActionbar} from './default/component';
+import {LogsDefaultActionbar} from './logsdefault/component';
+import {LogsExecDefaultActionbar} from './logsexecdefault/component';
+import {LogsScaleDefaultActionbar} from './logsscaledefault/component';
+import {ScaleDefaultActionbar} from './scaledefault/component';
+import {TriggerDefaultActionbar} from './triggerdefault/component';
 
 export const DEFAULT_ACTIONBAR = {
   path: '',

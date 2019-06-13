@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { ObjectMeta, TypeMeta } from '@api/backendapi';
+import {ObjectMeta, TypeMeta} from '@api/backendapi';
 
 export class RawResource {
   static getUrl(typeMeta: TypeMeta, objectMeta: ObjectMeta): string {

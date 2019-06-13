@@ -12,10 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'kd-daemon-set-list-state',
   template: '<kd-daemon-set-list></kd-daemon-set-list>',
 })
-export class DaemonSetListComponent {}
+export class DaemonSetListComponent {
+}

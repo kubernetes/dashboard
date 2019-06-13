@@ -12,18 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 
-import { ComponentsModule } from '../common/components/module';
-import { GuardsModule } from '../common/services/guard/module';
-import { SharedModule } from '../shared.module';
+import {ComponentsModule} from '../common/components/module';
+import {GuardsModule} from '../common/services/guard/module';
+import {SharedModule} from '../shared.module';
 
-import { ChromeComponent } from './component';
-import { NavModule } from './nav/module';
-import { NotificationsComponent } from './notifications/component';
-import { ChromeRoutingModule } from './routing';
-import { SearchComponent } from './search/component';
-import { UserPanelComponent } from './userpanel/component';
+import {ChromeComponent} from './component';
+import {NavModule} from './nav/module';
+import {NotificationsComponent} from './notifications/component';
+import {ChromeRoutingModule} from './routing';
+import {SearchComponent} from './search/component';
+import {UserPanelComponent} from './userpanel/component';
 
 @NgModule({
   imports: [
@@ -40,4 +40,5 @@ import { UserPanelComponent } from './userpanel/component';
     UserPanelComponent,
   ],
 })
-export class ChromeModule {}
+export class ChromeModule {
+}

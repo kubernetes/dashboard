@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { Metric } from '@api/backendapi';
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Metric} from '@api/backendapi';
 
-@Component({ selector: 'kd-graph-card', templateUrl: './template.html' })
+@Component({selector: 'kd-graph-card', templateUrl: './template.html'})
 export class GraphCardComponent implements OnChanges {
   @Input() graphTitle: string;
   @Input() graphInfo: string;
@@ -31,19 +31,14 @@ export class GraphCardComponent implements OnChanges {
   }
 
   private getSelectedMetrics(): Metric {
-    if (
-      !this.selectedMetricName ||
-      (this.metrics.length && this.metrics[0].dataPoints.length === 0)
-    ) {
+    if (!this.selectedMetricName ||
+        (this.metrics.length && this.metrics[0].dataPoints.length === 0)) {
       return null;
     }
 
     return (
-      this.metrics &&
-      this.metrics.filter(
-        metric => metric.metricName === this.selectedMetricName
-      )[0]
-    );
+        this.metrics &&
+        this.metrics.filter(metric => metric.metricName === this.selectedMetricName)[0]);
   }
 
   shouldShowGraph(): boolean {

@@ -12,36 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-} from '@angular/common/http/testing';
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import {
-  MatCardModule,
-  MatChipsModule,
-  MatDialogModule,
-  MatDividerModule,
-  MatIconModule,
-  MatTooltipModule,
-} from '@angular/material';
-import { By } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterModule } from '@angular/router';
-import { AppConfig, ObjectMeta } from '@api/backendapi';
-import { ChipsComponent } from 'common/components/chips/component';
+import {HttpClientTestingModule, HttpTestingController,} from '@angular/common/http/testing';
+import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {MatCardModule, MatChipsModule, MatDialogModule, MatDividerModule, MatIconModule, MatTooltipModule,} from '@angular/material';
+import {By} from '@angular/platform-browser';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {RouterModule} from '@angular/router';
+import {AppConfig, ObjectMeta} from '@api/backendapi';
+import {ChipsComponent} from 'common/components/chips/component';
 
-import { PipesModule } from '../../pipes/module';
-import { ConfigService } from '../../services/global/config';
-import { CardComponent } from '../card/component';
-import { PropertyComponent } from '../property/component';
+import {PipesModule} from '../../pipes/module';
+import {ConfigService} from '../../services/global/config';
+import {CardComponent} from '../card/component';
+import {PropertyComponent} from '../property/component';
 
-import { ObjectMetaComponent } from './component';
+import {ObjectMetaComponent} from './component';
 
 const miniName = 'my-mini-meta-name';
 
-@Component({ selector: 'test', templateUrl: './template.html' })
+@Component({selector: 'test', templateUrl: './template.html'})
 class TestComponent {
   initialized = true;
   objectMeta: ObjectMeta = {
@@ -64,30 +54,32 @@ describe('ObjectMetaComponent', () => {
   let configService: ConfigService;
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        ObjectMetaComponent,
-        TestComponent,
-        CardComponent,
-        PropertyComponent,
-        ChipsComponent,
-      ],
-      imports: [
-        MatIconModule,
-        MatCardModule,
-        MatDividerModule,
-        MatTooltipModule,
-        MatDialogModule,
-        MatChipsModule,
-        NoopAnimationsModule,
-        PipesModule,
-        HttpClientTestingModule,
-        MatIconModule,
-        RouterModule,
-      ],
-      providers: [ConfigService],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    }).compileComponents();
+    TestBed
+        .configureTestingModule({
+          declarations: [
+            ObjectMetaComponent,
+            TestComponent,
+            CardComponent,
+            PropertyComponent,
+            ChipsComponent,
+          ],
+          imports: [
+            MatIconModule,
+            MatCardModule,
+            MatDividerModule,
+            MatTooltipModule,
+            MatDialogModule,
+            MatChipsModule,
+            NoopAnimationsModule,
+            PipesModule,
+            HttpClientTestingModule,
+            MatIconModule,
+            RouterModule,
+          ],
+          providers: [ConfigService],
+          schemas: [CUSTOM_ELEMENTS_SCHEMA],
+        })
+        .compileComponents();
     httpMock = TestBed.get(HttpTestingController);
     configService = TestBed.get(ConfigService);
   }));
@@ -97,7 +89,7 @@ describe('ObjectMetaComponent', () => {
     fixture = TestBed.createComponent(TestComponent);
     component = fixture.componentInstance;
     const configRequest = httpMock.expectOne('config');
-    const config: AppConfig = { serverTime: new Date().getTime() };
+    const config: AppConfig = {serverTime: new Date().getTime()};
     configRequest.flush(config);
 
     // httpMock.verify();
@@ -109,9 +101,8 @@ describe('ObjectMetaComponent', () => {
     const card = fixture.debugElement.query(By.css('mat-card-title'));
     expect(card).toBeTruthy();
 
-    const metaName = fixture.debugElement.query(
-      By.css('kd-property.object-meta-name div.kd-property-value')
-    );
+    const metaName =
+        fixture.debugElement.query(By.css('kd-property.object-meta-name div.kd-property-value'));
     expect(metaName).toBeTruthy();
     expect(metaName.nativeElement.textContent === miniName);
   });

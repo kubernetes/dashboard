@@ -12,19 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { GraphCardComponent } from './component';
-import { Metric } from '@api/backendapi';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CardComponent } from '../card/component';
-import { GraphComponent } from '../graph/component';
-import { SharedModule } from '../../../shared.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { SimpleChange } from '@angular/core';
+import {SimpleChange} from '@angular/core';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {Metric} from '@api/backendapi';
+
+import {SharedModule} from '../../../shared.module';
+import {CardComponent} from '../card/component';
+import {GraphComponent} from '../graph/component';
+
+import {GraphCardComponent} from './component';
 
 const testMetrics: Metric[] = [
-  { dataPoints: [{ x: 1, y: 1 }], metricName: 'cpu/usage', aggregation: 'sum' },
+  {dataPoints: [{x: 1, y: 1}], metricName: 'cpu/usage', aggregation: 'sum'},
   {
-    dataPoints: [{ x: 1, y: 1 }],
+    dataPoints: [{x: 1, y: 1}],
     metricName: 'memory/usage',
     aggregation: 'sum',
   },
@@ -34,10 +36,12 @@ describe('GraphCardComponent', () => {
   let testHostFixture: ComponentFixture<GraphCardComponent>;
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [GraphCardComponent, GraphComponent, CardComponent],
-      imports: [SharedModule, NoopAnimationsModule],
-    }).compileComponents();
+    TestBed
+        .configureTestingModule({
+          declarations: [GraphCardComponent, GraphComponent, CardComponent],
+          imports: [SharedModule, NoopAnimationsModule],
+        })
+        .compileComponents();
   }));
 
   beforeEach(() => {

@@ -12,14 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { OnListChangeEvent } from '@api/frontendapi';
-import { ListGroupIdentifiers } from '../components/resourcelist/groupids';
+import {OnListChangeEvent} from '@api/frontendapi';
+import {ListGroupIdentifiers} from '../components/resourcelist/groupids';
 
 export class GroupedResourceList {
-  private readonly items_: { [id: string]: number } = {};
-  private readonly groupItems_: {
-    [groupId: string]: { [id: string]: number };
-  } = {
+  private readonly items_: {[id: string]: number} = {};
+  private readonly groupItems_: {[groupId: string]: {[id: string]: number};} = {
     [ListGroupIdentifiers.cluster]: {},
     [ListGroupIdentifiers.workloads]: {},
     [ListGroupIdentifiers.discovery]: {},

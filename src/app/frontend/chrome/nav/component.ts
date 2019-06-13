@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDrawer } from '@angular/material';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {MatDrawer} from '@angular/material';
 
-import { NavService } from '../../common/services/nav/service';
+import {NavService} from '../../common/services/nav/service';
 
 @Component({
   selector: 'kd-nav',
@@ -23,7 +23,7 @@ import { NavService } from '../../common/services/nav/service';
   styleUrls: ['./style.scss'],
 })
 export class NavComponent implements OnInit {
-  @ViewChild(MatDrawer, { static: true }) private readonly nav_: MatDrawer;
+  @ViewChild(MatDrawer, {static: true}) private readonly nav_: MatDrawer;
 
   constructor(private readonly navService_: NavService) {}
 

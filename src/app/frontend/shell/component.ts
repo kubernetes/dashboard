@@ -12,34 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
-import { MatSnackBar } from '@angular/material';
-import { ActivatedRoute } from '@angular/router';
-import {
-  PodContainerList,
-  ShellFrame,
-  SJSCloseEvent,
-  SJSMessageEvent,
-  TerminalResponse,
-} from '@api/backendapi';
-import { debounce } from 'lodash';
-import { ReplaySubject, Subject, Subscription } from 'rxjs';
-import { Terminal } from 'xterm';
-import { fit } from 'xterm/lib/addons/fit/fit';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild,} from '@angular/core';
+import {MatSnackBar} from '@angular/material';
+import {ActivatedRoute} from '@angular/router';
+import {PodContainerList, ShellFrame, SJSCloseEvent, SJSMessageEvent, TerminalResponse,} from '@api/backendapi';
+import {debounce} from 'lodash';
+import {ReplaySubject, Subject, Subscription} from 'rxjs';
+import {Terminal} from 'xterm';
+import {fit} from 'xterm/lib/addons/fit/fit';
 
-import {
-  EndpointManager,
-  Resource,
-} from '../common/services/resource/endpoint';
-import { NamespacedResourceService } from '../common/services/resource/resource';
+import {EndpointManager, Resource,} from '../common/services/resource/endpoint';
+import {NamespacedResourceService} from '../common/services/resource/resource';
 
 // tslint:disable-next-line:no-any
 declare let SockJS: any;
@@ -50,7 +33,7 @@ declare let SockJS: any;
   styleUrls: ['./styles.scss'],
 })
 export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild('anchor', { static: true }) anchorRef: ElementRef;
+  @ViewChild('anchor', {static: true}) anchorRef: ElementRef;
   term: Terminal;
   podName: string;
   selectedContainer: string;
@@ -69,12 +52,10 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
   private readonly incommingMessage$_ = new Subject<ShellFrame>();
 
   constructor(
-    private readonly containers_: NamespacedResourceService<PodContainerList>,
-    private readonly terminal_: NamespacedResourceService<TerminalResponse>,
-    private readonly activatedRoute_: ActivatedRoute,
-    private readonly matSnackBar_: MatSnackBar,
-    private readonly cdr_: ChangeDetectorRef
-  ) {}
+      private readonly containers_: NamespacedResourceService<PodContainerList>,
+      private readonly terminal_: NamespacedResourceService<TerminalResponse>,
+      private readonly activatedRoute_: ActivatedRoute, private readonly matSnackBar_: MatSnackBar,
+      private readonly cdr_: ChangeDetectorRef) {}
 
   onPodContainerChange(podContainer: string): void {
     this.selectedContainer = podContainer;
@@ -85,11 +66,8 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
     this.podName = this.activatedRoute_.snapshot.params.resourceName;
     this.selectedContainer = this.activatedRoute_.snapshot.params.containerName;
 
-    const containersEndpoint = this.endpoint_.child(
-      this.podName,
-      Resource.container,
-      this.namespace_
-    );
+    const containersEndpoint =
+        this.endpoint_.child(this.podName, Resource.container, this.namespace_);
 
     this.containers_.get(containersEndpoint).subscribe(containerList => {
       this.containers = containerList.containers;
@@ -117,11 +95,9 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
     this.debouncedFit_();
     window.addEventListener('resize', () => this.debouncedFit_());
 
-    this.subscriptions_.push(
-      this.connSubject_.subscribe(frame => {
-        this.handleConnectionMessage(frame);
-      })
-    );
+    this.subscriptions_.push(this.connSubject_.subscribe(frame => {
+      this.handleConnectionMessage(frame);
+    }));
 
     this.term.on('data', this.onTerminalSendString.bind(this));
     this.term.on('resize', this.onTerminalResize.bind(this));
@@ -155,25 +131,16 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private async setupConnection(): Promise<void> {
-    if (
-      !(
-        this.selectedContainer &&
-        this.podName &&
-        this.namespace_ &&
-        !this.connecting_
-      )
-    ) {
+    if (!(this.selectedContainer && this.podName && this.namespace_ && !this.connecting_)) {
       return;
     }
 
     this.connecting_ = true;
     this.connectionClosed_ = false;
 
-    const terminalSessionUrl =
-      this.endpoint_.child(this.podName, Resource.shell, this.namespace_) +
-      '/' +
-      this.selectedContainer;
-    const { id } = await this.terminal_.get(terminalSessionUrl).toPromise();
+    const terminalSessionUrl = this.endpoint_.child(this.podName, Resource.shell, this.namespace_) +
+        '/' + this.selectedContainer;
+    const {id} = await this.terminal_.get(terminalSessionUrl).toPromise();
 
     this.conn_ = new SockJS(`/api/sockjs?${id}`);
     this.conn_.onopen = this.onConnectionOpen.bind(this, id);
@@ -184,7 +151,7 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private onConnectionOpen(sessionId: string): void {
-    const startData = { Op: 'bind', SessionID: sessionId };
+    const startData = {Op: 'bind', SessionID: sessionId};
     this.conn_.send(JSON.stringify(startData));
     this.connSubject_.next(startData);
     this.connected_ = true;
@@ -205,7 +172,7 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     if (frame.Op === 'toast') {
-      this.matSnackBar_.open(frame.Data, null, { duration: 3000 });
+      this.matSnackBar_.open(frame.Data, null, {duration: 3000});
     }
 
     this.incommingMessage$_.next(frame);
@@ -225,33 +192,29 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
     this.connected_ = false;
     this.connecting_ = false;
     this.connectionClosed_ = true;
-    this.matSnackBar_.open(_evt.reason, null, { duration: 3000 });
+    this.matSnackBar_.open(_evt.reason, null, {duration: 3000});
 
     this.cdr_.markForCheck();
   }
 
   private onTerminalSendString(str: string): void {
     if (this.connected_) {
-      this.conn_.send(
-        JSON.stringify({
-          Op: 'stdin',
-          Data: str,
-          Cols: this.term.cols,
-          Rows: this.term.rows,
-        })
-      );
+      this.conn_.send(JSON.stringify({
+        Op: 'stdin',
+        Data: str,
+        Cols: this.term.cols,
+        Rows: this.term.rows,
+      }));
     }
   }
 
   private onTerminalResize(): void {
     if (this.connected_) {
-      this.conn_.send(
-        JSON.stringify({
-          Op: 'resize',
-          Cols: this.term.cols,
-          Rows: this.term.rows,
-        })
-      );
+      this.conn_.send(JSON.stringify({
+        Op: 'resize',
+        Cols: this.term.cols,
+        Rows: this.term.rows,
+      }));
     }
   }
 }

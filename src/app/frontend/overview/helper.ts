@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Status } from '@api/backendapi';
-import { RatioItem } from '@api/frontendapi';
+import {Status} from '@api/backendapi';
+import {RatioItem} from '@api/frontendapi';
 
 export enum ResourceRatioModes {
   Default = 'default',
@@ -22,11 +22,8 @@ export enum ResourceRatioModes {
 }
 
 export class Helper {
-  static getResourceRatio(
-    status: Status,
-    totalItems: number,
-    mode = ResourceRatioModes.Default
-  ): RatioItem[] {
+  static getResourceRatio(status: Status, totalItems: number, mode = ResourceRatioModes.Default):
+      RatioItem[] {
     if (totalItems === 0) {
       return [];
     }

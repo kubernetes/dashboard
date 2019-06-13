@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { NgModule } from '@angular/core';
-import { Route, RouterModule } from '@angular/router';
-import { DEFAULT_ACTIONBAR } from '../../../common/components/actionbars/routing';
+import {NgModule} from '@angular/core';
+import {Route, RouterModule} from '@angular/router';
+import {DEFAULT_ACTIONBAR} from '../../../common/components/actionbars/routing';
 
-import { CLUSTER_ROUTE } from '../routing';
+import {CLUSTER_ROUTE} from '../routing';
 
-import { NodeDetailComponent } from './detail/component';
-import { NodeListComponent } from './list/component';
+import {NodeDetailComponent} from './detail/component';
+import {NodeListComponent} from './list/component';
 
 const NODE_LIST_ROUTE: Route = {
   path: '',
@@ -49,4 +49,5 @@ const NODE_DETAIL_ROUTE: Route = {
   ],
   exports: [RouterModule],
 })
-export class NodeRoutingModule {}
+export class NodeRoutingModule {
+}

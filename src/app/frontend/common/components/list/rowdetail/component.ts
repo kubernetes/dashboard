@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Component } from '@angular/core';
-import { Event } from 'typings/backendapi';
+import {Component} from '@angular/core';
+import {Event} from 'typings/backendapi';
 
 @Component({
   selector: 'kd-row-detail',

@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { MatDialog } from '@angular/material';
-import { GlobalSettings } from '@api/backendapi';
-import { GlobalSettingsService } from '../../common/services/global/globalsettings';
-import { TitleService } from '../../common/services/global/title';
+import {Component, OnInit} from '@angular/core';
+import {NgForm} from '@angular/forms';
+import {MatDialog} from '@angular/material';
+import {GlobalSettings} from '@api/backendapi';
+import {GlobalSettingsService} from '../../common/services/global/globalsettings';
+import {TitleService} from '../../common/services/global/title';
 
-import { SaveAnywayDialog } from './saveanywaysdialog/dialog';
+import {SaveAnywayDialog} from './saveanywaysdialog/dialog';
 
-@Component({ selector: 'kd-global-settings', templateUrl: './template.html' })
+@Component({selector: 'kd-global-settings', templateUrl: './template.html'})
 export class GlobalSettingsComponent implements OnInit {
   // Keep it in sync with ConcurrentSettingsChangeError constant from the backend.
   private readonly concurrentChangeErr_ = 'settings changed since last reload';
@@ -29,10 +29,8 @@ export class GlobalSettingsComponent implements OnInit {
   hasLoadError = false;
 
   constructor(
-    private readonly settings_: GlobalSettingsService,
-    private readonly dialog_: MatDialog,
-    private readonly title_: TitleService
-  ) {}
+      private readonly settings_: GlobalSettingsService, private readonly dialog_: MatDialog,
+      private readonly title_: TitleService) {}
 
   ngOnInit(): void {
     this.load();
@@ -61,28 +59,27 @@ export class GlobalSettingsComponent implements OnInit {
   }
 
   save(form: NgForm): void {
-    this.settings_.save(this.settings).subscribe(
-      () => {
-        this.load(form);
-        this.title_.update();
-      },
-      err => {
-        if (err && err.data.indexOf(this.concurrentChangeErr_) !== -1) {
-          this.dialog_
-            .open(SaveAnywayDialog, { width: '420px' })
-            .afterClosed()
-            .subscribe(result => {
-              if (result === true) {
-                // Backend was refreshed with the PUT request, so the second try will be
-                // successful unless yet another concurrent change will happen. In that case
-                // "save anyways" dialog will be shown again.
-                this.save(form);
-              } else {
-                this.load(form);
+    this.settings_.save(this.settings)
+        .subscribe(
+            () => {
+              this.load(form);
+              this.title_.update();
+            },
+            err => {
+              if (err && err.data.indexOf(this.concurrentChangeErr_) !== -1) {
+                this.dialog_.open(SaveAnywayDialog, {width: '420px'})
+                    .afterClosed()
+                    .subscribe(result => {
+                      if (result === true) {
+                        // Backend was refreshed with the PUT request, so the second try will be
+                        // successful unless yet another concurrent change will happen. In that case
+                        // "save anyways" dialog will be shown again.
+                        this.save(form);
+                      } else {
+                        this.load(form);
+                      }
+                    });
               }
             });
-        }
-      }
-    );
   }
 }

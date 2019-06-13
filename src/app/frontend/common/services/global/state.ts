@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { EventEmitter, Injectable } from '@angular/core';
-import { Event, NavigationEnd, NavigationStart, Router } from '@angular/router';
+import {EventEmitter, Injectable} from '@angular/core';
+import {Event, NavigationEnd, NavigationStart, Router} from '@angular/router';
 
 @Injectable()
 export class KdStateService {
@@ -32,12 +32,8 @@ export class KdStateService {
     });
   }
 
-  href(
-    stateName: string,
-    resourceName?: string,
-    namespace?: string,
-    resourceType?: string
-  ): string {
+  href(stateName: string, resourceName?: string, namespace?: string, resourceType?: string):
+      string {
     resourceName = resourceName || '';
     namespace = namespace || '';
     resourceType = resourceType || '';

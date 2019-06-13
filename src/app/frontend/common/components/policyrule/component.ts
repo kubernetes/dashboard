@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Component, Input, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
-import { PolicyRule } from 'typings/backendapi';
+import {Component, Input, OnInit} from '@angular/core';
+import {MatTableDataSource} from '@angular/material';
+import {PolicyRule} from 'typings/backendapi';
 
 @Component({
   selector: 'kd-policy-rule-list',
