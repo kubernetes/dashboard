@@ -18,6 +18,7 @@ import {Component, ElementRef, OnInit} from '@angular/core';
 import {LocalSettingsService} from './common/services/global/localsettings';
 import {ThemeService} from './common/services/global/theme';
 import {TitleService} from './common/services/global/title';
+import {PluginsConfigProvider} from "./common/services/pluginloader/pluginsconfig.provider";
 
 enum Themes {
   Light = 'kd-light-theme',

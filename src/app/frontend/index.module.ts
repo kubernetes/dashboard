@@ -24,6 +24,7 @@ import {ErrorModule} from './error/module';
 import {RootComponent} from './index.component';
 import {routes} from './index.routing';
 import {LoginModule} from './login/module';
+import {PluginsConfigProvider} from "./common/services/pluginloader/pluginsconfig.provider";
 
 @NgModule({
   imports: [
@@ -35,7 +36,7 @@ import {LoginModule} from './login/module';
     LoginModule,
     RouterModule.forRoot(routes, {enableTracing: false}),
   ],
-  providers: [{provide: ErrorHandler, useClass: GlobalErrorHandler}],
+  providers: [{provide: ErrorHandler, useClass: GlobalErrorHandler}, PluginsConfigProvider],
   declarations: [RootComponent],
   bootstrap: [RootComponent],
 })

@@ -25,10 +25,8 @@ export class PluginsConfigProvider {
   }
 
   loadConfig() {
-    const val = this.http_.get<PluginsConfig>(
-      `${this.baseUrl}/static/plugins-config.json`
+    return this.http_.get<PluginsConfig>(
+      `${this.baseUrl}/static/plugins.json`
     );
-    console.log(val);
-    return val;
   }
 }
