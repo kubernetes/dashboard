@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {
   NamespacedResourceService
 } from "./resource";
-import {PodList} from "./backendapi";
+import {PodList} from "./typings/backendapi";
 
 @Injectable({
   providedIn: 'root',

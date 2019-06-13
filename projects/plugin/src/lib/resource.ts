@@ -9,6 +9,11 @@ export abstract class ResourceBase<T> {
 }
 
 @Injectable()
+export abstract class ResourceService<T> extends ResourceBase<T> {
+  abstract get(endpoint: string, name?: string, params?: HttpParams): Observable<T>;
+}
+
+@Injectable()
 export abstract class NamespacedResourceService<T> extends ResourceBase<T> {
   abstract get(endpoint: string, name?: string, namespace?: string, params?: HttpParams): Observable<T>;
 }
