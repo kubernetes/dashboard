@@ -53,19 +53,19 @@ export class LoginComponent implements OnInit {
   constructor(
     private readonly authService_: AuthService,
     private readonly state_: Router,
-    private readonly httpClient: HttpClient,
+    private readonly http_: HttpClient,
     private readonly ngZone_: NgZone,
     private readonly route_: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.httpClient
+    this.http_
       .get<EnabledAuthenticationModes>('api/v1/login/modes')
       .subscribe((enabledModes: EnabledAuthenticationModes) => {
         this.enabledAuthenticationModes_ = enabledModes.modes;
       });
 
-    this.httpClient
+    this.http_
       .get<LoginSkippableResponse>('api/v1/login/skippable')
       .subscribe((loginSkippableResponse: LoginSkippableResponse) => {
         this.isLoginSkippable_ = loginSkippableResponse.skippable;
