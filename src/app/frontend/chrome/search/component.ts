@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { SEARCH_QUERY_STATE_PARAM } from '../../common/params/params';
-import { ParamsService } from '../../common/services/global/params';
+import {Component, OnInit} from '@angular/core';
+import {NgForm} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {SEARCH_QUERY_STATE_PARAM} from '../../common/params/params';
+import {ParamsService} from '../../common/services/global/params';
 
 @Component({
   selector: 'kd-search',
@@ -27,10 +27,8 @@ export class SearchComponent implements OnInit {
   query: string;
 
   constructor(
-    private readonly router_: Router,
-    private readonly activatedRoute_: ActivatedRoute,
-    private readonly paramsService_: ParamsService
-  ) {}
+      private readonly router_: Router, private readonly activatedRoute_: ActivatedRoute,
+      private readonly paramsService_: ParamsService) {}
 
   ngOnInit(): void {
     this.activatedRoute_.queryParamMap.subscribe(paramMap => {
@@ -43,7 +41,7 @@ export class SearchComponent implements OnInit {
     if (form.valid) {
       this.router_.navigate(['search'], {
         queryParamsHandling: 'merge',
-        queryParams: { [SEARCH_QUERY_STATE_PARAM]: this.query },
+        queryParams: {[SEARCH_QUERY_STATE_PARAM]: this.query},
       });
     }
   }

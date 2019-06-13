@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { HttpErrorResponse } from '@angular/common/http';
-import { ErrStatus, K8sError as K8SApiError } from '@api/backendapi';
-import { KdError as KdApiError } from '@api/frontendapi';
+import {HttpErrorResponse} from '@angular/common/http';
+import {ErrStatus, K8sError as K8SApiError} from '@api/backendapi';
+import {KdError as KdApiError} from '@api/frontendapi';
 
 export enum ApiError {
   tokenExpired = 'MSG_TOKEN_EXPIRED_ERROR',
@@ -34,14 +34,11 @@ export enum ErrorCode {
   internal = 500,
 }
 
-const localizedErrors: { [key: string]: string } = {
-  MSG_TOKEN_EXPIRED_ERROR:
-    'You have been logged out because your token have expired.',
-  MSG_ENCRYPTION_KEY_CHANGED:
-    'You have been logged out because your token is invalid.',
+const localizedErrors: {[key: string]: string} = {
+  MSG_TOKEN_EXPIRED_ERROR: 'You have been logged out because your token have expired.',
+  MSG_ENCRYPTION_KEY_CHANGED: 'You have been logged out because your token is invalid.',
   MSG_ACCESS_DENIED: 'Access denied.',
-  MSG_DASHBOARD_EXCLUSIVE_RESOURCE_ERROR:
-    'Trying to access/modify dashboard exclusive resource.',
+  MSG_DASHBOARD_EXCLUSIVE_RESOURCE_ERROR: 'Trying to access/modify dashboard exclusive resource.',
 };
 
 /**
@@ -52,11 +49,7 @@ export class K8SError implements K8SApiError {
   ErrStatus: ErrStatus;
 
   toKdError(): KdError {
-    return new KdError(
-      this.ErrStatus.status,
-      this.ErrStatus.code,
-      this.ErrStatus.message
-    );
+    return new KdError(this.ErrStatus.status, this.ErrStatus.code, this.ErrStatus.message);
   }
 }
 /* tslint:enable */
@@ -65,11 +58,7 @@ export class K8SError implements K8SApiError {
  * Frontend specific errors or errors transformed based on server response.
  */
 export class KdError implements KdApiError {
-  constructor(
-    public status: string,
-    public code: number,
-    public message: string
-  ) {}
+  constructor(public status: string, public code: number, public message: string) {}
 
   static isError(error: HttpErrorResponse, ...apiErrors: string[]): boolean {
     // API errors will set 'error' as a string.
@@ -128,9 +117,6 @@ export function AsKdError(error: HttpErrorResponse): KdError {
 }
 
 export const ERRORS = {
-  forbidden: new KdError(
-    ErrorStatus.forbidden,
-    ErrorCode.forbidden,
-    localizedErrors.MSG_ACCESS_DENIED
-  ),
+  forbidden:
+      new KdError(ErrorStatus.forbidden, ErrorCode.forbidden, localizedErrors.MSG_ACCESS_DENIED),
 };

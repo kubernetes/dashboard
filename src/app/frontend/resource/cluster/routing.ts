@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { NgModule } from '@angular/core';
-import { Route, RouterModule } from '@angular/router';
-import { ClusterComponent } from './component';
+import {NgModule} from '@angular/core';
+import {Route, RouterModule} from '@angular/router';
+import {ClusterComponent} from './component';
 
 export const CLUSTER_ROUTE: Route = {
   path: '',
@@ -29,4 +29,5 @@ export const CLUSTER_ROUTE: Route = {
   imports: [RouterModule.forChild([CLUSTER_ROUTE])],
   exports: [RouterModule],
 })
-export class ClusterRoutingModule {}
+export class ClusterRoutingModule {
+}

@@ -12,19 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { KdStateService } from './state';
+import {Injectable} from '@angular/core';
+import {Router} from '@angular/router';
+import {KdStateService} from './state';
 
 @Injectable()
 export class HistoryService {
   private previousStateName: string;
   // private previousStateParams: RawParams;
 
-  constructor(
-    private readonly router_: Router,
-    private readonly kdState_: KdStateService
-  ) {
+  constructor(private readonly router_: Router, private readonly kdState_: KdStateService) {
     this.init();
   }
 
@@ -46,6 +43,6 @@ export class HistoryService {
     // if (this.state_.current.name === this.previousStateName) {
     //   targetState = defaultState;
     // }
-    return this.router_.navigate([defaultState], { queryParams: undefined });
+    return this.router_.navigate([defaultState], {queryParams: undefined});
   }
 }

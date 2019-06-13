@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Component, OnInit } from '@angular/core';
-import { LoginStatus } from '@api/backendapi';
-import { AuthService } from '../../common/services/global/authentication';
+import {Component, OnInit} from '@angular/core';
+import {LoginStatus} from '@api/backendapi';
+import {AuthService} from '../../common/services/global/authentication';
 
 @Component({
   selector: 'kd-user-panel',
@@ -39,18 +39,12 @@ export class UserPanelComponent implements OnInit {
 
   isAuthSkipped(): boolean {
     return (
-      this.loginStatus &&
-      !this.authService_.isLoginPageEnabled() &&
-      !this.loginStatus.headerPresent
-    );
+        this.loginStatus && !this.authService_.isLoginPageEnabled() &&
+        !this.loginStatus.headerPresent);
   }
 
   isLoggedIn(): boolean {
-    return (
-      this.loginStatus &&
-      !this.loginStatus.headerPresent &&
-      this.loginStatus.tokenPresent
-    );
+    return (this.loginStatus && !this.loginStatus.headerPresent && this.loginStatus.tokenPresent);
   }
 
   isAuthEnabled(): boolean {

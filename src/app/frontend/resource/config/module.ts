@@ -12,16 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 
-import { ComponentsModule } from '../../common/components/module';
-import { SharedModule } from '../../shared.module';
+import {ComponentsModule} from '../../common/components/module';
+import {SharedModule} from '../../shared.module';
 
-import { ConfigComponent } from './component';
-import { ConfigRoutingModule } from './routing';
+import {ConfigComponent} from './component';
+import {ConfigRoutingModule} from './routing';
 
 @NgModule({
   imports: [SharedModule, ComponentsModule, ConfigRoutingModule],
   declarations: [ConfigComponent],
 })
-export class ConfigModule {}
+export class ConfigModule {
+}

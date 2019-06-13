@@ -12,59 +12,42 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { HttpParams } from '@angular/common/http';
-import { Component, ComponentFactoryResolver, Input } from '@angular/core';
-import { DaemonSet, DaemonSetList, Event } from '@api/backendapi';
-import { Observable } from 'rxjs/Observable';
+import {HttpParams} from '@angular/common/http';
+import {Component, ComponentFactoryResolver, Input} from '@angular/core';
+import {DaemonSet, DaemonSetList, Event} from '@api/backendapi';
+import {Observable} from 'rxjs/Observable';
 
-import { ResourceListWithStatuses } from '../../../resources/list';
-import { NotificationsService } from '../../../services/global/notifications';
-import { EndpointManager, Resource } from '../../../services/resource/endpoint';
-import { NamespacedResourceService } from '../../../services/resource/resource';
-import { MenuComponent } from '../../list/column/menu/component';
-import { ListGroupIdentifiers, ListIdentifiers } from '../groupids';
+import {ResourceListWithStatuses} from '../../../resources/list';
+import {NotificationsService} from '../../../services/global/notifications';
+import {EndpointManager, Resource} from '../../../services/resource/endpoint';
+import {NamespacedResourceService} from '../../../services/resource/resource';
+import {MenuComponent} from '../../list/column/menu/component';
+import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
 
 @Component({
   selector: 'kd-daemon-set-list',
   templateUrl: './template.html',
 })
-export class DaemonSetListComponent extends ResourceListWithStatuses<
-  DaemonSetList,
-  DaemonSet
-> {
+export class DaemonSetListComponent extends ResourceListWithStatuses<DaemonSetList, DaemonSet> {
   @Input() endpoint = EndpointManager.resource(Resource.daemonSet, true).list();
 
   constructor(
-    private readonly daemonSet_: NamespacedResourceService<DaemonSetList>,
-    resolver: ComponentFactoryResolver,
-    notifications: NotificationsService
-  ) {
+      private readonly daemonSet_: NamespacedResourceService<DaemonSetList>,
+      resolver: ComponentFactoryResolver, notifications: NotificationsService) {
     super('daemonset', notifications, resolver);
     this.id = ListIdentifiers.daemonSet;
     this.groupId = ListGroupIdentifiers.workloads;
 
     // Register status icon handlers
-    this.registerBinding(
-      this.icon.checkCircle,
-      'kd-success',
-      this.isInSuccessState
-    );
-    this.registerBinding(
-      this.icon.timelapse,
-      'kd-muted',
-      this.isInPendingState
-    );
+    this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);
+    this.registerBinding(this.icon.timelapse, 'kd-muted', this.isInPendingState);
     this.registerBinding(this.icon.error, 'kd-error', this.isInErrorState);
 
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
 
     // Register dynamic columns.
-    this.registerDynamicColumn(
-      'namespace',
-      'name',
-      this.shouldShowNamespaceColumn_.bind(this)
-    );
+    this.registerDynamicColumn('namespace', 'name', this.shouldShowNamespaceColumn_.bind(this));
   }
 
   getResourceObservable(params?: HttpParams): Observable<DaemonSetList> {
@@ -80,15 +63,11 @@ export class DaemonSetListComponent extends ResourceListWithStatuses<
   }
 
   isInPendingState(resource: DaemonSet): boolean {
-    return (
-      resource.podInfo.warnings.length === 0 && resource.podInfo.pending > 0
-    );
+    return (resource.podInfo.warnings.length === 0 && resource.podInfo.pending > 0);
   }
 
   isInSuccessState(resource: DaemonSet): boolean {
-    return (
-      resource.podInfo.warnings.length === 0 && resource.podInfo.pending === 0
-    );
+    return (resource.podInfo.warnings.length === 0 && resource.podInfo.pending === 0);
   }
 
   hasErrors(daemonSet: DaemonSet): boolean {

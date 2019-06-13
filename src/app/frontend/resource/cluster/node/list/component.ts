@@ -12,10 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'kd-node-list-state',
   template: '<kd-node-list></kd-node-list>',
 })
-export class NodeListComponent {}
+export class NodeListComponent {
+}

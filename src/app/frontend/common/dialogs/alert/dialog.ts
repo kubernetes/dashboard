@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import {Component, Inject} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 
 export interface AlertDialogConfig {
   title: string;
@@ -27,9 +27,8 @@ export interface AlertDialogConfig {
 })
 export class AlertDialog {
   constructor(
-    public dialogRef: MatDialogRef<AlertDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: AlertDialogConfig
-  ) {}
+      public dialogRef: MatDialogRef<AlertDialog>,
+      @Inject(MAT_DIALOG_DATA) public data: AlertDialogConfig) {}
 
   onNoClick(): void {
     this.dialogRef.close();

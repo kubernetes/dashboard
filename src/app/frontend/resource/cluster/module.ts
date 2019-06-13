@@ -12,15 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 
-import { ComponentsModule } from '../../common/components/module';
-import { SharedModule } from '../../shared.module';
-import { ClusterComponent } from './component';
-import { ClusterRoutingModule } from './routing';
+import {ComponentsModule} from '../../common/components/module';
+import {SharedModule} from '../../shared.module';
+import {ClusterComponent} from './component';
+import {ClusterRoutingModule} from './routing';
 
 @NgModule({
   imports: [SharedModule, ComponentsModule, ClusterRoutingModule],
   declarations: [ClusterComponent],
 })
-export class ClusterModule {}
+export class ClusterModule {
+}

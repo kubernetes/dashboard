@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Component, Input } from '@angular/core';
-import { MetricResult } from '@api/backendapi';
+import {Component, Input} from '@angular/core';
+import {MetricResult} from '@api/backendapi';
 
 @Component({
   selector: 'kd-sparkline',
@@ -24,10 +24,7 @@ export class SparklineComponent {
   @Input() timeseries: MetricResult[];
 
   getPolygonPoints(): string {
-    const series = this.timeseries.map(({ timestamp, value }) => [
-      Date.parse(timestamp),
-      value,
-    ]);
+    const series = this.timeseries.map(({timestamp, value}) => [Date.parse(timestamp), value, ]);
     const sorted = series.slice().sort((a, b) => a[0] - b[0]);
     const xShift = Math.min(...sorted.map(pt => pt[0]));
     const shifted = sorted.map(([x, y]) => [x - xShift, y]);

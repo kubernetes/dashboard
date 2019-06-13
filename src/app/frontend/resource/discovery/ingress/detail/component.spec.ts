@@ -12,38 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-} from '@angular/common/http/testing';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import {
-  MatCardModule,
-  MatChipsModule,
-  MatDialogModule,
-  MatDividerModule,
-  MatIconModule,
-  MatTooltip,
-  MatTooltipModule,
-} from '@angular/material';
-import { By } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterModule } from '@angular/router';
-import { AppConfig, IngressDetail, ObjectMeta } from '@api/backendapi';
-import { CardComponent } from 'common/components/card/component';
-import { ChipsComponent } from 'common/components/chips/component';
-import { ObjectMetaComponent } from 'common/components/objectmeta/component';
-import { PropertyComponent } from 'common/components/property/component';
-import { PipesModule } from 'common/pipes/module';
-import { ConfigService } from 'common/services/global/config';
+import {HttpClientTestingModule, HttpTestingController,} from '@angular/common/http/testing';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement} from '@angular/core';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {MatCardModule, MatChipsModule, MatDialogModule, MatDividerModule, MatIconModule, MatTooltip, MatTooltipModule,} from '@angular/material';
+import {By} from '@angular/platform-browser';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {RouterModule} from '@angular/router';
+import {AppConfig, IngressDetail, ObjectMeta} from '@api/backendapi';
+import {CardComponent} from 'common/components/card/component';
+import {ChipsComponent} from 'common/components/chips/component';
+import {ObjectMetaComponent} from 'common/components/objectmeta/component';
+import {PropertyComponent} from 'common/components/property/component';
+import {PipesModule} from 'common/pipes/module';
+import {ConfigService} from 'common/services/global/config';
 
-import { IngressDetailComponent } from './component';
+import {IngressDetailComponent} from './component';
 
 const miniName = 'my-mini-ingress';
 const maxiName = 'my-maxi-ingress';
 
-@Component({ selector: 'test', templateUrl: './template.html' })
+@Component({selector: 'test', templateUrl: './template.html'})
 class MiniTestComponent {
   isInitialized = true;
   ingress: IngressDetail = {
@@ -53,12 +42,12 @@ class MiniTestComponent {
       labels: {},
       creationTimestamp: '2018-05-18T22:27:42Z',
     },
-    typeMeta: { kind: 'Ingress' },
+    typeMeta: {kind: 'Ingress'},
     errors: [],
   };
 }
 
-@Component({ selector: 'test', templateUrl: './template.html' })
+@Component({selector: 'test', templateUrl: './template.html'})
 class MaxiTestComponent {
   isInitialized = true;
   ingress: IngressDetail = {
@@ -73,7 +62,7 @@ class MaxiTestComponent {
       },
       creationTimestamp: '2018-05-18T22:27:42Z',
     },
-    typeMeta: { kind: 'Ingress' },
+    typeMeta: {kind: 'Ingress'},
     errors: [],
   };
 }
@@ -83,32 +72,34 @@ describe('IngressDetailComponent', () => {
   let configService: ConfigService;
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        ObjectMetaComponent,
-        MaxiTestComponent,
-        MiniTestComponent,
-        CardComponent,
-        PropertyComponent,
-        ChipsComponent,
-        IngressDetailComponent,
-      ],
-      imports: [
-        MatIconModule,
-        MatCardModule,
-        MatDividerModule,
-        MatTooltipModule,
-        MatDialogModule,
-        MatChipsModule,
-        NoopAnimationsModule,
-        PipesModule,
-        HttpClientTestingModule,
-        MatIconModule,
-        RouterModule,
-      ],
-      providers: [ConfigService],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    }).compileComponents();
+    TestBed
+        .configureTestingModule({
+          declarations: [
+            ObjectMetaComponent,
+            MaxiTestComponent,
+            MiniTestComponent,
+            CardComponent,
+            PropertyComponent,
+            ChipsComponent,
+            IngressDetailComponent,
+          ],
+          imports: [
+            MatIconModule,
+            MatCardModule,
+            MatDividerModule,
+            MatTooltipModule,
+            MatDialogModule,
+            MatChipsModule,
+            NoopAnimationsModule,
+            PipesModule,
+            HttpClientTestingModule,
+            MatIconModule,
+            RouterModule,
+          ],
+          providers: [ConfigService],
+          schemas: [CUSTOM_ELEMENTS_SCHEMA],
+        })
+        .compileComponents();
     httpMock = TestBed.get(HttpTestingController);
     configService = TestBed.get(ConfigService);
   }));
@@ -116,7 +107,7 @@ describe('IngressDetailComponent', () => {
   beforeEach(() => {
     configService.init();
     const configRequest = httpMock.expectOne('config');
-    const config: AppConfig = { serverTime: new Date().getTime() };
+    const config: AppConfig = {serverTime: new Date().getTime()};
     configRequest.flush(config);
 
     // httpMock.verify();
@@ -128,8 +119,7 @@ describe('IngressDetailComponent', () => {
 
     fixture.detectChanges();
     const debugElement = fixture.debugElement.query(
-      By.css('kd-property.object-meta-name div.kd-property-value div')
-    );
+        By.css('kd-property.object-meta-name div.kd-property-value div'));
     expect(debugElement).toBeTruthy();
 
     const htmlElement = debugElement.nativeElement;
@@ -142,8 +132,7 @@ describe('IngressDetailComponent', () => {
 
     fixture.detectChanges();
     const debugElement = fixture.debugElement.query(
-      By.css('kd-property.object-meta-name div.kd-property-value div')
-    );
+        By.css('kd-property.object-meta-name div.kd-property-value div'));
     expect(debugElement).toBeTruthy();
 
     const htmlElement = debugElement.nativeElement;

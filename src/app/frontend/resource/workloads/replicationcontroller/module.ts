@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { NgModule } from '@angular/core';
-import { ComponentsModule } from '../../../common/components/module';
+import {NgModule} from '@angular/core';
+import {ComponentsModule} from '../../../common/components/module';
 
-import { SharedModule } from '../../../shared.module';
-import { ReplicationControllerDetailComponent } from '../replicationcontroller/detail/component';
-import { ReplicationControllerListComponent } from './list/component';
-import { ReplicationControllerRoutingModule } from './routing';
+import {SharedModule} from '../../../shared.module';
+import {ReplicationControllerDetailComponent} from '../replicationcontroller/detail/component';
+import {ReplicationControllerListComponent} from './list/component';
+import {ReplicationControllerRoutingModule} from './routing';
 
 @NgModule({
   imports: [SharedModule, ComponentsModule, ReplicationControllerRoutingModule],
@@ -27,4 +27,5 @@ import { ReplicationControllerRoutingModule } from './routing';
     ReplicationControllerDetailComponent,
   ],
 })
-export class ReplicationControllerModule {}
+export class ReplicationControllerModule {
+}

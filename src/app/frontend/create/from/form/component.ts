@@ -12,36 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import {
-  AbstractControl,
-  FormArray,
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { MatDialog } from '@angular/material';
-import { ActivatedRoute } from '@angular/router';
-import {
-  AppDeploymentSpec,
-  EnvironmentVariable,
-  Namespace,
-  NamespaceList,
-  PortMapping,
-  Protocols,
-  SecretList,
-} from '@api/backendapi';
+import {HttpClient} from '@angular/common/http';
+import {Component, OnInit} from '@angular/core';
+import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators,} from '@angular/forms';
+import {MatDialog} from '@angular/material';
+import {ActivatedRoute} from '@angular/router';
+import {AppDeploymentSpec, EnvironmentVariable, Namespace, NamespaceList, PortMapping, Protocols, SecretList,} from '@api/backendapi';
 
-import { CreateService } from '../../../common/services/create/service';
-import { HistoryService } from '../../../common/services/global/history';
-import { NamespaceService } from '../../../common/services/global/namespace';
+import {CreateService} from '../../../common/services/create/service';
+import {HistoryService} from '../../../common/services/global/history';
+import {NamespaceService} from '../../../common/services/global/namespace';
 
-import { CreateNamespaceDialog } from './createnamespace/dialog';
-import { CreateSecretDialog } from './createsecret/dialog';
-import { DeployLabel } from './deploylabel/deploylabel';
-import { validateUniqueName } from './validator/uniquename.validator';
-import { FormValidators } from './validator/validators';
+import {CreateNamespaceDialog} from './createnamespace/dialog';
+import {CreateSecretDialog} from './createsecret/dialog';
+import {DeployLabel} from './deploylabel/deploylabel';
+import {validateUniqueName} from './validator/uniquename.validator';
+import {FormValidators} from './validator/validators';
 
 // Label keys for predefined labels
 const APP_LABEL_KEY = 'k8s-app';
@@ -64,14 +50,10 @@ export class CreateFromFormComponent implements OnInit {
   form: FormGroup;
 
   constructor(
-    private readonly namespace_: NamespaceService,
-    private readonly create_: CreateService,
-    private readonly history_: HistoryService,
-    private readonly http_: HttpClient,
-    private readonly route_: ActivatedRoute,
-    private readonly fb_: FormBuilder,
-    private readonly dialog_: MatDialog
-  ) {}
+      private readonly namespace_: NamespaceService, private readonly create_: CreateService,
+      private readonly history_: HistoryService, private readonly http_: HttpClient,
+      private readonly route_: ActivatedRoute, private readonly fb_: FormBuilder,
+      private readonly dialog_: MatDialog) {}
 
   ngOnInit(): void {
     this.form = this.fb_.group({
@@ -111,7 +93,7 @@ export class CreateFromFormComponent implements OnInit {
     ];
     this.name.valueChanges.subscribe(v => {
       this.labelArr[0].value = v;
-      this.labels.patchValue([{ index: 0, value: v }]);
+      this.labels.patchValue([{index: 0, value: v}]);
     });
     this.namespace.valueChanges.subscribe((namespace: string) => {
       this.name.clearAsyncValidators();
@@ -119,20 +101,14 @@ export class CreateFromFormComponent implements OnInit {
       this.name.updateValueAndValidity();
     });
     this.http_.get('api/v1/namespace').subscribe((result: NamespaceList) => {
-      this.namespaces = result.namespaces.map(
-        (namespace: Namespace) => namespace.objectMeta.name
-      );
+      this.namespaces = result.namespaces.map((namespace: Namespace) => namespace.objectMeta.name);
       this.namespace.patchValue(
-        !this.namespace_.areMultipleNamespacesSelected()
-          ? this.route_.snapshot.params.namespace || this.namespaces[0]
-          : this.namespaces[0]
-      );
+          !this.namespace_.areMultipleNamespacesSelected() ?
+              this.route_.snapshot.params.namespace || this.namespaces[0] :
+              this.namespaces[0]);
     });
-    this.http_
-      .get('api/v1/appdeployment/protocols')
-      .subscribe(
-        (protocols: Protocols) => (this.protocols = protocols.protocols)
-      );
+    this.http_.get('api/v1/appdeployment/protocols')
+        .subscribe((protocols: Protocols) => (this.protocols = protocols.protocols));
   }
 
   get name(): AbstractControl {
@@ -204,11 +180,9 @@ export class CreateFromFormComponent implements OnInit {
   }
 
   getSecrets(): void {
-    this.http_
-      .get(`api/v1/secret/${this.namespace.value}`)
-      .subscribe((result: SecretList) => {
-        this.secrets = result.secrets.map(secret => secret.objectMeta.name);
-      });
+    this.http_.get(`api/v1/secret/${this.namespace.value}`).subscribe((result: SecretList) => {
+      this.secrets = result.secrets.map(secret => secret.objectMeta.name);
+    });
   }
 
   cancel(): void {
@@ -235,44 +209,38 @@ export class CreateFromFormComponent implements OnInit {
   }
 
   handleNamespaceDialog(): void {
-    const dialogData = { data: { namespaces: this.namespaces } };
+    const dialogData = {data: {namespaces: this.namespaces}};
     const dialogDef = this.dialog_.open(CreateNamespaceDialog, dialogData);
-    dialogDef
-      .afterClosed()
-      .take(1)
-      .subscribe(answer => {
-        /**
-         * Handles namespace dialog result. If namespace was created successfully then it
-         * will be selected, otherwise first namespace will be selected.
-         */
-        if (answer) {
-          this.namespaces.push(answer);
-          this.namespace.patchValue(answer);
-        } else {
-          this.namespace.patchValue(this.namespaces[0]);
-        }
-      });
+    dialogDef.afterClosed().take(1).subscribe(answer => {
+      /**
+       * Handles namespace dialog result. If namespace was created successfully then it
+       * will be selected, otherwise first namespace will be selected.
+       */
+      if (answer) {
+        this.namespaces.push(answer);
+        this.namespace.patchValue(answer);
+      } else {
+        this.namespace.patchValue(this.namespaces[0]);
+      }
+    });
   }
 
   handleCreateSecretDialog(): void {
-    const dialogData = { data: { namespace: this.namespace.value } };
+    const dialogData = {data: {namespace: this.namespace.value}};
     const dialogDef = this.dialog_.open(CreateSecretDialog, dialogData);
-    dialogDef
-      .afterClosed()
-      .take(1)
-      .subscribe(response => {
-        /**
-         * Handles create secret dialog result. If the secret was created successfully, then it
-         * will be selected,
-         * otherwise None is selected.
-         */
-        if (response) {
-          this.secrets.push(response);
-          this.imagePullSecret.patchValue(response);
-        } else {
-          this.imagePullSecret.patchValue('');
-        }
-      });
+    dialogDef.afterClosed().take(1).subscribe(response => {
+      /**
+       * Handles create secret dialog result. If the secret was created successfully, then it
+       * will be selected,
+       * otherwise None is selected.
+       */
+      if (response) {
+        this.secrets.push(response);
+        this.imagePullSecret.patchValue(response);
+      } else {
+        this.imagePullSecret.patchValue('');
+      }
+    });
   }
 
   /**
@@ -307,15 +275,10 @@ export class CreateFromFormComponent implements OnInit {
     const labels = this.labels.value.labels || [];
     const spec: AppDeploymentSpec = {
       containerImage: this.containerImage.value,
-      imagePullSecret: this.imagePullSecret.value
-        ? this.imagePullSecret.value
-        : null,
-      containerCommand: this.containerCommand.value
-        ? this.containerCommand.value
-        : null,
-      containerCommandArgs: this.containerCommandArgs.value
-        ? this.containerCommandArgs.value
-        : null,
+      imagePullSecret: this.imagePullSecret.value ? this.imagePullSecret.value : null,
+      containerCommand: this.containerCommand.value ? this.containerCommand.value : null,
+      containerCommandArgs: this.containerCommandArgs.value ? this.containerCommandArgs.value :
+                                                              null,
       isExternal: this.isExternal,
       name: this.name.value,
       description: this.description.value ? this.description.value : null,
@@ -323,12 +286,9 @@ export class CreateFromFormComponent implements OnInit {
       variables: variables.filter(this.isVariableFilled),
       replicas: this.replicas.value,
       namespace: this.namespace.value,
-      cpuRequirement: this.isNumber(this.cpuRequirement.value)
-        ? this.cpuRequirement.value
-        : null,
-      memoryRequirement: this.isNumber(this.memoryRequirement.value)
-        ? `${this.memoryRequirement.value}Mi`
-        : null,
+      cpuRequirement: this.isNumber(this.cpuRequirement.value) ? this.cpuRequirement.value : null,
+      memoryRequirement:
+          this.isNumber(this.memoryRequirement.value) ? `${this.memoryRequirement.value}Mi` : null,
       labels: this.toBackendApiLabels(labels),
       runAsPrivileged: this.runAsPrivileged.value,
     };

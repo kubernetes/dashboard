@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Component, Inject } from '@angular/core';
-import { VersionInfo } from '@api/frontendapi';
-import { AssetsService } from '../common/services/global/assets';
-import { ConfigService } from '../common/services/global/config';
+import {Component, Inject} from '@angular/core';
+import {VersionInfo} from '@api/frontendapi';
+import {AssetsService} from '../common/services/global/assets';
+import {ConfigService} from '../common/services/global/config';
 
 @Component({
   selector: 'kd-about',
@@ -26,10 +26,7 @@ export class AboutComponent {
   latestCopyrightYear: number;
   versionInfo: VersionInfo;
 
-  constructor(
-    @Inject(AssetsService) public assets: AssetsService,
-    config: ConfigService
-  ) {
+  constructor(@Inject(AssetsService) public assets: AssetsService, config: ConfigService) {
     this.versionInfo = config.getVersionInfo();
     this.latestCopyrightYear = new Date().getFullYear();
   }

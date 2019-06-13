@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { NgModule } from '@angular/core';
-import { Route, RouterModule } from '@angular/router';
-import { LOGS_EXEC_DEFAULT_ACTIONBAR } from '../../../common/components/actionbars/routing';
+import {NgModule} from '@angular/core';
+import {Route, RouterModule} from '@angular/router';
+import {LOGS_EXEC_DEFAULT_ACTIONBAR} from '../../../common/components/actionbars/routing';
 
-import { WORKLOADS_ROUTE } from '../routing';
+import {WORKLOADS_ROUTE} from '../routing';
 
-import { PodDetailComponent } from './detail/component';
-import { PodListComponent } from './list/component';
+import {PodDetailComponent} from './detail/component';
+import {PodListComponent} from './list/component';
 
 const POD_LIST_ROUTE: Route = {
   path: '',
@@ -49,4 +49,5 @@ export const POD_DETAIL_ROUTE: Route = {
   ],
   exports: [RouterModule],
 })
-export class PodRoutingModule {}
+export class PodRoutingModule {
+}

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { EventEmitter, Injectable } from '@angular/core';
-import { CONFIG } from '../../../index.config';
+import {EventEmitter, Injectable} from '@angular/core';
+import {CONFIG} from '../../../index.config';
 
 @Injectable()
 export class NamespaceService {
@@ -64,9 +64,7 @@ export class NamespaceService {
   }
 
   areMultipleNamespacesSelected(): boolean {
-    return this.currentNamespace_
-      ? this.currentNamespace_ === this.allNamespacesKey_
-      : true;
+    return this.currentNamespace_ ? this.currentNamespace_ === this.allNamespacesKey_ : true;
   }
 
   getResourceNamespace(): string {

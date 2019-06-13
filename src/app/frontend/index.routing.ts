@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Routes } from '@angular/router';
-import { AuthGuard } from './common/services/guard/auth';
-import { LoginGuard } from './common/services/guard/login';
-import { LoginComponent } from './login/component';
+import {Routes} from '@angular/router';
+import {AuthGuard} from './common/services/guard/auth';
+import {LoginGuard} from './common/services/guard/login';
+import {LoginComponent} from './login/component';
 
 export const routes: Routes = [
-  { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
-  { path: '', redirectTo: '/overview', pathMatch: 'full' },
-  { path: '**', redirectTo: '/overview' },
+  {path: 'login', component: LoginComponent, canActivate: [LoginGuard]},
+  {path: '', redirectTo: '/overview', pathMatch: 'full'},
+  {path: '**', redirectTo: '/overview'},
 ];

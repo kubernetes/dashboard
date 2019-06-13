@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Component, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { KdFile } from '@api/frontendapi';
+import {Component, ViewChild} from '@angular/core';
+import {NgForm} from '@angular/forms';
+import {KdFile} from '@api/frontendapi';
 
-import { CreateService } from '../../../common/services/create/service';
-import { HistoryService } from '../../../common/services/global/history';
-import { NamespaceService } from '../../../common/services/global/namespace';
+import {CreateService} from '../../../common/services/create/service';
+import {HistoryService} from '../../../common/services/global/history';
+import {NamespaceService} from '../../../common/services/global/namespace';
 
 @Component({
   selector: 'kd-create-from-file',
@@ -26,21 +26,15 @@ import { NamespaceService } from '../../../common/services/global/namespace';
   styleUrls: ['./style.scss'],
 })
 export class CreateFromFileComponent {
-  @ViewChild(NgForm, { static: true }) private readonly ngForm: NgForm;
+  @ViewChild(NgForm, {static: true}) private readonly ngForm: NgForm;
   file: KdFile;
 
   constructor(
-    private readonly namespace_: NamespaceService,
-    private readonly create_: CreateService,
-    private readonly history_: HistoryService
-  ) {}
+      private readonly namespace_: NamespaceService, private readonly create_: CreateService,
+      private readonly history_: HistoryService) {}
 
   isCreateDisabled(): boolean {
-    return (
-      !this.file ||
-      this.file.content.length === 0 ||
-      this.create_.isDeployDisabled()
-    );
+    return (!this.file || this.file.content.length === 0 || this.create_.isDeployDisabled());
   }
 
   create(): void {

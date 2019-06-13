@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { AppConfig } from '@api/backendapi';
-import { VersionInfo } from '@api/frontendapi';
-import { Observable } from 'rxjs/Observable';
-import { version } from '../../../environments/version';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {AppConfig} from '@api/backendapi';
+import {VersionInfo} from '@api/frontendapi';
+import {Observable} from 'rxjs/Observable';
+import {version} from '../../../environments/version';
 
 @Injectable()
 export class ConfigService {

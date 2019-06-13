@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { NgModule } from '@angular/core';
-import { Route, RouterModule } from '@angular/router';
-import { DEFAULT_ACTIONBAR } from '../../../common/components/actionbars/routing';
+import {NgModule} from '@angular/core';
+import {Route, RouterModule} from '@angular/router';
+import {DEFAULT_ACTIONBAR} from '../../../common/components/actionbars/routing';
 
-import { WORKLOADS_ROUTE } from '../routing';
+import {WORKLOADS_ROUTE} from '../routing';
 
-import { ReplicationControllerDetailComponent } from './detail/component';
-import { ReplicationControllerListComponent } from './list/component';
+import {ReplicationControllerDetailComponent} from './detail/component';
+import {ReplicationControllerListComponent} from './list/component';
 
 const REPLICATIONCONTROLLER_LIST_ROUTE: Route = {
   path: '',
@@ -49,4 +49,5 @@ const REPLICATIONCONTROLLER_DETAIL_ROUTE: Route = {
   ],
   exports: [RouterModule],
 })
-export class ReplicationControllerRoutingModule {}
+export class ReplicationControllerRoutingModule {
+}

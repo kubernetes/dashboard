@@ -12,28 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { HttpParams } from '@angular/common/http';
-import { Component, Input } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { ConfigMap, ConfigMapList } from 'typings/backendapi';
-import { ResourceListBase } from '../../../resources/list';
-import { NotificationsService } from '../../../services/global/notifications';
-import { EndpointManager, Resource } from '../../../services/resource/endpoint';
-import { NamespacedResourceService } from '../../../services/resource/resource';
-import { MenuComponent } from '../../list/column/menu/component';
-import { ListGroupIdentifiers, ListIdentifiers } from '../groupids';
+import {HttpParams} from '@angular/common/http';
+import {Component, Input} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
+import {ConfigMap, ConfigMapList} from 'typings/backendapi';
+import {ResourceListBase} from '../../../resources/list';
+import {NotificationsService} from '../../../services/global/notifications';
+import {EndpointManager, Resource} from '../../../services/resource/endpoint';
+import {NamespacedResourceService} from '../../../services/resource/resource';
+import {MenuComponent} from '../../list/column/menu/component';
+import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
 
-@Component({ selector: 'kd-config-map-list', templateUrl: './template.html' })
-export class ConfigMapListComponent extends ResourceListBase<
-  ConfigMapList,
-  ConfigMap
-> {
+@Component({selector: 'kd-config-map-list', templateUrl: './template.html'})
+export class ConfigMapListComponent extends ResourceListBase<ConfigMapList, ConfigMap> {
   @Input() endpoint = EndpointManager.resource(Resource.configMap, true).list();
 
   constructor(
-    private readonly configMap_: NamespacedResourceService<ConfigMapList>,
-    notifications: NotificationsService
-  ) {
+      private readonly configMap_: NamespacedResourceService<ConfigMapList>,
+      notifications: NotificationsService) {
     super('configmap', notifications);
     this.id = ListIdentifiers.configMap;
     this.groupId = ListGroupIdentifiers.config;
@@ -42,11 +38,7 @@ export class ConfigMapListComponent extends ResourceListBase<
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
 
     // Register dynamic columns.
-    this.registerDynamicColumn(
-      'namespace',
-      'name',
-      this.shouldShowNamespaceColumn_.bind(this)
-    );
+    this.registerDynamicColumn('namespace', 'name', this.shouldShowNamespaceColumn_.bind(this));
   }
 
   getResourceObservable(params?: HttpParams): Observable<ConfigMapList> {

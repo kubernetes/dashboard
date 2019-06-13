@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class LogService {
@@ -28,7 +28,7 @@ export class LogService {
   constructor(private readonly http_: HttpClient) {}
 
   getResource<T>(uri: string, params?: HttpParams): Observable<T> {
-    return this.http_.get<T>(`api/v1/log/${uri}`, { params });
+    return this.http_.get<T>(`api/v1/log/${uri}`, {params});
   }
 
   setFollowing(status: boolean): void {

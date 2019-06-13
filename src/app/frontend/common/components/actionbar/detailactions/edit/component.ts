@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Component, Input } from '@angular/core';
-import { ObjectMeta, TypeMeta } from '@api/backendapi';
-import { Subscription } from 'rxjs/Subscription';
+import {Component, Input} from '@angular/core';
+import {ObjectMeta, TypeMeta} from '@api/backendapi';
+import {Subscription} from 'rxjs/Subscription';
 
-import { VerberService } from '../../../../services/global/verber';
+import {VerberService} from '../../../../services/global/verber';
 
 @Component({
   selector: 'kd-actionbar-detail-edit',
@@ -31,9 +31,10 @@ export class ActionbarDetailEditComponent {
   constructor(private readonly verber_: VerberService) {}
 
   ngOnInit(): void {
-    this.verberSubscription_ = this.verber_.onEdit.subscribe(() => {
-      // this.state_.reload().catch();
-    });
+    this.verberSubscription_ = this.verber_.onEdit.subscribe(
+        () => {
+            // this.state_.reload().catch();
+        });
   }
 
   ngOnDestroy(): void {
@@ -41,10 +42,6 @@ export class ActionbarDetailEditComponent {
   }
 
   onClick(): void {
-    this.verber_.showEditDialog(
-      this.displayName,
-      this.typeMeta,
-      this.objectMeta
-    );
+    this.verber_.showEditDialog(this.displayName, this.typeMeta, this.objectMeta);
   }
 }

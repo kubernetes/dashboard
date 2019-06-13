@@ -12,13 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Component } from '@angular/core';
-import { OnListChangeEvent } from '@api/frontendapi';
-import { ListGroupIdentifiers } from '../../common/components/resourcelist/groupids';
-import { GroupedResourceList } from '../../common/resources/groupedlist';
+import {Component} from '@angular/core';
+import {OnListChangeEvent} from '@api/frontendapi';
+import {ListGroupIdentifiers} from '../../common/components/resourcelist/groupids';
+import {GroupedResourceList} from '../../common/resources/groupedlist';
 
 @Component({
   selector: 'kd-workloads',
   templateUrl: './template.html',
 })
-export class WorkloadsComponent extends GroupedResourceList {}
+export class WorkloadsComponent extends GroupedResourceList {
+}

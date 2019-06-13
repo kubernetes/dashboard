@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { NgModule } from '@angular/core';
-import { Route, RouterModule } from '@angular/router';
-import { OverviewComponent } from './component';
+import {NgModule} from '@angular/core';
+import {Route, RouterModule} from '@angular/router';
+import {OverviewComponent} from './component';
 
 export const OVERVIEW_ROUTE: Route = {
   path: '',
@@ -28,4 +28,5 @@ export const OVERVIEW_ROUTE: Route = {
   imports: [RouterModule.forChild([OVERVIEW_ROUTE])],
   exports: [RouterModule],
 })
-export class OverviewRoutingModule {}
+export class OverviewRoutingModule {
+}

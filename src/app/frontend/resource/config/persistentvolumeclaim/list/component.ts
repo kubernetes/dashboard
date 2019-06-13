@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'kd-persistent-volume-claim-list-state',
-  template:
-    '<kd-persistent-volume-claim-list></kd-persistent-volume-claim-list>',
+  template: '<kd-persistent-volume-claim-list></kd-persistent-volume-claim-list>',
 })
-export class PersistentVolumeClaimListComponent {}
+export class PersistentVolumeClaimListComponent {
+}

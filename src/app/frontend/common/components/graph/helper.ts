@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { format } from 'd3';
+import {format} from 'd3';
 
 /** Base for prefixes */
 const coreBase = 1000;
@@ -64,10 +64,7 @@ export function memoryFilter(value: number): string {
   let divider = 1;
   let power = 0;
 
-  while (
-    value / divider > memoryBase &&
-    power < memoryPowerSuffixes.length - 1
-  ) {
+  while (value / divider > memoryBase && power < memoryPowerSuffixes.length - 1) {
     divider *= memoryBase;
     power += 1;
   }

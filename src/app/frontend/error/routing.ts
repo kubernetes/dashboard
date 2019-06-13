@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { NgModule } from '@angular/core';
-import { Route, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {Route, RouterModule} from '@angular/router';
 
-import { ErrorComponent } from './component';
+import {ErrorComponent} from './component';
 
 const ERROR_ROUTE: Route = {
   path: '',
@@ -29,4 +29,5 @@ const ERROR_ROUTE: Route = {
   imports: [RouterModule.forChild([ERROR_ROUTE])],
   exports: [RouterModule],
 })
-export class ErrorRoutingModule {}
+export class ErrorRoutingModule {
+}

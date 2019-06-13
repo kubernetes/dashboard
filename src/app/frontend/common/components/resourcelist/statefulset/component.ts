@@ -12,61 +12,42 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { HttpParams } from '@angular/common/http';
-import { Component, ComponentFactoryResolver, Input } from '@angular/core';
-import { Event, StatefulSet, StatefulSetList } from '@api/backendapi';
-import { Observable } from 'rxjs/Observable';
-import { ResourceListWithStatuses } from '../../../resources/list';
-import { NotificationsService } from '../../../services/global/notifications';
-import { EndpointManager, Resource } from '../../../services/resource/endpoint';
-import { NamespacedResourceService } from '../../../services/resource/resource';
-import { MenuComponent } from '../../list/column/menu/component';
-import { ListGroupIdentifiers, ListIdentifiers } from '../groupids';
+import {HttpParams} from '@angular/common/http';
+import {Component, ComponentFactoryResolver, Input} from '@angular/core';
+import {Event, StatefulSet, StatefulSetList} from '@api/backendapi';
+import {Observable} from 'rxjs/Observable';
+import {ResourceListWithStatuses} from '../../../resources/list';
+import {NotificationsService} from '../../../services/global/notifications';
+import {EndpointManager, Resource} from '../../../services/resource/endpoint';
+import {NamespacedResourceService} from '../../../services/resource/resource';
+import {MenuComponent} from '../../list/column/menu/component';
+import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
 
 @Component({
   selector: 'kd-stateful-set-list',
   templateUrl: './template.html',
 })
-export class StatefulSetListComponent extends ResourceListWithStatuses<
-  StatefulSetList,
-  StatefulSet
-> {
-  @Input() endpoint = EndpointManager.resource(
-    Resource.statefulSet,
-    true
-  ).list();
+export class StatefulSetListComponent extends
+    ResourceListWithStatuses<StatefulSetList, StatefulSet> {
+  @Input() endpoint = EndpointManager.resource(Resource.statefulSet, true).list();
 
   constructor(
-    private readonly statefulSet_: NamespacedResourceService<StatefulSetList>,
-    resolver: ComponentFactoryResolver,
-    notifications: NotificationsService
-  ) {
+      private readonly statefulSet_: NamespacedResourceService<StatefulSetList>,
+      resolver: ComponentFactoryResolver, notifications: NotificationsService) {
     super('statefulset', notifications, resolver);
     this.id = ListIdentifiers.statefulSet;
     this.groupId = ListGroupIdentifiers.workloads;
 
     // Register status icon handlers
-    this.registerBinding(
-      this.icon.checkCircle,
-      'kd-success',
-      this.isInSuccessState
-    );
-    this.registerBinding(
-      this.icon.timelapse,
-      'kd-muted',
-      this.isInPendingState
-    );
+    this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);
+    this.registerBinding(this.icon.timelapse, 'kd-muted', this.isInPendingState);
     this.registerBinding(this.icon.error, 'kd-error', this.isInErrorState);
 
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
 
     // Register dynamic columns.
-    this.registerDynamicColumn(
-      'namespace',
-      'name',
-      this.shouldShowNamespaceColumn_.bind(this)
-    );
+    this.registerDynamicColumn('namespace', 'name', this.shouldShowNamespaceColumn_.bind(this));
   }
 
   getResourceObservable(params?: HttpParams): Observable<StatefulSetList> {
@@ -82,15 +63,11 @@ export class StatefulSetListComponent extends ResourceListWithStatuses<
   }
 
   isInPendingState(resource: StatefulSet): boolean {
-    return (
-      resource.podInfo.warnings.length === 0 && resource.podInfo.pending > 0
-    );
+    return (resource.podInfo.warnings.length === 0 && resource.podInfo.pending > 0);
   }
 
   isInSuccessState(resource: StatefulSet): boolean {
-    return (
-      resource.podInfo.warnings.length === 0 && resource.podInfo.pending === 0
-    );
+    return (resource.podInfo.warnings.length === 0 && resource.podInfo.pending === 0);
   }
 
   getDisplayColumns(): string[] {

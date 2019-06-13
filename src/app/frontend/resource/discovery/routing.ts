@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { NgModule } from '@angular/core';
-import { Route, RouterModule } from '@angular/router';
-import { DiscoveryComponent } from './component';
+import {NgModule} from '@angular/core';
+import {Route, RouterModule} from '@angular/router';
+import {DiscoveryComponent} from './component';
 
 export const DISCOVERY_ROUTE: Route = {
   path: '',
@@ -29,4 +29,5 @@ export const DISCOVERY_ROUTE: Route = {
   imports: [RouterModule.forChild([DISCOVERY_ROUTE])],
   exports: [RouterModule],
 })
-export class DiscoveryRoutingModule {}
+export class DiscoveryRoutingModule {
+}

@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Component, Input } from '@angular/core';
+import {Component, Input} from '@angular/core';
 
-@Component({ selector: 'kd-settings-entry', templateUrl: './template.html' })
+@Component({selector: 'kd-settings-entry', templateUrl: './template.html'})
 export class SettingsEntryComponent {
   @Input() key: string;
   @Input() desc: string;

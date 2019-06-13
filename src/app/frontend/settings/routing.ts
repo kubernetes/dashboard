@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { NgModule } from '@angular/core';
-import { Route, RouterModule } from '@angular/router';
-import { SettingsComponent } from './component';
+import {NgModule} from '@angular/core';
+import {Route, RouterModule} from '@angular/router';
+import {SettingsComponent} from './component';
 
 export const SETTINGS_ROUTE: Route = {
   path: '',
@@ -28,4 +28,5 @@ export const SETTINGS_ROUTE: Route = {
   imports: [RouterModule.forChild([SETTINGS_ROUTE])],
   exports: [RouterModule],
 })
-export class SettingsRoutingModule {}
+export class SettingsRoutingModule {
+}

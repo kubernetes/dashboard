@@ -12,29 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { OverlayContainer } from '@angular/cdk/overlay';
-import { Component, ElementRef, OnInit } from '@angular/core';
+import {OverlayContainer} from '@angular/cdk/overlay';
+import {Component, ElementRef, OnInit} from '@angular/core';
 
-import { LocalSettingsService } from './common/services/global/localsettings';
-import { ThemeService } from './common/services/global/theme';
-import { TitleService } from './common/services/global/title';
+import {LocalSettingsService} from './common/services/global/localsettings';
+import {ThemeService} from './common/services/global/theme';
+import {TitleService} from './common/services/global/title';
 
 enum Themes {
   Light = 'kd-light-theme',
   Dark = 'kd-dark-theme',
 }
 
-@Component({ selector: 'kd-root', template: '<router-outlet></router-outlet>' })
+@Component({selector: 'kd-root', template: '<router-outlet></router-outlet>'})
 export class RootComponent implements OnInit {
   private isLightThemeEnabled_: boolean;
 
   constructor(
-    private readonly themeService_: ThemeService,
-    private readonly settings_: LocalSettingsService,
-    private readonly overlayContainer_: OverlayContainer,
-    private readonly kdRootRef: ElementRef,
-    private readonly titleService_: TitleService
-  ) {
+      private readonly themeService_: ThemeService,
+      private readonly settings_: LocalSettingsService,
+      private readonly overlayContainer_: OverlayContainer, private readonly kdRootRef: ElementRef,
+      private readonly titleService_: TitleService) {
     this.isLightThemeEnabled_ = this.themeService_.isLightThemeEnabled();
   }
 
@@ -54,9 +52,7 @@ export class RootComponent implements OnInit {
   private applyOverlayContainerTheme_(): void {
     const classToRemove = this.getTheme(!this.isLightThemeEnabled_);
     const classToAdd = this.getTheme(this.isLightThemeEnabled_);
-    this.overlayContainer_
-      .getContainerElement()
-      .classList.remove(classToRemove);
+    this.overlayContainer_.getContainerElement().classList.remove(classToRemove);
     this.overlayContainer_.getContainerElement().classList.add(classToAdd);
 
     this.kdRootRef.nativeElement.classList.add(classToAdd);

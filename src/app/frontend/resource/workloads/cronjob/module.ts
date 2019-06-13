@@ -12,16 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { NgModule } from '@angular/core';
-import { ComponentsModule } from '../../../common/components/module';
+import {NgModule} from '@angular/core';
+import {ComponentsModule} from '../../../common/components/module';
 
-import { SharedModule } from '../../../shared.module';
-import { CronJobDetailComponent } from './detail/component';
-import { CronJobListComponent } from './list/component';
-import { CronJobRoutingModule } from './routing';
+import {SharedModule} from '../../../shared.module';
+import {CronJobDetailComponent} from './detail/component';
+import {CronJobListComponent} from './list/component';
+import {CronJobRoutingModule} from './routing';
 
 @NgModule({
   imports: [SharedModule, ComponentsModule, CronJobRoutingModule],
   declarations: [CronJobListComponent, CronJobDetailComponent],
 })
-export class CronJobModule {}
+export class CronJobModule {
+}

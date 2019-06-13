@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Component, OnInit } from '@angular/core';
-import { LocalSettings } from '@api/backendapi';
-import { LocalSettingsService } from '../../common/services/global/localsettings';
+import {Component, OnInit} from '@angular/core';
+import {LocalSettings} from '@api/backendapi';
+import {LocalSettingsService} from '../../common/services/global/localsettings';
 
-@Component({ selector: 'kd-local-settings', templateUrl: './template.html' })
+@Component({selector: 'kd-local-settings', templateUrl: './template.html'})
 export class LocalSettingsComponent implements OnInit {
   settings: LocalSettings = {} as LocalSettings;
 

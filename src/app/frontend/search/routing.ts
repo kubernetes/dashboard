@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { NgModule } from '@angular/core';
-import { Route, RouterModule } from '@angular/router';
-import { SearchGuard } from '../common/services/guard/search';
-import { SearchComponent } from './component';
+import {NgModule} from '@angular/core';
+import {Route, RouterModule} from '@angular/router';
+import {SearchGuard} from '../common/services/guard/search';
+import {SearchComponent} from './component';
 
 export const SEARCH_ROUTE: Route = {
   path: '',
@@ -30,4 +30,5 @@ export const SEARCH_ROUTE: Route = {
   imports: [RouterModule.forChild([SEARCH_ROUTE])],
   exports: [RouterModule],
 })
-export class SearchRoutingModule {}
+export class SearchRoutingModule {
+}

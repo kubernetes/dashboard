@@ -12,67 +12,49 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-} from '@angular/common/http/testing';
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import {
-  MatCardModule,
-  MatDividerModule,
-  MatIconModule,
-  MatTooltipModule,
-} from '@angular/material';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import {
-  AppConfig,
-  CronJobList,
-  DaemonSetList,
-  PodList,
-} from '@api/backendapi';
+import {HttpClientTestingModule, HttpTestingController,} from '@angular/common/http/testing';
+import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {FlexLayoutModule} from '@angular/flex-layout';
+import {MatCardModule, MatDividerModule, MatIconModule, MatTooltipModule,} from '@angular/material';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {AppConfig, CronJobList, DaemonSetList, PodList,} from '@api/backendapi';
 
-import { AllocationChartComponent } from '../common/components/allocationchart/component';
-import { CardComponent } from '../common/components/card/component';
-import {
-  ListGroupIdentifiers,
-  ListIdentifiers,
-} from '../common/components/resourcelist/groupids';
-import { ConfigService } from '../common/services/global/config';
-import { NotificationsService } from '../common/services/global/notifications';
+import {AllocationChartComponent} from '../common/components/allocationchart/component';
+import {CardComponent} from '../common/components/card/component';
+import {ListGroupIdentifiers, ListIdentifiers,} from '../common/components/resourcelist/groupids';
+import {ConfigService} from '../common/services/global/config';
+import {NotificationsService} from '../common/services/global/notifications';
 
-import { OverviewComponent } from './component';
-import { Helper, ResourceRatioModes } from './helper';
-import {
-  emptyResourcesRatio,
-  WorkloadStatusComponent,
-} from './workloadstatus/component';
+import {OverviewComponent} from './component';
+import {Helper, ResourceRatioModes} from './helper';
+import {emptyResourcesRatio, WorkloadStatusComponent,} from './workloadstatus/component';
 
 const mockDaemonSetData: DaemonSetList = {
-  listMeta: { totalItems: 1 },
+  listMeta: {totalItems: 1},
   daemonSets: [],
-  status: { running: 1, pending: 0, succeeded: 0, failed: 0 },
+  status: {running: 1, pending: 0, succeeded: 0, failed: 0},
   errors: [],
 };
 
 const mockPodsData: PodList = {
-  listMeta: { totalItems: 12 },
+  listMeta: {totalItems: 12},
   pods: [],
   cumulativeMetrics: null,
-  status: { running: 9, pending: 1, succeeded: 0, failed: 2 },
+  status: {running: 9, pending: 1, succeeded: 0, failed: 2},
   errors: [],
 };
 
 const mockCronJobsData: CronJobList = {
-  listMeta: { totalItems: 18 },
+  listMeta: {totalItems: 18},
   items: [],
-  status: { running: 8, pending: 1, succeeded: 4, failed: 5 },
+  status: {running: 8, pending: 1, succeeded: 4, failed: 5},
   errors: [],
 };
 
-@Component({ selector: 'kd-daemon-set-list', template: '' })
-class MockDaemonSetListComponent {}
+@Component({selector: 'kd-daemon-set-list', template: ''})
+class MockDaemonSetListComponent {
+}
 
 describe('OverviewComponent', () => {
   let httpMock: HttpTestingController;
@@ -80,26 +62,28 @@ describe('OverviewComponent', () => {
   let testHostFixture: ComponentFixture<OverviewComponent>;
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        CardComponent,
-        OverviewComponent,
-        MockDaemonSetListComponent,
-        AllocationChartComponent,
-        WorkloadStatusComponent,
-      ],
-      imports: [
-        MatIconModule,
-        MatCardModule,
-        MatDividerModule,
-        MatTooltipModule,
-        NoopAnimationsModule,
-        HttpClientTestingModule,
-        FlexLayoutModule,
-      ],
-      providers: [ConfigService, NotificationsService],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    }).compileComponents();
+    TestBed
+        .configureTestingModule({
+          declarations: [
+            CardComponent,
+            OverviewComponent,
+            MockDaemonSetListComponent,
+            AllocationChartComponent,
+            WorkloadStatusComponent,
+          ],
+          imports: [
+            MatIconModule,
+            MatCardModule,
+            MatDividerModule,
+            MatTooltipModule,
+            NoopAnimationsModule,
+            HttpClientTestingModule,
+            FlexLayoutModule,
+          ],
+          providers: [ConfigService, NotificationsService],
+          schemas: [CUSTOM_ELEMENTS_SCHEMA],
+        })
+        .compileComponents();
     httpMock = TestBed.get(HttpTestingController);
     configService = TestBed.get(ConfigService);
   }));
@@ -107,7 +91,7 @@ describe('OverviewComponent', () => {
   beforeEach(() => {
     configService.init();
     const configRequest = httpMock.expectOne('config');
-    const config: AppConfig = { serverTime: new Date().getTime() };
+    const config: AppConfig = {serverTime: new Date().getTime()};
     configRequest.flush(config);
 
     testHostFixture = TestBed.createComponent(OverviewComponent);
@@ -131,10 +115,8 @@ describe('OverviewComponent', () => {
 
     expect(instance.resourcesRatio).toEqual({
       ...emptyResourcesRatio,
-      daemonSetRatio: Helper.getResourceRatio(
-        mockDaemonSetData.status,
-        mockDaemonSetData.listMeta.totalItems
-      ),
+      daemonSetRatio:
+          Helper.getResourceRatio(mockDaemonSetData.status, mockDaemonSetData.listMeta.totalItems),
     });
 
     expect(instance.showWorkloadStatuses()).toEqual(true);
@@ -155,10 +137,7 @@ describe('OverviewComponent', () => {
     expect(instance.resourcesRatio).toEqual({
       ...emptyResourcesRatio,
       podRatio: Helper.getResourceRatio(
-        mockPodsData.status,
-        mockPodsData.listMeta.totalItems,
-        ResourceRatioModes.Completable
-      ),
+          mockPodsData.status, mockPodsData.listMeta.totalItems, ResourceRatioModes.Completable),
     });
 
     expect(instance.showWorkloadStatuses()).toEqual(true);
@@ -179,10 +158,8 @@ describe('OverviewComponent', () => {
     expect(instance.resourcesRatio).toEqual({
       ...emptyResourcesRatio,
       cronJobRatio: Helper.getResourceRatio(
-        mockCronJobsData.status,
-        mockCronJobsData.listMeta.totalItems,
-        ResourceRatioModes.Suspendable
-      ),
+          mockCronJobsData.status, mockCronJobsData.listMeta.totalItems,
+          ResourceRatioModes.Suspendable),
     });
 
     expect(instance.showWorkloadStatuses()).toEqual(true);

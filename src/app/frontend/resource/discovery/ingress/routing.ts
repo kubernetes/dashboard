@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { NgModule } from '@angular/core';
-import { Route, RouterModule } from '@angular/router';
-import { DEFAULT_ACTIONBAR } from '../../../common/components/actionbars/routing';
+import {NgModule} from '@angular/core';
+import {Route, RouterModule} from '@angular/router';
+import {DEFAULT_ACTIONBAR} from '../../../common/components/actionbars/routing';
 
-import { DISCOVERY_ROUTE } from '../routing';
+import {DISCOVERY_ROUTE} from '../routing';
 
-import { IngressDetailComponent } from './detail/component';
-import { IngressListComponent } from './list/component';
+import {IngressDetailComponent} from './detail/component';
+import {IngressListComponent} from './list/component';
 
 const INGRESS_LIST_ROUTE: Route = {
   path: '',
@@ -49,4 +49,5 @@ const INGRESS_DETAIL_ROUTE: Route = {
   ],
   exports: [RouterModule],
 })
-export class IngressRoutingModule {}
+export class IngressRoutingModule {
+}

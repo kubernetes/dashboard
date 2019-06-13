@@ -12,10 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'kd-job-list-state',
   template: '<kd-job-list></kd-job-list>',
 })
-export class JobListComponent {}
+export class JobListComponent {
+}

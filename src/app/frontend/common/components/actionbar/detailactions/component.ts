@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Component, Input } from '@angular/core';
-import { ObjectMeta, TypeMeta } from '@api/backendapi';
-import { ResourceMeta } from '../../../services/global/actionbar';
+import {Component, Input} from '@angular/core';
+import {ObjectMeta, TypeMeta} from '@api/backendapi';
+import {ResourceMeta} from '../../../services/global/actionbar';
 
 @Component({
   selector: 'kd-actionbar-detail-actions',
