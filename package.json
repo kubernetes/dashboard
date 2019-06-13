@@ -167,7 +167,7 @@
     "webdriver-manager": "12.1.4"
   },
   "engines": {
-    "node": ">=10.0.0",
+    "node": ">=10.9.0",
     "npm": ">=6.0.0"
   }
 }
