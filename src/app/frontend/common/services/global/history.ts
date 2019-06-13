@@ -19,7 +19,7 @@ import { KdStateService } from './state';
 @Injectable()
 export class HistoryService {
   private previousStateName: string;
-  // private previousStateParams: RawParams; TODO
+  // private previousStateParams: RawParams;
 
   constructor(
     private readonly router_: Router,
@@ -46,6 +46,6 @@ export class HistoryService {
     // if (this.state_.current.name === this.previousStateName) {
     //   targetState = defaultState;
     // }
-    return this.router_.navigate([defaultState], { queryParams: undefined }); // TODO
+    return this.router_.navigate([defaultState], { queryParams: undefined });
   }
 }

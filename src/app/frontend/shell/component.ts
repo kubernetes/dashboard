@@ -78,9 +78,6 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onPodContainerChange(podContainer: string): void {
     this.selectedContainer = podContainer;
-    // this.state_.go(
-    //     '.', new ExecStateParams(this.namespace, this.podName, podContainer), {reload: true});
-    //     TODO
   }
 
   ngOnInit(): void {

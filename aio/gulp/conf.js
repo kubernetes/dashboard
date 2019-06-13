@@ -29,7 +29,6 @@ const basePath = path.join(__dirname, '../../');
 const arch = {
   /**
    * Default architecture that the project is compiled to. Used for local development and testing.
-   * TODO(bryk): Dynamically determine this based on current arch.
    */
   default: 'amd64',
   /**

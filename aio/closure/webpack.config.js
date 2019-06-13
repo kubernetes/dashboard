@@ -45,10 +45,8 @@ const postcssPlugins = () => {
         }
       },
       {
-        // TODO: inline .cur if not supporting IE (use browserslist to check)
         filter: (asset) => !asset.hash && !asset.absolutePath.endsWith('.cur'),
         url: 'inline',
-        // NOTE: maxSize is in KB
         maxSize: 10
       }
     ]),

@@ -562,7 +562,6 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 	return wsContainer, nil
 }
 
-// TODO: Handle case in which RBAC feature is not enabled in API server. Currently returns 404 resource not found
 func (apiHandler *APIHandler) handleGetClusterRoleList(request *restful.Request, response *restful.Response) {
 	k8sClient, err := apiHandler.cManager.Client(request)
 	if err != nil {

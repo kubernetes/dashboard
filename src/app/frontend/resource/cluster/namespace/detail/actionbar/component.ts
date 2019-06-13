@@ -45,9 +45,5 @@ export class ActionbarComponent implements OnInit {
     this.resourceMetaSubscription_.unsubscribe();
   }
 
-  onClick(): void {
-    // this.state_.go('overview', {
-    //   [NAMESPACE_STATE_PARAM]: this.resourceMeta.objectMeta.name,
-    // }); TODO
-  }
+  onClick(): void {}
 }

@@ -151,7 +151,6 @@ func main() {
 	}
 
 	// Run a HTTP server that serves static public files from './public' and handles API calls.
-	// TODO(bryk): Disable directory listing.
 	http.Handle("/", handler.MakeGzipHandler(handler.CreateLocaleHandler()))
 	http.Handle("/api/", apiHandler)
 	http.Handle("/config", handler.AppHandler(handler.ConfigHandler))

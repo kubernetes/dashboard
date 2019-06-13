@@ -51,7 +51,6 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          i18n>Status</mat-header-cell>
         <mat-cell *matCellDef="let quota">
-          <!-- TODO To display it in a better way handle it like other resources and create status list on details page. -->
           <ng-container *ngIf="quota.statusList">{{quota.statusList | json}}</ng-container>
           <ng-container *ngIf="!quota.statusList">-</ng-container>
         </mat-cell>

@@ -38,7 +38,6 @@ export class GlobalErrorHandler implements ErrorHandler {
     }
 
     if (error instanceof YAMLException) {
-      // TODO think what to do with this error. For now let's just silence it.
       return;
     }
 

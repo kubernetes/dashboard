@@ -169,7 +169,6 @@ export class VerberService {
         data: {
           title:
             err.statusText === 'OK' ? 'Internal server error' : err.statusText,
-          // TODO Add || this.localizerService_.localize(err.data).
           message: err.error || 'Could not perform the operation.',
           confirmLabel: 'OK',
         },
