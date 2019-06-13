@@ -20,11 +20,12 @@ import {RouterModule} from '@angular/router';
 import {ChromeModule} from './chrome/module';
 import {CoreModule} from './core.module';
 import {GlobalErrorHandler} from './error/handler';
-import {ErrorModule} from './error/module';
 import {RootComponent} from './index.component';
 import {routes} from './index.routing';
 import {LoginModule} from './login/module';
 import {PluginsConfigProvider} from "./common/services/pluginloader/pluginsconfig.provider";
+import {PluginLoaderService} from "./common/services/pluginloader/pluginloader.service";
+import {ClientPluginLoaderService} from "./common/services/pluginloader/clientloader.service";
 
 @NgModule({
   imports: [
@@ -36,7 +37,9 @@ import {PluginsConfigProvider} from "./common/services/pluginloader/pluginsconfi
     LoginModule,
     RouterModule.forRoot(routes, {enableTracing: false}),
   ],
-  providers: [{provide: ErrorHandler, useClass: GlobalErrorHandler}, PluginsConfigProvider],
+  providers: [{provide: ErrorHandler, useClass: GlobalErrorHandler},
+    {provide: PluginLoaderService, useClass: ClientPluginLoaderService},
+    PluginsConfigProvider],
   declarations: [RootComponent],
   bootstrap: [RootComponent],
 })
