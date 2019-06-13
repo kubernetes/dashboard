@@ -49,7 +49,13 @@ export class AuthService {
   }
 
   private init_() {
-    this.stateService_.onBefore.subscribe(() => this.refreshToken());
+    this.stateService_.onBefore
+      .pipe(switchMap(() => this.getLoginStatus()))
+      .subscribe(status => {
+        if (this.isAuthenticationEnabled(status)) {
+          this.refreshToken();
+        }
+      });
   }
 
   private setTokenCookie_(token: string): void {
