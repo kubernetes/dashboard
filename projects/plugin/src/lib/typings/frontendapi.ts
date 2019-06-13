@@ -19,7 +19,7 @@ import {
   ObjectMeta,
   ResourceList,
   TypeMeta,
-} from '@api/backendapi';
+} from './backendapi';
 
 export interface BreadcrumbConfig {
   label?: string;

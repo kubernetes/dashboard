@@ -11,6 +11,8 @@ node_modules/
 .cached_tools/
 dist/
 coverage/
+static/*
+!static/.keep
 
 # System specific files:
 .DS_Store

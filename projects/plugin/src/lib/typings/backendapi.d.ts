@@ -13,7 +13,7 @@
 // limitations under the License.
 
 // Shared resource types
-import {KdError} from '@api/frontendapi';
+import {KdError} from './frontendapi';
 
 export interface TypeMeta {
   kind: string;
