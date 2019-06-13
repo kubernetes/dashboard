@@ -87,6 +87,7 @@
     "@angular/router": "8.0.0",
     "@types/c3": "0.7.0",
     "@types/d3": "5.7.2",
+    "@types/d3-scale": "2.1.1",
     "@types/file-saver": "2.0.1",
     "ace-builds": "1.4.4",
     "c3": "0.7.0",
