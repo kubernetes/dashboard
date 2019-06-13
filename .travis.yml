@@ -17,8 +17,9 @@ cache:
 
 before_install:
   - export NG_CLI_ANALYTICS=ci
+  - export GO111MODULE=on
   - export PATH=$PATH:$GOPATH/bin
-  - eval "$(gimme 1.11.4)"
+  - eval "$(gimme 1.12.6)"
   - cd $HOME
   - mkdir -p $GOPATH/src/github.com/
   - mv $HOME/build/kubernetes $GOPATH/src/github.com/
