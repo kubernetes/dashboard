@@ -15,14 +15,15 @@
 package handler
 
 import (
-	"encoding/json"
+	"bytes"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"strings"
 	"time"
 
-	restful "github.com/emicklei/go-restful"
+	"github.com/emicklei/go-restful"
 	"golang.org/x/net/xsrftoken"
 	utilnet "k8s.io/apimachinery/pkg/util/net"
 
@@ -68,19 +69,19 @@ func requestAndResponseLogger(request *restful.Request, response *restful.Respon
 // formatRequestLog formats request log string.
 func formatRequestLog(request *restful.Request) string {
 	uri := ""
+	content := "{}"
+
 	if request.Request.URL != nil {
 		uri = request.Request.URL.RequestURI()
 	}
 
-	content := "{}"
-	entity := make(map[string]interface{})
-	request.ReadEntity(&entity)
-	if len(entity) > 0 {
-		bytes, err := json.MarshalIndent(entity, "", "  ")
-		if err == nil {
-			content = string(bytes)
-		}
+	byteArr, err := ioutil.ReadAll(request.Request.Body)
+	if err == nil {
+		content = string(byteArr)
 	}
+
+	// Restore request body so we can read it again in regular request handlers
+	request.Request.Body = ioutil.NopCloser(bytes.NewReader(byteArr))
 
 	// Is DEBUG level logging enabled? Yes?
 	// Great now let's filter out any content from sensitive URLs

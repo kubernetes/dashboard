@@ -12,16 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'rxjs/add/operator/first';
-import 'rxjs/add/operator/switchMap';
-
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { of } from 'rxjs';
+import 'rxjs/add/operator/first';
+import 'rxjs/add/operator/switchMap';
 import { Observable } from 'rxjs/Observable';
-import { catchError, first, switchMap } from 'rxjs/operators';
+import { first, switchMap } from 'rxjs/operators';
 import {
   AuthResponse,
   CsrfToken,
@@ -84,7 +83,7 @@ export class AuthService {
     return this.cookies_.get(this.config_.authTokenCookieName) || '';
   }
 
-  removeAuthCookies_(): void {
+  private removeAuthCookies_(): void {
     this.cookies_.delete(this.config_.authTokenCookieName);
     this.cookies_.delete(this.config_.skipLoginPageCookieName);
   }
@@ -121,40 +120,6 @@ export class AuthService {
     this.removeAuthCookies_();
     this.router_.navigate(['login']);
   }
-
-  /**
-   * In order to determine if user is logged in one of below factors have to be fulfilled:
-   *  - valid jwe token has to be present in a cookie (named 'kdToken')
-   *  - authorization header has to be present in request to dashboard ('Authorization: Bearer
-   * <token>')
-   */
-  // redirectToLogin(transition: Transition): Promise<boolean|TargetState> {
-  //   const state = transition.router.stateService;
-  //   return this.getLoginStatus().toPromise().then<boolean|TargetState>(loginStatus => {
-  //     console.log('======== Status =======');
-  //     console.log(loginStatus);
-  //     console.log('=======================');
-  //     if (transition.to().name === 'login' &&
-  //         // Do not allow entering login page if already authenticated or authentication is
-  //         // disabled.
-  //         (this.isAuthenticated(loginStatus) || !this.isAuthenticationEnabled(loginStatus))) {
-  //       console.log('No to login');
-  //       return state.target(overviewState.name, null, {location: 'replace', reload: true});
-  //     }
-  //
-  //     // In following cases user should not be redirected and reach his target state:
-  //     if (transition.to().name === 'login' || transition.to().name === errorState.name ||
-  //         !this.isLoginPageEnabled() || !this.isAuthenticationEnabled(loginStatus) ||
-  //         this.isAuthenticated(loginStatus)) {
-  //       console.log('Go wherver you want');
-  //       return true;
-  //     }
-  //
-  //     // In other cases redirect user to login state.
-  //     console.log('Stop! Log in!');
-  //     return state.target('login', null, {location: 'replace', reload: true});
-  //   });
-  // }
 
   /**
    * Sends a token refresh request to the backend. In case user is not logged in with token nothing
