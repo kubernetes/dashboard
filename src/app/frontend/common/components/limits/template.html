@@ -33,7 +33,6 @@ limitations under the License.
     <mat-table [dataSource]="getDataSource()"
                class="kd-table-no-footer">
       <ng-container [matColumnDef]="getColumnIds()[0]">
-        <!-- TODO To display it in a better way handle it like other resources and create status list on details page. -->
         <mat-header-cell *matHeaderCellDef
                          i18n>Resource name</mat-header-cell>
         <mat-cell *matCellDef="let limit">{{limit.resourceName}}</mat-cell>

@@ -143,11 +143,6 @@ export class BreadcrumbsComponent implements OnInit {
     return route;
   }
 
-  // TODO: When state search is active use specific logic to display custom breadcrumb:
-  //  if (state.url[0].path === searchState.name) {
-  //    const query = stateParams[SEARCH_QUERY_STATE_PARAM];
-  //    return `Search for "${query}"`;
-  //  }
   private _getBreadcrumbLabel(route: Route, params: Params) {
     if (route && route.data && route.data.breadcrumb) {
       let breadcrumb = route.data.breadcrumb as string;

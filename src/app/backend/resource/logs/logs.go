@@ -184,7 +184,7 @@ func (self LogLines) SelectLogs(logSelection *Selection) (LogLines, LogTimestamp
 	return self[fromIndex:toIndex], self[fromIndex].Timestamp, self[toIndex-1].Timestamp, newSelection, lastPage
 }
 
-// GetLineIndex returns the index of the line (referenced from beginning of log array) with provided logLineId.
+// getLineIndex returns the index of the line (referenced from beginning of log array) with provided logLineId.
 func (self LogLines) getLineIndex(logLineId *LogLineId) int {
 	if logLineId == nil || logLineId.LogTimestamp == NewestTimestamp || len(self) == 0 || logLineId.LogTimestamp == "" {
 		// if no line id provided return index of last item.
@@ -195,7 +195,7 @@ func (self LogLines) getLineIndex(logLineId *LogLineId) int {
 	logTimestamp := logLineId.LogTimestamp
 	linesMatched := 0
 	matchingStartedAt := 0
-	for idx := range self { // todo use binary search to speedup log search (compare timestamps).
+	for idx := range self {
 		if self[idx].Timestamp == logTimestamp {
 			if linesMatched == 0 {
 				matchingStartedAt = idx

@@ -25,7 +25,6 @@ export interface Config {
   defaultNamespace: string;
 }
 
-// TODO fill this out
 export const CONFIG: Config = {
   authTokenCookieName: 'jweToken',
   authTokenHeaderName: 'jweToken',

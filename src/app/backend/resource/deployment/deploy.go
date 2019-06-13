@@ -225,7 +225,6 @@ func DeployApp(spec *AppDeploymentSpec, client client.Interface) error {
 	_, err := client.AppsV1().Deployments(spec.Namespace).Create(deployment)
 
 	if err != nil {
-		// TODO(bryk): Roll back created resources in case of error.
 		return err
 	}
 
@@ -258,8 +257,6 @@ func DeployApp(spec *AppDeploymentSpec, client client.Interface) error {
 		}
 
 		_, err = client.CoreV1().Services(spec.Namespace).Create(service)
-
-		// TODO(bryk): Roll back created resources in case of error.
 		return err
 	}
 

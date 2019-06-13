@@ -84,7 +84,6 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
         this.selectedNamespace = namespace;
       });
 
-    // TODO reeneable once fixed
     // this.kdState_.onSuccess.pipe(takeUntil(this.unsubscribe_)).subscribe(() => {
     //   if (this.shouldShowNamespaceChangeDialog()) {
     //     this.handleNamespaceChangeDialog_();
