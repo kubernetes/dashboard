@@ -43,6 +43,8 @@ import { DateComponent } from './date/component';
 import { EndpointListComponent } from './endpoint/cardlist/component';
 import { ExternalEndpointComponent } from './endpoint/external/component';
 import { InternalEndpointComponent } from './endpoint/internal/component';
+import { GraphComponent } from './graph/component';
+import { GraphCardComponent } from './graphcard/component';
 import { HiddenPropertyComponent } from './hiddenproperty/component';
 import { ResourceLimitListComponent } from './limits/component';
 import { ColumnComponent } from './list/column/component';
@@ -108,6 +110,8 @@ const components = [
   ContainerCardComponent,
   ConditionListComponent,
   CreatorCardComponent,
+  GraphComponent,
+  GraphCardComponent,
 
   DaemonSetListComponent,
   DateComponent,
