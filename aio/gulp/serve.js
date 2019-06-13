@@ -101,7 +101,7 @@ gulp.task('watch', () => {
  * Spawns new backend application process and finishes the task immediately. Previously spawned
  * backend process is killed beforehand, if any. The frontend pages are served by BrowserSync.
  */
-gulp.task('spawn-backend', gulp.series(gulp.parallel('backend', 'kill-backend', 'locales-for-backend:dev'), () => {
+gulp.task('spawn-backend', gulp.series(gulp.parallel('kill-backend', 'backend', 'locales-for-backend:dev'), () => {
   if (process.env.K8S_DASHBOARD_DEBUG) {
     runningBackendProcess = child.spawn(
       "dlv", ["exec", "--headless", "--listen=0.0.0.0:2345", "--api-version=2", "--", path.join(conf.paths.serve, conf.backend.binaryName)].concat(getBackendArgs()),

@@ -119,14 +119,14 @@ type Authenticator interface {
 // information required to authenticate user.
 type LoginSpec struct {
 	// Username is the username for basic authentication to the kubernetes cluster.
-	Username string `json:"username"`
+	Username string `json:"username,omitempty"`
 	// Password is the password for basic authentication to the kubernetes cluster.
-	Password string `json:"password"`
+	Password string `json:"password,omitempty"`
 	// Token is the bearer token for authentication to the kubernetes cluster.
-	Token string `json:"token"`
+	Token string `json:"token,omitempty"`
 	// KubeConfig is the content of users' kubeconfig file. It will be parsed and auth data will be extracted.
 	// Kubeconfig can not contain any paths. All data has to be provided within the file.
-	KubeConfig string `json:"kubeConfig"`
+	KubeConfig string `json:"kubeconfig,omitempty"`
 }
 
 // AuthResponse is returned from our backend as a response for login/refresh requests. It contains generated JWEToken

@@ -15,12 +15,12 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router, UrlTree } from '@angular/router';
 import { LoginStatus } from '@api/backendapi';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { first, switchMap } from 'rxjs/operators';
 import { AuthService } from '../global/authentication';
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class LoginGuard implements CanActivate {
   constructor(
     private readonly authService_: AuthService,
     private readonly router_: Router
@@ -32,18 +32,15 @@ export class AuthGuard implements CanActivate {
       .pipe(first())
       .pipe(
         switchMap((loginStatus: LoginStatus) => {
-          if (
-            this.authService_.isAuthenticationEnabled(loginStatus) &&
-            !this.authService_.isAuthenticated(loginStatus)
-          ) {
-            return this.router_.navigate(['login']);
+          if (!this.authService_.isAuthenticationEnabled(loginStatus)) {
+            return this.router_.navigate(['overview']);
           }
 
-          return Observable.of(true);
+          return of(true);
         })
       )
       .catch(() => {
-        return this.router_.navigate(['login']);
+        return this.router_.navigate(['overview']);
       });
   }
 }

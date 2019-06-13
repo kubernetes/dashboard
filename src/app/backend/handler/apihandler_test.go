@@ -144,7 +144,7 @@ func TestFormatRequestLog(t *testing.T) {
 			"POST",
 			"/api/v1/login",
 			map[string]string{"password": "abc123"},
-			"Incoming HTTP/1.1 POST /api/v1/login request from : {\n  \"password\": \"abc123\"\n}",
+			"Incoming HTTP/1.1 POST /api/v1/login request from : {\"password\":\"abc123\"}",
 			"DEBUG",
 		},
 	}
