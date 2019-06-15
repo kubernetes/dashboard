@@ -5,20 +5,21 @@ import {ClientPluginLoaderService} from '../common/services/pluginloader/clientl
 import {PluginLoaderService} from '../common/services/pluginloader/pluginloader.service';
 import {PluginsConfigProvider} from '../common/services/pluginloader/pluginsconfig.provider';
 
-import {PluginComponent} from './plugin.component';
+import {PluginComponent} from './component';
+import {PluginsRoutingModule} from './routing';
 
 @NgModule({
-  imports: [HttpClientModule],
+  imports: [HttpClientModule, PluginsRoutingModule],
   declarations: [PluginComponent],
   providers: [
     {provide: PluginLoaderService, useClass: ClientPluginLoaderService}, PluginsConfigProvider, {
       provide: APP_INITIALIZER,
-      useFactory: (provider: PluginsConfigProvider) =>
+      useFactory: (provider: PluginsConfigProvider) => () =>
           provider.loadConfig().toPromise().then(config => (provider.config = config)),
       multi: true,
       deps: [PluginsConfigProvider]
     }
   ]
 })
-export class PluginModule {
+export class PluginsModule {
 }

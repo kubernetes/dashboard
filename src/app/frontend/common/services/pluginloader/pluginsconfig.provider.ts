@@ -1,32 +1,26 @@
-import { Inject, Injectable, Optional, PLATFORM_ID } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { isPlatformBrowser } from '@angular/common';
+import {isPlatformBrowser} from '@angular/common';
+import {HttpClient} from '@angular/common/http';
+import {Inject, Injectable, Optional, PLATFORM_ID} from '@angular/core';
 
 interface PluginsConfig {
-  [key: string]: {
-    name: string;
-    path: string;
-    deps: string[];
-  };
+  [key: string]: {name: string; path: string; deps: string[];};
 }
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class PluginsConfigProvider {
   config: PluginsConfig;
 
   constructor(
-    private http_: HttpClient,
-    @Inject(PLATFORM_ID) private platformId: {},
-    @Inject('APP_BASE_URL') @Optional() private readonly baseUrl: string
-  ) {
+      private http_: HttpClient, @Inject(PLATFORM_ID) private platformId: {},
+      @Inject('APP_BASE_URL') @Optional() private readonly baseUrl: string) {
     if (isPlatformBrowser(platformId)) {
       this.baseUrl = document.location.origin;
     }
   }
 
   loadConfig() {
-    return this.http_.get<PluginsConfig>(
-      `${this.baseUrl}/static/plugins.json`
-    );
+    return this.http_.get<PluginsConfig>(`${this.baseUrl}/static/plugins.json`);
   }
 }

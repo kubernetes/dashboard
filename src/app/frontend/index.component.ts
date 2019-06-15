@@ -18,9 +18,9 @@ import {Component, ElementRef, OnInit} from '@angular/core';
 import {LocalSettingsService} from './common/services/global/localsettings';
 import {ThemeService} from './common/services/global/theme';
 import {TitleService} from './common/services/global/title';
-import {PluginsConfigProvider} from "./common/services/pluginloader/pluginsconfig.provider";
-import {ClientPluginLoaderService} from "./common/services/pluginloader/clientloader.service";
-import {PluginLoaderService} from "./common/services/pluginloader/pluginloader.service";
+import {ClientPluginLoaderService} from './common/services/pluginloader/clientloader.service';
+import {PluginLoaderService} from './common/services/pluginloader/pluginloader.service';
+import {PluginsConfigProvider} from './common/services/pluginloader/pluginsconfig.provider';
 
 enum Themes {
   Light = 'kd-light-theme',
@@ -35,8 +35,7 @@ export class RootComponent implements OnInit {
       private readonly themeService_: ThemeService,
       private readonly settings_: LocalSettingsService,
       private readonly overlayContainer_: OverlayContainer, private readonly kdRootRef: ElementRef,
-      private readonly titleService_: TitleService,
-      private readonly pluginService_: PluginLoaderService) {
+      private readonly titleService_: TitleService) {
     this.isLightThemeEnabled_ = this.themeService_.isLightThemeEnabled();
   }
 

@@ -23,9 +23,7 @@ import {GlobalErrorHandler} from './error/handler';
 import {RootComponent} from './index.component';
 import {routes} from './index.routing';
 import {LoginModule} from './login/module';
-import {PluginsConfigProvider} from "./common/services/pluginloader/pluginsconfig.provider";
-import {PluginLoaderService} from "./common/services/pluginloader/pluginloader.service";
-import {ClientPluginLoaderService} from "./common/services/pluginloader/clientloader.service";
+import {PluginsModule} from './plugins/module';
 
 @NgModule({
   imports: [
@@ -34,12 +32,11 @@ import {ClientPluginLoaderService} from "./common/services/pluginloader/clientlo
     HttpClientModule,
     CoreModule,
     ChromeModule,
+    PluginsModule,
     LoginModule,
     RouterModule.forRoot(routes, {enableTracing: false}),
   ],
-  providers: [{provide: ErrorHandler, useClass: GlobalErrorHandler},
-    {provide: PluginLoaderService, useClass: ClientPluginLoaderService},
-    PluginsConfigProvider],
+  providers: [{provide: ErrorHandler, useClass: GlobalErrorHandler}],
   declarations: [RootComponent],
   bootstrap: [RootComponent],
 })
