@@ -1,6 +1,6 @@
 import {Injectable, NgModuleFactory} from '@angular/core';
 
-@Injectable({providedIn: 'root'})
+@Injectable()
 export abstract class PluginLoaderService {
   protected constructor() {
     this.provideExternals();

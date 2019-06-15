@@ -21,12 +21,15 @@ export class ClientPluginLoaderService extends PluginLoaderService {
 
   load<T>(pluginName: string): Promise<NgModuleFactory<T>> {
     const {config} = this.configProvider;
-    console.log('config => ', config);
     if (!config[pluginName]) {
-      throw Error(`Can't find appropriate plugin`);
+      throw Error(`Can't find plugin "${pluginName}"`);
     }
 
     const depsPromises = (config[pluginName].deps || []).map(dep => {
+      if (!config[dep]) {
+        throw Error(`Can't find dependency "${dep}" for plugin "${pluginName}"`);
+      }
+
       return systemJS.import(config[dep].path).then(m => {
         window['define'](dep, [], () => m.default);
       });

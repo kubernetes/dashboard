@@ -23,7 +23,7 @@ import {GlobalErrorHandler} from './error/handler';
 import {RootComponent} from './index.component';
 import {routes} from './index.routing';
 import {LoginModule} from './login/module';
-import {PluginsModule} from './plugins/module';
+import {PluginLoaderModule} from './plugin-loader.module';
 
 @NgModule({
   imports: [
@@ -31,7 +31,7 @@ import {PluginsModule} from './plugins/module';
     BrowserAnimationsModule,
     HttpClientModule,
     CoreModule,
-    PluginsModule,
+    PluginLoaderModule,
     ChromeModule,
     LoginModule,
     RouterModule.forRoot(routes, {enableTracing: false}),
