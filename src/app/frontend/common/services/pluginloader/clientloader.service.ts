@@ -1,7 +1,8 @@
-import { Injectable, NgModuleFactory } from '@angular/core';
-import { PluginLoaderService } from './pluginloader.service';
-import { PLUGIN_EXTERNALS_MAP } from './pluginexternals';
-import { PluginsConfigProvider } from './pluginsconfig.provider';
+import {Injectable, NgModuleFactory} from '@angular/core';
+
+import {PLUGIN_EXTERNALS_MAP} from './pluginexternals';
+import {PluginLoaderService} from './pluginloader.service';
+import {PluginsConfigProvider} from './pluginsconfig.provider';
 
 const systemJS = window.System;
 
@@ -12,16 +13,15 @@ export class ClientPluginLoaderService extends PluginLoaderService {
   }
 
   provideExternals() {
-    Object.keys(PLUGIN_EXTERNALS_MAP).forEach(externalKey =>
-      window.define(externalKey, [], () => {
-        // @ts-ignore
-        return PLUGIN_EXTERNALS_MAP[externalKey];
-      })
-    );
+    Object.keys(PLUGIN_EXTERNALS_MAP).forEach(externalKey => window.define(externalKey, [], () => {
+      // @ts-ignore
+      return PLUGIN_EXTERNALS_MAP[externalKey];
+    }));
   }
 
   load<T>(pluginName: string): Promise<NgModuleFactory<T>> {
-    const { config } = this.configProvider;
+    const {config} = this.configProvider;
+    console.log('config => ', config);
     if (!config[pluginName]) {
       throw Error(`Can't find appropriate plugin`);
     }
@@ -33,9 +33,7 @@ export class ClientPluginLoaderService extends PluginLoaderService {
     });
 
     return Promise.all(depsPromises).then(() => {
-      return systemJS
-        .import(config[pluginName].path)
-        .then(module => module.default.default);
+      return systemJS.import(config[pluginName].path).then(module => module.default.default);
     });
   }
 }

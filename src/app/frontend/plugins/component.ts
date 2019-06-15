@@ -16,7 +16,11 @@ export class PluginComponent implements OnInit {
   constructor(private injector: Injector, private pluginLoader: PluginLoaderService) {}
 
   ngOnInit() {
-    this.loadPlugin('plugin1');
+    try {
+      this.loadPlugin('plugin1');
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   loadPlugin(pluginName: string) {
