@@ -11,11 +11,11 @@
       "@api/*": [
         "typings/*"
       ],
-      "plugin": [
-        "dist/plugin"
+      "k8s-plugin": [
+        "../../../dist/plugin"
       ],
-      "plugin/*": [
-        "dist/plugin/*"
+      "k8s-plugin/*": [
+        "../../../dist/plugin/*"
       ]
     },
     "outDir": ".tmp/out-tsc",

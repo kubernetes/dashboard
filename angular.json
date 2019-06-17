@@ -161,6 +161,49 @@
           }
         }
       }
+    },
+    "custom-plugin": {
+      "root": "projects/custom/",
+      "sourceRoot": "projects/custom/src",
+      "projectType": "application",
+      "prefix": "app",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "./builders:plugin",
+          "options": {
+            "outputPath": "dist/plugins",
+            "index": "",
+            "main": "projects/custom/src/main.ts",
+            "polyfills": "projects/custom/src/polyfills.ts",
+            "tsConfig": "projects/custom/tsconfig.app.json",
+            "assets": [],
+            "styles": [],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [],
+              "optimization": true,
+              "outputHashing": "none",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": false,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        }
+      }
     }
   },
   "defaultProject": "kubernetes-dashboard",

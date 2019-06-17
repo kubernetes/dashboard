@@ -1,6 +1,6 @@
 {
   "name": "k8s-plugin",
-  "version": "0.0.1",
+  "version": "0.0.1-test",
   "peerDependencies": {
     "@angular/common": "^8.0.0",
     "@angular/core": "^8.0.0"
