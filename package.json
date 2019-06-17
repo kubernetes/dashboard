@@ -68,7 +68,7 @@
       "git add"
     ],
     "src/**/*.go": [
-      "golangci-lint run -c .golangci.yml --fix src/app/backend/...",
+      "golangci-lint run -c .golangci.yml --fix",
       "git add"
     ]
   },
