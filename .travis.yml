@@ -17,7 +17,7 @@ cache:
 
 before_install:
   - export NG_CLI_ANALYTICS=ci
-  - export GO111MODULE=on
+  - export GO111MODULE=off
   - export PATH=$PATH:$GOPATH/bin
   - eval "$(gimme 1.12.6)"
   - cd $HOME
