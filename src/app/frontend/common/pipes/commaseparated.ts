@@ -12,18 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Input} from '@angular/core';
-import {MatTableDataSource} from '@angular/material';
-import {PolicyRule} from 'typings/backendapi';
+import {Pipe, PipeTransform} from '@angular/core';
 
-@Component({
-  selector: 'kd-comma-separated-list',
-  templateUrl: './template.html',
-})
-export class CommaSeparatedListComponent {
-  @Input() items: string[];
-
-  appendItem(item: string, last: boolean): string {
-    return last ? item : `${item}, `;
+@Pipe({name: 'commaSeparated'})
+export class CommaSeparatedPipe implements PipeTransform {
+  transform(value: string[]): string {
+    if (!value) {
+      return '';
+    }
+    return value.join(', ');
   }
 }
