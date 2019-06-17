@@ -84,9 +84,21 @@ func (self *holderBuilder) SetApiServerHost(apiServerHost string) *holderBuilder
 	return self
 }
 
+// SetMetricsProvider 'metrics-provider' argument of Dashboard binary.
+func (self *holderBuilder) SetMetricsProvider(metricsProvider string) *holderBuilder {
+	self.holder.metricsProvider = metricsProvider
+	return self
+}
+
 // SetHeapsterHost 'heapster-host' argument of Dashboard binary.
 func (self *holderBuilder) SetHeapsterHost(heapsterHost string) *holderBuilder {
 	self.holder.heapsterHost = heapsterHost
+	return self
+}
+
+// SetSidecarHost 'sidecar-host' argument of Dashboard binary.
+func (self *holderBuilder) SetSidecarHost(sidecarHost string) *holderBuilder {
+	self.holder.sidecarHost = sidecarHost
 	return self
 }
 

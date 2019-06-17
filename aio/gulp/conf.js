@@ -126,12 +126,23 @@ export default {
      */
     apiLogLevel: gulpUtil.env.apiLogLevel !== undefined ? gulpUtil.env.apiLogLevel : '',
     /**
+     * Setting for metrics provider. Defaults to sidecar.
+     */
+    metricsProvider: gulpUtil.env.metricsProvider !== undefined ? gulpUtil.env.metricsProvider : 'sidecar',
+    /**
      * Address for the Heapster API server. If blank, the dashboard
      * will attempt to connect to Heapster via a service proxy.
      */
     heapsterServerHost: gulpUtil.env.heapsterServerHost !== undefined ?
         gulpUtil.env.heapsterServerHost :
-        '',
+        'http://localhost:8001',
+    /**
+     * Address for the Sidecar API server. If blank, the dashboard
+     * will attempt to connect to Sidecar via a service proxy.
+     */
+    sidecarServerHost: gulpUtil.env.sidecarServerHost !== undefined ?
+        gulpUtil.env.sidecarServerHost :
+        'http://localhost:8000',
     /**
      * File containing the default x509 Certificate for HTTPS.
      */

@@ -23,6 +23,7 @@ import (
 	integrationapi "github.com/kubernetes/dashboard/src/app/backend/integration/api"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
+	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/sidecar"
 	"k8s.io/apimachinery/pkg/util/wait"
 )
 
@@ -40,7 +41,9 @@ type MetricManager interface {
 	EnableWithRetry(id integrationapi.IntegrationID, period time.Duration)
 	// List returns list of available metric related integrations.
 	List() []integrationapi.Integration
-	// ConfigureHeapster configures and adds heapster to clients list.
+	// ConfigureSidecar configures and adds sidecar to clients list.
+	ConfigureSidecar(host string) MetricManager
+	// ConfigureHeapster configures and adds sidecar to clients list.
 	ConfigureHeapster(host string) MetricManager
 }
 
@@ -112,6 +115,19 @@ func (self *metricManager) List() []integrationapi.Integration {
 	}
 
 	return result
+}
+
+// ConfigureSidecar implements metric manager interface. See MetricManager for more information.
+func (self *metricManager) ConfigureSidecar(host string) MetricManager {
+	kubeClient := self.manager.InsecureClient()
+	metricClient, err := sidecar.CreateSidecarClient(host, kubeClient)
+	if err != nil {
+		log.Printf("There was an error during sidecar client creation: %s", err.Error())
+		return self
+	}
+
+	self.clients[metricClient.ID()] = metricClient
+	return self
 }
 
 // ConfigureHeapster implements metric manager interface. See MetricManager for more information.
