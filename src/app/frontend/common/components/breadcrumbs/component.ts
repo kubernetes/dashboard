@@ -16,6 +16,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Params, Route, Router,} from '@angular/router';
 import {Breadcrumb} from '@api/frontendapi';
 import {POD_DETAIL_ROUTE} from '../../../resource/workloads/pod/routing';
+import {SEARCH_QUERY_STATE_PARAM} from '../../params/params';
 
 export const LOGS_PARENT_PLACEHOLDER = '___LOGS_PARENT_PLACEHOLDER___';
 export const EXEC_PARENT_PLACEHOLDER = '___EXEC_PARENT_PLACEHOLDER___';
@@ -129,7 +130,7 @@ export class BreadcrumbsComponent implements OnInit {
         breadcrumb = breadcrumb.slice(2, breadcrumb.length - 2).trim();
         breadcrumb = params[breadcrumb];
       } else if (breadcrumb === SEARCH_BREADCRUMB_PLACEHOLDER) {
-        return `Search for ${this._activatedRoute.snapshot.queryParams['q']}`;
+        return `Search for ${this._activatedRoute.snapshot.queryParams[SEARCH_QUERY_STATE_PARAM]}`;
       }
       return breadcrumb;
     } else if (route && route.component) {
