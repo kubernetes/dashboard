@@ -14,7 +14,10 @@
 
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
+
+import {SEARCH_BREADCRUMB_PLACEHOLDER} from '../common/components/breadcrumbs/component';
 import {SearchGuard} from '../common/services/guard/search';
+
 import {SearchComponent} from './component';
 
 export const SEARCH_ROUTE: Route = {
@@ -22,7 +25,7 @@ export const SEARCH_ROUTE: Route = {
   component: SearchComponent,
   canDeactivate: [SearchGuard],
   data: {
-    breadcrumb: 'Search',
+    breadcrumb: SEARCH_BREADCRUMB_PLACEHOLDER,
   },
 };
 
