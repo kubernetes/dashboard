@@ -14,10 +14,10 @@
 
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
-import {DEFAULT_ACTIONBAR} from '../../../common/components/actionbars/routing';
 
 import {CLUSTER_ROUTE} from '../routing';
 
+import {ActionbarComponent} from './detail/actionbar/component';
 import {NamespaceDetailComponent} from './detail/component';
 import {NamespaceListComponent} from './list/component';
 
@@ -39,12 +39,18 @@ const NAMESPACE_DETAIL_ROUTE: Route = {
   },
 };
 
+export const ACTIONBAR = {
+  path: '',
+  component: ActionbarComponent,
+  outlet: 'actionbar',
+};
+
 @NgModule({
   imports: [
     RouterModule.forChild([
       NAMESPACE_LIST_ROUTE,
       NAMESPACE_DETAIL_ROUTE,
-      DEFAULT_ACTIONBAR,
+      ACTIONBAR,
     ]),
   ],
   exports: [RouterModule],

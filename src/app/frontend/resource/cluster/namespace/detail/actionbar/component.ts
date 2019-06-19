@@ -13,9 +13,10 @@
 // limitations under the License.
 
 import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
 
-import {NAMESPACE_STATE_PARAM} from '../../../../../common/params/params';
+import {NAMESPACE_STATE_PARAM, SEARCH_QUERY_STATE_PARAM} from '../../../../../common/params/params';
 import {ActionbarService, ResourceMeta,} from '../../../../../common/services/global/actionbar';
 
 @Component({
@@ -27,7 +28,7 @@ export class ActionbarComponent implements OnInit {
   resourceMeta: ResourceMeta;
   resourceMetaSubscription_: Subscription;
 
-  constructor(private readonly actionbar_: ActionbarService) {}
+  constructor(private readonly actionbar_: ActionbarService, private readonly router_: Router) {}
 
   ngOnInit(): void {
     this.resourceMetaSubscription_ =
@@ -41,5 +42,10 @@ export class ActionbarComponent implements OnInit {
     this.resourceMetaSubscription_.unsubscribe();
   }
 
-  onClick(): void {}
+  onClick(): void {
+    this.router_.navigate(['overview'], {
+      queryParamsHandling: 'merge',
+      queryParams: {[NAMESPACE_STATE_PARAM]: this.resourceMeta.objectMeta.name},
+    });
+  }
 }
