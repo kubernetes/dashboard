@@ -15,7 +15,7 @@
 /**
  * @fileoverview Common configuration constants used in other build/test files.
  */
-import gulpUtil from 'gulp-util';
+import minimist from 'minimist';
 import path from 'path';
 
 /**
@@ -70,6 +70,11 @@ const version = {
 const imageNameBase = 'kubernetes-dashboard';
 
 /**
+ * Arguments
+ */
+const argv = minimist(process.argv.slice(2));
+
+/**
  * Exported configuration object with common constants used in build pipeline.
  */
 export default {
@@ -119,65 +124,66 @@ export default {
     /**
      * Env variable with path to kubeconfig file.
      */
-    kubeconfig: gulpUtil.env.kubeconfig !== undefined ? gulpUtil.env.kubeconfig : '',
+    kubeconfig: argv.kubeconfig !== undefined ? argv.kubeconfig : '',
     /**
      * Env variable for API request log level. If blank, the
      * dashboard defaults to INFO, publishing sanitized logs to STDOUT
      */
-    apiLogLevel: gulpUtil.env.apiLogLevel !== undefined ? gulpUtil.env.apiLogLevel : '',
+    apiLogLevel: argv.apiLogLevel !== undefined ? argv.apiLogLevel : '',
     /**
      * Setting for metrics provider. Defaults to sidecar.
      */
-    metricsProvider: gulpUtil.env.metricsProvider !== undefined ? gulpUtil.env.metricsProvider : 'sidecar',
+    metricsProvider: argv.metricsProvider !== undefined ? argv.metricsProvider : 'sidecar',
     /**
      * Address for the Heapster API server. If blank, the dashboard
      * will attempt to connect to Heapster via a service proxy.
      */
-    heapsterServerHost: gulpUtil.env.heapsterServerHost !== undefined ?
-        gulpUtil.env.heapsterServerHost :
+    heapsterServerHost: argv.heapsterServerHost !== undefined ?
+        argv.heapsterServerHost :
         'http://localhost:8001',
     /**
      * Address for the Sidecar API server. If blank, the dashboard
      * will attempt to connect to Sidecar via a service proxy.
      */
-    sidecarServerHost: gulpUtil.env.sidecarServerHost !== undefined ?
-        gulpUtil.env.sidecarServerHost :
+    sidecarServerHost: argv.sidecarServerHost !== undefined ?
+        argv.sidecarServerHost :
         'http://localhost:8000',
     /**
      * File containing the default x509 Certificate for HTTPS.
      */
-    tlsCert: gulpUtil.env.tlsCert !== undefined ? gulpUtil.env.tlsCert : '',
+    tlsCert: argv.tlsCert !== undefined ? argv.tlsCert : '',
     /**
      * File containing the default x509 private key matching --tlsCert.
      */
-    tlsKey: gulpUtil.env.tlsKey !== undefined ? gulpUtil.env.tlsKey : '',
+    tlsKey: argv.tlsKey !== undefined ? argv.tlsKey : '',
     /**
      * When set to true, Dashboard will automatically generate certificates used to serve HTTPS.
      * Matches dashboard
      * '--auto-generate-certificates' flag.
      */
-    autoGenerateCerts: gulpUtil.env.autoGenerateCerts !== undefined ?
-        gulpUtil.env.autoGenerateCerts :
+    autoGenerateCerts: argv.autoGenerateCerts !== undefined ?
+        argv.autoGenerateCerts :
         'false',
     /**
      * Directory path containing certificate files. Matches dashboard '--default-cert-dir' flag.
      */
-    defaultCertDir: gulpUtil.env.defaultCertDir !== undefined ? gulpUtil.env.defaultCertDir : '',
+    defaultCertDir: argv.defaultCertDir !== undefined ? argv.defaultCertDir : '',
     /**
      * System banner message. Matches dashboard '--system-banner' flag.
      */
-    systemBanner: gulpUtil.env.systemBanner !== undefined ? gulpUtil.env.systemBanner : '',
+    systemBanner: argv.systemBanner !== undefined ? argv.systemBanner : '',
     /**
      * System banner severity. Matches dashboard '--system-banner-severity' flag.
      */
-    systemBannerSeverity: gulpUtil.env.systemBannerSeverity !== undefined ?
-        gulpUtil.env.systemBannerSeverity :
+    systemBannerSeverity: argv.systemBannerSeverity !== undefined ?
+        argv.systemBannerSeverity :
         '',
     /**
      * Allows to override enable skip login option on the backend.
      */
-    enableSkipButton: gulpUtil.env.enableSkipButton !== undefined ? gulpUtil.env.enableSkipButton :
-                                                                    false,
+    enableSkipButton: argv.enableSkipButton !== undefined ?
+        argv.enableSkipButton :
+        false,
   },
 
   /**
@@ -249,7 +255,7 @@ export default {
     /**
      * If defined `gulp serve` will serve on HTTPS.
      */
-    serveHttps: gulpUtil.env.serveHttps !== undefined,
+    serveHttps: argv.serveHttps !== undefined,
   },
 
   /**
