@@ -17,12 +17,13 @@ package node
 import (
 	"log"
 
+	v1 "k8s.io/api/core/v1"
+	client "k8s.io/client-go/kubernetes"
+
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	v1 "k8s.io/api/core/v1"
-	client "k8s.io/client-go/kubernetes"
 )
 
 // NodeList contains a list of nodes in the cluster.

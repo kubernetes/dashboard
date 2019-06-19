@@ -160,6 +160,12 @@ func (self sidecarClient) ithResourceDownload(selector sidecarSelector, metricNa
 			return
 		}
 
+		if len(rawResult.Items) == 0 {
+			result.Metric <- nil
+			result.Error <- nil
+			return
+		}
+
 		dataPoints := DataPointsFromMetricJSONFormat(rawResult.Items[0].MetricPoints)
 
 		result.Metric <- &metricapi.Metric{

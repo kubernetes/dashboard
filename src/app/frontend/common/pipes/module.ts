@@ -23,12 +23,20 @@ import {TrimPipe} from './trim';
 
 @NgModule({
   declarations: [
-    MemoryFormatter, CoreFormatter, RelativeTimeFormatter, SafeHtmlFormatter, TrimPipe,
-    CommaSeparatedPipe
+    MemoryFormatter,
+    CoreFormatter,
+    RelativeTimeFormatter,
+    SafeHtmlFormatter,
+    TrimPipe,
+    CommaSeparatedPipe,
   ],
   exports: [
-    MemoryFormatter, CoreFormatter, RelativeTimeFormatter, SafeHtmlFormatter, TrimPipe,
-    CommaSeparatedPipe
+    MemoryFormatter,
+    CoreFormatter,
+    RelativeTimeFormatter,
+    SafeHtmlFormatter,
+    TrimPipe,
+    CommaSeparatedPipe,
   ],
 })
 export class PipesModule {

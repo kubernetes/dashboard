@@ -53,8 +53,9 @@ export class BreadcrumbsComponent implements OnInit {
     this.breadcrumbs = [
       {
         label: this._getBreadcrumbLabel(currentRoute.routeConfig, currentRoute.snapshot.params),
-        stateLink: currentRoute.routeConfig.data.link ? currentRoute.routeConfig.data.link :
-                                                        urlArray,
+        stateLink: currentRoute.routeConfig.data && currentRoute.routeConfig.data.link ?
+            currentRoute.routeConfig.data.link :
+            urlArray,
       },
     ];
 

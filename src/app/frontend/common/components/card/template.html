@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<mat-card [ngClass]="{'kd-minimized-card': !expanded, 'kd-graph': graphMode}">
+<mat-card [ngClass]="{'kd-minimized-card': !expanded && !graphMode, 'kd-graph': graphMode}">
   <mat-card-title *ngIf="withTitle"
                   (click)="expand()"
                   [ngClass]="getTitleClasses()"
                   fxLayoutAlign=" center">
     <div class="kd-card-title"
-         fxFlex>
+         fxFlex="100%">
       <ng-content select="[title]"></ng-content>
     </div>
 

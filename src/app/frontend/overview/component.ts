@@ -104,4 +104,9 @@ export class OverviewComponent extends GroupedResourceList {
         Object.values(this.resourcesRatio)
             .reduce((sum, ratioItems) => sum + ratioItems.length, 0) !== 0);
   }
+
+  showGraphs(): boolean {
+    return this.cumulativeMetrics.every(
+        metrics => metrics.dataPoints && metrics.dataPoints.length > 1);
+  }
 }

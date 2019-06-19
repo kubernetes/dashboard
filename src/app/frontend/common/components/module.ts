@@ -79,7 +79,8 @@ import {SecretListComponent} from './resourcelist/secret/component';
 import {ServiceListComponent} from './resourcelist/service/component';
 import {StatefulSetListComponent} from './resourcelist/statefulset/component';
 import {StorageClassListComponent} from './resourcelist/storageclass/component';
-import {SparklineComponent} from './sparkline/component';
+import {CpuSparklineComponent} from './sparkline/cpu/component';
+import {MemorySparklineComponent} from './sparkline/memory/component';
 import {TextInputComponent} from './textinput/component';
 import {UploadFileComponent} from './uploadfile/component';
 import {ZeroStateComponent} from './zerostate/component';
@@ -160,7 +161,8 @@ const components = [
   StatefulSetListComponent,
   SecretListComponent,
   ServiceListComponent,
-  SparklineComponent,
+  CpuSparklineComponent,
+  MemorySparklineComponent,
   ScaleDefaultActionbar,
 
   TextInputComponent,

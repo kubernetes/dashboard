@@ -130,7 +130,7 @@ func ToPodList(pods []v1.Pod, events []v1.Event, nonCriticalErrors []error, dsQu
 
 	metrics, err := getMetricsPerPod(pods, metricClient, dsQuery)
 	if err != nil {
-		log.Printf("Skipping Heapster metrics because of error: %s\n", err)
+		log.Printf("Skipping metrics because of error: %s\n", err)
 	}
 
 	for _, pod := range pods {
