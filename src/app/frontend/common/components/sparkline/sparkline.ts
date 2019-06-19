@@ -12,20 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Input} from '@angular/core';
 import {MetricResult} from '@api/backendapi';
 
-@Component({
-  selector: 'kd-sparkline',
-  templateUrl: './template.html',
-  styleUrls: ['style.scss'],
-})
-export class SparklineComponent {
-  @Input() timeseries: MetricResult[];
+export class Sparkline {
+  lastValue = 0;
+
+  private _timeseries: MetricResult[];
+
+  setTimeseries(timeseries: MetricResult[]) {
+    this._timeseries = timeseries;
+  }
 
   getPolygonPoints(): string {
-    const series = this.timeseries.map(({timestamp, value}) => [Date.parse(timestamp), value, ]);
+    const series = this._timeseries.map(({timestamp, value}) => [Date.parse(timestamp), value, ]);
     const sorted = series.slice().sort((a, b) => a[0] - b[0]);
+    this.lastValue = sorted.length > 0 ? sorted[sorted.length - 1][1] : undefined;
     const xShift = Math.min(...sorted.map(pt => pt[0]));
     const shifted = sorted.map(([x, y]) => [x - xShift, y]);
     const xScale = Math.max(...shifted.map(pt => pt[0])) || 1;

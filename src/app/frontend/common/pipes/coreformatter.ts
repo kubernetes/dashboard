@@ -21,10 +21,9 @@ import {Pipe} from '@angular/core';
 @Pipe({name: 'kdCores'})
 export class CoreFormatter extends DecimalPipe {
   readonly base = 1000;
-  readonly powerSuffixes = ['', 'k', 'M', 'G', 'T'];
+  readonly powerSuffixes = ['m', '', 'k', 'M', 'G', 'T'];
 
   transform(value: number): string {
-    value = value / 1000;
     let divider = 1;
     let power = 0;
 
@@ -35,6 +34,6 @@ export class CoreFormatter extends DecimalPipe {
 
     const formatted = super.transform(value / divider, '1.2-2');
     const suffix = this.powerSuffixes[power];
-    return suffix ? `${formatted} ${suffix}` : formatted;
+    return suffix ? `${formatted}${suffix}` : formatted;
   }
 }

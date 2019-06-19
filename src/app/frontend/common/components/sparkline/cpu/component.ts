@@ -12,11 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../../variables';
+import {ChangeDetectionStrategy, Component, Input, OnInit,} from '@angular/core';
+import {MetricResult} from '@api/backendapi';
+import {Sparkline} from '../sparkline';
 
-.kd-sparkline {
-  height: 4 * $baseline-grid;
-  vertical-align: -$baseline-grid / 2; // 20% below baseline, to flow with text
-  width: 15 * $baseline-grid;
+@Component({
+  selector: 'kd-cpu-sparkline',
+  templateUrl: './template.html',
+  styleUrls: ['style.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class CpuSparklineComponent extends Sparkline implements OnInit {
+  @Input() timeseries: MetricResult[];
+
+  ngOnInit() {
+    this.setTimeseries(this.timeseries);
+  }
 }
-

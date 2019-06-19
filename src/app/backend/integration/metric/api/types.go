@@ -238,6 +238,11 @@ func (self MetricPromises) GetMetrics() ([]Metric, error) {
 		if err != nil {
 			return nil, err
 		}
+
+		if metric == nil {
+			continue
+		}
+
 		result = append(result, *metric)
 	}
 

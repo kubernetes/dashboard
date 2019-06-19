@@ -33,7 +33,7 @@ import {LoginModule} from './login/module';
     CoreModule,
     ChromeModule,
     LoginModule,
-    RouterModule.forRoot(routes, {enableTracing: false}),
+    RouterModule.forRoot(routes, {useHash: true}),
   ],
   providers: [{provide: ErrorHandler, useClass: GlobalErrorHandler}],
   declarations: [RootComponent],
