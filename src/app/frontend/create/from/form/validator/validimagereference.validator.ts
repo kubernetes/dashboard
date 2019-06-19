@@ -51,11 +51,4 @@ export class ValidImageReferenceValidator implements AsyncValidator, Validator {
               map(res => !res.valid ? {[uniqueNameValidationKey]: res.reason} : null));
     }
   }
-
-  ngOnChanges(): void {
-    // console.log('ngOnChanges');
-    // if (namespace && !namespace.firstChange) {
-    //   this.injector.get(NgModel).control.updateValueAndValidity();
-    // }
-  }
 }
