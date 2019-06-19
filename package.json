@@ -133,7 +133,6 @@
     "gulp-filter": "6.0.0",
     "gulp-header-license": "1.0.9",
     "gulp-license-check": "1.2.1",
-    "gulp-util": "3.0.8",
     "husky": "2.4.1",
     "jasmine-core": "3.4.0",
     "jasmine-spec-reporter": "4.2.1",
@@ -149,6 +148,7 @@
     "lite-server": "2.4.0",
     "lodash": "4.17.11",
     "minimatch": "3.0.4",
+    "minimist": "^1.2.0",
     "node-gyp": "5.0.0",
     "node-sass": "4.12.0",
     "protractor": "5.4.1",
@@ -164,8 +164,8 @@
     "ts-node": "8.3.0",
     "tslint": "5.16.0",
     "typescript": "3.4.5",
-    "webpack-dev-server": "3.5.1",
-    "webdriver-manager": "12.1.4"
+    "webdriver-manager": "12.1.4",
+    "webpack-dev-server": "3.5.1"
   },
   "engines": {
     "node": ">=10.9.0",
