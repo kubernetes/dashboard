@@ -14,7 +14,7 @@
 
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
-import {DEFAULT_ACTIONBAR} from '../../../common/components/actionbars/routing';
+import {SCALE_DEFAULT_ACTIONBAR} from '../../../common/components/actionbars/routing';
 
 import {WORKLOADS_ROUTE} from '../routing';
 
@@ -44,7 +44,7 @@ const DEPLOYMENT_DETAIL_ROUTE: Route = {
     RouterModule.forChild([
       DEPLOYMENT_LIST_ROUTE,
       DEPLOYMENT_DETAIL_ROUTE,
-      DEFAULT_ACTIONBAR,
+      SCALE_DEFAULT_ACTIONBAR,
     ]),
   ],
   exports: [RouterModule],

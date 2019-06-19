@@ -14,7 +14,7 @@
 
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
-import {DEFAULT_ACTIONBAR} from '../../../common/components/actionbars/routing';
+import {LOGS_SCALE_DEFAULT_ACTIONBAR} from '../../../common/components/actionbars/routing';
 
 import {WORKLOADS_ROUTE} from '../routing';
 
@@ -44,7 +44,7 @@ const REPLICATIONCONTROLLER_DETAIL_ROUTE: Route = {
     RouterModule.forChild([
       REPLICATIONCONTROLLER_LIST_ROUTE,
       REPLICATIONCONTROLLER_DETAIL_ROUTE,
-      DEFAULT_ACTIONBAR,
+      LOGS_SCALE_DEFAULT_ACTIONBAR,
     ]),
   ],
   exports: [RouterModule],

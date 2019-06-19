@@ -14,7 +14,7 @@
 
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
-import {DEFAULT_ACTIONBAR} from '../../../common/components/actionbars/routing';
+import {TRIGGER_DEFAULT_ACTIONBAR} from '../../../common/components/actionbars/routing';
 
 import {WORKLOADS_ROUTE} from '../routing';
 
@@ -44,7 +44,7 @@ const CRONJOB_DETAIL_ROUTE: Route = {
     RouterModule.forChild([
       CRONJOB_LIST_ROUTE,
       CRONJOB_DETAIL_ROUTE,
-      DEFAULT_ACTIONBAR,
+      TRIGGER_DEFAULT_ACTIONBAR,
     ]),
   ],
   exports: [RouterModule],
