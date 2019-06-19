@@ -19,6 +19,7 @@ import {POD_DETAIL_ROUTE} from '../../../resource/workloads/pod/routing';
 
 export const LOGS_PARENT_PLACEHOLDER = '___LOGS_PARENT_PLACEHOLDER___';
 export const EXEC_PARENT_PLACEHOLDER = '___EXEC_PARENT_PLACEHOLDER___';
+export const SEARCH_BREADCRUMB_PLACEHOLDER = '___SEARCH_BREADCRUMB_PLACEHOLDER___';
 
 @Component({
   selector: 'kd-breadcrumbs',
@@ -127,6 +128,8 @@ export class BreadcrumbsComponent implements OnInit {
       if (breadcrumb.startsWith('{{') && breadcrumb.endsWith('}}')) {
         breadcrumb = breadcrumb.slice(2, breadcrumb.length - 2).trim();
         breadcrumb = params[breadcrumb];
+      } else if (breadcrumb === SEARCH_BREADCRUMB_PLACEHOLDER) {
+        return `Search for ${this._activatedRoute.snapshot.queryParams['q']}`;
       }
       return breadcrumb;
     } else if (route && route.component) {
