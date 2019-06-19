@@ -36,7 +36,9 @@ limitations under the License.
                          i18n>Resources</mat-header-cell>
         <mat-cell *matCellDef="let rule">
           <ng-container *ngIf="rule.resources">
-            <kd-comma-separated-list [items]="rule.resources"></kd-comma-separated-list>
+            <span>
+              {{ rule.resources | commaSeparated }}
+            </span>
           </ng-container>
           <ng-container *ngIf="!rule.resources">-</ng-container>
         </mat-cell>
@@ -46,7 +48,9 @@ limitations under the License.
                          i18n>Non-resource URL</mat-header-cell>
         <mat-cell *matCellDef="let rule">
           <ng-container *ngIf="rule.nonResourceURLs">
-            <kd-comma-separated-list [items]="rule.nonResourceURLs"></kd-comma-separated-list>
+            <span>
+              {{ rule.nonResourceURLs | commaSeparated }}
+            </span>
           </ng-container>
           <ng-container *ngIf="!rule.nonResourceURLs">-</ng-container>
         </mat-cell>
@@ -56,7 +60,9 @@ limitations under the License.
                          i18n>Resource Names</mat-header-cell>
         <mat-cell *matCellDef="let rule">
           <ng-container *ngIf="rule.resourceNames">
-            <kd-comma-separated-list [items]="rule.resourceNames"></kd-comma-separated-list>
+            <span>
+              {{ rule.resourceNames | commaSeparated }}
+            </span>
           </ng-container>
           <ng-container *ngIf="!rule.resourceNames">-</ng-container>
         </mat-cell>
@@ -66,7 +72,9 @@ limitations under the License.
                          i18n>Verbs</mat-header-cell>
         <mat-cell *matCellDef="let rule">
           <ng-container *ngIf="rule.verbs">
-            <kd-comma-separated-list [items]="rule.verbs"></kd-comma-separated-list>
+            <span>
+              {{ rule.verbs | commaSeparated }}
+            </span>
           </ng-container>
           <ng-container *ngIf="!rule.verbs">-</ng-container>
         </mat-cell>
@@ -76,7 +84,9 @@ limitations under the License.
                          i18n>API Groups</mat-header-cell>
         <mat-cell *matCellDef="let rule">
           <ng-container *ngIf="rule.apiGroups && rule.apiGroups.length > 0">
-            <kd-comma-separated-list [items]="rule.apiGroups"></kd-comma-separated-list>
+            <span>
+              {{ rule.apiGroups | commaSeparated }}
+            </span>
           </ng-container>
           <ng-container *ngIf="!rule.apiGroups || rule.apiGroups.length === 0">-</ng-container>
         </mat-cell>

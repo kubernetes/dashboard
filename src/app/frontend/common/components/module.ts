@@ -35,7 +35,6 @@ import {BreadcrumbsComponent} from './breadcrumbs/component';
 import {CardComponent} from './card/component';
 import {ChipDialog} from './chips/chipdialog/dialog';
 import {ChipsComponent} from './chips/component';
-import {CommaSeparatedListComponent} from './commaseparatedlist/component';
 import {ConditionListComponent} from './condition/component';
 import {ContainerCardComponent} from './container/component';
 import {CreatorCardComponent} from './creator/component';
@@ -104,7 +103,6 @@ const components = [
   CronJobListComponent,
   ClusterRoleListComponent,
   ConfigMapListComponent,
-  CommaSeparatedListComponent,
   ColumnComponent,
   ChipDialog,
   ContainerCardComponent,
