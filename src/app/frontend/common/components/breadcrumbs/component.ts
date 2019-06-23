@@ -33,6 +33,7 @@ export class BreadcrumbsComponent implements OnInit {
   constructor(private readonly _router: Router, private readonly _activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
+    this._initBreadcrumbs();
     this._registerNavigationHook();
   }
 
