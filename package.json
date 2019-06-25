@@ -124,6 +124,7 @@
     "@types/js-yaml": "3.12.1",
     "@types/lodash": "4.14.133",
     "@types/node": "11.13.12",
+    "@types/webpack": "^4.4.34",
     "babel": "6.23.0",
     "babel-preset-env": "1.7.0",
     "babel-register": "6.26.0",
@@ -154,8 +155,8 @@
     "lite-server": "2.4.0",
     "lodash": "4.17.11",
     "minimatch": "3.0.4",
-    "node-gyp": "5.0.0",
     "ng-packagr": "^5.1.0",
+    "node-gyp": "5.0.0",
     "node-sass": "4.12.0",
     "protractor": "5.4.1",
     "q": "1.5.1",
@@ -171,8 +172,8 @@
     "tsickle": "^0.35.0",
     "tslint": "5.16.0",
     "typescript": "3.4.5",
-    "webpack-dev-server": "3.5.1",
-    "webdriver-manager": "12.1.4"
+    "webdriver-manager": "12.1.4",
+    "webpack-dev-server": "3.5.1"
   },
   "engines": {
     "node": ">=10.9.0",
