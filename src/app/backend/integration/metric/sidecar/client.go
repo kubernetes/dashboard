@@ -255,6 +255,6 @@ func CreateSidecarClient(host string, k8sClient kubernetes.Interface) (
 		return sidecarClient{}, err
 	}
 	log.Printf("Creating remote Sidecar client for %s", host)
-	c := remoteSidecarClient{client: restClient.CoreV1().RESTClient()}
+	c := remoteSidecarClient{client: restClient.RESTClient()}
 	return sidecarClient{client: c}, nil
 }
