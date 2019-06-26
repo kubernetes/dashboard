@@ -35,7 +35,7 @@ RUN curl -sL https://deb.nodesource.com/setup_11.x | bash - \
 	&& apt-get clean
 
 # Install dependencies. This will take a while.
-RUN npm install -g npm@latest gulp
+RUN npm install -g npm@latest gulp@4.0.2 @angular/cli@8.0.3
 
 # Set environment variable for JavaScript tests.
 ENV CHROME_BIN=/usr/bin/chromium

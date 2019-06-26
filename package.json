@@ -35,20 +35,22 @@
     "pretest:e2e": "webdriver-manager update --standalone false --versions.chrome 2.45 --gecko false",
     "cluster:start": "./aio/scripts/start-cluster.sh",
     "cluster:stop": "./aio/scripts/stop-cluster.sh",
-    "check": "concurrently \"npm run check:backend\" \"npm run check:frontend\" \"npm run check:license\"",
+    "check": "concurrently \"npm run check:backend\" \"npm run check:frontend\" \"npm run check:license\" \"npm run check:i18n\"",
     "check:backend": "golangci-lint run -c .golangci.yml src/app/backend/...",
     "check:frontend": "concurrently \"npm run check:frontend:ts\" \"npm run check:frontend:scss\" \"npm run check:frontend:html\"",
     "check:frontend:ts": "gts check",
     "check:frontend:scss": "./aio/scripts/format.sh --styles --check && ./node_modules/sass-lint/bin/sass-lint.js -c .sass-lint.yml 'src/app/frontend/**/*.scss' -v -q",
     "check:frontend:html": "./aio/scripts/format.sh --html --check",
     "check:license": "gulp check-license-headers",
-    "fix": "concurrently \"npm run fix:backend\" \"npm run fix:frontend\" \"npm run fix:license\"",
+    "check:i18n": "ng xi18n --outFile ../i18n/messages.xlf",
+    "fix": "concurrently \"npm run fix:backend\" \"npm run fix:frontend\" \"npm run fix:license\" \"npm run fix:i18n\"",
     "fix:backend": "golangci-lint run -c .golangci.yml --fix src/app/backend/...",
     "fix:frontend": "concurrently \"npm run fix:frontend:ts\" \"npm run fix:frontend:scss\" \"npm run fix:frontend:html\"",
     "fix:frontend:ts": "gts fix",
     "fix:frontend:scss": "scssfmt -r 'src/**/*.scss'",
     "fix:frontend:html": "./aio/scripts/format.sh --html",
     "fix:license": "gulp update-license-headers",
+    "fix:i18n": "ng xi18n --outFile ../i18n/messages.xlf",
     "clean": "rm -rf .go_workspace .tmp coverage dist npm-debug.log",
     "postversion": "node aio/scripts/version.js",
     "postinstall": "node aio/scripts/version.js && ./node_modules/protractor/bin/webdriver-manager update --gecko=false --versions.standalone=3.141.59 && curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(go env GOPATH)/bin v1.17.1"
@@ -69,6 +71,10 @@
     ],
     "src/**/*.go": [
       "golangci-lint run -c .golangci.yml --fix",
+      "git add"
+    ],
+    "src/**/*.html": [
+      "aio/scripts/pre-commit-i18n.sh",
       "git add"
     ]
   },
