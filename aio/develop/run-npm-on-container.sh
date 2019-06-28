@@ -38,6 +38,9 @@ else
   K8S_DASHBOARD_KUBECONFIG=$(pwd ${DIR}/../../)/kind.kubeconfig
 fi
 
+# Bind addres for dashboard
+K8S_DASHBOARD_BIND_ADDRESS=${K8S_DASHBOARD_BIND_ADDRESS:-"127.0.0.1"}
+
 # Build and run container for dashboard
 DASHBOARD_IMAGE_NAME=${K8S_DASHBOARD_CONTAINER_NAME:-"k8s-dashboard-dev-image"}
 K8S_DASHBOARD_SRC=${K8S_DASHBOARD_SRC:-"${CD}"}
@@ -63,6 +66,7 @@ docker run \
   -v ${K8S_DASHBOARD_KUBECONFIG}:/root/.kube/config \
   -e K8S_DASHBOARD_NPM_CMD="${K8S_DASHBOARD_NPM_CMD}" \
   -e K8S_OWN_CLUSTER=${K8S_OWN_CLUSTER} \
+  -e K8S_DASHBOARD_BIND_ADDRESS=${K8S_DASHBOARD_BIND_ADDRESS} \
   -e K8S_DASHBOARD_DEBUG=${K8S_DASHBOARD_DEBUG} \
   -p 8080:8080 \
   -p 9090:9090 \
