@@ -23,8 +23,4 @@ export class ActionbarComponent {
   constructor(config: ConfigService) {
     this.versionInfo = config.getVersionInfo();
   }
-
-  getFeedbackLink(): string {
-    return `https://github.com/kubernetes/dashboard/issues/new/choose`;
-  }
 }

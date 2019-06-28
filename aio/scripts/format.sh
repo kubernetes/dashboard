@@ -46,11 +46,11 @@ function format::styles::check {
 }
 
 function format::html {
-  ${GLOB_RUN_BIN} ${BEAUTIFY_BIN} --type html \
-                                  --end-with-newline \
-                                  --indent-size 2 \
-                                  --wrap-attributes "force-aligned" \
-                                  --replace 'src/app/frontend/**/*.html' > /dev/null
+  ${BEAUTIFY_BIN} --type html \
+                  --end-with-newline \
+                  --indent-size 2 \
+                  --wrap-attributes "force-aligned" \
+                  --replace 'src/app/frontend/**/*.html' > /dev/null
 }
 
 function format::html::check {

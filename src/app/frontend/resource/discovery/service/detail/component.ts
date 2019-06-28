@@ -59,5 +59,6 @@ export class ServiceDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.serviceSubscription_.unsubscribe();
+    this.actionbar_.onDetailsLeave.emit();
   }
 }

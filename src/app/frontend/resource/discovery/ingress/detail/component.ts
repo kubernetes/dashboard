@@ -56,5 +56,6 @@ export class IngressDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.ingressSubscription_.unsubscribe();
+    this.actionbar_.onDetailsLeave.emit();
   }
 }

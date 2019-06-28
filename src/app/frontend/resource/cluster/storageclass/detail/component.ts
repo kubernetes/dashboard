@@ -57,6 +57,7 @@ export class StorageClassDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.storageClassSubscription_.unsubscribe();
+    this.actionbar_.onDetailsLeave.emit();
   }
 
   getParameterNames(): string[] {

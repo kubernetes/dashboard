@@ -22,20 +22,18 @@ import semver from 'semver';
 
 import conf from './conf';
 
-// Add base directory to the gopath so that local imports work.
-const sourceGopath = `${conf.paths.backendTmp}:${conf.paths.backendVendor}`;
 // Add the project's required go tools to the PATH.
 const devPath = `${process.env.PATH}:${conf.paths.goTools}/bin`;
 
 /**
  * The environment needed for the execution of any go command.
  */
-const env = lodash.merge(process.env, {GOPATH: sourceGopath, PATH: devPath});
+const env = lodash.merge(process.env, {PATH: devPath});
 
 /**
  * Minimum required Go Version
  */
-const minGoVersion = '1.10.3';
+const minGoVersion = '1.12.6';
 
 /**
  * Spawns a Go process after making sure all Go prerequisites are

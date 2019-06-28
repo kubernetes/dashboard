@@ -32,11 +32,6 @@ export class NamespaceService {
    */
   private currentNamespace_ = '';
 
-  /**
-   * Holds namespace of currently selected resource or empty if not on details view.
-   */
-  private resourceNamespace_ = '';
-
   constructor() {}
 
   setCurrent(namespace: string) {
@@ -65,13 +60,5 @@ export class NamespaceService {
 
   areMultipleNamespacesSelected(): boolean {
     return this.currentNamespace_ ? this.currentNamespace_ === this.allNamespacesKey_ : true;
-  }
-
-  getResourceNamespace(): string {
-    return this.resourceNamespace_;
-  }
-
-  setResourceNamespace(namespace: string) {
-    this.resourceNamespace_ = namespace;
   }
 }

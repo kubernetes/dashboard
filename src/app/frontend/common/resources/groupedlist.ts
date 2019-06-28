@@ -40,9 +40,7 @@ export class GroupedResourceList {
 
   onListUpdate(listEvent: OnListChangeEvent): void {
     this.items_[listEvent.id] = listEvent.items;
-    if (!(listEvent.id in this.groupItems_[listEvent.groupId])) {
-      this.groupItems_[listEvent.groupId][listEvent.id] = listEvent.items;
-    }
+    this.groupItems_[listEvent.groupId][listEvent.id] = listEvent.items;
 
     if (listEvent.filtered) {
       this.items_[listEvent.id] = 1;

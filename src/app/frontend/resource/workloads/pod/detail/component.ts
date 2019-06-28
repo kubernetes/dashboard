@@ -58,6 +58,7 @@ export class PodDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.podSubscription_.unsubscribe();
+    this.actionbar_.onDetailsLeave.emit();
   }
 
   getNodeHref(name: string): string {

@@ -60,5 +60,6 @@ export class StatefulSetDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.statefulSetSubscription_.unsubscribe();
+    this.actionbar_.onDetailsLeave.emit();
   }
 }
