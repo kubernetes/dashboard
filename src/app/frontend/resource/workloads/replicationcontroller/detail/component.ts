@@ -64,5 +64,6 @@ export class ReplicationControllerDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.replicationControllerSubscription_.unsubscribe();
+    this.actionbar_.onDetailsLeave.emit();
   }
 }

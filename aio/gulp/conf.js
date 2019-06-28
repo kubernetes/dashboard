@@ -274,12 +274,6 @@ export default {
   paths: {
     base: basePath,
     backendSrc: path.join(basePath, 'src/app/backend'),
-    backendTmp: path.join(basePath, '.tmp/backend'),
-    backendTmpSrc: path.join(
-        basePath, '.tmp/backend/src/github.com/kubernetes/dashboard/src/app/backend'),
-    backendTmpSrcVendor: path.join(
-        basePath, '.tmp/backend/src/github.com/kubernetes/dashboard/vendor'),
-    backendVendor: path.join(basePath, 'vendor'),
     deploySrc: path.join(basePath, 'aio'),
     dist: path.join(basePath, 'dist', arch.default),
     distCross: arch.list.map((arch) => path.join(basePath, 'dist', arch)),

@@ -56,5 +56,6 @@ export class PersistentVolumeClaimDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.persistentVolumeClaimSubscription_.unsubscribe();
+    this.actionbar_.onDetailsLeave.emit();
   }
 }

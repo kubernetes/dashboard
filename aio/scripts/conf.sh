@@ -35,7 +35,6 @@ GULP_BIN="${ROOT_DIR}/node_modules/.bin/gulp"
 CLANG_FORMAT_BIN="${ROOT_DIR}/node_modules/.bin/clang-format"
 SCSSFMT_BIN="${ROOT_DIR}/node_modules/.bin/scssfmt"
 BEAUTIFY_BIN="${ROOT_DIR}/node_modules/.bin/js-beautify"
-GLOB_RUN_BIN="${ROOT_DIR}/node_modules/.bin/glob-run"
 
 # Global constants.
 ARCH=$(uname | awk '{print tolower($0)}')

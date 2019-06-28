@@ -52,5 +52,6 @@ export class ClusterRoleDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.clusterRoleSubscription_.unsubscribe();
+    this.actionbar_.onDetailsLeave.emit();
   }
 }

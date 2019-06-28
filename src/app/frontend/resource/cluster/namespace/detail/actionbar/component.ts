@@ -14,9 +14,10 @@
 
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {Subscription} from 'rxjs/Subscription';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
-import {NAMESPACE_STATE_PARAM, SEARCH_QUERY_STATE_PARAM} from '../../../../../common/params/params';
+import {NAMESPACE_STATE_PARAM} from '../../../../../common/params/params';
 import {ActionbarService, ResourceMeta,} from '../../../../../common/services/global/actionbar';
 
 @Component({
@@ -25,21 +26,28 @@ import {ActionbarService, ResourceMeta,} from '../../../../../common/services/gl
 })
 export class ActionbarComponent implements OnInit {
   isInitialized = false;
+  isVisible = false;
   resourceMeta: ResourceMeta;
-  resourceMetaSubscription_: Subscription;
+
+  private _unsubscribe = new Subject<void>();
 
   constructor(private readonly actionbar_: ActionbarService, private readonly router_: Router) {}
 
   ngOnInit(): void {
-    this.resourceMetaSubscription_ =
-        this.actionbar_.onInit.subscribe((resourceMeta: ResourceMeta) => {
+    this.actionbar_.onInit.pipe(takeUntil(this._unsubscribe))
+        .subscribe((resourceMeta: ResourceMeta) => {
           this.resourceMeta = resourceMeta;
           this.isInitialized = true;
+          this.isVisible = true;
         });
+
+    this.actionbar_.onDetailsLeave.pipe(takeUntil(this._unsubscribe))
+        .subscribe(() => this.isVisible = false);
   }
 
   ngOnDestroy(): void {
-    this.resourceMetaSubscription_.unsubscribe();
+    this._unsubscribe.next();
+    this._unsubscribe.complete();
   }
 
   onClick(): void {

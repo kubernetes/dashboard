@@ -54,6 +54,7 @@ export class SecretDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.secretSubscription_.unsubscribe();
+    this.actionbar_.onDetailsLeave.emit();
   }
 
   getDataKeys(): string[] {

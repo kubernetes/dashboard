@@ -63,5 +63,6 @@ export class ReplicaSetDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.replicaSetSubscription_.unsubscribe();
+    this.actionbar_.onDetailsLeave.emit();
   }
 }

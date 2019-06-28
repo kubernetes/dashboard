@@ -265,7 +265,13 @@ export class LogsComponent implements OnDestroy {
   }
 
   downloadLog(): void {
-    const dialogData = {data: {pod: this.pod, container: this.container}};
+    const dialogData = {
+      data: {
+        pod: this.pod,
+        container: this.container,
+        namespace: this.activatedRoute_.snapshot.paramMap.get('resourceNamespace')
+      }
+    };
     this.dialog_.open(LogsDownloadDialog, dialogData);
   }
 

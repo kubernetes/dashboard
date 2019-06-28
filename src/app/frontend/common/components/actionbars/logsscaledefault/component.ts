@@ -12,7 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 import {Subscription} from 'rxjs/Subscription';
 import {ActionbarService, ResourceMeta,} from '../../../services/global/actionbar';
 
@@ -20,22 +22,29 @@ import {ActionbarService, ResourceMeta,} from '../../../services/global/actionba
   selector: '',
   templateUrl: './template.html',
 })
-export class LogsScaleDefaultActionbar implements OnInit {
+export class LogsScaleDefaultActionbar implements OnInit, OnDestroy {
   isInitialized = false;
+  isVisible = false;
   resourceMeta: ResourceMeta;
-  resourceMetaSubscription_: Subscription;
+
+  private _unsubscribe = new Subject<void>();
 
   constructor(private readonly actionbar_: ActionbarService) {}
 
   ngOnInit(): void {
-    this.resourceMetaSubscription_ =
-        this.actionbar_.onInit.subscribe((resourceMeta: ResourceMeta) => {
+    this.actionbar_.onInit.pipe(takeUntil(this._unsubscribe))
+        .subscribe((resourceMeta: ResourceMeta) => {
           this.resourceMeta = resourceMeta;
           this.isInitialized = true;
+          this.isVisible = true;
         });
+
+    this.actionbar_.onDetailsLeave.pipe(takeUntil(this._unsubscribe))
+        .subscribe(() => this.isVisible = false);
   }
 
   ngOnDestroy(): void {
-    this.resourceMetaSubscription_.unsubscribe();
+    this._unsubscribe.next();
+    this._unsubscribe.complete();
   }
 }

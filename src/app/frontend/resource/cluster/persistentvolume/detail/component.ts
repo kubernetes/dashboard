@@ -55,6 +55,7 @@ export class PersistentVolumeDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.persistentVolumeSubscription_.unsubscribe();
+    this.actionbar_.onDetailsLeave.emit();
   }
 
   getCapacityColumns(): string[] {
