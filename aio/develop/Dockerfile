@@ -31,6 +31,10 @@ RUN curl -sL https://deb.nodesource.com/setup_11.x | bash - \
 	patch \
 	chromium \
 	bc \
+	sudo \
+	gosu \
+	nano \
+	less \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& apt-get clean
 
@@ -75,7 +79,7 @@ RUN go get github.com/go-delve/delve/cmd/dlv
 VOLUME ["/go/src/github.com/kubernetes/dashboard"]
 
 # Mount point for kubeconfig
-RUN mkdir -p /root/.kube
+RUN mkdir -p /home/user/.kube
 
 # Current directory is always dashboard source directory.
 WORKDIR /go/src/github.com/kubernetes/dashboard
@@ -83,5 +87,5 @@ WORKDIR /go/src/github.com/kubernetes/dashboard
 # Expose port for frontend, backend and remote debuging
 EXPOSE 8080 9090 2345
 
-# Run npm command in container. 
-CMD ./aio/develop/npm-command.sh
+# Run gosu command in container.
+CMD ./aio/develop/gosu-command.sh

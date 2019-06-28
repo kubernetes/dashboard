@@ -23,9 +23,16 @@
 CD="$(pwd)"
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+# User and group ID to execute commands.
+LOCAL_UID=$(id -u)
+LOCAL_GID=$(id -g)
+
 # K8S_DASHBOARD_NPM_CMD will be passed into container and will be used
-# by run-npm-command.sh on container.
-export K8S_DASHBOARD_NPM_CMD=$*
+# by run-npm-command.sh on container. Then the shell sciprt will run `npm`
+# command with K8S_DASHBOAD_NPM_CMD.
+# But if K8S_DASHBOARD_CMD is set, the command in K8S_DASHBOARD_CMD will be
+# executed instead of `npm ${K8S_DASHBOARD_NPM_CMD}`.
+K8S_DASHBOARD_NPM_CMD=$*
 
 # kubeconfig for dashboard.
 # This will be mounted and certain npm command can modify it,
@@ -63,14 +70,16 @@ docker run \
   --cap-add=SYS_PTRACE \
   -v /var/run/docker.sock:/var/run/docker.sock \
   -v ${K8S_DASHBOARD_SRC}:${K8S_DASHBOARD_SRC_ON_CONTAINER} \
-  -v ${K8S_DASHBOARD_KUBECONFIG}:/root/.kube/config \
+  -v ${K8S_DASHBOARD_KUBECONFIG}:/home/user/.kube/config \
   -e K8S_DASHBOARD_NPM_CMD="${K8S_DASHBOARD_NPM_CMD}" \
+  -e K8S_DASHBOARD_CMD="${K8S_DASHBOARD_CMD}" \
   -e K8S_OWN_CLUSTER=${K8S_OWN_CLUSTER} \
   -e K8S_DASHBOARD_BIND_ADDRESS=${K8S_DASHBOARD_BIND_ADDRESS} \
   -e K8S_DASHBOARD_DEBUG=${K8S_DASHBOARD_DEBUG} \
+  -e LOCAL_UID="${LOCAL_UID}" \
+  -e LOCAL_GID="${LOCAL_GID}" \
   -p 8080:8080 \
   -p 9090:9090 \
   -p 2345:2345 \
   ${DOCKER_RUN_OPTS} \
-  ${DASHBOARD_IMAGE_NAME} \
-  ${K8S_DASHBOARD_CMD}
+  ${DASHBOARD_IMAGE_NAME}

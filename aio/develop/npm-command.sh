@@ -23,17 +23,20 @@ if [[ -n "${K8S_DASHBOARD_NPM_CMD}" ]] ; then
 else
   # Install dashboard.
   echo "Install dashboard"
-  npm ci --unsafe-perm
+  npm ci
   if [[ "${K8S_OWN_CLUSTER}" != true ]] ; then
     # Stop cluster.
     echo "Stop cluster"
-    npm run cluster:stop
+    sudo npm run cluster:stop
     # Start cluster.
     echo "Start cluster"
-    npm run cluster:start
+    sudo npm run cluster:start
+    # Copy kubeconfig from /root/.kube/config
+    sudo cat /root/.kube/config > kind.kubeconfig
+    sudo chown ${LOCAL_UID}:${LOCAL_GID} kind.kubeconfig
     # Edit kubeconfig for kind
     KIND_CONTAINER_NAME="k8s-cluster-ci-control-plane"
-    KIND_ADDR=$(docker inspect -f='{{.NetworkSettings.IPAddress}}' ${KIND_CONTAINER_NAME})
+    KIND_ADDR=$(sudo docker inspect -f='{{.NetworkSettings.IPAddress}}' ${KIND_CONTAINER_NAME})
     sed -e "s/localhost:[0-9]\+/${KIND_ADDR}:6443/g" kind.kubeconfig > kind.kubeconfig.new
     cat kind.kubeconfig.new > kind.kubeconfig
     rm -f kind.kubeconfig.new
