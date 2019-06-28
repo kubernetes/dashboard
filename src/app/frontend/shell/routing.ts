@@ -21,7 +21,6 @@ import {ShellComponent} from './component';
 
 export const SHELL_ROUTE: Route = {
   path: ':resourceNamespace/:resourceName/:containerName',
-  runGuardsAndResolvers: 'always',
   component: ShellComponent,
   data: {
     breadcrumb: 'Shell',
@@ -31,7 +30,6 @@ export const SHELL_ROUTE: Route = {
 
 export const SHELL_ROUTE_RAW: Route = {
   path: ':resourceNamespace/:resourceName',
-  runGuardsAndResolvers: 'always',
   component: ShellComponent,
   data: {
     breadcrumb: 'Shell',

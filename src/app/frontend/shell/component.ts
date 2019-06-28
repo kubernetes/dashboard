@@ -114,8 +114,11 @@ export class ShellComponent implements AfterViewInit, OnDestroy {
     this.incommingMessage$_.complete();
     this.incommingMessage$_ = new Subject<ShellFrame>();
 
-
     this.selectedContainer = podContainer;
+
+    this._router.navigate([`/shell/${this.namespace_}/${this.podName}/${this.selectedContainer}`], {
+      queryParamsHandling: 'preserve',
+    });
 
     this.setupConnection();
     this.initTerm();

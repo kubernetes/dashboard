@@ -152,7 +152,6 @@ const routes: Routes = [
       {
         path: 'shell',
         loadChildren: 'shell/module#ShellModule',
-        runGuardsAndResolvers: 'always',
       },
       {
         path: 'search',
