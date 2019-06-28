@@ -29,7 +29,7 @@ import {NamespacedResourceService} from '../../../../common/services/resource/re
   templateUrl: './template.html',
 })
 export class DeploymentDetailComponent implements OnInit, OnDestroy {
-  private unsubscribe_ = new Subject();
+  private unsubscribe_ = new Subject<void>();
   private readonly endpoint_ = EndpointManager.resource(Resource.deployment, true);
   deployment: DeploymentDetail;
   newReplicaSet: ReplicaSet;
@@ -79,6 +79,7 @@ export class DeploymentDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.unsubscribe_.next();
-    this.unsubscribe_.unsubscribe();
+    this.unsubscribe_.complete();
+    this.actionbar_.onDetailsLeave.emit();
   }
 }

@@ -61,5 +61,6 @@ export class CronJobDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.cronJobSubscription_.unsubscribe();
+    this.actionbar_.onDetailsLeave.emit();
   }
 }

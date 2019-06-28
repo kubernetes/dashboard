@@ -15,8 +15,6 @@
 /**
  * @fileoverview Gulp tasks for compiling backend application.
  */
-import del from 'del';
-import fs from 'fs';
 import gulp from 'gulp';
 import lodash from 'lodash';
 import path from 'path';
@@ -25,45 +23,10 @@ import conf from './conf';
 import goCommand from './gocommand';
 
 /**
- * Cleans packaged backend source to remove any leftovers from there.
- */
-gulp.task('clean-packaged-backend-source', gulp.series(() => {
-  return del([conf.paths.backendTmpSrc]);
-}));
-
-/**
- * Moves all backend source files (app and tests) to a temporary package directory where it can be
- * applied go commands.
- */
-gulp.task('package-backend-source', gulp.series('clean-packaged-backend-source', () => {
-  return gulp.src([path.join(conf.paths.backendSrc, '**/*')])
-    .pipe(gulp.dest(conf.paths.backendTmpSrc));
-}));
-
-/**
- * Links vendor folder to the packaged backend source.
- */
-gulp.task('link-vendor', gulp.series('package-backend-source', (doneFn) => {
-  fs.symlink(conf.paths.backendVendor, conf.paths.backendTmpSrcVendor, 'dir', (err) => {
-    if (err && err.code === 'EEXIST') {
-      // Skip errors if the link already exists.
-      doneFn();
-    } else {
-      doneFn(err);
-    }
-  });
-}));
-
-/**
- * Packages backend code to be ready for tests and compilation.
- */
-gulp.task('package-backend', gulp.parallel('package-backend-source', 'link-vendor'));
-
-/**
  * Compiles backend application in development mode and places the binary in the serve
  * directory.
  */
-gulp.task('backend', gulp.series('package-backend', (doneFn) => {
+gulp.task('backend', gulp.series((doneFn) => {
   goCommand(
       [
         'build',
@@ -88,7 +51,7 @@ gulp.task('backend', gulp.series('package-backend', (doneFn) => {
  * The production binary difference from development binary is only that it contains all
  * dependencies inside it and is targeted for a specific architecture.
  */
-gulp.task('backend:prod', gulp.series('package-backend', () => {
+gulp.task('backend:prod', gulp.series(() => {
   let outputBinaryPath = path.join(conf.paths.dist, conf.backend.binaryName);
   return backendProd([[outputBinaryPath, conf.arch.default]]);
 }));
@@ -100,7 +63,7 @@ gulp.task('backend:prod', gulp.series('package-backend', () => {
  * The production binary difference from development binary is only that it contains all
  * dependencies inside it and is targeted specific architecture.
  */
-gulp.task('backend:prod:cross', gulp.series('package-backend', () => {
+gulp.task('backend:prod:cross', gulp.series(() => {
   let outputBinaryPaths =
       conf.paths.distCross.map((dir) => path.join(dir, conf.backend.binaryName));
   return backendProd(lodash.zip(outputBinaryPaths, conf.arch.list));

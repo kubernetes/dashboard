@@ -56,5 +56,6 @@ export class NamespaceDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.namespaceSubscription_.unsubscribe();
+    this.actionbar_.onDetailsLeave.emit();
   }
 }

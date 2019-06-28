@@ -58,6 +58,7 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.nodeSubscription_.unsubscribe();
+    this.actionbar_.onDetailsLeave.emit();
   }
 
   getAddresses(): string[] {

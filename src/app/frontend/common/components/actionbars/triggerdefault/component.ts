@@ -12,30 +12,38 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnInit} from '@angular/core';
-import {Subscription} from 'rxjs';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Subject, Subscription} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 import {ActionbarService, ResourceMeta,} from '../../../services/global/actionbar';
 
 @Component({
   selector: '',
   templateUrl: './template.html',
 })
-export class TriggerDefaultActionbar implements OnInit {
+export class TriggerDefaultActionbar implements OnInit, OnDestroy {
   isInitialized = false;
+  isVisible = false;
   resourceMeta: ResourceMeta;
-  resourceMetaSubscription_: Subscription;
+
+  private _unsubscribe = new Subject<void>();
 
   constructor(private readonly actionbar_: ActionbarService) {}
 
   ngOnInit(): void {
-    this.resourceMetaSubscription_ =
-        this.actionbar_.onInit.subscribe((resourceMeta: ResourceMeta) => {
+    this.actionbar_.onInit.pipe(takeUntil(this._unsubscribe))
+        .subscribe((resourceMeta: ResourceMeta) => {
           this.resourceMeta = resourceMeta;
           this.isInitialized = true;
+          this.isVisible = true;
         });
+
+    this.actionbar_.onDetailsLeave.pipe(takeUntil(this._unsubscribe))
+        .subscribe(() => this.isVisible = false);
   }
 
   ngOnDestroy(): void {
-    this.resourceMetaSubscription_.unsubscribe();
+    this._unsubscribe.next();
+    this._unsubscribe.complete();
   }
 }

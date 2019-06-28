@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div fxLayout="row">
+<div fxLayout="row"
+     *ngIf="isVisible">
   <button mat-icon-button
           color="accent"
           class="kd-toolbar-action"

@@ -54,5 +54,6 @@ export class ConfigMapDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.configMapSubscription_.unsubscribe();
+    this.actionbar_.onDetailsLeave.emit();
   }
 }

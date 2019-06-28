@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-actionbar-detail-actions *ngIf="isInitialized"
+<kd-actionbar-detail-actions *ngIf="isInitialized && isVisible"
                              [objectMeta]="resourceMeta.objectMeta"
                              [typeMeta]="resourceMeta.typeMeta"
                              [displayName]="resourceMeta.displayName"></kd-actionbar-detail-actions>

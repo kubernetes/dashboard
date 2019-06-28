@@ -62,5 +62,6 @@ export class DaemonSetDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.daemonSetSubscription_.unsubscribe();
+    this.actionbar_.onDetailsLeave.emit();
   }
 }

@@ -18,7 +18,7 @@
  */
 
 // IE10 and IE11 requires the following for the Reflect API.
-import 'core-js/es7/reflect';
+import 'core-js/es/reflect';
 
 import 'hammerjs';
 
@@ -30,9 +30,6 @@ import 'zone.js/dist/zone';
 
 // RxJS is required to support additional Observable methods such as map or switchMap.
 import 'rxjs/Rx';
-
-// Needed for unit testing.
-import 'core-js/es7/reflect';
 
 /* tslint:disable */
 // Global variable is required by some 3rd party libraries such as 'ace-ui'.

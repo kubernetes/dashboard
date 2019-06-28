@@ -59,5 +59,6 @@ export class JobDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.jobSubscription_.unsubscribe();
+    this.actionbar_.onDetailsLeave.emit();
   }
 }
