@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import {Routes} from '@angular/router';
-import {AuthGuard} from './common/services/guard/auth';
 import {LoginGuard} from './common/services/guard/login';
 import {LoginComponent} from './login/component';
 

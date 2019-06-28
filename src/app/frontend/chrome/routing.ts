@@ -132,13 +132,32 @@ const routes: Routes = [
       },
 
       // Others
-      {path: 'settings', loadChildren: 'settings/module#SettingsModule'},
-      {path: 'about', loadChildren: 'about/module#AboutModule'},
+      {
+        path: 'settings',
+        loadChildren: 'settings/module#SettingsModule',
+      },
+      {
+        path: 'about',
+        loadChildren: 'about/module#AboutModule',
+      },
 
-      {path: 'create', loadChildren: 'create/module#CreateModule'},
-      {path: 'log', loadChildren: 'logs/module#LogsModule'},
-      {path: 'shell', loadChildren: 'shell/module#ShellModule'},
-      {path: 'search', loadChildren: 'search/module#SearchModule'},
+      {
+        path: 'create',
+        loadChildren: 'create/module#CreateModule',
+      },
+      {
+        path: 'log',
+        loadChildren: 'logs/module#LogsModule',
+      },
+      {
+        path: 'shell',
+        loadChildren: 'shell/module#ShellModule',
+      },
+      {
+        path: 'search',
+        loadChildren: 'search/module#SearchModule',
+        runGuardsAndResolvers: 'always',
+      },
     ],
   },
 ];

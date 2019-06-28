@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild,} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, ViewChild,} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {PodContainerList, ShellFrame, SJSCloseEvent, SJSMessageEvent, TerminalResponse,} from '@api/backendapi';
 import {debounce} from 'lodash';
 import {ReplaySubject, Subject, Subscription} from 'rxjs';
@@ -32,7 +32,7 @@ declare let SockJS: any;
   templateUrl: './template.html',
   styleUrls: ['./styles.scss'],
 })
-export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ShellComponent implements AfterViewInit, OnDestroy {
   @ViewChild('anchor', {static: true}) anchorRef: ElementRef;
   term: Terminal;
   podName: string;
@@ -45,23 +45,17 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
   private conn_: WebSocket;
   private connected_ = false;
   private debouncedFit_: Function;
+  private connSubject_ = new ReplaySubject<ShellFrame>(100);
+  private incommingMessage$_ = new Subject<ShellFrame>();
   private readonly endpoint_ = EndpointManager.resource(Resource.pod, true);
   private readonly subscriptions_: Subscription[] = [];
   private readonly keyEvent$_ = new ReplaySubject<KeyboardEvent>(2);
-  private readonly connSubject_ = new ReplaySubject<ShellFrame>(100);
-  private readonly incommingMessage$_ = new Subject<ShellFrame>();
 
   constructor(
       private readonly containers_: NamespacedResourceService<PodContainerList>,
       private readonly terminal_: NamespacedResourceService<TerminalResponse>,
       private readonly activatedRoute_: ActivatedRoute, private readonly matSnackBar_: MatSnackBar,
-      private readonly cdr_: ChangeDetectorRef) {}
-
-  onPodContainerChange(podContainer: string): void {
-    this.selectedContainer = podContainer;
-  }
-
-  ngOnInit(): void {
+      private readonly cdr_: ChangeDetectorRef, private readonly _router: Router) {
     this.namespace_ = this.activatedRoute_.snapshot.params.resourceNamespace;
     this.podName = this.activatedRoute_.snapshot.params.resourceName;
     this.selectedContainer = this.activatedRoute_.snapshot.params.containerName;
@@ -80,6 +74,57 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
+    this.initTerm();
+  }
+
+  ngOnDestroy(): void {
+    if (this.conn_) {
+      this.conn_.close();
+    }
+
+    if (this.connSubject_) {
+      this.connSubject_.complete();
+    }
+
+    for (const sub of this.subscriptions_) {
+      sub.unsubscribe();
+    }
+
+    if (this.term) {
+      this.term.dispose();
+    }
+
+    this.incommingMessage$_.complete();
+  }
+
+  onPodContainerChange(podContainer: string): void {
+    if (this.conn_) {
+      this.conn_.close();
+    }
+
+    if (this.connSubject_) {
+      this.connSubject_.complete();
+      this.connSubject_ = new ReplaySubject<ShellFrame>(100);
+    }
+
+    if (this.term) {
+      this.term.dispose();
+    }
+
+    this.incommingMessage$_.complete();
+    this.incommingMessage$_ = new Subject<ShellFrame>();
+
+    this.selectedContainer = podContainer;
+
+    this._router.navigate([`/shell/${this.namespace_}/${this.podName}/${this.selectedContainer}`], {
+      queryParamsHandling: 'preserve',
+    });
+
+    this.setupConnection();
+    this.initTerm();
+  }
+
+  initTerm(): void {
     this.term = new Terminal({
       fontSize: 14,
       fontFamily: 'Consolas, "Courier New", monospace',
@@ -106,28 +151,6 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
     });
 
     this.cdr_.markForCheck();
-  }
-
-  ngOnDestroy(): void {
-    if (this.conn_ && this.connected_) {
-      this.conn_.close();
-    }
-
-    if (this.connSubject_) {
-      this.connSubject_.complete();
-    }
-
-    if (this.subscriptions_.length > 0) {
-      for (const sub of this.subscriptions_) {
-        sub.unsubscribe();
-      }
-    }
-
-    if (this.term) {
-      this.term.dispose();
-    }
-
-    this.incommingMessage$_.complete();
   }
 
   private async setupConnection(): Promise<void> {
