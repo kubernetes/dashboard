@@ -15,7 +15,7 @@
 import {HttpParams} from '@angular/common/http';
 import {Component, ElementRef, OnDestroy, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {LogDetails, LogLine, LogSelection, LogSources} from '@api/backendapi';
 import {GlobalSettingsService} from 'common/services/global/globalsettings';
 import {LogService} from 'common/services/global/logs';
@@ -23,6 +23,8 @@ import {NotificationSeverity, NotificationsService,} from 'common/services/globa
 import {Observable, Subscription} from 'rxjs';
 
 import {LogsDownloadDialog} from '../common/dialogs/download/dialog';
+import {NAMESPACE_STATE_PARAM} from '../common/params/params';
+import {CONFIG} from '../index.config';
 
 const logsPerView = 100;
 const maxLogSize = 2e9;
@@ -68,7 +70,7 @@ export class LogsComponent implements OnDestroy {
   constructor(
       logService: LogService, private readonly activatedRoute_: ActivatedRoute,
       private readonly settingsService_: GlobalSettingsService, private readonly dialog_: MatDialog,
-      private readonly notifications_: NotificationsService) {
+      private readonly notifications_: NotificationsService, private readonly _router: Router) {
     this.logService = logService;
     this.refreshInterval = this.settingsService_.getAutoRefreshTimeInterval() * 1000;
     this.isLoading = true;
@@ -76,7 +78,7 @@ export class LogsComponent implements OnDestroy {
     const namespace = this.activatedRoute_.snapshot.params.resourceNamespace;
     const resourceType = this.activatedRoute_.snapshot.params.resourceType;
     const resourceName = this.activatedRoute_.snapshot.params.resourceName;
-    const containerName = this.activatedRoute_.snapshot.params.container;
+    const containerName = this.activatedRoute_.snapshot.queryParams.container;
 
     this.sourceSubscription =
         logService.getResource(`source/${namespace}/${resourceName}/${resourceType}`)
@@ -98,6 +100,11 @@ export class LogsComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this._router.navigate([], {
+      queryParams: {['container']: null},
+      queryParamsHandling: 'merge',
+    });
+
     if (this.intervalSubscription) {
       this.intervalSubscription.unsubscribe();
     }
@@ -143,7 +150,10 @@ export class LogsComponent implements OnDestroy {
   }
 
   appendContainerParam() {
-    // this.state_.go('.', {container: this.container}, {notify: false, location: 'replace'});
+    this._router.navigate([], {
+      queryParams: {['container']: this.container},
+      queryParamsHandling: 'merge',
+    });
   }
 
   onContainerChange() {

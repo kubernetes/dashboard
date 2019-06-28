@@ -14,13 +14,14 @@
 
 import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild,} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {PodContainerList, ShellFrame, SJSCloseEvent, SJSMessageEvent, TerminalResponse,} from '@api/backendapi';
 import {debounce} from 'lodash';
 import {ReplaySubject, Subject, Subscription} from 'rxjs';
 import {Terminal} from 'xterm';
 import {fit} from 'xterm/lib/addons/fit/fit';
 
+import {NAMESPACE_STATE_PARAM} from '../common/params/params';
 import {EndpointManager, Resource,} from '../common/services/resource/endpoint';
 import {NamespacedResourceService} from '../common/services/resource/resource';
 
@@ -55,10 +56,13 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
       private readonly containers_: NamespacedResourceService<PodContainerList>,
       private readonly terminal_: NamespacedResourceService<TerminalResponse>,
       private readonly activatedRoute_: ActivatedRoute, private readonly matSnackBar_: MatSnackBar,
-      private readonly cdr_: ChangeDetectorRef) {}
+      private readonly cdr_: ChangeDetectorRef, private readonly _router: Router) {}
 
   onPodContainerChange(podContainer: string): void {
     this.selectedContainer = podContainer;
+    this._router.navigate([`/shell/${this.namespace_}/${this.podName}/${this.selectedContainer}`], {
+      queryParamsHandling: 'preserve',
+    });
   }
 
   ngOnInit(): void {

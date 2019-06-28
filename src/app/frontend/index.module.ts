@@ -20,7 +20,6 @@ import {RouterModule} from '@angular/router';
 import {ChromeModule} from './chrome/module';
 import {CoreModule} from './core.module';
 import {GlobalErrorHandler} from './error/handler';
-import {ErrorModule} from './error/module';
 import {RootComponent} from './index.component';
 import {routes} from './index.routing';
 import {LoginModule} from './login/module';
@@ -33,7 +32,10 @@ import {LoginModule} from './login/module';
     CoreModule,
     ChromeModule,
     LoginModule,
-    RouterModule.forRoot(routes, {useHash: true}),
+    RouterModule.forRoot(routes, {
+      useHash: true,
+      onSameUrlNavigation: 'reload',
+    }),
   ],
   providers: [{provide: ErrorHandler, useClass: GlobalErrorHandler}],
   declarations: [RootComponent],
