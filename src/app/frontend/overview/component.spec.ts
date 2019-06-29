@@ -23,12 +23,12 @@ import {AppConfig, CronJobList, DaemonSetList, PodList,} from '@api/backendapi';
 import {AllocationChartComponent} from '../common/components/allocationchart/component';
 import {CardComponent} from '../common/components/card/component';
 import {ListGroupIdentifiers, ListIdentifiers,} from '../common/components/resourcelist/groupids';
+import {emptyResourcesRatio, WorkloadStatusComponent,} from '../common/components/workloadstatus/component';
 import {ConfigService} from '../common/services/global/config';
 import {NotificationsService} from '../common/services/global/notifications';
 
 import {OverviewComponent} from './component';
 import {Helper, ResourceRatioModes} from './helper';
-import {emptyResourcesRatio, WorkloadStatusComponent,} from './workloadstatus/component';
 
 const mockDaemonSetData: DaemonSetList = {
   listMeta: {totalItems: 1},

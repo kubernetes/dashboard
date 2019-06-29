@@ -22,9 +22,9 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {AppConfig} from '@api/backendapi';
 import {ResourcesRatio} from '@api/frontendapi';
 
-import {AllocationChartComponent} from '../../common/components/allocationchart/component';
-import {CardComponent} from '../../common/components/card/component';
-import {ConfigService} from '../../common/services/global/config';
+import {ConfigService} from '../../services/global/config';
+import {AllocationChartComponent} from '../allocationchart/component';
+import {CardComponent} from '../card/component';
 
 import {WorkloadStatusComponent} from './component';
 

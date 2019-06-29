@@ -15,6 +15,8 @@ limitations under the License.
 -->
 
 <div [hidden]="shouldShowZeroState()">
+  <kd-workload-statuses *ngIf="showWorkloadStatuses()"
+                        [resourcesRatio]="resourcesRatio"></kd-workload-statuses>
   <kd-cron-job-list (onchange)="onListUpdate($event)"
                     [hideable]="true"></kd-cron-job-list>
   <kd-daemon-set-list (onchange)="onListUpdate($event)"
