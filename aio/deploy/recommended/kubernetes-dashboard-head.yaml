@@ -145,7 +145,7 @@ spec:
     spec:
       containers:
       - name: kubernetes-dashboard-head
-        image: kubernetesdashboarddev/kubernetes-dashboard-amd64:head
+        image: kubernetesdashboarddev/kubernetes-dashboard:head
         imagePullPolicy: Always
         ports:
         - containerPort: 8443

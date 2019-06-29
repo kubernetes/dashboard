@@ -77,13 +77,23 @@ rules:
   # Allow Dashboard to get metrics from heapster.
 - apiGroups: [""]
   resources: ["services"]
-  resourceNames: ["heapster"]
+  resourceNames: ["heapster", "dashboard-metrics-scraper"]
   verbs: ["proxy"]
 - apiGroups: [""]
   resources: ["services/proxy"]
-  resourceNames: ["heapster", "http:heapster:", "https:heapster:"]
+  resourceNames: ["heapster", "http:heapster:", "https:heapster:", "dashboard-metrics-scraper", "http:dashboard-metrics-scraper"]
   verbs: ["get"]
-
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: kubernetes-dashboard-minimal
+  namespace: kube-system
+rules:
+  # Allow Metrics Scraper to get metrics from the Metrics server
+- apiGroups: ["metrics.k8s.io"]
+  resources: ["pods", "nodes"]
+  verbs: ["get", "list", "watch"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -98,7 +108,20 @@ subjects:
 - kind: ServiceAccount
   name: kubernetes-dashboard
   namespace: kube-system
-
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: kubernetes-dashboard-minimal
+  namespace: kube-system
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: kubernetes-dashboard-minimal
+subjects:
+- kind: ServiceAccount
+  name: kubernetes-dashboard
+  namespace: kube-system
 ---
 # ------------------- Dashboard Deployment ------------------- #
 
@@ -123,6 +146,7 @@ spec:
       containers:
       - name: kubernetes-dashboard
         image: k8s.gcr.io/kubernetes-dashboard-amd64:v1.10.1
+        imagePullPolicy: Always
         ports:
         - containerPort: 8443
           protocol: TCP
@@ -173,3 +197,61 @@ spec:
       targetPort: 8443
   selector:
     k8s-app: kubernetes-dashboard
+
+
+---
+# ------------------- Metrics Scraper Deployment ------------------- #
+
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  labels:
+    k8s-app: kubernetes-metrics-scraper
+  name: kubernetes-metrics-scraper
+  namespace: kube-system
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      k8s-app: kubernetes-metrics-scraper
+  template:
+    metadata:
+      labels:
+        k8s-app: kubernetes-metrics-scraper
+    spec:
+      containers:
+      - name: kubernetes-metrics-scraper
+        image: kubernetesdashboarddev/dashboard-metrics-sidecar:latest
+        ports:
+        - containerPort: 8000
+          protocol: TCP
+        livenessProbe:
+          httpGet:
+            scheme: HTTP
+            path: /
+            port: 8000
+          initialDelaySeconds: 30
+          timeoutSeconds: 30
+      serviceAccountName: kubernetes-dashboard
+      # Comment the following tolerations if Dashboard must not be deployed on master
+      tolerations:
+      - key: node-role.kubernetes.io/master
+        effect: NoSchedule
+
+---
+# ------------------- Metrics Scraper Service ------------------- #
+
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    k8s-app: kubernetes-metrics-scraper
+  name: dashboard-metrics-scraper
+  namespace: kube-system
+spec:
+  ports:
+    - port: 8000
+      targetPort: 8000
+  selector:
+    k8s-app: kubernetes-metrics-scraper
