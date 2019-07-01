@@ -69,16 +69,16 @@ pushd "${KUBE_ROOT}" > /dev/null 2>&1
   fi
 popd > /dev/null 2>&1
 
-if [[ ${ret} -gt 0 ]]; then
-  exit ${ret}
-fi
-
 chmod -R +w "${_tmpdir}"
 if [ "${KEEP_TMP}" == "true" ]; then
   echo "Leaving ${_tmpdir} for you to examine or copy. Please delete it manually when finished. (rm -rf ${_tmpdir})"
 else
   echo "Removing ${_tmpdir}"
   rm -rf "${_tmpdir}"
+fi
+
+if [[ ${ret} -gt 0 ]]; then
+  exit ${ret}
 fi
 
 echo "Vendor Verified."
