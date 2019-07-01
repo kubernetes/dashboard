@@ -530,27 +530,27 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			Writes(persistentvolumeclaim.PersistentVolumeClaimDetail{}))
 
 	apiV1Ws.Route(
-		apiV1Ws.GET("/customresourcedefinition").
+		apiV1Ws.GET("/crd").
 			To(apiHandler.handleGetCustomResourceDefinitionList).
 			Writes(customresourcedefinition.CustomResourceDefinitionList{}))
 
 	apiV1Ws.Route(
-		apiV1Ws.GET("/customresourcedefinition/{customresourcedefinition}").
+		apiV1Ws.GET("/crd/{crd}").
 			To(apiHandler.handleGetCustomResourceDefinitionDetail).
 			Writes(customresourcedefinition.CustomResourceDefinitionDetail{}))
 
 	apiV1Ws.Route(
-		apiV1Ws.GET("/customresourcedefinition/{namespace}/{customresourcedefinition}/object").
+		apiV1Ws.GET("/crd/{namespace}/{crd}/object").
 			To(apiHandler.handleGetCustomResourceObjectList).
 			Writes(customresourcedefinition.CustomResourceObjectList{}))
 
 	apiV1Ws.Route(
-		apiV1Ws.GET("/customresourcedefinition/{namespace}/{customresourcedefinition}/object/{name}").
+		apiV1Ws.GET("/crd/{namespace}/{crd}/object/{name}").
 			To(apiHandler.handleGetCustomResourceObjectDetail).
 			Writes(customresourcedefinition.CustomResourceObjectDetail{}))
 
 	apiV1Ws.Route(
-		apiV1Ws.GET("/customresourcedefinition/{namespace}/{customresourcedefinition}/object/{name}/event").
+		apiV1Ws.GET("/crd/{namespace}/{crd}/object/{name}/event").
 			To(apiHandler.handleGetCustomResourceObjectEvents).
 			Writes(common.EventList{}))
 
@@ -2101,7 +2101,7 @@ func (apiHandler *APIHandler) handleGetCustomResourceDefinitionDetail(request *r
 		return
 	}
 
-	name := request.PathParameter("customresourcedefinition")
+	name := request.PathParameter("crd")
 	result, err := customresourcedefinition.GetCustomResourceDefinitionDetail(apiextensionsclient, config, name)
 	if err != nil {
 		errors.HandleInternalError(response, err)
@@ -2124,7 +2124,7 @@ func (apiHandler *APIHandler) handleGetCustomResourceObjectList(request *restful
 		return
 	}
 
-	crdName := request.PathParameter("customresourcedefinition")
+	crdName := request.PathParameter("crd")
 	namespace := parseNamespacePathParameter(request)
 	dataSelect := parseDataSelectPathParameter(request)
 	result, err := customresourcedefinition.GetCustomResourceObjectList(apiextensionsclient, config, namespace, dataSelect, crdName)
@@ -2150,7 +2150,7 @@ func (apiHandler *APIHandler) handleGetCustomResourceObjectDetail(request *restf
 	}
 
 	name := request.PathParameter("name")
-	crdName := request.PathParameter("customresourcedefinition")
+	crdName := request.PathParameter("crd")
 	namespace := parseNamespacePathParameter(request)
 	result, err := customresourcedefinition.GetCustomResourceObjectDetail(apiextensionsclient, namespace, config, crdName, name)
 	if err != nil {
