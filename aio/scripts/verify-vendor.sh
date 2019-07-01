@@ -20,9 +20,6 @@ set -o pipefail
 
 KUBE_ROOT=$(dirname "${BASH_SOURCE[0]}")/../..
 
-# create a nice clean place to put our new licenses
-# must be in the user dir (e.g. KUBE_ROOT) in order for the docker volume mount
-# to work with docker-machine on macs
 mkdir -p "${KUBE_ROOT}/_tmp"
 _tmpdir="$(mktemp -d "${KUBE_ROOT}/_tmp/kube-vendor.XXXXXX")"
 
@@ -54,16 +51,6 @@ pushd "${KUBE_ROOT}" > /dev/null 2>&1
     echo "${_out}" >&2
     echo "Vendor Verify failed." >&2
     echo "If you're seeing this locally, run the below command to fix your go.mod:" >&2
-    echo "npm run fix:backend:vendor" >&2
-    ret=1
-  fi
-
-  if ! _out="$(diff -Naupr -x "BUILD" -x "AUTHORS*" -x "CONTRIBUTORS*" vendor "${_kubetmp}/vendor")"; then
-    echo "Your vendored results are different:" >&2
-    echo "${_out}" >&2
-    echo "Vendor Verify failed." >&2
-    echo "${_out}" > vendordiff.patch
-    echo "If you're seeing this locally, run the below command to fix your directories:" >&2
     echo "npm run fix:backend:vendor" >&2
     ret=1
   fi
