@@ -24,6 +24,7 @@ before_install:
   - mkdir -p $GOPATH/src/github.com/
   - mv $HOME/build/kubernetes $GOPATH/src/github.com/
   - export TRAVIS_BUILD_DIR=$GOPATH/src/github.com/kubernetes/dashboard
+  - cd $TRAVIS_BUILD_DIR
 
 before_script:
   - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
