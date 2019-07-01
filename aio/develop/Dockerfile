@@ -75,6 +75,9 @@ RUN curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.s
 # Install delve for debuging go files.
 RUN go get github.com/go-delve/delve/cmd/dlv
 
+# Enable go mod. Note(shu-mutou): do not set this before `go get`
+ENV GO111MODULE=on
+
 # Volume for source code
 VOLUME ["/go/src/github.com/kubernetes/dashboard"]
 
@@ -85,7 +88,7 @@ RUN mkdir -p /home/user/.kube
 WORKDIR /go/src/github.com/kubernetes/dashboard
 
 # Expose port for frontend, backend and remote debuging
-EXPOSE 8080 9090 2345
+EXPOSE 8080 8443 9090 2345
 
 # Run gosu command in container.
 CMD ./aio/develop/gosu-command.sh

@@ -79,6 +79,7 @@ docker run \
   -e LOCAL_UID="${LOCAL_UID}" \
   -e LOCAL_GID="${LOCAL_GID}" \
   -p 8080:8080 \
+  -p 8443:8443 \
   -p 9090:9090 \
   -p 2345:2345 \
   ${DOCKER_RUN_OPTS} \
