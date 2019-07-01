@@ -3,6 +3,7 @@ src/app/frontend/environments/version.ts
 
 # Local copies of dependencies that should stay on developers' local machines:
 node_modules/
+vendor/
 
 # Build and test artifacts:
 .go_workspace/
