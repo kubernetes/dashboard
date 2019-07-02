@@ -20,13 +20,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/customresourcedefinition"
-
 	restful "github.com/emicklei/go-restful"
-	"golang.org/x/net/xsrftoken"
-	"k8s.io/apimachinery/pkg/runtime"
-	"k8s.io/client-go/tools/remotecommand"
-
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/auth"
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
@@ -40,6 +34,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/container"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/controller"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/cronjob"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/customresourcedefinition"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/deployment"
@@ -64,6 +59,9 @@ import (
 	settingsApi "github.com/kubernetes/dashboard/src/app/backend/settings/api"
 	"github.com/kubernetes/dashboard/src/app/backend/systembanner"
 	"github.com/kubernetes/dashboard/src/app/backend/validation"
+	"golang.org/x/net/xsrftoken"
+	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/client-go/tools/remotecommand"
 )
 
 const (
