@@ -20,11 +20,6 @@ before_install:
   - export GO111MODULE=on
   - export PATH=$PATH:$GOPATH/bin
   - eval "$(gimme 1.12.6)"
-#  - cd $HOME
-#  - mkdir -p $GOPATH/src/github.com/
-#  - mv $HOME/build/kubernetes $GOPATH/src/github.com/
-#  - export TRAVIS_BUILD_DIR=$GOPATH/src/github.com/kubernetes/dashboard
-#  - cd $TRAVIS_BUILD_DIR
 
 before_script:
   - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
