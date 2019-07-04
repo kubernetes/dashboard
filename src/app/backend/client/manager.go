@@ -18,8 +18,9 @@ import (
 	"log"
 	"strings"
 
-	restful "github.com/emicklei/go-restful"
+	"github.com/emicklei/go-restful"
 	v1 "k8s.io/api/authorization/v1"
+	apiextensionsclientset "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
@@ -67,6 +68,9 @@ type clientManager struct {
 	inClusterConfig *rest.Config
 	// Responsible for decrypting tokens coming in request header. Used for authentication.
 	tokenManager authApi.TokenManager
+	// API Extensions client created without providing auth info. It uses permissions granted to
+	// service account used by dashboard or kubeconfig file if it was passed during dashboard init.
+	insecureAPIExtensionsClient apiextensionsclientset.Interface
 	// Kubernetes client created without providing auth info. It uses permissions granted to
 	// service account used by dashboard or kubeconfig file if it was passed during dashboard init.
 	insecureClient kubernetes.Interface
@@ -91,6 +95,21 @@ func (self *clientManager) Client(req *restful.Request) (kubernetes.Interface, e
 	return self.InsecureClient(), nil
 }
 
+// APIExtensionsClient returns an API Extensions client. In case dashboard login is enabled and
+// option to skip login page is disabled only secure client will be returned, otherwise insecure
+// client will be used.
+func (self *clientManager) APIExtensionsClient(req *restful.Request) (apiextensionsclientset.Interface, error) {
+	if req == nil {
+		return nil, errors.NewBadRequest("request can not be nil!")
+	}
+
+	if self.isSecureModeEnabled(req) {
+		return self.secureAPIExtensionsClient(req)
+	}
+
+	return self.InsecureAPIExtensionsClient(), nil
+}
+
 // Config returns a rest config. In case dashboard login is enabled and option to skip
 // login page is disabled only secure config will be returned, otherwise insecure config will be
 // used.
@@ -111,6 +130,13 @@ func (self *clientManager) Config(req *restful.Request) (*rest.Config, error) {
 // during dashboard init.
 func (self *clientManager) InsecureClient() kubernetes.Interface {
 	return self.insecureClient
+}
+
+// InsecureAPIExtensionsClient returns API Extensions client that was created without providing
+// auth info. It uses permissions granted to service account used by dashboard or kubeconfig file
+// if it was passed during dashboard init.
+func (self *clientManager) InsecureAPIExtensionsClient() apiextensionsclientset.Interface {
+	return self.insecureAPIExtensionsClient
 }
 
 // InsecureConfig returns kubernetes client config that used privileges of dashboard service account
@@ -188,15 +214,20 @@ func (self *clientManager) HasAccess(authInfo api.AuthInfo) error {
 
 // VerberClient returns new verber client based on authentication information extracted from request
 func (self *clientManager) VerberClient(req *restful.Request) (clientapi.ResourceVerber, error) {
-	client, err := self.Client(req)
+	k8sClient, err := self.Client(req)
 	if err != nil {
 		return nil, err
 	}
 
-	return NewResourceVerber(client.CoreV1().RESTClient(),
-		client.ExtensionsV1beta1().RESTClient(), client.AppsV1().RESTClient(),
-		client.BatchV1().RESTClient(), client.BatchV1beta1().RESTClient(), client.AutoscalingV1().RESTClient(),
-		client.StorageV1().RESTClient(), client.RbacV1().RESTClient()), nil
+	apiextensionsclient, err := self.APIExtensionsClient(req)
+	if err != nil {
+		return nil, err
+	}
+
+	return NewResourceVerber(k8sClient.CoreV1().RESTClient(),
+		k8sClient.ExtensionsV1beta1().RESTClient(), k8sClient.AppsV1().RESTClient(),
+		k8sClient.BatchV1().RESTClient(), k8sClient.BatchV1beta1().RESTClient(), k8sClient.AutoscalingV1().RESTClient(),
+		k8sClient.StorageV1().RESTClient(), k8sClient.RbacV1().RESTClient(), apiextensionsclient.ApiextensionsV1beta1().RESTClient()), nil
 }
 
 // SetTokenManager sets the token manager that will be used for token decryption.
@@ -313,6 +344,20 @@ func (self *clientManager) secureClient(req *restful.Request) (kubernetes.Interf
 	return client, nil
 }
 
+func (self *clientManager) secureAPIExtensionsClient(req *restful.Request) (apiextensionsclientset.Interface, error) {
+	cfg, err := self.secureConfig(req)
+	if err != nil {
+		return nil, err
+	}
+
+	client, err := apiextensionsclientset.NewForConfig(cfg)
+	if err != nil {
+		return nil, err
+	}
+
+	return client, nil
+}
+
 func (self *clientManager) secureConfig(req *restful.Request) (*rest.Config, error) {
 	cmdConfig, err := self.ClientCmdConfig(req)
 	if err != nil {
@@ -331,7 +376,7 @@ func (self *clientManager) secureConfig(req *restful.Request) (*rest.Config, err
 // Initializes client manager
 func (self *clientManager) init() {
 	self.initInClusterConfig()
-	self.initInsecureClient()
+	self.initInsecureClients()
 	self.initCSRFKey()
 }
 
@@ -367,14 +412,21 @@ func (self *clientManager) initCSRFKey() {
 	self.csrfKey = csrf.NewCsrfTokenManager(self.insecureClient).Token()
 }
 
-func (self *clientManager) initInsecureClient() {
+// Initializes Kubernetes client and API extensions client.
+func (self *clientManager) initInsecureClients() {
 	self.initInsecureConfig()
-	client, err := kubernetes.NewForConfig(self.insecureConfig)
+	k8sClient, err := kubernetes.NewForConfig(self.insecureConfig)
 	if err != nil {
 		panic(err)
 	}
 
-	self.insecureClient = client
+	apiextensionsclient, err := apiextensionsclientset.NewForConfig(self.insecureConfig)
+	if err != nil {
+		panic(err)
+	}
+
+	self.insecureClient = k8sClient
+	self.insecureAPIExtensionsClient = apiextensionsclient
 }
 
 func (self *clientManager) initInsecureConfig() {
