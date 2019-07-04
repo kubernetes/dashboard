@@ -12,31 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package api
+package apis
 
-import (
-	coreV1 "k8s.io/api/core/v1"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+// GroupName is the group name used in this package
+const (
+	GroupName = "dashboard.k8s.io"
 )
-
-type Plugin struct {
-	metav1.TypeMeta   `json:",inline"`
-	metav1.ObjectMeta `json:"metadata,omitempty"`
-
-	Spec PluginSpec `json:"spec"`
-}
-
-type PluginList struct {
-	metav1.TypeMeta `json:",inline"`
-	metav1.ListMeta `json:"metadata"`
-
-	Items []Plugin `json:"items"`
-}
-
-type PluginSpec struct {
-	Source Source `json:"source"`
-}
-
-type Source struct {
-	ConfigMapRef *coreV1.ConfigMapEnvSource `json:"configMapRef,omitempty" protobuf:"bytes,1,opt,name=configMapRef"`
-}
