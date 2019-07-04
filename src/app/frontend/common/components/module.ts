@@ -83,6 +83,7 @@ import {CpuSparklineComponent} from './sparkline/cpu/component';
 import {MemorySparklineComponent} from './sparkline/memory/component';
 import {TextInputComponent} from './textinput/component';
 import {UploadFileComponent} from './uploadfile/component';
+import {WorkloadStatusComponent} from './workloadstatus/component';
 import {ZeroStateComponent} from './zerostate/component';
 
 const components = [
@@ -171,6 +172,7 @@ const components = [
   UploadFileComponent,
 
   ZeroStateComponent,
+  WorkloadStatusComponent
 ];
 
 @NgModule({

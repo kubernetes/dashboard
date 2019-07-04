@@ -17,10 +17,10 @@ import {CronJobList, DaemonSetList, DeploymentList, JobList, Metric, PodList, Re
 import {OnListChangeEvent, ResourcesRatio} from '@api/frontendapi';
 
 import {ListGroupIdentifiers, ListIdentifiers,} from '../common/components/resourcelist/groupids';
+import {emptyResourcesRatio} from '../common/components/workloadstatus/component';
 import {GroupedResourceList} from '../common/resources/groupedlist';
 
 import {Helper, ResourceRatioModes} from './helper';
-import {emptyResourcesRatio} from './workloadstatus/component';
 
 @Component({
   selector: 'kd-overview',
