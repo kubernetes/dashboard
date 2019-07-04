@@ -188,7 +188,7 @@ spec:
     spec:
       containers:
         - name: kubernetes-dashboard-head
-          image: kubernetesdashboarddev/kubernetes-dashboard:head
+          image: kubernetesdashboarddev/dashboard:head
           ports:
             - containerPort: 9090
               protocol: TCP
@@ -255,7 +255,7 @@ spec:
     spec:
       containers:
         - name: kubernetes-metrics-scraper
-          image: kubernetesui/metrics-scraper:v1.0.0
+          image: kubernetesdashboarddev/dashboard-metrics-sidecar:latest
           ports:
             - containerPort: 8000
               protocol: TCP

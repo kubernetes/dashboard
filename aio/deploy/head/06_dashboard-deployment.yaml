@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
         - name: kubernetes-dashboard-head
-          image: kubernetesdashboarddev/kubernetes-dashboard:head
+          image: kubernetesdashboarddev/dashboard:head
           imagePullPolicy: Always
           ports:
             - containerPort: 8443
