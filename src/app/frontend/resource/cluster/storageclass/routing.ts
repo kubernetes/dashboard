@@ -16,7 +16,7 @@ import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
 import {DEFAULT_ACTIONBAR} from '../../../common/components/actionbars/routing';
 
-import {DISCOVERY_ROUTE} from '../../discovery/routing';
+import {CLUSTER_ROUTE} from '../../cluster/routing';
 
 import {StorageClassDetailComponent} from './detail/component';
 import {StorageClassListComponent} from './list/component';
@@ -25,8 +25,8 @@ const STORAGECLASS_LIST_ROUTE: Route = {
   path: '',
   component: StorageClassListComponent,
   data: {
-    breadcrumb: 'Persistent Volumes',
-    parent: DISCOVERY_ROUTE,
+    breadcrumb: 'Storage Classes',
+    parent: CLUSTER_ROUTE,
   },
 };
 

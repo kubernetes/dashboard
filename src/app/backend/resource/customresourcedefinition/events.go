@@ -12,18 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
+package customresourcedefinition
 
-import {ComponentsModule} from '../common/components/module';
-import {WorkloadStatusComponent} from '../common/components/workloadstatus/component';
-import {SharedModule} from '../shared.module';
+import (
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
+	client "k8s.io/client-go/kubernetes"
+)
 
-import {OverviewComponent} from './component';
-import {OverviewRoutingModule} from './routing';
-
-@NgModule({
-  imports: [SharedModule, ComponentsModule, OverviewRoutingModule],
-  declarations: [OverviewComponent],
-})
-export class OverviewModule {
+// GetEventsForCustomResourceObject gets events that are associated with this CR object.
+func GetEventsForCustomResourceObject(client client.Interface, dsQuery *dataselect.DataSelectQuery,
+	namespace, name string) (*common.EventList, error) {
+	return event.GetResourceEvents(client, dsQuery, namespace, name)
 }

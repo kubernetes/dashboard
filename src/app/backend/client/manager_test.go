@@ -116,6 +116,81 @@ func TestSecureClient(t *testing.T) {
 	}
 }
 
+func TestAPIExtensionsClient(t *testing.T) {
+	cases := []struct {
+		request *restful.Request
+	}{
+		{
+			&restful.Request{
+				Request: &http.Request{
+					Header: http.Header(map[string][]string{}),
+				},
+			},
+		},
+	}
+
+	for _, c := range cases {
+		manager := NewClientManager("", "http://localhost:8080")
+		_, err := manager.APIExtensionsClient(c.request)
+
+		if err != nil {
+			t.Fatalf("APIExtensionsClient(%v): Expected API extensions client to be created"+
+				" but error was thrown: %s", c.request, err.Error())
+		}
+	}
+}
+
+func TestSecureAPIExtensionsClient(t *testing.T) {
+	cases := []struct {
+		request       *restful.Request
+		expectedError bool
+		err           error
+	}{
+		{
+			request: &restful.Request{
+				Request: &http.Request{
+					Header: http.Header(map[string][]string{}),
+					TLS:    &tls.ConnectionState{},
+				},
+			},
+			expectedError: true,
+			err:           errors.NewUnauthorized(errors.MsgLoginUnauthorizedError),
+		},
+		{
+			request: &restful.Request{
+				Request: &http.Request{
+					Header: http.Header(map[string][]string{"Authorization": {"Bearer asd"}}),
+					TLS:    &tls.ConnectionState{},
+				},
+			},
+			expectedError: false,
+			err:           nil,
+		},
+	}
+
+	for _, c := range cases {
+		manager := NewClientManager("", "http://localhost:8080")
+		_, err := manager.APIExtensionsClient(c.request)
+
+		if err == nil && !c.expectedError {
+			continue
+		}
+
+		if !c.expectedError && err != nil {
+			t.Fatalf("APIExtensions(%v): Expected client to be created but error"+
+				" was thrown: %s", c.request, err.Error())
+		}
+
+		if c.expectedError && err == nil {
+			t.Fatalf("Expected error %v but got nil", c.err)
+		}
+
+		if c.err.Error() != err.Error() {
+			t.Fatalf("Expected error %v but got %v", c.err, err)
+		}
+	}
+}
+
 func TestCSRFKey(t *testing.T) {
 	manager := NewClientManager("", "http://localhost:8080")
 	key := manager.CSRFKey()
@@ -217,9 +292,16 @@ func TestVerberClient(t *testing.T) {
 	}
 }
 
-func TestClientManager_InsecureClient(t *testing.T) {
+func TestClientManager_InsecureClients(t *testing.T) {
 	manager := NewClientManager("", "http://localhost:8080")
 	if manager.InsecureClient() == nil {
+		t.Fatalf("InsecureClient(): Expected insecure client not to be nil")
+	}
+}
+
+func TestClientManager_InsecureAPIExtensionsClient(t *testing.T) {
+	manager := NewClientManager("", "http://localhost:8080")
+	if manager.InsecureAPIExtensionsClient() == nil {
 		t.Fatalf("InsecureClient(): Expected insecure client not to be nil")
 	}
 }

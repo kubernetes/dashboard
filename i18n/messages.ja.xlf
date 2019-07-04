@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="en" datatype="plaintext" original="ng2.template">
     <body>
@@ -64,18 +64,18 @@
       </trans-unit>
       <trans-unit id="ea458920c36540bbd94274d9074c8c9fc2906f46" datatype="html">
         <source>
-    <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Are you sure you want to delete <x id="INTERPOLATION" equiv-text="{{data.displayName}}"/> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_1" equiv-text="{{data.objectMeta.name}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-    <x id="START_TAG_SPAN_1" ctype="x-span" equiv-text="&lt;span&gt;"/>
-       in namespace <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_2" equiv-text="{{data.objectMeta.namespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>
-    <x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-    <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>?<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
+    <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/>Are you sure you want to delete <x id="INTERPOLATION" equiv-text="{{data.displayName}}"/> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_1" equiv-text="{{data.objectMeta.name}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/>
+    <x id="START_TAG_SPAN_1" ctype="x-span" equiv-text="&lt;span>"/>
+       in namespace <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_2" equiv-text="{{data.objectMeta.namespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>
+    <x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/>
+    <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/>?<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/>
   </source>
         <target>
-    <x id="START_TAG_SPAN_1" ctype="x-span" equiv-text="&lt;span&gt;"/>
-       ネームスペース <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_2" equiv-text="{{data.objectMeta.namespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> の
-    <x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-    <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/> <x id="INTERPOLATION" equiv-text="{{data.displayName}}"/> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_1" equiv-text="{{data.objectMeta.name}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> を本当に削除しますか<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-    <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>？<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
+    <x id="START_TAG_SPAN_1" ctype="x-span" equiv-text="&lt;span>"/>
+       ネームスペース <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_2" equiv-text="{{data.objectMeta.namespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> の
+    <x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/>
+    <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/> <x id="INTERPOLATION" equiv-text="{{data.displayName}}"/> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_1" equiv-text="{{data.objectMeta.name}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> を本当に削除しますか<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/>
+    <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/>？<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/>
   </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/dialogs/deleteresource/template.html</context>
@@ -1639,10 +1639,10 @@
       </trans-unit>
       <trans-unit id="7966f20bdbfc6d32429e1eaa61386e3e6eb0cb2d" datatype="html">
         <source>
-    Do you want to stay on current page and change namespace from <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{namespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> to <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_1" equiv-text="{{newNamespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>?
+    Do you want to stay on current page and change namespace from <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION" equiv-text="{{namespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> to <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_1" equiv-text="{{newNamespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>?
   </source>
         <target>
-    現在のページで、ネームスペースを <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{namespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> から <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_1" equiv-text="{{newNamespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> に変更しますか？
+    現在のページで、ネームスペースを <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION" equiv-text="{{namespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> から <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_1" equiv-text="{{newNamespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> に変更しますか？
   </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/namespace/changedialog/template.html</context>
@@ -2119,14 +2119,14 @@
       </trans-unit>
       <trans-unit id="7066e1af065c2b6a45b83dc874af7d15f1fba435" datatype="html">
         <source>
-      You can <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>deploy a containerized app<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>, select other namespace or
-      <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a&gt;"/>take the Dashboard Tour
-        <x id="START_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;mat-icon&gt;"/>open_in_new<x id="CLOSE_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;/mat-icon&gt;"/><x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> to learn more.
+      You can <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>deploy a containerized app<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>, select other namespace or
+      <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a>"/>take the Dashboard Tour
+        <x id="START_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;mat-icon>"/>open_in_new<x id="CLOSE_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;/mat-icon>"/><x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> to learn more.
     </source>
         <target>
-      <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>コンテナー化アプリをデプロイ<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>、他のネームスペースを選択、もっと知るために
-      <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a&gt;"/>ダッシュボードツアーを見学
-        <x id="START_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;mat-icon&gt;"/>open_in_new<x id="CLOSE_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;/mat-icon&gt;"/><x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> できます。
+      <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>コンテナー化アプリをデプロイ<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>、他のネームスペースを選択、もっと知るために
+      <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a>"/>ダッシュボードツアーを見学
+        <x id="START_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;mat-icon>"/>open_in_new<x id="CLOSE_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;/mat-icon>"/><x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> できます。
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/zerostate/template.html</context>
@@ -2376,10 +2376,10 @@
       </trans-unit>
       <trans-unit id="6c52d5ec237726e7cd1dcca2be78c8a0be6bc344" datatype="html">
         <source>
-              <x id="START_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;kd-date&gt;"/><x id="CLOSE_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;/kd-date&gt;"/> ago
+              <x id="START_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;kd-date>"/><x id="CLOSE_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;/kd-date>"/> ago
             </source>
         <target>
-              <x id="START_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;kd-date&gt;"/><x id="CLOSE_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;/kd-date&gt;"/> 前
+              <x id="START_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;kd-date>"/><x id="CLOSE_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;/kd-date>"/> 前
             </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/notifications/template.html</context>
@@ -2522,10 +2522,10 @@
       </trans-unit>
       <trans-unit id="a55441e16a7aab838dcedbccf0a517b3ad41eac4" datatype="html">
         <source>
-                Please select the kubeconfig file that you have created to configure access to the cluster. To find out more about how to configure and use kubeconfig file, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>Configure Access to Multiple Clusters<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> section.
+                Please select the kubeconfig file that you have created to configure access to the cluster. To find out more about how to configure and use kubeconfig file, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Configure Access to Multiple Clusters<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> section.
               </source>
         <target>
-                クラスターにアクセスするために作成した kubeconfig ファイルを選択してください。kubeconfig ファイルの設定方法や使用方法についてもっと知るためには、 <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>Configure Access to Multiple Clusters<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> セクションを参照してください。
+                クラスターにアクセスするために作成した kubeconfig ファイルを選択してください。kubeconfig ファイルの設定方法や使用方法についてもっと知るためには、 <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Configure Access to Multiple Clusters<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> セクションを参照してください。
               </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
@@ -2534,10 +2534,10 @@
       </trans-unit>
       <trans-unit id="2071ed7df8c83bd144f74bc298a721261bea4c11" datatype="html">
         <source>
-                Make sure that support for basic authentication is enabled in the cluster. To find out more about how to configure basic authentication, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>Authenticating<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> and <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a&gt;"/>ABAC Mode<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> sections.
+                Make sure that support for basic authentication is enabled in the cluster. To find out more about how to configure basic authentication, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Authenticating<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> and <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a>"/>ABAC Mode<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> sections.
               </source>
         <target>
-                ベーシック認証がそのクラスターで有効になっていることを確認してください。ベーシック認証の設定方法についてもっと知るためには、 <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>Authenticating<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> と <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a&gt;"/>ABAC Mode<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> セクションを参照してください。
+                ベーシック認証がそのクラスターで有効になっていることを確認してください。ベーシック認証の設定方法についてもっと知るためには、 <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Authenticating<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> と <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a>"/>ABAC Mode<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> セクションを参照してください。
               </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
@@ -2546,10 +2546,10 @@
       </trans-unit>
       <trans-unit id="0007b848b1737e066b8ba78e030ed5a62fbbdb04" datatype="html">
         <source>
-                Every Service Account has a Secret with valid Bearer Token that can be used to log in to Dashboard. To find out more about how to configure and use Bearer Tokens, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>Authentication<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> section.
+                Every Service Account has a Secret with valid Bearer Token that can be used to log in to Dashboard. To find out more about how to configure and use Bearer Tokens, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Authentication<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> section.
               </source>
         <target>
-                すべてのサービスアカウントには、ダッシュボードのログインに使用できる有効なベアラートークンを持つシークレットがあります。ベアラートークンの設定方法や使用方法についてもっと知るためには、 <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>Authentication<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> セクションを参照してください。
+                すべてのサービスアカウントには、ダッシュボードのログインに使用できる有効なベアラートークンを持つシークレットがあります。ベアラートークンの設定方法や使用方法についてもっと知るためには、 <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Authentication<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> セクションを参照してください。
               </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
@@ -2627,13 +2627,13 @@
       <trans-unit id="c724811fb2f4bff899b199225a1581378ecf8af6" datatype="html">
         <source>
       Kubernetes Dashboard is made possible by the Dashboard
-      <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>community<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> as an
-      <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a&gt;"/>open source project<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>.
+      <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>community<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> as an
+      <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a>"/>open source project<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>.
     </source>
         <target>
       Kubernetes Dashboard は、ダッシュボード
-      <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>コミュニティー<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> によって、
-      <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a&gt;"/>オープンソースプロジェクト<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>として実現されています。
+      <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>コミュニティー<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> によって、
+      <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a>"/>オープンソースプロジェクト<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>として実現されています。
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/about/template.html</context>
@@ -2653,7 +2653,7 @@
         <target>フィードバックを提供する</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/about/actionbar/template.html</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7db62a1ccd31f1bb55e3532b0f58984a492296a8" datatype="html">
@@ -2751,11 +2751,11 @@
       <trans-unit id="1776287add5575c03fdef42670d0ddc4ecd15f75" datatype="html">
         <source>
               Learn more
-              <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>
+              <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>
             </source>
         <target>
               もっと詳しく
-              <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>
+              <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>
             </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createnamespace/template.html</context>
@@ -2894,17 +2894,17 @@
       </trans-unit>
       <trans-unit id="aea36993f0b05780ff41173cb0d5eaf5d6e886f9" datatype="html">
         <source>
-        Application name must start with a lowercase letter and contain only lowercase letters, numbers, and &apos;-&apos; between words.
+        Application name must start with a lowercase letter and contain only lowercase letters, numbers, and '-' between words.
       </source>
-        <target>アプリケーション名は小文字で始まり、小文字、数字、および &apos;-&apos; からなる必要があります。</target>
+        <target>アプリケーション名は小文字で始まり、小文字、数字、および '-' からなる必要があります。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
       <trans-unit id="41cb32a2fd6b8c46e9abfc29ad55e26bceb82b29" datatype="html">
-        <source>An &apos;app&apos; label with this value will be added to the Deployment and Service that get deployed.</source>
-        <target>この値の &apos;app&apos; ラベルがデプロイメントおよびサービスに追加されます。</target>
+        <source>An 'app' label with this value will be added to the Deployment and Service that get deployed.</source>
+        <target>この値の 'app' ラベルがデプロイメントおよびサービスに追加されます。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">50</context>
@@ -2913,13 +2913,13 @@
       <trans-unit id="7417b16e2ad24e4b169790f07c7b3697345c2e6f" datatype="html">
         <source>
         Learn more
-        <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>
+        <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>
       </source>
         <target>
         もっと詳しく
-        <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>
+        <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>
       </target>
-          <context-group purpose="location">
+        <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">54</context>
         </context-group>
@@ -3038,7 +3038,7 @@
       </trans-unit>
       <trans-unit id="d6f98d37a4e39b48d6861e098d106eb3a213bfae" datatype="html">
         <source>
-        The description will be added as an annotation to the Deployment and displayed in the application&apos;s details.
+        The description will be added as an annotation to the Deployment and displayed in the application's details.
       </source>
         <target>説明はデプロイメントのアノテーションとして追加され、アプリケーションの詳細に表示されます。</target>
         <context-group purpose="location">
@@ -3057,11 +3057,11 @@
       <trans-unit id="1acb8abbae43cfd87cf3aaf5b729c3935e61b8f9" datatype="html">
         <source>
           Learn more
-          <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>
+          <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>
         </source>
         <target>
           もっと詳しく
-          <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>
+          <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
@@ -3217,7 +3217,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="7f64de7337ceb8f09ec7db1778676b02f07a73df" datatype="html">
-        <source>By default, your containers run the selected image&apos;s default entrypoint command. You can use the command options to override the default.</source>
+        <source>By default, your containers run the selected image's default entrypoint command. You can use the command options to override the default.</source>
         <target>デフォルトでは、コンテナーは選択されたイメージの ENTRYPOINT のコマンドを実行します。コマンドオプションを使用して、このデフォルトの動作を上書きできます。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
@@ -3314,10 +3314,10 @@
       </trans-unit>
       <trans-unit id="f4f3cd7c1a966e896d4503d7c8ba0dc04a786717" datatype="html">
         <source>
-    Learn more <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>
+    Learn more <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>
   </source>
         <target>
-    もっと詳しく <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>
+    もっと詳しく <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>
   </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/input/template.html</context>
@@ -3357,11 +3357,11 @@
       <trans-unit id="d209b99bd6bb245d6ddb3d340ecc637df270c2f2" datatype="html">
         <source>
     Learn more
-    <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>
+    <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>
   </source>
         <target>
     もっと詳しく
-    <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>
+    <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>
   </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/file/template.html</context>
@@ -3554,10 +3554,10 @@
       </trans-unit>
       <trans-unit id="438306a033d833e01c0d4b43ffb47acb5c9d4fdb" datatype="html">
         <source>
-          <x id="INTERPOLATION" equiv-text="{{label.get(&apos;key&apos;).value}}"/> is not unique
+          <x id="INTERPOLATION" equiv-text="{{label.get('key').value}}"/> is not unique
         </source>
         <target>
-          <x id="INTERPOLATION" equiv-text="{{label.get(&apos;key&apos;).value}}"/> は一意ではありません
+          <x id="INTERPOLATION" equiv-text="{{label.get('key').value}}"/> は一意ではありません
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/deploylabel/template.html</context>
@@ -3576,9 +3576,9 @@
       </trans-unit>
       <trans-unit id="2cf48a4788243a5493ff403a8fac4db6b9073303" datatype="html">
         <source>
-          Label key name must be alphanumeric separated by &apos;-&apos;, &apos;_&apos; or &apos;.&apos;, optionally prefixed by a DNS subdomain and &apos;/&apos;.
+          Label key name must be alphanumeric separated by '-', '_' or '.', optionally prefixed by a DNS subdomain and '/'.
         </source>
-        <target>ラベルのキー名は、&apos;-&apos;、&apos;_&apos;、あるいは &apos;.&apos; で区切られたアルファベットと数字からなる必要があり、オプションで DNS サブドメイン、あるいは &apos;/&apos; でプレフィックスできます。</target>
+        <target>ラベルのキー名は、'-'、'_'、あるいは '.' で区切られたアルファベットと数字からなる必要があり、オプションで DNS サブドメイン、あるいは '/' でプレフィックスできます。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/deploylabel/template.html</context>
           <context context-type="linenumber">40</context>
@@ -3614,9 +3614,9 @@
       </trans-unit>
       <trans-unit id="f0f259da0f80c8a4cfb99e71ba6f6492efe816f2" datatype="html">
         <source>
-          Label value must be alphanumeric separated by &apos;.&apos; , &apos;-&apos; or &apos;_&apos;.
+          Label value must be alphanumeric separated by '.' , '-' or '_'.
         </source>
-        <target>ラベルの値は &apos;.&apos;、&apos;-&apos;、あるいは &apos;_&apos; で区切られたアルファベットと数字からなる必要があります。</target>
+        <target>ラベルの値は '.'、'-'、あるいは '_' で区切られたアルファベットと数字からなる必要があります。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/deploylabel/template.html</context>
           <context context-type="linenumber">65</context>
@@ -3666,10 +3666,10 @@
       </trans-unit>
       <trans-unit id="4718e522f1a6e0d5ca2062f6c96ee1c584021326" datatype="html">
         <source>
-          Logs from <x id="START_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;kd-date&gt;"/><x id="CLOSE_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;/kd-date&gt;"/> to <x id="START_TAG_KD-DATE_1" ctype="x-kd-date" equiv-text="&lt;kd-date&gt;"/><x id="CLOSE_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;/kd-date&gt;"/> UTC
+          Logs from <x id="START_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;kd-date>"/><x id="CLOSE_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;/kd-date>"/> to <x id="START_TAG_KD-DATE_1" ctype="x-kd-date" equiv-text="&lt;kd-date>"/><x id="CLOSE_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;/kd-date>"/> UTC
         </source>
         <target>
-          <x id="START_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;kd-date&gt;"/><x id="CLOSE_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;/kd-date&gt;"/> から <x id="START_TAG_KD-DATE_1" ctype="x-kd-date" equiv-text="&lt;kd-date&gt;"/><x id="CLOSE_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;/kd-date&gt;"/> UTC までのログ
+          <x id="START_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;kd-date>"/><x id="CLOSE_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;/kd-date>"/> から <x id="START_TAG_KD-DATE_1" ctype="x-kd-date" equiv-text="&lt;kd-date>"/><x id="CLOSE_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;/kd-date>"/> UTC までのログ
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/logs/template.html</context>
@@ -4682,12 +4682,12 @@
       </trans-unit>
       <trans-unit id="c9520753c9f858831cc65185a92171dd42e7306d" datatype="html">
         <source>
-      Global settings are stored in <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>kubernetes-dashboard-settings<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> config map inside
-      <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>kube-system<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> namespace, so all of them are applied for every instance of the app.
+      Global settings are stored in <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>kubernetes-dashboard-settings<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> config map inside
+      <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>kube-system<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> namespace, so all of them are applied for every instance of the app.
     </source>
         <target>
-      グローバル設定を <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>kube-system<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> ネームスペース内の
-      <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>kubernetes-dashboard-settings<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> コンフィグマップに保存しました。
+      グローバル設定を <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>kube-system<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> ネームスペース内の
+      <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>kubernetes-dashboard-settings<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> コンフィグマップに保存しました。
       これらは、アプリケーションのすべてのインスタンスに適用されます。
     </target>
         <context-group purpose="location">
@@ -4804,20 +4804,20 @@
       <trans-unit id="dc935c1eb87651baf1b1b0e53119e6dec2db8862" datatype="html">
         <source>
     Shell in
-    <x id="START_TAG_MAT-SELECT" ctype="x-mat-select" equiv-text="&lt;mat-select&gt;"/>
-      <x id="START_TAG_MAT-OPTION" ctype="x-mat-option" equiv-text="&lt;mat-option&gt;"/>
+    <x id="START_TAG_MAT-SELECT" ctype="x-mat-select" equiv-text="&lt;mat-select>"/>
+      <x id="START_TAG_MAT-OPTION" ctype="x-mat-option" equiv-text="&lt;mat-option>"/>
         <x id="INTERPOLATION" equiv-text="{{ item }}"/>
-      <x id="CLOSE_TAG_MAT-OPTION" ctype="x-mat-option" equiv-text="&lt;/mat-option&gt;"/>
-    <x id="CLOSE_TAG_MAT-SELECT" ctype="x-mat-select" equiv-text="&lt;/mat-select&gt;"/>
+      <x id="CLOSE_TAG_MAT-OPTION" ctype="x-mat-option" equiv-text="&lt;/mat-option>"/>
+    <x id="CLOSE_TAG_MAT-SELECT" ctype="x-mat-select" equiv-text="&lt;/mat-select>"/>
     in <x id="INTERPOLATION_1" equiv-text="{{ podName }}"/>
   </source>
         <target>
     <x id="INTERPOLATION_1" equiv-text="{{ podName }}"/> の
-    <x id="START_TAG_MAT-SELECT" ctype="x-mat-select" equiv-text="&lt;mat-select&gt;"/>
-      <x id="START_TAG_MAT-OPTION" ctype="x-mat-option" equiv-text="&lt;mat-option&gt;"/>
+    <x id="START_TAG_MAT-SELECT" ctype="x-mat-select" equiv-text="&lt;mat-select>"/>
+      <x id="START_TAG_MAT-OPTION" ctype="x-mat-option" equiv-text="&lt;mat-option>"/>
         <x id="INTERPOLATION" equiv-text="{{ item }}"/>
-      <x id="CLOSE_TAG_MAT-OPTION" ctype="x-mat-option" equiv-text="&lt;/mat-option&gt;"/>
-    <x id="CLOSE_TAG_MAT-SELECT" ctype="x-mat-select" equiv-text="&lt;/mat-select&gt;"/>
+      <x id="CLOSE_TAG_MAT-OPTION" ctype="x-mat-option" equiv-text="&lt;/mat-option>"/>
+    <x id="CLOSE_TAG_MAT-SELECT" ctype="x-mat-select" equiv-text="&lt;/mat-select>"/>
     のシェル
   </target>
         <context-group purpose="location">
