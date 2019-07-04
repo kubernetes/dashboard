@@ -280,7 +280,7 @@
         <source>Workload Status</source>
         <target>Statut des charges de travail</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/overview/workloadstatus/template.html</context>
+          <context context-type="sourcefile">../src/app/frontend/common/components/workloadstatus/template.html</context>
           <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
@@ -288,7 +288,7 @@
         <source>Cron Jobs</source>
         <target>Cron Jobs</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/overview/workloadstatus/template.html</context>
+          <context context-type="sourcefile">../src/app/frontend/common/components/workloadstatus/template.html</context>
           <context context-type="linenumber">37</context>
         </context-group>
         <context-group purpose="location">
@@ -300,7 +300,7 @@
         <source>Daemon Sets</source>
         <target>Daemon Sets</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/overview/workloadstatus/template.html</context>
+          <context context-type="sourcefile">../src/app/frontend/common/components/workloadstatus/template.html</context>
           <context context-type="linenumber">52</context>
         </context-group>
         <context-group purpose="location">
@@ -312,7 +312,7 @@
         <source>Deployments</source>
         <target>Déploiements</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/overview/workloadstatus/template.html</context>
+          <context context-type="sourcefile">../src/app/frontend/common/components/workloadstatus/template.html</context>
           <context context-type="linenumber">67</context>
         </context-group>
         <context-group purpose="location">
@@ -324,7 +324,7 @@
         <source>Jobs</source>
         <target>Jobs</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/overview/workloadstatus/template.html</context>
+          <context context-type="sourcefile">../src/app/frontend/common/components/workloadstatus/template.html</context>
           <context context-type="linenumber">82</context>
         </context-group>
         <context-group purpose="location">
@@ -335,6 +335,10 @@
       <trans-unit id="7357d53d819cc1f5dd329a4fff4c582461ee1317" datatype="html">
         <source>Pods</source>
         <target>Pods</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/workloadstatus/template.html</context>
+          <context context-type="linenumber">97</context>
+        </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
           <context context-type="linenumber">64</context>
@@ -368,10 +372,6 @@
           <context context-type="linenumber">84</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/overview/workloadstatus/template.html</context>
-          <context context-type="linenumber">97</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
           <context context-type="linenumber">247</context>
         </context-group>
@@ -394,7 +394,7 @@
         <source>Replica Sets</source>
         <target>Replica Sets</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/overview/workloadstatus/template.html</context>
+          <context context-type="sourcefile">../src/app/frontend/common/components/workloadstatus/template.html</context>
           <context context-type="linenumber">112</context>
         </context-group>
         <context-group purpose="location">
@@ -406,7 +406,7 @@
         <source>Replication Controllers</source>
         <target>Replication Controllers</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/overview/workloadstatus/template.html</context>
+          <context context-type="sourcefile">../src/app/frontend/common/components/workloadstatus/template.html</context>
           <context context-type="linenumber">127</context>
         </context-group>
       </trans-unit>
@@ -414,7 +414,7 @@
         <source>Stateful Sets</source>
         <target>Stateful Sets</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/overview/workloadstatus/template.html</context>
+          <context context-type="sourcefile">../src/app/frontend/common/components/workloadstatus/template.html</context>
           <context context-type="linenumber">142</context>
         </context-group>
         <context-group purpose="location">
