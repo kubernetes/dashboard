@@ -25,34 +25,19 @@ import {multiDest} from './common';
 import conf from './conf';
 
 /**
- * Creates head Docker image for the application for current architecture.
- * The image is tagged with the image name configuration constant.
+ * Processes the Docker file and places it in the dist folder for all architectures.
  */
-gulp.task('docker-image:head', () => {
-  return buildDockerImage([[conf.deploy.headImageName, conf.paths.dist]]);
+gulp.task('docker-file:cross', () => {
+  return dockerFile(conf.paths.distCross);
 });
 
 /**
  * Creates head Docker image for the application for all architectures.
  * The image is tagged with the image name configuration constant.
  */
-gulp.task('docker-image:head:cross', () => {
+gulp.task('docker-image:head:cross', gulp.series('docker-file:cross', () => {
   return buildDockerImage(lodash.zip(conf.deploy.headImageNames, conf.paths.distCross));
-});
-
-/**
- * Processes the Docker file and places it in the dist folder for building.
- */
-gulp.task('docker-file', () => {
-  return dockerFile(conf.paths.dist);
-});
-
-/**
- * Processes the Docker file and places it in the dist folder for all architectures.
- */
-gulp.task('docker-file:cross', () => {
-  return dockerFile(conf.paths.distCross);
-});
+}));
 
 /**
  * Creates release Docker image for the application for all architectures.
@@ -66,46 +51,15 @@ gulp.task('docker-image:release:cross', gulp.series('docker-file:cross', () => {
  * Pushes cross compiled head images to Docker Hub.
  */
 gulp.task('push-to-docker:head:cross', gulp.series('docker-image:head:cross', () => {
-  // If travis commit is available push all images and their copies tagged with commit SHA.
-  if (process.env.TRAVIS_COMMIT) {
-    let allImages = conf.deploy.headImageNames.concat([]);
-
-    let spawnPromises = conf.deploy.headImageNames.map((imageName) => {
-      // Regex to extract base image and its tag.
-      let extractBaseRegex = /(.*):(\w+)/i;
-      let newImageName = `${imageName.match(extractBaseRegex)[1]}:${process.env.TRAVIS_COMMIT}`;
-      allImages.push(newImageName);
-      return new Promise((resolve, reject) => {
-        spawnDockerProcess(
-            [
-              'tag',
-              imageName,
-              newImageName,
-            ],
-            (err) => {
-              if (err) {
-                reject(err);
-              } else {
-                resolve();
-              }
-            });
-      });
-    });
-
-    return Promise.all(spawnPromises).then(() => {
-      return pushToDocker(allImages, conf.deploy.headManifestName);
-    });
-  } else {
-    return pushToDocker(conf.deploy.headImageNames, conf.deploy.headManifestName);
-  }
+  return pushToDocker(conf.deploy.headImageNames, conf.deploy.headManifestName);
 }));
 
 /**
- * Pushes cross-compiled release images to GCR.
+ * Pushes cross compiled release images to Docker Hub.
  */
-gulp.task('push-to-gcr:release:cross', gulp.series('docker-image:release:cross'), () => {
-  return pushToGcr(conf.deploy.releaseImageNames);
-});
+gulp.task('push-to-docker:release:cross', gulp.series('docker-image:release:cross', () => {
+  return pushToDocker(conf.deploy.releaseImageNames, conf.deploy.releaseManifestName);
+}));
 
 /**
  * @param {!Array<string>} args
@@ -116,7 +70,7 @@ function spawnDockerProcess(args, doneFn) {
 
   // Call Gulp callback on task exit. This has to be done to make Gulp dependency management
   // work.
-  dockerTask.on('exit', function(code) {
+  dockerTask.on('exit', function (code) {
     if (code === 0) {
       doneFn();
     } else {
@@ -134,21 +88,21 @@ function buildDockerImage(imageNamesAndDirs) {
     let [imageName, dir] = imageNameAndDir;
     return new Promise((resolve, reject) => {
       spawnDockerProcess(
-          [
-            'build',
-            // Remove intermediate containers after a successful build.
-            '--rm=true',
-            '--tag',
-            imageName,
-            dir,
-          ],
-          (err) => {
-            if (err) {
-              reject(err);
-            } else {
-              resolve();
-            }
-          });
+        [
+          'build',
+          // Remove intermediate containers after a successful build.
+          '--rm=true',
+          '--tag',
+          imageName,
+          dir,
+        ],
+        (err) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve();
+          }
+        });
     });
   });
 
@@ -157,124 +111,83 @@ function buildDockerImage(imageNamesAndDirs) {
 
 /**
  * @param {!Array<string>} imageNames
+ * @param manifest
  * @return {!Promise}
  */
 function pushToDocker(imageNames, manifest) {
   let spawnPromises = imageNames.map((imageName) => {
     return new Promise((resolve, reject) => {
       spawnDockerProcess(
-          [
-            'push',
-            imageName,
-          ],
-          (err) => {
-            if (err) {
-              reject(err);
-            } else {
-              resolve();
-            }
-          });
-    });
-  });
-
-  // Create a new set of promises for annotating the manifest
-  return Promise.all(spawnPromises).then(function() {
-    return new Promise((resolve, reject) => {
-      spawnDockerProcess(
-          [
-            'manifest',
-            'create',
-            '--amend',
-            manifest,
-          ].concat(imageNames),
-          (err) => {
-            if (err) {
-              reject(err);
-            } else {
-              // Once all annotations have been made, push the manifest
-              let manifestPromises = imageNames.map((imageName) => {
-                return new Promise((resolveManifests, rejectManifests) => {
-                  spawnDockerProcess(
-                      [
-                        'manifest',
-                        'annotate',
-                        manifest,
-                        imageName,
-                        '--os',
-                        'linux',
-                        '--arch',
-                        imageName.split('-')[imageName.split('-').length - 1].split(':')[0],
-                      ],
-                      (err) => {
-                        if (err) {
-                          rejectManifests(err);
-                        } else {
-                          resolveManifests();
-                        }
-                      });
-                });
-              });
-              // Once all annotations have been made, push the manifest
-              Promise.all(manifestPromises).then(function() {
-                spawnDockerProcess(
-                    [
-                      'manifest',
-                      'push',
-                      manifest,
-                    ],
-                    (err) => {
-                      if (err) {
-                        reject(err);
-                      } else {
-                        resolve();
-                      }
-                    });
-              });
-            }
-          });
-    });
-  });
-}
-
-/**
- * @param {!Array<string>} args
- * @param {function(?Error=)} doneFn
- */
-function spawnGCloudProcess(args, doneFn) {
-  let gcloudTask = child.spawn('gcloud', args, {stdio: 'inherit'});
-
-  // Call Gulp callback on task exit. This has to be done to make Gulp dependency management
-  // work.
-  gcloudTask.on('exit', function(code) {
-    if (code === 0) {
-      doneFn();
-    } else {
-      doneFn(new Error(`GCloud command error, code: ${code}`));
-    }
-  });
-}
-
-/**
- * @param {!Array<string>} imageNames
- * @return {!Promise}
- */
-function pushToGcr(imageNames) {
-  return new Promise((resolve, reject) => {
-    spawnGCloudProcess(
         [
-          'auth',
-          'configure-docker',
-          '--quiet',
+          'push',
+          imageName,
         ],
         (err) => {
           if (err) {
             reject(err);
           } else {
-            pushToDocker(imageNames, conf.deploy.releaseManifestName).then(function() {
-              resolve();
+            resolve();
+          }
+        });
+    });
+  });
+
+  // Create a new set of promises for annotating the manifest
+  return Promise.all(spawnPromises).then(function () {
+    return new Promise((resolve, reject) => {
+      spawnDockerProcess(
+        [
+          'manifest',
+          'create',
+          '--amend',
+          manifest,
+        ].concat(imageNames),
+        (err) => {
+          if (err) {
+            reject(err);
+          } else {
+            // Once all annotations have been made, push the manifest
+            let manifestPromises = imageNames.map((imageName) => {
+              return new Promise((resolveManifests, rejectManifests) => {
+                spawnDockerProcess(
+                  [
+                    'manifest',
+                    'annotate',
+                    manifest,
+                    imageName,
+                    '--os',
+                    'linux',
+                    '--arch',
+                    conf.arch.list.filter(arch => imageName.includes(arch))[0],
+                  ],
+                  (err) => {
+                    if (err) {
+                      rejectManifests(err);
+                    } else {
+                      resolveManifests();
+                    }
+                  });
+              });
+            });
+            // Once all annotations have been made, push the manifest
+            Promise.all(manifestPromises).then(function () {
+              spawnDockerProcess(
+                [
+                  'manifest',
+                  'push',
+                  manifest,
+                ],
+                (err) => {
+                  if (err) {
+                    reject(err);
+                  } else {
+                    resolve();
+                  }
+                });
             });
           }
         });
+    });
   });
 }
 
@@ -285,5 +198,5 @@ function pushToGcr(imageNames) {
  */
 function dockerFile(outputDirs, doneFn) {
   return gulp.src(path.join(conf.paths.deploySrc, 'Dockerfile'))
-      .pipe(multiDest(outputDirs, doneFn));
+    .pipe(multiDest(outputDirs, doneFn));
 }

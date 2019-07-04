@@ -4195,10 +4195,10 @@
           <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="c9520753c9f858831cc65185a92171dd42e7306d" datatype="html">
+      <trans-unit id="983a9572a3ae2deaae8b3b0c38437af32f7e54c9" datatype="html">
         <source>
-      Global settings are stored in <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>kubernetes-dashboard-settings<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> config map inside
-      <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>kube-system<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> namespace, so all of them are applied for every instance of the app.
+      Global settings are stored in config map, so all of them are applied for every instance of the
+      app.
     </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
