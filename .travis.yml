@@ -44,7 +44,7 @@ jobs:
         - npm run docker:push:head
     - stage: release
       script:
-        - docker login -u &DOCKER_RELEASE_USER -p $DOCKER_RELEASE_PASS
+        - docker login -u $DOCKER_RELEASE_USER -p $DOCKER_RELEASE_PASS
         - npm run docker:push
 
 stages:
