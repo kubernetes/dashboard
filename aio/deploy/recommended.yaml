@@ -172,22 +172,22 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   labels:
-    k8s-app: kubernetes-dashboard-head
-  name: kubernetes-dashboard-head
-  namespace: kubernetes-dashboard-head
+    k8s-app: kubernetes-dashboard
+  name: kubernetes-dashboard
+  namespace: kubernetes-dashboard
 spec:
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      k8s-app: kubernetes-dashboard-head
+      k8s-app: kubernetes-dashboard
   template:
     metadata:
       labels:
-        k8s-app: kubernetes-dashboard-head
+        k8s-app: kubernetes-dashboard
     spec:
       containers:
-        - name: kubernetes-dashboard-head
+        - name: kubernetes-dashboard
           image: kubernetesui/dashboard:v2.0.0-beta1
           imagePullPolicy: Always
           ports:
@@ -195,7 +195,7 @@ spec:
               protocol: TCP
           args:
             - --auto-generate-certificates
-            - --namespace=kubernetes-dashboard-head
+            - --namespace=kubernetes-dashboard
             # Uncomment the following line to manually specify Kubernetes API server Host
             # If not specified, Dashboard will attempt to auto discover the API server and connect
             # to it. Uncomment only if the default does not work.
@@ -219,7 +219,7 @@ spec:
             secretName: kubernetes-dashboard-certs
         - name: tmp-volume
           emptyDir: {}
-      serviceAccountName: kubernetes-dashboard-head
+      serviceAccountName: kubernetes-dashboard
       # Comment the following tolerations if Dashboard must not be deployed on master
       tolerations:
         - key: node-role.kubernetes.io/master
