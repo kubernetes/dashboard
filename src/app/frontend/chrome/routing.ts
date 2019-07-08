@@ -131,6 +131,9 @@ const routes: Routes = [
         loadChildren: 'resource/config/secret/module#SecretModule',
       },
 
+      // Custom resource definitions
+      {path: 'customresourcedefinition', loadChildren: 'crd/module#CrdModule'},
+
       // Others
       {
         path: 'settings',
