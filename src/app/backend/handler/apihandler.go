@@ -15,7 +15,9 @@
 package handler
 
 import (
-	"log"
+  "github.com/kubernetes/dashboard/src/app/backend/plugin/apis/v1alpha1"
+  v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+  "log"
 	"net/http"
 	"strconv"
 	"strings"
@@ -583,6 +585,12 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 		apiV1Ws.GET("/log/file/{namespace}/{pod}/{container}").
 			To(apiHandler.handleLogFile).
 			Writes(logs.LogDetails{}))
+
+	// Plugin routes
+	apiV1Ws.Route(
+	  apiV1Ws.GET("/plugins/{namespace}").
+	    To(apiHandler.handlePluginList).
+	    Writes(v1alpha1.PluginList{}))
 
 	return wsContainer, nil
 }
@@ -2262,6 +2270,22 @@ func (apiHandler *APIHandler) handleLogFile(request *restful.Request, response *
 		return
 	}
 	handleDownload(response, logStream)
+}
+
+func (apiHandler *APIHandler) handlePluginList(request *restful.Request, response *restful.Response) {
+	pluginClient, err := apiHandler.cManager.PluginClient(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	namespace := request.PathParameter("namespace")
+
+	result, err := pluginClient.DashboardV1alpha1().Plugins(namespace).List(v1.ListOptions{})
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+  response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // parseNamespacePathParameter parses namespace selector for list pages in path parameter.
