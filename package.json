@@ -133,7 +133,7 @@
     "@types/jasminewd2": "2.0.6",
     "@types/js-yaml": "3.12.1",
     "@types/lodash": "4.14.135",
-    "@types/node": "12.0.11",
+    "@types/node": "12.6.0",
     "babel": "6.23.0",
     "babel-preset-env": "1.7.0",
     "babel-register": "6.26.0",
