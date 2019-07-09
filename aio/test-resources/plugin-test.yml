@@ -22,3 +22,4 @@ spec:
   source:
     configMapRef:
       name: plugin-test-src
+    filename: plugin1.js

@@ -22,7 +22,7 @@ import (
 	pluginclientset "github.com/kubernetes/dashboard/src/app/backend/plugin/client/clientset/versioned"
 	v1 "k8s.io/api/authorization/v1"
 	apiextensionsclientset "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
-  "k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/client-go/tools/clientcmd/api"
@@ -466,9 +466,9 @@ func (self *clientManager) initInsecureClients() {
 	}
 
 	pluginclient, err := pluginclientset.NewForConfig(self.insecureConfig)
-  if err != nil {
-    panic(err)
-  }
+	if err != nil {
+		panic(err)
+	}
 
 	self.insecureClient = k8sClient
 	self.insecureAPIExtensionsClient = apiextensionsclient

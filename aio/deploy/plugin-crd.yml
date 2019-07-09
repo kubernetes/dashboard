@@ -30,8 +30,11 @@ spec:
                       type: string
                   required:
                     - name
+                filename:
+                  type: string
               required:
                 - configMapRef
+                - filename
           required:
             - source
       required:
