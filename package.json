@@ -160,7 +160,7 @@
     "karma-jasmine-html-reporter": "1.4.2",
     "lint-staged": "9.1.0",
     "lite-server": "2.4.0",
-    "lodash": "4.17.11",
+    "lodash": "4.17.12",
     "minimatch": "3.0.4",
     "minimist": "1.2.0",
     "ngx-i18nsupport": "^0.17.1",
