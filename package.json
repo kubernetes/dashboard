@@ -121,7 +121,7 @@
     "rxjs-compat": "6.5.2",
     "sockjs-client": "1.3.0",
     "web-animations-js": "2.3.2",
-    "xterm": "3.14.4",
+    "xterm": "3.14.5",
     "zone.js": "0.9.1"
   },
   "devDependencies": {
