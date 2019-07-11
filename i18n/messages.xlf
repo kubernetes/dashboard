@@ -538,14 +538,14 @@
         <source>Show less</source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/chips/template.html</context>
-          <context context-type="linenumber">51</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4eb84de23219c85432e38fb4fbdeb6c0f103ff8b" datatype="html">
         <source>Show all</source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/chips/template.html</context>
-          <context context-type="linenumber">53</context>
+          <context context-type="linenumber">50</context>
         </context-group>
       </trans-unit>
       <trans-unit id="eb3d5aefff38a814b76da74371cbf02c0789a1ef" datatype="html">
