@@ -41,16 +41,13 @@ limitations under the License.
 
     </mat-chip>
   </ng-container>
-  <mat-chip *ngIf="isAnythingHidden()"
-            (click)="toggleView()"
-            color="primary"
-            class="kd-clickable"
-            [selected]="true"
-            [disableRipple]="true">
+  <div *ngIf="isAnythingHidden()"
+       (click)="toggleView()"
+       class="kd-chips-show-button">
     <ng-container *ngIf="isShowingAll"
                   i18n>Show less</ng-container>
     <ng-container *ngIf="!isShowingAll"
                   i18n>Show all</ng-container>
-  </mat-chip>
+  </div>
   <ng-container *ngIf="keys.length === 0">-</ng-container>
 </mat-chip-list>

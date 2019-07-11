@@ -71,15 +71,17 @@ code {
   }
 }
 
-.mat-chip {
+.mat-chip.mat-standard-chip {
   box-shadow: none !important;
+  font-size: $body-font-size-base;
   font-weight: $regular-font-weight;
-  height: fit-content !important;
+  height: fit-content;
+  line-height: $body-font-size-base;
+  min-height: unset;
+  padding: ($baseline-grid * .75) ($baseline-grid * 1.25);
   transition: none !important;
   word-break: break-all !important;
-}
 
-.mat-standard-chip {
   &:hover::after {
     opacity: 0 !important;
   }
@@ -288,6 +290,10 @@ router-outlet::after {
   right: 0;
   top: 0;
   z-index: 1;
+}
+
+.kd-chips-show-button {
+  cursor: pointer;
 }
 
 .kd-on-top {

@@ -175,6 +175,10 @@
     background-color: $border;
   }
 
+  .kd-chips-show-button {
+    color: $primary;
+  }
+
   .kd-minimized-card-header:hover {
     background: $border;
   }
@@ -220,6 +224,10 @@
     .mat-select-arrow {
       color: $muted-light;
     }
+  }
+
+  .mat-chip.mat-standard-chip {
+    background: $card-background-dark;
   }
 
   .mat-active,
