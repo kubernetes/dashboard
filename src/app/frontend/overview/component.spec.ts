@@ -105,7 +105,7 @@ describe('OverviewComponent', () => {
   it('should update resourcesRatio', () => {
     const instance = testHostFixture.componentInstance;
 
-    instance.updateResourcesRatio({
+    instance.onListUpdate({
       id: ListIdentifier.daemonSet,
       groupId: ListGroupIdentifier.workloads,
       items: mockDaemonSetData.listMeta.totalItems,
@@ -126,7 +126,7 @@ describe('OverviewComponent', () => {
     // This checks the ResourceRatioModes.Completable path
     const instance = testHostFixture.componentInstance;
 
-    instance.updateResourcesRatio({
+    instance.onListUpdate({
       id: ListIdentifier.pod,
       groupId: ListGroupIdentifier.workloads,
       items: mockPodsData.listMeta.totalItems,
@@ -147,7 +147,7 @@ describe('OverviewComponent', () => {
     // This checks the ResourceRatioModes.Suspendable path
     const instance = testHostFixture.componentInstance;
 
-    instance.updateResourcesRatio({
+    instance.onListUpdate({
       id: ListIdentifier.cronJob,
       groupId: ListGroupIdentifier.workloads,
       items: mockCronJobsData.listMeta.totalItems,
