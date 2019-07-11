@@ -27,5 +27,3 @@ coverage/
 # npm debug log:
 npm-debug.log
 
-# kubeconfig for cluster made by kind:
-kind.kubeconfig*
