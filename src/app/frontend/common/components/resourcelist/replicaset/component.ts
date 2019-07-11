@@ -23,7 +23,7 @@ import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
-import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
+import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 
 @Component({
   selector: 'kd-replica-set-list',
@@ -38,8 +38,8 @@ export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSet
       private readonly activatedRoute_: ActivatedRoute, notifications: NotificationsService,
       resolver: ComponentFactoryResolver) {
     super('replicaset', notifications, resolver);
-    this.id = ListIdentifiers.replicaSet;
-    this.groupId = ListGroupIdentifiers.workloads;
+    this.id = ListIdentifier.replicaSet;
+    this.groupId = ListGroupIdentifier.workloads;
 
     // Register status icon handlers
     this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);

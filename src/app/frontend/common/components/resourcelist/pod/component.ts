@@ -21,7 +21,7 @@ import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
-import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
+import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 
 @Component({selector: 'kd-pod-list', templateUrl: './template.html'})
 export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
@@ -31,8 +31,8 @@ export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
       private readonly podList: NamespacedResourceService<PodList>,
       resolver: ComponentFactoryResolver, notifications: NotificationsService) {
     super('pod', notifications, resolver);
-    this.id = ListIdentifiers.pod;
-    this.groupId = ListGroupIdentifiers.workloads;
+    this.id = ListIdentifier.pod;
+    this.groupId = ListGroupIdentifier.workloads;
 
     // Register status icon handlers
     this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);

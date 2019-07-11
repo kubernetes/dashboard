@@ -22,7 +22,7 @@ import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
-import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
+import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 
 @Component({
   selector: 'kd-daemon-set-list',
@@ -35,8 +35,8 @@ export class DaemonSetListComponent extends ResourceListWithStatuses<DaemonSetLi
       private readonly daemonSet_: NamespacedResourceService<DaemonSetList>,
       resolver: ComponentFactoryResolver, notifications: NotificationsService) {
     super('daemonset', notifications, resolver);
-    this.id = ListIdentifiers.daemonSet;
-    this.groupId = ListGroupIdentifiers.workloads;
+    this.id = ListIdentifier.daemonSet;
+    this.groupId = ListGroupIdentifier.workloads;
 
     // Register status icon handlers
     this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);
