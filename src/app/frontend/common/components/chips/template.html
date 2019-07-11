@@ -42,8 +42,8 @@ limitations under the License.
     </mat-chip>
   </ng-container>
   <div *ngIf="isAnythingHidden()"
-            (click)="toggleView()"
-            class="kd-chips-show-button">
+       (click)="toggleView()"
+       class="kd-chips-show-button">
     <ng-container *ngIf="isShowingAll"
                   i18n>Show less</ng-container>
     <ng-container *ngIf="!isShowingAll"
