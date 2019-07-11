@@ -22,6 +22,8 @@ limitations under the License.
   <div content
        fxLayout="row wrap">
 
+    {{ resourcesRatio?.podRatio[0].key }} : {{ resourcesRatio?.podRatio[0].value }}
+
     <div class="kd-graph-container"
          *ngIf="resourcesRatio.cronJobRatio.length">
       <div fxLayout="column"

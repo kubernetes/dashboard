@@ -21,7 +21,7 @@ import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
-import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
+import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 
 @Component({
   selector: 'kd-cron-job-list',
@@ -33,8 +33,8 @@ export class CronJobListComponent extends ResourceListWithStatuses<CronJobList, 
       private readonly cronJob_: NamespacedResourceService<CronJobList>,
       notifications: NotificationsService) {
     super('cronjob', notifications);
-    this.id = ListIdentifiers.cronJob;
-    this.groupId = ListGroupIdentifiers.workloads;
+    this.id = ListIdentifier.cronJob;
+    this.groupId = ListGroupIdentifier.workloads;
 
     // Register status icon handlers
     this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);

@@ -22,7 +22,7 @@ import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {ResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
-import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
+import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 
 @Component({
   selector: 'kd-cluster-role-list',
@@ -35,8 +35,8 @@ export class ClusterRoleListComponent extends ResourceListBase<ClusterRoleList, 
       private readonly clusterRole_: ResourceService<ClusterRoleList>,
       notifications: NotificationsService) {
     super('clusterrole', notifications);
-    this.id = ListIdentifiers.clusterRole;
-    this.groupId = ListGroupIdentifiers.cluster;
+    this.id = ListIdentifier.clusterRole;
+    this.groupId = ListGroupIdentifier.cluster;
 
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);

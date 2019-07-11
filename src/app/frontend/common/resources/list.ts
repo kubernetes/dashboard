@@ -23,8 +23,10 @@ import {Subject} from 'rxjs';
 import {Observable, ObservableInput} from 'rxjs/Observable';
 import {merge} from 'rxjs/observable/merge';
 import {startWith, switchMap, takeUntil} from 'rxjs/operators';
+
 import {CardListFilterComponent} from '../components/list/filter/component';
 import {RowDetailComponent} from '../components/list/rowdetail/component';
+import {ListIdentifier} from '../components/resourcelist/groupids';
 import {SEARCH_QUERY_STATE_PARAM} from '../params/params';
 import {GlobalSettingsService} from '../services/global/globalsettings';
 import {GlobalServicesModule} from '../services/global/module';
@@ -300,7 +302,7 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
       items: this.totalItems,
       filtered: false,
       resourceList: data,
-    };
+    } as OnListChangeEvent;
 
     if (this.cardFilter_) {
       emitValue.filtered = this.filtered_();

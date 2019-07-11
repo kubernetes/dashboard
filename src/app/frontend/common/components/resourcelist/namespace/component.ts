@@ -22,7 +22,7 @@ import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {ResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
-import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
+import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 
 @Component({
   selector: 'kd-namespace-list',
@@ -35,8 +35,8 @@ export class NamespaceListComponent extends ResourceListWithStatuses<NamespaceLi
       private readonly namespace_: ResourceService<NamespaceList>,
       notifications: NotificationsService) {
     super('namespace', notifications);
-    this.id = ListIdentifiers.namespace;
-    this.groupId = ListGroupIdentifiers.cluster;
+    this.id = ListIdentifier.namespace;
+    this.groupId = ListGroupIdentifier.cluster;
 
     // Register status icon handlers
     this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);

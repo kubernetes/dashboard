@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export enum ListIdentifiers {
+export enum ListIdentifier {
   clusterRole = 'clusterRoleList',
   namespace = 'namespaceList',
   node = 'nodeList',
@@ -35,7 +35,7 @@ export enum ListIdentifiers {
   resource = 'resource',
 }
 
-export enum ListGroupIdentifiers {
+export enum ListGroupIdentifier {
   cluster = 'clusterGroup',
   workloads = 'workloadsGroup',
   discovery = 'discoveryGroup',

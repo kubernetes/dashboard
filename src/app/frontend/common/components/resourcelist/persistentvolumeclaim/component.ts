@@ -22,7 +22,7 @@ import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
-import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
+import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 
 @Component({
   selector: 'kd-persistent-volume-claim-list',
@@ -36,8 +36,8 @@ export class PersistentVolumeClaimListComponent extends
       private readonly persistentVolumeClaim_: NamespacedResourceService<PersistentVolumeClaimList>,
       notifications: NotificationsService) {
     super('persistentvolumeclaim', notifications);
-    this.id = ListIdentifiers.persistentVolumeClaim;
-    this.groupId = ListGroupIdentifiers.config;
+    this.id = ListIdentifier.persistentVolumeClaim;
+    this.groupId = ListGroupIdentifier.config;
 
     // Register status icon handlers
     this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInBoundState);

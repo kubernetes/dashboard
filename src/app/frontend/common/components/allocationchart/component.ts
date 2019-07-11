@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {AfterViewInit, Component, Input} from '@angular/core';
+import {AfterViewInit, Component, Input, OnChanges} from '@angular/core';
 import {ChartAPI, generate} from 'c3';
 import {BaseType, select, Selection} from 'd3';
 
@@ -28,7 +28,7 @@ type ChartType = 'pie'|'donut';
   selector: 'kd-allocation-chart',
   templateUrl: './template.html',
 })
-export class AllocationChartComponent implements AfterViewInit {
+export class AllocationChartComponent implements OnChanges {
   @Input() data: PieChartData[];
   @Input() colorPalette: string[];
   @Input() outerPercent: number;
@@ -42,7 +42,7 @@ export class AllocationChartComponent implements AfterViewInit {
 
   allocated = new Set();
 
-  ngAfterViewInit(): void {
+  ngOnChanges(): void {
     setTimeout(() => this.generateGraph_(), 0);
   }
 

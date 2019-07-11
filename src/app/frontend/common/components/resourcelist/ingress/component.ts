@@ -22,7 +22,7 @@ import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
-import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
+import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 
 @Component({selector: 'kd-ingress-list', templateUrl: './template.html'})
 export class IngressListComponent extends ResourceListBase<IngressList, Ingress> {
@@ -32,8 +32,8 @@ export class IngressListComponent extends ResourceListBase<IngressList, Ingress>
       private readonly ingress_: NamespacedResourceService<IngressList>,
       notifications: NotificationsService) {
     super('ingress', notifications);
-    this.id = ListIdentifiers.ingress;
-    this.groupId = ListGroupIdentifiers.discovery;
+    this.id = ListIdentifier.ingress;
+    this.groupId = ListGroupIdentifier.discovery;
 
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);

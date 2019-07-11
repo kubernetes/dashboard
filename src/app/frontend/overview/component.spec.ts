@@ -22,7 +22,7 @@ import {AppConfig, CronJobList, DaemonSetList, PodList,} from '@api/backendapi';
 
 import {AllocationChartComponent} from '../common/components/allocationchart/component';
 import {CardComponent} from '../common/components/card/component';
-import {ListGroupIdentifiers, ListIdentifiers,} from '../common/components/resourcelist/groupids';
+import {ListGroupIdentifier, ListIdentifier,} from '../common/components/resourcelist/groupids';
 import {emptyResourcesRatio, WorkloadStatusComponent,} from '../common/components/workloadstatus/component';
 import {ConfigService} from '../common/services/global/config';
 import {NotificationsService} from '../common/services/global/notifications';
@@ -105,9 +105,9 @@ describe('OverviewComponent', () => {
   it('should update resourcesRatio', () => {
     const instance = testHostFixture.componentInstance;
 
-    instance.updateResourcesRatio({
-      id: ListIdentifiers.daemonSet,
-      groupId: ListGroupIdentifiers.workloads,
+    instance.onListUpdate({
+      id: ListIdentifier.daemonSet,
+      groupId: ListGroupIdentifier.workloads,
       items: mockDaemonSetData.listMeta.totalItems,
       filtered: false,
       resourceList: mockDaemonSetData,
@@ -126,9 +126,9 @@ describe('OverviewComponent', () => {
     // This checks the ResourceRatioModes.Completable path
     const instance = testHostFixture.componentInstance;
 
-    instance.updateResourcesRatio({
-      id: ListIdentifiers.pod,
-      groupId: ListGroupIdentifiers.workloads,
+    instance.onListUpdate({
+      id: ListIdentifier.pod,
+      groupId: ListGroupIdentifier.workloads,
       items: mockPodsData.listMeta.totalItems,
       filtered: false,
       resourceList: mockPodsData,
@@ -147,9 +147,9 @@ describe('OverviewComponent', () => {
     // This checks the ResourceRatioModes.Suspendable path
     const instance = testHostFixture.componentInstance;
 
-    instance.updateResourcesRatio({
-      id: ListIdentifiers.cronJob,
-      groupId: ListGroupIdentifiers.workloads,
+    instance.onListUpdate({
+      id: ListIdentifier.cronJob,
+      groupId: ListGroupIdentifier.workloads,
       items: mockCronJobsData.listMeta.totalItems,
       filtered: false,
       resourceList: mockCronJobsData,

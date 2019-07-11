@@ -14,6 +14,7 @@
 
 import {Type} from '@angular/core';
 import {GlobalSettings, K8sError, ObjectMeta, ResourceList, TypeMeta,} from '@api/backendapi';
+import {ListIdentifier} from '../common/components/resourcelist/groupids';
 
 export interface BreadcrumbConfig {
   label?: string;
@@ -40,7 +41,7 @@ export interface KdError {
 }
 
 export interface OnListChangeEvent {
-  id: string;
+  id: ListIdentifier;
   groupId: string;
   items: number;
   filtered: boolean;
