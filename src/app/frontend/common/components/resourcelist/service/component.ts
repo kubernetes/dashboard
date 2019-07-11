@@ -22,7 +22,7 @@ import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
-import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
+import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 
 @Component({selector: 'kd-service-list', templateUrl: './template.html'})
 export class ServiceListComponent extends ResourceListWithStatuses<ServiceList, Service> {
@@ -32,8 +32,8 @@ export class ServiceListComponent extends ResourceListWithStatuses<ServiceList, 
       private readonly service_: NamespacedResourceService<ServiceList>,
       notifications: NotificationsService) {
     super('service', notifications);
-    this.id = ListIdentifiers.service;
-    this.groupId = ListGroupIdentifiers.discovery;
+    this.id = ListIdentifier.service;
+    this.groupId = ListGroupIdentifier.discovery;
 
     // Register status icon handlers
     this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState.bind(this));

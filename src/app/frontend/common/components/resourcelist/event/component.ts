@@ -21,7 +21,7 @@ import {Observable} from 'rxjs/Observable';
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
 import {NamespacedResourceService} from '../../../services/resource/resource';
-import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
+import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 
 const EVENT_TYPE_WARNING = 'Warning';
 
@@ -34,8 +34,8 @@ export class EventListComponent extends ResourceListWithStatuses<EventList, Even
       private readonly eventList: NamespacedResourceService<EventList>,
       notifications: NotificationsService) {
     super('', notifications);
-    this.id = ListIdentifiers.event;
-    this.groupId = ListGroupIdentifiers.none;
+    this.id = ListIdentifier.event;
+    this.groupId = ListGroupIdentifier.none;
 
     // Register status icon handler
     this.registerBinding(this.icon.warning, 'kd-warning', this.isWarning);

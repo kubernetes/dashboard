@@ -22,7 +22,7 @@ import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {ResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
-import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
+import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 
 @Component({
   selector: 'kd-storage-class-list',
@@ -35,8 +35,8 @@ export class StorageClassListComponent extends ResourceListBase<StorageClassList
       private readonly sc_: ResourceService<StorageClassList>,
       notifications: NotificationsService) {
     super('storageclass', notifications);
-    this.id = ListIdentifiers.storageClass;
-    this.groupId = ListGroupIdentifiers.cluster;
+    this.id = ListIdentifier.storageClass;
+    this.groupId = ListGroupIdentifier.cluster;
 
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
