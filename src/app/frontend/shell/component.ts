@@ -165,7 +165,7 @@ export class ShellComponent implements AfterViewInit, OnDestroy {
         '/' + this.selectedContainer;
     const {id} = await this.terminal_.get(terminalSessionUrl).toPromise();
 
-    this.conn_ = new SockJS(`/api/sockjs?${id}`);
+    this.conn_ = new SockJS(`api/sockjs?${id}`);
     this.conn_.onopen = this.onConnectionOpen.bind(this, id);
     this.conn_.onmessage = this.onConnectionMessage.bind(this);
     this.conn_.onclose = this.onConnectionClose.bind(this);
