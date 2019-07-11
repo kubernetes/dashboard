@@ -114,7 +114,7 @@ export class AuthService {
 
   /** Checks if user is authenticated. */
   isAuthenticated(loginStatus: LoginStatus): boolean {
-    return loginStatus.headerPresent || loginStatus.tokenPresent;
+    return loginStatus.headerPresent || loginStatus.tokenPresent || !this.isLoginPageEnabled();
   }
 
   /**
