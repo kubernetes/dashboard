@@ -15,12 +15,17 @@
 package plugin
 
 import (
-  "github.com/kubernetes/dashboard/src/app/backend/errors"
-  "net/http"
-  "strings"
-
   "github.com/emicklei/go-restful"
   clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
+  "github.com/kubernetes/dashboard/src/app/backend/errors"
+  "net/http"
+  "path/filepath"
+  "strings"
+)
+
+const (
+  contentTypeHeader = "Content-Type"
+  jsContentType     = "text/javascript; charset=utf-8"
 )
 
 // Handler manages all endpoints related to plugin use cases, such as list and get.
@@ -28,12 +33,12 @@ type Handler struct {
   cManager clientapi.ClientManager
 }
 
-// Install creates new endpoints for integrations. All information that any integration would want
-// to expose by creating new endpoints should be kept here, i.e. helm integration might want to
-// create endpoint to list available releases/charts.
+// Install creates new endpoints for plugins. All information that any plugin would want
+// to expose by creating new endpoints should be kept here, i.e. plugin service might want to
+// create endpoint to list available proxy paths to another backend.
 //
-// By default endpoint for checking state of the integrations is installed. It allows user
-// to check state of integration by accessing `<DASHBOARD_URL>/api/v1/integration/{name}/state`.
+// By default, endpoint for getting and listing plugins is installed. It allows user
+// to list the installed plugins and get the source code for a plugin.
 func (h *Handler) Install(ws *restful.WebService) {
   ws.Route(
     ws.GET("/plugins/{namespace}").
@@ -79,12 +84,14 @@ func (h *Handler) servePluginSource(request *restful.Request, response *restful.
   }
   namespace := request.PathParameter("namespace")
   // Removes .js extension if it's present
-  pluginName := strings.Split(request.PathParameter("pluginName"), ".")[0]
+  pluginName := request.PathParameter("pluginName")
+  name := strings.TrimSuffix(pluginName, filepath.Ext(pluginName))
 
-  result, err := GetPluginSource(pluginClient, k8sClient, namespace, pluginName)
+  result, err := GetPluginSource(pluginClient, k8sClient, namespace, name)
   if err != nil {
     errors.HandleInternalError(response, err)
     return
   }
+  response.AddHeader(contentTypeHeader, jsContentType)
   response.Write(result)
 }
