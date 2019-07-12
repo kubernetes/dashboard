@@ -1,16 +1,12 @@
-# Kubernetes Dashboard documentation
+# Kubernetes Dashboard Documentation
 
-___TO BE ADDED___
-
-## Index
-
-### [Common](common/README.md)
+## [Common](common/README.md)
 
 * [FAQ](common/faq.md)
 * [Roadmap](common/roadmap.md)
 * [Dashboard arguments](common/dashboard-arguments.md)
 
-### [User Guide](user/README.md)
+## [User Guide](user/README.md)
 
 * [Installation](user/installation.md)
 * [Certificate management](user/certificate-management.md)
@@ -22,7 +18,7 @@ ___TO BE ADDED___
 * [Integrations](user/integrations.md)
 * [Labels](user/labels.md)
 
-### [Developer Guide](developer/README.md)
+## [Developer Guide](developer/README.md)
 
 * [Getting started](developer/getting-started.md)
 * [Release procedures](developer/release-procedures.md)
