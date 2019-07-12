@@ -12,7 +12,7 @@ it only presents fetched data and sends requests to the backend for actions.
 
 The backend runs in a Kubernetes cluster as a Kubernetes service. Alternatively, it may run anywhere
 outside of the cluster, given that it can connect to the master. The backend is an HTTP server that
-proxies data requests to appropriate remote backends (e.g., Kubernetes API server or Heapster) or implements
+proxies data requests to appropriate remote backends (e.g., Kubernetes API) or implements
 business logic. The backend implements business logic when remote backends APIs do not
 support required use case directly, e.g., “get a list of pods with their CPU usage metric
 timeline”. The figure below outlines the architecture of the project:
