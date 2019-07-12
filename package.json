@@ -152,7 +152,7 @@
     "jasmine-spec-reporter": "4.2.1",
     "js-beautify": "1.10.0",
     "karma": "4.1.0",
-    "karma-chrome-launcher": "2.2.0",
+    "karma-chrome-launcher": "3.0.0",
     "karma-cli": "2.0.0",
     "karma-coverage-istanbul-reporter": "2.0.5",
     "karma-firefox-launcher": "1.1.0",
