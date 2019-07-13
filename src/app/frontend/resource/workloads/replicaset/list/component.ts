@@ -16,6 +16,6 @@ import {Component} from '@angular/core';
 
 @Component({
   selector: 'kd-replica-set-list-state',
-  template: '<kd-replica-set-list></kd-replica-set-list>',
+  template: './template.html',
 })
 export class ReplicaSetListComponent {}

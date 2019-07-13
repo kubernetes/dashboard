@@ -13,10 +13,17 @@
 // limitations under the License.
 
 import {Component} from '@angular/core';
+import {ListGroupIdentifier} from 'common/components/resourcelist/groupids';
+
 import {GroupedResourceList} from '../../common/resources/groupedlist';
 
 @Component({
   selector: 'kd-cluster',
   templateUrl: './template.html',
 })
-export class ClusterComponent extends GroupedResourceList {}
+export class ClusterComponent extends GroupedResourceList {
+  showGraphs(): boolean {
+    return this.cumulativeMetrics.every(
+        metrics => metrics.dataPoints && metrics.dataPoints.length > 1);
+  }
+}

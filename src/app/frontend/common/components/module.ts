@@ -44,6 +44,7 @@ import {ExternalEndpointComponent} from './endpoint/external/component';
 import {InternalEndpointComponent} from './endpoint/internal/component';
 import {GraphComponent} from './graph/component';
 import {GraphCardComponent} from './graphcard/component';
+import {GraphsComponent} from './graphs/component';
 import {HiddenPropertyComponent} from './hiddenproperty/component';
 import {ResourceLimitListComponent} from './limits/component';
 import {ColumnComponent} from './list/column/component';
@@ -179,6 +180,7 @@ const components = [
 
   ZeroStateComponent,
   WorkloadStatusComponent,
+  GraphsComponent
 ];
 
 @NgModule({
