@@ -15,58 +15,59 @@
 package plugin
 
 import (
-  "bytes"
-  "github.com/kubernetes/dashboard/src/app/backend/plugin/apis/v1alpha1"
-  fakePluginClientset "github.com/kubernetes/dashboard/src/app/backend/plugin/client/clientset/versioned/fake"
-  coreV1 "k8s.io/api/core/v1"
-  v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-  fakeK8sClient "k8s.io/client-go/kubernetes/fake"
-  "testing"
+	"bytes"
+	"testing"
+
+	"github.com/kubernetes/dashboard/src/app/backend/plugin/apis/v1alpha1"
+	fakePluginClientset "github.com/kubernetes/dashboard/src/app/backend/plugin/client/clientset/versioned/fake"
+	coreV1 "k8s.io/api/core/v1"
+	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	fakeK8sClient "k8s.io/client-go/kubernetes/fake"
 )
 
 var srcData = "randomPluginSourceCode"
 
 func TestGetPluginSource(t *testing.T) {
-  ns := "default"
-  pluginName := "test-plugin"
-  filename := "plugin-test.js"
-  cfgMapName := "plugin-test-cfgMap"
+	ns := "default"
+	pluginName := "test-plugin"
+	filename := "plugin-test.js"
+	cfgMapName := "plugin-test-cfgMap"
 
-  pcs := fakePluginClientset.NewSimpleClientset()
-  cs := fakeK8sClient.NewSimpleClientset()
+	pcs := fakePluginClientset.NewSimpleClientset()
+	cs := fakeK8sClient.NewSimpleClientset()
 
-  _, err := GetPluginSource(pcs, cs, ns, pluginName)
-  if err == nil {
-    t.Errorf("error 'plugins.dashboard.k8s.io \"%s\" not found' did not occur", pluginName)
-  }
+	_, err := GetPluginSource(pcs, cs, ns, pluginName)
+	if err == nil {
+		t.Errorf("error 'plugins.dashboard.k8s.io \"%s\" not found' did not occur", pluginName)
+	}
 
-  _, err = pcs.DashboardV1alpha1().Plugins(ns).Create(&v1alpha1.Plugin{
-    ObjectMeta: v1.ObjectMeta{Name: pluginName, Namespace: ns},
-    Spec: v1alpha1.PluginSpec{
-      Source: v1alpha1.Source{
-        ConfigMapRef: &coreV1.ConfigMapEnvSource{
-          LocalObjectReference: coreV1.LocalObjectReference{Name: cfgMapName},
-        },
-        Filename: filename}},
-  })
+	_, _ = pcs.DashboardV1alpha1().Plugins(ns).Create(&v1alpha1.Plugin{
+		ObjectMeta: v1.ObjectMeta{Name: pluginName, Namespace: ns},
+		Spec: v1alpha1.PluginSpec{
+			Source: v1alpha1.Source{
+				ConfigMapRef: &coreV1.ConfigMapEnvSource{
+					LocalObjectReference: coreV1.LocalObjectReference{Name: cfgMapName},
+				},
+				Filename: filename}},
+	})
 
-  _, err = GetPluginSource(pcs, cs, ns, pluginName)
-  if err == nil {
-    t.Errorf("error 'configmaps \"%s\" not found' did not occur", cfgMapName)
-  }
+	_, err = GetPluginSource(pcs, cs, ns, pluginName)
+	if err == nil {
+		t.Errorf("error 'configmaps \"%s\" not found' did not occur", cfgMapName)
+	}
 
-  _, _ = cs.CoreV1().ConfigMaps(ns).Create(&coreV1.ConfigMap{
-    ObjectMeta: v1.ObjectMeta{
-      Name: cfgMapName, Namespace: ns},
-    Data: map[string]string{filename: srcData},
-  })
+	_, _ = cs.CoreV1().ConfigMaps(ns).Create(&coreV1.ConfigMap{
+		ObjectMeta: v1.ObjectMeta{
+			Name: cfgMapName, Namespace: ns},
+		Data: map[string]string{filename: srcData},
+	})
 
-  data, err := GetPluginSource(pcs, cs, ns, pluginName)
-  if err != nil {
-    t.Errorf("error while fetching plugin source: %s", err)
-  }
+	data, err := GetPluginSource(pcs, cs, ns, pluginName)
+	if err != nil {
+		t.Errorf("error while fetching plugin source: %s", err)
+	}
 
-  if !bytes.Equal(data, []byte(srcData)) {
-    t.Error("bytes in configMap and bytes from GetPluginSource are different")
-  }
+	if !bytes.Equal(data, []byte(srcData)) {
+		t.Error("bytes in configMap and bytes from GetPluginSource are different")
+	}
 }

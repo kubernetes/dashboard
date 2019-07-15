@@ -28,4 +28,5 @@ CODEGEN_PKG=${GOPATH}/src/k8s.io/code-generator
 "${CODEGEN_PKG}"/generate-groups.sh "deepcopy,client,informer,lister" \
   github.com/kubernetes/dashboard/src/app/backend/plugin/client github.com/kubernetes/dashboard/src/app/backend/plugin \
   apis:v1alpha1 \
+  --go-header-file "${SCRIPT_ROOT}"/aio/scripts/license-header.go.txt \
   --output-base "$(dirname "${BASH_SOURCE[0]}")/../../../../.."

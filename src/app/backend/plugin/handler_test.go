@@ -15,16 +15,17 @@
 package plugin
 
 import (
-  "github.com/emicklei/go-restful"
-  "testing"
+	"testing"
+
+	"github.com/emicklei/go-restful"
 )
 
 func TestIntegrationHandler_Install(t *testing.T) {
-  pHandler := NewPluginHandler(nil)
-  ws := new(restful.WebService)
-  pHandler.Install(ws)
+	pHandler := NewPluginHandler(nil)
+	ws := new(restful.WebService)
+	pHandler.Install(ws)
 
-  if len(ws.Routes()) == 0 {
-    t.Error("Failed to install routes.")
-  }
+	if len(ws.Routes()) == 0 {
+		t.Error("Failed to install routes.")
+	}
 }

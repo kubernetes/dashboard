@@ -15,37 +15,38 @@
 package plugin
 
 import (
-  "github.com/kubernetes/dashboard/src/app/backend/plugin/apis/v1alpha1"
-  fakePluginClientset "github.com/kubernetes/dashboard/src/app/backend/plugin/client/clientset/versioned/fake"
-  coreV1 "k8s.io/api/core/v1"
-  v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-  "testing"
+	"testing"
+
+	"github.com/kubernetes/dashboard/src/app/backend/plugin/apis/v1alpha1"
+	fakePluginClientset "github.com/kubernetes/dashboard/src/app/backend/plugin/client/clientset/versioned/fake"
+	coreV1 "k8s.io/api/core/v1"
+	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 func TestGetPluginList(t *testing.T) {
-  ns := "default"
-  pluginName := "test-plugin"
-  filename := "plugin-test.js"
-  cfgMapName := "plugin-test-cfgMap"
+	ns := "default"
+	pluginName := "test-plugin"
+	filename := "plugin-test.js"
+	cfgMapName := "plugin-test-cfgMap"
 
-  pcs := fakePluginClientset.NewSimpleClientset()
+	pcs := fakePluginClientset.NewSimpleClientset()
 
-  _, _ = pcs.DashboardV1alpha1().Plugins(ns).Create(&v1alpha1.Plugin{
-    ObjectMeta: v1.ObjectMeta{Name: pluginName, Namespace: ns},
-    Spec: v1alpha1.PluginSpec{
-      Source: v1alpha1.Source{
-        ConfigMapRef: &coreV1.ConfigMapEnvSource{
-          LocalObjectReference: coreV1.LocalObjectReference{Name: cfgMapName},
-        },
-        Filename: filename}},
-  })
+	_, _ = pcs.DashboardV1alpha1().Plugins(ns).Create(&v1alpha1.Plugin{
+		ObjectMeta: v1.ObjectMeta{Name: pluginName, Namespace: ns},
+		Spec: v1alpha1.PluginSpec{
+			Source: v1alpha1.Source{
+				ConfigMapRef: &coreV1.ConfigMapEnvSource{
+					LocalObjectReference: coreV1.LocalObjectReference{Name: cfgMapName},
+				},
+				Filename: filename}},
+	})
 
-  data, err := GetPluginList(pcs, ns)
-  if err != nil {
-    t.Errorf("error while fetching plugins: %s", err)
-  }
+	data, err := GetPluginList(pcs, ns)
+	if err != nil {
+		t.Errorf("error while fetching plugins: %s", err)
+	}
 
-  if data.ListMeta.TotalItems != 1 {
-    t.Errorf("there should be one plugin registered, got %d", data.ListMeta.TotalItems)
-  }
+	if data.ListMeta.TotalItems != 1 {
+		t.Errorf("there should be one plugin registered, got %d", data.ListMeta.TotalItems)
+	}
 }

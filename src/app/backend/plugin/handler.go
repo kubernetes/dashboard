@@ -15,22 +15,23 @@
 package plugin
 
 import (
-  "github.com/emicklei/go-restful"
-  clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
-  "github.com/kubernetes/dashboard/src/app/backend/errors"
-  "net/http"
-  "path/filepath"
-  "strings"
+	"net/http"
+	"path/filepath"
+	"strings"
+
+	"github.com/emicklei/go-restful"
+	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 )
 
 const (
-  contentTypeHeader = "Content-Type"
-  jsContentType     = "text/javascript; charset=utf-8"
+	contentTypeHeader = "Content-Type"
+	jsContentType     = "text/javascript; charset=utf-8"
 )
 
 // Handler manages all endpoints related to plugin use cases, such as list and get.
 type Handler struct {
-  cManager clientapi.ClientManager
+	cManager clientapi.ClientManager
 }
 
 // Install creates new endpoints for plugins. All information that any plugin would want
@@ -40,58 +41,58 @@ type Handler struct {
 // By default, endpoint for getting and listing plugins is installed. It allows user
 // to list the installed plugins and get the source code for a plugin.
 func (h *Handler) Install(ws *restful.WebService) {
-  ws.Route(
-    ws.GET("/plugins/{namespace}").
-      To(h.handlePluginList).
-      Writes(PluginList{}))
+	ws.Route(
+		ws.GET("/plugins/{namespace}").
+			To(h.handlePluginList).
+			Writes(PluginList{}))
 
-  ws.Route(
-    ws.GET("/plugin/{namespace}/{pluginName}").
-      To(h.servePluginSource))
+	ws.Route(
+		ws.GET("/plugin/{namespace}/{pluginName}").
+			To(h.servePluginSource))
 }
 
 // NewPluginHandler creates plugin.Handler.
 func NewPluginHandler(cManager clientapi.ClientManager) *Handler {
-  return &Handler{cManager: cManager}
+	return &Handler{cManager: cManager}
 }
 
 func (h *Handler) handlePluginList(request *restful.Request, response *restful.Response) {
-  pluginClient, err := h.cManager.PluginClient(request)
-  if err != nil {
-    errors.HandleInternalError(response, err)
-    return
-  }
-  namespace := request.PathParameter("namespace")
+	pluginClient, err := h.cManager.PluginClient(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	namespace := request.PathParameter("namespace")
 
-  result, err := GetPluginList(pluginClient, namespace)
-  if err != nil {
-    errors.HandleInternalError(response, err)
-    return
-  }
-  response.WriteHeaderAndEntity(http.StatusOK, result)
+	result, err := GetPluginList(pluginClient, namespace)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (h *Handler) servePluginSource(request *restful.Request, response *restful.Response) {
-  pluginClient, err := h.cManager.PluginClient(request)
-  if err != nil {
-    errors.HandleInternalError(response, err)
-    return
-  }
-  k8sClient, err := h.cManager.Client(request)
-  if err != nil {
-    errors.HandleInternalError(response, err)
-    return
-  }
-  namespace := request.PathParameter("namespace")
-  // Removes .js extension if it's present
-  pluginName := request.PathParameter("pluginName")
-  name := strings.TrimSuffix(pluginName, filepath.Ext(pluginName))
+	pluginClient, err := h.cManager.PluginClient(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	k8sClient, err := h.cManager.Client(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	namespace := request.PathParameter("namespace")
+	// Removes .js extension if it's present
+	pluginName := request.PathParameter("pluginName")
+	name := strings.TrimSuffix(pluginName, filepath.Ext(pluginName))
 
-  result, err := GetPluginSource(pluginClient, k8sClient, namespace, name)
-  if err != nil {
-    errors.HandleInternalError(response, err)
-    return
-  }
-  response.AddHeader(contentTypeHeader, jsContentType)
-  response.Write(result)
+	result, err := GetPluginSource(pluginClient, k8sClient, namespace, name)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	response.AddHeader(contentTypeHeader, jsContentType)
+	response.Write(result)
 }
