@@ -20,7 +20,9 @@ import (
 	"strconv"
 	"strings"
 
-	restful "github.com/emicklei/go-restful"
+	"github.com/kubernetes/dashboard/src/app/backend/plugin"
+
+	"github.com/emicklei/go-restful"
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/auth"
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
@@ -105,6 +107,9 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 
 	integrationHandler := integration.NewIntegrationHandler(iManager)
 	integrationHandler.Install(apiV1Ws)
+
+	pluginHandler := plugin.NewPluginHandler(cManager)
+	pluginHandler.Install(apiV1Ws)
 
 	authHandler := auth.NewAuthHandler(authManager)
 	authHandler.Install(apiV1Ws)

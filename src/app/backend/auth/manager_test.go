@@ -26,6 +26,7 @@ import (
 	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 
+	pluginclientset "github.com/kubernetes/dashboard/src/app/backend/plugin/client/clientset/versioned"
 	v1 "k8s.io/api/authorization/v1"
 	apiextensionsclientset "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	"k8s.io/client-go/kubernetes"
@@ -48,6 +49,10 @@ func (self *fakeClientManager) Client(req *restful.Request) (kubernetes.Interfac
 }
 
 func (self *fakeClientManager) APIExtensionsClient(req *restful.Request) (apiextensionsclientset.Interface, error) {
+	return nil, nil
+}
+
+func (self *fakeClientManager) PluginClient(req *restful.Request) (pluginclientset.Interface, error) {
 	return nil, nil
 }
 

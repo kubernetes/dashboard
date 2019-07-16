@@ -59,7 +59,10 @@ gulp.task('check-license-headers', () => {
 
   return gulp
       .src(
-          [path.join(conf.paths.src, getLicenseFileFilter('ts', 'go', 'scss', 'html'))],
+          [
+            path.join(conf.paths.src, getLicenseFileFilter('!deepcopy.go', 'ts', 'go', 'scss', 'html')),
+            path.join("!", conf.paths.src, getLicenseFileFilter('deepcopy.go'))
+          ],
           {base: conf.paths.base})
       .pipe(commonFilter)
       .pipe(licenseCheck(licenseConfig('aio/templates/header.txt')).on('log', handleLogEvent))
@@ -93,7 +96,10 @@ gulp.task('update-license-headers', (doneFn) => {
   const matchRate = 0.9;
 
   gulp.src(
-          [path.join(conf.paths.src, getLicenseFileFilter('ts', 'go', 'scss', 'html'))],
+          [
+            path.join(conf.paths.src, getLicenseFileFilter('ts', 'go', 'scss', 'html')),
+            path.join("!", conf.paths.src, getLicenseFileFilter('deepcopy.go'))
+          ],
           {base: conf.paths.base})
       .pipe(commonFilter)
       .pipe(license(fs.readFileSync('aio/templates/header.txt', 'utf8'), {}, matchRate))
