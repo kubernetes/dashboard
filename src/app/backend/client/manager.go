@@ -311,12 +311,21 @@ func (self *clientManager) buildCmdConfig(authInfo *api.AuthInfo, cfg *rest.Conf
 // Extracts authorization information from the request header
 func (self *clientManager) extractAuthInfo(req *restful.Request) (*api.AuthInfo, error) {
 	authHeader := req.HeaderParameter("Authorization")
+	impersonationHeader := req.HeaderParameter("Impersonate-User")
 	jweToken := req.HeaderParameter(JWETokenHeader)
 
 	// Authorization header will be more important than our token
 	token := self.extractTokenFromHeader(authHeader)
 	if len(token) > 0 {
-		return &api.AuthInfo{Token: token}, nil
+
+		authInfo := &api.AuthInfo{Token: token}
+
+		if len(impersonationHeader) > 0 {
+			//there's an impersonation header, lets make sure to add it
+			authInfo.Impersonate = impersonationHeader
+		}
+
+		return authInfo, nil
 	}
 
 	if self.tokenManager != nil && len(jweToken) > 0 {
