@@ -323,6 +323,12 @@ func (self *clientManager) extractAuthInfo(req *restful.Request) (*api.AuthInfo,
 		if len(impersonationHeader) > 0 {
 			//there's an impersonation header, lets make sure to add it
 			authInfo.Impersonate = impersonationHeader
+
+			//Check for groups
+			if groupsImpersonationHeader := req.Request.Header["Impersonate-Group"]; len(groupsImpersonationHeader) > 0 {
+				authInfo.ImpersonateGroups = groupsImpersonationHeader
+			}
+
 		}
 
 		return authInfo, nil
