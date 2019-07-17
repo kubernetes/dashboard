@@ -83,7 +83,8 @@
     "defaultLanguage": "en",
     "languages": [
       "fr",
-      "ja"
+      "ja",
+      "zh"
     ],
     "beautifyOutput": true
   },
