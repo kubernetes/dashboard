@@ -101,7 +101,7 @@
     "@angular/platform-browser": "8.0.3",
     "@angular/platform-browser-dynamic": "8.0.3",
     "@angular/router": "8.0.3",
-    "@types/c3": "0.7.0",
+    "@types/c3": "0.7.1",
     "@types/d3": "5.7.2",
     "@types/d3-scale": "2.1.1",
     "@types/file-saver": "2.0.1",
