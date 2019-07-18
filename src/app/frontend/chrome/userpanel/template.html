@@ -18,7 +18,7 @@ limitations under the License.
   <div class="kd-auth-status kd-muted-light">
     <ng-container *ngIf="isLoginStatusInitialized">
       <ng-container [ngSwitch]="true">
-        <ng-container *ngSwitchCase="loginStatus.headerPresent && ! loginStatus.impersonationPresent"
+        <ng-container *ngSwitchCase="loginStatus.headerPresent && !loginStatus.impersonationPresent"
                       i18n>Logged in with auth header</ng-container>
         <ng-container *ngSwitchCase="loginStatus.tokenPresent"
                       i18n>Logged in with token</ng-container>

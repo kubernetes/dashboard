@@ -589,17 +589,5 @@ func TestImpersonationExtrasClient(t *testing.T) {
 			t.Fatalf("Config(%v): Expected two scope impersonated extra but got %d",
 				c.request, len(cfg.Impersonate.Extra["scope"]))
 		}
-
-		/*
-			if cfg.Impersonate.Groups[0] != c.expectedImpersonationGroups[0] {
-				t.Fatalf("Config(%v): Expected impersonated group to be %s but got %s",
-					c.request, cfg.Impersonate.Groups[0], c.expectedImpersonationGroups[0])
-			}
-
-			if cfg.Impersonate.Groups[1] != c.expectedImpersonationGroups[1] {
-				t.Fatalf("Config(%v): Expected impersonated group to be %s but got %s",
-					c.request, cfg.Impersonate.Groups[1], c.expectedImpersonationGroups[1])
-			}
-		*/
 	}
 }

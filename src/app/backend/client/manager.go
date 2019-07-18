@@ -50,7 +50,6 @@ const (
 	JWETokenHeader = "jweToken"
 	// Default http header for user-agent
 	DefaultUserAgent = "dashboard"
-
 	//Impersonation Extra header
 	ImpersonateUserExtraHeader = "Impersonate-Extra-"
 )

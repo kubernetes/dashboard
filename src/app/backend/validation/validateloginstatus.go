@@ -30,7 +30,6 @@ type LoginStatus struct {
 	// True if dashboard is configured to use HTTPS connection. It is required for secure
 	// data exchange during login operation.
 	HTTPSMode bool `json:"httpsMode"`
-
 	// True if impersonation is enabled
 	ImpersonationPresent bool `json:"impersonationPresent"`
 
