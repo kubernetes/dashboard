@@ -2684,7 +2684,7 @@
               </source>
         <target>
                 Chaque compte de service a un Secret associé avec un jeton porteur (Bearer Token) valide
-                qui peut être utilisé pour se connecter au Dashboard. 
+                qui peut être utilisé pour se connecter au Dashboard.
                 Pour en savoir plus sur la façon de configurer et utiliser des jetons porteurs,
                 veuillez vous référer à la section <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Authentification<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>.
               </target>
@@ -2863,7 +2863,7 @@
         <source>
               Name must be up to <x id="INTERPOLATION" equiv-text="{{namespaceMaxLength}}"/> characters long.
             </source>
-        <target>Le nom ne doit pas dépasser 
+        <target>Le nom ne doit pas dépasser
           <x id="INTERPOLATION" equiv-text="{{namespaceMaxLength}}"/>
           caractères.</target>
         <context-group purpose="location">
@@ -2927,7 +2927,7 @@
         <source>
               Name must be up to <x id="INTERPOLATION" equiv-text="{{secretNameMaxLength}}"/> characters long.
             </source>
-        <target>Le nom ne doit pas dépasser 
+        <target>Le nom ne doit pas dépasser
           <x id="INTERPOLATION" equiv-text="{{secretNameMaxLength}}"/>
           caractères.</target>
         <context-group purpose="location">
@@ -4766,7 +4766,7 @@
       </trans-unit>
       <trans-unit id="409222992640ac7a22c9f4d8d1dd19bf0109bafa" datatype="html">
         <source>Cluster name appears in the browser window title if it is set.</source>
-        <target state="new">Cluster name appears in the browser window title if it is set.</target>
+        <target state="new">Le nom du cluster apparaît dans la barre de titre du navigateur s'il est défini.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">32</context>
@@ -4782,7 +4782,7 @@
       </trans-unit>
       <trans-unit id="e15825a0273ad0aa69da37ed117de2b8a79ebde5" datatype="html">
         <source>Max number of items that can be displayed on each list page.</source>
-        <target state="new">Max number of items that can be displayed on each list page.</target>
+        <target state="new">Nombre maximal d'éléments affichés dans chaque page de liste.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">45</context>
@@ -4798,7 +4798,7 @@
       </trans-unit>
       <trans-unit id="02458bd7e54108bc7ac4f35fc96aeb3e422fa471" datatype="html">
         <source>Number of seconds between every auto-refresh of logs.</source>
-        <target state="new">Number of seconds between every auto-refresh of logs.</target>
+        <target state="new">Nombre de secondes entre chaque actualisation automatique des journaux.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">64</context>
