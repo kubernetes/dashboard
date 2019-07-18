@@ -72,7 +72,7 @@ export class LogsComponent implements OnDestroy {
       private readonly settingsService_: GlobalSettingsService, private readonly dialog_: MatDialog,
       private readonly notifications_: NotificationsService, private readonly _router: Router) {
     this.logService = logService;
-    this.refreshInterval = this.settingsService_.getAutoRefreshTimeInterval() * 1000;
+    this.refreshInterval = this.settingsService_.getLogsAutoRefreshTimeInterval() * 1000;
     this.isLoading = true;
 
     const namespace = this.activatedRoute_.snapshot.params.resourceNamespace;

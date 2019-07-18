@@ -51,7 +51,9 @@ export class GlobalSettingsComponent implements OnInit {
   onLoad(): void {
     this.settings.itemsPerPage = this.settings_.getItemsPerPage();
     this.settings.clusterName = this.settings_.getClusterName();
-    this.settings.autoRefreshTimeInterval = this.settings_.getAutoRefreshTimeInterval();
+    this.settings.logsAutoRefreshTimeInterval = this.settings_.getLogsAutoRefreshTimeInterval();
+    this.settings.resourceAutoRefreshTimeInterval =
+        this.settings_.getResourceAutoRefreshTimeInterval();
   }
 
   onLoadError(): void {
@@ -64,6 +66,7 @@ export class GlobalSettingsComponent implements OnInit {
             () => {
               this.load(form);
               this.title_.update();
+              this.settings_.onSettingsUpdate.next();
             },
             err => {
               if (err && err.data.indexOf(this.concurrentChangeErr_) !== -1) {

@@ -26,20 +26,8 @@ export class ActionbarDetailTriggerComponent {
   @Input() objectMeta: ObjectMeta;
   @Input() typeMeta: TypeMeta;
   @Input() displayName: string;
-  verberSubscription_: Subscription;
 
   constructor(private readonly verber_: VerberService) {}
-
-  ngOnInit(): void {
-    this.verberSubscription_ = this.verber_.onTrigger.subscribe(
-        () => {
-            // this.state_.reload().catch();
-        });
-  }
-
-  ngOnDestroy(): void {
-    this.verberSubscription_.unsubscribe();
-  }
 
   onClick(): void {
     this.verber_.showTriggerDialog(this.displayName, this.typeMeta, this.objectMeta);

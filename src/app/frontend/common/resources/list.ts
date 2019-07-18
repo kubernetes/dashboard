@@ -41,7 +41,7 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
   private readonly actionColumns_: Array<ActionColumnDef<ActionColumn>> = [];
   private readonly data_ = new MatTableDataSource<R>();
   private listUpdates_ = new Subject();
-  private unsubscribe_ = new Subject();
+  private unsubscribe_ = new Subject<void>();
   private loaded_ = false;
   private readonly dynamicColumns_: ColumnWhenCondition[] = [];
   private paramsService_: ParamsService;
@@ -98,12 +98,12 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
     });
 
     this.getObservableWithDataSelect_()
-        .pipe(takeUntil(this.unsubscribe_))
         .pipe(startWith({}))
         .pipe(switchMap(() => {
           this.isLoading = true;
           return this.getResourceObservable(this.getDataSelectParams_());
         }))
+        .pipe(takeUntil(this.unsubscribe_))
         .subscribe((data: T) => {
           this.notifications_.pushErrors(data.errors);
           this.totalItems = data.listMeta.totalItems;

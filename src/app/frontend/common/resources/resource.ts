@@ -12,7 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {merge, timer} from 'rxjs';
+import {publishReplay, refCount, switchMapTo} from 'rxjs/operators';
 
 // @ts-ignore
 export abstract class ResourceBase<T> {
