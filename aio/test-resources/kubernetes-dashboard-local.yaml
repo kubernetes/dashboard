@@ -233,11 +233,17 @@ spec:
             port: 8000
           initialDelaySeconds: 30
           timeoutSeconds: 30
+        volumeMounts:
+        - mountPath: /tmp
+          name: tmp-volume
       serviceAccountName: kubernetes-dashboard-local
       # Comment the following tolerations if Dashboard must not be deployed on master
       tolerations:
       - key: node-role.kubernetes.io/master
         effect: NoSchedule
+      volumes:
+      - emptyDir: {}
+        name: tmp-volume
 
 ---
 # ------------------- Metrics Scraper Service ------------------- #
