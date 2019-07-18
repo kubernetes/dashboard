@@ -50,6 +50,9 @@ const (
 	JWETokenHeader = "jweToken"
 	// Default http header for user-agent
 	DefaultUserAgent = "dashboard"
+
+	//Impersonation Extra header
+	ImpersonateUserExtraHeader = "Impersonate-Extra-"
 )
 
 // VERSION of this binary
@@ -324,11 +327,21 @@ func (self *clientManager) extractAuthInfo(req *restful.Request) (*api.AuthInfo,
 			//there's an impersonation header, lets make sure to add it
 			authInfo.Impersonate = impersonationHeader
 
-			//Check for groups
+			//Check for impersonated groups
 			if groupsImpersonationHeader := req.Request.Header["Impersonate-Group"]; len(groupsImpersonationHeader) > 0 {
 				authInfo.ImpersonateGroups = groupsImpersonationHeader
 			}
 
+			//check for extra fields
+			for headerName, headerValues := range req.Request.Header {
+				if strings.HasPrefix(headerName, ImpersonateUserExtraHeader) {
+					extraName := headerName[len(ImpersonateUserExtraHeader):]
+					if authInfo.ImpersonateUserExtra == nil {
+						authInfo.ImpersonateUserExtra = make(map[string][]string)
+					}
+					authInfo.ImpersonateUserExtra[extraName] = headerValues
+				}
+			}
 		}
 
 		return authInfo, nil
