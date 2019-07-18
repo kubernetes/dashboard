@@ -19,7 +19,9 @@
 if [[ -n "${K8S_DASHBOARD_NPM_CMD}" ]] ; then
   # Run npm command
   echo "Run npm '${K8S_DASHBOARD_NPM_CMD}'"
-  npm ${K8S_DASHBOARD_NPM_CMD} --kubernetes-dashboard:bind_address=${K8S_DASHBOARD_BIND_ADDRESS}
+  npm ${K8S_DASHBOARD_NPM_CMD} \
+    --kubernetes-dashboard:bind_address=${K8S_DASHBOARD_BIND_ADDRESS} \
+    --kubernetes-dashboard:sidecar_host=${K8S_DASHBOARD_SIDECAR_HOST}
 else
   # Install dashboard.
   echo "Install dashboard"
@@ -32,16 +34,25 @@ else
     echo "Start cluster"
     sudo npm run cluster:start
     # Copy kubeconfig from /root/.kube/config
-    sudo cat /root/.kube/config > kind.kubeconfig
-    sudo chown ${LOCAL_UID}:${LOCAL_GID} kind.kubeconfig
+    sudo cat /root/.kube/config > /tmp/kind.kubeconfig
+    sudo chown ${LOCAL_UID}:${LOCAL_GID} /tmp/kind.kubeconfig
     # Edit kubeconfig for kind
     KIND_CONTAINER_NAME="k8s-cluster-ci-control-plane"
     KIND_ADDR=$(sudo docker inspect -f='{{.NetworkSettings.IPAddress}}' ${KIND_CONTAINER_NAME})
-    sed -e "s/localhost:[0-9]\+/${KIND_ADDR}:6443/g" kind.kubeconfig > kind.kubeconfig.new
-    cat kind.kubeconfig.new > kind.kubeconfig
-    rm -f kind.kubeconfig.new
+    sed -e "s/localhost:[0-9]\+/${KIND_ADDR}:6443/g" /tmp/kind.kubeconfig > ~/.kube/config
+    # Deploy recommended.yaml to deploy dashboard-metrics-scraper sidecar
+    echo "Deploy dashboard-metrics-scraper into kind cluster"
+    kubectl apply -f aio/deploy/recommended.yaml
+    # Kill and run `kubectl proxy`
+    KUBECTL_PID=$(ps -A|grep 'kubectl'|tr -s ' '|cut -d ' ' -f 2)
+    echo "Kill kubectl ${KUBECTL_PID}"
+    kill ${KUBECTL_PID}
+    nohup kubectl proxy --address 127.0.0.1 --port 8000 >/tmp/kubeproxy.log 2>&1 &
+    export K8S_DASHBOARD_SIDECAR_HOST="http://localhost:8000/api/v1/namespaces/kubernetes-dashboard/services/dashboard-metrics-scraper:/proxy/"
   fi
   # Start dashboard.
   echo "Start dashboard"
-  npm start --kubernetes-dashboard:bind_address=${K8S_DASHBOARD_BIND_ADDRESS}
+  npm start \
+    --kubernetes-dashboard:bind_address=${K8S_DASHBOARD_BIND_ADDRESS} \
+    --kubernetes-dashboard:sidecar_host=${K8S_DASHBOARD_SIDECAR_HOST}
 fi

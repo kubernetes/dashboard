@@ -66,6 +66,11 @@ RUN curl -sSL https://download.docker.com/linux/static/stable/x86_64/docker-18.0
 	rm -rf /tmp/docker/ && \
 	chmod +x /usr/bin/docker
 
+# Install kubectl
+RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+RUN chmod +x ./kubectl
+RUN mv ./kubectl /usr/local/bin/kubectl
+
 # Install golangci for ckecking or fixing go format.
 # `npm ci` installs golangci, but this installation is needed
 # for running `npm run check` singlely, like
