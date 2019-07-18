@@ -1128,3 +1128,9 @@ export interface SJSCloseEvent extends SockJSSimpleEvent {
 export interface SJSMessageEvent extends SockJSSimpleEvent {
   data: string;
 }
+
+export interface Plugin {
+  name: string;
+  path: string;
+  dependencies: string[];
+}

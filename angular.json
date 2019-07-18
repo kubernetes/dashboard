@@ -31,7 +31,12 @@
               "node_modules/c3/c3.min.css",
               "src/app/frontend/index.scss"
             ],
-            "scripts": ["node_modules/sockjs-client/dist/sockjs.min.js"]
+            "scripts": [
+              "node_modules/sockjs-client/dist/sockjs.min.js",
+              "node_modules/systemjs/dist/s.js",
+              "node_modules/systemjs/dist/extras/named-register.js",
+              "node_modules/systemjs/dist/extras/amd.js"
+            ]
           },
           "configurations": {
             "production": {
