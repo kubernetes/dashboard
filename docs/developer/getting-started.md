@@ -2,7 +2,7 @@
 
 This document describes how to setup your development environment.
 
-##Preparation
+## Preparation
 
 Make sure the following software is installed and added to the $PATH variable:
 
