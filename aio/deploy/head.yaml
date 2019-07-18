@@ -111,11 +111,11 @@ rules:
     # Allow Dashboard to get metrics.
   - apiGroups: [""]
     resources: ["services"]
-    resourceNames: ["heapster", "dashboard-metrics-scraper"]
+    resourceNames: ["heapster", "dashboard-metrics-scraper-head"]
     verbs: ["proxy"]
   - apiGroups: [""]
     resources: ["services/proxy"]
-    resourceNames: ["heapster", "http:heapster:", "https:heapster:", "dashboard-metrics-scraper", "http:dashboard-metrics-scraper"]
+    resourceNames: ["heapster", "http:heapster:", "https:heapster:", "dashboard-metrics-scraper-head", "http:dashboard-metrics-scraper-head"]
     verbs: ["get"]
 
 ---
@@ -223,15 +223,15 @@ kind: Service
 apiVersion: v1
 metadata:
   labels:
-    k8s-app: kubernetes-metrics-scraper
-  name: dashboard-metrics-scraper
+    k8s-app: dashboard-metrics-scraper-head
+  name: dashboard-metrics-scraper-head
   namespace: kubernetes-dashboard-head
 spec:
   ports:
     - port: 8000
       targetPort: 8000
   selector:
-    k8s-app: kubernetes-metrics-scraper
+    k8s-app: dashboard-metrics-scraper-head
 
 ---
 
@@ -239,22 +239,22 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   labels:
-    k8s-app: kubernetes-metrics-scraper
-  name: kubernetes-metrics-scraper
+    k8s-app: dashboard-metrics-scraper-head
+  name: dashboard-metrics-scraper-head
   namespace: kubernetes-dashboard-head
 spec:
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      k8s-app: kubernetes-metrics-scraper
+      k8s-app: dashboard-metrics-scraper-head
   template:
     metadata:
       labels:
-        k8s-app: kubernetes-metrics-scraper
+        k8s-app: dashboard-metrics-scraper-head
     spec:
       containers:
-        - name: kubernetes-metrics-scraper
+        - name: dashboard-metrics-scraper-head
           image: kubernetesdashboarddev/dashboard-metrics-sidecar:latest
           ports:
             - containerPort: 8000

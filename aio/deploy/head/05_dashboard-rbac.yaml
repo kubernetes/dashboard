@@ -33,11 +33,11 @@ rules:
     # Allow Dashboard to get metrics.
   - apiGroups: [""]
     resources: ["services"]
-    resourceNames: ["heapster", "dashboard-metrics-scraper"]
+    resourceNames: ["heapster", "dashboard-metrics-scraper-head"]
     verbs: ["proxy"]
   - apiGroups: [""]
     resources: ["services/proxy"]
-    resourceNames: ["heapster", "http:heapster:", "https:heapster:", "dashboard-metrics-scraper", "http:dashboard-metrics-scraper"]
+    resourceNames: ["heapster", "http:heapster:", "https:heapster:", "dashboard-metrics-scraper-head", "http:dashboard-metrics-scraper-head"]
     verbs: ["get"]
 
 ---
