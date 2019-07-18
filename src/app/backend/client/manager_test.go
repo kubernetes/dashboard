@@ -305,3 +305,289 @@ func TestClientManager_InsecureAPIExtensionsClient(t *testing.T) {
 		t.Fatalf("InsecureClient(): Expected insecure client not to be nil")
 	}
 }
+
+func TestImpersonationUserClient(t *testing.T) {
+	args.GetHolderBuilder().SetEnableSkipLogin(true)
+	cases := []struct {
+		request                   *restful.Request
+		expected                  string
+		expectedImpersonationUser string
+	}{
+		{
+			&restful.Request{
+				Request: &http.Request{
+					Header: http.Header(map[string][]string{
+						"Authorization":    {"Bearer test-token"},
+						"Impersonate-User": {"impersonatedUser"},
+					}),
+					TLS: &tls.ConnectionState{},
+				},
+			},
+			"test-token",
+			"impersonatedUser",
+		},
+	}
+
+	for _, c := range cases {
+		manager := NewClientManager("", "https://localhost:8080")
+		cfg, err := manager.Config(c.request)
+		//authInfo := manager.extractAuthInfo(c.request)
+		if err != nil {
+			t.Fatalf("Config(%v): Expected config to be created but error was thrown:"+
+				" %s",
+				c.request, err.Error())
+		}
+
+		if cfg.BearerToken != c.expected {
+			t.Fatalf("Config(%v): Expected token to be %s but got %s",
+				c.request, c.expected, cfg.BearerToken)
+		}
+
+		if cfg.Impersonate.UserName != c.expectedImpersonationUser {
+			t.Fatalf("Config(%v): Expected impersonated user to be %s but got %s",
+				c.request, c.expectedImpersonationUser, cfg.Impersonate.UserName)
+		}
+
+	}
+}
+
+func TestNoImpersonationUserWithNoBearerClient(t *testing.T) {
+	args.GetHolderBuilder().SetEnableSkipLogin(true)
+	cases := []struct {
+		request *restful.Request
+	}{
+		{
+			&restful.Request{
+				Request: &http.Request{
+					Header: http.Header(map[string][]string{}),
+					TLS:    &tls.ConnectionState{},
+				},
+			},
+		},
+	}
+
+	for _, c := range cases {
+		manager := NewClientManager("", "https://localhost:8080")
+		cfg, err := manager.Config(c.request)
+		//authInfo := manager.extractAuthInfo(c.request)
+		if err != nil {
+			t.Fatalf("Config(%v): Expected config to be created but error was thrown:"+
+				" %s",
+				c.request, err.Error())
+		}
+
+		if len(cfg.BearerToken) > 0 {
+			t.Fatalf("Config(%v): Expected no token but got %s",
+				c.request, cfg.BearerToken)
+		}
+
+		if len(cfg.Impersonate.UserName) > 0 {
+			t.Fatalf("Config(%v): Expected no impersonated user but got %s",
+				c.request, cfg.Impersonate.UserName)
+		}
+
+	}
+}
+
+func TestImpersonationOneGroupClient(t *testing.T) {
+	args.GetHolderBuilder().SetEnableSkipLogin(true)
+	cases := []struct {
+		request                     *restful.Request
+		expected                    string
+		expectedImpersonationUser   string
+		expectedImpersonationGroups []string
+	}{
+		{
+			&restful.Request{
+				Request: &http.Request{
+					Header: http.Header(map[string][]string{
+						"Authorization":     {"Bearer test-token"},
+						"Impersonate-User":  {"impersonatedUser"},
+						"Impersonate-Group": {"group1"},
+					}),
+					TLS: &tls.ConnectionState{},
+				},
+			},
+			"test-token",
+			"impersonatedUser",
+			[]string{"group1"},
+		},
+	}
+
+	for _, c := range cases {
+		manager := NewClientManager("", "https://localhost:8080")
+		cfg, err := manager.Config(c.request)
+		//authInfo := manager.extractAuthInfo(c.request)
+		if err != nil {
+			t.Fatalf("Config(%v): Expected config to be created but error was thrown:"+
+				" %s",
+				c.request, err.Error())
+		}
+
+		if cfg.BearerToken != c.expected {
+			t.Fatalf("Config(%v): Expected token to be %s but got %s",
+				c.request, c.expected, cfg.BearerToken)
+		}
+
+		if cfg.Impersonate.UserName != c.expectedImpersonationUser {
+			t.Fatalf("Config(%v): Expected impersonated user to be %s but got %s",
+				c.request, c.expectedImpersonationUser, cfg.Impersonate.UserName)
+		}
+
+		if len(cfg.Impersonate.Groups) != 1 {
+			t.Fatalf("Config(%v): Expected one impersonated group but got %d",
+				c.request, len(cfg.Impersonate.Groups))
+		}
+
+		if cfg.Impersonate.Groups[0] != c.expectedImpersonationGroups[0] {
+			t.Fatalf("Config(%v): Expected impersonated group to be %s but got %s",
+				c.request, cfg.Impersonate.Groups[0], c.expectedImpersonationGroups[0])
+		}
+	}
+}
+
+func TestImpersonationTwoGroupClient(t *testing.T) {
+	args.GetHolderBuilder().SetEnableSkipLogin(true)
+	cases := []struct {
+		request                     *restful.Request
+		expected                    string
+		expectedImpersonationUser   string
+		expectedImpersonationGroups []string
+	}{
+		{
+			&restful.Request{
+				Request: &http.Request{
+					Header: http.Header(map[string][]string{
+						"Authorization":     {"Bearer test-token"},
+						"Impersonate-User":  {"impersonatedUser"},
+						"Impersonate-Group": {"group1", "groups2"},
+					}),
+					TLS: &tls.ConnectionState{},
+				},
+			},
+			"test-token",
+			"impersonatedUser",
+			[]string{"group1", "groups2"},
+		},
+	}
+
+	for _, c := range cases {
+		manager := NewClientManager("", "https://localhost:8080")
+		cfg, err := manager.Config(c.request)
+		//authInfo := manager.extractAuthInfo(c.request)
+		if err != nil {
+			t.Fatalf("Config(%v): Expected config to be created but error was thrown:"+
+				" %s",
+				c.request, err.Error())
+		}
+
+		if cfg.BearerToken != c.expected {
+			t.Fatalf("Config(%v): Expected token to be %s but got %s",
+				c.request, c.expected, cfg.BearerToken)
+		}
+
+		if cfg.Impersonate.UserName != c.expectedImpersonationUser {
+			t.Fatalf("Config(%v): Expected impersonated user to be %s but got %s",
+				c.request, c.expectedImpersonationUser, cfg.Impersonate.UserName)
+		}
+
+		if len(cfg.Impersonate.Groups) != 2 {
+			t.Fatalf("Config(%v): Expected two impersonated group but got %d",
+				c.request, len(cfg.Impersonate.Groups))
+		}
+
+		if cfg.Impersonate.Groups[0] != c.expectedImpersonationGroups[0] {
+			t.Fatalf("Config(%v): Expected impersonated group to be %s but got %s",
+				c.request, cfg.Impersonate.Groups[0], c.expectedImpersonationGroups[0])
+		}
+
+		if cfg.Impersonate.Groups[1] != c.expectedImpersonationGroups[1] {
+			t.Fatalf("Config(%v): Expected impersonated group to be %s but got %s",
+				c.request, cfg.Impersonate.Groups[1], c.expectedImpersonationGroups[1])
+		}
+	}
+}
+
+func TestImpersonationExtrasClient(t *testing.T) {
+	args.GetHolderBuilder().SetEnableSkipLogin(true)
+	cases := []struct {
+		request                    *restful.Request
+		expected                   string
+		expectedImpersonationUser  string
+		expectedImpersonationExtra map[string][]string
+	}{
+		{
+			&restful.Request{
+				Request: &http.Request{
+					Header: http.Header(map[string][]string{
+						"Authorization":             {"Bearer test-token"},
+						"Impersonate-User":          {"impersonatedUser"},
+						"Impersonate-Extra-scope":   {"views", "writes"},
+						"Impersonate-Extra-service": {"iguess"},
+					}),
+					TLS: &tls.ConnectionState{},
+				},
+			},
+			"test-token",
+			"impersonatedUser",
+			map[string][]string{"scope": {"views", "writes"},
+				"service": {"iguess"}},
+		},
+	}
+
+	for _, c := range cases {
+		manager := NewClientManager("", "https://localhost:8080")
+		cfg, err := manager.Config(c.request)
+		//authInfo := manager.extractAuthInfo(c.request)
+		if err != nil {
+			t.Fatalf("Config(%v): Expected config to be created but error was thrown:"+
+				" %s",
+				c.request, err.Error())
+		}
+
+		if cfg.BearerToken != c.expected {
+			t.Fatalf("Config(%v): Expected token to be %s but got %s",
+				c.request, c.expected, cfg.BearerToken)
+		}
+
+		if cfg.Impersonate.UserName != c.expectedImpersonationUser {
+			t.Fatalf("Config(%v): Expected impersonated user to be %s but got %s",
+				c.request, c.expectedImpersonationUser, cfg.Impersonate.UserName)
+		}
+
+		if len(cfg.Impersonate.Extra) != 2 {
+			t.Fatalf("Config(%v): Expected two impersonated extra but got %d",
+				c.request, len(cfg.Impersonate.Extra))
+		}
+
+		if cfg.Impersonate.Extra["service"][0] != c.expectedImpersonationExtra["service"][0] {
+			t.Fatalf("Config(%v): Expected service extra to be %s but got %s",
+				c.request, cfg.Impersonate.Extra["service"][0], c.expectedImpersonationExtra["service"][0])
+
+		}
+
+		//check multi value scope
+
+		if len(cfg.Impersonate.Extra["scope"]) != 2 {
+			t.Fatalf("Config(%v): Expected two scope impersonated extra but got %d",
+				c.request, len(cfg.Impersonate.Extra["scope"]))
+		}
+
+		if cfg.Impersonate.Extra["scope"][0] != c.expectedImpersonationExtra["scope"][0] {
+			t.Fatalf("Config(%v): Expected scope extra to be %s but got %s",
+				c.request, c.expectedImpersonationExtra["scope"][0], cfg.Impersonate.Extra["scope"][0])
+
+		}
+
+		if cfg.Impersonate.Extra["scope"][1] != c.expectedImpersonationExtra["scope"][1] {
+			t.Fatalf("Config(%v): Expected scope extra to be %s but got %s",
+				c.request, c.expectedImpersonationExtra["scope"][1], cfg.Impersonate.Extra["scope"][1])
+
+		}
+
+		if len(cfg.Impersonate.Extra["scope"]) != 2 {
+			t.Fatalf("Config(%v): Expected two scope impersonated extra but got %d",
+				c.request, len(cfg.Impersonate.Extra["scope"]))
+		}
+	}
+}

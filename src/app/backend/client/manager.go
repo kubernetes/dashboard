@@ -50,6 +50,8 @@ const (
 	JWETokenHeader = "jweToken"
 	// Default http header for user-agent
 	DefaultUserAgent = "dashboard"
+	//Impersonation Extra header
+	ImpersonateUserExtraHeader = "Impersonate-Extra-"
 )
 
 // VERSION of this binary
@@ -311,12 +313,37 @@ func (self *clientManager) buildCmdConfig(authInfo *api.AuthInfo, cfg *rest.Conf
 // Extracts authorization information from the request header
 func (self *clientManager) extractAuthInfo(req *restful.Request) (*api.AuthInfo, error) {
 	authHeader := req.HeaderParameter("Authorization")
+	impersonationHeader := req.HeaderParameter("Impersonate-User")
 	jweToken := req.HeaderParameter(JWETokenHeader)
 
 	// Authorization header will be more important than our token
 	token := self.extractTokenFromHeader(authHeader)
 	if len(token) > 0 {
-		return &api.AuthInfo{Token: token}, nil
+
+		authInfo := &api.AuthInfo{Token: token}
+
+		if len(impersonationHeader) > 0 {
+			//there's an impersonation header, lets make sure to add it
+			authInfo.Impersonate = impersonationHeader
+
+			//Check for impersonated groups
+			if groupsImpersonationHeader := req.Request.Header["Impersonate-Group"]; len(groupsImpersonationHeader) > 0 {
+				authInfo.ImpersonateGroups = groupsImpersonationHeader
+			}
+
+			//check for extra fields
+			for headerName, headerValues := range req.Request.Header {
+				if strings.HasPrefix(headerName, ImpersonateUserExtraHeader) {
+					extraName := headerName[len(ImpersonateUserExtraHeader):]
+					if authInfo.ImpersonateUserExtra == nil {
+						authInfo.ImpersonateUserExtra = make(map[string][]string)
+					}
+					authInfo.ImpersonateUserExtra[extraName] = headerValues
+				}
+			}
+		}
+
+		return authInfo, nil
 	}
 
 	if self.tokenManager != nil && len(jweToken) > 0 {

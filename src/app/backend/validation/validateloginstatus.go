@@ -30,21 +30,34 @@ type LoginStatus struct {
 	// True if dashboard is configured to use HTTPS connection. It is required for secure
 	// data exchange during login operation.
 	HTTPSMode bool `json:"httpsMode"`
+	// True if impersonation is enabled
+	ImpersonationPresent bool `json:"impersonationPresent"`
+
+	// The impersonated user
+	ImpersonatedUser string `json:"impersonatedUser"`
 }
 
 // ValidateLoginStatus returns information about user login status and if request was made over HTTPS.
 func ValidateLoginStatus(request *restful.Request) *LoginStatus {
 	authHeader := request.HeaderParameter("Authorization")
 	tokenHeader := request.HeaderParameter(client.JWETokenHeader)
+	impersonationHeader := request.HeaderParameter("Impersonate-User")
 
 	httpsMode := request.Request.TLS != nil
 	if args.Holder.GetEnableInsecureLogin() {
 		httpsMode = true
 	}
 
-	return &LoginStatus{
-		TokenPresent:  len(tokenHeader) > 0,
-		HeaderPresent: len(authHeader) > 0,
-		HTTPSMode:     httpsMode,
+	loginStatus := &LoginStatus{
+		TokenPresent:         len(tokenHeader) > 0,
+		HeaderPresent:        len(authHeader) > 0,
+		ImpersonationPresent: len(impersonationHeader) > 0,
+		HTTPSMode:            httpsMode,
 	}
+
+	if loginStatus.ImpersonationPresent {
+		loginStatus.ImpersonatedUser = impersonationHeader
+	}
+
+	return loginStatus
 }
