@@ -16,22 +16,22 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   labels:
-    k8s-app: kubernetes-metrics-scraper
-  name: kubernetes-metrics-scraper
+    k8s-app: dashboard-metrics-scraper
+  name: dashboard-metrics-scraper
   namespace: kubernetes-dashboard
 spec:
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      k8s-app: kubernetes-metrics-scraper
+      k8s-app: dashboard-metrics-scraper
   template:
     metadata:
       labels:
-        k8s-app: kubernetes-metrics-scraper
+        k8s-app: dashboard-metrics-scraper
     spec:
       containers:
-        - name: kubernetes-metrics-scraper
+        - name: dashboard-metrics-scraper
           image: kubernetesui/metrics-scraper:v1.0.0
           ports:
             - containerPort: 8000

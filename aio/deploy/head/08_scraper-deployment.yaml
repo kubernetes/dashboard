@@ -16,22 +16,22 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   labels:
-    k8s-app: kubernetes-metrics-scraper-head
-  name: kubernetes-metrics-scraper-head
+    k8s-app: dashboard-metrics-scraper-head
+  name: dashboard-metrics-scraper-head
   namespace: kubernetes-dashboard-head
 spec:
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      k8s-app: kubernetes-metrics-scraper-head
+      k8s-app: dashboard-metrics-scraper-head
   template:
     metadata:
       labels:
-        k8s-app: kubernetes-metrics-scraper-head
+        k8s-app: dashboard-metrics-scraper-head
     spec:
       containers:
-      - name: kubernetes-metrics-scraper-head
+      - name: dashboard-metrics-scraper-head
         image: kubernetesdashboarddev/dashboard-metrics-sidecar:latest
         ports:
         - containerPort: 8000
