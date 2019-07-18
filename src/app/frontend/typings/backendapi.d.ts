@@ -193,7 +193,6 @@ export interface CronJob extends Resource {
 
 export interface CRD extends Resource {
   version: string;
-  objects: CRDObjectList;
 }
 
 export interface DaemonSet extends Resource {
@@ -442,6 +441,11 @@ export interface StorageClassDetail extends ResourceDetail {
 
 export interface ConfigMapDetail extends ResourceDetail {
   data: StringMap;
+}
+
+export interface CRDDetail extends ResourceDetail {
+  version: string;
+  objects: CRDObjectList;
 }
 
 export interface JobDetail extends ResourceDetail {

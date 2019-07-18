@@ -27,7 +27,7 @@ const CRD_LIST_ROUTE: Route = {
 const CRD_DETAIL_ROUTE: Route = {
   path: ':crdName',
   component: CRDDetailComponent,
-  data: {breadcrumb: ':crdName', parent: CRD_LIST_ROUTE}
+  data: {breadcrumb: '{{ crdName }}', parent: CRD_LIST_ROUTE}
 };
 
 @NgModule({
