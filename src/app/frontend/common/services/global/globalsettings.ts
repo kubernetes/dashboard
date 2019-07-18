@@ -58,6 +58,7 @@ export class GlobalSettingsService {
             },
             err => {
               this.isInitialized_ = false;
+              this.onSettingsUpdate.next();
               if (onFail) onFail(err);
             });
   }

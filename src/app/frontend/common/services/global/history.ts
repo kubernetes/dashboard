@@ -30,9 +30,9 @@ export class HistoryService {
 
     this.router_.events.pipe(filter(e => e instanceof NavigationEnd))
         .pipe(pairwise())
-        .subscribe(e => {
-          this.previousStateUrl_ = (e[0] as NavigationEnd).url;
-          this.currentStateUrl_ = (e[1] as NavigationEnd).url;
+        .subscribe((e: [NavigationEnd, NavigationEnd]) => {
+          this.previousStateUrl_ = e[0].url;
+          this.currentStateUrl_ = e[1].url;
         });
   }
 
