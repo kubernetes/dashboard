@@ -78,6 +78,12 @@ export interface CronJobList extends ResourceList {
   status: Status;
 }
 
+export interface CRDList extends ResourceList {
+  items: CRD[];
+}
+
+export interface CRDObjectList extends ResourceList {}
+
 export interface DaemonSetList extends ResourceList {
   daemonSets: DaemonSet[];
   status: Status;
@@ -183,6 +189,11 @@ export interface CronJob extends Resource {
   suspend: boolean;
   active: number;
   lastSchedule: string;
+}
+
+export interface CRD extends Resource {
+  version: string;
+  objects: CRDObjectList;
 }
 
 export interface DaemonSet extends Resource {

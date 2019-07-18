@@ -13,17 +13,28 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
-
-import {ComponentsModule} from '../common/components/module';
-import {SharedModule} from '../shared.module';
+import {Route, RouterModule} from '@angular/router';
 
 import {CRDDetailComponent} from './detail/component';
 import {CRDListComponent} from './list/component';
-import {CRDRoutingModule} from './routing';
+
+const CRD_LIST_ROUTE: Route = {
+  path: '',
+  component: CRDListComponent,
+  data: {breadcrumb: 'CRD'}
+};
+
+const CRD_DETAIL_ROUTE: Route = {
+  path: ':crdName',
+  component: CRDDetailComponent,
+  data: {breadcrumb: ':crdName', parent: CRD_LIST_ROUTE}
+};
 
 @NgModule({
-  imports: [SharedModule, ComponentsModule, CRDRoutingModule],
-  declarations: [CRDListComponent, CRDDetailComponent]
+  imports: [RouterModule.forChild([
+    CRD_LIST_ROUTE,
+    CRD_DETAIL_ROUTE,
+  ])]
 })
-export class CrdModule {
+export class CRDRoutingModule {
 }

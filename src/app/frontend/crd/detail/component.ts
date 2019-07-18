@@ -12,18 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 
-import {ComponentsModule} from '../common/components/module';
-import {SharedModule} from '../shared.module';
+@Component({selector: 'kd-crd-detail', templateUrl: './template.html', styleUrls: ['./style.scss']})
+export class CRDDetailComponent implements OnInit, OnDestroy {
+  ngOnDestroy(): void {}
 
-import {CRDDetailComponent} from './detail/component';
-import {CRDListComponent} from './list/component';
-import {CRDRoutingModule} from './routing';
-
-@NgModule({
-  imports: [SharedModule, ComponentsModule, CRDRoutingModule],
-  declarations: [CRDListComponent, CRDDetailComponent]
-})
-export class CrdModule {
+  ngOnInit(): void {}
 }

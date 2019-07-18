@@ -12,18 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
+import {Component} from '@angular/core';
 
-import {ComponentsModule} from '../common/components/module';
-import {SharedModule} from '../shared.module';
-
-import {CRDDetailComponent} from './detail/component';
-import {CRDListComponent} from './list/component';
-import {CRDRoutingModule} from './routing';
-
-@NgModule({
-  imports: [SharedModule, ComponentsModule, CRDRoutingModule],
-  declarations: [CRDListComponent, CRDDetailComponent]
-})
-export class CrdModule {
+@Component({selector: 'kd-crd-list-state', template: '<kd-crd-list></kd-crd-list>'})
+export class CRDListComponent {
 }

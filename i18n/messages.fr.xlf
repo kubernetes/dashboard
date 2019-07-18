@@ -606,6 +606,10 @@
           <context context-type="linenumber">48</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crd/template.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/daemonset/template.html</context>
           <context context-type="linenumber">57</context>
         </context-group>
@@ -776,6 +780,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/configmap/template.html</context>
           <context context-type="linenumber">70</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crd/template.html</context>
+          <context context-type="linenumber">54</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/daemonset/template.html</context>
@@ -1314,23 +1322,7 @@
         <source>Items: </source>
         <target>Éléments : </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/node/template.html</context>
-          <context context-type="linenumber">23</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/pod/template.html</context>
-          <context context-type="linenumber">24</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/replicaset/template.html</context>
-          <context context-type="linenumber">26</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/namespace/template.html</context>
-          <context context-type="linenumber">23</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/persistentvolume/template.html</context>
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/cronjob/template.html</context>
           <context context-type="linenumber">23</context>
         </context-group>
         <context-group purpose="location">
@@ -1338,11 +1330,15 @@
           <context context-type="linenumber">23</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/storageclass/template.html</context>
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/configmap/template.html</context>
           <context context-type="linenumber">23</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/cronjob/template.html</context>
+          <context context-type="sourcefile">../src/app/frontend/common/components/condition/template.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crd/template.html</context>
           <context context-type="linenumber">23</context>
         </context-group>
         <context-group purpose="location">
@@ -1354,28 +1350,44 @@
           <context context-type="linenumber">23</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/endpoint/cardlist/template.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/event/template.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/ingress/template.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/job/template.html</context>
           <context context-type="linenumber">26</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/replicationcontroller/template.html</context>
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/namespace/template.html</context>
           <context context-type="linenumber">23</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/statefulset/template.html</context>
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/node/template.html</context>
           <context context-type="linenumber">23</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/configmap/template.html</context>
-          <context context-type="linenumber">23</context>
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/pod/template.html</context>
+          <context context-type="linenumber">24</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/secret/template.html</context>
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/persistentvolume/template.html</context>
           <context context-type="linenumber">23</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/persistentvolumeclaim/template.html</context>
           <context context-type="linenumber">23</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/policyrule/template.html</context>
+          <context context-type="linenumber">26</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/quotas/template.html</context>
@@ -1386,28 +1398,28 @@
           <context context-type="linenumber">26</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/ingress/template.html</context>
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/replicaset/template.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/replicationcontroller/template.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/storageclass/template.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/statefulset/template.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/secret/template.html</context>
           <context context-type="linenumber">23</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/service/template.html</context>
           <context context-type="linenumber">23</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/components/endpoint/cardlist/template.html</context>
-          <context context-type="linenumber">26</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/event/template.html</context>
-          <context context-type="linenumber">23</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/components/condition/template.html</context>
-          <context context-type="linenumber">26</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/components/policyrule/template.html</context>
-          <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="fe22ca53e651df951dac25b67c17894b0980f767" datatype="html">
@@ -1920,6 +1932,14 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/statefulset/detail/template.html</context>
           <context context-type="linenumber">38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6af40687e73f3e54515b94380a6463e6f8744ff2" datatype="html">
+        <source>Custom Resource Definitions</source>
+        <target state="new">Custom Resource Definitions</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crd/template.html</context>
+          <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
       <trans-unit id="c3a7e364a88ea4673199dfa98bc73e6dbe09dfac" datatype="html">

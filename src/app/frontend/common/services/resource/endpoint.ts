@@ -17,6 +17,7 @@ const baseHref = 'api/v1';
 export enum Resource {
   job = 'job',
   cronJob = 'cronjob',
+  crd = 'crd',
   daemonSet = 'daemonset',
   deployment = 'deployment',
   pod = 'pod',

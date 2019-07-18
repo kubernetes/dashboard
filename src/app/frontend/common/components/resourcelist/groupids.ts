@@ -19,6 +19,8 @@ export enum ListIdentifier {
   persistentVolume = 'persistentVolumeList',
   storageClass = 'storageClassList',
   cronJob = 'cronJobList',
+  crd = 'crdList',
+  crdObject = 'crdObjectList',
   job = 'jobList',
   deployment = 'deploymentList',
   daemonSet = 'daemonSetList',

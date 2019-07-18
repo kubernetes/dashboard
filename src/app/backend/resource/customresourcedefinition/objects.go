@@ -31,8 +31,8 @@ type CustomResourceObjectDetail struct {
 
 // CustomResourceObject represents a custom resource object.
 type CustomResourceObject struct {
-	metav1.TypeMeta `json:",inline"`
-	Metadata        metav1.ObjectMeta `json:"metadata,omitempty"`
+	metav1.TypeMeta `json:"typeMeta"`
+	ObjectMeta      metav1.ObjectMeta `json:"objectMeta,omitempty"`
 }
 
 func (in *CustomResourceObject) DeepCopyObject() runtime.Object {
@@ -55,7 +55,7 @@ func (in *CustomResourceObject) DeepCopy() *CustomResourceObject {
 // CustomResourceObjectList represents crd objects in a namespace.
 type CustomResourceObjectList struct {
 	ListMeta        api.ListMeta `json:"listMeta"`
-	metav1.TypeMeta `json:",inline"`
+	metav1.TypeMeta `json:"typeMeta"`
 
 	// Unordered list of custom resource definitions
 	Items []CustomResourceObject `json:"items"`
