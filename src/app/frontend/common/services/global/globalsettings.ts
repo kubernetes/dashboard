@@ -13,20 +13,25 @@
 // limitations under the License.
 
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {GlobalSettings} from '@api/backendapi';
 import {onSettingsFailCallback, onSettingsLoadCallback,} from '@api/frontendapi';
+import {ReplaySubject} from 'rxjs';
 import {Observable} from 'rxjs/Observable';
+import {publishReplay, refCount} from 'rxjs/operators';
 
 import {AuthorizerService} from './authorizer';
 
 @Injectable()
 export class GlobalSettingsService {
+  onSettingsUpdate = new ReplaySubject<void>();
+
   private readonly endpoint_ = 'api/v1/settings/global';
   private settings_: GlobalSettings = {
     itemsPerPage: 10,
     clusterName: '',
-    autoRefreshTimeInterval: 5,
+    logsAutoRefreshTimeInterval: 5,
+    resourceAutoRefreshTimeInterval: 5,
   };
   private isInitialized_ = false;
 
@@ -48,10 +53,12 @@ export class GlobalSettingsService {
             settings => {
               this.settings_ = settings;
               this.isInitialized_ = true;
+              this.onSettingsUpdate.next();
               if (onLoad) onLoad(settings);
             },
             err => {
               this.isInitialized_ = false;
+              this.onSettingsUpdate.next();
               if (onFail) onFail(err);
             });
   }
@@ -74,7 +81,11 @@ export class GlobalSettingsService {
     return this.settings_.itemsPerPage;
   }
 
-  getAutoRefreshTimeInterval(): number {
-    return this.settings_.autoRefreshTimeInterval;
+  getLogsAutoRefreshTimeInterval(): number {
+    return this.settings_.logsAutoRefreshTimeInterval;
+  }
+
+  getResourceAutoRefreshTimeInterval(): number {
+    return this.settings_.resourceAutoRefreshTimeInterval;
   }
 }

@@ -985,7 +985,8 @@ export interface ScaleTargetRef {
 export interface GlobalSettings {
   clusterName: string;
   itemsPerPage: number;
-  autoRefreshTimeInterval: number;
+  logsAutoRefreshTimeInterval: number;
+  resourceAutoRefreshTimeInterval: number;
 }
 
 export interface APIVersion {

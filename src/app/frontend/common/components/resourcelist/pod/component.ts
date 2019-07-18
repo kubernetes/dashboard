@@ -13,9 +13,11 @@
 // limitations under the License.
 
 import {HttpParams} from '@angular/common/http';
-import {Component, ComponentFactoryResolver, Input} from '@angular/core';
+import {Component, ComponentFactoryResolver, Input, OnDestroy} from '@angular/core';
 import {Event, Pod, PodList} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
+import {takeUntil} from 'rxjs/operators';
+
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';

@@ -29,7 +29,7 @@ limitations under the License.
           (ngSubmit)="save(form)">
       <kd-settings-entry key="Cluster name"
                          i18n-key
-                         desc="Cluster name appears in the browser window title if it is set"
+                         desc="Cluster name appears in the browser window title if it is set."
                          i18n-desc>
         <mat-form-field fxFlex>
           <input [(ngModel)]="settings.clusterName"
@@ -42,7 +42,7 @@ limitations under the License.
       </kd-settings-entry>
       <kd-settings-entry key="Items per page"
                          i18n-key
-                         desc="Max number of items that can be displayed on each list page"
+                         desc="Max number of items that can be displayed on each list page."
                          i18n-desc>
         <div fxFlex>
           <mat-slider [(ngModel)]="settings.itemsPerPage"
@@ -59,12 +59,12 @@ limitations under the License.
           </div>
         </div>
       </kd-settings-entry>
-      <kd-settings-entry key="Auto-refresh time interval"
+      <kd-settings-entry key="Logs auto-refresh time interval"
                          i18n-key
-                         desc="Number of seconds between every auto-refresh of logs"
+                         desc="Number of seconds between every auto-refresh of logs."
                          i18n-desc>
         <div fxFlex>
-          <mat-slider [(ngModel)]="settings.autoRefreshTimeInterval"
+          <mat-slider [(ngModel)]="settings.logsAutoRefreshTimeInterval"
                       name="autoRefreshTimeInterval"
                       color="primary"
                       min="1"
@@ -74,7 +74,26 @@ limitations under the License.
           </mat-slider>
           <span class="kd-slider-value kd-muted"
                 fxFlexAlign=" center">
-            {{settings.autoRefreshTimeInterval}}
+            {{settings.logsAutoRefreshTimeInterval}}
+          </span>
+        </div>
+      </kd-settings-entry>
+      <kd-settings-entry key="Resource auto-refresh time interval"
+                         i18n-key
+                         desc="Number of seconds between every auto-refresh of every resource. Set 0 to disable."
+                         i18n-desc>
+        <div fxFlex>
+          <mat-slider [(ngModel)]="settings.resourceAutoRefreshTimeInterval"
+                      name="resourceAutoRefreshTimeInterval"
+                      color="primary"
+                      min="0"
+                      max="60"
+                      step="5"
+                      fxFlex>
+          </mat-slider>
+          <span class="kd-slider-value kd-muted"
+                fxFlexAlign=" center">
+            {{settings.resourceAutoRefreshTimeInterval}}
           </span>
         </div>
       </kd-settings-entry>

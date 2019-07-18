@@ -2684,7 +2684,7 @@
               </source>
         <target>
                 Chaque compte de service a un Secret associé avec un jeton porteur (Bearer Token) valide
-                qui peut être utilisé pour se connecter au Dashboard. 
+                qui peut être utilisé pour se connecter au Dashboard.
                 Pour en savoir plus sur la façon de configurer et utiliser des jetons porteurs,
                 veuillez vous référer à la section <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Authentification<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>.
               </target>
@@ -2863,7 +2863,7 @@
         <source>
               Name must be up to <x id="INTERPOLATION" equiv-text="{{namespaceMaxLength}}"/> characters long.
             </source>
-        <target>Le nom ne doit pas dépasser 
+        <target>Le nom ne doit pas dépasser
           <x id="INTERPOLATION" equiv-text="{{namespaceMaxLength}}"/>
           caractères.</target>
         <context-group purpose="location">
@@ -2927,7 +2927,7 @@
         <source>
               Name must be up to <x id="INTERPOLATION" equiv-text="{{secretNameMaxLength}}"/> characters long.
             </source>
-        <target>Le nom ne doit pas dépasser 
+        <target>Le nom ne doit pas dépasser
           <x id="INTERPOLATION" equiv-text="{{secretNameMaxLength}}"/>
           caractères.</target>
         <context-group purpose="location">
@@ -4764,9 +4764,9 @@
           <context context-type="linenumber">30</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="29631c82a2182a8417a9bcc96229e0f637e2bbba" datatype="html">
-        <source>Cluster name appears in the browser window title if it is set</source>
-        <target>Le nom du cluster apparaît dans la barre de titre du navigateur s'il est défini</target>
+      <trans-unit id="409222992640ac7a22c9f4d8d1dd19bf0109bafa" datatype="html">
+        <source>Cluster name appears in the browser window title if it is set.</source>
+        <target state="new">Le nom du cluster apparaît dans la barre de titre du navigateur s'il est défini.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">32</context>
@@ -4780,28 +4780,44 @@
           <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="00b22e584955d3a5548b16c52742a0f9bf029221" datatype="html">
-        <source>Max number of items that can be displayed on each list page</source>
-        <target>Nombre maximal d'éléments affichés dans chaque page de liste</target>
+      <trans-unit id="e15825a0273ad0aa69da37ed117de2b8a79ebde5" datatype="html">
+        <source>Max number of items that can be displayed on each list page.</source>
+        <target state="new">Nombre maximal d'éléments affichés dans chaque page de liste.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="06d8132c519a81e0f3b166f7dfba16ca3ef74377" datatype="html">
-        <source>Auto-refresh time interval</source>
-        <target>Intervalle de temps d'actualisation automatique</target>
+      <trans-unit id="1bf6e9fbb0027605b8c66e07e51ba28ff29ef67f" datatype="html">
+        <source>Logs auto-refresh time interval</source>
+        <target state="new">Logs auto-refresh time interval</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">62</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="e706a64c4a721f5440ab2cbe1a0ea57e592ec2c1" datatype="html">
-        <source>Number of seconds between every auto-refresh of logs</source>
-        <target>Nombre de secondes entre chaque actualisation automatique des journaux</target>
+      <trans-unit id="02458bd7e54108bc7ac4f35fc96aeb3e422fa471" datatype="html">
+        <source>Number of seconds between every auto-refresh of logs.</source>
+        <target state="new">Nombre de secondes entre chaque actualisation automatique des journaux.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">64</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="694d9a3839897f77b3ebca37be526771f6c54fd0" datatype="html">
+        <source>Resource auto-refresh time interval</source>
+        <target state="new">Resource auto-refresh time interval</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
+          <context context-type="linenumber">81</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ad66f1317f55d474a80b519533bde2eb31f99eda" datatype="html">
+        <source>Number of seconds between every auto-refresh of every resource. Set 0 to disable.</source>
+        <target state="new">Number of seconds between every auto-refresh of every resource. Set 0 to disable.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
+          <context context-type="linenumber">83</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f8b53b407af242e77dc3391947f23988f3451e64" datatype="html">
@@ -4811,7 +4827,7 @@
         <target>Enregistrer</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
-          <context context-type="linenumber">86</context>
+          <context context-type="linenumber">105</context>
         </context-group>
       </trans-unit>
       <trans-unit id="713f3afed85462e92402e8e3523c6dcdb362ce17" datatype="html">
@@ -4821,7 +4837,7 @@
         <target>Recharger</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
-          <context context-type="linenumber">93</context>
+          <context context-type="linenumber">112</context>
         </context-group>
       </trans-unit>
       <trans-unit id="d440068d2406e98fd156b9dcab7f0998e707a38b" datatype="html">

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import {Component, Input} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {ObjectMeta, TypeMeta} from '@api/backendapi';
 import {Subscription} from 'rxjs/Subscription';
 
@@ -26,20 +27,8 @@ export class ActionbarDetailEditComponent {
   @Input() objectMeta: ObjectMeta;
   @Input() typeMeta: TypeMeta;
   @Input() displayName: string;
-  verberSubscription_: Subscription;
 
   constructor(private readonly verber_: VerberService) {}
-
-  ngOnInit(): void {
-    this.verberSubscription_ = this.verber_.onEdit.subscribe(
-        () => {
-            // this.state_.reload().catch();
-        });
-  }
-
-  ngOnDestroy(): void {
-    this.verberSubscription_.unsubscribe();
-  }
 
   onClick(): void {
     this.verber_.showEditDialog(this.displayName, this.typeMeta, this.objectMeta);

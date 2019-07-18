@@ -12,9 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {ObjectMeta, TypeMeta} from '@api/backendapi';
-import {Subscription} from 'rxjs/Subscription';
+import {first} from 'rxjs/operators';
 
 import {VerberService} from '../../../../services/global/verber';
 
@@ -22,23 +23,19 @@ import {VerberService} from '../../../../services/global/verber';
   selector: 'kd-actionbar-detail-delete',
   templateUrl: './template.html',
 })
-export class ActionbarDetailDeleteComponent implements OnInit, OnDestroy {
+export class ActionbarDetailDeleteComponent implements OnInit {
   @Input() objectMeta: ObjectMeta;
   @Input() typeMeta: TypeMeta;
   @Input() displayName: string;
-  verberSubscription_: Subscription;
 
-  constructor(private readonly verber_: VerberService) {}
+  constructor(
+      private readonly verber_: VerberService, private readonly route_: ActivatedRoute,
+      private readonly router_: Router) {}
 
   ngOnInit(): void {
-    this.verberSubscription_ = this.verber_.onDelete.subscribe(
-        () => {
-            // this.state_.go('overview');
-        });
-  }
-
-  ngOnDestroy(): void {
-    this.verberSubscription_.unsubscribe();
+    this.verber_.onDelete.pipe(first()).subscribe(() => {
+      this.router_.navigate(['.'], {relativeTo: this.route_, queryParamsHandling: 'preserve'});
+    });
   }
 
   onClick(): void {

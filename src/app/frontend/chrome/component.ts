@@ -70,6 +70,6 @@ export class ChromeComponent implements OnInit {
   }
 
   goToCreateState(): void {
-    this.router_.navigate(['create']);
+    this.router_.navigate(['create'], {queryParamsHandling: 'preserve'});
   }
 }

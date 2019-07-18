@@ -12,37 +12,38 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
-import {KdStateService} from './state';
+import {Injectable, Injector} from '@angular/core';
+import {NavigationEnd, Router} from '@angular/router';
+import {filter, pairwise} from 'rxjs/operators';
 
 @Injectable()
 export class HistoryService {
-  private previousStateName: string;
-  // private previousStateParams: RawParams;
+  private router_: Router;
+  private previousStateUrl_: string;
+  private currentStateUrl_: string;
 
-  constructor(private readonly router_: Router, private readonly kdState_: KdStateService) {
-    this.init();
-  }
+  constructor(private readonly injector_: Injector) {}
 
   /** Initializes the service. Must be called before use. */
   init(): void {
-    // this.kdState_.onSuccess.subscribe((transition: Transition) => {
-    //   this.previousStateName = transition.from().name || '';
-    //   this.previousStateParams = transition.params('from');
-    // });
+    this.router_ = this.injector_.get(Router);
+
+    this.router_.events.pipe(filter(e => e instanceof NavigationEnd))
+        .pipe(pairwise())
+        .subscribe((e: [NavigationEnd, NavigationEnd]) => {
+          this.previousStateUrl_ = e[0].url;
+          this.currentStateUrl_ = e[1].url;
+        });
   }
 
   /**
    * Goes back to previous state or to the provided defaultState if none set.
    */
   goToPreviousState(defaultState: string): Promise<boolean> {
-    // let targetState = this.previousStateName || defaultState;
-    //
-    // // If previous state is same as current state then go to default state to avoid loop.
-    // if (this.state_.current.name === this.previousStateName) {
-    //   targetState = defaultState;
-    // }
-    return this.router_.navigate([defaultState], {queryParams: undefined});
+    if (this.previousStateUrl_ && this.previousStateUrl_ !== this.currentStateUrl_) {
+      return this.router_.navigateByUrl(this.previousStateUrl_);
+    }
+
+    return this.router_.navigate([defaultState], {queryParamsHandling: 'preserve'});
   }
 }

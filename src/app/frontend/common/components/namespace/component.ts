@@ -14,7 +14,7 @@
 
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild,} from '@angular/core';
 import {MatDialog, MatSelect} from '@angular/material';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, ActivatedRouteSnapshot, Router} from '@angular/router';
 import {NamespaceList} from '@api/backendapi';
 import {Subject} from 'rxjs';
 import {startWith, switchMap, takeUntil} from 'rxjs/operators';
@@ -212,7 +212,12 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
   // }
   //
   private isOnDetailsView_(): boolean {
-    return this.route_.snapshot.params.resourceNamespace !== undefined;
+    let leafRoute = this.route_;
+    while (leafRoute.children.length > 0) {
+      leafRoute = leafRoute.children[0];
+    }
+
+    return leafRoute.snapshot.params.resourceNamespace;
   }
 
   /**

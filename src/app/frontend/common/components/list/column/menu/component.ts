@@ -91,17 +91,14 @@ export class MenuComponent implements ActionColumn {
   }
 
   onScale(): void {
-    this.verber_.onScale.pipe(first()).subscribe(() => this.router_.navigate([]));
     this.verber_.showScaleDialog(this.typeMeta.kind, this.typeMeta, this.objectMeta);
   }
 
   onEdit(): void {
-    this.verber_.onEdit.pipe(first()).subscribe(() => this.router_.navigate([]));
     this.verber_.showEditDialog(this.typeMeta.kind, this.typeMeta, this.objectMeta);
   }
 
   onDelete(): void {
-    this.verber_.onDelete.pipe(first()).subscribe(() => this.router_.navigate([]));
     this.verber_.showDeleteDialog(this.typeMeta.kind, this.typeMeta, this.objectMeta);
   }
 }

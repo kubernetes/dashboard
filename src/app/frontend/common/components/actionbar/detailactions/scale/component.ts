@@ -26,20 +26,8 @@ export class ActionbarDetailScaleComponent {
   @Input() objectMeta: ObjectMeta;
   @Input() typeMeta: TypeMeta;
   @Input() displayName: string;
-  verberSubscription_: Subscription;
 
   constructor(private readonly verber_: VerberService) {}
-
-  ngOnInit(): void {
-    this.verberSubscription_ = this.verber_.onScale.subscribe(
-        () => {
-            // this.state_.reload().catch();
-        });
-  }
-
-  ngOnDestroy(): void {
-    this.verberSubscription_.unsubscribe();
-  }
 
   onClick(): void {
     this.verber_.showScaleDialog(this.displayName, this.typeMeta, this.objectMeta);
