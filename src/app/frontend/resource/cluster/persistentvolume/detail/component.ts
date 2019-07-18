@@ -29,30 +29,33 @@ import {ResourceService} from '../../../../common/services/resource/resource';
 })
 export class PersistentVolumeDetailComponent implements OnInit, OnDestroy {
   private persistentVolumeSubscription_: Subscription;
-  private readonly endpoint_ = EndpointManager.resource(Resource.persistentVolume);
+  private readonly endpoint_ =
+      EndpointManager.resource(Resource.persistentVolume);
   persistentVolume: PersistentVolumeDetail;
   isInitialized = false;
 
   constructor(
-    private readonly persistentVolume_: ResourceService<PersistentVolumeDetail>,
-    private readonly actionbar_: ActionbarService,
-    private readonly activatedRoute_: ActivatedRoute,
-    private readonly notifications_: NotificationsService,
+      private readonly persistentVolume_:
+          ResourceService<PersistentVolumeDetail>,
+      private readonly actionbar_: ActionbarService,
+      private readonly activatedRoute_: ActivatedRoute,
+      private readonly notifications_: NotificationsService,
   ) {}
 
   ngOnInit(): void {
     const resourceName = this.activatedRoute_.snapshot.params.resourceName;
 
-    this.persistentVolumeSubscription_ = this.persistentVolume_
-      .get(this.endpoint_.detail(), resourceName)
-      .subscribe((d: PersistentVolumeDetail) => {
-        this.persistentVolume = d;
-        this.notifications_.pushErrors(d.errors);
-        this.actionbar_.onInit.emit(
-          new ResourceMeta('Persistent Volume', d.objectMeta, d.typeMeta),
-        );
-        this.isInitialized = true;
-      });
+    this.persistentVolumeSubscription_ =
+        this.persistentVolume_.get(this.endpoint_.detail(), resourceName)
+            .subscribe((d: PersistentVolumeDetail) => {
+              this.persistentVolume = d;
+              this.notifications_.pushErrors(d.errors);
+              this.actionbar_.onInit.emit(
+                  new ResourceMeta(
+                      'Persistent Volume', d.objectMeta, d.typeMeta),
+              );
+              this.isInitialized = true;
+            });
   }
 
   ngOnDestroy(): void {
@@ -68,7 +71,8 @@ export class PersistentVolumeDetailComponent implements OnInit, OnDestroy {
     const data: CapacityItem[] = [];
 
     if (this.isInitialized) {
-      for (const rName of Array.from<string>(Object.keys(this.persistentVolume.capacity))) {
+      for (const rName of Array.from<string>(
+               Object.keys(this.persistentVolume.capacity))) {
         data.push({
           resourceName: rName,
           quantity: this.persistentVolume.capacity[rName],

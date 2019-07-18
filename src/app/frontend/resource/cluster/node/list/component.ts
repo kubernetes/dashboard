@@ -16,6 +16,7 @@ import {Component} from '@angular/core';
 
 @Component({
   selector: 'kd-node-list-state',
-  template: './template.html',
+  templateUrl: './template.html',
 })
-export class NodeListComponent {}
+export class NodeListComponent {
+}

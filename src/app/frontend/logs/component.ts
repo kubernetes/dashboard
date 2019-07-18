@@ -28,22 +28,23 @@ import {CONFIG} from '../index.config';
 
 const logsPerView = 100;
 const maxLogSize = 2e9;
-// Load logs from the beginning of the log file. This matters only if the log file is too large to
-// be loaded completely.
+// Load logs from the beginning of the log file. This matters only if the log
+// file is too large to be loaded completely.
 const beginningOfLogFile = 'beginning';
-// Load logs from the end of the log file. This matters only if the log file is too large to be
-// loaded completely.
+// Load logs from the end of the log file. This matters only if the log file is
+// too large to be loaded completely.
 const endOfLogFile = 'end';
 const oldestTimestamp = 'oldest';
 const newestTimestamp = 'newest';
 
 const i18n = {
-  MSG_LOGS_ZEROSTATE_TEXT: 'The selected container has not logged any messages yet.',
+  MSG_LOGS_ZEROSTATE_TEXT:
+      'The selected container has not logged any messages yet.',
   MSG_LOGS_TRUNCATED_WARNING:
-    'The middle part of the log file cannot be loaded, because it is too big.',
+      'The middle part of the log file cannot be loaded, because it is too big.',
 };
 
-type ScrollPosition = 'TOP' | 'BOTTOM';
+type ScrollPosition = 'TOP'|'BOTTOM';
 
 @Component({
   selector: 'kd-logs',
@@ -68,15 +69,16 @@ export class LogsComponent implements OnDestroy {
   isLoading: boolean;
 
   constructor(
-    logService: LogService,
-    private readonly activatedRoute_: ActivatedRoute,
-    private readonly settingsService_: GlobalSettingsService,
-    private readonly dialog_: MatDialog,
-    private readonly notifications_: NotificationsService,
-    private readonly _router: Router,
+      logService: LogService,
+      private readonly activatedRoute_: ActivatedRoute,
+      private readonly settingsService_: GlobalSettingsService,
+      private readonly dialog_: MatDialog,
+      private readonly notifications_: NotificationsService,
+      private readonly _router: Router,
   ) {
     this.logService = logService;
-    this.refreshInterval = this.settingsService_.getLogsAutoRefreshTimeInterval() * 1000;
+    this.refreshInterval =
+        this.settingsService_.getLogsAutoRefreshTimeInterval() * 1000;
     this.isLoading = true;
 
     const namespace = this.activatedRoute_.snapshot.params.resourceNamespace;
@@ -84,22 +86,27 @@ export class LogsComponent implements OnDestroy {
     const resourceName = this.activatedRoute_.snapshot.params.resourceName;
     const containerName = this.activatedRoute_.snapshot.queryParams.container;
 
-    this.sourceSubscription = logService
-      .getResource(`source/${namespace}/${resourceName}/${resourceType}`)
-      .subscribe((data: LogSources) => {
-        this.logSources = data;
-        this.pod = data.podNames[0]; // Pick first pod (cannot use resource name as it may
-        // not be a pod).
-        this.container = containerName ? containerName : data.containerNames[0]; // Pick from URL or first.
-        this.appendContainerParam();
+    this.sourceSubscription =
+        logService
+            .getResource(`source/${namespace}/${resourceName}/${resourceType}`)
+            .subscribe((data: LogSources) => {
+              this.logSources = data;
+              this.pod = data.podNames[0];  // Pick first pod (cannot use
+                                            // resource name as it may
+              // not be a pod).
+              this.container = containerName ?
+                  containerName :
+                  data.containerNames[0];  // Pick from URL or first.
+              this.appendContainerParam();
 
-        this.logsSubscription = this.logService
-          .getResource(`${namespace}/${this.pod}/${this.container}`)
-          .subscribe((data: LogDetails) => {
-            this.updateUiModel(data);
-            this.isLoading = false;
-          });
-      });
+              this.logsSubscription =
+                  this.logService
+                      .getResource(`${namespace}/${this.pod}/${this.container}`)
+                      .subscribe((data: LogDetails) => {
+                        this.updateUiModel(data);
+                        this.isLoading = false;
+                      });
+            });
   }
 
   ngOnDestroy(): void {
@@ -120,15 +127,17 @@ export class LogsComponent implements OnDestroy {
   }
 
   /**
-   * Updates all state parameters and sets the current log view with the data returned from the
-   * backend If logs are not available sets logs to no logs available message.
+   * Updates all state parameters and sets the current log view with the data
+   * returned from the backend If logs are not available sets logs to no logs
+   * available message.
    */
   updateUiModel(podLogs: LogDetails): void {
     this.podLogs = podLogs;
     this.currentSelection = podLogs.selection;
     this.logsSet = this.formatAllLogs(podLogs.logs);
     if (podLogs.info.truncated) {
-      this.notifications_.push(i18n.MSG_LOGS_TRUNCATED_WARNING, NotificationSeverity.error);
+      this.notifications_.push(
+          i18n.MSG_LOGS_TRUNCATED_WARNING, NotificationSeverity.error);
     }
 
     if (this.logService.getFollowing()) {
@@ -168,14 +177,17 @@ export class LogsComponent implements OnDestroy {
    * Loads maxLogSize oldest lines of logs.
    */
   loadOldest(): void {
-    this.loadView(beginningOfLogFile, oldestTimestamp, 0, -maxLogSize - logsPerView, -maxLogSize);
+    this.loadView(
+        beginningOfLogFile, oldestTimestamp, 0, -maxLogSize - logsPerView,
+        -maxLogSize);
   }
 
   /**
    * Loads maxLogSize newest lines of logs.
    */
   loadNewest(): void {
-    this.loadView(endOfLogFile, newestTimestamp, 0, maxLogSize, maxLogSize + logsPerView);
+    this.loadView(
+        endOfLogFile, newestTimestamp, 0, maxLogSize, maxLogSize + logsPerView);
   }
 
   /**
@@ -183,12 +195,12 @@ export class LogsComponent implements OnDestroy {
    */
   loadOlder(): void {
     this.loadView(
-      this.currentSelection.logFilePosition,
-      this.currentSelection.referencePoint.timestamp,
-      this.currentSelection.referencePoint.lineNum,
-      this.currentSelection.offsetFrom - logsPerView,
-      this.currentSelection.offsetFrom,
-      this.scrollToBottom.bind(this),
+        this.currentSelection.logFilePosition,
+        this.currentSelection.referencePoint.timestamp,
+        this.currentSelection.referencePoint.lineNum,
+        this.currentSelection.offsetFrom - logsPerView,
+        this.currentSelection.offsetFrom,
+        this.scrollToBottom.bind(this),
     );
   }
 
@@ -197,47 +209,47 @@ export class LogsComponent implements OnDestroy {
    */
   loadNewer(): void {
     this.loadView(
-      this.currentSelection.logFilePosition,
-      this.currentSelection.referencePoint.timestamp,
-      this.currentSelection.referencePoint.lineNum,
-      this.currentSelection.offsetTo,
-      this.currentSelection.offsetTo + logsPerView,
-      this.scrollToTop.bind(this),
+        this.currentSelection.logFilePosition,
+        this.currentSelection.referencePoint.timestamp,
+        this.currentSelection.referencePoint.lineNum,
+        this.currentSelection.offsetTo,
+        this.currentSelection.offsetTo + logsPerView,
+        this.scrollToTop.bind(this),
     );
   }
 
   /**
    * Downloads and loads slice of logs as specified by offsetFrom and offsetTo.
-   * It works just like normal slicing, but indices are referenced relatively to certain reference
-   * line.
-   * So for example if reference line has index n and we want to download first 10 elements in array
-   * we have to use
-   * from -n to -n+10.
+   * It works just like normal slicing, but indices are referenced relatively to
+   * certain reference line. So for example if reference line has index n and we
+   * want to download first 10 elements in array we have to use from -n to
+   * -n+10.
    */
   loadView(
-    logFilePosition: string,
-    referenceTimestamp: string,
-    referenceLinenum: number,
-    offsetFrom: number,
-    offsetTo: number,
-    onLoad?: Function,
-  ): void {
+      logFilePosition: string,
+      referenceTimestamp: string,
+      referenceLinenum: number,
+      offsetFrom: number,
+      offsetTo: number,
+      onLoad?: Function,
+      ): void {
     const namespace = this.activatedRoute_.snapshot.params.resourceNamespace;
     const params = new HttpParams()
-      .set('logFilePosition', logFilePosition)
-      .set('referenceTimestamp', referenceTimestamp)
-      .set('referenceLineNum', `${referenceLinenum}`)
-      .set('offsetFrom', `${offsetFrom}`)
-      .set('offsetTo', `${offsetTo}`)
-      .set('previous', `${this.logService.getPrevious()}`);
-    this.logsSubscription = this.logService
-      .getResource(`${namespace}/${this.pod}/${this.container}`, params)
-      .subscribe((podLogs: LogDetails) => {
-        this.updateUiModel(podLogs);
-        if (onLoad) {
-          onLoad();
-        }
-      });
+                       .set('logFilePosition', logFilePosition)
+                       .set('referenceTimestamp', referenceTimestamp)
+                       .set('referenceLineNum', `${referenceLinenum}`)
+                       .set('offsetFrom', `${offsetFrom}`)
+                       .set('offsetTo', `${offsetTo}`)
+                       .set('previous', `${this.logService.getPrevious()}`);
+    this.logsSubscription =
+        this.logService
+            .getResource(`${namespace}/${this.pod}/${this.container}`, params)
+            .subscribe((podLogs: LogDetails) => {
+              this.updateUiModel(podLogs);
+              if (onLoad) {
+                onLoad();
+              }
+            });
   }
 
   onTextColorChange(): void {
@@ -254,7 +266,8 @@ export class LogsComponent implements OnDestroy {
   }
 
   /**
-   * Execute when a user changes the selected option for show previous container logs.
+   * Execute when a user changes the selected option for show previous container
+   * logs.
    * @export
    */
   onPreviousChange(): void {
@@ -285,7 +298,8 @@ export class LogsComponent implements OnDestroy {
       this.intervalSubscription.unsubscribe();
     } else {
       const intervalObservable = Observable.interval(this.refreshInterval);
-      this.intervalSubscription = intervalObservable.subscribe(() => this.loadNewest());
+      this.intervalSubscription =
+          intervalObservable.subscribe(() => this.loadNewest());
     }
   }
 
@@ -294,7 +308,8 @@ export class LogsComponent implements OnDestroy {
       data: {
         pod: this.pod,
         container: this.container,
-        namespace: this.activatedRoute_.snapshot.paramMap.get('resourceNamespace'),
+        namespace:
+            this.activatedRoute_.snapshot.paramMap.get('resourceNamespace'),
       },
     };
     this.dialog_.open(LogsDownloadDialog, dialogData);
@@ -312,7 +327,8 @@ export class LogsComponent implements OnDestroy {
    */
   isScrolledBottom(): boolean {
     const {nativeElement} = this.logViewContainer_;
-    return nativeElement.scrollHeight <= nativeElement.scrollTop + nativeElement.clientHeight;
+    return nativeElement.scrollHeight <=
+        nativeElement.scrollTop + nativeElement.clientHeight;
   }
 
   /**

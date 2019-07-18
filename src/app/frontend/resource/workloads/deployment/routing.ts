@@ -49,4 +49,5 @@ const DEPLOYMENT_DETAIL_ROUTE: Route = {
   ],
   exports: [RouterModule],
 })
-export class DeploymentRoutingModule {}
+export class DeploymentRoutingModule {
+}

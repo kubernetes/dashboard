@@ -30,6 +30,7 @@ export class ActionbarDetailTriggerComponent {
   constructor(private readonly verber_: VerberService) {}
 
   onClick(): void {
-    this.verber_.showTriggerDialog(this.displayName, this.typeMeta, this.objectMeta);
+    this.verber_.showTriggerDialog(
+        this.displayName, this.typeMeta, this.objectMeta);
   }
 }

@@ -22,7 +22,7 @@ interface PieChartData {
   color?: string;
 }
 
-type ChartType = 'pie' | 'donut';
+type ChartType = 'pie'|'donut';
 
 @Component({
   selector: 'kd-allocation-chart',
@@ -47,13 +47,14 @@ export class AllocationChartComponent implements OnChanges {
   }
 
   initPieChart_(
-    svg: Selection<BaseType, {}, HTMLElement, HTMLElement>,
-    data: PieChartData[],
-    padding: number,
-    labelFunc: (d: {}, i: number, values: {}) => string | null = this.formatLabel_,
-  ): ChartAPI {
+      svg: Selection<BaseType, {}, HTMLElement, HTMLElement>,
+      data: PieChartData[],
+      padding: number,
+      labelFunc: (d: {}, i: number, values: {}) => string |
+          null = this.formatLabel_,
+      ): ChartAPI {
     const colors: {[key: string]: string} = {};
-    const columns: Array<Array<string | number>> = [];
+    const columns: Array<Array<string|number>> = [];
 
     data.forEach((x, i) => {
       if (x.value > 0) {
@@ -101,34 +102,32 @@ export class AllocationChartComponent implements OnChanges {
     let svg = select(`#${this.id}`);
 
     if (!this.data) {
-      svg = svg
-        .append('svg')
-        .attr('width', this.size)
-        .attr('height', this.size);
+      svg =
+          svg.append('svg').attr('width', this.size).attr('height', this.size);
 
       if (this.outerPercent !== undefined) {
         this.outerColor = this.outerColor ? this.outerColor : '#00c752';
         this.initPieChart_(
-          svg.append('g'),
-          [
-            {value: this.outerPercent, color: this.outerColor},
-            {value: 100 - this.outerPercent, color: '#ddd'},
-          ],
-          0,
-          this.displayOnlyAllocated_.bind(this),
+            svg.append('g'),
+            [
+              {value: this.outerPercent, color: this.outerColor},
+              {value: 100 - this.outerPercent, color: '#ddd'},
+            ],
+            0,
+            this.displayOnlyAllocated_.bind(this),
         );
       }
 
       if (this.innerPercent !== undefined) {
         this.innerColor = this.innerColor ? this.innerColor : '#326de6';
         this.initPieChart_(
-          svg.append('g'),
-          [
-            {value: this.innerPercent, color: this.innerColor},
-            {value: 100 - this.innerPercent, color: '#ddd'},
-          ],
-          45,
-          this.displayOnlyAllocated_.bind(this),
+            svg.append('g'),
+            [
+              {value: this.innerPercent, color: this.innerColor},
+              {value: 100 - this.innerPercent, color: '#ddd'},
+            ],
+            45,
+            this.displayOnlyAllocated_.bind(this),
         );
       }
     } else {
@@ -140,7 +139,8 @@ export class AllocationChartComponent implements OnChanges {
   /**
    * Displays label only for allocated resources
    */
-  private displayOnlyAllocated_(value: number, _: number, id: string | number): string {
+  private displayOnlyAllocated_(value: number, _: number, id: string|number):
+      string {
     if (this.allocated.has(id)) {
       return `${Math.round(value)}%`;
     }

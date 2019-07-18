@@ -28,7 +28,8 @@ import 'web-animations-js';
 // Zone JS is required by default for Angular itself.
 import 'zone.js/dist/zone';
 
-// RxJS is required to support additional Observable methods such as map or switchMap.
+// RxJS is required to support additional Observable methods such as map or
+// switchMap.
 import 'rxjs/Rx';
 
 /* tslint:disable */

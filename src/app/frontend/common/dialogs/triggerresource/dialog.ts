@@ -22,8 +22,8 @@ import {ResourceMeta} from '../../services/global/actionbar';
 })
 export class TriggerResourceDialog {
   constructor(
-    public dialogRef: MatDialogRef<TriggerResourceDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: ResourceMeta,
+      public dialogRef: MatDialogRef<TriggerResourceDialog>,
+      @Inject(MAT_DIALOG_DATA) public data: ResourceMeta,
   ) {}
 
   onNoClick(): void {

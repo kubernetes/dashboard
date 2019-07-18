@@ -65,7 +65,7 @@ export interface ActionColumn {
 }
 
 export interface HTMLInputEvent extends Event {
-  target: HTMLInputElement & EventTarget;
+  target: HTMLInputElement&EventTarget;
 }
 
 export interface KdFile {

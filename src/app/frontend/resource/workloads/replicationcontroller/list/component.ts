@@ -16,6 +16,7 @@ import {Component} from '@angular/core';
 
 @Component({
   selector: 'kd-replication-controller-list-state',
-  template: './template.html',
+  templateUrl: './template.html',
 })
-export class ReplicationControllerListComponent {}
+export class ReplicationControllerListComponent {
+}

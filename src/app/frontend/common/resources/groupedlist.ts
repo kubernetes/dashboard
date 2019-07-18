@@ -12,18 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {
-  CronJobList,
-  DaemonSetList,
-  DeploymentList,
-  JobList,
-  Metric,
-  PodList,
-  ReplicaSetList,
-  ReplicationControllerList,
-  ResourceList,
-  StatefulSetList,
-} from '@api/backendapi';
+import {CronJobList, DaemonSetList, DeploymentList, JobList, Metric, PodList, ReplicaSetList, ReplicationControllerList, ResourceList, StatefulSetList,} from '@api/backendapi';
 import {OnListChangeEvent, ResourcesRatio} from '@api/frontendapi';
 
 import {Helper, ResourceRatioModes} from '../../overview/helper';
@@ -67,48 +56,49 @@ export class GroupedResourceList {
     this.updateResourcesRatio_(listEvent.id, listEvent.resourceList);
   }
 
-  private updateResourcesRatio_(identifier: ListIdentifier, list: ResourceList) {
+  private updateResourcesRatio_(
+      identifier: ListIdentifier, list: ResourceList) {
     switch (identifier) {
       case ListIdentifier.cronJob: {
         const cronJobs = list as CronJobList;
         this.resourcesRatio.cronJobRatio = Helper.getResourceRatio(
-          cronJobs.status,
-          cronJobs.listMeta.totalItems,
-          ResourceRatioModes.Suspendable,
+            cronJobs.status,
+            cronJobs.listMeta.totalItems,
+            ResourceRatioModes.Suspendable,
         );
         break;
       }
       case ListIdentifier.daemonSet: {
         const daemonSets = list as DaemonSetList;
         this.resourcesRatio.daemonSetRatio = Helper.getResourceRatio(
-          daemonSets.status,
-          daemonSets.listMeta.totalItems,
+            daemonSets.status,
+            daemonSets.listMeta.totalItems,
         );
         break;
       }
       case ListIdentifier.deployment: {
         const deployments = list as DeploymentList;
         this.resourcesRatio.deploymentRatio = Helper.getResourceRatio(
-          deployments.status,
-          deployments.listMeta.totalItems,
+            deployments.status,
+            deployments.listMeta.totalItems,
         );
         break;
       }
       case ListIdentifier.job: {
         const jobs = list as JobList;
         this.resourcesRatio.jobRatio = Helper.getResourceRatio(
-          jobs.status,
-          jobs.listMeta.totalItems,
-          ResourceRatioModes.Completable,
+            jobs.status,
+            jobs.listMeta.totalItems,
+            ResourceRatioModes.Completable,
         );
         break;
       }
       case ListIdentifier.pod: {
         const pods = list as PodList;
         this.resourcesRatio.podRatio = Helper.getResourceRatio(
-          pods.status,
-          pods.listMeta.totalItems,
-          ResourceRatioModes.Completable,
+            pods.status,
+            pods.listMeta.totalItems,
+            ResourceRatioModes.Completable,
         );
         this.cumulativeMetrics = pods.cumulativeMetrics;
         break;
@@ -116,24 +106,25 @@ export class GroupedResourceList {
       case ListIdentifier.replicaSet: {
         const replicaSets = list as ReplicaSetList;
         this.resourcesRatio.replicaSetRatio = Helper.getResourceRatio(
-          replicaSets.status,
-          replicaSets.listMeta.totalItems,
+            replicaSets.status,
+            replicaSets.listMeta.totalItems,
         );
         break;
       }
       case ListIdentifier.replicationController: {
         const replicationControllers = list as ReplicationControllerList;
-        this.resourcesRatio.replicationControllerRatio = Helper.getResourceRatio(
-          replicationControllers.status,
-          replicationControllers.listMeta.totalItems,
-        );
+        this.resourcesRatio.replicationControllerRatio =
+            Helper.getResourceRatio(
+                replicationControllers.status,
+                replicationControllers.listMeta.totalItems,
+            );
         break;
       }
       case ListIdentifier.statefulSet: {
         const statefulSets = list as StatefulSetList;
         this.resourcesRatio.statefulSetRatio = Helper.getResourceRatio(
-          statefulSets.status,
-          statefulSets.listMeta.totalItems,
+            statefulSets.status,
+            statefulSets.listMeta.totalItems,
         );
         break;
       }

@@ -44,7 +44,6 @@ import {ExternalEndpointComponent} from './endpoint/external/component';
 import {InternalEndpointComponent} from './endpoint/internal/component';
 import {GraphComponent} from './graph/component';
 import {GraphCardComponent} from './graphcard/component';
-import {GraphsComponent} from './graphs/component';
 import {HiddenPropertyComponent} from './hiddenproperty/component';
 import {ResourceLimitListComponent} from './limits/component';
 import {ColumnComponent} from './list/column/component';
@@ -61,6 +60,7 @@ import {PolicyRuleListComponent} from './policyrule/component';
 import {PropertyComponent} from './property/component';
 import {ProxyComponent} from './proxy/component';
 import {ResourceQuotaListComponent} from './quotas/component';
+import {ResourceStatusComponent} from './resource-status/component';
 import {ClusterRoleListComponent} from './resourcelist/clusterrole/component';
 import {ConfigMapListComponent} from './resourcelist/configmap/component';
 import {CRDListComponent} from './resourcelist/crd/component';
@@ -180,13 +180,15 @@ const components = [
 
   ZeroStateComponent,
   WorkloadStatusComponent,
-  GraphsComponent
+  ResourceStatusComponent,
 ];
 
 @NgModule({
   imports: [SharedModule],
   declarations: [...components],
   exports: [...components],
-  entryComponents: [ChipDialog, RowDetailComponent, MenuComponent, NamespaceChangeDialog],
+  entryComponents:
+      [ChipDialog, RowDetailComponent, MenuComponent, NamespaceChangeDialog],
 })
-export class ComponentsModule {}
+export class ComponentsModule {
+}

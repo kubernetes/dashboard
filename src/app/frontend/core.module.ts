@@ -26,9 +26,11 @@ import {CONFIG, CONFIG_DI_TOKEN} from './index.config';
 })
 export class CoreModule {
   /* make sure CoreModule is imported only by one NgModule the RootModule */
-  constructor(@Inject(CoreModule) @Optional() @SkipSelf() parentModule: CoreModule) {
+  constructor(@Inject(CoreModule) @Optional() @SkipSelf() parentModule:
+                  CoreModule) {
     if (parentModule) {
-      throw new Error('CoreModule is already loaded. Import only in RootModule.');
+      throw new Error(
+          'CoreModule is already loaded. Import only in RootModule.');
     }
   }
 }

@@ -32,8 +32,8 @@ export class CRDListComponent extends ResourceListWithStatuses<CRDList, CRD> {
   @Input() endpoint = EndpointManager.resource(Resource.crd).list();
 
   constructor(
-    private readonly crd_: ResourceService<CRDList>,
-    notifications: NotificationsService,
+      private readonly crd_: ResourceService<CRDList>,
+      notifications: NotificationsService,
   ) {
     super('crd', notifications);
     this.id = ListIdentifier.crd;
@@ -43,7 +43,8 @@ export class CRDListComponent extends ResourceListWithStatuses<CRDList, CRD> {
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
 
     // Register status icon handlers
-    this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);
+    this.registerBinding(
+        this.icon.checkCircle, 'kd-success', this.isInSuccessState);
     this.registerBinding(this.icon.help, 'kd-muted', this.isInUnknownState);
     this.registerBinding(this.icon.error, 'kd-error', this.isInErrorState);
   }

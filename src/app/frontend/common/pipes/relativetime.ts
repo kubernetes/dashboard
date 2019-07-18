@@ -32,7 +32,8 @@ const i18n = {
 };
 
 /**
- * Unit name constants (singular and plural form), that will be used by the filter.
+ * Unit name constants (singular and plural form), that will be used by the
+ * filter.
  */
 const units = {
   SECOND: [i18n.MSG_TIME_UNIT_SECOND_LABEL, i18n.MSG_TIME_UNIT_SECONDS_LABEL],
@@ -74,19 +75,24 @@ export class RelativeTimeFormatter {
 
     // Time differences between current time and given time in specific units.
     const diffInMilliseconds = currentTime - givenTime;
-    const diffInSeconds = Math.floor(diffInMilliseconds / unitConversions.MILLISECONDS_PER_SECOND);
-    const diffInMinutes = Math.floor(diffInSeconds / unitConversions.SECONDS_PER_MINUTE);
-    const diffInHours = Math.floor(diffInMinutes / unitConversions.MINUTES_PER_HOUR);
+    const diffInSeconds = Math.floor(
+        diffInMilliseconds / unitConversions.MILLISECONDS_PER_SECOND);
+    const diffInMinutes =
+        Math.floor(diffInSeconds / unitConversions.SECONDS_PER_MINUTE);
+    const diffInHours =
+        Math.floor(diffInMinutes / unitConversions.MINUTES_PER_HOUR);
     const diffInDays = Math.floor(diffInHours / unitConversions.HOURS_PER_DAY);
-    const diffInMonths = Math.floor(diffInDays / unitConversions.DAYS_PER_MONTH);
+    const diffInMonths =
+        Math.floor(diffInDays / unitConversions.DAYS_PER_MONTH);
     const diffInYears = Math.floor(diffInDays / unitConversions.DAYS_PER_YEAR);
 
-    // Returns relative time value. Only biggest unit will be taken into consideration, so if time
-    // difference is 2 days and 15 hours, only '2 days' string will be returned.
+    // Returns relative time value. Only biggest unit will be taken into
+    // consideration, so if time difference is 2 days and 15 hours, only '2
+    // days' string will be returned.
     if (diffInMilliseconds < -1000) {
-      // Display NOT_YET only when diff is lower than -1000ms. To show NOW message for
-      // times now() +- 1 second. This is because there may be a small desync in server time
-      // computation.
+      // Display NOT_YET only when diff is lower than -1000ms. To show NOW
+      // message for times now() +- 1 second. This is because there may be a
+      // small desync in server time computation.
       return timeConstants.NOT_YET;
     } else if (diffInSeconds < 1) {
       return this.formatOutputTimeString_(0, units.SECOND);
@@ -106,17 +112,19 @@ export class RelativeTimeFormatter {
   }
 
   /**
-   * Returns current time. If appConfig.serverTime is provided then it will be returned, otherwise
-   * current client time will be used.
+   * Returns current time. If appConfig.serverTime is provided then it will be
+   * returned, otherwise current client time will be used.
    */
   private getCurrentTime_(serverTime: Date): number {
     return serverTime ? serverTime.getTime() : new Date().getTime();
   }
 
   /**
-   * Formats relative time string. Sample results look following: 'a year', '2 days' or '14 hours'.
+   * Formats relative time string. Sample results look following: 'a year', '2
+   * days' or '14 hours'.
    */
-  private formatOutputTimeString_(timeValue: number, timeUnit: string[]): string {
+  private formatOutputTimeString_(timeValue: number, timeUnit: string[]):
+      string {
     if (timeValue > 1 || timeValue === 0) {
       return `${timeValue} ${timeUnit[1]}`;
     } else {

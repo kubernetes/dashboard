@@ -27,28 +27,33 @@ import {ListGroupIdentifier, ListIdentifier} from '../groupids';
   selector: 'kd-deployment-list',
   templateUrl: './template.html',
 })
-export class DeploymentListComponent extends ResourceListWithStatuses<DeploymentList, Deployment> {
-  @Input() endpoint = EndpointManager.resource(Resource.deployment, true).list();
+export class DeploymentListComponent extends
+    ResourceListWithStatuses<DeploymentList, Deployment> {
+  @Input()
+  endpoint = EndpointManager.resource(Resource.deployment, true).list();
 
   constructor(
-    private readonly deployment_: NamespacedResourceService<DeploymentList>,
-    notifications: NotificationsService,
-    resolver: ComponentFactoryResolver,
+      private readonly deployment_: NamespacedResourceService<DeploymentList>,
+      notifications: NotificationsService,
+      resolver: ComponentFactoryResolver,
   ) {
     super('deployment', notifications, resolver);
     this.id = ListIdentifier.deployment;
     this.groupId = ListGroupIdentifier.workloads;
 
     // Register status icon handlers
-    this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);
-    this.registerBinding(this.icon.timelapse, 'kd-muted', this.isInPendingState);
+    this.registerBinding(
+        this.icon.checkCircle, 'kd-success', this.isInSuccessState);
+    this.registerBinding(
+        this.icon.timelapse, 'kd-muted', this.isInPendingState);
     this.registerBinding(this.icon.error, 'kd-error', this.isInErrorState);
 
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
 
     // Register dynamic columns.
-    this.registerDynamicColumn('namespace', 'name', this.shouldShowNamespaceColumn_.bind(this));
+    this.registerDynamicColumn(
+        'namespace', 'name', this.shouldShowNamespaceColumn_.bind(this));
   }
 
   getResourceObservable(params?: HttpParams): Observable<DeploymentList> {

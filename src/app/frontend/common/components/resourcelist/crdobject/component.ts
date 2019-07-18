@@ -12,29 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Input} from '@angular/core';
 import {HttpParams} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {CRDObject, CRDObjectList} from '@api/backendapi';
-import {ResourceListBase} from '../../../resources/list';
-import {NamespacedResourceService} from '../../../services/resource/resource';
-import {NotificationsService} from '../../../services/global/notifications';
+import {Component, Input} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {ListGroupIdentifier, ListIdentifier} from '../groupids';
+import {CRDObject, CRDObjectList} from '@api/backendapi';
+import {Observable} from 'rxjs';
+
+import {ResourceListBase} from '../../../resources/list';
+import {NotificationsService} from '../../../services/global/notifications';
+import {NamespacedResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
+import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 
 @Component({
   selector: 'kd-crd-object-list',
   templateUrl: './template.html',
 })
-export class CRDObjectListComponent extends ResourceListBase<CRDObjectList, CRDObject> {
+export class CRDObjectListComponent extends
+    ResourceListBase<CRDObjectList, CRDObject> {
   @Input() endpoint: string;
   @Input() crdName: string;
 
   constructor(
-    private readonly crdObject_: NamespacedResourceService<CRDObjectList>,
-    notifications: NotificationsService,
-    private readonly activatedRoute_: ActivatedRoute,
+      private readonly crdObject_: NamespacedResourceService<CRDObjectList>,
+      notifications: NotificationsService,
+      private readonly activatedRoute_: ActivatedRoute,
   ) {
     super(`crd/${activatedRoute_.snapshot.params.crdName}`, notifications);
     this.id = ListIdentifier.crdObject;

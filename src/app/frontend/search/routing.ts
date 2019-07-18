@@ -33,4 +33,5 @@ export const SEARCH_ROUTE: Route = {
   imports: [RouterModule.forChild([SEARCH_ROUTE])],
   exports: [RouterModule],
 })
-export class SearchRoutingModule {}
+export class SearchRoutingModule {
+}

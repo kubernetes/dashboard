@@ -29,11 +29,11 @@ export class RootComponent implements OnInit {
   private isLightThemeEnabled_: boolean;
 
   constructor(
-    private readonly themeService_: ThemeService,
-    private readonly settings_: LocalSettingsService,
-    private readonly overlayContainer_: OverlayContainer,
-    private readonly kdRootRef: ElementRef,
-    private readonly titleService_: TitleService,
+      private readonly themeService_: ThemeService,
+      private readonly settings_: LocalSettingsService,
+      private readonly overlayContainer_: OverlayContainer,
+      private readonly kdRootRef: ElementRef,
+      private readonly titleService_: TitleService,
   ) {
     this.isLightThemeEnabled_ = this.themeService_.isLightThemeEnabled();
   }
@@ -54,7 +54,8 @@ export class RootComponent implements OnInit {
   private applyOverlayContainerTheme_(): void {
     const classToRemove = this.getTheme(!this.isLightThemeEnabled_);
     const classToAdd = this.getTheme(this.isLightThemeEnabled_);
-    this.overlayContainer_.getContainerElement().classList.remove(classToRemove);
+    this.overlayContainer_.getContainerElement().classList.remove(
+        classToRemove);
     this.overlayContainer_.getContainerElement().classList.add(classToAdd);
 
     this.kdRootRef.nativeElement.classList.add(classToAdd);

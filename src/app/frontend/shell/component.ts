@@ -12,24 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  EventEmitter,
-  OnDestroy,
-  ViewChild,
-} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, OnDestroy, ViewChild,} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
 import {ActivatedRoute, Router} from '@angular/router';
-import {
-  PodContainerList,
-  ShellFrame,
-  SJSCloseEvent,
-  SJSMessageEvent,
-  TerminalResponse,
-} from '@api/backendapi';
+import {PodContainerList, ShellFrame, SJSCloseEvent, SJSMessageEvent, TerminalResponse,} from '@api/backendapi';
 import {debounce} from 'lodash';
 import {ReplaySubject, Subject, Subscription} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
@@ -68,46 +54,46 @@ export class ShellComponent implements AfterViewInit, OnDestroy {
   private readonly keyEvent$_ = new ReplaySubject<KeyboardEvent>(2);
 
   constructor(
-    private readonly containers_: NamespacedResourceService<PodContainerList>,
-    private readonly utility_: UtilityService<TerminalResponse>,
-    private readonly activatedRoute_: ActivatedRoute,
-    private readonly matSnackBar_: MatSnackBar,
-    private readonly cdr_: ChangeDetectorRef,
-    private readonly _router: Router,
+      private readonly containers_: NamespacedResourceService<PodContainerList>,
+      private readonly utility_: UtilityService<TerminalResponse>,
+      private readonly activatedRoute_: ActivatedRoute,
+      private readonly matSnackBar_: MatSnackBar,
+      private readonly cdr_: ChangeDetectorRef,
+      private readonly _router: Router,
   ) {
     this.namespace_ = this.activatedRoute_.snapshot.params.resourceNamespace;
     this.podName = this.activatedRoute_.snapshot.params.resourceName;
 
     const containersEndpoint = this.endpoint_.child(
-      this.podName,
-      Resource.container,
-      this.namespace_,
+        this.podName,
+        Resource.container,
+        this.namespace_,
     );
-    this.containers_
-      .get(containersEndpoint)
-      .pipe(takeUntil(this.unsubscribe_))
-      .subscribe(containerList => {
-        this.containers = containerList.containers;
-        if (this.containers.length > 0 && !this.selectedContainer) {
-          this.onPodContainerChange(this.containers[0]);
-        }
-      });
+    this.containers_.get(containersEndpoint)
+        .pipe(takeUntil(this.unsubscribe_))
+        .subscribe(containerList => {
+          this.containers = containerList.containers;
+          if (this.containers.length > 0 && !this.selectedContainer) {
+            this.onPodContainerChange(this.containers[0]);
+          }
+        });
   }
 
   ngAfterViewInit(): void {
-    this.activatedRoute_.paramMap.pipe(takeUntil(this.unsubscribe_)).subscribe(paramMap => {
-      const container = paramMap.get('containerName');
+    this.activatedRoute_.paramMap.pipe(takeUntil(this.unsubscribe_))
+        .subscribe(paramMap => {
+          const container = paramMap.get('containerName');
 
-      if (this.conn_ && this.connected_) {
-        this.disconnect();
-      }
+          if (this.conn_ && this.connected_) {
+            this.disconnect();
+          }
 
-      if (container) {
-        this.selectedContainer = container;
-        this.setupConnection();
-        this.initTerm();
-      }
-    });
+          if (container) {
+            this.selectedContainer = container;
+            this.setupConnection();
+            this.initTerm();
+          }
+        });
   }
 
   ngOnDestroy(): void {
@@ -130,9 +116,10 @@ export class ShellComponent implements AfterViewInit, OnDestroy {
   }
 
   onPodContainerChange(podContainer: string): void {
-    this._router.navigate([`/shell/${this.namespace_}/${this.podName}/${podContainer}`], {
-      queryParamsHandling: 'preserve',
-    });
+    this._router.navigate(
+        [`/shell/${this.namespace_}/${this.podName}/${podContainer}`], {
+          queryParamsHandling: 'preserve',
+        });
   }
 
   disconnect(): void {
@@ -192,17 +179,20 @@ export class ShellComponent implements AfterViewInit, OnDestroy {
   }
 
   private async setupConnection(): Promise<void> {
-    if (!(this.selectedContainer && this.podName && this.namespace_ && !this.connecting_)) {
+    if (!(this.selectedContainer && this.podName && this.namespace_ &&
+          !this.connecting_)) {
       return;
     }
 
     this.connecting_ = true;
     this.connectionClosed_ = false;
 
-    const terminalSessionUrl = `${EndpointManager.utility(Utility.shell).shell(
-      this.namespace_,
-      this.podName,
-    )}/${this.selectedContainer}`;
+    const terminalSessionUrl = `${
+        EndpointManager.utility(Utility.shell)
+            .shell(
+                this.namespace_,
+                this.podName,
+                )}/${this.selectedContainer}`;
     const {id} = await this.utility_.shell(terminalSessionUrl).toPromise();
 
     this.conn_ = new SockJS(`api/sockjs?${id}`);
@@ -263,12 +253,12 @@ export class ShellComponent implements AfterViewInit, OnDestroy {
   private onTerminalSendString(str: string): void {
     if (this.connected_) {
       this.conn_.send(
-        JSON.stringify({
-          Op: 'stdin',
-          Data: str,
-          Cols: this.term.cols,
-          Rows: this.term.rows,
-        }),
+          JSON.stringify({
+            Op: 'stdin',
+            Data: str,
+            Cols: this.term.cols,
+            Rows: this.term.rows,
+          }),
       );
     }
   }
@@ -276,11 +266,11 @@ export class ShellComponent implements AfterViewInit, OnDestroy {
   private onTerminalResize(): void {
     if (this.connected_) {
       this.conn_.send(
-        JSON.stringify({
-          Op: 'resize',
-          Cols: this.term.cols,
-          Rows: this.term.rows,
-        }),
+          JSON.stringify({
+            Op: 'resize',
+            Cols: this.term.cols,
+            Rows: this.term.rows,
+          }),
       );
     }
   }

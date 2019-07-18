@@ -16,6 +16,7 @@ import {Component} from '@angular/core';
 
 @Component({
   selector: 'kd-job-list-state',
-  template: './template.html',
+  templateUrl: './template.html',
 })
-export class JobListComponent {}
+export class JobListComponent {
+}

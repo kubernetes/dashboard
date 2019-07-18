@@ -14,17 +14,7 @@
 
 import {HttpClient} from '@angular/common/http';
 import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
-import {
-  AbstractControl,
-  ControlValueAccessor,
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  NG_ASYNC_VALIDATORS,
-  NG_VALUE_ACCESSOR,
-  Validators,
-} from '@angular/forms';
+import {AbstractControl, ControlValueAccessor, FormArray, FormBuilder, FormControl, FormGroup, NG_ASYNC_VALIDATORS, NG_VALUE_ACCESSOR, Validators,} from '@angular/forms';
 import {PortMapping} from '@api/backendapi';
 import {Observable} from 'rxjs';
 import {first, map, startWith} from 'rxjs/operators';
@@ -82,7 +72,8 @@ export class PortMappingsComponent implements OnInit, ControlValueAccessor {
   serviceTypes: ServiceType[];
   portMappingForm: FormGroup;
 
-  constructor(private readonly fb_: FormBuilder, private readonly http_: HttpClient) {}
+  constructor(
+      private readonly fb_: FormBuilder, private readonly http_: HttpClient) {}
 
   ngOnInit(): void {
     this.serviceTypes = [NO_SERVICE, INT_SERVICE, EXT_SERVICE];
@@ -99,13 +90,13 @@ export class PortMappingsComponent implements OnInit, ControlValueAccessor {
     });
   }
 
-  validate(_: FormControl): Observable<{[key: string]: boolean} | null> {
+  validate(_: FormControl): Observable<{[key: string]: boolean}|null> {
     return this.portMappingForm.statusChanges.pipe(
-      startWith(this.portMappingForm.status),
-      first(() => !this.portMappingForm.pending),
-      map(() => {
-        return this.portMappingForm.invalid ? {error: true} : null;
-      }),
+        startWith(this.portMappingForm.status),
+        first(() => !this.portMappingForm.pending),
+        map(() => {
+          return this.portMappingForm.invalid ? {error: true} : null;
+        }),
     );
   }
 
@@ -144,11 +135,19 @@ export class PortMappingsComponent implements OnInit, ControlValueAccessor {
     return this.fb_.group({
       port: [
         '',
-        Validators.compose([FormValidators.isInteger, Validators.min(1), Validators.max(65535)]),
+        Validators.compose([
+          FormValidators.isInteger,
+          Validators.min(1),
+          Validators.max(65535),
+        ]),
       ],
       targetPort: [
         '',
-        Validators.compose([FormValidators.isInteger, Validators.min(1), Validators.max(65535)]),
+        Validators.compose([
+          FormValidators.isInteger,
+          Validators.min(1),
+          Validators.max(65535),
+        ]),
       ],
       protocol: [defaultProtocol],
     });
@@ -166,21 +165,25 @@ export class PortMappingsComponent implements OnInit, ControlValueAccessor {
   }
 
   addProtocolIfNeeed(): void {
-    const lastPortMapping = this.portMappings.controls[this.portMappings.length - 1];
+    const lastPortMapping =
+        this.portMappings.controls[this.portMappings.length - 1];
     if (this.isPortMappingFilled(lastPortMapping)) {
       this.portMappings.push(this.newEmptyPortMapping(this.protocols[0]));
     }
   }
 
   /**
-   * Returns true when the given port mapping is filled by the user, i.e., is not empty.
+   * Returns true when the given port mapping is filled by the user, i.e., is
+   * not empty.
    */
   private isPortMappingFilled(portMapping: AbstractControl): boolean {
-    return !!portMapping.get('port').value && !!portMapping.get('targetPort').value;
+    return !!portMapping.get('port').value &&
+        !!portMapping.get('targetPort').value;
   }
 
   /**
-   * Validates port mapping. In case when only one port is specified it is considered as invalid.
+   * Validates port mapping. In case when only one port is specified it is
+   * considered as invalid.
    */
   private validatePortMapping(portIndex: number): void {
     if (portIndex === 0) {
@@ -203,9 +206,11 @@ export class PortMappingsComponent implements OnInit, ControlValueAccessor {
   }
 
   /**
-   * Returns true when the given port mapping is filled or empty (both ports), false otherwise.
+   * Returns true when the given port mapping is filled or empty (both ports),
+   * false otherwise.
    */
-  private isPortMappingFilledOrEmpty(port: number, targetPort: number): boolean {
+  private isPortMappingFilledOrEmpty(port: number, targetPort: number):
+      boolean {
     return !port === !targetPort;
   }
 

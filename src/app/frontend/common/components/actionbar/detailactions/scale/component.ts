@@ -30,6 +30,7 @@ export class ActionbarDetailScaleComponent {
   constructor(private readonly verber_: VerberService) {}
 
   onClick(): void {
-    this.verber_.showScaleDialog(this.displayName, this.typeMeta, this.objectMeta);
+    this.verber_.showScaleDialog(
+        this.displayName, this.typeMeta, this.objectMeta);
   }
 }

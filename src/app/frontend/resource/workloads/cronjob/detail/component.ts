@@ -36,28 +36,33 @@ export class CronJobDetailComponent implements OnInit, OnDestroy {
   inactiveJobsEndpoint: string;
 
   constructor(
-    private readonly cronJob_: NamespacedResourceService<CronJobDetail>,
-    private readonly actionbar_: ActionbarService,
-    private readonly activatedRoute_: ActivatedRoute,
-    private readonly notifications_: NotificationsService,
+      private readonly cronJob_: NamespacedResourceService<CronJobDetail>,
+      private readonly actionbar_: ActionbarService,
+      private readonly activatedRoute_: ActivatedRoute,
+      private readonly notifications_: NotificationsService,
   ) {}
 
   ngOnInit(): void {
     const resourceName = this.activatedRoute_.snapshot.params.resourceName;
-    const resourceNamespace = this.activatedRoute_.snapshot.params.resourceNamespace;
+    const resourceNamespace =
+        this.activatedRoute_.snapshot.params.resourceNamespace;
 
-    this.eventListEndpoint = this.endpoint_.child(resourceName, Resource.event, resourceNamespace);
-    this.activeJobsEndpoint = this.endpoint_.child(resourceName, Resource.job, resourceNamespace);
+    this.eventListEndpoint =
+        this.endpoint_.child(resourceName, Resource.event, resourceNamespace);
+    this.activeJobsEndpoint =
+        this.endpoint_.child(resourceName, Resource.job, resourceNamespace);
     this.inactiveJobsEndpoint = this.activeJobsEndpoint + `?active=false`;
 
-    this.cronJobSubscription_ = this.cronJob_
-      .get(this.endpoint_.detail(), resourceName, resourceNamespace)
-      .subscribe((d: CronJobDetail) => {
-        this.cronJob = d;
-        this.notifications_.pushErrors(d.errors);
-        this.actionbar_.onInit.emit(new ResourceMeta('Cron Job', d.objectMeta, d.typeMeta));
-        this.isInitialized = true;
-      });
+    this.cronJobSubscription_ =
+        this.cronJob_
+            .get(this.endpoint_.detail(), resourceName, resourceNamespace)
+            .subscribe((d: CronJobDetail) => {
+              this.cronJob = d;
+              this.notifications_.pushErrors(d.errors);
+              this.actionbar_.onInit.emit(
+                  new ResourceMeta('Cron Job', d.objectMeta, d.typeMeta));
+              this.isInitialized = true;
+            });
   }
 
   ngOnDestroy(): void {

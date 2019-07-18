@@ -31,6 +31,7 @@ export class ActionbarDetailEditComponent {
   constructor(private readonly verber_: VerberService) {}
 
   onClick(): void {
-    this.verber_.showEditDialog(this.displayName, this.typeMeta, this.objectMeta);
+    this.verber_.showEditDialog(
+        this.displayName, this.typeMeta, this.objectMeta);
   }
 }

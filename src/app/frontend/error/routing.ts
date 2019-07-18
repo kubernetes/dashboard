@@ -29,4 +29,5 @@ const ERROR_ROUTE: Route = {
   imports: [RouterModule.forChild([ERROR_ROUTE])],
   exports: [RouterModule],
 })
-export class ErrorRoutingModule {}
+export class ErrorRoutingModule {
+}

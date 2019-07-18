@@ -25,4 +25,5 @@ import {DeploymentRoutingModule} from './routing';
   imports: [SharedModule, ComponentsModule, DeploymentRoutingModule],
   declarations: [DeploymentListComponent, DeploymentDetailComponent],
 })
-export class DeploymentModule {}
+export class DeploymentModule {
+}

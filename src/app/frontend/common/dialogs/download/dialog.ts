@@ -39,31 +39,33 @@ export class LogsDownloadDialog implements OnDestroy {
   error: number;
 
   constructor(
-    public dialogRef: MatDialogRef<LogsDownloadDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: LogsDownloadDialogMeta,
-    private readonly logService: LogService,
-    private readonly http_: HttpClient,
+      public dialogRef: MatDialogRef<LogsDownloadDialog>,
+      @Inject(MAT_DIALOG_DATA) public data: LogsDownloadDialogMeta,
+      private readonly logService: LogService,
+      private readonly http_: HttpClient,
   ) {
     const logUrl = `api/v1/log/file/${data.namespace}/${data.pod}/${
-      data.container
-    }?previous=${this.logService.getPrevious()}`;
+        data.container}?previous=${this.logService.getPrevious()}`;
 
-    this.downloadSubscription = this.http_
-      .request(new HttpRequest('GET', logUrl, {}, {reportProgress: true, responseType: 'blob'}))
-      .subscribe(
-        event => {
-          if (event.type === HttpEventType.DownloadProgress) {
-            this.loaded = event.loaded;
-          } else if (event instanceof HttpResponse) {
-            this.finished = true;
-            // @ts-ignore
-            this.result = new Blob([event.body], {type: 'text/plan'});
-          }
-        },
-        error => {
-          this.error = error.status;
-        },
-      );
+    this.downloadSubscription =
+        this.http_
+            .request(new HttpRequest(
+                'GET', logUrl, {},
+                {reportProgress: true, responseType: 'blob'}))
+            .subscribe(
+                event => {
+                  if (event.type === HttpEventType.DownloadProgress) {
+                    this.loaded = event.loaded;
+                  } else if (event instanceof HttpResponse) {
+                    this.finished = true;
+                    // @ts-ignore
+                    this.result = new Blob([event.body], {type: 'text/plan'});
+                  }
+                },
+                error => {
+                  this.error = error.status;
+                },
+            );
   }
 
   ngOnDestroy(): void {
@@ -78,8 +80,8 @@ export class LogsDownloadDialog implements OnDestroy {
 
   save(): void {
     FileSaver.saveAs(
-      this.result,
-      this.logService.getLogFileName(this.data.pod, this.data.container),
+        this.result,
+        this.logService.getLogFileName(this.data.pod, this.data.container),
     );
     this.dialogRef.close();
   }

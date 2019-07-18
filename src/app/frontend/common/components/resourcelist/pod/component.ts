@@ -30,24 +30,27 @@ export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
   @Input() endpoint = EndpointManager.resource(Resource.pod, true).list();
 
   constructor(
-    private readonly podList: NamespacedResourceService<PodList>,
-    resolver: ComponentFactoryResolver,
-    notifications: NotificationsService,
+      private readonly podList: NamespacedResourceService<PodList>,
+      resolver: ComponentFactoryResolver,
+      notifications: NotificationsService,
   ) {
     super('pod', notifications, resolver);
     this.id = ListIdentifier.pod;
     this.groupId = ListGroupIdentifier.workloads;
 
     // Register status icon handlers
-    this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);
-    this.registerBinding(this.icon.timelapse, 'kd-muted', this.isInPendingState);
+    this.registerBinding(
+        this.icon.checkCircle, 'kd-success', this.isInSuccessState);
+    this.registerBinding(
+        this.icon.timelapse, 'kd-muted', this.isInPendingState);
     this.registerBinding(this.icon.error, 'kd-error', this.isInErrorState);
 
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
 
     // Register dynamic columns.
-    this.registerDynamicColumn('namespace', 'name', this.shouldShowNamespaceColumn_.bind(this));
+    this.registerDynamicColumn(
+        'namespace', 'name', this.shouldShowNamespaceColumn_.bind(this));
   }
 
   getResourceObservable(params?: HttpParams): Observable<PodList> {
@@ -67,11 +70,22 @@ export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
   }
 
   isInSuccessState(resource: Pod): boolean {
-    return resource.podStatus.status === 'Succeeded' || resource.podStatus.status === 'Running';
+    return resource.podStatus.status === 'Succeeded' ||
+        resource.podStatus.status === 'Running';
   }
 
   protected getDisplayColumns(): string[] {
-    return ['statusicon', 'name', 'labels', 'node', 'status', 'restarts', 'cpu', 'mem', 'age'];
+    return [
+      'statusicon',
+      'name',
+      'labels',
+      'node',
+      'status',
+      'restarts',
+      'cpu',
+      'mem',
+      'age',
+    ];
   }
 
   private shouldShowNamespaceColumn_(): boolean {
@@ -93,7 +107,8 @@ export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
     let reason = undefined;
 
     // Init container statuses are currently not taken into account.
-    // However, init containers with errors will still show as failed because of warnings.
+    // However, init containers with errors will still show as failed because of
+    // warnings.
     if (pod.podStatus.containerStates) {
       // Container states array may be null when no containers have started yet.
       for (let i = pod.podStatus.containerStates.length - 1; i >= 0; i--) {

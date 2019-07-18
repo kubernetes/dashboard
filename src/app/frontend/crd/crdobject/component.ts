@@ -12,19 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {MatButtonToggleGroup} from '@angular/material';
 import {HttpClient} from '@angular/common/http';
-import {dump as toYaml} from 'js-yaml';
-import {Subscription} from 'rxjs';
+import {Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {MatButtonToggleGroup} from '@angular/material';
+import {ActivatedRoute} from '@angular/router';
 import {CRDObjectDetail} from '@api/backendapi';
 import {highlightAuto} from 'highlight.js';
-import {ActionbarService, ResourceMeta} from '../../common/services/global/actionbar';
-import {NamespacedResourceService} from '../../common/services/resource/resource';
-import {EndpointManager, Resource} from '../../common/services/resource/endpoint';
-import {NotificationsService} from '../../common/services/global/notifications';
+import {dump as toYaml} from 'js-yaml';
+import {Subscription} from 'rxjs';
+
 import {RawResource} from '../../common/resources/rawresource';
+import {ActionbarService, ResourceMeta} from '../../common/services/global/actionbar';
+import {NotificationsService} from '../../common/services/global/notifications';
+import {EndpointManager, Resource} from '../../common/services/resource/endpoint';
+import {NamespacedResourceService} from '../../common/services/resource/resource';
 
 enum Modes {
   JSON = 'json',
@@ -46,43 +47,44 @@ export class CRDObjectDetailComponent implements OnInit, OnDestroy {
   eventListEndpoint: string;
 
   constructor(
-    private readonly object_: NamespacedResourceService<CRDObjectDetail>,
-    private readonly actionbar_: ActionbarService,
-    private readonly activatedRoute_: ActivatedRoute,
-    private readonly notifications_: NotificationsService,
-    private readonly http_: HttpClient,
-    private readonly renderer_: Renderer2,
+      private readonly object_: NamespacedResourceService<CRDObjectDetail>,
+      private readonly actionbar_: ActionbarService,
+      private readonly activatedRoute_: ActivatedRoute,
+      private readonly notifications_: NotificationsService,
+      private readonly http_: HttpClient,
+      private readonly renderer_: Renderer2,
   ) {}
 
   ngOnInit(): void {
-    const {crdName, namespace, objectName} = this.activatedRoute_.snapshot.params;
+    const {crdName, namespace, objectName} =
+        this.activatedRoute_.snapshot.params;
     this.eventListEndpoint = this.endpoint_.child(
-      `${crdName}/${objectName}`,
-      Resource.event,
-      namespace,
+        `${crdName}/${objectName}`,
+        Resource.event,
+        namespace,
     );
 
-    this.objectSubscription_ = this.object_
-      .get(this.endpoint_.child(crdName, objectName, namespace))
-      .subscribe((d: CRDObjectDetail) => {
-        this.object = d;
-        this.notifications_.pushErrors(d.errors);
-        this.actionbar_.onInit.emit(new ResourceMeta(d.typeMeta.kind, d.objectMeta, d.typeMeta));
-        this.isInitialized = true;
+    this.objectSubscription_ =
+        this.object_.get(this.endpoint_.child(crdName, objectName, namespace))
+            .subscribe((d: CRDObjectDetail) => {
+              this.object = d;
+              this.notifications_.pushErrors(d.errors);
+              this.actionbar_.onInit.emit(
+                  new ResourceMeta(d.typeMeta.kind, d.objectMeta, d.typeMeta));
+              this.isInitialized = true;
 
-        // Get raw resource
-        const url = RawResource.getUrl(this.object.typeMeta, this.object.objectMeta);
-        this.http_
-          .get(url)
-          .toPromise()
-          .then(response => {
-            this.objectRaw = {
-              json: highlightAuto(`${this.toRawJSON(response)}`, ['json']).value,
-              yaml: highlightAuto(`${toYaml(response)}`, ['yaml']).value,
-            };
-            this.updateText();
-          });
-      });
+              // Get raw resource
+              const url = RawResource.getUrl(
+                  this.object.typeMeta, this.object.objectMeta);
+              this.http_.get(url).toPromise().then(response => {
+                this.objectRaw = {
+                  json: highlightAuto(`${this.toRawJSON(response)}`, ['json'])
+                            .value,
+                  yaml: highlightAuto(`${toYaml(response)}`, ['yaml']).value,
+                };
+                this.updateText();
+              });
+            });
 
     this.buttonToggleGroup.valueChange.subscribe((selectedMode: Modes) => {
       this.selectedMode = selectedMode;
@@ -100,9 +102,9 @@ export class CRDObjectDetailComponent implements OnInit, OnDestroy {
 
   private updateText(): void {
     this.renderer_.setProperty(
-      this.codeRef.nativeElement,
-      'innerHTML',
-      this.objectRaw[this.selectedMode],
+        this.codeRef.nativeElement,
+        'innerHTML',
+        this.objectRaw[this.selectedMode],
     );
   }
 

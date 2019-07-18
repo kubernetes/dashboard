@@ -73,37 +73,39 @@ describe('LoginComponent', () => {
   let httpTestingController: HttpTestingController;
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [LoginComponent],
-      imports: [
-        NoopAnimationsModule,
-        HttpClientTestingModule,
-        RouterTestingModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MatRadioModule,
-        MatButtonModule,
-      ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    TestBed
+        .configureTestingModule({
+          declarations: [LoginComponent],
+          imports: [
+            NoopAnimationsModule,
+            HttpClientTestingModule,
+            RouterTestingModule,
+            FormsModule,
+            ReactiveFormsModule,
+            MatRadioModule,
+            MatButtonModule,
+          ],
+          schemas: [CUSTOM_ELEMENTS_SCHEMA],
 
-      // inject mocks
-      providers: [
-        {
-          provide: AuthService,
-          useClass: MockAuthService,
-        },
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            paramMap: from([]),
-          },
-        },
-        {
-          provide: Router,
-          useClass: MockRouter,
-        },
-      ],
-    }).compileComponents();
+          // inject mocks
+          providers: [
+            {
+              provide: AuthService,
+              useClass: MockAuthService,
+            },
+            {
+              provide: ActivatedRoute,
+              useValue: {
+                paramMap: from([]),
+              },
+            },
+            {
+              provide: Router,
+              useClass: MockRouter,
+            },
+          ],
+        })
+        .compileComponents();
   }));
 
   beforeEach(() => {
@@ -113,20 +115,24 @@ describe('LoginComponent', () => {
   });
 
   describe('initialization', () => {
-    it('renders appropriate number of authentication mode mat-radio-buttons from api/v1/login/modes call', () => {
-      const mockEnabledAuthenticationModes: EnabledAuthenticationModes = {
-        modes: ['kubeconfig', 'basic', 'token', 'hard-mode', 'a-la-mode'],
-      };
-      fixture.detectChanges();
-      const req = httpTestingController.expectOne('api/v1/login/modes');
-      req.flush(mockEnabledAuthenticationModes);
-      fixture.detectChanges();
-      expect(fixture.debugElement.queryAll(By.css('mat-radio-button')).length).toEqual(5);
-    });
+    it('renders appropriate number of authentication mode mat-radio-buttons from api/v1/login/modes call',
+       () => {
+         const mockEnabledAuthenticationModes: EnabledAuthenticationModes = {
+           modes: ['kubeconfig', 'basic', 'token', 'hard-mode', 'a-la-mode'],
+         };
+         fixture.detectChanges();
+         const req = httpTestingController.expectOne('api/v1/login/modes');
+         req.flush(mockEnabledAuthenticationModes);
+         fixture.detectChanges();
+         expect(
+             fixture.debugElement.queryAll(By.css('mat-radio-button')).length)
+             .toEqual(5);
+       });
 
     it('renders skip button if login is skippable', () => {
       initializeForSkip();
-      expect(fixture.debugElement.query(By.css(queries.skipButton))).toBeTruthy();
+      expect(fixture.debugElement.query(By.css(queries.skipButton)))
+          .toBeTruthy();
     });
 
     it('does not render skip button if login is not skippable', () => {
@@ -137,82 +143,105 @@ describe('LoginComponent', () => {
       const req = httpTestingController.expectOne('api/v1/login/skippable');
       req.flush(mockLoginSkippableResponse);
       fixture.detectChanges();
-      expect(fixture.debugElement.query(By.css(queries.skipButton))).toBeFalsy();
+      expect(fixture.debugElement.query(By.css(queries.skipButton)))
+          .toBeFalsy();
     });
   });
 
   describe('options', () => {
-    it('renders token inputs if selectedAuthenticationMode === token', async () => {
-      await setSelectedAuthenticationMode('token');
-      expect(fixture.debugElement.query(By.css('#token'))).toBeTruthy();
-    });
+    it('renders token inputs if selectedAuthenticationMode === token',
+       async () => {
+         await setSelectedAuthenticationMode('token');
+         expect(fixture.debugElement.query(By.css('#token'))).toBeTruthy();
+       });
 
-    it('renders user and password inputs if selectedAuthenticationMode === basic', async () => {
-      await setSelectedAuthenticationMode('basic');
-      expect(fixture.debugElement.query(By.css(queries.usernameId))).toBeTruthy();
-      expect(fixture.debugElement.query(By.css(queries.passwordId))).toBeTruthy();
-    });
+    it('renders user and password inputs if selectedAuthenticationMode === basic',
+       async () => {
+         await setSelectedAuthenticationMode('basic');
+         expect(fixture.debugElement.query(By.css(queries.usernameId)))
+             .toBeTruthy();
+         expect(fixture.debugElement.query(By.css(queries.passwordId)))
+             .toBeTruthy();
+       });
 
-    it('renders kd-upload-file if selectedAuthenticationMode === kubeconfig', async () => {
-      await setSelectedAuthenticationMode('kubeconfig');
-      expect(fixture.debugElement.query(By.css('kd-upload-file'))).toBeTruthy();
-    });
+    it('renders kd-upload-file if selectedAuthenticationMode === kubeconfig',
+       async () => {
+         await setSelectedAuthenticationMode('kubeconfig');
+         expect(fixture.debugElement.query(By.css('kd-upload-file')))
+             .toBeTruthy();
+       });
   });
 
   describe('login', () => {
-    it('calls AuthService.login with correct spec and redirects to overview', async () => {
-      // setups spies in services
-      const loginSpy = spyOn(TestBed.get(AuthService), 'login').and.callThrough();
-      const navigateSpy = spyOn(TestBed.get(Router), 'navigate').and.callThrough();
+    it('calls AuthService.login with correct spec and redirects to overview',
+       async () => {
+         // setups spies in services
+         const loginSpy =
+             spyOn(TestBed.get(AuthService), 'login').and.callThrough();
+         const navigateSpy =
+             spyOn(TestBed.get(Router), 'navigate').and.callThrough();
 
-      await setSelectedAuthenticationMode('basic');
+         await setSelectedAuthenticationMode('basic');
 
-      // set inputs and fire change events to trigger onChange()
-      const usernameInput = fixture.debugElement.query(By.css(queries.usernameId)).nativeElement;
-      const passwordInput = fixture.debugElement.query(By.css(queries.passwordId)).nativeElement;
-      usernameInput.value = username;
-      passwordInput.value = password;
-      usernameInput.dispatchEvent(new Event('change'));
-      passwordInput.dispatchEvent(new Event('change'));
+         // set inputs and fire change events to trigger onChange()
+         const usernameInput =
+             fixture.debugElement.query(By.css(queries.usernameId))
+                 .nativeElement;
+         const passwordInput =
+             fixture.debugElement.query(By.css(queries.passwordId))
+                 .nativeElement;
+         usernameInput.value = username;
+         passwordInput.value = password;
+         usernameInput.dispatchEvent(new Event('change'));
+         passwordInput.dispatchEvent(new Event('change'));
 
-      submit();
+         submit();
 
-      expect(loginSpy).toHaveBeenCalledWith({username, password});
-      expect(navigateSpy).toHaveBeenCalledWith(['overview']);
-    });
+         expect(loginSpy).toHaveBeenCalledWith({username, password});
+         expect(navigateSpy).toHaveBeenCalledWith(['overview']);
+       });
 
-    it('calls AuthService.login, does not redirect, and renders errors if login fails', async () => {
-      // setups spies in services
-      const loginSpy = spyOn(TestBed.get(AuthService), 'login').and.callThrough();
-      const navigateSpy = spyOn(TestBed.get(Router), 'navigate').and.callThrough();
+    it('calls AuthService.login, does not redirect, and renders errors if login fails',
+       async () => {
+         // setups spies in services
+         const loginSpy =
+             spyOn(TestBed.get(AuthService), 'login').and.callThrough();
+         const navigateSpy =
+             spyOn(TestBed.get(Router), 'navigate').and.callThrough();
 
-      await setSelectedAuthenticationMode('basic');
+         await setSelectedAuthenticationMode('basic');
 
-      submit();
+         submit();
 
-      expect(loginSpy).toHaveBeenCalled();
-      expect(fixture.debugElement.query(By.css(queries.errorText))).toBeTruthy();
-      expect(navigateSpy).not.toHaveBeenCalledWith(['overview']);
-    });
+         expect(loginSpy).toHaveBeenCalled();
+         expect(fixture.debugElement.query(By.css(queries.errorText)))
+             .toBeTruthy();
+         expect(navigateSpy).not.toHaveBeenCalledWith(['overview']);
+       });
   });
 
   describe('skip', () => {
-    it('calls AuthService.skipLoginPage and redirects to overview', async () => {
-      initializeForSkip();
-      fixture.debugElement.query(By.css(queries.skipButton)).nativeElement.click();
+    it('calls AuthService.skipLoginPage and redirects to overview',
+       async () => {
+         initializeForSkip();
+         fixture.debugElement.query(By.css(queries.skipButton))
+             .nativeElement.click();
 
-      // setups spies in services
-      const skipLoginPageSpy = spyOn(TestBed.get(AuthService), 'skipLoginPage').and.callThrough();
-      const navigateSpy = spyOn(TestBed.get(Router), 'navigate').and.callThrough();
+         // setups spies in services
+         const skipLoginPageSpy =
+             spyOn(TestBed.get(AuthService), 'skipLoginPage').and.callThrough();
+         const navigateSpy =
+             spyOn(TestBed.get(Router), 'navigate').and.callThrough();
 
-      await setSelectedAuthenticationMode('basic');
+         await setSelectedAuthenticationMode('basic');
 
-      fixture.debugElement.query(By.css(queries.skipButton)).nativeElement.click();
-      fixture.detectChanges();
+         fixture.debugElement.query(By.css(queries.skipButton))
+             .nativeElement.click();
+         fixture.detectChanges();
 
-      expect(skipLoginPageSpy).toHaveBeenCalledWith(true);
-      expect(navigateSpy).toHaveBeenCalledWith(['overview']);
-    });
+         expect(skipLoginPageSpy).toHaveBeenCalledWith(true);
+         expect(navigateSpy).toHaveBeenCalledWith(['overview']);
+       });
   });
 
   const initializeForSkip = (): void => {
@@ -225,14 +254,16 @@ describe('LoginComponent', () => {
     fixture.detectChanges();
   };
 
-  const setSelectedAuthenticationMode = (mode: 'basic' | 'token' | 'kubeconfig'): Promise<void> => {
-    (component.selectedAuthenticationMode as unknown) = mode;
-    fixture.detectChanges();
-    return fixture.whenStable();
-  };
+  const setSelectedAuthenticationMode =
+      (mode: 'basic'|'token'|'kubeconfig'): Promise<void> => {
+        (component.selectedAuthenticationMode as unknown) = mode;
+        fixture.detectChanges();
+        return fixture.whenStable();
+      };
 
   const submit = (): void => {
-    fixture.debugElement.query(By.css(queries.submitButton)).nativeElement.click();
+    fixture.debugElement.query(By.css(queries.submitButton))
+        .nativeElement.click();
     fixture.detectChanges();
   };
 });

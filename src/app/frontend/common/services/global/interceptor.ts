@@ -24,10 +24,11 @@ import {CONFIG} from '../../../index.config';
 export class AuthInterceptor implements HttpInterceptor {
   constructor(private readonly cookies_: CookieService) {}
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept(req: HttpRequest<any>, next: HttpHandler):
+      Observable<HttpEvent<any>> {
     const authCookie = this.cookies_.get(CONFIG.authTokenCookieName);
-    // Filter requests made to our backend starting with 'api/v1' and append request header
-    // with token stored in a cookie.
+    // Filter requests made to our backend starting with 'api/v1' and append
+    // request header with token stored in a cookie.
     if (req.url.startsWith('api/v1') && authCookie.length) {
       const authReq = req.clone({
         headers: req.headers.set(CONFIG.authTokenHeaderName, authCookie),

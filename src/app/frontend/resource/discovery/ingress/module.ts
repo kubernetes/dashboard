@@ -25,4 +25,5 @@ import {IngressRoutingModule} from './routing';
   imports: [SharedModule, ComponentsModule, IngressRoutingModule],
   declarations: [IngressListComponent, IngressDetailComponent],
 })
-export class IngressModule {}
+export class IngressModule {
+}

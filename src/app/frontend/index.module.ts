@@ -41,4 +41,5 @@ import {LoginModule} from './login/module';
   declarations: [RootComponent],
   bootstrap: [RootComponent],
 })
-export class RootModule {}
+export class RootModule {
+}

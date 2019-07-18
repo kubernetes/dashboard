@@ -36,10 +36,12 @@ describe('GraphCardComponent', () => {
   let testHostFixture: ComponentFixture<GraphCardComponent>;
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [GraphCardComponent, GraphComponent, CardComponent],
-      imports: [SharedModule, NoopAnimationsModule],
-    }).compileComponents();
+    TestBed
+        .configureTestingModule({
+          declarations: [GraphCardComponent, GraphComponent, CardComponent],
+          imports: [SharedModule, NoopAnimationsModule],
+        })
+        .compileComponents();
   }));
 
   beforeEach(() => {

@@ -28,15 +28,14 @@ import {ListGroupIdentifier, ListIdentifier} from '../groupids';
   selector: 'kd-persistent-volume-list',
   templateUrl: './template.html',
 })
-export class PersistentVolumeListComponent extends ResourceListWithStatuses<
-  PersistentVolumeList,
-  PersistentVolume
-> {
-  @Input() endpoint = EndpointManager.resource(Resource.persistentVolume).list();
+export class PersistentVolumeListComponent extends
+    ResourceListWithStatuses<PersistentVolumeList, PersistentVolume> {
+  @Input()
+  endpoint = EndpointManager.resource(Resource.persistentVolume).list();
 
   constructor(
-    private readonly pv_: ResourceService<PersistentVolumeList>,
-    notifications: NotificationsService,
+      private readonly pv_: ResourceService<PersistentVolumeList>,
+      notifications: NotificationsService,
   ) {
     super('persistentvolume', notifications);
     this.id = ListIdentifier.persistentVolume;
@@ -46,7 +45,8 @@ export class PersistentVolumeListComponent extends ResourceListWithStatuses<
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
 
     // Register status icon handlers
-    this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);
+    this.registerBinding(
+        this.icon.checkCircle, 'kd-success', this.isInSuccessState);
     this.registerBinding(this.icon.help, 'kd-muted', this.isInPendingState);
     this.registerBinding(this.icon.error, 'kd-error', this.isInErrorState);
   }
@@ -76,7 +76,8 @@ export class PersistentVolumeListComponent extends ResourceListWithStatuses<
 
     const splittedRef = claimReference.split('/');
     if (splittedRef.length === 2) {
-      href = this.kdState_.href('persistentvolumeclaim', splittedRef[1], splittedRef[0]);
+      href = this.kdState_.href(
+          'persistentvolumeclaim', splittedRef[1], splittedRef[0]);
     }
 
     return href;

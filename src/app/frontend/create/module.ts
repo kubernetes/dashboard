@@ -32,6 +32,8 @@ import {CreateRoutingModule} from './routing';
     CreateServiceModule,
     CreateRoutingModule,
   ],
-  declarations: [CreateComponent, CreateFromInputComponent, CreateFromFileComponent],
+  declarations:
+      [CreateComponent, CreateFromInputComponent, CreateFromFileComponent],
 })
-export class CreateModule {}
+export class CreateModule {
+}

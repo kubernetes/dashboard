@@ -28,19 +28,21 @@ import {ListGroupIdentifier, ListIdentifier} from '../groupids';
   selector: 'kd-namespace-list',
   templateUrl: './template.html',
 })
-export class NamespaceListComponent extends ResourceListWithStatuses<NamespaceList, Namespace> {
+export class NamespaceListComponent extends
+    ResourceListWithStatuses<NamespaceList, Namespace> {
   @Input() endpoint = EndpointManager.resource(Resource.namespace).list();
 
   constructor(
-    private readonly namespace_: ResourceService<NamespaceList>,
-    notifications: NotificationsService,
+      private readonly namespace_: ResourceService<NamespaceList>,
+      notifications: NotificationsService,
   ) {
     super('namespace', notifications);
     this.id = ListIdentifier.namespace;
     this.groupId = ListGroupIdentifier.cluster;
 
     // Register status icon handlers
-    this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);
+    this.registerBinding(
+        this.icon.checkCircle, 'kd-success', this.isInSuccessState);
     this.registerBinding(this.icon.error, 'kd-error', this.isInErrorState);
 
     // Register action columns.

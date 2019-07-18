@@ -41,8 +41,10 @@ const CONFIGMAP_DETAIL_ROUTE: Route = {
 
 @NgModule({
   imports: [
-    RouterModule.forChild([CONFIGMAP_LIST_ROUTE, CONFIGMAP_DETAIL_ROUTE, DEFAULT_ACTIONBAR]),
+    RouterModule.forChild(
+        [CONFIGMAP_LIST_ROUTE, CONFIGMAP_DETAIL_ROUTE, DEFAULT_ACTIONBAR]),
   ],
   exports: [RouterModule],
 })
-export class ConfigMapRoutingModule {}
+export class ConfigMapRoutingModule {
+}

@@ -27,25 +27,28 @@ import {ListGroupIdentifier, ListIdentifier} from '../groupids';
   selector: 'kd-cron-job-list',
   templateUrl: './template.html',
 })
-export class CronJobListComponent extends ResourceListWithStatuses<CronJobList, CronJob> {
+export class CronJobListComponent extends
+    ResourceListWithStatuses<CronJobList, CronJob> {
   @Input() endpoint = EndpointManager.resource(Resource.cronJob, true).list();
   constructor(
-    private readonly cronJob_: NamespacedResourceService<CronJobList>,
-    notifications: NotificationsService,
+      private readonly cronJob_: NamespacedResourceService<CronJobList>,
+      notifications: NotificationsService,
   ) {
     super('cronjob', notifications);
     this.id = ListIdentifier.cronJob;
     this.groupId = ListGroupIdentifier.workloads;
 
     // Register status icon handlers
-    this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);
+    this.registerBinding(
+        this.icon.checkCircle, 'kd-success', this.isInSuccessState);
     this.registerBinding(this.icon.error, 'kd-error', this.isInErrorState);
 
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
 
     // Register dynamic columns.
-    this.registerDynamicColumn('namespace', 'name', this.shouldShowNamespaceColumn_.bind(this));
+    this.registerDynamicColumn(
+        'namespace', 'name', this.shouldShowNamespaceColumn_.bind(this));
   }
 
   getResourceObservable(params?: HttpParams): Observable<CronJobList> {
@@ -65,7 +68,16 @@ export class CronJobListComponent extends ResourceListWithStatuses<CronJobList, 
   }
 
   getDisplayColumns(): string[] {
-    return ['statusicon', 'name', 'labels', 'schedule', 'suspend', 'active', 'lastschedule', 'age'];
+    return [
+      'statusicon',
+      'name',
+      'labels',
+      'schedule',
+      'suspend',
+      'active',
+      'lastschedule',
+      'age',
+    ];
   }
 
   private shouldShowNamespaceColumn_(): boolean {

@@ -25,7 +25,9 @@ export class LocalSettingsService {
     isThemeDark: false,
   };
 
-  constructor(private readonly theme_: ThemeService, private readonly cookies_: CookieService) {}
+  constructor(
+      private readonly theme_: ThemeService,
+      private readonly cookies_: CookieService) {}
 
   init(): void {
     const cookieValue = this.cookies_.get(this.cookieName_);

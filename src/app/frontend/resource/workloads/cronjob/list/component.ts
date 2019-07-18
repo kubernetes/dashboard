@@ -16,6 +16,7 @@ import {Component} from '@angular/core';
 
 @Component({
   selector: 'kd-cron-job-list-state',
-  template: './template.html',
+  templateUrl: './template.html',
 })
-export class CronJobListComponent {}
+export class CronJobListComponent {
+}

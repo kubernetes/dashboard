@@ -25,12 +25,13 @@ import {MenuComponent} from '../../list/column/menu/component';
 import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 
 @Component({selector: 'kd-ingress-list', templateUrl: './template.html'})
-export class IngressListComponent extends ResourceListBase<IngressList, Ingress> {
+export class IngressListComponent extends
+    ResourceListBase<IngressList, Ingress> {
   @Input() endpoint = EndpointManager.resource(Resource.ingress, true).list();
 
   constructor(
-    private readonly ingress_: NamespacedResourceService<IngressList>,
-    notifications: NotificationsService,
+      private readonly ingress_: NamespacedResourceService<IngressList>,
+      notifications: NotificationsService,
   ) {
     super('ingress', notifications);
     this.id = ListIdentifier.ingress;
@@ -40,7 +41,8 @@ export class IngressListComponent extends ResourceListBase<IngressList, Ingress>
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
 
     // Register dynamic columns.
-    this.registerDynamicColumn('namespace', 'name', this.shouldShowNamespaceColumn_.bind(this));
+    this.registerDynamicColumn(
+        'namespace', 'name', this.shouldShowNamespaceColumn_.bind(this));
   }
 
   getResourceObservable(params?: HttpParams): Observable<IngressList> {

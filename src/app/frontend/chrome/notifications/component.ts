@@ -28,8 +28,8 @@ export class NotificationsComponent implements OnInit {
   notifications: Notification[] = [];
 
   constructor(
-    private readonly notifications_: NotificationsService,
-    private readonly element_: ElementRef,
+      private readonly notifications_: NotificationsService,
+      private readonly element_: ElementRef,
   ) {}
 
   ngOnInit(): void {

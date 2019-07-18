@@ -15,14 +15,7 @@
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {
-  MatCardModule,
-  MatChipsModule,
-  MatDialogModule,
-  MatDividerModule,
-  MatIconModule,
-  MatTooltipModule,
-} from '@angular/material';
+import {MatCardModule, MatChipsModule, MatDialogModule, MatDividerModule, MatIconModule, MatTooltipModule,} from '@angular/material';
 import {By} from '@angular/platform-browser';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
@@ -61,30 +54,32 @@ describe('ObjectMetaComponent', () => {
   let configService: ConfigService;
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        ObjectMetaComponent,
-        TestComponent,
-        CardComponent,
-        PropertyComponent,
-        ChipsComponent,
-      ],
-      imports: [
-        MatIconModule,
-        MatCardModule,
-        MatDividerModule,
-        MatTooltipModule,
-        MatDialogModule,
-        MatChipsModule,
-        NoopAnimationsModule,
-        PipesModule,
-        HttpClientTestingModule,
-        MatIconModule,
-        RouterModule,
-      ],
-      providers: [ConfigService],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    }).compileComponents();
+    TestBed
+        .configureTestingModule({
+          declarations: [
+            ObjectMetaComponent,
+            TestComponent,
+            CardComponent,
+            PropertyComponent,
+            ChipsComponent,
+          ],
+          imports: [
+            MatIconModule,
+            MatCardModule,
+            MatDividerModule,
+            MatTooltipModule,
+            MatDialogModule,
+            MatChipsModule,
+            NoopAnimationsModule,
+            PipesModule,
+            HttpClientTestingModule,
+            MatIconModule,
+            RouterModule,
+          ],
+          providers: [ConfigService],
+          schemas: [CUSTOM_ELEMENTS_SCHEMA],
+        })
+        .compileComponents();
     httpMock = TestBed.get(HttpTestingController);
     configService = TestBed.get(ConfigService);
   }));
@@ -107,7 +102,7 @@ describe('ObjectMetaComponent', () => {
     expect(card).toBeTruthy();
 
     const metaName = fixture.debugElement.query(
-      By.css('kd-property.object-meta-name div.kd-property-value'),
+        By.css('kd-property.object-meta-name div.kd-property-value'),
     );
     expect(metaName).toBeTruthy();
     expect(metaName.nativeElement.textContent === miniName);

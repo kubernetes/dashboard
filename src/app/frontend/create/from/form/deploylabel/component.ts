@@ -13,17 +13,7 @@
 // limitations under the License.
 
 import {Component, forwardRef, Input} from '@angular/core';
-import {
-  AbstractControl,
-  ControlValueAccessor,
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  NG_VALIDATORS,
-  NG_VALUE_ACCESSOR,
-  Validators,
-} from '@angular/forms';
+import {AbstractControl, ControlValueAccessor, FormArray, FormBuilder, FormControl, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, Validators,} from '@angular/forms';
 import {FormValidators} from '../validator/validators';
 import {DeployLabel} from './deploylabel';
 
@@ -61,12 +51,16 @@ export class DeployLabelComponent implements ControlValueAccessor {
       this.propagateChange(v);
     });
     for (let i = 0; i < this.labelArr.length; i++) {
-      this.addNewLabel(this.labelArr[i].key, this.labelArr[i].value, this.labelArr[i].editable);
+      this.addNewLabel(
+          this.labelArr[i].key, this.labelArr[i].value,
+          this.labelArr[i].editable);
     }
   }
 
   validate(_: FormControl): {[key: string]: object} {
-    return this.labelForm.valid ? null : {labelValid: {value: this.labels.at(0).errors}};
+    return this.labelForm.valid ?
+        null :
+        {labelValid: {value: this.labels.at(0).errors}};
   }
 
   get labels(): FormArray {
@@ -78,22 +72,23 @@ export class DeployLabelComponent implements ControlValueAccessor {
    */
   private addNewLabel(key = '', value = '', editable = true): void {
     this.labels.push(
-      this.fb_.group({
-        key: [
-          {value: key, disabled: !editable},
-          Validators.compose([
-            FormValidators.labelKeyNameLength,
-            FormValidators.labelKeyNamePattern,
-            FormValidators.labelKeyPrefixLength,
-            FormValidators.labelKeyPrefixPattern,
-          ]),
-        ],
-        value: [
-          {value, disabled: !editable},
-          Validators.compose([Validators.maxLength(253), FormValidators.labelValuePattern]),
-        ],
-        editable,
-      }),
+        this.fb_.group({
+          key: [
+            {value: key, disabled: !editable},
+            Validators.compose([
+              FormValidators.labelKeyNameLength,
+              FormValidators.labelKeyNamePattern,
+              FormValidators.labelKeyPrefixLength,
+              FormValidators.labelKeyPrefixPattern,
+            ]),
+          ],
+          value: [
+            {value, disabled: !editable},
+            Validators.compose(
+                [Validators.maxLength(253), FormValidators.labelValuePattern]),
+          ],
+          editable,
+        }),
     );
   }
 
@@ -121,7 +116,9 @@ export class DeployLabelComponent implements ControlValueAccessor {
     const lastKey = lastElement.get('key').value;
     const lastValue = lastElement.get('value').value;
 
-    return !!(currentEditable && currentkey !== lastKey && currentValue !== lastValue);
+    return !!(
+        currentEditable && currentkey !== lastKey &&
+        currentValue !== lastValue);
   }
 
   /**
@@ -146,8 +143,8 @@ export class DeployLabelComponent implements ControlValueAccessor {
   }
 
   /**
-   * Returns true if there are 2 or more labels with the same key on the labelList,
-   * false otherwise.
+   * Returns true if there are 2 or more labels with the same key on the
+   * labelList, false otherwise.
    */
   private isKeyDuplicated(index: number): boolean {
     /** @type {number} */
@@ -181,7 +178,8 @@ export class DeployLabelComponent implements ControlValueAccessor {
    * Returns true if label key and value are not empty, false otherwise.
    */
   private isFilled(label: AbstractControl): boolean {
-    return label.get('key').value.length !== 0 && label.get('value').value.length !== 0;
+    return label.get('key').value.length !== 0 &&
+        label.get('value').value.length !== 0;
   }
 
   propagateChange = (_: {labels: DeployLabel[]}) => {};

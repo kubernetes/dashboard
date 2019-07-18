@@ -24,4 +24,5 @@ import {WorkloadsRoutingModule} from './routing';
   imports: [SharedModule, ComponentsModule, WorkloadsRoutingModule],
   declarations: [WorkloadsComponent],
 })
-export class WorkloadsModule {}
+export class WorkloadsModule {
+}

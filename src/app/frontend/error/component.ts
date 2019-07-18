@@ -30,11 +30,12 @@ export class ErrorComponent implements OnInit {
   constructor(private readonly route_: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.route_.paramMap.pipe(map(() => window.history.state)).subscribe((state: StateError) => {
-      if (state.error) {
-        this.error_ = state.error;
-      }
-    });
+    this.route_.paramMap.pipe(map(() => window.history.state))
+        .subscribe((state: StateError) => {
+          if (state.error) {
+            this.error_ = state.error;
+          }
+        });
   }
 
   getErrorStatus(): string {

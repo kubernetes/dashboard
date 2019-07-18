@@ -46,24 +46,30 @@ export enum Utility {
 }
 
 class ResourceEndpoint {
-  constructor(private readonly resource_: Resource, private readonly namespaced_ = false) {}
+  constructor(
+      private readonly resource_: Resource,
+      private readonly namespaced_ = false) {}
 
   list(): string {
-    return `${baseHref}/${this.resource_}${this.namespaced_ ? '/:namespace' : ''}`;
+    return `${baseHref}/${this.resource_}${
+        this.namespaced_ ? '/:namespace' : ''}`;
   }
 
   detail(): string {
-    return `${baseHref}/${this.resource_}${this.namespaced_ ? '/:namespace' : ''}/:name`;
+    return `${baseHref}/${this.resource_}${
+        this.namespaced_ ? '/:namespace' : ''}/:name`;
   }
 
-  child(resourceName: string, relatedResource: Resource, resourceNamespace?: string): string {
+  child(
+      resourceName: string, relatedResource: Resource,
+      resourceNamespace?: string): string {
     if (!resourceNamespace) {
       resourceNamespace = ':namespace';
     }
 
     return `${baseHref}/${this.resource_}${
-      this.namespaced_ ? `/${resourceNamespace}` : ''
-    }/${resourceName}/${relatedResource}`;
+        this.namespaced_ ? `/${resourceNamespace}` :
+                           ''}/${resourceName}/${relatedResource}`;
   }
 }
 
@@ -71,7 +77,8 @@ class UtilityEndpoint {
   constructor(private readonly utility_: Utility) {}
 
   shell(namespace: string, resourceName: string): string {
-    return `${baseHref}/${Resource.pod}/${namespace}/${resourceName}/${this.utility_}`;
+    return `${baseHref}/${Resource.pod}/${namespace}/${resourceName}/${
+        this.utility_}`;
   }
 }
 

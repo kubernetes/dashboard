@@ -25,4 +25,5 @@ import {NodeRoutingModule} from './routing';
   imports: [SharedModule, ComponentsModule, NodeRoutingModule],
   declarations: [NodeListComponent, NodeDetailComponent],
 })
-export class NodeModule {}
+export class NodeModule {
+}

@@ -54,7 +54,8 @@ export class NotificationsService {
   private notifications_: Notification[] = [];
 
   push(message: string, severity: NotificationSeverity): void {
-    this.notifications_ = [new Notification(message, severity), ...this.notifications_];
+    this.notifications_ =
+        [new Notification(message, severity), ...this.notifications_];
   }
 
   pushErrors(errors: K8sError[]): void {
@@ -75,12 +76,12 @@ export class NotificationsService {
 
   getUnreadCount(): number {
     return this.notifications_
-      .map(notification => {
-        return notification.read ? Number(0) : Number(1);
-      })
-      .reduce((previousValue, currentValue) => {
-        return previousValue + currentValue;
-      }, 0);
+        .map(notification => {
+          return notification.read ? Number(0) : Number(1);
+        })
+        .reduce((previousValue, currentValue) => {
+          return previousValue + currentValue;
+        }, 0);
   }
 
   markAllAsRead(): void {

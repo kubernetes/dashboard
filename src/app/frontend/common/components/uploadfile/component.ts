@@ -48,7 +48,8 @@ export class UploadFileComponent {
     };
 
     if (file instanceof ArrayBuffer) {
-      this.reportError('File Format Error', 'Specified file has the wrong format');
+      this.reportError(
+          'File Format Error', 'Specified file has the wrong format');
     } else {
       reader.readAsText(file);
     }

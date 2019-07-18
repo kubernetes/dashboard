@@ -16,6 +16,7 @@ import {Component} from '@angular/core';
 
 @Component({
   selector: 'kd-stateful-set-state',
-  template: './template.html',
+  templateUrl: './template.html',
 })
-export class StatefulSetListComponent {}
+export class StatefulSetListComponent {
+}

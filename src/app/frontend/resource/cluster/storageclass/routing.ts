@@ -41,8 +41,13 @@ const STORAGECLASS_DETAIL_ROUTE: Route = {
 
 @NgModule({
   imports: [
-    RouterModule.forChild([STORAGECLASS_LIST_ROUTE, STORAGECLASS_DETAIL_ROUTE, DEFAULT_ACTIONBAR]),
+    RouterModule.forChild([
+      STORAGECLASS_LIST_ROUTE,
+      STORAGECLASS_DETAIL_ROUTE,
+      DEFAULT_ACTIONBAR,
+    ]),
   ],
   exports: [RouterModule],
 })
-export class StorageClassRoutingModule {}
+export class StorageClassRoutingModule {
+}

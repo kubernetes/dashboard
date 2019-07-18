@@ -66,20 +66,26 @@ describe('WorkloadStatusComponent', () => {
   let testHostFixture: ComponentFixture<WorkloadStatusComponent>;
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [CardComponent, AllocationChartComponent, WorkloadStatusComponent],
-      imports: [
-        MatIconModule,
-        MatCardModule,
-        MatDividerModule,
-        MatTooltipModule,
-        NoopAnimationsModule,
-        HttpClientTestingModule,
-        FlexLayoutModule,
-      ],
-      providers: [ConfigService],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    }).compileComponents();
+    TestBed
+        .configureTestingModule({
+          declarations: [
+            CardComponent,
+            AllocationChartComponent,
+            WorkloadStatusComponent,
+          ],
+          imports: [
+            MatIconModule,
+            MatCardModule,
+            MatDividerModule,
+            MatTooltipModule,
+            NoopAnimationsModule,
+            HttpClientTestingModule,
+            FlexLayoutModule,
+          ],
+          providers: [ConfigService],
+          schemas: [CUSTOM_ELEMENTS_SCHEMA],
+        })
+        .compileComponents();
     httpMock = TestBed.get(HttpTestingController);
     configService = TestBed.get(ConfigService);
   }));
@@ -96,7 +102,7 @@ describe('WorkloadStatusComponent', () => {
   it('shows component heading', () => {
     testHostFixture.detectChanges();
     const debugElement = testHostFixture.debugElement.query(
-      By.css('kd-card mat-card mat-card-title div'),
+        By.css('kd-card mat-card mat-card-title div'),
     );
     expect(debugElement).toBeTruthy();
 
@@ -110,7 +116,7 @@ describe('WorkloadStatusComponent', () => {
 
     testHostFixture.detectChanges();
     const debugElements = testHostFixture.debugElement.queryAll(
-      By.css('kd-card mat-card div mat-card-content div.kd-graph-title'),
+        By.css('kd-card mat-card div mat-card-content div.kd-graph-title'),
     );
 
     debugElements.forEach(debugElement => {
@@ -125,10 +131,12 @@ describe('WorkloadStatusComponent', () => {
 
     testHostFixture.detectChanges();
     const debugElement = testHostFixture.debugElement.query(
-      By.css('kd-card mat-card div mat-card-content kd-allocation-chart #pods'),
+        By.css(
+            'kd-card mat-card div mat-card-content kd-allocation-chart #pods'),
     );
     expect(debugElement).toBeTruthy();
 
-    expect(debugElement.context.data === testResourcesRatio.podRatio).toBeTruthy();
+    expect(debugElement.context.data === testResourcesRatio.podRatio)
+        .toBeTruthy();
   });
 });

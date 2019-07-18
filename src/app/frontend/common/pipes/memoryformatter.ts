@@ -27,7 +27,8 @@ export class MemoryFormatter extends DecimalPipe {
     let divider = 1;
     let power = 0;
 
-    while (value / divider > this.base && power < this.powerSuffixes.length - 1) {
+    while (value / divider > this.base &&
+           power < this.powerSuffixes.length - 1) {
       divider *= this.base;
       power += 1;
     }

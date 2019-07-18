@@ -16,7 +16,8 @@ import {DecimalPipe} from '@angular/common';
 import {Pipe} from '@angular/core';
 
 /**
- * Formats cores usage in millicores to a decimal prefix format, e.g. 321,20 kCPU.
+ * Formats cores usage in millicores to a decimal prefix format, e.g. 321,20
+ * kCPU.
  */
 @Pipe({name: 'kdCores'})
 export class CoreFormatter extends DecimalPipe {
@@ -27,7 +28,8 @@ export class CoreFormatter extends DecimalPipe {
     let divider = 1;
     let power = 0;
 
-    while (value / divider > this.base && power < this.powerSuffixes.length - 1) {
+    while (value / divider > this.base &&
+           power < this.powerSuffixes.length - 1) {
       divider *= this.base;
       power += 1;
     }

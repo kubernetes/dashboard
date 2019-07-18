@@ -28,23 +28,24 @@ export class HistoryService {
   init(): void {
     this.router_ = this.injector_.get(Router);
 
-    this.router_.events
-      .pipe(filter(e => e instanceof NavigationEnd))
-      .pipe(pairwise())
-      .subscribe((e: [NavigationEnd, NavigationEnd]) => {
-        this.previousStateUrl_ = e[0].url;
-        this.currentStateUrl_ = e[1].url;
-      });
+    this.router_.events.pipe(filter(e => e instanceof NavigationEnd))
+        .pipe(pairwise())
+        .subscribe((e: [NavigationEnd, NavigationEnd]) => {
+          this.previousStateUrl_ = e[0].url;
+          this.currentStateUrl_ = e[1].url;
+        });
   }
 
   /**
    * Goes back to previous state or to the provided defaultState if none set.
    */
   goToPreviousState(defaultState: string): Promise<boolean> {
-    if (this.previousStateUrl_ && this.previousStateUrl_ !== this.currentStateUrl_) {
+    if (this.previousStateUrl_ &&
+        this.previousStateUrl_ !== this.currentStateUrl_) {
       return this.router_.navigateByUrl(this.previousStateUrl_);
     }
 
-    return this.router_.navigate([defaultState], {queryParamsHandling: 'preserve'});
+    return this.router_.navigate(
+        [defaultState], {queryParamsHandling: 'preserve'});
   }
 }

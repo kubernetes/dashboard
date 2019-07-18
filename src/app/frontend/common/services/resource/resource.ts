@@ -28,7 +28,9 @@ export class ResourceService<T> extends ResourceBase<T> {
    * We need to provide HttpClient here since the base is not annotated with
    * @Injectable
    */
-  constructor(readonly http: HttpClient, private readonly settings_: GlobalSettingsService) {
+  constructor(
+      readonly http: HttpClient,
+      private readonly settings_: GlobalSettingsService) {
     super(http);
   }
 
@@ -38,35 +40,39 @@ export class ResourceService<T> extends ResourceBase<T> {
     }
 
     return this.settings_.onSettingsUpdate
-      .pipe(
-        switchMap(() => {
-          let interval = this.settings_.getResourceAutoRefreshTimeInterval();
-          interval = interval === 0 ? undefined : interval * 1000;
-          return timer(0, interval);
-        }),
-      )
-      .pipe(switchMapTo(this.http_.get<T>(endpoint, {params})))
-      .pipe(publishReplay(1))
-      .pipe(refCount());
+        .pipe(
+            switchMap(() => {
+              let interval =
+                  this.settings_.getResourceAutoRefreshTimeInterval();
+              interval = interval === 0 ? undefined : interval * 1000;
+              return timer(0, interval);
+            }),
+            )
+        .pipe(switchMapTo(this.http_.get<T>(endpoint, {params})))
+        .pipe(publishReplay(1))
+        .pipe(refCount());
   }
 }
 
 @Injectable()
 export class NamespacedResourceService<T> extends ResourceBase<T> {
   constructor(
-    readonly http: HttpClient,
-    private readonly namespace_: NamespaceService,
-    private readonly settings_: GlobalSettingsService,
+      readonly http: HttpClient,
+      private readonly namespace_: NamespaceService,
+      private readonly settings_: GlobalSettingsService,
   ) {
     super(http);
   }
 
   private getNamespace_(): string {
     const currentNamespace = this.namespace_.current();
-    return this.namespace_.isMultiNamespace(currentNamespace) ? ' ' : currentNamespace;
+    return this.namespace_.isMultiNamespace(currentNamespace) ?
+        ' ' :
+        currentNamespace;
   }
 
-  get(endpoint: string, name?: string, namespace?: string, params?: HttpParams): Observable<T> {
+  get(endpoint: string, name?: string, namespace?: string,
+      params?: HttpParams): Observable<T> {
     if (namespace) {
       endpoint = endpoint.replace(':namespace', namespace);
     } else {
@@ -78,15 +84,16 @@ export class NamespacedResourceService<T> extends ResourceBase<T> {
     }
 
     return this.settings_.onSettingsUpdate
-      .pipe(
-        switchMap(() => {
-          let interval = this.settings_.getResourceAutoRefreshTimeInterval();
-          interval = interval === 0 ? undefined : interval * 1000;
-          return timer(0, interval);
-        }),
-      )
-      .pipe(switchMapTo(this.http_.get<T>(endpoint, {params})))
-      .pipe(publishReplay(1))
-      .pipe(refCount());
+        .pipe(
+            switchMap(() => {
+              let interval =
+                  this.settings_.getResourceAutoRefreshTimeInterval();
+              interval = interval === 0 ? undefined : interval * 1000;
+              return timer(0, interval);
+            }),
+            )
+        .pipe(switchMapTo(this.http_.get<T>(endpoint, {params})))
+        .pipe(publishReplay(1))
+        .pipe(refCount());
   }
 }

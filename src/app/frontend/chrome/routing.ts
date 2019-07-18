@@ -48,7 +48,8 @@ const routes: Routes = [
       },
       {
         path: 'persistentvolume',
-        loadChildren: 'resource/cluster/persistentvolume/module#PersistentVolumeModule',
+        loadChildren:
+            'resource/cluster/persistentvolume/module#PersistentVolumeModule',
       },
       {
         path: 'storageclass',
@@ -92,7 +93,8 @@ const routes: Routes = [
       },
       {
         path: 'replicationcontroller',
-        loadChildren: 'resource/workloads/replicationcontroller/module#ReplicationControllerModule',
+        loadChildren:
+            'resource/workloads/replicationcontroller/module#ReplicationControllerModule',
       },
       {
         path: 'statefulset',
@@ -124,7 +126,8 @@ const routes: Routes = [
       },
       {
         path: 'persistentvolumeclaim',
-        loadChildren: 'resource/config/persistentvolumeclaim/module#PersistentVolumeClaimModule',
+        loadChildren:
+            'resource/config/persistentvolumeclaim/module#PersistentVolumeClaimModule',
       },
       {
         path: 'secret',
@@ -169,4 +172,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ChromeRoutingModule {}
+export class ChromeRoutingModule {
+}

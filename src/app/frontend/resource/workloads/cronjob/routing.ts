@@ -41,8 +41,10 @@ const CRONJOB_DETAIL_ROUTE: Route = {
 
 @NgModule({
   imports: [
-    RouterModule.forChild([CRONJOB_LIST_ROUTE, CRONJOB_DETAIL_ROUTE, TRIGGER_DEFAULT_ACTIONBAR]),
+    RouterModule.forChild(
+        [CRONJOB_LIST_ROUTE, CRONJOB_DETAIL_ROUTE, TRIGGER_DEFAULT_ACTIONBAR]),
   ],
   exports: [RouterModule],
 })
-export class CronJobRoutingModule {}
+export class CronJobRoutingModule {
+}

@@ -21,9 +21,9 @@ import 'brace/theme/textmate';
 import 'brace/worker/json';
 
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {StringMap} from '@api/backendapi';
 
 import {ThemeService} from '../../services/global/theme';
-import {StringMap} from '@api/backendapi';
 
 enum EditorTheme {
   light = 'textmate',
@@ -36,8 +36,8 @@ enum EditorTheme {
   styleUrls: ['./style.scss'],
 })
 export class TextInputComponent implements OnInit {
-  @Output() textChange = new EventEmitter<string | StringMap>();
-  @Input() text: string | StringMap;
+  @Output() textChange = new EventEmitter<string|StringMap>();
+  @Input() text: string|StringMap;
   @Input() readOnly = false;
   @Input() mode = 'yaml';
   @Input() prettify = true;
@@ -57,13 +57,14 @@ export class TextInputComponent implements OnInit {
   constructor(private readonly themeService_: ThemeService) {}
 
   ngOnInit(): void {
-    this.theme = this.themeService_.isLightThemeEnabled() ? EditorTheme.light : EditorTheme.dark;
+    this.theme = this.themeService_.isLightThemeEnabled() ? EditorTheme.light :
+                                                            EditorTheme.dark;
     if (this.prettify) {
       this.prettify_();
     }
   }
 
-  onTextChange(text: string | StringMap): void {
+  onTextChange(text: string|StringMap): void {
     this.text = text;
     this.textChange.emit(this.text);
   }

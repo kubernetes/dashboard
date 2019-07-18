@@ -28,8 +28,8 @@ export class SecretListComponent extends ResourceListBase<SecretList, Secret> {
   @Input() endpoint = EndpointManager.resource(Resource.secret, true).list();
 
   constructor(
-    private readonly secret_: NamespacedResourceService<SecretList>,
-    notifications: NotificationsService,
+      private readonly secret_: NamespacedResourceService<SecretList>,
+      notifications: NotificationsService,
   ) {
     super('secret', notifications);
     this.id = ListIdentifier.secret;
@@ -39,7 +39,8 @@ export class SecretListComponent extends ResourceListBase<SecretList, Secret> {
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
 
     // Register dynamic columns.
-    this.registerDynamicColumn('namespace', 'name', this.shouldShowNamespaceColumn_.bind(this));
+    this.registerDynamicColumn(
+        'namespace', 'name', this.shouldShowNamespaceColumn_.bind(this));
   }
 
   getResourceObservable(params?: HttpParams): Observable<SecretList> {

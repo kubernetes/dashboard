@@ -24,4 +24,5 @@ import {ConfigRoutingModule} from './routing';
   imports: [SharedModule, ComponentsModule, ConfigRoutingModule],
   declarations: [ConfigComponent],
 })
-export class ConfigModule {}
+export class ConfigModule {
+}

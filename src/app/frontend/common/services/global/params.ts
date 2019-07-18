@@ -25,22 +25,23 @@ export class ParamsService {
   private queryParamMap_: Params = {};
 
   constructor(private router_: Router, private route_: ActivatedRoute) {
-    this.router_.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(() => {
-      let active = this.route_;
-      while (active.firstChild) {
-        active = active.firstChild;
-      }
+    this.router_.events.pipe(filter(event => event instanceof NavigationEnd))
+        .subscribe(() => {
+          let active = this.route_;
+          while (active.firstChild) {
+            active = active.firstChild;
+          }
 
-      active.params.subscribe((params: Params) => {
-        this.copyParams_(params, this.params_);
-        this.onParamChange.next();
-      });
+          active.params.subscribe((params: Params) => {
+            this.copyParams_(params, this.params_);
+            this.onParamChange.next();
+          });
 
-      active.params.subscribe((params: Params) => {
-        this.copyParams_(params, this.queryParamMap_);
-        this.onParamChange.next();
-      });
-    });
+          active.params.subscribe((params: Params) => {
+            this.copyParams_(params, this.queryParamMap_);
+            this.onParamChange.next();
+          });
+        });
   }
 
   getRouteParam(name: string) {

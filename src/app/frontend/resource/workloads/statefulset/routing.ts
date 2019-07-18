@@ -49,4 +49,5 @@ const REPLICASET_DETAIL_ROUTE: Route = {
   ],
   exports: [RouterModule],
 })
-export class StatefulSetRoutingModule {}
+export class StatefulSetRoutingModule {
+}

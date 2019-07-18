@@ -37,19 +37,16 @@ export class EditResourceDialog implements OnInit {
   modes = EditorMode;
 
   constructor(
-    public dialogRef: MatDialogRef<EditResourceDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: ResourceMeta,
-    private readonly http_: HttpClient,
+      public dialogRef: MatDialogRef<EditResourceDialog>,
+      @Inject(MAT_DIALOG_DATA) public data: ResourceMeta,
+      private readonly http_: HttpClient,
   ) {}
 
   ngOnInit(): void {
     const url = RawResource.getUrl(this.data.typeMeta, this.data.objectMeta);
-    this.http_
-      .get(url)
-      .toPromise()
-      .then(response => {
-        this.text = toYaml(response);
-      });
+    this.http_.get(url).toPromise().then(response => {
+      this.text = toYaml(response);
+    });
 
     this.buttonToggleGroup.valueChange.subscribe((selectedMode: EditorMode) => {
       this.selectedMode = selectedMode;

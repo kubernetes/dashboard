@@ -28,12 +28,13 @@ import {ListGroupIdentifier, ListIdentifier} from '../groupids';
   selector: 'kd-storage-class-list',
   templateUrl: './template.html',
 })
-export class StorageClassListComponent extends ResourceListBase<StorageClassList, StorageClass> {
+export class StorageClassListComponent extends
+    ResourceListBase<StorageClassList, StorageClass> {
   @Input() endpoint = EndpointManager.resource(Resource.storageClass).list();
 
   constructor(
-    private readonly sc_: ResourceService<StorageClassList>,
-    notifications: NotificationsService,
+      private readonly sc_: ResourceService<StorageClassList>,
+      notifications: NotificationsService,
   ) {
     super('storageclass', notifications);
     this.id = ListIdentifier.storageClass;

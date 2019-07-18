@@ -49,4 +49,5 @@ const PERSISTENTVOLUMECLAIM_DETAIL_ROUTE: Route = {
   ],
   exports: [RouterModule],
 })
-export class PersistentVolumeClaimRoutingModule {}
+export class PersistentVolumeClaimRoutingModule {
+}

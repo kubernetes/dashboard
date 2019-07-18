@@ -64,7 +64,8 @@ export function memoryFilter(value: number): string {
   let divider = 1;
   let power = 0;
 
-  while (value / divider > memoryBase && power < memoryPowerSuffixes.length - 1) {
+  while (value / divider > memoryBase &&
+         power < memoryPowerSuffixes.length - 1) {
     divider *= memoryBase;
     power += 1;
   }

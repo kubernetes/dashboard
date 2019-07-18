@@ -25,4 +25,5 @@ import {LogsRoutingModule} from './routing';
   imports: [CommonModule, SharedModule, ComponentsModule, LogsRoutingModule],
   declarations: [LogsComponent],
 })
-export class LogsModule {}
+export class LogsModule {
+}

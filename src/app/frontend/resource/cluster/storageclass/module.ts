@@ -25,4 +25,5 @@ import {StorageClassRoutingModule} from './routing';
   imports: [SharedModule, ComponentsModule, StorageClassRoutingModule],
   declarations: [StorageClassListComponent, StorageClassDetailComponent],
 })
-export class StorageClassModule {}
+export class StorageClassModule {
+}

@@ -20,8 +20,8 @@ import {Helper, ResourceRatioModes} from 'overview/helper';
 import {ListIdentifier} from '../resourcelist/groupids';
 import {emptyResourcesRatio} from '../workloadstatus/component';
 
-@Component({selector: 'kd-graphs', templateUrl: './template.html'})
-export class GraphsComponent {
+@Component({selector: 'kd-resource-status', templateUrl: './template.html'})
+export class ResourceStatusComponent {
   resourcesRatio: ResourcesRatio = emptyResourcesRatio;
   cumulativeMetrics: Metric[] = [];
 
@@ -30,11 +30,11 @@ export class GraphsComponent {
       case ListIdentifier.pod: {
         const pods = event.resourceList as PodList;
         this.resourcesRatio.podRatio = Helper.getResourceRatio(
-            pods.status, pods.listMeta.totalItems, ResourceRatioModes.Completable);
+            pods.status, pods.listMeta.totalItems,
+            ResourceRatioModes.Completable);
         this.cumulativeMetrics = pods.cumulativeMetrics;
         break;
       }
-
       default:
         break;
     }

@@ -12,7 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// This file is required by karma.conf.js and loads recursively all the .spec and framework files.
+// This file is required by karma.conf.js and loads recursively all the .spec
+// and framework files.
 /* tslint:disable */
 // import 'zone.js/dist/zone.js';
 import 'zone.js/dist/async-test';
@@ -24,12 +25,10 @@ import 'zone.js/dist/jasmine-patch';
 /* tslint:enable */
 
 import {getTestBed} from '@angular/core/testing';
-import {
-  BrowserDynamicTestingModule,
-  platformBrowserDynamicTesting,
-} from '@angular/platform-browser-dynamic/testing';
+import {BrowserDynamicTestingModule, platformBrowserDynamicTesting,} from '@angular/platform-browser-dynamic/testing';
 
-// Unfortunately there's no typing for the `__karma__` variable. Just declare it as any.
+// Unfortunately there's no typing for the `__karma__` variable. Just declare it
+// as any.
 /* tslint:disable */
 declare const __karma__: any;
 declare const require: any;
@@ -39,7 +38,8 @@ declare const require: any;
 __karma__.loaded = () => {};
 
 // First, initialize the Angular testing environment.
-getTestBed().initTestEnvironment(BrowserDynamicTestingModule, platformBrowserDynamicTesting());
+getTestBed().initTestEnvironment(
+    BrowserDynamicTestingModule, platformBrowserDynamicTesting());
 
 // Then we find all the tests.
 const context = require.context('./', true, /\.spec\.ts$/);

@@ -29,4 +29,5 @@ export const CLUSTER_ROUTE: Route = {
   imports: [RouterModule.forChild([CLUSTER_ROUTE])],
   exports: [RouterModule],
 })
-export class ClusterRoutingModule {}
+export class ClusterRoutingModule {
+}

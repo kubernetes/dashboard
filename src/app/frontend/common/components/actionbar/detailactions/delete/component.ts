@@ -29,18 +29,20 @@ export class ActionbarDetailDeleteComponent implements OnInit {
   @Input() displayName: string;
 
   constructor(
-    private readonly verber_: VerberService,
-    private readonly route_: ActivatedRoute,
-    private readonly router_: Router,
+      private readonly verber_: VerberService,
+      private readonly route_: ActivatedRoute,
+      private readonly router_: Router,
   ) {}
 
   ngOnInit(): void {
     this.verber_.onDelete.pipe(first()).subscribe(() => {
-      this.router_.navigate(['.'], {relativeTo: this.route_, queryParamsHandling: 'preserve'});
+      this.router_.navigate(
+          ['.'], {relativeTo: this.route_, queryParamsHandling: 'preserve'});
     });
   }
 
   onClick(): void {
-    this.verber_.showDeleteDialog(this.displayName, this.typeMeta, this.objectMeta);
+    this.verber_.showDeleteDialog(
+        this.displayName, this.typeMeta, this.objectMeta);
   }
 }

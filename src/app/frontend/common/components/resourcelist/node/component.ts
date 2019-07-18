@@ -27,12 +27,13 @@ import {ListGroupIdentifier, ListIdentifier} from '../groupids';
   selector: 'kd-node-list',
   templateUrl: './template.html',
 })
-export class NodeListComponent extends ResourceListWithStatuses<NodeList, Node> {
+export class NodeListComponent extends
+    ResourceListWithStatuses<NodeList, Node> {
   @Input() endpoint = EndpointManager.resource(Resource.node).list();
 
   constructor(
-    private readonly node_: ResourceService<NodeList>,
-    notifications: NotificationsService,
+      private readonly node_: ResourceService<NodeList>,
+      notifications: NotificationsService,
   ) {
     super('node', notifications);
     this.id = ListIdentifier.node;
@@ -42,7 +43,8 @@ export class NodeListComponent extends ResourceListWithStatuses<NodeList, Node> 
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
 
     // Register status icon handlers
-    this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);
+    this.registerBinding(
+        this.icon.checkCircle, 'kd-success', this.isInSuccessState);
     this.registerBinding(this.icon.help, 'kd-muted', this.isInUnknownState);
     this.registerBinding(this.icon.error, 'kd-error', this.isInErrorState);
   }
@@ -68,6 +70,16 @@ export class NodeListComponent extends ResourceListWithStatuses<NodeList, Node> 
   }
 
   getDisplayColumns(): string[] {
-    return ['statusicon', 'name', 'labels', 'ready', 'cpureq', 'cpulim', 'memreq', 'memlim', 'age'];
+    return [
+      'statusicon',
+      'name',
+      'labels',
+      'ready',
+      'cpureq',
+      'cpulim',
+      'memreq',
+      'memlim',
+      'age',
+    ];
   }
 }

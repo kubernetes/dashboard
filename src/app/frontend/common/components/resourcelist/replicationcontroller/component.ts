@@ -28,35 +28,41 @@ import {ListGroupIdentifier, ListIdentifier} from '../groupids';
   selector: 'kd-replication-controller-list',
   templateUrl: './template.html',
 })
-export class ReplicationControllerListComponent extends ResourceListWithStatuses<
-  ReplicationControllerList,
-  ReplicationController
-> {
-  @Input() endpoint = EndpointManager.resource(Resource.replicationController, true).list();
+export class ReplicationControllerListComponent extends
+    ResourceListWithStatuses<ReplicationControllerList, ReplicationController> {
+  @Input()
+  endpoint =
+      EndpointManager.resource(Resource.replicationController, true).list();
 
   constructor(
-    private readonly replicationController_: NamespacedResourceService<ReplicationControllerList>,
-    notifications: NotificationsService,
-    resolver: ComponentFactoryResolver,
+      private readonly replicationController_:
+          NamespacedResourceService<ReplicationControllerList>,
+      notifications: NotificationsService,
+      resolver: ComponentFactoryResolver,
   ) {
     super('replicationcontroller', notifications, resolver);
     this.id = ListIdentifier.replicationController;
     this.groupId = ListGroupIdentifier.workloads;
 
     // Register status icon handlers
-    this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);
-    this.registerBinding(this.icon.timelapse, 'kd-muted', this.isInPendingState);
+    this.registerBinding(
+        this.icon.checkCircle, 'kd-success', this.isInSuccessState);
+    this.registerBinding(
+        this.icon.timelapse, 'kd-muted', this.isInPendingState);
     this.registerBinding(this.icon.error, 'kd-error', this.isInErrorState);
 
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
 
     // Register dynamic columns.
-    this.registerDynamicColumn('namespace', 'name', this.shouldShowNamespaceColumn_.bind(this));
+    this.registerDynamicColumn(
+        'namespace', 'name', this.shouldShowNamespaceColumn_.bind(this));
   }
 
-  getResourceObservable(params?: HttpParams): Observable<ReplicationControllerList> {
-    return this.replicationController_.get(this.endpoint, undefined, undefined, params);
+  getResourceObservable(params?: HttpParams):
+      Observable<ReplicationControllerList> {
+    return this.replicationController_.get(
+        this.endpoint, undefined, undefined, params);
   }
 
   map(rcList: ReplicationControllerList): ReplicationController[] {
@@ -68,11 +74,13 @@ export class ReplicationControllerListComponent extends ResourceListWithStatuses
   }
 
   isInPendingState(resource: ReplicationController): boolean {
-    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending > 0;
+    return resource.podInfo.warnings.length === 0 &&
+        resource.podInfo.pending > 0;
   }
 
   isInSuccessState(resource: ReplicationController): boolean {
-    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending === 0;
+    return resource.podInfo.warnings.length === 0 &&
+        resource.podInfo.pending === 0;
   }
 
   protected getDisplayColumns(): string[] {

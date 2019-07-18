@@ -33,24 +33,27 @@ export class JobListComponent extends ResourceListWithStatuses<JobList, Job> {
   @Input() endpoint = EndpointManager.resource(Resource.job, true).list();
 
   constructor(
-    private readonly job_: NamespacedResourceService<JobList>,
-    notifications: NotificationsService,
-    resolver: ComponentFactoryResolver,
+      private readonly job_: NamespacedResourceService<JobList>,
+      notifications: NotificationsService,
+      resolver: ComponentFactoryResolver,
   ) {
     super('job', notifications, resolver);
     this.id = ListIdentifier.job;
     this.groupId = ListGroupIdentifier.workloads;
 
     // Register status icon handlers
-    this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);
-    this.registerBinding(this.icon.timelapse, 'kd-muted', this.isInPendingState);
+    this.registerBinding(
+        this.icon.checkCircle, 'kd-success', this.isInSuccessState);
+    this.registerBinding(
+        this.icon.timelapse, 'kd-muted', this.isInPendingState);
     this.registerBinding(this.icon.error, 'kd-error', this.isInErrorState);
 
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
 
     // Register dynamic columns.
-    this.registerDynamicColumn('namespace', 'name', this.shouldShowNamespaceColumn_.bind(this));
+    this.registerDynamicColumn(
+        'namespace', 'name', this.shouldShowNamespaceColumn_.bind(this));
   }
 
   getResourceObservable(params?: HttpParams): Observable<JobList> {
@@ -66,11 +69,13 @@ export class JobListComponent extends ResourceListWithStatuses<JobList, Job> {
   }
 
   isInPendingState(resource: Job): boolean {
-    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending > 0;
+    return resource.podInfo.warnings.length === 0 &&
+        resource.podInfo.pending > 0;
   }
 
   isInSuccessState(resource: Job): boolean {
-    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending === 0;
+    return resource.podInfo.warnings.length === 0 &&
+        resource.podInfo.pending === 0;
   }
 
   getDisplayColumns(): string[] {

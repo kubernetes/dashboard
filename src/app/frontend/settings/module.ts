@@ -35,4 +35,5 @@ import {SettingsRoutingModule} from './routing';
   ],
   entryComponents: [SaveAnywayDialog],
 })
-export class SettingsModule {}
+export class SettingsModule {
+}

@@ -36,10 +36,10 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
   eventListEndpoint: string;
 
   constructor(
-    private readonly node_: ResourceService<NodeDetail>,
-    private readonly actionbar_: ActionbarService,
-    private readonly activatedRoute_: ActivatedRoute,
-    private readonly notifications_: NotificationsService,
+      private readonly node_: ResourceService<NodeDetail>,
+      private readonly actionbar_: ActionbarService,
+      private readonly activatedRoute_: ActivatedRoute,
+      private readonly notifications_: NotificationsService,
   ) {}
 
   ngOnInit(): void {
@@ -48,14 +48,15 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
     this.podListEndpoint = this.endpoint_.child(resourceName, Resource.pod);
     this.eventListEndpoint = this.endpoint_.child(resourceName, Resource.event);
 
-    this.nodeSubscription_ = this.node_
-      .get(this.endpoint_.detail(), resourceName)
-      .subscribe((d: NodeDetail) => {
-        this.node = d;
-        this.notifications_.pushErrors(d.errors);
-        this.actionbar_.onInit.emit(new ResourceMeta('Node', d.objectMeta, d.typeMeta));
-        this.isInitialized = true;
-      });
+    this.nodeSubscription_ =
+        this.node_.get(this.endpoint_.detail(), resourceName)
+            .subscribe((d: NodeDetail) => {
+              this.node = d;
+              this.notifications_.pushErrors(d.errors);
+              this.actionbar_.onInit.emit(
+                  new ResourceMeta('Node', d.objectMeta, d.typeMeta));
+              this.isInitialized = true;
+            });
   }
 
   ngOnDestroy(): void {
@@ -64,14 +65,14 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
   }
 
   getAddresses(): string[] {
-    return this.node.addresses.map((address: NodeAddress) => `${address.type}: ${address.address}`);
+    return this.node.addresses.map(
+        (address: NodeAddress) => `${address.type}: ${address.address}`);
   }
 
   getTaints(): string[] {
     return this.node.taints.map((taint: NodeTaint) => {
-      return taint.value
-        ? `${taint.key}=${taint.value}:${taint.effect}`
-        : `${taint.key}=${taint.effect}`;
+      return taint.value ? `${taint.key}=${taint.value}:${taint.effect}` :
+                           `${taint.key}=${taint.effect}`;
     });
   }
 }

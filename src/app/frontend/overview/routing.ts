@@ -28,4 +28,5 @@ export const OVERVIEW_ROUTE: Route = {
   imports: [RouterModule.forChild([OVERVIEW_ROUTE])],
   exports: [RouterModule],
 })
-export class OverviewRoutingModule {}
+export class OverviewRoutingModule {
+}

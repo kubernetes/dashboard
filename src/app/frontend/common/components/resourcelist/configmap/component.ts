@@ -24,12 +24,13 @@ import {MenuComponent} from '../../list/column/menu/component';
 import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 
 @Component({selector: 'kd-config-map-list', templateUrl: './template.html'})
-export class ConfigMapListComponent extends ResourceListBase<ConfigMapList, ConfigMap> {
+export class ConfigMapListComponent extends
+    ResourceListBase<ConfigMapList, ConfigMap> {
   @Input() endpoint = EndpointManager.resource(Resource.configMap, true).list();
 
   constructor(
-    private readonly configMap_: NamespacedResourceService<ConfigMapList>,
-    notifications: NotificationsService,
+      private readonly configMap_: NamespacedResourceService<ConfigMapList>,
+      notifications: NotificationsService,
   ) {
     super('configmap', notifications);
     this.id = ListIdentifier.configMap;
@@ -39,7 +40,8 @@ export class ConfigMapListComponent extends ResourceListBase<ConfigMapList, Conf
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
 
     // Register dynamic columns.
-    this.registerDynamicColumn('namespace', 'name', this.shouldShowNamespaceColumn_.bind(this));
+    this.registerDynamicColumn(
+        'namespace', 'name', this.shouldShowNamespaceColumn_.bind(this));
   }
 
   getResourceObservable(params?: HttpParams): Observable<ConfigMapList> {

@@ -31,8 +31,8 @@ export class FormValidators {
 
   /**
    * Returns true if given value is a correct integer value, false otherwise.
-   * When value is undefined or empty then it is considered as correct value in order
-   * to not conflict with other validations like 'required'.
+   * When value is undefined or empty then it is considered as correct value in
+   * order to not conflict with other validations like 'required'.
    */
   static isInteger(control: FormControl): {[key: string]: object} {
     const value = control.value;
@@ -44,62 +44,68 @@ export class FormValidators {
   }
 
   /**
-   * Returns true if the label key name (after the "/" if there is one) is equal or shorter than 63
-   * characters, otherwise returns false.
+   * Returns true if the label key name (after the "/" if there is one) is equal
+   * or shorter than 63 characters, otherwise returns false.
    */
   static labelKeyNameLength(control: FormControl): {[key: string]: object} {
     const value = control.value;
     const maxKeyLength = 63;
 
     const slashPosition = value.indexOf('/');
-    const labelKeyName = slashPosition > -1 ? value.substring(slashPosition + 1) : value;
+    const labelKeyName =
+        slashPosition > -1 ? value.substring(slashPosition + 1) : value;
 
-    return labelKeyName.length <= maxKeyLength
-      ? null
-      : {kdValidLabelKeyPrefixLength: {value: true}};
+    return labelKeyName.length <= maxKeyLength ?
+        null :
+        {kdValidLabelKeyPrefixLength: {value: true}};
   }
 
   /**
-   * Returns true if the label key prefix (before the "/" if there is one) is equal or shorter than
-   * 253 characters, otherwise returns false.
+   * Returns true if the label key prefix (before the "/" if there is one) is
+   * equal or shorter than 253 characters, otherwise returns false.
    */
   static labelKeyPrefixLength(control: FormControl): {[key: string]: object} {
     const value = control.value;
     const maxKeyLength = 253;
 
     const slashPosition = value.indexOf('/');
-    const labelKeyPrefix = slashPosition > -1 ? value.substring(0, slashPosition) : '';
+    const labelKeyPrefix =
+        slashPosition > -1 ? value.substring(0, slashPosition) : '';
 
-    return labelKeyPrefix.length <= maxKeyLength
-      ? null
-      : {kdValidLabelKeyPrefixLength: {value: true}};
+    return labelKeyPrefix.length <= maxKeyLength ?
+        null :
+        {kdValidLabelKeyPrefixLength: {value: true}};
   }
 
   /**
-   * Returns true if the label key name (after the "/" if there is one) matches an alphanumeric
-   * character (upper or lower case) optionally followed by alphanumeric or -_. and ending
-   * with an alphanumeric character (upper or lower case), otherwise returns false.
+   * Returns true if the label key name (after the "/" if there is one) matches
+   * an alphanumeric character (upper or lower case) optionally followed by
+   * alphanumeric or -_. and ending with an alphanumeric character (upper or
+   * lower case), otherwise returns false.
    */
   static labelKeyNamePattern(control: FormControl): {[key: string]: object} {
     const value = control.value;
     const labelKeyNamePattern = /^([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9]$/;
 
     const slashPosition = value.indexOf('/');
-    const labelKeyName = slashPosition > -1 ? value.substring(slashPosition + 1) : value;
+    const labelKeyName =
+        slashPosition > -1 ? value.substring(slashPosition + 1) : value;
 
-    return labelKeyNamePattern.test(labelKeyName) || value === ''
-      ? null
-      : {kdValidLabelKeyNamePattern: {value: true}};
+    return labelKeyNamePattern.test(labelKeyName) || value === '' ?
+        null :
+        {kdValidLabelKeyNamePattern: {value: true}};
   }
 
   static labelKeyPrefixPattern(control: FormControl): {[key: string]: object} {
     const value = control.value;
-    const labelKeyPrefixPattern = /^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$/;
+    const labelKeyPrefixPattern =
+        /^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$/;
 
     const slashPosition = value.indexOf('/');
 
-    const isValid =
-      slashPosition > -1 ? labelKeyPrefixPattern.test(value.substring(0, slashPosition)) : true;
+    const isValid = slashPosition > -1 ?
+        labelKeyPrefixPattern.test(value.substring(0, slashPosition)) :
+        true;
 
     return isValid ? null : {kdValidLabelKeyPrefixPattern: {value: true}};
   }
@@ -108,6 +114,8 @@ export class FormValidators {
     const value = control.value;
     const labelValuePattern = /^(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])?$/;
 
-    return labelValuePattern.test(value) ? null : {kdValidLabelValuePattern: {value: true}};
+    return labelValuePattern.test(value) ?
+        null :
+        {kdValidLabelValuePattern: {value: true}};
   }
 }

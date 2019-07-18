@@ -22,8 +22,4 @@ import {GroupedResourceList} from '../../common/resources/groupedlist';
   templateUrl: './template.html',
 })
 export class ClusterComponent extends GroupedResourceList {
-  showGraphs(): boolean {
-    return this.cumulativeMetrics.every(
-        metrics => metrics.dataPoints && metrics.dataPoints.length > 1);
-  }
 }

@@ -29,4 +29,5 @@ export const DISCOVERY_ROUTE: Route = {
   imports: [RouterModule.forChild([DISCOVERY_ROUTE])],
   exports: [RouterModule],
 })
-export class DiscoveryRoutingModule {}
+export class DiscoveryRoutingModule {
+}

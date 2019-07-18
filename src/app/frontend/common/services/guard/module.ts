@@ -20,4 +20,5 @@ import {SearchGuard} from './search';
 @NgModule({
   providers: [AuthGuard, SearchGuard, LoginGuard],
 })
-export class GuardsModule {}
+export class GuardsModule {
+}

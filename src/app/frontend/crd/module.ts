@@ -17,13 +17,15 @@ import {NgModule} from '@angular/core';
 import {ComponentsModule} from '../common/components/module';
 import {SharedModule} from '../shared.module';
 
-import {CRDRoutingModule} from './routing';
+import {CRDObjectDetailComponent} from './crdobject/component';
 import {CRDDetailComponent} from './detail/component';
 import {CRDListComponent} from './list/component';
-import {CRDObjectDetailComponent} from './crdobject/component';
+import {CRDRoutingModule} from './routing';
 
 @NgModule({
   imports: [SharedModule, ComponentsModule, CRDRoutingModule],
-  declarations: [CRDListComponent, CRDDetailComponent, CRDObjectDetailComponent],
+  declarations:
+      [CRDListComponent, CRDDetailComponent, CRDObjectDetailComponent],
 })
-export class CrdModule {}
+export class CrdModule {
+}

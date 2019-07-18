@@ -24,17 +24,16 @@ import {Subject} from 'rxjs/Subject';
   styleUrls: ['style.scss'],
 })
 export class CardListFilterComponent implements OnInit {
-  @ViewChild('filterInput', {static: true}) private readonly filterInput_: ElementRef;
+  @ViewChild('filterInput', {static: true})
+  private readonly filterInput_: ElementRef;
   private hidden_ = true;
   keyUpEvent = new Subject<string>();
   query = '';
   filterEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   ngOnInit(): void {
-    this.keyUpEvent
-      .debounceTime(500)
-      .distinctUntilChanged()
-      .subscribe(this.onFilterTriggered_.bind(this));
+    this.keyUpEvent.debounceTime(500).distinctUntilChanged().subscribe(
+        this.onFilterTriggered_.bind(this));
   }
 
   private onFilterTriggered_(newVal: string): void {
@@ -56,8 +55,8 @@ export class CardListFilterComponent implements OnInit {
   }
 
   focusInput(): void {
-    // Small timeout is required as input is not yet rendered when method is fired right after
-    // clicking on filter button.
+    // Small timeout is required as input is not yet rendered when method is
+    // fired right after clicking on filter button.
     setTimeout(() => {
       this.filterInput_.nativeElement.focus();
     }, 150);

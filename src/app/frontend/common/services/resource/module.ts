@@ -21,4 +21,5 @@ import {UtilityService} from './utility';
   imports: [RouterModule],
   providers: [ResourceService, NamespacedResourceService, UtilityService],
 })
-export class ResourceModule {}
+export class ResourceModule {
+}

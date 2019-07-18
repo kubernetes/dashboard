@@ -13,17 +13,7 @@
 // limitations under the License.
 
 import {Component} from '@angular/core';
-import {
-  CronJobList,
-  DaemonSetList,
-  DeploymentList,
-  JobList,
-  Metric,
-  PodList,
-  ReplicaSetList,
-  ReplicationControllerList,
-  StatefulSetList,
-} from '@api/backendapi';
+import {CronJobList, DaemonSetList, DeploymentList, JobList, Metric, PodList, ReplicaSetList, ReplicationControllerList, StatefulSetList,} from '@api/backendapi';
 import {OnListChangeEvent, ResourcesRatio} from '@api/frontendapi';
 
 import {ListGroupIdentifier, ListIdentifier} from '../common/components/resourcelist/groupids';
@@ -52,14 +42,7 @@ export class OverviewComponent extends GroupedResourceList {
 
   showWorkloadStatuses(): boolean {
     return (
-      Object.values(this.resourcesRatio).reduce((sum, ratioItems) => sum + ratioItems.length, 0) !==
-      0
-    );
-  }
-
-  showGraphs(): boolean {
-    return this.cumulativeMetrics.every(
-      metrics => metrics.dataPoints && metrics.dataPoints.length > 1,
-    );
+        Object.values(this.resourcesRatio)
+            .reduce((sum, ratioItems) => sum + ratioItems.length, 0) !== 0);
   }
 }

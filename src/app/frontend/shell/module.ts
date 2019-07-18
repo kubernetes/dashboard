@@ -25,4 +25,5 @@ import {ShellRoutingModule} from './routing';
   imports: [CommonModule, SharedModule, ComponentsModule, ShellRoutingModule],
   declarations: [ShellComponent],
 })
-export class ShellModule {}
+export class ShellModule {
+}

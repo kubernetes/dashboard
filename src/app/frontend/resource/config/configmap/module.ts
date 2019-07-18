@@ -25,4 +25,5 @@ import {ConfigMapRoutingModule} from './routing';
   imports: [SharedModule, ComponentsModule, ConfigMapRoutingModule],
   declarations: [ConfigMapListComponent, ConfigMapDetailComponent],
 })
-export class ConfigMapModule {}
+export class ConfigMapModule {
+}

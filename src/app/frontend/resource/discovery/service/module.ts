@@ -25,4 +25,5 @@ import {ServiceRoutingModule} from './routing';
   imports: [SharedModule, ComponentsModule, ServiceRoutingModule],
   declarations: [ServiceListComponent, ServiceDetailComponent],
 })
-export class ServiceModule {}
+export class ServiceModule {
+}

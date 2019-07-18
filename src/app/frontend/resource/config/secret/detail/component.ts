@@ -33,24 +33,27 @@ export class SecretDetailComponent implements OnInit, OnDestroy {
   isInitialized = false;
 
   constructor(
-    private readonly secret_: NamespacedResourceService<SecretDetail>,
-    private readonly actionbar_: ActionbarService,
-    private readonly activatedRoute_: ActivatedRoute,
-    private readonly notifications_: NotificationsService,
+      private readonly secret_: NamespacedResourceService<SecretDetail>,
+      private readonly actionbar_: ActionbarService,
+      private readonly activatedRoute_: ActivatedRoute,
+      private readonly notifications_: NotificationsService,
   ) {}
 
   ngOnInit(): void {
     const resourceName = this.activatedRoute_.snapshot.params.resourceName;
-    const resourceNamespace = this.activatedRoute_.snapshot.params.resourceNamespace;
+    const resourceNamespace =
+        this.activatedRoute_.snapshot.params.resourceNamespace;
 
-    this.secretSubscription_ = this.secret_
-      .get(this.endpoint_.detail(), resourceName, resourceNamespace)
-      .subscribe((d: SecretDetail) => {
-        this.secret = d;
-        this.notifications_.pushErrors(d.errors);
-        this.actionbar_.onInit.emit(new ResourceMeta('Secret', d.objectMeta, d.typeMeta));
-        this.isInitialized = true;
-      });
+    this.secretSubscription_ =
+        this.secret_
+            .get(this.endpoint_.detail(), resourceName, resourceNamespace)
+            .subscribe((d: SecretDetail) => {
+              this.secret = d;
+              this.notifications_.pushErrors(d.errors);
+              this.actionbar_.onInit.emit(
+                  new ResourceMeta('Secret', d.objectMeta, d.typeMeta));
+              this.isInitialized = true;
+            });
   }
 
   ngOnDestroy(): void {

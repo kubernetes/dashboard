@@ -50,9 +50,9 @@ export class MenuComponent implements ActionColumn {
   @Input() typeMeta: TypeMeta;
 
   constructor(
-    private readonly verber_: VerberService,
-    private readonly router_: Router,
-    private readonly kdState_: KdStateService,
+      private readonly verber_: VerberService,
+      private readonly router_: Router,
+      private readonly kdState_: KdStateService,
   ) {}
 
   setObjectMeta(objectMeta: ObjectMeta): void {
@@ -69,10 +69,10 @@ export class MenuComponent implements ActionColumn {
 
   getLogsHref(): string {
     return this.kdState_.href(
-      'log',
-      this.objectMeta.name,
-      this.objectMeta.namespace,
-      this.typeMeta.kind,
+        'log',
+        this.objectMeta.name,
+        this.objectMeta.namespace,
+        this.typeMeta.kind,
     );
   }
 
@@ -81,7 +81,8 @@ export class MenuComponent implements ActionColumn {
   }
 
   getExecHref(): string {
-    return this.kdState_.href('shell', this.objectMeta.name, this.objectMeta.namespace);
+    return this.kdState_.href(
+        'shell', this.objectMeta.name, this.objectMeta.namespace);
   }
 
   isTriggerEnabled(): boolean {
@@ -89,7 +90,8 @@ export class MenuComponent implements ActionColumn {
   }
 
   onTrigger(): void {
-    this.verber_.showTriggerDialog(this.typeMeta.kind, this.typeMeta, this.objectMeta);
+    this.verber_.showTriggerDialog(
+        this.typeMeta.kind, this.typeMeta, this.objectMeta);
   }
 
   isScaleEnabled(): boolean {
@@ -97,14 +99,17 @@ export class MenuComponent implements ActionColumn {
   }
 
   onScale(): void {
-    this.verber_.showScaleDialog(this.typeMeta.kind, this.typeMeta, this.objectMeta);
+    this.verber_.showScaleDialog(
+        this.typeMeta.kind, this.typeMeta, this.objectMeta);
   }
 
   onEdit(): void {
-    this.verber_.showEditDialog(this.typeMeta.kind, this.typeMeta, this.objectMeta);
+    this.verber_.showEditDialog(
+        this.typeMeta.kind, this.typeMeta, this.objectMeta);
   }
 
   onDelete(): void {
-    this.verber_.showDeleteDialog(this.typeMeta.kind, this.typeMeta, this.objectMeta);
+    this.verber_.showDeleteDialog(
+        this.typeMeta.kind, this.typeMeta, this.objectMeta);
   }
 }

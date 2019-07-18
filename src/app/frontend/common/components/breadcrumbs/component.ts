@@ -20,7 +20,8 @@ import {SEARCH_QUERY_STATE_PARAM} from '../../params/params';
 
 export const LOGS_PARENT_PLACEHOLDER = '___LOGS_PARENT_PLACEHOLDER___';
 export const EXEC_PARENT_PLACEHOLDER = '___EXEC_PARENT_PLACEHOLDER___';
-export const SEARCH_BREADCRUMB_PLACEHOLDER = '___SEARCH_BREADCRUMB_PLACEHOLDER___';
+export const SEARCH_BREADCRUMB_PLACEHOLDER =
+    '___SEARCH_BREADCRUMB_PLACEHOLDER___';
 
 @Component({
   selector: 'kd-breadcrumbs',
@@ -30,7 +31,9 @@ export const SEARCH_BREADCRUMB_PLACEHOLDER = '___SEARCH_BREADCRUMB_PLACEHOLDER__
 export class BreadcrumbsComponent implements OnInit {
   breadcrumbs: Breadcrumb[];
 
-  constructor(private readonly _router: Router, private readonly _activatedRoute: ActivatedRoute) {}
+  constructor(
+      private readonly _router: Router,
+      private readonly _activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
     this._initBreadcrumbs();
@@ -38,39 +41,36 @@ export class BreadcrumbsComponent implements OnInit {
   }
 
   private _registerNavigationHook(): void {
-    this._router.events
-      .filter(event => event instanceof NavigationEnd)
-      .distinctUntilChanged()
-      .subscribe(() => {
-        this._initBreadcrumbs();
-      });
+    this._router.events.filter(event => event instanceof NavigationEnd)
+        .distinctUntilChanged()
+        .subscribe(() => {
+          this._initBreadcrumbs();
+        });
   }
 
   private _initBreadcrumbs(): void {
     const currentRoute = this._getCurrentRoute();
-    const url = this._router.url.includes('?') ? this._router.url.split('?')[0] : '';
+    const url =
+        this._router.url.includes('?') ? this._router.url.split('?')[0] : '';
     let urlArray = url.split('/');
-    let routeParamsCount = currentRoute.routeConfig.data.routeParamsCount
-      ? +currentRoute.routeConfig.data.routeParamsCount
-      : currentRoute.routeConfig.path.split('/').length;
+    let routeParamsCount = currentRoute.routeConfig.data.routeParamsCount ?
+        +currentRoute.routeConfig.data.routeParamsCount :
+        currentRoute.routeConfig.path.split('/').length;
 
     this.breadcrumbs = [
       {
-        label: this._getBreadcrumbLabel(currentRoute.routeConfig, currentRoute.snapshot.params),
-        stateLink:
-          currentRoute.routeConfig.data && currentRoute.routeConfig.data.link
-            ? currentRoute.routeConfig.data.link
-            : urlArray,
+        label: this._getBreadcrumbLabel(
+            currentRoute.routeConfig, currentRoute.snapshot.params),
+        stateLink: currentRoute.routeConfig.data &&
+                currentRoute.routeConfig.data.link ?
+            currentRoute.routeConfig.data.link :
+            urlArray,
       },
     ];
 
     let route: Route;
-    if (
-      currentRoute &&
-      currentRoute.routeConfig &&
-      currentRoute.routeConfig.data &&
-      currentRoute.routeConfig.data.parent
-    ) {
+    if (currentRoute && currentRoute.routeConfig &&
+        currentRoute.routeConfig.data && currentRoute.routeConfig.data.parent) {
       if (currentRoute.routeConfig.data.parent === LOGS_PARENT_PLACEHOLDER) {
         route = this._getLogsParent(currentRoute.snapshot.params);
         urlArray = [
@@ -80,9 +80,15 @@ export class BreadcrumbsComponent implements OnInit {
           urlArray[urlArray.length - 2],
         ];
         routeParamsCount = 0;
-      } else if (currentRoute.routeConfig.data.parent === EXEC_PARENT_PLACEHOLDER) {
+      } else if (
+          currentRoute.routeConfig.data.parent === EXEC_PARENT_PLACEHOLDER) {
         route = POD_DETAIL_ROUTE;
-        urlArray = ['', 'pod', urlArray[urlArray.length - 2], urlArray[urlArray.length - 1]];
+        urlArray = [
+          '',
+          'pod',
+          urlArray[urlArray.length - 2],
+          urlArray[urlArray.length - 1],
+        ];
         routeParamsCount = 0;
       } else {
         route = currentRoute.routeConfig.data.parent;
@@ -98,8 +104,8 @@ export class BreadcrumbsComponent implements OnInit {
           stateLink: route.data.link ? route.data.link : urlArray,
         });
 
-        // Explore the route tree to the root route (parent references have to be defined by us on
-        // each route).
+        // Explore the route tree to the root route (parent references have to
+        // be defined by us on each route).
         if (route && route.data && route.data.parent) {
           route = route.data.parent;
         } else {
@@ -111,7 +117,7 @@ export class BreadcrumbsComponent implements OnInit {
     this.breadcrumbs.reverse();
   }
 
-  private _getLogsParent(params: Params): Route | undefined {
+  private _getLogsParent(params: Params): Route|undefined {
     const resourceType = params['resourceType'];
     if (resourceType === 'pod') {
       return POD_DETAIL_ROUTE;
@@ -135,7 +141,9 @@ export class BreadcrumbsComponent implements OnInit {
         breadcrumb = breadcrumb.slice(2, breadcrumb.length - 2).trim();
         breadcrumb = params[breadcrumb];
       } else if (breadcrumb === SEARCH_BREADCRUMB_PLACEHOLDER) {
-        return `Search for ${this._activatedRoute.snapshot.queryParams[SEARCH_QUERY_STATE_PARAM]}`;
+        return `Search for ${
+            this._activatedRoute.snapshot
+                .queryParams[SEARCH_QUERY_STATE_PARAM]}`;
       }
       return breadcrumb;
     } else if (route && route.component) {

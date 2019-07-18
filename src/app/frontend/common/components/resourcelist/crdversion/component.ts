@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import {Component, Input} from '@angular/core';
-import {CRDVersion} from '@api/backendapi';
 import {MatTableDataSource} from '@angular/material';
+import {CRDVersion} from '@api/backendapi';
 
 @Component({
   selector: 'kd-crd-versions-list',

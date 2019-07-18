@@ -26,6 +26,7 @@ export class ActionbarDetailExecComponent {
   constructor(private readonly kdState_: KdStateService) {}
 
   getHref(): string {
-    return this.kdState_.href('shell', this.objectMeta.name, this.objectMeta.namespace);
+    return this.kdState_.href(
+        'shell', this.objectMeta.name, this.objectMeta.namespace);
   }
 }

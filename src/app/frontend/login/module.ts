@@ -22,4 +22,5 @@ import {LoginComponent} from './component';
   declarations: [LoginComponent],
   imports: [SharedModule, ComponentsModule],
 })
-export class LoginModule {}
+export class LoginModule {
+}

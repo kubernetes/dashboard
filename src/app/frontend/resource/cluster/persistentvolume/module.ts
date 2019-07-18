@@ -30,4 +30,5 @@ import {PersistentVolumeRoutingModule} from './routing';
     PersistentVolumeSourceComponent,
   ],
 })
-export class PersistentVolumeModule {}
+export class PersistentVolumeModule {
+}
