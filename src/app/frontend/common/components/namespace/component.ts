@@ -14,18 +14,20 @@
 
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild,} from '@angular/core';
 import {MatDialog, MatSelect} from '@angular/material';
-import {ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Router} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {NamespaceList} from '@api/backendapi';
 import {Subject} from 'rxjs';
 import {startWith, switchMap, takeUntil} from 'rxjs/operators';
-import {CONFIG} from '../../../index.config';
 
+import {CONFIG} from '../../../index.config';
 import {NAMESPACE_STATE_PARAM} from '../../params/params';
+import {HistoryService} from '../../services/global/history';
 import {NamespaceService} from '../../services/global/namespace';
 import {NotificationSeverity, NotificationsService,} from '../../services/global/notifications';
 import {KdStateService} from '../../services/global/state';
 import {EndpointManager, Resource} from '../../services/resource/endpoint';
 import {ResourceService} from '../../services/resource/resource';
+
 import {NamespaceChangeDialog} from './changedialog/dialog';
 
 @Component({
@@ -52,7 +54,8 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
       private readonly namespace_: ResourceService<NamespaceList>,
       private readonly dialog_: MatDialog, private readonly kdState_: KdStateService,
       private readonly notifications_: NotificationsService,
-      private readonly _activatedRoute: ActivatedRoute) {}
+      private readonly _activatedRoute: ActivatedRoute,
+      private readonly _historyService: HistoryService) {}
 
   ngOnInit(): void {
     this._activatedRoute.queryParams.pipe(takeUntil(this.unsubscribe_)).subscribe(params => {
@@ -168,11 +171,13 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
         .subscribe(confirmed => {
           if (confirmed) {
             this.selectedNamespace = this._getCurrentResourceNamespaceParam();
-          } else {
-            this.router_.navigate(['overview'], {
+            this.router_.navigate([], {
+              relativeTo: this._activatedRoute,
               queryParams: {[NAMESPACE_STATE_PARAM]: this.selectedNamespace},
               queryParamsHandling: 'merge',
             });
+          } else {
+            this._historyService.goToPreviousState('overview');
           }
         });
   }
@@ -180,17 +185,14 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
   private changeNamespace_(namespace: string): void {
     this.clearNamespaceInput_();
 
-    if (this.shouldShowNamespaceChangeDialog(namespace)) {
-      this.handleNamespaceChangeDialog_();
-      return;
-    }
-
     if (this.resourceNamespaceParam) {
+      // Go to overview of the new namespace as change was done from details view.
       this.router_.navigate(['overview'], {
         queryParams: {[NAMESPACE_STATE_PARAM]: namespace},
+        queryParamsHandling: 'merge',
       });
     } else {
-      // Change only the namespace as currently not on the details view.
+      // Change only the namespace as currently not on details view.
       this.router_.navigate([], {
         relativeTo: this._activatedRoute,
         queryParams: {[NAMESPACE_STATE_PARAM]: namespace},
