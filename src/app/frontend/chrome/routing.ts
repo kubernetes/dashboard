@@ -113,8 +113,8 @@ const routes: Routes = [
         loadChildren: 'resource/discovery/service/module#ServiceModule',
       },
       {
-        path: 'plugins',
-        loadChildren: 'plugins/module#PluginsModule',
+        path: 'plugin',
+        loadChildren: 'plugin/module#PluginModule',
       },
 
       // Config group

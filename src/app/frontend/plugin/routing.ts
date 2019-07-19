@@ -1,10 +1,10 @@
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
-import {PluginComponent} from './component';
+import {PluginListComponent} from './list/component';
 
 export const PLUGIN_ROUTE: Route = {
   path: '',
-  component: PluginComponent,
+  component: PluginListComponent,
   data: {
     breadcrumb: 'Plugins',
   }

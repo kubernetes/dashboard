@@ -15,13 +15,14 @@
 package plugin
 
 import (
-	"net/http"
-	"path/filepath"
-	"strings"
+  "github.com/kubernetes/dashboard/src/app/backend/handler/parser"
+  "net/http"
+  "path/filepath"
+  "strings"
 
-	"github.com/emicklei/go-restful"
-	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
-	"github.com/kubernetes/dashboard/src/app/backend/errors"
+  "github.com/emicklei/go-restful"
+  clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
+  "github.com/kubernetes/dashboard/src/app/backend/errors"
 )
 
 const (
@@ -42,7 +43,7 @@ type Handler struct {
 // to list the installed plugins and get the source code for a plugin.
 func (h *Handler) Install(ws *restful.WebService) {
 	ws.Route(
-		ws.GET("/plugins/{namespace}").
+		ws.GET("/plugin/{namespace}").
 			To(h.handlePluginList).
 			Writes(PluginList{}))
 
@@ -63,8 +64,9 @@ func (h *Handler) handlePluginList(request *restful.Request, response *restful.R
 		return
 	}
 	namespace := request.PathParameter("namespace")
+  dataSelect := parser.ParseDataSelectPathParameter(request)
 
-	result, err := GetPluginList(pluginClient, namespace)
+	result, err := GetPluginList(pluginClient, namespace, dataSelect)
 	if err != nil {
 		errors.HandleInternalError(response, err)
 		return

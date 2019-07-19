@@ -23,6 +23,6 @@ export class PluginsConfigProvider {
 
   loadConfig() {
     // TODO: Figure out a way to load plugins from different namespaces
-    return this.http_.get<PluginsConfig>(`${this.baseUrl}/api/v1/plugins/default`);
+    return this.http_.get<PluginsConfig>(`${this.baseUrl}/api/v1/plugin/default`);
   }
 }

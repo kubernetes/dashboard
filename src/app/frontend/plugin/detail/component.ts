@@ -1,16 +1,16 @@
 import {Component, Injector, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
-import {PluginLoaderService} from '../common/services/pluginloader/pluginloader.service';
+import {PluginLoaderService} from '../../common/services/pluginloader/pluginloader.service';
 
 @Component({
-  selector: 'kd-plugin-view',
+  selector: 'kd-plugin-holder',
   template: `
     <div>
-      <div class="plugins">
+      <div class="plugin">
         <ng-template #pluginViewRef></ng-template>
       </div>
     </div>`
 })
-export class PluginComponent implements OnInit {
+export class PluginHolderComponent implements OnInit {
   @ViewChild('pluginViewRef', {read: ViewContainerRef, static: true}) vcRef: ViewContainerRef;
 
   constructor(private injector: Injector, private pluginLoader: PluginLoaderService) {}

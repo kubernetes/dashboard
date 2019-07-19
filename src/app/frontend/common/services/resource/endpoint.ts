@@ -44,6 +44,7 @@ export enum Resource {
 
 export enum Utility {
   shell = 'shell',
+  plugin = 'plugin'
 }
 
 class ResourceEndpoint {
