@@ -26,13 +26,8 @@ import (
 
 type CustomResourceDefinitionDetail struct {
 	CustomResourceDefinition `json:",inline"`
-}
 
-// CustomResourceDefinition represents a custom resource definition.
-type CustomResourceDefinition struct {
-	ObjectMeta api.ObjectMeta           `json:"objectMeta"`
-	TypeMeta   api.TypeMeta             `json:"typeMeta"`
-	Version    string                   `json:"version"`
+	Conditions []common.Condition       `json:"conditions"`
 	Objects    CustomResourceObjectList `json:"objects"`
 }
 
@@ -53,13 +48,14 @@ func GetCustomResourceDefinitionDetail(client apiextensionsclientset.Interface, 
 	return toCustomResourceDefinitionDetail(customResourceDefinition, objects), nil
 }
 
-func toCustomResourceDefinitionDetail(customResourceDefinition *apiextensions.CustomResourceDefinition, objects CustomResourceObjectList) *CustomResourceDefinitionDetail {
+func toCustomResourceDefinitionDetail(crd *apiextensions.CustomResourceDefinition, objects CustomResourceObjectList) *CustomResourceDefinitionDetail {
 	return &CustomResourceDefinitionDetail{
-		CustomResourceDefinition{
-			ObjectMeta: api.NewObjectMeta(customResourceDefinition.ObjectMeta),
+		CustomResourceDefinition: CustomResourceDefinition{
+			ObjectMeta: api.NewObjectMeta(crd.ObjectMeta),
 			TypeMeta:   api.NewTypeMeta(api.ResourceKindCustomResourceDefinition),
-			Version:    customResourceDefinition.Spec.Version,
-			Objects:    objects,
+			Group:      crd.Spec.Group,
 		},
+		Conditions: getCRDConditions(crd),
+		Objects:    objects,
 	}
 }

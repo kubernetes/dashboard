@@ -32,7 +32,7 @@ limitations under the License.
 
         <mat-table [dataSource]="getData()"
                    matSort
-                   [matSortActive]="getDisplayColumns()[1]"
+                   [matSortActive]="getDisplayColumns()[4]"
                    matSortDisableClear
                    matSortDirection="asc">
 
@@ -41,19 +41,37 @@ limitations under the License.
                                  mat-sort-header
                                  disableClear="true"
                                  i18n>Name</mat-header-cell>
-                <mat-cell *matCellDef="let sc">
-                    <a [routerLink]="getDetailsHref(sc.objectMeta.name)"
-                       queryParamsHandling="preserve">{{sc.objectMeta.name}}</a>
+                <mat-cell *matCellDef="let crd">
+                    <a [routerLink]="getDetailsHref(crd.objectMeta.name)"
+                       queryParamsHandling="preserve">{{crd.nameKind}}</a>
                 </mat-cell>
             </ng-container>
 
             <ng-container [matColumnDef]="getDisplayColumns()[1]">
                 <mat-header-cell *matHeaderCellDef
+                                 i18n>Group</mat-header-cell>
+                <mat-cell *matCellDef="let crd">{{crd.group}}</mat-cell>
+            </ng-container>
+
+            <ng-container [matColumnDef]="getDisplayColumns()[2]">
+                <mat-header-cell *matHeaderCellDef
+                                 i18n>Full Name</mat-header-cell>
+                <mat-cell *matCellDef="let crd">{{crd.objectMeta.name}}</mat-cell>
+            </ng-container>
+
+            <ng-container [matColumnDef]="getDisplayColumns()[3]">
+                <mat-header-cell *matHeaderCellDef
+                                 i18n>Namespaced</mat-header-cell>
+                <mat-cell *matCellDef="let crd">{{isNamespaced(crd)}}</mat-cell>
+            </ng-container>
+
+            <ng-container [matColumnDef]="getDisplayColumns()[4]">
+                <mat-header-cell *matHeaderCellDef
                                  mat-sort-header
                                  disableClear="true"
                                  i18n>Age</mat-header-cell>
-                <mat-cell *matCellDef="let sc">
-                    <kd-date [date]="sc.objectMeta.creationTimestamp"
+                <mat-cell *matCellDef="let crd">
+                    <kd-date [date]="crd.objectMeta.creationTimestamp"
                              relative></kd-date>
                 </mat-cell>
             </ng-container>
@@ -61,9 +79,9 @@ limitations under the License.
             <ng-container *ngFor="let col of getActionColumns()"
                           [matColumnDef]="col.name">
                 <mat-header-cell *matHeaderCellDef></mat-header-cell>
-                <mat-cell *matCellDef="let sc">
+                <mat-cell *matCellDef="let crd">
                     <kd-dynamic-cell [component]="col.component"
-                                     [resource]="sc"></kd-dynamic-cell>
+                                     [resource]="crd"></kd-dynamic-cell>
                 </mat-cell>
             </ng-container>
 

@@ -139,7 +139,7 @@ export interface PodList extends ResourceList {
   pods: Pod[];
   status: Status;
   podInfo?: PodInfo;
-  cumulativeMetrics: Metric[]|null;
+  cumulativeMetrics: Metric[] | null;
 }
 
 export interface ReplicaSetList extends ResourceList {
@@ -192,7 +192,10 @@ export interface CronJob extends Resource {
 }
 
 export interface CRD extends Resource {
-  version: string;
+  group: string;
+  scope: string;
+  nameKind: string;
+  established: string;
 }
 
 export interface DaemonSet extends Resource {
@@ -793,9 +796,9 @@ export interface NodeTaint {
 }
 
 export interface PortMapping {
-  port: number|null;
+  port: number | null;
   protocol: string;
-  targetPort: number|null;
+  targetPort: number | null;
 }
 
 export interface EnvironmentVariable {
@@ -895,8 +898,8 @@ export interface FlockerVolumeSource {
 }
 
 export interface RollingUpdateStrategy {
-  maxSurge: (number|string);
-  maxUnavailable: (number|string);
+  maxSurge: number | string;
+  maxUnavailable: number | string;
 }
 
 export interface DeploymentInfo {

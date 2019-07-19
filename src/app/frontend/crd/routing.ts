@@ -21,20 +21,16 @@ import {CRDListComponent} from './list/component';
 const CRD_LIST_ROUTE: Route = {
   path: '',
   component: CRDListComponent,
-  data: {breadcrumb: 'CRD'}
+  data: {breadcrumb: 'CRD'},
 };
 
 const CRD_DETAIL_ROUTE: Route = {
-  path: ':crdName',
+  path: ':resourceName',
   component: CRDDetailComponent,
-  data: {breadcrumb: '{{ crdName }}', parent: CRD_LIST_ROUTE}
+  data: {breadcrumb: '{{ resourceName }}', parent: CRD_LIST_ROUTE},
 };
 
 @NgModule({
-  imports: [RouterModule.forChild([
-    CRD_LIST_ROUTE,
-    CRD_DETAIL_ROUTE,
-  ])]
+  imports: [RouterModule.forChild([CRD_LIST_ROUTE, CRD_DETAIL_ROUTE])],
 })
-export class CRDRoutingModule {
-}
+export class CRDRoutingModule {}

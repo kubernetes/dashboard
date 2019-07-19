@@ -17,7 +17,7 @@ import {Component, Input} from '@angular/core';
 import {CRD, CRDList} from '@api/backendapi';
 import {Observable} from 'rxjs';
 
-import {ResourceListBase} from '../../../resources/list';
+import {ResourceListWithStatuses} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {ResourceService} from '../../../services/resource/resource';
@@ -28,17 +28,23 @@ import {ListGroupIdentifier, ListIdentifier} from '../groupids';
   selector: 'kd-crd-list',
   templateUrl: './template.html',
 })
-export class CRDListComponent extends ResourceListBase<CRDList, CRD> {
+export class CRDListComponent extends ResourceListWithStatuses<CRDList, CRD> {
   @Input() endpoint = EndpointManager.resource(Resource.crd).list();
 
   constructor(
-      private readonly crd_: ResourceService<CRDList>, notifications: NotificationsService) {
+    private readonly crd_: ResourceService<CRDList>,
+    notifications: NotificationsService,
+  ) {
     super('crd', notifications);
     this.id = ListIdentifier.crd;
     this.groupId = ListGroupIdentifier.none;
 
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
+  }
+
+  isNamespaced(crd: CRD): string {
+    return crd.scope === 'Namespaced' ? 'True' : 'False';
   }
 
   getResourceObservable(params?: HttpParams): Observable<CRDList> {
@@ -50,6 +56,6 @@ export class CRDListComponent extends ResourceListBase<CRDList, CRD> {
   }
 
   getDisplayColumns(): string[] {
-    return ['name', 'age'];
+    return ['name', 'group', 'fullName', 'namespaced', 'age'];
   }
 }

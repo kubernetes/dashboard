@@ -17,7 +17,9 @@ package customresourcedefinition
 import (
 	"strings"
 
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	api "k8s.io/api/core/v1"
 	apiextensions "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 )
@@ -102,4 +104,18 @@ func getCustomResourceDefinitionGroupVersion(crd *apiextensions.CustomResourceDe
 		Group:   group,
 		Version: version,
 	}
+}
+
+func getCRDConditions(crd *apiextensions.CustomResourceDefinition) []common.Condition {
+	var conditions []common.Condition
+	for _, condition := range crd.Status.Conditions {
+		conditions = append(conditions, common.Condition{
+			Type:               string(condition.Type),
+			Status:             api.ConditionStatus(condition.Status),
+			LastTransitionTime: condition.LastTransitionTime,
+			Reason:             condition.Reason,
+			Message:            condition.Message,
+		})
+	}
+	return conditions
 }
