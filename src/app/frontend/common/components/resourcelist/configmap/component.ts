@@ -28,8 +28,9 @@ export class ConfigMapListComponent extends ResourceListBase<ConfigMapList, Conf
   @Input() endpoint = EndpointManager.resource(Resource.configMap, true).list();
 
   constructor(
-      private readonly configMap_: NamespacedResourceService<ConfigMapList>,
-      notifications: NotificationsService) {
+    private readonly configMap_: NamespacedResourceService<ConfigMapList>,
+    notifications: NotificationsService,
+  ) {
     super('configmap', notifications);
     this.id = ListIdentifier.configMap;
     this.groupId = ListGroupIdentifier.config;

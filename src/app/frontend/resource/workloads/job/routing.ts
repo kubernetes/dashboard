@@ -39,14 +39,7 @@ const JOB_DETAIL_ROUTE: Route = {
 };
 
 @NgModule({
-  imports: [
-    RouterModule.forChild([
-      JOB_LIST_ROUTE,
-      JOB_DETAIL_ROUTE,
-      LOGS_DEFAULT_ACTIONBAR,
-    ]),
-  ],
+  imports: [RouterModule.forChild([JOB_LIST_ROUTE, JOB_DETAIL_ROUTE, LOGS_DEFAULT_ACTIONBAR])],
   exports: [RouterModule],
 })
-export class JobRoutingModule {
-}
+export class JobRoutingModule {}

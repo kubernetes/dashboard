@@ -12,16 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, ViewChild,} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnDestroy,
+  ViewChild,
+} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
 import {ActivatedRoute, Router} from '@angular/router';
-import {PodContainerList, ShellFrame, SJSCloseEvent, SJSMessageEvent, TerminalResponse,} from '@api/backendapi';
+import {
+  PodContainerList,
+  ShellFrame,
+  SJSCloseEvent,
+  SJSMessageEvent,
+  TerminalResponse,
+} from '@api/backendapi';
 import {debounce} from 'lodash';
 import {ReplaySubject, Subject, Subscription} from 'rxjs';
 import {Terminal} from 'xterm';
 import {fit} from 'xterm/lib/addons/fit/fit';
 
-import {EndpointManager, Resource,} from '../common/services/resource/endpoint';
+import {EndpointManager, Resource} from '../common/services/resource/endpoint';
 import {NamespacedResourceService} from '../common/services/resource/resource';
 
 // tslint:disable-next-line:no-any
@@ -52,16 +65,22 @@ export class ShellComponent implements AfterViewInit, OnDestroy {
   private readonly keyEvent$_ = new ReplaySubject<KeyboardEvent>(2);
 
   constructor(
-      private readonly containers_: NamespacedResourceService<PodContainerList>,
-      private readonly terminal_: NamespacedResourceService<TerminalResponse>,
-      private readonly activatedRoute_: ActivatedRoute, private readonly matSnackBar_: MatSnackBar,
-      private readonly cdr_: ChangeDetectorRef, private readonly _router: Router) {
+    private readonly containers_: NamespacedResourceService<PodContainerList>,
+    private readonly terminal_: NamespacedResourceService<TerminalResponse>,
+    private readonly activatedRoute_: ActivatedRoute,
+    private readonly matSnackBar_: MatSnackBar,
+    private readonly cdr_: ChangeDetectorRef,
+    private readonly _router: Router,
+  ) {
     this.namespace_ = this.activatedRoute_.snapshot.params.resourceNamespace;
     this.podName = this.activatedRoute_.snapshot.params.resourceName;
     this.selectedContainer = this.activatedRoute_.snapshot.params.containerName;
 
-    const containersEndpoint =
-        this.endpoint_.child(this.podName, Resource.container, this.namespace_);
+    const containersEndpoint = this.endpoint_.child(
+      this.podName,
+      Resource.container,
+      this.namespace_,
+    );
 
     this.containers_.get(containersEndpoint).subscribe(containerList => {
       this.containers = containerList.containers;
@@ -140,9 +159,11 @@ export class ShellComponent implements AfterViewInit, OnDestroy {
     this.debouncedFit_();
     window.addEventListener('resize', () => this.debouncedFit_());
 
-    this.subscriptions_.push(this.connSubject_.subscribe(frame => {
-      this.handleConnectionMessage(frame);
-    }));
+    this.subscriptions_.push(
+      this.connSubject_.subscribe(frame => {
+        this.handleConnectionMessage(frame);
+      }),
+    );
 
     this.term.on('data', this.onTerminalSendString.bind(this));
     this.term.on('resize', this.onTerminalResize.bind(this));
@@ -161,8 +182,10 @@ export class ShellComponent implements AfterViewInit, OnDestroy {
     this.connecting_ = true;
     this.connectionClosed_ = false;
 
-    const terminalSessionUrl = this.endpoint_.child(this.podName, Resource.shell, this.namespace_) +
-        '/' + this.selectedContainer;
+    const terminalSessionUrl =
+      this.endpoint_.child(this.podName, Resource.shell, this.namespace_) +
+      '/' +
+      this.selectedContainer;
     const {id} = await this.terminal_.get(terminalSessionUrl).toPromise();
 
     this.conn_ = new SockJS(`api/sockjs?${id}`);
@@ -222,22 +245,26 @@ export class ShellComponent implements AfterViewInit, OnDestroy {
 
   private onTerminalSendString(str: string): void {
     if (this.connected_) {
-      this.conn_.send(JSON.stringify({
-        Op: 'stdin',
-        Data: str,
-        Cols: this.term.cols,
-        Rows: this.term.rows,
-      }));
+      this.conn_.send(
+        JSON.stringify({
+          Op: 'stdin',
+          Data: str,
+          Cols: this.term.cols,
+          Rows: this.term.rows,
+        }),
+      );
     }
   }
 
   private onTerminalResize(): void {
     if (this.connected_) {
-      this.conn_.send(JSON.stringify({
-        Op: 'resize',
-        Cols: this.term.cols,
-        Rows: this.term.rows,
-      }));
+      this.conn_.send(
+        JSON.stringify({
+          Op: 'resize',
+          Cols: this.term.cols,
+          Rows: this.term.rows,
+        }),
+      );
     }
   }
 }

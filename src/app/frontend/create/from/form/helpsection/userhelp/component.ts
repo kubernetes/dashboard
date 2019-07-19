@@ -19,5 +19,4 @@ import {Component, OnInit} from '@angular/core';
   templateUrl: './template.html',
   styleUrls: ['./style.scss'],
 })
-export class UserHelpComponent {
-}
+export class UserHelpComponent {}

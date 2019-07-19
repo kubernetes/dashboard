@@ -32,8 +32,9 @@ export class ClusterRoleListComponent extends ResourceListBase<ClusterRoleList, 
   @Input() endpoint = EndpointManager.resource(Resource.clusterRole).list();
 
   constructor(
-      private readonly clusterRole_: ResourceService<ClusterRoleList>,
-      notifications: NotificationsService) {
+    private readonly clusterRole_: ResourceService<ClusterRoleList>,
+    notifications: NotificationsService,
+  ) {
     super('clusterrole', notifications);
     this.id = ListIdentifier.clusterRole;
     this.groupId = ListGroupIdentifier.cluster;

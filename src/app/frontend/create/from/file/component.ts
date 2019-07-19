@@ -30,11 +30,13 @@ export class CreateFromFileComponent {
   file: KdFile;
 
   constructor(
-      private readonly namespace_: NamespaceService, private readonly create_: CreateService,
-      private readonly history_: HistoryService) {}
+    private readonly namespace_: NamespaceService,
+    private readonly create_: CreateService,
+    private readonly history_: HistoryService,
+  ) {}
 
   isCreateDisabled(): boolean {
-    return (!this.file || this.file.content.length === 0 || this.create_.isDeployDisabled());
+    return !this.file || this.file.content.length === 0 || this.create_.isDeployDisabled();
   }
 
   create(): void {

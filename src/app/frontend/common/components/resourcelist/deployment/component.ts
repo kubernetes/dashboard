@@ -31,8 +31,10 @@ export class DeploymentListComponent extends ResourceListWithStatuses<Deployment
   @Input() endpoint = EndpointManager.resource(Resource.deployment, true).list();
 
   constructor(
-      private readonly deployment_: NamespacedResourceService<DeploymentList>,
-      notifications: NotificationsService, resolver: ComponentFactoryResolver) {
+    private readonly deployment_: NamespacedResourceService<DeploymentList>,
+    notifications: NotificationsService,
+    resolver: ComponentFactoryResolver,
+  ) {
     super('deployment', notifications, resolver);
     this.id = ListIdentifier.deployment;
     this.groupId = ListGroupIdentifier.workloads;

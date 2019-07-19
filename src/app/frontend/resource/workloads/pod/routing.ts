@@ -40,14 +40,7 @@ export const POD_DETAIL_ROUTE: Route = {
 };
 
 @NgModule({
-  imports: [
-    RouterModule.forChild([
-      POD_LIST_ROUTE,
-      POD_DETAIL_ROUTE,
-      LOGS_EXEC_DEFAULT_ACTIONBAR,
-    ]),
-  ],
+  imports: [RouterModule.forChild([POD_LIST_ROUTE, POD_DETAIL_ROUTE, LOGS_EXEC_DEFAULT_ACTIONBAR])],
   exports: [RouterModule],
 })
-export class PodRoutingModule {
-}
+export class PodRoutingModule {}

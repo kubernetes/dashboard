@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HttpClient, HttpErrorResponse, HttpHeaders,} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {EventEmitter, Injectable} from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material';
 import {ObjectMeta, TypeMeta} from '@api/backendapi';
@@ -37,55 +37,73 @@ export class VerberService {
 
   showDeleteDialog(displayName: string, typeMeta: TypeMeta, objectMeta: ObjectMeta): void {
     const dialogConfig = this.getDialogConfig_(displayName, typeMeta, objectMeta);
-    this.dialog_.open(DeleteResourceDialog, dialogConfig).afterClosed().subscribe(doDelete => {
-      if (doDelete) {
-        const url = RawResource.getUrl(typeMeta, objectMeta);
-        this.http_.delete(url).subscribe(
-            () => this.onDelete.emit(true), this.handleErrorResponse_.bind(this));
-      }
-    });
+    this.dialog_
+      .open(DeleteResourceDialog, dialogConfig)
+      .afterClosed()
+      .subscribe(doDelete => {
+        if (doDelete) {
+          const url = RawResource.getUrl(typeMeta, objectMeta);
+          this.http_
+            .delete(url)
+            .subscribe(() => this.onDelete.emit(true), this.handleErrorResponse_.bind(this));
+        }
+      });
   }
 
   showEditDialog(displayName: string, typeMeta: TypeMeta, objectMeta: ObjectMeta): void {
     const dialogConfig = this.getDialogConfig_(displayName, typeMeta, objectMeta);
-    this.dialog_.open(EditResourceDialog, dialogConfig).afterClosed().subscribe(result => {
-      if (result) {
-        const url = RawResource.getUrl(typeMeta, objectMeta);
-        this.http_.put(url, JSON.parse(result), {headers: this.getHttpHeaders_()})
+    this.dialog_
+      .open(EditResourceDialog, dialogConfig)
+      .afterClosed()
+      .subscribe(result => {
+        if (result) {
+          const url = RawResource.getUrl(typeMeta, objectMeta);
+          this.http_
+            .put(url, JSON.parse(result), {headers: this.getHttpHeaders_()})
             .subscribe(() => this.onEdit.emit(true), this.handleErrorResponse_.bind(this));
-      }
-    });
+        }
+      });
   }
 
   showScaleDialog(displayName: string, typeMeta: TypeMeta, objectMeta: ObjectMeta): void {
     const dialogConfig = this.getDialogConfig_(displayName, typeMeta, objectMeta);
-    this.dialog_.open(ScaleResourceDialog, dialogConfig).afterClosed().subscribe(result => {
-      if (Number.isInteger(result)) {
-        const url = `api/v1/scale/${typeMeta.kind}/${objectMeta.namespace}/${objectMeta.name}/`;
-        this.http_
+    this.dialog_
+      .open(ScaleResourceDialog, dialogConfig)
+      .afterClosed()
+      .subscribe(result => {
+        if (Number.isInteger(result)) {
+          const url = `api/v1/scale/${typeMeta.kind}/${objectMeta.namespace}/${objectMeta.name}/`;
+          this.http_
             .put(url, result, {
               params: {
                 scaleBy: result,
               },
             })
             .subscribe(() => this.onScale.emit(true), this.handleErrorResponse_.bind(this));
-      }
-    });
+        }
+      });
   }
 
   showTriggerDialog(displayName: string, typeMeta: TypeMeta, objectMeta: ObjectMeta): void {
     const dialogConfig = this.getDialogConfig_(displayName, typeMeta, objectMeta);
-    this.dialog_.open(TriggerResourceDialog, dialogConfig).afterClosed().subscribe(result => {
-      if (result) {
-        const url = `api/v1/cronjob/${objectMeta.namespace}/${objectMeta.name}/trigger`;
-        this.http_.put(url, {}).subscribe(
-            () => this.onTrigger.emit(true), this.handleErrorResponse_.bind(this));
-      }
-    });
+    this.dialog_
+      .open(TriggerResourceDialog, dialogConfig)
+      .afterClosed()
+      .subscribe(result => {
+        if (result) {
+          const url = `api/v1/cronjob/${objectMeta.namespace}/${objectMeta.name}/trigger`;
+          this.http_
+            .put(url, {})
+            .subscribe(() => this.onTrigger.emit(true), this.handleErrorResponse_.bind(this));
+        }
+      });
   }
 
-  getDialogConfig_(displayName: string, typeMeta: TypeMeta, objectMeta: ObjectMeta):
-      MatDialogConfig<ResourceMeta> {
+  getDialogConfig_(
+    displayName: string,
+    typeMeta: TypeMeta,
+    objectMeta: ObjectMeta,
+  ): MatDialogConfig<ResourceMeta> {
     return {width: '630px', data: {displayName, typeMeta, objectMeta}};
   }
 

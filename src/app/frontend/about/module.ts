@@ -25,5 +25,4 @@ import {AboutRoutingModule} from './routing';
   imports: [SharedModule, ComponentsModule, AboutRoutingModule],
   declarations: [AboutComponent, ActionbarComponent],
 })
-export class AboutModule {
-}
+export class AboutModule {}

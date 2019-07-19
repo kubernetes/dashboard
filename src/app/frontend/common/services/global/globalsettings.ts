@@ -15,7 +15,7 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {EventEmitter, Injectable} from '@angular/core';
 import {GlobalSettings} from '@api/backendapi';
-import {onSettingsFailCallback, onSettingsLoadCallback,} from '@api/frontendapi';
+import {onSettingsFailCallback, onSettingsLoadCallback} from '@api/frontendapi';
 import {ReplaySubject} from 'rxjs';
 import {Observable} from 'rxjs/Observable';
 import {publishReplay, refCount} from 'rxjs/operators';
@@ -35,8 +35,10 @@ export class GlobalSettingsService {
   };
   private isInitialized_ = false;
 
-  constructor(private readonly http_: HttpClient, private readonly authorizer_: AuthorizerService) {
-  }
+  constructor(
+    private readonly http_: HttpClient,
+    private readonly authorizer_: AuthorizerService,
+  ) {}
 
   init(): void {
     this.load();
@@ -47,20 +49,22 @@ export class GlobalSettingsService {
   }
 
   load(onLoad?: onSettingsLoadCallback, onFail?: onSettingsFailCallback): void {
-    this.authorizer_.proxyGET<GlobalSettings>(this.endpoint_)
-        .toPromise()
-        .then(
-            settings => {
-              this.settings_ = settings;
-              this.isInitialized_ = true;
-              this.onSettingsUpdate.next();
-              if (onLoad) onLoad(settings);
-            },
-            err => {
-              this.isInitialized_ = false;
-              this.onSettingsUpdate.next();
-              if (onFail) onFail(err);
-            });
+    this.authorizer_
+      .proxyGET<GlobalSettings>(this.endpoint_)
+      .toPromise()
+      .then(
+        settings => {
+          this.settings_ = settings;
+          this.isInitialized_ = true;
+          this.onSettingsUpdate.next();
+          if (onLoad) onLoad(settings);
+        },
+        err => {
+          this.isInitialized_ = false;
+          this.onSettingsUpdate.next();
+          if (onFail) onFail(err);
+        },
+      );
   }
 
   save(settings: GlobalSettings): Observable<GlobalSettings> {

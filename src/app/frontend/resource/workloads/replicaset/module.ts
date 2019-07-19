@@ -24,5 +24,4 @@ import {ReplicaSetRoutingModule} from './routing';
   imports: [SharedModule, ComponentsModule, ReplicaSetRoutingModule],
   declarations: [ReplicaSetListComponent, ReplicaSetDetailComponent],
 })
-export class ReplicaSetModule {
-}
+export class ReplicaSetModule {}

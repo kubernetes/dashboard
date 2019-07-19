@@ -32,5 +32,4 @@ export const LOGS_ROUTE: Route = {
   imports: [RouterModule.forChild([LOGS_ROUTE])],
   exports: [RouterModule],
 })
-export class LogsRoutingModule {
-}
+export class LogsRoutingModule {}

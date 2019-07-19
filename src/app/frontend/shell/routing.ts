@@ -41,5 +41,4 @@ export const SHELL_ROUTE_RAW: Route = {
   imports: [RouterModule.forChild([SHELL_ROUTE_RAW, SHELL_ROUTE])],
   exports: [RouterModule],
 })
-export class ShellRoutingModule {
-}
+export class ShellRoutingModule {}

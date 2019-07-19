@@ -27,8 +27,9 @@ export interface AlertDialogConfig {
 })
 export class AlertDialog {
   constructor(
-      public dialogRef: MatDialogRef<AlertDialog>,
-      @Inject(MAT_DIALOG_DATA) public data: AlertDialogConfig) {}
+    public dialogRef: MatDialogRef<AlertDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: AlertDialogConfig,
+  ) {}
 
   onNoClick(): void {
     this.dialogRef.close();

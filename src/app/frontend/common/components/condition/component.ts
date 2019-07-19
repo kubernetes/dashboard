@@ -25,14 +25,7 @@ export class ConditionListComponent {
   @Input() conditions: Condition[];
 
   getConditionsColumns(): string[] {
-    return [
-      'type',
-      'status',
-      'lastProbeTime',
-      'lastTransitionTime',
-      'reason',
-      'message',
-    ];
+    return ['type', 'status', 'lastProbeTime', 'lastTransitionTime', 'reason', 'message'];
   }
 
   getDataSource(): MatTableDataSource<Condition> {

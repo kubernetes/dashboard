@@ -14,11 +14,29 @@
 
 import {DataSource} from '@angular/cdk/collections';
 import {HttpParams} from '@angular/common/http';
-import {ComponentFactoryResolver, EventEmitter, Input, OnDestroy, OnInit, Output, QueryList, Type, ViewChild, ViewChildren, ViewContainerRef,} from '@angular/core';
+import {
+  ComponentFactoryResolver,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  QueryList,
+  Type,
+  ViewChild,
+  ViewChildren,
+  ViewContainerRef,
+} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {Router} from '@angular/router';
 import {Event as KdEvent, Resource, ResourceList} from '@api/backendapi';
-import {ActionColumn, ActionColumnDef, ColumnWhenCallback, ColumnWhenCondition, OnListChangeEvent,} from '@api/frontendapi';
+import {
+  ActionColumn,
+  ActionColumnDef,
+  ColumnWhenCallback,
+  ColumnWhenCondition,
+  OnListChangeEvent,
+} from '@api/frontendapi';
 import {Subject} from 'rxjs';
 import {Observable, ObservableInput} from 'rxjs/Observable';
 import {merge} from 'rxjs/observable/merge';
@@ -35,8 +53,8 @@ import {NotificationsService} from '../services/global/notifications';
 import {ParamsService} from '../services/global/params';
 import {KdStateService} from '../services/global/state';
 
-export abstract class ResourceListBase<T extends ResourceList, R extends Resource> implements
-    OnInit, OnDestroy {
+export abstract class ResourceListBase<T extends ResourceList, R extends Resource>
+  implements OnInit, OnDestroy {
   // Base properties
   private readonly actionColumns_: Array<ActionColumnDef<ActionColumn>> = [];
   private readonly data_ = new MatTableDataSource<R>();
@@ -70,7 +88,9 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
   private readonly cardFilter_: CardListFilterComponent;
 
   protected constructor(
-      private readonly stateName_: string, private readonly notifications_: NotificationsService) {
+    private readonly stateName_: string,
+    private readonly notifications_: NotificationsService,
+  ) {
     this.settingsService_ = GlobalServicesModule.injector.get(GlobalSettingsService);
     this.kdState_ = GlobalServicesModule.injector.get(KdStateService);
     this.namespaceService_ = GlobalServicesModule.injector.get(NamespaceService);
@@ -98,20 +118,22 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
     });
 
     this.getObservableWithDataSelect_()
-        .pipe(startWith({}))
-        .pipe(switchMap(() => {
+      .pipe(startWith({}))
+      .pipe(
+        switchMap(() => {
           this.isLoading = true;
           return this.getResourceObservable(this.getDataSelectParams_());
-        }))
-        .pipe(takeUntil(this.unsubscribe_))
-        .subscribe((data: T) => {
-          this.notifications_.pushErrors(data.errors);
-          this.totalItems = data.listMeta.totalItems;
-          this.data_.data = this.map(data);
-          this.isLoading = false;
-          this.loaded_ = true;
-          this.onListChange_(data);
-        });
+        }),
+      )
+      .pipe(takeUntil(this.unsubscribe_))
+      .subscribe((data: T) => {
+        this.notifications_.pushErrors(data.errors);
+        this.totalItems = data.listMeta.totalItems;
+        this.data_.data = this.map(data);
+        this.isLoading = false;
+        this.loaded_ = true;
+        this.onListChange_(data);
+      });
   }
 
   ngOnDestroy(): void {
@@ -171,8 +193,11 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
     } as ActionColumnDef<ActionColumn>);
   }
 
-  protected registerDynamicColumn(col: string, afterCol: string, whenCallback: ColumnWhenCallback):
-      void {
+  protected registerDynamicColumn(
+    col: string,
+    afterCol: string,
+    whenCallback: ColumnWhenCallback,
+  ): void {
     this.dynamicColumns_.push({
       col,
       afterCol,
@@ -225,8 +250,9 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
       result = params;
     }
 
-    return result.set('itemsPerPage', `${this.itemsPerPage}`)
-        .set('page', `${this.matPaginator_.pageIndex + 1}`);
+    return result
+      .set('itemsPerPage', `${this.itemsPerPage}`)
+      .set('page', `${this.matPaginator_.pageIndex + 1}`);
   }
 
   private filter_(params?: HttpParams): HttpParams {
@@ -318,8 +344,10 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
   abstract map(value: T): R[];
 }
 
-export abstract class ResourceListWithStatuses<T extends ResourceList, R extends Resource> extends
-    ResourceListBase<T, R> {
+export abstract class ResourceListWithStatuses<
+  T extends ResourceList,
+  R extends Resource
+> extends ResourceListBase<T, R> {
   private readonly bindings_: {[hash: number]: StateBinding<R>} = {};
   @ViewChildren('matrow', {read: ViewContainerRef})
   private readonly containers_: QueryList<ViewContainerRef>;
@@ -335,8 +363,10 @@ export abstract class ResourceListWithStatuses<T extends ResourceList, R extends
   hoveredRow: number = undefined;
 
   protected constructor(
-      stateName: string, private readonly notifications: NotificationsService,
-      private readonly resolver_?: ComponentFactoryResolver) {
+    stateName: string,
+    private readonly notifications: NotificationsService,
+    private readonly resolver_?: ComponentFactoryResolver,
+  ) {
     super(stateName, notifications);
 
     this.onChange.subscribe(this.clearExpandedRows_.bind(this));
@@ -402,7 +432,7 @@ export abstract class ResourceListWithStatuses<T extends ResourceList, R extends
   }
 
   showHoverIcon(index: number, resource: R): boolean {
-    return (this.isRowHovered(index) && this.hasErrors(resource) && !this.isRowExpanded(index));
+    return this.isRowHovered(index) && this.hasErrors(resource) && !this.isRowExpanded(index);
   }
 
   protected getEvents(_resource: R): KdEvent[] {
@@ -414,7 +444,10 @@ export abstract class ResourceListWithStatuses<T extends ResourceList, R extends
   }
 
   protected registerBinding(
-      iconName: IconName, iconClass: string, callbackFunction: StatusCheckCallback<R>): void {
+    iconName: IconName,
+    iconClass: string,
+    callbackFunction: StatusCheckCallback<R>,
+  ): void {
     const icon = new Icon(String(iconName), iconClass);
     this.bindings_[icon.hash()] = {icon, callbackFunction};
   }
@@ -464,18 +497,20 @@ class Icon {
    */
   hash(): number {
     const value = `${this.name}#${this.cssClass}`;
-    return value.split('')
-        .map(str => {
-          return str.charCodeAt(0);
-        })
-        .reduce((prev, curr) => {
-          return (prev << 5) + prev + curr;
-        }, 5381);
+    return value
+      .split('')
+      .map(str => {
+        return str.charCodeAt(0);
+      })
+      .reduce((prev, curr) => {
+        return (prev << 5) + prev + curr;
+      }, 5381);
   }
 }
 
 type StatusCheckCallback<T> = (resource: T) => boolean;
 
 type StateBinding<T> = {
-  icon: Icon; callbackFunction: StatusCheckCallback<T>;
+  icon: Icon;
+  callbackFunction: StatusCheckCallback<T>;
 };

@@ -33,8 +33,10 @@ export class JobListComponent extends ResourceListWithStatuses<JobList, Job> {
   @Input() endpoint = EndpointManager.resource(Resource.job, true).list();
 
   constructor(
-      private readonly job_: NamespacedResourceService<JobList>,
-      notifications: NotificationsService, resolver: ComponentFactoryResolver) {
+    private readonly job_: NamespacedResourceService<JobList>,
+    notifications: NotificationsService,
+    resolver: ComponentFactoryResolver,
+  ) {
     super('job', notifications, resolver);
     this.id = ListIdentifier.job;
     this.groupId = ListGroupIdentifier.workloads;
@@ -64,11 +66,11 @@ export class JobListComponent extends ResourceListWithStatuses<JobList, Job> {
   }
 
   isInPendingState(resource: Job): boolean {
-    return (resource.podInfo.warnings.length === 0 && resource.podInfo.pending > 0);
+    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending > 0;
   }
 
   isInSuccessState(resource: Job): boolean {
-    return (resource.podInfo.warnings.length === 0 && resource.podInfo.pending === 0);
+    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending === 0;
   }
 
   getDisplayColumns(): string[] {

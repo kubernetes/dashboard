@@ -28,16 +28,20 @@ export class ScaleResourceDialog implements OnInit {
   desired = 0;
 
   constructor(
-      public dialogRef: MatDialogRef<ScaleResourceDialog>,
-      @Inject(MAT_DIALOG_DATA) public data: ResourceMeta, private readonly http_: HttpClient) {}
+    public dialogRef: MatDialogRef<ScaleResourceDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: ResourceMeta,
+    private readonly http_: HttpClient,
+  ) {}
 
   ngOnInit(): void {
-    const url = `api/v1/scale/${this.data.typeMeta.kind}/${this.data.objectMeta.namespace}/${
-        this.data.objectMeta.name}/`;
-    this.http_.get<ReplicaCounts>(url).toPromise().then(rc => {
-      this.actual = rc.actualReplicas;
-      this.desired = rc.desiredReplicas;
-    });
+    const url = `api/v1/scale/${this.data.typeMeta.kind}/${this.data.objectMeta.namespace}/${this.data.objectMeta.name}/`;
+    this.http_
+      .get<ReplicaCounts>(url)
+      .toPromise()
+      .then(rc => {
+        this.actual = rc.actualReplicas;
+        this.desired = rc.desiredReplicas;
+      });
   }
 
   onNoClick(): void {

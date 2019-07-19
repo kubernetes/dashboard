@@ -24,5 +24,4 @@ import {PodRoutingModule} from './routing';
   imports: [SharedModule, ComponentsModule, PodRoutingModule],
   declarations: [PodListComponent, PodDetailComponent],
 })
-export class PodModule {
-}
+export class PodModule {}

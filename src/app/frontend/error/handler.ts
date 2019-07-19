@@ -28,7 +28,7 @@ export class GlobalErrorHandler implements ErrorHandler {
     return this.injector_.get(Router);
   }
 
-  handleError(error: HttpErrorResponse|YAMLException): void {
+  handleError(error: HttpErrorResponse | YAMLException): void {
     if (error instanceof HttpErrorResponse) {
       this.handleHTTPError_(error);
       return;

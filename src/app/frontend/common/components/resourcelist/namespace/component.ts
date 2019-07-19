@@ -32,8 +32,9 @@ export class NamespaceListComponent extends ResourceListWithStatuses<NamespaceLi
   @Input() endpoint = EndpointManager.resource(Resource.namespace).list();
 
   constructor(
-      private readonly namespace_: ResourceService<NamespaceList>,
-      notifications: NotificationsService) {
+    private readonly namespace_: ResourceService<NamespaceList>,
+    notifications: NotificationsService,
+  ) {
     super('namespace', notifications);
     this.id = ListIdentifier.namespace;
     this.groupId = ListGroupIdentifier.cluster;

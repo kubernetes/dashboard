@@ -29,5 +29,4 @@ export const CONFIG_ROUTE: Route = {
   imports: [RouterModule.forChild([CONFIG_ROUTE])],
   exports: [RouterModule],
 })
-export class ConfigRoutingModule {
-}
+export class ConfigRoutingModule {}

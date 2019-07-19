@@ -24,5 +24,4 @@ import {CronJobRoutingModule} from './routing';
   imports: [SharedModule, ComponentsModule, CronJobRoutingModule],
   declarations: [CronJobListComponent, CronJobDetailComponent],
 })
-export class CronJobModule {
-}
+export class CronJobModule {}

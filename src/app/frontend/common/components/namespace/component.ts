@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, ElementRef, OnDestroy, OnInit, ViewChild,} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatDialog, MatSelect} from '@angular/material';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {NamespaceList} from '@api/backendapi';
@@ -23,7 +23,7 @@ import {CONFIG} from '../../../index.config';
 import {NAMESPACE_STATE_PARAM} from '../../params/params';
 import {HistoryService} from '../../services/global/history';
 import {NamespaceService} from '../../services/global/namespace';
-import {NotificationSeverity, NotificationsService,} from '../../services/global/notifications';
+import {NotificationSeverity, NotificationsService} from '../../services/global/notifications';
 import {KdStateService} from '../../services/global/state';
 import {EndpointManager, Resource} from '../../services/resource/endpoint';
 import {ResourceService} from '../../services/resource/resource';
@@ -50,12 +50,15 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
   @ViewChild('namespaceInput', {static: true}) private readonly namespaceInputEl_: ElementRef;
 
   constructor(
-      private readonly router_: Router, private readonly namespaceService_: NamespaceService,
-      private readonly namespace_: ResourceService<NamespaceList>,
-      private readonly dialog_: MatDialog, private readonly kdState_: KdStateService,
-      private readonly notifications_: NotificationsService,
-      private readonly _activatedRoute: ActivatedRoute,
-      private readonly _historyService: HistoryService) {}
+    private readonly router_: Router,
+    private readonly namespaceService_: NamespaceService,
+    private readonly namespace_: ResourceService<NamespaceList>,
+    private readonly dialog_: MatDialog,
+    private readonly kdState_: KdStateService,
+    private readonly notifications_: NotificationsService,
+    private readonly _activatedRoute: ActivatedRoute,
+    private readonly _historyService: HistoryService,
+  ) {}
 
   ngOnInit(): void {
     this._activatedRoute.queryParams.pipe(takeUntil(this.unsubscribe_)).subscribe(params => {
@@ -75,14 +78,15 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
     });
 
     this.resourceNamespaceParam = this._getCurrentResourceNamespaceParam();
-    this.router_.events.filter(event => event instanceof NavigationEnd)
-        .distinctUntilChanged()
-        .subscribe(() => {
-          this.resourceNamespaceParam = this._getCurrentResourceNamespaceParam();
-          if (this.shouldShowNamespaceChangeDialog(this.namespaceService_.current())) {
-            this.handleNamespaceChangeDialog_();
-          }
-        });
+    this.router_.events
+      .filter(event => event instanceof NavigationEnd)
+      .distinctUntilChanged()
+      .subscribe(() => {
+        this.resourceNamespaceParam = this._getCurrentResourceNamespaceParam();
+        if (this.shouldShowNamespaceChangeDialog(this.namespaceService_.current())) {
+          this.handleNamespaceChangeDialog_();
+        }
+      });
 
     this.allNamespacesKey = this.namespaceService_.getAllNamespacesKey();
     this.selectedNamespace = this.namespaceService_.current();
@@ -127,10 +131,12 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
     let newNamespace = this.namespaceService_.getDefaultNamespace();
     const targetNamespace = this.selectedNamespace;
 
-    if (targetNamespace &&
-        (this.namespaces.indexOf(targetNamespace) >= 0 ||
-         targetNamespace === this.allNamespacesKey ||
-         this.namespaceService_.isNamespaceValid(targetNamespace))) {
+    if (
+      targetNamespace &&
+      (this.namespaces.indexOf(targetNamespace) >= 0 ||
+        targetNamespace === this.allNamespacesKey ||
+        this.namespaceService_.isNamespaceValid(targetNamespace))
+    ) {
       newNamespace = targetNamespace;
     }
 
@@ -140,46 +146,48 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
   }
 
   private loadNamespaces_(): void {
-    this.namespaceUpdate_.pipe(takeUntil(this.unsubscribe_))
-        .pipe(startWith({}))
-        .pipe(switchMap(() => this.namespace_.get(this.endpoint_.list())))
-        .subscribe(
-            namespaceList => {
-              this.namespaces = namespaceList.namespaces.map(n => n.objectMeta.name);
+    this.namespaceUpdate_
+      .pipe(takeUntil(this.unsubscribe_))
+      .pipe(startWith({}))
+      .pipe(switchMap(() => this.namespace_.get(this.endpoint_.list())))
+      .subscribe(
+        namespaceList => {
+          this.namespaces = namespaceList.namespaces.map(n => n.objectMeta.name);
 
-              if (namespaceList.errors.length > 0) {
-                for (const err of namespaceList.errors) {
-                  this.notifications_.push(err.ErrStatus.message, NotificationSeverity.error);
-                }
-              }
-            },
-            undefined,
-            () => {
-              this.onNamespaceLoaded_();
-            });
+          if (namespaceList.errors.length > 0) {
+            for (const err of namespaceList.errors) {
+              this.notifications_.push(err.ErrStatus.message, NotificationSeverity.error);
+            }
+          }
+        },
+        undefined,
+        () => {
+          this.onNamespaceLoaded_();
+        },
+      );
   }
 
   private handleNamespaceChangeDialog_(): void {
     this.dialog_
-        .open(NamespaceChangeDialog, {
-          data: {
-            namespace: this.selectedNamespace,
-            newNamespace: this._getCurrentResourceNamespaceParam()
-          },
-        })
-        .afterClosed()
-        .subscribe(confirmed => {
-          if (confirmed) {
-            this.selectedNamespace = this._getCurrentResourceNamespaceParam();
-            this.router_.navigate([], {
-              relativeTo: this._activatedRoute,
-              queryParams: {[NAMESPACE_STATE_PARAM]: this.selectedNamespace},
-              queryParamsHandling: 'merge',
-            });
-          } else {
-            this._historyService.goToPreviousState('overview');
-          }
-        });
+      .open(NamespaceChangeDialog, {
+        data: {
+          namespace: this.selectedNamespace,
+          newNamespace: this._getCurrentResourceNamespaceParam(),
+        },
+      })
+      .afterClosed()
+      .subscribe(confirmed => {
+        if (confirmed) {
+          this.selectedNamespace = this._getCurrentResourceNamespaceParam();
+          this.router_.navigate([], {
+            relativeTo: this._activatedRoute,
+            queryParams: {[NAMESPACE_STATE_PARAM]: this.selectedNamespace},
+            queryParamsHandling: 'merge',
+          });
+        } else {
+          this._historyService.goToPreviousState('overview');
+        }
+      });
   }
 
   private changeNamespace_(namespace: string): void {
@@ -206,11 +214,14 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
   }
 
   private shouldShowNamespaceChangeDialog(targetNamespace: string): boolean {
-    return targetNamespace !== this.allNamespacesKey && !!this.resourceNamespaceParam &&
-        this.resourceNamespaceParam !== targetNamespace;
+    return (
+      targetNamespace !== this.allNamespacesKey &&
+      !!this.resourceNamespaceParam &&
+      this.resourceNamespaceParam !== targetNamespace
+    );
   }
 
-  private _getCurrentResourceNamespaceParam(): string|undefined {
+  private _getCurrentResourceNamespaceParam(): string | undefined {
     return this._getCurrentRoute().snapshot.params.resourceNamespace;
   }
 

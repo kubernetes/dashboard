@@ -31,14 +31,17 @@ export class GraphCardComponent implements OnChanges {
   }
 
   private getSelectedMetrics(): Metric {
-    if (!this.selectedMetricName ||
-        (this.metrics.length && this.metrics[0].dataPoints.length === 0)) {
+    if (
+      !this.selectedMetricName ||
+      (this.metrics.length && this.metrics[0].dataPoints.length === 0)
+    ) {
       return null;
     }
 
     return (
-        this.metrics &&
-        this.metrics.filter(metric => metric.metricName === this.selectedMetricName)[0]);
+      this.metrics &&
+      this.metrics.filter(metric => metric.metricName === this.selectedMetricName)[0]
+    );
   }
 
   shouldShowGraph(): boolean {

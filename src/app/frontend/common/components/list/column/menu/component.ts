@@ -50,8 +50,10 @@ export class MenuComponent implements ActionColumn {
   @Input() typeMeta: TypeMeta;
 
   constructor(
-      private readonly verber_: VerberService, private readonly router_: Router,
-      private readonly kdState_: KdStateService) {}
+    private readonly verber_: VerberService,
+    private readonly router_: Router,
+    private readonly kdState_: KdStateService,
+  ) {}
 
   setObjectMeta(objectMeta: ObjectMeta): void {
     this.objectMeta = objectMeta;
@@ -67,7 +69,11 @@ export class MenuComponent implements ActionColumn {
 
   getLogsHref(): string {
     return this.kdState_.href(
-        'log', this.objectMeta.name, this.objectMeta.namespace, this.typeMeta.kind);
+      'log',
+      this.objectMeta.name,
+      this.objectMeta.namespace,
+      this.typeMeta.kind,
+    );
   }
 
   isExecEnabled(): boolean {

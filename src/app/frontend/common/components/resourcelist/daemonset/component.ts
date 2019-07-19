@@ -32,8 +32,10 @@ export class DaemonSetListComponent extends ResourceListWithStatuses<DaemonSetLi
   @Input() endpoint = EndpointManager.resource(Resource.daemonSet, true).list();
 
   constructor(
-      private readonly daemonSet_: NamespacedResourceService<DaemonSetList>,
-      resolver: ComponentFactoryResolver, notifications: NotificationsService) {
+    private readonly daemonSet_: NamespacedResourceService<DaemonSetList>,
+    resolver: ComponentFactoryResolver,
+    notifications: NotificationsService,
+  ) {
     super('daemonset', notifications, resolver);
     this.id = ListIdentifier.daemonSet;
     this.groupId = ListGroupIdentifier.workloads;
@@ -63,11 +65,11 @@ export class DaemonSetListComponent extends ResourceListWithStatuses<DaemonSetLi
   }
 
   isInPendingState(resource: DaemonSet): boolean {
-    return (resource.podInfo.warnings.length === 0 && resource.podInfo.pending > 0);
+    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending > 0;
   }
 
   isInSuccessState(resource: DaemonSet): boolean {
-    return (resource.podInfo.warnings.length === 0 && resource.podInfo.pending === 0);
+    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending === 0;
   }
 
   hasErrors(daemonSet: DaemonSet): boolean {

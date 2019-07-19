@@ -26,13 +26,14 @@ import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 const EVENT_TYPE_WARNING = 'Warning';
 
 @Component({selector: 'kd-event-list', templateUrl: './template.html'})
-export class EventListComponent extends ResourceListWithStatuses<EventList, Event> implements
-    OnInit {
+export class EventListComponent extends ResourceListWithStatuses<EventList, Event>
+  implements OnInit {
   @Input() endpoint: string;
 
   constructor(
-      private readonly eventList: NamespacedResourceService<EventList>,
-      notifications: NotificationsService) {
+    private readonly eventList: NamespacedResourceService<EventList>,
+    notifications: NotificationsService,
+  ) {
     super('', notifications);
     this.id = ListIdentifier.event;
     this.groupId = ListGroupIdentifier.none;
@@ -67,14 +68,6 @@ export class EventListComponent extends ResourceListWithStatuses<EventList, Even
   }
 
   getDisplayColumns(): string[] {
-    return [
-      'statusicon',
-      'message',
-      'source',
-      'subobject',
-      'count',
-      'firstseen',
-      'lastseen',
-    ];
+    return ['statusicon', 'message', 'source', 'subobject', 'count', 'firstseen', 'lastseen'];
   }
 }
