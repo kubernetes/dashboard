@@ -15,6 +15,8 @@
 package customresourcedefinition
 
 import (
+	"encoding/json"
+
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
@@ -31,8 +33,8 @@ type CustomResourceObjectDetail struct {
 
 // CustomResourceObject represents a custom resource object.
 type CustomResourceObject struct {
-	metav1.TypeMeta `json:"typeMeta"`
-	ObjectMeta      metav1.ObjectMeta `json:"objectMeta,omitempty"`
+	metav1.TypeMeta `json:",inline"`
+	Metadata        metav1.ObjectMeta `json:"metadata,omitempty"`
 }
 
 func (in *CustomResourceObject) DeepCopyObject() runtime.Object {
@@ -54,8 +56,8 @@ func (in *CustomResourceObject) DeepCopy() *CustomResourceObject {
 
 // CustomResourceObjectList represents crd objects in a namespace.
 type CustomResourceObjectList struct {
+	metav1.TypeMeta `json:",inline"`
 	ListMeta        api.ListMeta `json:"listMeta"`
-	metav1.TypeMeta `json:"typeMeta"`
 
 	// Unordered list of custom resource definitions
 	Items []CustomResourceObject `json:"items"`
@@ -100,10 +102,16 @@ func GetCustomResourceObjectList(client apiextensionsclientset.Interface, config
 		return list, criticalError
 	}
 
-	err = restClient.Get().
+	raw, err := restClient.Get().
 		Namespace(namespace.ToRequestParam()).
 		Resource(customResourceDefinition.Spec.Names.Plural).
-		Do().Into(&list)
+		Do().Raw()
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return list, criticalError
+	}
+
+	err = json.Unmarshal(raw, &list)
 	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
 	if criticalError != nil {
 		return list, criticalError
@@ -134,10 +142,12 @@ func GetCustomResourceObjectDetail(client apiextensionsclientset.Interface, name
 		return detail, err
 	}
 
-	err = restClient.Get().
+	raw, err := restClient.Get().
 		Namespace(namespace.ToRequestParam()).
 		Resource(customResourceDefinition.Spec.Names.Plural).
-		Name(name).Do().Into(&detail)
+		Name(name).Do().Raw()
+
+	err = json.Unmarshal(raw, &detail)
 	if err != nil {
 		return detail, err
 	}

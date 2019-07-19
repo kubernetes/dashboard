@@ -15,7 +15,6 @@
 package customresourcedefinition
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	apiextensions "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
@@ -50,12 +49,8 @@ func GetCustomResourceDefinitionDetail(client apiextensionsclientset.Interface, 
 
 func toCustomResourceDefinitionDetail(crd *apiextensions.CustomResourceDefinition, objects CustomResourceObjectList) *CustomResourceDefinitionDetail {
 	return &CustomResourceDefinitionDetail{
-		CustomResourceDefinition: CustomResourceDefinition{
-			ObjectMeta: api.NewObjectMeta(crd.ObjectMeta),
-			TypeMeta:   api.NewTypeMeta(api.ResourceKindCustomResourceDefinition),
-			Group:      crd.Spec.Group,
-		},
-		Conditions: getCRDConditions(crd),
-		Objects:    objects,
+		CustomResourceDefinition: toCustomResourceDefinition(crd),
+		Conditions:               getCRDConditions(crd),
+		Objects:                  objects,
 	}
 }

@@ -15,7 +15,7 @@
 package customresourcedefinition
 
 import (
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"github.com/kubernetes/dashboard/src/app/backend/plugin/client/clientset/versioned/scheme"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/runtime/serializer"
@@ -23,31 +23,10 @@ import (
 )
 
 func newRESTClient(config *rest.Config, groupVersion schema.GroupVersion) (*rest.RESTClient, error) {
-	scheme := runtime.NewScheme()
-	schemeBuilder := runtime.NewSchemeBuilder(
-		func(scheme *runtime.Scheme) error {
-			scheme.AddKnownTypes(
-				groupVersion,
-				&metav1.ListOptions{},
-				&metav1.DeleteOptions{},
-				&CustomResourceObject{},
-				&CustomResourceObjectList{},
-			)
-			return nil
-		})
-	if err := schemeBuilder.AddToScheme(scheme); err != nil {
-		return nil, err
-	}
-
 	config.GroupVersion = &groupVersion
 	config.APIPath = "/apis"
 	config.ContentType = runtime.ContentTypeJSON
-	config.NegotiatedSerializer = serializer.DirectCodecFactory{CodecFactory: serializer.NewCodecFactory(scheme)}
+	config.NegotiatedSerializer = serializer.DirectCodecFactory{CodecFactory: scheme.Codecs}
 
-	client, err := rest.RESTClientFor(config)
-	if err != nil {
-		return nil, err
-	}
-
-	return client, nil
+	return rest.RESTClientFor(config)
 }
