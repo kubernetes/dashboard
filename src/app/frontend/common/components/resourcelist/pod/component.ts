@@ -30,8 +30,10 @@ export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
   @Input() endpoint = EndpointManager.resource(Resource.pod, true).list();
 
   constructor(
-      private readonly podList: NamespacedResourceService<PodList>,
-      resolver: ComponentFactoryResolver, notifications: NotificationsService) {
+    private readonly podList: NamespacedResourceService<PodList>,
+    resolver: ComponentFactoryResolver,
+    notifications: NotificationsService,
+  ) {
     super('pod', notifications, resolver);
     this.id = ListIdentifier.pod;
     this.groupId = ListGroupIdentifier.workloads;
@@ -65,21 +67,11 @@ export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
   }
 
   isInSuccessState(resource: Pod): boolean {
-    return (resource.podStatus.status === 'Succeeded' || resource.podStatus.status === 'Running');
+    return resource.podStatus.status === 'Succeeded' || resource.podStatus.status === 'Running';
   }
 
   protected getDisplayColumns(): string[] {
-    return [
-      'statusicon',
-      'name',
-      'labels',
-      'node',
-      'status',
-      'restarts',
-      'cpu',
-      'mem',
-      'age',
-    ];
+    return ['statusicon', 'name', 'labels', 'node', 'status', 'restarts', 'cpu', 'mem', 'age'];
   }
 
   private shouldShowNamespaceColumn_(): boolean {

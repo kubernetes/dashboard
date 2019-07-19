@@ -31,7 +31,9 @@ export class NodeListComponent extends ResourceListWithStatuses<NodeList, Node> 
   @Input() endpoint = EndpointManager.resource(Resource.node).list();
 
   constructor(
-      private readonly node_: ResourceService<NodeList>, notifications: NotificationsService) {
+    private readonly node_: ResourceService<NodeList>,
+    notifications: NotificationsService,
+  ) {
     super('node', notifications);
     this.id = ListIdentifier.node;
     this.groupId = ListGroupIdentifier.cluster;
@@ -66,16 +68,6 @@ export class NodeListComponent extends ResourceListWithStatuses<NodeList, Node> 
   }
 
   getDisplayColumns(): string[] {
-    return [
-      'statusicon',
-      'name',
-      'labels',
-      'ready',
-      'cpureq',
-      'cpulim',
-      'memreq',
-      'memlim',
-      'age',
-    ];
+    return ['statusicon', 'name', 'labels', 'ready', 'cpureq', 'cpulim', 'memreq', 'memlim', 'age'];
   }
 }

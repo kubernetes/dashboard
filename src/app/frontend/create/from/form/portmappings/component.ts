@@ -13,8 +13,18 @@
 // limitations under the License.
 
 import {HttpClient} from '@angular/common/http';
-import {Component, EventEmitter, forwardRef, Input, OnInit, Output,} from '@angular/core';
-import {AbstractControl, ControlValueAccessor, FormArray, FormBuilder, FormControl, FormGroup, NG_ASYNC_VALIDATORS, NG_VALUE_ACCESSOR, Validators,} from '@angular/forms';
+import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
+import {
+  AbstractControl,
+  ControlValueAccessor,
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  NG_ASYNC_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+  Validators,
+} from '@angular/forms';
 import {PortMapping} from '@api/backendapi';
 import {Observable} from 'rxjs';
 import {first, map, startWith} from 'rxjs/operators';
@@ -89,12 +99,14 @@ export class PortMappingsComponent implements OnInit, ControlValueAccessor {
     });
   }
 
-  validate(_: FormControl): Observable<{[key: string]: boolean}|null> {
+  validate(_: FormControl): Observable<{[key: string]: boolean} | null> {
     return this.portMappingForm.statusChanges.pipe(
-        startWith(this.portMappingForm.status), first(() => !this.portMappingForm.pending),
-        map(() => {
-          return this.portMappingForm.invalid ? {error: true} : null;
-        }));
+      startWith(this.portMappingForm.status),
+      first(() => !this.portMappingForm.pending),
+      map(() => {
+        return this.portMappingForm.invalid ? {error: true} : null;
+      }),
+    );
   }
 
   changeServiceType(): void {
@@ -132,19 +144,11 @@ export class PortMappingsComponent implements OnInit, ControlValueAccessor {
     return this.fb_.group({
       port: [
         '',
-        Validators.compose([
-          FormValidators.isInteger,
-          Validators.min(1),
-          Validators.max(65535),
-        ]),
+        Validators.compose([FormValidators.isInteger, Validators.min(1), Validators.max(65535)]),
       ],
       targetPort: [
         '',
-        Validators.compose([
-          FormValidators.isInteger,
-          Validators.min(1),
-          Validators.max(65535),
-        ]),
+        Validators.compose([FormValidators.isInteger, Validators.min(1), Validators.max(65535)]),
       ],
       protocol: [defaultProtocol],
     });
@@ -172,7 +176,7 @@ export class PortMappingsComponent implements OnInit, ControlValueAccessor {
    * Returns true when the given port mapping is filled by the user, i.e., is not empty.
    */
   private isPortMappingFilled(portMapping: AbstractControl): boolean {
-    return (!!portMapping.get('port').value && !!portMapping.get('targetPort').value);
+    return !!portMapping.get('port').value && !!portMapping.get('targetPort').value;
   }
 
   /**

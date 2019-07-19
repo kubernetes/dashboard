@@ -24,5 +24,4 @@ import {StatefulSetRoutingModule} from './routing';
   imports: [SharedModule, ComponentsModule, StatefulSetRoutingModule],
   declarations: [StatefulSetListComponent, StatefulSetDetailComponent],
 })
-export class StatefulSetModule {
-}
+export class StatefulSetModule {}

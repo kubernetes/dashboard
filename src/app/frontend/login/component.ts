@@ -15,7 +15,12 @@
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Component, NgZone, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {AuthenticationMode, EnabledAuthenticationModes, LoginSkippableResponse, LoginSpec,} from '@api/backendapi';
+import {
+  AuthenticationMode,
+  EnabledAuthenticationModes,
+  LoginSkippableResponse,
+  LoginSpec,
+} from '@api/backendapi';
 import {KdError, KdFile, StateError} from '@api/frontendapi';
 import {map} from 'rxjs/operators';
 
@@ -46,20 +51,25 @@ export class LoginComponent implements OnInit {
   private password_: string;
 
   constructor(
-      private readonly authService_: AuthService, private readonly state_: Router,
-      private readonly http_: HttpClient, private readonly ngZone_: NgZone,
-      private readonly route_: ActivatedRoute) {}
+    private readonly authService_: AuthService,
+    private readonly state_: Router,
+    private readonly http_: HttpClient,
+    private readonly ngZone_: NgZone,
+    private readonly route_: ActivatedRoute,
+  ) {}
 
   ngOnInit(): void {
-    this.http_.get<EnabledAuthenticationModes>('api/v1/login/modes')
-        .subscribe((enabledModes: EnabledAuthenticationModes) => {
-          this.enabledAuthenticationModes_ = enabledModes.modes;
-        });
+    this.http_
+      .get<EnabledAuthenticationModes>('api/v1/login/modes')
+      .subscribe((enabledModes: EnabledAuthenticationModes) => {
+        this.enabledAuthenticationModes_ = enabledModes.modes;
+      });
 
-    this.http_.get<LoginSkippableResponse>('api/v1/login/skippable')
-        .subscribe((loginSkippableResponse: LoginSkippableResponse) => {
-          this.isLoginSkippable_ = loginSkippableResponse.skippable;
-        });
+    this.http_
+      .get<LoginSkippableResponse>('api/v1/login/skippable')
+      .subscribe((loginSkippableResponse: LoginSkippableResponse) => {
+        this.isLoginSkippable_ = loginSkippableResponse.skippable;
+      });
 
     this.route_.paramMap.pipe(map(() => window.history.state)).subscribe((state: StateError) => {
       if (state.error) {
@@ -69,8 +79,10 @@ export class LoginComponent implements OnInit {
   }
 
   getEnabledAuthenticationModes(): AuthenticationMode[] {
-    if (this.enabledAuthenticationModes_.length > 0 &&
-        this.enabledAuthenticationModes_.indexOf(LoginModes.Kubeconfig) < 0) {
+    if (
+      this.enabledAuthenticationModes_.length > 0 &&
+      this.enabledAuthenticationModes_.indexOf(LoginModes.Kubeconfig) < 0
+    ) {
       // Push this option to the beginning of the list
       this.enabledAuthenticationModes_.splice(0, 0, LoginModes.Kubeconfig);
     }
@@ -79,21 +91,21 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    this.authService_.login(this.getLoginSpec_())
-        .subscribe(
-            (errors: K8SError[]) => {
-              if (errors.length > 0) {
-                this.errors = errors.map(error => error.toKdError());
-                return;
-              }
+    this.authService_.login(this.getLoginSpec_()).subscribe(
+      (errors: K8SError[]) => {
+        if (errors.length > 0) {
+          this.errors = errors.map(error => error.toKdError());
+          return;
+        }
 
-              this.ngZone_.run(() => {
-                this.state_.navigate(['overview']);
-              });
-            },
-            (err: HttpErrorResponse) => {
-              this.errors = [AsKdError(err)];
-            });
+        this.ngZone_.run(() => {
+          this.state_.navigate(['overview']);
+        });
+      },
+      (err: HttpErrorResponse) => {
+        this.errors = [AsKdError(err)];
+      },
+    );
   }
 
   skip(): void {
@@ -105,7 +117,7 @@ export class LoginComponent implements OnInit {
     return this.isLoginSkippable_;
   }
 
-  onChange(event: Event&KdFile): void {
+  onChange(event: Event & KdFile): void {
     switch (this.selectedAuthenticationMode) {
       case LoginModes.Kubeconfig:
         this.onFileLoad_(event as KdFile);

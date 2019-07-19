@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HttpClientTestingModule, HttpTestingController,} from '@angular/common/http/testing';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import {MatCardModule, MatDividerModule, MatIconModule, MatTooltipModule,} from '@angular/material';
+import {MatCardModule, MatDividerModule, MatIconModule, MatTooltipModule} from '@angular/material';
 import {By} from '@angular/platform-browser';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {AppConfig} from '@api/backendapi';
@@ -66,26 +66,20 @@ describe('WorkloadStatusComponent', () => {
   let testHostFixture: ComponentFixture<WorkloadStatusComponent>;
 
   beforeEach(async(() => {
-    TestBed
-        .configureTestingModule({
-          declarations: [
-            CardComponent,
-            AllocationChartComponent,
-            WorkloadStatusComponent,
-          ],
-          imports: [
-            MatIconModule,
-            MatCardModule,
-            MatDividerModule,
-            MatTooltipModule,
-            NoopAnimationsModule,
-            HttpClientTestingModule,
-            FlexLayoutModule,
-          ],
-          providers: [ConfigService],
-          schemas: [CUSTOM_ELEMENTS_SCHEMA],
-        })
-        .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [CardComponent, AllocationChartComponent, WorkloadStatusComponent],
+      imports: [
+        MatIconModule,
+        MatCardModule,
+        MatDividerModule,
+        MatTooltipModule,
+        NoopAnimationsModule,
+        HttpClientTestingModule,
+        FlexLayoutModule,
+      ],
+      providers: [ConfigService],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    }).compileComponents();
     httpMock = TestBed.get(HttpTestingController);
     configService = TestBed.get(ConfigService);
   }));
@@ -101,8 +95,9 @@ describe('WorkloadStatusComponent', () => {
 
   it('shows component heading', () => {
     testHostFixture.detectChanges();
-    const debugElement =
-        testHostFixture.debugElement.query(By.css('kd-card mat-card mat-card-title div'));
+    const debugElement = testHostFixture.debugElement.query(
+      By.css('kd-card mat-card mat-card-title div'),
+    );
     expect(debugElement).toBeTruthy();
 
     const htmlElement = debugElement.nativeElement;
@@ -115,7 +110,8 @@ describe('WorkloadStatusComponent', () => {
 
     testHostFixture.detectChanges();
     const debugElements = testHostFixture.debugElement.queryAll(
-        By.css('kd-card mat-card div mat-card-content div.kd-graph-title'));
+      By.css('kd-card mat-card div mat-card-content div.kd-graph-title'),
+    );
 
     debugElements.forEach(debugElement => {
       const htmlElement = debugElement.nativeElement;
@@ -129,7 +125,8 @@ describe('WorkloadStatusComponent', () => {
 
     testHostFixture.detectChanges();
     const debugElement = testHostFixture.debugElement.query(
-        By.css('kd-card mat-card div mat-card-content kd-allocation-chart #pods'));
+      By.css('kd-card mat-card div mat-card-content kd-allocation-chart #pods'),
+    );
     expect(debugElement).toBeTruthy();
 
     expect(debugElement.context.data === testResourcesRatio.podRatio).toBeTruthy();

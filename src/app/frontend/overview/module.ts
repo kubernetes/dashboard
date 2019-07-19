@@ -25,5 +25,4 @@ import {OverviewRoutingModule} from './routing';
   imports: [SharedModule, ComponentsModule, OverviewRoutingModule],
   declarations: [OverviewComponent],
 })
-export class OverviewModule {
-}
+export class OverviewModule {}

@@ -28,16 +28,17 @@ export class AuthorizerService {
   constructor(private readonly http_: HttpClient) {}
 
   proxyGET<T>(url: string): Observable<T> {
-    return this.http_.get<CanIResponse>(`${url}${this.authorizationSubUrl_}`)
-        .switchMap<CanIResponse, T>(response => {
-          if (!response.allowed) {
-            return Observable.throwError(ERRORS.forbidden);
-          }
+    return this.http_
+      .get<CanIResponse>(`${url}${this.authorizationSubUrl_}`)
+      .switchMap<CanIResponse, T>(response => {
+        if (!response.allowed) {
+          return Observable.throwError(ERRORS.forbidden);
+        }
 
-          return this.http_.get<T>(url);
-        })
-        .catch(e => {
-          return Observable.throwError(e);
-        });
+        return this.http_.get<T>(url);
+      })
+      .catch(e => {
+        return Observable.throwError(e);
+      });
   }
 }

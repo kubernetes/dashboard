@@ -29,5 +29,4 @@ export const WORKLOADS_ROUTE: Route = {
   imports: [RouterModule.forChild([WORKLOADS_ROUTE])],
   exports: [RouterModule],
 })
-export class WorkloadsRoutingModule {
-}
+export class WorkloadsRoutingModule {}

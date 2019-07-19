@@ -28,12 +28,13 @@ export class HistoryService {
   init(): void {
     this.router_ = this.injector_.get(Router);
 
-    this.router_.events.pipe(filter(e => e instanceof NavigationEnd))
-        .pipe(pairwise())
-        .subscribe((e: [NavigationEnd, NavigationEnd]) => {
-          this.previousStateUrl_ = e[0].url;
-          this.currentStateUrl_ = e[1].url;
-        });
+    this.router_.events
+      .pipe(filter(e => e instanceof NavigationEnd))
+      .pipe(pairwise())
+      .subscribe((e: [NavigationEnd, NavigationEnd]) => {
+        this.previousStateUrl_ = e[0].url;
+        this.currentStateUrl_ = e[1].url;
+      });
   }
 
   /**

@@ -24,5 +24,4 @@ import {DiscoveryRoutingModule} from './routing';
   imports: [SharedModule, ComponentsModule, DiscoveryRoutingModule],
   declarations: [DiscoveryComponent],
 })
-export class DiscoveryModule {
-}
+export class DiscoveryModule {}

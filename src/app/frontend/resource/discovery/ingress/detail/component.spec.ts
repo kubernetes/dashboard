@@ -12,10 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HttpClientTestingModule, HttpTestingController,} from '@angular/common/http/testing';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement} from '@angular/core';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {MatCardModule, MatChipsModule, MatDialogModule, MatDividerModule, MatIconModule, MatTooltip, MatTooltipModule,} from '@angular/material';
+import {
+  MatCardModule,
+  MatChipsModule,
+  MatDialogModule,
+  MatDividerModule,
+  MatIconModule,
+  MatTooltip,
+  MatTooltipModule,
+} from '@angular/material';
 import {By} from '@angular/platform-browser';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
@@ -72,34 +80,32 @@ describe('IngressDetailComponent', () => {
   let configService: ConfigService;
 
   beforeEach(async(() => {
-    TestBed
-        .configureTestingModule({
-          declarations: [
-            ObjectMetaComponent,
-            MaxiTestComponent,
-            MiniTestComponent,
-            CardComponent,
-            PropertyComponent,
-            ChipsComponent,
-            IngressDetailComponent,
-          ],
-          imports: [
-            MatIconModule,
-            MatCardModule,
-            MatDividerModule,
-            MatTooltipModule,
-            MatDialogModule,
-            MatChipsModule,
-            NoopAnimationsModule,
-            PipesModule,
-            HttpClientTestingModule,
-            MatIconModule,
-            RouterModule,
-          ],
-          providers: [ConfigService],
-          schemas: [CUSTOM_ELEMENTS_SCHEMA],
-        })
-        .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [
+        ObjectMetaComponent,
+        MaxiTestComponent,
+        MiniTestComponent,
+        CardComponent,
+        PropertyComponent,
+        ChipsComponent,
+        IngressDetailComponent,
+      ],
+      imports: [
+        MatIconModule,
+        MatCardModule,
+        MatDividerModule,
+        MatTooltipModule,
+        MatDialogModule,
+        MatChipsModule,
+        NoopAnimationsModule,
+        PipesModule,
+        HttpClientTestingModule,
+        MatIconModule,
+        RouterModule,
+      ],
+      providers: [ConfigService],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    }).compileComponents();
     httpMock = TestBed.get(HttpTestingController);
     configService = TestBed.get(ConfigService);
   }));
@@ -119,7 +125,8 @@ describe('IngressDetailComponent', () => {
 
     fixture.detectChanges();
     const debugElement = fixture.debugElement.query(
-        By.css('kd-property.object-meta-name div.kd-property-value div'));
+      By.css('kd-property.object-meta-name div.kd-property-value div'),
+    );
     expect(debugElement).toBeTruthy();
 
     const htmlElement = debugElement.nativeElement;
@@ -132,7 +139,8 @@ describe('IngressDetailComponent', () => {
 
     fixture.detectChanges();
     const debugElement = fixture.debugElement.query(
-        By.css('kd-property.object-meta-name div.kd-property-value div'));
+      By.css('kd-property.object-meta-name div.kd-property-value div'),
+    );
     expect(debugElement).toBeTruthy();
 
     const htmlElement = debugElement.nativeElement;

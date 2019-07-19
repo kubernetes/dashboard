@@ -117,6 +117,9 @@ export function AsKdError(error: HttpErrorResponse): KdError {
 }
 
 export const ERRORS = {
-  forbidden:
-      new KdError(ErrorStatus.forbidden, ErrorCode.forbidden, localizedErrors.MSG_ACCESS_DENIED),
+  forbidden: new KdError(
+    ErrorStatus.forbidden,
+    ErrorCode.forbidden,
+    localizedErrors.MSG_ACCESS_DENIED,
+  ),
 };

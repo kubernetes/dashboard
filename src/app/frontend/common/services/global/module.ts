@@ -74,8 +74,11 @@ export class GlobalServicesModule {
 }
 
 export function init(
-    globalSettings: GlobalSettingsService, localSettings: LocalSettingsService,
-    config: ConfigService, history: HistoryService): Function {
+  globalSettings: GlobalSettingsService,
+  localSettings: LocalSettingsService,
+  config: ConfigService,
+  history: HistoryService,
+): Function {
   return () => {
     globalSettings.init();
     localSettings.init();

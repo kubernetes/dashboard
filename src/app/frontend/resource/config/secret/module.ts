@@ -25,5 +25,4 @@ import {SecretRoutingModule} from './routing';
   imports: [SharedModule, ComponentsModule, SecretRoutingModule],
   declarations: [SecretListComponent, SecretDetailComponent],
 })
-export class SecretModule {
-}
+export class SecretModule {}

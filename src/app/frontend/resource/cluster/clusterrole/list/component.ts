@@ -18,5 +18,4 @@ import {Component} from '@angular/core';
   selector: 'kd-cluster-role-list-state',
   template: '<kd-cluster-role-list></kd-cluster-role-list>',
 })
-export class ClusterRoleListComponent {
-}
+export class ClusterRoleListComponent {}

@@ -29,8 +29,9 @@ export class IngressListComponent extends ResourceListBase<IngressList, Ingress>
   @Input() endpoint = EndpointManager.resource(Resource.ingress, true).list();
 
   constructor(
-      private readonly ingress_: NamespacedResourceService<IngressList>,
-      notifications: NotificationsService) {
+    private readonly ingress_: NamespacedResourceService<IngressList>,
+    notifications: NotificationsService,
+  ) {
     super('ingress', notifications);
     this.id = ListIdentifier.ingress;
     this.groupId = ListGroupIdentifier.discovery;

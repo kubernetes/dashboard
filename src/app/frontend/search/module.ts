@@ -24,5 +24,4 @@ import {SearchRoutingModule} from './routing';
   imports: [SharedModule, ComponentsModule, SearchRoutingModule],
   declarations: [SearchComponent],
 })
-export class SearchModule {
-}
+export class SearchModule {}

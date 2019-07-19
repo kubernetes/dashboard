@@ -15,7 +15,7 @@
 import {HttpParams} from '@angular/common/http';
 import {Component, Input} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {PersistentVolumeClaim, PersistentVolumeClaimList,} from 'typings/backendapi';
+import {PersistentVolumeClaim, PersistentVolumeClaimList} from 'typings/backendapi';
 
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
@@ -28,13 +28,16 @@ import {ListGroupIdentifier, ListIdentifier} from '../groupids';
   selector: 'kd-persistent-volume-claim-list',
   templateUrl: './template.html',
 })
-export class PersistentVolumeClaimListComponent extends
-    ResourceListWithStatuses<PersistentVolumeClaimList, PersistentVolumeClaim> {
+export class PersistentVolumeClaimListComponent extends ResourceListWithStatuses<
+  PersistentVolumeClaimList,
+  PersistentVolumeClaim
+> {
   @Input() endpoint = EndpointManager.resource(Resource.persistentVolumeClaim, true).list();
 
   constructor(
-      private readonly persistentVolumeClaim_: NamespacedResourceService<PersistentVolumeClaimList>,
-      notifications: NotificationsService) {
+    private readonly persistentVolumeClaim_: NamespacedResourceService<PersistentVolumeClaimList>,
+    notifications: NotificationsService,
+  ) {
     super('persistentvolumeclaim', notifications);
     this.id = ListIdentifier.persistentVolumeClaim;
     this.groupId = ListGroupIdentifier.config;

@@ -24,11 +24,6 @@ import {NamespaceRoutingModule} from './routing';
 
 @NgModule({
   imports: [SharedModule, ComponentsModule, NamespaceRoutingModule],
-  declarations: [
-    NamespaceListComponent,
-    NamespaceDetailComponent,
-    ActionbarComponent,
-  ],
+  declarations: [NamespaceListComponent, NamespaceDetailComponent, ActionbarComponent],
 })
-export class NamespaceModule {
-}
+export class NamespaceModule {}

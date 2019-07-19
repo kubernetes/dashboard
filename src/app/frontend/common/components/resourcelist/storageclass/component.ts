@@ -32,8 +32,9 @@ export class StorageClassListComponent extends ResourceListBase<StorageClassList
   @Input() endpoint = EndpointManager.resource(Resource.storageClass).list();
 
   constructor(
-      private readonly sc_: ResourceService<StorageClassList>,
-      notifications: NotificationsService) {
+    private readonly sc_: ResourceService<StorageClassList>,
+    notifications: NotificationsService,
+  ) {
     super('storageclass', notifications);
     this.id = ListIdentifier.storageClass;
     this.groupId = ListGroupIdentifier.cluster;

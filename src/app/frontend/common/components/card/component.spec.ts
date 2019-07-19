@@ -14,7 +14,13 @@
 
 import {Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement} from '@angular/core';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {MatCardModule, MatDividerModule, MatIconModule, MatTooltip, MatTooltipModule,} from '@angular/material';
+import {
+  MatCardModule,
+  MatDividerModule,
+  MatIconModule,
+  MatTooltip,
+  MatTooltipModule,
+} from '@angular/material';
 import {By} from '@angular/platform-browser';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
@@ -23,10 +29,7 @@ import {CardComponent} from './component';
 @Component({
   selector: 'test',
   template: `
-    <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     <kd-card [expanded]="isExpanded" [expandable]="isExpandable" role="table">
       <div title>{{ title }}</div>
       <div description>Description: default</div>
@@ -47,19 +50,17 @@ describe('CardComponent', () => {
   let fixture: ComponentFixture<TestComponent>;
 
   beforeEach(async(() => {
-    TestBed
-        .configureTestingModule({
-          declarations: [CardComponent, TestComponent],
-          imports: [
-            MatIconModule,
-            MatCardModule,
-            MatDividerModule,
-            MatTooltipModule,
-            NoopAnimationsModule,
-          ],
-          schemas: [CUSTOM_ELEMENTS_SCHEMA],
-        })
-        .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [CardComponent, TestComponent],
+      imports: [
+        MatIconModule,
+        MatCardModule,
+        MatDividerModule,
+        MatTooltipModule,
+        NoopAnimationsModule,
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

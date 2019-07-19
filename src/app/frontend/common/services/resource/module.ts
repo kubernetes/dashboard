@@ -20,5 +20,4 @@ import {NamespacedResourceService, ResourceService} from './resource';
   imports: [RouterModule],
   providers: [ResourceService, NamespacedResourceService],
 })
-export class ResourceModule {
-}
+export class ResourceModule {}

@@ -29,5 +29,4 @@ const CREATE_ROUTE: Route = {
   imports: [RouterModule.forChild([CREATE_ROUTE])],
   exports: [RouterModule],
 })
-export class CreateRoutingModule {
-}
+export class CreateRoutingModule {}

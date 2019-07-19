@@ -24,7 +24,7 @@ export class Sparkline {
   }
 
   getPolygonPoints(): string {
-    const series = this._timeseries.map(({timestamp, value}) => [Date.parse(timestamp), value, ]);
+    const series = this._timeseries.map(({timestamp, value}) => [Date.parse(timestamp), value]);
     const sorted = series.slice().sort((a, b) => a[0] - b[0]);
     this.lastValue = sorted.length > 0 ? sorted[sorted.length - 1][1] : undefined;
     const xShift = Math.min(...sorted.map(pt => pt[0]));

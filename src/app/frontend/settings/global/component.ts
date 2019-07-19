@@ -29,8 +29,10 @@ export class GlobalSettingsComponent implements OnInit {
   hasLoadError = false;
 
   constructor(
-      private readonly settings_: GlobalSettingsService, private readonly dialog_: MatDialog,
-      private readonly title_: TitleService) {}
+    private readonly settings_: GlobalSettingsService,
+    private readonly dialog_: MatDialog,
+    private readonly title_: TitleService,
+  ) {}
 
   ngOnInit(): void {
     this.load();
@@ -52,8 +54,7 @@ export class GlobalSettingsComponent implements OnInit {
     this.settings.itemsPerPage = this.settings_.getItemsPerPage();
     this.settings.clusterName = this.settings_.getClusterName();
     this.settings.logsAutoRefreshTimeInterval = this.settings_.getLogsAutoRefreshTimeInterval();
-    this.settings.resourceAutoRefreshTimeInterval =
-        this.settings_.getResourceAutoRefreshTimeInterval();
+    this.settings.resourceAutoRefreshTimeInterval = this.settings_.getResourceAutoRefreshTimeInterval();
   }
 
   onLoadError(): void {
@@ -61,28 +62,29 @@ export class GlobalSettingsComponent implements OnInit {
   }
 
   save(form: NgForm): void {
-    this.settings_.save(this.settings)
-        .subscribe(
-            () => {
-              this.load(form);
-              this.title_.update();
-              this.settings_.onSettingsUpdate.next();
-            },
-            err => {
-              if (err && err.data.indexOf(this.concurrentChangeErr_) !== -1) {
-                this.dialog_.open(SaveAnywayDialog, {width: '420px'})
-                    .afterClosed()
-                    .subscribe(result => {
-                      if (result === true) {
-                        // Backend was refreshed with the PUT request, so the second try will be
-                        // successful unless yet another concurrent change will happen. In that case
-                        // "save anyways" dialog will be shown again.
-                        this.save(form);
-                      } else {
-                        this.load(form);
-                      }
-                    });
+    this.settings_.save(this.settings).subscribe(
+      () => {
+        this.load(form);
+        this.title_.update();
+        this.settings_.onSettingsUpdate.next();
+      },
+      err => {
+        if (err && err.data.indexOf(this.concurrentChangeErr_) !== -1) {
+          this.dialog_
+            .open(SaveAnywayDialog, {width: '420px'})
+            .afterClosed()
+            .subscribe(result => {
+              if (result === true) {
+                // Backend was refreshed with the PUT request, so the second try will be
+                // successful unless yet another concurrent change will happen. In that case
+                // "save anyways" dialog will be shown again.
+                this.save(form);
+              } else {
+                this.load(form);
               }
             });
+        }
+      },
+    );
   }
 }

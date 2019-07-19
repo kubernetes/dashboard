@@ -54,8 +54,9 @@ export class FormValidators {
     const slashPosition = value.indexOf('/');
     const labelKeyName = slashPosition > -1 ? value.substring(slashPosition + 1) : value;
 
-    return labelKeyName.length <= maxKeyLength ? null :
-                                                 {kdValidLabelKeyPrefixLength: {value: true}};
+    return labelKeyName.length <= maxKeyLength
+      ? null
+      : {kdValidLabelKeyPrefixLength: {value: true}};
   }
 
   /**
@@ -69,8 +70,9 @@ export class FormValidators {
     const slashPosition = value.indexOf('/');
     const labelKeyPrefix = slashPosition > -1 ? value.substring(0, slashPosition) : '';
 
-    return labelKeyPrefix.length <= maxKeyLength ? null :
-                                                   {kdValidLabelKeyPrefixLength: {value: true}};
+    return labelKeyPrefix.length <= maxKeyLength
+      ? null
+      : {kdValidLabelKeyPrefixLength: {value: true}};
   }
 
   /**
@@ -85,20 +87,19 @@ export class FormValidators {
     const slashPosition = value.indexOf('/');
     const labelKeyName = slashPosition > -1 ? value.substring(slashPosition + 1) : value;
 
-    return labelKeyNamePattern.test(labelKeyName) || value === '' ?
-        null :
-        {kdValidLabelKeyNamePattern: {value: true}};
+    return labelKeyNamePattern.test(labelKeyName) || value === ''
+      ? null
+      : {kdValidLabelKeyNamePattern: {value: true}};
   }
 
   static labelKeyPrefixPattern(control: FormControl): {[key: string]: object} {
     const value = control.value;
-    const labelKeyPrefixPattern =
-        /^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$/;
+    const labelKeyPrefixPattern = /^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$/;
 
     const slashPosition = value.indexOf('/');
 
     const isValid =
-        slashPosition > -1 ? labelKeyPrefixPattern.test(value.substring(0, slashPosition)) : true;
+      slashPosition > -1 ? labelKeyPrefixPattern.test(value.substring(0, slashPosition)) : true;
 
     return isValid ? null : {kdValidLabelKeyPrefixPattern: {value: true}};
   }

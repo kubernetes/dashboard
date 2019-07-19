@@ -56,8 +56,9 @@ class ResourceEndpoint {
       resourceNamespace = '/:namespace';
     }
 
-    return `${baseHref}/${this.resource_}${this.namespaced_ ? `/${resourceNamespace}` : ''}/${
-        resourceName}/${relatedResource}`;
+    return `${baseHref}/${this.resource_}${
+      this.namespaced_ ? `/${resourceNamespace}` : ''
+    }/${resourceName}/${relatedResource}`;
   }
 }
 

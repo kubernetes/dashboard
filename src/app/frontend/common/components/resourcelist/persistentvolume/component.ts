@@ -28,13 +28,16 @@ import {ListGroupIdentifier, ListIdentifier} from '../groupids';
   selector: 'kd-persistent-volume-list',
   templateUrl: './template.html',
 })
-export class PersistentVolumeListComponent extends
-    ResourceListWithStatuses<PersistentVolumeList, PersistentVolume> {
+export class PersistentVolumeListComponent extends ResourceListWithStatuses<
+  PersistentVolumeList,
+  PersistentVolume
+> {
   @Input() endpoint = EndpointManager.resource(Resource.persistentVolume).list();
 
   constructor(
-      private readonly pv_: ResourceService<PersistentVolumeList>,
-      notifications: NotificationsService) {
+    private readonly pv_: ResourceService<PersistentVolumeList>,
+    notifications: NotificationsService,
+  ) {
     super('persistentvolume', notifications);
     this.id = ListIdentifier.persistentVolume;
     this.groupId = ListGroupIdentifier.cluster;

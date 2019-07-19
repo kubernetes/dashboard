@@ -51,5 +51,4 @@ import {TriggerResourceDialog} from './triggerresource/dialog';
     TriggerResourceDialog,
   ],
 })
-export class DialogsModule {
-}
+export class DialogsModule {}

@@ -172,19 +172,13 @@ const components = [
   UploadFileComponent,
 
   ZeroStateComponent,
-  WorkloadStatusComponent
+  WorkloadStatusComponent,
 ];
 
 @NgModule({
   imports: [SharedModule],
   declarations: [...components],
   exports: [...components],
-  entryComponents: [
-    ChipDialog,
-    RowDetailComponent,
-    MenuComponent,
-    NamespaceChangeDialog,
-  ],
+  entryComponents: [ChipDialog, RowDetailComponent, MenuComponent, NamespaceChangeDialog],
 })
-export class ComponentsModule {
-}
+export class ComponentsModule {}

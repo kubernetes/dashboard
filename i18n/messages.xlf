@@ -1516,27 +1516,6 @@
           <context context-type="linenumber">100</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="7d545ebc0f8d8727d50c375b2065a447f1029e2b" datatype="html">
-        <source>Select namespace...</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/components/namespace/template.html</context>
-          <context context-type="linenumber">25</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="6570ee92c355ae47991f34101be43f3f4270fdf3" datatype="html">
-        <source>All namespaces</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/components/namespace/template.html</context>
-          <context context-type="linenumber">33</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="6fac407fa5aec6e3291cf87a7ed3252add8a7d28" datatype="html">
-        <source>NAMESPACES</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/components/namespace/template.html</context>
-          <context context-type="linenumber">34</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="d12515fa127fafff639075d37498207138a5d18a" datatype="html">
         <source>Namespace conflict</source>
         <context-group purpose="location">
@@ -1574,6 +1553,27 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/namespace/changedialog/template.html</context>
           <context context-type="linenumber">37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7d545ebc0f8d8727d50c375b2065a447f1029e2b" datatype="html">
+        <source>Select namespace...</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/namespace/template.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6570ee92c355ae47991f34101be43f3f4270fdf3" datatype="html">
+        <source>All namespaces</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/namespace/template.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6fac407fa5aec6e3291cf87a7ed3252add8a7d28" datatype="html">
+        <source>NAMESPACES</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/namespace/template.html</context>
+          <context context-type="linenumber">34</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f721a500a68c357e8f2a01e60510f6a01e4ba529" datatype="html">

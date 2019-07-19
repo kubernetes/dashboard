@@ -48,5 +48,4 @@ import {WarnThresholdValidator} from './validator/warnthreshold.validator';
   exports: [CreateFromFormComponent],
   entryComponents: [CreateNamespaceDialog, CreateSecretDialog],
 })
-export class CreateFromFormModule {
-}
+export class CreateFromFormModule {}

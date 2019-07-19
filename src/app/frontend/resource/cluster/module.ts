@@ -23,5 +23,4 @@ import {ClusterRoutingModule} from './routing';
   imports: [SharedModule, ComponentsModule, ClusterRoutingModule],
   declarations: [ClusterComponent],
 })
-export class ClusterModule {
-}
+export class ClusterModule {}

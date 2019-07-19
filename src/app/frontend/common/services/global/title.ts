@@ -25,14 +25,15 @@ export class TitleService {
 
   update(): void {
     this.settings_.load(
-        () => {
-          this.clusterName = this.settings_.getClusterName();
-          this.apply_();
-        },
-        () => {
-          this.clusterName = '';
-          this.apply_();
-        });
+      () => {
+        this.clusterName = this.settings_.getClusterName();
+        this.apply_();
+      },
+      () => {
+        this.clusterName = '';
+        this.apply_();
+      },
+    );
   }
 
   private apply_(): void {

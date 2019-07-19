@@ -22,7 +22,9 @@ import {Chip} from '../component';
 })
 export class ChipDialog {
   constructor(
-      public dialogRef: MatDialogRef<ChipDialog>, @Inject(MAT_DIALOG_DATA) public data: Chip) {}
+    public dialogRef: MatDialogRef<ChipDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: Chip,
+  ) {}
 
   onNoClick(): void {
     this.dialogRef.close();

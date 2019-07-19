@@ -28,7 +28,9 @@ export class CreatorCardComponent {
 
   getHref(): string {
     return this.kdState_.href(
-        this.creator.typeMeta.kind, this.creator.objectMeta.name,
-        this.creator.objectMeta.namespace);
+      this.creator.typeMeta.kind,
+      this.creator.objectMeta.name,
+      this.creator.objectMeta.namespace,
+    );
   }
 }
