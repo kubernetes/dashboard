@@ -84,6 +84,10 @@ limitations under the License.
                     [crdName]="crd?.objectMeta.name"
                     [initialized]="isInitialized"></kd-crd-object-list>
 
+<kd-crd-versions-list *ngIf="crd?.versions"
+                      [versions]="crd?.versions"
+                      [initialized]="isInitialized"></kd-crd-versions-list>
+
 <kd-condition-list [conditions]="crd?.conditions"
                    [showLastProbeTime]="false"
                    [initialized]="isInitialized"></kd-condition-list>

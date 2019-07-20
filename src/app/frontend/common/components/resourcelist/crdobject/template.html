@@ -9,7 +9,7 @@ You may obtain a copy of the License at
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR objectS OF ANY KIND, either express or implied.
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
@@ -31,7 +31,7 @@ limitations under the License.
     <div content>
         <mat-table [dataSource]="getDataSource()"
                    class="kd-table-no-footer">
-            <ng-container [matColumnDef]="getCRDObjectsColumns()[0]">
+            <ng-container [matColumnDef]="getDisplayColumns()[0]">
                 <mat-header-cell *matHeaderCellDef
                                  i18n>Name</mat-header-cell>
                 <mat-cell *matCellDef="let object">
@@ -42,13 +42,13 @@ limitations under the License.
                 </mat-cell>
             </ng-container>
 
-            <ng-container [matColumnDef]="getCRDObjectsColumns()[1]">
+            <ng-container [matColumnDef]="getDisplayColumns()[1]">
                 <mat-header-cell *matHeaderCellDef
                                  i18n>Namespace</mat-header-cell>
                 <mat-cell *matCellDef="let object">{{object.objectMeta.namespace}}</mat-cell>
             </ng-container>
 
-            <ng-container [matColumnDef]="getCRDObjectsColumns()[2]">
+            <ng-container [matColumnDef]="getDisplayColumns()[2]">
                 <mat-header-cell *matHeaderCellDef
                                  i18n>Age</mat-header-cell>
                 <mat-cell *matCellDef="let object">
@@ -56,8 +56,8 @@ limitations under the License.
                 </mat-cell>
             </ng-container>
 
-            <mat-header-row *matHeaderRowDef="getCRDObjectsColumns()"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: getCRDObjectsColumns();"></mat-row>
+            <mat-header-row *matHeaderRowDef="getDisplayColumns()"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: getDisplayColumns();"></mat-row>
         </mat-table>
     </div>
 </kd-card>

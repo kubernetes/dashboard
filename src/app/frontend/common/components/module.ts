@@ -63,7 +63,8 @@ import {ResourceQuotaListComponent} from './quotas/component';
 import {ClusterRoleListComponent} from './resourcelist/clusterrole/component';
 import {ConfigMapListComponent} from './resourcelist/configmap/component';
 import {CRDListComponent} from './resourcelist/crd/component';
-import {CRDObjectListComponent} from './resourcelist/crdobjects/component';
+import {CRDObjectListComponent} from './resourcelist/crdobject/component';
+import {CRDVersionListComponent} from './resourcelist/crdversion/component';
 import {CronJobListComponent} from './resourcelist/cronjob/component';
 import {DaemonSetListComponent} from './resourcelist/daemonset/component';
 import {DeploymentListComponent} from './resourcelist/deployment/component';
@@ -114,6 +115,7 @@ const components = [
   CreatorCardComponent,
   CRDListComponent,
   CRDObjectListComponent,
+  CRDVersionListComponent,
   GraphComponent,
   GraphCardComponent,
 

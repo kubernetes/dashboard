@@ -738,7 +738,11 @@
           <context context-type="linenumber">23</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crdobjects/template.html</context>
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crdobject/template.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crdversion/template.html</context>
           <context context-type="linenumber">26</context>
         </context-group>
         <context-group purpose="location">
@@ -846,7 +850,11 @@
           <context context-type="linenumber">43</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crdobjects/template.html</context>
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crdobject/template.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crdversion/template.html</context>
           <context context-type="linenumber">36</context>
         </context-group>
         <context-group purpose="location">
@@ -938,7 +946,7 @@
           <context context-type="linenumber">54</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crdobjects/template.html</context>
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crdobject/template.html</context>
           <context context-type="linenumber">47</context>
         </context-group>
         <context-group purpose="location">
@@ -1142,7 +1150,7 @@
           <context context-type="linenumber">72</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crdobjects/template.html</context>
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crdobject/template.html</context>
           <context context-type="linenumber">53</context>
         </context-group>
         <context-group purpose="location">
@@ -1580,8 +1588,32 @@
         <source>Objects</source>
         <target state="new">Objects</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crdobjects/template.html</context>
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crdobject/template.html</context>
           <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="cfcee33b4f74fb641e9d6b00f72244d2b78c1480" datatype="html">
+        <source>Versions</source>
+        <target state="new">Versions</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crdversion/template.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="151dac5a4f23f33c7c8a2befe8b343edd202fd16" datatype="html">
+        <source>Served</source>
+        <target state="new">Served</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crdversion/template.html</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1fd6dbd0942f77002d852d7744dcb991cdd464d8" datatype="html">
+        <source>Storage</source>
+        <target state="new">Storage</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crdversion/template.html</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="35bc68bd793eed6ee0232bfa6c4d72bc8c07fe69" datatype="html">

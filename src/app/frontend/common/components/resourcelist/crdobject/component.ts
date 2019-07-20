@@ -36,7 +36,7 @@ export class CRDObjectListComponent {
     return this.kdState_.href('crd', this.crdName, namespace, objectName);
   }
 
-  getCRDObjectsColumns(): string[] {
+  getDisplayColumns(): string[] {
     return ['name', 'namespace', 'age'];
   }
 
