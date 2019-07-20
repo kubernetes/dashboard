@@ -449,6 +449,7 @@ export interface ConfigMapDetail extends ResourceDetail {
 export interface CRDDetail extends ResourceDetail {
   version: string;
   objects: CRDObjectList;
+  conditions: Condition[];
 }
 
 export interface JobDetail extends ResourceDetail {

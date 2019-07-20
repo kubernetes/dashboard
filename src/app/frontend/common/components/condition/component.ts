@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {MatTableDataSource} from '@angular/material';
 import {Condition} from 'typings/backendapi';
 
@@ -20,12 +20,31 @@ import {Condition} from 'typings/backendapi';
   selector: 'kd-condition-list',
   templateUrl: './template.html',
 })
-export class ConditionListComponent {
+export class ConditionListComponent implements OnInit {
   @Input() initialized: boolean;
   @Input() conditions: Condition[];
+  @Input() showLastProbeTime = true;
+  private columns = {
+    0: 'type',
+    1: 'status',
+    2: 'lastProbeTime',
+    3: 'lastTransitionTime',
+    4: 'reason',
+    5: 'message',
+  };
 
-  getConditionsColumns(): string[] {
-    return ['type', 'status', 'lastProbeTime', 'lastTransitionTime', 'reason', 'message'];
+  ngOnInit(): void {
+    if (!this.showLastProbeTime) {
+      delete this.columns[2];
+    }
+  }
+
+  getConditionsColumns(): {[key: number]: string} {
+    return this.columns;
+  }
+
+  getColumnKeys(): string[] {
+    return Object.values(this.columns);
   }
 
   getDataSource(): MatTableDataSource<Condition> {

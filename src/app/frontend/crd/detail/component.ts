@@ -27,6 +27,7 @@ export class CRDDetailComponent implements OnInit, OnDestroy {
   private crdSubscription_: Subscription;
   private readonly endpoint_ = EndpointManager.resource(Resource.crd);
   crd: CRDDetail;
+  isInitialized = false;
 
   constructor(
     private readonly crd_: ResourceService<CRDDetail>,
@@ -42,6 +43,7 @@ export class CRDDetailComponent implements OnInit, OnDestroy {
       .subscribe((d: CRDDetail) => {
         this.crd = d;
         this.notifications_.pushErrors(d.errors);
+        this.isInitialized = true;
       });
   }
 

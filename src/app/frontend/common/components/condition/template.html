@@ -79,8 +79,8 @@ limitations under the License.
           <ng-container *ngIf="!condition.message">-</ng-container>
         </mat-cell>
       </ng-container>
-      <mat-header-row *matHeaderRowDef="getConditionsColumns()"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: getConditionsColumns();"></mat-row>
+      <mat-header-row *matHeaderRowDef="getColumnKeys()"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: getColumnKeys();"></mat-row>
     </mat-table>
   </div>
 </kd-card>

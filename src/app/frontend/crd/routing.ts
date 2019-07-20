@@ -21,7 +21,7 @@ import {CRDListComponent} from './list/component';
 const CRD_LIST_ROUTE: Route = {
   path: '',
   component: CRDListComponent,
-  data: {breadcrumb: 'CRD'},
+  data: {breadcrumb: 'Custom Resource Definitions'},
 };
 
 const CRD_DETAIL_ROUTE: Route = {
