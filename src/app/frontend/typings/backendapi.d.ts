@@ -17,6 +17,7 @@ import {KdError} from '@api/frontendapi';
 
 export interface TypeMeta {
   kind: string;
+  apiVersion: string;
 }
 
 export interface ListMeta {
@@ -82,7 +83,11 @@ export interface CRDList extends ResourceList {
   items: CRD[];
 }
 
-export interface CRDObjectList extends ResourceList {}
+export interface CRDObjectList extends TypeMeta {
+  listMeta: ListMeta;
+  items: CRDObject[];
+  errors?: K8sError[];
+}
 
 export interface DaemonSetList extends ResourceList {
   daemonSets: DaemonSet[];
@@ -196,6 +201,10 @@ export interface CRD extends Resource {
   scope: string;
   nameKind: string;
   established: string;
+}
+
+export interface CRDObject extends TypeMeta {
+  metadata: ObjectMeta;
 }
 
 export interface DaemonSet extends Resource {

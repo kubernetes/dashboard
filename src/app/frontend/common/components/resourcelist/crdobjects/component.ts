@@ -1,7 +1,10 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {CRDObjectList} from '@api/backendapi';
 
 @Component({
-  selector: 'crd-object-list',
+  selector: 'kd-crd-object-list',
   templateUrl: './template.html',
 })
-export class CRDObjectListComponent {}
+export class CRDObjectListComponent {
+  @Input() objects: CRDObjectList;
+}
