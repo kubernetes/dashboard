@@ -83,10 +83,9 @@ export interface CRDList extends ResourceList {
   items: CRD[];
 }
 
-export interface CRDObjectList extends TypeMeta {
-  listMeta: ListMeta;
+export interface CRDObjectList extends ResourceList {
+  typeMeta: TypeMeta;
   items: CRDObject[];
-  errors?: K8sError[];
 }
 
 export interface DaemonSetList extends ResourceList {
@@ -203,9 +202,7 @@ export interface CRD extends Resource {
   established: string;
 }
 
-export interface CRDObject extends TypeMeta {
-  metadata: ObjectMeta;
-}
+export interface CRDObject extends Resource {}
 
 export interface DaemonSet extends Resource {
   podInfo: PodInfo;

@@ -16,6 +16,7 @@ package customresourcedefinition
 
 import (
 	"encoding/json"
+	"fmt"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
@@ -23,35 +24,27 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	apiextensionsclientset "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/client-go/rest"
 )
 
+// CustomResourceObjectDetail represents a custom resource object.
 type CustomResourceObjectDetail struct {
-	CustomResourceObject `json:",inline"`
-}
-
-// CustomResourceObject represents a custom resource object.
-type CustomResourceObject struct {
 	metav1.TypeMeta `json:",inline"`
-	Metadata        metav1.ObjectMeta `json:"metadata,omitempty"`
+	ObjectMeta      metav1.ObjectMeta `json:"metadata,omitempty"`
 }
 
-func (in *CustomResourceObject) DeepCopyObject() runtime.Object {
-	if c := in.DeepCopy(); c != nil {
-		return c
-	} else {
-		return nil
+func (r CustomResourceObjectDetail) MarshalJSON() ([]byte, error) {
+	typeMeta, err := json.Marshal(r.TypeMeta)
+	if err != nil {
+		return nil, err
 	}
-}
 
-func (in *CustomResourceObject) DeepCopy() *CustomResourceObject {
-	if in == nil {
-		return nil
+	objectMeta, err := json.Marshal(r.ObjectMeta)
+	if err != nil {
+		return nil, err
 	}
-	out := new(CustomResourceObject)
-	*out = *in
-	return out
+
+	return []byte(fmt.Sprintf(`{"typeMeta": %s, "objectMeta": %s}`, string(typeMeta), string(objectMeta))), nil
 }
 
 // CustomResourceObjectList represents crd objects in a namespace.
@@ -60,27 +53,34 @@ type CustomResourceObjectList struct {
 	ListMeta        api.ListMeta `json:"listMeta"`
 
 	// Unordered list of custom resource definitions
-	Items []CustomResourceObject `json:"items"`
+	Items []CustomResourceObjectDetail `json:"items"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
 }
 
-func (in *CustomResourceObjectList) DeepCopyObject() runtime.Object {
-	if c := in.DeepCopy(); c != nil {
-		return c
-	} else {
-		return nil
+func (r CustomResourceObjectList) MarshalJSON() ([]byte, error) {
+	typeMeta, err := json.Marshal(r.TypeMeta)
+	if err != nil {
+		return nil, err
 	}
-}
 
-func (in *CustomResourceObjectList) DeepCopy() *CustomResourceObjectList {
-	if in == nil {
-		return nil
+	listMeta, err := json.Marshal(r.ListMeta)
+	if err != nil {
+		return nil, err
 	}
-	out := new(CustomResourceObjectList)
-	*out = *in
-	return out
+
+	items, err := json.Marshal(r.Items)
+	if err != nil {
+		return nil, err
+	}
+
+	errs, err := json.Marshal(r.Errors)
+	if err != nil {
+		return nil, err
+	}
+
+	return []byte(fmt.Sprintf(`{"typeMeta": %s, "listMeta": %s, "items": %s, "errors": %s}`, string(typeMeta), string(listMeta), string(items), string(errs))), nil
 }
 
 // GetCustomResourceObjectList gets objects for a CR.

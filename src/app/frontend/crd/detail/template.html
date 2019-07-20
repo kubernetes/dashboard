@@ -17,8 +17,10 @@ limitations under the License.
 <kd-object-meta [initialized]="isInitialized"
                 [objectMeta]="crd?.objectMeta"></kd-object-meta>
 
+<kd-crd-object-list [objects]="crd?.objects.items"
+                    [crdName]="crd?.objectMeta.name"
+                    [initialized]="isInitialized"></kd-crd-object-list>
+
 <kd-condition-list [conditions]="crd?.conditions"
                    [showLastProbeTime]="false"
                    [initialized]="isInitialized"></kd-condition-list>
-
-<kd-crd-object-list></kd-crd-object-list>
