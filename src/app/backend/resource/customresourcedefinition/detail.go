@@ -26,8 +26,15 @@ import (
 type CustomResourceDefinitionDetail struct {
 	CustomResourceDefinition `json:",inline"`
 
-	Conditions []common.Condition       `json:"conditions"`
-	Objects    CustomResourceObjectList `json:"objects"`
+	Versions   []CustomResourceDefinitionVersion `json:"versions,omitempty"`
+	Conditions []common.Condition                `json:"conditions"`
+	Objects    CustomResourceObjectList          `json:"objects"`
+}
+
+type CustomResourceDefinitionVersion struct {
+	Name    string `json:"name"`
+	Served  bool   `json:"served"`
+	Storage bool   `json:"storage"`
 }
 
 // GetCustomResourceDefinitionDetail returns detailed information about a custom resource definition.
@@ -50,7 +57,23 @@ func GetCustomResourceDefinitionDetail(client apiextensionsclientset.Interface, 
 func toCustomResourceDefinitionDetail(crd *apiextensions.CustomResourceDefinition, objects CustomResourceObjectList) *CustomResourceDefinitionDetail {
 	return &CustomResourceDefinitionDetail{
 		CustomResourceDefinition: toCustomResourceDefinition(crd),
+		Versions:                 getCRDVersions(crd),
 		Conditions:               getCRDConditions(crd),
 		Objects:                  objects,
 	}
+}
+
+func getCRDVersions(crd *apiextensions.CustomResourceDefinition) []CustomResourceDefinitionVersion {
+	crdVersions := make([]CustomResourceDefinitionVersion, 0, len(crd.Spec.Versions))
+	if len(crd.Spec.Versions) > 0 {
+		for _, version := range crd.Spec.Versions {
+			crdVersions = append(crdVersions, CustomResourceDefinitionVersion{
+				Name:    version.Name,
+				Served:  version.Served,
+				Storage: version.Storage,
+			})
+		}
+	}
+
+	return crdVersions
 }

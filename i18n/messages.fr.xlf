@@ -1861,6 +1861,10 @@
           <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
           <context context-type="linenumber">58</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="90ae2a4959c979abc049f4652f59b85e993e16cd" datatype="html">
         <source>CPU requests (cores)</source>
@@ -1964,6 +1968,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crd/template.html</context>
           <context context-type="linenumber">52</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
+          <context context-type="linenumber">38</context>
         </context-group>
       </trans-unit>
       <trans-unit id="484b0e541230d60ddb5fbd771a34a5c8d90e7a57" datatype="html">
@@ -2396,6 +2404,78 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/about/actionbar/template.html</context>
           <context context-type="linenumber">35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="cd626f472efe69be170ca8916a5c0577a5c3b6e3" datatype="html">
+        <source>Custom Resource Definition Information</source>
+        <target state="new">Custom Resource Definition Information</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8fe73a4787b8068b2ba61f54ab7e0f9af2ea1fc9" datatype="html">
+        <source>Version</source>
+        <target state="new">Version</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1481b8488e10dbc437accce89d2ae35a0106e8ba" datatype="html">
+        <source>Scope</source>
+        <target state="new">Scope</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1ec17de9560711cd81108ccf93eb5b1df4eb6d4c" datatype="html">
+        <source>Accepted Names</source>
+        <target state="new">Accepted Names</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="fa1312fe00bfe38662df238fa059bcd75866ecd7" datatype="html">
+        <source>Plural</source>
+        <target state="new">Plural</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="712232bebfc8836a394c358ce9679452fabb945f" datatype="html">
+        <source>Singular</source>
+        <target state="new">Singular</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5a2fcb3c1d8240f8f966564ee3500235d7427245" datatype="html">
+        <source>List Kind</source>
+        <target state="new">List Kind</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
+          <context context-type="linenumber">67</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="d27e60f49dba9b7994331db545a4c14e1e2683ad" datatype="html">
+        <source>Short Names</source>
+        <target state="new">Short Names</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="04201f9d27abd7d6f58a4328ab98063ce1072006" datatype="html">
+        <source>Categories</source>
+        <target state="new">Categories</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
+          <context context-type="linenumber">77</context>
         </context-group>
       </trans-unit>
       <trans-unit id="004b222ff9ef9dd4771b777950ca1d0e4cd4348a" datatype="html">

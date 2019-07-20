@@ -36,12 +36,13 @@ type CustomResourceDefinitionList struct {
 
 // CustomResourceDefinition represents a custom resource definition.
 type CustomResourceDefinition struct {
-	ObjectMeta  api.ObjectMeta                `json:"objectMeta"`
-	TypeMeta    api.TypeMeta                  `json:"typeMeta"`
-	Group       string                        `json:"group"`
-	Scope       apiextensions.ResourceScope   `json:"scope"`
-	NameKind    string                        `json:"nameKind"`
-	Established apiextensions.ConditionStatus `json:"established"`
+	ObjectMeta  api.ObjectMeta                              `json:"objectMeta"`
+	TypeMeta    api.TypeMeta                                `json:"typeMeta"`
+	Version     string                                      `json:"version,omitempty"`
+	Group       string                                      `json:"group"`
+	Scope       apiextensions.ResourceScope                 `json:"scope"`
+	Names       apiextensions.CustomResourceDefinitionNames `json:"names"`
+	Established apiextensions.ConditionStatus               `json:"established"`
 }
 
 // GetCustomResourceDefinitionList returns all the custom resource definitions in the cluster.
@@ -80,9 +81,10 @@ func toCustomResourceDefinition(crd *apiextensions.CustomResourceDefinition) Cus
 	return CustomResourceDefinition{
 		ObjectMeta:  api.NewObjectMeta(crd.ObjectMeta),
 		TypeMeta:    api.NewTypeMeta(api.ResourceKindCustomResourceDefinition),
+		Version:     crd.Spec.Version,
 		Group:       crd.Spec.Group,
 		Scope:       crd.Spec.Scope,
-		NameKind:    crd.Status.AcceptedNames.Kind,
+		Names:       crd.Status.AcceptedNames,
 		Established: getCRDConditionStatus(crd, apiextensions.Established),
 	}
 }

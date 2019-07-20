@@ -453,7 +453,11 @@ export interface ConfigMapDetail extends ResourceDetail {
 }
 
 export interface CRDDetail extends ResourceDetail {
-  version: string;
+  version?: string;
+  group: string;
+  scope: string;
+  names: CRDNames;
+  versions: CRDVersion[];
   objects: CRDObjectList;
   conditions: Condition[];
 }
@@ -729,6 +733,21 @@ export interface Container {
   env: EnvVar[];
   commands: string[];
   args: string[];
+}
+
+export interface CRDNames {
+  plural: string;
+  singular?: string;
+  shortNames?: string[];
+  kind: string;
+  listKind?: string;
+  categories?: string[];
+}
+
+export interface CRDVersion {
+  name: string;
+  served: boolean;
+  storage: boolean;
 }
 
 export interface PodMetrics {

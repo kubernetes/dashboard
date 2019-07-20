@@ -17,6 +17,69 @@ limitations under the License.
 <kd-object-meta [initialized]="isInitialized"
                 [objectMeta]="crd?.objectMeta"></kd-object-meta>
 
+<kd-card [initialized]="isInitialized">
+    <div title
+         i18n>Custom Resource Definition Information</div>
+    <div content
+         *ngIf="isInitialized"
+         fxLayout="row wrap">
+        <kd-property *ngIf="crd?.version">
+            <div key
+                 i18n>Version</div>
+            <div value>{{crd?.version}}</div>
+        </kd-property>
+        <kd-property>
+            <div key
+                 i18n>Scope</div>
+            <div value>{{crd?.scope}}</div>
+        </kd-property>
+        <kd-property>
+            <div key
+                 i18n>Group</div>
+            <div value>{{crd?.group}}</div>
+        </kd-property>
+    </div>
+</kd-card>
+
+<kd-card [initialized]="isInitialized">
+    <div title
+         i18n>Accepted Names</div>
+    <div content
+         *ngIf="isInitialized"
+         fxLayout="row wrap">
+        <kd-property>
+            <div key
+                 i18n>Plural</div>
+            <div value>{{crd?.names.plural}}</div>
+        </kd-property>
+        <kd-property *ngIf="crd?.names.singular">
+            <div key
+                 i18n>Singular</div>
+            <div value>{{crd?.names.singular}}</div>
+        </kd-property>
+        <kd-property>
+            <div key
+                 i18n>Kind</div>
+            <div value>{{crd?.names.kind}}</div>
+        </kd-property>
+        <kd-property>
+            <div key
+                 i18n>List Kind</div>
+            <div value>{{crd?.names.listKind}}</div>
+        </kd-property>
+        <kd-property *ngIf="crd?.names.shortNames">
+            <div key
+                 i18n>Short Names</div>
+            <div value>{{crd?.names.shortNames.join(", ")}}</div>
+        </kd-property>
+        <kd-property *ngIf="crd?.names.categories">
+            <div key
+                 i18n>Categories</div>
+            <div value>{{crd?.names.categories.join(", ")}}</div>
+        </kd-property>
+    </div>
+</kd-card>
+
 <kd-crd-object-list [objects]="crd?.objects.items"
                     [crdName]="crd?.objectMeta.name"
                     [initialized]="isInitialized"></kd-crd-object-list>
