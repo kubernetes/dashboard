@@ -146,6 +146,9 @@ func GetCustomResourceObjectDetail(client apiextensionsclientset.Interface, name
 		Namespace(namespace.ToRequestParam()).
 		Resource(customResourceDefinition.Spec.Names.Plural).
 		Name(name).Do().Raw()
+	if err != nil {
+		return detail, err
+	}
 
 	err = json.Unmarshal(raw, &detail)
 	if err != nil {

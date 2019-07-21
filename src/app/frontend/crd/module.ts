@@ -23,7 +23,6 @@ import {CRDRoutingModule} from './routing';
 
 @NgModule({
   imports: [SharedModule, ComponentsModule, CRDRoutingModule],
-  declarations: [CRDListComponent, CRDDetailComponent]
+  declarations: [CRDListComponent, CRDDetailComponent],
 })
-export class CrdModule {
-}
+export class CrdModule {}

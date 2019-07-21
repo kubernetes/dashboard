@@ -17,7 +17,7 @@ import {ActivatedRoute} from '@angular/router';
 import {CRDDetail} from '@api/backendapi';
 import {Subscription} from 'rxjs';
 
-import {ActionbarService} from '../../common/services/global/actionbar';
+import {ActionbarService, ResourceMeta} from '../../common/services/global/actionbar';
 import {NotificationsService} from '../../common/services/global/notifications';
 import {ResourceService} from '../../common/services/resource/resource';
 import {EndpointManager, Resource} from '../../common/services/resource/endpoint';
@@ -43,6 +43,9 @@ export class CRDDetailComponent implements OnInit, OnDestroy {
       .subscribe((d: CRDDetail) => {
         this.crd = d;
         this.notifications_.pushErrors(d.errors);
+        this.actionbar_.onInit.emit(
+          new ResourceMeta('Custom Resource Definition', d.objectMeta, d.typeMeta),
+        );
         this.isInitialized = true;
       });
   }
