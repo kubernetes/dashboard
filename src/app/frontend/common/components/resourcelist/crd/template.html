@@ -35,8 +35,16 @@ limitations under the License.
                [matSortActive]="getDisplayColumns()[4]"
                matSortDisableClear
                matSortDirection="asc">
-
       <ng-container [matColumnDef]="getDisplayColumns()[0]">
+          <mat-header-cell *matHeaderCellDef></mat-header-cell>
+          <mat-cell *matCellDef="let crd">
+              <mat-icon [ngClass]="getStatus(crd).iconClass">
+                  {{getStatus(crd).iconName}}
+              </mat-icon>
+          </mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getDisplayColumns()[1]">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true"
@@ -47,25 +55,25 @@ limitations under the License.
         </mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayColumns()[1]">
+      <ng-container [matColumnDef]="getDisplayColumns()[2]">
         <mat-header-cell *matHeaderCellDef
                          i18n>Group</mat-header-cell>
         <mat-cell *matCellDef="let crd">{{crd.group}}</mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayColumns()[2]">
+      <ng-container [matColumnDef]="getDisplayColumns()[3]">
         <mat-header-cell *matHeaderCellDef
                          i18n>Full Name</mat-header-cell>
         <mat-cell *matCellDef="let crd">{{crd.objectMeta.name}}</mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayColumns()[3]">
+      <ng-container [matColumnDef]="getDisplayColumns()[4]">
         <mat-header-cell *matHeaderCellDef
                          i18n>Namespaced</mat-header-cell>
         <mat-cell *matCellDef="let crd">{{isNamespaced(crd)}}</mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayColumns()[4]">
+      <ng-container [matColumnDef]="getDisplayColumns()[5]">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true"
