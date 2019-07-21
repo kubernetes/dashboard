@@ -22,7 +22,7 @@ import {NotificationsService} from '../../common/services/global/notifications';
 import {ResourceService} from '../../common/services/resource/resource';
 import {EndpointManager, Resource} from '../../common/services/resource/endpoint';
 
-@Component({selector: 'kd-crd-detail', templateUrl: './template.html', styleUrls: ['./style.scss']})
+@Component({selector: 'kd-crd-detail', templateUrl: './template.html'})
 export class CRDDetailComponent implements OnInit, OnDestroy {
   private crdSubscription_: Subscription;
   private readonly endpoint_ = EndpointManager.resource(Resource.crd);
@@ -37,9 +37,9 @@ export class CRDDetailComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    const {resourceName} = this.activatedRoute_.snapshot.params;
+    const {crdName} = this.activatedRoute_.snapshot.params;
     this.crdSubscription_ = this.crd_
-      .get(this.endpoint_.detail(), resourceName)
+      .get(this.endpoint_.detail(), crdName)
       .subscribe((d: CRDDetail) => {
         this.crd = d;
         this.notifications_.pushErrors(d.errors);

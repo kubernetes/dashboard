@@ -18,6 +18,7 @@ import {Route, RouterModule} from '@angular/router';
 import {CRDDetailComponent} from './detail/component';
 import {CRDListComponent} from './list/component';
 import {DEFAULT_ACTIONBAR} from '../common/components/actionbars/routing';
+import {CRDObjectDetailComponent} from './crdobject/component';
 
 const CRD_LIST_ROUTE: Route = {
   path: '',
@@ -26,12 +27,25 @@ const CRD_LIST_ROUTE: Route = {
 };
 
 const CRD_DETAIL_ROUTE: Route = {
-  path: ':resourceName',
+  path: ':crdName',
   component: CRDDetailComponent,
-  data: {breadcrumb: '{{ resourceName }}', parent: CRD_LIST_ROUTE},
+  data: {breadcrumb: '{{ crdName }}', parent: CRD_LIST_ROUTE},
+};
+
+const CRD_OBJECT_DETAIL_ROUTE: Route = {
+  path: ':crdName/:namespace/:objectName',
+  component: CRDObjectDetailComponent,
+  data: {breadcrumb: '{{ objectName }}', routeParamsCount: 2, parent: CRD_DETAIL_ROUTE},
 };
 
 @NgModule({
-  imports: [RouterModule.forChild([CRD_LIST_ROUTE, CRD_DETAIL_ROUTE, DEFAULT_ACTIONBAR])],
+  imports: [
+    RouterModule.forChild([
+      CRD_LIST_ROUTE,
+      CRD_DETAIL_ROUTE,
+      CRD_OBJECT_DETAIL_ROUTE,
+      DEFAULT_ACTIONBAR,
+    ]),
+  ],
 })
 export class CRDRoutingModule {}

@@ -33,7 +33,7 @@ export class CRDObjectListComponent {
   }
 
   getObjectHref(objectName: string, namespace: string): string {
-    return this.kdState_.href('crd', this.crdName, namespace, objectName);
+    return this.kdState_.href(`crd/${this.crdName}`, objectName, namespace);
   }
 
   getDisplayColumns(): string[] {
