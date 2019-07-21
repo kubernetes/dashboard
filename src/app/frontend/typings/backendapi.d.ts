@@ -17,7 +17,6 @@ import {KdError} from '@api/frontendapi';
 
 export interface TypeMeta {
   kind: string;
-  apiVersion: string;
 }
 
 export interface ListMeta {

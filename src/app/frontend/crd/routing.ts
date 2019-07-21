@@ -17,6 +17,7 @@ import {Route, RouterModule} from '@angular/router';
 
 import {CRDDetailComponent} from './detail/component';
 import {CRDListComponent} from './list/component';
+import {DEFAULT_ACTIONBAR} from '../common/components/actionbars/routing';
 
 const CRD_LIST_ROUTE: Route = {
   path: '',
@@ -31,6 +32,6 @@ const CRD_DETAIL_ROUTE: Route = {
 };
 
 @NgModule({
-  imports: [RouterModule.forChild([CRD_LIST_ROUTE, CRD_DETAIL_ROUTE])],
+  imports: [RouterModule.forChild([CRD_LIST_ROUTE, CRD_DETAIL_ROUTE, DEFAULT_ACTIONBAR])],
 })
 export class CRDRoutingModule {}
