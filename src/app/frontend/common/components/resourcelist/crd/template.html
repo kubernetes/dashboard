@@ -36,12 +36,12 @@ limitations under the License.
                matSortDisableClear
                matSortDirection="asc">
       <ng-container [matColumnDef]="getDisplayColumns()[0]">
-          <mat-header-cell *matHeaderCellDef></mat-header-cell>
-          <mat-cell *matCellDef="let crd">
-              <mat-icon [ngClass]="getStatus(crd).iconClass">
-                  {{getStatus(crd).iconName}}
-              </mat-icon>
-          </mat-cell>
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let crd">
+          <mat-icon [ngClass]="getStatus(crd).iconClass">
+            {{getStatus(crd).iconName}}
+          </mat-icon>
+        </mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getDisplayColumns()[1]">
