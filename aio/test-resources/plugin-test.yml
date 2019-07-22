@@ -12,14 +12,28 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# A manifest that creates a plugin resource.
+# A manifest that creates test plugin resources.
 
 apiVersion: dashboard.k8s.io/v1alpha1
 kind: Plugin
 metadata:
-  name: plugin-test
+  name: k8s-plugin
 spec:
   source:
     configMapRef:
-      name: plugin-test-src
+      name: k8s-plugin-src
+    filename: k8s-plugin.js
+
+---
+
+apiVersion: dashboard.k8s.io/v1alpha1
+kind: Plugin
+metadata:
+  name: plugin1
+spec:
+  source:
+    configMapRef:
+      name: plugin1-src
     filename: plugin1.js
+  dependencies:
+    - "k8s-plugin"

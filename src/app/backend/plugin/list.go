@@ -93,8 +93,8 @@ func toPlugin(plugin v1alpha1.Plugin) Plugin {
     ObjectMeta:   api.NewObjectMeta(plugin.ObjectMeta),
     TypeMeta:     api.NewTypeMeta(api.ResourceKindPlugin),
     Name:         plugin.ObjectMeta.Name,
-    Path:         fmt.Sprintf("/%s/%s/%s.js", api.ResourceKindPlugin, plugin.Namespace, plugin.Name),
-    Dependencies: []string{},
+    Path:         fmt.Sprintf("/api/v1/%s/%s/%s.js", api.ResourceKindPlugin, plugin.Namespace, plugin.Name),
+    Dependencies: append([]string{}, plugin.Spec.Dependencies...),
   }
 }
 

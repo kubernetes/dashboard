@@ -5,13 +5,13 @@ import {ListMeta, Plugin} from '@api/backendapi';
 
 interface PluginsConfig {
   listMeta: ListMeta;
-  plugins: Plugin[];
+  items: Plugin[];
   errors: string[];
 }
 
 @Injectable()
 export class PluginsConfigProvider {
-  config: PluginsConfig = {listMeta: {totalItems: 0}, plugins: [], errors: []};
+  config: PluginsConfig = {listMeta: {totalItems: 0}, items: [], errors: []};
 
   constructor(
       private http_: HttpClient, @Inject(PLATFORM_ID) private platformId: {},

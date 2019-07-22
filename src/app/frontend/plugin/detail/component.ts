@@ -1,5 +1,6 @@
 import {Component, Injector, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {PluginLoaderService} from '../../common/services/pluginloader/pluginloader.service';
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'kd-plugin-holder',
@@ -13,11 +14,13 @@ import {PluginLoaderService} from '../../common/services/pluginloader/pluginload
 export class PluginHolderComponent implements OnInit {
   @ViewChild('pluginViewRef', {read: ViewContainerRef, static: true}) vcRef: ViewContainerRef;
 
-  constructor(private injector: Injector, private pluginLoader: PluginLoaderService) {}
+  constructor(private injector: Injector, private pluginLoader: PluginLoaderService,
+              private readonly activatedRoute_: ActivatedRoute) {}
 
   ngOnInit() {
+    const pluginName = this.activatedRoute_.snapshot.params.pluginName;
     try {
-      this.loadPlugin('plugin1');
+      this.loadPlugin(pluginName);
     } catch (e) {
       console.log(e);
     }

@@ -21,13 +21,13 @@ export class ClientPluginLoaderService extends PluginLoaderService {
 
   load<T>(pluginName: string): Promise<NgModuleFactory<T>> {
     const {config} = this.configProvider;
-    const plugin = config.plugins.find(p => p.name === pluginName);
+    const plugin = config.items.find(p => p.name === pluginName);
     if (!plugin) {
       throw Error(`Can't find plugin "${pluginName}"`);
     }
 
     const depsPromises = (plugin.dependencies || []).map(dep => {
-      const dependency = config.plugins.find(d => d.name === dep);
+      const dependency = config.items.find(d => d.name === dep);
       if (!dependency) {
         throw Error(`Can't find dependency "${dep}" for plugin "${pluginName}"`);
       }
