@@ -16,7 +16,6 @@ package customresourcedefinition
 
 import (
 	"encoding/json"
-	"fmt"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
@@ -27,79 +26,80 @@ import (
 	"k8s.io/client-go/rest"
 )
 
-// CustomResourceObjectDetail represents a custom resource object.
+// CustomResourceObject represents a custom resource object.
+type CustomResourceObject struct {
+	TypeMeta   metav1.TypeMeta   `json:"typeMeta"`
+	ObjectMeta metav1.ObjectMeta `json:"objectMeta"`
+}
+
+func (r *CustomResourceObject) UnmarshalJSON(data []byte) error {
+	tempStruct := &struct {
+		metav1.TypeMeta `json:",inline"`
+		ObjectMeta      metav1.ObjectMeta `json:"metadata,omitempty"`
+	}{}
+
+	err := json.Unmarshal(data, &tempStruct)
+	if err != nil {
+		return err
+	}
+
+	r.TypeMeta = tempStruct.TypeMeta
+	r.ObjectMeta = tempStruct.ObjectMeta
+	return nil
+}
+
 type CustomResourceObjectDetail struct {
-	metav1.TypeMeta `json:",inline"`
-	ObjectMeta      metav1.ObjectMeta `json:"metadata,omitempty"`
-}
-
-func (r CustomResourceObjectDetail) MarshalJSON() ([]byte, error) {
-	typeMeta, err := json.Marshal(r.TypeMeta)
-	if err != nil {
-		return nil, err
-	}
-
-	objectMeta, err := json.Marshal(r.ObjectMeta)
-	if err != nil {
-		return nil, err
-	}
-
-	return []byte(fmt.Sprintf(`{"typeMeta": %s, "objectMeta": %s}`, string(typeMeta), string(objectMeta))), nil
-}
-
-// CustomResourceObjectList represents crd objects in a namespace.
-type CustomResourceObjectList struct {
-	metav1.TypeMeta `json:",inline"`
-	ListMeta        api.ListMeta `json:"listMeta"`
-
-	// Unordered list of custom resource definitions
-	Items []CustomResourceObjectDetail `json:"items"`
+	CustomResourceObject `json:",inline"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
 }
 
-func (r CustomResourceObjectList) MarshalJSON() ([]byte, error) {
-	typeMeta, err := json.Marshal(r.TypeMeta)
+// CustomResourceObjectList represents crd objects in a namespace.
+type CustomResourceObjectList struct {
+	TypeMeta metav1.TypeMeta `json:"typeMeta"`
+	ListMeta api.ListMeta    `json:"listMeta"`
+
+	// Unordered list of custom resource definitions
+	Items []CustomResourceObject `json:"items"`
+
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
+}
+
+func (r *CustomResourceObjectList) UnmarshalJSON(data []byte) error {
+	tempStruct := &struct {
+		metav1.TypeMeta `json:",inline"`
+		Items           []CustomResourceObject `json:"items"`
+	}{}
+
+	err := json.Unmarshal(data, &tempStruct)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	listMeta, err := json.Marshal(r.ListMeta)
-	if err != nil {
-		return nil, err
-	}
-
-	items, err := json.Marshal(r.Items)
-	if err != nil {
-		return nil, err
-	}
-
-	errs, err := json.Marshal(r.Errors)
-	if err != nil {
-		return nil, err
-	}
-
-	return []byte(fmt.Sprintf(`{"typeMeta": %s, "listMeta": %s, "items": %s, "errors": %s}`, string(typeMeta), string(listMeta), string(items), string(errs))), nil
+	r.TypeMeta = tempStruct.TypeMeta
+	r.Items = tempStruct.Items
+	return nil
 }
 
 // GetCustomResourceObjectList gets objects for a CR.
 func GetCustomResourceObjectList(client apiextensionsclientset.Interface, config *rest.Config, namespace *common.NamespaceQuery,
-	dsQuery *dataselect.DataSelectQuery, crdName string) (CustomResourceObjectList, error) {
-	var list CustomResourceObjectList
+	dsQuery *dataselect.DataSelectQuery, crdName string) (*CustomResourceObjectList, error) {
+	var list *CustomResourceObjectList
 
 	customResourceDefinition, err := client.ApiextensionsV1beta1().
 		CustomResourceDefinitions().
 		Get(crdName, metav1.GetOptions{})
 	nonCriticalErrors, criticalError := errors.HandleError(err)
 	if criticalError != nil {
-		return list, criticalError
+		return nil, criticalError
 	}
 
 	restClient, err := newRESTClient(config, getCustomResourceDefinitionGroupVersion(customResourceDefinition))
 	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
 	if criticalError != nil {
-		return list, criticalError
+		return nil, criticalError
 	}
 
 	raw, err := restClient.Get().
@@ -108,13 +108,13 @@ func GetCustomResourceObjectList(client apiextensionsclientset.Interface, config
 		Do().Raw()
 	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
 	if criticalError != nil {
-		return list, criticalError
+		return nil, criticalError
 	}
 
 	err = json.Unmarshal(raw, &list)
 	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
 	if criticalError != nil {
-		return list, criticalError
+		return nil, criticalError
 	}
 
 	// Return only slice of data, pagination is done here.
@@ -127,33 +127,38 @@ func GetCustomResourceObjectList(client apiextensionsclientset.Interface, config
 }
 
 // GetCustomResourceObjectDetail returns details of a single object in a CR.
-func GetCustomResourceObjectDetail(client apiextensionsclientset.Interface, namespace *common.NamespaceQuery, config *rest.Config, crdName string, name string) (CustomResourceObjectDetail, error) {
-	var detail CustomResourceObjectDetail
+func GetCustomResourceObjectDetail(client apiextensionsclientset.Interface, namespace *common.NamespaceQuery, config *rest.Config, crdName string, name string) (*CustomResourceObjectDetail, error) {
+	var detail *CustomResourceObjectDetail
 
 	customResourceDefinition, err := client.ApiextensionsV1beta1().
 		CustomResourceDefinitions().
 		Get(crdName, metav1.GetOptions{})
-	if err != nil {
-		return detail, err
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
 	restClient, err := newRESTClient(config, getCustomResourceDefinitionGroupVersion(customResourceDefinition))
-	if err != nil {
-		return detail, err
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
 	raw, err := restClient.Get().
 		Namespace(namespace.ToRequestParam()).
 		Resource(customResourceDefinition.Spec.Names.Plural).
 		Name(name).Do().Raw()
-	if err != nil {
-		return detail, err
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
 	err = json.Unmarshal(raw, &detail)
-	if err != nil {
-		return detail, err
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
+	detail.Errors = nonCriticalErrors
 	return detail, nil
 }

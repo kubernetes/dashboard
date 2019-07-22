@@ -547,12 +547,12 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			Writes(customresourcedefinition.CustomResourceObjectList{}))
 
 	apiV1Ws.Route(
-		apiV1Ws.GET("/crd/{namespace}/{crd}/object/{name}").
+		apiV1Ws.GET("/crd/{namespace}/{crd}/{object}").
 			To(apiHandler.handleGetCustomResourceObjectDetail).
-			Writes(customresourcedefinition.CustomResourceObjectDetail{}))
+			Writes(customresourcedefinition.CustomResourceObject{}))
 
 	apiV1Ws.Route(
-		apiV1Ws.GET("/crd/{namespace}/{crd}/object/{name}/event").
+		apiV1Ws.GET("/crd/{namespace}/{crd}/{object}/event").
 			To(apiHandler.handleGetCustomResourceObjectEvents).
 			Writes(common.EventList{}))
 
@@ -2151,7 +2151,7 @@ func (apiHandler *APIHandler) handleGetCustomResourceObjectDetail(request *restf
 		return
 	}
 
-	name := request.PathParameter("name")
+	name := request.PathParameter("object")
 	crdName := request.PathParameter("crd")
 	namespace := parseNamespacePathParameter(request)
 	result, err := customresourcedefinition.GetCustomResourceObjectDetail(apiextensionsclient, namespace, config, crdName, name)
@@ -2172,8 +2172,8 @@ func (apiHandler *APIHandler) handleGetCustomResourceObjectEvents(request *restf
 		return
 	}
 
+	name := request.PathParameter("object")
 	namespace := request.PathParameter("namespace")
-	name := request.PathParameter("name")
 	dataSelect := parseDataSelectPathParameter(request)
 	dataSelect.MetricQuery = dataselect.StandardMetrics
 	result, err := customresourcedefinition.GetEventsForCustomResourceObject(k8sClient, dataSelect, namespace, name)

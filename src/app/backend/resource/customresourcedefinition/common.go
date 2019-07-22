@@ -54,8 +54,8 @@ func fromCells(cells []dataselect.DataCell) []apiextensions.CustomResourceDefini
 	return std
 }
 
-// The code below allows to perform complex data section on ThirdPartyResourceObject.
-type CustomResourceObjectCell CustomResourceObjectDetail
+// The code below allows to perform complex data section on CustomResourceObject.
+type CustomResourceObjectCell CustomResourceObject
 
 func (self CustomResourceObjectCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
 	switch name {
@@ -71,7 +71,7 @@ func (self CustomResourceObjectCell) GetProperty(name dataselect.PropertyName) d
 	}
 }
 
-func toObjectCells(std []CustomResourceObjectDetail) []dataselect.DataCell {
+func toObjectCells(std []CustomResourceObject) []dataselect.DataCell {
 	cells := make([]dataselect.DataCell, len(std))
 	for i := range std {
 		cells[i] = CustomResourceObjectCell(std[i])
@@ -79,10 +79,10 @@ func toObjectCells(std []CustomResourceObjectDetail) []dataselect.DataCell {
 	return cells
 }
 
-func fromObjectCells(cells []dataselect.DataCell) []CustomResourceObjectDetail {
-	std := make([]CustomResourceObjectDetail, len(cells))
+func fromObjectCells(cells []dataselect.DataCell) []CustomResourceObject {
+	std := make([]CustomResourceObject, len(cells))
 	for i := range std {
-		std[i] = CustomResourceObjectDetail(cells[i].(CustomResourceObjectCell))
+		std[i] = CustomResourceObject(cells[i].(CustomResourceObjectCell))
 	}
 	return std
 }

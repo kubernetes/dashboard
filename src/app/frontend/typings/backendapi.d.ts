@@ -461,6 +461,8 @@ export interface CRDDetail extends ResourceDetail {
   conditions: Condition[];
 }
 
+export interface CRDObjectDetail extends ResourceDetail {}
+
 export interface JobDetail extends ResourceDetail {
   podInfo: PodInfo;
   podList: PodList;

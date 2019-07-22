@@ -13,29 +13,39 @@
 // limitations under the License.
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {CRDObject} from '@api/backendapi';
+import {CRDObjectDetail} from '@api/backendapi';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
-import {ActionbarService} from '../../common/services/global/actionbar';
-import {ResourceService} from '../../common/services/resource/resource';
+import {ActionbarService, ResourceMeta} from '../../common/services/global/actionbar';
+import {NamespacedResourceService} from '../../common/services/resource/resource';
 import {EndpointManager, Resource} from '../../common/services/resource/endpoint';
 import {NotificationsService} from '../../common/services/global/notifications';
 
 @Component({selector: 'kd-crd-object-detail', templateUrl: './template.html'})
 export class CRDObjectDetailComponent implements OnInit, OnDestroy {
   private objectSubscription_: Subscription;
-  private readonly endpoint_ = EndpointManager.resource(Resource.crd);
-  object: CRDObject;
+  private readonly endpoint_ = EndpointManager.resource(Resource.crd, true);
+  object: CRDObjectDetail;
   isInitialized = false;
 
   constructor(
-    private readonly object_: ResourceService<CRDObject>,
+    private readonly object_: NamespacedResourceService<CRDObjectDetail>,
     private readonly actionbar_: ActionbarService,
     private readonly activatedRoute_: ActivatedRoute,
     private readonly notifications_: NotificationsService,
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const {crdName, namespace, objectName} = this.activatedRoute_.snapshot.params;
+    this.objectSubscription_ = this.object_
+      .get(this.endpoint_.child(crdName, objectName, namespace))
+      .subscribe((d: CRDObjectDetail) => {
+        this.object = d;
+        this.notifications_.pushErrors(d.errors);
+        this.actionbar_.onInit.emit(new ResourceMeta(d.typeMeta.kind, d.objectMeta, d.typeMeta));
+        this.isInitialized = true;
+      });
+  }
 
   ngOnDestroy(): void {
     this.objectSubscription_.unsubscribe();
