@@ -402,10 +402,62 @@
           <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="3fb1b414b1cff52e0c83adf0e62245b77f8e6fda" datatype="html">
-        <source>Pod information</source>
+      <trans-unit id="8c0925876d5a1454f604dc4fc4cf8dbb4dceed0a" datatype="html">
+        <source>Resource information</source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/pod/detail/template.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/cluster/namespace/detail/template.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/template.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/cluster/storageclass/detail/template.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/config/persistentvolumeclaim/detail/template.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/discovery/service/detail/template.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/workloads/cronjob/detail/template.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/workloads/daemonset/detail/template.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/workloads/job/detail/template.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/workloads/replicaset/detail/template.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/workloads/replicationcontroller/detail/template.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/workloads/statefulset/detail/template.html</context>
           <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
@@ -3356,20 +3408,6 @@
           <context context-type="linenumber">151</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="cd822e20f30707b670188ef04e8448f706be643d" datatype="html">
-        <source>Namespace information</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/cluster/namespace/detail/template.html</context>
-          <context context-type="linenumber">22</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="6810dc576003bff6d777cb3b52939a51c98742d4" datatype="html">
-        <source>Node information</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
-          <context context-type="linenumber">22</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="8a3abe0df530103020a480befe1757e3b1776e7b" datatype="html">
         <source>Pod CIDR</source>
         <context-group purpose="location">
@@ -3534,13 +3572,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
           <context context-type="linenumber">201</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="417da0c1bf58253b893afb902ee8e80c13214653" datatype="html">
-        <source>Persistent Volume information</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/template.html</context>
-          <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="c910633dbd59abefedb3896b45649b1373e31aab" datatype="html">
@@ -3758,13 +3789,6 @@
           <context context-type="linenumber">320</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="efe35bf14ba9ea3297753045ea24ba49a01e09a8" datatype="html">
-        <source>Storage Class information</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/cluster/storageclass/detail/template.html</context>
-          <context context-type="linenumber">22</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="5ad4eecbd0fe09c34678fefce317a052af39dc96" datatype="html">
         <source>Data</source>
         <context-group purpose="location">
@@ -3785,20 +3809,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/config/secret/detail/template.html</context>
           <context context-type="linenumber">31</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="e00c9adf5d31760067893d1948409b113f55ac14" datatype="html">
-        <source>Persistent Volume Claim information</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/config/persistentvolumeclaim/detail/template.html</context>
-          <context context-type="linenumber">22</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="868c0f1e8327f3333bfa89993066ff3f1d6ee485" datatype="html">
-        <source>Service information</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/discovery/service/detail/template.html</context>
-          <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="eeff8ad50c095fe47ae84d4ee2536b0e191c256d" datatype="html">
@@ -3825,13 +3835,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/replicaset/detail/template.html</context>
           <context context-type="linenumber">38</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="5e843ed7c012ba1e818e2bf1997667ff93bb7f9e" datatype="html">
-        <source>Cron Job information</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/workloads/cronjob/detail/template.html</context>
-          <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8f097dc952ca26f9cbb8f37ecd54f5e45af9d96d" datatype="html">
@@ -3894,13 +3897,6 @@
           <context context-type="linenumber">94</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5133fc5d6a114f0a32b24f9ea9835fc5796ea249" datatype="html">
-        <source>Daemon Set information</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/workloads/daemonset/detail/template.html</context>
-          <context context-type="linenumber">22</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="318e1e7193512514e192cab4e4b6b722548b017b" datatype="html">
         <source>Init images</source>
         <context-group purpose="location">
@@ -3926,13 +3922,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/statefulset/detail/template.html</context>
           <context context-type="linenumber">46</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="c81b446144d8ab7b8b7c52c9f46ef6a47d6bd933" datatype="html">
-        <source>Deployment information</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
-          <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ad224050a62a6ea987915f5b33223046def3a2d3" datatype="html">
@@ -4100,13 +4089,6 @@
           <context context-type="linenumber">280</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="009a10ebc406b0408f7d1ed35394d1946cc92a70" datatype="html">
-        <source>Job information</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/workloads/job/detail/template.html</context>
-          <context context-type="linenumber">22</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="5413cb2f145c06134be125af0b8900fa43178672" datatype="html">
         <source>Completions: </source>
         <context-group purpose="location">
@@ -4135,20 +4117,6 @@
           <context context-type="linenumber">51</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="ee51bf4f426237379f4a347510f994accd1d6a55" datatype="html">
-        <source>Replica Set information</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/workloads/replicaset/detail/template.html</context>
-          <context context-type="linenumber">22</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="1042026d3ace6951651c1a3ce610eadcd287b2bd" datatype="html">
-        <source>Replication Controller information</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/workloads/replicationcontroller/detail/template.html</context>
-          <context context-type="linenumber">22</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="53d3c87046022140381be2fc9b864d6fdd9f2cc8" datatype="html">
         <source>Label Selector</source>
         <context-group purpose="location">
@@ -4158,13 +4126,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/statefulset/detail/template.html</context>
           <context context-type="linenumber">30</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="cca4fdd8503c0e9914cc7996129aa9f4ec251927" datatype="html">
-        <source>Stateful Set information</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/workloads/statefulset/detail/template.html</context>
-          <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="130d46e5699c410721dbdf43691f5c957b5955ef" datatype="html">
