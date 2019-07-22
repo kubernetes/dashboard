@@ -12,7 +12,33 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {CRDObject} from '@api/backendapi';
+import {Subscription} from 'rxjs';
+import {ActivatedRoute} from '@angular/router';
+import {ActionbarService} from '../../common/services/global/actionbar';
+import {ResourceService} from '../../common/services/resource/resource';
+import {EndpointManager, Resource} from '../../common/services/resource/endpoint';
+import {NotificationsService} from '../../common/services/global/notifications';
 
 @Component({selector: 'kd-crd-object-detail', templateUrl: './template.html'})
-export class CRDObjectDetailComponent {}
+export class CRDObjectDetailComponent implements OnInit, OnDestroy {
+  private objectSubscription_: Subscription;
+  private readonly endpoint_ = EndpointManager.resource(Resource.crd);
+  object: CRDObject;
+  isInitialized = false;
+
+  constructor(
+    private readonly object_: ResourceService<CRDObject>,
+    private readonly actionbar_: ActionbarService,
+    private readonly activatedRoute_: ActivatedRoute,
+    private readonly notifications_: NotificationsService,
+  ) {}
+
+  ngOnInit(): void {}
+
+  ngOnDestroy(): void {
+    this.objectSubscription_.unsubscribe();
+    this.actionbar_.onDetailsLeave.emit();
+  }
+}
