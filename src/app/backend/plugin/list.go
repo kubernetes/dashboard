@@ -16,12 +16,11 @@ package plugin
 
 import (
   "fmt"
+  "github.com/kubernetes/dashboard/src/app/backend/api"
   "github.com/kubernetes/dashboard/src/app/backend/errors"
   "github.com/kubernetes/dashboard/src/app/backend/plugin/apis/v1alpha1"
-  "github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-
-  "github.com/kubernetes/dashboard/src/app/backend/api"
   pluginclientset "github.com/kubernetes/dashboard/src/app/backend/plugin/client/clientset/versioned"
+  "github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
   v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -64,7 +63,7 @@ func GetPluginList(client pluginclientset.Interface, ns string, dsQuery *datasel
   plugins, err := client.DashboardV1alpha1().Plugins(ns).List(v1.ListOptions{})
   nonCriticalErrors, criticalError := errors.HandleError(err)
   if criticalError != nil {
-    return nil, criticalError
+    return &PluginList{Items: []Plugin{}, Errors: []error{criticalError}}, nil
   }
 
   result := toPluginList(plugins.Items, nonCriticalErrors, dsQuery)
