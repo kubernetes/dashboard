@@ -19,14 +19,13 @@
 
 # golang is based on debian:jessie
 # Specify version to clarify which version we use.
-FROM golang:1.10
+FROM golang:1.12
 
 # Install Node.js. Go is already installed.
 # A small tweak, apt-get update is already run by the nodejs setup script,
 # so there's no need to run it again.
 RUN curl -sL https://deb.nodesource.com/setup_11.x | bash - \
   && apt-get install -y --no-install-recommends \
-	openjdk-8-jre \
 	nodejs \
 	patch \
 	chromium \
