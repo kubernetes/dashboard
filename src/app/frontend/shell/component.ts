@@ -99,7 +99,6 @@ export class ShellComponent implements AfterViewInit, OnDestroy {
       const container = paramMap.get('containerName');
 
       if (this.conn_ && this.connected_) {
-        console.log('disconnecting');
         this.disconnect();
       }
 
@@ -193,12 +192,9 @@ export class ShellComponent implements AfterViewInit, OnDestroy {
   }
 
   private async setupConnection(): Promise<void> {
-    console.log('before setup conn');
     if (!(this.selectedContainer && this.podName && this.namespace_ && !this.connecting_)) {
       return;
     }
-
-    console.log('connecting');
 
     this.connecting_ = true;
     this.connectionClosed_ = false;
@@ -207,12 +203,9 @@ export class ShellComponent implements AfterViewInit, OnDestroy {
       this.namespace_,
       this.podName,
     )}/${this.selectedContainer}`;
-    console.log('getting id');
     const {id} = await this.utility_.shell(terminalSessionUrl).toPromise();
-    console.log(`got id ${id}`);
 
     this.conn_ = new SockJS(`api/sockjs?${id}`);
-    console.log('opening sockjs connection');
     this.conn_.onopen = this.onConnectionOpen.bind(this, id);
     this.conn_.onmessage = this.onConnectionMessage.bind(this);
     this.conn_.onclose = this.onConnectionClose.bind(this);
