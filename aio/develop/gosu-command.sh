@@ -15,9 +15,11 @@
 # limitations under the License.
 
 # Create and switch user to "user" with same UID and GID as local.
-groupadd -g ${LOCAL_GID} user
+if [[ -z "$(cat /etc/group | grep ':${LOCAL_GID}:')" ]] ; then
+  groupadd -g ${LOCAL_GID} user
+fi
 useradd -u ${LOCAL_UID} -g ${LOCAL_GID} -d /home/user user
-chown -R user:user /home/user
+chown -R ${LOCAL_UID}:${LOCAL_GID} /home/user
 
 # Add user as sudoer without password
 echo "user ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/user
