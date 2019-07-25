@@ -12,13 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {RouterModule} from '@angular/router';
-import {NamespacedResourceService, ResourceService} from './resource';
-import {UtilityService} from './utility';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
 
-@NgModule({
-  imports: [RouterModule],
-  providers: [ResourceService, NamespacedResourceService, UtilityService],
-})
-export class ResourceModule {}
+import {ResourceBase} from '../../resources/resource';
+import {NamespaceService} from '../global/namespace';
+
+@Injectable()
+export class UtilityService<T> extends ResourceBase<T> {
+  constructor(readonly http: HttpClient, private readonly namespace_: NamespaceService) {
+    super(http);
+  }
+
+  shell(endpoint: string, params?: HttpParams): Observable<T> {
+    return this.http.get<T>(endpoint, {params});
+  }
+}

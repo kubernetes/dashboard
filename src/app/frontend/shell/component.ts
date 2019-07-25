@@ -17,6 +17,7 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  EventEmitter,
   OnDestroy,
   ViewChild,
 } from '@angular/core';
@@ -31,11 +32,13 @@ import {
 } from '@api/backendapi';
 import {debounce} from 'lodash';
 import {ReplaySubject, Subject, Subscription} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 import {Terminal} from 'xterm';
 import {fit} from 'xterm/lib/addons/fit/fit';
 
-import {EndpointManager, Resource} from '../common/services/resource/endpoint';
+import {EndpointManager, Resource, Utility} from '../common/services/resource/endpoint';
 import {NamespacedResourceService} from '../common/services/resource/resource';
+import {UtilityService} from '../common/services/resource/utility';
 
 // tslint:disable-next-line:no-any
 declare let SockJS: any;
@@ -52,7 +55,7 @@ export class ShellComponent implements AfterViewInit, OnDestroy {
   selectedContainer: string;
   containers: string[];
 
-  private namespace_: string;
+  private readonly namespace_: string;
   private connecting_: boolean;
   private connectionClosed_: boolean;
   private conn_: WebSocket;
@@ -61,12 +64,12 @@ export class ShellComponent implements AfterViewInit, OnDestroy {
   private connSubject_ = new ReplaySubject<ShellFrame>(100);
   private incommingMessage$_ = new Subject<ShellFrame>();
   private readonly endpoint_ = EndpointManager.resource(Resource.pod, true);
-  private readonly subscriptions_: Subscription[] = [];
+  private readonly unsubscribe_ = new Subject<void>();
   private readonly keyEvent$_ = new ReplaySubject<KeyboardEvent>(2);
 
   constructor(
     private readonly containers_: NamespacedResourceService<PodContainerList>,
-    private readonly terminal_: NamespacedResourceService<TerminalResponse>,
+    private readonly utility_: UtilityService<TerminalResponse>,
     private readonly activatedRoute_: ActivatedRoute,
     private readonly matSnackBar_: MatSnackBar,
     private readonly cdr_: ChangeDetectorRef,
@@ -74,39 +77,49 @@ export class ShellComponent implements AfterViewInit, OnDestroy {
   ) {
     this.namespace_ = this.activatedRoute_.snapshot.params.resourceNamespace;
     this.podName = this.activatedRoute_.snapshot.params.resourceName;
-    this.selectedContainer = this.activatedRoute_.snapshot.params.containerName;
 
     const containersEndpoint = this.endpoint_.child(
       this.podName,
       Resource.container,
       this.namespace_,
     );
-
-    this.containers_.get(containersEndpoint).subscribe(containerList => {
-      this.containers = containerList.containers;
-      if (this.containers.length > 0 && !this.selectedContainer) {
-        this.selectedContainer = this.containers[0];
-      }
-
-      this.setupConnection();
-    });
+    this.containers_
+      .get(containersEndpoint)
+      .pipe(takeUntil(this.unsubscribe_))
+      .subscribe(containerList => {
+        this.containers = containerList.containers;
+        if (this.containers.length > 0 && !this.selectedContainer) {
+          this.onPodContainerChange(this.containers[0]);
+        }
+      });
   }
 
   ngAfterViewInit(): void {
-    this.initTerm();
+    this.activatedRoute_.paramMap.pipe(takeUntil(this.unsubscribe_)).subscribe(paramMap => {
+      const container = paramMap.get('containerName');
+
+      if (this.conn_ && this.connected_) {
+        this.disconnect();
+      }
+
+      if (container) {
+        this.selectedContainer = container;
+        this.setupConnection();
+        this.initTerm();
+      }
+    });
   }
 
   ngOnDestroy(): void {
+    this.unsubscribe_.next();
+    this.unsubscribe_.complete();
+
     if (this.conn_) {
       this.conn_.close();
     }
 
     if (this.connSubject_) {
       this.connSubject_.complete();
-    }
-
-    for (const sub of this.subscriptions_) {
-      sub.unsubscribe();
     }
 
     if (this.term) {
@@ -117,6 +130,12 @@ export class ShellComponent implements AfterViewInit, OnDestroy {
   }
 
   onPodContainerChange(podContainer: string): void {
+    this._router.navigate([`/shell/${this.namespace_}/${this.podName}/${podContainer}`], {
+      queryParamsHandling: 'preserve',
+    });
+  }
+
+  disconnect(): void {
     if (this.conn_) {
       this.conn_.close();
     }
@@ -132,18 +151,18 @@ export class ShellComponent implements AfterViewInit, OnDestroy {
 
     this.incommingMessage$_.complete();
     this.incommingMessage$_ = new Subject<ShellFrame>();
-
-    this.selectedContainer = podContainer;
-
-    this._router.navigate([`/shell/${this.namespace_}/${this.podName}/${this.selectedContainer}`], {
-      queryParamsHandling: 'preserve',
-    });
-
-    this.setupConnection();
-    this.initTerm();
   }
 
   initTerm(): void {
+    if (this.connSubject_) {
+      this.connSubject_.complete();
+      this.connSubject_ = new ReplaySubject<ShellFrame>(100);
+    }
+
+    if (this.term) {
+      this.term.dispose();
+    }
+
     this.term = new Terminal({
       fontSize: 14,
       fontFamily: 'Consolas, "Courier New", monospace',
@@ -159,11 +178,9 @@ export class ShellComponent implements AfterViewInit, OnDestroy {
     this.debouncedFit_();
     window.addEventListener('resize', () => this.debouncedFit_());
 
-    this.subscriptions_.push(
-      this.connSubject_.subscribe(frame => {
-        this.handleConnectionMessage(frame);
-      }),
-    );
+    this.connSubject_.pipe(takeUntil(this.unsubscribe_)).subscribe(frame => {
+      this.handleConnectionMessage(frame);
+    });
 
     this.term.on('data', this.onTerminalSendString.bind(this));
     this.term.on('resize', this.onTerminalResize.bind(this));
@@ -182,11 +199,11 @@ export class ShellComponent implements AfterViewInit, OnDestroy {
     this.connecting_ = true;
     this.connectionClosed_ = false;
 
-    const terminalSessionUrl =
-      this.endpoint_.child(this.podName, Resource.shell, this.namespace_) +
-      '/' +
-      this.selectedContainer;
-    const {id} = await this.terminal_.get(terminalSessionUrl).toPromise();
+    const terminalSessionUrl = `${EndpointManager.utility(Utility.shell).shell(
+      this.namespace_,
+      this.podName,
+    )}/${this.selectedContainer}`;
+    const {id} = await this.utility_.shell(terminalSessionUrl).toPromise();
 
     this.conn_ = new SockJS(`api/sockjs?${id}`);
     this.conn_.onopen = this.onConnectionOpen.bind(this, id);
