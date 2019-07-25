@@ -19,6 +19,7 @@ import {StateError} from '@api/frontendapi';
 import {YAMLException} from 'js-yaml';
 
 import {ApiError, AsKdError, KdError} from '../common/errors/errors';
+import {AuthService} from '../common/services/global/authentication';
 
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
@@ -26,6 +27,10 @@ export class GlobalErrorHandler implements ErrorHandler {
 
   private get router_(): Router {
     return this.injector_.get(Router);
+  }
+
+  private get auth_(): AuthService {
+    return this.injector_.get(AuthService);
   }
 
   handleError(error: HttpErrorResponse | YAMLException): void {
@@ -47,6 +52,7 @@ export class GlobalErrorHandler implements ErrorHandler {
         this.router_.navigate(['login'], {
           state: {error: AsKdError(error)} as StateError,
         });
+        this.auth_.removeAuthCookies();
         return;
       }
 

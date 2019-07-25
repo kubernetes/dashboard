@@ -55,7 +55,8 @@ export class AuthService {
   private setTokenCookie_(token: string): void {
     // This will only work for HTTPS connection
     this.cookies_.set(this.config_.authTokenCookieName, token, null, null, null, true);
-    // This will only work when accessing Dashboard at 'localhost' or '127.0.0.1'
+    // This will only work when accessing Dashboard at 'localhost' or
+    // '127.0.0.1'
     this.cookies_.set(this.config_.authTokenCookieName, token, null, null, 'localhost');
     this.cookies_.set(this.config_.authTokenCookieName, token, null, null, '127.0.0.1');
   }
@@ -64,12 +65,14 @@ export class AuthService {
     return this.cookies_.get(this.config_.authTokenCookieName) || '';
   }
 
-  private removeAuthCookies_(): void {
+  removeAuthCookies(): void {
     this.cookies_.delete(this.config_.authTokenCookieName);
     this.cookies_.delete(this.config_.skipLoginPageCookieName);
   }
 
-  /** Sends a login request to the backend with filled in login spec structure. */
+  /**
+   * Sends a login request to the backend with filled in login spec structure.
+   */
   login(loginSpec: LoginSpec): Observable<K8SError[]> {
     return this.csrfTokenService_
       .getTokenForAction('login')
@@ -92,13 +95,13 @@ export class AuthService {
   }
 
   logout(): void {
-    this.removeAuthCookies_();
+    this.removeAuthCookies();
     this.router_.navigate(['login']);
   }
 
   /**
-   * Sends a token refresh request to the backend. In case user is not logged in with token nothing
-   * will happen.
+   * Sends a token refresh request to the backend. In case user is not logged in
+   * with token nothing will happen.
    */
   refreshToken(): void {
     const token = this.getTokenCookie_();
@@ -134,8 +137,8 @@ export class AuthService {
   }
 
   /**
-   * Checks authentication is enabled. It is enabled only on HTTPS. Can be overridden by
-   * 'enable-insecure-login' flag passed to dashboard.
+   * Checks authentication is enabled. It is enabled only on HTTPS. Can be
+   * overridden by 'enable-insecure-login' flag passed to dashboard.
    */
   isAuthenticationEnabled(loginStatus: LoginStatus): boolean {
     return loginStatus.httpsMode;
@@ -146,7 +149,7 @@ export class AuthService {
   }
 
   skipLoginPage(skip: boolean): void {
-    this.removeAuthCookies_();
+    this.removeAuthCookies();
     this.cookies_.set(this.config_.skipLoginPageCookieName, skip.toString());
   }
 
