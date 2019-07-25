@@ -37,6 +37,9 @@ export enum Resource {
   service = 'service',
   event = 'event',
   container = 'container',
+}
+
+export enum Utility {
   shell = 'shell',
 }
 
@@ -62,8 +65,20 @@ class ResourceEndpoint {
   }
 }
 
+class UtilityEndpoint {
+  constructor(private readonly utility_: Utility) {}
+
+  shell(namespace: string, resourceName: string): string {
+    return `${baseHref}/${Resource.pod}/${namespace}/${resourceName}/${this.utility_}`;
+  }
+}
+
 export class EndpointManager {
   static resource(resource: Resource, namespaced?: boolean): ResourceEndpoint {
     return new ResourceEndpoint(resource, namespaced);
+  }
+
+  static utility(utility: Utility): UtilityEndpoint {
+    return new UtilityEndpoint(utility);
   }
 }
