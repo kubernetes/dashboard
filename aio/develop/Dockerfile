@@ -34,8 +34,21 @@ RUN curl -sL https://deb.nodesource.com/setup_11.x | bash - \
 	gosu \
 	nano \
 	less \
+	unzip \
+	libssl-dev \
+	libghc-zlib-dev \
+	libcurl4-gnutls-dev \
+	libexpat1-dev \
+	gettext \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& apt-get clean
+
+# Re-install git
+# NOTE(shu-muto): husky-3.x requires git>=2.13.2 but golang:1.12 image based on debian 9 (stretch)
+#                 does not satisfy the requirement. Its git version is 2.11.0.
+#                 So re-install specified version of git from source code.
+RUN GIT_VERSION=2.22.0 && apt-get remove -y git && cd /tmp && rm -fr git* && wget https://github.com/git/git/archive/v${GIT_VERSION}.zip -O git.zip && unzip git.zip && mv git-${GIT_VERSION} git && cd git && make prefix=/usr all && make prefix=/usr install
+ENV GIT_EDITOR=nano
 
 # Install dependencies. This will take a while.
 RUN npm install -g npm@latest gulp@4.0.2 @angular/cli@8.0.3 ngx-i18nsupport
