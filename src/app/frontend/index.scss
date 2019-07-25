@@ -294,6 +294,11 @@ router-outlet::after {
 
 .kd-chips-show-button {
   cursor: pointer;
+  font-size: $body-font-size-base;
+  font-weight: $regular-font-weight;
+  height: fit-content;
+  line-height: $body-font-size-base;
+  padding: ($baseline-grid * .75) ($baseline-grid * 1.75);
 }
 
 .kd-on-top {
