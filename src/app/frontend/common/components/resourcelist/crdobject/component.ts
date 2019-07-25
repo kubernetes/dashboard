@@ -13,37 +13,55 @@
 // limitations under the License.
 
 import {Component, Input} from '@angular/core';
-import {CRDObject} from '@api/backendapi';
-import {MatTableDataSource} from '@angular/material';
-import {KdStateService} from '../../../services/global/state';
-import {GlobalServicesModule} from '../../../services/global/module';
+import {HttpParams} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {CRDObject, CRDObjectList} from '@api/backendapi';
+import {ResourceListBase} from '../../../resources/list';
+import {NamespacedResourceService} from '../../../services/resource/resource';
+import {NotificationsService} from '../../../services/global/notifications';
+import {EndpointManager, Resource} from '../../../services/resource/endpoint';
+import {ActivatedRoute} from '@angular/router';
+import {ListGroupIdentifier, ListIdentifier} from '../groupids';
+import {MenuComponent} from '../../list/column/menu/component';
 
 @Component({
   selector: 'kd-crd-object-list',
   templateUrl: './template.html',
 })
-export class CRDObjectListComponent {
+export class CRDObjectListComponent extends ResourceListBase<CRDObjectList, CRDObject> {
+  private readonly endpoint_ = EndpointManager.resource(Resource.crd, true);
   @Input() objects: CRDObject[];
   @Input() initialized: boolean;
   @Input() crdName: string;
-  protected readonly kdState_: KdStateService;
 
-  constructor() {
-    this.kdState_ = GlobalServicesModule.injector.get(KdStateService);
+  constructor(
+    private readonly crdObject_: NamespacedResourceService<CRDObjectList>,
+    notifications: NotificationsService,
+    private readonly activatedRoute_: ActivatedRoute,
+  ) {
+    super(`crd/${activatedRoute_.snapshot.params.crdName}`, notifications);
+    this.id = ListIdentifier.crdObject;
+    this.groupId = ListGroupIdentifier.none;
+
+    // Register action columns.
+    this.registerActionColumn<MenuComponent>('menu', MenuComponent);
   }
 
-  getObjectHref(objectName: string, namespace: string): string {
-    return this.kdState_.href(`crd/${this.crdName}`, objectName, namespace);
+  getResourceObservable(params?: HttpParams): Observable<CRDObjectList> {
+    const {crdName, namespace} = this.activatedRoute_.snapshot.params;
+    return this.crdObject_.get(
+      this.endpoint_.child(crdName, Resource.crdObject, namespace),
+      undefined,
+      namespace,
+      params,
+    );
+  }
+
+  map(crdObjectList: CRDObjectList): CRDObject[] {
+    return crdObjectList.items;
   }
 
   getDisplayColumns(): string[] {
     return ['name', 'namespace', 'age'];
-  }
-
-  getDataSource(): MatTableDataSource<CRDObject> {
-    const tableData = new MatTableDataSource<CRDObject>();
-    tableData.data = this.objects;
-
-    return tableData;
   }
 }

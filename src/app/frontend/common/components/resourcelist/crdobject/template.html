@@ -14,28 +14,33 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-card [initialized]="initialized"
-         role="table">
+<kd-card role="table"
+         [hidden]="isHidden()">
   <div title
+       fxLayout="row"
        i18n>Objects</div>
-
   <div description>
-    <div class="kd-inline-property"
-         *ngIf="objects?.length">
-      <span class="kd-muted-light"
-            i18n>Items:&nbsp;</span>
-      <span>{{objects.length}}</span>
-    </div>
+    <span class="kd-muted-light"
+          i18n>Items:&nbsp;</span>{{totalItems}}</div>
+  <div actions>
+    <kd-card-list-filter></kd-card-list-filter>
   </div>
 
-  <div content>
-    <mat-table [dataSource]="getDataSource()"
-               class="kd-table-no-footer">
+  <div content
+       [hidden]="showZeroState()">
+    <div kdLoadingSpinner
+         [isLoading]="isLoading"></div>
+
+    <mat-table [dataSource]="getData()"
+               matSort
+               matSortActive="age"
+               matSortDisableClear
+               matSortDirection="asc">
       <ng-container [matColumnDef]="getDisplayColumns()[0]">
         <mat-header-cell *matHeaderCellDef
                          i18n>Name</mat-header-cell>
         <mat-cell *matCellDef="let object">
-          <a [routerLink]="getObjectHref(object.objectMeta.name, object.objectMeta.namespace)"
+          <a [routerLink]="getDetailsHref(object.objectMeta.name, object.objectMeta.namespace)"
              queryParamsHandling="preserve">
             {{object.objectMeta.name}}
           </a>
@@ -60,5 +65,15 @@ limitations under the License.
       <mat-header-row *matHeaderRowDef="getDisplayColumns()"></mat-header-row>
       <mat-row *matRowDef="let row; columns: getDisplayColumns();"></mat-row>
     </mat-table>
+
+    <mat-paginator [length]="totalItems"
+                   [pageSize]="itemsPerPage"
+                   [hidePageSize]="true"
+                   [showFirstLastButtons]="true"></mat-paginator>
+  </div>
+
+  <div content
+       [hidden]="!showZeroState()">
+    <kd-list-zero-state></kd-list-zero-state>
   </div>
 </kd-card>
