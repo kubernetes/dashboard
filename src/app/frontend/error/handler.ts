@@ -19,16 +19,22 @@ import {StateError} from '@api/frontendapi';
 import {YAMLException} from 'js-yaml';
 
 import {ApiError, AsKdError, KdError} from '../common/errors/errors';
+import {AuthService} from '../common/services/global/authentication';
 
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
-  constructor(private readonly injector_: Injector, private readonly ngZone_: NgZone) {}
+  constructor(
+      private readonly injector_: Injector, private readonly ngZone_: NgZone) {}
 
   private get router_(): Router {
     return this.injector_.get(Router);
   }
 
-  handleError(error: HttpErrorResponse | YAMLException): void {
+  private get auth_(): AuthService {
+    return this.injector_.get(AuthService);
+  }
+
+  handleError(error: HttpErrorResponse|YAMLException): void {
     if (error instanceof HttpErrorResponse) {
       this.handleHTTPError_(error);
       return;
@@ -43,10 +49,12 @@ export class GlobalErrorHandler implements ErrorHandler {
 
   private handleHTTPError_(error: HttpErrorResponse): void {
     this.ngZone_.run(() => {
-      if (KdError.isError(error, ApiError.tokenExpired, ApiError.encryptionKeyChanged)) {
+      if (KdError.isError(
+              error, ApiError.tokenExpired, ApiError.encryptionKeyChanged)) {
         this.router_.navigate(['login'], {
           state: {error: AsKdError(error)} as StateError,
         });
+        this.auth_.removeAuthCookies();
         return;
       }
 
