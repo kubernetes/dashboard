@@ -58,7 +58,7 @@ class ResourceEndpoint {
 
   child(resourceName: string, relatedResource: Resource, resourceNamespace?: string): string {
     if (!resourceNamespace) {
-      resourceNamespace = '/:namespace';
+      resourceNamespace = ':namespace';
     }
 
     return `${baseHref}/${this.resource_}${

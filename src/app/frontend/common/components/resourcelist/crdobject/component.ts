@@ -19,7 +19,6 @@ import {CRDObject, CRDObjectList} from '@api/backendapi';
 import {ResourceListBase} from '../../../resources/list';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {NotificationsService} from '../../../services/global/notifications';
-import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {ActivatedRoute} from '@angular/router';
 import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 import {MenuComponent} from '../../list/column/menu/component';
@@ -29,9 +28,7 @@ import {MenuComponent} from '../../list/column/menu/component';
   templateUrl: './template.html',
 })
 export class CRDObjectListComponent extends ResourceListBase<CRDObjectList, CRDObject> {
-  private readonly endpoint_ = EndpointManager.resource(Resource.crd, true);
-  @Input() objects: CRDObject[];
-  @Input() initialized: boolean;
+  @Input() endpoint: string;
   @Input() crdName: string;
 
   constructor(
@@ -48,13 +45,7 @@ export class CRDObjectListComponent extends ResourceListBase<CRDObjectList, CRDO
   }
 
   getResourceObservable(params?: HttpParams): Observable<CRDObjectList> {
-    const {crdName, namespace} = this.activatedRoute_.snapshot.params;
-    return this.crdObject_.get(
-      this.endpoint_.child(crdName, Resource.crdObject, namespace),
-      undefined,
-      namespace,
-      params,
-    );
+    return this.crdObject_.get(this.endpoint, undefined, undefined, params);
   }
 
   map(crdObjectList: CRDObjectList): CRDObject[] {

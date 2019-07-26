@@ -80,9 +80,7 @@ limitations under the License.
   </div>
 </kd-card>
 
-<kd-crd-object-list [objects]="crd?.objects.items"
-                    [crdName]="crd?.objectMeta.name"
-                    [initialized]="isInitialized"></kd-crd-object-list>
+<kd-crd-object-list [endpoint]="crdObjectEndpoint"></kd-crd-object-list>
 
 <kd-crd-versions-list *ngIf="crd?.versions"
                       [versions]="crd?.versions"

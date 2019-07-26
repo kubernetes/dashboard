@@ -27,6 +27,7 @@ export class CRDDetailComponent implements OnInit, OnDestroy {
   private crdSubscription_: Subscription;
   private readonly endpoint_ = EndpointManager.resource(Resource.crd);
   crd: CRDDetail;
+  crdObjectEndpoint: string;
   isInitialized = false;
 
   constructor(
@@ -38,6 +39,11 @@ export class CRDDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     const {crdName} = this.activatedRoute_.snapshot.params;
+    this.crdObjectEndpoint = EndpointManager.resource(Resource.crd, true).child(
+      crdName,
+      Resource.crdObject,
+    );
+
     this.crdSubscription_ = this.crd_
       .get(this.endpoint_.detail(), crdName)
       .subscribe((d: CRDDetail) => {

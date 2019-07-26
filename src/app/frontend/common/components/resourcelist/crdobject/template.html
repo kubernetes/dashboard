@@ -36,7 +36,7 @@ limitations under the License.
                matSortActive="age"
                matSortDisableClear
                matSortDirection="asc">
-      <ng-container [matColumnDef]="getDisplayColumns()[0]">
+      <ng-container [matColumnDef]="getColumns()[0]">
         <mat-header-cell *matHeaderCellDef
                          i18n>Name</mat-header-cell>
         <mat-cell *matCellDef="let object">
@@ -47,13 +47,13 @@ limitations under the License.
         </mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayColumns()[1]">
+      <ng-container [matColumnDef]="getColumns()[1]">
         <mat-header-cell *matHeaderCellDef
                          i18n>Namespace</mat-header-cell>
         <mat-cell *matCellDef="let object">{{object.objectMeta.namespace}}</mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayColumns()[2]">
+      <ng-container [matColumnDef]="getColumns()[2]">
         <mat-header-cell *matHeaderCellDef
                          i18n>Age</mat-header-cell>
         <mat-cell *matCellDef="let object">
@@ -62,8 +62,17 @@ limitations under the License.
         </mat-cell>
       </ng-container>
 
-      <mat-header-row *matHeaderRowDef="getDisplayColumns()"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: getDisplayColumns();"></mat-row>
+      <ng-container *ngFor="let col of getActionColumns()"
+                    [matColumnDef]="col.name">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let crd">
+          <kd-dynamic-cell [component]="col.component"
+                           [resource]="crd"></kd-dynamic-cell>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="getColumns()"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: getColumns();"></mat-row>
     </mat-table>
 
     <mat-paginator [length]="totalItems"
