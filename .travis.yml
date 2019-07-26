@@ -13,6 +13,7 @@ git:
 cache:
   directories:
     - .cached_tools
+    - ~/.cache
     - node_modules
 
 before_install:
@@ -25,7 +26,7 @@ before_script:
   - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
   - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) edge"
   - sudo apt-get update
-  - sudo apt-get -y install docker-ce
+  - sudo apt-get -y install docker-ce libgconf2-4
   - sudo service docker restart
   - docker --version
 
@@ -37,7 +38,7 @@ jobs:
       after_success:
         - rm -rf $TRAVIS_BUILD_DIR/.tmp
         - bash <(curl -s https://codecov.io/bash)
-    - script: npm run cluster:start && npm run test:e2e
+    - script: npm run cluster:start && npm run e2e
     - stage: deploy
       script:
         - docker login -u $DOCKER_USER -p $DOCKER_PASS
