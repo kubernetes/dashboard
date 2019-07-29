@@ -106,7 +106,7 @@
     "@types/d3-scale": "2.1.1",
     "@types/file-saver": "2.0.1",
     "ace-builds": "1.4.5",
-    "c3": "0.7.2",
+    "c3": "0.7.3",
     "core-js": "3.1.4",
     "d3": "5.9.7",
     "file-saver": "2.0.2",
