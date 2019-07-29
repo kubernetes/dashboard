@@ -12,27 +12,42 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {CRDObjectDetail} from '@api/backendapi';
-import {Subscription} from 'rxjs';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
+import {MatButtonToggleGroup} from '@angular/material';
+import {HttpClient} from '@angular/common/http';
+import {dump as toYaml, load as fromYaml} from 'js-yaml';
+import {Subscription} from 'rxjs';
+import {CRDObjectDetail} from '@api/backendapi';
 import {ActionbarService, ResourceMeta} from '../../common/services/global/actionbar';
 import {NamespacedResourceService} from '../../common/services/resource/resource';
 import {EndpointManager, Resource} from '../../common/services/resource/endpoint';
 import {NotificationsService} from '../../common/services/global/notifications';
+import {RawResource} from '../../common/resources/rawresource';
+
+enum Modes {
+  JSON = 'json',
+  YAML = 'yaml',
+}
 
 @Component({selector: 'kd-crd-object-detail', templateUrl: './template.html'})
 export class CRDObjectDetailComponent implements OnInit, OnDestroy {
+  @ViewChild('group', {static: true}) buttonToggleGroup: MatButtonToggleGroup;
+
   private objectSubscription_: Subscription;
   private readonly endpoint_ = EndpointManager.resource(Resource.crd, true);
   object: CRDObjectDetail;
+  modes = Modes;
   isInitialized = false;
+  selectedMode = Modes.YAML;
+  objectRaw = '';
 
   constructor(
     private readonly object_: NamespacedResourceService<CRDObjectDetail>,
     private readonly actionbar_: ActionbarService,
     private readonly activatedRoute_: ActivatedRoute,
     private readonly notifications_: NotificationsService,
+    private readonly http_: HttpClient,
   ) {}
 
   ngOnInit(): void {
@@ -44,11 +59,40 @@ export class CRDObjectDetailComponent implements OnInit, OnDestroy {
         this.notifications_.pushErrors(d.errors);
         this.actionbar_.onInit.emit(new ResourceMeta(d.typeMeta.kind, d.objectMeta, d.typeMeta));
         this.isInitialized = true;
+
+        // Get raw resource
+        const url = RawResource.getUrl(this.object.typeMeta, this.object.objectMeta);
+        this.http_
+          .get(url)
+          .toPromise()
+          .then(response => {
+            this.objectRaw = toYaml(response);
+          });
       });
+
+    this.buttonToggleGroup.valueChange.subscribe((selectedMode: Modes) => {
+      this.selectedMode = selectedMode;
+
+      if (this.objectRaw) {
+        this.updateText();
+      }
+    });
   }
 
   ngOnDestroy(): void {
     this.objectSubscription_.unsubscribe();
     this.actionbar_.onDetailsLeave.emit();
+  }
+
+  private updateText(): void {
+    if (this.selectedMode === Modes.YAML) {
+      this.objectRaw = toYaml(JSON.parse(this.objectRaw));
+    } else {
+      this.objectRaw = this.toRawJSON(fromYaml(this.objectRaw));
+    }
+  }
+
+  private toRawJSON(object: {}): string {
+    return JSON.stringify(object, null, 2);
   }
 }

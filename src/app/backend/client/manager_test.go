@@ -22,6 +22,7 @@ import (
 	restful "github.com/emicklei/go-restful"
 	"github.com/kubernetes/dashboard/src/app/backend/args"
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
+	"k8s.io/client-go/rest"
 )
 
 func TestNewClientManager(t *testing.T) {
@@ -284,7 +285,7 @@ func TestClientCmdConfig(t *testing.T) {
 
 func TestVerberClient(t *testing.T) {
 	manager := NewClientManager("", "http://localhost:8080")
-	_, err := manager.VerberClient(&restful.Request{Request: &http.Request{TLS: &tls.ConnectionState{}}})
+	_, err := manager.VerberClient(&restful.Request{Request: &http.Request{TLS: &tls.ConnectionState{}}}, &rest.Config{})
 
 	if err != nil {
 		t.Fatalf("VerberClient(): Expected verber client to be created but got error: %s",

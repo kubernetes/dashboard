@@ -2646,6 +2646,13 @@
           <context context-type="linenumber">77</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="1140bc539f94ea3d77e9ea609436503e62d6cb1f" datatype="html">
+        <source>Spec</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/crd/crdobject/template.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="7db62a1ccd31f1bb55e3532b0f58984a492296a8" datatype="html">
         <source>Create from input</source>
         <context-group purpose="location">

@@ -16,3 +16,18 @@ limitations under the License.
 
 <kd-object-meta [initialized]="isInitialized"
                 [objectMeta]="object?.objectMeta"></kd-object-meta>
+
+<kd-card>
+  <div title
+       i18n>Spec</div>
+
+  <div content>
+    <mat-button-toggle-group #group="matButtonToggleGroup">
+      <mat-button-toggle [value]="modes.YAML"
+                         [checked]="true">YAML</mat-button-toggle>
+      <mat-button-toggle [value]="modes.JSON">JSON</mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <div class="kd-code-block">{{objectRaw}}</div>
+  </div>
+</kd-card>
