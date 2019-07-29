@@ -42,6 +42,7 @@ export class CRDObjectDetailComponent implements OnInit, OnDestroy {
       .subscribe((d: CRDObjectDetail) => {
         this.object = d;
         this.notifications_.pushErrors(d.errors);
+        this.actionbar_.onInit.emit(new ResourceMeta(d.typeMeta.kind, d.objectMeta, d.typeMeta));
         this.isInitialized = true;
       });
   }
