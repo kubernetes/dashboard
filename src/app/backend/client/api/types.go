@@ -15,7 +15,7 @@
 package api
 
 import (
-	"github.com/emicklei/go-restful"
+	restful "github.com/emicklei/go-restful"
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 	pluginclientset "github.com/kubernetes/dashboard/src/app/backend/plugin/client/clientset/versioned"
 	v1 "k8s.io/api/authorization/v1"
@@ -48,7 +48,7 @@ type ClientManager interface {
 	ClientCmdConfig(req *restful.Request) (clientcmd.ClientConfig, error)
 	CSRFKey() string
 	HasAccess(authInfo api.AuthInfo) error
-	VerberClient(req *restful.Request) (ResourceVerber, error)
+	VerberClient(req *restful.Request, config *rest.Config) (ResourceVerber, error)
 	SetTokenManager(manager authApi.TokenManager)
 }
 

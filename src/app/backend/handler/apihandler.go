@@ -1349,7 +1349,13 @@ func (apiHandler *APIHandler) handleUpdateReplicasCount(request *restful.Request
 }
 
 func (apiHandler *APIHandler) handleGetResource(request *restful.Request, response *restful.Response) {
-	verber, err := apiHandler.cManager.VerberClient(request)
+	config, err := apiHandler.cManager.Config(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	verber, err := apiHandler.cManager.VerberClient(request, config)
 	if err != nil {
 		errors.HandleInternalError(response, err)
 		return
@@ -1369,7 +1375,13 @@ func (apiHandler *APIHandler) handleGetResource(request *restful.Request, respon
 
 func (apiHandler *APIHandler) handlePutResource(
 	request *restful.Request, response *restful.Response) {
-	verber, err := apiHandler.cManager.VerberClient(request)
+	config, err := apiHandler.cManager.Config(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	verber, err := apiHandler.cManager.VerberClient(request, config)
 	if err != nil {
 		errors.HandleInternalError(response, err)
 		return
@@ -1394,7 +1406,13 @@ func (apiHandler *APIHandler) handlePutResource(
 
 func (apiHandler *APIHandler) handleDeleteResource(
 	request *restful.Request, response *restful.Response) {
-	verber, err := apiHandler.cManager.VerberClient(request)
+	config, err := apiHandler.cManager.Config(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	verber, err := apiHandler.cManager.VerberClient(request, config)
 	if err != nil {
 		errors.HandleInternalError(response, err)
 		return

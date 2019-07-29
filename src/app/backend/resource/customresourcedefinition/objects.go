@@ -96,7 +96,7 @@ func GetCustomResourceObjectList(client apiextensionsclientset.Interface, config
 		return nil, criticalError
 	}
 
-	restClient, err := newRESTClient(config, getCustomResourceDefinitionGroupVersion(customResourceDefinition))
+	restClient, err := NewRESTClient(config, customResourceDefinition)
 	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
 	if criticalError != nil {
 		return nil, criticalError
@@ -116,12 +116,16 @@ func GetCustomResourceObjectList(client apiextensionsclientset.Interface, config
 	if criticalError != nil {
 		return nil, criticalError
 	}
+	list.Errors = nonCriticalErrors
 
 	// Return only slice of data, pagination is done here.
 	crdObjectCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toObjectCells(list.Items), dsQuery)
 	list.Items = fromObjectCells(crdObjectCells)
 	list.ListMeta = api.ListMeta{TotalItems: filteredTotal}
-	list.Errors = nonCriticalErrors
+
+	for i := range list.Items {
+		replaceCRDObjectKind(&list.Items[i], customResourceDefinition.Name)
+	}
 
 	return list, nil
 }
@@ -138,7 +142,7 @@ func GetCustomResourceObjectDetail(client apiextensionsclientset.Interface, name
 		return nil, criticalError
 	}
 
-	restClient, err := newRESTClient(config, getCustomResourceDefinitionGroupVersion(customResourceDefinition))
+	restClient, err := NewRESTClient(config, customResourceDefinition)
 	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
 	if criticalError != nil {
 		return nil, criticalError
@@ -146,7 +150,7 @@ func GetCustomResourceObjectDetail(client apiextensionsclientset.Interface, name
 
 	raw, err := restClient.Get().
 		Namespace(namespace.ToRequestParam()).
-		Resource(customResourceDefinition.Spec.Names.Plural).
+		Resource(customResourceDefinition.Status.AcceptedNames.Plural).
 		Name(name).Do().Raw()
 	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
 	if criticalError != nil {
@@ -158,7 +162,14 @@ func GetCustomResourceObjectDetail(client apiextensionsclientset.Interface, name
 	if criticalError != nil {
 		return nil, criticalError
 	}
-
 	detail.Errors = nonCriticalErrors
+
+	replaceCRDObjectKind(&detail.CustomResourceObject, customResourceDefinition.Name)
 	return detail, nil
+}
+
+// replaceCRDObjectKind sets the object kind to the full name of the CRD.
+// E.g. changes "Foo" to "foos.samplecontroller.k8s.io"
+func replaceCRDObjectKind(object *CustomResourceObject, kind string) {
+	object.TypeMeta.Kind = kind
 }
