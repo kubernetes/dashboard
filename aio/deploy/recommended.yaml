@@ -186,6 +186,8 @@ spec:
       labels:
         k8s-app: kubernetes-dashboard
     spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
       containers:
         - name: kubernetes-dashboard
           image: kubernetesui/dashboard:v2.0.0-beta2
@@ -261,6 +263,8 @@ spec:
       labels:
         k8s-app: dashboard-metrics-scraper
     spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
       containers:
         - name: dashboard-metrics-scraper
           image: kubernetesui/metrics-scraper:v1.0.1
