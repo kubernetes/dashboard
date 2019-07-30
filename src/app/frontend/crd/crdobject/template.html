@@ -19,7 +19,7 @@ limitations under the License.
 
 <kd-card>
   <div title
-       i18n>Spec</div>
+       i18n>Data</div>
 
   <div content>
     <mat-button-toggle-group #group="matButtonToggleGroup">
@@ -28,6 +28,6 @@ limitations under the License.
       <mat-button-toggle [value]="modes.JSON">JSON</mat-button-toggle>
     </mat-button-toggle-group>
 
-    <pre><code>{{objectRaw}}</code></pre>
+    <div class="kd-code-block" #code></div>
   </div>
 </kd-card>

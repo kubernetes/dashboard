@@ -2646,10 +2646,18 @@
           <context context-type="linenumber">77</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="1140bc539f94ea3d77e9ea609436503e62d6cb1f" datatype="html">
-        <source>Spec</source>
+      <trans-unit id="5ad4eecbd0fe09c34678fefce317a052af39dc96" datatype="html">
+        <source>Data</source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/crdobject/template.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/config/configmap/detail/template.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/config/secret/detail/template.html</context>
           <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
@@ -3967,6 +3975,7 @@
           <context context-type="linenumber">320</context>
         </context-group>
       </trans-unit>
+<<<<<<< HEAD
       <trans-unit id="5ad4eecbd0fe09c34678fefce317a052af39dc96" datatype="html">
         <source>Data</source>
         <context-group purpose="location">
@@ -3975,6 +3984,12 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/config/secret/detail/template.html</context>
+=======
+      <trans-unit id="efe35bf14ba9ea3297753045ea24ba49a01e09a8" datatype="html">
+        <source>Storage Class information</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/cluster/storageclass/detail/template.html</context>
+>>>>>>> add syntax highlighting
           <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>

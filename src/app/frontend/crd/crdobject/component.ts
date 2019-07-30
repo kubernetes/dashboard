@@ -12,13 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {MatButtonToggleGroup} from '@angular/material';
 import {HttpClient} from '@angular/common/http';
-import {dump as toYaml, load as fromYaml} from 'js-yaml';
+import {dump as toYaml} from 'js-yaml';
 import {Subscription} from 'rxjs';
 import {CRDObjectDetail} from '@api/backendapi';
+import {highlightAuto} from 'highlight.js';
 import {ActionbarService, ResourceMeta} from '../../common/services/global/actionbar';
 import {NamespacedResourceService} from '../../common/services/resource/resource';
 import {EndpointManager, Resource} from '../../common/services/resource/endpoint';
@@ -33,6 +34,7 @@ enum Modes {
 @Component({selector: 'kd-crd-object-detail', templateUrl: './template.html'})
 export class CRDObjectDetailComponent implements OnInit, OnDestroy {
   @ViewChild('group', {static: true}) buttonToggleGroup: MatButtonToggleGroup;
+  @ViewChild('code', {static: true}) codeRef: ElementRef;
 
   private objectSubscription_: Subscription;
   private readonly endpoint_ = EndpointManager.resource(Resource.crd, true);
@@ -40,7 +42,7 @@ export class CRDObjectDetailComponent implements OnInit, OnDestroy {
   modes = Modes;
   isInitialized = false;
   selectedMode = Modes.YAML;
-  objectRaw = '';
+  objectRaw: {[s: string]: string} = {};
 
   constructor(
     private readonly object_: NamespacedResourceService<CRDObjectDetail>,
@@ -48,6 +50,7 @@ export class CRDObjectDetailComponent implements OnInit, OnDestroy {
     private readonly activatedRoute_: ActivatedRoute,
     private readonly notifications_: NotificationsService,
     private readonly http_: HttpClient,
+    private readonly renderer_: Renderer2,
   ) {}
 
   ngOnInit(): void {
@@ -66,14 +69,18 @@ export class CRDObjectDetailComponent implements OnInit, OnDestroy {
           .get(url)
           .toPromise()
           .then(response => {
-            this.objectRaw = toYaml(response);
+            this.objectRaw = {
+              json: highlightAuto(`${this.toRawJSON(response)}`, ['json']).value,
+              yaml: highlightAuto(`${toYaml(response)}`, ['yaml']).value,
+            };
+            this.updateText();
           });
       });
 
     this.buttonToggleGroup.valueChange.subscribe((selectedMode: Modes) => {
       this.selectedMode = selectedMode;
 
-      if (this.objectRaw) {
+      if (Object.keys(this.objectRaw).length > 0) {
         this.updateText();
       }
     });
@@ -85,11 +92,11 @@ export class CRDObjectDetailComponent implements OnInit, OnDestroy {
   }
 
   private updateText(): void {
-    if (this.selectedMode === Modes.YAML) {
-      this.objectRaw = toYaml(JSON.parse(this.objectRaw));
-    } else {
-      this.objectRaw = this.toRawJSON(fromYaml(this.objectRaw));
-    }
+    this.renderer_.setProperty(
+      this.codeRef.nativeElement,
+      'innerHTML',
+      this.objectRaw[this.selectedMode],
+    );
   }
 
   private toRawJSON(object: {}): string {
