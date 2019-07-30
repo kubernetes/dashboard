@@ -72,7 +72,9 @@ func (verber *resourceVerber) getResourceSpecFromKind(kind string, namespaceSet 
 		var crd apiextensions.CustomResourceDefinition
 		err = verber.apiExtensionsClient.Get().Resource("customresourcedefinitions").Name(kind).Do().Into(&crd)
 		if err != nil {
-			err = errors.NewInvalid(fmt.Sprintf("Unknown resource kind: %s", kind))
+			if errors.IsNotFoundError(err) {
+				err = errors.NewInvalid(fmt.Sprintf("Unknown resource kind: %s", kind))
+			}
 			return
 		}
 

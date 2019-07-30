@@ -121,7 +121,10 @@ func TestGetShouldPropagateErrorsAndChoseClient(t *testing.T) {
 }
 
 func TestDeleteShouldThrowErrorOnUnknownResourceKind(t *testing.T) {
-	verber := resourceVerber{client: &FakeRESTClient{}}
+	verber := resourceVerber{
+		client:              &FakeRESTClient{},
+		apiExtensionsClient: &FakeRESTClient{err: errors.NewNotFound("err")},
+	}
 
 	err := verber.Delete("foo", true, "bar", "baz")
 
@@ -131,7 +134,10 @@ func TestDeleteShouldThrowErrorOnUnknownResourceKind(t *testing.T) {
 }
 
 func TestGetShouldThrowErrorOnUnknownResourceKind(t *testing.T) {
-	verber := resourceVerber{client: &FakeRESTClient{}}
+	verber := resourceVerber{
+		client:              &FakeRESTClient{},
+		apiExtensionsClient: &FakeRESTClient{err: errors.NewNotFound("err")},
+	}
 
 	_, err := verber.Get("foo", true, "bar", "baz")
 
@@ -141,7 +147,10 @@ func TestGetShouldThrowErrorOnUnknownResourceKind(t *testing.T) {
 }
 
 func TestPutShouldThrowErrorOnUnknownResourceKind(t *testing.T) {
-	verber := resourceVerber{client: &FakeRESTClient{}}
+	verber := resourceVerber{
+		client:              &FakeRESTClient{},
+		apiExtensionsClient: &FakeRESTClient{err: errors.NewNotFound("err")},
+	}
 
 	err := verber.Put("foo", false, "", "baz", nil)
 
