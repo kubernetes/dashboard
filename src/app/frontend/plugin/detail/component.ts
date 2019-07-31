@@ -7,12 +7,14 @@ import {ActivatedRoute} from "@angular/router";
   template: `
     <div>
       <div class="plugin">
-        <ng-template #pluginViewRef></ng-template>
+        <mat-card *ngIf="entryError">This plugin has no entry component</mat-card>
+        <ng-template #pluginViewRef #elseBlock></ng-template>
       </div>
     </div>`
 })
 export class PluginHolderComponent implements OnInit {
   @ViewChild('pluginViewRef', {read: ViewContainerRef, static: true}) vcRef: ViewContainerRef;
+  entryError = false;
 
   constructor(private injector: Injector, private pluginLoader: PluginLoaderService,
               private readonly activatedRoute_: ActivatedRoute) {}
@@ -31,9 +33,13 @@ export class PluginHolderComponent implements OnInit {
       const moduleRef = moduleFactory.create(this.injector);
       // tslint:disable-next-line:no-any
       const entryComponent = (moduleFactory.moduleType as any).entry;
-      const compFactory =
+      try {
+        const compFactory =
           moduleRef.componentFactoryResolver.resolveComponentFactory(entryComponent);
-      this.vcRef.createComponent(compFactory);
+        this.vcRef.createComponent(compFactory);
+      } catch (e) {
+        this.entryError = true;
+      }
     });
   }
 }
