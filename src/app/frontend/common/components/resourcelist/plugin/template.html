@@ -53,7 +53,7 @@ limitations under the License.
                          disableClear="true"
                          i18n>Dependencies</mat-header-cell>
         <mat-cell *matCellDef="let plugin">
-          <span>{{ plugin.dependencies.length }}</span>
+          <span>{{ plugin.dependencies | commaSeparated }}</span>
         </mat-cell>
       </ng-container>
 
