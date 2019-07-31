@@ -56,7 +56,7 @@ var (
 		"to connect to in the format of protocol://address:port, e.g., "+
 		"http://localhost:8080. If not specified, the assumption is that the binary runs inside a "+
 		"Kubernetes cluster and local discovery is attempted.")
-	argMetricsProvider = pflag.String("metrics-provider", "sidecar", "Select provider type for metrics. Defaults to 'sidecar'")
+	argMetricsProvider = pflag.String("metrics-provider", "sidecar", "Select provider type for metrics. Defaults to 'sidecar' and will not check metrics when 'none'")
 	argHeapsterHost    = pflag.String("heapster-host", "", "The address of the Heapster Apiserver "+
 		"to connect to in the format of protocol://address:port, e.g., "+
 		"http://localhost:8082. If not specified, the assumption is that the binary runs inside a "+
@@ -130,8 +130,10 @@ func main() {
 	case "heapster":
 		integrationManager.Metric().ConfigureHeapster(args.Holder.GetHeapsterHost()).
 			EnableWithRetry(integrationapi.HeapsterIntegrationID, time.Duration(args.Holder.GetMetricClientCheckPeriod()))
+	case "none":
+		log.Print("no metrics provider selected, will not check metrics.")
 	default:
-		log.Printf("Invalid or metrics provider selected: %s", metricsProvider)
+		log.Printf("Invalid metrics provider selected: %s", metricsProvider)
 		log.Print("Defaulting to use the Sidecar provider.")
 		integrationManager.Metric().ConfigureSidecar(args.Holder.GetSidecarHost()).
 			EnableWithRetry(integrationapi.SidecarIntegrationID, time.Duration(args.Holder.GetMetricClientCheckPeriod()))
