@@ -194,14 +194,14 @@ func (self LogLines) getLineIndex(logLineId *LogLineId) int {
 		return 0
 	}
 	logTimestamp := logLineId.LogTimestamp
-	matchingStartedAt := sort.Search(len(self), func(i int) bool {
+
+	matchingStartedAt := 0
+	matchingStartedAt = sort.Search(len(self), func(i int) bool {
 		return self[i].Timestamp >= logTimestamp
 	})
 
 	linesMatched := 0
-	if matchingStartedAt == len(self) { // match not found
-		matchingStartedAt = 0
-	} else {
+	if matchingStartedAt < len(self) && self[matchingStartedAt].Timestamp == logTimestamp { // match found
 		for (matchingStartedAt+linesMatched) < len(self) && self[matchingStartedAt+linesMatched].Timestamp == logTimestamp {
 			linesMatched += 1
 		}
