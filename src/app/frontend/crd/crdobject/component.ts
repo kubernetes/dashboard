@@ -43,6 +43,7 @@ export class CRDObjectDetailComponent implements OnInit, OnDestroy {
   isInitialized = false;
   selectedMode = Modes.YAML;
   objectRaw: {[s: string]: string} = {};
+  eventListEndpoint: string;
 
   constructor(
     private readonly object_: NamespacedResourceService<CRDObjectDetail>,
@@ -55,6 +56,12 @@ export class CRDObjectDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     const {crdName, namespace, objectName} = this.activatedRoute_.snapshot.params;
+    this.eventListEndpoint = this.endpoint_.child(
+      `${crdName}/${objectName}`,
+      Resource.event,
+      namespace,
+    );
+
     this.objectSubscription_ = this.object_
       .get(this.endpoint_.child(crdName, objectName, namespace))
       .subscribe((d: CRDObjectDetail) => {
