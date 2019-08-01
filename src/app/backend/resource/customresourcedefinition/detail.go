@@ -15,7 +15,7 @@
 package customresourcedefinition
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	apiextensions "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
@@ -26,14 +26,19 @@ import (
 
 type CustomResourceDefinitionDetail struct {
 	CustomResourceDefinition `json:",inline"`
+
+	Versions   []CustomResourceDefinitionVersion `json:"versions,omitempty"`
+	Conditions []common.Condition                `json:"conditions"`
+	Objects    CustomResourceObjectList          `json:"objects"`
+
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
-// CustomResourceDefinition represents a custom resource definition.
-type CustomResourceDefinition struct {
-	ObjectMeta api.ObjectMeta           `json:"objectMeta"`
-	TypeMeta   api.TypeMeta             `json:"typeMeta"`
-	Version    string                   `json:"version"`
-	Objects    CustomResourceObjectList `json:"objects"`
+type CustomResourceDefinitionVersion struct {
+	Name    string `json:"name"`
+	Served  bool   `json:"served"`
+	Storage bool   `json:"storage"`
 }
 
 // GetCustomResourceDefinitionDetail returns detailed information about a custom resource definition.
@@ -41,25 +46,41 @@ func GetCustomResourceDefinitionDetail(client apiextensionsclientset.Interface, 
 	customResourceDefinition, err := client.ApiextensionsV1beta1().
 		CustomResourceDefinitions().
 		Get(name, metav1.GetOptions{})
-	if err != nil {
-		return nil, err
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
 	objects, err := GetCustomResourceObjectList(client, config, &common.NamespaceQuery{}, dataselect.DefaultDataSelect, name)
-	if err != nil {
-		return nil, err
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	return toCustomResourceDefinitionDetail(customResourceDefinition, objects), nil
+	return toCustomResourceDefinitionDetail(customResourceDefinition, *objects, nonCriticalErrors), nil
 }
 
-func toCustomResourceDefinitionDetail(customResourceDefinition *apiextensions.CustomResourceDefinition, objects CustomResourceObjectList) *CustomResourceDefinitionDetail {
+func toCustomResourceDefinitionDetail(crd *apiextensions.CustomResourceDefinition, objects CustomResourceObjectList, nonCriticalErrors []error) *CustomResourceDefinitionDetail {
 	return &CustomResourceDefinitionDetail{
-		CustomResourceDefinition{
-			ObjectMeta: api.NewObjectMeta(customResourceDefinition.ObjectMeta),
-			TypeMeta:   api.NewTypeMeta(api.ResourceKindCustomResourceDefinition),
-			Version:    customResourceDefinition.Spec.Version,
-			Objects:    objects,
-		},
+		CustomResourceDefinition: toCustomResourceDefinition(crd),
+		Versions:                 getCRDVersions(crd),
+		Conditions:               getCRDConditions(crd),
+		Objects:                  objects,
+		Errors:                   nonCriticalErrors,
 	}
+}
+
+func getCRDVersions(crd *apiextensions.CustomResourceDefinition) []CustomResourceDefinitionVersion {
+	crdVersions := make([]CustomResourceDefinitionVersion, 0, len(crd.Spec.Versions))
+	if len(crd.Spec.Versions) > 0 {
+		for _, version := range crd.Spec.Versions {
+			crdVersions = append(crdVersions, CustomResourceDefinitionVersion{
+				Name:    version.Name,
+				Served:  version.Served,
+				Storage: version.Storage,
+			})
+		}
+	}
+
+	return crdVersions
 }

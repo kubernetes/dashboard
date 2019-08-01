@@ -15,9 +15,9 @@
 package customresourcedefinition
 
 import (
-	"strings"
-
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	api "k8s.io/api/core/v1"
 	apiextensions "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 )
@@ -54,17 +54,17 @@ func fromCells(cells []dataselect.DataCell) []apiextensions.CustomResourceDefini
 	return std
 }
 
-// The code below allows to perform complex data section on ThirdPartyResourceObject.
+// The code below allows to perform complex data section on CustomResourceObject.
 type CustomResourceObjectCell CustomResourceObject
 
 func (self CustomResourceObjectCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
 	switch name {
 	case dataselect.NameProperty:
-		return dataselect.StdComparableString(self.Metadata.Name)
+		return dataselect.StdComparableString(self.ObjectMeta.Name)
 	case dataselect.CreationTimestampProperty:
-		return dataselect.StdComparableTime(self.Metadata.CreationTimestamp.Time)
+		return dataselect.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
 	case dataselect.NamespaceProperty:
-		return dataselect.StdComparableString(self.Metadata.Namespace)
+		return dataselect.StdComparableString(self.ObjectMeta.Namespace)
 	default:
 		// if name is not supported then just return a constant dummy value, sort will have no effect.
 		return nil
@@ -90,16 +90,22 @@ func fromObjectCells(cells []dataselect.DataCell) []CustomResourceObject {
 // getCustomResourceDefinitionGroupVersion returns first group version of custom resource definition.
 // It's also known as preferredVersion.
 func getCustomResourceDefinitionGroupVersion(crd *apiextensions.CustomResourceDefinition) schema.GroupVersion {
-	version := crd.Spec.Version
-	group := ""
-	if strings.Contains(crd.ObjectMeta.Name, ".") {
-		group = crd.ObjectMeta.Name[strings.Index(crd.ObjectMeta.Name, ".")+1:]
-	} else {
-		group = crd.ObjectMeta.Name
-	}
-
 	return schema.GroupVersion{
-		Group:   group,
-		Version: version,
+		Group:   crd.Spec.Group,
+		Version: crd.Spec.Version,
 	}
+}
+
+func getCRDConditions(crd *apiextensions.CustomResourceDefinition) []common.Condition {
+	var conditions []common.Condition
+	for _, condition := range crd.Status.Conditions {
+		conditions = append(conditions, common.Condition{
+			Type:               string(condition.Type),
+			Status:             api.ConditionStatus(condition.Status),
+			LastTransitionTime: condition.LastTransitionTime,
+			Reason:             condition.Reason,
+			Message:            condition.Message,
+		})
+	}
+	return conditions
 }

@@ -51,9 +51,10 @@ func TestGetCustomResourceDefinition(t *testing.T) {
 				ListMeta: api.ListMeta{TotalItems: 1},
 				Items: []CustomResourceDefinition{
 					{
-						ObjectMeta: api.ObjectMeta{Name: "foos.samplecontroller.k8s.io"},
-						TypeMeta:   api.TypeMeta{Kind: api.ResourceKindCustomResourceDefinition},
-						Version:    "v1alpha1",
+						ObjectMeta:  api.ObjectMeta{Name: "foos.samplecontroller.k8s.io"},
+						TypeMeta:    api.TypeMeta{Kind: api.ResourceKindCustomResourceDefinition},
+						Version:     "v1alpha1",
+						Established: apiextensions.ConditionUnknown,
 					},
 				},
 				Errors: []error{},

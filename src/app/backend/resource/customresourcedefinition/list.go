@@ -34,6 +34,17 @@ type CustomResourceDefinitionList struct {
 	Errors []error `json:"errors"`
 }
 
+// CustomResourceDefinition represents a custom resource definition.
+type CustomResourceDefinition struct {
+	ObjectMeta  api.ObjectMeta                              `json:"objectMeta"`
+	TypeMeta    api.TypeMeta                                `json:"typeMeta"`
+	Version     string                                      `json:"version,omitempty"`
+	Group       string                                      `json:"group"`
+	Scope       apiextensions.ResourceScope                 `json:"scope"`
+	Names       apiextensions.CustomResourceDefinitionNames `json:"names"`
+	Established apiextensions.ConditionStatus               `json:"established"`
+}
+
 // GetCustomResourceDefinitionList returns all the custom resource definitions in the cluster.
 func GetCustomResourceDefinitionList(client apiextensionsclientset.Interface, dsQuery *dataselect.DataSelectQuery) (*CustomResourceDefinitionList, error) {
 	channel := common.GetCustomResourceDefinitionChannel(client, 1)
@@ -68,8 +79,21 @@ func toCustomResourceDefinitionList(crds []apiextensions.CustomResourceDefinitio
 
 func toCustomResourceDefinition(crd *apiextensions.CustomResourceDefinition) CustomResourceDefinition {
 	return CustomResourceDefinition{
-		ObjectMeta: api.NewObjectMeta(crd.ObjectMeta),
-		TypeMeta:   api.NewTypeMeta(api.ResourceKindCustomResourceDefinition),
-		Version:    crd.Spec.Version,
+		ObjectMeta:  api.NewObjectMeta(crd.ObjectMeta),
+		TypeMeta:    api.NewTypeMeta(api.ResourceKindCustomResourceDefinition),
+		Version:     crd.Spec.Version,
+		Group:       crd.Spec.Group,
+		Scope:       crd.Spec.Scope,
+		Names:       crd.Status.AcceptedNames,
+		Established: getCRDConditionStatus(crd, apiextensions.Established),
 	}
+}
+
+func getCRDConditionStatus(node *apiextensions.CustomResourceDefinition, conditionType apiextensions.CustomResourceDefinitionConditionType) apiextensions.ConditionStatus {
+	for _, condition := range node.Status.Conditions {
+		if condition.Type == conditionType {
+			return condition.Status
+		}
+	}
+	return apiextensions.ConditionUnknown
 }

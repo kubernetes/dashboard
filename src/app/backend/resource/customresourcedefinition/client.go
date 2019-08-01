@@ -15,14 +15,15 @@
 package customresourcedefinition
 
 import (
+	apiextensions "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
-	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/runtime/serializer"
 	"k8s.io/client-go/rest"
 )
 
-func newRESTClient(config *rest.Config, groupVersion schema.GroupVersion) (*rest.RESTClient, error) {
+func NewRESTClient(config *rest.Config, crd *apiextensions.CustomResourceDefinition) (*rest.RESTClient, error) {
+	groupVersion := getCustomResourceDefinitionGroupVersion(crd)
 	scheme := runtime.NewScheme()
 	schemeBuilder := runtime.NewSchemeBuilder(
 		func(scheme *runtime.Scheme) error {
@@ -30,8 +31,6 @@ func newRESTClient(config *rest.Config, groupVersion schema.GroupVersion) (*rest
 				groupVersion,
 				&metav1.ListOptions{},
 				&metav1.DeleteOptions{},
-				&CustomResourceObject{},
-				&CustomResourceObjectList{},
 			)
 			return nil
 		})
@@ -44,10 +43,5 @@ func newRESTClient(config *rest.Config, groupVersion schema.GroupVersion) (*rest
 	config.ContentType = runtime.ContentTypeJSON
 	config.NegotiatedSerializer = serializer.DirectCodecFactory{CodecFactory: serializer.NewCodecFactory(scheme)}
 
-	client, err := rest.RESTClientFor(config)
-	if err != nil {
-		return nil, err
-	}
-
-	return client, nil
+	return rest.RESTClientFor(config)
 }

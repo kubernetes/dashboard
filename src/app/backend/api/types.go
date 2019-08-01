@@ -154,17 +154,19 @@ const (
 	ClientTypeAPIExtensionsClient = "apiextensionsclient"
 )
 
-// Mapping from resource kind to K8s apiserver API path. This is mostly pluralization, because
-// K8s apiserver uses plural paths and this project singular.
-// Must be kept in sync with the list of supported kinds.
-var KindToAPIMapping = map[string]struct {
+type APIMapping struct {
 	// Kubernetes resource name.
 	Resource string
 	// Client type used by given resource, i.e. deployments are using extension client.
 	ClientType ClientType
 	// Is this object global scoped (not below a namespace).
 	Namespaced bool
-}{
+}
+
+// Mapping from resource kind to K8s apiserver API path. This is mostly pluralization, because
+// K8s apiserver uses plural paths and this project singular.
+// Must be kept in sync with the list of supported kinds.
+var KindToAPIMapping = map[string]APIMapping{
 	ResourceKindConfigMap:                {"configmaps", ClientTypeDefault, true},
 	ResourceKindDaemonSet:                {"daemonsets", ClientTypeExtensionClient, true},
 	ResourceKindDeployment:               {"deployments", ClientTypeExtensionClient, true},

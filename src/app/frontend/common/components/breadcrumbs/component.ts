@@ -50,7 +50,9 @@ export class BreadcrumbsComponent implements OnInit {
     const currentRoute = this._getCurrentRoute();
     const url = this._router.url.includes('?') ? this._router.url.split('?')[0] : '';
     let urlArray = url.split('/');
-    let routeParamsCount = currentRoute.routeConfig.path.split('/').length;
+    let routeParamsCount = currentRoute.routeConfig.data.routeParamsCount
+      ? +currentRoute.routeConfig.data.routeParamsCount
+      : currentRoute.routeConfig.path.split('/').length;
 
     this.breadcrumbs = [
       {

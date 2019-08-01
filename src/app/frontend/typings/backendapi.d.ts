@@ -78,6 +78,15 @@ export interface CronJobList extends ResourceList {
   status: Status;
 }
 
+export interface CRDList extends ResourceList {
+  items: CRD[];
+}
+
+export interface CRDObjectList extends ResourceList {
+  typeMeta: TypeMeta;
+  items: CRDObject[];
+}
+
 export interface DaemonSetList extends ResourceList {
   daemonSets: DaemonSet[];
   status: Status;
@@ -133,7 +142,7 @@ export interface PodList extends ResourceList {
   pods: Pod[];
   status: Status;
   podInfo?: PodInfo;
-  cumulativeMetrics: Metric[]|null;
+  cumulativeMetrics: Metric[] | null;
 }
 
 export interface ReplicaSetList extends ResourceList {
@@ -184,6 +193,15 @@ export interface CronJob extends Resource {
   active: number;
   lastSchedule: string;
 }
+
+export interface CRD extends Resource {
+  group: string;
+  scope: string;
+  nameKind: string;
+  established: string;
+}
+
+export interface CRDObject extends Resource {}
 
 export interface DaemonSet extends Resource {
   podInfo: PodInfo;
@@ -432,6 +450,18 @@ export interface StorageClassDetail extends ResourceDetail {
 export interface ConfigMapDetail extends ResourceDetail {
   data: StringMap;
 }
+
+export interface CRDDetail extends ResourceDetail {
+  version?: string;
+  group: string;
+  scope: string;
+  names: CRDNames;
+  versions: CRDVersion[];
+  objects: CRDObjectList;
+  conditions: Condition[];
+}
+
+export interface CRDObjectDetail extends ResourceDetail {}
 
 export interface JobDetail extends ResourceDetail {
   podInfo: PodInfo;
@@ -706,6 +736,21 @@ export interface Container {
   args: string[];
 }
 
+export interface CRDNames {
+  plural: string;
+  singular?: string;
+  shortNames?: string[];
+  kind: string;
+  listKind?: string;
+  categories?: string[];
+}
+
+export interface CRDVersion {
+  name: string;
+  served: boolean;
+  storage: boolean;
+}
+
 export interface PodMetrics {
   cpuUsage: number;
   memoryUsage: number;
@@ -778,9 +823,9 @@ export interface NodeTaint {
 }
 
 export interface PortMapping {
-  port: number|null;
+  port: number | null;
   protocol: string;
-  targetPort: number|null;
+  targetPort: number | null;
 }
 
 export interface EnvironmentVariable {
@@ -880,8 +925,8 @@ export interface FlockerVolumeSource {
 }
 
 export interface RollingUpdateStrategy {
-  maxSurge: (number|string);
-  maxUnavailable: (number|string);
+  maxSurge: number | string;
+  maxUnavailable: number | string;
 }
 
 export interface DeploymentInfo {

@@ -18,7 +18,7 @@ import (
 	"log"
 	"strings"
 
-	"github.com/emicklei/go-restful"
+	restful "github.com/emicklei/go-restful"
 	pluginclientset "github.com/kubernetes/dashboard/src/app/backend/plugin/client/clientset/versioned"
 	v1 "k8s.io/api/authorization/v1"
 	apiextensionsclientset "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
@@ -241,7 +241,7 @@ func (self *clientManager) HasAccess(authInfo api.AuthInfo) error {
 }
 
 // VerberClient returns new verber client based on authentication information extracted from request
-func (self *clientManager) VerberClient(req *restful.Request) (clientapi.ResourceVerber, error) {
+func (self *clientManager) VerberClient(req *restful.Request, config *rest.Config) (clientapi.ResourceVerber, error) {
 	k8sClient, err := self.Client(req)
 	if err != nil {
 		return nil, err
@@ -255,7 +255,7 @@ func (self *clientManager) VerberClient(req *restful.Request) (clientapi.Resourc
 	return NewResourceVerber(k8sClient.CoreV1().RESTClient(),
 		k8sClient.ExtensionsV1beta1().RESTClient(), k8sClient.AppsV1().RESTClient(),
 		k8sClient.BatchV1().RESTClient(), k8sClient.BatchV1beta1().RESTClient(), k8sClient.AutoscalingV1().RESTClient(),
-		k8sClient.StorageV1().RESTClient(), k8sClient.RbacV1().RESTClient(), apiextensionsclient.ApiextensionsV1beta1().RESTClient()), nil
+		k8sClient.StorageV1().RESTClient(), k8sClient.RbacV1().RESTClient(), apiextensionsclient.ApiextensionsV1beta1().RESTClient(), config), nil
 }
 
 // SetTokenManager sets the token manager that will be used for token decryption.

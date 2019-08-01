@@ -20,7 +20,8 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
-
+	"github.com/kubernetes/dashboard/src/app/backend/resource/customresourcedefinition"
+	apiextensions "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	restclient "k8s.io/client-go/rest"
@@ -38,6 +39,7 @@ type resourceVerber struct {
 	storageClient       RESTClient
 	rbacClient          RESTClient
 	apiExtensionsClient RESTClient
+	config              *restclient.Config
 }
 
 func (verber *resourceVerber) getRESTClientByType(clientType api.ClientType) RESTClient {
@@ -63,6 +65,46 @@ func (verber *resourceVerber) getRESTClientByType(clientType api.ClientType) RES
 	}
 }
 
+func (verber *resourceVerber) getResourceSpecFromKind(kind string, namespaceSet bool) (client RESTClient, resourceSpec api.APIMapping, err error) {
+	resourceSpec, ok := api.KindToAPIMapping[kind]
+	if !ok {
+		// check if kind is CRD
+		var crd apiextensions.CustomResourceDefinition
+		err = verber.apiExtensionsClient.Get().Resource("customresourcedefinitions").Name(kind).Do().Into(&crd)
+		if err != nil {
+			if errors.IsNotFoundError(err) {
+				err = errors.NewInvalid(fmt.Sprintf("Unknown resource kind: %s", kind))
+			}
+			return
+		}
+
+		client, err = customresourcedefinition.NewRESTClient(verber.config, &crd)
+		if err != nil {
+			return
+		}
+
+		resourceSpec = api.APIMapping{
+			Resource:   crd.Status.AcceptedNames.Plural,
+			Namespaced: crd.Spec.Scope == apiextensions.NamespaceScoped,
+		}
+	}
+
+	if namespaceSet != resourceSpec.Namespaced {
+		if namespaceSet {
+			err = errors.NewInvalid(fmt.Sprintf("Set namespace for not-namespaced resource kind: %s", kind))
+			return
+		} else {
+			err = errors.NewInvalid(fmt.Sprintf("Set no namespace for namespaced resource kind: %s", kind))
+			return
+		}
+	}
+
+	if client == nil {
+		client = verber.getRESTClientByType(resourceSpec.ClientType)
+	}
+	return
+}
+
 // RESTClient is an interface for REST operations used in this file.
 type RESTClient interface {
 	Delete() *restclient.Request
@@ -73,27 +115,17 @@ type RESTClient interface {
 // NewResourceVerber creates a new resource verber that uses the given client for performing operations.
 func NewResourceVerber(client, extensionsClient, appsClient,
 	batchClient, betaBatchClient, autoscalingClient, storageClient,
-	rbacClient, apiExtensionsClient RESTClient) clientapi.ResourceVerber {
+	rbacClient, apiExtensionsClient RESTClient, config *restclient.Config) clientapi.ResourceVerber {
 	return &resourceVerber{client, extensionsClient, appsClient,
-		batchClient, betaBatchClient, autoscalingClient, storageClient, rbacClient, apiExtensionsClient}
+		batchClient, betaBatchClient, autoscalingClient, storageClient, rbacClient, apiExtensionsClient, config}
 }
 
 // Delete deletes the resource of the given kind in the given namespace with the given name.
 func (verber *resourceVerber) Delete(kind string, namespaceSet bool, namespace string, name string) error {
-	resourceSpec, ok := api.KindToAPIMapping[kind]
-	if !ok {
-		return errors.NewInvalid(fmt.Sprintf("Unknown resource kind: %s", kind))
+	client, resourceSpec, err := verber.getResourceSpecFromKind(kind, namespaceSet)
+	if err != nil {
+		return err
 	}
-
-	if namespaceSet != resourceSpec.Namespaced {
-		if namespaceSet {
-			return errors.NewInvalid(fmt.Sprintf("Set namespace for not-namespaced resource kind: %s", kind))
-		} else {
-			return errors.NewInvalid(fmt.Sprintf("Set no namespace for namespaced resource kind: %s", kind))
-		}
-	}
-
-	client := verber.getRESTClientByType(resourceSpec.ClientType)
 
 	// Do cascade delete by default, as this is what users typically expect.
 	defaultPropagationPolicy := v1.DeletePropagationForeground
@@ -114,20 +146,10 @@ func (verber *resourceVerber) Delete(kind string, namespaceSet bool, namespace s
 func (verber *resourceVerber) Put(kind string, namespaceSet bool, namespace string, name string,
 	object *runtime.Unknown) error {
 
-	resourceSpec, ok := api.KindToAPIMapping[kind]
-	if !ok {
-		return errors.NewInvalid(fmt.Sprintf("Unknown resource kind: %s", kind))
+	client, resourceSpec, err := verber.getResourceSpecFromKind(kind, namespaceSet)
+	if err != nil {
+		return err
 	}
-
-	if namespaceSet != resourceSpec.Namespaced {
-		if namespaceSet {
-			return errors.NewInvalid(fmt.Sprintf("Set namespace for not-namespaced resource kind: %s", kind))
-		} else {
-			return errors.NewInvalid(fmt.Sprintf("Set no namespace for namespaced resource kind: %s", kind))
-		}
-	}
-
-	client := verber.getRESTClientByType(resourceSpec.ClientType)
 
 	req := client.Put().
 		Resource(resourceSpec.Resource).
@@ -144,20 +166,11 @@ func (verber *resourceVerber) Put(kind string, namespaceSet bool, namespace stri
 
 // Get gets the resource of the given kind in the given namespace with the given name.
 func (verber *resourceVerber) Get(kind string, namespaceSet bool, namespace string, name string) (runtime.Object, error) {
-	resourceSpec, ok := api.KindToAPIMapping[kind]
-	if !ok {
-		return nil, errors.NewInvalid(fmt.Sprintf("Unknown resource kind: %s", kind))
+	client, resourceSpec, err := verber.getResourceSpecFromKind(kind, namespaceSet)
+	if err != nil {
+		return nil, err
 	}
 
-	if namespaceSet != resourceSpec.Namespaced {
-		if namespaceSet {
-			return nil, errors.NewInvalid(fmt.Sprintf("Set namespace for not-namespaced resource kind: %s", kind))
-		} else {
-			return nil, errors.NewInvalid(fmt.Sprintf("Set no namespace for namespaced resource kind: %s", kind))
-		}
-	}
-
-	client := verber.getRESTClientByType(resourceSpec.ClientType)
 	result := &runtime.Unknown{}
 	req := client.Get().Resource(resourceSpec.Resource).Name(name).SetHeader("Accept", "application/json")
 
@@ -165,6 +178,6 @@ func (verber *resourceVerber) Get(kind string, namespaceSet bool, namespace stri
 		req.Namespace(namespace)
 	}
 
-	err := req.Do().Into(result)
+	err = req.Do().Into(result)
 	return result, err
 }

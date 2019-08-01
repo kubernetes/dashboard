@@ -17,6 +17,8 @@ const baseHref = 'api/v1';
 export enum Resource {
   job = 'job',
   cronJob = 'cronjob',
+  crd = 'crd',
+  crdObject = 'object',
   daemonSet = 'daemonset',
   deployment = 'deployment',
   pod = 'pod',
@@ -56,7 +58,7 @@ class ResourceEndpoint {
 
   child(resourceName: string, relatedResource: Resource, resourceNamespace?: string): string {
     if (!resourceNamespace) {
-      resourceNamespace = '/:namespace';
+      resourceNamespace = ':namespace';
     }
 
     return `${baseHref}/${this.resource_}${

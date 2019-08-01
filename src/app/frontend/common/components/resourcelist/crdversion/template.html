@@ -1,0 +1,56 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-card [initialized]="initialized"
+         role="table">
+  <div title
+       i18n>Versions</div>
+
+  <div description>
+    <div class="kd-inline-property"
+         *ngIf="versions?.length">
+      <span class="kd-muted-light"
+            i18n>Items:&nbsp;</span>
+      <span>{{versions.length}}</span>
+    </div>
+  </div>
+
+  <div content>
+    <mat-table [dataSource]="getDataSource()"
+               class="kd-table-no-footer">
+      <ng-container [matColumnDef]="getDisplayColumns()[0]">
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Name</mat-header-cell>
+        <mat-cell *matCellDef="let version">{{version.name}}</mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getDisplayColumns()[1]">
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Served</mat-header-cell>
+        <mat-cell *matCellDef="let version">{{version.served ? "True" : "False"}}</mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getDisplayColumns()[2]">
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Storage</mat-header-cell>
+        <mat-cell *matCellDef="let version">{{version.storage ? "True" : "False"}}</mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="getDisplayColumns()"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: getDisplayColumns();"></mat-row>
+    </mat-table>
+  </div>
+</kd-card>
