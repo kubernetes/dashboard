@@ -15,6 +15,7 @@
 package logs
 
 import (
+	"sort"
 	"strings"
 )
 
@@ -194,17 +195,18 @@ func (self LogLines) getLineIndex(logLineId *LogLineId) int {
 	}
 	logTimestamp := logLineId.LogTimestamp
 	linesMatched := 0
-	matchingStartedAt := 0
-	for idx := range self {
-		if self[idx].Timestamp == logTimestamp {
-			if linesMatched == 0 {
-				matchingStartedAt = idx
-			}
+	matchingStartedAt := sort.Search(len(self), func(i int) bool {
+		return self[i].Timestamp == logTimestamp
+	})
+
+	if matchingStartedAt == len(self) {
+		matchingStartedAt = 0
+	} else {
+		for self[matchingStartedAt+linesMatched].Timestamp == logTimestamp {
 			linesMatched += 1
-		} else if linesMatched > 0 {
-			break
 		}
 	}
+
 	var offset int
 	if logLineId.LineNum < 0 {
 		offset = linesMatched + logLineId.LineNum
