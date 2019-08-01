@@ -101,28 +101,6 @@
         }
       }
     },
-    "kubernetes-dashboard-e2e": {
-      "root": "",
-      "sourceRoot": "",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "aio/protractor.conf.js",
-            "devServerTarget": "kubernetes-dashboard:serve",
-            "webdriverUpdate": false
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [],
-            "exclude": []
-          }
-        }
-      }
-    }
   },
   "defaultProject": "kubernetes-dashboard",
   "schematics": {

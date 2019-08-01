@@ -23,15 +23,16 @@
     "docker:build:head": "npm run clean && npm run build:cross && gulp docker-image:head:cross",
     "docker:push": "npm run docker:build && gulp push-to-docker:release:cross",
     "docker:push:head": "npm run docker:build:head && gulp push-to-docker:head:cross",
-    "test": "npm run test:frontend && npm run test:backend && npm run test:e2e",
+    "cy:open": "npx cypress open",
+    "cy:run": "npx cypress run",
+    "test": "npm run test:frontend && npm run test:backend && npm run e2e",
     "test:frontend": "ng test --karma-config ./aio/karma.conf.js --watch=false",
     "test:frontend:coverage": "ng test --karma-config ./aio/karma.conf.js --watch=false --code-coverage",
     "test:frontend:watch": "ng test --karma-config ./aio/karma.conf.js",
     "test:backend": "go test github.com/kubernetes/dashboard/src/app/backend/...",
     "test:backend:coverage": "./aio/scripts/coverage-backend.sh",
     "test:coverage": "npm run test:frontend:coverage && npm run test:backend:coverage",
-    "test:e2e": "ng e2e",
-    "pretest:e2e": "webdriver-manager update --standalone false --versions.chrome 2.45 --gecko false",
+    "e2e": "concurrently -kill-others --success first \"npm run start\" \"wait-on http://localhost:8080 && npm run cy:run\"",
     "cluster:start": "./aio/scripts/start-cluster.sh",
     "cluster:stop": "./aio/scripts/stop-cluster.sh",
     "check": "concurrently \"npm run check:backend\" \"npm run check:frontend\" \"npm run check:license\" \"npm run check:i18n\"",
@@ -52,7 +53,7 @@
     "fix:i18n": "ng xi18n --outFile ../i18n/messages.xlf && xliffmerge",
     "clean": "rm -rf .go_workspace .tmp coverage dist npm-debug.log",
     "postversion": "node aio/scripts/version.js",
-    "postinstall": "node aio/scripts/version.js && ./node_modules/protractor/bin/webdriver-manager update --gecko=false --versions.standalone=3.141.59 && curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(go env GOPATH)/bin v1.17.1"
+    "postinstall": "node aio/scripts/version.js && command -v golangci-lint >/dev/null 2>&1 || { curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(go env GOPATH)/bin v1.17.1; }"
   },
   "husky": {
     "hooks": {
@@ -142,6 +143,7 @@
     "babel-register": "6.26.0",
     "codelyzer": "4.5.0",
     "concurrently": "4.1.1",
+    "cypress": "3.3.2",
     "del": "5.0.0",
     "git-describe": "4.0.4",
     "gts": "1.1.0",
@@ -168,7 +170,6 @@
     "ngx-i18nsupport": "0.17.1",
     "node-gyp": "5.0.3",
     "node-sass": "4.12.0",
-    "protractor": "5.4.1",
     "q": "1.5.1",
     "raw-loader": "1.0.0",
     "sass-lint": "1.13.1",
@@ -181,7 +182,7 @@
     "ts-node": "8.3.0",
     "tslint": "5.16.0",
     "typescript": "3.4.5",
-    "webdriver-manager": "12.1.4",
+    "wait-on": "3.2.0",
     "webpack-dev-server": "3.5.1"
   },
   "engines": {
