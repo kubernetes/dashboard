@@ -70,7 +70,7 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          i18n>First Seen</mat-header-cell>
         <mat-cell *matCellDef="let event">
-          {{event.firstSeen | date}}
+          <kd-date [date]="event.firstSeen"></kd-date>
         </mat-cell>
       </ng-container>
 
@@ -78,7 +78,7 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          i18n>Last Seen</mat-header-cell>
         <mat-cell *matCellDef="let event">
-          {{event.lastSeen | date}}
+          <kd-date [date]="event.lastSeen"></kd-date>
         </mat-cell>
       </ng-container>
 
