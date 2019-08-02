@@ -14,11 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<span *ngIf="_relative"
-      class="kd-date"
+<span class="kd-date"
       [matTooltip]="date | date:format">
-  {{date | kdRelativeTime}}
-</span>
-<span *ngIf="!_relative">
-  {{date | date:format}}
+  {{_relative ? (date | kdRelativeTime) : (date | date)}}
 </span>
