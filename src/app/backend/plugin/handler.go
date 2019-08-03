@@ -42,6 +42,11 @@ type Handler struct {
 // By default, endpoint for getting and listing plugins is installed. It allows user
 // to list the installed plugins and get the source code for a plugin.
 func (h *Handler) Install(ws *restful.WebService) {
+  ws.Route(
+    ws.GET("/plugin/config").
+      To(h.handleConfig),
+    )
+
 	ws.Route(
 		ws.GET("/plugin/{namespace}").
 			To(h.handlePluginList).
@@ -75,16 +80,9 @@ func (h *Handler) handlePluginList(request *restful.Request, response *restful.R
 }
 
 func (h *Handler) servePluginSource(request *restful.Request, response *restful.Response) {
-	pluginClient, err := h.cManager.PluginClient(request)
-	if err != nil {
-		errors.HandleInternalError(response, err)
-		return
-	}
-	k8sClient, err := h.cManager.Client(request)
-	if err != nil {
-		errors.HandleInternalError(response, err)
-		return
-	}
+	pluginClient := h.cManager.InsecurePluginClient()
+	k8sClient := h.cManager.InsecureClient()
+
 	namespace := request.PathParameter("namespace")
 	// Removes .js extension if it's present
 	pluginName := request.PathParameter("pluginName")

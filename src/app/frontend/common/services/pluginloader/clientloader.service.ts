@@ -1,3 +1,17 @@
+// Copyright 2017 The Kubernetes Authors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 import {Injectable, NgModuleFactory} from '@angular/core';
 
 import {PLUGIN_EXTERNALS_MAP} from './pluginexternals';
@@ -21,13 +35,13 @@ export class ClientPluginLoaderService extends PluginLoaderService {
 
   load<T>(pluginName: string): Promise<NgModuleFactory<T>> {
     const {config} = this.configProvider;
-    const plugin = config.items.find(p => p.name === pluginName);
+    const plugin = config.plugins.find(p => p.name === pluginName);
     if (!plugin) {
       throw Error(`Can't find plugin "${pluginName}"`);
     }
 
     const depsPromises = (plugin.dependencies || []).map(dep => {
-      const dependency = config.items.find(d => d.name === dep);
+      const dependency = config.plugins.find(d => d.name === dep);
       if (!dependency) {
         throw Error(`Can't find dependency "${dep}" for plugin "${pluginName}"`);
       }
