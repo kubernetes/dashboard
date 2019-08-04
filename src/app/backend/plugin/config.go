@@ -29,7 +29,7 @@ type Metadata struct {
 
 type Config struct {
   Status         int32      `json:"status"`
-  PluginMetadata []Metadata `json:"plugins,omitempty"`
+  PluginMetadata []Metadata `json:"plugins"`
   Errors         []error    `json:"errors,omitempty"`
 }
 
@@ -43,43 +43,44 @@ func toPluginMetadata(vs []Plugin, f func(plugin Plugin) Metadata) []Metadata {
 
 func (h *Handler) handleConfig(request *restful.Request, response *restful.Response) {
   pluginClient, err := h.cManager.PluginClient(request)
+  cfg := Config{Status: http.StatusOK, PluginMetadata: []Metadata{}, Errors: []error{}}
   if err != nil {
-    handleConfigError(response, err, nil)
+    cfg.Status = statusCodeFromError(err)
+    cfg.Errors = append(cfg.Errors, err)
+    response.WriteHeaderAndEntity(http.StatusOK, cfg)
     return
   }
 
   dataSelect := parser.ParseDataSelectPathParameter(request)
   result, err := GetPluginList(pluginClient, "", dataSelect)
   if err != nil {
-    if result != nil && len(result.Errors) > 0 {
-      handleConfigError(response, err, result.Errors)
-    } else {
-      handleConfigError(response, err, nil)
-    }
+    cfg.Status = statusCodeFromError(err)
+    cfg.Errors = append(cfg.Errors, err)
+    response.WriteHeaderAndEntity(http.StatusOK, cfg)
     return
   }
 
-  config := Config{
-    Status: http.StatusOK,
-    PluginMetadata: toPluginMetadata(result.Items, func(plugin Plugin) Metadata {
-      return Metadata{
-        Name:         plugin.Name,
-        Path:         plugin.Path,
-        Dependencies: plugin.Dependencies,
-      }
-    }),
-    Errors: result.Errors,
+  if result != nil && len(result.Errors) > 0 {
+    cfg.Status = statusCodeFromError(result.Errors[0])
+    cfg.Errors = append(cfg.Errors, result.Errors...)
+    response.WriteHeaderAndEntity(http.StatusOK, cfg)
+    return
   }
-  response.WriteHeaderAndEntity(http.StatusOK, config)
+
+  cfg.PluginMetadata = toPluginMetadata(result.Items, func(plugin Plugin) Metadata {
+    return Metadata{
+      Name:         plugin.Name,
+      Path:         plugin.Path,
+      Dependencies: plugin.Dependencies,
+    }
+  })
+  cfg.Errors = result.Errors
+  response.WriteHeaderAndEntity(http.StatusOK, cfg)
 }
 
-func handleConfigError(response *restful.Response, err error, nonCriticalErrors []error) {
-  statusError, ok := err.(*apiErrors.StatusError)
-  cfg := Config{Errors: append([]error{err}, nonCriticalErrors...)}
-  if ok && statusError.Status().Code == 401 {
-    cfg.Status = statusError.Status().Code
-  } else {
-    cfg.Status = http.StatusUnprocessableEntity
+func statusCodeFromError(err error) int32 {
+  if statusError, ok := err.(*apiErrors.StatusError); ok {
+    return statusError.Status().Code
   }
-  response.WriteHeaderAndEntity(http.StatusOK, cfg)
+  return http.StatusUnprocessableEntity
 }

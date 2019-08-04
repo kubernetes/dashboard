@@ -24,12 +24,12 @@ interface PluginMetadata {
 interface PluginsConfig {
   status: number;
   plugins: PluginMetadata[];
-  errors?: object;
+  errors?: object[];
 }
 
 @Injectable()
 export class PluginsConfigProvider {
-  config: PluginsConfig = {status: 200, plugins: [], errors: {}};
+  config: PluginsConfig = {status: 200, plugins: [], errors: []};
 
   constructor(private http_: HttpClient) {}
 
