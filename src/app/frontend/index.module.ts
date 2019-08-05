@@ -19,15 +19,11 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
 
 import {ChromeModule} from './chrome/module';
-import {ClientPluginLoaderService} from './common/services/pluginloader/clientloader.service';
-import {PluginLoaderService} from './common/services/pluginloader/pluginloader.service';
-import {PluginsConfigProvider} from './common/services/pluginloader/pluginsconfig.provider';
 import {CoreModule} from './core.module';
 import {GlobalErrorHandler} from './error/handler';
 import {RootComponent} from './index.component';
 import {routes} from './index.routing';
 import {LoginModule} from './login/module';
-import {PluginLoaderModule} from './plugin-loader.module';
 
 @NgModule({
   imports: [
@@ -35,7 +31,6 @@ import {PluginLoaderModule} from './plugin-loader.module';
     BrowserAnimationsModule,
     HttpClientModule,
     CoreModule,
-    PluginLoaderModule,
     ChromeModule,
     LoginModule,
     RouterModule.forRoot(routes, {
@@ -43,10 +38,7 @@ import {PluginLoaderModule} from './plugin-loader.module';
       onSameUrlNavigation: 'reload',
     }),
   ],
-  providers: [
-    {provide: ErrorHandler, useClass: GlobalErrorHandler},
-    {provide: PluginLoaderService, useClass: ClientPluginLoaderService}, PluginsConfigProvider
-  ],
+  providers: [{provide: ErrorHandler, useClass: GlobalErrorHandler}],
   declarations: [RootComponent],
   bootstrap: [RootComponent],
 })

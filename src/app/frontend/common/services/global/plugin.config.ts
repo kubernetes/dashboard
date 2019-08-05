@@ -14,6 +14,10 @@
 
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
+import {AppConfig} from '@api/backendapi';
+import {VersionInfo} from '@api/frontendapi';
+import {Observable} from 'rxjs/Observable';
+import {version} from '../../../environments/version';
 
 interface PluginMetadata {
   name: string;
@@ -28,12 +32,25 @@ interface PluginsConfig {
 }
 
 @Injectable()
-export class PluginsConfigProvider {
-  config: PluginsConfig = {status: 200, plugins: [], errors: []};
+export class PluginsConfigService {
+  private readonly pluginConfigPath_ = 'api/v1/plugin/config';
+  private config_: PluginsConfig = {status: 204, plugins: [], errors: []};
 
-  constructor(private http_: HttpClient) {}
+  constructor(private readonly http: HttpClient) {}
 
-  loadConfig() {
-    return this.http_.get<PluginsConfig>(`api/v1/plugin/config`);
+  init(): void {
+    this.getConfig().subscribe(config => (this.config_ = config));
+  }
+
+  getConfig(): Observable<PluginsConfig> {
+    return this.http.get<PluginsConfig>(this.pluginConfigPath_);
+  }
+
+  pluginsMetadata(): PluginMetadata[] {
+    return this.config_.plugins;
+  }
+
+  status(): number {
+    return this.config_.status;
   }
 }

@@ -16,7 +16,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatDrawer} from '@angular/material';
 
 import {NavService} from '../../common/services/nav/service';
-import {PluginsConfigProvider} from '../../common/services/pluginloader/pluginsconfig.provider';
+import {PluginsConfigService} from '../../common/services/global/plugin.config';
 
 @Component({
   selector: 'kd-nav',
@@ -27,8 +27,9 @@ export class NavComponent implements OnInit {
   @ViewChild(MatDrawer, {static: true}) private readonly nav_: MatDrawer;
 
   constructor(
-      private readonly navService_: NavService,
-      private readonly configProvider_: PluginsConfigProvider) {}
+    private readonly navService_: NavService,
+    private readonly pluginsConfigService_: PluginsConfigService,
+  ) {}
 
   ngOnInit(): void {
     this.navService_.setNav(this.nav_);
@@ -36,6 +37,6 @@ export class NavComponent implements OnInit {
   }
 
   showPlugin(): boolean {
-    return this.configProvider_.config.status === 200;
+    return this.pluginsConfigService_.status() === 200;
   }
 }

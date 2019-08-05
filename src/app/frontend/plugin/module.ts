@@ -23,7 +23,6 @@ import {PluginsRoutingModule} from './routing';
 
 @NgModule({
   imports: [SharedModule, ComponentsModule, PluginsRoutingModule],
-  declarations: [PluginListComponent, PluginHolderComponent]
+  declarations: [PluginListComponent, PluginHolderComponent],
 })
-export class PluginModule {
-}
+export class PluginModule {}

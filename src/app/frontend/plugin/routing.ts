@@ -23,7 +23,7 @@ export const PLUGIN_ROUTE: Route = {
   component: PluginListComponent,
   data: {
     breadcrumb: 'Plugins',
-  }
+  },
 };
 
 export const PLUGIN_HOLDER_ROUTE: Route = {
@@ -37,7 +37,6 @@ export const PLUGIN_HOLDER_ROUTE: Route = {
 
 @NgModule({
   imports: [RouterModule.forChild([PLUGIN_ROUTE, PLUGIN_HOLDER_ROUTE])],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class PluginsRoutingModule {
-}
+export class PluginsRoutingModule {}

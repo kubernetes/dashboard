@@ -25,15 +25,18 @@ import {PluginLoaderService} from '../../common/services/pluginloader/pluginload
         <mat-card *ngIf="entryError">This plugin has no entry component</mat-card>
         <ng-template #pluginViewRef #elseBlock></ng-template>
       </div>
-    </div>`
+    </div>
+  `,
 })
 export class PluginHolderComponent implements OnInit {
   @ViewChild('pluginViewRef', {read: ViewContainerRef, static: true}) vcRef: ViewContainerRef;
   entryError = false;
 
   constructor(
-      private injector: Injector, private pluginLoader: PluginLoaderService,
-      private readonly activatedRoute_: ActivatedRoute) {}
+    private injector: Injector,
+    private pluginLoader: PluginLoaderService,
+    private readonly activatedRoute_: ActivatedRoute,
+  ) {}
 
   ngOnInit() {
     const pluginName = this.activatedRoute_.snapshot.params.pluginName;
@@ -50,8 +53,9 @@ export class PluginHolderComponent implements OnInit {
       // tslint:disable-next-line:no-any
       const entryComponent = (moduleFactory.moduleType as any).entry;
       try {
-        const compFactory =
-            moduleRef.componentFactoryResolver.resolveComponentFactory(entryComponent);
+        const compFactory = moduleRef.componentFactoryResolver.resolveComponentFactory(
+          entryComponent,
+        );
         this.vcRef.createComponent(compFactory);
       } catch (e) {
         this.entryError = true;

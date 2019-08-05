@@ -35,7 +35,7 @@ export enum ListIdentifier {
   statefulSet = 'statefulSetList',
   event = 'event',
   resource = 'resource',
-  plugin = 'plugin'
+  plugin = 'plugin',
 }
 
 export enum ListGroupIdentifier {

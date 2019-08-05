@@ -31,8 +31,9 @@ export class PluginListComponent extends ResourceListBase<PluginList, Plugin> {
   @Input() endpoint = EndpointManager.resource(Resource.plugin, true).list();
 
   constructor(
-      private readonly plugin_: NamespacedResourceService<PluginList>,
-      notifications: NotificationsService) {
+    private readonly plugin_: NamespacedResourceService<PluginList>,
+    notifications: NotificationsService,
+  ) {
     super('plugin', notifications);
     this.id = ListIdentifier.plugin;
     this.groupId = ListGroupIdentifier.none;

@@ -16,32 +16,34 @@ import {Injectable, NgModuleFactory} from '@angular/core';
 
 import {PLUGIN_EXTERNALS_MAP} from './pluginexternals';
 import {PluginLoaderService} from './pluginloader.service';
-import {PluginsConfigProvider} from './pluginsconfig.provider';
+import {PluginsConfigService} from '../global/plugin.config';
 
 const systemJS = window.System;
 
 @Injectable()
 export class ClientPluginLoaderService extends PluginLoaderService {
-  constructor(private configProvider: PluginsConfigProvider) {
+  constructor(private pluginsConfigService_: PluginsConfigService) {
     super();
   }
 
   provideExternals() {
-    Object.keys(PLUGIN_EXTERNALS_MAP).forEach(externalKey => window.define(externalKey, [], () => {
-      // @ts-ignore
-      return PLUGIN_EXTERNALS_MAP[externalKey];
-    }));
+    Object.keys(PLUGIN_EXTERNALS_MAP).forEach(externalKey =>
+      window.define(externalKey, [], () => {
+        // @ts-ignore
+        return PLUGIN_EXTERNALS_MAP[externalKey];
+      }),
+    );
   }
 
   load<T>(pluginName: string): Promise<NgModuleFactory<T>> {
-    const {config} = this.configProvider;
-    const plugin = config.plugins.find(p => p.name === pluginName);
+    const plugins = this.pluginsConfigService_.pluginsMetadata();
+    const plugin = plugins.find(p => p.name === pluginName);
     if (!plugin) {
       throw Error(`Can't find plugin "${pluginName}"`);
     }
 
     const depsPromises = (plugin.dependencies || []).map(dep => {
-      const dependency = config.plugins.find(d => d.name === dep);
+      const dependency = plugins.find(d => d.name === dep);
       if (!dependency) {
         throw Error(`Can't find dependency "${dep}" for plugin "${pluginName}"`);
       }

@@ -18,5 +18,4 @@ import {Component} from '@angular/core';
   selector: 'kd-plugins',
   template: '<kd-plugin-list></kd-plugin-list>',
 })
-export class PluginListComponent {
-}
+export class PluginListComponent {}

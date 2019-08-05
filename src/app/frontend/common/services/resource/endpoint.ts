@@ -40,11 +40,11 @@ export enum Resource {
   service = 'service',
   event = 'event',
   container = 'container',
+  plugin = 'plugin',
 }
 
 export enum Utility {
   shell = 'shell',
-  plugin = 'plugin'
 }
 
 class ResourceEndpoint {
