@@ -40,6 +40,9 @@ RUN curl -sL https://deb.nodesource.com/setup_11.x | bash - \
 	libcurl4-gnutls-dev \
 	libexpat1-dev \
 	gettext \
+	xvfb \
+	libgtk-3-0 \
+	libgconf-2-4 \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& apt-get clean
 
