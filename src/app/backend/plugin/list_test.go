@@ -17,6 +17,8 @@ package plugin
 import (
 	"testing"
 
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+
 	"github.com/kubernetes/dashboard/src/app/backend/plugin/apis/v1alpha1"
 	fakePluginClientset "github.com/kubernetes/dashboard/src/app/backend/plugin/client/clientset/versioned/fake"
 	coreV1 "k8s.io/api/core/v1"
@@ -41,7 +43,16 @@ func TestGetPluginList(t *testing.T) {
 				Filename: filename}},
 	})
 
-	data, err := GetPluginList(pcs, ns)
+	dsQuery := dataselect.DataSelectQuery{
+		PaginationQuery: &dataselect.PaginationQuery{
+			ItemsPerPage: 10,
+			Page:         1,
+		},
+		SortQuery:   dataselect.NoSort,
+		FilterQuery: dataselect.NoFilter,
+		MetricQuery: dataselect.NoMetrics,
+	}
+	data, err := GetPluginList(pcs, ns, &dsQuery)
 	if err != nil {
 		t.Errorf("error while fetching plugins: %s", err)
 	}

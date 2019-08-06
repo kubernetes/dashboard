@@ -39,7 +39,17 @@ export class PluginsConfigService {
   constructor(private readonly http: HttpClient) {}
 
   init(): void {
-    this.getConfig().subscribe(config => (this.config_ = config));
+    this.fetchConfig();
+  }
+
+  refreshConfig(): void {
+    this.fetchConfig();
+  }
+
+  private fetchConfig(): void {
+    this.getConfig()
+      .toPromise()
+      .then(config => (this.config_ = config));
   }
 
   getConfig(): Observable<PluginsConfig> {

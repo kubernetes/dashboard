@@ -15,14 +15,15 @@
 package plugin
 
 import (
-  "github.com/kubernetes/dashboard/src/app/backend/handler/parser"
-  "net/http"
-  "path/filepath"
-  "strings"
+	"net/http"
+	"path/filepath"
+	"strings"
 
-  "github.com/emicklei/go-restful"
-  clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
-  "github.com/kubernetes/dashboard/src/app/backend/errors"
+	"github.com/kubernetes/dashboard/src/app/backend/handler/parser"
+
+	"github.com/emicklei/go-restful"
+	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 )
 
 const (
@@ -42,10 +43,10 @@ type Handler struct {
 // By default, endpoint for getting and listing plugins is installed. It allows user
 // to list the installed plugins and get the source code for a plugin.
 func (h *Handler) Install(ws *restful.WebService) {
-  ws.Route(
-    ws.GET("/plugin/config").
-      To(h.handleConfig),
-    )
+	ws.Route(
+		ws.GET("/plugin/config").
+			To(h.handleConfig),
+	)
 
 	ws.Route(
 		ws.GET("/plugin/{namespace}").
@@ -69,7 +70,7 @@ func (h *Handler) handlePluginList(request *restful.Request, response *restful.R
 		return
 	}
 	namespace := request.PathParameter("namespace")
-  dataSelect := parser.ParseDataSelectPathParameter(request)
+	dataSelect := parser.ParseDataSelectPathParameter(request)
 
 	result, err := GetPluginList(pluginClient, namespace, dataSelect)
 	if err != nil {

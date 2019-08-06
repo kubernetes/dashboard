@@ -64,6 +64,10 @@ func (self *fakeClientManager) InsecureAPIExtensionsClient() apiextensionsclient
 	return nil
 }
 
+func (self *fakeClientManager) InsecurePluginClient() pluginclientset.Interface {
+	return nil
+}
+
 func (self *fakeClientManager) SetTokenManager(manager authApi.TokenManager) {}
 
 func (self *fakeClientManager) Config(req *restful.Request) (*rest.Config, error) {
