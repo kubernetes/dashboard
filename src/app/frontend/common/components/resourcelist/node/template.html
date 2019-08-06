@@ -89,7 +89,7 @@ limitations under the License.
 
       <ng-container [matColumnDef]="getColumns()[6]">
         <mat-header-cell *matHeaderCellDef
-                         i18n>Memory requestes (bytes)</mat-header-cell>
+                         i18n>Memory requests (bytes)</mat-header-cell>
         <mat-cell *matCellDef="let node">
           {{node.allocatedResources.memoryRequests | kdMemory}} ({{node.allocatedResources.memoryRequestsFraction | number:"1.2-2"}}%)
         </mat-cell>
