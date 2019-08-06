@@ -265,7 +265,7 @@ func GetNamespaceListChannel(client client.Interface, numReads int) NamespaceLis
 	return channel
 }
 
-// EventListChannel is a list and error channels to Nodes.
+// EventListChannel is a list and error channels to Events.
 type EventListChannel struct {
 	List  chan *v1.EventList
 	Error chan error
@@ -334,7 +334,7 @@ func GetEndpointListChannelWithOptions(client client.Interface,
 	return channel
 }
 
-// PodListChannel is a list and error channels to Nodes.
+// PodListChannel is a list and error channels to Pods.
 type PodListChannel struct {
 	List  chan *v1.PodList
 	Error chan error
@@ -374,7 +374,7 @@ func GetPodListChannelWithOptions(client client.Interface, nsQuery *NamespaceQue
 	return channel
 }
 
-// ReplicationControllerListChannel is a list and error channels to Nodes.
+// ReplicationControllerListChannel is a list and error channels to Replication Controllers.
 type ReplicationControllerListChannel struct {
 	List  chan *v1.ReplicationControllerList
 	Error chan error
@@ -486,7 +486,7 @@ func GetReplicaSetListChannelWithOptions(client client.Interface, nsQuery *Names
 	return channel
 }
 
-// DaemonSetListChannel is a list and error channels to Nodes.
+// DaemonSetListChannel is a list and error channels to Daemon Sets.
 type DaemonSetListChannel struct {
 	List  chan *apps.DaemonSetList
 	Error chan error
@@ -518,7 +518,7 @@ func GetDaemonSetListChannel(client client.Interface, nsQuery *NamespaceQuery, n
 	return channel
 }
 
-// JobListChannel is a list and error channels to Nodes.
+// JobListChannel is a list and error channels to Jobs.
 type JobListChannel struct {
 	List  chan *batch.JobList
 	Error chan error
@@ -581,7 +581,7 @@ func GetCronJobListChannel(client client.Interface, nsQuery *NamespaceQuery, num
 	return channel
 }
 
-// StatefulSetListChannel is a list and error channels to Nodes.
+// StatefulSetListChannel is a list and error channels to StatefulSets.
 type StatefulSetListChannel struct {
 	List  chan *apps.StatefulSetList
 	Error chan error
