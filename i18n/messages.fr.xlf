@@ -1891,7 +1891,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="8dd02c949ec9c302c7e781afcad6ecac282c00f3" datatype="html">
-        <source>Memory requestes (bytes)</source>
+        <source>Memory requests (bytes)</source>
         <target>Requêtes mémoire (octets)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/node/template.html</context>
