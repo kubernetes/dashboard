@@ -1890,9 +1890,9 @@
           <context context-type="linenumber">84</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="8dd02c949ec9c302c7e781afcad6ecac282c00f3" datatype="html">
+      <trans-unit id="85550e95dc12c58e2e711dbebe89f3448eb66c72" datatype="html">
         <source>Memory requests (bytes)</source>
-        <target>Requêtes mémoire (octets)</target>
+        <target state="new">Memory requests (bytes)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/node/template.html</context>
           <context context-type="linenumber">92</context>
