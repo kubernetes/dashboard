@@ -18,7 +18,9 @@ cache:
 
 before_install:
   - export NG_CLI_ANALYTICS=ci
+  - export DOCKER_CLI_EXPERIMENTAL=enabled
   - export GO111MODULE=on
+  - export GOPROXY=https://proxy.golang.org
   - export PATH=$PATH:$GOPATH/bin
   - eval "$(gimme 1.12.6)"
 
