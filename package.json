@@ -85,6 +85,7 @@
     "languages": [
       "fr",
       "ja",
+      "ko",
       "zh"
     ],
     "beautifyOutput": true
