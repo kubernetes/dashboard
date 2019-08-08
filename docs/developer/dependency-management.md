@@ -5,7 +5,8 @@
 
 ## Go dependencies
 
-- Use [go mod](https://github.com/golang/go/wiki/Modules) as dependency manager. 
+- Use [go mod](https://github.com/golang/go/wiki/Modules) as dependency manager.
+- Run `export GO111MODULE=on` to enable `go mod`. 
 - Run `go mod tidy` before sending any changes.
 - Use only official releases, avoid using master versions.
 
