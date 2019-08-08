@@ -53,7 +53,7 @@
     "fix:i18n": "ng xi18n --outFile ../i18n/messages.xlf && xliffmerge",
     "clean": "rm -rf .go_workspace .tmp coverage dist npm-debug.log",
     "postversion": "node aio/scripts/version.js",
-    "postinstall": "node aio/scripts/version.js && command -v golangci-lint >/dev/null 2>&1 || { curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(go env GOPATH)/bin v1.17.1; }"
+    "postinstall": "node aio/scripts/version.js && command -v golangci-lint >/dev/null 2>&1 || { curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(go env GOPATH)/bin v1.17.1; } && go mod download"
   },
   "husky": {
     "hooks": {
