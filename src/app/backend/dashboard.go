@@ -175,6 +175,9 @@ func main() {
 	http.Handle("/config", handler.AppHandler(handler.ConfigHandler))
 	http.Handle("/api/sockjs/", handler.CreateAttachHandler("/api/sockjs"))
 	http.Handle("/metrics", prometheus.Handler())
+	http.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintf(w, "OK")
+	})
 
 	// Listen for http or https
 	if servingCerts != nil {
