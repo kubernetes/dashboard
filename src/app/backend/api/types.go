@@ -174,6 +174,7 @@ const (
 	ClientTypeStorageClient       = "storageclient"
 	ClientTypeRbacClient          = "rbacclient"
 	ClientTypeAPIExtensionsClient = "apiextensionsclient"
+	ClientTypePluginsClient       = "plugin"
 )
 
 type APIMapping struct {
@@ -213,6 +214,7 @@ var KindToAPIMapping = map[string]APIMapping{
 	ResourceKindStorageClass:             {"storageclasses", ClientTypeStorageClient, false},
 	ResourceKindEndpoint:                 {"endpoints", ClientTypeDefault, true},
 	ResourceKindClusterRole:              {"clusterroles", ClientTypeRbacClient, false},
+	ResourceKindPlugin:                   {"plugins", ClientTypePluginsClient, true},
 }
 
 // IsSelectorMatching returns true when an object with the given selector targets the same
