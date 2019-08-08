@@ -38,7 +38,7 @@ export class PluginsConfigService {
       .then(config => (this.config_ = config));
   }
 
-  getConfig(): Observable<PluginsConfig> {
+  private getConfig(): Observable<PluginsConfig> {
     return this.http.get<PluginsConfig>(this.pluginConfigPath_);
   }
 

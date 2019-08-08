@@ -26,6 +26,8 @@ import {K8SError, KdError} from 'common/errors/errors';
 import {AuthService} from 'common/services/global/authentication';
 import {from, Observable, of} from 'rxjs';
 import {LoginComponent} from './component';
+import {PluginsConfigService} from '../common/services/global/plugin';
+import {PluginMetadata} from '@api/frontendapi';
 
 const queries = {
   submitButton: '.kd-login-button[type="submit"]',
@@ -67,6 +69,17 @@ class MockRouter {
   navigate(): void {}
 }
 
+class MockPluginsConfigService {
+  init(): void {}
+  refreshConfig(): void {}
+  static pluginsMetadata(): PluginMetadata[] {
+    return [];
+  }
+  static status(): number {
+    return 200;
+  }
+}
+
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
@@ -101,6 +114,10 @@ describe('LoginComponent', () => {
         {
           provide: Router,
           useClass: MockRouter,
+        },
+        {
+          provide: PluginsConfigService,
+          useClass: MockPluginsConfigService,
         },
       ],
     }).compileComponents();

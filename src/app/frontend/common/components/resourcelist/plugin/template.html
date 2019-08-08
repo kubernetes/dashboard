@@ -32,7 +32,7 @@ limitations under the License.
 
     <mat-table [dataSource]="getData()"
                matSort
-               matSortActive="name"
+               matSortActive="age"
                matSortDisableClear
                matSortDirection="asc">
       <ng-container matColumnDef="name">
@@ -62,6 +62,17 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          i18n>Namespace</mat-header-cell>
         <mat-cell *matCellDef="let plugin">{{plugin.objectMeta.namespace}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="age">
+        <mat-header-cell *matHeaderCellDef
+                         mat-sort-header
+                         disableClear="true"
+                         i18n>Age</mat-header-cell>
+        <mat-cell *matCellDef="let plugin">
+          <kd-date [date]="plugin.objectMeta.creationTimestamp"
+                   relative></kd-date>
+        </mat-cell>
       </ng-container>
 
       <ng-container *ngFor="let col of getActionColumns()"
