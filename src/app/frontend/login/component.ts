@@ -26,7 +26,7 @@ import {map} from 'rxjs/operators';
 
 import {AsKdError, K8SError} from '../common/errors/errors';
 import {AuthService} from '../common/services/global/authentication';
-import {PluginsConfigService} from '../common/services/global/plugin.config';
+import {PluginsConfigService} from '../common/services/global/plugin';
 
 enum LoginModes {
   Kubeconfig = 'kubeconfig',

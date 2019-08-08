@@ -16,7 +16,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatDrawer} from '@angular/material';
 
 import {NavService} from '../../common/services/nav/service';
-import {PluginsConfigService} from '../../common/services/global/plugin.config';
+import {PluginsConfigService} from '../../common/services/global/plugin';
 
 @Component({
   selector: 'kd-nav',

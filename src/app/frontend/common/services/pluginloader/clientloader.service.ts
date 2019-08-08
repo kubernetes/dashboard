@@ -16,7 +16,7 @@ import {Injectable, NgModuleFactory} from '@angular/core';
 
 import {PLUGIN_EXTERNALS_MAP} from './pluginexternals';
 import {PluginLoaderService} from './pluginloader.service';
-import {PluginsConfigService} from '../global/plugin.config';
+import {PluginsConfigService} from '../global/plugin';
 
 const systemJS = window.System;
 

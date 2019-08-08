@@ -33,7 +33,7 @@ import {KdStateService} from './state';
 import {ThemeService} from './theme';
 import {TitleService} from './title';
 import {VerberService} from './verber';
-import {PluginsConfigService} from './plugin.config';
+import {PluginsConfigService} from './plugin';
 import {PluginLoaderService} from '../pluginloader/pluginloader.service';
 import {ClientPluginLoaderService} from '../pluginloader/clientloader.service';
 import {PinnerService} from './pinner';
