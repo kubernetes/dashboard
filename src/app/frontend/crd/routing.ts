@@ -41,7 +41,7 @@ const CRD_NAMESPACED_OBJECT_DETAIL_ROUTE: Route = {
 const CRD_CLUSTER_OBJECT_DETAIL_ROUTE: Route = {
   path: ':crdName/:objectName',
   component: CRDObjectDetailComponent,
-  data: {breadcrumb: '{{ objectName }}', parent: CRD_DETAIL_ROUTE},
+  data: {breadcrumb: '{{ objectName }}', routeParamsCount: 1, parent: CRD_DETAIL_ROUTE},
 };
 
 @NgModule({
