@@ -21,6 +21,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	apiextensions "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
 	apiextensionsclientset "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/rest"
@@ -102,10 +103,12 @@ func GetCustomResourceObjectList(client apiextensionsclientset.Interface, config
 		return nil, criticalError
 	}
 
-	raw, err := restClient.Get().
-		Namespace(namespace.ToRequestParam()).
-		Resource(customResourceDefinition.Spec.Names.Plural).
-		Do().Raw()
+	request := restClient.Get().Resource(customResourceDefinition.Spec.Names.Plural)
+	if customResourceDefinition.Spec.Scope == apiextensions.NamespaceScoped {
+		request = request.Namespace(namespace.ToRequestParam())
+	}
+
+	raw, err := request.Do().Raw()
 	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
 	if criticalError != nil {
 		return nil, criticalError
@@ -148,10 +151,12 @@ func GetCustomResourceObjectDetail(client apiextensionsclientset.Interface, name
 		return nil, criticalError
 	}
 
-	raw, err := restClient.Get().
-		Namespace(namespace.ToRequestParam()).
-		Resource(customResourceDefinition.Status.AcceptedNames.Plural).
-		Name(name).Do().Raw()
+	request := restClient.Get().Resource(customResourceDefinition.Spec.Names.Plural).Name(name)
+	if customResourceDefinition.Spec.Scope == apiextensions.NamespaceScoped {
+		request = request.Namespace(namespace.ToRequestParam())
+	}
+
+	raw, err := request.Do().Raw()
 	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
 	if criticalError != nil {
 		return nil, criticalError
