@@ -103,12 +103,10 @@ func GetCustomResourceObjectList(client apiextensionsclientset.Interface, config
 		return nil, criticalError
 	}
 
-	request := restClient.Get().Resource(customResourceDefinition.Spec.Names.Plural)
-	if customResourceDefinition.Spec.Scope == apiextensions.NamespaceScoped {
-		request = request.Namespace(namespace.ToRequestParam())
-	}
-
-	raw, err := request.Do().Raw()
+	raw, err := restClient.Get().
+		NamespaceIfScoped(namespace.ToRequestParam(), customResourceDefinition.Spec.Scope == apiextensions.NamespaceScoped).
+		Resource(customResourceDefinition.Spec.Names.Plural).
+		Do().Raw()
 	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
 	if criticalError != nil {
 		return nil, criticalError
@@ -151,12 +149,10 @@ func GetCustomResourceObjectDetail(client apiextensionsclientset.Interface, name
 		return nil, criticalError
 	}
 
-	request := restClient.Get().Resource(customResourceDefinition.Spec.Names.Plural).Name(name)
-	if customResourceDefinition.Spec.Scope == apiextensions.NamespaceScoped {
-		request = request.Namespace(namespace.ToRequestParam())
-	}
-
-	raw, err := request.Do().Raw()
+	raw, err := restClient.Get().
+		NamespaceIfScoped(namespace.ToRequestParam(), customResourceDefinition.Spec.Scope == apiextensions.NamespaceScoped).
+		Resource(customResourceDefinition.Spec.Names.Plural).
+		Name(name).Do().Raw()
 	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
 	if criticalError != nil {
 		return nil, criticalError
