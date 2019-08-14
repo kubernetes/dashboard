@@ -34,7 +34,7 @@ CODEGEN_PKG=${GOPATH}/src/k8s.io/code-generator
 # Remove old generated client
 rm -rf ./src/app/backend/plugin/client
 # Move generated deepcopy funcs and client
-mv $(dirname "${BASH_SOURCE[0]}")/../github.com/kubernetes/dashboard/src/app/backend/plugin/apis/v1alpha1/zz_generated.deepcopy.go ./src/app/backend/plugin/apis/v1alpha1
-mv $(dirname "${BASH_SOURCE[0]}")/../github.com/kubernetes/dashboard/src/app/backend/plugin/client ./src/app/backend/plugin
+mv "$(dirname "${BASH_SOURCE[0]}")"/../github.com/kubernetes/dashboard/src/app/backend/plugin/apis/v1alpha1/zz_generated.deepcopy.go ./src/app/backend/plugin/apis/v1alpha1
+mv "$(dirname "${BASH_SOURCE[0]}")"/../github.com/kubernetes/dashboard/src/app/backend/plugin/client ./src/app/backend/plugin
 # Remove empty directory
 rm -rf ./aio/github.com
