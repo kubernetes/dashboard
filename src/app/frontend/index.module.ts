@@ -17,7 +17,6 @@ import {ErrorHandler, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
-
 import {ChromeModule} from './chrome/module';
 import {CoreModule} from './core.module';
 import {GlobalErrorHandler} from './error/handler';

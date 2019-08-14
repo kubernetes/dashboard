@@ -22,16 +22,18 @@ import (
 	apiErrors "k8s.io/apimachinery/pkg/api/errors"
 )
 
-type Metadata struct {
-	Name         string   `json:"name"`
-	Path         string   `json:"path"`
-	Dependencies []string `json:"dependencies"`
-}
-
+// Config holds the information required by the frontend application to bootstrap.
 type Config struct {
 	Status         int32      `json:"status"`
 	PluginMetadata []Metadata `json:"plugins"`
 	Errors         []error    `json:"errors,omitempty"`
+}
+
+// Metadata holds least possible plugin information for Config.
+type Metadata struct {
+  Name         string   `json:"name"`
+  Path         string   `json:"path"`
+  Dependencies []string `json:"dependencies"`
 }
 
 func toPluginMetadata(vs []Plugin, f func(plugin Plugin) Metadata) []Metadata {

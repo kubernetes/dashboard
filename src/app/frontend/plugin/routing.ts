@@ -14,7 +14,6 @@
 
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
-
 import {PluginListComponent} from './list/component';
 import {PluginDetailComponent} from './detail/component';
 
