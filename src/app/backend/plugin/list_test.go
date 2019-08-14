@@ -67,9 +67,24 @@ func TestGetPluginList(t *testing.T) {
 }
 
 func Test_handlePluginList(t *testing.T) {
+	ns := "default"
+	pluginName := "test-plugin"
+	filename := "plugin-test.js"
+	cfgMapName := "plugin-test-cfgMap"
 	h := Handler{&fakeClientManager{}}
 
-	httpReq, _ := http.NewRequest(http.MethodGet, "/api/v1//plugin/default", nil)
+	pcs, _ := h.cManager.PluginClient(nil)
+	_, _ = pcs.DashboardV1alpha1().Plugins(ns).Create(&v1alpha1.Plugin{
+		ObjectMeta: v1.ObjectMeta{Name: pluginName, Namespace: ns},
+		Spec: v1alpha1.PluginSpec{
+			Source: v1alpha1.Source{
+				ConfigMapRef: &coreV1.ConfigMapEnvSource{
+					LocalObjectReference: coreV1.LocalObjectReference{Name: cfgMapName},
+				},
+				Filename: filename}},
+	})
+
+	httpReq, _ := http.NewRequest(http.MethodGet, "/api/v1/plugin/default?itemsPerPage=10&page=1&sortBy=d,creationTimestamp", nil)
 	req := restful.NewRequest(httpReq)
 
 	httpWriter := httptest.NewRecorder()

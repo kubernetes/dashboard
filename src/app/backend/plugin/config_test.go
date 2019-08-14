@@ -19,13 +19,17 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/kubernetes/dashboard/src/app/backend/plugin/apis/v1alpha1"
+
 	"github.com/emicklei/go-restful"
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
 	"github.com/kubernetes/dashboard/src/app/backend/plugin/client/clientset/versioned"
 	fakePluginClientset "github.com/kubernetes/dashboard/src/app/backend/plugin/client/clientset/versioned/fake"
 	v1 "k8s.io/api/authorization/v1"
+	coreV1 "k8s.io/api/core/v1"
 	"k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 	fakeK8sClient "k8s.io/client-go/kubernetes/fake"
 	"k8s.io/client-go/rest"
@@ -34,7 +38,22 @@ import (
 )
 
 func Test_handleConfig(t *testing.T) {
+	ns := "default"
+	pluginName := "test-plugin"
+	filename := "plugin-test.js"
+	cfgMapName := "plugin-test-cfgMap"
 	h := Handler{&fakeClientManager{}}
+
+	pcs, _ := h.cManager.PluginClient(nil)
+	_, _ = pcs.DashboardV1alpha1().Plugins(ns).Create(&v1alpha1.Plugin{
+		ObjectMeta: metaV1.ObjectMeta{Name: pluginName, Namespace: ns},
+		Spec: v1alpha1.PluginSpec{
+			Source: v1alpha1.Source{
+				ConfigMapRef: &coreV1.ConfigMapEnvSource{
+					LocalObjectReference: coreV1.LocalObjectReference{Name: cfgMapName},
+				},
+				Filename: filename}},
+	})
 
 	httpReq, _ := http.NewRequest(http.MethodGet, "/api/v1/plugin/config", nil)
 	req := restful.NewRequest(httpReq)
@@ -46,6 +65,8 @@ func Test_handleConfig(t *testing.T) {
 }
 
 type fakeClientManager struct {
+	k8sClient    kubernetes.Interface
+	pluginClient versioned.Interface
 }
 
 func (cm *fakeClientManager) Client(req *restful.Request) (kubernetes.Interface, error) {
@@ -53,7 +74,10 @@ func (cm *fakeClientManager) Client(req *restful.Request) (kubernetes.Interface,
 }
 
 func (cm *fakeClientManager) InsecureClient() kubernetes.Interface {
-	return fakeK8sClient.NewSimpleClientset()
+	if cm.k8sClient == nil {
+		cm.k8sClient = fakeK8sClient.NewSimpleClientset()
+	}
+	return cm.k8sClient
 }
 
 func (cm *fakeClientManager) APIExtensionsClient(req *restful.Request) (clientset.Interface, error) {
@@ -61,7 +85,10 @@ func (cm *fakeClientManager) APIExtensionsClient(req *restful.Request) (clientse
 }
 
 func (cm *fakeClientManager) PluginClient(req *restful.Request) (versioned.Interface, error) {
-	return fakePluginClientset.NewSimpleClientset(), nil
+	if cm.pluginClient == nil {
+		cm.pluginClient = fakePluginClientset.NewSimpleClientset()
+	}
+	return cm.pluginClient, nil
 }
 
 func (cm *fakeClientManager) InsecureAPIExtensionsClient() clientset.Interface {
@@ -69,7 +96,10 @@ func (cm *fakeClientManager) InsecureAPIExtensionsClient() clientset.Interface {
 }
 
 func (cm *fakeClientManager) InsecurePluginClient() versioned.Interface {
-	return fakePluginClientset.NewSimpleClientset()
+	if cm.pluginClient == nil {
+		cm.pluginClient = fakePluginClientset.NewSimpleClientset()
+	}
+	return cm.pluginClient
 }
 
 func (cm *fakeClientManager) CanI(req *restful.Request, ssar *v1.SelfSubjectAccessReview) bool {
