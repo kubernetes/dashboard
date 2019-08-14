@@ -81,7 +81,7 @@ func (h *Handler) handlePluginList(request *restful.Request, response *restful.R
 }
 
 func (h *Handler) servePluginSource(request *restful.Request, response *restful.Response) {
-  // TODO: Change these to secure clients once SystemJS can send proper auth headers.
+	// TODO: Change these to secure clients once SystemJS can send proper auth headers.
 	pluginClient := h.cManager.InsecurePluginClient()
 	k8sClient := h.cManager.InsecureClient()
 

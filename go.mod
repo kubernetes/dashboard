@@ -26,10 +26,11 @@ require (
 	github.com/prometheus/procfs v0.0.0-20190102135031-14fa7590c24d // indirect
 	github.com/sirupsen/logrus v1.4.2 // indirect
 	github.com/spf13/pflag v1.0.3
-	golang.org/x/net v0.0.0-20190613194153-d28f0bde5980
+	golang.org/x/net v0.0.0-20190620200207-3b0461eec859
 	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45 // indirect
 	golang.org/x/text v0.3.2
 	golang.org/x/time v0.0.0-20181108054448-85acf8d2951c // indirect
+	golang.org/x/tools v0.0.0-20190814171936-5b18234b3ae0 // indirect
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6 // indirect
 	gopkg.in/igm/sockjs-go.v2 v2.0.0
 	gopkg.in/inf.v0 v0.9.1 // indirect

@@ -15,7 +15,11 @@
 package plugin
 
 import (
+	"net/http"
+	"net/http/httptest"
 	"testing"
+
+	"github.com/emicklei/go-restful"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 
@@ -60,4 +64,16 @@ func TestGetPluginList(t *testing.T) {
 	if data.ListMeta.TotalItems != 1 {
 		t.Errorf("there should be one plugin registered, got %d", data.ListMeta.TotalItems)
 	}
+}
+
+func Test_handlePluginList(t *testing.T) {
+	h := Handler{&fakeClientManager{}}
+
+	httpReq, _ := http.NewRequest(http.MethodGet, "/api/v1//plugin/default", nil)
+	req := restful.NewRequest(httpReq)
+
+	httpWriter := httptest.NewRecorder()
+	resp := restful.NewResponse(httpWriter)
+
+	h.handlePluginList(req, resp)
 }

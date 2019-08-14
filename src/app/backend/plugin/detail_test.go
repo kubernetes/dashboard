@@ -16,7 +16,11 @@ package plugin
 
 import (
 	"bytes"
+	"net/http"
+	"net/http/httptest"
 	"testing"
+
+	"github.com/emicklei/go-restful"
 
 	"github.com/kubernetes/dashboard/src/app/backend/plugin/apis/v1alpha1"
 	fakePluginClientset "github.com/kubernetes/dashboard/src/app/backend/plugin/client/clientset/versioned/fake"
@@ -70,4 +74,16 @@ func TestGetPluginSource(t *testing.T) {
 	if !bytes.Equal(data, []byte(srcData)) {
 		t.Error("bytes in configMap and bytes from GetPluginSource are different")
 	}
+}
+
+func Test_servePluginSource(t *testing.T) {
+	h := Handler{&fakeClientManager{}}
+
+	httpReq, _ := http.NewRequest(http.MethodGet, "/api/v1//plugin/default/test-plugin", nil)
+	req := restful.NewRequest(httpReq)
+
+	httpWriter := httptest.NewRecorder()
+	resp := restful.NewResponse(httpWriter)
+
+	h.servePluginSource(req, resp)
 }

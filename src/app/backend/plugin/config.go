@@ -31,9 +31,9 @@ type Config struct {
 
 // Metadata holds least possible plugin information for Config.
 type Metadata struct {
-  Name         string   `json:"name"`
-  Path         string   `json:"path"`
-  Dependencies []string `json:"dependencies"`
+	Name         string   `json:"name"`
+	Path         string   `json:"path"`
+	Dependencies []string `json:"dependencies"`
 }
 
 func toPluginMetadata(vs []Plugin, f func(plugin Plugin) Metadata) []Metadata {
