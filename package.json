@@ -143,7 +143,7 @@
     "babel-preset-env": "1.7.0",
     "babel-register": "6.26.0",
     "codelyzer": "4.5.0",
-    "concurrently": "4.1.1",
+    "concurrently": "4.1.2",
     "cypress": "3.3.2",
     "del": "5.0.0",
     "git-describe": "4.0.4",
