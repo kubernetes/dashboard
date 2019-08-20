@@ -20,6 +20,7 @@ import {first} from 'rxjs/operators';
 import {KdStateService} from '../../../../services/global/state';
 import {VerberService} from '../../../../services/global/verber';
 import {Resource} from '../../../../services/resource/endpoint';
+import {PinnerService} from '../../../../services/global/pinner';
 
 const loggableResources: string[] = [
   Resource.daemonSet,
@@ -37,6 +38,8 @@ const scalableResources: string[] = [
   Resource.statefulSet,
 ];
 
+const pinnableResources: string[] = [Resource.crdFull];
+
 const executableResources: string[] = [Resource.pod];
 
 const triggerableResources: string[] = [Resource.cronJob];
@@ -53,6 +56,7 @@ export class MenuComponent implements ActionColumn {
     private readonly verber_: VerberService,
     private readonly router_: Router,
     private readonly kdState_: KdStateService,
+    private readonly pinner_: PinnerService,
   ) {}
 
   setObjectMeta(objectMeta: ObjectMeta): void {
@@ -98,6 +102,26 @@ export class MenuComponent implements ActionColumn {
 
   onScale(): void {
     this.verber_.showScaleDialog(this.typeMeta.kind, this.typeMeta, this.objectMeta);
+  }
+
+  isPinEnabled(): boolean {
+    return pinnableResources.includes(this.typeMeta.kind);
+  }
+
+  onPin(): void {
+    this.pinner_.pin(this.typeMeta.kind, this.objectMeta.name, this.objectMeta.namespace);
+  }
+
+  onUnpin(): void {
+    this.pinner_.unpin(this.typeMeta.kind, this.objectMeta.name, this.objectMeta.namespace);
+  }
+
+  isPinned(): boolean {
+    return this.pinner_.isPinned(
+      this.typeMeta.kind,
+      this.objectMeta.name,
+      this.objectMeta.namespace,
+    );
   }
 
   onEdit(): void {

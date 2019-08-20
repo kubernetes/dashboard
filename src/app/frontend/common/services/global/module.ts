@@ -33,6 +33,7 @@ import {KdStateService} from './state';
 import {ThemeService} from './theme';
 import {TitleService} from './title';
 import {VerberService} from './verber';
+import {PinnerService} from './pinner';
 
 @NgModule({
   providers: [
@@ -50,13 +51,20 @@ import {VerberService} from './verber';
     NamespaceService,
     ActionbarService,
     VerberService,
+    PinnerService,
     HistoryService,
     LogService,
     ParamsService,
     {
       provide: APP_INITIALIZER,
       useFactory: init,
-      deps: [GlobalSettingsService, LocalSettingsService, ConfigService, HistoryService],
+      deps: [
+        GlobalSettingsService,
+        LocalSettingsService,
+        PinnerService,
+        ConfigService,
+        HistoryService,
+      ],
       multi: true,
     },
     {
@@ -76,12 +84,14 @@ export class GlobalServicesModule {
 export function init(
   globalSettings: GlobalSettingsService,
   localSettings: LocalSettingsService,
+  pinner: PinnerService,
   config: ConfigService,
   history: HistoryService,
 ): Function {
   return () => {
     globalSettings.init();
     localSettings.init();
+    pinner.init();
     config.init();
     history.init();
   };

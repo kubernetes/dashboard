@@ -77,6 +77,7 @@ const (
 type APIHandler struct {
 	iManager integration.IntegrationManager
 	cManager clientapi.ClientManager
+	sManager settingsApi.SettingsManager
 }
 
 // TerminalResponse is sent by handleExecShell. The Id is a random session id that binds the original REST request and the SockJS connection.
@@ -91,7 +92,7 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 	sbManager systembanner.SystemBannerManager) (
 
 	http.Handler, error) {
-	apiHandler := APIHandler{iManager: iManager, cManager: cManager}
+	apiHandler := APIHandler{iManager: iManager, cManager: cManager, sManager: sManager}
 	wsContainer := restful.NewContainer()
 	wsContainer.EnableContentEncoding(true)
 
@@ -1425,6 +1426,24 @@ func (apiHandler *APIHandler) handleDeleteResource(
 	if err := verber.Delete(kind, ok, namespace, name); err != nil {
 		errors.HandleInternalError(response, err)
 		return
+	}
+
+	// Try to unpin resource if it was pinned.
+	pinnedResource := &settingsApi.PinnedResource{
+		Name:      name,
+		Kind:      kind,
+		Namespace: namespace,
+	}
+
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	if err = apiHandler.sManager.DeletePinnedResource(k8sClient, pinnedResource); err != nil {
+		if !errors.IsNotFoundError(err) {
+			log.Printf("error while unpinning resource: %s", err.Error())
+		}
 	}
 
 	response.WriteHeader(http.StatusOK)

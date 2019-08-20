@@ -45,6 +45,22 @@ func (self *SettingsHandler) Install(ws *restful.WebService) {
 			To(self.handleSettingsGlobalSave).
 			Reads(api.Settings{}).
 			Writes(api.Settings{}))
+
+	ws.Route(
+		ws.GET("/settings/pinner").
+			To(self.handleSettingsGetPinned))
+	ws.Route(
+		ws.PUT("/settings/pinner").
+			To(self.handleSettingsSavePinned))
+	ws.Route(
+		ws.GET("/settings/pinner/cani").
+			To(self.handleSettingsGlobalCanI))
+	ws.Route(
+		ws.DELETE("/settings/pinner/{kind}/{name}").
+			To(self.handleSettingsDeletePinned))
+	ws.Route(
+		ws.DELETE("/settings/pinner/{kind}/{namespace}/{name}").
+			To(self.handleSettingsDeletePinned))
 }
 
 func (self *SettingsHandler) handleSettingsGlobalCanI(request *restful.Request, response *restful.Response) {
@@ -96,6 +112,57 @@ func (self *SettingsHandler) handleSettingsGlobalSave(request *restful.Request, 
 		return
 	}
 	response.WriteHeaderAndEntity(http.StatusCreated, settings)
+}
+
+func (self *SettingsHandler) handleSettingsGetPinned(request *restful.Request, response *restful.Response) {
+	client, err := self.clientManager.Client(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	result := self.manager.GetPinnedResources(client)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (self *SettingsHandler) handleSettingsSavePinned(request *restful.Request, response *restful.Response) {
+	pinnedResource := new(api.PinnedResource)
+	if err := request.ReadEntity(pinnedResource); err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	client, err := self.clientManager.Client(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	if err := self.manager.SavePinnedResource(client, pinnedResource); err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusCreated, pinnedResource)
+}
+
+func (self *SettingsHandler) handleSettingsDeletePinned(request *restful.Request, response *restful.Response) {
+	pinnedResource := &api.PinnedResource{
+		Kind:      request.PathParameter("kind"),
+		Name:      request.PathParameter("name"),
+		Namespace: request.PathParameter("namespace"),
+	}
+
+	client, err := self.clientManager.Client(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	if err := self.manager.DeletePinnedResource(client, pinnedResource); err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	response.WriteHeader(http.StatusNoContent)
 }
 
 // NewSettingsHandler creates SettingsHandler.

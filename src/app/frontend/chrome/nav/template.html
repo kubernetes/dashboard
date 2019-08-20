@@ -126,9 +126,12 @@ limitations under the License.
 
     <div class="kd-nav-group">
       <kd-nav-item class="kd-nav-group-item"
-                   state="/crd"
+                   state="/customresourcedefinition"
+                   [exact]="true"
                    i18n>Custom Resource Definitions
       </kd-nav-item>
+
+      <kd-pinner-nav kind="customresourcedefinition"></kd-pinner-nav>
     </div>
 
     <mat-divider></mat-divider>

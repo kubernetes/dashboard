@@ -18,6 +18,7 @@ import {LogsExecDefaultActionbar} from './logsexecdefault/component';
 import {LogsScaleDefaultActionbar} from './logsscaledefault/component';
 import {ScaleDefaultActionbar} from './scaledefault/component';
 import {TriggerDefaultActionbar} from './triggerdefault/component';
+import {PinDefaultActionbar} from './pindefault/component';
 
 export const DEFAULT_ACTIONBAR = {
   path: '',
@@ -40,6 +41,12 @@ export const LOGS_EXEC_DEFAULT_ACTIONBAR = {
 export const LOGS_SCALE_DEFAULT_ACTIONBAR = {
   path: '',
   component: LogsScaleDefaultActionbar,
+  outlet: 'actionbar',
+};
+
+export const PIN_DEFAULT_ACTIONBAR = {
+  path: '',
+  component: PinDefaultActionbar,
   outlet: 'actionbar',
 };
 

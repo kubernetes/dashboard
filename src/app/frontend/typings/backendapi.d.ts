@@ -1034,6 +1034,12 @@ export interface GlobalSettings {
   resourceAutoRefreshTimeInterval: number;
 }
 
+export interface PinnedResource {
+  kind: string;
+  name: string;
+  namespace?: string;
+}
+
 export interface APIVersion {
   name: string;
 }

@@ -104,6 +104,9 @@ func NewGenericResponse(code int, serverMessage string) *errors.StatusError {
 		reason = metav1.StatusReasonForbidden
 		// the server message has details about who is trying to perform what action.  Keep its message.
 		message = serverMessage
+	case http.StatusConflict:
+		reason = metav1.StatusReasonConflict
+		message = serverMessage
 	case http.StatusNotAcceptable:
 		reason = metav1.StatusReasonNotAcceptable
 		// the server message has details about what types are acceptable
