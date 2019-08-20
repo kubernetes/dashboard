@@ -32,10 +32,16 @@ const CRD_DETAIL_ROUTE: Route = {
   data: {breadcrumb: '{{ crdName }}', parent: CRD_LIST_ROUTE},
 };
 
-const CRD_OBJECT_DETAIL_ROUTE: Route = {
+const CRD_NAMESPACED_OBJECT_DETAIL_ROUTE: Route = {
   path: ':crdName/:namespace/:objectName',
   component: CRDObjectDetailComponent,
   data: {breadcrumb: '{{ objectName }}', routeParamsCount: 2, parent: CRD_DETAIL_ROUTE},
+};
+
+const CRD_CLUSTER_OBJECT_DETAIL_ROUTE: Route = {
+  path: ':crdName/:objectName',
+  component: CRDObjectDetailComponent,
+  data: {breadcrumb: '{{ objectName }}', routeParamsCount: 1, parent: CRD_DETAIL_ROUTE},
 };
 
 @NgModule({
@@ -43,7 +49,8 @@ const CRD_OBJECT_DETAIL_ROUTE: Route = {
     RouterModule.forChild([
       CRD_LIST_ROUTE,
       CRD_DETAIL_ROUTE,
-      CRD_OBJECT_DETAIL_ROUTE,
+      CRD_NAMESPACED_OBJECT_DETAIL_ROUTE,
+      CRD_CLUSTER_OBJECT_DETAIL_ROUTE,
       DEFAULT_ACTIONBAR,
     ]),
   ],
