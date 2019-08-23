@@ -124,7 +124,7 @@
     "roboto-fontface": "0.10.0",
     "rxjs": "6.5.2",
     "rxjs-compat": "6.5.2",
-    "sockjs-client": "1.3.0",
+    "sockjs-client": "1.4.0",
     "web-animations-js": "2.3.2",
     "xterm": "3.14.5",
     "zone.js": "0.9.1"
