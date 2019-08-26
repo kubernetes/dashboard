@@ -77,7 +77,7 @@ type TypeMeta struct {
 	Kind ResourceKind `json:"kind,omitempty"`
 
 	// Scalable represents whether or not an object is scalable.
-	Scalable bool `json:"scalable"`
+	Scalable bool `json:"scalable,omitempty"`
 }
 
 // ListMeta describes list of objects, i.e. holds information about pagination options set for the list.
