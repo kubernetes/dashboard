@@ -13,7 +13,8 @@
 // limitations under the License.
 
 import {Type} from '@angular/core';
-import {GlobalSettings, K8sError, ObjectMeta, ResourceList, TypeMeta,} from '@api/backendapi';
+import {GlobalSettings, K8sError, ObjectMeta, ResourceList, TypeMeta} from '@api/backendapi';
+import {ListIdentifier} from '../common/components/resourcelist/groupids';
 
 export interface BreadcrumbConfig {
   label?: string;
@@ -40,7 +41,7 @@ export interface KdError {
 }
 
 export interface OnListChangeEvent {
-  id: string;
+  id: ListIdentifier;
   groupId: string;
   items: number;
   filtered: boolean;
@@ -64,7 +65,7 @@ export interface ActionColumn {
 }
 
 export interface HTMLInputEvent extends Event {
-  target: HTMLInputElement&EventTarget;
+  target: HTMLInputElement & EventTarget;
 }
 
 export interface KdFile {

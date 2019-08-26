@@ -21,18 +21,19 @@ import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
-import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
+import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 
 @Component({selector: 'kd-secret-list', templateUrl: './template.html'})
 export class SecretListComponent extends ResourceListBase<SecretList, Secret> {
   @Input() endpoint = EndpointManager.resource(Resource.secret, true).list();
 
   constructor(
-      private readonly secret_: NamespacedResourceService<SecretList>,
-      notifications: NotificationsService) {
+    private readonly secret_: NamespacedResourceService<SecretList>,
+    notifications: NotificationsService,
+  ) {
     super('secret', notifications);
-    this.id = ListIdentifiers.secret;
-    this.groupId = ListGroupIdentifiers.config;
+    this.id = ListIdentifier.secret;
+    this.groupId = ListGroupIdentifier.config;
 
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);

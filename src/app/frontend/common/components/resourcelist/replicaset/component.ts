@@ -23,7 +23,7 @@ import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
-import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
+import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 
 @Component({
   selector: 'kd-replica-set-list',
@@ -34,12 +34,14 @@ export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSet
   @Input() endpoint = EndpointManager.resource(Resource.replicaSet, true).list();
 
   constructor(
-      private readonly replicaSet_: NamespacedResourceService<ReplicaSetList>,
-      private readonly activatedRoute_: ActivatedRoute, notifications: NotificationsService,
-      resolver: ComponentFactoryResolver) {
+    private readonly replicaSet_: NamespacedResourceService<ReplicaSetList>,
+    private readonly activatedRoute_: ActivatedRoute,
+    notifications: NotificationsService,
+    resolver: ComponentFactoryResolver,
+  ) {
     super('replicaset', notifications, resolver);
-    this.id = ListIdentifiers.replicaSet;
-    this.groupId = ListGroupIdentifiers.workloads;
+    this.id = ListIdentifier.replicaSet;
+    this.groupId = ListGroupIdentifier.workloads;
 
     // Register status icon handlers
     this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);
@@ -66,11 +68,11 @@ export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSet
   }
 
   isInPendingState(resource: ReplicaSet): boolean {
-    return (resource.podInfo.warnings.length === 0 && resource.podInfo.pending > 0);
+    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending > 0;
   }
 
   isInSuccessState(resource: ReplicaSet): boolean {
-    return (resource.podInfo.warnings.length === 0 && resource.podInfo.pending === 0);
+    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending === 0;
   }
 
   protected getDisplayColumns(): string[] {

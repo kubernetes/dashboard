@@ -56,7 +56,7 @@ import {VerberService} from './verber';
     {
       provide: APP_INITIALIZER,
       useFactory: init,
-      deps: [GlobalSettingsService, LocalSettingsService, ConfigService],
+      deps: [GlobalSettingsService, LocalSettingsService, ConfigService, HistoryService],
       multi: true,
     },
     {
@@ -74,11 +74,15 @@ export class GlobalServicesModule {
 }
 
 export function init(
-    globalSettings: GlobalSettingsService, localSettings: LocalSettingsService,
-    config: ConfigService): Function {
+  globalSettings: GlobalSettingsService,
+  localSettings: LocalSettingsService,
+  config: ConfigService,
+  history: HistoryService,
+): Function {
   return () => {
     globalSettings.init();
     localSettings.init();
     config.init();
+    history.init();
   };
 }

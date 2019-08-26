@@ -13,26 +13,30 @@
 // limitations under the License.
 
 import {HttpParams} from '@angular/common/http';
-import {Component, ComponentFactoryResolver, Input} from '@angular/core';
+import {Component, ComponentFactoryResolver, Input, OnDestroy} from '@angular/core';
 import {Event, Pod, PodList} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
+import {takeUntil} from 'rxjs/operators';
+
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
-import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
+import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 
 @Component({selector: 'kd-pod-list', templateUrl: './template.html'})
 export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
   @Input() endpoint = EndpointManager.resource(Resource.pod, true).list();
 
   constructor(
-      private readonly podList: NamespacedResourceService<PodList>,
-      resolver: ComponentFactoryResolver, notifications: NotificationsService) {
+    private readonly podList: NamespacedResourceService<PodList>,
+    resolver: ComponentFactoryResolver,
+    notifications: NotificationsService,
+  ) {
     super('pod', notifications, resolver);
-    this.id = ListIdentifiers.pod;
-    this.groupId = ListGroupIdentifiers.workloads;
+    this.id = ListIdentifier.pod;
+    this.groupId = ListGroupIdentifier.workloads;
 
     // Register status icon handlers
     this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);
@@ -63,21 +67,11 @@ export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
   }
 
   isInSuccessState(resource: Pod): boolean {
-    return (resource.podStatus.status === 'Succeeded' || resource.podStatus.status === 'Running');
+    return resource.podStatus.status === 'Succeeded' || resource.podStatus.status === 'Running';
   }
 
   protected getDisplayColumns(): string[] {
-    return [
-      'statusicon',
-      'name',
-      'labels',
-      'node',
-      'status',
-      'restarts',
-      'cpu',
-      'mem',
-      'age',
-    ];
+    return ['statusicon', 'name', 'labels', 'node', 'status', 'restarts', 'cpu', 'mem', 'age'];
   }
 
   private shouldShowNamespaceColumn_(): boolean {

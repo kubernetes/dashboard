@@ -21,21 +21,22 @@ import {Observable} from 'rxjs/Observable';
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
 import {NamespacedResourceService} from '../../../services/resource/resource';
-import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
+import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 
 const EVENT_TYPE_WARNING = 'Warning';
 
 @Component({selector: 'kd-event-list', templateUrl: './template.html'})
-export class EventListComponent extends ResourceListWithStatuses<EventList, Event> implements
-    OnInit {
+export class EventListComponent extends ResourceListWithStatuses<EventList, Event>
+  implements OnInit {
   @Input() endpoint: string;
 
   constructor(
-      private readonly eventList: NamespacedResourceService<EventList>,
-      notifications: NotificationsService) {
+    private readonly eventList: NamespacedResourceService<EventList>,
+    notifications: NotificationsService,
+  ) {
     super('', notifications);
-    this.id = ListIdentifiers.event;
-    this.groupId = ListGroupIdentifiers.none;
+    this.id = ListIdentifier.event;
+    this.groupId = ListGroupIdentifier.none;
 
     // Register status icon handler
     this.registerBinding(this.icon.warning, 'kd-warning', this.isWarning);
@@ -67,14 +68,6 @@ export class EventListComponent extends ResourceListWithStatuses<EventList, Even
   }
 
   getDisplayColumns(): string[] {
-    return [
-      'statusicon',
-      'message',
-      'source',
-      'subobject',
-      'count',
-      'firstseen',
-      'lastseen',
-    ];
+    return ['statusicon', 'message', 'source', 'subobject', 'count', 'firstseen', 'lastseen'];
   }
 }

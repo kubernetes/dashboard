@@ -23,5 +23,4 @@ import {JobRoutingModule} from './routing';
   imports: [SharedModule, ComponentsModule, JobRoutingModule],
   declarations: [JobListComponent, JobDetailComponent],
 })
-export class JobModule {
-}
+export class JobModule {}

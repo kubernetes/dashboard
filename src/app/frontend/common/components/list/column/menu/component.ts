@@ -50,8 +50,10 @@ export class MenuComponent implements ActionColumn {
   @Input() typeMeta: TypeMeta;
 
   constructor(
-      private readonly verber_: VerberService, private readonly router_: Router,
-      private readonly kdState_: KdStateService) {}
+    private readonly verber_: VerberService,
+    private readonly router_: Router,
+    private readonly kdState_: KdStateService,
+  ) {}
 
   setObjectMeta(objectMeta: ObjectMeta): void {
     this.objectMeta = objectMeta;
@@ -67,7 +69,11 @@ export class MenuComponent implements ActionColumn {
 
   getLogsHref(): string {
     return this.kdState_.href(
-        'log', this.objectMeta.name, this.objectMeta.namespace, this.typeMeta.kind);
+      'log',
+      this.objectMeta.name,
+      this.objectMeta.namespace,
+      this.typeMeta.kind,
+    );
   }
 
   isExecEnabled(): boolean {
@@ -91,17 +97,14 @@ export class MenuComponent implements ActionColumn {
   }
 
   onScale(): void {
-    this.verber_.onScale.pipe(first()).subscribe(() => this.router_.navigate([]));
     this.verber_.showScaleDialog(this.typeMeta.kind, this.typeMeta, this.objectMeta);
   }
 
   onEdit(): void {
-    this.verber_.onEdit.pipe(first()).subscribe(() => this.router_.navigate([]));
     this.verber_.showEditDialog(this.typeMeta.kind, this.typeMeta, this.objectMeta);
   }
 
   onDelete(): void {
-    this.verber_.onDelete.pipe(first()).subscribe(() => this.router_.navigate([]));
     this.verber_.showDeleteDialog(this.typeMeta.kind, this.typeMeta, this.objectMeta);
   }
 }

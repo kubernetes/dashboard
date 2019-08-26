@@ -19,7 +19,9 @@ import (
 	"strings"
 
 	restful "github.com/emicklei/go-restful"
+	pluginclientset "github.com/kubernetes/dashboard/src/app/backend/plugin/client/clientset/versioned"
 	v1 "k8s.io/api/authorization/v1"
+	apiextensionsclientset "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
@@ -48,6 +50,8 @@ const (
 	JWETokenHeader = "jweToken"
 	// Default http header for user-agent
 	DefaultUserAgent = "dashboard"
+	//Impersonation Extra header
+	ImpersonateUserExtraHeader = "Impersonate-Extra-"
 )
 
 // VERSION of this binary
@@ -67,6 +71,12 @@ type clientManager struct {
 	inClusterConfig *rest.Config
 	// Responsible for decrypting tokens coming in request header. Used for authentication.
 	tokenManager authApi.TokenManager
+	// API Extensions client created without providing auth info. It uses permissions granted to
+	// service account used by dashboard or kubeconfig file if it was passed during dashboard init.
+	insecureAPIExtensionsClient apiextensionsclientset.Interface
+	// Plugin client created without providing auth info. It uses permissions granted to
+	// service account used by dashboard or kubeconfig file if it was passed during dashboard init.
+	insecurePluginClient pluginclientset.Interface
 	// Kubernetes client created without providing auth info. It uses permissions granted to
 	// service account used by dashboard or kubeconfig file if it was passed during dashboard init.
 	insecureClient kubernetes.Interface
@@ -91,6 +101,36 @@ func (self *clientManager) Client(req *restful.Request) (kubernetes.Interface, e
 	return self.InsecureClient(), nil
 }
 
+// APIExtensionsClient returns an API Extensions client. In case dashboard login is enabled and
+// option to skip login page is disabled only secure client will be returned, otherwise insecure
+// client will be used.
+func (self *clientManager) APIExtensionsClient(req *restful.Request) (apiextensionsclientset.Interface, error) {
+	if req == nil {
+		return nil, errors.NewBadRequest("request can not be nil!")
+	}
+
+	if self.isSecureModeEnabled(req) {
+		return self.secureAPIExtensionsClient(req)
+	}
+
+	return self.InsecureAPIExtensionsClient(), nil
+}
+
+// PluginClient returns a plugin client. In case dashboard login is enabled and
+// option to skip login page is disabled only secure client will be returned, otherwise insecure
+// client will be used.
+func (self *clientManager) PluginClient(req *restful.Request) (pluginclientset.Interface, error) {
+	if req == nil {
+		return nil, errors.NewBadRequest("request can not be nil!")
+	}
+
+	if self.isSecureModeEnabled(req) {
+		return self.securePluginClient(req)
+	}
+
+	return self.InsecurePluginClient(), nil
+}
+
 // Config returns a rest config. In case dashboard login is enabled and option to skip
 // login page is disabled only secure config will be returned, otherwise insecure config will be
 // used.
@@ -111,6 +151,20 @@ func (self *clientManager) Config(req *restful.Request) (*rest.Config, error) {
 // during dashboard init.
 func (self *clientManager) InsecureClient() kubernetes.Interface {
 	return self.insecureClient
+}
+
+// InsecureAPIExtensionsClient returns API Extensions client that was created without providing
+// auth info. It uses permissions granted to service account used by dashboard or kubeconfig file
+// if it was passed during dashboard init.
+func (self *clientManager) InsecureAPIExtensionsClient() apiextensionsclientset.Interface {
+	return self.insecureAPIExtensionsClient
+}
+
+// InsecurePluginClient returns plugin client that was created without providing
+// auth info. It uses permissions granted to service account used by dashboard or kubeconfig file
+// if it was passed during dashboard init.
+func (self *clientManager) InsecurePluginClient() pluginclientset.Interface {
+	return self.insecurePluginClient
 }
 
 // InsecureConfig returns kubernetes client config that used privileges of dashboard service account
@@ -187,16 +241,21 @@ func (self *clientManager) HasAccess(authInfo api.AuthInfo) error {
 }
 
 // VerberClient returns new verber client based on authentication information extracted from request
-func (self *clientManager) VerberClient(req *restful.Request) (clientapi.ResourceVerber, error) {
-	client, err := self.Client(req)
+func (self *clientManager) VerberClient(req *restful.Request, config *rest.Config) (clientapi.ResourceVerber, error) {
+	k8sClient, err := self.Client(req)
 	if err != nil {
 		return nil, err
 	}
 
-	return NewResourceVerber(client.CoreV1().RESTClient(),
-		client.ExtensionsV1beta1().RESTClient(), client.AppsV1().RESTClient(),
-		client.BatchV1().RESTClient(), client.BatchV1beta1().RESTClient(), client.AutoscalingV1().RESTClient(),
-		client.StorageV1().RESTClient(), client.RbacV1().RESTClient()), nil
+	apiextensionsclient, err := self.APIExtensionsClient(req)
+	if err != nil {
+		return nil, err
+	}
+
+	return NewResourceVerber(k8sClient.CoreV1().RESTClient(),
+		k8sClient.ExtensionsV1beta1().RESTClient(), k8sClient.AppsV1().RESTClient(),
+		k8sClient.BatchV1().RESTClient(), k8sClient.BatchV1beta1().RESTClient(), k8sClient.AutoscalingV1().RESTClient(),
+		k8sClient.StorageV1().RESTClient(), k8sClient.RbacV1().RESTClient(), apiextensionsclient.ApiextensionsV1beta1().RESTClient(), config), nil
 }
 
 // SetTokenManager sets the token manager that will be used for token decryption.
@@ -254,12 +313,37 @@ func (self *clientManager) buildCmdConfig(authInfo *api.AuthInfo, cfg *rest.Conf
 // Extracts authorization information from the request header
 func (self *clientManager) extractAuthInfo(req *restful.Request) (*api.AuthInfo, error) {
 	authHeader := req.HeaderParameter("Authorization")
+	impersonationHeader := req.HeaderParameter("Impersonate-User")
 	jweToken := req.HeaderParameter(JWETokenHeader)
 
 	// Authorization header will be more important than our token
 	token := self.extractTokenFromHeader(authHeader)
 	if len(token) > 0 {
-		return &api.AuthInfo{Token: token}, nil
+
+		authInfo := &api.AuthInfo{Token: token}
+
+		if len(impersonationHeader) > 0 {
+			//there's an impersonation header, lets make sure to add it
+			authInfo.Impersonate = impersonationHeader
+
+			//Check for impersonated groups
+			if groupsImpersonationHeader := req.Request.Header["Impersonate-Group"]; len(groupsImpersonationHeader) > 0 {
+				authInfo.ImpersonateGroups = groupsImpersonationHeader
+			}
+
+			//check for extra fields
+			for headerName, headerValues := range req.Request.Header {
+				if strings.HasPrefix(headerName, ImpersonateUserExtraHeader) {
+					extraName := headerName[len(ImpersonateUserExtraHeader):]
+					if authInfo.ImpersonateUserExtra == nil {
+						authInfo.ImpersonateUserExtra = make(map[string][]string)
+					}
+					authInfo.ImpersonateUserExtra[extraName] = headerValues
+				}
+			}
+		}
+
+		return authInfo, nil
 	}
 
 	if self.tokenManager != nil && len(jweToken) > 0 {
@@ -313,6 +397,34 @@ func (self *clientManager) secureClient(req *restful.Request) (kubernetes.Interf
 	return client, nil
 }
 
+func (self *clientManager) secureAPIExtensionsClient(req *restful.Request) (apiextensionsclientset.Interface, error) {
+	cfg, err := self.secureConfig(req)
+	if err != nil {
+		return nil, err
+	}
+
+	client, err := apiextensionsclientset.NewForConfig(cfg)
+	if err != nil {
+		return nil, err
+	}
+
+	return client, nil
+}
+
+func (self *clientManager) securePluginClient(req *restful.Request) (pluginclientset.Interface, error) {
+	cfg, err := self.secureConfig(req)
+	if err != nil {
+		return nil, err
+	}
+
+	client, err := pluginclientset.NewForConfig(cfg)
+	if err != nil {
+		return nil, err
+	}
+
+	return client, nil
+}
+
 func (self *clientManager) secureConfig(req *restful.Request) (*rest.Config, error) {
 	cmdConfig, err := self.ClientCmdConfig(req)
 	if err != nil {
@@ -331,7 +443,7 @@ func (self *clientManager) secureConfig(req *restful.Request) (*rest.Config, err
 // Initializes client manager
 func (self *clientManager) init() {
 	self.initInClusterConfig()
-	self.initInsecureClient()
+	self.initInsecureClients()
 	self.initCSRFKey()
 }
 
@@ -367,14 +479,27 @@ func (self *clientManager) initCSRFKey() {
 	self.csrfKey = csrf.NewCsrfTokenManager(self.insecureClient).Token()
 }
 
-func (self *clientManager) initInsecureClient() {
+// Initializes Kubernetes client and API extensions client.
+func (self *clientManager) initInsecureClients() {
 	self.initInsecureConfig()
-	client, err := kubernetes.NewForConfig(self.insecureConfig)
+	k8sClient, err := kubernetes.NewForConfig(self.insecureConfig)
 	if err != nil {
 		panic(err)
 	}
 
-	self.insecureClient = client
+	apiextensionsclient, err := apiextensionsclientset.NewForConfig(self.insecureConfig)
+	if err != nil {
+		panic(err)
+	}
+
+	pluginclient, err := pluginclientset.NewForConfig(self.insecureConfig)
+	if err != nil {
+		panic(err)
+	}
+
+	self.insecureClient = k8sClient
+	self.insecureAPIExtensionsClient = apiextensionsclient
+	self.insecurePluginClient = pluginclient
 }
 
 func (self *clientManager) initInsecureConfig() {

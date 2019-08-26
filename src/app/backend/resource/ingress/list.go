@@ -60,7 +60,12 @@ func getEndpoints(ingress *extensions.Ingress) []common.Endpoint {
 	endpoints := make([]common.Endpoint, 0)
 	if len(ingress.Status.LoadBalancer.Ingress) > 0 {
 		for _, status := range ingress.Status.LoadBalancer.Ingress {
-			endpoint := common.Endpoint{Host: status.IP}
+			endpoint := common.Endpoint{}
+			if status.Hostname != "" {
+				endpoint.Host = status.Hostname
+			} else if status.IP != "" {
+				endpoint.Host = status.IP
+			}
 			endpoints = append(endpoints, endpoint)
 		}
 	}

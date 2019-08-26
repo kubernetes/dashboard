@@ -21,22 +21,26 @@ import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
-import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
+import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 
 @Component({
   selector: 'kd-stateful-set-list',
   templateUrl: './template.html',
 })
-export class StatefulSetListComponent extends
-    ResourceListWithStatuses<StatefulSetList, StatefulSet> {
+export class StatefulSetListComponent extends ResourceListWithStatuses<
+  StatefulSetList,
+  StatefulSet
+> {
   @Input() endpoint = EndpointManager.resource(Resource.statefulSet, true).list();
 
   constructor(
-      private readonly statefulSet_: NamespacedResourceService<StatefulSetList>,
-      resolver: ComponentFactoryResolver, notifications: NotificationsService) {
+    private readonly statefulSet_: NamespacedResourceService<StatefulSetList>,
+    resolver: ComponentFactoryResolver,
+    notifications: NotificationsService,
+  ) {
     super('statefulset', notifications, resolver);
-    this.id = ListIdentifiers.statefulSet;
-    this.groupId = ListGroupIdentifiers.workloads;
+    this.id = ListIdentifier.statefulSet;
+    this.groupId = ListGroupIdentifier.workloads;
 
     // Register status icon handlers
     this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);
@@ -63,11 +67,11 @@ export class StatefulSetListComponent extends
   }
 
   isInPendingState(resource: StatefulSet): boolean {
-    return (resource.podInfo.warnings.length === 0 && resource.podInfo.pending > 0);
+    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending > 0;
   }
 
   isInSuccessState(resource: StatefulSet): boolean {
-    return (resource.podInfo.warnings.length === 0 && resource.podInfo.pending === 0);
+    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending === 0;
   }
 
   getDisplayColumns(): string[] {

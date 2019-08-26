@@ -22,7 +22,7 @@ import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
-import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
+import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 
 @Component({
   selector: 'kd-job-list',
@@ -33,11 +33,13 @@ export class JobListComponent extends ResourceListWithStatuses<JobList, Job> {
   @Input() endpoint = EndpointManager.resource(Resource.job, true).list();
 
   constructor(
-      private readonly job_: NamespacedResourceService<JobList>,
-      notifications: NotificationsService, resolver: ComponentFactoryResolver) {
+    private readonly job_: NamespacedResourceService<JobList>,
+    notifications: NotificationsService,
+    resolver: ComponentFactoryResolver,
+  ) {
     super('job', notifications, resolver);
-    this.id = ListIdentifiers.job;
-    this.groupId = ListGroupIdentifiers.workloads;
+    this.id = ListIdentifier.job;
+    this.groupId = ListGroupIdentifier.workloads;
 
     // Register status icon handlers
     this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);
@@ -64,11 +66,11 @@ export class JobListComponent extends ResourceListWithStatuses<JobList, Job> {
   }
 
   isInPendingState(resource: Job): boolean {
-    return (resource.podInfo.warnings.length === 0 && resource.podInfo.pending > 0);
+    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending > 0;
   }
 
   isInSuccessState(resource: Job): boolean {
-    return (resource.podInfo.warnings.length === 0 && resource.podInfo.pending === 0);
+    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending === 0;
   }
 
   getDisplayColumns(): string[] {

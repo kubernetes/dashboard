@@ -22,13 +22,7 @@ import {GlobalErrorHandler} from './handler';
 import {ErrorRoutingModule} from './routing';
 
 @NgModule({
-  imports: [
-    SharedModule,
-    ComponentsModule,
-    NavServiceModule,
-    ErrorRoutingModule,
-  ],
+  imports: [SharedModule, ComponentsModule, NavServiceModule, ErrorRoutingModule],
   declarations: [ErrorComponent],
 })
-export class ErrorModule {
-}
+export class ErrorModule {}

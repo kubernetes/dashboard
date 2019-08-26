@@ -29,10 +29,12 @@ export class RootComponent implements OnInit {
   private isLightThemeEnabled_: boolean;
 
   constructor(
-      private readonly themeService_: ThemeService,
-      private readonly settings_: LocalSettingsService,
-      private readonly overlayContainer_: OverlayContainer, private readonly kdRootRef: ElementRef,
-      private readonly titleService_: TitleService) {
+    private readonly themeService_: ThemeService,
+    private readonly settings_: LocalSettingsService,
+    private readonly overlayContainer_: OverlayContainer,
+    private readonly kdRootRef: ElementRef,
+    private readonly titleService_: TitleService,
+  ) {
     this.isLightThemeEnabled_ = this.themeService_.isLightThemeEnabled();
   }
 

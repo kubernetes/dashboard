@@ -13,6 +13,7 @@ git:
 cache:
   directories:
     - .cached_tools
+    - ~/.cache
     - node_modules
 
 before_install:
@@ -20,20 +21,12 @@ before_install:
   - export GO111MODULE=on
   - export PATH=$PATH:$GOPATH/bin
   - eval "$(gimme 1.12.6)"
-  - cd $HOME
-  - mkdir -p $GOPATH/src/github.com/
-  - mv $HOME/build/kubernetes $GOPATH/src/github.com/
-  - export TRAVIS_BUILD_DIR=$GOPATH/src/github.com/kubernetes/dashboard
-  - cd $TRAVIS_BUILD_DIR
-  - mkdir -p $TRAVIS_BUILD_DIR/.tmp/src/github.com/kubernetes/dashboard/src/app
-  - cp -r $TRAVIS_BUILD_DIR/src/app/backend $TRAVIS_BUILD_DIR/.tmp/src/github.com/kubernetes/dashboard/src/app
-  - ln -s $TRAVIS_BUILD_DIR/vendor $TRAVIS_BUILD_DIR/.tmp/src/github.com/kubernetes/dashboard/src/app/backend/vendor
 
 before_script:
   - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
   - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) edge"
   - sudo apt-get update
-  - sudo apt-get -y install docker-ce
+  - sudo apt-get -y install docker-ce libgconf2-4
   - sudo service docker restart
   - docker --version
 
@@ -45,13 +38,19 @@ jobs:
       after_success:
         - rm -rf $TRAVIS_BUILD_DIR/.tmp
         - bash <(curl -s https://codecov.io/bash)
-    - script: npm run cluster:start && npm run test:e2e
+    - script: npm run cluster:start && npm run e2e
     - stage: deploy
       script:
         - docker login -u $DOCKER_USER -p $DOCKER_PASS
-        - npm run docker:push:head:cross
+        - npm run docker:push:head
+    - stage: release
+      script:
+        - docker login -u $DOCKER_RELEASE_USER -p $DOCKER_RELEASE_PASS
+        - npm run docker:push
 
 stages:
   - test
   - name: deploy
     if: branch = master AND type != pull_request
+  - name: release
+    if: tag IS present AND type != pull_request

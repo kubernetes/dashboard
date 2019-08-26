@@ -22,22 +22,25 @@ import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {ResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
-import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
+import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 
 @Component({
   selector: 'kd-persistent-volume-list',
   templateUrl: './template.html',
 })
-export class PersistentVolumeListComponent extends
-    ResourceListWithStatuses<PersistentVolumeList, PersistentVolume> {
+export class PersistentVolumeListComponent extends ResourceListWithStatuses<
+  PersistentVolumeList,
+  PersistentVolume
+> {
   @Input() endpoint = EndpointManager.resource(Resource.persistentVolume).list();
 
   constructor(
-      private readonly pv_: ResourceService<PersistentVolumeList>,
-      notifications: NotificationsService) {
+    private readonly pv_: ResourceService<PersistentVolumeList>,
+    notifications: NotificationsService,
+  ) {
     super('persistentvolume', notifications);
-    this.id = ListIdentifiers.persistentVolume;
-    this.groupId = ListGroupIdentifiers.cluster;
+    this.id = ListIdentifier.persistentVolume;
+    this.groupId = ListGroupIdentifier.cluster;
 
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);

@@ -39,5 +39,4 @@ import {TrimPipe} from './trim';
     CommaSeparatedPipe,
   ],
 })
-export class PipesModule {
-}
+export class PipesModule {}

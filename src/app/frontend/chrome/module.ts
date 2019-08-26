@@ -26,19 +26,7 @@ import {SearchComponent} from './search/component';
 import {UserPanelComponent} from './userpanel/component';
 
 @NgModule({
-  imports: [
-    SharedModule,
-    ComponentsModule,
-    NavModule,
-    ChromeRoutingModule,
-    GuardsModule,
-  ],
-  declarations: [
-    ChromeComponent,
-    SearchComponent,
-    NotificationsComponent,
-    UserPanelComponent,
-  ],
+  imports: [SharedModule, ComponentsModule, NavModule, ChromeRoutingModule, GuardsModule],
+  declarations: [ChromeComponent, SearchComponent, NotificationsComponent, UserPanelComponent],
 })
-export class ChromeModule {
-}
+export class ChromeModule {}

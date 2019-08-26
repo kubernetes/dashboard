@@ -62,6 +62,9 @@ import {ProxyComponent} from './proxy/component';
 import {ResourceQuotaListComponent} from './quotas/component';
 import {ClusterRoleListComponent} from './resourcelist/clusterrole/component';
 import {ConfigMapListComponent} from './resourcelist/configmap/component';
+import {CRDListComponent} from './resourcelist/crd/component';
+import {CRDObjectListComponent} from './resourcelist/crdobject/component';
+import {CRDVersionListComponent} from './resourcelist/crdversion/component';
 import {CronJobListComponent} from './resourcelist/cronjob/component';
 import {DaemonSetListComponent} from './resourcelist/daemonset/component';
 import {DeploymentListComponent} from './resourcelist/deployment/component';
@@ -83,6 +86,7 @@ import {CpuSparklineComponent} from './sparkline/cpu/component';
 import {MemorySparklineComponent} from './sparkline/memory/component';
 import {TextInputComponent} from './textinput/component';
 import {UploadFileComponent} from './uploadfile/component';
+import {WorkloadStatusComponent} from './workloadstatus/component';
 import {ZeroStateComponent} from './zerostate/component';
 
 const components = [
@@ -109,6 +113,9 @@ const components = [
   ContainerCardComponent,
   ConditionListComponent,
   CreatorCardComponent,
+  CRDListComponent,
+  CRDObjectListComponent,
+  CRDVersionListComponent,
   GraphComponent,
   GraphCardComponent,
 
@@ -171,18 +178,13 @@ const components = [
   UploadFileComponent,
 
   ZeroStateComponent,
+  WorkloadStatusComponent,
 ];
 
 @NgModule({
   imports: [SharedModule],
   declarations: [...components],
   exports: [...components],
-  entryComponents: [
-    ChipDialog,
-    RowDetailComponent,
-    MenuComponent,
-    NamespaceChangeDialog,
-  ],
+  entryComponents: [ChipDialog, RowDetailComponent, MenuComponent, NamespaceChangeDialog],
 })
-export class ComponentsModule {
-}
+export class ComponentsModule {}

@@ -21,7 +21,7 @@ import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
-import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
+import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 
 @Component({
   selector: 'kd-deployment-list',
@@ -31,11 +31,13 @@ export class DeploymentListComponent extends ResourceListWithStatuses<Deployment
   @Input() endpoint = EndpointManager.resource(Resource.deployment, true).list();
 
   constructor(
-      private readonly deployment_: NamespacedResourceService<DeploymentList>,
-      notifications: NotificationsService, resolver: ComponentFactoryResolver) {
+    private readonly deployment_: NamespacedResourceService<DeploymentList>,
+    notifications: NotificationsService,
+    resolver: ComponentFactoryResolver,
+  ) {
     super('deployment', notifications, resolver);
-    this.id = ListIdentifiers.deployment;
-    this.groupId = ListGroupIdentifiers.workloads;
+    this.id = ListIdentifier.deployment;
+    this.groupId = ListGroupIdentifier.workloads;
 
     // Register status icon handlers
     this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);

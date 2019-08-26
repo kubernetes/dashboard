@@ -40,14 +40,7 @@ const SECRET_DETAIL_ROUTE: Route = {
 };
 
 @NgModule({
-  imports: [
-    RouterModule.forChild([
-      SECRET_LIST_ROUTE,
-      SECRET_DETAIL_ROUTE,
-      DEFAULT_ACTIONBAR,
-    ]),
-  ],
+  imports: [RouterModule.forChild([SECRET_LIST_ROUTE, SECRET_DETAIL_ROUTE, DEFAULT_ACTIONBAR])],
   exports: [RouterModule],
 })
-export class SecretRoutingModule {
-}
+export class SecretRoutingModule {}

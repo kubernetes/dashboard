@@ -40,14 +40,7 @@ const INGRESS_DETAIL_ROUTE: Route = {
 };
 
 @NgModule({
-  imports: [
-    RouterModule.forChild([
-      INGRESS_LIST_ROUTE,
-      INGRESS_DETAIL_ROUTE,
-      DEFAULT_ACTIONBAR,
-    ]),
-  ],
+  imports: [RouterModule.forChild([INGRESS_LIST_ROUTE, INGRESS_DETAIL_ROUTE, DEFAULT_ACTIONBAR])],
   exports: [RouterModule],
 })
-export class IngressRoutingModule {
-}
+export class IngressRoutingModule {}

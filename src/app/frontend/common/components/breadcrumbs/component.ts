@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, NavigationEnd, Params, Route, Router,} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Params, Route, Router} from '@angular/router';
 import {Breadcrumb} from '@api/frontendapi';
 import {POD_DETAIL_ROUTE} from '../../../resource/workloads/pod/routing';
 import {SEARCH_QUERY_STATE_PARAM} from '../../params/params';
@@ -38,31 +38,39 @@ export class BreadcrumbsComponent implements OnInit {
   }
 
   private _registerNavigationHook(): void {
-    this._router.events.filter(event => event instanceof NavigationEnd)
-        .distinctUntilChanged()
-        .subscribe(() => {
-          this._initBreadcrumbs();
-        });
+    this._router.events
+      .filter(event => event instanceof NavigationEnd)
+      .distinctUntilChanged()
+      .subscribe(() => {
+        this._initBreadcrumbs();
+      });
   }
 
   private _initBreadcrumbs(): void {
     const currentRoute = this._getCurrentRoute();
     const url = this._router.url.includes('?') ? this._router.url.split('?')[0] : '';
     let urlArray = url.split('/');
-    let routeParamsCount = currentRoute.routeConfig.path.split('/').length;
+    let routeParamsCount = currentRoute.routeConfig.data.routeParamsCount
+      ? +currentRoute.routeConfig.data.routeParamsCount
+      : currentRoute.routeConfig.path.split('/').length;
 
     this.breadcrumbs = [
       {
         label: this._getBreadcrumbLabel(currentRoute.routeConfig, currentRoute.snapshot.params),
-        stateLink: currentRoute.routeConfig.data && currentRoute.routeConfig.data.link ?
-            currentRoute.routeConfig.data.link :
-            urlArray,
+        stateLink:
+          currentRoute.routeConfig.data && currentRoute.routeConfig.data.link
+            ? currentRoute.routeConfig.data.link
+            : urlArray,
       },
     ];
 
     let route: Route;
-    if (currentRoute && currentRoute.routeConfig && currentRoute.routeConfig.data &&
-        currentRoute.routeConfig.data.parent) {
+    if (
+      currentRoute &&
+      currentRoute.routeConfig &&
+      currentRoute.routeConfig.data &&
+      currentRoute.routeConfig.data.parent
+    ) {
       if (currentRoute.routeConfig.data.parent === LOGS_PARENT_PLACEHOLDER) {
         route = this._getLogsParent(currentRoute.snapshot.params);
         urlArray = [
@@ -74,12 +82,7 @@ export class BreadcrumbsComponent implements OnInit {
         routeParamsCount = 0;
       } else if (currentRoute.routeConfig.data.parent === EXEC_PARENT_PLACEHOLDER) {
         route = POD_DETAIL_ROUTE;
-        urlArray = [
-          '',
-          'pod',
-          urlArray[urlArray.length - 2],
-          urlArray[urlArray.length - 1],
-        ];
+        urlArray = ['', 'pod', urlArray[urlArray.length - 2], urlArray[urlArray.length - 1]];
         routeParamsCount = 0;
       } else {
         route = currentRoute.routeConfig.data.parent;
@@ -108,7 +111,7 @@ export class BreadcrumbsComponent implements OnInit {
     this.breadcrumbs.reverse();
   }
 
-  private _getLogsParent(params: Params): Route|undefined {
+  private _getLogsParent(params: Params): Route | undefined {
     const resourceType = params['resourceType'];
     if (resourceType === 'pod') {
       return POD_DETAIL_ROUTE;

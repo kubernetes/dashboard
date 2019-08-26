@@ -131,6 +131,9 @@ const routes: Routes = [
         loadChildren: 'resource/config/secret/module#SecretModule',
       },
 
+      // Custom resource definitions
+      {path: 'crd', loadChildren: 'crd/module#CrdModule'},
+
       // Others
       {
         path: 'settings',
@@ -166,5 +169,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ChromeRoutingModule {
-}
+export class ChromeRoutingModule {}

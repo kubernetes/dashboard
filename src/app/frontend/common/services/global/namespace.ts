@@ -32,8 +32,6 @@ export class NamespaceService {
    */
   private currentNamespace_ = '';
 
-  constructor() {}
-
   setCurrent(namespace: string) {
     this.currentNamespace_ = namespace;
   }

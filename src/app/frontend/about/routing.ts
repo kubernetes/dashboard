@@ -35,5 +35,4 @@ export const ACTIONBAR = {
   imports: [RouterModule.forChild([ABOUT_ROUTE, ACTIONBAR])],
   exports: [RouterModule],
 })
-export class AboutRoutingModule {
-}
+export class AboutRoutingModule {}

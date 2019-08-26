@@ -26,8 +26,10 @@ echo $MD5_OLD
 echo $MD5_NEW
 
 if [ $MD5_OLD != $MD5_NEW ] ; then
-  echo "i18n/messages.xlf is updated. Commit it too."
-  git add i18n/messages.xlf
+  ng xi18n --outFile ../i18n/messages.xlf
+  xliffmerge
+  echo "i18n/messages.* files are updated. Commit them too."
+  git add i18n/messages.*
 fi
 
 # Remove extracted file for check

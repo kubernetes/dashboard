@@ -34,16 +34,16 @@ const arch = {
   /**
    * List of all supported architectures by this project.
    */
-  list: ['amd64', 'arm', 'arm64', 'ppc64le', 's390x'],
+  list: ['amd64', 'arm64', 'arm', 'ppc64le', 's390x'],
 };
 
 /**
  * Configuration for container registry to push images to.
  */
 const containerRegistry = {
-  release: 'k8s.gcr.io',
+  release: 'kubernetesui',
   /** Default to an environment variable */
-  head: process.env.DOCKER_HUB_PREFIX || 'kubernetes',
+  head: 'kubernetesdashboarddev',
 };
 
 /**
@@ -53,7 +53,7 @@ const version = {
   /**
    * Current release version of the project.
    */
-  release: 'v2.0.0-alpha0',
+  release: 'v2.0.0-beta3',
   /**
    * Version name of the head release of the project.
    */
@@ -61,13 +61,13 @@ const version = {
   /**
    * Year of last source change of the project
    */
-  year: '2018',
+  year: '2019',
 };
 
 /**
  * Base name for the docker image.
  */
-const imageNameBase = 'kubernetes-dashboard';
+const imageNameBase = 'dashboard';
 
 /**
  * Arguments

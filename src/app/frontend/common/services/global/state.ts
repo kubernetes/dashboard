@@ -32,8 +32,12 @@ export class KdStateService {
     });
   }
 
-  href(stateName: string, resourceName?: string, namespace?: string, resourceType?: string):
-      string {
+  href(
+    stateName: string,
+    resourceName?: string,
+    namespace?: string,
+    resourceType?: string,
+  ): string {
     resourceName = resourceName || '';
     namespace = namespace || '';
     resourceType = resourceType || '';

@@ -28,7 +28,10 @@ export class ActionbarDetailLogsComponent {
 
   getHref(): string {
     return this.kdState_.href(
-        'log', this.resourceMeta.objectMeta.name, this.resourceMeta.objectMeta.namespace,
-        this.resourceMeta.typeMeta.kind);
+      'log',
+      this.resourceMeta.objectMeta.name,
+      this.resourceMeta.objectMeta.namespace,
+      this.resourceMeta.typeMeta.kind,
+    );
   }
 }

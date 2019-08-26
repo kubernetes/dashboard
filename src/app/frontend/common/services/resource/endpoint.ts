@@ -17,6 +17,8 @@ const baseHref = 'api/v1';
 export enum Resource {
   job = 'job',
   cronJob = 'cronjob',
+  crd = 'crd',
+  crdObject = 'object',
   daemonSet = 'daemonset',
   deployment = 'deployment',
   pod = 'pod',
@@ -37,6 +39,9 @@ export enum Resource {
   service = 'service',
   event = 'event',
   container = 'container',
+}
+
+export enum Utility {
   shell = 'shell',
 }
 
@@ -53,16 +58,29 @@ class ResourceEndpoint {
 
   child(resourceName: string, relatedResource: Resource, resourceNamespace?: string): string {
     if (!resourceNamespace) {
-      resourceNamespace = '/:namespace';
+      resourceNamespace = ':namespace';
     }
 
-    return `${baseHref}/${this.resource_}${this.namespaced_ ? `/${resourceNamespace}` : ''}/${
-        resourceName}/${relatedResource}`;
+    return `${baseHref}/${this.resource_}${
+      this.namespaced_ ? `/${resourceNamespace}` : ''
+    }/${resourceName}/${relatedResource}`;
+  }
+}
+
+class UtilityEndpoint {
+  constructor(private readonly utility_: Utility) {}
+
+  shell(namespace: string, resourceName: string): string {
+    return `${baseHref}/${Resource.pod}/${namespace}/${resourceName}/${this.utility_}`;
   }
 }
 
 export class EndpointManager {
   static resource(resource: Resource, namespaced?: boolean): ResourceEndpoint {
     return new ResourceEndpoint(resource, namespaced);
+  }
+
+  static utility(utility: Utility): UtilityEndpoint {
+    return new UtilityEndpoint(utility);
   }
 }

@@ -24,6 +24,8 @@ import (
 	extensions "k8s.io/api/extensions/v1beta1"
 	rbac "k8s.io/api/rbac/v1"
 	storage "k8s.io/api/storage/v1"
+	apiextensions "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
+	apiextensionsclientset "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
 )
@@ -825,6 +827,31 @@ func GetPersistentVolumeClaimListChannel(client client.Interface, nsQuery *Names
 
 	go func() {
 		list, err := client.CoreV1().PersistentVolumeClaims(nsQuery.ToRequestParam()).List(api.ListEverything)
+		for i := 0; i < numReads; i++ {
+			channel.List <- list
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
+// CustomResourceDefinitionChannel is a list and error channels to CustomResourceDefinition.
+type CustomResourceDefinitionChannel struct {
+	List  chan *apiextensions.CustomResourceDefinitionList
+	Error chan error
+}
+
+// GetCustomResourceDefinitionChannel returns a pair of channels to a CustomResourceDefinition list and errors
+// that both must be read numReads times.
+func GetCustomResourceDefinitionChannel(client apiextensionsclientset.Interface, numReads int) CustomResourceDefinitionChannel {
+	channel := CustomResourceDefinitionChannel{
+		List:  make(chan *apiextensions.CustomResourceDefinitionList, numReads),
+		Error: make(chan error, numReads),
+	}
+
+	go func() {
+		list, err := client.ApiextensionsV1beta1().CustomResourceDefinitions().List(api.ListEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err

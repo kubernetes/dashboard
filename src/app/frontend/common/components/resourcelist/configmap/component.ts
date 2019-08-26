@@ -21,18 +21,19 @@ import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
-import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
+import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 
 @Component({selector: 'kd-config-map-list', templateUrl: './template.html'})
 export class ConfigMapListComponent extends ResourceListBase<ConfigMapList, ConfigMap> {
   @Input() endpoint = EndpointManager.resource(Resource.configMap, true).list();
 
   constructor(
-      private readonly configMap_: NamespacedResourceService<ConfigMapList>,
-      notifications: NotificationsService) {
+    private readonly configMap_: NamespacedResourceService<ConfigMapList>,
+    notifications: NotificationsService,
+  ) {
     super('configmap', notifications);
-    this.id = ListIdentifiers.configMap;
-    this.groupId = ListGroupIdentifiers.config;
+    this.id = ListIdentifier.configMap;
+    this.groupId = ListGroupIdentifier.config;
 
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);

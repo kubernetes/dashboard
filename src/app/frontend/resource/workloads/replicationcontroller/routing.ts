@@ -49,5 +49,4 @@ const REPLICATIONCONTROLLER_DETAIL_ROUTE: Route = {
   ],
   exports: [RouterModule],
 })
-export class ReplicationControllerRoutingModule {
-}
+export class ReplicationControllerRoutingModule {}

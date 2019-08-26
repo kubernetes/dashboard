@@ -50,9 +50,10 @@ type SettingsManager interface {
 
 // Settings is a single instance of settings without context.
 type Settings struct {
-	ClusterName             string `json:"clusterName"`
-	ItemsPerPage            int    `json:"itemsPerPage"`
-	AutoRefreshTimeInterval int    `json:"autoRefreshTimeInterval"`
+	ClusterName                     string `json:"clusterName"`
+	ItemsPerPage                    int    `json:"itemsPerPage"`
+	LogsAutoRefreshTimeInterval     int    `json:"logsAutoRefreshTimeInterval"`
+	ResourceAutoRefreshTimeInterval int    `json:"resourceAutoRefreshTimeInterval"`
 }
 
 // Marshal settings into JSON object.
@@ -70,9 +71,10 @@ func Unmarshal(data string) (*Settings, error) {
 
 // defaultSettings contains default values for every setting.
 var defaultSettings = Settings{
-	ClusterName:             "",
-	ItemsPerPage:            10,
-	AutoRefreshTimeInterval: 5,
+	ClusterName:                     "",
+	ItemsPerPage:                    10,
+	LogsAutoRefreshTimeInterval:     5,
+	ResourceAutoRefreshTimeInterval: 5,
 }
 
 // GetDefaultSettings returns settings structure, that should be used if there are no

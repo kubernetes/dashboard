@@ -21,7 +21,7 @@ import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
-import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
+import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 
 @Component({
   selector: 'kd-cron-job-list',
@@ -30,11 +30,12 @@ import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
 export class CronJobListComponent extends ResourceListWithStatuses<CronJobList, CronJob> {
   @Input() endpoint = EndpointManager.resource(Resource.cronJob, true).list();
   constructor(
-      private readonly cronJob_: NamespacedResourceService<CronJobList>,
-      notifications: NotificationsService) {
+    private readonly cronJob_: NamespacedResourceService<CronJobList>,
+    notifications: NotificationsService,
+  ) {
     super('cronjob', notifications);
-    this.id = ListIdentifiers.cronJob;
-    this.groupId = ListGroupIdentifiers.workloads;
+    this.id = ListIdentifier.cronJob;
+    this.groupId = ListGroupIdentifier.workloads;
 
     // Register status icon handlers
     this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);
@@ -64,16 +65,7 @@ export class CronJobListComponent extends ResourceListWithStatuses<CronJobList, 
   }
 
   getDisplayColumns(): string[] {
-    return [
-      'statusicon',
-      'name',
-      'labels',
-      'schedule',
-      'suspend',
-      'active',
-      'lastschedule',
-      'age',
-    ];
+    return ['statusicon', 'name', 'labels', 'schedule', 'suspend', 'active', 'lastschedule', 'age'];
   }
 
   private shouldShowNamespaceColumn_(): boolean {

@@ -40,14 +40,7 @@ const NODE_DETAIL_ROUTE: Route = {
 };
 
 @NgModule({
-  imports: [
-    RouterModule.forChild([
-      NODE_LIST_ROUTE,
-      NODE_DETAIL_ROUTE,
-      DEFAULT_ACTIONBAR,
-    ]),
-  ],
+  imports: [RouterModule.forChild([NODE_LIST_ROUTE, NODE_DETAIL_ROUTE, DEFAULT_ACTIONBAR])],
   exports: [RouterModule],
 })
-export class NodeRoutingModule {
-}
+export class NodeRoutingModule {}

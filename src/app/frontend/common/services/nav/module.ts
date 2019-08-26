@@ -19,5 +19,4 @@ import {NavService} from './service';
 @NgModule({
   providers: [NavService],
 })
-export class NavServiceModule {
-}
+export class NavServiceModule {}

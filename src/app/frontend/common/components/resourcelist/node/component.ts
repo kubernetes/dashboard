@@ -21,7 +21,7 @@ import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {ResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
-import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
+import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 
 @Component({
   selector: 'kd-node-list',
@@ -31,10 +31,12 @@ export class NodeListComponent extends ResourceListWithStatuses<NodeList, Node> 
   @Input() endpoint = EndpointManager.resource(Resource.node).list();
 
   constructor(
-      private readonly node_: ResourceService<NodeList>, notifications: NotificationsService) {
+    private readonly node_: ResourceService<NodeList>,
+    notifications: NotificationsService,
+  ) {
     super('node', notifications);
-    this.id = ListIdentifiers.node;
-    this.groupId = ListGroupIdentifiers.cluster;
+    this.id = ListIdentifier.node;
+    this.groupId = ListGroupIdentifier.cluster;
 
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
@@ -66,16 +68,6 @@ export class NodeListComponent extends ResourceListWithStatuses<NodeList, Node> 
   }
 
   getDisplayColumns(): string[] {
-    return [
-      'statusicon',
-      'name',
-      'labels',
-      'ready',
-      'cpureq',
-      'cpulim',
-      'memreq',
-      'memlim',
-      'age',
-    ];
+    return ['statusicon', 'name', 'labels', 'ready', 'cpureq', 'cpulim', 'memreq', 'memlim', 'age'];
   }
 }

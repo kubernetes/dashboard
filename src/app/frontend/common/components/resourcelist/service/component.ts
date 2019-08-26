@@ -22,18 +22,19 @@ import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
-import {ListGroupIdentifiers, ListIdentifiers} from '../groupids';
+import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 
 @Component({selector: 'kd-service-list', templateUrl: './template.html'})
 export class ServiceListComponent extends ResourceListWithStatuses<ServiceList, Service> {
   @Input() endpoint = EndpointManager.resource(Resource.service, true).list();
 
   constructor(
-      private readonly service_: NamespacedResourceService<ServiceList>,
-      notifications: NotificationsService) {
+    private readonly service_: NamespacedResourceService<ServiceList>,
+    notifications: NotificationsService,
+  ) {
     super('service', notifications);
-    this.id = ListIdentifiers.service;
-    this.groupId = ListGroupIdentifiers.discovery;
+    this.id = ListIdentifier.service;
+    this.groupId = ListGroupIdentifier.discovery;
 
     // Register status icon handlers
     this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState.bind(this));
@@ -56,8 +57,9 @@ export class ServiceListComponent extends ResourceListWithStatuses<ServiceList, 
 
   isInPendingState(resource: Service): boolean {
     return (
-        !resource.clusterIP ||
-        (resource.type === 'LoadBalancer' && resource.externalEndpoints.length === 0));
+      !resource.clusterIP ||
+      (resource.type === 'LoadBalancer' && resource.externalEndpoints.length === 0)
+    );
   }
 
   /**
@@ -69,15 +71,7 @@ export class ServiceListComponent extends ResourceListWithStatuses<ServiceList, 
   }
 
   getDisplayColumns(): string[] {
-    return [
-      'statusicon',
-      'name',
-      'labels',
-      'clusterip',
-      'internalendp',
-      'externalendp',
-      'age',
-    ];
+    return ['statusicon', 'name', 'labels', 'clusterip', 'internalendp', 'externalendp', 'age'];
   }
 
   private shouldShowNamespaceColumn_(): boolean {

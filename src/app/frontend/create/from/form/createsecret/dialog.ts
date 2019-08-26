@@ -14,9 +14,9 @@
 
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Component, Inject, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, Validators,} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
-import {AlertDialog, AlertDialogConfig,} from '../../../../common/dialogs/alert/dialog';
+import {AlertDialog, AlertDialogConfig} from '../../../../common/dialogs/alert/dialog';
 import {CsrfTokenService} from '../../../../common/services/global/csrftoken';
 import {CONFIG} from '../../../../index.config';
 
@@ -41,8 +41,9 @@ export class CreateSecretDialog implements OnInit {
   /**
    * Pattern validation rule for secretName.
    */
-  secretNamePattern =
-      new RegExp('^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$');
+  secretNamePattern = new RegExp(
+    '^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$',
+  );
 
   /**
    * Pattern validating if the secret data is Base64 encoded.
@@ -50,10 +51,13 @@ export class CreateSecretDialog implements OnInit {
   dataPattern = new RegExp('^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$');
 
   constructor(
-      public dialogRef: MatDialogRef<CreateSecretDialog>,
-      @Inject(MAT_DIALOG_DATA) public data_: CreateSecretDialogMeta,
-      private readonly http_: HttpClient, private readonly csrfToken_: CsrfTokenService,
-      private readonly matDialog_: MatDialog, private readonly fb_: FormBuilder) {}
+    public dialogRef: MatDialogRef<CreateSecretDialog>,
+    @Inject(MAT_DIALOG_DATA) public data_: CreateSecretDialogMeta,
+    private readonly http_: HttpClient,
+    private readonly csrfToken_: CsrfTokenService,
+    private readonly matDialog_: MatDialog,
+    private readonly fb_: FormBuilder,
+  ) {}
 
   ngOnInit(): void {
     this.form = this.fb_.group({
@@ -91,24 +95,29 @@ export class CreateSecretDialog implements OnInit {
     const tokenPromise = this.csrfToken_.getTokenForAction('secret');
     tokenPromise.subscribe(csrfToken => {
       return this.http_
-          .post<{valid: boolean}>('api/v1/secret/', {...secretSpec}, {
+        .post<{valid: boolean}>(
+          'api/v1/secret/',
+          {...secretSpec},
+          {
             headers: new HttpHeaders().set(this.config_.csrfHeaderName, csrfToken.token),
-          })
-          .subscribe(
-              () => {
-                // this.log_.info('Successfully created namespace:', savedConfig);
-                this.dialogRef.close(this.secretName.value);
-              },
-              error => {
-                // this.log_.info('Error creating namespace:', err);
-                this.dialogRef.close();
-                const configData: AlertDialogConfig = {
-                  title: 'Error creating secret',
-                  message: error.data,
-                  confirmLabel: 'OK',
-                };
-                this.matDialog_.open(AlertDialog, {data: configData});
-              });
+          },
+        )
+        .subscribe(
+          () => {
+            // this.log_.info('Successfully created namespace:', savedConfig);
+            this.dialogRef.close(this.secretName.value);
+          },
+          error => {
+            // this.log_.info('Error creating namespace:', err);
+            this.dialogRef.close();
+            const configData: AlertDialogConfig = {
+              title: 'Error creating secret',
+              message: error.data,
+              confirmLabel: 'OK',
+            };
+            this.matDialog_.open(AlertDialog, {data: configData});
+          },
+        );
     });
   }
 
