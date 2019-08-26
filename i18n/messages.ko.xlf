@@ -1475,7 +1475,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
-          <context context-type="linenumber">62</context>
+          <context context-type="linenumber">67</context>
         </context-group>
       </trans-unit>
       <trans-unit id="81054386839df6c7c45d298e0044956413589ef4" datatype="html">
@@ -2912,12 +2912,20 @@
           <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="d9ac1caf6715c8011155c0a027d544dbeca63062" datatype="html">
+        <source>Subresources</source>
+        <target state="new">Subresources</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="1ec17de9560711cd81108ccf93eb5b1df4eb6d4c" datatype="html">
         <source>Accepted Names</source>
         <target state="new">Accepted Names</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">51</context>
         </context-group>
       </trans-unit>
       <trans-unit id="fa1312fe00bfe38662df238fa059bcd75866ecd7" datatype="html">
@@ -2925,7 +2933,7 @@
         <target state="new">복수</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">57</context>
         </context-group>
       </trans-unit>
       <trans-unit id="712232bebfc8836a394c358ce9679452fabb945f" datatype="html">
@@ -2933,7 +2941,7 @@
         <target state="new">단수</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">62</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5a2fcb3c1d8240f8f966564ee3500235d7427245" datatype="html">
@@ -2941,7 +2949,7 @@
         <target state="new">종류 리스트</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
-          <context context-type="linenumber">67</context>
+          <context context-type="linenumber">72</context>
         </context-group>
       </trans-unit>
       <trans-unit id="d27e60f49dba9b7994331db545a4c14e1e2683ad" datatype="html">
@@ -2949,7 +2957,7 @@
         <target state="new">단축 이름</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
-          <context context-type="linenumber">72</context>
+          <context context-type="linenumber">77</context>
         </context-group>
       </trans-unit>
       <trans-unit id="04201f9d27abd7d6f58a4328ab98063ce1072006" datatype="html">
@@ -2957,7 +2965,7 @@
         <target state="new">카테고리</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
-          <context context-type="linenumber">77</context>
+          <context context-type="linenumber">82</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5ad4eecbd0fe09c34678fefce317a052af39dc96" datatype="html">
@@ -3253,6 +3261,7 @@
         <target state="new">
         <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>
       </target> 더 배우기
+        
         
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>

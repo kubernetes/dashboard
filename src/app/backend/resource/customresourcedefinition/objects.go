@@ -29,8 +29,8 @@ import (
 
 // CustomResourceObject represents a custom resource object.
 type CustomResourceObject struct {
-	TypeMeta   metav1.TypeMeta   `json:"typeMeta"`
-	ObjectMeta metav1.ObjectMeta `json:"objectMeta"`
+	TypeMeta   api.TypeMeta   `json:"typeMeta"`
+	ObjectMeta api.ObjectMeta `json:"objectMeta"`
 }
 
 func (r *CustomResourceObject) UnmarshalJSON(data []byte) error {
@@ -44,8 +44,8 @@ func (r *CustomResourceObject) UnmarshalJSON(data []byte) error {
 		return err
 	}
 
-	r.TypeMeta = tempStruct.TypeMeta
-	r.ObjectMeta = tempStruct.ObjectMeta
+	r.TypeMeta = api.NewTypeMeta(api.ResourceKind(tempStruct.TypeMeta.Kind))
+	r.ObjectMeta = api.NewObjectMeta(tempStruct.ObjectMeta)
 	return nil
 }
 
@@ -125,7 +125,7 @@ func GetCustomResourceObjectList(client apiextensionsclientset.Interface, config
 	list.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
 	for i := range list.Items {
-		replaceCRDObjectKind(&list.Items[i], customResourceDefinition.Name)
+		toCRDObject(&list.Items[i], customResourceDefinition)
 	}
 
 	return list, nil
@@ -165,12 +165,13 @@ func GetCustomResourceObjectDetail(client apiextensionsclientset.Interface, name
 	}
 	detail.Errors = nonCriticalErrors
 
-	replaceCRDObjectKind(&detail.CustomResourceObject, customResourceDefinition.Name)
+	toCRDObject(&detail.CustomResourceObject, customResourceDefinition)
 	return detail, nil
 }
 
-// replaceCRDObjectKind sets the object kind to the full name of the CRD.
+// toCRDObject sets the object kind to the full name of the CRD.
 // E.g. changes "Foo" to "foos.samplecontroller.k8s.io"
-func replaceCRDObjectKind(object *CustomResourceObject, kind string) {
-	object.TypeMeta.Kind = kind
+func toCRDObject(object *CustomResourceObject, crd *apiextensions.CustomResourceDefinition) {
+	object.TypeMeta.Kind = api.ResourceKind(crd.Name)
+	object.TypeMeta.Scalable = crd.Spec.Subresources != nil && crd.Spec.Subresources.Scale != nil
 }

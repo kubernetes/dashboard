@@ -97,7 +97,7 @@ export class MenuComponent implements ActionColumn {
   }
 
   isScaleEnabled(): boolean {
-    return scalableResources.includes(this.typeMeta.kind);
+    return this.typeMeta.scalable || scalableResources.includes(this.typeMeta.kind);
   }
 
   onScale(): void {

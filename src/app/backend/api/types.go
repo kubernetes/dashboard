@@ -75,6 +75,9 @@ type TypeMeta struct {
 	// In smalllettercase.
 	// More info: http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#types-kinds
 	Kind ResourceKind `json:"kind,omitempty"`
+
+	// Scalable represents whether or not an object is scalable.
+	Scalable bool `json:"scalable"`
 }
 
 // ListMeta describes list of objects, i.e. holds information about pagination options set for the list.

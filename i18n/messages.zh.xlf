@@ -1483,7 +1483,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
-          <context context-type="linenumber">62</context>
+          <context context-type="linenumber">67</context>
         </context-group>
       </trans-unit>
       <trans-unit id="81054386839df6c7c45d298e0044956413589ef4" datatype="html">
@@ -2930,12 +2930,20 @@
           <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="d9ac1caf6715c8011155c0a027d544dbeca63062" datatype="html">
+        <source>Subresources</source>
+        <target state="new">Subresources</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="1ec17de9560711cd81108ccf93eb5b1df4eb6d4c" datatype="html">
         <source>Accepted Names</source>
         <target state="new">Accepted Names</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">51</context>
         </context-group>
       </trans-unit>
       <trans-unit id="fa1312fe00bfe38662df238fa059bcd75866ecd7" datatype="html">
@@ -2943,7 +2951,7 @@
         <target state="new">Plural</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">57</context>
         </context-group>
       </trans-unit>
       <trans-unit id="712232bebfc8836a394c358ce9679452fabb945f" datatype="html">
@@ -2951,7 +2959,7 @@
         <target state="new">Singular</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">62</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5a2fcb3c1d8240f8f966564ee3500235d7427245" datatype="html">
@@ -2959,7 +2967,7 @@
         <target state="new">List Kind</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
-          <context context-type="linenumber">67</context>
+          <context context-type="linenumber">72</context>
         </context-group>
       </trans-unit>
       <trans-unit id="d27e60f49dba9b7994331db545a4c14e1e2683ad" datatype="html">
@@ -2967,7 +2975,7 @@
         <target state="new">Short Names</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
-          <context context-type="linenumber">72</context>
+          <context context-type="linenumber">77</context>
         </context-group>
       </trans-unit>
       <trans-unit id="04201f9d27abd7d6f58a4328ab98063ce1072006" datatype="html">
@@ -2975,7 +2983,7 @@
         <target state="new">Categories</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
-          <context context-type="linenumber">77</context>
+          <context context-type="linenumber">82</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7db62a1ccd31f1bb55e3532b0f58984a492296a8" datatype="html">

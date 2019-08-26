@@ -269,7 +269,15 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			To(apiHandler.handleScaleResource).
 			Writes(scaling.ReplicaCounts{}))
 	apiV1Ws.Route(
+		apiV1Ws.PUT("/scale/{kind}/{name}/").
+			To(apiHandler.handleScaleResource).
+			Writes(scaling.ReplicaCounts{}))
+	apiV1Ws.Route(
 		apiV1Ws.GET("/scale/{kind}/{namespace}/{name}").
+			To(apiHandler.handleGetReplicaCount).
+			Writes(scaling.ReplicaCounts{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/scale/{kind}/{name}").
 			To(apiHandler.handleGetReplicaCount).
 			Writes(scaling.ReplicaCounts{}))
 
@@ -550,7 +558,7 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 	apiV1Ws.Route(
 		apiV1Ws.GET("/crd/{namespace}/{crd}/{object}").
 			To(apiHandler.handleGetCustomResourceObjectDetail).
-			Writes(customresourcedefinition.CustomResourceObject{}))
+			Writes(customresourcedefinition.CustomResourceObjectDetail{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/crd/{namespace}/{crd}/{object}/event").

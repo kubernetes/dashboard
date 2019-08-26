@@ -27,9 +27,10 @@ import (
 type CustomResourceDefinitionDetail struct {
 	CustomResourceDefinition `json:",inline"`
 
-	Versions   []CustomResourceDefinitionVersion `json:"versions,omitempty"`
-	Conditions []common.Condition                `json:"conditions"`
-	Objects    CustomResourceObjectList          `json:"objects"`
+	Versions     []CustomResourceDefinitionVersion `json:"versions,omitempty"`
+	Conditions   []common.Condition                `json:"conditions"`
+	Objects      CustomResourceObjectList          `json:"objects"`
+	Subresources []string                          `json:"subresources"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
@@ -61,11 +62,22 @@ func GetCustomResourceDefinitionDetail(client apiextensionsclientset.Interface, 
 }
 
 func toCustomResourceDefinitionDetail(crd *apiextensions.CustomResourceDefinition, objects CustomResourceObjectList, nonCriticalErrors []error) *CustomResourceDefinitionDetail {
+	subresources := []string{}
+	if crd.Spec.Subresources != nil {
+		if crd.Spec.Subresources.Scale != nil {
+			subresources = append(subresources, "Scale")
+		}
+		if crd.Spec.Subresources.Status != nil {
+			subresources = append(subresources, "Status")
+		}
+	}
+
 	return &CustomResourceDefinitionDetail{
 		CustomResourceDefinition: toCustomResourceDefinition(crd),
 		Versions:                 getCRDVersions(crd),
 		Conditions:               getCRDConditions(crd),
 		Objects:                  objects,
+		Subresources:             subresources,
 		Errors:                   nonCriticalErrors,
 	}
 }
