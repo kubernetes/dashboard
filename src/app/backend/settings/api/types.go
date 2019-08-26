@@ -36,7 +36,7 @@ const (
 	GlobalSettingsKey = "_global"
 
 	// PinnedResourcesKey is a settings map key which maps to current pinned resources.
-	PinnedResourcesKey = "pinned"
+	PinnedResourcesKey = "_pinnedCRD"
 
 	// ConcurrentSettingsChangeError occurs during settings save if settings were modified concurrently.
 	// Keep it in sync with CONCURRENT_CHANGE_ERROR constant from the frontend.

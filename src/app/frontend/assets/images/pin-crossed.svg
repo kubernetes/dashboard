@@ -4,12 +4,6 @@
        width="24px"
        height="24px"
        viewBox="0 0 24 24">
-    <line stroke="black"
-          stroke-width="4"
-          x1="0"
-          x2="22"
-          y1="2"
-          y2="24"/>
     <line stroke="white"
           stroke-width="2"
           x1="0"
