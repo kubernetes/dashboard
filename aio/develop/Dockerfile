@@ -98,6 +98,9 @@ RUN go get github.com/go-delve/delve/cmd/dlv
 # Enable go mod. Note(shu-mutou): do not set this before `go get`
 ENV GO111MODULE=on
 
+# Set GOPROXY to ensure download modules
+ENV GOPROXY=https://proxy.golang.org
+
 # Volume for source code
 VOLUME ["/go/src/github.com/kubernetes/dashboard"]
 
