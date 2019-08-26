@@ -34,6 +34,10 @@ limitations under the License.
           (click)="onScale()"
           i18n>Scale</button>
   <button mat-menu-item
+          *ngIf="isPinEnabled()"
+          (click)="isPinned() ? onUnpin() : onPin()"
+          i18n>{{ isPinned() ? "Unpin" : "Pin" }}</button>
+  <button mat-menu-item
           (click)="onEdit()"
           i18n>Edit</button>
   <button mat-menu-item

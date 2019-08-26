@@ -14,11 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<a mat-button
-   class="kd-nav-item-button"
-   [routerLink]="state"
-   [routerLinkActiveOptions]="{exact: exact}"
-   queryParamsHandling="preserve"
-   [routerLinkActive]="['kd-nav-item-button-active']">
-  <ng-content></ng-content>
-</a>
+<div *ngIf="isInitialized()">
+  <kd-nav-item *ngFor="let resource of getPinnedResources()"
+               class="kd-nav-item"
+               [state]="getResourceHref(resource)"
+               i18n>{{resource.name}}
+  </kd-nav-item>
+</div>

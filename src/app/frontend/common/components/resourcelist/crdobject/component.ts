@@ -36,7 +36,7 @@ export class CRDObjectListComponent extends ResourceListBase<CRDObjectList, CRDO
     notifications: NotificationsService,
     private readonly activatedRoute_: ActivatedRoute,
   ) {
-    super(`crd/${activatedRoute_.snapshot.params.crdName}`, notifications);
+    super(`customresourcedefinition/${activatedRoute_.snapshot.params.crdName}`, notifications);
     this.id = ListIdentifier.crdObject;
     this.groupId = ListGroupIdentifier.none;
 

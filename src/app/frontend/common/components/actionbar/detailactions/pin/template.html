@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<a mat-button
-   class="kd-nav-item-button"
-   [routerLink]="state"
-   [routerLinkActiveOptions]="{exact: exact}"
-   queryParamsHandling="preserve"
-   [routerLinkActive]="['kd-nav-item-button-active']">
-  <ng-content></ng-content>
-</a>
+<button mat-icon-button
+        color="accent"
+        class="kd-toolbar-action"
+        i18n-matTooltip
+        [matTooltip]="isPinned() ? 'Unpin resource' : 'Pin resource'"
+        (click)="onClick()">
+  <mat-icon [svgIcon]="isPinned() ? 'pin-crossed' : 'pin'"></mat-icon>
+</button>

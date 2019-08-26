@@ -21,4 +21,5 @@ import {Component, Input} from '@angular/core';
 })
 export class NavItemComponent {
   @Input() state: string;
+  @Input() exact = false;
 }

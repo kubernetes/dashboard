@@ -18,6 +18,7 @@ export enum Resource {
   job = 'job',
   cronJob = 'cronjob',
   crd = 'crd',
+  crdFull = 'customresourcedefinition',
   crdObject = 'object',
   daemonSet = 'daemonset',
   deployment = 'deployment',

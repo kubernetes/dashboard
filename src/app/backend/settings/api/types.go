@@ -35,9 +35,18 @@ const (
 	// GlobalSettingsKey is a settings map key which maps to current global settings.
 	GlobalSettingsKey = "_global"
 
+	// PinnedResourcesKey is a settings map key which maps to current pinned resources.
+	PinnedResourcesKey = "_pinnedCRD"
+
 	// ConcurrentSettingsChangeError occurs during settings save if settings were modified concurrently.
 	// Keep it in sync with CONCURRENT_CHANGE_ERROR constant from the frontend.
 	ConcurrentSettingsChangeError = "settings changed since last reload"
+
+	// PinnedResourceNotFoundError occurs while deleting pinned resource, if the resource wasn't already pinned.
+	PinnedResourceNotFoundError = "pinned resource not found"
+
+	// ResourceAlreadyPinnedError occurs while pinning a new resource, if it has been pinned before.
+	ResourceAlreadyPinnedError = "resource already pinned"
 )
 
 // SettingsManager is used for user settings management.
@@ -46,6 +55,36 @@ type SettingsManager interface {
 	GetGlobalSettings(client kubernetes.Interface) (s Settings)
 	// SaveGlobalSettings saves provided global settings in config map.
 	SaveGlobalSettings(client kubernetes.Interface, s *Settings) error
+	// GetPinnedResources gets the pinned resources from config map.
+	GetPinnedResources(client kubernetes.Interface) (r []PinnedResource)
+	// SavePinnedResource adds a new pinned resource to config map.
+	SavePinnedResource(client kubernetes.Interface, r *PinnedResource) error
+	// DeletePinnedResource removes a pinned resource from config map.
+	DeletePinnedResource(client kubernetes.Interface, r *PinnedResource) error
+}
+
+// PinnedResource represents a pinned resource.
+type PinnedResource struct {
+	Kind      string `json:"kind"`
+	Name      string `json:"name"`
+	Namespace string `json:"namespace,omitempty"`
+}
+
+func (p *PinnedResource) IsEqual(other *PinnedResource) bool {
+	return p.Name == other.Name && p.Namespace == other.Namespace && p.Kind == other.Kind
+}
+
+// MarshalPinnedResources pinned resource into JSON object.
+func MarshalPinnedResources(p []PinnedResource) string {
+	bytes, _ := json.Marshal(p)
+	return string(bytes)
+}
+
+// Unmarshal settings from JSON string into object.
+func UnmarshalPinnedResources(data string) (*[]PinnedResource, error) {
+	p := new([]PinnedResource)
+	err := json.Unmarshal([]byte(data), p)
+	return p, err
 }
 
 // Settings is a single instance of settings without context.

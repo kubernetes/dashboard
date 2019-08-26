@@ -91,7 +91,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/list/column/menu/template.html</context>
-          <context context-type="linenumber">41</context>
+          <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
       <trans-unit id="db0cf322b4bfc4f0466c9826810e3800dc4687dd" datatype="html">
@@ -502,12 +502,20 @@
           <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="14a5136cbdeef6ed97abfd58112f979f20f619f1" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ isPinned() ? &quot;Unpin&quot; : &quot;Pin&quot; }}"/></source>
+        <target state="new"><x id="INTERPOLATION" equiv-text="{{ isPinned() ? &quot;Unpin&quot; : &quot;Pin&quot; }}"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/list/column/menu/template.html</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="28f86ffd419b869711aa13f5e5ff54be6d70731c" datatype="html">
         <source>Edit</source>
         <target>編集</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/list/column/menu/template.html</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
       <trans-unit id="c97f017e8bd3fb17065c3c94515a2cca404f0157" datatype="html">
@@ -1681,7 +1689,7 @@
       </trans-unit>
       <trans-unit id="85550e95dc12c58e2e711dbebe89f3448eb66c72" datatype="html">
         <source>Memory requests (bytes)</source>
-        <target>メモリー要件 (バイト)</target>
+        <target state="new">Memory requests (bytes)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/node/template.html</context>
           <context context-type="linenumber">92</context>
@@ -2503,20 +2511,21 @@
       <trans-unit id="f2f9d18ebacb9e3bcb996d8176609e306864265e" datatype="html">
         <source>Custom Resource Definitions
       </source>
-        <target>カスタムリソース定義
+        <target state="new">Custom Resource Definitions
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">130</context>
+          <context context-type="linenumber">131</context>
         </context-group>
       </trans-unit>
+
       <trans-unit id="03511cfe5e28ed3380ab198c13cf62ebde1e89e6" datatype="html">
         <source>Settings
       </source>
         <target>設定</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">139</context>
+          <context context-type="linenumber">142</context>
         </context-group>
       </trans-unit>
       <trans-unit id="c2fa735eb6b1b2c10171c5acb818f6e0975a9406" datatype="html">
@@ -2525,7 +2534,7 @@
         <target>Kubernetes Dashboard について</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">144</context>
+          <context context-type="linenumber">147</context>
         </context-group>
       </trans-unit>
       <trans-unit id="01269ce8051398188d50367ead1831407e77d504" datatype="html">
@@ -2612,6 +2621,16 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/userpanel/template.html</context>
           <context context-type="linenumber">41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8d93137e6678a0a40da783d0a5bc06272d3317c5" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{resource.name}}"/>
+  </source>
+        <target state="new"><x id="INTERPOLATION" equiv-text="{{resource.name}}"/>
+  </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/pinner/template.html</context>
+          <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f4d1dd59b039ad818d9da7e29a773e10e41d9821" datatype="html">

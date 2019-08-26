@@ -22,6 +22,7 @@ import {ActionbarDetailDeleteComponent} from './actionbar/detailactions/delete/c
 import {ActionbarDetailEditComponent} from './actionbar/detailactions/edit/component';
 import {ActionbarDetailExecComponent} from './actionbar/detailactions/exec/component';
 import {ActionbarDetailLogsComponent} from './actionbar/detailactions/logs/component';
+import {ActionbarDetailPinComponent} from './actionbar/detailactions/pin/component';
 import {ActionbarDetailScaleComponent} from './actionbar/detailactions/scale/component';
 import {ActionbarDetailTriggerComponent} from './actionbar/detailactions/trigger/component';
 import {DefaultActionbar} from './actionbars/default/component';
@@ -30,6 +31,7 @@ import {LogsExecDefaultActionbar} from './actionbars/logsexecdefault/component';
 import {LogsScaleDefaultActionbar} from './actionbars/logsscaledefault/component';
 import {ScaleDefaultActionbar} from './actionbars/scaledefault/component';
 import {TriggerDefaultActionbar} from './actionbars/triggerdefault/component';
+import {PinDefaultActionbar} from './actionbars/pindefault/component';
 import {AllocationChartComponent} from './allocationchart/component';
 import {BreadcrumbsComponent} from './breadcrumbs/component';
 import {CardComponent} from './card/component';
@@ -96,6 +98,7 @@ const components = [
   ActionbarDetailScaleComponent,
   ActionbarDetailLogsComponent,
   ActionbarDetailExecComponent,
+  ActionbarDetailPinComponent,
   ActionbarComponent,
   AllocationChartComponent,
   ActionbarDetailTriggerComponent,
@@ -157,6 +160,7 @@ const components = [
   PersistentVolumeListComponent,
   PersistentVolumeClaimListComponent,
   PolicyRuleListComponent,
+  PinDefaultActionbar,
 
   ResourceQuotaListComponent,
   ResourceLimitListComponent,
