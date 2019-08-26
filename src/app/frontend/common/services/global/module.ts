@@ -68,7 +68,7 @@ import {PinnerService} from './pinner';
         ConfigService,
         HistoryService,
         PluginsConfigService,
-        PinnerService
+        PinnerService,
       ],
       multi: true,
     },
