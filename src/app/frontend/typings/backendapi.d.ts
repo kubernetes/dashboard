@@ -17,7 +17,7 @@ import {KdError} from '@api/frontendapi';
 
 export interface TypeMeta {
   kind: string;
-  scalable: boolean;
+  scalable?: boolean;
 }
 
 export interface ListMeta {
