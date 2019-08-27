@@ -10,10 +10,10 @@
 
 * [Installation](user/installation.md)
 * [Certificate management](user/certificate-management.md)
-* [Accessing Dashboard](user/accessing-dashboard.md)
+* [Accessing Dashboard](user/accessing-dashboard/README.md)
   * [1.7.x and above](user/accessing-dashboard/1.7.x-and-above.md)
   * [1.6.x and below](user/accessing-dashboard/1.6.x-and-below.md)
-* [Access control](user/access-control.md)
+* [Access control](user/access-control/README.md)
   * [Creating sample user](user/access-control/creating-sample-user.md)
 * [Integrations](user/integrations.md)
 * [Labels](user/labels.md)
