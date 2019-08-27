@@ -51,9 +51,7 @@ export class ScaleDefaultActionbar implements OnInit, OnDestroy {
   }
 
   scalable(): boolean {
-    if (this.resourceMeta.typeMeta.scalable !== undefined) {
-      return this.resourceMeta.typeMeta.scalable;
-    }
-    return true;
+    // @todo set scalable property for all scalable resources from the backend
+    return this.resourceMeta.typeMeta.scalable !== undefined || this.resourceMeta.typeMeta.scalable;
   }
 }
