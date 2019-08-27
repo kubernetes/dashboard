@@ -102,7 +102,8 @@ func NewObjectMeta(k8SObjectMeta metaV1.ObjectMeta) ObjectMeta {
 // NewTypeMeta creates new type mete for the resource kind.
 func NewTypeMeta(kind ResourceKind) TypeMeta {
 	return TypeMeta{
-		Kind: kind,
+		Kind:     kind,
+		Scalable: kind.Scalable(),
 	}
 }
 
@@ -138,6 +139,23 @@ const (
 	ResourceKindClusterRole              = "clusterrole"
 	ResourceKindEndpoint                 = "endpoint"
 )
+
+func (k ResourceKind) Scalable() bool {
+	scalable := []ResourceKind{
+		ResourceKindDeployment,
+		ResourceKindReplicaSet,
+		ResourceKindReplicationController,
+		ResourceKindStatefulSet,
+	}
+
+	for _, kind := range scalable {
+		if k == kind {
+			return true
+		}
+	}
+
+	return false
+}
 
 // ClientType represents type of client that is used to perform generic operations on resources.
 // Different resources belong to different client, i.e. Deployments belongs to extension client
