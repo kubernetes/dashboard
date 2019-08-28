@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Pipe} from '@angular/core';
+import {Pipe, SecurityContext} from '@angular/core';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 
 /**
@@ -23,6 +23,9 @@ export class SafeHtmlFormatter {
   constructor(private readonly sanitizer: DomSanitizer) {}
 
   transform(value: string): SafeHtml {
-    return this.sanitizer.bypassSecurityTrustHtml(value.replace(' ', '&nbsp;'));
+    return this.sanitizer.sanitize(
+      SecurityContext.HTML,
+      value.replace('<', '&lt;').replace('>', '&gt;'),
+    );
   }
 }
