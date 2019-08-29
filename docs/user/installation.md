@@ -23,7 +23,7 @@ kubectl create secret generic kubernetes-dashboard-certs --from-file=$HOME/certs
 Afterwards, you are ready to deploy Dashboard using the following command:
 
 ```
-kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta3/aio/deploy/recommended.yaml
+kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta4/aio/deploy/recommended.yaml
 ```
 
 ### Alternative setup
@@ -33,7 +33,7 @@ This setup is not fully secure. Certificates are not used and Dashboard is expos
 To deploy Dashboard execute following command:
 
 ```
-kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta3/aio/deploy/alternative.yaml
+kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta4/aio/deploy/alternative.yaml
 ```
 
 ## Development release
@@ -45,7 +45,7 @@ Besides official releases, there are also development releases, that are pushed 
 In most of the use cases you need to execute the following command to deploy latest development release:
 
 ```
-$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta3/aio/deploy/head.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta4/aio/deploy/head.yaml
 ```
 
 ### Update
