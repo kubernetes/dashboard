@@ -39,6 +39,7 @@ const localizedErrors: {[key: string]: string} = {
   MSG_ENCRYPTION_KEY_CHANGED: 'You have been logged out because your token is invalid.',
   MSG_ACCESS_DENIED: 'Access denied.',
   MSG_DASHBOARD_EXCLUSIVE_RESOURCE_ERROR: 'Trying to access/modify dashboard exclusive resource.',
+  MSG_LOGIN_UNAUTHORIZED_ERROR: 'Invalid credentials provided',
 };
 
 /**
@@ -48,8 +49,12 @@ const localizedErrors: {[key: string]: string} = {
 export class K8SError implements K8SApiError {
   ErrStatus: ErrStatus;
 
+  constructor(error: ErrStatus) {
+    this.ErrStatus = error;
+  }
+
   toKdError(): KdError {
-    return new KdError(this.ErrStatus.status, this.ErrStatus.code, this.ErrStatus.message);
+    return new KdError(this.ErrStatus.reason, this.ErrStatus.code, this.ErrStatus.message);
   }
 }
 /* tslint:enable */
