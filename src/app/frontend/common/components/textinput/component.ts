@@ -64,7 +64,7 @@ export class TextInputComponent implements OnInit {
   }
 
   onTextChange(text: string | StringMap): void {
-    this.text = text;
+    this.text = String(text);
     this.textChange.emit(this.text);
   }
 
