@@ -38,6 +38,11 @@ limitations under the License.
            i18n>Group</div>
       <div value>{{crd?.group}}</div>
     </kd-property>
+    <kd-property *ngIf="crd.subresources.length > 0">
+      <div key
+           i18n>Subresources</div>
+      <div value>{{crd.subresources.join(", ")}}</div>
+    </kd-property>
   </div>
 </kd-card>
 

@@ -177,7 +177,10 @@ func TestToReplicationControllerList(t *testing.T) {
 							Namespace: "namespace-1",
 							UID:       "uid-1",
 						},
-						TypeMeta:        api.TypeMeta{Kind: api.ResourceKindReplicationController},
+						TypeMeta: api.TypeMeta{
+							Kind:     api.ResourceKindReplicationController,
+							Scalable: true,
+						},
 						ContainerImages: []string{"my-container-image-1"},
 						Pods: common.PodInfo{
 							Desired:   &replicas,
@@ -193,7 +196,10 @@ func TestToReplicationControllerList(t *testing.T) {
 							Namespace: "namespace-2",
 							UID:       "uid-2",
 						},
-						TypeMeta:        api.TypeMeta{Kind: api.ResourceKindReplicationController},
+						TypeMeta: api.TypeMeta{
+							Kind:     api.ResourceKindReplicationController,
+							Scalable: true,
+						},
 						ContainerImages: []string{"my-container-image-2"},
 						Pods: common.PodInfo{
 							Desired:  &replicas,
@@ -245,7 +251,10 @@ func TestGetReplicationControllerList(t *testing.T) {
 							Name:   "rc-1",
 							Labels: map[string]string{},
 						},
-						TypeMeta: api.TypeMeta{Kind: api.ResourceKindReplicationController},
+						TypeMeta: api.TypeMeta{
+							Kind:     api.ResourceKindReplicationController,
+							Scalable: true,
+						},
 						Pods: common.PodInfo{
 							Desired:  &replicas,
 							Warnings: make([]common.Event, 0),

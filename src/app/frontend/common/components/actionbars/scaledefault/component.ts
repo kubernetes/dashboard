@@ -49,4 +49,8 @@ export class ScaleDefaultActionbar implements OnInit, OnDestroy {
     this._unsubscribe.next();
     this._unsubscribe.complete();
   }
+
+  scalable(): boolean {
+    return this.resourceMeta.typeMeta.scalable;
+  }
 }

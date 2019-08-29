@@ -148,7 +148,10 @@ func TestGetStatefulSetListFromChannels(t *testing.T) {
 						Labels:            map[string]string{"key": "value"},
 						CreationTimestamp: metaV1.Unix(111, 222),
 					},
-					TypeMeta: api.TypeMeta{Kind: api.ResourceKindStatefulSet},
+					TypeMeta: api.TypeMeta{
+						Kind:     api.ResourceKindStatefulSet,
+						Scalable: true,
+					},
 					Pods: common.PodInfo{
 						Current:  7,
 						Desired:  getReplicasPointer(21),

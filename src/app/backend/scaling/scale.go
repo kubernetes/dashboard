@@ -17,6 +17,7 @@ package scaling
 import (
 	"strconv"
 
+	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/client-go/discovery"
 	"k8s.io/client-go/discovery/cached/memory"
 	"k8s.io/client-go/dynamic"
@@ -40,7 +41,8 @@ func GetScaleSpec(cfg *rest.Config, kind, namespace, name string) (*ReplicaCount
 		return nil, err
 	}
 
-	res, err := sc.Scales(namespace).Get(appsv1beta2.Resource(kind), name)
+	gr := getGroupResource(kind)
+	res, err := sc.Scales(namespace).Get(gr, name)
 	if err != nil {
 		return nil, err
 	}
@@ -60,7 +62,8 @@ func ScaleResource(cfg *rest.Config, kind, namespace, name, count string) (*Repl
 		return nil, err
 	}
 
-	res, err := sc.Scales(namespace).Get(appsv1beta2.Resource(kind), name)
+	gr := getGroupResource(kind)
+	res, err := sc.Scales(namespace).Get(gr, name)
 	if err != nil {
 		return nil, err
 	}
@@ -72,7 +75,7 @@ func ScaleResource(cfg *rest.Config, kind, namespace, name, count string) (*Repl
 
 	res.Spec.Replicas = int32(c)
 
-	res, err = sc.Scales(namespace).Update(appsv1beta2.Resource(kind), res)
+	res, err = sc.Scales(namespace).Update(gr, res)
 	if err != nil {
 		return nil, err
 	}
@@ -106,4 +109,14 @@ func getScaleGetter(cfg *rest.Config) (scale.ScalesGetter, error) {
 	drm.Reset()
 
 	return scale.New(restClient, drm, dynamic.LegacyAPIPathResolverFunc, resolver), nil
+}
+
+func getGroupResource(kind string) schema.GroupResource {
+	gr := schema.ParseGroupResource(kind)
+
+	if gr.Group != "" && gr.Resource != "" {
+		return gr
+	} else {
+		return appsv1beta2.Resource(kind)
+	}
 }

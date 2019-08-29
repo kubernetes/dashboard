@@ -17,6 +17,7 @@ import {KdError} from '@api/frontendapi';
 
 export interface TypeMeta {
   kind: string;
+  scalable?: boolean;
 }
 
 export interface ListMeta {
@@ -459,6 +460,7 @@ export interface CRDDetail extends ResourceDetail {
   versions: CRDVersion[];
   objects: CRDObjectList;
   conditions: Condition[];
+  subresources: string[];
 }
 
 export interface CRDObjectDetail extends ResourceDetail {}

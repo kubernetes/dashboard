@@ -72,7 +72,11 @@ export class VerberService {
       .afterClosed()
       .subscribe(result => {
         if (Number.isInteger(result)) {
-          const url = `api/v1/scale/${typeMeta.kind}/${objectMeta.namespace}/${objectMeta.name}/`;
+          const url =
+            `api/v1/scale/${typeMeta.kind}` +
+            (objectMeta.namespace ? `/${objectMeta.namespace}` : '') +
+            `/${objectMeta.name}/`;
+
           this.http_
             .put(url, result, {
               params: {

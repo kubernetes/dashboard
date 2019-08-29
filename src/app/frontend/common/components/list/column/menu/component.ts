@@ -31,13 +31,6 @@ const loggableResources: string[] = [
   Resource.statefulSet,
 ];
 
-const scalableResources: string[] = [
-  Resource.deployment,
-  Resource.replicaSet,
-  Resource.replicationController,
-  Resource.statefulSet,
-];
-
 const pinnableResources: string[] = [Resource.crdFull];
 
 const executableResources: string[] = [Resource.pod];
@@ -97,7 +90,7 @@ export class MenuComponent implements ActionColumn {
   }
 
   isScaleEnabled(): boolean {
-    return scalableResources.includes(this.typeMeta.kind);
+    return this.typeMeta.scalable;
   }
 
   onScale(): void {

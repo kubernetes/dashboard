@@ -111,7 +111,10 @@ func TestGetDeploymentDetail(t *testing.T) {
 						Namespace: "ns-1",
 						Labels:    map[string]string{"foo": "bar"},
 					},
-					TypeMeta: api.TypeMeta{Kind: api.ResourceKindDeployment},
+					TypeMeta: api.TypeMeta{
+						Kind:     api.ResourceKindDeployment,
+						Scalable: true,
+					},
 					Pods: common.PodInfo{
 						Desired:  &desired,
 						Current:  4,
