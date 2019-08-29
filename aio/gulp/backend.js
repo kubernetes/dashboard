@@ -101,7 +101,6 @@ function backendProd(outputBinaryPathsAndArchs) {
             // Disable cgo package. Required to run on scratch docker image.
             CGO_ENABLED: '0',
             GOARCH: arch,
-            GOOS: 'linux',
           });
     };
   };
