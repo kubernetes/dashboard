@@ -94,7 +94,9 @@ export class LoginComponent implements OnInit {
     this.authService_.login(this.getLoginSpec_()).subscribe(
       (errors: K8SError[]) => {
         if (errors.length > 0) {
-          this.errors = errors.map(error => error.toKdError());
+          this.errors = errors.map((error: K8SError) =>
+            new K8SError(error.ErrStatus).toKdError().localize(),
+          );
           return;
         }
 
