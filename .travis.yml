@@ -18,39 +18,12 @@ cache:
 
 before_install:
   - export NG_CLI_ANALYTICS=ci
-  - export GO111MODULE=on
-  - export PATH=$PATH:$GOPATH/bin
   - eval "$(gimme 1.12.6)"
-
-before_script:
-  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-  - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) edge"
-  - sudo apt-get update
-  - sudo apt-get -y install docker-ce libgconf2-4
-  - sudo service docker restart
-  - docker --version
 
 jobs:
   include:
     - stage: test
       script: npm run check
-    - script: npm run test:coverage
-      after_success:
-        - rm -rf $TRAVIS_BUILD_DIR/.tmp
-        - bash <(curl -s https://codecov.io/bash)
-    - script: npm run cluster:start && npm run e2e
-    - stage: deploy
-      script:
-        - docker login -u $DOCKER_USER -p $DOCKER_PASS
-        - npm run docker:push:head
-    - stage: release
-      script:
-        - docker login -u $DOCKER_RELEASE_USER -p $DOCKER_RELEASE_PASS
-        - npm run docker:push
 
 stages:
   - test
-  - name: deploy
-    if: branch = master AND type != pull_request
-  - name: release
-    if: tag IS present AND type != pull_request

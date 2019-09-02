@@ -7,6 +7,7 @@
   },
   "license": "Apache-2.0",
   "scripts": {
+    "check": "npm run build:k8s-plugin && npm run build:plugin1",
     "build:k8s-plugin": "ng build plugin && ng build --project custom-plugin --prod --modulePath=k8s-plugin#PluginModule --pluginName=k8s-plugin  --outputPath=./dist/bundle",
     "build:plugin1": "ng build --project custom-plugin --prod --modulePath=./plugin1/plugin1.module#Plugin1Module --pluginName=plugin1 --sharedLibs=k8s-plugin --outputPath=./dist/bundle"
   },
