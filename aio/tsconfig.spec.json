@@ -1,0 +1,22 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../out-tsc/spec",
+    "baseUrl": "../src/app/frontend",
+    "module": "commonjs",
+    "target": "es5",
+    "types": [
+      "jasmine",
+      "node"
+    ]
+  },
+  "files": [
+    "../src/app/frontend/index.spec.ts",
+    "../src/app/frontend/polyfills.ts"
+  ],
+  "include": [
+    "../src/app/frontend/**/*.spec.ts",
+    "../src/app/frontend/**/*.d.ts"
+  ],
+  "lib": ["es2017", "dom"]
+}
