@@ -2611,15 +2611,7 @@
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-<<<<<<< HEAD
-<<<<<<< HEAD
-          <context context-type="linenumber">131</context>
-=======
-          <context context-type="linenumber">135</context>
->>>>>>> fix tests and sort order on first list fetch
-=======
           <context context-type="linenumber">136</context>
->>>>>>> update i18n/messages
         </context-group>
       </trans-unit>
       <trans-unit id="03511cfe5e28ed3380ab198c13cf62ebde1e89e6" datatype="html">
@@ -2629,15 +2621,7 @@
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-<<<<<<< HEAD
-<<<<<<< HEAD
-          <context context-type="linenumber">142</context>
-=======
-          <context context-type="linenumber">144</context>
->>>>>>> fix tests and sort order on first list fetch
-=======
           <context context-type="linenumber">147</context>
->>>>>>> update i18n/messages
         </context-group>
       </trans-unit>
       <trans-unit id="c2fa735eb6b1b2c10171c5acb818f6e0975a9406" datatype="html">
@@ -2647,15 +2631,7 @@
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-<<<<<<< HEAD
-<<<<<<< HEAD
-          <context context-type="linenumber">147</context>
-=======
-          <context context-type="linenumber">149</context>
->>>>>>> fix tests and sort order on first list fetch
-=======
           <context context-type="linenumber">152</context>
->>>>>>> update i18n/messages
         </context-group>
       </trans-unit>
       <trans-unit id="01269ce8051398188d50367ead1831407e77d504" datatype="html">
@@ -3347,14 +3323,8 @@
       </target> 더 배우기
         
         
-<<<<<<< HEAD
-<<<<<<< HEAD
         
-=======
->>>>>>> fix tests and sort order on first list fetch
-=======
         
->>>>>>> update i18n/messages
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">54</context>
