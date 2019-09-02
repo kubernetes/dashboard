@@ -29,4 +29,12 @@ CODEGEN_PKG=${GOPATH}/src/k8s.io/code-generator
   github.com/kubernetes/dashboard/src/app/backend/plugin/client github.com/kubernetes/dashboard/src/app/backend/plugin \
   apis:v1alpha1 \
   --go-header-file "${SCRIPT_ROOT}"/aio/scripts/license-header.go.txt \
-  --output-base "$(dirname "${BASH_SOURCE[0]}")/../../../../.."
+  --output-base "$(dirname "${BASH_SOURCE[0]}")/.."
+
+# Remove old generated client
+rm -rf ./src/app/backend/plugin/client
+# Move generated deepcopy funcs and client
+mv "$(dirname "${BASH_SOURCE[0]}")"/../github.com/kubernetes/dashboard/src/app/backend/plugin/apis/v1alpha1/zz_generated.deepcopy.go ./src/app/backend/plugin/apis/v1alpha1
+mv "$(dirname "${BASH_SOURCE[0]}")"/../github.com/kubernetes/dashboard/src/app/backend/plugin/client ./src/app/backend/plugin
+# Remove empty directory
+rm -rf ./aio/github.com

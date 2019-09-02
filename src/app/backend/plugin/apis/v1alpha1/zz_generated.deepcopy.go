@@ -87,6 +87,11 @@ func (in *PluginList) DeepCopyObject() runtime.Object {
 func (in *PluginSpec) DeepCopyInto(out *PluginSpec) {
 	*out = *in
 	in.Source.DeepCopyInto(&out.Source)
+	if in.Dependencies != nil {
+		in, out := &in.Dependencies, &out.Dependencies
+		*out = make([]string, len(*in))
+		copy(*out, *in)
+	}
 	return
 }
 

@@ -252,10 +252,18 @@ func (self *clientManager) VerberClient(req *restful.Request, config *rest.Confi
 		return nil, err
 	}
 
+	pluginsclient, err := self.PluginClient(req)
+	if err != nil {
+		return nil, err
+	}
+
 	return NewResourceVerber(k8sClient.CoreV1().RESTClient(),
 		k8sClient.ExtensionsV1beta1().RESTClient(), k8sClient.AppsV1().RESTClient(),
 		k8sClient.BatchV1().RESTClient(), k8sClient.BatchV1beta1().RESTClient(), k8sClient.AutoscalingV1().RESTClient(),
-		k8sClient.StorageV1().RESTClient(), k8sClient.RbacV1().RESTClient(), apiextensionsclient.ApiextensionsV1beta1().RESTClient(), config), nil
+		k8sClient.StorageV1().RESTClient(), k8sClient.RbacV1().RESTClient(),
+		apiextensionsclient.ApiextensionsV1beta1().RESTClient(),
+		pluginsclient.DashboardV1alpha1().RESTClient(),
+		config), nil
 }
 
 // SetTokenManager sets the token manager that will be used for token decryption.
