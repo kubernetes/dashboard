@@ -20,6 +20,8 @@ import {CanIResponse} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
 
 import {ERRORS} from '../../errors/errors';
+import {switchMap} from 'rxjs/operators';
+import {throwError} from 'rxjs';
 
 @Injectable()
 export class AuthorizerService {
@@ -30,15 +32,14 @@ export class AuthorizerService {
   proxyGET<T>(url: string): Observable<T> {
     return this.http_
       .get<CanIResponse>(`${url}${this.authorizationSubUrl_}`)
-      .switchMap<CanIResponse, T>(response => {
-        if (!response.allowed) {
-          return Observable.throwError(ERRORS.forbidden);
-        }
-
-        return this.http_.get<T>(url);
-      })
-      .catch(e => {
-        return Observable.throwError(e);
-      });
+      .pipe(
+        switchMap(response => {
+          if (!response.allowed) {
+            return throwError(ERRORS.forbidden);
+          }
+          return this.http_.get<T>(url);
+        }),
+      )
+      .catch(e => throwError(e));
   }
 }
