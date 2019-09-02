@@ -32,7 +32,8 @@ type Plugin struct {
 
 // PluginSpec holds the specs for the Plugin kind
 type PluginSpec struct {
-	Source Source `json:"source"`
+	Source       Source   `json:"source"`
+	Dependencies []string `json:"dependencies,omitempty"`
 }
 
 // Source holds the information about the plugin's source code origin

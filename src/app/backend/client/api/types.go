@@ -43,6 +43,7 @@ type ClientManager interface {
 	APIExtensionsClient(req *restful.Request) (apiextensionsclientset.Interface, error)
 	PluginClient(req *restful.Request) (pluginclientset.Interface, error)
 	InsecureAPIExtensionsClient() apiextensionsclientset.Interface
+	InsecurePluginClient() pluginclientset.Interface
 	CanI(req *restful.Request, ssar *v1.SelfSubjectAccessReview) bool
 	Config(req *restful.Request) (*rest.Config, error)
 	ClientCmdConfig(req *restful.Request) (clientcmd.ClientConfig, error)

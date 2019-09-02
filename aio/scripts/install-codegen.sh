@@ -1,4 +1,6 @@
-# Copyright 2017 Google Inc. All Rights Reserved.
+#!/usr/bin/env bash
+
+# Copyright 2017 The Kubernetes Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,28 +14,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# A manifest that creates test plugin resources.
+set -o errexit
+set -o nounset
+set -o pipefail
 
-apiVersion: dashboard.k8s.io/v1alpha1
-kind: Plugin
-metadata:
-  name: k8s-plugin
-spec:
-  source:
-    configMapRef:
-      name: k8s-plugin-src
-    filename: k8s-plugin.js
+function install_codegen() {
+    if [ "$(GO111MODULE=off go get -d k8s.io/code-generator)" != 0 ]; then
+    # this will return zero even if go get throws `build constraints exclude all Go files`
+      return 0
+    fi
+}
 
----
-
-apiVersion: dashboard.k8s.io/v1alpha1
-kind: Plugin
-metadata:
-  name: plugin1
-spec:
-  source:
-    configMapRef:
-      name: plugin1-src
-    filename: plugin1.js
-  dependencies:
-    - "k8s-plugin"
+install_codegen

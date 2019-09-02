@@ -121,3 +121,15 @@ export interface ResourcesRatio {
 export interface StateError {
   error: KdError;
 }
+
+export interface PluginMetadata {
+  name: string;
+  path: string;
+  dependencies: string[];
+}
+
+export interface PluginsConfig {
+  status: number;
+  plugins: PluginMetadata[];
+  errors?: object[];
+}

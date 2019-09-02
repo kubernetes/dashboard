@@ -120,6 +120,11 @@ limitations under the License.
                    state="/secret"
                    i18n>Secrets
       </kd-nav-item>
+      <kd-nav-item *ngIf="showPlugin()"
+                   class="kd-nav-group-item"
+                   state="/plugin"
+                   i18n>Plugins
+      </kd-nav-item>
     </div>
 
     <mat-divider></mat-divider>

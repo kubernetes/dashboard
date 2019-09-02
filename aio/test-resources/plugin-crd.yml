@@ -35,6 +35,10 @@ spec:
               required:
                 - configMapRef
                 - filename
+            dependencies:
+              type: array
+              items:
+                type: string
           required:
             - source
       required:

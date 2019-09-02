@@ -16,7 +16,11 @@ package plugin
 
 import (
 	"bytes"
+	"net/http"
+	"net/http/httptest"
 	"testing"
+
+	"github.com/emicklei/go-restful"
 
 	"github.com/kubernetes/dashboard/src/app/backend/plugin/apis/v1alpha1"
 	fakePluginClientset "github.com/kubernetes/dashboard/src/app/backend/plugin/client/clientset/versioned/fake"
@@ -70,4 +74,31 @@ func TestGetPluginSource(t *testing.T) {
 	if !bytes.Equal(data, []byte(srcData)) {
 		t.Error("bytes in configMap and bytes from GetPluginSource are different")
 	}
+}
+
+func Test_servePluginSource(t *testing.T) {
+	ns := "default"
+	pluginName := "test-plugin"
+	filename := "plugin-test.js"
+	cfgMapName := "plugin-test-cfgMap"
+	h := Handler{&fakeClientManager{}}
+
+	pcs, _ := h.cManager.PluginClient(nil)
+	_, _ = pcs.DashboardV1alpha1().Plugins(ns).Create(&v1alpha1.Plugin{
+		ObjectMeta: v1.ObjectMeta{Name: pluginName, Namespace: ns},
+		Spec: v1alpha1.PluginSpec{
+			Source: v1alpha1.Source{
+				ConfigMapRef: &coreV1.ConfigMapEnvSource{
+					LocalObjectReference: coreV1.LocalObjectReference{Name: cfgMapName},
+				},
+				Filename: filename}},
+	})
+
+	httpReq, _ := http.NewRequest(http.MethodGet, "/api/v1/plugin/default/test-plugin", nil)
+	req := restful.NewRequest(httpReq)
+
+	httpWriter := httptest.NewRecorder()
+	resp := restful.NewResponse(httpWriter)
+
+	h.servePluginSource(req, resp)
 }
