@@ -2,11 +2,13 @@
 
 Based on current browser locale the Dashboard can be displayed in one of the supported languages listed below. In case it does not work, make sure that your browser's locale is identified with correct language code.
 
-| Language          | Code |
---------------------|------|
-| English (default) | en   |
-| French            | fr   |
-| Japanese          | ja   |
+| Language           | Code |
+|--------------------|------|
+| English (default)  | en   |
+| French             | fr   |
+| Japanese           | ja   |
+| Korean             | ko   |
+| Simplified Chinese | zh   |
 
 ## Building localized dashboard
 
@@ -42,11 +44,13 @@ Find new localizable texts in `i18n/messages.[locale].xlf` file and translate te
 After preparation of new translation file, configure `i18n/locale conf.json` file to build newly localized dashboard as follows:
 
 ```
-{"translations": [ "en", "fr" ]}
+{"translations": [ "en", "fr", "ko", "zh" ]}
 ```
-To add Japanese translation file, add `"ja"` into `"translations"` array.
+
+To add Japanese translation file, add `"ja"` into `"translations"` array in alphabetical order.
+
 ```
-{"translations": [ "en", "fr", "ja" ]}
+{"translations": [ "en", "fr", "ja", "ko", "zh" ]}
 ```
 
 Then you can build your localized dashboard with `npm run build`.
