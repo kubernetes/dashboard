@@ -149,6 +149,10 @@ pass value for `--insecure-bind-address` option to dashboard as follows:
 * Set `K8S_DASHBOARD_BIND_ADDRESS` environment variable as `"0.0.0.0"` before using `aio/develop/run-npm-on-container.sh`.
 * Run like `npm run [command] --kubernetes-dashboard:bind_address="0.0.0.0"`, when you run dashboard from inside the container.
 
+### Change port number for dashboard
+
+As default, development container uses `8080` port to expose dashboard. If you need to change the port number, set `K8S_DASHBOARD_PORT` environment variable before using `aio/develop/run-npm-on-container.sh`. The variable would be passed to `--port` option for docker and `npm run start` command inside container, then container exports the port and dashboard starts at the port.
+
 ### To run dashboard using Docker at ease
 
 1. Run `aio/develop/run-npm-on-container.sh`.
@@ -160,8 +164,9 @@ Then you can see dashboard `http://localhost:8080` with your browser.
 
 1. Copy kubeconfig from your cluster, and confirm the URL for API server in it, and modify it if necessary.
 2. Set filepath for kubeconfig into `K8S_DASHBOARD_KUBECONFIG` environment variable.
-3. Change directory into your dashboard source directory.
-4. Run `aio/develop/run-npm-on-container.sh`.
+3. If you deployed `dashboard-metrics-scraper` in your cluster, set its endpoint to `K8S_DASHBOARD_SIDECAR_HOST` environment variable.
+4. Change directory into your dashboard source directory.
+5. Run `aio/develop/run-npm-on-container.sh`.
 
 These manipulations will build container, and run dashboard as default.
 

@@ -21,7 +21,8 @@ if [[ -n "${K8S_DASHBOARD_NPM_CMD}" ]] ; then
   echo "Run npm '${K8S_DASHBOARD_NPM_CMD}'"
   npm ${K8S_DASHBOARD_NPM_CMD} \
     --kubernetes-dashboard:bind_address=${K8S_DASHBOARD_BIND_ADDRESS} \
-    --kubernetes-dashboard:sidecar_host=${K8S_DASHBOARD_SIDECAR_HOST}
+    --kubernetes-dashboard:sidecar_host=${K8S_DASHBOARD_SIDECAR_HOST} \
+    --kubernetes-dashboard:port=${K8S_DASHBOARD_PORT}
 else
   # Install dashboard.
   echo "Install dashboard"
@@ -54,5 +55,6 @@ else
   echo "Start dashboard"
   npm start \
     --kubernetes-dashboard:bind_address=${K8S_DASHBOARD_BIND_ADDRESS} \
-    --kubernetes-dashboard:sidecar_host=${K8S_DASHBOARD_SIDECAR_HOST}
+    --kubernetes-dashboard:sidecar_host=${K8S_DASHBOARD_SIDECAR_HOST} \
+    --kubernetes-dashboard:port=${K8S_DASHBOARD_PORT}
 fi
