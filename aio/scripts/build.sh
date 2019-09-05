@@ -106,7 +106,7 @@ function parse::args {
 }
 
 # Execute script.
-START=$(date +%s.%N)
+START=$(date +%s)
 
 parse::args "$@"
 clean
@@ -129,6 +129,6 @@ copy::frontend
 copy::supported-locales
 copy::dockerfile
 
-END=$(date +%s.%N)
+END=$(date +%s)
 TOOK=$(echo "${END} - ${START}" | bc)
 say "\nBuild finished successfully after ${TOOK}s"
