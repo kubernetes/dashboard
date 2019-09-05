@@ -26,7 +26,6 @@ export class CpuSparklineComponent extends Sparkline implements OnInit {
   @Input() timeseries: MetricResult[];
 
   ngOnInit() {
-    console.log('cpu sparkline');
     this.setTimeseries(this.timeseries);
   }
 }

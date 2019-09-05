@@ -40,7 +40,6 @@ export class GraphComponent implements OnInit, AfterViewInit {
   }
 
   private generateGraph() {
-    console.log('graph');
     generate({
       bindto: select(`#${this.id}`),
       size: {

@@ -44,7 +44,6 @@ export class AllocationChartComponent implements OnChanges {
 
   ngOnChanges(): void {
     this.allocated_ = new Set();
-    console.log('allocation chart change');
     setTimeout(() => this.generateGraph_(), 0);
   }
 
