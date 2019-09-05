@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {HttpParams} from '@angular/common/http';
-import {Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {CronJob, CronJobList} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
 import {ResourceListWithStatuses} from '../../../resources/list';
@@ -26,14 +26,16 @@ import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 @Component({
   selector: 'kd-cron-job-list',
   templateUrl: './template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CronJobListComponent extends ResourceListWithStatuses<CronJobList, CronJob> {
   @Input() endpoint = EndpointManager.resource(Resource.cronJob, true).list();
   constructor(
     private readonly cronJob_: NamespacedResourceService<CronJobList>,
     notifications: NotificationsService,
+    cdr: ChangeDetectorRef,
   ) {
-    super('cronjob', notifications);
+    super('cronjob', notifications, cdr);
     this.id = ListIdentifier.cronJob;
     this.groupId = ListGroupIdentifier.workloads;
 

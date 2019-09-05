@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {HttpParams} from '@angular/common/http';
-import {Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {ClusterRole, ClusterRoleList} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
 
@@ -27,6 +27,7 @@ import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 @Component({
   selector: 'kd-cluster-role-list',
   templateUrl: './template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ClusterRoleListComponent extends ResourceListBase<ClusterRoleList, ClusterRole> {
   @Input() endpoint = EndpointManager.resource(Resource.clusterRole).list();
@@ -34,8 +35,9 @@ export class ClusterRoleListComponent extends ResourceListBase<ClusterRoleList, 
   constructor(
     private readonly clusterRole_: ResourceService<ClusterRoleList>,
     notifications: NotificationsService,
+    cdr: ChangeDetectorRef,
   ) {
-    super('clusterrole', notifications);
+    super('clusterrole', notifications, cdr);
     this.id = ListIdentifier.clusterRole;
     this.groupId = ListGroupIdentifier.cluster;
 

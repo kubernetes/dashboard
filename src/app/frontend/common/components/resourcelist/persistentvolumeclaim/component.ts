@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {HttpParams} from '@angular/common/http';
-import {Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {PersistentVolumeClaim, PersistentVolumeClaimList} from 'typings/backendapi';
 
@@ -27,6 +27,7 @@ import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 @Component({
   selector: 'kd-persistent-volume-claim-list',
   templateUrl: './template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PersistentVolumeClaimListComponent extends ResourceListWithStatuses<
   PersistentVolumeClaimList,
@@ -37,8 +38,9 @@ export class PersistentVolumeClaimListComponent extends ResourceListWithStatuses
   constructor(
     private readonly persistentVolumeClaim_: NamespacedResourceService<PersistentVolumeClaimList>,
     notifications: NotificationsService,
+    cdr: ChangeDetectorRef,
   ) {
-    super('persistentvolumeclaim', notifications);
+    super('persistentvolumeclaim', notifications, cdr);
     this.id = ListIdentifier.persistentVolumeClaim;
     this.groupId = ListGroupIdentifier.config;
 

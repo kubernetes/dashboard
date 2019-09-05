@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {HttpParams} from '@angular/common/http';
-import {Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {Node, NodeList} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
 import {ResourceListWithStatuses} from '../../../resources/list';
@@ -26,6 +26,7 @@ import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 @Component({
   selector: 'kd-node-list',
   templateUrl: './template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NodeListComponent extends ResourceListWithStatuses<NodeList, Node> {
   @Input() endpoint = EndpointManager.resource(Resource.node).list();
@@ -33,8 +34,9 @@ export class NodeListComponent extends ResourceListWithStatuses<NodeList, Node> 
   constructor(
     private readonly node_: ResourceService<NodeList>,
     notifications: NotificationsService,
+    cdr: ChangeDetectorRef,
   ) {
-    super('node', notifications);
+    super('node', notifications, cdr);
     this.id = ListIdentifier.node;
     this.groupId = ListGroupIdentifier.cluster;
 

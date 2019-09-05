@@ -13,7 +13,13 @@
 // limitations under the License.
 
 import {HttpParams} from '@angular/common/http';
-import {Component, ComponentFactoryResolver, Input} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ComponentFactoryResolver,
+  Input,
+} from '@angular/core';
 import {Deployment, DeploymentList, Event} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
 import {ResourceListWithStatuses} from '../../../resources/list';
@@ -26,6 +32,7 @@ import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 @Component({
   selector: 'kd-deployment-list',
   templateUrl: './template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DeploymentListComponent extends ResourceListWithStatuses<DeploymentList, Deployment> {
   @Input() endpoint = EndpointManager.resource(Resource.deployment, true).list();
@@ -34,8 +41,9 @@ export class DeploymentListComponent extends ResourceListWithStatuses<Deployment
     private readonly deployment_: NamespacedResourceService<DeploymentList>,
     notifications: NotificationsService,
     resolver: ComponentFactoryResolver,
+    cdr: ChangeDetectorRef,
   ) {
-    super('deployment', notifications, resolver);
+    super('deployment', notifications, cdr, resolver);
     this.id = ListIdentifier.deployment;
     this.groupId = ListGroupIdentifier.workloads;
 

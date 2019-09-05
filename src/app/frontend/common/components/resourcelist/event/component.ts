@@ -13,8 +13,7 @@
 // limitations under the License.
 
 import {HttpParams} from '@angular/common/http';
-import {Component, Input, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {Event, EventList} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
 
@@ -25,7 +24,11 @@ import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 
 const EVENT_TYPE_WARNING = 'Warning';
 
-@Component({selector: 'kd-event-list', templateUrl: './template.html'})
+@Component({
+  selector: 'kd-event-list',
+  templateUrl: './template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
 export class EventListComponent extends ResourceListWithStatuses<EventList, Event>
   implements OnInit {
   @Input() endpoint: string;
@@ -33,8 +36,9 @@ export class EventListComponent extends ResourceListWithStatuses<EventList, Even
   constructor(
     private readonly eventList: NamespacedResourceService<EventList>,
     notifications: NotificationsService,
+    cdr: ChangeDetectorRef,
   ) {
-    super('', notifications);
+    super('', notifications, cdr);
     this.id = ListIdentifier.event;
     this.groupId = ListGroupIdentifier.none;
 

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {HttpParams} from '@angular/common/http';
-import {Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {Plugin, PluginList} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
 import {ResourceListBase} from '../../../resources/list';
@@ -26,6 +26,7 @@ import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 @Component({
   selector: 'kd-plugin-list',
   templateUrl: './template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PluginListComponent extends ResourceListBase<PluginList, Plugin> {
   @Input() endpoint = EndpointManager.resource(Resource.plugin, true).list();
@@ -33,8 +34,9 @@ export class PluginListComponent extends ResourceListBase<PluginList, Plugin> {
   constructor(
     private readonly plugin_: NamespacedResourceService<PluginList>,
     notifications: NotificationsService,
+    cdr: ChangeDetectorRef,
   ) {
-    super('plugin', notifications);
+    super('plugin', notifications, cdr);
     this.id = ListIdentifier.plugin;
     this.groupId = ListGroupIdentifier.none;
 

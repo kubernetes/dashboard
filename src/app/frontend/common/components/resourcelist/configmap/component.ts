@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {HttpParams} from '@angular/common/http';
-import {Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {ConfigMap, ConfigMapList} from 'typings/backendapi';
 import {ResourceListBase} from '../../../resources/list';
@@ -23,15 +23,20 @@ import {NamespacedResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
 import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 
-@Component({selector: 'kd-config-map-list', templateUrl: './template.html'})
+@Component({
+  selector: 'kd-config-map-list',
+  templateUrl: './template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
 export class ConfigMapListComponent extends ResourceListBase<ConfigMapList, ConfigMap> {
   @Input() endpoint = EndpointManager.resource(Resource.configMap, true).list();
 
   constructor(
     private readonly configMap_: NamespacedResourceService<ConfigMapList>,
     notifications: NotificationsService,
+    cdr: ChangeDetectorRef,
   ) {
-    super('configmap', notifications);
+    super('configmap', notifications, cdr);
     this.id = ListIdentifier.configMap;
     this.groupId = ListGroupIdentifier.config;
 

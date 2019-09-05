@@ -13,7 +13,13 @@
 // limitations under the License.
 
 import {HttpParams} from '@angular/common/http';
-import {Component, ComponentFactoryResolver, Input} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ComponentFactoryResolver,
+  Input,
+} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Event, ReplicaSet, ReplicaSetList} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
@@ -28,6 +34,7 @@ import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 @Component({
   selector: 'kd-replica-set-list',
   templateUrl: './template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSetList, ReplicaSet> {
   @Input() title: string;
@@ -38,8 +45,9 @@ export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSet
     private readonly activatedRoute_: ActivatedRoute,
     notifications: NotificationsService,
     resolver: ComponentFactoryResolver,
+    cdr: ChangeDetectorRef,
   ) {
-    super('replicaset', notifications, resolver);
+    super('replicaset', notifications, cdr, resolver);
     this.id = ListIdentifier.replicaSet;
     this.groupId = ListGroupIdentifier.workloads;
 

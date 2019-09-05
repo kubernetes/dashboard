@@ -26,6 +26,7 @@ export class MemorySparklineComponent extends Sparkline implements OnInit {
   @Input() timeseries: MetricResult[];
 
   ngOnInit() {
+    console.log('memory spark');
     this.setTimeseries(this.timeseries);
   }
 }

@@ -13,7 +13,13 @@
 // limitations under the License.
 
 import {HttpParams} from '@angular/common/http';
-import {Component, ComponentFactoryResolver, Input} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ComponentFactoryResolver,
+  Input,
+} from '@angular/core';
 import {Event, Job, JobList} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
 
@@ -27,6 +33,7 @@ import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 @Component({
   selector: 'kd-job-list',
   templateUrl: './template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class JobListComponent extends ResourceListWithStatuses<JobList, Job> {
   @Input() title: string;
@@ -36,8 +43,9 @@ export class JobListComponent extends ResourceListWithStatuses<JobList, Job> {
     private readonly job_: NamespacedResourceService<JobList>,
     notifications: NotificationsService,
     resolver: ComponentFactoryResolver,
+    cdr: ChangeDetectorRef,
   ) {
-    super('job', notifications, resolver);
+    super('job', notifications, cdr, resolver);
     this.id = ListIdentifier.job;
     this.groupId = ListGroupIdentifier.workloads;
 

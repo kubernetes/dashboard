@@ -13,7 +13,13 @@
 // limitations under the License.
 
 import {HttpParams} from '@angular/common/http';
-import {Component, ComponentFactoryResolver, Input} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ComponentFactoryResolver,
+  Input,
+} from '@angular/core';
 import {Event, StatefulSet, StatefulSetList} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
 import {ResourceListWithStatuses} from '../../../resources/list';
@@ -26,6 +32,7 @@ import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 @Component({
   selector: 'kd-stateful-set-list',
   templateUrl: './template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StatefulSetListComponent extends ResourceListWithStatuses<
   StatefulSetList,
@@ -37,8 +44,9 @@ export class StatefulSetListComponent extends ResourceListWithStatuses<
     private readonly statefulSet_: NamespacedResourceService<StatefulSetList>,
     resolver: ComponentFactoryResolver,
     notifications: NotificationsService,
+    cdr: ChangeDetectorRef,
   ) {
-    super('statefulset', notifications, resolver);
+    super('statefulset', notifications, cdr, resolver);
     this.id = ListIdentifier.statefulSet;
     this.groupId = ListGroupIdentifier.workloads;
 
