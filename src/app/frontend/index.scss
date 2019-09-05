@@ -313,6 +313,22 @@ router-outlet::after {
   border-bottom: 0 !important;
 }
 
+.kd-sparkline {
+  height: 4 * $baseline-grid;
+  vertical-align: -$baseline-grid / 2; // 20% below baseline, to flow with text
+  width: 15 * $baseline-grid;
+}
+
+.kd-sparkline-value {
+  font-weight: $bold-font-weight;
+  position: absolute;
+}
+
+.mat-column-cpu,
+.mat-column-mem {
+  min-width: 15 * $baseline-grid;
+}
+
 // This is a workaround to remove whitespace from code block element.
 .kd-no-whitespace {
   font-size: 0;

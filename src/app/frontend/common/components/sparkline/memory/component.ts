@@ -19,7 +19,6 @@ import {Sparkline} from '../sparkline';
 @Component({
   selector: 'kd-memory-sparkline',
   templateUrl: './template.html',
-  styleUrls: ['style.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MemorySparklineComponent extends Sparkline implements OnInit {

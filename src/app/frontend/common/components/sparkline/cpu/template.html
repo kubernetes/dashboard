@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div [matTooltip]="'Latest value: ' + (lastValue | kdCores)">
+<div fxLayout="row"
+     fxLayoutAlign="center center">
   <svg viewBox="0,0 1,1"
        preserveAspectRatio="none"
        class="kd-sparkline kd-bg-background kd-border"
@@ -32,4 +33,5 @@ limitations under the License.
     <svg:polygon fill="url(#cpugradient)"
                  [attr.points]="getPolygonPoints()" />
   </svg>
+  <div class="kd-sparkline-value kd-muted-light">{{lastValue | kdCores}}</div>
 </div>
