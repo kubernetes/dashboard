@@ -19,7 +19,6 @@ import {Sparkline} from '../sparkline';
 @Component({
   selector: 'kd-cpu-sparkline',
   templateUrl: './template.html',
-  styleUrls: ['style.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CpuSparklineComponent extends Sparkline implements OnInit {
