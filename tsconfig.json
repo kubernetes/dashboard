@@ -8,7 +8,16 @@
   "compilerOptions": {
     "baseUrl": "src/app/frontend",
     "paths": {
-      "@api/*": ["typings/*"]
+        "*": ["types/*"],
+      "@api/*": [
+        "typings/*"
+      ],
+      "k8s-plugin": [
+        "../../../dist/plugin"
+      ],
+      "k8s-plugin/*": [
+        "../../../dist/plugin/*"
+      ]
     },
     "outDir": ".tmp/out-tsc",
     "target": "esnext",

@@ -1,0 +1,19 @@
+<h3>Pod List</h3>
+<table>
+  <thead>
+  <tr>
+    <td>Name</td>
+    <td>Namespace</td>
+    <td>Status</td>
+    <td>Created</td>
+  </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let pod of pods">
+      <td>{{ pod.objectMeta.name }}</td>
+      <td>{{ pod.objectMeta.namespace }}</td>
+      <td>{{ pod.podStatus.status }}</td>
+      <td>{{ pod.objectMeta.creationTimestamp }}</td>
+    </tr>
+  </tbody>
+</table>

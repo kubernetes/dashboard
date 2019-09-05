@@ -101,6 +101,84 @@
         }
       }
     },
+    "plugin": {
+      "projectType": "library",
+      "root": "projects/plugin",
+      "sourceRoot": "projects/plugin/src",
+      "prefix": "k8s",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/plugin/tsconfig.lib.json",
+            "project": "projects/plugin/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/plugin/src/test.ts",
+            "tsConfig": "projects/plugin/tsconfig.spec.json",
+            "karmaConfig": "projects/plugin/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/plugin/tsconfig.lib.json",
+              "projects/plugin/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "custom-plugin": {
+      "root": "projects/custom/",
+      "sourceRoot": "projects/custom/src",
+      "projectType": "application",
+      "prefix": "app",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "./builders:plugin",
+          "options": {
+            "outputPath": "dist/plugins",
+            "index": "",
+            "main": "projects/custom/src/main.ts",
+            "polyfills": "projects/custom/src/polyfills.ts",
+            "tsConfig": "projects/custom/tsconfig.app.json",
+            "assets": [],
+            "styles": [],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [],
+              "optimization": true,
+              "outputHashing": "none",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": false,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
   },
   "defaultProject": "kubernetes-dashboard",
   "schematics": {
