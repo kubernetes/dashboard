@@ -15,8 +15,10 @@
 import {DataSource} from '@angular/cdk/collections';
 import {HttpParams} from '@angular/common/http';
 import {
+  ChangeDetectorRef,
   ComponentFactoryResolver,
   EventEmitter,
+  Inject,
   Input,
   OnDestroy,
   OnInit,
@@ -66,8 +68,8 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
   private router_: Router;
   protected readonly kdState_: KdStateService;
   protected readonly settingsService_: GlobalSettingsService;
-
   protected readonly namespaceService_: NamespaceService;
+
   isLoading = false;
   totalItems = 0;
 
@@ -90,6 +92,7 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
   protected constructor(
     private readonly stateName_: string,
     private readonly notifications_: NotificationsService,
+    private readonly cdr_: ChangeDetectorRef,
   ) {
     this.settingsService_ = GlobalServicesModule.injector.get(GlobalSettingsService);
     this.kdState_ = GlobalServicesModule.injector.get(KdStateService);
@@ -133,6 +136,7 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
         this.isLoading = false;
         this.loaded_ = true;
         this.onListChange_(data);
+        this.cdr_.detectChanges();
       });
   }
 
@@ -365,9 +369,10 @@ export abstract class ResourceListWithStatuses<
   protected constructor(
     stateName: string,
     private readonly notifications: NotificationsService,
+    cdr: ChangeDetectorRef,
     private readonly resolver_?: ComponentFactoryResolver,
   ) {
-    super(stateName, notifications);
+    super(stateName, notifications, cdr);
 
     this.onChange.subscribe(this.clearExpandedRows_.bind(this));
   }

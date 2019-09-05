@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {CRDObject, CRDObjectList} from '@api/backendapi';
@@ -26,6 +26,7 @@ import {MenuComponent} from '../../list/column/menu/component';
 @Component({
   selector: 'kd-crd-object-list',
   templateUrl: './template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CRDObjectListComponent extends ResourceListBase<CRDObjectList, CRDObject> {
   @Input() endpoint: string;
@@ -35,8 +36,13 @@ export class CRDObjectListComponent extends ResourceListBase<CRDObjectList, CRDO
     private readonly crdObject_: NamespacedResourceService<CRDObjectList>,
     notifications: NotificationsService,
     private readonly activatedRoute_: ActivatedRoute,
+    cdr: ChangeDetectorRef,
   ) {
-    super(`customresourcedefinition/${activatedRoute_.snapshot.params.crdName}`, notifications);
+    super(
+      `customresourcedefinition/${activatedRoute_.snapshot.params.crdName}`,
+      notifications,
+      cdr,
+    );
     this.id = ListIdentifier.crdObject;
     this.groupId = ListGroupIdentifier.none;
 

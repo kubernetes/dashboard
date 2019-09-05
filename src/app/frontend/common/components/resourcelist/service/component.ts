@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {HttpParams} from '@angular/common/http';
-import {Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Service, ServiceList} from 'typings/backendapi';
 
@@ -24,15 +24,20 @@ import {NamespacedResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
 import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 
-@Component({selector: 'kd-service-list', templateUrl: './template.html'})
+@Component({
+  selector: 'kd-service-list',
+  templateUrl: './template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
 export class ServiceListComponent extends ResourceListWithStatuses<ServiceList, Service> {
   @Input() endpoint = EndpointManager.resource(Resource.service, true).list();
 
   constructor(
     private readonly service_: NamespacedResourceService<ServiceList>,
     notifications: NotificationsService,
+    cdr: ChangeDetectorRef,
   ) {
-    super('service', notifications);
+    super('service', notifications, cdr);
     this.id = ListIdentifier.service;
     this.groupId = ListGroupIdentifier.discovery;
 

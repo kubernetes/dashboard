@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {HttpParams} from '@angular/common/http';
-import {Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {CRD, CRDList} from '@api/backendapi';
 import {Observable} from 'rxjs';
 
@@ -27,6 +27,7 @@ import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 @Component({
   selector: 'kd-crd-list',
   templateUrl: './template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CRDListComponent extends ResourceListWithStatuses<CRDList, CRD> {
   @Input() endpoint = EndpointManager.resource(Resource.crd).list();
@@ -34,8 +35,9 @@ export class CRDListComponent extends ResourceListWithStatuses<CRDList, CRD> {
   constructor(
     private readonly crd_: ResourceService<CRDList>,
     notifications: NotificationsService,
+    cdr: ChangeDetectorRef,
   ) {
-    super(Resource.crdFull, notifications);
+    super(Resource.crdFull, notifications, cdr);
     this.id = ListIdentifier.crd;
     this.groupId = ListGroupIdentifier.none;
 

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {HttpParams} from '@angular/common/http';
-import {Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {StorageClass, StorageClassList} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
 
@@ -27,6 +27,7 @@ import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 @Component({
   selector: 'kd-storage-class-list',
   templateUrl: './template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StorageClassListComponent extends ResourceListBase<StorageClassList, StorageClass> {
   @Input() endpoint = EndpointManager.resource(Resource.storageClass).list();
@@ -34,8 +35,9 @@ export class StorageClassListComponent extends ResourceListBase<StorageClassList
   constructor(
     private readonly sc_: ResourceService<StorageClassList>,
     notifications: NotificationsService,
+    cdr: ChangeDetectorRef,
   ) {
-    super('storageclass', notifications);
+    super('storageclass', notifications, cdr);
     this.id = ListIdentifier.storageClass;
     this.groupId = ListGroupIdentifier.cluster;
 

@@ -13,7 +13,13 @@
 // limitations under the License.
 
 import {HttpParams} from '@angular/common/http';
-import {Component, ComponentFactoryResolver, Input, OnDestroy} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ComponentFactoryResolver,
+  Input,
+} from '@angular/core';
 import {Event, Pod, PodList} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
 
@@ -24,7 +30,11 @@ import {NamespacedResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
 import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 
-@Component({selector: 'kd-pod-list', templateUrl: './template.html'})
+@Component({
+  selector: 'kd-pod-list',
+  templateUrl: './template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
 export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
   @Input() endpoint = EndpointManager.resource(Resource.pod, true).list();
 
@@ -32,8 +42,9 @@ export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
     private readonly podList: NamespacedResourceService<PodList>,
     resolver: ComponentFactoryResolver,
     notifications: NotificationsService,
+    cdr: ChangeDetectorRef,
   ) {
-    super('pod', notifications, resolver);
+    super('pod', notifications, cdr, resolver);
     this.id = ListIdentifier.pod;
     this.groupId = ListGroupIdentifier.workloads;
 

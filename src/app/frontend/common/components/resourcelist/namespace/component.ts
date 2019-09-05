@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {HttpParams} from '@angular/common/http';
-import {Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {Namespace, NamespaceList} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
 
@@ -27,6 +27,7 @@ import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 @Component({
   selector: 'kd-namespace-list',
   templateUrl: './template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NamespaceListComponent extends ResourceListWithStatuses<NamespaceList, Namespace> {
   @Input() endpoint = EndpointManager.resource(Resource.namespace).list();
@@ -34,8 +35,9 @@ export class NamespaceListComponent extends ResourceListWithStatuses<NamespaceLi
   constructor(
     private readonly namespace_: ResourceService<NamespaceList>,
     notifications: NotificationsService,
+    cdr: ChangeDetectorRef,
   ) {
-    super('namespace', notifications);
+    super('namespace', notifications, cdr);
     this.id = ListIdentifier.namespace;
     this.groupId = ListGroupIdentifier.cluster;
 

@@ -21,8 +21,6 @@ export class TrimPipe implements PipeTransform {
       return '';
     }
 
-    console.log(value);
-
     return value.trim();
   }
 }

@@ -34,7 +34,8 @@ limitations under the License.
       </div>
     </div>
 
-    <kd-workload-statuses *ngIf="showWorkloadStatuses()"
+    <!-- TODO: Workload statuses cause a memory leak. Has to be fixed before enabling it back. -->
+    <kd-workload-statuses *ngIf="false"
                           [resourcesRatio]="resourcesRatio"></kd-workload-statuses>
 
     <kd-cron-job-list (onchange)="onListUpdate($event)"

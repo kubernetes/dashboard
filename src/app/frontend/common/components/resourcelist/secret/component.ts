@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {HttpParams} from '@angular/common/http';
-import {Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Secret, SecretList} from 'typings/backendapi';
 import {ResourceListBase} from '../../../resources/list';
@@ -23,15 +23,20 @@ import {NamespacedResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
 import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 
-@Component({selector: 'kd-secret-list', templateUrl: './template.html'})
+@Component({
+  selector: 'kd-secret-list',
+  templateUrl: './template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
 export class SecretListComponent extends ResourceListBase<SecretList, Secret> {
   @Input() endpoint = EndpointManager.resource(Resource.secret, true).list();
 
   constructor(
     private readonly secret_: NamespacedResourceService<SecretList>,
     notifications: NotificationsService,
+    cdr: ChangeDetectorRef,
   ) {
-    super('secret', notifications);
+    super('secret', notifications, cdr);
     this.id = ListIdentifier.secret;
     this.groupId = ListGroupIdentifier.config;
 

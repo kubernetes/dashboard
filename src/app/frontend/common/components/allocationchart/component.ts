@@ -40,9 +40,10 @@ export class AllocationChartComponent implements OnChanges {
   @Input() size = 280;
   @Input() id: string;
 
-  allocated = new Set();
+  private allocated_: Set<string | number>;
 
   ngOnChanges(): void {
+    this.allocated_ = new Set();
     setTimeout(() => this.generateGraph_(), 0);
   }
 
@@ -62,7 +63,7 @@ export class AllocationChartComponent implements OnChanges {
         columns.push([key, x.value]);
 
         if (i === 0) {
-          this.allocated.add(key);
+          this.allocated_.add(key);
         }
       }
     });
@@ -141,7 +142,7 @@ export class AllocationChartComponent implements OnChanges {
    * Displays label only for allocated resources
    */
   private displayOnlyAllocated_(value: number, _: number, id: string | number): string {
-    if (this.allocated.has(id)) {
+    if (this.allocated_.has(id)) {
       return `${Math.round(value)}%`;
     }
     return '';
