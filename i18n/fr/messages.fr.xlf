@@ -379,7 +379,7 @@
       <trans-unit id="81054386839df6c7c45d298e0044956413589ef4" datatype="html">
         <source>Age
       </source>
-        <target state="new">Age
+        <target>Âge
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
@@ -404,7 +404,7 @@
       </trans-unit>
       <trans-unit id="900ec6b108c64adf2f23a3a84699be1217050001" datatype="html">
         <source>Replication Controllers</source>
-        <target>Replication Controllers</target>
+        <target>Contrôleurs de réplication</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/workloadstatus/template.html</context>
           <context context-type="linenumber">126</context>
@@ -424,7 +424,7 @@
       </trans-unit>
       <trans-unit id="8c0925876d5a1454f604dc4fc4cf8dbb4dceed0a" datatype="html">
         <source>Resource information</source>
-        <target state="new">Resource information</target>
+        <target>Informations sur la ressource</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/pod/detail/template.html</context>
           <context context-type="linenumber">22</context>
@@ -1058,8 +1058,8 @@
         <source>
           Logs from <x id="START_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;kd-date>"/><x id="CLOSE_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;/kd-date>"/> to <x id="START_TAG_KD-DATE_1" ctype="x-kd-date" equiv-text="&lt;kd-date>"/><x id="CLOSE_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;/kd-date>"/> UTC
         </source>
-        <target state="new">
-          Logs from <x id="START_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;kd-date>"/><x id="CLOSE_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;/kd-date>"/> to <x id="START_TAG_KD-DATE_1" ctype="x-kd-date" equiv-text="&lt;kd-date>"/><x id="CLOSE_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;/kd-date>"/> UTC
+        <target>
+          Logs de <x id="START_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;kd-date>"/><x id="CLOSE_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;/kd-date>"/> à <x id="START_TAG_KD-DATE_1" ctype="x-kd-date" equiv-text="&lt;kd-date>"/><x id="CLOSE_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;/kd-date>"/> UTC
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/logs/template.html</context>
@@ -1147,8 +1147,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="14a5136cbdeef6ed97abfd58112f979f20f619f1" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{ isPinned() ? &quot;Unpin&quot; : &quot;Pin&quot; }}"/></source>
-        <target state="new"><x id="INTERPOLATION" equiv-text="{{ isPinned() ? &quot;Unpin&quot; : &quot;Pin&quot; }}"/></target>
+        <source><x id="INTERPOLATION" equiv-text="{{ isPinned() ? &quot;Détacher&quot; : &quot;Épingler&quot; }}"/></source>
+        <target><x id="INTERPOLATION" equiv-text="{{ isPinned() ? &quot;Détacher&quot; : &quot;Épingler&quot; }}"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/list/column/menu/template.html</context>
           <context context-type="linenumber">39</context>
@@ -1832,7 +1832,7 @@
       </trans-unit>
       <trans-unit id="e04aa162d5c7f9cf4dde1b4a78667ca3f70da778" datatype="html">
         <source>Replications Controllers</source>
-        <target>Replication Controllers</target>
+        <target>Contrôleurs de réplication</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/replicationcontroller/template.html</context>
           <context context-type="linenumber">21</context>
@@ -1848,7 +1848,7 @@
       </trans-unit>
       <trans-unit id="7099af5a120571be073bcfb7babafb38e91a3b50" datatype="html">
         <source>Plugins</source>
-        <target state="new">Plugins</target>
+        <target>Extensions</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/plugin/template.html</context>
           <context context-type="linenumber">21</context>
@@ -1856,7 +1856,7 @@
       </trans-unit>
       <trans-unit id="473fb06a7b7b3992af493059e8f9c8c74f369a97" datatype="html">
         <source>Dependencies</source>
-        <target state="new">Dependencies</target>
+        <target>Dépendances</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/plugin/template.html</context>
           <context context-type="linenumber">54</context>
@@ -1932,7 +1932,7 @@
       </trans-unit>
       <trans-unit id="85550e95dc12c58e2e711dbebe89f3448eb66c72" datatype="html">
         <source>Memory requests (bytes)</source>
-        <target state="new">Memory requests (bytes)</target>
+        <target>Requêtes mémoire (octets)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/node/template.html</context>
           <context context-type="linenumber">92</context>
@@ -2004,7 +2004,7 @@
       </trans-unit>
       <trans-unit id="6af40687e73f3e54515b94380a6463e6f8744ff2" datatype="html">
         <source>Custom Resource Definitions</source>
-        <target state="new">Custom Resource Definitions</target>
+        <target>Définitions de ressources personnalisées</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crd/template.html</context>
           <context context-type="linenumber">21</context>
@@ -2012,7 +2012,7 @@
       </trans-unit>
       <trans-unit id="4c90059afafb7e160384d9f512797c95bb95c6dc" datatype="html">
         <source>Group</source>
-        <target state="new">Group</target>
+        <target>Groupe</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crd/template.html</context>
           <context context-type="linenumber">60</context>
@@ -2024,7 +2024,7 @@
       </trans-unit>
       <trans-unit id="484b0e541230d60ddb5fbd771a34a5c8d90e7a57" datatype="html">
         <source>Full Name</source>
-        <target state="new">Full Name</target>
+        <target>Nom complet</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crd/template.html</context>
           <context context-type="linenumber">66</context>
@@ -2032,7 +2032,7 @@
       </trans-unit>
       <trans-unit id="c3e2c59f79e1c277706a4106e7ada43e5387a9d0" datatype="html">
         <source>Namespaced</source>
-        <target state="new">Namespaced</target>
+        <target>Relatif à un espace de nom</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crd/template.html</context>
           <context context-type="linenumber">72</context>
@@ -2040,7 +2040,7 @@
       </trans-unit>
       <trans-unit id="afdb601c16162f2c798b16a2920955f1cc6a20aa" datatype="html">
         <source>Objects</source>
-        <target state="new">Objects</target>
+        <target>Objets</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crdobject/template.html</context>
           <context context-type="linenumber">21</context>
@@ -2048,7 +2048,7 @@
       </trans-unit>
       <trans-unit id="cfcee33b4f74fb641e9d6b00f72244d2b78c1480" datatype="html">
         <source>Versions</source>
-        <target state="new">Versions</target>
+        <target>Versions</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crdversion/template.html</context>
           <context context-type="linenumber">20</context>
@@ -2056,7 +2056,7 @@
       </trans-unit>
       <trans-unit id="151dac5a4f23f33c7c8a2befe8b343edd202fd16" datatype="html">
         <source>Served</source>
-        <target state="new">Served</target>
+        <target>Servie</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crdversion/template.html</context>
           <context context-type="linenumber">42</context>
@@ -2064,7 +2064,7 @@
       </trans-unit>
       <trans-unit id="1fd6dbd0942f77002d852d7744dcb991cdd464d8" datatype="html">
         <source>Storage</source>
-        <target state="new">Storage</target>
+        <target>Stockage</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crdversion/template.html</context>
           <context context-type="linenumber">48</context>
@@ -2072,7 +2072,7 @@
       </trans-unit>
       <trans-unit id="c3a7e364a88ea4673199dfa98bc73e6dbe09dfac" datatype="html">
         <source>Namespaces</source>
-        <target>Espacs de noms</target>
+        <target>Espaces de noms</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/namespace/template.html</context>
           <context context-type="linenumber">21</context>
@@ -2272,7 +2272,7 @@
       </trans-unit>
       <trans-unit id="f2db0be1c93c93d5af51ed6d3b42abb184d07c08" datatype="html">
         <source>CPU Usage (cores)</source>
-        <target state="new">CPU Usage (cores)</target>
+        <target>Utilisation CPU (coeurs)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/pod/template.html</context>
           <context context-type="linenumber">107</context>
@@ -2280,7 +2280,7 @@
       </trans-unit>
       <trans-unit id="b433be6f17bb6c614c6adb6a81912baae4a619b7" datatype="html">
         <source>Memory Usage (bytes)</source>
-        <target state="new">Memory Usage (bytes)</target>
+        <target>Utilisation mémoire (octets)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/pod/template.html</context>
           <context context-type="linenumber">117</context>
@@ -2480,7 +2480,7 @@
       </trans-unit>
       <trans-unit id="5927a3493fbb556db65f530e01b3aa6ab9f186e6" datatype="html">
         <source>Resource Information</source>
-        <target state="new">Resource Information</target>
+        <target>Informations sur la ressource</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
           <context context-type="linenumber">22</context>
@@ -2488,7 +2488,7 @@
       </trans-unit>
       <trans-unit id="8fe73a4787b8068b2ba61f54ab7e0f9af2ea1fc9" datatype="html">
         <source>Version</source>
-        <target state="new">Version</target>
+        <target>Version</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
           <context context-type="linenumber">28</context>
@@ -2496,7 +2496,7 @@
       </trans-unit>
       <trans-unit id="1481b8488e10dbc437accce89d2ae35a0106e8ba" datatype="html">
         <source>Scope</source>
-        <target state="new">Scope</target>
+        <target>Portée</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
           <context context-type="linenumber">33</context>
@@ -2504,7 +2504,7 @@
       </trans-unit>
       <trans-unit id="d9ac1caf6715c8011155c0a027d544dbeca63062" datatype="html">
         <source>Subresources</source>
-        <target state="new">Subresources</target>
+        <target>Sous-ressources</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
           <context context-type="linenumber">43</context>
@@ -2512,7 +2512,7 @@
       </trans-unit>
       <trans-unit id="1ec17de9560711cd81108ccf93eb5b1df4eb6d4c" datatype="html">
         <source>Accepted Names</source>
-        <target state="new">Accepted Names</target>
+        <target>Noms acceptés</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
           <context context-type="linenumber">51</context>
@@ -2520,7 +2520,7 @@
       </trans-unit>
       <trans-unit id="fa1312fe00bfe38662df238fa059bcd75866ecd7" datatype="html">
         <source>Plural</source>
-        <target state="new">Plural</target>
+        <target>Pluriel</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
           <context context-type="linenumber">57</context>
@@ -2528,7 +2528,7 @@
       </trans-unit>
       <trans-unit id="712232bebfc8836a394c358ce9679452fabb945f" datatype="html">
         <source>Singular</source>
-        <target state="new">Singular</target>
+        <target>Singulier</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
           <context context-type="linenumber">62</context>
@@ -2536,7 +2536,7 @@
       </trans-unit>
       <trans-unit id="5a2fcb3c1d8240f8f966564ee3500235d7427245" datatype="html">
         <source>List Kind</source>
-        <target state="new">List Kind</target>
+        <target>Type de liste</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
           <context context-type="linenumber">72</context>
@@ -2544,7 +2544,7 @@
       </trans-unit>
       <trans-unit id="d27e60f49dba9b7994331db545a4c14e1e2683ad" datatype="html">
         <source>Short Names</source>
-        <target state="new">Short Names</target>
+        <target>Noms abrégés</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
           <context context-type="linenumber">77</context>
@@ -2552,7 +2552,7 @@
       </trans-unit>
       <trans-unit id="04201f9d27abd7d6f58a4328ab98063ce1072006" datatype="html">
         <source>Categories</source>
-        <target state="new">Categories</target>
+        <target>Catégories</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
           <context context-type="linenumber">82</context>
@@ -2673,7 +2673,7 @@
       <trans-unit id="787093faa4cfa59c1499dca2cfc6e804f1838ab1" datatype="html">
         <source>Cron Jobs
       </source>
-        <target state="new">Cron Jobs
+        <target>Cron Jobs
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2741,7 +2741,7 @@
       <trans-unit id="5a60417d6a34e8c0655cb0678071c60ca8119aad" datatype="html">
         <source>Replication Controllers
       </source>
-        <target>Replication Controllers</target>
+        <target>Contrôleurs de réplication</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
           <context context-type="linenumber">87</context>
@@ -2813,7 +2813,7 @@
       <trans-unit id="1d216da7f53e1afcd7bffd53c0a6b0f2502cde4d" datatype="html">
         <source>Plugins
       </source>
-        <target state="new">Plugins
+        <target>Extensions
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2823,7 +2823,7 @@
       <trans-unit id="f2f9d18ebacb9e3bcb996d8176609e306864265e" datatype="html">
         <source>Custom Resource Definitions
       </source>
-        <target state="new">Custom Resource Definitions
+        <target>Définitions de ressources personnalisées
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2860,8 +2860,8 @@
         <source>
               <x id="START_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;kd-date>"/><x id="CLOSE_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;/kd-date>"/> ago
             </source>
-        <target state="new">
-              <x id="START_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;kd-date>"/><x id="CLOSE_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;/kd-date>"/> ago
+        <target>
+              il y a <x id="START_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;kd-date>"/><x id="CLOSE_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;/kd-date>"/>
             </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/notifications/template.html</context>
@@ -2929,7 +2929,7 @@
       <trans-unit id="8d93137e6678a0a40da783d0a5bc06272d3317c5" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{resource.name}}"/>
   </source>
-        <target state="new"><x id="INTERPOLATION" equiv-text="{{resource.name}}"/>
+        <target><x id="INTERPOLATION" equiv-text="{{resource.name}}"/>
   </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/pinner/template.html</context>
@@ -3720,7 +3720,7 @@
         <source>
   <x id="ICU" equiv-text="{isMoreOptionsEnabled(), select, 1 {...} other {...}}"/>
 </source>
-        <target state="new">
+        <target>
   <x id="ICU" equiv-text="{isMoreOptionsEnabled(), select, 1 {...} other {...}}"/>
 </target>
         <context-group purpose="location">
@@ -4953,9 +4953,9 @@
       Global settings are stored in config map, so all of them are applied for every instance of the
       app.
     </source>
-        <target state="new">
-      Global settings are stored in config map, so all of them are applied for every instance of the
-      app.
+        <target>
+        Les paramètres généraux sont enregistrés dans une config map, ils sont donc utilisés pour 
+        toutes les instances de l'application.
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
@@ -4976,7 +4976,7 @@
       </trans-unit>
       <trans-unit id="409222992640ac7a22c9f4d8d1dd19bf0109bafa" datatype="html">
         <source>Cluster name appears in the browser window title if it is set.</source>
-        <target state="new">Le nom du cluster apparaît dans la barre de titre du navigateur s'il est défini.</target>
+        <target>Le nom du cluster apparaît dans la barre de titre du navigateur s'il est défini.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">32</context>
@@ -4992,7 +4992,7 @@
       </trans-unit>
       <trans-unit id="e15825a0273ad0aa69da37ed117de2b8a79ebde5" datatype="html">
         <source>Max number of items that can be displayed on each list page.</source>
-        <target state="new">Nombre maximal d'éléments affichés dans chaque page de liste.</target>
+        <target>Nombre maximal d'éléments affichés dans chaque page de liste.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">45</context>
@@ -5000,7 +5000,7 @@
       </trans-unit>
       <trans-unit id="1bf6e9fbb0027605b8c66e07e51ba28ff29ef67f" datatype="html">
         <source>Logs auto-refresh time interval</source>
-        <target state="new">Logs auto-refresh time interval</target>
+        <target>Intervalle d'actualisation automatique des journaux</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">62</context>
@@ -5008,7 +5008,7 @@
       </trans-unit>
       <trans-unit id="02458bd7e54108bc7ac4f35fc96aeb3e422fa471" datatype="html">
         <source>Number of seconds between every auto-refresh of logs.</source>
-        <target state="new">Nombre de secondes entre chaque actualisation automatique des journaux.</target>
+        <target>Nombre de secondes entre chaque actualisation automatique des journaux.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">64</context>
@@ -5016,7 +5016,7 @@
       </trans-unit>
       <trans-unit id="694d9a3839897f77b3ebca37be526771f6c54fd0" datatype="html">
         <source>Resource auto-refresh time interval</source>
-        <target state="new">Resource auto-refresh time interval</target>
+        <target>Intervalle d'actualisation automatique des ressources</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">81</context>
@@ -5024,7 +5024,7 @@
       </trans-unit>
       <trans-unit id="ad66f1317f55d474a80b519533bde2eb31f99eda" datatype="html">
         <source>Number of seconds between every auto-refresh of every resource. Set 0 to disable.</source>
-        <target state="new">Number of seconds between every auto-refresh of every resource. Set 0 to disable.</target>
+        <target>Nombre de secondes entre chaque actualisation automatique de chaque ressource. Mettre à 0 pour désactiver.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">83</context>
