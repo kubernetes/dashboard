@@ -33,14 +33,14 @@ function build::frontend {
   mkdir -p ${FRONTEND_DIR}/en
   ${NG_BIN} build --aot --prod --outputPath=${TMP_DIR}/frontend/en
 
-  languages=($(ls i18n | awk -F"." '{if (NF>2) print $2}'))
+  languages=($(find i18n/* -type d|cut -d"/" -f2))
   for language in "${languages[@]}"; do
     mkdir -p ${FRONTEND_DIR}/${language}
 
     say "Building frontend for locale: ${language}"
     ${NG_BIN} build --aot \
                     --prod \
-                    --i18nFile=${I18N_DIR}/messages.${language}.xlf \
+                    --i18nFile=${I18N_DIR}/${language}/messages.${language}.xlf \
                     --i18nFormat=xlf \
                     --i18nLocale=${language} --outputPath=${TMP_DIR}/frontend/${language}
   done
