@@ -33,15 +33,15 @@ Once the custom CRD is registered we can now create [instances](../../aio/test-r
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/aio/test-resources/plugin-test.yml
 ```
 
-> Note: The backend reads the built plugin from a ConfigMap and we new to create that also.
+> Note: The backend reads the compiled plugin source from a ConfigMap and we need to create that also.
 
 ### Creating ConfigMap
 
-We can now create config-maps to hold the generated plugin source code.
+We can now create config-maps to hold the compiled plugin source code.
 
 ```
 kubectl create configmap k8s-plugin-src --from-file=./dist/bundle/k8s-plugin.js
 kubectl create configmap plugin1-src --from-file=./dist/bundle/plugin1.js
 ```
 
-After following all the above steps, your new plugin should be available in the browser.
+After following all the above steps, your new plugin should be available in the dashboard.
