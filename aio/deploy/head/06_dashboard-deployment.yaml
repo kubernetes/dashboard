@@ -29,6 +29,8 @@ spec:
     metadata:
       labels:
         k8s-app: kubernetes-dashboard-head
+      annotations:
+        seccomp.security.alpha.kubernetes.io/pod: 'runtime/default'
     spec:
       containers:
         - name: kubernetes-dashboard-head
