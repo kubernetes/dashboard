@@ -16,13 +16,29 @@ import {Component, Inject} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CONFIG} from '../../index.config';
 import {MAT_DIALOG_DATA, MatDialog} from '@angular/material';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {CsrfTokenService} from '../../common/services/global/csrftoken';
 import {NamespaceService} from '../../common/services/global/namespace';
 import {AlertDialog, AlertDialogConfig} from '../../common/dialogs/alert/dialog';
 import {HelpSectionComponent} from '../from/form/helpsection/component';
 import {UserHelpComponent} from '../from/form/helpsection/userhelp/component';
 import {HistoryService} from '../../common/services/global/history';
+import {Router} from '@angular/router';
+
+export interface UpsertSecretResponse {
+  name: string;
+  data: string;
+  error: string;
+}
+export interface UpsertSecretSpec {
+  name: string;
+  namespace: string;
+  data: string;
+}
+
+const i18n = {
+  MSG_UPSERT_SECRETS_ERROR: 'Creating secret has failed',
+};
 
 @Component({
   selector: 'kd-upsert-secrets',
@@ -64,6 +80,8 @@ export class UpsertSecretsComponent {
     // private readonly matDialog_: MatDialog,
     private readonly fb_: FormBuilder,
     private readonly history_: HistoryService,
+    private readonly matDialog_: MatDialog,
+    private readonly router_: Router,
   ) {}
 
   ngOnInit(): void {
@@ -89,45 +107,47 @@ export class UpsertSecretsComponent {
   cancel(): void {
     this.history_.goToPreviousState('overview');
   }
-  createSecret(): void {
-    if (!this.form.valid) return;
+  async createSecret(): Promise<UpsertSecretResponse> {
+    if (!this.form.valid) return null;
 
-    const secretSpec = {
+    const secretSpec: UpsertSecretSpec = {
       name: this.secretName.value,
       namespace: this.namespace_.current(),
       data: this.data.value,
     };
 
-    const tokenPromise = this.csrfToken_.getTokenForAction('secret');
-    tokenPromise.subscribe(csrfToken => {
-      return this.http_
-        .post<{valid: boolean}>(
-          'api/v1/secret/',
-          {...secretSpec},
-          {
-            headers: new HttpHeaders().set(this.config_.csrfHeaderName, csrfToken.token),
-          },
-        )
-        .subscribe(
-          () => {
-            console.log('Created!');
-            // this.log_.info('Successfully created namespace:', savedConfig);
-            // this.dialogRef.close(this.secretName.value);
-          },
-          error => {
-            console.log('Error!');
-            console.log(error);
-            // print("error");
-            // this.log_.info('Error creating namespace:', err);
-            // this.dialogRef.close();
-            // const configData: AlertDialogConfig = {
-            //   title: 'Error creating secret',
-            //   message: error.data,
-            //   confirmLabel: 'OK',
-            // };
-            // this.matDialog_.open(AlertDialog, {data: configData});
-          },
-        );
-    });
+    let response: UpsertSecretResponse;
+    let error: HttpErrorResponse;
+
+    try {
+      const {token} = await this.csrfToken_.getTokenForAction('secret').toPromise();
+
+      response = await this.http_
+        .post<UpsertSecretResponse>('api/v1/secret', secretSpec, {
+          headers: new HttpHeaders().set(this.config_.csrfHeaderName, token),
+        })
+        .toPromise();
+      if (response.error) {
+        this.reportError(i18n.MSG_UPSERT_SECRETS_ERROR, response.error);
+      }
+    } catch (err) {
+      console.log(error);
+      error = err;
+    }
+    if (error) {
+      this.reportError(i18n.MSG_UPSERT_SECRETS_ERROR, error.error);
+      throw error;
+    } else {
+      this.router_.navigate(['overview']);
+    }
+    return response;
+  }
+  private reportError(title: string, message: string): void {
+    const configData: AlertDialogConfig = {
+      title,
+      message,
+      confirmLabel: 'OK',
+    };
+    this.matDialog_.open(AlertDialog, {data: configData});
   }
 }
