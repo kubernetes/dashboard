@@ -23,6 +23,8 @@ import {CreateFromFileComponent} from './from/file/component';
 import {CreateFromFormModule} from './from/form/module';
 import {CreateFromInputComponent} from './from/input/component';
 import {CreateRoutingModule} from './routing';
+import {UpsertSecretsComponent} from './upsertsecrets/component';
+import {UpsertSecretsModule} from './upsertsecrets/module';
 
 @NgModule({
   imports: [
@@ -31,6 +33,7 @@ import {CreateRoutingModule} from './routing';
     CreateFromFormModule,
     CreateServiceModule,
     CreateRoutingModule,
+    UpsertSecretsModule,
   ],
   declarations: [CreateComponent, CreateFromInputComponent, CreateFromFileComponent],
 })

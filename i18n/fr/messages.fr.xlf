@@ -1147,7 +1147,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="14a5136cbdeef6ed97abfd58112f979f20f619f1" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{ isPinned() ? &quot;Détacher&quot; : &quot;Épingler&quot; }}"/></source>
+        <source><x id="INTERPOLATION" equiv-text="{{ isPinned() ? &quot;Unpin&quot; : &quot;Pin&quot; }}"/></source>
         <target><x id="INTERPOLATION" equiv-text="{{ isPinned() ? &quot;Détacher&quot; : &quot;Épingler&quot; }}"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/list/column/menu/template.html</context>
@@ -3091,6 +3091,14 @@
           <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="b7b556542c5dd9e5a0cf60cb1bfd327f6d65a56d" datatype="html">
+        <source>Upsert Secrets</source>
+        <target state="new">Upsert Secrets</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/template.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="dc935c1eb87651baf1b1b0e53119e6dec2db8862" datatype="html">
         <source>
     Shell in
@@ -3174,6 +3182,10 @@
         <target>Nom du secret</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/upsertsecrets/template.html</context>
           <context context-type="linenumber">29</context>
         </context-group>
       </trans-unit>
@@ -3270,6 +3282,10 @@
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
           <context context-type="linenumber">48</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/upsertsecrets/template.html</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="77751725f4a7cb970bd5508543690c9e7977ab0d" datatype="html">
         <source>
@@ -3297,6 +3313,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
           <context context-type="linenumber">77</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/upsertsecrets/template.html</context>
+          <context context-type="linenumber">78</context>
         </context-group>
       </trans-unit>
       <trans-unit id="d6f7150f368b44c7aaa4b2b07df3e0f988a5db02" datatype="html">
@@ -3369,6 +3389,14 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">140</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/upsertsecrets/template.html</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/upsertsecrets/template.html</context>
+          <context context-type="linenumber">82</context>
         </context-group>
       </trans-unit>
       <trans-unit id="472c76a113baadeb4096e77d20a21556b2aa1e35" datatype="html">
@@ -3712,6 +3740,10 @@
           <context context-type="linenumber">362</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/upsertsecrets/template.html</context>
+          <context context-type="linenumber">104</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/input/template.html</context>
           <context context-type="linenumber">48</context>
         </context-group>
@@ -3734,6 +3766,78 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">371</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5355ba7911962f32154898c49f030ddb5807b052" datatype="html">
+        <source>
+        Name is required.
+      </source>
+        <target state="new">
+        Name is required.
+      </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/upsertsecrets/template.html</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="d2738be86e568ccf2a39cc42e5596e2edc0eca01" datatype="html">
+        <source>
+        Name must be up to <x id="INTERPOLATION" equiv-text="{{secretNameMaxLength}}"/> characters long.
+      </source>
+        <target state="new">
+        Name must be up to <x id="INTERPOLATION" equiv-text="{{secretNameMaxLength}}"/> characters long.
+      </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/upsertsecrets/template.html</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="d0b0c98ec58473f0893959736a3d8ee0598a0d26" datatype="html">
+        <source>
+        Name must follow the DNS domain name syntax (e.g. new.image-pull.secret).
+      </source>
+        <target state="new">
+        Name must follow the DNS domain name syntax (e.g. new.image-pull.secret).
+      </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/upsertsecrets/template.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ddbdcb0ef1e4ad586994fad61eadc32ef293198c" datatype="html">
+        <source>
+        Data is required.
+      </source>
+        <target state="new">
+        Data is required.
+      </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/upsertsecrets/template.html</context>
+          <context context-type="linenumber">69</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="a5df0b7eff1b5be4c810b133a5a3cd211d6b665d" datatype="html">
+        <source>
+        Data must be Base64 encoded.
+      </source>
+        <target state="new">
+        Data must be Base64 encoded.
+      </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/upsertsecrets/template.html</context>
+          <context context-type="linenumber">73</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="cfc855337cd5c044b9d373f78363ab97a1797ae1" datatype="html">
+        <source>
+  Upsert
+</source>
+        <target state="new">
+  Upsert
+</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/create/upsertsecrets/template.html</context>
+          <context context-type="linenumber">96</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4f59d1501469234b7a31dd312901ef0e208cab35" datatype="html">
