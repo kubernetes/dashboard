@@ -19,9 +19,15 @@ import {SharedModule} from '../../shared.module';
 import {UpsertSecretsComponent} from './component';
 import {HelpSectionComponent} from './helpsection/component';
 import {UserHelpComponent} from './helpsection/userhelp/component';
+import {CreateNamespaceDialog} from './createnamespace/dialog';
 
 @NgModule({
-  declarations: [HelpSectionComponent, UserHelpComponent, UpsertSecretsComponent],
+  declarations: [
+    HelpSectionComponent,
+    UserHelpComponent,
+    UpsertSecretsComponent,
+    CreateNamespaceDialog,
+  ],
   imports: [CommonModule, SharedModule, ComponentsModule],
   exports: [UpsertSecretsComponent],
 })

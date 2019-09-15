@@ -15,10 +15,15 @@ limitations under the License.
 -->
 
 <div class="kd-create-from-input-info">
-    Enter the contents of .env file to upsert secrets to create to the namespace selected.
+  <span i18n>A secret with the specified name will be added to the cluster in the namespace selected.</span>
+  <a href="http://kubernetes.io/docs/user-guide/secrets/"
+     target="_blank"
+     tabindex="-1"
+     i18n>
+    Learn more
+    <i class="material-icons">open_in_new</i>
+  </a>
 </div>
-
-
 
 <form [formGroup]="form">
   <kd-help-section>
@@ -29,7 +34,7 @@ limitations under the License.
              placeholder="Secret name"
              name="secretName"
              formControlName="secretName"
-             required />
+             required/>
       <mat-hint align="end">{{secretName.value.length}} / {{secretNameMaxLength}}</mat-hint>
       <mat-error *ngIf="secretName.errors?.required"
                  i18n>
@@ -45,8 +50,30 @@ limitations under the License.
       </mat-error>
     </mat-form-field>
     <kd-user-help>
-      <span i18n>A secret with the specified name will be added to the cluster in the namespace.</span>
-      <a href="http://kubernetes.io/docs/user-guide/secrets/"
+
+    </kd-user-help>
+  </kd-help-section>
+
+  <kd-help-section>
+    <mat-form-field>
+      <mat-select formControlName="namespace"
+
+                  placeholder="Namespace"
+                  i18n-placeholder
+                  required>
+        <mat-option *ngFor="let namespace of namespaces"
+                    [value]="namespace">
+          {{namespace}}
+        </mat-option>
+        <mat-option (click)="handleNamespaceDialog()"
+                    i18n>
+          Create a new namespace...
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <kd-user-help>
+      <ng-container i18n>Namespaces let you partition resources into logically named groups.</ng-container>
+      <a href="http://kubernetes.io/docs/admin/namespaces/"
          target="_blank"
          tabindex="-1"
          i18n>
@@ -56,26 +83,27 @@ limitations under the License.
     </kd-user-help>
   </kd-help-section>
 
-
   <kd-help-section>
     <mat-form-field>
-      <input matInput
-             type="text"
-             placeholder="Image pull secret data"
-             name="data"
-             formControlName="data"
-             required />
+      <textarea matInput
+                type="text"
+                placeholder="Image pull secret data"
+                name="data"
+                formControlName="data"
+                cdkTextareaAutosize
+                cdkAutosizeMinRows="10"
+                cdkAutosizeMaxRows="30"
+                #cfcAutosize="cdkTextareaAutosize">
+             required >
+      </textarea>
       <mat-error *ngIf="data.errors?.required"
                  i18n>
         Data is required.
       </mat-error>
-      <mat-error *ngIf="data.errors?.pattern"
-                 i18n>
-        Data must be Base64 encoded.
-      </mat-error>
     </mat-form-field>
     <kd-user-help>
-      <ng-container i18n>Specify the data for your secret to hold. The value is the Base64 encoded content of a .dockercfg file.</ng-container>
+      <ng-container i18n>Specify the data for your secret to hold. The value is the content of a .dockercfg file.
+      </ng-container>
       <a href="http://kubernetes.io/docs/user-guide/images/#specifying-imagepullsecrets-on-a-pod"
          target="_blank"
          tabindex="-1"
@@ -86,8 +114,6 @@ limitations under the License.
     </kd-user-help>
   </kd-help-section>
 </form>
-
-
 
 <button type="button"
         (click)="createSecret()"

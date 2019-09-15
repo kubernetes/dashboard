@@ -12,24 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Inject} from '@angular/core';
+import {Component} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CONFIG} from '../../index.config';
-import {MAT_DIALOG_DATA, MatDialog} from '@angular/material';
+import {MatDialog} from '@angular/material';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {CsrfTokenService} from '../../common/services/global/csrftoken';
 import {NamespaceService} from '../../common/services/global/namespace';
 import {AlertDialog, AlertDialogConfig} from '../../common/dialogs/alert/dialog';
-import {HelpSectionComponent} from '../from/form/helpsection/component';
-import {UserHelpComponent} from '../from/form/helpsection/userhelp/component';
 import {HistoryService} from '../../common/services/global/history';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {validateUniqueName} from '../from/form/validator/uniquename.validator';
+import {Namespace, NamespaceList} from '@api/backendapi';
+import {CreateNamespaceDialog} from '../from/form/createnamespace/dialog';
 
 export interface UpsertSecretResponse {
   name: string;
   data: string;
   error: string;
 }
+
 export interface UpsertSecretSpec {
   name: string;
   namespace: string;
@@ -45,12 +47,9 @@ const i18n = {
   templateUrl: './template.html',
   styleUrls: ['./style.scss'],
 })
-
-// export interface UpsertSecretsComponentMeta {
-//   namespace: string;
-// }
 export class UpsertSecretsComponent {
   form: FormGroup;
+  namespaces: string[];
 
   private readonly config_ = CONFIG;
 
@@ -66,22 +65,15 @@ export class UpsertSecretsComponent {
     '^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$',
   );
 
-  /**
-   * Pattern validating if the secret data is Base64 encoded.
-   */
-  dataPattern = new RegExp('^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$');
-
   constructor(
-    // @Inject(MAT_DIALOG_DATA) public data_: UpsertSecretsComponentMeta,
-    // Need method to get namespace here!
     private readonly namespace_: NamespaceService,
     private readonly http_: HttpClient,
     private readonly csrfToken_: CsrfTokenService,
-    // private readonly matDialog_: MatDialog,
     private readonly fb_: FormBuilder,
     private readonly history_: HistoryService,
     private readonly matDialog_: MatDialog,
     private readonly router_: Router,
+    private readonly route_: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
@@ -93,7 +85,21 @@ export class UpsertSecretsComponent {
           Validators.pattern(this.secretNamePattern),
         ]),
       ],
-      data: ['', Validators.pattern(this.dataPattern)],
+      namespace: [this.route_.snapshot.params.namespace || '', Validators.required],
+      data: [''],
+    });
+    this.namespace.valueChanges.subscribe((namespace: string) => {
+      this.secretName.clearAsyncValidators();
+      this.secretName.setAsyncValidators(validateUniqueName(this.http_, namespace));
+      this.secretName.updateValueAndValidity();
+    });
+    this.http_.get('api/v1/namespace').subscribe((result: NamespaceList) => {
+      this.namespaces = result.namespaces.map((namespace: Namespace) => namespace.objectMeta.name);
+      this.namespace.patchValue(
+        !this.namespace_.areMultipleNamespacesSelected()
+          ? this.route_.snapshot.params.namespace || this.namespaces[0]
+          : this.namespaces[0],
+      );
     });
   }
 
@@ -104,21 +110,21 @@ export class UpsertSecretsComponent {
   get data(): AbstractControl {
     return this.form.get('data');
   }
-  cancel(): void {
-    this.history_.goToPreviousState('overview');
+
+  get namespace(): AbstractControl {
+    return this.form.get('namespace');
   }
+
   async createSecret(): Promise<UpsertSecretResponse> {
     if (!this.form.valid) return null;
 
     const secretSpec: UpsertSecretSpec = {
       name: this.secretName.value,
-      namespace: this.namespace_.current(),
-      data: this.data.value,
+      namespace: this.namespace.value,
+      data: btoa(this.data.value),
     };
-
     let response: UpsertSecretResponse;
     let error: HttpErrorResponse;
-
     try {
       const {token} = await this.csrfToken_.getTokenForAction('secret').toPromise();
 
@@ -142,6 +148,7 @@ export class UpsertSecretsComponent {
     }
     return response;
   }
+
   private reportError(title: string, message: string): void {
     const configData: AlertDialogConfig = {
       title,
@@ -149,5 +156,29 @@ export class UpsertSecretsComponent {
       confirmLabel: 'OK',
     };
     this.matDialog_.open(AlertDialog, {data: configData});
+  }
+
+  handleNamespaceDialog(): void {
+    const dialogData = {data: {namespaces: this.namespaces}};
+    const dialogDef = this.matDialog_.open(CreateNamespaceDialog, dialogData);
+    dialogDef
+      .afterClosed()
+      .take(1)
+      .subscribe(answer => {
+        /**
+         * Handles namespace dialog result. If namespace was created successfully then it
+         * will be selected, otherwise first namespace will be selected.
+         */
+        if (answer) {
+          this.namespaces.push(answer);
+          this.namespace.patchValue(answer);
+        } else {
+          this.namespace.patchValue(this.namespaces[0]);
+        }
+      });
+  }
+
+  cancel(): void {
+    this.history_.goToPreviousState('overview');
   }
 }

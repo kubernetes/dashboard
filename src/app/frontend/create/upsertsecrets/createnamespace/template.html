@@ -1,0 +1,74 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<h4 mat-dialog-title
+    i18n>Create a new namespace</h4>
+<mat-dialog-content class="kd-dialog-text">
+  <ng-container>
+    <div i18n>The new namespace will be added to the cluster.</div>
+    <div>
+      <form [formGroup]="form">
+        <kd-help-section>
+          <mat-form-field>
+            <input matInput
+                   type="text"
+                   i18n-placeholder
+                   placeholder="Namespace name"
+                   name="namespace"
+                   formControlName="namespace"
+                   required />
+            <mat-hint align="end">{{namespace.value.length}} / {{namespaceMaxLength}}</mat-hint>
+            <mat-error *ngIf="namespace.errors?.required"
+                       i18n>
+              Name is required.
+            </mat-error>
+            <mat-error *ngIf="namespace.errors?.maxlength"
+                       i18n>
+              Name must be up to {{namespaceMaxLength}} characters long.
+            </mat-error>
+            <mat-error *ngIf="namespace.errors?.pattern"
+                       i18n>
+              Name must be alphanumeric and may contain dashes.
+            </mat-error>
+          </mat-form-field>
+          <kd-user-help>
+            <ng-container i18n>A namespace with the specified name will be added to the cluster.</ng-container>
+            <a href="http://kubernetes.io/docs/admin/namespaces/"
+               target="_blank"
+               tabindex="-1"
+               i18n>
+              Learn more
+              <i class="material-icons">open_in_new</i>
+            </a>
+          </kd-user-help>
+        </kd-help-section>
+      </form>
+    </div>
+  </ng-container>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <ng-container>
+    <button mat-button
+            type="submit"
+            color="primary"
+            (click)="createNamespace()"
+            [disabled]="isDisabled()"
+            i18n>Create</button>
+    <button mat-button
+            (click)="cancel()"
+            i18n>Cancel</button>
+  </ng-container>
+</mat-dialog-actions>
