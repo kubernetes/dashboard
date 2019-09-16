@@ -29,6 +29,8 @@ spec:
     metadata:
       labels:
         k8s-app: kubernetes-dashboard
+      annotations:
+        seccomp.security.alpha.kubernetes.io/pod: 'runtime/default'
     spec:
       containers:
         - name: kubernetes-dashboard
@@ -52,6 +54,11 @@ spec:
               port: 9090
             initialDelaySeconds: 30
             timeoutSeconds: 30
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            runAsUser: 1001
+            runAsGroup: 2001
       volumes:
         - name: tmp-volume
           emptyDir: {}

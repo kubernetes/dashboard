@@ -29,6 +29,8 @@ spec:
     metadata:
       labels:
         k8s-app: dashboard-metrics-scraper
+      annotations:
+        seccomp.security.alpha.kubernetes.io/pod: 'runtime/default'
     spec:
       containers:
       - name: dashboard-metrics-scraper
@@ -46,6 +48,11 @@ spec:
         volumeMounts:
         - mountPath: /tmp
           name: tmp-volume
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          runAsUser: 1001
+          runAsGroup: 2001
       serviceAccountName: kubernetes-dashboard
       # Comment the following tolerations if Dashboard must not be deployed on master
       tolerations:

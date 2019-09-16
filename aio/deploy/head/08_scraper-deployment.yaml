@@ -29,6 +29,8 @@ spec:
     metadata:
       labels:
         k8s-app: dashboard-metrics-scraper-head
+      annotations:
+        seccomp.security.alpha.kubernetes.io/pod: 'runtime/default'
     spec:
       containers:
       - name: dashboard-metrics-scraper-head
@@ -43,6 +45,11 @@ spec:
             port: 8000
           initialDelaySeconds: 30
           timeoutSeconds: 30
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          runAsUser: 1001
+          runAsGroup: 2001
         volumeMounts:
         - mountPath: /tmp
           name: tmp-volume

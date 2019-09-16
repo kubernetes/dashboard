@@ -208,6 +208,11 @@ spec:
               port: 9090
             initialDelaySeconds: 30
             timeoutSeconds: 30
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            runAsUser: 1001
+            runAsGroup: 2001
       volumes:
         - name: tmp-volume
           emptyDir: {}
@@ -252,6 +257,8 @@ spec:
     metadata:
       labels:
         k8s-app: dashboard-metrics-scraper-head
+      annotations:
+        seccomp.security.alpha.kubernetes.io/pod: 'runtime/default'
     spec:
       containers:
         - name: dashboard-metrics-scraper-head
@@ -269,6 +276,11 @@ spec:
           volumeMounts:
           - mountPath: /tmp
             name: tmp-volume
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            runAsUser: 1001
+            runAsGroup: 2001
       serviceAccountName: kubernetes-dashboard-head
       # Comment the following tolerations if Dashboard must not be deployed on master
       tolerations:
