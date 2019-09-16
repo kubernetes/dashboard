@@ -24,7 +24,7 @@ import {NamespaceService} from '../../../common/services/global/namespace';
   styleUrls: ['./style.scss'],
 })
 export class CreateFromInputComponent {
-  inputData: string;
+  inputData = '';
 
   constructor(
     private readonly namespace_: NamespaceService,
