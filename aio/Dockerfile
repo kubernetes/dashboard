@@ -17,7 +17,7 @@
 
 # Scratch can be used as the base image because the backend is compiled to include all
 # its dependencies.
-FROM gcr.io/distroless/static
+FROM scratch
 
 # Add all files from current working directory to the root of the image, i.e., copy dist directory
 # layout to the root directory.
