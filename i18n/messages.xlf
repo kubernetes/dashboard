@@ -948,7 +948,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/upsertsecrets/template.html</context>
-          <context context-type="linenumber">61</context>
+          <context context-type="linenumber">60</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
@@ -3020,11 +3020,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/upsertsecrets/template.html</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">78</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/upsertsecrets/template.html</context>
-          <context context-type="linenumber">110</context>
+          <context context-type="linenumber">109</context>
         </context-group>
       </trans-unit>
       <trans-unit id="472c76a113baadeb4096e77d20a21556b2aa1e35" datatype="html">
@@ -3181,7 +3181,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/upsertsecrets/template.html</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="linenumber">74</context>
         </context-group>
       </trans-unit>
       <trans-unit id="9837a4e132ec773fb004737601db78f448ba2534" datatype="html">
@@ -3325,7 +3325,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/upsertsecrets/template.html</context>
-          <context context-type="linenumber">130</context>
+          <context context-type="linenumber">129</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/input/template.html</context>
@@ -3402,7 +3402,7 @@
         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/upsertsecrets/template.html</context>
-          <context context-type="linenumber">69</context>
+          <context context-type="linenumber">68</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ddbdcb0ef1e4ad586994fad61eadc32ef293198c" datatype="html">
@@ -3411,7 +3411,7 @@
       </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/upsertsecrets/template.html</context>
-          <context context-type="linenumber">100</context>
+          <context context-type="linenumber">99</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8d46772badfadf39ec51d3e5f5cd81682850bb5b" datatype="html">
@@ -3419,7 +3419,7 @@
       </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/upsertsecrets/template.html</context>
-          <context context-type="linenumber">105</context>
+          <context context-type="linenumber">104</context>
         </context-group>
       </trans-unit>
       <trans-unit id="cfc855337cd5c044b9d373f78363ab97a1797ae1" datatype="html">
@@ -3428,7 +3428,7 @@
 </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/upsertsecrets/template.html</context>
-          <context context-type="linenumber">122</context>
+          <context context-type="linenumber">121</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4f59d1501469234b7a31dd312901ef0e208cab35" datatype="html">
