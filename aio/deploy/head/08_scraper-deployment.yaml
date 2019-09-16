@@ -54,6 +54,8 @@ spec:
         - mountPath: /tmp
           name: tmp-volume
       serviceAccountName: kubernetes-dashboard-head
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
       # Comment the following tolerations if Dashboard must not be deployed on master
       tolerations:
       - key: node-role.kubernetes.io/master
