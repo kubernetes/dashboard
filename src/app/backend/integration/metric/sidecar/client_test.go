@@ -111,7 +111,7 @@ func (self FakeRequest) DoRaw() ([]byte, error) {
 
 		items := metricapi.SidecarMetricResultList{}
 		for _, pod := range requestedPods {
-			items.Items = append(items.Items, metricapi.SidecarMetric{MetricPoints: self.PodData[pod+"/"+namespace]})
+			items.Items = append(items.Items, metricapi.SidecarMetric{MetricPoints: self.PodData[pod+"/"+namespace], UIDs: []string{pod}})
 		}
 		x, err := json.Marshal(items)
 		log.Println("Got you:", string(x))
@@ -126,7 +126,7 @@ func (self FakeRequest) DoRaw() ([]byte, error) {
 		requestedNode := submatch[1]
 
 		items := metricapi.SidecarMetricResultList{}
-		items.Items = append(items.Items, metricapi.SidecarMetric{MetricPoints: self.NodeData[requestedNode]})
+		items.Items = append(items.Items, metricapi.SidecarMetric{MetricPoints: self.NodeData[requestedNode], UIDs: []string{requestedNode}})
 
 		x, err := json.Marshal(items)
 		log.Println("Got you:", string(x))
