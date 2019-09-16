@@ -27,6 +27,7 @@
 * [Code conventions](developer/code-conventions.md)
 * [Text conventions](developer/text-conventions.md)
 * [Internationalization](developer/internationalization.md)
+* [Plugins](plugins/README.md)
 
 ----
 _Copyright 2019 [The Kubernetes Dashboard Authors](https://github.com/kubernetes/dashboard/graphs/contributors)_
