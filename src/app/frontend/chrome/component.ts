@@ -49,7 +49,7 @@ export class ChromeComponent implements OnInit {
   }
 
   getOverviewStateName(): string {
-    return 'overview';
+    return '/overview';
   }
 
   isSystemBannerVisible(): boolean {
