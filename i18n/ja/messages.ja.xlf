@@ -1072,7 +1072,7 @@
       </trans-unit>
       <trans-unit id="7099af5a120571be073bcfb7babafb38e91a3b50" datatype="html">
         <source>Plugins</source>
-        <target state="new">Plugins</target>
+        <target>プラグイン</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/plugin/template.html</context>
           <context context-type="linenumber">21</context>
@@ -1080,7 +1080,7 @@
       </trans-unit>
       <trans-unit id="473fb06a7b7b3992af493059e8f9c8c74f369a97" datatype="html">
         <source>Dependencies</source>
-        <target state="new">Dependencies</target>
+        <target>依存関係</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/plugin/template.html</context>
           <context context-type="linenumber">54</context>
@@ -1721,7 +1721,7 @@
       </trans-unit>
       <trans-unit id="85550e95dc12c58e2e711dbebe89f3448eb66c72" datatype="html">
         <source>Memory requests (bytes)</source>
-        <target state="new">Memory requests (bytes)</target>
+        <target>メモリ要件 (バイト)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/node/template.html</context>
           <context context-type="linenumber">92</context>
@@ -2543,7 +2543,7 @@
       <trans-unit id="1d216da7f53e1afcd7bffd53c0a6b0f2502cde4d" datatype="html">
         <source>Plugins
       </source>
-        <target state="new">Plugins
+        <target>プラグイン
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2553,7 +2553,7 @@
       <trans-unit id="f2f9d18ebacb9e3bcb996d8176609e306864265e" datatype="html">
         <source>Custom Resource Definitions
       </source>
-        <target state="new">Custom Resource Definitions
+        <target>カスタムリソース定義
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2667,7 +2667,7 @@
       <trans-unit id="8d93137e6678a0a40da783d0a5bc06272d3317c5" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{resource.name}}"/>
   </source>
-        <target state="new"><x id="INTERPOLATION" equiv-text="{{resource.name}}"/>
+        <target><x id="INTERPOLATION" equiv-text="{{resource.name}}"/>
   </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/pinner/template.html</context>
@@ -2912,7 +2912,7 @@
       </trans-unit>
       <trans-unit id="d9ac1caf6715c8011155c0a027d544dbeca63062" datatype="html">
         <source>Subresources</source>
-        <target state="new">Subresources</target>
+        <target>サブリソース</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
           <context context-type="linenumber">43</context>
