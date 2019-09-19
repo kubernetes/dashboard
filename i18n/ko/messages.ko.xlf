@@ -91,7 +91,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/list/column/menu/template.html</context>
-          <context context-type="linenumber">45</context>
+          <context context-type="linenumber">51</context>
         </context-group>
       </trans-unit>
       <trans-unit id="db0cf322b4bfc4f0466c9826810e3800dc4687dd" datatype="html">
@@ -706,12 +706,20 @@
           <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="14a5136cbdeef6ed97abfd58112f979f20f619f1" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{ isPinned() ? &quot;Unpin&quot; : &quot;Pin&quot; }}"/></source>
-        <target state="new"><x id="INTERPOLATION" equiv-text="{{ isPinned() ? &quot;Unpin&quot; : &quot;Pin&quot; }}"/></target>
+      <trans-unit id="8cf90839a62d530bfe9433ef049fb1b016c55e04" datatype="html">
+        <source>Unpin</source>
+        <target state="new">Unpin</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/list/column/menu/template.html</context>
-          <context context-type="linenumber">39</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="32d40747d801c0d4f51f2fbbdb368e265c307305" datatype="html">
+        <source>Pin</source>
+        <target state="new">Pin</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/list/column/menu/template.html</context>
+          <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
       <trans-unit id="28f86ffd419b869711aa13f5e5ff54be6d70731c" datatype="html">
@@ -719,7 +727,7 @@
         <target state="new">편집</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/list/column/menu/template.html</context>
-          <context context-type="linenumber">42</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="c0adb9c346b1a2715886258558098dc32bd10c40" datatype="html">
@@ -3321,6 +3329,8 @@
         <target state="new">
         <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>
       </target> 더 배우기
+        
+        
         
         
         
