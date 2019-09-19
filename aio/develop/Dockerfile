@@ -95,6 +95,10 @@ RUN curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.s
 # Install delve for debuging go files.
 RUN go get github.com/go-delve/delve/cmd/dlv
 
+# Install code-generator. `go get` rises error, use `git clone` instead.
+RUN mkdir -p /go/src/k8s.io
+RUN git clone https://github.com/kubernetes/code-generator /go/src/k8s.io/code-generator
+
 # Enable go mod. Note(shu-mutou): do not set this before `go get`
 ENV GO111MODULE=on
 
