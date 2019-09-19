@@ -14,7 +14,7 @@
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {PodDetail} from '@api/backendapi';
+import {Container, PodDetail} from '@api/backendapi';
 import {Subscription} from 'rxjs/Subscription';
 
 import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
@@ -65,5 +65,9 @@ export class PodDetailComponent implements OnInit, OnDestroy {
 
   getNodeHref(name: string): string {
     return this.kdState_.href('node', name);
+  }
+
+  getContainerName(_: number, container: Container): string {
+    return container.name;
   }
 }

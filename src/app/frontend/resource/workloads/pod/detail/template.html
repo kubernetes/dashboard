@@ -86,7 +86,7 @@ limitations under the License.
 <div *ngIf="pod?.containers?.length"
      class="kd-card-group-header kd-muted"
      i18n>Containers</div>
-<kd-container-card *ngFor="let container of pod?.containers"
+<kd-container-card *ngFor="let container of pod?.containers;trackBy:getContainerName"
                    [container]="container"
                    [namespace]="pod.objectMeta.namespace"
                    [initialized]="isInitialized"></kd-container-card>
@@ -94,7 +94,7 @@ limitations under the License.
 <div *ngIf="pod?.initContainers?.length"
      class="kd-card-group-header kd-muted"
      i18n>Init containers</div>
-<kd-container-card *ngFor="let container of pod?.initContainers"
+<kd-container-card *ngFor="let container of pod?.initContainers;trackBy:getContainerName"
                    [container]="container"
                    [namespace]="pod.objectMeta.namespace"
                    [initialized]="isInitialized"></kd-container-card>

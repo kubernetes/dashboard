@@ -47,4 +47,8 @@ export class ContainerCardComponent {
   getEnvSecretHref(secretKeyRef: SecretKeyRef): string {
     return this.state_.href('secret', secretKeyRef.name, this.namespace);
   }
+
+  getEnvVarID(_: number, envVar: EnvVar): string {
+    return `${envVar.name}-${envVar.value}`;
+  }
 }
