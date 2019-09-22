@@ -166,7 +166,7 @@
     "karma-firefox-launcher": "1.2.0",
     "karma-jasmine": "2.0.1",
     "karma-jasmine-html-reporter": "1.4.2",
-    "lint-staged": "9.2.5",
+    "lint-staged": "9.3.0",
     "lite-server": "2.4.0",
     "lodash": "4.17.13",
     "minimatch": "3.0.4",
