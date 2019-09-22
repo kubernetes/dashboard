@@ -46,7 +46,7 @@ func getPodStatus(pod v1.Pod, warnings []common.Event) PodStatus {
 	}
 }
 
-// getPodStatus returns one of three pod statuses (pending, success, failed)
+// getPodStatus returns one of four pod statuses (pending, running, success, failed)
 func getPodStatusPhase(pod v1.Pod, warnings []common.Event) v1.PodPhase {
 	// For terminated pods that failed
 	if pod.Status.Phase == v1.PodFailed {
