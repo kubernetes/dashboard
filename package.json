@@ -140,7 +140,7 @@
     "@types/jasmine": "3.4.0",
     "@types/jasminewd2": "2.0.6",
     "@types/js-yaml": "3.12.1",
-    "@types/lodash": "4.14.138",
+    "@types/lodash": "4.14.139",
     "@types/node": "12.7.8",
     "babel": "6.23.0",
     "babel-preset-env": "1.7.0",
