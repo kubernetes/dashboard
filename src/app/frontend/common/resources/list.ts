@@ -136,7 +136,10 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
         this.isLoading = false;
         this.loaded_ = true;
         this.onListChange_(data);
-        this.cdr_.detectChanges();
+
+        if (this.cdr_) {
+          this.cdr_.detectChanges();
+        }
       });
   }
 
