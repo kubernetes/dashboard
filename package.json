@@ -172,7 +172,7 @@
     "minimatch": "3.0.4",
     "minimist": "1.2.0",
     "ngx-i18nsupport": "0.17.1",
-    "node-gyp": "5.0.3",
+    "node-gyp": "5.0.4",
     "node-sass": "4.12.0",
     "q": "1.5.1",
     "raw-loader": "1.0.0",
