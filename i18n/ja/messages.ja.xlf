@@ -4564,7 +4564,7 @@
       </trans-unit>
       <trans-unit id="c4ebc7b58943268c8fa4f033e9a231b1a99e5ec9" datatype="html">
         <source>Active Jobs</source>
-        <target>稼働中のジョブ: </target>
+        <target>稼働中のジョブ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/cronjob/detail/template.html</context>
           <context context-type="linenumber">58</context>
