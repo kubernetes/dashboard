@@ -39,7 +39,7 @@ Find new localizable texts in `i18n/[locale]/messages.[locale].xlf` file and tra
 
 Since dashboard team can not review translation files in your language, so dashboard team transfers authority to review and approve for updating your translation file. At first, you need to organize translation team for your language that manages dashboard translation file.
 
-1. Add your language code, e.g. `fr` or `ja`, into `"languages"` array of `"xfillmergeOptions"` in `package.json` file.
+1. Add your locale, e.g. `fr` or `ja`, into `"languages"` array of `"xfillmergeOptions"` in `package.json` file.
 2. Run `npm run fix:i18n`. Then translation file for your language, e.g. `i18n/fr/messages.fr.xlf`, would be generated.
 3. Open your translation file and translate texts in `<target>` element into your language.
 
@@ -65,7 +65,7 @@ approvers:
   - [or your group name in kubernetes org]
 
 labels:
-- language/[your language code]
+- language/[your locale]
 ```
 
 By changes for html files, workflow for i18n on Kubernetes Dashboard updates your translation file. To ease watching updates for your translation file in the future, set `labels` in your `OWNERS` file like above. It would allow you watching updates for your translation file with watching PRs having this label in `kubernetes/dashboard` repository like [this](https://github.com/kubernetes/dashboard/pulls?utf8=%E2%9C%93&q=is%3Apr+label%3Alanguage%2Fja).
