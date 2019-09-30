@@ -50,17 +50,6 @@ kind: Secret
 metadata:
   labels:
     k8s-app: kubernetes-dashboard
-  name: kubernetes-dashboard-certs
-  namespace: kubernetes-dashboard
-type: Opaque
-
----
-
-apiVersion: v1
-kind: Secret
-metadata:
-  labels:
-    k8s-app: kubernetes-dashboard
   name: kubernetes-dashboard-csrf
   namespace: kubernetes-dashboard
 type: Opaque
@@ -156,7 +145,6 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: kubernetes-dashboard
-  namespace: kubernetes-dashboard
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
