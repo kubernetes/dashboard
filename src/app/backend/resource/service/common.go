@@ -15,8 +15,9 @@
 package service
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	v1 "k8s.io/api/core/v1"
+  "github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+  v1 "k8s.io/api/core/v1"
+  "encoding/json"
 )
 
 // The code below allows to perform complex data section on []api.Service
@@ -31,7 +32,10 @@ func (self ServiceCell) GetProperty(name dataselect.PropertyName) dataselect.Com
 		return dataselect.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
 	case dataselect.NamespaceProperty:
 		return dataselect.StdComparableString(self.ObjectMeta.Namespace)
-	default:
+  case dataselect.LabelProperty:
+    s1, _ := json.MarshalIndent(self.ObjectMeta.Labels, "", "\t")
+    return dataselect.StdComparableString(s1)
+  default:
 		// if name is not supported then just return a constant dummy value, sort will have no effect.
 		return nil
 	}
