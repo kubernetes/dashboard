@@ -15,7 +15,8 @@
 package customresourcedefinition
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+  "encoding/json"
+  "github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	api "k8s.io/api/core/v1"
 	apiextensions "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
@@ -30,7 +31,10 @@ func (self CustomResourceDefinitionCell) GetProperty(name dataselect.PropertyNam
 		return dataselect.StdComparableString(self.ObjectMeta.Name)
 	case dataselect.CreationTimestampProperty:
 		return dataselect.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
-	default:
+  case dataselect.LabelProperty:
+    s, _ := json.MarshalIndent(self.ObjectMeta.Labels, "", "\t")
+    return dataselect.StdComparableString(s)
+  default:
 		// if name is not supported then just return a constant dummy value, sort will have no effect.
 		return nil
 	}

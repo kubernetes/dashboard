@@ -15,7 +15,8 @@
 package job
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/api"
+  "encoding/json"
+  "github.com/kubernetes/dashboard/src/app/backend/api"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
@@ -35,7 +36,10 @@ func (self JobCell) GetProperty(name dataselect.PropertyName) dataselect.Compara
 		return dataselect.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
 	case dataselect.NamespaceProperty:
 		return dataselect.StdComparableString(self.ObjectMeta.Namespace)
-	default:
+  case dataselect.LabelProperty:
+    s, _ := json.MarshalIndent(self.ObjectMeta.Labels, "", "\t")
+    return dataselect.StdComparableString(s)
+  default:
 		// if name is not supported then just return a constant dummy value, sort will have no effect.
 		return nil
 	}

@@ -33,8 +33,8 @@ func (self ServiceCell) GetProperty(name dataselect.PropertyName) dataselect.Com
 	case dataselect.NamespaceProperty:
 		return dataselect.StdComparableString(self.ObjectMeta.Namespace)
   case dataselect.LabelProperty:
-    s1, _ := json.MarshalIndent(self.ObjectMeta.Labels, "", "\t")
-    return dataselect.StdComparableString(s1)
+    s, _ := json.MarshalIndent(self.ObjectMeta.Labels, "", "\t")
+    return dataselect.StdComparableString(s)
   default:
 		// if name is not supported then just return a constant dummy value, sort will have no effect.
 		return nil

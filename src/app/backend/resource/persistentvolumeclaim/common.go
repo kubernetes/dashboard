@@ -15,7 +15,8 @@
 package persistentvolumeclaim
 
 import (
-	"log"
+  "encoding/json"
+  "log"
 	"strings"
 
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
@@ -94,7 +95,10 @@ func (self PersistentVolumeClaimCell) GetProperty(name dataselect.PropertyName) 
 		return dataselect.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
 	case dataselect.NamespaceProperty:
 		return dataselect.StdComparableString(self.ObjectMeta.Namespace)
-	default:
+  case dataselect.LabelProperty:
+    s, _ := json.MarshalIndent(self.ObjectMeta.Labels, "", "\t")
+    return dataselect.StdComparableString(s)
+  default:
 		// if name is not supported then just return a constant dummy value, sort will have no effect.
 		return nil
 	}

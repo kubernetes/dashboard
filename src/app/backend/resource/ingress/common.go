@@ -15,7 +15,8 @@
 package ingress
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+  "encoding/json"
+  "github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	extensions "k8s.io/api/extensions/v1beta1"
 )
 
@@ -31,7 +32,10 @@ func (self IngressCell) GetProperty(name dataselect.PropertyName) dataselect.Com
 		return dataselect.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
 	case dataselect.NamespaceProperty:
 		return dataselect.StdComparableString(self.ObjectMeta.Namespace)
-	default:
+  case dataselect.LabelProperty:
+    s, _ := json.MarshalIndent(self.ObjectMeta.Labels, "", "\t")
+    return dataselect.StdComparableString(s)
+  default:
 		// if name is not supported then just return a constant dummy value, sort will have no effect.
 		return nil
 	}
