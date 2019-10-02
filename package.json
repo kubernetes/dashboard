@@ -187,7 +187,7 @@
     "tslint": "5.16.0",
     "typescript": "3.4.5",
     "wait-on": "3.2.0",
-    "webpack-dev-server": "3.8.1"
+    "webpack-dev-server": "3.8.2"
   },
   "engines": {
     "node": ">=10.9.0",
