@@ -289,7 +289,7 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
         if (filterByQuery) {
           filterByQuery += ',';
         }
-        filterByQuery += `name,${query}`;
+        filterByQuery += `name,${query},labels,${query}`;
       }
     }
 
