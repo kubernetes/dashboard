@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {Metric} from '@api/backendapi';
 import {generate} from 'c3';
 import {timeFormat} from 'd3';
@@ -21,7 +21,7 @@ import {select} from 'd3-selection';
 import {coresFilter, memoryFilter} from './helper';
 
 @Component({selector: 'kd-graph', templateUrl: './template.html'})
-export class GraphComponent implements OnInit, AfterViewInit {
+export class GraphComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() metric: Metric;
   @Input() id: string;
   private name: string;
@@ -35,6 +35,17 @@ export class GraphComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     if (this.metric && this.id) {
+      this.generateGraph();
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['id']) {
+      this.name = changes['id'].currentValue;
+    }
+
+    if (changes['metric']) {
+      this.metric = changes['metric'].currentValue;
       this.generateGraph();
     }
   }
