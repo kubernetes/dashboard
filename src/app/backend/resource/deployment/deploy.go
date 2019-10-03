@@ -214,10 +214,6 @@ func DeployApp(spec *AppDeploymentSpec, client client.Interface) error {
 			Replicas: &spec.Replicas,
 			Template: podTemplate,
 			Selector: &metaV1.LabelSelector{
-				// Quoting from https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#selector:
-				// In API version apps/v1beta2, .spec.selector and .metadata.labels no longer default to
-				// .spec.template.metadata.labels if not set. So they must be set explicitly.
-				// Also note that .spec.selector is immutable after creation of the Deployment in apps/v1beta2.
 				MatchLabels: labels,
 			},
 		},
