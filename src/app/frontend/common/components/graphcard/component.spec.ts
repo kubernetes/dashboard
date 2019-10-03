@@ -61,27 +61,15 @@ describe('GraphCardComponent', () => {
     expect(component.selectedMetric).toBeUndefined();
   });
 
-  it('should return correct boolean with selectedMetric value', () => {
+  it('should show graph when metrics are provided', () => {
     const component = testHostFixture.componentInstance;
     expect(component.shouldShowGraph()).toBeFalsy();
 
-    component.selectedMetricName = 'sum';
+    component.graphTitle = 'CPU';
+    component.selectedMetricName = 'cpu/usage';
     component.selectedMetric = testMetrics[0];
 
     testHostFixture.detectChanges();
     expect(component.shouldShowGraph()).toBeTruthy();
-  });
-
-  it('should select correct metric from input metrics array', () => {
-    const component = testHostFixture.componentInstance;
-    component.ngOnChanges({
-      metrics: new SimpleChange(null, testMetrics, true),
-    });
-
-    testHostFixture.detectChanges();
-
-    component.selectedMetricName = testMetrics[0].metricName;
-    component.selectedMetric = testMetrics[0];
-    expect(component.selectedMetric.metricName).toBe(testMetrics[0].metricName);
   });
 });
