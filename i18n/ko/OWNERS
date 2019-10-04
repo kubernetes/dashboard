@@ -1,3 +1,5 @@
 approvers:
   - seokho-son
 
+labels:
+- language/ko
