@@ -109,7 +109,7 @@ func (self *DataSelector) Filter() *DataSelector {
 	for _, c := range self.GenericDataList {
 		for _, filterBy := range self.DataSelectQuery.FilterQuery.FilterByList {
 			v := c.GetProperty(filterBy.Property)
-			if v == nil || v.Contains(filterBy.Value) {
+			if v.Contains(filterBy.Value){
         filteredList = append(filteredList, c)
       }
 		}
