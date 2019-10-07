@@ -37,7 +37,7 @@ const URL_REGEXP = new RegExp(
   'i',
 );
 
-const MAX_CHIP_VALUE_LENGHT = 63;
+const MAX_CHIP_VALUE_LENGTH = 63;
 
 @Component({
   selector: 'kd-chips',
@@ -76,7 +76,7 @@ export class ChipsComponent implements OnInit {
   }
 
   isTooLong(value: string): boolean {
-    return value !== undefined && value.length > MAX_CHIP_VALUE_LENGHT;
+    return value !== undefined && value.length > MAX_CHIP_VALUE_LENGTH;
   }
 
   isHref(value: string): boolean {
