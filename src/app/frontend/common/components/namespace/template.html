@@ -26,6 +26,7 @@ limitations under the License.
              [(ngModel)]="selectNamespaceInput"
              name="selectNamespaceInput"
              class="kd-namespace-select-input"
+             autocomplete="off"
              (keydown)="$event.keyCode === 13 ? selectNamespace() : null">
     </div>
     <mat-option *ngIf="namespaces.length"
