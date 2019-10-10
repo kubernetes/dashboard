@@ -206,7 +206,7 @@ var KindToAPIMapping = map[string]APIMapping{
 	ResourceKindPersistentVolume:         {"persistentvolumes", ClientTypeDefault, false},
 	ResourceKindCustomResourceDefinition: {"customresourcedefinitions", ClientTypeAPIExtensionsClient, false},
 	ResourceKindPod:                      {"pods", ClientTypeDefault, true},
-	ResourceKindReplicaSet:               {"replicasets", ClientTypeExtensionClient, true},
+	ResourceKindReplicaSet:               {"replicasets", ClientTypeAppsClient, true},
 	ResourceKindReplicationController:    {"replicationcontrollers", ClientTypeDefault, true},
 	ResourceKindResourceQuota:            {"resourcequotas", ClientTypeDefault, true},
 	ResourceKindSecret:                   {"secrets", ClientTypeDefault, true},
