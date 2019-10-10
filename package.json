@@ -155,7 +155,7 @@
     "gulp-filter": "6.0.0",
     "gulp-header-license": "1.0.9",
     "gulp-license-check": "1.2.1",
-    "husky": "3.0.6",
+    "husky": "3.0.8",
     "jasmine-core": "3.5.0",
     "jasmine-spec-reporter": "4.2.1",
     "js-beautify": "1.10.2",
