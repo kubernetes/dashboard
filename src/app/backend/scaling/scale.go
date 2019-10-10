@@ -17,7 +17,7 @@ package scaling
 import (
 	"strconv"
 
-	"k8s.io/api/apps/v1"
+	apps "k8s.io/api/apps/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/client-go/discovery"
 	"k8s.io/client-go/discovery/cached/memory"
@@ -92,7 +92,7 @@ func getScaleGetter(cfg *rest.Config) (scale.ScalesGetter, error) {
 		return nil, err
 	}
 
-	cfg.GroupVersion = &v1.SchemeGroupVersion
+	cfg.GroupVersion = &apps.SchemeGroupVersion
 	cfg.NegotiatedSerializer = scheme.Codecs
 
 	restClient, err := rest.RESTClientFor(cfg)
@@ -117,6 +117,6 @@ func getGroupResource(kind string) schema.GroupResource {
 	if gr.Group != "" && gr.Resource != "" {
 		return gr
 	} else {
-		return v1.Resource(kind)
+		return apps.Resource(kind)
 	}
 }
