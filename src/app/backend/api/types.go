@@ -187,12 +187,13 @@ type APIMapping struct {
 }
 
 // Mapping from resource kind to K8s apiserver API path. This is mostly pluralization, because
-// K8s apiserver uses plural paths and this project singular.
+// Kubernetes apiserver uses plural paths and this project singular.
 // Must be kept in sync with the list of supported kinds.
+// See: https://kubernetes.io/docs/reference/
 var KindToAPIMapping = map[string]APIMapping{
 	ResourceKindConfigMap:                {"configmaps", ClientTypeDefault, true},
-	ResourceKindDaemonSet:                {"daemonsets", ClientTypeExtensionClient, true},
-	ResourceKindDeployment:               {"deployments", ClientTypeExtensionClient, true},
+	ResourceKindDaemonSet:                {"daemonsets", ClientTypeAppsClient, true},
+	ResourceKindDeployment:               {"deployments", ClientTypeAppsClient, true},
 	ResourceKindEvent:                    {"events", ClientTypeDefault, true},
 	ResourceKindHorizontalPodAutoscaler:  {"horizontalpodautoscalers", ClientTypeAutoscalingClient, true},
 	ResourceKindIngress:                  {"ingresses", ClientTypeExtensionClient, true},
@@ -205,7 +206,7 @@ var KindToAPIMapping = map[string]APIMapping{
 	ResourceKindPersistentVolume:         {"persistentvolumes", ClientTypeDefault, false},
 	ResourceKindCustomResourceDefinition: {"customresourcedefinitions", ClientTypeAPIExtensionsClient, false},
 	ResourceKindPod:                      {"pods", ClientTypeDefault, true},
-	ResourceKindReplicaSet:               {"replicasets", ClientTypeExtensionClient, true},
+	ResourceKindReplicaSet:               {"replicasets", ClientTypeAppsClient, true},
 	ResourceKindReplicationController:    {"replicationcontrollers", ClientTypeDefault, true},
 	ResourceKindResourceQuota:            {"resourcequotas", ClientTypeDefault, true},
 	ResourceKindSecret:                   {"secrets", ClientTypeDefault, true},
