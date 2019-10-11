@@ -137,7 +137,7 @@
     "@angular/cli": "8.3.7",
     "@angular/compiler-cli": "8.0.3",
     "@angular/language-service": "8.0.3",
-    "@types/jasmine": "3.4.0",
+    "@types/jasmine": "3.4.4",
     "@types/jasminewd2": "2.0.8",
     "@types/js-yaml": "3.12.1",
     "@types/lodash": "4.14.143",
