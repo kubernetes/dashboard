@@ -2731,7 +2731,7 @@
         <target>Kubernetes Dashboard</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
       <trans-unit id="cf9072061094a1ad33866a311152c495c05890a0" datatype="html">
@@ -2739,7 +2739,7 @@
         <target>Kubeconfig</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">34</context>
         </context-group>
       </trans-unit>
       <trans-unit id="380ab580741bec31346978e7cab8062d6970408d" datatype="html">
@@ -2747,7 +2747,7 @@
         <target>ベーシック</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">40</context>
+          <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1edc1fc6cfbbb22353050ad6788508b3ed584f53" datatype="html">
@@ -2755,7 +2755,7 @@
         <target>トークン</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">42</context>
+          <context context-type="linenumber">38</context>
         </context-group>
       </trans-unit>
       <trans-unit id="a55441e16a7aab838dcedbccf0a517b3ad41eac4" datatype="html">
@@ -2767,7 +2767,7 @@
               </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2071ed7df8c83bd144f74bc298a721261bea4c11" datatype="html">
@@ -2779,7 +2779,7 @@
               </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="0007b848b1737e066b8ba78e030ed5a62fbbdb04" datatype="html">
@@ -2791,7 +2791,7 @@
               </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">56</context>
+          <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
       <trans-unit id="bb9463f1f9d12a58d7884a956a955e36369c5f9c" datatype="html">
@@ -2799,7 +2799,7 @@
         <target>トークンを入力</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">70</context>
+          <context context-type="linenumber">66</context>
         </context-group>
       </trans-unit>
       <trans-unit id="08c74dc9762957593b91f6eb5d65efdfc975bf48" datatype="html">
@@ -2807,7 +2807,7 @@
         <target>ユーザー名</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">84</context>
+          <context context-type="linenumber">79</context>
         </context-group>
       </trans-unit>
       <trans-unit id="c32ef07f8803a223a83ed17024b38e8d82292407" datatype="html">
@@ -2815,7 +2815,7 @@
         <target>パスワード</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">95</context>
+          <context context-type="linenumber">90</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6688d59ac99cdb1ad573ee4d2f9ab14ede43aab8" datatype="html">
@@ -2823,7 +2823,7 @@
         <target>kubeconfig ファイルの選択</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">104</context>
+          <context context-type="linenumber">99</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6ad17443c5d0be7954254eb2455fe0b32ee2ff05" datatype="html">
@@ -2833,7 +2833,7 @@
         <target>サインイン</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">116</context>
+          <context context-type="linenumber">120</context>
         </context-group>
       </trans-unit>
       <trans-unit id="89c689a203570b2848d633426d19bd73f51a34f8" datatype="html">
@@ -2843,7 +2843,7 @@
         <target>スキップ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">125</context>
+          <context context-type="linenumber">129</context>
         </context-group>
       </trans-unit>
       <trans-unit id="004b222ff9ef9dd4771b777950ca1d0e4cd4348a" datatype="html">

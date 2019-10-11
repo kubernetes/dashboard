@@ -16,10 +16,6 @@ limitations under the License.
 
 <div class="kd-login-container kd-bg-background"
      fxFlex>
-  <mat-card *ngFor="let error of errors"
-            class="kd-error-container kd-bg-error kd-accent">
-    <div class="kd-error-text">{{error.status}} ({{error.code}}): {{error.message}}</div>
-  </mat-card>
   <kd-card titleClasses="kd-card-top-radius kd-bg-primary kd-accent"
            class="kd-login-card"
            [expandable]="false">
@@ -72,7 +68,6 @@ limitations under the License.
                    required
                    (change)="onChange($event)">
           </mat-form-field>
-
           <div *ngSwitchCase="loginModes.Basic"
                fxLayout="column">
             <mat-form-field fxFlex
@@ -105,6 +100,15 @@ limitations under the License.
                             i18n-label
                             (onLoad)="onChange($event)"></kd-upload-file>
           </div>
+          <ng-template ngFor
+                       let-error
+                       [ngForOf]="errors"
+                       ngProjectAs="mat-error"
+                       class="kd-login-input">
+            <mat-error class="kd-login-input kd-error kd-error-text">
+              {{error.status}} ({{error.code}}): {{error.message}}
+            </mat-error>
+          </ng-template>
         </ng-container>
 
         <div fxFlex="none"
