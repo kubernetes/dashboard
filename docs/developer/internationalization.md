@@ -1,4 +1,4 @@
-# Internationarization
+# Internationalization
 
 Based on current browser locale the Dashboard can be displayed in one of the supported languages listed below. In case it does not work, make sure that your browser's locale is identified with correct language code.
 
