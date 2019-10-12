@@ -108,7 +108,7 @@ export class VerberService {
     typeMeta: TypeMeta,
     objectMeta: ObjectMeta,
   ): MatDialogConfig<ResourceMeta> {
-    return {width: '630px', data: {displayName, typeMeta, objectMeta}};
+    return {width: '900px', data: {displayName, typeMeta, objectMeta}};
   }
 
   handleErrorResponse_(err: HttpErrorResponse): void {

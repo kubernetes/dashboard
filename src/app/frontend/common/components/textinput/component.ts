@@ -47,6 +47,7 @@ export class TextInputComponent implements OnInit {
   // All possible options can be found at:
   // https://github.com/ajaxorg/ace/wiki/Configuring-Ace
   options = {
+    showPrintMargin: false,
     highlightActiveLine: false,
     tabSize: 2,
     wrap: true,
