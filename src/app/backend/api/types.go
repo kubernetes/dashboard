@@ -219,14 +219,14 @@ var KindToAPIMapping = map[string]APIMapping{
 }
 
 // IsSelectorMatching returns true when an object with the given selector targets the same
-// Resources (or subset) that the tested object with the given selector.
-func IsSelectorMatching(labelSelector map[string]string, testedObjectLabels map[string]string) bool {
+// Resources (or subset) that the target object with the given selector.
+func IsSelectorMatching(srcSelector map[string]string, targetObjectLabels map[string]string) bool {
 	// If service has no selectors, then assume it targets different resource.
-	if len(labelSelector) == 0 {
+	if len(srcSelector) == 0 {
 		return false
 	}
-	for label, value := range labelSelector {
-		if rsValue, ok := testedObjectLabels[label]; !ok || rsValue != value {
+	for label, value := range srcSelector {
+		if rsValue, ok := targetObjectLabels[label]; !ok || rsValue != value {
 			return false
 		}
 	}
@@ -234,18 +234,10 @@ func IsSelectorMatching(labelSelector map[string]string, testedObjectLabels map[
 }
 
 // IsLabelSelectorMatching returns true when a resource with the given selector targets the same
-// Resources(or subset) that a tested object selector with the given selector.
-func IsLabelSelectorMatching(selector map[string]string, labelSelector *v1.LabelSelector) bool {
-	// If the resource has no selectors, then assume it targets different Pods.
-	if len(selector) == 0 {
-		return false
-	}
-	for label, value := range selector {
-		if rsValue, ok := labelSelector.MatchLabels[label]; !ok || rsValue != value {
-			return false
-		}
-	}
-	return true
+// Resources(or subset) that a target object selector with the given selector.
+func IsLabelSelectorMatching(srcSelector map[string]string, targetLabelSelector *v1.LabelSelector) bool {
+  targetObjectLabels := targetLabelSelector.MatchLabels
+  return IsSelectorMatching(srcSelector, targetObjectLabels)
 }
 
 // ListEverything is a list options used to list all resources without any filtering.
