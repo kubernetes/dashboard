@@ -101,6 +101,7 @@ export class PinnerService {
   handleErrorResponse_(err: HttpErrorResponse): void {
     if (err) {
       this.error_ = AsKdError(err);
+      this.error_.localize();
       const alertDialogConfig: MatDialogConfig<AlertDialogConfig> = {
         width: '630px',
         data: {
