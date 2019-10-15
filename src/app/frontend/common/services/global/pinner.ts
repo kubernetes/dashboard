@@ -19,6 +19,7 @@ import {Subject} from 'rxjs';
 import {MatDialog, MatDialogConfig} from '@angular/material';
 import {AlertDialog, AlertDialogConfig} from '../../dialogs/alert/dialog';
 import {VerberService} from './verber';
+import {AsKdError, KdError} from '../../errors/errors';
 
 @Injectable()
 export class PinnerService {
@@ -26,6 +27,7 @@ export class PinnerService {
   private isInitialized_ = false;
   private pinnedResources_: PinnedResource[];
   private readonly endpoint_ = `api/v1/settings/pinner`;
+  private error_: KdError;
 
   constructor(
     private readonly dialog_: MatDialog,
@@ -98,11 +100,12 @@ export class PinnerService {
 
   handleErrorResponse_(err: HttpErrorResponse): void {
     if (err) {
+      this.error_ = AsKdError(err);
       const alertDialogConfig: MatDialogConfig<AlertDialogConfig> = {
         width: '630px',
         data: {
-          title: err.statusText === 'OK' ? 'Internal server error' : err.statusText,
-          message: err.error || 'Could not perform the operation.',
+          title: this.error_.status,
+          message: this.error_.message,
           confirmLabel: 'OK',
         },
       };
