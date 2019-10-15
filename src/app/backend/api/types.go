@@ -141,6 +141,7 @@ const (
 	ResourceKindEndpoint                 = "endpoint"
 )
 
+// Scalable method return whether ResourceKind is scalable.
 func (k ResourceKind) Scalable() bool {
 	scalable := []ResourceKind{
 		ResourceKindDeployment,
@@ -177,6 +178,7 @@ const (
 	ClientTypePluginsClient       = "plugin"
 )
 
+// APIMapping is the mapping from resource kind to ClientType and Namespaced.
 type APIMapping struct {
 	// Kubernetes resource name.
 	Resource string
@@ -186,7 +188,7 @@ type APIMapping struct {
 	Namespaced bool
 }
 
-// Mapping from resource kind to K8s apiserver API path. This is mostly pluralization, because
+// KindToAPIMapping is the mapping from resource kind to K8s apiserver API path. This is mostly pluralization, because
 // Kubernetes apiserver uses plural paths and this project singular.
 // Must be kept in sync with the list of supported kinds.
 // See: https://kubernetes.io/docs/reference/
@@ -236,6 +238,7 @@ func IsSelectorMatching(srcSelector map[string]string, targetObjectLabels map[st
 // IsLabelSelectorMatching returns true when a resource with the given selector targets the same
 // Resources(or subset) that a target object selector with the given selector.
 func IsLabelSelectorMatching(srcSelector map[string]string, targetLabelSelector *v1.LabelSelector) bool {
+  // If the resource has no selectors, then assume it targets different Pods.
   if targetLabelSelector != nil {
       targetObjectLabels := targetLabelSelector.MatchLabels
       return IsSelectorMatching(srcSelector, targetObjectLabels)
