@@ -142,8 +142,13 @@ describe('Custom Resource Definitions', () => {
 
     cy.wait('@deleteObject');
 
-    // browser goes to the crd list page on deletion
-    cy.url().should('include', '/#/customresourcedefinition?namespace=default');
+    cy.go('back'); // to crd detail
+
+    cy.get('kd-crd-object-list').within(() => {
+      cy.get('#zero-state').should('be.visible');
+    });
+
+    cy.go('back'); // to crd list
   });
 
   it('delete crd', () => {
