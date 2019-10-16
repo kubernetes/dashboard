@@ -18,7 +18,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	apiextensions "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
+	apiextensions "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	apiextensionsclientset "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/rest"
@@ -44,7 +44,7 @@ type CustomResourceDefinitionVersion struct {
 
 // GetCustomResourceDefinitionDetail returns detailed information about a custom resource definition.
 func GetCustomResourceDefinitionDetail(client apiextensionsclientset.Interface, config *rest.Config, name string) (*CustomResourceDefinitionDetail, error) {
-	customResourceDefinition, err := client.ApiextensionsV1beta1().
+	customResourceDefinition, err := client.ApiextensionsV1().
 		CustomResourceDefinitions().
 		Get(name, metav1.GetOptions{})
 	nonCriticalErrors, criticalError := errors.HandleError(err)
@@ -63,11 +63,12 @@ func GetCustomResourceDefinitionDetail(client apiextensionsclientset.Interface, 
 
 func toCustomResourceDefinitionDetail(crd *apiextensions.CustomResourceDefinition, objects CustomResourceObjectList, nonCriticalErrors []error) *CustomResourceDefinitionDetail {
 	subresources := []string{}
-	if crd.Spec.Subresources != nil {
-		if crd.Spec.Subresources.Scale != nil {
+	crdSubresources := crd.Spec.Versions[0].Subresources
+	if crdSubresources != nil {
+		if crdSubresources.Scale != nil {
 			subresources = append(subresources, "Scale")
 		}
-		if crd.Spec.Subresources.Status != nil {
+		if crdSubresources.Status != nil {
 			subresources = append(subresources, "Status")
 		}
 	}
