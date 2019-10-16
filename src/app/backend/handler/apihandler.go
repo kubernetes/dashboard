@@ -149,7 +149,7 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			Writes(validation.ProtocolValidity{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/appdeployment/protocols").
-			To(apiHandler.handleGetAvailableProcotols).
+			To(apiHandler.handleGetAvailableProtocols).
 			Writes(deployment.Protocols{}))
 
 	apiV1Ws.Route(
@@ -939,12 +939,12 @@ func (apiHandler *APIHandler) handleGetReplicaCount(request *restful.Request, re
 	namespace := request.PathParameter("namespace")
 	kind := request.PathParameter("kind")
 	name := request.PathParameter("name")
-	scaleSpec, err := scaling.GetScaleSpec(cfg, kind, namespace, name)
+  replicaCounts, err := scaling.GetReplicaCounts(cfg, kind, namespace, name)
 	if err != nil {
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, scaleSpec)
+	response.WriteHeaderAndEntity(http.StatusOK, replicaCounts)
 }
 
 func (apiHandler *APIHandler) handleDeployFromFile(request *restful.Request, response *restful.Response) {
@@ -1024,7 +1024,7 @@ func (apiHandler *APIHandler) handleProtocolValidity(request *restful.Request, r
 	response.WriteHeaderAndEntity(http.StatusOK, validation.ValidateProtocol(spec))
 }
 
-func (apiHandler *APIHandler) handleGetAvailableProcotols(request *restful.Request, response *restful.Response) {
+func (apiHandler *APIHandler) handleGetAvailableProtocols(request *restful.Request, response *restful.Response) {
 	response.WriteHeaderAndEntity(http.StatusOK, deployment.GetAvailableProtocols())
 }
 
@@ -1905,9 +1905,7 @@ func (apiHandler *APIHandler) handleGetJobDetail(request *restful.Request, respo
 		return
 	}
 
-	namespace := request.PathParameter("namespace")
-	name := request.PathParameter("name")
-	dataSelect := parser.ParseDataSelectPathParameter(request)
+	namespace, name, dataSelect := getBaseParameter(request)
 	dataSelect.MetricQuery = dataselect.StandardMetrics
 	result, err := job.GetJobDetail(k8sClient, namespace, name)
 	if err != nil {
@@ -1924,9 +1922,7 @@ func (apiHandler *APIHandler) handleGetJobPods(request *restful.Request, respons
 		return
 	}
 
-	namespace := request.PathParameter("namespace")
-	name := request.PathParameter("name")
-	dataSelect := parser.ParseDataSelectPathParameter(request)
+	namespace, name, dataSelect := getBaseParameter(request)
 	dataSelect.MetricQuery = dataselect.StandardMetrics
 	result, err := job.GetJobPods(k8sClient, apiHandler.iManager.Metric().Client(), dataSelect, namespace, name)
 	if err != nil {
@@ -1943,9 +1939,7 @@ func (apiHandler *APIHandler) handleGetJobEvents(request *restful.Request, respo
 		return
 	}
 
-	namespace := request.PathParameter("namespace")
-	name := request.PathParameter("name")
-	dataSelect := parser.ParseDataSelectPathParameter(request)
+	namespace, name, dataSelect := getBaseParameter(request)
 	result, err := job.GetJobEvents(k8sClient, dataSelect, namespace, name)
 	if err != nil {
 		errors.HandleInternalError(response, err)
@@ -1979,9 +1973,7 @@ func (apiHandler *APIHandler) handleGetCronJobDetail(request *restful.Request, r
 		return
 	}
 
-	namespace := request.PathParameter("namespace")
-	name := request.PathParameter("name")
-	dataSelect := parser.ParseDataSelectPathParameter(request)
+	namespace, name, dataSelect := getBaseParameter(request)
 	dataSelect.MetricQuery = dataselect.StandardMetrics
 	result, err := cronjob.GetCronJobDetail(k8sClient, namespace, name)
 	if err != nil {
@@ -2021,9 +2013,7 @@ func (apiHandler *APIHandler) handleGetCronJobEvents(request *restful.Request, r
 		return
 	}
 
-	namespace := request.PathParameter("namespace")
-	name := request.PathParameter("name")
-	dataSelect := parser.ParseDataSelectPathParameter(request)
+	namespace, name, dataSelect := getBaseParameter(request)
 	result, err := cronjob.GetCronJobEvents(k8sClient, dataSelect, namespace, name)
 	if err != nil {
 		errors.HandleInternalError(response, err)
@@ -2329,4 +2319,12 @@ func parseNamespacePathParameter(request *restful.Request) *common.NamespaceQuer
 		}
 	}
 	return common.NewNamespaceQuery(nonEmptyNamespaces)
+}
+
+// getBaseParameter is used to get namespace, name, dataSelect in path parameter.
+func getBaseParameter(request *restful.Request) (string, string, *dataselect.DataSelectQuery){
+	namespace := request.PathParameter("namespace")
+	name := request.PathParameter("name")
+	dataSelect := parser.ParseDataSelectPathParameter(request)
+	return namespace, name, dataSelect
 }
