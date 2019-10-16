@@ -44,15 +44,18 @@ limitations under the License.
     </ng-container>
   </button>
   <button mat-menu-item
+          id="edit"
           (click)="onEdit()"
           i18n>Edit</button>
   <button mat-menu-item
+          id="delete"
           (click)="onDelete()"
           i18n>Delete</button>
 </mat-menu>
 
 <a mat-icon-button
    class="kd-muted"
+   id="more-menu"
    [matMenuTriggerFor]="actions"
    (click)="$event.stopPropagation()">
   <mat-icon matTooltip="Actions">more_vert</mat-icon>
