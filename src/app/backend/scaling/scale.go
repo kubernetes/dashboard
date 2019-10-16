@@ -17,6 +17,7 @@ package scaling
 import (
 	"strconv"
 
+	apps "k8s.io/api/apps/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/client-go/discovery"
 	"k8s.io/client-go/discovery/cached/memory"
@@ -25,7 +26,6 @@ import (
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/restmapper"
 	"k8s.io/client-go/scale"
-	"k8s.io/client-go/scale/scheme/appsv1beta2"
 )
 
 // ReplicaCounts provide the desired and actual number of replicas.
@@ -92,7 +92,7 @@ func getScaleGetter(cfg *rest.Config) (scale.ScalesGetter, error) {
 		return nil, err
 	}
 
-	cfg.GroupVersion = &appsv1beta2.SchemeGroupVersion
+	cfg.GroupVersion = &apps.SchemeGroupVersion
 	cfg.NegotiatedSerializer = scheme.Codecs
 
 	restClient, err := rest.RESTClientFor(cfg)
@@ -117,6 +117,6 @@ func getGroupResource(kind string) schema.GroupResource {
 	if gr.Group != "" && gr.Resource != "" {
 		return gr
 	} else {
-		return appsv1beta2.Resource(kind)
+		return apps.Resource(kind)
 	}
 }
