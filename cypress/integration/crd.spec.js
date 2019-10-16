@@ -127,40 +127,4 @@ describe('Custom Resource Definitions', () => {
         .contains('default');
     });
   });
-
-  it('delete crd object', () => {
-    cy.server();
-    cy.route('DELETE', '/api/v1/_raw/foos.samplecontroller.k8s.io/**').as('deleteObject');
-
-    cy.get('kd-actionbar-detail-delete').click();
-    cy.get('#confirm-delete').click();
-
-    cy.wait('@deleteObject');
-
-    cy.go('back'); // to crd detail
-
-    cy.reload();
-    cy.get('kd-crd-object-list').within(() => {
-      cy.get('#zero-state').should('be.visible');
-    });
-
-    cy.reload();
-    cy.go('back'); // to crd list
-  });
-
-  it('delete crd', () => {
-    cy.server();
-    cy.route('DELETE', '/api/v1/_raw/customresourcedefinition/**').as('deleteCRD');
-
-    cy.get('#more-menu').click();
-    cy.get('#delete').click();
-    cy.get('#confirm-delete').click();
-
-    cy.wait('@deleteCRD');
-
-    cy.reload();
-    cy.get('kd-crd-list').within(() => {
-      cy.get('#zero-state').should('be.visible');
-    });
-  });
 });
