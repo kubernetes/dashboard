@@ -17,7 +17,6 @@ package scaling
 import (
 	"strconv"
 
-	apps "k8s.io/api/apps/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/client-go/discovery"
 	"k8s.io/client-go/discovery/cached/memory"
@@ -26,6 +25,7 @@ import (
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/restmapper"
 	"k8s.io/client-go/scale"
+	"k8s.io/client-go/scale/scheme/appsv1beta2"
 )
 
 // ReplicaCounts provide the desired and actual number of replicas.
@@ -34,8 +34,8 @@ type ReplicaCounts struct {
 	ActualReplicas  int32 `json:"actualReplicas"`
 }
 
-// GetScaleSpec returns a populated ReplicaCounts object with desired and actual number of replicas.
-func GetScaleSpec(cfg *rest.Config, kind, namespace, name string) (*ReplicaCounts, error) {
+// GetReplicaCounts returns a populated ReplicaCounts object with desired and actual number of replicas.
+func GetReplicaCounts(cfg *rest.Config, kind, namespace, name string) (*ReplicaCounts, error) {
 	sc, err := getScaleGetter(cfg)
 	if err != nil {
 		return nil, err
@@ -92,7 +92,7 @@ func getScaleGetter(cfg *rest.Config) (scale.ScalesGetter, error) {
 		return nil, err
 	}
 
-	cfg.GroupVersion = &apps.SchemeGroupVersion
+	cfg.GroupVersion = &appsv1beta2.SchemeGroupVersion
 	cfg.NegotiatedSerializer = scheme.Codecs
 
 	restClient, err := rest.RESTClientFor(cfg)
@@ -117,6 +117,6 @@ func getGroupResource(kind string) schema.GroupResource {
 	if gr.Group != "" && gr.Resource != "" {
 		return gr
 	} else {
-		return apps.Resource(kind)
+		return appsv1beta2.Resource(kind)
 	}
 }
