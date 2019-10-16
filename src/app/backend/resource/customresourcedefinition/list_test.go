@@ -42,7 +42,11 @@ func TestGetCustomResourceDefinition(t *testing.T) {
 								Kind:   "Foo",
 								Plural: "foos",
 							},
-							Version: "v1alpha1",
+							Versions: []apiextensions.CustomResourceDefinitionVersion{
+								{
+									Name: "v1alpha1",
+								},
+							},
 						},
 					},
 				},
