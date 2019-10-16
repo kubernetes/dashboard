@@ -46,14 +46,11 @@ describe('Custom Resource Definitions', () => {
     cy.get('#resource-information').within(() => {
       cy.get('kd-property').should('have.length', 3);
 
-      cy.get('kd-property')
-        .eq(0)
+      cy.get('#resource-version')
         .contains('v1alpha1');
-      cy.get('kd-property')
-        .eq(1)
+      cy.get('#resource-scope')
         .contains('Namespaced');
-      cy.get('kd-property')
-        .eq(2)
+      cy.get('#resource-group')
         .contains('samplecontroller.k8s.io');
     });
 
