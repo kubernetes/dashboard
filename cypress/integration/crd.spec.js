@@ -1,9 +1,7 @@
 describe('Custom Resource Definitions', () => {
-  before(() => {
-    cy.visit('/');
-  });
-
   it('crd list is initially empty', () => {
+    cy.visit('/');
+
     cy.get('#sidebar-crd').click();
     cy.url().should('include', '/#/customresourcedefinition');
 
