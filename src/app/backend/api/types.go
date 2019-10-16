@@ -236,7 +236,7 @@ func IsSelectorMatching(srcSelector map[string]string, targetObjectLabels map[st
 // IsLabelSelectorMatching returns true when a resource with the given selector targets the same
 // Resources(or subset) that a target object selector with the given selector.
 func IsLabelSelectorMatching(srcSelector map[string]string, targetLabelSelector *v1.LabelSelector) bool {
-	if targetObjectLabels != nil {
+	if targetLabelSelector != nil {
   	targetObjectLabels := targetLabelSelector.MatchLabels
   	return IsSelectorMatching(srcSelector, targetObjectLabels)
   }
