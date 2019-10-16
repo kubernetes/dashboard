@@ -139,10 +139,12 @@ describe('Custom Resource Definitions', () => {
 
     cy.go('back'); // to crd detail
 
+    cy.reload();
     cy.get('kd-crd-object-list').within(() => {
       cy.get('#zero-state').should('be.visible');
     });
 
+    cy.reload();
     cy.go('back'); // to crd list
   });
 
@@ -150,10 +152,7 @@ describe('Custom Resource Definitions', () => {
     cy.server();
     cy.route('DELETE', '/api/v1/_raw/customresourcedefinition/**').as('deleteCRD');
 
-    cy.get('#delete').should('not.be.visible');
     cy.get('#more-menu').click();
-    cy.get('#delete').should('be.visible');
-
     cy.get('#delete').click();
     cy.get('#confirm-delete').click();
 
