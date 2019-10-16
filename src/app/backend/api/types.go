@@ -238,7 +238,7 @@ func IsSelectorMatching(srcSelector map[string]string, targetObjectLabels map[st
 // IsLabelSelectorMatching returns true when a resource with the given selector targets the same
 // Resources(or subset) that a target object selector with the given selector.
 func IsLabelSelectorMatching(srcSelector map[string]string, targetLabelSelector *v1.LabelSelector) bool {
-  // If the resource has no selectors, then assume it targets different Pods.
+  // Check to see if targetLabelSelector pointer is not nil.
   if targetLabelSelector != nil {
       targetObjectLabels := targetLabelSelector.MatchLabels
       return IsSelectorMatching(srcSelector, targetObjectLabels)
