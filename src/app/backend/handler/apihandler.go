@@ -1165,7 +1165,7 @@ func (apiHandler *APIHandler) handleGetPodEvents(request *restful.Request, respo
 
 // Handles execute shell API call
 func (apiHandler *APIHandler) handleExecShell(request *restful.Request, response *restful.Response) {
-	sessionId, err := genTerminalSessionId()
+	sessionID, err := genTerminalSessionId()
 	if err != nil {
 		errors.HandleInternalError(response, err)
 		return
@@ -1183,13 +1183,13 @@ func (apiHandler *APIHandler) handleExecShell(request *restful.Request, response
 		return
 	}
 
-	terminalSessions.Set(sessionId, TerminalSession{
-		id:       sessionId,
+	terminalSessions.Set(sessionID, TerminalSession{
+		id:       sessionID,
 		bound:    make(chan error),
 		sizeChan: make(chan remotecommand.TerminalSize),
 	})
-	go WaitForTerminal(k8sClient, cfg, request, sessionId)
-	response.WriteHeaderAndEntity(http.StatusOK, TerminalResponse{Id: sessionId})
+	go WaitForTerminal(k8sClient, cfg, request, sessionID)
+	response.WriteHeaderAndEntity(http.StatusOK, TerminalResponse{Id: sessionID})
 }
 
 func (apiHandler *APIHandler) handleGetDeployments(request *restful.Request, response *restful.Response) {
