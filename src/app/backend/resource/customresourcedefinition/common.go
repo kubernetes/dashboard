@@ -18,7 +18,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	api "k8s.io/api/core/v1"
-	apiextensions "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
+	apiextensions "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 )
 
@@ -92,7 +92,7 @@ func fromObjectCells(cells []dataselect.DataCell) []CustomResourceObject {
 func getCustomResourceDefinitionGroupVersion(crd *apiextensions.CustomResourceDefinition) schema.GroupVersion {
 	return schema.GroupVersion{
 		Group:   crd.Spec.Group,
-		Version: crd.Spec.Version,
+		Version: crd.Spec.Versions[0].Name,
 	}
 }
 
