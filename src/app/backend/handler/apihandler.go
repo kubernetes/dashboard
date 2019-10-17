@@ -149,7 +149,7 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			Writes(validation.ProtocolValidity{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/appdeployment/protocols").
-			To(apiHandler.handleGetAvailableProcotols).
+			To(apiHandler.handleGetAvailableProtocols).
 			Writes(deployment.Protocols{}))
 
 	apiV1Ws.Route(
@@ -939,12 +939,12 @@ func (apiHandler *APIHandler) handleGetReplicaCount(request *restful.Request, re
 	namespace := request.PathParameter("namespace")
 	kind := request.PathParameter("kind")
 	name := request.PathParameter("name")
-	scaleSpec, err := scaling.GetScaleSpec(cfg, kind, namespace, name)
+	replicaCounts, err := scaling.GetReplicaCounts(cfg, kind, namespace, name)
 	if err != nil {
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, scaleSpec)
+	response.WriteHeaderAndEntity(http.StatusOK, replicaCounts)
 }
 
 func (apiHandler *APIHandler) handleDeployFromFile(request *restful.Request, response *restful.Response) {
@@ -1024,7 +1024,7 @@ func (apiHandler *APIHandler) handleProtocolValidity(request *restful.Request, r
 	response.WriteHeaderAndEntity(http.StatusOK, validation.ValidateProtocol(spec))
 }
 
-func (apiHandler *APIHandler) handleGetAvailableProcotols(request *restful.Request, response *restful.Response) {
+func (apiHandler *APIHandler) handleGetAvailableProtocols(request *restful.Request, response *restful.Response) {
 	response.WriteHeaderAndEntity(http.StatusOK, deployment.GetAvailableProtocols())
 }
 
@@ -1165,7 +1165,7 @@ func (apiHandler *APIHandler) handleGetPodEvents(request *restful.Request, respo
 
 // Handles execute shell API call
 func (apiHandler *APIHandler) handleExecShell(request *restful.Request, response *restful.Response) {
-	sessionId, err := genTerminalSessionId()
+	sessionID, err := genTerminalSessionId()
 	if err != nil {
 		errors.HandleInternalError(response, err)
 		return
@@ -1183,13 +1183,13 @@ func (apiHandler *APIHandler) handleExecShell(request *restful.Request, response
 		return
 	}
 
-	terminalSessions.Set(sessionId, TerminalSession{
-		id:       sessionId,
+	terminalSessions.Set(sessionID, TerminalSession{
+		id:       sessionID,
 		bound:    make(chan error),
 		sizeChan: make(chan remotecommand.TerminalSize),
 	})
-	go WaitForTerminal(k8sClient, cfg, request, sessionId)
-	response.WriteHeaderAndEntity(http.StatusOK, TerminalResponse{Id: sessionId})
+	go WaitForTerminal(k8sClient, cfg, request, sessionID)
+	response.WriteHeaderAndEntity(http.StatusOK, TerminalResponse{Id: sessionID})
 }
 
 func (apiHandler *APIHandler) handleGetDeployments(request *restful.Request, response *restful.Response) {

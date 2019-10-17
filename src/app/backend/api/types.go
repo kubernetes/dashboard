@@ -141,6 +141,7 @@ const (
 	ResourceKindEndpoint                 = "endpoint"
 )
 
+// Scalable method return whether ResourceKind is scalable.
 func (k ResourceKind) Scalable() bool {
 	scalable := []ResourceKind{
 		ResourceKindDeployment,
@@ -177,6 +178,7 @@ const (
 	ClientTypePluginsClient       = "plugin"
 )
 
+// APIMapping is the mapping from resource kind to ClientType and Namespaced.
 type APIMapping struct {
 	// Kubernetes resource name.
 	Resource string
@@ -186,7 +188,7 @@ type APIMapping struct {
 	Namespaced bool
 }
 
-// Mapping from resource kind to K8s apiserver API path. This is mostly pluralization, because
+// KindToAPIMapping is the mapping from resource kind to K8s apiserver API path. This is mostly pluralization, because
 // Kubernetes apiserver uses plural paths and this project singular.
 // Must be kept in sync with the list of supported kinds.
 // See: https://kubernetes.io/docs/reference/
@@ -219,14 +221,14 @@ var KindToAPIMapping = map[string]APIMapping{
 }
 
 // IsSelectorMatching returns true when an object with the given selector targets the same
-// Resources (or subset) that the tested object with the given selector.
-func IsSelectorMatching(labelSelector map[string]string, testedObjectLabels map[string]string) bool {
+// Resources (or subset) that the target object with the given selector.
+func IsSelectorMatching(srcSelector map[string]string, targetObjectLabels map[string]string) bool {
 	// If service has no selectors, then assume it targets different resource.
-	if len(labelSelector) == 0 {
+	if len(srcSelector) == 0 {
 		return false
 	}
-	for label, value := range labelSelector {
-		if rsValue, ok := testedObjectLabels[label]; !ok || rsValue != value {
+	for label, value := range srcSelector {
+		if rsValue, ok := targetObjectLabels[label]; !ok || rsValue != value {
 			return false
 		}
 	}
@@ -234,18 +236,14 @@ func IsSelectorMatching(labelSelector map[string]string, testedObjectLabels map[
 }
 
 // IsLabelSelectorMatching returns true when a resource with the given selector targets the same
-// Resources(or subset) that a tested object selector with the given selector.
-func IsLabelSelectorMatching(selector map[string]string, labelSelector *v1.LabelSelector) bool {
-	// If the resource has no selectors, then assume it targets different Pods.
-	if len(selector) == 0 {
-		return false
+// Resources(or subset) that a target object selector with the given selector.
+func IsLabelSelectorMatching(srcSelector map[string]string, targetLabelSelector *v1.LabelSelector) bool {
+	// Check to see if targetLabelSelector pointer is not nil.
+	if targetLabelSelector != nil {
+		targetObjectLabels := targetLabelSelector.MatchLabels
+		return IsSelectorMatching(srcSelector, targetObjectLabels)
 	}
-	for label, value := range selector {
-		if rsValue, ok := labelSelector.MatchLabels[label]; !ok || rsValue != value {
-			return false
-		}
-	}
-	return true
+	return false
 }
 
 // ListEverything is a list options used to list all resources without any filtering.
