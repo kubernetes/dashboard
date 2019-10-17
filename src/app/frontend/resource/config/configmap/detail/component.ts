@@ -57,4 +57,12 @@ export class ConfigMapDetailComponent implements OnInit, OnDestroy {
     this.configMapSubscription_.unsubscribe();
     this.actionbar_.onDetailsLeave.emit();
   }
+
+  getConfigMapData(cm: ConfigMapDetail): string {
+    if (!cm) {
+      return '';
+    }
+
+    return JSON.stringify(cm.data);
+  }
 }

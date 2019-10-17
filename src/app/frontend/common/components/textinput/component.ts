@@ -36,8 +36,8 @@ enum EditorTheme {
   styleUrls: ['./style.scss'],
 })
 export class TextInputComponent implements OnInit {
-  @Output() textChange = new EventEmitter<string | StringMap>();
-  @Input() text: string | StringMap;
+  @Output() textChange = new EventEmitter<string>();
+  @Input() text: string;
   @Input() readOnly = false;
   @Input() mode = 'yaml';
   @Input() prettify = true;
@@ -64,19 +64,14 @@ export class TextInputComponent implements OnInit {
     }
   }
 
-  onTextChange(text: string | StringMap): void {
-    this.text = String(text);
-    this.textChange.emit(this.text);
+  onTextChange(text: string): void {
+    this.textChange.emit(text);
   }
 
   private prettify_(): void {
     switch (this.mode) {
       case 'json':
-        if (typeof this.text === 'string') {
-          this.text = JSON.stringify(JSON.parse(this.text), null, '\t');
-        } else {
-          this.text = JSON.stringify(this.text, null, '\t');
-        }
+        this.text = JSON.stringify(JSON.parse(this.text), null, '\t');
         break;
       default:
         // Do nothing when mode is not recognized.
