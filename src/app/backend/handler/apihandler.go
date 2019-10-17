@@ -939,7 +939,7 @@ func (apiHandler *APIHandler) handleGetReplicaCount(request *restful.Request, re
 	namespace := request.PathParameter("namespace")
 	kind := request.PathParameter("kind")
 	name := request.PathParameter("name")
-  replicaCounts, err := scaling.GetReplicaCounts(cfg, kind, namespace, name)
+	replicaCounts, err := scaling.GetReplicaCounts(cfg, kind, namespace, name)
 	if err != nil {
 		errors.HandleInternalError(response, err)
 		return
