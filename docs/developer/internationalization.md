@@ -1,6 +1,6 @@
 # Internationalization
 
-Based on current browser locale the Dashboard can be displayed in one of the supported languages listed below. In case it does not work, make sure that your browser's locale is identified with correct language code.
+Based on current browser locale the Dashboard can be displayed in one of the supported languages listed below. In case it does not work, make sure that your browser's locale is identified with correct language code. In more details, Dashboard determines requested language based on HTTP `Accept-Language` header from browser. We can check which language codes are requested by browser on `Network` tab in developer tool of browser.
 
 | Language           | Code |
 |--------------------|------|
@@ -40,6 +40,7 @@ Find new localizable texts in `i18n/[locale]/messages.[locale].xlf` file and tra
 Since dashboard team can not review translation files in your language, so dashboard team transfers authority to review and approve for updating your translation file. At first, you need to organize translation team for your language that manages dashboard translation file.
 
 1. Add your locale, e.g. `fr` or `ja`, into `"languages"` array of `"xfillmergeOptions"` in `package.json` file.
+  **Impotant: Locales should be written in lower case to be handled by Dashboard, e.g. `zh-tw`, not `zh-TW`**
 2. Run `npm run fix:i18n`. Then translation file for your language, e.g. `i18n/fr/messages.fr.xlf`, would be generated.
 3. Open your translation file and translate texts in `<target>` element into your language.
 
