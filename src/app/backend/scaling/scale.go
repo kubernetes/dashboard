@@ -117,6 +117,6 @@ func getGroupResource(kind string) schema.GroupResource {
 	if gr.Group != "" && gr.Resource != "" {
 		return gr
 	}
-	
+
 	return apps.Resource(kind)
 }
