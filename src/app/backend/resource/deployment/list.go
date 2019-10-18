@@ -28,7 +28,7 @@ import (
 	client "k8s.io/client-go/kubernetes"
 )
 
-// DeploymentListComponent contains a list of Deployments in the cluster.
+// DeploymentList contains a list of Deployments in the cluster.
 type DeploymentList struct {
 	ListMeta          api.ListMeta       `json:"listMeta"`
 	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`
@@ -75,7 +75,7 @@ func GetDeploymentList(client client.Interface, nsQuery *common.NamespaceQuery, 
 	return GetDeploymentListFromChannels(channels, dsQuery, metricClient)
 }
 
-// GetDeploymentList returns a list of all Deployments in the cluster
+// GetDeploymentListFromChannels returns a list of all Deployments in the cluster
 // reading required resource list once from the channels.
 func GetDeploymentListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery,
 	metricClient metricapi.MetricClient) (*DeploymentList, error) {

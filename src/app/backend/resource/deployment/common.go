@@ -28,6 +28,7 @@ import (
 
 type DeploymentCell apps.Deployment
 
+// GetProperty is used to get property of the deployment
 func (self DeploymentCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
 	switch name {
 	case dataselect.NameProperty:

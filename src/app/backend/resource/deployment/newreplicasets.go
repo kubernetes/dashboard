@@ -25,7 +25,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
 )
 
-//GetDeploymentOldReplicaSets returns old replica sets targeting Deployment with given name
+// GetDeploymentNewReplicaSet returns old replica sets targeting Deployment with given name
 func GetDeploymentNewReplicaSet(client client.Interface, dsQuery *dataselect.DataSelectQuery,
 	namespace string, deploymentName string) (*replicaset.ReplicaSet, error) {
 

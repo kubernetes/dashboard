@@ -96,10 +96,9 @@ func (verber *resourceVerber) getResourceSpecFromKind(kind string, namespaceSet 
 		if namespaceSet {
 			err = errors.NewInvalid(fmt.Sprintf("Set namespace for not-namespaced resource kind: %s", kind))
 			return
-		} else {
-			err = errors.NewInvalid(fmt.Sprintf("Set no namespace for namespaced resource kind: %s", kind))
-			return
 		}
+		err = errors.NewInvalid(fmt.Sprintf("Set no namespace for namespaced resource kind: %s", kind))
+		return
 	}
 
 	if client == nil {
