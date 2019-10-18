@@ -20,7 +20,7 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	apiextensions "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
+	apiextensions "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	"k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset/fake"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
@@ -42,7 +42,11 @@ func TestGetCustomResourceDefinition(t *testing.T) {
 								Kind:   "Foo",
 								Plural: "foos",
 							},
-							Version: "v1alpha1",
+							Versions: []apiextensions.CustomResourceDefinitionVersion{
+								{
+									Name: "v1alpha1",
+								},
+							},
 						},
 					},
 				},

@@ -21,22 +21,26 @@ limitations under the License.
   <div title
        i18n>Resource Information</div>
   <div content
+       id="resource-information"
        *ngIf="isInitialized"
        fxLayout="row wrap">
     <kd-property *ngIf="crd?.version">
       <div key
            i18n>Version</div>
-      <div value>{{crd?.version}}</div>
+      <div id="resource-version"
+           value>{{crd?.version}}</div>
     </kd-property>
     <kd-property>
       <div key
            i18n>Scope</div>
-      <div value>{{crd?.scope}}</div>
+      <div id="resource-scope"
+           value>{{crd?.scope}}</div>
     </kd-property>
     <kd-property>
       <div key
            i18n>Group</div>
-      <div value>{{crd?.group}}</div>
+      <div id="resource-group"
+           value>{{crd?.group}}</div>
     </kd-property>
     <kd-property *ngIf="crd.subresources.length > 0">
       <div key
@@ -50,6 +54,7 @@ limitations under the License.
   <div title
        i18n>Accepted Names</div>
   <div content
+       id="accepted-names"
        *ngIf="isInitialized"
        fxLayout="row wrap">
     <kd-property>
