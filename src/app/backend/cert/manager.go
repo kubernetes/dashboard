@@ -22,7 +22,7 @@ import (
 	certapi "github.com/kubernetes/dashboard/src/app/backend/cert/api"
 )
 
-// Manager is used to implements cert/api/types.Manager interface. See Manager for more information.
+// Manager is used to implement cert/api/types.Manager interface. See Manager for more information.
 type Manager struct {
 	creator certapi.Creator
 	certDir string
