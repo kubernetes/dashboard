@@ -30,13 +30,14 @@ limitations under the License.
   </a>
 </div>
 
-<kd-text-input [(text)]="inputData"></kd-text-input>
+<kd-text-input id="input-text" [(text)]="inputData"></kd-text-input>
 
 <button type="button"
         (click)="create()"
         [disabled]="isCreateDisabled()"
         color="primary"
         mat-raised-button
+        id="upload"
         i18n>
   Upload
 </button>
@@ -45,6 +46,7 @@ limitations under the License.
         (click)="cancel()"
         color="primary"
         mat-button
+        id="cancel"
         i18n>
   Cancel
 </button>
