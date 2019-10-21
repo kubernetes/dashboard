@@ -49,7 +49,7 @@ type Service struct {
 	ClusterIP string `json:"clusterIP"`
 }
 
-// ServiceListComponent contains a list of services in the cluster.
+// ServiceList contains a list of services in the cluster.
 type ServiceList struct {
 	ListMeta api.ListMeta `json:"listMeta"`
 
