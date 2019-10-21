@@ -98,12 +98,12 @@ func NewInternal(reason string) *errors.StatusError {
 // reconstructed by clients from a REST response. Public to allow easy type switches.
 func NewUnexpectedObject(obj runtime.Object) *errors.StatusError {
 	return &errors.StatusError{
-	    ErrStatus: metav1.Status{
-		    Status:  metav1.StatusFailure,
-		    Code:    http.StatusInternalServerError,
-		    Reason:  metav1.StatusReasonInternalError,
-		    Message: errors.FromObject(obj).Error(),
-	    },
+		ErrStatus: metav1.Status{
+			Status:  metav1.StatusFailure,
+			Code:    http.StatusInternalServerError,
+			Reason:  metav1.StatusReasonInternalError,
+			Message: errors.FromObject(obj).Error(),
+		},
 	}
 }
 
