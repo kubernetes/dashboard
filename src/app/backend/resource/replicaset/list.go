@@ -28,7 +28,7 @@ import (
 	client "k8s.io/client-go/kubernetes"
 )
 
-// ReplicaSetListComponent contains a list of Replica Sets in the cluster.
+// ReplicaSetList contains a list of Replica Sets in the cluster.
 type ReplicaSetList struct {
 	ListMeta          api.ListMeta       `json:"listMeta"`
 	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`

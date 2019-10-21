@@ -24,7 +24,7 @@ import (
 	k8sClient "k8s.io/client-go/kubernetes"
 )
 
-// DaemonSeDetail represents detailed information about a Daemon Set.
+// DaemonSetDetail represents detailed information about a Daemon Set.
 type DaemonSetDetail struct {
 	// Extends list item structure.
 	DaemonSet `json:",inline"`
@@ -35,7 +35,7 @@ type DaemonSetDetail struct {
 	Errors []error `json:"errors"`
 }
 
-// Returns detailed information about the given daemon set in the given namespace.
+// GetDaemonSetDetail Returns detailed information about the given daemon set in the given namespace.
 func GetDaemonSetDetail(client k8sClient.Interface, metricClient metricapi.MetricClient,
 	namespace, name string) (*DaemonSetDetail, error) {
 

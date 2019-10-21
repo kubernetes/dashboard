@@ -28,7 +28,7 @@ import (
 	k8sClient "k8s.io/client-go/kubernetes"
 )
 
-// PodListComponent contains a list of Pods in the cluster.
+// PodList contains a list of Pods in the cluster.
 type PodList struct {
 	ListMeta          api.ListMeta       `json:"listMeta"`
 	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`

@@ -32,7 +32,7 @@ type Ingress struct {
 	Endpoints []common.Endpoint `json:"endpoints"`
 }
 
-// IngressListComponent - response structure for a queried ingress list.
+// IngressList - response structure for a queried ingress list.
 type IngressList struct {
 	api.ListMeta `json:"listMeta"`
 

@@ -27,12 +27,11 @@ func (rMap rangeMap) getRange(resource api.ResourceName) *LimitRangeItem {
 	if !ok {
 		rMap[resource] = &LimitRangeItem{}
 		return rMap[resource]
-	} else {
-		return r
 	}
+	return r
 }
 
-// LimitRange provides resource limit range values
+// LimitRangeItem provides resource limit range values
 type LimitRangeItem struct {
 	// ResourceName usage constraints on this kind by resource name
 	ResourceName string `json:"resourceName,omitempty"`

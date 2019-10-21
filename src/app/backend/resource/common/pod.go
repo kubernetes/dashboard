@@ -22,7 +22,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-// FilterPodsByControllerResource returns a subset of pods controlled by given deployment.
+// FilterDeploymentPodsByOwnerReference returns a subset of pods controlled by given deployment.
 func FilterDeploymentPodsByOwnerReference(deployment apps.Deployment, allRS []apps.ReplicaSet,
 	allPods []v1.Pod) []v1.Pod {
 	var matchingPods []v1.Pod
