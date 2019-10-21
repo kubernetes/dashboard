@@ -70,7 +70,7 @@ type Secret struct {
 	Type       v1.SecretType  `json:"type"`
 }
 
-// SecretsList is a response structure for a queried secrets list.
+// SecretList is a response structure for a queried secrets list.
 type SecretList struct {
 	api.ListMeta `json:"listMeta"`
 
