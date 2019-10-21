@@ -41,10 +41,9 @@ func AppendError(err error, nonCriticalErrors []error) ([]error, error) {
 	if err != nil {
 		if isErrorCritical(err) {
 			return nonCriticalErrors, LocalizeError(err)
-		} else {
-			log.Printf("Non-critical error occurred during resource retrieval: %s", err)
-			nonCriticalErrors = appendMissing(nonCriticalErrors, LocalizeError(err))
 		}
+		log.Printf("Non-critical error occurred during resource retrieval: %s", err)
+		nonCriticalErrors = appendMissing(nonCriticalErrors, LocalizeError(err))
 	}
 	return nonCriticalErrors, nil
 }
@@ -113,6 +112,7 @@ func IsNotFoundError(err error) bool {
 	return status.ErrStatus.Code == http.StatusNotFound
 }
 
+// IsTokenExpiredError determines if the err is the MsgTokenExpiredError.
 func IsTokenExpiredError(err error) bool {
 	if err == nil {
 		return false
@@ -132,7 +132,7 @@ func HandleInternalError(response *restful.Response, err error) {
 	response.WriteErrorString(statusCode, err.Error()+"\n")
 }
 
-// Handle HTTP Errors more accurately based on the localized consts
+// HandleHTTPError is used to handle HTTP Errors more accurately based on the localized consts
 func HandleHTTPError(err error) int {
 	if err == nil {
 		return http.StatusInternalServerError
