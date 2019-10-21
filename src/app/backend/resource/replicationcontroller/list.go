@@ -27,7 +27,7 @@ import (
 	client "k8s.io/client-go/kubernetes"
 )
 
-// ReplicationControllerListComponent contains a list of Replication Controllers in the cluster.
+// ReplicationControllerList contains a list of Replication Controllers in the cluster.
 type ReplicationControllerList struct {
 	ListMeta          api.ListMeta       `json:"listMeta"`
 	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`

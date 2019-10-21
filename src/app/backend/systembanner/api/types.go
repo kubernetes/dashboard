@@ -33,10 +33,10 @@ const (
 	// SystemBannerSeverityInfo is the lowest of allowed system banner severities.
 	SystemBannerSeverityInfo SystemBannerSeverity = "INFO"
 
-	// SystemBannerSeverityInfo is in the middle of allowed system banner severities.
+	// SystemBannerSeverityWarning is in the middle of allowed system banner severities.
 	SystemBannerSeverityWarning SystemBannerSeverity = "WARNING"
 
-	// SystemBannerSeverityInfo is the highest of allowed system banner severities.
+	// SystemBannerSeverityError is the highest of allowed system banner severities.
 	SystemBannerSeverityError SystemBannerSeverity = "ERROR"
 )
 
