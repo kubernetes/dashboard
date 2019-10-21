@@ -82,12 +82,11 @@ func NewNotFound(reason string) *errors.StatusError {
 // which is an error intended for consumption by a REST API server; it can also be
 // reconstructed by clients from a REST response. Public to allow easy type switches.
 func NewInternal(reason string) *errors.StatusError {
-	return &errors.StatusError{
-    ErrStatus: metav1.Status{
-      Status: metav1.StatusFailure,
-      Code:   http.StatusInternalServerError,
-      Reason: metav1.StatusReasonInternalError,
-      Details: &metav1.StatusDetails{
+	return &errors.StatusError{ErrStatus: metav1.Status{
+		Status: metav1.StatusFailure,
+		Code:   http.StatusInternalServerError,
+		Reason: metav1.StatusReasonInternalError,
+		Details: &metav1.StatusDetails{
 			Causes: []metav1.StatusCause{{Message: reason}},
 		},
 		Message: fmt.Sprintf("Internal error occurred: %s", reason),
