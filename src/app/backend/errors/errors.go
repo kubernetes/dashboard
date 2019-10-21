@@ -70,10 +70,10 @@ func NewInvalid(reason string) *errors.StatusError {
 func NewNotFound(reason string) *errors.StatusError {
 	return &errors.StatusError{
 		ErrStatus: metav1.Status{
-		Status:	metav1.StatusFailure,
-		Code:	http.StatusNotFound,
-		Reason:	metav1.StatusReasonNotFound,
-		Message:	reason,
+		Status:    metav1.StatusFailure,
+		Code:      http.StatusNotFound,
+		Reason:    metav1.StatusReasonNotFound,
+		Message:   reason,
 		},
 	}
 }
@@ -84,9 +84,9 @@ func NewNotFound(reason string) *errors.StatusError {
 func NewInternal(reason string) *errors.StatusError {
 	return &errors.StatusError{
 		ErrStatus: metav1.Status{
-			Status: metav1.StatusFailure,
-			Code:	http.StatusInternalServerError,
-			Reason: metav1.StatusReasonInternalError,
+			Status:  metav1.StatusFailure,
+			Code:	   http.StatusInternalServerError,
+			Reason:  metav1.StatusReasonInternalError,
 			Details: &metav1.StatusDetails{
 				Causes: []metav1.StatusCause{{Message: reason}},
 			},
