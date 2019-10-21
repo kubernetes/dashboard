@@ -25,10 +25,15 @@ import (
 
 var _ error = &errors.StatusError{}
 
+// NewUnauthorized returns an error indicating the client is not authorized to perform the requested
+// action.
 func NewUnauthorized(reason string) *errors.StatusError {
 	return errors.NewUnauthorized(reason)
 }
 
+// NewTokenExpired return a statusError
+// which is an error intended for consumption by a REST API server; it can also be
+// reconstructed by clients from a REST response. Public to allow easy type switches.
 func NewTokenExpired(reason string) *errors.StatusError {
 	return &errors.StatusError{
 		ErrStatus: metav1.Status{
@@ -40,10 +45,14 @@ func NewTokenExpired(reason string) *errors.StatusError {
 	}
 }
 
+// NewBadRequest creates an error that indicates that the request is invalid and can not be processed.
 func NewBadRequest(reason string) *errors.StatusError {
 	return errors.NewBadRequest(reason)
 }
 
+// NewInvalid return a statusError
+// which is an error intended for consumption by a REST API server; it can also be
+// reconstructed by clients from a REST response. Public to allow easy type switches.
 func NewInvalid(reason string) *errors.StatusError {
 	return &errors.StatusError{
 		ErrStatus: metav1.Status{
@@ -55,6 +64,9 @@ func NewInvalid(reason string) *errors.StatusError {
 	}
 }
 
+// NewNotFound return a statusError
+// which is an error intended for consumption by a REST API server; it can also be
+// reconstructed by clients from a REST response. Public to allow easy type switches.
 func NewNotFound(reason string) *errors.StatusError {
 	return &errors.StatusError{
 		ErrStatus: metav1.Status{
@@ -66,6 +78,9 @@ func NewNotFound(reason string) *errors.StatusError {
 	}
 }
 
+// NewInternal return a statusError
+// which is an error intended for consumption by a REST API server; it can also be
+// reconstructed by clients from a REST response. Public to allow easy type switches.
 func NewInternal(reason string) *errors.StatusError {
 	return &errors.StatusError{ErrStatus: metav1.Status{
 		Status: metav1.StatusFailure,
@@ -78,15 +93,24 @@ func NewInternal(reason string) *errors.StatusError {
 	}}
 }
 
+// NewUnexpectedObject return a statusError
+// which is an error intended for consumption by a REST API server; it can also be
+// reconstructed by clients from a REST response. Public to allow easy type switches.
 func NewUnexpectedObject(obj runtime.Object) *errors.StatusError {
-	return &errors.StatusError{ErrStatus: metav1.Status{
-		Status:  metav1.StatusFailure,
-		Code:    http.StatusInternalServerError,
-		Reason:  metav1.StatusReasonInternalError,
-		Message: errors.FromObject(obj).Error(),
-	}}
+	return &errors.StatusError{
+		ErrStatus: metav1.Status{
+			Status:  metav1.StatusFailure,
+			Code:    http.StatusInternalServerError,
+			Reason:  metav1.StatusReasonInternalError,
+			Message: errors.FromObject(obj).Error(),
+		},
+	}
 }
 
+// NewGenericResponse return a statusError
+// which is an error intended for consumption by a REST API server; it can also be
+// reconstructed by clients from a REST response. Public to allow easy type switches
+// by switch the error code.
 func NewGenericResponse(code int, serverMessage string) *errors.StatusError {
 	reason := metav1.StatusReasonUnknown
 	message := fmt.Sprintf("the server responded with the status code %d but did not return more information", code)
@@ -145,6 +169,7 @@ func NewGenericResponse(code int, serverMessage string) *errors.StatusError {
 	}}
 }
 
+// IsTokenExpired determines if the err is an error which errStatus' message is MsgTokenExpiredError
 func IsTokenExpired(err error) bool {
 	statusErr, ok := err.(*errors.StatusError)
 	if !ok {
@@ -154,10 +179,13 @@ func IsTokenExpired(err error) bool {
 	return statusErr.ErrStatus.Message == MsgTokenExpiredError
 }
 
+// IsAlreadyExists determines if the err is an error which indicates that a specified resource already exists.
 func IsAlreadyExists(err error) bool {
 	return errors.IsAlreadyExists(err)
 }
 
+// IsUnauthorized determines if err is an error which indicates that the request is unauthorized and
+// requires authentication by the user.
 func IsUnauthorized(err error) bool {
 	return errors.IsUnauthorized(err)
 }
