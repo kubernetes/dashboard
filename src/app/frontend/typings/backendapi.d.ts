@@ -535,6 +535,7 @@ export interface NodeDetail extends ResourceDetail {
   initContainerImages: string[];
   addresses: NodeAddress[];
   taints: NodeTaint[];
+  metrics: Metric[];
   conditions: Condition[];
   podList: PodList;
   eventList: EventList;
