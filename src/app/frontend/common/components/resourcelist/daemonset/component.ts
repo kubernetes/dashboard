@@ -20,7 +20,7 @@ import {
   ComponentFactoryResolver,
   Input,
 } from '@angular/core';
-import {DaemonSet, DaemonSetList, Event} from '@api/backendapi';
+import {DaemonSet, DaemonSetList, Event, Metric} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
 
 import {ResourceListWithStatuses} from '../../../resources/list';
@@ -37,6 +37,8 @@ import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 })
 export class DaemonSetListComponent extends ResourceListWithStatuses<DaemonSetList, DaemonSet> {
   @Input() endpoint = EndpointManager.resource(Resource.daemonSet, true).list();
+  @Input() showMetrics = false;
+  cumulativeMetrics: Metric[];
 
   constructor(
     private readonly daemonSet_: NamespacedResourceService<DaemonSetList>,
@@ -65,6 +67,7 @@ export class DaemonSetListComponent extends ResourceListWithStatuses<DaemonSetLi
   }
 
   map(daemonSetList: DaemonSetList): DaemonSet[] {
+    this.cumulativeMetrics = daemonSetList.cumulativeMetrics;
     return daemonSetList.daemonSets;
   }
 

@@ -20,7 +20,7 @@ import {
   ComponentFactoryResolver,
   Input,
 } from '@angular/core';
-import {Event, StatefulSet, StatefulSetList} from '@api/backendapi';
+import {Event, Metric, StatefulSet, StatefulSetList} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
@@ -39,6 +39,8 @@ export class StatefulSetListComponent extends ResourceListWithStatuses<
   StatefulSet
 > {
   @Input() endpoint = EndpointManager.resource(Resource.statefulSet, true).list();
+  @Input() showMetrics = false;
+  cumulativeMetrics: Metric[];
 
   constructor(
     private readonly statefulSet_: NamespacedResourceService<StatefulSetList>,
@@ -67,6 +69,7 @@ export class StatefulSetListComponent extends ResourceListWithStatuses<
   }
 
   map(statefulSetList: StatefulSetList): StatefulSet[] {
+    this.cumulativeMetrics = statefulSetList.cumulativeMetrics;
     return statefulSetList.statefulSets;
   }
 

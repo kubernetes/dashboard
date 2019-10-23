@@ -46,6 +46,7 @@ import {ExternalEndpointComponent} from './endpoint/external/component';
 import {InternalEndpointComponent} from './endpoint/internal/component';
 import {GraphComponent} from './graph/component';
 import {GraphCardComponent} from './graphcard/component';
+import {GraphMetricsComponent} from './graphmetrics/component';
 import {HiddenPropertyComponent} from './hiddenproperty/component';
 import {ResourceLimitListComponent} from './limits/component';
 import {ColumnComponent} from './list/column/component';
@@ -121,8 +122,6 @@ const components = [
   CRDListComponent,
   CRDObjectListComponent,
   CRDVersionListComponent,
-  GraphComponent,
-  GraphCardComponent,
 
   DaemonSetListComponent,
   DateComponent,
@@ -132,6 +131,10 @@ const components = [
   EndpointListComponent,
   ExternalEndpointComponent,
   EventListComponent,
+
+  GraphComponent,
+  GraphCardComponent,
+  GraphMetricsComponent,
 
   HiddenPropertyComponent,
 

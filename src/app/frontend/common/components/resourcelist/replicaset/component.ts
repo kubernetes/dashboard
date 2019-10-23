@@ -21,7 +21,7 @@ import {
   Input,
 } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Event, ReplicaSet, ReplicaSetList} from '@api/backendapi';
+import {Event, Metric, ReplicaSet, ReplicaSetList} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
 
 import {ResourceListWithStatuses} from '../../../resources/list';
@@ -39,6 +39,8 @@ import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSetList, ReplicaSet> {
   @Input() title: string;
   @Input() endpoint = EndpointManager.resource(Resource.replicaSet, true).list();
+  @Input() showMetrics = false;
+  cumulativeMetrics: Metric[];
 
   constructor(
     private readonly replicaSet_: NamespacedResourceService<ReplicaSetList>,
@@ -68,6 +70,7 @@ export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSet
   }
 
   map(rsList: ReplicaSetList): ReplicaSet[] {
+    this.cumulativeMetrics = rsList.cumulativeMetrics;
     return rsList.replicaSets;
   }
 

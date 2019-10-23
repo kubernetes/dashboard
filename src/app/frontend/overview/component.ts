@@ -35,7 +35,6 @@ import {Helper, ResourceRatioModes} from './helper';
 @Component({
   selector: 'kd-overview',
   templateUrl: './template.html',
-  styleUrls: ['./style.scss'],
 })
 export class OverviewComponent extends GroupedResourceList {
   hasWorkloads(): boolean {
@@ -54,12 +53,6 @@ export class OverviewComponent extends GroupedResourceList {
     return (
       Object.values(this.resourcesRatio).reduce((sum, ratioItems) => sum + ratioItems.length, 0) !==
       0
-    );
-  }
-
-  showGraphs(): boolean {
-    return this.cumulativeMetrics.every(
-      metrics => metrics.dataPoints && metrics.dataPoints.length > 1,
     );
   }
 }
