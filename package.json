@@ -173,7 +173,7 @@
     "minimist": "1.2.0",
     "ngx-i18nsupport": "0.17.1",
     "node-gyp": "5.0.4",
-    "node-sass": "4.12.0",
+    "node-sass": "4.13.0",
     "q": "1.5.1",
     "raw-loader": "1.0.0",
     "sass-lint": "1.13.1",
