@@ -34,6 +34,7 @@ import {OverviewComponent} from './component';
 import {Helper, ResourceRatioModes} from './helper';
 
 const mockDaemonSetData: DaemonSetList = {
+  cumulativeMetrics: [],
   listMeta: {totalItems: 1},
   daemonSets: [],
   status: {running: 1, pending: 0, succeeded: 0, failed: 0},

@@ -54,10 +54,4 @@ export class WorkloadsComponent extends GroupedResourceList {
       0
     );
   }
-
-  showGraphs(): boolean {
-    return this.cumulativeMetrics.every(
-      metrics => metrics.dataPoints && metrics.dataPoints.length > 1,
-    );
-  }
 }

@@ -89,11 +89,13 @@ export interface CRDObjectList extends ResourceList {
 }
 
 export interface DaemonSetList extends ResourceList {
+  cumulativeMetrics: Metric[] | null;
   daemonSets: DaemonSet[];
   status: Status;
 }
 
 export interface DeploymentList extends ResourceList {
+  cumulativeMetrics: Metric[] | null;
   deployments: Deployment[];
   status: Status;
 }
@@ -124,6 +126,7 @@ export interface NamespaceList extends ResourceList {
 }
 
 export interface NodeList extends ResourceList {
+  cumulativeMetrics: Metric[] | null;
   nodes: Node[];
 }
 
@@ -147,6 +150,7 @@ export interface PodList extends ResourceList {
 }
 
 export interface ReplicaSetList extends ResourceList {
+  cumulativeMetrics: Metric[] | null;
   replicaSets: ReplicaSet[];
   status: Status;
 }
@@ -169,6 +173,7 @@ export interface ServiceList extends ResourceList {
 }
 
 export interface StatefulSetList extends ResourceList {
+  cumulativeMetrics: Metric[] | null;
   statefulSets: StatefulSet[];
   status: Status;
 }
@@ -512,7 +517,7 @@ export interface PodDetail extends ResourceDetail {
   nodeName: string;
   restartCount: number;
   qosClass: string;
-  metrics: PodMetrics;
+  metrics: Metric[];
   conditions: Condition[];
   controller: Resource;
   eventList: EventList;
@@ -530,6 +535,7 @@ export interface NodeDetail extends ResourceDetail {
   initContainerImages: string[];
   addresses: NodeAddress[];
   taints: NodeTaint[];
+  metrics: Metric[];
   conditions: Condition[];
   podList: PodList;
   eventList: EventList;

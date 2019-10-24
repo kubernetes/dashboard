@@ -20,7 +20,7 @@ import {
   ComponentFactoryResolver,
   Input,
 } from '@angular/core';
-import {Deployment, DeploymentList, Event} from '@api/backendapi';
+import {Deployment, DeploymentList, Event, Metric} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
@@ -36,6 +36,8 @@ import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 })
 export class DeploymentListComponent extends ResourceListWithStatuses<DeploymentList, Deployment> {
   @Input() endpoint = EndpointManager.resource(Resource.deployment, true).list();
+  @Input() showMetrics = false;
+  cumulativeMetrics: Metric[];
 
   constructor(
     private readonly deployment_: NamespacedResourceService<DeploymentList>,
@@ -64,6 +66,7 @@ export class DeploymentListComponent extends ResourceListWithStatuses<Deployment
   }
 
   map(deploymentList: DeploymentList): Deployment[] {
+    this.cumulativeMetrics = deploymentList.cumulativeMetrics;
     return deploymentList.deployments;
   }
 

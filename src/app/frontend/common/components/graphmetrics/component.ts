@@ -12,10 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {Metric} from '@api/backendapi';
 
 @Component({
-  selector: 'kd-stateful-set-state',
-  template: '<kd-stateful-set-list [showMetrics]="true"></kd-stateful-set-list>',
+  selector: 'kd-graph-metrics',
+  templateUrl: './template.html',
+  styleUrls: ['./style.scss'],
 })
-export class StatefulSetListComponent {}
+export class GraphMetricsComponent {
+  @Input() metrics: Metric[];
+
+  showGraphs(): boolean {
+    return (
+      this.metrics &&
+      this.metrics.every(metrics => metrics.dataPoints && metrics.dataPoints.length > 1)
+    );
+  }
+}
