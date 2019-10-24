@@ -23,7 +23,7 @@ limitations under the License.
        i18n>Data</div>
   <div content>
     <kd-text-input *ngIf="configMap?.data"
-                   [text]="configMap?.data"
+                   [text]="getConfigMapData(configMap)"
                    [readOnly]="true"
                    [border]="false"
                    mode="json"></kd-text-input>

@@ -21,5 +21,5 @@ limitations under the License.
             [mode]="mode"
             [theme]="theme"
             [ngClass]="{'kd-border': border}"
-            (textChange)="onTextChange($event)"
+            (textChange)="onTextChange($event.toString())"
             class="kd-ace"></ace-editor>
