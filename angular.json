@@ -21,6 +21,11 @@
                 "glob": "**/*",
                 "input": "src/app/frontend/assets",
                 "output": "/assets"
+              },
+              {
+                "glob": "robots.txt",
+                "input": "src/app/frontend/assets",
+                "output": "/"
               }
             ],
             "styles": [
