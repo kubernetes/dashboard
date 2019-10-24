@@ -89,25 +89,25 @@ func ToReplicationController(replicationController *v1.ReplicationController,
 
 type ReplicationControllerCell v1.ReplicationController
 
-func (self ReplicationControllerCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
+func (cell ReplicationControllerCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
 	switch name {
 	case dataselect.NameProperty:
-		return dataselect.StdComparableString(self.ObjectMeta.Name)
+		return dataselect.StdComparableString(cell.ObjectMeta.Name)
 	case dataselect.CreationTimestampProperty:
-		return dataselect.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
+		return dataselect.StdComparableTime(cell.ObjectMeta.CreationTimestamp.Time)
 	case dataselect.NamespaceProperty:
-		return dataselect.StdComparableString(self.ObjectMeta.Namespace)
+		return dataselect.StdComparableString(cell.ObjectMeta.Namespace)
 	default:
 		// if name is not supported then just return a constant dummy value, sort will have no effect.
 		return nil
 	}
 }
-func (self ReplicationControllerCell) GetResourceSelector() *metricapi.ResourceSelector {
+func (cell ReplicationControllerCell) GetResourceSelector() *metricapi.ResourceSelector {
 	return &metricapi.ResourceSelector{
-		Namespace:    self.ObjectMeta.Namespace,
+		Namespace:    cell.ObjectMeta.Namespace,
 		ResourceType: api.ResourceKindReplicationController,
-		ResourceName: self.ObjectMeta.Name,
-		UID:          self.UID,
+		ResourceName: cell.ObjectMeta.Name,
+		UID:          cell.UID,
 	}
 }
 

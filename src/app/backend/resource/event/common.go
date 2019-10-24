@@ -148,7 +148,7 @@ func GetNamespaceEvents(client kubernetes.Interface, dsQuery *dataselect.DataSel
 	return CreateEventList(FillEventsType(events.Items), dsQuery), nil
 }
 
-// Based on event Reason fills event Type in order to allow correct filtering by Type.
+// FillEventsType based on event Reason fills event Type in order to allow correct filtering by Type.
 func FillEventsType(events []v1.Event) []v1.Event {
 	for i := range events {
 		// Fill in only events with empty type.
@@ -217,14 +217,14 @@ func CreateEventList(events []v1.Event, dsQuery *dataselect.DataSelectQuery) com
 
 type EventCell v1.Event
 
-func (self EventCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
+func (cell EventCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
 	switch name {
 	case dataselect.NameProperty:
-		return dataselect.StdComparableString(self.ObjectMeta.Name)
+		return dataselect.StdComparableString(cell.ObjectMeta.Name)
 	case dataselect.CreationTimestampProperty:
-		return dataselect.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
+		return dataselect.StdComparableTime(cell.ObjectMeta.CreationTimestamp.Time)
 	case dataselect.NamespaceProperty:
-		return dataselect.StdComparableString(self.ObjectMeta.Namespace)
+		return dataselect.StdComparableString(cell.ObjectMeta.Namespace)
 	default:
 		// if name is not supported then just return a constant dummy value, sort will have no effect.
 		return nil

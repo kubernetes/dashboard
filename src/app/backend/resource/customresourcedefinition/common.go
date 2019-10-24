@@ -24,12 +24,12 @@ import (
 
 type CustomResourceDefinitionCell apiextensions.CustomResourceDefinition
 
-func (self CustomResourceDefinitionCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
+func (cell CustomResourceDefinitionCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
 	switch name {
 	case dataselect.NameProperty:
-		return dataselect.StdComparableString(self.ObjectMeta.Name)
+		return dataselect.StdComparableString(cell.ObjectMeta.Name)
 	case dataselect.CreationTimestampProperty:
-		return dataselect.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
+		return dataselect.StdComparableTime(cell.ObjectMeta.CreationTimestamp.Time)
 	default:
 		// if name is not supported then just return a constant dummy value, sort will have no effect.
 		return nil
@@ -57,14 +57,14 @@ func fromCells(cells []dataselect.DataCell) []apiextensions.CustomResourceDefini
 // The code below allows to perform complex data section on CustomResourceObject.
 type CustomResourceObjectCell CustomResourceObject
 
-func (self CustomResourceObjectCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
+func (cell CustomResourceObjectCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
 	switch name {
 	case dataselect.NameProperty:
-		return dataselect.StdComparableString(self.ObjectMeta.Name)
+		return dataselect.StdComparableString(cell.ObjectMeta.Name)
 	case dataselect.CreationTimestampProperty:
-		return dataselect.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
+		return dataselect.StdComparableTime(cell.ObjectMeta.CreationTimestamp.Time)
 	case dataselect.NamespaceProperty:
-		return dataselect.StdComparableString(self.ObjectMeta.Namespace)
+		return dataselect.StdComparableString(cell.ObjectMeta.Namespace)
 	default:
 		// if name is not supported then just return a constant dummy value, sort will have no effect.
 		return nil

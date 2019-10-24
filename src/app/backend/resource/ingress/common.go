@@ -23,14 +23,14 @@ import (
 
 type IngressCell extensions.Ingress
 
-func (self IngressCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
+func (cell IngressCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
 	switch name {
 	case dataselect.NameProperty:
-		return dataselect.StdComparableString(self.ObjectMeta.Name)
+		return dataselect.StdComparableString(cell.ObjectMeta.Name)
 	case dataselect.CreationTimestampProperty:
-		return dataselect.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
+		return dataselect.StdComparableTime(cell.ObjectMeta.CreationTimestamp.Time)
 	case dataselect.NamespaceProperty:
-		return dataselect.StdComparableString(self.ObjectMeta.Namespace)
+		return dataselect.StdComparableString(cell.ObjectMeta.Namespace)
 	default:
 		// if name is not supported then just return a constant dummy value, sort will have no effect.
 		return nil

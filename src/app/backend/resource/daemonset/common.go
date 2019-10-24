@@ -28,7 +28,7 @@ import (
 	client "k8s.io/client-go/kubernetes"
 )
 
-// Based on given selector returns list of services that are candidates for deletion.
+// GetServicesForDSDeletion based on given selector returns list of services that are candidates for deletion.
 // Services are matched by daemon sets' label selector. They are deleted if given
 // label selector is targeting only 1 daemon set.
 func GetServicesForDSDeletion(client client.Interface, labelSelector labels.Selector,
@@ -64,26 +64,26 @@ func GetServicesForDSDeletion(client client.Interface, labelSelector labels.Sele
 
 type DaemonSetCell apps.DaemonSet
 
-func (self DaemonSetCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
+func (cell DaemonSetCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
 	switch name {
 	case dataselect.NameProperty:
-		return dataselect.StdComparableString(self.ObjectMeta.Name)
+		return dataselect.StdComparableString(cell.ObjectMeta.Name)
 	case dataselect.CreationTimestampProperty:
-		return dataselect.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
+		return dataselect.StdComparableTime(cell.ObjectMeta.CreationTimestamp.Time)
 	case dataselect.NamespaceProperty:
-		return dataselect.StdComparableString(self.ObjectMeta.Namespace)
+		return dataselect.StdComparableString(cell.ObjectMeta.Namespace)
 	default:
 		// if name is not supported then just return a constant dummy value, sort will have no effect.
 		return nil
 	}
 }
 
-func (self DaemonSetCell) GetResourceSelector() *metricapi.ResourceSelector {
+func (cell DaemonSetCell) GetResourceSelector() *metricapi.ResourceSelector {
 	return &metricapi.ResourceSelector{
-		Namespace:    self.ObjectMeta.Namespace,
+		Namespace:    cell.ObjectMeta.Namespace,
 		ResourceType: api.ResourceKindDaemonSet,
-		ResourceName: self.ObjectMeta.Name,
-		UID:          self.UID,
+		ResourceName: cell.ObjectMeta.Name,
+		UID:          cell.UID,
 	}
 }
 
