@@ -148,7 +148,7 @@ func GetNamespaceEvents(client kubernetes.Interface, dsQuery *dataselect.DataSel
 	return CreateEventList(FillEventsType(events.Items), dsQuery), nil
 }
 
-// Based on event Reason fills event Type in order to allow correct filtering by Type.
+// FillEventsType is based on event Reason fills event Type in order to allow correct filtering by Type.
 func FillEventsType(events []v1.Event) []v1.Event {
 	for i := range events {
 		// Fill in only events with empty type.

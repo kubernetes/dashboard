@@ -22,7 +22,7 @@ import (
 // LINE_INDEX_NOT_FOUND is returned if requested line could not be found
 var LINE_INDEX_NOT_FOUND = -1
 
-// Default number of lines that should be returned in case of invalid request.
+// DefaultDisplayNumLogLines returns default number of lines in case of invalid request.
 var DefaultDisplayNumLogLines = 100
 
 // MaxLogLines is a number that will be certainly bigger than any number of logs. Here 2 billion logs is certainly much larger
@@ -51,7 +51,7 @@ var OldestLogLineId = LogLineId{
 	LogTimestamp: OldestTimestamp,
 }
 
-// Default log view selector that is used in case of invalid request
+// DefaultSelection loads default log view selector that is used in case of invalid request
 // Downloads newest DefaultDisplayNumLogLines lines.
 var DefaultSelection = &Selection{
 	OffsetFrom:      1 - DefaultDisplayNumLogLines,
@@ -60,14 +60,14 @@ var DefaultSelection = &Selection{
 	LogFilePosition: End,
 }
 
-// Returns all logs.
+// AllSelection returns all logs.
 var AllSelection = &Selection{
 	OffsetFrom:     -MaxLogLines,
 	OffsetTo:       MaxLogLines,
 	ReferencePoint: NewestLogLineId,
 }
 
-// Representation of log lines
+// LogDetails returns representation of log lines
 type LogDetails struct {
 
 	// Additional information of the logs e.g. container name, dates,...
@@ -80,7 +80,7 @@ type LogDetails struct {
 	LogLines `json:"logs"`
 }
 
-// Meta information about the selected log lines
+// LogInfo returns meta information about the selected log lines
 type LogInfo struct {
 
 	// Pod name.
@@ -140,7 +140,7 @@ type LogLineId struct {
 // slice of logs relatively to certain reference line ID.
 type LogLines []LogLine
 
-// A single log line. Split into timestamp and the actual content
+// LogLine is a single log line that split into timestamp and the actual content.
 type LogLine struct {
 	Timestamp LogTimestamp `json:"timestamp"`
 	Content   string       `json:"content"`
@@ -215,9 +215,8 @@ func (self LogLines) getLineIndex(logLineId *LogLineId) int {
 	}
 	if 0 <= offset && offset < linesMatched {
 		return matchingStartedAt + offset
-	} else {
-		return LINE_INDEX_NOT_FOUND
 	}
+	return LINE_INDEX_NOT_FOUND
 }
 
 // CreateLogLineId returns ID of the line with provided lineIndex.

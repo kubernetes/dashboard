@@ -28,7 +28,7 @@ import (
 	client "k8s.io/client-go/kubernetes"
 )
 
-// Based on given selector returns list of services that are candidates for deletion.
+// GetServicesForDSDeletion is based on given selector returns list of services that are candidates for deletion.
 // Services are matched by daemon sets' label selector. They are deleted if given
 // label selector is targeting only 1 daemon set.
 func GetServicesForDSDeletion(client client.Interface, labelSelector labels.Selector,
