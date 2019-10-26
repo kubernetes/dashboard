@@ -14,7 +14,7 @@
 
 import {HttpParams} from '@angular/common/http';
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
-import {CronJob, CronJobList} from '@api/backendapi';
+import {CronJob, CronJobList, Metric} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
@@ -30,6 +30,9 @@ import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 })
 export class CronJobListComponent extends ResourceListWithStatuses<CronJobList, CronJob> {
   @Input() endpoint = EndpointManager.resource(Resource.cronJob, true).list();
+  @Input() showMetrics = false;
+  cumulativeMetrics: Metric[];
+
   constructor(
     private readonly cronJob_: NamespacedResourceService<CronJobList>,
     notifications: NotificationsService,
@@ -55,6 +58,7 @@ export class CronJobListComponent extends ResourceListWithStatuses<CronJobList, 
   }
 
   map(cronJobList: CronJobList): CronJob[] {
+    this.cumulativeMetrics = cronJobList.cumulativeMetrics;
     return cronJobList.items;
   }
 
