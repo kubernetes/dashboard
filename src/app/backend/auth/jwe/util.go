@@ -26,29 +26,29 @@ import (
 
 // ExportRSAKeyOrDie exports rsa key object to a private/public strings. In case of fail panic is called.
 func ExportRSAKeyOrDie(privKey *rsa.PrivateKey) (priv, pub string) {
-	privkey_bytes := x509.MarshalPKCS1PrivateKey(privKey)
-	privkey_pem := pem.EncodeToMemory(
+	privkeyBytes := x509.MarshalPKCS1PrivateKey(privKey)
+	privkeyPems := pem.EncodeToMemory(
 		&pem.Block{
 			Type:  "RSA PRIVATE KEY",
-			Bytes: privkey_bytes,
+			Bytes: privkeyBytes,
 		},
 	)
 
-	priv = string(privkey_pem)
+	priv = string(privkeyPems)
 
-	pubkey_bytes, err := x509.MarshalPKIXPublicKey(&privKey.PublicKey)
+	pubkeyBytes, err := x509.MarshalPKIXPublicKey(&privKey.PublicKey)
 	if err != nil {
 		panic(err)
 	}
 
-	pubkey_pem := pem.EncodeToMemory(
+	pubkeyPems := pem.EncodeToMemory(
 		&pem.Block{
 			Type:  "RSA PUBLIC KEY",
-			Bytes: pubkey_bytes,
+			Bytes: pubkeyBytes,
 		},
 	)
 
-	pub = string(pubkey_pem)
+	pub = string(pubkeyPems)
 	return
 }
 
