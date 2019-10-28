@@ -1907,8 +1907,6 @@ func (apiHandler *APIHandler) handleGetJobDetail(request *restful.Request, respo
 
 	namespace := request.PathParameter("namespace")
 	name := request.PathParameter("name")
-	dataSelect := parser.ParseDataSelectPathParameter(request)
-	dataSelect.MetricQuery = dataselect.StandardMetrics
 	result, err := job.GetJobDetail(k8sClient, namespace, name)
 	if err != nil {
 		errors.HandleInternalError(response, err)
