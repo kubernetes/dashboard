@@ -26,9 +26,9 @@ type CommonSelector struct {
   metricapi.Label
 }
 
-// compress compresses list of HeapsterSelectors to equivalent, shorter one in order to perform smaller number of requests.
-// For example if we have 2 HeapsterSelectors, first downloading data for pods A, B and second one downloading data for pods B,C.
-// compress will compress this to just one HeapsterSelector downloading data for A,B,C. Reverse mapping returned provides
+// compress compresses list of CommonSelectors to equivalent, shorter one in order to perform smaller number of requests.
+// For example if we have 2 CommonSelectors, first downloading data for pods A, B and second one downloading data for pods B,C.
+// compress will compress this to just one CommonSelector downloading data for A,B,C. Reverse mapping returned provides
 // a mapping between indices from new compressed list to the list of children indices from original list.
 func Compress(selectors []CommonSelector) ([]CommonSelector, map[string][]int) {
   reverseMapping := map[string][]int{}
@@ -54,7 +54,7 @@ func Compress(selectors []CommonSelector) ([]CommonSelector, map[string][]int) {
     resourceMap[entry] = toUniqueSlice(resources)
   }
 
-  // create new compressed HeapsterSelectors.
+  // create new compressed CommonSelectors.
   compressed := make([]CommonSelector, 0)
   for entry, resourceType := range resourceTypeMap {
     newSelector := CommonSelector{
