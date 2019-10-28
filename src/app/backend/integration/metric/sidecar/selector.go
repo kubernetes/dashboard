@@ -16,24 +16,18 @@ package sidecar
 
 import (
 	"fmt"
+  "github.com/kubernetes/dashboard/src/app/backend/integration/metric/common"
 
-	"github.com/emicklei/go-restful/log"
+  "github.com/emicklei/go-restful/log"
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/types"
 )
 
-type sidecarSelector struct {
-	TargetResourceType api.ResourceKind
-	Path               string
-	Resources          []string
-	metricapi.Label
-}
-
 func getSidecarSelectors(selectors []metricapi.ResourceSelector,
-	cachedResources *metricapi.CachedResources) []sidecarSelector {
-	result := make([]sidecarSelector, len(selectors))
+	cachedResources *metricapi.CachedResources) []common.CommonSelector {
+	result := make([]common.CommonSelector, len(selectors))
 	for i, selector := range selectors {
 		sidecarSelector, err := getSidecarSelector(selector, cachedResources)
 		if err != nil {
@@ -48,7 +42,7 @@ func getSidecarSelectors(selectors []metricapi.ResourceSelector,
 }
 
 func getSidecarSelector(selector metricapi.ResourceSelector,
-	cachedResources *metricapi.CachedResources) (sidecarSelector, error) {
+	cachedResources *metricapi.CachedResources) (common.CommonSelector, error) {
 	summingResource, isDerivedResource := metricapi.DerivedResources[selector.ResourceType]
 	if !isDerivedResource {
 		return newSidecarSelectorFromNativeResource(selector.ResourceType, selector.Namespace,
@@ -59,13 +53,13 @@ func getSidecarSelector(selector metricapi.ResourceSelector,
 	if summingResource == api.ResourceKindPod {
 		myPods, err := getMyPodsFromCache(selector, cachedResources.Pods)
 		if err != nil {
-			return sidecarSelector{}, err
+			return common.CommonSelector{}, err
 		}
 		return newSidecarSelectorFromNativeResource(api.ResourceKindPod,
 			selector.Namespace, podListToNameList(myPods), podListToUIDList(myPods))
 	}
 	// currently can only convert derived resource to pods. You can change it by implementing other methods
-	return sidecarSelector{}, fmt.Errorf(`Internal Error: Requested summing resources not supported. Requested "%s"`, summingResource)
+	return common.CommonSelector{}, fmt.Errorf(`Internal Error: Requested summing resources not supported. Requested "%s"`, summingResource)
 }
 
 // getMyPodsFromCache returns a full list of pods that belong to this resource.
@@ -100,24 +94,24 @@ func getMyPodsFromCache(selector metricapi.ResourceSelector, cachedPods []v1.Pod
 // NewSidecarSelectorFromNativeResource returns new sidecar selector for native resources specified in arguments.
 // returns error if requested resource is not native or is not supported.
 func newSidecarSelectorFromNativeResource(resourceType api.ResourceKind, namespace string,
-	resourceNames []string, resourceUIDs []types.UID) (sidecarSelector, error) {
+	resourceNames []string, resourceUIDs []types.UID) (common.CommonSelector, error) {
 	// Here we have 2 possibilities because this module allows downloading Nodes and Pods from sidecar
 	if resourceType == api.ResourceKindPod {
-		return sidecarSelector{
+		return common.CommonSelector{
 			TargetResourceType: api.ResourceKindPod,
 			Path:               `namespaces/` + namespace + `/pod-list/`,
 			Resources:          resourceNames,
 			Label:              metricapi.Label{resourceType: resourceUIDs},
 		}, nil
 	} else if resourceType == api.ResourceKindNode {
-		return sidecarSelector{
+		return common.CommonSelector{
 			TargetResourceType: api.ResourceKindNode,
 			Path:               `nodes/`,
 			Resources:          resourceNames,
 			Label:              metricapi.Label{resourceType: resourceUIDs},
 		}, nil
 	} else {
-		return sidecarSelector{}, fmt.Errorf(`Resource "%s" is not a native sidecar resource type or is not supported`, resourceType)
+		return common.CommonSelector{}, fmt.Errorf(`Resource "%s" is not a native sidecar resource type or is not supported`, resourceType)
 	}
 }
 

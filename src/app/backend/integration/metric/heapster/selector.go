@@ -16,24 +16,20 @@ package heapster
 
 import (
 	"fmt"
+  "github.com/kubernetes/dashboard/src/app/backend/integration/metric/common"
 
-	"github.com/emicklei/go-restful/log"
+  "github.com/emicklei/go-restful/log"
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/types"
 )
 
-type heapsterSelector struct {
-	TargetResourceType api.ResourceKind
-	Path               string
-	Resources          []string
-	metricapi.Label
-}
+
 
 func getHeapsterSelectors(selectors []metricapi.ResourceSelector,
-	cachedResources *metricapi.CachedResources) []heapsterSelector {
-	result := make([]heapsterSelector, len(selectors))
+	cachedResources *metricapi.CachedResources) []common.CommonSelector {
+	result := make([]common.CommonSelector, len(selectors))
 	for i, selector := range selectors {
 		heapsterSelector, err := getHeapsterSelector(selector, cachedResources)
 		if err != nil {
@@ -48,7 +44,7 @@ func getHeapsterSelectors(selectors []metricapi.ResourceSelector,
 }
 
 func getHeapsterSelector(selector metricapi.ResourceSelector,
-	cachedResources *metricapi.CachedResources) (heapsterSelector, error) {
+	cachedResources *metricapi.CachedResources) (common.CommonSelector, error) {
 	summingResource, isDerivedResource := metricapi.DerivedResources[selector.ResourceType]
 	if !isDerivedResource {
 		return newHeapsterSelectorFromNativeResource(selector.ResourceType, selector.Namespace,
@@ -59,13 +55,13 @@ func getHeapsterSelector(selector metricapi.ResourceSelector,
 	if summingResource == api.ResourceKindPod {
 		myPods, err := getMyPodsFromCache(selector, cachedResources.Pods)
 		if err != nil {
-			return heapsterSelector{}, err
+			return common.CommonSelector{}, err
 		}
 		return newHeapsterSelectorFromNativeResource(api.ResourceKindPod,
 			selector.Namespace, podListToNameList(myPods), podListToUIDList(myPods))
 	}
 	// currently can only convert derived resource to pods. You can change it by implementing other methods
-	return heapsterSelector{}, fmt.Errorf(`Internal Error: Requested summing resources not supported. Requested "%s"`, summingResource)
+	return common.CommonSelector{}, fmt.Errorf(`Internal Error: Requested summing resources not supported. Requested "%s"`, summingResource)
 }
 
 // getMyPodsFromCache returns a full list of pods that belong to this resource.
@@ -100,24 +96,24 @@ func getMyPodsFromCache(selector metricapi.ResourceSelector, cachedPods []v1.Pod
 // NewHeapsterSelectorFromNativeResource returns new heapster selector for native resources specified in arguments.
 // returns error if requested resource is not native or is not supported.
 func newHeapsterSelectorFromNativeResource(resourceType api.ResourceKind, namespace string,
-	resourceNames []string, resourceUIDs []types.UID) (heapsterSelector, error) {
+	resourceNames []string, resourceUIDs []types.UID) (common.CommonSelector, error) {
 	// Here we have 2 possibilities because this module allows downloading Nodes and Pods from heapster
 	if resourceType == api.ResourceKindPod {
-		return heapsterSelector{
+		return common.CommonSelector{
 			TargetResourceType: api.ResourceKindPod,
 			Path:               `namespaces/` + namespace + `/pod-list/`,
 			Resources:          resourceNames,
 			Label:              metricapi.Label{resourceType: resourceUIDs},
 		}, nil
 	} else if resourceType == api.ResourceKindNode {
-		return heapsterSelector{
+		return common.CommonSelector{
 			TargetResourceType: api.ResourceKindNode,
 			Path:               `nodes/`,
 			Resources:          resourceNames,
 			Label:              metricapi.Label{resourceType: resourceUIDs},
 		}, nil
 	} else {
-		return heapsterSelector{}, fmt.Errorf(`Resource "%s" is not a native heapster resource type or is not supported`, resourceType)
+		return common.CommonSelector{}, fmt.Errorf(`Resource "%s" is not a native heapster resource type or is not supported`, resourceType)
 	}
 }
 

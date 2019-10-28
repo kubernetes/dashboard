@@ -72,7 +72,7 @@ func (self heapsterClient) DownloadMetric(selectors []metricapi.ResourceSelector
 	heapsterSelectors := getHeapsterSelectors(selectors, cachedResources)
 
 	// Downloads metric in the fastest possible way by first compressing HeapsterSelectors and later unpacking the result to separate boxes.
-	compressedSelectors, reverseMapping := compress(heapsterSelectors)
+	compressedSelectors, reverseMapping := common.Compress(heapsterSelectors)
 	return self.downloadMetric(heapsterSelectors, compressedSelectors, reverseMapping, metricName)
 }
 
@@ -82,8 +82,8 @@ func (self heapsterClient) AggregateMetrics(metrics metricapi.MetricPromises, me
 	return common.AggregateMetricPromises(metrics, metricName, aggregations, nil)
 }
 
-func (self heapsterClient) downloadMetric(heapsterSelectors []heapsterSelector,
-	compressedSelectors []heapsterSelector, reverseMapping map[string][]int,
+func (self heapsterClient) downloadMetric(heapsterSelectors []common.CommonSelector,
+	compressedSelectors []common.CommonSelector, reverseMapping map[string][]int,
 	metricName string) metricapi.MetricPromises {
 	// collect all the required data (as promises)
 	unassignedResourcePromisesList := make([]metricapi.MetricPromises, len(compressedSelectors))
@@ -135,7 +135,7 @@ func (self heapsterClient) downloadMetric(heapsterSelectors []heapsterSelector,
 
 // downloadMetricForEachTargetResource downloads requested metric for each resource present in HeapsterSelector
 // and returns the result as a list of promises - one promise for each resource. Order of promises returned is the same as order in self.Resources.
-func (self heapsterClient) downloadMetricForEachTargetResource(selector heapsterSelector, metricName string) metricapi.MetricPromises {
+func (self heapsterClient) downloadMetricForEachTargetResource(selector common.CommonSelector, metricName string) metricapi.MetricPromises {
 	var notAggregatedMetrics metricapi.MetricPromises
 	if HeapsterAllInOneDownloadConfig[selector.TargetResourceType] {
 		notAggregatedMetrics = self.allInOneDownload(selector, metricName)
@@ -150,7 +150,7 @@ func (self heapsterClient) downloadMetricForEachTargetResource(selector heapster
 
 // ithResourceDownload downloads metric for ith resource in self.Resources. Use only in case all in 1 download is not supported
 // for this resource type.
-func (self heapsterClient) ithResourceDownload(selector heapsterSelector, metricName string,
+func (self heapsterClient) ithResourceDownload(selector common.CommonSelector, metricName string,
 	i int) metricapi.MetricPromise {
 	result := metricapi.NewMetricPromise()
 	go func() {
@@ -181,7 +181,7 @@ func (self heapsterClient) ithResourceDownload(selector heapsterSelector, metric
 
 // allInOneDownload downloads metrics for all resources present in self.Resources in one request.
 // returns a list of metric promises - one promise for each resource. Order of self.Resources is preserved.
-func (self heapsterClient) allInOneDownload(selector heapsterSelector, metricName string) metricapi.MetricPromises {
+func (self heapsterClient) allInOneDownload(selector common.CommonSelector, metricName string) metricapi.MetricPromises {
 	result := metricapi.NewMetricPromises(len(selector.Resources))
 	go func() {
 		if len(selector.Resources) == 0 {
