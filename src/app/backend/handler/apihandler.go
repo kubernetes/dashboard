@@ -1979,8 +1979,6 @@ func (apiHandler *APIHandler) handleGetCronJobDetail(request *restful.Request, r
 
 	namespace := request.PathParameter("namespace")
 	name := request.PathParameter("name")
-	dataSelect := parser.ParseDataSelectPathParameter(request)
-	dataSelect.MetricQuery = dataselect.StandardMetrics
 	result, err := cronjob.GetCronJobDetail(k8sClient, namespace, name)
 	if err != nil {
 		errors.HandleInternalError(response, err)
