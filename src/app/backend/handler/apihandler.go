@@ -15,7 +15,7 @@
 package handler
 
 import (
-	"log"
+  "log"
 	"net/http"
 	"strconv"
 	"strings"
@@ -53,6 +53,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
+  "github.com/kubernetes/dashboard/src/app/backend/resource/role"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/secret"
 	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/statefulset"
@@ -516,6 +517,15 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			To(apiHandler.handleGetClusterRoleDetail).
 			Writes(clusterrole.ClusterRoleDetail{}))
 
+  apiV1Ws.Route(
+    apiV1Ws.GET("/role/{namespace}").
+      To(apiHandler.handleGetRoleList).
+      Writes(role.RoleList{}))
+  apiV1Ws.Route(
+    apiV1Ws.GET("/role/{namespace}/{name}").
+      To(apiHandler.handleGetRoleDetail).
+      Writes(role.RoleDetail{}))
+
 	apiV1Ws.Route(
 		apiV1Ws.GET("/persistentvolume").
 			To(apiHandler.handleGetPersistentVolumeList).
@@ -632,6 +642,40 @@ func (apiHandler *APIHandler) handleGetClusterRoleDetail(request *restful.Reques
 		return
 	}
 	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetRoleList(request *restful.Request, response *restful.Response) {
+  k8sClient, err := apiHandler.cManager.Client(request)
+  if err != nil {
+    errors.HandleInternalError(response, err)
+    return
+  }
+
+  namespace := parseNamespacePathParameter(request)
+  dataSelect := parser.ParseDataSelectPathParameter(request)
+  result, err := role.GetRoleList(k8sClient, namespace, dataSelect)
+  if err != nil {
+    errors.HandleInternalError(response, err)
+    return
+  }
+  response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetRoleDetail(request *restful.Request, response *restful.Response) {
+  k8sClient, err := apiHandler.cManager.Client(request)
+  if err != nil {
+    errors.HandleInternalError(response, err)
+    return
+  }
+
+  namespace := request.PathParameter("namespace")
+  name := request.PathParameter("name")
+  result, err := role.GetRoleDetail(k8sClient, namespace, name)
+  if err != nil {
+    errors.HandleInternalError(response, err)
+    return
+  }
+  response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetCsrfToken(request *restful.Request, response *restful.Response) {
