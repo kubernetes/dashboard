@@ -37,8 +37,8 @@ type RoleList struct {
 // Role is a presentation layer view of Kubernetes role. This means it is role plus additional
 // augmented data we can get from other sources.
 type Role struct {
-	ObjectMeta         api.ObjectMeta         `json:"objectMeta"`
-	TypeMeta           api.TypeMeta           `json:"typeMeta"`
+	ObjectMeta api.ObjectMeta `json:"objectMeta"`
+	TypeMeta   api.TypeMeta   `json:"typeMeta"`
 }
 
 // GetRoleList returns a list of all Roles in the cluster.
