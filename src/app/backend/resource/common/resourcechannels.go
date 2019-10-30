@@ -690,14 +690,14 @@ type RoleListChannel struct {
 
 // GetRoleListChannel returns a pair of channels to a Role list for a namespace and errors that
 // both must be read numReads times.
-func GetRoleListChannel(client client.Interface, numReads int) RoleListChannel {
+func GetRoleListChannel(client client.Interface, nsQuery *NamespaceQuery, numReads int) RoleListChannel {
 	channel := RoleListChannel{
 		List:  make(chan *rbac.RoleList, numReads),
 		Error: make(chan error, numReads),
 	}
 
 	go func() {
-		list, err := client.RbacV1().Roles("").List(api.ListEverything)
+		list, err := client.RbacV1().Roles(nsQuery.ToRequestParam()).List(api.ListEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
