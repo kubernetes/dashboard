@@ -44,8 +44,8 @@ func GetRoleDetail(client k8sClient.Interface, namespace, name string) (*RoleDet
 
 func toRoleDetail(cr rbac.Role) RoleDetail {
 	return RoleDetail{
-		Role: toRole(cr),
-		Rules:       cr.Rules,
-		Errors:      []error{},
+		Role:   toRole(cr),
+		Rules:  cr.Rules,
+		Errors: []error{},
 	}
 }

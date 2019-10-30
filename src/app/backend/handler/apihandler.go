@@ -645,37 +645,37 @@ func (apiHandler *APIHandler) handleGetClusterRoleDetail(request *restful.Reques
 }
 
 func (apiHandler *APIHandler) handleGetRoleList(request *restful.Request, response *restful.Response) {
-  k8sClient, err := apiHandler.cManager.Client(request)
-  if err != nil {
-    errors.HandleInternalError(response, err)
-    return
-  }
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
 
-  namespace := parseNamespacePathParameter(request)
-  dataSelect := parser.ParseDataSelectPathParameter(request)
-  result, err := role.GetRoleList(k8sClient, namespace, dataSelect)
-  if err != nil {
-    errors.HandleInternalError(response, err)
-    return
-  }
-  response.WriteHeaderAndEntity(http.StatusOK, result)
+	namespace := parseNamespacePathParameter(request)
+	dataSelect := parser.ParseDataSelectPathParameter(request)
+	result, err := role.GetRoleList(k8sClient, namespace, dataSelect)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetRoleDetail(request *restful.Request, response *restful.Response) {
-  k8sClient, err := apiHandler.cManager.Client(request)
-  if err != nil {
-    errors.HandleInternalError(response, err)
-    return
-  }
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
 
-  namespace := request.PathParameter("namespace")
-  name := request.PathParameter("name")
-  result, err := role.GetRoleDetail(k8sClient, namespace, name)
-  if err != nil {
-    errors.HandleInternalError(response, err)
-    return
-  }
-  response.WriteHeaderAndEntity(http.StatusOK, result)
+	namespace := request.PathParameter("namespace")
+	name := request.PathParameter("name")
+	result, err := role.GetRoleDetail(k8sClient, namespace, name)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetCsrfToken(request *restful.Request, response *restful.Response) {
