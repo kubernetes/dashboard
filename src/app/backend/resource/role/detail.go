@@ -15,9 +15,9 @@
 package role
 
 import (
-  rbac "k8s.io/api/rbac/v1"
-  metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-  k8sClient "k8s.io/client-go/kubernetes"
+	rbac "k8s.io/api/rbac/v1"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	k8sClient "k8s.io/client-go/kubernetes"
 )
 
 // RoleDetail contains Cron Job details.
