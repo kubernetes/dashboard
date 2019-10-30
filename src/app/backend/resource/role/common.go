@@ -37,17 +37,17 @@ func (self RoleCell) GetProperty(name dataselect.PropertyName) dataselect.Compar
 }
 
 func toCells(std []Role) []dataselect.DataCell {
-  cells := make([]dataselect.DataCell, len(std))
-  for i := range std {
-    cells[i] = RoleCell(std[i])
-  }
-  return cells
+	cells := make([]dataselect.DataCell, len(std))
+	for i := range std {
+		cells[i] = RoleCell(std[i])
+	}
+	return cells
 }
 
 func fromCells(cells []dataselect.DataCell) []Role {
-  std := make([]Role, len(cells))
-  for i := range std {
-    std[i] = Role(cells[i].(RoleCell))
-  }
-  return std
+	std := make([]Role, len(cells))
+	for i := range std {
+		std[i] = Role(cells[i].(RoleCell))
+	}
+	return std
 }
