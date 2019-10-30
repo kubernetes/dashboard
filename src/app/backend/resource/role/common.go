@@ -23,17 +23,17 @@ import (
 type RoleCell Role
 
 func (self RoleCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
-  switch name {
-  case dataselect.NameProperty:
-    return dataselect.StdComparableString(self.ObjectMeta.Name)
-  case dataselect.CreationTimestampProperty:
-    return dataselect.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
-  case dataselect.NamespaceProperty:
-    return dataselect.StdComparableString(self.ObjectMeta.Namespace)
-  default:
-    // if name is not supported then just return a constant dummy value, sort will have no effect.
-    return nil
-  }
+	switch name {
+	case dataselect.NameProperty:
+		return dataselect.StdComparableString(self.ObjectMeta.Name)
+	case dataselect.CreationTimestampProperty:
+		return dataselect.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
+	case dataselect.NamespaceProperty:
+		return dataselect.StdComparableString(self.ObjectMeta.Namespace)
+	default:
+		// if name is not supported then just return a constant dummy value, sort will have no effect.
+		return nil
+	}
 }
 
 func toCells(std []Role) []dataselect.DataCell {

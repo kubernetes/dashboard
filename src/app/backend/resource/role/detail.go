@@ -22,30 +22,30 @@ import (
 
 // RoleDetail contains Cron Job details.
 type RoleDetail struct {
-  // Extends list item structure.
-  Role `json:",inline"`
+	// Extends list item structure.
+	Role `json:",inline"`
 
-  Rules []rbac.PolicyRule `json:"rules"`
+	Rules []rbac.PolicyRule `json:"rules"`
 
-  // List of non-critical errors, that occurred during resource retrieval.
-  Errors []error `json:"errors"`
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
 // GetRoleDetail gets Role details.
 func GetRoleDetail(client k8sClient.Interface, namespace, name string) (*RoleDetail, error) {
-  rawObject, err := client.RbacV1().Roles(namespace).Get(name, metaV1.GetOptions{})
-  if err != nil {
-    return nil, err
-  }
+	rawObject, err := client.RbacV1().Roles(namespace).Get(name, metaV1.GetOptions{})
+	if err != nil {
+		return nil, err
+	}
 
-  cr := toRoleDetail(*rawObject)
-  return &cr, nil
+	cr := toRoleDetail(*rawObject)
+	return &cr, nil
 }
 
 func toRoleDetail(cr rbac.Role) RoleDetail {
-  return RoleDetail{
-    Role: toRole(cr),
-    Rules:       cr.Rules,
-    Errors:      []error{},
-  }
+	return RoleDetail{
+		Role: toRole(cr),
+		Rules:       cr.Rules,
+		Errors:      []error{},
+	}
 }

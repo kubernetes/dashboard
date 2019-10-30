@@ -517,14 +517,14 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			To(apiHandler.handleGetClusterRoleDetail).
 			Writes(clusterrole.ClusterRoleDetail{}))
 
-  apiV1Ws.Route(
-    apiV1Ws.GET("/role/{namespace}").
-      To(apiHandler.handleGetRoleList).
-      Writes(role.RoleList{}))
-  apiV1Ws.Route(
-    apiV1Ws.GET("/role/{namespace}/{name}").
-      To(apiHandler.handleGetRoleDetail).
-      Writes(role.RoleDetail{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/role/{namespace}").
+			To(apiHandler.handleGetRoleList).
+			Writes(role.RoleList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/role/{namespace}/{name}").
+			To(apiHandler.handleGetRoleDetail).
+			Writes(role.RoleDetail{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/persistentvolume").
