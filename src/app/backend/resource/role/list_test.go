@@ -26,8 +26,8 @@ import (
 
 func TestToRbacRoleLists(t *testing.T) {
 	cases := []struct {
-		Roles []rbac.Role
-		expected     *RoleList
+		Roles    []rbac.Role
+		expected *RoleList
 	}{
 		{nil, &RoleList{Items: []Role{}}},
 		{
