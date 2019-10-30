@@ -27,8 +27,8 @@ import (
 
 // RoleList contains a list of role in the cluster.
 type RoleList struct {
-	ListMeta api.ListMeta  `json:"listMeta"`
-	Items    []Role        `json:"items"`
+	ListMeta api.ListMeta `json:"listMeta"`
+	Items    []Role       `json:"items"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
