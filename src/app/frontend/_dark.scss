@@ -21,9 +21,9 @@ $kd-dark-palette-primary: (
   200: #326de6,
   300: #9575cd,
   400: #7e57c2,
-  500: #326de6,
+  500: #3276f5,
   600: #5e35b1,
-  700: #326de6,
+  700: #52b5ff,
   800: #4527a0,
   900: #311b92,
   A100: #b388ff,
@@ -50,7 +50,7 @@ $kd-dark-palette-primary: (
 
 $kd-dark-palette-warn: (
   50: #00c752, // Chart green.
-  100: #008000,
+  100: #008020, // Checkmarks
   200: #326de6, // Chart blue.
   300: #0d47a1,
   400: #ff0,
@@ -95,12 +95,23 @@ $kd-dark-theme: mat-dark-theme($kd-dark-theme-primary, $kd-dark-theme-accent, $k
   @include angular-material-theme($kd-dark-theme);
   @include kd-theme($kd-dark-theme);
 
+  $background-palette: map-get($kd-dark-theme, background);
   $accent-palette: map-get($kd-dark-theme, accent);
   $accent: mat-color($accent-palette);
 
   .kd-toolbar-logo-text,
   .kd-primary-toolbar-icon {
     filter: brightness(100);
+  }
+
+  .kd-second-toolbar {
+    background-color: darken(mat-color($kd-dark-theme-primary), 10%);
+  }
+
+  .mat-card,
+  .mat-table,
+  .mat-paginator {
+    background-color: darken(mat-color($background-palette, card), 19%);
   }
 
   .kd-cross-line-primary {
