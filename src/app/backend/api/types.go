@@ -137,6 +137,7 @@ const (
 	ResourceKindStatefulSet              = "statefulset"
 	ResourceKindStorageClass             = "storageclass"
 	ResourceKindClusterRole              = "clusterrole"
+	ResourceKindRole                     = "role"
 	ResourceKindPlugin                   = "plugin"
 	ResourceKindEndpoint                 = "endpoint"
 )
