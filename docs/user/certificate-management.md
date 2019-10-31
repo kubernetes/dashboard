@@ -22,9 +22,9 @@ In case you want to generate certificates on your own you need library like [Ope
 A private key and certificate signing request are required to create an SSL certificate. These can be generated with a few simple commands. When the openssl req command asks for a “challenge password”, just press return, leaving the password empty. This password is used by Certificate Authorities to authenticate the certificate owner when they want to revoke their certificate. Since this is a self-signed certificate, there’s no way to revoke it via CRL (Certificate Revocation List).
 
 ```
-openssl genrsa -des3 -passout pass:x -out dashboard.pass.key 2048
+openssl genrsa -des3 -passout pass:over4chars -out dashboard.pass.key 2048
 ...
-openssl rsa -passin pass:x -in dashboard.pass.key -out dashboard.key
+openssl rsa -passin pass:over4chars -in dashboard.pass.key -out dashboard.key
 # Writing RSA key
 rm dashboard.pass.key
 openssl req -new -key dashboard.key -out dashboard.csr
