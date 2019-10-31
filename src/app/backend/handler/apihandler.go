@@ -85,7 +85,7 @@ type APIHandler struct {
 // TerminalResponse is sent by handleExecShell. The Id is a random session id that binds the original REST request and the SockJS connection.
 // Any clientapi in possession of this Id can hijack the terminal session.
 type TerminalResponse struct {
-	Id string `json:"id"`
+	ID string `json:"id"`
 }
 
 // CreateHTTPAPIHandler creates a new HTTP handler that handles all requests to the API of the backend.
@@ -1000,7 +1000,7 @@ func (apiHandler *APIHandler) handleNameValidity(request *restful.Request, respo
 	response.WriteHeaderAndEntity(http.StatusOK, validity)
 }
 
-func (APIHandler *APIHandler) handleImageReferenceValidity(request *restful.Request, response *restful.Response) {
+func (apiHandler *APIHandler) handleImageReferenceValidity(request *restful.Request, response *restful.Response) {
 	spec := new(validation.ImageReferenceValiditySpec)
 	if err := request.ReadEntity(spec); err != nil {
 		errors.HandleInternalError(response, err)
@@ -1189,7 +1189,7 @@ func (apiHandler *APIHandler) handleExecShell(request *restful.Request, response
 		sizeChan: make(chan remotecommand.TerminalSize),
 	})
 	go WaitForTerminal(k8sClient, cfg, request, sessionID)
-	response.WriteHeaderAndEntity(http.StatusOK, TerminalResponse{Id: sessionID})
+	response.WriteHeaderAndEntity(http.StatusOK, TerminalResponse{ID: sessionID})
 }
 
 func (apiHandler *APIHandler) handleGetDeployments(request *restful.Request, response *restful.Response) {
