@@ -20,7 +20,7 @@ import {
   ComponentFactoryResolver,
   Input,
 } from '@angular/core';
-import {Event, Job, JobList} from '@api/backendapi';
+import {Event, Job, JobList, Metric} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
 
 import {ResourceListWithStatuses} from '../../../resources/list';
@@ -38,6 +38,8 @@ import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 export class JobListComponent extends ResourceListWithStatuses<JobList, Job> {
   @Input() title: string;
   @Input() endpoint = EndpointManager.resource(Resource.job, true).list();
+  @Input() showMetrics = false;
+  cumulativeMetrics: Metric[];
 
   constructor(
     private readonly job_: NamespacedResourceService<JobList>,
@@ -66,6 +68,7 @@ export class JobListComponent extends ResourceListWithStatuses<JobList, Job> {
   }
 
   map(jobList: JobList): Job[] {
+    this.cumulativeMetrics = jobList.cumulativeMetrics;
     return jobList.jobs;
   }
 

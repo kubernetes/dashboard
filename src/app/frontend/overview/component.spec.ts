@@ -50,6 +50,7 @@ const mockPodsData: PodList = {
 };
 
 const mockCronJobsData: CronJobList = {
+  cumulativeMetrics: [],
   listMeta: {totalItems: 18},
   items: [],
   status: {running: 8, pending: 1, succeeded: 4, failed: 5},

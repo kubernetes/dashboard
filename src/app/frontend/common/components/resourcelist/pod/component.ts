@@ -20,7 +20,7 @@ import {
   ComponentFactoryResolver,
   Input,
 } from '@angular/core';
-import {Event, Pod, PodList} from '@api/backendapi';
+import {Event, Metric, Pod, PodList} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
 
 import {ResourceListWithStatuses} from '../../../resources/list';
@@ -37,6 +37,8 @@ import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 })
 export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
   @Input() endpoint = EndpointManager.resource(Resource.pod, true).list();
+  @Input() showMetrics = false;
+  cumulativeMetrics: Metric[];
 
   constructor(
     private readonly podList: NamespacedResourceService<PodList>,
@@ -65,6 +67,7 @@ export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
   }
 
   map(podList: PodList): Pod[] {
+    this.cumulativeMetrics = podList.cumulativeMetrics;
     return podList.pods;
   }
 

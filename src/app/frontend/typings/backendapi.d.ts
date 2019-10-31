@@ -75,6 +75,7 @@ export interface ConfigMapList extends ResourceList {
 }
 
 export interface CronJobList extends ResourceList {
+  cumulativeMetrics: Metric[] | null;
   items: CronJob[];
   status: Status;
 }
@@ -117,6 +118,7 @@ export interface IngressList extends ResourceList {
 }
 
 export interface JobList extends ResourceList {
+  cumulativeMetrics: Metric[] | null;
   jobs: Job[];
   status: Status;
 }
