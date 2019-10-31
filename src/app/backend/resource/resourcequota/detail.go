@@ -37,7 +37,7 @@ type ResourceQuotaDetail struct {
 	StatusList map[v1.ResourceName]ResourceStatus `json:"statusList,omitempty"`
 }
 
-// ResourceQuotaDetailList
+// ResourceQuotaDetailList provides a set of resource Quotas.
 type ResourceQuotaDetailList struct {
 	ListMeta api.ListMeta          `json:"listMeta"`
 	Items    []ResourceQuotaDetail `json:"items"`

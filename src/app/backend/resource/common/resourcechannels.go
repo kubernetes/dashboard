@@ -894,7 +894,7 @@ type HorizontalPodAutoscalerListChannel struct {
 	Error chan error
 }
 
-// GetPodListMetricsChannel returns a pair of channels to MetricsByPod and errors that
+// GetHorizontalPodAutoscalerListChannel returns a pair of channels to MetricsByPod and errors that
 // both must be read numReads times.
 func GetHorizontalPodAutoscalerListChannel(client client.Interface, nsQuery *NamespaceQuery,
 	numReads int) HorizontalPodAutoscalerListChannel {

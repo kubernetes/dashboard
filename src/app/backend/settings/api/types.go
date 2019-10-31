@@ -80,7 +80,7 @@ func MarshalPinnedResources(p []PinnedResource) string {
 	return string(bytes)
 }
 
-// Unmarshal settings from JSON string into object.
+// UnmarshalPinnedResources unmarshal pinned resource into object.
 func UnmarshalPinnedResources(data string) (*[]PinnedResource, error) {
 	p := new([]PinnedResource)
 	err := json.Unmarshal([]byte(data), p)

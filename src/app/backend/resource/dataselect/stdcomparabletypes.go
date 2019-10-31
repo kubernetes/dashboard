@@ -60,9 +60,8 @@ func (self StdComparableRFC3339Timestamp) Compare(otherV ComparableValue) int {
 	if err1 != nil || err2 != nil {
 		// in case of timestamp parsing failure just compare as strings
 		return strings.Compare(string(self), string(other))
-	} else {
-		return ints64Compare(selfTime.Unix(), otherTime.Unix())
 	}
+	return ints64Compare(selfTime.Unix(), otherTime.Unix())
 }
 
 func (self StdComparableRFC3339Timestamp) Contains(otherV ComparableValue) bool {
