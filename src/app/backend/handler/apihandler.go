@@ -32,6 +32,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/integration"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/clusterrole"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/clusterrolebinding"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/configmap"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/container"
@@ -518,6 +519,15 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			To(apiHandler.handleGetClusterRoleDetail).
 			Writes(clusterrole.ClusterRoleDetail{}))
 
+  apiV1Ws.Route(
+    apiV1Ws.GET("/clusterrolebinding").
+      To(apiHandler.handleGetClusterRoleBindingList).
+      Writes(clusterrolebinding.ClusterRoleBindingList{}))
+  apiV1Ws.Route(
+    apiV1Ws.GET("/clusterrolebinding/{name}").
+      To(apiHandler.handleGetClusterRoleBindingDetail).
+      Writes(clusterrolebinding.ClusterRoleBindingDetail{}))
+
 	apiV1Ws.Route(
 		apiV1Ws.GET("/role/{namespace}").
 			To(apiHandler.handleGetRoleList).
@@ -647,6 +657,38 @@ func (apiHandler *APIHandler) handleGetClusterRoleDetail(request *restful.Reques
 
 	name := request.PathParameter("name")
 	result, err := clusterrole.GetClusterRoleDetail(k8sClient, name)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetClusterRoleBindingList(request *restful.Request, response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	dataSelect := parser.ParseDataSelectPathParameter(request)
+	result, err := clusterrolebinding.GetClusterRoleBindingList(k8sClient, dataSelect)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetClusterRoleBindingDetail(request *restful.Request, response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	name := request.PathParameter("name")
+	result, err := clusterrolebinding.GetClusterRoleBindingDetail(k8sClient, name)
 	if err != nil {
 		errors.HandleInternalError(response, err)
 		return
