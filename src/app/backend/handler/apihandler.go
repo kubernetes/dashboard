@@ -519,14 +519,14 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			To(apiHandler.handleGetClusterRoleDetail).
 			Writes(clusterrole.ClusterRoleDetail{}))
 
-  apiV1Ws.Route(
-    apiV1Ws.GET("/clusterrolebinding").
-      To(apiHandler.handleGetClusterRoleBindingList).
-      Writes(clusterrolebinding.ClusterRoleBindingList{}))
-  apiV1Ws.Route(
-    apiV1Ws.GET("/clusterrolebinding/{name}").
-      To(apiHandler.handleGetClusterRoleBindingDetail).
-      Writes(clusterrolebinding.ClusterRoleBindingDetail{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/clusterrolebinding").
+			To(apiHandler.handleGetClusterRoleBindingList).
+			Writes(clusterrolebinding.ClusterRoleBindingList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/clusterrolebinding/{name}").
+			To(apiHandler.handleGetClusterRoleBindingDetail).
+			Writes(clusterrolebinding.ClusterRoleBindingDetail{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/role/{namespace}").
