@@ -138,6 +138,7 @@ const (
 	ResourceKindStorageClass             = "storageclass"
 	ResourceKindClusterRole              = "clusterrole"
 	ResourceKindRole                     = "role"
+  ResourceKindRoleBinding              = "rolebinding"
 	ResourceKindPlugin                   = "plugin"
 	ResourceKindEndpoint                 = "endpoint"
 )
