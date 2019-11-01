@@ -35,15 +35,15 @@ func TestToRbacRoleBindingLists(t *testing.T) {
 				{
 					ObjectMeta: metaV1.ObjectMeta{Name: "rolebinding"},
 					Subjects: []rbac.Subject{{
-            Kind:     "User",
-            Name:     "dashboard",
-            APIGroup: "rbac.authorization.k8s.io",
+						Kind:     "User",
+						Name:     "dashboard",
+						APIGroup: "rbac.authorization.k8s.io",
 					}},
 					RoleRef: rbac.RoleRef{
-            APIGroup: "Role",
-            Kind:     "pod-reader",
-            Name:     "rbac.authorization.k8s.io",
-          },
+						APIGroup: "Role",
+						Kind:     "pod-reader",
+						Name:     "rbac.authorization.k8s.io",
+					},
 				},
 			},
 			&RoleBindingList{

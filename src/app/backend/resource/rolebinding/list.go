@@ -60,7 +60,7 @@ func GetRoleBindingListFromChannels(channels *common.ResourceChannels, dsQuery *
 	if criticalError != nil {
 		return nil, criticalError
 	}
-  roleBindingList := toRoleBindingList(roleBindings.Items, nonCriticalErrors, dsQuery)
+	roleBindingList := toRoleBindingList(roleBindings.Items, nonCriticalErrors, dsQuery)
 	return roleBindingList, nil
 }
 
@@ -82,7 +82,7 @@ func toRoleBindingList(roleBindings []rbac.RoleBinding, nonCriticalErrors []erro
 		items = append(items, toRoleBinding(item))
 	}
 
-  roleBindingCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(items), dsQuery)
+	roleBindingCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(items), dsQuery)
 	result.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 	result.Items = fromCells(roleBindingCells)
 	return result

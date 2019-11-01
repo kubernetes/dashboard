@@ -46,9 +46,9 @@ func GetRoleBindingDetail(client k8sClient.Interface, namespace, name string) (*
 
 func toRoleBindingDetail(cr rbac.RoleBinding) RoleBindingDetail {
 	return RoleBindingDetail{
-    RoleBinding:   toRoleBinding(cr),
-    Subjects:  cr.Subjects,
-    RoleRef:   cr.RoleRef,
-		Errors: []error{},
+		RoleBinding: toRoleBinding(cr),
+		Subjects:    cr.Subjects,
+		RoleRef:     cr.RoleRef,
+		Errors:      []error{},
 	}
 }
