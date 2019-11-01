@@ -65,7 +65,7 @@ func GetRoleBindingListFromChannels(channels *common.ResourceChannels, dsQuery *
 }
 
 func toRoleBinding(roleBinding rbac.RoleBinding) RoleBinding {
-	return RoleBinding {
+	return RoleBinding{
 		ObjectMeta: api.NewObjectMeta(roleBinding.ObjectMeta),
 		TypeMeta:   api.NewTypeMeta(api.ResourceKindRoleBinding),
 	}
