@@ -60,7 +60,7 @@ func GetRoleListFromChannels(channels *common.ResourceChannels, dsQuery *datasel
 	if criticalError != nil {
 		return nil, criticalError
 	}
-  roleList := toRoleList(roles.Items, nonCriticalErrors, dsQuery)
+	roleList := toRoleList(roles.Items, nonCriticalErrors, dsQuery)
 	return roleList, nil
 }
 

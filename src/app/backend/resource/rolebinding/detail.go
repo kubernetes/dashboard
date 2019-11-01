@@ -23,11 +23,11 @@ import (
 // RoleBindingDetail contains RoleBinding details.
 type RoleBindingDetail struct {
 	// Extends list item structure.
-  RoleBinding `json:",inline"`
+	RoleBinding `json:",inline"`
 
-  Subjects []rbac.Subject `json:"subjects,omitempty" protobuf:"bytes,2,rep,name=subjects"`
+	Subjects []rbac.Subject `json:"subjects,omitempty" protobuf:"bytes,2,rep,name=subjects"`
 
-  RoleRef rbac.RoleRef `json:"roleRef" protobuf:"bytes,3,opt,name=roleRef"`
+	RoleRef  rbac.RoleRef `json:"roleRef" protobuf:"bytes,3,opt,name=roleRef"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
