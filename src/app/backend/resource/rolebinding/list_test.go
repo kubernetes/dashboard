@@ -26,8 +26,8 @@ import (
 
 func TestToRbacRoleBindingLists(t *testing.T) {
 	cases := []struct {
-    RoleBindings    []rbac.RoleBinding
-		expected *RoleBindingList
+    RoleBindings []rbac.RoleBinding
+		expected     *RoleBindingList
 	}{
 		{nil, &RoleBindingList{Items: []RoleBinding{}}},
 		{
@@ -36,7 +36,7 @@ func TestToRbacRoleBindingLists(t *testing.T) {
 					ObjectMeta: metaV1.ObjectMeta{Name: "rolebinding"},
 					Subjects: []rbac.Subject{{
             Kind:     "User",
-            Name: "dashboard",
+            Name:     "dashboard",
             APIGroup: "rbac.authorization.k8s.io",
 					}},
 					RoleRef: rbac.RoleRef{
