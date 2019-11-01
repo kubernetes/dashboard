@@ -26,7 +26,7 @@ import (
 
 func TestToRbacRoleBindingLists(t *testing.T) {
 	cases := []struct {
-    RoleBindings []rbac.RoleBinding
+		RoleBindings []rbac.RoleBinding
 		expected     *RoleBindingList
 	}{
 		{nil, &RoleBindingList{Items: []RoleBinding{}}},
