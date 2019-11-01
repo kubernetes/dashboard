@@ -54,7 +54,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/role"
-  "github.com/kubernetes/dashboard/src/app/backend/resource/rolebinding"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/rolebinding"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/secret"
 	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/statefulset"
@@ -530,11 +530,11 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 	apiV1Ws.Route(
 		apiV1Ws.GET("/rolebinding/{namespace}").
 			To(apiHandler.handleGetRoleBindingList).
-			Writes(role.RoleList{}))
+			Writes(rolebinding.RoleBindingList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/rolebinding/{namespace}/{name}").
 			To(apiHandler.handleGetRoleBindingDetail).
-			Writes(role.RoleDetail{}))
+			Writes(rolebinding.RoleBindingDetail{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/persistentvolume").
@@ -689,37 +689,37 @@ func (apiHandler *APIHandler) handleGetRoleDetail(request *restful.Request, resp
 }
 
 func (apiHandler *APIHandler) handleGetRoleBindingList(request *restful.Request, response *restful.Response) {
-  k8sClient, err := apiHandler.cManager.Client(request)
-  if err != nil {
-    errors.HandleInternalError(response, err)
-    return
-  }
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
 
-  namespace := parseNamespacePathParameter(request)
-  dataSelect := parser.ParseDataSelectPathParameter(request)
-  result, err := rolebinding.GetRoleBindingList(k8sClient, namespace, dataSelect)
-  if err != nil {
-    errors.HandleInternalError(response, err)
-    return
-  }
-  response.WriteHeaderAndEntity(http.StatusOK, result)
+	namespace := parseNamespacePathParameter(request)
+	dataSelect := parser.ParseDataSelectPathParameter(request)
+	result, err := rolebinding.GetRoleBindingList(k8sClient, namespace, dataSelect)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetRoleBindingDetail(request *restful.Request, response *restful.Response) {
-  k8sClient, err := apiHandler.cManager.Client(request)
-  if err != nil {
-    errors.HandleInternalError(response, err)
-    return
-  }
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
 
-  namespace := request.PathParameter("namespace")
-  name := request.PathParameter("name")
-  result, err := rolebinding.GetRoleBindingDetail(k8sClient, namespace, name)
-  if err != nil {
-    errors.HandleInternalError(response, err)
-    return
-  }
-  response.WriteHeaderAndEntity(http.StatusOK, result)
+	namespace := request.PathParameter("namespace")
+	name := request.PathParameter("name")
+	result, err := rolebinding.GetRoleBindingDetail(k8sClient, namespace, name)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetCsrfToken(request *restful.Request, response *restful.Response) {
