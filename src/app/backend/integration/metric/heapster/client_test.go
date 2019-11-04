@@ -295,16 +295,16 @@ func TestDownloadMetric(t *testing.T) {
 			t.Errorf("Test Case: %s. Failed to get metrics - %s", testCase.Info, err)
 			return
 		}
-		num_req := fakeHeapsterClient.GetNumberOfRequestsMade()
+		numReq := fakeHeapsterClient.GetNumberOfRequestsMade()
 
 		if !reflect.DeepEqual(metrics[0].DataPoints, testCase.ExpectedDataPoints) {
 			t.Errorf("Test Case: %s. Received incorrect data points. Got %v, expected %v.",
 				testCase.Info, metrics[0].DataPoints, testCase.ExpectedDataPoints)
 		}
 
-		if testCase.ExpectedNumRequests != num_req {
+		if testCase.ExpectedNumRequests != numReq {
 			t.Errorf("Test Case: %s. Selector performed unexpected number of requests to the heapster server. Performed %d, expected %d",
-				testCase.Info, num_req, testCase.ExpectedNumRequests)
+				testCase.Info, numReq, testCase.ExpectedNumRequests)
 		}
 	}
 }
@@ -433,10 +433,10 @@ func TestDownloadMetrics(t *testing.T) {
 			t.Errorf("Test Case: %s. Received incorrect data points. Got %v, expected %v.",
 				testCase.Info, receivedDataPoints, testCase.ExpectedDataPoints)
 		}
-		num_req := fakeHeapsterClient.GetNumberOfRequestsMade()
-		if testCase.ExpectedNumRequests != num_req {
+		numReq := fakeHeapsterClient.GetNumberOfRequestsMade()
+		if testCase.ExpectedNumRequests != numReq {
 			t.Errorf("Test Case: %s. Selector performed unexpected number of requests to the heapster server. Performed %d, expected %d",
-				testCase.Info, num_req, testCase.ExpectedNumRequests)
+				testCase.Info, numReq, testCase.ExpectedNumRequests)
 		}
 	}
 }
