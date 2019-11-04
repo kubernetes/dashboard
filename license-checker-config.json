@@ -3,7 +3,7 @@
     "*", "docs", "i18n",
     ".cached_tools", ".git", ".github", ".tmp", "coverage", "cypress",
     "aio/test-resources",
-    "**/*.json", "**/*.svg", "**/*.txt"
+    "**/*.json", "**/*.yaml", "**/*.svg", "**/*.txt", "**/*.md", "**/OWNERS", "**/.helmignore"
   ],
   "license": "aio/scripts/license-header.txt",
   "defaultFormat": {

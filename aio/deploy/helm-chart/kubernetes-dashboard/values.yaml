@@ -1,0 +1,191 @@
+# Copyright 2020 The Kubernetes Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Default values for kubernetes-dashboard
+# This is a YAML-formatted file.
+# Declare name/value pairs to be passed into your templates.
+# name: value
+
+image:
+  repository: kubernetesui/dashboard
+  tag: v2.0.0-rc6
+  pullPolicy: IfNotPresent
+  pullSecrets: []
+
+replicaCount: 1
+
+## Here annotations can be added to the kubernetes dashboard deployment
+annotations: {}
+## Here labels can be added to the kubernetes dashboard deployment
+labels: {}
+
+## Serve application over HTTP without TLS
+##
+## Note: If set to true, you may want to add --enable-insecure-login to extraArgs
+protocolHttp: false
+
+## Additional container arguments
+##
+# extraArgs:
+#   - --enable-skip-login
+#   - --enable-insecure-login
+#   - --system-banner="Welcome to Kubernetes"
+
+## Additional container environment variables
+##
+extraEnv: []
+# - name: SOME_VAR
+#   value: 'some value'
+
+# Annotations to be added to kubernetes dashboard pods
+podAnnotations:
+  seccomp.security.alpha.kubernetes.io/pod: 'runtime/default'
+
+## Node labels for pod assignment
+## Ref: https://kubernetes.io/docs/user-guide/node-selection/
+##
+nodeSelector: {}
+
+## List of node taints to tolerate (requires Kubernetes >= 1.6)
+tolerations: []
+#  - key: "key"
+#    operator: "Equal|Exists"
+#    value: "value"
+#    effect: "NoSchedule|PreferNoSchedule|NoExecute"
+
+## Affinity
+## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+affinity: {}
+
+# priorityClassName: ""
+
+service:
+  type: ClusterIP
+  externalPort: 443
+
+  # LoadBalancerSourcesRange is a list of allowed CIDR values, which are combined with ServicePort to
+  # set allowed inbound rules on the security group assigned to the master load balancer
+  # loadBalancerSourceRanges: []
+
+  ## Additional Kubernetes Dashboard Service annotations
+  annotations: {}
+
+  ## Here labels can be added to the Kubernetes Dashboard service
+  labels: {}
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 200Mi
+  limits:
+    cpu: 2
+    memory: 200Mi
+
+ingress:
+  ## If true, Kubernetes Dashboard Ingress will be created.
+  ##
+  enabled: false
+
+  ## Kubernetes Dashboard Ingress annotations
+  ##
+  ## Add custom labels
+  # labels:
+  #   key: value
+  # annotations:
+  #   kubernetes.io/ingress.class: nginx
+  #   kubernetes.io/tls-acme: 'true'
+  ## If you plan to use TLS backend with enableInsecureLogin set to false
+  ## (default), you need to uncomment the below.
+  ## If you use ingress-nginx < 0.21.0
+  #   nginx.ingress.kubernetes.io/secure-backends: "true"
+  ## if you use ingress-nginx >= 0.21.0
+  #   nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+
+
+  ## Kubernetes Dashboard Ingress paths
+  ##
+  paths:
+    - /
+  #  - /*
+
+  ## Kubernetes Dashboard Ingress hostnames
+  ## Must be provided if Ingress is enabled
+  ##
+  # hosts:
+  #   - kubernetes-dashboard.domain.com
+
+  ## Kubernetes Dashboard Ingress TLS configuration
+  ## Secrets must be manually created in the namespace
+  ##
+  # tls:
+  #   - secretName: kubernetes-dashboard-tls
+  #     hosts:
+  #       - kubernetes-dashboard.domain.com
+
+rbac:
+  # Specifies whether namespaced RBAC resources (Role, Rolebinding) should be created
+  create: true
+
+  # Specifies whether cluster-wide RBAC resources (ClusterRole, ClusterRolebinding) to access metrics should be created
+  # Independent from rbac.create parameter.
+  clusterRoleMetrics: true
+
+  # Start in ReadOnly mode.
+  # Only dashboard-related Secrets and ConfigMaps will still be available for writing.
+  #
+  # The basic idea of the clusterReadOnlyRole
+  # is not to hide all the secrets and sensitive data but more
+  # to avoid accidental changes in the cluster outside the standard CI/CD.
+  #
+  # It is NOT RECOMMENDED to use this version in production.
+  # Instead you should review the role and remove all potentially sensitive parts such as
+  # access to persistentvolumes, pods/log etc.
+  #
+  # Independent from rbac.create parameter.
+  clusterReadOnlyRole: false
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name:
+
+livenessProbe:
+  # Number of seconds to wait before sending first probe
+  initialDelaySeconds: 30
+  # Number of seconds to wait for probe response
+  timeoutSeconds: 30
+
+## podDisruptionBudget
+## ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/
+podDisruptionBudget:
+  enabled: false
+  minAvailable:
+  maxUnavailable:
+
+## PodSecurityContext for pod level securityContext
+# securityContext:
+#   runAsUser: 1001
+#   runAsGroup: 2001
+
+## SecurityContext for the kubernetes dashboard container
+dashboardContainerSecurityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  runAsUser: 1001
+  runAsGroup: 2001
+
+networkPolicy:
+  enabled: false
