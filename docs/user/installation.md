@@ -10,21 +10,30 @@ The fastest way of deploying Dashboard has been described in our [README](../../
 
 ### Recommended setup
 
-To access Dashboard directly (without `kubectl proxy`) valid certificates should be used to establish a secure HTTPS connection. They can be generated using public trusted Certificate Authorities like [Let's Encrypt](https://letsencrypt.org/). Use them to replace the auto-generated certificates from Dashboard.
+To access Dashboard directly (without `kubectl proxy`) valid certificates should be used to establish a secure HTTPS connection. They can be generated using public trusted Certificate Authorities like [Let's Encrypt](https://letsencrypt.org/), optionally [Cert-Manager](https://docs.cert-manager.io) can auto-issue and auto-renew them. Use them to replace the auto-generated certificates from Dashboard. 
 
 By default self-signed certificates are generated and stored in-memory. In case you would like to use your custom certificates follow the below steps, otherwise skip directly to the Dashboard deploy part.
 
-Custom certificates have to be stored in a secret named `kubernetes-dashboard-certs` in the same namespace as Kubernetes Dashboard. Assuming that you have `dashboard.crt` and `dashboard.key` files stored under `$HOME/certs` directory, you should create secret with contents of these files:
+Custom certificates have to be stored in a secret named `kubernetes-dashboard-certs` in the same namespace as Kubernetes Dashboard. Assuming that you have `tls.crt` and `tls.key` files stored under `$HOME/certs` directory, you should create secret with contents of these files:
 
 ```
 kubectl create secret generic kubernetes-dashboard-certs --from-file=$HOME/certs -n kubernetes-dashboard
 ```
 
-Afterwards, you are ready to deploy Dashboard using the following command:
+For Dashboard to pickup the certificates, you must pass arguments `--tls-cert-file=/tls.crt` and `--tls-key-file=/tls.key` to the container. You can edit YAML definition and deploy Dashboard in one go:
 
 ```
-kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta5/aio/deploy/recommended.yaml
+kubectl create --edit -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta5/aio/deploy/recommended.yaml
 ```
+ 
+Under Deployment section, add arguments to pod definition, it should look as follows:  
+```
+      containers:
+      - args:
+        - --tls-cert-file=/tls.crt
+        - --tls-key-file=/tls.key
+```
+`--auto-generate-certificates` can be left in place, and will be used as a fallback.
 
 ### Alternative setup
 
@@ -35,6 +44,7 @@ To deploy Dashboard execute following command:
 ```
 kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta5/aio/deploy/alternative.yaml
 ```
+
 
 ## Development release
 
