@@ -45,9 +45,8 @@ type PodMetrics struct {
 	MemoryUsageHistory []metricapi.MetricPoint `json:"memoryUsageHistory"`
 }
 
-func getMetricsPerPod(pods []v1.Pod, metricClient metricapi.MetricClient,
-	dsQuery *dataselect.DataSelectQuery) (
-	*MetricsByPod, error) {
+func getMetricsPerPod(pods []v1.Pod, metricClient metricapi.MetricClient, dsQuery *dataselect.DataSelectQuery) (
+  *MetricsByPod, error) {
 	log.Println("Getting pod metrics")
 
 	var filteredPods []v1.Pod

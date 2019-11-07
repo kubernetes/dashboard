@@ -15,17 +15,17 @@
 package pod
 
 import (
-	"log"
+  "log"
 
-	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/errors"
-	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
-	v1 "k8s.io/api/core/v1"
-	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	k8sClient "k8s.io/client-go/kubernetes"
+  "github.com/kubernetes/dashboard/src/app/backend/api"
+  "github.com/kubernetes/dashboard/src/app/backend/errors"
+  metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
+  "github.com/kubernetes/dashboard/src/app/backend/resource/common"
+  "github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+  "github.com/kubernetes/dashboard/src/app/backend/resource/event"
+  v1 "k8s.io/api/core/v1"
+  metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+  k8sClient "k8s.io/client-go/kubernetes"
 )
 
 // PodList contains a list of Pods in the cluster.
@@ -140,11 +140,12 @@ func ToPodList(pods []v1.Pod, events []v1.Event, nonCriticalErrors []error, dsQu
 	}
 
 	cumulativeMetrics, err := cumulativeMetricsPromises.GetMetrics()
-	podList.CumulativeMetrics = cumulativeMetrics
-	if err != nil {
-		podList.CumulativeMetrics = make([]metricapi.Metric, 0)
-	}
+  if err != nil {
+    log.Printf("Skipping metrics because of error: %s\n", err)
+    cumulativeMetrics = make([]metricapi.Metric, 0)
+  }
 
+	podList.CumulativeMetrics = cumulativeMetrics
 	return podList
 }
 
