@@ -740,14 +740,14 @@ type RoleBindingListChannel struct {
 
 // GetRoleBindingListChannel returns a pair of channels to a RoleBinding list for a namespace and errors that
 // both must be read numReads times.
-func GetRoleBindingListChannel(client client.Interface, numReads int) RoleBindingListChannel {
+func GetRoleBindingListChannel(client client.Interface, nsQuery *NamespaceQuery, numReads int) RoleBindingListChannel {
 	channel := RoleBindingListChannel{
 		List:  make(chan *rbac.RoleBindingList, numReads),
 		Error: make(chan error, numReads),
 	}
 
 	go func() {
-		list, err := client.RbacV1().RoleBindings("").List(api.ListEverything)
+		list, err := client.RbacV1().RoleBindings(nsQuery.ToRequestParam()).List(api.ListEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err

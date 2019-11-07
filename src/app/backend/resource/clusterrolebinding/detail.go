@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package role
+package clusterrolebinding
 
 import (
 	rbac "k8s.io/api/rbac/v1"
@@ -20,32 +20,35 @@ import (
 	k8sClient "k8s.io/client-go/kubernetes"
 )
 
-// RoleDetail contains Role details.
-type RoleDetail struct {
+// ClusterRoleBindingDetail contains ClusterRoleBinding details.
+type ClusterRoleBindingDetail struct {
 	// Extends list item structure.
-	Role `json:",inline"`
+	ClusterRoleBinding `json:",inline"`
 
-	Rules []rbac.PolicyRule `json:"rules"`
+	Subjects []rbac.Subject `json:"subjects,omitempty" protobuf:"bytes,2,rep,name=subjects"`
+
+	RoleRef rbac.RoleRef `json:"roleRef" protobuf:"bytes,3,opt,name=roleRef"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
 }
 
-// GetRoleDetail gets Role details.
-func GetRoleDetail(client k8sClient.Interface, namespace, name string) (*RoleDetail, error) {
-	rawObject, err := client.RbacV1().Roles(namespace).Get(name, metaV1.GetOptions{})
+// GetClusterRoleBindingDetail gets ClusterRoleBinding details.
+func GetClusterRoleBindingDetail(client k8sClient.Interface, name string) (*ClusterRoleBindingDetail, error) {
+	rawObject, err := client.RbacV1().ClusterRoleBindings().Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
 
-	cr := toRoleDetail(*rawObject)
+	cr := toClusterRoleBindingDetail(*rawObject)
 	return &cr, nil
 }
 
-func toRoleDetail(cr rbac.Role) RoleDetail {
-	return RoleDetail{
-		Role:   toRole(cr),
-		Rules:  cr.Rules,
-		Errors: []error{},
+func toClusterRoleBindingDetail(cr rbac.ClusterRoleBinding) ClusterRoleBindingDetail {
+	return ClusterRoleBindingDetail{
+		ClusterRoleBinding: toClusterRoleBinding(cr),
+		Subjects:           cr.Subjects,
+		RoleRef:            cr.RoleRef,
+		Errors:             []error{},
 	}
 }
