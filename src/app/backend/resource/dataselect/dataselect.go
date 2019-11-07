@@ -139,14 +139,23 @@ func (self *DataSelector) getMetrics(metricClient metricapi.MetricClient) (
 
 	selectors := make([]metricapi.ResourceSelector, len(self.GenericDataList))
 	for i, dataCell := range self.GenericDataList {
-		// make sure data cells support metrics
+		// Make sure data cells support metrics.
 		metricDataCell, ok := dataCell.(MetricDataCell)
 		if !ok {
 			log.Printf("Data cell does not implement MetricDataCell. Skipping. %v", dataCell)
 			continue
 		}
 
-		selectors[i] = *metricDataCell.GetResourceSelector()
+		// Make sure to skip succeeded pods.
+		resourceSelector := metricDataCell.GetResourceSelector()
+		//resourceStatus := metricDataCell.GetProperty(StatusProperty)
+		//succeededPod := StdComparableString(v1.PodSucceeded)
+		//if resourceSelector.ResourceType == "pod" &&  resourceStatus.Contains(succeededPod) {
+		//  log.Printf("Pod already finished its work. Skipping.")
+		//  continue
+		//}
+
+		selectors[i] = *resourceSelector
 	}
 
 	for _, metricName := range metricNames {

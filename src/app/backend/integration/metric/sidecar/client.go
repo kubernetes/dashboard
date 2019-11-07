@@ -200,8 +200,13 @@ func (self sidecarClient) allInOneDownload(selector sidecarSelector, metricName 
 			result.PutMetrics(nil, err)
 			return
 		}
+
+		fmt.Println()
+		fmt.Println("===================")
+		fmt.Println()
+
 		if len(result) != len(rawResults.Items) {
-			result.PutMetrics(nil, fmt.Errorf(`Received invalid number of resources from sidecar. Expected %d received %d`, len(result), len(rawResults.Items)))
+			result.PutMetrics(nil, fmt.Errorf(`received %d resources from sidecar instead of %d`, len(rawResults.Items), len(result)))
 			return
 		}
 
