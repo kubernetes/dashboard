@@ -16,7 +16,8 @@ package api
 
 import (
 	"fmt"
-	"time"
+  "log"
+  "time"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	integrationapi "github.com/kubernetes/dashboard/src/app/backend/integration/api"
@@ -236,6 +237,8 @@ func (self MetricPromises) GetMetrics() ([]Metric, error) {
 	for _, metricPromise := range self {
 		metric, err := metricPromise.GetMetric()
 		if err != nil {
+		  // Do not fail when cannot resolve one of the metrics promises and return what can be resolved.
+		  log.Printf(`Cannot get metrics: %v`, err)
       continue
 		}
 

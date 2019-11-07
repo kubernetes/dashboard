@@ -15,11 +15,11 @@
 package dataselect
 
 import (
-	"log"
-	"sort"
+  "log"
+  "sort"
 
-	"github.com/kubernetes/dashboard/src/app/backend/errors"
-	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
+  "github.com/kubernetes/dashboard/src/app/backend/errors"
+  metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 )
 
 // GenericDataCell describes the interface of the data cell that contains all the necessary methods needed to perform
@@ -139,23 +139,14 @@ func (self *DataSelector) getMetrics(metricClient metricapi.MetricClient) (
 
 	selectors := make([]metricapi.ResourceSelector, len(self.GenericDataList))
 	for i, dataCell := range self.GenericDataList {
-		// Make sure data cells support metrics.
+    // make sure data cells support metrics
 		metricDataCell, ok := dataCell.(MetricDataCell)
 		if !ok {
 			log.Printf("Data cell does not implement MetricDataCell. Skipping. %v", dataCell)
 			continue
 		}
 
-		// Make sure to skip succeeded pods.
-		resourceSelector := metricDataCell.GetResourceSelector()
-		//resourceStatus := metricDataCell.GetProperty(StatusProperty)
-		//succeededPod := StdComparableString(v1.PodSucceeded)
-		//if resourceSelector.ResourceType == "pod" &&  resourceStatus.Contains(succeededPod) {
-		//  log.Printf("Pod already finished its work. Skipping.")
-		//  continue
-		//}
-
-		selectors[i] = *resourceSelector
+		selectors[i] = *metricDataCell.GetResourceSelector()
 	}
 
 	for _, metricName := range metricNames {

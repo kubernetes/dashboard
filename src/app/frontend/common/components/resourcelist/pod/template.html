@@ -17,8 +17,6 @@ limitations under the License.
 <kd-graph-metrics [metrics]="cumulativeMetrics"
                   *ngIf="showMetrics"></kd-graph-metrics>
 
-{{cumulativeMetrics | json}}
-
 <kd-card role="table"
          [hidden]="isHidden()">
   <div title
