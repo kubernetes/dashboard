@@ -16,18 +16,5 @@
 # Extract i18n messages for update check.
 # TODO(shu-mutou): outFile path should be fixed.
 #                  `ng xi18n` seems ./aio directory as project root.
-ng xi18n --outFile ../i18n/messages.new.xlf
 
-# Generate MD5 existing and new messages file
-MD5_OLD=$(md5sum i18n/messages.xlf | cut -c -32)
-MD5_NEW=$(md5sum i18n/messages.new.xlf | cut -c -32)
-
-if [ $MD5_OLD != $MD5_NEW ] ; then
-  mv i18n/messages.new.xlf i18n/messages.xlf
-  aio/scripts/xliffmerge.sh
-  echo "i18n/messages.* files are updated. Commit them too."
-  git add i18n
-fi
-
-# Remove extracted file for check
-rm -fr i18n/messages.new.xlf
+echo "no need pre-commit-check"

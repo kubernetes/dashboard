@@ -50,7 +50,7 @@ limitations under the License.
               </ng-container>
               <ng-container *ngSwitchCase="loginModes.Token"
                             i18n>
-                Every Service Account has a Secret with valid Bearer Token that can be used to log in to Dashboard. To find out more about how to configure and use Bearer Tokens, please refer to the <a href='https://kubernetes.io/docs/admin/authentication/'>Authentication</a> section.
+                Pour obtenir votre token : <a href="https://alternative-dash.apps.yellow.dev.khad.hadock.gate-noe.enedis.fr/oidc/">https://alternative-dash.apps.yellow.dev.khad.hadock.gate-noe.enedis.fr/oidc</a>
               </ng-container>
             </div>
           </div>
@@ -63,9 +63,9 @@ limitations under the License.
                    id="token"
                    name="token"
                    i18n-placeholder
-                   placeholder="Enter token"
-                   type="password"
                    required
+                   type="password"
+                   [(ngModel)]="localStorageToken"
                    (change)="onChange($event)">
           </mat-form-field>
           <div *ngSwitchCase="loginModes.Basic"
