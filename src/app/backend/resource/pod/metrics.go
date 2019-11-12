@@ -46,7 +46,7 @@ type PodMetrics struct {
 }
 
 func getMetricsPerPod(pods []v1.Pod, metricClient metricapi.MetricClient, dsQuery *dataselect.DataSelectQuery) (
-  *MetricsByPod, error) {
+	*MetricsByPod, error) {
 	log.Println("Getting pod metrics")
 
 	var filteredPods []v1.Pod
