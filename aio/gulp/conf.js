@@ -43,7 +43,7 @@ const arch = {
 const containerRegistry = {
   release: 'wearehadock',
   /** Default to an environment variable */
-  head: 'kubernetesdashboarddev',
+  head: 'wearehadock',
 };
 
 /**
