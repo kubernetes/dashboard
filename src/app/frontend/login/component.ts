@@ -22,9 +22,8 @@ import {
   LoginSpec,
 } from '@api/backendapi';
 import {KdError, KdFile, StateError} from '@api/frontendapi';
-import {map, tap, filter} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 
-import {of} from 'rxjs';
 
 import {AsKdError, K8SError} from '../common/errors/errors';
 import {AuthService} from '../common/services/global/authentication';
@@ -73,17 +72,6 @@ export class LoginComponent implements OnInit {
       .subscribe((enabledModes: EnabledAuthenticationModes) => {
         this.enabledAuthenticationModes_ = enabledModes.modes;
       });
-
-    //    this.http_
-    //      .get<EnabledAuthenticationModes>('api/v1/login/modes').pipe(
-    //	filter((enabledModes: EnabledAuthenticationModes) => { return
-    //		of(enabledModes.modes.filter((mode) => mode !== LoginModes.Kubeconfig));
-    //	}),
-    //	tap((enabledModes: EnabledAuthenticationModes) => {
-    //		this.enabledAuthenticationModes_ = enabledModes.modes;
-    //	  })
-    //)
-    //  .subscribe();
 
     this.http_
       .get<LoginSkippableResponse>('api/v1/login/skippable')
