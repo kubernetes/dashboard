@@ -24,7 +24,6 @@ import {
 import {KdError, KdFile, StateError} from '@api/frontendapi';
 import {map} from 'rxjs/operators';
 
-
 import {AsKdError, K8SError} from '../common/errors/errors';
 import {AuthService} from '../common/services/global/authentication';
 import {PluginsConfigService} from '../common/services/global/plugin';
@@ -46,6 +45,8 @@ export class LoginComponent implements OnInit {
   errors: KdError[] = [];
 
   localStorageToken = undefined;
+  urlEnv = '';
+  urlLogin = '';
   private enabledAuthenticationModes_: AuthenticationMode[] = [];
   private isLoginSkippable_ = false;
   private kubeconfig_: string;
@@ -66,6 +67,9 @@ export class LoginComponent implements OnInit {
     this.localStorageToken = localStorage.getItem('token');
     this.token_ = this.localStorageToken;
     localStorage.clear();
+
+    this.urlEnv = window.location + '/oidc/';
+    this.urlLogin = this.urlEnv.replace('/#/login', '');
 
     this.http_
       .get<EnabledAuthenticationModes>('api/v1/login/modes')
