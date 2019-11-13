@@ -15,8 +15,9 @@
 package deployment
 
 import (
-	client "k8s.io/client-go/kubernetes"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	client "k8s.io/client-go/kubernetes"
+
 	"errors"
 )
 
