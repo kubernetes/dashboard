@@ -268,6 +268,11 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 		apiV1Ws.GET("/deployment/{namespace}/{deployment}/newreplicaset").
 			To(apiHandler.handleGetDeploymentNewReplicaSet).
 			Writes(replicaset.ReplicaSet{}))
+	apiV1Ws.Route(
+		apiV1Ws.POST("/deployment/{namespace}/{deployment}/rollback").
+			To(apiHandler.handleDeployRollBack).
+			Reads(deployment.RollBackSpec{}).
+			Writes(deployment.RollBackSpec{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.PUT("/scale/{kind}/{namespace}/{name}/").
@@ -1106,6 +1111,27 @@ func (apiHandler *APIHandler) handleDeployFromFile(request *restful.Request, res
 		Content: deploymentSpec.Content,
 		Error:   errorMessage,
 	})
+}
+
+func (apiHandler *APIHandler) handleDeployRollBack(request *restful.Request, response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	rollBackSpec := new(deployment.RollBackSpec)
+	if err := request.ReadEntity(rollBackSpec); err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	namespace := request.PathParameter("namespace")
+	name := request.PathParameter("deployment")
+	if err := deployment.RollbackDeployment(k8sClient, rollBackSpec, namespace, name); err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusCreated, rollBackSpec)
 }
 
 func (apiHandler *APIHandler) handleNameValidity(request *restful.Request, response *restful.Response) {
