@@ -57,4 +57,4 @@ stages:
   - name: deploy
     if: branch = master AND type != pull_request
   - name: release
-    if: tag IS present AND type != pull_request
+    if: branch = master AND type != pull_request
