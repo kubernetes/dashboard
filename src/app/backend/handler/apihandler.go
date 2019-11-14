@@ -158,7 +158,7 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 	apiV1Ws.Route(
 		apiV1Ws.POST("/appdeploymentfromfile").
 			To(apiHandler.handleDeployFromFile).
-			Reads(deployment.AppDeployRollBackSpec{}).
+			Reads(deployment.AppDeploymentFromFileSpec{}).
 			Writes(deployment.AppDeploymentFromFileResponse{}))
 
 	apiV1Ws.Route(
