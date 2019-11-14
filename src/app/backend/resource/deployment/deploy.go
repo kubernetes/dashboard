@@ -106,6 +106,18 @@ type AppDeploymentFromFileSpec struct {
 	Validate bool `json:"validate"`
 }
 
+// AppDeployRollBackSpec is a specification for deployment rollback from an specific revision number
+type AppDeployRollBackSpec struct {
+	// Name is the name of the deployment which will be rollback
+	Name string `json:"name"`
+
+	// Namespace is the namespace of the deployment which will be rollback
+	Namespace string `json:"namespace"`
+
+	// Number is the revision number of the replicateSet which we want to rollback
+	Number string `json:"number"`
+}
+
 // AppDeploymentFromFileResponse is a specification for deployment from file
 type AppDeploymentFromFileResponse struct {
 	// Name of the file

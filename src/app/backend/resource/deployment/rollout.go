@@ -24,8 +24,8 @@ import (
 )
 
 // RollbackDeployment rollback to a specific replicaSet version
-func RollbackDeployment(client client.Interface, namespace string, deploymentName, revisionNumber string) error {
-	deployment, err := client.AppsV1().Deployments(namespace).Get(deploymentName, metaV1.GetOptions{})
+func RollbackDeployment(client client.Interface, rollbackSpec *AppDeployRollBackSpec) error {
+	deployment, err := client.AppsV1().Deployments(rollbackSpec.Namespace).Get(rollbackSpec.Name, metaV1.GetOptions{})
 	if err != nil {
 		return err
 	}
@@ -33,15 +33,15 @@ func RollbackDeployment(client client.Interface, namespace string, deploymentNam
 	if currRevision == "1" {
 		return errors.New("No revision for rolling back ")
 	}
-	matchRS, err := GetReplicateSetFromDeployment(client, namespace, deploymentName)
+	matchRS, err := GetReplicateSetFromDeployment(client, rollbackSpec.Namespace, rollbackSpec.Name)
 	if err != nil {
 		return err
 	}
 	for _, rs := range matchRS {
-		if rs.Annotations["deployment.kubernetes.io/revision"] == revisionNumber {
+		if rs.Annotations["deployment.kubernetes.io/revision"] == rollbackSpec.Number {
 			updateDeployment := deployment.DeepCopy()
 			updateDeployment.Spec.Template.Spec = rs.Spec.Template.Spec
-			_, err = client.AppsV1().Deployments(namespace).Update(updateDeployment)
+			_, err = client.AppsV1().Deployments(rollbackSpec.Namespace).Update(updateDeployment)
 			if err != nil {
 				return err
 			}
