@@ -110,7 +110,7 @@
     "@types/file-saver": "2.0.1",
     "@types/highlight.js": "^9.12.3",
     "ace-builds": "1.4.7",
-    "c3": "0.7.10",
+    "c3": "0.7.11",
     "core-js": "3.3.3",
     "d3": "5.12.0",
     "file-saver": "2.0.2",
