@@ -97,7 +97,7 @@ func GetReplicateSetFromDeployment(client client.Interface, namespace, deploymen
 	}
 	var result []v1.ReplicaSet
 	for _, rs := range allRS.Items {
-		if metaV1.IsControlledBy(&rs, deployment){
+		if metaV1.IsControlledBy(&rs, deployment) {
 			result = append(result, rs)
 		}
 	}
