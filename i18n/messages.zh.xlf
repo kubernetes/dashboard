@@ -1854,6 +1854,33 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/node/template.html</context>
           <context context-type="linenumber">103</context>
+<<<<<<< HEAD:i18n/messages.zh.xlf
+=======
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7d545ebc0f8d8727d50c375b2065a447f1029e2b" datatype="html">
+        <source>Select namespace...</source>
+        <target state="new">选择命名空间...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/namespace/template.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6570ee92c355ae47991f34101be43f3f4270fdf3" datatype="html">
+        <source>All namespaces</source>
+        <target state="new">全部命名空间</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/namespace/template.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6fac407fa5aec6e3291cf87a7ed3252add8a7d28" datatype="html">
+        <source>NAMESPACES</source>
+        <target state="new">命名空间</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/namespace/template.html</context>
+          <context context-type="linenumber">35</context>
+>>>>>>> d57d4c5b4b8816e907a69a79b4e20cc84ab07e90:i18n/zh/messages.zh.xlf
         </context-group>
       </trans-unit>
       <trans-unit id="d12515fa127fafff639075d37498207138a5d18a" datatype="html">

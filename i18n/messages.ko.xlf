@@ -3322,7 +3322,24 @@
         <target state="new">
         Learn more
         <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>
+<<<<<<< HEAD:i18n/messages.ko.xlf
       </target>
+=======
+      </target> 더 배우기
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+>>>>>>> d57d4c5b4b8816e907a69a79b4e20cc84ab07e90:i18n/ko/messages.ko.xlf
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">54</context>
