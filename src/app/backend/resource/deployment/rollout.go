@@ -53,36 +53,36 @@ func RollbackDeployment(client client.Interface, namespace string, deploymentNam
 
 // RollPauseDeployment is used to pause a deployment
 func RollPauseDeployment(client client.Interface, namespace, deploymentName string) (*v1.Deployment, error) {
-  deployment, err := client.AppsV1().Deployments(namespace).Get(deploymentName, metaV1.GetOptions{})
-  if err != nil {
-    return nil, err
-  }
-  if deployment.Spec.Paused {
-    deployment.Spec.Paused = false
-    _, err = client.AppsV1().Deployments(namespace).Update(deployment)
-    if err != nil {
-      return nil, err
-    }
-    return deployment, nil
-  }
-  return nil, errors.New("the deployment is already paused")
+	deployment, err := client.AppsV1().Deployments(namespace).Get(deploymentName, metaV1.GetOptions{})
+	if err != nil {
+		return nil, err
+	}
+	if deployment.Spec.Paused {
+		deployment.Spec.Paused = false
+		_, err = client.AppsV1().Deployments(namespace).Update(deployment)
+		if err != nil {
+			return nil, err
+		}
+		return deployment, nil
+	}
+	return nil, errors.New("the deployment is already paused")
 }
 
 // RollResumeDeployment is used to resume a deployment
 func RollResumeDeployment(client client.Interface, namespace, deploymentName string) (*v1.Deployment, error) {
-  deployment, err := client.AppsV1().Deployments(namespace).Get(deploymentName, metaV1.GetOptions{})
-  if err != nil {
-    return nil, err
-  }
-  if !deployment.Spec.Paused {
-    deployment.Spec.Paused = true
-    _, err = client.AppsV1().Deployments(namespace).Update(deployment)
-    if err != nil {
-      return nil, err
-    }
-    return deployment, nil
-  }
-  return nil, errors.New("the deployment is already resumed")
+	deployment, err := client.AppsV1().Deployments(namespace).Get(deploymentName, metaV1.GetOptions{})
+	if err != nil {
+		return nil, err
+	}
+	if !deployment.Spec.Paused {
+		deployment.Spec.Paused = true
+		_, err = client.AppsV1().Deployments(namespace).Update(deployment)
+		if err != nil {
+			return nil, err
+		}
+		return deployment, nil
+	}
+	return nil, errors.New("the deployment is already resumed")
 }
 
 // GetReplicateSetFromDeployment return all replicateSet which is belong to the deployment
