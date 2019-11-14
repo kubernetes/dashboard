@@ -15,13 +15,16 @@
 package deployment
 
 import (
-	client "k8s.io/client-go/kubernetes"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	v1 "k8s.io/api/apps/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	client "k8s.io/client-go/kubernetes"
+
 	"errors"
 )
 
-//RollbackDeployment rollback to a specific replicaSet version
-func RollbackDeployment(client client.Interface, namespace string, deploymentName, replicaSetName string) error {
+// RollbackDeployment rollback to a specific replicaSet version
+func RollbackDeployment(client client.Interface, namespace string, deploymentName, revisionNumber string) error {
 	deployment, err := client.AppsV1().Deployments(namespace).Get(deploymentName, metaV1.GetOptions{})
 	if err != nil {
 		return err
@@ -30,15 +33,70 @@ func RollbackDeployment(client client.Interface, namespace string, deploymentNam
 	if currRevision == "1" {
 		return errors.New("No revision for rolling back ")
 	}
-	replicaSet, err := client.AppsV1().ReplicaSets(namespace).Get(replicaSetName, metaV1.GetOptions{})
-	if err != nil {
-		return nil
+	matchRS, err := GetReplicateSetFromDeployment(client, namespace, deploymentName)
+	for _, rs := range matchRS {
+		if rs.Annotations["deployment.kubernetes.io/revision"] == revisionNumber {
+			updateDeployment := deployment.DeepCopy()
+			updateDeployment.Spec.Template.Spec = rs.Spec.Template.Spec
+      _, err = client.AppsV1().Deployments(namespace).Update(updateDeployment)
+      if err != nil {
+				return err
+			}
+			return nil
+		}
 	}
-	updateDeployment := deployment.DeepCopy()
-	updateDeployment.Spec.Template.Spec = replicaSet.Spec.Template.Spec
-	_, err = client.AppsV1().Deployments(namespace).Update(updateDeployment)
+	return errors.New("No match revisionNumber replicateSet for deployment ")
+}
+
+// RollPauseDeployment is used to pause a deployment
+func RollPauseDeployment(client client.Interface, namespace, deploymentName string) (*v1.Deployment, error) {
+  deployment, err := client.AppsV1().Deployments(namespace).Get(deploymentName, metaV1.GetOptions{})
+  if err != nil {
+    return nil, err
+  }
+  if deployment.Spec.Paused {
+    deployment.Spec.Paused = false
+    _, err = client.AppsV1().Deployments(namespace).Update(deployment)
+    if err != nil {
+      return nil, err
+    }
+    return deployment, nil
+  }
+  return nil, errors.New("the deployment is already paused")
+}
+
+// RollResumeDeployment is used to resume a deployment
+func RollResumeDeployment(client client.Interface, namespace, deploymentName string) (*v1.Deployment, error) {
+  deployment, err := client.AppsV1().Deployments(namespace).Get(deploymentName, metaV1.GetOptions{})
+  if err != nil {
+    return nil, err
+  }
+  if !deployment.Spec.Paused {
+    deployment.Spec.Paused = true
+    _, err = client.AppsV1().Deployments(namespace).Update(deployment)
+    if err != nil {
+      return nil, err
+    }
+    return deployment, nil
+  }
+  return nil, errors.New("the deployment is already resumed")
+}
+
+// GetReplicateSetFromDeployment return all replicateSet which is belong to the deployment
+func GetReplicateSetFromDeployment(client client.Interface, namespace, deploymentName string) ([]v1.ReplicaSet, error) {
+	deployment, err := client.AppsV1().Deployments(namespace).Get(deploymentName, metaV1.GetOptions{})
 	if err != nil {
-		return nil
+		return nil, err
 	}
-	return nil
+	allRS, err := client.AppsV1().ReplicaSets(namespace).List(api.ListEverything)
+	if err != nil {
+		return nil, err
+	}
+	var result []v1.ReplicaSet
+	for _, rs := range allRS.Items {
+		if metaV1.IsControlledBy(&rs, deployment){
+			result = append(result, rs)
+		}
+	}
+	return result, nil
 }
