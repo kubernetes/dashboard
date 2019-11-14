@@ -34,12 +34,15 @@ func RollbackDeployment(client client.Interface, namespace string, deploymentNam
 		return errors.New("No revision for rolling back ")
 	}
 	matchRS, err := GetReplicateSetFromDeployment(client, namespace, deploymentName)
+	if err != nil {
+		return err
+	}
 	for _, rs := range matchRS {
 		if rs.Annotations["deployment.kubernetes.io/revision"] == revisionNumber {
 			updateDeployment := deployment.DeepCopy()
 			updateDeployment.Spec.Template.Spec = rs.Spec.Template.Spec
-      _, err = client.AppsV1().Deployments(namespace).Update(updateDeployment)
-      if err != nil {
+			_, err = client.AppsV1().Deployments(namespace).Update(updateDeployment)
+			if err != nil {
 				return err
 			}
 			return nil
