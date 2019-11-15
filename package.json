@@ -1,6 +1,6 @@
 {
   "name": "kubernetes-dashboard",
-  "version": "2.0.0-beta5",
+  "version": "2.0.0-beta6",
   "repository": {
     "type": "git",
     "url": "https://github.com/kubernetes/dashboard.git"
@@ -54,7 +54,7 @@
     "fix:i18n": "ng xi18n --outFile ../i18n/messages.xlf && aio/scripts/xliffmerge.sh",
     "clean": "rm -rf .go_workspace .tmp coverage dist npm-debug.log",
     "postversion": "node aio/scripts/version.js",
-    "postinstall": "node aio/scripts/version.js && command -v golangci-lint >/dev/null 2>&1 || { curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(go env GOPATH)/bin v1.17.1; } && go mod download"
+    "postinstall": "node aio/scripts/version.js && command -v golangci-lint >/dev/null 2>&1 || { curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(go env GOPATH)/bin v1.21.0; } && go mod download"
   },
   "husky": {
     "hooks": {
@@ -110,7 +110,7 @@
     "@types/file-saver": "2.0.1",
     "@types/highlight.js": "^9.12.3",
     "ace-builds": "1.4.7",
-    "c3": "0.7.10",
+    "c3": "0.7.11",
     "core-js": "3.3.3",
     "d3": "5.12.0",
     "file-saver": "2.0.2",
@@ -134,10 +134,10 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "0.803.18",
-    "@angular/cli": "8.3.18",
+    "@angular/cli": "8.3.19",
     "@angular/compiler-cli": "8.0.3",
     "@angular/language-service": "8.2.13",
-    "@types/jasmine": "3.4.4",
+    "@types/jasmine": "3.4.6",
     "@types/jasminewd2": "2.0.8",
     "@types/js-yaml": "3.12.1",
     "@types/lodash": "4.14.146",
@@ -147,7 +147,7 @@
     "babel-register": "6.26.0",
     "codelyzer": "4.5.0",
     "concurrently": "5.0.0",
-    "cypress": "3.5.0",
+    "cypress": "3.6.1",
     "del": "5.1.0",
     "git-describe": "4.0.4",
     "gts": "1.1.0",
@@ -166,7 +166,7 @@
     "karma-firefox-launcher": "1.2.0",
     "karma-jasmine": "2.0.1",
     "karma-jasmine-html-reporter": "1.4.2",
-    "lint-staged": "9.4.2",
+    "lint-staged": "9.4.3",
     "lite-server": "2.4.0",
     "lodash": "4.17.15",
     "minimatch": "3.0.4",
@@ -181,12 +181,12 @@
     "scssfmt": "1.0.7",
     "semver": "6.3.0",
     "source-map-explorer": "2.1.0",
-    "tar": "5.0.2",
+    "tar": "5.0.5",
     "through2": "3.0.1",
-    "ts-node": "8.5.0",
+    "ts-node": "8.5.2",
     "tslint": "5.20.1",
     "typescript": "3.4.5",
-    "wait-on": "3.2.0",
+    "wait-on": "3.3.0",
     "webpack-dev-server": "3.9.0"
   },
   "engines": {
