@@ -694,10 +694,6 @@
           <context context-type="linenumber">51</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/components/subject/template.html</context>
-          <context context-type="linenumber">60</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/environmentvariables/template.html</context>
           <context context-type="linenumber">29</context>
         </context-group>
@@ -776,10 +772,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/service/template.html</context>
           <context context-type="linenumber">63</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/components/subject/template.html</context>
-          <context context-type="linenumber">72</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
@@ -1386,12 +1378,36 @@
           <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="725e272ea1601241115103f2d52e6d4e27a66865" datatype="html">
-        <source>APIGroup</source>
-        <target state="new">APIGroup</target>
+      <trans-unit id="f1e339da59fdf1080dfcf4c66e8d15d591bf170c" datatype="html">
+        <source>kind</source>
+        <target state="new">kind</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/subject/template.html</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="113a77e0066b1e53cb59d44d248d2b944570bb8e" datatype="html">
+        <source>apiGroup</source>
+        <target state="new">apiGroup</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/subject/template.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6fc2c1a8969bb0645d798d2066d264882d206fcc" datatype="html">
+        <source>name</source>
+        <target state="new">name</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/subject/template.html</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="215a6276cef5bdbd3caef342a35c58e3c7f91ee6" datatype="html">
+        <source>namespace</source>
+        <target state="new">namespace</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/subject/template.html</context>
+          <context context-type="linenumber">60</context>
         </context-group>
       </trans-unit>
       <trans-unit id="c0adb9c346b1a2715886258558098dc32bd10c40" datatype="html">
@@ -1964,10 +1980,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
           <context context-type="linenumber">58</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/components/subject/template.html</context>
-          <context context-type="linenumber">36</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>

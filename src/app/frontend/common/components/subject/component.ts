@@ -23,11 +23,21 @@ import {Subject} from 'typings/backendapi';
 export class SubjectListComponent implements OnInit {
   @Input() initialized: boolean;
   @Input() subjects: Subject[];
+  private columns = {
+    0: 'kind',
+    1: 'apiGroup',
+    2: 'name',
+    3: 'namespace',
+  };
 
   ngOnInit(): void {}
 
-  getSubjectColumns(): string[] {
-    return ['kind', 'apiGroup', 'name', 'namespace'];
+  getSubjectsColumns(): {[key: number]: string} {
+    return this.columns;
+  }
+
+  getColumnKeys(): string[] {
+    return Object.values(this.columns);
   }
 
   getDataSource(): MatTableDataSource<Subject> {
