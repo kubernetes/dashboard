@@ -34,16 +34,16 @@ const arch = {
   /**
    * List of all supported architectures by this project.
    */
-  list: ['amd64', 'arm64', 'arm', 'ppc64le', 's390x'],
+  list: ['amd64'],
 };
 
 /**
  * Configuration for container registry to push images to.
  */
 const containerRegistry = {
-  release: 'kubernetesui',
+  release: 'wearehadock',
   /** Default to an environment variable */
-  head: 'kubernetesdashboarddev',
+  head: 'wearehadock',
 };
 
 /**

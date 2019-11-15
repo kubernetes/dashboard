@@ -1,12 +1,9 @@
 <!--
 Copyright 2017 The Kubernetes Authors.
-
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
-
     http://www.apache.org/licenses/LICENSE-2.0
-
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -50,7 +47,7 @@ limitations under the License.
               </ng-container>
               <ng-container *ngSwitchCase="loginModes.Token"
                             i18n>
-                Every Service Account has a Secret with valid Bearer Token that can be used to log in to Dashboard. To find out more about how to configure and use Bearer Tokens, please refer to the <a href='https://kubernetes.io/docs/admin/authentication/'>Authentication</a> section.
+                Pour obtenir votre token et accéder au dashboard:  <a href="{{ urlLogin }}">{{ urlLogin }}</a> 
               </ng-container>
             </div>
           </div>
@@ -63,9 +60,9 @@ limitations under the License.
                    id="token"
                    name="token"
                    i18n-placeholder
-                   placeholder="Enter token"
-                   type="password"
                    required
+                   type="password"
+                   [(ngModel)]="localStorageToken"
                    (change)="onChange($event)">
           </mat-form-field>
           <div *ngSwitchCase="loginModes.Basic"

@@ -41,9 +41,12 @@ enum LoginModes {
 })
 export class LoginComponent implements OnInit {
   loginModes = LoginModes;
-  selectedAuthenticationMode = LoginModes.Kubeconfig;
+  selectedAuthenticationMode = LoginModes.Token;
   errors: KdError[] = [];
 
+  localStorageToken = undefined;
+  urlEnv = '';
+  urlLogin = '';
   private enabledAuthenticationModes_: AuthenticationMode[] = [];
   private isLoginSkippable_ = false;
   private kubeconfig_: string;
@@ -61,6 +64,13 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.localStorageToken = localStorage.getItem('token');
+    this.token_ = this.localStorageToken;
+    localStorage.clear();
+
+    this.urlEnv = window.location + '/oidc/';
+    this.urlLogin = this.urlEnv.replace('/#/login', '');
+
     this.http_
       .get<EnabledAuthenticationModes>('api/v1/login/modes')
       .subscribe((enabledModes: EnabledAuthenticationModes) => {
@@ -78,6 +88,9 @@ export class LoginComponent implements OnInit {
         this.errors = [state.error];
       }
     });
+    if (this.token_ !== null) {
+      this.login();
+    }
   }
 
   getEnabledAuthenticationModes(): AuthenticationMode[] {
@@ -88,8 +101,8 @@ export class LoginComponent implements OnInit {
       // Push this option to the beginning of the list
       this.enabledAuthenticationModes_.splice(0, 0, LoginModes.Kubeconfig);
     }
-
-    return this.enabledAuthenticationModes_;
+    //    return this.enabledAuthenticationModes_;
+    return ['token'];
   }
 
   login(): void {
