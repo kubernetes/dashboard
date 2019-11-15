@@ -17,6 +17,8 @@ limitations under the License.
 <div [hidden]="shouldShowZeroState()">
   <kd-cluster-role-list (onchange)="onListUpdate($event)"
                         [hideable]="true"></kd-cluster-role-list>
+  <kd-cluster-role-binding-list (onchange)="onListUpdate($event)"
+                                [hideable]="true"></kd-cluster-role-binding-list>
   <kd-namespace-list (onchange)="onListUpdate($event)"
                      [hideable]="true"></kd-namespace-list>
   <kd-node-list (onchange)="onListUpdate($event)"
