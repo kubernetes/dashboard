@@ -2209,7 +2209,7 @@
         <source>namespace</source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/subject/template.html</context>
-          <context context-type="linenumber">60</context>
+          <context context-type="linenumber">59</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7066e1af065c2b6a45b83dc874af7d15f1fba435" datatype="html">

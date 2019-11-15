@@ -51,16 +51,14 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          i18n>name</mat-header-cell>
         <mat-cell *matCellDef="let subject">
-          <kd-date [date]="subject.name"
-                   relative></kd-date>
+          <ng-container *ngIf="subject.name">{{subject.name}}</ng-container>
         </mat-cell>
       </ng-container>
       <ng-container [matColumnDef]="getSubjectsColumns()[3]">
         <mat-header-cell *matHeaderCellDef
                          i18n>namespace</mat-header-cell>
         <mat-cell *matCellDef="let subject">
-          <kd-date [date]="subject.namespace"
-                   relative></kd-date>
+          <ng-container *ngIf="subject.namespace">{{subject.namespace}}</ng-container>
         </mat-cell>
       </ng-container>
       <mat-header-row *matHeaderRowDef="getColumnKeys()"></mat-header-row>
