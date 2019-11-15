@@ -34,16 +34,16 @@ const arch = {
   /**
    * List of all supported architectures by this project.
    */
-  list: ['amd64'],
+  list: ['amd64', 'arm64', 'arm', 'ppc64le', 's390x'],
 };
 
 /**
  * Configuration for container registry to push images to.
  */
 const containerRegistry = {
-  release: 'wearehadock',
+  release: 'kubernetesui',
   /** Default to an environment variable */
-  head: 'wearehadock',
+  head: 'kubernetesdashboarddev',
 };
 
 /**
@@ -53,7 +53,7 @@ const version = {
   /**
    * Current release version of the project.
    */
-  release: 'v2.0.0-beta6',
+  release: 'v2.0.0-beta5',
   /**
    * Version name of the head release of the project.
    */

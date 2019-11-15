@@ -20,7 +20,7 @@
     "experimentalDecorators": true,
     "noImplicitReturns": true,
     "noUnusedParameters": true,
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "lib": [
       "es2017",
       "dom"
