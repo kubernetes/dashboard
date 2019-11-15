@@ -60,6 +60,7 @@ import {NamespaceSelectorComponent} from './namespace/component';
 import {ObjectMetaComponent} from './objectmeta/component';
 import {PodStatusCardComponent} from './podstatus/component';
 import {PolicyRuleListComponent} from './policyrule/component';
+import {SubjectListComponent} from './subject/component';
 import {PropertyComponent} from './property/component';
 import {ProxyComponent} from './proxy/component';
 import {ResourceQuotaListComponent} from './quotas/component';
@@ -150,6 +151,7 @@ const components = [
   LogsDefaultActionbar,
 
   MenuComponent,
+  MemorySparklineComponent,
 
   NamespaceListComponent,
   NodeListComponent,
@@ -178,7 +180,7 @@ const components = [
   SecretListComponent,
   ServiceListComponent,
   CpuSparklineComponent,
-  MemorySparklineComponent,
+  SubjectListComponent,
   ScaleDefaultActionbar,
 
   TextInputComponent,

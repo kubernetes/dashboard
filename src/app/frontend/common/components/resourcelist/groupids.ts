@@ -14,6 +14,7 @@
 
 export enum ListIdentifier {
   clusterRole = 'clusterRoleList',
+  clusterRoleBinding = 'clusterRoleBindingList',
   namespace = 'namespaceList',
   node = 'nodeList',
   persistentVolume = 'persistentVolumeList',
