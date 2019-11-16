@@ -223,7 +223,7 @@ func (self sidecarClient) allInOneDownload(selector sidecarSelector, metricName 
 		for i, rawResult := range sortedResults {
 			dataPoints := DataPointsFromMetricJSONFormat(rawResult.MetricPoints)
 
-			if rawResult.MetricName == "" {
+			if rawResult.MetricName == "" && len(rawResult.UIDs) == 0 {
 				result[i].Metric <- nil
 				result[i].Error <- fmt.Errorf("can not get metrics for %s", selector.Resources[i])
 				continue
