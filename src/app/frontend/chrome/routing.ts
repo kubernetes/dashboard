@@ -40,7 +40,7 @@ const routes: Routes = [
       },
       {
         path: 'clusterrolebinding',
-        loadChildren: 'resource/cluster/clusterrolebinding/module#ClusterRoleModule',
+        loadChildren: 'resource/cluster/clusterrolebinding/module#ClusterRoleBindingModule',
       },
       {
         path: 'namespace',
