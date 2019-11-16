@@ -25,4 +25,4 @@ import {ClusterRoutingModule} from './routing';
   imports: [SharedModule, ComponentsModule, ClusterRoutingModule],
   declarations: [ClusterRoleListComponent, ClusterRoleDetailComponent],
 })
-export class ClusterRoleBindingModule {}
+export class ClusterRoleModule {}

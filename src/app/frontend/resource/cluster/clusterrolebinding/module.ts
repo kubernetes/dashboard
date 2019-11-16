@@ -30,4 +30,4 @@ import {RoleRefComponent} from '../../../common/components/roleref/component';
     RoleRefComponent,
   ],
 })
-export class ClusterRoleModule {}
+export class ClusterRoleBindingModule {}
