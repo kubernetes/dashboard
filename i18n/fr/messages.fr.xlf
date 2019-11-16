@@ -546,12 +546,16 @@
         <source>Name: </source>
         <target>Nom : </target>
         <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/objectmeta/template.html</context>
           <context context-type="linenumber">23</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="sourcefile">../src/app/frontend/common/components/roleref/template.html</context>
+          <context context-type="linenumber">35</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
@@ -692,6 +696,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/service/template.html</context>
           <context context-type="linenumber">51</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/roleref/template.html</context>
+          <context context-type="linenumber">54</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/environmentvariables/template.html</context>
@@ -1965,6 +1973,10 @@
           <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
           <context context-type="linenumber">29</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/roleref/template.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="539781df73bc24037d8289707d258925c9e4f2d5" datatype="html">
         <source>Controlled by</source>
@@ -1980,6 +1992,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
           <context context-type="linenumber">58</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/roleref/template.html</context>
+          <context context-type="linenumber">49</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
@@ -2548,6 +2564,30 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/about/actionbar/template.html</context>
           <context context-type="linenumber">35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9964ad38cd02366c238005bc6cb2b3e15f0809fd" datatype="html">
+        <source>RoleRef</source>
+        <target state="new">RoleRef</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/roleref/template.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="28488a3fda2fc7627ee76443c6c2ea58799af376" datatype="html">
+        <source>APIGroup: </source>
+        <target state="new">APIGroup: </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/roleref/template.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="725e272ea1601241115103f2d52e6d4e27a66865" datatype="html">
+        <source>APIGroup</source>
+        <target state="new">APIGroup</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/roleref/template.html</context>
+          <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5927a3493fbb556db65f530e01b3aa6ab9f186e6" datatype="html">

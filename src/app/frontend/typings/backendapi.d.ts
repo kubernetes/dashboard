@@ -450,8 +450,8 @@ export interface Subject {
 
 export interface RoleRef {
   apiGroup: string;
-  Kind: string;
-  Name: string;
+  kind: string;
+  name: string;
 }
 
 export interface ClusterRoleBindingDetail extends ResourceDetail {

@@ -14,3 +14,46 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
+<kd-card [initialized]="initialized">
+  <div title
+       i18n>RoleRef</div>
+  <div description>
+    <div class="kd-inline-property">
+      <span class="kd-muted-light"
+            i18n>APIGroup:&nbsp;</span>
+      <span>{{roleRef?.apiGroup}}</span>
+    </div>
+    <div class="kd-inline-property"
+         *ngIf="roleRef?.kind">
+      <span class="kd-muted-light"
+            i18n>Kind:&nbsp;</span>
+      <span>{{roleRef?.kind}}</span>
+    </div>
+    <div class="kd-inline-property"
+         *ngIf="roleRef?.name">
+      <span class="kd-muted-light"
+            i18n>Name:&nbsp;</span>
+      <span>{{roleRef?.name}}</span>
+    </div>
+  </div>
+  <div content>
+    <div fxLayout="row wrap">
+      <kd-property [ngClass]="'role-ref-apiGroup'">
+        <div key
+             i18n>APIGroup</div>
+        <div value>{{roleRef?.apiGroup}}</div>
+      </kd-property>
+      <kd-property *ngIf="roleRef?.kind"
+                   [ngClass]="'role-ref-kind'">
+        <div key
+             i18n>Kind</div>
+        <div value>{{roleRef?.kind}}</div>
+      </kd-property>
+      <kd-property [ngClass]="'role-ref-name'">
+        <div key
+             i18n>Name</div>
+        <div value>{{roleRef?.name}}</div>
+      </kd-property>
+    </div>
+  </div>
+</kd-card>
