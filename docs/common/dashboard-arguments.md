@@ -15,7 +15,7 @@ Dashboard container accepts multiple arguments that can be used to customize it 
 | tls-key-file  | -             | File containing the default x509 private key matching --tls-cert-file. |
 | auto-generate-certificates | false | When set to true, Dashboard will automatically generate certificates used to serve HTTPS. |
 | apiserver-host | -            | The address of the Kubernetes Apiserver to connect to in the format of protocol://address:port, e.g., http://localhost:8080. If not specified, the assumption is that the binary runs inside a Kubernetes cluster and local discovery is attempted. |
-| api-log-level | INFO          | Level of API request logging. Should be one of 'INFO|NONE|DEBUG'. |
+| api-log-level | INFO          | Level of API request logging. Should be one of 'INFO\|NONE\|DEBUG'. |
 | heapster-host | -             | The address of the Heapster Apiserver to connect to in the format of protocol://address:port, e.g., http://localhost:8082. If not specified, the assumption is that the binary runs inside a Kubernetes cluster and service proxy will be used. |
 | sidecar-host  | -             | The address of the Sidecar Apiserver to connect to in the format of protocol://address:port, e.g., http://localhost:8000. If not specified, the assumption is that the binary runs inside a Kubernetes cluster and service proxy will be used.
 | metrics-provider | sidecar    | Select provider type for metrics. 'none' will not check metrics. |
@@ -29,7 +29,7 @@ Dashboard container accepts multiple arguments that can be used to customize it 
 | disable-settings-authorizer | false | When enabled, Dashboard settings page will not require user to be logged in and authorized to access settings page. |
 | locale-config | ./locale_conf.json |File containing the configuration of locales.
 | system-banner | -             | When non-empty displays message to Dashboard users. Accepts simple HTML tags. |
-| system-banner-severity | INFO | Severity of system banner. Should be one of 'INFO|WARNING|ERROR'. |
+| system-banner-severity | INFO | Severity of system banner. Should be one of 'INFO\|WARNING\|ERROR'. |
 
 ----
 _Copyright 2019 [The Kubernetes Dashboard Authors](https://github.com/kubernetes/dashboard/graphs/contributors)_
