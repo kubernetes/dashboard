@@ -370,11 +370,6 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			To(apiHandler.handleTriggerCronJob))
 
 	apiV1Ws.Route(
-		apiV1Ws.POST("/namespace").
-			To(apiHandler.handleCreateNamespace).
-			Reads(ns.NamespaceSpec{}).
-			Writes(ns.NamespaceSpec{}))
-	apiV1Ws.Route(
 		apiV1Ws.GET("/namespace").
 			To(apiHandler.handleGetNamespaces).
 			Writes(ns.NamespaceList{}))
@@ -399,11 +394,6 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 		apiV1Ws.GET("/secret/{namespace}/{name}").
 			To(apiHandler.handleGetSecretDetail).
 			Writes(secret.SecretDetail{}))
-	apiV1Ws.Route(
-		apiV1Ws.POST("/secret").
-			To(apiHandler.handleCreateImagePullSecret).
-			Reads(secret.ImagePullSecretSpec{}).
-			Writes(secret.Secret{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/configmap").
@@ -1608,25 +1598,6 @@ func (apiHandler *APIHandler) handleGetReplicationControllerPods(request *restfu
 	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
-func (apiHandler *APIHandler) handleCreateNamespace(request *restful.Request, response *restful.Response) {
-	k8sClient, err := apiHandler.cManager.Client(request)
-	if err != nil {
-		errors.HandleInternalError(response, err)
-		return
-	}
-
-	namespaceSpec := new(ns.NamespaceSpec)
-	if err := request.ReadEntity(namespaceSpec); err != nil {
-		errors.HandleInternalError(response, err)
-		return
-	}
-	if err := ns.CreateNamespace(namespaceSpec, k8sClient); err != nil {
-		errors.HandleInternalError(response, err)
-		return
-	}
-	response.WriteHeaderAndEntity(http.StatusCreated, namespaceSpec)
-}
-
 func (apiHandler *APIHandler) handleGetNamespaces(request *restful.Request, response *restful.Response) {
 	k8sClient, err := apiHandler.cManager.Client(request)
 	if err != nil {
@@ -1674,26 +1645,6 @@ func (apiHandler *APIHandler) handleGetNamespaceEvents(request *restful.Request,
 		return
 	}
 	response.WriteHeaderAndEntity(http.StatusOK, result)
-}
-
-func (apiHandler *APIHandler) handleCreateImagePullSecret(request *restful.Request, response *restful.Response) {
-	k8sClient, err := apiHandler.cManager.Client(request)
-	if err != nil {
-		errors.HandleInternalError(response, err)
-		return
-	}
-
-	spec := new(secret.ImagePullSecretSpec)
-	if err := request.ReadEntity(spec); err != nil {
-		errors.HandleInternalError(response, err)
-		return
-	}
-	result, err := secret.CreateSecret(k8sClient, spec)
-	if err != nil {
-		errors.HandleInternalError(response, err)
-		return
-	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
 }
 
 func (apiHandler *APIHandler) handleGetSecretDetail(request *restful.Request, response *restful.Response) {

@@ -15,15 +15,14 @@
 package secret
 
 import (
-	"log"
+  "log"
 
-	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/errors"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	v1 "k8s.io/api/core/v1"
-	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/client-go/kubernetes"
+  "github.com/kubernetes/dashboard/src/app/backend/api"
+  "github.com/kubernetes/dashboard/src/app/backend/errors"
+  "github.com/kubernetes/dashboard/src/app/backend/resource/common"
+  "github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+  v1 "k8s.io/api/core/v1"
+  "k8s.io/client-go/kubernetes"
 )
 
 // SecretSpec is a common interface for the specification of different secrets.
@@ -93,22 +92,6 @@ func GetSecretList(client kubernetes.Interface, namespace *common.NamespaceQuery
 	}
 
 	return toSecretList(secretList.Items, nonCriticalErrors, dsQuery), nil
-}
-
-// CreateSecret creates a single secret using the cluster API client
-func CreateSecret(client kubernetes.Interface, spec SecretSpec) (*Secret, error) {
-	namespace := spec.GetNamespace()
-	secret := &v1.Secret{
-		ObjectMeta: metaV1.ObjectMeta{
-			Name:      spec.GetName(),
-			Namespace: namespace,
-		},
-		Type: spec.GetType(),
-		Data: spec.GetData(),
-	}
-	_, err := client.CoreV1().Secrets(namespace).Create(secret)
-	result := toSecret(secret)
-	return &result, err
 }
 
 func toSecret(secret *v1.Secret) Secret {

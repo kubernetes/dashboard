@@ -15,32 +15,14 @@
 package namespace
 
 import (
-	"log"
-
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	api "k8s.io/api/core/v1"
-	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/client-go/kubernetes"
+  "github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+  api "k8s.io/api/core/v1"
 )
 
 // NamespaceSpec is a specification of namespace to create.
 type NamespaceSpec struct {
 	// Name of the namespace.
 	Name string `json:"name"`
-}
-
-// CreateNamespace creates namespace based on given specification.
-func CreateNamespace(spec *NamespaceSpec, client kubernetes.Interface) error {
-	log.Printf("Creating namespace %s", spec.Name)
-
-	namespace := &api.Namespace{
-		ObjectMeta: metaV1.ObjectMeta{
-			Name: spec.Name,
-		},
-	}
-
-	_, err := client.CoreV1().Namespaces().Create(namespace)
-	return err
 }
 
 // The code below allows to perform complex data section on []api.Namespace
