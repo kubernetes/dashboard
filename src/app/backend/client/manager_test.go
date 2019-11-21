@@ -284,7 +284,10 @@ func TestClientCmdConfig(t *testing.T) {
 }
 
 func TestVerberClient(t *testing.T) {
-	manager := NewClientManager("", "http://localhost:8080")
+	// TODO: client manager needs a way of mocking created client to be able to test the logic inside
+	t.Skip("Skipping verber client test.")
+
+	manager := NewClientManager("", "")
 	_, err := manager.VerberClient(&restful.Request{Request: &http.Request{TLS: &tls.ConnectionState{}}}, &rest.Config{})
 
 	if err != nil {
@@ -332,7 +335,6 @@ func TestImpersonationUserClient(t *testing.T) {
 	for _, c := range cases {
 		manager := NewClientManager("", "https://localhost:8080")
 		cfg, err := manager.Config(c.request)
-		//authInfo := manager.extractAuthInfo(c.request)
 		if err != nil {
 			t.Fatalf("Config(%v): Expected config to be created but error was thrown:"+
 				" %s",
@@ -370,7 +372,6 @@ func TestNoImpersonationUserWithNoBearerClient(t *testing.T) {
 	for _, c := range cases {
 		manager := NewClientManager("", "https://localhost:8080")
 		cfg, err := manager.Config(c.request)
-		//authInfo := manager.extractAuthInfo(c.request)
 		if err != nil {
 			t.Fatalf("Config(%v): Expected config to be created but error was thrown:"+
 				" %s",
@@ -418,7 +419,6 @@ func TestImpersonationOneGroupClient(t *testing.T) {
 	for _, c := range cases {
 		manager := NewClientManager("", "https://localhost:8080")
 		cfg, err := manager.Config(c.request)
-		//authInfo := manager.extractAuthInfo(c.request)
 		if err != nil {
 			t.Fatalf("Config(%v): Expected config to be created but error was thrown:"+
 				" %s",
@@ -475,7 +475,6 @@ func TestImpersonationTwoGroupClient(t *testing.T) {
 	for _, c := range cases {
 		manager := NewClientManager("", "https://localhost:8080")
 		cfg, err := manager.Config(c.request)
-		//authInfo := manager.extractAuthInfo(c.request)
 		if err != nil {
 			t.Fatalf("Config(%v): Expected config to be created but error was thrown:"+
 				" %s",
