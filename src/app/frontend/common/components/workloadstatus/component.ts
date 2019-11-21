@@ -32,12 +32,6 @@ export const emptyResourcesRatio: ResourcesRatio = {
   styleUrls: ['./style.scss'],
 })
 export class WorkloadStatusComponent {
-  @Input() resourcesRatio: ResourcesRatio;
+  @Input() resourcesRatio = emptyResourcesRatio;
   colors: string[] = ['#00c752', '#f00', '#ffad20', '#006028'];
-
-  constructor() {
-    if (!this.resourcesRatio) {
-      this.resourcesRatio = emptyResourcesRatio;
-    }
-  }
 }

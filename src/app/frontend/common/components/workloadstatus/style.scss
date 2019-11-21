@@ -15,7 +15,8 @@
 @import '../../../variables';
 
 .kd-graph-container {
-  flex: auto;
+  width: 150px !important;
+  height: 200px;
   text-align: center;
 }
 
