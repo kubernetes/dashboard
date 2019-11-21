@@ -24,7 +24,7 @@ import {VerberService} from './verber';
 export class PinnerService {
   onPinUpdate = new Subject();
   private isInitialized_ = false;
-  private pinnedResources_: PinnedResource[];
+  private pinnedResources_: PinnedResource[] = [];
   private readonly endpoint_ = `api/v1/settings/pinner`;
 
   constructor(

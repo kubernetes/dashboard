@@ -21,10 +21,15 @@ import (
 	"strings"
 
 	"github.com/kubernetes/dashboard/src/app/backend/handler/parser"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/customresourcedefinition/types"
 
 	"github.com/kubernetes/dashboard/src/app/backend/plugin"
 
-	restful "github.com/emicklei/go-restful"
+	"github.com/emicklei/go-restful"
+	"golang.org/x/net/xsrftoken"
+	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/client-go/tools/remotecommand"
+
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/auth"
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
@@ -65,9 +70,6 @@ import (
 	settingsApi "github.com/kubernetes/dashboard/src/app/backend/settings/api"
 	"github.com/kubernetes/dashboard/src/app/backend/systembanner"
 	"github.com/kubernetes/dashboard/src/app/backend/validation"
-	"golang.org/x/net/xsrftoken"
-	"k8s.io/apimachinery/pkg/runtime"
-	"k8s.io/client-go/tools/remotecommand"
 )
 
 const (
@@ -575,22 +577,22 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 	apiV1Ws.Route(
 		apiV1Ws.GET("/crd").
 			To(apiHandler.handleGetCustomResourceDefinitionList).
-			Writes(customresourcedefinition.CustomResourceDefinitionList{}))
+			Writes(types.CustomResourceDefinitionList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/crd/{crd}").
 			To(apiHandler.handleGetCustomResourceDefinitionDetail).
-			Writes(customresourcedefinition.CustomResourceDefinitionDetail{}))
+			Writes(types.CustomResourceDefinitionDetail{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/crd/{namespace}/{crd}/object").
 			To(apiHandler.handleGetCustomResourceObjectList).
-			Writes(customresourcedefinition.CustomResourceObjectList{}))
+			Writes(types.CustomResourceObjectList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/crd/{namespace}/{crd}/{object}").
 			To(apiHandler.handleGetCustomResourceObjectDetail).
-			Writes(customresourcedefinition.CustomResourceObjectDetail{}))
+			Writes(types.CustomResourceObjectDetail{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/crd/{namespace}/{crd}/{object}/event").
