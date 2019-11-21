@@ -15,16 +15,17 @@
 package api
 
 import (
-	restful "github.com/emicklei/go-restful"
-	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
-	pluginclientset "github.com/kubernetes/dashboard/src/app/backend/plugin/client/clientset/versioned"
-	v1 "k8s.io/api/authorization/v1"
-	apiextensionsclientset "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
-	"k8s.io/apimachinery/pkg/runtime"
-	"k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/rest"
-	"k8s.io/client-go/tools/clientcmd"
-	"k8s.io/client-go/tools/clientcmd/api"
+  "github.com/emicklei/go-restful"
+  v1 "k8s.io/api/authorization/v1"
+  apiextensionsclientset "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
+  "k8s.io/apimachinery/pkg/runtime"
+  "k8s.io/client-go/kubernetes"
+  "k8s.io/client-go/rest"
+  "k8s.io/client-go/tools/clientcmd"
+  "k8s.io/client-go/tools/clientcmd/api"
+
+  authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
+  pluginclientset "github.com/kubernetes/dashboard/src/app/backend/plugin/client/clientset/versioned"
 )
 
 const (
