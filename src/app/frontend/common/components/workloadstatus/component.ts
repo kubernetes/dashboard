@@ -33,5 +33,19 @@ export const emptyResourcesRatio: ResourcesRatio = {
 })
 export class WorkloadStatusComponent {
   @Input() resourcesRatio = emptyResourcesRatio;
-  colors: string[] = ['#00c752', '#f00', '#ffad20', '#006028'];
+  colors: string[] = [];
+
+  getCustomColor(label: string): string {
+    if (label.includes('Running')) {
+      return '#00c752';
+    } else if (label.includes('Succeeded')) {
+      return '#006028';
+    } else if (label.includes('Pending')) {
+      return '#ffad20';
+    } else if (label.includes('Failed')) {
+      return '#f00';
+    } else {
+      return '';
+    }
+  }
 }

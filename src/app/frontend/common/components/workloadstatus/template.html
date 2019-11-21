@@ -18,16 +18,14 @@ limitations under the License.
   <div title
        fxLayout="row"
        i18n>Workload Status</div>
-
   <div content
        fxLayout="row wrap">
     <div class="kd-graph-container"
          *ngIf="resourcesRatio.cronJobRatio.length">
       <div fxLayout="column"
            fxLayoutAlign="center center">
-        <ngx-charts-pie-chart id="cronJobs"
-                              [results]="resourcesRatio.cronJobRatio">
-        </ngx-charts-pie-chart>
+        <ngx-charts-pie-chart [results]="resourcesRatio.cronJobRatio"
+                              [customColors]="getCustomColor"></ngx-charts-pie-chart>
       </div>
       <div class="kd-graph-title"
            i18n>Cron Jobs</div>
@@ -37,9 +35,8 @@ limitations under the License.
          *ngIf="resourcesRatio.daemonSetRatio.length">
       <div fxLayout="column"
            fxLayoutAlign="center center">
-        <ngx-charts-pie-chart id="daemonSets"
-                              [results]="resourcesRatio.daemonSetRatio">
-        </ngx-charts-pie-chart>
+        <ngx-charts-pie-chart [results]="resourcesRatio.daemonSetRatio"
+                              [customColors]="getCustomColor"></ngx-charts-pie-chart>
       </div>
       <div class="kd-graph-title"
            i18n>Daemon Sets</div>
@@ -49,9 +46,8 @@ limitations under the License.
          *ngIf="resourcesRatio.deploymentRatio.length">
       <div fxLayout="column"
            fxLayoutAlign="center center">
-        <ngx-charts-pie-chart id="deployments"
-                              [results]="resourcesRatio.deploymentRatio">
-        </ngx-charts-pie-chart>
+        <ngx-charts-pie-chart [results]="resourcesRatio.deploymentRatio"
+                              [customColors]="getCustomColor"></ngx-charts-pie-chart>
       </div>
       <div class="kd-graph-title"
            i18n>Deployments</div>
@@ -61,9 +57,8 @@ limitations under the License.
          *ngIf="resourcesRatio.jobRatio.length">
       <div fxLayout="column"
            fxLayoutAlign="center center">
-        <ngx-charts-pie-chart id="jobs"
-                              [results]="resourcesRatio.jobRatio">
-        </ngx-charts-pie-chart>
+        <ngx-charts-pie-chart [results]="resourcesRatio.jobRatio"
+                              [customColors]="getCustomColor"></ngx-charts-pie-chart>
       </div>
       <div class="kd-graph-title"
            i18n>Jobs</div>
@@ -73,9 +68,8 @@ limitations under the License.
          *ngIf="resourcesRatio.podRatio.length">
       <div fxLayout="column"
            fxLayoutAlign="center center">
-        <ngx-charts-pie-chart id="pods"
-                              [results]="resourcesRatio.podRatio">
-        </ngx-charts-pie-chart>
+        <ngx-charts-pie-chart [results]="resourcesRatio.podRatio"
+                              [customColors]="getCustomColor"></ngx-charts-pie-chart>
       </div>
       <div class="kd-graph-title"
            i18n>Pods</div>
@@ -85,9 +79,8 @@ limitations under the License.
          *ngIf="resourcesRatio.replicaSetRatio.length">
       <div fxLayout="column"
            fxLayoutAlign="center center">
-        <ngx-charts-pie-chart id="replicaSets"
-                              [results]="resourcesRatio.replicaSetRatio">
-        </ngx-charts-pie-chart>
+        <ngx-charts-pie-chart [results]="resourcesRatio.replicaSetRatio"
+                              [customColors]="getCustomColor"></ngx-charts-pie-chart>
       </div>
       <div class="kd-graph-title"
            i18n>Replica Sets</div>
@@ -97,9 +90,8 @@ limitations under the License.
          *ngIf="resourcesRatio.replicationControllerRatio.length">
       <div fxLayout="column"
            fxLayoutAlign="center center">
-        <ngx-charts-pie-chart id="replicationControllers"
-                              [results]="resourcesRatio.replicationControllerRatio">
-        </ngx-charts-pie-chart>
+        <ngx-charts-pie-chart [results]="resourcesRatio.replicationControllerRatio"
+                              [customColors]="getCustomColor"></ngx-charts-pie-chart>
       </div>
       <div class="kd-graph-title"
            i18n>Replication Controllers</div>
@@ -109,13 +101,11 @@ limitations under the License.
          *ngIf="resourcesRatio.statefulSetRatio.length">
       <div fxLayout="column"
            fxLayoutAlign="center center">
-        <ngx-charts-pie-chart id="statefulSets"
-                              [results]="resourcesRatio.statefulSetRatio">
-        </ngx-charts-pie-chart>
+        <ngx-charts-pie-chart [results]="resourcesRatio.statefulSetRatio"
+                              [customColors]="getCustomColor"></ngx-charts-pie-chart>
       </div>
       <div class="kd-graph-title"
            i18n>Stateful Sets</div>
-
     </div>
   </div>
 </kd-card>
