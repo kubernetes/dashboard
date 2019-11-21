@@ -84,6 +84,12 @@ func (self *holderBuilder) SetApiServerHost(apiServerHost string) *holderBuilder
 	return self
 }
 
+// SetApiServerHostCAFile 'api-server-host-ca-file' argument of Dashboard binary.
+func (self *holderBuilder) SetApiServerHostCAFile(apiServerHostCAFile string) *holderBuilder {
+	self.holder.apiServerHostCAFile = apiServerHostCAFile
+	return self
+}
+
 // SetMetricsProvider 'metrics-provider' argument of Dashboard binary.
 func (self *holderBuilder) SetMetricsProvider(metricsProvider string) *holderBuilder {
 	self.holder.metricsProvider = metricsProvider

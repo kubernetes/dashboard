@@ -66,6 +66,8 @@ type clientManager struct {
 	kubeConfigPath string
 	// Address of apiserver host in format 'protocol://address:port'
 	apiserverHost string
+	// location of the CA certificate used to verify connections to the apiserver
+	apiserverHostCAFile string
 	// Initialized on clientManager creation and used if kubeconfigPath and apiserverHost are
 	// empty
 	inClusterConfig *rest.Config
@@ -204,7 +206,7 @@ func (self *clientManager) ClientCmdConfig(req *restful.Request) (clientcmd.Clie
 		return nil, err
 	}
 
-	cfg, err := self.buildConfigFromFlags(self.apiserverHost, self.kubeConfigPath)
+	cfg, err := self.buildConfigFromFlags(self.apiserverHost, self.kubeConfigPath, self.apiserverHostCAFile)
 	if err != nil {
 		return nil, err
 	}
@@ -220,7 +222,7 @@ func (self *clientManager) CSRFKey() string {
 // HasAccess configures K8S api client with provided auth info and executes a basic check against apiserver to see
 // if it is valid.
 func (self *clientManager) HasAccess(authInfo api.AuthInfo) error {
-	cfg, err := self.buildConfigFromFlags(self.apiserverHost, self.kubeConfigPath)
+	cfg, err := self.buildConfigFromFlags(self.apiserverHost, self.kubeConfigPath, self.apiserverHostCAFile)
 	if err != nil {
 		return err
 	}
@@ -281,12 +283,16 @@ func (self *clientManager) initConfig(cfg *rest.Config) {
 
 // Returns rest Config based on provided apiserverHost and kubeConfigPath flags. If both are
 // empty then in-cluster config will be used and if it is nil the error is returned.
-func (self *clientManager) buildConfigFromFlags(apiserverHost, kubeConfigPath string) (
+func (self *clientManager) buildConfigFromFlags(apiserverHost, apiserverHostCAFile, kubeConfigPath string) (
 	*rest.Config, error) {
-	if len(kubeConfigPath) > 0 || len(apiserverHost) > 0 {
+	if len(kubeConfigPath) > 0 || len(apiserverHost) > 0 || len(apiserverHostCAFile) > 0 {
 		return clientcmd.NewNonInteractiveDeferredLoadingClientConfig(
 			&clientcmd.ClientConfigLoadingRules{ExplicitPath: kubeConfigPath},
-			&clientcmd.ConfigOverrides{ClusterInfo: api.Cluster{Server: apiserverHost}}).ClientConfig()
+			&clientcmd.ConfigOverrides{
+				ClusterInfo: api.Cluster{
+					Server:               apiserverHost,
+					CertificateAuthority: apiserverHostCAFile,
+				}}).ClientConfig()
 	}
 
 	if self.isRunningInCluster() {
@@ -511,7 +517,7 @@ func (self *clientManager) initInsecureClients() {
 }
 
 func (self *clientManager) initInsecureConfig() {
-	cfg, err := self.buildConfigFromFlags(self.apiserverHost, self.kubeConfigPath)
+	cfg, err := self.buildConfigFromFlags(self.apiserverHost, self.kubeConfigPath, self.apiserverHostCAFile)
 	if err != nil {
 		panic(err)
 	}

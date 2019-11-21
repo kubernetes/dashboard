@@ -37,6 +37,7 @@ type holder struct {
 	certFile             string
 	keyFile              string
 	apiServerHost        string
+	apiServerHostCAFile  string
 	metricsProvider      string
 	heapsterHost         string
 	sidecarHost          string
@@ -113,6 +114,11 @@ func (self *holder) GetKeyFile() string {
 // GetApiServerHost 'apiserver-host' argument of Dashboard binary.
 func (self *holder) GetApiServerHost() string {
 	return self.apiServerHost
+}
+
+// GetApiServerHostCAFile 'apiserver-host-ca-file' argument of Dashboard binary
+func (self *holder) GetApiServerHostCAFile() string {
+	return self.apiServerHostCAFile
 }
 
 // GetMetricsProvider 'metrics-provider' argument of Dashboard binary.

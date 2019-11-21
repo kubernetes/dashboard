@@ -56,8 +56,9 @@ var (
 		"to connect to in the format of protocol://address:port, e.g., "+
 		"http://localhost:8080. If not specified, the assumption is that the binary runs inside a "+
 		"Kubernetes cluster and local discovery is attempted.")
-	argMetricsProvider = pflag.String("metrics-provider", "sidecar", "Select provider type for metrics. 'none' will not check metrics.")
-	argHeapsterHost    = pflag.String("heapster-host", "", "The address of the Heapster Apiserver "+
+	argApiserverHostCAFile = pflag.String("apiserver-host-ca-file", "", "File containing the x509 CA certificate needed for validating the apiserver certificate")
+	argMetricsProvider     = pflag.String("metrics-provider", "sidecar", "Select provider type for metrics. 'none' will not check metrics.")
+	argHeapsterHost        = pflag.String("heapster-host", "", "The address of the Heapster Apiserver "+
 		"to connect to in the format of protocol://address:port, e.g., "+
 		"http://localhost:8082. If not specified, the assumption is that the binary runs inside a "+
 		"Kubernetes cluster and service proxy will be used.")
@@ -237,6 +238,7 @@ func initArgHolder() {
 	builder.SetCertFile(*argCertFile)
 	builder.SetKeyFile(*argKeyFile)
 	builder.SetApiServerHost(*argApiserverHost)
+	builder.SetApiServerHostCAFile(*argApiserverHostCAFile)
 	builder.SetMetricsProvider(*argMetricsProvider)
 	builder.SetHeapsterHost(*argHeapsterHost)
 	builder.SetSidecarHost(*argSidecarHost)
