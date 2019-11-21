@@ -15,17 +15,17 @@
 package v1beta1
 
 import (
-  "reflect"
-  "testing"
+	"reflect"
+	"testing"
 
-  "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions"
-  apiextensionsv1beta1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
-  "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset/fake"
-  metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apiextensions-apiserver/pkg/apis/apiextensions"
+	apiextensionsv1beta1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
+	"k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset/fake"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-  "github.com/kubernetes/dashboard/src/app/backend/api"
-  "github.com/kubernetes/dashboard/src/app/backend/resource/customresourcedefinition/types"
-  "github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/customresourcedefinition/types"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 func TestGetCustomResourceDefinition(t *testing.T) {

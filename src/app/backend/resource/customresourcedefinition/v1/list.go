@@ -15,15 +15,15 @@
 package v1
 
 import (
-  "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions"
-  apiextensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
-  apiextensionsclientset "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
+	"k8s.io/apiextensions-apiserver/pkg/apis/apiextensions"
+	apiextensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
+	apiextensionsclientset "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 
-  "github.com/kubernetes/dashboard/src/app/backend/api"
-  "github.com/kubernetes/dashboard/src/app/backend/errors"
-  "github.com/kubernetes/dashboard/src/app/backend/resource/common"
-  "github.com/kubernetes/dashboard/src/app/backend/resource/customresourcedefinition/types"
-  "github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/customresourcedefinition/types"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // GetCustomResourceDefinitionList returns all the custom resource definitions in the cluster.
@@ -71,18 +71,18 @@ func toCustomResourceDefinition(crd *apiextensionsv1.CustomResourceDefinition) t
 }
 
 func toCustomResourceDefinitionScope(scope apiextensionsv1.ResourceScope) apiextensions.ResourceScope {
-  return apiextensions.ResourceScope(scope)
+	return apiextensions.ResourceScope(scope)
 }
 
 func toCustomResourceDefinitionAcceptedNames(names apiextensionsv1.CustomResourceDefinitionNames) types.CustomResourceDefinitionNames {
-  return types.CustomResourceDefinitionNames{
-    Plural:     names.Plural,
-    Singular:   names.Singular,
-    ShortNames: names.ShortNames,
-    Kind:       names.Kind,
-    ListKind:   names.ListKind,
-    Categories: names.Categories,
-  }
+	return types.CustomResourceDefinitionNames{
+		Plural:     names.Plural,
+		Singular:   names.Singular,
+		ShortNames: names.ShortNames,
+		Kind:       names.Kind,
+		ListKind:   names.ListKind,
+		Categories: names.Categories,
+	}
 }
 
 func getCRDConditionStatus(node *apiextensionsv1.CustomResourceDefinition, conditionType apiextensionsv1.CustomResourceDefinitionConditionType) apiextensions.ConditionStatus {

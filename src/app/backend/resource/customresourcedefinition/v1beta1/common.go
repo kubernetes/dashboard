@@ -15,13 +15,13 @@
 package v1beta1
 
 import (
-  api "k8s.io/api/core/v1"
-  apiextensions "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
-  "k8s.io/apimachinery/pkg/runtime/schema"
+	api "k8s.io/api/core/v1"
+	apiextensions "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
+	"k8s.io/apimachinery/pkg/runtime/schema"
 
-  "github.com/kubernetes/dashboard/src/app/backend/resource/common"
-  "github.com/kubernetes/dashboard/src/app/backend/resource/customresourcedefinition/types"
-  "github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/customresourcedefinition/types"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 type CustomResourceDefinitionCell apiextensions.CustomResourceDefinition
