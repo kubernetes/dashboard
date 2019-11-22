@@ -1264,7 +1264,7 @@
       </trans-unit>
       <trans-unit id="dc6f44635b83446c0f7f31ad734c33c6af1f7e7a" datatype="html">
         <source>Config Maps</source>
-        <target state="new">Config Maps</target>
+        <target state="new">配置字典</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/configmap/template.html</context>
           <context context-type="linenumber">21</context>
@@ -1280,7 +1280,7 @@
       </trans-unit>
       <trans-unit id="473fb06a7b7b3992af493059e8f9c8c74f369a97" datatype="html">
         <source>Dependencies</source>
-        <target state="new">依赖：</target>
+        <target state="new">依赖</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/plugin/template.html</context>
           <context context-type="linenumber">54</context>
@@ -1958,7 +1958,7 @@
       </trans-unit>
       <trans-unit id="016ff9645a730c7a1171f2df1858a8f74d8e9ec0" datatype="html">
         <source>UID</source>
-        <target state="new">唯一ID</target>
+        <target state="new">UID</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/objectmeta/template.html</context>
           <context context-type="linenumber">71</context>
