@@ -97,6 +97,8 @@ $kd-light-theme: mat-light-theme($kd-light-theme-primary, $kd-light-theme-accent
   @include kd-theme($kd-light-theme);
 
   .kd-primary-toolbar {
+    // sass-lint:disable no-color-literals
     background-color: #fafafa;
+    // sass-lint:enable no-color-literals
   }
 }
