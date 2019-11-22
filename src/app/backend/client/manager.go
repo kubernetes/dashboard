@@ -285,7 +285,7 @@ func (self *clientManager) initConfig(cfg *rest.Config) {
 // empty then in-cluster config will be used and if it is nil the error is returned.
 func (self *clientManager) buildConfigFromFlags(apiserverHost, apiserverHostCAFile, kubeConfigPath string) (
 	*rest.Config, error) {
-	if len(kubeConfigPath) > 0 || len(apiserverHost) > 0 || len(apiserverHostCAFile) > 0 {
+	if len(kubeConfigPath) > 0 || len(apiserverHost) > 0 {
 		return clientcmd.NewNonInteractiveDeferredLoadingClientConfig(
 			&clientcmd.ClientConfigLoadingRules{ExplicitPath: kubeConfigPath},
 			&clientcmd.ConfigOverrides{
