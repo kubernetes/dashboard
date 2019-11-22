@@ -1826,7 +1826,7 @@
       </trans-unit>
       <trans-unit id="90ae2a4959c979abc049f4652f59b85e993e16cd" datatype="html">
         <source>CPU requests (cores)</source>
-        <target state="new">CPU使用(核)</target>
+        <target state="new">CPU 使用(核)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/node/template.html</context>
           <context context-type="linenumber">79</context>
@@ -1834,7 +1834,7 @@
       </trans-unit>
       <trans-unit id="d9465e327fed60c8566555ae63a51d8d24b4dcbe" datatype="html">
         <source>CPU limits (cores)</source>
-        <target state="new">CPU配额 (核)</target>
+        <target state="new">CPU 配额 (核)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/node/template.html</context>
           <context context-type="linenumber">87</context>
@@ -2054,7 +2054,7 @@
       </trans-unit>
       <trans-unit id="f2db0be1c93c93d5af51ed6d3b42abb184d07c08" datatype="html">
         <source>CPU Usage (cores)</source>
-        <target state="new">CPU使用率 (核)</target>
+        <target state="new">CPU 使用率 (核)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/pod/template.html</context>
           <context context-type="linenumber">110</context>
@@ -2194,7 +2194,7 @@
       </trans-unit>
       <trans-unit id="7531ac0f84b54f0bcefa85493d9b9a4695d0b9f4" datatype="html">
         <source>Non-resource URL</source>
-        <target state="new">非资源 URL</target>
+        <target state="new">非资源链接</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/policyrule/template.html</context>
           <context context-type="linenumber">48</context>
@@ -2918,7 +2918,7 @@
       </trans-unit>
       <trans-unit id="860f8d6a2a2265b9bdf4e5b35401ae1069082fe7" datatype="html">
         <source>General-purpose web UI for Kubernetes clusters</source>
-        <target state="new">Kubernetes集群的通用Web界面</target>
+        <target state="new">Kubernetes集群的通用 Web 界面</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/about/template.html</context>
           <context context-type="linenumber">30</context>
@@ -3239,7 +3239,7 @@
               Data must be Base64 encoded.
             </source>
         <target state="new">
-              数据必须是Base64编码的。
+              数据必须是 Base64 编码的。
             </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
@@ -3248,7 +3248,7 @@
       </trans-unit>
       <trans-unit id="f0ca722171e7547ce4fd039386dc5fc35359e186" datatype="html">
         <source>Specify the data for your secret to hold. The value is the Base64 encoded content of a .dockercfg file.</source>
-        <target state="new">指定要保留的密钥的数据。该值是.dockercfg文件中的Base64编码内容。</target>
+        <target state="new">指定要保留的密钥的数据。该值是 .dockercfg 文件中的 Base64 编码内容。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
           <context context-type="linenumber">77</context>
@@ -3366,7 +3366,7 @@
       </trans-unit>
       <trans-unit id="43f286635565c58e36280035a459dc47dfd62868" datatype="html">
         <source>Enter the URL of a public image on any registry, or a private image hosted on Docker Hub or Google Container Registry.</source>
-        <target state="new">输入公共镜像的连接（可以是在私有仓库或Docker Hub或Google Container Registry上托管任何镜像连接）。</target>
+        <target state="new">输入公共镜像的连接（可以是在私有仓库或 Docker Hub 或 Google Container Registry 上托管任何镜像连接）。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">80</context>
@@ -3409,7 +3409,7 @@
         Setting high number of pods may cause performance issues of the cluster and Dashboard UI.
       </source>
         <target state="new">
-        设置大量容器组可能会导致集群和Dashboard界面出现性能问题。
+        设置大量容器组可能会导致集群和 Dashboard 界面出现性能问题。
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
@@ -3548,7 +3548,7 @@
       </trans-unit>
       <trans-unit id="31fedef1fc3d84d80cd88ca33aa79b2d3e7d7be7" datatype="html">
         <source>CPU requirement (cores)</source>
-        <target state="new">CPU请求数(核)</target>
+        <target state="new">CPU 请求数(核)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">242</context>
@@ -3559,7 +3559,7 @@
             CPU requirement must be given as a positive number.
           </source>
         <target state="new">
-            CPU请求核数必须是正整数。
+            CPU 请求核数必须是正整数。
           </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
@@ -3571,7 +3571,7 @@
             CPU requirement must be given as a valid number.
           </source>
         <target state="new">
-            CPU请求核数必须是有效的数字。
+            CPU 请求核数必须是有效的数字。
           </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
