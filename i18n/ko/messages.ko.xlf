@@ -963,7 +963,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/roleref/template.html</context>
-          <context context-type="linenumber">54</context>
+          <context context-type="linenumber">43</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/environmentvariables/template.html</context>
@@ -1507,7 +1507,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/roleref/template.html</context>
-          <context context-type="linenumber">35</context>
+          <context context-type="linenumber">24</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
@@ -1523,7 +1523,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/roleref/template.html</context>
-          <context context-type="linenumber">29</context>
+          <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
       <trans-unit id="9b6940648326778f67ea6e6fa0955d31f758b739" datatype="html">
@@ -1559,7 +1559,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/roleref/template.html</context>
-          <context context-type="linenumber">49</context>
+          <context context-type="linenumber">54</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
@@ -2433,7 +2433,7 @@
         <target state="new">namespace</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/subject/template.html</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">60</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7066e1af065c2b6a45b83dc874af7d15f1fba435" datatype="html">
@@ -3046,9 +3046,9 @@
           <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="9964ad38cd02366c238005bc6cb2b3e15f0809fd" datatype="html">
-        <source>RoleRef</source>
-        <target state="new">RoleRef</target>
+      <trans-unit id="48bd9a06280e4749a12889e8cd33fc73e27cc271" datatype="html">
+        <source>Cluster Role</source>
+        <target state="new">Cluster Role</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/roleref/template.html</context>
           <context context-type="linenumber">19</context>
@@ -3059,7 +3059,7 @@
         <target state="new">APIGroup: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/roleref/template.html</context>
-          <context context-type="linenumber">23</context>
+          <context context-type="linenumber">29</context>
         </context-group>
       </trans-unit>
       <trans-unit id="725e272ea1601241115103f2d52e6d4e27a66865" datatype="html">
@@ -3067,7 +3067,7 @@
         <target state="new">APIGroup</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/roleref/template.html</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5927a3493fbb556db65f530e01b3aa6ab9f186e6" datatype="html">
@@ -3443,6 +3443,7 @@
         <target state="new">
         <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>
       </target> 더 배우기
+        
         
         
         

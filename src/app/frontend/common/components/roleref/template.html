@@ -16,8 +16,14 @@ limitations under the License.
 
 <kd-card [initialized]="initialized">
   <div title
-       i18n>RoleRef</div>
+       i18n>Cluster Role</div>
   <div description>
+    <div class="kd-inline-property"
+         *ngIf="roleRef?.name">
+      <span class="kd-muted-light"
+            i18n>Name:&nbsp;</span>
+      <span>{{roleRef?.name}}</span>
+    </div>
     <div class="kd-inline-property">
       <span class="kd-muted-light"
             i18n>APIGroup:&nbsp;</span>
@@ -29,15 +35,14 @@ limitations under the License.
             i18n>Kind:&nbsp;</span>
       <span>{{roleRef?.kind}}</span>
     </div>
-    <div class="kd-inline-property"
-         *ngIf="roleRef?.name">
-      <span class="kd-muted-light"
-            i18n>Name:&nbsp;</span>
-      <span>{{roleRef?.name}}</span>
-    </div>
   </div>
   <div content>
     <div fxLayout="row wrap">
+      <kd-property [ngClass]="'role-ref-name'">
+        <div key
+             i18n>Name</div>
+        <div value>{{roleRef?.name}}</div>
+      </kd-property>
       <kd-property [ngClass]="'role-ref-apiGroup'">
         <div key
              i18n>APIGroup</div>
@@ -48,11 +53,6 @@ limitations under the License.
         <div key
              i18n>Kind</div>
         <div value>{{roleRef?.kind}}</div>
-      </kd-property>
-      <kd-property [ngClass]="'role-ref-name'">
-        <div key
-             i18n>Name</div>
-        <div value>{{roleRef?.name}}</div>
       </kd-property>
     </div>
   </div>

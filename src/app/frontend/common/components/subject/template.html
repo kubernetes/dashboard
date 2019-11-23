@@ -52,6 +52,7 @@ limitations under the License.
                          i18n>name</mat-header-cell>
         <mat-cell *matCellDef="let subject">
           <ng-container *ngIf="subject.name">{{subject.name}}</ng-container>
+          <ng-container *ngIf="!subject.name">-</ng-container>
         </mat-cell>
       </ng-container>
       <ng-container [matColumnDef]="getSubjectsColumns()[3]">
@@ -59,6 +60,7 @@ limitations under the License.
                          i18n>namespace</mat-header-cell>
         <mat-cell *matCellDef="let subject">
           <ng-container *ngIf="subject.namespace">{{subject.namespace}}</ng-container>
+          <ng-container *ngIf="!subject.namespace">-</ng-container>
         </mat-cell>
       </ng-container>
       <mat-header-row *matHeaderRowDef="getColumnKeys()"></mat-header-row>
