@@ -35,4 +35,8 @@ export class RoleRefComponent {
       this.roleRef_ = val;
     }
   }
+
+  getClusterRef(name: string): string {
+    return '#/clusterrole/' + name + '?namespace=default';
+  }
 }
