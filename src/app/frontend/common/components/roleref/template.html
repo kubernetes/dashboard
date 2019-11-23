@@ -41,7 +41,7 @@ limitations under the License.
       <kd-property [ngClass]="'role-ref-name'">
         <div key
              i18n>Name</div>
-        <div value>{{roleRef?.name}}</div>
+        <div value><a [href]="getClusterRef(roleRef?.name)">{{roleRef?.name}}</a></div>
       </kd-property>
       <kd-property [ngClass]="'role-ref-apiGroup'">
         <div key
@@ -52,7 +52,7 @@ limitations under the License.
                    [ngClass]="'role-ref-kind'">
         <div key
              i18n>Kind</div>
-        <div value><a [href]="getClusterRef(roleRef?.name)">{{roleRef?.name}}</a></div>
+        <div value>{{roleRef?.kind}}</div>
       </kd-property>
     </div>
   </div>
