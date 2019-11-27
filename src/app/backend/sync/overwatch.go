@@ -31,8 +31,9 @@ var Overwatch *overwatch
 // Initializes and starts Overwatch instance. It is private to make sure that only one instance is running.
 func init() {
 	Overwatch = &overwatch{
-		syncMap:   make(map[string]syncApi.Synchronizer),
-		policyMap: make(map[string]RestartPolicy),
+		syncMap:      make(map[string]syncApi.Synchronizer),
+		policyMap:    make(map[string]RestartPolicy),
+		restartCount: make(map[string]int),
 
 		registrationSignal: make(chan string),
 		restartSignal:      make(chan string),
