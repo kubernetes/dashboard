@@ -329,7 +329,10 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 		apiV1Ws.GET("/horizontalpodautoscaler/{namespace}/{horizontalpodautoscaler}").
 			To(apiHandler.handleGetHorizontalPodAutoscalerDetail).
 			Writes(horizontalpodautoscaler.HorizontalPodAutoscalerDetail{}))
-
+	apiV1Ws.Route(
+		apiV1Ws.GET("/horizontalpodautoscaler/{kind}/{namespace}/{name}").
+			To(apiHandler.handleGetHorizontalPodAutoscalerListForResource).
+			Writes(horizontalpodautoscaler.HorizontalPodAutoscalerList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/job").
 			To(apiHandler.handleGetJobList).
