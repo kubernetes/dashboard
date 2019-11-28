@@ -21,11 +21,11 @@ import {ActionbarService, ResourceMeta} from '../../../../common/services/global
 import {NotificationsService} from '../../../../common/services/global/notifications';
 import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
 import {ResourceService} from '../../../../common/services/resource/resource';
+import {RatioItem} from '@api/frontendapi';
 
 @Component({
   selector: 'kd-node-detail',
   templateUrl: './template.html',
-  styleUrls: ['./style.scss'],
 })
 export class NodeDetailComponent implements OnInit, OnDestroy {
   private nodeSubscription_: Subscription;
@@ -34,6 +34,9 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
   isInitialized = false;
   podListEndpoint: string;
   eventListEndpoint: string;
+  cpuAllocation: RatioItem[] = [];
+  memoryAllocation: RatioItem[] = [];
+  podsAllocation: RatioItem[] = [];
 
   constructor(
     private readonly node_: ResourceService<NodeDetail>,
@@ -52,6 +55,7 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
       .get(this.endpoint_.detail(), resourceName)
       .subscribe((d: NodeDetail) => {
         this.node = d;
+        this._getAllocation();
         this.notifications_.pushErrors(d.errors);
         this.actionbar_.onInit.emit(new ResourceMeta('Node', d.objectMeta, d.typeMeta));
         this.isInitialized = true;
@@ -61,6 +65,30 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.nodeSubscription_.unsubscribe();
     this.actionbar_.onDetailsLeave.emit();
+  }
+
+  private _getAllocation(): void {
+    this.cpuAllocation = [
+      {name: 'Requests', value: this.node.allocatedResources.cpuRequests},
+      {name: 'Limits', value: this.node.allocatedResources.cpuLimits},
+    ];
+
+    this.memoryAllocation = [
+      {name: 'Requests', value: this.node.allocatedResources.memoryRequests},
+      {name: 'Limits', value: this.node.allocatedResources.memoryLimits},
+    ];
+
+    this.podsAllocation = [{name: 'Allocation', value: this.node.allocatedResources.allocatedPods}];
+  }
+
+  getCustomColors(label: string): string {
+    if (label.includes('Requests') || label.includes('Allocation')) {
+      return '#00c752';
+    } else if (label.includes('Limits')) {
+      return '#ffad20';
+    } else {
+      return '';
+    }
   }
 
   getAddresses(): string[] {
