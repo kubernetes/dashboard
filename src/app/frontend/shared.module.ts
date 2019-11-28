@@ -51,6 +51,7 @@ import {FilterPipeModule} from 'ngx-filter-pipe';
 
 import {PipesModule} from './common/pipes/module';
 import {KD_TOOLTIP_DEFAULT_OPTIONS} from './index.config';
+import {NgxChartsModule} from '@swimlane/ngx-charts';
 
 const SHARED_DEPENDENCIES = [
   // Angular imports
@@ -91,6 +92,7 @@ const SHARED_DEPENDENCIES = [
   RouterModule,
   AceEditorModule,
   FilterPipeModule,
+  NgxChartsModule,
 
   // Custom application modules
   PipesModule,

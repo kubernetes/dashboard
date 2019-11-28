@@ -290,7 +290,7 @@
         <source>Cron Jobs</source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/workloadstatus/template.html</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="linenumber">32</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/cronjob/template.html</context>
@@ -301,7 +301,7 @@
         <source>Daemon Sets</source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/workloadstatus/template.html</context>
-          <context context-type="linenumber">51</context>
+          <context context-type="linenumber">44</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/daemonset/template.html</context>
@@ -312,7 +312,7 @@
         <source>Deployments</source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/workloadstatus/template.html</context>
-          <context context-type="linenumber">66</context>
+          <context context-type="linenumber">56</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/deployment/template.html</context>
@@ -323,7 +323,7 @@
         <source>Jobs</source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/workloadstatus/template.html</context>
-          <context context-type="linenumber">81</context>
+          <context context-type="linenumber">68</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/job/template.html</context>
@@ -334,7 +334,7 @@
         <source>Pods</source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/workloadstatus/template.html</context>
-          <context context-type="linenumber">96</context>
+          <context context-type="linenumber">81</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
@@ -377,7 +377,7 @@
         <source>Replica Sets</source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/workloadstatus/template.html</context>
-          <context context-type="linenumber">111</context>
+          <context context-type="linenumber">93</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/replicaset/template.html</context>
@@ -388,14 +388,14 @@
         <source>Replication Controllers</source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/workloadstatus/template.html</context>
-          <context context-type="linenumber">126</context>
+          <context context-type="linenumber">105</context>
         </context-group>
       </trans-unit>
       <trans-unit id="0756fdca226249dcff9d05651d50b7acdade2aba" datatype="html">
         <source>Stateful Sets</source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/workloadstatus/template.html</context>
-          <context context-type="linenumber">141</context>
+          <context context-type="linenumber">117</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/statefulset/template.html</context>
@@ -2489,7 +2489,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/overview/template.html</context>
-          <context context-type="linenumber">49</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="0349fe54380ff3444a3a881afb66c9158a299575" datatype="html">
@@ -2500,7 +2500,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/overview/template.html</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="bef0c68b6a7d96b56a8879ecfb9de80a83c151a2" datatype="html">

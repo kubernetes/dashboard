@@ -142,10 +142,7 @@ export class AllocationChartComponent implements OnChanges {
    * Displays label only for allocated resources
    */
   private displayOnlyAllocated_(value: number, _: number, id: string | number): string {
-    if (this.allocated_.has(id)) {
-      return `${Math.round(value)}%`;
-    }
-    return '';
+    return this.allocated_.has(id) ? `${Math.round(value)}%` : '';
   }
 
   /**
