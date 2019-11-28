@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {SimpleChange} from '@angular/core';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {Metric} from '@api/backendapi';
 
 import {SharedModule} from '../../../shared.module';
 import {CardComponent} from '../card/component';
-import {GraphComponent} from '../graph/component';
+import {GraphComponent, GraphType} from '../graph/component';
 
 import {GraphCardComponent} from './component';
 
@@ -68,6 +67,7 @@ describe('GraphCardComponent', () => {
     component.graphTitle = 'CPU';
     component.selectedMetricName = 'cpu/usage';
     component.selectedMetric = testMetrics[0];
+    component.graphType = GraphType.CPU;
 
     testHostFixture.detectChanges();
     expect(component.shouldShowGraph()).toBeTruthy();
