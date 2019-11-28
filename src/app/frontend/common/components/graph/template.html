@@ -25,7 +25,8 @@ limitations under the License.
                        [curve]="curve"
                        [customColors]="customColors"
                        [gradient]="true">
-  <ng-template #seriesTooltipTemplate let-model="model">
+  <ng-template #seriesTooltipTemplate
+               let-model="model">
     <pre>{{model[0].series}}: {{getTooltipValue(model[0].value)}}</pre>
   </ng-template>
 </ngx-charts-area-chart>
