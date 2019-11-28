@@ -124,11 +124,7 @@ describe('WorkloadStatusComponent', () => {
     component.resourcesRatio = testResourcesRatio;
 
     testHostFixture.detectChanges();
-    const debugElement = testHostFixture.debugElement.query(
-      By.css('kd-card mat-card div mat-card-content kd-allocation-chart #pods'),
-    );
+    const debugElement = testHostFixture.debugElement.query(By.css('#kd-graph-pods'));
     expect(debugElement).toBeTruthy();
-
-    expect(debugElement.context.data === testResourcesRatio.podRatio).toBeTruthy();
   });
 });
