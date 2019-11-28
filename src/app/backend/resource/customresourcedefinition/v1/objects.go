@@ -12,82 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package customresourcedefinition
+package v1
 
 import (
 	"encoding/json"
 
-	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/errors"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	apiextensions "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
+	apiextensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	apiextensionsclientset "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/rest"
+
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/customresourcedefinition/types"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
-
-// CustomResourceObject represents a custom resource object.
-type CustomResourceObject struct {
-	TypeMeta   api.TypeMeta   `json:"typeMeta"`
-	ObjectMeta api.ObjectMeta `json:"objectMeta"`
-}
-
-func (r *CustomResourceObject) UnmarshalJSON(data []byte) error {
-	tempStruct := &struct {
-		metav1.TypeMeta `json:",inline"`
-		ObjectMeta      metav1.ObjectMeta `json:"metadata,omitempty"`
-	}{}
-
-	err := json.Unmarshal(data, &tempStruct)
-	if err != nil {
-		return err
-	}
-
-	r.TypeMeta = api.NewTypeMeta(api.ResourceKind(tempStruct.TypeMeta.Kind))
-	r.ObjectMeta = api.NewObjectMeta(tempStruct.ObjectMeta)
-	return nil
-}
-
-type CustomResourceObjectDetail struct {
-	CustomResourceObject `json:",inline"`
-
-	// List of non-critical errors, that occurred during resource retrieval.
-	Errors []error `json:"errors"`
-}
-
-// CustomResourceObjectList represents crd objects in a namespace.
-type CustomResourceObjectList struct {
-	TypeMeta metav1.TypeMeta `json:"typeMeta"`
-	ListMeta api.ListMeta    `json:"listMeta"`
-
-	// Unordered list of custom resource definitions
-	Items []CustomResourceObject `json:"items"`
-
-	// List of non-critical errors, that occurred during resource retrieval.
-	Errors []error `json:"errors"`
-}
-
-func (r *CustomResourceObjectList) UnmarshalJSON(data []byte) error {
-	tempStruct := &struct {
-		metav1.TypeMeta `json:",inline"`
-		Items           []CustomResourceObject `json:"items"`
-	}{}
-
-	err := json.Unmarshal(data, &tempStruct)
-	if err != nil {
-		return err
-	}
-
-	r.TypeMeta = tempStruct.TypeMeta
-	r.Items = tempStruct.Items
-	return nil
-}
 
 // GetCustomResourceObjectList gets objects for a CR.
 func GetCustomResourceObjectList(client apiextensionsclientset.Interface, config *rest.Config, namespace *common.NamespaceQuery,
-	dsQuery *dataselect.DataSelectQuery, crdName string) (*CustomResourceObjectList, error) {
-	var list *CustomResourceObjectList
+	dsQuery *dataselect.DataSelectQuery, crdName string) (*types.CustomResourceObjectList, error) {
+	var list *types.CustomResourceObjectList
 
 	customResourceDefinition, err := client.ApiextensionsV1().
 		CustomResourceDefinitions().
@@ -104,7 +49,7 @@ func GetCustomResourceObjectList(client apiextensionsclientset.Interface, config
 	}
 
 	raw, err := restClient.Get().
-		NamespaceIfScoped(namespace.ToRequestParam(), customResourceDefinition.Spec.Scope == apiextensions.NamespaceScoped).
+		NamespaceIfScoped(namespace.ToRequestParam(), customResourceDefinition.Spec.Scope == apiextensionsv1.NamespaceScoped).
 		Resource(customResourceDefinition.Spec.Names.Plural).
 		Do().Raw()
 	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
@@ -132,8 +77,8 @@ func GetCustomResourceObjectList(client apiextensionsclientset.Interface, config
 }
 
 // GetCustomResourceObjectDetail returns details of a single object in a CR.
-func GetCustomResourceObjectDetail(client apiextensionsclientset.Interface, namespace *common.NamespaceQuery, config *rest.Config, crdName string, name string) (*CustomResourceObjectDetail, error) {
-	var detail *CustomResourceObjectDetail
+func GetCustomResourceObjectDetail(client apiextensionsclientset.Interface, namespace *common.NamespaceQuery, config *rest.Config, crdName string, name string) (*types.CustomResourceObjectDetail, error) {
+	var detail *types.CustomResourceObjectDetail
 
 	customResourceDefinition, err := client.ApiextensionsV1().
 		CustomResourceDefinitions().
@@ -150,7 +95,7 @@ func GetCustomResourceObjectDetail(client apiextensionsclientset.Interface, name
 	}
 
 	raw, err := restClient.Get().
-		NamespaceIfScoped(namespace.ToRequestParam(), customResourceDefinition.Spec.Scope == apiextensions.NamespaceScoped).
+		NamespaceIfScoped(namespace.ToRequestParam(), customResourceDefinition.Spec.Scope == apiextensionsv1.NamespaceScoped).
 		Resource(customResourceDefinition.Spec.Names.Plural).
 		Name(name).Do().Raw()
 	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
@@ -171,7 +116,7 @@ func GetCustomResourceObjectDetail(client apiextensionsclientset.Interface, name
 
 // toCRDObject sets the object kind to the full name of the CRD.
 // E.g. changes "Foo" to "foos.samplecontroller.k8s.io"
-func toCRDObject(object *CustomResourceObject, crd *apiextensions.CustomResourceDefinition) {
+func toCRDObject(object *types.CustomResourceObject, crd *apiextensionsv1.CustomResourceDefinition) {
 	object.TypeMeta.Kind = api.ResourceKind(crd.Name)
 	crdSubresources := crd.Spec.Versions[0].Subresources
 	object.TypeMeta.Scalable = crdSubresources != nil && crdSubresources.Scale != nil

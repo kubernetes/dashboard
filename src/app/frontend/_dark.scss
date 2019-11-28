@@ -18,12 +18,12 @@
 $kd-dark-palette-primary: (
   50: #fff, // Primary toolbar buttons.
   100: #fff,
-  200: #326de6,
+  200: #327df4,
   300: #9575cd,
   400: #7e57c2,
-  500: #326de6,
+  500: #327df4,
   600: #5e35b1,
-  700: #326de6,
+  700: #327df4,
   800: #4527a0,
   900: #311b92,
   A100: #b388ff,
@@ -51,7 +51,7 @@ $kd-dark-palette-primary: (
 $kd-dark-palette-warn: (
   50: #00c752, // Chart green.
   100: #008000,
-  200: #326de6, // Chart blue.
+  200: #327df4, // Chart blue.
   300: #0d47a1,
   400: #ff0,
   500: #ffad20,
@@ -90,6 +90,15 @@ $kd-dark-theme-accent: mat-palette($kd-dark-palette-accent);
 $kd-dark-theme-warn: mat-palette($kd-dark-palette-warn);
 
 $kd-dark-theme: mat-dark-theme($kd-dark-theme-primary, $kd-dark-theme-accent, $kd-dark-theme-warn);
+
+// sass-lint:disable function-name-format
+$background: map-get($kd-dark-theme, background);
+$background: map_merge($background, (background: #1d1d1d));
+$background: map_merge($background, (app-bar: #1d1d1d));
+$background: map_merge($background, (card: #2d2d2d));
+$background: map_merge($background, (dialog: #2d2d2d));
+$kd-dark-theme: map_merge($kd-dark-theme, (background: $background));
+// sass-lint:enable function-name-format
 
 .kd-dark-theme {
   @include angular-material-theme($kd-dark-theme);

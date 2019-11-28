@@ -15,7 +15,6 @@
 package common
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/api"
 	apps "k8s.io/api/apps/v1"
 	autoscaling "k8s.io/api/autoscaling/v1"
 	batch "k8s.io/api/batch/v1"
@@ -25,9 +24,12 @@ import (
 	rbac "k8s.io/api/rbac/v1"
 	storage "k8s.io/api/storage/v1"
 	apiextensions "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
+	apiextensionsv1beta1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
 	apiextensionsclientset "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
+
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 )
 
 // ResourceChannels struct holds channels to resource lists. Each list channel is paired with
@@ -837,21 +839,46 @@ func GetPersistentVolumeClaimListChannel(client client.Interface, nsQuery *Names
 }
 
 // CustomResourceDefinitionChannel is a list and error channels to CustomResourceDefinition.
-type CustomResourceDefinitionChannel struct {
+type CustomResourceDefinitionChannelV1 struct {
 	List  chan *apiextensions.CustomResourceDefinitionList
 	Error chan error
 }
 
-// GetCustomResourceDefinitionChannel returns a pair of channels to a CustomResourceDefinition list and errors
+// GetCustomResourceDefinitionChannelV1 returns a pair of channels to a CustomResourceDefinition list and errors
 // that both must be read numReads times.
-func GetCustomResourceDefinitionChannel(client apiextensionsclientset.Interface, numReads int) CustomResourceDefinitionChannel {
-	channel := CustomResourceDefinitionChannel{
+func GetCustomResourceDefinitionChannelV1(client apiextensionsclientset.Interface, numReads int) CustomResourceDefinitionChannelV1 {
+	channel := CustomResourceDefinitionChannelV1{
 		List:  make(chan *apiextensions.CustomResourceDefinitionList, numReads),
 		Error: make(chan error, numReads),
 	}
 
 	go func() {
 		list, err := client.ApiextensionsV1().CustomResourceDefinitions().List(api.ListEverything)
+		for i := 0; i < numReads; i++ {
+			channel.List <- list
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
+// CustomResourceDefinitionChannel is a list and error channels to CustomResourceDefinition.
+type CustomResourceDefinitionChannelV1beta1 struct {
+	List  chan *apiextensionsv1beta1.CustomResourceDefinitionList
+	Error chan error
+}
+
+// GetCustomResourceDefinitionChannelV1beta1 returns a pair of channels to a CustomResourceDefinition list and errors
+// that both must be read numReads times.
+func GetCustomResourceDefinitionChannelV1beta1(client apiextensionsclientset.Interface, numReads int) CustomResourceDefinitionChannelV1beta1 {
+	channel := CustomResourceDefinitionChannelV1beta1{
+		List:  make(chan *apiextensionsv1beta1.CustomResourceDefinitionList, numReads),
+		Error: make(chan error, numReads),
+	}
+
+	go func() {
+		list, err := client.ApiextensionsV1beta1().CustomResourceDefinitions().List(api.ListEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err

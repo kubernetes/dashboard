@@ -24,4 +24,5 @@ const (
 	CreationTimestampProperty = "creationTimestamp"
 	NamespaceProperty         = "namespace"
 	StatusProperty            = "status"
+	TypeProperty              = "type"
 )

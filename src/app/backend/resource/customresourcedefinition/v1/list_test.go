@@ -12,37 +12,40 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package customresourcedefinition
+package v1
 
 import (
 	"reflect"
 	"testing"
 
-	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	apiextensions "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
+	"k8s.io/apiextensions-apiserver/pkg/apis/apiextensions"
+	apiextensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	"k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset/fake"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/customresourcedefinition/types"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 func TestGetCustomResourceDefinition(t *testing.T) {
 	cases := []struct {
 		expectedActions []string
-		crdList         *apiextensions.CustomResourceDefinitionList
-		expected        *CustomResourceDefinitionList
+		crdList         *apiextensionsv1.CustomResourceDefinitionList
+		expected        *types.CustomResourceDefinitionList
 	}{
 		{
 			[]string{"list"},
-			&apiextensions.CustomResourceDefinitionList{
-				Items: []apiextensions.CustomResourceDefinition{
+			&apiextensionsv1.CustomResourceDefinitionList{
+				Items: []apiextensionsv1.CustomResourceDefinition{
 					{
 						ObjectMeta: metaV1.ObjectMeta{Name: "foos.samplecontroller.k8s.io"},
-						Spec: apiextensions.CustomResourceDefinitionSpec{
-							Names: apiextensions.CustomResourceDefinitionNames{
+						Spec: apiextensionsv1.CustomResourceDefinitionSpec{
+							Names: apiextensionsv1.CustomResourceDefinitionNames{
 								Kind:   "Foo",
 								Plural: "foos",
 							},
-							Versions: []apiextensions.CustomResourceDefinitionVersion{
+							Versions: []apiextensionsv1.CustomResourceDefinitionVersion{
 								{
 									Name: "v1alpha1",
 								},
@@ -51,9 +54,9 @@ func TestGetCustomResourceDefinition(t *testing.T) {
 					},
 				},
 			},
-			&CustomResourceDefinitionList{
+			&types.CustomResourceDefinitionList{
 				ListMeta: api.ListMeta{TotalItems: 1},
-				Items: []CustomResourceDefinition{
+				Items: []types.CustomResourceDefinition{
 					{
 						ObjectMeta:  api.ObjectMeta{Name: "foos.samplecontroller.k8s.io"},
 						TypeMeta:    api.TypeMeta{Kind: api.ResourceKindCustomResourceDefinition},
