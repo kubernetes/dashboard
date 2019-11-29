@@ -2443,7 +2443,7 @@
         <x id="START_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;mat-icon>"/>open_in_new<x id="CLOSE_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;/mat-icon>"/><x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> to learn more.
     </source>
         <target state="new">
-      <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>컨테이너화된 앱을 디플로이<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> 하거나, 다른 네임스페이스를 선택할 수 있습니다. 자세한 정보는 
+      <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>컨테이너화된 앱을 디플로이<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> 하거나, 다른 네임스페이스를 선택할 수 있습니다. 자세한 정보는
       <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a>"/>대시보드 문서
         <x id="START_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;mat-icon>"/>open_in_new<x id="CLOSE_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;/mat-icon>"/><x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>를 살펴보시기 바랍니다.
     </target>
@@ -3021,8 +3021,8 @@
       <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a>"/>open source project<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>.
     </source>
         <target state="new">
-      쿠버네티스 대시보드는 대시보드 
-      <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>커뮤니티<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>에 의해서 
+      쿠버네티스 대시보드는 대시보드
+      <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>커뮤니티<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>에 의해서
       <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a>"/>오픈 소스 프로젝트<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>로 구현되었습니다.
     </target>
         <context-group purpose="location">
@@ -3443,6 +3443,24 @@
         <target state="new">
         <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>
       </target> 더 배우기
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">54</context>
@@ -5294,7 +5312,7 @@
     in <x id="INTERPOLATION_1" equiv-text="{{ podName }}"/>
   </source>
         <target state="new">
-    <x id="INTERPOLATION_1" equiv-text="{{ podName }}"/>의 
+    <x id="INTERPOLATION_1" equiv-text="{{ podName }}"/>의
     <x id="START_TAG_MAT-SELECT" ctype="x-mat-select" equiv-text="&lt;mat-select>"/>
       <x id="START_TAG_MAT-OPTION" ctype="x-mat-option" equiv-text="&lt;mat-option>"/>
         <x id="INTERPOLATION" equiv-text="{{ item }}"/>
