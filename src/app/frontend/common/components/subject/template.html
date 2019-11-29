@@ -1,0 +1,67 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-card [initialized]="initialized"
+         role="table">
+  <div title
+       i18n>Subjects</div>
+
+  <div description>
+    <div class="kd-inline-property"
+         *ngIf="subjects?.length">
+      <span class="kd-muted-light"
+            i18n>Items:&nbsp;</span>
+      <span>{{subjects.length}}</span>
+    </div>
+  </div>
+
+  <div content>
+    <mat-table [dataSource]="getDataSource()"
+               class="kd-table-no-footer">
+      <ng-container [matColumnDef]="getSubjectsColumns()[0]">
+        <mat-header-cell *matHeaderCellDef
+                         i18n>kind</mat-header-cell>
+        <mat-cell *matCellDef="let subject">
+          <ng-container *ngIf="subject.kind">{{subject.kind}}</ng-container>
+          <ng-container *ngIf="!subject.kind">-</ng-container>
+        </mat-cell>
+      </ng-container>
+      <ng-container [matColumnDef]="getSubjectsColumns()[1]">
+        <mat-header-cell *matHeaderCellDef
+                         i18n>apiGroup</mat-header-cell>
+        <mat-cell *matCellDef="let subject">
+          <ng-container *ngIf="subject.apiGroup">{{subject.apiGroup}}</ng-container>
+          <ng-container *ngIf="!subject.apiGroup">-</ng-container>
+        </mat-cell>
+      </ng-container>
+      <ng-container [matColumnDef]="getSubjectsColumns()[2]">
+        <mat-header-cell *matHeaderCellDef
+                         i18n>name</mat-header-cell>
+        <mat-cell *matCellDef="let subject">
+          <ng-container *ngIf="subject.name">{{subject.name}}</ng-container>
+          <ng-container *ngIf="!subject.name">-</ng-container>
+        </mat-cell>
+      </ng-container>
+      <ng-container [matColumnDef]="getSubjectsColumns()[3]">
+        <mat-header-cell *matHeaderCellDef
+                         i18n>namespace</mat-header-cell>
+        <mat-cell *matCellDef="let subject">
+          <ng-container *ngIf="subject.namespace">{{subject.namespace}}</ng-container>
+          <ng-container *ngIf="!subject.namespace">-</ng-container>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="getColumnKeys()"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: getColumnKeys();"></mat-row>
+    </mat-table>
+  </div>
+</kd-card>

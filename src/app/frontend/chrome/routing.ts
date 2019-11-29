@@ -39,6 +39,10 @@ const routes: Routes = [
         loadChildren: 'resource/cluster/clusterrole/module#ClusterRoleModule',
       },
       {
+        path: 'clusterrolebinding',
+        loadChildren: 'resource/cluster/clusterrolebinding/module#ClusterRoleBindingModule',
+      },
+      {
         path: 'namespace',
         loadChildren: 'resource/cluster/namespace/module#NamespaceModule',
       },

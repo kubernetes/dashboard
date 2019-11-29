@@ -70,6 +70,10 @@ export interface ClusterRoleList extends ResourceList {
   items: ClusterRole[];
 }
 
+export interface ClusterRoleBindingList extends ResourceList {
+  items: ClusterRoleBinding[];
+}
+
 export interface ConfigMapList extends ResourceList {
   items: ConfigMap[];
 }
@@ -186,6 +190,8 @@ export interface StorageClassList extends ResourceList {
 
 // Simple detail types
 export interface ClusterRole extends Resource {}
+
+export interface ClusterRoleBinding extends Resource {}
 
 export interface ConfigMap extends Resource {}
 
@@ -433,6 +439,24 @@ export interface PolicyRule {
 
 export interface ClusterRoleDetail extends ResourceDetail {
   rules: PolicyRule[];
+}
+
+export interface Subject {
+  kind: string;
+  apiGroup: string;
+  name: string;
+  namespace: string;
+}
+
+export interface RoleRef {
+  apiGroup: string;
+  kind: string;
+  name: string;
+}
+
+export interface ClusterRoleBindingDetail extends ResourceDetail {
+  subjects: Subject[];
+  roleRef: RoleRef;
 }
 
 export interface SecretDetail extends ResourceDetail {

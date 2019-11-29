@@ -1,0 +1,56 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-card [initialized]="initialized">
+  <div title
+       i18n>Cluster Role</div>
+  <div description>
+    <div class="kd-inline-property"
+         *ngIf="roleRef?.name">
+      <span class="kd-muted-light"
+            i18n>Name:&nbsp;</span>
+      <span><a [href]="getClusterRef(roleRef?.name)">{{roleRef?.name}}</a></span>
+    </div>
+    <div class="kd-inline-property">
+      <span class="kd-muted-light"
+            i18n>APIGroup:&nbsp;</span>
+      <span>{{roleRef?.apiGroup}}</span>
+    </div>
+    <div class="kd-inline-property"
+         *ngIf="roleRef?.kind">
+      <span class="kd-muted-light"
+            i18n>Kind:&nbsp;</span>
+      <span>{{roleRef?.kind}}</span>
+    </div>
+  </div>
+  <div content>
+    <div fxLayout="row wrap">
+      <kd-property [ngClass]="'role-ref-name'">
+        <div key
+             i18n>Name</div>
+        <div value><a [href]="getClusterRef(roleRef?.name)">{{roleRef?.name}}</a></div>
+      </kd-property>
+      <kd-property [ngClass]="'role-ref-apiGroup'">
+        <div key
+             i18n>APIGroup</div>
+        <div value>{{roleRef?.apiGroup}}</div>
+      </kd-property>
+      <kd-property *ngIf="roleRef?.kind"
+                   [ngClass]="'role-ref-kind'">
+        <div key
+             i18n>Kind</div>
+        <div value>{{roleRef?.kind}}</div>
+      </kd-property>
+    </div>
+  </div>
+</kd-card>
