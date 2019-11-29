@@ -32,12 +32,20 @@ export const emptyResourcesRatio: ResourcesRatio = {
   styleUrls: ['./style.scss'],
 })
 export class WorkloadStatusComponent {
-  @Input() resourcesRatio: ResourcesRatio;
-  colors: string[] = ['#00c752', '#f00', '#ffad20', '#006028'];
+  @Input() resourcesRatio = emptyResourcesRatio;
+  colors: string[] = [];
 
-  constructor() {
-    if (!this.resourcesRatio) {
-      this.resourcesRatio = emptyResourcesRatio;
+  getCustomColor(label: string): string {
+    if (label.includes('Running')) {
+      return '#00c752';
+    } else if (label.includes('Succeeded')) {
+      return '#006028';
+    } else if (label.includes('Pending')) {
+      return '#ffad20';
+    } else if (label.includes('Failed')) {
+      return '#f00';
+    } else {
+      return '';
     }
   }
 }

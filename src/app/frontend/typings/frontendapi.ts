@@ -103,7 +103,7 @@ export interface SemverInfoOptions {
 }
 
 export interface RatioItem {
-  key: string;
+  name: string;
   value: number;
 }
 
