@@ -127,7 +127,7 @@
     "rxjs": "6.5.3",
     "rxjs-compat": "6.5.3",
     "sockjs-client": "1.4.0",
-    "systemjs": "6.1.5",
+    "systemjs": "6.1.7",
     "tslib": "^1.9.0",
     "web-animations-js": "2.3.2",
     "xterm": "3.14.5",
