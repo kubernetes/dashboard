@@ -12,84 +12,103 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {Metric} from '@api/backendapi';
-import {generate} from 'c3';
-import {timeFormat} from 'd3';
-import {select} from 'd3-selection';
+import {curveBasis, CurveFactory, timeFormat} from 'd3';
 
-import {coresFilter, memoryFilter} from './helper';
+import {compareCoreSuffix, compareMemorySuffix, coresFilter, memoryFilter} from './helper';
+
+export enum GraphType {
+  CPU = 'cpu',
+  Memory = 'memory',
+}
 
 @Component({selector: 'kd-graph', templateUrl: './template.html'})
-export class GraphComponent implements OnInit, AfterViewInit, OnChanges {
+export class GraphComponent implements OnInit, OnChanges {
   @Input() metric: Metric;
   @Input() id: string;
-  private name: string;
+  @Input() graphType: GraphType = GraphType.CPU;
+
+  series: Array<{name: string; series: Array<{value: number; name: string}>}> = [];
+  curve = curveBasis;
+  customColors = {};
+  yAxisLabel = '';
+  yAxisTickFormatting = (value: number) => `${value} ${this.yAxisSuffix_}`;
+
+  private suffixMap_: Map<number, string> = new Map<number, string>();
+  private yAxisSuffix_ = '';
 
   ngOnInit(): void {
-    if (this.id) {
-      this.name = this.id;
-      this.id = this.id.replace(/\s/g, '');
+    if (!this.graphType) {
+      throw new Error('Graph type has to be provided.');
     }
+
+    this.series = this.generateSeries_();
+    this.customColors = this.getColor_();
+    this.yAxisLabel = this.graphType === GraphType.CPU ? 'CPU (cores)' : 'Memory (bytes)';
   }
 
-  ngAfterViewInit(): void {
-    if (this.metric && this.id) {
-      this.generateGraph();
-    }
+  ngOnChanges(_: SimpleChanges): void {
+    this.suffixMap_.clear();
+    this.series = this.generateSeries_();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['id']) {
-      this.name = changes['id'].currentValue;
-    }
-
-    if (changes['metric']) {
-      this.metric = changes['metric'].currentValue;
-      this.generateGraph();
-    }
+  getTooltipValue(value: number): string {
+    return `${value} ${this.suffixMap_.has(value) ? this.suffixMap_.get(value) : ''}`;
   }
 
-  private generateGraph() {
-    generate({
-      bindto: select(`#${this.id}`),
-      size: {
-        height: 200,
+  private generateSeries_(): Array<{name: string; series: Array<{value: number; name: string}>}> {
+    return [
+      {
+        name: this.id,
+        series: this.metric.dataPoints.map(point => {
+          return {
+            value: this.normalize_(point.y),
+            name: timeFormat('%H:%M')(new Date(1000 * point.x)),
+          };
+        }),
       },
-      padding: {
-        right: 25,
-      },
-      data: {
-        x: 'x',
-        columns: [
-          ['x', ...this.metric.dataPoints.map(dp => dp.x)],
-          [this.name, ...this.metric.dataPoints.map(dp => dp.y)],
-        ],
-        types: {
-          'CPU Usage': 'area-spline',
-          'Memory Usage': 'area-spline',
-        },
-        colors: {
-          'CPU Usage': '#00c752',
-          'Memory Usage': '#326de6',
-        },
-      },
-      axis: {
-        x: {
-          tick: {
-            format: (x: number): string => {
-              return timeFormat('%H:%M')(new Date(1000 * x));
-            },
+    ];
+  }
+
+  private getColor_(): Array<{name: string; value: string}> {
+    return this.graphType === GraphType.CPU
+      ? [
+          {
+            name: this.id,
+            value: '#00c752',
           },
-          label: 'Time',
-        },
-        y: {
-          tick: {
-            format: this.name.includes('CPU') ? coresFilter : memoryFilter,
+        ]
+      : [
+          {
+            name: this.id,
+            value: '#326de6',
           },
-          label: this.name.includes('CPU') ? 'CPU (Cores)' : 'Memory (bytes)',
-        },
-      },
-    });
+        ];
+  }
+
+  private normalize_(data: number): number {
+    const filtered = this.graphType === GraphType.CPU ? coresFilter(data) : memoryFilter(data);
+    const parts = filtered.split(' ');
+    const value = Number(parts[0]);
+
+    if (parts.length > 1) {
+      this.suffixMap_.set(value, parts[1]);
+
+      switch (this.graphType) {
+        case GraphType.CPU:
+          this.yAxisSuffix_ =
+            compareCoreSuffix(this.yAxisSuffix_, parts[1]) === -1 ? parts[1] : this.yAxisSuffix_;
+          break;
+        case GraphType.Memory:
+          this.yAxisSuffix_ =
+            compareMemorySuffix(this.yAxisSuffix_, parts[1]) === -1 ? parts[1] : this.yAxisSuffix_;
+          break;
+        default:
+          this.yAxisSuffix_ = '';
+      }
+    }
+
+    return value;
   }
 }

@@ -14,6 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div [id]="id">
-  <!-- Graph <svg> is inserted in here. -->
-</div>
+<ngx-charts-area-chart fxFlex
+                       [xAxis]="true"
+                       [yAxis]="true"
+                       [showYAxisLabel]="true"
+                       [yAxisLabel]="yAxisLabel"
+                       [yAxisTickFormatting]="yAxisTickFormatting"
+                       [results]="series"
+                       [showGridLines]="true"
+                       [curve]="curve"
+                       [customColors]="customColors"
+                       [gradient]="true">
+  <ng-template #seriesTooltipTemplate
+               let-model="model">
+    <pre>{{model[0].series}}: {{getTooltipValue(model[0].value)}}</pre>
+  </ng-template>
+</ngx-charts-area-chart>

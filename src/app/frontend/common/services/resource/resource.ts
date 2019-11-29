@@ -45,7 +45,11 @@ export class ResourceService<T> extends ResourceBase<T> {
           return timer(0, interval);
         }),
       )
-      .pipe(switchMapTo(this.http_.get<T>(endpoint, {params})))
+      .pipe(
+        switchMapTo(
+          this.http_.get<T>(endpoint, {params}),
+        ),
+      )
       .pipe(publishReplay(1))
       .pipe(refCount());
   }
@@ -85,7 +89,11 @@ export class NamespacedResourceService<T> extends ResourceBase<T> {
           return timer(0, interval);
         }),
       )
-      .pipe(switchMapTo(this.http_.get<T>(endpoint, {params})))
+      .pipe(
+        switchMapTo(
+          this.http_.get<T>(endpoint, {params}),
+        ),
+      )
       .pipe(publishReplay(1))
       .pipe(refCount());
   }
