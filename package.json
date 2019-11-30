@@ -184,7 +184,7 @@
     "source-map-explorer": "2.1.1",
     "tar": "5.0.5",
     "through2": "3.0.1",
-    "ts-node": "8.5.3",
+    "ts-node": "8.5.4",
     "tslint": "5.20.1",
     "typescript": "3.4.5",
     "wait-on": "3.3.0",
