@@ -590,6 +590,10 @@
           <context context-type="linenumber">23</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/horizontalpodautoscaler/template.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/ingress/template.html</context>
           <context context-type="linenumber">23</context>
         </context-group>
@@ -698,6 +702,10 @@
           <context context-type="linenumber">60</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/horizontalpodautoscaler/template.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/ingress/template.html</context>
           <context context-type="linenumber">42</context>
         </context-group>
@@ -792,6 +800,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/deployment/template.html</context>
           <context context-type="linenumber">73</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/horizontalpodautoscaler/template.html</context>
+          <context context-type="linenumber">56</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/ingress/template.html</context>
@@ -1000,6 +1012,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/deployment/template.html</context>
           <context context-type="linenumber">97</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/horizontalpodautoscaler/template.html</context>
+          <context context-type="linenumber">84</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/ingress/template.html</context>
@@ -1643,6 +1659,42 @@
           <context context-type="linenumber">79</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="fa94cedf16ac30b4c9523cb6e11c8681c5a8d9fd" datatype="html">
+        <source>Horizontal Pod Autoscaler</source>
+        <target state="new">Horizontal Pod Autoscaler</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/horizontalpodautoscaler/template.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9f4efd749c32559148d96bbd74a4113ad70a2a4f" datatype="html">
+        <source>MinPods</source>
+        <target state="new">MinPods</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/horizontalpodautoscaler/template.html</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="af42615437c58af9f89ab07bf036cc8d715378eb" datatype="html">
+        <source>MaxPods</source>
+        <target state="new">MaxPods</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/horizontalpodautoscaler/template.html</context>
+          <context context-type="linenumber">68</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9a5f638822c9cfd9b102e85f10db49b5be15b26a" datatype="html">
+        <source>ScaleTargetRef</source>
+        <target state="new">ScaleTargetRef</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/horizontalpodautoscaler/template.html</context>
+          <context context-type="linenumber">74</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/workloads/horizontalpodautoscaler/detail/template.html</context>
+          <context context-type="linenumber">75</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="31b85b06ea942f9bd430d369fd1b7fc0d2e949df" datatype="html">
         <source>Ingresses</source>
         <target>イングレス</target>
@@ -2265,6 +2317,10 @@
           <context context-type="linenumber">22</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/workloads/horizontalpodautoscaler/detail/template.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/job/detail/template.html</context>
           <context context-type="linenumber">22</context>
         </context-group>
@@ -2440,13 +2496,23 @@
           <context context-type="linenumber">71</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="501de4951b494632281583819efda068af2005f5" datatype="html">
+        <source>Horizontal Pod Autoscaler
+      </source>
+        <target state="new">Horizontal Pod Autoscaler
+      </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">75</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="702b6f15c86ce19a17aa8ae644658c852d3c1c08" datatype="html">
         <source>Jobs
       </source>
         <target>ジョブ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="linenumber">79</context>
         </context-group>
       </trans-unit>
       <trans-unit id="03ff2fadee6736ca0b92abdfe0f19db0d0b2c3f8" datatype="html">
@@ -2455,7 +2521,7 @@
         <target>ポッド</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">83</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6fed5420d42fcfbd09dfb4777c207274dd4f0c0a" datatype="html">
@@ -2464,7 +2530,7 @@
         <target>レプリカセット</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">83</context>
+          <context context-type="linenumber">87</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5a60417d6a34e8c0655cb0678071c60ca8119aad" datatype="html">
@@ -2473,7 +2539,7 @@
         <target>レプリケーションコントローラー</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">87</context>
+          <context context-type="linenumber">91</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1bc563edf644be0e1f682694e543cc8608575562" datatype="html">
@@ -2482,7 +2548,7 @@
         <target>ステートフルセット</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">91</context>
+          <context context-type="linenumber">95</context>
         </context-group>
       </trans-unit>
       <trans-unit id="c4df359ca10a7fe23b63de59b71b971fc8b91dc9" datatype="html">
@@ -2491,7 +2557,7 @@
         <target>ディスカバリーとロードバランシング</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">96</context>
+          <context context-type="linenumber">100</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7b4d1721251562683d614269b06ebbe3af811a00" datatype="html">
@@ -2500,7 +2566,7 @@
         <target>イングレス</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">100</context>
+          <context context-type="linenumber">104</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5502d7f80d7951086a85d2da478f3f13763939d5" datatype="html">
@@ -2509,7 +2575,7 @@
         <target>サービス</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">104</context>
+          <context context-type="linenumber">108</context>
         </context-group>
       </trans-unit>
       <trans-unit id="be3dcec436583ff66cce312fd2074779d8851f54" datatype="html">
@@ -2518,7 +2584,7 @@
         <target>コンフィグとストレージ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">109</context>
+          <context context-type="linenumber">113</context>
         </context-group>
       </trans-unit>
       <trans-unit id="990cffc29a7adb5ec1110b0176c8c12fff756eba" datatype="html">
@@ -2527,7 +2593,7 @@
         <target>コンフィグマップ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">113</context>
+          <context context-type="linenumber">117</context>
         </context-group>
       </trans-unit>
       <trans-unit id="74be5bc42681451056aacf13382e5b29c62bd903" datatype="html">
@@ -2536,7 +2602,7 @@
         <target>永続ボリューム要求</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">117</context>
+          <context context-type="linenumber">121</context>
         </context-group>
       </trans-unit>
       <trans-unit id="755417c37ab5d459cd2443b3776aaaca7ec87f90" datatype="html">
@@ -2545,7 +2611,7 @@
         <target>シークレット</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">121</context>
+          <context context-type="linenumber">125</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1d216da7f53e1afcd7bffd53c0a6b0f2502cde4d" datatype="html">
@@ -2555,7 +2621,7 @@
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">126</context>
+          <context context-type="linenumber">130</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f2f9d18ebacb9e3bcb996d8176609e306864265e" datatype="html">
@@ -2565,7 +2631,7 @@
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">137</context>
+          <context context-type="linenumber">141</context>
         </context-group>
       </trans-unit>
       <trans-unit id="03511cfe5e28ed3380ab198c13cf62ebde1e89e6" datatype="html">
@@ -2574,7 +2640,7 @@
         <target>設定</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">148</context>
+          <context context-type="linenumber">152</context>
         </context-group>
       </trans-unit>
       <trans-unit id="c2fa735eb6b1b2c10171c5acb818f6e0975a9406" datatype="html">
@@ -2583,7 +2649,7 @@
         <target>Kubernetes Dashboard について</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">153</context>
+          <context context-type="linenumber">157</context>
         </context-group>
       </trans-unit>
       <trans-unit id="01269ce8051398188d50367ead1831407e77d504" datatype="html">
@@ -4820,6 +4886,62 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
           <context context-type="linenumber">280</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="c43212e5bc90cd70590cc8419504df0ecd8545cc" datatype="html">
+        <source>CurrentReplicas: </source>
+        <target state="new">CurrentReplicas: </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/workloads/horizontalpodautoscaler/detail/template.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7ec9ef7f8067bbf8cfa0cc9fd5ca87fd2df1c5da" datatype="html">
+        <source>DesiredReplicas: </source>
+        <target state="new">DesiredReplicas: </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/workloads/horizontalpodautoscaler/detail/template.html</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="f2a3b6926915c001c87520cff2cca2eb6263072c" datatype="html">
+        <source>CurrentReplicas</source>
+        <target state="new">CurrentReplicas</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/workloads/horizontalpodautoscaler/detail/template.html</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="65a1ebda041a082c0ca046b9722964a3e9c0fc4b" datatype="html">
+        <source>DesiredReplicas</source>
+        <target state="new">DesiredReplicas</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/workloads/horizontalpodautoscaler/detail/template.html</context>
+          <context context-type="linenumber">51</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="b2d43044db6addb4e11efc695d4841635a4a1ba9" datatype="html">
+        <source>MaxReplicas</source>
+        <target state="new">MaxReplicas</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/workloads/horizontalpodautoscaler/detail/template.html</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="d053a1a19b250507093e89fb28ebf26f082ded89" datatype="html">
+        <source>MinReplicas</source>
+        <target state="new">MinReplicas</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/workloads/horizontalpodautoscaler/detail/template.html</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="de9d8a068df66e64be10a4377270fce972c408d4" datatype="html">
+        <source>LastScaleTime</source>
+        <target state="new">LastScaleTime</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/workloads/horizontalpodautoscaler/detail/template.html</context>
+          <context context-type="linenumber">69</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5413cb2f145c06134be125af0b8900fa43178672" datatype="html">

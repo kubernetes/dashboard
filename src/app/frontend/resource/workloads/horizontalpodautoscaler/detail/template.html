@@ -1,0 +1,81 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-object-meta [initialized]="isInitialized"
+                [objectMeta]="horizontalPodAutoscaler?.objectMeta"></kd-object-meta>
+
+<kd-card [initialized]="isInitialized">
+  <div title
+       i18n>Resource information</div>
+
+  <div description>
+    <div class="kd-inline-property"
+         *ngIf="horizontalPodAutoscaler?.currentReplicas !== null">
+      <span class="kd-muted-light"
+            i18n>CurrentReplicas:&nbsp;</span>
+      <span>{{horizontalPodAutoscaler.currentReplicas}}</span>
+    </div>
+
+    <div class="kd-inline-property"
+         *ngIf="horizontalPodAutoscaler?.desiredReplicas !== null">
+      <span class="kd-muted-light"
+            i18n>DesiredReplicas:&nbsp;</span>
+      <span>{{horizontalPodAutoscaler.desiredReplicas}}</span>
+    </div>
+  </div>
+
+  <div content
+       *ngIf="isInitialized"
+       fxLayout="row wrap">
+    <kd-property *ngIf="horizontalPodAutoscaler?.currentReplicas !== null">
+      <div key
+           i18n>CurrentReplicas</div>
+      <div value>{{horizontalPodAutoscaler.desiredReplicas}}</div>
+    </kd-property>
+
+    <kd-property *ngIf="horizontalPodAutoscaler?.desiredReplicas !== null">
+      <div key
+           i18n>DesiredReplicas</div>
+      <div value>{{horizontalPodAutoscaler.desiredReplicas}}</div>
+    </kd-property>
+
+    <kd-property *ngIf="horizontalPodAutoscaler?.maxReplicas !== null">
+      <div key
+           i18n>MaxReplicas</div>
+      <div value>{{horizontalPodAutoscaler.maxReplicas}}</div>
+    </kd-property>
+
+    <kd-property *ngIf="horizontalPodAutoscaler?.minReplicas !== null">
+      <div key
+           i18n>MinReplicas</div>
+      <div value>{{horizontalPodAutoscaler.minReplicas}}</div>
+    </kd-property>
+
+    <kd-property *ngIf="horizontalPodAutoscaler?.lastScaleTime !== null">
+      <div key
+           i18n>LastScaleTime</div>
+      <div value>{{horizontalPodAutoscaler.lastScaleTime}}</div>
+    </kd-property>
+
+    <kd-property *ngIf="horizontalPodAutoscaler?.scaleTargetRef !== null">
+      <div key
+           i18n>ScaleTargetRef</div>
+      <div value>
+        {{horizontalPodAutoscaler.scaleTargetRef.kind}} / {{horizontalPodAutoscaler.scaleTargetRef.name}}
+      </div>
+    </kd-property>
+  </div>
+</kd-card>

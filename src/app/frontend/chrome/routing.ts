@@ -79,6 +79,11 @@ const routes: Routes = [
         loadChildren: 'resource/workloads/deployment/module#DeploymentModule',
       },
       {
+        path: 'horizontalpodautoscaler',
+        loadChildren:
+          'resource/workloads/horizontalpodautoscaler/module#HorizontalPodActoscalerModule',
+      },
+      {
         path: 'job',
         loadChildren: 'resource/workloads/job/module#JobModule',
       },
