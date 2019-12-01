@@ -37,6 +37,7 @@ export class DeploymentDetailComponent implements OnInit, OnDestroy {
   eventListEndpoint: string;
   oldReplicaSetsEndpoint: string;
   newReplicaSetEndpoint: string;
+  horizontalPodAutoscalerEndpoint: string;
 
   constructor(
     private readonly deployment_: NamespacedResourceService<DeploymentDetail>,
@@ -60,6 +61,11 @@ export class DeploymentDetailComponent implements OnInit, OnDestroy {
     this.newReplicaSetEndpoint = this.endpoint_.child(
       resourceName,
       Resource.newReplicaSet,
+      resourceNamespace,
+    );
+    this.horizontalPodAutoscalerEndpoint = this.endpoint_.child(
+      resourceName,
+      Resource.horizontalPodAutoscaler,
       resourceNamespace,
     );
 
