@@ -1659,13 +1659,17 @@
           <context context-type="linenumber">79</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="fa94cedf16ac30b4c9523cb6e11c8681c5a8d9fd" datatype="html">
-        <source>Horizontal Pod Autoscaler</source>
-        <target state="new">Horizontal Pod Autoscaler</target>
+      <trans-unit id="72862a3c656e14a9ac4c295bb536af86762abe70" datatype="html">
+        <source>horizontalpodsautoscaler</source>
+        <target state="new">horizontalpodsautoscaler</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/horizontalpodautoscaler/template.html</context>
           <context context-type="linenumber">22</context>
         </context-group>
+      </trans-unit>
+      <trans-unit id="fa94cedf16ac30b4c9523cb6e11c8681c5a8d9fd" datatype="html">
+        <source>Horizontal Pod Autoscaler</source>
+        <target state="new">Horizontal Pod Autoscaler</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
           <context context-type="linenumber">284</context>
@@ -2500,10 +2504,10 @@
           <context context-type="linenumber">71</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="501de4951b494632281583819efda068af2005f5" datatype="html">
-        <source>Horizontal Pod Autoscaler
+      <trans-unit id="6729341b7965895e1e7d69aa9e39297cffbea06c" datatype="html">
+        <source>horizontalpodsautoscaler
       </source>
-        <target state="new">Horizontal Pod Autoscaler
+        <target state="new">horizontalpodsautoscaler
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
