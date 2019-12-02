@@ -1654,11 +1654,15 @@
           <context context-type="linenumber">79</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="72862a3c656e14a9ac4c295bb536af86762abe70" datatype="html">
-        <source>horizontalpodsautoscaler</source>
+      <trans-unit id="fa94cedf16ac30b4c9523cb6e11c8681c5a8d9fd" datatype="html">
+        <source>Horizontal Pod Autoscaler</source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/horizontalpodautoscaler/template.html</context>
           <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
+          <context context-type="linenumber">284</context>
         </context-group>
       </trans-unit>
       <trans-unit id="9f4efd749c32559148d96bbd74a4113ad70a2a4f" datatype="html">
@@ -2305,8 +2309,8 @@
           <context context-type="linenumber">71</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="6729341b7965895e1e7d69aa9e39297cffbea06c" datatype="html">
-        <source>horizontalpodsautoscaler
+      <trans-unit id="501de4951b494632281583819efda068af2005f5" datatype="html">
+        <source>Horizontal Pod Autoscaler
       </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -4389,13 +4393,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
           <context context-type="linenumber">280</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="fa94cedf16ac30b4c9523cb6e11c8681c5a8d9fd" datatype="html">
-        <source>Horizontal Pod Autoscaler</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
-          <context context-type="linenumber">284</context>
         </context-group>
       </trans-unit>
       <trans-unit id="c43212e5bc90cd70590cc8419504df0ecd8545cc" datatype="html">
