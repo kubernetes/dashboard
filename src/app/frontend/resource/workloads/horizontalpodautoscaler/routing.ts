@@ -25,7 +25,7 @@ const HORIZONTAL_POD_AUTOSCALER_LIST_ROUTE: Route = {
   path: '',
   component: HorizontalPodAutoscalerListComponent,
   data: {
-    breadcrumb: 'horizontalpodautoscalers',
+    breadcrumb: 'Horizontal Pod Autoscalers',
     parent: WORKLOADS_ROUTE,
   },
 };
