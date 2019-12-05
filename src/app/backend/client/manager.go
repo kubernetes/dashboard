@@ -18,14 +18,16 @@ import (
 	"log"
 	"strings"
 
-	restful "github.com/emicklei/go-restful"
-	pluginclientset "github.com/kubernetes/dashboard/src/app/backend/plugin/client/clientset/versioned"
+	"github.com/emicklei/go-restful"
 	v1 "k8s.io/api/authorization/v1"
 	apiextensionsclientset "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/client-go/tools/clientcmd/api"
+
+	pluginclientset "github.com/kubernetes/dashboard/src/app/backend/plugin/client/clientset/versioned"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/customresourcedefinition"
 
 	"github.com/kubernetes/dashboard/src/app/backend/args"
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
@@ -257,11 +259,16 @@ func (self *clientManager) VerberClient(req *restful.Request, config *rest.Confi
 		return nil, err
 	}
 
+	apiextensionsRestClient, err := customresourcedefinition.GetExtensionsAPIRestClient(apiextensionsclient)
+	if err != nil {
+		return nil, err
+	}
+
 	return NewResourceVerber(k8sClient.CoreV1().RESTClient(),
 		k8sClient.ExtensionsV1beta1().RESTClient(), k8sClient.AppsV1().RESTClient(),
 		k8sClient.BatchV1().RESTClient(), k8sClient.BatchV1beta1().RESTClient(), k8sClient.AutoscalingV1().RESTClient(),
 		k8sClient.StorageV1().RESTClient(), k8sClient.RbacV1().RESTClient(),
-		apiextensionsclient.ApiextensionsV1().RESTClient(),
+		apiextensionsRestClient,
 		pluginsclient.DashboardV1alpha1().RESTClient(),
 		config), nil
 }

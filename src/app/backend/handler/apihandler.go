@@ -21,10 +21,15 @@ import (
 	"strings"
 
 	"github.com/kubernetes/dashboard/src/app/backend/handler/parser"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/customresourcedefinition/types"
 
 	"github.com/kubernetes/dashboard/src/app/backend/plugin"
 
-	restful "github.com/emicklei/go-restful"
+	"github.com/emicklei/go-restful"
+	"golang.org/x/net/xsrftoken"
+	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/client-go/tools/remotecommand"
+
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/auth"
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
@@ -65,9 +70,6 @@ import (
 	settingsApi "github.com/kubernetes/dashboard/src/app/backend/settings/api"
 	"github.com/kubernetes/dashboard/src/app/backend/systembanner"
 	"github.com/kubernetes/dashboard/src/app/backend/validation"
-	"golang.org/x/net/xsrftoken"
-	"k8s.io/apimachinery/pkg/runtime"
-	"k8s.io/client-go/tools/remotecommand"
 )
 
 const (
@@ -318,6 +320,10 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 	apiV1Ws.Route(
 		apiV1Ws.GET("/horizontalpodautoscaler/{namespace}").
 			To(apiHandler.handleGetHorizontalPodAutoscalerList).
+			Writes(horizontalpodautoscaler.HorizontalPodAutoscalerList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/horizontalpodautoscaler/{kind}/{namespace}/{name}").
+			To(apiHandler.handleGetHorizontalPodAutoscalerListForResource).
 			Writes(horizontalpodautoscaler.HorizontalPodAutoscalerList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/horizontalpodautoscaler/{namespace}/{horizontalpodautoscaler}").
@@ -575,22 +581,22 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 	apiV1Ws.Route(
 		apiV1Ws.GET("/crd").
 			To(apiHandler.handleGetCustomResourceDefinitionList).
-			Writes(customresourcedefinition.CustomResourceDefinitionList{}))
+			Writes(types.CustomResourceDefinitionList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/crd/{crd}").
 			To(apiHandler.handleGetCustomResourceDefinitionDetail).
-			Writes(customresourcedefinition.CustomResourceDefinitionDetail{}))
+			Writes(types.CustomResourceDefinitionDetail{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/crd/{namespace}/{crd}/object").
 			To(apiHandler.handleGetCustomResourceObjectList).
-			Writes(customresourcedefinition.CustomResourceObjectList{}))
+			Writes(types.CustomResourceObjectList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/crd/{namespace}/{crd}/{object}").
 			To(apiHandler.handleGetCustomResourceObjectDetail).
-			Writes(customresourcedefinition.CustomResourceObjectDetail{}))
+			Writes(types.CustomResourceObjectDetail{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/crd/{namespace}/{crd}/{object}/event").
@@ -1986,6 +1992,25 @@ func (apiHandler *APIHandler) handleGetHorizontalPodAutoscalerList(request *rest
 	namespace := parseNamespacePathParameter(request)
 	dataSelect := parser.ParseDataSelectPathParameter(request)
 	result, err := horizontalpodautoscaler.GetHorizontalPodAutoscalerList(k8sClient, namespace, dataSelect)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetHorizontalPodAutoscalerListForResource(request *restful.Request,
+	response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	namespace := request.PathParameter("namespace")
+	name := request.PathParameter("name")
+	kind := request.PathParameter("kind")
+	result, err := horizontalpodautoscaler.GetHorizontalPodAutoscalerListForResource(k8sClient, namespace, name, kind)
 	if err != nil {
 		errors.HandleInternalError(response, err)
 		return

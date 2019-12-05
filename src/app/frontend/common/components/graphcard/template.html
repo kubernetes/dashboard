@@ -20,6 +20,7 @@ limitations under the License.
        fxLayout="row">{{graphTitle}} <span *ngIf="graphInfo">{{graphTitle}}</span></div>
   <div content>
     <kd-graph [id]="graphTitle"
+              [graphType]="graphType"
               [metric]="selectedMetric"></kd-graph>
   </div>
 </kd-card>

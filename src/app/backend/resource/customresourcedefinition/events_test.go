@@ -18,10 +18,12 @@ import (
 	"reflect"
 	"testing"
 
+	coreV1 "k8s.io/api/core/v1"
+
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	v1 "k8s.io/api/core/v1"
+
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/client-go/kubernetes/fake"
@@ -30,20 +32,20 @@ import (
 func TestGetEventsForCustomResourceObject(t *testing.T) {
 	cases := []struct {
 		namespace, objectName string
-		eventList             *v1.EventList
+		eventList             *coreV1.EventList
 		objectList            *unstructured.UnstructuredList
 		expected              *common.EventList
 	}{
 		{
 			"ns-1", "example-foo",
-			&v1.EventList{Items: []v1.Event{
+			&coreV1.EventList{Items: []coreV1.Event{
 				{
 					Message: "test-message",
 					ObjectMeta: metaV1.ObjectMeta{
 						Name: "ev-1", Namespace: "ns-1",
 						Labels: map[string]string{"app": "test"},
 					},
-					InvolvedObject: v1.ObjectReference{UID: "test-uid"}},
+					InvolvedObject: coreV1.ObjectReference{UID: "test-uid"}},
 			}},
 			&unstructured.UnstructuredList{Items: []unstructured.Unstructured{
 				{
@@ -65,7 +67,7 @@ func TestGetEventsForCustomResourceObject(t *testing.T) {
 					ObjectMeta: api.ObjectMeta{Name: "ev-1", Namespace: "ns-1",
 						Labels: map[string]string{"app": "test"}},
 					Message: "test-message",
-					Type:    v1.EventTypeNormal,
+					Type:    coreV1.EventTypeNormal,
 				}},
 				Errors: []error{},
 			},

@@ -15,97 +15,152 @@
 package customresourcedefinition
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	api "k8s.io/api/core/v1"
-	apiextensions "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
+	"fmt"
+
+	apiextensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
+	apiextensionsv1beta "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
+	"k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
+	apiextensionsclientset "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
+	"k8s.io/apimachinery/pkg/runtime/serializer"
+	"k8s.io/client-go/rest"
+
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/customresourcedefinition/types"
+	crdv1 "github.com/kubernetes/dashboard/src/app/backend/resource/customresourcedefinition/v1"
+	crdv1beta1 "github.com/kubernetes/dashboard/src/app/backend/resource/customresourcedefinition/v1beta1"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
-type CustomResourceDefinitionCell apiextensions.CustomResourceDefinition
+var (
+	groupName = apiextensionsv1.GroupName
+	v1        = apiextensionsv1.SchemeGroupVersion.Version
+	v1beta1   = apiextensionsv1beta.SchemeGroupVersion.Version
+)
 
-func (self CustomResourceDefinitionCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
-	switch name {
-	case dataselect.NameProperty:
-		return dataselect.StdComparableString(self.ObjectMeta.Name)
-	case dataselect.CreationTimestampProperty:
-		return dataselect.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
-	default:
-		// if name is not supported then just return a constant dummy value, sort will have no effect.
-		return nil
-	}
-}
-
-func toCells(std []apiextensions.CustomResourceDefinition) []dataselect.DataCell {
-	cells := make([]dataselect.DataCell, len(std))
-	for i := range std {
-		cells[i] = CustomResourceDefinitionCell(std[i])
+func GetExtensionsAPIVersion(client clientset.Interface) (string, error) {
+	list, err := client.Discovery().ServerGroups()
+	if err != nil {
+		return "", err
 	}
 
-	return cells
-}
-
-func fromCells(cells []dataselect.DataCell) []apiextensions.CustomResourceDefinition {
-	std := make([]apiextensions.CustomResourceDefinition, len(cells))
-	for i := range std {
-		std[i] = apiextensions.CustomResourceDefinition(cells[i].(CustomResourceDefinitionCell))
+	for _, group := range list.Groups {
+		if group.Name == groupName {
+			return group.PreferredVersion.Version, nil
+		}
 	}
 
-	return std
+	return "", errors.NewNotFound("supported version for extensions api not found")
 }
 
-// The code below allows to perform complex data section on CustomResourceObject.
-type CustomResourceObjectCell CustomResourceObject
-
-func (self CustomResourceObjectCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
-	switch name {
-	case dataselect.NameProperty:
-		return dataselect.StdComparableString(self.ObjectMeta.Name)
-	case dataselect.CreationTimestampProperty:
-		return dataselect.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
-	case dataselect.NamespaceProperty:
-		return dataselect.StdComparableString(self.ObjectMeta.Namespace)
-	default:
-		// if name is not supported then just return a constant dummy value, sort will have no effect.
-		return nil
+func GetExtensionsAPIRestClient(client clientset.Interface) (rest.Interface, error) {
+	version, err := GetExtensionsAPIVersion(client)
+	if err != nil {
+		return nil, err
 	}
-}
 
-func toObjectCells(std []CustomResourceObject) []dataselect.DataCell {
-	cells := make([]dataselect.DataCell, len(std))
-	for i := range std {
-		cells[i] = CustomResourceObjectCell(std[i])
+	switch version {
+	case v1:
+		return client.ApiextensionsV1().RESTClient(), nil
+	case v1beta1:
+		return client.ApiextensionsV1beta1().RESTClient(), nil
 	}
-	return cells
+
+	return nil, errors.NewNotFound(fmt.Sprintf("unsupported extensions api version: %s", version))
 }
 
-func fromObjectCells(cells []dataselect.DataCell) []CustomResourceObject {
-	std := make([]CustomResourceObject, len(cells))
-	for i := range std {
-		std[i] = CustomResourceObject(cells[i].(CustomResourceObjectCell))
+func GetCustomResourceDefinitionList(client apiextensionsclientset.Interface, dsQuery *dataselect.DataSelectQuery) (*types.CustomResourceDefinitionList, error) {
+	version, err := GetExtensionsAPIVersion(client)
+	if err != nil {
+		return nil, err
 	}
-	return std
-}
 
-// getCustomResourceDefinitionGroupVersion returns first group version of custom resource definition.
-// It's also known as preferredVersion.
-func getCustomResourceDefinitionGroupVersion(crd *apiextensions.CustomResourceDefinition) schema.GroupVersion {
-	return schema.GroupVersion{
-		Group:   crd.Spec.Group,
-		Version: crd.Spec.Versions[0].Name,
+	switch version {
+	case v1:
+		return crdv1.GetCustomResourceDefinitionList(client, dsQuery)
+	case v1beta1:
+		return crdv1beta1.GetCustomResourceDefinitionList(client, dsQuery)
 	}
+
+	return nil, errors.NewNotFound(fmt.Sprintf("unsupported extensions api version: %s", version))
 }
 
-func getCRDConditions(crd *apiextensions.CustomResourceDefinition) []common.Condition {
-	var conditions []common.Condition
-	for _, condition := range crd.Status.Conditions {
-		conditions = append(conditions, common.Condition{
-			Type:               string(condition.Type),
-			Status:             api.ConditionStatus(condition.Status),
-			LastTransitionTime: condition.LastTransitionTime,
-			Reason:             condition.Reason,
-			Message:            condition.Message,
+func GetCustomResourceDefinitionDetail(client apiextensionsclientset.Interface, config *rest.Config, name string) (*types.CustomResourceDefinitionDetail, error) {
+	version, err := GetExtensionsAPIVersion(client)
+	if err != nil {
+		return nil, err
+	}
+
+	switch version {
+	case v1:
+		return crdv1.GetCustomResourceDefinitionDetail(client, config, name)
+	case v1beta1:
+		return crdv1beta1.GetCustomResourceDefinitionDetail(client, config, name)
+	}
+
+	return nil, errors.NewNotFound(fmt.Sprintf("unsupported extensions api versions: %s", version))
+}
+
+func GetCustomResourceObjectList(client apiextensionsclientset.Interface, config *rest.Config, namespace *common.NamespaceQuery,
+	dsQuery *dataselect.DataSelectQuery, crdName string) (*types.CustomResourceObjectList, error) {
+	version, err := GetExtensionsAPIVersion(client)
+	if err != nil {
+		return nil, err
+	}
+
+	switch version {
+	case v1:
+		return crdv1.GetCustomResourceObjectList(client, config, namespace, dsQuery, crdName)
+	case v1beta1:
+		return crdv1beta1.GetCustomResourceObjectList(client, config, namespace, dsQuery, crdName)
+	}
+
+	return nil, errors.NewNotFound(fmt.Sprintf("unsupported extensions api versions: %s", version))
+}
+
+func GetCustomResourceObjectDetail(client apiextensionsclientset.Interface, namespace *common.NamespaceQuery, config *rest.Config, crdName string, name string) (*types.CustomResourceObjectDetail, error) {
+	version, err := GetExtensionsAPIVersion(client)
+	if err != nil {
+		return nil, err
+	}
+
+	switch version {
+	case v1:
+		return crdv1.GetCustomResourceObjectDetail(client, namespace, config, crdName, name)
+	case v1beta1:
+		return crdv1beta1.GetCustomResourceObjectDetail(client, namespace, config, crdName, name)
+	}
+
+	return nil, errors.NewNotFound(fmt.Sprintf("unsupported extensions api versions: %s", version))
+}
+
+func NewRESTClient(config *rest.Config, group, version string) (*rest.RESTClient, error) {
+	groupVersion := schema.GroupVersion{
+		Group:   group,
+		Version: version,
+	}
+
+	scheme := runtime.NewScheme()
+	schemeBuilder := runtime.NewSchemeBuilder(
+		func(scheme *runtime.Scheme) error {
+			scheme.AddKnownTypes(
+				groupVersion,
+				&metav1.ListOptions{},
+				&metav1.DeleteOptions{},
+			)
+			return nil
 		})
+	if err := schemeBuilder.AddToScheme(scheme); err != nil {
+		return nil, err
 	}
-	return conditions
+
+	config.GroupVersion = &groupVersion
+	config.APIPath = "/apis"
+	config.ContentType = runtime.ContentTypeJSON
+	config.NegotiatedSerializer = serializer.WithoutConversionCodecFactory{CodecFactory: serializer.NewCodecFactory(scheme)}
+
+	return rest.RESTClientFor(config)
 }

@@ -20,6 +20,13 @@ const coreBase = 1000;
 /** Names of the suffixes where I-th name is for base^I suffix. */
 const corePowerSuffixes = ['', 'k', 'M', 'G', 'T'];
 
+export function compareCoreSuffix(first: string, second: string): number {
+  const firstIdx = corePowerSuffixes.indexOf(first);
+  const secondIdx = corePowerSuffixes.indexOf(second);
+
+  return firstIdx === secondIdx ? 0 : firstIdx > secondIdx ? 1 : -1;
+}
+
 function precisionFilter(d: number): string {
   if (d >= 1000) {
     return format(',')(Number(d.toPrecision(3)));
@@ -51,11 +58,33 @@ export function coresFilter(value: number): string {
   return suffix ? `${formatted} ${suffix}` : formatted;
 }
 
+export function coresFilterDivider(value: number): number {
+  // Convert millicores to cores.
+  value = value / 1000;
+
+  let divider = 1;
+  let power = 0;
+
+  while (value / divider > memoryBase && power < memoryPowerSuffixes.length - 1) {
+    divider *= memoryBase;
+    power += 1;
+  }
+
+  return divider;
+}
+
 /** Base for binary prefixes */
 const memoryBase = 1024;
 
 /** Names of the suffixes where I-th name is for base^I suffix. */
 const memoryPowerSuffixes = ['', 'Ki', 'Mi', 'Gi', 'Ti', 'Pi'];
+
+export function compareMemorySuffix(first: string, second: string): number {
+  const firstIdx = memoryPowerSuffixes.indexOf(first);
+  const secondIdx = memoryPowerSuffixes.indexOf(second);
+
+  return firstIdx === secondIdx ? 0 : firstIdx > secondIdx ? 1 : -1;
+}
 
 /**
  * Returns filter function that formats memory in bytes.
@@ -71,4 +100,16 @@ export function memoryFilter(value: number): string {
   const formatted = precisionFilter(value / divider);
   const suffix = memoryPowerSuffixes[power];
   return suffix ? `${formatted} ${suffix}` : formatted;
+}
+
+export function memoryFilterDivider(value: number): number {
+  let divider = 1;
+  let power = 0;
+
+  while (value / divider > memoryBase && power < memoryPowerSuffixes.length - 1) {
+    divider *= memoryBase;
+    power += 1;
+  }
+
+  return divider;
 }

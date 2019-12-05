@@ -129,91 +129,42 @@ limitations under the License.
   <div content
        *ngIf="isInitialized">
     <div class="kd-allocated-resources">
-      <div class="kd-graph-container"
+      <div fxLayoutAlign="center center"
+           fxLayout="column"
            fxFlex>
-        <kd-allocation-chart [outerPercent]="node?.allocatedResources.cpuRequestsFraction"
-                             [innerPercent]="node?.allocatedResources.cpuLimitsFraction"
-                             id="cpu">
-        </kd-allocation-chart>
-        <div class="kd-graph-legend">
-          <div class="kd-graph-legend-title"
-               i18n>CPU allocation (cores)</div>
-          <div class="kd-graph-legend-entry">
-            <mat-icon class="kd-chart-green">stop</mat-icon>
-            <span i18n>Requests</span>
-            <span class="kd-graph-legend-value">
-              {{node?.allocatedResources.cpuRequests | kdCores}}
-            </span>
-          </div>
-          <div class="kd-graph-legend-entry">
-            <mat-icon class="kd-chart-blue">stop</mat-icon>
-            <span i18n>Limits</span>
-            <span class="kd-graph-legend-value">
-              {{node?.allocatedResources.cpuLimits | kdCores}}
-            </span>
-          </div>
-          <div class="kd-graph-legend-entry">
-            <div class="kd-graph-legend-placeholder"></div>
-            <span i18n>Capacity</span>
-            <span class="kd-graph-legend-value">
-              {{node?.allocatedResources.cpuCapacity | kdCores}}
-            </span>
-          </div>
-        </div>
+        <div class="kd-h1"
+             i18n>CPU</div>
+        <ngx-charts-pie-grid [results]="cpuAllocation"
+                             [designatedTotal]="cpuCapacity"
+                             [customColors]="customColors"
+                             [view]="[500,250]"
+                             [label]="cpuLabel">
+        </ngx-charts-pie-grid>
       </div>
-      <div class="kd-graph-container"
+      <div fxLayoutAlign="center center"
+           fxLayout="column"
            fxFlex>
-        <kd-allocation-chart [outerPercent]="node?.allocatedResources.memoryRequestsFraction"
-                             [innerPercent]="node?.allocatedResources.memoryLimitsFraction"
-                             id="memory">
-        </kd-allocation-chart>
-        <div class="kd-graph-legend">
-          <div class="kd-graph-legend-title"
-               i18n>Memory allocation (bytes)</div>
-          <div class="kd-graph-legend-entry">
-            <mat-icon class="kd-chart-green">stop</mat-icon>
-            <span i18n>Requests</span>
-            <span class="kd-graph-legend-value">
-              {{node?.allocatedResources.memoryRequests | kdMemory}}
-            </span>
-          </div>
-          <div class="kd-graph-legend-entry">
-            <mat-icon class="kd-chart-blue">stop</mat-icon>
-            <span i18n>Limits</span>
-            <span class="kd-graph-legend-value">
-              {{node?.allocatedResources.memoryLimits | kdMemory}}
-            </span>
-          </div>
-          <div class="kd-graph-legend-entry">
-            <div class="kd-graph-legend-placeholder"></div>
-            <span i18n>Capacity</span>
-            <span class="kd-graph-legend-value">
-              {{node?.allocatedResources.memoryCapacity | kdMemory}}
-            </span>
-          </div>
-        </div>
+        <div class="kd-h1"
+             i18n>Memory</div>
+        <ngx-charts-pie-grid [results]="memoryAllocation"
+                             [designatedTotal]="memoryCapacity"
+                             [customColors]="customColors"
+                             [view]="[500,250]"
+                             [label]="memoryLabel">
+        </ngx-charts-pie-grid>
       </div>
-      <div class="kd-graph-container"
+      <div fxLayoutAlign="center center"
+           fxLayout="column"
            fxFlex>
-        <kd-allocation-chart [outerPercent]="node?.allocatedResources.podFraction"
-                             id="pods">
-        </kd-allocation-chart>
-        <div class="kd-graph-legend">
-          <div class="kd-graph-legend-title"
-               i18n>Pods allocation</div>
-          <div class="kd-graph-legend-entry">
-            <mat-icon class="kd-chart-green">stop</mat-icon>
-            <span i18n>Allocation</span>
-            <span class="kd-graph-legend-value">{{node?.allocatedResources.allocatedPods}}</span>
-          </div>
-          <div class="kd-graph-legend-entry">
-            <div class="kd-graph-legend-placeholder"></div>
-            <span i18n>Capacity</span>
-            <span class="kd-graph-legend-value">{{node?.allocatedResources.podCapacity}}</span>
-          </div>
-        </div>
+        <div class="kd-h1"
+             i18n>Pods</div>
+        <ngx-charts-pie-grid [results]="podsAllocation"
+                             [designatedTotal]="node?.allocatedResources.podCapacity"
+                             [customColors]="customColors"
+                             [view]="[250,250]"
+                             label="Pods">
+        </ngx-charts-pie-grid>
       </div>
-
     </div>
   </div>
 </kd-card>

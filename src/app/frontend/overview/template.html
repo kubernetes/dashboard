@@ -22,8 +22,7 @@ limitations under the License.
   <div>
     <kd-graph-metrics [metrics]="cumulativeMetrics"></kd-graph-metrics>
 
-    <!-- TODO: Workload statuses cause a memory leak. Has to be fixed before enabling it back. -->
-    <kd-workload-statuses *ngIf="false"
+    <kd-workload-statuses *ngIf="showWorkloadStatuses()"
                           [resourcesRatio]="resourcesRatio"></kd-workload-statuses>
 
     <kd-cron-job-list (onchange)="onListUpdate($event)"

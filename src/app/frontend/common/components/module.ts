@@ -32,7 +32,6 @@ import {LogsScaleDefaultActionbar} from './actionbars/logsscaledefault/component
 import {ScaleDefaultActionbar} from './actionbars/scaledefault/component';
 import {TriggerDefaultActionbar} from './actionbars/triggerdefault/component';
 import {PinDefaultActionbar} from './actionbars/pindefault/component';
-import {AllocationChartComponent} from './allocationchart/component';
 import {BreadcrumbsComponent} from './breadcrumbs/component';
 import {CardComponent} from './card/component';
 import {ChipDialog} from './chips/chipdialog/dialog';
@@ -102,7 +101,6 @@ const components = [
   ActionbarDetailExecComponent,
   ActionbarDetailPinComponent,
   ActionbarComponent,
-  AllocationChartComponent,
   ActionbarDetailTriggerComponent,
 
   BreadcrumbsComponent,

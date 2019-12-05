@@ -23,7 +23,6 @@ import {AppConfig} from '@api/backendapi';
 import {ResourcesRatio} from '@api/frontendapi';
 
 import {ConfigService} from '../../services/global/config';
-import {AllocationChartComponent} from '../allocationchart/component';
 import {CardComponent} from '../card/component';
 
 import {WorkloadStatusComponent} from './component';
@@ -31,31 +30,31 @@ import {WorkloadStatusComponent} from './component';
 const testResourcesRatio: ResourcesRatio = {
   cronJobRatio: [],
   daemonSetRatio: [
-    {key: 'Running: 1', value: 100},
-    {key: 'Failed: 0', value: 0},
-    {key: 'Pending: 0', value: 0},
+    {name: 'Running: 1', value: 100},
+    {name: 'Failed: 0', value: 0},
+    {name: 'Pending: 0', value: 0},
   ],
   deploymentRatio: [
-    {key: 'Running: 1', value: 50},
-    {key: 'Failed: 1', value: 50},
-    {key: 'Pending: 0', value: 0},
+    {name: 'Running: 1', value: 50},
+    {name: 'Failed: 1', value: 50},
+    {name: 'Pending: 0', value: 0},
   ],
   jobRatio: [],
   podRatio: [
-    {key: 'Running: 10', value: 83.33333333333334},
-    {key: 'Failed: 2', value: 16.666666666666664},
-    {key: 'Pending: 0', value: 0},
-    {key: 'Succeeded: 0', value: 0},
+    {name: 'Running: 10', value: 83.33333333333334},
+    {name: 'Failed: 2', value: 16.666666666666664},
+    {name: 'Pending: 0', value: 0},
+    {name: 'Succeeded: 0', value: 0},
   ],
   replicaSetRatio: [
-    {key: 'Running: 1', value: 50},
-    {key: 'Failed: 1', value: 50},
-    {key: 'Pending: 0', value: 0},
+    {name: 'Running: 1', value: 50},
+    {name: 'Failed: 1', value: 50},
+    {name: 'Pending: 0', value: 0},
   ],
   replicationControllerRatio: [
-    {key: 'Running: 2', value: 100},
-    {key: 'Failed: 0', value: 0},
-    {key: 'Pending: 0', value: 0},
+    {name: 'Running: 2', value: 100},
+    {name: 'Failed: 0', value: 0},
+    {name: 'Pending: 0', value: 0},
   ],
   statefulSetRatio: [],
 };
@@ -67,7 +66,7 @@ describe('WorkloadStatusComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CardComponent, AllocationChartComponent, WorkloadStatusComponent],
+      declarations: [CardComponent, WorkloadStatusComponent],
       imports: [
         MatIconModule,
         MatCardModule,
@@ -124,11 +123,7 @@ describe('WorkloadStatusComponent', () => {
     component.resourcesRatio = testResourcesRatio;
 
     testHostFixture.detectChanges();
-    const debugElement = testHostFixture.debugElement.query(
-      By.css('kd-card mat-card div mat-card-content kd-allocation-chart #pods'),
-    );
+    const debugElement = testHostFixture.debugElement.query(By.css('#kd-graph-pods'));
     expect(debugElement).toBeTruthy();
-
-    expect(debugElement.context.data === testResourcesRatio.podRatio).toBeTruthy();
   });
 });

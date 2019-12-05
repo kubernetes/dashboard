@@ -183,10 +183,6 @@
     background: $border;
   }
 
-  .kd-primary-toolbar {
-    background-color: lighten($background, 5%);
-  }
-
   .kd-search {
     background-color: darken($background, 5%);
 
@@ -285,5 +281,11 @@
 
   .c3-tooltip {
     color: $dark-primary-text;
+  }
+
+  .ngx-charts {
+    text {
+      fill: mat-color($foreground-palette, text) !important;
+    }
   }
 }
