@@ -21,11 +21,17 @@ import {ActionbarService, ResourceMeta} from '../../../../common/services/global
 import {NotificationsService} from '../../../../common/services/global/notifications';
 import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
 import {ResourceService} from '../../../../common/services/resource/resource';
+import {RatioItem} from '@api/frontendapi';
+import {
+  coresFilter,
+  coresFilterDivider,
+  memoryFilter,
+  memoryFilterDivider,
+} from '../../../../common/components/graph/helper';
 
 @Component({
   selector: 'kd-node-detail',
   templateUrl: './template.html',
-  styleUrls: ['./style.scss'],
 })
 export class NodeDetailComponent implements OnInit, OnDestroy {
   private nodeSubscription_: Subscription;
@@ -34,6 +40,18 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
   isInitialized = false;
   podListEndpoint: string;
   eventListEndpoint: string;
+  cpuLabel = 'Cores';
+  cpuCapacity = 0;
+  cpuAllocation: RatioItem[] = [];
+  memoryLabel = 'B';
+  memoryCapacity = 0;
+  memoryAllocation: RatioItem[] = [];
+  podsAllocation: RatioItem[] = [];
+  customColors = [
+    {name: 'Requests', value: '#00c752'},
+    {name: 'Limits', value: '#ffad20'},
+    {name: 'Allocation', value: '#00c752'},
+  ];
 
   constructor(
     private readonly node_: ResourceService<NodeDetail>,
@@ -52,6 +70,7 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
       .get(this.endpoint_.detail(), resourceName)
       .subscribe((d: NodeDetail) => {
         this.node = d;
+        this._getAllocation();
         this.notifications_.pushErrors(d.errors);
         this.actionbar_.onInit.emit(new ResourceMeta('Node', d.objectMeta, d.typeMeta));
         this.isInitialized = true;
@@ -61,6 +80,36 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.nodeSubscription_.unsubscribe();
     this.actionbar_.onDetailsLeave.emit();
+  }
+
+  private _getAllocation(): void {
+    const minCpu = Math.min(
+      this.node.allocatedResources.cpuRequests,
+      this.node.allocatedResources.cpuLimits,
+    );
+    const minCpuDivider = coresFilterDivider(minCpu) * 1000;
+    const formattedMinCpu = coresFilter(minCpu).split(' ');
+    this.cpuLabel = formattedMinCpu.length > 1 ? `${formattedMinCpu[1]}cores` : 'Cores';
+    this.cpuCapacity = this.node.allocatedResources.cpuCapacity / minCpuDivider;
+    this.cpuAllocation = [
+      {name: 'Requests', value: this.node.allocatedResources.cpuRequests / minCpuDivider},
+      {name: 'Limits', value: this.node.allocatedResources.cpuLimits / minCpuDivider},
+    ];
+
+    const minMemory = Math.min(
+      this.node.allocatedResources.memoryRequests,
+      this.node.allocatedResources.memoryLimits,
+    );
+    const minMemoryDivider = memoryFilterDivider(minMemory);
+    const formattedMinMemory = memoryFilter(minMemory).split(' ');
+    this.memoryLabel = formattedMinMemory.length > 1 ? `${formattedMinMemory[1]}B` : 'B';
+    this.memoryCapacity = this.node.allocatedResources.memoryCapacity / minMemoryDivider;
+    this.memoryAllocation = [
+      {name: 'Requests', value: this.node.allocatedResources.memoryRequests / minMemoryDivider},
+      {name: 'Limits', value: this.node.allocatedResources.memoryLimits / minMemoryDivider},
+    ];
+
+    this.podsAllocation = [{name: 'Allocation', value: this.node.allocatedResources.allocatedPods}];
   }
 
   getAddresses(): string[] {

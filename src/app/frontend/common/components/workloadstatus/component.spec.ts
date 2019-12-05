@@ -23,7 +23,6 @@ import {AppConfig} from '@api/backendapi';
 import {ResourcesRatio} from '@api/frontendapi';
 
 import {ConfigService} from '../../services/global/config';
-import {AllocationChartComponent} from '../allocationchart/component';
 import {CardComponent} from '../card/component';
 
 import {WorkloadStatusComponent} from './component';
@@ -67,7 +66,7 @@ describe('WorkloadStatusComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CardComponent, AllocationChartComponent, WorkloadStatusComponent],
+      declarations: [CardComponent, WorkloadStatusComponent],
       imports: [
         MatIconModule,
         MatCardModule,

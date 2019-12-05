@@ -372,6 +372,10 @@
           <context context-type="linenumber">87</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
+          <context context-type="linenumber">160</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
           <context context-type="linenumber">247</context>
         </context-group>
@@ -2116,18 +2120,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/persistentvolumeclaim/template.html</context>
           <context context-type="linenumber">95</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
-          <context context-type="linenumber">157</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
-          <context context-type="linenumber">189</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
-          <context context-type="linenumber">211</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/template.html</context>
@@ -4219,57 +4211,21 @@
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
           <context context-type="linenumber">128</context>
         </context-group>
+      </trans-unit>
+      <trans-unit id="43a02cbb549d36c5086109559945a3db29542b1f" datatype="html">
+        <source>CPU</source>
+        <target state="new">CPU</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
-          <context context-type="linenumber">206</context>
+          <context context-type="linenumber">136</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="753027252ba1aa852076b700564511d009b9bdb1" datatype="html">
-        <source>CPU allocation (cores)</source>
-        <target>Allocation de CPU (coeurs)</target>
+      <trans-unit id="58d4a9814864741040bc5905b6a368836e683f76" datatype="html">
+        <source>Memory</source>
+        <target state="new">Memory</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
-          <context context-type="linenumber">140</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="5238405b3e8e1b72d2732f0ecbd83be35b98cd5d" datatype="html">
-        <source>Requests</source>
-        <target>Requêtes</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
-          <context context-type="linenumber">143</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
-          <context context-type="linenumber">175</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="6e4a7fbd08e57c43160b28964d8eefb1164a62d3" datatype="html">
-        <source>Limits</source>
-        <target>Limites</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
-          <context context-type="linenumber">150</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
-          <context context-type="linenumber">182</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="555a529389b6bb1e6ce44c2fcb3ed41acf43ce96" datatype="html">
-        <source>Memory allocation (bytes)</source>
-        <target>Allocation mémoire (octets)</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
-          <context context-type="linenumber">172</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="7c8fe438d81a06420cc7c644f80a4c559497dfe5" datatype="html">
-        <source>Pods allocation</source>
-        <target>Allocation de pods</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
-          <context context-type="linenumber">203</context>
+          <context context-type="linenumber">148</context>
         </context-group>
       </trans-unit>
       <trans-unit id="c910633dbd59abefedb3896b45649b1373e31aab" datatype="html">
