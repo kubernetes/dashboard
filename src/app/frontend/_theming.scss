@@ -282,4 +282,10 @@
   .c3-tooltip {
     color: $dark-primary-text;
   }
+
+  .ngx-charts {
+    text {
+      fill: mat-color($foreground-palette, text) !important;
+    }
+  }
 }

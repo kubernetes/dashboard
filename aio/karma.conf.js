@@ -26,6 +26,11 @@ module.exports = function(config) {
         pattern: './node_modules/@angular/material/prebuilt-themes/indigo-pink.css',
         included: true,
         watched: true
+      },
+      {
+        pattern: './aio/karma-test-shim.js',
+        included: true,
+        watched: true,
       }
     ],
 

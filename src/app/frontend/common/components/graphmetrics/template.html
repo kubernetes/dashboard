@@ -18,11 +18,13 @@ limitations under the License.
      *ngIf="showGraphs()">
   <div class="graph-col">
     <kd-graph-card graphTitle="CPU Usage"
+                   [graphType]="GraphType.CPU"
                    [metrics]="metrics"
                    selectedMetricName="cpu/usage_rate"></kd-graph-card>
   </div>
   <div class="graph-col">
     <kd-graph-card graphTitle="Memory Usage"
+                   [graphType]="GraphType.Memory"
                    [metrics]="metrics"
                    selectedMetricName="memory/usage"></kd-graph-card>
   </div>
