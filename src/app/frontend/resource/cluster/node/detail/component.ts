@@ -84,7 +84,7 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
     );
     const minCpuDivider = coresFilterDivider(minCpu) * 1000;
     const formattedMinCpu = coresFilter(minCpu).split(' ');
-    this.cpuLabel = formattedMinCpu.length > 1 ? `${formattedMinCpu[1]} cores` : 'Cores';
+    this.cpuLabel = formattedMinCpu.length > 1 ? `${formattedMinCpu[1]}cores` : 'Cores';
     this.cpuCapacity = this.node.allocatedResources.cpuCapacity / minCpuDivider;
     this.cpuAllocation = [
       {name: 'Requests', value: this.node.allocatedResources.cpuRequests / minCpuDivider},
