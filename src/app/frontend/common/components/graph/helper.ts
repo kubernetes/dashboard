@@ -58,6 +58,21 @@ export function coresFilter(value: number): string {
   return suffix ? `${formatted} ${suffix}` : formatted;
 }
 
+export function coresFilterDivider(value: number): number {
+  // Convert millicores to cores.
+  value = value / 1000;
+
+  let divider = 1;
+  let power = 0;
+
+  while (value / divider > memoryBase && power < memoryPowerSuffixes.length - 1) {
+    divider *= memoryBase;
+    power += 1;
+  }
+
+  return divider;
+}
+
 /** Base for binary prefixes */
 const memoryBase = 1024;
 
@@ -85,4 +100,16 @@ export function memoryFilter(value: number): string {
   const formatted = precisionFilter(value / divider);
   const suffix = memoryPowerSuffixes[power];
   return suffix ? `${formatted} ${suffix}` : formatted;
+}
+
+export function memoryFilterDivider(value: number): number {
+  let divider = 1;
+  let power = 0;
+
+  while (value / divider > memoryBase && power < memoryPowerSuffixes.length - 1) {
+    divider *= memoryBase;
+    power += 1;
+  }
+
+  return divider;
 }

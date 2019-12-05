@@ -135,10 +135,10 @@ limitations under the License.
         <div class="kd-h1"
              i18n>CPU</div>
         <ngx-charts-pie-grid [results]="cpuAllocation"
-                             [designatedTotal]="node?.allocatedResources.cpuCapacity"
+                             [designatedTotal]="cpuCapacity"
                              [customColors]="getCustomColors"
                              [view]="[500,250]"
-                             label="Milicores">
+                             [label]="cpuLabel">
         </ngx-charts-pie-grid>
       </div>
       <div fxLayoutAlign="center center"
@@ -147,10 +147,10 @@ limitations under the License.
         <div class="kd-h1"
              i18n>Memory</div>
         <ngx-charts-pie-grid [results]="memoryAllocation"
-                             [designatedTotal]="node?.allocatedResources.memoryCapacity"
+                             [designatedTotal]="memoryCapacity"
                              [customColors]="getCustomColors"
                              [view]="[500,250]"
-                             label="Bytes">
+                             [label]="memoryLabel">
         </ngx-charts-pie-grid>
       </div>
       <div fxLayoutAlign="center center"
