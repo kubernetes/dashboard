@@ -22,6 +22,7 @@ before_install:
   - export GO111MODULE=on
   - export GOPROXY=https://proxy.golang.org
   - export PATH=$PATH:$GOPATH/bin
+  - export NODE_OPTIONS=--max-old-space-size=8192
   - eval "$(gimme 1.12.6)"
 
 before_script:
