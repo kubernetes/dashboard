@@ -47,6 +47,11 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
   memoryCapacity = 0;
   memoryAllocation: RatioItem[] = [];
   podsAllocation: RatioItem[] = [];
+  customColors = [
+    {name: 'Requests', value: '#00c752'},
+    {name: 'Limits', value: '#ffad20'},
+    {name: 'Allocation', value: '#00c752'},
+  ];
 
   constructor(
     private readonly node_: ResourceService<NodeDetail>,
@@ -105,16 +110,6 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
     ];
 
     this.podsAllocation = [{name: 'Allocation', value: this.node.allocatedResources.allocatedPods}];
-  }
-
-  getCustomColors(label: string): string {
-    if (label.includes('Requests') || label.includes('Allocation')) {
-      return '#00c752';
-    } else if (label.includes('Limits')) {
-      return '#ffad20';
-    } else {
-      return '';
-    }
   }
 
   getAddresses(): string[] {

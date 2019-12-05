@@ -136,7 +136,7 @@ limitations under the License.
              i18n>CPU</div>
         <ngx-charts-pie-grid [results]="cpuAllocation"
                              [designatedTotal]="cpuCapacity"
-                             [customColors]="getCustomColors"
+                             [customColors]="customColors"
                              [view]="[500,250]"
                              [label]="cpuLabel">
         </ngx-charts-pie-grid>
@@ -148,7 +148,7 @@ limitations under the License.
              i18n>Memory</div>
         <ngx-charts-pie-grid [results]="memoryAllocation"
                              [designatedTotal]="memoryCapacity"
-                             [customColors]="getCustomColors"
+                             [customColors]="customColors"
                              [view]="[500,250]"
                              [label]="memoryLabel">
         </ngx-charts-pie-grid>
@@ -160,7 +160,7 @@ limitations under the License.
              i18n>Pods</div>
         <ngx-charts-pie-grid [results]="podsAllocation"
                              [designatedTotal]="node?.allocatedResources.podCapacity"
-                             [customColors]="getCustomColors"
+                             [customColors]="customColors"
                              [view]="[250,250]"
                              label="Pods">
         </ngx-charts-pie-grid>
