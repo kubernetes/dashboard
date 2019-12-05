@@ -15,7 +15,6 @@
 package deployment
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/api"
 	v1 "k8s.io/api/apps/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
