@@ -132,7 +132,8 @@ limitations under the License.
       <div fxLayoutAlign="center center"
            fxLayout="column"
            fxFlex>
-        <div class="kd-h1">CPU</div>
+        <div class="kd-h1"
+        i18n>CPU</div>
         <ngx-charts-pie-grid [results]="cpuAllocation"
                              [designatedTotal]="node?.allocatedResources.cpuCapacity"
                              [customColors]="getCustomColors"
@@ -143,7 +144,7 @@ limitations under the License.
       <div fxLayoutAlign="center center"
            fxLayout="column"
            fxFlex>
-        <div class="kd-h1">Memory</div>
+        <div class="kd-h1" i18n>Memory</div>
         <ngx-charts-pie-grid [results]="memoryAllocation"
                              [designatedTotal]="node?.allocatedResources.memoryCapacity"
                              [customColors]="getCustomColors"
@@ -154,7 +155,7 @@ limitations under the License.
       <div fxLayoutAlign="center center"
            fxLayout="column"
            fxFlex>
-        <div class="kd-h1">Pods</div>
+        <div class="kd-h1" i18n>Pods</div>
         <ngx-charts-pie-grid [results]="podsAllocation"
                              [designatedTotal]="node?.allocatedResources.podCapacity"
                              [customColors]="getCustomColors"
