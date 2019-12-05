@@ -22,12 +22,7 @@ import {NotificationsService} from '../../../../common/services/global/notificat
 import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
 import {ResourceService} from '../../../../common/services/resource/resource';
 import {RatioItem} from '@api/frontendapi';
-import {
-  coresFilter,
-  coresFilterDivider,
-  memoryFilter,
-  memoryFilterDivider,
-} from '../../../../common/components/graph/helper';
+import {FormattedValue} from '../../../../common/components/graph/helper';
 
 @Component({
   selector: 'kd-node-detail',
@@ -83,30 +78,62 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
   }
 
   private _getAllocation(): void {
-    const minCpu = Math.min(
-      this.node.allocatedResources.cpuRequests,
+    const cpuLimitsValue = FormattedValue.NewFormattedCoreValue(
       this.node.allocatedResources.cpuLimits,
     );
-    const minCpuDivider = coresFilterDivider(minCpu) * 1000;
-    const formattedMinCpu = coresFilter(minCpu).split(' ');
-    this.cpuLabel = formattedMinCpu.length > 1 ? `${formattedMinCpu[1]}cores` : 'Cores';
-    this.cpuCapacity = this.node.allocatedResources.cpuCapacity / minCpuDivider;
-    this.cpuAllocation = [
-      {name: 'Requests', value: this.node.allocatedResources.cpuRequests / minCpuDivider},
-      {name: 'Limits', value: this.node.allocatedResources.cpuLimits / minCpuDivider},
-    ];
+    const cpuRequestsValue = FormattedValue.NewFormattedCoreValue(
+      this.node.allocatedResources.cpuRequests,
+    );
+    const cpuCapacityValue = FormattedValue.NewFormattedCoreValue(
+      this.node.allocatedResources.cpuCapacity,
+    );
 
-    const minMemory = Math.min(
-      this.node.allocatedResources.memoryRequests,
+    const memoryLimitsValue = FormattedValue.NewFormattedMemoryValue(
       this.node.allocatedResources.memoryLimits,
     );
-    const minMemoryDivider = memoryFilterDivider(minMemory);
-    const formattedMinMemory = memoryFilter(minMemory).split(' ');
-    this.memoryLabel = formattedMinMemory.length > 1 ? `${formattedMinMemory[1]}B` : 'B';
-    this.memoryCapacity = this.node.allocatedResources.memoryCapacity / minMemoryDivider;
+    const memoryRequestsValue = FormattedValue.NewFormattedMemoryValue(
+      this.node.allocatedResources.memoryRequests,
+    );
+    const memoryCapacityValue = FormattedValue.NewFormattedMemoryValue(
+      this.node.allocatedResources.memoryCapacity,
+    );
+
+    if (cpuLimitsValue.suffixPower !== cpuRequestsValue.suffixPower) {
+      const suffix =
+        cpuLimitsValue.suffixPower < cpuRequestsValue.suffixPower
+          ? cpuLimitsValue.suffix
+          : cpuRequestsValue.suffix;
+
+      cpuLimitsValue.normalize(suffix);
+      cpuRequestsValue.normalize(suffix);
+      cpuCapacityValue.normalize(suffix);
+    }
+
+    if (memoryLimitsValue.suffixPower !== memoryRequestsValue.suffixPower) {
+      const suffix =
+        memoryLimitsValue.suffixPower < memoryRequestsValue.suffixPower
+          ? memoryLimitsValue.suffix
+          : memoryRequestsValue.suffix;
+
+      memoryLimitsValue.normalize(suffix);
+      memoryRequestsValue.normalize(suffix);
+      memoryCapacityValue.normalize(suffix);
+    }
+
+    this.cpuLabel =
+      cpuRequestsValue.suffix.length > 0 ? `${cpuRequestsValue.suffix}cores` : 'Cores';
+    this.cpuCapacity = cpuCapacityValue.value;
+    this.cpuAllocation = [
+      {name: 'Requests', value: cpuRequestsValue.value},
+      {name: 'Limits', value: cpuLimitsValue.value},
+    ];
+
+    this.memoryLabel =
+      memoryRequestsValue.suffix.length > 0 ? `${memoryRequestsValue.suffix}B` : 'B';
+    this.memoryCapacity = memoryCapacityValue.value;
     this.memoryAllocation = [
-      {name: 'Requests', value: this.node.allocatedResources.memoryRequests / minMemoryDivider},
-      {name: 'Limits', value: this.node.allocatedResources.memoryLimits / minMemoryDivider},
+      {name: 'Requests', value: memoryRequestsValue.value},
+      {name: 'Limits', value: memoryLimitsValue.value},
     ];
 
     this.podsAllocation = [{name: 'Allocation', value: this.node.allocatedResources.allocatedPods}];

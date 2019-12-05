@@ -12,104 +12,85 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {format} from 'd3';
+export class FormattedValue {
+  private readonly base_: number;
+  private readonly suffixes_: string[];
 
-/** Base for prefixes */
-const coreBase = 1000;
+  private value_: number;
+  private suffix_: string;
 
-/** Names of the suffixes where I-th name is for base^I suffix. */
-const corePowerSuffixes = ['', 'k', 'M', 'G', 'T'];
-
-export function compareCoreSuffix(first: string, second: string): number {
-  const firstIdx = corePowerSuffixes.indexOf(first);
-  const secondIdx = corePowerSuffixes.indexOf(second);
-
-  return firstIdx === secondIdx ? 0 : firstIdx > secondIdx ? 1 : -1;
-}
-
-function precisionFilter(d: number): string {
-  if (d >= 1000) {
-    return format(',')(Number(d.toPrecision(3)));
-  }
-  if (d < 0.01) {
-    return d.toPrecision(1);
-  } else if (d < 0.1) {
-    return d.toPrecision(2);
-  }
-  return d.toPrecision(3);
-}
-
-/**
- * Returns filter function that formats cores usage.
- */
-export function coresFilter(value: number): string {
-  // Convert millicores to cores.
-  value = value / 1000;
-
-  let divider = 1;
-  let power = 0;
-
-  while (value / divider > coreBase && power < corePowerSuffixes.length - 1) {
-    divider *= coreBase;
-    power += 1;
-  }
-  const formatted = precisionFilter(value / divider);
-  const suffix = corePowerSuffixes[power];
-  return suffix ? `${formatted} ${suffix}` : formatted;
-}
-
-export function coresFilterDivider(value: number): number {
-  // Convert millicores to cores.
-  value = value / 1000;
-
-  let divider = 1;
-  let power = 0;
-
-  while (value / divider > memoryBase && power < memoryPowerSuffixes.length - 1) {
-    divider *= memoryBase;
-    power += 1;
+  get suffix(): string {
+    return this.suffix_;
   }
 
-  return divider;
-}
-
-/** Base for binary prefixes */
-const memoryBase = 1024;
-
-/** Names of the suffixes where I-th name is for base^I suffix. */
-const memoryPowerSuffixes = ['', 'Ki', 'Mi', 'Gi', 'Ti', 'Pi'];
-
-export function compareMemorySuffix(first: string, second: string): number {
-  const firstIdx = memoryPowerSuffixes.indexOf(first);
-  const secondIdx = memoryPowerSuffixes.indexOf(second);
-
-  return firstIdx === secondIdx ? 0 : firstIdx > secondIdx ? 1 : -1;
-}
-
-/**
- * Returns filter function that formats memory in bytes.
- */
-export function memoryFilter(value: number): string {
-  let divider = 1;
-  let power = 0;
-
-  while (value / divider > memoryBase && power < memoryPowerSuffixes.length - 1) {
-    divider *= memoryBase;
-    power += 1;
-  }
-  const formatted = precisionFilter(value / divider);
-  const suffix = memoryPowerSuffixes[power];
-  return suffix ? `${formatted} ${suffix}` : formatted;
-}
-
-export function memoryFilterDivider(value: number): number {
-  let divider = 1;
-  let power = 0;
-
-  while (value / divider > memoryBase && power < memoryPowerSuffixes.length - 1) {
-    divider *= memoryBase;
-    power += 1;
+  get value(): number {
+    return this.value_;
   }
 
-  return divider;
+  get suffixPower(): number {
+    return this.suffixes_.indexOf(this.suffix_);
+  }
+
+  private constructor(base: number, value: number, suffixes: string[]) {
+    this.suffixes_ = suffixes;
+    this.base_ = base;
+    this.value_ = this.normalize_(value);
+  }
+
+  private normalize_(value: number): number {
+    let divider = 1;
+    let power = 0;
+
+    while (value / divider > this.base_ && power < this.suffixes_.length - 1) {
+      divider *= this.base_;
+      power += 1;
+    }
+
+    this.suffix_ = this.suffixes_[power];
+    return Number((value / divider).toPrecision(3));
+  }
+
+  normalize(suffix: string): void {
+    const currentPower = this.suffixes_.indexOf(this.suffix_);
+    const expectedPower = this.suffixes_.indexOf(suffix);
+
+    if (expectedPower < 0) {
+      throw new Error(`Suffix '${suffix}' not recognized.`);
+    }
+
+    let powerDiff = expectedPower - currentPower;
+
+    if (powerDiff < 0) {
+      powerDiff = -powerDiff;
+      this.value_ = this.value_ * Math.pow(this.base_, powerDiff);
+      this.suffix_ = suffix;
+    }
+
+    if (powerDiff > 0) {
+      this.value_ = this.value_ / Math.pow(this.base_, powerDiff);
+      this.suffix_ = suffix;
+    }
+
+    this.value_ = Number(this.value_.toPrecision(3));
+  }
+
+  static NewFormattedCoreValue(value: number): FormattedValue {
+    /** Base for prefixes */
+    const coreBase = 1000;
+
+    /** Names of the suffixes where I-th name is for base^I suffix. */
+    const corePowerSuffixes = ['', 'k', 'M', 'G', 'T'];
+
+    return new FormattedValue(coreBase, value / 1000, corePowerSuffixes);
+  }
+
+  static NewFormattedMemoryValue(value: number): FormattedValue {
+    /** Base for binary prefixes */
+    const memoryBase = 1024;
+
+    /** Names of the suffixes where I-th name is for base^I suffix. */
+    const memoryPowerSuffixes = ['', 'Ki', 'Mi', 'Gi', 'Ti', 'Pi'];
+
+    return new FormattedValue(memoryBase, value, memoryPowerSuffixes);
+  }
 }
