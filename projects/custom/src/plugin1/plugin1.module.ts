@@ -7,6 +7,8 @@ import {NamespacedResourceService} from "k8s-plugin";
 import {NamespacedResourceService as CNRS} from "../../../../src/app/frontend/common/services/resource/resource";
 import {NamespaceService} from "../../../../src/app/frontend/common/services/global/namespace";
 import {AuthInterceptor} from '../../../../src/app/frontend/common/services/global/interceptor';
+import {GlobalSettingsService} from "../../../../src/app/frontend/common/services/global/globalsettings";
+import {AuthorizerService} from "../../../../src/app/frontend/common/services/global/authorizer";
 
 @NgModule({
   imports: [CommonModule, HttpClientModule, PluginModule],
@@ -20,6 +22,8 @@ import {AuthInterceptor} from '../../../../src/app/frontend/common/services/glob
       multi: true,
     },
     NamespaceService,
+    GlobalSettingsService,
+    AuthorizerService
   ],
 })
 export class Plugin1Module {
