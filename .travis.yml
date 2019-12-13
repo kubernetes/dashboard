@@ -1,10 +1,21 @@
 # Travis continuous integration system configuration file.
-# Read more at: http://docs.travis-ci.com/user/customizing-the-build/
+# Read more follows:
+# * https://docs.travis-ci.com/user/customizing-the-build/
+# * https://docs.travis-ci.com/user/reference/bionic/
+# * https://docs.travis-ci.com/user/installing-dependencies/
+# * https://config.travis-ci.com/ref/job/addons/apt
 
 sudo: required
-dist: xenial
+dist: bionic
 language: node_js
 node_js: 11.6.0
+
+apt:
+  packages:
+  - google-chrome
+  sources:
+  - google-chrome-stable
+  update: true
 
 git:
   depth: 500
@@ -25,13 +36,14 @@ before_install:
   - export NODE_OPTIONS=--max-old-space-size=8192
   - eval "$(gimme 1.12.6)"
 
+# `npm ci` will run between `before_install` and `before_script`.
+
 before_script:
-  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-  - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) edge"
-  - sudo apt-get update
-  - sudo apt-get -y install docker-ce libgconf2-4
-  - sudo service docker restart
+  - echo "Recheck versions before job."
+  - go version
   - docker --version
+  - google-chrome-stable --version
+  - firefox --version
 
 jobs:
   include:
