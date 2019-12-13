@@ -43,6 +43,7 @@ RUN curl -sL https://deb.nodesource.com/setup_11.x | bash - \
 	xvfb \
 	libgtk-3-0 \
 	libgconf-2-4 \
+	bzip2 \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& apt-get clean
 
@@ -52,6 +53,12 @@ RUN curl -sL https://deb.nodesource.com/setup_11.x | bash - \
 #                 So re-install specified version of git from source code.
 RUN GIT_VERSION=2.22.0 && apt-get remove -y git && cd /tmp && rm -fr git* && wget https://github.com/git/git/archive/v${GIT_VERSION}.zip -O git.zip && unzip git.zip && mv git-${GIT_VERSION} git && cd git && make prefix=/usr all && make prefix=/usr install
 ENV GIT_EDITOR=nano
+
+# Install firefox from Mozilla binaries
+RUN mkdir -p /usr/local/lib/firefox
+RUN wget "https://download.mozilla.org/?product=firefox-latest-ssl&os=linux64&lang=en-US" -O /tmp/firefox.tar.bz2
+RUN tar -xjf /tmp/firefox.tar.bz2 -C /usr/local/lib
+RUN ln -s /usr/local/lib/firefox/firefox /usr/local/bin/firefox
 
 # Install dependencies. This will take a while.
 RUN npm install -g npm@latest gulp@4.0.2 @angular/cli@8.0.3 ngx-i18nsupport
