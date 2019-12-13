@@ -14,6 +14,7 @@
       {
         "multiline": "always"
       }
-    ]
+    ],
+    "no-any": false
   }
 }

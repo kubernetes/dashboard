@@ -3,7 +3,6 @@ export class NavbarPage {
   static visit() {
     cy.visit("/");
   }
-  // @ts-ignore
   static getKdNavItemById(id: string): Cypress.Chainable<any> {
     return cy.get(id);
   }
