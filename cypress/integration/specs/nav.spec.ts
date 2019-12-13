@@ -1,36 +1,35 @@
-
-import {NavbarPage} from "../../pages/navbarPage";
+import {NavbarPage} from '../../pages/navbarPage';
 
 // Check Cluster items links in nav
-describe("Navbar", () => {
+describe('Navbar', () => {
   // @ts-ignore
   before(() => {
     NavbarPage.visit();
   });
-  describe("Navbar Cluster Items", () => {
-    it("cluster", () => {
+  describe('Navbar Cluster Items', () => {
+    it('cluster', () => {
       NavbarPage.clickNavItemById('#nav-cluster');
       NavbarPage.assertUrlContains('cluster');
     });
-    it("clusterroles", () => {
+    it('clusterroles', () => {
       NavbarPage.clickNavItemById('#nav-clusterrole');
-      NavbarPage.assertUrlContains('clusterrole')
+      NavbarPage.assertUrlContains('clusterrole');
     });
-    it("namespaces", () => {
+    it('namespaces', () => {
       NavbarPage.clickNavItemById('#nav-namespace');
-      NavbarPage.assertUrlContains('namespace')
+      NavbarPage.assertUrlContains('namespace');
     });
-    it("nodes", () => {
+    it('nodes', () => {
       NavbarPage.clickNavItemById('#nav-node');
-      NavbarPage.assertUrlContains('node')
+      NavbarPage.assertUrlContains('node');
     });
-    it("persistentvolume", () => {
+    it('persistentvolume', () => {
       NavbarPage.clickNavItemById('#nav-persistentvolume');
-      NavbarPage.assertUrlContains('persistentvolume')
+      NavbarPage.assertUrlContains('persistentvolume');
     });
-    it("storageclass", () => {
+    it('storageclass', () => {
       NavbarPage.clickNavItemById('#nav-storageclass');
-      NavbarPage.assertUrlContains('storageclass')
+      NavbarPage.assertUrlContains('storageclass');
     });
   });
-})
+});

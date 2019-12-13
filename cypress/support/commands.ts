@@ -25,7 +25,7 @@
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
 // add a custom command cy.foo()
-Cypress.Commands.add('foo', () => 'foo')
+Cypress.Commands.add('foo', () => 'foo');
 //
 // // see more example of adding custom commands to Cypress TS interface
 // // in https://github.com/cypress-io/add-cypress-custom-command-in-typescript
@@ -34,7 +34,6 @@ Cypress.Commands.add('foo', () => 'foo')
 declare namespace Cypress {
   // tslint:disable-next-line interface-name
   interface Chainable {
-    foo: () => string
+    foo: () => string;
   }
 }
-
