@@ -1,13 +1,11 @@
 
 export class NavbarPage {
-  private static getId(id:string){
-    return '#'+id;
-  }
   static visit() {
     cy.visit("/");
   }
+  // @ts-ignore
   static getKdNavItemById(id: string): Cypress.Chainable<any> {
-    return cy.get(this.getId(id));
+    return cy.get(id);
   }
   static clickNavItemById(id: string) {
     this.getKdNavItemById(id).click()
