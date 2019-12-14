@@ -1,5 +1,3 @@
-import {AbstractPage} from "./abstractPage";
+import {AbstractPage} from './abstractPage';
 
-export class NavbarPage extends AbstractPage{
-
-}
+export class NavbarPage extends AbstractPage {}

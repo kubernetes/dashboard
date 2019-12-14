@@ -5,11 +5,13 @@ export class AbstractPage {
   static visit(url: string) {
     cy.visit(url);
   }
-  static getItemById(id: string): Cypress.Chainable<any> {
+  //Get item by tag/#id/.class/tag.class/tag#id
+  static getItem(id: string): Cypress.Chainable<any> {
     return cy.get(id);
   }
-  static clickItemById(id: string) {
-    this.getItemById(id).click();
+  //Click item by tag/#id/.class/tag.class/tag#id
+  static clickItem(id: string) {
+    this.getItem(id).click();
   }
   static assertUrlContains(url: string) {
     cy.url().should('contains', url);
