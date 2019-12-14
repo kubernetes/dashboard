@@ -2,16 +2,16 @@ import {UserpanelPage} from '../../pages/userpanelPage';
 
 describe('Userpanel', () => {
   before(() => {
-    NavbarPage.visitHome();
+    UserpanelPage.visitHome();
   });
   describe('Basic tests', () => {
     it('check default namespace', () => {
       UserpanelPage.assertUrlContains('overview?namespace=default');
     });
     it('collapses sidebar', () => {
-      UserpanelPage.assertVisibility('mat-drawer', true)
+      UserpanelPage.assertVisibility('mat-drawer', true);
       UserpanelPage.clickItem('kd-nav-hamburger');
-      UserpanelPage.assertVisibility('mat-drawer', false)
+      UserpanelPage.assertVisibility('mat-drawer', false);
     });
     it('home logo click overview redirect check', () => {
       UserpanelPage.clickItem('.kd-toolbar-logo-link');
@@ -23,7 +23,7 @@ describe('Userpanel', () => {
     });
     it('search', () => {
       UserpanelPage.visitHome();
-      UserpanelPage.typeSearch("test_string")
+      UserpanelPage.typeSearch('test_string');
       UserpanelPage.assertUrlContains('q=test_string');
       UserpanelPage.visitHome();
     });
