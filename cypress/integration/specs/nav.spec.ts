@@ -4,27 +4,33 @@ describe('Navbar', () => {
   before(() => {
     NavbarPage.visitHome();
   });
+
   describe('Navbar Cluster Items', () => {
     it('cluster', () => {
       NavbarPage.clickItem(NavbarPage.clusterItemId);
       NavbarPage.assertUrlContains('cluster');
     });
+
     it('clusterroles', () => {
       NavbarPage.clickItem(NavbarPage.clusterroleItemId);
       NavbarPage.assertUrlContains('clusterrole');
     });
+
     it('namespaces', () => {
       NavbarPage.clickItem(NavbarPage.namespaceItemId);
       NavbarPage.assertUrlContains('namespace');
     });
+
     it('nodes', () => {
       NavbarPage.clickItem(NavbarPage.nodeItemId);
       NavbarPage.assertUrlContains('node');
     });
+
     it('persistentvolume', () => {
       NavbarPage.clickItem(NavbarPage.persistentvolumeItemId);
       NavbarPage.assertUrlContains('persistentvolume');
     });
+
     it('storageclass', () => {
       NavbarPage.clickItem(NavbarPage.storageclassItemId);
       NavbarPage.assertUrlContains('storageclass');
@@ -35,6 +41,7 @@ describe('Navbar', () => {
       NavbarPage.clickItem(NavbarPage.overviewItemId);
       NavbarPage.assertUrlContains('overview');
     });
+
     // Namespace selector
     it('namespace selector', () => {
       const ns = 'kube-public';
@@ -50,14 +57,17 @@ describe('Navbar', () => {
       NavbarPage.clickItem(NavbarPage.workloadsItemId);
       NavbarPage.assertUrlContains('workloads');
     });
+
     it('cronjob', () => {
       NavbarPage.clickItem(NavbarPage.cronjobItemId);
       NavbarPage.assertUrlContains('cronjob');
     });
+
     it('daemonset', () => {
       NavbarPage.clickItem(NavbarPage.daemonsetItemId);
       NavbarPage.assertUrlContains('daemonset');
     });
+
     it('deployment', () => {
       NavbarPage.clickItem(NavbarPage.deploymentItemId);
       NavbarPage.assertUrlContains('deployment');
@@ -72,19 +82,23 @@ describe('Navbar', () => {
       NavbarPage.clickItem(NavbarPage.podItemId);
       NavbarPage.assertUrlContains('pod');
     });
+
     it('replicaset', () => {
       NavbarPage.clickItem(NavbarPage.replicasetItemId);
       NavbarPage.assertUrlContains('replicaset');
     });
+
     it('replicationcontroller', () => {
       NavbarPage.clickItem(NavbarPage.replicationcontrollerItemId);
       NavbarPage.assertUrlContains('replicationcontroller');
     });
+
     it('statefulset', () => {
       NavbarPage.clickItem(NavbarPage.statefulsetItemId);
       NavbarPage.assertUrlContains('statefulset');
     });
   });
+
   describe('Navbar Discovery and Load balancing  Items', () => {
     it('discovery', () => {
       NavbarPage.clickItem(NavbarPage.discoveryItemId);
@@ -95,6 +109,7 @@ describe('Navbar', () => {
       NavbarPage.clickItem(NavbarPage.ingressItemId);
       NavbarPage.assertUrlContains('ingress');
     });
+
     it('service', () => {
       NavbarPage.clickItem(NavbarPage.serviceItemId);
       NavbarPage.assertUrlContains('service');
@@ -106,6 +121,7 @@ describe('Navbar', () => {
       NavbarPage.clickItem(NavbarPage.configItemId);
       NavbarPage.assertUrlContains('config');
     });
+
     it('configmap', () => {
       NavbarPage.clickItem(NavbarPage.configmapItemId);
       NavbarPage.assertUrlContains('configmap');
@@ -121,20 +137,24 @@ describe('Navbar', () => {
       NavbarPage.assertUrlContains('secret');
     });
   });
+
   describe('Navbar Misc Items', () => {
     // TODO: Add a conditional check for plugin item here
     // it('plugin', () => {
     //   NavbarPage.clickNavItemById(NavbarPage.pluginItemId);
     //   NavbarPage.assertUrlContains('plugin');
     // });
+
     it('customresourcedefinition', () => {
       NavbarPage.clickItem(NavbarPage.customresourcedefinitionItemId);
       NavbarPage.assertUrlContains('customresourcedefinition');
     });
+
     it('settings', () => {
       NavbarPage.clickItem(NavbarPage.settingsItemId);
       NavbarPage.assertUrlContains('settings');
     });
+
     it('about', () => {
       NavbarPage.clickItem(NavbarPage.aboutItemId);
       NavbarPage.assertUrlContains('about');
