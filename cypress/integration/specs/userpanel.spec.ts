@@ -22,9 +22,10 @@ describe('Userpanel', () => {
       UserpanelPage.assertUrlContains('create');
     });
     it('search', () => {
+      const searchString = 'test_string';
       UserpanelPage.visitHome();
-      UserpanelPage.typeSearch('test_string');
-      UserpanelPage.assertUrlContains('q=test_string');
+      UserpanelPage.typeSearch(searchString);
+      UserpanelPage.assertUrlContains('q=' + searchString);
       UserpanelPage.visitHome();
     });
   });

@@ -6,40 +6,40 @@ describe('Navbar', () => {
   });
   describe('Navbar Cluster Items', () => {
     it('cluster', () => {
-      NavbarPage.clickItem('#nav-cluster');
+      NavbarPage.clickItem(NavbarPage.clusterItemId);
       NavbarPage.assertUrlContains('cluster');
     });
     it('clusterroles', () => {
-      NavbarPage.clickItem('#nav-clusterrole');
+      NavbarPage.clickItem(NavbarPage.clusterroleItemId);
       NavbarPage.assertUrlContains('clusterrole');
     });
     it('namespaces', () => {
-      NavbarPage.clickItem('#nav-namespace');
+      NavbarPage.clickItem(NavbarPage.namespaceItemId);
       NavbarPage.assertUrlContains('namespace');
     });
     it('nodes', () => {
-      NavbarPage.clickItem('#nav-node');
+      NavbarPage.clickItem(NavbarPage.nodeItemId);
       NavbarPage.assertUrlContains('node');
     });
     it('persistentvolume', () => {
-      NavbarPage.clickItem('#nav-persistentvolume');
+      NavbarPage.clickItem(NavbarPage.persistentvolumeItemId);
       NavbarPage.assertUrlContains('persistentvolume');
     });
     it('storageclass', () => {
-      NavbarPage.clickItem('#nav-storageclass');
+      NavbarPage.clickItem(NavbarPage.storageclassItemId);
       NavbarPage.assertUrlContains('storageclass');
     });
   });
   describe('Navbar Overview and Namespace Items', () => {
     it('overview', () => {
-      NavbarPage.clickItem('#nav-overview');
+      NavbarPage.clickItem(NavbarPage.overviewItemId);
       NavbarPage.assertUrlContains('overview');
     });
     // Namespace selector
     it('namespace selector', () => {
       const ns = 'kube-public';
       NavbarPage.visitHome();
-      NavbarPage.clickItem('#nav-namespace-selector');
+      NavbarPage.clickItem(NavbarPage.namespaceSelectorItemId);
       NavbarPage.clickSelectorItem(ns);
       NavbarPage.assertUrlContains('?namespace=' + ns);
       NavbarPage.visitHome();
@@ -47,96 +47,96 @@ describe('Navbar', () => {
   });
   describe('Navbar Workloads Items', () => {
     it('workloads', () => {
-      NavbarPage.clickItem('#nav-workloads');
+      NavbarPage.clickItem(NavbarPage.workloadsItemId);
       NavbarPage.assertUrlContains('workloads');
     });
     it('cronjob', () => {
-      NavbarPage.clickItem('#nav-cronjob');
+      NavbarPage.clickItem(NavbarPage.cronjobItemId);
       NavbarPage.assertUrlContains('cronjob');
     });
     it('daemonset', () => {
-      NavbarPage.clickItem('#nav-daemonset');
+      NavbarPage.clickItem(NavbarPage.daemonsetItemId);
       NavbarPage.assertUrlContains('daemonset');
     });
     it('deployment', () => {
-      NavbarPage.clickItem('#nav-deployment');
+      NavbarPage.clickItem(NavbarPage.deploymentItemId);
       NavbarPage.assertUrlContains('deployment');
     });
 
     it('job', () => {
-      NavbarPage.clickItem('#nav-job');
+      NavbarPage.clickItem(NavbarPage.jobItemId);
       NavbarPage.assertUrlContains('job');
     });
 
     it('pod', () => {
-      NavbarPage.clickItem('#nav-pod');
+      NavbarPage.clickItem(NavbarPage.podItemId);
       NavbarPage.assertUrlContains('pod');
     });
     it('replicaset', () => {
-      NavbarPage.clickItem('#nav-replicaset');
+      NavbarPage.clickItem(NavbarPage.replicasetItemId);
       NavbarPage.assertUrlContains('replicaset');
     });
     it('replicationcontroller', () => {
-      NavbarPage.clickItem('#nav-replicationcontroller');
+      NavbarPage.clickItem(NavbarPage.replicationcontrollerItemId);
       NavbarPage.assertUrlContains('replicationcontroller');
     });
     it('statefulset', () => {
-      NavbarPage.clickItem('#nav-statefulset');
+      NavbarPage.clickItem(NavbarPage.statefulsetItemId);
       NavbarPage.assertUrlContains('statefulset');
     });
   });
   describe('Navbar Discovery and Load balancing  Items', () => {
     it('discovery', () => {
-      NavbarPage.clickItem('#nav-discovery');
+      NavbarPage.clickItem(NavbarPage.discoveryItemId);
       NavbarPage.assertUrlContains('discovery');
     });
 
     it('ingress', () => {
-      NavbarPage.clickItem('#nav-ingress');
+      NavbarPage.clickItem(NavbarPage.ingressItemId);
       NavbarPage.assertUrlContains('ingress');
     });
     it('service', () => {
-      NavbarPage.clickItem('#nav-service');
+      NavbarPage.clickItem(NavbarPage.serviceItemId);
       NavbarPage.assertUrlContains('service');
     });
   });
 
   describe('Navbar Config and Storage  Items', () => {
     it('config', () => {
-      NavbarPage.clickItem('#nav-config');
+      NavbarPage.clickItem(NavbarPage.configItemId);
       NavbarPage.assertUrlContains('config');
     });
     it('configmap', () => {
-      NavbarPage.clickItem('#nav-configmap');
+      NavbarPage.clickItem(NavbarPage.configmapItemId);
       NavbarPage.assertUrlContains('configmap');
     });
 
     it('persistentvolumeclaim', () => {
-      NavbarPage.clickItem('#nav-persistentvolumeclaim');
+      NavbarPage.clickItem(NavbarPage.persistentvolumeclaimItemId);
       NavbarPage.assertUrlContains('persistentvolumeclaim');
     });
 
     it('secret', () => {
-      NavbarPage.clickItem('#nav-secret');
+      NavbarPage.clickItem(NavbarPage.secretItemId);
       NavbarPage.assertUrlContains('secret');
     });
   });
   describe('Navbar Misc Items', () => {
     // TODO: Add a conditional check for plugin item here
     // it('plugin', () => {
-    //   NavbarPage.clickNavItemById('#nav-plugin');
+    //   NavbarPage.clickNavItemById(NavbarPage.pluginItemId);
     //   NavbarPage.assertUrlContains('plugin');
     // });
     it('customresourcedefinition', () => {
-      NavbarPage.clickItem('#nav-customresourcedefinition');
+      NavbarPage.clickItem(NavbarPage.customresourcedefinitionItemId);
       NavbarPage.assertUrlContains('customresourcedefinition');
     });
     it('settings', () => {
-      NavbarPage.clickItem('#nav-settings');
+      NavbarPage.clickItem(NavbarPage.settingsItemId);
       NavbarPage.assertUrlContains('settings');
     });
     it('about', () => {
-      NavbarPage.clickItem('#nav-about');
+      NavbarPage.clickItem(NavbarPage.aboutItemId);
       NavbarPage.assertUrlContains('about');
     });
   });
