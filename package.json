@@ -151,7 +151,7 @@
     "cypress": "3.8.0",
     "del": "5.1.0",
     "git-describe": "4.0.4",
-    "gts": "1.1.0",
+    "gts": "1.1.2",
     "gulp": "4.0.2",
     "gulp-filter": "6.0.0",
     "gulp-header-license": "1.0.9",
