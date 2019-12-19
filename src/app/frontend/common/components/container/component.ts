@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {ConfigMapKeyRef, Container, EnvVar, SecretKeyRef} from 'typings/backendapi';
 import {KdStateService} from '../../services/global/state';
 
@@ -21,12 +21,16 @@ import {KdStateService} from '../../services/global/state';
   templateUrl: './template.html',
   styleUrls: ['style.scss'],
 })
-export class ContainerCardComponent {
+export class ContainerCardComponent implements OnChanges {
   @Input() container: Container;
   @Input() namespace: string;
   @Input() initialized: boolean;
 
   constructor(private readonly state_: KdStateService) {}
+
+  ngOnChanges(): void {
+    this.container.env = this.container.env.sort((a, b) => a.name.localeCompare(b.name));
+  }
 
   isSecret(envVar: EnvVar): boolean {
     return !!envVar.valueFrom && !!envVar.valueFrom.secretKeyRef;
