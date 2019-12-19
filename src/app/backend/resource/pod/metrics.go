@@ -49,16 +49,9 @@ func getMetricsPerPod(pods []v1.Pod, metricClient metricapi.MetricClient, dsQuer
 	*MetricsByPod, error) {
 	log.Println("Getting pod metrics")
 
-	var filteredPods []v1.Pod
-	for _, pod := range pods {
-		if pod.Status.Phase != v1.PodSucceeded {
-			filteredPods = append(filteredPods, pod)
-		}
-	}
-
 	result := &MetricsByPod{MetricsMap: make(map[types.UID]PodMetrics)}
 
-	metricPromises := dataselect.PodListMetrics(toCells(filteredPods), dsQuery, metricClient)
+	metricPromises := dataselect.PodListMetrics(toCells(pods), dsQuery, metricClient)
 	metrics, err := metricPromises.GetMetrics()
 	if err != nil {
 		return result, err

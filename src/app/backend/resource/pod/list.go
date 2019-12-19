@@ -123,9 +123,6 @@ func ToPodList(pods []v1.Pod, events []v1.Event, nonCriticalErrors []error, dsQu
 		Errors: nonCriticalErrors,
 	}
 
-	// TODO: There is an issue with mismatch of metrics returned from sidecar and number of pods.
-	//  Is occurs because there are no metrics for pods that are "succeeded". To improve the situation
-	//  following code should be changed. It should not create metric promises for "succeeded" pods.
 	podCells, cumulativeMetricsPromises, filteredTotal := dataselect.
 		GenericDataSelectWithFilterAndMetrics(toCells(pods), dsQuery, metricapi.NoResourceCache, metricClient)
 	pods = fromCells(podCells)
