@@ -118,6 +118,8 @@ limitations under the License.
 
       <ng-container matColumnDef="age">
         <mat-header-cell *matHeaderCellDef
+                         mat-sort-header
+                         disableClear="true"
                          i18n>Age</mat-header-cell>
         <mat-cell *matCellDef="let cronJob">
           <kd-date [date]="cronJob.objectMeta.creationTimestamp"
