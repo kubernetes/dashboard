@@ -712,7 +712,7 @@
       </trans-unit>
       <trans-unit id="8cf90839a62d530bfe9433ef049fb1b016c55e04" datatype="html">
         <source>Unpin</source>
-        <target state="new">Unpin</target>
+        <target state="new">고정 해제</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/list/column/menu/template.html</context>
           <context context-type="linenumber">41</context>
@@ -720,7 +720,7 @@
       </trans-unit>
       <trans-unit id="32d40747d801c0d4f51f2fbbdb368e265c307305" datatype="html">
         <source>Pin</source>
-        <target state="new">Pin</target>
+        <target state="new">고정</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/list/column/menu/template.html</context>
           <context context-type="linenumber">43</context>
@@ -1276,7 +1276,7 @@
       </trans-unit>
       <trans-unit id="7099af5a120571be073bcfb7babafb38e91a3b50" datatype="html">
         <source>Plugins</source>
-        <target state="new">Plugins</target>
+        <target state="new">플러그인</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/plugin/template.html</context>
           <context context-type="linenumber">21</context>
@@ -1284,7 +1284,7 @@
       </trans-unit>
       <trans-unit id="473fb06a7b7b3992af493059e8f9c8c74f369a97" datatype="html">
         <source>Dependencies</source>
-        <target state="new">Dependencies</target>
+        <target state="new">의존성</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/plugin/template.html</context>
           <context context-type="linenumber">54</context>
@@ -2355,7 +2355,7 @@
         <x id="START_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;mat-icon>"/>open_in_new<x id="CLOSE_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;/mat-icon>"/><x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> to learn more.
     </source>
         <target state="new">
-      <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>컨테이너화된 앱을 디플로이<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> 하거나, 다른 네임스페이스를 선택할 수 있습니다. 자세한 정보는 
+      <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>컨테이너화된 앱을 디플로이<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> 하거나, 다른 네임스페이스를 선택할 수 있습니다. 자세한 정보는
       <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a>"/>대시보드 문서
         <x id="START_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;mat-icon>"/>open_in_new<x id="CLOSE_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;/mat-icon>"/><x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>를 살펴보시기 바랍니다.
     </target>
@@ -2597,7 +2597,7 @@
       <trans-unit id="1d216da7f53e1afcd7bffd53c0a6b0f2502cde4d" datatype="html">
         <source>Plugins
       </source>
-        <target state="new">Plugins
+        <target state="new">플러그인
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2923,8 +2923,8 @@
       <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a>"/>open source project<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>.
     </source>
         <target state="new">
-      쿠버네티스 대시보드는 대시보드 
-      <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>커뮤니티<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>에 의해서 
+      쿠버네티스 대시보드는 대시보드
+      <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>커뮤니티<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>에 의해서
       <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a>"/>오픈 소스 프로젝트<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>로 구현되었습니다.
     </target>
         <context-group purpose="location">
@@ -2974,7 +2974,7 @@
       </trans-unit>
       <trans-unit id="d9ac1caf6715c8011155c0a027d544dbeca63062" datatype="html">
         <source>Subresources</source>
-        <target state="new">Subresources</target>
+        <target state="new">하위 리소스</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
           <context context-type="linenumber">47</context>
@@ -2982,7 +2982,7 @@
       </trans-unit>
       <trans-unit id="1ec17de9560711cd81108ccf93eb5b1df4eb6d4c" datatype="html">
         <source>Accepted Names</source>
-        <target state="new">Accepted Names</target>
+        <target state="new">허용된 이름</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
           <context context-type="linenumber">55</context>
@@ -3321,30 +3321,6 @@
         <target state="new">
         <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>
       </target> 더 배우기
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">54</context>
@@ -3737,7 +3713,7 @@
       </trans-unit>
       <trans-unit id="ca66e1e8242ccc7dcbf8f7b33343ddedfc51b688" datatype="html">
         <source>{VAR_SELECT, select, 1 {Hide advanced options} other {Show advanced options} }</source>
-        <target state="new">{VAR_SELECT, select, 1 {Hide advanced options} other {Show advanced options} }</target>
+        <target state="new">{VAR_SELECT, select, 1 {고급 옵션 숨기기} other {고급 옵션 보기} }</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">371</context>
@@ -3998,7 +3974,7 @@
       </trans-unit>
       <trans-unit id="acc04ca445d64958d843622f9ce95c0378198c24" datatype="html">
         <source>Protocol</source>
-        <target state="new">Protocol</target>
+        <target state="new">프로토콜</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/portmappings/template.html</context>
           <context context-type="linenumber">110</context>
@@ -4222,7 +4198,7 @@
       </trans-unit>
       <trans-unit id="c351ac57f153f24bf440eb98ec27932af51c203c" datatype="html">
         <source>Go to namespace overview</source>
-        <target state="new">Go to namespace overview</target>
+        <target state="new">네임스페이스 개요로 가기</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/namespace/detail/actionbar/template.html</context>
           <context context-type="linenumber">23</context>
@@ -4374,7 +4350,7 @@
       </trans-unit>
       <trans-unit id="58d4a9814864741040bc5905b6a368836e683f76" datatype="html">
         <source>Memory</source>
-        <target state="new">Memory</target>
+        <target state="new">메모리</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
           <context context-type="linenumber">148</context>
@@ -4618,7 +4594,7 @@
       </trans-unit>
       <trans-unit id="c64747f0bc3848d47c89e0af17d0c199b44ad0de" datatype="html">
         <source>Parameter</source>
-        <target state="new">Parameter</target>
+        <target state="new">파라미터</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/storageclass/detail/template.html</context>
           <context context-type="linenumber">37</context>
@@ -5180,7 +5156,7 @@
     in <x id="INTERPOLATION_1" equiv-text="{{ podName }}"/>
   </source>
         <target state="new">
-    <x id="INTERPOLATION_1" equiv-text="{{ podName }}"/>의 
+    <x id="INTERPOLATION_1" equiv-text="{{ podName }}"/>의
     <x id="START_TAG_MAT-SELECT" ctype="x-mat-select" equiv-text="&lt;mat-select>"/>
       <x id="START_TAG_MAT-OPTION" ctype="x-mat-option" equiv-text="&lt;mat-option>"/>
         <x id="INTERPOLATION" equiv-text="{{ item }}"/>
