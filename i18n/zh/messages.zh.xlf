@@ -71,9 +71,9 @@
     <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/>?<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/>
   </source>
         <target state="new">
-    <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/>Are you sure you want to delete <x id="INTERPOLATION" equiv-text="{{data.displayName}}"/> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_1" equiv-text="{{data.objectMeta.name}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/>
+    <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/>你确定要删除 <x id="INTERPOLATION" equiv-text="{{data.displayName}}"/> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_1" equiv-text="{{data.objectMeta.name}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/>
     <x id="START_TAG_SPAN_1" ctype="x-span" equiv-text="&lt;span>"/>
-       in namespace <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_2" equiv-text="{{data.objectMeta.namespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>
+       在命名空间 <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_2" equiv-text="{{data.objectMeta.namespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>
     <x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/>
     <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/>?<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/>
   </target>
@@ -131,7 +131,7 @@
       File is ready to download!
     </source>
         <target state="new">
-      文件已准备好下载！
+      文件已准备好被下载！
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/dialogs/download/template.html</context>
@@ -148,7 +148,7 @@
       </trans-unit>
       <trans-unit id="75560f1f2b93c480db660bab24f2aadb4503dc71" datatype="html">
         <source>You do not have required permissions to access this resource.</source>
-        <target state="new">您没有访问此资源所需的权限。</target>
+        <target state="new">您没有访问该资源所需的权限。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/dialogs/download/template.html</context>
           <context context-type="linenumber">40</context>
@@ -188,7 +188,7 @@
       </trans-unit>
       <trans-unit id="a92a2623ec8f7344194693dfb1341c9a7687eaa2" datatype="html">
         <source>Scale a resource</source>
-        <target state="new">扩展资源</target>
+        <target state="new">缩放资源</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/dialogs/scaleresource/template.html</context>
           <context context-type="linenumber">18</context>
@@ -227,7 +227,7 @@
     Scale
   </source>
         <target state="new">
-    规模
+    缩放
   </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/dialogs/scaleresource/template.html</context>
@@ -256,7 +256,7 @@
       </trans-unit>
       <trans-unit id="0f5bc8e972fe992b070094b40e9105fdc30badee" datatype="html">
         <source>Trigger a <x id="INTERPOLATION" equiv-text="{{data.displayName}}"/></source>
-        <target state="new"><x id="INTERPOLATION" equiv-text="{{data.displayName}}"/>触发器</target>
+        <target state="new">触发一个<x id="INTERPOLATION" equiv-text="{{data.displayName}}"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/dialogs/triggerresource/template.html</context>
           <context context-type="linenumber">18</context>
@@ -300,7 +300,7 @@
       </trans-unit>
       <trans-unit id="7a4e4644d31ae90390b396f08c2f209d0a4a9952" datatype="html">
         <source>Scale resource</source>
-        <target state="new">扩展资源</target>
+        <target state="new">缩放资源</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/actionbar/detailactions/scale/template.html</context>
           <context context-type="linenumber">21</context>
@@ -308,7 +308,7 @@
       </trans-unit>
       <trans-unit id="80a528a1e6015b28276e4ff83d1558722c354585" datatype="html">
         <source>View logs</source>
-        <target state="new">显示日志</target>
+        <target state="new">查看日志</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/actionbar/detailactions/logs/template.html</context>
           <context context-type="linenumber">21</context>
@@ -332,7 +332,7 @@
       </trans-unit>
       <trans-unit id="32c4fb786d3f614318c26ef8adc8f195d581545d" datatype="html">
         <source>Workload Status</source>
-        <target state="new">工作量状态</target>
+        <target state="new">工作负载状态</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/workloadstatus/template.html</context>
           <context context-type="linenumber">20</context>
@@ -340,7 +340,7 @@
       </trans-unit>
       <trans-unit id="c97f017e8bd3fb17065c3c94515a2cca404f0157" datatype="html">
         <source>Cron Jobs</source>
-        <target state="new">Cron 工作</target>
+        <target state="new">Cron Jobs</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/workloadstatus/template.html</context>
           <context context-type="linenumber">32</context>
@@ -352,7 +352,7 @@
       </trans-unit>
       <trans-unit id="d41640b21b662e4d9ee00c35239d30d15f1de9c7" datatype="html">
         <source>Daemon Sets</source>
-        <target state="new">守护进程设置</target>
+        <target state="new">Daemon Sets</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/workloadstatus/template.html</context>
           <context context-type="linenumber">44</context>
@@ -364,7 +364,7 @@
       </trans-unit>
       <trans-unit id="969a1d5188e9bde32221c1230eab21a3398b0cbe" datatype="html">
         <source>Deployments</source>
-        <target state="new">部署</target>
+        <target state="new">Deployments</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/workloadstatus/template.html</context>
           <context context-type="linenumber">56</context>
@@ -376,7 +376,7 @@
       </trans-unit>
       <trans-unit id="43f1cc191ebc0b8ce89f6916aa634f5a57158798" datatype="html">
         <source>Jobs</source>
-        <target state="new">工作</target>
+        <target state="new">Jobs</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/workloadstatus/template.html</context>
           <context context-type="linenumber">68</context>
@@ -436,7 +436,7 @@
       </trans-unit>
       <trans-unit id="d9161a5f702c1f98ea34e4996c2d0b0c9eb1b66a" datatype="html">
         <source>Replica Sets</source>
-        <target state="new">Replica 设置</target>
+        <target state="new">Replica Sets</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/workloadstatus/template.html</context>
           <context context-type="linenumber">93</context>
@@ -448,7 +448,7 @@
       </trans-unit>
       <trans-unit id="900ec6b108c64adf2f23a3a84699be1217050001" datatype="html">
         <source>Replication Controllers</source>
-        <target state="new">Replication 控制器</target>
+        <target state="new">Replication Controllers</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/workloadstatus/template.html</context>
           <context context-type="linenumber">105</context>
@@ -468,7 +468,7 @@
       </trans-unit>
       <trans-unit id="8c0925876d5a1454f604dc4fc4cf8dbb4dceed0a" datatype="html">
         <source>Resource information</source>
-        <target state="new">Resource information</target>
+        <target state="new">资源信息</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/pod/detail/template.html</context>
           <context context-type="linenumber">24</context>
@@ -628,7 +628,7 @@
       </trans-unit>
       <trans-unit id="f5dc4402dbf1d5f8f98da57b6061d5f9be05ca5c" datatype="html">
         <source>Containers</source>
-        <target state="new">容器</target>
+        <target state="new">Containers</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/pod/detail/template.html</context>
           <context context-type="linenumber">90</context>
@@ -640,7 +640,7 @@
       </trans-unit>
       <trans-unit id="0499542969c672a765fa0ba1643b9d411ed45616" datatype="html">
         <source>Init containers</source>
-        <target state="new">初始化容器</target>
+        <target state="new">Init 容器</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/pod/detail/template.html</context>
           <context context-type="linenumber">98</context>
@@ -664,7 +664,7 @@
       </trans-unit>
       <trans-unit id="5403a767248e304199592271bba3366d2ca3f903" datatype="html">
         <source>Show less</source>
-        <target state="new">Show less</target>
+        <target state="new">收起</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/chips/template.html</context>
           <context context-type="linenumber">48</context>
@@ -704,7 +704,7 @@
       </trans-unit>
       <trans-unit id="a062b45312698e8669cb644bff887f93778d334f" datatype="html">
         <source>Scale</source>
-        <target state="new">规模</target>
+        <target state="new">缩放</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/list/column/menu/template.html</context>
           <context context-type="linenumber">35</context>
@@ -1260,7 +1260,7 @@
       </trans-unit>
       <trans-unit id="13785977f5a140004dd7cdb29f604b685374d1db" datatype="html">
         <source>Cluster Roles</source>
-        <target state="new">集群角色</target>
+        <target state="new">Cluster Roles</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/clusterrole/template.html</context>
           <context context-type="linenumber">21</context>
@@ -1268,7 +1268,7 @@
       </trans-unit>
       <trans-unit id="dc6f44635b83446c0f7f31ad734c33c6af1f7e7a" datatype="html">
         <source>Config Maps</source>
-        <target state="new">配置图</target>
+        <target state="new">Config Maps</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/configmap/template.html</context>
           <context context-type="linenumber">21</context>
@@ -1276,7 +1276,7 @@
       </trans-unit>
       <trans-unit id="7099af5a120571be073bcfb7babafb38e91a3b50" datatype="html">
         <source>Plugins</source>
-        <target state="new">Plugins</target>
+        <target state="new">插件</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/plugin/template.html</context>
           <context context-type="linenumber">21</context>
@@ -1284,7 +1284,7 @@
       </trans-unit>
       <trans-unit id="473fb06a7b7b3992af493059e8f9c8c74f369a97" datatype="html">
         <source>Dependencies</source>
-        <target state="new">Dependencies</target>
+        <target state="new">依赖：</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/plugin/template.html</context>
           <context context-type="linenumber">54</context>
@@ -1424,7 +1424,7 @@
       </trans-unit>
       <trans-unit id="ee26cd8de15171cdcee1f1082be733f86076ce27" datatype="html">
         <source>Last probe time</source>
-        <target state="new">最后的检测时间</target>
+        <target state="new">最后的探测时间</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/condition/template.html</context>
           <context context-type="linenumber">52</context>
@@ -1610,7 +1610,7 @@
       </trans-unit>
       <trans-unit id="4c90059afafb7e160384d9f512797c95bb95c6dc" datatype="html">
         <source>Group</source>
-        <target state="new">Group</target>
+        <target state="new">组</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crd/template.html</context>
           <context context-type="linenumber">60</context>
@@ -1622,7 +1622,7 @@
       </trans-unit>
       <trans-unit id="484b0e541230d60ddb5fbd771a34a5c8d90e7a57" datatype="html">
         <source>Full Name</source>
-        <target state="new">Full Name</target>
+        <target state="new">全称</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crd/template.html</context>
           <context context-type="linenumber">66</context>
@@ -1630,7 +1630,7 @@
       </trans-unit>
       <trans-unit id="c3e2c59f79e1c277706a4106e7ada43e5387a9d0" datatype="html">
         <source>Namespaced</source>
-        <target state="new">Namespaced</target>
+        <target state="new">命名空间</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crd/template.html</context>
           <context context-type="linenumber">72</context>
@@ -1638,7 +1638,7 @@
       </trans-unit>
       <trans-unit id="afdb601c16162f2c798b16a2920955f1cc6a20aa" datatype="html">
         <source>Objects</source>
-        <target state="new">Objects</target>
+        <target state="new">对象组</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crdobject/template.html</context>
           <context context-type="linenumber">21</context>
@@ -1646,7 +1646,7 @@
       </trans-unit>
       <trans-unit id="cfcee33b4f74fb641e9d6b00f72244d2b78c1480" datatype="html">
         <source>Versions</source>
-        <target state="new">Versions</target>
+        <target state="new">版本</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crdversion/template.html</context>
           <context context-type="linenumber">20</context>
@@ -1686,7 +1686,7 @@
       </trans-unit>
       <trans-unit id="fe22ca53e651df951dac25b67c17894b0980f767" datatype="html">
         <source>Host</source>
-        <target state="new">Host</target>
+        <target state="new">主机</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/endpoint/cardlist/template.html</context>
           <context context-type="linenumber">37</context>
@@ -1722,7 +1722,7 @@
       </trans-unit>
       <trans-unit id="af88c1e95a1d16d3cdbb7210981e0bfb6dc1d137" datatype="html">
         <source>Events</source>
-        <target state="new">活动</target>
+        <target state="new">事件</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/event/template.html</context>
           <context context-type="linenumber">21</context>
@@ -1830,7 +1830,7 @@
       </trans-unit>
       <trans-unit id="90ae2a4959c979abc049f4652f59b85e993e16cd" datatype="html">
         <source>CPU requests (cores)</source>
-        <target state="new">CPU requests (cores)</target>
+        <target state="new">CPU 请求 (cores)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/node/template.html</context>
           <context context-type="linenumber">79</context>
@@ -1838,7 +1838,7 @@
       </trans-unit>
       <trans-unit id="d9465e327fed60c8566555ae63a51d8d24b4dcbe" datatype="html">
         <source>CPU limits (cores)</source>
-        <target state="new">CPU limits (cores)</target>
+        <target state="new">CPU 约束 (cores)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/node/template.html</context>
           <context context-type="linenumber">87</context>
@@ -1846,7 +1846,7 @@
       </trans-unit>
       <trans-unit id="85550e95dc12c58e2e711dbebe89f3448eb66c72" datatype="html">
         <source>Memory requests (bytes)</source>
-        <target state="new">Memory requests (bytes)</target>
+        <target state="new">内存请求 (bytes)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/node/template.html</context>
           <context context-type="linenumber">95</context>
@@ -1854,7 +1854,7 @@
       </trans-unit>
       <trans-unit id="69779fac7ee122da8c2ab05806baea7dec1a47f6" datatype="html">
         <source>Memory limits (bytes)</source>
-        <target state="new">Memory limits (bytes)</target>
+        <target state="new">内存约束 (bytes)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/node/template.html</context>
           <context context-type="linenumber">103</context>
@@ -1918,7 +1918,7 @@
       </trans-unit>
       <trans-unit id="4f20f2d5a6882190892e58b85f6ccbedfa737952" datatype="html">
         <source>Yes</source>
-        <target state="new">是的</target>
+        <target state="new">是</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/namespace/changedialog/template.html</context>
           <context context-type="linenumber">34</context>
@@ -1926,7 +1926,7 @@
       </trans-unit>
       <trans-unit id="3d3ae7deebc5949b0c1c78b9847886a94321d9fd" datatype="html">
         <source>No</source>
-        <target state="new">不</target>
+        <target state="new">否</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/namespace/changedialog/template.html</context>
           <context context-type="linenumber">37</context>
@@ -2010,7 +2010,7 @@
       </trans-unit>
       <trans-unit id="3e2da9f7fec9facb5fe70a9afbce2257ae37cba3" datatype="html">
         <source>Desired: </source>
-        <target state="new">Desired: </target>
+        <target state="new">期待值: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
           <context context-type="linenumber">52</context>
@@ -2050,7 +2050,7 @@
       </trans-unit>
       <trans-unit id="20cbe250e2fb0ec68ca81d06059fb5ec37c25002" datatype="html">
         <source>Desired</source>
-        <target state="new">Desired</target>
+        <target state="new">期待值</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
           <context context-type="linenumber">87</context>
@@ -2074,7 +2074,7 @@
       </trans-unit>
       <trans-unit id="ad2fd201bb504d5836ffd31f00d2c3a535059147" datatype="html">
         <source>Persistent Volumes</source>
-        <target state="new">持久化 Volumes</target>
+        <target state="new">Persistent Volumes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/persistentvolume/template.html</context>
           <context context-type="linenumber">21</context>
@@ -2138,7 +2138,7 @@
       </trans-unit>
       <trans-unit id="5a237d4cea2a69c625c9c0a081adc9acc4664843" datatype="html">
         <source>Storage Class</source>
-        <target state="new">存储类</target>
+        <target state="new">Storage Class</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/persistentvolume/template.html</context>
           <context context-type="linenumber">100</context>
@@ -2154,7 +2154,7 @@
       </trans-unit>
       <trans-unit id="b0e6fb912650bbbe88ff81601b2dea87727abb6f" datatype="html">
         <source>Persistent Volume Claims</source>
-        <target state="new">持久化 Volume 请求</target>
+        <target state="new">Persistent Volume Claims</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/persistentvolumeclaim/template.html</context>
           <context context-type="linenumber">21</context>
@@ -2270,7 +2270,7 @@
       </trans-unit>
       <trans-unit id="e04aa162d5c7f9cf4dde1b4a78667ca3f70da778" datatype="html">
         <source>Replications Controllers</source>
-        <target state="new">Replications 控制器</target>
+        <target state="new">Replications Controllers</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/replicationcontroller/template.html</context>
           <context context-type="linenumber">21</context>
@@ -2278,7 +2278,7 @@
       </trans-unit>
       <trans-unit id="3bb5706d8e2b719394b49d48ef5bf5398bfdc33f" datatype="html">
         <source>Storage Classes</source>
-        <target state="new">存储类</target>
+        <target state="new">Storage Classes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/storageclass/template.html</context>
           <context context-type="linenumber">21</context>
@@ -2377,7 +2377,7 @@
       <trans-unit id="1aff4cb93f64ca57fbf92fe405b2c1f2c4ec1b11" datatype="html">
         <source>Cluster Roles
       </source>
-        <target state="new">集群角色
+        <target state="new">Cluster Roles
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2407,7 +2407,7 @@
       <trans-unit id="53fa14e4e66a4b88531ac5852644edf4c93430c5" datatype="html">
         <source>Persistent Volumes
       </source>
-        <target state="new">持久化 Volumes
+        <target state="new">Persistent Volumes
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2417,7 +2417,7 @@
       <trans-unit id="d49c812d67b965bd0a172844e265f55567c812ad" datatype="html">
         <source>Storage Classes
       </source>
-        <target state="new">存储类
+        <target state="new">Storage Classes
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2437,7 +2437,7 @@
       <trans-unit id="6d9edf35ea416301631125005b66c9440397176d" datatype="html">
         <source>Workloads
       </source>
-        <target state="new">工作量
+        <target state="new">工作负载
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2457,7 +2457,7 @@
       <trans-unit id="d094e262a8d26c66b5eb9f7dbf501cd711c1306f" datatype="html">
         <source>Daemon Sets
       </source>
-        <target state="new">Daemon 设置
+        <target state="new">Daemon Sets
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2497,7 +2497,7 @@
       <trans-unit id="6fed5420d42fcfbd09dfb4777c207274dd4f0c0a" datatype="html">
         <source>Replica Sets
       </source>
-        <target state="new">Replica 集
+        <target state="new">Replica Sets
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2507,7 +2507,7 @@
       <trans-unit id="5a60417d6a34e8c0655cb0678071c60ca8119aad" datatype="html">
         <source>Replication Controllers
       </source>
-        <target state="new">Replication 控制器
+        <target state="new">Replication Controllers
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2517,7 +2517,7 @@
       <trans-unit id="1bc563edf644be0e1f682694e543cc8608575562" datatype="html">
         <source>Stateful Sets
       </source>
-        <target state="new">Stateful 设置
+        <target state="new">Stateful Sets
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2527,7 +2527,7 @@
       <trans-unit id="c4df359ca10a7fe23b63de59b71b971fc8b91dc9" datatype="html">
         <source>Discovery and Load Balancing
       </source>
-        <target state="new">发现和负载均衡
+        <target state="new">服务发现和负载均衡
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2577,7 +2577,7 @@
       <trans-unit id="74be5bc42681451056aacf13382e5b29c62bd903" datatype="html">
         <source>Persistent Volume Claims
       </source>
-        <target state="new">持久化 Volume Claims
+        <target state="new">Persistent Volume Claims
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2597,7 +2597,7 @@
       <trans-unit id="1d216da7f53e1afcd7bffd53c0a6b0f2502cde4d" datatype="html">
         <source>Plugins
       </source>
-        <target state="new">Plugins
+        <target state="new">插件
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2696,7 +2696,7 @@
       </trans-unit>
       <trans-unit id="f88774e30855665c168f36b58fdac3fdffbbe24f" datatype="html">
         <source>Default service account</source>
-        <target state="new">默认 service account</target>
+        <target state="new">默认 service 账号</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/userpanel/template.html</context>
           <context context-type="linenumber">27</context>
@@ -2742,7 +2742,7 @@
       </trans-unit>
       <trans-unit id="4346d3d4e2109584d33480fb8916a9b1cfcdf636" datatype="html">
         <source>Workloads</source>
-        <target state="new">工作量</target>
+        <target state="new">工作负载</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/search/template.html</context>
           <context context-type="linenumber">36</context>
@@ -2754,7 +2754,7 @@
       </trans-unit>
       <trans-unit id="3ca17e5da2745672786f9d80be73ef0b4929b7fc" datatype="html">
         <source>Discovery and Load Balancing</source>
-        <target state="new">发现和负载均衡</target>
+        <target state="new">服务发现和负载均衡</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/search/template.html</context>
           <context context-type="linenumber">58</context>
@@ -2950,7 +2950,7 @@
       </trans-unit>
       <trans-unit id="5927a3493fbb556db65f530e01b3aa6ab9f186e6" datatype="html">
         <source>Resource Information</source>
-        <target state="new">Resource Information</target>
+        <target state="new">资源信息</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
           <context context-type="linenumber">22</context>
@@ -2958,7 +2958,7 @@
       </trans-unit>
       <trans-unit id="8fe73a4787b8068b2ba61f54ab7e0f9af2ea1fc9" datatype="html">
         <source>Version</source>
-        <target state="new">Version</target>
+        <target state="new">版本</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
           <context context-type="linenumber">29</context>
@@ -2974,7 +2974,7 @@
       </trans-unit>
       <trans-unit id="d9ac1caf6715c8011155c0a027d544dbeca63062" datatype="html">
         <source>Subresources</source>
-        <target state="new">Subresources</target>
+        <target state="new">子资源</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
           <context context-type="linenumber">47</context>
@@ -3006,7 +3006,7 @@
       </trans-unit>
       <trans-unit id="5a2fcb3c1d8240f8f966564ee3500235d7427245" datatype="html">
         <source>List Kind</source>
-        <target state="new">List Kind</target>
+        <target state="new">列出分类</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
           <context context-type="linenumber">77</context>
@@ -3014,7 +3014,7 @@
       </trans-unit>
       <trans-unit id="d27e60f49dba9b7994331db545a4c14e1e2683ad" datatype="html">
         <source>Short Names</source>
-        <target state="new">Short Names</target>
+        <target state="new">短名称</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
           <context context-type="linenumber">82</context>
@@ -3160,7 +3160,7 @@
       </trans-unit>
       <trans-unit id="e8e1511eda00436d2d4d34a43d45af8be2e60fb4" datatype="html">
         <source>Create a new image pull secret</source>
-        <target state="new">创建一个新的 image pull secret</target>
+        <target state="new">创建一个新的镜像拉取密钥</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
           <context context-type="linenumber">18</context>
@@ -3349,7 +3349,7 @@
         Container image is invalid: <x id="INTERPOLATION" equiv-text="{{containerImage.errors?.validImageReference}}"/>
       </source>
         <target state="new">
-        Container image 无效: <x id="INTERPOLATION" equiv-text="{{containerImage.errors?.validImageReference}}"/>
+        容器镜像无效: <x id="INTERPOLATION" equiv-text="{{containerImage.errors?.validImageReference}}"/>
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
@@ -3524,7 +3524,7 @@
       </trans-unit>
       <trans-unit id="f87cc4e8fdd870d5f0fe071889d30939f9d0cd37" datatype="html">
         <source>Image Pull Secret</source>
-        <target state="new">Image Pull Secret</target>
+        <target state="new">容器拉取密钥</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">213</context>
@@ -3540,7 +3540,7 @@
       </trans-unit>
       <trans-unit id="31fedef1fc3d84d80cd88ca33aa79b2d3e7d7be7" datatype="html">
         <source>CPU requirement (cores)</source>
-        <target state="new">CPU requirement (cores)</target>
+        <target state="new">CPU 请求 (cores)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">242</context>
@@ -3572,7 +3572,7 @@
       </trans-unit>
       <trans-unit id="d36662c0168b3275eaae4d68c9c1a3dba0090f84" datatype="html">
         <source>Memory requirement (MiB)</source>
-        <target state="new">Memory requirement (MiB)</target>
+        <target state="new">Memory 请求 (MiB)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">260</context>
@@ -3583,7 +3583,7 @@
             Memory requirement must be given as a positive number.
           </source>
         <target state="new">
-            Memory requirement 必须是正整数。
+            内存请求必须是正整数。
           </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
@@ -3595,7 +3595,7 @@
             Memory requirement must be given as a valid number.
           </source>
         <target state="new">
-            Memory requirement 必须是一个有效的数字.
+            内存请求必须是一个有效的数字.
           </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
@@ -3612,7 +3612,7 @@
       </trans-unit>
       <trans-unit id="506587015effc48cbea3c5af7c94abf14ca76ea3" datatype="html">
         <source>Run command</source>
-        <target state="new">Run command</target>
+        <target state="new">执行命令</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">291</context>
@@ -3620,7 +3620,7 @@
       </trans-unit>
       <trans-unit id="f673c95db1b46263de2e28a17989d58b63b7033b" datatype="html">
         <source>Run command arguments</source>
-        <target state="new">Run command arguments</target>
+        <target state="new">执行命令参数</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">297</context>
@@ -4194,7 +4194,7 @@
       </trans-unit>
       <trans-unit id="6d2785638ecbd5c955523cb0aae6931e0acb1f2f" datatype="html">
         <source>Provider ID</source>
-        <target state="new">Provider ID</target>
+        <target state="new">提供者 ID</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
           <context context-type="linenumber">40</context>
@@ -4210,7 +4210,7 @@
       </trans-unit>
       <trans-unit id="7882f2edb1d4139800b276b6b0bbf5ae0b2234ef" datatype="html">
         <source>Addresses</source>
-        <target state="new">Addresses</target>
+        <target state="new">地址</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
           <context context-type="linenumber">51</context>
@@ -4218,7 +4218,7 @@
       </trans-unit>
       <trans-unit id="3dd30fc441ba6aa490d7a4200a1891c58afdda4e" datatype="html">
         <source>Taints</source>
-        <target state="new">Taints</target>
+        <target state="new">污点</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
           <context context-type="linenumber">59</context>
@@ -4314,7 +4314,7 @@
       </trans-unit>
       <trans-unit id="2ee26d58f2707416e636887111d5603b35346c4a" datatype="html">
         <source>Allocation</source>
-        <target state="new">Allocation</target>
+        <target state="new">分配额</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
           <context context-type="linenumber">128</context>
@@ -4330,7 +4330,7 @@
       </trans-unit>
       <trans-unit id="58d4a9814864741040bc5905b6a368836e683f76" datatype="html">
         <source>Memory</source>
-        <target state="new">Memory</target>
+        <target state="new">内存</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
           <context context-type="linenumber">148</context>
@@ -4486,7 +4486,7 @@
       </trans-unit>
       <trans-unit id="766c66ad5cc981c531aaf3fe3a2a7a346ddc8d83" datatype="html">
         <source>Path</source>
-        <target state="new">Path</target>
+        <target state="new">路径</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">178</context>
@@ -4906,7 +4906,7 @@
       </trans-unit>
       <trans-unit id="57b93a9b84d8693e539fe22e43688f26cdfb1783" datatype="html">
         <source>Old Replica Sets</source>
-        <target state="new">旧 Replica 集</target>
+        <target state="new">旧 Replica Sets</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
           <context context-type="linenumber">280</context>
@@ -5023,7 +5023,7 @@
       </trans-unit>
       <trans-unit id="2045151788cbdda7512752e408da59a6b54a8ef0" datatype="html">
         <source>Items per page</source>
-        <target state="new">每页 Items</target>
+        <target state="new">每页 Items 数量</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">43</context>
@@ -5039,7 +5039,7 @@
       </trans-unit>
       <trans-unit id="1bf6e9fbb0027605b8c66e07e51ba28ff29ef67f" datatype="html">
         <source>Logs auto-refresh time interval</source>
-        <target state="new">Logs auto-refresh time interval</target>
+        <target state="new">日志自动刷新间隔</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">62</context>
@@ -5055,7 +5055,7 @@
       </trans-unit>
       <trans-unit id="694d9a3839897f77b3ebca37be526771f6c54fd0" datatype="html">
         <source>Resource auto-refresh time interval</source>
-        <target state="new">Resource auto-refresh time interval</target>
+        <target state="new">资源自动刷新间隔</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">81</context>
@@ -5063,7 +5063,7 @@
       </trans-unit>
       <trans-unit id="ad66f1317f55d474a80b519533bde2eb31f99eda" datatype="html">
         <source>Number of seconds between every auto-refresh of every resource. Set 0 to disable.</source>
-        <target state="new">Number of seconds between every auto-refresh of every resource. Set 0 to disable.</target>
+        <target state="new">两次资源自动刷新时间间隔. 设置为 0 则不启用.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">83</context>
