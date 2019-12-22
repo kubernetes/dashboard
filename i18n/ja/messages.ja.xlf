@@ -1866,7 +1866,7 @@
         <target>稼働中: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
-          <context context-type="linenumber">25</context>
+          <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="96f3f35319c3d11b3851f4ed9e31544452f69005" datatype="html">
@@ -1874,7 +1874,7 @@
         <target>成功: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f2c8a2942797110c229cee3ee830ae2c1b64901a" datatype="html">
@@ -1882,7 +1882,7 @@
         <target>待機中: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
-          <context context-type="linenumber">39</context>
+          <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="be286c9229bebbb3a9ef0e88d926116fc8bd57a3" datatype="html">
@@ -1890,7 +1890,7 @@
         <target>失敗: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3e2da9f7fec9facb5fe70a9afbce2257ae37cba3" datatype="html">
@@ -1898,7 +1898,7 @@
         <target>要求中: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8dd15f6c73c05a8b0bd7b6d416487ab6570b88c8" datatype="html">
@@ -1906,7 +1906,7 @@
         <target>稼働中</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
-          <context context-type="linenumber">62</context>
+          <context context-type="linenumber">63</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5be78978b1c8277fda3bc75d8c3c28a0913c8795" datatype="html">
@@ -1914,7 +1914,7 @@
         <target>成功</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
-          <context context-type="linenumber">68</context>
+          <context context-type="linenumber">69</context>
         </context-group>
       </trans-unit>
       <trans-unit id="e6a27066251ca1e04c5be86ad758380856df2506" datatype="html">
@@ -1922,7 +1922,7 @@
         <target>待機中</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
-          <context context-type="linenumber">74</context>
+          <context context-type="linenumber">75</context>
         </context-group>
       </trans-unit>
       <trans-unit id="64b582e0d8e3a28331a14d2a1017fa5d6ffb8d93" datatype="html">
@@ -1930,7 +1930,7 @@
         <target>失敗</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
-          <context context-type="linenumber">81</context>
+          <context context-type="linenumber">82</context>
         </context-group>
       </trans-unit>
       <trans-unit id="20cbe250e2fb0ec68ca81d06059fb5ec37c25002" datatype="html">
@@ -1938,7 +1938,7 @@
         <target>要求中</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
-          <context context-type="linenumber">87</context>
+          <context context-type="linenumber">88</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f2db0be1c93c93d5af51ed6d3b42abb184d07c08" datatype="html">
@@ -4034,6 +4034,14 @@
           <context context-type="linenumber">151</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="c351ac57f153f24bf440eb98ec27932af51c203c" datatype="html">
+        <source>Go to namespace overview</source>
+        <target state="new">Go to namespace overview</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/cluster/namespace/detail/actionbar/template.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="32c4fb786d3f614318c26ef8adc8f195d581545d" datatype="html">
         <source>Workload Status</source>
         <target>ワークロードの状態</target>
@@ -4438,6 +4446,14 @@
           <context context-type="linenumber">320</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="c64747f0bc3848d47c89e0af17d0c199b44ad0de" datatype="html">
+        <source>Parameter</source>
+        <target state="new">Parameter</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/cluster/storageclass/detail/template.html</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="5ad4eecbd0fe09c34678fefce317a052af39dc96" datatype="html">
         <source>Data</source>
         <target>データ</target>
@@ -4681,6 +4697,10 @@
       <trans-unit id="0991eecb18ad10fac275b126b2829200d00f3976" datatype="html">
         <source>Pods status</source>
         <target>ポッド状態</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
           <context context-type="linenumber">118</context>
