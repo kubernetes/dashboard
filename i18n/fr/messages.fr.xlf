@@ -1120,7 +1120,7 @@
       </trans-unit>
       <trans-unit id="c351ac57f153f24bf440eb98ec27932af51c203c" datatype="html">
         <source>Go to namespace overview</source>
-        <target state="new">Go to namespace overview</target>
+        <target>Aller à l'aperçu de l'espace de nom</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/namespace/detail/actionbar/template.html</context>
           <context context-type="linenumber">23</context>
@@ -4226,7 +4226,7 @@
       </trans-unit>
       <trans-unit id="43a02cbb549d36c5086109559945a3db29542b1f" datatype="html">
         <source>CPU</source>
-        <target state="new">CPU</target>
+        <target>CPU</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
           <context context-type="linenumber">136</context>
@@ -4234,7 +4234,7 @@
       </trans-unit>
       <trans-unit id="58d4a9814864741040bc5905b6a368836e683f76" datatype="html">
         <source>Memory</source>
-        <target state="new">Memory</target>
+        <target>Mémoire</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
           <context context-type="linenumber">148</context>
@@ -4478,7 +4478,7 @@
       </trans-unit>
       <trans-unit id="c64747f0bc3848d47c89e0af17d0c199b44ad0de" datatype="html">
         <source>Parameter</source>
-        <target state="new">Parameter</target>
+        <target>Paramètre</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/storageclass/detail/template.html</context>
           <context context-type="linenumber">37</context>
