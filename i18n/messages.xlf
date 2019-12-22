@@ -1815,74 +1815,85 @@
           <context context-type="linenumber">88</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="0991eecb18ad10fac275b126b2829200d00f3976" datatype="html">
+        <source>Pods status</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
+          <context context-type="linenumber">118</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="e0254f98685441d1c9b3906a6048e61b20d5b05a" datatype="html">
         <source>Running: </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
-          <context context-type="linenumber">25</context>
+          <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="96f3f35319c3d11b3851f4ed9e31544452f69005" datatype="html">
         <source>Succeeded: </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f2c8a2942797110c229cee3ee830ae2c1b64901a" datatype="html">
         <source>Pending: </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
-          <context context-type="linenumber">39</context>
+          <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="be286c9229bebbb3a9ef0e88d926116fc8bd57a3" datatype="html">
         <source>Failed: </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3e2da9f7fec9facb5fe70a9afbce2257ae37cba3" datatype="html">
         <source>Desired: </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8dd15f6c73c05a8b0bd7b6d416487ab6570b88c8" datatype="html">
         <source>Running</source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
-          <context context-type="linenumber">62</context>
+          <context context-type="linenumber">63</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5be78978b1c8277fda3bc75d8c3c28a0913c8795" datatype="html">
         <source>Succeeded</source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
-          <context context-type="linenumber">68</context>
+          <context context-type="linenumber">69</context>
         </context-group>
       </trans-unit>
       <trans-unit id="e6a27066251ca1e04c5be86ad758380856df2506" datatype="html">
         <source>Pending</source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
-          <context context-type="linenumber">74</context>
+          <context context-type="linenumber">75</context>
         </context-group>
       </trans-unit>
       <trans-unit id="64b582e0d8e3a28331a14d2a1017fa5d6ffb8d93" datatype="html">
         <source>Failed</source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
-          <context context-type="linenumber">81</context>
+          <context context-type="linenumber">82</context>
         </context-group>
       </trans-unit>
       <trans-unit id="20cbe250e2fb0ec68ca81d06059fb5ec37c25002" datatype="html">
         <source>Desired</source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
-          <context context-type="linenumber">87</context>
+          <context context-type="linenumber">88</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f2db0be1c93c93d5af51ed6d3b42abb184d07c08" datatype="html">
@@ -3653,6 +3664,13 @@
           <context context-type="linenumber">151</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="c351ac57f153f24bf440eb98ec27932af51c203c" datatype="html">
+        <source>Go to namespace overview</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/cluster/namespace/detail/actionbar/template.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="8a3abe0df530103020a480befe1757e3b1776e7b" datatype="html">
         <source>Pod CIDR</source>
         <context-group purpose="location">
@@ -4001,6 +4019,13 @@
           <context context-type="linenumber">320</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="c64747f0bc3848d47c89e0af17d0c199b44ad0de" datatype="html">
+        <source>Parameter</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/cluster/storageclass/detail/template.html</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="cb784dbcccfc59a841e1b9477816aa9cada005fb" datatype="html">
         <source>There is no data to display.</source>
         <context-group purpose="location">
@@ -4200,13 +4225,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
           <context context-type="linenumber">110</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="0991eecb18ad10fac275b126b2829200d00f3976" datatype="html">
-        <source>Pods status</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
-          <context context-type="linenumber">118</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7821a91cdd779e6b4382c216b527f641ecc349ae" datatype="html">
