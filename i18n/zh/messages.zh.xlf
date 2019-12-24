@@ -71,7 +71,7 @@
     <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/>?<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/>
   </source>
         <target state="new">
-    <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/>Are you sure you want to delete <x id="INTERPOLATION" equiv-text="{{data.displayName}}"/> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_1" equiv-text="{{data.objectMeta.name}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/>
+    <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/>你确定要删除 <x id="INTERPOLATION" equiv-text="{{data.displayName}}"/> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_1" equiv-text="{{data.objectMeta.name}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/>
     <x id="START_TAG_SPAN_1" ctype="x-span" equiv-text="&lt;span>"/>
        in namespace <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_2" equiv-text="{{data.objectMeta.namespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>
     <x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/>
@@ -188,7 +188,7 @@
       </trans-unit>
       <trans-unit id="a92a2623ec8f7344194693dfb1341c9a7687eaa2" datatype="html">
         <source>Scale a resource</source>
-        <target state="new">扩展资源</target>
+        <target state="new">缩放资源</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/dialogs/scaleresource/template.html</context>
           <context context-type="linenumber">18</context>
@@ -300,7 +300,7 @@
       </trans-unit>
       <trans-unit id="7a4e4644d31ae90390b396f08c2f209d0a4a9952" datatype="html">
         <source>Scale resource</source>
-        <target state="new">扩展资源</target>
+        <target state="new">缩放资源</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/actionbar/detailactions/scale/template.html</context>
           <context context-type="linenumber">21</context>
@@ -3418,7 +3418,7 @@
       </trans-unit>
       <trans-unit id="a74cbfda3903734c9bf30900be931163a187c721" datatype="html">
         <source>Optionally, an internal or external Service can be defined to map an incoming Port to a target Port seen by the container.</source>
-        <target state="new">可选，可以定义内部或外部 Service，以将传入端口映射到容器看到的目标端口。</target>
+        <target state="new">可选，可以定义内部或外部 Service，将传入端口映射到容器的目标端口。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">136</context>
@@ -3540,7 +3540,7 @@
       </trans-unit>
       <trans-unit id="31fedef1fc3d84d80cd88ca33aa79b2d3e7d7be7" datatype="html">
         <source>CPU requirement (cores)</source>
-        <target state="new">CPU requirement (cores)</target>
+        <target state="new">CPU 最低需求 (cores)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">242</context>
@@ -3551,7 +3551,7 @@
             CPU requirement must be given as a positive number.
           </source>
         <target state="new">
-            CPU requirement 必须是正整数。
+            CPU 最低需求必须是正整数。
           </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
@@ -3563,7 +3563,7 @@
             CPU requirement must be given as a valid number.
           </source>
         <target state="new">
-            CPU requirement 必须是有效的数字。
+            CPU 最低需求必须是有效的数字。
           </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
@@ -3572,7 +3572,7 @@
       </trans-unit>
       <trans-unit id="d36662c0168b3275eaae4d68c9c1a3dba0090f84" datatype="html">
         <source>Memory requirement (MiB)</source>
-        <target state="new">Memory requirement (MiB)</target>
+        <target state="new">Memory 最低需求 (MiB)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">260</context>
@@ -3583,7 +3583,7 @@
             Memory requirement must be given as a positive number.
           </source>
         <target state="new">
-            Memory requirement 必须是正整数。
+            Memory 最低需求必须是正整数。
           </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
@@ -3595,7 +3595,7 @@
             Memory requirement must be given as a valid number.
           </source>
         <target state="new">
-            Memory requirement 必须是一个有效的数字.
+            Memory 最低需求必须是一个有效的数字。
           </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
@@ -3612,7 +3612,7 @@
       </trans-unit>
       <trans-unit id="506587015effc48cbea3c5af7c94abf14ca76ea3" datatype="html">
         <source>Run command</source>
-        <target state="new">Run command</target>
+        <target state="new">运行命令</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">291</context>
@@ -3620,7 +3620,7 @@
       </trans-unit>
       <trans-unit id="f673c95db1b46263de2e28a17989d58b63b7033b" datatype="html">
         <source>Run command arguments</source>
-        <target state="new">Run command arguments</target>
+        <target state="new">运行命令参数</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">297</context>
@@ -4202,7 +4202,7 @@
       </trans-unit>
       <trans-unit id="6d2785638ecbd5c955523cb0aae6931e0acb1f2f" datatype="html">
         <source>Provider ID</source>
-        <target state="new">Provider ID</target>
+        <target state="new">提供者的 ID</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
           <context context-type="linenumber">40</context>
@@ -4218,7 +4218,7 @@
       </trans-unit>
       <trans-unit id="7882f2edb1d4139800b276b6b0bbf5ae0b2234ef" datatype="html">
         <source>Addresses</source>
-        <target state="new">Addresses</target>
+        <target state="new">地址</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
           <context context-type="linenumber">51</context>
@@ -4322,7 +4322,7 @@
       </trans-unit>
       <trans-unit id="2ee26d58f2707416e636887111d5603b35346c4a" datatype="html">
         <source>Allocation</source>
-        <target state="new">Allocation</target>
+        <target state="new">分配</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
           <context context-type="linenumber">128</context>
@@ -5083,7 +5083,7 @@
       </trans-unit>
       <trans-unit id="ad66f1317f55d474a80b519533bde2eb31f99eda" datatype="html">
         <source>Number of seconds between every auto-refresh of every resource. Set 0 to disable.</source>
-        <target state="new">Number of seconds between every auto-refresh of every resource. Set 0 to disable.</target>
+        <target state="new">两次资源自动刷新时间间隔。 设置为 0 则表示不启用。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">83</context>
