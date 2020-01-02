@@ -1,0 +1,95 @@
+# Copyright 2017 The Kubernetes Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+{{ if .Values.metricsScraper.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.metricsScraper.name }}
+{{- with .Values.metricsScraper.annotations }}
+  annotations:
+{{ toYaml . | indent 4 }}
+{{- end }}
+  labels:
+{{ include "dashboard-metrics-scraper.labels" . | indent 4 }}
+{{- if .Values.metricsScraper.labels }}
+{{ toYaml .Values.metricsScraper.labels | indent 4 }}
+{{- end }}
+spec:
+  replicas: {{ .Values.metricsScraper.replicaCount }}
+  revisionHistoryLimit: {{ .Values.metricsScraper.revisionHistoryLimit }}
+  selector:
+    matchLabels:
+{{ include "dashboard-metrics-scraper.matchLabels" . | indent 6 }}
+  template:
+    metadata:
+{{- with .Values.metricsScraper.podAnnotations }}
+      annotations:
+{{ toYaml . | indent 8 }}
+{{- end }}
+      labels:
+{{ include "dashboard-metrics-scraper.labels" . | indent 8 }}
+    spec:
+      {{- if .Values.securityContext }}
+      securityContext:
+{{ toYaml .Values.securityContext | indent 8 }}
+      {{- end }}
+      serviceAccountName: {{ template "kubernetes-dashboard.serviceAccountName" . }}
+      containers:
+      - name: {{ .Values.metricsScraper.name }}
+        image: "{{ .Values.metricsScraper.image.repository }}:{{ .Values.metricsScraper.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+          - containerPort: 8000
+            protocol: TCP
+        livenessProbe:
+          httpGet:
+            scheme: HTTP
+            path: /
+            port: 8000
+          initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+          timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+        volumeMounts:
+        - mountPath: /tmp
+          name: tmp-volume
+{{- if .Values.metricsScraperContainerSecurityContext }}
+        securityContext:
+{{ toYaml .Values.metricsScraperContainerSecurityContext | indent 10 }}
+{{- end }}
+{{- with .Values.metricsScraper.resources }}
+        resources:
+{{ toYaml . | indent 10 }}
+{{- end }}
+{{- with .Values.image.pullSecrets }}
+      imagePullSecrets:
+{{- range . }}
+        - name: {{ . }}
+{{- end }}
+{{- end }}
+{{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+{{- end }}
+{{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+{{- end }}
+{{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+{{- end }}
+      volumes:
+        - name: tmp-volume
+          emptyDir: {}
+{{- end }}

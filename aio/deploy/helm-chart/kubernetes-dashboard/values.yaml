@@ -92,6 +92,21 @@ resources:
     cpu: 2
     memory: 200Mi
 
+metricsScraper:
+  enabled: true
+  name: dashboard-metrics-scraper
+  annotations: {}
+  labels: {}
+  revisionHistoryLimit: 10
+  podAnnotations:
+    seccomp.security.alpha.kubernetes.io/pod: 'runtime/default'
+  image:
+    repository: kubernetesui/metrics-scraper
+    tag: v1.0.1
+  resources:
+    requests: {}
+    limits: {}
+
 ingress:
   ## If true, Kubernetes Dashboard Ingress will be created.
   ##
@@ -182,6 +197,13 @@ podDisruptionBudget:
 
 ## SecurityContext for the kubernetes dashboard container
 dashboardContainerSecurityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  runAsUser: 1001
+  runAsGroup: 2001
+
+## SecurityContext for the dashboard metrics scraper container
+metricsScraperContainerSecurityContext:
   allowPrivilegeEscalation: false
   readOnlyRootFilesystem: true
   runAsUser: 1001
