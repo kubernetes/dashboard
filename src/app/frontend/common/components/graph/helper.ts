@@ -57,21 +57,10 @@ export class FormattedValue {
     if (expectedPower < 0) {
       throw new Error(`Suffix '${suffix}' not recognized.`);
     }
-
-    let powerDiff = expectedPower - currentPower;
-
-    if (powerDiff < 0) {
-      powerDiff = -powerDiff;
-      this.value_ = this.value_ * Math.pow(this.base_, powerDiff);
-      this.suffix_ = suffix;
-    }
-
-    if (powerDiff > 0) {
-      this.value_ = this.value_ / Math.pow(this.base_, powerDiff);
-      this.suffix_ = suffix;
-    }
-
-    this.value_ = Number(this.value_.toPrecision(3));
+    const powerDiff = expectedPower - currentPower;
+    const value = this.value_ / Math.pow(this.base_, powerDiff);
+    this.value_ = Number(value.toPrecision(3));
+    this.suffix_ = suffix;
   }
 
   static NewFormattedCoreValue(value: number): FormattedValue {
