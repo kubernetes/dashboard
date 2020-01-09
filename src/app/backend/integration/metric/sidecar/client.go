@@ -202,8 +202,7 @@ func (self sidecarClient) allInOneDownload(selector sidecarSelector, metricName 
 		}
 
 		if len(result) != len(rawResults.Items) {
-			result.PutMetrics(nil, fmt.Errorf(`received %d resources from sidecar instead of %d`, len(rawResults.Items), len(result)))
-			return
+			log.Printf(`received %d resources from sidecar instead of %d`, len(rawResults.Items), len(result))
 		}
 
 		// rawResult.Items have indefinite order.
@@ -224,6 +223,11 @@ func (self sidecarClient) allInOneDownload(selector sidecarSelector, metricName 
 		for i, rawResult := range sortedResults {
 			dataPoints := DataPointsFromMetricJSONFormat(rawResult.MetricPoints)
 
+			if rawResult.MetricName == "" && len(rawResult.UIDs) == 0 {
+				result[i].Metric <- nil
+				result[i].Error <- fmt.Errorf("can not get metrics for %s", selector.Resources[i])
+				continue
+			}
 			result[i].Metric <- &metricapi.Metric{
 				DataPoints:   dataPoints,
 				MetricPoints: rawResult.MetricPoints,

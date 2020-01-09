@@ -19,8 +19,8 @@ You can clone this repository and checkout to [`plugin/base`](https://github.com
 
 On this branch, you can compile the plugin with following command
 ```
-ng build plugin && ng build --project custom-plugin --prod --modulePath=k8s-plugin#PluginModule --pluginName=k8s-plugin --outputPath=./dist/bundle
-ng build --project custom-plugin --prod --modulePath=./plugin1/plugin1.module#Plugin1Module --pluginName=plugin1 --sharedLibs=k8s-plugin --outputPath=./dist/bundle
+ng build plugin && ng build --project custom-plugin --prod --modulePath="k8s-plugin#PluginModule" --pluginName="k8s-plugin" --outputPath="./dist/bundle"
+ng build --project custom-plugin --prod --modulePath="./plugin1/plugin1.module#Plugin1Module" --pluginName="plugin1" --sharedLibs="k8s-plugin" --outputPath="./dist/bundle"
 ```
 
 The key thing here is that we specify the `custom-plugin` project in the `angular.json` to use our custom builder. Make sure to keep the config similar when developing your own plugins.
@@ -40,8 +40,8 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/a
 We can now create config-maps to hold the compiled plugin source code.
 
 ```
-kubectl create configmap k8s-plugin-src --from-file=./dist/bundle/k8s-plugin.js
-kubectl create configmap plugin1-src --from-file=./dist/bundle/plugin1.js
+kubectl create configmap k8s-plugin-src --from-file="./dist/bundle/k8s-plugin.js"
+kubectl create configmap plugin1-src --from-file="./dist/bundle/plugin1.js"
 ```
 
 After following all the above steps, your new plugin should be available in the dashboard.

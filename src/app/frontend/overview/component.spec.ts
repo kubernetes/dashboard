@@ -20,7 +20,6 @@ import {MatCardModule, MatDividerModule, MatIconModule, MatTooltipModule} from '
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {AppConfig, CronJobList, DaemonSetList, PodList} from '@api/backendapi';
 
-import {AllocationChartComponent} from '../common/components/allocationchart/component';
 import {CardComponent} from '../common/components/card/component';
 import {ListGroupIdentifier, ListIdentifier} from '../common/components/resourcelist/groupids';
 import {
@@ -71,7 +70,6 @@ describe('OverviewComponent', () => {
         CardComponent,
         OverviewComponent,
         MockDaemonSetListComponent,
-        AllocationChartComponent,
         WorkloadStatusComponent,
       ],
       imports: [

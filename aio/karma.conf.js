@@ -75,8 +75,8 @@ module.exports = function(config) {
     singleRun: false
   };
 
-  // Use custom browser configuration when running on Travis CI.
-  if (!!process.env.TRAVIS) {
+  // Use custom browser configuration when running on Travis CI or container.
+  if (!!process.env.TRAVIS || !!process.env.K8S_DASHBOARD_CONTAINER) {
     configuration.browsers = ['ChromeHeadless', 'FirefoxHeadless'];
     configuration.customLaunchers = {
       ChromeHeadless: {
@@ -91,22 +91,6 @@ module.exports = function(config) {
       FirefoxHeadless: {
         base: 'Firefox',
         flags: ['-headless'],
-      },
-    };
-  }
-
-  // Use custom browser configuration when running on container.
-  if (!!process.env.K8S_DASHBOARD_CONTAINER) {
-    configuration.browsers = ['ChromeHeadless'];
-    configuration.customLaunchers = {
-      ChromeHeadless: {
-        base: 'Chrome',
-        flags: [
-          '--disable-gpu',
-          '--headless',
-          '--no-sandbox',
-          '--remote-debugging-port=9222',
-        ],
       },
     };
   }

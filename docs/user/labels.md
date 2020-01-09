@@ -53,7 +53,7 @@ Labels used to determine if creator of pull request has signed the CNCF CLA. It 
 
 Other labels used for issues and pull requests.
 
-* `greenkeeper` - pull requests created by [greenkeeper.io](https://greenkeeper.io/) bot. This label is assigned automatically.
+* `area/dependency` - pull requests created by [Dependabot Preview](https://github.com/marketplace/dependabot-preview/) bot. This label is assigned automatically.
 * `help wanted` - rather low priority issues, where any contributions are more than welcomed.
 * `good first issue` - issues good for contributor onboarding.
 * `missing details` - issues with missing details, that cannot be reproduced.
