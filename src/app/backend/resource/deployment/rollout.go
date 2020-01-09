@@ -15,21 +15,21 @@
 package deployment
 
 import (
+	"errors"
+
 	v1 "k8s.io/api/apps/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
-
-	"errors"
 )
 
-// RollBackSpec is a specification for deployment rollback from an specific revision number
-type RollBackSpec struct {
+// RollbackSpec is a specification for deployment rollback from an specific revision number
+type RollbackSpec struct {
 	// revision is the revision number of the replicateSet which we want to rollback
 	Revision string `json:"revision"`
 }
 
 // RollbackDeployment rollback to a specific replicaSet version
-func RollbackDeployment(client client.Interface, rollbackSpec *RollBackSpec, namespace, name string) error {
+func RollbackDeployment(client client.Interface, rollbackSpec *RollbackSpec, namespace, name string) error {
 	deployment, err := client.AppsV1().Deployments(namespace).Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return err
@@ -38,7 +38,7 @@ func RollbackDeployment(client client.Interface, rollbackSpec *RollBackSpec, nam
 	if currRevision == "1" {
 		return errors.New("No revision for rolling back ")
 	}
-	matchRS, err := GetReplicateSetFromDeployment(client, namespace, name)
+	matchRS, err := GetReplicaSetFromDeployment(client, namespace, name)
 	if err != nil {
 		return err
 	}
@@ -53,7 +53,7 @@ func RollbackDeployment(client client.Interface, rollbackSpec *RollBackSpec, nam
 			return nil
 		}
 	}
-	return errors.New("No match revisionNumber replicateSet for deployment ")
+	return errors.New("No match revisionNumber replicaSet for deployment ")
 }
 
 // PauseDeployment is used to pause a deployment
@@ -90,8 +90,8 @@ func ResumeDeployment(client client.Interface, namespace, deploymentName string)
 	return nil, errors.New("the deployment is already resumed")
 }
 
-// GetReplicateSetFromDeployment return all replicateSet which is belong to the deployment
-func GetReplicateSetFromDeployment(client client.Interface, namespace, deploymentName string) ([]v1.ReplicaSet, error) {
+// GetReplicaSetFromDeployment return all replicaSet which is belong to the deployment
+func GetReplicaSetFromDeployment(client client.Interface, namespace, deploymentName string) ([]v1.ReplicaSet, error) {
 	deployment, err := client.AppsV1().Deployments(namespace).Get(deploymentName, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err

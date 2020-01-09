@@ -271,8 +271,8 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 	apiV1Ws.Route(
 		apiV1Ws.POST("/deployment/{namespace}/{deployment}/rollback").
 			To(apiHandler.handleDeployRollBack).
-			Reads(deployment.RollBackSpec{}).
-			Writes(deployment.RollBackSpec{}))
+			Reads(deployment.RollbackSpec{}).
+			Writes(deployment.RollbackSpec{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.PUT("/scale/{kind}/{namespace}/{name}/").
@@ -1120,18 +1120,18 @@ func (apiHandler *APIHandler) handleDeployRollBack(request *restful.Request, res
 		return
 	}
 
-	rollBackSpec := new(deployment.RollBackSpec)
-	if err := request.ReadEntity(rollBackSpec); err != nil {
+	rollbackSpec := new(deployment.RollbackSpec)
+	if err := request.ReadEntity(rollbackSpec); err != nil {
 		errors.HandleInternalError(response, err)
 		return
 	}
 	namespace := request.PathParameter("namespace")
 	name := request.PathParameter("deployment")
-	if err := deployment.RollbackDeployment(k8sClient, rollBackSpec, namespace, name); err != nil {
+	if err := deployment.RollbackDeployment(k8sClient, rollbackSpec, namespace, name); err != nil {
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, rollBackSpec)
+	response.WriteHeaderAndEntity(http.StatusCreated, rollbackSpec)
 }
 
 func (apiHandler *APIHandler) handleNameValidity(request *restful.Request, response *restful.Response) {
