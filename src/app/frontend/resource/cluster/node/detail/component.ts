@@ -98,7 +98,10 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
       this.node.allocatedResources.memoryCapacity,
     );
 
-    if (cpuLimitsValue.suffixPower !== cpuRequestsValue.suffixPower) {
+    if (
+      cpuLimitsValue.suffixPower !== cpuRequestsValue.suffixPower ||
+      cpuLimitsValue.suffixPower !== cpuCapacityValue.suffixPower
+    ) {
       const suffix =
         cpuLimitsValue.suffixPower < cpuRequestsValue.suffixPower
           ? cpuLimitsValue.suffix
@@ -109,7 +112,10 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
       cpuCapacityValue.normalize(suffix);
     }
 
-    if (memoryLimitsValue.suffixPower !== memoryRequestsValue.suffixPower) {
+    if (
+      memoryLimitsValue.suffixPower !== memoryRequestsValue.suffixPower ||
+      memoryLimitsValue.suffixPower !== memoryCapacityValue.suffixPower
+    ) {
       const suffix =
         memoryLimitsValue.suffixPower < memoryRequestsValue.suffixPower
           ? memoryLimitsValue.suffix

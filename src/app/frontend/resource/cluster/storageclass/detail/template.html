@@ -33,7 +33,8 @@ limitations under the License.
       <div key
            fxLayout>
         {{parameter}}
-        <mat-icon matTooltip="Parameter"
+        <mat-icon i18n-matTooltip
+                  matTooltip="Parameter"
                   class="kd-storage-class-parameter-icon">tune</mat-icon>
       </div>
       <div value>{{storageClass?.parameters[parameter]}}</div>

@@ -47,6 +47,7 @@ import {GraphComponent} from './graph/component';
 import {GraphCardComponent} from './graphcard/component';
 import {GraphMetricsComponent} from './graphmetrics/component';
 import {HiddenPropertyComponent} from './hiddenproperty/component';
+import {HorizontalPodAutoscalerListComponent} from './resourcelist/horizontalpodautoscaler/component';
 import {ResourceLimitListComponent} from './limits/component';
 import {ColumnComponent} from './list/column/component';
 import {MenuComponent} from './list/column/menu/component';
@@ -135,6 +136,7 @@ const components = [
   GraphMetricsComponent,
 
   HiddenPropertyComponent,
+  HorizontalPodAutoscalerListComponent,
 
   IngressListComponent,
   InternalEndpointComponent,
