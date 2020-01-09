@@ -322,7 +322,7 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			To(apiHandler.handleGetHorizontalPodAutoscalerList).
 			Writes(horizontalpodautoscaler.HorizontalPodAutoscalerList{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/horizontalpodautoscaler/{kind}/{namespace}/{name}").
+		apiV1Ws.GET("/{kind}/{namespace}/{name}/horizontalpodautoscaler").
 			To(apiHandler.handleGetHorizontalPodAutoscalerListForResource).
 			Writes(horizontalpodautoscaler.HorizontalPodAutoscalerList{}))
 	apiV1Ws.Route(
@@ -2010,7 +2010,7 @@ func (apiHandler *APIHandler) handleGetHorizontalPodAutoscalerListForResource(re
 	namespace := request.PathParameter("namespace")
 	name := request.PathParameter("name")
 	kind := request.PathParameter("kind")
-	result, err := horizontalpodautoscaler.GetHorizontalPodAutoscalerListForResource(k8sClient, namespace, name, kind)
+	result, err := horizontalpodautoscaler.GetHorizontalPodAutoscalerListForResource(k8sClient, namespace, kind, name)
 	if err != nil {
 		errors.HandleInternalError(response, err)
 		return
