@@ -99,7 +99,7 @@
     "@angular/core": "8.0.3",
     "@angular/flex-layout": "8.0.0-beta.27",
     "@angular/forms": "8.0.3",
-    "@angular/http": "7.2.15",
+    "@angular/http": "7.2.16",
     "@angular/material": "8.2.3",
     "@angular/platform-browser": "8.0.3",
     "@angular/platform-browser-dynamic": "8.0.3",
