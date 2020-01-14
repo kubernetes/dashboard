@@ -34,7 +34,17 @@ function build::frontend {
   ${NG_BIN} build --aot --prod --outputPath=${TMP_DIR}/frontend/en
 
   languages=($(find i18n/* -type d|cut -d"/" -f2))
+  ignores=()
+  if [[ -f "i18n/locale_not_for_build_local" ]]; then
+    # Add locales to ignore on local setting file.
+    ignores=($(cat i18n/locale_not_for_build_local))
+  fi
   for language in "${languages[@]}"; do
+    if [[ " ${ignores[@]} " =~ " ${language} " ]]; then
+      say "Skip building locale: ${language}"
+      continue
+    fi
+
     mkdir -p ${FRONTEND_DIR}/${language}
 
     say "Building frontend for locale: ${language}"
