@@ -71,7 +71,7 @@
       "git add"
     ],
     "src/**/*.go": [
-      "golangci-lint run -c .golangci.yml --fix",
+      "./aio/scripts/pre-commit-golangci-lint.sh",
       "git add"
     ],
     "src/**/*.html": [
