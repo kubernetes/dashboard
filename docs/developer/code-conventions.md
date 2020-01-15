@@ -42,8 +42,7 @@ We use following tools and settings for each check and formatting:
 | scss    | [sass-lint](https://github.com/sasstools/sass-lint)                      | [`.scss-lint.yml`](../../.scss-lint.yml) |
 | scss    | [scssfmt](https://github.com/morishitter/scssfmt)                        | - |
 | html    | [js-beautify](https://github.com/beautify-web/js-beautify)               | options in [`format.sh`](../../aio/scripts/format.sh) |
-| license | [gulp-licence-check](https://github.com/magemello/gulp-license-check)    | [`header.txt`](aio/templates/header.txt) and [`header_html.txt`](aio/templates/header_html.txt) |
-| license | [gulp-header-licence](https://github.com/Vanessa219/gulp-header-license) | [`header.txt`](aio/templates/header.txt) and [`header_html.txt`](aio/templates/header_html.txt) |
+| license | [licence-check-and-add](https://github.com/awjh/license-check-and-add)   | [`license-checker-config.json`](../../license-checker-config.json) and [`license-header.txt`](aio/scripts/license-header.txt) |
 | i18n    | [xi18n](https://angular.io/cli/xi18n)                                    | - |
 | i18n    | [xliffmerge](https://github.com/martinroob/ngx-i18nsupport)              | `xliffmergeOptions` in [`package.json`](../../package.json) |
 

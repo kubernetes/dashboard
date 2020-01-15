@@ -1,0 +1,26 @@
+{
+  "ignore": [
+    "*", "docs", "i18n",
+    ".cached_tools", ".git", ".github", ".tmp", "coverage", "cypress",
+    "aio/test-resources",
+    "**/*.json", "**/*.svg", "**/*.txt"
+  ],
+  "license": "aio/scripts/license-header.txt",
+  "defaultFormat": {
+    "eachLine": {
+      "prepend": "# "
+    }
+  },
+  "licenseFormats": {
+    "go|ts|js|scss": {
+      "eachLine": {
+        "prepend": "// "
+      }
+    },
+    "html": {
+      "prepend": "<!--",
+      "append": "-->"
+    }
+  },
+  "trailingWhitespace": "TRIM"
+}
