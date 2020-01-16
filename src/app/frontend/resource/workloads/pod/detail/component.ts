@@ -33,6 +33,7 @@ export class PodDetailComponent implements OnInit, OnDestroy {
   pod: PodDetail;
   isInitialized = false;
   eventListEndpoint: string;
+  pvcListEndpoint: string;
 
   constructor(
     private readonly pod_: NamespacedResourceService<PodDetail>,
@@ -47,6 +48,11 @@ export class PodDetailComponent implements OnInit, OnDestroy {
     const resourceNamespace = this.activatedRoute_.snapshot.params.resourceNamespace;
 
     this.eventListEndpoint = this.endpoint_.child(resourceName, Resource.event, resourceNamespace);
+    this.pvcListEndpoint = this.endpoint_.child(
+      resourceName,
+      Resource.persistentVolumeClaim,
+      resourceNamespace,
+    );
 
     this.podSubscription_ = this.pod_
       .get(this.endpoint_.detail(), resourceName, resourceNamespace)
