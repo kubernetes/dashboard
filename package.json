@@ -87,7 +87,11 @@
       "fr",
       "ja",
       "ko",
-      "zh"
+      "zh",
+      "zh-cn",
+      "zh-hk",
+      "zh-sg",
+      "zh-tw"
     ],
     "beautifyOutput": true
   },

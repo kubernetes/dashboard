@@ -9,6 +9,10 @@ Based on current browser locale the Dashboard can be displayed in one of the sup
 | Japanese           | ja   |
 | Korean             | ko   |
 | Simplified Chinese | zh   |
+| Chinese (PRC)      | zh-cn|
+| Chinese (Hong Kong)| zh-hk|
+| Chinese (Singapore)| zh-sg|
+| Chinese (Taiwan)   | zh-tw|
 
 ## Building localized dashboard
 
@@ -40,11 +44,12 @@ Find new localizable texts in `i18n/[locale]/messages.[locale].xlf` file and tra
 Since dashboard team can not review translation files in your language, so dashboard team transfers authority to review and approve for updating your translation file. At first, you need to organize translation team for your language that manages dashboard translation file.
 
 1. Add your locale, e.g. `fr` or `ja`, into `"languages"` array of `"xfillmergeOptions"` in `package.json` file.
-  **Impotant: Locales should be written in lower case to be handled by Dashboard, e.g. `zh-tw`, not `zh-TW`**
-2. Run `npm run fix:i18n`. Then translation file for your language, e.g. `i18n/fr/messages.fr.xlf`, would be generated.
-3. Open your translation file and translate texts in `<target>` element into your language.
+  **Important: Locales should be written in lower case to be handled by Dashboard, e.g. `zh-tw`, not `zh-TW`**
+2. Run `npm run fix:i18n`. Then translation file for your language, e.g. `i18n/messages.fr.xlf`, would be generated.
+3. Create a new directory for generated file, e.g. `i18n/fr` and move generated file there.
+4. Open your translation file and translate texts in `<target>` element into your language.
 
-After preparation of new translation file, configure `i18n/locale conf.json` file to build newly translation dashboard as follows:
+After preparation of new translation file, configure `i18n/locale conf.json` file to build translated dashboard as follows:
 
 ```
 {"translations": [ "en", "fr", "ko", "zh" ]}
