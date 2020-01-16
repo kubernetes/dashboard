@@ -44,7 +44,7 @@ export class VerberService {
         if (doDelete) {
           const url = RawResource.getUrl(typeMeta, objectMeta);
           this.http_
-            .delete(url)
+            .delete(url, {responseType: 'text'})
             .subscribe(() => this.onDelete.emit(true), this.handleErrorResponse_.bind(this));
         }
       });
