@@ -13,16 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Collect current localized files
-languages=($(find i18n/* -type d|cut -d"/" -f2))
-for language in "${languages[@]}"; do
-  mv i18n/${language}/messages.${language}.xlf i18n
-done
-
-# Merge generated messages file into localized files.
-xliffmerge
-
-# Deliver merged localized files into each locale directories.
-for language in "${languages[@]}"; do
-  mv i18n/messages.${language}.xlf i18n/${language}
-done
+# `golangci-lint` can not check files on different directory.
+# It would reports "named files must all be in one directory" error.
+# So we need to check whole files in once without filepaths from `lint-staged`.
+# lint-staged passes all staged filepaths at once.
+# So this script will be called only once.
+golangci-lint run -c .golangci.yml --fix src/app/backend/...

@@ -17,7 +17,7 @@ Kubernetes Dashboard is a general purpose, web-based UI for Kubernetes clusters.
 To deploy Dashboard, execute following command:
 
 ```sh
-$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-rc1/aio/deploy/recommended.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-rc2/aio/deploy/recommended.yaml
 ```
 
 To access Dashboard from your local workstation you must create a secure channel to your Kubernetes cluster. Run the following command:
@@ -35,8 +35,7 @@ To find out how to create sample user and log in follow [Creating sample user](d
 
 **NOTE:**
 * Kubeconfig Authentication method does not support external identity providers or certificate-based authentication.
-* Dashboard can only be accessed over HTTPS
-* [Heapster](https://github.com/kubernetes/heapster/) has to be running in the cluster for the metrics and graphs to be available. Read more about it in [Integrations](docs/user/integrations.md) guide.
+* [metrics-server](https://github.com/kubernetes-sigs/metrics-server) has to be running in the cluster for the metrics and graphs to be available. Read more about it in [Integrations](docs/user/integrations.md) guide.
 
 ## Documentation
 

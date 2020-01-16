@@ -83,6 +83,9 @@ limitations under the License.
                  [creator]="pod?.controller"
                  [initialized]="isInitialized"></kd-creator-card>
 
+<kd-persistent-volume-claim-list *ngIf="pod?.persistentVolumeClaimList"
+                                 [endpoint]="pvcListEndpoint"></kd-persistent-volume-claim-list>
+
 <kd-event-list [endpoint]="eventListEndpoint"></kd-event-list>
 
 <div *ngIf="pod?.containers?.length"
