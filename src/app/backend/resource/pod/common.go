@@ -166,10 +166,10 @@ func getStatus(list *v1.PodList, events []v1.Event) common.ResourceStatus {
 			info.Running++
 		case v1.PodPending:
 			info.Pending++
-    case v1.PodUnknown:
-      info.Unknown++
-    case "Terminating":
-      info.Terminating++
+		case v1.PodUnknown:
+			info.Unknown++
+		case "Terminating":
+			info.Terminating++
 		}
 	}
 
