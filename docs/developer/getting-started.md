@@ -80,6 +80,12 @@ Open a browser and access the UI under `localhost:9090`. The following processes
 
 `Dashboard backend (9090) ---> Kubernetes API server (8080)`
 
+To build the docker image on darwin OS you will need to set environment variable for go to build as linux:
+
+```
+export GOOS=linux
+```
+
 In order to package everything into a ready-to-run Docker image, use the following task:
 
 ```
