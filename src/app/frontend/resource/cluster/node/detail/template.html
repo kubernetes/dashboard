@@ -137,6 +137,7 @@ limitations under the License.
         <ngx-charts-pie-grid [results]="cpuAllocation"
                              [designatedTotal]="cpuCapacity"
                              [customColors]="customColors"
+                             [animations]="false"
                              [view]="[500,250]"
                              [label]="cpuLabel">
         </ngx-charts-pie-grid>
@@ -149,6 +150,7 @@ limitations under the License.
         <ngx-charts-pie-grid [results]="memoryAllocation"
                              [designatedTotal]="memoryCapacity"
                              [customColors]="customColors"
+                             [animations]="false"
                              [view]="[500,250]"
                              [label]="memoryLabel">
         </ngx-charts-pie-grid>
@@ -161,6 +163,7 @@ limitations under the License.
         <ngx-charts-pie-grid [results]="podsAllocation"
                              [designatedTotal]="node?.allocatedResources.podCapacity"
                              [customColors]="customColors"
+                             [animations]="false"
                              [view]="[250,250]"
                              label="Pods">
         </ngx-charts-pie-grid>
