@@ -191,7 +191,7 @@
     "ts-node": "8.6.2",
     "tslint": "5.20.1",
     "typescript": "3.4.5",
-    "wait-on": "3.3.0",
+    "wait-on": "4.0.0",
     "webpack-dev-server": "3.10.1"
   },
   "engines": {
