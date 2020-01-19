@@ -264,7 +264,7 @@
       </trans-unit>
       <trans-unit id="93ad90307e8fc7a9a5b8d04d3dbe6e3a214ea542" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{data.displayName}}"/> <x id="INTERPOLATION_1" equiv-text="{{data.objectMeta.name}}"/> will be triggered.</source>
-        <target state="new"><x id="INTERPOLATION" equiv-text="{{data.displayName}}"/> <x id="INTERPOLATION_1" equiv-text="{{data.objectMeta.name}}"/> 将会被触发.</target>
+        <target state="new"><x id="INTERPOLATION" equiv-text="{{data.displayName}}"/> <x id="INTERPOLATION_1" equiv-text="{{data.objectMeta.name}}"/> 将会被触发。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/dialogs/triggerresource/template.html</context>
           <context context-type="linenumber">20</context>
@@ -528,7 +528,7 @@
       </trans-unit>
       <trans-unit id="3b121cf07ffe19827cbd77056761267306a74f33" datatype="html">
         <source>Status: </source>
-        <target state="new">状态: </target>
+        <target state="new">状态： </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/pod/detail/template.html</context>
           <context context-type="linenumber">30</context>
@@ -736,7 +736,7 @@
       </trans-unit>
       <trans-unit id="c0adb9c346b1a2715886258558098dc32bd10c40" datatype="html">
         <source>Items: </source>
-        <target state="new">项目: </target>
+        <target state="new">项目： </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/cronjob/template.html</context>
           <context context-type="linenumber">26</context>
@@ -1308,7 +1308,7 @@
       </trans-unit>
       <trans-unit id="3c16399a88dd3765114804d3825cc346f995c685" datatype="html">
         <source>Image: </source>
-        <target state="new">镜像: </target>
+        <target state="new">镜像： </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">19</context>
@@ -1488,7 +1488,7 @@
       </trans-unit>
       <trans-unit id="7473146d95b15814d45860e4f545c06798606faf" datatype="html">
         <source>Name: </source>
-        <target state="new">名字: </target>
+        <target state="new">名字： </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
           <context context-type="linenumber">22</context>
@@ -1504,7 +1504,7 @@
       </trans-unit>
       <trans-unit id="88db9c5672eb3d6dcd8e3b41617e98923b3b499a" datatype="html">
         <source>Kind: </source>
-        <target state="new">种类: </target>
+        <target state="new">种类： </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
           <context context-type="linenumber">29</context>
@@ -1512,7 +1512,7 @@
       </trans-unit>
       <trans-unit id="9b6940648326778f67ea6e6fa0955d31f758b739" datatype="html">
         <source>Age: </source>
-        <target state="new">经过时间: </target>
+        <target state="new">经过时间： </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
           <context context-type="linenumber">36</context>
@@ -1710,7 +1710,7 @@
       </trans-unit>
       <trans-unit id="02f397009ef997f78a6ea951356ea5deca2410c8" datatype="html">
         <source>Ports (Name, Port, Protocol)</source>
-        <target state="new">端口 (名字, 端口, 协议)</target>
+        <target state="new">端口（名字, 端口, 协议）</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/endpoint/cardlist/template.html</context>
           <context context-type="linenumber">45</context>
@@ -2034,7 +2034,7 @@
       </trans-unit>
       <trans-unit id="e0254f98685441d1c9b3906a6048e61b20d5b05a" datatype="html">
         <source>Running: </source>
-        <target state="new">运行中: </target>
+        <target state="new">运行中： </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
           <context context-type="linenumber">26</context>
@@ -2042,7 +2042,7 @@
       </trans-unit>
       <trans-unit id="96f3f35319c3d11b3851f4ed9e31544452f69005" datatype="html">
         <source>Succeeded: </source>
-        <target state="new">成功: </target>
+        <target state="new">成功： </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
           <context context-type="linenumber">33</context>
@@ -2050,7 +2050,7 @@
       </trans-unit>
       <trans-unit id="f2c8a2942797110c229cee3ee830ae2c1b64901a" datatype="html">
         <source>Pending: </source>
-        <target state="new">启动中: </target>
+        <target state="new">启动中： </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
           <context context-type="linenumber">40</context>
@@ -2058,7 +2058,7 @@
       </trans-unit>
       <trans-unit id="be286c9229bebbb3a9ef0e88d926116fc8bd57a3" datatype="html">
         <source>Failed: </source>
-        <target state="new">失败: </target>
+        <target state="new">失败： </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
           <context context-type="linenumber">47</context>
@@ -2066,7 +2066,7 @@
       </trans-unit>
       <trans-unit id="3e2da9f7fec9facb5fe70a9afbce2257ae37cba3" datatype="html">
         <source>Desired: </source>
-        <target state="new">期望值: </target>
+        <target state="new">期望值： </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
           <context context-type="linenumber">53</context>
@@ -2411,7 +2411,7 @@
         <x id="START_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;mat-icon>"/>open_in_new<x id="CLOSE_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;/mat-icon>"/><x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> to learn more.
     </source>
         <target state="new">
-      你可以 <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>部署容器化应用程序<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>, 选择其他命名空间或者
+      你可以 <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>部署容器化应用程序<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>，选择其他命名空间或者
       <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a>"/>加入 Dashboard Tour
         <x id="START_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;mat-icon>"/>open_in_new<x id="CLOSE_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;/mat-icon>"/><x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> to learn more.
     </target>
@@ -2683,7 +2683,7 @@
       <trans-unit id="c2fa735eb6b1b2c10171c5acb818f6e0975a9406" datatype="html">
         <source>About
       </source>
-        <target state="new">关于Kubernetes Dashboard
+        <target state="new">关于
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2869,7 +2869,7 @@
                 Please select the kubeconfig file that you have created to configure access to the cluster. To find out more about how to configure and use kubeconfig file, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Configure Access to Multiple Clusters<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> section.
               </source>
         <target state="new">
-                请选择您创建的kubeconfig文件以配置对集群的访问权限。  要了解有关如何配置和使用kubeconfig文件的更多信息， 请参阅<x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Configure Access to Multiple Clusters<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> 部分.
+                请选择您创建的 kubeconfig 文件以配置对集群的访问权限。要了解有关如何配置和使用 kubeconfig 文件的更多信息，请参阅<x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Configure Access to Multiple Clusters<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> 部分。
               </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
@@ -2881,7 +2881,7 @@
                 Make sure that support for basic authentication is enabled in the cluster. To find out more about how to configure basic authentication, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Authenticating<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> and <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a>"/>ABAC Mode<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> sections.
               </source>
         <target state="new">
-                确保在群集中启用了对基本身份验证的支持。 要了解有关如何配置基本身份验证的详情，请参阅 <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Authenticating<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> 和 <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a>"/>ABAC Mode<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> 部分.
+                确保在群集中启用了对基本身份验证的支持。要了解有关如何配置基本身份验证的详情，请参阅 <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Authenticating<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> 和 <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a>"/>ABAC Mode<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> 部分。
               </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
@@ -2893,7 +2893,7 @@
                 Every Service Account has a Secret with valid Bearer Token that can be used to log in to Dashboard. To find out more about how to configure and use Bearer Tokens, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Authentication<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> section.
               </source>
         <target state="new">
-                每个 Service Account 都有一个 valid Bearer Token ，可用于登录 Dashboard 。 要了解有关如何配置和使用 Bearer Tokens 的更多信息，请参阅 <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Authentication<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> 部分.
+                每个 Service Account 都有一个 valid Bearer Token ，可用于登录 Dashboard 。 要了解有关如何配置和使用 Bearer Tokens 的更多信息，请参阅 <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Authentication<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> 部分。
               </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
@@ -3153,7 +3153,7 @@
               Name must be up to <x id="INTERPOLATION" equiv-text="{{namespaceMaxLength}}"/> characters long.
             </source>
         <target state="new">
-              Name必须大于 <x id="INTERPOLATION" equiv-text="{{namespaceMaxLength}}"/> 个字符.
+              Name 必须大于 <x id="INTERPOLATION" equiv-text="{{namespaceMaxLength}}"/> 个字符。
             </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createnamespace/template.html</context>
@@ -3243,7 +3243,7 @@
               Name must be up to <x id="INTERPOLATION" equiv-text="{{secretNameMaxLength}}"/> characters long.
             </source>
         <target state="new">
-              Name 必须大于 <x id="INTERPOLATION" equiv-text="{{secretNameMaxLength}}"/> 字符.
+              Name 必须大于 <x id="INTERPOLATION" equiv-text="{{secretNameMaxLength}}"/> 字符。
             </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
