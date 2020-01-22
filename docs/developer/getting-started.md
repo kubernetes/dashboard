@@ -6,6 +6,7 @@ This document describes how to setup your development environment.
 
 Make sure the following software is installed and added to the $PATH variable:
 
+* Curl 7+
 * Git 2.13.2+
 * Docker 1.13.1+ ([installation manual](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/))
 * Golang 1.12.0+ ([installation manual](https://golang.org/dl/))
@@ -70,7 +71,6 @@ The Dashboard project can be built for production by using the following task:
 ```
 npm run build
 ```
-Notice that it would check whether `golangci-lint` in your path, if not, it would use `curl` to install it. Make sure you have installed `curl`.
 
 The code is compiled, compressed and debug support removed. The dashboard binary can be found in the `dist` folder.
 
