@@ -63,6 +63,8 @@ Once the angular server starts, it takes some time to pre-compile all assets bef
 
 ## Building Dashboard for production
 
+To build dashboard for production, you still need to install `bc`.
+
 The Dashboard project can be built for production by using the following task:
 
 ```
