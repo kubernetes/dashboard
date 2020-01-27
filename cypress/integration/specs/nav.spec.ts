@@ -5,7 +5,7 @@ describe('Navbar', () => {
     NavbarPage.visitHome();
   });
 
-  describe('Navbar Cluster Items', () => {
+  describe('Cluster Items', () => {
     it('cluster', () => {
       NavbarPage.clickItem(NavbarPage.clusterItemId);
       NavbarPage.assertUrlContains('cluster');
@@ -36,7 +36,7 @@ describe('Navbar', () => {
       NavbarPage.assertUrlContains('storageclass');
     });
   });
-  describe('Navbar Overview and Namespace Items', () => {
+  describe('Overview and Namespace Items', () => {
     it('overview', () => {
       NavbarPage.clickItem(NavbarPage.overviewItemId);
       NavbarPage.assertUrlContains('overview');
@@ -52,7 +52,7 @@ describe('Navbar', () => {
       NavbarPage.visitHome();
     });
   });
-  describe('Navbar Workloads Items', () => {
+  describe('Workloads Items', () => {
     it('workloads', () => {
       NavbarPage.clickItem(NavbarPage.workloadsItemId);
       NavbarPage.assertUrlContains('workloads');
@@ -99,7 +99,7 @@ describe('Navbar', () => {
     });
   });
 
-  describe('Navbar Discovery and Load balancing  Items', () => {
+  describe('Discovery and Load balancing  Items', () => {
     it('discovery', () => {
       NavbarPage.clickItem(NavbarPage.discoveryItemId);
       NavbarPage.assertUrlContains('discovery');
@@ -116,7 +116,7 @@ describe('Navbar', () => {
     });
   });
 
-  describe('Navbar Config and Storage  Items', () => {
+  describe('Config and Storage  Items', () => {
     it('config', () => {
       NavbarPage.clickItem(NavbarPage.configItemId);
       NavbarPage.assertUrlContains('config');
@@ -138,7 +138,7 @@ describe('Navbar', () => {
     });
   });
 
-  describe('Navbar Misc Items', () => {
+  describe('Misc Items', () => {
     // TODO: Add a conditional check for plugin item here
     // it('plugin', () => {
     //   NavbarPage.clickNavItemById(NavbarPage.pluginItemId);
