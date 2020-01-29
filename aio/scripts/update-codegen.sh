@@ -23,7 +23,7 @@ CODEGEN_PKG=${GOPATH}/src/k8s.io/code-generator
 
 # generate the code with:
 # --output-base    because this script should also be able to run inside the vendor dir of
-#                  kl8s.io/kubernetes. The output-base is needed for the generators to output into the vendor dir
+#                  k8s.io/kubernetes. The output-base is needed for the generators to output into the vendor dir
 #                  instead of the $GOPATH directly. For normal projects this can be dropped.
 "${CODEGEN_PKG}"/generate-groups.sh "deepcopy,client,informer,lister" \
   github.com/kubernetes/dashboard/src/app/backend/plugin/client github.com/kubernetes/dashboard/src/app/backend/plugin \
