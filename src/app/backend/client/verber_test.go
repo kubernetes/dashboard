@@ -15,206 +15,209 @@
 package client
 
 import (
-	"net/http"
-	"reflect"
-	"testing"
+  "net/http"
+  "net/url"
+  "reflect"
+  "testing"
 
-	"k8s.io/apimachinery/pkg/api/apitesting"
-	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/runtime"
-	"k8s.io/apimachinery/pkg/runtime/schema"
-	runtimeserializer "k8s.io/apimachinery/pkg/runtime/serializer"
-	restclient "k8s.io/client-go/rest"
+  metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+  "k8s.io/apimachinery/pkg/runtime"
+  "k8s.io/apimachinery/pkg/runtime/schema"
+  "k8s.io/client-go/kubernetes/scheme"
+  restclient "k8s.io/client-go/rest"
+  "k8s.io/client-go/rest/fake"
 
-	"github.com/kubernetes/dashboard/src/app/backend/errors"
+  "github.com/kubernetes/dashboard/src/app/backend/errors"
 )
 
 type clientFunc func(req *http.Request) (*http.Response, error)
 
 func (f clientFunc) Do(req *http.Request) (*http.Response, error) {
-	return f(req)
+  return f(req)
 }
 
 type FakeRESTClient struct {
-	response *http.Response
-	err      error
+  response *http.Response
+  err      error
+}
+
+func NewFakeClientFunc(c *FakeRESTClient) clientFunc {
+  return clientFunc(func(req *http.Request) (*http.Response, error) {
+    return c.response, c.err
+  })
 }
 
 func (c *FakeRESTClient) Delete() *restclient.Request {
-	scheme := runtime.NewScheme()
+  runtimeScheme := runtime.NewScheme()
+  groupVersion := schema.GroupVersion{Group: "meta.k8s.io", Version: "v1"}
+  runtimeScheme.AddKnownTypes(groupVersion, &metaV1.DeleteOptions{})
+  contentConfig := restclient.ContentConfig{
+    ContentType:          "application/json",
+    GroupVersion:         &groupVersion,
+    NegotiatedSerializer: scheme.Codecs.WithoutConversion(),
+  }
 
-	groupVersion := schema.GroupVersion{Group: "meta.k8s.io", Version: "v1"}
-
-	scheme.AddKnownTypes(groupVersion, &metaV1.DeleteOptions{})
-
-	factory := runtimeserializer.NewCodecFactory(scheme)
-	codec := apitesting.TestCodec(factory, metaV1.SchemeGroupVersion)
-	return restclient.NewRequest(clientFunc(func(req *http.Request) (*http.Response, error) {
-		return c.response, c.err
-	}), "DELETE", nil, "/api/v1", restclient.ContentConfig{}, restclient.Serializers{
-		Encoder: codec,
-	}, nil, nil, 0)
+  return restclient.NewRequestWithClient(&url.URL{Path: "/api/v1/"}, "",
+    restclient.ClientContentConfig{
+      Negotiator: runtime.NewClientNegotiator(contentConfig.NegotiatedSerializer, groupVersion),
+    }, fake.CreateHTTPClient(NewFakeClientFunc(c))).Verb("DELETE")
 }
 
 func (c *FakeRESTClient) Put() *restclient.Request {
-	return restclient.NewRequest(clientFunc(func(req *http.Request) (*http.Response, error) {
-		return c.response, c.err
-	}), "PUT", nil, "/api/v1", restclient.ContentConfig{}, restclient.Serializers{}, nil, nil, 0)
+  return restclient.NewRequestWithClient(&url.URL{Path: "/api/v1/"}, "", restclient.ClientContentConfig{}, fake.CreateHTTPClient(NewFakeClientFunc(c))).Verb("PUT")
 }
 
 func (c *FakeRESTClient) Get() *restclient.Request {
-	return restclient.NewRequest(clientFunc(func(req *http.Request) (*http.Response, error) {
-		return c.response, c.err
-	}), "GET", nil, "/api/v1", restclient.ContentConfig{}, restclient.Serializers{}, nil, nil, 0)
+  return restclient.NewRequestWithClient(&url.URL{Path: "/api/v1/"}, "", restclient.ClientContentConfig{}, fake.CreateHTTPClient(NewFakeClientFunc(c))).Verb("GET")
 }
 
-func TestDeleteShouldPropagateErrorsAndChoseClient(t *testing.T) {
-	verber := resourceVerber{
-		client:           &FakeRESTClient{err: errors.NewInvalid("err")},
-		extensionsClient: &FakeRESTClient{err: errors.NewInvalid("err from extensions")},
-		appsClient:       &FakeRESTClient{err: errors.NewInvalid("err from apps")},
-	}
+func TestDeleteShouldPropagateErrorsAndChooseClient(t *testing.T) {
+  verber := resourceVerber{
+    client:           &FakeRESTClient{err: errors.NewInvalid("err")},
+    extensionsClient: &FakeRESTClient{err: errors.NewInvalid("err from extensions")},
+    appsClient:       &FakeRESTClient{err: errors.NewInvalid("err from apps")},
+  }
 
-	err := verber.Delete("replicaset", true, "bar", "baz")
+  err := verber.Delete("replicaset", true, "bar", "baz")
 
-	if !reflect.DeepEqual(err, errors.NewInvalid("err from apps")) {
-		t.Fatalf("Expected error on verber delete but got %#v", err.Error())
-	}
+  if !reflect.DeepEqual(err.Error(), "Delete /api/v1/namespaces/bar/replicasets/baz: err from apps") {
+    t.Fatalf("Expected error on verber delete but got %#v", err.Error())
+  }
 
-	err = verber.Delete("service", true, "bar", "baz")
+  err = verber.Delete("service", true, "bar", "baz")
 
-	if !reflect.DeepEqual(err, errors.NewInvalid("err")) {
-		t.Fatalf("Expected error on verber delete but got %#v", err)
-	}
+  if !reflect.DeepEqual(err.Error(), "Delete /api/v1/namespaces/bar/services/baz: err") {
+    t.Fatalf("Expected error on verber delete but got %#v", err.Error())
+  }
 
-	err = verber.Delete("statefulset", true, "bar", "baz")
+  err = verber.Delete("statefulset", true, "bar", "baz")
 
-	if !reflect.DeepEqual(err, errors.NewInvalid("err from apps")) {
-		t.Fatalf("Expected error on verber delete but got %#v", err)
-	}
+  if !reflect.DeepEqual(err.Error(), "Delete /api/v1/namespaces/bar/statefulsets/baz: err from apps") {
+    t.Fatalf("Expected error on verber delete but got %#v", err.Error())
+  }
 }
 
 func TestGetShouldPropagateErrorsAndChoseClient(t *testing.T) {
-	verber := resourceVerber{
-		client:           &FakeRESTClient{err: errors.NewInvalid("err")},
-		extensionsClient: &FakeRESTClient{err: errors.NewInvalid("err from extensions")},
-		appsClient:       &FakeRESTClient{err: errors.NewInvalid("err from apps")},
-	}
+  verber := resourceVerber{
+    client:           &FakeRESTClient{err: errors.NewInvalid("err")},
+    extensionsClient: &FakeRESTClient{err: errors.NewInvalid("err from extensions")},
+    appsClient:       &FakeRESTClient{err: errors.NewInvalid("err from apps")},
+  }
 
-	_, err := verber.Get("replicaset", true, "bar", "baz")
+  _, err := verber.Get("replicaset", true, "bar", "baz")
 
-	if !reflect.DeepEqual(err, errors.NewInvalid("err from apps")) {
-		t.Fatalf("Expected error on verber delete but got %#v", err)
-	}
+  if !reflect.DeepEqual(err.Error(), "Get /api/v1/namespaces/bar/replicasets/baz: err from apps") {
+    t.Fatalf("Expected error on verber delete but got %#v", err.Error())
+  }
 
-	_, err = verber.Get("service", true, "bar", "baz")
+  _, err = verber.Get("service", true, "bar", "baz")
 
-	if !reflect.DeepEqual(err, errors.NewInvalid("err")) {
-		t.Fatalf("Expected error on verber delete but got %#v", err)
-	}
+  if !reflect.DeepEqual(err.Error(), "Get /api/v1/namespaces/bar/services/baz: err") {
+    t.Fatalf("Expected error on verber delete but got %#v", err.Error())
+  }
 
-	_, err = verber.Get("statefulset", true, "bar", "baz")
+  _, err = verber.Get("statefulset", true, "bar", "baz")
 
-	if !reflect.DeepEqual(err, errors.NewInvalid("err from apps")) {
-		t.Fatalf("Expected error on verber delete but got %#v", err)
-	}
+  if !reflect.DeepEqual(err.Error(), "Get /api/v1/namespaces/bar/statefulsets/baz: err from apps") {
+    t.Fatalf("Expected error on verber delete but got %#v", err.Error())
+  }
 }
 
 func TestDeleteShouldThrowErrorOnUnknownResourceKind(t *testing.T) {
-	verber := resourceVerber{
-		client:              &FakeRESTClient{},
-		apiExtensionsClient: &FakeRESTClient{err: errors.NewNotFound("err")},
-	}
+  verber := resourceVerber{
+    client:              &FakeRESTClient{},
+    apiExtensionsClient: &FakeRESTClient{err: errors.NewNotFound("err")},
+  }
 
-	err := verber.Delete("foo", true, "bar", "baz")
+  err := verber.Delete("foo", true, "bar", "baz")
 
-	if !reflect.DeepEqual(err, errors.NewInvalid("Unknown resource kind: foo")) {
-		t.Fatalf("Expected error on verber delete but got %#v", err)
-	}
+  if !reflect.DeepEqual(err.Error(), "Get /api/v1/customresourcedefinitions/foo: err") {
+    t.Fatalf("Expected error on verber delete but got %#v", err.Error())
+  }
 }
 
 func TestGetShouldThrowErrorOnUnknownResourceKind(t *testing.T) {
-	verber := resourceVerber{
-		client:              &FakeRESTClient{},
-		apiExtensionsClient: &FakeRESTClient{err: errors.NewNotFound("err")},
-	}
+  verber := resourceVerber{
+    client:              &FakeRESTClient{},
+    apiExtensionsClient: &FakeRESTClient{err: errors.NewNotFound("err")},
+  }
 
-	_, err := verber.Get("foo", true, "bar", "baz")
+  _, err := verber.Get("foo", true, "bar", "baz")
 
-	if !reflect.DeepEqual(err, errors.NewInvalid("Unknown resource kind: foo")) {
-		t.Fatalf("Expected error on verber get but got %#v", err)
-	}
+  if !reflect.DeepEqual(err.Error(), "Get /api/v1/customresourcedefinitions/foo: err") {
+    t.Fatalf("Expected error on verber get but got %#v", err.Error())
+  }
 }
 
 func TestPutShouldThrowErrorOnUnknownResourceKind(t *testing.T) {
-	verber := resourceVerber{
-		client:              &FakeRESTClient{},
-		apiExtensionsClient: &FakeRESTClient{err: errors.NewNotFound("err")},
-	}
+  verber := resourceVerber{
+    client:              &FakeRESTClient{},
+    apiExtensionsClient: &FakeRESTClient{err: errors.NewNotFound("err")},
+  }
 
-	err := verber.Put("foo", false, "", "baz", nil)
+  err := verber.Put("foo", false, "", "baz", nil)
 
-	if !reflect.DeepEqual(err, errors.NewInvalid("Unknown resource kind: foo")) {
-		t.Fatalf("Expected error on verber put but got %#v", err)
-	}
+  if !reflect.DeepEqual(err.Error(), "Get /api/v1/customresourcedefinitions/foo: err") {
+    t.Fatalf("Expected error on verber put but got %#v", err.Error())
+  }
 }
 
 func TestGetShouldRespectNamespacednessOfResourceKind(t *testing.T) {
-	verber := resourceVerber{client: &FakeRESTClient{}}
+  verber := resourceVerber{client: &FakeRESTClient{}}
 
-	_, err := verber.Get("service", false, "", "baz")
+  _, err := verber.Get("service", false, "", "baz")
 
-	if !reflect.DeepEqual(err, errors.NewInvalid("Set no namespace for namespaced resource kind: service")) {
-		t.Fatalf("Expected error on verber get but got %#v", err)
-	}
+  if !reflect.DeepEqual(err, errors.NewInvalid("Set no namespace for namespaced resource kind: service")) {
+    t.Fatalf("Expected error on verber get but got %#v", err)
+  }
 }
 
 func TestPutShouldRespectNamespacednessOfResourceKind(t *testing.T) {
-	verber := resourceVerber{client: &FakeRESTClient{}}
+  verber := resourceVerber{client: &FakeRESTClient{}}
 
-	err := verber.Put("service", false, "", "baz", nil)
+  err := verber.Put("service", false, "", "baz", nil)
 
-	if !reflect.DeepEqual(err, errors.NewInvalid("Set no namespace for namespaced resource kind: service")) {
-		t.Fatalf("Expected error on verber put but got %#v", err)
-	}
+  if !reflect.DeepEqual(err, errors.NewInvalid("Set no namespace for namespaced resource kind: service")) {
+    t.Fatalf("Expected error on verber put but got %#v", err)
+  }
 }
 
 func TestDeleteShouldRespectNamespacednessOfResourceKind(t *testing.T) {
-	verber := resourceVerber{client: &FakeRESTClient{}}
+  verber := resourceVerber{client: &FakeRESTClient{}}
 
-	err := verber.Delete("service", false, "", "baz")
+  err := verber.Delete("service", false, "", "baz")
 
-	if !reflect.DeepEqual(err, errors.NewInvalid("Set no namespace for namespaced resource kind: service")) {
-		t.Fatalf("Expected error on verber delete but got %#v", err)
-	}
+  if !reflect.DeepEqual(err, errors.NewInvalid("Set no namespace for namespaced resource kind: service")) {
+    t.Fatalf("Expected error on verber delete but got %#v", err)
+  }
 }
 
 func TestGetShouldRespectNotNamespacednessOfResourceKind(t *testing.T) {
-	verber := resourceVerber{client: &FakeRESTClient{}}
+  verber := resourceVerber{client: &FakeRESTClient{}}
 
-	_, err := verber.Get("namespace", true, "bar", "baz")
+  _, err := verber.Get("namespace", true, "bar", "baz")
 
-	if !reflect.DeepEqual(err, errors.NewInvalid("Set namespace for not-namespaced resource kind: namespace")) {
-		t.Fatalf("Expected error on verber get but got %#v", err)
-	}
+  if !reflect.DeepEqual(err, errors.NewInvalid("Set namespace for not-namespaced resource kind: namespace")) {
+    t.Fatalf("Expected error on verber get but got %#v", err)
+  }
 }
 
 func TestPutShouldRespectNotNamespacednessOfResourceKind(t *testing.T) {
-	verber := resourceVerber{client: &FakeRESTClient{}}
+  verber := resourceVerber{client: &FakeRESTClient{}}
 
-	err := verber.Put("namespace", true, "bar", "baz", nil)
+  err := verber.Put("namespace", true, "bar", "baz", nil)
 
-	if !reflect.DeepEqual(err, errors.NewInvalid("Set namespace for not-namespaced resource kind: namespace")) {
-		t.Fatalf("Expected error on verber put but got %#v", err)
-	}
+  if !reflect.DeepEqual(err, errors.NewInvalid("Set namespace for not-namespaced resource kind: namespace")) {
+    t.Fatalf("Expected error on verber put but got %#v", err)
+  }
 }
 
 func TestDeleteShouldRespectNotNamespacednessOfResourceKind(t *testing.T) {
-	verber := resourceVerber{client: &FakeRESTClient{}}
+  verber := resourceVerber{client: &FakeRESTClient{}}
 
-	err := verber.Delete("namespace", true, "bar", "baz")
+  err := verber.Delete("namespace", true, "bar", "baz")
 
-	if !reflect.DeepEqual(err, errors.NewInvalid("Set namespace for not-namespaced resource kind: namespace")) {
-		t.Fatalf("Expected error on verber delete but got %#v", err)
-	}
+  if !reflect.DeepEqual(err, errors.NewInvalid("Set namespace for not-namespaced resource kind: namespace")) {
+    t.Fatalf("Expected error on verber delete but got %#v", err)
+  }
 }
