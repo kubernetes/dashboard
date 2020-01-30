@@ -18,17 +18,18 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-SCRIPT_ROOT=$(dirname "${BASH_SOURCE[0]}")/../..
-CODEGEN_PKG=${GOPATH}/src/k8s.io/code-generator
+# Import config.
+ROOT_DIR="$(cd $(dirname "${BASH_SOURCE}")/../.. && pwd -P)"
+source "${ROOT_DIR}/aio/scripts/conf.sh"
 
 # generate the code with:
 # --output-base    because this script should also be able to run inside the vendor dir of
 #                  k8s.io/kubernetes. The output-base is needed for the generators to output into the vendor dir
 #                  instead of the $GOPATH directly. For normal projects this can be dropped.
-"${CODEGEN_PKG}"/generate-groups.sh "deepcopy,client,informer,lister" \
+"${CODEGEN_BIN}" "deepcopy,client,informer,lister" \
   github.com/kubernetes/dashboard/src/app/backend/plugin/client github.com/kubernetes/dashboard/src/app/backend/plugin \
   apis:v1alpha1 \
-  --go-header-file "${SCRIPT_ROOT}"/aio/scripts/license-header.go.txt \
+  --go-header-file "${ROOT_DIR}"/aio/scripts/license-header.go.txt \
   --output-base "$(dirname "${BASH_SOURCE[0]}")/.."
 
 # Remove old generated client

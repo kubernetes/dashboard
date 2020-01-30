@@ -18,8 +18,13 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
+# Import config.
+ROOT_DIR="$(cd $(dirname "${BASH_SOURCE}")/../.. && pwd -P)"
+source "${ROOT_DIR}/aio/scripts/conf.sh"
+
 function install_codegen() {
-    if [ "$(GO111MODULE=off go get -d k8s.io/code-generator)" != 0 ]; then
+    if [ "$(GO111MODULE=on go get -d k8s.io/code-generator@${CODEGEN_VERSION})" != 0 ]; then
+    chmod +x ${CODEGEN_BIN}
     # this will return zero even if go get throws `build constraints exclude all Go files`
       return 0
     fi

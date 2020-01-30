@@ -44,7 +44,8 @@
     "check:frontend:html": "./aio/scripts/format.sh --html --check",
     "check:license": "license-check-and-add check",
     "check:i18n": "ng xi18n --outFile ../i18n/messages.xlf && aio/scripts/xliffmerge.sh",
-    "fix": "concurrently \"npm run fix:backend\" \"npm run fix:frontend\" \"npm run fix:license\" \"npm run fix:i18n\"",
+    "fix": "concurrently \"npm run fix:backend\" \"npm run fix:frontend\" \"npm run fix:license\" \"npm run fix:i18n\" \"npm run fix:codegen\"",
+    "fix:codegen": "./aio/scripts/update-codegen.sh",
     "fix:backend": "golangci-lint run -c .golangci.yml --fix src/app/backend/...",
     "fix:frontend": "concurrently \"npm run fix:frontend:ts\" \"npm run fix:frontend:scss\" \"npm run fix:frontend:html\"",
     "fix:frontend:ts": "gts fix",
@@ -54,7 +55,7 @@
     "fix:i18n": "ng xi18n --outFile ../i18n/messages.xlf && aio/scripts/xliffmerge.sh",
     "clean": "rm -rf .go_workspace .tmp coverage dist npm-debug.log",
     "postversion": "node aio/scripts/version.js",
-    "postinstall": "node aio/scripts/version.js && command -v golangci-lint >/dev/null 2>&1 || { curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(go env GOPATH)/bin v1.21.0; } && go mod download"
+    "postinstall": "node aio/scripts/version.js && command -v golangci-lint >/dev/null 2>&1 || { curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(go env GOPATH)/bin v1.21.0; } && ./aio/scripts/install-codegen.sh && go mod download"
   },
   "husky": {
     "hooks": {
