@@ -144,7 +144,7 @@
     "@angular/language-service": "8.2.14",
     "@types/jasmine": "3.5.0",
     "@types/jasminewd2": "2.0.8",
-    "@types/js-yaml": "3.12.1",
+    "@types/js-yaml": "3.12.2",
     "@types/lodash": "4.14.149",
     "@types/node": "13.5.0",
     "babel-cli": "6.26.0",
