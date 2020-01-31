@@ -171,7 +171,7 @@
     "karma-jasmine": "3.1.0",
     "karma-jasmine-html-reporter": "1.5.1",
     "license-check-and-add": "3.0.4",
-    "lint-staged": "9.5.0",
+    "lint-staged": "10.0.7",
     "lite-server": "2.5.4",
     "lodash": "4.17.15",
     "minimatch": "3.0.4",
