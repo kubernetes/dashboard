@@ -138,7 +138,7 @@
     "zone.js": "0.9.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "0.803.23",
+    "@angular-devkit/build-angular": "0.803.24",
     "@angular/cli": "8.3.23",
     "@angular/compiler-cli": "8.0.3",
     "@angular/language-service": "8.2.14",
