@@ -187,7 +187,7 @@
     "scssfmt": "1.0.7",
     "semver": "7.1.2",
     "source-map-explorer": "2.2.2",
-    "tar": "5.0.5",
+    "tar": "6.0.1",
     "through2": "3.0.1",
     "ts-node": "8.6.2",
     "tslint": "5.20.1",
