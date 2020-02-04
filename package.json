@@ -132,7 +132,7 @@
     "systemjs": "6.2.0",
     "tslib": "1.10.0",
     "web-animations-js": "2.3.2",
-    "xterm": "3.14.5",
+    "xterm": "4.4.0",
     "zone.js": "0.9.1"
   },
   "devDependencies": {
