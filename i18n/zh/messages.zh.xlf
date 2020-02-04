@@ -1790,7 +1790,7 @@
       </trans-unit>
       <trans-unit id="7f910609b2f8e23ae9694be7103f52e258827fd5" datatype="html">
         <source>Horizontal Pod Autoscalers</source>
-        <target state="new">Horizontal Pod Autoscalers</target>
+        <target state="new">Pod 水平自动伸缩</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/horizontalpodautoscaler/template.html</context>
           <context context-type="linenumber">22</context>
@@ -1798,7 +1798,7 @@
       </trans-unit>
       <trans-unit id="18cd38a8b51485adf1e5a7e33f3fbbf8d6c92c00" datatype="html">
         <source>Min Replicas</source>
-        <target state="new">Min Replicas</target>
+        <target state="new">最小副本数</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/horizontalpodautoscaler/template.html</context>
           <context context-type="linenumber">58</context>
@@ -1806,7 +1806,7 @@
       </trans-unit>
       <trans-unit id="db972eb77504c0dfc832ecb36168c5b64ab6d30b" datatype="html">
         <source>Max Replicas</source>
-        <target state="new">Max Replicas</target>
+        <target state="new">最大副本数</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/horizontalpodautoscaler/template.html</context>
           <context context-type="linenumber">64</context>
@@ -1814,7 +1814,7 @@
       </trans-unit>
       <trans-unit id="7529307ff5a8475ecd0755abb1b8a91ae24c1d52" datatype="html">
         <source>Reference</source>
-        <target state="new">Reference</target>
+        <target state="new">参考</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/horizontalpodautoscaler/template.html</context>
           <context context-type="linenumber">70</context>
@@ -1822,7 +1822,7 @@
       </trans-unit>
       <trans-unit id="fa94cedf16ac30b4c9523cb6e11c8681c5a8d9fd" datatype="html">
         <source>Horizontal Pod Autoscaler</source>
-        <target state="new">Horizontal Pod Autoscaler</target>
+        <target state="new">Pod 水平自动伸缩</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
           <context context-type="linenumber">284</context>
