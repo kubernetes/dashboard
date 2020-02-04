@@ -59,7 +59,7 @@ export class VerberService {
         if (result) {
           const url = RawResource.getUrl(typeMeta, objectMeta);
           this.http_
-            .put(url, JSON.parse(result), {headers: this.getHttpHeaders_()})
+            .put(url, JSON.parse(result), {headers: this.getHttpHeaders_(), responseType: 'text'})
             .subscribe(() => this.onEdit.emit(true), this.handleErrorResponse_.bind(this));
         }
       });
@@ -79,9 +79,7 @@ export class VerberService {
 
           this.http_
             .put(url, result, {
-              params: {
-                scaleBy: result,
-              },
+              params: {scaleBy: result},
             })
             .subscribe(() => this.onScale.emit(true), this.handleErrorResponse_.bind(this));
         }
@@ -97,7 +95,7 @@ export class VerberService {
         if (result) {
           const url = `api/v1/cronjob/${objectMeta.namespace}/${objectMeta.name}/trigger`;
           this.http_
-            .put(url, {})
+            .put(url, {}, {responseType: 'text'})
             .subscribe(() => this.onTrigger.emit(true), this.handleErrorResponse_.bind(this));
         }
       });

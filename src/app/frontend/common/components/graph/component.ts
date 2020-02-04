@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {Metric} from '@api/backendapi';
-import {curveBasis, timeFormat} from 'd3';
+import {DataPoint, Metric} from '@api/backendapi';
+import {curveMonotoneX, timeFormat} from 'd3';
 
 import {FormattedValue} from './helper';
 
@@ -30,7 +30,7 @@ export class GraphComponent implements OnInit, OnChanges {
   @Input() graphType: GraphType = GraphType.CPU;
 
   series: Array<{name: string; series: Array<{value: number; name: string}>}> = [];
-  curve = curveBasis;
+  curve = curveMonotoneX;
   customColors = {};
   yAxisLabel = '';
   yAxisTickFormatting = (value: number) => `${value} ${this.yAxisSuffix_}`;
@@ -58,6 +58,7 @@ export class GraphComponent implements OnInit, OnChanges {
   }
 
   private generateSeries_(): Array<{name: string; series: Array<{value: number; name: string}>}> {
+    const points: DataPoint[] = [];
     let series: FormattedValue[];
     let highestSuffixPower = 0;
     let highestSuffix = '';
@@ -92,13 +93,16 @@ export class GraphComponent implements OnInit, OnChanges {
     this.yAxisSuffix_ = highestSuffix;
 
     this.metric.dataPoints.forEach((_, idx) => {
-      this.metric.dataPoints[idx].y = series[idx].value;
+      points.push({
+        x: this.metric.dataPoints[idx].x,
+        y: series[idx].value,
+      } as DataPoint);
     });
 
     return [
       {
         name: this.id,
-        series: this.metric.dataPoints.map(point => {
+        series: points.map(point => {
           return {
             value: point.y,
             name: timeFormat('%H:%M')(new Date(1000 * point.x)),

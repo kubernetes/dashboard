@@ -6,6 +6,8 @@ This document describes how to setup your development environment.
 
 Make sure the following software is installed and added to the $PATH variable:
 
+* Curl 7+
+* Git 2.13.2+
 * Docker 1.13.1+ ([installation manual](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/))
 * Golang 1.12.0+ ([installation manual](https://golang.org/dl/))
     * Dashboard uses `go mod` for go dependency management, so enable it with running `export GO111MODULE=on`.
@@ -62,6 +64,8 @@ Once the angular server starts, it takes some time to pre-compile all assets bef
 
 ## Building Dashboard for production
 
+To build dashboard for production, you still need to install `bc`.
+
 The Dashboard project can be built for production by using the following task:
 
 ```
@@ -79,6 +83,12 @@ npm run start:prod
 Open a browser and access the UI under `localhost:9090`. The following processes should be running (respective ports are given in parentheses):
 
 `Dashboard backend (9090) ---> Kubernetes API server (8080)`
+
+To build the docker image on darwin OS you will need to set environment variable for go to build as linux:
+
+```
+export GOOS=linux
+```
 
 In order to package everything into a ready-to-run Docker image, use the following task:
 

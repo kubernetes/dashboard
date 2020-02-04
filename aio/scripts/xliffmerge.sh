@@ -16,7 +16,10 @@
 # Collect current localized files
 languages=($(find i18n/* -type d|cut -d"/" -f2))
 for language in "${languages[@]}"; do
-  mv i18n/${language}/messages.${language}.xlf i18n
+  if [ ! -L i18n/${language}/messages.${language}.xlf ]; then
+    echo "Move translation file messages.${language}.xlf to be merged by xliffmerge."
+    mv i18n/${language}/messages.${language}.xlf i18n
+  fi
 done
 
 # Merge generated messages file into localized files.
@@ -24,5 +27,8 @@ xliffmerge
 
 # Deliver merged localized files into each locale directories.
 for language in "${languages[@]}"; do
-  mv i18n/messages.${language}.xlf i18n/${language}
+  if [ -e i18n/messages.${language}.xlf ]; then
+    echo "Move merged file i18n/messages.${language}.xlf to i18n/${language}"
+    mv i18n/messages.${language}.xlf i18n/${language}
+  fi
 done

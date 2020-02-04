@@ -48,7 +48,7 @@ export class TextInputComponent implements OnInit {
   // https://github.com/ajaxorg/ace/wiki/Configuring-Ace
   options = {
     showPrintMargin: false,
-    highlightActiveLine: false,
+    highlightActiveLine: true,
     tabSize: 2,
     wrap: true,
     fontSize: 14,
@@ -72,6 +72,8 @@ export class TextInputComponent implements OnInit {
     switch (this.mode) {
       case 'json':
         this.text = JSON.stringify(JSON.parse(this.text), null, '\t');
+        // Replace \n with new lines
+        this.text = this.text.replace(new RegExp(/\\n/g), '\n\t\t');
         break;
       default:
         // Do nothing when mode is not recognized.

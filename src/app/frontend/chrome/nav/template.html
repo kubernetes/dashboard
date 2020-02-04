@@ -20,109 +20,134 @@ limitations under the License.
     <div class="kd-nav-group">
       <kd-nav-item class="kd-nav-group-item"
                    state="/cluster"
+                   id="nav-cluster"
                    i18n>Cluster
       </kd-nav-item>
       <kd-nav-item class="kd-nav-item"
                    state="/clusterrole"
+                   id="nav-clusterrole"
                    i18n>Cluster Roles
       </kd-nav-item>
       <kd-nav-item class="kd-nav-item"
                    state="/namespace"
+                   id="nav-namespace"
                    i18n>Namespaces
       </kd-nav-item>
       <kd-nav-item class="kd-nav-item"
                    state="/node"
+                   id="nav-node"
                    i18n>Nodes
       </kd-nav-item>
       <kd-nav-item class="kd-nav-item"
                    state="/persistentvolume"
+                   id="nav-persistentvolume"
                    i18n>Persistent Volumes
       </kd-nav-item>
       <kd-nav-item class="kd-nav-item"
                    state="/storageclass"
+                   id="nav-storageclass"
                    i18n>Storage Classes
       </kd-nav-item>
     </div>
 
     <mat-divider></mat-divider>
 
-    <kd-namespace-selector></kd-namespace-selector>
+    <kd-namespace-selector id="nav-namespace-selector">
+    </kd-namespace-selector>
 
     <div class="kd-nav-group">
       <kd-nav-item class="kd-nav-group-item"
                    state="/overview"
+                   id="nav-overview"
                    i18n>Overview
       </kd-nav-item>
 
       <kd-nav-item class="kd-nav-group-item"
                    state="/workloads"
+                   id="nav-workloads"
                    i18n>Workloads
       </kd-nav-item>
       <kd-nav-item class="kd-nav-item"
                    state="/cronjob"
+                   id="nav-cronjob"
                    i18n>Cron Jobs
       </kd-nav-item>
       <kd-nav-item class="kd-nav-item"
                    state="/daemonset"
+                   id="nav-daemonset"
                    i18n>Daemon Sets
       </kd-nav-item>
       <kd-nav-item class="kd-nav-item"
                    state="/deployment"
+                   id="nav-deployment"
                    i18n>Deployments
       </kd-nav-item>
       <kd-nav-item class="kd-nav-item"
                    state="/job"
+                   id="nav-job"
                    i18n>Jobs
       </kd-nav-item>
       <kd-nav-item class="kd-nav-item"
                    state="/pod"
+                   id="nav-pod"
                    i18n>Pods
       </kd-nav-item>
       <kd-nav-item class="kd-nav-item"
                    state="/replicaset"
+                   id="nav-replicaset"
                    i18n>Replica Sets
       </kd-nav-item>
       <kd-nav-item class="kd-nav-item"
                    state="/replicationcontroller"
+                   id="nav-replicationcontroller"
                    i18n>Replication Controllers
       </kd-nav-item>
       <kd-nav-item class="kd-nav-item"
                    state="/statefulset"
+                   id="nav-statefulset"
                    i18n>Stateful Sets
       </kd-nav-item>
 
       <kd-nav-item class="kd-nav-group-item"
                    state="/discovery"
+                   id="nav-discovery"
                    i18n>Discovery and Load Balancing
       </kd-nav-item>
       <kd-nav-item class="kd-nav-item"
                    state="/ingress"
+                   id="nav-ingress"
                    i18n>Ingresses
       </kd-nav-item>
       <kd-nav-item class="kd-nav-item"
                    state="/service"
+                   id="nav-service"
                    i18n>Services
       </kd-nav-item>
 
       <kd-nav-item class="kd-nav-group-item"
                    state="/config"
+                   id="nav-config"
                    i18n>Config and Storage
       </kd-nav-item>
       <kd-nav-item class="kd-nav-item"
                    state="/configmap"
+                   id="nav-configmap"
                    i18n>Config Maps
       </kd-nav-item>
       <kd-nav-item class="kd-nav-item"
                    state="/persistentvolumeclaim"
+                   id="nav-persistentvolumeclaim"
                    i18n>Persistent Volume Claims
       </kd-nav-item>
       <kd-nav-item class="kd-nav-item"
                    state="/secret"
+                   id="nav-secret"
                    i18n>Secrets
       </kd-nav-item>
       <kd-nav-item *ngIf="showPlugin()"
                    class="kd-nav-group-item"
                    state="/plugin"
+                   id="nav-plugin"
                    i18n>Plugins
       </kd-nav-item>
     </div>
@@ -133,6 +158,7 @@ limitations under the License.
       <kd-nav-item class="kd-nav-group-item"
                    id="sidebar-crd"
                    state="/customresourcedefinition"
+                   id="nav-customresourcedefinition"
                    [exact]="true"
                    i18n>Custom Resource Definitions
       </kd-nav-item>
@@ -145,11 +171,13 @@ limitations under the License.
     <div class="kd-nav-group">
       <kd-nav-item class="kd-nav-group-item"
                    state="/settings"
+                   id="nav-settings"
                    i18n>Settings
       </kd-nav-item>
 
       <kd-nav-item class="kd-nav-group-item"
                    state="/about"
+                   id="nav-about"
                    i18n>About
       </kd-nav-item>
     </div>

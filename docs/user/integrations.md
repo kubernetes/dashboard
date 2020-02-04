@@ -1,6 +1,6 @@
 # Integrations
 
-Currently Dashboard implements [metrics-server](https://github.com/kubernetes-sigs/metrics-server) and [Heapster](https://github.com/kubernetes/heapster) integrations. They are using [integration framework](src/app/backend/integration/manager.go) that allows to support and integrate more metric providers as well as additional applications such as [Weave Scope](https://github.com/weaveworks/scope) or [Grafana](https://github.com/grafana/grafana).
+Currently Dashboard implements [metrics-server](https://github.com/kubernetes-sigs/metrics-server) and [Heapster](https://github.com/kubernetes/heapster) integrations. They are using [integration framework](../../src/app/backend/integration/manager.go) that allows to support and integrate more metric providers as well as additional applications such as [Weave Scope](https://github.com/weaveworks/scope) or [Grafana](https://github.com/grafana/grafana).
 
 ## Metric integrations
 
