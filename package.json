@@ -192,7 +192,7 @@
     "typescript": "3.4.5",
     "wait-on": "4.0.0",
     "@cypress/webpack-preprocessor": "latest",
-    "webpack-dev-server": "3.10.2"
+    "webpack-dev-server": "3.10.3"
   },
   "engines": {
     "node": ">=10.9.0",
