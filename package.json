@@ -182,7 +182,7 @@
     "sass-lint": "1.13.1",
     "sass-loader": "7.3.0",
     "scssfmt": "1.0.7",
-    "semver": "7.1.1",
+    "semver": "7.1.2",
     "source-map-explorer": "2.2.2",
     "tar": "6.0.1",
     "through2": "3.0.1",
