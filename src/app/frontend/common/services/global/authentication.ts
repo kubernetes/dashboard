@@ -32,7 +32,7 @@ import {KdStateService} from './state';
 
 @Injectable()
 export class AuthService {
-  private readonly config_ = CONFIG;
+  private readonly _config = CONFIG;
 
   constructor(
     private readonly cookies_: CookieService,
@@ -54,20 +54,36 @@ export class AuthService {
 
   private setTokenCookie_(token: string): void {
     // This will only work for HTTPS connection
-    this.cookies_.set(this.config_.authTokenCookieName, token, null, null, null, true);
+    this.cookies_.set(this._config.authTokenCookieName, token, null, null, null, true, 'Strict');
     // This will only work when accessing Dashboard at 'localhost' or
     // '127.0.0.1'
-    this.cookies_.set(this.config_.authTokenCookieName, token, null, null, 'localhost');
-    this.cookies_.set(this.config_.authTokenCookieName, token, null, null, '127.0.0.1');
+    this.cookies_.set(
+      this._config.authTokenCookieName,
+      token,
+      null,
+      null,
+      'localhost',
+      true,
+      'Strict',
+    );
+    this.cookies_.set(
+      this._config.authTokenCookieName,
+      token,
+      null,
+      null,
+      '127.0.0.1',
+      true,
+      'Strict',
+    );
   }
 
   private getTokenCookie_(): string {
-    return this.cookies_.get(this.config_.authTokenCookieName) || '';
+    return this.cookies_.get(this._config.authTokenCookieName) || '';
   }
 
   removeAuthCookies(): void {
-    this.cookies_.delete(this.config_.authTokenCookieName);
-    this.cookies_.delete(this.config_.skipLoginPageCookieName);
+    this.cookies_.delete(this._config.authTokenCookieName);
+    this.cookies_.delete(this._config.skipLoginPageCookieName);
   }
 
   /**
@@ -79,7 +95,7 @@ export class AuthService {
       .pipe(
         switchMap((csrfToken: CsrfToken) =>
           this.http_.post<AuthResponse>('api/v1/login', loginSpec, {
-            headers: new HttpHeaders().set(this.config_.csrfHeaderName, csrfToken.token),
+            headers: new HttpHeaders().set(this._config.csrfHeaderName, csrfToken.token),
           }),
         ),
       )
@@ -115,7 +131,7 @@ export class AuthService {
             'api/v1/token/refresh',
             {jweToken: token},
             {
-              headers: new HttpHeaders().set(this.config_.csrfHeaderName, csrfToken.token),
+              headers: new HttpHeaders().set(this._config.csrfHeaderName, csrfToken.token),
             },
           );
         }),
@@ -150,7 +166,15 @@ export class AuthService {
 
   skipLoginPage(skip: boolean): void {
     this.removeAuthCookies();
-    this.cookies_.set(this.config_.skipLoginPageCookieName, skip.toString());
+    this.cookies_.set(
+      this._config.skipLoginPageCookieName,
+      skip.toString(),
+      null,
+      null,
+      null,
+      true,
+      'Strict',
+    );
   }
 
   /**
@@ -159,6 +183,6 @@ export class AuthService {
    * In case cookie is not set login page will also be visible.
    */
   isLoginPageEnabled(): boolean {
-    return !(this.cookies_.get(this.config_.skipLoginPageCookieName) === 'true');
+    return !(this.cookies_.get(this._config.skipLoginPageCookieName) === 'true');
   }
 }

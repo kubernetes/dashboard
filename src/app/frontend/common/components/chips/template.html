@@ -18,20 +18,20 @@ limitations under the License.
   <ng-container *ngFor="let key of keys; let i = index">
     <mat-chip *ngIf="isVisible(i)"
               [disableRipple]="true">
-      <ng-container *ngIf="isTooLong(map[key])">
+      <ng-container *ngIf="isTooLong(map[key]) && !isHref(map[key])">
         <a class="kd-clickable"
            (click)="openChipDialog(key, map[key])">{{key}}</a>
       </ng-container>
 
       <!-- beautify ignore:start -->
-      <ng-container *ngIf="!isTooLong(map[key])">
+      <ng-container *ngIf="!isTooLong(map[key]) || isHref(map[key])">
         {{key}}<ng-container *ngIf="map[key]">:&nbsp;</ng-container>
         <ng-container *ngIf="map[key]">
           <ng-container *ngIf="isHref(map[key])">
-            <a [routerLink]="map[key]"
-               queryParamsHandling="preserve"
+            <a [href]="map[key]"
                target="_blank">
-              {{map[key]}}
+              <span *ngIf="!isTooLong(map[key])">{{map[key]}}</span>
+              <span *ngIf="isTooLong(map[key])">{{getTruncatedURL(map[key])}}</span>
             </a>
           </ng-container>
           <ng-container *ngIf="!isHref(map[key])">{{map[key]}}</ng-container>
