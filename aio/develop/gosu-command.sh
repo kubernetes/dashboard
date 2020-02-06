@@ -29,9 +29,10 @@ GOSU="exec /usr/sbin/gosu user"
 # Run command if K8S_DASHBOARD_CMD is set,
 # otherwise run `npm ${K8S_DASHBOARD_NPM_CMD}`.
 if [[ -n "${K8S_DASHBOARD_CMD}" ]] ; then
-  # Run npm command
+  # Run specified command
   echo "Run '${K8S_DASHBOARD_CMD}'"
   ${GOSU} ${K8S_DASHBOARD_CMD}
 else
+  # Run npm command
   ${GOSU} aio/develop/npm-command.sh
 fi

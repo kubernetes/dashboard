@@ -13,8 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Install dependencies
+echo "Install dependencies"
+npm ci
+
 # Run npm command if K8S_DASHBOARD_NPM_CMD is set,
-# otherwise install and start dashboard.
+# otherwise start dashboard.
 if [[ -n "${K8S_DASHBOARD_NPM_CMD}" ]] ; then
   # Run npm command
   echo "Run npm '${K8S_DASHBOARD_NPM_CMD}'"
@@ -23,9 +27,6 @@ if [[ -n "${K8S_DASHBOARD_NPM_CMD}" ]] ; then
     --kubernetes-dashboard:sidecar_host=${K8S_DASHBOARD_SIDECAR_HOST} \
     --kubernetes-dashboard:port=${K8S_DASHBOARD_PORT}
 else
-  # Install dashboard.
-  echo "Install dashboard"
-  npm ci
   if [[ "${K8S_OWN_CLUSTER}" != true ]] ; then
     # Stop cluster.
     echo "Stop cluster"
