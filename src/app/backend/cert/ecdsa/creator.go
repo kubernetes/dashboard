@@ -59,11 +59,10 @@ func (self *ecdsaCreator) GenerateCertificate(key interface{}) []byte {
 	validFor, _ := time.ParseDuration("8760h")
 	notAfter := notBefore.Add(validFor)
 
-
 	template := x509.Certificate{
 		SerialNumber: self.generateSerialNumber(),
-		NotAfter: notAfter,
-		NotBefore: notBefore,
+		NotAfter:     notAfter,
+		NotBefore:    notBefore,
 	}
 
 	if len(pod.Name) > 0 && len(pod.Namespace) > 0 {
