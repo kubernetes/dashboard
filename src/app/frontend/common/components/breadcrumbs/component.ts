@@ -82,7 +82,7 @@ export class BreadcrumbsComponent implements OnInit {
         routeParamsCount = 0;
       } else if (currentRoute.routeConfig.data.parent === EXEC_PARENT_PLACEHOLDER) {
         route = POD_DETAIL_ROUTE;
-        urlArray = ['', 'pod', urlArray[urlArray.length - 2], urlArray[urlArray.length - 1]];
+        urlArray = ['', 'pod', urlArray[urlArray.length - 3], urlArray[urlArray.length - 2]];
         routeParamsCount = 0;
       } else {
         route = currentRoute.routeConfig.data.parent;
