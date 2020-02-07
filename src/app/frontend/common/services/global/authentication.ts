@@ -63,7 +63,7 @@ export class AuthService {
       null,
       null,
       'localhost',
-      true,
+      false,
       'Strict',
     );
     this.cookies_.set(
@@ -72,7 +72,7 @@ export class AuthService {
       null,
       null,
       '127.0.0.1',
-      true,
+      false,
       'Strict',
     );
   }
@@ -172,7 +172,7 @@ export class AuthService {
       null,
       null,
       null,
-      true,
+      false,
       'Strict',
     );
   }

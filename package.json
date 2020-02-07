@@ -1,6 +1,6 @@
 {
   "name": "kubernetes-dashboard",
-  "version": "2.0.0-rc4",
+  "version": "2.0.0-rc5",
   "repository": {
     "type": "git",
     "url": "https://github.com/kubernetes/dashboard.git"
@@ -140,7 +140,7 @@
     "@angular-devkit/build-angular": "0.803.25",
     "@angular/cli": "8.3.25",
     "@angular/compiler-cli": "8.0.3",
-    "@angular/language-service": "8.2.14",
+    "@angular/language-service": "9.0.0",
     "@types/jasmine": "3.5.3",
     "@types/jasminewd2": "2.0.8",
     "@types/js-yaml": "3.12.2",
@@ -151,7 +151,7 @@
     "babel-register": "6.26.0",
     "codelyzer": "5.2.1",
     "concurrently": "5.1.0",
-    "cypress": "3.8.3",
+    "cypress": "4.0.0",
     "del": "5.1.0",
     "git-describe": "4.0.4",
     "gts": "1.1.2",
