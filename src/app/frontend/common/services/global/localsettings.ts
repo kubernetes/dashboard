@@ -51,7 +51,7 @@ export class LocalSettingsService {
       null,
       null,
       null,
-      true,
+      false,
       'Strict',
     );
   }
