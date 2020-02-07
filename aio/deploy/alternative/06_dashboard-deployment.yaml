@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
         - name: kubernetes-dashboard
-          image: kubernetesui/dashboard:v2.0.0-rc4
+          image: kubernetesui/dashboard:v2.0.0-rc5
           ports:
             - containerPort: 9090
               protocol: TCP
