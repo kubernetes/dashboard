@@ -17,7 +17,7 @@ Kubernetes Dashboard is a general purpose, web-based UI for Kubernetes clusters.
 To deploy Dashboard, execute following command:
 
 ```sh
-$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-rc4/aio/deploy/recommended.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-rc5/aio/deploy/recommended.yaml
 ```
 
 To access Dashboard from your local workstation you must create a secure channel to your Kubernetes cluster. Run the following command:
