@@ -40,8 +40,8 @@ K8S_DASHBOARD_NPM_CMD=${K8S_DASHBOARD_NPM_CMD:-*}
 if [[ -n "${K8S_DASHBOARD_KUBECONFIG}" ]] ; then
   K8S_OWN_CLUSTER=true
 else
-  touch ${DIR}/../../kind.kubeconfig
-  K8S_DASHBOARD_KUBECONFIG=$(pwd ${DIR}/../../)/kind.kubeconfig
+  touch /tmp/kind.kubeconfig
+  K8S_DASHBOARD_KUBECONFIG=/tmp/kind.kubeconfig
 fi
 
 # Bind addres for dashboard
