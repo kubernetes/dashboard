@@ -84,6 +84,7 @@
     "genDir": "i18n",
     "defaultLanguage": "en",
     "languages": [
+      "de",
       "fr",
       "ja",
       "ko",
