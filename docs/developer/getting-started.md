@@ -9,7 +9,7 @@ Make sure the following software is installed and added to the $PATH variable:
 * Curl 7+
 * Git 2.13.2+
 * Docker 1.13.1+ ([installation manual](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/))
-* Golang 1.12.0+ ([installation manual](https://golang.org/dl/))
+* Golang 1.13.6+ ([installation manual](https://golang.org/dl/))
     * Dashboard uses `go mod` for go dependency management, so enable it with running `export GO111MODULE=on`.
 * Node.js 12+ and npm 6+ ([installation with nvm](https://github.com/creationix/nvm#usage))
 * Gulp.js 4+ ([installation manual](https://github.com/gulpjs/gulp/blob/master/docs/getting-started/1-quick-start.md))

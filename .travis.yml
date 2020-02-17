@@ -34,7 +34,7 @@ before_install:
   - export GOPROXY=https://proxy.golang.org
   - export PATH=$PATH:$GOPATH/bin
   - export NODE_OPTIONS=--max-old-space-size=8192
-  - eval "$(gimme 1.12.6)"
+  - eval "$(gimme 1.13.6)"
 
 # `npm ci` will run between `before_install` and `before_script`.
 
