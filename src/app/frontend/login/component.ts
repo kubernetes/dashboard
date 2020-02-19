@@ -65,6 +65,13 @@ export class LoginComponent implements OnInit {
       .get<EnabledAuthenticationModes>('api/v1/login/modes')
       .subscribe((enabledModes: EnabledAuthenticationModes) => {
         this.enabledAuthenticationModes_ = enabledModes.modes;
+        if (enabledModes.modes.length > 0) {
+          Object.entries(LoginModes).forEach(([_, mode]) => {
+            if (mode === enabledModes.modes[0]) {
+              this.selectedAuthenticationMode = mode;
+            }
+          });
+        }
       });
 
     this.http_
@@ -85,8 +92,8 @@ export class LoginComponent implements OnInit {
       this.enabledAuthenticationModes_.length > 0 &&
       this.enabledAuthenticationModes_.indexOf(LoginModes.Kubeconfig) < 0
     ) {
-      // Push this option to the beginning of the list
-      this.enabledAuthenticationModes_.splice(0, 0, LoginModes.Kubeconfig);
+      // Push this option to the end of the list
+      this.enabledAuthenticationModes_.push(LoginModes.Kubeconfig);
     }
 
     return this.enabledAuthenticationModes_;
