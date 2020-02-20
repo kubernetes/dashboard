@@ -10,7 +10,6 @@
     ]
   },
   "files": [
-    "../src/app/frontend/index.spec.ts",
     "../src/app/frontend/polyfills.ts"
   ],
   "include": [

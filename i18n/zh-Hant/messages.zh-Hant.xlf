@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-  <file source-language="en" datatype="plaintext" original="ng2.template" target-language="zh-hk">
+  <file source-language="en" datatype="plaintext" original="ng2.template" target-language="zh-Hant">
     <body>
       <trans-unit id="70cd6a0cff2699d1c553c292ae76f41bb3b8e0de" datatype="html">
         <source>Edit a resource</source>
@@ -2587,7 +2587,7 @@
       <trans-unit id="c4df359ca10a7fe23b63de59b71b971fc8b91dc9" datatype="html">
         <source>Discovery and Load Balancing
       </source>
-        <target>服務發現和負載均衡
+        <target>服務發現與負載平衡
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2740,7 +2740,7 @@
       </trans-unit>
       <trans-unit id="7003098da97db80a0761fe9fdadb2f0349eb462c" datatype="html">
         <source>Logged in with auth header</source>
-        <target>使用 auth header 登錄</target>
+        <target>使用 auth header 登入</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/userpanel/template.html</context>
           <context context-type="linenumber">22</context>
@@ -2748,7 +2748,7 @@
       </trans-unit>
       <trans-unit id="2026658d9603d4eea6cbf142234d657111385bbc" datatype="html">
         <source>Logged in with token</source>
-        <target>使用 token 登錄</target>
+        <target>使用 token 登入</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/userpanel/template.html</context>
           <context context-type="linenumber">24</context>
@@ -2814,7 +2814,7 @@
       </trans-unit>
       <trans-unit id="3ca17e5da2745672786f9d80be73ef0b4929b7fc" datatype="html">
         <source>Discovery and Load Balancing</source>
-        <target>服務發現和負載均衡</target>
+        <target>服務發現與負載平衡</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/search/template.html</context>
           <context context-type="linenumber">58</context>
@@ -2873,7 +2873,7 @@
                 Please select the kubeconfig file that you have created to configure access to the cluster. To find out more about how to configure and use kubeconfig file, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Configure Access to Multiple Clusters<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> section.
               </source>
         <target>
-                請選擇您創建的kubeconfig文件以配置對集群的訪問權限。  要瞭解有關如何配置和使用kubeconfig文件的更多信息， 請參閲<x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Configure Access to Multiple Clusters<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> 部分.
+                請選擇您設定的kubeconfig文件以配置對叢集的訪問權限。   要瞭解有關如何配置和使用kubeconfig文件的更多訊息， 請參閲<x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Configure Access to Multiple Clusters<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> 部分.
               </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
@@ -2897,7 +2897,7 @@
                 Every Service Account has a Secret with valid Bearer Token that can be used to log in to Dashboard. To find out more about how to configure and use Bearer Tokens, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Authentication<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> section.
               </source>
         <target>
-                每個 Service Account 都有一個 valid Bearer Token ，可用於登錄 Dashboard 。 要瞭解如何配置使用 Bearer Tokens 的更多信息，请參閲 <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Authentication<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> 部分.
+                每個 Service Account 都有一個合法的 Bearer Token ，可用於登入 Dashboard。要瞭解更多如何配置並使用 Bearer Tokens 的資訊，請參閲 <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Authentication<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> 部分.
               </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
@@ -2930,7 +2930,7 @@
       </trans-unit>
       <trans-unit id="6688d59ac99cdb1ad573ee4d2f9ab14ede43aab8" datatype="html">
         <source>Choose kubeconfig file</source>
-        <target>選擇 kubeconfig 文件</target>
+        <target>選擇 kubeconfig 檔案</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
           <context context-type="linenumber">99</context>
@@ -2941,7 +2941,7 @@
             Sign in
           </source>
         <target>
-            登錄
+            登入
           </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
@@ -2970,7 +2970,7 @@
       </trans-unit>
       <trans-unit id="860f8d6a2a2265b9bdf4e5b35401ae1069082fe7" datatype="html">
         <source>General-purpose web UI for Kubernetes clusters</source>
-        <target>Kubernetes 集群通用的 Web UI</target>
+        <target>Kubernetes 叢集通用的 Web UI</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/about/template.html</context>
           <context context-type="linenumber">30</context>
@@ -2994,7 +2994,7 @@
       </trans-unit>
       <trans-unit id="a44df39b2ce0f5d85e406c3aeec76ae898dbf9af" datatype="html">
         <source>Read documentation</source>
-        <target>閲讀文檔</target>
+        <target>閱讀文件</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/about/actionbar/template.html</context>
           <context context-type="linenumber">24</context>
@@ -3002,7 +3002,7 @@
       </trans-unit>
       <trans-unit id="af1dff066daa4c07f3c314d3b0d3a5106c289efd" datatype="html">
         <source>Provide feedback</source>
-        <target>提供反饋意見</target>
+        <target>提供回饋意見</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/about/actionbar/template.html</context>
           <context context-type="linenumber">35</context>
@@ -3010,7 +3010,7 @@
       </trans-unit>
       <trans-unit id="5927a3493fbb556db65f530e01b3aa6ab9f186e6" datatype="html">
         <source>Resource Information</source>
-        <target>資源信息</target>
+        <target>資源訊息</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
           <context context-type="linenumber">22</context>
@@ -3090,7 +3090,7 @@
       </trans-unit>
       <trans-unit id="5ad4eecbd0fe09c34678fefce317a052af39dc96" datatype="html">
         <source>Data</source>
-        <target>数据</target>
+        <target>數據</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/crdobject/template.html</context>
           <context context-type="linenumber">22</context>
@@ -3106,7 +3106,7 @@
       </trans-unit>
       <trans-unit id="7db62a1ccd31f1bb55e3532b0f58984a492296a8" datatype="html">
         <source>Create from input</source>
-        <target>輸入並創建</target>
+        <target>輸入並建立</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/template.html</context>
           <context context-type="linenumber">20</context>
@@ -3114,7 +3114,7 @@
       </trans-unit>
       <trans-unit id="cddf3aed0d050e6a3f440f64300f73c3b9dd2f30" datatype="html">
         <source>Create from file</source>
-        <target>从文件創建</target>
+        <target>從檔案建立</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/template.html</context>
           <context context-type="linenumber">24</context>
@@ -3122,7 +3122,7 @@
       </trans-unit>
       <trans-unit id="5d581b7714e3cbc3f3c153655424bb9c0654d178" datatype="html">
         <source>Create from form</source>
-        <target>从表單創建</target>
+        <target>從表單建立</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/template.html</context>
           <context context-type="linenumber">28</context>
@@ -3130,7 +3130,7 @@
       </trans-unit>
       <trans-unit id="d5bf8edfc35f18bb70804a15ad79a70417be988f" datatype="html">
         <source>Create a new namespace</source>
-        <target>創建一個新的命名空間</target>
+        <target>建立一個新的命名空間</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createnamespace/template.html</context>
           <context context-type="linenumber">18</context>
@@ -3138,7 +3138,7 @@
       </trans-unit>
       <trans-unit id="78ca56338570a3b8cf68425e381a4d523b8b5e68" datatype="html">
         <source>The new namespace will be added to the cluster.</source>
-        <target>新的命名空間將添加到集群中。</target>
+        <target>新的命名空間將添加到叢集中。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createnamespace/template.html</context>
           <context context-type="linenumber">21</context>
@@ -3173,7 +3173,7 @@
               Name must be up to <x id="INTERPOLATION" equiv-text="{{namespaceMaxLength}}"/> characters long.
             </source>
         <target>
-              Name必须大於 <x id="INTERPOLATION" equiv-text="{{namespaceMaxLength}}"/> 个字符.
+              Name必須大於 <x id="INTERPOLATION" equiv-text="{{namespaceMaxLength}}"/> 個字符
             </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createnamespace/template.html</context>
@@ -3185,7 +3185,7 @@
               Name must be alphanumeric and may contain dashes.
             </source>
         <target>
-              名稱必須是字母或者數字，可以包含短化綫。
+              名稱必須是字母或者數字，可以包含連接號 "-"。
             </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createnamespace/template.html</context>
@@ -3194,7 +3194,7 @@
       </trans-unit>
       <trans-unit id="aeea49e3b19a41258a76d31750f01f807cf9f399" datatype="html">
         <source>A namespace with the specified name will be added to the cluster.</source>
-        <target>將具有指定名稱的命名空間添加到集群中。</target>
+        <target>將具有指定名稱的命名空間添加到叢集中。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createnamespace/template.html</context>
           <context context-type="linenumber">48</context>
@@ -3244,7 +3244,7 @@
       </trans-unit>
       <trans-unit id="f4958332544037105533688bf41b27d252e5c607" datatype="html">
         <source>The new secret will be added to the cluster</source>
-        <target>新的 secret 将添加到集群中</target>
+        <target>新的 secret 將添加到叢集中</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
           <context context-type="linenumber">21</context>
@@ -3263,7 +3263,7 @@
               Name must be up to <x id="INTERPOLATION" equiv-text="{{secretNameMaxLength}}"/> characters long.
             </source>
         <target>
-              Name 必须大於 <x id="INTERPOLATION" equiv-text="{{secretNameMaxLength}}"/> 字符.
+              Name 必須大於 <x id="INTERPOLATION" equiv-text="{{secretNameMaxLength}}"/> 字符.
             </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
@@ -3275,7 +3275,7 @@
               Name must follow the DNS domain name syntax (e.g. new.image-pull.secret).
             </source>
         <target>
-             名称必须遵循 DNS 域名语法（例如 new.image-pull.secret）。
+             名稱必須遵循 DNS 域名語法（例如 new.image-pull.secret）。
             </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
@@ -3284,7 +3284,7 @@
       </trans-unit>
       <trans-unit id="2244c094c4409a5d5bb05ae8a079db563b730d09" datatype="html">
         <source>A secret with the specified name will be added to the cluster in the namespace.</source>
-        <target>具有指定名称的 secret 将添加到命名空间中的集群中。</target>
+        <target>具有指定名稱的 secret 將添加到命名空間中的叢集中。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
           <context context-type="linenumber">48</context>
@@ -3295,7 +3295,7 @@
               Data is required.
             </source>
         <target>
-              Data 是必须的。
+              Data 是必須的。
             </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
@@ -3307,7 +3307,7 @@
               Data must be Base64 encoded.
             </source>
         <target>
-              Data 必须是 Base64 编码的。
+              Data 必須是 Base64 編碼的格式。
             </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
@@ -3316,7 +3316,7 @@
       </trans-unit>
       <trans-unit id="f0ca722171e7547ce4fd039386dc5fc35359e186" datatype="html">
         <source>Specify the data for your secret to hold. The value is the Base64 encoded content of a .dockercfg file.</source>
-        <target>指定要保留的 secret 的 data 。该值是 .dockercfg 文件中的 Base64 编码内容。</target>
+        <target>指定要保留的 secret 的 data。該值是 .dockercfg 文件中的 Base64 編碼内容</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
           <context context-type="linenumber">77</context>
@@ -3324,7 +3324,7 @@
       </trans-unit>
       <trans-unit id="d6f7150f368b44c7aaa4b2b07df3e0f988a5db02" datatype="html">
         <source>App name</source>
-        <target>应用名称</target>
+        <target>應用名稱</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">24</context>
@@ -3335,7 +3335,7 @@
         Deployment or service with this name already exists within namespace.
       </source>
         <target>
-        具有此名称的 deployment 或 service 已存在于命名空间中。
+        具有同名稱的 deployment 或 service 已存在於命名空間中
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
@@ -3347,7 +3347,7 @@
         Application name is required.
       </source>
         <target>
-        应用名称是必需的。
+        應用名稱是必需的。
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
@@ -3359,7 +3359,7 @@
         Application name must start with a lowercase letter and contain only lowercase letters, numbers, and '-' between words.
       </source>
         <target>
-        应用程序名称必须以小写字母开头，且只包含小写字母，数字和单词之间的“-”。
+        應用名稱必須以小寫字母開頭，只包含小寫字母與數字，並且之間可以包含“-”符號。
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
@@ -3368,7 +3368,7 @@
       </trans-unit>
       <trans-unit id="41cb32a2fd6b8c46e9abfc29ad55e26bceb82b29" datatype="html">
         <source>An 'app' label with this value will be added to the Deployment and Service that get deployed.</source>
-        <target>具有此值的“app”标签将添加到已部署的 Deployment 和 Service 中。</target>
+        <target>具有此值的“app”標籤將添加到已部署的 Deployment 和 Service 中。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">50</context>
@@ -3380,7 +3380,7 @@
         <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>
       </source>
         <target>
-        学到更多
+        學到更多
         <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>
       </target>
         <context-group purpose="location">
@@ -3402,7 +3402,7 @@
       </trans-unit>
       <trans-unit id="472c76a113baadeb4096e77d20a21556b2aa1e35" datatype="html">
         <source>Container image</source>
-        <target>容器镜像</target>
+        <target>容器映像檔</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">65</context>
@@ -3425,7 +3425,7 @@
         Container image is invalid: <x id="INTERPOLATION" equiv-text="{{containerImage.errors?.validImageReference}}"/>
       </source>
         <target>
-        Container image 无效: <x id="INTERPOLATION" equiv-text="{{containerImage.errors?.validImageReference}}"/>
+        容器映像檔無效: <x id="INTERPOLATION" equiv-text="{{containerImage.errors?.validImageReference}}"/>
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
@@ -3434,7 +3434,7 @@
       </trans-unit>
       <trans-unit id="43f286635565c58e36280035a459dc47dfd62868" datatype="html">
         <source>Enter the URL of a public image on any registry, or a private image hosted on Docker Hub or Google Container Registry.</source>
-        <target>输入公共镜像的 URL （可以是在私有仓库或Docker Hub或Google Container Registry上托管任何镜像URL）。</target>
+        <target>輸入公開倉庫或是私有倉庫 (Docker Hub 或 Google Container Registry) 的 URL。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">80</context>
@@ -3442,7 +3442,7 @@
       </trans-unit>
       <trans-unit id="84859895146eb819c224aa01e4464e28267aed98" datatype="html">
         <source>Number of pods</source>
-        <target>pod 的数量</target>
+        <target>pod 的數量</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">96</context>
@@ -3465,7 +3465,7 @@
         Number of pods must be a positive integer
       </source>
         <target>
-        pod 的数量必须是整数
+        pod 的數量必須是正整数
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
@@ -3477,7 +3477,7 @@
         Setting high number of pods may cause performance issues of the cluster and Dashboard UI.
       </source>
         <target>
-        设置大量 pod 可能会导致集群和 Dashboard UI 出现性能问题。
+        設定大量 pod 可能會導致叢集和 Dashboard UI 出現效能問題。
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
@@ -3486,7 +3486,7 @@
       </trans-unit>
       <trans-unit id="1b71dbca4d8c341a7a9be7f8ce266494a5ed3827" datatype="html">
         <source>A Deployment will be created to maintain the desired number of pods across your cluster.</source>
-        <target>Deployment 将跨集群创建 pod 以维护所需数量。</target>
+        <target>Deployment 将被創建來管理一定數量的 pod 在你的叢集中。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">116</context>
@@ -3494,7 +3494,7 @@
       </trans-unit>
       <trans-unit id="a74cbfda3903734c9bf30900be931163a187c721" datatype="html">
         <source>Optionally, an internal or external Service can be defined to map an incoming Port to a target Port seen by the container.</source>
-        <target>可选，可以定义内部或外部 Service，将传入端口映射到容器的目标端口。</target>
+        <target>(可選擇的) 可以定義内部或外部 Service，將傳入端口映射到容器的目標端口。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">136</context>
@@ -3513,7 +3513,7 @@
         The description will be added as an annotation to the Deployment and displayed in the application's details.
       </source>
         <target>
-            该描述将作为注释添加到 Deployment 中，并显示在应用程序的详细信息中。
+            該描述將作為注視添加到 Deployment 中，並顯示在應用程式的詳細資訊中。
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
@@ -3522,7 +3522,7 @@
       </trans-unit>
       <trans-unit id="d636f169ef473dd93ad70dce8cab4f9766c7d305" datatype="html">
         <source>The specified labels will be applied to the created Deployment, Service (if any) and Pods. Common labels include release, environment, tier, partition and track.</source>
-        <target>指定的标签将应用于创建的 Deployment，Service（如果有）和 Pod。 常见标签包括 release，environment，tier，partition 和 track。</target>
+        <target>指定的標籤將用於創建的 Deployment，Service（如果有）和 Pod。 常見標籤包括 release，environment，tier，partition 和 track。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">169</context>
@@ -3534,7 +3534,7 @@
           <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>
         </source>
         <target>
-          学到更多
+          學到更多
           <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>
         </target>
         <context-group purpose="location">
@@ -3571,7 +3571,7 @@
             Create a new namespace...
           </source>
         <target>
-            创建一个新的命名空间...
+            創建一个新的命名空間...
           </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
@@ -3580,7 +3580,7 @@
       </trans-unit>
       <trans-unit id="d3213693a72aff08814557c9d4ea66a1a8ebb5b7" datatype="html">
         <source>Namespaces let you partition resources into logically named groups.</source>
-        <target>Namespaces 允许您将资源分区为逻辑命名的组。</target>
+        <target>Namespaces 允許您將資源分區為邏輯命名的組。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">198</context>
@@ -3591,7 +3591,7 @@
             Create a new secret...
           </source>
         <target>
-           创建一个新的 secret...
+           創建一個新的 secret...
           </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
@@ -3600,7 +3600,7 @@
       </trans-unit>
       <trans-unit id="f87cc4e8fdd870d5f0fe071889d30939f9d0cd37" datatype="html">
         <source>Image Pull Secret</source>
-        <target>镜像拉取得 Secret</target>
+        <target>取得映像檔使用的 Secret</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">213</context>
@@ -3608,7 +3608,7 @@
       </trans-unit>
       <trans-unit id="141fd856fac50370a82a6082ef9e55f22014f32f" datatype="html">
         <source>The specified image could require a pull secret credential if it is private. You may choose an existing secret or create a new one.</source>
-        <target>如果指定的 Image 是私有的，则可能需要 pull secret credential。 您可以选择现有 secret 或创建新 secret。</target>
+        <target>如果指定的映像檔是私有的，則可能需要 pull secret credential。 您可以選擇現有 secret 或創建新 secret。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">226</context>
@@ -3616,7 +3616,7 @@
       </trans-unit>
       <trans-unit id="31fedef1fc3d84d80cd88ca33aa79b2d3e7d7be7" datatype="html">
         <source>CPU requirement (cores)</source>
-        <target>CPU 最低需求 (cores)</target>
+        <target>CPU 下限 (cores)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">242</context>
@@ -3627,7 +3627,7 @@
             CPU requirement must be given as a positive number.
           </source>
         <target>
-            CPU 最低需求必须是正整数。
+            CPU 下限必須是正整数。
           </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
@@ -3639,7 +3639,7 @@
             CPU requirement must be given as a valid number.
           </source>
         <target>
-            CPU 最低需求必须是有效的数字。
+            CPU 下限必須是有效的數字。
           </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
@@ -3648,7 +3648,7 @@
       </trans-unit>
       <trans-unit id="d36662c0168b3275eaae4d68c9c1a3dba0090f84" datatype="html">
         <source>Memory requirement (MiB)</source>
-        <target>Memory 最低需求 (MiB)</target>
+        <target>Memory 下限 (MiB)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">260</context>
@@ -3659,7 +3659,7 @@
             Memory requirement must be given as a positive number.
           </source>
         <target>
-            Memory 最低需求必须是正整数。
+            Memory 下限必須是正整數。
           </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
@@ -3671,7 +3671,7 @@
             Memory requirement must be given as a valid number.
           </source>
         <target>
-            Memory 最低需求必须是一个有效的数字。
+            Memory 下限必須是一個有效的數字。
           </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
@@ -3680,7 +3680,7 @@
       </trans-unit>
       <trans-unit id="e34bb7f0c94de7773e15d02b03df26f254a7142d" datatype="html">
         <source>You can specify minimum CPU and memory requirements for the container.</source>
-        <target>您可以指定容器的最低 CPU 和内存 requirements。</target>
+        <target>您可以指定容器的最低 CPU 和記憶體需求。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">276</context>
@@ -3688,7 +3688,7 @@
       </trans-unit>
       <trans-unit id="506587015effc48cbea3c5af7c94abf14ca76ea3" datatype="html">
         <source>Run command</source>
-        <target>运行命令</target>
+        <target>執行命令</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">291</context>
@@ -3696,7 +3696,7 @@
       </trans-unit>
       <trans-unit id="f673c95db1b46263de2e28a17989d58b63b7033b" datatype="html">
         <source>Run command arguments</source>
-        <target>运行命令参数</target>
+        <target>執行命令參數</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">297</context>
@@ -3704,7 +3704,7 @@
       </trans-unit>
       <trans-unit id="7f64de7337ceb8f09ec7db1778676b02f07a73df" datatype="html">
         <source>By default, your containers run the selected image's default entrypoint command. You can use the command options to override the default.</source>
-        <target>默认情况下，容器运行所选镜像的默认 entrypoint command。 您可以使用命令选项覆盖默认值。</target>
+        <target>默認情况下，容器運行所選映像檔的默認 entrypoint 命令。您可以使用命令選項覆蓋默認值。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">303</context>
@@ -3712,7 +3712,7 @@
       </trans-unit>
       <trans-unit id="c6da8aedaa5d3cd0687973b159947e1f22d05b42" datatype="html">
         <source>Run as privileged</source>
-        <target>以特权身份运行</target>
+        <target>以特權身份運行</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">318</context>
@@ -3720,7 +3720,7 @@
       </trans-unit>
       <trans-unit id="02d6959168cab2d5d4a1f513f7e74f1a9c718edf" datatype="html">
         <source>Processes in privileged containers are equivalent to processes running as root on the host.</source>
-        <target>特权容器中的进程等同于在主机上以root身份运行的进程。</target>
+        <target>特權容器中的程序等同於在主機上以 root 身份執行的程序。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">321</context>
@@ -3728,7 +3728,7 @@
       </trans-unit>
       <trans-unit id="d2f13c0a4c3a1e77e3cb724cafab9a0480be0ff3" datatype="html">
         <source>Environment variables available for use in the container. Values can reference other variables using $(VAR_NAME) syntax.</source>
-        <target>可在容器中使用的环境变量。值可以使用 $(VAR_NAME) 语法引用其他变量。</target>
+        <target>可在容器中使用的環境變數。值可以使用 $(VAR_NAME) 語法引用其他變數</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">335</context>
@@ -3823,7 +3823,7 @@
   Upload
 </source>
         <target>
-            上传
+            上傳
 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/input/template.html</context>
@@ -3890,7 +3890,7 @@
       </trans-unit>
       <trans-unit id="4703f18f9d5b6cd5c3c1f8a5d9677ee0ffb29c19" datatype="html">
         <source>Environment variables</source>
-        <target>環境變量</target>
+        <target>環境變數</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/environmentvariables/template.html</context>
           <context context-type="linenumber">19</context>
@@ -3901,7 +3901,7 @@
             Variable name must be a valid C identifier.
           </source>
         <target>
-            變量名必須是有效的 C 標識符
+            變數名必須是有效的 C 標識符
           </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/environmentvariables/template.html</context>
@@ -4170,7 +4170,7 @@
       </trans-unit>
       <trans-unit id="1baabee7b86d4d0935657f254c3b17b5fe4d1257" datatype="html">
         <source>Logs from</source>
-        <target>日志</target>
+        <target>日誌</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/logs/template.html</context>
           <context context-type="linenumber">23</context>
@@ -4194,7 +4194,7 @@
       </trans-unit>
       <trans-unit id="bdf43b20b7101e83458a69a1e5e2008557feca1f" datatype="html">
         <source>Download logs</source>
-        <target>下載日志</target>
+        <target>下載日誌</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/logs/template.html</context>
           <context context-type="linenumber">61</context>
@@ -4205,7 +4205,7 @@
           Logs from <x id="START_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;kd-date>"/><x id="CLOSE_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;/kd-date>"/> to <x id="START_TAG_KD-DATE_1" ctype="x-kd-date" equiv-text="&lt;kd-date>"/><x id="CLOSE_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;/kd-date>"/> UTC
         </source>
         <target>
-          日志來自 <x id="START_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;kd-date>"/><x id="CLOSE_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;/kd-date>"/> to <x id="START_TAG_KD-DATE_1" ctype="x-kd-date" equiv-text="&lt;kd-date>"/><x id="CLOSE_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;/kd-date>"/> UTC
+          日誌來自 <x id="START_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;kd-date>"/><x id="CLOSE_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;/kd-date>"/> to <x id="START_TAG_KD-DATE_1" ctype="x-kd-date" equiv-text="&lt;kd-date>"/><x id="CLOSE_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;/kd-date>"/> UTC
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/logs/template.html</context>
@@ -4254,7 +4254,7 @@
       </trans-unit>
       <trans-unit id="3de87d94cff5d685043f035ac20e6d4521f8edf2" datatype="html">
         <source>Show previous logs</source>
-        <target>顯示以前的日志</target>
+        <target>顯示以前的日誌</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/logs/template.html</context>
           <context context-type="linenumber">151</context>
@@ -4310,7 +4310,7 @@
       </trans-unit>
       <trans-unit id="b129f142540fcf057f58e5ffc3a4bd1aae6f074b" datatype="html">
         <source>System information</source>
-        <target>系統信息</target>
+        <target>系統訊息</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
           <context context-type="linenumber">69</context>
@@ -4334,7 +4334,7 @@
       </trans-unit>
       <trans-unit id="0125b821613421311435ad931bc1d25d45a256df" datatype="html">
         <source>Boot ID</source>
-        <target>啓動 ID</target>
+        <target>啟動 ID</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
           <context context-type="linenumber">85</context>
@@ -4342,7 +4342,7 @@
       </trans-unit>
       <trans-unit id="844dfe8046a0d112eb4e4a03394b029e45fbaea9" datatype="html">
         <source>Kernel version</source>
-        <target>内核版本</target>
+        <target>核心版本</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
           <context context-type="linenumber">90</context>
@@ -4350,7 +4350,7 @@
       </trans-unit>
       <trans-unit id="b398d1a80e8ad17d3e6cb69370e5c49613e16ec9" datatype="html">
         <source>OS Image</source>
-        <target>操作系統鏡像</target>
+        <target>操作系統映像檔</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
           <context context-type="linenumber">95</context>
@@ -4494,7 +4494,7 @@
       </trans-unit>
       <trans-unit id="083338c1e13796fd0259d89493ec7b75be0d14d0" datatype="html">
         <source>Read only</source>
-        <target>只讀</target>
+        <target>唯讀</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">45</context>
@@ -5079,7 +5079,7 @@
       </trans-unit>
       <trans-unit id="2509fab3be38702830979ab6368f37c52bfb8f80" datatype="html">
         <source>Cluster name</source>
-        <target>集群名稱</target>
+        <target>叢集名稱</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">38</context>
@@ -5091,7 +5091,7 @@
       </trans-unit>
       <trans-unit id="409222992640ac7a22c9f4d8d1dd19bf0109bafa" datatype="html">
         <source>Cluster name appears in the browser window title if it is set.</source>
-        <target>如果已設置， 則集群名字將顯示在瀏覽器窗口標題中。</target>
+        <target>如果已設置， 則叢集名字將顯示在瀏覽器標題中。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">32</context>
@@ -5115,7 +5115,7 @@
       </trans-unit>
       <trans-unit id="1bf6e9fbb0027605b8c66e07e51ba28ff29ef67f" datatype="html">
         <source>Logs auto-refresh time interval</source>
-        <target>日志自動刷新時間間隔</target>
+        <target>日誌自動刷新時間間隔</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">62</context>
@@ -5123,7 +5123,7 @@
       </trans-unit>
       <trans-unit id="02458bd7e54108bc7ac4f35fc96aeb3e422fa471" datatype="html">
         <source>Number of seconds between every auto-refresh of logs.</source>
-        <target>每次自動刷新日志的間隔秒數。</target>
+        <target>每次自動刷新日誌的間隔秒數。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">64</context>

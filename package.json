@@ -16,7 +16,7 @@
     "start:prod": "npm run build && ./$npm_package_config_dashboard_binary_path --kubeconfig $npm_package_config_kubeconfig --locale-config $npm_package_config_dashboard_locale_config --auto-generate-certificates --bind-address $npm_package_config_bind_address --sidecar-host $npm_package_config_sidecar_host --port $npm_package_config_port",
     "build": "./aio/scripts/build.sh",
     "build:cross": "./aio/scripts/build.sh -c",
-    "build:frontend": "npm run clean && ng build --aot --prod --outputPath=$npm_package_config_frontend_build_dir",
+    "build:frontend": "npm run clean && ng build --aot --prod --localize --outputPath=$npm_package_config_frontend_build_dir",
     "build:backend": "npm run clean && gulp backend:prod",
     "build:backend:cross": "npm run clean && gulp backend:prod:cross",
     "docker:build": "npm run clean && npm run build:cross && gulp docker-image:release:cross",
@@ -89,8 +89,10 @@
       "ja",
       "ko",
       "zh",
-      "zh-hk",
-      "zh-tw"
+      "zh-Hans",
+      "zh-Hans-SG",
+      "zh-Hant",
+      "zh-Hant-HK"
     ],
     "beautifyOutput": true
   },

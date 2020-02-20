@@ -648,7 +648,7 @@ export interface AppConfig {
   serverTime: number;
 }
 
-interface StringMap {
+export interface StringMap {
   [key: string]: string;
 }
 

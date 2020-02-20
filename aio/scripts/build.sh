@@ -29,31 +29,13 @@ function clean {
 }
 
 function build::frontend {
-  say "\nBuilding frontend for default locale: en"
-  mkdir -p ${FRONTEND_DIR}/en
-  ${NG_BIN} build --aot --prod --outputPath=${TMP_DIR}/frontend/en
-
-  languages=($(find i18n/* -type d|cut -d"/" -f2))
-  ignores=()
-  if [[ -f "i18n/locale_not_for_build_local" ]]; then
-    # Add locales to ignore on local setting file.
-    ignores=($(cat i18n/locale_not_for_build_local))
-  fi
-  for language in "${languages[@]}"; do
-    if [[ " ${ignores[@]} " =~ " ${language} " ]]; then
-      say "Skip building locale: ${language}"
-      continue
-    fi
-
-    mkdir -p ${FRONTEND_DIR}/${language}
-
-    say "Building frontend for locale: ${language}"
-    ${NG_BIN} build --aot \
-                    --prod \
-                    --i18nFile=${I18N_DIR}/${language}/messages.${language}.xlf \
-                    --i18nFormat=xlf \
-                    --i18nLocale=${language} --outputPath=${TMP_DIR}/frontend/${language}
-  done
+  say "\nBuilding localized frontend"
+  mkdir -p ${FRONTEND_DIR}
+  ${NG_BIN} build \
+            --aot \
+            --prod \
+            --localize \
+            --outputPath=${FRONTEND_DIR}
 }
 
 function build::backend {
