@@ -54,7 +54,7 @@
     "fix:i18n": "ng xi18n --outFile ../i18n/messages.xlf && aio/scripts/xliffmerge.sh",
     "clean": "rm -rf .go_workspace .tmp coverage dist npm-debug.log",
     "postversion": "node aio/scripts/version.js",
-    "postinstall": "node aio/scripts/version.js && command -v golangci-lint >/dev/null 2>&1 || { curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(go env GOPATH)/bin v1.23.6; } && go mod download"
+    "postinstall": "node aio/scripts/version.js && command -v golangci-lint >/dev/null 2>&1 || { curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(go env GOPATH)/bin v1.23.6; } && go mod download && ngcc"
   },
   "husky": {
     "hooks": {
@@ -96,13 +96,13 @@
   },
   "dependencies": {
     "@angular/animations": "9.0.2",
-    "@angular/cdk": "8.2.3",
+    "@angular/cdk": "9.0.1",
     "@angular/common": "9.0.2",
     "@angular/compiler": "9.0.2",
     "@angular/core": "9.0.2",
-    "@angular/flex-layout": "8.0.0-beta.27",
+    "@angular/flex-layout": "9.0.0-beta.29",
     "@angular/forms": "9.0.2",
-    "@angular/http": "7.2.16",
+    "@angular/http": "8.0.0-beta.10",
     "@angular/material": "8.2.3",
     "@angular/platform-browser": "9.0.2",
     "@angular/platform-browser-dynamic": "9.0.2",
@@ -151,7 +151,7 @@
     "babel-cli": "6.26.0",
     "babel-preset-env": "1.7.0",
     "babel-register": "6.26.0",
-    "codelyzer": "^5.1.2",
+    "codelyzer": "5.1.2",
     "concurrently": "5.1.0",
     "cypress": "4.0.2",
     "del": "5.1.0",
@@ -189,7 +189,7 @@
     "source-map-explorer": "2.3.1",
     "tar": "6.0.1",
     "through2": "3.0.1",
-    "ts-loader": "^6.2.1",
+    "ts-loader": "6.2.1",
     "ts-node": "8.6.2",
     "tslint": "5.20.1",
     "typescript": "3.7.5",
