@@ -138,7 +138,7 @@ describe('LoginComponent', () => {
       const req = httpTestingController.expectOne('api/v1/login/modes');
       req.flush(mockEnabledAuthenticationModes);
       fixture.detectChanges();
-      expect(fixture.debugElement.queryAll(By.css('mat-radio-button')).length).toEqual(5);
+      expect(fixture.debugElement.queryAll(By.css('mat-radio-button')).length).toEqual(6);
     });
 
     it('renders skip button if login is skippable', () => {
