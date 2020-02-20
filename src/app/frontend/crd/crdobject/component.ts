@@ -16,20 +16,16 @@ import {Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild} from '@a
 import {ActivatedRoute} from '@angular/router';
 import {MatButtonToggleGroup} from '@angular/material/button-toggle';
 import {HttpClient} from '@angular/common/http';
-import {dump as toYaml} from 'js-yaml';
+import {dump as toYaml, load as fromYaml} from 'js-yaml';
 import {Subscription} from 'rxjs';
 import {CRDObjectDetail} from '@api/backendapi';
 import {highlightAuto} from 'highlight.js';
+import {EditorMode} from '../../common/components/textinput/component';
 import {ActionbarService, ResourceMeta} from '../../common/services/global/actionbar';
 import {NamespacedResourceService} from '../../common/services/resource/resource';
 import {EndpointManager, Resource} from '../../common/services/resource/endpoint';
 import {NotificationsService} from '../../common/services/global/notifications';
 import {RawResource} from '../../common/resources/rawresource';
-
-enum Modes {
-  JSON = 'json',
-  YAML = 'yaml',
-}
 
 @Component({selector: 'kd-crd-object-detail', templateUrl: './template.html'})
 export class CRDObjectDetailComponent implements OnInit, OnDestroy {
@@ -39,10 +35,10 @@ export class CRDObjectDetailComponent implements OnInit, OnDestroy {
   private objectSubscription_: Subscription;
   private readonly endpoint_ = EndpointManager.resource(Resource.crd, true);
   object: CRDObjectDetail;
-  modes = Modes;
+  modes = EditorMode;
   isInitialized = false;
-  selectedMode = Modes.YAML;
-  objectRaw: {[s: string]: string} = {};
+  selectedMode = EditorMode.YAML;
+  text = '';
   eventListEndpoint: string;
 
   constructor(
@@ -75,22 +71,20 @@ export class CRDObjectDetailComponent implements OnInit, OnDestroy {
         this.http_
           .get(url)
           .toPromise()
-          .then(response => {
-            this.objectRaw = {
-              json: highlightAuto(`${this.toRawJSON(response)}`, ['json']).value,
-              yaml: highlightAuto(`${toYaml(response)}`, ['yaml']).value,
-            };
-            this.updateText();
-          });
+          .then(response => (this.text = toYaml(response)));
       });
 
-    this.buttonToggleGroup.valueChange.subscribe((selectedMode: Modes) => {
+    this.buttonToggleGroup.valueChange.subscribe((selectedMode: EditorMode) => {
       this.selectedMode = selectedMode;
 
-      if (Object.keys(this.objectRaw).length > 0) {
-        this.updateText();
+      if (this.text) {
+        this.updateText_();
       }
     });
+  }
+
+  getSelectedMode(): EditorMode {
+    return this.selectedMode;
   }
 
   ngOnDestroy(): void {
@@ -98,15 +92,15 @@ export class CRDObjectDetailComponent implements OnInit, OnDestroy {
     this.actionbar_.onDetailsLeave.emit();
   }
 
-  private updateText(): void {
-    this.renderer_.setProperty(
-      this.codeRef.nativeElement,
-      'innerHTML',
-      this.objectRaw[this.selectedMode],
-    );
+  private updateText_(): void {
+    if (this.selectedMode === EditorMode.YAML) {
+      this.text = toYaml(JSON.parse(this.text));
+    } else {
+      this.text = this.toRawJSON_(fromYaml(this.text));
+    }
   }
 
-  private toRawJSON(object: {}): string {
-    return JSON.stringify(object, null, 2);
+  private toRawJSON_(object: {}): string {
+    return JSON.stringify(object, null, '\t');
   }
 }

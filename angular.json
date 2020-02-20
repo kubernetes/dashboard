@@ -27,6 +27,11 @@
                 "glob": "robots.txt",
                 "input": "src/app/frontend/assets",
                 "output": "/"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/ace-builds/src-noconflict",
+                "output": "/ace"
               }
             ],
             "styles": [

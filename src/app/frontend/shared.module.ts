@@ -43,7 +43,6 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MAT_TOOLTIP_DEFAULT_OPTIONS, MatTooltipModule} from '@angular/material/tooltip';
 import {RouterModule} from '@angular/router';
-import {AceEditorModule} from 'ng2-ace-editor';
 import {FilterPipeModule} from 'ngx-filter-pipe';
 
 import {PipesModule} from './common/pipes/module';
@@ -87,7 +86,6 @@ const SHARED_DEPENDENCIES = [
   // Other 3rd party modules
   FlexLayoutModule,
   RouterModule,
-  AceEditorModule,
   FilterPipeModule,
   NgxChartsModule,
 

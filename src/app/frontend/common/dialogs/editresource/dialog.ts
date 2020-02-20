@@ -17,14 +17,10 @@ import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MatButtonToggleGroup} from '@angular/material/button-toggle';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {dump as toYaml, load as fromYaml} from 'js-yaml';
+import {EditorMode} from '../../components/textinput/component';
 
 import {RawResource} from '../../resources/rawresource';
 import {ResourceMeta} from '../../services/global/actionbar';
-
-enum EditorMode {
-  JSON = 'json',
-  YAML = 'yaml',
-}
 
 @Component({
   selector: 'kd-delete-resource-dialog',

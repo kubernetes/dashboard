@@ -29,6 +29,9 @@ import 'zone.js/dist/zone';
 // RxJS is required to support additional Observable methods such as map or switchMap.
 import 'rxjs/Rx';
 
+// Load `$localize` onto the global scope - used if i18n tags appear in Angular templates.
+import '@angular/localize/init';
+
 /* tslint:disable */
 // Global variable is required by some 3rd party libraries such as 'ace-ui'.
 // It was removed in Angular 6.X, more info can be found here:
