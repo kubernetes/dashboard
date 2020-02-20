@@ -3,12 +3,12 @@
   "compilerOptions": {
     "outDir": "../out-tsc/app",
     "baseUrl": "../src/app/frontend",
-    "module": "es6",
     "target": "es5",
     "types": ["node"]
   },
-  "exclude": [
-    "../src/app/frontend/**/*.spec.ts"
+  "files": [
+    "../src/app/frontend/index.ts",
+    "../src/app/frontend/polyfills.ts"
   ],
   "include": [
     "../src/app/frontend/**/*"
