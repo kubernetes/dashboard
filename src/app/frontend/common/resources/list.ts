@@ -14,8 +14,25 @@
 
 import {DataSource} from '@angular/cdk/collections';
 import {HttpParams} from '@angular/common/http';
-import { ChangeDetectorRef, ComponentFactoryResolver, EventEmitter, Inject, Input, OnDestroy, OnInit, Output, QueryList, Type, ViewChild, ViewChildren, ViewContainerRef, Directive } from '@angular/core';
-import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {
+  ChangeDetectorRef,
+  ComponentFactoryResolver,
+  EventEmitter,
+  Inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  QueryList,
+  Type,
+  ViewChild,
+  ViewChildren,
+  ViewContainerRef,
+  Directive,
+} from '@angular/core';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
 import {Router} from '@angular/router';
 import {Event as KdEvent, Resource, ResourceList} from '@api/backendapi';
 import {

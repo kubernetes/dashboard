@@ -14,7 +14,7 @@
 
 import {Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {MatButtonToggleGroup} from '@angular/material';
+import {MatButtonToggleGroup} from '@angular/material/button-toggle';
 import {HttpClient} from '@angular/common/http';
 import {dump as toYaml} from 'js-yaml';
 import {Subscription} from 'rxjs';

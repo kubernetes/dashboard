@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {InjectionToken} from '@angular/core';
-import {MatTooltipDefaultOptions} from '@angular/material';
+import {MatTooltipDefaultOptions} from '@angular/material/tooltip';
 
 export let CONFIG_DI_TOKEN = new InjectionToken<Config>('kd.config');
 

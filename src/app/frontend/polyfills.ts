@@ -23,9 +23,6 @@ import 'core-js/es/reflect';
 // Required to support Web Animations `@angular/platform-browser/animations`:
 import 'web-animations-js';
 
-// Required to support Angular Material animations.
-import 'hammerjs';
-
 // Zone JS is required by default for Angular itself.
 import 'zone.js/dist/zone';
 
