@@ -95,7 +95,9 @@
         </context-group>
       </trans-unit>
       <trans-unit id="db0cf322b4bfc4f0466c9826810e3800dc4687dd" datatype="html">
-        <source>Download logs file</source>
+        <source>
+  Download logs file
+</source>
         <target>Log-Datei herunterladen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/dialogs/download/template.html</context>
@@ -111,7 +113,9 @@
         </context-group>
       </trans-unit>
       <trans-unit id="f3e083d1d6d142b5f581e51f74b3b11a49612eb8" datatype="html">
-        <source>Preparing file to download...</source>
+        <source>
+      Preparing file to download...
+    </source>
         <target>Datei wird zum Download vorbereitet...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/dialogs/download/template.html</context>
@@ -119,7 +123,9 @@
         </context-group>
       </trans-unit>
       <trans-unit id="535be7fc12bbc76e3463e1cf9a959596141067cb" datatype="html">
-        <source>File is ready to download!</source>
+        <source>
+      File is ready to download!
+    </source>
         <target>Die Datei ist zum Download bereit!</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/dialogs/download/template.html</context>
@@ -211,7 +217,9 @@
         </context-group>
       </trans-unit>
       <trans-unit id="8bad5230cdda2f915bc80289f8d81675e97e8db9" datatype="html">
-        <source>Scale</source>
+        <source>
+    Scale
+  </source>
         <target>Skalieren</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/dialogs/scaleresource/template.html</context>
@@ -219,7 +227,9 @@
         </context-group>
       </trans-unit>
       <trans-unit id="e67bebb0291cbe76b190e83225878cdd3a8a6df6" datatype="html">
-        <source>Cancel</source>
+        <source>
+    Cancel
+  </source>
         <target>Abbrechen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/dialogs/scaleresource/template.html</context>
@@ -3997,7 +4007,7 @@
       </trans-unit>
       <trans-unit id="2fdd214de3db3734f51986e229a09b61536a7a18" datatype="html">
         <source>
-          Target port must be less than 65536.
+            Target port must be less than 65536.
           </source>
         <target>Ziel-Port muss kleiner als 65536 sein.</target>
         <context-group purpose="location">
