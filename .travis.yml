@@ -3,12 +3,16 @@
 # * https://docs.travis-ci.com/user/customizing-the-build/
 # * https://docs.travis-ci.com/user/reference/bionic/
 # * https://docs.travis-ci.com/user/installing-dependencies/
+# * https://docs.travis-ci.com/user/firefox/
 # * https://config.travis-ci.com/ref/job/addons/apt
 
 sudo: required
 dist: bionic
 language: node_js
 node_js: 12.16.0
+
+addons:
+  firefox: "latest"
 
 apt:
   packages:
