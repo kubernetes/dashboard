@@ -180,7 +180,7 @@
     "node-sass": "4.13.1",
     "q": "1.5.1",
     "raw-loader": "4.0.0",
-    "run-node": "1.0.0",
+    "run-node": "2.0.0",
     "sass-lint": "1.13.1",
     "sass-loader": "7.3.0",
     "scssfmt": "1.0.7",
