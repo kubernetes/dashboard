@@ -15,6 +15,7 @@
 package heapster
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -222,7 +223,7 @@ func (self heapsterClient) allInOneDownload(selector heapsterSelector, metricNam
 // unmarshalType performs heapster GET request to the specifies path and transfers
 // the data to the interface provided.
 func (self heapsterClient) unmarshalType(path string, v interface{}) error {
-	rawData, err := self.client.Get("/model/" + path).DoRaw()
+	rawData, err := self.client.Get("/model/" + path).DoRaw(context.TODO())
 	if err != nil {
 		return err
 	}

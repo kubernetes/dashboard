@@ -15,6 +15,8 @@
 package replicaset
 
 import (
+	"context"
+
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
@@ -27,7 +29,7 @@ import (
 func GetReplicaSetServices(client client.Interface, dsQuery *dataselect.DataSelectQuery,
 	namespace, name string) (*service.ServiceList, error) {
 
-	replicaSet, err := client.AppsV1().ReplicaSets(namespace).Get(name, metaV1.GetOptions{})
+	replicaSet, err := client.AppsV1().ReplicaSets(namespace).Get(context.TODO(), name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}

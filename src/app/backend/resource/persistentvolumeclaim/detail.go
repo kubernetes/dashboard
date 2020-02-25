@@ -15,6 +15,7 @@
 package persistentvolumeclaim
 
 import (
+	"context"
 	"log"
 
 	v1 "k8s.io/api/core/v1"
@@ -32,7 +33,7 @@ type PersistentVolumeClaimDetail struct {
 func GetPersistentVolumeClaimDetail(client kubernetes.Interface, namespace string, name string) (*PersistentVolumeClaimDetail, error) {
 	log.Printf("Getting details of %s persistent volume claim", name)
 
-	pvc, err := client.CoreV1().PersistentVolumeClaims(namespace).Get(name, metaV1.GetOptions{})
+	pvc, err := client.CoreV1().PersistentVolumeClaims(namespace).Get(context.TODO(), name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}

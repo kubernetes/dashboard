@@ -15,6 +15,7 @@
 package plugin
 
 import (
+	"context"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -26,6 +27,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/plugin/apis/v1alpha1"
 	fakePluginClientset "github.com/kubernetes/dashboard/src/app/backend/plugin/client/clientset/versioned/fake"
 	coreV1 "k8s.io/api/core/v1"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -37,7 +39,7 @@ func TestGetPluginList(t *testing.T) {
 
 	pcs := fakePluginClientset.NewSimpleClientset()
 
-	_, _ = pcs.DashboardV1alpha1().Plugins(ns).Create(&v1alpha1.Plugin{
+	_, _ = pcs.DashboardV1alpha1().Plugins(ns).Create(context.TODO(), &v1alpha1.Plugin{
 		ObjectMeta: v1.ObjectMeta{Name: pluginName, Namespace: ns},
 		Spec: v1alpha1.PluginSpec{
 			Source: v1alpha1.Source{
@@ -45,7 +47,7 @@ func TestGetPluginList(t *testing.T) {
 					LocalObjectReference: coreV1.LocalObjectReference{Name: cfgMapName},
 				},
 				Filename: filename}},
-	})
+	}, metaV1.CreateOptions{})
 
 	dsQuery := dataselect.DataSelectQuery{
 		PaginationQuery: &dataselect.PaginationQuery{
@@ -74,7 +76,7 @@ func Test_handlePluginList(t *testing.T) {
 	h := Handler{&fakeClientManager{}}
 
 	pcs, _ := h.cManager.PluginClient(nil)
-	_, _ = pcs.DashboardV1alpha1().Plugins(ns).Create(&v1alpha1.Plugin{
+	_, _ = pcs.DashboardV1alpha1().Plugins(ns).Create(context.TODO(), &v1alpha1.Plugin{
 		ObjectMeta: v1.ObjectMeta{Name: pluginName, Namespace: ns},
 		Spec: v1alpha1.PluginSpec{
 			Source: v1alpha1.Source{
@@ -82,7 +84,7 @@ func Test_handlePluginList(t *testing.T) {
 					LocalObjectReference: coreV1.LocalObjectReference{Name: cfgMapName},
 				},
 				Filename: filename}},
-	})
+	}, metaV1.CreateOptions{})
 
 	httpReq, _ := http.NewRequest(http.MethodGet, "/api/v1/plugin/default?itemsPerPage=10&page=1&sortBy=d,creationTimestamp", nil)
 	req := restful.NewRequest(httpReq)

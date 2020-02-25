@@ -15,6 +15,7 @@
 package csrf
 
 import (
+	"context"
 	"log"
 
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -34,7 +35,7 @@ func (self *csrfTokenManager) init() {
 	log.Printf("Initializing csrf token from %s secret", api.CsrfTokenSecretName)
 	tokenSecret, err := self.client.CoreV1().
 		Secrets(args.Holder.GetNamespace()).
-		Get(api.CsrfTokenSecretName, v1.GetOptions{})
+		Get(context.TODO(), api.CsrfTokenSecretName, v1.GetOptions{})
 
 	if err != nil {
 		panic(err)
@@ -45,7 +46,7 @@ func (self *csrfTokenManager) init() {
 		log.Printf("Empty token. Generating and storing in a secret %s", api.CsrfTokenSecretName)
 		token = api.GenerateCSRFKey()
 		tokenSecret.StringData = map[string]string{api.CsrfTokenSecretData: token}
-		_, err := self.client.CoreV1().Secrets(args.Holder.GetNamespace()).Update(tokenSecret)
+		_, err := self.client.CoreV1().Secrets(args.Holder.GetNamespace()).Update(context.TODO(), tokenSecret, v1.UpdateOptions{})
 		if err != nil {
 			panic(err)
 		}

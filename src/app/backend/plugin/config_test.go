@@ -15,6 +15,7 @@
 package plugin
 
 import (
+	"context"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -45,7 +46,7 @@ func Test_handleConfig(t *testing.T) {
 	h := Handler{&fakeClientManager{}}
 
 	pcs, _ := h.cManager.PluginClient(nil)
-	_, _ = pcs.DashboardV1alpha1().Plugins(ns).Create(&v1alpha1.Plugin{
+	_, _ = pcs.DashboardV1alpha1().Plugins(ns).Create(context.TODO(), &v1alpha1.Plugin{
 		ObjectMeta: metaV1.ObjectMeta{Name: pluginName, Namespace: ns},
 		Spec: v1alpha1.PluginSpec{
 			Source: v1alpha1.Source{
@@ -53,7 +54,7 @@ func Test_handleConfig(t *testing.T) {
 					LocalObjectReference: coreV1.LocalObjectReference{Name: cfgMapName},
 				},
 				Filename: filename}},
-	})
+	}, metaV1.CreateOptions{})
 
 	httpReq, _ := http.NewRequest(http.MethodGet, "/api/v1/plugin/config", nil)
 	req := restful.NewRequest(httpReq)

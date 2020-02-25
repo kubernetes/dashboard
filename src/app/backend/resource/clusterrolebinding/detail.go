@@ -15,6 +15,8 @@
 package clusterrolebinding
 
 import (
+	"context"
+
 	rbac "k8s.io/api/rbac/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
@@ -35,7 +37,7 @@ type ClusterRoleBindingDetail struct {
 
 // GetClusterRoleBindingDetail gets ClusterRoleBinding details.
 func GetClusterRoleBindingDetail(client k8sClient.Interface, name string) (*ClusterRoleBindingDetail, error) {
-	rawObject, err := client.RbacV1().ClusterRoleBindings().Get(name, metaV1.GetOptions{})
+	rawObject, err := client.RbacV1().ClusterRoleBindings().Get(context.TODO(), name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}

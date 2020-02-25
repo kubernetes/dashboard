@@ -15,6 +15,7 @@
 package persistentvolume
 
 import (
+	"context"
 	"log"
 
 	v1 "k8s.io/api/core/v1"
@@ -35,7 +36,7 @@ type PersistentVolumeDetail struct {
 func GetPersistentVolumeDetail(client client.Interface, name string) (*PersistentVolumeDetail, error) {
 	log.Printf("Getting details of %s persistent volume", name)
 
-	rawPersistentVolume, err := client.CoreV1().PersistentVolumes().Get(name, metaV1.GetOptions{})
+	rawPersistentVolume, err := client.CoreV1().PersistentVolumes().Get(context.TODO(), name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}

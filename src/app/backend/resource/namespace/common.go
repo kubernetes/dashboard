@@ -15,6 +15,7 @@
 package namespace
 
 import (
+	"context"
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
@@ -39,7 +40,7 @@ func CreateNamespace(spec *NamespaceSpec, client kubernetes.Interface) error {
 		},
 	}
 
-	_, err := client.CoreV1().Namespaces().Create(namespace)
+	_, err := client.CoreV1().Namespaces().Create(context.TODO(), namespace, metaV1.CreateOptions{})
 	return err
 }
 

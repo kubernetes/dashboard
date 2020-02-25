@@ -15,6 +15,7 @@
 package job
 
 import (
+	"context"
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
@@ -53,7 +54,7 @@ func GetJobPods(client k8sClient.Interface, metricClient metricapi.MetricClient,
 
 // Returns array of api pods targeting job with given name.
 func getRawJobPods(client k8sClient.Interface, petSetName, namespace string) ([]v1.Pod, error) {
-	job, err := client.BatchV1().Jobs(namespace).Get(petSetName, metaV1.GetOptions{})
+	job, err := client.BatchV1().Jobs(namespace).Get(context.TODO(), petSetName, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}

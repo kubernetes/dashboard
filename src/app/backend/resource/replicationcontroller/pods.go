@@ -15,6 +15,7 @@
 package replicationcontroller
 
 import (
+	"context"
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
@@ -51,7 +52,7 @@ func GetReplicationControllerPods(client k8sClient.Interface,
 }
 
 func getRawReplicationControllerPods(client k8sClient.Interface, rcName, namespace string) ([]v1.Pod, error) {
-	rc, err := client.CoreV1().ReplicationControllers(namespace).Get(rcName, metaV1.GetOptions{})
+	rc, err := client.CoreV1().ReplicationControllers(namespace).Get(context.TODO(), rcName, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}

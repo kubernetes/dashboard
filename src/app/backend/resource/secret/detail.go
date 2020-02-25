@@ -15,6 +15,7 @@
 package secret
 
 import (
+	"context"
 	"log"
 
 	v1 "k8s.io/api/core/v1"
@@ -39,7 +40,7 @@ type SecretDetail struct {
 func GetSecretDetail(client kubernetes.Interface, namespace, name string) (*SecretDetail, error) {
 	log.Printf("Getting details of %s secret in %s namespace\n", name, namespace)
 
-	rawSecret, err := client.CoreV1().Secrets(namespace).Get(name, metaV1.GetOptions{})
+	rawSecret, err := client.CoreV1().Secrets(namespace).Get(context.TODO(), name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}

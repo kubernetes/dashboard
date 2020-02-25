@@ -15,6 +15,8 @@
 package heapster
 
 import (
+	"context"
+
 	"k8s.io/client-go/rest"
 )
 
@@ -30,7 +32,7 @@ type HeapsterRESTClient interface {
 // RequestInterface is an interface that allows to make operations on pure request object.
 // Separation is done to allow testing.
 type RequestInterface interface {
-	DoRaw() ([]byte, error)
+	DoRaw(context.Context) ([]byte, error)
 	AbsPath(segments ...string) *rest.Request
 }
 
@@ -59,7 +61,7 @@ func (self inClusterHeapsterClient) HealthCheck() error {
 		Name("heapster").
 		SubResource("proxy").
 		Suffix("/healthz").
-		DoRaw()
+		DoRaw(context.TODO())
 	return err
 }
 
@@ -77,6 +79,6 @@ func (c remoteHeapsterClient) Get(path string) RequestInterface {
 // HealthCheck does a health check of the application.
 // Returns nil if connection to application can be established, error object otherwise.
 func (self remoteHeapsterClient) HealthCheck() error {
-	_, err := self.Get("healthz").AbsPath("/").DoRaw()
+	_, err := self.Get("healthz").AbsPath("/").DoRaw(context.TODO())
 	return err
 }

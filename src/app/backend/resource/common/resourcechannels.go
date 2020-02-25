@@ -15,6 +15,8 @@
 package common
 
 import (
+	"context"
+
 	apps "k8s.io/api/apps/v1"
 	autoscaling "k8s.io/api/autoscaling/v1"
 	batch "k8s.io/api/batch/v1"
@@ -139,7 +141,7 @@ func GetServiceListChannel(client client.Interface, nsQuery *NamespaceQuery,
 		Error: make(chan error, numReads),
 	}
 	go func() {
-		list, err := client.CoreV1().Services(nsQuery.ToRequestParam()).List(api.ListEverything)
+		list, err := client.CoreV1().Services(nsQuery.ToRequestParam()).List(context.TODO(), api.ListEverything)
 		var filteredItems []v1.Service
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
@@ -172,7 +174,7 @@ func GetIngressListChannel(client client.Interface, nsQuery *NamespaceQuery,
 		Error: make(chan error, numReads),
 	}
 	go func() {
-		list, err := client.ExtensionsV1beta1().Ingresses(nsQuery.ToRequestParam()).List(api.ListEverything)
+		list, err := client.ExtensionsV1beta1().Ingresses(nsQuery.ToRequestParam()).List(context.TODO(), api.ListEverything)
 		var filteredItems []extensions.Ingress
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
@@ -206,7 +208,7 @@ func GetLimitRangeListChannel(client client.Interface, nsQuery *NamespaceQuery,
 	}
 
 	go func() {
-		list, err := client.CoreV1().LimitRanges(nsQuery.ToRequestParam()).List(api.ListEverything)
+		list, err := client.CoreV1().LimitRanges(nsQuery.ToRequestParam()).List(context.TODO(), api.ListEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -231,7 +233,7 @@ func GetNodeListChannel(client client.Interface, numReads int) NodeListChannel {
 	}
 
 	go func() {
-		list, err := client.CoreV1().Nodes().List(api.ListEverything)
+		list, err := client.CoreV1().Nodes().List(context.TODO(), api.ListEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -257,7 +259,7 @@ func GetNamespaceListChannel(client client.Interface, numReads int) NamespaceLis
 	}
 
 	go func() {
-		list, err := client.CoreV1().Namespaces().List(api.ListEverything)
+		list, err := client.CoreV1().Namespaces().List(context.TODO(), api.ListEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -289,7 +291,7 @@ func GetEventListChannelWithOptions(client client.Interface,
 	}
 
 	go func() {
-		list, err := client.CoreV1().Events(nsQuery.ToRequestParam()).List(options)
+		list, err := client.CoreV1().Events(nsQuery.ToRequestParam()).List(context.TODO(), options)
 		var filteredItems []v1.Event
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
@@ -325,7 +327,7 @@ func GetEndpointListChannelWithOptions(client client.Interface,
 	}
 
 	go func() {
-		list, err := client.CoreV1().Endpoints(nsQuery.ToRequestParam()).List(opt)
+		list, err := client.CoreV1().Endpoints(nsQuery.ToRequestParam()).List(context.TODO(), opt)
 
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
@@ -359,7 +361,7 @@ func GetPodListChannelWithOptions(client client.Interface, nsQuery *NamespaceQue
 	}
 
 	go func() {
-		list, err := client.CoreV1().Pods(nsQuery.ToRequestParam()).List(options)
+		list, err := client.CoreV1().Pods(nsQuery.ToRequestParam()).List(context.TODO(), options)
 		var filteredItems []v1.Pod
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
@@ -395,7 +397,7 @@ func GetReplicationControllerListChannel(client client.Interface,
 
 	go func() {
 		list, err := client.CoreV1().ReplicationControllers(nsQuery.ToRequestParam()).
-			List(api.ListEverything)
+			List(context.TODO(), api.ListEverything)
 		var filteredItems []v1.ReplicationController
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
@@ -430,7 +432,7 @@ func GetDeploymentListChannel(client client.Interface,
 
 	go func() {
 		list, err := client.AppsV1().Deployments(nsQuery.ToRequestParam()).
-			List(api.ListEverything)
+			List(context.TODO(), api.ListEverything)
 		var filteredItems []apps.Deployment
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
@@ -471,7 +473,7 @@ func GetReplicaSetListChannelWithOptions(client client.Interface, nsQuery *Names
 
 	go func() {
 		list, err := client.AppsV1().ReplicaSets(nsQuery.ToRequestParam()).
-			List(options)
+			List(context.TODO(), options)
 		var filteredItems []apps.ReplicaSet
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
@@ -503,7 +505,7 @@ func GetDaemonSetListChannel(client client.Interface, nsQuery *NamespaceQuery, n
 	}
 
 	go func() {
-		list, err := client.AppsV1().DaemonSets(nsQuery.ToRequestParam()).List(api.ListEverything)
+		list, err := client.AppsV1().DaemonSets(nsQuery.ToRequestParam()).List(context.TODO(), api.ListEverything)
 		var filteredItems []apps.DaemonSet
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
@@ -535,7 +537,7 @@ func GetJobListChannel(client client.Interface,
 	}
 
 	go func() {
-		list, err := client.BatchV1().Jobs(nsQuery.ToRequestParam()).List(api.ListEverything)
+		list, err := client.BatchV1().Jobs(nsQuery.ToRequestParam()).List(context.TODO(), api.ListEverything)
 		var filteredItems []batch.Job
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
@@ -566,7 +568,7 @@ func GetCronJobListChannel(client client.Interface, nsQuery *NamespaceQuery, num
 	}
 
 	go func() {
-		list, err := client.BatchV1beta1().CronJobs(nsQuery.ToRequestParam()).List(api.ListEverything)
+		list, err := client.BatchV1beta1().CronJobs(nsQuery.ToRequestParam()).List(context.TODO(), api.ListEverything)
 		var filteredItems []batch2.CronJob
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
@@ -599,7 +601,7 @@ func GetStatefulSetListChannel(client client.Interface,
 	}
 
 	go func() {
-		statefulSets, err := client.AppsV1().StatefulSets(nsQuery.ToRequestParam()).List(api.ListEverything)
+		statefulSets, err := client.AppsV1().StatefulSets(nsQuery.ToRequestParam()).List(context.TODO(), api.ListEverything)
 		var filteredItems []apps.StatefulSet
 		for _, item := range statefulSets.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
@@ -633,7 +635,7 @@ func GetConfigMapListChannel(client client.Interface, nsQuery *NamespaceQuery,
 	}
 
 	go func() {
-		list, err := client.CoreV1().ConfigMaps(nsQuery.ToRequestParam()).List(api.ListEverything)
+		list, err := client.CoreV1().ConfigMaps(nsQuery.ToRequestParam()).List(context.TODO(), api.ListEverything)
 		var filteredItems []v1.ConfigMap
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
@@ -667,7 +669,7 @@ func GetSecretListChannel(client client.Interface, nsQuery *NamespaceQuery,
 	}
 
 	go func() {
-		list, err := client.CoreV1().Secrets(nsQuery.ToRequestParam()).List(api.ListEverything)
+		list, err := client.CoreV1().Secrets(nsQuery.ToRequestParam()).List(context.TODO(), api.ListEverything)
 		var filteredItems []v1.Secret
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
@@ -699,7 +701,7 @@ func GetRoleListChannel(client client.Interface, nsQuery *NamespaceQuery, numRea
 	}
 
 	go func() {
-		list, err := client.RbacV1().Roles(nsQuery.ToRequestParam()).List(api.ListEverything)
+		list, err := client.RbacV1().Roles(nsQuery.ToRequestParam()).List(context.TODO(), api.ListEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -724,7 +726,7 @@ func GetClusterRoleListChannel(client client.Interface, numReads int) ClusterRol
 	}
 
 	go func() {
-		list, err := client.RbacV1().ClusterRoles().List(api.ListEverything)
+		list, err := client.RbacV1().ClusterRoles().List(context.TODO(), api.ListEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -749,7 +751,7 @@ func GetRoleBindingListChannel(client client.Interface, nsQuery *NamespaceQuery,
 	}
 
 	go func() {
-		list, err := client.RbacV1().RoleBindings(nsQuery.ToRequestParam()).List(api.ListEverything)
+		list, err := client.RbacV1().RoleBindings(nsQuery.ToRequestParam()).List(context.TODO(), api.ListEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -775,7 +777,7 @@ func GetClusterRoleBindingListChannel(client client.Interface,
 	}
 
 	go func() {
-		list, err := client.RbacV1().ClusterRoleBindings().List(api.ListEverything)
+		list, err := client.RbacV1().ClusterRoleBindings().List(context.TODO(), api.ListEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -801,7 +803,7 @@ func GetPersistentVolumeListChannel(client client.Interface,
 	}
 
 	go func() {
-		list, err := client.CoreV1().PersistentVolumes().List(api.ListEverything)
+		list, err := client.CoreV1().PersistentVolumes().List(context.TODO(), api.ListEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -828,7 +830,7 @@ func GetPersistentVolumeClaimListChannel(client client.Interface, nsQuery *Names
 	}
 
 	go func() {
-		list, err := client.CoreV1().PersistentVolumeClaims(nsQuery.ToRequestParam()).List(api.ListEverything)
+		list, err := client.CoreV1().PersistentVolumeClaims(nsQuery.ToRequestParam()).List(context.TODO(), api.ListEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -853,7 +855,7 @@ func GetCustomResourceDefinitionChannelV1(client apiextensionsclientset.Interfac
 	}
 
 	go func() {
-		list, err := client.ApiextensionsV1().CustomResourceDefinitions().List(api.ListEverything)
+		list, err := client.ApiextensionsV1().CustomResourceDefinitions().List(context.TODO(), api.ListEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -878,7 +880,7 @@ func GetCustomResourceDefinitionChannelV1beta1(client apiextensionsclientset.Int
 	}
 
 	go func() {
-		list, err := client.ApiextensionsV1beta1().CustomResourceDefinitions().List(api.ListEverything)
+		list, err := client.ApiextensionsV1beta1().CustomResourceDefinitions().List(context.TODO(), api.ListEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -905,7 +907,7 @@ func GetResourceQuotaListChannel(client client.Interface, nsQuery *NamespaceQuer
 	}
 
 	go func() {
-		list, err := client.CoreV1().ResourceQuotas(nsQuery.ToRequestParam()).List(api.ListEverything)
+		list, err := client.CoreV1().ResourceQuotas(nsQuery.ToRequestParam()).List(context.TODO(), api.ListEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -932,7 +934,7 @@ func GetHorizontalPodAutoscalerListChannel(client client.Interface, nsQuery *Nam
 
 	go func() {
 		list, err := client.AutoscalingV1().HorizontalPodAutoscalers(nsQuery.ToRequestParam()).
-			List(api.ListEverything)
+			List(context.TODO(), api.ListEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -957,7 +959,7 @@ func GetStorageClassListChannel(client client.Interface, numReads int) StorageCl
 	}
 
 	go func() {
-		list, err := client.StorageV1().StorageClasses().List(api.ListEverything)
+		list, err := client.StorageV1().StorageClasses().List(context.TODO(), api.ListEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err

@@ -15,6 +15,7 @@
 package v1beta1
 
 import (
+	"context"
 	"encoding/json"
 
 	apiextensions "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
@@ -36,7 +37,7 @@ func GetCustomResourceObjectList(client apiextensionsclientset.Interface, config
 
 	customResourceDefinition, err := client.ApiextensionsV1beta1().
 		CustomResourceDefinitions().
-		Get(crdName, metav1.GetOptions{})
+		Get(context.TODO(), crdName, metav1.GetOptions{})
 	nonCriticalErrors, criticalError := errors.HandleError(err)
 	if criticalError != nil {
 		return nil, criticalError
@@ -51,7 +52,7 @@ func GetCustomResourceObjectList(client apiextensionsclientset.Interface, config
 	raw, err := restClient.Get().
 		NamespaceIfScoped(namespace.ToRequestParam(), customResourceDefinition.Spec.Scope == apiextensions.NamespaceScoped).
 		Resource(customResourceDefinition.Spec.Names.Plural).
-		Do().Raw()
+		Do(context.TODO()).Raw()
 	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
 	if criticalError != nil {
 		return nil, criticalError
@@ -82,7 +83,7 @@ func GetCustomResourceObjectDetail(client apiextensionsclientset.Interface, name
 
 	customResourceDefinition, err := client.ApiextensionsV1beta1().
 		CustomResourceDefinitions().
-		Get(crdName, metav1.GetOptions{})
+		Get(context.TODO(), crdName, metav1.GetOptions{})
 	nonCriticalErrors, criticalError := errors.HandleError(err)
 	if criticalError != nil {
 		return nil, criticalError
@@ -97,7 +98,7 @@ func GetCustomResourceObjectDetail(client apiextensionsclientset.Interface, name
 	raw, err := restClient.Get().
 		NamespaceIfScoped(namespace.ToRequestParam(), customResourceDefinition.Spec.Scope == apiextensions.NamespaceScoped).
 		Resource(customResourceDefinition.Spec.Names.Plural).
-		Name(name).Do().Raw()
+		Name(name).Do(context.TODO()).Raw()
 	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
 	if criticalError != nil {
 		return nil, criticalError

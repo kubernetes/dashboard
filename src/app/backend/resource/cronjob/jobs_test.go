@@ -15,6 +15,7 @@
 package cronjob_test
 
 import (
+	"context"
 	"strings"
 	"testing"
 
@@ -83,7 +84,7 @@ func TestTriggerCronJob(t *testing.T) {
 	}
 
 	//check if client has the newly triggered job
-	list, err := client.BatchV1().Jobs(namespace).List(metaV1.ListOptions{})
+	list, err := client.BatchV1().Jobs(namespace).List(context.TODO(), metaV1.ListOptions{})
 	if err != nil {
 		t.Error(err)
 	}

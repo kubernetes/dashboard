@@ -15,6 +15,8 @@
 package role
 
 import (
+	"context"
+
 	rbac "k8s.io/api/rbac/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
@@ -33,7 +35,7 @@ type RoleDetail struct {
 
 // GetRoleDetail gets Role details.
 func GetRoleDetail(client k8sClient.Interface, namespace, name string) (*RoleDetail, error) {
-	rawObject, err := client.RbacV1().Roles(namespace).Get(name, metaV1.GetOptions{})
+	rawObject, err := client.RbacV1().Roles(namespace).Get(context.TODO(), name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}

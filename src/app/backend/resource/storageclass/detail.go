@@ -15,6 +15,7 @@
 package storageclass
 
 import (
+	"context"
 	"log"
 
 	storage "k8s.io/api/storage/v1"
@@ -32,7 +33,7 @@ type StorageClassDetail struct {
 func GetStorageClass(client kubernetes.Interface, name string) (*StorageClassDetail, error) {
 	log.Printf("Getting details of %s storage class", name)
 
-	sc, err := client.StorageV1().StorageClasses().Get(name, metaV1.GetOptions{})
+	sc, err := client.StorageV1().StorageClasses().Get(context.TODO(), name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}

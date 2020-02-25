@@ -15,6 +15,7 @@
 package pod
 
 import (
+	"context"
 	"encoding/base64"
 	"fmt"
 	"log"
@@ -100,7 +101,7 @@ func GetPodDetail(client kubernetes.Interface, metricClient metricapi.MetricClie
 		SecretList:    common.GetSecretListChannel(client, common.NewSameNamespaceQuery(namespace), 1),
 	}
 
-	pod, err := client.CoreV1().Pods(namespace).Get(name, metaV1.GetOptions{})
+	pod, err := client.CoreV1().Pods(namespace).Get(context.TODO(), name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
