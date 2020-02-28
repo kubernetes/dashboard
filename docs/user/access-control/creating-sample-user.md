@@ -20,7 +20,7 @@ metadata:
 
 ## Create ClusterRoleBinding
 
-In most cases after provisioning our cluster using `kops` or `kubeadm` or any other popular tool, the `ClusterRole` `admin-Role` already exists in the cluster. We can use it and create only `ClusterRoleBinding` for our `ServiceAccount`.
+In most cases after provisioning our cluster using `kops` or `kubeadm` or any other popular tool, the `ClusterRole` `cluster-admin` already exists in the cluster. We can use it and create only `ClusterRoleBinding` for our `ServiceAccount`.
 
 **NOTE:** `apiVersion` of `ClusterRoleBinding` resource may differ between Kubernetes versions. Prior to Kubernetes `v1.8` the `apiVersion` was `rbac.authorization.k8s.io/v1beta1`.
 
