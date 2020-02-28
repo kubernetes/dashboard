@@ -82,7 +82,7 @@ limitations under the License.
              class="kd-logs-element"
              [ngClass]="{'kd-logs-element-compact': logService.getCompact(), 'kd-logs-element': !logService.getCompact()}">
           <span class="kd-log-line"
-                [innerHTML]="item | kdSafeHtml"></span>
+                [innerHTML]="item | kdSafeHtml:'color'"></span>
         </div>
       </div>
 
