@@ -18,6 +18,11 @@ import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 const ansiColorClass = require('ansi-to-html');
 const ansiColor = new ansiColorClass();
 
+enum TextMode {
+  Default = 'Default',
+  Colored = 'Colored',
+}
+
 /**
  * Formats the given value as raw HTML to display to the user.
  */
@@ -25,7 +30,7 @@ const ansiColor = new ansiColorClass();
 export class SafeHtmlFormatter {
   constructor(private readonly sanitizer: DomSanitizer) {}
 
-  transform(value: string, translate: string): SafeHtml {
+  transform(value: string, mode: TextMode = TextMode.Default): SafeHtml {
     let result: SafeHtml = null;
     let content = this.sanitizer.sanitize(
       SecurityContext.HTML,
@@ -33,11 +38,16 @@ export class SafeHtmlFormatter {
     );
 
     // Handle conversion of ANSI color codes.
-    if (translate === 'color') {
-      content = ansiColor.toHtml(content.replace(/&#27;/g, '\u001b'));
-      result = this.sanitizer.bypassSecurityTrustHtml(content);
-    } else {
-      result = content;
+    switch (mode) {
+      case TextMode.Colored:
+        content = ansiColor.toHtml(content.replace(/&#27;/g, '\u001b'));
+        result = this.sanitizer.bypassSecurityTrustHtml(content);
+        break;
+
+      default:
+        // TextMode.Default
+        result = content;
+        break;
     }
 
     return result;
