@@ -21,7 +21,7 @@ import {
   OnDestroy,
   ViewChild,
 } from '@angular/core';
-import {MatSnackBar} from '@angular/material';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import {ActivatedRoute, Router} from '@angular/router';
 import {
   PodContainerList,

@@ -28,8 +28,11 @@ import {
   ViewChild,
   ViewChildren,
   ViewContainerRef,
+  Directive,
 } from '@angular/core';
-import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
 import {Router} from '@angular/router';
 import {Event as KdEvent, Resource, ResourceList} from '@api/backendapi';
 import {
@@ -55,6 +58,7 @@ import {NotificationsService} from '../services/global/notifications';
 import {ParamsService} from '../services/global/params';
 import {KdStateService} from '../services/global/state';
 
+@Directive()
 export abstract class ResourceListBase<T extends ResourceList, R extends Resource>
   implements OnInit, OnDestroy {
   // Base properties
@@ -351,6 +355,7 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
   abstract map(value: T): R[];
 }
 
+@Directive()
 export abstract class ResourceListWithStatuses<
   T extends ResourceList,
   R extends Resource

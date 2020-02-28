@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {ConfigMapKeyRef, Container, EnvVar, SecretKeyRef} from 'typings/backendapi';
+import {Component, Input, OnChanges} from '@angular/core';
+import {ConfigMapKeyRef, Container, EnvVar, SecretKeyRef} from '@api/backendapi';
 import {KdStateService} from '../../services/global/state';
 
 @Component({

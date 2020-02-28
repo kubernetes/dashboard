@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {MatDialog} from '@angular/material';
+import {MatDialog} from '@angular/material/dialog';
 import {HTMLInputEvent, KdFile} from '@api/frontendapi';
 import {AlertDialog, AlertDialogConfig} from 'common/dialogs/alert/dialog';
 

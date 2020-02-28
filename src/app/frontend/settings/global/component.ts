@@ -14,7 +14,7 @@
 
 import {Component, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {MatDialog} from '@angular/material';
+import {MatDialog} from '@angular/material/dialog';
 import {GlobalSettings} from '@api/backendapi';
 import {GlobalSettingsService} from '../../common/services/global/globalsettings';
 import {TitleService} from '../../common/services/global/title';

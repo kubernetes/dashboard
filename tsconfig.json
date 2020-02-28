@@ -12,7 +12,6 @@
     },
     "outDir": ".tmp/out-tsc",
     "target": "esnext",
-    "module": "es6",
     "moduleResolution": "node",
     "sourceMap": true,
     "strict": false,
