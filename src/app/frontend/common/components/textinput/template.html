@@ -14,12 +14,5 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<ace-editor [text]="text"
-            [options]="options"
-            [readOnly]="readOnly"
-            [autoUpdateContent]="true"
-            [mode]="mode"
-            [theme]="theme"
-            [ngClass]="{'kd-border': border}"
-            (textChange)="onTextChange($event.toString())"
-            class="kd-ace"></ace-editor>
+<div #editor
+     class="kd-ace"></div>

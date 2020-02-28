@@ -26,143 +26,160 @@ const routes: Routes = [
     children: [
       {
         path: 'error',
-        loadChildren: 'error/module#ErrorModule',
+        loadChildren: () => import('error/module').then(m => m.ErrorModule),
       },
 
       // Cluster group
       {
         path: 'cluster',
-        loadChildren: 'resource/cluster/module#ClusterModule',
+        loadChildren: () => import('resource/cluster/module').then(m => m.ClusterModule),
       },
       {
         path: 'clusterrole',
-        loadChildren: 'resource/cluster/clusterrole/module#ClusterRoleModule',
+        loadChildren: () =>
+          import('resource/cluster/clusterrole/module').then(m => m.ClusterRoleModule),
       },
       {
         path: 'namespace',
-        loadChildren: 'resource/cluster/namespace/module#NamespaceModule',
+        loadChildren: () =>
+          import('resource/cluster/namespace/module').then(m => m.NamespaceModule),
       },
       {
         path: 'node',
-        loadChildren: 'resource/cluster/node/module#NodeModule',
+        loadChildren: () => import('resource/cluster/node/module').then(m => m.NodeModule),
       },
       {
         path: 'persistentvolume',
-        loadChildren: 'resource/cluster/persistentvolume/module#PersistentVolumeModule',
+        loadChildren: () =>
+          import('resource/cluster/persistentvolume/module').then(m => m.PersistentVolumeModule),
       },
       {
         path: 'storageclass',
-        loadChildren: 'resource/cluster/storageclass/module#StorageClassModule',
+        loadChildren: () =>
+          import('resource/cluster/storageclass/module').then(m => m.StorageClassModule),
       },
 
       // Overview
       {
         path: 'overview',
-        loadChildren: 'overview/module#OverviewModule',
+        loadChildren: () => import('overview/module').then(m => m.OverviewModule),
       },
 
       // Workloads group
       {
         path: 'workloads',
-        loadChildren: 'resource/workloads/module#WorkloadsModule',
+        loadChildren: () => import('resource/workloads/module').then(m => m.WorkloadsModule),
       },
       {
         path: 'cronjob',
-        loadChildren: 'resource/workloads/cronjob/module#CronJobModule',
+        loadChildren: () => import('resource/workloads/cronjob/module').then(m => m.CronJobModule),
       },
       {
         path: 'daemonset',
-        loadChildren: 'resource/workloads/daemonset/module#DaemonSetModule',
+        loadChildren: () =>
+          import('resource/workloads/daemonset/module').then(m => m.DaemonSetModule),
       },
       {
         path: 'deployment',
-        loadChildren: 'resource/workloads/deployment/module#DeploymentModule',
+        loadChildren: () =>
+          import('resource/workloads/deployment/module').then(m => m.DeploymentModule),
       },
       {
         path: 'job',
-        loadChildren: 'resource/workloads/job/module#JobModule',
+        loadChildren: () => import('resource/workloads/job/module').then(m => m.JobModule),
       },
       {
         path: 'pod',
-        loadChildren: 'resource/workloads/pod/module#PodModule',
+        loadChildren: () => import('resource/workloads/pod/module').then(m => m.PodModule),
       },
       {
         path: 'replicaset',
-        loadChildren: 'resource/workloads/replicaset/module#ReplicaSetModule',
+        loadChildren: () =>
+          import('resource/workloads/replicaset/module').then(m => m.ReplicaSetModule),
       },
       {
         path: 'replicationcontroller',
-        loadChildren: 'resource/workloads/replicationcontroller/module#ReplicationControllerModule',
+        loadChildren: () =>
+          import('resource/workloads/replicationcontroller/module').then(
+            m => m.ReplicationControllerModule,
+          ),
       },
       {
         path: 'statefulset',
-        loadChildren: 'resource/workloads/statefulset/module#StatefulSetModule',
+        loadChildren: () =>
+          import('resource/workloads/statefulset/module').then(m => m.StatefulSetModule),
       },
 
       // Discovery and load balancing group
       {
         path: 'discovery',
-        loadChildren: 'resource/discovery/module#DiscoveryModule',
+        loadChildren: () => import('resource/discovery/module').then(m => m.DiscoveryModule),
       },
       {
         path: 'ingress',
-        loadChildren: 'resource/discovery/ingress/module#IngressModule',
+        loadChildren: () => import('resource/discovery/ingress/module').then(m => m.IngressModule),
       },
       {
         path: 'service',
-        loadChildren: 'resource/discovery/service/module#ServiceModule',
+        loadChildren: () => import('resource/discovery/service/module').then(m => m.ServiceModule),
       },
       {
         path: 'plugin',
-        loadChildren: 'plugin/module#PluginModule',
+        loadChildren: () => import('plugin/module').then(m => m.PluginModule),
       },
 
       // Config group
       {
         path: 'config',
-        loadChildren: 'resource/config/module#ConfigModule',
+        loadChildren: () => import('resource/config/module').then(m => m.ConfigModule),
       },
       {
         path: 'configmap',
-        loadChildren: 'resource/config/configmap/module#ConfigMapModule',
+        loadChildren: () => import('resource/config/configmap/module').then(m => m.ConfigMapModule),
       },
       {
         path: 'persistentvolumeclaim',
-        loadChildren: 'resource/config/persistentvolumeclaim/module#PersistentVolumeClaimModule',
+        loadChildren: () =>
+          import('resource/config/persistentvolumeclaim/module').then(
+            m => m.PersistentVolumeClaimModule,
+          ),
       },
       {
         path: 'secret',
-        loadChildren: 'resource/config/secret/module#SecretModule',
+        loadChildren: () => import('resource/config/secret/module').then(m => m.SecretModule),
       },
 
       // Custom resource definitions
-      {path: 'customresourcedefinition', loadChildren: 'crd/module#CrdModule'},
+      {
+        path: 'customresourcedefinition',
+        loadChildren: () => import('crd/module').then(m => m.CrdModule),
+      },
 
       // Others
       {
         path: 'settings',
-        loadChildren: 'settings/module#SettingsModule',
+        loadChildren: () => import('settings/module').then(m => m.SettingsModule),
       },
       {
         path: 'about',
-        loadChildren: 'about/module#AboutModule',
+        loadChildren: () => import('about/module').then(m => m.AboutModule),
       },
 
       {
         path: 'create',
-        loadChildren: 'create/module#CreateModule',
+        loadChildren: () => import('create/module').then(m => m.CreateModule),
       },
       {
         path: 'log',
-        loadChildren: 'logs/module#LogsModule',
+        loadChildren: () => import('logs/module').then(m => m.LogsModule),
       },
       {
         path: 'shell',
-        loadChildren: 'shell/module#ShellModule',
+        loadChildren: () => import('shell/module').then(m => m.ShellModule),
       },
       {
         path: 'search',
-        loadChildren: 'search/module#SearchModule',
+        loadChildren: () => import('search/module').then(m => m.SearchModule),
         runGuardsAndResolvers: 'always',
       },
     ],

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Component, Input, OnInit} from '@angular/core';
-import {MatDialog, MatDialogConfig} from '@angular/material';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {StringMap} from '@api/backendapi';
 
 import {ChipDialog} from './chipdialog/dialog';

@@ -20,12 +20,21 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
-	"strings"
 
 	"github.com/golang/glog"
-	"github.com/kubernetes/dashboard/src/app/backend/args"
 	"golang.org/x/text/language"
+
+	"github.com/kubernetes/dashboard/src/app/backend/args"
 )
+
+// TODO(floreks): Remove that once new locale codes are supported by the browsers.
+// For backward compatibility only.
+var localeMap = map[string]string{
+	"zh-cn": "zh-Hans",
+	"zh-sg": "zh-Hans-SG",
+	"zh-tw": "zh-Hant",
+	"zh-hk": "zh-Hant-HK",
+}
 
 const defaultLocaleDir = "en"
 const assetsDir = "public"
@@ -115,14 +124,25 @@ func (handler *LocaleHandler) determineLocalizedDir(locale string) string {
 	assetsDir := getAssetsDir()
 	defaultDir := filepath.Join(assetsDir, defaultLocaleDir)
 	tags, _, err := language.ParseAcceptLanguage(locale)
-	if (err != nil) || (len(tags) == 0) {
+	if err != nil || len(tags) == 0 {
 		return defaultDir
 	}
 
 	locales := handler.SupportedLocales
 	tag, _, confidence := language.NewMatcher(locales).Match(tags...)
-	matchedLocale := strings.ToLower(tag.String())
-	if confidence != language.Exact {
+
+	if confidence < language.Exact {
+		tag, confidence, err = mapLocale(locale, locales)
+		if err != nil {
+			return defaultDir
+		}
+	}
+
+	matchedLocale := tag.String()
+	// If locale match is exact, then we have to manually look for proper locale code as language
+	// library contains a bug that returns invalid locale string.
+	// Related issue: https://github.com/golang/go/issues/24211
+	if confidence == language.Exact {
 		matchedLocale = ""
 		for _, l := range locales {
 			base, _ := tag.Base()
@@ -137,4 +157,20 @@ func (handler *LocaleHandler) determineLocalizedDir(locale string) string {
 		return localeDir
 	}
 	return defaultDir
+}
+
+// Used to map old locale codes to new ones, i.e. zh-cn -> zh-Hans
+func mapLocale(locale string, locales []language.Tag) (language.Tag, language.Confidence, error) {
+	if mappedLocale, ok := localeMap[locale]; ok {
+		locale = mappedLocale
+		tags, _, err := language.ParseAcceptLanguage(locale)
+		if (err != nil) || (len(tags) == 0) {
+			return language.Tag{}, language.No, err
+		}
+
+		tag, _, confidence := language.NewMatcher(locales).Match(tags...)
+		return tag, confidence, nil
+	}
+
+	return language.Tag{}, language.No, nil
 }

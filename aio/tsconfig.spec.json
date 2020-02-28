@@ -3,7 +3,6 @@
   "compilerOptions": {
     "outDir": "../out-tsc/spec",
     "baseUrl": "../src/app/frontend",
-    "module": "commonjs",
     "target": "es5",
     "types": [
       "jasmine",
@@ -11,7 +10,6 @@
     ]
   },
   "files": [
-    "../src/app/frontend/index.spec.ts",
     "../src/app/frontend/polyfills.ts"
   ],
   "include": [

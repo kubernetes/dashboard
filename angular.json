@@ -7,15 +7,53 @@
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
+      "i18n": {
+        "sourceLocale": {
+          "code": "en",
+          "baseHref": "/"
+        },
+        "locales": {
+          "de": {
+            "translation": "i18n/de/messages.de.xlf",
+            "baseHref": "/"
+          },
+          "fr": {
+            "translation": "i18n/fr/messages.fr.xlf",
+            "baseHref": "/"
+          },
+          "ja": {
+            "translation": "i18n/ja/messages.ja.xlf",
+            "baseHref": "/"
+          },
+          "ko": {
+            "translation": "i18n/ko/messages.ko.xlf",
+            "baseHref": "/"
+          },
+          "zh": {
+            "translation": "i18n/zh/messages.zh.xlf",
+            "baseHref": "/"
+          },
+          "zh-Hans": {
+            "translation": "i18n/zh-Hans/messages.zh-Hans.xlf",
+            "baseHref": "/"
+          },
+          "zh-Hant": {
+            "translation": "i18n/zh-Hant/messages.zh-Hant.xlf",
+            "baseHref": "/"
+          }
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": ".tmp/frontend",
             "index": "src/app/frontend/index.html",
             "main": "src/app/frontend/index.ts",
             "tsConfig": "src/app/frontend/../../../aio/tsconfig.app.json",
             "polyfills": "src/app/frontend/polyfills.ts",
+            "i18nMissingTranslation": "error",
             "assets": [
               {
                 "glob": "**/*",
@@ -26,6 +64,11 @@
                 "glob": "robots.txt",
                 "input": "src/app/frontend/assets",
                 "output": "/"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/ace-builds/src-noconflict",
+                "output": "/ace"
               }
             ],
             "styles": [
@@ -45,6 +88,12 @@
           },
           "configurations": {
             "production": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -116,7 +165,7 @@
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "kd",
-      "styleext": "scss"
+      "style": "scss"
     },
     "@schematics/angular:directive": {
       "prefix": "kd"
