@@ -4,9 +4,6 @@ src/app/frontend/environments/version.ts
 # Temporary translation file:
 i18n/messages.new.xlf
 
-# Local setting for locales not to build
-i18n/locale_not_for_build_local
-
 # Local copies of dependencies that should stay on developers' local machines:
 node_modules/
 
