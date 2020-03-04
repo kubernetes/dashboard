@@ -15,7 +15,7 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Component, Inject, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {AlertDialog, AlertDialogConfig} from '../../../../common/dialogs/alert/dialog';
 import {CsrfTokenService} from '../../../../common/services/global/csrftoken';
 import {CONFIG} from '../../../../index.config';

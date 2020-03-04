@@ -3,12 +3,16 @@
 # * https://docs.travis-ci.com/user/customizing-the-build/
 # * https://docs.travis-ci.com/user/reference/bionic/
 # * https://docs.travis-ci.com/user/installing-dependencies/
+# * https://docs.travis-ci.com/user/firefox/
 # * https://config.travis-ci.com/ref/job/addons/apt
 
 sudo: required
 dist: bionic
 language: node_js
-node_js: 11.6.0
+node_js: 12.16.0
+
+addons:
+  firefox: "latest"
 
 apt:
   packages:
@@ -34,7 +38,7 @@ before_install:
   - export GOPROXY=https://proxy.golang.org
   - export PATH=$PATH:$GOPATH/bin
   - export NODE_OPTIONS=--max-old-space-size=8192
-  - eval "$(gimme 1.12.6)"
+  - eval "$(gimme 1.13.6)"
 
 # `npm ci` will run between `before_install` and `before_script`.
 

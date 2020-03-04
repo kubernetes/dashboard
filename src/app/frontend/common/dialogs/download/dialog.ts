@@ -14,7 +14,7 @@
 
 import {HttpClient, HttpEventType, HttpRequest, HttpResponse} from '@angular/common/http';
 import {Component, Inject, OnDestroy} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import * as FileSaver from 'file-saver';
 import {Subscription} from 'rxjs';
 

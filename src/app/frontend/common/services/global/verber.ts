@@ -14,7 +14,7 @@
 
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {EventEmitter, Injectable} from '@angular/core';
-import {MatDialog, MatDialogConfig} from '@angular/material';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {ObjectMeta, TypeMeta} from '@api/backendapi';
 
 import {AlertDialog, AlertDialogConfig} from '../../dialogs/alert/dialog';

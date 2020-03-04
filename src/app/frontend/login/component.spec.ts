@@ -16,7 +16,8 @@ import {HttpClientTestingModule, HttpTestingController} from '@angular/common/ht
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatButtonModule, MatRadioModule} from '@angular/material';
+import {MatButtonModule} from '@angular/material/button';
+import {MatRadioModule} from '@angular/material/radio';
 import {By} from '@angular/platform-browser';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -138,7 +139,7 @@ describe('LoginComponent', () => {
       const req = httpTestingController.expectOne('api/v1/login/modes');
       req.flush(mockEnabledAuthenticationModes);
       fixture.detectChanges();
-      expect(fixture.debugElement.queryAll(By.css('mat-radio-button')).length).toEqual(5);
+      expect(fixture.debugElement.queryAll(By.css('mat-radio-button')).length).toEqual(6);
     });
 
     it('renders skip button if login is skippable', () => {

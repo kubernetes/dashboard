@@ -6,6 +6,7 @@ Based on current browser locale the Dashboard can be displayed in one of the sup
 |---------------------|---------|------------|
 | English (default)   | en      | -          |
 | French              | fr      | -          |
+| German              | de      | -          |
 | Japanese            | ja      | -          |
 | Korean              | ko      | -          |
 | Simplified Chinese  | zh      | -          |

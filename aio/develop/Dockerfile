@@ -19,27 +19,22 @@
 
 # golang is based on debian:jessie
 # Specify version to clarify which version we use.
-FROM golang:1.12
+FROM golang:1.13-buster
 
 # Install Node.js. Go is already installed.
 # A small tweak, apt-get update is already run by the nodejs setup script,
 # so there's no need to run it again.
-RUN curl -sL https://deb.nodesource.com/setup_11.x | bash - \
-  && apt-get install -y --no-install-recommends \
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
+	&& apt-get install -y --no-install-recommends \
 	nodejs \
 	patch \
 	chromium \
 	bc \
 	sudo \
+	git \
 	gosu \
 	nano \
 	less \
-	unzip \
-	libssl-dev \
-	libghc-zlib-dev \
-	libcurl4-gnutls-dev \
-	libexpat1-dev \
-	gettext \
 	xvfb \
 	libgtk-3-0 \
 	libgconf-2-4 \
@@ -47,11 +42,6 @@ RUN curl -sL https://deb.nodesource.com/setup_11.x | bash - \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& apt-get clean
 
-# Re-install git
-# NOTE(shu-muto): husky-3.x requires git>=2.13.2 but golang:1.12 image based on debian 9 (stretch)
-#                 does not satisfy the requirement. Its git version is 2.11.0.
-#                 So re-install specified version of git from source code.
-RUN GIT_VERSION=2.22.0 && apt-get remove -y git && cd /tmp && rm -fr git* && wget https://github.com/git/git/archive/v${GIT_VERSION}.zip -O git.zip && unzip git.zip && mv git-${GIT_VERSION} git && cd git && make prefix=/usr all && make prefix=/usr install
 ENV GIT_EDITOR=nano
 
 # Install firefox from Mozilla binaries
@@ -59,9 +49,6 @@ RUN mkdir -p /usr/local/lib/firefox
 RUN wget "https://download.mozilla.org/?product=firefox-latest-ssl&os=linux64&lang=en-US" -O /tmp/firefox.tar.bz2
 RUN tar -xjf /tmp/firefox.tar.bz2 -C /usr/local/lib
 RUN ln -s /usr/local/lib/firefox/firefox /usr/local/bin/firefox
-
-# Install dependencies. This will take a while.
-RUN npm install -g npm@latest gulp@4.0.2 @angular/cli@8.0.3 ngx-i18nsupport
 
 # Set environment variable for JavaScript tests.
 ENV CHROME_BIN=/usr/bin/chromium
@@ -101,10 +88,6 @@ RUN curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.s
 
 # Install delve for debuging go files.
 RUN go get github.com/go-delve/delve/cmd/dlv
-
-# Install code-generator. `go get` rises error, use `git clone` instead.
-RUN mkdir -p /go/src/k8s.io
-RUN git clone https://github.com/kubernetes/code-generator /go/src/k8s.io/code-generator
 
 # Enable go mod. Note(shu-mutou): do not set this before `go get`
 ENV GO111MODULE=on

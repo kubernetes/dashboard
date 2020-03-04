@@ -14,7 +14,7 @@
 
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {CRDVersion} from '@api/backendapi';
-import {MatTableDataSource} from '@angular/material';
+import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
   selector: 'kd-crd-versions-list',
