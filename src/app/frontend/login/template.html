@@ -45,8 +45,7 @@ limitations under the License.
                             i18n>
                 Make sure that support for basic authentication is enabled in the cluster. To find out more about how to configure basic authentication, please refer to the <a href="https://kubernetes.io/docs/admin/authentication/">Authenticating</a> and <a href="https://kubernetes.io/docs/admin/authorization/abac/">ABAC Mode</a> sections.
               </ng-container>
-              <ng-container *ngSwitchCase="loginModes.Token"
-                            i18n>
+              <ng-container *ngSwitchCase="loginModes.Token">
                 Pour obtenir votre token et accéder au dashboard:  <a href="{{ urlLogin }}">{{ urlLogin }}</a> 
               </ng-container>
             </div>
