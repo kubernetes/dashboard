@@ -356,9 +356,9 @@ func DeployAppFromFile(cfg *rest.Config, spec *AppDeploymentFromFileSpec) (bool,
 		}
 
 		if resource.Namespaced {
-			_, err = dynamicClient.Resource(groupVersionResource).Namespace(namespace).Create(data, metaV1.CreateOptions{})
+			_, err = dynamicClient.Resource(groupVersionResource).Namespace(namespace).Create(context.TODO(), data, metaV1.CreateOptions{})
 		} else {
-			_, err = dynamicClient.Resource(groupVersionResource).Create(data, metaV1.CreateOptions{})
+			_, err = dynamicClient.Resource(groupVersionResource).Create(context.TODO(), data, metaV1.CreateOptions{})
 		}
 
 		if err != nil {

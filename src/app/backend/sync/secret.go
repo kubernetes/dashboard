@@ -135,7 +135,7 @@ func (self *secretSynchronizer) Update(obj runtime.Object) error {
 // Delete implements Synchronizer interface. See Synchronizer for more information.
 func (self *secretSynchronizer) Delete() error {
 	return self.client.CoreV1().Secrets(self.namespace).Delete(context.TODO(), self.name,
-		&metaV1.DeleteOptions{GracePeriodSeconds: new(int64)})
+		metaV1.DeleteOptions{GracePeriodSeconds: new(int64)})
 }
 
 // RegisterActionHandler implements Synchronizer interface. See Synchronizer for more information.

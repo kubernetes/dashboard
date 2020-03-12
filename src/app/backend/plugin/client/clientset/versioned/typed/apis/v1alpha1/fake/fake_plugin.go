@@ -101,7 +101,7 @@ func (c *FakePlugins) Update(ctx context.Context, plugin *v1alpha1.Plugin, opts 
 }
 
 // Delete takes name of the plugin and deletes it. Returns an error if one occurs.
-func (c *FakePlugins) Delete(ctx context.Context, name string, options *v1.DeleteOptions) error {
+func (c *FakePlugins) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
 	_, err := c.Fake.
 		Invokes(testing.NewDeleteAction(pluginsResource, c.ns, name), &v1alpha1.Plugin{})
 
@@ -109,8 +109,8 @@ func (c *FakePlugins) Delete(ctx context.Context, name string, options *v1.Delet
 }
 
 // DeleteCollection deletes a collection of objects.
-func (c *FakePlugins) DeleteCollection(ctx context.Context, options *v1.DeleteOptions, listOptions v1.ListOptions) error {
-	action := testing.NewDeleteCollectionAction(pluginsResource, c.ns, listOptions)
+func (c *FakePlugins) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
+	action := testing.NewDeleteCollectionAction(pluginsResource, c.ns, listOpts)
 
 	_, err := c.Fake.Invokes(action, &v1alpha1.PluginList{})
 	return err
