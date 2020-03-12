@@ -34,6 +34,7 @@ export class GraphComponent implements OnInit, OnChanges {
   customColors = {};
   yAxisLabel = '';
   yAxisTickFormatting = (value: number) => `${value} ${this.yAxisSuffix_}`;
+  yScaleMax = '';
 
   private suffixMap_: Map<number, string> = new Map<number, string>();
   private yAxisSuffix_ = '';
@@ -62,6 +63,7 @@ export class GraphComponent implements OnInit, OnChanges {
     let series: FormattedValue[];
     let highestSuffixPower = 0;
     let highestSuffix = '';
+    let maxValue = 0;
 
     switch (this.graphType) {
       case GraphType.Memory:
@@ -91,6 +93,15 @@ export class GraphComponent implements OnInit, OnChanges {
     });
 
     this.yAxisSuffix_ = highestSuffix;
+
+    // Find out max value
+    this.metric.dataPoints.forEach(value => {
+      if (maxValue < value.y) {
+        maxValue = value.y;
+      }
+    });
+    // Set yScaleMax not to show area under zero
+    this.yScaleMax = maxValue ? '' : '1';
 
     this.metric.dataPoints.forEach((_, idx) => {
       points.push({
