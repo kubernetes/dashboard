@@ -55,6 +55,7 @@ export class GlobalSettingsComponent implements OnInit {
     this.settings.clusterName = this.settings_.getClusterName();
     this.settings.logsAutoRefreshTimeInterval = this.settings_.getLogsAutoRefreshTimeInterval();
     this.settings.resourceAutoRefreshTimeInterval = this.settings_.getResourceAutoRefreshTimeInterval();
+    this.settings.disableAccessDeniedNotifications = this.settings_.getDisableAccessDeniedNotifications();
   }
 
   onLoadError(): void {

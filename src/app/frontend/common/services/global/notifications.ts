@@ -14,6 +14,7 @@
 
 import {Injectable} from '@angular/core';
 import {K8sError} from '@api/backendapi';
+import {GlobalSettingsService} from './globalsettings';
 
 export class Notification {
   message: string;
@@ -53,6 +54,8 @@ export enum NotificationSeverity {
 export class NotificationsService {
   private notifications_: Notification[] = [];
 
+  constructor(private readonly _globalSettingsService: GlobalSettingsService) {}
+
   push(message: string, severity: NotificationSeverity): void {
     this.notifications_ = [new Notification(message, severity), ...this.notifications_];
   }
@@ -60,9 +63,18 @@ export class NotificationsService {
   pushErrors(errors: K8sError[]): void {
     if (errors) {
       errors.forEach(error => {
-        this.push(error.ErrStatus.message, NotificationSeverity.error);
+        if (
+          !this._globalSettingsService.getDisableAccessDeniedNotifications() ||
+          !this._isAccessDeniedError(error)
+        ) {
+          this.push(error.ErrStatus.message, NotificationSeverity.error);
+        }
       });
     }
+  }
+
+  private _isAccessDeniedError(error: K8sError): boolean {
+    return error.ErrStatus.message.indexOf('cannot list resource') >= 0;
   }
 
   remove(index: number): void {
