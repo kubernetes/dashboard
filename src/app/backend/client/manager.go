@@ -264,10 +264,15 @@ func (self *clientManager) VerberClient(req *restful.Request, config *rest.Confi
 		return nil, err
 	}
 
-	return NewResourceVerber(k8sClient.CoreV1().RESTClient(),
-		k8sClient.ExtensionsV1beta1().RESTClient(), k8sClient.AppsV1().RESTClient(),
-		k8sClient.BatchV1().RESTClient(), k8sClient.BatchV1beta1().RESTClient(), k8sClient.AutoscalingV1().RESTClient(),
-		k8sClient.StorageV1().RESTClient(), k8sClient.RbacV1().RESTClient(),
+	return NewResourceVerber(
+		k8sClient.CoreV1().RESTClient(),
+		k8sClient.ExtensionsV1beta1().RESTClient(),
+		k8sClient.AppsV1().RESTClient(),
+		k8sClient.BatchV1().RESTClient(),
+		k8sClient.BatchV1beta1().RESTClient(),
+		k8sClient.AutoscalingV1().RESTClient(),
+		k8sClient.StorageV1().RESTClient(),
+		k8sClient.RbacV1().RESTClient(),
 		apiextensionsRestClient,
 		pluginsclient.DashboardV1alpha1().RESTClient(),
 		config), nil

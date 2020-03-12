@@ -20,7 +20,6 @@ import (
 	"log"
 	"strings"
 
-	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	apps "k8s.io/api/apps/v1"
 	api "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/resource"
@@ -34,6 +33,8 @@ import (
 	"k8s.io/client-go/dynamic"
 	client "k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
+
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 )
 
 const (
@@ -304,8 +305,8 @@ func DeployAppFromFile(cfg *rest.Config, spec *AppDeploymentFromFileSpec) (bool,
 	log.Printf("Namespace for deploy from file: %s\n", spec.Namespace)
 	d := yaml.NewYAMLOrJSONDecoder(reader, 4096)
 	for {
-		data := unstructured.Unstructured{}
-		if err := d.Decode(&data); err != nil {
+		data := &unstructured.Unstructured{}
+		if err := d.Decode(data); err != nil {
 			if err == io.EOF {
 				return true, nil
 			}
@@ -347,11 +348,16 @@ func DeployAppFromFile(cfg *rest.Config, spec *AppDeploymentFromFileSpec) (bool,
 		}
 
 		groupVersionResource := schema.GroupVersionResource{Group: gv.Group, Version: gv.Version, Resource: resource.Name}
+		namespace := spec.Namespace
 
 		if strings.Compare(spec.Namespace, "_all") == 0 {
-			_, err = dynamicClient.Resource(groupVersionResource).Namespace(data.GetNamespace()).Create(&data, metaV1.CreateOptions{})
+			namespace = data.GetNamespace()
+		}
+
+		if resource.Namespaced {
+			_, err = dynamicClient.Resource(groupVersionResource).Namespace(namespace).Create(data, metaV1.CreateOptions{})
 		} else {
-			_, err = dynamicClient.Resource(groupVersionResource).Namespace(spec.Namespace).Create(&data, metaV1.CreateOptions{})
+			_, err = dynamicClient.Resource(groupVersionResource).Create(data, metaV1.CreateOptions{})
 		}
 
 		if err != nil {
