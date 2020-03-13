@@ -159,7 +159,7 @@
           }
         }
       }
-    },
+    }
   },
   "defaultProject": "kubernetes-dashboard",
   "schematics": {
@@ -170,5 +170,8 @@
     "@schematics/angular:directive": {
       "prefix": "kd"
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }
