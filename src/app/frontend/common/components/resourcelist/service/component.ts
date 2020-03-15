@@ -86,7 +86,7 @@ export class ServiceListComponent extends ResourceListWithStatuses<ServiceList, 
       default:
         break;
     }
-    return (resource.clusterIP.length > 0);
+    return resource.clusterIP.length > 0;
   }
 
   getDisplayColumns(): string[] {
