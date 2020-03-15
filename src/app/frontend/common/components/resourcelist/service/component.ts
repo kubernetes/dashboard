@@ -80,7 +80,7 @@ export class ServiceListComponent extends ResourceListWithStatuses<ServiceList, 
         if (resource.externalEndpoints.length === 0) {
           return false;
         }
-        // fall through to share clusterIP existence test
+        break;
       case 'ClusterIP':
       case 'NodePort':
       default:
