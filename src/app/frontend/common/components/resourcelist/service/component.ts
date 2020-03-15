@@ -74,7 +74,11 @@ export class ServiceListComponent extends ResourceListWithStatuses<ServiceList, 
    */
   isInSuccessState(resource: Service): boolean {
     if (resource.type === 'ExternalName') return true;
-    if ((resource.type === 'LoadBalancer') && (resource.externalEndpoints.length === 0)) return false;
+    if (
+      resource.type === "LoadBalancer" &&
+      resource.externalEndpoints.length === 0
+    )
+      return false;
     return (resource.clusterIP.length > 0);
   }
 
