@@ -132,7 +132,7 @@
     "rxjs": "6.5.4",
     "rxjs-compat": "6.5.4",
     "sockjs-client": "1.4.0",
-    "systemjs": "6.2.5",
+    "systemjs": "6.2.6",
     "truncate-url": "1.0.0",
     "tslib": "1.11.1",
     "web-animations-js": "2.3.2",
