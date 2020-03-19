@@ -263,6 +263,10 @@ router-outlet::after {
   width: 2 * $baseline-grid;
 }
 
+.mat-slider {
+  margin-left: -$baseline-grid;
+}
+
 .kd-comma-separated-item {
   display: inline-block;
 

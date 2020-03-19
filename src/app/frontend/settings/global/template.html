@@ -97,6 +97,17 @@ limitations under the License.
           </span>
         </div>
       </kd-settings-entry>
+      <kd-settings-entry key="Disable access denied notification"
+                         i18n-key
+                         desc="Hides all access denied warnings in the notification panel."
+                         i18n-desc>
+        <div fxFlex
+             fxLayoutAlign=" center">
+          <mat-slide-toggle color="primary"
+                            name="disableAccessDeniedNotifications"
+                            [(ngModel)]="settings.disableAccessDeniedNotifications"></mat-slide-toggle>
+        </div>
+      </kd-settings-entry>
       <br><br>
       <button [disabled]="form.pristine"
               type="submit"

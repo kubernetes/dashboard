@@ -13,12 +13,12 @@
 // limitations under the License.
 
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {EventEmitter, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {GlobalSettings} from '@api/backendapi';
 import {onSettingsFailCallback, onSettingsLoadCallback} from '@api/frontendapi';
-import {ReplaySubject} from 'rxjs';
+import {of, ReplaySubject} from 'rxjs';
 import {Observable} from 'rxjs/Observable';
-import {publishReplay, refCount} from 'rxjs/operators';
+import {catchError, switchMap} from 'rxjs/operators';
 
 import {AuthorizerService} from './authorizer';
 
@@ -32,6 +32,7 @@ export class GlobalSettingsService {
     clusterName: '',
     logsAutoRefreshTimeInterval: 5,
     resourceAutoRefreshTimeInterval: 5,
+    disableAccessDeniedNotifications: false,
   };
   private isInitialized_ = false;
 
@@ -49,8 +50,8 @@ export class GlobalSettingsService {
   }
 
   load(onLoad?: onSettingsLoadCallback, onFail?: onSettingsFailCallback): void {
-    this.authorizer_
-      .proxyGET<GlobalSettings>(this.endpoint_)
+    this.http_
+      .get<GlobalSettings>(this.endpoint_)
       .toPromise()
       .then(
         settings => {
@@ -65,6 +66,13 @@ export class GlobalSettingsService {
           if (onFail) onFail(err);
         },
       );
+  }
+
+  canI(): Observable<boolean> {
+    return this.authorizer_
+      .proxyGET<GlobalSettings>(this.endpoint_)
+      .pipe(switchMap(_ => of(true)))
+      .pipe(catchError(_ => of(false)));
   }
 
   save(settings: GlobalSettings): Observable<GlobalSettings> {
@@ -91,5 +99,9 @@ export class GlobalSettingsService {
 
   getResourceAutoRefreshTimeInterval(): number {
     return this.settings_.resourceAutoRefreshTimeInterval;
+  }
+
+  getDisableAccessDeniedNotifications(): boolean {
+    return this.settings_.disableAccessDeniedNotifications;
   }
 }
