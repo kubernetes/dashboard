@@ -12,21 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import {GlobalSettings} from '@api/backendapi';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 import {GlobalSettingsService} from '../../common/services/global/globalsettings';
 import {TitleService} from '../../common/services/global/title';
 
 import {SaveAnywayDialog} from './saveanywaysdialog/dialog';
 
-@Component({selector: 'kd-global-settings', templateUrl: './template.html'})
-export class GlobalSettingsComponent implements OnInit {
+@Component({
+  selector: 'kd-global-settings',
+  templateUrl: './template.html',
+  styleUrls: ['style.scss'],
+})
+export class GlobalSettingsComponent implements OnInit, OnDestroy {
   // Keep it in sync with ConcurrentSettingsChangeError constant from the backend.
   private readonly concurrentChangeErr_ = 'settings changed since last reload';
   settings: GlobalSettings = {} as GlobalSettings;
   hasLoadError = false;
+
+  private readonly unsubscribe_ = new Subject<void>();
 
   constructor(
     private readonly settings_: GlobalSettingsService,
@@ -38,6 +46,11 @@ export class GlobalSettingsComponent implements OnInit {
     this.load();
   }
 
+  ngOnDestroy(): void {
+    this.unsubscribe_.next();
+    this.unsubscribe_.complete();
+  }
+
   isInitialized(): boolean {
     return this.settings_.isInitialized();
   }
@@ -47,6 +60,10 @@ export class GlobalSettingsComponent implements OnInit {
       form.resetForm();
     }
 
+    this.settings_
+      .canI()
+      .pipe(takeUntil(this.unsubscribe_))
+      .subscribe(canI => (this.hasLoadError = !canI));
     this.settings_.load(this.onLoad.bind(this), this.onLoadError.bind(this));
   }
 

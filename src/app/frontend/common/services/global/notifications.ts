@@ -57,24 +57,34 @@ export class NotificationsService {
   constructor(private readonly _globalSettingsService: GlobalSettingsService) {}
 
   push(message: string, severity: NotificationSeverity): void {
+    console.log(message);
+    // Do not add same notifications multiple times
+    if (this.notifications_.some(notification => notification.message === message)) {
+      return;
+    }
+
     this.notifications_ = [new Notification(message, severity), ...this.notifications_];
   }
 
   pushErrors(errors: K8sError[]): void {
     if (errors) {
       errors.forEach(error => {
-        if (
-          !this._globalSettingsService.getDisableAccessDeniedNotifications() ||
-          !this._isAccessDeniedError(error)
-        ) {
+        if (this._shouldAddNotification(error)) {
           this.push(error.ErrStatus.message, NotificationSeverity.error);
         }
       });
     }
   }
 
+  private _shouldAddNotification(error: K8sError): boolean {
+    return (
+      !this._globalSettingsService.getDisableAccessDeniedNotifications() ||
+      !this._isAccessDeniedError(error)
+    );
+  }
+
   private _isAccessDeniedError(error: K8sError): boolean {
-    return error.ErrStatus.message.indexOf('cannot list resource') >= 0;
+    return error.ErrStatus.code === 403;
   }
 
   remove(index: number): void {

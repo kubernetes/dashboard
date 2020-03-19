@@ -84,12 +84,7 @@ func (self *SettingsHandler) handleSettingsGlobalCanI(request *restful.Request, 
 }
 
 func (self *SettingsHandler) handleSettingsGlobalGet(request *restful.Request, response *restful.Response) {
-	client, err := self.clientManager.Client(request)
-	if err != nil {
-		errors.HandleInternalError(response, err)
-		return
-	}
-
+	client := self.clientManager.InsecureClient()
 	result := self.manager.GetGlobalSettings(client)
 	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
@@ -115,12 +110,7 @@ func (self *SettingsHandler) handleSettingsGlobalSave(request *restful.Request, 
 }
 
 func (self *SettingsHandler) handleSettingsGetPinned(request *restful.Request, response *restful.Response) {
-	client, err := self.clientManager.Client(request)
-	if err != nil {
-		errors.HandleInternalError(response, err)
-		return
-	}
-
+	client := self.clientManager.InsecureClient()
 	result := self.manager.GetPinnedResources(client)
 	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
