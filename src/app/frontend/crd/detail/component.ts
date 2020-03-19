@@ -47,9 +47,7 @@ export class CRDDetailComponent implements OnInit, OnDestroy {
       .subscribe((d: CRDDetail) => {
         this.crd = d;
         this.notifications_.pushErrors(d.errors);
-        this.actionbar_.onInit.emit(
-          new ResourceMeta('Custom Resource Definition', d.objectMeta, d.typeMeta),
-        );
+        this.actionbar_.onInit.emit(new ResourceMeta(d.names.kind, d.objectMeta, d.typeMeta));
         this.isInitialized = true;
       });
   }

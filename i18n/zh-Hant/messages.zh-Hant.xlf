@@ -2782,10 +2782,10 @@
           <context context-type="linenumber">41</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="8d93137e6678a0a40da783d0a5bc06272d3317c5" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{resource.name}}"/>
+      <trans-unit id="192867803de476e3137425685702cb44b3bb9981" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{resource.displayName}}"/>
   </source>
-        <target><x id="INTERPOLATION" equiv-text="{{resource.name}}"/>
+        <target state="new"><x id="INTERPOLATION" equiv-text="{{resource.displayName}}"/>
   </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/pinner/template.html</context>

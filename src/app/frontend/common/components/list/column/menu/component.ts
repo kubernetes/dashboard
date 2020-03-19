@@ -16,11 +16,10 @@ import {Component, Input} from '@angular/core';
 import {Router} from '@angular/router';
 import {ObjectMeta, TypeMeta} from '@api/backendapi';
 import {ActionColumn} from '@api/frontendapi';
-import {first} from 'rxjs/operators';
+import {PinnerService} from '../../../../services/global/pinner';
 import {KdStateService} from '../../../../services/global/state';
 import {VerberService} from '../../../../services/global/verber';
 import {Resource} from '../../../../services/resource/endpoint';
-import {PinnerService} from '../../../../services/global/pinner';
 
 const loggableResources: string[] = [
   Resource.daemonSet,
@@ -44,6 +43,7 @@ const triggerableResources: string[] = [Resource.cronJob];
 export class MenuComponent implements ActionColumn {
   @Input() objectMeta: ObjectMeta;
   @Input() typeMeta: TypeMeta;
+  @Input() displayName: string;
 
   constructor(
     private readonly verber_: VerberService,
@@ -58,6 +58,10 @@ export class MenuComponent implements ActionColumn {
 
   setTypeMeta(typeMeta: TypeMeta): void {
     this.typeMeta = typeMeta;
+  }
+
+  setDisplayName(displayName: string): void {
+    this.displayName = displayName;
   }
 
   isLogsEnabled(): boolean {
@@ -102,7 +106,12 @@ export class MenuComponent implements ActionColumn {
   }
 
   onPin(): void {
-    this.pinner_.pin(this.typeMeta.kind, this.objectMeta.name, this.objectMeta.namespace);
+    this.pinner_.pin(
+      this.typeMeta.kind,
+      this.objectMeta.name,
+      this.objectMeta.namespace,
+      this.displayName ? this.displayName : this.objectMeta.name,
+    );
   }
 
   onUnpin(): void {

@@ -65,9 +65,10 @@ type SettingsManager interface {
 
 // PinnedResource represents a pinned resource.
 type PinnedResource struct {
-	Kind      string `json:"kind"`
-	Name      string `json:"name"`
-	Namespace string `json:"namespace,omitempty"`
+	Kind        string `json:"kind"`
+	Name        string `json:"name"`
+	DisplayName string `json:"displayName"`
+	Namespace   string `json:"namespace,omitempty"`
 }
 
 func (p *PinnedResource) IsEqual(other *PinnedResource) bool {

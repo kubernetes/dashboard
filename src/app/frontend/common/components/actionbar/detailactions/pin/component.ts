@@ -31,7 +31,12 @@ export class ActionbarDetailPinComponent {
     if (this.isPinned()) {
       this.pinner_.unpin(this.typeMeta.kind, this.objectMeta.name, this.objectMeta.namespace);
     } else {
-      this.pinner_.pin(this.typeMeta.kind, this.objectMeta.name, this.objectMeta.namespace);
+      this.pinner_.pin(
+        this.typeMeta.kind,
+        this.objectMeta.name,
+        this.objectMeta.namespace,
+        this.displayName,
+      );
     }
   }
 

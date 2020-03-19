@@ -1047,6 +1047,7 @@ export interface GlobalSettings {
 export interface PinnedResource {
   kind: string;
   name: string;
+  displayName: string;
   namespace?: string;
 }
 
