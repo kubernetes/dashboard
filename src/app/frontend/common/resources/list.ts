@@ -42,10 +42,10 @@ import {
   ColumnWhenCondition,
   OnListChangeEvent,
 } from '@api/frontendapi';
-import {Subject} from 'rxjs';
+import {isObservable, Subject} from 'rxjs';
 import {Observable, ObservableInput} from 'rxjs/Observable';
 import {merge} from 'rxjs/observable/merge';
-import {startWith, switchMap, takeUntil} from 'rxjs/operators';
+import {startWith, switchMap, takeUntil, tap} from 'rxjs/operators';
 
 import {CardListFilterComponent} from '../components/list/filter/component';
 import {RowDetailComponent} from '../components/list/rowdetail/component';
@@ -64,12 +64,13 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
   // Base properties
   private readonly actionColumns_: Array<ActionColumnDef<ActionColumn>> = [];
   private readonly data_ = new MatTableDataSource<R>();
+  private stateName_ = '';
   private listUpdates_ = new Subject();
-  private unsubscribe_ = new Subject<void>();
   private loaded_ = false;
   private readonly dynamicColumns_: ColumnWhenCondition[] = [];
   private paramsService_: ParamsService;
   private router_: Router;
+  protected readonly unsubscribe_ = new Subject<void>();
   protected readonly kdState_: KdStateService;
   protected readonly settingsService_: GlobalSettingsService;
   protected readonly namespaceService_: NamespaceService;
@@ -94,7 +95,7 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
   private readonly cardFilter_: CardListFilterComponent;
 
   protected constructor(
-    private readonly stateName_: string,
+    stateName: string | Observable<string>,
     private readonly notifications_: NotificationsService,
     private readonly cdr_: ChangeDetectorRef,
   ) {
@@ -103,6 +104,7 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
     this.namespaceService_ = GlobalServicesModule.injector.get(NamespaceService);
     this.paramsService_ = GlobalServicesModule.injector.get(ParamsService);
     this.router_ = GlobalServicesModule.injector.get(Router);
+    this.initStateName_(stateName);
   }
 
   ngOnInit(): void {
@@ -126,12 +128,8 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
 
     this.getObservableWithDataSelect_()
       .pipe(startWith({}))
-      .pipe(
-        switchMap(() => {
-          this.isLoading = true;
-          return this.getResourceObservable(this.getDataSelectParams_());
-        }),
-      )
+      .pipe(tap(_ => (this.isLoading = true)))
+      .pipe(switchMap(() => this.getResourceObservable(this.getDataSelectParams_())))
       .pipe(takeUntil(this.unsubscribe_))
       .subscribe((data: T) => {
         this.notifications_.pushErrors(data.errors);
@@ -214,6 +212,14 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
       afterCol,
       whenCallback,
     } as ColumnWhenCondition);
+  }
+
+  private initStateName_(stateName: string | Observable<string>): void {
+    if (isObservable(stateName)) {
+      stateName.pipe(takeUntil(this.unsubscribe_)).subscribe(name => (this.stateName_ = name));
+    } else {
+      this.stateName_ = stateName;
+    }
   }
 
   private getObservableWithDataSelect_<E>(): Observable<E> {
