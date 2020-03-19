@@ -23,7 +23,7 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import {ActionColumn} from '@api/frontendapi';
-import {Resource} from 'typings/backendapi';
+import {CRD, CRDDetail, CRDObject, Resource} from 'typings/backendapi';
 
 @Component({
   selector: 'kd-dynamic-cell',
@@ -47,5 +47,9 @@ export class ColumnComponent<T extends ActionColumn> implements OnChanges {
     this.componentRef_ = this.target.createComponent(factory);
     this.componentRef_.instance.setObjectMeta(this.resource.objectMeta);
     this.componentRef_.instance.setTypeMeta(this.resource.typeMeta);
+
+    if ((this.resource as CRDDetail).names !== undefined) {
+      this.componentRef_.instance.setDisplayName((this.resource as CRDDetail).names.kind);
+    }
   }
 }
