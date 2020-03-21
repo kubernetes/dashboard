@@ -34,6 +34,10 @@ var localeMap = map[string]string{
 	"zh-sg": "zh-Hans-SG",
 	"zh-tw": "zh-Hant",
 	"zh-hk": "zh-Hant-HK",
+	"zh-CN": "zh-Hans",
+	"zh-SG": "zh-Hans-SG",
+	"zh-TW": "zh-Hant",
+	"zh-HK": "zh-Hant-HK",
 }
 
 const defaultLocaleDir = "en"

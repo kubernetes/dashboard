@@ -2,18 +2,18 @@
 
 Based on current browser locale the Dashboard can be displayed in one of the supported languages listed below. In case it does not work, make sure that your browser's locale is identified with correct language code. In more details, Dashboard determines requested language based on HTTP `Accept-Language` header from browser. We can check which language codes are requested by browser on `Network` tab in developer tool of browser.
 
-| Language            | Code    | Remarks    |
-|---------------------|---------|------------|
-| English (default)   | en      | -          |
-| French              | fr      | -          |
-| German              | de      | -          |
-| Japanese            | ja      | -          |
-| Korean              | ko      | -          |
-| Simplified Chinese  | zh      | -          |
-| Chinese (PRC)       | zh-cn   | Same as zh |
-| Chinese (Hong Kong) | zh-hk   | -          |
-| Chinese (Singapore) | zh-sg   | -          |
-| Chinese (Taiwan)    | zh-tw   | -          |
+| Language            | Code           | Remarks    |
+|---------------------|----------------|------------|
+| English (default)   | en             | -          |
+| French              | fr             | -          |
+| German              | de             | -          |
+| Japanese            | ja             | -          |
+| Korean              | ko             | -          |
+| Simplified Chinese  | zh             | -          |
+| Chinese (PRC)       | zh-cn or zh-CN | Same as zh |
+| Chinese (Hong Kong) | zh-hk or zh-HK | -          |
+| Chinese (Singapore) | zh-sg or zh-SG | -          |
+| Chinese (Taiwan)    | zh-tw or zh-TW | -          |
 
 ## Building localized dashboard
 
