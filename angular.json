@@ -10,36 +10,36 @@
       "i18n": {
         "sourceLocale": {
           "code": "en",
-          "baseHref": "/"
+          "baseHref": ""
         },
         "locales": {
           "de": {
             "translation": "i18n/de/messages.de.xlf",
-            "baseHref": "/"
+            "baseHref": ""
           },
           "fr": {
             "translation": "i18n/fr/messages.fr.xlf",
-            "baseHref": "/"
+            "baseHref": ""
           },
           "ja": {
             "translation": "i18n/ja/messages.ja.xlf",
-            "baseHref": "/"
+            "baseHref": ""
           },
           "ko": {
             "translation": "i18n/ko/messages.ko.xlf",
-            "baseHref": "/"
+            "baseHref": ""
           },
           "zh": {
             "translation": "i18n/zh/messages.zh.xlf",
-            "baseHref": "/"
+            "baseHref": ""
           },
           "zh-Hans": {
             "translation": "i18n/zh-Hans/messages.zh-Hans.xlf",
-            "baseHref": "/"
+            "baseHref": ""
           },
           "zh-Hant": {
             "translation": "i18n/zh-Hant/messages.zh-Hant.xlf",
-            "baseHref": "/"
+            "baseHref": ""
           }
         }
       },
