@@ -71,24 +71,29 @@ Parameter                           | Description                               
 `image.tag`                         | Image tag                                                                                                                   | `v2.0.0`
 `image.pullPolicy`                  | Image pull policy                                                                                                           | `IfNotPresent`
 `image.pullSecrets`                 | Image pull secrets                                                                                                          | `[]`
-`annotations`                       | Annotations for deployment                                                                                                  | `{}`
 `replicaCount`                      | Number of replicas                                                                                                          | `1`
+`annotations`                       | Annotations for deployment                                                                                                  | `{}`
+`labels`                            | Labels for deployment                                                                                                       | `{}`
 `extraArgs`                         | Additional container arguments                                                                                              | `[]`
 `extraEnv`                          | Additional container environment variables                                                                                  | `[]`
 `podAnnotations`                    | Annotations to be added to pods                                                                                             | `seccomp.security.alpha.kubernetes.io/pod: 'runtime/default'}`
 `nodeSelector`                      | node labels for pod assignment                                                                                              | `{}`
 `tolerations`                       | List of node taints to tolerate (requires Kubernetes >= 1.6)                                                                | `[]`
-`affinity`                           | Affinity for pod assignment                                                                                                | `[]`
+`affinity`                           | Affinity for pod assignment                                                                                                  | `[]`
 `priorityClassName`                 | Name of Priority Class to assign pods                                                                                       | `nil`
+`resources`                         | Pod resource requests & limits                                                                                              | `limits: {cpu: 2, memory: 100Mi}, requests: {cpu: 100m, memory: 100Mi}`
+`protocolHttp`                      | Serve application over HTTP without TLS                                                                                     | `false`
+`service.type`                      | Service type                                                                                                                | `ClusterIP`
 `service.externalPort`              | Dashboard external port                                                                                                     | `443`
 `service.loadBalancerSourceRanges`  | list of IP CIDRs allowed access to load balancer (if supported)                                                             | `nil`
-`ingress.labels`                    | Add custom labels                                                                                                           | `[]`
 `ingress.annotations`               | Specify ingress class                                                                                                       | `kubernetes.io/ingress.class: nginx`
+`ingress.labels`                    | Add custom labels                                                                                                           | `[]`
 `ingress.enabled`                   | Enable ingress controller resource                                                                                          | `false`
 `ingress.paths`                     | Paths to match against incoming requests. Both `/` and `/*` are required to work on gce ingress.                            | `[/]`
 `ingress.hosts`                     | Dashboard Hostnames                                                                                                         | `nil`
 `ingress.tls`                       | Ingress TLS configuration                                                                                                    | `[]`
-`resources`                         | Pod resource requests & limits                                                                                              | `limits: {cpu: 2, memory: 100Mi}, requests: {cpu: 100m, memory: 100Mi}`
+`metricsScraper.enabled`            | Wether to enable dashboard-metrics-scraper                                                                                  | `false`
+`metrics-server.enabled`            | Wether to enable metrics-server                                                                                             | `false`
 `rbac.create`                       | Create & use RBAC resources                                                                                                 | `true`
 `rbac.clusterRoleMetrics`           | If set, an additional cluster role / role binding will be created to access metrics.                                        | `true`
 `rbac.clusterReadOnlyRole`          | If set, an additional cluster role / role binding will be created with read only permissions to all resources listed inside.| `false`
@@ -99,10 +104,12 @@ Parameter                           | Description                               
 `podDisruptionBudget.enabled`       | Create a PodDisruptionBudget                                                                                                | `false`
 `podDisruptionBudget.minAvailable`  | Minimum available instances; ignored if there is no PodDisruptionBudget                                                     |
 `podDisruptionBudget.maxUnavailable`| Maximum unavailable instances; ignored if there is no PodDisruptionBudget                                                   |
-`securityContext`                   | PodSecurityContext for pod level securityContext                                                                            | `{}`
+`securityContext`                   | PodSecurityContext for pod level securityContext                                                                            | `nil`
 `dashboardContainerSecurityContext` | SecurityContext for the kubernetes dashboard container                                                                      | `{allowPrivilegeEscalation:false, readOnlyRootFilesystem: true, runAsUser: 1001, runAsGroup: 2001}`
+`metricsScraperContainerSecurityContext` | SecurityContext for the kubernetes dashboard metrics scraper container                                                 | `{allowPrivilegeEscalation:false, readOnlyRootFilesystem: true, runAsUser: 1001, runAsGroup: 2001}`
 `networkPolicy`                     | Whether to create a network policy that allows access to the service                                                        | `false`
-`protocolHttp`                      | Serve application over HTTP without TLS                                                                                     | `false`
+
+
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 

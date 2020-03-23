@@ -30,11 +30,6 @@ annotations: {}
 ## Here labels can be added to the kubernetes dashboard deployment
 labels: {}
 
-## Serve application over HTTP without TLS
-##
-## Note: If set to true, you may want to add --enable-insecure-login to extraArgs
-protocolHttp: false
-
 ## Additional container arguments
 ##
 # extraArgs:
@@ -70,6 +65,19 @@ affinity: {}
 
 # priorityClassName: ""
 
+resources:
+  requests:
+    cpu: 100m
+    memory: 200Mi
+  limits:
+    cpu: 2
+    memory: 200Mi
+
+## Serve application over HTTP without TLS
+##
+## Note: If set to true, you may want to add --enable-insecure-login to extraArgs
+protocolHttp: false
+
 service:
   type: ClusterIP
   externalPort: 443
@@ -83,29 +91,6 @@ service:
 
   ## Here labels can be added to the Kubernetes Dashboard service
   labels: {}
-
-resources:
-  requests:
-    cpu: 100m
-    memory: 200Mi
-  limits:
-    cpu: 2
-    memory: 200Mi
-
-metricsScraper:
-  enabled: true
-  name: dashboard-metrics-scraper
-  annotations: {}
-  labels: {}
-  revisionHistoryLimit: 10
-  podAnnotations:
-    seccomp.security.alpha.kubernetes.io/pod: 'runtime/default'
-  image:
-    repository: kubernetesui/metrics-scraper
-    tag: v1.0.1
-  resources:
-    requests: {}
-    limits: {}
 
 ingress:
   ## If true, Kubernetes Dashboard Ingress will be created.
@@ -147,6 +132,30 @@ ingress:
   #   - secretName: kubernetes-dashboard-tls
   #     hosts:
   #       - kubernetes-dashboard.domain.com
+
+## Metrics Scraper
+## Container to scrape, store, and retrieve a window of time from the Metrics Server.
+## refs: https://github.com/kubernetes-sigs/dashboard-metrics-scraper
+metricsScraper:
+  enabled: false
+  revisionHistoryLimit: 10
+  image:
+    repository: kubernetesui/metrics-scraper
+    tag: v1.0.3
+  resources: {}
+
+## Optional Metrics Server sub-chart
+## Enable this is you don't already have metrics-server enabled on your cluster and
+## want to use it with dashboard metrics-scraper
+## refs:
+##  - https://hub.helm.sh/charts/stable/metrics-server
+##  - https://github.com/kubernetes-sigs/metrics-server
+metrics-server:
+  enabled: false
+  ## Example for additional args
+  # args:
+  #  - --kubelet-preferred-address-types=InternalIP
+  #  - --kubelet-insecure-tls
 
 rbac:
   # Specifies whether namespaced RBAC resources (Role, Rolebinding) should be created

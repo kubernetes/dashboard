@@ -16,7 +16,7 @@
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: "{{ template "kubernetes-dashboard.fullname" . }}"
+  name: "{{ template "kubernetes-dashboard.fullname" . }}-metrics"
   labels:
 {{ include "kubernetes-dashboard.labels" . | indent 4 }}
 rules:

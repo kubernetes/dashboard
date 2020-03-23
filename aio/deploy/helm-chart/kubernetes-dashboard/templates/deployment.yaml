@@ -22,8 +22,9 @@ metadata:
 {{- end }}
   labels:
 {{ include "kubernetes-dashboard.labels" . | indent 4 }}
-{{- if .Values.labels }}
-{{ toYaml .Values.labels | indent 4 }}
+    app.kubernetes.io/component: kubernetes-dashboard
+{{- with .Values.labels }}
+{{ toYaml . | indent 4 }}
 {{- end }}
 spec:
   replicas: {{ .Values.replicaCount }}
@@ -35,6 +36,7 @@ spec:
   selector:
     matchLabels:
 {{ include "kubernetes-dashboard.matchLabels" . | indent 6 }}
+      app.kubernetes.io/component: kubernetes-dashboard
   template:
     metadata:
 {{- with .Values.podAnnotations }}
@@ -43,6 +45,7 @@ spec:
 {{- end }}
       labels:
 {{ include "kubernetes-dashboard.labels" . | indent 8 }}
+        app.kubernetes.io/component: kubernetes-dashboard
     spec:
       {{- if .Values.securityContext }}
       securityContext:
@@ -58,8 +61,11 @@ spec:
 {{- if not .Values.protocolHttp }}
           - --auto-generate-certificates
 {{- end }}
-{{- if .Values.extraArgs }}
-{{ toYaml .Values.extraArgs | indent 10 }}
+{{- if .Values.metricsScraper.enabled }}
+          - --sidecar-host=http://127.0.0.1:8000
+{{- end }}
+{{- with .Values.extraArgs }}
+{{ toYaml . | indent 10 }}
 {{- end }}
 {{- with .Values.extraEnv }}
         env:
@@ -94,9 +100,35 @@ spec:
 {{- end }}
           initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
           timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
-{{- if .Values.dashboardContainerSecurityContext }}
+{{- if .Values.metricsScraper.enabled }}
+      - name: dashboard-metrics-scraper
+        image: "{{ .Values.metricsScraper.image.repository }}:{{ .Values.metricsScraper.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+          - containerPort: 8000
+            protocol: TCP
+        livenessProbe:
+          httpGet:
+            scheme: HTTP
+            path: /
+            port: 8000
+          initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+          timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+        volumeMounts:
+        - mountPath: /tmp
+          name: tmp-volume
+{{- if .Values.metricsScraperContainerSecurityContext }}
         securityContext:
-{{ toYaml .Values.dashboardContainerSecurityContext | indent 10 }}
+{{ toYaml .Values.metricsScraperContainerSecurityContext | indent 10 }}
+{{- end }}
+{{- with .Values.metricsScraper.resources }}
+        resources:
+{{ toYaml . | indent 10 }}
+{{- end }}
+{{- end }}
+{{- with .Values.dashboardContainerSecurityContext }}
+        securityContext:
+{{ toYaml . | indent 10 }}
 {{- end }}
 {{- with .Values.resources }}
         resources:

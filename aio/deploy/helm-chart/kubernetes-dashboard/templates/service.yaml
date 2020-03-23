@@ -18,6 +18,7 @@ metadata:
   name: {{ template "kubernetes-dashboard.fullname" . }}
   labels:
 {{ include "kubernetes-dashboard.labels" . | indent 4 }}
+    app.kubernetes.io/component: kubernetes-dashboard
     kubernetes.io/cluster-service: "true"
 {{- if .Values.service.labels }}
 {{ toYaml .Values.service.labels | indent 4 }}
@@ -46,3 +47,4 @@ spec:
 {{- end }}
   selector:
 {{ include "kubernetes-dashboard.matchLabels" . | indent 4 }}
+    app.kubernetes.io/component: kubernetes-dashboard
