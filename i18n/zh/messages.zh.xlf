@@ -856,7 +856,7 @@
       </trans-unit>
       <trans-unit id="cff1428d10d59d14e45edec3c735a27b5482db59" datatype="html">
         <source>Name</source>
-        <target>名字</target>
+        <target>名称</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/cronjob/template.html</context>
           <context context-type="linenumber">54</context>
@@ -1488,7 +1488,7 @@
       </trans-unit>
       <trans-unit id="7473146d95b15814d45860e4f545c06798606faf" datatype="html">
         <source>Name: </source>
-        <target>名字: </target>
+        <target>名称: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
           <context context-type="linenumber">22</context>
@@ -1710,7 +1710,7 @@
       </trans-unit>
       <trans-unit id="02f397009ef997f78a6ea951356ea5deca2410c8" datatype="html">
         <source>Ports (Name, Port, Protocol)</source>
-        <target>端口 (名字, 端口, 协议)</target>
+        <target>端口 (名称, 端口, 协议)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/endpoint/cardlist/template.html</context>
           <context context-type="linenumber">45</context>
@@ -3126,7 +3126,7 @@
       </trans-unit>
       <trans-unit id="c9150e5a71cb54a3cd81b6bc0c6cd15743204c57" datatype="html">
         <source>Namespace name</source>
-        <target>命名空间的名字</target>
+        <target>命名空间的名称</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createnamespace/template.html</context>
           <context context-type="linenumber">29</context>
@@ -3137,7 +3137,7 @@
               Name is required.
             </source>
         <target>
-              名字是必填的。
+              名称是必填的。
             </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createnamespace/template.html</context>
@@ -3153,7 +3153,7 @@
               Name must be up to <x id="INTERPOLATION" equiv-text="{{namespaceMaxLength}}"/> characters long.
             </source>
         <target>
-              名字必须大于 <x id="INTERPOLATION" equiv-text="{{namespaceMaxLength}}"/> 个字符.
+              名称必须大于 <x id="INTERPOLATION" equiv-text="{{namespaceMaxLength}}"/> 个字符.
             </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createnamespace/template.html</context>
@@ -3165,7 +3165,7 @@
               Name must be alphanumeric and may contain dashes.
             </source>
         <target>
-              名字必须是字母或者数字，可以包含短划线。
+              名称必须是字母或者数字，可以包含短划线。
             </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createnamespace/template.html</context>
@@ -3232,7 +3232,7 @@
       </trans-unit>
       <trans-unit id="0d2ab5feae3bde82e357ae93420738e775a69f50" datatype="html">
         <source>Secret name</source>
-        <target>Secret 名字</target>
+        <target>Secret 名称</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
           <context context-type="linenumber">29</context>
@@ -3243,7 +3243,7 @@
               Name must be up to <x id="INTERPOLATION" equiv-text="{{secretNameMaxLength}}"/> characters long.
             </source>
         <target>
-              名字必须大于 <x id="INTERPOLATION" equiv-text="{{secretNameMaxLength}}"/> 字符.
+              名称必须大于 <x id="INTERPOLATION" equiv-text="{{secretNameMaxLength}}"/> 字符.
             </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
@@ -3255,7 +3255,7 @@
               Name must follow the DNS domain name syntax (e.g. new.image-pull.secret).
             </source>
         <target>
-             名字必须遵循 DNS 域名语法（例如 new.image-pull.secret）。
+             名称必须遵循 DNS 域名语法（例如 new.image-pull.secret）。
             </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
@@ -4534,7 +4534,7 @@
       </trans-unit>
       <trans-unit id="9d3cac773074f1acb1bd046f41bfc25dcbda4620" datatype="html">
         <source>Dataset name</source>
-        <target>数据集名字</target>
+        <target>数据集名称</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">126</context>
