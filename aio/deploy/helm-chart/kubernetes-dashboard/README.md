@@ -107,7 +107,7 @@ Parameter                           | Description                               
 `securityContext`                   | PodSecurityContext for pod level securityContext                                                                            | `nil`
 `dashboardContainerSecurityContext` | SecurityContext for the kubernetes dashboard container                                                                      | `{allowPrivilegeEscalation:false, readOnlyRootFilesystem: true, runAsUser: 1001, runAsGroup: 2001}`
 `metricsScraperContainerSecurityContext` | SecurityContext for the kubernetes dashboard metrics scraper container                                                 | `{allowPrivilegeEscalation:false, readOnlyRootFilesystem: true, runAsUser: 1001, runAsGroup: 2001}`
-`networkPolicy`                     | Whether to create a network policy that allows access to the service                                                        | `false`
+`networkPolicy.enabled`                     | Whether to create a network policy that allows access to the service                                                        | `false`
 
 
 
