@@ -25,6 +25,6 @@ roleRef:
   name: {{ template "kubernetes-dashboard.fullname" . }}
 subjects:
   - kind: ServiceAccount
-    name: kubernetes-dashboard
+    name: {{ template "kubernetes-dashboard.serviceAccountName" . }}
     namespace: {{ .Release.Namespace }}
 {{- end }}
