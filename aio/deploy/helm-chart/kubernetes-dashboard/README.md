@@ -49,7 +49,7 @@ Version 2.0.0 is the first version hosted in the kubernetes/dashboard repository
 - It enables by default values for `podAnnotations` and `securityContext`, please disable them if you don't supoprt them
 - It removes `enableSkipLogin` and `enableInsecureLogin` parameters. Please use `extraEnv` instead.
 - It adds a `ProtocolHttp` parameter, allowing you to switch the backend to plain HTTP and replaces the old `enableSkipLogin` for the network part.
-- If `ProtocolHttp` is not set, it will automatically add to the `Ingress`, if enabled, annotations to support HTTPS backends for nginx-ingress and GKE Ingresses.
+- If `protocolHttp` is not set, it will automatically add to the `Ingress`, if enabled, annotations to support HTTPS backends for nginx-ingress and GKE Ingresses.
 - It updates all the labels to the new [recommended labels](https://github.com/helm/charts/blob/master/REVIEW_GUIDELINES.md#names-and-labels), most of them being immutable.
 
 In order to upgrade, please update your configuration to remove `clusterAdminRole` parameter and adapt `enableSkipLogin`, `enableInsecureLogin`, `podAnnotations` and `securityContext` parameters, and uninstall/reinstall the chart.
