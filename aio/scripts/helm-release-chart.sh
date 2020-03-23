@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Copyright 2019 The Kubernetes Authors.
+# Copyright 2017 The Kubernetes Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -38,6 +38,7 @@ function release-helm-chart {
   say "\nChanging current branch to $TAG."
   git checkout "$TAG"
   say "\nGenerating Helm Chart package for new version."
+  helm repo add stable https://kubernetes-charts.storage.googleapis.com/
   helm dependency build "$AIO_DIR/deploy/helm-chart/kubernetes-dashboard"
   helm package "$AIO_DIR/deploy/helm-chart/kubernetes-dashboard"
   say "\nSwitching git branch to gh-pages so that we can commit package along the previous versions."

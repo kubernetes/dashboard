@@ -64,29 +64,14 @@ jobs:
     - name: "Helm linting"
       cache: false
       install:
-        - cd aio/deploy/helm-chart/kubernetes-dashboard
-        - curl -L https://git.io/get_helm.sh | bash && helm init --skip-refresh --client-only
+        - curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
         - wget https://github.com/garethr/kubeval/releases/download/0.14.0/kubeval-linux-amd64.tar.gz
-        - tar xf kubeval-linux-amd64.tar.gz
+        - mkdir kubeval
+        - tar xf kubeval-linux-amd64.tar.gz -C kubeval
+        - export PATH="$PATH:$(pwd)/kubeval"
       before_script: skip  # We don't need Docker nor Go
       script:
-        - |
-          set -e;
-          for VALUES_FILE in $(ls ci); do
-            echo "Linting and validating Helm Chart using $VALUES_FILE values file..."
-            # Simple lint
-            helm lint --values ci/$VALUES_FILE;
-
-            # Validate all generated manifest against Kubernetes json schema
-            mkdir helm-output;
-            helm template --values ci/$VALUES_FILE --output-dir helm-output .;
-            find helm-output -type f -exec \
-              ./kubeval \
-              --kubernetes-version 1.16.0 \
-              --schema-location https://raw.githubusercontent.com/instrumenta/kubernetes-json-schema/master \
-              {} +;
-            rm -rf helm-output;
-          done;
+        - aio/scripts/helm-lint.sh
     - name: "e2e tests"
       script: npm run cluster:start && npm run e2e
 
