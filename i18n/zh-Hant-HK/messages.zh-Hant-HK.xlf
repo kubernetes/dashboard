@@ -5147,7 +5147,7 @@
       </trans-unit>
       <trans-unit id="a4f3393592e5ebfd34408e85c3bd576d88839191" datatype="html">
         <source>Disable access denied notification</source>
-        <target state="new">Disable access denied notification</target>
+        <target state="new">禁止拒絕訪問的通知</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">100</context>
@@ -5155,7 +5155,7 @@
       </trans-unit>
       <trans-unit id="b6484080715a11bad65395e51d42e6ae4aa3c856" datatype="html">
         <source>Hides all access denied warnings in the notification panel.</source>
-        <target state="new">Hides all access denied warnings in the notification panel.</target>
+        <target state="new">在通知面板中隱藏所有拒絕訪問的警告。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">102</context>
