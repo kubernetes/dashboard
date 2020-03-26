@@ -15,7 +15,9 @@
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 
-import {Component, ElementRef, EventEmitter, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {ReplaySubject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs/Subject';
 
 @Component({
@@ -23,17 +25,21 @@ import {Subject} from 'rxjs/Subject';
   templateUrl: './template.html',
   styleUrls: ['style.scss'],
 })
-export class CardListFilterComponent implements OnInit {
-  @ViewChild('filterInput', {static: true}) private readonly filterInput_: ElementRef;
-  private hidden_ = true;
-  keyUpEvent = new Subject<string>();
+export class CardListFilterComponent implements OnInit, OnDestroy {
   query = '';
-  filterEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
+  keyUpEvent = new Subject<string>();
+  filterEvent = new EventEmitter<boolean>();
+  openedChange = new ReplaySubject<boolean>();
+
+  private hidden_ = true;
+  private readonly debounceTime_ = 500;
+  private readonly unsubscribe_ = new Subject<void>();
 
   ngOnInit(): void {
     this.keyUpEvent
-      .debounceTime(500)
+      .debounceTime(this.debounceTime_)
       .distinctUntilChanged()
+      .pipe(takeUntil(this.unsubscribe_))
       .subscribe(this.onFilterTriggered_.bind(this));
   }
 
@@ -49,18 +55,7 @@ export class CardListFilterComponent implements OnInit {
   switchSearchVisibility(event: Event): void {
     event.stopPropagation();
     this.hidden_ = !this.hidden_;
-
-    if (!this.hidden_) {
-      this.focusInput();
-    }
-  }
-
-  focusInput(): void {
-    // Small timeout is required as input is not yet rendered when method is fired right after
-    // clicking on filter button.
-    setTimeout(() => {
-      this.filterInput_.nativeElement.focus();
-    }, 150);
+    this.openedChange.next(!this.hidden_);
   }
 
   clearInput(event: Event): void {
@@ -70,5 +65,10 @@ export class CardListFilterComponent implements OnInit {
       this.query = '';
       this.filterEvent.emit(true);
     }
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe_.next();
+    this.unsubscribe_.complete();
   }
 }

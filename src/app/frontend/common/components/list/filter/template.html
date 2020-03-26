@@ -19,10 +19,11 @@ limitations under the License.
   <div class="kd-search-container"
        fxFlex
        fxLayoutAlign="flex-end">
-    <input #filterInput
-           *ngIf="isSearchVisible()"
+    <input *ngIf="isSearchVisible()"
            (keyup)="keyUpEvent.next($event.target.value)"
            (click)="$event.stopPropagation()"
+           kdAutofocus
+           [opened]="openedChange"
            name="search"
            i18n-placeholder
            placeholder="Filter"
