@@ -96,7 +96,9 @@ export class CreateService {
       this.reportError(i18n.MSG_DEPLOY_DIALOG_ERROR, error.error);
       throw error;
     } else {
-      this.router_.navigate(['overview']);
+      this.router_.navigate(['overview'], {
+        queryParams: {[NAMESPACE_STATE_PARAM]: this.namespace_.current()},
+      });
     }
 
     return response;
