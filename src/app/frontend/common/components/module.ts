@@ -15,6 +15,7 @@
 import {NgModule} from '@angular/core';
 
 import {SharedModule} from '../../shared.module';
+import {DirectivesModule} from '../directives/module';
 
 import {ActionbarComponent} from './actionbar/component';
 import {ActionbarDetailActionsComponent} from './actionbar/detailactions/component';
@@ -29,9 +30,9 @@ import {DefaultActionbar} from './actionbars/default/component';
 import {LogsDefaultActionbar} from './actionbars/logsdefault/component';
 import {LogsExecDefaultActionbar} from './actionbars/logsexecdefault/component';
 import {LogsScaleDefaultActionbar} from './actionbars/logsscaledefault/component';
+import {PinDefaultActionbar} from './actionbars/pindefault/component';
 import {ScaleDefaultActionbar} from './actionbars/scaledefault/component';
 import {TriggerDefaultActionbar} from './actionbars/triggerdefault/component';
-import {PinDefaultActionbar} from './actionbars/pindefault/component';
 import {BreadcrumbsComponent} from './breadcrumbs/component';
 import {CardComponent} from './card/component';
 import {ChipDialog} from './chips/chipdialog/dialog';
@@ -47,7 +48,6 @@ import {GraphComponent} from './graph/component';
 import {GraphCardComponent} from './graphcard/component';
 import {GraphMetricsComponent} from './graphmetrics/component';
 import {HiddenPropertyComponent} from './hiddenproperty/component';
-import {HorizontalPodAutoscalerListComponent} from './resourcelist/horizontalpodautoscaler/component';
 import {ResourceLimitListComponent} from './limits/component';
 import {ColumnComponent} from './list/column/component';
 import {MenuComponent} from './list/column/menu/component';
@@ -72,6 +72,7 @@ import {CronJobListComponent} from './resourcelist/cronjob/component';
 import {DaemonSetListComponent} from './resourcelist/daemonset/component';
 import {DeploymentListComponent} from './resourcelist/deployment/component';
 import {EventListComponent} from './resourcelist/event/component';
+import {HorizontalPodAutoscalerListComponent} from './resourcelist/horizontalpodautoscaler/component';
 import {IngressListComponent} from './resourcelist/ingress/component';
 import {JobListComponent} from './resourcelist/job/component';
 import {NamespaceListComponent} from './resourcelist/namespace/component';
@@ -191,7 +192,7 @@ const components = [
 ];
 
 @NgModule({
-  imports: [SharedModule],
+  imports: [SharedModule, DirectivesModule],
   declarations: [...components],
   exports: [...components],
   entryComponents: [ChipDialog, RowDetailComponent, MenuComponent, NamespaceChangeDialog],
