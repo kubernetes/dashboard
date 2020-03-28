@@ -22,6 +22,7 @@ import {DeleteResourceDialog} from '../../dialogs/deleteresource/dialog';
 import {EditResourceDialog} from '../../dialogs/editresource/dialog';
 import {ScaleResourceDialog} from '../../dialogs/scaleresource/dialog';
 import {TriggerResourceDialog} from '../../dialogs/triggerresource/dialog';
+import {QuickEditDialog, QuickEditMeta} from '../../dialogs/quickedit/dialog';
 import {RawResource} from '../../resources/rawresource';
 
 import {ResourceMeta} from './actionbar';
@@ -54,6 +55,21 @@ export class VerberService {
     const dialogConfig = this.getDialogConfig_(displayName, typeMeta, objectMeta);
     this.dialog_
       .open(EditResourceDialog, dialogConfig)
+      .afterClosed()
+      .subscribe(result => {
+        if (result) {
+          const url = RawResource.getUrl(typeMeta, objectMeta);
+          this.http_
+            .put(url, JSON.parse(result), {headers: this.getHttpHeaders_(), responseType: 'text'})
+            .subscribe(() => this.onEdit.emit(true), this.handleErrorResponse_.bind(this));
+        }
+      });
+  }
+
+  showQuickEditDialog(resourceKey: string, typeMeta: TypeMeta, objectMeta: ObjectMeta): void {
+    const dialogConfig = this.getQuickEditDialogConfig_(resourceKey, typeMeta, objectMeta);
+    this.dialog_
+      .open(QuickEditDialog, dialogConfig)
       .afterClosed()
       .subscribe(result => {
         if (result) {
@@ -99,6 +115,14 @@ export class VerberService {
             .subscribe(() => this.onTrigger.emit(true), this.handleErrorResponse_.bind(this));
         }
       });
+  }
+
+  getQuickEditDialogConfig_(
+    resourceKey: string,
+    typeMeta: TypeMeta,
+    objectMeta: ObjectMeta,
+  ): MatDialogConfig<QuickEditMeta> {
+    return {width: '900px', data: {resourceKey, typeMeta, objectMeta}};
   }
 
   getDialogConfig_(

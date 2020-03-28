@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Input} from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 
 @Component({
   selector: 'kd-hidden-property',
@@ -20,5 +20,12 @@ import {Component, Input} from '@angular/core';
   styleUrls: ['./style.scss'],
 })
 export class HiddenPropertyComponent {
+  @Output() edit: EventEmitter<any> = new EventEmitter();
   @Input() hidden = true;
+
+  onEdit(event: MouseEvent): void {
+    // Prevent secret display from being toggled.
+    event.stopPropagation();
+    this.edit.emit(null);
+  }
 }

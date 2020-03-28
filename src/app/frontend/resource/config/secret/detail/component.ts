@@ -21,6 +21,7 @@ import {ActionbarService, ResourceMeta} from '../../../../common/services/global
 import {NotificationsService} from '../../../../common/services/global/notifications';
 import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
 import {NamespacedResourceService} from '../../../../common/services/resource/resource';
+import {VerberService} from '../../../../common/services/global/verber';
 
 @Component({
   selector: 'kd-secret-detail',
@@ -37,6 +38,7 @@ export class SecretDetailComponent implements OnInit, OnDestroy {
     private readonly actionbar_: ActionbarService,
     private readonly activatedRoute_: ActivatedRoute,
     private readonly notifications_: NotificationsService,
+    private readonly verber_: VerberService,
   ) {}
 
   ngOnInit(): void {
@@ -64,5 +66,9 @@ export class SecretDetailComponent implements OnInit, OnDestroy {
 
   decode(s: string): string {
     return atob(s);
+  }
+
+  edit(key: string): void {
+    this.verber_.showQuickEditDialog(key, this.secret.typeMeta, this.secret.objectMeta);
   }
 }
