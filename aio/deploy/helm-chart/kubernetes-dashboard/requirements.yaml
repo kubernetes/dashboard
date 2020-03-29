@@ -2,4 +2,4 @@ dependencies:
   - name: metrics-server
     version: 2.x.x
     repository: https://kubernetes-charts.storage.googleapis.com/
-    condition: metricsServer.enabled
+    condition: metrics-server.enabled
