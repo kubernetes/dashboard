@@ -26,14 +26,32 @@ import {MatDialogConfig, MatDialog} from '@angular/material/dialog';
 })
 export class SecretDetailEditComponent implements OnInit {
   @Output() onClose = new EventEmitter<boolean>();
-  @Input() secret: SecretDetail;
+  @Input() set editing(value: boolean) {
+    this.editing_ = value;
+    this.updateText();
+  }
+  get editing(): boolean {
+    return this.editing_;
+  }
+  @Input() set secret(value: SecretDetail) {
+    this.secret_ = value;
+
+    if (!this.editing) {
+      this.updateText();
+    }
+  }
+  get secret(): SecretDetail {
+    return this.secret_;
+  }
   @Input() key: string;
   text = '';
+  private secret_: SecretDetail;
+  private editing_ = false;
 
   constructor(private readonly dialog_: MatDialog, private readonly http_: HttpClient) {}
 
   ngOnInit(): void {
-    this.text = this.secret && this.key ? this.decode(this.secret.data[this.key]) : '';
+    this.updateText();
   }
 
   update(): void {
@@ -53,6 +71,10 @@ export class SecretDetailEditComponent implements OnInit {
 
   cancel(): void {
     this.onClose.emit(true);
+  }
+
+  updateText(): void {
+    this.text = this.secret && this.key ? this.decode(this.secret.data[this.key]) : '';
   }
 
   getHttpHeaders_(): HttpHeaders {
