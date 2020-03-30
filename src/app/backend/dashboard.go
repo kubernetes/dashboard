@@ -181,9 +181,12 @@ func main() {
 		log.Printf("Serving securely on HTTPS port: %d", args.Holder.GetPort())
 		secureAddr := fmt.Sprintf("%s:%d", args.Holder.GetBindAddress(), args.Holder.GetPort())
 		server := &http.Server{
-			Addr:      secureAddr,
-			Handler:   http.DefaultServeMux,
-			TLSConfig: &tls.Config{Certificates: servingCerts},
+			Addr:    secureAddr,
+			Handler: http.DefaultServeMux,
+			TLSConfig: &tls.Config{
+				Certificates: servingCerts,
+				MinVersion:   tls.VersionTLS12,
+			},
 		}
 		go func() { log.Fatal(server.ListenAndServeTLS("", "")) }()
 	} else {

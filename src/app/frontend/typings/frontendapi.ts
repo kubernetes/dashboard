@@ -62,6 +62,7 @@ export interface ColumnWhenCondition {
 export interface ActionColumn {
   setTypeMeta(typeMeta: TypeMeta): void;
   setObjectMeta(objectMeta: ObjectMeta): void;
+  setDisplayName(displayName: string): void;
 }
 
 export interface HTMLInputEvent extends Event {

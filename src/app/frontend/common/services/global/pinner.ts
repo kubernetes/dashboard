@@ -50,9 +50,9 @@ export class PinnerService {
     return this.isInitialized_;
   }
 
-  pin(kind: string, name: string, namespace: string): void {
+  pin(kind: string, name: string, namespace: string, displayName: string): void {
     this.http_
-      .put(this.endpoint_, {kind, name, namespace})
+      .put(this.endpoint_, {kind, name, namespace, displayName})
       .subscribe(() => this.onPinUpdate.next(), this.handleErrorResponse_.bind(this));
   }
 

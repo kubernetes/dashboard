@@ -1042,11 +1042,13 @@ export interface GlobalSettings {
   itemsPerPage: number;
   logsAutoRefreshTimeInterval: number;
   resourceAutoRefreshTimeInterval: number;
+  disableAccessDeniedNotifications: boolean;
 }
 
 export interface PinnedResource {
   kind: string;
   name: string;
+  displayName: string;
   namespace?: string;
 }
 

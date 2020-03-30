@@ -41,7 +41,7 @@ type Service struct {
 	// Label selector of the service.
 	Selector map[string]string `json:"selector"`
 
-	// Type determines how the service will be exposed.  Valid options: ClusterIP, NodePort, LoadBalancer
+	// Type determines how the service will be exposed.  Valid options: ClusterIP, NodePort, LoadBalancer, ExternalName
 	Type v1.ServiceType `json:"type"`
 
 	// ClusterIP is usually assigned by the master. Valid values are None, empty string (""), or

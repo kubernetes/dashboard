@@ -65,9 +65,10 @@ type SettingsManager interface {
 
 // PinnedResource represents a pinned resource.
 type PinnedResource struct {
-	Kind      string `json:"kind"`
-	Name      string `json:"name"`
-	Namespace string `json:"namespace,omitempty"`
+	Kind        string `json:"kind"`
+	Name        string `json:"name"`
+	DisplayName string `json:"displayName"`
+	Namespace   string `json:"namespace,omitempty"`
 }
 
 func (p *PinnedResource) IsEqual(other *PinnedResource) bool {
@@ -89,10 +90,11 @@ func UnmarshalPinnedResources(data string) (*[]PinnedResource, error) {
 
 // Settings is a single instance of settings without context.
 type Settings struct {
-	ClusterName                     string `json:"clusterName"`
-	ItemsPerPage                    int    `json:"itemsPerPage"`
-	LogsAutoRefreshTimeInterval     int    `json:"logsAutoRefreshTimeInterval"`
-	ResourceAutoRefreshTimeInterval int    `json:"resourceAutoRefreshTimeInterval"`
+	ClusterName                      string `json:"clusterName"`
+	ItemsPerPage                     int    `json:"itemsPerPage"`
+	LogsAutoRefreshTimeInterval      int    `json:"logsAutoRefreshTimeInterval"`
+	ResourceAutoRefreshTimeInterval  int    `json:"resourceAutoRefreshTimeInterval"`
+	DisableAccessDeniedNotifications bool   `json:"disableAccessDeniedNotifications"`
 }
 
 // Marshal settings into JSON object.
@@ -110,10 +112,11 @@ func Unmarshal(data string) (*Settings, error) {
 
 // defaultSettings contains default values for every setting.
 var defaultSettings = Settings{
-	ClusterName:                     "",
-	ItemsPerPage:                    10,
-	LogsAutoRefreshTimeInterval:     5,
-	ResourceAutoRefreshTimeInterval: 5,
+	ClusterName:                      "",
+	ItemsPerPage:                     10,
+	LogsAutoRefreshTimeInterval:      5,
+	ResourceAutoRefreshTimeInterval:  5,
+	DisableAccessDeniedNotifications: false,
 }
 
 // GetDefaultSettings returns settings structure, that should be used if there are no

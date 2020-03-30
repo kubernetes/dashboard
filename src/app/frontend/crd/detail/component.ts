@@ -15,7 +15,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {CRDDetail} from '@api/backendapi';
-import {Subscription} from 'rxjs';
+import {Subject, Subscription} from 'rxjs';
+import {switchMap, takeUntil, tap} from 'rxjs/operators';
 
 import {ActionbarService, ResourceMeta} from '../../common/services/global/actionbar';
 import {NotificationsService} from '../../common/services/global/notifications';
@@ -24,11 +25,12 @@ import {EndpointManager, Resource} from '../../common/services/resource/endpoint
 
 @Component({selector: 'kd-crd-detail', templateUrl: './template.html'})
 export class CRDDetailComponent implements OnInit, OnDestroy {
-  private crdSubscription_: Subscription;
-  private readonly endpoint_ = EndpointManager.resource(Resource.crd);
   crd: CRDDetail;
-  crdObjectEndpoint: string;
+  crdName: string;
   isInitialized = false;
+
+  private readonly unsubscribe_ = new Subject<void>();
+  private readonly endpoint_ = EndpointManager.resource(Resource.crd);
 
   constructor(
     private readonly crd_: ResourceService<CRDDetail>,
@@ -38,26 +40,21 @@ export class CRDDetailComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    const {crdName} = this.activatedRoute_.snapshot.params;
-    this.crdObjectEndpoint = EndpointManager.resource(Resource.crd, true).child(
-      crdName,
-      Resource.crdObject,
-    );
-
-    this.crdSubscription_ = this.crd_
-      .get(this.endpoint_.detail(), crdName)
+    this.activatedRoute_.params
+      .pipe(tap(params => (this.crdName = params.crdName)))
+      .pipe(switchMap(_ => this.crd_.get(this.endpoint_.detail(), this.crdName)))
+      .pipe(takeUntil(this.unsubscribe_))
       .subscribe((d: CRDDetail) => {
         this.crd = d;
         this.notifications_.pushErrors(d.errors);
-        this.actionbar_.onInit.emit(
-          new ResourceMeta('Custom Resource Definition', d.objectMeta, d.typeMeta),
-        );
+        this.actionbar_.onInit.emit(new ResourceMeta(d.names.kind, d.objectMeta, d.typeMeta));
         this.isInitialized = true;
       });
   }
 
   ngOnDestroy(): void {
-    this.crdSubscription_.unsubscribe();
+    this.unsubscribe_.next();
+    this.unsubscribe_.complete();
     this.actionbar_.onDetailsLeave.emit();
   }
 }
