@@ -2997,7 +2997,7 @@
       <trans-unit id="192867803de476e3137425685702cb44b3bb9981" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{resource.displayName}}"/>
   </source>
-        <target state="new"><x id="INTERPOLATION" equiv-text="{{resource.displayName}}"/>
+        <target><x id="INTERPOLATION" equiv-text="{{resource.displayName}}"/>
   </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/pinner/template.html</context>
@@ -5072,7 +5072,7 @@
       </trans-unit>
       <trans-unit id="a4f3393592e5ebfd34408e85c3bd576d88839191" datatype="html">
         <source>Disable access denied notification</source>
-        <target state="new">Disable access denied notification</target>
+        <target>Désactiver les notifications d'accès interdit</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">100</context>
@@ -5080,7 +5080,7 @@
       </trans-unit>
       <trans-unit id="b6484080715a11bad65395e51d42e6ae4aa3c856" datatype="html">
         <source>Hides all access denied warnings in the notification panel.</source>
-        <target state="new">Hides all access denied warnings in the notification panel.</target>
+        <target>Cache tous les avertissements d'accès interdit dans le panneau de notifications.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">102</context>
