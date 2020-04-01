@@ -45,6 +45,7 @@ export class SecretDetailEditComponent implements OnInit {
   }
   @Input() key: string;
   text = '';
+  isMultiline = true;
   private secret_: SecretDetail;
   private editing_ = false;
 
@@ -80,6 +81,7 @@ export class SecretDetailEditComponent implements OnInit {
 
   updateText(): void {
     this.text = this.secret && this.key ? this.decode(this.secret.data[this.key]) : '';
+    this.isMultiline = this.text.includes('\n');
   }
 
   getHttpHeaders_(): HttpHeaders {
