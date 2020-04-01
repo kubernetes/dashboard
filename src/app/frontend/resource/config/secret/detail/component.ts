@@ -21,6 +21,7 @@ import {ActionbarService, ResourceMeta} from '../../../../common/services/global
 import {NotificationsService} from '../../../../common/services/global/notifications';
 import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
 import {NamespacedResourceService} from '../../../../common/services/resource/resource';
+import {HiddenPropertyMode} from '../../../../common/components/hiddenproperty/component';
 
 @Component({
   selector: 'kd-secret-detail',
@@ -31,6 +32,7 @@ export class SecretDetailComponent implements OnInit, OnDestroy {
   private readonly endpoint_ = EndpointManager.resource(Resource.secret, true);
   secret: SecretDetail;
   isInitialized = false;
+  HiddenPropertyMode = HiddenPropertyMode;
 
   constructor(
     private readonly secret_: NamespacedResourceService<SecretDetail>,

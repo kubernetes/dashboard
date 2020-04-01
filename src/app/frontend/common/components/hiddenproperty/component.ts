@@ -14,11 +14,35 @@
 
 import {Component, Input} from '@angular/core';
 
+export enum HiddenPropertyMode {
+  hidden = 'hidden',
+  visible = 'visible',
+  edit = 'edit',
+}
+
 @Component({
   selector: 'kd-hidden-property',
   templateUrl: './template.html',
   styleUrls: ['./style.scss'],
 })
 export class HiddenPropertyComponent {
-  @Input() hidden = true;
+  @Input() mode = HiddenPropertyMode.hidden;
+  HiddenPropertyMode = HiddenPropertyMode;
+
+  toggleVisible(): void {
+    // Allow toggle between visible and hidden with eye icon and key.
+    this.mode =
+      this.mode !== HiddenPropertyMode.visible
+        ? HiddenPropertyMode.visible
+        : HiddenPropertyMode.hidden;
+  }
+
+  toggleEdit(event: MouseEvent): void {
+    // Prevent standard visible.
+    event.stopPropagation();
+
+    // Allow toggle between edit and hidden with pencil icon.
+    this.mode =
+      this.mode !== HiddenPropertyMode.edit ? HiddenPropertyMode.edit : HiddenPropertyMode.hidden;
+  }
 }
