@@ -27,6 +27,7 @@ export enum HiddenPropertyMode {
 })
 export class HiddenPropertyComponent {
   @Input() mode = HiddenPropertyMode.hidden;
+  @Input() enableEdit = false;
   HiddenPropertyMode = HiddenPropertyMode;
 
   toggleVisible(): void {

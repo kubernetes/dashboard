@@ -25,7 +25,8 @@ limitations under the License.
       <ng-container *ngIf="mode == HiddenPropertyMode.hidden">visibility</ng-container>
       <ng-container *ngIf="mode != HiddenPropertyMode.hidden">visibility_off</ng-container>
     </mat-icon>
-    <mat-icon class="kd-hidden-property-icon"
+    <mat-icon *ngIf="enableEdit"
+              class="kd-hidden-property-icon"
               (click)="toggleEdit($event)">edit</mat-icon>
   </div>
   <div value>
