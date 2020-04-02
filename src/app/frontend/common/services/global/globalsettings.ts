@@ -32,7 +32,7 @@ export class GlobalSettingsService {
     clusterName: '',
     logsAutoRefreshTimeInterval: 5,
     resourceAutoRefreshTimeInterval: 5,
-    disableAccessDeniedNotifications: false,
+    disableAccessDeniedNotifications: true,
   };
   private isInitialized_ = false;
 
