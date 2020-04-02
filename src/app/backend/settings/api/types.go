@@ -116,7 +116,7 @@ var defaultSettings = Settings{
 	ItemsPerPage:                     10,
 	LogsAutoRefreshTimeInterval:      5,
 	ResourceAutoRefreshTimeInterval:  5,
-	DisableAccessDeniedNotifications: false,
+	DisableAccessDeniedNotifications: true,
 }
 
 // GetDefaultSettings returns settings structure, that should be used if there are no
