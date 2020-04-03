@@ -26,33 +26,34 @@ import {MatDialogConfig, MatDialog} from '@angular/material/dialog';
 })
 export class SecretDetailEditComponent implements OnInit {
   @Output() onClose = new EventEmitter<boolean>();
+  @Input() key: string;
+
+  text = '';
+
+  private secret_: SecretDetail;
+  private editing_ = false;
+
   @Input() set editing(value: boolean) {
     this.editing_ = value;
-    this.updateText();
+    this.updateText_();
   }
+
   get editing(): boolean {
     return this.editing_;
   }
+
   @Input() set secret(value: SecretDetail) {
     this.secret_ = value;
-
-    if (!this.editing) {
-      this.updateText();
-    }
   }
+
   get secret(): SecretDetail {
     return this.secret_;
   }
-  @Input() key: string;
-  text = '';
-  isMultiline = true;
-  private secret_: SecretDetail;
-  private editing_ = false;
 
   constructor(private readonly dialog_: MatDialog, private readonly http_: HttpClient) {}
 
   ngOnInit(): void {
-    this.updateText();
+    this.updateText_();
   }
 
   update(): void {
@@ -62,8 +63,8 @@ export class SecretDetailEditComponent implements OnInit {
       .get(url)
       .toPromise()
       .then((resource: any) => {
-        const dataValue = this.encode(this.text);
-        resource.data[this.key] = this.encode(this.text);
+        const dataValue = this.encode_(this.text);
+        resource.data[this.key] = this.encode_(this.text);
         const url = RawResource.getUrl(this.secret.typeMeta, this.secret.objectMeta);
         this.http_
           .put(url, resource, {headers: this.getHttpHeaders_(), responseType: 'text'})
@@ -79,27 +80,26 @@ export class SecretDetailEditComponent implements OnInit {
     this.onClose.emit(true);
   }
 
-  updateText(): void {
-    this.text = this.secret && this.key ? this.decode(this.secret.data[this.key]) : '';
-    this.isMultiline = this.text.includes('\n');
+  private updateText_(): void {
+    this.text = this.secret && this.key ? this.decode_(this.secret.data[this.key]) : '';
   }
 
-  getHttpHeaders_(): HttpHeaders {
+  private decode_(s: string): string {
+    return atob(s);
+  }
+
+  private encode_(s: string): string {
+    return btoa(s);
+  }
+
+  private getHttpHeaders_(): HttpHeaders {
     const headers = new HttpHeaders();
     headers.set('Content-Type', 'application/json');
     headers.set('Accept', 'application/json');
     return headers;
   }
 
-  decode(s: string): string {
-    return atob(s);
-  }
-
-  encode(s: string): string {
-    return btoa(s);
-  }
-
-  handleErrorResponse_(err: HttpErrorResponse): void {
+  private handleErrorResponse_(err: HttpErrorResponse): void {
     if (err) {
       const alertDialogConfig: MatDialogConfig<AlertDialogConfig> = {
         width: '630px',
