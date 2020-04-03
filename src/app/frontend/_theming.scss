@@ -288,4 +288,27 @@
       fill: mat-color($foreground-palette, text) !important;
     }
   }
+
+  .kd-secret-detail-text {
+    .mat-form-field-infix {
+      border-top: 0;
+    }
+
+    .mat-form-field-underline {
+      background: none;
+
+      .mat-form-field-ripple {
+        background: none;
+      }
+    }
+
+    textarea {
+      background-color: $border;
+      border: 0;
+    }
+  }
+
+  .kd-edit-active {
+    color: $primary;
+  }
 }

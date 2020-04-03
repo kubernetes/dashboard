@@ -198,6 +198,7 @@ router-outlet::after {
   font-size: $body-font-size-base;
   padding: $baseline-grid * 2;
   white-space: pre-wrap;
+  width: 100%;
 }
 
 .kd-code-block-font {
@@ -351,4 +352,18 @@ router-outlet::after {
 // Override Arial font type
 .nvtooltip {
   font-family: Roboto, sans-serif;
+}
+
+.kd-secret-detail-text {
+  .mat-form-field-wrapper {
+    padding-bottom: $baseline-grid;
+  }
+
+  .mat-form-field-infix {
+    padding-top: 2px;
+  }
+
+  textarea {
+    padding: (2 * $baseline-grid) (2 * $baseline-grid) 0 !important;
+  }
 }
