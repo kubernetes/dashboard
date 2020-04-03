@@ -15,6 +15,7 @@
 package service
 
 import (
+	"context"
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
@@ -42,7 +43,7 @@ type ServiceDetail struct {
 // GetServiceDetail gets service details.
 func GetServiceDetail(client k8sClient.Interface, namespace, name string) (*ServiceDetail, error) {
 	log.Printf("Getting details of %s service in %s namespace", name, namespace)
-	serviceData, err := client.CoreV1().Services(namespace).Get(name, metaV1.GetOptions{})
+	serviceData, err := client.CoreV1().Services(namespace).Get(context.TODO(), name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}

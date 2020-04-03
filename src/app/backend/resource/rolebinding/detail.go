@@ -15,6 +15,8 @@
 package rolebinding
 
 import (
+	"context"
+
 	rbac "k8s.io/api/rbac/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
@@ -35,7 +37,7 @@ type RoleBindingDetail struct {
 
 // GetRoleBindingDetail gets RoleBinding details.
 func GetRoleBindingDetail(client k8sClient.Interface, namespace, name string) (*RoleBindingDetail, error) {
-	rawObject, err := client.RbacV1().RoleBindings(namespace).Get(name, metaV1.GetOptions{})
+	rawObject, err := client.RbacV1().RoleBindings(namespace).Get(context.TODO(), name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}

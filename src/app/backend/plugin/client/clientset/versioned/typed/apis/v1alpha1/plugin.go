@@ -17,6 +17,7 @@
 package v1alpha1
 
 import (
+	"context"
 	"time"
 
 	v1alpha1 "github.com/kubernetes/dashboard/src/app/backend/plugin/apis/v1alpha1"
@@ -35,14 +36,14 @@ type PluginsGetter interface {
 
 // PluginInterface has methods to work with Plugin resources.
 type PluginInterface interface {
-	Create(*v1alpha1.Plugin) (*v1alpha1.Plugin, error)
-	Update(*v1alpha1.Plugin) (*v1alpha1.Plugin, error)
-	Delete(name string, options *v1.DeleteOptions) error
-	DeleteCollection(options *v1.DeleteOptions, listOptions v1.ListOptions) error
-	Get(name string, options v1.GetOptions) (*v1alpha1.Plugin, error)
-	List(opts v1.ListOptions) (*v1alpha1.PluginList, error)
-	Watch(opts v1.ListOptions) (watch.Interface, error)
-	Patch(name string, pt types.PatchType, data []byte, subresources ...string) (result *v1alpha1.Plugin, err error)
+	Create(ctx context.Context, plugin *v1alpha1.Plugin, opts v1.CreateOptions) (*v1alpha1.Plugin, error)
+	Update(ctx context.Context, plugin *v1alpha1.Plugin, opts v1.UpdateOptions) (*v1alpha1.Plugin, error)
+	Delete(ctx context.Context, name string, opts v1.DeleteOptions) error
+	DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error
+	Get(ctx context.Context, name string, opts v1.GetOptions) (*v1alpha1.Plugin, error)
+	List(ctx context.Context, opts v1.ListOptions) (*v1alpha1.PluginList, error)
+	Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error)
+	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.Plugin, err error)
 	PluginExpansion
 }
 
@@ -61,20 +62,20 @@ func newPlugins(c *DashboardV1alpha1Client, namespace string) *plugins {
 }
 
 // Get takes name of the plugin, and returns the corresponding plugin object, and an error if there is any.
-func (c *plugins) Get(name string, options v1.GetOptions) (result *v1alpha1.Plugin, err error) {
+func (c *plugins) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.Plugin, err error) {
 	result = &v1alpha1.Plugin{}
 	err = c.client.Get().
 		Namespace(c.ns).
 		Resource("plugins").
 		Name(name).
 		VersionedParams(&options, scheme.ParameterCodec).
-		Do().
+		Do(ctx).
 		Into(result)
 	return
 }
 
 // List takes label and field selectors, and returns the list of Plugins that match those selectors.
-func (c *plugins) List(opts v1.ListOptions) (result *v1alpha1.PluginList, err error) {
+func (c *plugins) List(ctx context.Context, opts v1.ListOptions) (result *v1alpha1.PluginList, err error) {
 	var timeout time.Duration
 	if opts.TimeoutSeconds != nil {
 		timeout = time.Duration(*opts.TimeoutSeconds) * time.Second
@@ -85,13 +86,13 @@ func (c *plugins) List(opts v1.ListOptions) (result *v1alpha1.PluginList, err er
 		Resource("plugins").
 		VersionedParams(&opts, scheme.ParameterCodec).
 		Timeout(timeout).
-		Do().
+		Do(ctx).
 		Into(result)
 	return
 }
 
 // Watch returns a watch.Interface that watches the requested plugins.
-func (c *plugins) Watch(opts v1.ListOptions) (watch.Interface, error) {
+func (c *plugins) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
 	var timeout time.Duration
 	if opts.TimeoutSeconds != nil {
 		timeout = time.Duration(*opts.TimeoutSeconds) * time.Second
@@ -102,71 +103,74 @@ func (c *plugins) Watch(opts v1.ListOptions) (watch.Interface, error) {
 		Resource("plugins").
 		VersionedParams(&opts, scheme.ParameterCodec).
 		Timeout(timeout).
-		Watch()
+		Watch(ctx)
 }
 
 // Create takes the representation of a plugin and creates it.  Returns the server's representation of the plugin, and an error, if there is any.
-func (c *plugins) Create(plugin *v1alpha1.Plugin) (result *v1alpha1.Plugin, err error) {
+func (c *plugins) Create(ctx context.Context, plugin *v1alpha1.Plugin, opts v1.CreateOptions) (result *v1alpha1.Plugin, err error) {
 	result = &v1alpha1.Plugin{}
 	err = c.client.Post().
 		Namespace(c.ns).
 		Resource("plugins").
+		VersionedParams(&opts, scheme.ParameterCodec).
 		Body(plugin).
-		Do().
+		Do(ctx).
 		Into(result)
 	return
 }
 
 // Update takes the representation of a plugin and updates it. Returns the server's representation of the plugin, and an error, if there is any.
-func (c *plugins) Update(plugin *v1alpha1.Plugin) (result *v1alpha1.Plugin, err error) {
+func (c *plugins) Update(ctx context.Context, plugin *v1alpha1.Plugin, opts v1.UpdateOptions) (result *v1alpha1.Plugin, err error) {
 	result = &v1alpha1.Plugin{}
 	err = c.client.Put().
 		Namespace(c.ns).
 		Resource("plugins").
 		Name(plugin.Name).
+		VersionedParams(&opts, scheme.ParameterCodec).
 		Body(plugin).
-		Do().
+		Do(ctx).
 		Into(result)
 	return
 }
 
 // Delete takes name of the plugin and deletes it. Returns an error if one occurs.
-func (c *plugins) Delete(name string, options *v1.DeleteOptions) error {
+func (c *plugins) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
 	return c.client.Delete().
 		Namespace(c.ns).
 		Resource("plugins").
 		Name(name).
-		Body(options).
-		Do().
+		Body(&opts).
+		Do(ctx).
 		Error()
 }
 
 // DeleteCollection deletes a collection of objects.
-func (c *plugins) DeleteCollection(options *v1.DeleteOptions, listOptions v1.ListOptions) error {
+func (c *plugins) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
 	var timeout time.Duration
-	if listOptions.TimeoutSeconds != nil {
-		timeout = time.Duration(*listOptions.TimeoutSeconds) * time.Second
+	if listOpts.TimeoutSeconds != nil {
+		timeout = time.Duration(*listOpts.TimeoutSeconds) * time.Second
 	}
 	return c.client.Delete().
 		Namespace(c.ns).
 		Resource("plugins").
-		VersionedParams(&listOptions, scheme.ParameterCodec).
+		VersionedParams(&listOpts, scheme.ParameterCodec).
 		Timeout(timeout).
-		Body(options).
-		Do().
+		Body(&opts).
+		Do(ctx).
 		Error()
 }
 
 // Patch applies the patch and returns the patched plugin.
-func (c *plugins) Patch(name string, pt types.PatchType, data []byte, subresources ...string) (result *v1alpha1.Plugin, err error) {
+func (c *plugins) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.Plugin, err error) {
 	result = &v1alpha1.Plugin{}
 	err = c.client.Patch(pt).
 		Namespace(c.ns).
 		Resource("plugins").
-		SubResource(subresources...).
 		Name(name).
+		SubResource(subresources...).
+		VersionedParams(&opts, scheme.ParameterCodec).
 		Body(data).
-		Do().
+		Do(ctx).
 		Into(result)
 	return
 }

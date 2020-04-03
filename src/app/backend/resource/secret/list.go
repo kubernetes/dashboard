@@ -15,6 +15,7 @@
 package secret
 
 import (
+	"context"
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
@@ -85,7 +86,7 @@ type SecretList struct {
 func GetSecretList(client kubernetes.Interface, namespace *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery) (*SecretList, error) {
 	log.Printf("Getting list of secrets in %s namespace\n", namespace)
-	secretList, err := client.CoreV1().Secrets(namespace.ToRequestParam()).List(api.ListEverything)
+	secretList, err := client.CoreV1().Secrets(namespace.ToRequestParam()).List(context.TODO(), api.ListEverything)
 
 	nonCriticalErrors, criticalError := errors.HandleError(err)
 	if criticalError != nil {
@@ -106,7 +107,7 @@ func CreateSecret(client kubernetes.Interface, spec SecretSpec) (*Secret, error)
 		Type: spec.GetType(),
 		Data: spec.GetData(),
 	}
-	_, err := client.CoreV1().Secrets(namespace).Create(secret)
+	_, err := client.CoreV1().Secrets(namespace).Create(context.TODO(), secret, metaV1.CreateOptions{})
 	result := toSecret(secret)
 	return &result, err
 }

@@ -15,6 +15,7 @@
 package node
 
 import (
+	"context"
 	"log"
 
 	v1 "k8s.io/api/core/v1"
@@ -47,7 +48,7 @@ type Node struct {
 
 // GetNodeList returns a list of all Nodes in the cluster.
 func GetNodeList(client client.Interface, dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) (*NodeList, error) {
-	nodes, err := client.CoreV1().Nodes().List(api.ListEverything)
+	nodes, err := client.CoreV1().Nodes().List(context.TODO(), api.ListEverything)
 
 	nonCriticalErrors, criticalError := errors.HandleError(err)
 	if criticalError != nil {

@@ -15,6 +15,8 @@
 package replicationcontroller
 
 import (
+	"context"
+
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
@@ -28,7 +30,7 @@ import (
 func GetReplicationControllerServices(client client.Interface, dsQuery *dataselect.DataSelectQuery,
 	namespace, rcName string) (*service.ServiceList, error) {
 
-	replicationController, err := client.CoreV1().ReplicationControllers(namespace).Get(rcName, metaV1.GetOptions{})
+	replicationController, err := client.CoreV1().ReplicationControllers(namespace).Get(context.TODO(), rcName, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}

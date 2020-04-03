@@ -15,6 +15,7 @@
 package heapster
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -90,7 +91,7 @@ func (self FakeHeapster) ID() integrationapi.IntegrationID {
 	return "fakeHeapster"
 }
 
-func (self FakeRequest) DoRaw() ([]byte, error) {
+func (self FakeRequest) DoRaw(ctx context.Context) ([]byte, error) {
 	_NumRequests.increment()
 	log.Println("Performing req...")
 	path := self.Path

@@ -15,6 +15,8 @@
 package ingress
 
 import (
+	"context"
+
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
@@ -46,7 +48,7 @@ type IngressList struct {
 // GetIngressList returns all ingresses in the given namespace.
 func GetIngressList(client client.Interface, namespace *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery) (*IngressList, error) {
-	ingressList, err := client.ExtensionsV1beta1().Ingresses(namespace.ToRequestParam()).List(api.ListEverything)
+	ingressList, err := client.ExtensionsV1beta1().Ingresses(namespace.ToRequestParam()).List(context.TODO(), api.ListEverything)
 
 	nonCriticalErrors, criticalError := errors.HandleError(err)
 	if criticalError != nil {

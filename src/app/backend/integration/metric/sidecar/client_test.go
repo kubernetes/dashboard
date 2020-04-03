@@ -15,6 +15,7 @@
 package sidecar
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -89,7 +90,7 @@ func (self FakeSidecar) ID() integrationapi.IntegrationID {
 	return "fakeSidecar"
 }
 
-func (self FakeRequest) DoRaw() ([]byte, error) {
+func (self FakeRequest) DoRaw(ctx context.Context) ([]byte, error) {
 	_NumRequests.increment()
 	log.Println("Performing req...")
 	path := self.Path

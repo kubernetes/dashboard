@@ -15,6 +15,8 @@
 package deployment
 
 import (
+	"context"
+
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
@@ -29,7 +31,7 @@ import (
 func GetDeploymentPods(client client.Interface, metricClient metricapi.MetricClient,
 	dsQuery *dataselect.DataSelectQuery, namespace, deploymentName string) (*pod.PodList, error) {
 
-	deployment, err := client.AppsV1().Deployments(namespace).Get(deploymentName, metaV1.GetOptions{})
+	deployment, err := client.AppsV1().Deployments(namespace).Get(context.TODO(), deploymentName, metaV1.GetOptions{})
 	if err != nil {
 		return pod.EmptyPodList, err
 	}

@@ -15,6 +15,8 @@
 package daemonset
 
 import (
+	"context"
+
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
@@ -34,7 +36,7 @@ import (
 func GetServicesForDSDeletion(client client.Interface, labelSelector labels.Selector,
 	namespace string) ([]v1.Service, error) {
 
-	daemonSet, err := client.AppsV1().DaemonSets(namespace).List(metaV1.ListOptions{
+	daemonSet, err := client.AppsV1().DaemonSets(namespace).List(context.TODO(), metaV1.ListOptions{
 		LabelSelector: labelSelector.String(),
 		FieldSelector: fields.Everything().String(),
 	})
@@ -49,7 +51,7 @@ func GetServicesForDSDeletion(client client.Interface, labelSelector labels.Sele
 		return []v1.Service{}, nil
 	}
 
-	services, err := client.CoreV1().Services(namespace).List(metaV1.ListOptions{
+	services, err := client.CoreV1().Services(namespace).List(context.TODO(), metaV1.ListOptions{
 		LabelSelector: labelSelector.String(),
 		FieldSelector: fields.Everything().String(),
 	})

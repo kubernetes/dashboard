@@ -15,6 +15,7 @@
 package deployment
 
 import (
+	"context"
 	"fmt"
 	"io"
 	"log"
@@ -219,7 +220,7 @@ func DeployApp(spec *AppDeploymentSpec, client client.Interface) error {
 			},
 		},
 	}
-	_, err := client.AppsV1().Deployments(spec.Namespace).Create(deployment)
+	_, err := client.AppsV1().Deployments(spec.Namespace).Create(context.TODO(), deployment, metaV1.CreateOptions{})
 
 	if err != nil {
 		return err
@@ -253,7 +254,7 @@ func DeployApp(spec *AppDeploymentSpec, client client.Interface) error {
 			service.Spec.Ports = append(service.Spec.Ports, servicePort)
 		}
 
-		_, err = client.CoreV1().Services(spec.Namespace).Create(service)
+		_, err = client.CoreV1().Services(spec.Namespace).Create(context.TODO(), service, metaV1.CreateOptions{})
 		return err
 	}
 
@@ -355,9 +356,9 @@ func DeployAppFromFile(cfg *rest.Config, spec *AppDeploymentFromFileSpec) (bool,
 		}
 
 		if resource.Namespaced {
-			_, err = dynamicClient.Resource(groupVersionResource).Namespace(namespace).Create(data, metaV1.CreateOptions{})
+			_, err = dynamicClient.Resource(groupVersionResource).Namespace(namespace).Create(context.TODO(), data, metaV1.CreateOptions{})
 		} else {
-			_, err = dynamicClient.Resource(groupVersionResource).Create(data, metaV1.CreateOptions{})
+			_, err = dynamicClient.Resource(groupVersionResource).Create(context.TODO(), data, metaV1.CreateOptions{})
 		}
 
 		if err != nil {

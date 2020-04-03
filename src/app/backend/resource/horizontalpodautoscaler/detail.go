@@ -15,6 +15,7 @@
 package horizontalpodautoscaler
 
 import (
+	"context"
 	"log"
 
 	autoscaling "k8s.io/api/autoscaling/v1"
@@ -36,7 +37,7 @@ type HorizontalPodAutoscalerDetail struct {
 func GetHorizontalPodAutoscalerDetail(client client.Interface, namespace string, name string) (*HorizontalPodAutoscalerDetail, error) {
 	log.Printf("Getting details of %s horizontal pod autoscaler", name)
 
-	rawHorizontalPodAutoscaler, err := client.AutoscalingV1().HorizontalPodAutoscalers(namespace).Get(name, v1.GetOptions{})
+	rawHorizontalPodAutoscaler, err := client.AutoscalingV1().HorizontalPodAutoscalers(namespace).Get(context.TODO(), name, v1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}

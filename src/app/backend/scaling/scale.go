@@ -15,9 +15,11 @@
 package scaling
 
 import (
+	"context"
 	"strconv"
 
 	apps "k8s.io/api/apps/v1"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/client-go/discovery"
 	"k8s.io/client-go/discovery/cached/memory"
@@ -42,7 +44,7 @@ func GetReplicaCounts(cfg *rest.Config, kind, namespace, name string) (*ReplicaC
 	}
 
 	gr := getGroupResource(kind)
-	res, err := sc.Scales(namespace).Get(gr, name)
+	res, err := sc.Scales(namespace).Get(context.TODO(), gr, name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
@@ -63,7 +65,7 @@ func ScaleResource(cfg *rest.Config, kind, namespace, name, count string) (*Repl
 	}
 
 	gr := getGroupResource(kind)
-	res, err := sc.Scales(namespace).Get(gr, name)
+	res, err := sc.Scales(namespace).Get(context.TODO(), gr, name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
@@ -75,7 +77,7 @@ func ScaleResource(cfg *rest.Config, kind, namespace, name, count string) (*Repl
 
 	res.Spec.Replicas = int32(c)
 
-	res, err = sc.Scales(namespace).Update(gr, res)
+	res, err = sc.Scales(namespace).Update(context.TODO(), gr, res, metaV1.UpdateOptions{})
 	if err != nil {
 		return nil, err
 	}

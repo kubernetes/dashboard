@@ -15,6 +15,7 @@
 package daemonset
 
 import (
+	"context"
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
@@ -50,7 +51,7 @@ func GetDaemonSetPods(client k8sClient.Interface, metricClient metricapi.MetricC
 
 // Returns array of api pods targeting daemon set with given name.
 func getRawDaemonSetPods(client k8sClient.Interface, daemonSetName, namespace string) ([]api.Pod, error) {
-	daemonSet, err := client.AppsV1().DaemonSets(namespace).Get(daemonSetName, metaV1.GetOptions{})
+	daemonSet, err := client.AppsV1().DaemonSets(namespace).Get(context.TODO(), daemonSetName, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}

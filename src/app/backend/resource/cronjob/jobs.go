@@ -15,6 +15,8 @@
 package cronjob
 
 import (
+	"context"
+
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
@@ -40,7 +42,7 @@ var emptyJobList = &job.JobList{
 func GetCronJobJobs(client client.Interface, metricClient metricapi.MetricClient,
 	dsQuery *dataselect.DataSelectQuery, namespace, name string, active bool) (*job.JobList, error) {
 
-	cronJob, err := client.BatchV1beta1().CronJobs(namespace).Get(name, metaV1.GetOptions{})
+	cronJob, err := client.BatchV1beta1().CronJobs(namespace).Get(context.TODO(), name, metaV1.GetOptions{})
 	if err != nil {
 		return emptyJobList, err
 	}
@@ -82,7 +84,7 @@ func GetCronJobJobs(client client.Interface, metricClient metricapi.MetricClient
 func TriggerCronJob(client client.Interface,
 	namespace, name string) error {
 
-	cronJob, err := client.BatchV1beta1().CronJobs(namespace).Get(name, metaV1.GetOptions{})
+	cronJob, err := client.BatchV1beta1().CronJobs(namespace).Get(context.TODO(), name, metaV1.GetOptions{})
 
 	if err != nil {
 		return err
@@ -114,7 +116,7 @@ func TriggerCronJob(client client.Interface,
 		Spec: cronJob.Spec.JobTemplate.Spec,
 	}
 
-	_, err = client.BatchV1().Jobs(namespace).Create(jobToCreate)
+	_, err = client.BatchV1().Jobs(namespace).Create(context.TODO(), jobToCreate, metaV1.CreateOptions{})
 
 	if err != nil {
 		return err

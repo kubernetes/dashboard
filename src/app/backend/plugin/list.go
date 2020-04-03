@@ -15,6 +15,7 @@
 package plugin
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
@@ -61,7 +62,7 @@ func (p PluginCell) GetProperty(name dataselect.PropertyName) dataselect.Compara
 
 // GetPluginList returns all the registered plugins
 func GetPluginList(client pluginclientset.Interface, ns string, dsQuery *dataselect.DataSelectQuery) (*PluginList, error) {
-	plugins, err := client.DashboardV1alpha1().Plugins(ns).List(v1.ListOptions{})
+	plugins, err := client.DashboardV1alpha1().Plugins(ns).List(context.TODO(), v1.ListOptions{})
 	nonCriticalErrors, criticalError := errors.HandleError(err)
 	if criticalError != nil {
 		return &PluginList{Items: []Plugin{}, Errors: []error{criticalError}}, nil

@@ -15,6 +15,8 @@
 package deployment
 
 import (
+	"context"
+
 	apps "k8s.io/api/apps/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
@@ -31,7 +33,7 @@ func GetDeploymentNewReplicaSet(client client.Interface, dsQuery *dataselect.Dat
 
 	newReplicaSet := &replicaset.ReplicaSet{}
 
-	deployment, err := client.AppsV1().Deployments(namespace).Get(deploymentName, metaV1.GetOptions{})
+	deployment, err := client.AppsV1().Deployments(namespace).Get(context.TODO(), deploymentName, metaV1.GetOptions{})
 	if err != nil {
 		return newReplicaSet, err
 	}

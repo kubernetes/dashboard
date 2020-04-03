@@ -15,6 +15,8 @@
 package sidecar
 
 import (
+	"context"
+
 	"github.com/kubernetes/dashboard/src/app/backend/args"
 	"k8s.io/client-go/rest"
 )
@@ -31,7 +33,7 @@ type SidecarRESTClient interface {
 // RequestInterface is an interface that allows to make operations on pure request object.
 // Separation is done to allow testing.
 type RequestInterface interface {
-	DoRaw() ([]byte, error)
+	DoRaw(context.Context) ([]byte, error)
 	AbsPath(segments ...string) *rest.Request
 }
 
@@ -60,7 +62,7 @@ func (self inClusterSidecarClient) HealthCheck() error {
 		Name("dashboard-metrics-scraper").
 		SubResource("proxy").
 		Suffix("/healthz").
-		DoRaw()
+		DoRaw(context.TODO())
 	return err
 }
 
@@ -78,6 +80,6 @@ func (c remoteSidecarClient) Get(path string) RequestInterface {
 // HealthCheck does a health check of the application.
 // Returns nil if connection to application can be established, error object otherwise.
 func (self remoteSidecarClient) HealthCheck() error {
-	_, err := self.Get("healthz").AbsPath("/").DoRaw()
+	_, err := self.Get("healthz").AbsPath("/").DoRaw(context.TODO())
 	return err
 }

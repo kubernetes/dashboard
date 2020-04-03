@@ -15,6 +15,8 @@
 package event
 
 import (
+	"context"
+
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
@@ -128,7 +130,7 @@ func GetNodeEvents(client kubernetes.Interface, dsQuery *dataselect.DataSelectQu
 	scheme.AddKnownTypes(groupVersion, &v1.Node{})
 
 	mc := client.CoreV1().Nodes()
-	node, err := mc.Get(nodeName, metaV1.GetOptions{})
+	node, err := mc.Get(context.TODO(), nodeName, metaV1.GetOptions{})
 	if err != nil {
 		return &eventList, err
 	}
@@ -144,7 +146,7 @@ func GetNodeEvents(client kubernetes.Interface, dsQuery *dataselect.DataSelectQu
 
 // GetNamespaceEvents gets events associated to a namespace with given name.
 func GetNamespaceEvents(client kubernetes.Interface, dsQuery *dataselect.DataSelectQuery, namespace string) (common.EventList, error) {
-	events, _ := client.CoreV1().Events(namespace).List(api.ListEverything)
+	events, _ := client.CoreV1().Events(namespace).List(context.TODO(), api.ListEverything)
 	return CreateEventList(FillEventsType(events.Items), dsQuery), nil
 }
 

@@ -15,6 +15,7 @@
 package poll
 
 import (
+	"context"
 	"time"
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -52,7 +53,7 @@ func (self *SecretPoller) Poll(interval time.Duration) watch.Interface {
 
 // Gets secret from API server and transforms it to watch.Event object.
 func (self *SecretPoller) getSecretEvent() (event watch.Event) {
-	secret, err := self.client.CoreV1().Secrets(self.namespace).Get(self.name, metav1.GetOptions{})
+	secret, err := self.client.CoreV1().Secrets(self.namespace).Get(context.TODO(), self.name, metav1.GetOptions{})
 	event = watch.Event{
 		Object: secret,
 		Type:   watch.Added,
