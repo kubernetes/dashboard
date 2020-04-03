@@ -70,10 +70,6 @@ func getSupportedLocales(configFile string) ([]language.Tag, error) {
 	result := []language.Tag{}
 	for _, translation := range localization.Translations {
 		result = append(result, language.Make(translation))
-		if translation != strings.ToLower(translation) {
-			// Add locale in lowercase
-			result = append(result, language.Make(strings.ToLower(translation)))
-		}
 	}
 	return result, nil
 }
@@ -89,24 +85,6 @@ func getAssetsDir() string {
 		glog.Fatalf("Error evaluating symlinks for path '%s': %#v", path, err)
 	}
 	return filepath.Join(filepath.Dir(path), assetsDir)
-}
-
-func getLocaleDirs() map[string]string {
-	var localeDirs = map[string]string{}
-	assetsDir := getAssetsDir()
-	entries, err := ioutil.ReadDir(assetsDir)
-	if err != nil {
-		glog.Warningf(err.Error())
-		return localeDirs
-	}
-	for _, entry := range entries {
-		if entry.IsDir() {
-			localeDirs[entry.Name()] = assetsDir + "/" + entry.Name()
-			// Support locale in lower case
-			localeDirs[strings.ToLower(entry.Name())] = assetsDir + "/" + entry.Name()
-		}
-	}
-	return localeDirs
 }
 
 // LocaleHandler serves different html versions based on the Accept-Language header.
@@ -126,53 +104,56 @@ func (handler *LocaleHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) 
 }
 
 func (handler *LocaleHandler) determineLocalizedDir(locale string) string {
-	// TODO(floreks): Remove that once new locale codes are supported by the browsers,
-	// or golang.org/x/text/language map properly.
+	// TODO(floreks): Remove that once new locale codes are supported by the browsers.
 	// For backward compatibility only.
-	// Also, support locales in lowercase.
 	localeMap := strings.NewReplacer(
 		"zh-CN", "zh-Hans",
 		"zh-cn", "zh-Hans",
 		"zh-TW", "zh-Hant",
 		"zh-tw", "zh-Hant",
+		"zh-hk", "zh-Hant-HK",
+		"zh-HK", "zh-Hant-HK",
 	)
-	// Replace old locale codes to new ones, e.g. zh-CN -> zh-Hans
-	locale = localeMap.Replace(locale)
 
-	assetsDir := getAssetsDir()
-	defaultDir := filepath.Join(assetsDir, defaultLocaleDir)
-	tags, _, err := language.ParseAcceptLanguage(locale)
-	if err != nil || len(tags) == 0 {
-		return defaultDir
-	}
-
-	locales := handler.SupportedLocales
-	tag, _, confidence := language.NewMatcher(locales).Match(tags...)
-
-	localeDir := ""
-	if confidence == language.Exact {
-		// Locales supported by dashboard, i.e. locale_conf.json, can get proper locale directory.
-		// e.g. `de`, `fr`, `ja`, `ko`, `zh-Hans`, `zh-Hant`, `zh-Hant-HK`
-		localeDir = handler.getSupportedLocaleDir(tag.String())
-	}
-
-	if localeDir == "" {
-		return defaultDir
-	}
-	return localeDir
+	return handler.getLocaleDir(localeMap.Replace(locale))
 }
 
-func (handler *LocaleHandler) getSupportedLocaleDir(locale string) string {
-	locales := handler.SupportedLocales
-	localeDirs := getLocaleDirs()
-	for _, l := range locales {
-		if l.String() == locale || strings.ToLower(l.String()) == locale {
-			dir, ok := localeDirs[locale]
-			if ok {
-				return dir
-			}
-			return ""
+func (handler *LocaleHandler) getLocaleDir(locale string) string {
+	localeDir := ""
+	assetsDir := getAssetsDir()
+	tags, _, _ := language.ParseAcceptLanguage(locale)
+	localeMap := handler.getLocaleMap()
+
+	for _, tag := range tags {
+		if _, exists := localeMap[tag.String()]; exists {
+			localeDir = filepath.Join(assetsDir, tag.String())
+			break
 		}
 	}
-	return ""
+
+	if handler.dirExists(localeDir) {
+		return localeDir
+	}
+
+	return filepath.Join(assetsDir, defaultLocaleDir)
+}
+
+func (handler *LocaleHandler) getLocaleMap() map[string]struct{} {
+	result := map[string]struct{}{}
+	for _, tag := range handler.SupportedLocales {
+		result[tag.String()] = struct{}{}
+	}
+
+	return result
+}
+
+func (handler *LocaleHandler) dirExists(name string) bool {
+	if _, err := os.Stat(name); err != nil {
+		if os.IsNotExist(err) {
+			glog.Warningf(name)
+			return false
+		}
+	}
+
+	return true
 }
