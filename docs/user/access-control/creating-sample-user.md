@@ -74,7 +74,7 @@ token:      eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2V
 
 Now copy the token and paste it into `Enter token` field on login screen.
 
-![Sing in](../../images/signin.png)
+![Sign in](../../images/signin.png)
 
 Click `Sign in` button and that's it. You are now logged in as an admin.
 
