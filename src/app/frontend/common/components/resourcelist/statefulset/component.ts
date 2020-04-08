@@ -56,6 +56,7 @@ export class StatefulSetListComponent extends ResourceListWithStatuses<
     this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);
     this.registerBinding(this.icon.timelapse, 'kd-muted', this.isInPendingState);
     this.registerBinding(this.icon.error, 'kd-error', this.isInErrorState);
+    this.registerBinding(this.icon.warning, 'kd-warning', this.hasUnhealthyPods);
 
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
@@ -71,6 +72,10 @@ export class StatefulSetListComponent extends ResourceListWithStatuses<
   map(statefulSetList: StatefulSetList): StatefulSet[] {
     this.cumulativeMetrics = statefulSetList.cumulativeMetrics;
     return statefulSetList.statefulSets;
+  }
+
+  hasUnhealthyPods(resource: StatefulSet): boolean {
+    return resource.podInfo.running !== resource.podInfo.desired;
   }
 
   isInErrorState(resource: StatefulSet): boolean {
