@@ -27,6 +27,6 @@
   margin-left: 0;
 }
 
-kd-text-input::ng-deep ace-editor {
+::ng-deep .kd-ace {
   margin-bottom: $baseline-grid * 3;
 }
