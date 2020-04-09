@@ -35,6 +35,11 @@ export class WorkloadStatusComponent {
   @Input() resourcesRatio = emptyResourcesRatio;
   colors: string[] = [];
 
+  constructor() {
+    console.warn('resourceratio below')
+    console.warn(this.resourcesRatio)
+  }
+
   getCustomColor(label: string): string {
     if (label.includes('Running')) {
       return '#00c752';

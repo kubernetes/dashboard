@@ -82,6 +82,13 @@ limitations under the License.
         </mat-cell>
       </ng-container>
 
+      <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef
+                         disableClear="true"
+                         i18n>Status</mat-header-cell>
+        <mat-cell *matCellDef="let ss">{{getDisplayStatus(ss.podInfo)}}</mat-cell>
+      </ng-container>
+
       <ng-container matColumnDef="pods">
         <mat-header-cell *matHeaderCellDef
                          i18n>Pods</mat-header-cell>

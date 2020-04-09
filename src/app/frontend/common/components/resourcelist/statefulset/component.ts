@@ -20,7 +20,7 @@ import {
   ComponentFactoryResolver,
   Input,
 } from '@angular/core';
-import {Event, Metric, StatefulSet, StatefulSetList} from '@api/backendapi';
+import {Event, Metric, StatefulSet, StatefulSetList, PodInfo} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
@@ -56,7 +56,6 @@ export class StatefulSetListComponent extends ResourceListWithStatuses<
     this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);
     this.registerBinding(this.icon.timelapse, 'kd-muted', this.isInPendingState);
     this.registerBinding(this.icon.error, 'kd-error', this.isInErrorState);
-    this.registerBinding(this.icon.warning, 'kd-warning', this.hasUnhealthyPods);
 
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
@@ -74,24 +73,30 @@ export class StatefulSetListComponent extends ResourceListWithStatuses<
     return statefulSetList.statefulSets;
   }
 
-  hasUnhealthyPods(resource: StatefulSet): boolean {
-    return resource.podInfo.running !== resource.podInfo.desired;
-  }
-
   isInErrorState(resource: StatefulSet): boolean {
     return resource.podInfo.warnings.length > 0;
   }
 
   isInPendingState(resource: StatefulSet): boolean {
-    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending > 0;
+    return (resource.podInfo.warnings.length === 0 && resource.podInfo.pending > 0) || (resource.podInfo.running !== resource.podInfo.desired);
   }
 
   isInSuccessState(resource: StatefulSet): boolean {
-    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending === 0;
+    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending === 0 && (resource.podInfo.running === resource.podInfo.desired);
+  }
+
+  getDisplayStatus(podInfo: PodInfo): string {
+    let msgState = 'Running';
+
+    if (podInfo.pending > 1 || (podInfo.running !== podInfo.desired)) {
+      msgState = 'Pending';
+    }
+
+    return msgState;
   }
 
   getDisplayColumns(): string[] {
-    return ['statusicon', 'name', 'labels', 'pods', 'age', 'images'];
+    return ['statusicon', 'name', 'labels', 'status', 'pods', 'age', 'images'];
   }
 
   hasErrors(statefulSet: StatefulSet): boolean {
