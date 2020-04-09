@@ -78,25 +78,15 @@ export class StatefulSetListComponent extends ResourceListWithStatuses<
   }
 
   isInPendingState(resource: StatefulSet): boolean {
-    return (resource.podInfo.warnings.length === 0 && resource.podInfo.pending > 0) || (resource.podInfo.running !== resource.podInfo.desired);
+    return resource.podInfo.warnings.length === 0 && (resource.podInfo.pending > 0 || resource.podInfo.running !== resource.podInfo.desired);
   }
 
   isInSuccessState(resource: StatefulSet): boolean {
-    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending === 0 && (resource.podInfo.running === resource.podInfo.desired);
-  }
-
-  getDisplayStatus(podInfo: PodInfo): string {
-    let msgState = 'Running';
-
-    if (podInfo.pending > 1 || (podInfo.running !== podInfo.desired)) {
-      msgState = 'Pending';
-    }
-
-    return msgState;
+    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending === 0 && resource.podInfo.running === resource.podInfo.desired;
   }
 
   getDisplayColumns(): string[] {
-    return ['statusicon', 'name', 'labels', 'status', 'pods', 'age', 'images'];
+    return ['statusicon', 'name', 'labels', 'pods', 'age', 'images'];
   }
 
   hasErrors(statefulSet: StatefulSet): boolean {
