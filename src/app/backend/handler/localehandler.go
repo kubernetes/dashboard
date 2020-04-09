@@ -20,21 +20,13 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/golang/glog"
 	"golang.org/x/text/language"
 
 	"github.com/kubernetes/dashboard/src/app/backend/args"
 )
-
-// TODO(floreks): Remove that once new locale codes are supported by the browsers.
-// For backward compatibility only.
-var localeMap = map[string]string{
-	"zh-cn": "zh-Hans",
-	"zh-sg": "zh-Hans-SG",
-	"zh-tw": "zh-Hant",
-	"zh-hk": "zh-Hant-HK",
-}
 
 const defaultLocaleDir = "en"
 const assetsDir = "public"
@@ -95,16 +87,6 @@ func getAssetsDir() string {
 	return filepath.Join(filepath.Dir(path), assetsDir)
 }
 
-func dirExists(name string) bool {
-	if _, err := os.Stat(name); err != nil {
-		if os.IsNotExist(err) {
-			glog.Warningf(name)
-			return false
-		}
-	}
-	return true
-}
-
 // LocaleHandler serves different html versions based on the Accept-Language header.
 func (handler *LocaleHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if r.URL.EscapedPath() == "/" || r.URL.EscapedPath() == "/index.html" {
@@ -116,61 +98,62 @@ func (handler *LocaleHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) 
 	if acceptLanguage == "" {
 		acceptLanguage = r.Header.Get("Accept-Language")
 	}
+
 	dirName := handler.determineLocalizedDir(acceptLanguage)
 	http.FileServer(http.Dir(dirName)).ServeHTTP(w, r)
 }
 
 func (handler *LocaleHandler) determineLocalizedDir(locale string) string {
-	assetsDir := getAssetsDir()
-	defaultDir := filepath.Join(assetsDir, defaultLocaleDir)
-	tags, _, err := language.ParseAcceptLanguage(locale)
-	if err != nil || len(tags) == 0 {
-		return defaultDir
-	}
+	// TODO(floreks): Remove that once new locale codes are supported by the browsers.
+	// For backward compatibility only.
+	localeMap := strings.NewReplacer(
+		"zh-CN", "zh-Hans",
+		"zh-cn", "zh-Hans",
+		"zh-TW", "zh-Hant",
+		"zh-tw", "zh-Hant",
+		"zh-hk", "zh-Hant-HK",
+		"zh-HK", "zh-Hant-HK",
+	)
 
-	locales := handler.SupportedLocales
-	tag, _, confidence := language.NewMatcher(locales).Match(tags...)
-
-	if confidence < language.Exact {
-		tag, confidence, err = mapLocale(locale, locales)
-		if err != nil {
-			return defaultDir
-		}
-	}
-
-	matchedLocale := tag.String()
-	// If locale match is exact, then we have to manually look for proper locale code as language
-	// library contains a bug that returns invalid locale string.
-	// Related issue: https://github.com/golang/go/issues/24211
-	if confidence == language.Exact {
-		matchedLocale = ""
-		for _, l := range locales {
-			base, _ := tag.Base()
-			if l.String() == base.String() {
-				matchedLocale = l.String()
-			}
-		}
-	}
-
-	localeDir := filepath.Join(assetsDir, matchedLocale)
-	if matchedLocale != "" && dirExists(localeDir) {
-		return localeDir
-	}
-	return defaultDir
+	return handler.getLocaleDir(localeMap.Replace(locale))
 }
 
-// Used to map old locale codes to new ones, i.e. zh-cn -> zh-Hans
-func mapLocale(locale string, locales []language.Tag) (language.Tag, language.Confidence, error) {
-	if mappedLocale, ok := localeMap[locale]; ok {
-		locale = mappedLocale
-		tags, _, err := language.ParseAcceptLanguage(locale)
-		if (err != nil) || (len(tags) == 0) {
-			return language.Tag{}, language.No, err
-		}
+func (handler *LocaleHandler) getLocaleDir(locale string) string {
+	localeDir := ""
+	assetsDir := getAssetsDir()
+	tags, _, _ := language.ParseAcceptLanguage(locale)
+	localeMap := handler.getLocaleMap()
 
-		tag, _, confidence := language.NewMatcher(locales).Match(tags...)
-		return tag, confidence, nil
+	for _, tag := range tags {
+		if _, exists := localeMap[tag.String()]; exists {
+			localeDir = filepath.Join(assetsDir, tag.String())
+			break
+		}
 	}
 
-	return language.Tag{}, language.No, nil
+	if handler.dirExists(localeDir) {
+		return localeDir
+	}
+
+	return filepath.Join(assetsDir, defaultLocaleDir)
+}
+
+func (handler *LocaleHandler) getLocaleMap() map[string]struct{} {
+	result := map[string]struct{}{}
+	for _, tag := range handler.SupportedLocales {
+		result[tag.String()] = struct{}{}
+	}
+
+	return result
+}
+
+func (handler *LocaleHandler) dirExists(name string) bool {
+	if _, err := os.Stat(name); err != nil {
+		if os.IsNotExist(err) {
+			glog.Warningf(name)
+			return false
+		}
+	}
+
+	return true
 }

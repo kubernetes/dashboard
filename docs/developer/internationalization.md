@@ -2,18 +2,16 @@
 
 Based on current browser locale the Dashboard can be displayed in one of the supported languages listed below. In case it does not work, make sure that your browser's locale is identified with correct language code. In more details, Dashboard determines requested language based on HTTP `Accept-Language` header from browser. We can check which language codes are requested by browser on `Network` tab in developer tool of browser.
 
-| Language            | Code    | Remarks    |
-|---------------------|---------|------------|
-| English (default)   | en      | -          |
-| French              | fr      | -          |
-| German              | de      | -          |
-| Japanese            | ja      | -          |
-| Korean              | ko      | -          |
-| Simplified Chinese  | zh      | -          |
-| Chinese (PRC)       | zh-cn   | Same as zh |
-| Chinese (Hong Kong) | zh-hk   | -          |
-| Chinese (Singapore) | zh-sg   | -          |
-| Chinese (Taiwan)    | zh-tw   | -          |
+| Language            | Code       | Remarks         |
+|---------------------|------------|-----------------|
+| English (default)   | en         | -               |
+| French              | fr         | -               |
+| German              | de         | -               |
+| Japanese            | ja         | -               |
+| Korean              | ko         | -               |
+| Simplified Chinese  | zh-Hans    | -               |
+| Traditional Chinese | zh-Hant    | -               |
+| Traditional Chinese (Hong Kong) | zh-Hant-HK | -               |
 
 ## Building localized dashboard
 
@@ -45,16 +43,17 @@ Find new localizable texts in `i18n/[locale]/messages.[locale].xlf` file and tra
 Since dashboard team can not review translation files in your language, so dashboard team transfers authority to review and approve for updating your translation file. At first, you need to organize translation team for your language that manages dashboard translation file.
 
 1. Create your locale directory under `i18n` directory, e.g. `i18n/fr` or `i18n/ja`.
-2. Add your locale, e.g. `fr` or `ja`, into `"languages"` array of `"xliffmergeOptions"` in `package.json` file. If you want to add only locale and use an existing translation file for it, i.e. add `zh-cn` but use existing `i18n/zh/messages.zh.xlf` file for it, skip this step and go step 5.
-  **Important: Locales should be written in lower case to be handled by Dashboard, e.g. `zh-cn`, not `zh-CN`**
+2. Add your locale, e.g. `fr` or `ja`, into `"languages"` array of `"xliffmergeOptions"` in `package.json` file. If you want to add only locale using an existing translation file, i.e. add `zh` but use existing `i18n/zh-Hans/messages.zh-Hans.xlf` file for it, skip this step and go step 5.
 3. Run `npm run fix:i18n`. Then translation file for your language, e.g. `i18n/fr/messages.fr.xlf`, would be generated in your locale directory.
-  If `i18n/[locale]/messages.[locale].xlf` is not normal file type, our script ignores `xliffmerge` for the locale.
-4. Open your translation file and translate texts in `<target>` element into your language.
-5. If you want to use an existing translation file for the locale, create symbolic link `messages.[locale].xlf` to the existing translation file like follow:
+4. Open your translation file and translate texts in `<target>` element into your language, and remove `state="new"` to mark it as translated.
+5. To build dashboard for your language, add your locale into `locales` in `angular.json` like follow:
   ```
-  cd i18n/zh-cn
-  ln -s ../zh/messages.zh.xlf messages.zh-cn.xlf
+          "ja": {
+            "translation": "i18n/ja/messages.ja.xlf",
+            "baseHref": ""
+          },
   ```
+  If you want to add only locale using an existing translation file, specify existing translation file to `"translation"`.
 
 After preparation of new translation file, configure `i18n/locale_conf.json` file to support translated dashboard as follows:
 
@@ -66,13 +65,6 @@ To add Japanese translation file, add `"ja"` into `"translations"` array in alph
 
 ```
 {"translations": [ "en", "fr", "ja", "ko", "zh" ]}
-```
-
-To save time for building localized version in your develop environment, you can set locales not to build by creating `i18n/locale_not_for_build_local` and adding into it like below:
-
-```
-fr
-ko
 ```
 
 Then you can build your localized dashboard with `npm run build`.
