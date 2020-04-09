@@ -23,21 +23,21 @@
 }
 
 .kd-toolbar {
-  height: 6 * $baseline-grid;
+  height: $primary-toolbar-height;
   min-height: 6 * $baseline-grid;
   padding-left: 1.75 * $baseline-grid;
 }
 
 .kd-toolbar-tools {
   align-items: center;
-  height: 6 * $baseline-grid;
+  height: $secondary-toolbar-height;
   margin: auto;
   padding-left: $baseline-grid;
 }
 
 .kd-logo-bar {
   height: 4 * $baseline-grid;
-  width: 250px;
+  width: $nav-width;
 }
 
 .kd-toolbar-logo-link {

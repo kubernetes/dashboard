@@ -292,6 +292,6 @@
   }
 
   .kd-edit-active {
-    color: $primary;
+    color: map-get($colors, primary);
   }
 }
