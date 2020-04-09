@@ -78,11 +78,18 @@ export class StatefulSetListComponent extends ResourceListWithStatuses<
   }
 
   isInPendingState(resource: StatefulSet): boolean {
-    return resource.podInfo.warnings.length === 0 && (resource.podInfo.pending > 0 || resource.podInfo.running !== resource.podInfo.desired);
+    return (
+      resource.podInfo.warnings.length === 0 &&
+      (resource.podInfo.pending > 0 || resource.podInfo.running !== resource.podInfo.desired)
+    );
   }
 
   isInSuccessState(resource: StatefulSet): boolean {
-    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending === 0 && resource.podInfo.running === resource.podInfo.desired;
+    return (
+      resource.podInfo.warnings.length === 0 &&
+      resource.podInfo.pending === 0 &&
+      resource.podInfo.running === resource.podInfo.desired
+    );
   }
 
   getDisplayColumns(): string[] {
