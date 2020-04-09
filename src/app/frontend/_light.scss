@@ -26,9 +26,11 @@ $colors-light: (
   toolbar-button: #000,
 );
 
-$theme-light: mat-light-theme(mat-palette($mat-blue), mat-palette($mat-light-blue), mat-palette($mat-pink));
-
 // sass-lint:disable function-name-format
+$kd-blue: map_merge($mat-blue, (500: #326de6));
+
+$theme-light: mat-light-theme(mat-palette($kd-blue), mat-palette($kd-blue), mat-palette($kd-blue));
+
 $background: map-get($theme-light, background);
 $background: map_merge($background, (background: #edeff0));
 $theme-light: map_merge($theme-light, (background: $background));
@@ -38,6 +40,15 @@ $theme-light: map_merge($theme-light, (background: $background));
 .kd-light-theme {
   @include angular-material-theme($theme-light);
   @include kd-theme($theme-light, $colors-light);
+
+  .kd-toolbar-logo-text,
+  .kd-primary-toolbar-icon {
+    color: #326de6;
+  }
+
+  .kd-actionbar .mat-icon {
+    color: #fff;
+  }
 
   .kd-primary-toolbar {
     background-color: #fafafa;

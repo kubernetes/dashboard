@@ -2824,24 +2824,24 @@
         <source>Discovery and Load Balancing</source>
         <target>服務發現與負載平衡</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/search/template.html</context>
-          <context context-type="linenumber">58</context>
+          <context context-type="sourcefile">../src/app/frontend/overview/template.html</context>
+          <context context-type="linenumber">47</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/overview/template.html</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="sourcefile">../src/app/frontend/search/template.html</context>
+          <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="0349fe54380ff3444a3a881afb66c9158a299575" datatype="html">
         <source>Config and Storage</source>
         <target>配置和存儲</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/search/template.html</context>
-          <context context-type="linenumber">68</context>
+          <context context-type="sourcefile">../src/app/frontend/overview/template.html</context>
+          <context context-type="linenumber">57</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/overview/template.html</context>
-          <context context-type="linenumber">58</context>
+          <context context-type="sourcefile">../src/app/frontend/search/template.html</context>
+          <context context-type="linenumber">68</context>
         </context-group>
       </trans-unit>
       <trans-unit id="bef0c68b6a7d96b56a8879ecfb9de80a83c151a2" datatype="html">
