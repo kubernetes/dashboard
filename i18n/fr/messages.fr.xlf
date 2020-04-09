@@ -2929,7 +2929,7 @@
         <target>Recherche</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/search/template.html</context>
-          <context context-type="linenumber">30</context>
+          <context context-type="linenumber">29</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6c52d5ec237726e7cd1dcca2be78c8a0be6bc344" datatype="html">
