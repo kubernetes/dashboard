@@ -79,11 +79,18 @@ export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSet
   }
 
   isInPendingState(resource: ReplicaSet): boolean {
-    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending > 0;
+    return (
+      resource.podInfo.warnings.length === 0 &&
+      (resource.podInfo.pending > 0 || resource.podInfo.running !== resource.podInfo.desired)
+    );
   }
 
   isInSuccessState(resource: ReplicaSet): boolean {
-    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending === 0;
+    return (
+      resource.podInfo.warnings.length === 0 &&
+      resource.podInfo.pending === 0 &&
+      resource.podInfo.running === resource.podInfo.desired
+    );
   }
 
   protected getDisplayColumns(): string[] {
