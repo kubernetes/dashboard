@@ -20,7 +20,7 @@ import {
   ComponentFactoryResolver,
   Input,
 } from '@angular/core';
-import {Event, Metric, StatefulSet, StatefulSetList} from '@api/backendapi';
+import {Event, Metric, StatefulSet, StatefulSetList, PodInfo} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
@@ -78,11 +78,18 @@ export class StatefulSetListComponent extends ResourceListWithStatuses<
   }
 
   isInPendingState(resource: StatefulSet): boolean {
-    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending > 0;
+    return (
+      resource.podInfo.warnings.length === 0 &&
+      (resource.podInfo.pending > 0 || resource.podInfo.running !== resource.podInfo.desired)
+    );
   }
 
   isInSuccessState(resource: StatefulSet): boolean {
-    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending === 0;
+    return (
+      resource.podInfo.warnings.length === 0 &&
+      resource.podInfo.pending === 0 &&
+      resource.podInfo.running === resource.podInfo.desired
+    );
   }
 
   getDisplayColumns(): string[] {
