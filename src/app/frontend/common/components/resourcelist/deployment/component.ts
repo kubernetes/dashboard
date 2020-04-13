@@ -75,11 +75,18 @@ export class DeploymentListComponent extends ResourceListWithStatuses<Deployment
   }
 
   isInPendingState(resource: Deployment): boolean {
-    return resource.pods.warnings.length === 0 && resource.pods.pending > 0;
+    return (
+      resource.pods.warnings.length === 0 &&
+      (resource.pods.pending > 0 || resource.pods.running !== resource.pods.desired)
+    );
   }
 
   isInSuccessState(resource: Deployment): boolean {
-    return resource.pods.warnings.length === 0 && resource.pods.pending === 0;
+    return (
+      resource.pods.warnings.length === 0 &&
+      resource.pods.pending === 0 &&
+      resource.pods.running === resource.pods.desired
+    );
   }
 
   getDisplayColumns(): string[] {
