@@ -75,7 +75,7 @@
               "node_modules/highlight.js/styles/github.css",
               "node_modules/material-design-icons/iconfont/material-icons.css",
               "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
-              "node_modules/xterm/dist/xterm.css",
+              "node_modules/xterm/css/xterm.css",
               "node_modules/c3/c3.min.css",
               "src/app/frontend/index.scss"
             ],
