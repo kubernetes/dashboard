@@ -54,6 +54,6 @@ export class StorageClassListComponent extends ResourceListBase<StorageClassList
   }
 
   getDisplayColumns(): string[] {
-    return ['name', 'provisioner', 'params', 'age'];
+    return ['name', 'provisioner', 'params', 'created'];
   }
 }

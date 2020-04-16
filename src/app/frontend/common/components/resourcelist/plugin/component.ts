@@ -56,7 +56,7 @@ export class PluginListComponent extends ResourceListBase<PluginList, Plugin> {
   }
 
   getDisplayColumns(): string[] {
-    return ['name', 'dependencies', 'age'];
+    return ['name', 'dependencies', 'created'];
   }
 
   private shouldShowNamespaceColumn_(): boolean {

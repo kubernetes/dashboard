@@ -25,7 +25,7 @@ export class ResourceQuotaListComponent {
   @Input() quotas: ResourceQuotaDetail[];
 
   getQuotaColumns(): string[] {
-    return ['name', 'age', 'status'];
+    return ['name', 'created', 'status'];
   }
 
   getDataSource(): MatTableDataSource<ResourceQuotaDetail> {

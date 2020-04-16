@@ -39,7 +39,7 @@ limitations under the License.
       </ng-container>
       <ng-container [matColumnDef]="getQuotaColumns()[1]">
         <mat-header-cell *matHeaderCellDef
-                         i18n>Age</mat-header-cell>
+                         i18n>Created</mat-header-cell>
         <mat-cell *matCellDef="let quota">
           <kd-date *ngIf="quota.objectMeta.creationTimestamp"
                    [date]="quota.objectMeta.creationTimestamp"

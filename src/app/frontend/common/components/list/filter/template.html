@@ -28,17 +28,19 @@ limitations under the License.
            i18n-placeholder
            placeholder="Filter"
            class="kd-search-input">
-    <mat-icon class="kd-search-icon"
-              i18n-matTooltip
-              matTooltip="Filter objects by name"
-              *ngIf="!isSearchVisible()"
-              (click)="switchSearchVisibility($event)">
-      filter_list
-    </mat-icon>
-    <mat-icon class="material-icons kd-search-icon"
-              *ngIf="isSearchVisible()"
-              (click)="clearInput($event)">
-      close
-    </mat-icon>
+    <button mat-icon-button>
+      <mat-icon class="kd-search-icon"
+                i18n-matTooltip
+                matTooltip="Filter objects by name"
+                *ngIf="!isSearchVisible()"
+                (click)="switchSearchVisibility($event)">
+        filter_list
+      </mat-icon>
+      <mat-icon class="material-icons kd-search-icon"
+                *ngIf="isSearchVisible()"
+                (click)="clearInput($event)">
+        close
+      </mat-icon>
+    </button>
   </div>
 </div>

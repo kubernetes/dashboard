@@ -93,7 +93,7 @@ export class StatefulSetListComponent extends ResourceListWithStatuses<
   }
 
   getDisplayColumns(): string[] {
-    return ['statusicon', 'name', 'labels', 'pods', 'age', 'images'];
+    return ['statusicon', 'name', 'labels', 'pods', 'created', 'images'];
   }
 
   hasErrors(statefulSet: StatefulSet): boolean {

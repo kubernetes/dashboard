@@ -84,7 +84,7 @@ export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
   }
 
   protected getDisplayColumns(): string[] {
-    return ['statusicon', 'name', 'labels', 'node', 'status', 'restarts', 'cpu', 'mem', 'age'];
+    return ['statusicon', 'name', 'labels', 'node', 'status', 'restarts', 'cpu', 'mem', 'created'];
   }
 
   private shouldShowNamespaceColumn_(): boolean {

@@ -90,7 +90,7 @@ export class DeploymentListComponent extends ResourceListWithStatuses<Deployment
   }
 
   getDisplayColumns(): string[] {
-    return ['statusicon', 'name', 'labels', 'pods', 'age', 'images'];
+    return ['statusicon', 'name', 'labels', 'pods', 'created', 'images'];
   }
 
   hasErrors(deployment: Deployment): boolean {

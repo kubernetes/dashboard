@@ -317,7 +317,7 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
   private getSortBy_(): string {
     // Default values.
     let ascending = true;
-    let active = 'age';
+    let active = 'created';
 
     if (this.matSort_.direction) {
       ascending = this.matSort_.direction === 'asc';
@@ -327,7 +327,7 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
       active = this.matSort_.active;
     }
 
-    if (active === 'age') {
+    if (active === 'created') {
       ascending = !ascending;
     }
 
@@ -335,7 +335,7 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
   }
 
   private mapToBackendValue_(sortByColumnName: string): string {
-    return sortByColumnName === 'age' ? 'creationTimestamp' : sortByColumnName;
+    return sortByColumnName === 'created' ? 'creationTimestamp' : sortByColumnName;
   }
 
   private onListChange_(data: T): void {

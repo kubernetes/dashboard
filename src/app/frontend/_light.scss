@@ -15,90 +15,43 @@
 @import '~@angular/material/theming';
 @import './theming';
 
-$kd-light-palette-primary: (
-  // Used for primary toolbar button
-  50: #326de6,
-  100: #000,
-  200: #90caf9,
-  300: #64b5f6,
-  400: #42a5f5,
-  500: #326de6,
-  600: #1e88e5,
-  700: #1976d2,
-  800: #1565c0,
-  900: #0d47a1,
-  A100: #82b1ff,
-  A200: #448aff,
-  A400: #2979ff,
-  A700: #2962ff,
-  contrast: (
-    50: $black-87-opacity,
-    100: $black-87-opacity,
-    200: $black-87-opacity,
-    300: $black-87-opacity,
-    400: $black-87-opacity,
-    500: #fff,
-    600: #fff,
-    700: #fff,
-    800: $white-87-opacity,
-    900: $white-87-opacity,
-    A100: $black-87-opacity,
-    A200: #fff,
-    A400: #fff,
-    A700: #fff,
-  )
-);
-
-$kd-light-palette-warn: (
-  50: #00c752, // Chart green.
-  100: #008000,
-  200: #326de6, // Chart blue.
-  300: #0d47a1,
-  400: #ff0,
-  500: #ffad20,
-  600: #ff5722,
-  700: #ff481b,
-  800: #f51200,
-  900: #f00,
-  A100: #ffd180,
-  A200: #ffab40,
-  A400: #ff9100,
-  A700: #ff6d00,
-  contrast: (
-    50: $black-87-opacity,
-    100: $black-87-opacity,
-    200: $black-87-opacity,
-    300: $black-87-opacity,
-    400: $black-87-opacity,
-    500: $black-87-opacity,
-    600: $black-87-opacity,
-    700: $black-87-opacity,
-    800: #fff,
-    900: #fff,
-    A100: $black-87-opacity,
-    A200: $black-87-opacity,
-    A400: $black-87-opacity,
-    A700: #000,
-  )
+$colors-light: (
+  primary: #326de6,
+  accent: #fff,
+  indicator-success: #008000,
+  indicator-warning: #ffad20,
+  indicator-error: #ff481b,
+  chart-blue: #326de6,
+  chart-green: #00c752,
+  toolbar-button: #000,
 );
 
 // sass-lint:disable function-name-format
-$kd-light-palette-accent: map_merge($mat-blue, (500: #fff));
+$kd-blue: map_merge($mat-blue, (500: #326de6));
+
+$theme-light: mat-light-theme(mat-palette($kd-blue), mat-palette($kd-blue), mat-palette($kd-blue));
+
+$background: map-get($theme-light, background);
+$background: map_merge($background, (background: #edeff0));
+$theme-light: map_merge($theme-light, (background: $background));
 // sass-lint:enable function-name-format
 
-$kd-light-theme-primary: mat-palette($kd-light-palette-primary);
-$kd-light-theme-accent: mat-palette($kd-light-palette-accent);
-$kd-light-theme-warn: mat-palette($kd-light-palette-warn);
-
-$kd-light-theme: mat-light-theme($kd-light-theme-primary, $kd-light-theme-accent, $kd-light-theme-warn);
-
+// sass-lint:disable no-color-literals
 .kd-light-theme {
-  @include angular-material-theme($kd-light-theme);
-  @include kd-theme($kd-light-theme);
+  @include angular-material-theme($theme-light);
+  @include kd-theme($theme-light, $colors-light);
+
+  .kd-toolbar-logo-text,
+  .kd-primary-toolbar-icon {
+    color: #326de6;
+  }
+
+  .kd-actionbar .mat-icon {
+    color: #fff;
+  }
 
   .kd-primary-toolbar {
-    // sass-lint:disable no-color-literals
     background-color: #fafafa;
-    // sass-lint:enable no-color-literals
   }
 }
+// sass-lint:enable no-color-literals

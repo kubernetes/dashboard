@@ -127,6 +127,11 @@ code {
 
 .mat-column-statusicon {
   flex: 0 0 ($baseline-grid * 5) !important;
+
+  .mat-icon {
+    font-size: 2.5 * $baseline-grid;
+    margin-top: .66 * $baseline-grid;
+  }
 }
 
 .mat-column-labels,
