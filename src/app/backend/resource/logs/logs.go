@@ -20,7 +20,7 @@ import (
 )
 
 // LINE_INDEX_NOT_FOUND is returned if requested line could not be found
-var LINE_INDEX_NOT_FOUND = -1
+var LineIndexNotFound = -1
 
 // DefaultDisplayNumLogLines returns default number of lines in case of invalid request.
 var DefaultDisplayNumLogLines = 100
@@ -154,7 +154,7 @@ type LogTimestamp string
 func (self LogLines) SelectLogs(logSelection *Selection) (LogLines, LogTimestamp, LogTimestamp, Selection, bool) {
 	requestedNumItems := logSelection.OffsetTo - logSelection.OffsetFrom
 	referenceLineIndex := self.getLineIndex(&logSelection.ReferencePoint)
-	if referenceLineIndex == LINE_INDEX_NOT_FOUND || requestedNumItems <= 0 || len(self) == 0 {
+	if referenceLineIndex == LineIndexNotFound || requestedNumItems <= 0 || len(self) == 0 {
 		// Requested reference line could not be found, probably it's already gone or requested no logs. Return no logs.
 		return LogLines{}, "", "", Selection{}, false
 	}
@@ -216,10 +216,10 @@ func (self LogLines) getLineIndex(logLineId *LogLineId) int {
 	if 0 <= offset && offset < linesMatched {
 		return matchingStartedAt + offset
 	}
-	return LINE_INDEX_NOT_FOUND
+	return LineIndexNotFound
 }
 
-// CreateLogLineId returns ID of the line with provided lineIndex.
+// createLogLineId returns ID of the line with provided lineIndex.
 func (self LogLines) createLogLineId(lineIndex int) *LogLineId {
 	logTimestamp := self[lineIndex].Timestamp
 	// determine whether to use negative or positive indexing
@@ -235,7 +235,7 @@ func (self LogLines) createLogLineId(lineIndex int) *LogLineId {
 	}
 	offset := step
 	for ; 0 <= lineIndex-offset && lineIndex-offset < len(self); offset += step {
-		if !(self[lineIndex-offset].Timestamp == logTimestamp) {
+		if self[lineIndex-offset].Timestamp != logTimestamp {
 			break
 		}
 	}
@@ -251,7 +251,7 @@ func ToLogLines(rawLogs string) LogLines {
 	logLines := LogLines{}
 	for _, line := range strings.Split(rawLogs, "\n") {
 		if line != "" {
-			startsWithDate := ('0' <= line[0] && line[0] <= '9') //2017-...
+			startsWithDate := '0' <= line[0] && line[0] <= '9' //2017-...
 			idx := strings.Index(line, " ")
 			if idx > 0 && startsWithDate {
 				timestamp := LogTimestamp(line[0:idx])
