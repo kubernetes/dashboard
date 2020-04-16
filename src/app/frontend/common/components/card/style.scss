@@ -35,19 +35,13 @@
   }
 }
 
-.kd-card-header:hover {
-  cursor: pointer;
-}
-
 .kd-card-actions {
   display: block;
   padding: $baseline-grid (2 * $baseline-grid);
 }
 
 .kd-card-toggle {
-  cursor: pointer;
   margin-right: (3 * $baseline-grid);
-  outline: none;
 }
 
 .kd-card-content {

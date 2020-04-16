@@ -262,6 +262,10 @@
     border-right: 0;
   }
 
+  .mat-icon-button:hover {
+    background-color: $border !important;
+  }
+
   .c3-tooltip {
     color: $dark-primary-text;
   }
