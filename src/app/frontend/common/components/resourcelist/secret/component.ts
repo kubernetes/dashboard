@@ -56,7 +56,7 @@ export class SecretListComponent extends ResourceListBase<SecretList, Secret> {
   }
 
   getDisplayColumns(): string[] {
-    return ['name', 'labels', 'type', 'age'];
+    return ['name', 'labels', 'type', 'created'];
   }
 
   private shouldShowNamespaceColumn_(): boolean {

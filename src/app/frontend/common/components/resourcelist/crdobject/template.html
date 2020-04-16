@@ -55,7 +55,7 @@ limitations under the License.
 
       <ng-container [matColumnDef]="getColumns()[2]">
         <mat-header-cell *matHeaderCellDef
-                         i18n>Age</mat-header-cell>
+                         i18n>Created</mat-header-cell>
         <mat-cell *matCellDef="let object">
           <kd-date [date]="object.objectMeta.creationTimestamp"
                    relative></kd-date>

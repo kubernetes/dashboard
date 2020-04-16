@@ -87,11 +87,11 @@ limitations under the License.
         </mat-cell>
       </ng-container>
 
-      <ng-container matColumnDef="age">
+      <ng-container matColumnDef="created">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true"
-                         i18n>Age</mat-header-cell>
+                         i18n>Created</mat-header-cell>
         <mat-cell *matCellDef="let rc">
           <kd-date [date]="rc.objectMeta.creationTimestamp"
                    relative></kd-date>
