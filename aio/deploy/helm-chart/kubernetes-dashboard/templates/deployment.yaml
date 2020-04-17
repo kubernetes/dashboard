@@ -100,6 +100,10 @@ spec:
 {{- end }}
           initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
           timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+{{- with .Values.resources }}
+        resources:
+{{ toYaml . | indent 10 }}
+{{- end }}
 {{- if .Values.metricsScraper.enabled }}
       - name: dashboard-metrics-scraper
         image: "{{ .Values.metricsScraper.image.repository }}:{{ .Values.metricsScraper.image.tag }}"
@@ -128,10 +132,6 @@ spec:
 {{- end }}
 {{- with .Values.dashboardContainerSecurityContext }}
         securityContext:
-{{ toYaml . | indent 10 }}
-{{- end }}
-{{- with .Values.resources }}
-        resources:
 {{ toYaml . | indent 10 }}
 {{- end }}
 {{- with .Values.image.pullSecrets }}
