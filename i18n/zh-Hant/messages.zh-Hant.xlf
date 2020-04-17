@@ -1184,7 +1184,7 @@
       </trans-unit>
       <trans-unit id="1b051734b0ee9021991c91b3ed4e81c244322462" datatype="html">
         <source>Created</source>
-        <target state="new">Created</target>
+        <target>創建時間</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/cronjob/template.html</context>
           <context context-type="linenumber">123</context>
@@ -1236,6 +1236,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/node/template.html</context>
           <context context-type="linenumber">113</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/objectmeta/template.html</context>
+          <context context-type="linenumber">55</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/pod/template.html</context>
@@ -2010,14 +2014,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
           <context context-type="linenumber">198</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="3bfe4f9e6a0d47732c965b79c953d17d60d64167" datatype="html">
-        <source>Creation time</source>
-        <target>創建時間</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/components/objectmeta/template.html</context>
-          <context context-type="linenumber">55</context>
         </context-group>
       </trans-unit>
       <trans-unit id="016ff9645a730c7a1171f2df1858a8f74d8e9ec0" datatype="html">
