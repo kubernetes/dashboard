@@ -794,14 +794,6 @@
           <context context-type="linenumber">231</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="3bfe4f9e6a0d47732c965b79c953d17d60d64167" datatype="html">
-        <source>Creation time</source>
-        <target>Erstellungszeitpunkt</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/components/objectmeta/template.html</context>
-          <context context-type="linenumber">55</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="2e6be334a2152f179a557167f98ce4459ff9a2f9" datatype="html">
         <source>Age</source>
         <target>Alter</target>
@@ -1820,7 +1812,7 @@
       </trans-unit>
       <trans-unit id="1b051734b0ee9021991c91b3ed4e81c244322462" datatype="html">
         <source>Created</source>
-        <target state="new">Created</target>
+        <target>Erstellungszeitpunkt</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/cronjob/template.html</context>
           <context context-type="linenumber">123</context>
@@ -1872,6 +1864,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/node/template.html</context>
           <context context-type="linenumber">113</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/objectmeta/template.html</context>
+          <context context-type="linenumber">55</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/pod/template.html</context>
@@ -3005,7 +3001,7 @@
       <trans-unit id="192867803de476e3137425685702cb44b3bb9981" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{resource.displayName}}"/>
   </source>
-        <target state="new"><x id="INTERPOLATION" equiv-text="{{resource.displayName}}"/>
+        <target><x id="INTERPOLATION" equiv-text="{{resource.displayName}}"/>
   </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/pinner/template.html</context>
