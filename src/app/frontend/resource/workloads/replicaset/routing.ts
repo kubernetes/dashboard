@@ -30,7 +30,7 @@ const REPLICASET_LIST_ROUTE: Route = {
   },
 };
 
-const REPLICASET_DETAIL_ROUTE: Route = {
+export const REPLICASET_DETAIL_ROUTE: Route = {
   path: ':resourceNamespace/:resourceName',
   component: ReplicaSetDetailComponent,
   data: {
