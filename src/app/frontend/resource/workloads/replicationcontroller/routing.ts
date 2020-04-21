@@ -30,7 +30,7 @@ const REPLICATIONCONTROLLER_LIST_ROUTE: Route = {
   },
 };
 
-const REPLICATIONCONTROLLER_DETAIL_ROUTE: Route = {
+export const REPLICATIONCONTROLLER_DETAIL_ROUTE: Route = {
   path: ':resourceNamespace/:resourceName',
   component: ReplicationControllerDetailComponent,
   data: {
