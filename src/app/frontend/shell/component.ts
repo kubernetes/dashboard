@@ -34,7 +34,7 @@ import {debounce} from 'lodash';
 import {ReplaySubject, Subject, Subscription} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {Terminal} from 'xterm';
-import {fit} from 'xterm/lib/addons/fit/fit';
+import {FitAddon} from 'xterm-addon-fit';
 
 import {EndpointManager, Resource, Utility} from '../common/services/resource/endpoint';
 import {NamespacedResourceService} from '../common/services/resource/resource';
@@ -170,9 +170,11 @@ export class ShellComponent implements AfterViewInit, OnDestroy {
       cursorBlink: true,
     });
 
+    const fitAddon = new FitAddon();
+    this.term.loadAddon(fitAddon);
     this.term.open(this.anchorRef.nativeElement);
     this.debouncedFit_ = debounce(() => {
-      fit(this.term);
+      fitAddon.fit();
       this.cdr_.markForCheck();
     }, 100);
     this.debouncedFit_();
@@ -182,10 +184,10 @@ export class ShellComponent implements AfterViewInit, OnDestroy {
       this.handleConnectionMessage(frame);
     });
 
-    this.term.on('data', this.onTerminalSendString.bind(this));
-    this.term.on('resize', this.onTerminalResize.bind(this));
-    this.term.on('key', (_, event) => {
-      this.keyEvent$_.next(event);
+    this.term.onData(this.onTerminalSendString.bind(this));
+    this.term.onResize(this.onTerminalResize.bind(this));
+    this.term.onKey(event => {
+      this.keyEvent$_.next(event.domEvent);
     });
 
     this.cdr_.markForCheck();

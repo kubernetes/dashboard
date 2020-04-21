@@ -15,6 +15,7 @@
 package validation
 
 import (
+	"context"
 	"log"
 
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -43,7 +44,7 @@ func ValidateAppName(spec *AppNameValiditySpec, client client.Interface) (*AppNa
 	isValidDeployment := false
 	isValidService := false
 
-	_, err := client.AppsV1().Deployments(spec.Namespace).Get(spec.Name, metaV1.GetOptions{})
+	_, err := client.AppsV1().Deployments(spec.Namespace).Get(context.TODO(), spec.Name, metaV1.GetOptions{})
 	if err != nil {
 		if errors.IsNotFoundError(err) || errors.IsForbiddenError(err) {
 			isValidDeployment = true
@@ -52,7 +53,7 @@ func ValidateAppName(spec *AppNameValiditySpec, client client.Interface) (*AppNa
 		}
 	}
 
-	_, err = client.CoreV1().Services(spec.Namespace).Get(spec.Name, metaV1.GetOptions{})
+	_, err = client.CoreV1().Services(spec.Namespace).Get(context.TODO(), spec.Name, metaV1.GetOptions{})
 	if err != nil {
 		if errors.IsNotFoundError(err) || errors.IsForbiddenError(err) {
 			isValidService = true

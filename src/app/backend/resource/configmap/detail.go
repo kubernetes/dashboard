@@ -15,6 +15,7 @@
 package configmap
 
 import (
+	"context"
 	"log"
 
 	v1 "k8s.io/api/core/v1"
@@ -37,7 +38,7 @@ type ConfigMapDetail struct {
 func GetConfigMapDetail(client kubernetes.Interface, namespace, name string) (*ConfigMapDetail, error) {
 	log.Printf("Getting details of %s config map in %s namespace", name, namespace)
 
-	rawConfigMap, err := client.CoreV1().ConfigMaps(namespace).Get(name, metaV1.GetOptions{})
+	rawConfigMap, err := client.CoreV1().ConfigMaps(namespace).Get(context.TODO(), name, metaV1.GetOptions{})
 
 	if err != nil {
 		return nil, err

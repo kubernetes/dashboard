@@ -15,6 +15,8 @@
 package deployment
 
 import (
+	"context"
+
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
@@ -34,7 +36,7 @@ func GetDeploymentOldReplicaSets(client client.Interface, dsQuery *dataselect.Da
 		ListMeta:    api.ListMeta{TotalItems: 0},
 	}
 
-	deployment, err := client.AppsV1().Deployments(namespace).Get(deploymentName, metaV1.GetOptions{})
+	deployment, err := client.AppsV1().Deployments(namespace).Get(context.TODO(), deploymentName, metaV1.GetOptions{})
 	if err != nil {
 		return oldReplicaSetList, err
 	}

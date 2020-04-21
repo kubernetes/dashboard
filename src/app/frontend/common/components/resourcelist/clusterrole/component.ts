@@ -54,6 +54,6 @@ export class ClusterRoleListComponent extends ResourceListBase<ClusterRoleList, 
   }
 
   getDisplayColumns(): string[] {
-    return ['name', 'age'];
+    return ['name', 'created'];
   }
 }

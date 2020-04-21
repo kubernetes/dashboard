@@ -15,6 +15,7 @@
 package namespace
 
 import (
+	"context"
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
@@ -46,7 +47,7 @@ type NamespaceDetail struct {
 func GetNamespaceDetail(client k8sClient.Interface, name string) (*NamespaceDetail, error) {
 	log.Printf("Getting details of %s namespace\n", name)
 
-	namespace, err := client.CoreV1().Namespaces().Get(name, metaV1.GetOptions{})
+	namespace, err := client.CoreV1().Namespaces().Get(context.TODO(), name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
@@ -79,7 +80,7 @@ func toNamespaceDetail(namespace v1.Namespace, resourceQuotaList *rq.ResourceQuo
 }
 
 func getResourceQuotas(client k8sClient.Interface, namespace v1.Namespace) (*rq.ResourceQuotaDetailList, error) {
-	list, err := client.CoreV1().ResourceQuotas(namespace.Name).List(api.ListEverything)
+	list, err := client.CoreV1().ResourceQuotas(namespace.Name).List(context.TODO(), api.ListEverything)
 
 	result := &rq.ResourceQuotaDetailList{
 		Items:    make([]rq.ResourceQuotaDetail, 0),
@@ -95,7 +96,7 @@ func getResourceQuotas(client k8sClient.Interface, namespace v1.Namespace) (*rq.
 }
 
 func getLimitRanges(client k8sClient.Interface, namespace v1.Namespace) ([]limitrange.LimitRangeItem, error) {
-	list, err := client.CoreV1().LimitRanges(namespace.Name).List(api.ListEverything)
+	list, err := client.CoreV1().LimitRanges(namespace.Name).List(context.TODO(), api.ListEverything)
 	if err != nil {
 		return nil, err
 	}

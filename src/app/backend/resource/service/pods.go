@@ -15,6 +15,8 @@
 package service
 
 import (
+	"context"
+
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
@@ -35,7 +37,7 @@ func GetServicePods(client k8sClient.Interface, metricClient metricapi.MetricCli
 		CumulativeMetrics: []metricapi.Metric{},
 	}
 
-	service, err := client.CoreV1().Services(namespace).Get(name, metaV1.GetOptions{})
+	service, err := client.CoreV1().Services(namespace).Get(context.TODO(), name, metaV1.GetOptions{})
 	if err != nil {
 		return &podList, err
 	}

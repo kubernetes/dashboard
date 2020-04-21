@@ -15,6 +15,7 @@
 package deployment
 
 import (
+	"context"
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
@@ -83,7 +84,7 @@ func GetDeploymentDetail(client client.Interface, namespace string, deploymentNa
 
 	log.Printf("Getting details of %s deployment in %s namespace", deploymentName, namespace)
 
-	deployment, err := client.AppsV1().Deployments(namespace).Get(deploymentName, metaV1.GetOptions{})
+	deployment, err := client.AppsV1().Deployments(namespace).Get(context.TODO(), deploymentName, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}

@@ -15,6 +15,7 @@
 package replicaset
 
 import (
+	"context"
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
@@ -48,7 +49,7 @@ func GetReplicaSetDetail(client k8sClient.Interface, metricClient metricapi.Metr
 	namespace, name string) (*ReplicaSetDetail, error) {
 	log.Printf("Getting details of %s service in %s namespace", name, namespace)
 
-	rs, err := client.AppsV1().ReplicaSets(namespace).Get(name, metaV1.GetOptions{})
+	rs, err := client.AppsV1().ReplicaSets(namespace).Get(context.TODO(), name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}

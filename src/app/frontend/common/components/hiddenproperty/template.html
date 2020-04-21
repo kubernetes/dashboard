@@ -19,21 +19,29 @@ limitations under the License.
        fxLayout="row"
        fxLayoutAlign=" center"
        class="kd-hidden-property-key kd-clickable"
-       (click)="hidden = !hidden">
+       (click)="toggleVisible()">
     <ng-content select="[key]"></ng-content>
     <mat-icon class="kd-hidden-property-icon">
-      <ng-container *ngIf="hidden">visibility</ng-container>
-      <ng-container *ngIf="!hidden">visibility_off</ng-container>
+      <ng-container *ngIf="mode == HiddenPropertyMode.Hidden">visibility</ng-container>
+      <ng-container *ngIf="mode != HiddenPropertyMode.Hidden">visibility_off</ng-container>
     </mat-icon>
+    <mat-icon *ngIf="enableEdit"
+              class="kd-hidden-property-icon"
+              [ngClass]="mode == HiddenPropertyMode.Edit ? 'kd-edit-active' : ''"
+              (click)="toggleEdit(); $event.stopPropagation();">edit</mat-icon>
   </div>
   <div value>
 
-    <div [hidden]="!hidden">
+    <div [hidden]="mode != HiddenPropertyMode.Hidden">
       <ng-content select="[whenHidden]"></ng-content>
     </div>
 
-    <div [hidden]="hidden">
+    <div [hidden]="mode != HiddenPropertyMode.Visible">
       <ng-content select="[whenVisible]"></ng-content>
+    </div>
+
+    <div [hidden]="mode != HiddenPropertyMode.Edit">
+      <ng-content select="[whenEdit]"></ng-content>
     </div>
 
   </div>

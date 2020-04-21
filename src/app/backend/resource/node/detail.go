@@ -15,6 +15,7 @@
 package node
 
 import (
+	"context"
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
@@ -126,7 +127,7 @@ func GetNodeDetail(client k8sClient.Interface, metricClient metricapi.MetricClie
 	dsQuery *dataselect.DataSelectQuery) (*NodeDetail, error) {
 	log.Printf("Getting details of %s node", name)
 
-	node, err := client.CoreV1().Nodes().Get(name, metaV1.GetOptions{})
+	node, err := client.CoreV1().Nodes().Get(context.TODO(), name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
@@ -295,7 +296,7 @@ func GetNodePods(client k8sClient.Interface, metricClient metricapi.MetricClient
 		CumulativeMetrics: []metricapi.Metric{},
 	}
 
-	node, err := client.CoreV1().Nodes().Get(name, metaV1.GetOptions{})
+	node, err := client.CoreV1().Nodes().Get(context.TODO(), name, metaV1.GetOptions{})
 	if err != nil {
 		return &podList, err
 	}
@@ -324,7 +325,7 @@ func getNodePods(client k8sClient.Interface, node v1.Node) (*v1.PodList, error) 
 		return nil, err
 	}
 
-	return client.CoreV1().Pods(v1.NamespaceAll).List(metaV1.ListOptions{
+	return client.CoreV1().Pods(v1.NamespaceAll).List(context.TODO(), metaV1.ListOptions{
 		FieldSelector: fieldSelector.String(),
 	})
 }

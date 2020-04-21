@@ -15,6 +15,8 @@
 package logs
 
 import (
+	"context"
+
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/controller"
@@ -32,7 +34,7 @@ func GetLogSources(k8sClient kubernetes.Interface, ns string, resourceName strin
 
 // GetLogSourcesFromPod returns all containers for a given pod
 func getLogSourcesFromPod(k8sClient kubernetes.Interface, ns, resourceName string) (controller.LogSources, error) {
-	pod, err := k8sClient.CoreV1().Pods(ns).Get(resourceName, meta.GetOptions{})
+	pod, err := k8sClient.CoreV1().Pods(ns).Get(context.TODO(), resourceName, meta.GetOptions{})
 	if err != nil {
 		return controller.LogSources{}, err
 	}
@@ -50,7 +52,7 @@ func getLogSourcesFromController(k8sClient kubernetes.Interface, ns, resourceNam
 	if err != nil {
 		return controller.LogSources{}, err
 	}
-	allPods, err := k8sClient.CoreV1().Pods(ns).List(api.ListEverything)
+	allPods, err := k8sClient.CoreV1().Pods(ns).List(context.TODO(), api.ListEverything)
 	if err != nil {
 		return controller.LogSources{}, err
 	}

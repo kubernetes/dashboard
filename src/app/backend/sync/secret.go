@@ -15,6 +15,7 @@
 package sync
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"reflect"
@@ -92,7 +93,7 @@ func (self *secretSynchronizer) Error() chan error {
 // Create implements Synchronizer interface. See Synchronizer for more information.
 func (self *secretSynchronizer) Create(obj runtime.Object) error {
 	secret := self.getSecret(obj)
-	_, err := self.client.CoreV1().Secrets(secret.Namespace).Create(secret)
+	_, err := self.client.CoreV1().Secrets(secret.Namespace).Create(context.TODO(), secret, metaV1.CreateOptions{})
 	if err != nil {
 		return err
 	}
@@ -107,7 +108,7 @@ func (self *secretSynchronizer) Get() runtime.Object {
 
 	if self.secret == nil {
 		// In case secret was not yet initialized try to do it synchronously
-		secret, err := self.client.CoreV1().Secrets(self.namespace).Get(self.name, metaV1.GetOptions{})
+		secret, err := self.client.CoreV1().Secrets(self.namespace).Get(context.TODO(), self.name, metaV1.GetOptions{})
 		if err != nil {
 			return nil
 		}
@@ -123,7 +124,7 @@ func (self *secretSynchronizer) Get() runtime.Object {
 // Update implements Synchronizer interface. See Synchronizer for more information.
 func (self *secretSynchronizer) Update(obj runtime.Object) error {
 	secret := self.getSecret(obj)
-	_, err := self.client.CoreV1().Secrets(secret.Namespace).Update(secret)
+	_, err := self.client.CoreV1().Secrets(secret.Namespace).Update(context.TODO(), secret, metaV1.UpdateOptions{})
 	if err != nil {
 		return err
 	}
@@ -133,8 +134,8 @@ func (self *secretSynchronizer) Update(obj runtime.Object) error {
 
 // Delete implements Synchronizer interface. See Synchronizer for more information.
 func (self *secretSynchronizer) Delete() error {
-	return self.client.CoreV1().Secrets(self.namespace).Delete(self.name,
-		&metaV1.DeleteOptions{GracePeriodSeconds: new(int64)})
+	return self.client.CoreV1().Secrets(self.namespace).Delete(context.TODO(), self.name,
+		metaV1.DeleteOptions{GracePeriodSeconds: new(int64)})
 }
 
 // RegisterActionHandler implements Synchronizer interface. See Synchronizer for more information.
@@ -153,7 +154,7 @@ func (self *secretSynchronizer) Refresh() {
 	self.mux.Lock()
 	defer self.mux.Unlock()
 
-	secret, err := self.client.CoreV1().Secrets(self.namespace).Get(self.name, metaV1.GetOptions{})
+	secret, err := self.client.CoreV1().Secrets(self.namespace).Get(context.TODO(), self.name, metaV1.GetOptions{})
 	if err != nil {
 		log.Printf("Secret synchronizer %s failed to refresh secret", self.Name())
 		return

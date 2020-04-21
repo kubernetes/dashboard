@@ -127,6 +127,11 @@ code {
 
 .mat-column-statusicon {
   flex: 0 0 ($baseline-grid * 5) !important;
+
+  .mat-icon {
+    font-size: 2.5 * $baseline-grid;
+    margin-top: .66 * $baseline-grid;
+  }
 }
 
 .mat-column-labels,
@@ -198,6 +203,7 @@ router-outlet::after {
   font-size: $body-font-size-base;
   padding: $baseline-grid * 2;
   white-space: pre-wrap;
+  width: 100%;
 }
 
 .kd-code-block-font {
@@ -351,4 +357,18 @@ router-outlet::after {
 // Override Arial font type
 .nvtooltip {
   font-family: Roboto, sans-serif;
+}
+
+.kd-secret-detail-text {
+  .mat-form-field-wrapper {
+    padding-bottom: $baseline-grid;
+  }
+
+  .mat-form-field-infix {
+    padding-top: 2px;
+  }
+
+  textarea {
+    padding: (2 * $baseline-grid) (2 * $baseline-grid) 0 !important;
+  }
 }

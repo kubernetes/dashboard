@@ -27,7 +27,12 @@ limitations under the License.
         <ngx-charts-pie-chart [results]="resourcesRatio.cronJobRatio"
                               [view]="[200,200]"
                               [customColors]="getCustomColor"
-                              [animations]="false"></ngx-charts-pie-chart>
+                              [animations]="false">
+          <ng-template #tooltipTemplate
+                       let-model="model">
+            {{model.value | number}}%
+          </ng-template>
+        </ngx-charts-pie-chart>
       </div>
       <div class="kd-graph-title"
            i18n>Cron Jobs</div>
@@ -40,7 +45,12 @@ limitations under the License.
         <ngx-charts-pie-chart [results]="resourcesRatio.daemonSetRatio"
                               [view]="[200,200]"
                               [customColors]="getCustomColor"
-                              [animations]="false"></ngx-charts-pie-chart>
+                              [animations]="false">
+          <ng-template #tooltipTemplate
+                       let-model="model">
+            {{model.value | number}}%
+          </ng-template>
+        </ngx-charts-pie-chart>
       </div>
       <div class="kd-graph-title"
            i18n>Daemon Sets</div>
@@ -53,7 +63,12 @@ limitations under the License.
         <ngx-charts-pie-chart [results]="resourcesRatio.deploymentRatio"
                               [view]="[200,200]"
                               [customColors]="getCustomColor"
-                              [animations]="false"></ngx-charts-pie-chart>
+                              [animations]="false">
+          <ng-template #tooltipTemplate
+                       let-model="model">
+            {{model.value | number}}%
+          </ng-template>
+        </ngx-charts-pie-chart>
       </div>
       <div class="kd-graph-title"
            i18n>Deployments</div>
@@ -66,7 +81,12 @@ limitations under the License.
         <ngx-charts-pie-chart [results]="resourcesRatio.jobRatio"
                               [view]="[200,200]"
                               [customColors]="getCustomColor"
-                              [animations]="false"></ngx-charts-pie-chart>
+                              [animations]="false">
+          <ng-template #tooltipTemplate
+                       let-model="model">
+            {{model.value | number}}%
+          </ng-template>
+        </ngx-charts-pie-chart>
       </div>
       <div class="kd-graph-title"
            i18n>Jobs</div>
@@ -80,7 +100,12 @@ limitations under the License.
                               [view]="[200,200]"
                               [customColors]="getCustomColor"
                               [animations]="false"
-                              id="kd-graph-pods"></ngx-charts-pie-chart>
+                              id="kd-graph-pods">
+          <ng-template #tooltipTemplate
+                       let-model="model">
+            {{model.value | number}}%
+          </ng-template>
+        </ngx-charts-pie-chart>
       </div>
       <div class="kd-graph-title"
            i18n>Pods</div>
@@ -93,7 +118,12 @@ limitations under the License.
         <ngx-charts-pie-chart [results]="resourcesRatio.replicaSetRatio"
                               [view]="[200,200]"
                               [customColors]="getCustomColor"
-                              [animations]="false"></ngx-charts-pie-chart>
+                              [animations]="false">
+          <ng-template #tooltipTemplate
+                       let-model="model">
+            {{model.value | number}}%
+          </ng-template>
+        </ngx-charts-pie-chart>
       </div>
       <div class="kd-graph-title"
            i18n>Replica Sets</div>
@@ -106,7 +136,12 @@ limitations under the License.
         <ngx-charts-pie-chart [results]="resourcesRatio.replicationControllerRatio"
                               [view]="[200,200]"
                               [customColors]="getCustomColor"
-                              [animations]="false"></ngx-charts-pie-chart>
+                              [animations]="false">
+          <ng-template #tooltipTemplate
+                       let-model="model">
+            {{model.value | number}}%
+          </ng-template>
+        </ngx-charts-pie-chart>
       </div>
       <div class="kd-graph-title"
            i18n>Replication Controllers</div>
@@ -119,7 +154,12 @@ limitations under the License.
         <ngx-charts-pie-chart [results]="resourcesRatio.statefulSetRatio"
                               [view]="[200,200]"
                               [customColors]="getCustomColor"
-                              [animations]="false"></ngx-charts-pie-chart>
+                              [animations]="false">
+          <ng-template #tooltipTemplate
+                       let-model="model">
+            {{model.value | number}}%
+          </ng-template>
+        </ngx-charts-pie-chart>
       </div>
       <div class="kd-graph-title"
            i18n>Stateful Sets</div>

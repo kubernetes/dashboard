@@ -15,6 +15,7 @@
 package persistentvolumeclaim
 
 import (
+	"context"
 	"log"
 	"strings"
 
@@ -34,7 +35,7 @@ type PersistentVolumeClaimCell api.PersistentVolumeClaim
 func GetPodPersistentVolumeClaims(client client.Interface, namespace string, podName string,
 	dsQuery *dataselect.DataSelectQuery) (*PersistentVolumeClaimList, error) {
 
-	pod, err := client.CoreV1().Pods(namespace).Get(podName, metaV1.GetOptions{})
+	pod, err := client.CoreV1().Pods(namespace).Get(context.TODO(), podName, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}

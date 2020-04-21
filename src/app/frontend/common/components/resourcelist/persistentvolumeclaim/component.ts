@@ -86,7 +86,7 @@ export class PersistentVolumeClaimListComponent extends ResourceListWithStatuses
       'capacity',
       'accmodes',
       'storagecl',
-      'age',
+      'created',
     ];
   }
 

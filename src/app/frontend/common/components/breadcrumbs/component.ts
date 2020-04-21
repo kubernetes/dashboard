@@ -17,6 +17,8 @@ import {ActivatedRoute, NavigationEnd, Params, Route, Router} from '@angular/rou
 import {Breadcrumb} from '@api/frontendapi';
 import {POD_DETAIL_ROUTE} from '../../../resource/workloads/pod/routing';
 import {SEARCH_QUERY_STATE_PARAM} from '../../params/params';
+import {REPLICATIONCONTROLLER_DETAIL_ROUTE} from '../../../resource/workloads/replicationcontroller/routing';
+import {REPLICASET_DETAIL_ROUTE} from '../../../resource/workloads/replicaset/routing';
 
 export const LOGS_PARENT_PLACEHOLDER = '___LOGS_PARENT_PLACEHOLDER___';
 export const EXEC_PARENT_PLACEHOLDER = '___EXEC_PARENT_PLACEHOLDER___';
@@ -115,6 +117,10 @@ export class BreadcrumbsComponent implements OnInit {
     const resourceType = params['resourceType'];
     if (resourceType === 'pod') {
       return POD_DETAIL_ROUTE;
+    } else if (resourceType === 'replicationcontroller') {
+      return REPLICATIONCONTROLLER_DETAIL_ROUTE;
+    } else if (resourceType === 'replicaset') {
+      return REPLICASET_DETAIL_ROUTE;
     } else {
       return undefined;
     }

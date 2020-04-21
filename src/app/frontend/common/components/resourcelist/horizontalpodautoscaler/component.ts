@@ -68,7 +68,7 @@ export class HorizontalPodAutoscalerListComponent extends ResourceListWithStatus
   }
 
   getDisplayColumns(): string[] {
-    return ['name', 'minpods', 'maxpods', 'scaletargetref', 'age'];
+    return ['name', 'minpods', 'maxpods', 'scaletargetref', 'created'];
   }
 
   private shouldShowNamespaceColumn_(): boolean {

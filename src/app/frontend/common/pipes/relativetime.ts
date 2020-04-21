@@ -118,9 +118,9 @@ export class RelativeTimeFormatter {
    */
   private formatOutputTimeString_(timeValue: number, timeUnit: string[]): string {
     if (timeValue > 1 || timeValue === 0) {
-      return `${timeValue} ${timeUnit[1]}`;
+      return `${timeValue} ${timeUnit[1]} ago`;
     } else {
-      return timeUnit[0];
+      return `${timeUnit[0]} ago`;
     }
   }
 }

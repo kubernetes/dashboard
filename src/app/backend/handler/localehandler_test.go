@@ -141,7 +141,7 @@ func TestDetermineLocale(t *testing.T) {
 		},
 		{
 			&LocaleHandler{
-				SupportedLocales: languageMake([]string{"en", "zh-tw", "zh-hk", "zh", "ar-dz"}),
+				SupportedLocales: languageMake([]string{"en", "zh", "zh-Hant", "zh-Hans", "ar-DZ"}),
 			},
 			true,
 			"en",
@@ -149,7 +149,7 @@ func TestDetermineLocale(t *testing.T) {
 		},
 		{
 			&LocaleHandler{
-				SupportedLocales: languageMake([]string{"en", "zh-tw", "zh-hk", "zh", "ar-dz"}),
+				SupportedLocales: languageMake([]string{"en", "zh", "zh-Hant", "zh-Hans", "ar-DZ"}),
 			},
 			true,
 			"zh",
@@ -157,27 +157,51 @@ func TestDetermineLocale(t *testing.T) {
 		},
 		{
 			&LocaleHandler{
-				SupportedLocales: languageMake([]string{"en", "zh-tw", "zh-hk", "zh", "ar-dz"}),
+				SupportedLocales: languageMake([]string{"en", "zh", "zh-Hant", "zh-Hans", "ar-DZ"}),
 			},
 			true,
-			"ar",
-			filepath.Join(assetsDir, "en"),
+			"ar-DZ",
+			filepath.Join(assetsDir, "ar-DZ"),
 		},
 		{
 			&LocaleHandler{
-				SupportedLocales: languageMake([]string{"en", "zh-tw", "zh-hk", "zh", "ar-dz"}),
+				SupportedLocales: languageMake([]string{"en", "zh", "zh-Hant", "zh-Hans", "ar-DZ"}),
 			},
 			true,
-			"ar-bh",
-			filepath.Join(assetsDir, "en"),
+			"ar-BH",
+			defaultDir,
 		},
 		{
 			&LocaleHandler{
-				SupportedLocales: languageMake([]string{"en", "zh-tw", "zh", "ar-dz"}),
+				SupportedLocales: languageMake([]string{"en", "zh", "zh-Hans", "zh-Hant", "zh-Hant-HK"}),
 			},
 			true,
 			"af,zh-HK,zh;q=0.8,en;q=0.6",
-			filepath.Join(assetsDir, "zh"),
+			filepath.Join(assetsDir, "zh-Hant-HK"),
+		},
+		{
+			&LocaleHandler{
+				SupportedLocales: languageMake([]string{"en", "zh", "zh-Hans", "zh-Hant", "zh-Hant-HK"}),
+			},
+			true,
+			"af,zh-TW,zh;q=0.8,en;q=0.6",
+			filepath.Join(assetsDir, "zh-Hant"),
+		},
+		{
+			&LocaleHandler{
+				SupportedLocales: languageMake([]string{"en", "zh", "zh-Hans", "zh-Hant", "zh-Hant-HK"}),
+			},
+			true,
+			"zh-tw",
+			filepath.Join(assetsDir, "zh-Hant"),
+		},
+		{
+			&LocaleHandler{
+				SupportedLocales: languageMake([]string{"en", "zh", "zh-Hans", "zh-Hant", "zh-Hant-HK"}),
+			},
+			true,
+			"zh-hant-hk",
+			filepath.Join(assetsDir, "zh-Hant-HK"),
 		},
 	}
 
@@ -198,7 +222,7 @@ func TestDetermineLocale(t *testing.T) {
 			}
 			actual := c.handler.determineLocalizedDir(c.acceptLanguageKey)
 			if !reflect.DeepEqual(actual, c.expected) {
-				t.Errorf("localeHandler.determineLocalizedDir() returns %#v, expected %#v", actual, c.expected)
+				t.Errorf("localeHandler.determineLocalizedDir(%#v) returns %#v, expected %#v", c.acceptLanguageKey, actual, c.expected)
 			}
 		}()
 	}

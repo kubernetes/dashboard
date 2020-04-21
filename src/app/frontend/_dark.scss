@@ -15,109 +15,48 @@
 @import '~@angular/material/theming';
 @import './theming';
 
-$kd-dark-palette-primary: (
-  50: #fff, // Primary toolbar buttons.
-  100: #fff,
-  200: #327df4,
-  300: #9575cd,
-  400: #7e57c2,
-  500: #327df4,
-  600: #5e35b1,
-  700: #327df4,
-  800: #4527a0,
-  900: #311b92,
-  A100: #b388ff,
-  A200: #7c4dff,
-  A400: #651fff,
-  A700: #6200ea,
-  contrast: (
-    50: $black-87-opacity,
-    100: $black-87-opacity,
-    200: $black-87-opacity,
-    300: #fff,
-    400: #fff,
-    500: $white-87-opacity,
-    600: $white-87-opacity,
-    700: $white-87-opacity,
-    800: $white-87-opacity,
-    900: $white-87-opacity,
-    A100: $black-87-opacity,
-    A200: #fff,
-    A400: $white-87-opacity,
-    A700: $white-87-opacity,
-  )
-);
-
-$kd-dark-palette-warn: (
-  50: #00c752, // Chart green.
-  100: #008000,
-  200: #327df4, // Chart blue.
-  300: #0d47a1,
-  400: #ff0,
-  500: #ffad20,
-  600: #ff5722,
-  700: #ff481b,
-  800: #f51200,
-  900: #f00,
-  A100: #ffd180,
-  A200: #ffab40,
-  A400: #ff9100,
-  A700: #ff6d00,
-  contrast: (
-    50: $black-87-opacity,
-    100: $black-87-opacity,
-    200: $black-87-opacity,
-    300: $black-87-opacity,
-    400: $black-87-opacity,
-    500: $black-87-opacity,
-    600: $black-87-opacity,
-    700: $black-87-opacity,
-    800: #fff,
-    900: #fff,
-    A100: $black-87-opacity,
-    A200: $black-87-opacity,
-    A400: $black-87-opacity,
-    A700: #000,
-  )
+$colors-dark: (
+  primary: #327df4,
+  accent: #fff,
+  indicator-success: #008000,
+  indicator-warning: #ffad20,
+  indicator-error: #ff481b,
+  chart-blue: #327df4,
+  chart-green: #00c752,
+  toolbar-button: #fff,
 );
 
 // sass-lint:disable function-name-format
-$kd-dark-palette-accent: map_merge($mat-blue, (500: #fff));
-// sass-lint:enable function-name-format
+$kd-blue: map_merge($mat-blue, (500: #327df4));
 
-$kd-dark-theme-primary: mat-palette($kd-dark-palette-primary);
-$kd-dark-theme-accent: mat-palette($kd-dark-palette-accent);
-$kd-dark-theme-warn: mat-palette($kd-dark-palette-warn);
+$theme-dark: mat-dark-theme(mat-palette($kd-blue), mat-palette($kd-blue), mat-palette($kd-blue));
 
-$kd-dark-theme: mat-dark-theme($kd-dark-theme-primary, $kd-dark-theme-accent, $kd-dark-theme-warn);
-
-// sass-lint:disable function-name-format
-$background: map-get($kd-dark-theme, background);
+$background: map-get($theme-dark, background);
 $background: map_merge($background, (background: #1d1d1d));
 $background: map_merge($background, (app-bar: #1d1d1d));
 $background: map_merge($background, (card: #2d2d2d));
 $background: map_merge($background, (dialog: #2d2d2d));
-$kd-dark-theme: map_merge($kd-dark-theme, (background: $background));
+$theme-dark: map_merge($theme-dark, (background: $background));
 // sass-lint:enable function-name-format
 
+// sass-lint:disable no-color-literals
 .kd-dark-theme {
-  @include angular-material-theme($kd-dark-theme);
-  @include kd-theme($kd-dark-theme);
-
-  $accent-palette: map-get($kd-dark-theme, accent);
-  $accent: mat-color($accent-palette);
+  @include angular-material-theme($theme-dark);
+  @include kd-theme($theme-dark, $colors-dark);
 
   .kd-toolbar-logo-text,
-  .kd-primary-toolbar-icon {
-    filter: brightness(100);
+  .kd-primary-toolbar-icon,
+  .kd-toolbar-action .mat-icon {
+    color: #fff;
   }
 
   .kd-cross-line-primary {
-    stroke: $accent;
+    stroke: #fff;
   }
 
-  // this removes the border of the graphs
+  // Remove the border of the graphs.
   .c3-chart-arc path {
     stroke: none;
   }
 }
+// sass-lint:enable no-color-literals

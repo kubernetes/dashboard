@@ -219,7 +219,7 @@ spec:
           emptyDir: {}
       serviceAccountName: kubernetes-dashboard-head
       nodeSelector:
-        "beta.kubernetes.io/os": linux
+        "kubernetes.io/os": linux
       # Comment the following tolerations if Dashboard must not be deployed on master
       tolerations:
         - key: node-role.kubernetes.io/master
@@ -286,7 +286,7 @@ spec:
             runAsGroup: 2001
       serviceAccountName: kubernetes-dashboard-head
       nodeSelector:
-        "beta.kubernetes.io/os": linux
+        "kubernetes.io/os": linux
       # Comment the following tolerations if Dashboard must not be deployed on master
       tolerations:
         - key: node-role.kubernetes.io/master

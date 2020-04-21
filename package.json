@@ -1,6 +1,6 @@
 {
   "name": "kubernetes-dashboard",
-  "version": "2.0.0-rc7",
+  "version": "2.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/kubernetes/dashboard.git"
@@ -88,9 +88,7 @@
       "fr",
       "ja",
       "ko",
-      "zh",
       "zh-Hans",
-      "zh-Hans-SG",
       "zh-Hant",
       "zh-Hant-HK"
     ],
@@ -136,7 +134,8 @@
     "truncate-url": "1.0.0",
     "tslib": "1.11.1",
     "web-animations-js": "2.3.2",
-    "xterm": "3.14.5",
+    "xterm": "4.5.0",
+    "xterm-addon-fit": "0.3.0",
     "zone.js": "0.10.2"
   },
   "devDependencies": {
@@ -155,7 +154,7 @@
     "babel-register": "6.26.0",
     "codelyzer": "5.2.1",
     "concurrently": "5.1.0",
-    "cypress": "4.2.0",
+    "cypress": "4.4.1",
     "del": "5.1.0",
     "git-describe": "4.0.4",
     "gts": "1.1.2",
@@ -165,7 +164,7 @@
     "jasmine-core": "3.5.0",
     "jasmine-spec-reporter": "4.2.1",
     "js-beautify": "1.10.3",
-    "karma": "4.4.1",
+    "karma": "5.0.2",
     "karma-chrome-launcher": "3.1.0",
     "karma-cli": "2.0.0",
     "karma-coverage-istanbul-reporter": "2.1.1",

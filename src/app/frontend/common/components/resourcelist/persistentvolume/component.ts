@@ -95,7 +95,7 @@ export class PersistentVolumeListComponent extends ResourceListWithStatuses<
       'claim',
       'storagecl',
       'reason',
-      'age',
+      'created',
     ];
   }
 }
