@@ -19,6 +19,7 @@ import (
 	"log"
 	"net/http"
 	"reflect"
+	"sync"
 
 	v1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -34,6 +35,7 @@ type SettingsManager struct {
 	settings        map[string]api.Settings
 	pinnedResources []api.PinnedResource
 	rawSettings     map[string]string
+	mux             sync.Mutex
 }
 
 // NewSettingsManager creates new settings manager.
@@ -58,6 +60,8 @@ func (sm *SettingsManager) load(client kubernetes.Interface) (configMap *v1.Conf
 	isDifferent = !reflect.DeepEqual(sm.rawSettings, configMap.Data)
 
 	if isDifferent {
+		sm.mux.Lock()
+		defer sm.mux.Unlock()
 		sm.rawSettings = configMap.Data
 		sm.settings = make(map[string]api.Settings)
 
