@@ -138,10 +138,9 @@ ingress:
 ## refs: https://github.com/kubernetes-sigs/dashboard-metrics-scraper
 metricsScraper:
   enabled: false
-  revisionHistoryLimit: 10
   image:
     repository: kubernetesui/metrics-scraper
-    tag: v1.0.3
+    tag: v1.0.4
   resources: {}
 
 ## Optional Metrics Server sub-chart
