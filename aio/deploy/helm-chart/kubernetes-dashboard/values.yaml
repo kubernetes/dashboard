@@ -142,6 +142,13 @@ metricsScraper:
     repository: kubernetesui/metrics-scraper
     tag: v1.0.4
   resources: {}
+  ## SecurityContext for the metrics scraper container
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: true
+    runAsUser: 1001
+    runAsGroup: 2001
+
 
 ## Optional Metrics Server sub-chart
 ## Enable this is you don't already have metrics-server enabled on your cluster and
@@ -204,14 +211,7 @@ podDisruptionBudget:
 #   runAsGroup: 2001
 
 ## SecurityContext for the kubernetes dashboard container
-dashboardContainerSecurityContext:
-  allowPrivilegeEscalation: false
-  readOnlyRootFilesystem: true
-  runAsUser: 1001
-  runAsGroup: 2001
-
-## SecurityContext for the dashboard metrics scraper container
-metricsScraperContainerSecurityContext:
+containerSecurityContext:
   allowPrivilegeEscalation: false
   readOnlyRootFilesystem: true
   runAsUser: 1001

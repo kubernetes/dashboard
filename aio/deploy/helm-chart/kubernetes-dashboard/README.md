@@ -105,8 +105,8 @@ Parameter                           | Description                               
 `podDisruptionBudget.minAvailable`  | Minimum available instances; ignored if there is no PodDisruptionBudget                                                     |
 `podDisruptionBudget.maxUnavailable`| Maximum unavailable instances; ignored if there is no PodDisruptionBudget                                                   |
 `securityContext`                   | PodSecurityContext for pod level securityContext                                                                            | `nil`
-`dashboardContainerSecurityContext` | SecurityContext for the kubernetes dashboard container                                                                      | `{allowPrivilegeEscalation:false, readOnlyRootFilesystem: true, runAsUser: 1001, runAsGroup: 2001}`
-`metricsScraperContainerSecurityContext` | SecurityContext for the kubernetes dashboard metrics scraper container                                                 | `{allowPrivilegeEscalation:false, readOnlyRootFilesystem: true, runAsUser: 1001, runAsGroup: 2001}`
+`containerSecurityContext` | SecurityContext for the kubernetes dashboard container                                                                      | `{allowPrivilegeEscalation:false, readOnlyRootFilesystem: true, runAsUser: 1001, runAsGroup: 2001}`
+`metricsScraper.containerSecurityContext` | SecurityContext for the kubernetes dashboard metrics scraper container                                                 | `{allowPrivilegeEscalation:false, readOnlyRootFilesystem: true, runAsUser: 1001, runAsGroup: 2001}`
 `networkPolicy.enabled`                     | Whether to create a network policy that allows access to the service                                                        | `false`
 
 
