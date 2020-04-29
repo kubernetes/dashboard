@@ -5,8 +5,7 @@ import {CanActivate, ActivatedRouteSnapshot, Router, RouterStateSnapshot} from '
 export class RedirectGuard implements CanActivate {
   constructor(private router: Router) {}
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    //console.log(state);
+  canActivate(route: ActivatedRouteSnapshot): boolean {
     if (route.params['redirect'] === 'true') {
       window.location.href = route.params['externalUrl'];
     } else {
