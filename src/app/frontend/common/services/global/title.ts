@@ -12,21 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Injectable} from '@angular/core';
+import {Injectable, Inject} from '@angular/core';
 import {Title} from '@angular/platform-browser';
-
+import {ConfigService} from './config';
 import {GlobalSettingsService} from './globalsettings';
 
 @Injectable()
 export class TitleService {
   clusterName = '';
-
-  constructor(private readonly title_: Title, private readonly settings_: GlobalSettingsService) {}
+  private titleStr = '';
+  constructor(
+    @Inject(ConfigService) private config: ConfigService,
+    private readonly title_: Title,
+    private readonly settings_: GlobalSettingsService,
+  ) {}
 
   update(): void {
     this.settings_.load(
       () => {
         this.clusterName = this.settings_.getClusterName();
+        if (this.config.getCustomConfig()) {
+          this.titleStr = this.config.getCustomConfig()['title'];
+        }
+
         this.apply_();
       },
       () => {
@@ -37,12 +45,10 @@ export class TitleService {
   }
 
   private apply_(): void {
-    let title = 'Kubernetes Dashboard';
-
     if (this.clusterName && this.clusterName.length > 0) {
-      title = `${this.clusterName} - ` + title;
+      this.titleStr = `${this.clusterName} - ` + this.titleStr;
     }
 
-    this.title_.setTitle(title);
+    this.title_.setTitle(this.titleStr);
   }
 }

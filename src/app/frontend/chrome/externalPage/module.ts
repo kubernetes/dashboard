@@ -12,16 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Input} from '@angular/core';
+import {NgModule} from '@angular/core';
 
-@Component({
-  selector: 'kd-nav-item',
-  templateUrl: 'template.html',
-  styleUrls: ['style.scss'],
+import {ExtPageComponent} from './component';
+import {SharedModule} from 'shared.module';
+import {ComponentsModule} from 'common/components/module';
+import {ExtPageRoutingModule} from './routing';
+
+@NgModule({
+  imports: [SharedModule, ComponentsModule, ExtPageRoutingModule],
+  declarations: [ExtPageComponent],
 })
-export class NavItemComponent {
-  @Input() state: string;
-  @Input() url: string;
-  @Input() redirect: string;
-  @Input() exact = false;
-}
+export class ExtPageModule {}

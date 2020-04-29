@@ -16,7 +16,7 @@ limitations under the License.
 
 <a mat-button
    class="kd-nav-item-button"
-   [routerLink]="state"
+   [routerLink]="[state, {externalUrl: url, redirect: redirect}]"
    [routerLinkActiveOptions]="{exact: exact}"
    queryParamsHandling="preserve"
    [routerLinkActive]="['kd-nav-item-button-active']">

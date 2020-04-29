@@ -1,0 +1,37 @@
+{
+  "title" : "CLUSTER BLACK",
+  "logo" : "kubernetes-logo.svg" ,
+  "color" : "rgb(0, 0, 0)",
+  "menus": [
+    {
+      "label": "No redirect links",
+      "links": [
+        {
+          "redirect":false,
+          "label":"Validator",
+          "url":"http://validator.w3.org/"
+        },
+        {
+          "redirect":false,
+          "label":"Wikipedia",
+          "url":"https://en.wikipedia.org/wiki/Korobeiniki"
+        }
+      ]
+    },
+    {
+      "label": "Redirect links",
+      "links": [
+        {
+          "redirect":true,
+          "label":"Google Maps",
+          "url":"https://www.google.es/maps/"
+        },
+        {
+          "redirect":true,
+          "label":"StackOverflow",
+          "url":"https://stackoverflow.com/"
+        }
+      ]
+    }
+  ]
+}

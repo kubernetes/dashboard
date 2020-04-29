@@ -1,9 +1,12 @@
 <!--
 Copyright 2017 The Kubernetes Authors.
+
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
+
     http://www.apache.org/licenses/LICENSE-2.0
+
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,9 +18,10 @@ limitations under the License.
      fxFlex>
   <kd-card titleClasses="kd-card-top-radius kd-bg-primary kd-accent"
            class="kd-login-card"
-           [expandable]="false">
+           [expandable]="false"
+           [color]="config.getColor()">
     <div title
-         i18n>Kubernetes Dashboard</div>
+          >{{getTitle()}}</div>
     <div content>
       <form fxLayout="column"
             (ngSubmit)="login()">
@@ -39,14 +43,15 @@ limitations under the License.
                  [ngSwitch]="mode">
               <ng-container *ngSwitchCase="loginModes.Kubeconfig"
                             i18n>
-                Please select the kubeconfig file that you have created to configure access to the cluster. To find out more about how to configure and use kubeconfig file, please refer to the <a href='https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/'>Configure Access to Multiple Clusters</a> section.
+                Please select the kubeconfig file that you have created to configure access to the cluster. To find out more about how to configure and use kubeconfig file, please refer to the <a href='https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/' [ngStyle]="applyColor()">Configure Access to Multiple Clusters</a> section.
               </ng-container>
               <ng-container *ngSwitchCase="loginModes.Basic"
                             i18n>
-                Make sure that support for basic authentication is enabled in the cluster. To find out more about how to configure basic authentication, please refer to the <a href="https://kubernetes.io/docs/admin/authentication/">Authenticating</a> and <a href="https://kubernetes.io/docs/admin/authorization/abac/">ABAC Mode</a> sections.
+                Make sure that support for basic authentication is enabled in the cluster. To find out more about how to configure basic authentication, please refer to the <a href="https://kubernetes.io/docs/admin/authentication/" [ngStyle]="applyColor()">Authenticating</a> and <a href="https://kubernetes.io/docs/admin/authorization/abac/" [ngStyle]="applyColor()">ABAC Mode</a> sections.
               </ng-container>
-              <ng-container *ngSwitchCase="loginModes.Token">
-                Pour obtenir votre token et accéder au dashboard:  <a href="{{ urlLogin }}">{{ urlLogin }}</a> 
+              <ng-container *ngSwitchCase="loginModes.Token"
+                            >
+                            Pour obtenir votre token et accéder au dashboard: <a href='{{ urlLogin }}' [ngStyle]="applyColor()">{{ urlLogin }}</a> .
               </ng-container>
             </div>
           </div>
@@ -113,6 +118,7 @@ limitations under the License.
                   color="primary"
                   type="submit"
                   class="kd-login-button"
+                  [ngStyle]="applyStyles()"
                   i18n>
             Sign in
           </button>
@@ -121,6 +127,7 @@ limitations under the License.
                   type="button"
                   class="kd-login-button"
                   *ngIf="isSkipButtonEnabled()"
+                  [ngStyle]="applyStyles()"
                   (click)="skip()"
                   i18n>
             Skip
@@ -130,3 +137,4 @@ limitations under the License.
     </div>
   </kd-card>
 </div>
+

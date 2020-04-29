@@ -33,7 +33,7 @@ export class CardComponent {
   }
   @Input() expanded = true;
   @Input() graphMode = false;
-
+  @Input() color = 'white';
   private classes_: string[] = [];
 
   expand(): void {
@@ -57,5 +57,9 @@ export class CardComponent {
     }
 
     return ngCls;
+  }
+  applyStyles() {
+    const styles = {'background-color': this.color};
+    return styles;
   }
 }

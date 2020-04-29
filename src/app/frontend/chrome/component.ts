@@ -15,8 +15,8 @@
 import {HttpClient} from '@angular/common/http';
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-
 import {AssetsService} from '../common/services/global/assets';
+import {ConfigService} from 'common/services/global/config';
 
 class SystemBanner {
   message: string;
@@ -35,6 +35,7 @@ export class ChromeComponent implements OnInit {
 
   constructor(
     public assets: AssetsService,
+    public config: ConfigService,
     private readonly http_: HttpClient,
     private readonly router_: Router,
   ) {}
@@ -77,5 +78,17 @@ export class ChromeComponent implements OnInit {
 
   goToCreateState(): void {
     this.router_.navigate(['create'], {queryParamsHandling: 'preserve'});
+  }
+  applyToolbarStyles(): object {
+    const styles = {'background-color': this.config.getColor()};
+    return styles;
+  }
+  applyTitleStyles(): object {
+    const styles = {
+      display: 'inline-block',
+      'vertical-align': 'top',
+      color: this.config.getColor(),
+    };
+    return styles;
   }
 }

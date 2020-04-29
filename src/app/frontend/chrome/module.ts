@@ -24,9 +24,11 @@ import {NotificationsComponent} from './notifications/component';
 import {ChromeRoutingModule} from './routing';
 import {SearchComponent} from './search/component';
 import {UserPanelComponent} from './userpanel/component';
+import {RedirectGuard} from './redirectGuard';
 
 @NgModule({
   imports: [SharedModule, ComponentsModule, NavModule, ChromeRoutingModule, GuardsModule],
   declarations: [ChromeComponent, SearchComponent, NotificationsComponent, UserPanelComponent],
+  providers: [RedirectGuard],
 })
 export class ChromeModule {}

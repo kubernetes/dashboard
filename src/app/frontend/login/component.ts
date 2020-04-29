@@ -15,6 +15,7 @@
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Component, NgZone, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {ConfigService} from 'common/services/global/config';
 import {
   AuthenticationMode,
   EnabledAuthenticationModes,
@@ -61,6 +62,7 @@ export class LoginComponent implements OnInit {
     private readonly ngZone_: NgZone,
     private readonly route_: ActivatedRoute,
     private readonly pluginConfigService_: PluginsConfigService,
+    public config: ConfigService,
   ) {}
 
   ngOnInit(): void {
@@ -78,13 +80,11 @@ export class LoginComponent implements OnInit {
         this.enabledAuthenticationModes_.push(LoginModes.Kubeconfig);
         this.selectedAuthenticationMode = this.enabledAuthenticationModes_[0] as LoginModes;
       });
-
     this.http_
       .get<LoginSkippableResponse>('api/v1/login/skippable')
       .subscribe((loginSkippableResponse: LoginSkippableResponse) => {
         this.isLoginSkippable_ = loginSkippableResponse.skippable;
       });
-
     this.route_.paramMap.pipe(map(() => window.history.state)).subscribe((state: StateError) => {
       if (state.error) {
         this.errors = [state.error];
@@ -96,6 +96,7 @@ export class LoginComponent implements OnInit {
   }
 
   getEnabledAuthenticationModes(): AuthenticationMode[] {
+    //return this.enabledAuthenticationModes_;
     return ['token'];
   }
 
@@ -166,5 +167,19 @@ export class LoginComponent implements OnInit {
       default:
         return {} as LoginSpec;
     }
+  }
+  applyStyles() {
+    const styles = {'background-color': this.config.getColor()};
+    return styles;
+  }
+  applyColor() {
+    const styles = {color: this.config.getColor()};
+    return styles;
+  }
+  getTitle() {
+    return this.config.getTitle();
+  }
+  getColor() {
+    return this.config.getColor();
   }
 }

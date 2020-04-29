@@ -152,8 +152,27 @@ limitations under the License.
       </kd-nav-item>
     </div>
 
-    <mat-divider></mat-divider>
+    <div *ngIf="custom">
+      <mat-divider></mat-divider>
+      <div class="kd-nav-group" *ngFor="let menu of menus">
+        <kd-nav-item class="kd-nav-group-item"
+                      id= "{{menu.id}}"
+                      >{{menu.label}}
+        </kd-nav-item>
+        <div *ngFor="let link of menu.links">
+            <kd-nav-item class="kd-nav-item"
+                      state= "/custom"
+                      url = "{{link.url}}"
+                      redirect = {{link.redirect}}
+                      id= "{{link.id}}"
+                      >{{link.label}}
+            </kd-nav-item>
+        </div>
+      </div>
+    </div>
 
+    <mat-divider></mat-divider>
+    
     <div class="kd-nav-group">
       <kd-nav-item class="kd-nav-group-item"
                    id="sidebar-crd"

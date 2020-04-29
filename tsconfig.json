@@ -7,6 +7,8 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "src/app/frontend",
+    "resolveJsonModule": true, 
+    "esModuleInterop": true,
     "paths": {
       "@api/*": ["typings/*"]
     },

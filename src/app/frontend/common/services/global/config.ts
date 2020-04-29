@@ -24,7 +24,7 @@ export class ConfigService {
   private readonly configPath_ = 'config';
   private config_: AppConfig;
   private initTime_: number;
-
+  private customConfig_: any;
   constructor(private readonly http: HttpClient) {}
 
   init(): void {
@@ -32,6 +32,12 @@ export class ConfigService {
       // Set init time when response from the backend will arrive.
       this.config_ = config;
       this.initTime_ = new Date().getTime();
+    });
+    this.readJson().subscribe(config => {
+      this.customConfig_ = config;
+      if (!this.customConfig_) {
+        window.location.reload();
+      }
     });
   }
 
@@ -50,5 +56,25 @@ export class ConfigService {
 
   getVersionInfo(): VersionInfo {
     return version;
+  }
+
+  readJson(): Observable<{}> {
+    return this.http.get('assets/config/config.json');
+  }
+  getCustomConfig(): any {
+    return this.customConfig_;
+  }
+  getColor(): string {
+    if (this.customConfig_) {
+      return this.customConfig_['color'];
+    } else {
+      return 'blue';
+    }
+  }
+  getTitle(): string {
+    return this.customConfig_['title'];
+  }
+  getMenus(): JSON {
+    return this.customConfig_['menus'];
   }
 }

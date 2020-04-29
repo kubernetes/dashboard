@@ -12,16 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Input} from '@angular/core';
+@import '../../variables';
 
-@Component({
-  selector: 'kd-nav-item',
-  templateUrl: 'template.html',
-  styleUrls: ['style.scss'],
-})
-export class NavItemComponent {
-  @Input() state: string;
-  @Input() url: string;
-  @Input() redirect: string;
-  @Input() exact = false;
+object {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+div {
+  height: 100%;
 }

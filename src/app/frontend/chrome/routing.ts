@@ -16,6 +16,8 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {AuthGuard} from '../common/services/guard/auth';
 import {ChromeComponent} from './component';
+import {RedirectGuard} from './redirectGuard';
+//import {ExtPageComponent} from './externalPage/component'
 
 const routes: Routes = [
   {path: '', redirectTo: '/overview', pathMatch: 'full'},
@@ -182,12 +184,25 @@ const routes: Routes = [
         loadChildren: () => import('search/module').then(m => m.SearchModule),
         runGuardsAndResolvers: 'always',
       },
+      {
+        path: 'custom',
+        canActivate: [RedirectGuard],
+        component: RedirectGuard,
+      },
+      {
+        path: 'externalPage',
+        loadChildren: () => import('./externalPage/module').then(m => m.ExtPageModule),
+        runGuardsAndResolvers: 'always',
+      },
     ],
   },
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [
+    RouterModule.forChild(routes),
+    RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'}),
+  ],
   exports: [RouterModule],
 })
 export class ChromeRoutingModule {}

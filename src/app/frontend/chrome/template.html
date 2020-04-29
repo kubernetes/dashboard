@@ -28,9 +28,7 @@ limitations under the License.
           <mat-icon [svgIcon]="assets.getAppLogo()"
                     class="kd-toolbar-logo">
           </mat-icon>
-          <mat-icon [svgIcon]="assets.getAppLogoText()"
-                    class="kd-toolbar-logo-text">
-          </mat-icon>
+          <span  [ngStyle]="applyTitleStyles()">{{config.getTitle()}}</span>
         </a>
       </div>
       <kd-search class="kd-search-bar"
@@ -51,7 +49,7 @@ limitations under the License.
     </div>
   </mat-toolbar>
 
-  <mat-toolbar class="kd-second-toolbar kd-bg-primary">
+  <mat-toolbar class="kd-second-toolbar kd-bg-primary" [ngStyle]="applyToolbarStyles()">
     <div class="kd-toolbar-tools"
          fxFlex>
       <kd-nav-hamburger fxFlex="none"></kd-nav-hamburger>
