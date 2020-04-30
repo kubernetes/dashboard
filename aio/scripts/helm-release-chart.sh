@@ -18,37 +18,32 @@
 # Exit on error.
 set -e
 
-# Declare variables.
-UPSTREAM_REPOSITORY_NAME="upstream"
-TAG="$1"
-
 # Import config.
 ROOT_DIR="$(cd $(dirname "${BASH_SOURCE}")/../.. && pwd -P)"
 . "${ROOT_DIR}/aio/scripts/conf.sh"
 
+# Declare variables.
+HELM_CHART_DIR="$AIO_DIR/deploy/helm-chart/kubernetes-dashboard"
+
 function release-helm-chart {
-  if [ -z "$TAG" ]; then
-    saye "\nPlease specify tag (like v1.2.3) as first and only argument."
-    exit 1
-  fi
   if [ -n "$(git status --porcelain)" ]; then
     saye "\nGit working tree not clean, aborting."
     exit 1
   fi
-  say "\nChanging current branch to $TAG."
-  git checkout "$TAG"
   say "\nGenerating Helm Chart package for new version."
+  say "Please note that your gh-pages branch, if it locally exists, should be up-to-date."
   helm repo add stable https://kubernetes-charts.storage.googleapis.com/
-  helm dependency build "$AIO_DIR/deploy/helm-chart/kubernetes-dashboard"
-  helm package "$AIO_DIR/deploy/helm-chart/kubernetes-dashboard"
+  helm dependency build "$HELM_CHART_DIR"
+  helm package "$HELM_CHART_DIR"
+  rm -rf "$HELM_CHART_DIR/charts/"
   say "\nSwitching git branch to gh-pages so that we can commit package along the previous versions."
   git checkout gh-pages
   say "\nGenerating new Helm index, containing all existing versions in gh-pages (previous ones + new one)."
   helm repo index .
   say "\nCommit new package and index."
   git add -A "./kubernetes-dashboard-*.tgz" ./index.yaml && git commit -m "Update Helm repository from CI."
-  say "\nPush the gh-pages branch (no force)."
-  git push $UPSTREAM_REPOSITORY_NAME gh-pages
+  say "\nIf you are happy with the changes, please manually push to the gh-pages branch. No force should be needed."
+  say "Assuming upstream is your remote, please run: git push upstream gh-pages."
 }
 
 # Execute script.

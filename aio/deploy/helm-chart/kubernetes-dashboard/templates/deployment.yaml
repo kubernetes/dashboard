@@ -47,10 +47,10 @@ spec:
 {{ include "kubernetes-dashboard.labels" . | indent 8 }}
         app.kubernetes.io/component: kubernetes-dashboard
     spec:
-      {{- if .Values.securityContext }}
+{{- with .Values.securityContext }}
       securityContext:
-{{ toYaml .Values.securityContext | indent 8 }}
-      {{- end }}
+{{ toYaml . | indent 8 }}
+{{- end }}
       serviceAccountName: {{ template "kubernetes-dashboard.serviceAccountName" . }}
       containers:
       - name: {{ .Chart.Name }}
