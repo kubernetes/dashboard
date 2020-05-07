@@ -143,15 +143,19 @@ export class TextInputComponent implements OnInit, AfterViewInit, OnChanges {
       return;
     }
 
-    switch (this.mode) {
-      case 'json':
-        this.text = JSON.stringify(JSON.parse(this.text), null, '\t');
-        // Replace \n with new lines
-        this.text = this.text.replace(new RegExp(/\\n/g), '\n\t\t');
-        break;
-      default:
-        // Do nothing when mode is not recognized.
-        break;
+    try {
+      switch (this.mode) {
+        case 'json':
+          this.text = JSON.stringify(JSON.parse(this.text), null, '\t');
+          // Replace \n with new lines
+          this.text = this.text.replace(new RegExp(/\\n/g), '\n\t\t');
+          break;
+        default:
+          // Do nothing when mode is not recognized.
+          break;
+      }
+    } catch (e) {
+      // Ignore any errors in case of wrong format. Formatting will not be applied.
     }
   }
 }
