@@ -12,11 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {DOCUMENT} from '@angular/common';
 import {HttpClient} from '@angular/common/http';
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
 import {AssetsService} from '../common/services/global/assets';
+import {GlobalSettingsService} from '../common/services/global/globalsettings';
 
 class SystemBanner {
   message: string;
@@ -37,6 +39,8 @@ export class ChromeComponent implements OnInit {
     public assets: AssetsService,
     private readonly http_: HttpClient,
     private readonly router_: Router,
+    @Inject(DOCUMENT) private readonly document_: Document,
+    private readonly globalSettings_: GlobalSettingsService,
   ) {}
 
   ngOnInit(): void {
@@ -46,6 +50,8 @@ export class ChromeComponent implements OnInit {
       .then(sb => {
         this.systemBanner_ = sb;
       });
+
+    this.registerVisibilityChangeHandler_();
   }
 
   getOverviewStateName(): string {
@@ -77,5 +83,24 @@ export class ChromeComponent implements OnInit {
 
   goToCreateState(): void {
     this.router_.navigate(['create'], {queryParamsHandling: 'preserve'});
+  }
+
+  private registerVisibilityChangeHandler_(): void {
+    if (typeof this.document_.addEventListener === 'undefined') {
+      console.log(
+        'Your browser does not support Page Visibility API. Page cannot properly stop background tasks when tab is inactive.',
+      );
+      return;
+    }
+
+    this.document_.addEventListener(
+      'visibilitychange',
+      this.handleVisibilityChange_.bind(this),
+      false,
+    );
+  }
+
+  private handleVisibilityChange_(): void {
+    this.globalSettings_.onPageVisibilityChange.emit(!this.document_.hidden);
   }
 }

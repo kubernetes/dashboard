@@ -20,11 +20,10 @@ import {LogDetails, LogLine, LogSelection, LogSources} from '@api/backendapi';
 import {GlobalSettingsService} from 'common/services/global/globalsettings';
 import {LogService} from 'common/services/global/logs';
 import {NotificationSeverity, NotificationsService} from 'common/services/global/notifications';
-import {Observable, Subscription} from 'rxjs';
+import {Subject, Subscription, timer} from 'rxjs';
+import {switchMap, takeUntil} from 'rxjs/operators';
 
 import {LogsDownloadDialog} from '../common/dialogs/download/dialog';
-import {NAMESPACE_STATE_PARAM} from '../common/params/params';
-import {CONFIG} from '../index.config';
 
 const logsPerView = 100;
 const maxLogSize = 2e9;
@@ -61,11 +60,13 @@ export class LogsComponent implements OnDestroy {
   totalItems = 0;
   itemsPerPage = 10;
   currentSelection: LogSelection;
-  refreshInterval = 5000;
   intervalSubscription: Subscription;
   sourceSubscription: Subscription;
   logsSubscription: Subscription;
   isLoading: boolean;
+  logsAutorefreshEnabled = false;
+
+  private unsubscribe_ = new Subject<void>();
 
   constructor(
     logService: LogService,
@@ -76,7 +77,6 @@ export class LogsComponent implements OnDestroy {
     private readonly _router: Router,
   ) {
     this.logService = logService;
-    this.refreshInterval = this.settingsService_.getLogsAutoRefreshTimeInterval() * 1000;
     this.isLoading = true;
 
     const namespace = this.activatedRoute_.snapshot.params.resourceNamespace;
@@ -281,12 +281,21 @@ export class LogsComponent implements OnDestroy {
    * Starts and stops interval function used to automatically refresh logs.
    */
   toggleIntervalFunction(): void {
-    if (this.intervalSubscription && !this.intervalSubscription.closed) {
-      this.intervalSubscription.unsubscribe();
-    } else {
-      const intervalObservable = Observable.interval(this.refreshInterval);
-      this.intervalSubscription = intervalObservable.subscribe(() => this.loadNewest());
+    this.logsAutorefreshEnabled = !this.logsAutorefreshEnabled;
+    if (!this.logsAutorefreshEnabled) {
+      this.unsubscribe_.next();
+      return;
     }
+
+    this.settingsService_.onSettingsUpdate
+      .pipe(
+        switchMap(_ => {
+          const interval = this.settingsService_.getLogsAutoRefreshTimeInterval() * 1000;
+          return timer(0, interval === 0 ? undefined : interval);
+        }),
+      )
+      .pipe(takeUntil(this.unsubscribe_))
+      .subscribe(_ => this.loadNewest());
   }
 
   downloadLog(): void {
