@@ -1676,6 +1676,14 @@
           <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="a3e6ad731f3d27e2fd80064adf380f461ea0251b" datatype="html">
+        <source>No resources found in the selected namespace.</source>
+        <target state="new">No resources found in the selected namespace.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crdobject/template.html</context>
+          <context context-type="linenumber">90</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="cfcee33b4f74fb641e9d6b00f72244d2b78c1480" datatype="html">
         <source>Versions</source>
         <target>版本</target>
@@ -1861,7 +1869,7 @@
         <target>找不到資源。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/list/zerostate/template.html</context>
-          <context context-type="linenumber">25</context>
+          <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
       <trans-unit id="c3a7e364a88ea4673199dfa98bc73e6dbe09dfac" datatype="html">

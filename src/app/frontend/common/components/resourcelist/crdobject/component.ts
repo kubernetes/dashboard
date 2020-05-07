@@ -32,6 +32,7 @@ import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 })
 export class CRDObjectListComponent extends ResourceListBase<CRDObjectList, CRDObject> {
   @Input() endpoint: string;
+  @Input() namespaced = false;
 
   constructor(
     private readonly crdObject_: NamespacedResourceService<CRDObjectList>,
@@ -68,5 +69,9 @@ export class CRDObjectListComponent extends ResourceListBase<CRDObjectList, CRDO
 
   getDisplayColumns(): string[] {
     return ['name', 'namespace', 'created'];
+  }
+
+  areMultipleNamespacesSelected(): boolean {
+    return this.namespaceService_.areMultipleNamespacesSelected();
   }
 }

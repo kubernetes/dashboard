@@ -14,7 +14,7 @@
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {CRDDetail} from '@api/backendapi';
+import {CRD, CRDDetail} from '@api/backendapi';
 import {Subject, Subscription} from 'rxjs';
 import {switchMap, takeUntil, tap} from 'rxjs/operators';
 
@@ -56,5 +56,9 @@ export class CRDDetailComponent implements OnInit, OnDestroy {
     this.unsubscribe_.next();
     this.unsubscribe_.complete();
     this.actionbar_.onDetailsLeave.emit();
+  }
+
+  isNamespaced(): boolean {
+    return this.crd && this.crd.scope === 'Namespaced';
   }
 }
