@@ -83,6 +83,12 @@ limitations under the License.
 
   <div content
        [hidden]="!showZeroState()">
-    <kd-list-zero-state></kd-list-zero-state>
+    <kd-list-zero-state>
+      <ng-template #textTemplate
+                   *ngIf="!areMultipleNamespacesSelected() && namespaced">
+        <div fxFlexAlign="center"
+             i18n>No resources found in the selected namespace.</div>
+      </ng-template>
+    </kd-list-zero-state>
   </div>
 </kd-card>

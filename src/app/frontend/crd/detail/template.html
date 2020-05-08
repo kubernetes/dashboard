@@ -90,7 +90,7 @@ limitations under the License.
   </div>
 </kd-card>
 
-<kd-crd-object-list></kd-crd-object-list>
+<kd-crd-object-list [namespaced]="isNamespaced()"></kd-crd-object-list>
 
 <kd-crd-versions-list *ngIf="crd?.versions"
                       [versions]="crd?.versions"
