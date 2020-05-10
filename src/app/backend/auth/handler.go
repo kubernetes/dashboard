@@ -104,7 +104,7 @@ func (self *AuthHandler) handleLoginModes(request *restful.Request, response *re
 }
 
 func (self *AuthHandler) handleLoginSkippable(request *restful.Request, response *restful.Response) {
-	response.WriteHeaderAndEntity(http.StatusOK, authApi.LoginSkippableResponse{Skippable: self.manager.AuthenticationSkippable()})
+	response.WriteHeaderAndEntity(http.StatusOK, authApi.LoginSkippableResponse{Skippable: self.manager.AuthenticationSkippable(), ForceSkip: self.manager.AuthenticationForceSkip()})
 }
 
 // NewAuthHandler created AuthHandler instance.

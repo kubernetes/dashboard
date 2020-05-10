@@ -156,6 +156,12 @@ func (self *holderBuilder) SetEnableSkipLogin(enableSkipLogin bool) *holderBuild
 	return self
 }
 
+// SetForceSkipLogin 'force-skip-login' argument of Dashboard binary.
+func (self *holderBuilder) SetForceSkipLogin(forceSkipLogin bool) *holderBuilder {
+	self.holder.forceSkipLogin = forceSkipLogin
+	return self
+}
+
 // SetNamespace 'namespace' argument of Dashboard binary.
 func (self *holderBuilder) SetNamespace(namespace string) *holderBuilder {
 	self.holder.namespace = namespace

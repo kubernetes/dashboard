@@ -89,6 +89,8 @@ type AuthManager interface {
 	AuthenticationModes() []AuthenticationMode
 	// AuthenticationSkippable tells if the Skip button should be enabled or not
 	AuthenticationSkippable() bool
+	// AuthenticationForceSkip tells if dashboard to skip login immediately
+	AuthenticationForceSkip() bool
 }
 
 // TokenManager is responsible for generating and decrypting tokens used for authorization. Authorization is handled
@@ -149,8 +151,11 @@ type LoginModesResponse struct {
 	Modes []AuthenticationMode `json:"modes"`
 }
 
-// LoginSkippableResponse contains a flag that tells the UI not to display the Skip button.
-// Note that this only hides the button, it doesn't disable unauthenticated access.
+// LoginSkippableResponse contains flags about whether login can/should be skipped.
 type LoginSkippableResponse struct {
+	// Skippable is a flag that tells the UI not to display the Skip button.
+	// Note that this only hides the button, it doesn't disable unauthenticated access.
 	Skippable bool `json:"skippable"`
+	// ForceSkip is a flag that tells the UI to automatically skip Login.
+	ForceSkip bool `json:"forceSkip"`
 }

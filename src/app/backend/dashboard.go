@@ -73,6 +73,7 @@ var (
 	argAutoGenerateCertificates  = pflag.Bool("auto-generate-certificates", false, "When set to true, Dashboard will automatically generate certificates used to serve HTTPS. (default false)")
 	argEnableInsecureLogin       = pflag.Bool("enable-insecure-login", false, "When enabled, Dashboard login view will also be shown when Dashboard is not served over HTTPS. (default false)")
 	argEnableSkip                = pflag.Bool("enable-skip-login", false, "When enabled, the skip button on the login page will be shown. (default false)")
+	argForceSkip                 = pflag.Bool("force-skip-login", false, "When enabled, the login page will be not shown and immediately set to skip. (default false)")
 	argSystemBanner              = pflag.String("system-banner", "", "When non-empty displays message to Dashboard users. Accepts simple HTML tags.")
 	argSystemBannerSeverity      = pflag.String("system-banner-severity", "INFO", "Severity of system banner. Should be one of 'INFO|WARNING|ERROR'.")
 	argAPILogLevel               = pflag.String("api-log-level", "INFO", "Level of API request logging. Should be one of 'INFO|NONE|DEBUG'.")
@@ -224,8 +225,9 @@ func initAuthManager(clientManager clientapi.ClientManager) authApi.AuthManager 
 
 	// UI logic dictates this should be the inverse of the cli option
 	authenticationSkippable := args.Holder.GetEnableSkipLogin()
+	authenticationForceSkip := args.Holder.GetForceSkipLogin()
 
-	return auth.NewAuthManager(clientManager, tokenManager, authModes, authenticationSkippable)
+	return auth.NewAuthManager(clientManager, tokenManager, authModes, authenticationSkippable, authenticationForceSkip)
 }
 
 func initArgHolder() {
@@ -252,6 +254,7 @@ func initArgHolder() {
 	builder.SetEnableInsecureLogin(*argEnableInsecureLogin)
 	builder.SetDisableSettingsAuthorizer(*argDisableSettingsAuthorizer)
 	builder.SetEnableSkipLogin(*argEnableSkip)
+	builder.SetForceSkipLogin(*argForceSkip)
 	builder.SetNamespace(*argNamespace)
 	builder.SetLocaleConfig(*localeConfig)
 }

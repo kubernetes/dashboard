@@ -46,6 +46,7 @@ export class LoginComponent implements OnInit {
 
   private enabledAuthenticationModes_: AuthenticationMode[] = [];
   private isLoginSkippable_ = false;
+  private enableForceSkipLogin_ = false;
   private kubeconfig_: string;
   private token_: string;
   private username_: string;
@@ -73,6 +74,7 @@ export class LoginComponent implements OnInit {
       .get<LoginSkippableResponse>('api/v1/login/skippable')
       .subscribe((loginSkippableResponse: LoginSkippableResponse) => {
         this.isLoginSkippable_ = loginSkippableResponse.skippable;
+        this.enableForceSkipLogin_ = loginSkippableResponse.forceSkip;
       });
 
     this.route_.paramMap.pipe(map(() => window.history.state)).subscribe((state: StateError) => {
@@ -80,6 +82,10 @@ export class LoginComponent implements OnInit {
         this.errors = [state.error];
       }
     });
+
+    if (this.enableForceSkipLogin_) {
+      this.skip();
+    }
   }
 
   getEnabledAuthenticationModes(): AuthenticationMode[] {

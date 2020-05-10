@@ -1082,6 +1082,7 @@ export interface EnabledAuthenticationModes {
 
 export interface LoginSkippableResponse {
   skippable: boolean;
+  forceSkip: boolean;
 }
 
 export interface SystemBanner {

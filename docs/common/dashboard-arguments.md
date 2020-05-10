@@ -26,6 +26,7 @@ Dashboard container accepts multiple arguments that can be used to customize it 
 | authentication-mode | token   | Enables authentication options that will be reflected on the login screen in the same order as provided. Multiple options can be used at once. Supported values: token, basic. Note that basic option should only be used if apiserver has '--authorization-mode=ABAC' and '--basic-auth-file' flags set. |
 | enable-insecure-login | false | When enabled, Dashboard login view will also be shown when Dashboard is not served over HTTPS. |
 | enable-skip-login | false | When enabled, the skip button on the login page will be shown. |
+| force-skip-login | false | When enabled, the login page will be not shown and immediately set to skip. |
 | disable-settings-authorizer | false | When enabled, Dashboard settings page will not require user to be logged in and authorized to access settings page. |
 | locale-config | ./locale_conf.json |File containing the configuration of locales.
 | system-banner | -             | When non-empty displays message to Dashboard users. Accepts simple HTML tags. |

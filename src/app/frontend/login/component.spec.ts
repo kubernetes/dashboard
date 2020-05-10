@@ -150,6 +150,7 @@ describe('LoginComponent', () => {
     it('does not render skip button if login is not skippable', () => {
       const mockLoginSkippableResponse: LoginSkippableResponse = {
         skippable: false,
+        forceSkip: false,
       };
       fixture.detectChanges();
       const req = httpTestingController.expectOne('api/v1/login/skippable');
@@ -236,6 +237,7 @@ describe('LoginComponent', () => {
   const initializeForSkip = (): void => {
     const mockLoginSkippableResponse: LoginSkippableResponse = {
       skippable: true,
+      forceSkip: false,
     };
     fixture.detectChanges();
     const req = httpTestingController.expectOne('api/v1/login/skippable');

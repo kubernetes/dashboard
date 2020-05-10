@@ -53,6 +53,7 @@ type holder struct {
 	disableSettingsAuthorizer bool
 
 	enableSkipLogin bool
+	forceSkipLogin  bool
 
 	localeConfig string
 }
@@ -173,6 +174,11 @@ func (self *holder) GetDisableSettingsAuthorizer() bool {
 // GetEnableSkipLogin 'enable-skip-login' argument of Dashboard binary.
 func (self *holder) GetEnableSkipLogin() bool {
 	return self.enableSkipLogin
+}
+
+// GetForceSkipLogin 'force-skip-login' argument of Dashboard binary.
+func (self *holder) GetForceSkipLogin() bool {
+	return self.forceSkipLogin
 }
 
 // GetNamespace 'namespace' argument of Dashboard binary.
