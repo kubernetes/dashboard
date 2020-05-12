@@ -220,6 +220,8 @@ var KindToAPIMapping = map[string]APIMapping{
 	ResourceKindStorageClass:             {"storageclasses", ClientTypeStorageClient, false},
 	ResourceKindEndpoint:                 {"endpoints", ClientTypeDefault, true},
 	ResourceKindClusterRole:              {"clusterroles", ClientTypeRbacClient, false},
+	ResourceKindRoleBinding:              {"rolebindings", ClientTypeRbacClient, false},
+	ResourceKindRole:                     {"roles", ClientTypeRbacClient, false},
 	ResourceKindPlugin:                   {"plugins", ClientTypePluginsClient, true},
 }
 

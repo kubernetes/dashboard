@@ -544,7 +544,7 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			Writes(role.RoleDetail{}))
 
 	apiV1Ws.Route(
-		apiV1Ws.GET("/rolebinding/{namespace}").
+		apiV1Ws.GET("/rolebinding").
 			To(apiHandler.handleGetRoleBindingList).
 			Writes(rolebinding.RoleBindingList{}))
 	apiV1Ws.Route(

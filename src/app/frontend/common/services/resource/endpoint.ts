@@ -42,6 +42,7 @@ export enum Resource {
   event = 'event',
   container = 'container',
   plugin = 'plugin',
+  roleBinding = 'rolebinding',
 }
 
 export enum Utility {

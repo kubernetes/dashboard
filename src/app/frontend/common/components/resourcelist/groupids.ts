@@ -37,6 +37,7 @@ export enum ListIdentifier {
   event = 'event',
   resource = 'resource',
   plugin = 'plugin',
+  roleBinding = 'roleBindingList',
 }
 
 export enum ListGroupIdentifier {

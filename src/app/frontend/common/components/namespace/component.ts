@@ -17,6 +17,8 @@ import {MatDialog} from '@angular/material/dialog';
 import {MatSelect} from '@angular/material/select';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {NamespaceList} from '@api/backendapi';
+import {NamespaceDetail} from '@api/backendapi';
+import {RoleBindingList} from '@api/backendapi';
 import {Subject} from 'rxjs';
 import {startWith, switchMap, takeUntil} from 'rxjs/operators';
 
@@ -38,8 +40,10 @@ import {NamespaceChangeDialog} from './changedialog/dialog';
 })
 export class NamespaceSelectorComponent implements OnInit, OnDestroy {
   private namespaceUpdate_ = new Subject();
+  private roleBindingUpdate_ = new Subject();
   private unsubscribe_ = new Subject();
   private readonly endpoint_ = EndpointManager.resource(Resource.namespace);
+  private readonly endpointRole_ = EndpointManager.resource(Resource.roleBinding);
 
   namespaces: string[] = [];
   selectNamespaceInput = '';
@@ -54,6 +58,8 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
     private readonly router_: Router,
     private readonly namespaceService_: NamespaceService,
     private readonly namespace_: ResourceService<NamespaceList>,
+    private readonly namespaceDetail_: ResourceService<NamespaceDetail>,
+    private readonly roleBinding_: ResourceService<RoleBindingList>,
     private readonly dialog_: MatDialog,
     private readonly kdState_: KdStateService,
     private readonly notifications_: NotificationsService,
@@ -93,6 +99,7 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
     this.selectedNamespace = this.namespaceService_.current();
     this.select_.value = this.selectedNamespace;
     this.loadNamespaces_();
+    //this.loadRoleBindings_();
   }
 
   ngOnDestroy(): void {
@@ -153,11 +160,16 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
       .pipe(switchMap(() => this.namespace_.get(this.endpoint_.list())))
       .subscribe(
         namespaceList => {
-          this.namespaces = namespaceList.namespaces.map(n => n.objectMeta.name);
+          const namespacesTemp = namespaceList.namespaces.map(n => n.objectMeta.name);
 
           if (namespaceList.errors.length > 0) {
             for (const err of namespaceList.errors) {
               this.notifications_.pushErrors([err]);
+            }
+          }
+          for (const namespace of namespacesTemp) {
+            if (this.namespaces.indexOf(namespace) === -1) {
+              this.checkNamespaces_(namespace);
             }
           }
         },
@@ -166,6 +178,45 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
           this.onNamespaceLoaded_();
         },
       );
+  }
+
+  private loadRoleBindings_(): void {
+    this.roleBindingUpdate_
+      .pipe(takeUntil(this.unsubscribe_))
+      .pipe(startWith({}))
+      .pipe(switchMap(() => this.roleBinding_.get(this.endpointRole_.list())))
+      .subscribe(
+        roleBindingList => {
+          if (roleBindingList.errors.length > 0) {
+            for (const err of roleBindingList.errors) {
+              this.notifications_.pushErrors([err]);
+              console.log([err]);
+            }
+          }
+        },
+        () => {},
+        () => {},
+      );
+  }
+
+  private checkNamespaces_(namespaceName: string): void {
+    console.log('Checking namespaces');
+    this.namespaceDetail_.get(this.endpoint_.detail(), namespaceName).subscribe(
+      () => {
+        if (this.namespaces.indexOf(namespaceName) === -1) {
+          console.log(namespaceName + ' is allowed. Adding');
+          this.namespaces.push(namespaceName);
+        }
+      },
+      () => {
+        const index = this.namespaces.indexOf(namespaceName, 0);
+        if (index > -1) {
+          console.log(namespaceName + ' is forbidden. Deleting');
+          this.namespaces.splice(index, 1);
+        }
+      },
+      () => {},
+    );
   }
 
   private handleNamespaceChangeDialog_(): void {
