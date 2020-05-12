@@ -7,7 +7,7 @@ export class RedirectGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot): boolean {
     if (route.params['redirect'] === 'true') {
-      window.location.href = route.params['externalUrl'];
+      window.open(route.params['externalUrl'], '_blank');
     } else {
       setTimeout(() => {
         window.location.reload();
