@@ -64,6 +64,7 @@ import {PropertyComponent} from './property/component';
 import {ProxyComponent} from './proxy/component';
 import {ResourceQuotaListComponent} from './quotas/component';
 import {ClusterRoleListComponent} from './resourcelist/clusterrole/component';
+import {RoleBindingListComponent} from './resourcelist/rolebinding/component';
 import {ConfigMapListComponent} from './resourcelist/configmap/component';
 import {CRDListComponent} from './resourcelist/crd/component';
 import {CRDObjectListComponent} from './resourcelist/crdobject/component';
@@ -112,6 +113,7 @@ const components = [
   ChipsComponent,
   CronJobListComponent,
   ClusterRoleListComponent,
+  RoleBindingListComponent,
   ConfigMapListComponent,
   PluginListComponent,
   ColumnComponent,
