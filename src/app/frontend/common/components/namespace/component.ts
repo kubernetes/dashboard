@@ -190,7 +190,7 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
           if (roleBindingList.errors.length > 0) {
             for (const err of roleBindingList.errors) {
               this.notifications_.pushErrors([err]);
-              console.log([err]);
+              //console.log([err]);
             }
           }
         },
@@ -200,18 +200,18 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
   }
 
   private checkNamespaces_(namespaceName: string): void {
-    console.log('Checking namespaces');
+    //console.log('Checking namespaces');
     this.namespaceDetail_.get(this.endpoint_.detail(), namespaceName).subscribe(
       () => {
         if (this.namespaces.indexOf(namespaceName) === -1) {
-          console.log(namespaceName + ' is allowed. Adding');
+          //console.log(namespaceName + ' is allowed. Adding');
           this.namespaces.push(namespaceName);
         }
       },
       () => {
         const index = this.namespaces.indexOf(namespaceName, 0);
         if (index > -1) {
-          console.log(namespaceName + ' is forbidden. Deleting');
+          //console.log(namespaceName + ' is forbidden. Deleting');
           this.namespaces.splice(index, 1);
         }
       },
