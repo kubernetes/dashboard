@@ -100,15 +100,19 @@ limitations under the License.
                             i18n-label
                             (onLoad)="onChange($event)"></kd-upload-file>
           </div>
-          <ng-template ngFor
-                       let-error
-                       [ngForOf]="errors"
-                       ngProjectAs="mat-error"
-                       class="kd-login-input">
-            <mat-error class="kd-login-input kd-error kd-error-text">
-              {{error.status}} ({{error.code}}): {{error.message}}
-            </mat-error>
-          </ng-template>
+          <mat-error *ngFor="let error of errors"
+                     class="kd-login-input kd-error kd-error-text">
+            {{error.status}} ({{error.code}}): {{error.message}}
+          </mat-error>
+          <mat-error *ngIf="!isLoginEnabled()"
+                     class="kd-login-input kd-error kd-error-text"
+                     i18n>
+            Insecure access detected. Sign in will not be available. Access Dashboard securely over HTTPS or using localhost. Read more
+            <a href="https://github.com/kubernetes/dashboard/blob/master/docs/user/accessing-dashboard/README.md#login-not-available"
+               target="_blank">
+              here
+            </a>.
+          </mat-error>
         </ng-container>
 
         <div fxFlex="none"
@@ -117,6 +121,7 @@ limitations under the License.
                   color="primary"
                   type="submit"
                   class="kd-login-button"
+                  [disabled]="!isLoginEnabled()"
                   i18n>
             Sign in
           </button>

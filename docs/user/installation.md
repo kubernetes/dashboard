@@ -1,8 +1,4 @@
-# Installation
-
 ## Official release
-
-**IMPORTANT:** Before upgrading from older version of Dashboard to 1.7+ make sure to delete Cluster Role Binding for `kubernetes-dashboard` Service Account, otherwise Dashboard will have full admin access to the cluster.
 
 ### Quick setup
 
