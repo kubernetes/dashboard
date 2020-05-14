@@ -50,7 +50,12 @@ type ScrollPosition = 'TOP' | 'BOTTOM';
   styleUrls: ['./style.scss'],
 })
 export class LogsComponent implements OnDestroy {
+  private unsubscribe_ = new Subject<void>();
+
+  readonly refreshInterval: number;
+
   @ViewChild('logViewContainer', {static: true}) logViewContainer_: ElementRef;
+
   podLogs: LogDetails;
   logsSet: string[];
   logSources: LogSources;
@@ -66,8 +71,6 @@ export class LogsComponent implements OnDestroy {
   isLoading: boolean;
   logsAutorefreshEnabled = false;
 
-  private unsubscribe_ = new Subject<void>();
-
   constructor(
     logService: LogService,
     private readonly activatedRoute_: ActivatedRoute,
@@ -78,6 +81,7 @@ export class LogsComponent implements OnDestroy {
   ) {
     this.logService = logService;
     this.isLoading = true;
+    this.refreshInterval = this.settingsService_.getLogsAutoRefreshTimeInterval();
 
     const namespace = this.activatedRoute_.snapshot.params.resourceNamespace;
     const resourceType = this.activatedRoute_.snapshot.params.resourceType;
