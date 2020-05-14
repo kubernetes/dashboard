@@ -4444,8 +4444,8 @@
           <context context-type="linenumber">136</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="deb6f7adf24853a40f57516d8512227e75ab5a2e" datatype="html">
-        <source>Auto-refresh (every <x id="INTERPOLATION" equiv-text="{{refreshInterval / 1000}}"/> s.)</source>
+      <trans-unit id="72f275d9b31bf0e6dc122c1a9b58b4986800eb7a" datatype="html">
+        <source>Auto-refresh (every <x id="INTERPOLATION" equiv-text="{{refreshInterval}}"/> s.)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/logs/template.html</context>
           <context context-type="linenumber">141</context>

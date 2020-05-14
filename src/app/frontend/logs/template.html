@@ -138,7 +138,7 @@ limitations under the License.
   <button mat-menu-item
           (click)="toggleLogAutoRefresh()">
     <mat-icon>{{logService.getAutoRefresh() ? 'check_box' : 'check_box_outline_blank'}}</mat-icon>
-    <span i18n>Auto-refresh (every {{refreshInterval / 1000}} s.)</span>
+    <span i18n>Auto-refresh (every {{refreshInterval}} s.)</span>
   </button>
   <button mat-menu-item
           (click)="toggleLogFollow()">

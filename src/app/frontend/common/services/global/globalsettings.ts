@@ -13,18 +13,19 @@
 // limitations under the License.
 
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {GlobalSettings} from '@api/backendapi';
 import {onSettingsFailCallback, onSettingsLoadCallback} from '@api/frontendapi';
-import {of, ReplaySubject} from 'rxjs';
+import {of, ReplaySubject, Subject} from 'rxjs';
 import {Observable} from 'rxjs/Observable';
-import {catchError, switchMap} from 'rxjs/operators';
+import {catchError, switchMap, takeUntil} from 'rxjs/operators';
 
 import {AuthorizerService} from './authorizer';
 
 @Injectable()
 export class GlobalSettingsService {
   onSettingsUpdate = new ReplaySubject<void>();
+  onPageVisibilityChange = new EventEmitter<boolean>();
 
   private readonly endpoint_ = 'api/v1/settings/global';
   private settings_: GlobalSettings = {
@@ -34,7 +35,9 @@ export class GlobalSettingsService {
     resourceAutoRefreshTimeInterval: 5,
     disableAccessDeniedNotifications: false,
   };
+  private unsubscribe_ = new Subject<void>();
   private isInitialized_ = false;
+  private isPageVisible_ = true;
 
   constructor(
     private readonly http_: HttpClient,
@@ -43,6 +46,11 @@ export class GlobalSettingsService {
 
   init(): void {
     this.load();
+
+    this.onPageVisibilityChange.pipe(takeUntil(this.unsubscribe_)).subscribe(visible => {
+      this.isPageVisible_ = visible;
+      this.onSettingsUpdate.next();
+    });
   }
 
   isInitialized(): boolean {
@@ -94,11 +102,11 @@ export class GlobalSettingsService {
   }
 
   getLogsAutoRefreshTimeInterval(): number {
-    return this.settings_.logsAutoRefreshTimeInterval;
+    return this.isPageVisible_ ? this.settings_.logsAutoRefreshTimeInterval : 0;
   }
 
   getResourceAutoRefreshTimeInterval(): number {
-    return this.settings_.resourceAutoRefreshTimeInterval;
+    return this.isPageVisible_ ? this.settings_.resourceAutoRefreshTimeInterval : 0;
   }
 
   getDisableAccessDeniedNotifications(): boolean {
