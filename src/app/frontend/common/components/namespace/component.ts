@@ -191,7 +191,7 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
           if (roleBindingList.errors.length > 0) {
             for (const err of roleBindingList.errors) {
               this.notifications_.pushErrors([err]);
-              console.log([err]);
+              //console.log([err]);
             }
           }
         },
