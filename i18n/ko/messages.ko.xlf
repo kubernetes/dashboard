@@ -2948,6 +2948,18 @@
           <context context-type="linenumber">99</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="01294ca06c1c536eaf79c93b34b2f18be418d3c0" datatype="html">
+        <source>
+            Insecure access detected. Sign in will not be available. Access Dashboard securely over HTTPS or using localhost. Read more <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>here<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>.
+          </source>
+        <target state="new">
+            Insecure access detected. Sign in will not be available. Access Dashboard securely over HTTPS or using localhost. Read more <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>here<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>.
+          </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
+          <context context-type="linenumber">109</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="6ad17443c5d0be7954254eb2455fe0b32ee2ff05" datatype="html">
         <source>
             Sign in
@@ -2957,7 +2969,7 @@
           </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">120</context>
+          <context context-type="linenumber">121</context>
         </context-group>
       </trans-unit>
       <trans-unit id="89c689a203570b2848d633426d19bd73f51a34f8" datatype="html">
@@ -2969,7 +2981,7 @@
           </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">129</context>
+          <context context-type="linenumber">130</context>
         </context-group>
       </trans-unit>
       <trans-unit id="004b222ff9ef9dd4771b777950ca1d0e4cd4348a" datatype="html">

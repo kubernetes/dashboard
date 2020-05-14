@@ -105,7 +105,8 @@ limitations under the License.
             {{error.status}} ({{error.code}}): {{error.message}}
           </mat-error>
           <mat-error *ngIf="!isLoginEnabled()"
-                     class="kd-login-input kd-error kd-error text">
+                     class="kd-login-input kd-error kd-error text"
+                     i18n>
             Insecure access detected. Sign in will not be available. Access Dashboard securely over HTTPS or using localhost. Read more <a href="https://github.com/kubernetes/dashboard/blob/master/docs/user/accessing-dashboard/README.md#login-not-available" target="_blank">here</a>.
           </mat-error>
         </ng-container>
