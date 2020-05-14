@@ -34,6 +34,14 @@ import {KdStateService} from './state';
 export class AuthService {
   private readonly _config = CONFIG;
 
+  get allowedProtocol(): string {
+    return 'https';
+  }
+
+  get domainWhitelist(): string[] {
+    return ['localhost', '127.0.0.1'];
+  }
+
   constructor(
     private readonly cookies_: CookieService,
     private readonly router_: Router,
