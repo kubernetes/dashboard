@@ -100,7 +100,7 @@ export class TextInputComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   private initEditor_(): void {
-    config.set('basePath', '/ace');
+    config.set('basePath', 'ace');
 
     this.editor = edit(this.editorRef.nativeElement);
     this.prettify_();
