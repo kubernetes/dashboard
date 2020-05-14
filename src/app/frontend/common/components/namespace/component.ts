@@ -19,8 +19,9 @@ import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {NamespaceList} from '@api/backendapi';
 import {NamespaceDetail} from '@api/backendapi';
 import {RoleBindingList} from '@api/backendapi';
+import {PodList} from '@api/backendapi';
 import {Subject} from 'rxjs';
-import {startWith, switchMap, takeUntil} from 'rxjs/operators';
+import {startWith, switchMap, takeUntil, first} from 'rxjs/operators';
 
 import {CONFIG} from '../../../index.config';
 import {NAMESPACE_STATE_PARAM} from '../../params/params';
@@ -58,8 +59,8 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
     private readonly router_: Router,
     private readonly namespaceService_: NamespaceService,
     private readonly namespace_: ResourceService<NamespaceList>,
-    private readonly namespaceDetail_: ResourceService<NamespaceDetail>,
     private readonly roleBinding_: ResourceService<RoleBindingList>,
+    private readonly podList_: ResourceService<PodList>,
     private readonly dialog_: MatDialog,
     private readonly kdState_: KdStateService,
     private readonly notifications_: NotificationsService,
@@ -98,6 +99,7 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
     this.allNamespacesKey = this.namespaceService_.getAllNamespacesKey();
     this.selectedNamespace = this.namespaceService_.current();
     this.select_.value = this.selectedNamespace;
+
     this.loadNamespaces_();
     //this.loadRoleBindings_();
   }
@@ -161,7 +163,6 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
       .subscribe(
         namespaceList => {
           const namespacesTemp = namespaceList.namespaces.map(n => n.objectMeta.name);
-
           if (namespaceList.errors.length > 0) {
             for (const err of namespaceList.errors) {
               this.notifications_.pushErrors([err]);
@@ -200,23 +201,27 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
   }
 
   private checkNamespaces_(namespaceName: string): void {
-    console.log('Checking namespaces');
-    this.namespaceDetail_.get(this.endpoint_.detail(), namespaceName).subscribe(
-      () => {
-        if (this.namespaces.indexOf(namespaceName) === -1) {
-          console.log(namespaceName + ' is allowed. Adding');
-          this.namespaces.push(namespaceName);
-        }
-      },
-      () => {
-        const index = this.namespaces.indexOf(namespaceName, 0);
-        if (index > -1) {
-          console.log(namespaceName + ' is forbidden. Deleting');
-          this.namespaces.splice(index, 1);
-        }
-      },
-      () => {},
-    );
+    this.podList_
+      .get('api/v1/pod/' + namespaceName)
+      .pipe(first())
+      .subscribe(
+        podList => {
+          if (this.namespaces.indexOf(namespaceName) === -1) {
+            if (podList.errors.length === 0) {
+              //console.log(namespaceName + ' is allowed. Adding');
+              this.namespaces.push(namespaceName);
+            } else {
+              const index = this.namespaces.indexOf(namespaceName, 0);
+              if (index > -1) {
+                //console.log(namespaceName + ' is forbidden. Deleting');
+                this.namespaces.splice(index, 1);
+              }
+            }
+          }
+        },
+        () => {},
+        () => {},
+      );
   }
 
   private handleNamespaceChangeDialog_(): void {
