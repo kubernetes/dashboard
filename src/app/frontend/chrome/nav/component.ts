@@ -18,6 +18,10 @@ import {ConfigService} from 'common/services/global/config';
 import {NavService} from '../../common/services/nav/service';
 import {PluginsConfigService} from '../../common/services/global/plugin';
 import {Router} from '@angular/router';
+import {ResourceService} from 'common/services/resource/resource';
+import {NamespaceDetail} from '@api/backendapi';
+import {EndpointManager, Resource} from 'common/services/resource/endpoint';
+import {first} from 'rxjs/operators';
 
 @Component({
   selector: 'kd-nav',
@@ -28,10 +32,13 @@ import {Router} from '@angular/router';
 export class NavComponent implements OnInit {
   @ViewChild(MatDrawer, {static: true}) private readonly nav_: MatDrawer;
   custom: boolean;
+  isAdmin: boolean;
   menus;
+  private readonly endpoint_ = EndpointManager.resource(Resource.namespace);
   constructor(
     private readonly navService_: NavService,
     private readonly pluginsConfigService_: PluginsConfigService,
+    private readonly namespace_: ResourceService<NamespaceDetail>,
     private router: Router,
     public config: ConfigService,
   ) {}
@@ -39,7 +46,7 @@ export class NavComponent implements OnInit {
   ngOnInit(): void {
     this.navService_.setNav(this.nav_);
     this.navService_.setVisibility(true);
-
+    this.isAdmin_();
     this.custom = this.processjson(); //should be true
   }
 
@@ -89,5 +96,20 @@ export class NavComponent implements OnInit {
   }
   goToPage(url: string) {
     this.router.navigate([`${url}`]);
+  }
+
+  isAdmin_(): void {
+    this.namespace_
+      .get(this.endpoint_.detail(), 'kube-system')
+      .pipe(first())
+      .subscribe(
+        () => {
+          this.isAdmin = true;
+        },
+        () => {
+          this.isAdmin = false;
+        },
+        () => {},
+      );
   }
 }
