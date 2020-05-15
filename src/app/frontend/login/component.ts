@@ -28,6 +28,7 @@ import {map} from 'rxjs/operators';
 import {AsKdError, K8SError} from '../common/errors/errors';
 import {AuthService} from '../common/services/global/authentication';
 import {PluginsConfigService} from '../common/services/global/plugin';
+import {PermissionsService} from 'common/services/global/permissions';
 
 enum LoginModes {
   Kubeconfig = 'kubeconfig',
@@ -63,6 +64,7 @@ export class LoginComponent implements OnInit {
     private readonly route_: ActivatedRoute,
     private readonly pluginConfigService_: PluginsConfigService,
     public config: ConfigService,
+    public permission: PermissionsService,
   ) {}
 
   ngOnInit(): void {
@@ -112,7 +114,7 @@ export class LoginComponent implements OnInit {
 
         this.pluginConfigService_.refreshConfig();
         this.ngZone_.run(() => {
-          this.state_.navigate(['overview']);
+          this.permission.redirectToNs(this.state_);
         });
       },
       (err: HttpErrorResponse) => {

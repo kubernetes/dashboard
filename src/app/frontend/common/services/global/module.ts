@@ -27,6 +27,7 @@ import {AuthInterceptor} from './interceptor';
 import {LocalSettingsService} from './localsettings';
 import {LogService} from './logs';
 import {NamespaceService} from './namespace';
+import {PermissionsService} from './permissions';
 import {NotificationsService} from './notifications';
 import {ParamsService} from './params';
 import {KdStateService} from './state';
@@ -53,6 +54,7 @@ import {PinnerService} from './pinner';
     ThemeService,
     KdStateService,
     NamespaceService,
+    PermissionsService,
     ActionbarService,
     VerberService,
     PinnerService,
@@ -66,6 +68,7 @@ import {PinnerService} from './pinner';
         GlobalSettingsService,
         LocalSettingsService,
         ConfigService,
+        PermissionsService,
         HistoryService,
         PluginsConfigService,
         PinnerService,
