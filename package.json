@@ -135,7 +135,7 @@
     "truncate-url": "1.0.0",
     "tslib": "1.11.1",
     "web-animations-js": "2.3.2",
-    "xterm": "4.5.0",
+    "xterm": "4.6.0",
     "xterm-addon-fit": "0.3.0",
     "zone.js": "0.10.2"
   },
