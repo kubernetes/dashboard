@@ -108,7 +108,7 @@
     "@angular/platform-browser": "9.0.2",
     "@angular/platform-browser-dynamic": "9.0.2",
     "@angular/router": "9.0.2",
-    "@swimlane/ngx-charts": "13.0.2",
+    "@swimlane/ngx-charts": "13.0.4",
     "@types/c3": "0.7.1",
     "@types/d3": "5.7.2",
     "@types/d3-scale": "2.2.0",
