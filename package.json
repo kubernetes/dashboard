@@ -142,7 +142,7 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "0.900.6",
     "@angular/cli": "9.0.6",
-    "@angular/compiler-cli": "9.1.4",
+    "@angular/compiler-cli": "9.1.7",
     "@angular/language-service": "9.1.7",
     "@cypress/webpack-preprocessor": "5.2.1",
     "@types/jasmine": "3.5.10",
