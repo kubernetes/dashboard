@@ -69,10 +69,40 @@ const version = {
  */
 const imageNameBase = 'dashboard';
 
+function envToArgv() {
+  let envArgs = process.env.DASHBOARD_ARGS;
+  let result = {};
+
+  const args = minimist(process.argv.splice(2));
+  delete args._;
+  Object.keys(args).forEach(key => result[key] = args[key]);
+
+  if(!envArgs) {
+    return result;
+  }
+
+  envArgs = envArgs.split(';');
+  if(envArgs.length === 0) {
+    return result;
+  }
+
+  envArgs.forEach(arg => {
+    const parts = arg.split('=');
+    if(parts.length === 2) {
+      result[parts[0]] = parts[1];
+      return;
+    }
+
+    result[parts[0]] = true;
+  })
+
+  return result;
+}
+
 /**
  * Arguments
  */
-const argv = minimist(process.argv.slice(2));
+const argv = envToArgv();
 
 /**
  * Exported configuration object with common constants used in build pipeline.
@@ -184,6 +214,13 @@ export default {
     enableSkipButton: argv.enableSkipButton !== undefined ?
         argv.enableSkipButton :
         false,
+
+    /**
+     * Allows to enable login view when serving on http.
+     */
+    enableInsecureLogin: argv.enableInsecureLogin !== undefined ?
+      argv.enableInsecureLogin :
+      false,
   },
 
   /**

@@ -38,6 +38,8 @@ function getBackendArgs() {
     `--tls-cert-file=${conf.backend.tlsCert}`,
     `--tls-key-file=${conf.backend.tlsKey}`,
     `--auto-generate-certificates=${conf.backend.autoGenerateCerts}`,
+    `--enable-insecure-login=${conf.backend.enableInsecureLogin}`,
+    `--enable-skip-login=${conf.backend.enableSkipButton}`
   ];
 
   if (conf.backend.systemBanner.length > 0) {
@@ -56,10 +58,6 @@ function getBackendArgs() {
     args.push(`--kubeconfig=${conf.backend.kubeconfig}`);
   } else {
     args.push(`--apiserver-host=${conf.backend.apiServerHost}`);
-  }
-
-  if (conf.backend.enableSkipButton) {
-    args.push(`--enable-skip-login=${conf.backend.enableSkipButton}`);
   }
 
   return args;
