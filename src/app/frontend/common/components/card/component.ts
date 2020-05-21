@@ -42,6 +42,12 @@ export class CardComponent {
     }
   }
 
+  onCardHeaderClick(): void {
+    if (this.expandable && !this.expanded) {
+      this.expanded = true;
+    }
+  }
+
   getTitleClasses(): {[clsName: string]: boolean} {
     const ngCls = {} as {[clsName: string]: boolean};
     if (!this.expanded) {
