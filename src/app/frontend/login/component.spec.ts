@@ -65,12 +65,8 @@ class MockAuthService {
 
   skipLoginPage(): void {}
 
-  get allowedProtocol(): string {
-    return 'https';
-  }
-
-  get domainWhitelist(): string[] {
-    return ['localhost', '127.0.0.1'];
+  isLoginEnabled(): boolean {
+    return true;
   }
 }
 
