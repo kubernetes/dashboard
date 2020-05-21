@@ -46,6 +46,10 @@ export class SecretDetailEditComponent implements OnInit {
     this.secret_ = value;
   }
 
+  focus(textAreaElement: any) {
+    textAreaElement.nativeElement.focus();
+  }
+
   get secret(): SecretDetail {
     return this.secret_;
   }
