@@ -214,13 +214,18 @@ export default {
     enableSkipButton: argv.enableSkipButton !== undefined ?
         argv.enableSkipButton :
         false,
-
     /**
      * Allows to enable login view when serving on http.
      */
     enableInsecureLogin: argv.enableInsecureLogin !== undefined ?
       argv.enableInsecureLogin :
       false,
+    /**
+     * Defines token time to live.
+     */
+    tokenTTL: argv.tokenTTL !== undefined ?
+      argv.tokenTTL :
+      0,
   },
 
   /**
