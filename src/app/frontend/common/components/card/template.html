@@ -17,6 +17,7 @@ limitations under the License.
 <mat-card [ngClass]="{'kd-minimized-card': !expanded && !graphMode, 'kd-graph': graphMode}">
   <mat-card-title *ngIf="withTitle"
                   [ngClass]="getTitleClasses()"
+                  (click)="onCardHeaderClick(); $event.stopPropagation()"
                   fxLayoutAlign=" center">
     <div class="kd-card-title"
          fxFlex="100%">
@@ -36,7 +37,7 @@ limitations under the License.
     </div>
     <button class="kd-card-toggle"
             mat-icon-button
-            (click)="expand()"
+            (click)="expand(); $event.stopPropagation()"
             *ngIf="expandable">
       <mat-icon class="kd-muted"
                 [matTooltip]="expanded ? 'Minimize card' : 'Expand card'">
