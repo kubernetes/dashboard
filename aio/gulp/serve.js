@@ -60,6 +60,10 @@ function getBackendArgs() {
     args.push(`--apiserver-host=${conf.backend.apiServerHost}`);
   }
 
+  if(conf.backend.tokenTTL) {
+    args.push(`--token-ttl=${conf.backend.tokenTTL}`);
+  }
+
   return args;
 }
 
