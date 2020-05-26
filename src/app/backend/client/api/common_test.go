@@ -18,8 +18,9 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/kubernetes/dashboard/src/app/backend/client/api"
 	v1 "k8s.io/api/authorization/v1"
+
+	"github.com/kubernetes/dashboard/src/app/backend/client/api"
 )
 
 func TestToSelfSubjectAccessReview(t *testing.T) {
@@ -32,8 +33,8 @@ func TestToSelfSubjectAccessReview(t *testing.T) {
 			ResourceAttributes: &v1.ResourceAttributes{
 				Namespace: ns,
 				Name:      name,
-				Resource:  resourceName,
-				Verb:      verb,
+				Resource:  "deployments",
+				Verb:      "get",
 			},
 		},
 	}
