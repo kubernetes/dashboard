@@ -1678,7 +1678,7 @@
       </trans-unit>
       <trans-unit id="a3e6ad731f3d27e2fd80064adf380f461ea0251b" datatype="html">
         <source>No resources found in the selected namespace.</source>
-        <target state="new">No resources found in the selected namespace.</target>
+        <target>在所选的 namespace 中找不到资源。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crdobject/template.html</context>
           <context context-type="linenumber">90</context>
@@ -2955,11 +2955,11 @@
               here
             <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>.
           </source>
-        <target state="new">
-            Insecure access detected. Sign in will not be available. Access Dashboard securely over HTTPS or using localhost. Read more
+        <target>
+            检测到不安全的访问。无法登陆。通过 HTTPS 或使用 localhost 安全访问 Dashboard 。更多信息
             <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>
-              here
-            <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>.
+              在这里
+            <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>阅读。
           </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
@@ -4252,7 +4252,7 @@
       </trans-unit>
       <trans-unit id="72f275d9b31bf0e6dc122c1a9b58b4986800eb7a" datatype="html">
         <source>Auto-refresh (every <x id="INTERPOLATION" equiv-text="{{refreshInterval}}"/> s.)</source>
-        <target state="new">Auto-refresh (every <x id="INTERPOLATION" equiv-text="{{refreshInterval}}"/> s.)</target>
+        <target>自动刷新 (每 <x id="INTERPOLATION" equiv-text="{{refreshInterval}}"/> 秒)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/logs/template.html</context>
           <context context-type="linenumber">141</context>
