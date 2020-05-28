@@ -40,6 +40,7 @@ export class GlobalErrorHandler implements ErrorHandler {
     }
 
     if (error instanceof YAMLException) {
+      console.error(error);
       return;
     }
 
