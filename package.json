@@ -124,6 +124,7 @@
     "highlight.js": "10.0.3",
     "js-yaml": "3.13.1",
     "material-design-icons": "3.0.1",
+    "ng-in-viewport": "6.1.0",
     "ngx-cookie-service": "2.4.0",
     "ngx-filter-pipe": "2.1.2",
     "normalize.css": "8.0.1",

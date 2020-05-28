@@ -134,3 +134,8 @@ export interface PluginsConfig {
   plugins: PluginMetadata[];
   errors?: object[];
 }
+
+export interface ViewportMetadata {
+  target: HTMLElement;
+  visible: boolean;
+}

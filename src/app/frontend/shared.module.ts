@@ -43,6 +43,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MAT_TOOLTIP_DEFAULT_OPTIONS, MatTooltipModule} from '@angular/material/tooltip';
 import {RouterModule} from '@angular/router';
+import {InViewportModule} from 'ng-in-viewport';
 import {FilterPipeModule} from 'ngx-filter-pipe';
 
 import {PipesModule} from './common/pipes/module';
@@ -88,6 +89,7 @@ const SHARED_DEPENDENCIES = [
   RouterModule,
   FilterPipeModule,
   NgxChartsModule,
+  InViewportModule,
 
   // Custom application modules
   PipesModule,
