@@ -6,7 +6,9 @@ It allows users to manage applications running in the cluster and troubleshoot t
 ## TL;DR
 
 ```console
+# Add kubernetes-dashboard repository
 helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
+# Deploy a Helm Release named "my-release" using the kubernetes-dashboard chart
 helm install kubernetes-dashboard/kubernetes-dashboard --name my-release
 ```
 
