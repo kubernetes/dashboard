@@ -1678,7 +1678,7 @@
       </trans-unit>
       <trans-unit id="a3e6ad731f3d27e2fd80064adf380f461ea0251b" datatype="html">
         <source>No resources found in the selected namespace.</source>
-        <target>在所选的 namespace 中找不到资源。</target>
+        <target>在所选的 namespace 中找不到资源</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crdobject/template.html</context>
           <context context-type="linenumber">90</context>
@@ -1874,7 +1874,7 @@
       </trans-unit>
       <trans-unit id="b7c59f712c5e6628569d1aed53a624f883c11663" datatype="html">
         <source>No resources found.</source>
-        <target>找不到资源。</target>
+        <target>找不到资源</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/list/zerostate/template.html</context>
           <context context-type="linenumber">27</context>
