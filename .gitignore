@@ -28,3 +28,4 @@ cypress/videos
 
 # npm debug log:
 npm-debug.log
+/aio/deploy/helm-chart/kubernetes-dashboard/charts/metrics-server-2.11.1.tgz
