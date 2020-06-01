@@ -73,15 +73,19 @@ export class JobListComponent extends ResourceListWithStatuses<JobList, Job> {
   }
 
   isInErrorState(resource: Job): boolean {
-    return resource.podInfo.warnings.length > 0;
+    return resource.jobStatus.status === 'Failed';
   }
 
   isInPendingState(resource: Job): boolean {
-    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending > 0;
+    return (
+      resource.podInfo.running === 0 &&
+      resource.jobStatus.status !== 'Complete' &&
+      resource.jobStatus.status !== 'Failed'
+    );
   }
 
   isInSuccessState(resource: Job): boolean {
-    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending === 0;
+    return resource.podInfo.running > 0 || resource.jobStatus.status === 'Complete';
   }
 
   getDisplayColumns(): string[] {

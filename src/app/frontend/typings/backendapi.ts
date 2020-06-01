@@ -33,6 +33,11 @@ export interface ObjectMeta {
   uid?: string;
 }
 
+export interface JobStatus {
+  status: string;
+  message: string;
+}
+
 export interface ResourceDetail {
   objectMeta: ObjectMeta;
   typeMeta: TypeMeta;
@@ -285,6 +290,7 @@ export interface Job extends Resource {
   containerImages: string[];
   initContainerImages: string[];
   parallelism: number;
+  jobStatus: JobStatus;
 }
 
 export interface Namespace extends Resource {
