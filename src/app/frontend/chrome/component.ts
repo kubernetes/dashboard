@@ -90,6 +90,7 @@ export class ChromeComponent implements OnInit {
     const styles = {'background-color': this.config.getColor()};
     return styles;
   }
+
   applyTitleStyles(): object {
     const styles = {
       display: 'inline-block',
@@ -107,15 +108,16 @@ export class ChromeComponent implements OnInit {
       return;
     }
 
-    this.document_.addEventListener(
+  this.document_.addEventListener(
       'visibilitychange',
       this.handleVisibilityChange_.bind(this),
       false,
     );
   }
 
+
   private handleVisibilityChange_(): void {
     this.globalSettings_.onPageVisibilityChange.emit(!this.document_.hidden);
   }
 
-
+}
