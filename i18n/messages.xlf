@@ -604,7 +604,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/pod/template.html</context>
-          <context context-type="linenumber">96</context>
+          <context context-type="linenumber">95</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/persistentvolume/template.html</context>
@@ -653,7 +653,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/pod/template.html</context>
-          <context context-type="linenumber">102</context>
+          <context context-type="linenumber">101</context>
         </context-group>
       </trans-unit>
       <trans-unit id="0499542969c672a765fa0ba1643b9d411ed45616" datatype="html">
@@ -1355,7 +1355,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/pod/template.html</context>
-          <context context-type="linenumber">132</context>
+          <context context-type="linenumber">131</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/persistentvolume/template.html</context>
@@ -1695,6 +1695,13 @@
           <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="a3e6ad731f3d27e2fd80064adf380f461ea0251b" datatype="html">
+        <source>No resources found in the selected namespace.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crdobject/template.html</context>
+          <context context-type="linenumber">90</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="cfcee33b4f74fb641e9d6b00f72244d2b78c1480" datatype="html">
         <source>Versions</source>
         <context-group purpose="location">
@@ -1859,7 +1866,7 @@
         <source>No resources found.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/list/zerostate/template.html</context>
-          <context context-type="linenumber">25</context>
+          <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
       <trans-unit id="c3a7e364a88ea4673199dfa98bc73e6dbe09dfac" datatype="html">
@@ -2099,14 +2106,14 @@
         <source>CPU Usage (cores)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/pod/template.html</context>
-          <context context-type="linenumber">110</context>
+          <context context-type="linenumber">109</context>
         </context-group>
       </trans-unit>
       <trans-unit id="b433be6f17bb6c614c6adb6a81912baae4a619b7" datatype="html">
         <source>Memory Usage (bytes)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/pod/template.html</context>
-          <context context-type="linenumber">120</context>
+          <context context-type="linenumber">119</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ad2fd201bb504d5836ffd31f00d2c3a535059147" datatype="html">
@@ -4458,6 +4465,85 @@
           <context context-type="linenumber">69</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="1baabee7b86d4d0935657f254c3b17b5fe4d1257" datatype="html">
+        <source>Logs from</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/logs/template.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="c7b6cfe5410900faa386dd25760731fc8f8d68d7" datatype="html">
+        <source>Init Containers</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/logs/template.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="cb0f69bdd4dea41d7d45c74b6e07f98de8a2ab26" datatype="html">
+        <source>in</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/logs/template.html</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="bdf43b20b7101e83458a69a1e5e2008557feca1f" datatype="html">
+        <source>Download logs</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/logs/template.html</context>
+          <context context-type="linenumber">61</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4718e522f1a6e0d5ca2062f6c96ee1c584021326" datatype="html">
+        <source>
+          Logs from <x id="START_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;kd-date&gt;"/><x id="CLOSE_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;/kd-date&gt;"/> to <x id="START_TAG_KD-DATE_1" ctype="x-kd-date" equiv-text="&lt;kd-date&gt;"/><x id="CLOSE_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;/kd-date&gt;"/> UTC
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/logs/template.html</context>
+          <context context-type="linenumber">93</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="fb31e77d231aa06eb2e8494b50596519bbeeb386" datatype="html">
+        <source>Invert colors</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/logs/template.html</context>
+          <context context-type="linenumber">126</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8902979878d0f294dfc6f5b95fd7788c3fa2dd49" datatype="html">
+        <source>Reduce font size</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/logs/template.html</context>
+          <context context-type="linenumber">131</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="b5c4c520630525f705f7bddbeb2f0b0aec7a30d6" datatype="html">
+        <source>Show timestamps</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/logs/template.html</context>
+          <context context-type="linenumber">136</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="72f275d9b31bf0e6dc122c1a9b58b4986800eb7a" datatype="html">
+        <source>Auto-refresh (every <x id="INTERPOLATION" equiv-text="{{refreshInterval}}"/> s.)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/logs/template.html</context>
+          <context context-type="linenumber">141</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6e73f7b06ce74fa29c8866cf5a82bfbeaf2452ed" datatype="html">
+        <source>Follow logs</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/logs/template.html</context>
+          <context context-type="linenumber">146</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3de87d94cff5d685043f035ac20e6d4521f8edf2" datatype="html">
+        <source>Show previous logs</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/logs/template.html</context>
+          <context context-type="linenumber">151</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="dc935c1eb87651baf1b1b0e53119e6dec2db8862" datatype="html">
         <source>
     Shell in
@@ -4538,6 +4624,18 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
           <context context-type="linenumber">100</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="e09a3f8198fa5e84e6259c2a9b9f8c0dbafab5ad" datatype="html">
+        <source>
+            Insecure access detected. Sign in will not be available. Access Dashboard securely over HTTPS or using localhost. Read more
+            <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>
+              here
+            <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>.
+          </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
+          <context context-type="linenumber">109</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6ad17443c5d0be7954254eb2455fe0b32ee2ff05" datatype="html">

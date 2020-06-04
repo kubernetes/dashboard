@@ -579,7 +579,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/pod/template.html</context>
-          <context context-type="linenumber">96</context>
+          <context context-type="linenumber">95</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/persistentvolume/template.html</context>
@@ -631,7 +631,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/pod/template.html</context>
-          <context context-type="linenumber">102</context>
+          <context context-type="linenumber">101</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f5dc4402dbf1d5f8f98da57b6061d5f9be05ca5c" datatype="html">
@@ -1243,7 +1243,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/pod/template.html</context>
-          <context context-type="linenumber">132</context>
+          <context context-type="linenumber">131</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/persistentvolume/template.html</context>
@@ -1676,6 +1676,14 @@
           <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="a3e6ad731f3d27e2fd80064adf380f461ea0251b" datatype="html">
+        <source>No resources found in the selected namespace.</source>
+        <target state="new">No resources found in the selected namespace.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crdobject/template.html</context>
+          <context context-type="linenumber">90</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="cfcee33b4f74fb641e9d6b00f72244d2b78c1480" datatype="html">
         <source>Versions</source>
         <target>版本</target>
@@ -1861,7 +1869,7 @@
         <target>找不到資源。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/list/zerostate/template.html</context>
-          <context context-type="linenumber">25</context>
+          <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
       <trans-unit id="c3a7e364a88ea4673199dfa98bc73e6dbe09dfac" datatype="html">
@@ -2129,7 +2137,7 @@
         <target>CPU 實用 (cores)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/pod/template.html</context>
-          <context context-type="linenumber">110</context>
+          <context context-type="linenumber">109</context>
         </context-group>
       </trans-unit>
       <trans-unit id="b433be6f17bb6c614c6adb6a81912baae4a619b7" datatype="html">
@@ -2137,7 +2145,7 @@
         <target>内存實用 (bytes)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/pod/template.html</context>
-          <context context-type="linenumber">120</context>
+          <context context-type="linenumber">119</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ad2fd201bb504d5836ffd31f00d2c3a535059147" datatype="html">
@@ -2914,6 +2922,24 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
           <context context-type="linenumber">100</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="e09a3f8198fa5e84e6259c2a9b9f8c0dbafab5ad" datatype="html">
+        <source>
+            Insecure access detected. Sign in will not be available. Access Dashboard securely over HTTPS or using localhost. Read more
+            <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>
+              here
+            <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>.
+          </source>
+        <target state="new">
+            Insecure access detected. Sign in will not be available. Access Dashboard securely over HTTPS or using localhost. Read more
+            <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>
+              here
+            <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>.
+          </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
+          <context context-type="linenumber">109</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6ad17443c5d0be7954254eb2455fe0b32ee2ff05" datatype="html">
@@ -4216,9 +4242,9 @@
           <context context-type="linenumber">136</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="deb6f7adf24853a40f57516d8512227e75ab5a2e" datatype="html">
-        <source>Auto-refresh (every <x id="INTERPOLATION" equiv-text="{{refreshInterval / 1000}}"/> s.)</source>
-        <target>自動刷新 (每 <x id="INTERPOLATION" equiv-text="{{refreshInterval / 1000}}"/> 秒.)</target>
+      <trans-unit id="72f275d9b31bf0e6dc122c1a9b58b4986800eb7a" datatype="html">
+        <source>Auto-refresh (every <x id="INTERPOLATION" equiv-text="{{refreshInterval}}"/> s.)</source>
+        <target state="new">Auto-refresh (every <x id="INTERPOLATION" equiv-text="{{refreshInterval}}"/> s.)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/logs/template.html</context>
           <context context-type="linenumber">141</context>

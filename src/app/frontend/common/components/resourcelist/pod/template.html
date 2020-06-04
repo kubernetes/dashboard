@@ -36,7 +36,7 @@ limitations under the License.
 
     <mat-table [dataSource]="getData()"
                matSort
-               matSortActive="age"
+               matSortActive="created"
                matSortDisableClear
                matSortDirection="asc">
       <ng-container matColumnDef="statusicon">
@@ -91,7 +91,6 @@ limitations under the License.
 
       <ng-container matColumnDef="status">
         <mat-header-cell *matHeaderCellDef
-                         mat-sort-header
                          disableClear="true"
                          i18n>Status</mat-header-cell>
         <mat-cell *matCellDef="let pod">{{getDisplayStatus(pod)}}</mat-cell>

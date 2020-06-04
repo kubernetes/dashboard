@@ -20,7 +20,10 @@ limitations under the License.
   <div fxFlexAlign="center"
        class="kd-zerostate-title"
        i18n>There is nothing to display here</div>
-  <div fxFlexAlign="center"
-       class="kd-zerostate-text"
-       i18n>No resources found.</div>
+  <ng-container *ngTemplateOutlet="textTemplate ? textTemplate : defaultTextTemplate"></ng-container>
+  <ng-template #defaultTextTemplate>
+    <div fxFlexAlign="center"
+         class="kd-zerostate-text"
+         i18n>No resources found.</div>
+  </ng-template>
 </div>

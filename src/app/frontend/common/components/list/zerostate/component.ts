@@ -12,11 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component} from '@angular/core';
+import {Component, ContentChild, Input, TemplateRef} from '@angular/core';
 
 @Component({
   selector: 'kd-list-zero-state',
   templateUrl: './template.html',
   styleUrls: ['./style.scss'],
 })
-export class ListZeroStateComponent {}
+export class ListZeroStateComponent {
+  @ContentChild('textTemplate', {read: TemplateRef}) textTemplate: TemplateRef<any>;
+}

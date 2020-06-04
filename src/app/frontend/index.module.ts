@@ -17,6 +17,7 @@ import {ErrorHandler, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
+import {AngularPageVisibilityModule} from 'angular-page-visibility';
 import {ChromeModule} from './chrome/module';
 import {CoreModule} from './core.module';
 import {GlobalErrorHandler} from './error/handler';
@@ -32,6 +33,7 @@ import {LoginModule} from './login/module';
     CoreModule,
     ChromeModule,
     LoginModule,
+    AngularPageVisibilityModule,
     RouterModule.forRoot(routes, {
       useHash: true,
       onSameUrlNavigation: 'reload',

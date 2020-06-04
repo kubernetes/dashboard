@@ -132,6 +132,12 @@ export class LoginComponent implements OnInit {
     return this.isLoginSkippable_;
   }
 
+  isLoginEnabled(): boolean {
+    return this.authService_.domainWhitelist.indexOf(location.hostname) > -1
+      ? true
+      : location.protocol === this.authService_.allowedProtocol;
+  }
+
   onChange(event: Event & KdFile): void {
     switch (this.selectedAuthenticationMode) {
       case LoginModes.Kubeconfig:
