@@ -33,6 +33,7 @@ import {EndpointManager, Resource} from '../../services/resource/endpoint';
 import {ResourceService} from '../../services/resource/resource';
 
 import {NamespaceChangeDialog} from './changedialog/dialog';
+import {PermissionsService} from 'common/services/global/permissions';
 
 @Component({
   selector: 'kd-namespace-selector',
@@ -63,6 +64,7 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
     private readonly podList_: ResourceService<PodList>,
     private readonly dialog_: MatDialog,
     private readonly kdState_: KdStateService,
+    public permission: PermissionsService,
     private readonly notifications_: NotificationsService,
     private readonly _activatedRoute: ActivatedRoute,
     private readonly _historyService: HistoryService,
@@ -301,9 +303,6 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
   }
 
   setDefaultQueryParams_() {
-    this.router_.navigate([this._activatedRoute.snapshot.url], {
-      queryParams: {[NAMESPACE_STATE_PARAM]: CONFIG.defaultNamespace},
-      queryParamsHandling: 'merge',
-    });
+    this.permission.redirectToNs(this.router_);
   }
 }
