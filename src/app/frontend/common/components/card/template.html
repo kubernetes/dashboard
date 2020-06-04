@@ -20,6 +20,8 @@ limitations under the License.
                   [ngClass]="getTitleClasses()"
                   fxLayoutAlign=" center"
                   [ngStyle] = "applyStyles()">
+                  (click)="onCardHeaderClick(); $event.stopPropagation()"
+                  fxLayoutAlign=" center">
     <div class="kd-card-title"
          fxFlex="100%">
       <ng-content select="[title]"></ng-content>
@@ -36,12 +38,16 @@ limitations under the License.
          class="kd-card-actions kd-muted">
       <ng-content select="[actions]"></ng-content>
     </div>
-    <mat-icon class="kd-card-toggle kd-muted"
-              [matTooltip]="expanded ? 'Minimize card' : 'Expand card'"
-              *ngIf="expandable">
-      <ng-container *ngIf="expanded">arrow_drop_up</ng-container>
-      <ng-container *ngIf="!expanded">arrow_drop_down</ng-container>
-    </mat-icon>
+    <button class="kd-card-toggle"
+            mat-icon-button
+            (click)="expand(); $event.stopPropagation()"
+            *ngIf="expandable">
+      <mat-icon class="kd-muted"
+                [matTooltip]="expanded ? 'Minimize card' : 'Expand card'">
+        <ng-container *ngIf="expanded">arrow_drop_up</ng-container>
+        <ng-container *ngIf="!expanded">arrow_drop_down</ng-container>
+      </mat-icon>
+    </button>
   </mat-card-title>
 
   <div [@expandInOut]="!expanded">

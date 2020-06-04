@@ -133,9 +133,7 @@ export class LoginComponent implements OnInit {
   }
 
   isLoginEnabled(): boolean {
-    return this.authService_.domainWhitelist.indexOf(location.hostname) > -1
-      ? true
-      : location.protocol === this.authService_.allowedProtocol;
+    return this.authService_.isLoginEnabled();
   }
 
   onChange(event: Event & KdFile): void {

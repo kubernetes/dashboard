@@ -1,0 +1,49 @@
+*********************************************************************************
+*** PLEASE BE PATIENT: kubernetes-dashboard may take a few minutes to install ***
+*********************************************************************************
+
+{{- if .Values.ingress.enabled }}
+From outside the cluster, the server URL(s) are:
+{{- range .Values.ingress.hosts }}
+{{- if $.Values.protocolHttp }}
+     http://{{ . }}
+{{- else }}
+     https://{{ . }}
+{{- end }}
+{{- end }}
+
+{{- else if contains "NodePort" .Values.service.type }}
+
+Get the Kubernetes Dashboard URL by running:
+  export NODE_PORT=$(kubectl get -n {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ template "kubernetes-dashboard.fullname" . }})
+  export NODE_IP=$(kubectl get nodes -o jsonpath="{.items[0].status.addresses[0].address}")
+{{- if .Values.protocolHttp }}
+  echo http://$NODE_IP:$NODE_PORT/
+{{- else }}
+  echo https://$NODE_IP:$NODE_PORT/
+{{- end }}
+
+{{- else if contains "LoadBalancer" .Values.service.type }}
+
+  NOTE: It may take a few minutes for the LoadBalancer IP to be available.
+        Watch the status with: 'kubectl get svc -n {{ .Release.Namespace }} -w {{ template "kubernetes-dashboard.fullname" . }}'
+
+Get the Kubernetes Dashboard URL by running:
+  export SERVICE_IP=$(kubectl get svc -n {{ .Release.Namespace }} {{ template "kubernetes-dashboard.fullname" . }} -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+{{- if .Values.protocolHttp }}
+  echo http://$SERVICE_IP/
+{{- else }}
+  echo https://$SERVICE_IP/
+{{- end }}
+{{- else if contains "ClusterIP"  .Values.service.type }}
+
+Get the Kubernetes Dashboard URL by running:
+  export POD_NAME=$(kubectl get pods -n {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ template "kubernetes-dashboard.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
+{{- if .Values.protocolHttp }}
+  echo http://127.0.0.1:9090/
+  kubectl -n {{ .Release.Namespace }} port-forward $POD_NAME 9090:9090
+{{- else }}
+  echo https://127.0.0.1:8443/
+  kubectl -n {{ .Release.Namespace }} port-forward $POD_NAME 8443:8443
+{{- end }}
+{{- end }}

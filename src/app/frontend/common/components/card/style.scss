@@ -37,7 +37,7 @@
 
 .kd-card-actions {
   display: block;
-  padding: $baseline-grid (2 * $baseline-grid);
+  padding: 0 (2 * $baseline-grid);
 }
 
 .kd-card-toggle {
@@ -57,7 +57,7 @@
   font-size: $title-font-size-base;
   font-weight: $regular-font-weight;
   margin-right: $baseline-grid;
-  padding: $baseline-grid 0 $baseline-grid (2 * $baseline-grid);
+  padding: (2 * $baseline-grid) 0 (2 * $baseline-grid) (2 * $baseline-grid);
 }
 
 .kd-card-description {

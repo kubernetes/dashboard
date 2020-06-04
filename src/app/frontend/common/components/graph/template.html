@@ -15,6 +15,9 @@ limitations under the License.
 -->
 
 <ngx-charts-area-chart fxFlex
+                       inViewport
+                       [inViewportOptions]="{partial: false}"
+                       (inViewportAction)="changeState($event)"
                        [xAxis]="true"
                        [yAxis]="true"
                        [showYAxisLabel]="true"

@@ -52,22 +52,50 @@ before_script:
 jobs:
   include:
 #    - stage: test
+#      name: "Code check & linting"
 #      before_script:
 #        - aio/scripts/install-codegen.sh
 #      script: npm run check
-#    - script: npm run test:coverage
+#    - name: "Unit tests"
+#      script: npm run test:coverage
 #      after_success:
 #        - rm -rf $TRAVIS_BUILD_DIR/.tmp
 #        - bash <(curl -s https://codecov.io/bash)
-#    - script: npm run cluster:start && npm run e2e
+    - name: "Helm linting"
+      cache: false
+      install:
+        - curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+        - wget https://github.com/garethr/kubeval/releases/download/0.14.0/kubeval-linux-amd64.tar.gz
+        - mkdir kubeval
+        - tar xf kubeval-linux-amd64.tar.gz -C kubeval
+        - export PATH="$PATH:$(pwd)/kubeval"
+      before_script: skip  # We don't need Docker nor Go
+      script:
+        - aio/scripts/helm-lint.sh
+#    - name: "e2e tests"
+#      script: npm run cluster:start && npm run e2e
     - stage: deploy
+      name: "Development release"
       script:
         - docker login -u $DOCKER_USER -p $DOCKER_PASS
         - npm run docker:push:head
+
     - stage: release
+      name: "Release"
       script:
         - docker login -u $DOCKER_RELEASE_USER -p $DOCKER_RELEASE_PASS
         - npm run docker:push
+    # Manual step for now since it requires to add a GitHub Token to Travis which would be a security issue
+    # - name: "Helm repository generation"
+    #   cache: false
+    #   install:
+    #     - curl -L https://git.io/get_helm.sh | bash && helm init --skip-refresh --client-only
+    #     - git remote set-branches origin '*' && git fetch --unshallow
+    #     # GTHUB_WRITE_TOKEN is a travis secret variable that is generated from https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line
+    #     - git remote set-url origin https://x-access-token:${GITHUB_WRITE_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git
+    #   before_script: skip  # We don't need Docker nor Go
+    #   script:
+    #     - sh ./aio/scripts/
 
 stages:
   - test

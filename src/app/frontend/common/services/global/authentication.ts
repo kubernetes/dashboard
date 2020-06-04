@@ -34,14 +34,6 @@ import {KdStateService} from './state';
 export class AuthService {
   private readonly _config = CONFIG;
 
-  get allowedProtocol(): string {
-    return 'https';
-  }
-
-  get domainWhitelist(): string[] {
-    return ['localhost', '127.0.0.1'];
-  }
-
   constructor(
     private readonly cookies_: CookieService,
     private readonly router_: Router,
@@ -61,32 +53,38 @@ export class AuthService {
   }
 
   private setTokenCookie_(token: string): void {
-    // This will only work for HTTPS connection
-    this.cookies_.set(this._config.authTokenCookieName, token, null, null, null, true, 'Strict');
-    // This will only work when accessing Dashboard at 'localhost' or
-    // '127.0.0.1'
-    this.cookies_.set(
-      this._config.authTokenCookieName,
-      token,
-      null,
-      null,
-      'localhost',
-      false,
-      'Strict',
-    );
-    this.cookies_.set(
-      this._config.authTokenCookieName,
-      token,
-      null,
-      null,
-      '127.0.0.1',
-      false,
-      'Strict',
-    );
+    if (!this.isLoginEnabled()) {
+      return;
+    }
+
+    if (this.isCurrentProtocolSecure_()) {
+      this.cookies_.set(this._config.authTokenCookieName, token, null, null, null, true, 'Strict');
+      return;
+    }
+
+    if (this.isCurrentDomainSecure_()) {
+      this.cookies_.set(
+        this._config.authTokenCookieName,
+        token,
+        null,
+        null,
+        location.hostname,
+        false,
+        'Strict',
+      );
+    }
   }
 
   private getTokenCookie_(): string {
     return this.cookies_.get(this._config.authTokenCookieName) || '';
+  }
+
+  private isCurrentDomainSecure_(): boolean {
+    return ['localhost', '127.0.0.1'].indexOf(location.hostname) > -1;
+  }
+
+  private isCurrentProtocolSecure_(): boolean {
+    return location.protocol.includes('https');
   }
 
   removeAuthCookies(): void {
@@ -192,5 +190,13 @@ export class AuthService {
    */
   isLoginPageEnabled(): boolean {
     return !(this.cookies_.get(this._config.skipLoginPageCookieName) === 'true');
+  }
+
+  /**
+   * Returns true if domain is localhost/127.0.0.1 or if the connection
+   * protocol is HTTPS, false otherwise.
+   */
+  isLoginEnabled(): boolean {
+    return this.isCurrentDomainSecure_() || this.isCurrentProtocolSecure_();
   }
 }

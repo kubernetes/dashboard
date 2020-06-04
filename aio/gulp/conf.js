@@ -53,7 +53,7 @@ const version = {
   /**
    * Current release version of the project.
    */
-  release: 'v2.0.0',
+  release: 'v2.0.1',
   /**
    * Version name of the head release of the project.
    */
@@ -69,10 +69,40 @@ const version = {
  */
 const imageNameBase = 'dashboard';
 
+function envToArgv() {
+  let envArgs = process.env.DASHBOARD_ARGS;
+  let result = {};
+
+  const args = minimist(process.argv.splice(2));
+  delete args._;
+  Object.keys(args).forEach(key => result[key] = args[key]);
+
+  if(!envArgs) {
+    return result;
+  }
+
+  envArgs = envArgs.split(';');
+  if(envArgs.length === 0) {
+    return result;
+  }
+
+  envArgs.forEach(arg => {
+    const parts = arg.split('=');
+    if(parts.length === 2) {
+      result[parts[0]] = parts[1];
+      return;
+    }
+
+    result[parts[0]] = true;
+  })
+
+  return result;
+}
+
 /**
  * Arguments
  */
-const argv = minimist(process.argv.slice(2));
+const argv = envToArgv();
 
 /**
  * Exported configuration object with common constants used in build pipeline.
@@ -184,6 +214,18 @@ export default {
     enableSkipButton: argv.enableSkipButton !== undefined ?
         argv.enableSkipButton :
         false,
+    /**
+     * Allows to enable login view when serving on http.
+     */
+    enableInsecureLogin: argv.enableInsecureLogin !== undefined ?
+      argv.enableInsecureLogin :
+      false,
+    /**
+     * Defines token time to live.
+     */
+    tokenTTL: argv.tokenTTL !== undefined ?
+      argv.tokenTTL :
+      0,
   },
 
   /**
