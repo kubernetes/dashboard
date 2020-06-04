@@ -59,7 +59,7 @@ type JobStatus struct {
 	Status JobStatusType `json:"status"`
 	// A human-readable description of the status of related job.
 	Message string `json:"message"`
-	// The last transition time of the conditions of job status
+	// Conditions describe the state of a job after it finishes.
 	Conditions []common.Condition `json:"conditions"`
 }
 

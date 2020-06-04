@@ -208,6 +208,10 @@ func TestGetJobListFromChannels(t *testing.T) {
 					},
 					JobStatus: JobStatus{
 						Status: JobStatusFailed,
+						Conditions: []common.Condition{{
+							Type:   string(batch.JobFailed),
+							Status: v1.ConditionTrue,
+						}},
 					},
 				}},
 				Errors: []error{},
