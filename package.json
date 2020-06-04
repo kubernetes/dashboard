@@ -102,7 +102,6 @@
     "@angular/core": "9.1.9",
     "@angular/flex-layout": "9.0.0-beta.31",
     "@angular/forms": "9.1.9",
-    "@angular/http": "7.2.16",
     "@angular/localize": "9.1.9",
     "@angular/material": "9.2.4",
     "@angular/platform-browser": "9.1.9",
