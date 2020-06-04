@@ -75,9 +75,7 @@ export class GraphComponent implements OnInit, OnChanges {
 
     switch (this.graphType) {
       case GraphType.Memory:
-        series = this.metric.dataPoints.map(point =>
-          FormattedValue.NewFormattedMemoryValue(point.y),
-        );
+        series = this.metric.dataPoints.map(point => FormattedValue.NewFormattedMemoryValue(point.y));
         break;
       case GraphType.CPU:
         series = this.metric.dataPoints.map(point => FormattedValue.NewFormattedCoreValue(point.y));
@@ -142,12 +140,7 @@ export class GraphComponent implements OnInit, OnChanges {
 
   // Calculate the average usage based on minute intervals. If there are more data points within
   // a single minute, they will be accumulated and an average will be taken.
-  private _average(
-    acc: DataPoint[],
-    point: DataPoint,
-    idx: number,
-    points: DataPoint[],
-  ): DataPoint[] {
+  private _average(acc: DataPoint[], point: DataPoint, idx: number, points: DataPoint[]): DataPoint[] {
     if (idx > 0) {
       const currMinute = this._getMinute(point.x);
       const lastMinute = this._getMinute(points[idx - 1].x);

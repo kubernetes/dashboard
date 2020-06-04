@@ -40,11 +40,7 @@ export class CRDObjectListComponent extends ResourceListBase<CRDObjectList, CRDO
     notifications: NotificationsService,
     cdr: ChangeDetectorRef,
   ) {
-    super(
-      activatedRoute_.params.pipe(map(params => `customresourcedefinition/${params.crdName}`)),
-      notifications,
-      cdr,
-    );
+    super(activatedRoute_.params.pipe(map(params => `customresourcedefinition/${params.crdName}`)), notifications, cdr);
     this.id = ListIdentifier.crdObject;
     this.groupId = ListGroupIdentifier.none;
 
@@ -52,10 +48,7 @@ export class CRDObjectListComponent extends ResourceListBase<CRDObjectList, CRDO
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
 
     this.activatedRoute_.params.pipe(takeUntil(this.unsubscribe_)).subscribe(params => {
-      this.endpoint = EndpointManager.resource(Resource.crd, true).child(
-        params.crdName,
-        Resource.crdObject,
-      );
+      this.endpoint = EndpointManager.resource(Resource.crd, true).child(params.crdName, Resource.crdObject);
     });
   }
 

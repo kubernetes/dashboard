@@ -44,8 +44,7 @@ export class WorkloadStatusComponent {
       return '#ffad20';
     } else if (label.includes('Failed')) {
       return '#f00';
-    } else {
-      return '';
     }
+    return '';
   }
 }

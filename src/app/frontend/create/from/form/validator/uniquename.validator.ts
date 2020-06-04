@@ -14,12 +14,7 @@
 
 import {HttpClient} from '@angular/common/http';
 import {Directive, forwardRef, Input} from '@angular/core';
-import {
-  AbstractControl,
-  AsyncValidator,
-  AsyncValidatorFn,
-  NG_ASYNC_VALIDATORS,
-} from '@angular/forms';
+import {AbstractControl, AsyncValidator, AsyncValidatorFn, NG_ASYNC_VALIDATORS} from '@angular/forms';
 import {Observable} from 'rxjs/Observable';
 import {debounceTime, map} from 'rxjs/operators';
 
@@ -55,16 +50,15 @@ export function validateUniqueName(http: HttpClient, namespace: string): AsyncVa
   return (control: AbstractControl): Observable<{[key: string]: boolean} | null> => {
     if (!control.value) {
       return Observable.of(null);
-    } else {
-      return http
-        .post<{valid: boolean}>('api/v1/appdeployment/validate/name', {
-          name: control.value,
-          namespace,
-        })
-        .pipe(
-          debounceTime(500),
-          map(res => (!res.valid ? {[uniqueNameValidationKey]: control.value} : null)),
-        );
     }
+    return http
+      .post<{valid: boolean}>('api/v1/appdeployment/validate/name', {
+        name: control.value,
+        namespace,
+      })
+      .pipe(
+        debounceTime(500),
+        map(res => (!res.valid ? {[uniqueNameValidationKey]: control.value} : null)),
+      );
   };
 }

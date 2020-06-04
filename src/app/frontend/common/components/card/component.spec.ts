@@ -49,13 +49,7 @@ describe('CardComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CardComponent, TestComponent],
-      imports: [
-        MatIconModule,
-        MatCardModule,
-        MatDividerModule,
-        MatTooltipModule,
-        NoopAnimationsModule,
-      ],
+      imports: [MatIconModule, MatCardModule, MatDividerModule, MatTooltipModule, NoopAnimationsModule],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
   }));

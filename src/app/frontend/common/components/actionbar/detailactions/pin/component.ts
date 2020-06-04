@@ -31,20 +31,11 @@ export class ActionbarDetailPinComponent {
     if (this.isPinned()) {
       this.pinner_.unpin(this.typeMeta.kind, this.objectMeta.name, this.objectMeta.namespace);
     } else {
-      this.pinner_.pin(
-        this.typeMeta.kind,
-        this.objectMeta.name,
-        this.objectMeta.namespace,
-        this.displayName,
-      );
+      this.pinner_.pin(this.typeMeta.kind, this.objectMeta.name, this.objectMeta.namespace, this.displayName);
     }
   }
 
   isPinned(): boolean {
-    return this.pinner_.isPinned(
-      this.typeMeta.kind,
-      this.objectMeta.name,
-      this.objectMeta.namespace,
-    );
+    return this.pinner_.isPinned(this.typeMeta.kind, this.objectMeta.name, this.objectMeta.namespace);
   }
 }

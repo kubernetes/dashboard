@@ -97,9 +97,7 @@ describe('WorkloadStatusComponent', () => {
 
   it('shows component heading', () => {
     testHostFixture.detectChanges();
-    const debugElement = testHostFixture.debugElement.query(
-      By.css('kd-card mat-card mat-card-title div'),
-    );
+    const debugElement = testHostFixture.debugElement.query(By.css('kd-card mat-card mat-card-title div'));
     expect(debugElement).toBeTruthy();
 
     const htmlElement = debugElement.nativeElement;

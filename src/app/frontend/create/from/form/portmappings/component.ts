@@ -142,14 +142,8 @@ export class PortMappingsComponent implements OnInit, ControlValueAccessor {
 
   private newEmptyPortMapping(defaultProtocol: string): FormGroup {
     return this.fb_.group({
-      port: [
-        '',
-        Validators.compose([FormValidators.isInteger, Validators.min(1), Validators.max(65535)]),
-      ],
-      targetPort: [
-        '',
-        Validators.compose([FormValidators.isInteger, Validators.min(1), Validators.max(65535)]),
-      ],
+      port: ['', Validators.compose([FormValidators.isInteger, Validators.min(1), Validators.max(65535)])],
+      targetPort: ['', Validators.compose([FormValidators.isInteger, Validators.min(1), Validators.max(65535)])],
       protocol: [defaultProtocol],
     });
   }

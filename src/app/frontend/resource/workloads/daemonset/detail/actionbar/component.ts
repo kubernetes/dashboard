@@ -28,12 +28,10 @@ export class ActionbarComponent implements OnInit {
   constructor(private readonly actionbar_: ActionbarService) {}
 
   ngOnInit(): void {
-    this.resourceMetaSubscription_ = this.actionbar_.onInit.subscribe(
-      (resourceMeta: ResourceMeta) => {
-        this.resourceMeta = resourceMeta;
-        this.isInitialized = true;
-      },
-    );
+    this.resourceMetaSubscription_ = this.actionbar_.onInit.subscribe((resourceMeta: ResourceMeta) => {
+      this.resourceMeta = resourceMeta;
+      this.isInitialized = true;
+    });
   }
 
   ngOnDestroy(): void {

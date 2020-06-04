@@ -32,14 +32,10 @@ export class HiddenPropertyComponent {
   HiddenPropertyMode = HiddenPropertyMode;
 
   toggleVisible(): void {
-    this.mode =
-      this.mode !== HiddenPropertyMode.Visible
-        ? HiddenPropertyMode.Visible
-        : HiddenPropertyMode.Hidden;
+    this.mode = this.mode !== HiddenPropertyMode.Visible ? HiddenPropertyMode.Visible : HiddenPropertyMode.Hidden;
   }
 
   toggleEdit(): void {
-    this.mode =
-      this.mode !== HiddenPropertyMode.Edit ? HiddenPropertyMode.Edit : HiddenPropertyMode.Hidden;
+    this.mode = this.mode !== HiddenPropertyMode.Edit ? HiddenPropertyMode.Edit : HiddenPropertyMode.Hidden;
   }
 }

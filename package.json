@@ -157,6 +157,8 @@
     "codelyzer": "5.2.2",
     "concurrently": "5.2.0",
     "cypress": "4.7.0",
+    "eslint": "7.1.0",
+    "eslint-plugin-rxjs": "0.0.2-beta.24",
     "del": "5.1.0",
     "git-describe": "4.0.4",
     "gts": "2.0.2",
@@ -202,5 +204,58 @@
   "engines": {
     "node": ">=10.13.0",
     "npm": ">=6.0.0"
-  }
+  },
+  "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaVersion": 2019,
+      "project": "./tsconfig.json",
+      "sourceType": "module"
+    },
+    "extends": "./node_modules/gts/",
+    "plugins": [
+      "rxjs"
+    ],
+    "rules": {
+      "@typescript-eslint/ban-ts-ignore": "off",
+      "@typescript-eslint/interface-name-prefix": "off",
+      "@typescript-eslint/no-namespace": "off",
+      "@typescript-eslint/no-unused-vars": "off",
+      "@typescript-eslint/no-this-alias": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+      "node/no-unpublished-import": "off",
+      "no-undef": "off",
+      "no-inner-declarations": "off",
+      "no-redeclare": "off",
+      "eol-last": "error",
+      "no-console": "off",
+      "no-prototype-builtins": "off",
+      "no-extra-boolean-cast": "error",
+      "no-else-return": "error",
+      "node/no-extraneous-require": "error",
+      "node/no-unpublished-require": "error",
+      "prefer-rest-params": "error",
+      "rxjs/no-ignored-observable": "error",
+      "rxjs/no-unbound-methods": "error",
+      "rxjs/no-unsafe-takeuntil": "error"
+    },
+    "overrides": [
+      {
+        "files": [
+          "src/**/*.spec.ts"
+        ],
+        "env": {
+          "browser": true,
+          "jest": true
+        }
+      }
+    ],
+    "ignorePatterns": [
+      "**/*.js"
+    ]
+  },
+  "eslintIgnore": [
+    "node_modules/*",
+    "aio/*"
+  ]
 }

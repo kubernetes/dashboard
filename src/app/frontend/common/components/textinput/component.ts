@@ -62,7 +62,7 @@ export class TextInputComponent implements OnInit, AfterViewInit, OnChanges {
     tabSize: 2,
     wrap: true,
     fontSize: 14,
-    fontFamily: `'Roboto Mono Regular', monospace`,
+    fontFamily: "'Roboto Mono Regular', monospace",
   };
 
   constructor(private readonly themeService_: ThemeService) {}

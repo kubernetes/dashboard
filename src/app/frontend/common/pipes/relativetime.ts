@@ -28,7 +28,7 @@ const i18n = {
   MSG_TIME_UNIT_MONTHS_LABEL: 'months',
   MSG_TIME_UNIT_YEAR_LABEL: 'a year',
   MSG_TIME_UNIT_YEARS_LABEL: 'years',
-  MSG_TIME_NOT_YET_LABEL: `-`,
+  MSG_TIME_NOT_YET_LABEL: '-',
 };
 
 /**
@@ -62,7 +62,7 @@ export class RelativeTimeFormatter {
   constructor(private readonly config_: ConfigService) {}
 
   transform(value: string): string {
-    if (value == null) {
+    if (value === null) {
       return timeConstants.NOT_YET;
     }
     // Current server time.
@@ -100,9 +100,8 @@ export class RelativeTimeFormatter {
       return this.formatOutputTimeString_(diffInDays, units.DAY);
     } else if (diffInYears < 1) {
       return this.formatOutputTimeString_(diffInMonths, units.MONTH);
-    } else {
-      return this.formatOutputTimeString_(diffInYears, units.YEAR);
     }
+    return this.formatOutputTimeString_(diffInYears, units.YEAR);
   }
 
   /**
@@ -119,8 +118,7 @@ export class RelativeTimeFormatter {
   private formatOutputTimeString_(timeValue: number, timeUnit: string[]): string {
     if (timeValue > 1 || timeValue === 0) {
       return `${timeValue} ${timeUnit[1]} ago`;
-    } else {
-      return `${timeUnit[0]} ago`;
     }
+    return `${timeUnit[0]} ago`;
   }
 }

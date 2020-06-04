@@ -77,17 +77,7 @@ export class PersistentVolumeClaimListComponent extends ResourceListWithStatuses
   }
 
   getDisplayColumns(): string[] {
-    return [
-      'statusicon',
-      'name',
-      'labels',
-      'status',
-      'volume',
-      'capacity',
-      'accmodes',
-      'storagecl',
-      'created',
-    ];
+    return ['statusicon', 'name', 'labels', 'status', 'volume', 'capacity', 'accmodes', 'storagecl', 'created'];
   }
 
   getVolumeHref(persistentVolumeName: string): string {

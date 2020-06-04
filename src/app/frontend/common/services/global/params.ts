@@ -44,15 +44,15 @@ export class ParamsService {
   }
 
   getRouteParam(name: string) {
-    return !!this.params_ ? this.params_[name] : undefined;
+    return this.params_ ? this.params_[name] : undefined;
   }
 
   getQueryParam(name: string) {
-    return !!this.queryParamMap_ ? this.queryParamMap_[name] : undefined;
+    return this.queryParamMap_ ? this.queryParamMap_[name] : undefined;
   }
 
   setQueryParam(name: string, value: string) {
-    if (!!this.queryParamMap_) this.queryParamMap_[name] = value;
+    if (this.queryParamMap_) this.queryParamMap_[name] = value;
   }
 
   private copyParams_(from: Params, to: Params) {

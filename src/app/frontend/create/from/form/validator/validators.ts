@@ -22,7 +22,7 @@ export class FormValidators {
    */
   static namePattern(control: FormControl): {[key: string]: object} {
     if (control.value) {
-      const namePattern: RegExp = new RegExp('^[a-z]([-a-z0-9]*[a-z0-9])?$');
+      const namePattern = new RegExp('^[a-z]([-a-z0-9]*[a-z0-9])?$');
       const result = namePattern.test(control.value);
       return result ? null : {namePattern: {value: control.value}};
     }
@@ -54,9 +54,7 @@ export class FormValidators {
     const slashPosition = value.indexOf('/');
     const labelKeyName = slashPosition > -1 ? value.substring(slashPosition + 1) : value;
 
-    return labelKeyName.length <= maxKeyLength
-      ? null
-      : {kdValidLabelKeyPrefixLength: {value: true}};
+    return labelKeyName.length <= maxKeyLength ? null : {kdValidLabelKeyPrefixLength: {value: true}};
   }
 
   /**
@@ -70,9 +68,7 @@ export class FormValidators {
     const slashPosition = value.indexOf('/');
     const labelKeyPrefix = slashPosition > -1 ? value.substring(0, slashPosition) : '';
 
-    return labelKeyPrefix.length <= maxKeyLength
-      ? null
-      : {kdValidLabelKeyPrefixLength: {value: true}};
+    return labelKeyPrefix.length <= maxKeyLength ? null : {kdValidLabelKeyPrefixLength: {value: true}};
   }
 
   /**
@@ -87,9 +83,7 @@ export class FormValidators {
     const slashPosition = value.indexOf('/');
     const labelKeyName = slashPosition > -1 ? value.substring(slashPosition + 1) : value;
 
-    return labelKeyNamePattern.test(labelKeyName) || value === ''
-      ? null
-      : {kdValidLabelKeyNamePattern: {value: true}};
+    return labelKeyNamePattern.test(labelKeyName) || value === '' ? null : {kdValidLabelKeyNamePattern: {value: true}};
   }
 
   static labelKeyPrefixPattern(control: FormControl): {[key: string]: object} {
@@ -98,8 +92,7 @@ export class FormValidators {
 
     const slashPosition = value.indexOf('/');
 
-    const isValid =
-      slashPosition > -1 ? labelKeyPrefixPattern.test(value.substring(0, slashPosition)) : true;
+    const isValid = slashPosition > -1 ? labelKeyPrefixPattern.test(value.substring(0, slashPosition)) : true;
 
     return isValid ? null : {kdValidLabelKeyPrefixPattern: {value: true}};
   }

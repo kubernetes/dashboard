@@ -26,10 +26,7 @@ import {PluginsConfigService} from '../../common/services/global/plugin';
 export class NavComponent implements OnInit {
   @ViewChild(MatDrawer, {static: true}) private readonly nav_: MatDrawer;
 
-  constructor(
-    private readonly navService_: NavService,
-    private readonly pluginsConfigService_: PluginsConfigService,
-  ) {}
+  constructor(private readonly navService_: NavService, private readonly pluginsConfigService_: PluginsConfigService) {}
 
   ngOnInit(): void {
     this.navService_.setNav(this.nav_);

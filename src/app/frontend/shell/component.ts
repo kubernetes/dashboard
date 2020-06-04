@@ -23,13 +23,7 @@ import {
 } from '@angular/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ActivatedRoute, Router} from '@angular/router';
-import {
-  PodContainerList,
-  ShellFrame,
-  SJSCloseEvent,
-  SJSMessageEvent,
-  TerminalResponse,
-} from '@api/backendapi';
+import {PodContainerList, ShellFrame, SJSCloseEvent, SJSMessageEvent, TerminalResponse} from '@api/backendapi';
 import {debounce} from 'lodash';
 import {ReplaySubject, Subject, Subscription} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
@@ -78,11 +72,7 @@ export class ShellComponent implements AfterViewInit, OnDestroy {
     this.namespace_ = this.activatedRoute_.snapshot.params.resourceNamespace;
     this.podName = this.activatedRoute_.snapshot.params.resourceName;
 
-    const containersEndpoint = this.endpoint_.child(
-      this.podName,
-      Resource.container,
-      this.namespace_,
-    );
+    const containersEndpoint = this.endpoint_.child(this.podName, Resource.container, this.namespace_);
     this.containers_
       .get(containersEndpoint)
       .pipe(takeUntil(this.unsubscribe_))
@@ -201,10 +191,9 @@ export class ShellComponent implements AfterViewInit, OnDestroy {
     this.connecting_ = true;
     this.connectionClosed_ = false;
 
-    const terminalSessionUrl = `${EndpointManager.utility(Utility.shell).shell(
-      this.namespace_,
-      this.podName,
-    )}/${this.selectedContainer}`;
+    const terminalSessionUrl = `${EndpointManager.utility(Utility.shell).shell(this.namespace_, this.podName)}/${
+      this.selectedContainer
+    }`;
     const {id} = await this.utility_.shell(terminalSessionUrl).toPromise();
 
     this.conn_ = new SockJS(`api/sockjs?${id}`);

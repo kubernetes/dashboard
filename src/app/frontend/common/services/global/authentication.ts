@@ -63,15 +63,7 @@ export class AuthService {
     }
 
     if (this.isCurrentDomainSecure_()) {
-      this.cookies_.set(
-        this._config.authTokenCookieName,
-        token,
-        null,
-        null,
-        location.hostname,
-        false,
-        'Strict',
-      );
+      this.cookies_.set(this._config.authTokenCookieName, token, null, null, location.hostname, false, 'Strict');
     }
   }
 
@@ -172,15 +164,7 @@ export class AuthService {
 
   skipLoginPage(skip: boolean): void {
     this.removeAuthCookies();
-    this.cookies_.set(
-      this._config.skipLoginPageCookieName,
-      skip.toString(),
-      null,
-      null,
-      null,
-      false,
-      'Strict',
-    );
+    this.cookies_.set(this._config.skipLoginPageCookieName, skip.toString(), null, null, null, false, 'Strict');
   }
 
   /**

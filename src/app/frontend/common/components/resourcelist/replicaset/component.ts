@@ -13,13 +13,7 @@
 // limitations under the License.
 
 import {HttpParams} from '@angular/common/http';
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  ComponentFactoryResolver,
-  Input,
-} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, Input} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Event, Metric, ReplicaSet, ReplicaSetList} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
