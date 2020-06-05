@@ -594,6 +594,11 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			Writes(types.CustomResourceObjectList{}))
 
 	apiV1Ws.Route(
+		apiV1Ws.GET("/crd/{namespace}/{crd}/traefik/{resourceName}").
+			To(apiHandler.handleGetCustomResourceTraefik).
+			Writes(types.CustomResourceObjectList{}))
+
+	apiV1Ws.Route(
 		apiV1Ws.GET("/crd/{namespace}/{crd}/{object}").
 			To(apiHandler.handleGetCustomResourceObjectDetail).
 			Writes(types.CustomResourceObjectDetail{}))
@@ -2328,6 +2333,25 @@ func (apiHandler *APIHandler) handleGetCustomResourceObjectList(request *restful
 	namespace := parseNamespacePathParameter(request)
 	dataSelect := parser.ParseDataSelectPathParameter(request)
 	result, err := customresourcedefinition.GetCustomResourceObjectList(apiextensionsclient, config, namespace, dataSelect, crdName)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetCustomResourceTraefik(request *restful.Request, response *restful.Response) {
+	config, err := apiHandler.cManager.Config(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	objectname := request.PathParameter("resourceName")
+	namespace := parseNamespacePathParameter(request)
+	dataSelect := parser.ParseDataSelectPathParameter(request)
+	result, err := customresourcedefinition.GetTraefikList(config, namespace, dataSelect, objectname)
 	if err != nil {
 		errors.HandleInternalError(response, err)
 		return

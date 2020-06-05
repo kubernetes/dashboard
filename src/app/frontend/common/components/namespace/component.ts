@@ -22,7 +22,7 @@ import {RoleBindingList} from '@api/backendapi';
 import {PodList} from '@api/backendapi';
 import {Subject} from 'rxjs';
 import {startWith, switchMap, takeUntil, first} from 'rxjs/operators';
-
+import {CRDObjectList} from '@api/backendapi';
 import {CONFIG} from '../../../index.config';
 import {NAMESPACE_STATE_PARAM} from '../../params/params';
 import {HistoryService} from '../../services/global/history';
@@ -43,16 +43,17 @@ import {PermissionsService} from 'common/services/global/permissions';
 export class NamespaceSelectorComponent implements OnInit, OnDestroy {
   private namespaceUpdate_ = new Subject();
   private roleBindingUpdate_ = new Subject();
+  private ingressRouteUpdate_ = new Subject();
   private unsubscribe_ = new Subject();
   private readonly endpoint_ = EndpointManager.resource(Resource.namespace);
   private readonly endpointRole_ = EndpointManager.resource(Resource.roleBinding);
-
+  private readonly endpointcrd_ = EndpointManager.resource(Resource.crd, true);
   namespaces: string[] = [];
   selectNamespaceInput = '';
   allNamespacesKey: string;
   selectedNamespace: string;
   resourceNamespaceParam: string;
-
+  endpoint: string;
   @ViewChild(MatSelect, {static: true}) private readonly select_: MatSelect;
   @ViewChild('namespaceInput', {static: true}) private readonly namespaceInputEl_: ElementRef;
 
@@ -61,6 +62,7 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
     private readonly namespaceService_: NamespaceService,
     private readonly namespace_: ResourceService<NamespaceList>,
     private readonly roleBinding_: ResourceService<RoleBindingList>,
+    private readonly ing_: ResourceService<CRDObjectList>,
     private readonly podList_: ResourceService<PodList>,
     private readonly dialog_: MatDialog,
     private readonly kdState_: KdStateService,
@@ -104,6 +106,7 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
 
     this.loadNamespaces_();
     //this.loadRoleBindings_();
+    //this.loadRoleIngressroutes_();
   }
 
   ngOnDestroy(): void {
@@ -180,6 +183,32 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
         () => {
           this.onNamespaceLoaded_();
         },
+      );
+  }
+
+  private loadRoleIngressroutes_(namespace: string): void {
+    this.ingressRouteUpdate_
+      .pipe(takeUntil(this.unsubscribe_))
+      .pipe(startWith({}))
+      .pipe(
+        switchMap(() =>
+          this.ing_.get(
+            'api/v1/crd/' + namespace + '/ingressroutes.traefik.containo.us/traefik/ingressroutes',
+          ),
+        ),
+      )
+      .pipe(first())
+      .subscribe(
+        inglist => {
+          if (inglist.errors.length > 0) {
+            for (const err of inglist.errors) {
+              this.notifications_.pushErrors([err]);
+              console.log([err]);
+            }
+          }
+        },
+        () => {},
+        () => {},
       );
   }
 
