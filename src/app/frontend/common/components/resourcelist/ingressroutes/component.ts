@@ -24,6 +24,7 @@ import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
 import {ListGroupIdentifier, ListIdentifier} from '../groupids';
+import {defaultThrottleConfig} from 'rxjs/internal-compatibility';
 
 @Component({
   selector: 'kd-ingressroute-list',
@@ -33,7 +34,7 @@ import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 export class IngressRouteListComponent extends ResourceListBase<CRDObjectList, CRDObject> {
   @Input() endpoint;
   objectType: string;
-
+  objectName: string;
   constructor(
     private readonly crdObject_: NamespacedResourceService<CRDObjectList>,
     private readonly activatedRoute_: ActivatedRoute,
@@ -49,7 +50,16 @@ export class IngressRouteListComponent extends ResourceListBase<CRDObjectList, C
     this.groupId = ListGroupIdentifier.none;
     const url = activatedRoute_.snapshot['_routerState']['url'];
     this.objectType = url.split(';')[0].split('/')[1];
-
+    switch (this.objectType) {
+      case 'ingressroutes':
+        this.objectName = 'IngressRoutes';
+        break;
+      case 'ingressroutetcps':
+        this.objectName = 'IngressRouteTCPs';
+        break;
+      default:
+        this.objectName = this.objectType;
+    }
     this.endpoint = EndpointManager.resource(Resource.crd, true).traefik(this.objectType);
 
     // Register action columns.
@@ -67,12 +77,13 @@ export class IngressRouteListComponent extends ResourceListBase<CRDObjectList, C
         item.objectMeta.annotations['kubectl.kubernetes.io/last-applied-configuration'],
       );
       item.objectMeta['traefik'] = json;
+      item.typeMeta.kind = this.objectType + '.traefik.containo.us';
       ingressrouteList.push(item);
     });
     return ingressrouteList;
   }
 
   getDisplayColumns(): string[] {
-    return ['names', 'name', 'service', 'port', 'entrypoint', 'created'];
+    return ['title', 'host', 'service', 'port', 'entrypoint', 'created'];
   }
 }
