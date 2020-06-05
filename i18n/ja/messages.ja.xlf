@@ -606,6 +606,10 @@
           <context context-type="linenumber">23</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/ingressroutes/template.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/job/template.html</context>
           <context context-type="linenumber">29</context>
         </context-group>
@@ -2559,13 +2563,33 @@
           <context context-type="linenumber">139</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="950167b1c4eae7d3d3efdc6508f72c0c78a3f3cd" datatype="html">
+        <source>IngressRoutes
+      </source>
+        <target state="new">IngressRoutes
+      </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">144</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8d6b7d147911e1d13187825c308cdd70f01dabd0" datatype="html">
+        <source>IngressRouteTCPs
+      </source>
+        <target state="new">IngressRouteTCPs
+      </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">149</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="5502d7f80d7951086a85d2da478f3f13763939d5" datatype="html">
         <source>Services
       </source>
         <target>サービス</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">144</context>
+          <context context-type="linenumber">154</context>
         </context-group>
       </trans-unit>
       <trans-unit id="be3dcec436583ff66cce312fd2074779d8851f54" datatype="html">
@@ -2574,7 +2598,7 @@
         <target>コンフィグとストレージ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">150</context>
+          <context context-type="linenumber">160</context>
         </context-group>
       </trans-unit>
       <trans-unit id="990cffc29a7adb5ec1110b0176c8c12fff756eba" datatype="html">
@@ -2583,7 +2607,7 @@
         <target>コンフィグマップ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">155</context>
+          <context context-type="linenumber">165</context>
         </context-group>
       </trans-unit>
       <trans-unit id="74be5bc42681451056aacf13382e5b29c62bd903" datatype="html">
@@ -2592,7 +2616,7 @@
         <target>永続ボリューム要求</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">160</context>
+          <context context-type="linenumber">170</context>
         </context-group>
       </trans-unit>
       <trans-unit id="755417c37ab5d459cd2443b3776aaaca7ec87f90" datatype="html">
@@ -2601,7 +2625,7 @@
         <target>シークレット</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">165</context>
+          <context context-type="linenumber">175</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1d216da7f53e1afcd7bffd53c0a6b0f2502cde4d" datatype="html">
@@ -2611,7 +2635,7 @@
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">171</context>
+          <context context-type="linenumber">181</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f2f9d18ebacb9e3bcb996d8176609e306864265e" datatype="html">
@@ -2621,7 +2645,7 @@
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">183</context>
+          <context context-type="linenumber">193</context>
         </context-group>
       </trans-unit>
       <trans-unit id="03511cfe5e28ed3380ab198c13cf62ebde1e89e6" datatype="html">
@@ -2630,7 +2654,7 @@
         <target>設定</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">195</context>
+          <context context-type="linenumber">205</context>
         </context-group>
       </trans-unit>
       <trans-unit id="c2fa735eb6b1b2c10171c5acb818f6e0975a9406" datatype="html">
@@ -2639,7 +2663,7 @@
         <target>Kubernetes Dashboard について</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">201</context>
+          <context context-type="linenumber">211</context>
         </context-group>
       </trans-unit>
       <trans-unit id="01269ce8051398188d50367ead1831407e77d504" datatype="html">

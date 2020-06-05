@@ -32,7 +32,7 @@ export class TitleService {
       () => {
         this.clusterName = this.settings_.getClusterName();
         if (this.config.getCustomConfig()) {
-          this.titleStr = this.config.getCustomConfig()['title'];
+          this.titleStr = this.config.getTitle();
         }
 
         this.apply_();

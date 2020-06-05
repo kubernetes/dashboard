@@ -137,6 +137,12 @@ func GetCustomResourceObjectDetail(client apiextensionsclientset.Interface, name
 	return nil, errors.NewNotFound(fmt.Sprintf("unsupported extensions api versions: %s", version))
 }
 
+func GetTraefikList(config *rest.Config, namespace *common.NamespaceQuery, dsQuery *dataselect.DataSelectQuery, objectType string) (*types.CustomResourceObjectList, error) {
+
+	return crdv1.GetTraefikList(config, namespace, dsQuery, objectType)
+
+}
+
 func NewRESTClient(config *rest.Config, group, version string) (*rest.RESTClient, error) {
 	groupVersion := schema.GroupVersion{
 		Group:   group,

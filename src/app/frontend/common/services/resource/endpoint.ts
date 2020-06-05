@@ -56,6 +56,12 @@ class ResourceEndpoint {
     return `${baseHref}/${this.resource_}${this.namespaced_ ? '/:namespace' : ''}`;
   }
 
+  traefik(objectType: string): string {
+    return `api/v1/crd/${
+      this.namespaced_ ? '/:namespace' : ''
+    }/${objectType}.traefik.containo.us/traefik/${objectType}`;
+  }
+
   detail(): string {
     return `${baseHref}/${this.resource_}${this.namespaced_ ? '/:namespace' : ''}/:name`;
   }

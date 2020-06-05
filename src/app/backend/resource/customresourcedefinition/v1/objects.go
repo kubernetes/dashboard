@@ -22,7 +22,7 @@ import (
 	apiextensionsclientset "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/rest"
-
+	"k8s.io/apimachinery/pkg/runtime/schema"
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
@@ -73,6 +73,43 @@ func GetCustomResourceObjectList(client apiextensionsclientset.Interface, config
 	for i := range list.Items {
 		toCRDObject(&list.Items[i], customResourceDefinition)
 	}
+
+	return list, nil
+}
+
+// Fixed crd version and group to traefik
+func GetTraefikList(config *rest.Config, namespace *common.NamespaceQuery, dsQuery *dataselect.DataSelectQuery, objectType string) (*types.CustomResourceObjectList, error) {
+	var list *types.CustomResourceObjectList
+
+	restClient, err := NewRESTClient2(config, schema.GroupVersion{
+		Group:   "traefik.containo.us",
+		Version: "v1alpha1",
+	})
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
+	}
+
+		raw, err := restClient.Get().
+		Namespace(namespace.ToRequestParam()).
+		Resource(objectType).
+		Do(context.TODO()).Raw()
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
+	}
+
+	err = json.Unmarshal(raw, &list)
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
+	if criticalError != nil {
+		return nil, criticalError
+	}
+	list.Errors = nonCriticalErrors
+
+	// Return only slice of data, pagination is done here.
+	crdObjectCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toObjectCells(list.Items), dsQuery)
+	list.Items = fromObjectCells(crdObjectCells)
+	list.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
 	return list, nil
 }
