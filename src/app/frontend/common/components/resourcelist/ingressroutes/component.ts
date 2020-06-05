@@ -73,6 +73,6 @@ export class IngressRouteListComponent extends ResourceListBase<CRDObjectList, C
   }
 
   getDisplayColumns(): string[] {
-    return ['namespace', 'name', 'host', 'service', 'port', 'entrypoint'];
+    return ['names', 'name', 'service', 'port', 'entrypoint', 'created'];
   }
 }

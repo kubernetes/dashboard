@@ -36,42 +36,44 @@ limitations under the License.
                matSortActive="age"
                matSortDisableClear
                matSortDirection="asc">
+
       <ng-container [matColumnDef]="getColumns()[0]">
         <mat-header-cell *matHeaderCellDef
-                         >Namespace</mat-header-cell>
-        <mat-cell *matCellDef="let object">
-            {{object.objectMeta.traefik.metadata.namespace}}
-        </mat-cell>
-      </ng-container>
-
-      <ng-container [matColumnDef]="getColumns()[1]">
-        <mat-header-cell *matHeaderCellDef
-                         >Name</mat-header-cell>
+                         >Nom</mat-header-cell>
         <mat-cell *matCellDef="let object">{{object.objectMeta.traefik.metadata.name}}</mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getColumns()[2]">
+      <ng-container [matColumnDef]="getColumns()[1]">
         <mat-header-cell *matHeaderCellDef
                          >Host</mat-header-cell>
         <mat-cell *matCellDef="let object">{{object.objectMeta.traefik.spec.routes[0].match}}</mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getColumns()[3]">
+      <ng-container [matColumnDef]="getColumns()[2]">
         <mat-header-cell *matHeaderCellDef
                          >Service</mat-header-cell>
         <mat-cell *matCellDef="let object">{{object.objectMeta.traefik.spec.routes[0].services[0].name}}</mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getColumns()[4]">
+      <ng-container [matColumnDef]="getColumns()[3]">
         <mat-header-cell *matHeaderCellDef
                          >Port</mat-header-cell>
         <mat-cell *matCellDef="let object">{{object.objectMeta.traefik.spec.routes[0].services[0].port}}</mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getColumns()[5]">
+      <ng-container [matColumnDef]="getColumns()[4]">
         <mat-header-cell *matHeaderCellDef
                          >Entrypoint</mat-header-cell>
         <mat-cell *matCellDef="let object">{{object.objectMeta.traefik.spec.entryPoints[0]}}</mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getColumns()[5]">
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Created</mat-header-cell>
+        <mat-cell *matCellDef="let object">
+          <kd-date [date]="object.objectMeta.creationTimestamp"
+                   relative></kd-date>
+        </mat-cell>
       </ng-container>
 
       <ng-container *ngFor="let col of getActionColumns()"
