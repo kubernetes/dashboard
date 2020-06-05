@@ -41,9 +41,7 @@ export class CreateSecretDialog implements OnInit {
   /**
    * Pattern validation rule for secretName.
    */
-  secretNamePattern = new RegExp(
-    '^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$',
-  );
+  secretNamePattern = new RegExp('^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$');
 
   /**
    * Pattern validating if the secret data is Base64 encoded.

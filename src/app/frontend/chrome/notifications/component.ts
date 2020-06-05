@@ -27,10 +27,7 @@ export class NotificationsComponent {
   isOpen_ = false;
   notifications: Notification[] = [];
 
-  constructor(
-    private readonly notifications_: NotificationsService,
-    private readonly element_: ElementRef,
-  ) {}
+  constructor(private readonly notifications_: NotificationsService, private readonly element_: ElementRef) {}
 
   @HostListener('document:click', ['$event'])
   private onOutsideClick_(event: Event): void {

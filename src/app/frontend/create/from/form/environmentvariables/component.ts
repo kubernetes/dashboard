@@ -45,7 +45,7 @@ import {EnvironmentVariable} from '@api/backendapi';
 export class EnvironmentVariablesComponent implements ControlValueAccessor {
   form: FormGroup;
 
-  namePattern: RegExp = new RegExp('^[A-Za-z_][A-Za-z0-9_]*$');
+  namePattern = new RegExp('^[A-Za-z_][A-Za-z0-9_]*$');
 
   constructor(private readonly fb_: FormBuilder) {}
 

@@ -29,8 +29,7 @@ const EVENT_TYPE_WARNING = 'Warning';
   templateUrl: './template.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EventListComponent extends ResourceListWithStatuses<EventList, Event>
-  implements OnInit {
+export class EventListComponent extends ResourceListWithStatuses<EventList, Event> implements OnInit {
   @Input() endpoint: string;
 
   constructor(

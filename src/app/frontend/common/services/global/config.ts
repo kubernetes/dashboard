@@ -43,9 +43,8 @@ export class ConfigService {
     if (this.config_.serverTime) {
       const elapsed = new Date().getTime() - this.initTime_;
       return new Date(this.config_.serverTime + elapsed);
-    } else {
-      return new Date();
     }
+    return new Date();
   }
 
   getVersionInfo(): VersionInfo {

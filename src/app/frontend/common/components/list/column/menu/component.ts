@@ -69,12 +69,7 @@ export class MenuComponent implements ActionColumn {
   }
 
   getLogsHref(): string {
-    return this.kdState_.href(
-      'log',
-      this.objectMeta.name,
-      this.objectMeta.namespace,
-      this.typeMeta.kind,
-    );
+    return this.kdState_.href('log', this.objectMeta.name, this.objectMeta.namespace, this.typeMeta.kind);
   }
 
   isExecEnabled(): boolean {
@@ -119,11 +114,7 @@ export class MenuComponent implements ActionColumn {
   }
 
   isPinned(): boolean {
-    return this.pinner_.isPinned(
-      this.typeMeta.kind,
-      this.objectMeta.name,
-      this.objectMeta.namespace,
-    );
+    return this.pinner_.isPinned(this.typeMeta.kind, this.objectMeta.name, this.objectMeta.namespace);
   }
 
   onEdit(): void {

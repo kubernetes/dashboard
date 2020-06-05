@@ -77,10 +77,7 @@ export class LogsDownloadDialog implements OnDestroy {
   }
 
   save(): void {
-    FileSaver.saveAs(
-      this.result,
-      this.logService.getLogFileName(this.data.pod, this.data.container),
-    );
+    FileSaver.saveAs(this.result, this.logService.getLogFileName(this.data.pod, this.data.container));
     this.dialogRef.close();
   }
 

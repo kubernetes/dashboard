@@ -26,9 +26,6 @@ export class GraphMetricsComponent {
   readonly GraphType: typeof GraphType = GraphType;
 
   showGraphs(): boolean {
-    return (
-      this.metrics &&
-      this.metrics.every(metrics => metrics.dataPoints && metrics.dataPoints.length > 1)
-    );
+    return this.metrics && this.metrics.every(metrics => metrics.dataPoints && metrics.dataPoints.length > 1);
   }
 }

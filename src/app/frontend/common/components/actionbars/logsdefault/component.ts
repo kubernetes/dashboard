@@ -31,17 +31,13 @@ export class LogsDefaultActionbar implements OnInit, OnDestroy {
   constructor(private readonly actionbar_: ActionbarService) {}
 
   ngOnInit(): void {
-    this.actionbar_.onInit
-      .pipe(takeUntil(this._unsubscribe))
-      .subscribe((resourceMeta: ResourceMeta) => {
-        this.resourceMeta = resourceMeta;
-        this.isInitialized = true;
-        this.isVisible = true;
-      });
+    this.actionbar_.onInit.pipe(takeUntil(this._unsubscribe)).subscribe((resourceMeta: ResourceMeta) => {
+      this.resourceMeta = resourceMeta;
+      this.isInitialized = true;
+      this.isVisible = true;
+    });
 
-    this.actionbar_.onDetailsLeave
-      .pipe(takeUntil(this._unsubscribe))
-      .subscribe(() => (this.isVisible = false));
+    this.actionbar_.onDetailsLeave.pipe(takeUntil(this._unsubscribe)).subscribe(() => (this.isVisible = false));
   }
 
   ngOnDestroy(): void {

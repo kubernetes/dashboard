@@ -59,8 +59,7 @@ import {ParamsService} from '../services/global/params';
 import {KdStateService} from '../services/global/state';
 
 @Directive()
-export abstract class ResourceListBase<T extends ResourceList, R extends Resource>
-  implements OnInit, OnDestroy {
+export abstract class ResourceListBase<T extends ResourceList, R extends Resource> implements OnInit, OnDestroy {
   // Base properties
   private readonly actionColumns_: Array<ActionColumnDef<ActionColumn>> = [];
   private readonly data_ = new MatTableDataSource<R>();
@@ -202,11 +201,7 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
     } as ActionColumnDef<ActionColumn>);
   }
 
-  protected registerDynamicColumn(
-    col: string,
-    afterCol: string,
-    whenCallback: ColumnWhenCallback,
-  ): void {
+  protected registerDynamicColumn(col: string, afterCol: string, whenCallback: ColumnWhenCallback): void {
     this.dynamicColumns_.push({
       col,
       afterCol,
@@ -267,9 +262,7 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
       result = params;
     }
 
-    return result
-      .set('itemsPerPage', `${this.itemsPerPage}`)
-      .set('page', `${this.matPaginator_.pageIndex + 1}`);
+    return result.set('itemsPerPage', `${this.itemsPerPage}`).set('page', `${this.matPaginator_.pageIndex + 1}`);
   }
 
   private filter_(params?: HttpParams): HttpParams {
@@ -362,10 +355,10 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
 }
 
 @Directive()
-export abstract class ResourceListWithStatuses<
-  T extends ResourceList,
-  R extends Resource
-> extends ResourceListBase<T, R> {
+export abstract class ResourceListWithStatuses<T extends ResourceList, R extends Resource> extends ResourceListBase<
+  T,
+  R
+> {
   private readonly bindings_: {[hash: number]: StateBinding<R>} = {};
   @ViewChildren('matrow', {read: ViewContainerRef})
   private readonly containers_: QueryList<ViewContainerRef>;
@@ -462,11 +455,7 @@ export abstract class ResourceListWithStatuses<
     return false;
   }
 
-  protected registerBinding(
-    iconName: IconName,
-    iconClass: string,
-    callbackFunction: StatusCheckCallback<R>,
-  ): void {
+  protected registerBinding(iconName: IconName, iconClass: string, callbackFunction: StatusCheckCallback<R>): void {
     const icon = new Icon(String(iconName), iconClass);
     this.bindings_[icon.hash()] = {icon, callbackFunction};
   }

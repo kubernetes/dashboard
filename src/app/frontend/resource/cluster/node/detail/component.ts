@@ -61,15 +61,13 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
     this.podListEndpoint = this.endpoint_.child(resourceName, Resource.pod);
     this.eventListEndpoint = this.endpoint_.child(resourceName, Resource.event);
 
-    this.nodeSubscription_ = this.node_
-      .get(this.endpoint_.detail(), resourceName)
-      .subscribe((d: NodeDetail) => {
-        this.node = d;
-        this._getAllocation();
-        this.notifications_.pushErrors(d.errors);
-        this.actionbar_.onInit.emit(new ResourceMeta('Node', d.objectMeta, d.typeMeta));
-        this.isInitialized = true;
-      });
+    this.nodeSubscription_ = this.node_.get(this.endpoint_.detail(), resourceName).subscribe((d: NodeDetail) => {
+      this.node = d;
+      this._getAllocation();
+      this.notifications_.pushErrors(d.errors);
+      this.actionbar_.onInit.emit(new ResourceMeta('Node', d.objectMeta, d.typeMeta));
+      this.isInitialized = true;
+    });
   }
 
   ngOnDestroy(): void {
@@ -78,34 +76,20 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
   }
 
   private _getAllocation(): void {
-    const cpuLimitsValue = FormattedValue.NewFormattedCoreValue(
-      this.node.allocatedResources.cpuLimits,
-    );
-    const cpuRequestsValue = FormattedValue.NewFormattedCoreValue(
-      this.node.allocatedResources.cpuRequests,
-    );
-    const cpuCapacityValue = FormattedValue.NewFormattedCoreValue(
-      this.node.allocatedResources.cpuCapacity,
-    );
+    const cpuLimitsValue = FormattedValue.NewFormattedCoreValue(this.node.allocatedResources.cpuLimits);
+    const cpuRequestsValue = FormattedValue.NewFormattedCoreValue(this.node.allocatedResources.cpuRequests);
+    const cpuCapacityValue = FormattedValue.NewFormattedCoreValue(this.node.allocatedResources.cpuCapacity);
 
-    const memoryLimitsValue = FormattedValue.NewFormattedMemoryValue(
-      this.node.allocatedResources.memoryLimits,
-    );
-    const memoryRequestsValue = FormattedValue.NewFormattedMemoryValue(
-      this.node.allocatedResources.memoryRequests,
-    );
-    const memoryCapacityValue = FormattedValue.NewFormattedMemoryValue(
-      this.node.allocatedResources.memoryCapacity,
-    );
+    const memoryLimitsValue = FormattedValue.NewFormattedMemoryValue(this.node.allocatedResources.memoryLimits);
+    const memoryRequestsValue = FormattedValue.NewFormattedMemoryValue(this.node.allocatedResources.memoryRequests);
+    const memoryCapacityValue = FormattedValue.NewFormattedMemoryValue(this.node.allocatedResources.memoryCapacity);
 
     if (
       cpuLimitsValue.suffixPower !== cpuRequestsValue.suffixPower ||
       cpuLimitsValue.suffixPower !== cpuCapacityValue.suffixPower
     ) {
       const suffix =
-        cpuLimitsValue.suffixPower < cpuRequestsValue.suffixPower
-          ? cpuLimitsValue.suffix
-          : cpuRequestsValue.suffix;
+        cpuLimitsValue.suffixPower < cpuRequestsValue.suffixPower ? cpuLimitsValue.suffix : cpuRequestsValue.suffix;
 
       cpuLimitsValue.normalize(suffix);
       cpuRequestsValue.normalize(suffix);
@@ -126,16 +110,14 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
       memoryCapacityValue.normalize(suffix);
     }
 
-    this.cpuLabel =
-      cpuRequestsValue.suffix.length > 0 ? `${cpuRequestsValue.suffix}cores` : 'Cores';
+    this.cpuLabel = cpuRequestsValue.suffix.length > 0 ? `${cpuRequestsValue.suffix}cores` : 'Cores';
     this.cpuCapacity = cpuCapacityValue.value;
     this.cpuAllocation = [
       {name: 'Requests', value: cpuRequestsValue.value},
       {name: 'Limits', value: cpuLimitsValue.value},
     ];
 
-    this.memoryLabel =
-      memoryRequestsValue.suffix.length > 0 ? `${memoryRequestsValue.suffix}B` : 'B';
+    this.memoryLabel = memoryRequestsValue.suffix.length > 0 ? `${memoryRequestsValue.suffix}B` : 'B';
     this.memoryCapacity = memoryCapacityValue.value;
     this.memoryAllocation = [
       {name: 'Requests', value: memoryRequestsValue.value},
@@ -151,9 +133,7 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
 
   getTaints(): string[] {
     return this.node.taints.map((taint: NodeTaint) => {
-      return taint.value
-        ? `${taint.key}=${taint.value}:${taint.effect}`
-        : `${taint.key}=${taint.effect}`;
+      return taint.value ? `${taint.key}=${taint.value}:${taint.effect}` : `${taint.key}=${taint.effect}`;
     });
   }
 }

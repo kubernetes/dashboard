@@ -36,10 +36,7 @@ export class AssetsService {
       this.appLogoTextIcon_,
       sanitizer_.bypassSecurityTrustResourceUrl(`${this.assetsPath_}/${this.appLogoTextSvg_}`),
     );
-    iconRegistry_.addSvgIcon(
-      'pin',
-      sanitizer_.bypassSecurityTrustResourceUrl(`${this.assetsPath_}/pin.svg`),
-    );
+    iconRegistry_.addSvgIcon('pin', sanitizer_.bypassSecurityTrustResourceUrl(`${this.assetsPath_}/pin.svg`));
     iconRegistry_.addSvgIcon(
       'pin-crossed',
       sanitizer_.bypassSecurityTrustResourceUrl(`${this.assetsPath_}/pin-crossed.svg`),

@@ -179,9 +179,7 @@ describe('ServiceDetailComponent', () => {
     const component = fixture.componentInstance;
 
     fixture.detectChanges();
-    const debugElement = fixture.debugElement.query(
-      By.css('kd-property.object-meta-name div.kd-property-value div'),
-    );
+    const debugElement = fixture.debugElement.query(By.css('kd-property.object-meta-name div.kd-property-value div'));
     expect(debugElement).toBeTruthy();
 
     const htmlElement = debugElement.nativeElement;

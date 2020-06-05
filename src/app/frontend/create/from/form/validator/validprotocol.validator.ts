@@ -14,12 +14,7 @@
 
 import {HttpClient} from '@angular/common/http';
 import {Directive, forwardRef, Input} from '@angular/core';
-import {
-  AbstractControl,
-  AsyncValidator,
-  AsyncValidatorFn,
-  NG_ASYNC_VALIDATORS,
-} from '@angular/forms';
+import {AbstractControl, AsyncValidator, AsyncValidatorFn, NG_ASYNC_VALIDATORS} from '@angular/forms';
 import {Observable} from 'rxjs/Observable';
 import {debounceTime, map} from 'rxjs/operators';
 
@@ -55,20 +50,19 @@ export function validateProtocol(http: HttpClient, isExternal: boolean): AsyncVa
   return (control: AbstractControl): Observable<{[key: string]: boolean} | null> => {
     if (!control.value) {
       return Observable.of(null);
-    } else {
-      const protocol = control.value;
-      return http
-        .post<{valid: boolean}>('api/v1/appdeployment/validate/protocol', {
-          protocol,
-          isExternal,
-        })
-        .first()
-        .pipe(
-          debounceTime(500),
-          map(res => {
-            return !res.valid ? {[validProtocolValidationKey]: true} : null;
-          }),
-        );
     }
+    const protocol = control.value;
+    return http
+      .post<{valid: boolean}>('api/v1/appdeployment/validate/protocol', {
+        protocol,
+        isExternal,
+      })
+      .first()
+      .pipe(
+        debounceTime(500),
+        map(res => {
+          return !res.valid ? {[validProtocolValidationKey]: true} : null;
+        }),
+      );
   };
 }

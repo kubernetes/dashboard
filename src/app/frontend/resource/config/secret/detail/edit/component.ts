@@ -66,13 +66,11 @@ export class SecretDetailEditComponent implements OnInit {
         const dataValue = this.encode_(this.text);
         resource.data[this.key] = this.encode_(this.text);
         const url = RawResource.getUrl(this.secret.typeMeta, this.secret.objectMeta);
-        this.http_
-          .put(url, resource, {headers: this.getHttpHeaders_(), responseType: 'text'})
-          .subscribe(() => {
-            // Update current data value for secret, so refresh isn't needed.
-            this.secret_.data[this.key] = dataValue;
-            this.onClose.emit(true);
-          }, this.handleErrorResponse_.bind(this));
+        this.http_.put(url, resource, {headers: this.getHttpHeaders_(), responseType: 'text'}).subscribe(() => {
+          // Update current data value for secret, so refresh isn't needed.
+          this.secret_.data[this.key] = dataValue;
+          this.onClose.emit(true);
+        }, this.handleErrorResponse_.bind(this));
       });
   }
 

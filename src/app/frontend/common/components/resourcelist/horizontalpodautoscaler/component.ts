@@ -13,13 +13,7 @@
 // limitations under the License.
 
 import {HttpParams} from '@angular/common/http';
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  ComponentFactoryResolver,
-  Input,
-} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, Input} from '@angular/core';
 import {HorizontalPodAutoscaler, HorizontalPodAutoscalerList} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
 import {ResourceListWithStatuses} from '../../../resources/list';
@@ -41,9 +35,7 @@ export class HorizontalPodAutoscalerListComponent extends ResourceListWithStatus
   @Input() endpoint = EndpointManager.resource(Resource.horizontalPodAutoscaler, true).list();
 
   constructor(
-    private readonly horizontalpodautoscaler_: NamespacedResourceService<
-      HorizontalPodAutoscalerList
-    >,
+    private readonly horizontalpodautoscaler_: NamespacedResourceService<HorizontalPodAutoscalerList>,
     notifications: NotificationsService,
     resolver: ComponentFactoryResolver,
     cdr: ChangeDetectorRef,

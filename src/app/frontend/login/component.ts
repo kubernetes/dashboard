@@ -15,12 +15,7 @@
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Component, NgZone, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {
-  AuthenticationMode,
-  EnabledAuthenticationModes,
-  LoginSkippableResponse,
-  LoginSpec,
-} from '@api/backendapi';
+import {AuthenticationMode, EnabledAuthenticationModes, LoginSkippableResponse, LoginSpec} from '@api/backendapi';
 import {KdError, KdFile, StateError} from '@api/frontendapi';
 import {map} from 'rxjs/operators';
 
@@ -90,9 +85,7 @@ export class LoginComponent implements OnInit {
     this.authService_.login(this.getLoginSpec_()).subscribe(
       (errors: K8SError[]) => {
         if (errors.length > 0) {
-          this.errors = errors.map((error: K8SError) =>
-            new K8SError(error.ErrStatus).toKdError().localize(),
-          );
+          this.errors = errors.map((error: K8SError) => new K8SError(error.ErrStatus).toKdError().localize());
           return;
         }
 

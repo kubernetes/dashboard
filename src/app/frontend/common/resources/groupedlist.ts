@@ -80,10 +80,7 @@ export class GroupedResourceList {
       }
       case ListIdentifier.daemonSet: {
         const daemonSets = list as DaemonSetList;
-        this.resourcesRatio.daemonSetRatio = Helper.getResourceRatio(
-          daemonSets.status,
-          daemonSets.listMeta.totalItems,
-        );
+        this.resourcesRatio.daemonSetRatio = Helper.getResourceRatio(daemonSets.status, daemonSets.listMeta.totalItems);
         break;
       }
       case ListIdentifier.deployment: {

@@ -38,9 +38,7 @@ export class UserPanelComponent implements OnInit {
   }
 
   isAuthSkipped(): boolean {
-    return (
-      this.loginStatus && !this.authService_.isLoginPageEnabled() && !this.loginStatus.headerPresent
-    );
+    return this.loginStatus && !this.authService_.isLoginPageEnabled() && !this.loginStatus.headerPresent;
   }
 
   isLoggedIn(): boolean {

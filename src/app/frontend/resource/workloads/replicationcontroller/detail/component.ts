@@ -48,20 +48,14 @@ export class ReplicationControllerDetailComponent implements OnInit, OnDestroy {
 
     this.eventListEndpoint = this.endpoint_.child(resourceName, Resource.event, resourceNamespace);
     this.podListEndpoint = this.endpoint_.child(resourceName, Resource.pod, resourceNamespace);
-    this.serviceListEndpoint = this.endpoint_.child(
-      resourceName,
-      Resource.service,
-      resourceNamespace,
-    );
+    this.serviceListEndpoint = this.endpoint_.child(resourceName, Resource.service, resourceNamespace);
 
     this.replicationControllerSubscription_ = this.replicationController_
       .get(this.endpoint_.detail(), resourceName, resourceNamespace)
       .subscribe((d: ReplicationControllerDetail) => {
         this.replicationController = d;
         this.notifications_.pushErrors(d.errors);
-        this.actionbar_.onInit.emit(
-          new ResourceMeta('Replication Controller', d.objectMeta, d.typeMeta),
-        );
+        this.actionbar_.onInit.emit(new ResourceMeta('Replication Controller', d.objectMeta, d.typeMeta));
         this.isInitialized = true;
       });
   }

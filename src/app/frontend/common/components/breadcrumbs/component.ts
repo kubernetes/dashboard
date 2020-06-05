@@ -76,12 +76,7 @@ export class BreadcrumbsComponent implements OnInit {
     ) {
       if (currentRoute.routeConfig.data.parent === LOGS_PARENT_PLACEHOLDER) {
         route = this._getLogsParent(currentRoute.snapshot.params);
-        urlArray = [
-          '',
-          urlArray[urlArray.length - 1],
-          urlArray[urlArray.length - 3],
-          urlArray[urlArray.length - 2],
-        ];
+        urlArray = ['', urlArray[urlArray.length - 1], urlArray[urlArray.length - 3], urlArray[urlArray.length - 2]];
         routeParamsCount = 0;
       } else if (currentRoute.routeConfig.data.parent === EXEC_PARENT_PLACEHOLDER) {
         route = POD_DETAIL_ROUTE;
@@ -122,9 +117,8 @@ export class BreadcrumbsComponent implements OnInit {
       return REPLICATIONCONTROLLER_DETAIL_ROUTE;
     } else if (resourceType === 'replicaset') {
       return REPLICASET_DETAIL_ROUTE;
-    } else {
-      return undefined;
     }
+    return undefined;
   }
 
   private _getCurrentRoute(): ActivatedRoute {
@@ -147,8 +141,7 @@ export class BreadcrumbsComponent implements OnInit {
       return breadcrumb;
     } else if (route && route.component) {
       return route.component.name;
-    } else {
-      return 'Unknown';
     }
+    return 'Unknown';
   }
 }

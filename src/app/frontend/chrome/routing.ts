@@ -36,13 +36,11 @@ const routes: Routes = [
       },
       {
         path: 'clusterrole',
-        loadChildren: () =>
-          import('resource/cluster/clusterrole/module').then(m => m.ClusterRoleModule),
+        loadChildren: () => import('resource/cluster/clusterrole/module').then(m => m.ClusterRoleModule),
       },
       {
         path: 'namespace',
-        loadChildren: () =>
-          import('resource/cluster/namespace/module').then(m => m.NamespaceModule),
+        loadChildren: () => import('resource/cluster/namespace/module').then(m => m.NamespaceModule),
       },
       {
         path: 'node',
@@ -50,13 +48,11 @@ const routes: Routes = [
       },
       {
         path: 'persistentvolume',
-        loadChildren: () =>
-          import('resource/cluster/persistentvolume/module').then(m => m.PersistentVolumeModule),
+        loadChildren: () => import('resource/cluster/persistentvolume/module').then(m => m.PersistentVolumeModule),
       },
       {
         path: 'storageclass',
-        loadChildren: () =>
-          import('resource/cluster/storageclass/module').then(m => m.StorageClassModule),
+        loadChildren: () => import('resource/cluster/storageclass/module').then(m => m.StorageClassModule),
       },
 
       // Overview
@@ -76,13 +72,11 @@ const routes: Routes = [
       },
       {
         path: 'daemonset',
-        loadChildren: () =>
-          import('resource/workloads/daemonset/module').then(m => m.DaemonSetModule),
+        loadChildren: () => import('resource/workloads/daemonset/module').then(m => m.DaemonSetModule),
       },
       {
         path: 'deployment',
-        loadChildren: () =>
-          import('resource/workloads/deployment/module').then(m => m.DeploymentModule),
+        loadChildren: () => import('resource/workloads/deployment/module').then(m => m.DeploymentModule),
       },
       {
         path: 'job',
@@ -94,20 +88,16 @@ const routes: Routes = [
       },
       {
         path: 'replicaset',
-        loadChildren: () =>
-          import('resource/workloads/replicaset/module').then(m => m.ReplicaSetModule),
+        loadChildren: () => import('resource/workloads/replicaset/module').then(m => m.ReplicaSetModule),
       },
       {
         path: 'replicationcontroller',
         loadChildren: () =>
-          import('resource/workloads/replicationcontroller/module').then(
-            m => m.ReplicationControllerModule,
-          ),
+          import('resource/workloads/replicationcontroller/module').then(m => m.ReplicationControllerModule),
       },
       {
         path: 'statefulset',
-        loadChildren: () =>
-          import('resource/workloads/statefulset/module').then(m => m.StatefulSetModule),
+        loadChildren: () => import('resource/workloads/statefulset/module').then(m => m.StatefulSetModule),
       },
 
       // Discovery and load balancing group
@@ -140,9 +130,7 @@ const routes: Routes = [
       {
         path: 'persistentvolumeclaim',
         loadChildren: () =>
-          import('resource/config/persistentvolumeclaim/module').then(
-            m => m.PersistentVolumeClaimModule,
-          ),
+          import('resource/config/persistentvolumeclaim/module').then(m => m.PersistentVolumeClaimModule),
       },
       {
         path: 'secret',

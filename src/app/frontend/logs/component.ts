@@ -38,8 +38,7 @@ const newestTimestamp = 'newest';
 
 const i18n = {
   MSG_LOGS_ZEROSTATE_TEXT: 'The selected container has not logged any messages yet.',
-  MSG_LOGS_TRUNCATED_WARNING:
-    'The middle part of the log file cannot be loaded, because it is too big.',
+  MSG_LOGS_TRUNCATED_WARNING: 'The middle part of the log file cannot be loaded, because it is too big.',
 };
 
 type ScrollPosition = 'TOP' | 'BOTTOM';

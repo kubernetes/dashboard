@@ -22,11 +22,7 @@ export enum ResourceRatioModes {
 }
 
 export class Helper {
-  static getResourceRatio(
-    status: Status,
-    totalItems: number,
-    mode = ResourceRatioModes.Default,
-  ): RatioItem[] {
+  static getResourceRatio(status: Status, totalItems: number, mode = ResourceRatioModes.Default): RatioItem[] {
     if (totalItems === 0) {
       return [];
     }
