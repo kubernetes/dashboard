@@ -71,7 +71,7 @@ limitations under the License.
   </div>
 </kd-card>
 
-<kd-condition-list [conditions]="job?.jobStatus.conditions"
+<kd-condition-list [conditions]="job?.jobStatus?.conditions"
                    [initialized]="isInitialized"></kd-condition-list>
 
 <kd-pod-status-card [podInfo]="job?.podInfo"
