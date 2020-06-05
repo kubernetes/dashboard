@@ -18,7 +18,7 @@ limitations under the License.
          [hidden]="isHidden()">
   <div title
        fxLayout="row"
-       >{{objectType.toUpperCase()}}</div>
+       >{{objectName}}</div>
   <div description>
     <span class="kd-muted-light"
           i18n>Items:&nbsp;</span>{{totalItems}}</div>
@@ -40,7 +40,9 @@ limitations under the License.
       <ng-container [matColumnDef]="getColumns()[0]">
         <mat-header-cell *matHeaderCellDef
                          >Nom</mat-header-cell>
-        <mat-cell *matCellDef="let object">{{object.objectMeta.traefik.metadata.name}}</mat-cell>
+        <mat-cell *matCellDef="let object">
+             {{object.objectMeta.traefik.metadata.name}}
+        </mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getColumns()[1]">
