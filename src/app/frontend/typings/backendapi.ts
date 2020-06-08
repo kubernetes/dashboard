@@ -33,6 +33,12 @@ export interface ObjectMeta {
   uid?: string;
 }
 
+export interface JobStatus {
+  status: string;
+  message: string;
+  conditions: Condition[];
+}
+
 export interface ResourceDetail {
   objectMeta: ObjectMeta;
   typeMeta: TypeMeta;
@@ -480,6 +486,7 @@ export interface JobDetail extends ResourceDetail {
   eventList: EventList;
   parallelism: number;
   completions: number;
+  jobStatus: JobStatus;
 }
 
 export interface CronJobDetail extends ResourceDetail {
