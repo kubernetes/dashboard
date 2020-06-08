@@ -156,7 +156,7 @@
     "codelyzer": "5.2.2",
     "concurrently": "5.2.0",
     "cypress": "4.7.0",
-    "eslint": "7.1.0",
+    "eslint": "7.2.0",
     "eslint-plugin-rxjs": "0.0.2-beta.24",
     "del": "5.1.0",
     "git-describe": "4.0.4",
