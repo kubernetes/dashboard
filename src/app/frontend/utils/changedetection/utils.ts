@@ -21,7 +21,7 @@ function isObject(item: any): boolean {
 }
 
 function safeReplace(target: any, source: any) {
-  const sourceKeys = Object.keys(source);
+  let sourceKeys: string[];
 
   switch (true) {
     // Safely replace array items to keep old memory references
@@ -39,6 +39,7 @@ function safeReplace(target: any, source: any) {
 
     // Safely replace objects to keep old memory references
     case isObject(target) && isObject(source):
+      sourceKeys = Object.keys(source);
       // Add all source keys
       sourceKeys.forEach((key: string) => {
         target[key] = safeReplace(target[key], source[key]);
