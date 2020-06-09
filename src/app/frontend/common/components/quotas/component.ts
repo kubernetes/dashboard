@@ -33,4 +33,16 @@ export class ResourceQuotaListComponent {
     tableData.data = this.quotas;
     return tableData;
   }
+
+  trackByResourceQuotaDetail(_: number, item: ResourceQuotaDetail): any {
+    if (item.objectMeta.uid) {
+      return item.objectMeta.uid;
+    }
+
+    if (item.objectMeta.namespace) {
+      return `${item.objectMeta.namespace}/${item.objectMeta.name}`;
+    }
+
+    return item.objectMeta.name;
+  }
 }

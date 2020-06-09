@@ -17,6 +17,7 @@ import {Injectable} from '@angular/core';
 import {timer} from 'rxjs';
 import {Observable} from 'rxjs/Observable';
 import {publishReplay, refCount, switchMap, switchMapTo} from 'rxjs/operators';
+import {changeDetectionSafeUpdate} from '../../../utils/changedetection/utils';
 
 import {ResourceBase} from '../../resources/resource';
 import {GlobalSettingsService} from '../global/globalsettings';
@@ -50,6 +51,7 @@ export class ResourceService<T> extends ResourceBase<T> {
           this.http_.get<T>(endpoint, {params}),
         ),
       )
+      .pipe(changeDetectionSafeUpdate())
       .pipe(publishReplay(1))
       .pipe(refCount());
   }
@@ -94,6 +96,7 @@ export class NamespacedResourceService<T> extends ResourceBase<T> {
           this.http_.get<T>(endpoint, {params}),
         ),
       )
+      .pipe(changeDetectionSafeUpdate())
       .pipe(publishReplay(1))
       .pipe(refCount());
   }

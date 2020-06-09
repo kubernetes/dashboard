@@ -79,4 +79,8 @@ export class PersistentVolumeDetailComponent implements OnInit, OnDestroy {
 
     return tableData;
   }
+
+  trackByCapacityItemName(_: number, item: CapacityItem): any {
+    return item.resourceName;
+  }
 }

@@ -53,4 +53,8 @@ export class ConditionListComponent implements OnInit {
 
     return tableData;
   }
+
+  trackByConditionType(_: number, item: Condition): any {
+    return item.type;
+  }
 }

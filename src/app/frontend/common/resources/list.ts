@@ -17,8 +17,8 @@ import {HttpParams} from '@angular/common/http';
 import {
   ChangeDetectorRef,
   ComponentFactoryResolver,
+  Directive,
   EventEmitter,
-  Inject,
   Input,
   OnDestroy,
   OnInit,
@@ -28,7 +28,6 @@ import {
   ViewChild,
   ViewChildren,
   ViewContainerRef,
-  Directive,
 } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
@@ -49,7 +48,6 @@ import {startWith, switchMap, takeUntil, tap} from 'rxjs/operators';
 
 import {CardListFilterComponent} from '../components/list/filter/component';
 import {RowDetailComponent} from '../components/list/rowdetail/component';
-import {ListIdentifier} from '../components/resourcelist/groupids';
 import {SEARCH_QUERY_STATE_PARAM} from '../params/params';
 import {GlobalSettingsService} from '../services/global/globalsettings';
 import {GlobalServicesModule} from '../services/global/module';
@@ -139,7 +137,7 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
         this.onListChange_(data);
 
         if (this.cdr_) {
-          this.cdr_.detectChanges();
+          this.cdr_.markForCheck();
         }
       });
   }
@@ -155,6 +153,18 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
 
   getData(): DataSource<R> {
     return this.data_;
+  }
+
+  trackByResource(_: number, item: R): any {
+    if (item.objectMeta.uid) {
+      return item.objectMeta.uid;
+    }
+
+    if (item.objectMeta.namespace) {
+      return `${item.objectMeta.namespace}/${item.objectMeta.name}`;
+    }
+
+    return item.objectMeta.name;
   }
 
   showZeroState(): boolean {

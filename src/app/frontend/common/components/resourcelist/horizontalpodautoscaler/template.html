@@ -32,6 +32,7 @@ limitations under the License.
          [isLoading]="isLoading"></div>
 
     <mat-table [dataSource]="getData()"
+               [trackBy]="trackByResource"
                matSort
                matSortActive="created"
                matSortDisableClear
