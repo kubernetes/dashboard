@@ -17,11 +17,11 @@ import {Injectable} from '@angular/core';
 import {timer} from 'rxjs';
 import {Observable} from 'rxjs/Observable';
 import {publishReplay, refCount, switchMap, switchMapTo} from 'rxjs/operators';
-import {changeDetectionSafeUpdate} from '../../../utils/changedetection/utils';
 
 import {ResourceBase} from '../../resources/resource';
 import {GlobalSettingsService} from '../global/globalsettings';
 import {NamespaceService} from '../global/namespace';
+import {changeDetectionSafeUpdate} from '../../../utils/changedetection/utils';
 
 @Injectable()
 export class ResourceService<T> extends ResourceBase<T> {
