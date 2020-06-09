@@ -35,7 +35,7 @@ export class CRDVersionListComponent {
     return tableData;
   }
 
-  trackByCDRVersionName(_: number, item: CRDVersion): any {
+  trackByCRDVersionName(_: number, item: CRDVersion): any {
     return item.name;
   }
 }
