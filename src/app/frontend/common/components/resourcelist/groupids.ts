@@ -29,6 +29,7 @@ export enum ListIdentifier {
   replicaSet = 'replicaSetList',
   ingress = 'ingressList',
   service = 'serviceList',
+  serviceAccount = 'serviceAccountList',
   configMap = 'configMapList',
   persistentVolumeClaim = 'persistentVolumeClaimList',
   secret = 'secretList',
