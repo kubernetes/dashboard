@@ -95,11 +95,10 @@ limitations under the License.
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="getColumns()"></mat-header-row>
-      <mat-row #matrow
-               (mouseover)="onRowOver(index)"
+      <mat-row (mouseover)="onRowOver(index, row)"
                (mouseleave)="onRowLeave()"
                (click)="expand(index, row)"
-               [ngClass]="{'kd-no-bottom-border': isRowExpanded(index), 'kd-clickable': hasErrors(row)}"
+               [ngClass]="{'kd-no-bottom-border': isRowExpanded(index, row), 'kd-clickable': hasErrors(row)}"
                *matRowDef="let row; columns: getColumns(); let index=index"></mat-row>
     </mat-table>
 

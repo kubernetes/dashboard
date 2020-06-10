@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {HttpParams} from '@angular/common/http';
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, Input} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {Event, ReplicationController, ReplicationControllerList} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
 
@@ -38,10 +38,9 @@ export class ReplicationControllerListComponent extends ResourceListWithStatuses
   constructor(
     private readonly replicationController_: NamespacedResourceService<ReplicationControllerList>,
     notifications: NotificationsService,
-    resolver: ComponentFactoryResolver,
     cdr: ChangeDetectorRef,
   ) {
-    super('replicationcontroller', notifications, cdr, resolver);
+    super('replicationcontroller', notifications, cdr);
     this.id = ListIdentifier.replicationController;
     this.groupId = ListGroupIdentifier.workloads;
 

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {HttpParams} from '@angular/common/http';
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, Input} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {Event, Metric, Pod, PodList} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
 
@@ -36,11 +36,10 @@ export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
 
   constructor(
     private readonly podList: NamespacedResourceService<PodList>,
-    resolver: ComponentFactoryResolver,
     notifications: NotificationsService,
     cdr: ChangeDetectorRef,
   ) {
-    super('pod', notifications, cdr, resolver);
+    super('pod', notifications, cdr);
     this.id = ListIdentifier.pod;
     this.groupId = ListGroupIdentifier.workloads;
 

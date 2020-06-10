@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {HttpParams} from '@angular/common/http';
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, Input} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {DaemonSet, DaemonSetList, Event, Metric} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
 
@@ -36,11 +36,10 @@ export class DaemonSetListComponent extends ResourceListWithStatuses<DaemonSetLi
 
   constructor(
     private readonly daemonSet_: NamespacedResourceService<DaemonSetList>,
-    resolver: ComponentFactoryResolver,
     notifications: NotificationsService,
     cdr: ChangeDetectorRef,
   ) {
-    super('daemonset', notifications, cdr, resolver);
+    super('daemonset', notifications, cdr);
     this.id = ListIdentifier.daemonSet;
     this.groupId = ListGroupIdentifier.workloads;
 

@@ -19,8 +19,7 @@ import {MetricResult} from '@api/backendapi';
 export class Sparkline {
   lastValue = 0;
 
-  @Input()
-  timeseries: MetricResult[];
+  @Input() timeseries: MetricResult[];
 
   getPolygonPoints(): string {
     const series = this.timeseries.map(({timestamp, value}) => [Date.parse(timestamp), value]);

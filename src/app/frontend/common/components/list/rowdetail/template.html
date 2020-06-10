@@ -15,7 +15,6 @@ limitations under the License.
 -->
 
 <div class="kd-row-detail kd-error"
-     *ngFor="let ev of events">
+     *ngFor="let ev of events; trackBy: trackByEvent">
   {{ev.message}}
 </div>
-<mat-divider></mat-divider>
