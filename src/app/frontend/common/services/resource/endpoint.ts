@@ -39,6 +39,7 @@ export enum Resource {
   secret = 'secret',
   ingress = 'ingress',
   service = 'service',
+  serviceAccount = 'serviceaccount',
   event = 'event',
   container = 'container',
   plugin = 'plugin',

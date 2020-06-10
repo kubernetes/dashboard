@@ -446,6 +446,8 @@ export interface SecretDetail extends ResourceDetail {
   data: StringMap;
 }
 
+export type ServiceAccountDetail = ResourceDetail;
+
 export type IngressDetail = ResourceDetail;
 
 export interface PersistentVolumeClaimDetail extends ResourceDetail {
