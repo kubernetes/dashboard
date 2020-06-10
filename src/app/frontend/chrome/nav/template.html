@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<mat-drawer-container class="kd-nav" [ngClass]="isVisible ? 'visible' : 'hidden'">
+<mat-drawer-container class="kd-nav"
+                      [ngClass]="isVisible ? 'visible' : 'hidden'">
   <mat-drawer class="kd-nav"
               mode="side">
     <div class="kd-nav-group">
@@ -148,8 +149,6 @@ limitations under the License.
                    i18n>Plugins
       </kd-nav-item>
     </div>
-
-    <mat-divider></mat-divider>
 
     <div class="kd-nav-group">
       <kd-nav-item class="kd-nav-group-item"

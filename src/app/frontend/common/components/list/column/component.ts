@@ -23,7 +23,7 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import {ActionColumn} from '@api/frontendapi';
-import {CRD, CRDDetail, CRDObject, Resource} from 'typings/backendapi';
+import {CRDDetail, Resource} from 'typings/backendapi';
 
 @Component({
   selector: 'kd-dynamic-cell',
@@ -50,6 +50,11 @@ export class ColumnComponent<T extends ActionColumn> implements OnChanges {
 
     if ((this.resource as CRDDetail).names !== undefined) {
       this.componentRef_.instance.setDisplayName((this.resource as CRDDetail).names.kind);
+      this.componentRef_.instance.setNamespaced(this.isNamespaced_(this.resource as CRDDetail));
     }
+  }
+
+  private isNamespaced_(crd: CRDDetail): boolean {
+    return crd && crd.scope === 'Namespaced';
   }
 }

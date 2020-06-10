@@ -1065,6 +1065,7 @@ export interface PinnedResource {
   name: string;
   displayName: string;
   namespace?: string;
+  namespaced: boolean;
 }
 
 export interface APIVersion {

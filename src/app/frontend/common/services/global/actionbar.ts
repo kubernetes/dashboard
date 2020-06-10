@@ -19,11 +19,13 @@ export class ResourceMeta {
   displayName: string;
   objectMeta: ObjectMeta;
   typeMeta: TypeMeta;
+  namespaced?: boolean;
 
-  constructor(displayName: string, objectMeta: ObjectMeta, typeMeta: TypeMeta) {
+  constructor(displayName: string, objectMeta: ObjectMeta, typeMeta: TypeMeta, namespaced?: boolean) {
     this.displayName = displayName;
     this.objectMeta = objectMeta;
     this.typeMeta = typeMeta;
+    this.namespaced = namespaced;
   }
 }
 

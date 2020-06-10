@@ -44,6 +44,7 @@ export class MenuComponent implements ActionColumn {
   @Input() objectMeta: ObjectMeta;
   @Input() typeMeta: TypeMeta;
   @Input() displayName: string;
+  @Input() namespaced: boolean;
 
   constructor(
     private readonly verber_: VerberService,
@@ -62,6 +63,10 @@ export class MenuComponent implements ActionColumn {
 
   setDisplayName(displayName: string): void {
     this.displayName = displayName;
+  }
+
+  setNamespaced(namespaced: boolean): void {
+    this.namespaced = namespaced;
   }
 
   isLogsEnabled(): boolean {
@@ -106,6 +111,7 @@ export class MenuComponent implements ActionColumn {
       this.objectMeta.name,
       this.objectMeta.namespace,
       this.displayName ? this.displayName : this.objectMeta.name,
+      this.namespaced,
     );
   }
 

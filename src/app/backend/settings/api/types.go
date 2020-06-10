@@ -69,6 +69,7 @@ type PinnedResource struct {
 	Name        string `json:"name"`
 	DisplayName string `json:"displayName"`
 	Namespace   string `json:"namespace,omitempty"`
+	Namespaced  bool   `json:"namespaced"`
 }
 
 func (p *PinnedResource) IsEqual(other *PinnedResource) bool {
