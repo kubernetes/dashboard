@@ -27,4 +27,10 @@ type ResourceStatus struct {
 
 	// Number of resources that are in succeeded state.
 	Succeeded int `json:"succeeded"`
+
+	// Number of resources that are in unknown state.
+	Unknown int `json:"unknown"`
+
+	// Number of resources that are in terminating state.
+	Terminating int `json:"terminating"`
 }

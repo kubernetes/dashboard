@@ -25,10 +25,7 @@ import {AppConfig, CronJobList, DaemonSetList, PodList} from '@api/backendapi';
 
 import {CardComponent} from '../common/components/card/component';
 import {ListGroupIdentifier, ListIdentifier} from '../common/components/resourcelist/groupids';
-import {
-  emptyResourcesRatio,
-  WorkloadStatusComponent,
-} from '../common/components/workloadstatus/component';
+import {emptyResourcesRatio, WorkloadStatusComponent} from '../common/components/workloadstatus/component';
 import {ConfigService} from '../common/services/global/config';
 import {NotificationsService} from '../common/services/global/notifications';
 
@@ -69,12 +66,7 @@ describe('OverviewComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        CardComponent,
-        OverviewComponent,
-        MockDaemonSetListComponent,
-        WorkloadStatusComponent,
-      ],
+      declarations: [CardComponent, OverviewComponent, MockDaemonSetListComponent, WorkloadStatusComponent],
       imports: [
         MatIconModule,
         MatCardModule,
@@ -118,10 +110,7 @@ describe('OverviewComponent', () => {
 
     expect(instance.resourcesRatio).toEqual({
       ...emptyResourcesRatio,
-      daemonSetRatio: Helper.getResourceRatio(
-        mockDaemonSetData.status,
-        mockDaemonSetData.listMeta.totalItems,
-      ),
+      daemonSetRatio: Helper.getResourceRatio(mockDaemonSetData.status, mockDaemonSetData.listMeta.totalItems),
     });
 
     expect(instance.showWorkloadStatuses()).toEqual(true);

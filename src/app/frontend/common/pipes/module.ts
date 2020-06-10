@@ -30,13 +30,6 @@ import {TrimPipe} from './trim';
     TrimPipe,
     CommaSeparatedPipe,
   ],
-  exports: [
-    MemoryFormatter,
-    CoreFormatter,
-    RelativeTimeFormatter,
-    SafeHtmlFormatter,
-    TrimPipe,
-    CommaSeparatedPipe,
-  ],
+  exports: [MemoryFormatter, CoreFormatter, RelativeTimeFormatter, SafeHtmlFormatter, TrimPipe, CommaSeparatedPipe],
 })
 export class PipesModule {}

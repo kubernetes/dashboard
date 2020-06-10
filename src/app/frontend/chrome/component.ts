@@ -63,10 +63,7 @@ export class ChromeComponent implements OnInit {
   }
 
   getSystemBannerClass(): string {
-    const severity =
-      this.systemBanner_ && this.systemBanner_.severity
-        ? this.systemBanner_.severity.toLowerCase()
-        : '';
+    const severity = this.systemBanner_ && this.systemBanner_.severity ? this.systemBanner_.severity.toLowerCase() : '';
     switch (severity) {
       case 'warning':
         return 'kd-bg-warning-light';
@@ -93,11 +90,7 @@ export class ChromeComponent implements OnInit {
       return;
     }
 
-    this.document_.addEventListener(
-      'visibilitychange',
-      this.handleVisibilityChange_.bind(this),
-      false,
-    );
+    this.document_.addEventListener('visibilitychange', this.handleVisibilityChange_.bind(this), false);
   }
 
   private handleVisibilityChange_(): void {

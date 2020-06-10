@@ -52,11 +52,7 @@ export class CRDObjectDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     const {crdName, namespace, objectName} = this.activatedRoute_.snapshot.params;
-    this.eventListEndpoint = this.endpoint_.child(
-      `${crdName}/${objectName}`,
-      Resource.event,
-      namespace,
-    );
+    this.eventListEndpoint = this.endpoint_.child(`${crdName}/${objectName}`, Resource.event, namespace);
 
     this.objectSubscription_ = this.object_
       .get(this.endpoint_.child(crdName, objectName, namespace))

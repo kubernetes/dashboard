@@ -48,9 +48,7 @@ export class PersistentVolumeDetailComponent implements OnInit, OnDestroy {
       .subscribe((d: PersistentVolumeDetail) => {
         this.persistentVolume = d;
         this.notifications_.pushErrors(d.errors);
-        this.actionbar_.onInit.emit(
-          new ResourceMeta('Persistent Volume', d.objectMeta, d.typeMeta),
-        );
+        this.actionbar_.onInit.emit(new ResourceMeta('Persistent Volume', d.objectMeta, d.typeMeta));
         this.isInitialized = true;
       });
   }

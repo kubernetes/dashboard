@@ -53,16 +53,8 @@ export class DeploymentDetailComponent implements OnInit, OnDestroy {
     const resourceNamespace = this.activatedRoute_.snapshot.params.resourceNamespace;
 
     this.eventListEndpoint = this.endpoint_.child(resourceName, Resource.event, resourceNamespace);
-    this.oldReplicaSetsEndpoint = this.endpoint_.child(
-      resourceName,
-      Resource.oldReplicaSet,
-      resourceNamespace,
-    );
-    this.newReplicaSetEndpoint = this.endpoint_.child(
-      resourceName,
-      Resource.newReplicaSet,
-      resourceNamespace,
-    );
+    this.oldReplicaSetsEndpoint = this.endpoint_.child(resourceName, Resource.oldReplicaSet, resourceNamespace);
+    this.newReplicaSetEndpoint = this.endpoint_.child(resourceName, Resource.newReplicaSet, resourceNamespace);
     this.horizontalPodAutoscalerEndpoint = this.endpoint_.child(
       resourceName,
       Resource.horizontalPodAutoscaler,

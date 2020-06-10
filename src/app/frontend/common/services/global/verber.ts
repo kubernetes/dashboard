@@ -101,11 +101,7 @@ export class VerberService {
       });
   }
 
-  getDialogConfig_(
-    displayName: string,
-    typeMeta: TypeMeta,
-    objectMeta: ObjectMeta,
-  ): MatDialogConfig<ResourceMeta> {
+  getDialogConfig_(displayName: string, typeMeta: TypeMeta, objectMeta: ObjectMeta): MatDialogConfig<ResourceMeta> {
     return {width: '900px', data: {displayName, typeMeta, objectMeta}};
   }
 

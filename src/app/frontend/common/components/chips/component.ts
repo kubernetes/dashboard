@@ -18,7 +18,8 @@ import {StringMap} from '@api/backendapi';
 
 import {ChipDialog} from './chipdialog/dialog';
 
-const truncateUrl = require('truncate-url');
+// @ts-ignore
+import * as truncateUrl from 'truncate-url';
 
 export interface Chip {
   key: string;

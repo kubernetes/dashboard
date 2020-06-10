@@ -48,11 +48,7 @@ export class ReplicaSetDetailComponent implements OnInit, OnDestroy {
 
     this.eventListEndpoint = this.endpoint_.child(resourceName, Resource.event, resourceNamespace);
     this.podListEndpoint = this.endpoint_.child(resourceName, Resource.pod, resourceNamespace);
-    this.serviceListEndpoint = this.endpoint_.child(
-      resourceName,
-      Resource.service,
-      resourceNamespace,
-    );
+    this.serviceListEndpoint = this.endpoint_.child(resourceName, Resource.service, resourceNamespace);
 
     this.replicaSetSubscription_ = this.replicaSet_
       .get(this.endpoint_.detail(), resourceName, resourceNamespace)

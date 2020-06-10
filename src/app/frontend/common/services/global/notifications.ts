@@ -77,10 +77,7 @@ export class NotificationsService {
   }
 
   private _shouldAddNotification(error: K8sError): boolean {
-    return (
-      !this._globalSettingsService.getDisableAccessDeniedNotifications() ||
-      !this._isAccessDeniedError(error)
-    );
+    return !this._globalSettingsService.getDisableAccessDeniedNotifications() || !this._isAccessDeniedError(error);
   }
 
   private _isAccessDeniedError(error: K8sError): boolean {

@@ -62,6 +62,6 @@ export class StorageClassDetailComponent implements OnInit, OnDestroy {
   }
 
   getParameterNames(): string[] {
-    return !!this.storageClass.parameters ? Object.keys(this.storageClass.parameters) : [];
+    return this.storageClass.parameters ? Object.keys(this.storageClass.parameters) : [];
   }
 }

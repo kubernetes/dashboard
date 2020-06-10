@@ -48,7 +48,7 @@ export class CronJobDetailComponent implements OnInit, OnDestroy {
 
     this.eventListEndpoint = this.endpoint_.child(resourceName, Resource.event, resourceNamespace);
     this.activeJobsEndpoint = this.endpoint_.child(resourceName, Resource.job, resourceNamespace);
-    this.inactiveJobsEndpoint = this.activeJobsEndpoint + `?active=false`;
+    this.inactiveJobsEndpoint = this.activeJobsEndpoint + '?active=false';
 
     this.cronJobSubscription_ = this.cronJob_
       .get(this.endpoint_.detail(), resourceName, resourceNamespace)

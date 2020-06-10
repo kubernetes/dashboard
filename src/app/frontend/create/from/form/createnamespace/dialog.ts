@@ -43,7 +43,7 @@ export class CreateNamespaceDialog implements OnInit {
   /**
    * Pattern validation rule for namespace
    */
-  namespacePattern: RegExp = new RegExp('^[a-z0-9]([-a-z0-9]*[a-z0-9])?$');
+  namespacePattern = new RegExp('^[a-z0-9]([-a-z0-9]*[a-z0-9])?$');
 
   constructor(
     public dialogRef: MatDialogRef<CreateNamespaceDialog>,
@@ -58,10 +58,7 @@ export class CreateNamespaceDialog implements OnInit {
     this.form = this.fb_.group({
       namespace: [
         '',
-        Validators.compose([
-          Validators.maxLength(this.namespaceMaxLength),
-          Validators.pattern(this.namespacePattern),
-        ]),
+        Validators.compose([Validators.maxLength(this.namespaceMaxLength), Validators.pattern(this.namespacePattern)]),
       ],
     });
   }

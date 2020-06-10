@@ -15,7 +15,7 @@
 import {InjectionToken} from '@angular/core';
 import {MatTooltipDefaultOptions} from '@angular/material/tooltip';
 
-export let CONFIG_DI_TOKEN = new InjectionToken<Config>('kd.config');
+export const CONFIG_DI_TOKEN = new InjectionToken<Config>('kd.config');
 
 export interface Config {
   authTokenCookieName: string;

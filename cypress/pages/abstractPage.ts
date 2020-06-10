@@ -11,9 +11,8 @@ export class AbstractPage {
   static getItem(id: string, contains?: string): Cypress.Chainable<any> {
     if (contains) {
       return cy.get(id).contains(contains);
-    } else {
-      return cy.get(id);
     }
+    return cy.get(id);
   }
 
   //Click item by tag/#id/.class/tag.class/tag#id
@@ -26,9 +25,7 @@ export class AbstractPage {
   }
 
   static clickSelectorItem(option: string) {
-    cy.get('mat-option')
-      .contains(option)
-      .click();
+    cy.get('mat-option').contains(option).click();
   }
 
   static assertUrlContains(url: string) {
