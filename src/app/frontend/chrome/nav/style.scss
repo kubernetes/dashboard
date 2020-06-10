@@ -21,6 +21,16 @@
   overflow: hidden;
   overflow-y: auto;
   white-space: nowrap;
+  width: $nav-width;
+
+  &.visible {
+    transition: width .3s;
+  }
+
+  &.hidden {
+    width: 0;
+    transition: width .2s;
+  }
 
   .mat-divider {
     margin: $baseline-grid $baseline-grid (2 * $baseline-grid) 0;

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 @import '~@angular/material/theming';
+@import 'variables';
 
 @mixin kd-theme($theme, $colors) {
   $foreground-palette: map-get($theme, foreground);
@@ -167,7 +168,7 @@
   }
 
   .kd-search {
-    background-color: darken($background, 5%);
+    background-color: darken($background, 2.5%);
 
     input {
       color: mat-color($foreground-palette, base);
@@ -195,16 +196,6 @@
     }
   }
 
-  .kd-namespace-select-input-container {
-    .mat-form-field-underline {
-      background-color: $border;
-    }
-
-    .mat-select-arrow {
-      color: $muted-light;
-    }
-  }
-
   .mat-chip.mat-standard-chip {
     background: $card-background-dark;
   }
@@ -214,9 +205,31 @@
     color: map-get($colors, primary) !important;
   }
 
+  kd-namespace-selector {
+    border: 1px solid $border;
+
+    .kd-namespace-select {
+      color: mat-color($foreground-palette, secondary-text);
+    }
+
+    .kd-namespace-select-input-container {
+      .mat-form-field-underline {
+        display: none;
+      }
+
+      .mat-select-arrow {
+        color: $muted-light !important;
+      }
+    }
+  }
+
   .kd-namespace-select-input {
     background: $card-background;
-    color: mat-color($foreground-palette, text);
+  }
+
+  .kd-namespaced-item {
+    background: $border;
+    color: mat-color($foreground-palette, secondary-text);
   }
 
   .kd-namespace-select-input-border,

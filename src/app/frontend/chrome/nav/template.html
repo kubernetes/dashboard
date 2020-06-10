@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<mat-drawer-container class="kd-nav">
+<mat-drawer-container class="kd-nav" [ngClass]="isVisible ? 'visible' : 'hidden'">
   <mat-drawer class="kd-nav"
               mode="side">
     <div class="kd-nav-group">
@@ -50,21 +50,11 @@ limitations under the License.
       </kd-nav-item>
     </div>
 
-    <mat-divider></mat-divider>
-
-    <kd-namespace-selector id="nav-namespace-selector">
-    </kd-namespace-selector>
-
     <div class="kd-nav-group">
-      <kd-nav-item class="kd-nav-group-item"
-                   state="/overview"
-                   id="nav-overview"
-                   i18n>Overview
-      </kd-nav-item>
-
       <kd-nav-item class="kd-nav-group-item"
                    state="/workloads"
                    id="nav-workloads"
+                   [namespaced]="true"
                    i18n>Workloads
       </kd-nav-item>
       <kd-nav-item class="kd-nav-item"
@@ -111,7 +101,8 @@ limitations under the License.
       <kd-nav-item class="kd-nav-group-item"
                    state="/discovery"
                    id="nav-discovery"
-                   i18n>Discovery and Load Balancing
+                   [namespaced]="true"
+                   i18n>Service
       </kd-nav-item>
       <kd-nav-item class="kd-nav-item"
                    state="/ingress"
@@ -127,6 +118,7 @@ limitations under the License.
       <kd-nav-item class="kd-nav-group-item"
                    state="/config"
                    id="nav-config"
+                   [namespaced]="true"
                    i18n>Config and Storage
       </kd-nav-item>
       <kd-nav-item class="kd-nav-item"

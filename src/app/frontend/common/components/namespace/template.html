@@ -14,10 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div class="kd-namespace-select-title kd-muted"
-     i18n>Namespace</div>
 <mat-form-field class="kd-namespace-select-input-container">
   <mat-select (openedChange)="onNamespaceToggle($event)"
+              class="kd-namespace-select"
               [(ngModel)]="selectedNamespace">
     <div [ngClass]="{'kd-namespace-select-input-border': namespaces.length > 0}">
       <input #namespaceInput
@@ -27,7 +26,7 @@ limitations under the License.
              name="selectNamespaceInput"
              class="kd-namespace-select-input"
              autocomplete="off"
-             (keydown)="$event.keyCode === 13 ? selectNamespace() : null">
+             (keydown)="$event.code === 'Enter' ? selectNamespace() : null">
     </div>
     <mat-option *ngIf="namespaces.length"
                 [value]="allNamespacesKey"
