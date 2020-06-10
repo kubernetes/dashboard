@@ -34,18 +34,15 @@ type ServiceAccount struct {
 // ServiceAccountList contains a list of service accounts.
 type ServiceAccountList struct {
 	api.ListMeta `json:"listMeta"`
-
-	// Unordered list of service accounts.
-	Items []ServiceAccount `json:"items"`
-
-	// List of non-critical errors, that occurred during resource retrieval.
-	Errors []error `json:"errors"`
+	Items        []ServiceAccount `json:"items"`
+	Errors       []error          `json:"errors"`
 }
 
 // GetServiceAccountList lists service accounts from given namespace using given data select query.
 func GetServiceAccountList(client client.Interface, namespace *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery) (*ServiceAccountList, error) {
-	saList, err := client.CoreV1().ServiceAccounts(namespace.ToRequestParam()).List(context.TODO(), api.ListEverything)
+	saList, err := client.CoreV1().ServiceAccounts(namespace.ToRequestParam()).List(context.TODO(),
+		api.ListEverything)
 
 	nonCriticalErrors, criticalError := errors.HandleError(err)
 	if criticalError != nil {
@@ -62,7 +59,8 @@ func toServiceAccount(sa *v1.ServiceAccount) ServiceAccount {
 	}
 }
 
-func toServiceAccountList(serviceAccounts []v1.ServiceAccount, nonCriticalErrors []error, dsQuery *dataselect.DataSelectQuery) *ServiceAccountList {
+func toServiceAccountList(serviceAccounts []v1.ServiceAccount, nonCriticalErrors []error,
+	dsQuery *dataselect.DataSelectQuery) *ServiceAccountList {
 	newServiceAccountList := &ServiceAccountList{
 		ListMeta: api.ListMeta{TotalItems: len(serviceAccounts)},
 		Items:    make([]ServiceAccount, 0),
@@ -71,8 +69,8 @@ func toServiceAccountList(serviceAccounts []v1.ServiceAccount, nonCriticalErrors
 
 	saCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(serviceAccounts), dsQuery)
 	serviceAccounts = fromCells(saCells)
-	newServiceAccountList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
+	newServiceAccountList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 	for _, sa := range serviceAccounts {
 		newServiceAccountList.Items = append(newServiceAccountList.Items, toServiceAccount(&sa))
 	}

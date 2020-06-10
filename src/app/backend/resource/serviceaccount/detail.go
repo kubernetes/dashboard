@@ -24,11 +24,8 @@ import (
 
 // ServiceAccountDetail contains detailed information about a service account.
 type ServiceAccountDetail struct {
-	// Extends list item structure.
 	ServiceAccount `json:",inline"`
-
-	// List of non-critical errors, that occurred during resource retrieval.
-	Errors []error `json:"errors"`
+	Errors         []error `json:"errors"`
 }
 
 // GetServiceAccountDetail returns detailed information about a service account.
@@ -36,7 +33,6 @@ func GetServiceAccountDetail(client client.Interface, namespace, name string) (*
 	log.Printf("Getting details of %s service account in %s namespace", name, namespace)
 
 	raw, err := client.CoreV1().ServiceAccounts(namespace).Get(context.TODO(), name, metaV1.GetOptions{})
-
 	if err != nil {
 		return nil, err
 	}
