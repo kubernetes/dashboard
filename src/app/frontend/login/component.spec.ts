@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, InjectionToken} from '@angular/core';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
@@ -23,6 +23,7 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {ActivatedRoute, Router} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
 import {EnabledAuthenticationModes, LoginSkippableResponse, LoginSpec} from '@api/backendapi';
+import {Config, CONFIG_DI_TOKEN} from '../index.config';
 import {K8SError, KdError} from 'common/errors/errors';
 import {AuthService} from 'common/services/global/authentication';
 import {from, Observable, of} from 'rxjs';
@@ -39,6 +40,7 @@ const queries = {
 };
 const username = 'kubedude';
 const password = 'supersecret';
+const MOCK_CONFIG_DI_TOKEN = new InjectionToken<Config>('kd.config');
 
 class MockAuthService {
   login(loginSpec: LoginSpec): Observable<K8SError[]> {
@@ -123,6 +125,10 @@ describe('LoginComponent', () => {
         {
           provide: PluginsConfigService,
           useClass: MockPluginsConfigService,
+        },
+        {
+          provide: CONFIG_DI_TOKEN,
+          useValue: MOCK_CONFIG_DI_TOKEN,
         },
       ],
     }).compileComponents();
