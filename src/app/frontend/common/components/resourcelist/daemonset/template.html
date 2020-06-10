@@ -132,8 +132,7 @@ limitations under the License.
                (click)="expand(index, row)"
                [ngClass]="{'kd-no-bottom-border': isRowExpanded(index, row), 'kd-clickable': hasErrors(row)}"
                *matRowDef="let row; columns: getColumns(); let index=index"></mat-row>
-      <mat-row (click)="expand(index, row)"
-               class="kd-detail-row"
+      <mat-row class="kd-detail-row"
                [ngClass]="{'kd-hidden': !isRowExpanded(index, row)}"
                *matRowDef="let row; columns: ['statusDetail']; let index=index"></mat-row>
     </mat-table>
