@@ -37,7 +37,7 @@ export class ServiceAccountListComponent extends ResourceListBase<ServiceAccount
     notifications: NotificationsService,
     cdr: ChangeDetectorRef,
   ) {
-    super('serviceAccount', notifications, cdr);
+    super('serviceaccount', notifications, cdr);
     this.id = ListIdentifier.serviceAccount;
     this.groupId = ListGroupIdentifier.config;
 
