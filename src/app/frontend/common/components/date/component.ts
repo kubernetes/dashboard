@@ -12,7 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Subject, timer} from 'rxjs';
+import {filter, switchMap, takeUntil} from 'rxjs/operators';
+import {GlobalSettingsService} from '../../services/global/globalsettings';
 
 /**
  * Display a date
@@ -36,14 +39,41 @@ import {Component, Input} from '@angular/core';
   selector: 'kd-date',
   templateUrl: './template.html',
   styleUrls: ['./style.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DateComponent {
+export class DateComponent implements OnInit, OnDestroy {
   @Input() date: string;
   @Input() format = 'medium';
 
   _relative: boolean;
+  changeIteration = 0;
   @Input('relative')
   set relative(v: boolean) {
     this._relative = v !== undefined && v !== false;
+  }
+  private _unsubscribe = new Subject<void>();
+
+  constructor(private readonly settings_: GlobalSettingsService, private readonly cdr_: ChangeDetectorRef) {}
+
+  ngOnInit() {
+    this.settings_.onSettingsUpdate
+      .pipe(
+        switchMap(() => {
+          let interval = this.settings_.getResourceAutoRefreshTimeInterval();
+          interval = interval === 0 ? undefined : interval * 1000;
+          return timer(0, interval);
+        }),
+      )
+      .pipe(filter(() => this._relative))
+      .pipe(takeUntil(this._unsubscribe))
+      .subscribe(() => {
+        this.changeIteration++;
+        this.cdr_.markForCheck();
+      });
+  }
+
+  ngOnDestroy(): void {
+    this._unsubscribe.next();
+    this._unsubscribe.complete();
   }
 }

@@ -57,11 +57,11 @@ const timeConstants = {
   NOT_YET: i18n.MSG_TIME_NOT_YET_LABEL,
 };
 
-@Pipe({name: 'kdRelativeTime', pure: false})
+@Pipe({name: 'kdRelativeTime'})
 export class RelativeTimeFormatter {
   constructor(private readonly config_: ConfigService) {}
 
-  transform(value: string): string {
+  transform(value: string, _: number): string {
     if (value === null) {
       return timeConstants.NOT_YET;
     }
