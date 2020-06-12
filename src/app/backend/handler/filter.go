@@ -33,6 +33,12 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 )
 
+const (
+	originalForwardedForHeader = "X-Original-Forwarded-For"
+	forwardedForHeader         = "X-Forwarded-For"
+	realIPHeader               = "X-Real-Ip"
+)
+
 // InstallFilters installs defined filter for given web service
 func InstallFilters(ws *restful.WebService, manager clientapi.ClientManager) {
 	ws.Filter(requestAndResponseLogger)
@@ -90,13 +96,13 @@ func formatRequestLog(request *restful.Request) string {
 	}
 
 	return fmt.Sprintf(RequestLogString, time.Now().Format(time.RFC3339), request.Request.Proto,
-		request.Request.Method, uri, remoteAddr(request.Request), content)
+		request.Request.Method, uri, getRemoteAddr(request.Request), content)
 }
 
 // formatResponseLog formats response log string.
 func formatResponseLog(response *restful.Response, request *restful.Request) string {
 	return fmt.Sprintf(ResponseLogString, time.Now().Format(time.RFC3339),
-		remoteAddr(request.Request), response.StatusCode())
+		getRemoteAddr(request.Request), response.StatusCode())
 }
 
 // checkSensitiveUrl checks if a string matches against a sensitive URL
@@ -178,32 +184,25 @@ func mapUrlToResource(url string) *string {
 	return &parts[3]
 }
 
-// remoteAddr extracts the remote address of the request, taking into
+// getRemoteAddr extracts the remote address of the request, taking into
 // account proxy headers.
-func remoteAddr(r *http.Request) string {
-	if prior := r.Header.Get("X-Original-Forwarded-For"); prior != "" {
-		proxies := strings.Split(prior, ",")
-		if len(proxies) > 0 {
-			remoteAddr := strings.TrimSpace(proxies[0])
-			if remoteAddr != "" {
-				return remoteAddr
-			}
-		}
+func getRemoteAddr(r *http.Request) string {
+	if ip := getRemoteIPFromForwardHeader(r, originalForwardedForHeader); ip != "" {
+		return ip
 	}
 
-	if prior := r.Header.Get("X-Forwarded-For"); prior != "" {
-		proxies := strings.Split(prior, ",")
-		if len(proxies) > 0 {
-			remoteAddr := strings.TrimSpace(proxies[0])
-			if remoteAddr != "" {
-				return remoteAddr
-			}
-		}
+	if ip := getRemoteIPFromForwardHeader(r, forwardedForHeader); ip != "" {
+		return ip
 	}
 
-	if realIP := strings.TrimSpace(r.Header.Get("X-Real-Ip")); realIP != "" {
+	if realIP := strings.TrimSpace(r.Header.Get(realIPHeader)); realIP != "" {
 		return realIP
 	}
 
 	return r.RemoteAddr
+}
+
+func getRemoteIPFromForwardHeader(r *http.Request, header string) string {
+	ips := strings.Split(r.Header.Get(header), ",")
+	return strings.TrimSpace(ips[0])
 }
