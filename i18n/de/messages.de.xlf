@@ -1012,7 +1012,7 @@
       </trans-unit>
       <trans-unit id="72f275d9b31bf0e6dc122c1a9b58b4986800eb7a" datatype="html">
         <source>Auto-refresh (every <x id="INTERPOLATION" equiv-text="{{refreshInterval}}"/> s.)</source>
-        <target state="new">Auto-refresh (every <x id="INTERPOLATION" equiv-text="{{refreshInterval}}"/> s.)</target>
+        <target>Automatisch aktualisieren (alle <x id="INTERPOLATION" equiv-text="{{refreshInterval}}"/> s.)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/logs/template.html</context>
           <context context-type="linenumber">141</context>
@@ -2128,7 +2128,7 @@
       </trans-unit>
       <trans-unit id="a3e6ad731f3d27e2fd80064adf380f461ea0251b" datatype="html">
         <source>No resources found in the selected namespace.</source>
-        <target state="new">No resources found in the selected namespace.</target>
+        <target>Im ausgewählten Namespace wurden keine Ressourcen gefunden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crdobject/template.html</context>
           <context context-type="linenumber">90</context>
@@ -3124,11 +3124,11 @@
               here
             <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>.
           </source>
-        <target state="new">
-            Insecure access detected. Sign in will not be available. Access Dashboard securely over HTTPS or using localhost. Read more
+        <target>
+            Unsicherer Zugriff erkannt. Anmeldung nicht verfügbar. Greifen Sie auf das Dashboard gesichert per HTTPS zu oder nutzen Sie localhost. Mehr dazu können Sie
             <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>
-              here
-            <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>.
+              hier
+            <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> lesen.
           </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
