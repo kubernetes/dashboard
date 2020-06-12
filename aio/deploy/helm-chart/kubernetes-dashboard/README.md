@@ -21,7 +21,7 @@ This chart bootstraps a [Kubernetes Dashboard](https://github.com/kubernetes/das
 To install the chart with the release name `my-release`:
 
 ```console
-helm repository add kubernetes-dashboard https://kubernetes.github.io/dashboard/
+helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
 helm install kubernetes-dashboard/kubernetes-dashboard --name my-release
 ```
 
