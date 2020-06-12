@@ -90,13 +90,13 @@ func formatRequestLog(request *restful.Request) string {
 	}
 
 	return fmt.Sprintf(RequestLogString, time.Now().Format(time.RFC3339), request.Request.Proto,
-		request.Request.Method, uri, request.Request.RemoteAddr, content)
+		request.Request.Method, uri, remoteAddr(request.Request), content)
 }
 
 // formatResponseLog formats response log string.
 func formatResponseLog(response *restful.Response, request *restful.Request) string {
 	return fmt.Sprintf(ResponseLogString, time.Now().Format(time.RFC3339),
-		request.Request.RemoteAddr, response.StatusCode())
+		remoteAddr(request.Request), response.StatusCode())
 }
 
 // checkSensitiveUrl checks if a string matches against a sensitive URL
@@ -176,4 +176,34 @@ func mapUrlToResource(url string) *string {
 		return nil
 	}
 	return &parts[3]
+}
+
+// remoteAddr extracts the remote address of the request, taking into
+// account proxy headers.
+func remoteAddr(r *http.Request) string {
+	if prior := r.Header.Get("X-Original-Forwarded-For"); prior != "" {
+		proxies := strings.Split(prior, ",")
+		if len(proxies) > 0 {
+			remoteAddr := strings.TrimSpace(proxies[0])
+			if remoteAddr != "" {
+				return remoteAddr
+			}
+		}
+	}
+
+	if prior := r.Header.Get("X-Forwarded-For"); prior != "" {
+		proxies := strings.Split(prior, ",")
+		if len(proxies) > 0 {
+			remoteAddr := strings.TrimSpace(proxies[0])
+			if remoteAddr != "" {
+				return remoteAddr
+			}
+		}
+	}
+
+	if realIP := strings.TrimSpace(r.Header.Get("X-Real-Ip")); realIP != "" {
+		return realIP
+	}
+
+	return r.RemoteAddr
 }
