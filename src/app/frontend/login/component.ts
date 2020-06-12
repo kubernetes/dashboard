@@ -13,12 +13,14 @@
 // limitations under the License.
 
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {Component, NgZone, OnInit} from '@angular/core';
+import {Component, Inject, NgZone, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationMode, EnabledAuthenticationModes, LoginSkippableResponse, LoginSpec} from '@api/backendapi';
 import {KdError, KdFile, StateError} from '@api/frontendapi';
+import {CookieService} from 'ngx-cookie-service';
 import {map} from 'rxjs/operators';
 
+import {Config, CONFIG_DI_TOKEN} from '../index.config';
 import {AsKdError, K8SError} from '../common/errors/errors';
 import {AuthService} from '../common/services/global/authentication';
 import {PluginsConfigService} from '../common/services/global/plugin';
@@ -36,7 +38,7 @@ enum LoginModes {
 })
 export class LoginComponent implements OnInit {
   loginModes = LoginModes;
-  selectedAuthenticationMode = LoginModes.Kubeconfig;
+  selectedAuthenticationMode = '';
   errors: KdError[] = [];
 
   private enabledAuthenticationModes_: AuthenticationMode[] = [];
@@ -48,20 +50,27 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private readonly authService_: AuthService,
+    private readonly cookies_: CookieService,
     private readonly state_: Router,
     private readonly http_: HttpClient,
     private readonly ngZone_: NgZone,
     private readonly route_: ActivatedRoute,
     private readonly pluginConfigService_: PluginsConfigService,
+    @Inject(CONFIG_DI_TOKEN) private readonly CONFIG: Config,
   ) {}
 
   ngOnInit(): void {
+    this.selectedAuthenticationMode =
+      this.selectedAuthenticationMode || this.cookies_.get(this.CONFIG.authModeCookieName) || '';
+
     this.http_
       .get<EnabledAuthenticationModes>('api/v1/login/modes')
       .subscribe((enabledModes: EnabledAuthenticationModes) => {
         this.enabledAuthenticationModes_ = enabledModes.modes;
         this.enabledAuthenticationModes_.push(LoginModes.Kubeconfig);
-        this.selectedAuthenticationMode = this.enabledAuthenticationModes_[0] as LoginModes;
+        this.selectedAuthenticationMode = this.selectedAuthenticationMode
+          ? (this.selectedAuthenticationMode as LoginModes)
+          : (this.enabledAuthenticationModes_[0] as LoginModes);
       });
 
     this.http_
@@ -82,6 +91,16 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
+    this.cookies_.set(
+      this.CONFIG.authModeCookieName,
+      this.selectedAuthenticationMode,
+      null,
+      null,
+      null,
+      false,
+      'Strict',
+    );
+
     this.authService_.login(this.getLoginSpec_()).subscribe(
       (errors: K8SError[]) => {
         if (errors.length > 0) {

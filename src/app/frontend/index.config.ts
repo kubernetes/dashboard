@@ -23,6 +23,7 @@ export interface Config {
   csrfHeaderName: string;
   authTokenHeaderName: string;
   defaultNamespace: string;
+  authModeCookieName: string;
 }
 
 export const CONFIG: Config = {
@@ -31,6 +32,7 @@ export const CONFIG: Config = {
   csrfHeaderName: 'X-CSRF-TOKEN',
   skipLoginPageCookieName: 'skipLoginPage',
   defaultNamespace: 'default',
+  authModeCookieName: 'authMode',
 };
 
 // Override default material tooltip values.
