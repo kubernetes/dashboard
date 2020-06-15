@@ -18,10 +18,10 @@ This chart bootstraps a [Kubernetes Dashboard](https://github.com/kubernetes/das
 
 ## Installing the Chart
 
-To install the chart with the release name `my-release`:
+To install the [Chart](https://helm.sh/docs/intro/using_helm/#three-big-concepts) with the [Release](https://helm.sh/docs/intro/using_helm/#three-big-concepts) name `my-release`:
 
 ```console
-helm repository add kubernetes-dashboard https://kubernetes.github.io/dashboard/
+helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
 helm install kubernetes-dashboard/kubernetes-dashboard --name my-release
 ```
 
@@ -49,7 +49,7 @@ Version 2.0.0 of this chart is the first version hosted in the kubernetes/dashbo
 
 - This version upgrades to kubernetes-dashboard v2.0.0 along with changes in RBAC management: all secrets are explicitely created and ServiceAccount do not have permission to create any secret. On top of that, it completely removes the `clusterAdminRole` parameter, being too dangerous. In order to upgrade, please update your configuration to remove `clusterAdminRole` parameter and uninstall/reinstall the chart.
 - It enables by default values for `podAnnotations` and `securityContext`, please disable them if you don't supoprt them
-- It removes `enableSkipLogin` and `enableInsecureLogin` parameters. Please use `extraEnv` instead.
+- It removes `enableSkipLogin` and `enableInsecureLogin` parameters. Please use `extraArgs` instead.
 - It adds a `ProtocolHttp` parameter, allowing you to switch the backend to plain HTTP and replaces the old `enableSkipLogin` for the network part.
 - If `protocolHttp` is not set, it will automatically add to the `Ingress`, if enabled, annotations to support HTTPS backends for nginx-ingress and GKE Ingresses.
 - It updates all the labels to the new [recommended labels](https://github.com/helm/charts/blob/master/REVIEW_GUIDELINES.md#names-and-labels), most of them being immutable.
