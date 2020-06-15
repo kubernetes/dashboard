@@ -20,6 +20,7 @@ import (
 	"strconv"
 	"strings"
 
+	"io/ioutil"
 	"github.com/kubernetes/dashboard/src/app/backend/handler/parser"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/customresourcedefinition/types"
 
@@ -597,6 +598,19 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 		apiV1Ws.GET("/crd/{namespace}/{crd}/traefik/{resourceName}").
 			To(apiHandler.handleGetCustomResourceTraefik).
 			Writes(types.CustomResourceObjectList{}))
+
+	apiV1Ws.Route(
+		apiV1Ws.GET("/crd/{namespace}/{crd}/traefik/{resourceName}/{objectName}").
+			To(apiHandler.handleGetCustomResourceTraefikDetail).
+			Writes(types.CustomResourceObjectDetail{}))
+	
+	apiV1Ws.Route(
+		apiV1Ws.PUT("/crd/{namespace}/{crd}/traefik/{resourceName}/{objectName}").
+			To(apiHandler.handlePutTraefikResource))
+
+	apiV1Ws.Route(
+		apiV1Ws.DELETE("/crd/{namespace}/{crd}/traefik/{resourceName}/{objectName}").
+			To(apiHandler.handleDeleteTraefikResource))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/crd/{namespace}/{crd}/{object}").
@@ -2341,6 +2355,48 @@ func (apiHandler *APIHandler) handleGetCustomResourceObjectList(request *restful
 	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
+func (apiHandler *APIHandler) handlePutTraefikResource(
+	request *restful.Request, response *restful.Response) {
+	config, err := apiHandler.cManager.Config(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	resourceName := request.PathParameter("resourceName")
+	objectName := request.PathParameter("objectName")
+	namespace := parseNamespacePathParameter(request)
+
+	byteArr, err := ioutil.ReadAll(request.Request.Body)
+	content := string(byteArr)
+
+	err = customresourcedefinition.PutTraefikDetail(namespace, config, resourceName, objectName, content)
+	response.WriteHeader(http.StatusCreated)
+}
+
+func (apiHandler *APIHandler) handleDeleteTraefikResource(
+	request *restful.Request, response *restful.Response) {
+	config, err := apiHandler.cManager.Config(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	resourceName := request.PathParameter("resourceName")
+	objectName := request.PathParameter("objectName")
+	namespace := parseNamespacePathParameter(request)
+
+	byteArr, err := ioutil.ReadAll(request.Request.Body)
+	content := string(byteArr)
+
+	err = customresourcedefinition.DeleteTraefikDetail(namespace, config, resourceName, objectName, content)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeader(http.StatusOK)
+}
+
 func (apiHandler *APIHandler) handleGetCustomResourceTraefik(request *restful.Request, response *restful.Response) {
 	config, err := apiHandler.cManager.Config(request)
 	if err != nil {
@@ -2352,6 +2408,25 @@ func (apiHandler *APIHandler) handleGetCustomResourceTraefik(request *restful.Re
 	namespace := parseNamespacePathParameter(request)
 	dataSelect := parser.ParseDataSelectPathParameter(request)
 	result, err := customresourcedefinition.GetTraefikList(config, namespace, dataSelect, objectname)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetCustomResourceTraefikDetail(request *restful.Request, response *restful.Response) {
+	config, err := apiHandler.cManager.Config(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	resourceName := request.PathParameter("resourceName")
+	objectName := request.PathParameter("objectName")
+	namespace := parseNamespacePathParameter(request)
+	result, err := customresourcedefinition.GetTraefikDetail(namespace, config, resourceName, objectName)
 	if err != nil {
 		errors.HandleInternalError(response, err)
 		return

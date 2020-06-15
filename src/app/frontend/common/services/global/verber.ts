@@ -42,7 +42,20 @@ export class VerberService {
       .afterClosed()
       .subscribe(doDelete => {
         if (doDelete) {
-          const url = RawResource.getUrl(typeMeta, objectMeta);
+          let url = RawResource.getUrl(typeMeta, objectMeta);
+          if (typeMeta.kind === 'IngressRoute') {
+            url =
+              'api/v1/crd/' +
+              objectMeta.namespace +
+              '/ingressroutes.traefik.containo.us/traefik/ingressroutes/' +
+              objectMeta.name;
+          } else if (typeMeta.kind === 'IngressRouteTCP') {
+            url =
+              'api/v1/crd/' +
+              objectMeta.namespace +
+              '/ingressroutetcps.traefik.containo.us/traefik/ingressroutetcps/' +
+              objectMeta.name;
+          }
           this.http_
             .delete(url, {responseType: 'text'})
             .subscribe(() => this.onDelete.emit(true), this.handleErrorResponse_.bind(this));
@@ -57,7 +70,20 @@ export class VerberService {
       .afterClosed()
       .subscribe(result => {
         if (result) {
-          const url = RawResource.getUrl(typeMeta, objectMeta);
+          let url = RawResource.getUrl(typeMeta, objectMeta);
+          if (typeMeta.kind === 'IngressRoute') {
+            url =
+              'api/v1/crd/' +
+              objectMeta.namespace +
+              '/ingressroutes.traefik.containo.us/traefik/ingressroutes/' +
+              objectMeta.name;
+          } else if (typeMeta.kind === 'IngressRouteTCP') {
+            url =
+              'api/v1/crd/' +
+              objectMeta.namespace +
+              '/ingressroutetcps.traefik.containo.us/traefik/ingressroutetcps/' +
+              objectMeta.name;
+          }
           this.http_
             .put(url, JSON.parse(result), {headers: this.getHttpHeaders_(), responseType: 'text'})
             .subscribe(() => this.onEdit.emit(true), this.handleErrorResponse_.bind(this));

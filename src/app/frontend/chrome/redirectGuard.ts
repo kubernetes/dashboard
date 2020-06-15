@@ -13,7 +13,9 @@ export class RedirectGuard implements CanActivate {
         window.location.reload();
       }, 100);
 
-      this.router.navigate(['externalPage'], {queryParams: {url: route.params['externalUrl']}});
+      this.router.navigate(['externalPage'], {
+        queryParams: {url: route.params['externalUrl'], namespace: 'default'},
+      });
     }
 
     return true;

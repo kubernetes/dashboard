@@ -40,7 +40,21 @@ export class EditResourceDialog implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const url = RawResource.getUrl(this.data.typeMeta, this.data.objectMeta);
+    let url = RawResource.getUrl(this.data.typeMeta, this.data.objectMeta);
+    if (this.data.typeMeta.kind === 'IngressRoute') {
+      url =
+        'api/v1/crd/' +
+        this.data.objectMeta.namespace +
+        '/ingressroutes.traefik.containo.us/traefik/ingressroutes/' +
+        this.data.objectMeta.name;
+    } else if (this.data.typeMeta.kind === 'IngressRouteTCP') {
+      url =
+        'api/v1/crd/' +
+        this.data.objectMeta.namespace +
+        '/ingressroutetcps.traefik.containo.us/traefik/ingressroutetcps/' +
+        this.data.objectMeta.name;
+    }
+
     this.http_
       .get(url)
       .toPromise()
