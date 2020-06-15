@@ -41,32 +41,32 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          >Nom</mat-header-cell>
         <mat-cell *matCellDef="let object">
-             {{object.objectMeta.traefik.metadata.name}}
+             {{object.objectMeta.name}}
         </mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getColumns()[1]">
         <mat-header-cell *matHeaderCellDef
                          >Host</mat-header-cell>
-        <mat-cell *matCellDef="let object">{{object.objectMeta.traefik.spec.routes[0].match}}</mat-cell>
+        <mat-cell *matCellDef="let object">{{object.spec.routes[0].match}}</mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getColumns()[2]">
         <mat-header-cell *matHeaderCellDef
                          >Service</mat-header-cell>
-        <mat-cell *matCellDef="let object">{{object.objectMeta.traefik.spec.routes[0].services[0].name}}</mat-cell>
+        <mat-cell *matCellDef="let object">{{object.spec.routes[0].services[0].name}}</mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getColumns()[3]">
         <mat-header-cell *matHeaderCellDef
                          >Port</mat-header-cell>
-        <mat-cell *matCellDef="let object">{{object.objectMeta.traefik.spec.routes[0].services[0].port}}</mat-cell>
+        <mat-cell *matCellDef="let object">{{object.spec.routes[0].services[0].port}}</mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getColumns()[4]">
         <mat-header-cell *matHeaderCellDef
                          >Entrypoint</mat-header-cell>
-        <mat-cell *matCellDef="let object">{{object.objectMeta.traefik.spec.entryPoints[0]}}</mat-cell>
+        <mat-cell *matCellDef="let object">{{object.spec.entryPoints[0]}}</mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getColumns()[5]">

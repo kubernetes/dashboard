@@ -71,16 +71,8 @@ export class IngressRouteListComponent extends ResourceListBase<CRDObjectList, C
   }
 
   map(crdObjectList: CRDObjectList): any[] {
-    const ingressrouteList = [];
-    crdObjectList.items.forEach(item => {
-      const json = JSON.parse(
-        item.objectMeta.annotations['kubectl.kubernetes.io/last-applied-configuration'],
-      );
-      item.objectMeta['traefik'] = json;
-      item.typeMeta.kind = this.objectType + '.traefik.containo.us';
-      ingressrouteList.push(item);
-    });
-    return ingressrouteList;
+    this.totalItems = crdObjectList.items.length;
+    return crdObjectList.items;
   }
 
   getDisplayColumns(): string[] {

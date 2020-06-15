@@ -72,9 +72,17 @@ export class ConfigService {
     }
   }
   getTitle(): string {
-    return this.customConfig_['title'];
+    if (this.customConfig_ !== undefined) {
+      return this.customConfig_['title'];
+    } else {
+      return 'error';
+    }
   }
   getMenus(): JSON {
-    return this.customConfig_['menus'];
+    if (this.customConfig_ !== undefined) {
+      return this.customConfig_['menus'];
+    } else {
+      return null;
+    }
   }
 }

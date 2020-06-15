@@ -69,12 +69,14 @@ type CustomResourceDefinitionVersion struct {
 type CustomResourceObject struct {
 	TypeMeta   api.TypeMeta   `json:"typeMeta"`
 	ObjectMeta api.ObjectMeta `json:"objectMeta"`
+	Spec map[string]interface{} `json:"spec,omitempty"`
 }
 
 func (r *CustomResourceObject) UnmarshalJSON(data []byte) error {
 	tempStruct := &struct {
 		metav1.TypeMeta `json:",inline"`
 		ObjectMeta      metav1.ObjectMeta `json:"metadata,omitempty"`
+		Spec map[string]interface{} `json:"spec,omitempty"`
 	}{}
 
 	err := json.Unmarshal(data, &tempStruct)
@@ -84,6 +86,7 @@ func (r *CustomResourceObject) UnmarshalJSON(data []byte) error {
 
 	r.TypeMeta = api.NewTypeMeta(api.ResourceKind(tempStruct.TypeMeta.Kind))
 	r.ObjectMeta = api.NewObjectMeta(tempStruct.ObjectMeta)
+	r.Spec = tempStruct.Spec
 	return nil
 }
 

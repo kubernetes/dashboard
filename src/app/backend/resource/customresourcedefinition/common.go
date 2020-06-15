@@ -143,6 +143,24 @@ func GetTraefikList(config *rest.Config, namespace *common.NamespaceQuery, dsQue
 
 }
 
+func GetTraefikDetail(namespace *common.NamespaceQuery,config *rest.Config, objectType string, name string) (map[string]interface{}, error) {
+
+	return crdv1.GetTraefikDetail(namespace, config, objectType, name)
+
+}
+
+func PutTraefikDetail(namespace *common.NamespaceQuery, config *rest.Config, objectType string, name string, object string) (error) {
+
+	return crdv1.PutTraefikDetail(namespace, config, objectType, name, object)
+
+}
+
+func DeleteTraefikDetail(namespace *common.NamespaceQuery, config *rest.Config, objectType string, name string, object string) (error) {
+
+	return crdv1.DeleteTraefikDetail(namespace, config, objectType, name, object)
+
+}
+
 func NewRESTClient(config *rest.Config, group, version string) (*rest.RESTClient, error) {
 	groupVersion := schema.GroupVersion{
 		Group:   group,
