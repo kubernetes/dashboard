@@ -145,7 +145,7 @@ func PutTraefikDetail(namespace *common.NamespaceQuery, config *rest.Config, obj
 		return err
 	}
 	
-	a, err := restClient.Put().
+	_, err = restClient.Put().
 		Namespace(namespace.ToRequestParam()).
 		Resource(objectType).
 		Name(name).
