@@ -35,6 +35,10 @@ export class IngressRouteListComponent extends ResourceListBase<CRDObjectList, C
   @Input() endpoint;
   objectType: string;
   objectName: string;
+  errorSpec = {
+    entryPoints: ['Erreur de format'],
+    routes: [{match: 'Erreur de format', services: [{name: 'Erreur de format', port: 0}]}],
+  };
   constructor(
     private readonly crdObject_: NamespacedResourceService<CRDObjectList>,
     private readonly activatedRoute_: ActivatedRoute,
@@ -46,6 +50,7 @@ export class IngressRouteListComponent extends ResourceListBase<CRDObjectList, C
       notifications,
       cdr,
     );
+
     this.id = ListIdentifier.crdObject;
     this.groupId = ListGroupIdentifier.none;
     const url = activatedRoute_.snapshot['_routerState']['url'];
@@ -72,6 +77,20 @@ export class IngressRouteListComponent extends ResourceListBase<CRDObjectList, C
 
   map(crdObjectList: CRDObjectList): any[] {
     this.totalItems = crdObjectList.items.length;
+
+    crdObjectList.items.forEach(item => {
+      if (
+        !item.spec.routes ||
+        !item.spec.routes[0] ||
+        !item.spec.routes[0].match ||
+        !item.spec.routes[0].services ||
+        !item.spec.routes[0].services[0] ||
+        !item.spec.routes[0].services[0].name ||
+        !item.spec.routes[0].services[0].port
+      ) {
+        item.spec = this.errorSpec;
+      }
+    });
     return crdObjectList.items;
   }
 

@@ -48,6 +48,22 @@ export interface ResourceList {
 export interface Resource {
   objectMeta: ObjectMeta;
   typeMeta: TypeMeta;
+  spec?: Spec;
+}
+
+export interface Spec {
+  entryPoints: string[];
+  routes: IgRoute[];
+}
+
+export interface IgRoute {
+  services: IgService[];
+  match: string;
+}
+
+export interface IgService {
+  name: string;
+  port: number;
 }
 
 export interface ResourceOwner extends Resource {
