@@ -18,10 +18,10 @@ This chart bootstraps a [Kubernetes Dashboard](https://github.com/kubernetes/das
 
 ## Installing the Chart
 
-To install the chart with the release name `my-release`:
+To install the [Chart](https://helm.sh/docs/intro/using_helm/#three-big-concepts) with the [Release](https://helm.sh/docs/intro/using_helm/#three-big-concepts) name `my-release`:
 
 ```console
-helm repository add kubernetes-dashboard https://kubernetes.github.io/dashboard/
+helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
 helm install kubernetes-dashboard/kubernetes-dashboard --name my-release
 ```
 
