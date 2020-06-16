@@ -80,13 +80,13 @@ export class IngressRouteListComponent extends ResourceListBase<CRDObjectList, C
 
     crdObjectList.items.forEach(item => {
       if (
-        typeof item.spec.routes === 'undefined' ||
-        typeof item.spec.routes[0] === 'undefined' ||
-        typeof item.spec.routes[0].match === 'undefined' ||
-        typeof item.spec.routes[0].services === 'undefined' ||
-        typeof item.spec.routes[0].services[0] === 'undefined' ||
-        typeof item.spec.routes[0].services[0].name === 'undefined' ||
-        typeof item.spec.routes[0].services[0].port === 'undefined'
+        !item.spec.routes ||
+        !item.spec.routes[0] ||
+        !item.spec.routes[0].match ||
+        !item.spec.routes[0].services ||
+        !item.spec.routes[0].services[0] ||
+        !item.spec.routes[0].services[0].name ||
+        !item.spec.routes[0].services[0].port
       ) {
         item.spec = this.errorSpec;
       }
