@@ -37,7 +37,16 @@ limitations under the License.
                matSortDisableClear
                matSortDirection="asc">
 
-      <ng-container [matColumnDef]="getColumns()[0]">
+      <ng-container matColumnDef="statusicon">
+         <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let object">
+                <mat-icon [ngClass]="object.iconClass">
+                  {{object.iconName}}
+                </mat-icon>
+            </mat-cell>
+      </ng-container>
+      
+      <ng-container [matColumnDef]="getColumns()[1]">
         <mat-header-cell *matHeaderCellDef
                          >Nom</mat-header-cell>
         <mat-cell *matCellDef="let object">
@@ -45,31 +54,31 @@ limitations under the License.
         </mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getColumns()[1]">
+      <ng-container [matColumnDef]="getColumns()[2]">
         <mat-header-cell *matHeaderCellDef
                          >Host</mat-header-cell>
         <mat-cell *matCellDef="let object">{{object.spec.routes[0].match}}</mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getColumns()[2]">
+      <ng-container [matColumnDef]="getColumns()[3]">
         <mat-header-cell *matHeaderCellDef
                          >Service</mat-header-cell>
         <mat-cell *matCellDef="let object">{{object.spec.routes[0].services[0].name}}</mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getColumns()[3]">
+      <ng-container [matColumnDef]="getColumns()[4]">
         <mat-header-cell *matHeaderCellDef
                          >Port</mat-header-cell>
         <mat-cell *matCellDef="let object">{{object.spec.routes[0].services[0].port}}</mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getColumns()[4]">
+      <ng-container [matColumnDef]="getColumns()[5]">
         <mat-header-cell *matHeaderCellDef
                          >Entrypoint</mat-header-cell>
         <mat-cell *matCellDef="let object">{{object.spec.entryPoints[0]}}</mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getColumns()[5]">
+      <ng-container [matColumnDef]="getColumns()[6]">
         <mat-header-cell *matHeaderCellDef
                          i18n>Created</mat-header-cell>
         <mat-cell *matCellDef="let object">

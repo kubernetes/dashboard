@@ -88,13 +88,18 @@ export class IngressRouteListComponent extends ResourceListBase<CRDObjectList, C
         !item.spec.routes[0].services[0].name ||
         !item.spec.routes[0].services[0].port
       ) {
+        item['iconName'] = 'error';
+        item['iconClass'] = {'kd-success': false};
         item.spec = this.errorSpec;
+      } else {
+        item['iconName'] = 'check_circle';
+        item['iconClass'] = {'kd-success': true};
       }
     });
     return crdObjectList.items;
   }
 
   getDisplayColumns(): string[] {
-    return ['title', 'host', 'service', 'port', 'entrypoint', 'created'];
+    return ['statusicon', 'title', 'host', 'service', 'port', 'entrypoint', 'created'];
   }
 }
