@@ -12,10 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {Subject, timer} from 'rxjs';
-import {filter, switchMap, takeUntil} from 'rxjs/operators';
-import {GlobalSettingsService} from '../../services/global/globalsettings';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnDestroy} from '@angular/core';
+import {of, Subject, timer} from 'rxjs';
+import {mergeMap, take, takeUntil} from 'rxjs/operators';
 
 /**
  * Display a date
@@ -41,7 +40,7 @@ import {GlobalSettingsService} from '../../services/global/globalsettings';
   styleUrls: ['./style.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DateComponent implements OnInit, OnDestroy {
+export class DateComponent implements OnChanges, OnDestroy {
   @Input() date: string;
   @Input() format = 'medium';
 
@@ -51,25 +50,23 @@ export class DateComponent implements OnInit, OnDestroy {
   set relative(v: boolean) {
     this._relative = v !== undefined && v !== false;
   }
+
   private _unsubscribe = new Subject<void>();
 
-  constructor(private readonly settings_: GlobalSettingsService, private readonly cdr_: ChangeDetectorRef) {}
+  constructor(private readonly cdr_: ChangeDetectorRef) {}
 
-  ngOnInit() {
-    this.settings_.onSettingsUpdate
-      .pipe(
-        switchMap(() => {
-          let interval = this.settings_.getResourceAutoRefreshTimeInterval();
-          interval = interval === 0 ? undefined : interval * 1000;
-          return timer(0, interval);
-        }),
-      )
-      .pipe(filter(() => this._relative))
-      .pipe(takeUntil(this._unsubscribe))
-      .subscribe(() => {
-        this.changeIteration++;
-        this.cdr_.markForCheck();
-      });
+  ngOnChanges() {
+    this._unsubscribe.next();
+    if (this._relative) {
+      // Every 5 seconds the first minute, every minute the first hour, afterwards every hour
+      of([5, 5, 11], [60, 60, 59], [3600, 3600, Infinity])
+        .pipe(mergeMap(([delay, period, takeFirstN]) => timer(delay * 1000, period * 1000).pipe(take(takeFirstN))))
+        .pipe(takeUntil(this._unsubscribe))
+        .subscribe(() => {
+          this.changeIteration++;
+          this.cdr_.markForCheck();
+        });
+    }
   }
 
   ngOnDestroy(): void {
