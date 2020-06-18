@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import {HttpParams} from '@angular/common/http';
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, Input} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import {Event, Metric, ReplicaSet, ReplicaSetList} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
 
@@ -40,10 +40,9 @@ export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSet
     private readonly replicaSet_: NamespacedResourceService<ReplicaSetList>,
     private readonly activatedRoute_: ActivatedRoute,
     notifications: NotificationsService,
-    resolver: ComponentFactoryResolver,
     cdr: ChangeDetectorRef,
   ) {
-    super('replicaset', notifications, cdr, resolver);
+    super('replicaset', notifications, cdr);
     this.id = ListIdentifier.replicaSet;
     this.groupId = ListGroupIdentifier.workloads;
 

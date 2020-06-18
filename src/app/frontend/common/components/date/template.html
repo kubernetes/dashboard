@@ -16,5 +16,5 @@ limitations under the License.
 
 <span class="kd-date"
       [matTooltip]="date | date:format">
-  {{_relative ? (date | kdRelativeTime) : (date | date)}}
+  {{relative ? (date | kdRelativeTime:iteration) : (date | date)}}
 </span>

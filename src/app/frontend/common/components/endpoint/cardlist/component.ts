@@ -35,4 +35,20 @@ export class EndpointListComponent {
 
     return tableData;
   }
+
+  trackByEndpoint(index: number, item: Endpoint): any {
+    if (item.objectMeta) {
+      if (item.objectMeta.uid) {
+        return item.objectMeta.uid;
+      }
+
+      if (item.objectMeta.namespace) {
+        return `${item.objectMeta.namespace}/${item.objectMeta.name}`;
+      }
+
+      return item.objectMeta.name;
+    }
+
+    return `${item.host}/${index}`;
+  }
 }

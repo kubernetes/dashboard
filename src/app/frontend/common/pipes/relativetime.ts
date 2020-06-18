@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import {Pipe} from '@angular/core';
+import {Observable} from 'rxjs';
 import {ConfigService} from '../services/global/config';
 
 const i18n = {
@@ -61,7 +62,7 @@ const timeConstants = {
 export class RelativeTimeFormatter {
   constructor(private readonly config_: ConfigService) {}
 
-  transform(value: string): string {
+  transform(value: string, _: number): string {
     if (value === null) {
       return timeConstants.NOT_YET;
     }

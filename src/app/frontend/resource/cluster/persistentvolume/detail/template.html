@@ -83,6 +83,7 @@ limitations under the License.
 
   <div content>
     <mat-table [dataSource]="getCapacityDataSource()"
+               [trackBy]="trackByCapacityItemName"
                class="kd-table-no-footer">
       <ng-container [matColumnDef]="getCapacityColumns()[0]">
         <mat-header-cell *matHeaderCellDef

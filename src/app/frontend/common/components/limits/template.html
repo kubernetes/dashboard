@@ -31,6 +31,7 @@ limitations under the License.
   <div content
        [hidden]="!limits?.length">
     <mat-table [dataSource]="getDataSource()"
+               [trackBy]="trackByLimitRage"
                class="kd-table-no-footer">
       <ng-container [matColumnDef]="getColumnIds()[0]">
         <mat-header-cell *matHeaderCellDef

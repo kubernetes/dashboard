@@ -95,6 +95,16 @@ code {
 .mat-row {
   min-height: (5 * $baseline-grid) !important;
   padding: 0 (2 * $baseline-grid) !important;
+
+  // Remove margin and padding on detail rows/cells
+  &.kd-detail-row {
+    min-height: 0 !important;
+    padding: 0 !important;
+
+    .mat-cell {
+      margin: 0 !important;
+    }
+  }
 }
 
 .mat-header-cell {

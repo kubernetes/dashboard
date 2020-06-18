@@ -31,6 +31,7 @@ limitations under the License.
   <div content
        [hidden]="!quotas?.length">
     <mat-table [dataSource]="getDataSource()"
+               [trackBy]="trackByResourceQuotaDetail"
                class="kd-table-no-footer">
       <ng-container [matColumnDef]="getQuotaColumns()[0]">
         <mat-header-cell *matHeaderCellDef

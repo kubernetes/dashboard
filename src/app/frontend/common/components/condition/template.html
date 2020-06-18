@@ -30,6 +30,7 @@ limitations under the License.
 
   <div content>
     <mat-table [dataSource]="getDataSource()"
+               [trackBy]="trackByConditionType"
                class="kd-table-no-footer">
       <ng-container [matColumnDef]="getConditionsColumns()[0]">
         <mat-header-cell *matHeaderCellDef

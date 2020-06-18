@@ -12,7 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Input, OnInit} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {StringMap} from '@api/backendapi';
 
@@ -45,16 +53,27 @@ const MAX_CHIP_VALUE_LENGTH = 63;
 @Component({
   selector: 'kd-chips',
   templateUrl: './template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChipsComponent implements OnInit {
+export class ChipsComponent implements OnInit, OnChanges {
   @Input() map: StringMap | string[];
   @Input() minChipsVisible = 2;
   keys: string[];
   isShowingAll = false;
 
-  constructor(private readonly dialog_: MatDialog) {}
+  constructor(private readonly dialog_: MatDialog, private readonly cdr_: ChangeDetectorRef) {}
 
   ngOnInit(): void {
+    this.processMap();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.map) {
+      this.processMap();
+    }
+  }
+
+  private processMap() {
     if (!this.map) {
       this.map = [];
     }
@@ -64,6 +83,7 @@ export class ChipsComponent implements OnInit {
     } else {
       this.keys = Object.keys(this.map);
     }
+    this.cdr_.markForCheck();
   }
 
   isVisible(index: number): boolean {

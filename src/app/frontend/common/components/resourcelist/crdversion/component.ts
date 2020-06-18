@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
-import {CRDVersion} from '@api/backendapi';
+import {Component, Input} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
+import {CRDVersion} from '@api/backendapi';
 
 @Component({
   selector: 'kd-crd-versions-list',
@@ -33,5 +33,9 @@ export class CRDVersionListComponent {
     tableData.data = this.versions;
 
     return tableData;
+  }
+
+  trackByCRDVersionName(_: number, item: CRDVersion): any {
+    return item.name;
   }
 }

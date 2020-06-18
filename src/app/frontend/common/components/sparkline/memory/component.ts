@@ -12,8 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
-import {MetricResult} from '@api/backendapi';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {Sparkline} from '../sparkline';
 
 @Component({
@@ -21,10 +20,4 @@ import {Sparkline} from '../sparkline';
   templateUrl: './template.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MemorySparklineComponent extends Sparkline implements OnInit {
-  @Input() timeseries: MetricResult[];
-
-  ngOnInit() {
-    this.setTimeseries(this.timeseries);
-  }
-}
+export class MemorySparklineComponent extends Sparkline {}
