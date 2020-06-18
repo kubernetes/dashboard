@@ -55,4 +55,7 @@ jobs:
           aio/scripts/install-codegen.sh
       
       - name: Check Code
-        run: npm run check
+        shell: bash
+        run: |
+          export GOPATH=$(go env GOPATH)/bin
+          npm run check
