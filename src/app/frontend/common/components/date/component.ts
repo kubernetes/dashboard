@@ -14,7 +14,7 @@
 
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnDestroy} from '@angular/core';
 import {of, Subject, timer} from 'rxjs';
-import {mergeMap, take, takeUntil} from 'rxjs/operators';
+import {mergeMap, switchMap, take, takeUntil} from 'rxjs/operators';
 
 /**
  * Display a date
@@ -44,33 +44,84 @@ export class DateComponent implements OnChanges, OnDestroy {
   @Input() date: string;
   @Input() format = 'medium';
 
-  _relative: boolean;
-  changeIteration = 0;
   @Input('relative')
   set relative(v: boolean) {
-    this._relative = v !== undefined && v !== false;
+    this.relative_ = v !== undefined && v !== false;
   }
 
-  private _unsubscribe = new Subject<void>();
+  get relative(): boolean {
+    return this.relative_;
+  }
+
+  iteration = 0;
+
+  private relative_: boolean;
+  private refreshInterval_: number;
+  private intervalChanged_ = new Subject<void>();
+  private timeBaseIntervals_ = [
+    60, // Seconds in a minute
+    60, // Minutes in a second
+    24, // Hours in a day
+  ];
+  private unsubscribe_ = new Subject<void>();
 
   constructor(private readonly cdr_: ChangeDetectorRef) {}
 
   ngOnChanges() {
-    this._unsubscribe.next();
-    if (this._relative) {
-      // Every 5 seconds the first minute, every minute the first hour, afterwards every hour
-      of([5, 5, 11], [60, 60, 59], [3600, 3600, Infinity])
-        .pipe(mergeMap(([delay, period, takeFirstN]) => timer(delay * 1000, period * 1000).pipe(take(takeFirstN))))
-        .pipe(takeUntil(this._unsubscribe))
-        .subscribe(() => {
-          this.changeIteration++;
+    if (this.relative_) {
+      this.intervalChanged_
+        .pipe(switchMap(_ => timer(0, this.refreshInterval_)))
+        .pipe(takeUntil(this.unsubscribe_))
+        .subscribe(_ => {
           this.cdr_.markForCheck();
+          this.iteration++;
+
+          // Check if refresh interval should be updated
+          const interval = this.calculateRefreshInterval_(this.getTimePassed_());
+          if (interval !== this.refreshInterval_ / 1000) {
+            this.setRefreshInterval_(interval);
+          }
         });
+
+      // Kick off the check interval
+      this.setRefreshInterval_(1);
     }
   }
 
   ngOnDestroy(): void {
-    this._unsubscribe.next();
-    this._unsubscribe.complete();
+    this.unsubscribe_.next();
+    this.unsubscribe_.complete();
+  }
+
+  // Calculates timer refresh interval that should be used based on time that has passed.
+  // 1 - 59s -> 1 second
+  // 1m - 59m59s -> 1 minute
+  // 1h - 23h59m59s -> 1 hour
+  // > 1 day -> 1 day
+  private calculateRefreshInterval_(passed: number): number {
+    let power = 0;
+    let interval = 1;
+
+    while (power < this.timeBaseIntervals_.length && passed / this.timeBaseIntervals_[power] >= 1) {
+      passed /= this.timeBaseIntervals_[power];
+      power++;
+    }
+
+    while (power > 0) {
+      interval *= this.timeBaseIntervals_[--power];
+    }
+
+    return interval;
+  }
+
+  // Returns how much time has passed (in seconds) between the provided date and current time.
+  private getTimePassed_(): number {
+    return Math.floor((new Date().getTime() - new Date(this.date).getTime()) / 1000);
+  }
+
+  // Takes the interval in seconds and updates currently running timer to use the new interval
+  private setRefreshInterval_(interval: number): void {
+    this.refreshInterval_ = interval * 1000;
+    this.intervalChanged_.next();
   }
 }
