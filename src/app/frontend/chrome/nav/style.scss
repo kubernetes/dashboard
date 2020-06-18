@@ -28,8 +28,8 @@
   }
 
   &.hidden {
-    width: 0;
     transition: width .2s;
+    width: 0;
   }
 
   .mat-divider {

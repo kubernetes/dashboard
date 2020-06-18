@@ -23,8 +23,8 @@
 
   ::ng-deep {
     .mat-form-field-infix {
-      padding: 0;
       border: 0;
+      padding: 0;
       width: 18 * $baseline-grid;
     }
 
@@ -33,10 +33,10 @@
     }
 
     .kd-namespace-select {
-      line-height: 4.5 * $baseline-grid;
-      margin-left: 2 * $baseline-grid;
       font-family: $font-family-sans;
       font-size: $subhead-font-size-base;
+      line-height: 4.5 * $baseline-grid;
+      margin-left: 2 * $baseline-grid;
     }
   }
 }
