@@ -45,6 +45,12 @@ limitations under the License.
                    i18n>Persistent Volumes
       </kd-nav-item>
       <kd-nav-item class="kd-nav-item"
+                   state="/serviceaccount"
+                   id="nav-serviceaccount"
+                   [namespaced]="true"
+                   i18n>Service Accounts
+      </kd-nav-item>
+      <kd-nav-item class="kd-nav-item"
                    state="/storageclass"
                    id="nav-storageclass"
                    i18n>Storage Classes
@@ -137,22 +143,10 @@ limitations under the License.
                    id="nav-secret"
                    i18n>Secrets
       </kd-nav-item>
-      <kd-nav-item class="kd-nav-item"
-                   state="/serviceaccount"
-                   id="nav-serviceaccount"
-                   i18n>Service Accounts
-      </kd-nav-item>
-      <kd-nav-item *ngIf="showPlugin()"
-                   class="kd-nav-group-item"
-                   state="/plugin"
-                   id="nav-plugin"
-                   i18n>Plugins
-      </kd-nav-item>
     </div>
 
     <div class="kd-nav-group">
       <kd-nav-item class="kd-nav-group-item"
-                   id="sidebar-crd"
                    state="/customresourcedefinition"
                    id="nav-customresourcedefinition"
                    [exact]="true"
@@ -161,6 +155,18 @@ limitations under the License.
 
       <kd-pinner-nav kind="customresourcedefinition"></kd-pinner-nav>
     </div>
+
+    <ng-container *ngIf="showPlugin()">
+      <mat-divider></mat-divider>
+
+      <div class="kd-nav-group">
+        <kd-nav-item class="kd-nav-group-item"
+                     state="/plugin"
+                     id="nav-plugin"
+                     i18n>Plugins
+        </kd-nav-item>
+      </div>
+    </ng-container>
 
     <mat-divider></mat-divider>
 
