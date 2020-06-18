@@ -48,9 +48,9 @@ jobs:
       
       - name: Install Codegen
         shell: bash
-        env:
-          GOPATH: $(go env GOPATH)/bin
-        run: aio/scripts/install-codegen.sh
+        run: |
+          $(go env GOPATH)/bin
+          aio/scripts/install-codegen.sh
       
       - name: Check Code
         run: npm run check
