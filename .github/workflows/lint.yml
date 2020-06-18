@@ -12,12 +12,6 @@ jobs:
     steps:
       - name: Setup Envrionment
         uses: actions/checkout@v2
-        env:
-          NG_CLI_ANALYTICS: ci
-          GO111MODULE: on
-          GOPROXY: "https://proxy.golang.org"
-          PATH: "$PATH:$GOPATH:/bin"
-          NODE_OPTIONS: "--max-old-space-size=8192"
 
       - name: Setup Go
         uses: actions/setup-go@v2
@@ -29,6 +23,13 @@ jobs:
         with:
           node-version: ^10.15.0
 
-      - run: npm install
-      - run: ./aio/scripts/install-codegen.sh
-      - run: npm run check
+      - env:
+          NG_CLI_ANALYTICS: ci
+          GO111MODULE: on
+          GOPROXY: "https://proxy.golang.org"
+          PATH: "$PATH:$GOPATH:/bin"
+          NODE_OPTIONS: "--max-old-space-size=8192"
+        run: |
+          npm install
+          ./aio/scripts/install-codegen.sh
+          npm run check
