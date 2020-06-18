@@ -24,6 +24,7 @@ export class ActionbarDetailPinComponent {
   @Input() objectMeta: ObjectMeta;
   @Input() typeMeta: TypeMeta;
   @Input() displayName: string;
+  @Input() namespaced = false;
 
   constructor(private readonly pinner_: PinnerService) {}
 
@@ -31,7 +32,13 @@ export class ActionbarDetailPinComponent {
     if (this.isPinned()) {
       this.pinner_.unpin(this.typeMeta.kind, this.objectMeta.name, this.objectMeta.namespace);
     } else {
-      this.pinner_.pin(this.typeMeta.kind, this.objectMeta.name, this.objectMeta.namespace, this.displayName);
+      this.pinner_.pin(
+        this.typeMeta.kind,
+        this.objectMeta.name,
+        this.objectMeta.namespace,
+        this.displayName,
+        this.namespaced,
+      );
     }
   }
 

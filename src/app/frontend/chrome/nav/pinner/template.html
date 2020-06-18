@@ -18,6 +18,7 @@ limitations under the License.
   <kd-nav-item *ngFor="let resource of getPinnedResources()"
                class="kd-nav-item"
                [state]="getResourceHref(resource)"
+               [namespaced]="resource.namespaced"
                i18n>{{resource.displayName}}
   </kd-nav-item>
 </div>

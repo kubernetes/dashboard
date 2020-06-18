@@ -21,4 +21,7 @@ limitations under the License.
    queryParamsHandling="preserve"
    [routerLinkActive]="['kd-nav-item-button-active']">
   <ng-content></ng-content>
+  <span *ngIf="namespaced"
+        class="kd-namespaced-item"
+        [@rollInOut]="animationState">{{indicator}}</span>
 </a>

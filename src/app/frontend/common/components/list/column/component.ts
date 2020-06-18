@@ -54,9 +54,14 @@ export class ColumnComponent<T extends ActionColumn> implements OnChanges {
 
     if ((this.resource as CRDDetail).names !== undefined) {
       this.componentRef_.instance.setDisplayName((this.resource as CRDDetail).names.kind);
+      this.componentRef_.instance.setNamespaced(this.isNamespaced_(this.resource as CRDDetail));
     }
 
     // Let the change detector run for out component
     this.componentRef_.changeDetectorRef.detectChanges();
+  }
+
+  private isNamespaced_(crd: CRDDetail): boolean {
+    return crd && crd.scope === 'Namespaced';
   }
 }

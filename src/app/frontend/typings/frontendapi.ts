@@ -63,6 +63,7 @@ export interface ActionColumn {
   setTypeMeta(typeMeta: TypeMeta): void;
   setObjectMeta(objectMeta: ObjectMeta): void;
   setDisplayName(displayName: string): void;
+  setNamespaced(namespaced: boolean): void;
 }
 
 export interface HTMLInputEvent extends Event {
