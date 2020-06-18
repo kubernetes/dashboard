@@ -136,6 +136,10 @@ const routes: Routes = [
         path: 'secret',
         loadChildren: () => import('resource/config/secret/module').then(m => m.SecretModule),
       },
+      {
+        path: 'serviceaccount',
+        loadChildren: () => import('resource/config/serviceaccount/module').then(m => m.ServiceAccountModule),
+      },
 
       // Custom resource definitions
       {

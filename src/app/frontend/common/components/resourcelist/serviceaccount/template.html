@@ -18,7 +18,7 @@ limitations under the License.
          [hidden]="isHidden()">
   <div title
        fxLayout="row"
-       i18n>{{title}}</div>
+       i18n>Service Accounts</div>
   <div description><span class="kd-muted-light"
           i18n>Items:&nbsp;</span>{{totalItems}}</div>
   <div actions>
@@ -40,10 +40,10 @@ limitations under the License.
                          mat-sort-header
                          disableClear="true"
                          i18n>Name</mat-header-cell>
-        <mat-cell *matCellDef="let secret">
-          <a [routerLink]="getDetailsHref(secret.objectMeta.name, secret.objectMeta.namespace)"
+        <mat-cell *matCellDef="let serviceAccount">
+          <a [routerLink]="getDetailsHref(serviceAccount.objectMeta.name, serviceAccount.objectMeta.namespace)"
              queryParamsHandling="preserve">
-            {{secret.objectMeta.name}}
+            {{serviceAccount.objectMeta.name}}
           </a>
         </mat-cell>
       </ng-container>
@@ -52,21 +52,15 @@ limitations under the License.
                     matColumnDef="namespace">
         <mat-header-cell *matHeaderCellDef
                          i18n>Namespace</mat-header-cell>
-        <mat-cell *matCellDef="let secret">{{secret.objectMeta.namespace}}</mat-cell>
+        <mat-cell *matCellDef="let serviceAccount">{{serviceAccount.objectMeta.namespace}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="labels">
         <mat-header-cell *matHeaderCellDef
                          i18n>Labels</mat-header-cell>
-        <mat-cell *matCellDef="let secret">
-          <kd-chips [map]="secret.objectMeta.labels"></kd-chips>
+        <mat-cell *matCellDef="let serviceAccount">
+          <kd-chips [map]="serviceAccount.objectMeta.labels"></kd-chips>
         </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="type">
-        <mat-header-cell *matHeaderCellDef
-                         i18n>Type</mat-header-cell>
-        <mat-cell *matCellDef="let secret">{{secret.type}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="created">
@@ -74,8 +68,8 @@ limitations under the License.
                          mat-sort-header
                          disableClear="true"
                          i18n>Created</mat-header-cell>
-        <mat-cell *matCellDef="let secret">
-          <kd-date [date]="secret.objectMeta.creationTimestamp"
+        <mat-cell *matCellDef="let serviceAccount">
+          <kd-date [date]="serviceAccount.objectMeta.creationTimestamp"
                    relative></kd-date>
         </mat-cell>
       </ng-container>
@@ -83,9 +77,9 @@ limitations under the License.
       <ng-container *ngFor="let col of getActionColumns()"
                     [matColumnDef]="col.name">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let secret">
+        <mat-cell *matCellDef="let serviceAccount">
           <kd-dynamic-cell [component]="col.component"
-                           [resource]="secret"></kd-dynamic-cell>
+                           [resource]="serviceAccount"></kd-dynamic-cell>
         </mat-cell>
       </ng-container>
 

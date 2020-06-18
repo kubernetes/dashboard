@@ -15,7 +15,8 @@
 import {HttpParams} from '@angular/common/http';
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {Secret, SecretList} from 'typings/backendapi';
+import {ServiceAccount, ServiceAccountList} from 'typings/backendapi';
+
 import {ResourceListBase} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
@@ -24,21 +25,20 @@ import {MenuComponent} from '../../list/column/menu/component';
 import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 
 @Component({
-  selector: 'kd-secret-list',
+  selector: 'kd-service-account-list',
   templateUrl: './template.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SecretListComponent extends ResourceListBase<SecretList, Secret> {
-  @Input() title = 'Secrets';
-  @Input() endpoint = EndpointManager.resource(Resource.secret, true).list();
+export class ServiceAccountListComponent extends ResourceListBase<ServiceAccountList, ServiceAccount> {
+  @Input() endpoint = EndpointManager.resource(Resource.serviceAccount, true).list();
 
   constructor(
-    private readonly secret_: NamespacedResourceService<SecretList>,
+    private readonly serviceAccount_: NamespacedResourceService<ServiceAccountList>,
     notifications: NotificationsService,
     cdr: ChangeDetectorRef,
   ) {
-    super('secret', notifications, cdr);
-    this.id = ListIdentifier.secret;
+    super('serviceaccount', notifications, cdr);
+    this.id = ListIdentifier.serviceAccount;
     this.groupId = ListGroupIdentifier.config;
 
     // Register action columns.
@@ -48,16 +48,16 @@ export class SecretListComponent extends ResourceListBase<SecretList, Secret> {
     this.registerDynamicColumn('namespace', 'name', this.shouldShowNamespaceColumn_.bind(this));
   }
 
-  getResourceObservable(params?: HttpParams): Observable<SecretList> {
-    return this.secret_.get(this.endpoint, undefined, undefined, params);
+  getResourceObservable(params?: HttpParams): Observable<ServiceAccountList> {
+    return this.serviceAccount_.get(this.endpoint, undefined, undefined, params);
   }
 
-  map(secretList: SecretList): Secret[] {
-    return secretList.secrets;
+  map(serviceAccountList: ServiceAccountList): ServiceAccount[] {
+    return serviceAccountList.items;
   }
 
   getDisplayColumns(): string[] {
-    return ['name', 'labels', 'type', 'created'];
+    return ['name', 'labels', 'created'];
   }
 
   private shouldShowNamespaceColumn_(): boolean {

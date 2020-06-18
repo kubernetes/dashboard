@@ -63,6 +63,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/rolebinding"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/secret"
 	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/serviceaccount"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/statefulset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/storageclass"
 	"github.com/kubernetes/dashboard/src/app/backend/scaling"
@@ -444,6 +445,27 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 		apiV1Ws.GET("/service/{namespace}/{service}/pod").
 			To(apiHandler.handleGetServicePods).
 			Writes(pod.PodList{}))
+
+	apiV1Ws.Route(
+		apiV1Ws.GET("/serviceaccount").
+			To(apiHandler.handleGetServiceAccountList).
+			Writes(serviceaccount.ServiceAccountList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/serviceaccount/{namespace}").
+			To(apiHandler.handleGetServiceAccountList).
+			Writes(serviceaccount.ServiceAccountList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/serviceaccount/{namespace}/{serviceaccount}").
+			To(apiHandler.handleGetServiceAccountDetail).
+			Writes(serviceaccount.ServiceAccountDetail{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/serviceaccount/{namespace}/{serviceaccount}/secret").
+			To(apiHandler.handleGetServiceAccountSecrets).
+			Writes(secret.SecretList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/serviceaccount/{namespace}/{serviceaccount}/imagepullsecret").
+			To(apiHandler.handleGetServiceAccountImagePullSecrets).
+			Writes(secret.SecretList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/ingress").
@@ -896,6 +918,76 @@ func (apiHandler *APIHandler) handleGetServiceEvent(request *restful.Request, re
 	dataSelect := parser.ParseDataSelectPathParameter(request)
 	dataSelect.MetricQuery = dataselect.StandardMetrics
 	result, err := resourceService.GetServiceEvents(k8sClient, dataSelect, namespace, name)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetServiceAccountList(request *restful.Request, response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	namespace := parseNamespacePathParameter(request)
+	dataSelect := parser.ParseDataSelectPathParameter(request)
+	result, err := serviceaccount.GetServiceAccountList(k8sClient, namespace, dataSelect)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetServiceAccountDetail(request *restful.Request, response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	namespace := request.PathParameter("namespace")
+	name := request.PathParameter("serviceaccount")
+	result, err := serviceaccount.GetServiceAccountDetail(k8sClient, namespace, name)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetServiceAccountImagePullSecrets(request *restful.Request, response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	namespace := request.PathParameter("namespace")
+	name := request.PathParameter("serviceaccount")
+	dataSelect := parser.ParseDataSelectPathParameter(request)
+	result, err := serviceaccount.GetServiceAccountImagePullSecrets(k8sClient, namespace, name, dataSelect)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetServiceAccountSecrets(request *restful.Request, response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	namespace := request.PathParameter("namespace")
+	name := request.PathParameter("serviceaccount")
+	dataSelect := parser.ParseDataSelectPathParameter(request)
+	result, err := serviceaccount.GetServiceAccountSecrets(k8sClient, namespace, name, dataSelect)
 	if err != nil {
 		errors.HandleInternalError(response, err)
 		return

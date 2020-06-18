@@ -123,6 +123,10 @@ export interface IngressList extends ResourceList {
   items: Ingress[];
 }
 
+export interface ServiceAccountList extends ResourceList {
+  items: ServiceAccount[];
+}
+
 export interface JobList extends ResourceList {
   cumulativeMetrics: Metric[] | null;
   jobs: Job[];
@@ -194,6 +198,8 @@ export interface StorageClassList extends ResourceList {
 export type ClusterRole = Resource;
 
 export type ConfigMap = Resource;
+
+export type ServiceAccount = Resource;
 
 export interface Controller extends Resource {
   pods: PodInfo;
@@ -445,6 +451,8 @@ export interface SecretDetail extends ResourceDetail {
   type: string;
   data: StringMap;
 }
+
+export type ServiceAccountDetail = ResourceDetail;
 
 export type IngressDetail = ResourceDetail;
 
