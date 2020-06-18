@@ -1,0 +1,35 @@
+name: Code Check & Linting
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Envrionment
+        env:
+          NG_CLI_ANALYTICS: ci
+          GO111MODULE: on
+          GOPROXY: "https://proxy.golang.org"
+          PATH: "$PATH:$GOPATH:/bin"
+          NODE_OPTIONS: "--max-old-space-size=8192"
+
+      - name: Setup Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: ^1.13
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v1.4.2
+        with:
+          node-version: ^10.15.0
+
+      - run: npm install
+      - run: ./aio/scripts/install-codegen.sh
+      - run: npm run check
