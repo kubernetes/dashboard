@@ -17,6 +17,7 @@ jobs:
       GOPROXY: "https://proxy.golang.org"
       NODE_OPTIONS: "--max-old-space-size=8192"
       DOCKER_CLI_EXPERIMENTAL: enabled
+      TERM: xterm
       
     steps:
       - name: Setup Environment
@@ -73,6 +74,7 @@ jobs:
       GOPROXY: "https://proxy.golang.org"
       NODE_OPTIONS: "--max-old-space-size=8192"
       DOCKER_CLI_EXPERIMENTAL: enabled
+      TERM: xterm
 
     steps:
       - name: Setup Environment
