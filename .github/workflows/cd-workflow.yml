@@ -1,0 +1,47 @@
+name: Continuous Deployment
+
+on:
+  push:
+    branches: [ master ]
+  create:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  deploy:
+    name: Development Release
+    if: github.event_name == 'push' && contains(github.ref, 'master')
+    runs-on: ubuntu-latest
+    env:
+      NG_CLI_ANALYTICS: ci
+      GO111MODULE: on
+      GOPROXY: "https://proxy.golang.org"
+      NODE_OPTIONS: "--max-old-space-size=8192"
+      TERM: xterm
+    steps:
+      - name: Setup Environment
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Docker Login
+        run: echo "Log in"
+
+  release:
+    name: Release
+    if: github.event_name == 'create' && startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    env:
+      NG_CLI_ANALYTICS: ci
+      GOPROXY: "https://proxy.golang.org"
+      NODE_OPTIONS: "--max-old-space-size=8192"
+      TERM: xterm
+
+    steps:
+      - name: Setup Environment
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Docker Login
+        run: echo "Log in"
