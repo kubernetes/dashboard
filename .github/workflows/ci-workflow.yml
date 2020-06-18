@@ -102,7 +102,7 @@ jobs:
       - name: Install Dependencies
         shell: bash
         run: |
-          [ ! -d "$dldir" ] && npm ci
+          [ ! -d "node_modules" ] && npm ci
 
       - name: Run Unit Tests
         uses: GabrielBB/xvfb-action@v1.2
