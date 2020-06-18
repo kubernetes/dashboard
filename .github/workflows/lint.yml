@@ -10,9 +10,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-
       - name: Setup Envrionment
+        uses: actions/checkout@v2
         env:
           NG_CLI_ANALYTICS: ci
           GO111MODULE: on
