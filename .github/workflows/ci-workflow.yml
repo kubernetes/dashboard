@@ -30,8 +30,13 @@ jobs:
         with:
           node-version: ^10.15.0
 
-      - shell: bash 
-        run: |
-          npm install
-          aio/scripts/install-codegen.sh
-          npm run check
+#       - name: Install Dependencies
+#         shell: bash 
+#         run: npm ci
+      
+      - name: Install Codegen
+        shell: bash
+        run: aio/scripts/install-codegen.sh
+      
+      - name: Check Code
+        run: npm run check
