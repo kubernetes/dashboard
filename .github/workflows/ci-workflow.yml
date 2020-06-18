@@ -20,7 +20,7 @@ jobs:
       - name: Setup Envrionment
         uses: actions/checkout@v2
         with:
-          fetch-depth: ''
+          fetch-depth: 500
 
       - name: Setup Go
         uses: actions/setup-go@v2
