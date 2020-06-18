@@ -23,6 +23,34 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
+          
+      - name: Setup Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.14.4
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v1.4.2
+        with:
+          node-version: 12.6.0
+
+      - name: Cache Node Modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Install Dependencies
+        shell: bash
+        run: |
+          [ ! -d "node_modules" ] && npm ci || node aio/scripts/version.js && go mod download
 
       - name: Docker Login
         env:
@@ -31,7 +59,10 @@ jobs:
         run: docker login -u $DOCKER_USER -p $DOCKER_PASS
 
       - name: Push Image
-        run: echo "Push"
+        shell: bash
+        run: |
+          export GOPATH=$(go env GOPATH)/bin
+          npm run docker:push:head
 
   release:
     name: Release
