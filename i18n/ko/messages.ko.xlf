@@ -2396,9 +2396,9 @@
           <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="1b915a3d679d132fe75c952cc8a4062ee738a238" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{cardTitle}}"/></source>
-        <target state="new"><x id="INTERPOLATION" equiv-text="{{cardTitle}}"/></target>
+      <trans-unit id="045ed332fbb2645493d6955677247db0d1134c2d" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{title}}"/></source>
+        <target state="new"><x id="INTERPOLATION" equiv-text="{{title}}"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/secret/template.html</context>
           <context context-type="linenumber">21</context>
