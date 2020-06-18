@@ -1,4 +1,4 @@
-name: Code Check & Linting
+name: Continuous Integration
 
 on:
   push:
@@ -7,8 +7,15 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  check:
+    name: Code Check & Linting
     runs-on: ubuntu-latest
+    env:
+      NG_CLI_ANALYTICS: ci
+      GO111MODULE: on
+      GOPROXY: "https://proxy.golang.org"
+      PATH: "$PATH:$GOPATH:/bin"
+      NODE_OPTIONS: "--max-old-space-size=8192"
     steps:
       - name: Setup Envrionment
         uses: actions/checkout@v2
@@ -23,13 +30,7 @@ jobs:
         with:
           node-version: ^10.15.0
 
-      - env:
-          NG_CLI_ANALYTICS: ci
-          GO111MODULE: on
-          GOPROXY: "https://proxy.golang.org"
-          PATH: "$PATH:$GOPATH:/bin"
-          NODE_OPTIONS: "--max-old-space-size=8192"
-        run: |
+      - run: |
           npm install
-          ./aio/scripts/install-codegen.sh
+          aio/scripts/install-codegen.sh
           npm run check
