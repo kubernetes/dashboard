@@ -17,7 +17,7 @@ jobs:
       NODE_OPTIONS: "--max-old-space-size=8192"
       TERM: xterm
     steps:
-      - name: Setup Envrionment
+      - name: Setup Environment
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
