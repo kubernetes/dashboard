@@ -36,7 +36,7 @@ jobs:
       - name: Install Codegen
         shell: bash
         run: |
-          export PATH=$PATH:$(go env GOPATH)/bin
+          export GOPATH=$(go env GOPATH)/bin
           aio/scripts/install-codegen.sh
       
       - name: Check Code
