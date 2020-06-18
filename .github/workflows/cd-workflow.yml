@@ -14,16 +14,16 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NG_CLI_ANALYTICS: ci
-      GO111MODULE: on
       GOPROXY: "https://proxy.golang.org"
       NODE_OPTIONS: "--max-old-space-size=8192"
-      TERM: xterm
+      DOCKER_CLI_EXPERIMENTAL: enabled
+      
     steps:
       - name: Setup Environment
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-          
+
       - name: Setup Go
         uses: actions/setup-go@v2
         with:
@@ -72,7 +72,7 @@ jobs:
       NG_CLI_ANALYTICS: ci
       GOPROXY: "https://proxy.golang.org"
       NODE_OPTIONS: "--max-old-space-size=8192"
-      TERM: xterm
+      DOCKER_CLI_EXPERIMENTAL: enabled
 
     steps:
       - name: Setup Environment
