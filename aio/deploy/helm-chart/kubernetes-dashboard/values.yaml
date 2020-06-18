@@ -119,6 +119,18 @@ ingress:
     - /
   #  - /*
 
+  ## CustomKubernetes Dashboard Ingress paths
+  ##
+  paths_custom: []
+  #  - backend:
+  #      serviceName: ssl-redirect
+  #      servicePort: use-annotation
+  #  - backend:
+  #      serviceName: >-
+  #        {{ include "kubernetes-dashboard.fullname" . }}
+  #      # Don't use string here, use only integer value!
+  #      servicePort: 443
+
   ## Kubernetes Dashboard Ingress hostnames
   ## Must be provided if Ingress is enabled
   ##

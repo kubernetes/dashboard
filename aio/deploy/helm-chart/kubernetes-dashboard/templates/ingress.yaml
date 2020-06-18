@@ -43,21 +43,29 @@ spec:
     - host: {{ $host }}
       http:
         paths:
+  {{- if len ($.Values.ingress.paths_custom) }}
+  {{- "\n" }}{{ tpl (toYaml $.Values.ingress.paths_custom | indent 10) $ }}
+  {{- else }}
   {{- range $p := $paths }}
           - path: {{ $p }}
             backend:
               serviceName: {{ $serviceName }}
               servicePort: {{ $servicePort }}
+  {{- end -}}
   {{- end -}}
   {{- end -}}
   {{- else }}
     - http:
         paths:
+  {{- if len ($.Values.ingress.paths_custom) }}
+  {{- "\n" }}{{ tpl (toYaml $.Values.ingress.paths_custom | indent 10) $ }}
+  {{- else }}
   {{- range $p := $paths }}
           - path: {{ $p }}
             backend:
               serviceName: {{ $serviceName }}
               servicePort: {{ $servicePort }}
+  {{- end -}}
   {{- end -}}
   {{- end -}}
   {{- if .Values.ingress.tls }}
