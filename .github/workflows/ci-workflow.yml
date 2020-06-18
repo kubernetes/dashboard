@@ -105,10 +105,15 @@ jobs:
         run: |
           [ ! -d "node_modules" ] && npm ci || node aio/scripts/version.js && command -v golangci-lint >/dev/null 2>&1 || { curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(go env GOPATH)/bin v1.23.6; } && go mod download
 
-      - name: Run Unit Tests
+      - name: Run Frontend Unit Tests
         uses: GabrielBB/xvfb-action@v1.2
         with:
-          run: npm run test:coverage
+          run: npm run test:frontend:coverage
+          
+      - name: Run Backend Unit Tests
+        run: |
+          export GOPATH=$(go env GOPATH)/bin
+          npm run test:backend:coverage
 
       - name: Cleanup & Upload Coverage
         shell: bash
