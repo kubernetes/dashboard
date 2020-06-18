@@ -37,6 +37,7 @@ export enum Resource {
   configMap = 'configmap',
   persistentVolumeClaim = 'persistentvolumeclaim',
   secret = 'secret',
+  imagePullSecret = 'imagepullsecret',
   ingress = 'ingress',
   service = 'service',
   serviceAccount = 'serviceaccount',

@@ -2293,6 +2293,14 @@
           <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="1b915a3d679d132fe75c952cc8a4062ee738a238" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{cardTitle}}"/></source>
+        <target state="new"><x id="INTERPOLATION" equiv-text="{{cardTitle}}"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/secret/template.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="0756fdca226249dcff9d05651d50b7acdade2aba" datatype="html">
         <source>Stateful Sets</source>
         <target>ステートフルセット</target>
@@ -2363,14 +2371,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/statefulset/detail/template.html</context>
           <context context-type="linenumber">22</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="29f86a92691ef11e87a07459d2104cab7bd91f56" datatype="html">
-        <source>Secrets</source>
-        <target>シークレット</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/secret/template.html</context>
-          <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
       <trans-unit id="419d940613972cc3fae9c8ea0a4306dbf80616e5" datatype="html">

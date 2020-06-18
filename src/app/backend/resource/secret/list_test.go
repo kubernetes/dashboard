@@ -76,7 +76,7 @@ func TestToSecretList(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		actual := toSecretList(c.secrets, nil, dataselect.NoDataSelect)
+		actual := ToSecretList(c.secrets, nil, dataselect.NoDataSelect)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("toSecretList() ==\n%#v\nExpected: %#v", actual, c.expected)
 		}
