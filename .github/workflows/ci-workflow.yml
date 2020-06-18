@@ -103,10 +103,11 @@ jobs:
         run: npm ci
 
       - name: Run Unit Tests
-        shell: bash
-        run: |
-          export GOPATH=$(go env GOPATH)/bin
-          npm run test:coverage
+        uses: GabrielBB/xvfb-action@v1.2
+        with: 
+          run: |
+            export GOPATH=$(go env GOPATH)/bin
+            npm run test:coverage
 
       - name: Cleanup & Upload Coverage
         shell: bash
