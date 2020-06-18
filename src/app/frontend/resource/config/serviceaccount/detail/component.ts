@@ -31,7 +31,7 @@ import {NamespacedResourceService} from '../../../../common/services/resource/re
 export class ServiceAccountDetailComponent implements OnInit, OnDestroy {
   private serviceAccountSubscription_: Subscription;
   private readonly endpoint_ = EndpointManager.resource(Resource.serviceAccount, true);
-  secretListEndpoint: string;
+  imagePullSecretListEndpoint: string;
   serviceAccount: ServiceAccountDetail;
   isInitialized = false;
 
@@ -46,7 +46,7 @@ export class ServiceAccountDetailComponent implements OnInit, OnDestroy {
     const resourceName = this.activatedRoute_.snapshot.params.resourceName;
     const resourceNamespace = this.activatedRoute_.snapshot.params.resourceNamespace;
 
-    this.secretListEndpoint = this.endpoint_.child(resourceName, Resource.imagePullSecret, resourceNamespace);
+    this.imagePullSecretListEndpoint = this.endpoint_.child(resourceName, Resource.imagePullSecret, resourceNamespace);
 
     this.serviceAccountSubscription_ = this.serviceAccount_
       .get(this.endpoint_.detail(), resourceName, resourceNamespace)
