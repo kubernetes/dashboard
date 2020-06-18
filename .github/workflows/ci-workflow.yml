@@ -43,8 +43,8 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-      
 
-#       - name: Install Dependencies
-#         run: npm ci
+      - name: Install Dependencies
+        run: npm ci
       
       - name: Install Codegen
         shell: bash
