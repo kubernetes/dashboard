@@ -48,7 +48,7 @@ jobs:
       - name: Install Dependencies
         shell: bash
         run: |
-          [ ! -d "node_modules" ] && npm ci
+          [ ! -d "node_modules" ] && npm ci || true
 
       - name: Install Codegen
         shell: bash
@@ -103,7 +103,7 @@ jobs:
       - name: Install Dependencies
         shell: bash
         run: |
-          [ ! -d "node_modules" ] && npm ci
+          [ ! -d "node_modules" ] && npm ci || true
 
       - name: Run Unit Tests
         uses: GabrielBB/xvfb-action@v1.2
@@ -157,7 +157,7 @@ jobs:
       - name: Install Dependencies
         shell: bash
         run: |
-          [ ! -d "node_modules" ] && npm ci
+          [ ! -d "node_modules" ] && npm ci || true
 
       - name: Run E2E Tests
         run: npm run cluster:start && npm run e2e
