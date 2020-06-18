@@ -17,5 +17,7 @@ limitations under the License.
 <kd-object-meta [initialized]="isInitialized"
                 [objectMeta]="serviceAccount?.objectMeta"></kd-object-meta>
 
+<kd-secret-list [endpoint]="secretListEndpoint"></kd-secret-list>
+
 <kd-secret-list [endpoint]="imagePullSecretListEndpoint"
                 cardTitle="Image Pull Secrets"></kd-secret-list>

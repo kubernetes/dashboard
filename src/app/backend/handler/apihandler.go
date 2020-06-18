@@ -458,10 +458,14 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 		apiV1Ws.GET("/serviceaccount/{namespace}/{serviceaccount}").
 			To(apiHandler.handleGetServiceAccountDetail).
 			Writes(serviceaccount.ServiceAccountDetail{}))
-  apiV1Ws.Route(
-    apiV1Ws.GET("/serviceaccount/{namespace}/{serviceaccount}/imagepullsecret").
-      To(apiHandler.handleGetServiceAccountImagePullSecrets).
-      Writes(secret.SecretList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/serviceaccount/{namespace}/{serviceaccount}/secret").
+			To(apiHandler.handleGetServiceAccountSecrets).
+			Writes(secret.SecretList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/serviceaccount/{namespace}/{serviceaccount}/imagepullsecret").
+			To(apiHandler.handleGetServiceAccountImagePullSecrets).
+			Writes(secret.SecretList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/ingress").
@@ -956,24 +960,40 @@ func (apiHandler *APIHandler) handleGetServiceAccountDetail(request *restful.Req
 }
 
 func (apiHandler *APIHandler) handleGetServiceAccountImagePullSecrets(request *restful.Request, response *restful.Response) {
-  k8sClient, err := apiHandler.cManager.Client(request)
-  if err != nil {
-    errors.HandleInternalError(response, err)
-    return
-  }
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
 
-  namespace := request.PathParameter("namespace")
-  name := request.PathParameter("serviceaccount")
-  dataSelect := parser.ParseDataSelectPathParameter(request)
-  result, err := serviceaccount.GetServiceAccountImagePullSecrets(k8sClient, namespace, name, dataSelect)
-  if err != nil {
-    errors.HandleInternalError(response, err)
-    return
-  }
-  response.WriteHeaderAndEntity(http.StatusOK, result)
+	namespace := request.PathParameter("namespace")
+	name := request.PathParameter("serviceaccount")
+	dataSelect := parser.ParseDataSelectPathParameter(request)
+	result, err := serviceaccount.GetServiceAccountImagePullSecrets(k8sClient, namespace, name, dataSelect)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
+func (apiHandler *APIHandler) handleGetServiceAccountSecrets(request *restful.Request, response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
 
+	namespace := request.PathParameter("namespace")
+	name := request.PathParameter("serviceaccount")
+	dataSelect := parser.ParseDataSelectPathParameter(request)
+	result, err := serviceaccount.GetServiceAccountSecrets(k8sClient, namespace, name, dataSelect)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
 
 func (apiHandler *APIHandler) handleGetIngressDetail(request *restful.Request, response *restful.Response) {
 	k8sClient, err := apiHandler.cManager.Client(request)
