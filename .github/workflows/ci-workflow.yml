@@ -14,7 +14,6 @@ jobs:
       NG_CLI_ANALYTICS: ci
       GO111MODULE: on
       GOPROXY: "https://proxy.golang.org"
-      PATH: "$PATH:$GOPATH:/bin"
       NODE_OPTIONS: "--max-old-space-size=8192"
     steps:
       - name: Setup Envrionment
