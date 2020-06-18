@@ -16,10 +16,11 @@ package serviceaccount
 
 import (
 	"context"
+	"log"
+
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
-	"log"
 )
 
 // ServiceAccountDetail contains detailed information about a service account.
