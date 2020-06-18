@@ -18,6 +18,7 @@ import (
 	"net/http"
 	"net/url"
 	"reflect"
+	"strings"
 	"testing"
 
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -71,6 +72,12 @@ func (c *FakeRESTClient) Get() *restclient.Request {
 	return restclient.NewRequestWithClient(&url.URL{Path: "/api/v1/"}, "", restclient.ClientContentConfig{}, fake.CreateHTTPClient(NewFakeClientFunc(c))).Verb("GET")
 }
 
+// Removes all quote signs that might have been added to the message.
+// Might depend on dependencies version how they are constructed.
+func normalize(msg string) string {
+	return strings.Replace(msg, "\"", "", -1)
+}
+
 func TestDeleteShouldPropagateErrorsAndChooseClient(t *testing.T) {
 	verber := resourceVerber{
 		client:           &FakeRESTClient{err: errors.NewInvalid("err")},
@@ -80,19 +87,19 @@ func TestDeleteShouldPropagateErrorsAndChooseClient(t *testing.T) {
 
 	err := verber.Delete("replicaset", true, "bar", "baz")
 
-	if !reflect.DeepEqual(err.Error(), "Delete /api/v1/namespaces/bar/replicasets/baz: err from apps") {
+	if !reflect.DeepEqual(normalize(err.Error()), "Delete /api/v1/namespaces/bar/replicasets/baz: err from apps") {
 		t.Fatalf("Expected error on verber delete but got %#v", err.Error())
 	}
 
 	err = verber.Delete("service", true, "bar", "baz")
 
-	if !reflect.DeepEqual(err.Error(), "Delete /api/v1/namespaces/bar/services/baz: err") {
+	if !reflect.DeepEqual(normalize(err.Error()), "Delete /api/v1/namespaces/bar/services/baz: err") {
 		t.Fatalf("Expected error on verber delete but got %#v", err.Error())
 	}
 
 	err = verber.Delete("statefulset", true, "bar", "baz")
 
-	if !reflect.DeepEqual(err.Error(), "Delete /api/v1/namespaces/bar/statefulsets/baz: err from apps") {
+	if !reflect.DeepEqual(normalize(err.Error()), "Delete /api/v1/namespaces/bar/statefulsets/baz: err from apps") {
 		t.Fatalf("Expected error on verber delete but got %#v", err.Error())
 	}
 }
@@ -106,19 +113,19 @@ func TestGetShouldPropagateErrorsAndChoseClient(t *testing.T) {
 
 	_, err := verber.Get("replicaset", true, "bar", "baz")
 
-	if !reflect.DeepEqual(err.Error(), "Get /api/v1/namespaces/bar/replicasets/baz: err from apps") {
+	if !reflect.DeepEqual(normalize(err.Error()), "Get /api/v1/namespaces/bar/replicasets/baz: err from apps") {
 		t.Fatalf("Expected error on verber delete but got %#v", err.Error())
 	}
 
 	_, err = verber.Get("service", true, "bar", "baz")
 
-	if !reflect.DeepEqual(err.Error(), "Get /api/v1/namespaces/bar/services/baz: err") {
+	if !reflect.DeepEqual(normalize(err.Error()), "Get /api/v1/namespaces/bar/services/baz: err") {
 		t.Fatalf("Expected error on verber delete but got %#v", err.Error())
 	}
 
 	_, err = verber.Get("statefulset", true, "bar", "baz")
 
-	if !reflect.DeepEqual(err.Error(), "Get /api/v1/namespaces/bar/statefulsets/baz: err from apps") {
+	if !reflect.DeepEqual(normalize(err.Error()), "Get /api/v1/namespaces/bar/statefulsets/baz: err from apps") {
 		t.Fatalf("Expected error on verber delete but got %#v", err.Error())
 	}
 }
@@ -131,7 +138,7 @@ func TestDeleteShouldThrowErrorOnUnknownResourceKind(t *testing.T) {
 
 	err := verber.Delete("foo", true, "bar", "baz")
 
-	if !reflect.DeepEqual(err.Error(), "Get /api/v1/customresourcedefinitions/foo: err") {
+	if !reflect.DeepEqual(normalize(err.Error()), "Get /api/v1/customresourcedefinitions/foo: err") {
 		t.Fatalf("Expected error on verber delete but got %#v", err.Error())
 	}
 }
@@ -144,7 +151,7 @@ func TestGetShouldThrowErrorOnUnknownResourceKind(t *testing.T) {
 
 	_, err := verber.Get("foo", true, "bar", "baz")
 
-	if !reflect.DeepEqual(err.Error(), "Get /api/v1/customresourcedefinitions/foo: err") {
+	if !reflect.DeepEqual(normalize(err.Error()), "Get /api/v1/customresourcedefinitions/foo: err") {
 		t.Fatalf("Expected error on verber get but got %#v", err.Error())
 	}
 }
@@ -157,7 +164,7 @@ func TestPutShouldThrowErrorOnUnknownResourceKind(t *testing.T) {
 
 	err := verber.Put("foo", false, "", "baz", nil)
 
-	if !reflect.DeepEqual(err.Error(), "Get /api/v1/customresourcedefinitions/foo: err") {
+	if !reflect.DeepEqual(normalize(err.Error()), "Get /api/v1/customresourcedefinitions/foo: err") {
 		t.Fatalf("Expected error on verber put but got %#v", err.Error())
 	}
 }
