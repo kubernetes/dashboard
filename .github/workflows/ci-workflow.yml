@@ -19,6 +19,8 @@ jobs:
     steps:
       - name: Setup Envrionment
         uses: actions/checkout@v2
+        with:
+          fetch-depth: ''
 
       - name: Setup Go
         uses: actions/setup-go@v2
@@ -44,7 +46,6 @@ jobs:
             ${{ runner.os }}-      
 
       - name: Install Dependencies
-        shell: bash
         run: npm ci
       
       - name: Install Codegen
