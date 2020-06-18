@@ -15,6 +15,7 @@ jobs:
       GO111MODULE: on
       GOPROXY: "https://proxy.golang.org"
       NODE_OPTIONS: "--max-old-space-size=8192"
+      TERM: xterm
     steps:
       - name: Setup Envrionment
         uses: actions/checkout@v2
@@ -42,15 +43,14 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-      
 
-      - name: Install Dependencies
-        shell: bash 
-        run: npm ci
+#       - name: Install Dependencies
+#         run: npm ci
       
       - name: Install Codegen
         shell: bash
-        run: |
-          export GOPATH=$(go env GOPATH)/bin
-          aio/scripts/install-codegen.sh
+        env:
+          GOPATH: $(go env GOPATH)/bin
+        run: aio/scripts/install-codegen.sh
       
       - name: Check Code
         run: npm run check
