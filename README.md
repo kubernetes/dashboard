@@ -1,6 +1,7 @@
 # Kubernetes Dashboard
 
-[![Build Status](https://travis-ci.org/kubernetes/dashboard.svg?branch=master)](https://travis-ci.org/kubernetes/dashboard)
+![Continuous Integration](https://github.com/kubernetes/dashboard/workflows/Continuous%20Integration/badge.svg)
+![Continuous Deployment](https://github.com/kubernetes/dashboard/workflows/Continuous%20Deployment/badge.svg)
 [![Go Report Card](https://goreportcard.com/badge/github.com/kubernetes/dashboard)](https://goreportcard.com/report/github.com/kubernetes/dashboard)
 [![Coverage Status](https://codecov.io/github/kubernetes/dashboard/coverage.svg?branch=master)](https://codecov.io/github/kubernetes/dashboard?branch=master)
 [![GitHub release](https://img.shields.io/github/release/kubernetes/dashboard.svg)](https://github.com/kubernetes/dashboard/releases/latest)
