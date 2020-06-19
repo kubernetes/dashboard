@@ -93,7 +93,7 @@ Parameter                                       | Description                   
 `ingress.labels`                                | Add custom labels                                                                                                                | `[]`
 `ingress.enabled`                               | Enable ingress controller resource                                                                                               | `false`
 `ingress.paths`                                 | Paths to match against incoming requests. Both `/` and `/*` are required to work on gce ingress.                                 | `[/]`
-`ingress.paths_custom`                          | Override for the ingress paths                                                                                                   | `[]`
+`ingress.customPaths`                           | Override the default ingress paths                                                                                               | `[]`
 `ingress.hosts`                                 | Dashboard Hostnames                                                                                                              | `nil`
 `ingress.tls`                                   | Ingress TLS configuration                                                                                                        | `[]`
 `metricsScraper.enabled`                        | Wether to enable dashboard-metrics-scraper                                                                                       | `false`

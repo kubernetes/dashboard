@@ -119,9 +119,9 @@ ingress:
     - /
   #  - /*
 
-  ## CustomKubernetes Dashboard Ingress paths
+  ## Custom Kubernetes Dashboard Ingress paths. Will override default paths.
   ##
-  paths_custom: []
+  customPaths: []
   #  - backend:
   #      serviceName: ssl-redirect
   #      servicePort: use-annotation
