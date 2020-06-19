@@ -48,3 +48,6 @@ spec:
   selector:
 {{ include "kubernetes-dashboard.matchLabels" . | indent 4 }}
     app.kubernetes.io/component: kubernetes-dashboard
+{{- if .Values.service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.service.loadBalancerIP }}
+{{- end }}
