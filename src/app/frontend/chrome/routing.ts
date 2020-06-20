@@ -138,7 +138,7 @@ const routes: Routes = [
       },
       {
         path: 'serviceaccount',
-        loadChildren: () => import('resource/config/serviceaccount/module').then(m => m.ServiceAccountModule),
+        loadChildren: () => import('resource/cluster/serviceaccount/module').then(m => m.ServiceAccountModule),
       },
 
       // Custom resource definitions

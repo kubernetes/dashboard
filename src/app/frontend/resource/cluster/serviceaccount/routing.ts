@@ -16,7 +16,7 @@ import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
 import {DEFAULT_ACTIONBAR} from '../../../common/components/actionbars/routing';
 
-import {CONFIG_ROUTE} from '../routing';
+import {CONFIG_ROUTE} from '../../config/routing';
 
 import {ServiceAccountDetailComponent} from './detail/component';
 import {ServiceAccountListComponent} from './list/component';
