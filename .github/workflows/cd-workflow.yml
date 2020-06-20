@@ -40,7 +40,6 @@ jobs:
         env:
           cache-name: cache-node-modules
         with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
           path: node_modules
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
@@ -97,7 +96,6 @@ jobs:
         env:
           cache-name: cache-node-modules
         with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
           path: node_modules
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
@@ -114,7 +112,7 @@ jobs:
         env:
           DOCKER_USER: ${{ secrets.DOCKER_RELEASE_USER }}
           DOCKER_PASS: ${{ secrets.DOCKER_RELEASE_PASS }}
-        run: docker login -u $DOCKER_RELEASE_USER -p $DOCKER_RELEASE_PASS
+        run: docker login -u $DOCKER_USER -p $DOCKER_PASS
 
       - name: Push Image
         shell: bash
