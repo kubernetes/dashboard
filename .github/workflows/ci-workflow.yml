@@ -109,7 +109,7 @@ jobs:
         uses: GabrielBB/xvfb-action@v1.2
         with:
           run: npm run test:frontend:coverage
-          
+
       - name: Run Backend Unit Tests
         run: |
           export GOPATH=$(go env GOPATH)/bin

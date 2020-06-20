@@ -1,0 +1,5 @@
+chart-dirs:
+  - aio/deploy/helm-chart
+chart-repos:
+  - stable=https://kubernetes-charts.storage.googleapis.com/
+debug: true

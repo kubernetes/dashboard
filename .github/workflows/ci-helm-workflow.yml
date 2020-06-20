@@ -1,0 +1,42 @@
+name: Continuous Integration - Helm
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+    - 'aio/deploy/helm-chart/**'
+  pull_request:
+    paths:
+    - 'aio/deploy/helm-chart/**'
+
+jobs:
+  helm-lint-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: "0"
+
+      - name: Run chart-testing (lint)
+        id: lint
+        uses: helm/chart-testing-action@v1.0.0-rc.2
+        with:
+          command: lint
+          config: .helm-chart-testing.yaml
+
+      - name: validate-schema
+        uses: desaintmartin/helm-kubeval-action@v1.0.0
+        with:
+          path: aio/deploy/helm-chart
+
+      - name: Create kind cluster
+        uses: helm/kind-action@v1.0.0-rc.1
+        # Only build a kind cluster if there are chart changes to test.
+        if: steps.lint.outputs.changed == 'true'
+
+      - name: Run chart-testing (install)
+        uses: helm/chart-testing-action@v1.0.0-rc.2
+        with:
+          command: install
+          config: .helm-chart-testing.yaml
