@@ -60,7 +60,7 @@ In order to upgrade, please update your configuration to remove `clusterAdminRol
 ## Access control
 
 It is critical for the Kubernetes cluster to correctly setup access control of Kubernetes Dashboard.
-See this [guide](https://github.com/kubernetes/dashboard/wiki/Access-control) for best practises.
+See this [guide](https://github.com/kubernetes/dashboard/blob/master/docs/user/access-control/README.md) for details.
 
 It is highly recommended to use RBAC with minimal privileges needed for Dashboard to run.
 
