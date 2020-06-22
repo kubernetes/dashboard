@@ -55,7 +55,9 @@ class ResourceEndpoint {
   list(): string {
     return `${baseHref}/${this.resource_}${this.namespaced_ ? '/:namespace' : ''}`;
   }
-
+  listOPA(): string {
+    return `${baseHref}/${this.resource_}/kube-opa : ''}`;
+  }
   traefik(objectType: string): string {
     return `api/v1/crd/${
       this.namespaced_ ? '/:namespace' : ''

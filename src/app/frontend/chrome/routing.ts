@@ -17,6 +17,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {AuthGuard} from '../common/services/guard/auth';
 import {ChromeComponent} from './component';
 import {RedirectGuard} from './redirectGuard';
+import {ConfigMapOpaModule} from 'resource/config/configmapopa/module';
 //import {ExtPageComponent} from './externalPage/component'
 
 const routes: Routes = [
@@ -148,6 +149,11 @@ const routes: Routes = [
       {
         path: 'configmap',
         loadChildren: () => import('resource/config/configmap/module').then(m => m.ConfigMapModule),
+      },
+      {
+        path: 'opa',
+        loadChildren: () =>
+          import('resource/config/configmapopa/module').then(m => m.ConfigMapOpaModule),
       },
       {
         path: 'persistentvolumeclaim',
